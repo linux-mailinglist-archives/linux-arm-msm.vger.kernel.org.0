@@ -1,101 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-14267-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14268-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75F5B87D16E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 17:47:46 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id DF39787D285
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 18:12:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 97CEA1C223F0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 16:47:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1CA961C20A5E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 17:12:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BE203D96E;
-	Fri, 15 Mar 2024 16:47:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2ED8145034;
+	Fri, 15 Mar 2024 17:12:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bYMrTgRi"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="UYrkcpq0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EBD928F1;
-	Fri, 15 Mar 2024 16:47:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8320F4596F
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 17:12:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710521264; cv=none; b=JntgiFsXtl7F824DeAECqn03nhkQWEmdwJGPjuRDRNhzvMm7+a25sADovINWZhA1Qk68cfgoa2mMfXkPmf/kyzC0e3fsBkIBMcJUlQB3BEVoMY9dVgbonZjaknDBXiO4OcDfoH9Qb1cQFwkDW6M3oyacP2suTNAB8YUR9x4legM=
+	t=1710522754; cv=none; b=dQF9KAqIZ/0ZDYlfl+Q/H5zOQ2OMx810nd3RXNtjj+pKbzEpR1x7A9tPugJJI7ereQ25DgdlUtiMr9nD1yS5aoPDeONDKFLlWufhK1LoM7bBUXskBE5iF3OEfD5fweauGaQ/Jq4pAxZ1SsgSywbx+fYUufNqghTwP933FyjFBiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710521264; c=relaxed/simple;
-	bh=JL5eSL26L69YUqhQ5+zJQo9l0y8hKk3BZ+EnlZ3I0ew=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mgX752XL4uINe/JMTIx/fTAia9Rmhmzv+1qLbDvVzIoOx0CQ3YAlt3JFlzjO+VuvVt/8IXIuQ3Qtf4rbQvrk2HnJgGPU7M8n+GoZFMAEX9bXXJSka5KWuDESQQ5wyxVdQEezJ+VcGZbK3RP1ql34dB40eOb72D6vd8HTKnjOj4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bYMrTgRi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAA8AC433C7;
-	Fri, 15 Mar 2024 16:47:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710521263;
-	bh=JL5eSL26L69YUqhQ5+zJQo9l0y8hKk3BZ+EnlZ3I0ew=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bYMrTgRi1fAF0uJpaHYkRyXi7WMU9CRq/YAAwuGPJ96W4PBq+7ovToG4kCo/Wh9he
-	 0FQhO8q2MPRkIiOYC/kBvrSn17yLoSkOuf8FKSraqnI1nDrVkmSWd3b9HAIjxCrUcW
-	 GTxUZ399ds/6rak0w56+JGj/BG6zNMnfuW+UzYueaEGHBHoExb0TPtkcV3wbwpWsl6
-	 DC4p1cxQETsHR1wh8l06vm6qbgmR+PM1DhCRCJlViSSpd4bvVAPp7WSIZTZiNxLqdi
-	 +8v6sqK2++UPI8NRxHA+pHQBRnmAJnqj/speZyq2TwAD/ieIOKwMoDFbRCcM8YZN3A
-	 UWzjd3bXJuYZg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rlAim-000000000Nn-3x3C;
-	Fri, 15 Mar 2024 17:47:53 +0100
-Date: Fri, 15 Mar 2024 17:47:52 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Bjorn Helgaas <helgaas@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH v2 2/3] PCI: qcom: Read back PARF_LTSSM register
-Message-ID: <ZfR7uCcflCiFTvBh@hovoldconsulting.com>
-References: <20240215161114.GA1292081@bhelgaas>
- <bc7d9859-f7ec-41c5-8a9e-170ccdfff46a@linaro.org>
- <Zc8GHrgdF7jJBgyu@hovoldconsulting.com>
- <c1f85249-32b1-41e2-adc3-5aa4ad7609b9@linaro.org>
+	s=arc-20240116; t=1710522754; c=relaxed/simple;
+	bh=kWzlo4AaZeWtEkzCy8TJZmtsYDqVVCm/XwSPAebW3DI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MkimfYYr79nfiwweiPIWgnLoCC832UhYIcAelt721KzyOO072bsJd1tNxQbOAVxWUTfmOP4ix0zWfRdV0eiEIEzcBD+7rLXiXkK85UJIpTTnxMeySQoThfUt8xKDJFzFQyOZTrIyI9EWMlVM863YSmMBbQWHOdAQ70HIHht09SA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=UYrkcpq0; arc=none smtp.client-ip=209.85.160.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-430b72a0033so2941731cf.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 10:12:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1710522749; x=1711127549; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YBgzsheMyMt2wDXPPT0VYLjrPGEmgjQ97XLNs9yUYLg=;
+        b=UYrkcpq0VM8HGji3C4iHBLJv21E63ItbM0s3Ps427+e2CevGvaf7hw8BHwggdmFLwQ
+         /F/M6f/mJAOIstrCnc3/gZpXxdlWc9yVFOmYV2JyEVogzFk5emX0whAAk3Ut0J3qtnEO
+         efEVWyLfOYKtPjPsK3pBgrrztOXGktv5PPz34=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710522749; x=1711127549;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YBgzsheMyMt2wDXPPT0VYLjrPGEmgjQ97XLNs9yUYLg=;
+        b=OjPrRxYXufGb9wBIw6N4h1tv2voXc0tH0hQBVp4dxAnsVUpdUhKZvRlZd1igCm5js7
+         NKHb6vY5llQGNB1U1Z18O4FhirG4yvtdIaZieus4cD1wJIve4gHdHIGrRCZImzAnkJ1n
+         2sYtF0q2fN7VZJrJ5bSsUAceDIDDhp0KszoApukMp9ZMoBf5v7dI2I96IYNJ3VPzONuH
+         WWusxjHwZlTqVrCCOYOui5C0ku8iHKpvYV5JyeOPLzDPBZK1sEM3w6x5zpyQbznNcNXI
+         aGOjvz5zeMurfcGHtacJYkNAzyEsAoPl2roAONtSzvaMp0TEpOUO+jKvPfMPIhPyPWpc
+         +itg==
+X-Forwarded-Encrypted: i=1; AJvYcCXG8DuujL8q0fL+o2LCmaKqcGNQp//oCLW10lYm66NV2Em7Wmn39XMYDIdN1wkVnKxTBxtn5xsgO6jYFOyv7cy8xmJl7x2/3+1acgNrGg==
+X-Gm-Message-State: AOJu0Yz1mPBFgqorDB1IIwBSiDr/topupEWdSaBlObqyQgsPHJiizKX5
+	sXBd+tHvRleNPtCbXL4pC0CgoAmQvcMUuCTRQg+nJUdYOwEa58m5Gaj51gC3m7K/aoThGc1uCaY
+	=
+X-Google-Smtp-Source: AGHT+IGZX9gbZW56x+TaBFR8MCyBk5gyOW3Er0OR4bbxjGq2oWFQwb+fKv+iC6FtXrPWuAQ706Drow==
+X-Received: by 2002:a05:622a:164b:b0:42e:e12f:ee30 with SMTP id y11-20020a05622a164b00b0042ee12fee30mr5543837qtj.33.1710522749505;
+        Fri, 15 Mar 2024 10:12:29 -0700 (PDT)
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com. [209.85.160.169])
+        by smtp.gmail.com with ESMTPSA id hf21-20020a05622a609500b00430b74c1661sm412262qtb.97.2024.03.15.10.12.28
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 Mar 2024 10:12:28 -0700 (PDT)
+Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-42ee0c326e8so9531cf.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 10:12:28 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCWgX3lbTUjCt/XSe5B3AlyBk8AI9bk8P8o/7CT92fY+DnUJTbH6XbjS49GWqxL+PVkCuncb564L5boDw1i+zFs34eVy/PQD0htYemUmiA==
+X-Received: by 2002:a05:622a:1706:b0:42f:a3c:2d53 with SMTP id
+ h6-20020a05622a170600b0042f0a3c2d53mr822108qtk.20.1710522747755; Fri, 15 Mar
+ 2024 10:12:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c1f85249-32b1-41e2-adc3-5aa4ad7609b9@linaro.org>
+References: <20230703085555.30285-1-quic_mkshah@quicinc.com>
+ <20230703085555.30285-4-quic_mkshah@quicinc.com> <CAD=FV=XWH+Eoa9XjDns--NSDTZHeUwTdrX_r_QZhSPpbZNwz+w@mail.gmail.com>
+ <20240315152431.sckqhc6ri63blf2g@bogus>
+In-Reply-To: <20240315152431.sckqhc6ri63blf2g@bogus>
+From: Doug Anderson <dianders@chromium.org>
+Date: Fri, 15 Mar 2024 10:12:12 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UD1nuxryvWH=Mi7E+QzMoa7xCHebY0DtZCAVmEW3ZeAg@mail.gmail.com>
+Message-ID: <CAD=FV=UD1nuxryvWH=Mi7E+QzMoa7xCHebY0DtZCAVmEW3ZeAg@mail.gmail.com>
+Subject: Re: [RESEND v4 3/3] arm64: dts: qcom: sc7280: Add power-domains for
+ cpuidle states
+To: Sudeep Holla <sudeep.holla@arm.com>
+Cc: Maulik Shah <quic_mkshah@quicinc.com>, andersson@kernel.org, ulf.hansson@linaro.org, 
+	swboyd@chromium.org, wingers@google.com, daniel.lezcano@linaro.org, 
+	rafael@kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, jwerner@chromium.org, 
+	quic_lsrao@quicinc.com, quic_rjendra@quicinc.com, devicetree@vger.kernel.org, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Rob Clark <robdclark@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Mar 15, 2024 at 11:16:59AM +0100, Konrad Dybcio wrote:
-> On 2/16/24 07:52, Johan Hovold wrote:
+Hi,
 
-> > This makes no sense. As Bjorn already said, you're just polling for the
-> > link to come up (for a second). And unless you have something else that
-> > depends on the write to have reached the device, there is no need to
-> > read it back. It's not going to be cached indefinitely if that's what
-> > you fear.
-> 
-> The point is, if we know that the hardware is expected to return "done"
-> within the polling timeout value of receiving the request to do so, we
-> are actively taking away an unknown amount of time from that timeout.
+On Fri, Mar 15, 2024 at 8:24=E2=80=AFAM Sudeep Holla <sudeep.holla@arm.com>=
+ wrote:
+>
+> On Thu, Mar 14, 2024 at 04:20:59PM -0700, Doug Anderson wrote:
+> > Hi,
+> >
+> > On Mon, Jul 3, 2023 at 1:56=E2=80=AFAM Maulik Shah <quic_mkshah@quicinc=
+.com> wrote:
+> > >
+> > > Add power-domains for cpuidle states to use psci os-initiated idle st=
+ates.
+> > >
+> > > Cc: devicetree@vger.kernel.org
+> > > Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+> > > Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/sc7280.dtsi | 98 +++++++++++++++++++++-----=
+--
+> > >  1 file changed, 73 insertions(+), 25 deletions(-)
+> >
+> > FWIW, I dug up an old sc7280-herobrine board to test some other change
+> > and found it no longer booted. :( I bisected it and this is the change
+> > that breaks it. Specifically, I can make mainline boot with:
+> >
+> > git revert --no-edit db5d137e81bc # arm64: dts: qcom: sc7280: Update
+> > domain-idle-states for cluster sleep
+> > git revert --no-edit 7925ca85e956 # arm64: dts: qcom: sc7280: Add
+> > power-domains for cpuidle states
+> >
+>
+> IIRC, this could be issue with psci firmware. There were some known
+> issues which were discussed few years back but I am not aware of the
+> details and if/how it is applicable here.
+>
+> Not sure if you are getting any logs during the boot, if you do have
+> worth look at logs related to PSCI/OSI/Idle/...
 
-We're talking about microseconds, not milliseconds or seconds as you
-seem to believe.
+Given that the new firmware fixes it I'm going to say it's not worth
+looking into any longer.
 
-> So, if the polling condition becomes true after 980ms, but due to write
-> buffering the value reached the PCIe hardware after 21 ms, we're gonna
-> hit a timeout. Or under truly extreme circumstances, the polling may
-> time out before the write has even arrived at the PCIe hw.
-
-So the write latency is not an issue here.
-
-Johan
+-Doug
 
