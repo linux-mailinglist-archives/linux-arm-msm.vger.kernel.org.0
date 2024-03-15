@@ -1,171 +1,295 @@
-Return-Path: <linux-arm-msm+bounces-14272-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 351B287D2D6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 18:32:29 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 15C4487D2DF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 18:35:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5A1021C22232
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 17:32:28 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7F916B20C84
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 17:35:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A90274C600;
-	Fri, 15 Mar 2024 17:32:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D6E148CCC;
+	Fri, 15 Mar 2024 17:35:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="f8bSTqO9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lNGSgXH6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 087FE487AE
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 17:32:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD404AEC6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 17:35:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710523938; cv=none; b=DxRT7AD83LPk1gJ9/dQ99w5lmfdTnUF1I1rT7d+x8UK+MR5mDR4pi9E8MWagoHnYNhaMFnT0zqobAdvg7atxfejoXiKVFSTYWx0zVbDiuRs7FVWwoQQXDYFvByfLEp/QjvwmTAtQPnXxocKn9OZorQJAjWJBmTLYsqiVb1zCm6w=
+	t=1710524121; cv=none; b=mgXptVmVlJQYRZnVNzJCUizhlMUSQEax3VU/V5FVrbCsaPQ0sVIUZ6T6K5IFznCA7iXAA2kSi5WkCnAo5ZZ2qtVo77wArsztH5AkxuaLzqSbCQz8m8VDlFgGnQMG9akXPb2YRL7orAwadTh+eb4jFUUaS+vT0i/R/FxXVzWlYZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710523938; c=relaxed/simple;
-	bh=0LTEsN2O/FgSWhZk5KJW+7bWr7jqaVlwguZyG5cUT4s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=U9C8a/pAnnHfKEX4kUK2q0x0W1v6SuPd3S9vr8lXLF3Rb/Wvk+y2eMdbh+fmEiluHlzW6popfgZjiwwBAGAgdgxVtVi4P4+/b7506FTuF3tbOjs7o+Mb7RzNbdWa+MabMQyLzmNz1/oAL5aDA6RgCM1JdnnKDXMXqmJK7seQlPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=f8bSTqO9; arc=none smtp.client-ip=209.85.167.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-3c19dd9ade5so1232709b6e.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 10:32:16 -0700 (PDT)
+	s=arc-20240116; t=1710524121; c=relaxed/simple;
+	bh=8oZV8aP3SBSo3hy+jvbWW+mvLwxem5+OH9Q8I4xTC2c=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=mfK4Fx00lrUsMZdMRjrEy1xR1hAKmLSGZNy4xTLP/QpHpK6btv2zRsM4GtAnFIV0NRf6RMJtEBLEBvaF1EVp1PtNyRQc2n6wDEECF8nll50fyGfuRHVzLb2DCfqirQWN/vw40TEs7xgoVp2twnA48/IIT1JaI9gB8ex+xm4Zwqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lNGSgXH6; arc=none smtp.client-ip=209.85.167.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-513d3746950so2515210e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 10:35:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1710523933; x=1711128733; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=35pY7i/gjcm69pUN8AAJZNQoGf0jouiTU8qeW6pOlqY=;
-        b=f8bSTqO97dV4NRJXwZOl8YCt1H6UwzdG2nE4ckdX1+3D8he/Z50iGd5+odKUcGv0QN
-         wQlU5fCVL2DFGlklRH7dTu8rGNkw01oIdqgOpCWBBPol8FebO0CfWdT/THoa7Np1tKC6
-         GesErz+qFnXqYhMXkAz7+5usnRQ7+gtJpuvGc=
+        d=linaro.org; s=google; t=1710524118; x=1711128918; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iQf/zU1IbIJWQAYBzJwgaR4fassboS7XZvHjBHUMNEU=;
+        b=lNGSgXH64x4Tf1wYNYILlptIX+ZuWecB66rtLwReD08uQEQV/us1tThk7JOUcU09Dj
+         FyPPKgdDrMoK2wznN7bz3cFVfDpjfhWBHidFbufjuVlPXONV7YNOXBQSFh4Vhmo0Lhku
+         t+15WWKvRb3V8BicRewyuFV5N4h7RfgOVhBE67380FGcO0Nk+QKUViRdyfGJtuUrKaqB
+         gCTGVeev2M4I9Dg1Ub4zJW0ox+HAwQ/2cPzZ3Y+TbCW8cCm8PaHwoQeMNIXXQnCLZaUh
+         SZnv9WBBtMbfGdIqI8UzSIr3nUkI6QvPuUexF83etmwt+DKZYSuiwOe/muXNTL1dw8o+
+         eJmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710523933; x=1711128733;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=35pY7i/gjcm69pUN8AAJZNQoGf0jouiTU8qeW6pOlqY=;
-        b=e17D7ARJr1kN7rNvF5FzqtgcVTe5xi5SSbpLQhL7fXKFO8S9as2r/6sGrnf/rjEQur
-         TBZm0bckcgmL+LJrr1C6HfGvlYqYHxOAFr94rL3H4UWZfgSw4GckSaCZv/CzS7bPWxji
-         ru76iKPNvaUvelY7T80CtPCpFNaHX5k9yTrWeuuBylUTmt/b1VXqoVKhLgwmtE/bMtxl
-         5+FTGSBVW8uu6XdO+DwncbAOOj17YhfI5pPleikM4O8tXurEhC96EvrYGY5HhRp9wJxm
-         0+se4vfD3qB7lXnfvFEvydBFqLeEBa2jDZWblpl2F3Bq7c4It3kY2fA1Nfq51XrIjnub
-         cSKw==
-X-Forwarded-Encrypted: i=1; AJvYcCUhurphizQ1mujGPs64s/k0Xh5wCm7fvBmh8QBYjd6gi0tNo0vH2g/QCbe0PsyrxmZwO+njI3nPmNCiIls3x7gY9PGZkOJtBLw0gwrWpg==
-X-Gm-Message-State: AOJu0YyRbrtKCdXe4GxAoQWr7Ta51025C6Lkb+xRh7aKpmC7fHrhNztI
-	mTd1wfPNDlxbVBPiXH3Vpwne9ZLtlUBOaqAvvfJwAFQK1DmrSdASasRbRjYm7KHIFQwN2cFzOEw
-	=
-X-Google-Smtp-Source: AGHT+IFr5SGdgWhtVPGX+swPPAjoGfWUOxXKZjucIravo+SQLDxXdMqgCo8THS2RMTkSr59BP8slYQ==
-X-Received: by 2002:aca:1114:0:b0:3c1:f2fd:78c3 with SMTP id 20-20020aca1114000000b003c1f2fd78c3mr4280494oir.15.1710523933382;
-        Fri, 15 Mar 2024 10:32:13 -0700 (PDT)
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com. [209.85.160.181])
-        by smtp.gmail.com with ESMTPSA id cn19-20020a056808351300b003c37c016afesm88105oib.41.2024.03.15.10.32.12
-        for <linux-arm-msm@vger.kernel.org>
+        d=1e100.net; s=20230601; t=1710524118; x=1711128918;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=iQf/zU1IbIJWQAYBzJwgaR4fassboS7XZvHjBHUMNEU=;
+        b=f7YuKsND2JUgnrHaL8qpmUduRLzk7ipK19icBCMI3dzkt4jnhOHkdKMSVwKzLc96nz
+         yQMEdQ4KYYGput8RlnL4oBIGuhttKQeuqCaSFSbtlg+MUMUixCrGCEhKSYWuEJX/Cbu3
+         2IK3uEZ+67uYsB3GXluUviDxgSjgVVP2Bnfn+3H8KUb7P5K9B7bWe4LOt7x/U2yUVO0o
+         IGAjFfHW3mxmCftsJc3VHUDN1VC2HQgMdM4T27DyqS+CsytrOBUkwHMeku0JuGHWanah
+         CIBggjNoyz/k1AbelAChkECEnCqsCe7fBygB4TPF7KJdiUU6rtKoWRD7w+8T8UjBLbh0
+         x0uQ==
+X-Gm-Message-State: AOJu0YzcigM0cTNaH037lnIetLSYw3amMTejHHThaPJ0O91/MTSAY/q8
+	iWWSmcoVMV1jrrCz2d2VQsSpUMttRDnRvF8x5vtR90jkrRvd3gPbulMsxKkjBUA=
+X-Google-Smtp-Source: AGHT+IGQMulSlRF7Dtm081lDWhL1YsbGIlVuJQPI/UbTHpu33qoEVYfb40RG2YVrbINNMNXXvzA+ww==
+X-Received: by 2002:ac2:498e:0:b0:513:ca99:5908 with SMTP id f14-20020ac2498e000000b00513ca995908mr3093475lfl.26.1710524117699;
+        Fri, 15 Mar 2024 10:35:17 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:a633:992a:92cc:9c3? ([2a01:e0a:982:cbb0:a633:992a:92cc:9c3])
+        by smtp.gmail.com with ESMTPSA id t6-20020a05600c450600b004133365bbc6sm9590842wmo.19.2024.03.15.10.35.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Mar 2024 10:32:12 -0700 (PDT)
-Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-43095dcbee6so17811cf.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 10:32:12 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCV9CKD/JyRuMgw134ePhPGgekF8BBlW3NmPeSalAtJMJde2cTD9Nc1EWMt8Y6lFxO5VutBJ6F783zG2SA1cI1r3m2i4bvUujO2b8sYprg==
-X-Received: by 2002:ac8:470b:0:b0:42e:e40f:fca4 with SMTP id
- f11-20020ac8470b000000b0042ee40ffca4mr311095qtp.13.1710523931775; Fri, 15 Mar
- 2024 10:32:11 -0700 (PDT)
+        Fri, 15 Mar 2024 10:35:17 -0700 (PDT)
+Message-ID: <7a7aa05f-9ae6-4ca0-a423-224fc78fbd0c@linaro.org>
+Date: Fri, 15 Mar 2024 18:35:15 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20230703085555.30285-1-quic_mkshah@quicinc.com>
- <20230703085555.30285-4-quic_mkshah@quicinc.com> <CAD=FV=XWH+Eoa9XjDns--NSDTZHeUwTdrX_r_QZhSPpbZNwz+w@mail.gmail.com>
- <20240315152431.sckqhc6ri63blf2g@bogus> <CAD=FV=UD1nuxryvWH=Mi7E+QzMoa7xCHebY0DtZCAVmEW3ZeAg@mail.gmail.com>
- <20240315172632.6zxwj4enq4tddbb3@bogus>
-In-Reply-To: <20240315172632.6zxwj4enq4tddbb3@bogus>
-From: Doug Anderson <dianders@chromium.org>
-Date: Fri, 15 Mar 2024 10:31:55 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=X+d8E67fxk0FiLqp3bpR4ZCEB1+bN21V3Lw_XA5JNQag@mail.gmail.com>
-Message-ID: <CAD=FV=X+d8E67fxk0FiLqp3bpR4ZCEB1+bN21V3Lw_XA5JNQag@mail.gmail.com>
-Subject: Re: [RESEND v4 3/3] arm64: dts: qcom: sc7280: Add power-domains for
- cpuidle states
-To: Sudeep Holla <sudeep.holla@arm.com>
-Cc: Maulik Shah <quic_mkshah@quicinc.com>, andersson@kernel.org, ulf.hansson@linaro.org, 
-	swboyd@chromium.org, wingers@google.com, daniel.lezcano@linaro.org, 
-	rafael@kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, jwerner@chromium.org, 
-	quic_lsrao@quicinc.com, quic_rjendra@quicinc.com, devicetree@vger.kernel.org, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	Rob Clark <robdclark@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH RFT 0/7] arm64: qcom: allow up to 4 lanes for the Type-C
+ DisplayPort Altmode
+Content-Language: en-US, fr
+To: Luca Weiss <luca.weiss@fairphone.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240229-topic-sm8x50-upstream-phy-combo-typec-mux-v1-0-07e24a231840@linaro.org>
+ <CZUHV429NTF7.1GW9TN9NXB4J1@fairphone.com>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <CZUHV429NTF7.1GW9TN9NXB4J1@fairphone.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi,
+On 15/03/2024 18:19, Luca Weiss wrote:
+> On Thu Feb 29, 2024 at 2:07 PM CET, Neil Armstrong wrote:
+>> Register a typec mux in order to change the PHY mode on the Type-C
+>> mux events depending on the mode and the svid when in Altmode setup.
+>>
+>> The DisplayPort phy should be left enabled if is still powered on
+>> by the DRM DisplayPort controller, so bail out until the DisplayPort
+>> PHY is not powered off.
+>>
+>> The Type-C Mode/SVID only changes on plug/unplug, and USB SAFE states
+>> will be set in between of USB-Only, Combo and DisplayPort Only so
+>> this will leave enough time to the DRM DisplayPort controller to
+>> turn of the DisplayPort PHY.
+>>
+>> The patchset also includes bindings changes and DT changes.
+>>
+>> This has been successfully tested on an SM8550 board, but the
+>> Thinkpad X13s deserved testing between non-PD USB, non-PD DisplayPort,
+>> PD USB Hubs and PD Altmode Dongles to make sure the switch works
+>> as expected.
+>>
+>> The DisplayPort 4 lanes setup can be check with:
+>> $ cat /sys/kernel/debug/dri/ae01000.display-controller/DP-1/dp_debug
+>> 	name = msm_dp
+>> 	drm_dp_link
+>> 		rate = 540000
+>> 		num_lanes = 4
+> 
+> Hi Neil,
+> 
+> I tried this on QCM6490/SC7280 which should also support 4-lane DP but I
+> haven't had any success so far.
+> 
+> On top of your patches I added the following for my device:
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
+> index f5bd51806819..e7be17844da1 100644
+> --- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
+> +++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
+> @@ -712,7 +712,7 @@ &mdss_dp {
+>   };
+>   
+>   &mdss_dp_out {
+> -	data-lanes = <0 1>;
+> +	data-lanes = <0 1 2 3>;
+>   	remote-endpoint = <&usb_dp_qmpphy_dp_in>;
+>   };
+>   
+> @@ -1344,6 +1344,7 @@ &usb_1_qmpphy {
+>   	vdda-phy-supply = <&vreg_l6b>;
+>   	vdda-pll-supply = <&vreg_l1b>;
+>   
+> +	mode-switch;
+>   	orientation-switch;
+>   
+>   	status = "okay";
+> 
+> 
+> The output of the dp_debug file shows it's trying to use 4 lanes:
+> 
+>          name = msm_dp
+>          drm_dp_link
+>                  rate = 540000
+>                  num_lanes = 4
+>                  capabilities = 1
+>          dp_panel_info:
+>                  active = 0x0
+>                  back_porch = 0x0
+>                  front_porch = 0x0
+>                  sync_width = 0x0
+>                  active_low = 0x0
+>                  h_skew = 0
+>                  refresh rate = 0
+>                  pixel clock khz = 0
+>                  bpp = 0
+>          dp_link:
+>                  test_requested = 128
+>                  num_lanes = 4
+>                  bw_code = 20
+>                  lclk = 540000000
+>                  v_level = 2
+>                  p_level = 0
+> 
+> But the monitor stays black and the following appears in dmesg:
+> (starts with plugging in a dongle, ends with unplugging it again)
+> 
+> [ 1773.538161] xhci-hcd xhci-hcd.2.auto: xHCI Host Controller
+> [ 1773.538197] xhci-hcd xhci-hcd.2.auto: new USB bus registered, assigned bus number 1
+> [ 1773.540215] xhci-hcd xhci-hcd.2.auto: hcc params 0x0230fe65 hci version 0x110 quirks 0x0000008000000010
+> [ 1773.540260] xhci-hcd xhci-hcd.2.auto: irq 185, io mem 0x0a600000
+> [ 1773.540372] xhci-hcd xhci-hcd.2.auto: xHCI Host Controller
+> [ 1773.540384] xhci-hcd xhci-hcd.2.auto: new USB bus registered, assigned bus number 2
+> [ 1773.540396] xhci-hcd xhci-hcd.2.auto: Host supports USB 3.0 SuperSpeed
+> [ 1773.540524] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 6.08
+> [ 1773.540534] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+> [ 1773.540541] usb usb1: Product: xHCI Host Controller
+> [ 1773.540547] usb usb1: Manufacturer: Linux 6.8.0-00058-g113103fa3b95 xhci-hcd
+> [ 1773.540554] usb usb1: SerialNumber: xhci-hcd.2.auto
+> [ 1773.540999] hub 1-0:1.0: USB hub found
+> [ 1773.541028] hub 1-0:1.0: 1 port detected
+> [ 1773.542010] usb usb2: We don't know the algorithms for LPM for this host, disabling LPM.
+> [ 1773.542146] usb usb2: New USB device found, idVendor=1d6b, idProduct=0003, bcdDevice= 6.08
+> [ 1773.542162] usb usb2: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+> [ 1773.542174] usb usb2: Product: xHCI Host Controller
+> [ 1773.542183] usb usb2: Manufacturer: Linux 6.8.0-00058-g113103fa3b95 xhci-hcd
+> [ 1773.542193] usb usb2: SerialNumber: xhci-hcd.2.auto
+> [ 1773.543241] hub 2-0:1.0: USB hub found
+> [ 1773.543282] hub 2-0:1.0: 1 port detected
+> [ 1775.563969] [drm:dp_ctrl_link_train] *ERROR* max v_level reached
+> [ 1775.564031] [drm:dp_ctrl_link_train] *ERROR* link training #1 failed. ret=-11
 
-On Fri, Mar 15, 2024 at 10:26=E2=80=AFAM Sudeep Holla <sudeep.holla@arm.com=
-> wrote:
->
-> On Fri, Mar 15, 2024 at 10:12:12AM -0700, Doug Anderson wrote:
-> > Hi,
-> >
-> > On Fri, Mar 15, 2024 at 8:24=E2=80=AFAM Sudeep Holla <sudeep.holla@arm.=
-com> wrote:
-> > >
-> > > On Thu, Mar 14, 2024 at 04:20:59PM -0700, Doug Anderson wrote:
-> > > > Hi,
-> > > >
-> > > > On Mon, Jul 3, 2023 at 1:56=E2=80=AFAM Maulik Shah <quic_mkshah@qui=
-cinc.com> wrote:
-> > > > >
-> > > > > Add power-domains for cpuidle states to use psci os-initiated idl=
-e states.
-> > > > >
-> > > > > Cc: devicetree@vger.kernel.org
-> > > > > Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-> > > > > Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
-> > > > > ---
-> > > > >  arch/arm64/boot/dts/qcom/sc7280.dtsi | 98 +++++++++++++++++++++-=
-------
-> > > > >  1 file changed, 73 insertions(+), 25 deletions(-)
-> > > >
-> > > > FWIW, I dug up an old sc7280-herobrine board to test some other cha=
-nge
-> > > > and found it no longer booted. :( I bisected it and this is the cha=
-nge
-> > > > that breaks it. Specifically, I can make mainline boot with:
-> > > >
-> > > > git revert --no-edit db5d137e81bc # arm64: dts: qcom: sc7280: Updat=
-e
-> > > > domain-idle-states for cluster sleep
-> > > > git revert --no-edit 7925ca85e956 # arm64: dts: qcom: sc7280: Add
-> > > > power-domains for cpuidle states
-> > > >
-> > >
-> > > IIRC, this could be issue with psci firmware. There were some known
-> > > issues which were discussed few years back but I am not aware of the
-> > > details and if/how it is applicable here.
-> > >
-> > > Not sure if you are getting any logs during the boot, if you do have
-> > > worth look at logs related to PSCI/OSI/Idle/...
-> >
-> > Given that the new firmware fixes it I'm going to say it's not worth
-> > looking into any longer.
-> >
->
-> But it would be good to know if that is the exact reason, see if it can
-> be upgraded, or else we can disable them by default. The bootloader or
-> something else can detect the f/w version and enable them so that the
-> board with old f/w(if can't be upgraded) can still be used.
->
-> Otherwise it is a regression IMO.
+Interesting #1 means the 4 lanes are not physically connected to the other side,
+perhaps QCM6490/SC7280 requires a specific way to enable the 4 lanes in the PHY,
+or some fixups in the init tables.
 
-I think it only would really matter if the problematic firmware
-actually made it out into the real world. In this case the only people
-who run into this are developers at Google and Qualcomm who had early
-versions of hardware and had old firmware sitting around on them. I
-can count the number of folks affected on one hand, and that's even if
-one of my fingers gets cut off. All of those folks can just upgrade
-their firmware since there is no downside in doing so.
+Abhinav, any suggestions ?
 
--Doug
+Neil
+
+> [ 1775.597965] [drm:dp_display_process_hpd_high] *ERROR* failed to complete DP link training
+> [ 1775.598149] [drm:dp_aux_isr] *ERROR* Unexpected DP AUX IRQ 0x01000000 when not busy
+> [ 1776.632081] [drm:dp_ctrl_link_train] *ERROR* max v_level reached
+> [ 1776.632145] [drm:dp_ctrl_link_train] *ERROR* link training #1 failed. ret=-11
+> [ 1776.662978] [drm:dp_display_process_hpd_high] *ERROR* failed to complete DP link training
+> [ 1776.663039] [drm:dp_aux_isr] *ERROR* Unexpected DP AUX IRQ 0x01000000 when not busy
+> [ 1777.717501] [drm:dp_ctrl_link_train] *ERROR* max v_level reached
+> [ 1777.717524] [drm:dp_ctrl_link_train] *ERROR* link training #1 failed. ret=-11
+> [ 1777.751427] [drm:dp_display_process_hpd_high] *ERROR* failed to complete DP link training
+> [ 1777.751518] [drm:dp_aux_isr] *ERROR* Unexpected DP AUX IRQ 0x01000000 when not busy
+> [ 1778.793550] [drm:dp_ctrl_link_train] *ERROR* max v_level reached
+> [ 1778.793617] [drm:dp_ctrl_link_train] *ERROR* link training #1 failed. ret=-11
+> [ 1778.827260] [drm:dp_aux_isr] *ERROR* Unexpected DP AUX IRQ 0x01000000 when not busy
+> [ 1778.827334] [drm:dp_display_process_hpd_high] *ERROR* failed to complete DP link training
+> [ 1779.279889] xhci-hcd xhci-hcd.2.auto: remove, state 1
+> [ 1779.279942] usb usb2: USB disconnect, device number 1
+> [ 1779.311920] xhci-hcd xhci-hcd.2.auto: USB bus 2 deregistered
+> [ 1779.311987] xhci-hcd xhci-hcd.2.auto: remove, state 4
+> [ 1779.312019] usb usb1: USB disconnect, device number 1
+> [ 1779.317772] xhci-hcd xhci-hcd.2.auto: USB bus 1 deregistered
+> 
+> Regards
+> Luca
+> 
+> 
+>> ...
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>> Neil Armstrong (7):
+>>        dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp: Add mode-switch
+>>        phy: qcom: qmp-combo: store DP phy power state
+>>        phy: qcom: qmp-combo: introduce QPHY_MODE
+>>        phy: qcom: qmp-combo: register a typec mux to change the QPHY_MODE
+>>        arm64: dts: qcom-sm8550: allow 4 lanes for DisplayPort and enable QMP PHY mode-switch
+>>        arm64: dts: qcom-sm8650: allow 4 lanes for DisplayPort and enable QMP PHY mode-switch
+>>        arm64: dts: qcom-mode-switch: allow 4 lanes for DisplayPort and enable QMP PHY mode-switch
+>>
+>>   .../phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml         |   5 +
+>>   .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts     |   6 +-
+>>   arch/arm64/boot/dts/qcom/sm8550-hdk.dts            |   3 +-
+>>   arch/arm64/boot/dts/qcom/sm8550-qrd.dts            |   3 +-
+>>   arch/arm64/boot/dts/qcom/sm8650-qrd.dts            |   3 +-
+>>   drivers/phy/qualcomm/phy-qcom-qmp-combo.c          | 168 +++++++++++++++++++--
+>>   6 files changed, 173 insertions(+), 15 deletions(-)
+>> ---
+>> base-commit: b321c0e8ca754d8cd9f23ceba958e3ea93c6519e
+>> change-id: 20240229-topic-sm8x50-upstream-phy-combo-typec-mux-31b5252513c9
+>>
+>> Best regards,
+> 
+
 
