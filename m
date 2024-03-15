@@ -1,190 +1,388 @@
-Return-Path: <linux-arm-msm+bounces-14228-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14229-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1CBE087CC29
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 12:17:59 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11C5E87CC9F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 12:45:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6D1191F22EEC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 11:17:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C336D2836CD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 11:45:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 391921AADB;
-	Fri, 15 Mar 2024 11:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E6581B948;
+	Fri, 15 Mar 2024 11:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RuqHKnNi"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="MwAvTPay"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BAD71CAAC
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 11:17:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B481BC59;
+	Fri, 15 Mar 2024 11:45:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710501423; cv=none; b=jqMmgOupHUlKsDbS1DCVE/8/tJywddygXhfUv864MRQBluhP8VWpXrrxltbLNAqyd4Ykc+D2DQ8M/taDGqRcPAJotI904qTDcWNEYmgO8p5rJRBfs5/E3XRArQjAE/QmJ2FwN0tq7NrXJiGTVFN7bYY8fEin/2gf1PFAAqBz+G4=
+	t=1710503124; cv=none; b=V9hD6SxiOm0iIyQgUDJIxJmHkKG99hr29x8nJHNgCI1+biW+vdmm56y5sWAOnWDYL0o32JdfDMYkJrPh0GrOniudd4x0pfvJ/bHF9vHRbKJ6GSuSFG4XOsxZGtSCuco97GzOtShbFoutQhHGA+hxFiT60lwfF5dHoDVtvMP/7DE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710501423; c=relaxed/simple;
-	bh=dy5cwDLufg7wxxCaD7noxLPHBv05JlTpNKDhZ2qTW4w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tJN4QnbNcUIZ41iza/SqrEUzj07+nomCnFxvWgoeBamidpUKGUhN/Bt7yjOxSFAG4y3gG88WlXB/I/K8AeCD0IgBzkLq3rWnLAm/wrIMADQKUB8G+6xKYl1RNoYNmaAy1GXu1ol1aHxSKW4SL75J3GU1HAhw8Wormd6648rzJ0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RuqHKnNi; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1deefb08b9eso3433555ad.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 04:17:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710501421; x=1711106221; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=6thXPYH7LClGHgWcKL9h7zZt1TlMxpmVNK+Pq17t2X0=;
-        b=RuqHKnNibQjibdxtlSCxX9VBfbMGHzJ0pZP7TywFvX4i3jlT8E4182jUkTjsslVtbk
-         EpLL6j9bTPzNrqk7VkeOksX8f8sNs14tZlyQY1WcJ8yvYaaSupJ7P781YfY3wU7A+rOG
-         iZHKGX6R8D1AT8/U483fQLqBVIBs8GXlb1T4mrnMOI2djTonRX/+MvgaOGufi/2n3v9I
-         sgCbp0KkG56NAmRAQz16W79NfTSm9YjugaWduBiMH3KnpWFFm0CJRqby5wdsaX4jJC2Z
-         co0pm3/tfHFsk520g39VxRNBQ0yAIx1JAt69n7MJm0nWSx0iS5RWpvDKimobEjJF0jz7
-         1LsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710501421; x=1711106221;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6thXPYH7LClGHgWcKL9h7zZt1TlMxpmVNK+Pq17t2X0=;
-        b=rk2gZyo6WmkvFSIWdBJW2mW+AGEfT5R/wv66hOIXUUwv4biI2IFdzuSKNAChHmF7cv
-         m1RrkNeuRbilQTsl4cDBubG1OL1O2ojmyV/ha2C+tTqCahrQuy8EB2rSRdMTwFt6QJrW
-         WlupiiEOpbRDkTVwmoHNSwEzQuOiXu9Agt4SvDNWrf0Z/bCmtOWpYbvjCHOPKvJ7vnLw
-         6Eacr9fKH3E5SZRKT+SE8Gs79+bg3FOMn8DtlE5sY8dOyXXK4/zIpXlVjLkKJdpmxO+n
-         LNeW/mjJwa9fpihtWaX1M0i880JnqfqGTZMEgKWU30isrmkbgpc0fm8G8p1yxVHweXSF
-         ez2A==
-X-Forwarded-Encrypted: i=1; AJvYcCWmQqikbaqYLpDK4HSVh3JyYmL4GpSpAojDb6/EGlNihj8P4KVOsVqUfToMptKBrIsRIApTA4VzVfgDzY69a8Ubk80daESUUWSykUl8Rw==
-X-Gm-Message-State: AOJu0YyFVau7SJEV03Ujyco/bdYqItzfHcNE1MSErsjVsZzTt7wpO7rh
-	0e2YciCBqK2+SSqrQ1ryzEmP+gWPUpIkWcE7Gxwmqb15HU0DWy4S8i6MnBaIwUV6sjoG7HQS5lQ
-	=
-X-Google-Smtp-Source: AGHT+IFf34WhzPmRgX8Nynn9KCi2nYLHvfYmTnrmUcYWFD3uvozcGhYEeRipTeVGDuCrwoz3xrAlHw==
-X-Received: by 2002:a17:902:b78b:b0:1dd:819f:9503 with SMTP id e11-20020a170902b78b00b001dd819f9503mr4404314pls.12.1710501420484;
-        Fri, 15 Mar 2024 04:17:00 -0700 (PDT)
-Received: from thinkpad ([117.217.176.159])
-        by smtp.gmail.com with ESMTPSA id y6-20020a17090322c600b001dd59b54f9fsm3502877plg.136.2024.03.15.04.16.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Mar 2024 04:17:00 -0700 (PDT)
-Date: Fri, 15 Mar 2024 16:46:53 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Johan Hovold <johan@kernel.org>, Bjorn Helgaas <helgaas@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH v2 2/3] PCI: qcom: Read back PARF_LTSSM register
-Message-ID: <20240315111653.GK3375@thinkpad>
-References: <20240215161114.GA1292081@bhelgaas>
- <bc7d9859-f7ec-41c5-8a9e-170ccdfff46a@linaro.org>
- <Zc8GHrgdF7jJBgyu@hovoldconsulting.com>
- <c1f85249-32b1-41e2-adc3-5aa4ad7609b9@linaro.org>
+	s=arc-20240116; t=1710503124; c=relaxed/simple;
+	bh=xADKVOnSLQ/eSoxk0F4pbiiTRO2FBYoibk1GxdCL7Ug=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=UFpIZAM3G/V6LH5nmJlrGlN0Ge+oON62uEtKOXuGkvt8K2siTMGd7sMNDRuF3Et6J5CXzutgX8gwqX9FSY0whfGhZAdwCb9yPc4x9/ZLZYTa6cLGXWrxqnfIurcSTQFZlKMHRxZ7R2vbRmKX38GlHP79tKodKdma8KH0zlTpNds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=MwAvTPay; arc=none smtp.client-ip=217.70.183.196
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 9CFDBE0005;
+	Fri, 15 Mar 2024 11:45:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1710503120;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=R0kqNtL6G3XJ3YlpCpRDs+8Ulm0OGWV3L8/ec8/EvgA=;
+	b=MwAvTPaym4uwlN1C1EKgYc3IKFvTxnhIr+kXMPITBXU9heEQTwKc5yqIMpdk4aDLrsHsFr
+	EMDVVDpRFOb71CDe8L7p5WJkkCEUlEj07gGU1kjv7/NSUeCrpkPEIKkEGMZgLlZx70O7LF
+	F4JTHrNdYsnCy0kGE/VSaK8rjaVTOS4f5+gVih9kw3MDFbYvhLwXKDjTYk+lpyY9tRGfdj
+	OrTvX+x2Tw+5/DFixsU306TRTcsuszxO1Pvrx10j1ycpHpRK96t2KP3baGsi7Bp9Q78tr0
+	MJdjRBo3stvEKHJL9Dj74IHYauC5nn3YgYYKHN9HfT5mzCJ/K0K+uqEuK4Y8rA==
+Date: Fri, 15 Mar 2024 12:45:17 +0100
+From: Miquel Raynal <miquel.raynal@bootlin.com>
+To: Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, broonie@kernel.org,
+ robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+ richard@nod.at, vigneshr@ti.com, manivannan.sadhasivam@linaro.org,
+ neil.armstrong@linaro.org, daniel@makrotopia.org, arnd@arndb.de,
+ chris.packham@alliedtelesis.co.nz, christophe.kerello@foss.st.com,
+ linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-mtd@lists.infradead.org, quic_srichara@quicinc.com,
+ quic_varada@quicinc.com
+Subject: Re: [PATCH v4 2/5] drivers: mtd: nand: Add qpic_common API file
+Message-ID: <20240315124517.4a546ce9@xps-13>
+In-Reply-To: <20240308091752.16136-3-quic_mdalam@quicinc.com>
+References: <20240308091752.16136-1-quic_mdalam@quicinc.com>
+	<20240308091752.16136-3-quic_mdalam@quicinc.com>
+Organization: Bootlin
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c1f85249-32b1-41e2-adc3-5aa4ad7609b9@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-GND-Sasl: miquel.raynal@bootlin.com
 
-On Fri, Mar 15, 2024 at 11:16:59AM +0100, Konrad Dybcio wrote:
-> 
-> 
-> On 2/16/24 07:52, Johan Hovold wrote:
-> > On Thu, Feb 15, 2024 at 07:44:27PM +0100, Konrad Dybcio wrote:
-> > > On 15.02.2024 17:11, Bjorn Helgaas wrote:
-> > > > On Thu, Feb 15, 2024 at 11:21:45AM +0100, Konrad Dybcio wrote:
-> > > > > On 14.02.2024 23:28, Bjorn Helgaas wrote:
-> > > > > > On Wed, Feb 14, 2024 at 10:35:16PM +0100, Konrad Dybcio wrote:
-> > > > > > > On 12.02.2024 22:17, Bjorn Helgaas wrote:
-> > > > > > > > Maybe include the reason in the subject?  "Read back" is literally
-> > > > > > > > what the diff says.
-> > > > > > > > 
-> > > > > > > > On Sat, Feb 10, 2024 at 06:10:06PM +0100, Konrad Dybcio wrote:
-> > > > > > > > > To ensure write completion, read the PARF_LTSSM register after setting
-> > > > > > > > > the LTSSM enable bit before polling for "link up".
-> > > > > > > > 
-> > > > > > > > The write will obviously complete *some* time; I assume the point is
-> > > > > > > > that it's important for it to complete before some other event, and it
-> > > > > > > > would be nice to know why that's important.
-> > > > > > > 
-> > > > > > > Right, that's very much meaningful on non-total-store-ordering
-> > > > > > > architectures, like arm64, where the CPU receives a store instruction,
-> > > > > > > but that does not necessarily impact the memory/MMIO state immediately.
-> > > > > > 
-> > > > > > I was hinting that maybe we could say what the other event is, or what
-> > > > > > problem this solves?  E.g., maybe it's as simple as "there's no point
-> > > > > > in polling for link up until after the PARF_LTSSM store completes."
-> > > > > > 
-> > > > > > But while the read of PARF_LTSSM might reduce the number of "is the
-> > > > > > link up" polls, it probably wouldn't speed anything up otherwise, so I
-> > > > > > suspect there's an actual functional reason for this patch, and that's
-> > > > > > what I'm getting at.
-> > > > > 
-> > > > > So, the register containing the "enable switch" (PARF_LTSSM) can (due
-> > > > > to the armv8 memory model) be "written" but not "change the value of
-> > > > > memory/mmio from the perspective of other (non-CPU) memory-readers
-> > > > > (such as the MMIO-mapped PCI controller itself)".
-> > > > > 
-> > > > > In that case, the CPU will happily continue calling qcom_pcie_link_up()
-> > > > > in a loop, waiting for the PCIe controller to bring the link up, however
-> > > > > the PCIE controller may have never received the PARF_LTSSM "enable link"
-> > > > > write by the time we decide to time out on checking the link status.
-> > 
-> > This makes no sense. As Bjorn already said, you're just polling for the
-> > link to come up (for a second). And unless you have something else that
-> > depends on the write to have reached the device, there is no need to
-> > read it back. It's not going to be cached indefinitely if that's what
-> > you fear.
-> 
-> The point is, if we know that the hardware is expected to return "done"
-> within the polling timeout value of receiving the request to do so, we
-> are actively taking away an unknown amount of time from that timeout.
-> 
-> So, if the polling condition becomes true after 980ms, but due to write
-> buffering the value reached the PCIe hardware after 21 ms, we're gonna
-> hit a timeout. Or under truly extreme circumstances, the polling may
-> time out before the write has even arrived at the PCIe hw.
-> 
+Hello,
 
-You should've mentioned the actual reason for doing the readback in the commit
-message. That would've clarified the intention.
+> +/**
+> + * qcom_qpic_bam_dma_done() - Callback for DMA descriptor completion
+> + * @data: data pointer
+> + *
+> + * This function is a callback for DMA descriptor completion
+> + */
+> +void qcom_qpic_bam_dma_done(void *data)
+> +{
+> +	struct bam_transaction *bam_txn =3D data;
+> +
+> +	/*
+> +	 * In case of data transfer with NAND, 2 callbacks will be generated.
+> +	 * One for command channel and another one for data channel.
+> +	 * If current transaction has data descriptors
+> +	 * (i.e. wait_second_completion is true), then set this to false
+> +	 * and wait for second DMA descriptor completion.
+> +	 */
+> +	if (bam_txn->wait_second_completion)
+> +		bam_txn->wait_second_completion =3D false;
+> +	else
+> +		complete(&bam_txn->txn_done);
 
-> > 
-> > > Generally, it's a good idea to add such readbacks after all timing-
-> > > critical writes, especially when they concern asserting reset,
-> > > enabling/disabling power, etc., to make sure we're not assuming the
-> > > hardware state of a peripheral has changed before we ask it to do so.
-> > 
-> > Again no, there is no general need to do that. It all depends on what
-> > the code does and how the device works.
-> 
-> Agreed it's not necessary *in general*, but as I pointed out, this is
-> an operation that we expect to complete within a set time frame, which
-> involves external hardware.
-> 
+Can't you just call "wait" and "complete" twice? It's supposed to be
+handled by the API. This is totally racy.
 
-As I pointed out in the review of v1 series, LTSSM is in PARF register region
-and the link status is in DBI region. Techinically both belongs to the PCIe
-domain, but I am not 100% sure that both belong to the same hw domain or
-different. So I cannot rule out the possibility that the first write may not
-reach the hardware by the time link status is queried.
+> +}
+> +
+> +/**
+> + * qcom_nandc_read_buffer_sync() - Check for dma sync for cpu or device
+> + * @nandc: qpic nand controller
+> + * @is_cpu: cpu or Device
 
-That's the reason I gave my R-b tag. But I need to confirm with the hw team
-on this to be sure since this may be applicable to other drivers also.
+? the naming is really strange dev_to_mem or something like that would
+probably be more helpful.
 
-- Mani
+> + *
+> + * This function will check for dma sync for cpu or device
+> + */
+> +void qcom_nandc_read_buffer_sync(struct qcom_nand_controller *nandc,
+> +				 bool is_cpu)
+> +{
+> +	if (!nandc->props->is_bam)
+> +		return;
+> +
+> +	if (is_cpu)
+> +		dma_sync_single_for_cpu(nandc->dev, nandc->reg_read_dma,
+> +					MAX_REG_RD *
+> +					sizeof(*nandc->reg_read_buf),
+> +					DMA_FROM_DEVICE);
+> +	else
+> +		dma_sync_single_for_device(nandc->dev, nandc->reg_read_dma,
+> +					   MAX_REG_RD *
+> +					   sizeof(*nandc->reg_read_buf),
+> +					   DMA_FROM_DEVICE);
+> +}
+> +
+> +/**
+> + * qcom_offset_to_nandc_reg() - Get the actual offset
+> + * @regs: pointer to nandc_reg structure
+> + * @offset: register offset
+> + *
+> + * This function will reurn the actual offset for qpic controller regist=
+er
+> + */
+> +__le32 *qcom_offset_to_nandc_reg(struct nandc_regs *regs, int offset)
+> +{
+> +	switch (offset) {
+> +	case NAND_FLASH_CMD:
+> +		return &regs->cmd;
+> +	case NAND_ADDR0:
+> +		return &regs->addr0;
+> +	case NAND_ADDR1:
+> +		return &regs->addr1;
+> +	case NAND_FLASH_CHIP_SELECT:
+> +		return &regs->chip_sel;
+> +	case NAND_EXEC_CMD:
+> +		return &regs->exec;
+> +	case NAND_FLASH_STATUS:
+> +		return &regs->clrflashstatus;
+> +	case NAND_DEV0_CFG0:
+> +		return &regs->cfg0;
+> +	case NAND_DEV0_CFG1:
+> +		return &regs->cfg1;
+> +	case NAND_DEV0_ECC_CFG:
+> +		return &regs->ecc_bch_cfg;
+> +	case NAND_READ_STATUS:
+> +		return &regs->clrreadstatus;
+> +	case NAND_DEV_CMD1:
+> +		return &regs->cmd1;
+> +	case NAND_DEV_CMD1_RESTORE:
+> +		return &regs->orig_cmd1;
+> +	case NAND_DEV_CMD_VLD:
+> +		return &regs->vld;
+> +	case NAND_DEV_CMD_VLD_RESTORE:
+> +		return &regs->orig_vld;
+> +	case NAND_EBI2_ECC_BUF_CFG:
+> +		return &regs->ecc_buf_cfg;
+> +	case NAND_READ_LOCATION_0:
+> +		return &regs->read_location0;
+> +	case NAND_READ_LOCATION_1:
+> +		return &regs->read_location1;
+> +	case NAND_READ_LOCATION_2:
+> +		return &regs->read_location2;
+> +	case NAND_READ_LOCATION_3:
+> +		return &regs->read_location3;
+> +	case NAND_READ_LOCATION_LAST_CW_0:
+> +		return &regs->read_location_last0;
+> +	case NAND_READ_LOCATION_LAST_CW_1:
+> +		return &regs->read_location_last1;
+> +	case NAND_READ_LOCATION_LAST_CW_2:
+> +		return &regs->read_location_last2;
+> +	case NAND_READ_LOCATION_LAST_CW_3:
+> +		return &regs->read_location_last3;
 
--- 
-மணிவண்ணன் சதாசிவம்
+Why do you need this indirection?
+
+> +	default:
+> +		return NULL;
+> +	}
+> +}
+> +
+
+...
+
+> +/**
+> + * qcom_clear_bam_transaction() - Clears the BAM transaction
+> + * @nandc: qpic nand controller
+> + *
+> + * This function will clear the BAM transaction indexes.
+> + */
+> +void qcom_clear_bam_transaction(struct qcom_nand_controller *nandc)
+> +{
+> +	struct bam_transaction *bam_txn =3D nandc->bam_txn;
+> +
+> +	if (!nandc->props->is_bam)
+> +		return;
+> +
+> +	bam_txn->bam_ce_pos =3D 0;
+> +	bam_txn->bam_ce_start =3D 0;
+> +	bam_txn->cmd_sgl_pos =3D 0;
+> +	bam_txn->cmd_sgl_start =3D 0;
+> +	bam_txn->tx_sgl_pos =3D 0;
+> +	bam_txn->tx_sgl_start =3D 0;
+> +	bam_txn->rx_sgl_pos =3D 0;
+> +	bam_txn->rx_sgl_start =3D 0;
+> +	bam_txn->last_data_desc =3D NULL;
+> +	bam_txn->wait_second_completion =3D false;
+
+What about using memset here?
+
+> +
+> +	sg_init_table(bam_txn->cmd_sgl, nandc->max_cwperpage *
+> +		      QPIC_PER_CW_CMD_SGL);
+> +	sg_init_table(bam_txn->data_sgl, nandc->max_cwperpage *
+> +		      QPIC_PER_CW_DATA_SGL);
+> +
+> +	reinit_completion(&bam_txn->txn_done);
+> +}
+
+...
+
+> diff --git a/include/linux/mtd/nand-qpic-common.h b/include/linux/mtd/nan=
+d-qpic-common.h
+> new file mode 100644
+> index 000000000000..aced15866627
+> --- /dev/null
+> +++ b/include/linux/mtd/nand-qpic-common.h
+> @@ -0,0 +1,486 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +/*
+> + * QCOM QPIC common APIs header file
+> + *
+> + * Copyright (c) 2023 Qualcomm Inc.
+> + * Authors:     Md sadre Alam           <quic_mdalam@quicinc.com>
+> + *		Sricharan R             <quic_srichara@quicinc.com>
+> + *		Varadarajan Narayanan   <quic_varada@quicinc.com>
+> + *
+> + */
+> +#ifndef __MTD_NAND_QPIC_COMMON_H__
+> +#define __MTD_NAND_QPIC_COMMON_H__
+> +
+> +#include <linux/bitops.h>
+> +#include <linux/clk.h>
+> +#include <linux/delay.h>
+> +#include <linux/dmaengine.h>
+> +#include <linux/dma-mapping.h>
+> +#include <linux/dma/qcom_adm.h>
+> +#include <linux/dma/qcom_bam_dma.h>
+> +#include <linux/module.h>
+> +#include <linux/mtd/partitions.h>
+> +#include <linux/mtd/rawnand.h>
+
+You really need this?
+
+> +#include <linux/of.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/slab.h>
+> +
+> +/* NANDc reg offsets */
+> +#define	NAND_FLASH_CMD			0x00
+> +#define	NAND_ADDR0			0x04
+> +#define	NAND_ADDR1			0x08
+> +#define	NAND_FLASH_CHIP_SELECT		0x0c
+> +#define	NAND_EXEC_CMD			0x10
+> +#define	NAND_FLASH_STATUS		0x14
+> +#define	NAND_BUFFER_STATUS		0x18
+> +#define	NAND_DEV0_CFG0			0x20
+> +#define	NAND_DEV0_CFG1			0x24
+> +#define	NAND_DEV0_ECC_CFG		0x28
+> +#define	NAND_AUTO_STATUS_EN		0x2c
+> +#define	NAND_DEV1_CFG0			0x30
+> +#define	NAND_DEV1_CFG1			0x34
+> +#define	NAND_READ_ID			0x40
+> +#define	NAND_READ_STATUS		0x44
+> +#define	NAND_DEV_CMD0			0xa0
+> +#define	NAND_DEV_CMD1			0xa4
+> +#define	NAND_DEV_CMD2			0xa8
+> +#define	NAND_DEV_CMD_VLD		0xac
+> +#define	SFLASHC_BURST_CFG		0xe0
+> +#define	NAND_ERASED_CW_DETECT_CFG	0xe8
+> +#define	NAND_ERASED_CW_DETECT_STATUS	0xec
+> +#define	NAND_EBI2_ECC_BUF_CFG		0xf0
+> +#define	FLASH_BUF_ACC			0x100
+> +
+
+...
+
+> +/*
+> + * This data type corresponds to the NAND controller properties which va=
+ries
+> + * among different NAND controllers.
+> + * @ecc_modes - ecc mode for NAND
+
+Should this member be an enum?
+
+> + * @dev_cmd_reg_start - NAND_DEV_CMD_* registers starting offset
+> + * @is_bam - whether NAND controller is using BAM
+
+has_bam_support? supports_bam?
+
+> + * @is_qpic - whether NAND CTRL is part of qpic IP
+
+CTRL? do you mean controller?
+
+> + * @qpic_v2 - flag to indicate QPIC IP version 2
+> + * @use_codeword_fixup - whether NAND has different layout for boot part=
+itions
+
+The doc is clear but the member name is terrible. Please clarify the
+naming.
+
+> + */
+> +struct qcom_nandc_props {
+> +	u32 ecc_modes;
+> +	u32 dev_cmd_reg_start;
+> +	bool is_bam;
+> +	bool is_qpic;
+> +	bool qpic_v2;
+> +	bool use_codeword_fixup;
+> +};
+> +
+> +void config_nand_page_read(struct nand_chip *chip);
+> +void qcom_qpic_bam_dma_done(void *data);
+> +void qcom_nandc_read_buffer_sync(struct qcom_nand_controller *nandc, boo=
+l is_cpu);
+> +__le32 *qcom_offset_to_nandc_reg(struct nandc_regs *regs, int offset);
+> +int qcom_prep_adm_dma_desc(struct qcom_nand_controller *nandc, bool read,
+> +			   int reg_off, const void *vaddr, int size,
+> +			bool flow_control);
+> +int qcom_submit_descs(struct qcom_nand_controller *nandc);
+> +int qcom_prepare_bam_async_desc(struct qcom_nand_controller *nandc,
+> +				struct dma_chan *chan, unsigned long flags);
+> +int qcom_prep_bam_dma_desc_cmd(struct qcom_nand_controller *nandc, bool =
+read,
+> +			       int reg_off, const void *vaddr,
+> +			int size, unsigned int flags);
+> +int qcom_prep_bam_dma_desc_data(struct qcom_nand_controller *nandc, bool=
+ read,
+> +				const void *vaddr,
+> +			int size, unsigned int flags);
+> +int qcom_read_reg_dma(struct qcom_nand_controller *nandc, int first,
+> +		      int num_regs, unsigned int flags);
+> +int qcom_write_reg_dma(struct qcom_nand_controller *nandc, int first,
+> +		       int num_regs, unsigned int flags);
+> +int qcom_read_data_dma(struct qcom_nand_controller *nandc, int reg_off,
+> +		       const u8 *vaddr, int size, unsigned int flags);
+> +int qcom_write_data_dma(struct qcom_nand_controller *nandc, int reg_off,
+> +			const u8 *vaddr, int size, unsigned int flags);
+> +struct bam_transaction *qcom_alloc_bam_transaction(struct qcom_nand_cont=
+roller *nandc);
+> +void qcom_clear_bam_transaction(struct qcom_nand_controller *nandc);
+> +void qcom_nandc_unalloc(struct qcom_nand_controller *nandc);
+> +int qcom_nandc_alloc(struct qcom_nand_controller *nandc);
+> +void qcom_clear_read_regs(struct qcom_nand_controller *nandc);
+> +void qcom_free_bam_transaction(struct qcom_nand_controller *nandc);
+> +#endif
+
+I made several requests on code that already exists, please add these
+changes to your series.
+
+
+Also, this patching being big, please split:
+1- rename your all your symbols to start with the same prefix
+(qcom_nand_ instead of nothing or just qcom)
+2- then perform the move, which should not require changing the names
+of all the functions everywhere.
+
+Thanks,
+Miqu=C3=A8l
 
