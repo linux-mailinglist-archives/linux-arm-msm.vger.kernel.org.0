@@ -1,171 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-14221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A3B887CB3C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 11:17:13 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 51E4E87CBE9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 12:11:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 165C7281443
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 10:17:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 508FC1C21EEF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 11:11:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 804A218627;
-	Fri, 15 Mar 2024 10:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93F491A27E;
+	Fri, 15 Mar 2024 11:11:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RPsowmXT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l6nDnYbQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1AB182AE
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 10:17:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D340B19470;
+	Fri, 15 Mar 2024 11:11:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710497830; cv=none; b=cm+kTQRR4U4jlXl9zMf1q7UhkQdrodOY2SWqaQnzzD8AWhQuUkPO+gOg8GrAAr7qTKrtTVX8yuSKrR5Y6nkLIl3Wjpmk1IuYzOHn+Nm1CMGj2feI0+roJChHCUY4oOS2SoOeFnjQjImMGqkp5DfHQuVUDcNwci270OUiKlwoKOQ=
+	t=1710501091; cv=none; b=CPEJD1T7ePAXL0v46gGWcBdSg9F3O6ItQddXfHnPOKtjXz+xHlMUOYuHgK0ULEpnQrIk/qgFTcCGiJmLoO14fX4P5DBY3QcGqAEY66mhaR263GusOOoIO4MScGjLTMeYGNFU8QiNimGY+HAsBCWbJxoJ0/nawVXQqHaOg8FC0pI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710497830; c=relaxed/simple;
-	bh=oHV5jyiNttfVN2XdElX7JwJmvr1YWBo1/0MlP/fboNg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fX4zK+DgCj78xBwVyDNGy2U22eH/kUzWLLZhxfcqSRgqG9/SpMaciBE8NxL9NOw5bqyoAP8v66/5/AZiYAYA57JluPAn3ZnWJTuh+lesOnvy8xSpcawau4seTcF9cFPLV/5UCy9U/N2lNoLCwlZSWl5rfQCtkWsRBh3gXTH6KE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RPsowmXT; arc=none smtp.client-ip=209.85.219.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-69145fc4265so11675606d6.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 03:17:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710497828; x=1711102628; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=I6tT+NcwpCH1Pw07al3Z4O6Zj2OI59Neo7bH4uFpikU=;
-        b=RPsowmXT64dpl7oyDH7qsDikmJcWt4AYym6upL2gtxeRUg0bFelEcIhASeC37dZXna
-         UfdtTx+bcQTForK3l9/iaL1ykkacEgeDD1MlgjbRrSg7+RosZpo2vJE6V4lxGEOsX4PQ
-         7yq8RVSmX50P62J32wZJywl4lMbSJJkdDJencYsOXUeOd/yAzmyVkHkARmW8HgJYn//f
-         IbonwcDJcHtNomwNkUEgJx1W3XsyZFapBGQcdlHc4Ky8AtHvffghdhOGOELPeBe1B+Vk
-         pM+VBOe3M5usnBPPDd9/NaWwERPkfRKq9jQA0bSFksgOh4/Z+hUYqawUVFVL6CKnDBwV
-         yetg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710497828; x=1711102628;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=I6tT+NcwpCH1Pw07al3Z4O6Zj2OI59Neo7bH4uFpikU=;
-        b=eRsz8B3dTrkLHbT7cgaEGQet4BUQK5Y+yPdgptYZyM1wRRG5BF2+2/+AX3LjeGN0Ow
-         /GIiipGhAaqZ2f9BhQJPYJR1NCU7CWZIDLp/B55fmohiGuzRVPeFNWaBtaZ4cKYuemuQ
-         xaatIpqz13ryPHzgX/j70OO2jqCHXrSC2XNXrNl4vfYt3vjWf3frGSXCCLEIqkY0vAuN
-         Gz8nrJ2PKrmn4qROcRGH33C4nNfFBTNejDs4AHtix75ulFFrxqRXY4L/5o6XbPvaWg35
-         KzaDIeaPYXditTPwCk1AMu434/w41xriyFtY0yemIaG/3CeCABBy3FBFHs0R11Xv+O4R
-         2hlg==
-X-Forwarded-Encrypted: i=1; AJvYcCWFqUTmUPlfVjiaQotQUcQDaYuwcF84NZBQGao5yAQ+PGz+12h4WpI3xngpA7BeXQwypEoYVCyOKJO4n62JUtIt07rnQLnzvHywMq/alA==
-X-Gm-Message-State: AOJu0YwoQyf+JYk9zZOM4Raecz4qZqhdh7sPKMB/uh+NsCd7pHwdW+2u
-	a45mmLhDkzuS2RflqgIukLEwoZvmDzSd6acDeK/IzOfEhHXkwqKf1m3dZDNTCtU=
-X-Google-Smtp-Source: AGHT+IHrhbiGVEjN1QgiRSnPRQQmIe+549icsYvrMinCkS0IAydYdE6xtIBvVfhrF3hMoV0M0FyHzQ==
-X-Received: by 2002:a0c:e8c6:0:b0:690:9a8a:855b with SMTP id m6-20020a0ce8c6000000b006909a8a855bmr4498037qvo.29.1710497827614;
-        Fri, 15 Mar 2024 03:17:07 -0700 (PDT)
-Received: from [87.246.221.229] (netpanel-87-246-221-229.pol.akademiki.lublin.pl. [87.246.221.229])
-        by smtp.gmail.com with ESMTPSA id p14-20020a05621421ee00b00691631154a2sm1472434qvj.43.2024.03.15.03.17.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Mar 2024 03:17:07 -0700 (PDT)
-Message-ID: <c1f85249-32b1-41e2-adc3-5aa4ad7609b9@linaro.org>
-Date: Fri, 15 Mar 2024 11:16:59 +0100
+	s=arc-20240116; t=1710501091; c=relaxed/simple;
+	bh=Vf+L7jw0hVdyWsY+RKzSYBH+cZo3YYxSFHIk7xqh0xk=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=QmU+PZWlXUGdCBodN67ay/BiSPHH4bNjyA5MpmgORkVdf2ruMs5AhKJVaBYuu8Pa6WzviXcn43/ErjGy9rP0xnktVm2GJEj3gVjAsDbhD8feemhxyKm8ByYyKVav2rdILkma/XSN/JDQpmriIc0OWVblAGe9MTvs1VrBXBCMfhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=l6nDnYbQ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42FArCZp030651;
+	Fri, 15 Mar 2024 11:11:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=vs5TCj9
+	Ay0TpFIyW+xfHqr89guPUxIhI8SgimdQNQUo=; b=l6nDnYbQN1jcABMM+HJ+fMI
+	FJfhdK7eOA+cXqGP+OQ9gRNjTIshALP1gkE40j7JqN+ilvbVVHKP7VxxWdpOB/ev
+	AnCvi0YAGLhMtv1TcqAsJZ8HUZD+80WLicQNxhdVJVZHBpfAq52Iq6zgcI02G0/U
+	sQ7u+PavAIYjxwsnTMAd/lDlSziF6bC1HhUsDoHuAkztEeeFJiqFIfe57DSGAVuF
+	FDVHaYLmPd5miL2DjdP9Q2UShWncfR7SGWIuRhJBOVmfsWJipGEXwE3VcSdgn3QQ
+	l+YugzHXOcsfpnfBRT92gt4rm+PWqp5expyVsAqZ09YE11b/NzJOXm8Njx0+G6w=
+	=
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wva0912w3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 15 Mar 2024 11:11:11 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42FBBA2t025931
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 15 Mar 2024 11:11:10 GMT
+Received: from hu-jkona-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Fri, 15 Mar 2024 04:11:03 -0700
+From: Jagadeesh Kona <quic_jkona@quicinc.com>
+To: "Rafael J . Wysocki" <rafael@kernel.org>,
+        Kevin Hilman
+	<khilman@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>, Pavel Machek
+	<pavel@ucw.cz>,
+        Len Brown <len.brown@intel.com>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad
+ Dybcio" <konrad.dybcio@linaro.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Andy Gross <agross@kernel.org>, Stephen Boyd
+	<sboyd@kernel.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        "Vikash Garodia" <quic_vgarodia@quicinc.com>,
+        Bryan O'Donoghue
+	<bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abel Vesa
+	<abel.vesa@linaro.org>, Taniya Das <quic_tdas@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, Jagadeesh Kona <quic_jkona@quicinc.com>,
+        "Imran
+ Shaik" <quic_imrashai@quicinc.com>,
+        Ajit Pandey <quic_ajipan@quicinc.com>
+Subject: [PATCH V5 0/5] PM: domains: Add control for switching back and forth to HW control
+Date: Fri, 15 Mar 2024 16:40:41 +0530
+Message-ID: <20240315111046.22136-1-quic_jkona@quicinc.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] PCI: qcom: Read back PARF_LTSSM register
-To: Johan Hovold <johan@kernel.org>
-Cc: Bjorn Helgaas <helgaas@kernel.org>, Bjorn Andersson
- <andersson@kernel.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Philipp Zabel <p.zabel@pengutronix.de>, linux-arm-msm@vger.kernel.org,
- linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
- Johan Hovold <johan+linaro@kernel.org>
-References: <20240215161114.GA1292081@bhelgaas>
- <bc7d9859-f7ec-41c5-8a9e-170ccdfff46a@linaro.org>
- <Zc8GHrgdF7jJBgyu@hovoldconsulting.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <Zc8GHrgdF7jJBgyu@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 9zRqU3ZyzwdigTryvmfD36Jwfw1omQAC
+X-Proofpoint-ORIG-GUID: 9zRqU3ZyzwdigTryvmfD36Jwfw1omQAC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-14_13,2024-03-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
+ adultscore=0 mlxscore=0 malwarescore=0 priorityscore=1501 bulkscore=0
+ impostorscore=0 clxscore=1011 suspectscore=0 mlxlogscore=999
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403140001 definitions=main-2403150091
 
+This series adds support for dev_pm_genpd_set_hwmode() and dev_pm_genpd_get_hwmode() APIs
+and support in gdsc provider drivers to register respective callbacks and venus consumer
+driver example using above API to switch the power domain(GDSC) to HW/SW modes dynamically
+at runtime.
 
+Changes in V5:
+- Updated 1st patch as per V4 review comments to synchronize the initial HW mode state by
+  invoking ->get_hwmode_dev()callback in genpd_add_device()
+- With above change, SW cached hwmode will contain correct value initially, and it will be
+  updated everytime mode is changed in set_hwmode, hence updated dev_pm_genpd_get_hwmode()
+  to just return SW cached hwmode in 1st patch
+- Updated commit text for 1st, 3rd, 4th and 5th patches
+- Updated 3rd and 5th patches as per review comments received on V4 series
+- Added R-By tags received in older series to 1st and 2nd patches
 
-On 2/16/24 07:52, Johan Hovold wrote:
-> On Thu, Feb 15, 2024 at 07:44:27PM +0100, Konrad Dybcio wrote:
->> On 15.02.2024 17:11, Bjorn Helgaas wrote:
->>> On Thu, Feb 15, 2024 at 11:21:45AM +0100, Konrad Dybcio wrote:
->>>> On 14.02.2024 23:28, Bjorn Helgaas wrote:
->>>>> On Wed, Feb 14, 2024 at 10:35:16PM +0100, Konrad Dybcio wrote:
->>>>>> On 12.02.2024 22:17, Bjorn Helgaas wrote:
->>>>>>> Maybe include the reason in the subject?  "Read back" is literally
->>>>>>> what the diff says.
->>>>>>>
->>>>>>> On Sat, Feb 10, 2024 at 06:10:06PM +0100, Konrad Dybcio wrote:
->>>>>>>> To ensure write completion, read the PARF_LTSSM register after setting
->>>>>>>> the LTSSM enable bit before polling for "link up".
->>>>>>>
->>>>>>> The write will obviously complete *some* time; I assume the point is
->>>>>>> that it's important for it to complete before some other event, and it
->>>>>>> would be nice to know why that's important.
->>>>>>
->>>>>> Right, that's very much meaningful on non-total-store-ordering
->>>>>> architectures, like arm64, where the CPU receives a store instruction,
->>>>>> but that does not necessarily impact the memory/MMIO state immediately.
->>>>>
->>>>> I was hinting that maybe we could say what the other event is, or what
->>>>> problem this solves?  E.g., maybe it's as simple as "there's no point
->>>>> in polling for link up until after the PARF_LTSSM store completes."
->>>>>
->>>>> But while the read of PARF_LTSSM might reduce the number of "is the
->>>>> link up" polls, it probably wouldn't speed anything up otherwise, so I
->>>>> suspect there's an actual functional reason for this patch, and that's
->>>>> what I'm getting at.
->>>>
->>>> So, the register containing the "enable switch" (PARF_LTSSM) can (due
->>>> to the armv8 memory model) be "written" but not "change the value of
->>>> memory/mmio from the perspective of other (non-CPU) memory-readers
->>>> (such as the MMIO-mapped PCI controller itself)".
->>>>
->>>> In that case, the CPU will happily continue calling qcom_pcie_link_up()
->>>> in a loop, waiting for the PCIe controller to bring the link up, however
->>>> the PCIE controller may have never received the PARF_LTSSM "enable link"
->>>> write by the time we decide to time out on checking the link status.
-> 
-> This makes no sense. As Bjorn already said, you're just polling for the
-> link to come up (for a second). And unless you have something else that
-> depends on the write to have reached the device, there is no need to
-> read it back. It's not going to be cached indefinitely if that's what
-> you fear.
+Previous series:
+V4: https://lore.kernel.org/all/20240122-gdsc-hwctrl-v4-0-9061e8a7aa07@linaro.org/
+V3: https://lore.kernel.org/lkml/20230823114528.3677667-1-abel.vesa@linaro.org/ 
+V2: https://lore.kernel.org/lkml/20230816145741.1472721-1-abel.vesa@linaro.org/
+V1: https://lore.kernel.org/all/20230628105652.1670316-1-abel.vesa@linaro.org/
 
-The point is, if we know that the hardware is expected to return "done"
-within the polling timeout value of receiving the request to do so, we
-are actively taking away an unknown amount of time from that timeout.
+Abel Vesa (1):
+  PM: domains: Add the domain HW-managed mode to the summary
 
-So, if the polling condition becomes true after 980ms, but due to write
-buffering the value reached the PCIe hardware after 21 ms, we're gonna
-hit a timeout. Or under truly extreme circumstances, the polling may
-time out before the write has even arrived at the PCIe hw.
+Jagadeesh Kona (3):
+  clk: qcom: gdsc: Add set and get hwmode callbacks to switch GDSC mode
+  clk: qcom: Use HW_CTRL_TRIGGER flag to switch video GDSC to HW mode
+  venus: pm_helpers: Use dev_pm_genpd_set_hwmode to switch GDSC mode on
+    V6
 
-> 
->> Generally, it's a good idea to add such readbacks after all timing-
->> critical writes, especially when they concern asserting reset,
->> enabling/disabling power, etc., to make sure we're not assuming the
->> hardware state of a peripheral has changed before we ask it to do so.
-> 
-> Again no, there is no general need to do that. It all depends on what
-> the code does and how the device works.
+Ulf Hansson (1):
+  PM: domains: Allow devices attached to genpd to be managed by HW
 
-Agreed it's not necessary *in general*, but as I pointed out, this is
-an operation that we expect to complete within a set time frame, which
-involves external hardware.
+ drivers/clk/qcom/gdsc.c                       | 37 +++++++++
+ drivers/clk/qcom/gdsc.h                       |  1 +
+ drivers/clk/qcom/videocc-sc7280.c             |  2 +-
+ drivers/clk/qcom/videocc-sm8250.c             |  4 +-
+ .../media/platform/qcom/venus/pm_helpers.c    | 39 ++++++----
+ drivers/pmdomain/core.c                       | 78 ++++++++++++++++++-
+ include/linux/pm_domain.h                     | 17 ++++
+ 7 files changed, 157 insertions(+), 21 deletions(-)
 
-Konrad
+-- 
+2.43.0
+
 
