@@ -1,70 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-14212-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14213-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C2DE87C8B5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 07:07:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D90A87C8B8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 07:07:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8B0CC2832CC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 06:07:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 080B92822F6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 06:07:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C077134A5;
-	Fri, 15 Mar 2024 06:07:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C16F134A0;
+	Fri, 15 Mar 2024 06:07:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WAa8P53t"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OXcTFc6K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA53563AC
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 06:07:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA6914016
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 06:07:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710482841; cv=none; b=AW0+X+vM3/x258U0GKwhoGhhjm8nIvfF3RmMhG+HNOdBN+ddJmR896yGsbpNY/lERLxrV3nh+Pqjr7oMBVGXi4NWCx5jyAAa512Jzqf8x2a5Cl7lEMoCgxoUl5IUA+z1ZaZfb31kWcDSg18leYbgD1UgEPTCZooQneYgw6m10Bs=
+	t=1710482847; cv=none; b=CtfqJ56hIYKYJYaW5eGraVH+ydvhz7VOV56N2pYev8nYLrvl/Ji+iG2FD/rCa6VCYbDTcos4D97C6XklqONjZ7vL5wuGabCAQByirhN8bvg2bNvpNcpdE1j5+bUIy/M9SgrgEU2mPQZDyJPoj04rj/LfixHCDzfjBG8ZvtqskP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710482841; c=relaxed/simple;
-	bh=HVXTNW9WfrKPtY5fK0crOs82roJk78uiZSNA4Bpj5tE=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=MRI34T14p2kZL/plYR/CEZSBx5VxLMyC/9oP2gpFIKLw2JJz+TTFCuUfVRtm10+FZRtJcgjW+hTycSiBE11fMlw6qJR5Xb3Ia5Za4yviTxUO0MrfXWiUToZtcBccjCOE1ZQJnhvepibiCGhN1HueLfjUlT66a030VLE6TzdGMDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WAa8P53t; arc=none smtp.client-ip=209.85.215.181
+	s=arc-20240116; t=1710482847; c=relaxed/simple;
+	bh=rPfFrJBnAulSY0rHFnC89I3kUqU3f8YhptHrQUiyOjs=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=ePKxI9NfPy9aBOuQBtBiWpOkBjb/OsQYoVk8fFK8V4m3qnm7GGSmfJeInpBjH/5FJfwqAwoTZPoalwFCSViGki4JAV4VIJH8oMWKKatbiiF84Mal5CvWnp60iSzCyvRPq78fnyuZRJka8t3SFF7coABGFn5xpwCyH1Z9qCFrh6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OXcTFc6K; arc=none smtp.client-ip=209.85.210.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-5d3907ff128so1383776a12.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 23:07:19 -0700 (PDT)
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-6e6afb754fcso1657192b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 23:07:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710482839; x=1711087639; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=xxvxJAdPrUFHn3gHyj5TaXqFg1E/jrdJuUEbi6T9i/I=;
-        b=WAa8P53tdPONPW4OqIgKzKQ3WHZFpu+75Lrx9FQ8P4XtRKx3sW6FJvP969+GnaHt8K
-         9CbPe35sbsdhjcX3M7bS8hEzFSpSEmj/n2eCNjhJ1LcisFZznK5YHC+tTvJ4m63lhBKF
-         dURZgBX+ZXdbWzA2XJsT5rBiVxAPmf8e9zFPTfFBQOHEDi6d9IZ1ptnpNEaekQg1sm61
-         TY0A/xEV4dwqVmaC7yfXl271ZWkx0g8J9W+GnQv4EJ4cKGRCJY++FvDSMBEXBAr+qfQw
-         EtcvL9PfWTBWsbS7fCEjgzks2Ib+obpPjxH5XS6UjRj7yeNs2wmTb4TZB139UBLuBZz6
-         ScSw==
+        d=linaro.org; s=google; t=1710482845; x=1711087645; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BaoVf9eqjsot1BqIU97nmYIfRRMIaK539UE6et7+tDo=;
+        b=OXcTFc6KRmvzJXSLqQ1wK5hWCgZ2kig1rFqI0KU224jnvEFBAFfxC5ePzx1qUnV8dF
+         dAjk9entEtMnFE/K4Pq7IfpmjTkkbEPMZSq5x8ijmxkGpLarw62VAmNiHczIvLmCoOwf
+         Wr7x2fIOFG0ScAaEJhIgiRJkY7X/58RL6ZncnqnkHNhoTZ+Gikq7R0CksadzqGi+cHuq
+         yKlUAvEvXUOJ9aRHDduliAU/lCUXP7AHzsMjsS6PKMGDzhl+ZiJGjbxpatdT9zmZFhbD
+         dxKhJNgvUrWQ7ishdToNJqv6zM1ym+oVuaY0FssxQQDMUdbZ5NvuQpNZ8/HCPEsw4R3o
+         mmWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710482839; x=1711087639;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xxvxJAdPrUFHn3gHyj5TaXqFg1E/jrdJuUEbi6T9i/I=;
-        b=piMR9n1zv41xGVJSHemD94r5KDvhxShQnQG8yWQYzkgCv0RO70OvZhSYEA4p0LF3+S
-         sXHwsoRPd9dgDWoPuM3pAeRRqljEfrL+I2iYrjTvbSSlVZxNCI22FGlyb6bcjHJjgnCE
-         i7U0HMb17y0/uKPUYT+2Z0I8XqGAySUkOey/NLJKjXPc4fhAQ2vEP5qi9S0HoAa3aTAP
-         RPtvxxYgEsokAKfs1KiX86oaONza6NF5WCBPqQgiFe0Fmmd75cM5vEkXoCs+Wgmx86MW
-         I/P4+wuNxikHiBw11XKG2pDnVBKgE6amhSzgj1K9oRbHP70IoaJFmfR5BZcHVOJm07EV
-         nhfA==
-X-Gm-Message-State: AOJu0YwH1o93spkxZAAQDOfVWtpWOo2tNkRgr33GAgkgFQITD6HRc39x
-	pmXZhwT4W7Ps3SShs9gqoB8F7f0RVH0EMyUc57Gmbn/CQnie8sAtS1ZtVGjkTz3unhwzPkd/PFb
-	l
-X-Google-Smtp-Source: AGHT+IFLqeSVg/GGkWBFLXbMR3PVm6GB4LJGElcVrUUbrFmFNe904DbaRZ9ayxCFBsx906C2f8WoEw==
-X-Received: by 2002:a17:90a:d686:b0:29a:46d2:e877 with SMTP id x6-20020a17090ad68600b0029a46d2e877mr3747233pju.48.1710482838778;
-        Thu, 14 Mar 2024 23:07:18 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1710482845; x=1711087645;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BaoVf9eqjsot1BqIU97nmYIfRRMIaK539UE6et7+tDo=;
+        b=tT9Vd19TfGzNJdyS8BjAoMKpUPBPH6npGBXJCazfixNLV+Nh8EVeDQfmpIwEr0s/Md
+         O18+ws9xK1gZbznrOI7cerAkcQPCYaa4UcDY79wbCPKrM7hQXpBYTClN0unIEVaqktlb
+         TqZqYNmt4UbB8BgHkSe0NqwQFaKymymsDBv5XF+r2dhwJi8FsrWu76+zTTylJiWq0y3k
+         pXqGARhCQsT/lBYzV8lm9XA0WX9v6N+GlkeoVS+1v0qe83dngdf88We1IEKL+DSMrPb8
+         sPC9JDi6CJjscuvy5rR2fK0Y4nYfx/TN5icCQAIAqzDU3vl7MjB2Oq4eD+gDXnN0MGVH
+         SXgg==
+X-Gm-Message-State: AOJu0YzNtgk6j4p3q8RCv+P6uLSFn+L2CQykHIJAqlwSajXQjmXDEQ0V
+	keoHWgPSpYZIaAxlBONohUa9MhyL3iMOtJr7SFUiRtkEIfBaEzNdCM6pyX+Vgbsf3fFfZ7dKKKI
+	H
+X-Google-Smtp-Source: AGHT+IHFm4sFG8tL4mqeCjyXADUMibOeJ8dbQh7BVj68FUdxiCyg9F3bKknXFUQ7hjlVtpy4pVq/Rw==
+X-Received: by 2002:a05:6a20:6a0e:b0:1a3:4c69:6030 with SMTP id p14-20020a056a206a0e00b001a34c696030mr1493226pzk.54.1710482844746;
+        Thu, 14 Mar 2024 23:07:24 -0700 (PDT)
 Received: from sumit-X1.. ([223.178.212.73])
-        by smtp.gmail.com with ESMTPSA id lf11-20020a170902fb4b00b001dccaafe249sm2852024plb.220.2024.03.14.23.07.13
+        by smtp.gmail.com with ESMTPSA id lf11-20020a170902fb4b00b001dccaafe249sm2852024plb.220.2024.03.14.23.07.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Mar 2024 23:07:18 -0700 (PDT)
+        Thu, 14 Mar 2024 23:07:24 -0700 (PDT)
 From: Sumit Garg <sumit.garg@linaro.org>
 To: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org
@@ -84,11 +86,14 @@ Cc: andersson@kernel.org,
 	benjamin.missey@non.se.com,
 	daniel.thompson@linaro.org,
 	linux-kernel@vger.kernel.org,
-	Sumit Garg <sumit.garg@linaro.org>
-Subject: [PATCH v3 0/3] arm64: dts: qcom: apq8016: Add Schneider HMIBSC board DTS
-Date: Fri, 15 Mar 2024 11:37:04 +0530
-Message-Id: <20240315060707.471248-1-sumit.garg@linaro.org>
+	Sumit Garg <sumit.garg@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3 1/3] dt-bindings: vendor-prefixes: Add Schneider Electric
+Date: Fri, 15 Mar 2024 11:37:05 +0530
+Message-Id: <20240315060707.471248-2-sumit.garg@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240315060707.471248-1-sumit.garg@linaro.org>
+References: <20240315060707.471248-1-sumit.garg@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -97,53 +102,27 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add Schneider Electric HMIBSC board DTS. The HMIBSC board is an IIoT Edge
-Box Core board based on the Qualcomm APQ8016E SoC. For more information
-refer to the product page [1].
+Add vendor prefix for Schneider Electric (https://www.se.com/).
 
-One of the major difference from db410c is serial port where HMIBSC board
-uses UART1 as the debug console with a default RS232 mode (UART1 mode mux
-configured via gpio99 and gpio100).
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
+---
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Support for Schneider Electric HMIBSC. Features:
-- Qualcomm Snapdragon 410C SoC - APQ8016 (4xCortex A53, Adreno 306)
-- 1GiB RAM
-- 8GiB eMMC, SD slot
-- WiFi and Bluetooth
-- 2x Host, 1x Device USB port
-- HDMI
-- Discrete TPM2 chip over SPI
-- USB ethernet adaptors (soldered)
-
-This series is a v2 since v1 of this DTS file has been reviewed on the
-U-Boot mailing list [2].
-
-Changes in v3:
-- Picked up tags.
-- Fixed further DT schema warnings.
-- Configure resin/power button interrupt as falling edge.
-- Incorporate DTS coding style comments from Krzysztof and Konrad.
-
-Changes in v2:
-- Fix DT schema warnings.
-- Incorporate suggestions from Stephan.
-- Document UART1 mode GPIOs based mux.
-
-[1] https://www.se.com/us/en/product/HMIBSCEA53D1L0T/iiot-edge-box-core-harmony-ipc-emmc-dc-linux-tpm/
-[2] https://patchwork.ozlabs.org/project/uboot/patch/20240311111027.44577-6-sumit.garg@linaro.org/
-
-Sumit Garg (3):
-  dt-bindings: vendor-prefixes: Add Schneider Electric
-  dt-bindings: arm: qcom: Add Schneider Electric HMIBSC board
-  arm64: dts: qcom: apq8016: Add Schneider HMIBSC board DTS
-
- .../devicetree/bindings/arm/qcom.yaml         |   1 +
- .../devicetree/bindings/vendor-prefixes.yaml  |   2 +
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../dts/qcom/apq8016-schneider-hmibsc.dts     | 510 ++++++++++++++++++
- 4 files changed, 514 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
-
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index 1a0dc04f1db4..4ef38573e411 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -1211,6 +1211,8 @@ patternProperties:
+     description: Smart Battery System
+   "^schindler,.*":
+     description: Schindler
++  "^schneider,.*":
++    description: Schneider Electric
+   "^seagate,.*":
+     description: Seagate Technology PLC
+   "^seeed,.*":
 -- 
 2.34.1
 
