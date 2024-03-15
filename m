@@ -1,214 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-14278-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14279-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1CE0E87D4C8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 21:02:15 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 560AC87D5E0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 21:58:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AB9562842A9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 20:02:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 18085288A5C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 20:58:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42AD043AC5;
-	Fri, 15 Mar 2024 20:02:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6ED84548F0;
+	Fri, 15 Mar 2024 20:52:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z84j4GsJ"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="BoYY4M/6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014601F19A;
-	Fri, 15 Mar 2024 20:02:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4012317984
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 20:52:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710532931; cv=none; b=ohWLZWqZadu8YYdPYOPtoQXsXAqkdZaUSk8MuwCDd3lEJXVcBZv0wLgUMuljXB72ILzrl2O1fdvdk4l2ZQhEFeiQ8dv4/scPNPLDDJNKXAVUzoHlq/dMAzvPNu0ZmT3XgtjiDUdmzCm1PU0O+DRbIAkhdE5uW8UEQ0xsSpxDrYk=
+	t=1710535959; cv=none; b=VaSF77f32/BsAKYaJn9X+QkJCHbYZZ9kDUTJ4t00NtNPFSzLWrsL3wvYfyedaHvE3e5WCYAxdM0GUltIByYgQmxY0vTixQIrrqo90+WXZq3x3DEPnJpx/ncVJsWQTmOVFmuhqRWDZbvSlNvep8qqprIfgLjZEhJfw1go8Gfm9xU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710532931; c=relaxed/simple;
-	bh=aGrVTWitAhogQD5XumZ6583Dwe14StC04W0SSKoGZh4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=P2HEqSgcA+Pk4vANByMFQmpqXStgb9+kxPYWi9ESiAaYv8LAWqA9h/V5txrNlgpjN55Aq7GNVjaNA058h9uvuTCB5d/WcCtOyU3M7JdtSKGXuM+rzxftm0wx/QIpSv1CbTPZ60cAY/yyEIMZOcSOrLy0o690E7XwJC7p/bVcORM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z84j4GsJ; arc=none smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-563c403719cso3232994a12.2;
-        Fri, 15 Mar 2024 13:02:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710532926; x=1711137726; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/YYAb4etLz4rCTfoR4YKT4WIcWb2hUEXXqGho2kxvLA=;
-        b=Z84j4GsJ3inxkqaIUPLzokAdcY4IKofT5AWAZeFaMVe7KJHL3VzyYhgjYpjljsMxNS
-         uAz5aOTil1TiFUMvtUGMHUgk/76Fi+o9MwP0SrfaeXp27zKDdeWp5AFrYT6N6XZ5BB4Z
-         FHwZBi0KRs/XZ8UT3t0kn0CS31qoIY3DbOumh9hJPRaCUCK3wOYlsrwAGV4GSxc4ZePW
-         khgGbuBIz0X0l2L6wIomZZ4nriuy+2zlRq2I9aC+uFHwG4q5VgcX1G1M5vcEXKd2ySQ2
-         L/qT/yIAXPGBoJTQCCrdwUuxly7qllHr9SEvWq1Np1sluyegIILWaHHRCGDMgFeAT4Qu
-         GQZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710532926; x=1711137726;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/YYAb4etLz4rCTfoR4YKT4WIcWb2hUEXXqGho2kxvLA=;
-        b=nl9lm7qk+bkm8yPd6A+QR9fQyUB+PiEEJUIG9fEi3wYL4TRELQzMkCE0+nHQhMH5Og
-         h4tiJ/bgY5Hb5TrrJqSY/eP02gREPTD4UZZgJbZDtmnS+BFgNs/oNu7Zs1vHdViVzBEJ
-         OhsilsS8BtkgAXRpUPjEymhlDxMZPp+mWWjqpCdLIgw4QLMkJm8AgjRatEom88YUfPf0
-         i8DA7seOtn1+VHnF+L4QjpG3ib8MHPkM2vF051Ruc49S9PYXHbaU/oN+vtJMUr1L/Oo6
-         7I0MwiW5K4pB8F7MyLy4NWlxUmH+dTC9MamXXL8sDd2x/KjKLmYPPOZsR/BpTfoSngyI
-         Vaog==
-X-Forwarded-Encrypted: i=1; AJvYcCVrhaQMSdh4r5gR1mjmK+CUnxEjgoURGKVrkbzh2mMUG3l+pctBGoyjpO6QZZjVHeK0q3S5rH8bpo/7MP4dPXh2sDltt697JBKOboOCaNGEWendI8+pXqjfECVj2zEdb/CL+G+FQHrTQ/PgAA==
-X-Gm-Message-State: AOJu0YyrYcDCqfZqwl2n/NjYF+hpsqecVSAjyr62LdZvtTynhubbxtOh
-	XIYareso1MoxKKWywWCK/MJIg7NFAHJt/3PkWPhev+E4R2/imkek2CQhMLpftq0BWwnnJGI61HU
-	prXLUmISUjqLdJ54P9KIg/y2OABw=
-X-Google-Smtp-Source: AGHT+IGNiEX+KvIuK+2zgES9ZbZBeWUk3t1ZiDKNwUyIzDDeNdWSwtV/1hXvoCPUp+xFTA06sIdvaC4OjWNqTwIhSb0=
-X-Received: by 2002:a05:6402:1f07:b0:568:b490:7d80 with SMTP id
- b7-20020a0564021f0700b00568b4907d80mr1600464edb.18.1710532925895; Fri, 15 Mar
- 2024 13:02:05 -0700 (PDT)
+	s=arc-20240116; t=1710535959; c=relaxed/simple;
+	bh=lym18ZesQC+Q6gWwXilhatR9qla2T4b8vlkjNBFywO0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=d34L0uekah38vhDS/OXpWNsVcO+qk9jxEab2GPeVfVhJaFcfjIdJmNCZZGmA8puplYFd1QlSFCIDTHERrbAePrvZ0NvL33l6LshLpqyuakYQbL4+66JZ0tArFGen6BMEribNn5ulFQfGWmB+0ql2ybzd1bJQ+Je7kPdndxuZWNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=BoYY4M/6; arc=none smtp.client-ip=192.198.163.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1710535956; x=1742071956;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=lym18ZesQC+Q6gWwXilhatR9qla2T4b8vlkjNBFywO0=;
+  b=BoYY4M/6UD5pGJj3jdLtoGVLuSuHnC6fh9n+FiWYhSQup1okADpogctq
+   sUvyjmnH+UhyQc7q71rTGQa+rli3y3D+fckfbgEtT07hFN9+ZVsTA1uf6
+   sv0OE9aeha7aHG1JobMxjhrWGbpmb2dn7UcNX4fhnNYaQQjuCYCO9HEAw
+   YuMgyMikKOMQ4B9TeOanVGwMywMunGDf0IA4EibzDtnhCbbhBK5gV1nFh
+   AOGLByIeL1sw1dSLJla2gKGQqrDWNoDWwnvc/aY/rEck10RtTOe/D0A/t
+   PUBbDyid199ZSny8JdR/MBT+lVqScuK8Jf1v0DODYHnK2oy9FU7Mq7Ic2
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11014"; a="5282997"
+X-IronPort-AV: E=Sophos;i="6.07,129,1708416000"; 
+   d="scan'208";a="5282997"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Mar 2024 13:52:26 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,129,1708416000"; 
+   d="scan'208";a="17402062"
+Received: from lkp-server01.sh.intel.com (HELO b21307750695) ([10.239.97.150])
+  by fmviesa003.fm.intel.com with ESMTP; 15 Mar 2024 13:52:22 -0700
+Received: from kbuild by b21307750695 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1rlEXM-000Emv-1A;
+	Fri, 15 Mar 2024 20:52:20 +0000
+Date: Sat, 16 Mar 2024 04:51:26 +0800
+From: kernel test robot <lkp@intel.com>
+To: Jeffrey Hugo <quic_jhugo@quicinc.com>, daniel@ffwll.ch,
+	jiasheng@iscas.ac.cn, quic_carlv@quicinc.com,
+	quic_pkanojiy@quicinc.com, stanislaw.gruszka@linux.intel.com,
+	jacek.lawrynowicz@linux.intel.com
+Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, ogabbay@kernel.org,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>
+Subject: Re: [PATCH 1/2] drm: Add DRM-managed alloc_workqueue() and
+ alloc_ordered_workqueue()
+Message-ID: <202403160449.IaCY0Cl5-lkp@intel.com>
+References: <20240315145034.3972749-2-quic_jhugo@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240315-fd-xml-shipped-v3-0-0fc122e36c53@linaro.org>
-In-Reply-To: <20240315-fd-xml-shipped-v3-0-0fc122e36c53@linaro.org>
-From: Rob Clark <robdclark@gmail.com>
-Date: Fri, 15 Mar 2024 13:01:53 -0700
-Message-ID: <CAF6AEGuc-xu_Ji5fOXCFFudos1Ah4tgFxjRs0neHVujtNdXB+A@mail.gmail.com>
-Subject: Re: [PATCH RFC v3 00/12] drm/msm: generate register header files
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Masahiro Yamada <masahiroy@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
-	Nicolas Schier <nicolas@fjasle.eu>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, linux-kbuild@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240315145034.3972749-2-quic_jhugo@quicinc.com>
 
-On Fri, Mar 15, 2024 at 4:46=E2=80=AFAM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> Currently display-related register headers are generated from XML files
-> shipped withing Mesa source tree. This is not fully optimal: it requires
-> multi-stage process of the changes first being landed to Mesa and only
-> then synced to the kernel tree.
+Hi Jeffrey,
 
-I think we'd more or less need to continue following this process for
-the gpu .xml so that the kernel and mesa are not diverging.  I guess
-we could drop the display related .xml from mesa.  (But it would be
-nice to have a decoder tool for display devcoredumps, like we do for
-gpu..)
+kernel test robot noticed the following build warnings:
 
-BR,
--R
+[auto build test WARNING on drm-misc/drm-misc-next]
+[also build test WARNING on linus/master v6.8 next-20240315]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-> Move original XML files to the kernel tree and generate header files
-> when required.
->
-> NOTE: the gen_header.py script is based on the non-merged Mesa MR [1].
-> Once that MR lands, I will update the script and commit messages and
-> send the next iteration.
->
-> [1] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/28193
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-> Changes in v3:
-> - Split XML and git rm patches in hope to pass ML limitations
-> - Link to v2: https://lore.kernel.org/r/20240315-fd-xml-shipped-v2-0-7cd6=
-8ecc4320@linaro.org
->
-> Changes in v2:
-> - Removed the _shipped files, always generating the headers (Masahiro
->   Yamada)
-> - Replaced headergen2 with gen_headers.py
-> - Simplify Makefile rules, making all Adreno objects depend on Adreno
->   headers and all displau objects depend on all display headers
-> - Also handle Adreno registers
-> - Link to v1: https://lore.kernel.org/r/20240226-fd-xml-shipped-v1-0-86bb=
-6c3346d2@linaro.org
->
-> ---
-> Dmitry Baryshkov (12):
->       drm/msm/mdp5: add writeback block bases
->       drm/msm/hdmi: drop qfprom.xml.h
->       drm/msm/dsi: drop mmss_cc.xml.h
->       drm/msm: move msm_gpummu.c to adreno/a2xx_gpummu.c
->       drm/msm: import XML display registers database
->       drm/msm: import A2xx-A4xx XML display registers database
->       drm/msm: import A5xx-A7xx XML display registers database
->       drm/msm: import gen_header.py script from Mesa
->       drm/msm: generate headers on the fly
->       drm/msm: drop display-related headers
->       drm/msm: drop A5xx, A6xx headers
->       drm/msm: drop A2xx-A4xx headers
->
->  drivers/gpu/drm/msm/.gitignore                     |     6 +
->  drivers/gpu/drm/msm/Makefile                       |    97 +-
->  drivers/gpu/drm/msm/adreno/a2xx.xml.h              |  3251 -----
->  drivers/gpu/drm/msm/adreno/a2xx_gpu.c              |     4 +-
->  drivers/gpu/drm/msm/adreno/a2xx_gpu.h              |     4 +
->  .../drm/msm/{msm_gpummu.c =3D> adreno/a2xx_gpummu.c} |    45 +-
->  drivers/gpu/drm/msm/adreno/a3xx.xml.h              |  3268 -----
->  drivers/gpu/drm/msm/adreno/a4xx.xml.h              |  4379 -------
->  drivers/gpu/drm/msm/adreno/a5xx.xml.h              |  5572 ---------
->  drivers/gpu/drm/msm/adreno/a6xx.xml.h              | 11858 -------------=
-------
->  drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h          |   422 -
->  drivers/gpu/drm/msm/adreno/adreno_common.xml.h     |   539 -
->  drivers/gpu/drm/msm/adreno/adreno_pm4.xml.h        |  2803 -----
->  drivers/gpu/drm/msm/disp/mdp4/mdp4.xml.h           |  1181 --
->  drivers/gpu/drm/msm/disp/mdp5/mdp5.xml.h           |  1979 ----
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h           |    11 +
->  drivers/gpu/drm/msm/disp/mdp_common.xml.h          |   111 -
->  drivers/gpu/drm/msm/dsi/dsi.xml.h                  |   790 --
->  drivers/gpu/drm/msm/dsi/dsi_phy_10nm.xml.h         |   227 -
->  drivers/gpu/drm/msm/dsi/dsi_phy_14nm.xml.h         |   309 -
->  drivers/gpu/drm/msm/dsi/dsi_phy_20nm.xml.h         |   237 -
->  drivers/gpu/drm/msm/dsi/dsi_phy_28nm.xml.h         |   384 -
->  drivers/gpu/drm/msm/dsi/dsi_phy_28nm_8960.xml.h    |   286 -
->  drivers/gpu/drm/msm/dsi/dsi_phy_7nm.xml.h          |   483 -
->  drivers/gpu/drm/msm/dsi/mmss_cc.xml.h              |   131 -
->  drivers/gpu/drm/msm/dsi/sfpb.xml.h                 |    70 -
->  drivers/gpu/drm/msm/hdmi/hdmi.xml.h                |  1399 ---
->  drivers/gpu/drm/msm/hdmi/qfprom.xml.h              |    61 -
->  drivers/gpu/drm/msm/msm_drv.c                      |     3 +-
->  drivers/gpu/drm/msm/msm_gpu.c                      |     2 +-
->  drivers/gpu/drm/msm/msm_mmu.h                      |     5 -
->  drivers/gpu/drm/msm/registers/adreno/a2xx.xml      |  1865 +++
->  drivers/gpu/drm/msm/registers/adreno/a3xx.xml      |  1751 +++
->  drivers/gpu/drm/msm/registers/adreno/a4xx.xml      |  2409 ++++
->  drivers/gpu/drm/msm/registers/adreno/a5xx.xml      |  3039 +++++
->  drivers/gpu/drm/msm/registers/adreno/a6xx.xml      |  4969 ++++++++
->  drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml  |   228 +
->  .../gpu/drm/msm/registers/adreno/adreno_common.xml |   399 +
->  .../gpu/drm/msm/registers/adreno/adreno_pm4.xml    |  2267 ++++
->  drivers/gpu/drm/msm/registers/display/dsi.xml      |   390 +
->  .../gpu/drm/msm/registers/display/dsi_phy_10nm.xml |   102 +
->  .../gpu/drm/msm/registers/display/dsi_phy_14nm.xml |   135 +
->  .../gpu/drm/msm/registers/display/dsi_phy_20nm.xml |   100 +
->  .../gpu/drm/msm/registers/display/dsi_phy_28nm.xml |   180 +
->  .../msm/registers/display/dsi_phy_28nm_8960.xml    |   134 +
->  .../gpu/drm/msm/registers/display/dsi_phy_7nm.xml  |   230 +
->  drivers/gpu/drm/msm/registers/display/edp.xml      |   239 +
->  drivers/gpu/drm/msm/registers/display/hdmi.xml     |  1015 ++
->  drivers/gpu/drm/msm/registers/display/mdp4.xml     |   504 +
->  drivers/gpu/drm/msm/registers/display/mdp5.xml     |   806 ++
->  .../gpu/drm/msm/registers/display/mdp_common.xml   |    89 +
->  drivers/gpu/drm/msm/registers/display/msm.xml      |    32 +
->  drivers/gpu/drm/msm/registers/display/sfpb.xml     |    17 +
->  .../gpu/drm/msm/registers/freedreno_copyright.xml  |    40 +
->  drivers/gpu/drm/msm/registers/gen_header.py        |   958 ++
->  drivers/gpu/drm/msm/registers/rules-ng.xsd         |   457 +
->  56 files changed, 22480 insertions(+), 39792 deletions(-)
-> ---
-> base-commit: 8ffc8b1bbd505e27e2c8439d326b6059c906c9dd
-> change-id: 20240225-fd-xml-shipped-ba9a321cdedf
->
-> Best regards,
-> --
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
+url:    https://github.com/intel-lab-lkp/linux/commits/Jeffrey-Hugo/drm-Add-DRM-managed-alloc_workqueue-and-alloc_ordered_workqueue/20240315-225330
+base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
+patch link:    https://lore.kernel.org/r/20240315145034.3972749-2-quic_jhugo%40quicinc.com
+patch subject: [PATCH 1/2] drm: Add DRM-managed alloc_workqueue() and alloc_ordered_workqueue()
+config: parisc-defconfig (https://download.01.org/0day-ci/archive/20240316/202403160449.IaCY0Cl5-lkp@intel.com/config)
+compiler: hppa-linux-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240316/202403160449.IaCY0Cl5-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202403160449.IaCY0Cl5-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/gpu/drm/drm_managed.c:336: warning: Function parameter or struct member 'fmt' not described in 'drmm_alloc_workqueue'
+>> drivers/gpu/drm/drm_managed.c:336: warning: Function parameter or struct member 'flags' not described in 'drmm_alloc_workqueue'
+>> drivers/gpu/drm/drm_managed.c:336: warning: Function parameter or struct member 'max_active' not described in 'drmm_alloc_workqueue'
+>> drivers/gpu/drm/drm_managed.c:336: warning: Excess function parameter 'wq' description in 'drmm_alloc_workqueue'
+>> drivers/gpu/drm/drm_managed.c:374: warning: Function parameter or struct member 'fmt' not described in 'drmm_alloc_ordered_workqueue'
+>> drivers/gpu/drm/drm_managed.c:374: warning: Function parameter or struct member 'flags' not described in 'drmm_alloc_ordered_workqueue'
+>> drivers/gpu/drm/drm_managed.c:374: warning: Excess function parameter 'wq' description in 'drmm_alloc_ordered_workqueue'
+
+
+vim +336 drivers/gpu/drm/drm_managed.c
+
+   320	
+   321	/**
+   322	 * drmm_alloc_workqueue - &drm_device-managed alloc_workqueue()
+   323	 * @dev: DRM device
+   324	 * @wq: workqueue to be allocated
+   325	 *
+   326	 * Returns:
+   327	 * Valid pointer on success, NULL on error.
+   328	 *
+   329	 * This is a &drm_device-managed version of alloc_workqueue().
+   330	 * The initialized lock is automatically destroyed on the final
+   331	 * drm_dev_put().
+   332	 */
+   333	struct workqueue_struct *drmm_alloc_workqueue(struct drm_device *dev,
+   334						      const char *fmt, unsigned int flags,
+   335						      int max_active, ...)
+ > 336	{
+   337		struct workqueue_struct *wq;
+   338		va_list args;
+   339		int ret;
+   340	
+   341		va_start(args, max_active);
+   342		wq = alloc_workqueue(fmt, flags, max_active, args);
+   343		va_end(args);
+   344	
+   345		if (!wq)
+   346			return NULL;
+   347	
+   348		ret = drmm_add_action_or_reset(dev, drmm_destroy_workqueue, wq);
+   349		if (ret) {
+   350			destroy_workqueue(wq);
+   351			return NULL;
+   352		}
+   353	
+   354		return wq;
+   355	}
+   356	EXPORT_SYMBOL(drmm_alloc_workqueue);
+   357	
+   358	/**
+   359	 * drmm_alloc_ordered_workqueue - &drm_device-managed
+   360	 * alloc_ordered_workqueue()
+   361	 * @dev: DRM device
+   362	 * @wq: workqueue to be allocated
+   363	 *
+   364	 * Returns:
+   365	 * Valid pointer on success, NULL on error.
+   366	 *
+   367	 * This is a &drm_device-managed version of alloc_ordered_workqueue().
+   368	 * The initialized lock is automatically destroyed on the final
+   369	 * drm_dev_put().
+   370	 */
+   371	struct workqueue_struct *drmm_alloc_ordered_workqueue(struct drm_device *dev,
+   372							      const char *fmt,
+   373							      unsigned int flags, ...)
+ > 374	{
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
