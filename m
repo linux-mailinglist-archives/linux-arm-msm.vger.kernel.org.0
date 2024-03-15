@@ -1,147 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-14259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id F40FF87CFFB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 16:16:21 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CD0D87D029
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 16:25:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BB05F284992
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 15:16:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9F7C21C21ECC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 15:25:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B42E3D0C0;
-	Fri, 15 Mar 2024 15:16:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pp7lWExy"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96DB63D56B;
+	Fri, 15 Mar 2024 15:24:41 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08AFF3CF6D;
-	Fri, 15 Mar 2024 15:16:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D056B405FF;
+	Fri, 15 Mar 2024 15:24:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710515777; cv=none; b=Ye0u7Ss5Y1NYFjLy2r8zyF25LUaCYmvSN1DY9UVxIkEj6IzUZ6YBro0Sh95CwhzSSFlsgFkEDEcOHuRZgjWWc7dVIhDF/TTst066ZQkPI4CDPR19z5qMDLpnP26Bu513WrwLwRkfsChzM/eeKIvGvrAbwYwYJTFmv+IKm9aUsGA=
+	t=1710516281; cv=none; b=NK3n9LiAd8lXor5LKRxwRMEx8xrPulZ4keUswZCuH8o+p7XfRccHbYVrb9UIdMR/gpFunMcedd0WftRS0tcfFe6kMD4kNaoNdwNhSbgSOucy75uf5QS6aVdy64mDHKp1kDzgzruLCqKYBOKtsnhCuIQTY/35tR8JgHTkMlizmeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710515777; c=relaxed/simple;
-	bh=rW2HryGSEjzyD6FFEg2XJKkSr3CLQOCxWR3nI7wapa0=;
+	s=arc-20240116; t=1710516281; c=relaxed/simple;
+	bh=tvtPqHTyHAvq5sNabGjdAHpevyZoKTYNDRZhl/bZKTY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fnPblLscaFzGGRlDSiZ9cSIX4er4hCvTwd/k8Bz/AZYsv9p35obMMODAKOg7jGM70fXLx1/EjQlpsli9Q92AxN9LMyEY8hwuZxyvazp/hDb1gJWK6zX9F4rffsvoaapJ6icXcgB8k82nIg0CV8d34iOUizE1RTjTOZtDyDXDl78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pp7lWExy; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641E3C433F1;
-	Fri, 15 Mar 2024 15:16:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710515776;
-	bh=rW2HryGSEjzyD6FFEg2XJKkSr3CLQOCxWR3nI7wapa0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=pp7lWExyYs0p6QUXGBUvtMo/qelfJaX913MzZnctePLBSTOregYZpaVKajIcFIFAF
-	 qOcltgdIXI2njthpjricvHzsMLTWSadOaeb39hK6dzzfQ/8JxLEyUkxZKjVj9T1Ubj
-	 oauz5bHHnMBz0yi9jBrxck+W9LUcwIQiTxT3cCWaR8jAPct/IEan6QfQe4vUnxeC3b
-	 l4RdD+AjrtxpxWrgcL8jt+lLcu5cFS0RBQ10DIO/uVBIuSBLoVgo5WqupbVh8PjapB
-	 N1MSK1FYx+j4+maqeqYK7111jx/QiiSKqkA341X6XYPPkSmeSaK/ZC2H+TudhEhAMM
-	 qaLNJ6r9L7VwQ==
-Date: Fri, 15 Mar 2024 09:16:13 -0600
-From: Rob Herring <robh@kernel.org>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: clock: qcom: Fix x1e80100 camcc
- power-domain declaration
-Message-ID: <20240315151613.GA1256230-robh@kernel.org>
-References: <20240313-linux-next-camcc-fixes-v2-0-9426da94ae37@linaro.org>
- <20240313-linux-next-camcc-fixes-v2-1-9426da94ae37@linaro.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=I0hDFsYnFV++GN7OjEAHtZH160x8GoDLbdcl0EPfOO4PAheh1T1JkGzBDsm/8LL+L1Pc4zQgWcDxnC4UJqAl9Nlo4t3Ye5rdFG1Hl5lUN4J5FedkqUXHHdoBbA8hAKCXFl0zHjCYArYsbbLG4mY9Z/4nOkk24Ph+HhdUgfJr5t4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B10B3C15;
+	Fri, 15 Mar 2024 08:25:12 -0700 (PDT)
+Received: from bogus (unknown [10.57.81.245])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4EDD23F73F;
+	Fri, 15 Mar 2024 08:24:34 -0700 (PDT)
+Date: Fri, 15 Mar 2024 15:24:31 +0000
+From: Sudeep Holla <sudeep.holla@arm.com>
+To: Doug Anderson <dianders@chromium.org>
+Cc: Maulik Shah <quic_mkshah@quicinc.com>, andersson@kernel.org,
+	Sudeep Holla <sudeep.holla@arm.com>, ulf.hansson@linaro.org,
+	swboyd@chromium.org, wingers@google.com, daniel.lezcano@linaro.org,
+	rafael@kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+	jwerner@chromium.org, quic_lsrao@quicinc.com,
+	quic_rjendra@quicinc.com, devicetree@vger.kernel.org,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Rob Clark <robdclark@chromium.org>
+Subject: Re: [RESEND v4 3/3] arm64: dts: qcom: sc7280: Add power-domains for
+ cpuidle states
+Message-ID: <20240315152431.sckqhc6ri63blf2g@bogus>
+References: <20230703085555.30285-1-quic_mkshah@quicinc.com>
+ <20230703085555.30285-4-quic_mkshah@quicinc.com>
+ <CAD=FV=XWH+Eoa9XjDns--NSDTZHeUwTdrX_r_QZhSPpbZNwz+w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240313-linux-next-camcc-fixes-v2-1-9426da94ae37@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAD=FV=XWH+Eoa9XjDns--NSDTZHeUwTdrX_r_QZhSPpbZNwz+w@mail.gmail.com>
 
-On Wed, Mar 13, 2024 at 05:53:52PM +0000, Bryan O'Donoghue wrote:
-> camcc on x1e80100 requires two power domains MXC and MMCX. Define those as
-> part of the schema.
+On Thu, Mar 14, 2024 at 04:20:59PM -0700, Doug Anderson wrote:
+> Hi,
 > 
-> Fixes: 76126a5129b5 ("clk: qcom: Add camcc clock driver for x1e80100")
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  .../bindings/clock/qcom,sm8450-camcc.yaml          | 37 ++++++++++++++++++----
->  1 file changed, 31 insertions(+), 6 deletions(-)
+> On Mon, Jul 3, 2023 at 1:56 AM Maulik Shah <quic_mkshah@quicinc.com> wrote:
+> >
+> > Add power-domains for cpuidle states to use psci os-initiated idle states.
+> >
+> > Cc: devicetree@vger.kernel.org
+> > Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+> > Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sc7280.dtsi | 98 +++++++++++++++++++++-------
+> >  1 file changed, 73 insertions(+), 25 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
-> index fa0e5b6b02b81..1f62139426845 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
-> @@ -19,9 +19,6 @@ description: |
->      include/dt-bindings/clock/qcom,sc8280xp-camcc.h
->      include/dt-bindings/clock/qcom,x1e80100-camcc.h
->  
-> -allOf:
-> -  - $ref: qcom,gcc.yaml#
-> -
->  properties:
->    compatible:
->      enum:
-> @@ -38,9 +35,8 @@ properties:
->        - description: Sleep clock source
->  
->    power-domains:
-> -    maxItems: 1
-> -    description:
-> -      A phandle and PM domain specifier for the MMCX power domain.
-> +    minItems: 1
-> +    maxItems: 2
->  
->    required-opps:
->      maxItems: 1
-> @@ -50,6 +46,35 @@ properties:
->    reg:
->      maxItems: 1
->  
-> +allOf:
-> +  - $ref: qcom,gcc.yaml#
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,sc8280xp-camcc
-> +              - qcom,sm8450-camcc
-> +              - qcom,sm8550-camcc
-> +    then:
-> +      properties:
-> +        power-domains:
-> +          items:
-> +            - description: MMCX power domain.
-> +
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,x1e80100-camcc
-> +    then:
-> +      properties:
-> +        power-domains:
-> +          items:
-> +            - description: MXC power domain.
-> +            - description: MMCX power domain.
+> FWIW, I dug up an old sc7280-herobrine board to test some other change
+> and found it no longer booted. :( I bisected it and this is the change
+> that breaks it. Specifically, I can make mainline boot with:
+> 
+> git revert --no-edit db5d137e81bc # arm64: dts: qcom: sc7280: Update
+> domain-idle-states for cluster sleep
+> git revert --no-edit 7925ca85e956 # arm64: dts: qcom: sc7280: Add
+> power-domains for cpuidle states
+>
 
-Add new entries onto the end of existing ones. IOW, MMCX should always 
-be 1st. Then you can move the descriptions to the top level and just put 
-minItems or maxItems as appropriate here.
+IIRC, this could be issue with psci firmware. There were some known
+issues which were discussed few years back but I am not aware of the
+details and if/how it is applicable here.
 
-Rob
+Not sure if you are getting any logs during the boot, if you do have
+worth look at logs related to PSCI/OSI/Idle/...
+
+-- 
+Regards,
+Sudeep
 
