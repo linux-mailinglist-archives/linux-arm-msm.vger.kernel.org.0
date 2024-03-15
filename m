@@ -1,156 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-14254-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A5D887CF75
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 15:51:27 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5CE8D87CFC4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 16:04:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AE3D01C21ABA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 14:51:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EAF1DB211E5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 15:04:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63E333613B;
-	Fri, 15 Mar 2024 14:51:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A9633C46E;
+	Fri, 15 Mar 2024 15:04:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="buT4itVc"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="dkEX6ct8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46B4374FC
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 14:51:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B631B3B79E;
+	Fri, 15 Mar 2024 15:04:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710514284; cv=none; b=COOHBVmk/RLzPN3FWZZe8G1qbLUMHUGZIIAnVsGVq0l3vS6fHfxrsFPcR8sySUnfgP/4XRqga4a+Zh1vY+yV1xvMQz2tNG/KLgrR7kljpjYjz20gMza/Sz2sz2nGS/po9chBfQRvYzjx5fGzgBiYN0bq2CKcqToFgVV7XXmQiGE=
+	t=1710515079; cv=none; b=YIaRPKE5Il4cK0A8cQlv4/0jRd7LAk8Plev2U1AqQ6BB0U1CPnX4XJatrIL7Wi6BQWBWgCisQDrTiwsTywHw8LtFevLyFUGGsIcKGr67vJc2uMUuDcV/63PBfCg/rC8WkZXgoiifekMYqCTQr59WFrvDYKpP9gcU5pKFkxAVx10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710514284; c=relaxed/simple;
-	bh=NtK6sDgAgmCQgF9nyCz0+5gaXiqO3MI2NF4CjT/eonQ=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rqQCCCoaBc1P1H/L/1o5lr9w5e3zcWV6bBn9utIFFlYLAj6O6RCW7sgNi3zq5gx/d49TQTHGuMlpRJ7nPjH6RayD58vRhqINPQ52xEIvAf2urOBXPSiexNObMuovb695Hgzk2b2dx1hZlzVosspGuwZgKuKfOYXEALDvqAM7oXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=buT4itVc; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42FE0CiG022627;
-	Fri, 15 Mar 2024 14:50:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=c7JBbv0lhNoz7QFrjoa1u9Mih8m48RIaYcKKPv4NqKo=; b=bu
-	T4itVcWhiFXUX9k4bhe5Ux2SHCsrhQpUI6d/pBwysMbfBlqKE3czHlvejpEB7i/a
-	0rvXnVtf81Mu5+A6sQrzLWoXSZlkX6haUI4aZNuQvHlPNWJ2YXPSlOOyDtbsqJdG
-	FPppXXzzJQLXmdxLb+JfAPYIZut2R8FdJX9xPVgTNKDIFZn3a8UKskjanfvEG2he
-	NmVZicR5Zv9sqG9ofRaJkCQGfJKxBfqQXILVgc0SRQjrWt/roQqlQu4z+D99j6rB
-	fuIxTYQ53UoJrIMgms+FfP6WWzmht7iyHaOfVWi8xwHQc3jI0VYLVTgSLyaReia0
-	dE3m5VNZ+gYpQFjWoknQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wv9yq9cyy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 15 Mar 2024 14:50:55 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42FEosHL009742
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 15 Mar 2024 14:50:54 GMT
-Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Fri, 15 Mar 2024 07:50:53 -0700
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-To: <daniel@ffwll.ch>, <jiasheng@iscas.ac.cn>, <quic_carlv@quicinc.com>,
-        <quic_pkanojiy@quicinc.com>, <stanislaw.gruszka@linux.intel.com>,
-        <jacek.lawrynowicz@linux.intel.com>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <ogabbay@kernel.org>, Jeffrey Hugo <quic_jhugo@quicinc.com>
-Subject: [PATCH 2/2] accel/qaic: Use drmm_alloc_workqueue()
-Date: Fri, 15 Mar 2024 08:50:34 -0600
-Message-ID: <20240315145034.3972749-3-quic_jhugo@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240315145034.3972749-1-quic_jhugo@quicinc.com>
-References: <20240315145034.3972749-1-quic_jhugo@quicinc.com>
+	s=arc-20240116; t=1710515079; c=relaxed/simple;
+	bh=JjMkGoGOpVHuBppEVlwRVBzxpdqGJlEG4RAZ7zYSQRE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ttaC7jWocYVp8GvhShzj5GFyzXu82T6OyfveZiixMInCuaNVKPF/aHsuKA4VgbLu1kRb0o2Nc7Ozd2mEwWPptf/23Jdh3zqBqV9bPGgpM+mCkLiKAR0ITHmpLAHDnMfHOsOvR2MLsYXEZyc6h7QuER2oM+i0x9uPlySJuAOeljM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=dkEX6ct8; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
+	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
+	bh=JEDll7qlKJ2VdVRT6RgHb/sGcHWUgJy9vc+jPo1L+X8=; b=dkEX6ct8Gd55cQn0s2bWVGOSm3
+	02KKbH0OlC32ZxZ2rE0U1E5JLzgHEvvqXqXRc83zl7wmnNQGpGOJ7Z5yKTYmzURXcNo8sYSZ0VjsR
+	zdhtmd2uL6EEi2zq6QaeRSOvCbPlUovEXMHYu8OUNYJ1cYn8wB53z1H0BP/OWrWnDAgkKJ8j6QPWr
+	eEPjjBsbcmptSzRvkdINu+lvL1n1tj3KlCAij39E/qQ3697ZyzEcWZS5i0u52C7qc8Bq0TO/TRLze
+	vn1IS8fuAsTFhkFmaBpaxAbd/4PhArjHR8aDddZSvgdpDnl0z8/IbP7M/+vru/0JgAUPM9jgHLX8u
+	vbQdEWGQ==;
+Received: from [50.53.2.121] (helo=[192.168.254.15])
+	by bombadil.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
+	id 1rl96l-00000000bLU-1g5C;
+	Fri, 15 Mar 2024 15:04:31 +0000
+Message-ID: <68f799ae-2746-4576-a7fc-d93deadfb052@infradead.org>
+Date: Fri, 15 Mar 2024 08:04:26 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: T-vZmW_o0seczoc7mFNkIEEqWpWxpDCu
-X-Proofpoint-GUID: T-vZmW_o0seczoc7mFNkIEEqWpWxpDCu
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-15_02,2024-03-13_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- suspectscore=0 adultscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0
- malwarescore=0 impostorscore=0 mlxlogscore=999 clxscore=1015 phishscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403140001 definitions=main-2403150120
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 3/4] platform: arm64: Add Acer Aspire 1 embedded
+ controller driver
+Content-Language: en-US
+To: Nikita Travkin <nikita@trvn.ru>, Hans de Goede <hdegoede@redhat.com>,
+ =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+ Sebastian Reichel <sre@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org
+References: <20240315-aspire1-ec-v5-0-f93381deff39@trvn.ru>
+ <20240315-aspire1-ec-v5-3-f93381deff39@trvn.ru>
+From: Randy Dunlap <rdunlap@infradead.org>
+In-Reply-To: <20240315-aspire1-ec-v5-3-f93381deff39@trvn.ru>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Now that drmm_alloc_workqueue() exists, we can stop open coding our own
-implementation.
 
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
-Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
----
- drivers/accel/qaic/qaic_drv.c | 30 ++++--------------------------
- 1 file changed, 4 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_drv.c
-index f072edb74f22..9bc09b87a7e1 100644
---- a/drivers/accel/qaic/qaic_drv.c
-+++ b/drivers/accel/qaic/qaic_drv.c
-@@ -45,28 +45,6 @@ MODULE_PARM_DESC(datapath_polling, "Operate the datapath in polling mode");
- static bool link_up;
- static DEFINE_IDA(qaic_usrs);
- 
--static void qaicm_wq_release(struct drm_device *dev, void *res)
--{
--	struct workqueue_struct *wq = res;
--
--	destroy_workqueue(wq);
--}
--
--static struct workqueue_struct *qaicm_wq_init(struct drm_device *dev, const char *fmt)
--{
--	struct workqueue_struct *wq;
--	int ret;
--
--	wq = alloc_workqueue(fmt, WQ_UNBOUND, 0);
--	if (!wq)
--		return ERR_PTR(-ENOMEM);
--	ret = drmm_add_action_or_reset(dev, qaicm_wq_release, wq);
--	if (ret)
--		return ERR_PTR(ret);
--
--	return wq;
--}
--
- static void qaicm_srcu_release(struct drm_device *dev, void *res)
- {
- 	struct srcu_struct *lock = res;
-@@ -391,11 +369,11 @@ static struct qaic_device *create_qdev(struct pci_dev *pdev, const struct pci_de
- 	if (ret)
- 		return NULL;
- 
--	qdev->cntl_wq = qaicm_wq_init(drm, "qaic_cntl");
--	if (IS_ERR(qdev->cntl_wq))
-+	qdev->cntl_wq = drmm_alloc_workqueue(drm, "qaic_cntl", WQ_UNBOUND, WQ_UNBOUND_MAX_ACTIVE);
-+	if (!qdev->cntl_wq)
- 		return NULL;
--	qdev->qts_wq = qaicm_wq_init(drm, "qaic_ts");
--	if (IS_ERR(qdev->qts_wq))
-+	qdev->qts_wq = drmm_alloc_workqueue(drm, "qaic_ts", WQ_UNBOUND, WQ_UNBOUND_MAX_ACTIVE);
-+	if (!qdev->qts_wq)
- 		return NULL;
- 
- 	ret = qaicm_srcu_init(drm, &qdev->dev_lock);
+On 3/15/24 06:51, Nikita Travkin wrote:
+> diff --git a/drivers/platform/arm64/Kconfig b/drivers/platform/arm64/Kconfig
+> index 644b83ede093..07d47879a9e3 100644
+> --- a/drivers/platform/arm64/Kconfig
+> +++ b/drivers/platform/arm64/Kconfig
+> @@ -16,4 +16,20 @@ menuconfig ARM64_PLATFORM_DEVICES
+>  
+>  if ARM64_PLATFORM_DEVICES
+>  
+> +config EC_ACER_ASPIRE1
+> +	tristate "Acer Aspire 1 Emedded Controller driver"
+
+	                        Embedded
+
+> +	depends on I2C
+> +	depends on DRM
+> +	depends on POWER_SUPPLY
+> +	depends on INPUT
+> +	help
+> +	  Say Y here to enable the EC driver for the (Snapdragon-based)
+> +	  Acer Aspire 1 laptop. The EC handles battery and charging
+> +	  monitoring as well as some misc functions like the lid sensor
+> +	  and USB Type-C DP HPD events.
+> +
+> +	  This driver provides battery and AC status support for the mentioned
+> +	  laptop where this information is not properly exposed via the
+> +	  standard ACPI devices.
+
 -- 
-2.34.1
-
+#Randy
 
