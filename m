@@ -1,145 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-14289-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E8D887DA11
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Mar 2024 13:08:16 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 709FB87DA16
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Mar 2024 13:10:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 81AF11C20B02
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Mar 2024 12:08:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2BD852818CC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Mar 2024 12:10:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD08F18AF8;
-	Sat, 16 Mar 2024 12:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8509317993;
+	Sat, 16 Mar 2024 12:10:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NcotFaW+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yT6QNQ2b"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90AE18AED
-	for <linux-arm-msm@vger.kernel.org>; Sat, 16 Mar 2024 12:08:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971E81798C
+	for <linux-arm-msm@vger.kernel.org>; Sat, 16 Mar 2024 12:10:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710590893; cv=none; b=M6hL9iv6K8eAZ9cvy7WHZE8eH+V5YIpjdB1ItnVPNmdOu6K3AZIEmhlIC9LPz6+jc8+OFHJNOm0ZbWWA7yVPxviSoeZ9Tc330hLRQtpQwdNQfuf8uuuNW8fwrXdqjImzT/RZPK1UYcEZ27SlSjX36/t+ytH35fOSf3g6XoRgGWk=
+	t=1710591053; cv=none; b=W2mxiRx++MU5UdtUMDfz02j2BHxuZ+gnnuBmSRpj6bo+Qbj3dcxdV7r6zBGSlqjmOIiEL7rHRC9ddDRmwavvaLpEA6x9nouKIiYTSGNop5hXiF0EwzuJBXFWH9EEEGwnyzJXRksZeqMZWS9gs7ivRasS9HT8+Li9EoI3CWnD9kA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710590893; c=relaxed/simple;
-	bh=lOLo/MNfzxLJ6WfvIA5d9qx+T0I5n1LR8XctpmkR9ps=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NpQZpeue5OO0Z7ExDx80PT4P3RtWi+j9wCTzkGsr26NBsKconH4q0EU5MRbaDfG9NA+WYKN8Cg1z+zTliPwgbzjiv4FhEQcathCoiCxqmMZTb5kA+WCMCdKYSaTO8oGXPlSAPgRlLhY2iKQ4EcTfTk4XzQliaZBp3ueRL/tB0pY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NcotFaW+; arc=none smtp.client-ip=209.85.167.48
+	s=arc-20240116; t=1710591053; c=relaxed/simple;
+	bh=fktCCbDv/VIuSyXY3tYWs4IVqhS8SDqxMK0qvxnzbNI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=eqOAHUy5ss4pbinlQgHPRp+lZvL29y5E3QN6ljoE2RMhyQNpYWWjswM+SDzKuJjXQ2tSob5cOXQ/1ZUBS3NZOXJSPc3SShr1gNbultd209aEPqNouegb6zp21UoBes28jbVS/7X2fzx6dQGQsvb733t8Y7gOtTx3d5e6cQ3s8I4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yT6QNQ2b; arc=none smtp.client-ip=209.85.208.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-513b022a238so3607594e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Mar 2024 05:08:11 -0700 (PDT)
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2d21cdbc85bso37462751fa.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Mar 2024 05:10:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710590890; x=1711195690; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=gBQn+4o33fa3usgQAoaNIQyP/sacMzy6onFIQRcXAHA=;
-        b=NcotFaW+G94GjGNVkaWkCZowO6sJj2gkN2YMVr9CeF41mGQosp9pUY+g4oVnecetz5
-         pJc3IxCVxTN15FUuTEb7Rcs0Lb83FD08R6zEiHpJ1JjgvuwuGzvI8fDuxtHMLst/jdOu
-         vRLOOddnYvCJUwgtfQ3Hj4Id1Ct2cfGwpMtqbZyMRC7ZDdz1dwQ32+dTtrG4nmABhRKu
-         kiSy/gR3hgGSm83kC9Fa/f31xU8zDOw6QKkzGbPPdJa4+sZcIt2CtyxWZujrmZvtNG5q
-         jAzAB4JZDoQHG7uU0oVwDzHJ5uhnIU78Z5ZSBj5BkahCgW0Cgf0O9Y8kW8Pn2YTqvONl
-         Wg7w==
+        d=linaro.org; s=google; t=1710591050; x=1711195850; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=hDpnnflX/d44C9t+bbp3CWw+BJoJUiJIyi0Tnl0vMkI=;
+        b=yT6QNQ2b2ReX/W79tosz/REgxreL28Ozk3eRP9wmX0kjwJB1a0WuXGDvbDktnsQ1gn
+         v+NDeVCa0pm1R1wQLVQmQDrO0bRWBbqML4eztgaLgE444fRPpJxuSpgdNv6hS71Z3bRj
+         r84XlW5wlhQdZuFtrKo/oDzHTWfSQLd/OUtY9jfZefTKQeqERz9bV04TLq81fWpwTaBM
+         WafnAwcbRO7wasNwi+nCDDQmbS17R1jtd1WaDn4bRzZQjkZt/Trzkey+ZTTNC+LJHA3O
+         zNfqu7I23dVwrD4O7Nw6Q9uM5LR1BDB0snLUX+5gS43zKXyI7tgzE3m7HGwj3fvVG/cZ
+         cDZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710590890; x=1711195690;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gBQn+4o33fa3usgQAoaNIQyP/sacMzy6onFIQRcXAHA=;
-        b=Wy3xbYJvXec+pYxoiq1c6aB5n/H8zDyL17UZptw3tohWMKWBhrnx5u2e3pGVHXLguE
-         BSwWzwHdvyxn4TZERU9eu67635eXau59R6sIDuOrIYGEGPvLs4Dtqr02fFVCfafDkMBC
-         uXptiLfQmFi+Pg7cm3rjP7EeYVRYHlzk1XNHail3y2B0wAl4nEEQIsXQ+/kEkvVo6Oih
-         bj5SVtKkK3q4p0uI2AgjG7ykox6G2tmX7gaRA/59VqcR4prYEYOhz0Jh0ewvwnPQji84
-         F2k5Z11eKurXaFHj6Sh2oyTFr4Tdkb8vfvdJ+Q1ieDe2CuhSRd1Q1G+1eUhZM5lb7y6u
-         K/cA==
-X-Forwarded-Encrypted: i=1; AJvYcCXslDODle1Le4uCCzdUmHZriZDgAXsbWG4qxGP8vENSgNCFZuoyPLbrDO8GXU8i1llg6rN3J7/86dK3NM7g8zYIaJY+JRsDi5yqaEedDQ==
-X-Gm-Message-State: AOJu0Yw3Flofb58aY+0h2lZCDxbRlBCf2bz9hzvL5J39Uzxkni62lag9
-	SeycXufOAjUB34vIPkbpafoK198m4gLC59vRxVdnET0dv766Ib5kVQ7AsXznEFo=
-X-Google-Smtp-Source: AGHT+IETHhE2krTe+L4sEOdBQlVRhR0BCKoPhwiB4W8KP8W6cMoFtA095QgnuHEnxphTSkhsDSmAAA==
-X-Received: by 2002:a19:9142:0:b0:513:d5b5:78e9 with SMTP id y2-20020a199142000000b00513d5b578e9mr3793878lfj.26.1710590889797;
-        Sat, 16 Mar 2024 05:08:09 -0700 (PDT)
-Received: from [192.168.223.169] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id fb17-20020a056512125100b005135cdcf4a4sm950755lfb.32.2024.03.16.05.08.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 16 Mar 2024 05:08:09 -0700 (PDT)
-Message-ID: <a201b559-473c-4020-88da-2ab0589723b0@linaro.org>
-Date: Sat, 16 Mar 2024 13:08:06 +0100
+        d=1e100.net; s=20230601; t=1710591050; x=1711195850;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hDpnnflX/d44C9t+bbp3CWw+BJoJUiJIyi0Tnl0vMkI=;
+        b=gV7dhfvWcCRXvOX6YrXkiQkjFq9zOWucVGcPs85QG56+chLmjDFDlVaXvm003mGRYy
+         kdAKI0612McH79YchzXtqGPHYt73xXpkKZ8jaNTsgCRkFPegOOiYPvcaoHwhLNLNfLG2
+         n9L45XupHxsoMecjs+/RSKfNcFPsVMhc14on2uNKxzrqBRNRCi45pIvmGzcN9QXMcweG
+         mu5Yiypo/+92lKOuqlFaJ6/WJBhKLSORpsGXXXeqRT2l7LR5/eFUStGEUf+nUOQN6XuN
+         d9ZcdDRjCSi+wWs+8GZYNtn+PI5rs40MmjC9U8VMFWtMSmUMo5qNeLxKaXLbtr8Hyd+C
+         GlOQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXeEujlViXMK1kn53FUoWt5JXpYsQ0PIPpEU1Zt5lZRYgDzVakyPwU58cD1Gxr5TmYQbytYGMNsRUswHK9Bdj6+Ydo557MJV4uiVxHUgA==
+X-Gm-Message-State: AOJu0Yz9/5qbjz/97nP0c0pXk8PVDY+bwNzZUHGWdemOtbUlbkG/22W0
+	yvOxSPoZXxSl6u0UV05Kwlv55ev/X4SQtqoft26TFxQfCgZE7CEDwe4fhp9v7S8=
+X-Google-Smtp-Source: AGHT+IEcAO04rh698adudsqeA0OCLfkC2mSxbb70R3fbi4/BAOaySoscZl/ZJMdaztL3d23VKxoD6g==
+X-Received: by 2002:ac2:5e24:0:b0:513:c658:799b with SMTP id o4-20020ac25e24000000b00513c658799bmr3497844lfg.55.1710591049663;
+        Sat, 16 Mar 2024 05:10:49 -0700 (PDT)
+Received: from [10.167.154.1] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id q13-20020ac246ed000000b005134263d56bsm945284lfo.224.2024.03.16.05.10.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 16 Mar 2024 05:10:49 -0700 (PDT)
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Date: Sat, 16 Mar 2024 13:10:46 +0100
+Subject: [PATCH] arm64: dts: qcom: msm8998-yoshino: Enable RGB led
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: msm8998-yoshino: fix volume-up key
-To: Sebastian Raase <linux@sraa.de>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240315225237.1616550-1-linux@sraa.de>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20240315225237.1616550-1-linux@sraa.de>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20240316-topic-maple_led-v1-1-ca3430fd9dc5@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAEWM9WUC/x2NWwqDMBAAryL73YUkPsBepZSyJqsuxBiStgji3
+ bv0cwaGOaFyEa5wb04o/JUqe1Kwtwb8SmlhlKAMzrjOtHbA957F40Y58itywLnvyNnBmRBG0Gq
+ iyjgVSn7VLn1iVJkLz3L8N4/ndf0AVcPOQHYAAAA=
+To: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Sebastian Raase <linux@sraa.de>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1710591048; l=1354;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=7POCFrK25iWDlgWo1fz1erE33bL/FqB3Pzbou7z2qXg=;
+ b=1y3D449unX2u/4yzer9iQnPZsjeGGuEasxQxa95dyYh2Jbc37yqg4ImMS4imagsy+2Xf1LDKp
+ Tk/+TI8L2thDKJgi7oB+hH9r88T6H6xoHas5AUIPj/2hb5XxJkuw/wk
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-On 15.03.2024 23:52, Sebastian Raase wrote:
-> The volume-up key is connected to gpio6 on yoshino.
-> Fix button node ordering while at it.
-> Disable pm8998_resin, since it is now unused.
-> 
-> Tested on maple and lilac.
-> 
-> Fixes: 390883af89d2e ("arm64: dts: qcom: msm8998: Introduce support for Sony Yoshino platform")
-> Signed-off-by: Sebastian Raase <linux@sraa.de>
-> ---
+From: Konrad Dybcio <konradybcio@kernel.org>
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Add the multicolor description and enable the PMI8998 LPG to expose the
+RGB notification LED.
 
-Konrad
+Signed-off-by: Konrad Dybcio <konradybcio@kernel.org>
+---
+Depends on: <20240315225237.1616550-1-linux@sraa.de>
+---
+ .../boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi | 29 ++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
+index fdd3953938d9..d8cc0d729e99 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
+@@ -418,6 +418,35 @@ vib_ldo_en: vib-ldo-en-state {
+ 	};
+ };
+ 
++&pmi8998_lpg {
++	qcom,power-source = <1>;
++
++	status = "okay";
++
++	multi-led {
++		color = <LED_COLOR_ID_RGB>;
++		function = LED_FUNCTION_STATUS;
++
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		led@3 {
++			reg = <3>;
++			color = <LED_COLOR_ID_BLUE>;
++		};
++
++		led@4 {
++			reg = <4>;
++			color = <LED_COLOR_ID_GREEN>;
++		};
++
++		led@5 {
++			reg = <5>;
++			color = <LED_COLOR_ID_RED>;
++		};
++	};
++};
++
+ &qusb2phy {
+ 	status = "okay";
+ 
+
+---
+base-commit: 6a2bcf40b85ff77e3f32a2fbced3faaf3f59b43c
+change-id: 20240316-topic-maple_led-f54a21620dd9
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
 
