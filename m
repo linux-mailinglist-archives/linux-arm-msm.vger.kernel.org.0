@@ -1,155 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-14287-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14288-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA0DE87D6D1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 23:54:28 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 95F0087D9C9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Mar 2024 11:41:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 814B5282290
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 22:54:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 261D21F21357
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Mar 2024 10:41:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74E1D59B7E;
-	Fri, 15 Mar 2024 22:54:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 839A4111A2;
+	Sat, 16 Mar 2024 10:41:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fFlut+ct"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sraa.de (sraa.de [85.214.240.192])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508A05786D;
-	Fri, 15 Mar 2024 22:54:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.214.240.192
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C31B101CA;
+	Sat, 16 Mar 2024 10:41:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710543264; cv=none; b=UJFxCvKDZF0ssapCL3Cu82KCGDgi2N6yDga8LBeXGzVNe613+ffqJDgas9RXTh/aTbtwgTVhut2Fa5JxL3++gZhxp+6GBnNpCG5S8XQLMjYpCl3taQTwpleqUlMT2gRByOghVRporIkzIqGqic3g6pZ9FGeX91bD7P7zn1v6Y4Q=
+	t=1710585706; cv=none; b=GUMsVxtz6nqaKEK5L/34LoGaUOdmcRVu4wKHXnzTob0mJg5PGjFjX17ERTuDOrb47rG0wv2a0lFpbhkU/rD/e5HQaiUrqgVxSTRUpV5TVnaLPKytSvvHBNAS6Pii+wYs1k+71+NFqNg/u/y/mJAESzcMT0rwSajZGtIFRubeO28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710543264; c=relaxed/simple;
-	bh=6hR05NJk+lMVNR9EfuXcSOG743yQJzWU6Wr45bCwm/0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=logEDm5CdaS3iBeagUuyWVRV6KOxxgr3IPCMOyyKZUmMn2tX402rUo/+262KVimw3SRz2dO/ZvQnEpWSajX/znt3ZwO7AI4u/Cyv7ig0l6Unt60yq4lPQOMmqjpgHGnrn3e+41PKx97w0fGfVoDZR4Omj9w3/5h4xXy7XWkx6uQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sraa.de; spf=pass smtp.mailfrom=sraa.de; arc=none smtp.client-ip=85.214.240.192
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sraa.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sraa.de
-Received: from c-bda170d5.017-30-6c756e3.bbcust.telenor.se ([213.112.161.189] helo=senor0lunlx0336.fritz.box)
-	by sraa.de with esmtpa (Exim 4.94.2)
-	(envelope-from <basti@sraa.de>)
-	id 1rlGRG-006eh0-AX; Fri, 15 Mar 2024 23:54:09 +0100
-From: Sebastian Raase <linux@sraa.de>
-To: linux@sraa.de
-Cc: Bjorn Andersson <andersson@kernel.org>,
+	s=arc-20240116; t=1710585706; c=relaxed/simple;
+	bh=VvZZEADe/yjZo+gK5HdF8YmkQc3//fHA5cwRHHUoupI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nvnGIPqLUuV5gboz7j1xwNPcxoIP8S8gpkG+WHIaewi7jxV9LZro/e9HrsZR+qp0bJ+1+6JnLSXTSiS0lrS3e/zWjsM3OFpyIIRMYHBzJeUoVpk1Q39VDLuT6r4LTnqj9MrY86m59evj+cadk6mpkHfUr06MmQ7I/D8ul2tXFFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fFlut+ct; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 833DBC43390;
+	Sat, 16 Mar 2024 10:41:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1710585705;
+	bh=VvZZEADe/yjZo+gK5HdF8YmkQc3//fHA5cwRHHUoupI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fFlut+ctJhF18SbVxoUKwpANag+xrSwhU4G9rzBfcB0QYShA86thiC3nc5Glm6yzq
+	 A88I4dyu6EpFFc8MMNgOBgiANqAFQIqzt6dw+PzuWfk9uT8DboNr5Ih3+pL8hGk/0D
+	 3kHEf9bn8jWAH7JvcO9+qkhyUAmJ/fASoargC3F9Pw6Byx2fDKF2jZ1HEyo66zNDBI
+	 daOHh4ZSSgtJcV+tmA9SRNQqI61WB95M1UOnt3aFf7MEuMpheEfpfOcnVxXkpzjfCm
+	 zL7tzMHLggeBLsxDCdKG1CO2sGIYvE83Pxej0LgKljGElw+pv3f0GbADAT3iUzBhjb
+	 pHQRVRZR8i5DQ==
+Date: Sat, 16 Mar 2024 06:41:44 -0400
+From: Sasha Levin <sashal@kernel.org>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: stable@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: msm8998-yoshino: fix volume-up key
-Date: Fri, 15 Mar 2024 23:52:29 +0100
-Message-ID: <20240315225237.1616550-1-linux@sraa.de>
-X-Mailer: git-send-email 2.42.0
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH stable-6.7] soc: qcom: pmic_glink_altmode: fix drm bridge
+ use-after-free
+Message-ID: <ZfV3aIjuV9PDplWn@sashalap>
+References: <20240308090357.8758-1-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Sender: basti@sraa.de
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20240308090357.8758-1-johan+linaro@kernel.org>
 
-The volume-up key is connected to gpio6 on yoshino.
-Fix button node ordering while at it.
-Disable pm8998_resin, since it is now unused.
+On Fri, Mar 08, 2024 at 10:03:57AM +0100, Johan Hovold wrote:
+>commit b979f2d50a099f3402418d7ff5f26c3952fb08bb upstream.
+>
+>A recent DRM series purporting to simplify support for "transparent
+>bridges" and handling of probe deferrals ironically exposed a
+>use-after-free issue on pmic_glink_altmode probe deferral.
+>
+>This has manifested itself as the display subsystem occasionally failing
+>to initialise and NULL-pointer dereferences during boot of machines like
+>the Lenovo ThinkPad X13s.
+>
+>Specifically, the dp-hpd bridge is currently registered before all
+>resources have been acquired which means that it can also be
+>deregistered on probe deferrals.
+>
+>In the meantime there is a race window where the new aux bridge driver
+>(or PHY driver previously) may have looked up the dp-hpd bridge and
+>stored a (non-reference-counted) pointer to the bridge which is about to
+>be deallocated.
+>
+>When the display controller is later initialised, this triggers a
+>use-after-free when attaching the bridges:
+>
+>	dp -> aux -> dp-hpd (freed)
+>
+>which may, for example, result in the freed bridge failing to attach:
+>
+>	[drm:drm_bridge_attach [drm]] *ERROR* failed to attach bridge /soc@0/phy@88eb000 to encoder TMDS-31: -16
+>
+>or a NULL-pointer dereference:
+>
+>	Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+>	...
+>	Call trace:
+>	  drm_bridge_attach+0x70/0x1a8 [drm]
+>	  drm_aux_bridge_attach+0x24/0x38 [aux_bridge]
+>	  drm_bridge_attach+0x80/0x1a8 [drm]
+>	  dp_bridge_init+0xa8/0x15c [msm]
+>	  msm_dp_modeset_init+0x28/0xc4 [msm]
+>
+>The DRM bridge implementation is clearly fragile and implicitly built on
+>the assumption that bridges may never go away. In this case, the fix is
+>to move the bridge registration in the pmic_glink_altmode driver to
+>after all resources have been looked up.
+>
+>Incidentally, with the new dp-hpd bridge implementation, which registers
+>child devices, this is also a requirement due to a long-standing issue
+>in driver core that can otherwise lead to a probe deferral loop (see
+>commit fbc35b45f9f6 ("Add documentation on meaning of -EPROBE_DEFER")).
+>
+>[DB: slightly fixed commit message by adding the word 'commit']
+>Fixes: 080b4e24852b ("soc: qcom: pmic_glink: Introduce altmode support")
+>Fixes: 2bcca96abfbf ("soc: qcom: pmic-glink: switch to DRM_AUX_HPD_BRIDGE")
+>Cc: <stable@vger.kernel.org>      # 6.3
+>Cc: Bjorn Andersson <andersson@kernel.org>
+>Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+>Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+>Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>Link: https://patchwork.freedesktop.org/patch/msgid/20240217150228.5788-4-johan+linaro@kernel.org
+>[ johan: backport to 6.7 which does not have DRM aux bridge ]
+>Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-Tested on maple and lilac.
+Queued up, thanks!
 
-Fixes: 390883af89d2e ("arm64: dts: qcom: msm8998: Introduce support for Sony Yoshino platform")
-Signed-off-by: Sebastian Raase <linux@sraa.de>
----
- .../dts/qcom/msm8998-sony-xperia-yoshino.dtsi | 44 +++++++++++--------
- 1 file changed, 26 insertions(+), 18 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-index 876c6921ddf0..fdd3953938d9 100644
---- a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-@@ -98,30 +98,35 @@ extcon_usb: extcon-usb {
- 	gpio-keys {
- 		compatible = "gpio-keys";
- 		label = "Side buttons";
-+		pinctrl-0 = <&focus_n &snapshot_n &vol_down_n &vol_up_n>;
- 		pinctrl-names = "default";
--		pinctrl-0 = <&vol_down_n &focus_n &snapshot_n>;
--		button-vol-down {
--			label = "Volume Down";
--			gpios = <&pm8998_gpios 5 GPIO_ACTIVE_LOW>;
--			linux,input-type = <EV_KEY>;
--			linux,code = <KEY_VOLUMEDOWN>;
--			wakeup-source;
-+		button-camera-focus {
-+			label = "Camera Focus";
-+			gpios = <&pm8998_gpios 8 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_CAMERA_FOCUS>;
- 			debounce-interval = <15>;
- 		};
- 
- 		button-camera-snapshot {
- 			label = "Camera Snapshot";
- 			gpios = <&pm8998_gpios 7 GPIO_ACTIVE_LOW>;
--			linux,input-type = <EV_KEY>;
- 			linux,code = <KEY_CAMERA>;
- 			debounce-interval = <15>;
- 		};
- 
--		button-camera-focus {
--			label = "Camera Focus";
--			gpios = <&pm8998_gpios 8 GPIO_ACTIVE_LOW>;
--			linux,input-type = <EV_KEY>;
--			linux,code = <KEY_CAMERA_FOCUS>;
-+		button-vol-down {
-+			label = "Volume Down";
-+			gpios = <&pm8998_gpios 5 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEDOWN>;
-+			wakeup-source;
-+			debounce-interval = <15>;
-+		};
-+
-+		button-vol-up {
-+			label = "Volume Up";
-+			gpios = <&pm8998_gpios 6 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			wakeup-source;
- 			debounce-interval = <15>;
- 		};
- 	};
-@@ -345,6 +350,14 @@ vol_down_n: vol-down-n-state {
- 		qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
- 	};
- 
-+	vol_up_n: vol-up-n-state {
-+		pins = "gpio6";
-+		function = PMIC_GPIO_FUNC_NORMAL;
-+		bias-pull-up;
-+		input-enable;
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
-+	};
-+
- 	focus_n: focus-n-state {
- 		pins = "gpio7";
- 		function = PMIC_GPIO_FUNC_NORMAL;
-@@ -405,11 +418,6 @@ vib_ldo_en: vib-ldo-en-state {
- 	};
- };
- 
--&pm8998_resin {
--	linux,code = <KEY_VOLUMEUP>;
--	status = "okay";
--};
--
- &qusb2phy {
- 	status = "okay";
- 
 -- 
-2.42.0
-
+Thanks,
+Sasha
 
