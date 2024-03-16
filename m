@@ -1,137 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-14294-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14295-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id ABA0187DAFA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Mar 2024 18:17:28 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0051987DB0B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Mar 2024 18:24:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4FE751F2162E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Mar 2024 17:17:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AF0E2281B20
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Mar 2024 17:24:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 729C11BC4F;
-	Sat, 16 Mar 2024 17:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35B401BDD5;
+	Sat, 16 Mar 2024 17:24:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O82n/udP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vallxqpk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FEAE1BDCD;
-	Sat, 16 Mar 2024 17:17:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DEBC1BDCE;
+	Sat, 16 Mar 2024 17:24:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710609443; cv=none; b=tuSwe7+ywvco/LknIE1RVl/s0Bw8fv2Mhf174JtHcqunCd5KFuIIXJzdSmqCIdnQq8GhjJ+okh/17VVmKggJ8RJmgKbLO990oJTYO9fI+pL+AbbS4qIQeODE53jy3QXXncHzjii8yjPkwTZplSYDtGMVvmR7WNaWv0LaZ1Z2Wdo=
+	t=1710609880; cv=none; b=iSHn0yJZ1+2JhjdZML3RohdTSk4aWmntnZemAlEznVttMgewHo0uzOH/uHHTWoBXR7whBfMvfrDVzzxjTP71zb9mHgvts8QzlQXMhM4OzpoyfaA695gk1FYjAhDIQqE0/PCS5+QBrpl6zmFi1XwKvGUAb4N6fmxWRTMDbus626Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710609443; c=relaxed/simple;
-	bh=Y7MMok4/WVkHSrSRtc7DvUedfEzlbaDNki4+7DUNy14=;
+	s=arc-20240116; t=1710609880; c=relaxed/simple;
+	bh=t2f9OCV2id9IXt90SjuS1wuibjrWOdvYSHURUhVXBCc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EMMAzunRJ/D458aaDbIcfK8dr59bqgXx5ydGfK2oW80oiDKVGQ42jp9ofJgQSbsxOv+Ds+vQDbY8VTPVFK2iYzyu1jP2H+0sKrPtZulEGoIRfFQ6eZgmdkkGmGKKCSDeDoMfRdVEm9WaCMviLuD99tQv76C/s+nDBq+SxIZZ/qA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O82n/udP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53F13C433F1;
-	Sat, 16 Mar 2024 17:17:22 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=eWFFBOA0pxe0Fp0fZok10XlmJEf6F8oWeaj5AzBIxTPa+2FjPg8Bqpg1y4sYF7vzOsu7hUEiH6h3mJlUTD6OxoYjzb2DsXtSF0HKeecq5M32iOlOsxrbrHZFei6yDGkgPU1YVUOwkaBkJw1kJyxjMqnz9SMuBFqds3Qgxihqs+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vallxqpk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E307C433F1;
+	Sat, 16 Mar 2024 17:24:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710609442;
-	bh=Y7MMok4/WVkHSrSRtc7DvUedfEzlbaDNki4+7DUNy14=;
+	s=k20201202; t=1710609879;
+	bh=t2f9OCV2id9IXt90SjuS1wuibjrWOdvYSHURUhVXBCc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=O82n/udPHZsXGhrOdHp3YwXVBKYHxRyitzXa2IawL4hHCDHHLB8igqPY+jmI9AAO4
-	 aBbU+ZhdDufIrPkF/YTLhMIp6wusPe+zgWhdR1wFQBuF30AeB7rBMuTFtj3FuwQHpc
-	 tmRSXD4SCG06wfbGaLSvcW+n6vw76xFNI4JLRCxGu0ZpJxXe2z75rsxD+7e+wa7lNP
-	 X3gP33ZefdASj55rnVFR5fEdm3eRbqrpveeGksGmRZXWL0Mlugn8pF15eMGrUyfPG3
-	 PYc9glpMLnvSG0hP3f1wzdQMg4XTJQHIp6CFK42Xgz3PTGtiTLe1PWA0IjMl7Zy0ku
-	 l+SRWl3cfj7Gw==
-Date: Sat, 16 Mar 2024 12:17:20 -0500
+	b=Vallxqpk8xB2VeXjticMxlwQFQ+em2yaUhv4FF8f7i7m5oXFD2XPtOz2UXt/g0WUe
+	 E+5wMuOdRVJ4ZCVl37W3G3fI3RKhS6bhHatbPqRYeMhPhgLFeKZz/zXdAExgpxqMi0
+	 dsPtdKld/ezhDUxzDUrJfDf5Y4hFcN5qbLg7vyhGtzA4okLqTiiQ1IPmIKViE60d0F
+	 EzuNoYwYsI4Rz72rWcHiOdWduAiNAsZpwnC8yyU6oYyoMv+hUCVKvRJAEef0o3pYc/
+	 WFjFnONb3j2WXGa3UHKj/cYOrXEKN5LGEyuNMBzQmXJ54o4MRhvzW4H7dxFWWOLQIW
+	 v8RmQvBhVDxHg==
+Date: Sat, 16 Mar 2024 12:24:36 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Auditya Bhattaram <quic_audityab@quicinc.com>
-Cc: konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH v4] soc: qcom: mdt_loader: Add Upperbounds check for
- program header access
-Message-ID: <2m2sbrg2d667ciiiog3nekfjt3gfn4na64avtp6yctxasejtal@6pipid473s7h>
-References: <20240213080010.16924-1-quic_audityab@quicinc.com>
- <y6em73mzbh47fzpgfvfsrypw5ktgt6zaqfujscaxkjuqivlxcr@vcke7w4omq7b>
- <38e6cf32-78fc-4a5a-a98c-18b126bdf50f@quicinc.com>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Andy Gross <agross@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Elliot Berman <quic_eberman@quicinc.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Guru Das Srinagesh <quic_gurus@quicinc.com>, 
+	Andrew Halaney <ahalaney@redhat.com>, Maximilian Luz <luzmaximilian@gmail.com>, 
+	Alex Elder <elder@linaro.org>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
+	Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, kernel@quicinc.com, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Deepti Jaggi <quic_djaggi@quicinc.com>
+Subject: Re: [PATCH v7 08/12] firmware: qcom: qseecom: convert to using the
+ TZ allocator
+Message-ID: <vevlpit6xttrrpse6lxw43vnmf7hpoxsovoofrdvam7dmmvyyh@5bajhnotdr3y>
+References: <20240205182810.58382-1-brgl@bgdev.pl>
+ <20240205182810.58382-9-brgl@bgdev.pl>
+ <yu5uhamdlygti3jo73ipy3gxhcmgxrm5g6imgqg6ksleim4ton@npvzlex2j4xi>
+ <CAMRc=Mctm-cyYPpu-Vb+fr1cWJPUW49shaa9HEXYp+rkF_CHUw@mail.gmail.com>
+ <odnisr4flot3rgwwqpjob3qtw63jow7hcj4guy6ao6spdz6fm4@wtcm62o3hgxm>
+ <CAMRc=Mezj4BQ=-4SfgdE6OmKX0X8+xedvroBNeaDeyqey4=2DQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <38e6cf32-78fc-4a5a-a98c-18b126bdf50f@quicinc.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMRc=Mezj4BQ=-4SfgdE6OmKX0X8+xedvroBNeaDeyqey4=2DQ@mail.gmail.com>
 
-On Wed, Feb 14, 2024 at 11:27:01AM +0530, Auditya Bhattaram wrote:
+On Sun, Mar 03, 2024 at 05:18:18PM +0100, Bartosz Golaszewski wrote:
+> On Tue, Feb 27, 2024 at 5:53 PM Bjorn Andersson <andersson@kernel.org> wrote:
+> >
+> > On Tue, Feb 20, 2024 at 10:54:02AM +0100, Bartosz Golaszewski wrote:
+> > >
+> > > I disagree. If we have a better interface in place, then let's use it
+> > > right away, otherwise it's just useless churn.
+> > >
+> >
+> > The functional change and the use of cleanup macros, could be done
+> > independently of each other, each one fully beneficial on their own.
+> >
+> > As such I don't find it hard to claim that they are two independent
+> > changes.
+> >
 > 
-> 
-> On 2/14/2024 11:12 AM, Bjorn Andersson wrote:
-> > On Tue, Feb 13, 2024 at 01:30:10PM +0530, Auditya Bhattaram wrote:
-> > > hash_index is evaluated by looping phdrs till QCOM_MDT_TYPE_HASH
-> > > is found. Add an upperbound check to phdrs to access within elf size.
-> > > 
-> > 
-> > How is this compatible with what is being observed on SM8450 and
-> > implemented in commit 8bd42e2341a7 ("soc: qcom: mdt_loader: Allow hash
-> > segment to be split out"?
-> > 
-> > Regards,
-> > Bjorn
-> > 
-> 
-> Calculating hash_index is introduced with this commit 8bd42e2341a7 ("soc:
-> qcom: mdt_loader: Allow hash segment to be split out"
-> 
->     for (i = 1; i < ehdr->e_phnum; i++) {
->  	if ((phdrs[i].p_flags & QCOM_MDT_TYPE_MASK) ...
-> 
-> I'm trying to add an upper bound for this access "phdrs[i]"
+> This series would be 50% bigger for no reason if we split every patch
+> using the new allocator into two.
+
+I'm not asking you to split every patch into two, unless that makes
+sense.
+
+> I absolutely don't see how this makes any sense.
+
+I find it unnecessarily hard to determine which parts of _this_ patch is
+functional and which is cleanup.
+
+> We're removing the calls to old interfaces and using
+> the new ones instead. The new ones happen to support cleanup so we use
+> it right away. If the old ones supported cleanup then maybeeee it
+> would make some sense to convert them first and then use tzmem. As it
+> is, there's really no point.
 > 
 
-Ahh, sorry, you're of course correct. I think I would have preferred a
-more obvious check of offset >= fw->size though...
-
-That said, this code used to sit behind rproc_elf_sanity_check(), but
-that seem to have been lost in the refactorings. As such, your patch is
-incomplete and we should reintroduce a whole bunch of these sanity
-checks!
+The old interface is kzalloc(). I haven't used the cleanup mechanism
+myself yet, but are you saying that there's no cleanup support for
+kzalloc()?
 
 Regards,
 Bjorn
-
-> > > Fixes: 64fb5eb87d58 ("soc: qcom: mdt_loader: Allow hash to reside in any segment")
-> > > Cc: <stable@vger.kernel.org>
-> > > Signed-off-by: Auditya Bhattaram <quic_audityab@quicinc.com>
-> > > Acked-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> > > ---
-> > > Changes in v4:
-> > >   - Added additional prints incase of Invalid access.
-> > > Link to v3 https://lore.kernel.org/stable/1c91c653-cebe-4407-bdd6-cfc73b64c0fb@quicinc.com
-> > > Link to v2 https://lore.kernel.org/linux-arm-msm/9773d189-c896-d5c5-804c-e086c24987b4@quicinc.com/T/#t
-> > > Link to v1 https://lore.kernel.org/linux-arm-msm/5d7a3b97-d840-4863-91a0-32c1d8e7532f@linaro.org/T/#t
-> > > ---
-> > >   drivers/soc/qcom/mdt_loader.c | 7 +++++++
-> > >   1 file changed, 7 insertions(+)
-> > > 
-> > > diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
-> > > index 6f177e46fa0f..1a79a7bba468 100644
-> > > --- a/drivers/soc/qcom/mdt_loader.c
-> > > +++ b/drivers/soc/qcom/mdt_loader.c
-> > > @@ -145,6 +143,13 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len,
-> > >   	if (phdrs[0].p_type == PT_LOAD)
-> > >   		return ERR_PTR(-EINVAL);
-> > > 
-> > > +	if (((size_t)(phdrs + ehdr->e_phnum)) > ((size_t)ehdr + fw->size)) {
-> > > +		dev_err(dev,
-> > > +			"Invalid phdrs access for fw: %s, e_phnum: %u, fw->size: %zu\n",
-> > > +			fw_name, ehdr->e_phnum, fw->size);
-> > > +		return ERR_PTR(-EINVAL);
-> > > +	}
-> > > +
-> > >   	for (i = 1; i < ehdr->e_phnum; i++) {
-> > >   		if ((phdrs[i].p_flags & QCOM_MDT_TYPE_MASK) == QCOM_MDT_TYPE_HASH) {
-> > >   			hash_segment = i;
-> > > --
-> > > 2.17.1
-> > > 
 
