@@ -1,122 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-14291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14292-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 84D6E87DAA5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Mar 2024 17:01:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DB09387DAC2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Mar 2024 17:20:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3D3DD282865
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Mar 2024 16:01:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 954FE2820E2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Mar 2024 16:20:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B86B1B970;
-	Sat, 16 Mar 2024 16:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03A7A1BC26;
+	Sat, 16 Mar 2024 16:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AxHeZiVm"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DXNM6JFW"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3151B299;
-	Sat, 16 Mar 2024 16:01:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64561B964;
+	Sat, 16 Mar 2024 16:20:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710604889; cv=none; b=mzbIAJXVDN9WTx2ZBrWrsT4KRDOz/KzgU6HJqbyBtsV0RYwNc/ezEHiwH+oKeOMi41Bv2K2gFBL3oR+CYdt/QsrgibhEMS3MgWg30qgzG2FmfXYvD0FiGqBK9RhHeanzq/G2Z3r2Bs6d03vH78iUkONS9+ZJHPtCNmV/CQo/6UI=
+	t=1710606009; cv=none; b=uHSimcp9LlZHbKbpT26QHTEfjGhXC2DoHtQRdt6LbChJlC87fQQQvANkIQudLaFkWLfpVW26cAlVU4devfkaKOX5YWXUnfkqzJlBRivHgrnfaxSB8vgEfBpEZCoYvfZohxHJvZpNPTmoge9wPpsGcdNsjy+cPc5Z0Jf73bDHpEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710604889; c=relaxed/simple;
-	bh=E8gpcSQ4g+qjnbdy6/BOeXM1PQg+hZZkOsNPJV1YA+Y=;
+	s=arc-20240116; t=1710606009; c=relaxed/simple;
+	bh=wWfDrMxlKAAHdXQoz1wKJ6soUSFbO+NXsn6wGPuTqeg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AepKFr1nKXoopRKzVOlLYA6pHYsS9kYjxdfBpaXkxziLdepqvCMwkOiEDEfBOYin5vR1LsKOtIYps+rxDGoNBAoOJHhyqpfwSRNFq+TxLpBdzZU6yH+piDTtyNkAzkUEkao+c+McPRii5fvn5Q7+zRPsH77k4O6ygNOJvLOmqf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AxHeZiVm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C8A9C433C7;
-	Sat, 16 Mar 2024 16:01:27 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=f8W9Y9oFLpNBcaSx71bZ4YtQt1Hswt1LJpCIBrRLyrCKPSnrgxQCtlXXT88X3wM55CPUZr0+UIVysG7AnsbzzYnrKEFzoYjx47OwHu9qIYTASQzN6aAmEbxxm7pXvGAWhnttF0J3eLEic/yrWxD9UghS6HdGjSGwPFlsnltlJSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DXNM6JFW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5136C433F1;
+	Sat, 16 Mar 2024 16:20:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710604888;
-	bh=E8gpcSQ4g+qjnbdy6/BOeXM1PQg+hZZkOsNPJV1YA+Y=;
+	s=k20201202; t=1710606009;
+	bh=wWfDrMxlKAAHdXQoz1wKJ6soUSFbO+NXsn6wGPuTqeg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=AxHeZiVmueWwHy/Tvld9s1FsYsofbgvjQqJ2wBze7H2Ldfmdu8z7WJLEENRkvB5yl
-	 +V+3+DpToZpyT4Udw0s11ZnxK5g8V64EfNBOR3yqSf93PzbuxpC0okzC9hLGbXXp9m
-	 +GbxG2BGQaXUPbqQMcvOt7/yfxuqZ5KDIQWKTQLUpPknoYGH5nK7HHlbXWqmBHk5EN
-	 +xNSK0vBWcRoaeVX7/s4/sN4NoZkg9qLcQeKmNBETBHt+UoLCulQ4SGT09pi2F6MGC
-	 wWXuQUfkk8uIFBv32otHrlN4K+L6xTWfO1aYXwMzSzq793luTaZ6+j+20V/3yj8x5H
-	 rQhSiewwWp4GQ==
-Date: Sat, 16 Mar 2024 11:01:25 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Luca Weiss <luca.weiss@fairphone.com>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFT 0/7] arm64: qcom: allow up to 4 lanes for the Type-C
- DisplayPort Altmode
-Message-ID: <liah4xvkfattlen7s2zi3vt2bl5pbbxqgig3k5ljqpveoao656@iacnommxkjkt>
-References: <20240229-topic-sm8x50-upstream-phy-combo-typec-mux-v1-0-07e24a231840@linaro.org>
- <CZUHV429NTF7.1GW9TN9NXB4J1@fairphone.com>
- <7a7aa05f-9ae6-4ca0-a423-224fc78fbd0c@linaro.org>
+	b=DXNM6JFWMvnjo24oeEsdu6XQL44YKNfYOZgAr/fIZzRh/Z/Yszq1ltqqeGNHx4ZUR
+	 AOsBUQ4TQf04amRNE+iFRbl118k/paSNZaMFSL+41+8zdvWSVNMcVEcDTkZ3F3lWFr
+	 po6tQKcq67y0LDRY1pWITvAISJ/AmuZmvWmPmuyB6UCdNRMVFQZBmNlOPmqmm8JfwP
+	 h8MxSegPgTf1EYKTeHgxpC/f6SaNI/ALXn9QEKadLOEw/nfBwiLI//+yitKD/IeAiN
+	 TFq8O0tN3nzdG+jF/+KahMmY3CiTyW6Gqmwr1bV2CY6vlO0Y8Jo1b0lzIi2dQa8nhL
+	 sirzoeVrGBSUQ==
+Date: Sat, 16 Mar 2024 16:20:03 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Caleb Connolly <caleb.connolly@linaro.org>
+Cc: Amrit Anand <quic_amrianan@quicinc.com>, robh@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+	agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, kernel@quicinc.com,
+	peter.griffin@linaro.org, linux-riscv@lists.infradead.org,
+	chrome-platform@lists.linux.dev, linux-mediatek@lists.infradead.org,
+	Simon Glass <sjg@chromium.org>
+Subject: Re: [PATCH v2 2/2] dt-bindings: qcom: Update DT bindings for
+ multiple DT
+Message-ID: <20240316-germinate-browsing-6865db3a44d7@spud>
+References: <1710418312-6559-1-git-send-email-quic_amrianan@quicinc.com>
+ <1710418312-6559-3-git-send-email-quic_amrianan@quicinc.com>
+ <f6f317d9-830d-4c38-998f-b229b3d9f95a@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="tCduvHh9wXhEP0el"
+Content-Disposition: inline
+In-Reply-To: <f6f317d9-830d-4c38-998f-b229b3d9f95a@linaro.org>
+
+
+--tCduvHh9wXhEP0el
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <7a7aa05f-9ae6-4ca0-a423-224fc78fbd0c@linaro.org>
 
-On Fri, Mar 15, 2024 at 06:35:15PM +0100, Neil Armstrong wrote:
-> On 15/03/2024 18:19, Luca Weiss wrote:
-> > On Thu Feb 29, 2024 at 2:07 PM CET, Neil Armstrong wrote:
-> > > Register a typec mux in order to change the PHY mode on the Type-C
-> > > mux events depending on the mode and the svid when in Altmode setup.
-> > > 
-> > > The DisplayPort phy should be left enabled if is still powered on
-> > > by the DRM DisplayPort controller, so bail out until the DisplayPort
-> > > PHY is not powered off.
-> > > 
-> > > The Type-C Mode/SVID only changes on plug/unplug, and USB SAFE states
-> > > will be set in between of USB-Only, Combo and DisplayPort Only so
-> > > this will leave enough time to the DRM DisplayPort controller to
-> > > turn of the DisplayPort PHY.
-> > > 
-> > > The patchset also includes bindings changes and DT changes.
-> > > 
-> > > This has been successfully tested on an SM8550 board, but the
-> > > Thinkpad X13s deserved testing between non-PD USB, non-PD DisplayPort,
-> > > PD USB Hubs and PD Altmode Dongles to make sure the switch works
-> > > as expected.
-> > > 
-> > > The DisplayPort 4 lanes setup can be check with:
-> > > $ cat /sys/kernel/debug/dri/ae01000.display-controller/DP-1/dp_debug
-> > > 	name = msm_dp
-> > > 	drm_dp_link
-> > > 		rate = 540000
-> > > 		num_lanes = 4
-> > 
-> > Hi Neil,
-> > 
-> > I tried this on QCM6490/SC7280 which should also support 4-lane DP but I
-> > haven't had any success so far.
-> > 
-[..]
-> > [ 1775.563969] [drm:dp_ctrl_link_train] *ERROR* max v_level reached
-> > [ 1775.564031] [drm:dp_ctrl_link_train] *ERROR* link training #1 failed. ret=-11
-> 
-> Interesting #1 means the 4 lanes are not physically connected to the other side,
-> perhaps QCM6490/SC7280 requires a specific way to enable the 4 lanes in the PHY,
-> or some fixups in the init tables.
-> 
+On Thu, Mar 14, 2024 at 02:20:38PM +0000, Caleb Connolly wrote:
+> On 14/03/2024 12:11, Amrit Anand wrote:
+> 2. A top level board-id property that isn't namespaced implies that it
+> isn't vendor specific, but the proposed implementation doesn't even
+> pretend to be vendor agnostic.
 
-I tested the same on rb3gen2 (qcs6490) a couple of weeks ago, with the
-same outcome. Looking at the AUX reads, after switching to 4-lane the
-link training is failing on all 4 lanes, in contrast to succeeding only
-on the first 2 if you e.g. forget to mux the other two.
+I pointed out previously that the Chromebook guys had some similar
+issues with dtb selection when the OEM varies parts but there does not
+seem to be any of them on CC here.
+There's definitely a generic problem to be solved here but I don't see
+an effort made to involve the other people known to have the same
+problems and this is all highly vendor specific.
 
-As such, my expectation is that there's something wrong in the QMP PHY
-(or possibly redriver) for this platform.
+--tCduvHh9wXhEP0el
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Regards,
-Bjorn
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZfXGswAKCRB4tDGHoIJi
+0i8QAP933DDPKZ34gelBNiCnSveXI+wd4DrofTe+JiVItAGQngEA38mvngcysQke
+6ZrKo1u7YDvXAH0bmMFJAWV6LKzeWg0=
+=F4VS
+-----END PGP SIGNATURE-----
+
+--tCduvHh9wXhEP0el--
 
