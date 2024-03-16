@@ -1,160 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-14290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 709FB87DA16
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Mar 2024 13:10:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 84D6E87DAA5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Mar 2024 17:01:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2BD852818CC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Mar 2024 12:10:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3D3DD282865
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Mar 2024 16:01:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8509317993;
-	Sat, 16 Mar 2024 12:10:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B86B1B970;
+	Sat, 16 Mar 2024 16:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yT6QNQ2b"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AxHeZiVm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971E81798C
-	for <linux-arm-msm@vger.kernel.org>; Sat, 16 Mar 2024 12:10:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3151B299;
+	Sat, 16 Mar 2024 16:01:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710591053; cv=none; b=W2mxiRx++MU5UdtUMDfz02j2BHxuZ+gnnuBmSRpj6bo+Qbj3dcxdV7r6zBGSlqjmOIiEL7rHRC9ddDRmwavvaLpEA6x9nouKIiYTSGNop5hXiF0EwzuJBXFWH9EEEGwnyzJXRksZeqMZWS9gs7ivRasS9HT8+Li9EoI3CWnD9kA=
+	t=1710604889; cv=none; b=mzbIAJXVDN9WTx2ZBrWrsT4KRDOz/KzgU6HJqbyBtsV0RYwNc/ezEHiwH+oKeOMi41Bv2K2gFBL3oR+CYdt/QsrgibhEMS3MgWg30qgzG2FmfXYvD0FiGqBK9RhHeanzq/G2Z3r2Bs6d03vH78iUkONS9+ZJHPtCNmV/CQo/6UI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710591053; c=relaxed/simple;
-	bh=fktCCbDv/VIuSyXY3tYWs4IVqhS8SDqxMK0qvxnzbNI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=eqOAHUy5ss4pbinlQgHPRp+lZvL29y5E3QN6ljoE2RMhyQNpYWWjswM+SDzKuJjXQ2tSob5cOXQ/1ZUBS3NZOXJSPc3SShr1gNbultd209aEPqNouegb6zp21UoBes28jbVS/7X2fzx6dQGQsvb733t8Y7gOtTx3d5e6cQ3s8I4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yT6QNQ2b; arc=none smtp.client-ip=209.85.208.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2d21cdbc85bso37462751fa.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Mar 2024 05:10:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710591050; x=1711195850; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=hDpnnflX/d44C9t+bbp3CWw+BJoJUiJIyi0Tnl0vMkI=;
-        b=yT6QNQ2b2ReX/W79tosz/REgxreL28Ozk3eRP9wmX0kjwJB1a0WuXGDvbDktnsQ1gn
-         v+NDeVCa0pm1R1wQLVQmQDrO0bRWBbqML4eztgaLgE444fRPpJxuSpgdNv6hS71Z3bRj
-         r84XlW5wlhQdZuFtrKo/oDzHTWfSQLd/OUtY9jfZefTKQeqERz9bV04TLq81fWpwTaBM
-         WafnAwcbRO7wasNwi+nCDDQmbS17R1jtd1WaDn4bRzZQjkZt/Trzkey+ZTTNC+LJHA3O
-         zNfqu7I23dVwrD4O7Nw6Q9uM5LR1BDB0snLUX+5gS43zKXyI7tgzE3m7HGwj3fvVG/cZ
-         cDZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710591050; x=1711195850;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hDpnnflX/d44C9t+bbp3CWw+BJoJUiJIyi0Tnl0vMkI=;
-        b=gV7dhfvWcCRXvOX6YrXkiQkjFq9zOWucVGcPs85QG56+chLmjDFDlVaXvm003mGRYy
-         kdAKI0612McH79YchzXtqGPHYt73xXpkKZ8jaNTsgCRkFPegOOiYPvcaoHwhLNLNfLG2
-         n9L45XupHxsoMecjs+/RSKfNcFPsVMhc14on2uNKxzrqBRNRCi45pIvmGzcN9QXMcweG
-         mu5Yiypo/+92lKOuqlFaJ6/WJBhKLSORpsGXXXeqRT2l7LR5/eFUStGEUf+nUOQN6XuN
-         d9ZcdDRjCSi+wWs+8GZYNtn+PI5rs40MmjC9U8VMFWtMSmUMo5qNeLxKaXLbtr8Hyd+C
-         GlOQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXeEujlViXMK1kn53FUoWt5JXpYsQ0PIPpEU1Zt5lZRYgDzVakyPwU58cD1Gxr5TmYQbytYGMNsRUswHK9Bdj6+Ydo557MJV4uiVxHUgA==
-X-Gm-Message-State: AOJu0Yz9/5qbjz/97nP0c0pXk8PVDY+bwNzZUHGWdemOtbUlbkG/22W0
-	yvOxSPoZXxSl6u0UV05Kwlv55ev/X4SQtqoft26TFxQfCgZE7CEDwe4fhp9v7S8=
-X-Google-Smtp-Source: AGHT+IEcAO04rh698adudsqeA0OCLfkC2mSxbb70R3fbi4/BAOaySoscZl/ZJMdaztL3d23VKxoD6g==
-X-Received: by 2002:ac2:5e24:0:b0:513:c658:799b with SMTP id o4-20020ac25e24000000b00513c658799bmr3497844lfg.55.1710591049663;
-        Sat, 16 Mar 2024 05:10:49 -0700 (PDT)
-Received: from [10.167.154.1] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id q13-20020ac246ed000000b005134263d56bsm945284lfo.224.2024.03.16.05.10.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 Mar 2024 05:10:49 -0700 (PDT)
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Sat, 16 Mar 2024 13:10:46 +0100
-Subject: [PATCH] arm64: dts: qcom: msm8998-yoshino: Enable RGB led
+	s=arc-20240116; t=1710604889; c=relaxed/simple;
+	bh=E8gpcSQ4g+qjnbdy6/BOeXM1PQg+hZZkOsNPJV1YA+Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AepKFr1nKXoopRKzVOlLYA6pHYsS9kYjxdfBpaXkxziLdepqvCMwkOiEDEfBOYin5vR1LsKOtIYps+rxDGoNBAoOJHhyqpfwSRNFq+TxLpBdzZU6yH+piDTtyNkAzkUEkao+c+McPRii5fvn5Q7+zRPsH77k4O6ygNOJvLOmqf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AxHeZiVm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C8A9C433C7;
+	Sat, 16 Mar 2024 16:01:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1710604888;
+	bh=E8gpcSQ4g+qjnbdy6/BOeXM1PQg+hZZkOsNPJV1YA+Y=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=AxHeZiVmueWwHy/Tvld9s1FsYsofbgvjQqJ2wBze7H2Ldfmdu8z7WJLEENRkvB5yl
+	 +V+3+DpToZpyT4Udw0s11ZnxK5g8V64EfNBOR3yqSf93PzbuxpC0okzC9hLGbXXp9m
+	 +GbxG2BGQaXUPbqQMcvOt7/yfxuqZ5KDIQWKTQLUpPknoYGH5nK7HHlbXWqmBHk5EN
+	 +xNSK0vBWcRoaeVX7/s4/sN4NoZkg9qLcQeKmNBETBHt+UoLCulQ4SGT09pi2F6MGC
+	 wWXuQUfkk8uIFBv32otHrlN4K+L6xTWfO1aYXwMzSzq793luTaZ6+j+20V/3yj8x5H
+	 rQhSiewwWp4GQ==
+Date: Sat, 16 Mar 2024 11:01:25 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Luca Weiss <luca.weiss@fairphone.com>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFT 0/7] arm64: qcom: allow up to 4 lanes for the Type-C
+ DisplayPort Altmode
+Message-ID: <liah4xvkfattlen7s2zi3vt2bl5pbbxqgig3k5ljqpveoao656@iacnommxkjkt>
+References: <20240229-topic-sm8x50-upstream-phy-combo-typec-mux-v1-0-07e24a231840@linaro.org>
+ <CZUHV429NTF7.1GW9TN9NXB4J1@fairphone.com>
+ <7a7aa05f-9ae6-4ca0-a423-224fc78fbd0c@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240316-topic-maple_led-v1-1-ca3430fd9dc5@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAEWM9WUC/x2NWwqDMBAAryL73YUkPsBepZSyJqsuxBiStgji3
- bv0cwaGOaFyEa5wb04o/JUqe1Kwtwb8SmlhlKAMzrjOtHbA957F40Y58itywLnvyNnBmRBG0Gq
- iyjgVSn7VLn1iVJkLz3L8N4/ndf0AVcPOQHYAAAA=
-To: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Sebastian Raase <linux@sraa.de>, 
- Konrad Dybcio <konradybcio@kernel.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1710591048; l=1354;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=7POCFrK25iWDlgWo1fz1erE33bL/FqB3Pzbou7z2qXg=;
- b=1y3D449unX2u/4yzer9iQnPZsjeGGuEasxQxa95dyYh2Jbc37yqg4ImMS4imagsy+2Xf1LDKp
- Tk/+TI8L2thDKJgi7oB+hH9r88T6H6xoHas5AUIPj/2hb5XxJkuw/wk
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7a7aa05f-9ae6-4ca0-a423-224fc78fbd0c@linaro.org>
 
-From: Konrad Dybcio <konradybcio@kernel.org>
+On Fri, Mar 15, 2024 at 06:35:15PM +0100, Neil Armstrong wrote:
+> On 15/03/2024 18:19, Luca Weiss wrote:
+> > On Thu Feb 29, 2024 at 2:07 PM CET, Neil Armstrong wrote:
+> > > Register a typec mux in order to change the PHY mode on the Type-C
+> > > mux events depending on the mode and the svid when in Altmode setup.
+> > > 
+> > > The DisplayPort phy should be left enabled if is still powered on
+> > > by the DRM DisplayPort controller, so bail out until the DisplayPort
+> > > PHY is not powered off.
+> > > 
+> > > The Type-C Mode/SVID only changes on plug/unplug, and USB SAFE states
+> > > will be set in between of USB-Only, Combo and DisplayPort Only so
+> > > this will leave enough time to the DRM DisplayPort controller to
+> > > turn of the DisplayPort PHY.
+> > > 
+> > > The patchset also includes bindings changes and DT changes.
+> > > 
+> > > This has been successfully tested on an SM8550 board, but the
+> > > Thinkpad X13s deserved testing between non-PD USB, non-PD DisplayPort,
+> > > PD USB Hubs and PD Altmode Dongles to make sure the switch works
+> > > as expected.
+> > > 
+> > > The DisplayPort 4 lanes setup can be check with:
+> > > $ cat /sys/kernel/debug/dri/ae01000.display-controller/DP-1/dp_debug
+> > > 	name = msm_dp
+> > > 	drm_dp_link
+> > > 		rate = 540000
+> > > 		num_lanes = 4
+> > 
+> > Hi Neil,
+> > 
+> > I tried this on QCM6490/SC7280 which should also support 4-lane DP but I
+> > haven't had any success so far.
+> > 
+[..]
+> > [ 1775.563969] [drm:dp_ctrl_link_train] *ERROR* max v_level reached
+> > [ 1775.564031] [drm:dp_ctrl_link_train] *ERROR* link training #1 failed. ret=-11
+> 
+> Interesting #1 means the 4 lanes are not physically connected to the other side,
+> perhaps QCM6490/SC7280 requires a specific way to enable the 4 lanes in the PHY,
+> or some fixups in the init tables.
+> 
 
-Add the multicolor description and enable the PMI8998 LPG to expose the
-RGB notification LED.
+I tested the same on rb3gen2 (qcs6490) a couple of weeks ago, with the
+same outcome. Looking at the AUX reads, after switching to 4-lane the
+link training is failing on all 4 lanes, in contrast to succeeding only
+on the first 2 if you e.g. forget to mux the other two.
 
-Signed-off-by: Konrad Dybcio <konradybcio@kernel.org>
----
-Depends on: <20240315225237.1616550-1-linux@sraa.de>
----
- .../boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi | 29 ++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+As such, my expectation is that there's something wrong in the QMP PHY
+(or possibly redriver) for this platform.
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-index fdd3953938d9..d8cc0d729e99 100644
---- a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-@@ -418,6 +418,35 @@ vib_ldo_en: vib-ldo-en-state {
- 	};
- };
- 
-+&pmi8998_lpg {
-+	qcom,power-source = <1>;
-+
-+	status = "okay";
-+
-+	multi-led {
-+		color = <LED_COLOR_ID_RGB>;
-+		function = LED_FUNCTION_STATUS;
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		led@3 {
-+			reg = <3>;
-+			color = <LED_COLOR_ID_BLUE>;
-+		};
-+
-+		led@4 {
-+			reg = <4>;
-+			color = <LED_COLOR_ID_GREEN>;
-+		};
-+
-+		led@5 {
-+			reg = <5>;
-+			color = <LED_COLOR_ID_RED>;
-+		};
-+	};
-+};
-+
- &qusb2phy {
- 	status = "okay";
- 
-
----
-base-commit: 6a2bcf40b85ff77e3f32a2fbced3faaf3f59b43c
-change-id: 20240316-topic-maple_led-f54a21620dd9
-
-Best regards,
--- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
-
+Regards,
+Bjorn
 
