@@ -1,131 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-14300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id BDBEE87DD49
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Mar 2024 14:30:33 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9576187DE6F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Mar 2024 17:27:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6CE1E1F21209
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Mar 2024 13:30:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4C99F1C210C0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Mar 2024 16:27:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDC511BC43;
-	Sun, 17 Mar 2024 13:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E801D1CD03;
+	Sun, 17 Mar 2024 16:27:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TSY4JoHa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KlBHeJEr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 224AE1BC3E;
-	Sun, 17 Mar 2024 13:30:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4441CAB7;
+	Sun, 17 Mar 2024 16:27:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710682227; cv=none; b=gemsM9FPEJOeIp4WljCmYrr0jMCGh3gYhYCq/95dEGU9v+NDo9wSNeUxqEirDFShugyPr9dt7/PC83CtWwsbN05NvpjVh/qYqTKl/W2jhXOc3GI7ttFdqH89u42TEMhnVY9YlRRNP6EzkOhPcLd9iU2q0qCecfphNCZ5bTmJAhI=
+	t=1710692845; cv=none; b=eBKMFZNpzbXXhdRYS0fJjFcufj8SAaCrLbR4Qvb/2HC9yBhN1XexNOoRBfSzmQWfAnJQBN4P6lbsQl7hcqVXnkjEDp/t/Hk/t0VbQTpOnxhwiReMIM+MCoRTXT4J5+UQPXODMTUAECC0QFpcljmvp8VNbtABUlcbgRHRyatFX14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710682227; c=relaxed/simple;
-	bh=2gdq8EBgY1LmHd9w6DjX1eMIdhBWiKxla81oO9Irugs=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=FVUZ0tuvC5ph7PuxWvPA9JMGowWw7qDLs4On0dBu+qL+R31fUcPxfWuMUFowFjdNPzMZxEmzDsUOXC5p7QzgMv4Zb6cfGyjVsU7RYnYAJKvbd7ay1HFc5gyJxSSu7wCAu2cxBe8DnbIX6W4ueVw7sTIaCgtmE0vzROBxKTnLKDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TSY4JoHa; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42HDQ1im023310;
-	Sun, 17 Mar 2024 13:30:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version
-	:content-transfer-encoding:content-type; s=qcppdkim1; bh=6bxKWY+
-	uxQwNgwJMAYt+WRedxst3xgEotcSyVl8ra58=; b=TSY4JoHafJGdOgCTUJS8P/C
-	qRfyZj08/uJUYY0hlhKC3eZfldPihINnzYzh0dCR0BiPaMt7ctRplC46pF70x86X
-	9uWKgi3vvEtOo5jlKpdruTguWCJrUy4URhs2VIdqzjJwcn/fpaKpVMDP6xXQrNxN
-	pIIOOn8alCWbV8DPOKy+FcUi5yLB8vXp3iaCP0ziqPvbVe3S8Jfy8uh7lktvYvXN
-	+BR2wQW0Pj8dRpUMFFH4IJEHaAXynmU4bWXe554/TzKSMj4F5sebWpn4HEsOnvCj
-	9HGNjjuQn7Vw0AYS/8uunPqUKxtpAcuJoIkbiKg+u3+x9onb7ycB2zqNGdSnr3Q=
-	=
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wwxtb04u0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 17 Mar 2024 13:30:09 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42HDU8Pe022340
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 17 Mar 2024 13:30:08 GMT
-Received: from hu-rjendra-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Sun, 17 Mar 2024 06:30:04 -0700
-From: Rajendra Nayak <quic_rjendra@quicinc.com>
-To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC: <abel.vesa@linaro.org>, <quic_sibis@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-Subject: [PATCH v2] arm64: dts: qcom: x1e80100: Fix the compatible for cluster idle states
-Date: Sun, 17 Mar 2024 18:59:18 +0530
-Message-ID: <20240317132918.1068817-1-quic_rjendra@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1710692845; c=relaxed/simple;
+	bh=J6UtGI5bJeJCYfzWsrAHw9nY2Blhqb2ZvPfQpf1DE3E=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=f1dNWZ80y9ZbQwgAmWhZ+L5/GggS/6eb2qlSPjd/Dapk76ApiR3fEuZmTLx0a2CA6V02HuVjYJCwmInfgqGwSU3rCBMUfK0QgS4KSz5+P33GJ2nYOVfJz0giiPCqgdyXTB5TMLDrLg8IC2zLvou7edeeOaemeBPaW9Mmrsa/twA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KlBHeJEr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF1BEC433F1;
+	Sun, 17 Mar 2024 16:27:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1710692845;
+	bh=J6UtGI5bJeJCYfzWsrAHw9nY2Blhqb2ZvPfQpf1DE3E=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=KlBHeJErrrTNeBvoKkLogXoYyLonHZWhi87D8MUz1npLSq7F6Rup2lw0JoHAV1WGg
+	 kJb6at8jNZ6Hf6xNsnBK7IAGEJTUuONNStsbisDb6ZXUr/92cFDzbk3z/G0RBXCqyX
+	 Xrq8x9EXsmwYuBmrFFVOXkfiVDNRFuH+fbvd5SHRDk4CrSkmjIHxXKaJBQ8Q2mKV9X
+	 Wx8NsumtVdCnxWVxGHmEn3JibFFm3Dm32IfyDJw3qCDUCDjvJRDMGlZT2Rhx8DR3Dv
+	 BQvHVLfEncPXMN42DJ83OMoYxiOOVJJqM4XXw9uUSUxUkcW8udw1dgunePZJQ1wstn
+	 0Jv/QwTI2jG+Q==
+From: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Abel Vesa <abel.vesa@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/3] soc: qcom: Add X1E80100 platform and SMB2360 PMIC
+Date: Sun, 17 Mar 2024 11:27:16 -0500
+Message-ID: <171069283522.134123.14650965425548964366.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240223-x1e80100-socinfo-v1-0-be581ca60f27@linaro.org>
+References: <20240223-x1e80100-socinfo-v1-0-be581ca60f27@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: s34K_ikphXzrQSQftGafd5ZdFJ9pKEHz
-X-Proofpoint-ORIG-GUID: s34K_ikphXzrQSQftGafd5ZdFJ9pKEHz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-17_09,2024-03-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- adultscore=0 lowpriorityscore=0 clxscore=1015 phishscore=0 mlxlogscore=769
- impostorscore=0 bulkscore=0 spamscore=0 suspectscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2403140001
- definitions=main-2403170106
 
-The compatible's for the cluster/domain idle states of x1e80100
-are wrong, fix it.
 
-Fixes: af16b00578a7 ("arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts")
-Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
-v2:
-Updated the subject to include 'qcom: x1e80100'
+On Fri, 23 Feb 2024 16:37:54 +0200, Abel Vesa wrote:
+> This patchset adds the entry for the new X1E80100 SoC and one of the
+> PMICs it uses, the SMB2360. Rest of the PMICs are already added.
+> 
+> 
 
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Applied, thanks!
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index 8e517f76189e..6b40082bac68 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -284,7 +284,7 @@ CLUSTER_C4: cpu-sleep-0 {
- 
- 		domain-idle-states {
- 			CLUSTER_CL4: cluster-sleep-0 {
--				compatible = "arm,idle-state";
-+				compatible = "domain-idle-state";
- 				idle-state-name = "l2-ret";
- 				arm,psci-suspend-param = <0x01000044>;
- 				entry-latency-us = <350>;
-@@ -293,7 +293,7 @@ CLUSTER_CL4: cluster-sleep-0 {
- 			};
- 
- 			CLUSTER_CL5: cluster-sleep-1 {
--				compatible = "arm,idle-state";
-+				compatible = "domain-idle-state";
- 				idle-state-name = "ret-pll-off";
- 				arm,psci-suspend-param = <0x01000054>;
- 				entry-latency-us = <2200>;
+[1/3] dt-bindings: arm: qcom,ids: Add SoC ID for X1E80100
+      commit: 734364d0ddee6c145705bac89400266c972efc0b
+[2/3] soc: qcom: socinfo: Add X1E80100 SoC ID table entry
+      commit: e876303c6f18da4c649d97f6d488ee0a850ad384
+[3/3] soc: qcom: socinfo: Add SMB2360 PMIC
+      commit: e025171d1ab1edf286c102f7adecafd51c3a84c3
+
+Best regards,
 -- 
-2.34.1
-
+Bjorn Andersson <andersson@kernel.org>
 
