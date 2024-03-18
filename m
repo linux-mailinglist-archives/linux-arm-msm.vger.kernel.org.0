@@ -1,148 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-14426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14427-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 63BB187F357
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 23:49:34 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DEEA487F43B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 00:50:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 10A4F1F21A3E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 22:49:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9A81C2823BB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 23:49:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0508C5A7A4;
-	Mon, 18 Mar 2024 22:49:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA4D55F86C;
+	Mon, 18 Mar 2024 23:49:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="pI569OBW"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Ji56pQvZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-io1-f73.google.com (mail-io1-f73.google.com [209.85.166.73])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DE85B5A2
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 22:49:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9BC5F862
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 23:49:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710802167; cv=none; b=DzJd1FuZrVz23kHieHNlEv44I6hxWWcBzpMLRCtnUi5sH1KJqvY2jU/nMtYJI/ojH6LJzaBCjmVnuUnzgWsJ3Qyt4va63n/MnoaMltNSbjrPsgD3f3i+figymV8jjb/6szKGDNVqtdNzVlvll47qt8ASMo70+yB9hEGlhX4UKeY=
+	t=1710805795; cv=none; b=jjBQ1lyX4fQYDwwmInZOCA/my1mCjdovY8VkqVv8FGhG2m0DnXW2HlqzuzEMJmG0O+cNVWE8VMklCk/nDoCzQcHctLl06eDJsBPy599CoMYz5nc9In3bWnQlYEWiUsxfaI4giCksE/TqyXBc3cEJ8fRWjmG0PmlNPFo1FxlDmcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710802167; c=relaxed/simple;
-	bh=7ElkExln+LzH1qJsWL78fTMZuik1BMBe40sUEK3gv20=;
-	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=EZIqhNdddGQ4HMqhBYXwkU1b+BBASm1BcWioTbiEfDnIWJ0C6X9VqrqWtCRo3sDog8shafzwkOSZzAxIhNr/IrUFvlRBJ+MUdAbuvauvq1NnY5BDo6iQRbLTc8G5GDFTt3gL1OTC5d7S7JA4NeBpQCe2fS+ZB6a91ejZ02nIl3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--justinstitt.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=pI569OBW; arc=none smtp.client-ip=209.85.166.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--justinstitt.bounces.google.com
-Received: by mail-io1-f73.google.com with SMTP id ca18e2360f4ac-7cef80a1e5bso439f.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 15:49:26 -0700 (PDT)
+	s=arc-20240116; t=1710805795; c=relaxed/simple;
+	bh=++8AIV7HG9payGSZCdI/YJMOMZaQDxTnyhPn9woYAqs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IYf6BaW0NAkJ5VivFv6GOSrcZXzmETyXgvHx4C36yWWX9uy2/a9GrPs8aEfRn5i/ptWjpsDv8E4OsjawQmbfwaOqgvge39WvmiFsUqHlO5+EJMXa+qykDac9PDWr/zSZ1edSyzQg3M3S535F9C3bE43sQPcideBXSWNhnQ5d9zE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Ji56pQvZ; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-1e01c38f98cso9674985ad.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 16:49:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1710802164; x=1711406964; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=LgDnfik+9/3BsUysoVFP/f8YdrJMDhMQegoRsxaj0Vk=;
-        b=pI569OBWIUrwNnT0xtrOqGhiJ5cHoBK5UsHqayDzmLdnr2MVNCQrS76zR+B3jZgqDe
-         Uc1qf2I4vh6+/9oNv6d3bOQh9XN+5iEqGmHVdliPkSCFtlNMJi7t5/h97BLdyI7o0Puj
-         4gFAGYUENkqJhKfQJ9szC4zM9mMuhel8xYVa7YdITgjO+XEwRySuhcK+cOp0BDkmxrLt
-         sIm42wKLGwDURitoDoDCIP6oCtNGByHr4rMtNvHjqihWrz3zug0ASEWjOrnE6F2YoWI7
-         GE3UVqGNEoomi3e6ZhlS/QMdqvvOeoPuHztfzAImMeAnhduxacwbyNeM+vLzSLTLRO8N
-         OUKQ==
+        d=chromium.org; s=google; t=1710805794; x=1711410594; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=vRkn/Ffa0kshb8/M23HImClN08sGjJ63GvS/V4Rk06I=;
+        b=Ji56pQvZ6h5OLs7A0WB7yG6lpmLOpokga+eqJ3c0hKX/ZqYE52I00W7mz9On+kHujD
+         JCm3PMUN221eD3/7vixTYaK1WLLzWWMQ7mhRL4RETfbR5LchPzRZCosc231qtTiYLcRA
+         ofajvl6qH54rt0bj1TLrk3vRsRwFM3qXtaCfI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710802164; x=1711406964;
-        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=LgDnfik+9/3BsUysoVFP/f8YdrJMDhMQegoRsxaj0Vk=;
-        b=Fl4CoTIxwN54ZySyvmQejLrfMzNmgdtYVOkjmRJUMUTmW42PPtGVpe51uoc8DXYNbP
-         2Ai59L+cxyYis/ZynzYZl+bzFsBFSABE3z8W+8kI6zI5gE9WBUgrPOK4ncs6f9HnOHK7
-         /lQGDHOiFS9rFBONWGVNAY0x/M/lxfG5gLYx151HyLwnk8KzKpSTc0/0KV5hX/5AdwDU
-         S2YTnOwDkYDL3QG0cWqvrbff8i8DT7VoWmcQVtfKysgr1UvW3c7XPXTI3B0iVMK7YSIs
-         sG8O8TdG/s0RDVJ3sA9x8Yd5iEZD2WgSdVv6Lw0F2z57BTzjxUFPfIXMjo0H8fE1Cx8t
-         d/Rg==
-X-Gm-Message-State: AOJu0Yw3rjWQFcexJt186spFtt/jZflERxJKUw2KDg9QJf3Zy/z6Qth3
-	pXoVVzHXMYC6nBb0dwYs0Br9mEFhQnKnGwcnwB+eDdxzuDHrZ0/DMpLEWOyVGQ/g/ftCSRx7KPl
-	FELoz8B6mRLMKdbbuAUBn+g==
-X-Google-Smtp-Source: AGHT+IHMpcJoXZdyrHjAYr1x0gAOLz6kDbg2aET0fcmbxdiALkUs3IYlBcuQW5IgSRdlf2q80a1jpzftzVuiOykGvg==
-X-Received: from jstitt-linux1.c.googlers.com ([fda3:e722:ac3:cc00:2b:ff92:c0a8:23b5])
- (user=justinstitt job=sendgmr) by 2002:a05:6602:2c94:b0:7cc:342:72f9 with
- SMTP id i20-20020a0566022c9400b007cc034272f9mr230571iow.2.1710802164523; Mon,
- 18 Mar 2024 15:49:24 -0700 (PDT)
-Date: Mon, 18 Mar 2024 22:49:23 +0000
+        d=1e100.net; s=20230601; t=1710805794; x=1711410594;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vRkn/Ffa0kshb8/M23HImClN08sGjJ63GvS/V4Rk06I=;
+        b=Ezp2sAccoRsoomLLYBFz1XjA/2Av5P3CsEqORqjTNKmc5QMfCr6428coKJbheQysfb
+         p7BuiwrN7BxlUSqbZiMRipkafvRRp62Ehhq73hBoCj5xelr0timMvcfaDEAjTeJh7mnp
+         E2BwoUJhjL435urjC0DTpekAANTsrt5j7oOp0iGQs0FcJA3jELgNSsuUsp8EkR9xXM8R
+         l3z4oc+J3ZgW0gLlO9ikbCf73IWw0+KK3gwQnuts0riali6olkvYMbYcgBQA6cOxo4Fy
+         wUm9OS2txgQftFhFaZxdr5Fg3oH8x4GCYhKVjM+9BmoiezZvw5rMspgxbvcAdIdAZj/Q
+         xTMA==
+X-Forwarded-Encrypted: i=1; AJvYcCXlLPVad4pPUZcxZih+uw744bkz+1S8/reURpBzpDicoVhjyFxdA7AdK1EoAOeWRjdwTCg0dOFR84A2+PcgLEQ2BlQ8FLEwkfdImhzjYA==
+X-Gm-Message-State: AOJu0Yy0WFLhtbLBMaudqzVf5Xfi2/BE8EsCfId6zSAWKMZOtfA6lamo
+	8yzXQrsU9dQ9jW16E/QC60a+53uFmkmpb2f+r93nWMj6zT6iDO6vRK+AwSPDIQ==
+X-Google-Smtp-Source: AGHT+IHuA2onb1wnKM9PYOhYyVkXUleXOMB2F2xCC/G7R18UXwREYPkQdg9dME1Kl1WX8TGqOzk0Hg==
+X-Received: by 2002:a17:903:2448:b0:1e0:766:abe4 with SMTP id l8-20020a170903244800b001e00766abe4mr7899286pls.46.1710805793852;
+        Mon, 18 Mar 2024 16:49:53 -0700 (PDT)
+Received: from www.outflux.net ([198.0.35.241])
+        by smtp.gmail.com with ESMTPSA id k5-20020a170902c40500b001dd635551f1sm9921941plk.255.2024.03.18.16.49.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Mar 2024 16:49:53 -0700 (PDT)
+Date: Mon, 18 Mar 2024 16:49:52 -0700
+From: Kees Cook <keescook@chromium.org>
+To: Justin Stitt <justinstitt@google.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-hardening@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: cmd-db: replace deprecated strncpy with memcpy
+Message-ID: <202403181646.667970F76@keescook>
+References: <20240314-strncpy-drivers-soc-qcom-cmd-db-c-v1-1-70f5d5e70732@google.com>
+ <202403181443.F4021C9F63@keescook>
+ <CAFhGd8qJ+Sks33cgEie_cvj-YrAUUiLrA7wY42eWQ2Xr++C4Pw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-X-B4-Tracking: v=1; b=H4sIAPLE+GUC/5WNTQqDMBBGryJZd0oSFaWr3qO4yM+oA9VoRkJFv
- HtTb9Dl+/h47xCMkZDFozhExERMYc6gb4Vwo5kHBPKZhZa6kqWqgLc4u2UHHylhZODgYHVhAjd
- 58BYc6LbqS2ONsbYV2bNE7OlzNV5d5pF4C3G/kkn91n/sSYGCRva1r7GRTamfQwjDG+/5JbrzP L/AnnN60wAAAA==
-X-Developer-Key: i=justinstitt@google.com; a=ed25519; pk=tC3hNkJQTpNX/gLKxTNQKDmiQl6QjBNCGKJINqAdJsE=
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1710802163; l=2041;
- i=justinstitt@google.com; s=20230717; h=from:subject:message-id;
- bh=7ElkExln+LzH1qJsWL78fTMZuik1BMBe40sUEK3gv20=; b=2o9Mfp5OBit8WuRHJkby3WD6RzVls4Keg34t/5M2jalSBs/dZ3Qys4mmBx2jYrJLKgBnHKO3H
- B6IiMtq77BiA691RdJp1BUVkGirAZymbUYDAEZ4NAKMlveJamKnqRhn
-X-Mailer: b4 0.12.3
-Message-ID: <20240318-strncpy-drivers-soc-qcom-cmd-db-c-v2-1-8f6ebf1bd891@google.com>
-Subject: [PATCH v2] soc: qcom: cmd-db: replace deprecated strncpy with strtomem
-From: Justin Stitt <justinstitt@google.com>
-To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-hardening@vger.kernel.org, Justin Stitt <justinstitt@google.com>
-Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFhGd8qJ+Sks33cgEie_cvj-YrAUUiLrA7wY42eWQ2Xr++C4Pw@mail.gmail.com>
 
-strncpy() is deprecated for use on NUL-terminated destination strings
-[1] and as such we should prefer more robust and less ambiguous string
-interfaces.
+On Mon, Mar 18, 2024 at 03:47:38PM -0700, Justin Stitt wrote:
+> Gotcha, I was operating under the assumption that we needed to know
+> the size of id at compile time. Apparently __builtin_object_size(_, 1)
+> will return SIZE_T_MAX if we don't know the size of something. Sending
+> a v2.
 
-@query is already marked as __nonstring and doesn't need to be
-NUL-terminated. Since @id is a string, we can use the self-describing
-string API strtomem().
+Yeah, it only requires to know the compile-time size of the destination
+buffer.
 
-Link: https://www.kernel.org/doc/html/latest/process/deprecated.html#strncpy-on-nul-terminated-strings [1]
-Link: https://manpages.debian.org/testing/linux-manual-4.8/strscpy.9.en.html [2]
-Link: https://github.com/KSPP/linux/issues/90
-Cc: linux-hardening@vger.kernel.org
-Signed-off-by: Justin Stitt <justinstitt@google.com>
----
-Changes in v2:
-- use strtomem instead of memcpy (thanks Kees)
-- Link to v1: https://lore.kernel.org/r/20240314-strncpy-drivers-soc-qcom-cmd-db-c-v1-1-70f5d5e70732@google.com
----
-Note: build-tested only.
-
-Found with: $ rg "strncpy\("
----
- drivers/soc/qcom/cmd-db.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
-
-diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
-index a5fd68411bed..d05f35d175bd 100644
---- a/drivers/soc/qcom/cmd-db.c
-+++ b/drivers/soc/qcom/cmd-db.c
-@@ -141,18 +141,13 @@ static int cmd_db_get_header(const char *id, const struct entry_header **eh,
- 	const struct rsc_hdr *rsc_hdr;
- 	const struct entry_header *ent;
- 	int ret, i, j;
--	u8 query[sizeof(ent->id)] __nonstring;
-+	u8 query[sizeof(ent->id)] __nonstring = { 0 };
- 
- 	ret = cmd_db_ready();
- 	if (ret)
- 		return ret;
- 
--	/*
--	 * Pad out query string to same length as in DB. NOTE: the output
--	 * query string is not necessarily '\0' terminated if it bumps up
--	 * against the max size. That's OK and expected.
--	 */
--	strncpy(query, id, sizeof(query));
-+	strtomem(query, id);
- 
- 	for (i = 0; i < MAX_SLV_ID; i++) {
- 		rsc_hdr = &cmd_db_header->header[i];
-
----
-base-commit: fe46a7dd189e25604716c03576d05ac8a5209743
-change-id: 20240314-strncpy-drivers-soc-qcom-cmd-db-c-284f3abaabb8
-
-Best regards,
---
-Justin Stitt <justinstitt@google.com>
-
+-- 
+Kees Cook
 
