@@ -1,109 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-14394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 908F587E9F1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 14:17:49 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 18E7987EA58
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 14:49:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BDEC91C20FA6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 13:17:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C21491F226F1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 13:49:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A01538DF2;
-	Mon, 18 Mar 2024 13:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BFAC487B4;
+	Mon, 18 Mar 2024 13:48:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jfn6yFY5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cZQKAkzU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F174D383B0;
-	Mon, 18 Mar 2024 13:17:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3351481BE
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 13:48:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710767863; cv=none; b=XA3q2EpYx9oPr0tl/EbGJ06pywOjyh8MJ4ouFFGNcl9PEfmq60SwCeg6pF+8sIpcma2L4PVJOySigIctoNhL5aoKuOQXP6LVkZ5U9DMw2NPSCx13RrR/NzqjaQH7ylZx/UMblLovwLl7XC2W69mE3SsTm4DXPbCZborhf8JMcWA=
+	t=1710769738; cv=none; b=Hx1texCDBcYrwGGPnJkF+85ECIHL7iROoaDbr2SFadTK6gEuCYy0WfR31KUT1kQSqsZ4heuuNkQFNx6f1uRb0AOpwNw3BJOnB9lSvetDIbsl3J28c56ZYcZITCYFB989QowHecoH09LCjNX0EWcLqwVHIRGBfQgGYCk0Ay05Z8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710767863; c=relaxed/simple;
-	bh=TBxlNbJ1kz+1mgc5LCV7B1yVqyid6pknsBQioHE+wvk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TCYke6JmP4QUlVkMsyJ9r4S0CTsDxryJJ0kP1u8xf6hau/7lBm4AyBHhi6/mQTJN750RnxCqu9EYec5EJjyfE+9yFz4BovuYla+LLBlAHaUaAXReTBajKX3p1qtZB9RiA3rgRstm5X6GSI4jbUv6yKjVd2cQPDFphM4sGRS9bSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jfn6yFY5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65B23C433C7;
-	Mon, 18 Mar 2024 13:17:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710767862;
-	bh=TBxlNbJ1kz+1mgc5LCV7B1yVqyid6pknsBQioHE+wvk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Jfn6yFY5x4ioM/28bhoexwqqED+kx78C7906yUeW8Z/8QSUgq6RolopQ5eyEINwNM
-	 xzj5LQtBaqipMQ59yVEF6WL6G3XDksaViLZglkF4ECw2itY4cy0T6MRo+1sK4in3ON
-	 d2ucQ4ZTUuSaZgx67vgbUhTVE0nnKtqGDPPhzZsFCXFFZ1dO3AK/e/vcpHia0wMHJo
-	 RmzPD/XdSIDdvNQ8ra7bF3Wo03gdf+YltOu840+d3/180ohoqCDb6hDEKgDH8BELTv
-	 7tvOEnAsZ36LpQVzqhCLUiFIsC8gGyJnvpnKi0iLica0joad0fiwH76tgOYGpz+4h+
-	 hCP/rvpR1PB/w==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rmCs7-000000000L7-46cK;
-	Mon, 18 Mar 2024 14:17:48 +0100
-Date: Mon, 18 Mar 2024 14:17:47 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Johan Hedberg <johan.hedberg@gmail.com>,
-	Matthias Kaehlcke <mka@chromium.org>,
-	Doug Anderson <dianders@google.com>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	netdev@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/4] dt-bindings: bluetooth: add new wcn3991
- compatible to fix bd_addr
-Message-ID: <Zfg--2_NMPSPTxK-@hovoldconsulting.com>
-References: <20240318110855.31954-1-johan+linaro@kernel.org>
- <20240318110855.31954-2-johan+linaro@kernel.org>
- <CAA8EJprywWbdoyfAbys=0WzEdAkp0UK1fzzCPzxKRjyk9DrC6Q@mail.gmail.com>
+	s=arc-20240116; t=1710769738; c=relaxed/simple;
+	bh=R2UaOpKnY97aWVhZ/hgFlH9poNa+7COfnT3VW02GUGE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=s5u250QVX/i8oOQcBL/7oJEGT98iFx7oAF7XxOpotsMdzk7M+Wa9LWoTACqeS1MX537OzaTMBLP+dqhUyVE3jWznUVTBSSDuAvhV3sEex7n0xUFD2y8wFgb7SYvONhDzPHmvkC20AU6M01zG/lDwxvfirZQotnHSmbPHeWENwTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cZQKAkzU; arc=none smtp.client-ip=209.85.219.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-dcbcea9c261so4082689276.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 06:48:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1710769734; x=1711374534; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=V3FYhI19+7mXvMPKmKsCyQbdJxb3cWwyAzFHyh7qwU8=;
+        b=cZQKAkzUxWZ3DiR2+CMXuDmMSWC1MZpfCZmvrHvdd3Lz6yu4xL0TUE6I8U2qJoQuqp
+         gR1C3iF8TrOC8gOKApo2HaV/oaE8gr2z/qe6U4B5A1hPrD5PoGxta9VsAwR2T8DI5wWv
+         l/Y7ve+R7fE9UWq/LljsR6glDc5e6FYQNLu1WRvETPB/eE+Z533dEnsZrdDC79oHAaFj
+         ascsj6lIhV5shoOLJXIAEcOjPpHQKFZskuv7QeLR0x1o/xH1BHMwqA4I2SWUD2UB4SBs
+         TzAFfOB9FyAHUNV7B1xyK/7WBPHcv4g4SIXNoEIyUaxo0ZC0r+KxoxE9M0PEcK0wyvUa
+         TWGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710769734; x=1711374534;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=V3FYhI19+7mXvMPKmKsCyQbdJxb3cWwyAzFHyh7qwU8=;
+        b=abHOsDbWfXSPEqJq8S+csgaYHtDSUDCrPDT5IkM2ZiUJNc87t5Sh+BAdbbE8UNS4eP
+         b9Qh6kgvaUrvQ0JnlojnID7391RqRsdXONoZODXZOsZLAu2W0QL5ZDLpscvyJOyYHG2F
+         +UfU82QsjOYulPn//H1JdHmPxfuCU8enkuFbMPkdnvIjt5VFxl6D31JPhuBZ0z5g+uOO
+         4Ny2IlK6qWnyYqCwnGpYpxjCpUvtXbgFHbsjBtwYCXxnTlZ90qf4dYViPDBvegbJiP2L
+         cSIuBoaLvz0ses7lypZ8aH54nDjDOckBdz9mD2Gt/S3FKEtIIulJWPUGvTwJksoRZoUs
+         Kd0Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUnCiCG6OosYf2Cp7zNTRMLBw85bkuXbvQx8oQQqi30ru84+IwvcbqIBmlPrC3dWIH7KRg6eLJEMld4XUzknEJ9Z6zpRVzI1PP4OqwZkA==
+X-Gm-Message-State: AOJu0Yw4bDUNmLZz6vO5eVAcppIAFsYu1H5J2gTN1sggWNIZqhnU9Tks
+	am1uwPdOX6sv2HlvIIEiERxX7NFJLKZ+dCxk3YYXI2WsmE1CA54Ru7WYNv9WTS31B+docTyiv7t
+	MnGVCC9CEutR4vhryBBLxQupzGZQeMaWsDaoWew==
+X-Google-Smtp-Source: AGHT+IHIKdJh6Ea44QB/HJYggMw6MDwULWny87xsrwu5PR/MnhdaDTL0l9BRYsgBrUOoIuoSQyIdEFoMdSPlHuMn2yY=
+X-Received: by 2002:a25:db08:0:b0:dc7:4460:878a with SMTP id
+ g8-20020a25db08000000b00dc74460878amr8986047ybf.3.1710769734613; Mon, 18 Mar
+ 2024 06:48:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJprywWbdoyfAbys=0WzEdAkp0UK1fzzCPzxKRjyk9DrC6Q@mail.gmail.com>
+References: <20240318-apss-ipq-pll-cleanup-v1-0-52f795429d5d@gmail.com> <20240318-apss-ipq-pll-cleanup-v1-1-52f795429d5d@gmail.com>
+In-Reply-To: <20240318-apss-ipq-pll-cleanup-v1-1-52f795429d5d@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 18 Mar 2024 15:48:43 +0200
+Message-ID: <CAA8EJppE8Pt8XX-e9=b5g-4+GGbw8pEgg6Jyj--HDCmC1n5N1w@mail.gmail.com>
+Subject: Re: [PATCH 1/5] clk: qcom: apss-ipq-pll: reuse Stromer reg offsets
+ from 'clk_alpha_pll_regs'
+To: Gabor Juhos <j4g8y7@gmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Mar 18, 2024 at 03:00:40PM +0200, Dmitry Baryshkov wrote:
-> On Mon, 18 Mar 2024 at 13:09, Johan Hovold <johan+linaro@kernel.org> wrote:
-> >
-> > Several Qualcomm Bluetooth controllers lack persistent storage for the
-> > device address and instead one can be provided by the boot firmware
-> > using the 'local-bd-address' devicetree property.
-> >
-> > The Bluetooth bindings clearly says that the address should be specified
-> > in little-endian order, but due to a long-standing bug in the Qualcomm
-> > driver which reversed the address some bootloaders have been providing
-> > the address in big-endian order instead.
-> >
-> > The only device out there that should be affected by this is the WCN3991
-> > used in some Chromebooks. To maintain backwards compatibility, mark the
-> > current compatible string as deprecated and add a new
-> > 'qcom,wcn3991-bt-bdaddr-le' for firmware which conforms with the
-> > binding.
+On Mon, 18 Mar 2024 at 13:20, Gabor Juhos <j4g8y7@gmail.com> wrote:
+>
+> The register offset array defined locally for the
+> CLK_ALPHA_PLL_TYPE_STROMER_PLUS is the same as the
+> entry defined for CLK_ALPHA_PLL_TYPE_STROMER in the
+> 'clk_alpha_pll_regs' array.
+>
+> To avoid code duplication, remove the local definition
+> and use the global one instead.
+>
+> No functional changes.
+>
+> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+> ---
+> Depends on the following patches:
+>  - "clk: qcom: apss-ipq-pll: use stromer ops for IPQ5018 to fix boot failure"
+>    Link: https://lore.kernel.org/r/20240315-apss-ipq-pll-ipq5018-hang-v2-1-6fe30ada2009@gmail.com
+>  - "clk: qcom: clk-alpha-pll: Stromer register cleanup"
+>    Link: https://lore.kernel.org/r/20240311-alpha-pll-stromer-cleanup-v1-0-f7c0c5607cca@gmail.com
+> ---
+>  drivers/clk/qcom/apss-ipq-pll.c | 24 ++++++------------------
+>  1 file changed, 6 insertions(+), 18 deletions(-)
 
-> This compatible doesn't describe new hardware kind. As such, I think,
-> the better way would be to continue using qcom,wcn3991-bt compatible
-> string + add some kind of qcom,bt-addr-le property.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-No, you can't handle backwards compatibility by *adding* a property.
 
-I wanted to avoid doing this, but if we have to support Google's broken
-boot firmware for these devices, then this is how it needs to be done.
-
-Johan
+-- 
+With best wishes
+Dmitry
 
