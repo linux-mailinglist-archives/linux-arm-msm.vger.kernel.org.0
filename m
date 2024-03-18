@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-14404-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14405-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 45C7587EBE8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 16:19:17 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BBEF487EBEA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 16:19:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 002A928403F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 15:19:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EBC0A1C2132F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 15:19:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9ACAB4F214;
-	Mon, 18 Mar 2024 15:18:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BC784F606;
+	Mon, 18 Mar 2024 15:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mDyoLoWO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LvLY8Zqy"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E58D4F1E1;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301AF4F21F;
 	Mon, 18 Mar 2024 15:18:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710775096; cv=none; b=b/dJZ962fBcsYaI4ugHmJkGazEjVxSrV2JJesc1iFVKdTjiAuo37wyKyzRVGxFRbDFpXqmPeu/9j+WyBBDD9Gylu8E3V4qocI31NqGaoAdHGcFoTis1FGOywkzuzH3MnVQG63LqDmo0rzfUvPVq6RhnV5NoL4er6gKAWY5lKLMk=
+	t=1710775097; cv=none; b=Qp/NKSxPw55s0jcBc1fG7N8kLQ0SrINyvWazzEcsBM2HEsnRl33Nv8FlAtUbf5j6qOHUH2keYEaHErrk3lpYtumVosyCp4hhZLbfyWz98qE7kEbh2pZxAM+k3cb0odMycdE0CxWz/0bIM5kBR4b9el13v+KgeyHREW+WQZZS+5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710775096; c=relaxed/simple;
-	bh=oC5+asc/QICklzkaAGgwcBOXlJD1QTbEuepLI6tiLK4=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=DfYOVcqluAXuwchRfpSf0mcDRiT7Fo+MSlzQtOP/0uvCKCRTWbueR3cQDHx0vMyDJWKqIr5ZQ0ttt1fNYBYkN5JVB9FWh6PkBl++BnOrJtruUHfkImEd9WJIaLcJP2Pr7AHlc1rDg2xiNgS18E0YvXqRw3vaJpFT4Oje+OlFCEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mDyoLoWO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66DB4C433F1;
-	Mon, 18 Mar 2024 15:18:15 +0000 (UTC)
+	s=arc-20240116; t=1710775097; c=relaxed/simple;
+	bh=H26MWfO5jVgxjJ1B98g+ecZU2nTEJ0XuYXpLUHFC5QQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=l/s4pEOCxYjYFM6hRjmUaXh4VjgmWtR1DVoJK+VyoiATgkVZtrcZWRbpwJ4PbCv0JlfyD1nkQMa3CMdhyiXTzf8rh0jagcmokBfW7wYUjErHSyQ4ioGn2oOrH6UmFGDBNw8fb1jusHOkQe55Ud3MdTHo0RasHs5hcpMN0INxkZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LvLY8Zqy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25BDDC433A6;
+	Mon, 18 Mar 2024 15:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1710775096;
-	bh=oC5+asc/QICklzkaAGgwcBOXlJD1QTbEuepLI6tiLK4=;
-	h=From:Subject:Date:To:Cc:From;
-	b=mDyoLoWOWiCMEdXkx9n4YUsSumpF7e0vY4o0+dcywNoZYOFhQJu8b+BBfWUJNmVXW
-	 8qIKWvn/+20UknH5eve3jLM+/c0KsletfNrB0YU5do/uij0otwMNu+Bx9uSFmin/8U
-	 Chp/ydjf2qDxKbOoFiwuvrM5AtFWR9HbYbDkBo0qzwDnnitfjK6IGcTwUtjRMUvpg4
-	 DXKiUuXQ3EToJttPodl88lTjWY4ZazZb2sL+dZS+czu+gBpUA3t0VwRruaaKvgOPeM
-	 nwwHWkJi1hVy+iU1jnbVpL1Z2KMJlfA671AGWoQHVp8w/6oui+X4slGzDxSdv/a6C6
-	 +UxULlQSoRhnw==
+	bh=H26MWfO5jVgxjJ1B98g+ecZU2nTEJ0XuYXpLUHFC5QQ=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+	b=LvLY8ZqySLCT+pOxVbkrxjFD3vNzHeKdU/rjQcUT8qSPkwnW7ZgY+hz6IEKBjND7J
+	 4otHIlbmg18L7yKRWyJL0Oi4Z4RTw9Da1QwHj9NR5zAUz4IN5XskX2PWyl2ZnoAFwr
+	 8a4y6bL/5MeOnlanI60DNWid0mrEs++LDNyoqV0Ab886YizV6DtGX5wFLEyIiYK0aT
+	 Kmw5aktKLMLN4EzfADsyP02VDx+6vYgAbJNEh7s7I4zYUje78Mpj/1gyw8AN22hkRW
+	 +lrGR05YQ5fZv/WTNChDlW5Z1biKtCjdYdZbZ6QYwhjnurCqXmxIXAMW/2mIhhoaEi
+	 5REqK+OvuyMPA==
 From: Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 0/2] clk: qcom: Fix two driver Kconfig dependencies
-Date: Mon, 18 Mar 2024 08:18:09 -0700
-Message-Id: <20240318-fix-some-qcom-kconfig-deps-v1-0-ea0773e3df5a@kernel.org>
+Date: Mon, 18 Mar 2024 08:18:10 -0700
+Subject: [PATCH 1/2] clk: qcom: Fix SC_CAMCC_8280XP dependencies
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,49 +52,56 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIADFb+GUC/x3MSwqAMAwA0atI1gb8FFGvIi40pjWIrTYggnh3i
- 8sHwzygHIUV+uyByJeoBJ9Q5hnQOnnHKEsyVEVlirps0cqNGnbGk8KOGwVvxeHChyJRN3NnbFP
- PE6TBETnV/3wY3/cDQTKEwWwAAAA=
+Message-Id: <20240318-fix-some-qcom-kconfig-deps-v1-1-ea0773e3df5a@kernel.org>
+References: <20240318-fix-some-qcom-kconfig-deps-v1-0-ea0773e3df5a@kernel.org>
+In-Reply-To: <20240318-fix-some-qcom-kconfig-deps-v1-0-ea0773e3df5a@kernel.org>
 To: sboyd@kernel.org, andersson@kernel.org
 Cc: konrad.dybcio@linaro.org, mturquette@baylibre.com, 
  bryan.odonoghue@linaro.org, neil.armstrong@linaro.org, 
  linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
  patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
 X-Mailer: b4 0.14-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=919; i=nathan@kernel.org;
- h=from:subject:message-id; bh=oC5+asc/QICklzkaAGgwcBOXlJD1QTbEuepLI6tiLK4=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDKk/os3W/5/js5uf9dIj70fWxW9K/h8vOOhSxFT+q3TyL
- +d13LNDOkpZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEYmQYGWZIrzavPbZ00eln
- 4nzXusULZRc9r3fbff13z0XNXUpLar4yMjzdeSKaZc7qN4Kcfvkfuz5/e2ufbzl5lewq/jMXN3M
- /1+EBAA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1120; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=H26MWfO5jVgxjJ1B98g+ecZU2nTEJ0XuYXpLUHFC5QQ=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDKk/os2kFD9PORA9jfdb2rffLCvnfuOa/WdjjrD+LcvSB
+ fsnzlyo2VHKwiDGxSArpshS/Vj1uKHhnLOMN05NgpnDygQyhIGLUwAmcmYWw//aian5PtUf9kel
+ GH94euTIhZ0r61tTL2pYpDTUyc31sMxg+B/X+evj4VVHovccm8tww/3FlbbPm2Y2f+SZ2tTWGS9
+ uysQPAA==
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-This series fixes two Kconfig warnings that I recently saw crop up in my
-build tests because the dependencies for newly added drivers in 6.8 are
-not correct.
+CONFIG_SC_GCC_8280XP depends on ARM64 but it is selected by
+CONFIG_SC_CAMCC_8280XP, which can be selected on ARM, resulting in a
+Kconfig warning.
 
-This is now the fourth set of changes to avoid warnings of this nature
-for the exact same reason... is there anything that can be done to
-ensure this does not continue to happen? See
+WARNING: unmet direct dependencies detected for SC_GCC_8280XP
+  Depends on [n]: COMMON_CLK [=y] && COMMON_CLK_QCOM [=y] && (ARM64 || COMPILE_TEST [=n])
+  Selected by [y]:
+  - SC_CAMCC_8280XP [=y] && COMMON_CLK [=y] && COMMON_CLK_QCOM [=y]
 
-  b6bcd1c0c27e ("clk: qcom: fix some Kconfig corner cases")
-  75d1d3a433f0 ("clk: qcom: Fix SM_GPUCC_8450 dependencies")
-  e8d66d02defd ("clk: qcom: Fix SM_CAMCC_8550 dependencies")
+Add the same dependencies to CONFIG_SC_CAMCC_8280XP to resolve the
+warning.
 
+Fixes: ff93872a9c61 ("clk: qcom: camcc-sc8280xp: Add sc8280xp CAMCC")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
-Nathan Chancellor (2):
-      clk: qcom: Fix SC_CAMCC_8280XP dependencies
-      clk: qcom: Fix SM_GPUCC_8650 dependencies
+ drivers/clk/qcom/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
- drivers/clk/qcom/Kconfig | 2 ++
- 1 file changed, 2 insertions(+)
----
-base-commit: 3066c521be9db14964d78c6c431c97a424468ded
-change-id: 20240318-fix-some-qcom-kconfig-deps-cc9be94f63ba
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index 8ab08e7b5b6c..b9ff32cab329 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -474,6 +474,7 @@ config SC_CAMCC_7280
+ 
+ config SC_CAMCC_8280XP
+ 	tristate "SC8280XP Camera Clock Controller"
++	depends on ARM64 || COMPILE_TEST
+ 	select SC_GCC_8280XP
+ 	help
+ 	  Support for the camera clock controller on Qualcomm Technologies, Inc
 
-Best regards,
 -- 
-Nathan Chancellor <nathan@kernel.org>
+2.44.0
 
 
