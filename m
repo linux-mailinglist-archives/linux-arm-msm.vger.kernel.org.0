@@ -1,115 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-14391-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7FF8B87E8F8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 12:54:12 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1DE8587E9A6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 14:01:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3A0AF282BC7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 11:54:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C4C88282385
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 13:01:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94E35374FE;
-	Mon, 18 Mar 2024 11:54:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30A6638385;
+	Mon, 18 Mar 2024 13:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="eb5NZg+L"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="guNOzgPG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F9A374DD;
-	Mon, 18 Mar 2024 11:54:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7392036B11
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 13:00:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710762847; cv=none; b=JpxgdRuhhbTLawLG9KZzN1JG2m8+42xYGlNOSDQP46GsWwn1MbZACQpLT8lTvn9LPFKj4pRx8XDes4zmGrKde6kK4WdL7xL2imRouiY/PDCUHHH55GwXUtn2WL/vEwTs5sAcqb/NTcjSBtiZ+65HJZqlhztE2Bb4veNPEg7MQos=
+	t=1710766855; cv=none; b=RlXXEk2HdnAyXdyiWO3B9DUS4+z2Dsw3NGEOtDlypRjewUgbz2/G4t73OlrVfq6m3+qi8rMwPJiO2ASE/QMghuYPUU0wiQvfJDOudvobsAzdbddguXIqgLWDSiLZGR4B2dhMkmagKAto98FJiSO/GB5wsFDjmVPnjFyIzLBKwzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710762847; c=relaxed/simple;
-	bh=JA/KRWB1iWsUGT53W2XAqwsBspnF3Fn6EQ5RKr36NmY=;
-	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=AlNVKQAq/kU8haXIZ0Jw2Jhpq7+WHdUV4LndzJ0qDBcdHaWZxBjkQy0i6tStNN2fJKOfsAP3R5iPzys4s87wdNa2IjnndfK1/4OtU17VW7V0wb5IXrtH5VJQuSTvzJoU7u25X2RLc4OrIEVHCQrrNI0rf6QQqJ8VFLpcNcyiRSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=eb5NZg+L; arc=none smtp.client-ip=192.198.163.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1710762846; x=1742298846;
-  h=from:date:to:cc:subject:in-reply-to:message-id:
-   references:mime-version:content-id;
-  bh=JA/KRWB1iWsUGT53W2XAqwsBspnF3Fn6EQ5RKr36NmY=;
-  b=eb5NZg+LYnEn7CKFrX9FI+Zg55awTvJYagQwm9tGhfpexOAk9we8/jMw
-   3H9G/jiGShw2znpt6c+0uThoh9Hv2gFt5Myk8r+WgUCiKQGfGBGc41izP
-   okfRlvKMoCVUxclM9vEq2UImSPLLMhQwuLRl6GX80cFuPzG2H2V8cJ5ZR
-   u8B4QTKsUJ9ZaqbCl8vPUB7L4ZExEBFcbOyc0+C07YlVzZcKaz8pGvKqL
-   2m0cVtfdhNyY3/F1SSYDdgGmPtEm07ojn4oV6Ygf9lYA0W2/0EdwrR8Tx
-   O3lg0PVgK0AElJvxGP8jOqPpY9bfKZbfReEcEc6MKMrzDTCJ7ktPKaJB9
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11016"; a="5403765"
-X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; 
-   d="scan'208";a="5403765"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Mar 2024 04:54:05 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; 
-   d="scan'208";a="13831209"
-Received: from ijarvine-desk1.ger.corp.intel.com (HELO localhost) ([10.245.247.11])
-  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Mar 2024 04:53:59 -0700
-From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Mon, 18 Mar 2024 13:53:53 +0200 (EET)
-To: Nikita Travkin <nikita@trvn.ru>
-cc: Hans de Goede <hdegoede@redhat.com>, Sebastian Reichel <sre@kernel.org>, 
-    Rob Herring <robh+dt@kernel.org>, 
-    Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-    Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
-    Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-    Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
-    Bryan O'Donoghue <bryan.odonoghue@linaro.org>, devicetree@vger.kernel.org, 
-    LKML <linux-kernel@vger.kernel.org>, linux-arm-msm@vger.kernel.org, 
-    platform-driver-x86@vger.kernel.org
-Subject: Re: [PATCH v5 3/4] platform: arm64: Add Acer Aspire 1 embedded
- controller driver
-In-Reply-To: <20240315-aspire1-ec-v5-3-f93381deff39@trvn.ru>
-Message-ID: <f68150a6-62bd-f99f-ad24-f2a018a67d2e@linux.intel.com>
-References: <20240315-aspire1-ec-v5-0-f93381deff39@trvn.ru> <20240315-aspire1-ec-v5-3-f93381deff39@trvn.ru>
+	s=arc-20240116; t=1710766855; c=relaxed/simple;
+	bh=abNTLKYcLXIhe2eOSU6DyOpFwTK4BPqk/0FE1JzWnEQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nE/RoqL9z0KzwVsnzJ6iMTy70QRAuEOQrRVRDBMqqNbdjwRaT1NzRXBT/98iOG0u+4nT5dgk5DggSv7iLHIwqhAYR4NXIfOm6EeYEsfUP4LB20YrTsMzgTv3RM6bWc61MBPZ6hd3/pZWstro6lV0xu2HXfBE7ehn8Z9MiQWkv6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=guNOzgPG; arc=none smtp.client-ip=209.85.128.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-60a0579a931so42086197b3.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 06:00:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1710766852; x=1711371652; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=krtW4aUuwrjQ2jkX8A4jBdsmWsZ29REGKZPPhdTh9uc=;
+        b=guNOzgPGHeiyycfe5bqDTRCmhhmnzjQVZ21JIJnG+IdNfTFILcG6WbmBcWnYwHg3dk
+         QcnRhwO27DMW/DFy4bCUQYqPpQElRSt6/Baq8IjYSx1iDiiwWZ5fejxRfd+B/CCLVKz5
+         2CJSZ5IFz3xDMNS5+VbDD15FcNP8CuZBtAn0+3tZ9Ad2I65nhDHA0oHgvVoGqkcW8XwE
+         ehDTgkvHvzE8GI6DA0Dgidf3jt7D9lRs6C5No2H2IhA2UxAHxvnDi9TXwT4qekPdKOVU
+         lwWWG2c23SUjzg53W75uUzPXlOIJevBw9+8Pa4/shbVfkv3Xy05uyQqG03Treuq/R5Cy
+         gNqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710766852; x=1711371652;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=krtW4aUuwrjQ2jkX8A4jBdsmWsZ29REGKZPPhdTh9uc=;
+        b=fn+FxH2b5UocjGPjJ9avm3ddeo2IIpRtOoSAVzukoM5fzU5IWLiKRdUGXwrY8G6y4M
+         U7W59YC4QTsnitAEKtv9EjQezewXTN/PhU/hXks0wopXYk7lwLql7NKBVdIZFw+Fuy61
+         PSFdk2t6yn0e1tFfXjA7IoCakxik+y304eJDd6LnFmLsiW1uTexZj5BzQXKrseIhi6x2
+         kqhc9tqhK0r9cdL+y5A5jDLNCENi4/slbo9k8Iz8/21pqSVfghQf189QPrjSVm49vskd
+         Ib1IZHFm5TtH0zcA4YBED13XADQT9K8WGLUByIlxBYF3FfEPCfqAuZAeDUcJ3GJd0+AM
+         tk/Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXkz2l6kntT5iNMBJn5ge5TJi4tdNKiVboy26nyuGcUqMMXksPVm7EmIlkrzBR6N9F1RWqt/ndBjiHuP3cN7nH59qlf8PWQ5fGlcujl1g==
+X-Gm-Message-State: AOJu0YyA8yIVF/0QR37a4hoKUf9IXSUqpYUlnYQ3SgBDU4EruFqileP7
+	+hzj4cCwhSFUuIjD+pmx1/r9cvU7ZjHfDP4bEBAUyMnruUFv+Nx0j6LGXKMYCWNHaeN9zJqXv+k
+	5u68gdaBJwUW+TCvHdss/y2uTUWei2fet5u5dFQ==
+X-Google-Smtp-Source: AGHT+IHNIqyRYAx97Bsm8icZ7FibD5CfXZy6+AclCn9jOAbIEUGiVoB04TJFOEhgeti/W3RP6sRcFIurJfwvOEdKwzA=
+X-Received: by 2002:a5b:845:0:b0:dcc:96db:fc0d with SMTP id
+ v5-20020a5b0845000000b00dcc96dbfc0dmr6407441ybq.25.1710766851867; Mon, 18 Mar
+ 2024 06:00:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323328-685438645-1710762824=:1041"
-Content-ID: <8d9d18f0-5a11-8f08-3681-a84e27267c21@linux.intel.com>
+References: <20240318110855.31954-1-johan+linaro@kernel.org> <20240318110855.31954-2-johan+linaro@kernel.org>
+In-Reply-To: <20240318110855.31954-2-johan+linaro@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 18 Mar 2024 15:00:40 +0200
+Message-ID: <CAA8EJprywWbdoyfAbys=0WzEdAkp0UK1fzzCPzxKRjyk9DrC6Q@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] dt-bindings: bluetooth: add new wcn3991 compatible
+ to fix bd_addr
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Johan Hedberg <johan.hedberg@gmail.com>, Matthias Kaehlcke <mka@chromium.org>, 
+	Doug Anderson <dianders@google.com>, Bjorn Andersson <quic_bjorande@quicinc.com>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-bluetooth@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Mon, 18 Mar 2024 at 13:09, Johan Hovold <johan+linaro@kernel.org> wrote:
+>
+> Several Qualcomm Bluetooth controllers lack persistent storage for the
+> device address and instead one can be provided by the boot firmware
+> using the 'local-bd-address' devicetree property.
+>
+> The Bluetooth bindings clearly says that the address should be specified
+> in little-endian order, but due to a long-standing bug in the Qualcomm
+> driver which reversed the address some bootloaders have been providing
+> the address in big-endian order instead.
+>
+> The only device out there that should be affected by this is the WCN3991
+> used in some Chromebooks. To maintain backwards compatibility, mark the
+> current compatible string as deprecated and add a new
+> 'qcom,wcn3991-bt-bdaddr-le' for firmware which conforms with the
+> binding.
+>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>  .../net/bluetooth/qualcomm-bluetooth.yaml     | 29 +++++++++++--------
+>  1 file changed, 17 insertions(+), 12 deletions(-)
+>
+> diff --git a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+> index eba2f3026ab0..b6fce6d02138 100644
+> --- a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+> +++ b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+> @@ -15,18 +15,22 @@ description:
+>
+>  properties:
+>    compatible:
+> -    enum:
+> -      - qcom,qca2066-bt
+> -      - qcom,qca6174-bt
+> -      - qcom,qca9377-bt
+> -      - qcom,wcn3988-bt
+> -      - qcom,wcn3990-bt
+> -      - qcom,wcn3991-bt
+> -      - qcom,wcn3998-bt
+> -      - qcom,qca6390-bt
+> -      - qcom,wcn6750-bt
+> -      - qcom,wcn6855-bt
+> -      - qcom,wcn7850-bt
+> +    oneOf:
+> +      - enum:
+> +          - qcom,qca2066-bt
+> +          - qcom,qca6174-bt
+> +          - qcom,qca9377-bt
+> +          - qcom,wcn3988-bt
+> +          - qcom,wcn3990-bt
+> +          - qcom,wcn3991-bt-bdaddr-le
 
---8323328-685438645-1710762824=:1041
-Content-Type: text/plain; CHARSET=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Content-ID: <64e59465-3e35-8c82-5b41-6fd74dbb49db@linux.intel.com>
+This compatible doesn't describe new hardware kind. As such, I think,
+the better way would be to continue using qcom,wcn3991-bt compatible
+string + add some kind of qcom,bt-addr-le property.
 
-On Fri, 15 Mar 2024, Nikita Travkin wrote:
+> +          - qcom,wcn3998-bt
+> +          - qcom,qca6390-bt
+> +          - qcom,wcn6750-bt
+> +          - qcom,wcn6855-bt
+> +          - qcom,wcn7850-bt
+> +      - enum:
+> +          - qcom,wcn3991-bt
+> +        deprecated: true
+>
+>    enable-gpios:
+>      maxItems: 1
+> @@ -122,6 +126,7 @@ allOf:
+>                - qcom,wcn3988-bt
+>                - qcom,wcn3990-bt
+>                - qcom,wcn3991-bt
+> +              - qcom,wcn3991-bt-bdaddr-le
+>                - qcom,wcn3998-bt
+>      then:
+>        required:
+> --
+> 2.43.2
+>
+>
 
-> Acer Aspire 1 is a Snapdragon 7c based laptop. It uses an embedded
-> controller to perform a set of various functions, such as:
->=20
-> - Battery and charger monitoring;
-> - Keyboard layout control (i.e. fn_lock settings);
-> - USB Type-C DP alt mode HPD notifications;
-> - Laptop lid status.
->=20
-> Unfortunately, while all this functionality is implemented in ACPI, it's
-> currently not possible to use ACPI to boot Linux on such Qualcomm
-> devices. To allow Linux to still support the features provided by EC,
-> this driver reimplments the relevant ACPI parts. This allows us to boot
-> the laptop with Device Tree and retain all the features.
->=20
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
 
-Reviewed-by: Ilpo J=E4rvinen <ilpo.jarvinen@linux.intel.com>
-
---=20
- i.
---8323328-685438645-1710762824=:1041--
+-- 
+With best wishes
+Dmitry
 
