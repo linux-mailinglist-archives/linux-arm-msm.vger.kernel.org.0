@@ -1,74 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-14349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14350-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5939E87E473
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 08:55:02 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 535D487E47D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 08:56:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DBFF91F212C7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 07:55:01 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ADCA7B20DC7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 07:56:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3428624B26;
-	Mon, 18 Mar 2024 07:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C3C023774;
+	Mon, 18 Mar 2024 07:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TomYdB1P"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jyX6yYh/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
+Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA4C24B29
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 07:54:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4167D24205
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 07:55:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710748498; cv=none; b=TzzFypqW0whWFqLv59f+OyJWQopVVHfA60SIT0mi6WZqrLViGePz4lVdlTlJWU0So107mtZt2x9VH1SOiGJmqzXRZvQO6oxLAyKkgEK5t25S/KKu+9vSe00eyWLg7MsKGfpYEmab6+e3dDDCRqXxp5ns0hFr4IkhXzkTwNtIupo=
+	t=1710748558; cv=none; b=Z/A23qGvO89d0Hd/nMjsG3u+IpfPkj9FatkkJ3YfXGInhLSEy8Lru+sbQZYpn41YJsKkjCfKFVTKoUigTBq//EnDfy2ki/7fwuJo9+tIFsi+x+PeoJNFEbZvBUWLP9aeq927fQUKUoJbA/TX1W9YIf47s25fGRmHjEZBT4+cEAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710748498; c=relaxed/simple;
-	bh=tV/9c5WX/jZlj7YRfM5Sh5A3g2kgoLfJIXSA40BN0DU=;
+	s=arc-20240116; t=1710748558; c=relaxed/simple;
+	bh=aDZnBBneiWHtvV04ZlUZq0+6FYjUW1DNvppSIAkiUGo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=skNtRNsE9jbk/cVxS44E49D9WQuIKfdiXLS7KAagXT+6WbiJeQffl2vjFjD1KH4qQq4o1wl5mUdrpvNqYRhxsgMC6frIeOyM3ail3GUDDeVAZEehzq2JIdEmrw+pjqHsEmdTWQwEZ4Po+SNtJZIhZnmNtsJ61D/SiUADSEWwqOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TomYdB1P; arc=none smtp.client-ip=209.85.161.42
+	 In-Reply-To:Content-Type; b=PnUXALsQ8zb3I9A3ISeP3RsRnkafCFVuRCto5wbbbb5zkqW8ypdkv7gGW89iGsDNX6WTifC8TXXb/P6rPwfhY91A3prZiXRT/pDqTBeNgUsSrImBX1ngaPgFsHDkp3xgeKGZTCPUMVGvr09QgdfyQAvZ1um2npODfB5tY7w78k0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jyX6yYh/; arc=none smtp.client-ip=209.85.161.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-5a47abe2ff7so1346097eaf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 00:54:56 -0700 (PDT)
+Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-5a492093073so947016eaf.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 00:55:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710748496; x=1711353296; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1710748554; x=1711353354; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Act/RINO34oo1a2ZYlSnoHp6gUrMy0RrgNQ5BWRiL9w=;
-        b=TomYdB1PlbfyuKVdIdtseySo/gC8Xi8wC6oFrIsEWXUpyZrJDxJFLeUA8orJkzrTH1
-         IywZbw81w6VQXr46N07OJbSgpcvSHPwLZea7FtH7FatVcEXBjYwov6+bpdt2ikKfrsYT
-         32cX4bbhKE8Km2FgQkrPHH/A+esf05c2DdiTF5QKGgI4YJkbz6BW/xpVgAILTYJz871R
-         wvnFrv87aW0PeT6ue9ECayhnYf48itjjmSiZidn7l50O8YRMLPqGFAQTO0oAVBirW6Mt
-         HV+wTRvF9e6uHq6d5+GlaZM3jS3FpIG1u6NUSf3+3+O376L/w4y/5dj9Ajgat/MenN51
-         DcNQ==
+        bh=ztrWy7AuOAQ+IL99ftGb5Cg4rREAV9eGD+VoH9bdgno=;
+        b=jyX6yYh/poxxK6MmmW8JMdLjGWFIup2fRdedIb1pfUziHt5pYC+T3LvgQPFbXxZ9Nn
+         kVG2s4ydvpr1lYkGyUWS4BlGfwHw2Uh/TCWuXuFNBPvrCAtConpbf92xlwF1gMBtUDWT
+         Ip7zEOQau2cypaMh7GuhgqDsCzUQLs8Np7szMzjqOCjbX5+Nv9hdmIhA7FBl6k5m5Dza
+         YWnTvzoi0MW2tRf+s2bp/VIwQ33hm97WE5ZtMK2AqGYKcxlQDJijHFvlEE45H5Tv13Cf
+         KXFJfqSYrJwzmwCmT9JAje+q8FwMBNowXzCpMOjyHTGwyFSgRDmTNtIcMRDv0QqRhogI
+         lDfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710748496; x=1711353296;
+        d=1e100.net; s=20230601; t=1710748554; x=1711353354;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Act/RINO34oo1a2ZYlSnoHp6gUrMy0RrgNQ5BWRiL9w=;
-        b=PNKqiLR04zVfEqcuNS3U97xWwTDMGZApPReBui2F3MIIYbJK4p8SMKD30X3qV+6ZYZ
-         oi2kSiNtDPkfjPPGKWmxBvcC7fb9ulj31nm0mHOS+RJmwM6rGVG0VoJaJvsSfFdP8NHH
-         CNhkwr1mFCKrigySWp1EY8t1nrenDsDpawyn5sajOwoszG8rJo4hIclbe+MjtyC53b/7
-         gvCdi6EkdpHTmorlDGjBDnD1Gxv43MqyPlzdAR4SBYi5OXShkYRWKPj9DQuB4kZJadH1
-         xMY5yMCQq7HxXiitaOPJpMOkOFSCi6ZlnplqiQ/gtLg/r05ZdGSEAm9MejTE3W0EjNwY
-         vOFw==
-X-Gm-Message-State: AOJu0YyVIduQwtD7E0djOGCgSQa53zMOkyT29Pq2hdCkl3h/ou0uXB5e
-	FEZNeNgnLn3niNiJY2yzFZRuHh03bngDM7dvGZhqO+s8BzblMWpNkzS2Pm3iLc9fOLXc33hM8C8
-	q
-X-Google-Smtp-Source: AGHT+IFJT1kTMCQOaeLHAvs2Mly7OkfK0p2nnsO6JWIjXLivOe/Zv8EHgZPUrmTtcWW4G1eAypcFSQ==
-X-Received: by 2002:a4a:7518:0:b0:5a4:55f5:e30d with SMTP id j24-20020a4a7518000000b005a455f5e30dmr7634114ooc.3.1710748495685;
-        Mon, 18 Mar 2024 00:54:55 -0700 (PDT)
+        bh=ztrWy7AuOAQ+IL99ftGb5Cg4rREAV9eGD+VoH9bdgno=;
+        b=OjWuIJsrC9pLVHTw2x9ZMaNGx2N0t5b9hWuaVfMKZ/yhbH5wvFjVDLxPz6Lkls6Wzs
+         oRo+sK5S3YdV/KKWqA5rPNgw0yEsj1gbInLtsnda64a4XtlkLWFvXEai5+KGOepTvR/8
+         +MVYGQRr+uM+xi7EWbtNvRASy92Ngi4FUorJzdcx5243kLqcxSmfK5EHhvKUCQ9IEG7Q
+         M6ElhlTdtX/NiPkhmAKf1ZJ6h1Gqtjkzk3sbIYPGz1svTa2ehepR43k6sevM9+tmupVJ
+         LCzyjVt0hN+5meKCye4c8pRx1vzWHqwp0+v+GzXMAGZzFJ6PH205N+OkbYYPvbbc9AgJ
+         oMnA==
+X-Gm-Message-State: AOJu0YyHtLrLJWpnoZo3QaYzgig3pQZoeHYxozm+SQiPypkN4C0xf4/Q
+	2QMqfvPneXhHAf/1y+Bm8WpYA+xJJpQHA0Ix1BRIj9BBPlE88CJ1EZ1VODS2xxM=
+X-Google-Smtp-Source: AGHT+IG14pt+bpF47yyhiej5bFRvCVgC9NsbiUMotPSg9NX9tGXGNQ5p13LEqZMjZwWHowHorMlZmg==
+X-Received: by 2002:a05:6820:b08:b0:5a4:8680:7c96 with SMTP id df8-20020a0568200b0800b005a486807c96mr2568092oob.1.1710748554424;
+        Mon, 18 Mar 2024 00:55:54 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.222.97])
-        by smtp.gmail.com with ESMTPSA id bm8-20020a056820188800b005a4b2172e48sm420608oob.41.2024.03.18.00.54.52
+        by smtp.gmail.com with ESMTPSA id bm8-20020a056820188800b005a4b2172e48sm420608oob.41.2024.03.18.00.55.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Mar 2024 00:54:55 -0700 (PDT)
-Message-ID: <06c08855-3965-4d57-8bec-fba8544dee7d@linaro.org>
-Date: Mon, 18 Mar 2024 08:54:52 +0100
+        Mon, 18 Mar 2024 00:55:54 -0700 (PDT)
+Message-ID: <231b373d-82e7-46da-ab24-96aea6857225@linaro.org>
+Date: Mon, 18 Mar 2024 08:55:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,8 +75,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/8] arm64: dts: qcom: qcm6490-idp: Update protected
- clocks list
+Subject: Re: [PATCH v2 8/8] arm64: dts: qcom: qcs6490-rb3gen2: Update the
+ LPASS audio node
 Content-Language: en-US
 To: Taniya Das <quic_tdas@quicinc.com>, Stephen Boyd <sboyd@kernel.org>,
  Michael Turquette <mturquette@baylibre.com>,
@@ -88,7 +87,7 @@ To: Taniya Das <quic_tdas@quicinc.com>, Stephen Boyd <sboyd@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org
 References: <20240318053555.20405-1-quic_tdas@quicinc.com>
- <20240318053555.20405-8-quic_tdas@quicinc.com>
+ <20240318053555.20405-9-quic_tdas@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -134,45 +133,43 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240318053555.20405-8-quic_tdas@quicinc.com>
+In-Reply-To: <20240318053555.20405-9-quic_tdas@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 18/03/2024 06:35, Taniya Das wrote:
-> Certain clocks are not accessible on QCM6490-IDP board,
-> thus mark them as protected. Update the lpassaudio node to
-> support the new compatible.
+> Update the lpassaudio node to support the new compatible.
+
+Why? The most important information and you ignore it... What is easily
+visible from the diff.
+
 > 
 > Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 > ---
-
+>  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
 > 
-> +&gcc {
-> +	protected-clocks = <GCC_AGGRE_NOC_PCIE_1_AXI_CLK> ,<GCC_PCIE_1_AUX_CLK>,
-> +			<GCC_PCIE_1_AUX_CLK_SRC>, <GCC_PCIE_1_CFG_AHB_CLK>,
-> +			<GCC_PCIE_1_MSTR_AXI_CLK>, <GCC_PCIE_1_PHY_RCHNG_CLK_SRC>,
-> +			<GCC_PCIE_1_PIPE_CLK>, <GCC_PCIE_1_PIPE_CLK_SRC>,
-> +			<GCC_PCIE_1_SLV_AXI_CLK>, <GCC_PCIE_1_SLV_Q2A_AXI_CLK>,
-> +			<GCC_QSPI_CNOC_PERIPH_AHB_CLK>, <GCC_QSPI_CORE_CLK>,
-> +			<GCC_QSPI_CORE_CLK_SRC>,<GCC_USB30_SEC_MASTER_CLK>,
-> +			<GCC_USB30_SEC_MASTER_CLK_SRC>, <GCC_USB30_SEC_MOCK_UTMI_CLK>,
-> +			<GCC_USB30_SEC_MOCK_UTMI_CLK_SRC>,
-> +			<GCC_USB30_SEC_MOCK_UTMI_POSTDIV_CLK_SRC>, <GCC_USB30_SEC_SLEEP_CLK>,
-> +			<GCC_USB3_SEC_PHY_AUX_CLK>, <GCC_USB3_SEC_PHY_AUX_CLK_SRC>,
-> +			<GCC_USB3_SEC_PHY_COM_AUX_CLK>, <GCC_USB3_SEC_PHY_PIPE_CLK>,
-> +			<GCC_USB3_SEC_PHY_PIPE_CLK_SRC>, <GCC_CFG_NOC_LPASS_CLK>,
-> +			<GCC_MSS_GPLL0_MAIN_DIV_CLK_SRC>, <GCC_MSS_CFG_AHB_CLK>,
-> +			<GCC_MSS_OFFLINE_AXI_CLK>, <GCC_MSS_SNOC_AXI_CLK>,
-> +			<GCC_MSS_Q6_MEMNOC_AXI_CLK>, <GCC_MSS_Q6SS_BOOT_CLK_SRC>,
-> +			<GCC_SEC_CTRL_CLK_SRC>, <GCC_WPSS_AHB_CLK>,
-> +			<GCC_WPSS_AHB_BDG_MST_CLK>, <GCC_WPSS_RSCP_CLK>;
-> +};
-> +
+> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> index 97824c769ba3..dc7edea7f7c8 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> @@ -1,6 +1,6 @@
+>  // SPDX-License-Identifier: BSD-3-Clause
+>  /*
+> - * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + * Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>   */
+> 
+>  /dts-v1/;
+> @@ -430,6 +430,11 @@
+>  			   <GCC_WPSS_RSCP_CLK>;
+>  };
+> 
 > +&lpass_audiocc {
 > +	compatible = "qcom,qcm6490-lpassaudiocc";
 
-What? Why do you override compatible for given board? This is a SoC
-block, not board!
+No, you are creating some spaghetti DTS. Boards do not change SoC
+compatibles.
 
 Best regards,
 Krzysztof
