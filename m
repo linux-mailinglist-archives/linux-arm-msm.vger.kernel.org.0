@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-14390-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14391-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C937087E8AB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 12:31:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7FF8B87E8F8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 12:54:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7E5AA28276C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 11:31:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3A0AF282BC7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 11:54:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB588364BF;
-	Mon, 18 Mar 2024 11:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94E35374FE;
+	Mon, 18 Mar 2024 11:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jx+K0CQI"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="eb5NZg+L"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3C22EB05;
-	Mon, 18 Mar 2024 11:31:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F9A374DD;
+	Mon, 18 Mar 2024 11:54:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710761514; cv=none; b=ZWSrNUzC+Ld2BptUwYAx8UI9Kf0SyXT9MJFj4txjL6A6Vh1QtodCTyNWNba3ZwEf05nolE8sxiSACNO50TPQWF0QFeEtGj6RDK8emgwUGgXGomFcjb4OPqKdb0jwuf8cfsNZ5gWF5DC8R+KMDEuLZMsxqWbaWQU9/buIDyUQx0k=
+	t=1710762847; cv=none; b=JpxgdRuhhbTLawLG9KZzN1JG2m8+42xYGlNOSDQP46GsWwn1MbZACQpLT8lTvn9LPFKj4pRx8XDes4zmGrKde6kK4WdL7xL2imRouiY/PDCUHHH55GwXUtn2WL/vEwTs5sAcqb/NTcjSBtiZ+65HJZqlhztE2Bb4veNPEg7MQos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710761514; c=relaxed/simple;
-	bh=1BYULFfpmrtdt5zSdHz7afbD+gWoM76bjV/mS7ORSuc=;
+	s=arc-20240116; t=1710762847; c=relaxed/simple;
+	bh=JA/KRWB1iWsUGT53W2XAqwsBspnF3Fn6EQ5RKr36NmY=;
 	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=UWhXiawW7tR5vtUaeaaKsn4NEuiqbc1ghrPZ3TqkdE51yAnoCv0wfzzR/RvM9Du3cf4RSpx6+l9akyt4a82wDIhk70VeY5T6hY/dYJAerVOBF3VMy59Auzswq0XpLMHAyCXyIrN6k7JT5tp2sAcVBjYEAouo4XoZzp3/bB8NA4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jx+K0CQI; arc=none smtp.client-ip=192.198.163.18
+	 MIME-Version:Content-Type; b=AlNVKQAq/kU8haXIZ0Jw2Jhpq7+WHdUV4LndzJ0qDBcdHaWZxBjkQy0i6tStNN2fJKOfsAP3R5iPzys4s87wdNa2IjnndfK1/4OtU17VW7V0wb5IXrtH5VJQuSTvzJoU7u25X2RLc4OrIEVHCQrrNI0rf6QQqJ8VFLpcNcyiRSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=eb5NZg+L; arc=none smtp.client-ip=192.198.163.18
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1710761513; x=1742297513;
+  t=1710762846; x=1742298846;
   h=from:date:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=1BYULFfpmrtdt5zSdHz7afbD+gWoM76bjV/mS7ORSuc=;
-  b=jx+K0CQI1i7bGcE3cxe3wLTs1Gj631A+v5ppVJMVs6f16A39Ufgn5Q8d
-   jf6R5IMvi9xTrq/RzEF3Z1nLkbY1pUnpYuLtpeKovAVU3sv0C9RgoWtXM
-   O4xVtX3ceQpJsNAPV4sWYPxi+mkKwVlQ6n8K0GdCrngV6IKmzVi2yJMy3
-   +l+J/RmVceWFB4TWbIRqEYUfVXdPJ9FVPzkjE508SVED/cb9jjH4ZGI/G
-   c30y6AKzCEFlrt/avTfXjhnQNzAx7pb+FPfglWWzHTSB99xVxTEwJd1p+
-   eKmOi46svwgd6ABm8JT23gRg+5LsDl1wrduDPp6h7v7h1RA37MONSLwtL
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11016"; a="5401772"
+   references:mime-version:content-id;
+  bh=JA/KRWB1iWsUGT53W2XAqwsBspnF3Fn6EQ5RKr36NmY=;
+  b=eb5NZg+LYnEn7CKFrX9FI+Zg55awTvJYagQwm9tGhfpexOAk9we8/jMw
+   3H9G/jiGShw2znpt6c+0uThoh9Hv2gFt5Myk8r+WgUCiKQGfGBGc41izP
+   okfRlvKMoCVUxclM9vEq2UImSPLLMhQwuLRl6GX80cFuPzG2H2V8cJ5ZR
+   u8B4QTKsUJ9ZaqbCl8vPUB7L4ZExEBFcbOyc0+C07YlVzZcKaz8pGvKqL
+   2m0cVtfdhNyY3/F1SSYDdgGmPtEm07ojn4oV6Ygf9lYA0W2/0EdwrR8Tx
+   O3lg0PVgK0AElJvxGP8jOqPpY9bfKZbfReEcEc6MKMrzDTCJ7ktPKaJB9
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11016"; a="5403765"
 X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; 
-   d="scan'208";a="5401772"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Mar 2024 04:31:52 -0700
+   d="scan'208";a="5403765"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Mar 2024 04:54:05 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; 
-   d="scan'208";a="18117243"
+   d="scan'208";a="13831209"
 Received: from ijarvine-desk1.ger.corp.intel.com (HELO localhost) ([10.245.247.11])
-  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Mar 2024 04:31:47 -0700
+  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Mar 2024 04:53:59 -0700
 From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Mon, 18 Mar 2024 13:31:40 +0200 (EET)
+Date: Mon, 18 Mar 2024 13:53:53 +0200 (EET)
 To: Nikita Travkin <nikita@trvn.ru>
 cc: Hans de Goede <hdegoede@redhat.com>, Sebastian Reichel <sre@kernel.org>, 
     Rob Herring <robh+dt@kernel.org>, 
@@ -66,144 +66,50 @@ cc: Hans de Goede <hdegoede@redhat.com>, Sebastian Reichel <sre@kernel.org>,
     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, devicetree@vger.kernel.org, 
     LKML <linux-kernel@vger.kernel.org>, linux-arm-msm@vger.kernel.org, 
     platform-driver-x86@vger.kernel.org
-Subject: Re: [PATCH v5 2/4] platform: Add ARM64 platform directory
-In-Reply-To: <20240315-aspire1-ec-v5-2-f93381deff39@trvn.ru>
-Message-ID: <0634bc80-f149-e75a-40fa-03841d8e9161@linux.intel.com>
-References: <20240315-aspire1-ec-v5-0-f93381deff39@trvn.ru> <20240315-aspire1-ec-v5-2-f93381deff39@trvn.ru>
+Subject: Re: [PATCH v5 3/4] platform: arm64: Add Acer Aspire 1 embedded
+ controller driver
+In-Reply-To: <20240315-aspire1-ec-v5-3-f93381deff39@trvn.ru>
+Message-ID: <f68150a6-62bd-f99f-ad24-f2a018a67d2e@linux.intel.com>
+References: <20240315-aspire1-ec-v5-0-f93381deff39@trvn.ru> <20240315-aspire1-ec-v5-3-f93381deff39@trvn.ru>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1606358534-1710761500=:1041"
+Content-Type: multipart/mixed; BOUNDARY="8323328-685438645-1710762824=:1041"
+Content-ID: <8d9d18f0-5a11-8f08-3681-a84e27267c21@linux.intel.com>
 
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1606358534-1710761500=:1041
-Content-Type: text/plain; charset=utf-8
+--8323328-685438645-1710762824=:1041
+Content-Type: text/plain; CHARSET=ISO-8859-15
 Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-ID: <64e59465-3e35-8c82-5b41-6fd74dbb49db@linux.intel.com>
 
 On Fri, 15 Mar 2024, Nikita Travkin wrote:
 
-> Some ARM64 based laptops and computers require vendor/board specific
-> drivers for their embedded controllers. Even though usually the most
-> important functionality of those devices is implemented inside ACPI,
-> unfortunately Linux doesn't currently have great support for ACPI on
-> platforms like Qualcomm Snapdragon that are used in most ARM64 laptops
-> today. Instead Linux relies on Device Tree for Qualcomm based devices
-> and it's significantly easier to reimplement the EC functionality in
-> a dedicated driver than to make use of ACPI code.
+> Acer Aspire 1 is a Snapdragon 7c based laptop. It uses an embedded
+> controller to perform a set of various functions, such as:
 >=20
-> This commit introduces a new platform/arm64 subdirectory to give a
-> place to such drivers for EC-like devices.
+> - Battery and charger monitoring;
+> - Keyboard layout control (i.e. fn_lock settings);
+> - USB Type-C DP alt mode HPD notifications;
+> - Laptop lid status.
 >=20
-> A new MAINTAINERS entry is added for this directory. Patches to files in
-> this directory will be taken up by the platform-drivers-x86 team (i.e.
-> Hans de Goede and Ilpo J=C3=A4rvinen) with additional review from Bryan
-> O'Donoghue to represent ARM64 maintainers.
+> Unfortunately, while all this functionality is implemented in ACPI, it's
+> currently not possible to use ACPI to boot Linux on such Qualcomm
+> devices. To allow Linux to still support the features provided by EC,
+> this driver reimplments the relevant ACPI parts. This allows us to boot
+> the laptop with Device Tree and retain all the features.
 >=20
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > Signed-off-by: Nikita Travkin <nikita@trvn.ru>
 
-Acked-by: Ilpo J=C3=A4rvinen <ilpo.jarvinen@linux.intel.com>
-
-And big thanks for Bryan for volunteering!
+Reviewed-by: Ilpo J=E4rvinen <ilpo.jarvinen@linux.intel.com>
 
 --=20
  i.
-
-> ---
->  MAINTAINERS                     | 10 ++++++++++
->  drivers/platform/Kconfig        |  2 ++
->  drivers/platform/Makefile       |  1 +
->  drivers/platform/arm64/Kconfig  | 19 +++++++++++++++++++
->  drivers/platform/arm64/Makefile |  6 ++++++
->  5 files changed, 38 insertions(+)
->=20
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 76b3714710c2..186338451099 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3050,6 +3050,16 @@ F:=09drivers/mmc/host/sdhci-of-arasan.c
->  N:=09zynq
->  N:=09xilinx
-> =20
-> +ARM64 PLATFORM DRIVERS
-> +M:=09Hans de Goede <hdegoede@redhat.com>
-> +M:=09Ilpo J=C3=A4rvinen <ilpo.jarvinen@linux.intel.com>
-> +R:=09Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> +L:=09platform-driver-x86@vger.kernel.org
-> +S:=09Maintained
-> +Q:=09https://patchwork.kernel.org/project/platform-driver-x86/list/
-> +T:=09git git://git.kernel.org/pub/scm/linux/kernel/git/pdx86/platform-dr=
-ivers-x86.git
-> +F:=09drivers/platform/arm64/
-> +
->  ARM64 PORT (AARCH64 ARCHITECTURE)
->  M:=09Catalin Marinas <catalin.marinas@arm.com>
->  M:=09Will Deacon <will@kernel.org>
-> diff --git a/drivers/platform/Kconfig b/drivers/platform/Kconfig
-> index 868b20361769..81a298517df2 100644
-> --- a/drivers/platform/Kconfig
-> +++ b/drivers/platform/Kconfig
-> @@ -14,3 +14,5 @@ source "drivers/platform/olpc/Kconfig"
->  source "drivers/platform/surface/Kconfig"
-> =20
->  source "drivers/platform/x86/Kconfig"
-> +
-> +source "drivers/platform/arm64/Kconfig"
-> diff --git a/drivers/platform/Makefile b/drivers/platform/Makefile
-> index 41640172975a..fbbe4f77aa5d 100644
-> --- a/drivers/platform/Makefile
-> +++ b/drivers/platform/Makefile
-> @@ -11,3 +11,4 @@ obj-$(CONFIG_OLPC_EC)=09=09+=3D olpc/
->  obj-$(CONFIG_GOLDFISH)=09=09+=3D goldfish/
->  obj-$(CONFIG_CHROME_PLATFORMS)=09+=3D chrome/
->  obj-$(CONFIG_SURFACE_PLATFORMS)=09+=3D surface/
-> +obj-$(CONFIG_ARM64)=09=09+=3D arm64/
-> diff --git a/drivers/platform/arm64/Kconfig b/drivers/platform/arm64/Kcon=
-fig
-> new file mode 100644
-> index 000000000000..644b83ede093
-> --- /dev/null
-> +++ b/drivers/platform/arm64/Kconfig
-> @@ -0,0 +1,19 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +#
-> +# EC-like Drivers for aarch64 based devices.
-> +#
-> +
-> +menuconfig ARM64_PLATFORM_DEVICES
-> +=09bool "ARM64 Platform-Specific Device Drivers"
-> +=09depends on ARM64 || COMPILE_TEST
-> +=09default y
-> +=09help
-> +=09  Say Y here to get to see options for platform-specific device drive=
-rs
-> +=09  for arm64 based devices, primarily EC-like device drivers.
-> +=09  This option alone does not add any kernel code.
-> +
-> +=09  If you say N, all options in this submenu will be skipped and disab=
-led.
-> +
-> +if ARM64_PLATFORM_DEVICES
-> +
-> +endif # ARM64_PLATFORM_DEVICES
-> diff --git a/drivers/platform/arm64/Makefile b/drivers/platform/arm64/Mak=
-efile
-> new file mode 100644
-> index 000000000000..f91cdc7155e2
-> --- /dev/null
-> +++ b/drivers/platform/arm64/Makefile
-> @@ -0,0 +1,6 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +#
-> +# Makefile for linux/drivers/platform/arm64
-> +#
-> +# This dir should only include drivers for EC-like devices.
-> +#
->=20
->=20
---8323328-1606358534-1710761500=:1041--
+--8323328-685438645-1710762824=:1041--
 
