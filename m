@@ -1,129 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-14389-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14390-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5F6C87E873
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 12:21:06 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C937087E8AB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 12:31:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4E0EB1F21088
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 11:21:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7E5AA28276C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 11:31:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2EDF38FA8;
-	Mon, 18 Mar 2024 11:20:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB588364BF;
+	Mon, 18 Mar 2024 11:31:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="De65PA0O"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jx+K0CQI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01116381C5;
-	Mon, 18 Mar 2024 11:20:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3C22EB05;
+	Mon, 18 Mar 2024 11:31:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710760809; cv=none; b=j2xbN9/1zwQkkUd2inKrTYkWSrlMKl85cjfCdF1rG7isrNv6f6IuGK1OU/TUOmo0Euk+zeLlXsjGELvDBjM3ND8c8gbQ3BlgyvvO/IlPKStIHtnVD1VLP+hcqdNuydv0qmWg/i3ndw7i3B/Umi2xAAuoH5dNueXTpyNrEuIOgyc=
+	t=1710761514; cv=none; b=ZWSrNUzC+Ld2BptUwYAx8UI9Kf0SyXT9MJFj4txjL6A6Vh1QtodCTyNWNba3ZwEf05nolE8sxiSACNO50TPQWF0QFeEtGj6RDK8emgwUGgXGomFcjb4OPqKdb0jwuf8cfsNZ5gWF5DC8R+KMDEuLZMsxqWbaWQU9/buIDyUQx0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710760809; c=relaxed/simple;
-	bh=VeSHBpyUKXYt/Yh7tQKPCVQRJ1T9+Llp9DI0p6yKfjs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Y0Uh+9Rn8TDYc/NGHFiyngczZqQKTCMPmKK2hS+K4SDHVPmpxlecRfkvWD8A3y9/L1Tiyb0/aol1S4qHWSRyh07I9CRXqN8F1xKmXEfSVqNujnxR4plVvhxAmzCXtLyf8hMzcMLx4MELzqoYJXgsG8JEWwbKBNme3b06MNr46S4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=De65PA0O; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3416df43cabso609038f8f.3;
-        Mon, 18 Mar 2024 04:20:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710760806; x=1711365606; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kPuoOY9/Q98dbqm96E10istRwlwF4G6fYLA56NqAfeQ=;
-        b=De65PA0O4Po2tbxqrs5PcqG1HaTvAxUKwY/T3t2GdDzw7o+XXgXrL8Bz2QoUo6a1Ib
-         Ug6/9UDwxE2EstIp4sGIRE8+JfInpB2Jt+KycdOOVCKdBzeOK8ZRg1CPgupR4769sRO+
-         TqXOp4NJ9c7opnkbw7K6yJXYKl8Kv4We0fqsDJdABhNseyMKJbxOJregN5Ib2SGLbCys
-         eu4yiCskFyJtE5FyERYGaEhRkA/hKTvVfFZAVJI/PAIixtiC/GdvoKeqfarIek6FQUZ3
-         TxmSokl9SyKcmIN/zbf5Wai5AbCIUty81yIySCijHY/SX4VEI8hyQA+ZoXmbGkGyFvEe
-         1hzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710760806; x=1711365606;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kPuoOY9/Q98dbqm96E10istRwlwF4G6fYLA56NqAfeQ=;
-        b=mUrFyIqWRmqIvMOhGTZPIQ9we+TzqhxbmXI1mVilJGbGkYu6ymOZ+hgz8S1pbL8ogr
-         UScamhNaPDbpmazOQbT2LjDIXOcGX+MtqgtorO0NcwN+bUwQd0Fkjvi3GVaWqBnfFCHr
-         xT6l0GyKzkiW+jkAazw3u+FrMzcOEJX6tDJPUfZaHtpQ0OhQl9/tQbS4IK9+vrBQoxl8
-         VT1v51cVRuLWCNhr/oX4szBEloHN2lKgall4t5TPOf9lyW83ZGd1/lEs8nG6R/5IyND7
-         AopUwpuJRJ7I/xCwvLn8owQyud8wLXEHXomAkfUDRgV4YsRSTdHtRWXd8oVFocxF6CCy
-         mFXQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVZbHBIRyqzOautmQUmf86VfJcfyrqN2+yAgQdgXSFy6z1xsfNMtkRDy+Yyi6BppRMIzHA5VVHcCsTxrGN4ohy3k28lHmsrmmlu0G+zPqfu6d8SSIaDJklkLKGXrLeB2FxN1vqSLGnb
-X-Gm-Message-State: AOJu0Yw9Z/uqEGvWlKvO+Trh10yRTNSS0LNNzEph8wTnrvgY6XAdwGCh
-	0AN7N7LxRI/NL4/u+ijMSv7RA23ZGMtPL1xCJtG5KDfkRjCrGIrT
-X-Google-Smtp-Source: AGHT+IFqSLqH86uUqVcWskOa3664WxrdQZUIeDK6MH78X1d6f5pdQ6F6vPZNrjt0NUgpe+kOIlGqiw==
-X-Received: by 2002:adf:eb11:0:b0:33d:2472:eb8c with SMTP id s17-20020adfeb11000000b0033d2472eb8cmr7350002wrn.19.1710760806267;
-        Mon, 18 Mar 2024 04:20:06 -0700 (PDT)
-Received: from [192.168.20.102] (57657817.catv.pool.telekom.hu. [87.101.120.23])
-        by smtp.googlemail.com with ESMTPSA id az1-20020adfe181000000b0033ed7181fd1sm6650421wrb.62.2024.03.18.04.20.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Mar 2024 04:20:05 -0700 (PDT)
-From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Mon, 18 Mar 2024 12:19:59 +0100
-Subject: [PATCH 5/5] clk: qcom: apss-ipq-pll: constify clk_init_data
- structures
+	s=arc-20240116; t=1710761514; c=relaxed/simple;
+	bh=1BYULFfpmrtdt5zSdHz7afbD+gWoM76bjV/mS7ORSuc=;
+	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=UWhXiawW7tR5vtUaeaaKsn4NEuiqbc1ghrPZ3TqkdE51yAnoCv0wfzzR/RvM9Du3cf4RSpx6+l9akyt4a82wDIhk70VeY5T6hY/dYJAerVOBF3VMy59Auzswq0XpLMHAyCXyIrN6k7JT5tp2sAcVBjYEAouo4XoZzp3/bB8NA4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jx+K0CQI; arc=none smtp.client-ip=192.198.163.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1710761513; x=1742297513;
+  h=from:date:to:cc:subject:in-reply-to:message-id:
+   references:mime-version;
+  bh=1BYULFfpmrtdt5zSdHz7afbD+gWoM76bjV/mS7ORSuc=;
+  b=jx+K0CQI1i7bGcE3cxe3wLTs1Gj631A+v5ppVJMVs6f16A39Ufgn5Q8d
+   jf6R5IMvi9xTrq/RzEF3Z1nLkbY1pUnpYuLtpeKovAVU3sv0C9RgoWtXM
+   O4xVtX3ceQpJsNAPV4sWYPxi+mkKwVlQ6n8K0GdCrngV6IKmzVi2yJMy3
+   +l+J/RmVceWFB4TWbIRqEYUfVXdPJ9FVPzkjE508SVED/cb9jjH4ZGI/G
+   c30y6AKzCEFlrt/avTfXjhnQNzAx7pb+FPfglWWzHTSB99xVxTEwJd1p+
+   eKmOi46svwgd6ABm8JT23gRg+5LsDl1wrduDPp6h7v7h1RA37MONSLwtL
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11016"; a="5401772"
+X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; 
+   d="scan'208";a="5401772"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Mar 2024 04:31:52 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; 
+   d="scan'208";a="18117243"
+Received: from ijarvine-desk1.ger.corp.intel.com (HELO localhost) ([10.245.247.11])
+  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Mar 2024 04:31:47 -0700
+From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Date: Mon, 18 Mar 2024 13:31:40 +0200 (EET)
+To: Nikita Travkin <nikita@trvn.ru>
+cc: Hans de Goede <hdegoede@redhat.com>, Sebastian Reichel <sre@kernel.org>, 
+    Rob Herring <robh+dt@kernel.org>, 
+    Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+    Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
+    Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+    Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+    Bryan O'Donoghue <bryan.odonoghue@linaro.org>, devicetree@vger.kernel.org, 
+    LKML <linux-kernel@vger.kernel.org>, linux-arm-msm@vger.kernel.org, 
+    platform-driver-x86@vger.kernel.org
+Subject: Re: [PATCH v5 2/4] platform: Add ARM64 platform directory
+In-Reply-To: <20240315-aspire1-ec-v5-2-f93381deff39@trvn.ru>
+Message-ID: <0634bc80-f149-e75a-40fa-03841d8e9161@linux.intel.com>
+References: <20240315-aspire1-ec-v5-0-f93381deff39@trvn.ru> <20240315-aspire1-ec-v5-2-f93381deff39@trvn.ru>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240318-apss-ipq-pll-cleanup-v1-5-52f795429d5d@gmail.com>
-References: <20240318-apss-ipq-pll-cleanup-v1-0-52f795429d5d@gmail.com>
-In-Reply-To: <20240318-apss-ipq-pll-cleanup-v1-0-52f795429d5d@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Gabor Juhos <j4g8y7@gmail.com>
-X-Mailer: b4 0.12.3
+Content-Type: multipart/mixed; boundary="8323328-1606358534-1710761500=:1041"
 
-The clk_init_data structures are never modified, so add const
-qualifier to the ones where it is missing.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-No functional changes.
+--8323328-1606358534-1710761500=:1041
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
----
- drivers/clk/qcom/apss-ipq-pll.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+On Fri, 15 Mar 2024, Nikita Travkin wrote:
 
-diff --git a/drivers/clk/qcom/apss-ipq-pll.c b/drivers/clk/qcom/apss-ipq-pll.c
-index 6ee71ed6baed1..6cf093f7f91eb 100644
---- a/drivers/clk/qcom/apss-ipq-pll.c
-+++ b/drivers/clk/qcom/apss-ipq-pll.c
-@@ -31,7 +31,7 @@ static struct clk_alpha_pll ipq_pll_huayra = {
- 	.clkr = {
- 		.enable_reg = 0x0,
- 		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
-+		.hw.init = &(const struct clk_init_data) {
- 			.name = "a53pll",
- 			.parent_data = &(const struct clk_parent_data) {
- 				.fw_name = "xo",
-@@ -71,7 +71,7 @@ static struct clk_alpha_pll ipq_pll_stromer_plus = {
- 	.clkr = {
- 		.enable_reg = 0x0,
- 		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
-+		.hw.init = &(const struct clk_init_data) {
- 			.name = "a53pll",
- 			.parent_data = &(const struct clk_parent_data) {
- 				.fw_name = "xo",
+> Some ARM64 based laptops and computers require vendor/board specific
+> drivers for their embedded controllers. Even though usually the most
+> important functionality of those devices is implemented inside ACPI,
+> unfortunately Linux doesn't currently have great support for ACPI on
+> platforms like Qualcomm Snapdragon that are used in most ARM64 laptops
+> today. Instead Linux relies on Device Tree for Qualcomm based devices
+> and it's significantly easier to reimplement the EC functionality in
+> a dedicated driver than to make use of ACPI code.
+>=20
+> This commit introduces a new platform/arm64 subdirectory to give a
+> place to such drivers for EC-like devices.
+>=20
+> A new MAINTAINERS entry is added for this directory. Patches to files in
+> this directory will be taken up by the platform-drivers-x86 team (i.e.
+> Hans de Goede and Ilpo J=C3=A4rvinen) with additional review from Bryan
+> O'Donoghue to represent ARM64 maintainers.
+>=20
+> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
 
--- 
-2.44.0
+Acked-by: Ilpo J=C3=A4rvinen <ilpo.jarvinen@linux.intel.com>
 
+And big thanks for Bryan for volunteering!
+
+--=20
+ i.
+
+> ---
+>  MAINTAINERS                     | 10 ++++++++++
+>  drivers/platform/Kconfig        |  2 ++
+>  drivers/platform/Makefile       |  1 +
+>  drivers/platform/arm64/Kconfig  | 19 +++++++++++++++++++
+>  drivers/platform/arm64/Makefile |  6 ++++++
+>  5 files changed, 38 insertions(+)
+>=20
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 76b3714710c2..186338451099 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -3050,6 +3050,16 @@ F:=09drivers/mmc/host/sdhci-of-arasan.c
+>  N:=09zynq
+>  N:=09xilinx
+> =20
+> +ARM64 PLATFORM DRIVERS
+> +M:=09Hans de Goede <hdegoede@redhat.com>
+> +M:=09Ilpo J=C3=A4rvinen <ilpo.jarvinen@linux.intel.com>
+> +R:=09Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> +L:=09platform-driver-x86@vger.kernel.org
+> +S:=09Maintained
+> +Q:=09https://patchwork.kernel.org/project/platform-driver-x86/list/
+> +T:=09git git://git.kernel.org/pub/scm/linux/kernel/git/pdx86/platform-dr=
+ivers-x86.git
+> +F:=09drivers/platform/arm64/
+> +
+>  ARM64 PORT (AARCH64 ARCHITECTURE)
+>  M:=09Catalin Marinas <catalin.marinas@arm.com>
+>  M:=09Will Deacon <will@kernel.org>
+> diff --git a/drivers/platform/Kconfig b/drivers/platform/Kconfig
+> index 868b20361769..81a298517df2 100644
+> --- a/drivers/platform/Kconfig
+> +++ b/drivers/platform/Kconfig
+> @@ -14,3 +14,5 @@ source "drivers/platform/olpc/Kconfig"
+>  source "drivers/platform/surface/Kconfig"
+> =20
+>  source "drivers/platform/x86/Kconfig"
+> +
+> +source "drivers/platform/arm64/Kconfig"
+> diff --git a/drivers/platform/Makefile b/drivers/platform/Makefile
+> index 41640172975a..fbbe4f77aa5d 100644
+> --- a/drivers/platform/Makefile
+> +++ b/drivers/platform/Makefile
+> @@ -11,3 +11,4 @@ obj-$(CONFIG_OLPC_EC)=09=09+=3D olpc/
+>  obj-$(CONFIG_GOLDFISH)=09=09+=3D goldfish/
+>  obj-$(CONFIG_CHROME_PLATFORMS)=09+=3D chrome/
+>  obj-$(CONFIG_SURFACE_PLATFORMS)=09+=3D surface/
+> +obj-$(CONFIG_ARM64)=09=09+=3D arm64/
+> diff --git a/drivers/platform/arm64/Kconfig b/drivers/platform/arm64/Kcon=
+fig
+> new file mode 100644
+> index 000000000000..644b83ede093
+> --- /dev/null
+> +++ b/drivers/platform/arm64/Kconfig
+> @@ -0,0 +1,19 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +#
+> +# EC-like Drivers for aarch64 based devices.
+> +#
+> +
+> +menuconfig ARM64_PLATFORM_DEVICES
+> +=09bool "ARM64 Platform-Specific Device Drivers"
+> +=09depends on ARM64 || COMPILE_TEST
+> +=09default y
+> +=09help
+> +=09  Say Y here to get to see options for platform-specific device drive=
+rs
+> +=09  for arm64 based devices, primarily EC-like device drivers.
+> +=09  This option alone does not add any kernel code.
+> +
+> +=09  If you say N, all options in this submenu will be skipped and disab=
+led.
+> +
+> +if ARM64_PLATFORM_DEVICES
+> +
+> +endif # ARM64_PLATFORM_DEVICES
+> diff --git a/drivers/platform/arm64/Makefile b/drivers/platform/arm64/Mak=
+efile
+> new file mode 100644
+> index 000000000000..f91cdc7155e2
+> --- /dev/null
+> +++ b/drivers/platform/arm64/Makefile
+> @@ -0,0 +1,6 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +#
+> +# Makefile for linux/drivers/platform/arm64
+> +#
+> +# This dir should only include drivers for EC-like devices.
+> +#
+>=20
+>=20
+--8323328-1606358534-1710761500=:1041--
 
