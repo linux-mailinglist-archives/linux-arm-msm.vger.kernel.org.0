@@ -1,159 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-14357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14358-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5867887E596
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 10:21:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3924287E5AE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 10:25:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D3BE91F21B77
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 09:21:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E7027280F1C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 09:25:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 328BA2C1A2;
-	Mon, 18 Mar 2024 09:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 885962C1A6;
+	Mon, 18 Mar 2024 09:25:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KE7VQoLT"
+	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="PW0zMHeJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C8126AF7
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 09:21:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 691CB2C19C;
+	Mon, 18 Mar 2024 09:25:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710753682; cv=none; b=F4SC/lVjDO2xBlqDAPvOyFhuC9067V4xfKznzLjxDiyTIrqSP7YggFeNL9XcNfhJHh/YYLLJqiwj8nr9JJZ7oPU8m4703ut/zL7v35Frhl4oJP+EM4kRoNEy3WpTmf/ChMdpt9X1s3sFBi+6NDmulwYgImu1xWVGoqK781zqAK0=
+	t=1710753951; cv=none; b=A9WWklx/2+2YDdsBYc+6Cxr/sgPhxmjk9/YjaS55bncEK8IZMWMrGbNsecqdx1/dlRq31TWdb2cVvlu37ziHmXiFSa/b5Q7yO345sLR6a3hHNcM2QwQ4VzYpn6RVPOTrW1j95CXBXhWXKMPEUbUuebnp7+pp+nq+a5bwg9gVHX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710753682; c=relaxed/simple;
-	bh=5+6iTQ0gzis+PQcHuNf7VDmaig60PJvYvukmbUIlpQU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RLHGtct0tB9aAPLKs6DJwSPxG+PTg5ov0QDboZDorlL2uaBtT1ky+UbGl+w0KoEUYsGKDejOdTKmGiJU2FhKSVngQaUxrxejIMMQtL03S7RV9ZHoi2A0KksKI+m+Rg3Pvzv/ZjeWdKiu3FRLHzocZd9EbFk4f3c/wu11r+ZPCFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KE7VQoLT; arc=none smtp.client-ip=209.85.208.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2d109e82bd0so52184221fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 02:21:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710753678; x=1711358478; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=lLj/tCGNP2MK0uv/n4AThhr2XVPFu3MQ0EBorGXinCk=;
-        b=KE7VQoLTJa10MVKWUmSLpeWaO+9CicbsHGABWoeNsFmwRJFFew/NBhrsxWTbaK8ts5
-         fplS68NEiXiWVFl6S0ggj5Y1+FMDZiLRwvBZJgnDoXZJi9b9pHPLS54AMXBKd+3ybNDC
-         dODEDB6BN/GSBgsY9VTNVH3ikcmdAEG1USspRrtL0vr+8dxlhJNVwuBqAu+Z4u3H49hH
-         BBi33+YbHBvfIjObGjS306qP59Q0l18+nt1RoluvpVr0XltIJp15D3iA8z5KqasFOwAK
-         Hk9LA+28IOvIbcuLF3qSSpni1oiNJVO+io4+jv7kx8Z4b9od2rJ/Gra8f1B0eLT4coq0
-         uxTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710753678; x=1711358478;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lLj/tCGNP2MK0uv/n4AThhr2XVPFu3MQ0EBorGXinCk=;
-        b=Q/pQJrVerdWU9rP1VotVp+aIalmja2SrlqALU3KkvtwIYj9DReMb5EoKJIfLmcbA7t
-         5UdFlsf5HFlgqiYZaoFSWWGaJwyCA+vXby68Onsm2UanB//o8l795hPWEuvvAYdKadrV
-         Vr23VnnU/j0J2Wz0LRSkKCU3QLcP7ebrCN885naRF9H5FJ+dZJ1WN6cWoDH/gCmC0Ghl
-         sc9Y8b2VWB9d7gGoDUFFcUJs3n5EybreNPPy4Fl9z/w0Sa7ICoBdQGyxhc10FKIw4KUz
-         16+UJv4d78mv0hpNhhZ7r00y9EUDgKmCIiJ7CHiY1u26vEe9XJEot5fMMvs5e8xqvgdr
-         FYiw==
-X-Forwarded-Encrypted: i=1; AJvYcCXO0tutzR98pyrvFeyOwypGmswn2KWLuSa45Agih6zg8oTJZIzcJhzo2P0nk5kJHnp7mvrNKCCYPTT5SknXQqhy7tV/165ZB7H0no3TWg==
-X-Gm-Message-State: AOJu0YxOLjf/XWcQz70s3gmWJ1QLCq2SJCi3xQqq75IGee6+TrIAeaJx
-	eUS8UqYrwQ8rWTIeE8F9a6Jy5l6l0hOwMAeqI9DN96HFrGUrxiSyFf/vbD5zpnceCXxNYL0dIPb
-	gQ5g=
-X-Google-Smtp-Source: AGHT+IEyiY99jR9sVdK1Xei3RjmIYwEQfVpGB3cJ9kv1n8zHC1PY1YHncHzoFF8Q7qYrAKzwaduuLw==
-X-Received: by 2002:a2e:9357:0:b0:2d4:7455:8a02 with SMTP id m23-20020a2e9357000000b002d474558a02mr7412983ljh.21.1710753677917;
-        Mon, 18 Mar 2024 02:21:17 -0700 (PDT)
-Received: from [192.168.52.106] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id g11-20020a2e9ccb000000b002d34c754a9asm1366392ljj.109.2024.03.18.02.21.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Mar 2024 02:21:17 -0700 (PDT)
-Message-ID: <b9724b4c-7c99-4903-aa53-19592df5695f@linaro.org>
-Date: Mon, 18 Mar 2024 10:21:13 +0100
+	s=arc-20240116; t=1710753951; c=relaxed/simple;
+	bh=wOmnMpLWk8IZd8z0AR1b7cEr1xRkYhWpObjhZzG7CXo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=HCVk0BIbYExsuQSB3amRPNcgRsAF2qI/PzpA/h733mInhgbwBJl1oPaGiL6ywHHxS/jmsnPPE7WYvDDj2FNeD4hwe7Mu8u2KAa75KaFF5r2HrwSFzf5en/JtuvnOSMVmezfl73HwEg8S8g0Cmq5d0FmgseIc3BRb1jUgFnQuHHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz; spf=pass smtp.mailfrom=z3ntu.xyz; dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b=PW0zMHeJ; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=z3ntu.xyz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=s1;
+	t=1710753942; bh=wOmnMpLWk8IZd8z0AR1b7cEr1xRkYhWpObjhZzG7CXo=;
+	h=From:Subject:Date:To:Cc;
+	b=PW0zMHeJI/NcVHrP3oj0GYqVO9Qa44c5rmpGvKexPYum8hjxBfbdMvdzUrhLT+xdm
+	 mdGx0CoxKXjXrI0RG3l8nRO/u6/q7JISXjpO2axuJkKHZxjPcnP6s9ln19Kucn8BLt
+	 oCYwTvKzKy1XwlvEGSOoDFmhbjkU5hhoQtF3ox3E=
+From: Luca Weiss <luca@z3ntu.xyz>
+Subject: [PATCH 0/2] Small fixes for MSM8974 SoC dtsi
+Date: Mon, 18 Mar 2024 10:24:40 +0100
+Message-Id: <20240318-msm8974-misc2-v1-0-f71668a2b8cd@z3ntu.xyz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: sc8280xp: Describe the PCIe
- SMMUv3
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Will Deacon <will@kernel.org>,
- Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
- Rob Herring <robh@kernel.org>, Marijn Suijten
- <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
- Johan Hovold <johan+linaro@kernel.org>
-References: <20231219-topic-8280_smmuv3-v2-0-c67bd3226687@linaro.org>
- <20231219-topic-8280_smmuv3-v2-2-c67bd3226687@linaro.org>
- <phledylmdu23yrw6f4x7fkefntrejuwagazebsnkgyxsweodzg@pddhnc2gwexz>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <phledylmdu23yrw6f4x7fkefntrejuwagazebsnkgyxsweodzg@pddhnc2gwexz>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFgI+GUC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDY0ML3dziXAtLcxPd3MziZCNdw7QkS6PEVLOklDRjJaCegqLUtMwKsHn
+ RsbW1ALukxIJfAAAA
+To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=504; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=wOmnMpLWk8IZd8z0AR1b7cEr1xRkYhWpObjhZzG7CXo=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBl+AhiT58rMPy+cJQgdMGrNFmibJO+WhDx7WVg3
+ mkeAnERrGOJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZfgIYgAKCRBy2EO4nU3X
+ VuyED/9nu28g/TK0G94SPIhNyFOH3hjvJTmX1L5NArlpeiP0+/EXwrCBI4QWX32zMUFHLcbntkx
+ YXs9sszX22SSSXuy+ieUlK2mHf7YavbZCX12/E2mVdu16sn7T7ExtewGuNG3yfZlEarqMDXnfGu
+ bMpHfPRa4bKGXP8KI10wSPbB/YboqqKTmGSfhvRV7+3y9g9PcX7K14HFN8ltbyHz7uSI7m0C/bL
+ MMAO8/41RnbNuwSA58vgZeYVuROFyZE/mluyqhcIXdi8nvrz2RCIvy5BMwhjUahZoej/Oea5+2W
+ DJx0ii32lIiOPVoJVs76ugXAq4hWSZqsmwKTONc04DvnwMXxHdll0VE78eLAueVMFkkbjvMOZbr
+ BQoVoCJXR+Znb9NP8X/N97j1Bf1BlZk3IwLvhQ9ZpWUxtOP5mi9QDTpYo94xxrswEq8ph07hopg
+ 4iNwmByPDVwMgVc3iAXMe67oQmMBQ+IvUA7EmTOU9LIJVJ1Pxsw85Xlk9tltAzGqch0g0mB+Prc
+ 1PNSj4qm7Ir65ozu9+nhRGM7WIEI3yagzuz+gIvzorh7+hpJ2S8bVy+XxHVQIoRR/iEe1R5pCR7
+ BxAWdAQgMC+swvOMJJYjNBIe8IlYrccxFK+qGTfQvZmcjZeMTSW4N8kanKx4gU71B9g/HsylsEX
+ 697xx1zB21GdSiA==
+X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 
-On 18.03.2024 02:31, Bjorn Andersson wrote:
-> On Sat, Mar 09, 2024 at 02:31:10PM +0100, Konrad Dybcio wrote:
->> SC8280XP actually has a third SMMU, which can be seen in e.g. the IORT
->> ACPI table and is used for the PCIe hosts.
->>
->> Unfortunately though, the secure firmware seems to be configured in a
->> way such that Linux can't touch it, not even read back the ID registers.
->> It also seems like the SMMU is configured to run in some sort of bypass
->> mode, completely opaque to the OS.
->>
->> Describe it so that one can configure it when running Linux as a
->> hypervisor (e.g with [1]) and for hardware description completeness.
->>
->> [1] https://github.com/TravMurav/slbounce
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> 
-> Have this information been validated? Or are you suggesting we add it
-> for documentation purposes?
+One fix for dt schema validation, one for the /chosen node.
 
-I confirmed the platforms boots up with this if the hypervisor is gone.
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+Luca Weiss (2):
+      ARM: dts: qcom: msm8974: Add @0 to memory node name
+      ARM: dts: qcom: msm8974: Add empty chosen node
 
-Konrad
+ arch/arm/boot/dts/qcom/qcom-msm8974.dtsi | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+---
+base-commit: f6cef5f8c37f58a3bc95b3754c3ae98e086631ca
+change-id: 20240318-msm8974-misc2-1fb92ae6bdf3
+
+Best regards,
+-- 
+Luca Weiss <luca@z3ntu.xyz>
+
 
