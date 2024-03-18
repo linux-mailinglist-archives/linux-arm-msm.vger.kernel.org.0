@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-14340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14341-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE65E87E3FE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 08:19:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EA96D87E401
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 08:19:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 46C481F2160D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 07:19:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 630661F21756
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 07:19:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CC642374C;
-	Mon, 18 Mar 2024 07:19:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A00CF225AE;
+	Mon, 18 Mar 2024 07:19:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NFkWht3e"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oCXTHpq+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7F722F02
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 07:19:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0426249FA
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 07:19:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710746355; cv=none; b=OxbTmct0DpJfCB16MvUZZanrCZ3kGoSX6zLgcxDs68tjxEvDU86du2a7fvzmD/mRoPvdm1X1fj2aJQA4m0zhF4DZBNqEttwbSWv5tNvsM4QUFc3ZiXabz+Ci9FybqsU8GFRcgPXMgk4C/aOrWnnzkDBPi7ghEEC2PzxToTjOaA8=
+	t=1710746358; cv=none; b=d3ikKmrdpbsh2RCxa2QSv/aAX9n/v0PbbpbJsOyNZtkUkSG02/MyuOr++F1Rmt57b5eaPGciIQvSC2RAOKTWk+6Ux0Vho1tbjqyCd1/e8ZggvnZa7IINr54gRTUB7nJcxZqJ0JrtK5AOANkyLBhQ0PjYCrE738Cs5ekMWPMaLpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710746355; c=relaxed/simple;
-	bh=1v1aQLIYP8b+mI95hKqjB4PDKnC2GI6VXXU3JQllGfA=;
+	s=arc-20240116; t=1710746358; c=relaxed/simple;
+	bh=T8yctEwOPXumvWXkHLXlcJBaV/u14z5lA6ODl0lFm9E=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=u3l04j8JbHOtFlVNqTEqHyswuJNb1GMm+NWeHVyK43CFYPHlWRSa8+310smbrEOmf+NWzhrHiuLLuyFtq0FI9sn4QSzWcQp9m6J5ni+1VAgAoaBD1MOudTztNcAtX8hU4D7qAhLfWTQUmgAJ1H6uu/inLgd/RyS0zUVB1PINwrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NFkWht3e; arc=none smtp.client-ip=209.85.210.177
+	 In-Reply-To:To:Cc; b=jj20YSHLfkR9GINS5Htb3HkYmH4HuVrq1yl/hKvgtbm3SHnEx8O6tyJz1It4N7csNE21ZOgzLp1JmN61fS28ljJm2AlcJRHNWK5A+ZHY7rBCz70rnW7FgqHdTJyKzGKU2tf9tbczCDlbIhcfUx4zjROuQjPEyj7ZTr3MgIuwLhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oCXTHpq+; arc=none smtp.client-ip=209.85.210.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-6da202aa138so1953185b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 00:19:13 -0700 (PDT)
+Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-6e445b4f80bso1579064a34.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 00:19:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710746353; x=1711351153; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1710746356; x=1711351156; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=vq5Dos6DoYH4j6IedoqEyUOn4weuKjM4Z19kQDTr6Y0=;
-        b=NFkWht3eQAH7ntsZchDqrXm7b+aU3x2abErjZN1B2hjh6Dj5F0/lNefQLmsEG3PsJC
-         EIEiZNsW+H6uIWrC7irhlk48bTz6HIae7mzPhCDHh70VCztxxM/zXpBhcSMJdhmhqwmv
-         l8DQ/5qz2lXCFPR+zG+OMTnQaT9NSto0RXGtjuB/8ifeN3luKeFMYO8I8St8mt4dGyHG
-         O+pCeSCB6NrhYwzhonjvYYB2yg0npp1IpSJL1Y1qne9um1LXfJRDW80jQPA6zq7m7LsF
-         duzYWQhvghyh6NxIms9HxB7wKij90B0PNIsnFjUN/TnLJ9aM8JDfJot+HvLoXdvI7CT+
-         /cEA==
+        bh=kH/SjGlGieE/UE0Ur3+4AtAfyoXMqizrw8NzFP+1cro=;
+        b=oCXTHpq+tFaBzF425NcV+fNK/l272zvU3UNU8MTTqPfEjQf9KvQzdSg8uaijVfYlqF
+         tEqLdqqcHwtOh8Ft8+JPGibpBE0gOYrKWN6jjyZM8KJSCGus2FwUldvIU8wQ4kDT4cn2
+         jRgVWDw7JaSRDncW7rdPYfg22MZfU7OYYOipSEvyke0RIMj3ajCXvZQQSQ/MFvIuO4hW
+         +DXDMiftZGP6jlXbYnMlo3GJPtoPeCOkrFSDfftgnUUIGITSHNUqrt+Yh3xzEcdM4ZNc
+         kWR5gROyoAnnsnj784ZV/BkgB3PxHj3Ergelkz0F21EncX2rEe00M3sChfMcvmst7l8u
+         9ZeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710746353; x=1711351153;
+        d=1e100.net; s=20230601; t=1710746356; x=1711351156;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vq5Dos6DoYH4j6IedoqEyUOn4weuKjM4Z19kQDTr6Y0=;
-        b=UxNGMFYkhaj6VEhkTy//0Dw8caFBmY4OmCP4qTsPwMB2v5gw5VTi/8oGxKYzKB2DBY
-         dgDFgdZyc1KHzhp13La+5+N9VAbgIm4C4Jli5wh/2G1uhVpLlmhoaEOGTBUOUiIegYxw
-         UwSQTib/9LWydKUubtAlS/MGyJYQF2ZYyXwYC7mLp/ldLF6j5yrjdKgCxrkZipXk1Dzo
-         2tUzvAWuBeLiBzs8koYF87X2hkiAuS3tVMt5KKrJ1ly++MjbryOWynuandBYl4S7C/jT
-         tnrEm30wRuzy2POX9CymbGFj+wde1GegpKrFPxDVfP+ciVDtB6ir+BrL/ilhPuqZaOqV
-         qh2Q==
-X-Gm-Message-State: AOJu0YwgRbE+mMwWO+i2ufk90pc1Ua65UDQcc7mIb2n1P6+/Q/APpOwc
-	1QygPVzz4YZpcwZkE4P5vC4s+vQyue1m3RYuAuoflWXh0fJlqO7bvP6XU77KvQ==
-X-Google-Smtp-Source: AGHT+IFSMGfgI9ewcyB/Piyi5+UjAAibSDaWTk/5HkiYLVv/0ABTPRS3zbdmrJt1hEWYLIHu2wy2aQ==
-X-Received: by 2002:a05:6a00:2387:b0:6e6:a0de:563a with SMTP id f7-20020a056a00238700b006e6a0de563amr13811975pfc.15.1710746352955;
-        Mon, 18 Mar 2024 00:19:12 -0700 (PDT)
+        bh=kH/SjGlGieE/UE0Ur3+4AtAfyoXMqizrw8NzFP+1cro=;
+        b=AUipFOOvdEG8m93ME1Xw2j0KIUZf7wz91b3YLOPsuPJLGBWrerntKhtuZ1C1JKwlF6
+         8yBPNdNmVIwjbOr5cS0iMIs3Jimt6dPcnlsf/BC3lQo8+K8hB1gAyFosZLszciNWQKZZ
+         egdqXjb7KyAIgk8wemrf69OBNMBx8BBrtlwhp6NIcoIBxhnmTCubQVzgr7cJTt19VK5J
+         YsF3XN6GtlNDQRzkUZuMTOV+JNYfBX5hI3NckblYUBdc/ObmNTaTt9j7rFd1m7XQa+2Q
+         6Z3dkk57Db4cb54FBzAMf2fxp3Ef7PMCsW3i4o4IaiRT5XIeFaUkbVihLO5qb/jMCo8v
+         fyPg==
+X-Gm-Message-State: AOJu0YxxHQ9VTJhahAwFByEOOuIQpK+gERcoqG42hLIfwiv2iPrnqMvn
+	nJd+BhgPwO2Bbgk8UkBdHMrfv/j+Z+TjGTjgQP7YPk0y7z0q6JTdq7R9Nkb8EXPHCyNFY55U7vc
+	=
+X-Google-Smtp-Source: AGHT+IHxIQYzpr8+IRSVJKRQ1OUJWPiVuU+PBuEqfPt1lpHXTTs1DYOuDa4MdLLc0F7nvNoFemUNmg==
+X-Received: by 2002:a05:6871:64e:b0:221:6840:d131 with SMTP id x14-20020a056871064e00b002216840d131mr12314329oan.58.1710746356117;
+        Mon, 18 Mar 2024 00:19:16 -0700 (PDT)
 Received: from [127.0.1.1] ([103.246.195.160])
-        by smtp.gmail.com with ESMTPSA id x16-20020aa784d0000000b006e66c9bb00dsm7387515pfn.179.2024.03.18.00.19.09
+        by smtp.gmail.com with ESMTPSA id x16-20020aa784d0000000b006e66c9bb00dsm7387515pfn.179.2024.03.18.00.19.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Mar 2024 00:19:12 -0700 (PDT)
+        Mon, 18 Mar 2024 00:19:15 -0700 (PDT)
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Date: Mon, 18 Mar 2024 12:49:03 +0530
-Subject: [PATCH 1/3] arm64: dts: qcom: sm8450: Fix the msi-map entries
+Date: Mon, 18 Mar 2024 12:49:04 +0530
+Subject: [PATCH 2/3] arm64: dts: qcom: sm8550: Fix the msi-map entries
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240318-pci-bdf-sid-fix-v1-1-acca6c5d9cf1@linaro.org>
+Message-Id: <20240318-pci-bdf-sid-fix-v1-2-acca6c5d9cf1@linaro.org>
 References: <20240318-pci-bdf-sid-fix-v1-0-acca6c5d9cf1@linaro.org>
 In-Reply-To: <20240318-pci-bdf-sid-fix-v1-0-acca6c5d9cf1@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -87,19 +88,18 @@ To: Bjorn Andersson <andersson@kernel.org>,
  Neil Armstrong <neil.armstrong@linaro.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
- stable@vger.kernel.org
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2236;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1920;
  i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
- bh=1v1aQLIYP8b+mI95hKqjB4PDKnC2GI6VXXU3JQllGfA=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBl9+rpsZJOD5LdQA2yEn0WyWcaDrhLmj04RjjXG
- pK/74qvqrSJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZffq6QAKCRBVnxHm/pHO
- 9S3KB/42QV76nv/mS1H0u1J7geOMOVeURxPRrCxDsTk47fvKgH/rXwLsRQb0ZmpAhlX+4wtI1i3
- rzTYnJr+CZGzVYIWktiszpGZ+V2/CH7igul/6ekvW7QUKOa3xLUKRObTi/K8+MDNxQs8x0olJ6v
- JWKyOZ1JyWvQrGZB2+zIhAKKlURRRK0V/yfHzOktZQLH3DZXsHUOaBthHOPxDVIAXLDaqdPgBQv
- VzvW7ZBYviiTHCnUXHcrSFpIeo1o2qRpV28hL0FFdyB8OGyMgyGAfNDXFHqlV5GOQ3nhyQCSlOJ
- WxC8S2xcnpDAQISj7XlJGE3jaZxbpJ5Giu8m+KgVpXBKFzUn
+ bh=T8yctEwOPXumvWXkHLXlcJBaV/u14z5lA6ODl0lFm9E=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBl9+rpAPsEYVnQhIgS4XnxvfwLqtT1wLbJRKpe2
+ 7uJrOvc7IeJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZffq6QAKCRBVnxHm/pHO
+ 9d1TB/9+1iI7pQ3wD5B9FCFbbI1bPHp7Hgji13iYVbWt1Enxa7RJY1mGNo5a6waNiXyGNH77GPZ
+ trh92uH6U8Ogdsa/gen7bSlpQu1895kCKDuXZ9VBWeJeiVGsa/84Y8xT62HuWk7Tf3bC+temrF7
+ 6URzlYlbT/Aq3X34zsWumRfOX9kbM/IooL50T9gaAH8fgEUrwuAjAybVkgk9Nhq7CpbVQxa7neY
+ lFxgBjW/BPd3+NknijLFn9cu6FZytJ1C9Xb30uo0iaXoAfxGNEYjPaX4uLeSPExjNvV3xv1wkQL
+ e7r/tpZLFX8tNfZFbWKhhVJm4UNSUrqJJhbxNMOjxpIfQoB7
 X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
  fpr=C668AEC3C3188E4C611465E7488550E901166008
 
@@ -112,47 +112,40 @@ commit bf79e33cdd89 ("PCI: qcom: Enable BDF to SID translation properly"),
 let's fix the msi-map entries also to reflect the actual mapping in the
 hardware.
 
-Cc: <stable@vger.kernel.org> # 6.3: bf79e33cdd89 ("PCI: qcom: Enable BDF to SID translation properly")
-Fixes: ff384ab56f16 ("arm64: dts: qcom: sm8450: Use GIC-ITS for PCIe0 and PCIe1")
+Fixes: 114990ce3edf ("arm64: dts: qcom: sm8550: Use GIC-ITS for PCIe0 and PCIe1")
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index b86be34a912b..024d2653cc30 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -1777,12 +1777,8 @@ pcie0: pcie@1c00000 {
- 			ranges = <0x01000000 0x0 0x00000000 0x0 0x60200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x60300000 0x0 0x60300000 0x0 0x3d00000>;
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index 3904348075f6..3348bc06db48 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -1755,9 +1755,8 @@ pcie0: pcie@1c00000 {
+ 					<&gem_noc MASTER_APPSS_PROC 0 &cnoc_main SLAVE_PCIE_0 0>;
+ 			interconnect-names = "pcie-mem", "cpu-pcie";
  
--			/*
--			 * MSIs for BDF (1:0.0) only works with Device ID 0x5980.
--			 * Hence, the IDs are swapped.
--			 */
--			msi-map = <0x0 &gic_its 0x5981 0x1>,
--				  <0x100 &gic_its 0x5980 0x1>;
-+			msi-map = <0x0 &gic_its 0x5980 0x1>,
-+				  <0x100 &gic_its 0x5981 0x1>;
- 			msi-map-mask = <0xff00>;
- 			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
-@@ -1900,12 +1896,8 @@ pcie1: pcie@1c08000 {
- 			ranges = <0x01000000 0x0 0x00000000 0x0 0x40200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x1fd00000>;
+-			/* Entries are reversed due to the unusual ITS DeviceID encoding */
+-			msi-map = <0x0 &gic_its 0x1401 0x1>,
+-				  <0x100 &gic_its 0x1400 0x1>;
++			msi-map = <0x0 &gic_its 0x1400 0x1>,
++				  <0x100 &gic_its 0x1401 0x1>;
+ 			iommu-map = <0x0   &apps_smmu 0x1400 0x1>,
+ 				    <0x100 &apps_smmu 0x1401 0x1>;
  
--			/*
--			 * MSIs for BDF (1:0.0) only works with Device ID 0x5a00.
--			 * Hence, the IDs are swapped.
--			 */
--			msi-map = <0x0 &gic_its 0x5a01 0x1>,
--				  <0x100 &gic_its 0x5a00 0x1>;
-+			msi-map = <0x0 &gic_its 0x5a00 0x1>,
-+				  <0x100 &gic_its 0x5a01 0x1>;
- 			msi-map-mask = <0xff00>;
- 			interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 308 IRQ_TYPE_LEVEL_HIGH>,
+@@ -1867,9 +1866,8 @@ pcie1: pcie@1c08000 {
+ 					<&gem_noc MASTER_APPSS_PROC 0 &cnoc_main SLAVE_PCIE_1 0>;
+ 			interconnect-names = "pcie-mem", "cpu-pcie";
+ 
+-			/* Entries are reversed due to the unusual ITS DeviceID encoding */
+-			msi-map = <0x0 &gic_its 0x1481 0x1>,
+-				  <0x100 &gic_its 0x1480 0x1>;
++			msi-map = <0x0 &gic_its 0x1480 0x1>,
++				  <0x100 &gic_its 0x1481 0x1>;
+ 			iommu-map = <0x0   &apps_smmu 0x1480 0x1>,
+ 				    <0x100 &apps_smmu 0x1481 0x1>;
+ 
 
 -- 
 2.25.1
