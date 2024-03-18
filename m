@@ -1,162 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-14423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE56887F243
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 22:36:32 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1FA4987F29A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 22:52:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 35451B20A7E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 21:36:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CE3332824EA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 21:52:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFAA158ADF;
-	Mon, 18 Mar 2024 21:36:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE6995A784;
+	Mon, 18 Mar 2024 21:52:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Xt4kLtuc"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="jAd8nIVH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39891535B9
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 21:36:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A945A782
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 21:52:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710797785; cv=none; b=pWYWDOuW8DFw7SK6+xQ8/X32xKG9OrJP+ZuqKRhd3BoTnevSZUd/dmT8bXnWRyuE/HBKtDzGgrgfJUj0k2NlaFP6VubiFv6YwFJlbZpNoLiDTHKFCxqhjvK4qjUQqiOVzMQMDEbBjNFE6yVfCDj7N7riP50j0Z3L+IEaqSbEhbY=
+	t=1710798743; cv=none; b=GeNT0AqKhyuwpgKWU38GclVjXWAJM+hGQrDpK2Tjt5uycjgSblvGcyrAakTyMjLSeDb4CcML0waIIaSCNK9JvO1H6pkEe3nwg2AMHSmEWMNHO4bSl3yYUYVgrlsS6WRuMlHrFiOykJKjO5UU7t+B8Zfj0/ZXuHY1ntwU3qOp0rI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710797785; c=relaxed/simple;
-	bh=oN3ajsjXsAF9HfH4yepxydlxom6CmZW2+KuqWPApvOc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RyXq8cFAllFN8mX5GnXF/8Wfv5OGG1zvYm6TGRYv9yPGRbQcWo12kjAvdrDLSwvpUYmzx9EQMJdWGSwaNWN8W9wLHGnwMISjN26amgYf5S4Qy+yBBZe4tLNnu24d8yhDa17TlpB7qReZXW3TMY3QJUw5WTPdBhLMjijfNKXwyDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Xt4kLtuc; arc=none smtp.client-ip=209.85.222.175
+	s=arc-20240116; t=1710798743; c=relaxed/simple;
+	bh=Zoh/plVRzNX+mESj2AyesuzyFZDwEPVf/5TgNhPjGPk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=m9Sf9DZ9mH6tIBNKedSjfxRjhJhD4FvMLiQwKCZsYL7eKjIcCT/PjKnaRTX2byvgRP52ichzFhXoGW3EVF5xBZOvj4uKZIWjOOtamz+IphJcDs6FcalwTsgBEaSJR6U57Ot4eQDFycu27a02m8zMXnklkkBxoix4tkopmddNsT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=jAd8nIVH; arc=none smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-7882dd2b1c9so382932785a.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 14:36:24 -0700 (PDT)
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-1e0189323b4so11999755ad.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 14:52:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1710797783; x=1711402583; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oN3ajsjXsAF9HfH4yepxydlxom6CmZW2+KuqWPApvOc=;
-        b=Xt4kLtucDqsA/MbhJz8HP7NmR2TGwDHm03/2lGlNE5xDmhjqxAd6W+x58EbtpCqlwL
-         VRfRGcRbhQXMWSu6AQy9nFqfKxA6AhGHctMv5+XTA6+ra+qft+lf8QxWJbSItnpGoHKD
-         WSuiyo3YUg5gyLGfRL78F4rTaDgmaqldy9UIA=
+        d=chromium.org; s=google; t=1710798741; x=1711403541; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=phAwglOrC+GzhgRWH4s2HaB4VQhNtprYIKXp99X9Uc4=;
+        b=jAd8nIVHTsJd3mAUtB1mIVX+O/1XR0yVyu1V/Jqq/7zHe6ywtFaJ5uEEenYFsUycUF
+         +/coFaLIZiEXAEdqUwG/yDAw+gzybaNDy5dh+Qg6jWe8SK9U3gexOao+bUyeidhr81tg
+         /d6aGHp5nem58SlUCyfvjRxwbHY6aKXQyztKI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710797783; x=1711402583;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oN3ajsjXsAF9HfH4yepxydlxom6CmZW2+KuqWPApvOc=;
-        b=Vp+0R+FQdahBbHQdFVrmwyaZAbnoB1orZNueRqJsto1XOlw0xVyfzFPrNd6ouD0bp+
-         QdWZ/395s7xqkdDeOOgtc05RdLjg7hsd7kCdCJJLc2ROJ1XKc686Iwo9LRUyvadf5v07
-         HO/yGUk4Z860zSFznN12fIoxwuhAtTbe+/zqh8CNFArMz59CfP7jvWklj3JV6g5qizlK
-         uj9oDhuMbWVCAYe4CQfvi+EafFHYA5Pm3ib6jEQgnJVzJ6Xw6o5gqmjK2IOnkWG8XGsg
-         4qhQqs/Pwi5OZzE9YJ0IdBr0X/icgIxcqSRtaWrGK7d8XVGkc3pvD+rpNjMf6DXSgTXi
-         mc/g==
-X-Forwarded-Encrypted: i=1; AJvYcCX95TGr5IpatAPrHWGmRGN58bWgZe7BQt9lJeEqruS+Agpr22uJkF4EdLgAWivvWnm7ftSQf3Aws/MqSBlQbyLnOn/sTfFyrCaomvj0nw==
-X-Gm-Message-State: AOJu0Yz8PW+hdOkHL/L5RIhAWwS0dOZxeV8H8Kk2dkaLzafP09xUlN/J
-	nDhi0ajkizJOwq9O+KHxMgvjAGrRClZGpcfkIBVp7jA6WwUWFhe9RmBqsuj+o9Vu4Xmdfq1oiFw
-	=
-X-Google-Smtp-Source: AGHT+IEWNb49kbqUyH4SLC0obZkYhKO1V/EDIEXK8OaE8a/4hiVtRgTycDTBpGPVZhOFw5cMLzCnDw==
-X-Received: by 2002:a05:620a:850f:b0:789:faed:fcb4 with SMTP id pe15-20020a05620a850f00b00789faedfcb4mr1303976qkn.21.1710797783251;
-        Mon, 18 Mar 2024 14:36:23 -0700 (PDT)
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com. [209.85.160.178])
-        by smtp.gmail.com with ESMTPSA id wl8-20020a05620a57c800b00789f3e53d04sm2105447qkn.126.2024.03.18.14.36.22
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Mar 2024 14:36:23 -0700 (PDT)
-Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-428405a0205so38541cf.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 14:36:22 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCWKrIJ0W6kA9fw4zKsyJYwa0XsdORACqbj3aH0Ukh4XBs4YAqMertJI9Bl/+mcOqVeuTtn1B1Oob7Sh+MTCUFqtAzn7Wb+Uefu94JGpFA==
-X-Received: by 2002:a05:622a:50e:b0:430:b590:e88c with SMTP id
- l14-20020a05622a050e00b00430b590e88cmr111577qtx.6.1710797782513; Mon, 18 Mar
- 2024 14:36:22 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1710798741; x=1711403541;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=phAwglOrC+GzhgRWH4s2HaB4VQhNtprYIKXp99X9Uc4=;
+        b=fUWxgNqm3uz7skjwYl7kqADQSfFKbquw6vayJAYaUizYmoSsDWy8+kSkjsAe5FD0Bb
+         w4e+jugsVhsz4Rc76z0ydD2JQxAH/DrifCqZrjUDdKMDve94scGyok9VFu6gwMe6e8m1
+         acONrdV90EPpN/L1HlWxhYY1VPn91Wh5GibvTJkNzxynyJ8PWX8SHm22GTHKGXEvdDvu
+         1gaIsUGcN/9BOxs4qW9jjkj9nqamox7GPfx3cbqBiN4BMeeXXA50Kn+6vngMlHdhvJZ/
+         1IwkywwAtGjaZMNym9T64nkraGRt67FSnJati8jEzyzRAAfCei7sZ9Qk8BGpA9y8jPBL
+         YX8A==
+X-Forwarded-Encrypted: i=1; AJvYcCXQnaaNi1cyu5jMIWE4WKdiuXXqZ/rT8PAsA9vDPfbve/42i+HkL6kqZfKleY+8LwpkXCfzT8xBXtpm57zFYl6q5pGM4ceCcD2uHgSC1Q==
+X-Gm-Message-State: AOJu0YywDso4xbGcW6B4Jg/cnGcgCHt5ewUtlnr6e/2zCx0Q4XT+fLo/
+	5Edwq59t7CGZ5f0+RY6Ixhj/02NBMLyEpr/IAv2+HMmiRwtNVsisULTpVo60hw==
+X-Google-Smtp-Source: AGHT+IGFvpUkb4zb8ZV5cxUcrGzuH2I+SCgZ2wa3Oc3Y3SsPXQEkBAX3UGe71imR/kKil5/jxQnWJw==
+X-Received: by 2002:a17:902:c952:b0:1de:e278:cb95 with SMTP id i18-20020a170902c95200b001dee278cb95mr15968411pla.50.1710798741455;
+        Mon, 18 Mar 2024 14:52:21 -0700 (PDT)
+Received: from www.outflux.net ([198.0.35.241])
+        by smtp.gmail.com with ESMTPSA id mm14-20020a1709030a0e00b001dd2b965a8esm9823069plb.163.2024.03.18.14.52.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Mar 2024 14:52:20 -0700 (PDT)
+Date: Mon, 18 Mar 2024 14:52:20 -0700
+From: Kees Cook <keescook@chromium.org>
+To: Justin Stitt <justinstitt@google.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-hardening@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: cmd-db: replace deprecated strncpy with memcpy
+Message-ID: <202403181443.F4021C9F63@keescook>
+References: <20240314-strncpy-drivers-soc-qcom-cmd-db-c-v1-1-70f5d5e70732@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <1710418312-6559-1-git-send-email-quic_amrianan@quicinc.com>
- <1710418312-6559-3-git-send-email-quic_amrianan@quicinc.com>
- <f6f317d9-830d-4c38-998f-b229b3d9f95a@linaro.org> <20240316-germinate-browsing-6865db3a44d7@spud>
- <20240316-herring-skies-6ee1d4a9c0d2@spud>
-In-Reply-To: <20240316-herring-skies-6ee1d4a9c0d2@spud>
-From: Doug Anderson <dianders@chromium.org>
-Date: Mon, 18 Mar 2024 14:36:06 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VZB9Dqsw6+2WBdWxaQVA9NgK_W2n0okBOU0haDMSogPw@mail.gmail.com>
-Message-ID: <CAD=FV=VZB9Dqsw6+2WBdWxaQVA9NgK_W2n0okBOU0haDMSogPw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] dt-bindings: qcom: Update DT bindings for multiple DT
-To: Conor Dooley <conor@kernel.org>
-Cc: Caleb Connolly <caleb.connolly@linaro.org>, Amrit Anand <quic_amrianan@quicinc.com>, 
-	robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
-	agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, kernel@quicinc.com, peter.griffin@linaro.org, 
-	linux-riscv@lists.infradead.org, chrome-platform@lists.linux.dev, 
-	linux-mediatek@lists.infradead.org, Simon Glass <sjg@chromium.org>, 
-	Chen-Yu Tsai <wenst@chromium.org>, Julius Werner <jwerner@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240314-strncpy-drivers-soc-qcom-cmd-db-c-v1-1-70f5d5e70732@google.com>
 
-Hi,
+On Thu, Mar 14, 2024 at 10:29:37PM +0000, Justin Stitt wrote:
+> strncpy() is deprecated for use on NUL-terminated destination strings
+> [1] and as such we should prefer more robust and less ambiguous string
+> interfaces.
+> 
+> @query is already marked as __nonstring and doesn't need to be
+> NUL-terminated. Due to this, we don't need to use a string API here
+> (especially a deprecated one). Let's have our stack allocation also
+> zero-initialize so that we can just perform a standard memcpy. Since the
+> code now speaks for itself we can drop the comment. A memcpy on a
+> __nonstring buffer explains everything that this comment talks about.
+> 
+> Link: https://www.kernel.org/doc/html/latest/process/deprecated.html#strncpy-on-nul-terminated-strings [1]
+> Link: https://manpages.debian.org/testing/linux-manual-4.8/strscpy.9.en.html [2]
+> Link: https://github.com/KSPP/linux/issues/90
+> Cc: linux-hardening@vger.kernel.org
+> Signed-off-by: Justin Stitt <justinstitt@google.com>
+> ---
+> Note: build-tested only.
+> 
+> Found with: $ rg "strncpy\("
+> ---
+>  drivers/soc/qcom/cmd-db.c | 9 ++-------
+>  1 file changed, 2 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
+> index a5fd68411bed..512556366a3e 100644
+> --- a/drivers/soc/qcom/cmd-db.c
+> +++ b/drivers/soc/qcom/cmd-db.c
+> @@ -141,18 +141,13 @@ static int cmd_db_get_header(const char *id, const struct entry_header **eh,
+>  	const struct rsc_hdr *rsc_hdr;
+>  	const struct entry_header *ent;
+>  	int ret, i, j;
+> -	u8 query[sizeof(ent->id)] __nonstring;
+> +	u8 query[sizeof(ent->id)] __nonstring = { 0 };
+>  
+>  	ret = cmd_db_ready();
+>  	if (ret)
+>  		return ret;
+>  
+> -	/*
+> -	 * Pad out query string to same length as in DB. NOTE: the output
+> -	 * query string is not necessarily '\0' terminated if it bumps up
+> -	 * against the max size. That's OK and expected.
+> -	 */
+> -	strncpy(query, id, sizeof(query));
+> +	memcpy(query, id, sizeof(query));
 
-On Sat, Mar 16, 2024 at 9:51=E2=80=AFAM Conor Dooley <conor@kernel.org> wro=
-te:
->
-> On Sat, Mar 16, 2024 at 04:20:03PM +0000, Conor Dooley wrote:
-> > On Thu, Mar 14, 2024 at 02:20:38PM +0000, Caleb Connolly wrote:
-> > > On 14/03/2024 12:11, Amrit Anand wrote:
-> > > 2. A top level board-id property that isn't namespaced implies that i=
-t
-> > > isn't vendor specific, but the proposed implementation doesn't even
-> > > pretend to be vendor agnostic.
-> >
-> > I pointed out previously that the Chromebook guys had some similar
-> > issues with dtb selection when the OEM varies parts but there does not
-> > seem to be any of them on CC here.
->
-> That's maybe a bit harsh of me actually, I see that there's a
-> chrome-platform address on CC, but I don't know if that's gonna reach
-> the guys that work on these devices (Chen-Yu Tsai and Doug Anderson in
-> particular).
+Hm, no, this isn't right. We do want to stop copying at the first NUL
+character, but we don't care about truncation. e.g. imagine if "id" was
+a 3 character string followed by other bytes in memory. We'd copy beyond
+the end of "id" into query, and the later memcmp()s would start failing.
+I think what you want here is:
 
-Thanks for the CC. Yeah, I don't watch the "chrome-platform" list
-myself, though maybe I should...
+	strtomem(query, id);
 
-The Chromebook boot flow and how we've handled this so far is
-documented in the kernel [1]. This method is what we've been using
-(with slight modifications over the years) since the earlier ARM
-Chromebooks and is, I believe, supported in both the depthcharge
-loader (used in Chromebooks) and also in U-Boot, though it's possible
-(?) that the U-Boot rules might vary ever so slightly. I haven't tried
-using U-Boot to boot a Chromebook in years.
+-Kees
 
-The current way things work for Chromebooks involves a heavy amount of
-duplication. We bundle an entire "DTB" for every relevant
-board/rev/sku combination even though many of those DTBs are 99% the
-same as the other ones. The DTBs have been relatively small and we
-compress them so this hasn't been a massive deal, but it's always been
-on the TODO list to come up with a scheme to use DT overlays. We've
-also talked about bundling a device tree that has the superset of
-components and then using an in-kernel driver to set the status of
-some components to okay and there is some overlap there in the
-possible way to represent board variants. I think Chen-Yu is going to
-talk about a few of these topics next month at EOSS [2].
+>  
+>  	for (i = 0; i < MAX_SLV_ID; i++) {
+>  		rsc_hdr = &cmd_db_header->header[i];
+> 
+> ---
+> base-commit: fe46a7dd189e25604716c03576d05ac8a5209743
+> change-id: 20240314-strncpy-drivers-soc-qcom-cmd-db-c-284f3abaabb8
+> 
+> Best regards,
+> --
+> Justin Stitt <justinstitt@google.com>
+> 
+> 
 
-In terms of looking at your specific proposal, it's definitely trying
-to factor in a lot more things than the current one that Chromebooks
-use. The Chromebook model was "simple" enough that we could just
-leverage the compatible string, though the way we leverage it has
-ended up controversial over the years. Yours is definitely too
-complicated to work the same way. It seems like device tree overlays
-would be a better fit? I'm not an expert so maybe this is already
-solved somewhere, but I'd imagine the hard part is getting everyone to
-agree on how to specify stuff in the DT overlay that allows the
-bootloader to know whether to overlay it or not...
-
-[1] https://docs.kernel.org/arch/arm/google/chromebook-boot-flow.html
-[2] https://eoss24.sched.com/event/1aBGe/second-source-component-probing-on=
--device-tree-platforms-chen-yu-tsai-google-llc
+-- 
+Kees Cook
 
