@@ -1,174 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-14392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1DE8587E9A6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 14:01:03 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0F7F87E9D8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 14:08:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C4C88282385
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 13:01:01 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 659C6B22275
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 13:08:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30A6638385;
-	Mon, 18 Mar 2024 13:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1CEF383B0;
+	Mon, 18 Mar 2024 13:08:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="guNOzgPG"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YnU+g3/Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7392036B11
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 13:00:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A2D3BB35;
+	Mon, 18 Mar 2024 13:08:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710766855; cv=none; b=RlXXEk2HdnAyXdyiWO3B9DUS4+z2Dsw3NGEOtDlypRjewUgbz2/G4t73OlrVfq6m3+qi8rMwPJiO2ASE/QMghuYPUU0wiQvfJDOudvobsAzdbddguXIqgLWDSiLZGR4B2dhMkmagKAto98FJiSO/GB5wsFDjmVPnjFyIzLBKwzY=
+	t=1710767323; cv=none; b=VzZxyI+vOIIm7lyQjTCgrzX1DiAfxThrG2UPb4uV0NXNMMdlf/NZs9slxI189LPM7vd/9++dMrCp3yQFyLBfiFqZnxGYdyQVxcvMDGOiuGipSBlMWC+ba25ejUIYThj3sVltJn2KvaMMJ6jmze5EQJYwrslOJbE3UoQh6mqxqTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710766855; c=relaxed/simple;
-	bh=abNTLKYcLXIhe2eOSU6DyOpFwTK4BPqk/0FE1JzWnEQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nE/RoqL9z0KzwVsnzJ6iMTy70QRAuEOQrRVRDBMqqNbdjwRaT1NzRXBT/98iOG0u+4nT5dgk5DggSv7iLHIwqhAYR4NXIfOm6EeYEsfUP4LB20YrTsMzgTv3RM6bWc61MBPZ6hd3/pZWstro6lV0xu2HXfBE7ehn8Z9MiQWkv6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=guNOzgPG; arc=none smtp.client-ip=209.85.128.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-60a0579a931so42086197b3.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 06:00:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710766852; x=1711371652; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=krtW4aUuwrjQ2jkX8A4jBdsmWsZ29REGKZPPhdTh9uc=;
-        b=guNOzgPGHeiyycfe5bqDTRCmhhmnzjQVZ21JIJnG+IdNfTFILcG6WbmBcWnYwHg3dk
-         QcnRhwO27DMW/DFy4bCUQYqPpQElRSt6/Baq8IjYSx1iDiiwWZ5fejxRfd+B/CCLVKz5
-         2CJSZ5IFz3xDMNS5+VbDD15FcNP8CuZBtAn0+3tZ9Ad2I65nhDHA0oHgvVoGqkcW8XwE
-         ehDTgkvHvzE8GI6DA0Dgidf3jt7D9lRs6C5No2H2IhA2UxAHxvnDi9TXwT4qekPdKOVU
-         lwWWG2c23SUjzg53W75uUzPXlOIJevBw9+8Pa4/shbVfkv3Xy05uyQqG03Treuq/R5Cy
-         gNqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710766852; x=1711371652;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=krtW4aUuwrjQ2jkX8A4jBdsmWsZ29REGKZPPhdTh9uc=;
-        b=fn+FxH2b5UocjGPjJ9avm3ddeo2IIpRtOoSAVzukoM5fzU5IWLiKRdUGXwrY8G6y4M
-         U7W59YC4QTsnitAEKtv9EjQezewXTN/PhU/hXks0wopXYk7lwLql7NKBVdIZFw+Fuy61
-         PSFdk2t6yn0e1tFfXjA7IoCakxik+y304eJDd6LnFmLsiW1uTexZj5BzQXKrseIhi6x2
-         kqhc9tqhK0r9cdL+y5A5jDLNCENi4/slbo9k8Iz8/21pqSVfghQf189QPrjSVm49vskd
-         Ib1IZHFm5TtH0zcA4YBED13XADQT9K8WGLUByIlxBYF3FfEPCfqAuZAeDUcJ3GJd0+AM
-         tk/Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXkz2l6kntT5iNMBJn5ge5TJi4tdNKiVboy26nyuGcUqMMXksPVm7EmIlkrzBR6N9F1RWqt/ndBjiHuP3cN7nH59qlf8PWQ5fGlcujl1g==
-X-Gm-Message-State: AOJu0YyA8yIVF/0QR37a4hoKUf9IXSUqpYUlnYQ3SgBDU4EruFqileP7
-	+hzj4cCwhSFUuIjD+pmx1/r9cvU7ZjHfDP4bEBAUyMnruUFv+Nx0j6LGXKMYCWNHaeN9zJqXv+k
-	5u68gdaBJwUW+TCvHdss/y2uTUWei2fet5u5dFQ==
-X-Google-Smtp-Source: AGHT+IHNIqyRYAx97Bsm8icZ7FibD5CfXZy6+AclCn9jOAbIEUGiVoB04TJFOEhgeti/W3RP6sRcFIurJfwvOEdKwzA=
-X-Received: by 2002:a5b:845:0:b0:dcc:96db:fc0d with SMTP id
- v5-20020a5b0845000000b00dcc96dbfc0dmr6407441ybq.25.1710766851867; Mon, 18 Mar
- 2024 06:00:51 -0700 (PDT)
+	s=arc-20240116; t=1710767323; c=relaxed/simple;
+	bh=ztUZOiiQ83sOZSaGrczXdpBYDKXlAj5hFGLEYEnTbW0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=btZjYQcYVOj1oJooPn0QLMB5bZVMN8yQ7D1cRDSbh1MLv5NqAQ0JgpxvpvKJjLJTomvwYYYgV53pQ0fCmWdxYXY+GVq/wDVbuJJ8PXk9wwn9aop/sih4UKufC4z6xEnx87efF408+EYGkR7Py4F72VVCCPeXEMfArMPgSLMld+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YnU+g3/Z; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42IC2IW7021532;
+	Mon, 18 Mar 2024 13:08:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=ZxobO1it1RfZw+po5acttX2e+DmpggTe3qaJAqZDePs=; b=Yn
+	U+g3/ZECPHeIdJ+7j+XUTmlX+oLvz7JBObLHs4uWu+/AhCCeDmS640if38KF2h3O
+	2l8ZOSMdO9f0xSCrnjDRpjB1RThnvjppmSkPPYgOZHl563LMPV0n9QjGSl5ay+15
+	bj+zRtlwSDzcYlLRFPlNngEgcuwj/N852dZBRMxIWMcssitqe8SGOYD+r3ggu0Zc
+	IuktDi3gxvLEmEx3WfRaEZ3lpgHkZEtagCFL7lniz5X8UmDu+dtDfxryuH7W1n7i
+	UaAYgvCSUETX2YUJMmyDwHgQ41HbYXTXlgCmMadPmsy+xntZI8O27ef4+6Hr/NGb
+	+BSYMtWQecRtLbGGpU6A==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wwxta9y1u-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 18 Mar 2024 13:08:32 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42ID8VMe029353
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 18 Mar 2024 13:08:31 GMT
+Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 18 Mar
+ 2024 06:08:29 -0700
+Message-ID: <260371ff-da7a-8406-0511-4019f6b860bf@quicinc.com>
+Date: Mon, 18 Mar 2024 18:38:20 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240318110855.31954-1-johan+linaro@kernel.org> <20240318110855.31954-2-johan+linaro@kernel.org>
-In-Reply-To: <20240318110855.31954-2-johan+linaro@kernel.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 18 Mar 2024 15:00:40 +0200
-Message-ID: <CAA8EJprywWbdoyfAbys=0WzEdAkp0UK1fzzCPzxKRjyk9DrC6Q@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] dt-bindings: bluetooth: add new wcn3991 compatible
- to fix bd_addr
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Johan Hedberg <johan.hedberg@gmail.com>, Matthias Kaehlcke <mka@chromium.org>, 
-	Doug Anderson <dianders@google.com>, Bjorn Andersson <quic_bjorande@quicinc.com>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-bluetooth@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-
-On Mon, 18 Mar 2024 at 13:09, Johan Hovold <johan+linaro@kernel.org> wrote:
->
-> Several Qualcomm Bluetooth controllers lack persistent storage for the
-> device address and instead one can be provided by the boot firmware
-> using the 'local-bd-address' devicetree property.
->
-> The Bluetooth bindings clearly says that the address should be specified
-> in little-endian order, but due to a long-standing bug in the Qualcomm
-> driver which reversed the address some bootloaders have been providing
-> the address in big-endian order instead.
->
-> The only device out there that should be affected by this is the WCN3991
-> used in some Chromebooks. To maintain backwards compatibility, mark the
-> current compatible string as deprecated and add a new
-> 'qcom,wcn3991-bt-bdaddr-le' for firmware which conforms with the
-> binding.
->
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
->  .../net/bluetooth/qualcomm-bluetooth.yaml     | 29 +++++++++++--------
->  1 file changed, 17 insertions(+), 12 deletions(-)
->
-> diff --git a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
-> index eba2f3026ab0..b6fce6d02138 100644
-> --- a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
-> +++ b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
-> @@ -15,18 +15,22 @@ description:
->
->  properties:
->    compatible:
-> -    enum:
-> -      - qcom,qca2066-bt
-> -      - qcom,qca6174-bt
-> -      - qcom,qca9377-bt
-> -      - qcom,wcn3988-bt
-> -      - qcom,wcn3990-bt
-> -      - qcom,wcn3991-bt
-> -      - qcom,wcn3998-bt
-> -      - qcom,qca6390-bt
-> -      - qcom,wcn6750-bt
-> -      - qcom,wcn6855-bt
-> -      - qcom,wcn7850-bt
-> +    oneOf:
-> +      - enum:
-> +          - qcom,qca2066-bt
-> +          - qcom,qca6174-bt
-> +          - qcom,qca9377-bt
-> +          - qcom,wcn3988-bt
-> +          - qcom,wcn3990-bt
-> +          - qcom,wcn3991-bt-bdaddr-le
-
-This compatible doesn't describe new hardware kind. As such, I think,
-the better way would be to continue using qcom,wcn3991-bt compatible
-string + add some kind of qcom,bt-addr-le property.
-
-> +          - qcom,wcn3998-bt
-> +          - qcom,qca6390-bt
-> +          - qcom,wcn6750-bt
-> +          - qcom,wcn6855-bt
-> +          - qcom,wcn7850-bt
-> +      - enum:
-> +          - qcom,wcn3991-bt
-> +        deprecated: true
->
->    enable-gpios:
->      maxItems: 1
-> @@ -122,6 +126,7 @@ allOf:
->                - qcom,wcn3988-bt
->                - qcom,wcn3990-bt
->                - qcom,wcn3991-bt
-> +              - qcom,wcn3991-bt-bdaddr-le
->                - qcom,wcn3998-bt
->      then:
->        required:
-> --
-> 2.43.2
->
->
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v12 7/9] firmware: qcom: scm: Fix __scm->dev assignement
+Content-Language: en-US
+To: Bjorn Andersson <andersson@kernel.org>
+CC: <konrad.dybcio@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linus.walleij@linaro.org>,
+        <linux-gpio@vger.kernel.org>
+References: <20240227155308.18395-1-quic_mojha@quicinc.com>
+ <20240227155308.18395-8-quic_mojha@quicinc.com>
+ <n2gomlmlzwodpg2v3gzuc62n3plewdqgiwctrv2tawdih26rig@obqd2a2ovqvp>
+From: Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <n2gomlmlzwodpg2v3gzuc62n3plewdqgiwctrv2tawdih26rig@obqd2a2ovqvp>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 0D1krBj979_XuCMiTaT-7x-b_71Hffyw
+X-Proofpoint-ORIG-GUID: 0D1krBj979_XuCMiTaT-7x-b_71Hffyw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-18_04,2024-03-18_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 malwarescore=0 adultscore=0 spamscore=0 impostorscore=0
+ mlxscore=0 phishscore=0 lowpriorityscore=0 mlxlogscore=999 bulkscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403140001 definitions=main-2403180098
 
 
--- 
-With best wishes
-Dmitry
+
+On 3/3/2024 12:55 AM, Bjorn Andersson wrote:
+> On Tue, Feb 27, 2024 at 09:23:06PM +0530, Mukesh Ojha wrote:
+>> qcom_scm_is_available() gives wrong indication if __scm
+>> is initialized but __scm->dev is not.
+>>
+>> Fix this appropriately by making sure if __scm is
+>> initialized and then it is associated with its
+>> device.
+>>
+> 
+> This seems like a bug fix, and should as such have a Fixes: tag and
+> probably Cc: stable@vger.kernel.org
+> 
+>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+>> ---
+>>   drivers/firmware/qcom/qcom_scm.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+>> index 6c252cddd44e..6f14254c0c10 100644
+>> --- a/drivers/firmware/qcom/qcom_scm.c
+>> +++ b/drivers/firmware/qcom/qcom_scm.c
+>> @@ -1859,6 +1859,7 @@ static int qcom_scm_probe(struct platform_device *pdev)
+>>   	if (!scm)
+>>   		return -ENOMEM;
+>>   
+>> +	scm->dev = &pdev->dev;
+>>   	ret = qcom_scm_find_dload_address(&pdev->dev, &scm->dload_mode_addr);
+>>   	if (ret < 0)
+>>   		return ret;
+>> @@ -1895,7 +1896,6 @@ static int qcom_scm_probe(struct platform_device *pdev)
+>>   		return ret;
+>>   
+>>   	__scm = scm;
+>> -	__scm->dev = &pdev->dev;
+> 
+> Is it sufficient to just move the line up, or do we need a barrier of
+> some sort here?
+
+Would be good to use, smp_mb() before the assignment
+      __scm = scm
+along with moving below line
+__scm->dev = &pdev->dev
+
+somewhere up.
+
+-Mukesh
+
+> 
+> Regards,
+> Bjorn
+> 
+>>   
+>>   	init_completion(&__scm->waitq_comp);
+>>   
+>> -- 
+>> 2.43.0.254.ga26002b62827
+>>
 
