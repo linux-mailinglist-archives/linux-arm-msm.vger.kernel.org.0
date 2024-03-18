@@ -1,143 +1,421 @@
-Return-Path: <linux-arm-msm+bounces-14362-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 724E887E61A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 10:41:16 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1FAEF87E65A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 10:52:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D2F77B2172D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 09:41:13 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 71B26B22218
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 09:52:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 788AA2D048;
-	Mon, 18 Mar 2024 09:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D283E2D7B8;
+	Mon, 18 Mar 2024 09:51:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WAU34mNF"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fVOqI6G4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3DCD2D04C
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 09:40:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C942D04A
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 09:50:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710754852; cv=none; b=WwW0Zzjb7tX4L/N6bs//YNhP+1vrL2SnbvgZrM8WJzamDx+0cMluEFkWgKomz3Z+f5zbRzQjwYqGOoPRZ/2B4pUTRfl43gvGYPBO4Cc1GOqaYL5ii6ru8SyFjcbRQM5h0DQ0Ze8IWbCUPoxEFeAJWoeYJjXfVHA4/t0tUHJ/xQk=
+	t=1710755460; cv=none; b=UXohmZMoOvjhVzOvdHQK9Bn/xi0w5a3rcl2UX1YlCh1AqpI1ZYUzq3M15sbpyK4YBiCs5Xmw2Xvev4DS26ptcMQChWZ5BeYI2/ReZFREVWt+PQ5i+pTLjtMAdichfSqW3dym6NDXkqx+a3FdgN+SqQmzU0O5hbME+BWxNBd3TWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710754852; c=relaxed/simple;
-	bh=7RRzsd940VesbdljysukgA3ppk4C5jd/NTCqUia9jTY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VkncrfYhecE0KW+/iIFnzUUN0+LmRIjw1Mt8xDqBcB3sZGC4w2mBBKbqLPzdB4JE/qYP53zv8ecrU8p6RshfKzCHJbY6vp3lvEMnjhRbh0V8mOL86pNfIc5QVTTEmr+coyNOiNZmNq+uguWyoUSi8uyNv6qmt3TWQJUl1MLAetA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WAU34mNF; arc=none smtp.client-ip=209.85.167.49
+	s=arc-20240116; t=1710755460; c=relaxed/simple;
+	bh=auVUFwgCBmyVxTxFiH+lRCLpkk+F+vVWKfEeldpx/lk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pdsZZz6Tdl1HWKs4FP0OlBIv6nj1E8HOUG2BGqclwJFeoWku38Mxmq8XJ2kSGGfNDqd/ILWK8vNVitzVqJJ2FjgXZ7RGucY1YOxRvTHmPCiL7/uXgx69QLikM+nc79r5cDom3vnJWZ56tDhWxZyLM1EaDbCFpQaA583NtpQai8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fVOqI6G4; arc=none smtp.client-ip=209.85.217.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-513d599dbabso4397848e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 02:40:50 -0700 (PDT)
+Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-4766e56ccccso1084790137.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 02:50:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710754849; x=1711359649; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=KbPc2grsn8ubyCfu19TPDk39rt7ZtyWx1KZ6ztW2BUA=;
-        b=WAU34mNFEzexvwQKjVy6+JM+RSZQl8KmnMQliNIbc01Ne54/k6g0+AU4dmbGSUwy/6
-         CDwoNKM+KxZXS/mY3nNSrBtu9q630lgrr1CtvRRYcCzB9DB9W5XqR/Pa8r0vUY6HXPsP
-         uyKgnSPv0tb20U7j59BIf8/g/Y8t0x1P0TGc4soPlxCp9WGjMiDKMn6mBdAEcaT6yTAC
-         Hk3yD8U/F8dJR04XUdOoF+L77LdFz33GkCdsvnKDRTY2sT0rUGmNJQcWovDrCPRBWAgC
-         A4cQowiWJ/lqyMir9irAXJiG80+rsY9WPXyiBat10XQGMB3QEevF7acYdGL3MRUx13lm
-         ylIg==
+        d=linaro.org; s=google; t=1710755458; x=1711360258; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Jfd2BbpInLFXO/gl5I1K9j+aMpVjnkifvVf9+3n/epo=;
+        b=fVOqI6G4nj9LuRdNTqc6L/wwnGtnAwG4I04uiDnYi2u55yR9iDUEYjuH/f6WseCFji
+         NPUFiPzkyIU+QBghK/lHRgakVNmiRWtRltgiI2SVY8KgRBkH/PAjUrHS99I66QqySowA
+         X+oY84q37ncPq1GaxMfbwL4amx3gmt8NjT2HFY/IrAw8jfJjL4yGiyAj6Fzz45689zvq
+         KbaHNvqfckNz9l0X4D6Qt8Vv8NiXCfNv6oD4WI+Y+MhJHu4+XfUuszFJcwGEteFfZyAX
+         WDKTbSN380r1cAN8wFjiINnLObcN1pAFca1tqFPlo2V+jW/0VNXdHjrQAKGj8sLufoyU
+         I+ZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710754849; x=1711359649;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KbPc2grsn8ubyCfu19TPDk39rt7ZtyWx1KZ6ztW2BUA=;
-        b=KePboJf/rP0qYthUfAk3A2sWC+IMgPfSUZvjGU2Ed5UjetVjFTI/0V0uCwaCxGYL02
-         xmU0kGvnJu0DtLttgd6cBxvZSDWKvRNmhf300gHC4sNg4SnLVIFYSf+/uG6QT5W77wg7
-         viQpVhk7rlgsXNjzmWjYorWkr8UC34guQ0zjan5QJ/THKjQlm81E1WfdgWVk20pYsOPD
-         y2CJETjgejz82KWzUqYjc0xHLG7OW4VTDQurhD74FZ98Ph223wttzM1rRpstwISb002T
-         AQIlUqPLY9kgI3Uz+Tefwpb1DrQ0CBSS91tWo/4sgGDT5JJSB/lKBnLMc5/ZSMoyu6b8
-         kNow==
-X-Gm-Message-State: AOJu0Yz2nabfd+978cZzBn3e54hP8EArZ2qn6ksxpNY77RovEnGC4VI0
-	GxLDUUsoOFEWcMUieyZTmz6eJ3CfmrzzSuk58t3nirwsjOAdBomUgv0YrFpwBmI=
-X-Google-Smtp-Source: AGHT+IEKP6RKoAYAEi3GRca/Mh+uZFVCwMvaxiJvWpR5WEyyJhT1ayzgEkhi83oDMj7FRlI97lfNtQ==
-X-Received: by 2002:ac2:5983:0:b0:513:c54d:7bd1 with SMTP id w3-20020ac25983000000b00513c54d7bd1mr7677187lfn.35.1710754848789;
-        Mon, 18 Mar 2024 02:40:48 -0700 (PDT)
-Received: from [192.168.52.106] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id q11-20020ac2514b000000b00513e3190eeesm642816lfd.171.2024.03.18.02.40.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Mar 2024 02:40:48 -0700 (PDT)
-Message-ID: <fcd36435-ccee-4467-b61f-2733da5a9cda@linaro.org>
-Date: Mon, 18 Mar 2024 10:40:47 +0100
+        d=1e100.net; s=20230601; t=1710755458; x=1711360258;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Jfd2BbpInLFXO/gl5I1K9j+aMpVjnkifvVf9+3n/epo=;
+        b=VDFcVp2ho4jII9/yyLetlnj12P682duO6vI1VgDfi1flPSbuZHFCE6QMlTYEqxny7b
+         3M0/JFJ4beHevYdU5dTe9Geze/IaADu9gqJJNkwwLnAK0PCocNyLV4Ny1SdOE/KHu/aV
+         TpdTvYx/H7BPsOT5aUEZWlMME7v2lHiH5ICShI8tGhqHtAHFI8aJjx2qA2w6JBUTRyvX
+         pzmsIpewHexwy23eVRrZh2sAypM1PCqiqRHAbjnMN9ikTP/n5EJOCGzdS3zabUYCDpAQ
+         q+kexxY8cg4Sc8XzIE8jREuFp39SoYPoOSLO95/2Gjo48dqlSA+d3GJWmWjZPbXSwcoW
+         M2Ng==
+X-Gm-Message-State: AOJu0YynSdW7zhozEr+qcxQ6dnWyJtWq7WRheVjJngGN6oUA/756a/I5
+	/VpBXdlZImhSY6/y0Cu+6FasSwPpftplZPG3UsEPIvFJAYmzlcUfMC0qmxGAj8AgJxq104jDSSk
+	tklyIjIBv8+UulWY5DIBsxzOrqYaZdvjJ/BAftg==
+X-Google-Smtp-Source: AGHT+IH4FyFv1D8F2gZISrZTTPRuc+B0sE92LhX8lYAkMKHcHpV2oQ5xGlf9diPhxK2wW1KsYreKGIW8bDmby41ZNIQ=
+X-Received: by 2002:a67:fe4b:0:b0:473:148c:805d with SMTP id
+ m11-20020a67fe4b000000b00473148c805dmr8854213vsr.11.1710755457728; Mon, 18
+ Mar 2024 02:50:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] ARM: dts: qcom: msm8974: Add empty chosen node
-Content-Language: en-US
-To: Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
- phone-devel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
- Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240318-msm8974-misc2-v1-0-f71668a2b8cd@z3ntu.xyz>
- <20240318-msm8974-misc2-v1-2-f71668a2b8cd@z3ntu.xyz>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20240318-msm8974-misc2-v1-2-f71668a2b8cd@z3ntu.xyz>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20240315060707.471248-1-sumit.garg@linaro.org>
+ <20240315060707.471248-4-sumit.garg@linaro.org> <ZfRlYnEQUKvwGQ65@gerhold.net>
+In-Reply-To: <ZfRlYnEQUKvwGQ65@gerhold.net>
+From: Sumit Garg <sumit.garg@linaro.org>
+Date: Mon, 18 Mar 2024 15:20:46 +0530
+Message-ID: <CAFA6WYMucNzLNm+oHNd-Jb65oigpNphU=mFGM1cD8A-mK-BFDw@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: apq8016: Add Schneider HMIBSC
+ board DTS
+To: Stephan Gerhold <stephan@gerhold.net>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org, 
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+	caleb.connolly@linaro.org, neil.armstrong@linaro.org, 
+	dmitry.baryshkov@linaro.org, laetitia.mariottini@se.com, 
+	pascal.eberhard@se.com, abdou.saker@se.com, jimmy.lalande@se.com, 
+	benjamin.missey@non.se.com, daniel.thompson@linaro.org, 
+	linux-kernel@vger.kernel.org, Jagdish Gediya <jagdish.gediya@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On 18.03.2024 10:24, Luca Weiss wrote:
-> Add an empty /chosen node to the dtsi like is common on most other
-> Qualcomm SoC files, so that various pieces of software expecting this
-> node to exist don't complain.
-> 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
+On Fri, 15 Mar 2024 at 20:43, Stephan Gerhold <stephan@gerhold.net> wrote:
+>
+> On Fri, Mar 15, 2024 at 11:37:07AM +0530, Sumit Garg wrote:
+> > Add Schneider Electric HMIBSC board DTS. The HMIBSC board is an IIoT Edge
+> > Box Core board based on the Qualcomm APQ8016E SoC.
+> >
+> > Support for Schneider Electric HMIBSC. Features:
+> > - Qualcomm Snapdragon 410C SoC - APQ8016 (4xCortex A53, Adreno 306)
+> > - 1GiB RAM
+> > - 8GiB eMMC, SD slot
+> > - WiFi and Bluetooth
+> > - 2x Host, 1x Device USB port
+> > - HDMI
+> > - Discrete TPM2 chip over SPI
+> > - USB ethernet adaptors (soldered)
+> >
+> > Co-developed-by: Jagdish Gediya <jagdish.gediya@linaro.org>
+> > Signed-off-by: Jagdish Gediya <jagdish.gediya@linaro.org>
+> > Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
+> > Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+> >  .../dts/qcom/apq8016-schneider-hmibsc.dts     | 510 ++++++++++++++++++
+> >  2 files changed, 511 insertions(+)
+> >  create mode 100644 arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> > index 39889d5f8e12..ad55e52e950b 100644
+> > --- a/arch/arm64/boot/dts/qcom/Makefile
+> > +++ b/arch/arm64/boot/dts/qcom/Makefile
+> > @@ -5,6 +5,7 @@ apq8016-sbc-usb-host-dtbs     := apq8016-sbc.dtb apq8016-sbc-usb-host.dtbo
+> >
+> >  dtb-$(CONFIG_ARCH_QCOM)      += apq8016-sbc-usb-host.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += apq8016-sbc-d3-camera-mezzanine.dtb
+> > +dtb-$(CONFIG_ARCH_QCOM)      += apq8016-schneider-hmibsc.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += apq8039-t2.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += apq8094-sony-xperia-kitakami-karin_windy.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += apq8096-db820c.dtb
+> > diff --git a/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts b/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
+> > new file mode 100644
+> > index 000000000000..9c79a31a04db
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
+> > @@ -0,0 +1,510 @@
+> > [...]
+> > +&blsp_uart1 {
+> > +     label = "UART0";
+> > +     status = "okay";
+> > +};
+> > +
+> > +&blsp_uart2 {
+> > +     label = "UART1";
+> > +     status = "okay";
+> > +};
+> > +
+> > +/* Enable CoreSight */
+> > +&cti0 { status = "okay"; };
+> > +&cti1 { status = "okay"; };
+> > +&cti12 { status = "okay"; };
+> > +&cti13 { status = "okay"; };
+> > +&cti14 { status = "okay"; };
+> > +&cti15 { status = "okay"; };
+> > +&debug0 { status = "okay"; };
+> > +&debug1 { status = "okay"; };
+> > +&debug2 { status = "okay"; };
+> > +&debug3 { status = "okay"; };
+> > +&etf { status = "okay"; };
+> > +&etm0 { status = "okay"; };
+> > +&etm1 { status = "okay"; };
+> > +&etm2 { status = "okay"; };
+> > +&etm3 { status = "okay"; };
+> > +&etr { status = "okay"; };
+> > +&funnel0 { status = "okay"; };
+> > +&funnel1 { status = "okay"; };
+> > +&replicator { status = "okay"; };
+> > +&stm { status = "okay"; };
+> > +&tpiu { status = "okay"; };
+>
+> Nitpick: The &cti0 is in the correct alphabetically ordered place, but
+> &replicator, &stm and &tpiu are not.
+>
+> I know you changed this based on the review comments but I personally
+> think it was clearer having this separated as condensed block towards
+> the end of the file (where it was before).
+>
+> The other option would be to put each element individually at the
+> correctly ordered position in the file. However, having a single "Enable
+> CoreSight" comment for the entire block would then not work anymore
+> since all the lines would be interspersed throughout the file.
 
-Kinda weird dtc doesn't add it automatically or complain about its
-absence at this point.. perhaps it could be taught about the latter
+IMO, having it as a condensed block is a bit more clear such that
+people are able to locate overrides easily given their function.
+However, there aren't any guidelines for such block orders. So let me
+wait to hear back from platform maintainers if they would like
+anything to be changed here.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>
+> > [...]
+> > +&pm8916_codec {
+> > +     qcom,mbhc-vthreshold-low = <75 150 237 450 500>;
+> > +     qcom,mbhc-vthreshold-high = <75 150 237 450 500>;
+> > +     status = "okay";
+> > +};
+> > +
+> > +&pm8916_gpios {
+> > +     gpio-line-names =
+> > +             "USB_HUB_RESET_N_PM",
+> > +             "USB_SW_SEL_PM",
+> > +             "NC",
+> > +             "NC";
+> > +
+> > +     usb_hub_reset_pm: usb-hub-reset-pm-state {
+> > +             pins = "gpio1";
+> > +             function = PMIC_GPIO_FUNC_NORMAL;
+> > +
+> > +             input-disable;
+> > +             output-high;
+> > +     };
+> > +
+> > +     usb_hub_reset_pm_device: usb-hub-reset-pm-device-state {
+> > +             pins = "gpio1";
+> > +             function = PMIC_GPIO_FUNC_NORMAL;
+> > +
+> > +             output-low;
+> > +     };
+> > +
+> > +     usb_sw_sel_pm: usb-sw-sel-pm-state {
+> > +             pins = "gpio2";
+> > +             function = PMIC_GPIO_FUNC_NORMAL;
+> > +
+> > +             power-source = <PM8916_GPIO_VPH>;
+> > +             input-disable;
+> > +             output-high;
+> > +     };
+> > +
+> > +     usb_sw_sel_pm_device: usb-sw-sel-pm-device-state {
+> > +             pins = "gpio2";
+> > +             function = PMIC_GPIO_FUNC_NORMAL;
+> > +
+> > +             power-source = <PM8916_GPIO_VPH>;
+> > +             input-disable;
+> > +             output-low;
+> > +     };
+> > +};
+> > +
+> > +&pm8916_mpps {
+> > +     gpio-line-names =
+> > +             "NC",
+> > +             "WLAN_LED_CTRL",
+> > +             "BT_LED_CTRL",
+> > +             "NC";
+> > +
+> > +     pm8916_mpps_leds: pm8916-mpps-state {
+> > +             pins = "mpp2", "mpp3";
+> > +             function = "digital";
+> > +
+> > +             output-low;
+> > +     };
+> > +};
+> > +
+> > +&pm8916_resin {
+> > +     interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_FALLING>;
+>
+> What is the goal of overriding the interrupt here? It looks like you are
+> changing the interrupt type from IRQ_TYPE_EDGE_BOTH to FALLING. This
+> sounds a bit like you want the driver to receive just button release
+> events (or just press events, not sure about the polarity). I'm not sure
+> if the driver will handle this correctly.
 
-Konrad
+The use-case here is to just act upon button release events and the
+driver handles this appropriately. Final use-case of the reset button:
+
+- Short press and release leads to normal Linux reboot.
+- Long press for more than 10 sec or so leads to a hard reset.
+
+With IRQ_TYPE_EDGE_BOTH, that's not achievable because just a simple
+press leads to Linux reboot.
+
+>
+> > +     linux,code = <KEY_POWER>;
+> > +     status = "okay";
+> > +};
+> > +
+> > +&pm8916_rpm_regulators {
+> > +     pm8916_l17: l17 {
+> > +             regulator-min-microvolt = <3300000>;
+> > +             regulator-max-microvolt = <3300000>;
+> > +     };
+> > +};
+> > +
+> > +&sdhc_1 {
+> > +     status = "okay";
+> > +};
+> > +
+> > +&sdhc_2 {
+> > +     pinctrl-0 = <&sdc2_default &sdc2_cd_default>;
+> > +     pinctrl-1 = <&sdc2_sleep &sdc2_cd_default>;
+> > +     pinctrl-names = "default", "sleep";
+> > +
+> > +     cd-gpios = <&tlmm 38 GPIO_ACTIVE_LOW>;
+> > +     status = "okay";
+> > +};
+> > +
+> > +&sound {
+> > +     pinctrl-0 = <&cdc_pdm_default &sec_mi2s_default>;
+> > +     pinctrl-1 = <&cdc_pdm_sleep &sec_mi2s_sleep>;
+> > +     pinctrl-names = "default", "sleep";
+> > +     model = "HMIBSC";
+> > +     audio-routing =
+> > +             "AMIC2", "MIC BIAS Internal2",
+> > +             "AMIC3", "MIC BIAS External1";
+> > +     status = "okay";
+> > +
+> > +     quaternary-dai-link {
+> > +             link-name = "ADV7533";
+> > +             cpu {
+> > +                     sound-dai = <&lpass MI2S_QUATERNARY>;
+> > +             };
+> > +             codec {
+> > +                     sound-dai = <&adv_bridge 0>;
+> > +             };
+> > +     };
+> > +
+> > +     primary-dai-link {
+> > +             link-name = "WCD";
+> > +             cpu {
+> > +                     sound-dai = <&lpass MI2S_PRIMARY>;
+> > +             };
+> > +             codec {
+> > +                     sound-dai = <&lpass_codec 0>, <&pm8916_codec 0>;
+> > +             };
+> > +     };
+> > +
+> > +     tertiary-dai-link {
+> > +             link-name = "WCD-Capture";
+> > +             cpu {
+> > +                     sound-dai = <&lpass MI2S_TERTIARY>;
+> > +             };
+> > +             codec {
+> > +                     sound-dai = <&lpass_codec 1>, <&pm8916_codec 1>;
+> > +             };
+> > +     };
+> > +};
+> > +
+> > +&tlmm {
+> > +     pinctrl-0 = <&uart1_mux0_rs232_high &uart1_mux1_rs232_low>;
+> > +     pinctrl-names = "default";
+> > +
+> > +     adv7533_int_active: adv533-int-active-state {
+> > +             pins = "gpio31";
+> > +             function = "gpio";
+> > +
+> > +             drive-strength = <16>;
+> > +             bias-disable;
+> > +     };
+> > +
+> > +     adv7533_int_suspend: adv7533-int-suspend-state {
+> > +             pins = "gpio31";
+> > +             function = "gpio";
+> > +
+> > +             drive-strength = <2>;
+> > +             bias-disable;
+> > +     };
+> > +
+> > +     adv7533_switch_active: adv7533-switch-active-state {
+> > +             pins = "gpio32";
+> > +             function = "gpio";
+> > +
+> > +             drive-strength = <16>;
+> > +             bias-disable;
+> > +     };
+> > +
+> > +     adv7533_switch_suspend: adv7533-switch-suspend-state {
+> > +             pins = "gpio32";
+> > +             function = "gpio";
+> > +
+> > +             drive-strength = <2>;
+> > +             bias-disable;
+> > +     };
+> > +
+> > +     msm_key_volp_n_default: msm-key-volp-n-default-state {
+> > +             pins = "gpio107";
+> > +             function = "gpio";
+> > +
+> > +             drive-strength = <8>;
+> > +             bias-pull-up;
+> > +     };
+> > +
+> > +     sdc2_cd_default: sdc2-cd-default-state {
+> > +             pins = "gpio38";
+> > +             function = "gpio";
+> > +             drive-strength = <2>;
+> > +             bias-disable;
+> > +     };
+>
+> Nitpick: It would look a bit cleaner to have the empty lines consistent
+> in all pinctrl nodes, i.e. either always having an empty line between
+> function and drive-strength or never. I think Konrad prefers the more
+> compact version without empty line (sadly I'm not sure if this is
+> clearly documented anywhere). Same for &pm8916_gpios and mpps.
+>
+
+Sure I can remove the empty lines to be consistent with msm8916.dtsi.
+
+> > +
+> > +     /*
+> > +      * UART1 being the debug console supports various modes of
+> > +      * operation (RS-232/485/422) controlled via GPIOs configured
+> > +      * mux as follows:
+> > +      *
+> > +      *   gpio100    gpio99    UART mode
+> > +      *   0          0         loopback
+> > +      *   0          1         RS-232
+> > +      *   1          0         RS-485
+> > +      *   1          1         RS-422
+> > +      *
+> > +      * The default mode configured here is RS-232 mode.
+> > +      */
+>
+> :D
+>
+> Thanks a lot for making this clear using the table. And also for all the
+> other cleanup changes!
+
+Thanks for your review.
+
+-Sumit
+
+>
+> Stephan
 
