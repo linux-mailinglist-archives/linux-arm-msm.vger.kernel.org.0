@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-14325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14326-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E12887E33D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 06:37:20 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 002C587E340
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 06:37:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3954C282906
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 05:37:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AFC552828DD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 05:37:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE56721379;
-	Mon, 18 Mar 2024 05:37:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65F0A21345;
+	Mon, 18 Mar 2024 05:37:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LX2AxPsN"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="H7+Z0UeC"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C6581EB2B;
-	Mon, 18 Mar 2024 05:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD371EB2B;
+	Mon, 18 Mar 2024 05:37:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710740237; cv=none; b=n6Q8TrUQ0Z4z5BSuDmGFk9RoConvUqOwudDvS7lcw9rLNDmwgAfL9Om20qGlgI2+bTgYBxPFe4gudqG9xeEsW2a8Ejd3AiM+iiGm5l4U4WnAM7KY3kPfHFYa2yvwOPu7/JouTMUKLg85XCAHTo+gDqEZRbyN5w6fAu8MDOSOe20=
+	t=1710740242; cv=none; b=DOtGESsR8KkVbfYOzTjon7EyjYgyWI9jv2chZ4qj9k6oDaSdBjRVz2wATAzxmu5wHgPLGYbi9jnz9VLaU25S7pddG80pgiHJmuPlHd2Ucu9fXVBQhIDt27JSOAkpEHMcTkrE9Um7v3f/S4lopVDoh5IUQYAsG1nGYf9SbSTD3mw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710740237; c=relaxed/simple;
-	bh=LN2D+lnYKrmJey3K5aVA79RG0luujSl26OrZjjXpZlM=;
+	s=arc-20240116; t=1710740242; c=relaxed/simple;
+	bh=TbO6NktTGoFmFBAPEamXwwQP6bLYf2ZBRvUZOoifc/k=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aDCTA2IANOlIN4jqH4cUwd2YgQRSVbUm860kHlZr7niCYOCcEerq64kt4w9yiqykGbahRSAioHl+3nWAvl5sXU1xAaiYB0wa/EyvGaQGupPrsqGPBsU+LmEhkRMUdfJX14WEpJSyvCTS5ky5Ik04NEiFK/9+aj14O7TnY/6Bcvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LX2AxPsN; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version:Content-Type; b=WowM2wgdz3O/HO69fUTdPfoyWLdwIqF90jZTkNrqvd0FW1cwhE43tzuBqbXAMKsl2dqVbLVb3FjGpOrswV85ZPcIJI+QVjKK9E8nptJ1eVLlXerRKz5gIu1dUpGv5S5ZK5mXIcXGBmspqHK8e/HkS7YqlOcdoSJQzUUQDLyFKp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=H7+Z0UeC; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42I3ewm8011420;
-	Mon, 18 Mar 2024 05:37:13 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42I3e29R007308;
+	Mon, 18 Mar 2024 05:37:17 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-type; s=qcppdkim1; bh=wpAVoHOEAoV8/RrzavSv
-	z2P2yCK47RZud2MG3Rtckm0=; b=LX2AxPsNiBK8YkRET/fPrf6bjJT8IYRzb1S3
-	WOPgXeyjAZJbYccgGAhkDHHQKJ9QTee3cPfXjSpk+MNOnRCOkZckZr5lZT1htJQm
-	TfT9+Rog0lvkUM1QSa8X8KuHMx0kNYSx5cFVvgce3IkkOYUKSZe3pLOmZa+zMeHl
-	IjkSJHImgXkmPxIyZBiHUByyk+D8/GLiD0heiwroqQx7/kjoN/kWec6nNn9IsRY8
-	/F0jKeYKKHiEZpAXcyzLwywLHp8H0S2kdKSNRvO/RgE38Qx72NDYbDs4skweXNBS
-	JrsaymqF1b6mooTIth/AKjz8FGHkFssaKrXj6Lk+4Sq8QBsMAg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wwxtds4m7-1
+	:mime-version:content-type; s=qcppdkim1; bh=aw95Wa5chkNbbhK6SWmX
+	8uH5xyWpmt3vQ2DsLbCqa7Q=; b=H7+Z0UeCUi1oM9hUzK/ac3DkCqFMvw7+PuUn
+	xcI2FC2yJ4HsRTbogSOW/AbE9fuZla043scz1V5PoXLDH4fhl9Cdv9tqICkUeObY
+	gyKnMW94X9ssl+RT89uu7BGx2zebcbIhFLHEjgHVscB5f8TFRwaNX4EarJayrbSH
+	g7DDRnunXjx20Bn+wam9kUmV+3mC7tCe28vMbeDtySYWfq122mkb6BsiJzPXhRGC
+	4lczej683/7+YlIHh5MOxZvR5mMzkBNk2cJWP3/8FnsZcoWwfd5HIZ7cIardPzVn
+	6Euj7+2TyXUX0j9FmBp04lEvQ1EK/ALX75NUjaK5y6ajqPR+AQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wwxtb94g9-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Mar 2024 05:37:12 +0000 (GMT)
+	Mon, 18 Mar 2024 05:37:16 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42I5bBe0030727
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42I5bGVq015156
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Mar 2024 05:37:12 GMT
+	Mon, 18 Mar 2024 05:37:16 GMT
 Received: from hu-tdas-hyd.qualcomm.com (10.80.80.8) by
  nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Sun, 17 Mar 2024 22:37:05 -0700
+ 15.2.1118.40; Sun, 17 Mar 2024 22:37:11 -0700
 From: Taniya Das <quic_tdas@quicinc.com>
 To: Stephen Boyd <sboyd@kernel.org>,
         =?UTF-8?q?Michael=20Turquette=20=C2=A0?=
@@ -68,9 +68,9 @@ To: Stephen Boyd <sboyd@kernel.org>,
 	<conor+dt@kernel.org>
 CC: Taniya Das <quic_tdas@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
         <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>
-Subject: [PATCH v2 6/8] clk: qcom: camcc-sc7280: Add parent dependency to all camera GDSCs
-Date: Mon, 18 Mar 2024 11:05:53 +0530
-Message-ID: <20240318053555.20405-7-quic_tdas@quicinc.com>
+Subject: [PATCH v2 7/8] arm64: dts: qcom: qcm6490-idp: Update protected clocks list
+Date: Mon, 18 Mar 2024 11:05:54 +0530
+Message-ID: <20240318053555.20405-8-quic_tdas@quicinc.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20240318053555.20405-1-quic_tdas@quicinc.com>
 References: <20240318053555.20405-1-quic_tdas@quicinc.com>
@@ -85,74 +85,71 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: _4nzFSacQYe4by_r90PhVCDLegt8gjYc
-X-Proofpoint-ORIG-GUID: _4nzFSacQYe4by_r90PhVCDLegt8gjYc
+X-Proofpoint-GUID: 7DSBEo43Rks7lqw217yFjfHvJDwV_CB8
+X-Proofpoint-ORIG-GUID: 7DSBEo43Rks7lqw217yFjfHvJDwV_CB8
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-03-17_12,2024-03-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- lowpriorityscore=0 phishscore=0 mlxlogscore=740 mlxscore=0 clxscore=1015
- impostorscore=0 malwarescore=0 suspectscore=0 adultscore=0 bulkscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
+ clxscore=1015 priorityscore=1501 phishscore=0 suspectscore=0
+ lowpriorityscore=0 spamscore=0 malwarescore=0 impostorscore=0 adultscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2403140001 definitions=main-2403180040
 
-Camera titan top GDSC is a parent supply to all other camera GDSCs. Titan
-top GDSC is required to be enabled before enabling any other camera GDSCs
-and it should be disabled only after all other camera GDSCs are disabled.
-Ensure this behavior by marking titan top GDSC as parent of all other
-camera GDSCs.
+Certain clocks are not accessible on QCM6490-IDP board,
+thus mark them as protected. Update the lpassaudio node to
+support the new compatible.
 
-Fixes: 1daec8cfebc2 ("clk: qcom: camcc: Add camera clock controller driver for SC7280")
 Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/clk/qcom/camcc-sc7280.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 28 +++++++++++++++++++++++-
+ 1 file changed, 27 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/camcc-sc7280.c b/drivers/clk/qcom/camcc-sc7280.c
-index 27bfb0f959c4..da29d3b953ee 100644
---- a/drivers/clk/qcom/camcc-sc7280.c
-+++ b/drivers/clk/qcom/camcc-sc7280.c
-@@ -2267,6 +2267,7 @@ static struct gdsc cam_cc_bps_gdsc = {
- 		.name = "cam_cc_bps_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = HW_CTRL | RETAIN_FF_ENABLE,
+diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+index e4bfad50a669..915f955657df 100644
+--- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
++++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: BSD-3-Clause
+ /*
+- * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+
+ /dts-v1/;
+@@ -448,6 +448,32 @@
+ 	};
  };
 
-@@ -2279,6 +2280,7 @@ static struct gdsc cam_cc_ife_0_gdsc = {
- 		.name = "cam_cc_ife_0_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = RETAIN_FF_ENABLE,
++&gcc {
++	protected-clocks = <GCC_AGGRE_NOC_PCIE_1_AXI_CLK> ,<GCC_PCIE_1_AUX_CLK>,
++			<GCC_PCIE_1_AUX_CLK_SRC>, <GCC_PCIE_1_CFG_AHB_CLK>,
++			<GCC_PCIE_1_MSTR_AXI_CLK>, <GCC_PCIE_1_PHY_RCHNG_CLK_SRC>,
++			<GCC_PCIE_1_PIPE_CLK>, <GCC_PCIE_1_PIPE_CLK_SRC>,
++			<GCC_PCIE_1_SLV_AXI_CLK>, <GCC_PCIE_1_SLV_Q2A_AXI_CLK>,
++			<GCC_QSPI_CNOC_PERIPH_AHB_CLK>, <GCC_QSPI_CORE_CLK>,
++			<GCC_QSPI_CORE_CLK_SRC>,<GCC_USB30_SEC_MASTER_CLK>,
++			<GCC_USB30_SEC_MASTER_CLK_SRC>, <GCC_USB30_SEC_MOCK_UTMI_CLK>,
++			<GCC_USB30_SEC_MOCK_UTMI_CLK_SRC>,
++			<GCC_USB30_SEC_MOCK_UTMI_POSTDIV_CLK_SRC>, <GCC_USB30_SEC_SLEEP_CLK>,
++			<GCC_USB3_SEC_PHY_AUX_CLK>, <GCC_USB3_SEC_PHY_AUX_CLK_SRC>,
++			<GCC_USB3_SEC_PHY_COM_AUX_CLK>, <GCC_USB3_SEC_PHY_PIPE_CLK>,
++			<GCC_USB3_SEC_PHY_PIPE_CLK_SRC>, <GCC_CFG_NOC_LPASS_CLK>,
++			<GCC_MSS_GPLL0_MAIN_DIV_CLK_SRC>, <GCC_MSS_CFG_AHB_CLK>,
++			<GCC_MSS_OFFLINE_AXI_CLK>, <GCC_MSS_SNOC_AXI_CLK>,
++			<GCC_MSS_Q6_MEMNOC_AXI_CLK>, <GCC_MSS_Q6SS_BOOT_CLK_SRC>,
++			<GCC_SEC_CTRL_CLK_SRC>, <GCC_WPSS_AHB_CLK>,
++			<GCC_WPSS_AHB_BDG_MST_CLK>, <GCC_WPSS_RSCP_CLK>;
++};
++
++&lpass_audiocc {
++	compatible = "qcom,qcm6490-lpassaudiocc";
++	/delete-property/ power-domains;
++};
++
+ &qupv3_id_0 {
+ 	status = "okay";
  };
-
-@@ -2291,6 +2293,7 @@ static struct gdsc cam_cc_ife_1_gdsc = {
- 		.name = "cam_cc_ife_1_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = RETAIN_FF_ENABLE,
- };
-
-@@ -2303,6 +2306,7 @@ static struct gdsc cam_cc_ife_2_gdsc = {
- 		.name = "cam_cc_ife_2_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = RETAIN_FF_ENABLE,
- };
-
-@@ -2315,6 +2319,7 @@ static struct gdsc cam_cc_ipe_0_gdsc = {
- 		.name = "cam_cc_ipe_0_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = HW_CTRL | RETAIN_FF_ENABLE,
- };
-
 --
 2.17.1
 
