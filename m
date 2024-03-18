@@ -1,61 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-14353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B62A387E53A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 09:50:05 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D564087E541
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 09:52:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D6C171C2116F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 08:50:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2F7F4B20C95
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 08:52:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 630FD2CCDF;
-	Mon, 18 Mar 2024 08:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B272D28DCA;
+	Mon, 18 Mar 2024 08:52:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dH2UfHgN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nSe6UA7H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3327B2CCB3
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 08:49:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0FA428DAB
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 08:52:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710751798; cv=none; b=bIpaJjUVpwV1DPO7jT9j2HJkemWEsCoKhH7OSZ93xKzt6/r0pkZD5ZTjAd7dh0not2jD7JVCAIfaq+oxeulSP1apiXFBTr83jZ+a1xG5ZESUGGFjEPjmgPtGjvCURH9u7Obm6J2OrckI5C53QgMPEINGTceNijv8gWi77TAh1HM=
+	t=1710751951; cv=none; b=WROS7ggWj8h3RhDvmdeokgms29GjXCfHp19cAydCfDlGrj6XykAjK38gcmZT4O+J0Q4XSj793ciLaeYMhPkIbY/x20Lt4sCx8h52fvHNcKXqihTWK7Mj/7okKyQxGv41MukTnEI6oX1qMI/oA0ANCMzlo1NyA1a2ZPZ4MiS1YHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710751798; c=relaxed/simple;
-	bh=EBS2sHG9+WdevaodlV4OZpLhPQv/LCsVQpR7N/C/3kw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=C6IEnSccjg2RCTBGYUdmyjd8SilnjU2lMpHdXAstIT4NNIt7tAwqzEyq9JvJQkuY2sjRWC5h6T3E2lVSO6lqVI3CUDzQBKEyV9Ihwdxh+ekODPc3Y9+K+eilz8ByHsqnLgtRpfGIjM/AjFWgHRWQhkeALzxMnShLAgtDng9Llyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dH2UfHgN; arc=none smtp.client-ip=198.175.65.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1710751796; x=1742287796;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=EBS2sHG9+WdevaodlV4OZpLhPQv/LCsVQpR7N/C/3kw=;
-  b=dH2UfHgNFrW3jxJTOWph33/W2B15ef47p62TC6wCY0lXFrWipR3xF/+m
-   LeifClfjKmx3nTzgVKcbqUMJN9SUpAxNnVm3goarI/6ft2fRw8a9knXd4
-   +GOAKAvNz+3fkqWHoJBmWvJvnTKndK5tGxIiHAnNIk8oZMHRSrNsumo5m
-   RI9AIyLTlg1WFF6/cswKtXsn+QSLGuNVaxDkbd81KId1E+llrGHpD4u6b
-   9ANp3IqrGNMSZQe0YCNlyxgqxfqSjepSnbIimnR8GAnl+I89yoXN2me3C
-   eFZvT7Ba9C1r+ycmHmUannCz65E73/sVbEXc+15LyQaTK+BlJz0JIXeZ1
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11016"; a="9361593"
-X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; 
-   d="scan'208";a="9361593"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Mar 2024 01:49:55 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; 
-   d="scan'208";a="18080255"
-Received: from jlawryno-mobl.ger.corp.intel.com (HELO [10.245.80.160]) ([10.245.80.160])
-  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Mar 2024 01:49:54 -0700
-Message-ID: <6191c215-0271-44e1-bdb9-c1ff05438f03@linux.intel.com>
-Date: Mon, 18 Mar 2024 09:49:50 +0100
+	s=arc-20240116; t=1710751951; c=relaxed/simple;
+	bh=GUiZOljZZCQ6KLDONbeZl1yR9+RFtSZ/NilXA1E2+dU=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=tzyzySby8XsY0qrXFBAq110JuNXpPeKh7KzO0pRTI/8P7lHdcQxQMYpesmYAeh6oqJ82GAQBWbKHEqHOaL/TEP8ZvRSCJEGNpNYt+4TE+huMeJyzpya7rTdvhNnqry/o9T0+xkL5mu5LE8It+9smUCLenNGyjIsrneYMOxdMe9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nSe6UA7H; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-341730bfc46so428362f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 01:52:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1710751947; x=1711356747; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=i6UMWdi6YpiZ/NlXwld8jB4DogbMlixTU7wdJd6oBLQ=;
+        b=nSe6UA7HonLd0Ooze21vZUWD6BFM9+Px/rSvG9Zye9v4VLSaPB6txhtxE0P2uW8Ve0
+         ouTAFPvDK+MviBH0fzo8RzzGTe156JkZaF967uSQ0A92WCjTdlMpq3PeAGpZ/B86cCiN
+         Cw+rZGGutBY/O1NU6RpWwKsli1TZUiUDy/1+IZ5sG8pQOuchXPVD7amv8OHK0XSIvOLu
+         E7YPorWjE51GuTSPmWSPlQ2q9sClUViX82s4+ivAIeUf2qjiUvu5hQqINGuUYy5sGCaY
+         aWng1j+8t9MBkW5O4SUtTkEHyZ6qiGSxi5taaQEcteDsFXLP1SyEZ+50VzdWtllZCNIW
+         Am9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710751947; x=1711356747;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=i6UMWdi6YpiZ/NlXwld8jB4DogbMlixTU7wdJd6oBLQ=;
+        b=mEjYOeLeOWj9XF6TsQqGInkFGWNJ3b2aQXOcqVmmDemOY+qXQPFfc4l8FvJcaWMgeB
+         r054K1CojN7ps3NAaDmoRrGQqGCTeYUef+zknk+eCs2hzHHQL8vE/7rKh1PpdvOfVH6L
+         5taPRe4+T03yJDfiD4F5Xlc1Fb1uRa1wTIssssOabvIsVdva/u5apcBLB0ZqVUCuIyBo
+         hs2gUdPIe4sdDjrGrXDLmX0Rs1Bxb5EKJ8p1G+TVa9Cqm6d0pS6sfjnX3Rq7wfcLkxsV
+         S3WLHFz0xXptS/5b0wA/WPVcTptRGbxtPP3gm1FkhwRT3QtffWKQcBOOEknepk/rTrwC
+         sCSw==
+X-Gm-Message-State: AOJu0YxE5FMfV+4pi5p2y2IuvH/B+AqO3LMAsw811TAf7RfRQXwsQ8WE
+	vNP8zuBTdGBTAchP24jtcBW6pTPG6kdjWud4WEXTDB81J/ZyWrSdZoSjxujdkHQ=
+X-Google-Smtp-Source: AGHT+IHRvjid4hGA5bSp2QT33q7Uk/lS6mc/wJi4SYdJbLsVnz9me859Z6q5uU7ai/HgxCiOEJ82Dg==
+X-Received: by 2002:adf:fa4d:0:b0:33e:c5fd:662b with SMTP id y13-20020adffa4d000000b0033ec5fd662bmr7996520wrr.4.1710751947023;
+        Mon, 18 Mar 2024 01:52:27 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:ad2b:a316:59d9:3dbc? ([2a01:e0a:982:cbb0:ad2b:a316:59d9:3dbc])
+        by smtp.gmail.com with ESMTPSA id i7-20020a5d5587000000b0033ec68dd3c3sm9289562wrv.96.2024.03.18.01.52.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 Mar 2024 01:52:26 -0700 (PDT)
+Message-ID: <869e106f-b953-4615-8dc2-bf200af6f3d9@linaro.org>
+Date: Mon, 18 Mar 2024 09:52:26 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,493 +77,94 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] accel/qaic: Add bootlog debugfs
-To: Jeffrey Hugo <quic_jhugo@quicinc.com>, quic_carlv@quicinc.com,
- quic_pkanojiy@quicinc.com, stanislaw.gruszka@linux.intel.com
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- ogabbay@kernel.org
-References: <20240311165826.1728693-1-quic_jhugo@quicinc.com>
- <20240311165826.1728693-2-quic_jhugo@quicinc.com>
- <2b00ea2c-3193-48fb-bb61-c96a87db44a6@linux.intel.com>
- <4a0f9918-f1af-4010-bbbb-55d5ee3f45d5@quicinc.com>
-Content-Language: en-US
-From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Organization: Intel Technology Poland sp. z o.o. - ul. Slowackiego 173, 80-298
- Gdansk - KRS 101882 - NIP 957-07-52-316
-In-Reply-To: <4a0f9918-f1af-4010-bbbb-55d5ee3f45d5@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sm8550: Fix the msi-map entries
+Content-Language: en-US, fr
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240318-pci-bdf-sid-fix-v1-0-acca6c5d9cf1@linaro.org>
+ <20240318-pci-bdf-sid-fix-v1-2-acca6c5d9cf1@linaro.org>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <20240318-pci-bdf-sid-fix-v1-2-acca6c5d9cf1@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-
-
-On 15.03.2024 16:39, Jeffrey Hugo wrote:
-> On 3/14/2024 5:41 AM, Jacek Lawrynowicz wrote:
->> Hi,
->>
->> On 11.03.2024 17:58, Jeffrey Hugo wrote:
->>> During the boot process of AIC100, the bootloaders (PBL and SBL) log
->>> messages to device RAM. During SBL, if the host opens the QAIC_LOGGING
->>> channel, SBL will offload the contents of the log buffer to the host,
->>> and stream any new messages that SBL logs.
->>>
->>> This log of the boot process can be very useful for an initial triage of
->>> any boot related issues. For example, if SBL rejects one of the runtime
->>> firmware images for a validation failure, SBL will log a reason why.
->>>
->>> Add the ability of the driver to open the logging channel, receive the
->>> messages, and store them. Also define a debugfs entry called "bootlog"
->>> by hooking into the DRM debugfs framework. When the bootlog debugfs
->>> entry is read, the current contents of the log that the host is caching
->>> is displayed to the user. The driver will retain the cache until it
->>> detects that the device has rebooted.  At that point, the cache will be
->>> freed, and the driver will wait for a new log. With this scheme, the
->>> driver will only have a cache of the log from the current device boot.
->>> Note that if the driver initializes a device and it is already in the
->>> runtime state (QSM), no bootlog will be available through this mechanism
->>> because the driver and SBL have not communicated.
->>>
->>> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
->>> Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
->>> Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
->>> ---
->>>   drivers/accel/qaic/Makefile       |   2 +
->>>   drivers/accel/qaic/qaic.h         |   8 +
->>>   drivers/accel/qaic/qaic_debugfs.c | 271 ++++++++++++++++++++++++++++++
->>>   drivers/accel/qaic/qaic_debugfs.h |  20 +++
->>>   drivers/accel/qaic/qaic_drv.c     |  16 +-
->>>   5 files changed, 316 insertions(+), 1 deletion(-)
->>>   create mode 100644 drivers/accel/qaic/qaic_debugfs.c
->>>   create mode 100644 drivers/accel/qaic/qaic_debugfs.h
->>>
->>> diff --git a/drivers/accel/qaic/Makefile b/drivers/accel/qaic/Makefile
->>> index 3f7f6dfde7f2..2cadcc1baa0e 100644
->>> --- a/drivers/accel/qaic/Makefile
->>> +++ b/drivers/accel/qaic/Makefile
->>> @@ -11,3 +11,5 @@ qaic-y := \
->>>       qaic_data.o \
->>>       qaic_drv.o \
->>>       qaic_timesync.o
->>> +
->>> +qaic-$(CONFIG_DEBUG_FS) += qaic_debugfs.o
->>> diff --git a/drivers/accel/qaic/qaic.h b/drivers/accel/qaic/qaic.h
->>> index 9256653b3036..03d9c9fbffb3 100644
->>> --- a/drivers/accel/qaic/qaic.h
->>> +++ b/drivers/accel/qaic/qaic.h
->>> @@ -153,6 +153,14 @@ struct qaic_device {
->>>       struct mhi_device    *qts_ch;
->>>       /* Work queue for tasks related to MHI "QAIC_TIMESYNC" channel */
->>>       struct workqueue_struct    *qts_wq;
->>> +    /* Head of list of page allocated by MHI bootlog device */
->>> +    struct list_head        bootlog;
->>> +    /* MHI bootlog channel device */
->>> +    struct mhi_device       *bootlog_ch;
->>> +    /* Work queue for tasks related to MHI bootlog device */
->>> +    struct workqueue_struct *bootlog_wq;
->>> +    /* Synchronizes access of pages in MHI bootlog device */
->>> +    struct mutex            bootlog_mutex;
->>>   };
->>>     struct qaic_drm_device {
->>> diff --git a/drivers/accel/qaic/qaic_debugfs.c b/drivers/accel/qaic/qaic_debugfs.c
->>> new file mode 100644
->>> index 000000000000..4f87fe29be1a
->>> --- /dev/null
->>> +++ b/drivers/accel/qaic/qaic_debugfs.c
->>> @@ -0,0 +1,271 @@
->>> +// SPDX-License-Identifier: GPL-2.0-only
->>> +
->>> +/* Copyright (c) 2020, The Linux Foundation. All rights reserved. */
->>> +/* Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved. */
->>> +
->>> +#include <linux/debugfs.h>
->>> +#include <linux/device.h>
->>> +#include <linux/fs.h>
->>> +#include <linux/list.h>
->>> +#include <linux/mhi.h>
->>> +#include <linux/mutex.h>
->>> +#include <linux/pci.h>
->>> +#include <linux/seq_file.h>
->>> +#include <linux/string.h>
->>> +#include <linux/types.h>
->>> +#include <linux/workqueue.h>
->>> +
->>> +#include "qaic.h"
->>> +#include "qaic_debugfs.h"
->>> +
->>> +#define BOOTLOG_POOL_SIZE        16
->>> +#define BOOTLOG_MSG_SIZE        512
->>> +
->>> +struct bootlog_msg {
->>> +    /* Buffer for bootlog messages */
->>> +    char str[BOOTLOG_MSG_SIZE];
->>> +    /* Root struct of device, used to access device resources */
->>> +    struct qaic_device *qdev;
->>> +    /* Work struct to schedule work coming on QAIC_LOGGING channel */
->>> +    struct work_struct work;
->>> +};
->>> +
->>> +struct bootlog_page {
->>> +    /* Node in list of bootlog pages maintained by root device struct */
->>> +    struct list_head node;
->>> +    /* Total size of the buffer that holds the bootlogs. It is PAGE_SIZE */
->>> +    unsigned int size;
->>> +    /* Offset for the next bootlog */
->>> +    unsigned int offset;
->>> +};
->>> +
->>> +static int bootlog_show(struct seq_file *s, void *unused)
->>> +{
->>> +    struct bootlog_page *page;
->>> +    struct qaic_device *qdev;
->>> +    void *page_end;
->>> +    void *log;
->>> +
->>> +    qdev = s->private;
->>> +    mutex_lock(&qdev->bootlog_mutex);
->>> +    list_for_each_entry(page, &qdev->bootlog, node) {
->>> +        log = page + 1;
->>> +        page_end = (void *)page + page->offset;
->>> +        while (log < page_end) {
->>> +            seq_printf(s, "%s", (char *)log);
->>> +            log += strlen(log) + 1;
->>> +        }
->>> +    }
->>> +    mutex_unlock(&qdev->bootlog_mutex);
->>> +
->>> +    return 0;
->>> +}
->>> +
->>> +static int bootlog_fops_open(struct inode *inode, struct file *file)
->>> +{
->>> +    return single_open(file, bootlog_show, inode->i_private);
->>> +}
->>> +
->>> +static const struct file_operations bootlog_fops = {
->>> +    .owner = THIS_MODULE,
->>> +    .open = bootlog_fops_open,
->>> +    .read = seq_read,
->>> +    .llseek = seq_lseek,
->>> +    .release = single_release,
->>> +};
->>> +
->>> +void qaic_debugfs_init(struct qaic_drm_device *qddev)
->>> +{
->>> +    struct qaic_device *qdev = qddev->qdev;
->>> +    struct dentry *debugfs_root;
->>> +
->>> +    debugfs_root = to_drm(qddev)->debugfs_root;
->>> +
->>> +    debugfs_create_file("bootlog", 0400, debugfs_root, qdev, &bootlog_fops);
->>> +}
->>> +
->>> +static struct bootlog_page *alloc_bootlog_page(struct qaic_device *qdev)
->>> +{
->>> +    struct bootlog_page *page;
->>> +
->>> +    page = (struct bootlog_page *)devm_get_free_pages(&qdev->pdev->dev, GFP_KERNEL, 0);
->>> +    if (!page)
->>> +        return page;
->>> +
->>> +    page->size = PAGE_SIZE;
->>> +    page->offset = sizeof(*page);
->>> +    list_add_tail(&page->node, &qdev->bootlog);
->>> +
->>> +    return page;
->>> +}
->>> +
->>> +static int reset_bootlog(struct qaic_device *qdev)
->>> +{
->>> +    struct bootlog_page *page;
->>> +    struct bootlog_page *i;
->>> +
->>> +    list_for_each_entry_safe(page, i, &qdev->bootlog, node) {
->>> +        list_del(&page->node);
->>> +        devm_free_pages(&qdev->pdev->dev, (unsigned long)page);
->>> +    }
->> This is currently dead code. reset is only used to init the bootlog. You may consider making this init_bootlog() if you are not planning to actually reset the bootlog.
+On 18/03/2024 08:19, Manivannan Sadhasivam wrote:
+> While adding the GIC ITS MSI support, it was found that the msi-map entries
+> needed to be swapped to receive MSIs from the endpoint.
 > 
-> No, its not dead code.
+> But later it was identified that the swapping was needed due to a bug in
+> the Qualcomm PCIe controller driver. And since the bug is now fixed with
+> commit bf79e33cdd89 ("PCI: qcom: Enable BDF to SID translation properly"),
+> let's fix the msi-map entries also to reflect the actual mapping in the
+> hardware.
 > 
-> We boot the device the first time.  qaic_bootlog_mhi_probe() is called, which calls reset_bootlog().  This code does not execute as the list is empty.  For this instance, reset_bootlog() is "init_bootlog".  We collect a bootlog and store it in the list.  The device finishes booting, and qaic_bootlog_mhi_remove() is called.  We do not clear the list at that time.  This allows the log to be dumped at a later time.
+> Fixes: 114990ce3edf ("arm64: dts: qcom: sm8550: Use GIC-ITS for PCIe0 and PCIe1")
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>   arch/arm64/boot/dts/qcom/sm8550.dtsi | 10 ++++------
+>   1 file changed, 4 insertions(+), 6 deletions(-)
 > 
-> Now, lets assume the device crashes.  The device will reboot and go through the boot flow again.  In this example, this will be boot instance 2, but this also applies to boot instance N+1.
-> 
-> qaic_bootlog_mhi_probe() is called again.  Reset_bootlog() will be called, and now this code will execute because the list is non-empty and contains data from the previous boot.  As we are only storing the current bootlog, this loop clears the list and frees the resources. Then we collect the new log for the current boot, and qaic_bootlog_mhi_remove() is triggered again.
-
-OK, make sense.
-
->>> +
->>> +    page = alloc_bootlog_page(qdev);
->>> +    if (!page)
->>> +        return -ENOMEM;
->>> +
->>> +    return 0;
->>> +}
->>> +
->>> +static void *bootlog_get_space(struct qaic_device *qdev, unsigned int size)
->>> +{
->>> +    struct bootlog_page *page;
->>> +
->>> +    page = list_last_entry(&qdev->bootlog, struct bootlog_page, node);
->>> +
->>> +    if (size > page->size - sizeof(*page))
->> Not critical but would be safer to use this condition: "sizeof(*page) + size > page->size"
-> 
-> I disagree.  Your suggestion would appear to have the potential to overflow because it is doing a calculation based on an untrusted value (the size parameter).  The current code restructures the check to avoid this.
-> 
-> What would be safer is to utilize size_add(), which I think is better than either the current code, or your suggestion, and is what I will implement.
-
-Yeah, size_add() seems to be the best solution here.
-
->>
->>> +        return NULL;
->>> +
->>> +    if (page->offset + size > page->size) {
->>> +        page = alloc_bootlog_page(qdev);
->>> +        if (!page)
->>> +            return NULL;
->>> +    }
->>> +
->>> +    return (void *)page + page->offset;
->>> +}
->>> +
->>> +static void bootlog_commit(struct qaic_device *qdev, unsigned int size)
->>> +{
->>> +    struct bootlog_page *page;
->>> +
->>> +    page = list_last_entry(&qdev->bootlog, struct bootlog_page, node);
->>> +
->>> +    page->offset += size;
->>> +}
->>> +
->>> +static void bootlog_log(struct work_struct *work)
->>> +{
->>> +    struct bootlog_msg *msg = container_of(work, struct bootlog_msg, work);
->>> +    unsigned int len = strlen(msg->str) + 1;
->>> +    struct qaic_device *qdev = msg->qdev;
->>> +    void *log;
->>> +
->>> +    mutex_lock(&qdev->bootlog_mutex);
->>> +    log = bootlog_get_space(qdev, len);
->>> +    if (log) {
->>> +        memcpy(log, msg, len);
->>> +        bootlog_commit(qdev, len);
->>> +    }
->>> +    mutex_unlock(&qdev->bootlog_mutex);
->>> +
->>> +    if (mhi_queue_buf(qdev->bootlog_ch, DMA_FROM_DEVICE, msg, BOOTLOG_MSG_SIZE, MHI_EOT))
->>> +        devm_kfree(&qdev->pdev->dev, msg);
->> You are freeing `struct work` while still in work callback. This is unsafe.
->> See https://elixir.bootlin.com/linux/v6.8/source/kernel/workqueue.c#L2564.
->> Work ptr is kept in busy_hash after the callback has finished and may be still be accessed.
-> 
-> Documentation says that is permitted - https://elixir.bootlin.com/linux/v6.8/source/kernel/workqueue.c#L2548
-> 
-> Also, the framework code documents that the struct work cannot be accessed after the callback is invoked - https://elixir.bootlin.com/linux/v6.8/source/kernel/workqueue.c#L2635
-
-It looks to me as find_worker_executing_work() may access the work data but maybe I'm missinterpreteing the code.
-Anyway, this would be a kernel bug rather then yours.
-
->>
->>> +}
->>> +
->>> +static int qaic_bootlog_mhi_probe(struct mhi_device *mhi_dev, const struct mhi_device_id *id)
->>> +{
->>> +    struct qaic_device *qdev = pci_get_drvdata(to_pci_dev(mhi_dev->mhi_cntrl->cntrl_dev));
->>> +    struct bootlog_msg *msg;
->>> +    int i, ret;
->>> +
->>> +    qdev->bootlog_wq = alloc_ordered_workqueue("qaic_bootlog", 0);
->>> +    if (!qdev->bootlog_wq) {
->>> +        ret = -ENOMEM;
->>> +        goto out;
->>> +    }
->>> +
->>> +    mutex_lock(&qdev->bootlog_mutex);
->> Looks like locking should be inside reset_bootlog(), like in other places.
-> 
-> Will do.
-> 
->>
->>> +    ret = reset_bootlog(qdev);
->>> +    mutex_unlock(&qdev->bootlog_mutex);
->>> +    if (ret)
->>> +        goto destroy_workqueue;
->>> +
->>> +    ret = mhi_prepare_for_transfer(mhi_dev);
->>> +    if (ret)
->>> +        goto destroy_workqueue;
->>> +
->>> +    for (i = 0; i < BOOTLOG_POOL_SIZE; i++) {
->>> +        msg = devm_kzalloc(&qdev->pdev->dev, sizeof(*msg), GFP_KERNEL);
->>> +        if (!msg) {
->>> +            ret = -ENOMEM;
->>> +            goto mhi_unprepare;
->>> +        }
->>> +
->>> +        msg->qdev = qdev;
->>> +        INIT_WORK(&msg->work, bootlog_log);
->>> +
->>> +        ret = mhi_queue_buf(mhi_dev, DMA_FROM_DEVICE, msg, BOOTLOG_MSG_SIZE, MHI_EOT);
->>> +        if (ret)
->>> +            goto mhi_unprepare;
->>> +    }
->>> +
->>> +    dev_set_drvdata(&mhi_dev->dev, qdev);
->>> +    qdev->bootlog_ch = mhi_dev;
->>> +    return 0;
->>> +
->>> +mhi_unprepare:
->>> +    mhi_unprepare_from_transfer(mhi_dev);
->>> +destroy_workqueue:
->>> +    flush_workqueue(qdev->bootlog_wq);
->>> +    destroy_workqueue(qdev->bootlog_wq);
->>> +out:
->>> +    return ret;
->>> +}
->>> +
->>> +static void qaic_bootlog_mhi_remove(struct mhi_device *mhi_dev)
->>> +{
->>> +    struct qaic_device *qdev;
->>> +
->>> +    qdev = dev_get_drvdata(&mhi_dev->dev);
->>> +
->>> +    mhi_unprepare_from_transfer(qdev->bootlog_ch);
->>> +    flush_workqueue(qdev->bootlog_wq);
->>> +    destroy_workqueue(qdev->bootlog_wq);
->>> +    qdev->bootlog_ch = NULL;
->>> +}
->>> +
->>> +static void qaic_bootlog_mhi_ul_xfer_cb(struct mhi_device *mhi_dev, struct mhi_result *mhi_result)
->>> +{
->>> +}
->>> +
->>> +static void qaic_bootlog_mhi_dl_xfer_cb(struct mhi_device *mhi_dev, struct mhi_result *mhi_result)
->>> +{
->>> +    struct qaic_device *qdev = dev_get_drvdata(&mhi_dev->dev);
->>> +    struct bootlog_msg *msg = mhi_result->buf_addr;
->>> +
->>> +    if (mhi_result->transaction_status) {
->>> +        devm_kfree(&qdev->pdev->dev, msg);
->>> +        return;
->>> +    }
->>> +
->>> +    /* Force a null at the end of the transferred string */
->>> +    msg->str[mhi_result->bytes_xferd - 1] = 0;
->> Is it guaranteed that bytes_xferd will always be within valid range here?
-> 
-> Yes.  We provide the buffer size when we queue it to MHI.  When the buffer comes back, before this callback, MHI will clamp the transfered size to the buffer size.
-> 
->>
->>> +
->>> +    queue_work(qdev->bootlog_wq, &msg->work);
->>> +}
->>> +
->>> +static const struct mhi_device_id qaic_bootlog_mhi_match_table[] = {
->>> +    { .chan = "QAIC_LOGGING", },
->>> +    {},
->>> +};
->>> +
->>> +static struct mhi_driver qaic_bootlog_mhi_driver = {
->>> +    .id_table = qaic_bootlog_mhi_match_table,
->>> +    .remove = qaic_bootlog_mhi_remove,
->>> +    .probe = qaic_bootlog_mhi_probe,
->>> +    .ul_xfer_cb = qaic_bootlog_mhi_ul_xfer_cb,
->>> +    .dl_xfer_cb = qaic_bootlog_mhi_dl_xfer_cb,
->>> +    .driver = {
->>> +        .name = "qaic_bootlog",
->>> +    },
->>> +};
->>> +
->>> +int qaic_bootlog_register(void)
->>> +{
->>> +    return mhi_driver_register(&qaic_bootlog_mhi_driver);
->>> +}
->>> +
->>> +void qaic_bootlog_unregister(void)
->>> +{
->>> +    mhi_driver_unregister(&qaic_bootlog_mhi_driver);
->>> +}
->>> diff --git a/drivers/accel/qaic/qaic_debugfs.h b/drivers/accel/qaic/qaic_debugfs.h
->>> new file mode 100644
->>> index 000000000000..ea3fd1a88405
->>> --- /dev/null
->>> +++ b/drivers/accel/qaic/qaic_debugfs.h
->>> @@ -0,0 +1,20 @@
->>> +/* SPDX-License-Identifier: GPL-2.0-only */
->>> +
->>> +/* Copyright (c) 2020, The Linux Foundation. All rights reserved. */
->>> +/* Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved. */
->>> +
->>> +#ifndef __QAIC_DEBUGFS_H__
->>> +#define __QAIC_DEBUGFS_H__
->>> +
->>> +#include <drm/drm_file.h>
->>> +
->>> +#ifdef CONFIG_DEBUG_FS
->>> +int qaic_bootlog_register(void);
->>> +void qaic_bootlog_unregister(void);
->>> +void qaic_debugfs_init(struct qaic_drm_device *qddev);
->>> +#else
->>> +int qaic_bootlog_register(void) { return 0; }
->>> +void qaic_bootlog_unregister(void) {}
->>> +void qaic_debugfs_init(struct qaic_drm_device *qddev) {}
->>> +#endif /* CONFIG_DEBUG_FS */
->>> +#endif /* __QAIC_DEBUGFS_H__ */
->>> diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_drv.c
->>> index d1a632dbaec6..f072edb74f22 100644
->>> --- a/drivers/accel/qaic/qaic_drv.c
->>> +++ b/drivers/accel/qaic/qaic_drv.c
->>> @@ -28,6 +28,7 @@
->>>     #include "mhi_controller.h"
->>>   #include "qaic.h"
->>> +#include "qaic_debugfs.h"
->>>   #include "qaic_timesync.h"
->>>     MODULE_IMPORT_NS(DMA_BUF);
->>> @@ -229,8 +230,12 @@ static int qaic_create_drm_device(struct qaic_device *qdev, s32 partition_id)
->>>       qddev->partition_id = partition_id;
->>>         ret = drm_dev_register(drm, 0);
->>> -    if (ret)
->>> +    if (ret) {
->>>           pci_dbg(qdev->pdev, "drm_dev_register failed %d\n", ret);
->>> +        return ret;
->>> +    }
->>> +
->>> +    qaic_debugfs_init(qddev);
->>>         return ret;
->>>   }
->>> @@ -380,6 +385,9 @@ static struct qaic_device *create_qdev(struct pci_dev *pdev, const struct pci_de
->>>       if (ret)
->>>           return NULL;
->>>       ret = drmm_mutex_init(drm, &qdev->cntl_mutex);
->>> +    if (ret)
->>> +        return NULL;
->>> +    ret = drmm_mutex_init(drm, &qdev->bootlog_mutex);
->>>       if (ret)
->>>           return NULL;
->>>   @@ -399,6 +407,7 @@ static struct qaic_device *create_qdev(struct pci_dev *pdev, const struct pci_de
->>>       qddev->qdev = qdev;
->>>         INIT_LIST_HEAD(&qdev->cntl_xfer_list);
->>> +    INIT_LIST_HEAD(&qdev->bootlog);
->>>       INIT_LIST_HEAD(&qddev->users);
->>>         for (i = 0; i < qdev->num_dbc; ++i) {
->>> @@ -639,6 +648,10 @@ static int __init qaic_init(void)
->>>       if (ret)
->>>           pr_debug("qaic: qaic_timesync_init failed %d\n", ret);
->>>   +    ret = qaic_bootlog_register();
->>> +    if (ret)
->>> +        pr_debug("qaic: qaic_bootlog_register failed %d\n", ret);
->>> +
->>>       return 0;
->>>     free_pci:
->>> @@ -664,6 +677,7 @@ static void __exit qaic_exit(void)
->>>        * reinitializing the link_up state after the cleanup is done.
->>>        */
->>>       link_up = true;
->>> +    qaic_bootlog_unregister();
->>>       qaic_timesync_deinit();
->>>       mhi_driver_unregister(&qaic_mhi_driver);
->>>       pci_unregister_driver(&qaic_pci_driver);
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> index 3904348075f6..3348bc06db48 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> @@ -1755,9 +1755,8 @@ pcie0: pcie@1c00000 {
+>   					<&gem_noc MASTER_APPSS_PROC 0 &cnoc_main SLAVE_PCIE_0 0>;
+>   			interconnect-names = "pcie-mem", "cpu-pcie";
+>   
+> -			/* Entries are reversed due to the unusual ITS DeviceID encoding */
+> -			msi-map = <0x0 &gic_its 0x1401 0x1>,
+> -				  <0x100 &gic_its 0x1400 0x1>;
+> +			msi-map = <0x0 &gic_its 0x1400 0x1>,
+> +				  <0x100 &gic_its 0x1401 0x1>;
+>   			iommu-map = <0x0   &apps_smmu 0x1400 0x1>,
+>   				    <0x100 &apps_smmu 0x1401 0x1>;
+>   
+> @@ -1867,9 +1866,8 @@ pcie1: pcie@1c08000 {
+>   					<&gem_noc MASTER_APPSS_PROC 0 &cnoc_main SLAVE_PCIE_1 0>;
+>   			interconnect-names = "pcie-mem", "cpu-pcie";
+>   
+> -			/* Entries are reversed due to the unusual ITS DeviceID encoding */
+> -			msi-map = <0x0 &gic_its 0x1481 0x1>,
+> -				  <0x100 &gic_its 0x1480 0x1>;
+> +			msi-map = <0x0 &gic_its 0x1480 0x1>,
+> +				  <0x100 &gic_its 0x1481 0x1>;
+>   			iommu-map = <0x0   &apps_smmu 0x1480 0x1>,
+>   				    <0x100 &apps_smmu 0x1481 0x1>;
+>   
 > 
 
-Reviewed-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
 
