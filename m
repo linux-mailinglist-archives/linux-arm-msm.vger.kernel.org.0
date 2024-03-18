@@ -1,421 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-14363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1FAEF87E65A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 10:52:12 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 54F1F87E661
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 10:52:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 71B26B22218
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 09:52:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 74E1D1C21816
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 09:52:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D283E2D7B8;
-	Mon, 18 Mar 2024 09:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 818D32CCA0;
+	Mon, 18 Mar 2024 09:52:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fVOqI6G4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WmPFT7Gq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C942D04A
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 09:50:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941C63610A
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 09:51:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710755460; cv=none; b=UXohmZMoOvjhVzOvdHQK9Bn/xi0w5a3rcl2UX1YlCh1AqpI1ZYUzq3M15sbpyK4YBiCs5Xmw2Xvev4DS26ptcMQChWZ5BeYI2/ReZFREVWt+PQ5i+pTLjtMAdichfSqW3dym6NDXkqx+a3FdgN+SqQmzU0O5hbME+BWxNBd3TWY=
+	t=1710755520; cv=none; b=fGMrpWMSDVkuCdYRipV3E1Qdxw0djhjKyunP1ThEoVQ107URtkZC1wWbuEZJITwNfelQMnfzIj1xUsvhVpDnjonMjywfcsGE0SwiJYWuq9iCj1KLxsH/FXBcvYIr/9zDdzJZfgT7c2nPe//WbB4OcOCymR1z9jGyESaempSUnwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710755460; c=relaxed/simple;
-	bh=auVUFwgCBmyVxTxFiH+lRCLpkk+F+vVWKfEeldpx/lk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pdsZZz6Tdl1HWKs4FP0OlBIv6nj1E8HOUG2BGqclwJFeoWku38Mxmq8XJ2kSGGfNDqd/ILWK8vNVitzVqJJ2FjgXZ7RGucY1YOxRvTHmPCiL7/uXgx69QLikM+nc79r5cDom3vnJWZ56tDhWxZyLM1EaDbCFpQaA583NtpQai8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fVOqI6G4; arc=none smtp.client-ip=209.85.217.49
+	s=arc-20240116; t=1710755520; c=relaxed/simple;
+	bh=PIfBWZ6wslpgmOaI5QqBZUbYKMOZbqTD0EQ38/257Fw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=HI+lYEvRyYu+qduv1sB2h9Vd6Kqm+oFBtbpYoMuGUfGiB4FZHPs3b4fhHfubkQ+hVf2eO+Dv8iGUi5BCCaVhiwnCdahncxx6I43dUqWHmrLsDHANr160bBcn3z43FYFtBZantll8WnmwgcOtTEHvkqz0gGJSvE6KUe7ndFZOTtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WmPFT7Gq; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-4766e56ccccso1084790137.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 02:50:58 -0700 (PDT)
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-33e672e10cfso2059730f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 02:51:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710755458; x=1711360258; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Jfd2BbpInLFXO/gl5I1K9j+aMpVjnkifvVf9+3n/epo=;
-        b=fVOqI6G4nj9LuRdNTqc6L/wwnGtnAwG4I04uiDnYi2u55yR9iDUEYjuH/f6WseCFji
-         NPUFiPzkyIU+QBghK/lHRgakVNmiRWtRltgiI2SVY8KgRBkH/PAjUrHS99I66QqySowA
-         X+oY84q37ncPq1GaxMfbwL4amx3gmt8NjT2HFY/IrAw8jfJjL4yGiyAj6Fzz45689zvq
-         KbaHNvqfckNz9l0X4D6Qt8Vv8NiXCfNv6oD4WI+Y+MhJHu4+XfUuszFJcwGEteFfZyAX
-         WDKTbSN380r1cAN8wFjiINnLObcN1pAFca1tqFPlo2V+jW/0VNXdHjrQAKGj8sLufoyU
-         I+ZQ==
+        d=linaro.org; s=google; t=1710755517; x=1711360317; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=bhpR8m1BKg/4ZqXCedQn8etISKen0k3LBbXkscAw5/o=;
+        b=WmPFT7GqZqW3sb/5nxIY9suGNlEZwRFBeCpk30E1jo1sJ4xrHFlwVXZwapPX6OZN3l
+         O+quCdone83eF8Gs3rckZ1wUqRZzUqCcKW8GDb3r8JlVym5+dBPp1Jj0fQGHGI3Bd2zT
+         gTJmVmJ/J8zvMCorF0l7bhgiYsuWnW4F5KtZ/UMmtNDfg5u+aF9sOQIBIZ8uJqc2NTmS
+         V6E/n4HkVtFtfk9gzypkg5H9daRwpAf3CTb3IG/FTFJFymkUm98+kw3So4VhoxujzpQI
+         wI3VVMsoFv1CAmn27Od1qT3qfUdfq4ShCOL5IGX2yc9KEVUYpRnCrlkwe5jaJfFfnv+v
+         nMUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710755458; x=1711360258;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1710755517; x=1711360317;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Jfd2BbpInLFXO/gl5I1K9j+aMpVjnkifvVf9+3n/epo=;
-        b=VDFcVp2ho4jII9/yyLetlnj12P682duO6vI1VgDfi1flPSbuZHFCE6QMlTYEqxny7b
-         3M0/JFJ4beHevYdU5dTe9Geze/IaADu9gqJJNkwwLnAK0PCocNyLV4Ny1SdOE/KHu/aV
-         TpdTvYx/H7BPsOT5aUEZWlMME7v2lHiH5ICShI8tGhqHtAHFI8aJjx2qA2w6JBUTRyvX
-         pzmsIpewHexwy23eVRrZh2sAypM1PCqiqRHAbjnMN9ikTP/n5EJOCGzdS3zabUYCDpAQ
-         q+kexxY8cg4Sc8XzIE8jREuFp39SoYPoOSLO95/2Gjo48dqlSA+d3GJWmWjZPbXSwcoW
-         M2Ng==
-X-Gm-Message-State: AOJu0YynSdW7zhozEr+qcxQ6dnWyJtWq7WRheVjJngGN6oUA/756a/I5
-	/VpBXdlZImhSY6/y0Cu+6FasSwPpftplZPG3UsEPIvFJAYmzlcUfMC0qmxGAj8AgJxq104jDSSk
-	tklyIjIBv8+UulWY5DIBsxzOrqYaZdvjJ/BAftg==
-X-Google-Smtp-Source: AGHT+IH4FyFv1D8F2gZISrZTTPRuc+B0sE92LhX8lYAkMKHcHpV2oQ5xGlf9diPhxK2wW1KsYreKGIW8bDmby41ZNIQ=
-X-Received: by 2002:a67:fe4b:0:b0:473:148c:805d with SMTP id
- m11-20020a67fe4b000000b00473148c805dmr8854213vsr.11.1710755457728; Mon, 18
- Mar 2024 02:50:57 -0700 (PDT)
+        bh=bhpR8m1BKg/4ZqXCedQn8etISKen0k3LBbXkscAw5/o=;
+        b=cC54AcL9FwP4oOFHfnBAIZRgJaz2tDPwqBua7hKZHPtqoyJJapHGdcgFE1mk9TS1mD
+         FZFKpShSNLNrbqCM6OY7MvGraTvko3Z/adf8xU60dCH42X6lYvMDdvC+wteyu3oSrkzq
+         FekicvjyCFIV2KlGMkzylOa4g8k8U2BbuaoOREjnVBrpHatlYTCB+3HFyzpLHUryHWUd
+         2KhHey//7rXoZnUME9UxvQonchFwGx8uffJg7H543WW8ZllE8NCvCWoQYv5MKasmfanW
+         bsgbr2IjnpJHj7kzP/oqLhT03+DoUEOdm1kZ0Je4HDc1+uUpmwQ3XoZ2gBl9IQka57XH
+         cMHw==
+X-Gm-Message-State: AOJu0YxLQPxkKZC4qFDZjvEDyTpX3YB8UEGbz3Jc8Rak7Y5lmhFJWgxO
+	7kj+wHoiqsyo/b8Dq6NQC8IjIOSFhLqTWkin1KliDzA+UxbG/1QFhBRdlNPZfPo=
+X-Google-Smtp-Source: AGHT+IF4hqwhhN9ejGxakhVlgNcsc5fxhX/noA7MKMBWR+IsuUkU3u72avfLIQIRnp+t6eqhMuMs2g==
+X-Received: by 2002:a05:6000:b50:b0:33e:d547:4318 with SMTP id dk16-20020a0560000b5000b0033ed5474318mr5844510wrb.47.1710755516824;
+        Mon, 18 Mar 2024 02:51:56 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id bq22-20020a5d5a16000000b0033ebf702e17sm7514974wrb.21.2024.03.18.02.51.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Mar 2024 02:51:56 -0700 (PDT)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH v2 0/3] arm64: qcom: sm8650: add support for the SM8650-HDK
+ board
+Date: Mon, 18 Mar 2024 10:51:52 +0100
+Message-Id: <20240318-topic-sm8650-upstream-hdk-v2-0-b63a5d45a784@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240315060707.471248-1-sumit.garg@linaro.org>
- <20240315060707.471248-4-sumit.garg@linaro.org> <ZfRlYnEQUKvwGQ65@gerhold.net>
-In-Reply-To: <ZfRlYnEQUKvwGQ65@gerhold.net>
-From: Sumit Garg <sumit.garg@linaro.org>
-Date: Mon, 18 Mar 2024 15:20:46 +0530
-Message-ID: <CAFA6WYMucNzLNm+oHNd-Jb65oigpNphU=mFGM1cD8A-mK-BFDw@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: apq8016: Add Schneider HMIBSC
- board DTS
-To: Stephan Gerhold <stephan@gerhold.net>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALgO+GUC/42NQQ6CMBBFr0Jm7Zi2AkFX3sOwaKYDTFRKpkg0h
+ LtbOYHL95L//gqJVTjBpVhBeZEkcczgDgXQ4MeeUUJmcMaVxrkTznESwvRs6srga0qzsn/iEO7
+ IzlIX6s4GbiDvJ+VO3nv71mYeJM1RP/vVYn/2n+pi0SAR+bqsKJyNvT5k9BqPUXtot237AlXgR
+ JTDAAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org, 
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
-	caleb.connolly@linaro.org, neil.armstrong@linaro.org, 
-	dmitry.baryshkov@linaro.org, laetitia.mariottini@se.com, 
-	pascal.eberhard@se.com, abdou.saker@se.com, jimmy.lalande@se.com, 
-	benjamin.missey@non.se.com, daniel.thompson@linaro.org, 
-	linux-kernel@vger.kernel.org, Jagdish Gediya <jagdish.gediya@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2194;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=PIfBWZ6wslpgmOaI5QqBZUbYKMOZbqTD0EQ38/257Fw=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBl+A66PVCQkfCUV58DJMMXLdfhNUsK1ofUOI4Uimxs
+ UAspql6JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZfgOugAKCRB33NvayMhJ0Z6OD/
+ 9xGb36ZvV2cADpQDRDltw1IKUXo6WwBxRjHH/VFMcV4f77D61GjFNjGurrvkZlc+gTJzRNyGi6mYPg
+ 3Wbz5cjx1X6BnGwpQ420Qyir+OZGLT6YlpBgkXphaXz7/c2OShck+eFNOFSjRF8u19nAb+72vKyRHc
+ kPrsbFG0f3B1eh0txyyEmXHEzzbczU5rvUGsb+CpQ0AXA6q4eayqMImX0Plc9u+5Vli/GGGUTij42Y
+ DPzOnrv86Kp8M9+N1U4dmQ5HvfhvZhXqa3qVmQsBZA+jJzeC/xLVuBa2VYcD++UUCmc5RuVzaK8iR2
+ 85Z2Upv/V1lT1cbGDoJfmcsOlRxBFSgeERRClSji8EqFmADngJGsk1SG4dFf+SE5kpwQNzPcJw38/1
+ fi4tgjUtU2fVXJKEXhO2i9thmk0v+y54+AmKYaREbixQ9JS59323p1VE39CfrAwNlBUGeqNsYMzI30
+ ihvIBULQY3ikD0RO0oWoUbbQDJJxIqgJ4VBX7PVPVK6cfxMpLtonWCrshK+WHYFrjv0XYBYLSRLfYP
+ MSDMQRn6U2ccYWtyo02RAAV53bq2ULntukQUpHTMEzt756tSzeiM/n6UDZXDwintPhTalqGD7HBVGA
+ 67lg+B3BPwGyK876TC/SOh6r0CZOadrHY1NsE5QE78JaITOcX+AkLH/Ctcqg==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-On Fri, 15 Mar 2024 at 20:43, Stephan Gerhold <stephan@gerhold.net> wrote:
->
-> On Fri, Mar 15, 2024 at 11:37:07AM +0530, Sumit Garg wrote:
-> > Add Schneider Electric HMIBSC board DTS. The HMIBSC board is an IIoT Edge
-> > Box Core board based on the Qualcomm APQ8016E SoC.
-> >
-> > Support for Schneider Electric HMIBSC. Features:
-> > - Qualcomm Snapdragon 410C SoC - APQ8016 (4xCortex A53, Adreno 306)
-> > - 1GiB RAM
-> > - 8GiB eMMC, SD slot
-> > - WiFi and Bluetooth
-> > - 2x Host, 1x Device USB port
-> > - HDMI
-> > - Discrete TPM2 chip over SPI
-> > - USB ethernet adaptors (soldered)
-> >
-> > Co-developed-by: Jagdish Gediya <jagdish.gediya@linaro.org>
-> > Signed-off-by: Jagdish Gediya <jagdish.gediya@linaro.org>
-> > Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
-> > Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/Makefile             |   1 +
-> >  .../dts/qcom/apq8016-schneider-hmibsc.dts     | 510 ++++++++++++++++++
-> >  2 files changed, 511 insertions(+)
-> >  create mode 100644 arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> > index 39889d5f8e12..ad55e52e950b 100644
-> > --- a/arch/arm64/boot/dts/qcom/Makefile
-> > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> > @@ -5,6 +5,7 @@ apq8016-sbc-usb-host-dtbs     := apq8016-sbc.dtb apq8016-sbc-usb-host.dtbo
-> >
-> >  dtb-$(CONFIG_ARCH_QCOM)      += apq8016-sbc-usb-host.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += apq8016-sbc-d3-camera-mezzanine.dtb
-> > +dtb-$(CONFIG_ARCH_QCOM)      += apq8016-schneider-hmibsc.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += apq8039-t2.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += apq8094-sony-xperia-kitakami-karin_windy.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += apq8096-db820c.dtb
-> > diff --git a/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts b/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
-> > new file mode 100644
-> > index 000000000000..9c79a31a04db
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
-> > @@ -0,0 +1,510 @@
-> > [...]
-> > +&blsp_uart1 {
-> > +     label = "UART0";
-> > +     status = "okay";
-> > +};
-> > +
-> > +&blsp_uart2 {
-> > +     label = "UART1";
-> > +     status = "okay";
-> > +};
-> > +
-> > +/* Enable CoreSight */
-> > +&cti0 { status = "okay"; };
-> > +&cti1 { status = "okay"; };
-> > +&cti12 { status = "okay"; };
-> > +&cti13 { status = "okay"; };
-> > +&cti14 { status = "okay"; };
-> > +&cti15 { status = "okay"; };
-> > +&debug0 { status = "okay"; };
-> > +&debug1 { status = "okay"; };
-> > +&debug2 { status = "okay"; };
-> > +&debug3 { status = "okay"; };
-> > +&etf { status = "okay"; };
-> > +&etm0 { status = "okay"; };
-> > +&etm1 { status = "okay"; };
-> > +&etm2 { status = "okay"; };
-> > +&etm3 { status = "okay"; };
-> > +&etr { status = "okay"; };
-> > +&funnel0 { status = "okay"; };
-> > +&funnel1 { status = "okay"; };
-> > +&replicator { status = "okay"; };
-> > +&stm { status = "okay"; };
-> > +&tpiu { status = "okay"; };
->
-> Nitpick: The &cti0 is in the correct alphabetically ordered place, but
-> &replicator, &stm and &tpiu are not.
->
-> I know you changed this based on the review comments but I personally
-> think it was clearer having this separated as condensed block towards
-> the end of the file (where it was before).
->
-> The other option would be to put each element individually at the
-> correctly ordered position in the file. However, having a single "Enable
-> CoreSight" comment for the entire block would then not work anymore
-> since all the lines would be interspersed throughout the file.
+The SM8650-HDK is an embedded development platforms for the
+Snapdragon 8 Gen 3 SoC aka SM8650, with the following features:
+- Qualcomm SM8650 SoC
+- 16GiB On-board LPDDR5
+- On-board WiFi 7 + Bluetooth 5.3/BLE
+- On-board UFS4.0
+- M.2 Key B+M Gen3x2 PCIe Slot
+- HDMI Output
+- USB-C Connector with DP Almode & Audio Accessory mode
+- Micro-SDCard Slot
+- Audio Jack with Playback and Microphone
+- 2 On-board Analog microphones
+- 2 On-board Speakers
+- 96Boards Compatible Low-Speed and High-Speed connectors [1]
+- For Camera, Sensors and external Display cards
+- Compatible with the Linaro Debug board [2]
+- SIM Slot for Modem
+- Debug connectors
+- 6x On-Board LEDs
 
-IMO, having it as a condensed block is a bit more clear such that
-people are able to locate overrides easily given their function.
-However, there aren't any guidelines for such block orders. So let me
-wait to hear back from platform maintainers if they would like
-anything to be changed here.
+An optional Display Card kit can be connected on top,
+an overlay is handled to add support for the DSI Display
+and Touch Controller.
 
->
-> > [...]
-> > +&pm8916_codec {
-> > +     qcom,mbhc-vthreshold-low = <75 150 237 450 500>;
-> > +     qcom,mbhc-vthreshold-high = <75 150 237 450 500>;
-> > +     status = "okay";
-> > +};
-> > +
-> > +&pm8916_gpios {
-> > +     gpio-line-names =
-> > +             "USB_HUB_RESET_N_PM",
-> > +             "USB_SW_SEL_PM",
-> > +             "NC",
-> > +             "NC";
-> > +
-> > +     usb_hub_reset_pm: usb-hub-reset-pm-state {
-> > +             pins = "gpio1";
-> > +             function = PMIC_GPIO_FUNC_NORMAL;
-> > +
-> > +             input-disable;
-> > +             output-high;
-> > +     };
-> > +
-> > +     usb_hub_reset_pm_device: usb-hub-reset-pm-device-state {
-> > +             pins = "gpio1";
-> > +             function = PMIC_GPIO_FUNC_NORMAL;
-> > +
-> > +             output-low;
-> > +     };
-> > +
-> > +     usb_sw_sel_pm: usb-sw-sel-pm-state {
-> > +             pins = "gpio2";
-> > +             function = PMIC_GPIO_FUNC_NORMAL;
-> > +
-> > +             power-source = <PM8916_GPIO_VPH>;
-> > +             input-disable;
-> > +             output-high;
-> > +     };
-> > +
-> > +     usb_sw_sel_pm_device: usb-sw-sel-pm-device-state {
-> > +             pins = "gpio2";
-> > +             function = PMIC_GPIO_FUNC_NORMAL;
-> > +
-> > +             power-source = <PM8916_GPIO_VPH>;
-> > +             input-disable;
-> > +             output-low;
-> > +     };
-> > +};
-> > +
-> > +&pm8916_mpps {
-> > +     gpio-line-names =
-> > +             "NC",
-> > +             "WLAN_LED_CTRL",
-> > +             "BT_LED_CTRL",
-> > +             "NC";
-> > +
-> > +     pm8916_mpps_leds: pm8916-mpps-state {
-> > +             pins = "mpp2", "mpp3";
-> > +             function = "digital";
-> > +
-> > +             output-low;
-> > +     };
-> > +};
-> > +
-> > +&pm8916_resin {
-> > +     interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_FALLING>;
->
-> What is the goal of overriding the interrupt here? It looks like you are
-> changing the interrupt type from IRQ_TYPE_EDGE_BOTH to FALLING. This
-> sounds a bit like you want the driver to receive just button release
-> events (or just press events, not sure about the polarity). I'm not sure
-> if the driver will handle this correctly.
+Product Page: [3]
 
-The use-case here is to just act upon button release events and the
-driver handles this appropriately. Final use-case of the reset button:
+Dependencies: None
 
-- Short press and release leads to normal Linux reboot.
-- Long press for more than 10 sec or so leads to a hard reset.
+[1] https://www.96boards.org/specifications/
+[2] https://git.codelinaro.org/linaro/qcomlt/debugboard
+[3] https://www.lantronix.com/products/snapdragon-8-gen-3-mobile-hardware-development-kit/
 
-With IRQ_TYPE_EDGE_BOTH, that's not achievable because just a simple
-press leads to Linux reboot.
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v2:
+- Fixed commit messages with links, and recently added product page URL
+- Swapped i2c3/i2c6 nodes
+- Moved pcie_1_phy_aux_clk under pcie1_phy
+- Removed duplicate mdp_vsync pinctrl state
+- Collected review & tested tags
+- Link to v1: https://lore.kernel.org/r/20240223-topic-sm8650-upstream-hdk-v1-0-ccca645cd901@linaro.org
 
->
-> > +     linux,code = <KEY_POWER>;
-> > +     status = "okay";
-> > +};
-> > +
-> > +&pm8916_rpm_regulators {
-> > +     pm8916_l17: l17 {
-> > +             regulator-min-microvolt = <3300000>;
-> > +             regulator-max-microvolt = <3300000>;
-> > +     };
-> > +};
-> > +
-> > +&sdhc_1 {
-> > +     status = "okay";
-> > +};
-> > +
-> > +&sdhc_2 {
-> > +     pinctrl-0 = <&sdc2_default &sdc2_cd_default>;
-> > +     pinctrl-1 = <&sdc2_sleep &sdc2_cd_default>;
-> > +     pinctrl-names = "default", "sleep";
-> > +
-> > +     cd-gpios = <&tlmm 38 GPIO_ACTIVE_LOW>;
-> > +     status = "okay";
-> > +};
-> > +
-> > +&sound {
-> > +     pinctrl-0 = <&cdc_pdm_default &sec_mi2s_default>;
-> > +     pinctrl-1 = <&cdc_pdm_sleep &sec_mi2s_sleep>;
-> > +     pinctrl-names = "default", "sleep";
-> > +     model = "HMIBSC";
-> > +     audio-routing =
-> > +             "AMIC2", "MIC BIAS Internal2",
-> > +             "AMIC3", "MIC BIAS External1";
-> > +     status = "okay";
-> > +
-> > +     quaternary-dai-link {
-> > +             link-name = "ADV7533";
-> > +             cpu {
-> > +                     sound-dai = <&lpass MI2S_QUATERNARY>;
-> > +             };
-> > +             codec {
-> > +                     sound-dai = <&adv_bridge 0>;
-> > +             };
-> > +     };
-> > +
-> > +     primary-dai-link {
-> > +             link-name = "WCD";
-> > +             cpu {
-> > +                     sound-dai = <&lpass MI2S_PRIMARY>;
-> > +             };
-> > +             codec {
-> > +                     sound-dai = <&lpass_codec 0>, <&pm8916_codec 0>;
-> > +             };
-> > +     };
-> > +
-> > +     tertiary-dai-link {
-> > +             link-name = "WCD-Capture";
-> > +             cpu {
-> > +                     sound-dai = <&lpass MI2S_TERTIARY>;
-> > +             };
-> > +             codec {
-> > +                     sound-dai = <&lpass_codec 1>, <&pm8916_codec 1>;
-> > +             };
-> > +     };
-> > +};
-> > +
-> > +&tlmm {
-> > +     pinctrl-0 = <&uart1_mux0_rs232_high &uart1_mux1_rs232_low>;
-> > +     pinctrl-names = "default";
-> > +
-> > +     adv7533_int_active: adv533-int-active-state {
-> > +             pins = "gpio31";
-> > +             function = "gpio";
-> > +
-> > +             drive-strength = <16>;
-> > +             bias-disable;
-> > +     };
-> > +
-> > +     adv7533_int_suspend: adv7533-int-suspend-state {
-> > +             pins = "gpio31";
-> > +             function = "gpio";
-> > +
-> > +             drive-strength = <2>;
-> > +             bias-disable;
-> > +     };
-> > +
-> > +     adv7533_switch_active: adv7533-switch-active-state {
-> > +             pins = "gpio32";
-> > +             function = "gpio";
-> > +
-> > +             drive-strength = <16>;
-> > +             bias-disable;
-> > +     };
-> > +
-> > +     adv7533_switch_suspend: adv7533-switch-suspend-state {
-> > +             pins = "gpio32";
-> > +             function = "gpio";
-> > +
-> > +             drive-strength = <2>;
-> > +             bias-disable;
-> > +     };
-> > +
-> > +     msm_key_volp_n_default: msm-key-volp-n-default-state {
-> > +             pins = "gpio107";
-> > +             function = "gpio";
-> > +
-> > +             drive-strength = <8>;
-> > +             bias-pull-up;
-> > +     };
-> > +
-> > +     sdc2_cd_default: sdc2-cd-default-state {
-> > +             pins = "gpio38";
-> > +             function = "gpio";
-> > +             drive-strength = <2>;
-> > +             bias-disable;
-> > +     };
->
-> Nitpick: It would look a bit cleaner to have the empty lines consistent
-> in all pinctrl nodes, i.e. either always having an empty line between
-> function and drive-strength or never. I think Konrad prefers the more
-> compact version without empty line (sadly I'm not sure if this is
-> clearly documented anywhere). Same for &pm8916_gpios and mpps.
->
+---
+Neil Armstrong (3):
+      dt-bindings: arm: qcom: Document the HDK8650 board
+      arm64: dts: qcom: sm8650: add support for the SM8650-HDK board
+      arch: arm64: dts: sm8650-hdk: add support for the Display Card overlay
 
-Sure I can remove the empty lines to be consistent with msm8916.dtsi.
+ Documentation/devicetree/bindings/arm/qcom.yaml    |    1 +
+ arch/arm64/boot/dts/qcom/Makefile                  |    5 +
+ .../boot/dts/qcom/sm8650-hdk-display-card.dtso     |  144 +++
+ arch/arm64/boot/dts/qcom/sm8650-hdk.dts            | 1259 ++++++++++++++++++++
+ 4 files changed, 1409 insertions(+)
+---
+base-commit: 2e93f143ca010a5013528e1cfdc895f024fe8c21
+change-id: 20240223-topic-sm8650-upstream-hdk-e21cfd6f1de8
 
-> > +
-> > +     /*
-> > +      * UART1 being the debug console supports various modes of
-> > +      * operation (RS-232/485/422) controlled via GPIOs configured
-> > +      * mux as follows:
-> > +      *
-> > +      *   gpio100    gpio99    UART mode
-> > +      *   0          0         loopback
-> > +      *   0          1         RS-232
-> > +      *   1          0         RS-485
-> > +      *   1          1         RS-422
-> > +      *
-> > +      * The default mode configured here is RS-232 mode.
-> > +      */
->
-> :D
->
-> Thanks a lot for making this clear using the table. And also for all the
-> other cleanup changes!
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
 
-Thanks for your review.
-
--Sumit
-
->
-> Stephan
 
