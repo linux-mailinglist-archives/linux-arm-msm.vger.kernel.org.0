@@ -1,60 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-14309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADC0287E198
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 02:24:14 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C7E787E1A1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 02:28:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DBD831C20C32
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 01:24:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3E71F1F21A61
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 01:28:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A43117545;
-	Mon, 18 Mar 2024 01:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA73617545;
+	Mon, 18 Mar 2024 01:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uQozQc8g"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mAZqwJus"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61BC3179AE;
-	Mon, 18 Mar 2024 01:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753CD1CD07;
+	Mon, 18 Mar 2024 01:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710725049; cv=none; b=nVePsXl3wu8lwJlTIk4royGm+CAma/7eha2UL9eqAvHKHTIhwMiaHh9JCSSbk7jUPqEVv628yOzN/LsnxQigIdvmmUcbZj4rflyHAvQBzs1dWDrl5WmCZLzGTGm/rQ0gkRGsSNRCmA7KM8AWDdP16NmC8wS9ygTGxdz+NAtHNpQ=
+	t=1710725276; cv=none; b=QIaFhdtuecS7skmpojejXTusE7xV6+H7voZvfc7IcBxvO6OdKefiRYExbEWeiUiASeROXwIFsbPGbuCJo58wQ27641ZfcPuqx4zR9M3f61cnFvbrvjFvN6aWizU/csHGgywIeYcsJua9CwzwPU9aTEaoW3Bjgp9tf9SsKnB7dSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710725049; c=relaxed/simple;
-	bh=+wfvHnwJWpfZDGn/7Sn97aBeOjz4tC3+nHOqRiSkpxk=;
+	s=arc-20240116; t=1710725276; c=relaxed/simple;
+	bh=RhB/nWWwoCQMMHLsN2PtqvPB+ZkEomggWeNkRLQBVUc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gW8cASwbPvCcWcit1LAXje6u3XfC1+EQapy8cLN6qJGUtVanhEfZZ87YxMmXLrbp10t3LNiQ/cZ9KimJTcK5qv0Br6hTJZlH8vb9AFHi1lzBh+CBUPhRiAIWgeejvjX8gqix5ubb1c8G2ugoN6slbEQmuFTMSE7YG52FNLUbf/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uQozQc8g; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E21D1C433C7;
-	Mon, 18 Mar 2024 01:24:07 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=bLsmpKNpUAH6nxdY1qlO3iGcoFHYK5flGqF4I9iAn3jdagxuraBYcExPO1dbB0P3X9baCBzfiXYXLYCwE4KPR5IfG2MEH5gQNxFtLLlat0tio3X6inTqitzNmxWLwAzo+S4m+afjo7mYF6ylwF6i5By0HyGEcmDY5zqxlrNPjx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mAZqwJus; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE0F4C433C7;
+	Mon, 18 Mar 2024 01:27:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710725048;
-	bh=+wfvHnwJWpfZDGn/7Sn97aBeOjz4tC3+nHOqRiSkpxk=;
+	s=k20201202; t=1710725276;
+	bh=RhB/nWWwoCQMMHLsN2PtqvPB+ZkEomggWeNkRLQBVUc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=uQozQc8gbodC6KvNGzCsF9tEaq1ZXPHr/ZCwmtz+4zNnZaaAeaolAH4IiW7BtsiXD
-	 A++0Do+rE427NeibdWKRcW2D+CoctBncoYacjXixE7QZ1J5U+LQo2ZJKd7yABOq1Fd
-	 KkP1sN39X2oA6G64NSbbWwYQk8Ds8HEbBzsF3CU9ls2nVmMYqWxU9nUINN4as1bE8Z
-	 PB/BvjjGbY2tgBT2S1lbaKPpB05s+Bpq/oytolz89AMYApRqnzs/KjaoDKjdR9Uh5B
-	 aUecHpRB2dQOOSZ4FYufrOgujp34GQ1c0j83eoX0TSXFKo9ebmyoF7jEespYlPz77G
-	 vB1tKj8wH3X5A==
-Date: Sun, 17 Mar 2024 20:24:06 -0500
+	b=mAZqwJusQJZXb2OJMfT+mDfrdyC8ILUSY2QKpsvTPvP5oVcLiZ9GyhibASy3ausGx
+	 5JHmg3fBSOTc4NkezKfvT82kSECEFp049Z5SpFxh6nbg/natLPSx+uRbgvLJn9T3Rm
+	 AJIctURuGRrhcyszXa/oo5r/qhwp+e49EzTkjq0aPo+IlbR7ATcaKCiENjaAplVGaB
+	 BKZi9HQVhh9mamrTZoWwMWSjwngbgodqh5rXnjSb4scBrNsZr17vogzbxn2/2W5Aow
+	 08qpNcTQeweb+KERctFkLLKDCgS9DTFwqBBIE6OSqZDrsQrgz3QSrS+y/tYxRb0HuA
+	 obxAj+9QY/NNg==
+Date: Sun, 17 Mar 2024 20:27:52 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: Bjorn Helgaas <bhelgaas@google.com>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, Rob Herring <robh@kernel.org>, 
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
+	Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH v4 3/5] PCI: qcom: Disable ASPM L0s for sc8280xp, sa8540p
- and sa8295p
-Message-ID: <5o5vbnxfsiokjf2ahrppr26oyuqhwhdos3374r3zpexunhc5j7@yquaupvfywbz>
-References: <20240306095651.4551-1-johan+linaro@kernel.org>
- <20240306095651.4551-4-johan+linaro@kernel.org>
+	Thara Gopinath <thara.gopinath@gmail.com>, Amit Kucheria <amitk@kernel.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, stable@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] thermal: qcom: lmh: Check for SCM availability at
+ probe
+Message-ID: <yes2jztatfs7abss6rt3dlnnifse7xh2klyd44zg2lkngp7mjf@dsmh23oqgbf6>
+References: <20240308-topic-rb1_lmh-v2-0-bac3914b0fe3@linaro.org>
+ <20240308-topic-rb1_lmh-v2-2-bac3914b0fe3@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,29 +65,19 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240306095651.4551-4-johan+linaro@kernel.org>
+In-Reply-To: <20240308-topic-rb1_lmh-v2-2-bac3914b0fe3@linaro.org>
 
-On Wed, Mar 06, 2024 at 10:56:49AM +0100, Johan Hovold wrote:
-> Commit 9f4f3dfad8cf ("PCI: qcom: Enable ASPM for platforms supporting
-> 1.9.0 ops") started enabling ASPM unconditionally when the hardware
-> claims to support it. This triggers Correctable Errors for some PCIe
-> devices on machines like the Lenovo ThinkPad X13s when L0s is enabled,
-> which could indicate an incomplete driver ASPM implementation or that
-> the hardware does in fact not support L0s.
+On Sat, Mar 09, 2024 at 02:15:03PM +0100, Konrad Dybcio wrote:
+> Up until now, the necessary scm availability check has not been
+> performed, leading to possible null pointer dereferences (which did
+> happen for me on RB1).
 > 
-> This has now been confirmed by Qualcomm to be the case for sc8280xp and
-> its derivate platforms (e.g. sa8540p and sa8295p). Specifically, the PHY
-> configuration used on these platforms is not correctly tuned for L0s and
-> there is currently no updated configuration available.
+> Fix that.
 > 
-> Add a new flag to the driver configuration data and use it to disable
-> ASPM L0s on sc8280xp, sa8540p and sa8295p for now.
-> 
-> Note that only the 1.9.0 ops enable ASPM currently.
-> 
-> Fixes: 9f4f3dfad8cf ("PCI: qcom: Enable ASPM for platforms supporting 1.9.0 ops")
-> Cc: stable@vger.kernel.org      # 6.7
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> Fixes: 53bca371cdf7 ("thermal/drivers/qcom: Add support for LMh driver")
+> Cc: <stable@vger.kernel.org>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
