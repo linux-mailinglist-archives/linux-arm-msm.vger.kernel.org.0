@@ -1,173 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-14373-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14374-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A53F287E79F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 11:46:10 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A02F87E7A7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 11:48:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0082CB21609
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 10:46:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E5F322831EA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 10:48:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04D142E652;
-	Mon, 18 Mar 2024 10:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1B582E651;
+	Mon, 18 Mar 2024 10:48:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="gFShZaJm"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="U85BJ6I3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC6F2C692
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 10:46:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29EDF24B26;
+	Mon, 18 Mar 2024 10:48:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710758762; cv=none; b=Hzxw+wJY1KhSPrLNLd6XWeItBqledsgQSwsoCSZ8KcTaGDNYoVRpREZ5Nlw8/ImbfkZWYe/ZrbpXV7XXpR835XhLJk2ay14+n6LoGil09epVsNminmD0T8DA2Buaz56aNo/BsWCFGslrlzz+sWa1oTaPVd0n61nzJTfcDLC3wVU=
+	t=1710758933; cv=none; b=F1V4UWdDiCB6+zEYILb0XUO8rRtvj0UbBp4KYkWwltWD+yIHMYEiIgqECl0hhkGcHRPebrhj3YuNfis7dD6h9Rp0Cry79ZvsI4dfvwA8JfGLbSyIsPzCNHDHLu8yFVKXNybTkxQYWQDeklxtPGjysmHu2NE4UUf+zxAdKaYY2FY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710758762; c=relaxed/simple;
-	bh=AnN09J7l+NzyG+L7VRxA++nqcTL77gssPZ6K+HlliN0=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=a2ASCS/sEB6yzZNyXXgCTw3xeuUqX8U+GmPzK2mD56Wt2AvDwlZMr7zCZDHXxe68Yac7f0fr165LEPbb7dP6y5mo4WoDjEvqBzLBaP7lQwNXBKf4+cqYnr3Jp+bp8zMwAr5TQsnwCuDvPQREm26VgtlDdAAd2W8oWNDwwepDApc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=gFShZaJm; arc=none smtp.client-ip=209.85.218.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a46ba1a05e0so115549966b.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 03:46:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1710758759; x=1711363559; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QT8ZXpFVpdTpbU/Iue/RRtJuRFnBjnoJvr+qPsVlQ40=;
-        b=gFShZaJm0J/4fRAbBSE/Url3e3UYnEDBjMm6YvFOstIIFcZ3JhM8nkwmm1YHtfhdBo
-         UM07BNaqk9p7ncnNkJOMX2VfzlA4nChzpk4PGMDW5UIfV5MP2Xrcxx+sa93E2eiA1AGA
-         P3PnAc5NDhPtoQAPmq+xsHgs2PB4gzNW/s2cryCSxgpdQcYWZ4V7ntR5Phmri+DRu/Oo
-         GLyVTOn2ZUICM1g+vIhTFkaPUkss/VMGodQyNn2K5d0K7D46D/lmJVz7WgmAjhx50SPG
-         eusJcLM3ESl5s9WRt9EF0DTSAb1wswHyUcRfhvHobGDLQmrKBiZ8pgACW5X8hybcF0jw
-         fRSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710758759; x=1711363559;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=QT8ZXpFVpdTpbU/Iue/RRtJuRFnBjnoJvr+qPsVlQ40=;
-        b=vFDuIaYl3YR4PD9Ww3gRNhkU8Xc0BDGj2DW1ff7dXF6dKD/pR+DYjdJSUaaEdYCBth
-         5Nc4Ckrv9PC7JXNrTyz/t0xdScktAcS8X45IFV73BBX5rkejwUXiJEbOao+3Laa+9tSn
-         Cf7Ay50WVBSDHVVM6qel+gR60LmgFB2EspiNRjN63s56oURB71/j+fo3Rl8gFIdHbgNj
-         efVVn6aJjC5qhvELc1qVpWD96dx0mtkxwmp0GFg5JWaVOQYhJW7I+ze9K18KBA9qpHqp
-         jGZXIWz6PIV4qOWzZg17/4wwfjscNPjCGfWCI575j2n1E0JCNaRFb25z6YNa/qbCNSJ6
-         esSQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXFl1JGF0gipv4ZfU5rwya6X9Htv/z4dwJi+MpDdOGHi7q355SY6xXEciE/UEyLMg1N2fbU8R5BxMYc7f0G/SY7UJRD8blgHT3ltGJYcA==
-X-Gm-Message-State: AOJu0YxKZbeDkCuewwJvKSD9W6aGP89ty7B2cs4I5G/wibAQ11HtDqpV
-	GzuwnoH/L1ex00BWekdx3h7xmtOtQoSOwpdbH/fY92TzUqkZPi7CpexVztQU5M8=
-X-Google-Smtp-Source: AGHT+IFPJHgyGW8eWsjDqZVT5V0Yr6Jl+8ZG3GAIH6rvmehrSUpZJRzmZ6+jGP8apXMV0anVvWUU5w==
-X-Received: by 2002:a17:907:961a:b0:a46:3785:4adc with SMTP id gb26-20020a170907961a00b00a4637854adcmr9600678ejc.57.1710758759368;
-        Mon, 18 Mar 2024 03:45:59 -0700 (PDT)
-Received: from localhost (046125249120.public.t-mobile.at. [46.125.249.120])
-        by smtp.gmail.com with ESMTPSA id g14-20020a170906198e00b00a46d049ff63sm114217ejd.21.2024.03.18.03.45.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Mar 2024 03:45:59 -0700 (PDT)
+	s=arc-20240116; t=1710758933; c=relaxed/simple;
+	bh=RtP8eU6U6Ho2Zqu2gqpQBB1r7GR+88lHEvxc53l5Syw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=V06DODeqNYZz3DNDwN7N3D6vkTjsZ/Viq4RQCS7043KQVkkKZv2TUm7RDUhcrspVUxd3zqGwELCrVHaEDsEObn+ImIG61O56v897/M01GABjs2GFDF7lMpb4pI4EcdZUX3ndp0WgEkIkHYdAEaR8BH9d7ejSycgvr2GLruf0FXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=U85BJ6I3; arc=none smtp.client-ip=198.175.65.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1710758932; x=1742294932;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=RtP8eU6U6Ho2Zqu2gqpQBB1r7GR+88lHEvxc53l5Syw=;
+  b=U85BJ6I3TFMZG6kl26aT9VNq80cwmWN1IBfi8yj5c6Kg+xQqZO1a9AP3
+   hlYnPedYw/TUMF+kXE+mN+7xEHMJvQvMz8gwRmqtWG7aSXriU0OPLrysg
+   wMGe5txE340WIxDNQswacTIPeR5v7TJHLBq6BlD/LHARvrG8Izw3blHBN
+   JdLDnbRuDvyCykEin5Y2gYymPLMttuEMvhzVTmVxZ47Ogws1gtNNCXSiH
+   tuK0lb9L44AZXwmWqK2FCqsAsKX+tFPSXlFTQHnnmSydfPKj53/FfmH2N
+   JdjQYC686I5lRPS4pnwUgn4lXgecS95vSclglTaYc3bMyu5YkDbV2IrmZ
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11016"; a="5688639"
+X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; 
+   d="scan'208";a="5688639"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Mar 2024 03:48:51 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,11016"; a="937060146"
+X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; 
+   d="scan'208";a="937060146"
+Received: from kuha.fi.intel.com ([10.237.72.185])
+  by fmsmga001.fm.intel.com with SMTP; 18 Mar 2024 03:48:48 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 18 Mar 2024 12:48:47 +0200
+Date: Mon, 18 Mar 2024 12:48:47 +0200
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>, linux-usb@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 3/7] usb: typec: ucsi: make ACK_CC_CI rules more obvious
+Message-ID: <ZfgcD2b0ovU9BPiC@kuha.fi.intel.com>
+References: <20240313-qcom-ucsi-fixes-v1-0-74d90cb48a00@linaro.org>
+ <20240313-qcom-ucsi-fixes-v1-3-74d90cb48a00@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 18 Mar 2024 11:45:57 +0100
-Message-Id: <CZWTD7P4CE12.1ZUNPF2WFTBHR@fairphone.com>
-Cc: "Konrad Dybcio" <konrad.dybcio@linaro.org>, "Vinod Koul"
- <vkoul@kernel.org>, "Kishon Vijay Abraham I" <kishon@kernel.org>, "Rob
- Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
- <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "Abhinav Kumar" <quic_abhinavk@quicinc.com>,
- <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH RFT 0/7] arm64: qcom: allow up to 4 lanes for the Type-C
- DisplayPort Altmode
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Bjorn Andersson" <andersson@kernel.org>, "Neil Armstrong"
- <neil.armstrong@linaro.org>
-X-Mailer: aerc 0.15.2
-References: <20240229-topic-sm8x50-upstream-phy-combo-typec-mux-v1-0-07e24a231840@linaro.org> <CZUHV429NTF7.1GW9TN9NXB4J1@fairphone.com> <7a7aa05f-9ae6-4ca0-a423-224fc78fbd0c@linaro.org> <liah4xvkfattlen7s2zi3vt2bl5pbbxqgig3k5ljqpveoao656@iacnommxkjkt>
-In-Reply-To: <liah4xvkfattlen7s2zi3vt2bl5pbbxqgig3k5ljqpveoao656@iacnommxkjkt>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240313-qcom-ucsi-fixes-v1-3-74d90cb48a00@linaro.org>
 
-On Sat Mar 16, 2024 at 5:01 PM CET, Bjorn Andersson wrote:
-> On Fri, Mar 15, 2024 at 06:35:15PM +0100, Neil Armstrong wrote:
-> > On 15/03/2024 18:19, Luca Weiss wrote:
-> > > On Thu Feb 29, 2024 at 2:07 PM CET, Neil Armstrong wrote:
-> > > > Register a typec mux in order to change the PHY mode on the Type-C
-> > > > mux events depending on the mode and the svid when in Altmode setup=
-.
-> > > >=20
-> > > > The DisplayPort phy should be left enabled if is still powered on
-> > > > by the DRM DisplayPort controller, so bail out until the DisplayPor=
-t
-> > > > PHY is not powered off.
-> > > >=20
-> > > > The Type-C Mode/SVID only changes on plug/unplug, and USB SAFE stat=
-es
-> > > > will be set in between of USB-Only, Combo and DisplayPort Only so
-> > > > this will leave enough time to the DRM DisplayPort controller to
-> > > > turn of the DisplayPort PHY.
-> > > >=20
-> > > > The patchset also includes bindings changes and DT changes.
-> > > >=20
-> > > > This has been successfully tested on an SM8550 board, but the
-> > > > Thinkpad X13s deserved testing between non-PD USB, non-PD DisplayPo=
-rt,
-> > > > PD USB Hubs and PD Altmode Dongles to make sure the switch works
-> > > > as expected.
-> > > >=20
-> > > > The DisplayPort 4 lanes setup can be check with:
-> > > > $ cat /sys/kernel/debug/dri/ae01000.display-controller/DP-1/dp_debu=
-g
-> > > > 	name =3D msm_dp
-> > > > 	drm_dp_link
-> > > > 		rate =3D 540000
-> > > > 		num_lanes =3D 4
-> > >=20
-> > > Hi Neil,
-> > >=20
-> > > I tried this on QCM6490/SC7280 which should also support 4-lane DP bu=
-t I
-> > > haven't had any success so far.
-> > >=20
-> [..]
-> > > [ 1775.563969] [drm:dp_ctrl_link_train] *ERROR* max v_level reached
-> > > [ 1775.564031] [drm:dp_ctrl_link_train] *ERROR* link training #1 fail=
-ed. ret=3D-11
-> >=20
-> > Interesting #1 means the 4 lanes are not physically connected to the ot=
-her side,
-> > perhaps QCM6490/SC7280 requires a specific way to enable the 4 lanes in=
- the PHY,
-> > or some fixups in the init tables.
-> >=20
->
-> I tested the same on rb3gen2 (qcs6490) a couple of weeks ago, with the
-> same outcome. Looking at the AUX reads, after switching to 4-lane the
-> link training is failing on all 4 lanes, in contrast to succeeding only
-> on the first 2 if you e.g. forget to mux the other two.
+On Wed, Mar 13, 2024 at 05:54:13AM +0200, Dmitry Baryshkov wrote:
+> It is pretty easy to miss a call to usb_acknowledge_command() in
+> the error handling inside ucsi_exec_command(). For example
+> UCSI_CCI_ERROR had this call hidden inside ucsi_read_error().
+> 
+> Move this call and add a comment to make the rules regarding
+> usb_acknowledge_command() calls more obvious.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Good to know it's not just my device then ;)
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
->
-> As such, my expectation is that there's something wrong in the QMP PHY
-> (or possibly redriver) for this platform.
+> ---
+>  drivers/usb/typec/ucsi/ucsi.c | 18 +++++++++++++-----
+>  1 file changed, 13 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
+> index bde4f03b9aa2..05a44e346e85 100644
+> --- a/drivers/usb/typec/ucsi/ucsi.c
+> +++ b/drivers/usb/typec/ucsi/ucsi.c
+> @@ -92,11 +92,6 @@ static int ucsi_read_error(struct ucsi *ucsi)
+>  	u16 error;
+>  	int ret;
+>  
+> -	/* Acknowledge the command that failed */
+> -	ret = ucsi_acknowledge_command(ucsi);
+> -	if (ret)
+> -		return ret;
+> -
+>  	ret = ucsi_exec_command(ucsi, UCSI_GET_ERROR_STATUS);
+>  	if (ret < 0)
+>  		return ret;
+> @@ -167,14 +162,27 @@ static int ucsi_exec_command(struct ucsi *ucsi, u64 cmd)
+>  	if (!(cci & UCSI_CCI_COMMAND_COMPLETE))
+>  		return -EIO;
+>  
+> +	/*
+> +	 * All error cases below must acknowledge the command completion,
+> +	 * otherwise PPM will be stuck and won't process commands anymore.
+> +	 *
+> +	 * In non-error case the command is acknowledged after reading Data
+> +	 * from the controller.
+> +	 */
+> +
+>  	if (cci & UCSI_CCI_NOT_SUPPORTED) {
+>  		ret = ucsi_acknowledge_command(ucsi);
+>  		return ret ? ret : -EOPNOTSUPP;
+>  	}
+>  
+>  	if (cci & UCSI_CCI_ERROR) {
+> +		ret = ucsi_acknowledge_command(ucsi);
+> +		if (ret)
+> +			return ret;
+> +
+>  		if (cmd == UCSI_GET_ERROR_STATUS)
+>  			return -EIO;
+> +
+>  		return ucsi_read_error(ucsi);
+>  	}
+>  
+> 
+> -- 
+> 2.39.2
 
-Since I imagine rb3gen2 uses a different redriver setup compared to FP5,
-I wouldn't say that's at fault for now? And at least my ptn36502 driver
-only has very little difference between 2-lane and 4-lane setup, only
-setting the mode to DP-only and 4-lane (vs USB+DP and 2-lane), nothing
-else.
-
-Regards
-Luca
-
->
-> Regards,
-> Bjorn
-
+-- 
+heikki
 
