@@ -1,129 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-14422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57A2C87F1F8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 22:23:53 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE56887F243
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 22:36:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 11D0B281B56
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 21:23:52 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 35451B20A7E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 21:36:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8C5A59146;
-	Mon, 18 Mar 2024 21:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFAA158ADF;
+	Mon, 18 Mar 2024 21:36:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X2XMD9NR"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Xt4kLtuc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40B458AC3;
-	Mon, 18 Mar 2024 21:23:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39891535B9
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 21:36:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710797019; cv=none; b=RmLWJaPND1MnX4dHP6OUr+6yQrJyZ/Z9UVq0KbXH9nEmpH3fNnYIydfrA7M8lzdx0kH3epz6nLUDqv5HS2LAji0JrpKceUSXr/Cod4lxEgYY6Z7ZFo5XmJAPUsXAWcS+m1InxOv0VZ7M851nXcapt5IMR+HH81UMieI3I84m5yg=
+	t=1710797785; cv=none; b=pWYWDOuW8DFw7SK6+xQ8/X32xKG9OrJP+ZuqKRhd3BoTnevSZUd/dmT8bXnWRyuE/HBKtDzGgrgfJUj0k2NlaFP6VubiFv6YwFJlbZpNoLiDTHKFCxqhjvK4qjUQqiOVzMQMDEbBjNFE6yVfCDj7N7riP50j0Z3L+IEaqSbEhbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710797019; c=relaxed/simple;
-	bh=jXUjOX54Xb1FBNE9JdYUTQzq4trLE3UQuafL1UqQCaU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YsuOxPTMjZsElLwHF7u05/eUV+01AA/UAD8j86sbVKyLqAsaaWnpY9iU6QkVWAOFjZ1hsFomHv/3q+4V83D33h5OCITt2M4aHgJs8VaNASQh4as166MM/lJwMGnCWBwTs4f8Eid8AE2DTPu0VsM5WjUMYqecJbHTP4u3f1S2WLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X2XMD9NR; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-414633f7a52so1343615e9.0;
-        Mon, 18 Mar 2024 14:23:37 -0700 (PDT)
+	s=arc-20240116; t=1710797785; c=relaxed/simple;
+	bh=oN3ajsjXsAF9HfH4yepxydlxom6CmZW2+KuqWPApvOc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RyXq8cFAllFN8mX5GnXF/8Wfv5OGG1zvYm6TGRYv9yPGRbQcWo12kjAvdrDLSwvpUYmzx9EQMJdWGSwaNWN8W9wLHGnwMISjN26amgYf5S4Qy+yBBZe4tLNnu24d8yhDa17TlpB7qReZXW3TMY3QJUw5WTPdBhLMjijfNKXwyDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Xt4kLtuc; arc=none smtp.client-ip=209.85.222.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-7882dd2b1c9so382932785a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 14:36:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710797016; x=1711401816; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QUmaePLvv7eXQ5vSkHddOGOBZwbf9kgfdDc4phHSI68=;
-        b=X2XMD9NRJGYoI2whqSN7lfDNHarxOrNz5HV+dKWbzcRaXmOFawJerR3VDXAOc90R79
-         Xdfz8dn9K7KWwLU2CFPjb1/ArTJWNC/OFeI+3mgDLtY8FwoA48sujdmRuVK9cccQiVx1
-         Pwwi8YmLNjFwcLrfSGnftGmOBKX4J/iK6Xcx+3kADqboGDOAEcWdFN8aaiBx1veK20uY
-         A2Ucxc4cDmBasxCGuRneHV2YIk3xclbozjCFi/r5+6+OeBAFBYKZ3QHCj8ybAbBLPsR/
-         cZsLTpLRj6rz8NlIwsrMMyxTvGSJMMzZddA3F6hcOqB37HoRnNYRtqpBwa1aa78GpZgQ
-         8QhQ==
+        d=chromium.org; s=google; t=1710797783; x=1711402583; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oN3ajsjXsAF9HfH4yepxydlxom6CmZW2+KuqWPApvOc=;
+        b=Xt4kLtucDqsA/MbhJz8HP7NmR2TGwDHm03/2lGlNE5xDmhjqxAd6W+x58EbtpCqlwL
+         VRfRGcRbhQXMWSu6AQy9nFqfKxA6AhGHctMv5+XTA6+ra+qft+lf8QxWJbSItnpGoHKD
+         WSuiyo3YUg5gyLGfRL78F4rTaDgmaqldy9UIA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710797016; x=1711401816;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QUmaePLvv7eXQ5vSkHddOGOBZwbf9kgfdDc4phHSI68=;
-        b=mSboJYXuvpTOiqHB3jzgc9jqX2gwLKAhwhZkofVawv+QjP9zaH8/9nhf2uTygmSoSA
-         fosXJUE4fcIt+JKHOTx5sDOT3HFf0fL6EaxgFzDdjcs8kKKqHsBDTUNhkRpQpa8P2goa
-         028fntr/y9LsNzao51u3guM8NNX68Oye3fSryoPuIvO/e6TlGeKCergwID7hJjkOB+5U
-         DeSuh6NteV17mSLHhxm3luhqX+X+r8BE7rIclpW6G9G2uzginiOK5p8jW+UwzMNxjDke
-         aNWykfoFg+qDSjGivAzpIKY6HJ9hDftgFvx2LCAqN/aA6K9Pxz2eeXrOpDmcPHD+afYj
-         dkcg==
-X-Forwarded-Encrypted: i=1; AJvYcCVZKbAuou/gdLzJRqya2WBEb/z42zgXTiRXj4Fj/hA0nNgrtqTLAGbJKxOBAZHuPi8eW91xkXJk6SZPoawS2kpzlO3/koqSGqxginpHmCy/cPmseJVqKZg3e+XnjGORf/2WOQMZZQCd+MQUYdDSTO/yBy7FdTkjqmS+M9hzrcSP1wbmpeTQ9w==
-X-Gm-Message-State: AOJu0YzGWXbtPzs1qc/pCEW+J85tPxKKSFfjHCYOQBzx47GLbeDdQKa2
-	TeWE17zTkGBVfmdUVrHyBI/rV6FEb7hfld1wMxh6n2MLg76kJYYA
-X-Google-Smtp-Source: AGHT+IHLRh0Pg+JUcUwocj9n1tMEzUsGeZil7WG3Hn91sbwpo0LSq+i23Clj/ttNpfiAAVhl+OvQnw==
-X-Received: by 2002:adf:f292:0:b0:33d:1eea:4346 with SMTP id k18-20020adff292000000b0033d1eea4346mr6825996wro.37.1710797016137;
-        Mon, 18 Mar 2024 14:23:36 -0700 (PDT)
-Received: from [192.168.20.170] (57657817.catv.pool.telekom.hu. [87.101.120.23])
-        by smtp.gmail.com with ESMTPSA id hz13-20020a1709072ced00b00a46a9cdcfa5sm2948714ejc.162.2024.03.18.14.23.34
+        d=1e100.net; s=20230601; t=1710797783; x=1711402583;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oN3ajsjXsAF9HfH4yepxydlxom6CmZW2+KuqWPApvOc=;
+        b=Vp+0R+FQdahBbHQdFVrmwyaZAbnoB1orZNueRqJsto1XOlw0xVyfzFPrNd6ouD0bp+
+         QdWZ/395s7xqkdDeOOgtc05RdLjg7hsd7kCdCJJLc2ROJ1XKc686Iwo9LRUyvadf5v07
+         HO/yGUk4Z860zSFznN12fIoxwuhAtTbe+/zqh8CNFArMz59CfP7jvWklj3JV6g5qizlK
+         uj9oDhuMbWVCAYe4CQfvi+EafFHYA5Pm3ib6jEQgnJVzJ6Xw6o5gqmjK2IOnkWG8XGsg
+         4qhQqs/Pwi5OZzE9YJ0IdBr0X/icgIxcqSRtaWrGK7d8XVGkc3pvD+rpNjMf6DXSgTXi
+         mc/g==
+X-Forwarded-Encrypted: i=1; AJvYcCX95TGr5IpatAPrHWGmRGN58bWgZe7BQt9lJeEqruS+Agpr22uJkF4EdLgAWivvWnm7ftSQf3Aws/MqSBlQbyLnOn/sTfFyrCaomvj0nw==
+X-Gm-Message-State: AOJu0Yz8PW+hdOkHL/L5RIhAWwS0dOZxeV8H8Kk2dkaLzafP09xUlN/J
+	nDhi0ajkizJOwq9O+KHxMgvjAGrRClZGpcfkIBVp7jA6WwUWFhe9RmBqsuj+o9Vu4Xmdfq1oiFw
+	=
+X-Google-Smtp-Source: AGHT+IEWNb49kbqUyH4SLC0obZkYhKO1V/EDIEXK8OaE8a/4hiVtRgTycDTBpGPVZhOFw5cMLzCnDw==
+X-Received: by 2002:a05:620a:850f:b0:789:faed:fcb4 with SMTP id pe15-20020a05620a850f00b00789faedfcb4mr1303976qkn.21.1710797783251;
+        Mon, 18 Mar 2024 14:36:23 -0700 (PDT)
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com. [209.85.160.178])
+        by smtp.gmail.com with ESMTPSA id wl8-20020a05620a57c800b00789f3e53d04sm2105447qkn.126.2024.03.18.14.36.22
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Mar 2024 14:23:35 -0700 (PDT)
-Message-ID: <09c91419-8bce-49dc-86d1-3ed1b9f28ee6@gmail.com>
-Date: Mon, 18 Mar 2024 22:23:37 +0100
+        Mon, 18 Mar 2024 14:36:23 -0700 (PDT)
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-428405a0205so38541cf.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 14:36:22 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCWKrIJ0W6kA9fw4zKsyJYwa0XsdORACqbj3aH0Ukh4XBs4YAqMertJI9Bl/+mcOqVeuTtn1B1Oob7Sh+MTCUFqtAzn7Wb+Uefu94JGpFA==
+X-Received: by 2002:a05:622a:50e:b0:430:b590:e88c with SMTP id
+ l14-20020a05622a050e00b00430b590e88cmr111577qtx.6.1710797782513; Mon, 18 Mar
+ 2024 14:36:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] clk: qcom: apss-ipq-pll: use an 1-D array for Huayra
- pll register offsets
-Content-Language: hu
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240318-apss-ipq-pll-cleanup-v1-0-52f795429d5d@gmail.com>
- <20240318-apss-ipq-pll-cleanup-v1-2-52f795429d5d@gmail.com>
- <CAA8EJpo2Vo-XqstNk69dWW8pqNkGi0tz3UmHY7j6LLKd-yH22w@mail.gmail.com>
-From: Gabor Juhos <j4g8y7@gmail.com>
-In-Reply-To: <CAA8EJpo2Vo-XqstNk69dWW8pqNkGi0tz3UmHY7j6LLKd-yH22w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <1710418312-6559-1-git-send-email-quic_amrianan@quicinc.com>
+ <1710418312-6559-3-git-send-email-quic_amrianan@quicinc.com>
+ <f6f317d9-830d-4c38-998f-b229b3d9f95a@linaro.org> <20240316-germinate-browsing-6865db3a44d7@spud>
+ <20240316-herring-skies-6ee1d4a9c0d2@spud>
+In-Reply-To: <20240316-herring-skies-6ee1d4a9c0d2@spud>
+From: Doug Anderson <dianders@chromium.org>
+Date: Mon, 18 Mar 2024 14:36:06 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VZB9Dqsw6+2WBdWxaQVA9NgK_W2n0okBOU0haDMSogPw@mail.gmail.com>
+Message-ID: <CAD=FV=VZB9Dqsw6+2WBdWxaQVA9NgK_W2n0okBOU0haDMSogPw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] dt-bindings: qcom: Update DT bindings for multiple DT
+To: Conor Dooley <conor@kernel.org>
+Cc: Caleb Connolly <caleb.connolly@linaro.org>, Amrit Anand <quic_amrianan@quicinc.com>, 
+	robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+	agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, kernel@quicinc.com, peter.griffin@linaro.org, 
+	linux-riscv@lists.infradead.org, chrome-platform@lists.linux.dev, 
+	linux-mediatek@lists.infradead.org, Simon Glass <sjg@chromium.org>, 
+	Chen-Yu Tsai <wenst@chromium.org>, Julius Werner <jwerner@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-2024. 03. 18. 15:16 keltezéssel, Dmitry Baryshkov írta:
+Hi,
 
-...
+On Sat, Mar 16, 2024 at 9:51=E2=80=AFAM Conor Dooley <conor@kernel.org> wro=
+te:
+>
+> On Sat, Mar 16, 2024 at 04:20:03PM +0000, Conor Dooley wrote:
+> > On Thu, Mar 14, 2024 at 02:20:38PM +0000, Caleb Connolly wrote:
+> > > On 14/03/2024 12:11, Amrit Anand wrote:
+> > > 2. A top level board-id property that isn't namespaced implies that i=
+t
+> > > isn't vendor specific, but the proposed implementation doesn't even
+> > > pretend to be vendor agnostic.
+> >
+> > I pointed out previously that the Chromebook guys had some similar
+> > issues with dtb selection when the OEM varies parts but there does not
+> > seem to be any of them on CC here.
+>
+> That's maybe a bit harsh of me actually, I see that there's a
+> chrome-platform address on CC, but I don't know if that's gonna reach
+> the guys that work on these devices (Chen-Yu Tsai and Doug Anderson in
+> particular).
 
->> +static const u8 ipq_pll_huayra_regs[PLL_OFF_MAX_REGS] = {
->> +       [PLL_OFF_L_VAL] = 0x08,
->> +       [PLL_OFF_ALPHA_VAL] = 0x10,
->> +       [PLL_OFF_USER_CTL] = 0x18,
->> +       [PLL_OFF_CONFIG_CTL] = 0x20,
->> +       [PLL_OFF_CONFIG_CTL_U] = 0x24,
->> +       [PLL_OFF_STATUS] = 0x28,
->> +       [PLL_OFF_TEST_CTL] = 0x30,
->> +       [PLL_OFF_TEST_CTL_U] = 0x34,
->>  };
-> 
-> Can you please move this to clk_alpha_pll? We can then drop it from
-> clk-cbf-8996.c too.
+Thanks for the CC. Yeah, I don't watch the "chrome-platform" list
+myself, though maybe I should...
 
-Sure, I can do that. By any chance, do you have a suggestion for the name of the
-new enum value to be used in the clk_alpha_pll_regs array?
+The Chromebook boot flow and how we've handled this so far is
+documented in the kernel [1]. This method is what we've been using
+(with slight modifications over the years) since the earlier ARM
+Chromebooks and is, I believe, supported in both the depthcharge
+loader (used in Chromebooks) and also in U-Boot, though it's possible
+(?) that the U-Boot rules might vary ever so slightly. I haven't tried
+using U-Boot to boot a Chromebook in years.
 
-CLK_ALPHA_PLL_TYPE_HUAYRA_IPQ seems too generic, and it would be a bit
-misleading using that for MSM8996 CBF.
+The current way things work for Chromebooks involves a heavy amount of
+duplication. We bundle an entire "DTB" for every relevant
+board/rev/sku combination even though many of those DTBs are 99% the
+same as the other ones. The DTBs have been relatively small and we
+compress them so this hasn't been a massive deal, but it's always been
+on the TODO list to come up with a scheme to use DT overlays. We've
+also talked about bundling a device tree that has the superset of
+components and then using an in-kernel driver to set the status of
+some components to okay and there is some overlap there in the
+possible way to represent board variants. I think Chen-Yu is going to
+talk about a few of these topics next month at EOSS [2].
 
-CLK_ALPHA_PLL_TYPE_HUAYRA_IPQ6018_A53 is quite long and it is also misleading.
+In terms of looking at your specific proposal, it's definitely trying
+to factor in a lot more things than the current one that Chromebooks
+use. The Chromebook model was "simple" enough that we could just
+leverage the compatible string, though the way we leverage it has
+ended up controversial over the years. Yours is definitely too
+complicated to work the same way. It seems like device tree overlays
+would be a better fit? I'm not an expert so maybe this is already
+solved somewhere, but I'd imagine the hard part is getting everyone to
+agree on how to specify stuff in the DT overlay that allows the
+bootloader to know whether to overlay it or not...
 
-Maybe we could use CLK_ALPHA_PLL_TYPE_IPQ6018_A53 which is short and unique
-enough and we could add an alias for that like CLK_ALPHA_PLL_TYPE_MSM8996_CBF or
-something similar.
-
-Regards,
-Gabor
-
+[1] https://docs.kernel.org/arch/arm/google/chromebook-boot-flow.html
+[2] https://eoss24.sched.com/event/1aBGe/second-source-component-probing-on=
+-device-tree-platforms-chen-yu-tsai-google-llc
 
