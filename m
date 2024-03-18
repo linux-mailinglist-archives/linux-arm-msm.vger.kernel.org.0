@@ -1,57 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-14401-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14402-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 737DB87EB58
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 15:46:01 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9021787EB5F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 15:48:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AB773B22E00
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 14:45:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C0B441C20DE3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 14:48:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3398C4E1DC;
-	Mon, 18 Mar 2024 14:45:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A53994E1C5;
+	Mon, 18 Mar 2024 14:48:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kqwSd1uF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M/XoVnYI"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A184E1C5;
-	Mon, 18 Mar 2024 14:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F3738BEF;
+	Mon, 18 Mar 2024 14:48:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710773140; cv=none; b=pHkQs+xKCOdEFJW/t55lKwJQXnHN39D/IdylIfwP5HGxsvunJJ0r9T8XoXehMggrObip3WoBcb4KKXZX5T1tGQ6x4KYdj+fZt2CDARi1l2jl6fON8+E1jzh1NmRJiJvtbzIp66G9uoJI7aOFok+P1zawdc0aJmluxHvjGP6pA/M=
+	t=1710773289; cv=none; b=ErH4u9WcvlQVNcbU2OM2Q/MtvmfSLrtHcxoZ7te6/MJUwVwACNm6qaObMXZjfqScgcuR7cVkSjrrXnP22OzuGkDx0O3Is/RVB6WJ8C9BwSkpMvMIda1ZS3A1YiOWeYAhSWvssuCLCOQ+wq7nNNZxapyD2CbVCNl5LsO6ocMJR8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710773140; c=relaxed/simple;
-	bh=mNFwIbUpYbC6mIe+Ons8M/fmdCsJd0AHKosKXozTHfs=;
+	s=arc-20240116; t=1710773289; c=relaxed/simple;
+	bh=fFpQIC1WWlry+MCS3UDnBUqyuPC+yR/ct7UaDoPegoM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uKyLW1z1NmEK52DwAiloLSV8e0IwvDXEv6nFzKjMe5mpxtNY14MY0F658jNCU20TblMCpy2GUzu9gjD/cR+O9qomP8LD4JX2/VZYFz0e3h7b/G6xMjSrM5gQKTPoK+Vv5PmTdfx0mI75aMGyzFLcyVcZaoELWffS8yw3Wvvwkho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kqwSd1uF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EBC3C433F1;
-	Mon, 18 Mar 2024 14:45:39 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=sDAnCLOB3NbKUwe5YokGXFVwMoq+kr1Ai6yMbiJpRZoCXKdprfKlq/h1jh6XwgdNhgGhwI/vuxZNJeIi5zUEEC1yHp7NF51LDx8+7RiJHUpu/Ips9KacP4y4yii0GmRa7lL4gmgUGyzu2DO6ZQ8wxKsV147fpNiSX+yp1Oly168=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M/XoVnYI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6290C433F1;
+	Mon, 18 Mar 2024 14:48:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710773139;
-	bh=mNFwIbUpYbC6mIe+Ons8M/fmdCsJd0AHKosKXozTHfs=;
+	s=k20201202; t=1710773289;
+	bh=fFpQIC1WWlry+MCS3UDnBUqyuPC+yR/ct7UaDoPegoM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kqwSd1uFjWxPfNUE0/idanxGBUrdyMwC9MFJVRWvUhOVxbEuBrHkpxTBXNRmucbIu
-	 drSTjRLLKhPKf9SVWv9E+6//cUMjLhj3ixKZNa9kwq7Sg9J6HwjpnNCXOJRGqVlVvY
-	 WaE/9HaIvEnL2lNf5PtSKn8lAgqT2do3hOuJftC+fjuKUBNgw9k1Lt585dSw8zKB0G
-	 QwH08EjqmxoUE1iHv7degGtOJ31pY+vyQ/H9ic+QHHYu+xWvGSAGvyF4cNXbnxs6gw
-	 uoORzwsDvWQLi38VzylOrPel1jI0dYMYupn/imr0gT1NJzPD1PfU5Vofc0tusOr9Fr
-	 itZfsI5QGKC/w==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rmEFF-00000000310-1VgJ;
-	Mon, 18 Mar 2024 15:45:45 +0100
-Date: Mon, 18 Mar 2024 15:45:45 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>,
+	b=M/XoVnYI5ZdzwSJQsiQPry3j6wkqfmUhZ0Wb/cIZ7LPOs9P9MTvgHrhk4dzJCgnh3
+	 iRcaUdDTfJutaZgbQCgrdKQnIZC4PFp67egUc7l3lOD6CqnOJuvSEGJMTy394EgaL+
+	 NAnajc6gZDem815pcxkYMvKpr5vo5J5L+6tm85ihFYdCmzAnlZfxDzSp+KHIXLN+zy
+	 bgCh7fubqT8eXW2s8zDVnCyJ3k7/HyyaOjTuBi51B4/6L1pgATEJNs7OXiLebUPRPq
+	 Bgvej4YQdDedu17o5C6njM8QxJwTTazZDwb4p/Xagrfx0+qo++1Qg7z2to/4EmdOAg
+	 c41SuMXcWasgw==
+Date: Mon, 18 Mar 2024 09:48:06 -0500
+From: Rob Herring <robh@kernel.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
 	Marcel Holtmann <marcel@holtmann.org>,
 	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Rob Herring <robh+dt@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	Conor Dooley <conor+dt@kernel.org>,
 	Johan Hedberg <johan.hedberg@gmail.com>,
@@ -64,12 +60,11 @@ Cc: Johan Hovold <johan+linaro@kernel.org>,
 	linux-kernel@vger.kernel.org
 Subject: Re: [PATCH v2 1/4] dt-bindings: bluetooth: add new wcn3991
  compatible to fix bd_addr
-Message-ID: <ZfhTmQ6mOLR8eXA5@hovoldconsulting.com>
+Message-ID: <20240318144806.GA3963554-robh@kernel.org>
 References: <20240318110855.31954-1-johan+linaro@kernel.org>
  <20240318110855.31954-2-johan+linaro@kernel.org>
  <CAA8EJprywWbdoyfAbys=0WzEdAkp0UK1fzzCPzxKRjyk9DrC6Q@mail.gmail.com>
  <Zfg--2_NMPSPTxK-@hovoldconsulting.com>
- <CAA8EJpoxq6__DMcsuAEsnxBfPrrQBuu4ZgfULkok4KWSYVxuHQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,31 +73,41 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAA8EJpoxq6__DMcsuAEsnxBfPrrQBuu4ZgfULkok4KWSYVxuHQ@mail.gmail.com>
+In-Reply-To: <Zfg--2_NMPSPTxK-@hovoldconsulting.com>
 
-On Mon, Mar 18, 2024 at 04:17:24PM +0200, Dmitry Baryshkov wrote:
-> On Mon, 18 Mar 2024 at 15:17, Johan Hovold <johan@kernel.org> wrote:
-> > On Mon, Mar 18, 2024 at 03:00:40PM +0200, Dmitry Baryshkov wrote:
-> > > On Mon, 18 Mar 2024 at 13:09, Johan Hovold <johan+linaro@kernel.org> wrote:
-> > > > The only device out there that should be affected by this is the WCN3991
-> > > > used in some Chromebooks. To maintain backwards compatibility, mark the
-> > > > current compatible string as deprecated and add a new
-> > > > 'qcom,wcn3991-bt-bdaddr-le' for firmware which conforms with the
-> > > > binding.
-> >
-> > > This compatible doesn't describe new hardware kind. As such, I think,
-> > > the better way would be to continue using qcom,wcn3991-bt compatible
-> > > string + add some kind of qcom,bt-addr-le property.
-> >
-> > No, you can't handle backwards compatibility by *adding* a property.
-> >
-> > I wanted to avoid doing this, but if we have to support Google's broken
-> > boot firmware for these devices, then this is how it needs to be done.
+On Mon, Mar 18, 2024 at 02:17:47PM +0100, Johan Hovold wrote:
+> On Mon, Mar 18, 2024 at 03:00:40PM +0200, Dmitry Baryshkov wrote:
+> > On Mon, 18 Mar 2024 at 13:09, Johan Hovold <johan+linaro@kernel.org> wrote:
+> > >
+> > > Several Qualcomm Bluetooth controllers lack persistent storage for the
+> > > device address and instead one can be provided by the boot firmware
+> > > using the 'local-bd-address' devicetree property.
+> > >
+> > > The Bluetooth bindings clearly says that the address should be specified
+> > > in little-endian order, but due to a long-standing bug in the Qualcomm
+> > > driver which reversed the address some bootloaders have been providing
+> > > the address in big-endian order instead.
+> > >
+> > > The only device out there that should be affected by this is the WCN3991
+> > > used in some Chromebooks. To maintain backwards compatibility, mark the
+> > > current compatible string as deprecated and add a new
+> > > 'qcom,wcn3991-bt-bdaddr-le' for firmware which conforms with the
+> > > binding.
 > 
-> One hardware compat string per hardware type.
+> > This compatible doesn't describe new hardware kind. As such, I think,
+> > the better way would be to continue using qcom,wcn3991-bt compatible
+> > string + add some kind of qcom,bt-addr-le property.
+> 
+> No, you can't handle backwards compatibility by *adding* a property.
 
-Again, no. Not when there is an incompatible change in the binding. Then
-we add a new compatible string and deprecate the old binding.
+But you could add a property for the not broken case. That's a bit odd, 
+but so is your compatible.
 
-Johan
+> I wanted to avoid doing this, but if we have to support Google's broken
+> boot firmware for these devices, then this is how it needs to be done.
+
+Don't Chromebooks update everything together. So maybe we don't care in 
+this case?
+
+Rob
 
