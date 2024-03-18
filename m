@@ -1,166 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-14409-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14410-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED50887EBFF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 16:22:28 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2BC0587EC18
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 16:26:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2916E1C215E5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 15:22:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 640D61C20FE4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Mar 2024 15:26:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6348B4F1F2;
-	Mon, 18 Mar 2024 15:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70D6D4F1FE;
+	Mon, 18 Mar 2024 15:26:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O/Lx+BFJ"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ho4NZNqm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3545C1CD3B;
-	Mon, 18 Mar 2024 15:22:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBBD74F1E3
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 15:26:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710775343; cv=none; b=QVe++/MICt86hGC2r2EdExYZmlG6DE06i6qYxcXlTwFcfS66WLgNf3mrzEKJfmU4iV8gy56dvBgd91/6ZQEH1IkypQS7LlAgUJW6ELxdXivaqPvtcIdzBfSyOv9dkgtyLsH8Y7vEW9hN+rfwWTgoD6DgUHX84l0zPIAk/jwEcXY=
+	t=1710775605; cv=none; b=rl9/xF8wFQh/gaKefsg4TO2TDci4n7w4ixSvJ57Tam/twwLbfWpE0b4pdU/EfdBHWJP/KQiabhLmjnWwGvUuocZF95HniHp0qeWu6b0djnUUOtU9myD8cUG12lWM0pJhowMb6iEEXHh3OAfdN3qxuAIULDg9X6+m1h4sBHf4hmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710775343; c=relaxed/simple;
-	bh=Pm8X9+GHL3uhjeSunL8byVQe/wt5/ZgrK6SBitYJwQ8=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=jfLj6g5fRq+YrW9pJVpIHdCjXrYPlIHzHV6n2eECM4qoGt8yyQMpHlf12eAMsiICbaAL5jweExFYqrBhEQ3VHMUy8MA08imljvI9eBF36JAtP6yVmdzYLq5F4dyRS8K4bvAv3UDlxTk94HRWx+r4CH9Gut/8vHmO26qAcBR/ko4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O/Lx+BFJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE8A4C433C7;
-	Mon, 18 Mar 2024 15:22:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710775343;
-	bh=Pm8X9+GHL3uhjeSunL8byVQe/wt5/ZgrK6SBitYJwQ8=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=O/Lx+BFJiEhZA5JOLrhuwSx0lVplFQ5dOaMpZZ/39IuoxojbIYV8s1edlMtqy2uug
-	 Tqm7pyBLvzcw6oh1RzAMkFsXyb95BRp4jsBpqFFQjGIQCt/cqUp1W3J9HD9XuhoTwS
-	 aY6Z2/6QNJihEKh/KnGpwRwtotjCpAxqIUbsFfZTO2jYOBN/xECozY2guH1GjcdbP3
-	 LaSnt+d2JVv1HkBU8ZKXv1LXlJXBqymKUB3YfBaqQPhgHzn2Ke4YVh0o+ulJQx29wO
-	 i27KEUd+GSwaTRm0JAv2btMoWpJk1nCm9MBjFo6DdQFcrJIOBw3WtVKzWh/6P1Sgly
-	 gf32w3EfnuhoA==
-Date: Mon, 18 Mar 2024 10:22:21 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1710775605; c=relaxed/simple;
+	bh=PhWdZeNBOqRnQlySupzqWY3j6i3+Ipt/UkCpMfvZd/U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XxSewKYbmE21k0Kq8VvGDRTxeUzF4Mr3N3mL0UlgbBY4P6nhTCpplpcS8nF9Z82eZUCfvrjWEsxwyLDo4AjPIK1QvgyI4gKchOJdlcH8xTFGdBFFa2vZ6AjBKeUlt+iI5SohddPr/SAM6ohxq6t65qgfYiTOi2JrTU4UXcy9kXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ho4NZNqm; arc=none smtp.client-ip=209.85.160.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-430e1e06e75so71491cf.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 08:26:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1710775603; x=1711380403; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1Hv/QWr8M8ls7knB1wZCVGtf2AvJWRUgL6rtvFRG9dk=;
+        b=ho4NZNqmCiLQ7HWHlsIjzcX9Rm4CtT9YQXvjax3No5poNUDL7DxYEj3uJoeKgEp4/v
+         viaCB3yR2Yvn5HTvnyG2jD3hT5mSxVMWSlLjDij2cOq3o34GqT1CAPvK8WcqFo9KGKDV
+         lSPDmxWPcYYjYqZF4r6bmExQzO5UTTHyKVFNhegw7SOjWLKge5zKe5rP7MS3Z0r3oRu0
+         JVdHJGjFg5vdkt6W63StUs59IFgJq0+deUbOzBicebrndoD+eyHFuIJE5QFnv/RnFjzd
+         fP26FtT/fVvcliQfLZEDIrNR+ioGVA6UnobnNi4LTf9zpyjmSrrgRJQct69FUTjv13vs
+         nEyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710775603; x=1711380403;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1Hv/QWr8M8ls7knB1wZCVGtf2AvJWRUgL6rtvFRG9dk=;
+        b=M7ORUWaAlGYH70OG0qB5S7ipmoleilDE+AfTkbTjBFo4M3FU1m13QmYqXGi5ZZ2hBl
+         HEPfnlS2TjZqIJKT8wlAVB3eRsRj+WZ/cElWNd/i8wLU9EM8a8wG+okFssgZ3YhUXDW3
+         IpYUKoXijDRpDzPekJHxnc3Ts/3XgvqDegoYqchr43FIKzaG8tnvJ5u8o88CVEfEp65C
+         9sNC5y3eRDovGVq9CvbVS+wTOF0yhvRBWgGkjwEJguBMuiPI4Re33QLR2fn6qpIjKdGU
+         J6JZsycX0GyIUXeKRtmMp5GNX2IstWFFZeo8COskfP7pLDYFlVs378HuXJEEkkZy22L9
+         Xn0Q==
+X-Forwarded-Encrypted: i=1; AJvYcCV/4Pu4ltK3B7UW4a1cNV+LSSFnQUnTvDAUjjrZRr5cloYOM2uTJ/ebyds1TbYkzDBkGvXhxGllay/k/Ute8iwTyoZH6B8pmMHCPkTA0w==
+X-Gm-Message-State: AOJu0Yw8H1CRIUqKgrIx+XFqubiLwWgHLGDv638CFfxw7qTAezr6v2GY
+	zlMws99YNV0ijHYNdmfp+epUQhH2QShSifYdVtSqO1YWogSpSq0u6MyzVVAUQ/X5RvswkSorTZ8
+	6Cqh5q2+qGDMi7dFOn87PSOVHMUuUGCChGxuG
+X-Google-Smtp-Source: AGHT+IElNKMYwCi4pjlGQPSRb/mYiqxHrQTnrkhZuM+F1WRWvuGL2GBfnxd8OlBNdyC8AcvWl00mmRDtzrqltlVm71w=
+X-Received: by 2002:a05:622a:18a8:b0:42e:b6df:819d with SMTP id
+ v40-20020a05622a18a800b0042eb6df819dmr333517qtc.24.1710775602553; Mon, 18 Mar
+ 2024 08:26:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
- Bjorn Andersson <andersson@kernel.org>, devicetree@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org
-In-Reply-To: <20240318-topic-sm8650-upstream-hdk-v2-0-b63a5d45a784@linaro.org>
-References: <20240318-topic-sm8650-upstream-hdk-v2-0-b63a5d45a784@linaro.org>
-Message-Id: <171077500758.4030479.17208797895858042949.robh@kernel.org>
-Subject: Re: [PATCH v2 0/3] arm64: qcom: sm8650: add support for the
- SM8650-HDK board
+References: <20240318110855.31954-1-johan+linaro@kernel.org>
+ <20240318110855.31954-2-johan+linaro@kernel.org> <CAA8EJprywWbdoyfAbys=0WzEdAkp0UK1fzzCPzxKRjyk9DrC6Q@mail.gmail.com>
+ <Zfg--2_NMPSPTxK-@hovoldconsulting.com> <20240318144806.GA3963554-robh@kernel.org>
+ <ZfhZffrZXwtKgZ13@hovoldconsulting.com>
+In-Reply-To: <ZfhZffrZXwtKgZ13@hovoldconsulting.com>
+From: Doug Anderson <dianders@google.com>
+Date: Mon, 18 Mar 2024 08:26:26 -0700
+Message-ID: <CAD=FV=UpuD7Lq0DxSZAGpL4Mi2uxy9HNt3V3FZq7Y3p--gbMrg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] dt-bindings: bluetooth: add new wcn3991 compatible
+ to fix bd_addr
+To: Johan Hovold <johan@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Johan Hovold <johan+linaro@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Johan Hedberg <johan.hedberg@gmail.com>, Matthias Kaehlcke <mka@chromium.org>, 
+	Bjorn Andersson <quic_bjorande@quicinc.com>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	netdev@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi,
+
+On Mon, Mar 18, 2024 at 8:10=E2=80=AFAM Johan Hovold <johan@kernel.org> wro=
+te:
+>
+> > > I wanted to avoid doing this, but if we have to support Google's brok=
+en
+> > > boot firmware for these devices, then this is how it needs to be done=
+.
+> >
+> > Don't Chromebooks update everything together. So maybe we don't care in
+> > this case?
+>
+> That was my hope, but Matthias seemed to suggest that we need to
+> continue supporting the current (broken) binding because doing such a
+> coordinated update may be easier said than done:
+>
+>         https://lore.kernel.org/lkml/ZcuQ2qRX0zsLSVRL@google.com/
+
+Chromebooks update kernel and devicetree together, but not firmware.
+Firmware is relatively hard to get updated trying to have kernel and
+firmware updates coordinated at the exact same time has challenges.
+This would further be complicated by the fact that firmware
+qualification for each variant happens on its own timeline.
 
 
-On Mon, 18 Mar 2024 10:51:52 +0100, Neil Armstrong wrote:
-> The SM8650-HDK is an embedded development platforms for the
-> Snapdragon 8 Gen 3 SoC aka SM8650, with the following features:
-> - Qualcomm SM8650 SoC
-> - 16GiB On-board LPDDR5
-> - On-board WiFi 7 + Bluetooth 5.3/BLE
-> - On-board UFS4.0
-> - M.2 Key B+M Gen3x2 PCIe Slot
-> - HDMI Output
-> - USB-C Connector with DP Almode & Audio Accessory mode
-> - Micro-SDCard Slot
-> - Audio Jack with Playback and Microphone
-> - 2 On-board Analog microphones
-> - 2 On-board Speakers
-> - 96Boards Compatible Low-Speed and High-Speed connectors [1]
-> - For Camera, Sensors and external Display cards
-> - Compatible with the Linaro Debug board [2]
-> - SIM Slot for Modem
-> - Debug connectors
-> - 6x On-Board LEDs
-> 
-> An optional Display Card kit can be connected on top,
-> an overlay is handled to add support for the DSI Display
-> and Touch Controller.
-> 
-> Product Page: [3]
-> 
-> Dependencies: None
-> 
-> [1] https://www.96boards.org/specifications/
-> [2] https://git.codelinaro.org/linaro/qcomlt/debugboard
-> [3] https://www.lantronix.com/products/snapdragon-8-gen-3-mobile-hardware-development-kit/
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
-> Changes in v2:
-> - Fixed commit messages with links, and recently added product page URL
-> - Swapped i2c3/i2c6 nodes
-> - Moved pcie_1_phy_aux_clk under pcie1_phy
-> - Removed duplicate mdp_vsync pinctrl state
-> - Collected review & tested tags
-> - Link to v1: https://lore.kernel.org/r/20240223-topic-sm8650-upstream-hdk-v1-0-ccca645cd901@linaro.org
-> 
-> ---
-> Neil Armstrong (3):
->       dt-bindings: arm: qcom: Document the HDK8650 board
->       arm64: dts: qcom: sm8650: add support for the SM8650-HDK board
->       arch: arm64: dts: sm8650-hdk: add support for the Display Card overlay
-> 
->  Documentation/devicetree/bindings/arm/qcom.yaml    |    1 +
->  arch/arm64/boot/dts/qcom/Makefile                  |    5 +
->  .../boot/dts/qcom/sm8650-hdk-display-card.dtso     |  144 +++
->  arch/arm64/boot/dts/qcom/sm8650-hdk.dts            | 1259 ++++++++++++++++++++
->  4 files changed, 1409 insertions(+)
-> ---
-> base-commit: 2e93f143ca010a5013528e1cfdc895f024fe8c21
-> change-id: 20240223-topic-sm8650-upstream-hdk-e21cfd6f1de8
-> 
-> Best regards,
-> --
-> Neil Armstrong <neil.armstrong@linaro.org>
-> 
-> 
-> 
+> A new compatible string (or one-off property) would allow them do make a
+> change when they are ready (e.g. by only updating the devicetrees after
+> all boot firmware has been patched and pushed out).
 
+I have no real opinion about the exact way this is solved so happy to
+let DT folks decide on how they want this. I will note, however, that
+device trees are never shipped separately and thus we have no
+intrinsic need for DT backward compatbility here. It would be OK from
+a ChromeOS perspective to add a property or compatible string for the
+broken case.
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
-
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-New warnings running 'make CHECK_DTBS=y qcom/sm8650-hdk.dtb' for 20240318-topic-sm8650-upstream-hdk-v2-0-b63a5d45a784@linaro.org:
-
-arch/arm64/boot/dts/qcom/sm8650-hdk.dtb: usb@a6f8800: interrupt-names:0: 'pwr_event' was expected
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-arch/arm64/boot/dts/qcom/sm8650-hdk.dtb: usb@a6f8800: interrupt-names:1: 'hs_phy_irq' was expected
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-arch/arm64/boot/dts/qcom/sm8650-hdk.dtb: usb@a6f8800: interrupt-names:2: 'dp_hs_phy_irq' was expected
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-arch/arm64/boot/dts/qcom/sm8650-hdk.dtb: usb@a6f8800: interrupt-names:3: 'dm_hs_phy_irq' was expected
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-arch/arm64/boot/dts/qcom/sm8650-hdk.dtb: usb@a6f8800: interrupt-names: ['hs_phy_irq', 'ss_phy_irq', 'dm_hs_phy_irq', 'dp_hs_phy_irq'] is too short
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-
-
-
-
-
+-Doug
 
