@@ -1,85 +1,292 @@
-Return-Path: <linux-arm-msm+bounces-14578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14579-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9D45880295
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 17:43:28 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1A348802AC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 17:46:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6630B284989
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 16:43:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 317211F24B01
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 16:46:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90732FBF0;
-	Tue, 19 Mar 2024 16:43:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 778E51097B;
+	Tue, 19 Mar 2024 16:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YI04zE8L"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oDAdaKJa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63696D29E;
-	Tue, 19 Mar 2024 16:43:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2E8101D4
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 16:46:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710866601; cv=none; b=TEo6xCwpEotoaBObJDhftdgFvAR2g/HRjlamYbSNo4NpKkRwwakrNk/X5CB3gccckcUK9w7g6KzAbvCHt1HLfQZsJOwH7i13Xxy2veR3z1VG2XEoxXba+W7PaGA4AKBj740YmcB+u0uUxt3s0tVP/OzQ22yXpMfAQ0wJQzoeSP4=
+	t=1710866809; cv=none; b=okyOyDYInQXk9XXbMGvpoRp7G5P6UjPkIxikeqUAUYd0JU1LvBBA1VGUvv/4f/V5AkyUcL3WTgpaoCUGqphwEv3ZYpH0/UrXhF8e8VTQfa3zX2oHuZVoeykJn4iS04bk3fRbc6FBKktdI8jNp6CjmI7pvRNhAvs/Qh++hpjhOIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710866601; c=relaxed/simple;
-	bh=7q6K03v9Gajaxg7y54ygTX+ANkBwLzliWh+n0D7C7nY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TptCiJTEN+n2XpOENpZYlWmUC996ex1AdI0aTenT1xZuPTssMFQFsa3eEr0567+ZM8mMPfCnfQw5FhRvrbzeQJJGyS2F29Ds2KELha1eIIpUEF1Uf13JXvQ70qYvG8BbJMHffY52YKTDm1fJi6NRURPJYxPS7hoAAuz+IGl//o8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YI04zE8L; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E02A7C433C7;
-	Tue, 19 Mar 2024 16:43:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710866600;
-	bh=7q6K03v9Gajaxg7y54ygTX+ANkBwLzliWh+n0D7C7nY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YI04zE8LVliNzxYztt5R88IbNw4YFt2AxA+0Swc/ydZsmpym7x7i09cyRN2qVc0Kt
-	 6qLHX5IBr9bMgLB+/uBWsA+DjENIzFxy95IDdLKASyTihj70Wc931pSW+GAHyCgBov
-	 TBECJWTpaBnW1LoNZ3euYwTAf/xkRpMo7fJBJZYhTV4mzvLBqQZd/gE5CNJaAZKD+V
-	 K7NmBBheWFRtdlXFWWlN3XRZ1ZGynqoUgtoQOYD1BqbuFXNLDaTZv9tsZKrCl+Ajoe
-	 PQsoMv+VZxYBs/ZDBseBhN0316CX7YMVNFN/RMf78vZprsXc73eNQqoqHJ+DuOFzvP
-	 1JYSA1iocAO4Q==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rmcYi-000000000vo-0EDB;
-	Tue, 19 Mar 2024 17:43:28 +0100
-Date: Tue, 19 Mar 2024 17:43:28 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 00/31] Clean up thermal zone polling-delay
-Message-ID: <ZfnAsGlV9Wowkh9z@hovoldconsulting.com>
-References: <20240319-topic-msm-polling-cleanup-v1-0-e0aee1dbcd78@linaro.org>
+	s=arc-20240116; t=1710866809; c=relaxed/simple;
+	bh=Bk966/7YvJhcNzWySUwU2Y7SkHjTq80cfm7tt5j4dTg=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=sLEeOGjq5wbSGlvxTNOEVyeY0I1xIFR0tf58FW1pCJTvJQoc1Wg1fEBV6W7UKQYW9Viblk4ujxokatv3UA2LTF0pEghe5NREAuBAr2EwjPt1GQ7Ra31F+hZLg9RBCdqyl5PfkG1MoM6ueU1A4FiW8V1HWO8QoZ5gKT06PHx8tE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oDAdaKJa; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-33ec7e38b84so3442577f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 09:46:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1710866806; x=1711471606; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+68pdTiUjypEc+CyXNmTyy6qJ3QLO2R/oUhIUplT4hs=;
+        b=oDAdaKJaCHo/YiDqNnrDwRwcICJG756r7qYVThNfym9SpBUJiVAu9qwyy9jS+082ek
+         xGHgPIb9jAmxQcwj25qClqRPx1AcyjtjQ/d7vw29+gV1B1+c3CGFrwT4AQYlcGrfm5SU
+         fPtxUW2DgKO9Rh/cCF2DUN1BL0lk7K+7ou1IdHUrAlbz3IXYdGS7DAus81QPJ5/icoGv
+         dut3xR9PU0AC6v1RGHaksZlmM2R7BL0a+Yj4G/WGqezXb+yjV3cekge54De5fk7o/yZp
+         MSKJkM7ekq5kKhGDh9BYwiPb3GJjr4T3hK4QBEGEVl6qgzhSVFBupDuz1oQ1VwoM/iqh
+         fSwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710866806; x=1711471606;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=+68pdTiUjypEc+CyXNmTyy6qJ3QLO2R/oUhIUplT4hs=;
+        b=ovJ8Unzy/3gXEfunLaJfzNGIMqpUWdUN9Up/rFWrLsqXcbw92EzQdaKPOrA1Mb51hl
+         fhABEj7phVsgbkQBBb8sV/8sEtNr4m9nsz6ihV6Ry38Cq+tQ2xElutmspIFnm1w9RcXe
+         9J7nzysY2sqOQu6BPYnlwm8rTrULw3AOYgeYkFfLHyTbKXhTnd6I/1j8Kx3GkTspTE8D
+         yhBW0GVcsueR2+v8owXsFF+Y2XcxMrc0hQGEZ24MkdRzVWWHPIrpeh1/+C9YK17qTswC
+         lRQv3bE4WhHmX+pldxJOaCZjFAQsuoGiWZCPyhnFRPckW32dJE0d3207c0ytaCbaTMSA
+         UA8Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUy4Q+zhwSITUsY6AFF0isypnygkatOrn88pqiNQrWiPRdNYePPx4jylU/Z4m22POEkAz7bD+lWTwQVmDfkEphPUsOyoT2DbZjGZjWWzA==
+X-Gm-Message-State: AOJu0YyAFnYWMBjsCDn2zZrYMC0dGpkc+VQ5UE56gOaYEX1pVgWLL6Ld
+	CTSRMhwmS0h6DjEbFo376tgSjkd4hd9Wcq7KwSmpcFXT4SPMHT9YZUUW0lWdveefANL29uCj9wP
+	5DtU=
+X-Google-Smtp-Source: AGHT+IHTu1oSDWlL+VuhRsgqv1o6IplIZtVQKToCzyFcOwo5C+SJFvUd0M9a4mDLpg1v2GrCu3QdXw==
+X-Received: by 2002:adf:e044:0:b0:33e:c974:1291 with SMTP id w4-20020adfe044000000b0033ec9741291mr9790057wrh.30.1710866805728;
+        Tue, 19 Mar 2024 09:46:45 -0700 (PDT)
+Received: from ?IPV6:2a0d:e487:128f:e9ca:2e29:c91b:3cc4:4dc0? ([2a0d:e487:128f:e9ca:2e29:c91b:3cc4:4dc0])
+        by smtp.gmail.com with ESMTPSA id f16-20020adfdb50000000b0033ec8f3ca9bsm12715053wrj.49.2024.03.19.09.45.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Mar 2024 09:46:45 -0700 (PDT)
+Message-ID: <3141e539-67f9-4a90-abf7-0cc8d95f7396@linaro.org>
+Date: Tue, 19 Mar 2024 17:45:23 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240319-topic-msm-polling-cleanup-v1-0-e0aee1dbcd78@linaro.org>
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 3/7] phy: qcom: qmp-pcie: register second optional PHY AUX
+ clock
+Content-Language: en-US, fr
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240319-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v1-0-926d7a4ccd80@linaro.org>
+ <20240319-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v1-3-926d7a4ccd80@linaro.org>
+ <CAA8EJpoJ0rUd8aY6xpXyL3Obg66XtOebso_AUUxKmg1CWNykJA@mail.gmail.com>
+ <85d67f3f-2b01-44c0-ace3-5e7cb48a9431@linaro.org>
+ <090e306c-0bfc-4374-83ed-e883d73a0f0a@linaro.org>
+ <CAA8EJpovp1S9MYb3ByeoR7WmjPgUmqicqs_fQo_OoL5_NTNPJw@mail.gmail.com>
+ <c799b110-978f-412f-b50e-87a4215a17cf@linaro.org>
+ <CAA8EJpp2pVnKh4J0TnGy_s_GB60P58xEW7OtmzReGVTF-1Ax-g@mail.gmail.com>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <CAA8EJpp2pVnKh4J0TnGy_s_GB60P58xEW7OtmzReGVTF-1Ax-g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Mar 19, 2024 at 05:13:30PM +0100, Konrad Dybcio wrote:
-> A trivial follow-up on the changes introduced in Commit 488164006a28
-> ("thermal/of: Assume polling-delay(-passive) 0 when absent").
+On 19/03/2024 17:05, Dmitry Baryshkov wrote:
+> On Tue, 19 Mar 2024 at 17:15, <neil.armstrong@linaro.org> wrote:
+>>
+>> On 19/03/2024 15:46, Dmitry Baryshkov wrote:
+>>> On Tue, 19 Mar 2024 at 16:35, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+>>>>
+>>>> On 19/03/2024 11:59, Neil Armstrong wrote:
+>>>>> On 19/03/2024 11:55, Dmitry Baryshkov wrote:
+>>>>>> On Tue, 19 Mar 2024 at 12:45, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+>>>>>>>
+>>>>>>> The PCIe Gen4x2 PHY found in the SM8[456]50 SoCs have a second clock,
+>>>>>>> add the code to register it for PHYs configs that sets a aux_clock_rate.
+>>>>>>>
+>>>>>>> In order to get the right clock, add qmp_pcie_clk_hw_get() which uses
+>>>>>>> the newly introduced QMP_PCIE_PIPE_CLK & QMP_PCIE_PHY_AUX_CLK clock
+>>>>>>> IDs and also supports the legacy bindings by returning the PIPE clock.
+>>>>>>>
+>>>>>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>>>>>> ---
+>>>>>>>     drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 70 ++++++++++++++++++++++++++++++++
+>>>>>>>     1 file changed, 70 insertions(+)
+>>>>>>>
+>>>>>>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>>>>>>> index 079b3e306489..2d05226ae200 100644
+>>>>>>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>>>>>>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>>>>>>> @@ -22,6 +22,8 @@
+>>>>>>>     #include <linux/reset.h>
+>>>>>>>     #include <linux/slab.h>
+>>>>>>>
+>>>>>>> +#include <dt-bindings/phy/phy-qcom-qmp.h>
+>>>>>>> +
+>>>>>>>     #include "phy-qcom-qmp-common.h"
+>>>>>>>
+>>>>>>>     #include "phy-qcom-qmp.h"
+>>>>>>> @@ -2389,6 +2391,9 @@ struct qmp_phy_cfg {
+>>>>>>>
+>>>>>>>            /* QMP PHY pipe clock interface rate */
+>>>>>>>            unsigned long pipe_clock_rate;
+>>>>>>> +
+>>>>>>> +       /* QMP PHY AUX clock interface rate */
+>>>>>>> +       unsigned long aux_clock_rate;
+>>>>>>>     };
+>>>>>>>
+>>>>>>>     struct qmp_pcie {
+>>>>>>> @@ -2420,6 +2425,7 @@ struct qmp_pcie {
+>>>>>>>            int mode;
+>>>>>>>
+>>>>>>>            struct clk_fixed_rate pipe_clk_fixed;
+>>>>>>> +       struct clk_fixed_rate aux_clk_fixed;
+>>>>>>>     };
+>>>>>>>
+>>>>>>>     static inline void qphy_setbits(void __iomem *base, u32 offset, u32 val)
+>>>>>>> @@ -3681,6 +3687,62 @@ static int phy_pipe_clk_register(struct qmp_pcie *qmp, struct device_node *np)
+>>>>>>>            return devm_clk_hw_register(qmp->dev, &fixed->hw);
+>>>>>>>     }
+>>>>>>>
+>>>>>>> +/*
+>>>>>>> + * Register a fixed rate PHY aux clock.
+>>>>>>> + *
+>>>>>>> + * The <s>_phy_aux_clksrc generated by PHY goes to the GCC that gate
+>>>>>>> + * controls it. The <s>_phy_aux_clk coming out of the GCC is requested
+>>>>>>> + * by the PHY driver for its operations.
+>>>>>>> + * We register the <s>_phy_aux_clksrc here. The gcc driver takes care
+>>>>>>> + * of assigning this <s>_phy_aux_clksrc as parent to <s>_phy_aux_clk.
+>>>>>>> + * Below picture shows this relationship.
+>>>>>>> + *
+>>>>>>> + *         +---------------+
+>>>>>>> + *         |   PHY block   |<<---------------------------------------------+
+>>>>>>> + *         |               |                                               |
+>>>>>>> + *         |   +-------+   |                      +-----+                  |
+>>>>>>> + *   I/P---^-->|  PLL  |---^--->phy_aux_clksrc--->| GCC |--->phy_aux_clk---+
+>>>>>>> + *    clk  |   +-------+   |                      +-----+
+>>>>>>> + *         +---------------+
+>>>>>>> + */
+>>>>>>> +static int phy_aux_clk_register(struct qmp_pcie *qmp, struct device_node *np)
+>>>>>>> +{
+>>>>>>> +       struct clk_fixed_rate *fixed = &qmp->aux_clk_fixed;
+>>>>>>> +       struct clk_init_data init = { };
+>>>>>>> +       int ret;
+>>>>>>> +
+>>>>>>> +       ret = of_property_read_string_index(np, "clock-output-names", 1, &init.name);
+>>>>>>> +       if (ret) {
+>>>>>>> +               dev_err(qmp->dev, "%pOFn: No clock-output-names index 1\n", np);
+>>>>>>> +               return ret;
+>>>>>>> +       }
+>>>>>>> +
+>>>>>>> +       init.ops = &clk_fixed_rate_ops;
+>>>>>>> +
+>>>>>>> +       fixed->fixed_rate = qmp->cfg->aux_clock_rate;
+>>>>>>> +       fixed->hw.init = &init;
+>>>>>>> +
+>>>>>>> +       return devm_clk_hw_register(qmp->dev, &fixed->hw);
+>>>>>>> +}
+>>>>>>> +
+>>>>>>> +static struct clk_hw *qmp_pcie_clk_hw_get(struct of_phandle_args *clkspec, void *data)
+>>>>>>> +{
+>>>>>>> +       struct qmp_pcie *qmp = data;
+>>>>>>> +
+>>>>>>> +       /* Support legacy bindings */
+>>>>>>> +       if (!clkspec->args_count)
+>>>>>>> +               return &qmp->pipe_clk_fixed.hw;
+>>>>>>> +
+>>>>>>> +       switch (clkspec->args[0]) {
+>>>>>>> +       case QMP_PCIE_PIPE_CLK:
+>>>>>>> +               return &qmp->pipe_clk_fixed.hw;
+>>>>>>> +       case QMP_PCIE_PHY_AUX_CLK:
+>>>>>>> +               return &qmp->aux_clk_fixed.hw;
+>>>>>>> +       }
+>>>>>>> +
+>>>>>>> +       return ERR_PTR(-EINVAL);
+>>>>>>> +}
+>>>>>>
+>>>>>> Can we use of_clk_hw_onecell_get() instead? I think it even should be
+>>>>>> possible to use onecell for both cases, it will look at the first arg,
+>>>>>> which will be 0 in case of #clock-cells equal to 0.
+>>>>>
+>>>>> Let me investigate if it's possible
+>>>>
+>>>> Ok, it would work but it would require building a clk_hw_onecell_data a runtime,
+>>>> while we could simply provide this qmp_pcie_clk_hw_get() and avoid runtime 2 allocations.
+>>>>
+>>>> I'm not sure it's worth it.
+>>>
+>>> Single allocation (or even 0 allocations if you embed it into struct
+>>> qmp_pcie) for the sake of using standard helpers.
+>>
+>> And I just recall I tried the same for Amlogic clocks, but the clk_hw_onecell_data hws
+>> field is a flexible array member you can't set at runtime, if you try you'll get:
+>> drivers/phy/qualcomm/phy-qcom-qmp-pcie.c:3753:38: error: invalid use of flexible array member
+>>    3753 |                 qmp->clk_hw_data.hws = qmp->clk_hws;
 > 
-> Should probably wait until v6.9-rc1 so that the patch in question is
-> in the base tree, otherwise TZs will fail to register.
+> Yes, so it's either
+> devm_kzalloc(dev, struct_size(data, hws, 2), GFP_KERNEL);
+> or
+> struct qmp_pcie {
+> ...
+>    struct {
+>      struct clk_hw_onecell_data clk_data;
+>      struct clk_hw clocks[2];
+>    };
+> };
+
+I won't go down this path because of that mess and using of_clk_hw_onecell_get() would need
+to still add a custom getter before calling of_clk_hw_onecell_get() to handle the
+#clock-cells=0 legacy case.
+
+Neil
+
 > 
-> FWIW, Compile-tested only (except 8280).
+>>
+>> Neil
+>>
+>>>
+>>>
+>>>
+>>
+> 
+> 
 
-Please provide some more details on how you verified these patches (or
-that patch).
-
-Last time you said you just checked that the interrupt counters were
-incremented, which is not sufficient.
-
-Johan
 
