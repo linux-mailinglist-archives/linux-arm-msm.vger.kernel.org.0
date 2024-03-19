@@ -1,503 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-14570-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B453C880208
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 17:22:25 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FBA0880212
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 17:23:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D7D8B1C204FC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 16:22:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4AD1228371D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 16:23:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A708D127B53;
-	Tue, 19 Mar 2024 16:14:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C59482D78;
+	Tue, 19 Mar 2024 16:16:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dDwEOCR7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DneJ/nvX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30678127B72
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 16:14:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4628A2E62A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 16:16:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710864856; cv=none; b=T8qEvpX38QtukI28OtnOlBkRj2LenIrae0IM0nCqP51bNRt1X/BsOFKOOI2aSBfu22N3pgVVpDVbrjF3hQqOz48epXe8s7PcD6uZnx1BNWJ8QwUCBgKHiOEQ14v3D95cMWorwtYL3CE1LsBjfJD/597MHH/B53ChuVSLANZNtjE=
+	t=1710865011; cv=none; b=A8rL+dtgw56e99CrlhL9vWwbHEKaSD1oLgzb/e22jaAGDEu6rVfsP2AA0dcH89wUct75xTsAUu1lA/E+pYxexGFVVqebGOLulHFCiowgEO3klYlga2TnnF72kLMZJz2nztyJ5nmmg0ChYmZOCWUpENEBZ9IvY7N98RCQmP9tVq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710864856; c=relaxed/simple;
-	bh=C1WwkTnF4D51zKxLRgtTi7neKO7FUlW1WZehIPRagUM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WQK7RebJExPhUgPyAyjLuf6Qw5uiOtE3MHbQ+7XmygwHRWRdZYTw8LBD6nYNPP2V7+8A+MVlin42MnSYcBuzsxp/oPz2WomSqPxW/cx0NUEYQm3GbLzpQRnxJxUkswOQ2nZazy4ZqskslGUoE7bTUxIjkDCAgLn/H6uiHdjTZr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dDwEOCR7; arc=none smtp.client-ip=209.85.167.52
+	s=arc-20240116; t=1710865011; c=relaxed/simple;
+	bh=jt/z4E2fl/MmVcNLQbE3dr/YDP5CaljyhC9bWYkStRQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ch3h3Cvg4dRb+eNUMdz2xs6y+G+9KkQRp3GdIhKCzS1eBdQlkoQ4wZ2xJittZc0bHBip3tUtz3mAdTDHbTaI8u5o3+hOI+9q9G2BwOVNa5vSoAq179KzJjeBiN8wU4Rgwl7Xm4qQdOp+aLH8VgbpLvZvOFgRZt5DDjuxRdl5GsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DneJ/nvX; arc=none smtp.client-ip=209.85.208.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-513cf9bacf1so7290688e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 09:14:13 -0700 (PDT)
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2d476d7972aso84900351fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 09:16:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710864852; x=1711469652; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VE7A1TMqiKAqmFzW6nlWEzBc38jwIdf+oOhpNZjQBgs=;
-        b=dDwEOCR7VW56O/7jQOeucTWq+b1EtjyBDgf6+7e3c1VbctQ9BHENidEj2iTC7gOg3L
-         lWOqFZmgHH7XbjiMbWY7yaVVpMWUehoL8YlXF8F74AhfLBIcfdFpL8PDL9oXYHCUw6W3
-         xXHRwMQmmacqjBaEigAzcRJcHh0lP894W6skbgPRQS9jNir/knY9pVaEVEOIcrDWGgcb
-         6D/g2BoQLRxu4eUjnKKTfRdbaj/MFTUSuMLalQorSRzb9aTStT2azoZWPYvFmUVq6j3Z
-         p0EeUXeExg6bLbeMHheb1dpQscFE4WDXW921HlbPON6SUUGlhvaluKeRo+D9XDQFUlp3
-         93Ig==
+        d=linaro.org; s=google; t=1710865007; x=1711469807; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zkkIJgJaurA9K8QokEebR7bixjWgXEoceQbAEPubtN8=;
+        b=DneJ/nvXqnQFc2si0xLZ9xQjeTkceqMzK+AK0eDYIQeKIcSxftaRneC5MR4Ge4lu03
+         5F/SzhI5o3DyJmD/hDLEoFb++nghh13uNtL4NEUakGzOd6ynKrUsJ7MGO4dtrbbVAyEY
+         gu+oHZJexLnEDTY9Jk+lggYKDReIw7bJuWo+E01vI9ynlWQ29R6AEJKQqEtid3SKLlyM
+         BZn+WbGLCDpalK/HnykEg3sGkAT+zYkbBeiAkIG2UYlKdea8QKnbUpjlYJyFP9NA9MrY
+         l8stUThCfjgx1wfETJ0dux9EJlAupLkHQxmUkLolGrVKsb5r6JL6CiyUfE0f59XxzwoS
+         tmEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710864852; x=1711469652;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VE7A1TMqiKAqmFzW6nlWEzBc38jwIdf+oOhpNZjQBgs=;
-        b=cEdbrplkDPSJWNaIzrMRHeJ+M5ApNnUqyxWG/wMEDMdzdR8kKALhMTfccvorrhHq7n
-         JmK2cbKWZOCK9L71p3xJZs8nHiA4x6a4KoVmhjQ2LM3cMVxA55Kt47Xpp1SCPVXwOlLy
-         hywpBj1zBSQ814MRQTkUu0VWq1uq3t+oLelei2fcTcG0WE5qhQg3W/kXJT/l0CCMi+sn
-         X/+r96CDsVML54fYZp82Opy7EXUy+Q0KYlI+7Z/pKjUGVP5a1j9yflo/7lMBrrIEe+FP
-         cbTp4ZSh6hOrPTC9GBd2XFfbUFSF//cvhFe1+9qLbTP4IJf764PyyssuleU81v5/6gi+
-         aPzg==
-X-Gm-Message-State: AOJu0Yzspa5V/Ert7BTxeqRSF+DnDPM0OrrZkqKXBis55Uun3DeMT9EO
-	Bp+IQCbXq/u6vDZtWxANUkiytO41BuH+ablycoXWt/LtLiraUO+NbFQCRfLyFP0=
-X-Google-Smtp-Source: AGHT+IG9nJYuESJlyiQ7awgWZhAwPnAQNG+SHgHrl9DiIHJkT+cc5Zh1SDoCpiSoJ/eFSy9gFswN4Q==
-X-Received: by 2002:ac2:4985:0:b0:513:9f14:8f73 with SMTP id f5-20020ac24985000000b005139f148f73mr10387113lfl.36.1710864852401;
-        Tue, 19 Mar 2024 09:14:12 -0700 (PDT)
-Received: from [127.0.1.1] (netpanel-87-246-222-29.pol.akademiki.lublin.pl. [87.246.222.29])
-        by smtp.gmail.com with ESMTPSA id dx9-20020a0565122c0900b00513ee207982sm607686lfb.198.2024.03.19.09.14.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Mar 2024 09:14:12 -0700 (PDT)
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Tue, 19 Mar 2024 17:14:01 +0100
-Subject: [PATCH 31/31] arm64: dts: qcom: sm8650-*: Remove thermal zone
- polling delays
+        d=1e100.net; s=20230601; t=1710865007; x=1711469807;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zkkIJgJaurA9K8QokEebR7bixjWgXEoceQbAEPubtN8=;
+        b=VIEGu9qOslqtI9FPFLK/XnIUXUen5Ub8lYRJmKyK8OhCPgnAYwqkdWgLpEV0TwB1pr
+         Khyfg9UBGeuyItxUIolfXIMXoIr3dDefWpe0pK2NgKhBDw4iji9HSTHcQaC5sJMTgVvC
+         l8vjvjNDXHPqBDVuza/ZaVTyDcGxJDO/xxrq1aJH5UuU5Edjujm3Aj64IH3zIc+Wb/zp
+         JiDlis1bHx6HfqeQQSq6CK463mUQsys5PSPS1Ixb36rb7o9c+a0NrwB2FbXrL6sQUJkf
+         WlPtz1PXmYXZ+rRGobIEehinWPAHAxfpwRZSibpfyCmtqirb/w1C5IU7RATDfkcJv0qO
+         3wVw==
+X-Forwarded-Encrypted: i=1; AJvYcCVkwqyNlBdmwUKiNO338DLext8jkdSfHwJznA1U8yvFNpjiHj+DB2AxhWLwHNzsb2xlwiHgaZBUDZdpVIK4a3dJjVwNbtn1uJrAeKodOQ==
+X-Gm-Message-State: AOJu0Yy2AuxHoFpl3taL8wguP74p0i4DTQuqLaYU5Yy9xw9ou5YlC2p7
+	BVdLNZQHBX0M/sE9LGb6ahjNzC5Pdh2sO+UHrIMsV6rPkLbKENXLwRGBvm2HE14=
+X-Google-Smtp-Source: AGHT+IEMnVT7pDGsySafCWfDKj7dS9ehW1PKUPyGsJqRXzf4ESkY6ATnWPC0NHRaxf2yidkrmVjupA==
+X-Received: by 2002:a2e:a794:0:b0:2d3:1043:749a with SMTP id c20-20020a2ea794000000b002d31043749amr2801599ljf.21.1710865006770;
+        Tue, 19 Mar 2024 09:16:46 -0700 (PDT)
+Received: from [87.246.222.29] (netpanel-87-246-222-29.pol.akademiki.lublin.pl. [87.246.222.29])
+        by smtp.gmail.com with ESMTPSA id a32-20020a2ebea0000000b002d42c91249dsm1895250ljr.16.2024.03.19.09.16.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Mar 2024 09:16:46 -0700 (PDT)
+Message-ID: <c3a109b0-1672-484d-99ed-656a43143538@linaro.org>
+Date: Tue, 19 Mar 2024 17:16:43 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240319-topic-msm-polling-cleanup-v1-31-e0aee1dbcd78@linaro.org>
-References: <20240319-topic-msm-polling-cleanup-v1-0-e0aee1dbcd78@linaro.org>
-In-Reply-To: <20240319-topic-msm-polling-cleanup-v1-0-e0aee1dbcd78@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.13-dev-0438c
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/5] Bluetooth: add quirk for broken address properties
+To: Doug Anderson <dianders@chromium.org>,
+ Johan Hovold <johan+linaro@kernel.org>
+Cc: Marcel Holtmann <marcel@holtmann.org>,
+ Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org,
+ Johan Hedberg <johan.hedberg@gmail.com>,
+ Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
+ Matthias Kaehlcke <mka@chromium.org>, Rocky Liao <quic_rjliao@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org
+References: <20240319152926.1288-1-johan+linaro@kernel.org>
+ <20240319152926.1288-3-johan+linaro@kernel.org>
+ <CAD=FV=VUFodCAXEJgfpSqZZdtQaw5-8n_-sX_2p6LuQ2ixLRpQ@mail.gmail.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <CAD=FV=VUFodCAXEJgfpSqZZdtQaw5-8n_-sX_2p6LuQ2ixLRpQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-All of the thermal zone suppliers are interrupt-driven, remove the
-bogus and unnecessary polling that only wastes CPU time.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8650.dtsi | 88 ------------------------------------
- 1 file changed, 88 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index ba72d8f38420..f7707c155696 100644
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -5091,8 +5091,6 @@ compute-cb@8 {
- 
- 	thermal-zones {
- 		aoss0-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens0 0>;
- 
- 			trips {
-@@ -5111,8 +5109,6 @@ aoss0-critical {
- 		};
- 
- 		cpuss0-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens0 1>;
- 
- 			trips {
-@@ -5131,8 +5127,6 @@ cpuss0-critical {
- 		};
- 
- 		cpuss1-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens0 2>;
- 
- 			trips {
-@@ -5151,8 +5145,6 @@ cpuss1-critical {
- 		};
- 
- 		cpuss2-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens0 3>;
- 
- 			trips {
-@@ -5171,8 +5163,6 @@ cpuss2-critical {
- 		};
- 
- 		cpuss3-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens0 4>;
- 
- 			trips {
-@@ -5191,8 +5181,6 @@ cpuss3-critical {
- 		};
- 
- 		cpu2-top-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens0 5>;
- 
- 			trips {
-@@ -5217,8 +5205,6 @@ cpu2-critical {
- 		};
- 
- 		cpu2-bottom-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens0 6>;
- 
- 			trips {
-@@ -5243,8 +5229,6 @@ cpu2-critical {
- 		};
- 
- 		cpu3-top-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens0 7>;
- 
- 			trips {
-@@ -5269,8 +5253,6 @@ cpu3-critical {
- 		};
- 
- 		cpu3-bottom-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens0 8>;
- 
- 			trips {
-@@ -5295,8 +5277,6 @@ cpu3-critical {
- 		};
- 
- 		cpu4-top-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens0 9>;
- 
- 			trips {
-@@ -5321,8 +5301,6 @@ cpu4-critical {
- 		};
- 
- 		cpu4-bottom-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens0 10>;
- 
- 			trips {
-@@ -5347,8 +5325,6 @@ cpu4-critical {
- 		};
- 
- 		cpu5-top-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens0 11>;
- 
- 			trips {
-@@ -5373,8 +5349,6 @@ cpu5-critical {
- 		};
- 
- 		cpu5-bottom-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens0 12>;
- 
- 			trips {
-@@ -5399,8 +5373,6 @@ cpu5-critical {
- 		};
- 
- 		cpu6-top-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens0 13>;
- 
- 			trips {
-@@ -5425,8 +5397,6 @@ cpu6-critical {
- 		};
- 
- 		cpu6-bottom-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens0 14>;
- 
- 			trips {
-@@ -5451,8 +5421,6 @@ cpu6-critical {
- 		};
- 
- 		aoss1-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens1 0>;
- 
- 			trips {
-@@ -5471,8 +5439,6 @@ aoss1-critical {
- 		};
- 
- 		cpu7-top-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens1 1>;
- 
- 			trips {
-@@ -5497,8 +5463,6 @@ cpu7-critical {
- 		};
- 
- 		cpu7-middle-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens1 2>;
- 
- 			trips {
-@@ -5523,8 +5487,6 @@ cpu7-critical {
- 		};
- 
- 		cpu7-bottom-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens1 3>;
- 
- 			trips {
-@@ -5549,8 +5511,6 @@ cpu7-critical {
- 		};
- 
- 		cpu0-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens1 4>;
- 
- 			trips {
-@@ -5575,8 +5535,6 @@ cpu0-critical {
- 		};
- 
- 		cpu1-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens1 5>;
- 
- 			trips {
-@@ -5601,8 +5559,6 @@ cpu1-critical {
- 		};
- 
- 		nsphvx0-thermal {
--			polling-delay-passive = <10>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens2 6>;
- 
- 			trips {
-@@ -5621,8 +5577,6 @@ nsphvx1-critical {
- 		};
- 
- 		nsphvx1-thermal {
--			polling-delay-passive = <10>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens2 7>;
- 
- 			trips {
-@@ -5641,8 +5595,6 @@ nsphvx1-critical {
- 		};
- 
- 		nsphmx0-thermal {
--			polling-delay-passive = <10>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens2 8>;
- 
- 			trips {
-@@ -5661,8 +5613,6 @@ nsphmx0-critical {
- 		};
- 
- 		nsphmx1-thermal {
--			polling-delay-passive = <10>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens2 9>;
- 
- 			trips {
-@@ -5681,8 +5631,6 @@ nsphmx1-critical {
- 		};
- 
- 		nsphmx2-thermal {
--			polling-delay-passive = <10>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens2 10>;
- 
- 			trips {
-@@ -5701,8 +5649,6 @@ nsphmx2-critical {
- 		};
- 
- 		nsphmx3-thermal {
--			polling-delay-passive = <10>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens2 11>;
- 
- 			trips {
-@@ -5721,8 +5667,6 @@ nsphmx3-critical {
- 		};
- 
- 		video-thermal {
--			polling-delay-passive = <10>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens1 12>;
- 
- 			trips {
-@@ -5741,8 +5685,6 @@ video-critical {
- 		};
- 
- 		ddr-thermal {
--			polling-delay-passive = <10>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens1 13>;
- 
- 			trips {
-@@ -5761,8 +5703,6 @@ ddr-critical {
- 		};
- 
- 		camera0-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens1 14>;
- 
- 			trips {
-@@ -5781,8 +5721,6 @@ camera0-critical {
- 		};
- 
- 		camera1-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens1 15>;
- 
- 			trips {
-@@ -5801,8 +5739,6 @@ camera1-critical {
- 		};
- 
- 		aoss2-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens2 0>;
- 
- 			trips {
-@@ -5821,8 +5757,6 @@ aoss2-critical {
- 		};
- 
- 		gpuss0-thermal {
--			polling-delay-passive = <10>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens2 1>;
- 
- 			trips {
-@@ -5841,8 +5775,6 @@ gpuss0-critical {
- 		};
- 
- 		gpuss1-thermal {
--			polling-delay-passive = <10>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens2 2>;
- 
- 			trips {
-@@ -5861,8 +5793,6 @@ gpuss1-critical {
- 		};
- 
- 		gpuss2-thermal {
--			polling-delay-passive = <10>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens2 3>;
- 
- 			trips {
-@@ -5881,8 +5811,6 @@ gpuss2-critical {
- 		};
- 
- 		gpuss3-thermal {
--			polling-delay-passive = <10>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens2 4>;
- 
- 			trips {
-@@ -5901,8 +5829,6 @@ gpuss3-critical {
- 		};
- 
- 		gpuss4-thermal {
--			polling-delay-passive = <10>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens2 5>;
- 
- 			trips {
-@@ -5921,8 +5847,6 @@ gpuss4-critical {
- 		};
- 
- 		gpuss5-thermal {
--			polling-delay-passive = <10>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens2 6>;
- 
- 			trips {
-@@ -5941,8 +5865,6 @@ gpuss5-critical {
- 		};
- 
- 		gpuss6-thermal {
--			polling-delay-passive = <10>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens2 7>;
- 
- 			trips {
-@@ -5961,8 +5883,6 @@ gpuss6-critical {
- 		};
- 
- 		gpuss7-thermal {
--			polling-delay-passive = <10>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens2 8>;
- 
- 			trips {
-@@ -5981,8 +5901,6 @@ gpuss7-critical {
- 		};
- 
- 		modem0-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens2 9>;
- 
- 			trips {
-@@ -6001,8 +5919,6 @@ modem0-critical {
- 		};
- 
- 		modem1-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens2 10>;
- 
- 			trips {
-@@ -6021,8 +5937,6 @@ modem1-critical {
- 		};
- 
- 		modem2-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens2 11>;
- 
- 			trips {
-@@ -6041,8 +5955,6 @@ modem2-critical {
- 		};
- 
- 		modem3-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
- 			thermal-sensors = <&tsens2 12>;
- 
- 			trips {
+On 3/19/24 17:10, Doug Anderson wrote:
+> Hi,
+> 
+> On Tue, Mar 19, 2024 at 8:29 AM Johan Hovold <johan+linaro@kernel.org> wrote:
+>>
+>> Some Bluetooth controllers lack persistent storage for the device
+>> address and instead one can be provided by the boot firmware using the
+>> 'local-bd-address' devicetree property.
+>>
+>> The Bluetooth devicetree bindings clearly states that the address should
+>> be specified in little-endian order, but due to a long-standing bug in
+>> the Qualcomm driver which reversed the address some boot firmware has
+>> been providing the address in big-endian order instead.
+>>
+>> Add a new quirk that can be set on platforms with broken firmware and
+>> use it to reverse the address when parsing the property so that the
+>> underlying driver bug can be fixed.
+>>
+>> Fixes: 5c0a1001c8be ("Bluetooth: hci_qca: Add helper to set device address")
+>> Cc: stable@vger.kernel.org      # 5.1
+>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+>> ---
+>>   include/net/bluetooth/hci.h | 9 +++++++++
+>>   net/bluetooth/hci_sync.c    | 5 ++++-
+>>   2 files changed, 13 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+>> index bdee5d649cc6..191077d8d578 100644
+>> --- a/include/net/bluetooth/hci.h
+>> +++ b/include/net/bluetooth/hci.h
+>> @@ -176,6 +176,15 @@ enum {
+>>           */
+>>          HCI_QUIRK_USE_BDADDR_PROPERTY,
+>>
+>> +       /* When this quirk is set, the Bluetooth Device Address provided by
+>> +        * the 'local-bd-address' fwnode property is incorrectly specified in
+>> +        * big-endian order.
+>> +        *
+>> +        * This quirk can be set before hci_register_dev is called or
+>> +        * during the hdev->setup vendor callback.
+>> +        */
+>> +       HCI_QUIRK_BDADDR_PROPERTY_BROKEN,
+> 
+> Like with the binding, I feel like
+> "HCI_QUIRK_BDADDR_PROPERTY_BACKWARDS" or
+> "HCI_QUIRK_BDADDR_PROPERTY_SWAPPED" would be more documenting but I
+> don't feel strongly.
 
--- 
-2.40.1
+Yeah, I thought the same.. and the binding, perhaps could be generic,
+as I have a strong suspicion Qualcomm is not the only vendor who
+made such oopsies..
 
+Konrad
 
