@@ -1,266 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-14505-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 037CC87FC75
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 11:59:12 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2745187FC85
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 12:07:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ACA3F281902
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 10:59:10 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4E2F4B21F6D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 11:07:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 817297CF27;
-	Tue, 19 Mar 2024 10:59:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1921E7B3F6;
+	Tue, 19 Mar 2024 11:07:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LHNulDAQ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dmInOBrl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EEE07B3F6
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 10:59:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC1864CE8;
+	Tue, 19 Mar 2024 11:07:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710845947; cv=none; b=bVHnUJkcpx89HLDrfvcdfLVybpU+2vRVS7t8DrENhZRX400XOoW9E+uq+lLxbiLTPl/CQMzRLescYPWX6Dzj+4Y0pVzyqooMuzYCpb5FNqO/vfDjzxewVdpBaT8zqBXeMU/N0U7H9ev7q810DNu5rb84TX4ap7t2rkgn6iUvrLI=
+	t=1710846454; cv=none; b=BN1NlCTeL7mYGnOL5vTeZ4Pz1lUlpTScM4130+TNMsILQ03Hd+ujqJsrZfen+t4S1qEWkV/AED2r2i6MCjrCTKAdXNspcRGAnrws65y3brqVJDbHwSRaqbdNBA5MOPFC3gHrEH4TDAiqMcJGzXkvuaSxNz+slTpR5J9esWO1QRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710845947; c=relaxed/simple;
-	bh=eSyOUTrKm2w+4kPW3KKzkhjBFUJbNXkStK/tdlKIsKc=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=kGrBjRbzVrhX4NBt0OqX8q/lusc6QG2zDGE34NSg5lie2POVR7YSaD88xIooI4FmCZUOLzvsDp1egeGJVHetFMeUtUqwXnLmcHVKXH9MUpVQDfeuWC4hUJzunPKTrpsaqbARy7tl8LrDPMoAw7Q0zW2VAyuowDpWwDTRVE3EvgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LHNulDAQ; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-41463132ab1so4854955e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 03:59:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710845944; x=1711450744; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=URJxdgqVlqoDNrXeeXOTq1SfTWACq8g8yW2+lxzoe5c=;
-        b=LHNulDAQTB32q3f4KTjkBu/EzroYQ9LCKmCzqk1qUH/OwvZ5iLff7JxpdId1lF3kC7
-         DFP17tF2bdcgV/VDnnrPZs+siPNhrf+PN4G3/S+UpM09EYbOtDe9+pwp1gpDcnE3+q4T
-         lEhUxK2GeUcwPCN3GfQDeu0oHEGxzaGCgmeZa6mDYlGovuErfpQg0Ex2a1HCai3BU5l/
-         7MZp1678o8Tuqx1b+VsEff4ZNiH1CoabKvI5m5DseZqBljBU+F92veJu2eHqrx+x2D0t
-         lIlCbBM9FzTfZloQOCD4fsMMPEOoU1x673234NTDLCUhrFZidsqOk5pc9I5S0JlRhqiz
-         A1CQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710845944; x=1711450744;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=URJxdgqVlqoDNrXeeXOTq1SfTWACq8g8yW2+lxzoe5c=;
-        b=nKvSzNzwLTFNQjEFNGADdL245JuccBd8an5IXirkXedSWbjC0MMdFDF3jOKLoVk+7Q
-         vKHw8Zwunxc0enDxCHRjAZQyGAQ8Ni69SsEDPuBhtoGjZ/Or2mMTiWqTILgEPC0EIsI5
-         eHK9QeT/VgyvVJ2bb6bd+/Is7Pxec1C+1EJ9qhQLIygwi4q7nzOrnMTAdu0H8hxwiErD
-         mIhoLVWw77B/9ACQkk86fYzC0eFDvQePtBhulSLu9qDCPlC0xskI1Oqk+ecc+wYnWbnF
-         zS887l2+7yMT+gfeHH/CUsRrp7+LMvykn1xxIw9FHU8nrFxLCkuLXa2PdH+sqlEm7k1E
-         ix7g==
-X-Forwarded-Encrypted: i=1; AJvYcCV8N4HzsocM0PRwprzae82316TyfuhkVOfCjXKfUXAoGdbCKSjQ6XeMY80FRaE8/9UEikgkNr22Zge3QYBzQ7s+MQ+Eu2hNVJG6doBvmQ==
-X-Gm-Message-State: AOJu0YxB7RkF9Ush3OQ4NPke2OWcc9h7c7eX8duM0nb/CJpDXaPI/Bv5
-	86yGg+Lv6sIYgCHpnc1XfxRlncHAvS6VSKteWdID03OJymOcvI199LY5SUXnspE=
-X-Google-Smtp-Source: AGHT+IHTw+fqjT9qtXiOHeC9NT/dqyCAEtCiF1WiSTroO3VvPAOY+LweBAb87o715igho5oYJxZGcw==
-X-Received: by 2002:adf:f5d1:0:b0:33e:7650:58b4 with SMTP id k17-20020adff5d1000000b0033e765058b4mr9601797wrp.27.1710845943516;
-        Tue, 19 Mar 2024 03:59:03 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:2fcf:6f16:3b3b:da8e? ([2a01:e0a:982:cbb0:2fcf:6f16:3b3b:da8e])
-        by smtp.gmail.com with ESMTPSA id l4-20020adfe584000000b0033e91509224sm12093815wrm.22.2024.03.19.03.59.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Mar 2024 03:59:03 -0700 (PDT)
-Message-ID: <85d67f3f-2b01-44c0-ace3-5e7cb48a9431@linaro.org>
-Date: Tue, 19 Mar 2024 11:59:02 +0100
+	s=arc-20240116; t=1710846454; c=relaxed/simple;
+	bh=pWUlgTn6nHX3bdnZ9hOiOeopJLOgtZrnwrOe1BUeat4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ZahHNIC1pXmHNQe7AgSvQnbpAOOVT3LxCKct39xhKkrhFPPOA0pETbtzwX/9K7otpcoJsTgv399yplolwt2/JdOi94w3fyZDxaTJq9TNTN7v6adZuH8FfQUROoOAJGrBUq6DSqb+4tS/SEXEgGOP1FjLBI2lSVk55sj84/8bneA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dmInOBrl; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42J3JXQf016132;
+	Tue, 19 Mar 2024 11:07:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=s6prlzbdg7THi44K6pB0anmZEUrHlNA21RkUbYyl6f4=; b=dm
+	InOBrlljudKxx9rKF5chn5g6OXVkZKW6syeItdrC1nQPWW3NDtuv0cyUr5M8ZuLB
+	MNAKlvmaZjG3LQ263IO/RicYLnKI0WV8wpKiQuGYb6mropYkKf3DoDl+n95sdvcy
+	l2HYs8OpwJezEAHcbi9fG+I10I4vWr1q1VAie9r9ooPLMgfDWvKgAcqkpx+d6tAx
+	yY9XixjPMTQhD5P56VJ5WlwrvwvSInLoZ112ThMzMN+pZ9f2sMgp2CC/Cxsgyuyb
+	51AE8uBvxA3WFzkt7e5gepOKyWRrqOHIsbRM3UdiY6BX8eO+qLfMUOjJ7O1HY5Uy
+	40E/9NyeAYlSLcFka8bg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wy2e9gyb7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 Mar 2024 11:07:16 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42JB7E9g011442
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 Mar 2024 11:07:14 GMT
+Received: from [10.81.25.230] (10.49.16.6) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 19 Mar
+ 2024 04:07:14 -0700
+Message-ID: <6eafdda1-76e1-49af-ae4b-ffe7b26097ca@quicinc.com>
+Date: Tue, 19 Mar 2024 04:07:13 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 3/7] phy: qcom: qmp-pcie: register second optional PHY AUX
- clock
-Content-Language: en-US, fr
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240319-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v1-0-926d7a4ccd80@linaro.org>
- <20240319-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v1-3-926d7a4ccd80@linaro.org>
- <CAA8EJpoJ0rUd8aY6xpXyL3Obg66XtOebso_AUUxKmg1CWNykJA@mail.gmail.com>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <CAA8EJpoJ0rUd8aY6xpXyL3Obg66XtOebso_AUUxKmg1CWNykJA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v1 2/3] PCI: dwc: add equalization settings for gen4
+Content-Language: en-US
+To: Bjorn Helgaas <helgaas@kernel.org>
+CC: "agross@kernel.org" <agross@kernel.org>,
+        "andersson@kernel.org"
+	<andersson@kernel.org>,
+        "konrad.dybcio@linaro.org"
+	<konrad.dybcio@linaro.org>,
+        "mani@kernel.org" <mani@kernel.org>,
+        "Mrinmay
+ Sarkar (QUIC)" <quic_msarkar@quicinc.com>,
+        "Aravind Ramakrishnaiah (QUIC)"
+	<quic_kraravin@quicinc.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Rob Herring
+	<robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+        "manivannan.sadhasivam@linaro.org" <manivannan.sadhasivam@linaro.org>,
+        "Serge
+ Semin" <fancer.lancer@gmail.com>,
+        Yoshihiro Shimoda
+	<yoshihiro.shimoda.uh@renesas.com>,
+        Josh Triplett <josh@joshtriplett.org>,
+        Conor Dooley <conor.dooley@microchip.com>,
+        "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>,
+        "linux-pci@vger.kernel.org"
+	<linux-pci@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org"
+	<linux-arm-msm@vger.kernel.org>
+References: <20240301200041.GA405674@bhelgaas>
+From: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
+In-Reply-To: <20240301200041.GA405674@bhelgaas>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: CkVqNtX-GBpxlL74-lxp7Gfa2UQ6sN5W
+X-Proofpoint-ORIG-GUID: CkVqNtX-GBpxlL74-lxp7Gfa2UQ6sN5W
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-18_12,2024-03-18_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1011
+ mlxlogscore=999 suspectscore=0 spamscore=0 bulkscore=0 phishscore=0
+ malwarescore=0 adultscore=0 lowpriorityscore=0 mlxscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403140001 definitions=main-2403190085
 
-On 19/03/2024 11:55, Dmitry Baryshkov wrote:
-> On Tue, 19 Mar 2024 at 12:45, Neil Armstrong <neil.armstrong@linaro.org> wrote:
->>
->> The PCIe Gen4x2 PHY found in the SM8[456]50 SoCs have a second clock,
->> add the code to register it for PHYs configs that sets a aux_clock_rate.
->>
->> In order to get the right clock, add qmp_pcie_clk_hw_get() which uses
->> the newly introduced QMP_PCIE_PIPE_CLK & QMP_PCIE_PHY_AUX_CLK clock
->> IDs and also supports the legacy bindings by returning the PIPE clock.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 70 ++++++++++++++++++++++++++++++++
->>   1 file changed, 70 insertions(+)
->>
->> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->> index 079b3e306489..2d05226ae200 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->> @@ -22,6 +22,8 @@
->>   #include <linux/reset.h>
->>   #include <linux/slab.h>
->>
->> +#include <dt-bindings/phy/phy-qcom-qmp.h>
->> +
->>   #include "phy-qcom-qmp-common.h"
->>
->>   #include "phy-qcom-qmp.h"
->> @@ -2389,6 +2391,9 @@ struct qmp_phy_cfg {
->>
->>          /* QMP PHY pipe clock interface rate */
->>          unsigned long pipe_clock_rate;
->> +
->> +       /* QMP PHY AUX clock interface rate */
->> +       unsigned long aux_clock_rate;
->>   };
->>
->>   struct qmp_pcie {
->> @@ -2420,6 +2425,7 @@ struct qmp_pcie {
->>          int mode;
->>
->>          struct clk_fixed_rate pipe_clk_fixed;
->> +       struct clk_fixed_rate aux_clk_fixed;
->>   };
->>
->>   static inline void qphy_setbits(void __iomem *base, u32 offset, u32 val)
->> @@ -3681,6 +3687,62 @@ static int phy_pipe_clk_register(struct qmp_pcie *qmp, struct device_node *np)
->>          return devm_clk_hw_register(qmp->dev, &fixed->hw);
->>   }
->>
->> +/*
->> + * Register a fixed rate PHY aux clock.
->> + *
->> + * The <s>_phy_aux_clksrc generated by PHY goes to the GCC that gate
->> + * controls it. The <s>_phy_aux_clk coming out of the GCC is requested
->> + * by the PHY driver for its operations.
->> + * We register the <s>_phy_aux_clksrc here. The gcc driver takes care
->> + * of assigning this <s>_phy_aux_clksrc as parent to <s>_phy_aux_clk.
->> + * Below picture shows this relationship.
->> + *
->> + *         +---------------+
->> + *         |   PHY block   |<<---------------------------------------------+
->> + *         |               |                                               |
->> + *         |   +-------+   |                      +-----+                  |
->> + *   I/P---^-->|  PLL  |---^--->phy_aux_clksrc--->| GCC |--->phy_aux_clk---+
->> + *    clk  |   +-------+   |                      +-----+
->> + *         +---------------+
->> + */
->> +static int phy_aux_clk_register(struct qmp_pcie *qmp, struct device_node *np)
->> +{
->> +       struct clk_fixed_rate *fixed = &qmp->aux_clk_fixed;
->> +       struct clk_init_data init = { };
->> +       int ret;
->> +
->> +       ret = of_property_read_string_index(np, "clock-output-names", 1, &init.name);
->> +       if (ret) {
->> +               dev_err(qmp->dev, "%pOFn: No clock-output-names index 1\n", np);
->> +               return ret;
->> +       }
->> +
->> +       init.ops = &clk_fixed_rate_ops;
->> +
->> +       fixed->fixed_rate = qmp->cfg->aux_clock_rate;
->> +       fixed->hw.init = &init;
->> +
->> +       return devm_clk_hw_register(qmp->dev, &fixed->hw);
->> +}
->> +
->> +static struct clk_hw *qmp_pcie_clk_hw_get(struct of_phandle_args *clkspec, void *data)
->> +{
->> +       struct qmp_pcie *qmp = data;
->> +
->> +       /* Support legacy bindings */
->> +       if (!clkspec->args_count)
->> +               return &qmp->pipe_clk_fixed.hw;
->> +
->> +       switch (clkspec->args[0]) {
->> +       case QMP_PCIE_PIPE_CLK:
->> +               return &qmp->pipe_clk_fixed.hw;
->> +       case QMP_PCIE_PHY_AUX_CLK:
->> +               return &qmp->aux_clk_fixed.hw;
->> +       }
->> +
->> +       return ERR_PTR(-EINVAL);
->> +}
+
+On 3/1/24 12:00, Bjorn Helgaas wrote:
+> On Thu, Feb 29, 2024 at 09:11:35PM -0800, Shashank Babu Chinta Venkata wrote:
+>> GEN3_RELATED_OFFSET is being used as shadow register for generation4 and
+>> generation5 data rates based on rate select mask settings on this register.
+>> Select relevant mask and equalization settings for generation4 operation.
 > 
-> Can we use of_clk_hw_onecell_get() instead? I think it even should be
-> possible to use onecell for both cases, it will look at the first arg,
-> which will be 0 in case of #clock-cells equal to 0.
-
-Let me investigate if it's possible
-
+> Please capitalize subject lines to match history ("PCI: qcom: Add ...")
 > 
+> s/GEN3_RELATED_OFFSET/GEN3_RELATED_OFF/ (I think?)
+> 
+> I wish these "GEN3_RELATED" things were named with the data rate
+> instead of "GEN3".  The PCIe spec defines these things based on the
+> data rate (8GT/s, 16GT/s, etc), not the revision of the spec they
+> appeared in (gen3/gen4/etc).
+I have kept it consistent with nomenclature followed in pcie designware
+documentation for these registers. For function names and constraint to 
+apply these, I will fall back to data rates rather than generation.
+
+> Using "GEN3" means we have to first look up the "gen -> rate" mapping
+> before finding the relevant spec info.
+> 
+> Applies to the subject line, commit log, #defines, function names,
+> etc.
+> 
+>> +void qcom_pcie_cmn_set_gen4_eq_settings(struct dw_pcie *pci)
+>> +{
+>> +	u32 reg;
 >> +
->>   static int qmp_pcie_register_clocks(struct qmp_pcie *qmp, struct device_node *np)
+>> +	reg = dw_pcie_readl_dbi(pci, GEN3_RELATED_OFF);
+> 
+> Warrants a one-line comment about using "GEN3_..." in a function named
+> "..._gen4_..."  (But ideally both would be renamed based on the data
+> rate instead.)
+> 
+>> +++ b/drivers/pci/controller/dwc/pcie-qcom-cmn.h
+>> @@ -9,10 +9,29 @@
+>>   #include "../../pci.h"
+>>   #include "pcie-designware.h"
+>>   
+>> +#define GEN3_EQ_CONTROL_OFF			0x8a8
+>> +#define GEN3_EQ_CONTROL_OFF_FB_MODE_MASK        GENMASK(3, 0)
+>> +#define GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE   BIT(4)
+>> +#define GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC_MASK	GENMASK(23, 8)
+>> +#define GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL	BIT(24)
+> 
+> Are these qcom-specific registers, or should they be added alongside
+> GEN3_RELATED_OFF in pcie-designware.h?
+yes, these are designware register offsets. Will move them to designware 
+header file. However, the settings are vendor specific.I will park
+settings for these in QCOM specific files.
+> 
+>> +#define GEN3_EQ_FB_MODE_DIR_CHANGE_OFF          0x8ac
+>> +#define GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA_VAL   0x5
+>> +#define GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA_VAL  0x5
+>> +#define GEN3_EQ_FMDC_N_EVALS_VAL          0xD
+>> +#define GEN3_EQ_FMDC_T_MIN_PHASE23_MASK         GENMASK(4, 0)
+>> +#define GEN3_EQ_FMDC_N_EVALS_MASK               GENMASK(9, 5)
+>> +#define GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA_MASK  GENMASK(13, 10)
+>> +#define GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA_MASK	GENMASK(17, 14)
+>> +#define GEN3_EQ_FMDC_N_EVALS_SHIFT			5
+>> +#define GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA_SHIFT		10
+>> +#define GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA_SHIFT	14
+> 
+>> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+>> @@ -438,6 +438,10 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
+>>   		goto err_disable_resources;
+>>   	}
+>>   
+>> +	/* set Gen4 equalization settings */
+> 
+> Pointless comment.
+> 
+>> +	if (pci->link_gen == 4)
+>> +		qcom_pcie_cmn_set_gen4_eq_settings(pci);
+> 
+>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+>> @@ -263,6 +263,10 @@ static int qcom_pcie_start_link(struct dw_pcie *pci)
 >>   {
->>          int ret;
->> @@ -3689,6 +3751,14 @@ static int qmp_pcie_register_clocks(struct qmp_pcie *qmp, struct device_node *np
->>          if (ret)
->>                  return ret;
->>
->> +       if (qmp->cfg->aux_clock_rate) {
->> +               ret = phy_aux_clk_register(qmp, np);
->> +               if (ret)
->> +                       return ret;
->> +
->> +               return devm_of_clk_add_hw_provider(qmp->dev, qmp_pcie_clk_hw_get, qmp);
->> +       }
->> +
->>          return devm_of_clk_add_hw_provider(qmp->dev, of_clk_hw_simple_get,
->>                                             &qmp->pipe_clk_fixed.hw);
->>   }
->>
->> --
->> 2.34.1
->>
->>
+>>   	struct qcom_pcie *pcie = to_qcom_pcie(pci);
+>>   
+>> +	/* set Gen4 equalization settings */
 > 
+> Pointless comment.
 > 
-
+>> +	if (pci->link_gen == 4)
+>> +		qcom_pcie_cmn_set_gen4_eq_settings(pci);
 
