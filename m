@@ -1,206 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-14506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2745187FC85
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 12:07:43 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF9F587FD12
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 12:42:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4E2F4B21F6D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 11:07:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 619EA1F22B06
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 11:42:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1921E7B3F6;
-	Tue, 19 Mar 2024 11:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07BB87EF1D;
+	Tue, 19 Mar 2024 11:42:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dmInOBrl"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MY3NMmAx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC1864CE8;
-	Tue, 19 Mar 2024 11:07:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1617E767;
+	Tue, 19 Mar 2024 11:42:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710846454; cv=none; b=BN1NlCTeL7mYGnOL5vTeZ4Pz1lUlpTScM4130+TNMsILQ03Hd+ujqJsrZfen+t4S1qEWkV/AED2r2i6MCjrCTKAdXNspcRGAnrws65y3brqVJDbHwSRaqbdNBA5MOPFC3gHrEH4TDAiqMcJGzXkvuaSxNz+slTpR5J9esWO1QRo=
+	t=1710848538; cv=none; b=MFmnY1K1EMYJypURcEu8gGLcji2vBRchB7kkA814fHteWmS57jPeuSl1Zwxy56+v+l8SLk7hk1nEXU1Sc7/5iqtuKFr6hXz4FbKmXICcSUOu+BZnVSNldmcUn2G6rIk/i9mLI96fnA+vmn3AlW/kyWb4yUEQ7Vbv7EfSIEeVcww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710846454; c=relaxed/simple;
-	bh=pWUlgTn6nHX3bdnZ9hOiOeopJLOgtZrnwrOe1BUeat4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ZahHNIC1pXmHNQe7AgSvQnbpAOOVT3LxCKct39xhKkrhFPPOA0pETbtzwX/9K7otpcoJsTgv399yplolwt2/JdOi94w3fyZDxaTJq9TNTN7v6adZuH8FfQUROoOAJGrBUq6DSqb+4tS/SEXEgGOP1FjLBI2lSVk55sj84/8bneA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dmInOBrl; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42J3JXQf016132;
-	Tue, 19 Mar 2024 11:07:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=s6prlzbdg7THi44K6pB0anmZEUrHlNA21RkUbYyl6f4=; b=dm
-	InOBrlljudKxx9rKF5chn5g6OXVkZKW6syeItdrC1nQPWW3NDtuv0cyUr5M8ZuLB
-	MNAKlvmaZjG3LQ263IO/RicYLnKI0WV8wpKiQuGYb6mropYkKf3DoDl+n95sdvcy
-	l2HYs8OpwJezEAHcbi9fG+I10I4vWr1q1VAie9r9ooPLMgfDWvKgAcqkpx+d6tAx
-	yY9XixjPMTQhD5P56VJ5WlwrvwvSInLoZ112ThMzMN+pZ9f2sMgp2CC/Cxsgyuyb
-	51AE8uBvxA3WFzkt7e5gepOKyWRrqOHIsbRM3UdiY6BX8eO+qLfMUOjJ7O1HY5Uy
-	40E/9NyeAYlSLcFka8bg==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wy2e9gyb7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Mar 2024 11:07:16 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42JB7E9g011442
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Mar 2024 11:07:14 GMT
-Received: from [10.81.25.230] (10.49.16.6) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 19 Mar
- 2024 04:07:14 -0700
-Message-ID: <6eafdda1-76e1-49af-ae4b-ffe7b26097ca@quicinc.com>
-Date: Tue, 19 Mar 2024 04:07:13 -0700
+	s=arc-20240116; t=1710848538; c=relaxed/simple;
+	bh=9mj4fImnckfhMvuhi27/rW5wPV2VrOkxeaCKbPhYXm4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=X1m7J4WI6OXU7UkR0axb+RtNGyKNZX2xr92KZjol+HlZnM6PupDhWXqVYluWj9lQIpJgHKrOzTaxJjkn3lmEESVg/KUGZDg63i3LbLfUqjANHs4o6AQXilRSynDGI3ePY5JbVr4IPTZQYK3yY95byFd3eGVpIWZhvbUJRWon3co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MY3NMmAx; arc=none smtp.client-ip=209.85.208.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2d228a132acso77085811fa.0;
+        Tue, 19 Mar 2024 04:42:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710848535; x=1711453335; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=elC/J+DQMSiEL3syNo73tLIm3C8p69Tr5sKldmaLKFo=;
+        b=MY3NMmAxr8rZQTPnAgJunQaB9h2UvICFML08N3A3CMq94G9Mqa5oDQTVInZYKZfwWF
+         uveJ7F/7Ia/0yxFZhQHiInFekyNnUaLlStNMbTeNKa1VEOvaQMf6fw5WjSufLZpwpS3h
+         agPE3CE/yg/4yXwcMW5H5+MIF5qNuNtrh5HPv8cIeDbTVMN0ZkL4AwOjGvuZGqRTOpC0
+         20GCf71T/NP82DDOqzsMZg8s2qpPOGCWhqyefhMd6EKi9EYqx/ASYuQc+BgPbfx6P+Yx
+         wsy5tF7G3q8EZeD5oXhtxThHamGhik6G1Jek84eayryW/ZhwGBueasl15Uh1cHYN1919
+         jh2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710848535; x=1711453335;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=elC/J+DQMSiEL3syNo73tLIm3C8p69Tr5sKldmaLKFo=;
+        b=ktwKyYxtl5uDWPzUWLj3M+Cmlf8xH5OHOKecH9H4FBJ/hHcHCS2d8TugCRYndTzjRA
+         ELjn8NfNZpwKMGLELzaPgmB2jB1A6OtFCCCAasdsxFazQ/qpWDXuEqawf2cEC4Zi/mWv
+         ULWPWoXwkMK0wfsCsyGB5S5m6k0G8oganrL9JKbc8nVa8YVdZSK77OmnFJPcOgeh9+D8
+         s3iHeXKn5ea7D30EY6fsphydY1OkouVzBmmIrhQjVblyS4TalwGqUDOnb81iTVqSANWy
+         7oyUjIngr9v5dPO6Y8enTm5VijcgIsv3xk+uecPUux2fk4ADOAWZqhL7eUh1IWdva4Rn
+         dmsg==
+X-Forwarded-Encrypted: i=1; AJvYcCUO3qn1FTyeRhu1q8xlAOeRhAKSFQY5YXg/gTBdk+LX2HG5+wazVQ6aCj4TaBOv3RsE4scywiZidE56IIgZxZFpgmUR5fdwKXCUakFUZRcOiMFg1NRGhj8Gg/RDvNRlOSpy29VOiWUY6qw4bt73Irq7vMIz/yCfXzFzopzkdkuBJJYWQUrIB7CtDMgYkMTHki5ciR0H32rub1hlEES5DU2Zq3Btwx39BEbZ
+X-Gm-Message-State: AOJu0YxwnZEwnrRwDSSYzL1ihq4BIhSMzvKkPXLdJDZJ0PPPDMvW5j8c
+	mBbfdXd3uuQoYslDz+ZkIgfED7/BgJXDB3GPF9kjoo0ImxmAvPFH
+X-Google-Smtp-Source: AGHT+IEbPtInSnoxABuprHRsFDYGfrjvEEgi/PvCR0A0PjriWs8/Fs7e5VgS8xyyf1KxtbICUZUEPw==
+X-Received: by 2002:a2e:b8c2:0:b0:2d5:9bd4:4496 with SMTP id s2-20020a2eb8c2000000b002d59bd44496mr2105191ljp.50.1710848535069;
+        Tue, 19 Mar 2024 04:42:15 -0700 (PDT)
+Received: from mobilestation ([178.176.56.174])
+        by smtp.gmail.com with ESMTPSA id b4-20020a2e8944000000b002d449d1d509sm1851199ljk.70.2024.03.19.04.42.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Mar 2024 04:42:14 -0700 (PDT)
+Date: Tue, 19 Mar 2024 14:42:11 +0300
+From: Serge Semin <fancer.lancer@gmail.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Jingoo Han <jingoohan1@gmail.com>, 
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, Rob Herring <robh@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Marek Vasut <marek.vasut+renesas@gmail.com>, 
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, Kishon Vijay Abraham I <kishon@kernel.org>, 
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev, Siddharth Vadapalli <s-vadapalli@ti.com>, 
+	Frank Li <Frank.Li@nxp.com>
+Subject: Re: [PATCH v5 1/5] PCI: dwc: Refactor dw_pcie_edma_find_chip() API
+Message-ID: <kxcd3n4hb6c2bhksqvxql3gj6zr2my5moxx5mighk33dggspw5@wvt565ch6gm2>
+References: <20240318-dw-hdma-v5-0-f04c5cdde760@linaro.org>
+ <20240318-dw-hdma-v5-1-f04c5cdde760@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v1 2/3] PCI: dwc: add equalization settings for gen4
-Content-Language: en-US
-To: Bjorn Helgaas <helgaas@kernel.org>
-CC: "agross@kernel.org" <agross@kernel.org>,
-        "andersson@kernel.org"
-	<andersson@kernel.org>,
-        "konrad.dybcio@linaro.org"
-	<konrad.dybcio@linaro.org>,
-        "mani@kernel.org" <mani@kernel.org>,
-        "Mrinmay
- Sarkar (QUIC)" <quic_msarkar@quicinc.com>,
-        "Aravind Ramakrishnaiah (QUIC)"
-	<quic_kraravin@quicinc.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Rob Herring
-	<robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-        "manivannan.sadhasivam@linaro.org" <manivannan.sadhasivam@linaro.org>,
-        "Serge
- Semin" <fancer.lancer@gmail.com>,
-        Yoshihiro Shimoda
-	<yoshihiro.shimoda.uh@renesas.com>,
-        Josh Triplett <josh@joshtriplett.org>,
-        Conor Dooley <conor.dooley@microchip.com>,
-        "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>,
-        "linux-pci@vger.kernel.org"
-	<linux-pci@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org"
-	<linux-arm-msm@vger.kernel.org>
-References: <20240301200041.GA405674@bhelgaas>
-From: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
-In-Reply-To: <20240301200041.GA405674@bhelgaas>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: CkVqNtX-GBpxlL74-lxp7Gfa2UQ6sN5W
-X-Proofpoint-ORIG-GUID: CkVqNtX-GBpxlL74-lxp7Gfa2UQ6sN5W
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-18_12,2024-03-18_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1011
- mlxlogscore=999 suspectscore=0 spamscore=0 bulkscore=0 phishscore=0
- malwarescore=0 adultscore=0 lowpriorityscore=0 mlxscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403140001 definitions=main-2403190085
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240318-dw-hdma-v5-1-f04c5cdde760@linaro.org>
 
+On Mon, Mar 18, 2024 at 11:34:25AM +0530, Manivannan Sadhasivam wrote:
+> In order to add support for Hyper DMA (HDMA), let's refactor the existing
+> dw_pcie_edma_find_chip() API by moving the common code to separate
+> functions.
+> 
+> No functional change.
 
-On 3/1/24 12:00, Bjorn Helgaas wrote:
-> On Thu, Feb 29, 2024 at 09:11:35PM -0800, Shashank Babu Chinta Venkata wrote:
->> GEN3_RELATED_OFFSET is being used as shadow register for generation4 and
->> generation5 data rates based on rate select mask settings on this register.
->> Select relevant mask and equalization settings for generation4 operation.
-> 
-> Please capitalize subject lines to match history ("PCI: qcom: Add ...")
-> 
-> s/GEN3_RELATED_OFFSET/GEN3_RELATED_OFF/ (I think?)
-> 
-> I wish these "GEN3_RELATED" things were named with the data rate
-> instead of "GEN3".  The PCIe spec defines these things based on the
-> data rate (8GT/s, 16GT/s, etc), not the revision of the spec they
-> appeared in (gen3/gen4/etc).
-I have kept it consistent with nomenclature followed in pcie designware
-documentation for these registers. For function names and constraint to 
-apply these, I will fall back to data rates rather than generation.
+No more notes from my side. Thanks!
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
 
-> Using "GEN3" means we have to first look up the "gen -> rate" mapping
-> before finding the relevant spec info.
+-Serge(y)
+
 > 
-> Applies to the subject line, commit log, #defines, function names,
-> etc.
+> Suggested-by: Serge Semin <fancer.lancer@gmail.com>
+> Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+> Reviewed-by: Frank Li <Frank.Li@nxp.com>
+> Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  drivers/pci/controller/dwc/pcie-designware.c | 37 ++++++++++++++++++++++------
+>  1 file changed, 30 insertions(+), 7 deletions(-)
 > 
->> +void qcom_pcie_cmn_set_gen4_eq_settings(struct dw_pcie *pci)
->> +{
->> +	u32 reg;
->> +
->> +	reg = dw_pcie_readl_dbi(pci, GEN3_RELATED_OFF);
+> diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
+> index 250cf7f40b85..e591c1cd1efb 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware.c
+> @@ -880,7 +880,17 @@ static struct dw_edma_plat_ops dw_pcie_edma_ops = {
+>  	.irq_vector = dw_pcie_edma_irq_vector,
+>  };
+>  
+> -static int dw_pcie_edma_find_chip(struct dw_pcie *pci)
+> +static void dw_pcie_edma_init_data(struct dw_pcie *pci)
+> +{
+> +	pci->edma.dev = pci->dev;
+> +
+> +	if (!pci->edma.ops)
+> +		pci->edma.ops = &dw_pcie_edma_ops;
+> +
+> +	pci->edma.flags |= DW_EDMA_CHIP_LOCAL;
+> +}
+> +
+> +static int dw_pcie_edma_find_mf(struct dw_pcie *pci)
+>  {
+>  	u32 val;
+>  
+> @@ -902,8 +912,6 @@ static int dw_pcie_edma_find_chip(struct dw_pcie *pci)
+>  
+>  	if (val == 0xFFFFFFFF && pci->edma.reg_base) {
+>  		pci->edma.mf = EDMA_MF_EDMA_UNROLL;
+> -
+> -		val = dw_pcie_readl_dma(pci, PCIE_DMA_CTRL);
+>  	} else if (val != 0xFFFFFFFF) {
+>  		pci->edma.mf = EDMA_MF_EDMA_LEGACY;
+>  
+> @@ -912,12 +920,14 @@ static int dw_pcie_edma_find_chip(struct dw_pcie *pci)
+>  		return -ENODEV;
+>  	}
+>  
+> -	pci->edma.dev = pci->dev;
+> +	return 0;
+> +}
+>  
+> -	if (!pci->edma.ops)
+> -		pci->edma.ops = &dw_pcie_edma_ops;
+> +static int dw_pcie_edma_find_channels(struct dw_pcie *pci)
+> +{
+> +	u32 val;
+>  
+> -	pci->edma.flags |= DW_EDMA_CHIP_LOCAL;
+> +	val = dw_pcie_readl_dma(pci, PCIE_DMA_CTRL);
+>  
+>  	pci->edma.ll_wr_cnt = FIELD_GET(PCIE_DMA_NUM_WR_CHAN, val);
+>  	pci->edma.ll_rd_cnt = FIELD_GET(PCIE_DMA_NUM_RD_CHAN, val);
+> @@ -930,6 +940,19 @@ static int dw_pcie_edma_find_chip(struct dw_pcie *pci)
+>  	return 0;
+>  }
+>  
+> +static int dw_pcie_edma_find_chip(struct dw_pcie *pci)
+> +{
+> +	int ret;
+> +
+> +	dw_pcie_edma_init_data(pci);
+> +
+> +	ret = dw_pcie_edma_find_mf(pci);
+> +	if (ret)
+> +		return ret;
+> +
+> +	return dw_pcie_edma_find_channels(pci);
+> +}
+> +
+>  static int dw_pcie_edma_irq_verify(struct dw_pcie *pci)
+>  {
+>  	struct platform_device *pdev = to_platform_device(pci->dev);
 > 
-> Warrants a one-line comment about using "GEN3_..." in a function named
-> "..._gen4_..."  (But ideally both would be renamed based on the data
-> rate instead.)
+> -- 
+> 2.25.1
 > 
->> +++ b/drivers/pci/controller/dwc/pcie-qcom-cmn.h
->> @@ -9,10 +9,29 @@
->>   #include "../../pci.h"
->>   #include "pcie-designware.h"
->>   
->> +#define GEN3_EQ_CONTROL_OFF			0x8a8
->> +#define GEN3_EQ_CONTROL_OFF_FB_MODE_MASK        GENMASK(3, 0)
->> +#define GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE   BIT(4)
->> +#define GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC_MASK	GENMASK(23, 8)
->> +#define GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL	BIT(24)
-> 
-> Are these qcom-specific registers, or should they be added alongside
-> GEN3_RELATED_OFF in pcie-designware.h?
-yes, these are designware register offsets. Will move them to designware 
-header file. However, the settings are vendor specific.I will park
-settings for these in QCOM specific files.
-> 
->> +#define GEN3_EQ_FB_MODE_DIR_CHANGE_OFF          0x8ac
->> +#define GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA_VAL   0x5
->> +#define GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA_VAL  0x5
->> +#define GEN3_EQ_FMDC_N_EVALS_VAL          0xD
->> +#define GEN3_EQ_FMDC_T_MIN_PHASE23_MASK         GENMASK(4, 0)
->> +#define GEN3_EQ_FMDC_N_EVALS_MASK               GENMASK(9, 5)
->> +#define GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA_MASK  GENMASK(13, 10)
->> +#define GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA_MASK	GENMASK(17, 14)
->> +#define GEN3_EQ_FMDC_N_EVALS_SHIFT			5
->> +#define GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA_SHIFT		10
->> +#define GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA_SHIFT	14
-> 
->> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
->> @@ -438,6 +438,10 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
->>   		goto err_disable_resources;
->>   	}
->>   
->> +	/* set Gen4 equalization settings */
-> 
-> Pointless comment.
-> 
->> +	if (pci->link_gen == 4)
->> +		qcom_pcie_cmn_set_gen4_eq_settings(pci);
-> 
->> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
->> @@ -263,6 +263,10 @@ static int qcom_pcie_start_link(struct dw_pcie *pci)
->>   {
->>   	struct qcom_pcie *pcie = to_qcom_pcie(pci);
->>   
->> +	/* set Gen4 equalization settings */
-> 
-> Pointless comment.
-> 
->> +	if (pci->link_gen == 4)
->> +		qcom_pcie_cmn_set_gen4_eq_settings(pci);
 
