@@ -1,61 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-14449-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 237BF87F5C1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 03:52:43 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 510EF87F5C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 03:53:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CB9EC1F22113
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 02:52:42 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D720AB21E2B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 02:53:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FEC17F7F6;
-	Tue, 19 Mar 2024 02:49:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B3AD7FBCD;
+	Tue, 19 Mar 2024 02:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tq/oqrYb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tEF3tECZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456D87F7F2;
-	Tue, 19 Mar 2024 02:49:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1397B7FBC4;
+	Tue, 19 Mar 2024 02:49:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710816550; cv=none; b=Ea84rw3DLFYPYihFPbg47TIMJCVfWstMYlNct+YDftPTIoAsS2VJtBjhiew6nOklCiWX3fi/xCObhe4LsnALJLdQE/lyvkhy33qZtqM/Iihmt/sEQsUzGOoOD55nrOApAhMVP6vBN7AxpRzpI6RGZdPbnpe3Amc76yKaPoXjKzc=
+	t=1710816552; cv=none; b=HgFJZ8XzjpcUvOO4f+xyZRoe4nmqIc1qq/KtrrMEtbHjAXWL/BRBqtIDKtUfNmEK7VUky1P3NS3L5P7wAVCKSc8oDuboiyz4qE8vondnf1G5ULfWAp4RXxufw8uoecrOJHwLIK2P0byVA2zxIfaMFgIShckCJFkDf7BeJ0gIEpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710816550; c=relaxed/simple;
-	bh=zAJX23UHd/9Paoq2CMnqidvxB8/P6xEMFnnlO4OCSak=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CZ85MvxzH40fjMWJUxqIj/tnQkzfupnq1E8naVoqk1J01IgRaMEIKASohMTI6BApW3Xhb8wUsvm7kQeCcS9GkQtXlaAU5TPdbuNKEEZSGgo/2q/JocKLVdgobpAO/fmK947TAi5hG+pFrDVqc5L0EdmziJwWM7d7BknPgj7x8O8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tq/oqrYb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79067C43399;
-	Tue, 19 Mar 2024 02:49:09 +0000 (UTC)
+	s=arc-20240116; t=1710816552; c=relaxed/simple;
+	bh=6IEeWe8fAl6Qfo90w/86AbAPtb+pIixFMGMT5D84h9w=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=kbUVxIwOZvpayCbUAFPzpKWBCzaDsH7iX4Y6Km0gS/scVRxw4wD6yuXFiUD69m5Ns0aG2sQTYNGyrPEYedhwvqIgF9/yvedQj1DhraNSk6NEpBeHw/ZAfEUcyy3XDyMGiCE6GQP3H2E5cDRiqpUGxxbi5xDD7glar3IBQ0JyC2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tEF3tECZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EDEAC43394;
+	Tue, 19 Mar 2024 02:49:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710816550;
-	bh=zAJX23UHd/9Paoq2CMnqidvxB8/P6xEMFnnlO4OCSak=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tq/oqrYb+k5P75nIyad8a0mFyixet/T1niCR4lJ/xb2H/Sfvu2r8PhrXMHvySXMar
-	 A+wt9YN+5yp+Whzt3bcn9WzpB46pQY6JIgHonjA9niVWhYNo8z+lUL/cuUOsZoqzIM
-	 ew1dbAN8y4BARA9SG8YYsrgifHYutMwmrY1OXDTPSoYkLdPNP/4/EBXH/7sfdHnF99
-	 7y41fn66MYHl29ORexs2ZsbQwUM0Lza3T76g6ePyq5L/ljbHgMqjaYrRBjP1DKI7EA
-	 yFmSwo+8/V9Zk4bsAXY1f/t1fxxUTlR5vrK+igWV2pYWhvnATith0Y24p1ICsn51Gt
-	 QLrFlnzi3Aphg==
+	s=k20201202; t=1710816551;
+	bh=6IEeWe8fAl6Qfo90w/86AbAPtb+pIixFMGMT5D84h9w=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=tEF3tECZ0dAeyJujgyOOwdeXsb3wHpw6pf172VsJcTJsZm1pdtYnQlceKvDimwART
+	 5Cs/2k4Z1USVSkud8Em2/pOWX3ZYC4BhXkNlMPZX35qC2DJeGufs2ajgSgKrju+gBY
+	 JYvOm3dds9pEc+gFZFPoFOed/p4t/UQGX4XByBCIgNgAXqgKTrlkJ09S4ajqRVHmpj
+	 Y86y1P4PFkP5OFDMw2qExEw09oWn7eXwdd3huaCEQNb36mk8dGxnQxj9SsBazJD+rc
+	 2hLyCejKhpBp8A/J+UcFZZI6PReY49LA6kOq7vEULX4UCOBKuC4hC4OqcBSF7Ka0XM
+	 /5ELioEiZ+OKw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Jianhua Lu <lujianhua000@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	dri-devel@lists.freedesktop.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] arm64: dts: qcom: sm8250-xiaomi-elish: add usb pd negotiation support
-Date: Mon, 18 Mar 2024 21:48:40 -0500
-Message-ID: <171081652637.198276.12446437834826324312.b4-ty@kernel.org>
+	linux-arm-msm@vger.kernel.org,
+	Richard Acayan <mailingradian@gmail.com>
+Subject: Re: (subset) [PATCH 0/3] drm/panel: Pixel 3a Panel
+Date: Mon, 18 Mar 2024 21:48:41 -0500
+Message-ID: <171081652646.198276.4591986979489107944.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240302131025.13741-1-lujianhua000@gmail.com>
-References: <20240302131025.13741-1-lujianhua000@gmail.com>
+In-Reply-To: <20240209001639.387374-6-mailingradian@gmail.com>
+References: <20240209001639.387374-6-mailingradian@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,16 +75,21 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Sat, 02 Mar 2024 21:10:25 +0800, Jianhua Lu wrote:
-> Add usb pd negotiation, but charging is controlled by pm8150b pmic,
-> so it can only charge battery with 5W,
+On Thu, 08 Feb 2024 19:16:41 -0500, Richard Acayan wrote:
+> This adds support for the AMS559NK06 panel with the S6E3FA7 display
+> controller and enables the display subsystem on the Pixel 3a.
 > 
+> Richard Acayan (3):
+>   dt-bindings: display: panel-simple-dsi: add s6e3fa7 ams559nk06 compat
+>   drm/panel: add samsung s6e3fa7 panel driver
+>   arm64: dts: qcom: sdm670-google-sargo: add panel
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sm8250-xiaomi-elish: add usb pd negotiation support
-      commit: 91905d8368c69bea3fb85f5c76334274a232612d
+[3/3] arm64: dts: qcom: sdm670-google-sargo: add panel
+      commit: 232490b925272d54dd91847a183bdbc2deec904b
 
 Best regards,
 -- 
