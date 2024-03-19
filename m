@@ -1,245 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-14536-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DEAF7880160
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 17:05:40 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96657880181
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 17:10:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6E3B0282B24
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 16:05:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B91B21C22D8C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 16:10:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A8BA7C0A7;
-	Tue, 19 Mar 2024 16:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 381D281ADB;
+	Tue, 19 Mar 2024 16:10:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uYDJUIqt"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="eM3YBj9/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59864651BE
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 16:05:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BDAA81AC4
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 16:10:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710864337; cv=none; b=iwV+Jwyb0wRf9p5MCtfLjxdtMBOe+JMvXX6jaPoqHCBpOlKZscVhV5gmvuXwLUXgRHG6TqC9z9Pzp8G1DgaKm3+cPrBc7Sg6P6maBrQVQOvqI5K2xeQ5MrwUznDUIyr8WDWI+VBC1Rqw+zI/ARBgJ671QtrF9p+zRJxSv+03sus=
+	t=1710864633; cv=none; b=hJuOmcaG0qz6amPpzAnNDyHZgqYXqhjIkCgpw13jtIvi+R+cdrULfbxH0vDF6QAGoGRY89Ca+qianMVtVKW839CkZpxsqeaEibH9GhGOf9jws73lHbmrVWOZ55+sHpD+L9fG6w3n9OzF9BZy6gmowFqeSQJ8GJHhET1GPB2BXP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710864337; c=relaxed/simple;
-	bh=Ad79h1k+HD6v+kGeE/hH+EBlVR2ZFbisAIfFd18eHu8=;
+	s=arc-20240116; t=1710864633; c=relaxed/simple;
+	bh=FWs6LFKM/xcvvgakZ39skUFNVfNPQgC7Bo//2KPJp+g=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nFCJe85VfaJJPxQX4sspaCRgyieifXoVcwUO3snv5PzpAAbuUr7eranQrVhKxsF+jo+NIiT3czIuNGH7dXfqP2vl5YYl7E/N/D7jH0AhZCtyQIW4r9vlTgasV8yovs524BPP1H3csVKECf06SAP607YIcGloLAO9CsduMvjfyk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uYDJUIqt; arc=none smtp.client-ip=209.85.219.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-dcbef31a9dbso3996002276.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 09:05:35 -0700 (PDT)
+	 To:Cc:Content-Type; b=Vaqd+RUuY9YsjOgj11nzAQnbVGNiEzpcDjJR01cEhkyO7HMTHnkCWUdRE4eXyMo2lTed6p9S4PKdVjXSxUnLOTO8ffCPWq1GJ2S2C6w4CMh0WyFaiMyb3h5T5eOvzIE1RUsN8ITfRkjsjd+OxThVu4hU7v7hmtKz3IJG4fby/oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=eM3YBj9/; arc=none smtp.client-ip=209.85.219.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-690c821e088so36658046d6.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 09:10:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710864334; x=1711469134; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ol5DwFk94dhNJ8561vUenj1hX3tsUa9C7nuNtM75Z+k=;
-        b=uYDJUIqtI3oZMQjzeA1J5JXYh3HLSmLbQp++faxm/PYEYEDZ/ZBDwaHNvXsSh1Ik6e
-         FOmtKDNxfumJI4E/n2xw1E5Md3lKq586rtIlkEkCdENUlTUbDyLtsg2sn8uvx4RdRG6D
-         qUSZyM52FAdnyIRc0nCAXhiu0vqHOxxuF2Tf4iJXoH5urtMbNXiIOfooPtNiFPLFt2xq
-         u2EnT7+RWgCReWaDFEdFhe92Lm1cEKorfj8lgj7i5bddmJsoBEqX2Bonf+LOCipJYRzu
-         F6kg4wz0p/mXhaxgm3EyUVCblIHabnm86mlmwLEVSMpDEHMe97HEZYC86crABNn5Fb2n
-         MjGQ==
+        d=chromium.org; s=google; t=1710864628; x=1711469428; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Suh5QCHeNsdbI/6JZV91e5lppTR9YIcMyoALsn6PjZc=;
+        b=eM3YBj9/wWnwAYlxSdq7Ro9SqQiiENW4Nz4K9XerJQ7A0RGjQ2Sm0caYDn18+OopHo
+         9GYvo4NeXVSTzrGdHSeR2vfy9hDO9BMJnSRoWTsjEZKlhjJGiZYf36jTEI0mLaDUEru8
+         15B/Fbg4Ew9P1I0M8f8LwMHDeMVa4bHtk+mTo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710864334; x=1711469134;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Ol5DwFk94dhNJ8561vUenj1hX3tsUa9C7nuNtM75Z+k=;
-        b=enBlGyIUm9LfrwNwyDC4v6om0GlqS3Q4wybL/cGiFb5z6FaJ6YYO0yYzjgIm8wW3EC
-         iIqbmuyM8EqFyEy0qxflfWVfpk6IKrEh+rbdo4eK4Px0koTNEzdi74CbjO32NATLJAiS
-         n5CxLJn7Cry3xcc8hpy++yfHuinBpqazUssRMKYRMsXvhRCyhyit0Yh0aXv46slzFEkp
-         PtuE9aE6fQnTbreGsCQWjpL+DUTwPFzrzbWeUVw7kjiQzi2mQYyUNJgOy+pOScL4aP52
-         t7OSDe1a+auBV9FD65l0tEy0UUfPIWrEa2dynBP7qGqBkfYgBTPzspsbhMikdjpX1A/T
-         ZfAA==
-X-Forwarded-Encrypted: i=1; AJvYcCXIJ67b4vFHGoKTcQeK+SPd76Wuz1fXrOp8l7sl1Ame483B/yrc6CQkdpwjseEwrg2VLyCxhBm+ETlwzue0aPM/ncrA/BZD+wOUJ0yPgQ==
-X-Gm-Message-State: AOJu0YyYqlPItnuL36Z6nvNFyW4mUahViPAmIVeKuBNRXsbtoHU1XD7r
-	0D13IxNrF7CHz/pTuGLPwsaqYm1yP9bUTzQ/LR9sdl2DIrue1Ruf1c0HR47XdKVawU9tQNLbsBS
-	o9Eor7VQJ9nHbSSCmOBoIxtz3bd5TsMcIucTsjQ==
-X-Google-Smtp-Source: AGHT+IF8cnUo8sbparMWwRRVzaaD6qBiN+30eL8pVGijJslX0pHZp1XBv9v7gWbSuNhRHpCDDPAmYisXA5pPMF9uvsQ=
-X-Received: by 2002:a25:780b:0:b0:dcd:97ad:74b3 with SMTP id
- t11-20020a25780b000000b00dcd97ad74b3mr2186633ybc.63.1710864334302; Tue, 19
- Mar 2024 09:05:34 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1710864628; x=1711469428;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Suh5QCHeNsdbI/6JZV91e5lppTR9YIcMyoALsn6PjZc=;
+        b=XEEuELrKabyq51IKHfIjn3V63kUQOpjhEWZlAQgME0BJ7srIbe+yHwDjLFpv64ui2L
+         +R3uk4EDSq/KYNW7MfgEoliJBTQeQgP+Wmo6ZFHSgfZi7g9sS4DYzEjSJeJmoJ/CIs6u
+         2mPS7EkQDz0kvWKgXVSS2CNLkag21idhoQqAllry8mdgPBydKFlr/ZA+g/mOqdVlfml8
+         SqmHl7Vca9OwePYm9u7qk2BXfQKcHN2H1D5TsyU+lIayqnLMKQgLGh9F2S+7pPiDcwlP
+         rVKBOCFj+Q5mgIjXZ+vk+EU4fiiTznXjcRcOgSuRM2x/o0qTQ/KLzINI96t6jL86MVp1
+         zf6A==
+X-Forwarded-Encrypted: i=1; AJvYcCWAIEWqrm1y0ed4KNxLFEkuKT2SLHPeY7a2KcrK81FyaE/1Tzj54L8I581flqdOk2iUW76GbOQPOg01Mh07XgQGRH65gIQtHM9F8jRFPg==
+X-Gm-Message-State: AOJu0Yz4Vh+VIW+YVRyUKYromW1QjXUIumSz8Qkd3Yw5xPTRixPOPJWA
+	avlgVTjCsUxRbXOjMt/0DrdEOGelhnLg7XZmhh7X5HWhx8rrFSq9VahJwTetquPrTGsAEAKxpZc
+	=
+X-Google-Smtp-Source: AGHT+IESWgAAeIehSwF10GDxfPZzWkKk6AQ8bJelKsUr735LTkU5iw7q+r2aLxTdoXijcDwt95miqg==
+X-Received: by 2002:a05:6214:1192:b0:691:4d30:8827 with SMTP id t18-20020a056214119200b006914d308827mr15918253qvv.7.1710864628112;
+        Tue, 19 Mar 2024 09:10:28 -0700 (PDT)
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com. [209.85.160.174])
+        by smtp.gmail.com with ESMTPSA id c14-20020ad45aee000000b00695e602d356sm3360511qvh.46.2024.03.19.09.10.26
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Mar 2024 09:10:26 -0700 (PDT)
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-42ee0c326e8so322881cf.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 09:10:26 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCX82MTfE5vQ7FO6cFVE+l7rt3ge6FhU/BlC5iPrJWIFdU8Pl4zaYerhFp+VjiVGFNvVsaVmd0ua1sjUalxOAdeH8e9xGG+E+89QI9mvDA==
+X-Received: by 2002:ac8:5991:0:b0:430:eb3e:d599 with SMTP id
+ e17-20020ac85991000000b00430eb3ed599mr197066qte.28.1710864626281; Tue, 19 Mar
+ 2024 09:10:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240319-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v1-0-926d7a4ccd80@linaro.org>
- <20240319-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v1-3-926d7a4ccd80@linaro.org>
- <CAA8EJpoJ0rUd8aY6xpXyL3Obg66XtOebso_AUUxKmg1CWNykJA@mail.gmail.com>
- <85d67f3f-2b01-44c0-ace3-5e7cb48a9431@linaro.org> <090e306c-0bfc-4374-83ed-e883d73a0f0a@linaro.org>
- <CAA8EJpovp1S9MYb3ByeoR7WmjPgUmqicqs_fQo_OoL5_NTNPJw@mail.gmail.com> <c799b110-978f-412f-b50e-87a4215a17cf@linaro.org>
-In-Reply-To: <c799b110-978f-412f-b50e-87a4215a17cf@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 19 Mar 2024 18:05:22 +0200
-Message-ID: <CAA8EJpp2pVnKh4J0TnGy_s_GB60P58xEW7OtmzReGVTF-1Ax-g@mail.gmail.com>
-Subject: Re: [PATCH 3/7] phy: qcom: qmp-pcie: register second optional PHY AUX clock
-To: neil.armstrong@linaro.org
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+References: <20240319152926.1288-1-johan+linaro@kernel.org> <20240319152926.1288-2-johan+linaro@kernel.org>
+In-Reply-To: <20240319152926.1288-2-johan+linaro@kernel.org>
+From: Doug Anderson <dianders@chromium.org>
+Date: Tue, 19 Mar 2024 09:10:08 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XJ+yAvDn5NyfCSJdg+DujPrWO+DZu=BmcqbJS-ugEGMg@mail.gmail.com>
+Message-ID: <CAD=FV=XJ+yAvDn5NyfCSJdg+DujPrWO+DZu=BmcqbJS-ugEGMg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/5] dt-bindings: bluetooth: add 'qcom,local-bd-address-broken'
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+	cros-qcom-dts-watchers@chromium.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Johan Hedberg <johan.hedberg@gmail.com>, 
+	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, Matthias Kaehlcke <mka@chromium.org>, 
+	Rocky Liao <quic_rjliao@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 19 Mar 2024 at 17:15, <neil.armstrong@linaro.org> wrote:
->
-> On 19/03/2024 15:46, Dmitry Baryshkov wrote:
-> > On Tue, 19 Mar 2024 at 16:35, Neil Armstrong <neil.armstrong@linaro.org> wrote:
-> >>
-> >> On 19/03/2024 11:59, Neil Armstrong wrote:
-> >>> On 19/03/2024 11:55, Dmitry Baryshkov wrote:
-> >>>> On Tue, 19 Mar 2024 at 12:45, Neil Armstrong <neil.armstrong@linaro.org> wrote:
-> >>>>>
-> >>>>> The PCIe Gen4x2 PHY found in the SM8[456]50 SoCs have a second clock,
-> >>>>> add the code to register it for PHYs configs that sets a aux_clock_rate.
-> >>>>>
-> >>>>> In order to get the right clock, add qmp_pcie_clk_hw_get() which uses
-> >>>>> the newly introduced QMP_PCIE_PIPE_CLK & QMP_PCIE_PHY_AUX_CLK clock
-> >>>>> IDs and also supports the legacy bindings by returning the PIPE clock.
-> >>>>>
-> >>>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> >>>>> ---
-> >>>>>    drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 70 ++++++++++++++++++++++++++++++++
-> >>>>>    1 file changed, 70 insertions(+)
-> >>>>>
-> >>>>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> >>>>> index 079b3e306489..2d05226ae200 100644
-> >>>>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> >>>>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> >>>>> @@ -22,6 +22,8 @@
-> >>>>>    #include <linux/reset.h>
-> >>>>>    #include <linux/slab.h>
-> >>>>>
-> >>>>> +#include <dt-bindings/phy/phy-qcom-qmp.h>
-> >>>>> +
-> >>>>>    #include "phy-qcom-qmp-common.h"
-> >>>>>
-> >>>>>    #include "phy-qcom-qmp.h"
-> >>>>> @@ -2389,6 +2391,9 @@ struct qmp_phy_cfg {
-> >>>>>
-> >>>>>           /* QMP PHY pipe clock interface rate */
-> >>>>>           unsigned long pipe_clock_rate;
-> >>>>> +
-> >>>>> +       /* QMP PHY AUX clock interface rate */
-> >>>>> +       unsigned long aux_clock_rate;
-> >>>>>    };
-> >>>>>
-> >>>>>    struct qmp_pcie {
-> >>>>> @@ -2420,6 +2425,7 @@ struct qmp_pcie {
-> >>>>>           int mode;
-> >>>>>
-> >>>>>           struct clk_fixed_rate pipe_clk_fixed;
-> >>>>> +       struct clk_fixed_rate aux_clk_fixed;
-> >>>>>    };
-> >>>>>
-> >>>>>    static inline void qphy_setbits(void __iomem *base, u32 offset, u32 val)
-> >>>>> @@ -3681,6 +3687,62 @@ static int phy_pipe_clk_register(struct qmp_pcie *qmp, struct device_node *np)
-> >>>>>           return devm_clk_hw_register(qmp->dev, &fixed->hw);
-> >>>>>    }
-> >>>>>
-> >>>>> +/*
-> >>>>> + * Register a fixed rate PHY aux clock.
-> >>>>> + *
-> >>>>> + * The <s>_phy_aux_clksrc generated by PHY goes to the GCC that gate
-> >>>>> + * controls it. The <s>_phy_aux_clk coming out of the GCC is requested
-> >>>>> + * by the PHY driver for its operations.
-> >>>>> + * We register the <s>_phy_aux_clksrc here. The gcc driver takes care
-> >>>>> + * of assigning this <s>_phy_aux_clksrc as parent to <s>_phy_aux_clk.
-> >>>>> + * Below picture shows this relationship.
-> >>>>> + *
-> >>>>> + *         +---------------+
-> >>>>> + *         |   PHY block   |<<---------------------------------------------+
-> >>>>> + *         |               |                                               |
-> >>>>> + *         |   +-------+   |                      +-----+                  |
-> >>>>> + *   I/P---^-->|  PLL  |---^--->phy_aux_clksrc--->| GCC |--->phy_aux_clk---+
-> >>>>> + *    clk  |   +-------+   |                      +-----+
-> >>>>> + *         +---------------+
-> >>>>> + */
-> >>>>> +static int phy_aux_clk_register(struct qmp_pcie *qmp, struct device_node *np)
-> >>>>> +{
-> >>>>> +       struct clk_fixed_rate *fixed = &qmp->aux_clk_fixed;
-> >>>>> +       struct clk_init_data init = { };
-> >>>>> +       int ret;
-> >>>>> +
-> >>>>> +       ret = of_property_read_string_index(np, "clock-output-names", 1, &init.name);
-> >>>>> +       if (ret) {
-> >>>>> +               dev_err(qmp->dev, "%pOFn: No clock-output-names index 1\n", np);
-> >>>>> +               return ret;
-> >>>>> +       }
-> >>>>> +
-> >>>>> +       init.ops = &clk_fixed_rate_ops;
-> >>>>> +
-> >>>>> +       fixed->fixed_rate = qmp->cfg->aux_clock_rate;
-> >>>>> +       fixed->hw.init = &init;
-> >>>>> +
-> >>>>> +       return devm_clk_hw_register(qmp->dev, &fixed->hw);
-> >>>>> +}
-> >>>>> +
-> >>>>> +static struct clk_hw *qmp_pcie_clk_hw_get(struct of_phandle_args *clkspec, void *data)
-> >>>>> +{
-> >>>>> +       struct qmp_pcie *qmp = data;
-> >>>>> +
-> >>>>> +       /* Support legacy bindings */
-> >>>>> +       if (!clkspec->args_count)
-> >>>>> +               return &qmp->pipe_clk_fixed.hw;
-> >>>>> +
-> >>>>> +       switch (clkspec->args[0]) {
-> >>>>> +       case QMP_PCIE_PIPE_CLK:
-> >>>>> +               return &qmp->pipe_clk_fixed.hw;
-> >>>>> +       case QMP_PCIE_PHY_AUX_CLK:
-> >>>>> +               return &qmp->aux_clk_fixed.hw;
-> >>>>> +       }
-> >>>>> +
-> >>>>> +       return ERR_PTR(-EINVAL);
-> >>>>> +}
-> >>>>
-> >>>> Can we use of_clk_hw_onecell_get() instead? I think it even should be
-> >>>> possible to use onecell for both cases, it will look at the first arg,
-> >>>> which will be 0 in case of #clock-cells equal to 0.
-> >>>
-> >>> Let me investigate if it's possible
-> >>
-> >> Ok, it would work but it would require building a clk_hw_onecell_data a runtime,
-> >> while we could simply provide this qmp_pcie_clk_hw_get() and avoid runtime 2 allocations.
-> >>
-> >> I'm not sure it's worth it.
-> >
-> > Single allocation (or even 0 allocations if you embed it into struct
-> > qmp_pcie) for the sake of using standard helpers.
->
-> And I just recall I tried the same for Amlogic clocks, but the clk_hw_onecell_data hws
-> field is a flexible array member you can't set at runtime, if you try you'll get:
-> drivers/phy/qualcomm/phy-qcom-qmp-pcie.c:3753:38: error: invalid use of flexible array member
->   3753 |                 qmp->clk_hw_data.hws = qmp->clk_hws;
+Hi,
 
-Yes, so it's either
-devm_kzalloc(dev, struct_size(data, hws, 2), GFP_KERNEL);
-or
-struct qmp_pcie {
-...
-  struct {
-    struct clk_hw_onecell_data clk_data;
-    struct clk_hw clocks[2];
-  };
-};
-
+On Tue, Mar 19, 2024 at 8:29=E2=80=AFAM Johan Hovold <johan+linaro@kernel.o=
+rg> wrote:
 >
-> Neil
+> Several Qualcomm Bluetooth controllers lack persistent storage for the
+> device address and instead one can be provided by the boot firmware
+> using the 'local-bd-address' devicetree property.
 >
-> >
-> >
-> >
+> The Bluetooth bindings clearly states that the address should be
+> specified in little-endian order, but due to a long-standing bug in the
+> Qualcomm driver which reversed the address some boot firmware has been
+> providing the address in big-endian order instead.
 >
+> The only device out there that should be affected by this is the WCN3991
+> used in some Chromebooks.
+>
+> Add a 'qcom,local-bd-address-broken' property which can be set on these
+> platforms to indicate that the boot firmware is using the wrong byte
+> order.
+>
+> Note that ChromeOS always updates the kernel and devicetree in lockstep
+> so that there is no need to handle backwards compatibility with older
+> devicetrees.
+>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>  .../devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml  | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-blu=
+etooth.yaml b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-blue=
+tooth.yaml
+> index eba2f3026ab0..e099ef83e7b1 100644
+> --- a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.=
+yaml
+> +++ b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.=
+yaml
+> @@ -94,6 +94,9 @@ properties:
+>
+>    local-bd-address: true
+>
+> +  qcom,local-bd-address-broken: true
+> +    description: >
+> +      boot firmware is incorrectly passing the address in big-endian ord=
+er
 
+Personally, I feel like "qcom,local-bd-address-backwards" or
+"qcom,local-bd-address-swapped" would be more documenting but I don't
+feel super strongly about it. I guess "broken" makes it more obvious
+that this is not just a normal variant that someone should use. If DT
+binding folks are happy, I'm happy enough with this solution.
 
--- 
-With best wishes
-Dmitry
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
