@@ -1,407 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-14598-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14599-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D43098803BD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 18:42:59 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79BBB880485
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 19:16:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 89F3D2813F1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 17:42:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9CD171C21E3B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 18:16:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A990E3C092;
-	Tue, 19 Mar 2024 17:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 150072BAF0;
+	Tue, 19 Mar 2024 18:16:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Sr88yDC5"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Xfk9pT+l"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7C43A8CB;
-	Tue, 19 Mar 2024 17:40:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F69282E1
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 18:16:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710870036; cv=none; b=A09aevN4zd7AI9sQU4UKCp/UOhvDr40q7VBxmEx0YnQOtitNrCqK7Afv7D+5rLSxImGbliN26zRAHlp/MvBDpYMXF0y2JZI0w0m20/T8W6rBc3B1YYRMHxx9uIv27OXCcg1kZLZ1PIEzDtDRQ3FlOlGsavLDTEHkoQgjVBnjbBI=
+	t=1710872167; cv=none; b=SfvhYN3urWhelSgfUSHXPsGOAVmfXOjJV4Rk3aebyOjbiHWpahYcSJpqsS5H0Rk5DNEMpLY8XzAVtH0O6eLlMrve5DayslRwdJJ6cm8qX2cw7AbCYVEI+0AfMpLkRTQ/CEcGPS0f1KpMbUOj12BXkEG+edcmABidJNmwUIVLfDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710870036; c=relaxed/simple;
-	bh=6rbiRBSmZv+rso/F4bT0GSk6nZrPqX9lEXbfOb28FMg=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZqiPzj5EjwgrG2IKMVYdGfZ8wzHID3WHBMQHjlBMVPUSoNI6zG6JjUgmmDVbIVSPhTO6IN5ztYomkejB3gAQ2WwX10d+8OKHjFA6nobsXpsmvjrIyQEeWb0tVBZ3jrIgDpWpSHgzB5j/NK4K/SHnnck3b9UreUQDRGLnT8I6vtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Sr88yDC5; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42JHGj7B019829;
-	Tue, 19 Mar 2024 17:40:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=d5arsTPuzg11MBYLCWZfOVv+wUmyVBXaWyubqL4+J0o=; b=Sr
-	88yDC5wNZ7AQBQFS1RBmrZjF/3qMcR01WgkBvFz4v1iVg/GqM8W8hGpngZxzyt+5
-	/yR41WqGVb9ruu2q+XECWhnw3+hFCYg5bKisy88ssGD6hcp79Mp6I3d3WbVmexbK
-	X+kAqsp7Rwa22xe8YUMP4SE7CWpSJoEgRerwLOGj7CoH5O4l/AeVbmv0HJAHsN1z
-	11/VFZpvqOiIEe+SL15zukNZ8rOlxgVPTO1HUO+thMLRuSUhrkvzS37bjOI4OdEi
-	5/sVnylzsZJLbD+62yhlW/xdPw7uNYYvI0l4R3H/gKzHvta+/D9Ymu6jNRYla4x7
-	t1ble0DTbCNM9n84xqhg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wy4gf9rjc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Mar 2024 17:40:28 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42JHeRhc021193
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Mar 2024 17:40:27 GMT
-Received: from grosikop.eu.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 19 Mar 2024 10:40:24 -0700
-From: Gjorgji Rosikopulos <quic_grosikop@quicinc.com>
-To: <rfoss@kernel.org>, <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mchehab@kernel.org>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <laurent.pinchart@ideasonboard.com>,
-        <hverkuil-cisco@xs4all.nl>, <quic_hariramp@quicinc.com>
-Subject: [PATCH v2 8/8] media: qcom: camss: Decouple VFE from CSID
-Date: Tue, 19 Mar 2024 19:39:35 +0200
-Message-ID: <20240319173935.481-9-quic_grosikop@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240319173935.481-1-quic_grosikop@quicinc.com>
-References: <20240319173935.481-1-quic_grosikop@quicinc.com>
+	s=arc-20240116; t=1710872167; c=relaxed/simple;
+	bh=3rkOtNqRZGNeJ0BmlK/wCNlX+LHzHZmWg6oBPJO2b7I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WkSduGl2zMXMWgIUjzswXh8GOUrg9PH6x8kgM9Upm0Lk1v4VZRG92XU/Esv50c+01FX/Cl9dM3eN+7dHF1JbWjVsQuVHL+klcSyJE4yiPp/QrbWnTJvnmrTCc3ZNOvAS3602kM8ehGdR1VinbyhcOFnbZLKhVH2PiMeVtqixmDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Xfk9pT+l; arc=none smtp.client-ip=209.85.219.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-690e2d194f6so40313746d6.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 11:16:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1710872163; x=1711476963; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TY3JC7lCg0J0NbLsthogiU7IlW38IYTYvI5MHCluIsY=;
+        b=Xfk9pT+lbC6sSIIcTKhTGdAFiMJHi85OVBxvBA2OEh1w1+YVNxCd+1YBNgH63Ho1em
+         hAjbpYu/Kgv8JCNriwPi3c+X8lXS6qNwj6o5OhyiT0ihPyVa4lazNECcJPTc/NxHQGqr
+         Ohp5sw33xZQmRYS29szxXBE0R5NzUAAU2ukYk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710872163; x=1711476963;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=TY3JC7lCg0J0NbLsthogiU7IlW38IYTYvI5MHCluIsY=;
+        b=nulorpWmAsx3MTvTutjBpk6KyPS3REWKPVNp3QtBY1xFnbMuJiB9ATy5cYCkXT0TLK
+         1lAS7nlHw5qU0flUPI41g3bgKAAAn9hkqE8rGgGPaZkY136Nz5evziaSqNtUWsKzJusO
+         4wFtAiWYhS56vPRsqgcYv9JJlWrzyWANUcrjUDYuuM3WLLpuQ86JMq611aVL/4BHW/sO
+         KK4pLvashjZeACaPbnLCFvM1nLcBM0RuTKFcQQzr9+gi6kYCErcU7QdvJ9X/F70PFF5Z
+         su3Q1E35x8k2uR/9WK+Pk4udE+3yiNR38KQFhIUKWjRQky3xRfRy3oVOfZr847Ow80ZM
+         r8rQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUtJ0Xui43rOyeEm8JiNL4PREDdHM33UncyINvdXlOw+T0AB2kPJYQqf0q7CLl6xUcvx310YKBKSo1lnczUatHk4Lf0bLxLJ5rX5L6/0w==
+X-Gm-Message-State: AOJu0Ywa/HIz5qVl51a0/1lpOD5zPQXeq7ZPJ88mDJx0wgBgLn0M8oZv
+	H2BxZ3yGgY8s9Qm/OrtdLnq40R3xlyziUThUZ3k8rrh2pZu3oUKT0DGuIVbTOvT4woy7Ogdt6zQ
+	=
+X-Google-Smtp-Source: AGHT+IG2AWZAzrfiFVd59h5c+kq5iOo2ZXCfO1mUhCRNHfs/f7WQKWRKPdDgyOjDN2C504sQQ66iUg==
+X-Received: by 2002:ad4:4208:0:b0:691:59ad:ff43 with SMTP id k8-20020ad44208000000b0069159adff43mr3401357qvp.12.1710872163057;
+        Tue, 19 Mar 2024 11:16:03 -0700 (PDT)
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com. [209.85.160.173])
+        by smtp.gmail.com with ESMTPSA id pp26-20020a056214139a00b00691732938a8sm5816379qvb.73.2024.03.19.11.16.02
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Mar 2024 11:16:02 -0700 (PDT)
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-428405a0205so42581cf.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 11:16:02 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCXFuCh7s9yCOQ6Uqd8B3skrIDeCsND/G7/DNBojSSV+AF3qZKJ8cuhMaPtmbWFvSlrK7lgbLMJZ7jsqnLPq6PtDZ89gFx7J++NPxaTxNg==
+X-Received: by 2002:ac8:7f0d:0:b0:430:ed72:bc0d with SMTP id
+ f13-20020ac87f0d000000b00430ed72bc0dmr39379qtk.26.1710872161807; Tue, 19 Mar
+ 2024 11:16:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Z72LmNvIV0bt_xmHerVCydSrly02GoG9
-X-Proofpoint-ORIG-GUID: Z72LmNvIV0bt_xmHerVCydSrly02GoG9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-19_07,2024-03-18_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 priorityscore=1501
- suspectscore=0 clxscore=1015 bulkscore=0 adultscore=0 malwarescore=0
- phishscore=0 impostorscore=0 lowpriorityscore=0 spamscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403140001 definitions=main-2403190133
+References: <20240315213717.1411017-1-dianders@chromium.org>
+ <20240315143621.v2.3.I535606f6d4f7e3e5588bb75c55996f61980183cd@changeid>
+ <e2319b19-d999-24e7-48fa-bbc19bbfbeea@quicinc.com> <CAA8EJppau--vt3RLkH96K0SF2x-QGWz+5U8tErvLFDvz-GQN4Q@mail.gmail.com>
+ <d04711c1-6df0-f988-9227-2161f4109dd1@quicinc.com> <CAA8EJppcuftv4hfKkZeaXCDQJ4Z5+8-P99wHc9X8WgYJbk6CjA@mail.gmail.com>
+In-Reply-To: <CAA8EJppcuftv4hfKkZeaXCDQJ4Z5+8-P99wHc9X8WgYJbk6CjA@mail.gmail.com>
+From: Doug Anderson <dianders@chromium.org>
+Date: Tue, 19 Mar 2024 11:15:46 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WMbqmU1q+6hJZV9a16PdPUtdDJuMmsQ1wb27jDdeQFmg@mail.gmail.com>
+Message-ID: <CAD=FV=WMbqmU1q+6hJZV9a16PdPUtdDJuMmsQ1wb27jDdeQFmg@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] drm/msm/dp: Delete the old 500 ms wait for eDP HPD
+ in aux transfer
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, Rob Clark <robdclark@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@gmail.com>, 
+	Kuogee Hsieh <quic_khsieh@quicinc.com>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Bjorn Andersson <quic_bjorande@quicinc.com>, 
+	Johan Hovold <johan@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Milen Mitkov <quic_mmitkov@quicinc.com>
+Hi,
 
-Decouple the direct calls to VFE's vfe_get/put in the CSID subdev
-in order to prepare for the introduction of IFE subdev.
+On Tue, Mar 19, 2024 at 10:27=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Tue, 19 Mar 2024 at 19:13, Abhinav Kumar <quic_abhinavk@quicinc.com> w=
+rote:
+> >
+> >
+> >
+> > On 3/18/2024 5:55 PM, Dmitry Baryshkov wrote:
+> > > On Tue, 19 Mar 2024 at 02:19, Abhinav Kumar <quic_abhinavk@quicinc.co=
+m> wrote:
+> > >>
+> > >> +bjorn, johan as fyi for sc8280xp
+> > >>
+> > >> On 3/15/2024 2:36 PM, Douglas Anderson wrote:
+> > >>> Before the introduction of the wait_hpd_asserted() callback in comm=
+it
+> > >>> 841d742f094e ("drm/dp: Add wait_hpd_asserted() callback to struct
+> > >>> drm_dp_aux") the API between panel drivers and DP AUX bus drivers w=
+as
+> > >>> that it was up to the AUX bus driver to wait for HPD in the transfe=
+r()
+> > >>> function.
+> > >>>
+> > >>> Now wait_hpd_asserted() has been added. The two panel drivers that =
+are
+> > >>> DP AUX endpoints use it. See commit 2327b13d6c47 ("drm/panel-edp: T=
+ake
+> > >>> advantage of wait_hpd_asserted() in struct drm_dp_aux") and commit
+> > >>> 3b5765df375c ("drm/panel: atna33xc20: Take advantage of
+> > >>> wait_hpd_asserted() in struct drm_dp_aux"). We've implemented
+> > >>> wait_hpd_asserted() in the MSM DP driver as of commit e2969ee30252
+> > >>> ("drm/msm/dp: move of_dp_aux_populate_bus() to eDP probe()"). There=
+ is
+> > >>> no longer any reason for long wait in the AUX transfer() function.
+> > >>> Remove it.
+> > >>>
+> > >>> NOTE: the wait_hpd_asserted() is listed as "optional". That means i=
+t's
+> > >>> optional for the DP AUX bus to implement. In the case of the MSM DP
+> > >>> driver we implement it so we can assume it will be called.
+> > >>>
+> > >>
+> > >> How do we enforce that for any new edp panels to be used with MSM, t=
+he
+> > >> panels should atleast invoke wait_hpd_asserted()?
+> > >>
+> > >> I agree that since MSM implements it, even though its listed as
+> > >> optional, we can drop this additional wait. So nothing wrong with th=
+is
+> > >> patch for current users including sc8280xp, sc7280 and sc7180.
+> > >>
+> > >> But, does there need to be some documentation that the edp panels no=
+t
+> > >> using the panel-edp framework should still invoke wait_hpd_asserted(=
+)?
+> > >>
+> > >> Since its marked as optional, what happens if the edp panel driver,
+> > >> skips calling wait_hpd_asserted()?
+> > >
+> > > It is optional for the DP AUX implementations, not for the panel to b=
+e called.
+> > >
+> >
+> > Yes, I understood that part, but is there anything from the panel side
+> > which mandates calling wait_hpd_asserted()?
+> >
+> > Is this documented somewhere for all edp panels to do:
+> >
+> > if (aux->wait_hpd_asserted)
+> >         aux->wait_hpd_asserted(aux, wait_us);
+>
+> That's obviously not true, e.g. if panel-edp.c handled HPD signal via
+> the GPIO pin.
+>
+> But the documentation explicitly says that the host will be powered up
+> automatically, but the caller must ensure that the panel is powered
+> on. `It's up to the caller of this code to make sure that the panel is
+> powered on if getting an error back is not OK.'
 
-Also decouple CSID base address from VFE since on the Titan platform
-CSID register base address resides within VFE's base address.
+It wouldn't hurt to send out a documentation patch that makes this
+more explicit. OK, I sent:
 
-Signed-off-by: Milen Mitkov <quic_mmitkov@quicinc.com>
-Signed-off-by: Radoslav Tsvetkov <quic_rtsvetko@quicinc.com>
----
- .../media/platform/qcom/camss/camss-csid.c    | 16 +++--
- .../media/platform/qcom/camss/camss-csid.h    |  1 +
- drivers/media/platform/qcom/camss/camss.c     | 61 +++++++++++++++++++
- drivers/media/platform/qcom/camss/camss.h     |  8 +++
- 4 files changed, 81 insertions(+), 5 deletions(-)
+https://lore.kernel.org/r/20240319111432.1.I521dad0693cc24fe4dd14cba0c7048d=
+94f5b6b41@changeid
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-index 5b23f5b8746d..858db5d4ca75 100644
---- a/drivers/media/platform/qcom/camss/camss-csid.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid.c
-@@ -602,7 +602,6 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
- 	struct csid_device *csid = v4l2_get_subdevdata(sd);
- 	struct camss *camss = csid->camss;
- 	struct device *dev = camss->dev;
--	struct vfe_device *vfe = &camss->vfe[csid->id];
- 	int ret = 0;
- 
- 	if (on) {
-@@ -611,7 +610,7 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
- 		 * switching on the CSID. Do so unconditionally, as there is no
- 		 * drawback in following the same powering order on older SoCs.
- 		 */
--		ret = vfe_get(vfe);
-+		ret = csid->res->parent_dev_ops->get(camss, csid->id);
- 		if (ret < 0)
- 			return ret;
- 
-@@ -663,7 +662,7 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
- 		regulator_bulk_disable(csid->num_supplies,
- 				       csid->supplies);
- 		pm_runtime_put_sync(dev);
--		vfe_put(vfe);
-+		csid->res->parent_dev_ops->put(camss, csid->id);
- 	}
- 
- 	return ret;
-@@ -1021,6 +1020,11 @@ int msm_csid_subdev_init(struct camss *camss, struct csid_device *csid,
- 	csid->id = id;
- 	csid->res = &res->csid;
- 
-+	if (dev_WARN_ONCE(dev, !csid->res->parent_dev_ops,
-+			  "Error: CSID depends on VFE/IFE device ops!\n")) {
-+		return -EINVAL;
-+	}
-+
- 	csid->res->hw_ops->subdev_init(csid);
- 
- 	/* Memory */
-@@ -1031,9 +1035,11 @@ int msm_csid_subdev_init(struct camss *camss, struct csid_device *csid,
- 		 * VFE to be initialized before CSID
- 		 */
- 		if (id >= 2) /* VFE/CSID lite */
--			csid->base = camss->vfe[id].base + VFE_480_LITE_CSID_OFFSET;
-+			csid->base = csid->res->parent_dev_ops->get_base_address(camss, id)
-+				+ VFE_480_LITE_CSID_OFFSET;
- 		else
--			csid->base = camss->vfe[id].base + VFE_480_CSID_OFFSET;
-+			csid->base = csid->res->parent_dev_ops->get_base_address(camss, id)
-+				 + VFE_480_CSID_OFFSET;
- 	} else {
- 		csid->base = devm_platform_ioremap_resource_byname(pdev, res->reg[0]);
- 		if (IS_ERR(csid->base))
-diff --git a/drivers/media/platform/qcom/camss/camss-csid.h b/drivers/media/platform/qcom/camss/camss-csid.h
-index 0e385d17c250..8cdae98e4dca 100644
---- a/drivers/media/platform/qcom/camss/camss-csid.h
-+++ b/drivers/media/platform/qcom/camss/camss-csid.h
-@@ -157,6 +157,7 @@ struct csid_hw_ops {
- struct csid_subdev_resources {
- 	bool is_lite;
- 	const struct csid_hw_ops *hw_ops;
-+	const struct parent_dev_ops *parent_dev_ops;
- 	const struct csid_formats *formats;
- };
- 
-diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index fd5a42355d80..2cec96815daf 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -32,6 +32,8 @@
- #define CAMSS_CLOCK_MARGIN_NUMERATOR 105
- #define CAMSS_CLOCK_MARGIN_DENOMINATOR 100
- 
-+static const struct parent_dev_ops vfe_parent_dev_ops;
-+
- static const struct camss_subdev_resources csiphy_res_8x16[] = {
- 	/* CSIPHY0 */
- 	{
-@@ -87,6 +89,7 @@ static const struct camss_subdev_resources csid_res_8x16[] = {
- 		.type = CAMSS_SUBDEV_TYPE_CSID,
- 		.csid = {
- 			.hw_ops = &csid_ops_4_1,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_4_1
- 		}
- 	},
-@@ -109,6 +112,7 @@ static const struct camss_subdev_resources csid_res_8x16[] = {
- 		.type = CAMSS_SUBDEV_TYPE_CSID,
- 		.csid = {
- 			.hw_ops = &csid_ops_4_1,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_4_1
- 		}
- 	},
-@@ -226,6 +230,7 @@ static const struct camss_subdev_resources csid_res_8x96[] = {
- 		.type = CAMSS_SUBDEV_TYPE_CSID,
- 		.csid = {
- 			.hw_ops = &csid_ops_4_7,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_4_7
- 		}
- 	},
-@@ -248,6 +253,7 @@ static const struct camss_subdev_resources csid_res_8x96[] = {
- 		.type = CAMSS_SUBDEV_TYPE_CSID,
- 		.csid = {
- 			.hw_ops = &csid_ops_4_7,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_4_7
- 		}
- 	},
-@@ -270,6 +276,7 @@ static const struct camss_subdev_resources csid_res_8x96[] = {
- 		.type = CAMSS_SUBDEV_TYPE_CSID,
- 		.csid = {
- 			.hw_ops = &csid_ops_4_7,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_4_7
- 		}
- 	},
-@@ -292,6 +299,7 @@ static const struct camss_subdev_resources csid_res_8x96[] = {
- 		.type = CAMSS_SUBDEV_TYPE_CSID,
- 		.csid = {
- 			.hw_ops = &csid_ops_4_7,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_4_7
- 		}
- 	}
-@@ -445,6 +453,7 @@ static const struct camss_subdev_resources csid_res_660[] = {
- 		.type = CAMSS_SUBDEV_TYPE_CSID,
- 		.csid = {
- 			.hw_ops = &csid_ops_4_7,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_4_7
- 		}
- 	},
-@@ -470,6 +479,7 @@ static const struct camss_subdev_resources csid_res_660[] = {
- 		.type = CAMSS_SUBDEV_TYPE_CSID,
- 		.csid = {
- 			.hw_ops = &csid_ops_4_7,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_4_7
- 		}
- 	},
-@@ -495,6 +505,7 @@ static const struct camss_subdev_resources csid_res_660[] = {
- 		.type = CAMSS_SUBDEV_TYPE_CSID,
- 		.csid = {
- 			.hw_ops = &csid_ops_4_7,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_4_7
- 		}
- 	},
-@@ -520,6 +531,7 @@ static const struct camss_subdev_resources csid_res_660[] = {
- 		.type = CAMSS_SUBDEV_TYPE_CSID,
- 		.csid = {
- 			.hw_ops = &csid_ops_4_7,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_4_7
- 		}
- 	}
-@@ -714,6 +726,7 @@ static const struct camss_subdev_resources csid_res_845[] = {
- 		.type = CAMSS_SUBDEV_TYPE_CSID,
- 		.csid = {
- 			.hw_ops = &csid_ops_gen2,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_gen2
- 		}
- 	},
-@@ -739,6 +752,7 @@ static const struct camss_subdev_resources csid_res_845[] = {
- 		.type = CAMSS_SUBDEV_TYPE_CSID,
- 		.csid = {
- 			.hw_ops = &csid_ops_gen2,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_gen2
- 		}
- 	},
-@@ -765,6 +779,7 @@ static const struct camss_subdev_resources csid_res_845[] = {
- 		.csid = {
- 			.is_lite = true,
- 			.hw_ops = &csid_ops_gen2,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_gen2
- 		}
- 	}
-@@ -957,6 +972,7 @@ static const struct camss_subdev_resources csid_res_8250[] = {
- 		.type = CAMSS_SUBDEV_TYPE_CSID,
- 		.csid = {
- 			.hw_ops = &csid_ops_gen2,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_gen2
- 		}
- 	},
-@@ -974,6 +990,7 @@ static const struct camss_subdev_resources csid_res_8250[] = {
- 		.type = CAMSS_SUBDEV_TYPE_CSID,
- 		.csid = {
- 			.hw_ops = &csid_ops_gen2,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_gen2
- 		}
- 	},
-@@ -991,6 +1008,7 @@ static const struct camss_subdev_resources csid_res_8250[] = {
- 		.csid = {
- 			.is_lite = true,
- 			.hw_ops = &csid_ops_gen2,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_gen2
- 		}
- 	},
-@@ -1008,6 +1026,7 @@ static const struct camss_subdev_resources csid_res_8250[] = {
- 		.csid = {
- 			.is_lite = true,
- 			.hw_ops = &csid_ops_gen2,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_gen2
- 		}
- 	}
-@@ -1649,6 +1668,48 @@ void camss_pm_domain_off(struct camss *camss, int id)
- 	}
- }
- 
-+static int vfe_parent_dev_ops_get(struct camss *camss, int id)
-+{
-+	int ret = -EINVAL;
-+
-+	if (id < camss->res->vfe_num) {
-+		struct vfe_device *vfe = &camss->vfe[id];
-+
-+		ret = vfe_get(vfe);
-+	}
-+
-+	return ret;
-+}
-+
-+static int vfe_parent_dev_ops_put(struct camss *camss, int id)
-+{
-+	if (id < camss->res->vfe_num) {
-+		struct vfe_device *vfe = &camss->vfe[id];
-+
-+		vfe_put(vfe);
-+	}
-+
-+	return 0;
-+}
-+
-+static void __iomem
-+*vfe_parent_dev_ops_get_base_address(struct camss *camss, int id)
-+{
-+	if (id < camss->res->vfe_num) {
-+		struct vfe_device *vfe = &camss->vfe[id];
-+
-+		return vfe->base;
-+	}
-+
-+	return NULL;
-+}
-+
-+static const struct parent_dev_ops vfe_parent_dev_ops = {
-+	.get = vfe_parent_dev_ops_get,
-+	.put = vfe_parent_dev_ops_put,
-+	.get_base_address = vfe_parent_dev_ops_get_base_address
-+};
-+
- /*
-  * camss_of_parse_endpoint_node - Parse port endpoint node
-  * @dev: Device
-diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
-index a5be9e872992..b3c967bcf8a9 100644
---- a/drivers/media/platform/qcom/camss/camss.h
-+++ b/drivers/media/platform/qcom/camss/camss.h
-@@ -143,6 +143,12 @@ struct camss_clock {
- 	u32 nfreqs;
- };
- 
-+struct parent_dev_ops {
-+	int (*get)(struct camss *camss, int id);
-+	int (*put)(struct camss *camss, int id);
-+	void __iomem *(*get_base_address)(struct camss *camss, int id);
-+};
-+
- void camss_add_clock_margin(u64 *rate);
- int camss_enable_clocks(int nclocks, struct camss_clock *clock,
- 			struct device *dev);
-@@ -153,6 +159,8 @@ s64 camss_get_link_freq(struct media_entity *entity, unsigned int bpp,
- int camss_get_pixel_clock(struct media_entity *entity, u64 *pixel_clock);
- int camss_pm_domain_on(struct camss *camss, int id);
- void camss_pm_domain_off(struct camss *camss, int id);
-+int camss_vfe_get(struct camss *camss, int id);
-+void camss_vfe_put(struct camss *camss, int id);
- void camss_delete(struct camss *camss);
- 
- #endif /* QC_MSM_CAMSS_H */
--- 
-2.17.1
-
+-Doug
 
