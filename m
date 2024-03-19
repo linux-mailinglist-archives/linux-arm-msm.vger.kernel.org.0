@@ -1,194 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-14602-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14603-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05D50880589
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 20:38:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 26BF48805C2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 21:02:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 276301C228BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 19:38:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 52C8F1C22669
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 20:02:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C89A39FFD;
-	Tue, 19 Mar 2024 19:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 351164AEF8;
+	Tue, 19 Mar 2024 20:02:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oyDOyx9E"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pJnDqtCz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5317320B21
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 19:38:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31012C6B8;
+	Tue, 19 Mar 2024 20:02:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710877101; cv=none; b=OhlDEV3zAWH0hLIuDERkDQS6CH/QKLf9d9dPvZYWuXMpJdyIefqUOcJJ1e3RJ3MyX+fZ3LX60vT2JIJ0YyWbWfLIuuQGOEeUt0mFKOPkNd8AFNfB9XGEfljqMDjWiVrvF2wpuaFVZWDbIHsaFMP2yFbpbEZh7J8ATox/ECK2MDA=
+	t=1710878530; cv=none; b=gSSfiKvcScbgnqQNWsbQlN4E4FXrHl+PCQs2t7DB5q2ZD7HVM8DgDPvw/ZqGRGSYdrN3QQzm997oLaumtmQpigR20fSlyGXBY6K9t7NGhYPWcf+gxp0oZKaq7RU0yrSwwPzzGrvNq4gVDW3Uh1Hx0ySTCPVqlBYCf+MTYa+cqGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710877101; c=relaxed/simple;
-	bh=aagDPeokyfaYYaGEsAu8DCyrWN75B0lnogx9pZh2syg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=g/MUvlyYUEy2saCNgVsqmIsmteeBAvLgvmBA0o3L/dUfN54IgspTXPvqh2q4rvv93zCAb/+X3dDtJfPRjlHIP1OB9Mr5GazZsArb7zhbIiaoH0el0jfT2rSHPWQRJRb/9lszfKx5bYM6MasbFEgOjsIdTuS3LOukTCWTamGxoqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oyDOyx9E; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42JHGjYH030216;
-	Tue, 19 Mar 2024 19:38:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=OtR7HIxuiihWCpcnaPxCR5sKik8HMX3DkwylFBWcFZk=; b=oy
-	DOyx9E/1FF2GxPEx/ZtGxA3f2T9QVz97yNpD0654y7atGvwb0GPPrdJAbZf9m9eY
-	LM4heSSv7CPbL8bc2anRDa4oxlZ0bcxcudaTlbtUJQeSJUOnV+faqqwGT2nwlo92
-	zHYax4QK9UtSCTDiZBFIbpRWjbkBW39sGnik8eCqmzGZ7QhATuGkfrZUTl3Hrzq3
-	PGHzgRiYp6i5Jx4PBi93VkR/fEDvg/IOqZ7U0ey9Ltn1QwnRKTT2qU3YMr7Pm0+o
-	D9ORssKv/CtHDpt7JU9zy4SXB6ZAbp9F5JuUgcfFb2+WoDBP6LIkT7I22TAwARKe
-	qByJeQWXdJ1lFCOk6ilQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wy94tsapn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Mar 2024 19:38:10 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42JJc9r9026527
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Mar 2024 19:38:09 GMT
-Received: from [10.110.10.159] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 19 Mar
- 2024 12:38:06 -0700
-Message-ID: <eb8a78e0-5202-861c-a4cd-2d1366ff3423@quicinc.com>
-Date: Tue, 19 Mar 2024 12:38:04 -0700
+	s=arc-20240116; t=1710878530; c=relaxed/simple;
+	bh=BfzfXnXoSemadhBtWj3WTtx3o15kRsVsxyeo0pRpIbA=;
+	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
+	 Message-Id:Subject; b=pgN9pf30Ym5VusHhsu7L5PJ6zfVMHX2nyr7QTIbt2xBwCj6xjofg6EeaAjOWvQ0lyuAojOLKan/Qm0XaAy2SY/Rg7YeGyWnw4XWQ494143EsF/xkU9Fey0jm14kD1GS76mL746cR0iHeW+iyO7iHOFaouD0taO0JidHSHAPfINs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pJnDqtCz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5E5C433C7;
+	Tue, 19 Mar 2024 20:02:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1710878529;
+	bh=BfzfXnXoSemadhBtWj3WTtx3o15kRsVsxyeo0pRpIbA=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+	b=pJnDqtCzYhzzXWlnC9ojvuZnXmWsdooKOdDBCKUA3VpLuUkNv6/QqSCz2Iq1NYCId
+	 QWeNNDoQHySk/Co56XBb0CoTAo7F2JYQFkTgR0nl1QOBP6T3/rPjEOLNk8FXDzvayn
+	 nUFdCRXbp3yMYYgotTwKXP6wL73w3M6y4gBC8Y5o7FiQQc9DBmnlTRso4emUlHJh44
+	 a31RC8yKuy3KD6RpVfvKIgkpMxdYysdBrtkl81Nq78Lg4zYn7b3Ek6arb2H8qNye61
+	 w5tUz5gfardmH9IAmTMfdkPDHZzDyWYDLsHFBaeD+8NDkIuQOpjI8sYwNGz4h6zFdu
+	 dOAfSntfba3Ag==
+Date: Tue, 19 Mar 2024 15:02:08 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v3 2/5] drm/msm/dpu: core_perf: extract bandwidth
- aggregation function
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Daniel
- Vetter <daniel@ffwll.ch>,
-        Stephen Boyd <swboyd@chromium.org>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20240314-dpu-perf-rework-v3-0-79fa4e065574@linaro.org>
- <20240314-dpu-perf-rework-v3-2-79fa4e065574@linaro.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240314-dpu-perf-rework-v3-2-79fa4e065574@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: FlLccESTJRpMBBZVM3rfqT_jeyAZ_3Rm
-X-Proofpoint-ORIG-GUID: FlLccESTJRpMBBZVM3rfqT_jeyAZ_3Rm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-19_08,2024-03-18_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
- spamscore=0 clxscore=1015 mlxlogscore=999 suspectscore=0
- priorityscore=1501 impostorscore=0 malwarescore=0 bulkscore=0 adultscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403140001 definitions=main-2403190149
+From: Rob Herring <robh@kernel.org>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, 
+ Matthias Kaehlcke <mka@chromium.org>, devicetree@vger.kernel.org, 
+ netdev@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Rob Herring <robh+dt@kernel.org>, Rocky Liao <quic_rjliao@quicinc.com>, 
+ linux-bluetooth@vger.kernel.org, Douglas Anderson <dianders@chromium.org>, 
+ Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+ Johan Hedberg <johan.hedberg@gmail.com>, 
+ Marcel Holtmann <marcel@holtmann.org>, cros-qcom-dts-watchers@chromium.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org, 
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org
+In-Reply-To: <20240319152926.1288-2-johan+linaro@kernel.org>
+References: <20240319152926.1288-1-johan+linaro@kernel.org>
+ <20240319152926.1288-2-johan+linaro@kernel.org>
+Message-Id: <171087317847.5394.2197018705200988833.robh@kernel.org>
+Subject: Re: [PATCH v3 1/5] dt-bindings: bluetooth: add
+ 'qcom,local-bd-address-broken'
 
 
-
-On 3/13/2024 6:10 PM, Dmitry Baryshkov wrote:
-> In preparation to refactoring the dpu_core_perf debugfs interface,
-> extract the bandwidth aggregation function from
-> _dpu_core_perf_crtc_update_bus().
+On Tue, 19 Mar 2024 16:29:22 +0100, Johan Hovold wrote:
+> Several Qualcomm Bluetooth controllers lack persistent storage for the
+> device address and instead one can be provided by the boot firmware
+> using the 'local-bd-address' devicetree property.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> The Bluetooth bindings clearly states that the address should be
+> specified in little-endian order, but due to a long-standing bug in the
+> Qualcomm driver which reversed the address some boot firmware has been
+> providing the address in big-endian order instead.
+> 
+> The only device out there that should be affected by this is the WCN3991
+> used in some Chromebooks.
+> 
+> Add a 'qcom,local-bd-address-broken' property which can be set on these
+> platforms to indicate that the boot firmware is using the wrong byte
+> order.
+> 
+> Note that ChromeOS always updates the kernel and devicetree in lockstep
+> so that there is no need to handle backwards compatibility with older
+> devicetrees.
+> 
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 45 +++++++++++++++------------
->   1 file changed, 25 insertions(+), 20 deletions(-)
+>  .../devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml  | 3 +++
+>  1 file changed, 3 insertions(+)
 > 
 
-no need of core_perf : in the subject line.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> index 68fae048a9a8..87b892069526 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> @@ -204,36 +204,41 @@ int dpu_core_perf_crtc_check(struct drm_crtc *crtc,
->   	return 0;
->   }
->   
-> -static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
-> -		struct drm_crtc *crtc)
-> +static void dpu_core_perf_aggregate(struct drm_device *ddev,
-> +				    enum dpu_crtc_client_type curr_client_type,
-> +				    struct dpu_core_perf_params *perf)
->   {
-> -	struct dpu_core_perf_params perf = { 0 };
-> -	enum dpu_crtc_client_type curr_client_type
-> -					= dpu_crtc_get_client_type(crtc);
-> -	struct drm_crtc *tmp_crtc;
->   	struct dpu_crtc_state *dpu_cstate;
-> -	int i, ret = 0;
-> -	u64 avg_bw;
-> -
-> -	if (!kms->num_paths)
-> -		return 0;
-> +	struct drm_crtc *tmp_crtc;
->   
-> -	drm_for_each_crtc(tmp_crtc, crtc->dev) {
-> +	drm_for_each_crtc(tmp_crtc, ddev) {
->   		if (tmp_crtc->enabled &&
-> -			curr_client_type ==
-> -				dpu_crtc_get_client_type(tmp_crtc)) {
-> +		    curr_client_type == dpu_crtc_get_client_type(tmp_crtc)) {
->   			dpu_cstate = to_dpu_crtc_state(tmp_crtc->state);
->   
-> -			perf.max_per_pipe_ib = max(perf.max_per_pipe_ib,
-> -					dpu_cstate->new_perf.max_per_pipe_ib);
-> +			perf->max_per_pipe_ib = max(perf->max_per_pipe_ib,
-> +						    dpu_cstate->new_perf.max_per_pipe_ib);
->   
-> -			perf.bw_ctl += dpu_cstate->new_perf.bw_ctl;
-> +			perf->bw_ctl += dpu_cstate->new_perf.bw_ctl;
->   
-> -			DRM_DEBUG_ATOMIC("crtc=%d bw=%llu paths:%d\n",
-> -				  tmp_crtc->base.id,
-> -				  dpu_cstate->new_perf.bw_ctl, kms->num_paths);
-> +			DRM_DEBUG_ATOMIC("crtc=%d bw=%llu\n",
-> +					 tmp_crtc->base.id,
-> +					 dpu_cstate->new_perf.bw_ctl);
->   		}
->   	}
-> +}
-> +
-> +static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
-> +		struct drm_crtc *crtc)
-> +{
+yamllint warnings/errors:
+./Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml:98:16: [error] syntax error: mapping values are not allowed here (syntax)
 
-since you have fixed some of the formatting inside the function, do you 
-also want to align struct drm_crtc *crtc with the opening braces?
+dtschema/dtc warnings/errors:
+make[2]: *** Deleting file 'Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.example.dts'
+Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml:98:16: mapping values are not allowed in this context
+make[2]: *** [Documentation/devicetree/bindings/Makefile:26: Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.example.dts] Error 1
+make[2]: *** Waiting for unfinished jobs....
+./Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml:98:16: mapping values are not allowed in this context
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml: ignoring, error parsing file
+make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1428: dt_binding_check] Error 2
+make: *** [Makefile:240: __sub-make] Error 2
 
-With that fixed,
+doc reference errors (make refcheckdocs):
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240319152926.1288-2-johan+linaro@kernel.org
 
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
 
-> +	struct dpu_core_perf_params perf = { 0 };
-> +	int i, ret = 0;
-> +	u64 avg_bw;
-> +
-> +	if (!kms->num_paths)
-> +		return 0;
-> +
-> +	dpu_core_perf_aggregate(crtc->dev, dpu_crtc_get_client_type(crtc), &perf);
->   
->   	avg_bw = perf.bw_ctl;
->   	do_div(avg_bw, (kms->num_paths * 1000)); /*Bps_to_icc*/
-> 
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
 
