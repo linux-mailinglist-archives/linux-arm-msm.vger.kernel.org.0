@@ -1,81 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-14576-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC57A88026D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 17:35:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id AE14788027D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 17:38:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 66599282913
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 16:35:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D8F09283370
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 16:38:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62BB1F503;
-	Tue, 19 Mar 2024 16:35:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CD23848E;
+	Tue, 19 Mar 2024 16:38:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="b38QZMhE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pJY+9+pS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBCD5DDBD
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 16:35:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BF27470;
+	Tue, 19 Mar 2024 16:38:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710866150; cv=none; b=Bvp6lKKrM5sci2Trdq7ObUYasMgrgedsafyf6f1j98p6zgZt6TvrBYklaRjFqd3kTNZa6DFryY5eUxszf+qnJLgngGbwiYaLdLleyEkk6wKoQxROImeBogxAG7KUvhGlJbMjdeWksNgfpzCy3UgI6fyYzvXzbkO2WCQx5jhz4kc=
+	t=1710866331; cv=none; b=n7GEtrU6Dmlo+vxNWVdp0evU16q+28JCA7uVyOlR940fmSZeRF43tsc+Sr0g78mlPI5WYeHUv+wtGBBywkyGl7lBPqHDlnZCz6CDEtZoLb9VccB8WjFrpUehIY1Nd2cMgXMJWGq2ofq9HQ/oNKDkbsRIJUggQDNbTNd/Cz/rhPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710866150; c=relaxed/simple;
-	bh=q9uBXXkF/Mg0O6HtdHWp+kni+gGwOkJTVLcjuy2q/UA=;
+	s=arc-20240116; t=1710866331; c=relaxed/simple;
+	bh=dYsylaBpQOp3sMEqxBcd5E0VBO1SUJjmx6IkRhLuU/w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=shFxZA1MlV/9baA73IqsgkGeld+3Yz8CzBz8r2YEBrYwx1+tD8RZX8hNkAU2UlvsT2PMNSVCyFkdv64LBkp/4ErHt/DoHIJSE7xsdb8BQCAGjHDbsPQfrwD76VpmNXPn04SquAoZIi96n9pnm/fpZOQlcExizfRmqp9+0Rm1ts8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=b38QZMhE; arc=none smtp.client-ip=209.85.210.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-6e6aa5c5a6fso5520972b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 09:35:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710866148; x=1711470948; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=w96SEqzYAbTpf966liJXQFnSoV9Z+YW1Z6ZiFx4qEQs=;
-        b=b38QZMhE8jZ03+6rwp10aiCumqH/zxyRsYN7tRnUkECxAiI0fOgJm23/emDql7ikbP
-         htkFYgIb0d1ESFGqhCugKuVSNgiUKbtd1k6QjbWx9cv0ZmUfDr/wFEYevgSXzMl5kPBo
-         ir5iw+u3D3ShKPDTtfff/fdIPiQ2JQRKWubHlrvNjYNL2x0ib/fZeTzrTFxuEEQNWXSL
-         C2Y7Ayix1ArWJ2b/TiVe4A9p57kkdIkn1fsNc36n9FQ0u59V8IaECXzX3Vu0MQLZ6j36
-         f2+jeOma3JMHzow8c8jWEH3VKM8ThTR7KEgxE6P9gQeKNmq6sebtU6HRXUFtNdhGxNR2
-         zfAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710866148; x=1711470948;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=w96SEqzYAbTpf966liJXQFnSoV9Z+YW1Z6ZiFx4qEQs=;
-        b=Uhh+vXG8Bjw4v9z30d+iTaJUPuf+K89BXE1ZXXjkzwslFJNpT5er3bAoP0hLc5oF5c
-         7O9yZLqqhiVPqh/yB1BKZbQ2HOehInqdpES25lxqyaHOJKGsDZkYdLYrnF6jUPYMFiCV
-         SRkfBcrp9SHmW4ujAJVhnswW6qs96vXXSUWpLpUE0o9QNDAbsyxJjKS2zOPssbw/9XWP
-         vAPPPeOvCQYmPYOupEmpRdHBSoGN9X8xjv8o7UJGAeIxmO1NU4vGv7sxTH8YxBhWFtrj
-         2N9NYgH1dKW2l8Z18knhQplDUxod8gU8QQzDtkyOtuwAe427AY3wn7GJEziiDqX9dmN6
-         uUyA==
-X-Forwarded-Encrypted: i=1; AJvYcCX1BpeR3wjJ0tszhNYabLv/FzLFh6puXX5Bt+f02lJW+7ARIW6lMsq/0sEvtOv1SV5tF+u6ZeAWYYVL7/N+9m45hUyhyjMV2Jukb/YFHw==
-X-Gm-Message-State: AOJu0YydVVBvIKNftEHXkw+o/EZRoRQGa78GWQgHJwMCHjzRVTga2GWE
-	2PSiYZi6N9LXHxRW/l/lzkzBq0QW/tc6DRnZy9zNmNpt99ZLDRgV8mch7MnuGA==
-X-Google-Smtp-Source: AGHT+IHUQM6pzUf/IP4HxZ2Ij8eYMGp3z1k0Y4oBtNyrAeqJ6GDq1SULh4emJAASSYdl6qKHg7E2/w==
-X-Received: by 2002:a05:6a21:3406:b0:1a3:6940:82ea with SMTP id yn6-20020a056a21340600b001a3694082eamr5204737pzb.31.1710866147866;
-        Tue, 19 Mar 2024 09:35:47 -0700 (PDT)
-Received: from thinkpad ([120.56.201.52])
-        by smtp.gmail.com with ESMTPSA id y31-20020a056a00181f00b006e61b0a4b17sm9923587pfa.185.2024.03.19.09.35.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Mar 2024 09:35:47 -0700 (PDT)
-Date: Tue, 19 Mar 2024 22:05:44 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Kunwu Chan <chentao@kylinos.cn>
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] bus: mhi: ep: Simplify the allocation of slab caches
- in mhi_ep_register_controller
-Message-ID: <20240319163544.GE3297@thinkpad>
-References: <20240228030056.509994-1-chentao@kylinos.cn>
+	 Content-Type:Content-Disposition:In-Reply-To; b=cNmYiXpgMCopPBR1OZmHmHbyc9um6HsR5Rt85FMZ0MnvFXmR0QXGSalsKALDRuu0PxXxcIp4r7JwKwsQ/uBdpNFiVx3ZNk6EPqQrEJqAjtiDtJ5B+Z+5RbIdzzlZ7oWsDvuQHF4OykUsR9iliXa6dbAJ5b/Mb8gk6h0GZrW0P0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pJY+9+pS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81801C43394;
+	Tue, 19 Mar 2024 16:38:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1710866330;
+	bh=dYsylaBpQOp3sMEqxBcd5E0VBO1SUJjmx6IkRhLuU/w=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=pJY+9+pSarDhpFmWIuEdBfUThaZYx4IzquJlP5O64VzWFDoFioQINcZi4p+yopd6F
+	 ErebcMpVyh4KjLRkxscbDd7pdoed6R/I3g9++/WFyZQPcZ8z17rWY3gKGmaeCYZk64
+	 hn+/Y64HGirKPes9zYqyBKvE/jnlNtWaKjws6jjAhQ1G4V31ooEJqiMm4m0c33GZBa
+	 6NWaIKh5JXdu1eel98bZoLAH92veFrGvDHWgbuyrJSiSjmlVz95bjBEweJdwkSCB8T
+	 mVKrcpSYzfMonTbtZj6OW2xbxjp/3XC8WWfwU3MvA5UJx3oYj8gJ9VE339DdVziiOI
+	 X470z+WxwiZlg==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rmcUK-000000000ul-22u3;
+	Tue, 19 Mar 2024 17:38:57 +0100
+Date: Tue, 19 Mar 2024 17:38:56 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Doug Anderson <dianders@chromium.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>,
+	Marcel Holtmann <marcel@holtmann.org>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hedberg <johan.hedberg@gmail.com>,
+	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
+	Matthias Kaehlcke <mka@chromium.org>,
+	Rocky Liao <quic_rjliao@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+	Nikita Travkin <nikita@trvn.ru>
+Subject: Re: [PATCH v3 3/5] Bluetooth: qca: fix device-address endianness
+Message-ID: <Zfm_oFLNgPHqJKtG@hovoldconsulting.com>
+References: <20240319152926.1288-1-johan+linaro@kernel.org>
+ <20240319152926.1288-4-johan+linaro@kernel.org>
+ <CAD=FV=WqwY07fMV-TuO8QMRnk555BJYEysv4urcugsELufHr4A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,55 +80,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240228030056.509994-1-chentao@kylinos.cn>
+In-Reply-To: <CAD=FV=WqwY07fMV-TuO8QMRnk555BJYEysv4urcugsELufHr4A@mail.gmail.com>
 
-On Wed, Feb 28, 2024 at 11:00:56AM +0800, Kunwu Chan wrote:
-> Use the new KMEM_CACHE() macro instead of direct kmem_cache_create
-> to simplify the creation of SLAB caches.
+On Tue, Mar 19, 2024 at 09:10:38AM -0700, Doug Anderson wrote:
+> On Tue, Mar 19, 2024 at 8:30 AM Johan Hovold <johan+linaro@kernel.org> wrote:
+> >
+> > The WCN6855 firmware on the Lenovo ThinkPad X13s expects the Bluetooth
+> > device address in big-endian order when setting it using the
+> > EDL_WRITE_BD_ADDR_OPCODE command.
+> >
+> > Presumably, this is the case for all non-ROME devices which all use the
+> > EDL_WRITE_BD_ADDR_OPCODE command for this (unlike the ROME devices which
+> > use a different command and expect the address in little-endian order).
+> >
+> > Reverse the little-endian address before setting it to make sure that
+> > the address can be configured using tools like btmgmt or using the
+> > 'local-bd-address' devicetree property.
+> >
+> > Note that this can potentially break systems with boot firmware which
+> > has started relying on the broken behaviour and is incorrectly passing
+> > the address via devicetree in big-endian order.
+> >
+> > Fixes: 5c0a1001c8be ("Bluetooth: hci_qca: Add helper to set device address")
+> > Cc: stable@vger.kernel.org      # 5.1
+> > Cc: Balakrishna Godavarthi <quic_bgodavar@quicinc.com>
+> > Cc: Matthias Kaehlcke <mka@chromium.org>
+> > Tested-by: Nikita Travkin <nikita@trvn.ru> # sc7180
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > ---
+> >  drivers/bluetooth/btqca.c | 8 ++++++--
+> >  1 file changed, 6 insertions(+), 2 deletions(-)
 > 
+> Personally, I'd prefer it if you didn't break bisectability with your
+> series. As it is, if someone applies just the first 3 patches they'll
+> end up with broken Bluetooth.
 
-There are 3 kmem caches in this driver. Please change all of them.
+It doesn't break the build, but yes, the device address would be
+reversed for Trogdor machines for two commits and possible break any
+previous pairings. That's hardly something to worry about.
 
-- Mani
+So I consider this to be acceptable for sake of clarity, and especially
+since these patches will be coming in from separate trees anyway.
 
-> Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-> ---
-> v2:
->     - Simplify the allocations of mhi_ring_element slab caches
-> ---
->  drivers/bus/mhi/ep/main.c | 8 ++------
->  1 file changed, 2 insertions(+), 6 deletions(-)
+> IMO the order should be:
+> 1. Binding (currently patch #1)
+> 2. Trogdor dt patch, which won't hurt on its own (currently patch #5)
+> 3. Bluetooth subsystem patch handling the quirk (currently patch #2)
+> 4. Qualcomm change to fix the endianness and handle the quirk squashed
+> into 1 patch (currently patch #3 + #4)
 > 
-> diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-> index 65fc1d738bec..795611482f16 100644
-> --- a/drivers/bus/mhi/ep/main.c
-> +++ b/drivers/bus/mhi/ep/main.c
-> @@ -1478,9 +1478,7 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
->  		goto err_free_ch;
->  	}
->  
-> -	mhi_cntrl->ev_ring_el_cache = kmem_cache_create("mhi_ep_event_ring_el",
-> -							sizeof(struct mhi_ring_element), 0,
-> -							SLAB_CACHE_DMA, NULL);
-> +	mhi_cntrl->ev_ring_el_cache = KMEM_CACHE(mhi_ring_element, SLAB_CACHE_DMA);
->  	if (!mhi_cntrl->ev_ring_el_cache) {
->  		ret = -ENOMEM;
->  		goto err_free_cmd;
-> @@ -1493,9 +1491,7 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
->  		goto err_destroy_ev_ring_el_cache;
->  	}
->  
-> -	mhi_cntrl->ring_item_cache = kmem_cache_create("mhi_ep_ring_item",
-> -							sizeof(struct mhi_ep_ring_item), 0,
-> -							0, NULL);
-> +	mhi_cntrl->ring_item_cache = KMEM_CACHE(mhi_ep_ring_item, 0);
->  	if (!mhi_cntrl->ev_ring_el_cache) {
->  		ret = -ENOMEM;
->  		goto err_destroy_tre_buf_cache;
-> -- 
-> 2.39.2
+> ..and the patch that changes the Qualcomm driver should make it
+> obvious that it depends on the trogdor DT patch in the change
+> description.
 > 
+> With patches #3 and #4 combined, feel free to add my Reviewed-by tag
+> as both patches look fine to me.
 
--- 
-மணிவண்ணன் சதாசிவம்
+I don't think it's worth spending more time and effort on this issue
+(which should have been caught and fixed years ago) for this.
+
+Johan
 
