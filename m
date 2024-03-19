@@ -1,77 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-14517-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2ECF587FEAC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 14:22:33 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1675587FEAE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 14:22:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DA1502853BD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 13:22:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C1A53284266
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 13:22:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D349980633;
-	Tue, 19 Mar 2024 13:22:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF3E280021;
+	Tue, 19 Mar 2024 13:22:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VpVkE1qU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NCumf5sy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CADA80627
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 13:22:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0207C8062F
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 13:22:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710854531; cv=none; b=RY7j5GXaG9xVRtophPjRxS/7Ac9k3fmhqxmhZdxK6GWiHgGnA+CiQIHT1KaxxHEHsnBJcZNTtEsfRfpO2pNCJllSnoPigNiOyzYheObpGWKgeBtPDvkmVgmYQFSbFBiV3RK9ImR1SLzD4HtSLf8b7fPS/n9jgFZFeqyzv4LkhIY=
+	t=1710854532; cv=none; b=VjHgzl3KmmD3r0lYVGEkaHQSSiWJzuIJr31g0xF0V7NO32zzXsO3bFDtboIpPVtjIyQP9a9f4V0ko1PowLL9YPFqUvtEZFhL4yqXQ4sKT8W0L3MCIsxmCKdhpopyn/kZXzpLbSv9ej2zddcRZc68vdNxaYun5UCZemaPNCKhhDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710854531; c=relaxed/simple;
-	bh=3qmqU6bSN0cRP9BWJnA7iPyjYtQle9jNYPKUby6bjiA=;
+	s=arc-20240116; t=1710854532; c=relaxed/simple;
+	bh=oxONTvBo3a22TAARxRZKWb7mB82JhjnItvZbZYS2bz4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ipH2c5ziub9030N4rNuJFyCcde+LdSHLvgxVXn8YJTokDnvbECxpfIVJUQBTbJwLSvKO1rmHvTl1sNbwD7s/XhHptG+0X3yOBla0BgtbkRrAgYmOBxElbOgJsmkbe+uOX80Ga3a9EBmmVkpjDbBuMu06L0lLgzcTRAe3TGOu0n4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VpVkE1qU; arc=none smtp.client-ip=209.85.208.178
+	 In-Reply-To:To:Cc; b=XDS3iR/5ZBmD3O/+VBzldbmP1Uk3BfivKGMz/Cc9nvsqKv+R+d8y87SctTqDvEl4/d7lBl3wy+TmKDGIuKu86gYCk6duT1DVbPHi4o4/s1CoEh2+EnUhHcydUb2GybGg4DmCG4yOhCy6anhq5qr2rBJJqCoDR81dABTio7GNUo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NCumf5sy; arc=none smtp.client-ip=209.85.208.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2d4979cd8c8so30649441fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 06:22:09 -0700 (PDT)
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2d475b6609eso71155621fa.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 06:22:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710854528; x=1711459328; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1710854529; x=1711459329; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=dNAKoiDHewNcwvkzDamm6bm6LBy8ay/1mKzk8jCSgik=;
-        b=VpVkE1qU9Yq2PX2alavorY0XhyE8bEPzqI3YxwGdgfhrEp/K1FfdQPL2BQAw1ZXALV
-         fOPS2VH+Ytm+NkbiKWQ4/eqbFngosS0xNPRXatukS4b3GwqwqRqZLXKP9gFx0N4j0aUN
-         nirEaRfPeVmUZhkKGQbYWgupik2iJxpShKY6GiIawaqjWejvutN9DBmCUJ+DuG9ezJUF
-         Dlpc1Hj2mi1ep542UyBncWV7ww0GirXte2FVSMLYQKvZcf95sQpPth63FZKdarLtZuAh
-         Kqv/EeglVpAbuaqBD/PTh+e8kqqnEnVYkvfp9gLM5kyQBRuiMfAA0HY0wkRRJsOpqJvy
-         Mx1g==
+        bh=lfmAQzn+LLNOd1P1Ei+JN2z86jgOlHY8peuyPP1BcaI=;
+        b=NCumf5syCtsMrEb//zrEZCJrbUdKKQ3vQn95/iu24Swax0I+/DuzOVLQP2PokgYSLg
+         hHGAfPSpY6P2EtVp+WsqGbyuE37/0GY24o1d3WuMASlYSXNsDV41uH+RJTpABGYS3u4G
+         knIYW35Nq06DTaJnuBq0g6VyDMcOmAIf3lj+ZkkQcL51+DmY5fmaivRw8MzO//Q7873y
+         1xUDvlOzuTV5YMOrO0EArNRtoGcVJq4BBiJwNAkv5RVz4+4c08KE+ff7aAbat9EZ5Hma
+         CK+hqylDHACuh/4u+JqmiiaHeueWehom9+ajCwVbfRRpjQGA8045ayqemuOgFE56R6tT
+         BYTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710854528; x=1711459328;
+        d=1e100.net; s=20230601; t=1710854529; x=1711459329;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=dNAKoiDHewNcwvkzDamm6bm6LBy8ay/1mKzk8jCSgik=;
-        b=VMdXllMBYTwDQGHoIdxAAkCTRyR4/u289bDhLzmLtRbVt9T6dX3QnjlPI7FGA377MT
-         uyFbJnK7qS5+MvKUZYswF8fWL6e/KnHna8E0qiFhRkaXnonbxMzgjiUIrBGnMk1i6JwV
-         ArCg19IFe+ntNvZ4GB3Dtpl9MTR8q9dpPorg5zdy6hhJAQnroaP0MCSxrw7ctEYArfXj
-         +eDiKo2Ep1u54qviGdJw8FLHM4b3hlnwMhgFJ+xpcw+sdEUKJhfMoj73cRFYigFEwbhR
-         BkKyOHWAY19MmGhwM+XWZ5zDN5RSAkFVTqNhtFLEQKFFyxtV8tJl3+gEU6w7ELxBhAZw
-         kGhQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW2O4NbFCa51HfbB0zdTUc1lpizTbHBFMlliiJTDiW/PA1NZ9+BN9A1MyZWCcntGpjacTcOqmSUhP5ZEwi5SXYp12M5opcAt1l0Y8gbSQ==
-X-Gm-Message-State: AOJu0YzH5Dg/AUmaxaFYZ839yQHMcsSl1Y+eRtw1Hog9VP0xKxc8P+fv
-	FN4aTg3Ny4kGG3kY4fiBFg3c+PsF4ZqhovRoB1aKhNCvd7UMNsNdw2LLjwk+iEXKUKLXPb2SD0T
-	X
-X-Google-Smtp-Source: AGHT+IGa1lacsRP3poDQ2kM+iUBKGdvnsRXaJcUx3u8Mbmmxifx6l0Z6sDcpXYXh9V2xDGQRRGj5og==
-X-Received: by 2002:a2e:2e06:0:b0:2d3:17e6:3b4a with SMTP id u6-20020a2e2e06000000b002d317e63b4amr977739lju.23.1710854528370;
-        Tue, 19 Mar 2024 06:22:08 -0700 (PDT)
+        bh=lfmAQzn+LLNOd1P1Ei+JN2z86jgOlHY8peuyPP1BcaI=;
+        b=ZH7xsmfDQUHEFATZ69iZo/562n2FkJHok+pyZYsmVnt7XPsoK0FQ1GTyyx/+8J5Bws
+         78BrBLJwbzUJ4/kQ+pKJGNPCIZDq1gIB4QO7cKDT5Aqa+ioVKGYNZ6tfVA8CGHtWBi3x
+         ztXRG/RegrLaSS24eFsAGBwho1u3c68FoX1+iUkZe7LrOs7a4/QrSIDspSghfz9ox2KS
+         ewF+27ib2RyfzCL+bix/b030mKUebb2u6nnKPinTtmsIvD/FwPtXNcyMlq7af6IzGCiD
+         44j4t8I2iZtjBbUPlb8I/l3hVCaq+UFmZCAXP7mwhTbExzQ7FigbQM3LKY6RmuvWQOQJ
+         U40A==
+X-Forwarded-Encrypted: i=1; AJvYcCUp+tYGPB6wd9b/bhpEUlkhQGCS0mdTJzjX6musvZJW2zh8IcrHDYFTwndf37idP7ig7l3ShQZcxSEirPbnb3KKrV0Lv+f0jmYF/8Z2tw==
+X-Gm-Message-State: AOJu0YwMUbbMVaX3jqbekdrfjpkyw2uJDSI9/653T8dzsCCNB3cZP8Yt
+	tg3DvX2fGM9w7Ym3/YoHohu9Tmsl43dEp38AexKMBuONYSIPcUUbAV3If9AAFIY=
+X-Google-Smtp-Source: AGHT+IFX1aAEpEwXPmaUZwe+U7THcR+jVQycmmL88o52TfP9WgSU/bZekNQH7YzEgPY3sCwDXKJzEA==
+X-Received: by 2002:a05:651c:210d:b0:2d4:64fc:65bb with SMTP id a13-20020a05651c210d00b002d464fc65bbmr2650875ljq.48.1710854529349;
+        Tue, 19 Mar 2024 06:22:09 -0700 (PDT)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id j7-20020a2e3c07000000b002d435cdf2adsm1826148lja.111.2024.03.19.06.22.07
+        by smtp.gmail.com with ESMTPSA id j7-20020a2e3c07000000b002d435cdf2adsm1826148lja.111.2024.03.19.06.22.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Mar 2024 06:22:07 -0700 (PDT)
+        Tue, 19 Mar 2024 06:22:08 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 19 Mar 2024 15:22:05 +0200
-Subject: [PATCH 7/9] drm/msm/dpu: check for overflow in
- _dpu_crtc_setup_lm_bounds()
+Date: Tue, 19 Mar 2024 15:22:06 +0200
+Subject: [PATCH 8/9] drm/msm/dpu: merge MAX_IMG_WIDTH/HEIGHT with
+ DPU_MAX_IMG_WIDTH/HEIGHT
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,7 +79,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240319-dpu-mode-config-width-v1-7-d0fe6bf81bf1@linaro.org>
+Message-Id: <20240319-dpu-mode-config-width-v1-8-d0fe6bf81bf1@linaro.org>
 References: <20240319-dpu-mode-config-width-v1-0-d0fe6bf81bf1@linaro.org>
 In-Reply-To: <20240319-dpu-mode-config-width-v1-0-d0fe6bf81bf1@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -91,73 +90,74 @@ Cc: Abel Vesa <abel.vesa@linaro.org>,
  Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org, 
  dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1950;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2190;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=3qmqU6bSN0cRP9BWJnA7iPyjYtQle9jNYPKUby6bjiA=;
- b=owGbwMvMwMXYbdNlx6SpcZXxtFoSQ+rPiRUW0/52N5rue6gUIPaqUEw9ofQaS7twUuvWyu2ps
- fsZXoR2MhqzMDByMciKKbL4FLRMjdmUHPZhx9R6mEGsTCBTGLg4BWAi0yQ4GBZyCyWyNrNGR53z
- tbnWdmNZcsWFw7evf1nrpvl2QensCy9FpNxMDVJ/8M/cs79JYZaZ3MfXx/muTlXwX8Lgp1XCcub
- dj6rJu0oSzP6zsgT3xvrXmU+6odx52ULBKljDVuvbpvhpbz8aH1aPMdt0OVh9Jv/sh9Fdqjk+pS
- Ff0y5be+zZG75of/kt0w67CWf/T7h6oaxotpvvt7ob4e/04nfU6+3f9fJGjfOyuEeHXrRdW/mEW
- exFMEvZ7soCMfOIu9tLZGeX8mbvKi4KCD71qlO9xqzGLjenWn8lwxwuJ8H54eoC/EJb/qvk+jie
- +Lw6+sCWfYptlUa7eb5Evt1/RUYrwUlIZ0WS75n5a5wEAQ==
+ bh=oxONTvBo3a22TAARxRZKWb7mB82JhjnItvZbZYS2bz4=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBl+ZF41mZIEwZobtj48H7DderSIIO41YVgYGsl3
+ bR1W7sCgM+JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZfmReAAKCRCLPIo+Aiko
+ 1YKBB/sGizXX5biEBU53PDUittIDTEl5a4CFAeO84c9uZOzfj0tWA7dgnHYFFKR/fTDEOfhaYkL
+ lxK7IYixXSl2qucsnL8THVdMnnn9QdvPzxCn7wkxKPQgdI/6HCOTRq3oAvIzEwiE859kXC3aJ8V
+ Ix3usb0d8ZNTxgWTyZgOqEZEVttfGMdesazgydy3N8HmEYVyZhiV29dSfCjA0qa7z8Ln9LpVJbn
+ 15eVr3hBAHRyU54IASZ8soCq+oAdpbmUbXs5UO720z803zL3mqAvHlKMS+++Y/Ma//W2D85VL1x
+ rJ7V7fddxB5MdknGa/+x6+4zmxpS0mp5I21pyd4DR2Hg6MLO
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Check in _dpu_crtc_setup_lm_bounds() that CRTC width is not overflowing
-LM requirements.
+dpu_formats.c defines DPU_MAX_IMG_WIDTH and _HEIGHT, while
+dpu_hw_catalog.h defines just MAX_IMG_WIDTH and _HEIGHT. Merge these
+constants to remove duplication.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c    | 3 ---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 4 ++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      | 4 ++--
+ 3 files changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index 64befead366f..2fc1c2729bfd 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -711,12 +711,13 @@ void dpu_crtc_complete_commit(struct drm_crtc *crtc)
- 	_dpu_crtc_complete_flip(crtc);
- }
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
+index 1fc9817278df..1ee78ba640b5 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
+@@ -20,9 +20,6 @@
+ #define DPU_TILE_HEIGHT_UBWC	4
+ #define DPU_TILE_HEIGHT_NV12	8
  
--static void _dpu_crtc_setup_lm_bounds(struct drm_crtc *crtc,
-+static int _dpu_crtc_setup_lm_bounds(struct drm_crtc *crtc,
- 		struct drm_crtc_state *state)
- {
- 	struct dpu_crtc_state *cstate = to_dpu_crtc_state(state);
- 	struct drm_display_mode *adj_mode = &state->adjusted_mode;
- 	u32 crtc_split_width = adj_mode->hdisplay / cstate->num_mixers;
-+	struct dpu_kms *dpu_kms = _dpu_crtc_get_kms(crtc);
- 	int i;
+-#define DPU_MAX_IMG_WIDTH		0x3FFF
+-#define DPU_MAX_IMG_HEIGHT		0x3FFF
+-
+ /*
+  * DPU supported format packing, bpp, and other format
+  * information.
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+index d1aef778340b..af2ead1c4886 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+@@ -21,8 +21,8 @@
  
- 	for (i = 0; i < cstate->num_mixers; i++) {
-@@ -727,7 +728,12 @@ static void _dpu_crtc_setup_lm_bounds(struct drm_crtc *crtc,
- 		r->y2 = adj_mode->vdisplay;
+ #define DPU_HW_BLK_NAME_LEN	16
  
- 		trace_dpu_crtc_setup_lm_bounds(DRMID(crtc), i, r);
-+
-+		if (drm_rect_width(r) > dpu_kms->catalog->caps->max_mixer_width)
-+			return -E2BIG;
- 	}
-+
-+	return 0;
- }
+-#define MAX_IMG_WIDTH 0x3fff
+-#define MAX_IMG_HEIGHT 0x3fff
++#define DPU_MAX_IMG_WIDTH 0x3fff
++#define DPU_MAX_IMG_HEIGHT 0x3fff
  
- static void _dpu_crtc_get_pcc_coeff(struct drm_crtc_state *state,
-@@ -1195,8 +1201,11 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
- 	if (crtc_state->active_changed)
- 		crtc_state->mode_changed = true;
+ #define CRTC_DUAL_MIXERS	2
  
--	if (cstate->num_mixers)
--		_dpu_crtc_setup_lm_bounds(crtc, crtc_state);
-+	if (cstate->num_mixers) {
-+		rc = _dpu_crtc_setup_lm_bounds(crtc, crtc_state);
-+		if (rc)
-+			return rc;
-+	}
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index 9e57c51f5343..47165d2bd4ea 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -851,8 +851,8 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+ 	fb_rect.y2 = new_plane_state->fb->height;
  
- 	/* FIXME: move this to dpu_plane_atomic_check? */
- 	drm_atomic_crtc_state_for_each_plane_state(plane, pstate, crtc_state) {
+ 	/* Ensure fb size is supported */
+-	if (drm_rect_width(&fb_rect) > MAX_IMG_WIDTH ||
+-	    drm_rect_height(&fb_rect) > MAX_IMG_HEIGHT) {
++	if (drm_rect_width(&fb_rect) > DPU_MAX_IMG_WIDTH ||
++	    drm_rect_height(&fb_rect) > DPU_MAX_IMG_HEIGHT) {
+ 		DPU_DEBUG_PLANE(pdpu, "invalid framebuffer " DRM_RECT_FMT "\n",
+ 				DRM_RECT_ARG(&fb_rect));
+ 		return -E2BIG;
 
 -- 
 2.39.2
