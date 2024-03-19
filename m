@@ -1,126 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-14534-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14535-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70DA58800A8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 16:30:32 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C9EAA8800D5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 16:39:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A23141C21FF4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 15:30:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 69F9D1F234FF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 15:39:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 365B3823A2;
-	Tue, 19 Mar 2024 15:29:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FZEu/ANV"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC738657C4;
+	Tue, 19 Mar 2024 15:38:55 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD132657BE;
-	Tue, 19 Mar 2024 15:29:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D5551F608;
+	Tue, 19 Mar 2024 15:38:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710862193; cv=none; b=Hga3DdTiuMqDLCrhGeuHd0rbiXGj0hUCd+CTXIWhQAuMOLNH5QZ2yjzX7HiiVugBjl4bevuQEHz7+TY5eO5rAZfeDns05Z8LYlwLzY1T20sCUzr/sW0C0/koEIYrKzLQ8n5EN3ql/iVXnNkmvTut9YIV9eexOD7O/E2HtIxrQ9o=
+	t=1710862735; cv=none; b=cILXwHRiOevBBWGgAAIYtdH5CZJW4qedFJjPiQrdiC6tTzWLnu9cOFMyigTmXepSHSGW1kjg/rYCupug4GcsZtx8sAtH5ra/7esGzS6jZ9ddgRW7D7jqODVvxrpLuMAzuGkF+/rD1Fh6lVxyasopsvkz6cUJaO1du0jTvvzPnyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710862193; c=relaxed/simple;
-	bh=8/BAOgM7/E4Oo/lzhVSkfOrC0gVN60IoirdUeSlLQpk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sUgYcZcQ0NWP/o45wR8H1ja/QCTBDJVG/axzfQKrK81SiSLl1NY6S4jUyhV2erv8E4zEvCBOWePEtcsLeWDr5+Fb24yifiPu+ZpNZ+PpTuaaK8PypRpW1uukECIe1vIr/ATKgcqD5/hXV0EY0YYzg/BgMAwbYuelZONgoOTWzMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FZEu/ANV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E101C433C7;
-	Tue, 19 Mar 2024 15:29:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710862193;
-	bh=8/BAOgM7/E4Oo/lzhVSkfOrC0gVN60IoirdUeSlLQpk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FZEu/ANVOCScrmFrRpYhb6lv9kfcI1MRolgnPAxDfUrvI856KNELYC3gAS8nuBngd
-	 M9XRLrl7h90EkRCEN7dMkycWmKdksVc5h+jviA+dvCsF6khX3idFQrM08mbr/zFiH0
-	 uB30woKsESP10flPIy9Es48hqFbbAc8uRLc4JmkUiN+zkmTmEOeepDeBh68U0qROlK
-	 epUIiwqvdOWJeQTxGFdJIQ7w37pcOzYQEFJDNIsFdzyVgbc//n2AEKPzQYeZgANrb1
-	 q545wrbYA5yREvFDOuo80nyciU2H/jCDmRWOvqvj0GJBaYCxZRVgtqlYOR+KQusKHI
-	 8ACqk3BgRQhGw==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan+linaro@kernel.org>)
-	id 1rmbPc-000000000LO-0cIK;
-	Tue, 19 Mar 2024 16:30:00 +0100
-From: Johan Hovold <johan+linaro@kernel.org>
-To: Marcel Holtmann <marcel@holtmann.org>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Cc: Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hedberg <johan.hedberg@gmail.com>,
-	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
-	Matthias Kaehlcke <mka@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Rocky Liao <quic_rjliao@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	linux-bluetooth@vger.kernel.org,
-	netdev@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>,
-	stable@vger.kernel.org,
-	Rob Clark <robdclark@chromium.org>
-Subject: [PATCH v3 5/5] arm64: dts: qcom: sc7180-trogdor: mark bluetooth address as broken
-Date: Tue, 19 Mar 2024 16:29:26 +0100
-Message-ID: <20240319152926.1288-6-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240319152926.1288-1-johan+linaro@kernel.org>
-References: <20240319152926.1288-1-johan+linaro@kernel.org>
+	s=arc-20240116; t=1710862735; c=relaxed/simple;
+	bh=Ab+zULn2IP9jCO5eMIYobOnMG4LfbJA7u/jzgOg8EEc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XIdgEBFHiTYVrOpammpTIUorQf0t/pbO7rAbAYuX7QIN67rRWXxEUOtF/Yz43BtfSNJNzajH7Qta22Vxw3q8ZNo8yF8YdbhENjPj0el/WQrgFBkonILene+ywpch6d1aeIPJSKkI/JAFhzXQLMx8bO63NVVJmdNLsA6biKRT6Xs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 86CBC106F;
+	Tue, 19 Mar 2024 08:39:27 -0700 (PDT)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6AED93F762;
+	Tue, 19 Mar 2024 08:38:49 -0700 (PDT)
+Date: Tue, 19 Mar 2024 15:38:46 +0000
+From: Sudeep Holla <sudeep.holla@arm.com>
+To: Sriram Dash <quic_sriramd@quicinc.com>
+Cc: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
+	<kishon@kernel.org>, <robh@kernel.org>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	<krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+	<gregkh@linuxfoundation.org>, <quic_wcheng@quicinc.com>,
+	<Thinh.Nguyen@synopsys.com>, <p.zabel@pengutronix.de>,
+	<linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+	<devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+	<linux-usb@vger.kernel.org>, <quic_psodagud@quicinc.com>,
+	<quic_nkela@quicinc.com>, <manivannan.sadhasivam@linaro.org>,
+	<ulf.hansson@linaro.org>, <quic_shazhuss@quicinc.com>
+Subject: Re: [RFC 0/3] Enable firmware-managed USB resources on Qcom targets
+Message-ID: <Zfmxhn9-uTo-6zyD@bogus>
+References: <1709657858-8563-1-git-send-email-quic_sriramd@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1709657858-8563-1-git-send-email-quic_sriramd@quicinc.com>
 
-Several Qualcomm Bluetooth controllers lack persistent storage for the
-device address and instead one can be provided by the boot firmware
-using the 'local-bd-address' devicetree property.
+On Tue, Mar 05, 2024 at 10:27:35PM +0530, Sriram Dash wrote:
+> Some target systems allow multiple resources to be managed by firmware.
+> On these targets, tasks related to clocks, regulators, resets, and
+> interconnects can be delegated to the firmware, while the remaining
+> responsibilities are handled by Linux.
+>
+> To support the management of partial resources in Linux and leave the rest
+> to firmware, multiple power domains are introduced. Each power domain can
+> manage one or more resources, depending on the specific use case.
+>
 
-The Bluetooth bindings clearly states that the address should be
-specified in little-endian order, but due to a long-standing bug in the
-Qualcomm driver which reversed the address some boot firmware has been
-providing the address in big-endian order instead.
+Currently it is just 2 IIUC. Better to be specific with more details and
+point to the exact binding.
 
-The boot firmware in SC7180 Trogdor Chromebooks is known to be affected
-so mark the 'local-bd-address' property as broken to maintain backwards
-compatibility with older firmware when fixing the underlying driver bug.
+> These power domains handle SCMI calls to the firmware, enabling the
+> activation and deactivation of firmware-managed resources.
+>
+> The driver is responsible for managing multiple power domains and
+> linking them to consumers as needed. Incase there is only single
+> power domain, it is considered to be a standard GDSC hooked on to
+> the qcom dt node which is read and assigned to device structure
+> (by genpd framework) before the driver probe even begins.
+>
+> fw-managed dt property allows the driver to determine whether
+> device resources are managed by Linux or firmware, ensuring
+> backward compatibility.
+>
 
-Note that ChromeOS always updates the kernel and devicetree in lockstep
-so that there is no need to handle backwards compatibility with older
-devicetrees.
+And provide the reason why this additional property is a must ? Why can't
+the implementation deal with absence of it on these systems ?
 
-Fixes: 7ec3e67307f8 ("arm64: dts: qcom: sc7180-trogdor: add initial trogdor and lazor dt")
-Cc: stable@vger.kernel.org      # 5.10
-Cc: Rob Clark <robdclark@chromium.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+Not sure if you have seen/followed this[1] discussion before, but please
+do now if not already and contribute. It is definitely related to this
+patch set and all possible very similar patch sets Qcom might have in the
+future across various subsystems in the Linux kernel.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index 46aaeba28604..ebe37678102f 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -943,6 +943,8 @@ bluetooth: bluetooth {
- 		vddrf-supply = <&pp1300_l2c>;
- 		vddch0-supply = <&pp3300_l10c>;
- 		max-speed = <3200000>;
-+
-+		qcom,local-bd-address-broken;
- 	};
- };
- 
--- 
-2.43.2
+In general, Qcom must stop pushing such changes to individual drivers
+in isolation and confuse the reviewers to some extent without giving
+the complete view(or rather providing partial view) which may result in
+them agreeing with proposed solution without considering the overall
+impact on various subsystems and DT bindings.
 
+--
+Regards,
+Sudeep
+
+[1] https://lore.kernel.org/all/be31801e-bb21-426b-f7aa-2b52727de646@quicinc.com/
 
