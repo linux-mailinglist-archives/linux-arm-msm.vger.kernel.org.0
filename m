@@ -1,218 +1,265 @@
-Return-Path: <linux-arm-msm+bounces-14524-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6ABC387FFDA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 15:46:45 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B71DA880046
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 16:10:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 213EA2847C9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 14:46:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6D7361F233A2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 15:10:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABEB22E400;
-	Tue, 19 Mar 2024 14:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5A8D651B3;
+	Tue, 19 Mar 2024 15:10:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bFINu8Tl"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Oolw6rGY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E992206E
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 14:46:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69B0651AC
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 15:10:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710859600; cv=none; b=j6xlWqiBuGHCrkIU49Mj5wVsdiUeP4TtZhB6MVshVlMB/LHes3m7XhPNaI0GzGONunMjp6qA6so+RQNvI2qL/T0HXazcFMR2FTSGq4aPl8j0iDk+LxtE8p8pBjoU+/eomjowd+lDSDOOm8BWjidZSdDISUULO/6HTZOdr8zwmFc=
+	t=1710861023; cv=none; b=RaZHfjGLYNXDpSxXt3eZ0ekh96TlPYxwhZ+R3mWSu/S3d3F1EC/sRgKgk34ORg2iNRIeIFBgE9p+TRT/bj+kKhrN7R+wMEiKBsKaWbxj+xO3GjIwUyJXAiavLFZWsDQVs4IxHlw7mLK27FUBBlu6BZvLxt7d4N3oWW+oBJDHC8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710859600; c=relaxed/simple;
-	bh=0YR4vaEHHbGNKE8eA6vzC7Rt66ToMX193XLYwIpixJQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Qt/rIZXCLa0tlMczwb6M/SzOq68SvPFxTbs0NBIRFWSglTnLbZGC0zfaAN00NpOdMbO7KL/aDtUmqJH2Q46GgCr7ZoxgJM2zapemGnkZGClcyZchqiN0/3Ei26OrnkKzajfB/JGzuA/tv299oqJF6RckJ4RJFAfzixD2PV28zOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bFINu8Tl; arc=none smtp.client-ip=209.85.128.169
+	s=arc-20240116; t=1710861023; c=relaxed/simple;
+	bh=GLE7RjZ8yGnxItU0Sie22/RERMRW/HIE8vexq37+vlU=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=YOY0OaGOeQc30bLrU9TIIhRgFzAbdE5ReVs79H5zR09q7z7bO/W9jRqwYU0v6Jw/6NiCZ8LskgPCGQBMWXEI+GttLzqhb6PLHKKtVSvzodhAxzfVKngE6AWVtVmB7RGkocd0fmMrbkcivqgfYzcSeR6Xw/FvLdez2X/bRBVzIs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Oolw6rGY; arc=none smtp.client-ip=209.85.221.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-609f4155b76so58999617b3.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 07:46:38 -0700 (PDT)
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-33fd12a06fdso1786706f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 08:10:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710859598; x=1711464398; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=BPlNhua1WaqcSnRpkvhSs0yu6N7jGpn1fD8XUmo6+sY=;
-        b=bFINu8TlLEZzIWgg8fE1snYIgL2xpP/hGgzP9rs4DBJIZqbSa43p6XBco+1wbwx2RB
-         cnMk2Ok0KI2D+zP2u4DpWFS5xo98wYixFM2d9VWIdhraRwrLhngL5cRg0pDattKzeMpw
-         PTFHW4abmt4hkZjU2iuGqe0dwb50pqVefjTEeonSh6npMcucVJt2lkPm52dzgIHN7Xbe
-         V93mtCvjGsxRLdGsFgHXe+p+eEwKE6i4LnnmTCfpsczgOO6DkHFxPvHXSrDm8gL8l6g9
-         tbhne8oxU0WiqFy/CzJGtO5PrWZlK6kqbF0ZUVnir/BZ+bDstCRCMlDCpZLaI0PP9Cih
-         BE7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710859598; x=1711464398;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1710861020; x=1711465820; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=BPlNhua1WaqcSnRpkvhSs0yu6N7jGpn1fD8XUmo6+sY=;
-        b=dT+U9MoNDTw7+qVDtlCBQDV/Dqm3SOPkI+mMA7awG6ktunk3Cwka5DrxFYf1HOtkoh
-         a4Z+MF1l+nKlczmB9MG+vCOzeYNpJrFw9GZj356L2D2N4CSgO3xlJyIgvsxpcZ1OF7cY
-         RnRwDOaedZgizgrUO/dAsEgGu25RmPRYTyI8gTbf8z2I6uVOeefSHgt13ibAPkn9eXMe
-         MzvVP1tayzEb6JhmTahIzCY2vz3g9QVjmzNacCa6G7Cq/VOBtLm3xtwndvqI97qMAF82
-         Cy3jBF28mDZzmMAjLDDfSVuzwKusafiatGD8kSLfgOIBu8RGz9KwvoMZsTRVC9QkWyt3
-         exMw==
-X-Forwarded-Encrypted: i=1; AJvYcCUvvtYe+ZibQBC+3Uk1db2bnpOuNnsVXmHU7H/NN03hUiRh6fzN2JcdyuRV6dJiIvV1td6zlR8qqWyVLeIRDa9StVZZfY3PBsww4+LBUQ==
-X-Gm-Message-State: AOJu0Yxc6GhSSXRh0oUu9udJ1DUYm1xiIme95dWKv1Jnhy8nBaUcWYdt
-	TziK09OD7TQTmi27hkCF0lLpQBV3qiZJSi4+3D8H2as7O5pjck4z8mYQNvbMCWHc528LGyLAn0J
-	0P46th7VkHP9NGPgyYdBpU8EgFiYw7Svy0soZ7Q==
-X-Google-Smtp-Source: AGHT+IEXyzVQEjMGPIvQmFR8INOGeXXHEcno7tcbTIIT/p8RjF8ofE3sSYVPzm7Iah6+/YLpDlP+7Vd8Gk7/89u0Xjk=
-X-Received: by 2002:a0d:e943:0:b0:609:efe8:2bfc with SMTP id
- s64-20020a0de943000000b00609efe82bfcmr2947995ywe.27.1710859597965; Tue, 19
- Mar 2024 07:46:37 -0700 (PDT)
+        bh=Lv9VN9GVBcDOc4A+Q1Q1vvWgwwJ35DrouW0B+LBA6Oc=;
+        b=Oolw6rGYAiag59njDmiCeeKwLjjyBQQfNYxcKWS9mgAS2WKoVFFQp2UE7Jd/R1f82p
+         bpAP1KbkffRwZUSF2wOTGMnK2TgJ+d+K71mYSlxeMzJ3x/y6IwvD3qLl4SehV9jpj/yG
+         mNpz7jLDiAKX73fGo6uecpJD9x6lTvTs4E8NFD/Z8XwvMVkDx4sskB+gslSJrSkoPVmd
+         hpHrJZ0NW8vpW0njWACYYEP3HhilFj7htqqhRDpsmamUOxuATZ7rw3NnVDNbxZu+1cQH
+         bp7CXQEQ4irEbXd9DoaFH660f2HA5UeEpf8OvbxYTIeS0hBFyjIbuIsflvVmtQokXCsp
+         aRWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710861020; x=1711465820;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Lv9VN9GVBcDOc4A+Q1Q1vvWgwwJ35DrouW0B+LBA6Oc=;
+        b=XzXB/PrGtDXfb4USVJpm3UmtVtIUYsYHdRskqMwhr2a8UHar6eZ10E5qSTNK6goM3D
+         dm7Ri0I0Ul4zS828Fon723jJIL6oUhgiph7upSEeoNnjPOQ3RKtBNyJOaiuge/0wFycE
+         gts9Wha2ipWsnzvxArfHggnYJbAPPSHKzATKgZvClO7MbwDjCCVIO4RohI6pizGAViSo
+         K2+0q2YLe7NrEO7+7pWTTUIqRV/gfHU39hg06uMVb5WwmC0fb7cgp1Q3ICLm1OJN9kUL
+         GdcSuN1GmKUrIYTkTNooC51Z2NXBbsJClGLZT8jmf9pr0c++XQ6woS4pLD0yOA9AddLi
+         Bb9w==
+X-Forwarded-Encrypted: i=1; AJvYcCVzccrzgTaPQv+hHepgOqOhcDz/m01dP7zOpaoR5kajIKCMFVE63Cr9i/h1Dt9YOKE50nLoZK3HkfJvyBEbZmZmAQItUiCh85KqNvAxkg==
+X-Gm-Message-State: AOJu0YxMRBlHwP3vqP8rPMsMhocrmxQ4gwbrGMsd79CMr+ME6LHf0ALh
+	owVXJbjUOgT2YGy4eAzW555kXPXMlxH1UXXqRNKE/Jccxw88cnKuba71EEmmVV8=
+X-Google-Smtp-Source: AGHT+IFFAApS5bQKIFb+wgCIKBX+aQfkMy1p3i+4wPO/V4l0krVq+icF57gDaGptc0jSembLd72NeA==
+X-Received: by 2002:adf:fa87:0:b0:33e:7946:4cd2 with SMTP id h7-20020adffa87000000b0033e79464cd2mr10053794wrr.10.1710861019858;
+        Tue, 19 Mar 2024 08:10:19 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:2fcf:6f16:3b3b:da8e? ([2a01:e0a:982:cbb0:2fcf:6f16:3b3b:da8e])
+        by smtp.gmail.com with ESMTPSA id q2-20020a05600000c200b0033dedd63382sm12491818wrx.101.2024.03.19.08.10.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Mar 2024 08:10:19 -0700 (PDT)
+Message-ID: <1b6bc933-d749-4852-a292-5b3b7bedc44e@linaro.org>
+Date: Tue, 19 Mar 2024 16:10:18 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 3/7] phy: qcom: qmp-pcie: register second optional PHY AUX
+ clock
+Content-Language: en-US, fr
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
 References: <20240319-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v1-0-926d7a4ccd80@linaro.org>
  <20240319-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v1-3-926d7a4ccd80@linaro.org>
  <CAA8EJpoJ0rUd8aY6xpXyL3Obg66XtOebso_AUUxKmg1CWNykJA@mail.gmail.com>
- <85d67f3f-2b01-44c0-ace3-5e7cb48a9431@linaro.org> <090e306c-0bfc-4374-83ed-e883d73a0f0a@linaro.org>
-In-Reply-To: <090e306c-0bfc-4374-83ed-e883d73a0f0a@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 19 Mar 2024 16:46:26 +0200
-Message-ID: <CAA8EJpovp1S9MYb3ByeoR7WmjPgUmqicqs_fQo_OoL5_NTNPJw@mail.gmail.com>
-Subject: Re: [PATCH 3/7] phy: qcom: qmp-pcie: register second optional PHY AUX clock
-To: neil.armstrong@linaro.org
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+ <85d67f3f-2b01-44c0-ace3-5e7cb48a9431@linaro.org>
+ <090e306c-0bfc-4374-83ed-e883d73a0f0a@linaro.org>
+ <CAA8EJpovp1S9MYb3ByeoR7WmjPgUmqicqs_fQo_OoL5_NTNPJw@mail.gmail.com>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <CAA8EJpovp1S9MYb3ByeoR7WmjPgUmqicqs_fQo_OoL5_NTNPJw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, 19 Mar 2024 at 16:35, Neil Armstrong <neil.armstrong@linaro.org> wrote:
->
-> On 19/03/2024 11:59, Neil Armstrong wrote:
-> > On 19/03/2024 11:55, Dmitry Baryshkov wrote:
-> >> On Tue, 19 Mar 2024 at 12:45, Neil Armstrong <neil.armstrong@linaro.org> wrote:
-> >>>
-> >>> The PCIe Gen4x2 PHY found in the SM8[456]50 SoCs have a second clock,
-> >>> add the code to register it for PHYs configs that sets a aux_clock_rate.
-> >>>
-> >>> In order to get the right clock, add qmp_pcie_clk_hw_get() which uses
-> >>> the newly introduced QMP_PCIE_PIPE_CLK & QMP_PCIE_PHY_AUX_CLK clock
-> >>> IDs and also supports the legacy bindings by returning the PIPE clock.
-> >>>
-> >>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> >>> ---
-> >>>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 70 ++++++++++++++++++++++++++++++++
-> >>>   1 file changed, 70 insertions(+)
-> >>>
-> >>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> >>> index 079b3e306489..2d05226ae200 100644
-> >>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> >>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> >>> @@ -22,6 +22,8 @@
-> >>>   #include <linux/reset.h>
-> >>>   #include <linux/slab.h>
-> >>>
-> >>> +#include <dt-bindings/phy/phy-qcom-qmp.h>
-> >>> +
-> >>>   #include "phy-qcom-qmp-common.h"
-> >>>
-> >>>   #include "phy-qcom-qmp.h"
-> >>> @@ -2389,6 +2391,9 @@ struct qmp_phy_cfg {
-> >>>
-> >>>          /* QMP PHY pipe clock interface rate */
-> >>>          unsigned long pipe_clock_rate;
-> >>> +
-> >>> +       /* QMP PHY AUX clock interface rate */
-> >>> +       unsigned long aux_clock_rate;
-> >>>   };
-> >>>
-> >>>   struct qmp_pcie {
-> >>> @@ -2420,6 +2425,7 @@ struct qmp_pcie {
-> >>>          int mode;
-> >>>
-> >>>          struct clk_fixed_rate pipe_clk_fixed;
-> >>> +       struct clk_fixed_rate aux_clk_fixed;
-> >>>   };
-> >>>
-> >>>   static inline void qphy_setbits(void __iomem *base, u32 offset, u32 val)
-> >>> @@ -3681,6 +3687,62 @@ static int phy_pipe_clk_register(struct qmp_pcie *qmp, struct device_node *np)
-> >>>          return devm_clk_hw_register(qmp->dev, &fixed->hw);
-> >>>   }
-> >>>
-> >>> +/*
-> >>> + * Register a fixed rate PHY aux clock.
-> >>> + *
-> >>> + * The <s>_phy_aux_clksrc generated by PHY goes to the GCC that gate
-> >>> + * controls it. The <s>_phy_aux_clk coming out of the GCC is requested
-> >>> + * by the PHY driver for its operations.
-> >>> + * We register the <s>_phy_aux_clksrc here. The gcc driver takes care
-> >>> + * of assigning this <s>_phy_aux_clksrc as parent to <s>_phy_aux_clk.
-> >>> + * Below picture shows this relationship.
-> >>> + *
-> >>> + *         +---------------+
-> >>> + *         |   PHY block   |<<---------------------------------------------+
-> >>> + *         |               |                                               |
-> >>> + *         |   +-------+   |                      +-----+                  |
-> >>> + *   I/P---^-->|  PLL  |---^--->phy_aux_clksrc--->| GCC |--->phy_aux_clk---+
-> >>> + *    clk  |   +-------+   |                      +-----+
-> >>> + *         +---------------+
-> >>> + */
-> >>> +static int phy_aux_clk_register(struct qmp_pcie *qmp, struct device_node *np)
-> >>> +{
-> >>> +       struct clk_fixed_rate *fixed = &qmp->aux_clk_fixed;
-> >>> +       struct clk_init_data init = { };
-> >>> +       int ret;
-> >>> +
-> >>> +       ret = of_property_read_string_index(np, "clock-output-names", 1, &init.name);
-> >>> +       if (ret) {
-> >>> +               dev_err(qmp->dev, "%pOFn: No clock-output-names index 1\n", np);
-> >>> +               return ret;
-> >>> +       }
-> >>> +
-> >>> +       init.ops = &clk_fixed_rate_ops;
-> >>> +
-> >>> +       fixed->fixed_rate = qmp->cfg->aux_clock_rate;
-> >>> +       fixed->hw.init = &init;
-> >>> +
-> >>> +       return devm_clk_hw_register(qmp->dev, &fixed->hw);
-> >>> +}
-> >>> +
-> >>> +static struct clk_hw *qmp_pcie_clk_hw_get(struct of_phandle_args *clkspec, void *data)
-> >>> +{
-> >>> +       struct qmp_pcie *qmp = data;
-> >>> +
-> >>> +       /* Support legacy bindings */
-> >>> +       if (!clkspec->args_count)
-> >>> +               return &qmp->pipe_clk_fixed.hw;
-> >>> +
-> >>> +       switch (clkspec->args[0]) {
-> >>> +       case QMP_PCIE_PIPE_CLK:
-> >>> +               return &qmp->pipe_clk_fixed.hw;
-> >>> +       case QMP_PCIE_PHY_AUX_CLK:
-> >>> +               return &qmp->aux_clk_fixed.hw;
-> >>> +       }
-> >>> +
-> >>> +       return ERR_PTR(-EINVAL);
-> >>> +}
-> >>
-> >> Can we use of_clk_hw_onecell_get() instead? I think it even should be
-> >> possible to use onecell for both cases, it will look at the first arg,
-> >> which will be 0 in case of #clock-cells equal to 0.
-> >
-> > Let me investigate if it's possible
->
-> Ok, it would work but it would require building a clk_hw_onecell_data a runtime,
-> while we could simply provide this qmp_pcie_clk_hw_get() and avoid runtime 2 allocations.
->
-> I'm not sure it's worth it.
+On 19/03/2024 15:46, Dmitry Baryshkov wrote:
+> On Tue, 19 Mar 2024 at 16:35, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+>>
+>> On 19/03/2024 11:59, Neil Armstrong wrote:
+>>> On 19/03/2024 11:55, Dmitry Baryshkov wrote:
+>>>> On Tue, 19 Mar 2024 at 12:45, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+>>>>>
+>>>>> The PCIe Gen4x2 PHY found in the SM8[456]50 SoCs have a second clock,
+>>>>> add the code to register it for PHYs configs that sets a aux_clock_rate.
+>>>>>
+>>>>> In order to get the right clock, add qmp_pcie_clk_hw_get() which uses
+>>>>> the newly introduced QMP_PCIE_PIPE_CLK & QMP_PCIE_PHY_AUX_CLK clock
+>>>>> IDs and also supports the legacy bindings by returning the PIPE clock.
+>>>>>
+>>>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>>>> ---
+>>>>>    drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 70 ++++++++++++++++++++++++++++++++
+>>>>>    1 file changed, 70 insertions(+)
+>>>>>
+>>>>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>>>>> index 079b3e306489..2d05226ae200 100644
+>>>>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>>>>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>>>>> @@ -22,6 +22,8 @@
+>>>>>    #include <linux/reset.h>
+>>>>>    #include <linux/slab.h>
+>>>>>
+>>>>> +#include <dt-bindings/phy/phy-qcom-qmp.h>
+>>>>> +
+>>>>>    #include "phy-qcom-qmp-common.h"
+>>>>>
+>>>>>    #include "phy-qcom-qmp.h"
+>>>>> @@ -2389,6 +2391,9 @@ struct qmp_phy_cfg {
+>>>>>
+>>>>>           /* QMP PHY pipe clock interface rate */
+>>>>>           unsigned long pipe_clock_rate;
+>>>>> +
+>>>>> +       /* QMP PHY AUX clock interface rate */
+>>>>> +       unsigned long aux_clock_rate;
+>>>>>    };
+>>>>>
+>>>>>    struct qmp_pcie {
+>>>>> @@ -2420,6 +2425,7 @@ struct qmp_pcie {
+>>>>>           int mode;
+>>>>>
+>>>>>           struct clk_fixed_rate pipe_clk_fixed;
+>>>>> +       struct clk_fixed_rate aux_clk_fixed;
+>>>>>    };
+>>>>>
+>>>>>    static inline void qphy_setbits(void __iomem *base, u32 offset, u32 val)
+>>>>> @@ -3681,6 +3687,62 @@ static int phy_pipe_clk_register(struct qmp_pcie *qmp, struct device_node *np)
+>>>>>           return devm_clk_hw_register(qmp->dev, &fixed->hw);
+>>>>>    }
+>>>>>
+>>>>> +/*
+>>>>> + * Register a fixed rate PHY aux clock.
+>>>>> + *
+>>>>> + * The <s>_phy_aux_clksrc generated by PHY goes to the GCC that gate
+>>>>> + * controls it. The <s>_phy_aux_clk coming out of the GCC is requested
+>>>>> + * by the PHY driver for its operations.
+>>>>> + * We register the <s>_phy_aux_clksrc here. The gcc driver takes care
+>>>>> + * of assigning this <s>_phy_aux_clksrc as parent to <s>_phy_aux_clk.
+>>>>> + * Below picture shows this relationship.
+>>>>> + *
+>>>>> + *         +---------------+
+>>>>> + *         |   PHY block   |<<---------------------------------------------+
+>>>>> + *         |               |                                               |
+>>>>> + *         |   +-------+   |                      +-----+                  |
+>>>>> + *   I/P---^-->|  PLL  |---^--->phy_aux_clksrc--->| GCC |--->phy_aux_clk---+
+>>>>> + *    clk  |   +-------+   |                      +-----+
+>>>>> + *         +---------------+
+>>>>> + */
+>>>>> +static int phy_aux_clk_register(struct qmp_pcie *qmp, struct device_node *np)
+>>>>> +{
+>>>>> +       struct clk_fixed_rate *fixed = &qmp->aux_clk_fixed;
+>>>>> +       struct clk_init_data init = { };
+>>>>> +       int ret;
+>>>>> +
+>>>>> +       ret = of_property_read_string_index(np, "clock-output-names", 1, &init.name);
+>>>>> +       if (ret) {
+>>>>> +               dev_err(qmp->dev, "%pOFn: No clock-output-names index 1\n", np);
+>>>>> +               return ret;
+>>>>> +       }
+>>>>> +
+>>>>> +       init.ops = &clk_fixed_rate_ops;
+>>>>> +
+>>>>> +       fixed->fixed_rate = qmp->cfg->aux_clock_rate;
+>>>>> +       fixed->hw.init = &init;
+>>>>> +
+>>>>> +       return devm_clk_hw_register(qmp->dev, &fixed->hw);
+>>>>> +}
+>>>>> +
+>>>>> +static struct clk_hw *qmp_pcie_clk_hw_get(struct of_phandle_args *clkspec, void *data)
+>>>>> +{
+>>>>> +       struct qmp_pcie *qmp = data;
+>>>>> +
+>>>>> +       /* Support legacy bindings */
+>>>>> +       if (!clkspec->args_count)
+>>>>> +               return &qmp->pipe_clk_fixed.hw;
+>>>>> +
+>>>>> +       switch (clkspec->args[0]) {
+>>>>> +       case QMP_PCIE_PIPE_CLK:
+>>>>> +               return &qmp->pipe_clk_fixed.hw;
+>>>>> +       case QMP_PCIE_PHY_AUX_CLK:
+>>>>> +               return &qmp->aux_clk_fixed.hw;
+>>>>> +       }
+>>>>> +
+>>>>> +       return ERR_PTR(-EINVAL);
+>>>>> +}
+>>>>
+>>>> Can we use of_clk_hw_onecell_get() instead? I think it even should be
+>>>> possible to use onecell for both cases, it will look at the first arg,
+>>>> which will be 0 in case of #clock-cells equal to 0.
 
-Single allocation (or even 0 allocations if you embed it into struct
-qmp_pcie) for the sake of using standard helpers.
+I didn't find evidence this is the case, while following of_parse_clkspec() called
+from of_clk_get_hw() or clk_core_get(), where clkspec is not initialized, the
+__of_parse_phandle_with_args() and of_phandle_iterator_args() don't touch
+clkspec->args if it->cur_count is 0. So clkspec->args[0] may be left initialized
+and it would be abusingthe API to use it with #clocks-cells = 0.
 
+>>>
+>>> Let me investigate if it's possible
+>>
+>> Ok, it would work but it would require building a clk_hw_onecell_data a runtime,
+>> while we could simply provide this qmp_pcie_clk_hw_get() and avoid runtime 2 allocations.
+>>
+>> I'm not sure it's worth it.
+> 
+> Single allocation (or even 0 allocations if you embed it into struct
+> qmp_pcie) for the sake of using standard helpers.
+> 
+Well, sure
 
+Thanks,
+Neil
 
--- 
-With best wishes
-Dmitry
 
