@@ -1,182 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-14605-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14606-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BEA1F88062C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 21:44:02 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3470B880695
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 22:10:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 33D811F22C37
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 20:44:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 58DE81C21F84
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 21:10:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42CE73F9D4;
-	Tue, 19 Mar 2024 20:43:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4E043D0B8;
+	Tue, 19 Mar 2024 21:10:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TPrO4yZm"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="BrMm7b+p"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FCC23F9C6
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 20:43:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25D239FD1
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 21:10:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710881039; cv=none; b=YqDQ9PxFjmB4uxKJStkztMmmo1KBkQcNldmarl3JDZJn1WYeN22+NLipBg1IW5vh8KepruHxVJ2Aur1UPsdL1RMlVldsXZq1nVRnwzd0Yqj6DEy5nJbdsmqHs1RiSPZ7/ShjXFcVz7usPDk5NPKISabNKUMPvtrSorxny08MvIM=
+	t=1710882639; cv=none; b=OZ6CQPxykCEf1ok4RkCwFXYEPkgJXjG6pCCJW7knfPO+Gv7cuTJnqJWntuOcM2ZQP0+VSBR+v8srS5bIy12Y1sD5fYBX3YUnaNQHHzliio+xNRliqf6zqq+HqcNqYAxyvEeKz1Mjm2Hb2eC+tgoFX77GfLNW71z80TGjo+/gTvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710881039; c=relaxed/simple;
-	bh=DXTZx1OTVG22giXe5Qhpdo2Jxyata1VToELP6znPcLM=;
+	s=arc-20240116; t=1710882639; c=relaxed/simple;
+	bh=Bg5O22U75rqlMnX/ePS1zsGUIyjtYU5uXFU+wKROdF0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=h282Tty/1nApuRt16YIU50h9v9wU+5XK5JTmFYKLOvjfIVFxnWt+My3yPFeKTY5vR803A8iM05Pgp05h9Q7X8us/lmTsVCnV0dKueQA+7qrUicIeQAuPpkxoI3Uf0R2N9vOt8GSJI143thtxc2XOSKWYPEGJzinvpGhlLTwo0ME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TPrO4yZm; arc=none smtp.client-ip=209.85.128.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-60a0599f647so55259167b3.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 13:43:57 -0700 (PDT)
+	 To:Cc:Content-Type; b=MOqwhCB2HDyAbnA5OboGV+g3qe4PIRDxdIdZZIP5+M+B2zGa3nQcfMBTYI/UwHBhKZjoTjyxh5Qy6nlEdqJ5TzEjQhwJNRdhbphyhCDdhNE+Mb9+90Mz/a0EWXNFhSG/4forCIfWuI8tjDNXZ5Z/lmFBPlu104gTAZw4v3vA7Nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=BrMm7b+p; arc=none smtp.client-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5687e7662a5so7915900a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 14:10:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710881036; x=1711485836; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=OeXdd6BoIpGck+XAlpFKofkTnIc6zBqulWBdd+v07Ic=;
-        b=TPrO4yZmVn2R+0u4jR+r0xzWhDbC48+kucUSEObFxv9GFjtX8+siBebckhOWA/Hl4D
-         c4+KuVvTlWNSInLTdjaCWZojPaYbq1byZVDXE53/e/FOQ3PM7dG/VlVGcc1H1VoceeIk
-         8QRUH+Y/qcuVLrM5CCokZnChR6yGE/qov/wUMArgq3mhzenZ74CKcEg6FLeOZvEB4ZGU
-         E90YFOmntZnt3Znt4oxHOSuAl4R/IZ5YjmDhocaM8w06JuGuoiIVwgDJPcAI+uOjPdpT
-         gl2xlRnKYo8chRfhqGkFWEs955r/3MNHUgl3elygXPeV4cCu+CFcgVWLvKFdZmOPvO/X
-         VWUg==
+        d=google.com; s=20230601; t=1710882636; x=1711487436; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OXyTHdBINJAGv5SDzujCKegsUk6ZlTJU8rXZcTRQcWI=;
+        b=BrMm7b+pPY7gBn2+/DxekGmJpA++PAtwN++AgCi4JvZIczPsYFKAkAKMAtHOwsi+OK
+         6wzLPFm8J11iRtGyMWdIQ/ZfCH9z9OmT4vhF+VneGjhj36mljoVVYTEpIVazjTTZeqzZ
+         ff9buetMPWFk6wRJdyNx5f9acC+TOPXjhgfwP6fiaEklblVk8BBa1hhVhhp9qtyraidE
+         O8/RXJWxBuMyqIQm89MsBAMK+jEXEfE6a7oQGNokKbmdiyAbkcYcuwAmR/pkEXFxL+OT
+         FjycS8bAMWdA0MX2sApUkQfM01T362u/FY9V4CUysPpHYLJ8YwLNbvLJnlWPJFvRCcps
+         1aAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710881036; x=1711485836;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OeXdd6BoIpGck+XAlpFKofkTnIc6zBqulWBdd+v07Ic=;
-        b=PnM1zPDRR1unJHIJrXoRBPHmUqc/nihxD/qHl/eWtvITz3ZSb7dxShDhuqjsAMndXE
-         SA0fjGQROGos2QwKpm3OFyFIUa6ml+RMcTGYhQicha/e1RUDaq/r/pfj2n6eV57yRF5C
-         Mdj7tLn9fQx86beQmgjQE2PooKgrIR7eUhbKB4dYh4D0RxPHX8NFFyqhey3/zdhAZzT0
-         klNzOVorN7BRZpQUXe0YROnf5oxga9a9HTZDi2FXcBWcPtH6hbqgesyXuh4pATTmm6vC
-         c3AjEjq7Me8TgThhWXJ5742PUduY9AifFBDHtwnt03W4sB71G5Pa9/P094U4LgaWNPAQ
-         CwTQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUn1aMwaTJ+f2K8uNVM3fLFz21ysW8QU4lzDpFzehDsmDWSmKyWEwzWZq3tmARGV+mknARABOAqsM8uEE3oNfc6fDnvayu0srB9JL8PoQ==
-X-Gm-Message-State: AOJu0Yzy53NNtkm1IBmsIWNmze1C9rFfEE/ZKQL5pgx+GR5MiGMwIPDF
-	FEQwW/d6AVNW8grNleWwG8MBDZWk9k7rrozJuZ6F0VCXk4p78w4ewZQrxTGPCCoEgffP6hZJNd7
-	E4M1DTWBJ0aRTqhFN/Dl8d0Zc9KK8OeFugbTnp/US0Kpz4P4D
-X-Google-Smtp-Source: AGHT+IEGB9smWzSs4kyVjf1ngJ0sHXwF85dqOAOilm7NUBGQFDjvo6qUc1UKfbV7DzP5s2uNDsumhOKr73aIWIBS4y8=
-X-Received: by 2002:a5b:c08:0:b0:dcb:e82c:f7f with SMTP id f8-20020a5b0c08000000b00dcbe82c0f7fmr13872142ybq.12.1710881036276;
- Tue, 19 Mar 2024 13:43:56 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1710882636; x=1711487436;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=OXyTHdBINJAGv5SDzujCKegsUk6ZlTJU8rXZcTRQcWI=;
+        b=Eza0wzwRrNW2/XAx6AeKfE7pOHt1kP4jjlGG/h9Dkrv3nVDy7g37RQjb0e5eNzp/ze
+         j54wylKVV0DvwfIBl3CJy2ED0A09Vq3yxBvBw6n8DH1e2eM2MkKv+KiVFdJZL5SgAFDj
+         Vfu2suPO0E4GL569ETap6+LfeNVgykF0w10lniuZi43LNOYxkonlaqFrv8Rpd5fH4S+W
+         vRKVW5RcjZB26LlDz7Ql/l4cfnxgBw7AiuqUQfAGfUM6dqJp+ZudDEiwLuBCpz0faUHQ
+         UtmREtYrMIKusGbFb1PrMiauvQsOwjzwPlHPPVenVnRlCBzfPTP2cMqBshcFdhfYwshw
+         OuYg==
+X-Forwarded-Encrypted: i=1; AJvYcCU/EQXoNTK1bEEvJ78/P9mm9k1nZktyXVCwcuBw5PAFgRih0ryN2gOmnTxAe2F73hCy0zwBRGU0OwQyq3wZIlNyzdDyTMCoDlULrMLRZw==
+X-Gm-Message-State: AOJu0Yw3XNtqM+yai1PH5SApONgXU4mu9C5l/vMeu4JXoCRd6/5hn9Ff
+	KHUeuoZuPD8ogAR9gu26TlVKZoudixN0JIZeszVT8Cg7TmmacchUh0n0uk6IY/tQlhtgRVG91qa
+	gJnluACul4D36CcR8YTzQJqOFdsMTxIAc6+Fy
+X-Google-Smtp-Source: AGHT+IGZHztom/M+JF3mlrAUh1Z4cKu8I7AIhJ/SwhbjcbH/ma1t+dETJuBHN07scTHpDNQJBFnGGFxqx2fwYUfODPE=
+X-Received: by 2002:a05:6402:4313:b0:56b:989d:bdce with SMTP id
+ m19-20020a056402431300b0056b989dbdcemr2132942edc.24.1710882635868; Tue, 19
+ Mar 2024 14:10:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240314-dpu-perf-rework-v3-0-79fa4e065574@linaro.org>
- <20240314-dpu-perf-rework-v3-3-79fa4e065574@linaro.org> <ebf0ca9b-6e9d-4387-8628-a6ccaca11215@quicinc.com>
-In-Reply-To: <ebf0ca9b-6e9d-4387-8628-a6ccaca11215@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 19 Mar 2024 22:43:44 +0200
-Message-ID: <CAA8EJprhgPheFq-xhAh54NkTTh5_BJk=bL1f94=hvsio6VUSQQ@mail.gmail.com>
-Subject: Re: [PATCH v3 3/5] drm/msm/dpu: handle perf mode in _dpu_core_perf_crtc_update_bus()
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Stephen Boyd <swboyd@chromium.org>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+References: <20240318-strncpy-drivers-soc-qcom-cmd-db-c-v2-1-8f6ebf1bd891@google.com>
+ <ag7oslzfcuiyuehxq5n5jth4adrhel4xafby5whxsvyybbm6dc@6rtwaolbmm45>
+In-Reply-To: <ag7oslzfcuiyuehxq5n5jth4adrhel4xafby5whxsvyybbm6dc@6rtwaolbmm45>
+From: Justin Stitt <justinstitt@google.com>
+Date: Tue, 19 Mar 2024 14:10:23 -0700
+Message-ID: <CAFhGd8rdd=qmAmax27gvExZ5sweC=porkS6dW3RJh7NV1ydjSw@mail.gmail.com>
+Subject: Re: [PATCH v2] soc: qcom: cmd-db: replace deprecated strncpy with strtomem
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 19 Mar 2024 at 22:34, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+Hi,
+
+On Mon, Mar 18, 2024 at 8:37=E2=80=AFPM Bjorn Andersson <andersson@kernel.o=
+rg> wrote:
 >
->
->
-> On 3/13/2024 6:10 PM, Dmitry Baryshkov wrote:
-> > Move perf mode handling for the bandwidth to
-> > _dpu_core_perf_crtc_update_bus() rather than overriding per-CRTC data
-> > and then aggregating known values.
+> On Mon, Mar 18, 2024 at 10:49:23PM +0000, Justin Stitt wrote:
+> > strncpy() is deprecated for use on NUL-terminated destination strings
+> > [1] and as such we should prefer more robust and less ambiguous string
+> > interfaces.
 > >
-> > Note, this changes the fix_core_ab_vote. Previously it would be
-> > multiplied per the CRTC number, now it will be used directly for
-> > interconnect voting.
+>
+> I don't mind changing the strncpy() in this function, but I don't think
+> this problem description adequately describes the problem you're
+> solving.
+>
+> If the motivation is that we want 0 users of strncpy() in the kernel,
+> then say so.
+
+Fair. You caught me in a bad case of "copy pasting this blurb into all
+my patches". You are right though, the true motivation here is to rid
+the kernel of strncpy.
+
+>
+> > @query is already marked as __nonstring and doesn't need to be
+> > NUL-terminated.
+>
+> You're not wrong, but in the event that strlen(id) < sizeof(ent->id) the
+> destination should be NUL-padded - exactly one of the well known,
+> normally unwanted, effects of strncpy(). strtomem() does explicitly not
+> do this.
+>
+> > Since @id is a string, we can use the self-describing
+> > string API strtomem().
+>
+> "self-describing"?
+>
+
+In the sense that its name matches its functionality:
+
+strncpy    =3D=3D=3D string to string copy, bounded by n
+
+strtomem =3D=3D=3D string to memory buffer
+
+strncpy technically does the latter functionality as well but it may
+not be obvious in all cases that the destination buffer is not a
+string. Granted, in this case, it is extremely obvious what the
+behavior is because query is marked nonstring.
+
 > >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Link: https://www.kernel.org/doc/html/latest/process/deprecated.html#st=
+rncpy-on-nul-terminated-strings [1]
+> > Link: https://manpages.debian.org/testing/linux-manual-4.8/strscpy.9.en=
+.html [2]
+> > Link: https://github.com/KSPP/linux/issues/90
+> > Cc: linux-hardening@vger.kernel.org
+> > Signed-off-by: Justin Stitt <justinstitt@google.com>
 > > ---
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 39 +++++++++++++--------------
-> >   1 file changed, 19 insertions(+), 20 deletions(-)
+> > Changes in v2:
+> > - use strtomem instead of memcpy (thanks Kees)
+> > - Link to v1: https://lore.kernel.org/r/20240314-strncpy-drivers-soc-qc=
+om-cmd-db-c-v1-1-70f5d5e70732@google.com
+> > ---
+> > Note: build-tested only.
 > >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> > index 87b892069526..ff2942a6a678 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> > @@ -118,21 +118,9 @@ static void _dpu_core_perf_calc_crtc(const struct dpu_core_perf *core_perf,
-> >               return;
-> >       }
+> > Found with: $ rg "strncpy\("
+> > ---
+> >  drivers/soc/qcom/cmd-db.c | 9 ++-------
+> >  1 file changed, 2 insertions(+), 7 deletions(-)
 > >
-> > -     memset(perf, 0, sizeof(struct dpu_core_perf_params));
-> > -
-> > -     if (core_perf->perf_tune.mode == DPU_PERF_MODE_MINIMUM) {
-> > -             perf->bw_ctl = 0;
-> > -             perf->max_per_pipe_ib = 0;
-> > -             perf->core_clk_rate = 0;
-> > -     } else if (core_perf->perf_tune.mode == DPU_PERF_MODE_FIXED) {
-> > -             perf->bw_ctl = core_perf->fix_core_ab_vote;
-> > -             perf->max_per_pipe_ib = core_perf->fix_core_ib_vote;
-> > -             perf->core_clk_rate = core_perf->fix_core_clk_rate;
-> > -     } else {
-> > -             perf->bw_ctl = _dpu_core_perf_calc_bw(perf_cfg, crtc);
-> > -             perf->max_per_pipe_ib = perf_cfg->min_dram_ib;
-> > -             perf->core_clk_rate = _dpu_core_perf_calc_clk(perf_cfg, crtc, state);
-> > -     }
-> > +     perf->bw_ctl = _dpu_core_perf_calc_bw(perf_cfg, crtc);
-> > +     perf->max_per_pipe_ib = perf_cfg->min_dram_ib;
-> > +     perf->core_clk_rate = _dpu_core_perf_calc_clk(perf_cfg, crtc, state);
+> > diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
+> > index a5fd68411bed..d05f35d175bd 100644
+> > --- a/drivers/soc/qcom/cmd-db.c
+> > +++ b/drivers/soc/qcom/cmd-db.c
+> > @@ -141,18 +141,13 @@ static int cmd_db_get_header(const char *id, cons=
+t struct entry_header **eh,
+> >       const struct rsc_hdr *rsc_hdr;
+> >       const struct entry_header *ent;
+> >       int ret, i, j;
+> > -     u8 query[sizeof(ent->id)] __nonstring;
+> > +     u8 query[sizeof(ent->id)] __nonstring =3D { 0 };
 > >
-> >       DRM_DEBUG_ATOMIC(
-> >               "crtc=%d clk_rate=%llu core_ib=%llu core_ab=%llu\n",
-> > @@ -233,18 +221,29 @@ static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
-> >   {
-> >       struct dpu_core_perf_params perf = { 0 };
-> >       int i, ret = 0;
-> > -     u64 avg_bw;
-> > +     u32 avg_bw;
-> > +     u32 peak_bw;
+> >       ret =3D cmd_db_ready();
+> >       if (ret)
+> >               return ret;
 > >
-> >       if (!kms->num_paths)
-> >               return 0;
-> >
-> > -     dpu_core_perf_aggregate(crtc->dev, dpu_crtc_get_client_type(crtc), &perf);
-> > +     if (kms->perf.perf_tune.mode == DPU_PERF_MODE_MINIMUM) {
-> > +             avg_bw = 0;
-> > +             peak_bw = 0;
-> > +     } else if (kms->perf.perf_tune.mode == DPU_PERF_MODE_FIXED) {
-> > +             avg_bw = kms->perf.fix_core_ab_vote;
-> > +             peak_bw = kms->perf.fix_core_ib_vote;
-> > +     } else {
-> > +             dpu_core_perf_aggregate(crtc->dev, dpu_crtc_get_client_type(crtc), &perf);
+> > -     /*
+> > -      * Pad out query string to same length as in DB. NOTE: the output
+> > -      * query string is not necessarily '\0' terminated if it bumps up
+> > -      * against the max size. That's OK and expected.
+> > -      */
+> > -     strncpy(query, id, sizeof(query));
+> > +     strtomem(query, id);
 >
-> Where is this function dpu_core_perf_aggregate() defined? I dont see it
-> in msm-next
+> query needs to be NUL-padded to sizeof(ent->id) bytes (like strncpy
+> does), something you recognized by adding the zero-initialization above.
+> But why split this requirement across two non-adjacent lines? Isn't this
+> what strtomem_pad() is supposed to do?
 
-In the previous patch.
+Yes, strtomem_pad() will accomplish this task. I'll send a v3 fixing
+up the commit log and use the pad version.
 
 >
-> > +
-> > +             avg_bw = div_u64(perf.bw_ctl, 1000); /*Bps_to_icc*/
-> > +             peak_bw = perf.max_per_pipe_ib;
-> > +     }
+> Regards,
+> Bjorn
+>
 > >
-> > -     avg_bw = perf.bw_ctl;
-> > -     do_div(avg_bw, (kms->num_paths * 1000)); /*Bps_to_icc*/
-> > +     avg_bw /= kms->num_paths;
+> >       for (i =3D 0; i < MAX_SLV_ID; i++) {
+> >               rsc_hdr =3D &cmd_db_header->header[i];
 > >
-> >       for (i = 0; i < kms->num_paths; i++)
-> > -             icc_set_bw(kms->path[i], avg_bw, perf.max_per_pipe_ib);
-> > +             icc_set_bw(kms->path[i], avg_bw, peak_bw);
+> > ---
+> > base-commit: fe46a7dd189e25604716c03576d05ac8a5209743
+> > change-id: 20240314-strncpy-drivers-soc-qcom-cmd-db-c-284f3abaabb8
 > >
-> >       return ret;
-> >   }
+> > Best regards,
+> > --
+> > Justin Stitt <justinstitt@google.com>
 > >
 
-
-
--- 
-With best wishes
-Dmitry
+Thanks
+Justin
 
