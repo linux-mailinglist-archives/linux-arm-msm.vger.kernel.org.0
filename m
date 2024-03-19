@@ -1,138 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-14519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C176C87FEB0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 14:22:39 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0FF087FF1F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 14:53:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 49B3CB25019
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 13:22:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8ED871F23581
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 13:53:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC87980036;
-	Tue, 19 Mar 2024 13:22:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZdSDF/4D"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0708F81724;
+	Tue, 19 Mar 2024 13:53:41 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F292C80636
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 13:22:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37BB481723;
+	Tue, 19 Mar 2024 13:53:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710854533; cv=none; b=WSG7zas4O0ezCCOuspInLm2Juqe/2o5vKhY414iVOWTuoe3e/RQaFmPpnSKsUE2EinneZbtXW7hWZlpKBHsXVpQKDPHgbRHa49OLvv6XxpcJaaGbNXTGQomAs/XB9Wpek6Dq7JeWcnrGHMShpt8x4DzhyE4jES0zaJ5dx0vGPlA=
+	t=1710856420; cv=none; b=E37sCljsOah45leqNovwdv6x+8dpgCkbz/nc5ISD47HlocfA4esK4sURQ2iYt0OH3fEbQZeubCnSOVYFcjZ7mw6GKZf0d3XuoKcPdFMVlTJqR/cUa3saVKfyjUX9CcRLg0xtRDALYKAkSe7yxhVVUM56hJcVzBKxKC0g7ZFnG2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710854533; c=relaxed/simple;
-	bh=l+jS/WeU6+WV+iPnXjTwcbP9FrWycJdv5uX5JuvRCbw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=tPU+i+HC2/gCCfX2MYwpfuRXu9RVEHkmgnH7PPbdQVjyF5cc+laX05seAF8BuhosSU39qiqRsaPaRmzJqQPWtrd7TmmEvsw5xgjTOc19QNPXugFUNONfaavfBw3r0agoz5HkYSGDIKM3uJ+bKGmcCklwLu2BV+Eoe9uxn7jZJpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZdSDF/4D; arc=none smtp.client-ip=209.85.208.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2d220e39907so79417581fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 06:22:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710854530; x=1711459330; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pkrnYls3X1MuXQKYwYx/PX2IVbZAosNiMpQA/toIkE0=;
-        b=ZdSDF/4DVEWQSWmPSnnXwBh+9SgS3KUzDnMnvnLRWGHoWa40/tfECyZyoG6aldv/nz
-         wzILU/gM/CfgxSIfp1onqIgp1/6N2sQnU3szolWJs7ugFOWljtLciidaOhei5fQdUeVm
-         XiORINFdT3u7chHgL7mJ6VuEpOyLx2zIjoOgp/ZgF7InGcFA+nf1NH3oPuDJsdti0vG+
-         CopMKcP0vVCuR2d439cYnTDRxZo2PiG2Geyxeyi5dSZmdjxs+/jNRnSjIjPgDhHByz/D
-         fwYGEFi8Z8t/b9cR4zYc0DbnhbG9CXHhmv1R9rHnjwYRC2BWl9kmaV9JmSw2gBBKZ/pR
-         W7rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710854530; x=1711459330;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pkrnYls3X1MuXQKYwYx/PX2IVbZAosNiMpQA/toIkE0=;
-        b=LeMRyzZ51YBDrzf1/hsECXSchdxd49AWtiHfjP+9KbNrLQ0Z3eGp3JyF4kDLlUVLqe
-         SikGHOhb+3fKp0pqyLRqt9vtJHf+mbOfOwkGgu8M+HUMBEqA4WhVlbhiPmfjUliz4b79
-         /yrBLkl8FaYvf2/NSGrcGIGq2ohadbl6Y6qqBIk/Zzc/Ls3FYrnaUqpPOUymD1QS4WD2
-         xIWswWj9WyMBvBKfSdaPS8o4471nTSXBhZx4RLYtmJiP/+cSJJ4hvdr29HmYqa4uykER
-         ccHcnxbO9rUGOagGk3ok4U6A++QC/bg2BdGuzW0OpnsVW8wT6BJKsq0fhWzChy1gRLhe
-         jDxA==
-X-Forwarded-Encrypted: i=1; AJvYcCX80olWF+PUPCkPM970jKbI/UPoqhaH/tirhpOrG77k741S/+8MY2H2VBcu4mGo7w4vvVzHVbDSWq5lXZ2PNwQHJDhVLqdlrO02CZzcNA==
-X-Gm-Message-State: AOJu0YyYcvCEAdDfJA0wuKT50kM3cEIgMj8rf7IQD2hNaeyalWq7mw6q
-	iXD6IvOR+J/Yy/qUaulS2QN3C4w48dJfT1MREt2uCe0mKoB+e9as+QaeTEp706Y=
-X-Google-Smtp-Source: AGHT+IH3Rc/XI4TCoZJ2aVcx9dY4AFFvKMOie4KcwqoIxGI63sY/eHg5FBhC+JvKF70OPM+12743MA==
-X-Received: by 2002:a2e:99c5:0:b0:2d4:ad34:8599 with SMTP id l5-20020a2e99c5000000b002d4ad348599mr3773601ljj.26.1710854530243;
-        Tue, 19 Mar 2024 06:22:10 -0700 (PDT)
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id j7-20020a2e3c07000000b002d435cdf2adsm1826148lja.111.2024.03.19.06.22.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Mar 2024 06:22:09 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 19 Mar 2024 15:22:07 +0200
-Subject: [PATCH 9/9] drm/msm/dpu: sync mode_config limits to the FB limits
- in dpu_plane.c
+	s=arc-20240116; t=1710856420; c=relaxed/simple;
+	bh=l1tlpDCQ2bSEpQZ9E3s9/g28w3A6nWny3ZLXbyWSsDQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uVW/jqh8yCp3N6/zeAq+ViFeDeB6lziP/yAcVEz8QwKlQ35zOSJgGXbPVgSHcpx2LCfLdCoIXjkTS9XDEKjl9o8ulpj4IxQOefUlTqIgM/ghuhYtC55LrCw88VWrnTOz70sFEGsn2C5AYT5IZ1aK9/XKQx8pj1I7ycoWcSJ0VOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5F600106F;
+	Tue, 19 Mar 2024 06:54:12 -0700 (PDT)
+Received: from [10.57.52.192] (unknown [10.57.52.192])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 123473F762;
+	Tue, 19 Mar 2024 06:53:34 -0700 (PDT)
+Message-ID: <9b2a681e-1191-4cf7-8da7-14aa2c1fa455@arm.com>
+Date: Tue, 19 Mar 2024 13:53:32 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] dt-bindings: iommu: arm,smmu-v3: Add SC8280XP
+ compatible
+Content-Language: en-GB
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Will Deacon <will@kernel.org>,
+ Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ iommu@lists.linux.dev, Johan Hovold <johan+linaro@kernel.org>
+References: <20231219-topic-8280_smmuv3-v2-0-c67bd3226687@linaro.org>
+ <20231219-topic-8280_smmuv3-v2-1-c67bd3226687@linaro.org>
+From: Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <20231219-topic-8280_smmuv3-v2-1-c67bd3226687@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240319-dpu-mode-config-width-v1-9-d0fe6bf81bf1@linaro.org>
-References: <20240319-dpu-mode-config-width-v1-0-d0fe6bf81bf1@linaro.org>
-In-Reply-To: <20240319-dpu-mode-config-width-v1-0-d0fe6bf81bf1@linaro.org>
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc: Abel Vesa <abel.vesa@linaro.org>, 
- Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1099;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=l+jS/WeU6+WV+iPnXjTwcbP9FrWycJdv5uX5JuvRCbw=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBl+ZF48jjHdnqclv3m6b2iEXob/wnXebX/T4gSc
- WerEdykzqaJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZfmReAAKCRCLPIo+Aiko
- 1XsLCACqOS4AAV7mN5wqLWszjF1ylp1xJHg4rTIsuZmrqJCCMTqf/blfZ3H+Lzkch2/kf7okxrI
- m0h+HJu4Zey/tb8fdNUybFPcBikIYjJDHN2D+3XVtMmg43rELHH+c0IW2g/eBjyMWwCtEpR/LYG
- roN1TvrdcMal+szi9HBVBknWC2W1YeLyWlyxYDCPqgzFv4w/ZBvdvmV3hqGhOl0TD/9WB68nZoz
- chXWfS/U69MwxLhlBpnB/SxiAH9wS1ijl7TsyJtbFhvcASJKH9tmYodvsBjwPiZxlH9i6AHsZSK
- 9957jQ+68GMk1f9C1AvSE8/G9nSfQH69b8T0g0NsAy81gFOZ
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Lift mode_config limits set by the DPU driver to the actual FB limits as
-handled by the dpu_plane.c.
+On 2024-03-09 1:31 pm, Konrad Dybcio wrote:
+> The smmu-v3 binding currently doesn't differentiate the SoCs it's
+> implemented on. This is a poor design choice that may bite in the future,
+> should any quirks surface.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+That doesn't seem entirely fair to say - the vast majority of bindings 
+don't have separate compatibles for every known integration of the same 
+implementation in different SoCs. And in this case we don't have 
+per-implementation compatibles for quirks and errata because the 
+implementation is architecturally discoverable from the SMMU_IIDR register.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 7257ac4020d8..e7dda9eca466 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -1136,13 +1136,8 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
- 	dev->mode_config.min_width = 0;
- 	dev->mode_config.min_height = 0;
- 
--	/*
--	 * max crtc width is equal to the max mixer width * 2 and max height is
--	 * is 4K
--	 */
--	dev->mode_config.max_width =
--			dpu_kms->catalog->caps->max_mixer_width * 2;
--	dev->mode_config.max_height = 4096;
-+	dev->mode_config.max_width = DPU_MAX_IMG_WIDTH;
-+	dev->mode_config.max_height = DPU_MAX_IMG_HEIGHT;
- 
- 	dev->max_vblank_count = 0xffffffff;
- 	/* Disable vblank irqs aggressively for power-saving */
+We have the whole mess for QCom SMMUv2 because the effective 
+*implementation* is a mix of hardware and hypervisor, whose behaviour 
+does seem to vary on almost a per-SoC basis. I'm not at all keen to 
+start repeating that here without very good reason, and that of 
+"documenting" a device which we typically expect to not even be 
+accessible isn't really convincing me...
 
--- 
-2.39.2
+Thanks,
+Robin.
 
+> 
+> Add a compatible for the instance found on Qualcomm SC8280XP.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>   Documentation/devicetree/bindings/iommu/arm,smmu-v3.yaml | 6 +++++-
+>   1 file changed, 5 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu-v3.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu-v3.yaml
+> index 75fcf4cb52d9..f284f7b0c1d8 100644
+> --- a/Documentation/devicetree/bindings/iommu/arm,smmu-v3.yaml
+> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu-v3.yaml
+> @@ -20,7 +20,11 @@ properties:
+>     $nodename:
+>       pattern: "^iommu@[0-9a-f]*"
+>     compatible:
+> -    const: arm,smmu-v3
+> +    oneOf:
+> +      - items:
+> +          - const: qcom,sc8280xp-smmu-v3
+> +          - const: arm,smmu-v3
+> +      - const: arm,smmu-v3
+>   
+>     reg:
+>       maxItems: 1
+> 
 
