@@ -1,226 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-14497-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14498-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E267787FC2A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 11:50:09 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EFB8387FC2F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 11:51:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 63D1A28770E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 10:50:08 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6CECCB22651
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 10:51:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F05B77EEE4;
-	Tue, 19 Mar 2024 10:49:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E433E55C3C;
+	Tue, 19 Mar 2024 10:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DO0T/veh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XUOq0NVT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FCDB7E588;
-	Tue, 19 Mar 2024 10:49:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF4145940
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 10:51:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710845375; cv=none; b=jZAm2bV2hTNz9wU3LUn3QbJ/fZ1Cy0Plu8yncZ/NM0/j9wSFhO/jADpvCfzpDcAm8flUQptOOGlxu1svFUxWMsv31KhxXpfurgVqGsHuTD9W8zARM6MQfpUPz4rP2n2JdSMj6Psjtg53WcmTL7Em2AJqb2J112pMk2M2AkxWxYI=
+	t=1710845462; cv=none; b=pwsx0hL3EXk7tVNUf5bNaPdSi9BsDzxERsV2tCbieS2rBEONaCwmDKXc4X878cXSKTzmDARpPlYGkGtBuMnsw50a+wuYmjyzU43Vvx8EeCqq+tKSaj6wDVjiRwsbhjsPcjXaWbieoIfnTN2l3/fggMiv5uDFce90h7oBFJlDQK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710845375; c=relaxed/simple;
-	bh=+2+hlQeVCNe/+OvCDgO7BBlv6P43RD46BVGfCKuEOtM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=HcTddbVFZbWLCpy92Ll+a7trWsvjJ2W3Ad9Da74vGo2uISAr+cvjM0+D424TMFUiazHve0VL8QydsA+Kwc4lUqEcQf6TvDVVDkiAfvRHc5Dk9c2fN5DVsKHUoydpxbaZLWcrGe5lC5PE/Bqz0/rkm1W8MD4DIHmVV1WVJoE447I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DO0T/veh; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42J6wnvW032363;
-	Tue, 19 Mar 2024 10:49:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=TXmOXKzV/bRduRmg70uERLPSV0dZISDGvpH1DiR0zGA=; b=DO
-	0T/vehIZQLRGbC5Dc1wJ29z2VnaRX+IZJ5eOFfLHASUU+o1qsP0GA2JtH+o+NsBi
-	d9flvb+2a7lrCnISDroGeb99Gw3q6V1SiqL+AtSiVNTtqd8a1t26mIwkIJWxMqMO
-	tpECqivvUHK6lnQ+1uT8T8kBSGFbPzM19fsqSOP6IdUpwtnk/UQUAO3r5IFKa1yz
-	83PawNcUpNEcDHCJNfj/mMiO5LL82oP4SLZ8i3MWTJYIh4QTVqDr+J2fef3PzNnw
-	1RRVUOhu+6RYgoLYMA/OlD+KdfRiYiOvJE/29IgkvZuaI4Skbr3zOLlrmK4srpqX
-	9cOW506tiqNTD+o9DO7Q==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wy5ws0h34-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Mar 2024 10:49:24 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42JAn3Jf014757
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Mar 2024 10:49:03 GMT
-Received: from [10.218.47.125] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 19 Mar
- 2024 03:48:59 -0700
-Message-ID: <06ab4347-3ed0-432a-cc36-49837d8a28de@quicinc.com>
-Date: Tue, 19 Mar 2024 16:18:32 +0530
+	s=arc-20240116; t=1710845462; c=relaxed/simple;
+	bh=/DOvHVSOVMluK8I+tpm1539f+hV2X5lomXUGnvZ9uu0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IAZ3L+OdREXnMj1X5a9zp5TpxsWJeMC4OYu0LSToSM14t3ty1OF+hMnBERuz/ELaXAt8dZwlh9x4WrTysIVDjGXfCBNReRDr6HgKAKN8D8dk+m8RQfXyI3ejZbNCptfjBgo/o6KN9rjtyUpu1TfkPP+4QDS6ZyStAE5hfbHXdv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XUOq0NVT; arc=none smtp.client-ip=209.85.128.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-609fb0450d8so56972987b3.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 03:51:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1710845460; x=1711450260; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=wzawuu8hFKU1RvK4lgLUgZN5WdTja0Pdn2+gmpJF2Io=;
+        b=XUOq0NVT7sxqdnc8vDFqwCoXAbINKu0LltQ9LSBOOEgH39u88SYKm9jzYTMkJvYv49
+         eXJeTeQAfJOht3oZTsLva+DSvp7h/6lofFti8Q0KJ5rxjtWYoakSknrhyHK2DCWzF1Kq
+         QyZWZU6S/kBt/ih5sv6kMuM25dxAq5u0v9WIO+TOl4ZVUSx1Zf1IPsEJsjQyQleqsjbf
+         K6vHZaG9YRgblKkVpuM+OGlTavotwFM4O7id5kLO5KKX3wtaO+q0Jz917wZhYAKYH2HU
+         aBA/v011a011ZmIDiPx04ftdzlIY/PeOzPDax8U4U6PaIRxb9NLlUGBjNmZ/kY1ZCbAo
+         umTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710845460; x=1711450260;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wzawuu8hFKU1RvK4lgLUgZN5WdTja0Pdn2+gmpJF2Io=;
+        b=Jm9u5UjCSbXx9bXQ0OzuKYAmJ5Pv3++9uYXhD+RbugtPLGOoKo1CA+WX+Zzf+JjAT8
+         9MyMNbJ/q8/XD5b/0klmzqE6R6ILZrWDLcMb/d1dD4rPLp2uQOY2YoSDivSrPUwSNcTG
+         a7MVxl/dCvI2q/YUBviVDPQ0vgPlY1QWhgq2aa6S52yaGvpDnWsoCqhwpXCEEspdeJI5
+         Bc0N1qHNdcD69XO+SHErfPgpAxR5Hyix89v491H5ER0koMphK3h3E56ug6oq9NssRvJg
+         Fc3mdjj5Lhl1jCQdQ8Gbls9VzYRDGJEEC35ANyNrIcsGfFOAcFo4tI0PK6IWDFLW7vXj
+         4PNg==
+X-Forwarded-Encrypted: i=1; AJvYcCXg7LoyKUK34Ziv2miqI571CaskUmW6euZd5B+ADFiLCHfxThe7F0A3Izt1fJxBfv1I6ZTCCdM47EEdY0Pv7U7RiDPU4DxWmyGIiAxMqA==
+X-Gm-Message-State: AOJu0YwXFLDccdSwjWkfO6e+JtLKGMTe8r4YpiVQ9prVxI3I6PQA0fpd
+	+hYUNIFBFCyVb6AfG45gk2zluLvr+lCgpcCy7MWDIWPfHkC8HCzyai5LKbu1xS2Ui1CY8zvEPX+
+	1eog0ZF69m4Q4olhMf5TKsUsdi6C7xxaHM8q5ZA==
+X-Google-Smtp-Source: AGHT+IF6/EuqMBnZAX9r4gMKX9xc56hM2A2d3pzv6I0+nw/q8t6zrphceVRoZ2/ZcznRqKX1df24xMZiYzkbloy8K6Y=
+X-Received: by 2002:a81:4702:0:b0:60a:3e2:2a35 with SMTP id
+ u2-20020a814702000000b0060a03e22a35mr2384855ywa.37.1710845460142; Tue, 19 Mar
+ 2024 03:51:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH v3] thermal/drivers/tsens: Add suspend to RAM support for
- tsens
-To: Amit Kucheria <amitk@kernel.org>
-CC: Thara Gopinath <thara.gopinath@gmail.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Rafael J .
- Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
-        <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_manafm@quicinc.com>
-References: <20240227160928.2671-1-quic_priyjain@quicinc.com>
- <CAHLCerModb=01WX=q6XU0XO8dr5EaSQ5RaBoFLFc_=vpOGAgaw@mail.gmail.com>
-Content-Language: en-US
-From: Priyansh Jain <quic_priyjain@quicinc.com>
-In-Reply-To: <CAHLCerModb=01WX=q6XU0XO8dr5EaSQ5RaBoFLFc_=vpOGAgaw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: M5ZQHBwoEQiAAhbIUMXytZ9qa59Mg8I-
-X-Proofpoint-GUID: M5ZQHBwoEQiAAhbIUMXytZ9qa59Mg8I-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-18_12,2024-03-18_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- mlxlogscore=999 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
- mlxscore=0 lowpriorityscore=0 adultscore=0 clxscore=1011 suspectscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403140001 definitions=main-2403190083
+References: <20240319-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v1-0-926d7a4ccd80@linaro.org>
+ <20240319-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v1-2-926d7a4ccd80@linaro.org>
+In-Reply-To: <20240319-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v1-2-926d7a4ccd80@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 19 Mar 2024 12:50:48 +0200
+Message-ID: <CAA8EJpqbhc_Y+EBTdz1WTnAnZN=vkTUAzc6feH4NYgbdR-ZibQ@mail.gmail.com>
+Subject: Re: [PATCH 2/7] phy: qcom: qmp-pcie: refactor clock register code
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+
+On Tue, 19 Mar 2024 at 12:45, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+>
+> The PCIe Gen4x2 PHY found in the SM8[456]50 SoCs have a second clock,
+> in order to expose it, split the current clock registering in two parts:
+> - CCF clock registering
+> - DT clock registering
+>
+> Also switch to devm_of_clk_add_hw_provider().
+>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 27 +++++++++++----------------
+>  1 file changed, 11 insertions(+), 16 deletions(-)
+>
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> index 8836bb1ff0cc..079b3e306489 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> @@ -3635,11 +3635,6 @@ static int qmp_pcie_clk_init(struct qmp_pcie *qmp)
+>         return devm_clk_bulk_get_optional(dev, num, qmp->clks);
+>  }
+>
+> -static void phy_clk_release_provider(void *res)
+> -{
+> -       of_clk_del_provider(res);
+> -}
+> -
+>  /*
+>   * Register a fixed rate pipe clock.
+>   *
+> @@ -3664,7 +3659,7 @@ static int phy_pipe_clk_register(struct qmp_pcie *qmp, struct device_node *np)
+>         struct clk_init_data init = { };
+>         int ret;
+>
+> -       ret = of_property_read_string(np, "clock-output-names", &init.name);
+> +       ret = of_property_read_string_index(np, "clock-output-names", 0, &init.name);
+>         if (ret) {
+>                 dev_err(qmp->dev, "%pOFn: No clock-output-names\n", np);
+>                 return ret;
+> @@ -3683,19 +3678,19 @@ static int phy_pipe_clk_register(struct qmp_pcie *qmp, struct device_node *np)
+>
+>         fixed->hw.init = &init;
+>
+> -       ret = devm_clk_hw_register(qmp->dev, &fixed->hw);
+> -       if (ret)
+> -               return ret;
+> +       return devm_clk_hw_register(qmp->dev, &fixed->hw);
+> +}
+>
+> -       ret = of_clk_add_hw_provider(np, of_clk_hw_simple_get, &fixed->hw);
+> +static int qmp_pcie_register_clocks(struct qmp_pcie *qmp, struct device_node *np)
+> +{
+> +       int ret;
+> +
+> +       ret = phy_pipe_clk_register(qmp, np);
+>         if (ret)
+>                 return ret;
+>
+> -       /*
+> -        * Roll a devm action because the clock provider is the child node, but
+> -        * the child node is not actually a device.
+> -        */
+> -       return devm_add_action_or_reset(qmp->dev, phy_clk_release_provider, np);
+> +       return devm_of_clk_add_hw_provider(qmp->dev, of_clk_hw_simple_get,
+> +                                          &qmp->pipe_clk_fixed.hw);
+
+No. The driver has to register a clock provider at the np rather than
+at dev->of_node. Otherwise legacy DT will be broken.
+
+>  }
+>
+>  static int qmp_pcie_parse_dt_legacy(struct qmp_pcie *qmp, struct device_node *np)
+> @@ -3899,7 +3894,7 @@ static int qmp_pcie_probe(struct platform_device *pdev)
+>         if (ret)
+>                 goto err_node_put;
+>
+> -       ret = phy_pipe_clk_register(qmp, np);
+> +       ret = qmp_pcie_register_clocks(qmp, np);
+>         if (ret)
+>                 goto err_node_put;
+>
+>
+> --
+> 2.34.1
+>
+>
 
 
-
-On 3/17/2024 1:37 AM, Amit Kucheria wrote:
-> On Tue, Feb 27, 2024 at 9:40 PM Priyansh Jain <quic_priyjain@quicinc.com> wrote:
->>
->> As part of suspend to RAM, tsens hardware will be turned off.
->> While resume callback, re-initialize tsens hardware.
->>
->> Signed-off-by: Priyansh Jain <quic_priyjain@quicinc.com>
->> ---
->> V2 -> V3: Remove suspend callback & interrupt enablement part from
->> resume callback.
->> V1 -> V2: Update commit text to explain the necessity of this patch
->>
->>   drivers/thermal/qcom/tsens-v2.c |  1 +
->>   drivers/thermal/qcom/tsens.c    | 40 +++++++++++++++++++++++++++++++++
->>   drivers/thermal/qcom/tsens.h    |  6 +++++
->>   3 files changed, 47 insertions(+)
->>
->> diff --git a/drivers/thermal/qcom/tsens-v2.c b/drivers/thermal/qcom/tsens-v2.c
->> index 29a61d2d6ca3..0cb7301eca6e 100644
->> --- a/drivers/thermal/qcom/tsens-v2.c
->> +++ b/drivers/thermal/qcom/tsens-v2.c
->> @@ -107,6 +107,7 @@ static const struct reg_field tsens_v2_regfields[MAX_REGFIELDS] = {
->>   static const struct tsens_ops ops_generic_v2 = {
->>          .init           = init_common,
->>          .get_temp       = get_temp_tsens_valid,
->> +       .resume         = tsens_resume_common,
->>   };
-> 
-> Please add resume callbacks for the other tsens hardware too and make
-> sure that your reinit function handles them too.
-> 
-We have discussed internally on this and we think that if someone wants 
-to extend the support (and do the validation) of one of those old 
-platforms they can add the resume ops for that platform. There are many 
-versions of tsens hardware so we are bit skeptical to add reinit support
-for all these platforms with any validations(since S2R mode is not 
-enabled for all these older platforms so it is not possible to validate).
-
-Regards,
-Priyansh
->>
->>   struct tsens_plat_data data_tsens_v2 = {
->> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
->> index 6d7c16ccb44d..396c1cd71351 100644
->> --- a/drivers/thermal/qcom/tsens.c
->> +++ b/drivers/thermal/qcom/tsens.c
->> @@ -17,6 +17,7 @@
->>   #include <linux/pm.h>
->>   #include <linux/regmap.h>
->>   #include <linux/slab.h>
->> +#include <linux/suspend.h>
->>   #include <linux/thermal.h>
->>   #include "../thermal_hwmon.h"
->>   #include "tsens.h"
->> @@ -1193,6 +1194,45 @@ static int tsens_register_irq(struct tsens_priv *priv, char *irqname,
->>          return ret;
->>   }
->>
->> +#ifdef CONFIG_SUSPEND
->> +static int tsens_reinit(struct tsens_priv *priv)
->> +{
->> +       unsigned long flags;
->> +
->> +       spin_lock_irqsave(&priv->ul_lock, flags);
->> +
->> +       /* in VER_0 TSENS need to be explicitly enabled */
->> +       if (tsens_version(priv) == VER_0)
->> +               regmap_field_write(priv->rf[TSENS_EN], 1);
->> +
->> +       /*
->> +        * Re-enable the watchdog, unmask the bark.
->> +        * Disable cycle completion monitoring
->> +        */
->> +       if (priv->feat->has_watchdog) {
->> +               regmap_field_write(priv->rf[WDOG_BARK_MASK], 0);
->> +               regmap_field_write(priv->rf[CC_MON_MASK], 1);
->> +       }
->> +
->> +       /* Re-enable interrupts */
->> +       if (tsens_version(priv) >= VER_0_1)
->> +               tsens_enable_irq(priv);
->> +
->> +       spin_unlock_irqrestore(&priv->ul_lock, flags);
->> +
->> +       return 0;
->> +}
->> +
->> +int tsens_resume_common(struct tsens_priv *priv)
->> +{
->> +       if (pm_suspend_target_state == PM_SUSPEND_MEM)
->> +               tsens_reinit(priv);
->> +
->> +       return 0;
->> +}
->> +
->> +#endif /* !CONFIG_SUSPEND */
->> +
->>   static int tsens_register(struct tsens_priv *priv)
->>   {
->>          int i, ret;
->> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
->> index cb637fa289ca..7a147d9d8544 100644
->> --- a/drivers/thermal/qcom/tsens.h
->> +++ b/drivers/thermal/qcom/tsens.h
->> @@ -635,6 +635,12 @@ int init_common(struct tsens_priv *priv);
->>   int get_temp_tsens_valid(const struct tsens_sensor *s, int *temp);
->>   int get_temp_common(const struct tsens_sensor *s, int *temp);
->>
->> +#ifdef CONFIG_SUSPEND
->> +int tsens_resume_common(struct tsens_priv *priv);
->> +#else
->> +#define tsens_resume_common            NULL
->> +#endif
->> +
->>   /* TSENS target */
->>   extern struct tsens_plat_data data_8960;
->>
->> --
->> 2.17.1
->>
+-- 
+With best wishes
+Dmitry
 
