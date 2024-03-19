@@ -1,203 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-14476-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14477-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 09C7687FA72
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 10:11:31 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A89787FACE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 10:35:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3B8F71C21C37
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 09:11:30 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 196B3B217D8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 09:35:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDF2B7D411;
-	Tue, 19 Mar 2024 09:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7797A7CF32;
+	Tue, 19 Mar 2024 09:35:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="X596egTr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="b6gNmsnr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E76F7CF1F;
-	Tue, 19 Mar 2024 09:10:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5AF7D3E2
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 09:35:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710839457; cv=none; b=tfQ6IjONE2Uj5ubd8kgZz76XiirDke80SP1DoZIqVlVNLrK3HFeqQ0dPbxgb0aEMGcKPcqk1a2F8CDYup2RumJyCihogIUs3dRdD4BnUPIeMii+AHx4mO9tFUujTA/+nVeHA5tMedUcTq790/iqOLJI26v2z78jMgj2f8yYSZNk=
+	t=1710840931; cv=none; b=RaQA95WGMiXcmgdrCBsvimPqaCmFP3c1bZrufCq87vSF7cy/jsVPoP95cGeboj+/8QA5iodEzjAVyoYDrnIPORJbi1mDux4mGmAj/kFWPGbwEX3Y0uIx6fg80fKaMMAkbUi9uO7Cph66AZjqgK3+dql0iOGVpI3fQ6+Ymq7MLM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710839457; c=relaxed/simple;
-	bh=1GjPaXR/AcWqSYjy6NW+yKhk8z6ZayMbRuyJVgXZRyI=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rfkFa1tEMLy07XQSYfEfL0etIxzkIM9k5UkigvDbNyFa+uIt7OER1UTp7OMetZ0joqFH14xiY7OToKnbl9CKiyYn2/gQcIX/5V6mDbJ0gfOlVoO4UicQuS2uzxuUPm9KzO9EeFL6YeD3ExZovxfuosqAtgU6cfSRbSV5TsekvKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=X596egTr; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42J2HbAx005288;
-	Tue, 19 Mar 2024 09:10:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=JJ17S7PQVSKlwvPFjjPcR/mmQhwVo68YrxSRgZU+5Bc=; b=X5
-	96egTrEJdcpkHjIduWKLQOmwPxx7UZTXZyD623cg/KDfm1fafTuEKLaKoSW514pT
-	s4Ihazq32hdvNOU2RF0nvGFaYfr+crQsf4zoFE/liEGL42RbtPsUcly3T89t3jT0
-	gdv/WNyhnfwidfr/DUx7IaWhuoNjX7OAlTb3YTd856H6ee7ySQhiqq7W40QgFK2K
-	BTnLFDXhBvCKe36SVPZH9l1s8pnHSG6gQqJukDkAp5gUkEpWkg1svCR2USZtLMy9
-	zwLvj8TOgEJZBZU64hkHwQgZg3QsUy0v9aps3YxgpvU/USpE7FS3LeTpebEg0bPr
-	9+H0hpGPh6C9wwwUKKgQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wy1j2gsh9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Mar 2024 09:10:53 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42J9AqDP022155
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Mar 2024 09:10:52 GMT
-Received: from hu-kbajaj-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 19 Mar 2024 02:10:49 -0700
-From: Komal Bajaj <quic_kbajaj@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Komal Bajaj <quic_kbajaj@quicinc.com>,
-        "Amrit
- Anand" <quic_amrianan@quicinc.com>
-Subject: [PATCH 3/3] arm64: dts: qcom: qru1000-idp: enable USB nodes
-Date: Tue, 19 Mar 2024 14:40:20 +0530
-Message-ID: <20240319091020.15137-4-quic_kbajaj@quicinc.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20240319091020.15137-1-quic_kbajaj@quicinc.com>
-References: <20240319091020.15137-1-quic_kbajaj@quicinc.com>
+	s=arc-20240116; t=1710840931; c=relaxed/simple;
+	bh=crQWSKqhD5O72VBc1PHOdc8Vc/RicEqwpfQSKOep/cg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=O7CcI574+2XOZdkJImVTTJh1hh9lL7OEh3WeGpgZd+xcPDdFVNfsLrz9Ixn3zSFC+47zrwYdZbiPywJfb3lLKJQWiBe76NxjRGOODtWjQrHU6tok6kT7sx4cJDsGbDjnpwyV4HDE4qEKVS4fxisCygljBsGutnF0BriuOdb1rVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=b6gNmsnr; arc=none smtp.client-ip=209.85.128.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-607c5679842so56170367b3.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 02:35:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1710840929; x=1711445729; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=xR46scEd5OGiZdVCXg0rQe3a9fCq5Vz9qpEb1ZYc0XU=;
+        b=b6gNmsnrlDhEMG0w61H6qwwb/96aNwwVk/MN8Nx88cHqo/3dUKrxbH23DG16cIr/L2
+         IgETHEOxZI/PM1+QKg9OP7ST3kNQH99YpCpWkdUzohjehxZQQe0ttbKfSsNVbt5CHR3E
+         bkgjCU/B3eVBkDqnB+YXHoGkGP6MeLnj/isyjtthiPd7GIGswd4FDviVUIQFj3hxL+RP
+         8GR48Iet0KYgXxeXYajSgYkgcdslZHMXYBlZ5NygphVZkzh8qF1k1MCkgAlAgwIjp3TI
+         8a+dw1AGR03Hup43ZdJ2FgkRZeE95BHpC9ZYorVd7XmKj9UYQVuyf98SShB0+szRPIw9
+         mfBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710840929; x=1711445729;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xR46scEd5OGiZdVCXg0rQe3a9fCq5Vz9qpEb1ZYc0XU=;
+        b=HO6jh5dLdAVy9jXUjH+d4SHKNcIB9Eg/99QXNud7rUlEoL59ok98F7d/IBKrFrwARc
+         vTNWYIRWJrq8eDgo4WDM39WWQQ4q90H5urEqkla9JYiFuP+eeGW8R3HEtdfKXfgh47x8
+         8W3Aenou4BOjNMPNCvpRoWiObLfbwNdDbyo74U9DSbfTyKMX2tTEYdM7JSjeyvKucgaY
+         QUaL+ll8NipTLY03HoE07vteVA1CtVaxdH45ddRx3wolW905dXryQ+crzWWYxTqM3dl4
+         aBHqW20nI6LfpifCjzhwyDZ6LOg4WAggIfmSdpi6q1Ct+dpIFpIDC6r0QBlidklfDB8S
+         /3vg==
+X-Forwarded-Encrypted: i=1; AJvYcCVH5jmUntnkvNjMMznEJjq4ycCIVenexjtH08BwNazFXqdFnjyn7i35ILahQ1q+Ql1hY3AGZoCnHT53cxW9XtYne64LRxjvheLNw2+S2g==
+X-Gm-Message-State: AOJu0Yy5XNOZlenl+9390ledZeGM8V6Czp0EQF3+8P4Qo/UQSIy/rNEV
+	/4eNruIHngRw4cD8Dpco68FU+ExDpg+D51I3o7k0FtXDwmXxjKYQBxpiSoucjeDA/4UDiC1E+uz
+	OHAnkTmyMjDP2ANvEl69So5J1og1A2uGHZB5rYA==
+X-Google-Smtp-Source: AGHT+IH99r/kvvmJRAw/ZWjt48XmIun30VNYQDPLxn70UqEVweorAxmCjp8Gd6tgaqNqP65M7MNy+IGg5wrYdgB82h4=
+X-Received: by 2002:a0d:f003:0:b0:60c:c986:5ea with SMTP id
+ z3-20020a0df003000000b0060cc98605eamr13991538ywe.42.1710840928785; Tue, 19
+ Mar 2024 02:35:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: REutQsOCmiJkepPzx_RpDNZFKVqVHY6B
-X-Proofpoint-ORIG-GUID: REutQsOCmiJkepPzx_RpDNZFKVqVHY6B
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-18_12,2024-03-18_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
- impostorscore=0 phishscore=0 mlxlogscore=767 spamscore=0 suspectscore=0
- malwarescore=0 priorityscore=1501 lowpriorityscore=0 clxscore=1015
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403140001 definitions=main-2403190070
+References: <20240319090729.14674-1-quic_kbajaj@quicinc.com>
+In-Reply-To: <20240319090729.14674-1-quic_kbajaj@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 19 Mar 2024 11:35:17 +0200
+Message-ID: <CAA8EJpojQg2BHvR5kZtRxyXWRKy6zV=88_bdcuMH+QE-n4k73A@mail.gmail.com>
+Subject: Re: [PATCH 0/4] Add USB Support on Qualcomm's QDU/QRU1000 Platform
+To: Komal Bajaj <quic_kbajaj@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Wesley Cheng <quic_wcheng@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-usb@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Enable both USB controllers and associated hsphy and qmp phy
-nodes on QRU1000 IDP. Add the usb type B port linked with the
-DWC3 USB controller switched to OTG mode and tagged with
-usb-role-switch.
+On Tue, 19 Mar 2024 at 11:08, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
+>
+> This series adds support of USB3 PHY support for Qualcomm's QDU/QRU1000 Platform.
+>
+> ---------
+> Changes in v2:
+> * Dropped extra lines
+> * Sorted the tables alphabetically
+> * Link to v1: https://lore.kernel.org/linux-arm-msm/20240311120215.16845-1-quic_kbajaj@quicinc.com/
 
-Co-developed-by: Amrit Anand <quic_amrianan@quicinc.com>
-Signed-off-by: Amrit Anand <quic_amrianan@quicinc.com>
-Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qru1000-idp.dts | 65 ++++++++++++++++++++++++
- 1 file changed, 65 insertions(+)
+So, this is v2, but you didn't mark patches as v2. Please use b4 for
+sending patches. It can handle patch revisions automatically.
 
-diff --git a/arch/arm64/boot/dts/qcom/qru1000-idp.dts b/arch/arm64/boot/dts/qcom/qru1000-idp.dts
-index 258483af065b..5c479c1e4773 100644
---- a/arch/arm64/boot/dts/qcom/qru1000-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/qru1000-idp.dts
-@@ -46,6 +46,33 @@ ppvar_sys: ppvar-sys-regulator {
- 		regulator-boot-on;
- 	};
+>
+> Komal Bajaj (4):
+>   dt-bindings: phy: qcom,usb-snps-femto-v2: Add bindings for QDU1000
+>   dt-bindings: phy: qcom,qmp-usb: Add QDU1000 USB3 PHY
+>   dt-bindings: usb: dwc3: Add QDU1000 compatible
+>   phy: qcpm-qmp-usb: Add support for QDU1000/QRU1000
+>
+>  .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml   |  2 +
+>  .../bindings/phy/qcom,usb-snps-femto-v2.yaml  |  1 +
+>  .../devicetree/bindings/usb/qcom,dwc3.yaml    |  3 ++
+>  drivers/phy/qualcomm/phy-qcom-qmp-usb.c       | 49 +++++++++++++++++++
+>  4 files changed, 55 insertions(+)
 
-+	usb_conn_gpio: usb-conn-gpio {
-+		compatible = "gpio-usb-b-connector";
-+		vbus-gpio =  <&pm8150_gpios 7 GPIO_ACTIVE_HIGH>;
-+		id-gpio = <&tlmm 42 GPIO_ACTIVE_HIGH>;
-+		vbus-supply = <&vbus_supply_regulator>;
-+
-+		pinctrl-0 = <&usb_vbus_det_default
-+			     &usb_id_det_default>;
-+		pinctrl-names = "default";
-+
-+		port {
-+			usb_port0_connector: endpoint {
-+				remote-endpoint = <&usb_1_dwc3_hs>;
-+			};
-+		};
-+	};
-+
-+	vbus_supply_regulator: vbus-supply-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vbus_supply";
-+
-+		gpio = <&tlmm 43 GPIO_ACTIVE_HIGH>;
-+		pinctrl-0 = <&usb_vbus_boost_default>;
-+		pinctrl-names = "default";
-+		enable-active-high;
-+	};
-+
- 	vph_pwr: vph-pwr-regulator {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vph_pwr";
-@@ -239,6 +266,16 @@ vreg_l18a_1p2: ldo18 {
- 	};
- };
 
-+&pm8150_gpios {
-+	usb_vbus_det_default: usb-vbus-det-default {
-+		pins = "gpio7";
-+		function = "normal";
-+		input-enable;
-+		bias-pull-up;
-+		power-source = <0>;
-+	};
-+};
-+
- &qup_i2c1_data_clk {
- 	drive-strength = <2>;
- 	bias-pull-up;
-@@ -467,3 +504,31 @@ &tlmm {
- &uart7 {
- 	status = "okay";
- };
-+
-+&usb_1 {
-+	status = "okay";
-+};
-+
-+&usb_1_dwc3 {
-+	dr_mode = "otg";
-+	usb-role-switch;
-+};
-+
-+&usb_1_dwc3_hs {
-+	remote-endpoint = <&usb_port0_connector>;
-+};
-+
-+&usb_1_hsphy {
-+	vdda-pll-supply = <&vreg_l8a_0p91>;
-+	vdda18-supply = <&vreg_l14a_1p8>;
-+	vdda33-supply = <&vreg_l2a_2p3>;
-+
-+	status = "okay";
-+};
-+
-+&usb_1_qmpphy {
-+	vdda-phy-supply = <&vreg_l8a_0p91>;
-+	vdda-pll-supply = <&vreg_l3a_1p2>;
-+
-+	status = "okay";
-+};
---
-2.42.0
 
+-- 
+With best wishes
+Dmitry
 
