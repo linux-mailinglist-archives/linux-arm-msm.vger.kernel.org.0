@@ -1,145 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-14433-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14434-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7AF3687F4D8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 02:17:56 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 94B1E87F56E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 03:26:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7A6B31C21272
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 01:17:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0C2A01F21D67
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 02:26:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0959D620;
-	Tue, 19 Mar 2024 01:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D214657B3;
+	Tue, 19 Mar 2024 02:26:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aOaQxjbW"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="u+QpXFOH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F10F4FC;
-	Tue, 19 Mar 2024 01:17:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6878964CEF
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Mar 2024 02:26:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710811071; cv=none; b=oSlgXsS8UnxiNxH+C48PF8gggQuOgsaX5Omh4K2TdjL0Ve3dchHCOd4ASQu4rMeQlyakuztvTw0J+qdjV44koa95GJHAcZJEKXe4TgRTr42Xh14q9aBnadyChAoFUc4VNXyXjm3P9N8wLMvsE4pxo6Z98gpF47HR/ZwVxmZ3P3M=
+	t=1710815186; cv=none; b=NqjSUBaOcWaHDhu0c0rM7fTnPKI3u/x1Hd7yWEvqtAt5/WYxIqWGiENYY9KMnhPBO1IuToe/kMfdgD2tiUMjvHbU2fIfw/2YG+xBzAe2UhsCpu+/hdCIFP5hW6CN6Sy67cgmyLBixIqO11EAgIAAI4UDFJi95tIPoGSHeH4zb1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710811071; c=relaxed/simple;
-	bh=296Aa5IYrw+k3OBNGji0A97d7DKH3UDMwHn5T5Ph/hw=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=glwPceXkCE7vRwyBAi+N4FGgytPVEWBlrE4K7M0j4ERZ7LmhzxtL0wLj2MaSpLEYI6aaqM6ICKJktAsF8XXi3v+SaYsUqU9vLf1Zxguwhe/T76qrCBcypqi2dH49+hVpt7QijsBumKjWaVrXxSVzONonsE8yEO1iPcvU3f6JWTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aOaQxjbW; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42J0kunb023937;
-	Tue, 19 Mar 2024 01:17:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=H7x/R1+R+BCgNC4W4I1mP
-	HO8Zw8WK5UeRiKPms7Hmh8=; b=aOaQxjbWAt+CWON7aJhaxV05LSf5wBy2Z6Ow2
-	5ItxFn+JRmfiSlIdG6BCaBNOb2xUUizP0T9AvudL1o7IMndgO+ot4Wu7aIVkfyFv
-	tHmZX9NqSwHmSlNnHAvJY48ALQzK/zrkqZHsqFSI2B7Gzzzg+8vWeh6cIYAxj9xt
-	KUVUQag8akV3jq0OabFy2wI6MIfg6TBctsj2DOpCEruoDGxJUA2yDRdVOBkswqoe
-	ynN+DUAsxoz9xVhGU8LVNpii5ttgP+vKFjo+40kuJoykXEbr3+ctZZDurYb3Op8f
-	rcvNgWNsq5wDbaebJLsSVHFKjQ3I95i2AZxFNl+1sLo0tQn6g==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wxmnjsnrx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Mar 2024 01:17:46 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42J1Hkdk025641
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Mar 2024 01:17:46 GMT
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Mon, 18 Mar 2024 18:17:43 -0700
-Date: Tue, 19 Mar 2024 06:47:40 +0530
-From: Pavan Kondeti <quic_pkondeti@quicinc.com>
-To: Mukesh Ojha <quic_mojha@quicinc.com>
-CC: Bjorn Andersson <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linus.walleij@linaro.org>, <linux-gpio@vger.kernel.org>
-Subject: Re: [PATCH v12 7/9] firmware: qcom: scm: Fix __scm->dev assignement
-Message-ID: <03367100-1ad4-4d83-8200-5879550398be@quicinc.com>
-References: <20240227155308.18395-1-quic_mojha@quicinc.com>
- <20240227155308.18395-8-quic_mojha@quicinc.com>
- <n2gomlmlzwodpg2v3gzuc62n3plewdqgiwctrv2tawdih26rig@obqd2a2ovqvp>
- <260371ff-da7a-8406-0511-4019f6b860bf@quicinc.com>
+	s=arc-20240116; t=1710815186; c=relaxed/simple;
+	bh=sggre/bwedm+SjhOnNs5oKMSJXt1Hx/MhvbnEbYdQRE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=b+U7VEjJMkWPns5ObsFGahhA8fy6vrl1fA5SBXSiybXf9OLe/91wDY4abHfouN17tHq2xj3a3/ebXi/Cx2v7K314PEdo2JyFCSuJDOEYLplgXErRxZCKKzrh0GtuRHZQP0KXPD36q4t2FowcRjwEKmYAD57mYuh6acrBX47esM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=u+QpXFOH; arc=none smtp.client-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a467d8efe78so524230366b.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Mar 2024 19:26:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1710815182; x=1711419982; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9PVwebktWBWty2mBrf17cNCGtAzEMmWTbg3BNLwRbR4=;
+        b=u+QpXFOHxIIm2aA8ZtgDstbdEP0JytJobxygrcibELE2iSg42kVC3nIhORU+hQRdCR
+         g02IrjRD211Th2bTY7QgjIDz8/vvzyrWwbNp74QLJaFZFfbHDgcS2+5Tuoj0930kPNkf
+         c5x6ok0I/EMtikTXIe6THfEeU4JEvOhnoN+MkV1pV8QRt5gUoq42kfYXtxdB4JbDg8Mq
+         Ny7aNIrtG/saUzznCbyJGJp+gTdqkFow4k6LyzTqM8w2oRxnxSQ41Quu/jitkpJYs0uC
+         3GS4g2V6k/At4g57bbgqkF2rtgkVMB32SCqGrKB26kWQdo1HgPBZk0ytKK3VgS62qucq
+         Xqsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710815182; x=1711419982;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9PVwebktWBWty2mBrf17cNCGtAzEMmWTbg3BNLwRbR4=;
+        b=tAcCzEFV7mcu5x34n8BiHVxyabrP8hy8zuIkiC3xL4iwhx2ftH4SHxHJy8MCU9+0at
+         di83dje9AZqbdH6UykSWxMJP1QxUvk/CKX9d3dN4TFvXE/GotW/g7C87ddLog6x1Adoq
+         9gr11XUNESKlfICj/EF5RNm7uGMlzDxkhY/Hscan7PmvPh+qNJvO+vDm4eARvtPbnfE0
+         UDiaUTFbifhgtxCFTlygM0ZjczvHiZcerNHQ8gcvKTOr/yQvSFQWlbVOferPuypoDo5t
+         ncKtvP2pJD6CibJ/4yDPeLUnKvRZtbuRg6oDuXyHJWDip3Fyr2yZnXFZpMaAeMdTvBoM
+         pBLQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXKY+aGxz8T3GfrMyUPJk2m2ibNT3BDUJztfZk9XpEtV/6C2haz3yd0smD6BaRwgNa/UdIT5RmQ8Ro0K30uu7b2hufg9LDR3aURTsO2DA==
+X-Gm-Message-State: AOJu0YwtCB2+LHmR9dt+s7Wln+XczmhEtQh6yg11tC6NqQUgxuzPeNlx
+	7UFU3dylwY62WeGZEG0XMGcDXHqgmN4FA3Uxg2IHUHLHQldmUNsuHp6hSr583zsfiwQDBfFCOFn
+	3gU8fKI6CGCJvmQXvrcb9abzXisNVy6ui6SZD
+X-Google-Smtp-Source: AGHT+IFu9/5+j8r+Fb4pBtW95+Cl0mFkAx99vWRUt0Y35XyzFmr6MbTbI8DsVSvg5VsvJGnE/Mvw9QqpeiGeWfWctas=
+X-Received: by 2002:a17:906:81c9:b0:a46:6958:c415 with SMTP id
+ e9-20020a17090681c900b00a466958c415mr639887ejx.8.1710815181445; Mon, 18 Mar
+ 2024 19:26:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <260371ff-da7a-8406-0511-4019f6b860bf@quicinc.com>
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: jnpVEGgqOve90oQlCkE5ZPbPm_TRA_JO
-X-Proofpoint-ORIG-GUID: jnpVEGgqOve90oQlCkE5ZPbPm_TRA_JO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-18_12,2024-03-18_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
- clxscore=1011 mlxscore=0 lowpriorityscore=0 mlxlogscore=987 phishscore=0
- impostorscore=0 bulkscore=0 priorityscore=1501 adultscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2403140001
- definitions=main-2403190008
+References: <20240228013619.29758-1-quic_wcheng@quicinc.com>
+ <20240228013619.29758-21-quic_wcheng@quicinc.com> <CANqn-rjTgHgzssxZiuwvTKzOS31wzjS4Y9G-XacZN4a7c82MaA@mail.gmail.com>
+ <d97f635f-053b-70a7-5ffe-a1ae273091d1@quicinc.com> <CANqn-ring2uf=A-F7VuRwnJ--n=FtFzSddCmR-=nfxCGcFAF2g@mail.gmail.com>
+ <0e9f0f2f-a404-3b76-3c52-9eca7594efa3@quicinc.com>
+In-Reply-To: <0e9f0f2f-a404-3b76-3c52-9eca7594efa3@quicinc.com>
+From: Albert Wang <albertccwang@google.com>
+Date: Tue, 19 Mar 2024 10:26:08 +0800
+Message-ID: <CANqn-rjMcncjZv9YNZJOZgFo0_ro9hk=TBSFrY9RfhE1Mi13qw@mail.gmail.com>
+Subject: Re: [PATCH v18 20/41] ALSA: usb-audio: qcom: Introduce QC USB SND
+ offloading support
+To: Wesley Cheng <quic_wcheng@quicinc.com>
+Cc: srinivas.kandagatla@linaro.org, mathias.nyman@intel.com, perex@perex.cz, 
+	conor+dt@kernel.org, corbet@lwn.net, lgirdwood@gmail.com, 
+	andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org, 
+	gregkh@linuxfoundation.org, Thinh.Nguyen@synopsys.com, broonie@kernel.org, 
+	bgoswami@quicinc.com, tiwai@suse.com, robh+dt@kernel.org, 
+	konrad.dybcio@linaro.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-sound@vger.kernel.org, 
+	linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-doc@vger.kernel.org, alsa-devel@alsa-project.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Mar 18, 2024 at 06:38:20PM +0530, Mukesh Ojha wrote:
-> 
-> 
-> On 3/3/2024 12:55 AM, Bjorn Andersson wrote:
-> > On Tue, Feb 27, 2024 at 09:23:06PM +0530, Mukesh Ojha wrote:
-> > > qcom_scm_is_available() gives wrong indication if __scm
-> > > is initialized but __scm->dev is not.
-> > > 
-> > > Fix this appropriately by making sure if __scm is
-> > > initialized and then it is associated with its
-> > > device.
-> > > 
-> > 
-> > This seems like a bug fix, and should as such have a Fixes: tag and
-> > probably Cc: stable@vger.kernel.org
-> > 
-> > > Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> > > ---
-> > >   drivers/firmware/qcom/qcom_scm.c | 2 +-
-> > >   1 file changed, 1 insertion(+), 1 deletion(-)
-> > > 
-> > > diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-> > > index 6c252cddd44e..6f14254c0c10 100644
-> > > --- a/drivers/firmware/qcom/qcom_scm.c
-> > > +++ b/drivers/firmware/qcom/qcom_scm.c
-> > > @@ -1859,6 +1859,7 @@ static int qcom_scm_probe(struct platform_device *pdev)
-> > >   	if (!scm)
-> > >   		return -ENOMEM;
-> > > +	scm->dev = &pdev->dev;
-> > >   	ret = qcom_scm_find_dload_address(&pdev->dev, &scm->dload_mode_addr);
-> > >   	if (ret < 0)
-> > >   		return ret;
-> > > @@ -1895,7 +1896,6 @@ static int qcom_scm_probe(struct platform_device *pdev)
-> > >   		return ret;
-> > >   	__scm = scm;
-> > > -	__scm->dev = &pdev->dev;
-> > 
-> > Is it sufficient to just move the line up, or do we need a barrier of
-> > some sort here?
-> 
-> Would be good to use, smp_mb() before the assignment
->      __scm = scm
-> along with moving below line
-> __scm->dev = &pdev->dev
-> 
+> We can discuss that offline and come up with an approach that is
+> reviewable by maintainers and the community.
 
-Full memory barrier is not needed here. store variant is sufficient.
-WRITE_ONCE() + smp_store_release() will fit here no?
+Sure, looking forward to working together with you!
 
 Thanks,
-Pavan
+Albert Wang
+
+On Fri, Mar 15, 2024 at 4:57=E2=80=AFAM Wesley Cheng <quic_wcheng@quicinc.c=
+om> wrote:
+>
+> Hi Albert
+>
+> On 3/14/2024 3:29 AM, Albert Wang wrote:
+> > On Thu, Mar 14, 2024 at 3:18=E2=80=AFAM Wesley Cheng <quic_wcheng@quici=
+nc.com> wrote:
+> >>
+> >> Hi Albert,
+> >>
+> >> On 3/13/2024 1:03 AM, Albert Wang wrote:
+> >>> Hi Wesley,
+> >>>
+> >>> The suspend function `qc_usb_audio_offload_suspend()` looks to stop
+> >>> the traffic on the bus, so that the bus can be suspended. That allows
+> >>> the application processor(AP) to enter suspend. There is a subtle
+> >>> difference with our feature, which is to allow AP suspend with the
+> >>> Host and USB controller active to continue the audio offloading. We
+> >>> call this feature `allow AP suspend in playback`. So, I have some
+> >>> points to clarify with you:
+> >>
+> >> Yes, I'm aware of that feature also.
+> >>
+> >>> 1. Will the suspend flow `usb_audio_suspend() -->
+> >>> platform_ops->suspend_cb() --> qc_usb_audio_offload_suspend()` be
+> >>> called when offloading is active?
+> >>
+> >> It can be.  This is why in our case, we are going to issue the
+> >> disconnect event to the audio DSP to stop the session if it is current=
+ly
+> >> in one.
+> >>
+> >>> 2. As my understanding, the suspend function is to allow AP suspend
+> >>> when the offloading is IDLE, but it won't allow AP suspend when in
+> >>> playback or capture. Please correct me if anything is wrong.
+> >>
+> >> As mentioned above, it will let apps go into PM suspend after forcing
+> >> the audio stream to be idle.  We won't block PM suspend entry.
+> >>
+> > Right. Your design is to force the audio stream idle, or say, inform
+> > the audio DSP
+> > to stop the current offloading session first, then AP can go into PM
+> > suspend as usual.
+> > Then I can say the current design did not support the `allow AP
+> > suspend in playback`
+> > feature, right?
+> >
+>
+> Correct, this series does not cover this mechanism.
+>
+> >> Yes, I saw that patch as well.  I'll take a look once this series land=
+s
+> >> upstream.
+> >
+> > That patch is rejected and archived now. So we need to find another
+> > approach to do
+> > that, even based on your framework.
+> >
+>
+> We can discuss that offline and come up with an approach that is
+> reviewable by maintainers and the community.
+>
+> Thanks
+> Wesley Cheng
+>
+> > Thanks,
+> > Albert
+> >
+> >
+> >>> 3. We would like to integrate the `allow AP suspend in playback`
+> >>> feature with your framework to become one upstream offload solution.
+> >>> Here is the patch:
+> >>> https://patchwork.kernel.org/project/linux-pm/patch/20240223143833.15=
+09961-1-guanyulin@google.com/
+> >>> .
+> >>
+> >> Yes, I saw that patch as well.  I'll take a look once this series land=
+s
+> >> upstream.
+> >>
+> >> Thanks
+> >> Wesley Cheng
 
