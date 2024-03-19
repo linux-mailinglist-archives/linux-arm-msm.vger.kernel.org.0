@@ -1,157 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-14467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14468-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9DA5E87FA00
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 09:34:52 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D68D187FA51
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 10:08:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 55F061F21E31
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 08:34:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2F69A281E3B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 09:08:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60F4654BD7;
-	Tue, 19 Mar 2024 08:34:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DC7A7BB17;
+	Tue, 19 Mar 2024 09:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QyclQmQU"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kGWFmmCO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E6222339;
-	Tue, 19 Mar 2024 08:34:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB3A54BE2;
+	Tue, 19 Mar 2024 09:08:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710837287; cv=none; b=LzdVvrQdM45+UFQgIV30N/fd9lRFVLJgkTuZzZ7ZO80Rn1HuUlW5jghn0ZiPaySNcuaE7MJyxawWChm6pKNE9Ns8L6CvPchvAZpUQub+bF1uJ32DS2sWBEkIxLVITXYpXxTmVPS2FGSHtJm3b5zqvLRDSBIVlA1skt4+82dbszc=
+	t=1710839288; cv=none; b=R03coJ4jQFjUbaK1//GUXY0ge/cLnzuZNf/Wa58MQ4qLDEyEbv9VngIwjF11+YhNAl4AVuQMu0eMrrZqoTr9bm+3IHJgyUNIUV7CsNdsXUfphXfeSW5OeAljgxoDpRoscF/q4YDSqPoN/jmkkGDcGuUfUSrq181MO5D3vr237HA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710837287; c=relaxed/simple;
-	bh=pZCwEcBu5MwlxyM1kCa+BjpqXn0IzjmWygFH2xHMQG0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=b2MDgS1oC4QeBOXkvUGwzFVdAzWyQaCP+fSyCRYZcsmnaYdJiAJKHaCvRw9a85eCAEyTTPF73S/9SwsLkffBiCM52pIFWpNL6S2NK0MfSYxmek/DEM/vMmJUUNFvDoRYImecs8MyvQEZMJTd6q5QvPMeQeHsdjMiUj484lXy8g0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QyclQmQU; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1710839288; c=relaxed/simple;
+	bh=1YarG7GbSGGH/lbImy8EevZHEMUEWi3oXQdaJmqDZDE=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=FUWRUWuGtyYLEY8k9oTIAGK0bJU1jc/2b+pXZo7PbZPhDMfc3WkqMTJo+HC5Rbon0QIrxJVRgIaU/xZHsulnhP7GxKO8ctDqx2LbN46Fo/P/e57x6N+ql2XStGwo0aW69JyZhhzZcwQ3Q7n8iKYO0dWvyssUpZmGWbVM6YjGQqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kGWFmmCO; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42J6TTjU024457;
-	Tue, 19 Mar 2024 08:34:40 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42J4Q8YM029011;
+	Tue, 19 Mar 2024 09:07:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=IVuU61o5Z0vG27BocK0lkfi/gc5Z+ncaUAAfauu0R3E=; b=Qy
-	clQmQUpDIrL60LNQV9Ai7ZAzAYcyrBaOAj71s2pXUEnvUOOuLCOKT99J0qenlLhq
-	2VulOvHprPZl2CeEXq00qb91RLmDrB3cwTGSaMgEZlbjuYKwG+GtAx/sDxMgJnoR
-	ZsMIiMj9IKKbM0wsuSRheC3BdKvkOcSG0I99gBvD4TBfBd2v8DWqrQWg0uvLFTzD
-	vIKPcI4ecwZ27cHuv3gJvqccwZeFh/grOHE/hgGH5E1asOV5XGzN9SXg3IKmEPx/
-	90qLTS/mztPsUcvqMQNQjgrDMT7Pk3OaSlzCRFJNJuRTw/daAW6sf0aiKppKHYA/
-	7gRyajBuOqvV15M41OxQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wy2ea0jxw-1
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=wwYFukg
+	eyuIky5uAAKxxD46KLlDXv5v6ZWiYYzTNLzw=; b=kGWFmmCO8DHqJ07PnHE1nwI
+	Grq9EeuzuGUdy+SbgqZYp/CTHsDh64GR7DxzDZosR++IVx1tm6aq+hrVSYYhJ83g
+	dUCQOvmwyaZDjVyrpp1rF21OdiDXVGEJ/0Oa7p6LU+4cVqhvYKWY6Ai+2Kv7zlYJ
+	E3ANOHI15vfgmPwriGFn5j/z2oVOcuBTtPhCsUFZF3OnxUh/mMUAVGsxBH/Eao5m
+	u1mkMHfSXNAt0L5tfFtFwE3VPPeB7Jxi4E5yQHoF7S1PRWTLip0K4DBFlcH1uhqN
+	zSrJTaYvjaLvJGd86Gj8LEBOUWIacxOjDzXE/QE1ayobjuUf1Ig5wGconDXkXvQ=
+	=
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wy2cjrnue-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Mar 2024 08:34:40 +0000 (GMT)
+	Tue, 19 Mar 2024 09:07:55 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42J8Yesq016125
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42J97sUA027195
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Mar 2024 08:34:40 GMT
-Received: from [10.214.67.128] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 19 Mar
- 2024 01:34:36 -0700
-Message-ID: <3e9218a6-5fe7-5506-7ae4-09bace08f844@quicinc.com>
-Date: Tue, 19 Mar 2024 14:04:33 +0530
+	Tue, 19 Mar 2024 09:07:54 GMT
+Received: from hu-kbajaj-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Tue, 19 Mar 2024 02:07:49 -0700
+From: Komal Bajaj <quic_kbajaj@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        "Kishon Vijay
+ Abraham I" <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>, Komal Bajaj <quic_kbajaj@quicinc.com>
+Subject: [PATCH 0/4] Add USB Support on Qualcomm's QDU/QRU1000 Platform
+Date: Tue, 19 Mar 2024 14:37:24 +0530
+Message-ID: <20240319090729.14674-1-quic_kbajaj@quicinc.com>
+X-Mailer: git-send-email 2.42.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: qdu1000-idp: enable USB nodes
-Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Amrit Anand
-	<quic_amrianan@quicinc.com>
-References: <20240311120859.18489-1-quic_kbajaj@quicinc.com>
- <20240311120859.18489-3-quic_kbajaj@quicinc.com>
- <CAA8EJpqMWBWAEUCiJXm0x7zjZYbP8SkRDgu+w+goYjB=8JBN0A@mail.gmail.com>
- <e787706d-b5ef-40bd-9fa8-fed784a9d7b7@linaro.org>
-From: Komal Bajaj <quic_kbajaj@quicinc.com>
-In-Reply-To: <e787706d-b5ef-40bd-9fa8-fed784a9d7b7@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: uWoXB43SlU8K_p1wwgxw5qumRekGUsoS
-X-Proofpoint-GUID: uWoXB43SlU8K_p1wwgxw5qumRekGUsoS
+X-Proofpoint-ORIG-GUID: BbcRD6RuQmQNMSU6OMuTTVs-P-h3R06-
+X-Proofpoint-GUID: BbcRD6RuQmQNMSU6OMuTTVs-P-h3R06-
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-03-18_12,2024-03-18_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- spamscore=0 phishscore=0 impostorscore=0 malwarescore=0 adultscore=0
- clxscore=1015 mlxlogscore=617 lowpriorityscore=0 bulkscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403140001 definitions=main-2403190065
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ priorityscore=1501 malwarescore=0 bulkscore=0 clxscore=1015
+ impostorscore=0 lowpriorityscore=0 mlxlogscore=561 suspectscore=0
+ mlxscore=0 phishscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2403140001 definitions=main-2403190068
 
+This series adds support of USB3 PHY support for Qualcomm's QDU/QRU1000 Platform.
 
+---------
+Changes in v2:
+* Dropped extra lines
+* Sorted the tables alphabetically
+* Link to v1: https://lore.kernel.org/linux-arm-msm/20240311120215.16845-1-quic_kbajaj@quicinc.com/
 
-On 3/12/2024 5:34 AM, Konrad Dybcio wrote:
-> 
-> 
-> On 3/11/24 13:14, Dmitry Baryshkov wrote:
->> On Mon, 11 Mar 2024 at 14:10, Komal Bajaj <quic_kbajaj@quicinc.com> 
->> wrote:
->>>
->>> Enable both USB controllers and associated hsphy and qmp phy nodes
->>> on QDU1000 IDP.
->>>
->>> Co-developed-by: Amrit Anand <quic_amrianan@quicinc.com>
->>> Signed-off-by: Amrit Anand <quic_amrianan@quicinc.com>
->>> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
->>> ---
->>>   arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 24 ++++++++++++++++++++++++
->>>   1 file changed, 24 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts 
->>> b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->>> index 89b84fb0f70a..126bc71afd90 100644
->>> --- a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->>> +++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->>> @@ -500,3 +500,27 @@ &tlmm {
->>>   &uart7 {
->>>          status = "okay";
->>>   };
->>> +
->>> +&usb_1 {
->>> +       status = "okay";
->>> +};
->>> +
->>> +&usb_1_dwc3 {
->>> +       dr_mode = "peripheral";
->>
->> Are these ports really peripheral-only?
+Komal Bajaj (4):
+  dt-bindings: phy: qcom,usb-snps-femto-v2: Add bindings for QDU1000
+  dt-bindings: phy: qcom,qmp-usb: Add QDU1000 USB3 PHY
+  dt-bindings: usb: dwc3: Add QDU1000 compatible
+  phy: qcpm-qmp-usb: Add support for QDU1000/QRU1000
 
-This was done for testing. Will add the usb-role-switch role.
+ .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml   |  2 +
+ .../bindings/phy/qcom,usb-snps-femto-v2.yaml  |  1 +
+ .../devicetree/bindings/usb/qcom,dwc3.yaml    |  3 ++
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c       | 49 +++++++++++++++++++
+ 4 files changed, 55 insertions(+)
 
->>
->>> +       maximum-speed = "high-speed";
-> 
-> More importantly, are these ports really HS-only?
+--
+2.42.0
 
-Apologies for this, added it for testing purpose only, forgot to remove it.
-Will remove it.
-
-Thanks
-Komal
-
-> 
-> Konrad
 
