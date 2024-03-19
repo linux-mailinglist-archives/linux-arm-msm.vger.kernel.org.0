@@ -1,111 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-14520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0FF087FF1F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 14:53:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CE51E87FF59
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 15:13:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8ED871F23581
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 13:53:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 851901F2263C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 14:13:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0708F81724;
-	Tue, 19 Mar 2024 13:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38B8F81742;
+	Tue, 19 Mar 2024 14:13:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="H3zU5Ib1";
+	dkim=permerror (0-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="qERMqygQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37BB481723;
-	Tue, 19 Mar 2024 13:53:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710856420; cv=none; b=E37sCljsOah45leqNovwdv6x+8dpgCkbz/nc5ISD47HlocfA4esK4sURQ2iYt0OH3fEbQZeubCnSOVYFcjZ7mw6GKZf0d3XuoKcPdFMVlTJqR/cUa3saVKfyjUX9CcRLg0xtRDALYKAkSe7yxhVVUM56hJcVzBKxKC0g7ZFnG2M=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710856420; c=relaxed/simple;
-	bh=l1tlpDCQ2bSEpQZ9E3s9/g28w3A6nWny3ZLXbyWSsDQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uVW/jqh8yCp3N6/zeAq+ViFeDeB6lziP/yAcVEz8QwKlQ35zOSJgGXbPVgSHcpx2LCfLdCoIXjkTS9XDEKjl9o8ulpj4IxQOefUlTqIgM/ghuhYtC55LrCw88VWrnTOz70sFEGsn2C5AYT5IZ1aK9/XKQx8pj1I7ycoWcSJ0VOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5F600106F;
-	Tue, 19 Mar 2024 06:54:12 -0700 (PDT)
-Received: from [10.57.52.192] (unknown [10.57.52.192])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 123473F762;
-	Tue, 19 Mar 2024 06:53:34 -0700 (PDT)
-Message-ID: <9b2a681e-1191-4cf7-8da7-14aa2c1fa455@arm.com>
-Date: Tue, 19 Mar 2024 13:53:32 +0000
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.164])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69F481721;
+	Tue, 19 Mar 2024 14:13:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.164
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1710857594; cv=pass; b=F3dMPSkPF9choC3kLQltI7i4tG3s4pXWSXlMx0pcKVSouvi9Ydjq4W2dtkGu3vydDZtg3TfSeF1tZ8vwIU+VuhbvMqcSGf+I9tL0aKrWRa7x49/B2NcJOFFRNi9mtxNwgiUKU6YbrcdWUIQXIZImzx21Rud3EirzT8cLedeHep4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1710857594; c=relaxed/simple;
+	bh=6aCWbrDbRYmEYuxM00BPHK+S1MuilKFJ1QlbUTNPGZg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ua0sGPgCWUI9mnCSlWDXdKGuSKics8nf/CABOLsaiTG5IRoXuS4YKsvmLPli+Bf0rUBKI9+/7KJnL7yTr1iR2sQHvcfqBKpoLIAafp5lajDulhfATgA3rkn1eSgcR9bC6bBZ47ySUyOqWbYNmSF74TD9/T6G7w6yzoJ8LD89JmU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gerhold.net; spf=none smtp.mailfrom=gerhold.net; dkim=pass (2048-bit key) header.d=gerhold.net header.i=@gerhold.net header.b=H3zU5Ib1; dkim=permerror (0-bit key) header.d=gerhold.net header.i=@gerhold.net header.b=qERMqygQ; arc=pass smtp.client-ip=81.169.146.164
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gerhold.net
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=gerhold.net
+ARC-Seal: i=1; a=rsa-sha256; t=1710857570; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=Il3Vil8NTv2dc7zUgfhmuNShS31UiREIMfiltitCFfHOk0qaSgr6rjTXV9cGtCkAT1
+    sHxuBK1b2h4vZuGF6yAEUadl4aqsFGCIExNaheFGhSlhFzsSdWGt7BO0xjCyz9lRbcRO
+    N/ezL/s5/jyR5ZSFFaHmLnpmcJIoGyCtxD25Bz6KQMngkXt9gIWiPuQCzlL6dLBuLBX1
+    TD7py+jrsbCnd8NIfHX3LBLHDiFD+Sew6PvbDnjj2GSFAPvBFvUKkc/cLMFQaJ8IlOAz
+    jIR2gYgwYWc2JmMGnYmXQxoVtFbxn2hp5675bjOsMxcGTxvRvzoTa//GmUjLO0VO+Wxa
+    DTuw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1710857570;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=DYa+8d2UWYgwRzURH7RQQ2juMt5EiPhLxQIXRjk018c=;
+    b=jDBvRhSRo1iznY9fpd3EA5YH32a+u9TTw8EqU+qzSCxyxaan71KpS9CFxOhX2wBJHu
+    XrsNiCVzmo+c8ycxfyf21GKkANav1Te4dH89/8OXVPGQzbLMjmCcWvkmhWXBhV1rrPxU
+    lbUvlvcItDPTrg1xwoo1OkRz6+VFZaDKH89fPBsT66k8vQCCC9iDR/5+xyIJP7f/juVn
+    xABIt88WogBPRAtc/4GM5PFdj84VeKcUPMhEE9V4fvfagVnhswAO7tzmdftHtCROnQQA
+    eIV6gLGM4MnI8/vkGMCv9lbbu8PUrAX6/509X7TKWdTzt/rpoazHhp2pguWiAsUAIdzP
+    CVzA==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1710857570;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=DYa+8d2UWYgwRzURH7RQQ2juMt5EiPhLxQIXRjk018c=;
+    b=H3zU5Ib1Xwft4x9CsITafUB/hXpM8QyleUZWpjLO+TL0LvBY1vyfEbQGH/zXa+J29S
+    yRD1xGtoBDrt1Ie/YED0TQx3rCDBtio2nltT9fVOkq1sO4fJ4vH4o/rHf0ATlb4ObJ+m
+    n7U8DLtZbJsuEnZFM4fBS69Imk5DRxZ0Hids6S74x/Is6/QpG5p6xv+qos6TB+iCWHJj
+    9RGHXxjMbIyVLo/c7NT/i8u5n6s1HLWGRISCwYNfhy9aYKU3PHBT7D727idN0vQ8hMH/
+    T8lCN1qKdLJk6ZSIDBa0C3WvMVwx2GVldaaSz7cjRsbCiU7bFvCZjv3guwu2MRBsI66J
+    1rmQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1710857570;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=DYa+8d2UWYgwRzURH7RQQ2juMt5EiPhLxQIXRjk018c=;
+    b=qERMqygQkvRJLWmJr6bw5nmZ7b76M8SGfHK1T6/gRyCeUVdiVXyv10/iWb6/mmPorH
+    dchaqanpdBvkI2rlOOBg==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8paF1A=="
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 50.3.1 DYNA|AUTH)
+    with ESMTPSA id R475ba02JECn06O
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Tue, 19 Mar 2024 15:12:49 +0100 (CET)
+Date: Tue, 19 Mar 2024 15:12:42 +0100
+From: Stephan Gerhold <stephan@gerhold.net>
+To: Sumit Garg <sumit.garg@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+	caleb.connolly@linaro.org, neil.armstrong@linaro.org,
+	dmitry.baryshkov@linaro.org, laetitia.mariottini@se.com,
+	pascal.eberhard@se.com, abdou.saker@se.com, jimmy.lalande@se.com,
+	benjamin.missey@non.se.com, daniel.thompson@linaro.org,
+	linux-kernel@vger.kernel.org,
+	Jagdish Gediya <jagdish.gediya@linaro.org>
+Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: apq8016: Add Schneider HMIBSC
+ board DTS
+Message-ID: <ZfmdWtoiP4ZF7JRk@gerhold.net>
+References: <20240315060707.471248-1-sumit.garg@linaro.org>
+ <20240315060707.471248-4-sumit.garg@linaro.org>
+ <ZfRlYnEQUKvwGQ65@gerhold.net>
+ <CAFA6WYMucNzLNm+oHNd-Jb65oigpNphU=mFGM1cD8A-mK-BFDw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dt-bindings: iommu: arm,smmu-v3: Add SC8280XP
- compatible
-Content-Language: en-GB
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Will Deacon <will@kernel.org>,
- Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- iommu@lists.linux.dev, Johan Hovold <johan+linaro@kernel.org>
-References: <20231219-topic-8280_smmuv3-v2-0-c67bd3226687@linaro.org>
- <20231219-topic-8280_smmuv3-v2-1-c67bd3226687@linaro.org>
-From: Robin Murphy <robin.murphy@arm.com>
-In-Reply-To: <20231219-topic-8280_smmuv3-v2-1-c67bd3226687@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFA6WYMucNzLNm+oHNd-Jb65oigpNphU=mFGM1cD8A-mK-BFDw@mail.gmail.com>
 Content-Transfer-Encoding: 7bit
 
-On 2024-03-09 1:31 pm, Konrad Dybcio wrote:
-> The smmu-v3 binding currently doesn't differentiate the SoCs it's
-> implemented on. This is a poor design choice that may bite in the future,
-> should any quirks surface.
+On Mon, Mar 18, 2024 at 03:20:46PM +0530, Sumit Garg wrote:
+> On Fri, 15 Mar 2024 at 20:43, Stephan Gerhold <stephan@gerhold.net> wrote:
+> > On Fri, Mar 15, 2024 at 11:37:07AM +0530, Sumit Garg wrote:
+> > > Add Schneider Electric HMIBSC board DTS. The HMIBSC board is an IIoT Edge
+> > > Box Core board based on the Qualcomm APQ8016E SoC.
+> > >
+> > > Support for Schneider Electric HMIBSC. Features:
+> > > - Qualcomm Snapdragon 410C SoC - APQ8016 (4xCortex A53, Adreno 306)
+> > > - 1GiB RAM
+> > > - 8GiB eMMC, SD slot
+> > > - WiFi and Bluetooth
+> > > - 2x Host, 1x Device USB port
+> > > - HDMI
+> > > - Discrete TPM2 chip over SPI
+> > > - USB ethernet adaptors (soldered)
+> > >
+> > > Co-developed-by: Jagdish Gediya <jagdish.gediya@linaro.org>
+> > > Signed-off-by: Jagdish Gediya <jagdish.gediya@linaro.org>
+> > > Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
+> > > Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+> > >  .../dts/qcom/apq8016-schneider-hmibsc.dts     | 510 ++++++++++++++++++
+> > >  2 files changed, 511 insertions(+)
+> > >  create mode 100644 arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
+> > >
+> > > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> > > index 39889d5f8e12..ad55e52e950b 100644
+> > > --- a/arch/arm64/boot/dts/qcom/Makefile
+> > > +++ b/arch/arm64/boot/dts/qcom/Makefile
+> > > @@ -5,6 +5,7 @@ apq8016-sbc-usb-host-dtbs     := apq8016-sbc.dtb apq8016-sbc-usb-host.dtbo
+> > >
+> > >  dtb-$(CONFIG_ARCH_QCOM)      += apq8016-sbc-usb-host.dtb
+> > >  dtb-$(CONFIG_ARCH_QCOM)      += apq8016-sbc-d3-camera-mezzanine.dtb
+> > > +dtb-$(CONFIG_ARCH_QCOM)      += apq8016-schneider-hmibsc.dtb
+> > >  dtb-$(CONFIG_ARCH_QCOM)      += apq8039-t2.dtb
+> > >  dtb-$(CONFIG_ARCH_QCOM)      += apq8094-sony-xperia-kitakami-karin_windy.dtb
+> > >  dtb-$(CONFIG_ARCH_QCOM)      += apq8096-db820c.dtb
+> > > diff --git a/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts b/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
+> > > new file mode 100644
+> > > index 000000000000..9c79a31a04db
+> > > --- /dev/null
+> > > +++ b/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
+> > > @@ -0,0 +1,510 @@
+> > > [...]
+> > > +
+> > > +&pm8916_resin {
+> > > +     interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_FALLING>;
+> > > +     linux,code = <KEY_POWER>;
+> > > +     status = "okay";
+> > > +};
+> >
+> > What is the goal of overriding the interrupt here? It looks like you are
+> > changing the interrupt type from IRQ_TYPE_EDGE_BOTH to FALLING. This
+> > sounds a bit like you want the driver to receive just button release
+> > events (or just press events, not sure about the polarity). I'm not sure
+> > if the driver will handle this correctly.
+> 
+> The use-case here is to just act upon button release events and the
+> driver handles this appropriately. Final use-case of the reset button:
+> 
+> - Short press and release leads to normal Linux reboot.
+> - Long press for more than 10 sec or so leads to a hard reset.
+> 
+> With IRQ_TYPE_EDGE_BOTH, that's not achievable because just a simple
+> press leads to Linux reboot.
+> 
 
-That doesn't seem entirely fair to say - the vast majority of bindings 
-don't have separate compatibles for every known integration of the same 
-implementation in different SoCs. And in this case we don't have 
-per-implementation compatibles for quirks and errata because the 
-implementation is architecturally discoverable from the SMMU_IIDR register.
+Thanks for explaining your use case. Is the DT really the right place to
+describe this? In the hardware, this is just a button that provides both
+press and release events. Linux typically forwards these events to user
+space, without interpreting them in any way. This means you likely have
+some user space component that listens to the events (e.g. systemd
+logind). Ideally that component should be reconfigured to trigger the
+reboot on release instead of press.
 
-We have the whole mess for QCom SMMUv2 because the effective 
-*implementation* is a mix of hardware and hypervisor, whose behaviour 
-does seem to vary on almost a per-SoC basis. I'm not at all keen to 
-start repeating that here without very good reason, and that of 
-"documenting" a device which we typically expect to not even be 
-accessible isn't really convincing me...
+If you hardcode this behavior in the DT you are essentially describing
+that the hardware is incapable of detecting the press event before the
+release event. This is not the case, right? There may be use cases where
+someone would still want to detect the key press (rather than just
+release).
 
 Thanks,
-Robin.
-
-> 
-> Add a compatible for the instance found on Qualcomm SC8280XP.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->   Documentation/devicetree/bindings/iommu/arm,smmu-v3.yaml | 6 +++++-
->   1 file changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu-v3.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu-v3.yaml
-> index 75fcf4cb52d9..f284f7b0c1d8 100644
-> --- a/Documentation/devicetree/bindings/iommu/arm,smmu-v3.yaml
-> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu-v3.yaml
-> @@ -20,7 +20,11 @@ properties:
->     $nodename:
->       pattern: "^iommu@[0-9a-f]*"
->     compatible:
-> -    const: arm,smmu-v3
-> +    oneOf:
-> +      - items:
-> +          - const: qcom,sc8280xp-smmu-v3
-> +          - const: arm,smmu-v3
-> +      - const: arm,smmu-v3
->   
->     reg:
->       maxItems: 1
-> 
+Stephan
 
