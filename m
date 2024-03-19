@@ -1,146 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-14460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5046087F609
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 04:29:14 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC91B87F619
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 04:38:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D37EF1F22370
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 03:29:13 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 381E6B22066
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Mar 2024 03:37:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CCAD7BAF3;
-	Tue, 19 Mar 2024 03:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 665947BAF3;
+	Tue, 19 Mar 2024 03:37:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oS8przDC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eaxrcT7n"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC072F5B;
-	Tue, 19 Mar 2024 03:29:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A880657A9;
+	Tue, 19 Mar 2024 03:37:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710818948; cv=none; b=F+NMy3H7DApw0Q9oxeMk9AJyW5pjp0ryyZGZK6TKBO6PcRQo1GF9pPntUbSSVIRYRp3eHJgY/kpAhSvVP7ylwKn+mtgHB9FwYSSSL4lcnFfr7BrGCV/6jJBbEisxxKDS6+hOguxKmcKOZ2/GTsVc5hmbykUOabsL2AbdNF6EWPk=
+	t=1710819472; cv=none; b=FywetHd60b8je637klfH2bEM0jDRE/SBRda//jU+IolLtQi8aw5rLD9N4wjFmG7N+ZTr/k01rGnGX1Z8sejO/bkVO2XREgv2jM2p/FC8IS33VvzGK57RWDXhkJZ0uj7DkQE6bFPuwJiIyGTMb3heDcyEbnkU4+9GApAosb48YhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710818948; c=relaxed/simple;
-	bh=Od381JPSUKH8+MmNmWOHeI2X3X/5qdlT2/DqpZ7NYcc=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=kV3c8zdXQFPvvsZ2fkVp9SjoaeeAoqqbTWs9b/KNC3EXHhQlJLNYfT13va+4uMZS4a0dp/GjG/dnr64bdc2Ik4LKHjdZG2wzl0khC4wMf1HCC01odKg5lV0kGkExWvugYuTDCVTjhnUsZaa0u4Dmj6rR4Wu4khIhw8vCOEwOo64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oS8przDC; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42J2wwp5017456;
-	Tue, 19 Mar 2024 03:29:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version:content-type; s=
-	qcppdkim1; bh=fe3ESbcgZSyVaQBbKQU/1/nK/Zh67/3lPiSBxhcDGXM=; b=oS
-	8przDCtFSJAZ349r1SjBXE9yVgTCjHx19PCVTXGou9yR8g6qP1XkZDxxKbtVy0h4
-	gtFBTyBm+/+6GO1CroUyxna58hSnTKv8ResJ/wHPU3XRW2l2CnmrtMWOaMXl2LFE
-	R+713GrMi8podvZ3jn/Zr+RgZCFgA8XTfgLdvBkHhcKyWLxtjnQdrOTBXOYlgHob
-	mi+uTqseQXRafk83wgA2tFr1US9f8fQ2MRRzEjXCliEImMIMq9DK7U5x9YojekCh
-	Cl2E8reupUhVxBdw43Ax7jzH0TdqodGLaoTEp/EoEmuEe+zZ9EotrMhQofoEPcFe
-	NZo0d13bppRj4G3drEWw==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wy2cjr1j6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Mar 2024 03:29:00 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42J3SxVp004003
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Mar 2024 03:28:59 GMT
-Received: from hu-lxu5-sha.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Mon, 18 Mar 2024 20:28:54 -0700
-From: Ling Xu <quic_lxu5@quicinc.com>
-To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC: <quic_lxu5@quicinc.com>, <quic_ekangupt@quicinc.com>, <kernel@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2] arm64: dts: qcom: sm8650: Add three missing fastrpc-compute-cb nodes
-Date: Tue, 19 Mar 2024 08:58:16 +0530
-Message-ID: <20240319032816.27070-1-quic_lxu5@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+	s=arc-20240116; t=1710819472; c=relaxed/simple;
+	bh=VebSyVF5bHPrPRjmNRIpWZO5EROr4cyAn3m11V+qwRk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qtZnBFf8keMcyXzn81yZNL2DcvFgt6X0vp/xfMbQIQH/WKmvjHNBN9GWs3M/1YxGfZLW+6Z3rlWgmZSyrc0ys22hFXpB+H4zNuieZA5m7+W61G/9Yw70XK5lZ+PHjYnyNheYwq1REEliSqUOFwIVjHnGwBtVnPbE7lXv4M5j/Mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eaxrcT7n; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35FA8C433F1;
+	Tue, 19 Mar 2024 03:37:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1710819471;
+	bh=VebSyVF5bHPrPRjmNRIpWZO5EROr4cyAn3m11V+qwRk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=eaxrcT7no+9PDOYRe21156WwnGaYAKx1nj7+f47W+Rb6taX7Xpn/0D5OmVonT1FY8
+	 c8SqFNBOM2kMltEOe2PAUzSH6qY3BZZf0ljF6epCaOSbCyfX/p05Nr6fDX+lGoqRED
+	 b9HeD4Vh90uJC2LhEaWXcCCmGwiBRm9y5oMoJlyFe8woGhYv420N1jK1/gwlMqdQk4
+	 rw/im6Q7h2r9KjabYQ/vHyoF0cGOsLrCvOM0lRa1jSUEh5vAX3EZl7pM+TwKJi4SkH
+	 +vrf924R64pr3WVzAiPaAm6wqXT0ala6mqgoGu7WF8BfR3+7UOzh72I/mlxQKxSKNJ
+	 hp5lXNyLBC05w==
+Date: Mon, 18 Mar 2024 22:37:49 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Justin Stitt <justinstitt@google.com>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
+Subject: Re: [PATCH v2] soc: qcom: cmd-db: replace deprecated strncpy with
+ strtomem
+Message-ID: <ag7oslzfcuiyuehxq5n5jth4adrhel4xafby5whxsvyybbm6dc@6rtwaolbmm45>
+References: <20240318-strncpy-drivers-soc-qcom-cmd-db-c-v2-1-8f6ebf1bd891@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: BjTA4MaFWz41SJLpLdPHaw2fpt9pZsAo
-X-Proofpoint-GUID: BjTA4MaFWz41SJLpLdPHaw2fpt9pZsAo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-18_12,2024-03-18_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- priorityscore=1501 malwarescore=0 bulkscore=0 clxscore=1015
- impostorscore=0 lowpriorityscore=0 mlxlogscore=585 suspectscore=0
- mlxscore=0 phishscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2403140001 definitions=main-2403190025
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240318-strncpy-drivers-soc-qcom-cmd-db-c-v2-1-8f6ebf1bd891@google.com>
 
-Add three missing cDSP fastrpc compute-cb nodes for the SM8650 SoC.
+On Mon, Mar 18, 2024 at 10:49:23PM +0000, Justin Stitt wrote:
+> strncpy() is deprecated for use on NUL-terminated destination strings
+> [1] and as such we should prefer more robust and less ambiguous string
+> interfaces.
+> 
 
-Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
----
-* v1->v2: Lowercase hex
-  v1: https://lore.kernel.org/linux-arm-msm/20240314063334.31942-1-quic_lxu5@quicinc.com/
----
----
- arch/arm64/boot/dts/qcom/sm8650.dtsi | 32 ++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+I don't mind changing the strncpy() in this function, but I don't think
+this problem description adequately describes the problem you're
+solving.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index ba72d8f38420..57158e4606b1 100644
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -5084,6 +5084,38 @@
- 							 <&apps_smmu 0x19c8 0x0>;
- 						dma-coherent;
- 					};
-+
-+					/* note: secure cb9 in downstream */
-+
-+					compute-cb@10 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <12>;
-+
-+						iommus = <&apps_smmu 0x196c 0x0>,
-+							 <&apps_smmu 0x0c0c 0x20>,
-+							 <&apps_smmu 0x19cc 0x0>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@11 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <13>;
-+
-+						iommus = <&apps_smmu 0x196d 0x0>,
-+							 <&apps_smmu 0x0c0d 0x20>,
-+							 <&apps_smmu 0x19cd 0x0>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@12 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <14>;
-+
-+						iommus = <&apps_smmu 0x196e 0x0>,
-+							 <&apps_smmu 0x0c0e 0x20>,
-+							 <&apps_smmu 0x19ce 0x0>;
-+						dma-coherent;
-+					};
- 				};
- 			};
- 		};
--- 
-2.17.1
+If the motivation is that we want 0 users of strncpy() in the kernel,
+then say so.
 
+> @query is already marked as __nonstring and doesn't need to be
+> NUL-terminated.
+
+You're not wrong, but in the event that strlen(id) < sizeof(ent->id) the
+destination should be NUL-padded - exactly one of the well known,
+normally unwanted, effects of strncpy(). strtomem() does explicitly not
+do this.
+
+> Since @id is a string, we can use the self-describing
+> string API strtomem().
+
+"self-describing"?
+
+> 
+> Link: https://www.kernel.org/doc/html/latest/process/deprecated.html#strncpy-on-nul-terminated-strings [1]
+> Link: https://manpages.debian.org/testing/linux-manual-4.8/strscpy.9.en.html [2]
+> Link: https://github.com/KSPP/linux/issues/90
+> Cc: linux-hardening@vger.kernel.org
+> Signed-off-by: Justin Stitt <justinstitt@google.com>
+> ---
+> Changes in v2:
+> - use strtomem instead of memcpy (thanks Kees)
+> - Link to v1: https://lore.kernel.org/r/20240314-strncpy-drivers-soc-qcom-cmd-db-c-v1-1-70f5d5e70732@google.com
+> ---
+> Note: build-tested only.
+> 
+> Found with: $ rg "strncpy\("
+> ---
+>  drivers/soc/qcom/cmd-db.c | 9 ++-------
+>  1 file changed, 2 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
+> index a5fd68411bed..d05f35d175bd 100644
+> --- a/drivers/soc/qcom/cmd-db.c
+> +++ b/drivers/soc/qcom/cmd-db.c
+> @@ -141,18 +141,13 @@ static int cmd_db_get_header(const char *id, const struct entry_header **eh,
+>  	const struct rsc_hdr *rsc_hdr;
+>  	const struct entry_header *ent;
+>  	int ret, i, j;
+> -	u8 query[sizeof(ent->id)] __nonstring;
+> +	u8 query[sizeof(ent->id)] __nonstring = { 0 };
+>  
+>  	ret = cmd_db_ready();
+>  	if (ret)
+>  		return ret;
+>  
+> -	/*
+> -	 * Pad out query string to same length as in DB. NOTE: the output
+> -	 * query string is not necessarily '\0' terminated if it bumps up
+> -	 * against the max size. That's OK and expected.
+> -	 */
+> -	strncpy(query, id, sizeof(query));
+> +	strtomem(query, id);
+
+query needs to be NUL-padded to sizeof(ent->id) bytes (like strncpy
+does), something you recognized by adding the zero-initialization above.
+But why split this requirement across two non-adjacent lines? Isn't this
+what strtomem_pad() is supposed to do?
+
+Regards,
+Bjorn
+
+>  
+>  	for (i = 0; i < MAX_SLV_ID; i++) {
+>  		rsc_hdr = &cmd_db_header->header[i];
+> 
+> ---
+> base-commit: fe46a7dd189e25604716c03576d05ac8a5209743
+> change-id: 20240314-strncpy-drivers-soc-qcom-cmd-db-c-284f3abaabb8
+> 
+> Best regards,
+> --
+> Justin Stitt <justinstitt@google.com>
+> 
 
