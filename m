@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-14669-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14670-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4FB8988151B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Mar 2024 17:01:53 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C9FF88153A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Mar 2024 17:09:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7D1BDB20CB8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Mar 2024 16:01:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D8A14284430
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Mar 2024 16:09:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B120F53E1B;
-	Wed, 20 Mar 2024 16:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2845554F83;
+	Wed, 20 Mar 2024 16:08:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zXVPuvRs"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nqFEIgIh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E04DE4EB23
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Mar 2024 16:01:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CADEE53E13
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Mar 2024 16:08:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710950506; cv=none; b=h1MXHLU96bMVP/2B1AIzGF0e5iJ/Mh1HOF/2zqeQqqysdG1ttVxXUmMTv+8NCdb5s4pavZ/hRiyoUQzFTvHSjDud2Jc125mTiHlEvpHModvMQAycm7cfqStfjiZtz4FTWFnd+4T9oKaBCFCOvTIjcPaJShhODNn5gmCisoLfYSU=
+	t=1710950932; cv=none; b=M3Ugz6ZqOJnzt6bxL9HmEwJTNAg6rc9fUz7lV43GEmDUvliJnOS/4R+7BrS+j5XLS4U5on899lwrUosmJP5Q0BXxiAadqN7hiFqU/qvIEVRr+y0R3hMdECnsp7Gt5kDF33CUXgJT6rDdvPp6s+ruXHFEbWW+Fcdgbgd0tUmYVoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710950506; c=relaxed/simple;
-	bh=kJOH+rnAS2hEXejfUJZwazxTlSB8DY7It82kT/meYn8=;
+	s=arc-20240116; t=1710950932; c=relaxed/simple;
+	bh=5mgRIKvZE18i+NU8GUVCCwd9pcBsnNt96OUwKEZvEcY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KSp03qq3b7qbWFLkG48GS4DK3P7u68DM21BKcUc180wq3+UiqkuPcbTGDxyu8bvxr56oTO1la7eLL0OW1x7df3B1/aQNaIJJskbGMFEiOWnvwPo6I1lHhl96SChqODvA3u8N9w547ZwR65fQFHFLcpaoPCMnTzTDBJuYUPZnDxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zXVPuvRs; arc=none smtp.client-ip=209.85.128.46
+	 In-Reply-To:Content-Type; b=BPx5pcv9B7NxCmgz9OX2VA9feBYrVAZUpni3fg9L9uf19gh8zGP0gHpTEI6oYqntoG8RbI2KgFWul9ZMYeU0hkZY1TnWUU56P5z/0EP08tkfYCnxKQAZRSQ4R5+rBhYrH5FBALDYb66SvUdT046IKZmT5tFeV5jYrWTZoNDGvJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nqFEIgIh; arc=none smtp.client-ip=209.85.167.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4146a1b6faaso10787035e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Mar 2024 09:01:44 -0700 (PDT)
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-513da1c1f26so23860e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Mar 2024 09:08:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710950503; x=1711555303; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1710950927; x=1711555727; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=kL96kx3LN/9lm4lbLyIo1jNh4JW+F+59O3JF2oZwblI=;
-        b=zXVPuvRs+uJ0obHjQjKp+UmikjjlQfiX3SSIrw2+PtFnxYp8pLjxy6Axv4OQcwsZP7
-         zfBxqAFSQVfHfqMuB1PnWGhf0sGExhi7DTfff2KMJumzQcKfdYI29u08uaODET1zNUJW
-         XNynpWwpGwfar+sgccAMpPE6LdWE4hxFtl9EPUy4iREkHml6OcDfn2vGWVcVOFKhLWmt
-         jm3BESgVJB0Fdm4KwT88CpPrzxkRurtIpI7xgLJm5bfg8w5wYhN3Tvd04lUTfzu8ehGm
-         ZdpQBiZccqXv/pMdWS1dzPd+uI4aekwQ+KSXRiKywcDurPosN4OFthxMJL3sRmhLmxij
-         YIKQ==
+        bh=STdKZ1YTCOGuMZ4k+N27m1pIFIyChgbyuE8sqsxHhp0=;
+        b=nqFEIgIhG56J8QSzWhR5Bboyga5u6OXLg7WV9dzZcJbo06rmlCxjpGsCORgAU17Tty
+         yBYHkJmxpbWebpCRyXFGaUZoCrQg/xAhwzMhfS2eXRviZWK4j9w4zUJQf2Uoo/ZoBBGl
+         ipFh9bGBiy1GBRXJj9HzgDBv/RA3SSuzQCQZ5uad1Mb896oukLkUeKcic+hCfb5YxSR9
+         RhUnMIAmc1SYmD/WofH2rvfcrxqZq62zbFSz3vTP4dpW8d8X/Nj454VTHiHadkql8QuS
+         0EWZ3rtk3pdskJ2a+N9dgJEAnyGtx/9DfSV3pAkH5t7EFPZToJ/7Qz6G6RuiBFrCJm0a
+         cHtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710950503; x=1711555303;
+        d=1e100.net; s=20230601; t=1710950927; x=1711555727;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kL96kx3LN/9lm4lbLyIo1jNh4JW+F+59O3JF2oZwblI=;
-        b=QAZ0VhVxZEjlinYf3Os8gzTHjVypPFnvltt0ZwA6Buk0xN4t2sHzfkE1YTpJ2bwmNg
-         rwHK4P6+WGjc6mDV2GjTvk31jv0HmZanbmkndr6/ntblPiUssm0NIKVivg6x1xBPkQFk
-         A514IXSs0fDp1Xo6ZQfCtxqcyXEkWSWNOXYMJQp0Vy73cvRFkVzfeIQJ+UG7O3GpWbXU
-         3pkqpFTj02pLfDltc9wJvjdsXc4qKQdLiIcAVjkJ6NmTPQpu4c6HKuE7a187L9cv0JZY
-         Cfpl0fRbA4zzIWw1J93+J0wBiyFXwWd7Dr7o2K+fzF5fvaQPkT7w3gQJeiQweUyENK/1
-         PY2A==
-X-Forwarded-Encrypted: i=1; AJvYcCVjBaxs0Ws/b9vQDqBFEg89s44cYC8LXIl7fsKRB04YoiiqMNftaMiq0E36K+zwmYKEZJBtl/jSXU+OGfcyE61KAMcHRxzdgzj5rKgpPw==
-X-Gm-Message-State: AOJu0YxbePAXQGXt0F6KtwJLfzH6jn4iuF6e04dK8P26Ie75wTvIgckW
-	/aXQnO6dZBMHMZHWieb5/AP3NjdMifXveY9dNz2ykTnIhwDdK0SkQNvkHxFEa/k=
-X-Google-Smtp-Source: AGHT+IFIN6YIRXMa/mq1RLwjoKatqeyjBY5gl4ZOfUmSTIK1vlAArNKVYBMmbIRFvVAbqPe8dmgSPg==
-X-Received: by 2002:a5d:560e:0:b0:33e:bfd0:335c with SMTP id l14-20020a5d560e000000b0033ebfd0335cmr12054591wrv.51.1710950503210;
-        Wed, 20 Mar 2024 09:01:43 -0700 (PDT)
+        bh=STdKZ1YTCOGuMZ4k+N27m1pIFIyChgbyuE8sqsxHhp0=;
+        b=MYAo8j4M6Ygq2gm3LPZcf/155ZNqMg26+L0p/DQz+E2MDXOU8zDZdv+7SI7Hagvp6e
+         TQEEb9exgRh/WRY4kO/Fnv1hX1GN5iCPtP4DMlNkxNaS9Kz1GD/cpGVwIvCyKfAKgbP8
+         WJbpqLqd//ATuOUsdHGWwCooa6T7z8zzKr4cl1Hqi62mdKY5XGsriTdTbyWHTB3P8EtA
+         WMiO19MWn7SckkACQSzw/4wIyfpIdlDZ0E6LBOPEPYbwkRcDWk0LqIGaGLvTC5PMNME6
+         bkRG8vW1aLhweNCD5YIk5ZrpUS+jrT5j+aBIJTDTapns3cosqyUQbte8w7tTutUBALfM
+         V9kg==
+X-Forwarded-Encrypted: i=1; AJvYcCWlEmxel4m5i65IHY74sOZ8I/ox9Fl+nD8FyVlI47/WrTduGDot97Erw4/j2hnfhxkJAUZuqjNLSlOaPKM/0q36iVbkO+06glwOpEP6Rg==
+X-Gm-Message-State: AOJu0YzsdI+bXf1Q470whiTdL6dGjbj2WYVjLCJQVvOmYdJDBBIgOujP
+	ZdPuFLMDHXWB2fSijCjkZ7xXE1u91qlHMT0nMuNn6eOoCvv17s0SNFHwTZ/jh4ziPjrgGBWn9p8
+	y
+X-Google-Smtp-Source: AGHT+IGvoLccX5vlTEu8f2RKp23Iekbq6/tDhDQls/lFwY6VUTEOInWbp4R8IY6fxygIl2uhGt5qqQ==
+X-Received: by 2002:a05:6512:4844:b0:513:c8b8:aad2 with SMTP id ep4-20020a056512484400b00513c8b8aad2mr12403529lfb.57.1710950926117;
+        Wed, 20 Mar 2024 09:08:46 -0700 (PDT)
 Received: from [192.168.0.102] ([176.61.106.68])
-        by smtp.gmail.com with ESMTPSA id dd15-20020a0560001e8f00b0033ce727e728sm14983529wrb.94.2024.03.20.09.01.42
+        by smtp.gmail.com with ESMTPSA id d10-20020adfe88a000000b0033b6e26f0f9sm14924639wrm.42.2024.03.20.09.08.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Mar 2024 09:01:42 -0700 (PDT)
-Message-ID: <944ff951-53dc-40f6-a7b0-5ecfc2cd4771@linaro.org>
-Date: Wed, 20 Mar 2024 16:01:41 +0000
+        Wed, 20 Mar 2024 09:08:45 -0700 (PDT)
+Message-ID: <21d2139f-8547-466a-9be1-fbeae1194869@linaro.org>
+Date: Wed, 20 Mar 2024 16:08:44 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,106 +77,144 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 8/8] media: qcom: camss: Add sm8550 support
+Subject: Re: [PATCH v2 2/8] media: qcom: camss: Add subdev notify support
 Content-Language: en-US
 To: Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, andersson@kernel.org, konrad.dybcio@linaro.org,
- mchehab@kernel.org, quic_yon@quicinc.com
+ todor.too@gmail.com, bryan.odonoghue@linaro.org, andersson@kernel.org,
+ konrad.dybcio@linaro.org, mchehab@kernel.org, quic_yon@quicinc.com
 Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
  linux-arm-msm@vger.kernel.org
 References: <20240320141136.26827-1-quic_depengs@quicinc.com>
- <20240320141136.26827-9-quic_depengs@quicinc.com>
+ <20240320141136.26827-3-quic_depengs@quicinc.com>
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20240320141136.26827-9-quic_depengs@quicinc.com>
+In-Reply-To: <20240320141136.26827-3-quic_depengs@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 20/03/2024 14:11, Depeng Shao wrote:
-> Add in functional logic throughout the code to support the SM8550.
+> From: Yongsheng Li <quic_yon@quicinc.com>
 > 
-> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
-> ---
->   .../media/platform/qcom/camss/camss-csid.c    | 19 +++++++++++++++++++
->   .../media/platform/qcom/camss/camss-csiphy.c  |  1 +
->   drivers/media/platform/qcom/camss/camss-vfe.c |  7 +++++++
->   .../media/platform/qcom/camss/camss-video.c   |  1 +
->   4 files changed, 28 insertions(+)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-> index eb27d69e89a1..e9203dc15798 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
-> @@ -590,6 +590,25 @@ int msm_csid_subdev_init(struct camss *camss, struct csid_device *csid,
->   			csid->base = camss->vfe[id].base + VFE_480_LITE_CSID_OFFSET;
->   		else
->   			csid->base = camss->vfe[id].base + VFE_480_CSID_OFFSET;
-> +	} else if (camss->res->version == CAMSS_8550) {
-> +		/* for titan 780, CSID lite registers are inside the VFE lite region,
-> +		 * between the VFE "top" and "bus" registers. this requires
-> +		 * VFE to be initialized before CSID
-> +		 */
-> +		if (id >= 2)
-> +			csid->base = camss->vfe[id].base;
-
-Hard-coded magic numbers are definitely out.
-
-If you need to differentiate - please include something in the struct 
-resources so that the flag is always available and we don't have to 
-start doing funky magic index/magic number gymnastics.
-
-> +		else {
-> +			csid->base =
-> +				devm_platform_ioremap_resource_byname(pdev, res->reg[0]);
-> +			if (id != 0)
-> +				csid->top_base = camss->csid[0].top_base;
-> +			else
-> +				csid->top_base =
-> +					devm_platform_ioremap_resource_byname(pdev, res->reg[1]);
-> +		}
-
-What is the point of hooking the TOP base just to clear our the status 
-registers ?
-
-We take no meaningful action in the ISR that I can see.
+> The buf done irq and register update register are moved
+> to CSID in SM8550, so but the write master configuration
+> in VFE, in case adapt existing code logic. So add buf
+> done and register related subdev event, and use the notify
+> interface in the v4l2_device structure to communicate
+> between CSID and VFE driver.
 
 
+Shouldn't it be possible to just have a function to write internally ?
+
+You know the indexes of the CSID -> VFE connection.
+
+The subdev notify is I think not the right fit for this purpose within 
+our driver.
+
+> diff --git a/drivers/media/platform/qcom/camss/camss-csid.h b/drivers/media/platform/qcom/camss/camss-csid.h
+> index fddccb69da13..4a9e5a2d1f92 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csid.h
+> +++ b/drivers/media/platform/qcom/camss/camss-csid.h
+> @@ -147,6 +147,13 @@ struct csid_hw_ops {
+>   	 * @csid: CSID device
+>   	 */
+>   	void (*subdev_init)(struct csid_device *csid);
 > +
-> +		if (IS_ERR(csid->base))
-> +			return PTR_ERR(csid->base);
->   	} else {
->   		csid->base = devm_platform_ioremap_resource_byname(pdev, res->reg[0]);
->   		if (IS_ERR(csid->base))
-> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
-> index 45b3a8e5dea4..f35af0dd2147 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csiphy.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
-> @@ -579,6 +579,7 @@ int msm_csiphy_subdev_init(struct camss *camss,
->   	case CAMSS_845:
->   	case CAMSS_8250:
->   	case CAMSS_8280XP:
-> +	case CAMSS_8550:
->   		csiphy->formats = csiphy_formats_sdm845;
->   		csiphy->nformats = ARRAY_SIZE(csiphy_formats_sdm845);
->   		break;
-> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-> index d875237cf244..ff115c5521c6 100644
-> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
-> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-> @@ -226,6 +226,7 @@ static u32 vfe_src_pad_code(struct vfe_line *line, u32 sink_code,
->   	case CAMSS_845:
->   	case CAMSS_8250:
->   	case CAMSS_8280XP:
-> +	case CAMSS_8550:
->   		switch (sink_code) {
->   		case MEDIA_BUS_FMT_YUYV8_1X16:
->   		{
-> @@ -296,6 +297,10 @@ int vfe_reset(struct vfe_device *vfe)
+> +	/*
+> +	 * event - receive event from parent v4l2 device
+> +	 * @csid: CSID device
+> +	 */
+> +	void (*event)(struct csid_device *csid,
+> +			unsigned int evt_type, void *arg);
+>   };
 >   
->   	reinit_completion(&vfe->reset_complete);
+>   struct csid_device {
+> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.h b/drivers/media/platform/qcom/camss/camss-csiphy.h
+> index c9b7fe82b1f0..ffe1b95eea98 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csiphy.h
+> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.h
+> @@ -61,6 +61,8 @@ struct csiphy_hw_ops {
+>   	void (*lanes_disable)(struct csiphy_device *csiphy,
+>   			      struct csiphy_config *cfg);
+>   	irqreturn_t (*isr)(int irq, void *dev);
+> +	void (*event)(struct csiphy_device *csiphy,
+> +			unsigned int evt_type, void *arg);
+>   };
 >   
-> +	// The reset has been moved to csid in 8550
+>   struct csiphy_device {
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h b/drivers/media/platform/qcom/camss/camss-vfe.h
+> index 0572c9b08e11..9919fe0ff101 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe.h
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe.h
+> @@ -115,6 +115,8 @@ struct vfe_hw_ops {
+>   	int (*vfe_halt)(struct vfe_device *vfe);
+>   	void (*violation_read)(struct vfe_device *vfe);
+>   	void (*vfe_wm_stop)(struct vfe_device *vfe, u8 wm);
+> +	void (*event)(struct vfe_device *vfe,
+> +			unsigned int evt_type, void *arg);
+>   };
+>   
+>   struct vfe_isr_ops {
+> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+> index 1923615f0eea..b57cd25bf6c7 100644
+> --- a/drivers/media/platform/qcom/camss/camss.c
+> +++ b/drivers/media/platform/qcom/camss/camss.c
+> @@ -1904,6 +1904,55 @@ static void camss_genpd_cleanup(struct camss *camss)
+>   	dev_pm_domain_detach(camss->genpd, true);
+>   }
+>   
+> +static void camss_v4l2_subdev_notify(struct v4l2_subdev *sd,
+> +			unsigned int cmd, void *arg)
+> +{
+> +	struct v4l2_device *v4l2_dev = sd->v4l2_dev;
+> +	struct camss *camss = to_camss(v4l2_dev);
+> +	struct vfe_device *vfe;
+> +	struct vfe_line *vfe_line;
+> +	struct csid_device *csid;
+> +	int evt_data = *(int *)arg;
+> +
+> +	if (camss->res->version != CAMSS_8550)
+> +		return;
+> +
+> +	switch (cmd) {
+> +	case NOTIFY_BUF_DONE:
+> +		csid = v4l2_get_subdevdata(sd);
+> +		vfe = &(camss->vfe[csid->id]);
+> +		if (vfe->ops->event)
+> +			vfe->ops->event(vfe,
+> +				NOTIFY_BUF_DONE, (void *)&evt_data);
+> +		break;
+> +
+> +	case NOTIFY_RUP:
+> +		vfe_line = v4l2_get_subdevdata(sd);
+> +		vfe = to_vfe(vfe_line);
+> +		csid = &(camss->csid[vfe->id]);
+> +
+> +		if (csid->ops->event)
+> +			csid->ops->event(csid,
+> +				NOTIFY_RUP, (void *)&evt_data);
+> +		break;
+> +
+> +	case NOTIFY_RUP_CLEAR:
+> +		vfe_line = v4l2_get_subdevdata(sd);
+> +		vfe = to_vfe(vfe_line);
+> +		csid = &(camss->csid[vfe->id]);
+> +
+> +		if (csid->ops->event)
+> +			csid->ops->event(csid,
+> +				NOTIFY_RUP_CLEAR, (void *)&evt_data);
+> +
+> +		break;
+> +
+> +	default:
+> +		dev_err(camss->dev, "Not supported evt type\n");
+> +		break;
+> +	}
+> +}
 
-Please run checkpatch.pl on your code before submission C++ are not allowed.
+I'm really not sure I see a good reason for this.
+
+Why can't we just define calls between vfe and csid similar to
+
+drivers/media/platform/qcom/camss/camss-csid.c:		ret = vfe_get(vfe);
 
 ---
 bod
