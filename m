@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-14670-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2C9FF88153A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Mar 2024 17:09:02 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96BF1881546
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Mar 2024 17:12:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D8A14284430
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Mar 2024 16:09:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B20E11C22C42
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Mar 2024 16:12:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2845554F83;
-	Wed, 20 Mar 2024 16:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20C435474D;
+	Wed, 20 Mar 2024 16:12:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nqFEIgIh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZWeTSntZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CADEE53E13
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Mar 2024 16:08:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D2714F1E5
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Mar 2024 16:12:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710950932; cv=none; b=M3Ugz6ZqOJnzt6bxL9HmEwJTNAg6rc9fUz7lV43GEmDUvliJnOS/4R+7BrS+j5XLS4U5on899lwrUosmJP5Q0BXxiAadqN7hiFqU/qvIEVRr+y0R3hMdECnsp7Gt5kDF33CUXgJT6rDdvPp6s+ruXHFEbWW+Fcdgbgd0tUmYVoQ=
+	t=1710951161; cv=none; b=kRy6olryDXNonHZnRJV1wof/0PnvRkyvqXLy+Wq6IdsX170d1/8JaPHJQItZxkKFAnVsVmyHVKwFw9lusv4d0Des19Dta4QdhD3rmH10oquwdfipt3u1ykH5M2QX8TqaFG/NG/he9Utc1aQpBrpw3octcU/a1Erpy+Tcg6PyTjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710950932; c=relaxed/simple;
-	bh=5mgRIKvZE18i+NU8GUVCCwd9pcBsnNt96OUwKEZvEcY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BPx5pcv9B7NxCmgz9OX2VA9feBYrVAZUpni3fg9L9uf19gh8zGP0gHpTEI6oYqntoG8RbI2KgFWul9ZMYeU0hkZY1TnWUU56P5z/0EP08tkfYCnxKQAZRSQ4R5+rBhYrH5FBALDYb66SvUdT046IKZmT5tFeV5jYrWTZoNDGvJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nqFEIgIh; arc=none smtp.client-ip=209.85.167.54
+	s=arc-20240116; t=1710951161; c=relaxed/simple;
+	bh=91XMpLG2akQ92yHfsX86vnzQBDTtg0DrCMSJa/o9yO4=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=pjga8P1/fAtG9EUIryupn20IZxYwXdZS1Tsk0HGQ0NNe1CeInyWALlq7w+d9YgPA4uHfjQEDmeMY7fAqES7HWoW6jYDAQZnDzFsKjjijlh3H1j5UJ7ioo5vU7gKGrgBVHToDjDlvkfScHmWRRIHXZTQPy1cXqUU/m5ubtxn9glE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZWeTSntZ; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-513da1c1f26so23860e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Mar 2024 09:08:48 -0700 (PDT)
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4146db7e5a0so5540585e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Mar 2024 09:12:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710950927; x=1711555727; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=linaro.org; s=google; t=1710951157; x=1711555957; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=STdKZ1YTCOGuMZ4k+N27m1pIFIyChgbyuE8sqsxHhp0=;
-        b=nqFEIgIhG56J8QSzWhR5Bboyga5u6OXLg7WV9dzZcJbo06rmlCxjpGsCORgAU17Tty
-         yBYHkJmxpbWebpCRyXFGaUZoCrQg/xAhwzMhfS2eXRviZWK4j9w4zUJQf2Uoo/ZoBBGl
-         ipFh9bGBiy1GBRXJj9HzgDBv/RA3SSuzQCQZ5uad1Mb896oukLkUeKcic+hCfb5YxSR9
-         RhUnMIAmc1SYmD/WofH2rvfcrxqZq62zbFSz3vTP4dpW8d8X/Nj454VTHiHadkql8QuS
-         0EWZ3rtk3pdskJ2a+N9dgJEAnyGtx/9DfSV3pAkH5t7EFPZToJ/7Qz6G6RuiBFrCJm0a
-         cHtw==
+        bh=OHaerxnf+Io0STbXSxPOeYL0uihrNa0TldEwjw3BQgY=;
+        b=ZWeTSntZ3C9eDoRi9NgKZjAgmPAHzY6+rinN5GPISYIEw6hya3n6aW1P3tRR6a6qAb
+         FRdCwz87hnV52HKD2YHOwiOekplp/BjbBReBHjx7y8eYpcmnZKu/kwaGNelMbeRY52Ga
+         sfoeBvpFsutZ1PfyjoVEkr/xAbcTnhUzywvxzv2MW/siM+SFwOkx0WBiejUhLzLcgH2m
+         /2dCengCm6jP/WSwS5NTTCENZ0z/zt6QKT0qSQNTZ68lYXEczyxn9QgIbCbbKPk+LR12
+         5+Sb0khCuRE/8lE3IofBAxOQzjMBNq2rIzJ7SXTvyVAuna/9koHt7z9G4ex38xcKcUYl
+         pjzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710950927; x=1711555727;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20230601; t=1710951157; x=1711555957;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=STdKZ1YTCOGuMZ4k+N27m1pIFIyChgbyuE8sqsxHhp0=;
-        b=MYAo8j4M6Ygq2gm3LPZcf/155ZNqMg26+L0p/DQz+E2MDXOU8zDZdv+7SI7Hagvp6e
-         TQEEb9exgRh/WRY4kO/Fnv1hX1GN5iCPtP4DMlNkxNaS9Kz1GD/cpGVwIvCyKfAKgbP8
-         WJbpqLqd//ATuOUsdHGWwCooa6T7z8zzKr4cl1Hqi62mdKY5XGsriTdTbyWHTB3P8EtA
-         WMiO19MWn7SckkACQSzw/4wIyfpIdlDZ0E6LBOPEPYbwkRcDWk0LqIGaGLvTC5PMNME6
-         bkRG8vW1aLhweNCD5YIk5ZrpUS+jrT5j+aBIJTDTapns3cosqyUQbte8w7tTutUBALfM
-         V9kg==
-X-Forwarded-Encrypted: i=1; AJvYcCWlEmxel4m5i65IHY74sOZ8I/ox9Fl+nD8FyVlI47/WrTduGDot97Erw4/j2hnfhxkJAUZuqjNLSlOaPKM/0q36iVbkO+06glwOpEP6Rg==
-X-Gm-Message-State: AOJu0YzsdI+bXf1Q470whiTdL6dGjbj2WYVjLCJQVvOmYdJDBBIgOujP
-	ZdPuFLMDHXWB2fSijCjkZ7xXE1u91qlHMT0nMuNn6eOoCvv17s0SNFHwTZ/jh4ziPjrgGBWn9p8
-	y
-X-Google-Smtp-Source: AGHT+IGvoLccX5vlTEu8f2RKp23Iekbq6/tDhDQls/lFwY6VUTEOInWbp4R8IY6fxygIl2uhGt5qqQ==
-X-Received: by 2002:a05:6512:4844:b0:513:c8b8:aad2 with SMTP id ep4-20020a056512484400b00513c8b8aad2mr12403529lfb.57.1710950926117;
-        Wed, 20 Mar 2024 09:08:46 -0700 (PDT)
+        bh=OHaerxnf+Io0STbXSxPOeYL0uihrNa0TldEwjw3BQgY=;
+        b=m5R9H748TCvga2Xw0AdODOUngkBl9xIu2sxkq5EmbTav9p6Tn0ts3x37IiZ5RlUnKL
+         BTWqqfzN4mb84shI/tFxkF74yFBrBtYkqaeTS89P1UroqCG5hUocfuwjzHoSjvgM/7PK
+         5UfvsFpMFFd+3FPiCr62DPy31T7MtKyXm0Jir3UuNCOPFUDHmKsIvOceG39PO50thXrg
+         +Tlprus4QehnFmQ0essBeElQmfok23JcKdygAUNziV92kWfRx/g9jLstT5WgdxiojMcC
+         C6e4T0UmZXdHiYoeOVmNraJZ1253Bq/AfMGrKVHNHX0FWZkYsZW/6wI8+0DJG4oFqc4v
+         mULw==
+X-Forwarded-Encrypted: i=1; AJvYcCXKzwXc66ttn9XtyDVi+ujxVjHZhfhTR9AosJi9JjJJUDxY5szTBzKyfCsFlhqhrQ1m5d4OofiRxBPDNHj0LFLpZ6z4zmaJ3Yk51yubag==
+X-Gm-Message-State: AOJu0YweOV7i7kZDD/fsa2zjcnlFuft/16O/lQhjdMx4VdekJtFZoyLC
+	PFp9Ky+/RQUeINuqkqY/Xw1fgfF6eluATkj4++BuG4L3gC49RXgyG2SFFpGUHm0=
+X-Google-Smtp-Source: AGHT+IGUmqwc0fjYKojLrdrN0jIAX9AbIj172jwSl+A63IlFH6oYl/Bmn8K+Tv5YFkUwdiy9Xj10ig==
+X-Received: by 2002:a05:600c:4fc8:b0:414:6172:8366 with SMTP id o8-20020a05600c4fc800b0041461728366mr5260918wmq.15.1710951157618;
+        Wed, 20 Mar 2024 09:12:37 -0700 (PDT)
 Received: from [192.168.0.102] ([176.61.106.68])
-        by smtp.gmail.com with ESMTPSA id d10-20020adfe88a000000b0033b6e26f0f9sm14924639wrm.42.2024.03.20.09.08.45
+        by smtp.gmail.com with ESMTPSA id by19-20020a056000099300b0034174875850sm7821180wrb.70.2024.03.20.09.12.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Mar 2024 09:08:45 -0700 (PDT)
-Message-ID: <21d2139f-8547-466a-9be1-fbeae1194869@linaro.org>
-Date: Wed, 20 Mar 2024 16:08:44 +0000
+        Wed, 20 Mar 2024 09:12:37 -0700 (PDT)
+Message-ID: <bbbb5983-f870-48ce-ab7d-c424266e78d9@linaro.org>
+Date: Wed, 20 Mar 2024 16:12:36 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,144 +76,184 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/8] media: qcom: camss: Add subdev notify support
+Subject: Re: [PATCH v2 5/8] media: qcom: camss: Add CSID gen3 driver
 Content-Language: en-US
-To: Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, bryan.odonoghue@linaro.org, andersson@kernel.org,
- konrad.dybcio@linaro.org, mchehab@kernel.org, quic_yon@quicinc.com
-Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20240320141136.26827-1-quic_depengs@quicinc.com>
- <20240320141136.26827-3-quic_depengs@quicinc.com>
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20240320141136.26827-3-quic_depengs@quicinc.com>
+To: Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, andersson@kernel.org, konrad.dybcio@linaro.org,
+ mchehab@kernel.org, quic_yon@quicinc.com
+Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org,
+ Gjorgji Rosikopulos <quic_grosikop@quicinc.com>
+References: <20240320141136.26827-1-quic_depengs@quicinc.com>
+ <20240320141136.26827-6-quic_depengs@quicinc.com>
+ <b542f9a1-2053-4431-832e-5510e8d8220e@linaro.org>
+In-Reply-To: <b542f9a1-2053-4431-832e-5510e8d8220e@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 20/03/2024 14:11, Depeng Shao wrote:
-> From: Yongsheng Li <quic_yon@quicinc.com>
-> 
-> The buf done irq and register update register are moved
-> to CSID in SM8550, so but the write master configuration
-> in VFE, in case adapt existing code logic. So add buf
-> done and register related subdev event, and use the notify
-> interface in the v4l2_device structure to communicate
-> between CSID and VFE driver.
+On 20/03/2024 15:40, Bryan O'Donoghue wrote:
+> +static const struct csid_format csid_formats[] = {
+> +    {
+> +        MEDIA_BUS_FMT_UYVY8_1X16,
+> +        DATA_TYPE_YUV422_8BIT,
+> +        DECODE_FORMAT_UNCOMPRESSED_8_BIT,
+> +        8,
+> +        2,
+> +    },
+> +    {
+> +        MEDIA_BUS_FMT_VYUY8_1X16,
+> +        DATA_TYPE_YUV422_8BIT,
+> +        DECODE_FORMAT_UNCOMPRESSED_8_BIT,
+> +        8,
+> +        2,
+> +    },
+> +    {
+> +        MEDIA_BUS_FMT_YUYV8_1X16,
+> +        DATA_TYPE_YUV422_8BIT,
+> +        DECODE_FORMAT_UNCOMPRESSED_8_BIT,
+> +        8,
+> +        2,
+> +    },
+> +    {
+> +        MEDIA_BUS_FMT_YVYU8_1X16,
+> +        DATA_TYPE_YUV422_8BIT,
+> +        DECODE_FORMAT_UNCOMPRESSED_8_BIT,
+> +        8,
+> +        2,
+> +    },
+> +    {
+> +        MEDIA_BUS_FMT_SBGGR8_1X8,
+> +        DATA_TYPE_RAW_8BIT,
+> +        DECODE_FORMAT_UNCOMPRESSED_8_BIT,
+> +        8,
+> +        1,
+> +    },
+> +    {
+> +        MEDIA_BUS_FMT_SGBRG8_1X8,
+> +        DATA_TYPE_RAW_8BIT,
+> +        DECODE_FORMAT_UNCOMPRESSED_8_BIT,
+> +        8,
+> +        1,
+> +    },
+> +    {
+> +        MEDIA_BUS_FMT_SGRBG8_1X8,
+> +        DATA_TYPE_RAW_8BIT,
+> +        DECODE_FORMAT_UNCOMPRESSED_8_BIT,
+> +        8,
+> +        1,
+> +    },
+> +    {
+> +        MEDIA_BUS_FMT_SRGGB8_1X8,
+> +        DATA_TYPE_RAW_8BIT,
+> +        DECODE_FORMAT_UNCOMPRESSED_8_BIT,
+> +        8,
+> +        1,
+> +    },
+> +    {
+> +        MEDIA_BUS_FMT_SBGGR10_1X10,
+> +        DATA_TYPE_RAW_10BIT,
+> +        DECODE_FORMAT_UNCOMPRESSED_10_BIT,
+> +        10,
+> +        1,
+> +    },
+> +    {
+> +        MEDIA_BUS_FMT_SGBRG10_1X10,
+> +        DATA_TYPE_RAW_10BIT,
+> +        DECODE_FORMAT_UNCOMPRESSED_10_BIT,
+> +        10,
+> +        1,
+> +    },
+> +    {
+> +        MEDIA_BUS_FMT_SGRBG10_1X10,
+> +        DATA_TYPE_RAW_10BIT,
+> +        DECODE_FORMAT_UNCOMPRESSED_10_BIT,
+> +        10,
+> +        1,
+> +    },
+> +    {
+> +        MEDIA_BUS_FMT_SRGGB10_1X10,
+> +        DATA_TYPE_RAW_10BIT,
+> +        DECODE_FORMAT_UNCOMPRESSED_10_BIT,
+> +        10,
+> +        1,
+> +    },
+> +    {
+> +        MEDIA_BUS_FMT_Y8_1X8,
+> +        DATA_TYPE_RAW_8BIT,
+> +        DECODE_FORMAT_UNCOMPRESSED_8_BIT,
+> +        8,
+> +        1,
+> +    },
+> +    {
+> +        MEDIA_BUS_FMT_Y10_1X10,
+> +        DATA_TYPE_RAW_10BIT,
+> +        DECODE_FORMAT_UNCOMPRESSED_10_BIT,
+> +        10,
+> +        1,
+> +    },
+> +    {
+> +        MEDIA_BUS_FMT_SBGGR12_1X12,
+> +        DATA_TYPE_RAW_12BIT,
+> +        DECODE_FORMAT_UNCOMPRESSED_12_BIT,
+> +        12,
+> +        1,
+> +    },
+> +    {
+> +        MEDIA_BUS_FMT_SGBRG12_1X12,
+> +        DATA_TYPE_RAW_12BIT,
+> +        DECODE_FORMAT_UNCOMPRESSED_12_BIT,
+> +        12,
+> +        1,
+> +    },
+> +    {
+> +        MEDIA_BUS_FMT_SGRBG12_1X12,
+> +        DATA_TYPE_RAW_12BIT,
+> +        DECODE_FORMAT_UNCOMPRESSED_12_BIT,
+> +        12,
+> +        1,
+> +    },
+> +    {
+> +        MEDIA_BUS_FMT_SRGGB12_1X12,
+> +        DATA_TYPE_RAW_12BIT,
+> +        DECODE_FORMAT_UNCOMPRESSED_12_BIT,
+> +        12,
+> +        1,
+> +    },
+> +    {
+> +        MEDIA_BUS_FMT_SBGGR14_1X14,
+> +        DATA_TYPE_RAW_14BIT,
+> +        DECODE_FORMAT_UNCOMPRESSED_14_BIT,
+> +        14,
+> +        1,
+> +    },
+> +    {
+> +        MEDIA_BUS_FMT_SGBRG14_1X14,
+> +        DATA_TYPE_RAW_14BIT,
+> +        DECODE_FORMAT_UNCOMPRESSED_14_BIT,
+> +        14,
+> +        1,
+> +    },
+> +    {
+> +        MEDIA_BUS_FMT_SGRBG14_1X14,
+> +        DATA_TYPE_RAW_14BIT,
+> +        DECODE_FORMAT_UNCOMPRESSED_14_BIT,
+> +        14,
+> +        1,
+> +    },
+> +    {
+> +        MEDIA_BUS_FMT_SRGGB14_1X14,
+> +        DATA_TYPE_RAW_14BIT,
+> +        DECODE_FORMAT_UNCOMPRESSED_14_BIT,
+> +        14,
+> +        1,
+> +    },
+> +};
 
+Also please consider including/reviewing Gjorgji's patchset which 
+reworks the declaration of resources.
 
-Shouldn't it be possible to just have a function to write internally ?
-
-You know the indexes of the CSID -> VFE connection.
-
-The subdev notify is I think not the right fit for this purpose within 
-our driver.
-
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid.h b/drivers/media/platform/qcom/camss/camss-csid.h
-> index fddccb69da13..4a9e5a2d1f92 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid.h
-> +++ b/drivers/media/platform/qcom/camss/camss-csid.h
-> @@ -147,6 +147,13 @@ struct csid_hw_ops {
->   	 * @csid: CSID device
->   	 */
->   	void (*subdev_init)(struct csid_device *csid);
-> +
-> +	/*
-> +	 * event - receive event from parent v4l2 device
-> +	 * @csid: CSID device
-> +	 */
-> +	void (*event)(struct csid_device *csid,
-> +			unsigned int evt_type, void *arg);
->   };
->   
->   struct csid_device {
-> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.h b/drivers/media/platform/qcom/camss/camss-csiphy.h
-> index c9b7fe82b1f0..ffe1b95eea98 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csiphy.h
-> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.h
-> @@ -61,6 +61,8 @@ struct csiphy_hw_ops {
->   	void (*lanes_disable)(struct csiphy_device *csiphy,
->   			      struct csiphy_config *cfg);
->   	irqreturn_t (*isr)(int irq, void *dev);
-> +	void (*event)(struct csiphy_device *csiphy,
-> +			unsigned int evt_type, void *arg);
->   };
->   
->   struct csiphy_device {
-> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h b/drivers/media/platform/qcom/camss/camss-vfe.h
-> index 0572c9b08e11..9919fe0ff101 100644
-> --- a/drivers/media/platform/qcom/camss/camss-vfe.h
-> +++ b/drivers/media/platform/qcom/camss/camss-vfe.h
-> @@ -115,6 +115,8 @@ struct vfe_hw_ops {
->   	int (*vfe_halt)(struct vfe_device *vfe);
->   	void (*violation_read)(struct vfe_device *vfe);
->   	void (*vfe_wm_stop)(struct vfe_device *vfe, u8 wm);
-> +	void (*event)(struct vfe_device *vfe,
-> +			unsigned int evt_type, void *arg);
->   };
->   
->   struct vfe_isr_ops {
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> index 1923615f0eea..b57cd25bf6c7 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -1904,6 +1904,55 @@ static void camss_genpd_cleanup(struct camss *camss)
->   	dev_pm_domain_detach(camss->genpd, true);
->   }
->   
-> +static void camss_v4l2_subdev_notify(struct v4l2_subdev *sd,
-> +			unsigned int cmd, void *arg)
-> +{
-> +	struct v4l2_device *v4l2_dev = sd->v4l2_dev;
-> +	struct camss *camss = to_camss(v4l2_dev);
-> +	struct vfe_device *vfe;
-> +	struct vfe_line *vfe_line;
-> +	struct csid_device *csid;
-> +	int evt_data = *(int *)arg;
-> +
-> +	if (camss->res->version != CAMSS_8550)
-> +		return;
-> +
-> +	switch (cmd) {
-> +	case NOTIFY_BUF_DONE:
-> +		csid = v4l2_get_subdevdata(sd);
-> +		vfe = &(camss->vfe[csid->id]);
-> +		if (vfe->ops->event)
-> +			vfe->ops->event(vfe,
-> +				NOTIFY_BUF_DONE, (void *)&evt_data);
-> +		break;
-> +
-> +	case NOTIFY_RUP:
-> +		vfe_line = v4l2_get_subdevdata(sd);
-> +		vfe = to_vfe(vfe_line);
-> +		csid = &(camss->csid[vfe->id]);
-> +
-> +		if (csid->ops->event)
-> +			csid->ops->event(csid,
-> +				NOTIFY_RUP, (void *)&evt_data);
-> +		break;
-> +
-> +	case NOTIFY_RUP_CLEAR:
-> +		vfe_line = v4l2_get_subdevdata(sd);
-> +		vfe = to_vfe(vfe_line);
-> +		csid = &(camss->csid[vfe->id]);
-> +
-> +		if (csid->ops->event)
-> +			csid->ops->event(csid,
-> +				NOTIFY_RUP_CLEAR, (void *)&evt_data);
-> +
-> +		break;
-> +
-> +	default:
-> +		dev_err(camss->dev, "Not supported evt type\n");
-> +		break;
-> +	}
-> +}
-
-I'm really not sure I see a good reason for this.
-
-Why can't we just define calls between vfe and csid similar to
-
-drivers/media/platform/qcom/camss/camss-csid.c:		ret = vfe_get(vfe);
+https://lore.kernel.org/lkml/20240319173935.481-4-quic_grosikop@quicinc.com/T/
 
 ---
 bod
