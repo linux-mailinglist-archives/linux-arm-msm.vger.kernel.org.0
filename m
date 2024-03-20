@@ -1,116 +1,237 @@
-Return-Path: <linux-arm-msm+bounces-14634-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14635-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53831880F17
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Mar 2024 10:52:38 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 084A1880F3A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Mar 2024 11:04:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0A6561F22F16
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Mar 2024 09:52:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7170E1F233DC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Mar 2024 10:04:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86F6B3BB48;
-	Wed, 20 Mar 2024 09:52:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A27163BBE7;
+	Wed, 20 Mar 2024 10:04:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FOGHfPBb"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HnixBj/W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E38C3A1DD;
-	Wed, 20 Mar 2024 09:52:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F9C38F82;
+	Wed, 20 Mar 2024 10:04:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710928352; cv=none; b=c2x2rROwZxRQagYkHx7T7jsHnKPUbdI9LAY6Pkr9G0blIC4jGE/G3BWmRCCgbxP+7Mq8jJml5BQmGRRvGK16wLeBxW5xHCxT8GVcIU0yYKV3tte60F5fuJ4sAJtJxgl0c/F9oobxyiFwo80EOmjqYcdPv1YcbzLRUcLiYrz0amQ=
+	t=1710929062; cv=none; b=NTiu1wpJnNgTlNLuQ/iltxUkQqHsraiMmXIDsKbTSGbzg9h6UHvw3RF7DDjGmLWDyV76xiRcWojnVLQZ9fJ6MDIH2WAVgCGKBsqw+kFf52QIwaz1FfJS9rggKHMPBqKpNBcSTncBNujogd/xqFy48IyykyhHwCyr8Eiq8fcoVFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710928352; c=relaxed/simple;
-	bh=xL/Cti2wD9PvualWZlfHsEhTv0Hvo2bjVwZkw7Orp2o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RsVXH6qf+3ESvTzsd1CN5HitWgGcZaTVe3JSQrCcrAUAUwTSILGYsGfYL6zBTZvudSxekhIAI1EVmvIkvjYORs8ap4NiC0ea0EGjYPG3Oe+0tk85SNydyQDpuJQwuktNJ6/rV4sKCsJqKNiXct3UjO9UktGA0HqESMlECsyzCAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FOGHfPBb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3B5CC433C7;
-	Wed, 20 Mar 2024 09:52:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710928350;
-	bh=xL/Cti2wD9PvualWZlfHsEhTv0Hvo2bjVwZkw7Orp2o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=FOGHfPBbGfB2A9VwZ6/lkVr2qzrakEJSnm2UX4WKWqVr+YtCAzq9NVQeLEGnZOrpE
-	 9eLNt1FMoX/EFATPeRyzOcrqx5bBOH30SmYb05Odi/Ze2NOOEk61+pdnnPamFXjg45
-	 y/pKmHT11MiSDQp8MEO2btjKDS7+kJv8e4X4EkemumRyvA3uTEzXEqioSXWrHJ7mim
-	 ovOnHxhaaAjNtFHVyn4doyeCcqClkFvBbgLC0T5F9ZcI3HwZjtrbIQhUjkIZqCpnLU
-	 nzG1xvRx5lTqhf82FEJIGJGC/ZyYSF4+uZ3icMIv6Sn+eTo0iix7A64EmGYAySmr1Q
-	 ia+HiodvPjw3w==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rmsce-000000004Kr-3pt5;
-	Wed, 20 Mar 2024 10:52:37 +0100
-Date: Wed, 20 Mar 2024 10:52:36 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH v4 0/5] arm64: dts: qcom: sc8280xp: PCIe fixes
- and GICv3 ITS enable
-Message-ID: <Zfqx5IP__IV_hjoT@hovoldconsulting.com>
-References: <20240306095651.4551-1-johan+linaro@kernel.org>
- <171081652637.198276.6219023769904423414.b4-ty@kernel.org>
- <Zfk98hYPn7kiFGkt@hovoldconsulting.com>
- <9b475e13-96b9-4bce-8041-e0d8e5a332a1@linaro.org>
- <Zfqb8jPK50vlqu5Q@hovoldconsulting.com>
- <baf9c1bd-84ef-4ecb-b229-51a83fe82c3f@linaro.org>
- <ZfqhCKoEL4XGRs7T@hovoldconsulting.com>
- <cc5d4fc1-14e7-4a73-80bf-6375e44162a3@linaro.org>
+	s=arc-20240116; t=1710929062; c=relaxed/simple;
+	bh=nIqkjMSHV9EcCxgnfZD3kI/SawCNOWAjVuJ+etAG/KE=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=P0yYQGCqX73ASQMLDp8ZAoSyqnCAYs0i3hsPDbE90R78811JMBmJhpSQgG1zKYRsybF9ZQ3P7DercRoQJtsyAITbisHaX+48iBSaBszPw/y+TFy48RBdjXO1Ic4mlE+Vx3ETPZeTj7DgBT9HF7d23nHFi63ioZ+CAphn5PkTg/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HnixBj/W; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42K7dJNU023914;
+	Wed, 20 Mar 2024 10:04:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=NSwShFQocCiNdxEXdDTWS
+	rFKKz5ddmj/SrKnvqOPygI=; b=HnixBj/WDkUf8h0JAZxntqc7AuKKwlmDNwhiG
+	WxDg9KO1gk2y9llKT4/0zEfn+AWy5BQY24HmSmvG3QYrPIdKGhOsuorIrVzm03wF
+	s8IHZeBOclGeD3su3QcMJyLqo65mV+76NRHJ3OcbMENv9B35ZYfnblWxYrz2ZNEU
+	x+g+VLaptQO8Uzjl2ZgoPppSyK9rHal7Xu0pGZNfac3HR7r/u9ggCRhWuoOre+Rx
+	xsmVr2XmiNa9W8U7betciiLFruNUXMEISu5YsUnuUb89LGHB3+SgaO6gO36GoEqL
+	FALi0uJdJw+GqmkouU74STgpLbnl+eoYZlRppE6EUsMBvzejw==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wypxq0ub4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 Mar 2024 10:04:04 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42KA43mK029663
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 Mar 2024 10:04:03 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Wed, 20 Mar 2024 03:04:00 -0700
+Date: Wed, 20 Mar 2024 15:33:56 +0530
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 03/31] arm64: dts: qcom: ipq9574-*: Remove thermal zone
+ polling delays
+Message-ID: <Zfq0jF93iJVgd1+R@hu-varada-blr.qualcomm.com>
+References: <20240319-topic-msm-polling-cleanup-v1-0-e0aee1dbcd78@linaro.org>
+ <20240319-topic-msm-polling-cleanup-v1-3-e0aee1dbcd78@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <cc5d4fc1-14e7-4a73-80bf-6375e44162a3@linaro.org>
+In-Reply-To: <20240319-topic-msm-polling-cleanup-v1-3-e0aee1dbcd78@linaro.org>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ogZc7Fp0078mp0OWJuL9-WjMhYyv9J7V
+X-Proofpoint-GUID: ogZc7Fp0078mp0OWJuL9-WjMhYyv9J7V
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-20_06,2024-03-18_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ lowpriorityscore=0 phishscore=0 clxscore=1011 malwarescore=0
+ priorityscore=1501 mlxlogscore=865 adultscore=0 suspectscore=0 mlxscore=0
+ bulkscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2403140001 definitions=main-2403200078
 
-On Wed, Mar 20, 2024 at 10:16:16AM +0100, Krzysztof Kozlowski wrote:
-> On 20/03/2024 09:40, Johan Hovold wrote:
-
-> > At the time there was still hope that there may be an rc8, and the patch
-> > in question had been used by a large number of X13s users for several
-> > weeks, which is a lot more testing than the average Qualcomm patch
-> > receives, whether it's in linux-next or not.
+On Tue, Mar 19, 2024 at 05:13:33PM +0100, Konrad Dybcio wrote:
+> All of the thermal zone suppliers are interrupt-driven, remove the
+> bogus and unnecessary polling that only wastes CPU time.
 > 
-> OK, it does solve some parts of our discussion but does not solve my
-> earlier comment: Fixes should be separate series. Certain folks have
-> quite strict requirement on this. Try sending a fix with non-fix
-> (depending on fix somehow like here) to Mark Brown. He has even template
-> for such case...
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 26 --------------------------
+>  1 file changed, 26 deletions(-)
 
-That's not a general rule at all.
+Reviewed-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 
-> > And patch 5 depends on the earlier patches in the series so it belongs
-> > in the series, which was also initially posted long before the merge
-> > window.
+Thanks
+Varada
+
 > 
-> The dependency is might not be good enough reason to combine fixes and
-> non-fixes into one series. Dependency should be explained (in 5th
-> patch), but it's maintainer's judgement and job to handle this.
-
-FFS, I'm posting a series adding a new feature, which depends on first
-addressing a few related bugs. I post everything together so that it can
-be evaluated and tested together. That's perfectly fine, and not that
-different from how we post driver and dts changes in one series to
-facilitate review. Some maintainers don't like that either, then we deal
-with that.
-
-Johan
+> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> index 7f2e5cbf3bbb..98c5623f4391 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> @@ -749,8 +749,6 @@ frame@b128000 {
+>  
+>  	thermal-zones {
+>  		nss-top-thermal {
+> -			polling-delay-passive = <0>;
+> -			polling-delay = <0>;
+>  			thermal-sensors = <&tsens 3>;
+>  
+>  			trips {
+> @@ -763,8 +761,6 @@ nss-top-critical {
+>  		};
+>  
+>  		ubi-0-thermal {
+> -			polling-delay-passive = <0>;
+> -			polling-delay = <0>;
+>  			thermal-sensors = <&tsens 4>;
+>  
+>  			trips {
+> @@ -777,8 +773,6 @@ ubi_0-critical {
+>  		};
+>  
+>  		ubi-1-thermal {
+> -			polling-delay-passive = <0>;
+> -			polling-delay = <0>;
+>  			thermal-sensors = <&tsens 5>;
+>  
+>  			trips {
+> @@ -791,8 +785,6 @@ ubi_1-critical {
+>  		};
+>  
+>  		ubi-2-thermal {
+> -			polling-delay-passive = <0>;
+> -			polling-delay = <0>;
+>  			thermal-sensors = <&tsens 6>;
+>  
+>  			trips {
+> @@ -805,8 +797,6 @@ ubi_2-critical {
+>  		};
+>  
+>  		ubi-3-thermal {
+> -			polling-delay-passive = <0>;
+> -			polling-delay = <0>;
+>  			thermal-sensors = <&tsens 7>;
+>  
+>  			trips {
+> @@ -819,8 +809,6 @@ ubi_3-critical {
+>  		};
+>  
+>  		cpuss0-thermal {
+> -			polling-delay-passive = <0>;
+> -			polling-delay = <0>;
+>  			thermal-sensors = <&tsens 8>;
+>  
+>  			trips {
+> @@ -833,8 +821,6 @@ cpu-critical {
+>  		};
+>  
+>  		cpuss1-thermal {
+> -			polling-delay-passive = <0>;
+> -			polling-delay = <0>;
+>  			thermal-sensors = <&tsens 9>;
+>  
+>  			trips {
+> @@ -847,8 +833,6 @@ cpu-critical {
+>  		};
+>  
+>  		cpu0-thermal {
+> -			polling-delay-passive = <0>;
+> -			polling-delay = <0>;
+>  			thermal-sensors = <&tsens 10>;
+>  
+>  			trips {
+> @@ -877,8 +861,6 @@ map0 {
+>  		};
+>  
+>  		cpu1-thermal {
+> -			polling-delay-passive = <0>;
+> -			polling-delay = <0>;
+>  			thermal-sensors = <&tsens 11>;
+>  
+>  			trips {
+> @@ -907,8 +889,6 @@ map0 {
+>  		};
+>  
+>  		cpu2-thermal {
+> -			polling-delay-passive = <0>;
+> -			polling-delay = <0>;
+>  			thermal-sensors = <&tsens 12>;
+>  
+>  			trips {
+> @@ -937,8 +917,6 @@ map0 {
+>  		};
+>  
+>  		cpu3-thermal {
+> -			polling-delay-passive = <0>;
+> -			polling-delay = <0>;
+>  			thermal-sensors = <&tsens 13>;
+>  
+>  			trips {
+> @@ -967,8 +945,6 @@ map0 {
+>  		};
+>  
+>  		wcss-phyb-thermal {
+> -			polling-delay-passive = <0>;
+> -			polling-delay = <0>;
+>  			thermal-sensors = <&tsens 14>;
+>  
+>  			trips {
+> @@ -981,8 +957,6 @@ wcss_phyb-critical {
+>  		};
+>  
+>  		top-glue-thermal {
+> -			polling-delay-passive = <0>;
+> -			polling-delay = <0>;
+>  			thermal-sensors = <&tsens 15>;
+>  
+>  			trips {
+> 
+> -- 
+> 2.40.1
+> 
+> 
 
