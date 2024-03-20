@@ -1,133 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-14612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57985880861
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Mar 2024 01:06:09 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7879880868
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Mar 2024 01:12:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1FCC71C22252
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Mar 2024 00:06:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7D9EB1F2357F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Mar 2024 00:12:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B62A2384;
-	Wed, 20 Mar 2024 00:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD19E384;
+	Wed, 20 Mar 2024 00:11:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eBkPz22e"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FBmv1DkD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459B918E;
-	Wed, 20 Mar 2024 00:06:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B37B29A9;
+	Wed, 20 Mar 2024 00:11:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710893163; cv=none; b=X/iwiR777lPPCbjKR8YEBft7wsYnj6zLmYHNDIYlgAwwBjLvbNMCj+YS5vFLTyzWDWg/ZjIF2Gk4fbO0cRBN7ymkeqtQbLv22ulS820UcSE6q/EVM1FHsyoEP4IfvUn9V7qG63/UUL0d3hdKsX28AwDBA1TMCGu9khvC99B17kY=
+	t=1710893518; cv=none; b=bAOVpxbgkRJX5NAsmbaw0cMqkHcXg8JErDJn58H+0W7u0VPyHOmnjkHNpMSXY0umTIbQariXINE3LLfv/h1SmKtNdEaFYceAxxsI8wkTb9qsowY37lqXEtV2BZb9Tv0M+i3aVhSejaYnKgN+JNZRanUpb9ifnQQkTmAyJ2/za48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710893163; c=relaxed/simple;
-	bh=jD14SSlcihd7H1ulYAUgfj0jcPE3SXwIMEfiqvF/DOA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=nufi6YhhkleuXiqeJEgLsG1uSMVq61DmSgullN1VmkYZbvjOxWi6aEGPLzLbojId+Nu0xCMBNpWc6pUq79F98Oy/8JPhr5cFYOFR9XS1YoKFIS8H0j4Hc+oYQj5McP36lZhufezZUbR/SEW31RhXuodXQ2oGszA+rqN6Ds1JYGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eBkPz22e; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42K00E7N015802;
-	Wed, 20 Mar 2024 00:05:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:date:subject:mime-version:content-type
-	:content-transfer-encoding:message-id:to:cc; s=qcppdkim1; bh=dAq
-	aOTSXRNlp94sBryrgCs3OcYOIXxjtnBVhWqYUlOs=; b=eBkPz22e6AWeLaqS2hy
-	kQyQPFXBzRmuvRwVWZgmmIoYdG6i0S+1rjprIzecjbyBe92Fu6Q5MoUDMnMTO5wN
-	pxZYz1Y+OjXvAMdFaZIQS8nKWTLL9+WgvEYWz5k1q0hbJqkUpgfwrTJhpUHmgFg6
-	XP5S5hWB4xQyPs8xpBGz3v4surGa0PtHXC5JXAsOgqx5EWoLwKfWu8EajxRNb3oI
-	0LRdHziy7tN6ZRaHdTuaJD6a7ytSMj2rLQcOBjysUWyBkTZojB5kEJrnf0R3MCCj
-	5QycIfIv/TvGME/8LMi6YlTkIxp38ue6dzwym/OEzkp+yWsWAkRqrQW7aArlfsWn
-	7yQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wy7hy2270-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Mar 2024 00:05:56 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42K05ufu004964
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Mar 2024 00:05:56 GMT
-Received: from [169.254.0.1] (10.49.16.6) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 19 Mar
- 2024 17:05:55 -0700
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-Date: Tue, 19 Mar 2024 17:05:55 -0700
-Subject: [PATCH] MAINTAINER: Include linux-arm-msm for Qualcomm RTC patches
+	s=arc-20240116; t=1710893518; c=relaxed/simple;
+	bh=tT/cnq29qDS361LtzVLG3+TjD7UVyvgFr5D6DtgnviA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=vEjI12F1DaaBJfWdbdF7eiriolBfXd2BQrkXnLS348yNaEyjN0XNTW3cKsJuo+Jhg66NU47nJOuIDoy9nWP8mZbDgpYVg9SUAA6heb80uWi1GKTrFWd43TR+znhutgYePb6jrswEIQZ21YOtzi+qOGJR+e6xfIRGpESswWrftv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FBmv1DkD; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-41462295004so12199095e9.0;
+        Tue, 19 Mar 2024 17:11:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710893515; x=1711498315; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=s5UeCuP+rHqrtuTgJs0v1PQXUHTqmsrEuVFHCUle14o=;
+        b=FBmv1DkDhrVDBdi9RyurOfG+9db0yxQQ4e4Ir0e+h4lQl0wcbANLE/7W4VW94yUtMU
+         37HhmZvDx2mgAQkvDo4V2MDdylidsbrxTgW8JBugdKLY5m6Resb6pEh7n1xed24V7lpq
+         OvXIZdJT2D9TcsfWeRWejyTmlhi8JgOvLEkL2eoYxfI7m0tPK6qy0COsdRjFOiSLHHQ9
+         tENer/uf4De+SNsZb/1/BkTXcNyjRIaH9fV1FLscvjYqS/HtkQMkeFuYXjbr+UdyasS5
+         aQQNf+iv3urA5dYeHT9Rs1aAO+x0dsJnVWeHRV+xcAlsfSuhQ9VKOH7QKcCOy3Y/6HRR
+         KLdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710893515; x=1711498315;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=s5UeCuP+rHqrtuTgJs0v1PQXUHTqmsrEuVFHCUle14o=;
+        b=kGnbOoRZwzVxWPsdw2QvfR6z9/8Gds5Q5hxRZyMi8A7LpvPN9N42gjm5M4WXSWm9bQ
+         crd/u399iSOG54lS2TouACsYoB+narTE6SdYHjuFaQY11wROwzxZ+wbz2gvQDMnAAFoe
+         hn1N9VUENloqjOVL99p4ClIZaIhcWPqGjEIovA5KJ5aTr1fkliCJpHtl5dn5d5ed2uG1
+         se9ayI80FmCy/AVsYvo9XJlmwiuLmZbeHppGa/mJd85WmUxq/f+g3ulkSNLr+FhYL4ZR
+         NcRxi93wBWfE2JS/xALNjeyDHwgj5Sal9TYml9Du4o8zfkBqx+i2o9LyCcJBDViLUquK
+         Or/Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVxSszq1F9tjY3N0UGWwVdDMhULL1wqwy/bq9kmUNqDV4UDcKJFQyzVMIPjnLxtJZoNHNc/hcXy+8ZH+PSwrQz83COJ+AUqcb0CqZVBfA2n64hu+L7rGOUDImQfH6OYrcyLrR8wAqliJiYENkqyDtLZ25TsgzZZ1vSNy5nE3ds6P5ydMw==
+X-Gm-Message-State: AOJu0YwDwi5l7aNkGLA2dNDJUXkeJktKHR1JMe4Sd8gEaeQ+KawBtvBX
+	GdZtNIUoYgFqfZs2VYn3+mX7+FMOZGrRGtkQsn/n06XjLRgpOvWs
+X-Google-Smtp-Source: AGHT+IH3ETbAdh9odNtGmgi5+pc37TVausHqIdd+KaNxNGb33DnpvHbi2eNlp3wRouIqKjFQ5anQpA==
+X-Received: by 2002:a05:600c:3b0a:b0:414:cc0:e4d6 with SMTP id m10-20020a05600c3b0a00b004140cc0e4d6mr5937225wms.26.1710893515176;
+        Tue, 19 Mar 2024 17:11:55 -0700 (PDT)
+Received: from localhost.localdomain (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
+        by smtp.googlemail.com with ESMTPSA id f20-20020a05600c155400b00413eedd36a4sm371478wmg.39.2024.03.19.17.11.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Mar 2024 17:11:54 -0700 (PDT)
+From: Christian Marangi <ansuelsmth@gmail.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Richard Weinberger <richard@nod.at>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+	Md Sadre Alam <quic_mdalam@quicinc.com>,
+	linux-mtd@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Christian Marangi <ansuelsmth@gmail.com>,
+	stable@vger.kernel.org
+Subject: [PATCH] mtd: rawnand: qcom: Fix broken misc_cmd_type in exec_op
+Date: Wed, 20 Mar 2024 01:11:39 +0100
+Message-ID: <20240320001141.16560-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20240319-maintainer-msm-add-rtc-v1-1-3a4f7d41b4d4@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAGIo+mUC/x2MuwqAMAwAf0UyG2i1Pn9FHKqNmqFVUhFB/HeLw
- w033D0QSZgi9NkDQhdH3kMSnWcwbzashOySQ6EKo0rdobcczgQJ+ujROodyzlirqTFl63RFBlJ
- 8CC18/+NhfN8PC1QokGgAAAA=
-To: Alexandre Belloni <alexandre.belloni@bootlin.com>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-rtc@vger.kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Bjorn
- Andersson" <andersson@kernel.org>,
-        Bjorn Andersson
-	<quic_bjorande@quicinc.com>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1710893155; l=843;
- i=quic_bjorande@quicinc.com; s=20230915; h=from:subject:message-id;
- bh=jD14SSlcihd7H1ulYAUgfj0jcPE3SXwIMEfiqvF/DOA=;
- b=anLqUUNHrYZm7sm7JcDGxkS008iejnoJVNnErJdSfQJ2vCvDZlePxrykNGQNgcbiCcjUAVhoo
- gjXyc7MjCGqBb90uei0og0jW4n8Ycup+a74Q73LgJsQnykoj1n7uQLC
-X-Developer-Key: i=quic_bjorande@quicinc.com; a=ed25519;
- pk=VkhObtljigy9k0ZUIE1Mvr0Y+E1dgBEH9WoLQnUtbIM=
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: gU29Rm8geqNYXDVgaxXZzVd5rUXScDCa
-X-Proofpoint-GUID: gU29Rm8geqNYXDVgaxXZzVd5rUXScDCa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-19_10,2024-03-18_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
- spamscore=0 lowpriorityscore=0 mlxlogscore=873 priorityscore=1501
- clxscore=1015 impostorscore=0 adultscore=0 suspectscore=0 malwarescore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403140001 definitions=main-2403190187
+Content-Transfer-Encoding: 8bit
 
-Add Qualcomm RTC driver to the linux-arm-msm list, to ensure that
-members of the Qualcomm community gets Cc'ed, to assist with reviews
-etc.
+misc_cmd_type in exec_op have multiple problems. With commit a82990c8a409
+("mtd: rawnand: qcom: Add read/read_start ops in exec_op path") it was
+reworked and generalized but actually dropped the handling of the
+RESET_DEVICE command.
 
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+The rework itself was correct with supporting case where a single misc
+command is handled, but became problematic by the addition of exiting
+early if we didn't had an ERASE or an OP_PROGRAM_PAGE operation.
+
+Also additional logic was added without clear explaination causing the
+erase command to be broken on testing it on a ipq806x nandc.
+
+Add some additional logic to restore RESET_DEVICE command handling and
+fix erase command.
+
+Fixes: a82990c8a409 ("mtd: rawnand: qcom: Add read/read_start ops in exec_op path")
+Cc: stable@vger.kernel.org
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 ---
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mtd/nand/raw/qcom_nandc.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 82896c3e0559..933290aad4c4 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2617,6 +2617,7 @@ F:	drivers/pci/controller/dwc/pcie-qcom.c
- F:	drivers/phy/qualcomm/
- F:	drivers/power/*/msm*
- F:	drivers/reset/reset-qcom-*
-+F:	drivers/rtc/rtc-pm8xxx.c
- F:	drivers/spi/spi-geni-qcom.c
- F:	drivers/spi/spi-qcom-qspi.c
- F:	drivers/spi/spi-qup.c
-
----
-base-commit: 226d3c72fcde130a99d760895ebdd20e78e02cb5
-change-id: 20240319-maintainer-msm-add-rtc-60b7438d15e4
-
-Best regards,
+diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
+index b079605c84d3..b8cff9240b28 100644
+--- a/drivers/mtd/nand/raw/qcom_nandc.c
++++ b/drivers/mtd/nand/raw/qcom_nandc.c
+@@ -2815,7 +2815,7 @@ static int qcom_misc_cmd_type_exec(struct nand_chip *chip, const struct nand_sub
+ 			      host->cfg0_raw & ~(7 << CW_PER_PAGE));
+ 		nandc_set_reg(chip, NAND_DEV0_CFG1, host->cfg1_raw);
+ 		instrs = 3;
+-	} else {
++	} else if (q_op.cmd_reg != OP_RESET_DEVICE) {
+ 		return 0;
+ 	}
+ 
+@@ -2830,9 +2830,8 @@ static int qcom_misc_cmd_type_exec(struct nand_chip *chip, const struct nand_sub
+ 	nandc_set_reg(chip, NAND_EXEC_CMD, 1);
+ 
+ 	write_reg_dma(nandc, NAND_FLASH_CMD, instrs, NAND_BAM_NEXT_SGL);
+-	(q_op.cmd_reg == OP_BLOCK_ERASE) ? write_reg_dma(nandc, NAND_DEV0_CFG0,
+-	2, NAND_BAM_NEXT_SGL) : read_reg_dma(nandc,
+-	NAND_FLASH_STATUS, 1, NAND_BAM_NEXT_SGL);
++	if (q_op.cmd_reg == OP_BLOCK_ERASE)
++		write_reg_dma(nandc, NAND_DEV0_CFG0, 2, NAND_BAM_NEXT_SGL);
+ 
+ 	write_reg_dma(nandc, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
+ 	read_reg_dma(nandc, NAND_FLASH_STATUS, 1, NAND_BAM_NEXT_SGL);
 -- 
-Bjorn Andersson <quic_bjorande@quicinc.com>
+2.43.0
 
 
