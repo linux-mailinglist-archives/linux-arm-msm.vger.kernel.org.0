@@ -1,124 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-14683-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14684-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8F71881A18
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 00:09:05 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D8B5881BE6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 05:32:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8090A1F21E5F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Mar 2024 23:09:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6AC471C2156E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 04:32:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD05886128;
-	Wed, 20 Mar 2024 23:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3103F10A0F;
+	Thu, 21 Mar 2024 04:32:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wtnlTsix"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="V3135EqZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5EBB85C7B
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Mar 2024 23:08:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697AA6FB9;
+	Thu, 21 Mar 2024 04:32:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710976140; cv=none; b=Mz+yJQYzBb32df3Kha12lBwVMRMpFuZJKifDuasGVtZnfY4gq5qiBLm/Pc+ZjVHF1EXOXOdeEuMhQtpOxuQuksHdnqCk+EwhwptJx1BGQY1pfCXYCuY+R90yuXsrrqf/eVRtWQduSyW6uKT4OZunydKQHZB/O9FOAotpRRNiHac=
+	t=1710995558; cv=none; b=OsIScjcng2HQb/0ARGKqht2bGdPpS2iUHAa6As22oQ26z/aYVpAaLXZcTk2VQPb4hBu2XL20Rk8dahP2yGjIkHT/ZFB48YIBoxDwYwER2kbKgPwk6m/8NRJh2DhnshLEFfpbLX6IZBD+2rrLm2Zd0/ec8sYI8TRWguurowQTKAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710976140; c=relaxed/simple;
-	bh=wEitcMtU69ELTQ6HFUAJtJm8A18kUQS1wB/GUBQBwI4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MRbdih2nxkoXhc991LJb6Ck3P4nqQE+FPHFkyDZ45dZHJA6w8nqnLUKrHyIQKvzPWBX4ky+JQ6C94ICW9drdIN4YZtgzT/kNjdBIXcSW4rpQIs21nS/DJa0PCaEcTrfpEvv0CtOxRi8YNXmQ3DRNSD2KnS1WYNX6ocWsTSFGbdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wtnlTsix; arc=none smtp.client-ip=209.85.208.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2d4801ea689so1028491fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Mar 2024 16:08:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710976137; x=1711580937; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=IkXn2l9aQZGCQHALJx17Ml36xPwVxX2TSWrjLHWJzFk=;
-        b=wtnlTsixQ64fAnB5ADKJxhH89+rsYZIPpYp9XtwjJ6FRckH39iNaShQD9RbsqAvcbX
-         +qAMDGacbSSriXNZ1zT0XFptmilwmlhpn37OX8ZUU57+een8eqBu943FFmczZaw45Iub
-         sqSvQFgs98JrLma8+UCiZzOvwTnG9Dug1qh8tNT8e1MSptv+AMrUMZwyyGCXO6xPJ2tG
-         QL5AvWqX3oKaFKw7Z3ARA+Z9H94d4L/lgH8802OBhl87piOIu8XF+K/n1lTXUutBPzYg
-         f7W00tD3icjlCjwyGsmbaImqU35yuXbriuspn+i+QgsclTzhabB18cv01Xq8AqEfWpYK
-         SrQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710976137; x=1711580937;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IkXn2l9aQZGCQHALJx17Ml36xPwVxX2TSWrjLHWJzFk=;
-        b=D3DejEJaeEoQ0u6Pfu1vQWE5qC+noouer51D4mNeithrsLhSheJB3ShNX5DJP5tV3D
-         zX3+aNyZJ8AVhCJZKwYtdA4Mao1ACBEg46T7/tJxaO+Ie1HoTi9DDQ21zDl6Ct3W0C1L
-         6nU6p7eSus3KmmukuImViMEcQTyNiRCMc/1LA4E4wnjDBAIKqQi1eYxHj1bdZF30qCwo
-         w79Zdl6kkv7sgvuMbmMvHuNRiHFtzGYDDzi6Jy4FcCF8uBCoMkKhUrdAqMjROIXc09OE
-         yrOGeksUb0w1m7XrlnPQy22XF6o3WsOhcrEzTcQyTzIq//hnxHANtzkMfPjOP7TBYlOu
-         JTjQ==
-X-Gm-Message-State: AOJu0YxZgnI12e5s6DQbRkYZcLLo1iwXnTrXobMwEsTPSZLy1kiiNlYu
-	yCqJCUReeyjIXdQfwbiI8hzjaa9e7DcXvp9ifcYUZ3NVsmgic/TDYmaNE80eWik=
-X-Google-Smtp-Source: AGHT+IH4oiswGEj49f2wWDyVtL3HMN3AVR4jZcyvrpnyiJp+ismyJGeVgL2Opz5yeSH2QEe/aSfmeQ==
-X-Received: by 2002:a05:651c:1068:b0:2d6:93fa:ce20 with SMTP id y8-20020a05651c106800b002d693face20mr1646812ljm.0.1710976136987;
-        Wed, 20 Mar 2024 16:08:56 -0700 (PDT)
-Received: from [192.168.1.102] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id e7-20020a05651c038700b002d4aa0bcf15sm1181328ljp.71.2024.03.20.16.08.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Mar 2024 16:08:55 -0700 (PDT)
-Message-ID: <65c8614e-d54a-42bb-923c-1c2bfc1d3bc1@linaro.org>
-Date: Thu, 21 Mar 2024 01:08:45 +0200
+	s=arc-20240116; t=1710995558; c=relaxed/simple;
+	bh=Og0wY5UlzS70CHhhOINPsqOxTR2TotlCmUAEXCZNn90=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=nDVamSFbqeGbK4+EwRpEp40GtWWV1rKZ9/RRB86dxUaBt1u6tL999iD7kCpq/y2yAkQr02/yNbFFtYcmIHiAXfkxLl3xt2+kvyiy1Pv5Urlls1GS9suFNBR5l0/tRJOftcX++crXNNYHLj7e1raPKqyWKSEbzmW45RRZgdU3eWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=V3135EqZ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42L2Ve1o024624;
+	Thu, 21 Mar 2024 04:32:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=Aq6opX9
+	ZfKnMeslz2hJCg1tfG66b+q7ZXbIy3T/bUBg=; b=V3135EqZniO51MR/ZKUBCzM
+	PaORUt1vsQY2s53dSPCX6EDWT2Cd0hB4PZh4vzrFOKIufQeL/gkmbP9EBywaMi1T
+	4u6gxQHIhR94Oki2rDvibSbEyeMWo1pkIt9T6DL5HWEIFicAYz+osKWaUbTccswn
+	8L2nHaG/tURbxS5odl9X08WaQy/lm64P0gXxSgHPlPNuGyqnOL0kK2eHJdZkCOH5
+	Hrl6wGwsEHuX4d21McVb2w30JS5EduPGadQu02ef545yQPHIrtpOMFba6+lfzVet
+	cAThU74owNgcE7dyAnkO97jYlkZSkh8CQ2G9ibSnvl7zqo08FX2oofBi55A3hgg=
+	=
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x0c67g66y-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 Mar 2024 04:32:31 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42L4WU1p028817
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 Mar 2024 04:32:30 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Wed, 20 Mar 2024 21:32:25 -0700
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>, <djakov@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>
+CC: Varadarajan Narayanan <quic_varada@quicinc.com>
+Subject: [PATCH 0/2] Add interconnect driver for IPQ9574 SoC
+Date: Thu, 21 Mar 2024 10:01:47 +0530
+Message-ID: <20240321043149.2739204-1-quic_varada@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] arch: arm64: dts: sm8650-hdk: add support for the
- Display Card overlay
-Content-Language: en-US
-To: Neil Armstrong <neil.armstrong@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240318-topic-sm8650-upstream-hdk-v2-0-b63a5d45a784@linaro.org>
- <20240318-topic-sm8650-upstream-hdk-v2-3-b63a5d45a784@linaro.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20240318-topic-sm8650-upstream-hdk-v2-3-b63a5d45a784@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: pfZfUli-0J_ceVpu3I7RDYAqHcSg7x_d
+X-Proofpoint-ORIG-GUID: pfZfUli-0J_ceVpu3I7RDYAqHcSg7x_d
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-21_01,2024-03-18_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ mlxlogscore=999 lowpriorityscore=0 clxscore=1011 priorityscore=1501
+ phishscore=0 impostorscore=0 spamscore=0 suspectscore=0 bulkscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403140001 definitions=main-2403210028
 
-Hi Neil,
+MSM platforms manage NoC related clocks and scaling from RPM.
+However, in IPQ SoCs, RPM is not involved in managing NoC
+related clocks and there is no NoC scaling.
 
-On 3/18/24 11:51, Neil Armstrong wrote:
-> With the SM8650-HDK, a Display Card kit can be connected to provide
-> a VTDR6130 display with Goodix Berlin Touch controller.
-> 
-> In order to route the DSI lanes to the connector for the Display
-> Card kit, a switch must be changed on the board.
-> 
-> The HDMI nodes are disabled since the DSI lanes are shared with
-> the DSI to HDMI transceiver.
-> 
-> Add support for this card as an overlay and apply it it at
-> build-time to the sm8650-hdk dtb.
-> 
-> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
+However, there is a requirement to enable some NoC interface
+clocks for the accessing the peripherals present in the
+system. Hence add a minimalistic interconnect driver that
+establishes a path from the processor/memory to those peripherals
+and vice versa.
 
-Now I've successfully tested the change on v6.8 with commit 0581bcc48048
-("drm/panel: visionox-vtdr6130: Set prepare_prev_first flag") applied.
+Varadarajan Narayanan (2):
+  dt-bindings: interconnect: Add Qualcomm IPQ9574 support
+  clk: qcom: add IPQ9574 interconnect clocks support
 
-Please feel free to add my tag:
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi         |  2 +
+ drivers/clk/qcom/gcc-ipq9574.c                | 75 ++++++++++++++++++-
+ .../dt-bindings/interconnect/qcom,ipq9574.h   | 62 +++++++++++++++
+ 3 files changed, 138 insertions(+), 1 deletion(-)
+ create mode 100644 include/dt-bindings/interconnect/qcom,ipq9574.h
 
-Tested-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+-- 
+2.34.1
 
---
-Best wishes,
-Vladimir
 
