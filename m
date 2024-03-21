@@ -1,133 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-14712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AEE998856F5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 10:57:43 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 87275885704
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 11:03:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 714C72844C1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 09:57:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0C0E51F225EE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 10:03:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1970955E4F;
-	Thu, 21 Mar 2024 09:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E470555782;
+	Thu, 21 Mar 2024 10:03:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jwoJyvK7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="k19gMiE8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B730537EE;
-	Thu, 21 Mar 2024 09:57:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3097028DCB
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Mar 2024 10:03:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711015052; cv=none; b=FkSbb3xlWF19iVyS3VANVLX3rOKG5h9J3U9Wy7ks3HKsHgosjHkBkfFXY46QjDTJkRPeiT7YxcWXBg17pLK04sSWpOfysgjuiQWu/tcmD9wSaLSSzGVjsvcJSZNhr4tXCBzVb/JrpSnLGpmwCvIUF7pDFTkc42vitJDphcO5iWo=
+	t=1711015426; cv=none; b=DUAXXGRY/8SHudK8EkVrF6g2WfHdsv000FdEM1JtMoUoOfAwPRGg3Scos6QV8osDcP8f6sM3B8sW2fX52rhjel9yotliY6vcUNQAAbv97Y6BXsfmkvtbTZ+YpzznREeoR8f2jkRmGpAOnX2/vEjneEQ6ZyTlQKYEd8vBol2/elM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711015052; c=relaxed/simple;
-	bh=ngQahxHlpBaX3jfWU9mfhKy5tX98kiPeSjHQ0x+mPp0=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lGXgotS7vSkH8PYQBNc5hiCedo7j0m4ChwYo4hhv14coi9nKiMx2CcvWLpkpSXfE8EBK5p7QkH0l98MqGXgYBb66SRB7d6dz5CpXFvCJVT2iig3FoUxjS848XpGpKl7dJJDxseZhoqmYLVcz7H3QW3rHUzzhmXPd21teFF4z/mY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jwoJyvK7; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42L654kM025563;
-	Thu, 21 Mar 2024 09:57:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=dxkqT3U/WCFhUtra5/hI+
-	/dDnis7vzANk8176O+OmvE=; b=jwoJyvK7sndr8IrRSIky+t5c/lFDjKs+Zab4u
-	6QDpOQe/ksjmIbNDP4LBbYhK/H+86Osu9j8A4K/W0g5YoBG+1Kq2H38/mVmppC8o
-	ud65nlAi6fLsiIVaL7oQmhoa9zm7y54gxSpFTpT5W1e3ITgH80s2Gtrb5cEih9HR
-	P/wQs+GqA4AfBQps3l64mpVL5Ur8VLGx0Oe1wMDsWn7K07gW+9fRIIM/dFgQrgdq
-	6ROvc8n+rvWYRowj4hxBOi6RnPP5PZFStn0ODnxOlGN+kumj/ql27IXVJ9/L25Wq
-	BTMLYB2eajecUHlcnyR8XgcaQxJQfgETn11VKIZabbNLrkGhw==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x0fa7gf38-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Mar 2024 09:57:26 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42L9vPTY019027
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Mar 2024 09:57:25 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Thu, 21 Mar 2024 02:57:20 -0700
-Date: Thu, 21 Mar 2024 15:27:10 +0530
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>, <djakov@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH 1/2] dt-bindings: interconnect: Add Qualcomm IPQ9574
- support
-Message-ID: <ZfwEdtZoTH0/vPD5@hu-varada-blr.qualcomm.com>
-References: <20240321043149.2739204-1-quic_varada@quicinc.com>
- <20240321043149.2739204-2-quic_varada@quicinc.com>
- <9e50c5fe-cb4c-4c3b-bff7-4492b24a5291@linaro.org>
+	s=arc-20240116; t=1711015426; c=relaxed/simple;
+	bh=9mBsSCywB1UYVK5EIoAzSbSWRc36LYtQG7L15yc7v9I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jjRCpJm5Y6Z7KFAWmI9O+JDin9ANcFTTDsEQx/Uezz5rFF/ZK7VqO9FgtrUmm8b5FaiSAg1QgK/ebBz/LYv1devZVNOCBayWRbsvp01bUnvaq4Fl6st+t0QqP/KOnlLjjK3Cmlx6E5KuhBFz91ikCVa7KUtLm+QnGal/PfNKdWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=k19gMiE8; arc=none smtp.client-ip=209.85.219.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-dd161eb03afso611997276.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Mar 2024 03:03:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1711015424; x=1711620224; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=QSqCEacDmuyhGjW4tIZGQOCZnmnjyg2MSjCQM9ns3PM=;
+        b=k19gMiE8HnSOcxpo/+oGc6con8ZQSioz148eupvUPE8htxpUkuWXuVoBNjC8TazZBG
+         TfqoiNaKwPg8AbXIg9lX/SRUY5nm7NRpHpvpMwBcuWKf0v3aii2REGgayDcCNmUzzlJd
+         mZ6aHzMtQZteyfV/Bz0IB5F/q5Tg1Znzp0SXQquQSpP3SWIdGqIS4D49ttwPf19+b760
+         qokZWazG/6NqXnzpGA/ds8Ke0mUkKvaNYmP1S1drQZKUO0Q5IIs7wvJJFy2GJAzXCKpb
+         UQ10iul7c0m9z2f2VSLZ6pKs6AW0d3ZJe5DAyJthxn6lXrZ1HYTNB16Mpz4td/8Dhtph
+         NzxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711015424; x=1711620224;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QSqCEacDmuyhGjW4tIZGQOCZnmnjyg2MSjCQM9ns3PM=;
+        b=Xs7aX9gHxHhS5xCuiO/wBq5yg7wGySY9akvH3QwePMN8Jgo/wgCMmlXwK/h9U/b0RS
+         Lpe8jxt/vEMCucG9Z7196BnWRLPuSEPPp53SFwVv+UU8grhP0bOTJPmiuobQWmzkiJmv
+         pBUFyreCavOyZkjXpmW3NvteJKXyJlnTIVJP2N1LtBvHOysYf/jQGx5rBxH+p47h8FeS
+         Ty5ezbDrYEYikJ3w07iumySqYenNXIwnM8F0NA5jrAJUl1508h9My6lk30x0Yj3F5esM
+         pmUc8fRiTkhCrUsuQP1eTL0Il9FtM1vqVL2tum4DeC1Ug7F99+V8m1tp5k+lZMdwVhjK
+         SQPQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWJ/mn2dWXtkFGIfCKfSXY9wvCA5nnSG0OnLzvLL8hKdut6T4CqpHLOJCW5igtieWZNT/2yOXM3Cgnn/lc3koaPZwtAvKXMnui0UrOibg==
+X-Gm-Message-State: AOJu0YwIGPAzV2NtfJyy3fpw4sSDuRlurJkmve0S09mspQBHqgYE90WE
+	Qax9UDdRZIozu39b4lA5g3c81GU1rKeJT4st1Ruoj00TNQzUPhnIc2TGoCHbAuLTtFuxqhzpxuX
+	BKGL7kDxjZu63C+50G4lXmLAWXrIvHyQlsE6SU6eXz4O7V9iInSI=
+X-Google-Smtp-Source: AGHT+IE9o5xv1E+a+C5db8AW+UAGMIBoieSfVU/7OhyJYyIyX0EhBpq7st4JqdhP6/XI91PKF3215+N4PdtJ8bZCO4Y=
+X-Received: by 2002:a05:6902:4c4:b0:dc7:465d:c06d with SMTP id
+ v4-20020a05690204c400b00dc7465dc06dmr17513281ybs.28.1711015424255; Thu, 21
+ Mar 2024 03:03:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <9e50c5fe-cb4c-4c3b-bff7-4492b24a5291@linaro.org>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: spDNa0BATrxTq2iljEnF-hxDKTkzJAvq
-X-Proofpoint-ORIG-GUID: spDNa0BATrxTq2iljEnF-hxDKTkzJAvq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-21_06,2024-03-18_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- mlxlogscore=999 bulkscore=0 mlxscore=0 phishscore=0 clxscore=1015
- suspectscore=0 spamscore=0 malwarescore=0 adultscore=0 priorityscore=1501
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403140001 definitions=main-2403210068
+References: <20240321092529.13362-1-quic_jkona@quicinc.com> <20240321092529.13362-4-quic_jkona@quicinc.com>
+In-Reply-To: <20240321092529.13362-4-quic_jkona@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 21 Mar 2024 12:03:32 +0200
+Message-ID: <CAA8EJpq11ZeYrMqdKWrcs3=cx_Pr7wc1Y87SHMqP6B_9XtusVg@mail.gmail.com>
+Subject: Re: [PATCH V2 RESEND 3/6] clk: qcom: videocc-sm8550: Add SM8650 video
+ clock controller
+To: Jagadeesh Kona <quic_jkona@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>, 
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, Ajit Pandey <quic_ajipan@quicinc.com>, 
+	Imran Shaik <quic_imrashai@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Mar 21, 2024 at 08:23:01AM +0100, Krzysztof Kozlowski wrote:
-> On 21/03/2024 05:31, Varadarajan Narayanan wrote:
-> > Add master/slave ids for Qualcomm IPQ9574 Network-On-Chip
-> > interfaces. This will be used by the gcc-ipq9574 driver
-> > that will for providing interconnect services using the
-> > icc-clk framework.
-> >
-> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > ---
-> >  .../dt-bindings/interconnect/qcom,ipq9574.h   | 62 +++++++++++++++++++
-> >  1 file changed, 62 insertions(+)
-> >  create mode 100644 include/dt-bindings/interconnect/qcom,ipq9574.h
-> >
-> > diff --git a/include/dt-bindings/interconnect/qcom,ipq9574.h b/include/dt-bindings/interconnect/qcom,ipq9574.h
-> > new file mode 100644
-> > index 000000000000..96f79a86e8d2
-> > --- /dev/null
-> > +++ b/include/dt-bindings/interconnect/qcom,ipq9574.h
-> > @@ -0,0 +1,62 @@
-> > +// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
-> > +#ifndef INTERCONNECT_QCOM_IPQ9574_H
-> > +#define INTERCONNECT_QCOM_IPQ9574_H
-> > +
-> > +#define IPQ_APPS_ID			9574	/* some unique value */
-> > +#define IPQ_NSS_ID			(IPQ_APPS_ID * 2)
-> > +
-> > +#define IPQ_ANOC_PCIE0_1_MAS		0
-> > +#define IPQ_ANOC_PCIE0_1_SLV		1
+On Thu, 21 Mar 2024 at 11:27, Jagadeesh Kona <quic_jkona@quicinc.com> wrote:
 >
-> Please use style matching rest of mainline code. There is no IPQ in the
-> name of interconnect. Open recent SM8650 or similar and see.
+> Add support to the SM8650 video clock controller by extending
+> the SM8550 video clock controller, which is mostly identical
+> but SM8650 has few additional clocks and minor differences.
+>
+> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
 
-Ok. Will update and post the next version.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Thanks
-Varada
+
+
+> @@ -411,6 +540,7 @@ static int video_cc_sm8550_probe(struct platform_device *pdev)
+>  {
+>         struct regmap *regmap;
+>         int ret;
+> +       u32 offset = 0x8140;
+
+Nit: this variable seems misnamed. Please rename to something like
+sleep_clk_offset;
+
+>
+>         ret = devm_pm_runtime_enable(&pdev->dev);
+>         if (ret)
+> @@ -426,12 +556,27 @@ static int video_cc_sm8550_probe(struct platform_device *pdev)
+>                 return PTR_ERR(regmap);
+>         }
+>
+> +       if (of_device_is_compatible(pdev->dev.of_node, "qcom,sm8650-videocc")) {
+> +               offset = 0x8150;
+> +               video_cc_pll0_config.l = 0x1e;
+> +               video_cc_pll0_config.alpha = 0xa000;
+> +               video_cc_pll1_config.l = 0x2b;
+> +               video_cc_pll1_config.alpha = 0xc000;
+> +               video_cc_mvs0_clk_src.freq_tbl = ftbl_video_cc_mvs0_clk_src_sm8650;
+> +               video_cc_mvs1_clk_src.freq_tbl = ftbl_video_cc_mvs1_clk_src_sm8650;
+> +               video_cc_sm8550_clocks[VIDEO_CC_MVS0_SHIFT_CLK] = &video_cc_mvs0_shift_clk.clkr;
+> +               video_cc_sm8550_clocks[VIDEO_CC_MVS0C_SHIFT_CLK] = &video_cc_mvs0c_shift_clk.clkr;
+> +               video_cc_sm8550_clocks[VIDEO_CC_MVS1_SHIFT_CLK] = &video_cc_mvs1_shift_clk.clkr;
+> +               video_cc_sm8550_clocks[VIDEO_CC_MVS1C_SHIFT_CLK] = &video_cc_mvs1c_shift_clk.clkr;
+> +               video_cc_sm8550_clocks[VIDEO_CC_XO_CLK_SRC] = &video_cc_xo_clk_src.clkr;
+> +       }
+> +
+>         clk_lucid_ole_pll_configure(&video_cc_pll0, regmap, &video_cc_pll0_config);
+>         clk_lucid_ole_pll_configure(&video_cc_pll1, regmap, &video_cc_pll1_config);
+>
+>         /* Keep some clocks always-on */
+>         qcom_branch_set_clk_en(regmap, 0x80f4); /* VIDEO_CC_AHB_CLK */
+> -       qcom_branch_set_clk_en(regmap, 0x8140); /* VIDEO_CC_SLEEP_CLK */
+> +       qcom_branch_set_clk_en(regmap, offset); /* VIDEO_CC_SLEEP_CLK */
+>         qcom_branch_set_clk_en(regmap, 0x8124); /* VIDEO_CC_XO_CLK */
+>
+>         ret = qcom_cc_really_probe(pdev, &video_cc_sm8550_desc, regmap);
+> --
+> 2.43.0
+>
+>
+
+
+-- 
+With best wishes
+Dmitry
 
