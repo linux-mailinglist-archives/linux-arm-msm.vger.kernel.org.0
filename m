@@ -1,60 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-14752-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14753-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25D98885AE0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 15:35:58 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 85888885B07
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 15:43:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2F0541C21684
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 14:35:57 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 098D6B253EF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 14:43:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E69D941C71;
-	Thu, 21 Mar 2024 14:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7AED086256;
+	Thu, 21 Mar 2024 14:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IfO9S2W+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X2KAZ0D3"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD2A1EB5B;
-	Thu, 21 Mar 2024 14:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB6684FBE;
+	Thu, 21 Mar 2024 14:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711031752; cv=none; b=MISEQyL1ojfywMjuYK6J3TivnMFAKU9uT78/ngkOvC7vsol/W51alHBsfQI/y/BGCQM5YRIA30mDoOHoiZfDfl5mgpwP02CxG//pB6jjHWwWDj2vbCWezCd3U6OWht7W+F2CGR1IUEeJDIsXnPZt1UrHfT6PnGSWrF77Sjag7CA=
+	t=1711032149; cv=none; b=erpnzKoKp5x8H3tTNmdTDobXcG7vW8X7sINgTh78mHmtdNKZjXJRK4M+9qMCogGHaJVneN6N1+S8Jm12X1UkZphZ4j+CwAovseb8MqYJ2ZdMONS2DjquzJvMFM3u88njHi9CatKj6M9dlK3KTgYnLJpws9PIikZl1axgo2rqVFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711031752; c=relaxed/simple;
-	bh=70vwzhgn79yogJCS87DlftU4oBSZhD43UWqQlGCtGrU=;
+	s=arc-20240116; t=1711032149; c=relaxed/simple;
+	bh=eCmOsrWn0vFoPh2l6bOYyx1AWFAxo0BkYpUu5K+u20o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GIqXgTd317SI7q5RhmVwKUt6hMVHpqWwh3ZFGz07g4amw4W+6VtOgfGHhgjwcwuONxdL80EotZDsR78kBcR31aHey9uUJyUCy5iNB6Ib53/07YvQG49r5BkMvAc/Hf4r8FiU60ZeZzYhxmPdSGyfM0D+ApLmmCWjCxJycQriiCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IfO9S2W+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 079B5C433F1;
-	Thu, 21 Mar 2024 14:35:51 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=mor0FCcO7rGhlV4ggF32008TvS6zsaNtKz3017alokPoEXzGHYNirHeSEqMnVos6ePnoKIObq2pOA/f+3JDma1FsmVNoTDNR5Nmhv4vnP9324KhHgCCZDPFAXR9BizkdBS3Bs5zWu/JsTktS98DOsLlbeE8B3Zfzw8Q7sWJIdVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X2KAZ0D3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08D5C43330;
+	Thu, 21 Mar 2024 14:42:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711031752;
-	bh=70vwzhgn79yogJCS87DlftU4oBSZhD43UWqQlGCtGrU=;
+	s=k20201202; t=1711032148;
+	bh=eCmOsrWn0vFoPh2l6bOYyx1AWFAxo0BkYpUu5K+u20o=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IfO9S2W+we9+5OhEducULSvn5FUTOeaJNq3guTfppTUv1WpX4j/hMWhAC3Gm1S4jT
-	 L45LPbzwRFpkZ2IfAlps/7oDBdJGBac4+KTB5kdleaEUqjx9RQPWueasnpO5j2ONFh
-	 4FjsLrk+0ZTToJraGxS1cOu/6pcAmEV5D4ZnXYuQAWci4nPsoBcbZnVffzTFakRk1D
-	 cUF6PT+LSrxFyymJvG1zYb50NJAtpEMrp9097oGWegoHDh5V2dI/V7N0IOrRsN9NCi
-	 GsT3lJn4x7pzQtaLutknHpx/ZSVhJQmqn1GUZaRIJZ2QHl6i263pZyK3jFh2v5EMvi
-	 +8lRtRPLeeLzQ==
-Date: Thu, 21 Mar 2024 09:35:49 -0500
+	b=X2KAZ0D3Xtxnv8OsYsVu202OprZWKYS6nVtp75NTuw2qtG5JG7OdKdlb+mvYvOpYJ
+	 2MKgxqYMC8QT1D+DnlVkvA/BnK26R6JFhtlknlsKgRtO9W3DgyGk1pUFCF1VyRPApE
+	 ugFxgtieTtv7vJFX8tmzOBTBmKO/r+PuWT3atzqg6rXtzoixTbJIzPlDPj7XSgRDuw
+	 gVHsTreKozoPmoROAQSD4Vz1XZzR1Nybo6yTLD2gT14qDB5b7MSwVUh9yA4k+pGuRQ
+	 TEoFYmySo5HXc6pzc2sfQYV74BK6XXCJ4+mlEEvoT828OKhxAYjQGF/s+p01Agagwm
+	 Kyb3v+2RKO4zg==
+Date: Thu, 21 Mar 2024 09:42:26 -0500
 From: Rob Herring <robh@kernel.org>
-To: Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org,
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-	mturquette@baylibre.com, sboyd@kernel.org, djakov@kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-	linux-pm@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: interconnect: Add Qualcomm IPQ9574
- support
-Message-ID: <20240321143549.GA1679970-robh@kernel.org>
-References: <20240321043149.2739204-1-quic_varada@quicinc.com>
- <20240321043149.2739204-2-quic_varada@quicinc.com>
+To: Tao Zhang <quic_taozha@quicinc.com>
+Cc: Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Konrad Dybcio <konradybcio@gmail.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Jinlong Mao <quic_jinlmao@quicinc.com>,
+	Leo Yan <leo.yan@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	Tingwei Zhang <quic_tingweiz@quicinc.com>,
+	Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+	Trilok Soni <quic_tsoni@quicinc.com>,
+	Song Chai <quic_songchai@quicinc.com>,
+	linux-arm-msm@vger.kernel.org, andersson@kernel.org
+Subject: Re: [PATCH 1/4] dt-bindings: arm: qcom,coresight-funnel: Add label
+ for multi-ouput
+Message-ID: <20240321144226.GA1689544-robh@kernel.org>
+References: <1711009927-17873-1-git-send-email-quic_taozha@quicinc.com>
+ <1711009927-17873-2-git-send-email-quic_taozha@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,30 +73,82 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240321043149.2739204-2-quic_varada@quicinc.com>
+In-Reply-To: <1711009927-17873-2-git-send-email-quic_taozha@quicinc.com>
 
-On Thu, Mar 21, 2024 at 10:01:48AM +0530, Varadarajan Narayanan wrote:
-> Add master/slave ids for Qualcomm IPQ9574 Network-On-Chip
-> interfaces. This will be used by the gcc-ipq9574 driver
-> that will for providing interconnect services using the
-> icc-clk framework.
+On Thu, Mar 21, 2024 at 04:32:04PM +0800, Tao Zhang wrote:
+> Add new property "label" to label the source corresponding to the
+> output connection. When the funnel supports multi-output, this
+> property needs to be introduced to mark which source component a
+> certain output connection corresponds to.
 > 
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
 > ---
->  .../dt-bindings/interconnect/qcom,ipq9574.h   | 62 +++++++++++++++++++
->  1 file changed, 62 insertions(+)
->  create mode 100644 include/dt-bindings/interconnect/qcom,ipq9574.h
+>  .../arm/arm,coresight-dynamic-funnel.yaml     | 34 ++++++++++++++++---
+>  1 file changed, 30 insertions(+), 4 deletions(-)
 > 
-> diff --git a/include/dt-bindings/interconnect/qcom,ipq9574.h b/include/dt-bindings/interconnect/qcom,ipq9574.h
-> new file mode 100644
-> index 000000000000..96f79a86e8d2
-> --- /dev/null
-> +++ b/include/dt-bindings/interconnect/qcom,ipq9574.h
-> @@ -0,0 +1,62 @@
-> +// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
+> diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-dynamic-funnel.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-dynamic-funnel.yaml
+> index 44a1041cb0fc..cde62c286d29 100644
+> --- a/Documentation/devicetree/bindings/arm/arm,coresight-dynamic-funnel.yaml
+> +++ b/Documentation/devicetree/bindings/arm/arm,coresight-dynamic-funnel.yaml
+> @@ -66,13 +66,39 @@ properties:
+>          $ref: /schemas/graph.yaml#/properties/port
+>  
+>    out-ports:
+> -    $ref: /schemas/graph.yaml#/properties/ports
+> -    additionalProperties: false
+> -
+> +    type: object
+>      properties:
+> +      "#address-cells":
+> +        const: 1
+> +
+> +      "#size-cells":
+> +        const: 0
+> +
+>        port:
+> +        type: object
+> +
+> +    patternProperties:
+> +      '^port(@[0-7])?$':
+> +        type: object
+>          description: Output connection to CoreSight Trace bus
+> -        $ref: /schemas/graph.yaml#/properties/port
 
-Where did you come up with GPL-2.0+? Every other qcom interconnect 
-header is GPL-2.0-only. Is your employer okay with GPLv3 AND after?
+Nope, now you have no constraints on port node properties. Please look 
+at how other bindings are done to add properties on endpoint node.
+
+> +
+> +        patternProperties:
+> +          "^endpoint(@[0-9a-f]+)?$":
+> +            type: object
+> +            properties:
+> +              remote-endpoint:
+> +                description: |
+> +                  phandle to an 'endpoint' subnode of a remote device node.
+> +                  $ref: /schemas/types.yaml#/definitions/phandle
+
+Don't need this.
+
+> +              label:
+> +                description: Label the source corresponding to the output connection
+> +                $ref: /schemas/types.yaml#/definitions/string
+
+label already has a type.
+
+As this node is an output, aren't you labeling what the destination is, 
+not the "source"?
+
+Why can't you look at the remote connection to identify what it is?
+
+
+> +    oneOf:
+> +      - required:
+> +          - port
+> +      - required:
+> +          - "#address-cells"
+> +          - "#size-cells"
+
+The common schema that you removed handles this.
 
 Rob
 
