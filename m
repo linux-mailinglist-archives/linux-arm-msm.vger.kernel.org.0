@@ -1,233 +1,335 @@
-Return-Path: <linux-arm-msm+bounces-14762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14763-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C18C885EB9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 17:54:19 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED5C5885EC1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 17:55:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8CC82B24AEC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 16:54:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 679A31F2179A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 16:55:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8C7017590;
-	Thu, 21 Mar 2024 16:40:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mQYwfrRK"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B9B012CD8C;
+	Thu, 21 Mar 2024 16:42:02 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E91112B7E;
-	Thu, 21 Mar 2024 16:40:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89E85134733;
+	Thu, 21 Mar 2024 16:41:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711039258; cv=none; b=L3XaVyLriFyUeE3dFEiTy4BRR73zwSZje6WCqamQtsfOkoekwzJowyEtoIPFwK1fixEWgrh/+K4qHW3Lk+qaGjpwUzZPV+b50M1ikxZwLJnOfTP8y4/6tVoSzZnGaEIVF4fH2Qqf2drr63M+YcxqUgf4k6HIinG2bFuoFNXmtGY=
+	t=1711039322; cv=none; b=ZG5KBQzloBYHYfPfl+TWt529/KdRdpzx0l1BrexMuIQeKDkEMuRGE1soBb7EqYva4h3ZwVRImEx4RIfDkja43SGSwhjxfx+jYIEmXRypb5/qt10JygS6z2NTrltt40chXkQUXO04l/W5JL8Xayh+wwBp9Nd3VcbFv6MRr4/23/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711039258; c=relaxed/simple;
-	bh=Rg3Qyg/aCiHbBDT5o4Egzs5J5LChZshjXRXkzKdFYoY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MPg85tYRU76/lmcUA5eqeJon8IwRua5/ew6Rf6xUBTfrH8ljD8OpK74dCMwFirlnFf6H18l1Q3VBWPH1Tcjw5D19FnuLlI1yndth8H+d3anDet5TNBDbx37EguHkzFI43u/do+v5BMAYBRgK2JfLHT0mPFSxHUdRnfN37aIvTd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mQYwfrRK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F2E6C433C7;
-	Thu, 21 Mar 2024 16:40:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711039258;
-	bh=Rg3Qyg/aCiHbBDT5o4Egzs5J5LChZshjXRXkzKdFYoY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=mQYwfrRKlmBpZtRh1sVLmwtfHGxXtsJlqNmo7dVaTfOapv2REcGyrzPgytUQaNsI1
-	 cPcLN3qiahtFIPWyKZ9T0fAXrFHKwVQBW34wxyRIZ+hWmtkfcx16FKQdwwcBPgl5XE
-	 2plqgCGYA+6yi+IWm9viO2oONOtI1aevMJiH9zsCSJwaztgUoMSmAzrloaPWlHyRTG
-	 t2mvRCCC5ujTAaLOxyYLvyIqrgvJogGFKxW2a8frOJwoaHeD4Ge0G/UPjzE/2tH/z4
-	 w1GL3bt+o9ASG47/cPbHsBesEatxUqiOdqij4KhEp2AIHI/lE+jKwOWiQqeuZAjYFE
-	 tzRX8goZyCciQ==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rnLTV-0000000082A-2Ev6;
-	Thu, 21 Mar 2024 17:41:06 +0100
-Date: Thu, 21 Mar 2024 17:41:05 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	dri-devel@lists.freedesktop.org, swboyd@chromium.org,
-	quic_jesszhan@quicinc.com, quic_parellan@quicinc.com,
-	quic_bjorande@quicinc.com, Rob Clark <robdclark@chromium.org>,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/dp: move link_ready out of HPD event thread
-Message-ID: <ZfxjISnPhplKDDxc@hovoldconsulting.com>
-References: <ZfApxyVAJMK4bL8O@hovoldconsulting.com>
- <ZfCFsmNv62-KMkA6@hovoldconsulting.com>
- <ZfCKDGq9n9WG3Quj@hovoldconsulting.com>
- <8e125a99-543d-8328-a2a9-100e223e4faf@quicinc.com>
- <ZfFhXG5yd6O29spS@hovoldconsulting.com>
- <ec2cba17-5644-6cf6-f6c9-d37d7ca56204@quicinc.com>
- <ZfMaEIzv3Z3ny3y0@hovoldconsulting.com>
- <9313aa00-41f0-15af-a646-3f4e4b3098c7@quicinc.com>
- <ZfRv5le7Bfdiwrk_@hovoldconsulting.com>
- <a1152afe-b652-d83e-05e4-25c07292b568@quicinc.com>
+	s=arc-20240116; t=1711039322; c=relaxed/simple;
+	bh=fznBggQcBCFiKQC6HZG44OJYau2TgxMOPGYgwwAiXuI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QgCRlSJHm/cfaqzwrPaiCc+HVsxJMPWpgI5GF1g+S6jsLpbmF3NO4+acL87UbS9Cg9jaziPfeSDxcGmiW4URCQ5+MkGgJWQwog6iTLWDpqDNWHxfAFy4G207XAm1BN9ND6ERj6Jx52sROn2o20JEWV0jUBc8B18I5XLSD0tvMRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id F041B1007;
+	Thu, 21 Mar 2024 09:42:32 -0700 (PDT)
+Received: from [10.57.53.86] (unknown [10.57.53.86])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B6C8D3F67D;
+	Thu, 21 Mar 2024 09:41:55 -0700 (PDT)
+Message-ID: <8d381e6e-9328-46ff-83fe-efbe5bb4363e@arm.com>
+Date: Thu, 21 Mar 2024 16:41:54 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a1152afe-b652-d83e-05e4-25c07292b568@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] coresight: Add support for multiple output ports on
+ the funnel
+Content-Language: en-GB
+To: Tao Zhang <quic_taozha@quicinc.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Konrad Dybcio <konradybcio@gmail.com>, Mike Leach <mike.leach@linaro.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: Jinlong Mao <quic_jinlmao@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, coresight@lists.linaro.org,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Trilok Soni <quic_tsoni@quicinc.com>, Song Chai <quic_songchai@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, andersson@kernel.org
+References: <1711009927-17873-1-git-send-email-quic_taozha@quicinc.com>
+ <1711009927-17873-3-git-send-email-quic_taozha@quicinc.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <1711009927-17873-3-git-send-email-quic_taozha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Mar 18, 2024 at 11:01:25AM -0700, Abhinav Kumar wrote:
-> On 3/15/2024 8:57 AM, Johan Hovold wrote:
-> > On Thu, Mar 14, 2024 at 09:30:57AM -0700, Abhinav Kumar wrote:
-
-> >> The race condition is between the time we get disconnect event and set
-> >> link_ready to false, a commit can come in. Because setting link_ready to
-> >> false happens in the event thread so it could be slightly delayed.
-> > 
-> > I get this part, just not why, or rather when, that becomes a problem.
-> > 
-> > Once the disconnect event is processed, dp_hpd_unplug_handle() will
-> > update the state to ST_DISCONNECT_PENDING, and queue a notification
-> > event. link_ready is (before this patch) still set to 1.
-
-> This is the case I am thinking of:
+On 21/03/2024 08:32, Tao Zhang wrote:
+> Funnel devices are now capable of supporting multiple-inputs and
+> multiple-outputs configuration with in built hardware filtering
+> for TPDM devices. Add software support to this function. Output
+> port is selected according to the source in the trace path.
 > 
-> 1) Disconnect event happens which will call dp_hpd_unplug_handle() but 
-> link_ready is not false yet.
+> The source of the input port on funnels will be marked in the
+> device tree.
+> e.g.
+> tpdm@xxxxxxx {
+>      ... ... ... ...
+> };
 > 
-> 2) There is a commit with a modeset, which shall trigger 
-> atomic_disable() followed by an atomic_enable()
+> funnel_XXX: funnel@xxxxxxx {
+>      ... ... ... ...
+>      out-ports {
+>          ... ... ... ...
+>          port@x {
+>              ... ... ... ...
+>              label = "xxxxxxx.tpdm"; <-- To label the source
+>          };                           corresponding to the output
+>      ... ... ... ...                  connection "port@x". And this
+>      };                               is a hardware static connections.
+>      ... ... ... ...                  Here needs to refer to hardware
+> };                                   design.
 > 
-> atomic_disable() will go through disable clocks and set hpd_state to 
-> ST_DISCONNECTED.
+> Then driver will parse the source label marked in the device tree, and
+> save it to the coresight path. When the function needs to know the
+> source label, it could obtain it from coresight path parameter. Finally,
+> the output port knows which source it corresponds to, and it also knows
+> which input port it corresponds to.
+
+Why do we need labels ? We have connection information for all devices
+(both in and out), so, why do we need this label to find a device ?
+
+And also, I thought TPDM is a source device, why does a funnel output
+port link to a source ?
+
+Are these funnels programmable ? Or, are they static ? If they are
+static, do these need to be described in the DT ? If they are simply
+acting as a "LINK" (or HWFIFO ?)
+
+Suzuki
+
 > 
-> 3) atomic_enable() will not go through because we will bail out because 
-> state was ST_DISCONNECTED.
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> ---
+>   drivers/hwtracing/coresight/coresight-core.c  | 81 ++++++++++++++++---
+>   .../hwtracing/coresight/coresight-platform.c  |  5 ++
+>   include/linux/coresight.h                     |  2 +
+>   3 files changed, 75 insertions(+), 13 deletions(-)
 > 
->          if (state != ST_DISPLAY_OFF && state != ST_MAINLINK_READY) {
->                  mutex_unlock(&dp_display->event_mutex);
->                  return;
->          }
-> 
-> 4) Now, if there is another commit with a modeset, it will go and crash 
-> at atomic_disable()
+> diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
+> index 5dde597403b3..b1b5e6d9ec7a 100644
+> --- a/drivers/hwtracing/coresight/coresight-core.c
+> +++ b/drivers/hwtracing/coresight/coresight-core.c
+> @@ -113,15 +113,63 @@ struct coresight_device *coresight_get_percpu_sink(int cpu)
+>   }
+>   EXPORT_SYMBOL_GPL(coresight_get_percpu_sink);
+>   
+> +static struct coresight_device *coresight_get_source(struct list_head *path)
+> +{
+> +	struct coresight_device *csdev;
+> +
+> +	if (!path)
+> +		return NULL;
+> +
+> +	csdev = list_first_entry(path, struct coresight_node, link)->csdev;
+> +	if (csdev->type != CORESIGHT_DEV_TYPE_SOURCE)
+> +		return NULL;
+> +
+> +	return csdev;
+> +}
+> +
+> +/**
+> + * coresight_source_filter - checks whether the connection matches the source
+> + * of path if connection is binded to specific source.
+> + * @path:	The list of devices
+> + * @conn:	The connection of one outport
+> + *
+> + * Return zero if the connection doesn't have a source binded or source of the
+> + * path matches the source binds to connection.
+> + */
+> +static int coresight_source_filter(struct list_head *path,
+> +			struct coresight_connection *conn)
+> +{
+> +	int ret = 0;
+> +	struct coresight_device *source = NULL;
+> +
+> +	if (conn->source_label == NULL)
+> +		return ret;
+> +
+> +	source = coresight_get_source(path);
+> +	if (source == NULL)
+> +		return ret;
+> +
+> +	if (strstr(kobject_get_path(&source->dev.kobj, GFP_KERNEL),
+> +			conn->source_label))
+> +		ret = 0;
+> +	else
+> +		ret = -1;
+> +
+> +	return ret;
+> +}
+> +
+>   static struct coresight_connection *
+>   coresight_find_out_connection(struct coresight_device *src_dev,
+> -			      struct coresight_device *dest_dev)
+> +			      struct coresight_device *dest_dev,
+> +			      struct list_head *path)
+>   {
+>   	int i;
+>   	struct coresight_connection *conn;
+>   
+>   	for (i = 0; i < src_dev->pdata->nr_outconns; i++) {
+>   		conn = src_dev->pdata->out_conns[i];
+> +		if (coresight_source_filter(path, conn))
+> +			continue;
+>   		if (conn->dest_dev == dest_dev)
+>   			return conn;
+>   	}
+> @@ -312,7 +360,8 @@ static void coresight_disable_sink(struct coresight_device *csdev)
+>   
+>   static int coresight_enable_link(struct coresight_device *csdev,
+>   				 struct coresight_device *parent,
+> -				 struct coresight_device *child)
+> +				 struct coresight_device *child,
+> +				 struct list_head *path)
+>   {
+>   	int ret = 0;
+>   	int link_subtype;
+> @@ -321,8 +370,8 @@ static int coresight_enable_link(struct coresight_device *csdev,
+>   	if (!parent || !child)
+>   		return -EINVAL;
+>   
+> -	inconn = coresight_find_out_connection(parent, csdev);
+> -	outconn = coresight_find_out_connection(csdev, child);
+> +	inconn = coresight_find_out_connection(parent, csdev, path);
+> +	outconn = coresight_find_out_connection(csdev, child, path);
+>   	link_subtype = csdev->subtype.link_subtype;
+>   
+>   	if (link_subtype == CORESIGHT_DEV_SUBTYPE_LINK_MERG && IS_ERR(inconn))
+> @@ -341,7 +390,8 @@ static int coresight_enable_link(struct coresight_device *csdev,
+>   
+>   static void coresight_disable_link(struct coresight_device *csdev,
+>   				   struct coresight_device *parent,
+> -				   struct coresight_device *child)
+> +				   struct coresight_device *child,
+> +				   struct list_head *path)
+>   {
+>   	int i;
+>   	int link_subtype;
+> @@ -350,8 +400,8 @@ static void coresight_disable_link(struct coresight_device *csdev,
+>   	if (!parent || !child)
+>   		return;
+>   
+> -	inconn = coresight_find_out_connection(parent, csdev);
+> -	outconn = coresight_find_out_connection(csdev, child);
+> +	inconn = coresight_find_out_connection(parent, csdev, path);
+> +	outconn = coresight_find_out_connection(csdev, child, path);
+>   	link_subtype = csdev->subtype.link_subtype;
+>   
+>   	if (link_ops(csdev)->disable) {
+> @@ -507,7 +557,7 @@ static void coresight_disable_path_from(struct list_head *path,
+>   		case CORESIGHT_DEV_TYPE_LINK:
+>   			parent = list_prev_entry(nd, link)->csdev;
+>   			child = list_next_entry(nd, link)->csdev;
+> -			coresight_disable_link(csdev, parent, child);
+> +			coresight_disable_link(csdev, parent, child, path);
+>   			break;
+>   		default:
+>   			break;
+> @@ -588,7 +638,7 @@ int coresight_enable_path(struct list_head *path, enum cs_mode mode,
+>   		case CORESIGHT_DEV_TYPE_LINK:
+>   			parent = list_prev_entry(nd, link)->csdev;
+>   			child = list_next_entry(nd, link)->csdev;
+> -			ret = coresight_enable_link(csdev, parent, child);
+> +			ret = coresight_enable_link(csdev, parent, child, path);
+>   			if (ret)
+>   				goto err;
+>   			break;
+> @@ -802,7 +852,8 @@ static void coresight_drop_device(struct coresight_device *csdev)
+>    */
+>   static int _coresight_build_path(struct coresight_device *csdev,
+>   				 struct coresight_device *sink,
+> -				 struct list_head *path)
+> +				 struct list_head *path,
+> +				 struct coresight_device *source)
+>   {
+>   	int i, ret;
+>   	bool found = false;
+> @@ -814,7 +865,7 @@ static int _coresight_build_path(struct coresight_device *csdev,
+>   
+>   	if (coresight_is_percpu_source(csdev) && coresight_is_percpu_sink(sink) &&
+>   	    sink == per_cpu(csdev_sink, source_ops(csdev)->cpu_id(csdev))) {
+> -		if (_coresight_build_path(sink, sink, path) == 0) {
+> +		if (_coresight_build_path(sink, sink, path, source) == 0) {
+>   			found = true;
+>   			goto out;
+>   		}
+> @@ -825,8 +876,12 @@ static int _coresight_build_path(struct coresight_device *csdev,
+>   		struct coresight_device *child_dev;
+>   
+>   		child_dev = csdev->pdata->out_conns[i]->dest_dev;
+> +		if (csdev->pdata->out_conns[i]->source_label &&
+> +			!strstr(kobject_get_path(&source->dev.kobj, GFP_KERNEL),
+> +				csdev->pdata->out_conns[i]->source_label))
+> +			continue;
+>   		if (child_dev &&
+> -		    _coresight_build_path(child_dev, sink, path) == 0) {
+> +		    _coresight_build_path(child_dev, sink, path, source) == 0) {
+>   			found = true;
+>   			break;
+>   		}
+> @@ -871,7 +926,7 @@ struct list_head *coresight_build_path(struct coresight_device *source,
+>   
+>   	INIT_LIST_HEAD(path);
+>   
+> -	rc = _coresight_build_path(source, sink, path);
+> +	rc = _coresight_build_path(source, sink, path, source);
+>   	if (rc) {
+>   		kfree(path);
+>   		return ERR_PTR(rc);
+> diff --git a/drivers/hwtracing/coresight/coresight-platform.c b/drivers/hwtracing/coresight/coresight-platform.c
+> index 9d550f5697fa..f553fb20966d 100644
+> --- a/drivers/hwtracing/coresight/coresight-platform.c
+> +++ b/drivers/hwtracing/coresight/coresight-platform.c
+> @@ -205,6 +205,7 @@ static int of_coresight_parse_endpoint(struct device *dev,
+>   	struct fwnode_handle *rdev_fwnode;
+>   	struct coresight_connection conn = {};
+>   	struct coresight_connection *new_conn;
+> +	const char *label;
+>   
+>   	do {
+>   		/* Parse the local port details */
+> @@ -243,6 +244,10 @@ static int of_coresight_parse_endpoint(struct device *dev,
+>   		conn.dest_fwnode = fwnode_handle_get(rdev_fwnode);
+>   		conn.dest_port = rendpoint.port;
+>   
+> +		conn.source_label = NULL;
+> +		if (!of_property_read_string(ep, "label", &label))
+> +			conn.source_label = label;
+> +
+>   		new_conn = coresight_add_out_conn(dev, pdata, &conn);
+>   		if (IS_ERR_VALUE(new_conn)) {
+>   			fwnode_handle_put(conn.dest_fwnode);
+> diff --git a/include/linux/coresight.h b/include/linux/coresight.h
+> index e8b6e388218c..a9c06ef9bbb2 100644
+> --- a/include/linux/coresight.h
+> +++ b/include/linux/coresight.h
+> @@ -167,6 +167,7 @@ struct coresight_desc {
+>    * struct coresight_connection - representation of a single connection
+>    * @src_port:	a connection's output port number.
+>    * @dest_port:	destination's input port number @src_port is connected to.
+> + * @source_label: source component's label.
+>    * @dest_fwnode: destination component's fwnode handle.
+>    * @dest_dev:	a @coresight_device representation of the component
+>   		connected to @src_port. NULL until the device is created
+> @@ -195,6 +196,7 @@ struct coresight_desc {
+>   struct coresight_connection {
+>   	int src_port;
+>   	int dest_port;
+> +	const char *source_label;
+>   	struct fwnode_handle *dest_fwnode;
+>   	struct coresight_device *dest_dev;
+>   	struct coresight_sysfs_link *link;
 
-Right, that's what I described in the mail you replied to but that still
-doesn't answer what triggers those mode sets.
- 
-> > Here a commit comes in; what exactly are you suggesting would trigger
-> > that? And in such a way that it breaks the state machine?
-
-> Like we have seen, the commit can either come directly from userspace as 
-> one last frame (the original bug I had given the link to) or from the 
-> __drm_fb_helper_restore_fbdev_mode_unlocked() which happened in 
-> sc8280xp's case. This is totally independent of the hpd_thread() with no 
-> mutual exclusion.
-
-Right . Still not sure about the details about "that last frame" issue,
-that you saw in the past, and if that's still an issue or not. You
-claimed that you had fixed that, right?
-
-> This commit() can come before the link_ready was set to false. If it had 
-> come after link_ready was set to false, atomic_check() would have failed 
-> and no issue would have been seen.
-> 
-> My change is making the link_ready false sooner in the disconnect case.
-
-Yes, but again, and as you have confirmed, you're only papering over the
-issue at such a mode set can still come in before you set link_state to
-false.
- 
-> > One way this could cause trouble is if you end up with a call to
-> > dp_bridge_atomic_post_disable() which updates the state to
-> > ST_DISCONNECTED. (1)
-> > 
-> > This would then need to be followed by another call to
-> > dp_bridge_atomic_enable() which bails out early with the link clock
-> > disabled. (2) (And if link_ready were to be set to 0 sooner, the
-> > likelihood of this is reduced.)
-> > 
-> > This in turn, would trigger a reset when dp_bridge_atomic_disable() is
-> > later called.
-
-> Yes, this is exactly what I have written above.
-
-Thanks for confirming.
-
-> > This is the kind of description of the race I expect to see in the
-> > commit message, and I'm still not sure what would trigger the call to
-> > dp_bridge_atomic_post_disable() and dp_bridge_atomic_enable() (i.e. (1)
-> > and (2) above) and whether this is a real issue or not.
-> 
-> I have explained what triggers the disable/enable call below.
-> 
-> > Also note that the above scenario is quite different from the one I've
-> > hit and described earlier.
-
-> Why is that so? Eventually it will also translate to the same scenario. 
-> I would like to understand why this is different. I think in your case, 
-> probably we do not know what triggers the modeset, but its a minor 
-> detail like I have written before.
-
-The state transitions are different and the enable event comes in
-before the bridge has been fully tore down unlike in the scenario we
-outlined above.
-
-And it's certainly not a minor detail, as in the sc8280xp VT case,
-those spurious hotplug events that trigger the atomic_enable would not
-have caused any trouble if it wasn't for the case that the bridge was
-stuck in the ST_MAINLINK_READY state.
-
-That explains why the hotplug notification revert in rc7 made a
-difference on sc8280xp. 
-
-You're talking about an entirely different and, as far as I can tell,
-hypothetical scenario where are user executes a modeset while pulling
-the plug. This is certainly not why we had a number of user suddenly
-starting to hit this crash after they upgraded to 6.8-rc1.
-
-And, just to be clear, we know what triggers the modeset in the VT case,
-and I posted a detailed explanation with a strack trace here:
-
-	https://lore.kernel.org/lkml/Ze8Ke_M2xHyPYCu-@hovoldconsulting.com/
-
-> >> It will be hard to reproduce this. Only way I can think of is to delay
-> >> the EV_NOTIFICATION for sometime and see in dp_bridge_hpd_notify()
-> >>
-> >>           else if (dp_display->link_ready && status ==
-> >> connector_status_disconnected)
-> >>                   dp_add_event(dp, EV_HPD_UNPLUG_INT, 0, 0);
-> >>
-> >> as dp_add_event() will add the event, then wakeup the event_q.
-> > 
-> > Sure that would increase the race window with the current code, but that
-> > alone isn't enough to trigger the bug AFAICT.
-> > 
-> >> Before the event thread wakes up and processes this unplug event, the
-> >> commit can come in. This is the race condition i was thinking of.
-> > 
-> > Yes, but what triggers the commit? And why would it lead to a mode set
-> > that disables the bridge?
-
-> Commit was triggered from the userspace as it did not process the 
-> disconnect event on time and the userspace was triggering a couple of 
-> modesets by by changing the mode on the CRTC from 1080P to NONE to 1080P.
-> 
-> [drm:drm_atomic_helper_check_modeset] [CRTC:60:crtc-1] mode changed
-
-But *why* would user space do that? Pushing out another frame would
-generally not trigger a modeset, right?
-
-And as I've alluded to repeatedly, your patch only seems concerned with
-something like the above, where a hypothetical user space is triggering
-modesets after receiving a notification.
-
-And we know that that is not relevant for the crashes I've seen as there
-is no user space processing any events in my VT or X setup.
-
-Johan
 
