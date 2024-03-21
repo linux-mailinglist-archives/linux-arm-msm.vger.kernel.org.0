@@ -1,180 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-14689-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14690-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 555BB8854EB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 08:25:29 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B4E21885516
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 08:50:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AFBDBB2151F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 07:25:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0FF8AB21371
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 07:50:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A21251C50;
-	Thu, 21 Mar 2024 07:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 726B757894;
+	Thu, 21 Mar 2024 07:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CEC1ytEu"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NEDZBoRy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C69A3A29F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Mar 2024 07:25:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A09EA41E4E;
+	Thu, 21 Mar 2024 07:50:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711005921; cv=none; b=iDuOoNWHxu903BDk6IxUy89THXehlEesWysuN1kvwBZ98Xi1dh3dlmKx9IhWqN0nYP5CaPkdJIL0kUi00diIwmkTR/0s3LH6Vl6pEECCUnjUrLBp1mf2gx6HVKlVBt/oRA75B1u9DBibJhIQgEYJ30frcBHKVsWmwEipTnDxpz4=
+	t=1711007411; cv=none; b=a92rIZFM7E7++IEeJJ6CIlc/151nt1UxgdxyLGbJMvK/RXA2UOEz6wiI12TRqjdwIDCZi3BMgiCgkzeWw9fRB5TqfAKw2qNLrnyiOAp4VrfNRaQE+wS8S4maOeOCw+f6tk+Z2efSYyNBExM70GIIKB/Bjl2xJWYyOGEtFq561tU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711005921; c=relaxed/simple;
-	bh=SQYENTXYS/IBQjccIXgLfwO104lv0QCzfCjn0Q0BqZU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=D3N2sbRGXr1HNqHiRB+VqwnK52Jrt72r4O39bCHz0+uYBqkfzPEZEWp0Gc86Ne2AxFwp3XqX0vYwiuyiVMwJ552Lpv4gKpVbjvZxWkvAVnXOQjjMUgSRvk66bS3wghXdegIij0AqTFCRaq+0PoKsfSnFOQZ+dUsQljrYLemuq/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CEC1ytEu; arc=none smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-56b85146589so1180408a12.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Mar 2024 00:25:19 -0700 (PDT)
+	s=arc-20240116; t=1711007411; c=relaxed/simple;
+	bh=FNRcqeDJ23ezcSIiELqF9WTGRyuefiXNZGwjyBGo8MY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=L2CGSzlmGGaj18XSdoAAEDXum9C9SAGdJMOnHmqiJpOBiMgh5hHXi053mrUJzXMRnhmIBrW9nXHJj4ZI+NN/Ru6wioMvnEOmS8LUJTQuaF/1fGKPxXKv3Ctw2P4de8CZD/zOg+QD/HW9HY37+zZ6Xzx2Uk6+PeY6bco4Pwyid6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NEDZBoRy; arc=none smtp.client-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2d46dd8b0b8so9082791fa.2;
+        Thu, 21 Mar 2024 00:50:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711005918; x=1711610718; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=dW/DVr6H9lxXs8kj3uemHI4cq9jKqtvmA1r7vUJK6aQ=;
-        b=CEC1ytEu7SS2BPDZYPJMOdzoU7nwGASq0KL5485UxTcAsVKR4OHVwctE88JphJghc0
-         0qx9nkxz+WqIkwZRW66oH8XaPxixHaGJL4qzWQTmNvfhN+Jcx6ykqnPc4yR2q5J1rJmp
-         e+YsmfNLwQIPi0YrhxVkMrOGb9OcFOtd5kfObrfmInsVf6DuUd7FjCMvmoUSls86iVoa
-         aJ9in6HL6VYbVOR27p6L/LCpNv9psMSlXE38JEgDZ9BdUmwOUKJTcqMdsKd1fEZfED6c
-         VA5dMTN+EJziuv8M1wsizMIMIat4H02Xg1sjNu65DD13BfN3K30qPpOLL64HSMY8Xcsd
-         TaLg==
+        d=gmail.com; s=20230601; t=1711007408; x=1711612208; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vGccOu1VKuavIsm40qKIEGM+Cd72GKkJnR7gjFgC8Ik=;
+        b=NEDZBoRy18rx6bRSGZgrVVxToMZqMfhuNtzr+kINetHN9KW6EGkkXHqjpEchsvh4Xd
+         JweEIG2ViguGiuHLHCzsnuC/KwhmwIhhYUBSg5Vbx0V40Nh5pbzIMqmA2X7Smiq9+/kK
+         7J19d3psDhNTh+sbxvfxQ+9QTMlIguWr8SJ1R3CMMXIzdQE6QTzaZboL9l8KwHx20Aox
+         g0ODFbhxQEd6eYqMxa2Q6KU4Mmjrdx+8lVsS5wAams85HtFtKOxZ0mSj4YyVQRQdk95M
+         rQnn3mfpdU1QjccD6cSJsZh8nPmXRYLlqe+SSAYwyEK/jLRjoKMC/rpfYb2bZq1M69j+
+         ThPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711005918; x=1711610718;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1711007408; x=1711612208;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=dW/DVr6H9lxXs8kj3uemHI4cq9jKqtvmA1r7vUJK6aQ=;
-        b=MIBXx+BoGWu3V/qWzDit5OS1sWawBQzanngVsQMSausNIVf7hvbpPLJs5ntlfIS74b
-         4mb6kVIOPyZ18P/mwQylLrebjW/dyZ7augfQcL1Jcul7cLIVicMYgWqMFOTX9ShDC8D8
-         xKynaxh9bHGz1hnXH7Pzol4Yz2R6JIZa35CUw6zMqTTyPMnj+Xr+7MPpG/5a4taD5c2b
-         s8iyn+d2qnEi0SF5cz+sesMhgWs0WVlQQAAq48rA2hphx7/KgONVV+sffG2h4ybS1gFl
-         C2gLff/cRSMwt7RzK9VGHifCszT6vH1n8yVZ63sc4vFRLGtlE1kD32T7N1sK9HupS8xJ
-         iWqw==
-X-Forwarded-Encrypted: i=1; AJvYcCXrGy21hcZGnjAERa+ncqbSYJyNJjPyVE0S7asSA+uRu+JQDRMN+geZZUs+3gWYylVKXkJyk5AdyfEmFzTDdpQHwmbym8BLCGGyz1aB7Q==
-X-Gm-Message-State: AOJu0YzFDVSt0HIDefXsDH/7vBIQIE+xUhhe6cOs/7grxLy+oEaGQsxo
-	RJ7Dj11WVrv3odWrE/MCGEbv5tC7UtOnk+o1QdHA70usdXiNafz3wSO2mMJVYMg=
-X-Google-Smtp-Source: AGHT+IHWwIH8of0S0V3kJihlWI36GOZcqY3zh8uiP8wMtrqpKL4zCWfNie8voIhlde61btxAhfckMA==
-X-Received: by 2002:a50:9b4c:0:b0:567:efec:6d81 with SMTP id a12-20020a509b4c000000b00567efec6d81mr1755502edj.11.1711005917779;
-        Thu, 21 Mar 2024 00:25:17 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.222.97])
-        by smtp.gmail.com with ESMTPSA id fe4-20020a056402390400b00567e27c72c4sm7707124edb.62.2024.03.21.00.25.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Mar 2024 00:25:17 -0700 (PDT)
-Message-ID: <4079ddcf-425d-4194-93b8-ee113864541e@linaro.org>
-Date: Thu, 21 Mar 2024 08:25:15 +0100
+        bh=vGccOu1VKuavIsm40qKIEGM+Cd72GKkJnR7gjFgC8Ik=;
+        b=N/uJShz2dJxoGIXbcbi+YX+MbaUkli3GBngh+HtFKjHV+Sm5SjmP7wdYs5zUaP8nfQ
+         twTM7+okhAnvLg8RRnXdkLbpJa2pKRTy+XrJG8zk7mtvZnqEVM/5Vtwg7x0HKMFD+qQh
+         UcvYeCYfOxvmRFQa/4FHs84aq67VLGfPgKdCR06dlgT08fD6Ylbs/18wfM4e/JSkdtIU
+         bkONlJBDqV9GNsg0tqPX+im9uMb1rSDoa0keubP1p46NdI24s6LS+of+HxYQtX2V2yqJ
+         DG2q15dlnqk1LtvDT/5mzL5pRGLA2aLhMaTRgQm4cN9/F8m45rihjg2pwcveqdCoiUzI
+         hF7A==
+X-Forwarded-Encrypted: i=1; AJvYcCUB3+DEJEoCsQWcS/EcEvuTd40moMxUmv6yewYap+23nZGDA0HtuvY3QqhATlZoKdOIaHVCVQGy2ZrNZLS9OTmcDOnYERC8HDtCGyNdOIbcLGzSeKdvuhX1g6eu5A0mnLviAIootspg
+X-Gm-Message-State: AOJu0YyWMybtsd7zpGYuE0sgb/Hf/1Mf9q4HDjJYAuhUKlINH4YHnJHo
+	Gd4CN3X01Yyxkg7uZHrxPuOn25yHF0cRkOZfigDttVZiK0dufahfBul6QlL8
+X-Google-Smtp-Source: AGHT+IEt9imL380eotJY058uuV666FxWnZeZZusAy2pnyp+RzhoWy/fZoP9F/ziYDELJF14X6PG7wg==
+X-Received: by 2002:a2e:7004:0:b0:2d4:93d3:11ab with SMTP id l4-20020a2e7004000000b002d493d311abmr10057315ljc.6.1711007407579;
+        Thu, 21 Mar 2024 00:50:07 -0700 (PDT)
+Received: from [192.168.1.253] (57657817.catv.pool.telekom.hu. [87.101.120.23])
+        by smtp.googlemail.com with ESMTPSA id p1-20020a05600c1d8100b004146bda6c32sm4637096wms.9.2024.03.21.00.50.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Mar 2024 00:50:07 -0700 (PDT)
+From: Gabor Juhos <j4g8y7@gmail.com>
+Subject: [PATCH v2 0/6] clk: qcom: apss-ipq-pll: various cleanups
+Date: Thu, 21 Mar 2024 08:49:53 +0100
+Message-Id: <20240321-apss-ipq-pll-cleanup-v2-0-201f3cf79fd4@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] clk: qcom: add IPQ9574 interconnect clocks support
-To: Varadarajan Narayanan <quic_varada@quicinc.com>, andersson@kernel.org,
- konrad.dybcio@linaro.org, robh@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
- mturquette@baylibre.com, sboyd@kernel.org, djakov@kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-pm@vger.kernel.org
-References: <20240321043149.2739204-1-quic_varada@quicinc.com>
- <20240321043149.2739204-3-quic_varada@quicinc.com>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240321043149.2739204-3-quic_varada@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKHm+2UC/22NQQ6CMBBFr0Jm7Zi20khdeQ/DoqFTmKRAbZVoC
+ He3krhz+V7y318hU2LKcKlWSLRw5nkqoA4VdIOdekJ2hUEJVYuT1GhjzsjxjjEE7ALZ6RnRSjL
+ GeuMaXUOZxkSeX3v21hYeOD/m9N5fFvm1v2DzP7hIFKiVPxtdK+O0u/aj5XDs5hHabds+kfQWN
+ 7gAAAA=
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Gabor Juhos <j4g8y7@gmail.com>
+X-Mailer: b4 0.12.3
 
-On 21/03/2024 05:31, Varadarajan Narayanan wrote:
-> Unlike MSM platforms that manage NoC related clocks and scaling
-> from RPM, IPQ SoCs dont involve RPM in managing NoC related
-> clocks and there is no NoC scaling.
+This series contains a few patches to perform some cleanup in the
+apss-ipq-pll driver.
 
-If these are clocks, expose them as clocks, not as interconnects.
+The set is based on v6.8 and it depends on the following patches:
+  - "clk: qcom: apss-ipq-pll: use stromer ops for IPQ5018 to fix boot failure"
+     Link: https://lore.kernel.org/r/20240315-apss-ipq-pll-ipq5018-hang-v2-1-6fe30ada2009@gmail.com
+  - "clk: qcom: clk-alpha-pll: Stromer register cleanup"
+     Link: https://lore.kernel.org/r/20240311-alpha-pll-stromer-cleanup-v1-0-f7c0c5607cca@gmail.com
 
-> 
-> However, there is a requirement to enable some NoC interface
-> clocks for accessing the peripheral controllers present on
-> these NoCs.
-> 
-> Hence adding a minimalistic interconnect driver that can enable
-> the relevant clocks. This is similar to msm8996-cbf's usage of
-> icc-clk framework.
-> 
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/ipq9574.dtsi |  2 +
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+---
+Changes in v2:
+  - add a new patch at the end to remove the 'cbf_pll_regs' register map
+    from clk-cbf-8996.c
+  - change patch 2 to move huayra register map to clk-alpha-pll.c
+  - collect Reviewed-by tags
+  - Link to v1: https://lore.kernel.org/r/20240318-apss-ipq-pll-cleanup-v1-0-52f795429d5d@gmail.com
 
-DTS is always, ALWAYS, separate.
+---
+Gabor Juhos (6):
+      clk: qcom: apss-ipq-pll: reuse Stromer reg offsets from 'clk_alpha_pll_regs'
+      clk: qcom: apss-ipq-pll: move Huayra register map to 'clk_alpha_pll_regs'
+      clk: qcom: apss-ipq-pll: remove 'pll_type' field from struct 'apss_pll_data'
+      clk: qcom: apss-ipq-pll: constify match data structures
+      clk: qcom: apss-ipq-pll: constify clk_init_data structures
+      clk: qcom: clk-cbf-8996: use HUAYRA_APPS register map for cbf_pll
 
->  drivers/clk/qcom/gcc-ipq9574.c        | 75 ++++++++++++++++++++++++++-
->  2 files changed, 76 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> index 7f2e5cbf3bbb..efffbd085715 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> @@ -11,6 +11,7 @@
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
->  #include <dt-bindings/reset/qcom,ipq9574-gcc.h>
->  #include <dt-bindings/thermal/thermal.h>
-> +#include <dt-bindings/interconnect/qcom,ipq9574.h>
-
-Keep the order,
+ drivers/clk/qcom/apss-ipq-pll.c  | 68 ++++++++++------------------------------
+ drivers/clk/qcom/clk-alpha-pll.c | 10 ++++++
+ drivers/clk/qcom/clk-alpha-pll.h |  1 +
+ drivers/clk/qcom/clk-cbf-8996.c  | 13 +-------
+ 4 files changed, 28 insertions(+), 64 deletions(-)
+---
+base-commit: 9b65bf93985e8bd5bc5476beef59ba56f3f99697
+change-id: 20240315-apss-ipq-pll-cleanup-a1e99af9d854
 
 Best regards,
-Krzysztof
+-- 
+Gabor Juhos <j4g8y7@gmail.com>
 
 
