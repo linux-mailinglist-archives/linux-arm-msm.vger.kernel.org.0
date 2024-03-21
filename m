@@ -1,128 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-14766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87F57885FB8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 18:26:16 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C4F2A885FDE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 18:36:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 181A9B26A5D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 17:26:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E87BF1C21432
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 17:36:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3AC9133400;
-	Thu, 21 Mar 2024 17:25:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51E3884A28;
+	Thu, 21 Mar 2024 17:36:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Q5fmhoDq"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pLsl1lFM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7B5131E21
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Mar 2024 17:25:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B1128E7
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Mar 2024 17:36:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711041936; cv=none; b=cy0qrPDZU2zyblbSu4gnZ/sS5DK3FS9bj32qV3WHmkuu4ra6O/1hodr8PNj8tQid/YEKHJy6MLnfKcpdgZ5YC/t2F4DrX84NFErUrdpBNMdg+KBlHktDv0vJclt76b7919fieaM9knq2w4Rh8qG0jhh07XsqclnX1/IIjag2QeA=
+	t=1711042582; cv=none; b=EXLZavxi8eYWkSUYq31GdTpneGCYluX+BfO6q/HeUz+As3uWeHQntyUDghVpM73rkhZD5SnxTH/BUostTZ2aD00Sj8oNUx5lRT1kIi0HwH2JG207kQXMgQK0+4xn25FY5K2ZanbShmSxrrnUEMOwyyZElttei1HWIfh9osceOCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711041936; c=relaxed/simple;
-	bh=tzLyvs7HcITvZy2SLeDlzKPKDAvxzPz3QeAl0srd2kM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GO9tzB2omqDH6TbG7xrDtcPKJm+zxVkHsbkDXAb+XI3ytmky7qKbv6MBRf7Jh8HZPHCmOEv4OFf4frfy7fA71FkXqJNNVqElcBY/VsFwnoDHHiZwBxFvc+oFfZff2KGmzuCSmGWgrBdAA5fXanM6Ak5SH2pfpwHJg955zjnaDGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Q5fmhoDq; arc=none smtp.client-ip=209.85.208.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2d21cdbc85bso20188201fa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Mar 2024 10:25:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711041932; x=1711646732; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=tRBkydo4iL6GNIo9VuK+sRcHXGRAdy7FiD0d40q49mA=;
-        b=Q5fmhoDq1p7ZKB4byx+fxOQBu64C4ohyu5MfzDHeytchUE8sGzOIkWaTDhLt+oIXCu
-         vzjve0oFRgvKiaGHlxcIFmrmSaERKHNHnNLJjzChH0lR5d65c/lkFQbPuxCh6CeV8G2r
-         avbvhd2sn1YZxLJsFxtO1uYr9HYPYq9xseJy09QMMwo1suE/iNZzXZgCHjfBCKa/QeUA
-         KspEPUY1quCgYq5JXAMv5Uvsu1AMhZ0d285QADx6TcSVe377nPwhq1QvG3NGNx3yWePd
-         pB/PAWMA4zS0cE8u8pFs8WmTIr2DB7WNjYpe77AwPKDqzppcihw2XW9jB5EnzZm3Bcmd
-         U1+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711041932; x=1711646732;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tRBkydo4iL6GNIo9VuK+sRcHXGRAdy7FiD0d40q49mA=;
-        b=FlPhdc1tPo+g/IfkEJJwdexJrb8ixB2/753WLoaEeWKSgzXuNHOsS0L+le8auZF8dU
-         hkDUo5XfINlNdqaVKSVKwKO+O3AL8fjQzCGYw5JkC1hMP/WfdyJ8IyWDOoyyMT95Kmq/
-         HENmSkRL/JT9lH6cE0kVrtfzw4w5M5lepi0rOtV3UPAW9p3PgZgsD60d7DxKZYWovyKu
-         0zbVEFc/7WYsFYVHC5bolC6KyBTwH1DgwrKThWVKxBodwAu1BSwaCWWwaVzCsfW4V6XW
-         VyRZOLS206BqfkmRnqmq2coDqAmfNIp+2RDwlZtn8itdLSUPvrm2SnmTURVlNjWPukwC
-         kZXw==
-X-Gm-Message-State: AOJu0YzduqXHq4y1ALpIT3lonzCnUtoIMtRjZwT6PJgY45r1wKR6tvgD
-	Ywgq3DQJ6k+0EPiJthnF47xyD1wwfA6yiACaBS1G3nSwIAEhWQ0ADcl0HE8yzRE=
-X-Google-Smtp-Source: AGHT+IHrN9hd+5miWuYAgdozoiw3KTFiep55MuLkXG8T+NijirFPCwjWqLRb4mVSGYXrrzSiJ5bWMw==
-X-Received: by 2002:a05:651c:2ca:b0:2d4:6d12:71f7 with SMTP id f10-20020a05651c02ca00b002d46d1271f7mr117412ljo.15.1711041932431;
-        Thu, 21 Mar 2024 10:25:32 -0700 (PDT)
-Received: from [192.168.10.46] (146725694.box.freepro.com. [130.180.211.218])
-        by smtp.googlemail.com with ESMTPSA id i2-20020a05600c354200b0041464451c81sm385263wmq.20.2024.03.21.10.25.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Mar 2024 10:25:31 -0700 (PDT)
-Message-ID: <ebdeceae-62b6-4674-ab19-a3252d52f296@linaro.org>
-Date: Thu, 21 Mar 2024 18:25:30 +0100
+	s=arc-20240116; t=1711042582; c=relaxed/simple;
+	bh=470OBBVsO3jt8ezDziKuLV15PUxch078PlWsLGkY38M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=krcxlttooyOetg358K9oiYpHd0BbzMZGOnOcKHVGJpeb+olCZwIsVFSlMD6w9/YdQywd1ixfYCKwX/g+I9vf/xH7FhDcw9GsSIdlgE/cN0ZYZxYO5y2iDvN8xcSTHdmIU7xaESB3I6HYhUq0K8nzZLHjM6sXx4v8uOLa9dydplw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pLsl1lFM; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42LHV4gs011997;
+	Thu, 21 Mar 2024 17:36:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=sL5JC6R9UoOuQr92O3O8DL9F/Ylfm91tNbgFrV41SKI=; b=pL
+	sl1lFMGdg+JWyvkoJDWo+o168bITkI5mg0fuYO84YqLC7RCY7pZAMavZeL5FznrC
+	bVTWOj1J7+TD68WU83dXbhPRjZc0Llm8ub6cq9LbTJww4yqRyQDE6T9yH4iLNy5K
+	oU8Puh4blAN3uVKOfMZZAOA1DG0eq6vnFj39XuSKrJZsbNLRNeFhNtNeL17UtoHm
+	KZJryeXP5tBtpEPsgZ5kEVOOzAyzEUjOARFZc3Iepf9yMoQuEJyXI3ldOKKIRsQB
+	4DGIQrmNreJ9AqYU+/Ap7a/f2m6DjWQRYMI9FA5ODdv/L+/DdZFhElQWls2x/0kn
+	+UDw3M7nfAwmqQSpojRg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x0f1nhph7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 Mar 2024 17:36:06 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42LHa5n8015969
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 Mar 2024 17:36:05 GMT
+Received: from [10.71.109.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 21 Mar
+ 2024 10:36:02 -0700
+Message-ID: <9bac0e8c-d14d-a759-dc02-2e38301e4ef1@quicinc.com>
+Date: Thu, 21 Mar 2024 10:35:53 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/31] Clean up thermal zone polling-delay
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH] drm/msm/dpu: add support for 4:2:2 and 4:4:4 planar YCbCr
+ plane formats
 Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240319-topic-msm-polling-cleanup-v1-0-e0aee1dbcd78@linaro.org>
-From: Daniel Lezcano <daniel.lezcano@linaro.org>
-In-Reply-To: <20240319-topic-msm-polling-cleanup-v1-0-e0aee1dbcd78@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn
+ Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20240222-fd-dpu-yv16-yv24-v1-1-4aa833cdc641@linaro.org>
+ <6334793a-1204-85b3-4f91-7859b83f79ed@quicinc.com>
+ <CAA8EJpqxkY=Bk8_iAq6Yj6VGNO2UYmF2Hm6XOeE5EhJFKUpaPQ@mail.gmail.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJpqxkY=Bk8_iAq6Yj6VGNO2UYmF2Hm6XOeE5EhJFKUpaPQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Aupp1nZBHeEEljZIx3mUTyoJ-Qrbj_KO
+X-Proofpoint-ORIG-GUID: Aupp1nZBHeEEljZIx3mUTyoJ-Qrbj_KO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-21_10,2024-03-21_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ bulkscore=0 mlxlogscore=669 adultscore=0 malwarescore=0 spamscore=0
+ suspectscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403140001 definitions=main-2403210127
 
-On 19/03/2024 17:13, Konrad Dybcio wrote:
-> A trivial follow-up on the changes introduced in Commit 488164006a28
-> ("thermal/of: Assume polling-delay(-passive) 0 when absent").
+
+
+On 3/21/2024 8:43 AM, Dmitry Baryshkov wrote:
+> On Fri, 23 Feb 2024 at 22:48, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 2/22/2024 3:43 AM, Dmitry Baryshkov wrote:
+>>> The DPU driver provides support for 4:2:0 planar YCbCr plane formats.
+>>> Extend it to also support 4:2:2 and 4:4:4 plat formats.
+>>>
+>>
+>> I checked myself and also internally on this. On sm8250, the DPU planes
+>> do not support YUV444 and YUV422 (and the corresponding YVU formats).
+>>
+>> May I know what was the reference to add these formats to DPU
+>> considering that even downstream sources didn't add them?
+>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>> Full-screen (1080p@60) YV24 gave me underruns on SM8250 until I bumped
+>>> the clock inefficiency factor from 105 to 117. I'm not sure that it is a
+>>> correct way to handle it, so I'm sending this as an RFC. If we agree
+>>> that bumping the .clk_inefficiency_factor is a correct way, I'll send
+>>> v2, including catalog changes.
+>>>
+>>> I had no such issues for the YV16/YU16 formats.
+>>
+>> We don't support this too on sm8250. But interesting it worked.
 > 
-> Should probably wait until v6.9-rc1 so that the patch in question is
-> in the base tree, otherwise TZs will fail to register.
+> I have been cross-checking DPU formats list against the format list
+> from the display overview docs.
+> The DPU (and SDE FWIW) drivers supported NV16/61 and
+> UYVY/YUY2/YVYU/VYUY formats for ages, although overview does not
+> mention these semi-planar formats at all and interleaved YUV formats
+> are marked as unsupported.
 > 
-> FWIW, Compile-tested only (except 8280).
+> For reference, NV24 and NV42 also seem to work.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
 
-Are you sure these changes are correct. They are not related to commit 
-488164006a28.
+Thanks for the update.
 
-If the sensor has interrupt support, then it can specify:
+I cross-checked sm8250 format list in our internal docs to make sure 
+there is no discrepancy between those and the display overview doc.
 
-	polling-delay = <0>;
+NV16 / NV61 (linear) are marked "NOT supported" by DPU.
 
-As a zero polling value can be omitted in the DT then it can be removed.
+UYVY/YUY2/YVYU/VYUY (linear) are also marked "NOT supported".
+
+So the markings are correct.
+
+If you notice a discrepancy between our dpu formats list in the driver 
+and what is marked as "supported" in the display overview docs, that is 
+something we can investigate and get fixed.
+
+If you are running some standalone tests and reporting that formats 
+marked as "unsupported" in the display overview docs still work, we 
+cannot simply add those formats on the basis of your modetest validation 
+as your validation alone shall not supersede the marking of the design 
+teams as the system level validation of those formats is what we have to 
+go by.
+
+The formats marked unsupported shall remain unsupported by the driver 
+and QC shall not ack adding any of those.
 
 
-Then when a trip point is crossed, the interrupt fires but then it must 
-sample the temperature of the thermal zone to do the mitigation.
 
-I doubt polling-delay-passive must be removed. The changes you 
-introduced just disable the mitigation and that will lead to board wild 
-reboots.
 
--- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
-
+> 
+> --
+> With best wishes
+> Dmitry
 
