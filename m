@@ -1,127 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-14760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14761-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44B61885C5B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 16:44:38 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ECFD1885C8E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 16:51:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E7CD71F21998
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 15:44:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 29E1B1C22C06
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 15:51:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7D5186246;
-	Thu, 21 Mar 2024 15:43:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DADAA86263;
+	Thu, 21 Mar 2024 15:51:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="A47I8TVF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oBKDKkH3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65AE85278
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Mar 2024 15:43:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F651E879;
+	Thu, 21 Mar 2024 15:51:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711035820; cv=none; b=qcMDze9E2OyUfvbwRAvwReZ6iQygJGchrokPEezoMGtaI+/4eESDhMU7IIAhhNYk2iHC/N0Dj6ydNEwO6HFM1/mNjxvUWwUb5Xf/B6cmcNm47mCBDAlo3sPUgvV/RTuS8U6EA7SHYgnvazclY1SiJY3scbwFrTUoaSO4vswMSBo=
+	t=1711036267; cv=none; b=RUN/U7OXRfQjungU32Wted7uMEoVwa/oAb5SAYIIgj8VPYHSKZvtZq6o3t+7VS++xkyO7bBoTqsjBwDILb5IssHx2W4nmCjhSL3brE+qaCeToN9HnBOpJcmoKQWdMEBV5nsMY642pW5wRJ98z8UY5Gpx9IN2SQ+/zTJwKgEbUsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711035820; c=relaxed/simple;
-	bh=UpgzR9qYFt2DVUXh+ZlrB3kv/cSpRH2o+XXZxpbADmA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=daG0GJxhRSj64bAAu7GnbUc65Yg5zCq2dPUE0L5uL1YuyPwTqzA6oZCo/E0ydF/j6PuUmUAN1fuQwFB28r55q2a0VrOWMUYqApLE73MczpYQ/ki5WOcBFgs5ERvJKSNJRgqvF/QcjqeUmwtLcvx7zhggsdIO7VcHfXbroTMKv2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=A47I8TVF; arc=none smtp.client-ip=209.85.219.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-dc74e33fe1bso1136621276.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Mar 2024 08:43:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711035818; x=1711640618; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=UpgzR9qYFt2DVUXh+ZlrB3kv/cSpRH2o+XXZxpbADmA=;
-        b=A47I8TVFY++vYuiuIaXh1tUlk7NTpPs8rwdGVtCdPjwvNbQx5JnILbGTftKxNJ0ewk
-         ZAqp0jaNr6dYNqU+IvtggyzLUQTcHcrPKxoMq3Yx71RXS/VxwGi/b1ny/eDi6J1o48xm
-         43pPp023pJTYlccgp83ZQe68dG2G9a4IxQRws3CJ/RfCqoT8mk7GhR4jFVS/7DSHGo7W
-         jxTZMSOpG7tR6MHJetDooSSQPrLVl8+jh+ywxirhOVFizrh4reEG4QUo/sybYmyf0pou
-         /crpHpqcMBdKADMb21vL//OzZCKkbfq2ofbnYhZuwsigdM2wUdDvIHcQB/DGl5w8E+/B
-         lVqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711035818; x=1711640618;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UpgzR9qYFt2DVUXh+ZlrB3kv/cSpRH2o+XXZxpbADmA=;
-        b=fNSC3hI0FojlQlBzYjuSErvoM32UPEkYXvEEqPe/RdomHIwxrd+gXZOg0QUQWzFdx2
-         JLJEURJdvkIqHZcB0ww1X5kHpkPS29geFd975yxRSKOubFSKb7vp+zfIGNSvaARVmSca
-         EvdE+4nDJRS2KEQWLDsz3DnI3Z4/SUoae2gbvQ38U4KOx4eOMuwxFo9LcOkH0y8txoDA
-         Dkb8S8S4kTyaFy1d7kV3RTdpUKGwcAboseH7mpXKeYk2wXAZa9U8LmNjXClJ+mhq63Bw
-         waEmufGcuknekmYJ0ugUDnqVBezfXUQixyhNzVUlq5iilNlay/ujKXm3msX3wNMPidsz
-         M8qg==
-X-Forwarded-Encrypted: i=1; AJvYcCXzQcu8xxPBxAxvDsok+3wCoh8iY6jhetfy8VM4x7OFOoVrGauDf/AtUQqKXWWlHqVtfOu6cRqacK0kObC1gjyATTqghWh5WtRZWXd/Fg==
-X-Gm-Message-State: AOJu0YypjgAr3FOrSTE49qfYF/SPP30dHRNFw84xUXKoi8oJOJjKrNyx
-	AYSGC9uz/IiVTVKC1nxUvaTxK365iaSxqoQaVjfY8kvxGCcuaDp4b5FfkYVLNyxRfhGiufcNSel
-	SIu2ZB4mIJQfojRcmj4BO74vpitsUQXgF9qX4Ngwyo4QnaetPZDs=
-X-Google-Smtp-Source: AGHT+IHvO2gpoo35hpbPazduMDS3YRusSo/Zx0sw5zMx7Ip/e9xHwuH2gpf2tlgkpO9357jnNImek1UHtxy3YWbuZJY=
-X-Received: by 2002:a25:b213:0:b0:dcf:bc86:1020 with SMTP id
- i19-20020a25b213000000b00dcfbc861020mr8347225ybj.53.1711035817909; Thu, 21
- Mar 2024 08:43:37 -0700 (PDT)
+	s=arc-20240116; t=1711036267; c=relaxed/simple;
+	bh=NcoABh9qQqWyHeyP/BJpH8RDi7iEiqb/AKOW3kyJ7Hk=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=enr9cjIK/XHfqpvKswRRpQZG8xQaFAXHEQpTtLhRfI0zPRd7J2x2s7NWFT1zbZQIacZl0nNe9OFLcIy6rD8Ec2JyOB8CoNDst2JFXAf4EAyZvWwa4mQcZOc8XWsLlBwG+ioWRBMmDgoEa8YNkC9V1wAnOohvaf8fOlJvjjCdzms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oBKDKkH3; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42LFOW30010746;
+	Thu, 21 Mar 2024 15:50:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=FRj4LVlZr5NDfUAqAPS+X
+	NAuH+YYahtbNBB1SbEdMAM=; b=oBKDKkH38UMpT2lFxBJvGBHAI7ipNAdSu7t7d
+	xYezGRKPqmIGRvI9X+rvP5942Kq9O6LQ7V5NpoaxzaMH53PFRZP2Yvf34mUpiL8F
+	Mb+MCyUa2LCAU2UtYIA9BzaVVRcbq21eqd0V6XCaC7Aw22UgNWhOidTKpSgCuBkn
+	iYygFm7MNNdAOcuLjMZA4HSHMyZFqyXVVYxMgIo7NSC8VtcjqcxkfMuWnEpJsr2G
+	CW01W4OGJbcKRHzS5ma7EdsfzsLU64Jc5MN5d8MdMAdeqIWqbmn/sOQNQVhem/SO
+	U5RAwycD/5U8avMp2SDcN/u+OLLEuKVpxlDTtm6sMkosKlNfA==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x0f1nhd6w-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 Mar 2024 15:50:58 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42LFovDG006831
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 Mar 2024 15:50:57 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Thu, 21 Mar 2024 08:50:53 -0700
+Date: Thu, 21 Mar 2024 21:20:49 +0530
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: Rob Herring <robh@kernel.org>
+CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>, <djakov@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH 1/2] dt-bindings: interconnect: Add Qualcomm IPQ9574
+ support
+Message-ID: <ZfxXWaNzJoai6VpV@hu-varada-blr.qualcomm.com>
+References: <20240321043149.2739204-1-quic_varada@quicinc.com>
+ <20240321043149.2739204-2-quic_varada@quicinc.com>
+ <20240321143549.GA1679970-robh@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240222-fd-dpu-yv16-yv24-v1-1-4aa833cdc641@linaro.org> <6334793a-1204-85b3-4f91-7859b83f79ed@quicinc.com>
-In-Reply-To: <6334793a-1204-85b3-4f91-7859b83f79ed@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 21 Mar 2024 17:43:26 +0200
-Message-ID: <CAA8EJpqxkY=Bk8_iAq6Yj6VGNO2UYmF2Hm6XOeE5EhJFKUpaPQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dpu: add support for 4:2:2 and 4:4:4 planar YCbCr
- plane formats
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20240321143549.GA1679970-robh@kernel.org>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: S01h8yhEomAX6KFUw1hiZzgJAvomdgE-
+X-Proofpoint-ORIG-GUID: S01h8yhEomAX6KFUw1hiZzgJAvomdgE-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-21_10,2024-03-21_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ bulkscore=0 mlxlogscore=999 adultscore=0 malwarescore=0 spamscore=0
+ suspectscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403140001 definitions=main-2403210115
 
-On Fri, 23 Feb 2024 at 22:48, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->
->
->
-> On 2/22/2024 3:43 AM, Dmitry Baryshkov wrote:
-> > The DPU driver provides support for 4:2:0 planar YCbCr plane formats.
-> > Extend it to also support 4:2:2 and 4:4:4 plat formats.
+On Thu, Mar 21, 2024 at 09:35:49AM -0500, Rob Herring wrote:
+> On Thu, Mar 21, 2024 at 10:01:48AM +0530, Varadarajan Narayanan wrote:
+> > Add master/slave ids for Qualcomm IPQ9574 Network-On-Chip
+> > interfaces. This will be used by the gcc-ipq9574 driver
+> > that will for providing interconnect services using the
+> > icc-clk framework.
 > >
->
-> I checked myself and also internally on this. On sm8250, the DPU planes
-> do not support YUV444 and YUV422 (and the corresponding YVU formats).
->
-> May I know what was the reference to add these formats to DPU
-> considering that even downstream sources didn't add them?
->
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 > > ---
-> > Full-screen (1080p@60) YV24 gave me underruns on SM8250 until I bumped
-> > the clock inefficiency factor from 105 to 117. I'm not sure that it is a
-> > correct way to handle it, so I'm sending this as an RFC. If we agree
-> > that bumping the .clk_inefficiency_factor is a correct way, I'll send
-> > v2, including catalog changes.
+> >  .../dt-bindings/interconnect/qcom,ipq9574.h   | 62 +++++++++++++++++++
+> >  1 file changed, 62 insertions(+)
+> >  create mode 100644 include/dt-bindings/interconnect/qcom,ipq9574.h
 > >
-> > I had no such issues for the YV16/YU16 formats.
+> > diff --git a/include/dt-bindings/interconnect/qcom,ipq9574.h b/include/dt-bindings/interconnect/qcom,ipq9574.h
+> > new file mode 100644
+> > index 000000000000..96f79a86e8d2
+> > --- /dev/null
+> > +++ b/include/dt-bindings/interconnect/qcom,ipq9574.h
+> > @@ -0,0 +1,62 @@
+> > +// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
 >
-> We don't support this too on sm8250. But interesting it worked.
+> Where did you come up with GPL-2.0+? Every other qcom interconnect
+> header is GPL-2.0-only. Is your employer okay with GPLv3 AND after?
 
-I have been cross-checking DPU formats list against the format list
-from the display overview docs.
-The DPU (and SDE FWIW) drivers supported NV16/61 and
-UYVY/YUY2/YVYU/VYUY formats for ages, although overview does not
-mention these semi-planar formats at all and interleaved YUV formats
-are marked as unsupported.
+Oops. Will fix it in the next version.
 
-For reference, NV24 and NV42 also seem to work.
-
-
---
-With best wishes
-Dmitry
+Thanks
+Varada
 
