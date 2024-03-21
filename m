@@ -1,185 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-14720-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D60DE88578D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 11:37:34 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 18D2D885830
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 12:23:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8B7E228468F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 10:37:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 963D11F21B19
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 11:23:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9156856759;
-	Thu, 21 Mar 2024 10:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43E7358229;
+	Thu, 21 Mar 2024 11:23:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="a1LcEzz/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YMLwfvcv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8E8656B89
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Mar 2024 10:37:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD7C5730C
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Mar 2024 11:23:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711017449; cv=none; b=BnB3AQloGQNbzasfy5bvGbGBKBXh0XMVIfQtRWXvXW71m0DtFYLHYpi20Dn7cJn9M4lNya2xZrjuryA3s9SdJ4Lddn5mliG3/82jce1vN5zlwJKZyECOb3Q0VOvf0QLtSxWzc3uOE8x8nOSaT4o2wJfLMh/Ao81N8X/9ApVL6IU=
+	t=1711020194; cv=none; b=CTWkE0UmmGRhH7vlABw5pc27XJDayabS6cWiAnwSfxPIaiHcGuP4RSPMdeSwq6QjzbOsBOjbsibYKBmV15A+dLtZTar+TF1/lhZpTvdec895HRzXd/jupCTfqD3lzeUFANo0tYeaAwM1EGVZS51vmHuzzVe/VAkJz/X2Kc7sKzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711017449; c=relaxed/simple;
-	bh=Q5HIPUafMl6eXevlnHQ/URvfVcm3dyhh3w+1UjS8SKU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EsR0oceWU1HVY5MJU4ejjiCbEswOrzbaxUko96e/uc0BAoTSAU76HvXl8/73geEGCKTFtHHuSOG9ZB2164vp1tLQlMwOnxzEkh7N1xZDQDcKhT1SSp+WByjg3Y2RH1P1/oOw9M9um/jwIOJ8xH6XKKeV5jWhm+rTPe8QsnLCybk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=a1LcEzz/; arc=none smtp.client-ip=209.85.219.180
+	s=arc-20240116; t=1711020194; c=relaxed/simple;
+	bh=zv9KKqUc9fAa+niST3PvZen5PrPnTLP0uZp7en464NE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=bKMaTqU5OoPDXMR4NwrH6bNjkdmgBftWT/FM7FZwxnAAS1ApfK+YhyArFpLPaT6YLv81BPTXDVvb37l8hsffowOI7wIT+8fQvKir+Bz103KRCThfTigEeA8+CTU6/1a20OeiQsgpjeU4BC56SDc7A8U4KgSuZYBDODmn49U17Q8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YMLwfvcv; arc=none smtp.client-ip=209.85.166.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-dbed179f0faso1341954276.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Mar 2024 03:37:27 -0700 (PDT)
+Received: by mail-io1-f48.google.com with SMTP id ca18e2360f4ac-7bed9fb159fso33956239f.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Mar 2024 04:23:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711017447; x=1711622247; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=rgS7vN2/6Af+74Byj9OlnJ0H2zeuQGC5P3Z2OCbZVfM=;
-        b=a1LcEzz/X2gNicqmhPQDL0qaKaEqhPmy3KaTuYNzEwowyPmBPMEcudiIYiTOdHpN9z
-         4vB9UM7pns9KfD4BYVw7HHxdmSdVxC4+QjLzPzRvJuQxgVZT9xhHZslwMZF5of9LCpFu
-         TDR8QBjnqsRAFK1FcRfju9rwbVz6vycJPH5Y+Nq9iTpgzjHpkoGWyS0cllfp3sUZ196l
-         X7bjBN6w05fflwitx2AH1B3qCd9lwS/fMtZefDz8EDhewWaIDLcN9piOqGv8zLsj9Hvi
-         S8WoeHgVpGstjC6Lf092Q5IVVQLEIVxAuddbE1Za9CmIbqeD2KDFaMuxnpJYaxxyN+n/
-         u0yw==
+        d=linaro.org; s=google; t=1711020190; x=1711624990; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=AoHRZqUApoexBQclJ0SEIArATxYn4nvqO1XMi4tAf/I=;
+        b=YMLwfvcvZtgzMxPvc6rRyyfK31zhpy6jL4EO//5w3tURgbkbjccJYlwgm+I5TH7TL3
+         IcPRk0BlUURAUQ85IY+ez7P99NwshsWyCclKJ2ntUECU4xd/TeWpto1tLHjxeA99umdp
+         IqlcL/KamWBJ1on/ciiHDNgumjFQID/sEjWZpgR7UUYSFUncScC2Thggj+Qb5d+CLc9V
+         d9LhJ2d2qbJJAPO2hQiyXwLlne/NS/4orR6pdTP2tUu6d44MuylSCG52bdLGO+EMUoGv
+         nxhbAw345tLSbq+Ji+aImF7C6lk1rx4FJy8QOcq2K+Qf61axpu4NI3oa9PeeDRvt6V3Y
+         UCPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711017447; x=1711622247;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1711020190; x=1711624990;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=rgS7vN2/6Af+74Byj9OlnJ0H2zeuQGC5P3Z2OCbZVfM=;
-        b=kMBbPvXzhQZ5qJcrCRLIFQqgr1DMyq0TOXMEnUtDH1+3UjIN5jKXh6OUSOiqsjfJOO
-         zeou/NNCaB4AjFKGA4a8tdjbRHQSPnbCru7B0U+2ErcRlmeac0SEYIkF+4SgBbopGqAl
-         4HXn6yqMRqT6MrEavd0NAtg7xRmIzN5BQfhyjDZ27pkPvxkfydRAAf7X+G1aIvGhUdrE
-         3HWD5vqn4iYaoQrZ0sGDhn41vDhGDYCEhDs7QR4FOktxwN+2GQE5yPiLe2esRNr8oNaP
-         NmmsiYX7hHHyGleHF/qO8aosJcCR5KSQVZ8Zwtg2/eCQXF3RnRQZw3jjam2NU3EScMxF
-         +2FQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWxOqS++Kncly5iofS7DMg6E0WGHRuKkrkcalFH5J/shCV1wKWiIjB9Hv93/7fmrPDfMMO1RzL6nC7nlehaKrzlXzsaph4+vDImPRniMg==
-X-Gm-Message-State: AOJu0YwQ0/sNn0ppnzYFF/t+YImWL6Z7O07rvO1CiFVywlsl9N/PN4S9
-	7VlZLxm/i6/schCSsS7ByNClZk30M/Jo5NRWJukma9ey2+n0JJuAEKNQyn1OD5V58dDiKozOAKg
-	8bq6xdcKUM6TJuBMY0A52HAHjSKJGz3o2a9fhfQ==
-X-Google-Smtp-Source: AGHT+IG2RUQPgEXkiyPfIu42ue8IopFBcxsPMrsI45xpnMh6qrZimyfxJTyJ0YmVvs0DIScxCwEfz3O2Hzr3FChTGMA=
-X-Received: by 2002:a25:808f:0:b0:dc6:d513:cd3 with SMTP id
- n15-20020a25808f000000b00dc6d5130cd3mr1365059ybk.31.1711017446673; Thu, 21
- Mar 2024 03:37:26 -0700 (PDT)
+        bh=AoHRZqUApoexBQclJ0SEIArATxYn4nvqO1XMi4tAf/I=;
+        b=VjcyhLvZWRIuvH4Bh+2rUmHqA2wKQtmLMNpEuWoUd0YkGWV0l65Ey8tYjmtDWVOa52
+         KvMuE3d2Qli4A5jUYD856X7h2mK8LHBU1JhVdLPxiSJVsj/CYnA5qo4j1WbqqGXvOKIg
+         T3j4xcbEJpkZMik/2kn2twF3ZNtT8U69jhxDhXgvTMdG7Zx9D977C9Stao8ISn3akIRY
+         92+z9RJqgW5bFUtMWzRnbpl6SNkKERBEC89DvLmYxlsCmvJ/haqHDBo0AYl0tQNbiOUD
+         kfguuIGSSdeHfkX0Zt/Nhep9n0zxZ8mEvAIRK9q4zLBqDu/FzBP6xgLKBxO3e9XYbkoV
+         3Qbw==
+X-Gm-Message-State: AOJu0YwVOjejQ/Idt5rWi3f8MR7zGJ6oPI6IMe/ZDmqXMqPbZ8yklvQW
+	U1wCujydclh4sCT+XMOe80yFbSSy8Ujs3ZhCAOG8Xl+Re2olaZztjs8ktecE1lXaxHR0LmRhzUY
+	=
+X-Google-Smtp-Source: AGHT+IFJsLv0LKyhdDZ4hWi1GEWRRF4DiaqFe0j7aUXHYQSeixrjn3jVZLnWa1Vb9aLvT3uBlbwP/Q==
+X-Received: by 2002:a05:6a21:3a84:b0:1a3:5d70:1828 with SMTP id zv4-20020a056a213a8400b001a35d701828mr4489419pzb.48.1711019795777;
+        Thu, 21 Mar 2024 04:16:35 -0700 (PDT)
+Received: from [127.0.1.1] ([2409:40f4:102b:a64b:d832:a82a:837c:6d3])
+        by smtp.gmail.com with ESMTPSA id ka6-20020a056a00938600b006e7324d32bbsm5531120pfb.122.2024.03.21.04.16.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Mar 2024 04:16:35 -0700 (PDT)
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2 00/21] Add PCIe bridge node in DT for Qcom SoCs
+Date: Thu, 21 Mar 2024 16:46:20 +0530
+Message-Id: <20240321-pcie-qcom-bridge-dts-v2-0-1eb790c53e43@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240321-apss-ipq-pll-cleanup-v2-0-201f3cf79fd4@gmail.com> <20240321-apss-ipq-pll-cleanup-v2-3-201f3cf79fd4@gmail.com>
-In-Reply-To: <20240321-apss-ipq-pll-cleanup-v2-3-201f3cf79fd4@gmail.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 21 Mar 2024 12:37:15 +0200
-Message-ID: <CAA8EJprr4E1CM4f+eBzdRN41nm33xY-hRPQDn3peR94vLyJsYQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/6] clk: qcom: apss-ipq-pll: remove 'pll_type' field
- from struct 'apss_pll_data'
-To: Gabor Juhos <j4g8y7@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAUX/GUC/4WNTQ6CMBCFr0Jm7Zh2rERdeQ/Dgv4AkyiFKSEa0
+ rtbuYDL7728722QgnBIcKs2kLBy4jgWoEMFbmjHPiD7wkCKjCLSODkOOLv4QivsS++XhPZycsp
+ rWxuyUKaThI7fu/bRFB44LVE++8uqf+kf4apRYe1q36nuas7K3588thKPUXpocs5fLDKHybkAA
+ AA=
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
+ Rob Herring <robh@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3620;
+ i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
+ bh=zv9KKqUc9fAa+niST3PvZen5PrPnTLP0uZp7en464NE=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBl/BcI0ubzqSFwVpxkGZjd+njegKvBWv5lTO3O4
+ FkM6u/CmWaJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZfwXCAAKCRBVnxHm/pHO
+ 9aYkCACWDEgfPJUitECHdt0chIpNj4kwVLqbDXVmOr8c8MxzTZESFZKLUCfNyPhr3jqiWN23u1V
+ sC+vVz0hVomQUcsf1ZsuTk7422nRScDN+DTf0GxIcmP3Z3ZDd1b47Ybe7KyxempGzW/GmHWLp1+
+ qZGi3nODxg/B4/Fk/+JplaqckHupMvIFuyAb4SgYf+AYBhuGCEJwhQBUhEhEEoAASIU1/0/4fRr
+ cbHqnOCu3bLxtQrknVHa8Y6nEWFwNSVE9EvXlPJ+guuQp6mGECJdRqYNTvE5js81RzxVP88ciLD
+ aViBc1H73jdbgEBnEB377dkzsv5PXV9cHKjsjNIj6an4kIT3
+X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
 
-On Thu, 21 Mar 2024 at 09:50, Gabor Juhos <j4g8y7@gmail.com> wrote:
->
-> The value of the 'pll_type' field of 'struct apps_pll_data'
-> is used only by the probe function to decide which config
-> function should be called for the actual PLL. However this
-> can be derived also from the 'pll' field  which makes the
-> 'pll_type' field redundant.
->
-> Additionally, the CLK_ALPHA_PLL_TYPE_* enumeration values
-> are meant to be used as indices to the 'clk_alpha_pll_regs'
-> array so using those to define the pll type in this driver
-> is misleading anyway.
->
-> Change the probe function to use the 'pll' field to determine
-> the configuration function to be used, and remove the
-> 'pll_type' field to simplify the code.
+On Qcom SoCs, the PCIe host bridge is connected to a single PCIe bridge
+for each controller instance. Hence, this series adds a DT node for the
+PCIe bridges across all SoCs.
 
-I can't fully appreciate this idea. There can be cases when different
-PLL types share the set of ops. I think having a type is more
-versatile and makes the code more obvious.
+There is no functionality change with this series, but the PCIe bridge
+representation in DT will be necessary to add the DT node for the client
+devices like the one proposed in power sequencing series [1].
 
->
-> No functional changes.
->
-> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-> ---
-> Changes in v2:
->  - no changes
->  - Link to v1: https://lore.kernel.org/r/20240318-apss-ipq-pll-cleanup-v1-3-52f795429d5d@gmail.com
-> ---
->  drivers/clk/qcom/apss-ipq-pll.c | 12 +++---------
->  1 file changed, 3 insertions(+), 9 deletions(-)
->
-> diff --git a/drivers/clk/qcom/apss-ipq-pll.c b/drivers/clk/qcom/apss-ipq-pll.c
-> index 8cf17374a2e2a..816b0d1f8d8c8 100644
-> --- a/drivers/clk/qcom/apss-ipq-pll.c
-> +++ b/drivers/clk/qcom/apss-ipq-pll.c
-> @@ -131,37 +131,31 @@ static const struct alpha_pll_config ipq9574_pll_config = {
->  };
->
->  struct apss_pll_data {
-> -       int pll_type;
->         struct clk_alpha_pll *pll;
->         const struct alpha_pll_config *pll_config;
->  };
->
->  static const struct apss_pll_data ipq5018_pll_data = {
-> -       .pll_type = CLK_ALPHA_PLL_TYPE_STROMER,
->         .pll = &ipq_pll_stromer,
->         .pll_config = &ipq5018_pll_config,
->  };
->
->  static struct apss_pll_data ipq5332_pll_data = {
-> -       .pll_type = CLK_ALPHA_PLL_TYPE_STROMER_PLUS,
->         .pll = &ipq_pll_stromer_plus,
->         .pll_config = &ipq5332_pll_config,
->  };
->
->  static struct apss_pll_data ipq8074_pll_data = {
-> -       .pll_type = CLK_ALPHA_PLL_TYPE_HUAYRA,
->         .pll = &ipq_pll_huayra,
->         .pll_config = &ipq8074_pll_config,
->  };
->
->  static struct apss_pll_data ipq6018_pll_data = {
-> -       .pll_type = CLK_ALPHA_PLL_TYPE_HUAYRA,
->         .pll = &ipq_pll_huayra,
->         .pll_config = &ipq6018_pll_config,
->  };
->
->  static struct apss_pll_data ipq9574_pll_data = {
-> -       .pll_type = CLK_ALPHA_PLL_TYPE_HUAYRA,
->         .pll = &ipq_pll_huayra,
->         .pll_config = &ipq9574_pll_config,
->  };
-> @@ -194,10 +188,10 @@ static int apss_ipq_pll_probe(struct platform_device *pdev)
->         if (!data)
->                 return -ENODEV;
->
-> -       if (data->pll_type == CLK_ALPHA_PLL_TYPE_HUAYRA)
-> +       if (data->pll == &ipq_pll_huayra)
->                 clk_alpha_pll_configure(data->pll, regmap, data->pll_config);
-> -       else if (data->pll_type == CLK_ALPHA_PLL_TYPE_STROMER ||
-> -                data->pll_type == CLK_ALPHA_PLL_TYPE_STROMER_PLUS)
-> +       else if (data->pll == &ipq_pll_stromer ||
-> +                data->pll == &ipq_pll_stromer_plus)
->                 clk_stromer_pll_configure(data->pll, regmap, data->pll_config);
->
->         ret = devm_clk_register_regmap(dev, &data->pll->clkr);
->
-> --
-> 2.44.0
->
+- Mani
 
+[1] https://lore.kernel.org/linux-arm-msm/20240216203215.40870-8-brgl@bgdev.pl/
 
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+Changes in v2:
+- Added label for bridges in sc8280xp
+- Collected reviews
+- Link to v1: https://lore.kernel.org/r/20240221-pcie-qcom-bridge-dts-v1-0-6c6df0f9450d@linaro.org
+
+---
+Manivannan Sadhasivam (21):
+      arm64: dts: qcom: sm8250: Add PCIe bridge node
+      arm64: dts: qcom: sdm845: Add PCIe bridge node
+      arm64: dts: qcom: sm8150: Add PCIe bridge node
+      arm64: dts: qcom: sm8350: Add PCIe bridge node
+      arm64: dts: qcom: sm8450: Add PCIe bridge node
+      arm64: dts: qcom: sm8550: Add PCIe bridge node
+      arm64: dts: qcom: sm8650: Add PCIe bridge node
+      arm64: dts: qcom: sa8775p: Add PCIe bridge node
+      arm64: dts: qcom: sc8280xp: Add PCIe bridge node
+      arm64: dts: qcom: msm8998: Add PCIe bridge node
+      arm64: dts: qcom: sc7280: Add PCIe bridge node
+      arm64: dts: qcom: qcs404: Add PCIe bridge node
+      arm64: dts: qcom: sc8180x: Add PCIe bridge node
+      arm64: dts: qcom: msm8996: Add PCIe bridge node
+      arm64: dts: qcom: ipq8074: Add PCIe bridge node
+      arm64: dts: qcom: ipq6018: Add PCIe bridge node
+      ARM: dts: qcom: ipq8064: Add PCIe bridge node
+      ARM: dts: qcom: ipq4019: Add PCIe bridge node
+      ARM: dts: qcom: apq8064: Add PCIe bridge node
+      ARM: dts: qcom: sdx55: Add PCIe bridge node
+      arm64: dts: qcom: sm8650: Use "pcie" as the node name instead of "pci"
+
+ arch/arm/boot/dts/qcom/qcom-apq8064.dtsi           | 10 +++++
+ arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi           | 10 +++++
+ arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi           | 30 +++++++++++++
+ arch/arm/boot/dts/qcom/qcom-sdx55.dtsi             | 10 +++++
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi              | 10 +++++
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi              | 20 +++++++++
+ arch/arm64/boot/dts/qcom/msm8996.dtsi              | 30 +++++++++++++
+ arch/arm64/boot/dts/qcom/msm8998.dtsi              | 10 +++++
+ arch/arm64/boot/dts/qcom/qcs404.dtsi               | 10 +++++
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi              | 20 +++++++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               | 10 +++++
+ arch/arm64/boot/dts/qcom/sc8180x.dtsi              | 40 +++++++++++++++++
+ .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts     | 20 +++------
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi             | 50 ++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi               | 20 +++++++++
+ arch/arm64/boot/dts/qcom/sm8150.dtsi               | 20 +++++++++
+ arch/arm64/boot/dts/qcom/sm8250.dtsi               | 30 +++++++++++++
+ arch/arm64/boot/dts/qcom/sm8350.dtsi               | 20 +++++++++
+ arch/arm64/boot/dts/qcom/sm8450.dtsi               | 20 +++++++++
+ arch/arm64/boot/dts/qcom/sm8550.dtsi               | 20 +++++++++
+ arch/arm64/boot/dts/qcom/sm8650.dtsi               | 24 ++++++++++-
+ 21 files changed, 418 insertions(+), 16 deletions(-)
+---
+base-commit: 10569bb9fb9732cec670faa38cf1460cabeffa09
+change-id: 20240221-pcie-qcom-bridge-dts-b83c0d1b642b
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
 
