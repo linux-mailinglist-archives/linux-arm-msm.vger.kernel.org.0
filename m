@@ -1,135 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-14702-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14703-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C205488561C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 09:59:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1430E885662
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 10:26:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F3E601C211CD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 08:59:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 356C21C2104C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 09:26:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 186D82A1C6;
-	Thu, 21 Mar 2024 08:59:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C57D34084A;
+	Thu, 21 Mar 2024 09:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f9F5l2CB"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ePSFgGTy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F9BB2837F;
-	Thu, 21 Mar 2024 08:59:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC7D2C6BB;
+	Thu, 21 Mar 2024 09:26:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711011556; cv=none; b=lDpEWdn/OpqPIrbvDU7uQZYEZmn8ndkr8hOkr5a7CF8Y9j5ttG1tX54skLu6kaByI4oP++clbnp18+sv71jSug0fATWfRMNV+J7mUFbaTnVe0Ynh/aav/hQEre3NegJPT9FzngrdZ/b7o0jx6S/cmbTapu/nkyM5zIpTpx7BqRU=
+	t=1711013171; cv=none; b=ewPl9hfrf7jHWAvJt7gFY2P9m3zzqsFjGjj/6HGkXUl3FuJswbitzC2yZYfCKzOA7+DWv6wlRM8gJRr21YM/gc+I+WVkzjp9nWkbIa+R2Z+5TltPoxn0KqMk8k/jtAaX5w1D8h0KNiLsYbiXIRR8CprsVlo8N1Rih6x0kgysanE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711011556; c=relaxed/simple;
-	bh=NxDbZYgwH4jpjVelX1PrNVvVGA+QrJ3WUXZ1vKbEGXI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=qBlLArkDQQyhV/zlu1TqQJlF6G54lhPUKl/l3dE0o8JeMr0FDhCfY4gB8O3SHir1/0l9tGf6nFrtEsQMZMS9bOZ/Mogd9ZJ7uCr0xmIL9d70WtLCEr75WxhvTOF3u9Xjf/1Xt3R+2TJv1xv/PUxJI/uGhL3UdxlZp4/xbnE7ds4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f9F5l2CB; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a46a7208eedso99928966b.0;
-        Thu, 21 Mar 2024 01:59:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711011552; x=1711616352; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=50OqpzaNnJv0r4pTaChj38doMx6VdmtBy+/lDzIFTC4=;
-        b=f9F5l2CB1TfcWEV4vZpYl1ojSdvlHOY4qcMY4F5nHeoxCIfIF34FbbZZ3lQTHVmsOl
-         pxSfJyVS+bDIB9pnOlHwqlpb8lYF2zgR4nT0Zv91cSxfFTMZVGMozItIZTZH1TKG7/A7
-         vpiixKafoLNt7RnThQmiLp1IFz/YQtggkayZrgg6jgffAwYjl3QyL76yAdd1XHYFq3+1
-         pdpsaxG9jWZ93C3c/AWsffsMLTg+K+00GwaFU2CS/l3ReayEUyJaa4tLey8Iifv0oXuu
-         g+oobw45r1kgPfIDlFwkQC0RG7if3ybXIVsnl/vPNaIczsALE6oRkQ91JB5f9YWL2NQU
-         1a1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711011552; x=1711616352;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=50OqpzaNnJv0r4pTaChj38doMx6VdmtBy+/lDzIFTC4=;
-        b=DcTn3nUhgLen8jkqudG3UMjOCzkBJppYwXf9sq+4O1XaW6ttVVRR+V7RRMbXQWAWtp
-         NTwQCGejaQsB8KAkmZ8kCpe7tI6mEgq/a39T2rktf46hDYWr3GwOJf7krKqiB7M0LlRi
-         empeVctTlNxDyzO14IGTcW6cxCJ/o4SBQ3GFAAR+J/CJukhQW3KGWZdSFWikp0ih2TLM
-         +k1x3Qpn/hHQyOVVZX4FpVO9fIUMIhzxiFqzVKa6ux3alVz9QJeKtptk0XcmpUPYT1nP
-         3xMeoK4IVw5ym/w4fkdxEiI9wETf25N0x3ssKC92lpY0MrnL8f+nOYMJCR6fdvxzXzbt
-         AoYg==
-X-Forwarded-Encrypted: i=1; AJvYcCUsRjJHjaoLk1jcdheuOy90RJ+zk2OaC2w752LgE2A8KEjIctYzbdgIc9Z2GXub4K1T9xqt4MAbPnvsU6PGBV/DLVacq8tmbtj3Zn/5Nr+vDpCO8NhUdGgLPFhcaJr2SAQXO4l9L1fc
-X-Gm-Message-State: AOJu0YwRw92ncdivZ5dUG+mcNfiERlvDoUWpRSFwHO2S833Xd7HrCvAk
-	U9tFT+8WOy/tLzKdgcTgE+vZvDSY+xCpaTy6oFv2KWlYHwpToZU+
-X-Google-Smtp-Source: AGHT+IHjSN1AJpIAG2e3sSoLMC5C2Cu5XoiqPCD4u42ssn18L9uLH9vYrvcZXsC4XrZGDxmYoknfRw==
-X-Received: by 2002:a17:907:3594:b0:a44:e34a:792f with SMTP id ao20-20020a170907359400b00a44e34a792fmr12557655ejc.15.1711011552419;
-        Thu, 21 Mar 2024 01:59:12 -0700 (PDT)
-Received: from [192.168.1.253] (57657817.catv.pool.telekom.hu. [87.101.120.23])
-        by smtp.googlemail.com with ESMTPSA id af3-20020a170906998300b00a469604c464sm6719582ejc.160.2024.03.21.01.59.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Mar 2024 01:59:11 -0700 (PDT)
-From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Thu, 21 Mar 2024 09:59:04 +0100
-Subject: [PATCH] clk: qcom: clk-alpha-pll: fix kerneldoc of struct
- clk_alpha_pll
+	s=arc-20240116; t=1711013171; c=relaxed/simple;
+	bh=PlwojYEi6pzpwOgwySUmkgmcNKbny4X/LINyRO/qUdg=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=dL3zqI2EpuOMBBwmdfju/o+L5Jd7Tak0LQG8Q6Q4M0FE1VOsjyt811poRZoJZN5WJdvGyqNp7s3GQH2QeUnPSSKPW+BvaZK45MCSqAfvzFQTE+XW5JL+kACk8VJOYjbqcKRyQIOYBfYmTeAMaPjgrvZQZamnzgFi0KuHB7QZJOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ePSFgGTy; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42L6Y13Q026350;
+	Thu, 21 Mar 2024 09:26:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=oMwXO0z
+	PVmYR5tmzhdeivtbshlrazKGqDzHgj+QVUFg=; b=ePSFgGTyIP5Ad5Sji0VOOpf
+	2jvYmOVqe1Az4GMBHNI+b0SjGVdg34EG2rTQFl1XdHEPFz0kx4mTnGia6HkRoM1j
+	ChyCZTnf9KxSvB/2tSSmmRWhFxIBAiUR7Q4Pbzu86FVgD4CGX6zftoGOco6ZGn2c
+	5e7XYmAL492OwX952Q/K0z3hU/ho2Z/jz88xC5li8ht+N+NmszkDiBXAACSP/RPg
+	syxA7sWN6+OeZa74YZrijRwQTy8YWbMxDhAX9L820CnDH4YRTFj6Tv8ZBHzorC6R
+	Opq/YYiSfoCemx5+glzZ3L4kGEiOArhqE9YNNrjDZZovXDnOR0oyhQLgRGZgevg=
+	=
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x0fqxgb82-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 Mar 2024 09:26:01 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42L9Q0Gx014554
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 Mar 2024 09:26:00 GMT
+Received: from hu-jkona-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Thu, 21 Mar 2024 02:25:55 -0700
+From: Jagadeesh Kona <quic_jkona@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Taniya Das
+	<quic_tdas@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        "Satya
+ Priya Kakitapalli" <quic_skakitap@quicinc.com>,
+        Ajit Pandey
+	<quic_ajipan@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>
+Subject: [PATCH V2 RESEND 0/6] Add support for videocc and camcc on SM8650
+Date: Thu, 21 Mar 2024 14:55:23 +0530
+Message-ID: <20240321092529.13362-1-quic_jkona@quicinc.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240321-alpha-pll-kerneldoc-v1-1-0d76926b72c3@gmail.com>
-X-B4-Tracking: v=1; b=H4sIANf2+2UC/x3MQQqAIBBA0avErBuY1Iq6SrSQGmtITBQiiO6et
- HyL/x/InIQzjNUDiS/JcoaCpq5g2W3YGGUtBkXKkFYNWh93i9F7PDgF9uu5oOtb6oi0MUMLpYy
- Jndz/dZrf9wNx68ONZQAAAA==
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Gabor Juhos <j4g8y7@gmail.com>
-X-Mailer: b4 0.12.3
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: cqkittiQ6jZQXccZFv4QU-qzkGe91f8j
+X-Proofpoint-GUID: cqkittiQ6jZQXccZFv4QU-qzkGe91f8j
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-21_06,2024-03-18_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
+ clxscore=1011 lowpriorityscore=0 phishscore=0 mlxlogscore=999
+ suspectscore=0 spamscore=0 priorityscore=1501 malwarescore=0 adultscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403140001 definitions=main-2403210064
 
-Add missing descriptions of the 'num_vco' and 'flags' members to
-clk_alpha_pll structure's documentation. Also reorder the member
-description entries to match the order of the declarations.
+Add support for video and camera clock controllers on Qualcomm SM8650
+platform.
 
-Eliminates the following warnings:
-  drivers/clk/qcom/clk-alpha-pll.h:72: info: Scanning doc for struct clk_alpha_pll
-  drivers/clk/qcom/clk-alpha-pll.h:91: warning: Function parameter or struct member 'num_vco' not described in 'clk_alpha_pll'
-  drivers/clk/qcom/clk-alpha-pll.h:91: warning: Function parameter or struct member 'flags' not described in 'clk_alpha_pll'
+This is a RESEND of V2 series.
+Link to V2: https://lore.kernel.org/all/20240220135121.22578-1-quic_jkona@quicinc.com/
 
-No functional changes.
+Changes in V2:
+ - Updated commit text for videocc dt-bindings patch as Krzysztof suggested
+ - Moved videocc XO clk ares to a separate patch and added fixes tag as per
+   review comments
+ - Inverted the logic in videocc probe to add new SM8650 specific videocc
+   clocks based on SM8650 compatible string as Dmitry suggested
+ - Used module_platform_driver() for SM8650 camcc driver
+ - Updated driver name from cam_cc-sm8650 to camcc-sm8650 as Bryan suggested
+ - Used qcom_branch_set_clk_en() helper to enable clocks in camcc sm8650 probe
+ - Added Krzysztof and Bryan Reviewed-by tags to dt-bindings and camcc patches
+   received in V1
+ - Link to V1: https://lore.kernel.org/linux-kernel/20240206113145.31096-1-quic_jkona@quicinc.com/T/
 
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
----
-Based on v6.8.
----
- drivers/clk/qcom/clk-alpha-pll.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Jagadeesh Kona (6):
+  dt-bindings: clock: qcom: Add SM8650 video clock controller
+  clk: qcom: videocc-sm8550: Add support for videocc XO clk ares
+  clk: qcom: videocc-sm8550: Add SM8650 video clock controller
+  dt-bindings: clock: qcom: Add SM8650 camera clock controller
+  clk: qcom: camcc-sm8650: Add SM8650 camera clock controller driver
+  arm64: dts: qcom: sm8650: Add video and camera clock controllers
 
-diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
-index a1a75bb12fe88..19717246c8b6e 100644
---- a/drivers/clk/qcom/clk-alpha-pll.h
-+++ b/drivers/clk/qcom/clk-alpha-pll.h
-@@ -71,8 +71,10 @@ struct pll_vco {
- /**
-  * struct clk_alpha_pll - phase locked loop (PLL)
-  * @offset: base address of registers
-- * @vco_table: array of VCO settings
-  * @regs: alpha pll register map (see @clk_alpha_pll_regs)
-+ * @vco_table: array of VCO settings
-+ * @num_vco: number of VCO settings in @vco_table
-+ * @flags: bitmask to indicate features supported by the hardware
-  * @clkr: regmap clock handle
-  */
- struct clk_alpha_pll {
+ .../bindings/clock/qcom,sm8450-camcc.yaml     |    3 +
+ .../bindings/clock/qcom,sm8450-videocc.yaml   |    4 +-
+ arch/arm64/boot/dts/qcom/sm8650.dtsi          |   28 +
+ drivers/clk/qcom/Kconfig                      |    8 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/camcc-sm8650.c               | 3591 +++++++++++++++++
+ drivers/clk/qcom/videocc-sm8550.c             |  154 +-
+ .../dt-bindings/clock/qcom,sm8450-videocc.h   |    8 +-
+ include/dt-bindings/clock/qcom,sm8650-camcc.h |  195 +
+ 9 files changed, 3986 insertions(+), 6 deletions(-)
+ create mode 100644 drivers/clk/qcom/camcc-sm8650.c
+ create mode 100644 include/dt-bindings/clock/qcom,sm8650-camcc.h
 
----
-base-commit: e8f897f4afef0031fe618a8e94127a0934896aba
-change-id: 20240321-alpha-pll-kerneldoc-f75060034495
-
-Best regards,
 -- 
-Gabor Juhos <j4g8y7@gmail.com>
+2.43.0
 
 
