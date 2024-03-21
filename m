@@ -1,125 +1,233 @@
-Return-Path: <linux-arm-msm+bounces-14761-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ECFD1885C8E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 16:51:12 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C18C885EB9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 17:54:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 29E1B1C22C06
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 15:51:12 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8CC82B24AEC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 16:54:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DADAA86263;
-	Thu, 21 Mar 2024 15:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8C7017590;
+	Thu, 21 Mar 2024 16:40:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oBKDKkH3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mQYwfrRK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F651E879;
-	Thu, 21 Mar 2024 15:51:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E91112B7E;
+	Thu, 21 Mar 2024 16:40:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711036267; cv=none; b=RUN/U7OXRfQjungU32Wted7uMEoVwa/oAb5SAYIIgj8VPYHSKZvtZq6o3t+7VS++xkyO7bBoTqsjBwDILb5IssHx2W4nmCjhSL3brE+qaCeToN9HnBOpJcmoKQWdMEBV5nsMY642pW5wRJ98z8UY5Gpx9IN2SQ+/zTJwKgEbUsw=
+	t=1711039258; cv=none; b=L3XaVyLriFyUeE3dFEiTy4BRR73zwSZje6WCqamQtsfOkoekwzJowyEtoIPFwK1fixEWgrh/+K4qHW3Lk+qaGjpwUzZPV+b50M1ikxZwLJnOfTP8y4/6tVoSzZnGaEIVF4fH2Qqf2drr63M+YcxqUgf4k6HIinG2bFuoFNXmtGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711036267; c=relaxed/simple;
-	bh=NcoABh9qQqWyHeyP/BJpH8RDi7iEiqb/AKOW3kyJ7Hk=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=enr9cjIK/XHfqpvKswRRpQZG8xQaFAXHEQpTtLhRfI0zPRd7J2x2s7NWFT1zbZQIacZl0nNe9OFLcIy6rD8Ec2JyOB8CoNDst2JFXAf4EAyZvWwa4mQcZOc8XWsLlBwG+ioWRBMmDgoEa8YNkC9V1wAnOohvaf8fOlJvjjCdzms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oBKDKkH3; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42LFOW30010746;
-	Thu, 21 Mar 2024 15:50:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=FRj4LVlZr5NDfUAqAPS+X
-	NAuH+YYahtbNBB1SbEdMAM=; b=oBKDKkH38UMpT2lFxBJvGBHAI7ipNAdSu7t7d
-	xYezGRKPqmIGRvI9X+rvP5942Kq9O6LQ7V5NpoaxzaMH53PFRZP2Yvf34mUpiL8F
-	Mb+MCyUa2LCAU2UtYIA9BzaVVRcbq21eqd0V6XCaC7Aw22UgNWhOidTKpSgCuBkn
-	iYygFm7MNNdAOcuLjMZA4HSHMyZFqyXVVYxMgIo7NSC8VtcjqcxkfMuWnEpJsr2G
-	CW01W4OGJbcKRHzS5ma7EdsfzsLU64Jc5MN5d8MdMAdeqIWqbmn/sOQNQVhem/SO
-	U5RAwycD/5U8avMp2SDcN/u+OLLEuKVpxlDTtm6sMkosKlNfA==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x0f1nhd6w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Mar 2024 15:50:58 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42LFovDG006831
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Mar 2024 15:50:57 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Thu, 21 Mar 2024 08:50:53 -0700
-Date: Thu, 21 Mar 2024 21:20:49 +0530
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: Rob Herring <robh@kernel.org>
-CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>, <djakov@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH 1/2] dt-bindings: interconnect: Add Qualcomm IPQ9574
- support
-Message-ID: <ZfxXWaNzJoai6VpV@hu-varada-blr.qualcomm.com>
-References: <20240321043149.2739204-1-quic_varada@quicinc.com>
- <20240321043149.2739204-2-quic_varada@quicinc.com>
- <20240321143549.GA1679970-robh@kernel.org>
+	s=arc-20240116; t=1711039258; c=relaxed/simple;
+	bh=Rg3Qyg/aCiHbBDT5o4Egzs5J5LChZshjXRXkzKdFYoY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MPg85tYRU76/lmcUA5eqeJon8IwRua5/ew6Rf6xUBTfrH8ljD8OpK74dCMwFirlnFf6H18l1Q3VBWPH1Tcjw5D19FnuLlI1yndth8H+d3anDet5TNBDbx37EguHkzFI43u/do+v5BMAYBRgK2JfLHT0mPFSxHUdRnfN37aIvTd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mQYwfrRK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F2E6C433C7;
+	Thu, 21 Mar 2024 16:40:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711039258;
+	bh=Rg3Qyg/aCiHbBDT5o4Egzs5J5LChZshjXRXkzKdFYoY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=mQYwfrRKlmBpZtRh1sVLmwtfHGxXtsJlqNmo7dVaTfOapv2REcGyrzPgytUQaNsI1
+	 cPcLN3qiahtFIPWyKZ9T0fAXrFHKwVQBW34wxyRIZ+hWmtkfcx16FKQdwwcBPgl5XE
+	 2plqgCGYA+6yi+IWm9viO2oONOtI1aevMJiH9zsCSJwaztgUoMSmAzrloaPWlHyRTG
+	 t2mvRCCC5ujTAaLOxyYLvyIqrgvJogGFKxW2a8frOJwoaHeD4Ge0G/UPjzE/2tH/z4
+	 w1GL3bt+o9ASG47/cPbHsBesEatxUqiOdqij4KhEp2AIHI/lE+jKwOWiQqeuZAjYFE
+	 tzRX8goZyCciQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rnLTV-0000000082A-2Ev6;
+	Thu, 21 Mar 2024 17:41:06 +0100
+Date: Thu, 21 Mar 2024 17:41:05 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	dri-devel@lists.freedesktop.org, swboyd@chromium.org,
+	quic_jesszhan@quicinc.com, quic_parellan@quicinc.com,
+	quic_bjorande@quicinc.com, Rob Clark <robdclark@chromium.org>,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/dp: move link_ready out of HPD event thread
+Message-ID: <ZfxjISnPhplKDDxc@hovoldconsulting.com>
+References: <ZfApxyVAJMK4bL8O@hovoldconsulting.com>
+ <ZfCFsmNv62-KMkA6@hovoldconsulting.com>
+ <ZfCKDGq9n9WG3Quj@hovoldconsulting.com>
+ <8e125a99-543d-8328-a2a9-100e223e4faf@quicinc.com>
+ <ZfFhXG5yd6O29spS@hovoldconsulting.com>
+ <ec2cba17-5644-6cf6-f6c9-d37d7ca56204@quicinc.com>
+ <ZfMaEIzv3Z3ny3y0@hovoldconsulting.com>
+ <9313aa00-41f0-15af-a646-3f4e4b3098c7@quicinc.com>
+ <ZfRv5le7Bfdiwrk_@hovoldconsulting.com>
+ <a1152afe-b652-d83e-05e4-25c07292b568@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240321143549.GA1679970-robh@kernel.org>
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: S01h8yhEomAX6KFUw1hiZzgJAvomdgE-
-X-Proofpoint-ORIG-GUID: S01h8yhEomAX6KFUw1hiZzgJAvomdgE-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-21_10,2024-03-21_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- bulkscore=0 mlxlogscore=999 adultscore=0 malwarescore=0 spamscore=0
- suspectscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403140001 definitions=main-2403210115
+In-Reply-To: <a1152afe-b652-d83e-05e4-25c07292b568@quicinc.com>
 
-On Thu, Mar 21, 2024 at 09:35:49AM -0500, Rob Herring wrote:
-> On Thu, Mar 21, 2024 at 10:01:48AM +0530, Varadarajan Narayanan wrote:
-> > Add master/slave ids for Qualcomm IPQ9574 Network-On-Chip
-> > interfaces. This will be used by the gcc-ipq9574 driver
-> > that will for providing interconnect services using the
-> > icc-clk framework.
-> >
-> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > ---
-> >  .../dt-bindings/interconnect/qcom,ipq9574.h   | 62 +++++++++++++++++++
-> >  1 file changed, 62 insertions(+)
-> >  create mode 100644 include/dt-bindings/interconnect/qcom,ipq9574.h
-> >
-> > diff --git a/include/dt-bindings/interconnect/qcom,ipq9574.h b/include/dt-bindings/interconnect/qcom,ipq9574.h
-> > new file mode 100644
-> > index 000000000000..96f79a86e8d2
-> > --- /dev/null
-> > +++ b/include/dt-bindings/interconnect/qcom,ipq9574.h
-> > @@ -0,0 +1,62 @@
-> > +// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
->
-> Where did you come up with GPL-2.0+? Every other qcom interconnect
-> header is GPL-2.0-only. Is your employer okay with GPLv3 AND after?
+On Mon, Mar 18, 2024 at 11:01:25AM -0700, Abhinav Kumar wrote:
+> On 3/15/2024 8:57 AM, Johan Hovold wrote:
+> > On Thu, Mar 14, 2024 at 09:30:57AM -0700, Abhinav Kumar wrote:
 
-Oops. Will fix it in the next version.
+> >> The race condition is between the time we get disconnect event and set
+> >> link_ready to false, a commit can come in. Because setting link_ready to
+> >> false happens in the event thread so it could be slightly delayed.
+> > 
+> > I get this part, just not why, or rather when, that becomes a problem.
+> > 
+> > Once the disconnect event is processed, dp_hpd_unplug_handle() will
+> > update the state to ST_DISCONNECT_PENDING, and queue a notification
+> > event. link_ready is (before this patch) still set to 1.
 
-Thanks
-Varada
+> This is the case I am thinking of:
+> 
+> 1) Disconnect event happens which will call dp_hpd_unplug_handle() but 
+> link_ready is not false yet.
+> 
+> 2) There is a commit with a modeset, which shall trigger 
+> atomic_disable() followed by an atomic_enable()
+> 
+> atomic_disable() will go through disable clocks and set hpd_state to 
+> ST_DISCONNECTED.
+> 
+> 3) atomic_enable() will not go through because we will bail out because 
+> state was ST_DISCONNECTED.
+> 
+>          if (state != ST_DISPLAY_OFF && state != ST_MAINLINK_READY) {
+>                  mutex_unlock(&dp_display->event_mutex);
+>                  return;
+>          }
+> 
+> 4) Now, if there is another commit with a modeset, it will go and crash 
+> at atomic_disable()
+
+Right, that's what I described in the mail you replied to but that still
+doesn't answer what triggers those mode sets.
+ 
+> > Here a commit comes in; what exactly are you suggesting would trigger
+> > that? And in such a way that it breaks the state machine?
+
+> Like we have seen, the commit can either come directly from userspace as 
+> one last frame (the original bug I had given the link to) or from the 
+> __drm_fb_helper_restore_fbdev_mode_unlocked() which happened in 
+> sc8280xp's case. This is totally independent of the hpd_thread() with no 
+> mutual exclusion.
+
+Right . Still not sure about the details about "that last frame" issue,
+that you saw in the past, and if that's still an issue or not. You
+claimed that you had fixed that, right?
+
+> This commit() can come before the link_ready was set to false. If it had 
+> come after link_ready was set to false, atomic_check() would have failed 
+> and no issue would have been seen.
+> 
+> My change is making the link_ready false sooner in the disconnect case.
+
+Yes, but again, and as you have confirmed, you're only papering over the
+issue at such a mode set can still come in before you set link_state to
+false.
+ 
+> > One way this could cause trouble is if you end up with a call to
+> > dp_bridge_atomic_post_disable() which updates the state to
+> > ST_DISCONNECTED. (1)
+> > 
+> > This would then need to be followed by another call to
+> > dp_bridge_atomic_enable() which bails out early with the link clock
+> > disabled. (2) (And if link_ready were to be set to 0 sooner, the
+> > likelihood of this is reduced.)
+> > 
+> > This in turn, would trigger a reset when dp_bridge_atomic_disable() is
+> > later called.
+
+> Yes, this is exactly what I have written above.
+
+Thanks for confirming.
+
+> > This is the kind of description of the race I expect to see in the
+> > commit message, and I'm still not sure what would trigger the call to
+> > dp_bridge_atomic_post_disable() and dp_bridge_atomic_enable() (i.e. (1)
+> > and (2) above) and whether this is a real issue or not.
+> 
+> I have explained what triggers the disable/enable call below.
+> 
+> > Also note that the above scenario is quite different from the one I've
+> > hit and described earlier.
+
+> Why is that so? Eventually it will also translate to the same scenario. 
+> I would like to understand why this is different. I think in your case, 
+> probably we do not know what triggers the modeset, but its a minor 
+> detail like I have written before.
+
+The state transitions are different and the enable event comes in
+before the bridge has been fully tore down unlike in the scenario we
+outlined above.
+
+And it's certainly not a minor detail, as in the sc8280xp VT case,
+those spurious hotplug events that trigger the atomic_enable would not
+have caused any trouble if it wasn't for the case that the bridge was
+stuck in the ST_MAINLINK_READY state.
+
+That explains why the hotplug notification revert in rc7 made a
+difference on sc8280xp. 
+
+You're talking about an entirely different and, as far as I can tell,
+hypothetical scenario where are user executes a modeset while pulling
+the plug. This is certainly not why we had a number of user suddenly
+starting to hit this crash after they upgraded to 6.8-rc1.
+
+And, just to be clear, we know what triggers the modeset in the VT case,
+and I posted a detailed explanation with a strack trace here:
+
+	https://lore.kernel.org/lkml/Ze8Ke_M2xHyPYCu-@hovoldconsulting.com/
+
+> >> It will be hard to reproduce this. Only way I can think of is to delay
+> >> the EV_NOTIFICATION for sometime and see in dp_bridge_hpd_notify()
+> >>
+> >>           else if (dp_display->link_ready && status ==
+> >> connector_status_disconnected)
+> >>                   dp_add_event(dp, EV_HPD_UNPLUG_INT, 0, 0);
+> >>
+> >> as dp_add_event() will add the event, then wakeup the event_q.
+> > 
+> > Sure that would increase the race window with the current code, but that
+> > alone isn't enough to trigger the bug AFAICT.
+> > 
+> >> Before the event thread wakes up and processes this unplug event, the
+> >> commit can come in. This is the race condition i was thinking of.
+> > 
+> > Yes, but what triggers the commit? And why would it lead to a mode set
+> > that disables the bridge?
+
+> Commit was triggered from the userspace as it did not process the 
+> disconnect event on time and the userspace was triggering a couple of 
+> modesets by by changing the mode on the CRTC from 1080P to NONE to 1080P.
+> 
+> [drm:drm_atomic_helper_check_modeset] [CRTC:60:crtc-1] mode changed
+
+But *why* would user space do that? Pushing out another frame would
+generally not trigger a modeset, right?
+
+And as I've alluded to repeatedly, your patch only seems concerned with
+something like the above, where a hypothetical user space is triggering
+modesets after receiving a notification.
+
+And we know that that is not relevant for the crashes I've seen as there
+is no user space processing any events in my VT or X setup.
+
+Johan
 
