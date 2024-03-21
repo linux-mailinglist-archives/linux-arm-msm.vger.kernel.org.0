@@ -1,151 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-14696-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14697-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89A33885528
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 08:51:40 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3BAAE8855C2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 09:33:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2A60CB21688
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 07:51:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 73580B21618
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 08:33:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB84A78283;
-	Thu, 21 Mar 2024 07:50:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B91617561;
+	Thu, 21 Mar 2024 08:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WKmDXSHx"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SAm9nyHt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFDA577F2D;
-	Thu, 21 Mar 2024 07:50:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7247020326;
+	Thu, 21 Mar 2024 08:32:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711007419; cv=none; b=Vgwb1X2qXEeK1ny2NU8qJrLw7j5slpP3NXWo0R2s+0lFTjNSJSGlXAtB8oTK3EGRNnqgGoqbYiPbbfPCmXhnoTLbYZadm7L6YRoIQLThcyn1uP6BWh4rTDdopXeIbRP2uVJJVgSi1MXZC8eUdReXMh68OaSDpLeQVynxtELb9sY=
+	t=1711009975; cv=none; b=m5tdtL4rBaJpYhIarq6WeJHLV1K8Z/z/CL1m8G0Xo/kEWFqSW2TVbMrhZJnO0HqVcCqszbdh1891eX1NefzEgmruvxAbSOYm2adzaoHsl60ow0Nd8TpsTMpo0ZiXALpAebZT2pOZ0AxLKVGg89JzVMdUdZNUeVplywxcCxMkuew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711007419; c=relaxed/simple;
-	bh=DVHMTHd9cw8fYFLji10BJ/X3RxtwR7CoHYOkARmz740=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=EuGhK9tfwJGqV9vY7bPDAduvOZ06mP5gt3w1X3Ytmn5txPK/dYJKh3enw6Al7EdZHlWyRB7FJnq+YMCbZKLfpX5HSAO80JMcfC2T/2J7ubxr8cRwp8Urwnq/fPQyP4S4EA5lqvu/+s1Sdb+vvN3QRnxhASgTXsXzxlpKgK3SXXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WKmDXSHx; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-414633f7a52so6643835e9.0;
-        Thu, 21 Mar 2024 00:50:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711007416; x=1711612216; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oMgePyPqtHXUGa3piv5tLSTW7fonCxVeBttImy15UeU=;
-        b=WKmDXSHxfAGf1M8z878XISsHFU27GtgGfK2HK5hAf+33iDw3nArWqRO8Pja+FakqnL
-         PimkPmmYapL0KdeBnjqN+A1XPlytNlcqXHBUYsiA9/L9ZrlpGV0psEUGwLbPEj0dM8VJ
-         rwxiBqUSeZMRqnxZal4HkK33vHoIwBgmC05dSJuFjJ1Edr3+sAQ4aj0CMgQL1Mz6pWSD
-         lFCrMT8/+nT+rXIwQ20ospXF64nH2WqTx9jq7Eck2JYvImuUd55TYP7XyA/oBQ8II4RX
-         n8b2Tc+J1HEkYT0gmGS78IrZNpSsM2kPVIoQK1XrrELnlraAcAz2YSqwkd3nO2n5Uafa
-         l6Eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711007416; x=1711612216;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oMgePyPqtHXUGa3piv5tLSTW7fonCxVeBttImy15UeU=;
-        b=ecPa+KiI87g1A689S5MDE1lnAXNtuvhHEldAWk6zbqUg/deexvCH+9at9SMpTPiBmS
-         rWD2SQMPbAuRhHoS8RT9ADXbzX6J+naSrnbfc1rorsqiXyIkETSEWPsWhfaI/MbWbv2L
-         bufJ7XPQFLl37tUQbqVVUGHnlNdHy9AFOCKaUcFVfI80mFhX7Cjc+1GRJo1HOMUZctdO
-         6Aq5SUpRg+gWcew8jNtgUlCBtd+ZAPJ8nHfaYslDRjhjtuF7ORzmTeBzscMR2J4TS19O
-         bWW6m1D4uEA3rIgFNDO4przUmxbxyA/CRCrU4TvllDOzcRvT7OH62Mly4rgK7DOjpGBB
-         7rHw==
-X-Forwarded-Encrypted: i=1; AJvYcCWHVppMovZqx5d8C9ncBwPRyWf0QDC+VbHAzRwyln2T4W0jodEEjXCwe+FbFn6EYFkM6Lmn/2vLpCKqYzUlunX3aAI1GkO6qlyPqFsAUtKkq+rTdvcgg7aLCAhc5uzq+xH7c0A0WY/7
-X-Gm-Message-State: AOJu0YyWohmZY1KG9WeTOAOFho9La9t2PL+hEARc9+NzdgDpoQoAR0JS
-	oCDbjFee2G5X2mX55KiYZ9f3BDVEfWHAjLkcTwF8vQJhG9u0MdNUhFT2rAOh
-X-Google-Smtp-Source: AGHT+IFBxiVcxHlAt0MfenJ1sZGVg/Umm4dOVc/7FHqmtl04FBAihzW5AKA70GImVUAiAUI6QCTPhg==
-X-Received: by 2002:a05:600c:1395:b0:413:271d:8889 with SMTP id u21-20020a05600c139500b00413271d8889mr970161wmf.11.1711007416283;
-        Thu, 21 Mar 2024 00:50:16 -0700 (PDT)
-Received: from [192.168.1.253] (57657817.catv.pool.telekom.hu. [87.101.120.23])
-        by smtp.googlemail.com with ESMTPSA id p1-20020a05600c1d8100b004146bda6c32sm4637096wms.9.2024.03.21.00.50.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Mar 2024 00:50:15 -0700 (PDT)
-From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Thu, 21 Mar 2024 08:49:59 +0100
-Subject: [PATCH v2 6/6] clk: qcom: clk-cbf-8996: use HUAYRA_APPS register
- map for cbf_pll
+	s=arc-20240116; t=1711009975; c=relaxed/simple;
+	bh=z+FrTDDpCS5sBLXqT3PMNnGtVkxHHd/9OmfBSzShTHo=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=JeOEPF8shy96J1fcV79PCIiJOPTjUfw7rZxv3QaNuxS751muxvZlb6P6sB644XNkMt7goHHukjczdMcutsX1Se8wRUkWxJw7DTMDD2RwoygRDYhk8bwkr1d/MDOcINnAb/efgTPapfePta0QxJCAZtymXcrGi6XRejrhmJaCnrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SAm9nyHt; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42L7cUuU021617;
+	Thu, 21 Mar 2024 08:32:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version:content-type; s=
+	qcppdkim1; bh=Qa7Q5URf9WyJXmiA4bjGLM7ZuuZskXa385voHGR4D+Q=; b=SA
+	m9nyHtAXh7j2drP1kxsrmDoFMD6R7TAiiYMYrvsS3TM4lYoTDtxBzN6PNzdBBUcx
+	pKqFSF05ulinctD1TqS9SWt8j+Yqsaxd6loN/sncb91mIy8ievAV9iSgQonZSW06
+	LqqSbXStLPs1RU0kDR+BTkm8BGDGH7svAW8Vy82a6EyPPs5LRfuJ8tqr0n+//0Mt
+	n/ag8TqZmUvIcbiIxUSIWb2mdwosk88xupXazIYDn8JKWs5QjFFx9N1q8lNUeE0O
+	C9Z7sRiqQWsxkNaUpeWsGCEKVqcNObvR93oVb79AM7cogF1+hvAOSSJpDCv8wCHO
+	oJsnzrEWJi/czONj6oYQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x0ecf0cju-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 Mar 2024 08:32:31 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42L8WUSn009011
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 Mar 2024 08:32:30 GMT
+Received: from taozha-gv.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Thu, 21 Mar 2024 01:32:25 -0700
+From: Tao Zhang <quic_taozha@quicinc.com>
+To: Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose
+	<suzuki.poulose@arm.com>,
+        Alexander Shishkin
+	<alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC: Tao Zhang <quic_taozha@quicinc.com>,
+        Jinlong Mao
+	<quic_jinlmao@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni
+	<quic_tsoni@quicinc.com>,
+        Song Chai <quic_songchai@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <andersson@kernel.org>
+Subject: [PATCH 0/4] Add support for multi-port output on the funnel
+Date: Thu, 21 Mar 2024 16:32:03 +0800
+Message-ID: <1711009927-17873-1-git-send-email-quic_taozha@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240321-apss-ipq-pll-cleanup-v2-6-201f3cf79fd4@gmail.com>
-References: <20240321-apss-ipq-pll-cleanup-v2-0-201f3cf79fd4@gmail.com>
-In-Reply-To: <20240321-apss-ipq-pll-cleanup-v2-0-201f3cf79fd4@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Gabor Juhos <j4g8y7@gmail.com>
-X-Mailer: b4 0.12.3
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: NFOT1mAxFAuCF5sCagxdGqdsYFU89aqZ
+X-Proofpoint-ORIG-GUID: NFOT1mAxFAuCF5sCagxdGqdsYFU89aqZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-21_05,2024-03-18_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1011
+ priorityscore=1501 adultscore=0 mlxscore=0 bulkscore=0 mlxlogscore=999
+ impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403140001 definitions=main-2403210057
 
-The register map used for 'cbf_pll' is the same as the one defined for
-the CLK_ALPHA_PLL_TYPE_HUAYRA_APSS indice in the 'clk_alpha_pll_regs'
-array.
+Funnel can support multi-port output in our hardware design. Since original
+funnels only support a single output connection, the code needs to be
+modified to support this new feature. The following is a typical topology
+diagram of multi-port output of the funnels.
+|---------|    |---------|    |---------|    |---------|    |---------|
+|  TPDM0  |    |  TPDM1  |    |  TPDM2  |    |  TPDM3  |    |  TPDM4  |
+|---------|    |---------|    |---------|    |---------|    |---------|
+    |               |             |               |              |
+    |               |             |               |              |
+    |               |             |               |              |
+    |-----|   |-----|             |-----|   |-----|              |
+          |   |                         |   |                    |
+          |   |                         |   |                    |
+       [0]|   |[1]                   [0]|   |[1]                 |
+     \-------------/               \-------------/        \-------------/
+      \  FUNNEL0  /                 \  FUNNEL1  /          \  FUNNEL2  /
+       -----------                   -----------            -----------
+       [0]|  |[1]                   [0]|   |[1]                  |
+          |  |----------               |   |                     |
+          |            |               |   |                     |
+          |-------|    |      |------- |   |          |--------- |
+                  |    |      |            |          |
+                  |    |      |            |          |
+               [0]|    |[1]   |[2]         |[3]       |[4]
+           \ ---------------------------------------------------/
+            \                     TPDA0                        /
+             \                                                /
+              ------------------------------------------------
+For example, TPDM0 and TPDM1 are connected to the [0] and [1] input ports
+of the funnel respectively, and output from the [0] and [1] output ports.
+In this way, when data is output from the Funnel's output port, it needs
+to know the source component corresponding to this output port. Our
+solution is to add a property named "label" in the devicetree to mark the
+source corresponding to the output port.
+After introducing this new feature, another new problem also needs to be
+solved. For example, TPDA driver will search for all the TPDMs on a input
+port. In the topology diagram above, when TPDA searches for TPDM from the
+input port[0], it will find TPDM0 and TPDM1. Our solution is to add a new
+property named "qcom,tpda-input-port" to mark the input port number of the
+TPDA in the devicetree.
 
-Drop the local register map and use the global one instead to reduce
-code duplication.
+Tao Zhang (4):
+  dt-bindings: arm: qcom,coresight-funnel: Add label for multi-ouput
+  coresight: Add support for multiple output ports on the funnel
+  dt-bindings: arm: qcom,coresight-tpdm: Mark tpda input port number
+  coresight-tpda: Add support multi-port input on TPDA
 
-No functional changes intended. Compile tested only.
-
-Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
----
-Changes since v1:
-  - new patch
-
-Note: Although this patch is not strictly related to the subject of the
-series but as the change has been suggested by Dmitry during the review
-process it has been added here for completeness.
----
- drivers/clk/qcom/clk-cbf-8996.c | 13 +------------
- 1 file changed, 1 insertion(+), 12 deletions(-)
-
-diff --git a/drivers/clk/qcom/clk-cbf-8996.c b/drivers/clk/qcom/clk-cbf-8996.c
-index fe24b4abeab48..76bf523431b85 100644
---- a/drivers/clk/qcom/clk-cbf-8996.c
-+++ b/drivers/clk/qcom/clk-cbf-8996.c
-@@ -41,17 +41,6 @@ enum {
- 
- #define CBF_PLL_OFFSET 0xf000
- 
--static const u8 cbf_pll_regs[PLL_OFF_MAX_REGS] = {
--	[PLL_OFF_L_VAL] = 0x08,
--	[PLL_OFF_ALPHA_VAL] = 0x10,
--	[PLL_OFF_USER_CTL] = 0x18,
--	[PLL_OFF_CONFIG_CTL] = 0x20,
--	[PLL_OFF_CONFIG_CTL_U] = 0x24,
--	[PLL_OFF_TEST_CTL] = 0x30,
--	[PLL_OFF_TEST_CTL_U] = 0x34,
--	[PLL_OFF_STATUS] = 0x28,
--};
--
- static struct alpha_pll_config cbfpll_config = {
- 	.l = 72,
- 	.config_ctl_val = 0x200d4828,
-@@ -67,7 +56,7 @@ static struct alpha_pll_config cbfpll_config = {
- 
- static struct clk_alpha_pll cbf_pll = {
- 	.offset = CBF_PLL_OFFSET,
--	.regs = cbf_pll_regs,
-+	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_HUAYRA_APSS],
- 	.flags = SUPPORTS_DYNAMIC_UPDATE | SUPPORTS_FSM_MODE,
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cbf_pll",
+ .../arm/arm,coresight-dynamic-funnel.yaml     | 34 +++++++-
+ .../bindings/arm/qcom,coresight-tpdm.yaml     |  8 ++
+ drivers/hwtracing/coresight/coresight-core.c  | 81 ++++++++++++++++---
+ .../hwtracing/coresight/coresight-platform.c  |  5 ++
+ drivers/hwtracing/coresight/coresight-tpda.c  | 27 ++++++-
+ include/linux/coresight.h                     |  2 +
+ 6 files changed, 139 insertions(+), 18 deletions(-)
 
 -- 
-2.44.0
+2.17.1
 
 
