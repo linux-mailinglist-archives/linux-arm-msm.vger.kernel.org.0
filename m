@@ -1,108 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-14714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80CB4885754
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 11:20:02 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC6FF885768
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 11:26:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1F2E81F21D07
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 10:20:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C744B1C216C8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Mar 2024 10:26:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AAA055E75;
-	Thu, 21 Mar 2024 10:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF6DF56B68;
+	Thu, 21 Mar 2024 10:26:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tk/Lk+/b"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kg+5ZZLh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C230200D3;
-	Thu, 21 Mar 2024 10:19:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A83200D3
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Mar 2024 10:26:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711016398; cv=none; b=sGzwXnpLTHaIEPzRVOGlIkBIGKot3wtJOvwsPSZODLwDIeVGXX2qSb+JqwRYalz1TJXFm9NcK5sZhXtRHt5XIwSGHj4dSSgwlAKc0pUyq75QYLP0eGF92/DhJtyiwEN0CyLPPMGF4abndfmp+ml2IbeCDLRBHzV5GSz5RxtJ5BI=
+	t=1711016797; cv=none; b=QLHmlDZsQWEyE0pKLf9p5UuF/q6qWxD598G8R/NpZzm5s32fydpRRrx4dZcOjli1ZTuACEbSWrURdN9k1XcbXQVNlAYcuSFw3vpNs1xZ1nAS4bale/ZYS1pRaOzRfdIAp3ngCxln196vXff8lw4x7LEAGaZf72JI5kZKCq3pbJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711016398; c=relaxed/simple;
-	bh=lO/wG4XF/5dsIZJ2dAHwfekBZW7O4cljkSFhVC8pbVM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=f4VKbfwOQhGR9Xk6cSexPNDUEAMFOCo888IyGxtBbw5bGEOitXVfjoOiuFIwZ24qEL2HaN2pT9QLwKa5xZWUTq1WXDHkFRcpAV0Izt/ErSI0kCNtvG8icmGFv869wuSCurR2yfhBffkXUhQNeHL0Q4m62IGugaj+T218FZWQFBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tk/Lk+/b; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDAF0C433C7;
-	Thu, 21 Mar 2024 10:19:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711016397;
-	bh=lO/wG4XF/5dsIZJ2dAHwfekBZW7O4cljkSFhVC8pbVM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tk/Lk+/bAWQql2fWtlvB8hAGfJaZLUBJP0Tymf+c+vFJN7ADMvZ8w7MdAfUTGhs44
-	 g7Ln2i+vIu72lW4s1TGBaOUieUqfZmlBKEUowXtlzKae5gQXBkevW1hHPoGPi+Ma8N
-	 c9vFf4L4btQdQObh4pK0zM33sqyxZ+eWy5ysNjb55P/QDukzaOUVTceElLKT1pRk33
-	 5cdlldCYPrR3q1zZo0FySdz0Xn6A5KWAX4A79VBPRVcxThczUaCeXNG8o5cl9rydjW
-	 xTO84YzSK/Id//i4Nfk+kMe+La84xps8U4VszaL3efXd4o7BvyvDfkxwN/hTJURNVp
-	 Gzy1eAhxTxhXg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rnFWn-000000005Hl-09if;
-	Thu, 21 Mar 2024 11:20:05 +0100
-Date: Thu, 21 Mar 2024 11:20:05 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Jagadeesh Kona <quic_jkona@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-	Ajit Pandey <quic_ajipan@quicinc.com>,
-	Imran Shaik <quic_imrashai@quicinc.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH V2 RESEND 4/6] dt-bindings: clock: qcom: Add SM8650
- camera clock controller
-Message-ID: <ZfwJ1cgFLlWdj7xp@hovoldconsulting.com>
-References: <20240321092529.13362-1-quic_jkona@quicinc.com>
- <20240321092529.13362-5-quic_jkona@quicinc.com>
+	s=arc-20240116; t=1711016797; c=relaxed/simple;
+	bh=+884RlU/GlvwTUa+q87xsqia51wLJdHzo+MtTS+qfuA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bO/EK0UigOZCqPXBLL0IIlWtsWz7dRML8fIOA4YEK+wlhObm6AIVftSU01wqxwfGvkfxs5knwFiIfnszkk7CnIgsG6HUUzp4HTTSFcCqYuWfO4/z+XkCLJdCEL+KcEZ4Yi8l5RBN296FhDoUBBOmKdVKbLET7QDhX+mTNb6g3ME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kg+5ZZLh; arc=none smtp.client-ip=209.85.219.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-dcc6fc978ddso698784276.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Mar 2024 03:26:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1711016794; x=1711621594; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=G1DsQsCfjVXlcreC9mkpHOUXs3G0EDhLcSU9dnMnmlI=;
+        b=kg+5ZZLh+doRgTaLkijY08SgBBLjl9YUBJ3oUe9BEryI7Ud81dZkGMzUsR3GI8dIvZ
+         Mq/jTO2KhL7ferxBN/HoUIkDXzkjczA1Qzu5+a5+rH+zy/8dNjUPmBHOju8RXLkSuf+G
+         J5jBJ4n3ZmbR37wH9pmSu4aqcV6m3ougqSZx8gwPjxEzz0PehxhclKPKUafKBOiku7Yz
+         pOEph7nvmuFY15RfYBZCQ8/VO1Hb99KMcFnNFRasyElNltmHdi9Dvi6F1oe1Th5WG+Tr
+         EuprPQ7t/Li/2Bn1m3MFDh7pjNzcFZsYkd8jwMkYM3ogqt1WlZ75oihg0vJRv3iNp12N
+         Ux+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711016794; x=1711621594;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=G1DsQsCfjVXlcreC9mkpHOUXs3G0EDhLcSU9dnMnmlI=;
+        b=tsguW23tmPy2yoLvuK5K/Z2SWqsD+LZqCRqMyZjOWqDFBLXkBSvRN8KSJubjppJiSE
+         TToxJaKOAi7sya4OpK48kYztU3z1mr2vgQlIFquLyZHmvGUPAJXO1bfZtUZXydcs5mCf
+         g2PG7FY7WVNTsjUPlVX+C4kH5rQUxSA+BL4Vz/Cs2TfF2MFTixNxpS9NZLZzfPBd6q1Z
+         hef3uBekvfhMg1erchzFuu+0fX7wvZrODJWydTmEARO30+3MIQbf8cdomJ9W4bGNLF0y
+         oiomX9lW+IUWLE0NhQvzmnmaY0gn7mr5Gcn3jXD1XNGz0Fs1AKparOcH1pKVGRqEhj9Q
+         9mnQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV6XWRSaVganKwQ3wOFTAvCecH7c1mA/nP66wSOSP8jDWaybFKqxirGpZJ0wpEmqs7Po559SomjnFZCwM8kdccEuf9ZXbJLRSAV14//pg==
+X-Gm-Message-State: AOJu0YwkitZPRbPCPjNqrBrpFT3p1JF54by93tMnZBmMBj9jSGKEtiyn
+	mSyfm1lXDFFeU+NbtD1/6BRpH9LsS4lRSZVWRORgrZyy3uePXs4SYabRfO81CoDNlMHpeeTcTHP
+	AiSiNLYV0olr1DTXuSMeD6Qv2iKiFyIk+7sgDhw==
+X-Google-Smtp-Source: AGHT+IExb+vzGD2UTaSisA7Z8I+voE+Wf1d1MMMQfTeCa1gMgMMvvTYLlKLB30P2jM8a1OlAg5BhSTY31uqzspWQZBA=
+X-Received: by 2002:a25:7208:0:b0:dc6:e7f6:254a with SMTP id
+ n8-20020a257208000000b00dc6e7f6254amr1505416ybc.8.1711016794255; Thu, 21 Mar
+ 2024 03:26:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240321092529.13362-5-quic_jkona@quicinc.com>
+References: <20240321092529.13362-1-quic_jkona@quicinc.com> <20240321092529.13362-6-quic_jkona@quicinc.com>
+In-Reply-To: <20240321092529.13362-6-quic_jkona@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 21 Mar 2024 12:26:23 +0200
+Message-ID: <CAA8EJppoeOgcEoaoAYs0cS9yVTPOOwa7J47GvZ=OHNRZzj69FQ@mail.gmail.com>
+Subject: Re: [PATCH V2 RESEND 5/6] clk: qcom: camcc-sm8650: Add SM8650 camera
+ clock controller driver
+To: Jagadeesh Kona <quic_jkona@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>, 
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, Ajit Pandey <quic_ajipan@quicinc.com>, 
+	Imran Shaik <quic_imrashai@quicinc.com>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Mar 21, 2024 at 02:55:27PM +0530, Jagadeesh Kona wrote:
-> Add device tree bindings for the camera clock controller on
-> Qualcomm SM8650 platform.
-> 
+On Thu, 21 Mar 2024 at 11:27, Jagadeesh Kona <quic_jkona@quicinc.com> wrote:
+>
+> Add support for the camera clock controller for camera clients to
+> be able to request for camcc clocks on SM8650 platform.
+>
 > Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  drivers/clk/qcom/Kconfig        |    8 +
+>  drivers/clk/qcom/Makefile       |    1 +
+>  drivers/clk/qcom/camcc-sm8650.c | 3591 +++++++++++++++++++++++++++++++
+>  3 files changed, 3600 insertions(+)
+>  create mode 100644 drivers/clk/qcom/camcc-sm8650.c
+>
 
-Did Krzysztof really review this version?
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-> @@ -18,6 +19,7 @@ description: |
->      include/dt-bindings/clock/qcom,sm8550-camcc.h
->      include/dt-bindings/clock/qcom,sc8280xp-camcc.h
->      include/dt-bindings/clock/qcom,x1e80100-camcc.h
-> +    include/dt-bindings/clock/qcom,sm8650-camcc.h
-
-This does not look like alphabetical order.
-
->  allOf:
->    - $ref: qcom,gcc.yaml#
-> @@ -29,6 +31,7 @@ properties:
->        - qcom,sm8450-camcc
->        - qcom,sm8550-camcc
->        - qcom,x1e80100-camcc
-> +      - qcom,sm8650-camcc
-
-And neither does this.
-
-Johan
+-- 
+With best wishes
+Dmitry
 
