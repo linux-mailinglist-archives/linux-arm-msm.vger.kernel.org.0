@@ -1,73 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-14891-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9326C887318
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 19:29:50 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D7BC887321
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 19:30:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C44541C228E5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 18:29:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AAEDB2850D8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 18:30:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD1975FDC9;
-	Fri, 22 Mar 2024 18:29:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8A5A1756D;
+	Fri, 22 Mar 2024 18:30:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VxxM7E8U"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UIENj+9L"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A6366B53
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 18:29:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCC767C45
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 18:30:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711132187; cv=none; b=dGtlHUXfEYd03zT3pb9HmZKKViSAc1Yer+2XeoGWO6xhXk2YCsY8IAnsR60xkaRO3Ql11x4BqiESrA+GigHgEMTtztZyJiwTv8GY0IaMnYuyHZvMn98bP4T+L672Pcf/CbN4ERcFFWgAN3ox48W1X1k2iZhpqt9f+SI31dCUvxo=
+	t=1711132234; cv=none; b=OtF0njvL1Q0kNEtrfyItgdLKAeYjBgBXMhzO4zJwwOmBX1XWCVMt0cjHWtA7ujofgSvBMBCAcKBvnr/1yxKIeyeabFn5NcV2kKW0TJ1AHhUg03xEvdhDAl8zpOKdipmgwvc/KYCdc94NV+SynuJxpMOCyxqd3vYsrxfc7N2Df1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711132187; c=relaxed/simple;
-	bh=X3GBYauhqIuqvIcR7Hb7hsupuQZottATKa79BnUfIrU=;
+	s=arc-20240116; t=1711132234; c=relaxed/simple;
+	bh=6k/hI9VKU0vg7OSzoqkipq3rc4fNUx12EkOasVVwQZg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eHydle/8tD4Vg0+O3j8luACcV/4NUBnxiQiHLOBvB0bF47TYGbrjIE3nsAWYjExQiJuJq4i4w2zd2OwaAb3SEwF+t7C3nGYUUk/B8LpcdhxkzMdV9TVsMfVdP7RrSq9hHyX2A0RETz4IIm5E5yJFgnAdEittayQuarmPVWzbXgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VxxM7E8U; arc=none smtp.client-ip=209.85.218.50
+	 In-Reply-To:Content-Type; b=qjzZvrpbzzWYwNX5vQjXI8YDdOcd6VjfFC47fOSyOXnQhX2VoFMAbggPEcMbiJWlL5YILaR0cceF+2lfxZLkzRefdoOYUJ2KG2q/gjyliYivNJgZQ/FjBv5H838NUqkz6FcRfcJBMb36UqaMOiCrjOtw82ui2xS5YBuaUsDk44s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UIENj+9L; arc=none smtp.client-ip=209.85.208.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a4715d4c2cbso289185566b.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 11:29:45 -0700 (PDT)
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2d41d1bedc9so45570691fa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 11:30:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711132184; x=1711736984; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1711132231; x=1711737031; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=+mRICY5TnCZqU/4Za2HtNxYqccp5/DnWXp0xELZHP8I=;
-        b=VxxM7E8UcXrd1l+ROvM+2urvSAARE3aUVc0e+6dLE9dBcBGDbqOUzwGPXum4+vX48C
-         DrgDZ2tMj40aiNJekufouEemf0v/6+RCWBjQAiH8mBFq7OtTqIAwMmdJZW1/6Imvd/mD
-         kopYfW56zgVHMRPl9Z1DoZ3hO+g3nx5wYJRTKoVz8nPFF6qc2JfuYjo9byWbMHigN67h
-         8eQW78mn+/qsGBYKdI4/rJVjkmrf0BgtVf5eOko/yey6uSPMvgrcli7Jj2Ek7qjDnxdA
-         hV1wprTbq64dctW+HoKmeUv45aMA408G/qb4vNeM5ulOKuuHPvKnGXdvq2xfjCqg6PqX
-         pOsQ==
+        bh=Odz1V0jHlAEnYHOPUvuJFI8Il+hSKWfQUAwAyBiPNU4=;
+        b=UIENj+9Lef3VpuHFS04IRKhPwMoFkQc+k39kplxRQ1JY9V5mccnxhrDiRxaI8yCnVy
+         YXqM0dxWERu2t5qTSY4EwKbRQPKW0BPzorhO9gXK4jj+Et7h51W/TpKFO2YchXPM7eRf
+         fyF64wnSLb8a3B0Hl/jDGRGdiNSZLr27kSRBD+7XXkyonHzvJOmjVwPu/5yKO5fMSoqI
+         Qs4wL3r/h2Do0GHd678/cpwp7P8XqTKAbbbWq4/acc5vdKJVHuVIk/iQIOlEw/C5L2Ty
+         d5E0U6+NwPcACCrN8MxlKxuPFCrHIrIexNrqC9g2U1YSLSym2KwEdxgDitc5F8hi0vU/
+         FzNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711132184; x=1711736984;
+        d=1e100.net; s=20230601; t=1711132231; x=1711737031;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+mRICY5TnCZqU/4Za2HtNxYqccp5/DnWXp0xELZHP8I=;
-        b=bYVB+LeJd1EhbALWXiL1EDHKA2+xerGTx+mnqx2r6oOhuhp46ZdEISp2/nT9LnjezT
-         qwZo4Gh8UYOxgL0RQ/zgnPN3gITDfsCnJFkeCX7fLIDAUE3CY0HrS7KlEW8CavBAKrjq
-         sdbQkmV/LsSiU8+BEElWV0xx7zIOHx8ifCqJcPYe7k123l3QwbNpSmF2eHfe6M9bIxAq
-         V+EdxdMAeXzbjz7mybUuLy0QTuKg2W3PqyRk+mAV/mZBUCarVfIAjt7PxPIA5K1Yd6c1
-         q9NTEganYmGTqC20cjWZ1+TFJaMX5Kz6N5ih8t1xtt+AOAZy1DA5hYML5GRkfjRX+Eeh
-         +zOA==
-X-Gm-Message-State: AOJu0YzN1aqqF+seJVLi00Dkq6qvxs9JYxW0N+UHwx5Wx6LusV7zVJF5
-	0QYo9f8/3nZGh2LSJ6AksM3aTSFyvFZyb8qYa7Kz2YnO3GXZ4ArUI6AJlRTv/G4=
-X-Google-Smtp-Source: AGHT+IFBZ+qwOlzXEQiwepS8gMRPMWRkRTNO0hBdFwot4ZoVlYJC6MggnFQCwIYRRgK7FkDCrd63VQ==
-X-Received: by 2002:a17:906:6d6:b0:a47:398f:1a0e with SMTP id v22-20020a17090606d600b00a47398f1a0emr389221ejb.33.1711132184394;
-        Fri, 22 Mar 2024 11:29:44 -0700 (PDT)
+        bh=Odz1V0jHlAEnYHOPUvuJFI8Il+hSKWfQUAwAyBiPNU4=;
+        b=Cg+M4c+Kel15YA/mSyCeW/C4XI40mBUEDVAnJG4fBfk5n6JOZz12DWmHGFnwFHNZcB
+         mdVtembKHdS8vUQNYWE8QkhIo4lemT3MWkVgJwsJgjEaG5004ccDC/XR8akPISaoPzY0
+         YhHbvk69iJmnZo0Pz9w1n4kzDFk5unFbtcEmOaBw+sgn0u7T2qDp0BNBuj5GYnqZnFNY
+         JYW/IloOvWY1lYpOXYTix0FCVazci4fyZ8Yopv0PFN0FcbcRHo8ZW1FPWuFYhUcKBhuC
+         5jK9gr7npOHETJTXHL3MXBwVj/bmCJqTB8iFdZEgRuQ0k7No6mGdlp6KC3MpA+FBQUYY
+         jEqQ==
+X-Gm-Message-State: AOJu0YzmiLJqJ9OEOJw1m3dk/j5exiM2CREnlqBYpyGSrK7EKrVA+nGZ
+	3Iw9bNTAGTWxjOREniEm6qNMgjVcFkIfsiqQQjXFrXqgzcJ4tIvSCvS9BWTcG1k=
+X-Google-Smtp-Source: AGHT+IEZKtBJ02fTaIWArwgXmYgqxM41gBHjTYDe5foPm1ZT3Qo3OpC6xjLJpVQ2JhcD1T4DFtsOcA==
+X-Received: by 2002:a2e:9891:0:b0:2d4:22b6:eee6 with SMTP id b17-20020a2e9891000000b002d422b6eee6mr309834ljj.8.1711132231108;
+        Fri, 22 Mar 2024 11:30:31 -0700 (PDT)
 Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id m21-20020a17090679d500b00a4739efd7cesm92418ejo.60.2024.03.22.11.29.43
+        by smtp.gmail.com with ESMTPSA id m21-20020a17090679d500b00a4739efd7cesm92418ejo.60.2024.03.22.11.30.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Mar 2024 11:29:43 -0700 (PDT)
-Message-ID: <4bf8bd0a-4e9e-43fd-a99b-a9b552f70798@linaro.org>
-Date: Fri, 22 Mar 2024 19:29:42 +0100
+        Fri, 22 Mar 2024 11:30:30 -0700 (PDT)
+Message-ID: <3f19eb66-1489-4604-b564-7e85b6b180e8@linaro.org>
+Date: Fri, 22 Mar 2024 19:30:29 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,8 +75,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] clk: qcom: apss-ipq-pll: reuse Stromer reg offsets
- from 'clk_alpha_pll_regs'
+Subject: Re: [PATCH v2 2/6] clk: qcom: apss-ipq-pll: move Huayra register map
+ to 'clk_alpha_pll_regs'
 Content-Language: en-US
 To: Gabor Juhos <j4g8y7@gmail.com>, Bjorn Andersson <andersson@kernel.org>,
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
@@ -84,7 +84,7 @@ To: Gabor Juhos <j4g8y7@gmail.com>, Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20240321-apss-ipq-pll-cleanup-v2-0-201f3cf79fd4@gmail.com>
- <20240321-apss-ipq-pll-cleanup-v2-1-201f3cf79fd4@gmail.com>
+ <20240321-apss-ipq-pll-cleanup-v2-2-201f3cf79fd4@gmail.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -121,22 +121,16 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240321-apss-ipq-pll-cleanup-v2-1-201f3cf79fd4@gmail.com>
+In-Reply-To: <20240321-apss-ipq-pll-cleanup-v2-2-201f3cf79fd4@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 21.03.2024 08:49, Gabor Juhos wrote:
-> The register offset array defined locally for the
-> CLK_ALPHA_PLL_TYPE_STROMER_PLUS is the same as the
-> entry defined for CLK_ALPHA_PLL_TYPE_STROMER in the
-> 'clk_alpha_pll_regs' array.
-> 
-> To avoid code duplication, remove the local definition
-> and use the global one instead.
+> Move the locally defined Huayra register map to 'clk_alpha_pll_regs'
+> in order to allow using that by other drivers, like the clk-cbf-8996.
 > 
 > No functional changes.
 > 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
 > ---
 
