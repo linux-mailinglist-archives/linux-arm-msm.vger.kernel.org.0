@@ -1,140 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-14894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14895-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38BBD88732B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 19:31:44 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F193887341
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 19:36:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8851BB246ED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 18:31:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A9900287BEE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 18:36:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A11767735;
-	Fri, 22 Mar 2024 18:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B98AB69970;
+	Fri, 22 Mar 2024 18:36:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Bpjpb3Bh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BV/BUCmx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA98273FA
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 18:31:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D93A69941;
+	Fri, 22 Mar 2024 18:36:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711132283; cv=none; b=Y9r83GNEI6i4R89aicJUWaI2igYQODmPkXwxtQqW5TdUKsjQMR5kf2TbAjHSDKp3/XbRmFXe0Dqhz6dCWo4HJXy/xz6xGvPxqqqBxKpkCCWYkZTShHhVe9DmyR3aDVeUAqz/4QGP5lAOBAzSNMAlzenMZlxdxKb0ruyrlohP7Ns=
+	t=1711132576; cv=none; b=kI16ypPqMh7AlzGsF5ri7rrJ8myfHzWj1ec4GY8jDyhlHGX7Mt4W3rejUCC9CpKFp6h23EB/km7RgQMX9Z4QzbQbjcSP5fHQeMZUGRU6z5Pn1df4z4EvQMxXN0Fh7jb/wql01RYOeT/vwK0k4ZGX3WMcjves+q2peHaC2vtiXRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711132283; c=relaxed/simple;
-	bh=OfI+oHjE9rUKzFb07eVefp1yp9j5dONH7Mr311yeSmQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RiGE9BTZRilv2x9CRZL3fx/d5TL/RNal/rN8IThYiTwHSjXaXVI5LIbnEgVMn4S27bli4/auOg49B/frYW0r4B0IfMVBAtHkYSClJvIhhR2CYKVXXrCrm1FtI7kKkYyi6eKjfzBp5CUtZ7pq4BPxPtJPYnJp2lzyYiX5VybCl70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Bpjpb3Bh; arc=none smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a450bedffdfso298388366b.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 11:31:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711132280; x=1711737080; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vbXGMFum/bc9Q5xBJXwJXkTK07xU0LwMz7UoxPP6Z0E=;
-        b=Bpjpb3BhadmiKyUyfjBhUkYwCZWoEXIZcsKYuRVJKgG2YcqpUb/zr5lfd9J3qWoVzx
-         sfAPlhX3Rct47m5YNodF9OWTxpiB5DNlCdoq4MbmCqyM7Lv8uw/gIWeAS/OG6iozrPFo
-         72TtQtVDlX9QQIAZMFWEc1EtPkdP5c7H/ba8FipTXxNlcRBzFM2uihrLWeWZPz0dxjcA
-         9ltWQ36Dyky12YKj+hEZiYUWMizMPdzvEq73UhK0QbZNsDGmzxPZ3NfsrrEZYKSbLjbE
-         9JeeCJGLBtt/FaoXISEyC9YOcB56hYNRVqSGnpPXFfkeLyN4D034vpSWg6WMzZGmr6ra
-         /LoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711132280; x=1711737080;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vbXGMFum/bc9Q5xBJXwJXkTK07xU0LwMz7UoxPP6Z0E=;
-        b=h2ecvu2XHaPOZJTIdWa7f8TjMkMALlbpZtY41p8Fi4NAFP6HPHeUGPBGwF9wPeX5Cy
-         6L3Q9iJd7E4KgJSu/bCRAfJ1H9B0BFPswtqfrtYL0jIQdEuP3QLlf/iCBDdN/oT6oKyk
-         jzomGfx/yUqlr8AGShwAsmvPCQ6NPTnEUZVXqOCbaJfEhQgwd10g0BDIfEfPVpX0i7D9
-         8RYJN2VaLoZc40EkLwxHngSH/62LTDr9YwZIzql7QJ5laR90HF6jQXLV46LfYlyoRUsc
-         xaPA1yZT58O5ZxfIe+nvItIwQ+9FwWOflvQplwzXAiIpS2iQ3mcJX3fZRicvsEjeE/GR
-         4WBQ==
-X-Gm-Message-State: AOJu0YyZn0ABZHndHnejOEayYis2fQQDPkcdm6AqIt28SHDpmKBmjqEw
-	d4QqQNXpnPq/KBaGnGGVnxmy8gQ+Iq8DwQuX+kooUj/Lb4MZW/eMvPSdIlR5CRU=
-X-Google-Smtp-Source: AGHT+IEMBz/n6i5scGsvQhKf0agafDOjhO7vlhTQiZYrQnjuhlJdN5K2vf1RR57EWBZM4my6yZUPVg==
-X-Received: by 2002:a17:906:22d9:b0:a47:322d:7e3d with SMTP id q25-20020a17090622d900b00a47322d7e3dmr360870eja.75.1711132280417;
-        Fri, 22 Mar 2024 11:31:20 -0700 (PDT)
-Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id m21-20020a17090679d500b00a4739efd7cesm92418ejo.60.2024.03.22.11.31.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Mar 2024 11:31:20 -0700 (PDT)
-Message-ID: <d0e893c6-a1ee-4079-a822-8ad9a30f856a@linaro.org>
-Date: Fri, 22 Mar 2024 19:31:19 +0100
+	s=arc-20240116; t=1711132576; c=relaxed/simple;
+	bh=0y+MfSq9AjFTDKn0zQYT/v6yPp3l+ObYynFLWm8K1Zs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GgJkR15v4mnl5Hd1ku4NVjKGwM3dD//Gst22NLaNdo2r5cdi4gpviPgSzGa4kI+mmuOz6eGc5KZmoil+RfvQwbir/TFgeJl+b7NUd8hugCKCR4z8KVt/bqMUhyqfOJRSihvAszMuMzDO4AylWuZUpL8yHqfgj7HtydM6DLWK0sQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BV/BUCmx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44210C433C7;
+	Fri, 22 Mar 2024 18:36:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711132576;
+	bh=0y+MfSq9AjFTDKn0zQYT/v6yPp3l+ObYynFLWm8K1Zs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=BV/BUCmxtRxdyZxMgdjLHny9/yv6eMrzAecMuroNJXACO9zdPogvOZLlBF5QBcJOw
+	 3S/jS7Evwa7ZZJS52jOXy1+fP9drg+E+VSyyqOoRoURr3RxvJKbIly3Ol6bEMfQkD9
+	 Okfos52Z3dNH+bSc0yAHLKMNSuPKiFU6DcYkRoaszhPuew6o9n+6N5shuY9ymV+6jW
+	 6YbsecN4ppKV+8HARWrPJbMzLrLQv2cwN5l9WtHI4JkawFdsuQn6kyy5RT6obWgJ57
+	 14AteTI8fyVgZqrLA5j/JkFwcfGzJbTmD5/kjNAMEmbKMmODfb2TmuqldQyVLWYjKV
+	 Dhew0Q6ret/7w==
+Date: Fri, 22 Mar 2024 13:36:14 -0500
+From: Rob Herring <robh@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	neil.armstrong@linaro.org, Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: usb: qcom,pmic-typec: drop port
+ description
+Message-ID: <20240322183614.GA1233803-robh@kernel.org>
+References: <20240322-typec-fix-example-v1-0-6b01c347419e@linaro.org>
+ <20240322-typec-fix-example-v1-1-6b01c347419e@linaro.org>
+ <230eab52-9751-43fd-8e47-fbfe12410e44@linaro.org>
+ <CAA8EJprD3fM966pLV4QXPUu=bFTn24fvPMKOaGqtqkAbdz7sOQ@mail.gmail.com>
+ <5ea4a187-1971-4970-a289-826d96c0351a@linaro.org>
+ <c0f1e898-7638-4b7b-a938-9e31e5b57e57@linaro.org>
+ <0b091595-1587-421d-bb00-c00ef729d143@linaro.org>
+ <CAA8EJpqvwhafFoD_=GO4E93JBQA2A+xY0rG14pgPm=xgJ9Yz_Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/6] clk: qcom: apss-ipq-pll: constify clk_init_data
- structures
-Content-Language: en-US
-To: Gabor Juhos <j4g8y7@gmail.com>, Bjorn Andersson <andersson@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240321-apss-ipq-pll-cleanup-v2-0-201f3cf79fd4@gmail.com>
- <20240321-apss-ipq-pll-cleanup-v2-5-201f3cf79fd4@gmail.com>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20240321-apss-ipq-pll-cleanup-v2-5-201f3cf79fd4@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJpqvwhafFoD_=GO4E93JBQA2A+xY0rG14pgPm=xgJ9Yz_Q@mail.gmail.com>
 
-On 21.03.2024 08:49, Gabor Juhos wrote:
-> The clk_init_data structures are never modified, so add const
-> qualifier to the ones where it is missing.
+On Fri, Mar 22, 2024 at 05:49:00PM +0200, Dmitry Baryshkov wrote:
+> On Fri, 22 Mar 2024 at 17:23, Bryan O'Donoghue
+> <bryan.odonoghue@linaro.org> wrote:
+> >
+> > On 22/03/2024 15:09, neil.armstrong@linaro.org wrote:
+> > >> TBH I think we should drop this HS, SS stuff from the connector
+> > >> definition - there's nothing to say in a h/w definition anywhere HS
+> > >> must be a port or indeed SS - not all hardware knows or cares about
+> > >> different HS/SS signalling.
+> > >
+> > > It matches the USB-C connector electrical characteristics, which by spec
+> > > has, at least:
+> > > - High-Speed USB Line
+> > > - up to 4 differential high-speed lanes that can be switched to DP, USB2
+> > > or PCIe
+> > > - SideBand line (SBU)
+> > >
+> > > And those 3 components can be handled by 3 different HW in the SoC, so
+> > > each one has a dedicated port.
+> > >
+> > > Remember DT describes the HW, not the SW implementation.
+> > >
+> > > Neil
+> >
+> > Yes, you're right about that.
+> >
+> > I suppose
+> >
+> > 1. Orientation switches should be defined as coming from a port on the
+> >     connector associated with the CC pins.
+> >     port@3:
+> >     orientation-switch port name goes here
+> >
+> > 2. Data-role switches...
+> >     Again the CC pins
+> >
+> > https://community.silabs.com/s/article/what-s-the-role-of-cc-pin-in-type-c-solution?language=en_US
+> >
+> > Maybe the right-thing-to-do is to add another port for the CC pins -
+> > which would still describe the hardware characteristics but would
+> > _accurately_ name the thing which does the data-role/orientation switching
 > 
-> No functional changes.
-> 
-> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-> ---
+> It's true that we don't describe CC lines. However In most of the
+> cases CC lines are handled by the Type-C port manager directly. So
+> there will be a connection from usb-c-connector to the pmic-typec
+> itself (which looks pretty redundant).
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+The thought at the time this was designed was that would be the parent 
+node of the connector. That's perhaps too simple.
 
-Konrad
+Rob
 
