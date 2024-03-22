@@ -1,189 +1,387 @@
-Return-Path: <linux-arm-msm+bounces-14822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14823-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A724D886B96
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 12:53:06 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E88B886B9F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 12:54:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5B426285424
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 11:53:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D9D5D1F24B1F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 11:54:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BB6740BFD;
-	Fri, 22 Mar 2024 11:52:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F88B3FB07;
+	Fri, 22 Mar 2024 11:54:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="T+2f2l4/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bRb6+7dx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7354A3FB1E
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 11:52:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5133C3FB04;
+	Fri, 22 Mar 2024 11:54:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711108355; cv=none; b=BZVoLUZ56wnbhEsOeRVLRE1L78GASptuvda4REpPBYtq51Ab2sHxJo7Fxx6rxE2rqPbb8uCDU1NihC8mu+n9dV61/Ih3XmDwMp6nLxxn1FiNd7OfB4feBWEag/oOqZMA0P8NRY+OnY+rzmrrpGM+/uJQWCvmBZr4JQggD/6A07U=
+	t=1711108441; cv=none; b=Us89jVFpnnGFsNDDNbZf5sOXh+/TzNOHUd5PAfSTfZqbXNTCIBIGwpvOc6aBtaWbDTAleMdKlWFX4gCNcYhvV5Vna/iYJdo8vQjnU/Wzi2QOkNhbbtfw0nsG3Nrrs+fBbwveQmN6Eh98ATodFdTqLr8IJDywbWLPPT4aw3tzqWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711108355; c=relaxed/simple;
-	bh=sNL+P1h7bA7A/w8ikEYKlALN61mPmedZHQKBVN02bv4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=RRePV+cLBdhVcm01WnLGffR55z1daVnoNVNpdG7wcknGUanypD5AagkS78QdIJVeVx8YNh0ElO3V+X63h4hnRW6uEOKy02Yp2xe2v1Fo8nBbLuefxgwqZIFhWckcK31KlS7xvWzgu4p/vkNvJFyzw936Mo9iPm4W8VfTjPll01Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=T+2f2l4/; arc=none smtp.client-ip=209.85.208.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2d49f7e5d65so24475081fa.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 04:52:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711108351; x=1711713151; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OJ+GFLZIXNkg5v+GlXl4TnEHJE7knc6+m/ZcyQWbv4w=;
-        b=T+2f2l4/E+UZqiJP/2bDLZJKszTxG8NJ/9VxrbYBuC+56d732wqKSJPFTTUXkUm0Gt
-         gmpisWYuOwLQiULOHCt9DakG6wOgh6825/LC22D0WhtampIB4nXaAlYKYsxCjlAiWKzT
-         YmFyviwc8vpeu6sQdC4Foil3uuBtZG5E7iL1vfaWBn79FuIp0twC/N516mC6023AYEo2
-         3JTG+ooHnzworhlXYFLrLCQrIF6rFqWUAAC4+JFuR0jyIbT2XcGydcaeo67l21L2Akf7
-         QThBz9SCP8QPm4DNJYCucXZzOsv3+eVlEdkbIYMn0foCidmV2j+LBQs8J6Ca0KbEBsZk
-         4jEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711108351; x=1711713151;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OJ+GFLZIXNkg5v+GlXl4TnEHJE7knc6+m/ZcyQWbv4w=;
-        b=NKzHxHNQKOm/OeRbA9pcuRg/j6eB3Wd1/7CXE0xXSVGGUrg/xoXzLUggSpPWBMp/of
-         TLin0W/3GzhEFs7zhW6St8HIus9HkXVIFUo+5M/DhMlZuH//HNvQTbjLmlW6Ya+RD6Ns
-         TN1vRlTv2ZiXFJu5F3MB/pELl1562qW4yr+7W+bL7TKEt+LgxmIsiGjvCFcOKqdyDBDa
-         leXTajgE0JKHIZhOjbo551SW96MiPk6gfSR/LNgMc31xBk1gvRsZXZ3ouUlWLMcjJpAW
-         vbwbZdK0+OYVMlQpnW5t888zTReoG6a4+H/OENzO9DT2gh/2+HBbAHM9fIcR20QxiIpW
-         IARQ==
-X-Gm-Message-State: AOJu0YzlZwtyJz6REtd/4tJ4I9efYsk0TfEcIPt6t1StxcWDSmsymSXP
-	zwyyTWGaZkom9em5OtqSN6cEqv/Ge1gQqzWpvTPoTaUGA6Hr46X+ad+L8hqbC3eeaiZMMgJ6GBm
-	G
-X-Google-Smtp-Source: AGHT+IHOrQzzpTNeMHB5pyVYf6AvHcpttAJajZrK/jIORc2gpzME5sDrHJsvjeLGUZT8gTbSc53y+A==
-X-Received: by 2002:a05:6512:558:b0:513:76ec:2d21 with SMTP id h24-20020a056512055800b0051376ec2d21mr1539868lfl.10.1711108351065;
-        Fri, 22 Mar 2024 04:52:31 -0700 (PDT)
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id y18-20020a056512045200b00514b644bfebsm320136lfk.299.2024.03.22.04.52.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Mar 2024 04:52:30 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 22 Mar 2024 13:52:22 +0200
-Subject: [PATCH 2/2] dt-bindings: usb: qcom,pmic-typec: update example to
- follow connector schema
+	s=arc-20240116; t=1711108441; c=relaxed/simple;
+	bh=b9Cp4C1sz2JvQcloJbd1gxGs1djTlwbzJPl/7QImHrk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=T06KrPYnLO9kvm+1TApe0Au8HDAgy2PJCbYtm4OKK/d5yDDxV332V1rxJ2+nmjKs1jm1ZgMQWMrcEu5mqEk9GeDhFqscqdtRk9D5Zrw5GdIQ5y22LT/tBIx7t0UahW4iDUuQwmOGmltE0aeloNUjCajMww2tiiX3VUF75Bj2ZPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bRb6+7dx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5125FC433C7;
+	Fri, 22 Mar 2024 11:53:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711108440;
+	bh=b9Cp4C1sz2JvQcloJbd1gxGs1djTlwbzJPl/7QImHrk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bRb6+7dx+JBAmmwEy/1CbdN2q2OvEsiR/RQXuB4t8hLIaNirKmj/2Trwph9TnuZnq
+	 9FLsy/VthCWbXcnq09IdY81DsJdJbeXxGL5SfvszT2ZFMTMbDc4ZphVkmAkucYmB3q
+	 uwRuBYE0daZ2r/KSrsMurn/OJcqc8lAmbvavkQdJ1Wal8yBkdX6WuduVDqxSSoJcep
+	 46LvtW9lm7lfch2R4MktG5kQjJaFBZggm+vD7/AUSJMFAuzjpnr4w6jV02k/G30/I2
+	 jYWN2TwvUDMCfeDD/vRCo2XVllTNp7SFh3RKj8+25msTV0WfF8wI4iCNU+drxf3qJI
+	 lvyqUtd9CUZoA==
+Date: Fri, 22 Mar 2024 12:53:50 +0100
+From: Niklas Cassel <cassel@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Jingoo Han <jingoohan1@gmail.com>,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Marek Vasut <marek.vasut+renesas@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Kishon Vijay Abraham I <kishon@ti.com>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	NXP Linux Team <linux-imx@nxp.com>,
+	Minghuan Lian <minghuan.Lian@nxp.com>,
+	Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Jesper Nilsson <jesper.nilsson@axis.com>,
+	Srikanth Thokala <srikanth.thokala@intel.com>,
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
+	linux-arm-kernel@axis.com
+Subject: Re: [PATCH v10 8/8] PCI: dwc: ep: Remove "core_init_notifier" flag
+Message-ID: <Zf1xTkuK8yBZXmQ0@ryzen>
+References: <20240314-pci-dbi-rework-v10-0-14a45c5a938e@linaro.org>
+ <20240314-pci-dbi-rework-v10-8-14a45c5a938e@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240322-typec-fix-example-v1-2-6b01c347419e@linaro.org>
-References: <20240322-typec-fix-example-v1-0-6b01c347419e@linaro.org>
-In-Reply-To: <20240322-typec-fix-example-v1-0-6b01c347419e@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2868;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=sNL+P1h7bA7A/w8ikEYKlALN61mPmedZHQKBVN02bv4=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBl/XD8eVS0HaN3UvT0a0rdJ3gp1+uqRKHzDDbaP
- OEyDy2vAYCJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZf1w/AAKCRCLPIo+Aiko
- 1f7/CACV8GFASdzCAHKIGIiR13c2TTORHa+O+xBHdGr2I3E3hqY4SWWGvLfMmoqQKIMEuOjp6/5
- y5UDtuSPpcnD8qHtA1y9CDC8xeT91G7qnk+IZVrWt7Y3jULTC0FntriWYlTMroSOpQqEUm04aXH
- rmX6Ml5ZC1YbP6tU+M6Ez4SZwApiYKIcJnRzOSKYen8v6+TZbEx2RtxxSstVCuJ0FXeQtnUSMgj
- pFFA1YMC/dJSRM1jolpaPaXMC30ObZOpyODx9CJJzN0iwU5GOxTl9d9kCCL3ouRvdTtNNV7ywS8
- FlRW0cyk9/1ZWGC9CVUsgr565CbqF6aZmOazrTnl7F4A7aMB
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240314-pci-dbi-rework-v10-8-14a45c5a938e@linaro.org>
 
-Update Qualcomm PMIC Type-C examples to follow the USB-C connector
-schema. The USB-C connector should have three ports (USB HS @0,
-SSTX/RX @1 and SBU @2 lanes). Reorder ports accordingly and add SBU port
-connected to the SBU mux (e.g. FSA4480).
+On Thu, Mar 14, 2024 at 01:18:06PM +0530, Manivannan Sadhasivam wrote:
+> "core_init_notifier" flag is set by the glue drivers requiring refclk from
+> the host to complete the DWC core initialization. Also, those drivers will
+> send a notification to the EPF drivers once the initialization is fully
+> completed using the pci_epc_init_notify() API. Only then, the EPF drivers
+> will start functioning.
+> 
+> For the rest of the drivers generating refclk locally, EPF drivers will
+> start functioning post binding with them. EPF drivers rely on the
+> 'core_init_notifier' flag to differentiate between the drivers.
+> Unfortunately, this creates two different flows for the EPF drivers.
+> 
+> So to avoid that, let's get rid of the "core_init_notifier" flag and follow
+> a single initialization flow for the EPF drivers. This is done by calling
+> the dw_pcie_ep_init_notify() from all glue drivers after the completion of
+> dw_pcie_ep_init_registers() API. This will allow all the glue drivers to
+> send the notification to the EPF drivers once the initialization is fully
+> completed.
+> 
+> Only difference here is that, the drivers requiring refclk from host will
+> send the notification once refclk is received, while others will send it
+> during probe time itself.
+> 
+> But this also requires the EPC core driver to deliver the notification
+> after EPF driver bind. Because, the glue driver can send the notification
+> before the EPF drivers bind() and in those cases the EPF drivers will miss
+> the event. To accommodate this, EPC core is now caching the state of the
+> EPC initialization in 'init_complete' flag and pci-ep-cfs driver sends the
+> notification to EPF drivers based on that after each EPF driver bind.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  drivers/pci/controller/dwc/pci-dra7xx.c           |  2 ++
+>  drivers/pci/controller/dwc/pci-imx6.c             |  2 ++
+>  drivers/pci/controller/dwc/pci-keystone.c         |  2 ++
+>  drivers/pci/controller/dwc/pci-layerscape-ep.c    |  2 ++
+>  drivers/pci/controller/dwc/pcie-artpec6.c         |  2 ++
+>  drivers/pci/controller/dwc/pcie-designware-plat.c |  2 ++
+>  drivers/pci/controller/dwc/pcie-keembay.c         |  2 ++
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c         |  1 -
+>  drivers/pci/controller/dwc/pcie-rcar-gen4.c       |  2 ++
+>  drivers/pci/controller/dwc/pcie-tegra194.c        |  1 -
+>  drivers/pci/controller/dwc/pcie-uniphier-ep.c     |  2 ++
+>  drivers/pci/endpoint/functions/pci-epf-test.c     | 18 +++++-------------
+>  drivers/pci/endpoint/pci-ep-cfs.c                 |  9 +++++++++
+>  drivers/pci/endpoint/pci-epc-core.c               | 22 ++++++++++++++++++++++
+>  include/linux/pci-epc.h                           |  7 ++++---
+>  15 files changed, 58 insertions(+), 18 deletions(-)
 
-Fixes: 00bb478b829e ("dt-bindings: usb: Add Qualcomm PMIC Type-C")
-Reported-by: Luca Weiss <luca.weiss@fairphone.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- .../devicetree/bindings/usb/qcom,pmic-typec.yaml   | 34 +++++++++++++++++-----
- 1 file changed, 26 insertions(+), 8 deletions(-)
+FWIW:
+Tested-by: Niklas Cassel <cassel@kernel.org>
 
-diff --git a/Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml b/Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
-index 63020a88a355..beecbda40e3c 100644
---- a/Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
-+++ b/Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
-@@ -187,15 +187,22 @@ examples:
- 
-                     port@0 {
-                         reg = <0>;
--                        pmic_typec_mux_out: endpoint {
--                            remote-endpoint = <&usb_phy_typec_mux_in>;
-+                        pmic_typec_hs_in: endpoint {
-+                            remote-endpoint = <&usb_hs_out>;
-                         };
-                     };
- 
-                     port@1 {
-                         reg = <1>;
--                        pmic_typec_role_switch_out: endpoint {
--                            remote-endpoint = <&usb_role_switch_in>;
-+                        pmic_typec_ss_in: endpoint {
-+                            remote-endpoint = <&usb_phy_typec_ss_out>;
-+                        };
-+                    };
-+
-+                    port@2 {
-+                        reg = <2>;
-+                        pmic_typec_sbu: endpoint {
-+                            remote-endpoint = <&usb_mux_sbu>;
-                         };
-                     };
-                 };
-@@ -207,8 +214,8 @@ examples:
-         dr_mode = "otg";
-         usb-role-switch;
-         port {
--            usb_role_switch_in: endpoint {
--                remote-endpoint = <&pmic_typec_role_switch_out>;
-+            usb_hs_out: endpoint {
-+                remote-endpoint = <&pmic_typec_hs_in>;
-             };
-         };
-     };
-@@ -216,8 +223,19 @@ examples:
-     usb-phy {
-         orientation-switch;
-         port {
--            usb_phy_typec_mux_in: endpoint {
--                remote-endpoint = <&pmic_typec_mux_out>;
-+            usb_phy_typec_ss_out: endpoint {
-+                remote-endpoint = <&pmic_typec_ss_in>;
-+            };
-+        };
-+    };
-+
-+    usb-mux {
-+        orientation-switch;
-+        mode-switch;
-+
-+        port {
-+            usb_mux_sbu: endpoint {
-+                remote-endpoint = <&pmic_typec_sbu>;
-             };
-         };
-     };
 
--- 
-2.39.2
 
+However, when looking at this, I was surprised that you never call something
+that will set:
+init_complete = false;
+from e.g. dw_pcie_ep_deinit() or dw_pcie_ep_cleanup().
+
+I saw that you do seem to set
+init_complete = false;
+in your other follow up series that is based on this one.
+
+What will happen if you run with only this series merged (without your
+follow up series), on a platform that used to have .core_init_notifier?
+
+If you do remove and recreate the symlink on a platform with external
+refclk, since you never set init_complete to false, you could trigger
+EPF core_init callback, e.g. pci_epf_test_core_init() to be called,
+which will do DBI writes even when there is no refclk.
+
+E.g. (on a platform with external refclk):
+1) Create symlink to pci-epf-test in configfs.
+2) Start RC, your EPC driver will call ep_init_notifiy() when perst
+deasserts.
+3) Run pci-epf-test.
+4) Remove the pci-epf-test symlink
+5) Shutdown RC
+6) Create symlink to pci-epf-test in configfs.
+   This will see that init_complete is true, and will do DBI writes
+   which will crash your system, since you don't have a refclk.
+
+Perhaps you should move the patch that calls a function that sets
+init_complete = false;
+to this series, so that this crash is not possible?
+
+
+> 
+> diff --git a/drivers/pci/controller/dwc/pci-dra7xx.c b/drivers/pci/controller/dwc/pci-dra7xx.c
+> index 395042b29ffc..d2d17d37d3e0 100644
+> --- a/drivers/pci/controller/dwc/pci-dra7xx.c
+> +++ b/drivers/pci/controller/dwc/pci-dra7xx.c
+> @@ -474,6 +474,8 @@ static int dra7xx_add_pcie_ep(struct dra7xx_pcie *dra7xx,
+>  		return ret;
+>  	}
+>  
+> +	dw_pcie_ep_init_notify(ep);
+> +
+>  	return 0;
+>  }
+>  
+> diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
+> index bfcafa440ddb..894b5de76e3a 100644
+> --- a/drivers/pci/controller/dwc/pci-imx6.c
+> +++ b/drivers/pci/controller/dwc/pci-imx6.c
+> @@ -1144,6 +1144,8 @@ static int imx6_add_pcie_ep(struct imx6_pcie *imx6_pcie,
+>  		return ret;
+>  	}
+>  
+> +	dw_pcie_ep_init_notify(ep);
+> +
+>  	/* Start LTSSM. */
+>  	imx6_pcie_ltssm_enable(dev);
+>  
+> diff --git a/drivers/pci/controller/dwc/pci-keystone.c b/drivers/pci/controller/dwc/pci-keystone.c
+> index 093dbb725e41..b7b30470b394 100644
+> --- a/drivers/pci/controller/dwc/pci-keystone.c
+> +++ b/drivers/pci/controller/dwc/pci-keystone.c
+> @@ -1293,6 +1293,8 @@ static int ks_pcie_probe(struct platform_device *pdev)
+>  			goto err_ep_init;
+>  		}
+>  
+> +		dw_pcie_ep_init_notify(&pci->ep);
+> +
+>  		break;
+>  	default:
+>  		dev_err(dev, "INVALID device type %d\n", mode);
+> diff --git a/drivers/pci/controller/dwc/pci-layerscape-ep.c b/drivers/pci/controller/dwc/pci-layerscape-ep.c
+> index b712fdd06549..c513598a46d7 100644
+> --- a/drivers/pci/controller/dwc/pci-layerscape-ep.c
+> +++ b/drivers/pci/controller/dwc/pci-layerscape-ep.c
+> @@ -283,6 +283,8 @@ static int __init ls_pcie_ep_probe(struct platform_device *pdev)
+>  		return ret;
+>  	}
+>  
+> +	dw_pcie_ep_init_notify(&pci->ep);
+> +
+>  	return ls_pcie_ep_interrupt_init(pcie, pdev);
+>  }
+>  
+> diff --git a/drivers/pci/controller/dwc/pcie-artpec6.c b/drivers/pci/controller/dwc/pcie-artpec6.c
+> index a6095561db4a..a4630b92489b 100644
+> --- a/drivers/pci/controller/dwc/pcie-artpec6.c
+> +++ b/drivers/pci/controller/dwc/pcie-artpec6.c
+> @@ -452,6 +452,8 @@ static int artpec6_pcie_probe(struct platform_device *pdev)
+>  			return ret;
+>  		}
+>  
+> +		dw_pcie_ep_init_notify(&pci->ep);
+> +
+>  		break;
+>  	default:
+>  		dev_err(dev, "INVALID device type %d\n", artpec6_pcie->mode);
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-plat.c b/drivers/pci/controller/dwc/pcie-designware-plat.c
+> index ca9b22e654cd..8490c5d6ff9f 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-plat.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-plat.c
+> @@ -154,6 +154,8 @@ static int dw_plat_pcie_probe(struct platform_device *pdev)
+>  			dw_pcie_ep_deinit(&pci->ep);
+>  		}
+>  
+> +		dw_pcie_ep_init_notify(&pci->ep);
+> +
+>  		break;
+>  	default:
+>  		dev_err(dev, "INVALID device type %d\n", dw_plat_pcie->mode);
+> diff --git a/drivers/pci/controller/dwc/pcie-keembay.c b/drivers/pci/controller/dwc/pcie-keembay.c
+> index 250d6acf16dc..9fa9354a5f48 100644
+> --- a/drivers/pci/controller/dwc/pcie-keembay.c
+> +++ b/drivers/pci/controller/dwc/pcie-keembay.c
+> @@ -438,6 +438,8 @@ static int keembay_pcie_probe(struct platform_device *pdev)
+>  			return ret;
+>  		}
+>  
+> +		dw_pcie_ep_init_notify(&pci->ep);
+> +
+>  		break;
+>  	default:
+>  		dev_err(dev, "Invalid device type %d\n", pcie->mode);
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> index 3697b4a944cc..2fb8c15e7a91 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> @@ -775,7 +775,6 @@ static void qcom_pcie_ep_init_debugfs(struct qcom_pcie_ep *pcie_ep)
+>  
+>  static const struct pci_epc_features qcom_pcie_epc_features = {
+>  	.linkup_notifier = true,
+> -	.core_init_notifier = true,
+>  	.msi_capable = true,
+>  	.msix_capable = false,
+>  	.align = SZ_4K,
+> diff --git a/drivers/pci/controller/dwc/pcie-rcar-gen4.c b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+> index fb7c03639a53..0448928017f3 100644
+> --- a/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+> +++ b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+> @@ -435,6 +435,8 @@ static int rcar_gen4_add_dw_pcie_ep(struct rcar_gen4_pcie *rcar)
+>  		rcar_gen4_pcie_ep_deinit(rcar);
+>  	}
+>  
+> +	dw_pcie_ep_init_notify(ep);
+> +
+>  	return ret;
+>  }
+>  
+> diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
+> index 264ee76bf008..e02deb31a72d 100644
+> --- a/drivers/pci/controller/dwc/pcie-tegra194.c
+> +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+> @@ -2006,7 +2006,6 @@ static int tegra_pcie_ep_raise_irq(struct dw_pcie_ep *ep, u8 func_no,
+>  
+>  static const struct pci_epc_features tegra_pcie_epc_features = {
+>  	.linkup_notifier = true,
+> -	.core_init_notifier = true,
+>  	.msi_capable = false,
+>  	.msix_capable = false,
+>  	.reserved_bar = 1 << BAR_2 | 1 << BAR_3 | 1 << BAR_4 | 1 << BAR_5,
+> diff --git a/drivers/pci/controller/dwc/pcie-uniphier-ep.c b/drivers/pci/controller/dwc/pcie-uniphier-ep.c
+> index 82ccaea089be..eb1d79fdb1f1 100644
+> --- a/drivers/pci/controller/dwc/pcie-uniphier-ep.c
+> +++ b/drivers/pci/controller/dwc/pcie-uniphier-ep.c
+> @@ -410,6 +410,8 @@ static int uniphier_pcie_ep_probe(struct platform_device *pdev)
+>  		return ret;
+>  	}
+>  
+> +	dw_pcie_ep_init_notify(&priv->pci.ep);
+> +
+>  	return 0;
+>  }
+>  
+> diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
+> index 18c80002d3bd..fc0282b0d626 100644
+> --- a/drivers/pci/endpoint/functions/pci-epf-test.c
+> +++ b/drivers/pci/endpoint/functions/pci-epf-test.c
+> @@ -753,6 +753,7 @@ static int pci_epf_test_core_init(struct pci_epf *epf)
+>  	const struct pci_epc_features *epc_features;
+>  	struct pci_epc *epc = epf->epc;
+>  	struct device *dev = &epf->dev;
+> +	bool linkup_notifier = false;
+>  	bool msix_capable = false;
+>  	bool msi_capable = true;
+>  	int ret;
+> @@ -795,6 +796,10 @@ static int pci_epf_test_core_init(struct pci_epf *epf)
+>  		}
+>  	}
+>  
+> +	linkup_notifier = epc_features->linkup_notifier;
+> +	if (!linkup_notifier)
+> +		queue_work(kpcitest_workqueue, &epf_test->cmd_handler.work);
+> +
+>  	return 0;
+>  }
+>  
+> @@ -901,8 +906,6 @@ static int pci_epf_test_bind(struct pci_epf *epf)
+>  	const struct pci_epc_features *epc_features;
+>  	enum pci_barno test_reg_bar = BAR_0;
+>  	struct pci_epc *epc = epf->epc;
+> -	bool linkup_notifier = false;
+> -	bool core_init_notifier = false;
+>  
+>  	if (WARN_ON_ONCE(!epc))
+>  		return -EINVAL;
+> @@ -913,8 +916,6 @@ static int pci_epf_test_bind(struct pci_epf *epf)
+>  		return -EOPNOTSUPP;
+>  	}
+>  
+> -	linkup_notifier = epc_features->linkup_notifier;
+> -	core_init_notifier = epc_features->core_init_notifier;
+>  	test_reg_bar = pci_epc_get_first_free_bar(epc_features);
+>  	if (test_reg_bar < 0)
+>  		return -EINVAL;
+> @@ -927,21 +928,12 @@ static int pci_epf_test_bind(struct pci_epf *epf)
+>  	if (ret)
+>  		return ret;
+>  
+> -	if (!core_init_notifier) {
+> -		ret = pci_epf_test_core_init(epf);
+> -		if (ret)
+> -			return ret;
+> -	}
+> -
+
+While you did fix up all DWC based drivers, the non-DWC EPC drivers that
+did not have epc_features->core_init_notifier before this patch:
+
+drivers/pci/controller/cadence/pcie-cadence-ep.c:#include <linux/pci-epc.h>
+drivers/pci/controller/pcie-rcar-ep.c:#include <linux/pci-epc.h>
+drivers/pci/controller/pcie-rockchip-ep.c:#include <linux/pci-epc.h>
+
+I don't think that they will work with pci-epf-test anymore, since AFAICT,
+you did not add a call to: pci_epc_init_notify() or similar in these EPC drivers.
+(Like this patch does to all the DWC-based drivers without a core_init_notifier.)
+
+
+Kind regards,
+Niklas
 
