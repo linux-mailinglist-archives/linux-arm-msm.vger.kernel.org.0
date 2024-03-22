@@ -1,76 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-14813-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14814-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C924886AA1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 11:45:21 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AF706886AA3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 11:45:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6B4E5B2100E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 10:45:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 63D3E282132
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 10:45:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 894B13C684;
-	Fri, 22 Mar 2024 10:45:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aiVvjJoG"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 878FC282FE;
+	Fri, 22 Mar 2024 10:45:37 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC48383B9
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 10:45:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4839B224FA;
+	Fri, 22 Mar 2024 10:45:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711104313; cv=none; b=CyPHWQU3nHbJG2+u9UaOOwT/ezF7XDWTOGK7FyKJoCmmPHxuyA4deYfHrmmRbjOxcPqpIo9mY6/16cJjT5yhHXPwne7/oEItKg72kwLiYhFiYr4TsE2imZy+SAyxjfDqQlx56xvUbv9Mj5PqTM2kl32GCkvNL58eUWNJE91vNHE=
+	t=1711104337; cv=none; b=bIQyO7eChxGVvLZ66b0jst1gsix5egSJwl0QymqF0b8WmMq6cGDpDQeeZtsps5WCRI91VWAf2AmRbxKQww/ZU/uS+/hQviDfE0vEGI88mQyII1GG/h0ZmqCvSZushOGE35ZTvBGPMDn117/0HzHBoubjXiOl+LUb0sZsEcRurZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711104313; c=relaxed/simple;
-	bh=jWRuh7EGPZi+az7Aq33aapOL1INFIF3xUm8yZfIfKMU=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=tNKKhq5ccGzFh1WSvvPaVy2OJmfDcNs+2Fdzyh+/U3wCucRDjLUTimKWU5qXaazrcfwe/WMz1Vr/YanPaxUm20WaKT7vWar7TCosXbvr+RV4X2tQIHkWsPdW1zlAdJVERdXzza0hVKvM7qBUnDAw1m8E4zE207xp0Z7zw+JmTm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aiVvjJoG; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-33ed7ef0ae8so1087382f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 03:45:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711104310; x=1711709110; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Ijz4cnwmta4DwRjOoVv/yS9+lUjTkF7NKjIpyzpOrv4=;
-        b=aiVvjJoG80jSLyFxRYRywfwVzM2t3cEK6wFW+rDlM7+Kb8C25AtGPLDwfBaEgXQ2KL
-         Te7NM0ap/2sD4j9y3TiEuCvF1luJuEdWqYK0Jk4igM2//0uxmcdLQLVRSo/X+I/eDaSs
-         rpYue8vOhFCbn7wlKcrTcES3gD8JzLHAwLEgGiAiCsWY1fz+YE7jGQakTcua6QaxwOyC
-         Vlogzmrv2+x4gHOl4VspPwGL/VTD0Z8W5WHonXDE2Ig+rDOvYUYy5tHT6Y3CLFzctct7
-         IXmgzNSr7mT2cSlKePOR1YvAEQICy08BqoqzCTnORko+nBOPRfcgvmF1zBoNl32NpPxR
-         gulA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711104310; x=1711709110;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Ijz4cnwmta4DwRjOoVv/yS9+lUjTkF7NKjIpyzpOrv4=;
-        b=eUoej9q9djZ0K8VNlvJkfI83ZYv7AIRZKN+O2uOq00UnNsBKuftTGD2oRg60slwo5X
-         +qYMbPzEfq4PpWmNIFCUhYq9s/O/R5DXvysTHh9kVsIgXrlWRv7mPfPE23n/LRQouc5j
-         wc2WJ5rAxql7QDldVZ39rjMVen7FCcNtpbCKUIl3Ob+xOtmxBUMG4UkYMAJwponDK/QO
-         YgIjplTlZiMLQpVDtAqxVuHFoXEmCjhtk+oBzdm47edGVCEJKz9mAATULP7VvrMnal1J
-         NbAtsGio/MtA1+wBgz0RYPX0K3HFtxYhkeUGFHm+DBOyYFDEJK0zcWZ7bvoNxBt1PY93
-         p3rw==
-X-Forwarded-Encrypted: i=1; AJvYcCWGbB5nB0/DKNICJUeRYQM12eoNYH+M6hqH7NZnvGPV0xeXsAOvWm7zO3O58/6OkeNERLO9lT4PvLE64zq9HlpWzwUO4vBQQfZxbbgipA==
-X-Gm-Message-State: AOJu0YxOX+v8enn9izl2ORnzn2bfC2CtYv03XQtY7ZiUfBBrZOcY84dU
-	dKONViKWFcBweahYtWlmP6GJ2jvx3yOwN7Ny8GeWWRLguXkvK1tuCO8y7TQpmmU=
-X-Google-Smtp-Source: AGHT+IE0h2NuaEVe60IzMpflYy6JouB/v/PcDVSKl0vyEQEKhI77w54WnPoVuNyW77f1ZSy4VjO1Wg==
-X-Received: by 2002:a5d:69d0:0:b0:33e:7f51:c2f9 with SMTP id s16-20020a5d69d0000000b0033e7f51c2f9mr1268500wrw.49.1711104309609;
-        Fri, 22 Mar 2024 03:45:09 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:3ee1:a278:2b57:55f7? ([2a01:e0a:982:cbb0:3ee1:a278:2b57:55f7])
-        by smtp.gmail.com with ESMTPSA id j1-20020adff001000000b0033e7e9c8657sm1778124wro.45.2024.03.22.03.45.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Mar 2024 03:45:09 -0700 (PDT)
-Message-ID: <1dc187c1-2005-486f-a9dd-6648cf52ab70@linaro.org>
-Date: Fri, 22 Mar 2024 11:45:08 +0100
+	s=arc-20240116; t=1711104337; c=relaxed/simple;
+	bh=/flLk3EG/+cgDBKscBEg0JxsnQXiAp3C4TWd9Upm2vI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=guKpmNxUBKhIy+mpJC5vKdmQa5/lH7RhUQISw0oeLcKTW3Hqzj6xxF7fT46nbZVJ2myBUkmKovGTSrZ1o02ohxu8b5NU68/bWX/9NNS0FXalcBtwEIumtu2NYxHlE77R7dAfu4Mj5h104bLjMvuFFJMe1r+DCuKU9AwwRTUrvsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BF7D41007;
+	Fri, 22 Mar 2024 03:46:08 -0700 (PDT)
+Received: from [10.57.71.57] (unknown [10.57.71.57])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9B4BE3F64C;
+	Fri, 22 Mar 2024 03:45:32 -0700 (PDT)
+Message-ID: <a576209f-ffda-4891-82e9-21f153b57a26@arm.com>
+Date: Fri, 22 Mar 2024 10:45:30 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,203 +42,236 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 3/7] phy: qcom: qmp-pcie: register second optional PHY
- AUX clock
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240322-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v2-0-3ec0a966d52f@linaro.org>
- <20240322-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v2-3-3ec0a966d52f@linaro.org>
- <CAA8EJpoJWKZcZu3SY2P9dpYQ_KXkimRXNhAKfaOreCGZ1muYqw@mail.gmail.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <CAA8EJpoJWKZcZu3SY2P9dpYQ_KXkimRXNhAKfaOreCGZ1muYqw@mail.gmail.com>
+Subject: Re: [PATCH V3 2/2] cpufreq: scmi: Register for limit change
+ notifications
+Content-Language: en-US
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: sudeep.holla@arm.com, Cristian Marussi <cristian.marussi@arm.com>,
+ linux-arm-kernel@lists.infradead.org, pierre.gondois@arm.com,
+ dietmar.eggemann@arm.com, morten.rasmussen@arm.com, viresh.kumar@linaro.org,
+ rafael@kernel.org, linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ quic_mdtipton@quicinc.com, linux-arm-msm@vger.kernel.org
+References: <20240227181632.659133-1-quic_sibis@quicinc.com>
+ <20240227181632.659133-3-quic_sibis@quicinc.com>
+ <f8bfc666-c216-44d5-a63b-99f04ff3b8ef@arm.com>
+ <2608b2d8-f3b0-b4f5-f8e4-1f2242043ded@quicinc.com>
+ <64c6a1bc-92f2-4f44-ab10-cbd2473746f3@arm.com>
+ <18c249b2-ce8c-435b-8d65-a1770a1f294e@arm.com> <ZeBqW04f8V4dHphn@pluto>
+ <7c82b316-89d9-470d-b46d-f86e81e2add3@arm.com> <ZeB0iCr9GpfUiOEg@pluto>
+ <66ca73cc-8bdd-453a-951c-5e0166340edd@arm.com>
+ <08018d07-79cf-cebd-aba5-214afbc5001d@quicinc.com>
+From: Lukasz Luba <lukasz.luba@arm.com>
+In-Reply-To: <08018d07-79cf-cebd-aba5-214afbc5001d@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 22/03/2024 11:41, Dmitry Baryshkov wrote:
-> On Fri, 22 Mar 2024 at 11:43, Neil Armstrong <neil.armstrong@linaro.org> wrote:
->>
->> The PCIe Gen4x2 PHY found in the SM8[456]50 SoCs have a second clock,
->> add the code to register it for PHYs configs that sets a aux_clock_rate.
->>
->> In order to get the right clock, add qmp_pcie_clk_hw_get() which uses
->> the newly introduced QMP_PCIE_PIPE_CLK & QMP_PCIE_PHY_AUX_CLK clock
->> IDs and also supports the legacy bindings by returning the PIPE clock
->> when #clock-cells=0.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> Small question below.
-> 
->> ---
->>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 78 ++++++++++++++++++++++++++++++--
->>   1 file changed, 75 insertions(+), 3 deletions(-)
->>
->> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->> index e8da2e9146dc..6c9a95e62429 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->> @@ -22,6 +22,8 @@
->>   #include <linux/reset.h>
->>   #include <linux/slab.h>
->>
->> +#include <dt-bindings/phy/phy-qcom-qmp.h>
->> +
->>   #include "phy-qcom-qmp-common.h"
->>
->>   #include "phy-qcom-qmp.h"
->> @@ -2389,6 +2391,9 @@ struct qmp_phy_cfg {
->>
->>          /* QMP PHY pipe clock interface rate */
->>          unsigned long pipe_clock_rate;
->> +
->> +       /* QMP PHY AUX clock interface rate */
->> +       unsigned long aux_clock_rate;
->>   };
->>
->>   struct qmp_pcie {
->> @@ -2420,6 +2425,7 @@ struct qmp_pcie {
->>          int mode;
->>
->>          struct clk_fixed_rate pipe_clk_fixed;
->> +       struct clk_fixed_rate aux_clk_fixed;
->>   };
->>
->>   static inline void qphy_setbits(void __iomem *base, u32 offset, u32 val)
->> @@ -3686,6 +3692,62 @@ static int phy_pipe_clk_register(struct qmp_pcie *qmp, struct device_node *np)
->>          return devm_clk_hw_register(qmp->dev, &fixed->hw);
->>   }
->>
->> +/*
->> + * Register a fixed rate PHY aux clock.
->> + *
->> + * The <s>_phy_aux_clksrc generated by PHY goes to the GCC that gate
->> + * controls it. The <s>_phy_aux_clk coming out of the GCC is requested
->> + * by the PHY driver for its operations.
->> + * We register the <s>_phy_aux_clksrc here. The gcc driver takes care
->> + * of assigning this <s>_phy_aux_clksrc as parent to <s>_phy_aux_clk.
->> + * Below picture shows this relationship.
->> + *
->> + *         +---------------+
->> + *         |   PHY block   |<<---------------------------------------------+
->> + *         |               |                                               |
->> + *         |   +-------+   |                      +-----+                  |
->> + *   I/P---^-->|  PLL  |---^--->phy_aux_clksrc--->| GCC |--->phy_aux_clk---+
->> + *    clk  |   +-------+   |                      +-----+
->> + *         +---------------+
->> + */
->> +static int phy_aux_clk_register(struct qmp_pcie *qmp, struct device_node *np)
->> +{
->> +       struct clk_fixed_rate *fixed = &qmp->aux_clk_fixed;
->> +       struct clk_init_data init = { };
->> +       int ret;
->> +
->> +       ret = of_property_read_string_index(np, "clock-output-names", 1, &init.name);
->> +       if (ret) {
->> +               dev_err(qmp->dev, "%pOFn: No clock-output-names index 1\n", np);
->> +               return ret;
->> +       }
->> +
->> +       init.ops = &clk_fixed_rate_ops;
->> +
->> +       fixed->fixed_rate = qmp->cfg->aux_clock_rate;
->> +       fixed->hw.init = &init;
->> +
->> +       return devm_clk_hw_register(qmp->dev, &fixed->hw);
->> +}
->> +
->> +static struct clk_hw *qmp_pcie_clk_hw_get(struct of_phandle_args *clkspec, void *data)
->> +{
->> +       struct qmp_pcie *qmp = data;
->> +
->> +       /* Support legacy bindings */
->> +       if (!clkspec->args_count)
->> +               return &qmp->pipe_clk_fixed.hw;
->> +
->> +       switch (clkspec->args[0]) {
->> +       case QMP_PCIE_PIPE_CLK:
->> +               return &qmp->pipe_clk_fixed.hw;
->> +       case QMP_PCIE_PHY_AUX_CLK:
->> +               return &qmp->aux_clk_fixed.hw;
-> 
-> Does the absence of the default case trigger a warning if compiled with W=1?
+Hi Sibi,
 
-Nop it doesn't with GCC arm-gnu-toolchain-13.2.Rel1-x86_64-aarch64-none-linux-gnu + W=1 and with smatch and C=1
-
-Neil
-
-> 
->> +       }
->> +
->> +       return ERR_PTR(-EINVAL);
->> +}
->> +
->>   static int qmp_pcie_register_clocks(struct qmp_pcie *qmp, struct device_node *np)
->>   {
->>          int ret;
->> @@ -3694,9 +3756,19 @@ static int qmp_pcie_register_clocks(struct qmp_pcie *qmp, struct device_node *np
->>          if (ret)
->>                  return ret;
->>
->> -       ret = of_clk_add_hw_provider(np, of_clk_hw_simple_get, &qmp->pipe_clk_fixed.hw);
->> -       if (ret)
->> -               return ret;
->> +       if (qmp->cfg->aux_clock_rate) {
->> +               ret = phy_aux_clk_register(qmp, np);
->> +               if (ret)
->> +                       return ret;
->> +
->> +               ret = of_clk_add_hw_provider(np, qmp_pcie_clk_hw_get, qmp);
->> +               if (ret)
->> +                       return ret;
->> +       } else {
->> +               ret = of_clk_add_hw_provider(np, of_clk_hw_simple_get, &qmp->pipe_clk_fixed.hw);
->> +               if (ret)
->> +                       return ret;
->> +       }
->>
->>          /*
->>           * Roll a devm action because the clock provider is the child node, but
->>
->> --
->> 2.34.1
->>
->>
+On 3/1/24 05:31, Sibi Sankar wrote:
 > 
 > 
+> On 2/29/24 19:45, Lukasz Luba wrote:
+>>
+>>
+>> On 2/29/24 12:11, Cristian Marussi wrote:
+>>> On Thu, Feb 29, 2024 at 11:45:41AM +0000, Lukasz Luba wrote:
+>>>>
+>>>>
+>>>> On 2/29/24 11:28, Cristian Marussi wrote:
+>>>>> On Thu, Feb 29, 2024 at 10:22:39AM +0000, Lukasz Luba wrote:
+>>>>>>
+>>>>>>
+>>>>>> On 2/29/24 09:59, Lukasz Luba wrote:
+>>>>>>>
+>>>>>>>
+>>>>>>> On 2/28/24 17:00, Sibi Sankar wrote:
+>>>>>>>>
+>>>>>>>>
+>>>>>>>> On 2/28/24 18:54, Lukasz Luba wrote:
+>>>>>>>>>
+>>>>>>>>>
+>>>>>>>>> On 2/27/24 18:16, Sibi Sankar wrote:
+>>>>>>>>>> Register for limit change notifications if supported and use
+>>>>>>>>>> the throttled
+>>>>>>>>>> frequency from the notification to apply HW pressure.
+>>>>>>>>
+>>>>>>>> Lukasz,
+>>>>>>>>
+>>>>>>>> Thanks for taking time to review the series!
+>>>>>>>>
+>>>>>>>>>>
+>>>>>>>>>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+>>>>>>>>>> ---
+>>>>>>>>>>
+>>>>>>>>>> v3:
+>>>>>>>>>> * Sanitize range_max received from the notifier. [Pierre]
+>>>>>>>>>> * Update commit message.
+>>>>>>>>>>
+>>>>>>>>>> ï¿½ drivers/cpufreq/scmi-cpufreq.c | 29 
+>>>>>>>>>> ++++++++++++++++++++++++++++-
+>>>>>>>>>> ï¿½ 1 file changed, 28 insertions(+), 1 deletion(-)
+>>>>>>>>>>
+>>>>>>>>>> diff --git a/drivers/cpufreq/scmi-cpufreq.c
+>>>>>>>>>> b/drivers/cpufreq/scmi-cpufreq.c
+>>>>>>>>>> index 76a0ddbd9d24..78b87b72962d 100644
+>>>>>>>>>> --- a/drivers/cpufreq/scmi-cpufreq.c
+>>>>>>>>>> +++ b/drivers/cpufreq/scmi-cpufreq.c
+>>>>>>>>>> @@ -25,9 +25,13 @@ struct scmi_data {
+>>>>>>>>>> ï¿½ï¿½ï¿½ï¿½ï¿½ int domain_id;
+>>>>>>>>>> ï¿½ï¿½ï¿½ï¿½ï¿½ int nr_opp;
+>>>>>>>>>> ï¿½ï¿½ï¿½ï¿½ï¿½ struct device *cpu_dev;
+>>>>>>>>>> +ï¿½ï¿½ï¿½ struct cpufreq_policy *policy;
+>>>>>>>>>> ï¿½ï¿½ï¿½ï¿½ï¿½ cpumask_var_t opp_shared_cpus;
+>>>>>>>>>> +ï¿½ï¿½ï¿½ struct notifier_block limit_notify_nb;
+>>>>>>>>>> ï¿½ };
+>>>>>>>>>> +const struct scmi_handle *handle;
+>>>>>>>
+>>>>>>> I've missed this bit here.
+>>>>>>
+>>>>>> So for this change we actually have to ask Cristian or Sudeep
+>>>>>> because I'm not sure if we have only one 'handle' instance
+>>>>>> for all cpufreq devices.
+>>>>>>
+>>>>>> If we have different 'handle' we cannot move it to the
+>>>>>> global single pointer.
+>>>>>>
+>>>>>> Sudeep, Cristian what do you think?
+>>>>>
+>>>>> I was just replying noticing this :D .... since SCMI drivers can be
+>>>>> probed multiple times IF you defined multiple scmi top nodes in 
+>>>>> your DT
+>>>>> containing the same protocol nodes, they receive a distinct 
+>>>>> sdev/handle/ph
+>>>>> for each probe...so any attempt to globalize these wont work...BUT...
+>>>>>
+>>>>> ...this is a bit of a weird setup BUT it is not against the spec 
+>>>>> and it can
+>>>>> be used to parallelize more the SCMI accesses to disjont set of 
+>>>>> resources
+>>>>> within the same protocol (a long story here...) AND this type of 
+>>>>> setup is
+>>>>> something that it is already used by some other colleagues of Sibi 
+>>>>> working
+>>>>> on a different line of products (AFAIK)...
+>>>>>
+>>>>> So, for these reasons, usually, all the other SCMI drivers have 
+>>>>> per-instance
+>>>>> non-global references to handle/sdev/ph....
+>>>>>
+>>>>> ...having said that, thought, looking at the structure of CPUFReq
+>>>>> drivers, I am not sure that they can stand such a similar setup
+>>>>> where multiple instances of this same driver are probed
+>>>>>
+>>>>> .... indeed the existent *ph refs above is already global....so it 
+>>>>> wont already
+>>>>> work anyway in case of multiple instances now...
+>>>>>
+>>>>> ...and if I look at how CPUFreq expects the signature of 
+>>>>> scmi_cpufreq_get_rate()
+>>>>> to be annd how it is implemented now using the global *ph 
+>>>>> reference, it is
+>>>>> clearly already not working cleanly on a multi-instance setup...
+>>>>>
+>>>>> ...now...I can imagine how to (maybe) fix the above removing the 
+>>>>> globals and
+>>>>> fixing this, BUT the question, more generally, is CPUFreq supposed 
+>>>>> to work at all in
+>>>>> this multi-probed mode of operation ?
+>>>>> Does it even make sense to be able to support this in CPUFREQ ?
+>>>>>
+>>>>> (as an example in cpufreq,c there is static global cpufreq_driver
+>>>>>    pointing to the arch-specific configured driver BUT that also holds
+>>>>>    some .driver_data AND that cleraly wont be instance specific if you
+>>>>>    probe multiple times and register with CPUFreq multiple times...)
+>>>>>
+>>>>>    More questions than answers here :D
+>>>>>
+>>>>
+>>>> Thanks Cristian for instant response. Yes, indeed now we have more
+>>>> questions :) (which is good). But that's good description of the
+>>>> situation.
+>>>>
+>>>> So lets consider a few option what we could do now:
+>>>> 1. Let Sibi add another global state the 'handle' but add
+>>>>     a BUG_ON() or WARN_ON() in the probe path if the next
+>>>>     'handle' instance is different than already set in global.
+>>>>     This would simply mean that we don't support (yet)
+>>>>     such configuration in a platform. As you said, we
+>>>>     already have the *ph global, so maybe such platforms
+>>>>     with multiple instances for this particular cpufreq and
+>>>>     performance protocol don't exist yet.
+>>>
+>>> Yes this is the quickst way (and a WARN_ON() is better I'd say) but 
+>>> there
+>>> are similar issues of "unicity" currently already with another vendor 
+>>> SCMI
+>>> drivers and custom protocol currently under review, so I was thinking to
+>>> add a new common mechanism in SCMI to handle this ... not thought about
+>>> this really in depth and I want to chat with Sudeep about this...
+>>>
+>>>> 2. Ask Sibi to wait with this change, till we refactor the
+>>>>     exiting driver such that it could support easily those
+>>>>     multiple instances. Then pick up this patch set.
+>>>>     Although, we would also like to have those notifications from our
+>>>>     Juno SCP reference FW, so the feature is useful.
+>>>> 3. Ask Sibi to refactor his patch to somehow get the 'handle'
+>>>>     in different way, using exiting code and not introduce this global.
+>>>>
+>>>
+>>>> IHMO we could do this in steps: 1. and then 2. When
+>>>> we create some mock platform to test this refactoring we can
+>>>> start cleaning it.
+> 
+> I should be able to volunteer a platform to test against when
+> we have things ready.
+> 
+>>>>
+>>>
+>>> Both of these options really beg an answer to my original previous q
+>>> question...if we somehow enable this multi-probe support in the
+>>> scmi-cpufreq.c driver by avoiding glbals refs, does this work at all in
+>>> the context of CPUFreq ?
+>>
+>> I don't know yet.
+>>
+>>>
+>>> ...or it is just that CPUFreq cannot handle such a configuration (and
+>>> maybe dont want to) and so the only solution here is just 1. at first 
+>>> and
+>>> then a common refined mechanism (as mentioned above) to ensure this 
+>>> "unicity"
+>>> of the probes for some drivers ?
+>>
+>> This sounds reasonable.
+>>
+>>>
+>>> I'm not familiar enough to grasp if this "multi-probed" mode of 
+>>> operation is
+>>> allowed/supported by CPUFreq and, more important, if it makes any sense
+>>> at all to be a supported mode...
+>>>
+>>
+>> OK, let me check some stuff in the code and think for a while on that.
+>> Thanks Cristian!
+>>
+>> Sibi, please give me a few days. In the meantime you can continue
+>> on the 'boost' patch set probably.
+> 
+> sure, thanks. I've plenty things to send out so no hurry ;)
+> 
+> -Sibi
+> 
 
+I've went through the cpufreq. It's quite complicated how those
+policies, cpus, drivers are setup. Although, IHMO we should be
+safe with you current proposal in this patch.
+
+As we discussed with Cristian, we can take that approach further.
+
+Therefore, you can add:
+
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+
+Regards,
+Lukasz
 
