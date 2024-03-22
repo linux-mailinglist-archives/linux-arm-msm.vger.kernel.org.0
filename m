@@ -1,167 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-14903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14905-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D18778874DD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 23:33:37 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 37C538874FC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 23:57:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5C8EC1F20FA0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 22:33:37 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A3E03B229A1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 22:57:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7ED6C82C6C;
-	Fri, 22 Mar 2024 22:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6E0282899;
+	Fri, 22 Mar 2024 22:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EC1n8Imh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="z8rEuZXP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D158289E
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 22:33:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9898582886
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 22:57:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711146802; cv=none; b=rO+QCXEwGX06ud1G564plfj/U4AtlqqSvm9hnSQ7Fqqy/oamG1JHtKIWnDlnMed9wWF3OSx3sfamXqVyLFucHM9XiS0nVHNYhBcFztHgQB30r65B+gVbTnk6L6uInL2S7s4p8u3eNdDEtSSRmosk19bpRBLptz7GRgmLtiCgKJ0=
+	t=1711148222; cv=none; b=FR+nSNZIUJz7uhTOogtB8FtUR9S41kucYZzW+RM7A8BCpos7RLRB0ju1b10XsikLw/YM5kbfMxzE1vRP1F7eDSvPqNMoaOg75ban76pEBdRFvkO2dkMnSkFr5mpcSMAKMs6l5WohZ57WSzTipq+EmFfFf24HRhvFHTGHYNVflkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711146802; c=relaxed/simple;
-	bh=eqf3ihHx9YHmHJuuScJ0QnswcC+loLOYogzQd1XaHpc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=N9gUbRTs6hHe/FRYhs/Xm+4+w1SSFnizSikW8f6b+CBrZlNAWnkoLt5e/jKhErN7c6VdKNttCXSMLvYQC1kAThJiAdNMjEPIy0AIxdPAVLyEn2lhL9YQ3LNQr8pC0EXTBVo2hM7RoneVBzq0ZBbROqCpPHoh75le7OGG8+sUEKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EC1n8Imh; arc=none smtp.client-ip=209.85.219.178
+	s=arc-20240116; t=1711148222; c=relaxed/simple;
+	bh=SUasj9x+5boQXrGjbbvWEUUrFe45KHm8dnD84tTBZlM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=SszBcT4cSXZ9Bz9Px6tugqoAbAYmtVizgtnX24UNSC3hG6gePEWoJZhjZwau7i0n8ekqJjxB22wXSBc9RLUeVApO/DB0Z6yqn/uokyMteZptfyVYf6/40ANkLouYcNEc+/E4q/cvXWcsgoKxYksGZipXdneCjQCStsfBcX1CXl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=z8rEuZXP; arc=none smtp.client-ip=209.85.167.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-dcc84ae94c1so2611110276.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 15:33:20 -0700 (PDT)
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-513d4559fb4so3338171e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 15:57:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711146800; x=1711751600; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kJ9F0pY9n/+igvd/03ZLKYicj33ULltRkxaxHp9S2Mk=;
-        b=EC1n8ImhTItkTN4PavZIK4BRpWnuHsMjukmbTREwhMfKuGkMbUU1ObIvXhzPgXskFf
-         Sjk0TPxH4Msq4lGSTPSMmSfpPwJGzLbTvg5OM9lG/fhQ+93MrO522fxc+UFfIEC5Vg4+
-         SQ3RaqAwpUi0urIseuKGN5JY10a7dm6ZeugrnBdltOaXS+bt15yg6YmYdyu5T7ilBk5k
-         p+d3kYZ3h75c6vnkv9vSwZqUCEy4oASN4RxFnrTgD98YdBh4OGXIX9DhJMm3v6+Cr4YC
-         CNScVUlHIjpbZzz1kWfm9p5RUfuMFfuWLQ6/xImSDi+z79q59NzUPdQ1dhKZP3OBgPw7
-         ajVQ==
+        d=linaro.org; s=google; t=1711148219; x=1711753019; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=kfjVwt6d+IRd8DOInllyNHPrf4pjD9asCpY8CF5unc4=;
+        b=z8rEuZXP4gz+GYdPqUTdVLZXBIYdewM9HGW7mQ7vApMw+bp88JIqOtRSsD+B5RycoS
+         J3eJ4UhR6VoXyyE3Wb81w4fzlL+dvIKPT2SkogtEWJ1i1LS/b6mkUR/LGlQ4mcCYW3YT
+         a4L4hXR2ijwjXOJ1t8EfekrmWYLemb4Iu/YJzXZyAcivTk9VHJIVHSgNChv48v7mGIUl
+         7/XKJ87CMOF/RwAmzPVVn721bfmeKrSIOuMHZb7WQJk9nFmYkcXQGmzsEukQN9F0QukH
+         Bn4UeB/lOR7fvs65Wab79Wo8KLZXFnOyJ+lHMXwyuYKpk67RGpgeicE3loQtfxQ0UU1O
+         6M5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711146800; x=1711751600;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kJ9F0pY9n/+igvd/03ZLKYicj33ULltRkxaxHp9S2Mk=;
-        b=WECTyx0OYT7NkHcNTREav+82n6a36XbwDLKuROVmmyKQLDqJVluBLAs0B/BeSveOVH
-         VBHs93CP1Ai1k3ZGzwWChdeVg7+ZLjUcyUwZHqUUdOk82cpu0zNgwguL/ZIk1BfdJvVm
-         DdWukfj7w0namunTs+fddrTs9JW0FWILFknr0AwpP4sMEZ/FMjLGVjAzB7qlIejcdarT
-         umrbAL5kVQYLbzJaYOmovCJnvE7n3YJix3/2Hllo6Qt+DmfUlUIP34JmA0gHlASZ2Ehf
-         CHUG0wFraKa4MsYpekfIvsIH1a2zawVpi6ZYiOvWkSrTbkQ+SE+BoJjzpfAj1QdcGnvU
-         3G+w==
-X-Forwarded-Encrypted: i=1; AJvYcCW6XZvDH7U9+pErv+HqHt3k4gz4Y28PPF1/lEkxVuaE4FI0E6/9Xq4FoqPf8MVRS1wlQ/BHZzSJ44N9kCy+AoWvLMSsZLPjJDXIZXXOZQ==
-X-Gm-Message-State: AOJu0YzlrnfNTA7wj7LDEBLDXiQ9Fns++jJJmVElbGrC2ntBctyAH16N
-	CYCqbQpdzqOaAePlioppX+seW99dbo0J6AG1exa0MUujU4/DAkMQrYbnkyVRhfzGh82vbp7Y8m9
-	TK8zPSaCWOLFn+aZb6sNxHGj41S/QuNTSj+YEyQ==
-X-Google-Smtp-Source: AGHT+IHeqHvXyVTz47o9FkA2GJ7YHmI3n1DCfYkliY4NJgtd4mhyutbc3aVWnftbGu6jfh1yTN/kdnyTxaqt4ddPtJ8=
-X-Received: by 2002:a25:1941:0:b0:dd0:2076:4706 with SMTP id
- 62-20020a251941000000b00dd020764706mr576713ybz.31.1711146799824; Fri, 22 Mar
- 2024 15:33:19 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1711148219; x=1711753019;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kfjVwt6d+IRd8DOInllyNHPrf4pjD9asCpY8CF5unc4=;
+        b=DK/NbligcthRkoM7+LJWwY4HFEfKJTA5vsHJIvPZY7Teef3++Tk1qdEYpj7MxRHm9c
+         XmTAEv+AIaqs4QN7jqZ4dCeFbLK9g/MN8YPmYwf5lmnWBNEIx+31sJyq4YDaDuYJ1FWr
+         9c1bu1SE3RPySNEyiKVxbwzi2PpguqBHni21SLP6FDMntugPjFpVW5VtlGSnkDIcxZE0
+         7E5yFl8t6zFGKmAWgbCXjJGw6dx6ARp0mnkCtaqdMBC+XxnfjyrgXJ7Re3SURlbnirAC
+         xjYt2XxJ8hfkSd0/TNSKAOELf3yxsLiY0G7aSG6ICuLf0zqHs3iE0lreIGXOGUu9kKK+
+         0Wsg==
+X-Forwarded-Encrypted: i=1; AJvYcCUU4E5wqxz5ERaOYIUvq89uLwAwATtmNybopJfPSqk/OYWrwZZYAKHBwihBIkfze1itm8qD5yM87wp80CbIYIHBbby4/H0VNtgD8Bg9GA==
+X-Gm-Message-State: AOJu0YwM5wUHUtSFbtofQ8o2WNgnNwM7x2TuCKOOz/sSwKgREaYPa6CV
+	2xFOl+MS/i/e1qjbBSrHFPPayUh3OGPiatQCYx/O4EPxgiXaEYXH6cDM+JVIzqo=
+X-Google-Smtp-Source: AGHT+IFHVlDi96VVX9QQGQSp36xeTVVK2YAOFfU9flowpUO64lBi5C0OuNMJrS/SE1YaXbH3CXQNLg==
+X-Received: by 2002:a05:6512:32a3:b0:512:f657:122d with SMTP id q3-20020a05651232a300b00512f657122dmr586259lfe.12.1711148218316;
+        Fri, 22 Mar 2024 15:56:58 -0700 (PDT)
+Received: from umbar.lan ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id e7-20020a196907000000b005158982f42csm78530lfc.16.2024.03.22.15.56.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Mar 2024 15:56:57 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH v4 00/16] drm/msm: generate register header files
+Date: Sat, 23 Mar 2024 00:56:52 +0200
+Message-Id: <20240323-fd-xml-shipped-v4-0-cca5e8457b9e@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240321-apss-ipq-pll-cleanup-v2-0-201f3cf79fd4@gmail.com>
- <20240321-apss-ipq-pll-cleanup-v2-3-201f3cf79fd4@gmail.com>
- <CAA8EJprr4E1CM4f+eBzdRN41nm33xY-hRPQDn3peR94vLyJsYQ@mail.gmail.com> <ca4d85f1-397e-4c43-8548-436b9238e85e@gmail.com>
-In-Reply-To: <ca4d85f1-397e-4c43-8548-436b9238e85e@gmail.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 23 Mar 2024 00:33:08 +0200
-Message-ID: <CAA8EJpp9jyCHgMSEBMumSz7xXUkMRm3wapjUdjzeOuJSpH5g5w@mail.gmail.com>
-Subject: Re: [PATCH v2 3/6] clk: qcom: apss-ipq-pll: remove 'pll_type' field
- from struct 'apss_pll_data'
-To: Gabor Juhos <j4g8y7@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALQM/mUC/33O0QqCMBTG8VeJXbfYztFlXfUe0YVuRx2Yky2GI
+ b57U4goocvvwO/PmVggbymw825inqIN1vVpZPsd023ZN8StSZuBgEwA5Lw2fLx3PLR2GMjwqjy
+ VCFIbMjVLaPBU23ENXm9ptzY8nH+u/SiX6zulflNRcsELVVVKI2bKwKWzfendwfmGLa0IH49y8
+ 0qE5I/aqIK0zhDExuN/j8mLWksAQqVz/PLzPL8A0skSuS0BAAA=
+To: Masahiro Yamada <masahiroy@kernel.org>, 
+ Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, 
+ Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc: linux-kbuild@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6362;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=SUasj9x+5boQXrGjbbvWEUUrFe45KHm8dnD84tTBZlM=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBl/gy1GAeGsSVMy2dItc8Eim/HYejhaCYx4nzxi
+ 6x2n0RnrtGJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZf4MtQAKCRCLPIo+Aiko
+ 1RouB/0RA0EXl8cWAvvhz4VFY1azOhyepALjUsAfJ+HobFciLte50m06U+7me+dFHP9WN6ry1zx
+ mn9I4DasJ0PZ58Q/Td8thBaDEY2/cyQWTZ57tk+zNEHTieUQMstkzZWvKl1X48h7uJ5waNI3cmn
+ Lziqtd2tgGqENF8TirzbiznPDeATIliXcuT6minaEbnwh3FvWSQdYE61Tyc7Q8TgI9h4oUcoaxN
+ F4HmPtkmAbQiWhCoSaAE7zi7wrYXlnpGai9caKSr7CiU/rZerbdjNkc6tFIyEtxWpZIjS7lWGAn
+ Tc84BNWJwSn8frUVT0U9n+F5x6CSpng7jUd5iLNgnJQ3oF6i
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-On Fri, 22 Mar 2024 at 22:59, Gabor Juhos <j4g8y7@gmail.com> wrote:
->
-> 2024. 03. 21. 11:37 keltez=C3=A9ssel, Dmitry Baryshkov =C3=ADrta:
-> > On Thu, 21 Mar 2024 at 09:50, Gabor Juhos <j4g8y7@gmail.com> wrote:
-> >>
-> >> The value of the 'pll_type' field of 'struct apps_pll_data'
-> >> is used only by the probe function to decide which config
-> >> function should be called for the actual PLL. However this
-> >> can be derived also from the 'pll' field  which makes the
-> >> 'pll_type' field redundant.
-> >>
-> >> Additionally, the CLK_ALPHA_PLL_TYPE_* enumeration values
-> >> are meant to be used as indices to the 'clk_alpha_pll_regs'
-> >> array so using those to define the pll type in this driver
-> >> is misleading anyway.
-> >>
-> >> Change the probe function to use the 'pll' field to determine
-> >> the configuration function to be used, and remove the
-> >> 'pll_type' field to simplify the code.
-> >
-> > I can't fully appreciate this idea. There can be cases when different
-> > PLL types share the set of ops. I think having a type is more
-> > versatile and makes the code more obvious.
->
-> I understand your concerns, but let me explain the reasons about why I ha=
-ve
-> choosed this implementation in more detail.
->
-> The driver declares three distinct clocks for the three different PLL typ=
-es it
-> supports. Each one of these clocks are using different register maps and =
-clock
-> operations which in a whole uniquely identifies the type of the PLL. In c=
-ontrary
-> to this, the CLK_ALPHA_PLL_TYPE_* values assigned to 'pll_type' are only
-> indicating that which register map should be used for the given PLL. Howe=
-ver
-> this is also specified indirectly through the 'regs' member of the clocks=
- so
-> this is a redundant information.
->
-> Additionally, using the CLK_ALPHA_PLL_TYPE_*  for anything other than for
-> specifying the register map is misleading.  For example, here are some sn=
-ippets
-> from the driver before the patch:
->
-> static struct clk_alpha_pll ipq_pll_stromer_plus =3D {
->         ...
->         .regs =3D clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_STROMER],
->         ...
->
-> static struct apss_pll_data ipq5332_pll_data =3D {
->         .pll_type =3D CLK_ALPHA_PLL_TYPE_STROMER_PLUS,
->         .pll =3D &ipq_pll_stromer_plus,
->         ...
->
-> Since it is not obvious at a first glance, one could ask that why the two
-> CLK_ALPHA_PLL_TYPE_* values are different?
->
-> Although my opinion that it is redundant still stand, but I'm not against
-> keeping the pll_type. However if we keep that, then at least we should us=
-e
-> private enums (IPQ_APSS_PLL_TYPE_* or similar) for that in order to make =
-it more
-> obvious that it means a different thing than the CLK_ALPHA_PLL_TYPE_* val=
-ues.
->
-> This solution would be more acceptable?
+Currently display-related register headers are generated from XML files
+shipped withing Mesa source tree. This is not fully optimal: it requires
+multi-stage process of the changes first being landed to Mesa and only
+then synced to the kernel tree.
 
-This looks like a slight overkill, but yes, it is more acceptable. The
-logic should be type =3D> functions, not the other way around.
+Move original XML files to the kernel tree and generate header files
+when required. Display-related XMLs are going to be dropped from the
+Mesa, with the kernel becoming the primary source. Adreno-related XMLs
+are still going to handled by Mesa and should be synced from Mesa to the
+kernel when required.
 
+Unless there are any objections, I'd like to consider this a final
+revision with the target of it being merged for 6.10. Please review.
 
---=20
-With best wishes
-Dmitry
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Changes in v4:
+- Updated headers, schema and script to the latest version merged to
+  Mesa
+- Further split of Adreno XML / Adreno headers patches in order to pass
+  through more ML filters.
+- Dropped the RFC tag
+- Link to v3: https://lore.kernel.org/r/20240315-fd-xml-shipped-v3-0-0fc122e36c53@linaro.org
+
+Changes in v3:
+- Split XML and git rm patches in hope to pass ML limitations
+- Link to v2: https://lore.kernel.org/r/20240315-fd-xml-shipped-v2-0-7cd68ecc4320@linaro.org
+
+Changes in v2:
+- Removed the _shipped files, always generating the headers (Masahiro
+  Yamada)
+- Replaced headergen2 with gen_headers.py
+- Simplify Makefile rules, making all Adreno objects depend on Adreno
+  headers and all displau objects depend on all display headers
+- Also handle Adreno registers
+- Link to v1: https://lore.kernel.org/r/20240226-fd-xml-shipped-v1-0-86bb6c3346d2@linaro.org
+
+---
+Dmitry Baryshkov (16):
+      drm/msm/mdp5: add writeback block bases
+      drm/msm/hdmi: drop qfprom.xml.h
+      drm/msm/dsi: drop mmss_cc.xml.h
+      drm/msm: move msm_gpummu.c to adreno/a2xx_gpummu.c
+      drm/msm: import XML display registers database
+      drm/msm: import A2xx-A4xx XML display registers database
+      drm/msm: import A5xx XML display registers database
+      drm/msm: import A6xx XML display registers database
+      drm/msm: import gen_header.py script from Mesa
+      drm/msm: generate headers on the fly
+      drm/msm: drop display-related headers
+      drm/msm: drop A2xx and common headers
+      drm/msm: drop A3xx and A4xx headers
+      drm/msm: drop A5xx header
+      drm/msm: drop A6xx GMU header
+      drm/msm: drop A6xx headers
+
+ drivers/gpu/drm/msm/.gitignore                     |     1 +
+ drivers/gpu/drm/msm/Makefile                       |    99 +-
+ drivers/gpu/drm/msm/adreno/a2xx.xml.h              |  3251 -----
+ drivers/gpu/drm/msm/adreno/a2xx_gpu.c              |     4 +-
+ drivers/gpu/drm/msm/adreno/a2xx_gpu.h              |     4 +
+ .../drm/msm/{msm_gpummu.c => adreno/a2xx_gpummu.c} |    45 +-
+ drivers/gpu/drm/msm/adreno/a3xx.xml.h              |  3268 -----
+ drivers/gpu/drm/msm/adreno/a4xx.xml.h              |  4379 -------
+ drivers/gpu/drm/msm/adreno/a5xx.xml.h              |  5572 ---------
+ drivers/gpu/drm/msm/adreno/a6xx.xml.h              | 11858 -------------------
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h          |   422 -
+ drivers/gpu/drm/msm/adreno/adreno_common.xml.h     |   539 -
+ drivers/gpu/drm/msm/adreno/adreno_pm4.xml.h        |  2803 -----
+ drivers/gpu/drm/msm/disp/mdp4/mdp4.xml.h           |  1181 --
+ drivers/gpu/drm/msm/disp/mdp5/mdp5.xml.h           |  1979 ----
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h           |    11 +
+ drivers/gpu/drm/msm/disp/mdp_common.xml.h          |   111 -
+ drivers/gpu/drm/msm/dsi/dsi.xml.h                  |   790 --
+ drivers/gpu/drm/msm/dsi/dsi_phy_10nm.xml.h         |   227 -
+ drivers/gpu/drm/msm/dsi/dsi_phy_14nm.xml.h         |   309 -
+ drivers/gpu/drm/msm/dsi/dsi_phy_20nm.xml.h         |   237 -
+ drivers/gpu/drm/msm/dsi/dsi_phy_28nm.xml.h         |   384 -
+ drivers/gpu/drm/msm/dsi/dsi_phy_28nm_8960.xml.h    |   286 -
+ drivers/gpu/drm/msm/dsi/dsi_phy_7nm.xml.h          |   483 -
+ drivers/gpu/drm/msm/dsi/mmss_cc.xml.h              |   131 -
+ drivers/gpu/drm/msm/dsi/sfpb.xml.h                 |    70 -
+ drivers/gpu/drm/msm/hdmi/hdmi.xml.h                |  1399 ---
+ drivers/gpu/drm/msm/hdmi/qfprom.xml.h              |    61 -
+ drivers/gpu/drm/msm/msm_drv.c                      |     3 +-
+ drivers/gpu/drm/msm/msm_gpu.c                      |     2 +-
+ drivers/gpu/drm/msm/msm_mmu.h                      |     5 -
+ drivers/gpu/drm/msm/registers/.gitignore           |     4 +
+ drivers/gpu/drm/msm/registers/adreno/a2xx.xml      |  1865 +++
+ drivers/gpu/drm/msm/registers/adreno/a3xx.xml      |  1751 +++
+ drivers/gpu/drm/msm/registers/adreno/a4xx.xml      |  2409 ++++
+ drivers/gpu/drm/msm/registers/adreno/a5xx.xml      |  3039 +++++
+ drivers/gpu/drm/msm/registers/adreno/a6xx.xml      |  4970 ++++++++
+ drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml  |   228 +
+ .../gpu/drm/msm/registers/adreno/adreno_common.xml |   400 +
+ .../gpu/drm/msm/registers/adreno/adreno_pm4.xml    |  2268 ++++
+ drivers/gpu/drm/msm/registers/display/dsi.xml      |   390 +
+ .../gpu/drm/msm/registers/display/dsi_phy_10nm.xml |   102 +
+ .../gpu/drm/msm/registers/display/dsi_phy_14nm.xml |   135 +
+ .../gpu/drm/msm/registers/display/dsi_phy_20nm.xml |   100 +
+ .../gpu/drm/msm/registers/display/dsi_phy_28nm.xml |   180 +
+ .../msm/registers/display/dsi_phy_28nm_8960.xml    |   134 +
+ .../gpu/drm/msm/registers/display/dsi_phy_7nm.xml  |   230 +
+ drivers/gpu/drm/msm/registers/display/edp.xml      |   239 +
+ drivers/gpu/drm/msm/registers/display/hdmi.xml     |  1015 ++
+ drivers/gpu/drm/msm/registers/display/mdp4.xml     |   504 +
+ drivers/gpu/drm/msm/registers/display/mdp5.xml     |   806 ++
+ .../gpu/drm/msm/registers/display/mdp_common.xml   |    90 +
+ drivers/gpu/drm/msm/registers/display/msm.xml      |    32 +
+ drivers/gpu/drm/msm/registers/display/sfpb.xml     |    17 +
+ .../gpu/drm/msm/registers/freedreno_copyright.xml  |    40 +
+ drivers/gpu/drm/msm/registers/gen_header.py        |   957 ++
+ drivers/gpu/drm/msm/registers/rules-fd.xsd         |   404 +
+ 57 files changed, 22431 insertions(+), 39792 deletions(-)
+---
+base-commit: 226d3c72fcde130a99d760895ebdd20e78e02cb5
+change-id: 20240225-fd-xml-shipped-ba9a321cdedf
+
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 
