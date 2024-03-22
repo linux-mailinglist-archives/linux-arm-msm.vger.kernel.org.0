@@ -1,65 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-14859-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14860-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D857A886F97
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 16:13:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8EFA3886FBB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 16:23:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 067651C2267C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 15:13:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B283E1C22026
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 15:23:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6844451016;
-	Fri, 22 Mar 2024 15:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DAD754FB7;
+	Fri, 22 Mar 2024 15:23:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b="oqI+5Jmk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qsnn1yXW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.154.123])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C74050278;
-	Fri, 22 Mar 2024 15:13:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=68.232.154.123
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ABEF54BFC
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 15:23:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711120411; cv=none; b=MwyyFa+w3p5JKt3Dck/fKv9x/l0QqNiGB3CIKjQRt/Pqs5yoUwLWMMvGDpylwopibygB+nR5IzaOOReBgMXgBZDxapPtGinFES4pFdqCsCvQD1qrV3/TWh0RNCcXbb67v2kzSDb6ABwmiO122GU5YhmCfjbiY44IqD02X5/fKaI=
+	t=1711121006; cv=none; b=Dec8qzZkcLpfbHdpEZWIYCU2/JJ8ZyYm/aXl2hKTpGhj2WKkAvIH7CmON2910vu0HwpMe0TQwtmvlarZDQnMagOOuVK7nG7xESK+U6pMpPzycA/yvh5BHUdNoo+c1TQ1lmEh4MqxOhDHG6yi7qJzm9WIuRarQ9EQ25Qn0sF17CE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711120411; c=relaxed/simple;
-	bh=F50EgZ2lJjv6pHduFkF5MM5IKGV69nz1KM4YNtLhMAs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=bERKpWRIPHmaAYvgBiwLhczzPBU6tzcEs8IarW4wnLOdSI+M8CCGQQO+4vGVNMNLj2mgqIoej/23P8AP4LnR6/4RhUMfP+91egiety2isyMNfzi9jyEGi5dUGTjGsz6d0zQS5cPbRrUN67Bs/ldGSrWKPmZKDa511kQK7JL1LxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=microchip.com; spf=pass smtp.mailfrom=microchip.com; dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b=oqI+5Jmk; arc=none smtp.client-ip=68.232.154.123
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=microchip.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microchip.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1711120408; x=1742656408;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=F50EgZ2lJjv6pHduFkF5MM5IKGV69nz1KM4YNtLhMAs=;
-  b=oqI+5JmkcBUM+KMCfZdOV1mWAvIN0yr2MPr2ztMKBDZ/xi+MFZ3EG4Z5
-   vECsis4cRicHGZaR7NBDldDxnVxUg3vFXh0CeY47KjfZpdJsrKVd5oCH9
-   458OqOcmPRL7Vg/agHrzE6SsW2GUv0VMUSqX9c81z8wiSs/Gvv2qVsl4V
-   KklX9ZqCKCMb1NF6HtVLtQhF14rB5GyfqY+IqfTRv1ajhdTAKmR0n/nJn
-   TtKWqQCGKK9sz8OSE7AT2QtGdJ92EHubg5IeCinIc5B0HV+ILVAB7rla4
-   M3slIgljFFp+/4tmffz9FDq44JNtxEyWlrJAK3m07Wt8zrqExn3bZ1Xaw
-   A==;
-X-CSE-ConnectionGUID: X1l3K2T7QvGR7YYL+xW82w==
-X-CSE-MsgGUID: FtnGXb0RSl6ESGuAQ94UKg==
-X-IronPort-AV: E=Sophos;i="6.07,146,1708412400"; 
-   d="scan'208";a="185306479"
-X-Amp-Result: SKIPPED(no attachment in message)
-Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa6.microchip.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 22 Mar 2024 08:13:19 -0700
-Received: from chn-vm-ex01.mchp-main.com (10.10.85.143) by
- chn-vm-ex04.mchp-main.com (10.10.85.152) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Fri, 22 Mar 2024 08:13:07 -0700
-Received: from [10.159.245.205] (10.10.85.11) by chn-vm-ex01.mchp-main.com
- (10.10.85.143) with Microsoft SMTP Server id 15.1.2507.35 via Frontend
- Transport; Fri, 22 Mar 2024 08:12:51 -0700
-Message-ID: <e8dff9d4-ed15-44e9-ae9a-2e77845ec40b@microchip.com>
-Date: Fri, 22 Mar 2024 16:11:48 +0100
+	s=arc-20240116; t=1711121006; c=relaxed/simple;
+	bh=Jh9QoSpAh1VJIpxGig8oTblYGq/+BHwEt/Vp0lSS23E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MLPX32bXhCQX14EQcjTiKd83cKRSN0Z/r921jwsgkh3/lBlmfhZE7D0AKo0DQ+xpFKAQxqneCDddbTs/Ri9FeZR+OmIqT7PqWX+iNlO4yO2FBgI4DR/v72rvcEvRsfVRKzXQnBlg/ZURMGSkGwFrVD8CdMIGSJ1uZSAXdgva++w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qsnn1yXW; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-33edbc5932bso1251440f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 08:23:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1711121003; x=1711725803; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xH+tLDeMl99Xl0L3QKJ15jBZOcEoqwwXUzAeFBXfobY=;
+        b=qsnn1yXW8LdqXh4iwvKIexEj6btk6YM1YV6p5gVHnL/mnupx2gW2u/NRIX1SB5mTp3
+         wwdIELhghDdDWtBDP+ud2NnjwHwJ+4p82zk5MUuXrXh2jNYbDOJnRhNHB8MzZ8+EgNhf
+         z12pSygmnuARXarXJvGgKlud8WQHRouHU3caeIqstB3UbbbxXbW7lapN6mFnpwtw+0bO
+         mEhc+hvQsz7bPdTmxGhcGWeiin2bp5KcWsxV4wfE9XLajeelpb6c1BDg7yHbS00D4tAW
+         HJT1uB/8k5rNcfeilhft+0UHLs+8lEl7df+hCkjFsqvRU5OkHpuONnCf7g8ep7pJXHZv
+         HT2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711121003; x=1711725803;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xH+tLDeMl99Xl0L3QKJ15jBZOcEoqwwXUzAeFBXfobY=;
+        b=FmquEV1kCLPap3GWmZa8jntcJg+tk8sKredwArUKeJoF1g8DMaeMEIGkOg1C4RVUlJ
+         dVbNwDWs4aPA/Q6tNSwM56OnfzqlNTQ7ZD7PA7fhswSWq18RonbMsC5rSasvSYq/SW39
+         AfeocqV/0gaNInBgV00lkJIB2hmsLEq2R50M1AcO/GGwp+VO7yJJzXampLeFatyYHvNu
+         9ahlhke9y+GcZVCCc7/RvkVM7K4d2bWYUART5qaSdUoLcTjUFebLj/23RtoLbTcCFxwZ
+         V9V51W/SM482DeObSUay0AvMZMd+4gYfaEFEsDXWourLgDQyjGXAFTqXBKtc0ky5bb/S
+         GbkA==
+X-Forwarded-Encrypted: i=1; AJvYcCVjZA9bTLSxVH1mb1RF0e+PhyjC3zydG3wDKEFsOcrNewCGxskeM0fDPxj/MW9iMIm5iZTulij0zQrithWzymeIk7kpK3T/SbUE7aDznQ==
+X-Gm-Message-State: AOJu0YyX0p7pl/83leMIHjugBHDzUpzptjq+hezP/6Xz9Qhgkwibz+eh
+	eZfMLKF0dj4wAJIh0nBdIbjglTVbcmOf4CeKVE7YqWF1Kp59IlT//60y1fWcy58=
+X-Google-Smtp-Source: AGHT+IFq6peRNoTIZX+OTTQQf2b0W2SgKQJH3FoqXVgRL6cjwP/nlcEPgUeLLcilEgXGe1cpMzVILg==
+X-Received: by 2002:adf:e603:0:b0:341:b5ca:8f88 with SMTP id p3-20020adfe603000000b00341b5ca8f88mr1503198wrm.48.1711121002762;
+        Fri, 22 Mar 2024 08:23:22 -0700 (PDT)
+Received: from [192.168.0.102] ([176.61.106.68])
+        by smtp.gmail.com with ESMTPSA id t17-20020a0560001a5100b0033dd2c3131fsm2282603wry.65.2024.03.22.08.23.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 Mar 2024 08:23:22 -0700 (PDT)
+Message-ID: <0b091595-1587-421d-bb00-c00ef729d143@linaro.org>
+Date: Fri, 22 Mar 2024 15:23:21 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,102 +76,73 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 64/64] i2c: reword i2c_algorithm in drivers according to
- newest specification
-Content-Language: en-US, fr-FR
-To: Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	<linux-i2c@vger.kernel.org>
-CC: Elie Morisse <syniurge@gmail.com>, Shyam Sundar S K
-	<shyam-sundar.s-k@amd.com>, Andi Shyti <andi.shyti@kernel.org>, "Codrin
- Ciubotariu" <codrin.ciubotariu@microchip.com>, Alexandre Belloni
-	<alexandre.belloni@bootlin.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Krzysztof Adamski <krzysztof.adamski@nokia.com>, Benson Leung
-	<bleung@chromium.org>, Guenter Roeck <groeck@chromium.org>, Jarkko Nikula
-	<jarkko.nikula@linux.intel.com>, Andy Shevchenko
-	<andriy.shevchenko@linux.intel.com>, Mika Westerberg
-	<mika.westerberg@linux.intel.com>, Jan Dabros <jsd@semihalf.com>, "Krzysztof
- Kozlowski" <krzysztof.kozlowski@linaro.org>, Alim Akhtar
-	<alim.akhtar@samsung.com>, Jean-Marie Verdun <verdun@hpe.com>, Nick Hawkins
-	<nick.hawkins@hpe.com>, Yicong Yang <yangyicong@hisilicon.com>, "Oleksij
- Rempel" <o.rempel@pengutronix.de>, Pengutronix Kernel Team
-	<kernel@pengutronix.de>, Shawn Guo <shawnguo@kernel.org>, Sascha Hauer
-	<s.hauer@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, Paul Cercueil
-	<paul@crapouillou.net>, Neil Armstrong <neil.armstrong@linaro.org>, "Kevin
- Hilman" <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, "Martin
- Blumenstingl" <martin.blumenstingl@googlemail.com>, Khalil Blaiech
-	<kblaiech@nvidia.com>, Asmaa Mnebhi <asmaa@nvidia.com>, Qii Wang
-	<qii.wang@mediatek.com>, Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, "Linus
- Walleij" <linus.walleij@linaro.org>, Avi Fishman <avifishman70@gmail.com>,
-	Tomer Maimon <tmaimon77@gmail.com>, Tali Perry <tali.perry1@gmail.com>,
-	Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>,
-	"Benjamin Fair" <benjaminfair@google.com>, Ajay Gupta <ajayg@nvidia.com>,
-	"Peter Korsgaard" <peter@korsgaard.com>, Andrew Lunn <andrew@lunn.ch>, Robert
- Richter <rric@kernel.org>, Aaro Koskinen <aaro.koskinen@iki.fi>, Janusz
- Krzysztofik <jmkrzyszt@gmail.com>, Tony Lindgren <tony@atomide.com>, Vignesh
- R <vigneshr@ti.com>, Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin
-	<npiggin@gmail.com>, Christophe Leroy <christophe.leroy@csgroup.eu>, "Aneesh
- Kumar K.V" <aneesh.kumar@kernel.org>, "Naveen N. Rao"
-	<naveen.n.rao@linux.ibm.com>, Hector Martin <marcan@marcan.st>, Sven Peter
-	<sven@svenpeter.dev>, Alyssa Rosenzweig <alyssa@rosenzweig.io>, "Vladimir
- Zapolskiy" <vz@mleia.com>, Loic Poulain <loic.poulain@linaro.org>, Robert
- Foss <rfoss@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Konrad
- Dybcio <konrad.dybcio@linaro.org>, Fabrizio Castro
-	<fabrizio.castro.jz@renesas.com>, Pierre-Yves MORDRET
-	<pierre-yves.mordret@foss.st.com>, Alain Volmat <alain.volmat@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue
-	<alexandre.torgue@foss.st.com>, Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>, "Laxman Dewangan"
-	<ldewangan@nvidia.com>, Dmitry Osipenko <digetx@gmail.com>, "Conghui Chen"
-	<conghui.chen@intel.com>, Viresh Kumar <viresh.kumar@linaro.org>, "Michal
- Simek" <michal.simek@amd.com>, <linux-kernel@vger.kernel.org>,
-	<linux-arm-kernel@lists.infradead.org>, <chrome-platform@lists.linux.dev>,
-	<linux-samsung-soc@vger.kernel.org>, <imx@lists.linux.dev>,
-	<linux-mips@vger.kernel.org>, <linux-amlogic@lists.infradead.org>,
-	<linux-mediatek@lists.infradead.org>, <openbmc@lists.ozlabs.org>,
-	<linux-omap@vger.kernel.org>, <linuxppc-dev@lists.ozlabs.org>,
-	<asahi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-	<linux-renesas-soc@vger.kernel.org>,
-	<linux-stm32@st-md-mailman.stormreply.com>, <linux-tegra@vger.kernel.org>,
-	<virtualization@lists.linux.dev>, Ryan Wanner <Ryan.Wanner@microchip.com>
-References: <20240322132619.6389-1-wsa+renesas@sang-engineering.com>
- <20240322132619.6389-65-wsa+renesas@sang-engineering.com>
-From: Nicolas Ferre <nicolas.ferre@microchip.com>
-Organization: microchip
-In-Reply-To: <20240322132619.6389-65-wsa+renesas@sang-engineering.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Subject: Re: [PATCH 1/2] dt-bindings: usb: qcom,pmic-typec: drop port
+ description
+Content-Language: en-US
+To: neil.armstrong@linaro.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240322-typec-fix-example-v1-0-6b01c347419e@linaro.org>
+ <20240322-typec-fix-example-v1-1-6b01c347419e@linaro.org>
+ <230eab52-9751-43fd-8e47-fbfe12410e44@linaro.org>
+ <CAA8EJprD3fM966pLV4QXPUu=bFTn24fvPMKOaGqtqkAbdz7sOQ@mail.gmail.com>
+ <5ea4a187-1971-4970-a289-826d96c0351a@linaro.org>
+ <c0f1e898-7638-4b7b-a938-9e31e5b57e57@linaro.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <c0f1e898-7638-4b7b-a938-9e31e5b57e57@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 22/03/2024 at 14:25, Wolfram Sang wrote:
-> EXTERNAL EMAIL: Do not click links or open attachments unless you know the content is safe
+On 22/03/2024 15:09, neil.armstrong@linaro.org wrote:
+>> TBH I think we should drop this HS, SS stuff from the connector 
+>> definition - there's nothing to say in a h/w definition anywhere HS 
+>> must be a port or indeed SS - not all hardware knows or cares about 
+>> different HS/SS signalling.
 > 
-> Match the wording in i2c_algorithm in I2C drivers wrt. the newest I2C
-> v7, SMBus 3.2, I3C specifications and replace "master/slave" with more
-> appropriate terms. For some drivers, this means no more conversions are
-> needed. For the others more work needs to be done but this will be
-> performed incrementally along with API changes/improvements. All these
-> changes here are simple search/replace results.
+> It matches the USB-C connector electrical characteristics, which by spec 
+> has, at least:
+> - High-Speed USB Line
+> - up to 4 differential high-speed lanes that can be switched to DP, USB2 
+> or PCIe
+> - SideBand line (SBU)
 > 
-> Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-> ---
-
-[..]
-
->   drivers/i2c/busses/i2c-at91-master.c       |  2 +-
->   drivers/i2c/busses/i2c-at91-slave.c        |  8 ++++----
-
-[..]
-
-Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com> # for at91
-Probably file names themselves will need some care, in a second time.
-
-Thanks. Regards,
-   Nicolas
-
-[..]
-
-> --
-> 2.43.0
+> And those 3 components can be handled by 3 different HW in the SoC, so 
+> each one has a dedicated port.
 > 
+> Remember DT describes the HW, not the SW implementation.
+> 
+> Neil
 
+Yes, you're right about that.
+
+I suppose
+
+1. Orientation switches should be defined as coming from a port on the
+    connector associated with the CC pins.
+    port@3:
+    orientation-switch port name goes here
+
+2. Data-role switches...
+    Again the CC pins
+
+https://community.silabs.com/s/article/what-s-the-role-of-cc-pin-in-type-c-solution?language=en_US
+
+Maybe the right-thing-to-do is to add another port for the CC pins - 
+which would still describe the hardware characteristics but would 
+_accurately_ name the thing which does the data-role/orientation switching
+
+CC1/CC2
+
+Then we would not be abusing HS/SS/SBU for the port names - we'd be 
+extending the connector definition but also naming the ports/endpoints 
+appropriately associated with the data over the hw
+
+---
+bod
 
