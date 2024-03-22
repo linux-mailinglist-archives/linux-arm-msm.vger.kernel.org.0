@@ -1,57 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-14853-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14854-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF4B2886ED4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 15:42:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C7CA1886EDC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 15:45:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E14531C202EB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 14:42:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 04F731C2091F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 14:45:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8330F481A0;
-	Fri, 22 Mar 2024 14:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 879D3481B7;
+	Fri, 22 Mar 2024 14:45:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W/v/hAI7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WjPVXYXO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF4347F6C
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 14:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C6FD47F7F;
+	Fri, 22 Mar 2024 14:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711118523; cv=none; b=WNgGe/dU4BtO6yJ92lFTavosX8qpHt58XLoFwlxA/bD0YTCv/RqFhkVUyMgIkMNzs5oB0YQOp8ALP2/8ft+hhQ9trgZP+5b+CAKveQwrqRP9KnBjI6R/6DETgbujYUC8eEk+4BLCJQdRJzTKneCOxHqEjtA8jO1HGfeCx+2MqHo=
+	t=1711118701; cv=none; b=G5LLB4QlW7KtNWIth73QMYwXHA9lQ6OvvUMxlhISLlOX9iPTLXPlYheCHePYJ2JtrtXa+jIeH8XEESwkwtGYt4HsoQN2rDCh1QlxC9DtEEpZJCFRsoXOpAxRY3qxEueTEVr4IWuc79LtsFLUlgQGITDy82lKK1qUr09KMdeU2pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711118523; c=relaxed/simple;
-	bh=WOSj3F3OfM3HjItJG0aKTUFwCYD1ysI0kLGRlYk90go=;
+	s=arc-20240116; t=1711118701; c=relaxed/simple;
+	bh=oJOb22wO4m+N/5n0eP9Z0CpvUQn2sWpgpr9DVZAQk+o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TD8beZBPGiRzhPS8VGsgPpq/F9xPhiW1tcxlI49pDHSjcP2c0qt64cJegnuWgsziRUMymInoJbGGn9Yk/8XanqoHf0c1wdOqninWEafpMVZYP6kKJacwTLJ+Oj7we3H3qGkPy0O5U9zmBPdo0sCHwQgH6OguPcy9k3ojmlWmrRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W/v/hAI7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FB27C433C7;
-	Fri, 22 Mar 2024 14:42:02 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Cx+bC34pmDYMH+GkAfGfkubPZkQ5xk1oQOuCDpbMaNiDJ6oJWCk+VzHwUj7M7V7W5urC8durhMpVTkgQC9sPK6M7JW9HWaSYFuzlQBT9z784EnfrZsVJyeOkhv3VP5j4XtP0u60N7PCcip5KBUXDK/95K/HxynRATEcEHX+5swA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WjPVXYXO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E37C433F1;
+	Fri, 22 Mar 2024 14:44:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711118523;
-	bh=WOSj3F3OfM3HjItJG0aKTUFwCYD1ysI0kLGRlYk90go=;
+	s=k20201202; t=1711118700;
+	bh=oJOb22wO4m+N/5n0eP9Z0CpvUQn2sWpgpr9DVZAQk+o=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=W/v/hAI7BLuZ59qdzSztB+Ba45vaFFSxOnPgZ9lnH/O/kU3V4zL9lt65LG03g+V+k
-	 rOoP6LnZyFf8EPY9SoHfl72r1eL3kSSrWTizeU9zNHPhN/EfMHfzj8xP10uHwJtRp6
-	 HWgduOIwM/hbGHf9Pig0xpAVA1AhULiT5vdn5MwU34O33Ahwe4Zz7r45xhhc3VDuU8
-	 puAnDX+VzMkZCCbR9CTdYZ/wj/zTpeQ/giVnD/haFr0+I3d+4YWUUAtS+FyCo62PX7
-	 1s7StiUDnb8O1qHewdguvEFYnt43BDGLfzZ0a82Fx9x1bs2bO1bGdmiv2b/FW2ZPgP
-	 u7fBPiF3gVTNQ==
-Date: Fri, 22 Mar 2024 09:42:00 -0500
+	b=WjPVXYXOBygNVlQYfGKlpPu601j+i0avVfAeryoYW6+156u+jIoWgruPO6EFERoAj
+	 x79IJUs2tykeelwIHNxl3+pIoO0/O2eumqYSvFpQhlisKihvn8pWO+e/12vYMhqO4k
+	 zye4r+l1JMOda7Iss6U8lxDSuTyyUP6lh97RD61hzndqIQfZNYy9++yYbSoVIu6jDA
+	 yGdlGYx5oOPMEZQ1EpjNdu8H4s7/8L98HLD1kY6fRfw0+k4AANax1HNpGaTi811UTE
+	 /ynR2igcSH3qdIU4zhwR/j+DXh5/Y6J0/WrsYYCBn6ueJe2UAaHjLJ7nf2AVQn2B+x
+	 QFvu/CgFTINkw==
+Date: Fri, 22 Mar 2024 09:44:57 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc: quic_bjorande@quicinc.com, quic_carlv@quicinc.com, 
-	quic_pkanojiy@quicinc.com, stanislaw.gruszka@linux.intel.com, 
-	jacek.lawrynowicz@linux.intel.com, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	ogabbay@kernel.org
-Subject: Re: [PATCH] accel/qaic: Add Sahara implementation for firmware
- loading
-Message-ID: <bv7pdgwx5rm6wblikmit6tw3znea5g4xrzntilt7idqdas4cmo@ejxbddbq6kwa>
-References: <20240322034917.3522388-1-quic_jhugo@quicinc.com>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Marcel Holtmann <marcel@holtmann.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	cros-qcom-dts-watchers@chromium.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Johan Hedberg <johan.hedberg@gmail.com>, Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, 
+	Matthias Kaehlcke <mka@chromium.org>, Douglas Anderson <dianders@chromium.org>, 
+	Rocky Liao <quic_rjliao@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
+	Rob Clark <robdclark@chromium.org>
+Subject: Re: [PATCH v4 2/4] arm64: dts: qcom: sc7180-trogdor: mark bluetooth
+ address as broken
+Message-ID: <hcpgho3xrkxas55c5isxi7mwusdjbxkyxlt74r72gfxuunzikx@jxiyumioezb6>
+References: <20240320075554.8178-1-johan+linaro@kernel.org>
+ <20240320075554.8178-3-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,46 +67,58 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240322034917.3522388-1-quic_jhugo@quicinc.com>
+In-Reply-To: <20240320075554.8178-3-johan+linaro@kernel.org>
 
-On Thu, Mar 21, 2024 at 09:49:17PM -0600, Jeffrey Hugo wrote:
-> The AIC100 secondary bootloader uses the Sahara protocol for two
-> purposes - loading the runtime firmware images from the host, and
-> offloading crashdumps to the host. The crashdump functionality is only
-> invoked when the AIC100 device encounters a crash and dumps are enabled.
-> Also the collection of the dump is optional - the host can reject
-> collecting the dump.
+On Wed, Mar 20, 2024 at 08:55:52AM +0100, Johan Hovold wrote:
+> Several Qualcomm Bluetooth controllers lack persistent storage for the
+> device address and instead one can be provided by the boot firmware
+> using the 'local-bd-address' devicetree property.
 > 
-> The Sahara protocol contains many features and modes including firmware
-> upload, crashdump download, and client commands. For simplicity,
-> implement the parts of the protocol needed for loading firmware to the
-> device.
+> The Bluetooth bindings clearly states that the address should be
+> specified in little-endian order, but due to a long-standing bug in the
+> Qualcomm driver which reversed the address some boot firmware has been
+> providing the address in big-endian order instead.
 > 
-> Fundamentally, the Sahara protocol is an embedded file transfer
-> protocol. Both sides negotiate a connection through a simple exchange of
-> hello messages. After handshaking through a hello message, the device
-> either sends a message requesting images, or a message advertising the
-> memory dump available for the host. For image transfer, the remote device
-> issues a read data request that provides an image (by ID), an offset, and
-> a length. The host has an internal mapping of image IDs to filenames. The
-> host is expected to access the image and transfer the requested chunk to
-> the device. The device can issue additional read requests, or signal that
-> it has consumed enough data from this image with an end of image message.
-> The host confirms the end of image, and the device can proceed with
-> another image by starting over with the hello exchange again.
+> The boot firmware in SC7180 Trogdor Chromebooks is known to be affected
+> so mark the 'local-bd-address' property as broken to maintain backwards
+> compatibility with older firmware when fixing the underlying driver bug.
 > 
-> Some images may be optional, and only provided as part of a provisioning
-> flow. The host is not aware of this information, and thus should report
-> an error to the device when an image is not available. The device will
-> evaluate if the image is required or not, and take the appropriate
-> action.
+> Note that ChromeOS always updates the kernel and devicetree in lockstep
+> so that there is no need to handle backwards compatibility with older
+> devicetrees.
 > 
-> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
-> Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+> Fixes: 7ec3e67307f8 ("arm64: dts: qcom: sc7180-trogdor: add initial trogdor and lazor dt")
+> Cc: stable@vger.kernel.org      # 5.10
+> Cc: Rob Clark <robdclark@chromium.org>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
+Acked-by: Bjorn Andersson <andersson@kernel.org>
 Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+
+Please merge this through the BT tree, together with the other patches.
 
 Regards,
 Bjorn
+
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> index 46aaeba28604..ebe37678102f 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> @@ -943,6 +943,8 @@ bluetooth: bluetooth {
+>  		vddrf-supply = <&pp1300_l2c>;
+>  		vddch0-supply = <&pp3300_l10c>;
+>  		max-speed = <3200000>;
+> +
+> +		qcom,local-bd-address-broken;
+>  	};
+>  };
+>  
+> -- 
+> 2.43.2
+> 
 
