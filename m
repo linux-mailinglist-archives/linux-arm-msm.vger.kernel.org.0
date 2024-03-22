@@ -1,191 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-14882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14885-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32A24887263
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 18:59:07 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0FE708872E6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 19:18:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E2C63288498
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 17:59:05 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7B9BCB2498F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 18:18:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 212966089A;
-	Fri, 22 Mar 2024 17:58:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DF91634F6;
+	Fri, 22 Mar 2024 18:18:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NDHiJjFE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="G8TPjHS1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A27E60ED8
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 17:58:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54776626A4
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 18:18:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711130294; cv=none; b=Fi2HAQi//+syLE0FtBTbC1sqx2fFdb6zDe+BWPjeofAH7e0lQP2EBQAHm4eRe0J6d96d4hljoZTITtNcohndCjzTxJEyaF9GdYyjw3X/wJDUG7AbH7+J3yDSrvXAy+YReUhQ8pgMBbRwur47ZY+KQVgU/nWahtFY/OtwPNcSMPs=
+	t=1711131482; cv=none; b=huDH0Xm842rrmGhcPdmis0/gQoUaRp5a1eXjYS+n+YRl7jB1cVYgsURf7eWFhZwu11GAF6IZdEIipVddxwVdLwfHDkAAxNmDxeOqSf4uQlsUoQeKmYhKPEacDjqkD4ZTgHdfv7e5sBHbb16kpF9yLuWcfs7lzmpqovd6l6gTMJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711130294; c=relaxed/simple;
-	bh=Oiw9o5L6GSBJcYnUEoKTlrROg7MvV4CE15Ntq6sehy8=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pFpK+eAFRigBvu3FRvaE1t8qagfEXzLRTEoBzNz4Ks1ps8xqLcc27d0F5sB+gvno0LvKfyk69Zmyw8eEFqaqgm6D4HSjPGC6HVkylZu8YsH25++nwM/DQd3OR+ZXERNK6VFYDiSDoEXgzSowgu9Ix6YyTvR39+jTigS639hE6w8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NDHiJjFE; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42M4rmhe002852;
-	Fri, 22 Mar 2024 17:57:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=Vb3/BhACQgd0Lkib5CeEds9ZFeODXFvmLDP5i/pngvM=; b=ND
-	HiJjFEZN11ivWPcuHbRxerqwd32pFNOxHSispkMsnZO63AaeIh/w6yW+Lo5RllG3
-	l812iCKkpZwZM5AqDez7n3FLlxIrWQxRPiAWSwfc2MqXK2yFsthYYHRg3ozW1pEZ
-	Oqq7ttOXS5Jq9YFfaZ1ykbdh+Zs6AU20C8F0uf2cQlRJgAdq42d96TQg1EAayVSI
-	Bw4Vfm9jNecL3kKeoclOy+dBC5s5VteQreRCmxyboJTxhti4b9fjcK9+tGSPo/W8
-	VN4nAGPrIERyPAl1M2mQVTnrKsxaqQIWhvvQjsU3ZrPPzBRj/+bfDeAoWv6aTwzU
-	sxSFpIEpn0scAS5s8NPA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x0wy8twpu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Mar 2024 17:57:57 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42MHvvxJ017334
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Mar 2024 17:57:57 GMT
-Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Fri, 22 Mar 2024 10:57:56 -0700
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-To: <quic_carlv@quicinc.com>, <quic_pkanojiy@quicinc.com>,
-        <stanislaw.gruszka@linux.intel.com>,
-        <jacek.lawrynowicz@linux.intel.com>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <ogabbay@kernel.org>, Jeffrey Hugo <quic_jhugo@quicinc.com>
-Subject: [PATCH v2 3/3] accel/qaic: Add fifo queued debugfs
-Date: Fri, 22 Mar 2024 11:57:30 -0600
-Message-ID: <20240322175730.3855440-4-quic_jhugo@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240322175730.3855440-1-quic_jhugo@quicinc.com>
-References: <20240322175730.3855440-1-quic_jhugo@quicinc.com>
+	s=arc-20240116; t=1711131482; c=relaxed/simple;
+	bh=4PZeNkpkgA9MeuFYKbd3qbiEtrgn3qW6NEkoD0AvAHA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qFs6z7Va6UGZ2RuQzMJY+YNBhQFNGy5VHrYm6/fUu7wu68QlUp1KlOQJ8RbMd3xKOctVDjgPVFZ1PfKblLD55c55kKeucB9ufyyHnOylaZ90XprUwMfNGdKcJlKuHJvySVodyN8vOf4bjoSeb1AECiNxmCM4ZAQJJHrz3sbcUl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=G8TPjHS1; arc=none smtp.client-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a44665605f3so286067566b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 11:18:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1711131479; x=1711736279; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=SeiHsFNUoaCnN7xb45zTYPjadaI5jk5AW3v5aPdkC2E=;
+        b=G8TPjHS1Ql/oTRYf+u6U0NKmtXpl/4/idaaYTQPncDaT+NWosjPAoWIZUQ2qDWAex5
+         B+GnXm64CeHa9UksAmFNd6NqQeN1RMMJK1m/+5PYY5nuCut9C0zdkawKBedoIWOLraR0
+         etFIlsS7YyMHi3/VR5EwjORww+x8wEHJucfP4tRVCoCNlc+uOgQvemZw2STJSSLWZmpK
+         TmUN6kb7I/iKNVXTx0+lyG7mhn96hUxD1uAKMJTcU3kqJt/yQzyPb61hKdBbRAPlxl5R
+         ghCyaScwPUxpRuzDS+P4jBZfz390UdhrbLNlI6u/fnzyuYW4N9QyLyeGJig+vD/+VXcp
+         BsWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711131479; x=1711736279;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SeiHsFNUoaCnN7xb45zTYPjadaI5jk5AW3v5aPdkC2E=;
+        b=dAElaXP5HhI7uti+4Vcz+2aopmMEsukIfRAFAQSHIZHOfU3fPa7SwOFYefo6/Stdka
+         dvBc2tcB86p2Pvb0ZlkSkjtNLlVe0HBokqRgiLUfY8/ly/JvFzvo8vDorf2ckWnSMSxY
+         bdjfmz6bRy1ya2rY4GjjpGsoMa9US+5W3zYxx62uDtPfNlGOCQC9LP/EINSJSUiNhBl2
+         kMvTNYZQ8tj81GwslqYBqLDkHeVX1rONK1LFZEiUPxIq0m681jW3UrvRlYEdJVRDG1Hv
+         os1gfF0G8lf8DniFdBRwkQW4vKDkSAtVOhbowkRLXgqSQfJTxIg2GqliAMoCci727MC4
+         kEUw==
+X-Forwarded-Encrypted: i=1; AJvYcCWWoqOl/EEOpi2bG5VDt6hGIbYvTq1p5DaGk76MQatWV7YSEjEUdI9ifbuoqfal39hCJg6TY8TI+IjsJZXD+iW+VmQ/utxPkiFToQDh7w==
+X-Gm-Message-State: AOJu0YwYiDOrRINYkJd2TTACl2dO9QIJWEXXM72UEbPxV/FPrPSldU0V
+	mVlLFlzkYRR2XyXZJUwNeDYTjNXCxHmr61MHe0ojHdVWCVr1jBqD8TvQ5PFc91ags7Mtrc/A1oa
+	/rYg=
+X-Google-Smtp-Source: AGHT+IE8rf51P6ZV2w55aQi32v1RbTPj7yYppeHjfqgIRLq8bBYJrd3E4Qma1nFlYxhYP5nuDoAUOw==
+X-Received: by 2002:a17:906:c4c:b0:a46:dca5:8b10 with SMTP id t12-20020a1709060c4c00b00a46dca58b10mr373843ejf.24.1711131478620;
+        Fri, 22 Mar 2024 11:17:58 -0700 (PDT)
+Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id a6-20020a1709062b0600b00a46a19b8a68sm74040ejg.167.2024.03.22.11.17.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 Mar 2024 11:17:58 -0700 (PDT)
+Message-ID: <5ad8fc4d-cabf-4b50-bb22-60896a13362d@linaro.org>
+Date: Fri, 22 Mar 2024 19:17:55 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Y-b4l8VBwP9oCpCBwugK9r22QVeHBx9e
-X-Proofpoint-GUID: Y-b4l8VBwP9oCpCBwugK9r22QVeHBx9e
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-22_10,2024-03-21_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 impostorscore=0 phishscore=0 mlxlogscore=999 adultscore=0
- priorityscore=1501 mlxscore=0 spamscore=0 bulkscore=0 suspectscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2403220128
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8250: add a link between DWC3 and
+ QMP PHY
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Luca Weiss <luca.weiss@fairphone.com>
+References: <20240322-typec-fix-sm8250-v1-0-1ac22b333ea9@linaro.org>
+ <20240322-typec-fix-sm8250-v1-2-1ac22b333ea9@linaro.org>
+ <635f7501-82cf-4df1-9194-27f24eb40a53@linaro.org>
+ <CAA8EJpoYBsB8kx8P9w9M3pd6E7iUfqWk4XYwMr2oLoZV_nuYpg@mail.gmail.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
+ BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
+ HGWdmtO+RvadOVi6CoUDqALsmfS3MUG5Pj2Ne9+0jRg4hEnB92AyF9rW2G3qisFcwPgvatt7
+ TXD5E38mLyOPOUyXNj9XpDbt1hNwKQfiidmPh5e7VNAWRnW1iCMMoKqzM1Anzq7e5Afyeifz
+ zRcQPLaqrPjnKqZGL2BKQSZDh6NkI5ZLRhhHQf61fkWcUpTp1oDC6jWVfT7hwRVIQLrrNj9G
+ MpPzrlN4YuAqKeIer1FMt8cq64ifgTzxHzXsMcUdclzq2LTk2RXaPl6Jg/IXWqUClJHbamSk
+ t1bfif3SnmhA6TiNvEpDKPiT3IDs42THU6ygslrBxyROQPWLI9IL1y8S6RtEh8H+NZQWZNzm
+ UQ3imZirlPjxZtvz1BtnnBWS06e7x/UEAguj7VHCuymVgpl2Za17d1jj81YN5Rp5L9GXxkV1
+ aUEwONM3eCI3qcYm5JNc5X+JthZOWsbIPSC1Rhxz3JmWIwP1udr5E3oNRe9u2LIEq+wH/toH
+ kpPDhTeMkvt4KfE5m5ercid9+ZXAqoaYLUL4HCEw+HW0DXcKDwARAQABzShLb25yYWQgRHli
+ Y2lvIDxrb25yYWQuZHliY2lvQGxpbmFyby5vcmc+wsGOBBMBCAA4FiEEU24if9oCL2zdAAQV
+ R4cBcg5dfFgFAmQ5bqwCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQR4cBcg5dfFjO
+ BQ//YQV6fkbqQCceYebGg6TiisWCy8LG77zV7DB0VMIWJv7Km7Sz0QQrHQVzhEr3trNenZrf
+ yy+o2tQOF2biICzbLM8oyQPY8B///KJTWI2khoB8IJSJq3kNG68NjPg2vkP6CMltC/X3ohAo
+ xL2UgwN5vj74QnlNneOjc0vGbtA7zURNhTz5P/YuTudCqcAbxJkbqZM4WymjQhe0XgwHLkiH
+ 5LHSZ31MRKp/+4Kqs4DTXMctc7vFhtUdmatAExDKw8oEz5NbskKbW+qHjW1XUcUIrxRr667V
+ GWH6MkVceT9ZBrtLoSzMLYaQXvi3sSAup0qiJiBYszc/VOu3RbIpNLRcXN3KYuxdQAptacTE
+ mA+5+4Y4DfC3rUSun+hWLDeac9z9jjHm5rE998OqZnOU9aztbd6zQG5VL6EKgsVXAZD4D3RP
+ x1NaAjdA3MD06eyvbOWiA5NSzIcC8UIQvgx09xm7dThCuQYJR4Yxjd+9JPJHI6apzNZpDGvQ
+ BBZzvwxV6L1CojUEpnilmMG1ZOTstktWpNzw3G2Gis0XihDUef0MWVsQYJAl0wfiv/0By+XK
+ mm2zRR+l/dnzxnlbgJ5pO0imC2w0TVxLkAp0eo0LHw619finad2u6UPQAkZ4oj++iIGrJkt5
+ Lkn2XgB+IW8ESflz6nDY3b5KQRF8Z6XLP0+IEdLOOARkOW7yEgorBgEEAZdVAQUBAQdAwmUx
+ xrbSCx2ksDxz7rFFGX1KmTkdRtcgC6F3NfuNYkYDAQgHwsF2BBgBCAAgFiEEU24if9oCL2zd
+ AAQVR4cBcg5dfFgFAmQ5bvICGwwACgkQR4cBcg5dfFju1Q//Xta1ShwL0MLSC1KL1lXGXeRM
+ 8arzfyiB5wJ9tb9U/nZvhhdfilEDLe0jKJY0RJErbdRHsalwQCrtq/1ewQpMpsRxXzAjgfRN
+ jc4tgxRWmI+aVTzSRpywNahzZBT695hMz81cVZJoZzaV0KaMTlSnBkrviPz1nIGHYCHJxF9r
+ cIu0GSIyUjZ/7xslxdvjpLth16H27JCWDzDqIQMtg61063gNyEyWgt1qRSaK14JIH/DoYRfn
+ jfFQSC8bffFjat7BQGFz4ZpRavkMUFuDirn5Tf28oc5ebe2cIHp4/kajTx/7JOxWZ80U70mA
+ cBgEeYSrYYnX+UJsSxpzLc/0sT1eRJDEhI4XIQM4ClIzpsCIN5HnVF76UQXh3a9zpwh3dk8i
+ bhN/URmCOTH+LHNJYN/MxY8wuukq877DWB7k86pBs5IDLAXmW8v3gIDWyIcgYqb2v8QO2Mqx
+ YMqL7UZxVLul4/JbllsQB8F/fNI8AfttmAQL9cwo6C8yDTXKdho920W4WUR9k8NT/OBqWSyk
+ bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
+ nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
+ izWDgYvmBE8=
+In-Reply-To: <CAA8EJpoYBsB8kx8P9w9M3pd6E7iUfqWk4XYwMr2oLoZV_nuYpg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-When debugging functional issues with workload input processing, it is
-useful to know if requests are backing up in the fifo, or perhaps
-getting stuck elsewhere. To answer the question of how many requests are
-in the fifo, implement a "queued" debugfs entry per-dbc that returns the
-number of pending requests when read.
+On 22.03.2024 14:19, Dmitry Baryshkov wrote:
+> On Fri, 22 Mar 2024 at 14:11, Bryan O'Donoghue
+> <bryan.odonoghue@linaro.org> wrote:
+>>
+>> On 22/03/2024 11:58, Dmitry Baryshkov wrote:
+>>> The SuperSpeed signals originate from the DWC3 host controller and then
+>>> are routed through the Combo QMP PHY, where they are multiplexed with
+>>> the DisplayPort signals. Add corresponding OF graph link.
+>>>
+>>> Reported-by: Luca Weiss <luca.weiss@fairphone.com>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/sm8250.dtsi | 24 ++++++++++++++++++++++--
+>>>   1 file changed, 22 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+>>> index d57039a4c3aa..e551e733ab94 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+>>> @@ -3917,6 +3917,10 @@ port@0 {
+>>>
+>>>                               port@1 {
+>>>                                       reg = <1>;
+>>> +
+>>> +                                     usb_1_qmpphy_usb_ss_in: endpoint {
+>>> +                                             remote-endpoint = <&usb_1_dwc3_ss_out>;
+>>> +                                     };
+>>>                               };
+>>>
+>>>                               port@2 {
+>>> @@ -4195,8 +4199,24 @@ usb_1_dwc3: usb@a600000 {
+>>>                               phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
+>>>                               phy-names = "usb2-phy", "usb3-phy";
+>>>
+>>> -                             port {
+>>> -                                     usb_1_dwc3_hs_out: endpoint {};
+>>> +                             ports {
+>>> +                                     #address-cells = <1>;
+>>> +                                     #size-cells = <0>;
+>>> +
+>>> +                                     port@0 {
+>>> +                                             reg = <0>;
+>>> +
+>>> +                                             usb_1_dwc3_hs_out: endpoint {
+>>> +                                             };
+>>> +                                     };
+>>> +
+>>> +                                     port@1 {
+>>> +                                             reg = <1>;
+>>> +
+>>> +                                             usb_1_dwc3_ss_out: endpoint {
+>>> +                                                     remote-endpoint = <&usb_1_qmpphy_usb_ss_in>;
+>>> +                                             };
+>>> +                                     };
+>>>                               };
+>>>                       };
+>>>               };
+>>>
+>>
+>> I think these should go into platform definitions, there's nothing at
+>> the SoC level that imposes the port constraint.
+> 
+> The link between DWC3 and QMP PHY is fixed in the SoC, if I remember correctly.
 
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
-Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-Reviewed-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
----
- drivers/accel/qaic/qaic.h         |  1 +
- drivers/accel/qaic/qaic_data.c    |  9 +++++++++
- drivers/accel/qaic/qaic_debugfs.c | 31 +++++++++++++++++++++++++++++++
- 3 files changed, 41 insertions(+)
+Yes, I believe so too
 
-diff --git a/drivers/accel/qaic/qaic.h b/drivers/accel/qaic/qaic.h
-index 03d9c9fbffb3..02561b6cecc6 100644
---- a/drivers/accel/qaic/qaic.h
-+++ b/drivers/accel/qaic/qaic.h
-@@ -288,6 +288,7 @@ int disable_dbc(struct qaic_device *qdev, u32 dbc_id, struct qaic_user *usr);
- void enable_dbc(struct qaic_device *qdev, u32 dbc_id, struct qaic_user *usr);
- void wakeup_dbc(struct qaic_device *qdev, u32 dbc_id);
- void release_dbc(struct qaic_device *qdev, u32 dbc_id);
-+void qaic_data_get_fifo_info(struct dma_bridge_chan *dbc, u32 *head, u32 *tail);
- 
- void wake_all_cntl(struct qaic_device *qdev);
- void qaic_dev_reset_clean_local_state(struct qaic_device *qdev);
-diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
-index 2459fe4a3f95..e86e71c1cdd8 100644
---- a/drivers/accel/qaic/qaic_data.c
-+++ b/drivers/accel/qaic/qaic_data.c
-@@ -1981,3 +1981,12 @@ void release_dbc(struct qaic_device *qdev, u32 dbc_id)
- 	dbc->in_use = false;
- 	wake_up(&dbc->dbc_release);
- }
-+
-+void qaic_data_get_fifo_info(struct dma_bridge_chan *dbc, u32 *head, u32 *tail)
-+{
-+	if (!dbc || !head || !tail)
-+		return;
-+
-+	*head = readl(dbc->dbc_base + REQHP_OFF);
-+	*tail = readl(dbc->dbc_base + REQTP_OFF);
-+}
-diff --git a/drivers/accel/qaic/qaic_debugfs.c b/drivers/accel/qaic/qaic_debugfs.c
-index b362960941d7..20b653d99e52 100644
---- a/drivers/accel/qaic/qaic_debugfs.c
-+++ b/drivers/accel/qaic/qaic_debugfs.c
-@@ -98,6 +98,36 @@ static const struct file_operations fifo_size_fops = {
- 	.release = single_release,
- };
- 
-+static int read_dbc_queued(struct seq_file *s, void *unused)
-+{
-+	struct dma_bridge_chan *dbc = s->private;
-+	u32 tail = 0, head = 0;
-+
-+	qaic_data_get_fifo_info(dbc, &head, &tail);
-+
-+	if (head == U32_MAX || tail == U32_MAX)
-+		seq_printf(s, "%u\n", 0);
-+	else if (head > tail)
-+		seq_printf(s, "%u\n", dbc->nelem - head + tail);
-+	else
-+		seq_printf(s, "%u\n", tail - head);
-+
-+	return 0;
-+}
-+
-+static int queued_open(struct inode *inode, struct file *file)
-+{
-+	return single_open(file, read_dbc_queued, inode->i_private);
-+}
-+
-+static const struct file_operations queued_fops = {
-+	.owner = THIS_MODULE,
-+	.open = queued_open,
-+	.read = seq_read,
-+	.llseek = seq_lseek,
-+	.release = single_release,
-+};
-+
- void qaic_debugfs_init(struct qaic_drm_device *qddev)
- {
- 	struct qaic_device *qdev = qddev->qdev;
-@@ -117,6 +147,7 @@ void qaic_debugfs_init(struct qaic_drm_device *qddev)
- 		snprintf(name, QAIC_DBC_DIR_NAME, "dbc%03u", i);
- 		debugfs_dir = debugfs_create_dir(name, debugfs_root);
- 		debugfs_create_file("fifo_size", 0400, debugfs_dir, &qdev->dbc[i], &fifo_size_fops);
-+		debugfs_create_file("queued", 0400, debugfs_dir, &qdev->dbc[i], &queued_fops);
- 	}
- }
- 
--- 
-2.34.1
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
+Konrad
+> 
 
