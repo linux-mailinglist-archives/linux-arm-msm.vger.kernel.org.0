@@ -1,296 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-14829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id ECA78886BCD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 13:04:25 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B5F4886BDF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 13:11:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7BCF01F24A42
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 12:04:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EB3D72827BC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 12:11:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A71A3F8E2;
-	Fri, 22 Mar 2024 12:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A70033FBA3;
+	Fri, 22 Mar 2024 12:11:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="v5iHBY8V"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IwVMaP2k"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD123FB3B
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 12:04:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8CC427453
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 12:11:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711109063; cv=none; b=gHCnqA5N6qm17daBY/nUcZU69l3hBYbcRJHQkjkRUeZCLsS33PiOEyE8jIgaDbf22UhWzI8gE0czltFfobAuntEKsS3cATVDUi3cLb9IfHZVFvzf2tgnhRaFjQM8AhMendqCPL304/fauyITX7XE4Yb1Lw4RmG2V+Bhbl3VVDUA=
+	t=1711109492; cv=none; b=Pq1NLiRpHhaRXotVOuq6diofVMAIEdIpsbgdtxNV9ujI9xP5ZBEij05+DlHd2/zlzo68cQ/C6fEVRMFQ+a3T5/scxF1k/i5xaLjxElwJds5/kCRf0yDOanwxADCu9ZX019U+PHM2neCbAlKBK1885Jwq23HyrMncw1fkiHMA3Wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711109063; c=relaxed/simple;
-	bh=ozlstPZnT67G4t93qFgml5ue6BYtjIpzn6sfzja57vs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UoWZ4x0ZZqgv6MyMPaHSKz9zYQlChVLndHaLAHVaV+VEFBp8OY77YcbZ6MxVIOErtCTScy7JXvQVgmBHTNGO2AK3SRXHUefAT8oiAT7dK5RPPf9hxBUBYd7IUmfVsJuetuf9BrZ0dVWkNWYWmbrdQBDKd17brllXPwxsBTtKHUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=v5iHBY8V; arc=none smtp.client-ip=209.85.208.175
+	s=arc-20240116; t=1711109492; c=relaxed/simple;
+	bh=ookcacqQvslMXulbynVMtpcpPlYS0qDy2qdS2UTm+nc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=L7/OMho5447lZ+O8Rv5lKZFrwhatMTpwmlMkGA91BOa3STDI6vxwla12VEU4TcVgqrJMmOeV486a5v7PKEWvU60eE1x9xJ/5a8ScEYbAXLpjkVN27x6tcHakS3PvCkB/t6okfcVhh9I6KsDr4aj4EbE+w2YexWDDU0CKwjIVcg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IwVMaP2k; arc=none smtp.client-ip=209.85.219.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2d2509c66daso27239191fa.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 05:04:21 -0700 (PDT)
+Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-dcbc6a6808fso1978261276.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 05:11:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711109059; x=1711713859; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WICDXs2NPGOqmCrNvqdcZ0UIIiTxf1scmM138aUvNvU=;
-        b=v5iHBY8VOsts32yOxa9k1syF9f2j06jTETL5HW4AzvJvUUMGk+CH+DpxPaVrAFIZee
-         E60cGLO0oL4d8xMz7LCC5RjsCEMOaIoBcHwfPEROI8HVj3dJiEUY3P7xso7sJNgfTov/
-         3h77unyGL8zJZWs9dOBVEbz5B09x2q4ygvNW0HbLG/06+LKjyy+cIGfK/1bML+NdJAi7
-         dFYijtbID9aluF2NqAOrknox/NScvzUzNhDSBPIcsYHVB3qkglmUbFYa+5StuG2TNnr1
-         1JXShjZ5jIP5f7UjGmm7TYE3PAU40UJa5XHIOAp5gtjRZhvwMQEJKwqEOvZRfWu5qEFl
-         dAOQ==
+        d=linaro.org; s=google; t=1711109490; x=1711714290; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=F/FEfLL5ARXahGfD5kj2pZpy3RrSe+B9Qp8hGUm/NLI=;
+        b=IwVMaP2k5UKwOLibawxM8SdE4/U4Gio52NR1UlljOKA5JUS6UsS3FfkM8H7frhobL3
+         mljoclux0QxCyy0SDz4vFteM6bS5sKE8u88pZ4/zSK6SGitbga0+Y3nlVOkK4t4iHb+y
+         k9Mc0J3s+u8GVI9+7WaB+r3mbMt6j48wC0NLkCz8/B/KEIUj//KElcNCmFzzxwzp00KE
+         CEFlZH2XDxTTAevZDDgv8/MHbmbembh20pewjqmhVbWsDQcVkgYKtKg8y4b6z55VAFFf
+         Wp3ijo+Mow0r3IlAofNs12nuRQuSQp+xadCegQO3TrI3Z8wH5kXlT9CyOsSmX86YzabJ
+         Ngtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711109059; x=1711713859;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WICDXs2NPGOqmCrNvqdcZ0UIIiTxf1scmM138aUvNvU=;
-        b=cZnNy05x67rVPL0NW9JoFB6phcsqytnBt5g53sTZMtFHEjDE3chaAsqCd0hLDXW+Ca
-         oOyRGqcLXVrTSXzbhqcjSXUCdCFr0AQRwI+ibovNjafpGzfRa6oHmDW/H9YXm9rX2uzX
-         0yXz7oTH4xHZly6bsPDszoAGXLjGM2FZwfn2pLGnbB5a6cGbtd7cvqppNrei1OLssXpq
-         0VJZ6NphqL/jZVvvkhUo/vwy9ZvHzF0jj3BdeviR0ZwRqU2axqdlueNzoD9gmVaF/wCu
-         O4ilEipiVNl6dhc1I5PS3XWK5YNSkqdV3PzwBmW6IQdqN+MEArRWY7MS2Ded0fhD655A
-         g3Sg==
-X-Gm-Message-State: AOJu0YygjG7DD5twFm7ey4SBlw3qFXPdwntREmn2IwE/90QQ3bSTqSsB
-	VdXpUngAtaAbn8lNIWDSluL/kMnMqjHgvKVLk5eXFGpnUv+j6j7PdI2YThCQR6Q=
-X-Google-Smtp-Source: AGHT+IE128SN8UjOrd0vAtwBkqgFTxULvcKhrr33MiQn/9XmlyQg+Y9eD+d/cclzTtWcEu78DU8fSw==
-X-Received: by 2002:a2e:3312:0:b0:2d4:6e71:59e9 with SMTP id d18-20020a2e3312000000b002d46e7159e9mr1574758ljc.13.1711109059394;
-        Fri, 22 Mar 2024 05:04:19 -0700 (PDT)
-Received: from [192.168.1.78] (host-92-17-96-232.as13285.net. [92.17.96.232])
-        by smtp.gmail.com with ESMTPSA id o20-20020a05600c511400b0041477f95cf6sm2887639wms.13.2024.03.22.05.04.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Mar 2024 05:04:19 -0700 (PDT)
-Message-ID: <13368789-1ee0-49fe-8732-ba170349cec7@linaro.org>
-Date: Fri, 22 Mar 2024 12:04:18 +0000
+        d=1e100.net; s=20230601; t=1711109490; x=1711714290;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=F/FEfLL5ARXahGfD5kj2pZpy3RrSe+B9Qp8hGUm/NLI=;
+        b=eW6K6SkaKrZ81isWmiGKE7ANhVycCt4/4YY2hEQkiTmq+ZAnb9fuKjeWvuOsrUl37g
+         0k4DYOSl00GZda/53mRsQPGMG68A/sTnLU5oE9isiB5X2Z6VCTnU1xfDyWzuRE65rxWZ
+         dxwLxc6l0qCbdr37IN5Gk5BBvOjQjZRR+Jrq8CguEE/yS8BNvWLxY/aBrAUL2U/lLIvk
+         GLnDprGbFCE06CmqvIsKXt2M+MmCqMOgRfUGzSLXe+kjDIRCVAx/OLO+HdykXr7qyXza
+         BX9m9C9iDqGfcoXHeFnqVwmHt8STTBdX5MOYsW7vztJvcdQ0c4QrfjvVCF6Hb1NxECml
+         WoJg==
+X-Forwarded-Encrypted: i=1; AJvYcCVXPlhYZVOIq2+8FXp0CDYsNkT5hjYbwoy8LOU1+K/x8sBA1jXYWEgSUjbp0cZpQbl3FRRDpDVlVFdBelIjj33sJpLgzy2gkaJSQ9fuDw==
+X-Gm-Message-State: AOJu0Yxb9KxHIeananuXXK3sjoFcScaexczCzUl7AhdAIiOZVmbZqniz
+	qV1vJhwhpcKOzesllgTfn0PmucA7yrWQX2OKf9Ap07UI3dbwKyKbo8gbFVpuhp9llHxCCkTZ9QF
+	OGbS03QrE66X1AAQZC8XS6GkZtYlBJZlxeQ8sbA==
+X-Google-Smtp-Source: AGHT+IGB0HkBiPswuKP8IjOEEr+Ve7Grth1dIhr3BI6d7OWAcFJXCTnZ+hcmMSMVCmZ1rO5o9+1LQZhT6eIjuBhFXWE=
+X-Received: by 2002:a25:2f0c:0:b0:dcc:f5d4:8b43 with SMTP id
+ v12-20020a252f0c000000b00dccf5d48b43mr1836581ybv.9.1711109489879; Fri, 22 Mar
+ 2024 05:11:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: apq8016: Add Schneider HMIBSC
- board DTS
-Content-Language: en-US
-To: Sumit Garg <sumit.garg@linaro.org>, Stephan Gerhold <stephan@gerhold.net>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
- neil.armstrong@linaro.org, dmitry.baryshkov@linaro.org,
- laetitia.mariottini@se.com, pascal.eberhard@se.com, abdou.saker@se.com,
- jimmy.lalande@se.com, benjamin.missey@non.se.com,
- daniel.thompson@linaro.org, linux-kernel@vger.kernel.org,
- Jagdish Gediya <jagdish.gediya@linaro.org>
-References: <20240315060707.471248-1-sumit.garg@linaro.org>
- <20240315060707.471248-4-sumit.garg@linaro.org>
- <ZfRlYnEQUKvwGQ65@gerhold.net>
- <CAFA6WYMucNzLNm+oHNd-Jb65oigpNphU=mFGM1cD8A-mK-BFDw@mail.gmail.com>
- <ZfmdWtoiP4ZF7JRk@gerhold.net>
- <CAFA6WYPzdSHEMmeb_J6LPje8MUkSSq93oN3+O1PMahtZN7hWnA@mail.gmail.com>
- <ZfwM3ZrjTWR_QANd@gerhold.net>
- <CAFA6WYN+Y8qyv9yEMoU1wqpqDN7rwNO5xfHkSUe+H2DdSiBqyA@mail.gmail.com>
-From: Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <CAFA6WYN+Y8qyv9yEMoU1wqpqDN7rwNO5xfHkSUe+H2DdSiBqyA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20240322-typec-fix-sm8250-v1-0-1ac22b333ea9@linaro.org>
+ <20240322-typec-fix-sm8250-v1-1-1ac22b333ea9@linaro.org> <30f71224-7340-4255-bd48-a96252985b15@linaro.org>
+In-Reply-To: <30f71224-7340-4255-bd48-a96252985b15@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 22 Mar 2024 14:11:18 +0200
+Message-ID: <CAA8EJpqNM8dsnX6OzZOFeV88ngJ-mE8AKjaKFurT=eKed6Yu4Q@mail.gmail.com>
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8250: describe HS signals properly
+To: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Luca Weiss <luca.weiss@fairphone.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi both,
+On Fri, 22 Mar 2024 at 14:03, Bryan O'Donoghue
+<bryan.odonoghue@linaro.org> wrote:
+>
+> On 22/03/2024 11:58, Dmitry Baryshkov wrote:
+> > The OF graph should describe physical signals. There is no 'role switch'
+> > signal between Type-C connector and the DWC3 USB controller. Instead
+> > there is a HighSpeed signal lane between DWC3 controller and the USB-C
+> > connector. Rename endpoints in accordance to that (this follows the
+> > example lead by other plaforms, including QRB2210 RB1, QRB4210 RB2 and
+> > all PMIC GLINK platforms).
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
+> Hmm
+>
+> I think if you are going to change the name here, you should also do so here
+>
+> grep role_switch arch/arm64/* -r | wc -l
+> 54
 
-On 22/03/2024 06:29, Sumit Garg wrote:
-> On Thu, 21 Mar 2024 at 16:03, Stephan Gerhold <stephan@gerhold.net> wrote:
->>
->> On Wed, Mar 20, 2024 at 12:10:32PM +0530, Sumit Garg wrote:
->>> On Tue, 19 Mar 2024 at 19:43, Stephan Gerhold <stephan@gerhold.net> wrote:
->>>> On Mon, Mar 18, 2024 at 03:20:46PM +0530, Sumit Garg wrote:
->>>>> On Fri, 15 Mar 2024 at 20:43, Stephan Gerhold <stephan@gerhold.net> wrote:
->>>>>> On Fri, Mar 15, 2024 at 11:37:07AM +0530, Sumit Garg wrote:
->>>>>>> Add Schneider Electric HMIBSC board DTS. The HMIBSC board is an IIoT Edge
->>>>>>> Box Core board based on the Qualcomm APQ8016E SoC.
->>>>>>>
->>>>>>> Support for Schneider Electric HMIBSC. Features:
->>>>>>> - Qualcomm Snapdragon 410C SoC - APQ8016 (4xCortex A53, Adreno 306)
->>>>>>> - 1GiB RAM
->>>>>>> - 8GiB eMMC, SD slot
->>>>>>> - WiFi and Bluetooth
->>>>>>> - 2x Host, 1x Device USB port
->>>>>>> - HDMI
->>>>>>> - Discrete TPM2 chip over SPI
->>>>>>> - USB ethernet adaptors (soldered)
->>>>>>>
->>>>>>> Co-developed-by: Jagdish Gediya <jagdish.gediya@linaro.org>
->>>>>>> Signed-off-by: Jagdish Gediya <jagdish.gediya@linaro.org>
->>>>>>> Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
->>>>>>> Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
->>>>>>> ---
->>>>>>>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->>>>>>>  .../dts/qcom/apq8016-schneider-hmibsc.dts     | 510 ++++++++++++++++++
->>>>>>>  2 files changed, 511 insertions(+)
->>>>>>>  create mode 100644 arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
->>>>>>>
->>>>>>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
->>>>>>> index 39889d5f8e12..ad55e52e950b 100644
->>>>>>> --- a/arch/arm64/boot/dts/qcom/Makefile
->>>>>>> +++ b/arch/arm64/boot/dts/qcom/Makefile
->>>>>>> @@ -5,6 +5,7 @@ apq8016-sbc-usb-host-dtbs     := apq8016-sbc.dtb apq8016-sbc-usb-host.dtbo
->>>>>>>
->>>>>>>  dtb-$(CONFIG_ARCH_QCOM)      += apq8016-sbc-usb-host.dtb
->>>>>>>  dtb-$(CONFIG_ARCH_QCOM)      += apq8016-sbc-d3-camera-mezzanine.dtb
->>>>>>> +dtb-$(CONFIG_ARCH_QCOM)      += apq8016-schneider-hmibsc.dtb
->>>>>>>  dtb-$(CONFIG_ARCH_QCOM)      += apq8039-t2.dtb
->>>>>>>  dtb-$(CONFIG_ARCH_QCOM)      += apq8094-sony-xperia-kitakami-karin_windy.dtb
->>>>>>>  dtb-$(CONFIG_ARCH_QCOM)      += apq8096-db820c.dtb
->>>>>>> diff --git a/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts b/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
->>>>>>> new file mode 100644
->>>>>>> index 000000000000..9c79a31a04db
->>>>>>> --- /dev/null
->>>>>>> +++ b/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
->>>>>>> @@ -0,0 +1,510 @@
->>>>>>> [...]
->>>>>>> +
->>>>>>> +&pm8916_resin {
->>>>>>> +     interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_FALLING>;
->>>>>>> +     linux,code = <KEY_POWER>;
->>>>>>> +     status = "okay";
->>>>>>> +};
->>>>>>
->>>>>> What is the goal of overriding the interrupt here? It looks like you are
->>>>>> changing the interrupt type from IRQ_TYPE_EDGE_BOTH to FALLING. This
->>>>>> sounds a bit like you want the driver to receive just button release
->>>>>> events (or just press events, not sure about the polarity). I'm not sure
->>>>>> if the driver will handle this correctly.
->>>>>
->>>>> The use-case here is to just act upon button release events and the
->>>>> driver handles this appropriately. Final use-case of the reset button:
->>>>>
->>>>> - Short press and release leads to normal Linux reboot.
->>>>> - Long press for more than 10 sec or so leads to a hard reset.
->>>>>
->>>>> With IRQ_TYPE_EDGE_BOTH, that's not achievable because just a simple
->>>>> press leads to Linux reboot.
->>>>>
->>>>
->>>> Thanks for explaining your use case. Is the DT really the right place to
->>>> describe this? In the hardware, this is just a button that provides both
->>>> press and release events. Linux typically forwards these events to user
->>>> space, without interpreting them in any way. This means you likely have
->>>> some user space component that listens to the events (e.g. systemd
->>>> logind). Ideally that component should be reconfigured to trigger the
->>>> reboot on release instead of press.
->>>
->>> I am not sure if that's really the case. I only see power key value to
->>> be reported as follows:
->>>
->>> input_report_key(pwrkey->input, pwrkey->code, 1);
->>>                     or
->>> input_report_key(pwrkey->input, pwrkey->code, 0);
->>>
->>> It's not like a press event being a rising edge (0->1) or a release
->>> event being a falling edge (1->0) reported. AFAICS, a reboot is issued
->>> whenever the value of power key is reported as "1".
->>>
->>
->> If you look inside the input_report_key() function you can see that the
->> input subsystem internally tracks the key state. input_get_disposition()
->> returns INPUT_IGNORE_EVENT if the key bit already has the same value.
->> Only when the key changes its state, an event is sent to user space.
->> This means that all events reported to user space are effectively
->> rising/falling edges (an event with value "1" is a rising edge 0->1, an
->> event with value "0" is a falling edge 1->0).
->>
->> The only reason why setting IRQ_TYPE_EDGE_FALLING works here is because
->> of the workaround added in commit be8fc023ef64 ("Input: pm8941-pwrkey -
->> simulate missed key press events") [1]. No event is reported when you
->> start pressing the key. When you release the key, you get a key press
->> event (rising edge) immediately followed by a key release (falling
->> edge). But the workaround was added to handle potentially missed
->> interrupts, not to inhibit reporting key press events.
-> 
-> I rather see it differently being actually allowing the current
-> use-case to support only the IRQ_TYPE_EDGE_FALLING. As per your
-> description above, a falling edge can only be an event for user-space
-> if we have:
-> 
-> input_report_key(pwrkey->input, pwrkey->code, 1);
-> input_report_key(pwrkey->input, pwrkey->code, 0);
-> 
-> rather than only
-> 
-> input_report_key(pwrkey->input, pwrkey->code, 0);
-> 
-> which won't trigger any event for user-space, right?
-> 
->>
->> In my opinion, if you want to perform an action on key release rather
->> than key press then you should adjust the user space program to do so.
->> From the point of view of the hardware DT (and even the kernel), the key
->> press happens when you actually start pressing the key, and not later
->> when you release it.
-> 
-> The reason why we are discussing it back and forth looks like due to
-> lack of clarity as to how HMIBSC board supports this button. The
-> common implementation as per db410c DTS is to have two buttons:
-> 
-> - One button is representing pwrkey(KEY_POWER) which is solely
-> consumed by the operating system to cleanly power off/restart the
-> db410c.
-> - Another button is representing pm8916_resin(KEY_VOLUMEDOWN) which
-> apart from normal volume down is also consumed by PMIC hardware to
-> perform a hard reset on a long press (if more than 10 sec.).
-> 
-> However, on HMIBSC board we only have a single power/reset button
-> which has to support the dual role of above two buttons on db410c:
-> 
-> Only one button as pm8916_resin(KEY_POWER), behaviour required:
-> - The rising edge (or button press) has to be only consumed by PMIC to
-> perform a hard reset of the HMIBSC board if pressed for more than 10
-> secs.
-> - The falling edge has to be consumed by the operating system to
-> cleanly reboot the HMIBSC board.
-> 
-> So what you are asking here is that the operating system has to be
-> notified of the rising edge of the button even if it has to just
-> ignore that without any action. Do you really think that would be
-> acceptable as a generic solution for systemd logind?
+Oh, my. I'll take a look at the qcom platforms for v2. And funny
+enough sc8180x even uses old bindings for the QMP PHY.
 
-Yes, this does seem to be a bug in systemd-logind. It appears to have
-subtly different behaviour depending on if you have
-HandlePowerKeyLongPress configured or not. If it is set to any action
-then systemd will wait until you release the key to decide whether to
-perform HandlePowerKey or HandlePowerKeyLongPress. However if there is
-no LongPress action configured then it will immediately perform the
-HandlePowerKey action on key down. [2]
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-As a workaround, try adding HandlePowerKeyLongPress="lock" to
-logind.conf and see if that gives you the desired behaviour on short press.
-> 
-> Also, why DT isn't the right place for correctly describing the
-> intended hardware behaviour? Or am I missing any DT policy which says
-> hardware has to be described the exact way it is rather than the
-> expected way for hardware to behave? BTW, If you want the hardware
-> behaviour to be properly commented then I can do that too.
-
-DT is for describing the hardware, not for dictating its behaviour. As
-Stephen pointed out, your workaround here only works due to a workaround
-in the kernel for a bug... DT isn't just consumed by Linux, and some
-other OS might not behave correctly as a result of this hack.
-
-[1]:
-https://github.com/systemd/systemd/blob/main/src/login/logind-button.c#L215
-> 
-> -Sumit
-> 
->>
->> Thanks,
->> Stephan
->>
->> [1]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=be8fc023ef64dcb11042aaa4bb0f29f7e0335d85
 
 -- 
-// Caleb (they/them)
+With best wishes
+Dmitry
 
