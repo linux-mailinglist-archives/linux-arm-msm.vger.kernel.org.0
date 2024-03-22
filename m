@@ -1,102 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-14880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B062D88724C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 18:56:06 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F049887262
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 18:59:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E26771C21CCA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 17:56:05 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D8282B243BC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 17:58:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CFFF60BA1;
-	Fri, 22 Mar 2024 17:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37E0360EC8;
+	Fri, 22 Mar 2024 17:58:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RXHJRrgE"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="C1BJYibu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF8260898;
-	Fri, 22 Mar 2024 17:55:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF9B612F2
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 17:58:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711130130; cv=none; b=AD4Fg+wkaKtaBflsfWgP9+I+uTgePzTWjbiIBi+A/yEoHYjxBfl0NrDVp7CraFdb058kPe6/y5hS+okWmIZU19g7vJtahlUpjd7FVXnlGFKR6Yvtx7Dx4LI9Y8jEYWR1h3gLesWRgkrT0zf5zV6lDap+n74V5T1GZb+Bq94QlPE=
+	t=1711130291; cv=none; b=Ac5T7ms9GcneWtKaU6j0SZN9w8QlDMHA7bPqbmDsy/xu4ZQdjlLjJd7coYYohwfietJCYvWZZKzatE+qVMXyA5OyzRwsVXCsS/rriI6h+tbkf7Qnxao+aTdyp7Y8S62DYLCSR2qoxZf0+XPnygT7BSEFSwyW57CJy5clvvFvqGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711130130; c=relaxed/simple;
-	bh=IatL3AnQ1sBWIjVS3yyegSKCpECgw5Uocz0/m+B0+pw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qpZoLyTr6zTyCfo5lcOc9lw2us00STD3NLm+6XVyPNMIBRMW5kIRvC6JNdFy4gT3vrVuUm6BlKShyWSL8Wr/qxXX+3GV7sdAztXNcWKXt2i2xiPfSz3uDOTnMdxyPxrPfxWKD07yZfTKquwuVwunAakEUu6+HpUeg594eJ0WUFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RXHJRrgE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E7D3C433C7;
-	Fri, 22 Mar 2024 17:55:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711130129;
-	bh=IatL3AnQ1sBWIjVS3yyegSKCpECgw5Uocz0/m+B0+pw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RXHJRrgEJLOCeZhgwemuP6xrjBHYm2239sO30SiCsL3RIHc7pHbM66Av+16ot42fn
-	 i0331hL6gzDQZ6PcwlOzFPzqLpxK7t9S1JlDKJSNLVeqpjND0VjKA7MqmLzBZ3f58D
-	 Wymu905/jKYV6TR7fi/ruOdnfcN5YLKTI6Rl7GX1Hk4PQOWK6E1oEzxq98mtoDQrda
-	 7z6ve/70lFzQX9huMiCr/h3EHNwpFHbxCKBfGQ1CXm67ocZQ66urc3cq31FGuSw3CB
-	 ECNQcTR4SZ5+EJDTgFc6YSWD+2Deg6aL/mE0/4k8/nKL7gxoAZ0MHoZdrbpAlWBDX6
-	 3tBPQO4XMeYSA==
-Date: Fri, 22 Mar 2024 17:55:24 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-usb@vger.kernel.org
-Subject: Re: [PATCH 1/5] dt-bindings: regulator: qcom,usb-vbus-regulator: Add
- PM7250B compatible
-Message-ID: <20240322-front-rekindle-20f15e9841bd@spud>
-References: <20240322-fp4-tcpm-v1-0-c5644099d57b@fairphone.com>
- <20240322-fp4-tcpm-v1-1-c5644099d57b@fairphone.com>
+	s=arc-20240116; t=1711130291; c=relaxed/simple;
+	bh=OuMt0znDI07GjFRFcifJLgKh5gYcRxiw7lOySUF9bcU=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=K30wVEZpd6QQvT3Ak9Cu1WX4MiK3O1dXzSkv57yDa/Ftqh36MCaKt04pirzgKmviKBEflMu0oW1sNJ9Ter99SCxLUd/pVRR6DKxNCN+YszNNJ/othSOTldiMKHJtIk48Tx/P+5bb2eP+O+jjZWu/OY3pURPq2VaRtSavtilK1WE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=C1BJYibu; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42MDuPjN018369;
+	Fri, 22 Mar 2024 17:57:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=UwVByEh
+	BAXgyyJJ9ZwdRXIQAGviL8lWg+XhXFsFdASU=; b=C1BJYibuukpmOj4YtuCfr66
+	09Vd7pmm91GzcQ9DALCCPiu3sjfdYlrFcR5Stgb3k26n9jFQO+UHlIj3cwE5vx8I
+	qHbmQdEY/288v/H3y+dyo3yuVGi83DqwP5AQLF38/6K7FaTlIGWIHJu2qqJiYTf7
+	4rVG0G86sGorAMsWSdV97yCsymfnipRlOU0UP+CMBMqU1vBvR7iIJD+glTCY93c9
+	3gH9gSN6iVybFQDipcT5v6YcVCliSVAzU68tBTD6hqhqxZXiZ/b6+iAvWkdNH7a/
+	bYttkx7nzUGikvebmZAqQ1t0/Y9HHWt8BNqpP6KqL8TiHgCjq9IFJW5pQ3zuizg=
+	=
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x1ajartwv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 22 Mar 2024 17:57:53 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42MHvque017307
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 22 Mar 2024 17:57:52 GMT
+Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Fri, 22 Mar 2024 10:57:51 -0700
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+To: <quic_carlv@quicinc.com>, <quic_pkanojiy@quicinc.com>,
+        <stanislaw.gruszka@linux.intel.com>,
+        <jacek.lawrynowicz@linux.intel.com>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <ogabbay@kernel.org>, Jeffrey Hugo <quic_jhugo@quicinc.com>
+Subject: [PATCH v2 0/3] accel/qaic: Add debugfs entries
+Date: Fri, 22 Mar 2024 11:57:27 -0600
+Message-ID: <20240322175730.3855440-1-quic_jhugo@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="zrO6/TpLSL1IE1BD"
-Content-Disposition: inline
-In-Reply-To: <20240322-fp4-tcpm-v1-1-c5644099d57b@fairphone.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: XEPMwfmUz9-F_jJr8L6IQPXEJSGmyLY_
+X-Proofpoint-GUID: XEPMwfmUz9-F_jJr8L6IQPXEJSGmyLY_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-22_10,2024-03-21_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 phishscore=0 suspectscore=0 clxscore=1015 adultscore=0
+ mlxscore=0 bulkscore=0 spamscore=0 mlxlogscore=722 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403210001 definitions=main-2403220129
 
+Add 3 debugfs entries that can be useful in debugging a variety of
+issues.
 
---zrO6/TpLSL1IE1BD
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+bootlog - output the device bootloader log
 
-On Fri, Mar 22, 2024 at 09:01:32AM +0100, Luca Weiss wrote:
-> The VBUS register block on the PM6150 PMIC shares the design with the
-> PM8150B one. Define corresponding compatible string, having the
-> qcom,pm8150b-vbus-reg as a fallback.
->=20
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+fifo_size - output the configured dbc fifo size
 
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+queued - output how many requests are queued in the dbc fifo
 
---zrO6/TpLSL1IE1BD
-Content-Type: application/pgp-signature; name="signature.asc"
+Bootlog is unique to the device, where as fifo_size/queued is per-dbc.
 
------BEGIN PGP SIGNATURE-----
+v2:
+-Use size_add() for bounds check
+-Move locking into reset_bootlog()
+-Clamp num dbcs supported to 256 to address a sprintf warning
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZf3GDAAKCRB4tDGHoIJi
-0tNSAP43+Tgl00PPvrdj3zRAA0b2dvtJfOKFaIei0uPXW1HnIgEA7HECliQR+dHz
-KAqbZgZcRczb5ech2CZFcJU1Z2hjDgM=
-=xGlc
------END PGP SIGNATURE-----
+Jeffrey Hugo (3):
+  accel/qaic: Add bootlog debugfs
+  accel/qaic: Add fifo size debugfs
+  accel/qaic: Add fifo queued debugfs
 
---zrO6/TpLSL1IE1BD--
+ drivers/accel/qaic/Makefile       |   2 +
+ drivers/accel/qaic/qaic.h         |   9 +
+ drivers/accel/qaic/qaic_data.c    |   9 +
+ drivers/accel/qaic/qaic_debugfs.c | 338 ++++++++++++++++++++++++++++++
+ drivers/accel/qaic/qaic_debugfs.h |  20 ++
+ drivers/accel/qaic/qaic_drv.c     |  16 +-
+ 6 files changed, 393 insertions(+), 1 deletion(-)
+ create mode 100644 drivers/accel/qaic/qaic_debugfs.c
+ create mode 100644 drivers/accel/qaic/qaic_debugfs.h
+
+-- 
+2.34.1
+
 
