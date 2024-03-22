@@ -1,65 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-14865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE9C2887068
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 17:09:36 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A93F8887072
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 17:10:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7A21C28463D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 16:09:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6080C1F21CE7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 16:10:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20E1257864;
-	Fri, 22 Mar 2024 16:09:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BAC8C5BAC1;
+	Fri, 22 Mar 2024 16:09:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fa2YsZns"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cVysgCUj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1BC659B43;
-	Fri, 22 Mar 2024 16:09:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05F756B68;
+	Fri, 22 Mar 2024 16:09:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711123750; cv=none; b=h8fZsUv7xquatgRpTBF3agAPEl8J0Cn40e1+IEQYesRrNuvgeGMoN6wnfHS4oTqqHNGorVDadi0snryXRPSOMy/L35zlcYrXm5abUR9lcIOry9HbZ8i0CEFCSpU3OphlQmcdoS5o+q5HO/Fa1+JWA+u0H0PMzkqYUMPNyPqcDh0=
+	t=1711123793; cv=none; b=mvVV5lGmPvFONA/9SzFOVLBXBb3Y7O397f3B1Si0qyZhhle8IlFYYs5gmnzEtEikMtay8bdN3nMv1+GhaEveYk6mD1nLcr865NaqOQtXmgme3vAWRTxHc/x/oL6BtujPEgEPfjau8BTgk7C53PJXd/URTvur2zpCocK02CAAmlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711123750; c=relaxed/simple;
-	bh=F/sqXNXuusfoq5nFRK9dwEPOFu1E0B/ZZnfUgH0lVkw=;
+	s=arc-20240116; t=1711123793; c=relaxed/simple;
+	bh=cuGiQISoVKHBaZbLIVHnraYHHoAO1WEtkqCEo2+zeaY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kha5ISIzY+IbnSmNEWf4EgwdUKDM0zlnBjU/xB+pj841MUzq4Sf08Ceu0nRndExqsFMNLNF6IZ4s5wjyWo0VJc1ukQfx/8Pgml9Uj9RWPQ+CWb2uZC+b70nRzXv7G2KvqOmA5pbqdr8FORYGqEfOYkULHqSKh2EZHsJtqDg7oNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fa2YsZns; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 322B1C433A6;
-	Fri, 22 Mar 2024 16:09:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711123749;
-	bh=F/sqXNXuusfoq5nFRK9dwEPOFu1E0B/ZZnfUgH0lVkw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fa2YsZnsQGWbd6LtSs6H5aNN6QH0eiSf5N2umA5sLvBVzoec42e9efUOyM3pmJnvR
-	 ssAgWezniuSPisV1K1HOUN3AvZOXO2dnolNNQkZ1zaOSM6eif9E0LhQIp2C4eaXhb1
-	 igZl1eWSpvJu/RRYas0uzHQrpdDAlTC7nv1siruOlVOcW/G/z2aG72m+uzXHieQLqs
-	 hfw7qPfKXkUbD+ZcPGyDqpjDwZm4YhHC5jJ8XY8IDjxIZLDK5gh1ac+FwiGHBY2RIH
-	 ijXweKZh5c08Vtrn1/lrOZrbmtcpRSEPDzlkn7jDpXPL76OG6SbdGZiqoO/n292aRW
-	 Br36xScrOoeDg==
-Date: Fri, 22 Mar 2024 17:09:03 +0100
-From: Niklas Cassel <cassel@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
-	linux-tegra@vger.kernel.org
-Subject: Re: [PATCH 04/11] PCI: epf-test: Refactor pci_epf_test_unbind()
- function
-Message-ID: <Zf2tH67WRvOGK7-O@ryzen>
-References: <20240314-pci-epf-rework-v1-0-6134e6c1d491@linaro.org>
- <20240314-pci-epf-rework-v1-4-6134e6c1d491@linaro.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=qgIQDnKLsWYegyurwm54nDb/XG953mH0sPvGOkZqQe9uqJ8cEStDIB9Sn2F/j/HHkunlpB8zsm++m6lnam9JT+VqvlWYtxVeWo/bkU2ydomEmK0D9/fBlO9ssIwtZsrNNDlQKDbZXaAsL3CPFOCupypUJajt2EmStdutAhYy+6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cVysgCUj; arc=none smtp.client-ip=198.175.65.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1711123793; x=1742659793;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=cuGiQISoVKHBaZbLIVHnraYHHoAO1WEtkqCEo2+zeaY=;
+  b=cVysgCUjthGXsXESrmm6GvwBx3Ubd3mW30jUrr6yqd1d+PIwUoQCDscs
+   szlw+EIeVIN9I1FabCKBUzlt7qLnfoKqfL3QmxnBsRYiRwkbH68qs4BIL
+   cweH4b76wwphHndDsgb3NIOzIr3Gy6iiZT6RASzNib6olEPHxKyzUNEbe
+   7mIfLJ44yc13Lq4JO4SpcUMa2RCk5teisaG1D0rf3e8gmw4HZ78EuIcFV
+   l1v1dnGAHPTA63f77HJ5tk1UKfXBm+62cp1lGSX8j6s68CJ9qtzChnPWz
+   /a8hOhJsRS2f6VZjn4LDg+MS6qlODy/6wTTfPh2EIO2SWPAcW3q8SG4lO
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11020"; a="23634248"
+X-IronPort-AV: E=Sophos;i="6.07,146,1708416000"; 
+   d="scan'208";a="23634248"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2024 09:09:52 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,11020"; a="914747988"
+X-IronPort-AV: E=Sophos;i="6.07,146,1708416000"; 
+   d="scan'208";a="914747988"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by fmsmga002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2024 09:09:47 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.97)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1rnhSi-0000000FCTj-1lkG;
+	Fri, 22 Mar 2024 18:09:44 +0200
+Date: Fri, 22 Mar 2024 18:09:44 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Cc: linux-i2c@vger.kernel.org, Andi Shyti <andi.shyti@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	linux-arm-kernel@lists.infradead.org,
+	chrome-platform@lists.linux.dev, linux-samsung-soc@vger.kernel.org,
+	imx@lists.linux.dev, linux-mips@vger.kernel.org,
+	linux-amlogic@lists.infradead.org,
+	linux-mediatek@lists.infradead.org, openbmc@lists.ozlabs.org,
+	linux-omap@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+	asahi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-tegra@vger.kernel.org, virtualization@lists.linux.dev
+Subject: Re: [PATCH 64/64] i2c: reword i2c_algorithm in drivers according to
+ newest specification
+Message-ID: <Zf2tSLJzujUHbJjp@smile.fi.intel.com>
+References: <20240322132619.6389-1-wsa+renesas@sang-engineering.com>
+ <20240322132619.6389-65-wsa+renesas@sang-engineering.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,130 +87,31 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240314-pci-epf-rework-v1-4-6134e6c1d491@linaro.org>
+In-Reply-To: <20240322132619.6389-65-wsa+renesas@sang-engineering.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-On Thu, Mar 14, 2024 at 08:53:43PM +0530, Manivannan Sadhasivam wrote:
-> Move the pci_epc_clear_bar() and pci_epf_free_space() code to respective
-> helper functions. This allows reusing the helpers in future commits.
-> 
-> This also requires moving the pci_epf_test_unbind() definition below
-> pci_epf_test_bind() to avoid forward declaration of the above helpers.
-> 
-> No functional change.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  drivers/pci/endpoint/functions/pci-epf-test.c | 63 ++++++++++++++++++---------
->  1 file changed, 42 insertions(+), 21 deletions(-)
-> 
-> diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
-> index 1dae0fce8fc4..2fac36553633 100644
-> --- a/drivers/pci/endpoint/functions/pci-epf-test.c
-> +++ b/drivers/pci/endpoint/functions/pci-epf-test.c
-> @@ -686,27 +686,6 @@ static void pci_epf_test_cmd_handler(struct work_struct *work)
->  			   msecs_to_jiffies(1));
->  }
->  
-> -static void pci_epf_test_unbind(struct pci_epf *epf)
-> -{
-> -	struct pci_epf_test *epf_test = epf_get_drvdata(epf);
-> -	struct pci_epc *epc = epf->epc;
-> -	struct pci_epf_bar *epf_bar;
-> -	int bar;
-> -
-> -	cancel_delayed_work(&epf_test->cmd_handler);
-> -	pci_epf_test_clean_dma_chan(epf_test);
-> -	for (bar = 0; bar < PCI_STD_NUM_BARS; bar++) {
-> -		epf_bar = &epf->bar[bar];
-> -
-> -		if (epf_test->reg[bar]) {
-> -			pci_epc_clear_bar(epc, epf->func_no, epf->vfunc_no,
-> -					  epf_bar);
-> -			pci_epf_free_space(epf, epf_test->reg[bar], bar,
-> -					   PRIMARY_INTERFACE);
-> -		}
-> -	}
-> -}
-> -
->  static int pci_epf_test_set_bar(struct pci_epf *epf)
->  {
->  	int bar, add;
-> @@ -746,6 +725,22 @@ static int pci_epf_test_set_bar(struct pci_epf *epf)
->  	return 0;
->  }
->  
-> +static void pci_epf_test_clear_bar(struct pci_epf *epf)
-> +{
-> +	struct pci_epf_test *epf_test = epf_get_drvdata(epf);
-> +	struct pci_epc *epc = epf->epc;
-> +	struct pci_epf_bar *epf_bar;
-> +	int bar;
-> +
-> +	for (bar = 0; bar < PCI_STD_NUM_BARS; bar++) {
-> +		epf_bar = &epf->bar[bar];
-> +
-> +		if (epf_test->reg[bar])
-> +			pci_epc_clear_bar(epc, epf->func_no, epf->vfunc_no,
-> +					  epf_bar);
-> +	}
-> +}
-> +
->  static int pci_epf_test_epc_init(struct pci_epf *epf)
->  {
->  	struct pci_epf_test *epf_test = epf_get_drvdata(epf);
-> @@ -885,6 +880,22 @@ static int pci_epf_test_alloc_space(struct pci_epf *epf)
->  	return 0;
->  }
->  
-> +static void pci_epf_test_free_space(struct pci_epf *epf)
-> +{
-> +	struct pci_epf_test *epf_test = epf_get_drvdata(epf);
-> +	struct pci_epf_bar *epf_bar;
-> +	int bar;
-> +
-> +	for (bar = 0; bar < PCI_STD_NUM_BARS; bar++) {
-> +		epf_bar = &epf->bar[bar];
-> +
-> +		if (epf_test->reg[bar]) {
-> +			pci_epf_free_space(epf, epf_test->reg[bar], bar,
-> +					   PRIMARY_INTERFACE);
-> +		}
+On Fri, Mar 22, 2024 at 02:25:57PM +0100, Wolfram Sang wrote:
+> Match the wording in i2c_algorithm in I2C drivers wrt. the newest I2C
+> v7, SMBus 3.2, I3C specifications and replace "master/slave" with more
+> appropriate terms. For some drivers, this means no more conversions are
+> needed. For the others more work needs to be done but this will be
+> performed incrementally along with API changes/improvements. All these
+> changes here are simple search/replace results.
 
-Nit: No need for braces here. (Just like you don't have braces in
-pci_epf_test_clear_bar()).
+...
 
-Like you said in the other thread, this commit clashes with changes done
-in my series.
+>  static const struct i2c_algorithm at91_twi_algorithm = {
+> -	.master_xfer	= at91_twi_xfer,
+> +	.xfer	= at91_twi_xfer,
 
-However, except for the small nit, the commit looks good:
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Seems you made this by a script, can you check the indentations afterwards?
+
+>  	.functionality	= at91_twi_func,
+>  };
+
+-- 
+With Best Regards,
+Andy Shevchenko
 
 
-> +	}
-> +}
-> +
->  static void pci_epf_configure_bar(struct pci_epf *epf,
->  				  const struct pci_epc_features *epc_features)
->  {
-> @@ -940,6 +951,16 @@ static int pci_epf_test_bind(struct pci_epf *epf)
->  	return 0;
->  }
->  
-> +static void pci_epf_test_unbind(struct pci_epf *epf)
-> +{
-> +	struct pci_epf_test *epf_test = epf_get_drvdata(epf);
-> +
-> +	cancel_delayed_work(&epf_test->cmd_handler);
-> +	pci_epf_test_clean_dma_chan(epf_test);
-> +	pci_epf_test_clear_bar(epf);
-> +	pci_epf_test_free_space(epf);
-> +}
-> +
->  static const struct pci_epf_device_id pci_epf_test_ids[] = {
->  	{
->  		.name = "pci_epf_test",
-> 
-> -- 
-> 2.25.1
-> 
 
