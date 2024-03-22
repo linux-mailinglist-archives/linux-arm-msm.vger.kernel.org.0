@@ -1,63 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-14806-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14807-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2136886A27
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 11:23:05 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 438FB886A2C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 11:24:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D1F2C1C212DB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 10:23:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D7FBDB25874
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 10:24:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADADE383AF;
-	Fri, 22 Mar 2024 10:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62CB0374CF;
+	Fri, 22 Mar 2024 10:24:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="B/GDueIx"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lg/BHtze"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BADDC3D3B3;
-	Fri, 22 Mar 2024 10:22:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7285F35894
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 10:24:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711102958; cv=none; b=acV3D/u0lUsS35ywhcOBBLLh65nNe8G9WHiVICH7zK3dsV0CBhSr7mB5/dB1wG8RpV4lz6chmSoCzqvCe4Qw5xfLJWuV2U36ykwUnOBjdnuX1dmUn9Ro2AjHriUWUNUHUXQ9mcckHF0jcZPxHeFO16KD0pfgdi4bRPI84aTsCV0=
+	t=1711103075; cv=none; b=KL8IQe9uId2Uw6fXKtcdEVzDGKmDAT46+Y4aevRPDXN1ys+W2xosJoZVujGtg6hYaWXrDaNRgjRh/llU++MRn1VNS7bhJJNU2grfgTIcMhsJwn834g1cThQUVYZzqdI8AgZu4PThUDljLybnbVPpBZ+4koNpxtV2UYwVS5YP7/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711102958; c=relaxed/simple;
-	bh=jQ1A3iunoJqVPVAohgMpGzli1IusWCUHRlBP+T0f0OY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=oQRgVXBJB8+sfD+MqdpQ5uX4y8n6DdR6eb62hOjkZXfeuteRh8qPmrsrz+fonHuruVCYlwsV/KzRAPPxuh6E1nInX2FbIbxXi+CgZ4iXPIQOpIMEEJEyPfvh9HK9zYAGrqUIElqRZUMyRx3cBysJ6CUaG3N3wapoiUHBYdGDiYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=B/GDueIx; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42MAFdnN029095;
-	Fri, 22 Mar 2024 10:22:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=DGPQHj7+v6fyAAfdAuyrN1/4eFBJEz3zzoRR86rxgrI=; b=B/
-	GDueIxJpEvZRyx4GLaU5O2cZxcykoixX8Qtuih+Ekdjm2aS5je5P7LrtFHdvcNi5
-	98YzC7iBC36IXbtzeuBCIG7iw4F+GLCHSZrxDQkp6mdSEx/8ub3sElhIK+HBX3WS
-	0MsOSLzoe1WM3O/1+RhfMj2lFQgXVpBiaDZVprG4mN0ueo5laEME6WhV4SUf5Tjl
-	AOrNmvQyLKh9bL+doM2qoxS5sA9saT7b3AtjRLOoRXmOjnGnFPOCb2YJgd/OZB9+
-	5mKe2z1eZDRswrypwRqhXSyFRmjQPVdT8nWUYVcXor6P12vftuB8HU1de7M+4zsf
-	V5IuezQ7HegyvO3v2nTQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x0wy91h9s-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Mar 2024 10:22:19 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42MAMIpa015998
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Mar 2024 10:22:18 GMT
-Received: from [10.233.17.145] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 22 Mar
- 2024 03:22:12 -0700
-Message-ID: <55829f0f-6f5a-4898-b3d6-33850e790d62@quicinc.com>
-Date: Fri, 22 Mar 2024 18:22:10 +0800
+	s=arc-20240116; t=1711103075; c=relaxed/simple;
+	bh=LdraHFKkYxsoFAQsnK5xaReIIh1bnT+H6G/1KbOLhyY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uhJ3+4oZUq3YJD0iTuf895fpDqEDNFLsE3Cdu1SV75FwfBjq8hBtAXTkZH5E1t5OLEKUjvFYkPStqyR2AE2TMdPGsJH434FfeFCZBKmZjT98YyIHD++efKEfYwvC+i8VfhDD5kNPrYxaljDo8RdZXBky71mmUuJJ7AC9SKGq320=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lg/BHtze; arc=none smtp.client-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2d46c2e8dd7so24152601fa.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 03:24:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1711103071; x=1711707871; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XbU84KSOwnLxXUjDH60L4m12voWSvWaFGV7NZhED0mY=;
+        b=lg/BHtzeA/KHPPcljScts4CsixnZl76gpq9JZj5ZkU7bzJMm48s/26GhY+Pvxjsv9P
+         1tnYDHbd61gxMDnNQI6t32TRhzk8CquEZLI2gN1UKMAfqISTcVavL/8Xx7ro88AuXa5e
+         TmlThLO2fHWouenruEgoqBR1DIAAYlFwpM55wIWw8DD7YI2xXD1E0Uy9dSslNU82WeFR
+         yjEU00t7wecaQ0057KzvvJcawdRbHH6oDtADJxnhBoNrGk6ib7jwuaoZPExJF3+Z+Un8
+         DfvESBDX6UjwDtK/0wnb5SNjFl91CyxxH4WxcYBhhaP3d90hSYHsSPTLqVVMfv1KCxtk
+         j8Sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711103071; x=1711707871;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XbU84KSOwnLxXUjDH60L4m12voWSvWaFGV7NZhED0mY=;
+        b=qLZFBTFjXD5uxxoOc0s4IwBEGpwyFKOlF7MZZwq+bG+d491yGFnkRf1uW5I2rUHdAN
+         1CquuM/RP4hVA5UmK5YRbS0eklFIAMP1N0zqvGEseds3axXYNweOrXRB4NOtUl3tAUOA
+         nG3xD4O7uFeTfTa9LHShwwObqNNKmt3cGJeXHEuqFtHXfcDzM+f7BbI1Kc6QBLHaUbRJ
+         NLN68kGTf7RpyWfjgOBRMgD1xhqnN/rCI38RRzEZZ3oNAr7uAObzww8TsJw8cls/+Ws9
+         sYD66sPyFitev4GlfDVaV1g4rAPD8AXw3SV3Z9Cvi2QHU+HoNGepJCl1HBQZyJEzm+2C
+         TyRA==
+X-Forwarded-Encrypted: i=1; AJvYcCX1kdcR8l1Lyv/RU4eDH6g27irfAhfedS685dzbPVBvP9DocUIJ1vYTMa5f8pPGDdC+uqhKt+GmzpkO19xHPV8RpjG6i/7I/3TZ/UXyNA==
+X-Gm-Message-State: AOJu0Yzdz1rsJKwYEI33BNJEVMvb+dvxICn5Uon3xazEV1TAjwdngmwK
+	2fn+no9x3Sx+8YY2TquC9fMWRi/m/GSv8Vov2JAMghz6ADmirVM+WU8HqjqGBvs=
+X-Google-Smtp-Source: AGHT+IEIVG8bh+X4Ju2UJR3vnr0XfmzR3ZjVuy71x8WHH0+8JMVoyLDvz2/SChZ+zaLCYvb5BdxISA==
+X-Received: by 2002:ac2:44cf:0:b0:513:eba9:46c8 with SMTP id d15-20020ac244cf000000b00513eba946c8mr1213314lfm.35.1711103071691;
+        Fri, 22 Mar 2024 03:24:31 -0700 (PDT)
+Received: from [192.168.0.102] ([176.61.106.68])
+        by smtp.gmail.com with ESMTPSA id n21-20020a05600c4f9500b0041468961233sm8440421wmq.35.2024.03.22.03.24.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 Mar 2024 03:24:31 -0700 (PDT)
+Message-ID: <f5dafde0-03d6-4693-b263-adf19984fa64@linaro.org>
+Date: Fri, 22 Mar 2024 10:24:30 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,201 +76,49 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] dt-bindings: arm: qcom,coresight-funnel: Add label
- for multi-ouput
-To: Suzuki K Poulose <suzuki.poulose@arm.com>, Rob Herring <robh@kernel.org>,
-        Tao Zhang <quic_taozha@quicinc.com>
-CC: Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin
-	<alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Song Chai <quic_songchai@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <andersson@kernel.org>
-References: <1711009927-17873-1-git-send-email-quic_taozha@quicinc.com>
- <1711009927-17873-2-git-send-email-quic_taozha@quicinc.com>
- <20240321144226.GA1689544-robh@kernel.org>
- <443edf61-2a28-4ae7-ac88-2da2d29cebe3@quicinc.com>
- <77fd8549-5e69-42a8-9e35-5d3de56a490f@arm.com>
-From: Tingwei Zhang <quic_tingweiz@quicinc.com>
-In-Reply-To: <77fd8549-5e69-42a8-9e35-5d3de56a490f@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: IgLOd7gJWFknAndjGbnbJqNatcG6T4rm
-X-Proofpoint-ORIG-GUID: IgLOd7gJWFknAndjGbnbJqNatcG6T4rm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-22_06,2024-03-21_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- spamscore=0 impostorscore=0 adultscore=0 mlxlogscore=999 suspectscore=0
- bulkscore=0 phishscore=0 clxscore=1015 priorityscore=1501 mlxscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2403220073
+Subject: Re: [PATCH 1/5] dt-bindings: regulator: qcom,usb-vbus-regulator: Add
+ PM7250B compatible
+Content-Language: en-US
+To: Luca Weiss <luca.weiss@fairphone.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Liam Girdwood
+ <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-usb@vger.kernel.org
+References: <20240322-fp4-tcpm-v1-0-c5644099d57b@fairphone.com>
+ <20240322-fp4-tcpm-v1-1-c5644099d57b@fairphone.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20240322-fp4-tcpm-v1-1-c5644099d57b@fairphone.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 3/22/2024 5:42 PM, Suzuki K Poulose wrote:
-> On 22/03/2024 07:02, Tingwei Zhang wrote:
->> On 3/21/2024 10:42 PM, Rob Herring wrote:
->>> On Thu, Mar 21, 2024 at 04:32:04PM +0800, Tao Zhang wrote:
->>>> Add new property "label" to label the source corresponding to the
->>>> output connection. When the funnel supports multi-output, this
->>>> property needs to be introduced to mark which source component a
->>>> certain output connection corresponds to.
->>>>
->>>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->>>> ---
->>>>   .../arm/arm,coresight-dynamic-funnel.yaml     | 34 
->>>> ++++++++++++++++---
->>>>   1 file changed, 30 insertions(+), 4 deletions(-)
->>>>
->>>> diff --git 
->>>> a/Documentation/devicetree/bindings/arm/arm,coresight-dynamic-funnel.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-dynamic-funnel.yaml
->>>> index 44a1041cb0fc..cde62c286d29 100644
->>>> --- 
->>>> a/Documentation/devicetree/bindings/arm/arm,coresight-dynamic-funnel.yaml
->>>> +++ 
->>>> b/Documentation/devicetree/bindings/arm/arm,coresight-dynamic-funnel.yaml
->>>> @@ -66,13 +66,39 @@ properties:
->>>>           $ref: /schemas/graph.yaml#/properties/port
->>>>     out-ports:
->>>> -    $ref: /schemas/graph.yaml#/properties/ports
->>>> -    additionalProperties: false
->>>> -
->>>> +    type: object
->>>>       properties:
->>>> +      "#address-cells":
->>>> +        const: 1
->>>> +
->>>> +      "#size-cells":
->>>> +        const: 0
->>>> +
->>>>         port:
->>>> +        type: object
->>>> +
->>>> +    patternProperties:
->>>> +      '^port(@[0-7])?$':
->>>> +        type: object
->>>>           description: Output connection to CoreSight Trace bus
->>>> -        $ref: /schemas/graph.yaml#/properties/port
->>>
->>> Nope, now you have no constraints on port node properties. Please look
->>> at how other bindings are done to add properties on endpoint node.
->>>
->> Thanks for pointing this out, Rob. Shall we ref port-base and
->> endpoint-base then add new properties on endpoint? In this way, the 
->> redundant code from port schema is not required.
->>>> +
->>>> +        patternProperties:
->>>> +          "^endpoint(@[0-9a-f]+)?$":
->>>> +            type: object
->>>> +            properties:
->>>> +              remote-endpoint:
->>>> +                description: |
->>>> +                  phandle to an 'endpoint' subnode of a remote 
->>>> device node.
->>>> +                  $ref: /schemas/types.yaml#/definitions/phandle
->>>
->>> Don't need this.
->>>
->>>> +              label:
->>>> +                description: Label the source corresponding to the 
->>>> output connection
->>>> +                $ref: /schemas/types.yaml#/definitions/string
->>>
->>> label already has a type.
->>>
->>> As this node is an output, aren't you labeling what the destination is,
->>> not the "source"?
->>>
->>> Why can't you look at the remote connection to identify what it is?
->>>
->> This funnel can route data stream from different trace source to 
->> different output ports. This lable property is added to describe which 
->> source is routed to this output port.
->>
->> For example, the graph is as below. Funnel3 routes trace data from 
->> TPDM0 to output[0] and output[0] of funnel3 is connected to input[0] 
->> of TPDA0.
+On 22/03/2024 08:01, Luca Weiss wrote:
+> The VBUS register block on the PM6150 PMIC shares the design with the
+> PM8150B one. Define corresponding compatible string, having the
+> qcom,pm8150b-vbus-reg as a fallback.
 > 
-> Funnel3 and Funnel4 are really Replicators ! How are they Funnels ? 
-> Again, my question still stands. Are Funnel(Replicator-renamed)3/4 and 
-> Funnel 0/1/2 programmable ?
-
-Sorry for oversimplied the topology. Funnel3 and Funnel4 have multiple 
-input ports instead of just one input port. It can have multiple input 
-ports and multiple output ports. Unlike replicator, it won't replicate 
-same data trace to all the outputs.
-
-Funnel3/funnel4 has same programing capability like standard coresight 
-funnel. It can enable input ports as requested. It can not be programed 
-to route which source to which output ports. Hardware staticlly defined 
-which source is routed to which output.
-
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+>   Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> Suzuki
+> diff --git a/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
+> index 33ae1f786802..fcefc722ee2a 100644
+> --- a/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
+> +++ b/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
+> @@ -26,6 +26,7 @@ properties:
+>             - enum:
+>                 - qcom,pm4125-vbus-reg
+>                 - qcom,pm6150-vbus-reg
+> +              - qcom,pm7250b-vbus-reg
+>                 - qcom,pmi632-vbus-reg
+>             - const: qcom,pm8150b-vbus-reg
+>   
 > 
-> 
->> While Funnels routes trace data from TPDM1 to output[1] which connects 
->> to input[1] of TPDA0. Hope that clarifies this a little bit.
->>
->> |---------|    |---------|    |---------|    |---------|    |---------|
->> |  TPDM0  |    |  TPDM1  |    |  TPDM2  |    |  TPDM3  |    |  TPDM4  |
->> |---------|    |---------|    |---------|    |---------|    |---------|
->>      |               |             |               |              |
->>      |               |             |               |              |
->>      |               |             |               |              |
->>      |-----|   |-----|             |-----|   |-----|              |
->>            |   |                         |   |                    |
->>            |   |                         |   |                    |
->>         [0]|   |[1]                   [0]|   |[1]                 |
->>       \-------------/               \-------------/        \------------/
->>        \  FUNNEL0  /                 \  FUNNEL1  /          \  FUNNEL2  /
->>         -----------                   -----------            -----------
->>              |                             |                      |
->>       \-------------/               \-------------/               |
->>        \  FUNNEL3  /                 \  FUNNEL4  /                |
->>         -----------                   -----------                 |
->>            |  |                         |   |
->>         [0]|  |[1]                   [0]|   |[1]                  |
->>            |  |----------               |   |                     |
->>            |            |               |   |                     |
->>            |-------|    |      |------- |   |          |--------- |
->>                    |    |      |            |          |
->>                    |    |      |            |          |
->>                 [0]|    |[1]   |[2]         |[3]       |[4]
->>             \ ---------------------------------------------------/
->>              \                     TPDA0                        /
->>               \                                                /
->>                ------------------------------------------------
->>
->>>
->>>> +    oneOf:
->>>> +      - required:
->>>> +          - port
->>>> +      - required:
->>>> +          - "#address-cells"
->>>> +          - "#size-cells"
->>>
->>> The common schema that you removed handles this.
->>>
->>> Rob
->>
-> 
-
--- 
-Thanks,
-Tingwei
-
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
