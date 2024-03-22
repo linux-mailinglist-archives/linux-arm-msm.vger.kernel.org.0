@@ -1,158 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-14857-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14858-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5847886F62
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 16:05:19 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43DFD886F71
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 16:09:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 14FBC1C21290
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 15:05:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E803D1F22B5E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 15:09:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 710DF482F3;
-	Fri, 22 Mar 2024 15:05:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D83F4D59F;
+	Fri, 22 Mar 2024 15:09:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="E9it4zVh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u0vc9sCA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C334CE13
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 15:05:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7EF04D137
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 15:09:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711119917; cv=none; b=GbbsOxTwBU1wgelJNAk8K4TrOaUL3j8EH3vbcbNa2LdgVa3QWFSk8ef2YP+nnuKE+Jt88BPu49sFvX6+0Pqs4ZZ68x7LuTMInckdYxiAt7RV590oulc6rqZbEysry6ShRZ4NS6gnbBHxuR87J3u9XdiZ3582dUXycVk3i6dE15M=
+	t=1711120151; cv=none; b=lgz8Fqyv/b2VFfjSAtI0QoGjKG+Vftpn9CVr7Uqo0HYCzHUYYW5AamwQKMRO4GyaQQqHXxEWS6If3Nni+vcEKTORzlWdpNzi3QPaZovGKcmslWkGteXJKtG8/NlBokchXDqyMam7ertG+S/DlA+2Go8KAnRJp1mTIaAeJzd+WAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711119917; c=relaxed/simple;
-	bh=gkYusBscgoxgaz2KTP3MjsMEu9+re1gKs0yjn4oDBW4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uIKHq2qt0tfM03u6Zt8jsT3CTuBeKU6svsTMcf/ddqTTpx48R+lyORCmoIORWsgTNYUW+GOl0NOwTsDrVt3saPdWF3VEPeFQ8gU4Tw1QYRfrKO5SyhV9xVSvkJLTb4gIN8xRHgSM0/nYRq2FOJiXVwBrdIEJc0+1b9uVX2Su4Y0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=E9it4zVh; arc=none smtp.client-ip=209.85.210.172
+	s=arc-20240116; t=1711120151; c=relaxed/simple;
+	bh=ioCddxy0Wrih4HSkFxOLHM43p7Jl973JpXnI5PGwl2M=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=kT8w1S+T3G9qqsh9102FJ6gWLhL87O2CMusEvJu3lVDORgezeWJnuGKRJbKfknGRog7B/2LD1BNDr2qYjqEdbw4RhC7x6VFuk5G5qg5RKfosFI9Dhj/pS3aHGtFc095L3+OcaTEGjunK2JU+Ajd/mCDv8oM+75Qhn2RApRpQk2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u0vc9sCA; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-6e6082eab17so1667740b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 08:05:15 -0700 (PDT)
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-414701303f7so21238935e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 08:09:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711119915; x=1711724715; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=nYtRMDTbG4RNH7nK1yI7ROk5/pYQnmRT4k34XSD/fpw=;
-        b=E9it4zVh9Pkks3nwfSUogd0oEvXC8XrwSt0mueISehd+g9ShdMJRzkz0xBSr10Zg6B
-         3YQo5ZfQDiVEbC22WCdo1df/bt7/ji62Uira2xHoj8SkxYtmo5WOanEsqdUVftPi497H
-         wirNuBmfYtc0eOy0TBHulPPitlIBZCjbZQmHKO7SVmuf2FARpKNGaxenvSy/th3Uaqdq
-         kNL2myDWA1GWQwol1RInA1akjed1GNeyyj6QhEZ0FqmDYtNikQX+mNNVegvah+G//4ZD
-         rAAh6eA+OPerRqfSbphSb5dIkxGqgxNsdPkIvRtiFEKhuvw/vMWsNJrJtlRoLFHR498C
-         rVYQ==
+        d=linaro.org; s=google; t=1711120148; x=1711724948; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+yvhwYHTfV+3rWYF2DgHMW8lY8LzP+BMH9HrnaAPrfM=;
+        b=u0vc9sCAI1HN3xQAtVMng+IZkpfhxd0M+Zez/GowzxWXDfoQQs/W6F5dzLQDFHXCSN
+         7Z0cIcxcSiId6TyOZ2xqToWVuebqWOJccpP4cAT5lm+F7rm3HJctW0RcZhQsXaxYYtSw
+         B1fqGzwuIz8eX2A5m5s6NfNmssfdub21t/ysRSD+84j+9ORp95K6/mVGPxYzixvppmT/
+         zUJPZmdx8CkHXwmA8CAdsB9omACsCCJaxxCrBPBk8PgGJ0atpkXD+/bYHKvZGLDZnCVY
+         EZf/zmXtpU/TcOZSavc7kxiA+xgsW0uiv9WEsQvyca8yrLjoCahDYyFghBymprB7GBF4
+         AkBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711119915; x=1711724715;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nYtRMDTbG4RNH7nK1yI7ROk5/pYQnmRT4k34XSD/fpw=;
-        b=fFCzf5CZpb90WTnoYFsoqN7c1FRQGicndmNiyUD41DLSyZQGdiKFbbWuMa5ezS1scB
-         vUOfMjMGARBwco9qX01JCDFLlIzrgJdEWBALvSZTkBIZMUJSxKakfd0YymbKMvD+XOQG
-         5YMASAmSN0JgL5lW6P6+ZQMCSq1uwEGMCxGkOSP6XxC3xeyO1neM+KnztjvPRvY1TmaW
-         wn53amnzqkfp2vsPEnTO/o0XFE3XPQXyHRbdXyHoq4v9q9TypCQZ1lxLnyVZsDZLY4z1
-         TGeBfOVS/Jh/A916NOfHcPiTx4gyZAAG5EduUDYHz7mctUV0zW7xm41y+64C2z5NqONa
-         SNVQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUOGI1NoB5eUsaK5/DhjYHmBo3rvduDr6ONKRVl5XWP2UimC3LBlfGoqfU8GNR74p9edvieJeMplp6zt97zgD40I8E8bysBeTRfSLZAdQ==
-X-Gm-Message-State: AOJu0YxnzZ00sxHFYjr/zCcLuS7jGOLxHmSxG+tbhK98uOnR8gHhii8R
-	+W07yKGdBkpXs9lBsinnALniQLFKuX2ZEvLVTZeybI5NSK225Z2+5RjAdemenA==
-X-Google-Smtp-Source: AGHT+IGYbQybiUZqXzRNwAr1M/pqxdrMdugBVhGSQDcs2L60R2/mNWIyHVBayTYGU3wCM5UA6L13jA==
-X-Received: by 2002:a17:90a:ff95:b0:29f:9548:4932 with SMTP id hf21-20020a17090aff9500b0029f95484932mr2430080pjb.3.1711119914819;
-        Fri, 22 Mar 2024 08:05:14 -0700 (PDT)
-Received: from thinkpad ([103.28.246.103])
-        by smtp.gmail.com with ESMTPSA id x20-20020a17090abc9400b0029dd7b52d1bsm5604576pjr.56.2024.03.22.08.05.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Mar 2024 08:05:14 -0700 (PDT)
-Date: Fri, 22 Mar 2024 20:35:10 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Christian Marangi <ansuelsmth@gmail.com>
-Cc: Miquel Raynal <miquel.raynal@bootlin.com>,
-	Richard Weinberger <richard@nod.at>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-	Md Sadre Alam <quic_mdalam@quicinc.com>,
-	linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH] mtd: rawnand: qcom: Fix broken misc_cmd_type in exec_op
-Message-ID: <20240322150510.GC3774@thinkpad>
-References: <20240320001141.16560-1-ansuelsmth@gmail.com>
+        d=1e100.net; s=20230601; t=1711120148; x=1711724948;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=+yvhwYHTfV+3rWYF2DgHMW8lY8LzP+BMH9HrnaAPrfM=;
+        b=weX0vqjnuGKqxrRFKt3n5phdrqzbWiorS74lx7WD7xgka/1fOhz8H+YaC6zLoZ0RMR
+         7I7DclknncRXRvG+yEBULBzDlfwBp6YsinDlGGRo47w/AAhDL4Xpug5ibF/lc8cXT4Tf
+         B8lrjLWXTbgYSDIqPW9K1z9FCkjdFcykm+TgKM5EnqkeiGYd5tJ+uYeXo7yyMNOxG2VW
+         WeBoSKPJDsXy0mM0KO6L9JMGm3Y0PJNDH73C/6spKF8Zj4jvZcovn1kn2jIsryW9xQrg
+         Wp4M6+cGvH1QamDSck+bAkx3yNfQxv65XF+AS+h7uJMkOFvRLwLrBXDouSfITLATguiJ
+         X9HQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWL6qFAkH7hsBhzsYuTCrPtxZxFH/51eKP2ys+q2FxFxsM972+oEveUp1pgmhMBbPnwWm/Gfe6H4hMw7f/AfTeNAxEH7o3Co6VsSit5DQ==
+X-Gm-Message-State: AOJu0Yy9b587KhDdxXThE1YT7/vvF4gt/Uehk/YCiqIkyrKmKNAT3j82
+	QDj7SJpDTOVusaEAtZMitMSJTbdetEwlJ90RR8D1m/qaHUZHbobZb0hcEbal3g8=
+X-Google-Smtp-Source: AGHT+IH+c2Vf59CqJ5Cq+G3Tl6E5gw0t2OS8y62T87hvyxoA76WeFaOA1V0WIJpkrZVfPD9fa8oFJw==
+X-Received: by 2002:a05:600c:3546:b0:413:2a10:8a29 with SMTP id i6-20020a05600c354600b004132a108a29mr2656828wmq.13.1711120147837;
+        Fri, 22 Mar 2024 08:09:07 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:b232:2557:aa5b:1e23? ([2a01:e0a:982:cbb0:b232:2557:aa5b:1e23])
+        by smtp.gmail.com with ESMTPSA id p17-20020a05600c469100b004132ae838absm3289819wmo.43.2024.03.22.08.09.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 Mar 2024 08:09:07 -0700 (PDT)
+Message-ID: <c0f1e898-7638-4b7b-a938-9e31e5b57e57@linaro.org>
+Date: Fri, 22 Mar 2024 16:09:06 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 1/2] dt-bindings: usb: qcom,pmic-typec: drop port
+ description
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240322-typec-fix-example-v1-0-6b01c347419e@linaro.org>
+ <20240322-typec-fix-example-v1-1-6b01c347419e@linaro.org>
+ <230eab52-9751-43fd-8e47-fbfe12410e44@linaro.org>
+ <CAA8EJprD3fM966pLV4QXPUu=bFTn24fvPMKOaGqtqkAbdz7sOQ@mail.gmail.com>
+ <5ea4a187-1971-4970-a289-826d96c0351a@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <5ea4a187-1971-4970-a289-826d96c0351a@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240320001141.16560-1-ansuelsmth@gmail.com>
 
-On Wed, Mar 20, 2024 at 01:11:39AM +0100, Christian Marangi wrote:
-> misc_cmd_type in exec_op have multiple problems. With commit a82990c8a409
-> ("mtd: rawnand: qcom: Add read/read_start ops in exec_op path") it was
-> reworked and generalized but actually dropped the handling of the
-> RESET_DEVICE command.
+On 22/03/2024 15:52, Bryan O'Donoghue wrote:
+> On 22/03/2024 13:28, Dmitry Baryshkov wrote:
+>> Then the actual usage doesn't match the schema. usb-c-connector
+>> clearly defines HS, SS and SBU ports
 > 
-> The rework itself was correct with supporting case where a single misc
-> command is handled, but became problematic by the addition of exiting
-> early if we didn't had an ERASE or an OP_PROGRAM_PAGE operation.
+> Its a bit restrictive IMO, data-role and power-role switching is not limited to HS and in fact can be done with a GPIO for example.
 > 
-> Also additional logic was added without clear explaination causing the
-> erase command to be broken on testing it on a ipq806x nandc.
+> /Looks in Documentation/devicetree/bindings/connector/usb-connector.yaml
 > 
-
-Interesting. I believe Alam tested the rework on IPQ platforms and not sure how
-it got missed.
-
-> Add some additional logic to restore RESET_DEVICE command handling and
-> fix erase command.
+> Yeah I mean this just doesn't cover all use-cases ..
 > 
+> ports:
+>      $ref: /schemas/graph.yaml#/properties/ports
+>      description: OF graph bindings modeling any data bus to the connector
+>        unless the bus is between parent node and the connector. Since a single
+>        connector can have multiple data buses every bus has an assigned OF graph
+>        port number as described below.
+> 
+>      properties:
+>        port@0:
+>          $ref: /schemas/graph.yaml#/properties/port
+>          description: High Speed (HS), present in all connectors.
+> 
+>        port@1:
+>          $ref: /schemas/graph.yaml#/properties/port
+>          description: Super Speed (SS), present in SS capable connectors.
+> 
+>        port@2:
+>          $ref: /schemas/graph.yaml#/properties/port
+>          description: Sideband Use (SBU), present in USB-C. This describes the
+>            alternate mode connection of which SBU is a part.
+> 
+> TBH I think we should drop this HS, SS stuff from the connector definition - there's nothing to say in a h/w definition anywhere HS must be a port or indeed SS - not all hardware knows or cares about different HS/SS signalling.
 
-This sounds like two independent fixes, no? Please split them into separate
-patches.
+It matches the USB-C connector electrical characteristics, which by spec has, at least:
+- High-Speed USB Line
+- up to 4 differential high-speed lanes that can be switched to DP, USB2 or PCIe
+- SideBand line (SBU)
 
-- Mani
+And those 3 components can be handled by 3 different HW in the SoC, so each one has a dedicated port.
 
-> Fixes: a82990c8a409 ("mtd: rawnand: qcom: Add read/read_start ops in exec_op path")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Remember DT describes the HW, not the SW implementation.
+
+Neil
+
+> 
+> Documentation bit-rot
+> 
 > ---
->  drivers/mtd/nand/raw/qcom_nandc.c | 7 +++----
->  1 file changed, 3 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-> index b079605c84d3..b8cff9240b28 100644
-> --- a/drivers/mtd/nand/raw/qcom_nandc.c
-> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-> @@ -2815,7 +2815,7 @@ static int qcom_misc_cmd_type_exec(struct nand_chip *chip, const struct nand_sub
->  			      host->cfg0_raw & ~(7 << CW_PER_PAGE));
->  		nandc_set_reg(chip, NAND_DEV0_CFG1, host->cfg1_raw);
->  		instrs = 3;
-> -	} else {
-> +	} else if (q_op.cmd_reg != OP_RESET_DEVICE) {
->  		return 0;
->  	}
->  
-> @@ -2830,9 +2830,8 @@ static int qcom_misc_cmd_type_exec(struct nand_chip *chip, const struct nand_sub
->  	nandc_set_reg(chip, NAND_EXEC_CMD, 1);
->  
->  	write_reg_dma(nandc, NAND_FLASH_CMD, instrs, NAND_BAM_NEXT_SGL);
-> -	(q_op.cmd_reg == OP_BLOCK_ERASE) ? write_reg_dma(nandc, NAND_DEV0_CFG0,
-> -	2, NAND_BAM_NEXT_SGL) : read_reg_dma(nandc,
-> -	NAND_FLASH_STATUS, 1, NAND_BAM_NEXT_SGL);
-> +	if (q_op.cmd_reg == OP_BLOCK_ERASE)
-> +		write_reg_dma(nandc, NAND_DEV0_CFG0, 2, NAND_BAM_NEXT_SGL);
->  
->  	write_reg_dma(nandc, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
->  	read_reg_dma(nandc, NAND_FLASH_STATUS, 1, NAND_BAM_NEXT_SGL);
-> -- 
-> 2.43.0
+> bod
 > 
 
--- 
-மணிவண்ணன் சதாசிவம்
 
