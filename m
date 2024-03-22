@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-14900-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 45B8888743A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 21:44:16 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B6B988744D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 21:59:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C9777B22618
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 20:44:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ADA2E282875
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 20:59:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9C677F7FC;
-	Fri, 22 Mar 2024 20:44:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48A4C7F7FD;
+	Fri, 22 Mar 2024 20:59:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dGtQv85Y"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hWP1T4ld"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11AB67F7C1
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 20:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844A31E53A;
+	Fri, 22 Mar 2024 20:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711140248; cv=none; b=ccb+TXtpgJ4u4S5U3YfKHpw2EDRKLJaEe558mNFQaft5nH2i7L0p9xnp0KWoyuFRT+MefU1TWQWmu4/P7LHzDsIl+ZBCiIIc/uuZJFocuSvVHBmoMgbgo+Ef5KC9Aorcn6eXTm0A5yXQpj5j2pYNCzJboapc3rnfwAlHj91Wlk4=
+	t=1711141182; cv=none; b=ZxQj6OalhtGjKm+ouGeRPzXLdpgFtlSogsxSo4r4ehaC6eOtoc00O6vD1fu5Wyf5nEcQRGk26uTeOXTHcFbHoPsK6fEqIfQrVqbnCyjKVdjvZAs6TXVRHDFSHF5bWOQByZIXpn3/HvrYjfgnwgRQHF8egroRNugOGjXhpc68Cm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711140248; c=relaxed/simple;
-	bh=cdtFl6iLAHk1Vr+6jkOspmAMmf94CBqvn+kJl1AgPRI=;
+	s=arc-20240116; t=1711141182; c=relaxed/simple;
+	bh=dcPqVPVlekj/1D0yZKd0ytj+AvHgkBPi76h7Ig9Sgo8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sxOS3BaHokTE3LlpESz/h0F1pw7PqvZl1xVR6adOd9rsMQF+ziL/XPqjmb4eprvZWprDgxetmP46yLXYprviFvzb4n8Gz5ujxFa3+ILKxqcFTR5qxku/1R7j/aP32vSXLg0/sujobkgkP3sqYtzVAMfaoaJsLb5bB7u7slRY0oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dGtQv85Y; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-33ecb04e018so1552493f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 13:44:06 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=d7l1+msUNGZPtMS3nEVUvVGcJfSP6uLFOgLIBpr1x929ht5zohefSL19gtbkvUCeiMIT4Qy88EKe6GDJVQ5nzcI3Clkg7XHD/dkZ6s6cxKZ3Xwipmgx3lP0/KRFs6ApOZbkf4TwdCr2E0pmO0lQjvPmF93nByJOKzjw7mkXppfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hWP1T4ld; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-33edbc5932bso1437699f8f.3;
+        Fri, 22 Mar 2024 13:59:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711140245; x=1711745045; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=gmail.com; s=20230601; t=1711141179; x=1711745979; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=tjlcpy9oH2RphOesJNzXB8pL3ummy1CxCHShx47lx50=;
-        b=dGtQv85Y4vstzxhT1ylF0vEmVzPyKPoJf6QKysD/EfAsYSFhX1Qxj7/rJs/CSR2P07
-         dQo1t4td7i3CO7o7iBluqZG6pcHK/avGu9iEJeKF39XtEOlXJZgoQh/M6MEKp1baPOUp
-         +7za5E0NO9JZCyv8GB03hSM3RfgqJGAe0qs/x87FHXLeAKDPD6NUENxULLSv48zHtiRO
-         oCpgnkeJY9FYjujldUkf7HadFcxTkyrjilReV6WzbF9EVrmGmsQylc7Hv9Y54toAI35q
-         fpLruE+EGVdOtip4yTGddOhZtdpZdKmmdCBGJ6QvdRTfMTUcH7KIcvLXiQo+LmHLLi5y
-         kBRA==
+        bh=mx5abWniPmMEHe5nRvt33pyFnIPxwPNkAz4naD0v62I=;
+        b=hWP1T4ldWGB581fqpNr6fWby4wiR7rM02iCYgyG1cAft7iGlcUBvUoyhTUkowDSLfy
+         LNAiOD6pk3hDoY+l/2oG6DH4zPG37huDjsAOzHzHMyhbNV2p6jg1vPvYpHfLYcRBmhAg
+         VYjz0QBokVGST1WYtRf+vJpMXXWGBwV06StQ3R0AG3LqrPfXHX9uOlch844kkriITNr7
+         YCtryzZyJam4Din1O1gs7Sqjg53h6YUkgUZjZKu4l46cz1rq+xryvcsLcJBsu5E4bUuR
+         TftYjOCP967jvsXWYdCox/NLSlgNFpdqJXQGWkHza45qszqPXtwMILot+TmVIonTmqCq
+         D5dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711140245; x=1711745045;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1711141179; x=1711745979;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tjlcpy9oH2RphOesJNzXB8pL3ummy1CxCHShx47lx50=;
-        b=NqCHz1CYHK73wcJqnJDK9RZZ/v8MK/m1gzhqO2J2NeA/AUC5Y3hDuwsUKQyN6G4Rxs
-         B2CO8MqNcNAgynNCZevrmmHQsLxKCisV7foSTU245TkGNv4J3UrXerTXcBp6TWrwY95T
-         rowbsPcuprQBv0B0ACFTr5ZdLP9CwgXlJNGhOlVWLOwqVPD2QTL9UdlIuKz5FxALmrMw
-         SohqAYTwzDajt62Iav0aSOY3Sh39B+cD1Ye081RJCSMF5WU+uVHsP2+cV2PXIyU7pqdm
-         oKpgLkq5UFk3kv5NYt6wlBBJdlHNILWAghVLxmINiw8sQ5bmMcHXLUDheKMfIj1pw0Uh
-         C/lg==
-X-Forwarded-Encrypted: i=1; AJvYcCUJPa8IHzYBqj7G54T5RAAKLhgjnEo+LGtG67D9JyzVYudUc5ttEj4qICdJ6v5USxIoHIm1n6GbxDUqSIwbWEDEFdFOy3JsI8Bivk2+pA==
-X-Gm-Message-State: AOJu0YyOSxU1g5CwfsOFwyl1dR+ofYA6A8m3S8zXWMwyqtiMc5xeqEK4
-	T7wyqkZ8brFG0kzGT79HNa6wynx9oy1RHM1pPZQ68aWWmrTR3UyTcX1kVv8D1vA=
-X-Google-Smtp-Source: AGHT+IFSBv8mmfWNJQGZ+o4H7aPA+E9nwD0XtouiZeMdGlUjzuXBbSISqCQZgJ3dZHa+ntlt1/m/Vg==
-X-Received: by 2002:a5d:4002:0:b0:33e:1c40:4f18 with SMTP id n2-20020a5d4002000000b0033e1c404f18mr358630wrp.4.1711140245049;
-        Fri, 22 Mar 2024 13:44:05 -0700 (PDT)
-Received: from [192.168.0.253] ([176.61.106.68])
-        by smtp.gmail.com with ESMTPSA id cr8-20020a05600004e800b0033e7715bafasm2837046wrb.59.2024.03.22.13.44.03
+        bh=mx5abWniPmMEHe5nRvt33pyFnIPxwPNkAz4naD0v62I=;
+        b=paXAb0Dx1pf7/vn/8MfnC5SjJakxHPzfEtS+FY0RW5ArgVtg4jhepV8mzHyeK7PWYC
+         PWxspHu5nr4u2mv/lzXp9u7npYmVMEmSk9keextEJ/OLWN2k1WORFS+PmUYAvhRsSS/9
+         +KXYhumSrNkr9Csid6ueFgTubiWPvFcQRD5EYKz7st+eDyZcoQ4F9fDe4OGWJzaPEzEB
+         8Zw/uJuFOgonrj7m7SX0Vz/M+YhurUu/meQ9n4V1On/G+m06CkAVzwtImPCraPoCUdCP
+         U4wfsXqv5UPaI5qY8Z2Wg4tYJ9CwOn/Bz8XeIcJQPoBUA4brXuCKUn8hyMm6r+RiU+cm
+         pmdQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUkHfmwqyzw5IXfGS6YFCebXujLMhF1KkNkdP5vLWCSrx1nSZOHkya1kyt5zLh8S0Y22XI60Mocs07vAGK7ElYz7CDTQ/9XjNw31/7PF/SbuwhQXKSK4KYi7nmgAOZMTW7jCn/AXlSeg1IteXrySfCjKAszR0jjuKfaa5zMlkwSGdbEppry9Q==
+X-Gm-Message-State: AOJu0YwAovMPBQvJJ2Keo96XKWJLddmem+BdoJvDPYQk/Yuw8kUi9mIv
+	F+VNQi1q6M170YhxACUUHxPZ4Fdyfp82UIoxAMFRxVsU0IeVti/g+ttoqvf+
+X-Google-Smtp-Source: AGHT+IH8qwLFqVcj6lce2Vc30GmobK5Gewe79ELjMRvL+fjE2owhWRpmg0NacD/D8F61nJ0TBHFPhA==
+X-Received: by 2002:adf:c004:0:b0:33e:867:b288 with SMTP id z4-20020adfc004000000b0033e0867b288mr281077wre.63.1711141178677;
+        Fri, 22 Mar 2024 13:59:38 -0700 (PDT)
+Received: from [192.168.20.170] (57657817.catv.pool.telekom.hu. [87.101.120.23])
+        by smtp.gmail.com with ESMTPSA id m9-20020a5d4a09000000b00341bdecdae3sm658086wrq.117.2024.03.22.13.59.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Mar 2024 13:44:04 -0700 (PDT)
-Message-ID: <7cd6768d-780c-4cdb-8091-c7a161eab23e@linaro.org>
-Date: Fri, 22 Mar 2024 20:44:03 +0000
+        Fri, 22 Mar 2024 13:59:38 -0700 (PDT)
+Message-ID: <ca4d85f1-397e-4c43-8548-436b9238e85e@gmail.com>
+Date: Fri, 22 Mar 2024 21:59:40 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,46 +76,81 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: usb: qcom,pmic-typec: drop port
- description
-Content-Language: en-US
+Subject: Re: [PATCH v2 3/6] clk: qcom: apss-ipq-pll: remove 'pll_type' field
+ from struct 'apss_pll_data'
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: neil.armstrong@linaro.org, Bjorn Andersson <andersson@kernel.org>,
+Cc: Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konrad.dybcio@linaro.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240322-typec-fix-example-v1-0-6b01c347419e@linaro.org>
- <20240322-typec-fix-example-v1-1-6b01c347419e@linaro.org>
- <230eab52-9751-43fd-8e47-fbfe12410e44@linaro.org>
- <CAA8EJprD3fM966pLV4QXPUu=bFTn24fvPMKOaGqtqkAbdz7sOQ@mail.gmail.com>
- <5ea4a187-1971-4970-a289-826d96c0351a@linaro.org>
- <c0f1e898-7638-4b7b-a938-9e31e5b57e57@linaro.org>
- <0b091595-1587-421d-bb00-c00ef729d143@linaro.org>
- <CAA8EJpqvwhafFoD_=GO4E93JBQA2A+xY0rG14pgPm=xgJ9Yz_Q@mail.gmail.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <CAA8EJpqvwhafFoD_=GO4E93JBQA2A+xY0rG14pgPm=xgJ9Yz_Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240321-apss-ipq-pll-cleanup-v2-0-201f3cf79fd4@gmail.com>
+ <20240321-apss-ipq-pll-cleanup-v2-3-201f3cf79fd4@gmail.com>
+ <CAA8EJprr4E1CM4f+eBzdRN41nm33xY-hRPQDn3peR94vLyJsYQ@mail.gmail.com>
+Content-Language: hu
+From: Gabor Juhos <j4g8y7@gmail.com>
+In-Reply-To: <CAA8EJprr4E1CM4f+eBzdRN41nm33xY-hRPQDn3peR94vLyJsYQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 22/03/2024 15:49, Dmitry Baryshkov wrote:
-> It's true that we don't describe CC lines. However In most of the
-> cases CC lines are handled by the Type-C port manager directly. So
-> there will be a connection from usb-c-connector to the pmic-typec
-> itself (which looks pretty redundant).
+2024. 03. 21. 11:37 keltezéssel, Dmitry Baryshkov írta:
+> On Thu, 21 Mar 2024 at 09:50, Gabor Juhos <j4g8y7@gmail.com> wrote:
+>>
+>> The value of the 'pll_type' field of 'struct apps_pll_data'
+>> is used only by the probe function to decide which config
+>> function should be called for the actual PLL. However this
+>> can be derived also from the 'pll' field  which makes the
+>> 'pll_type' field redundant.
+>>
+>> Additionally, the CLK_ALPHA_PLL_TYPE_* enumeration values
+>> are meant to be used as indices to the 'clk_alpha_pll_regs'
+>> array so using those to define the pll type in this driver
+>> is misleading anyway.
+>>
+>> Change the probe function to use the 'pll' field to determine
+>> the configuration function to be used, and remove the
+>> 'pll_type' field to simplify the code.
+> 
+> I can't fully appreciate this idea. There can be cases when different
+> PLL types share the set of ops. I think having a type is more
+> versatile and makes the code more obvious.
 
-I think it more logical to associate the role-switch event with the CC 
-lines which actually handle the messaging than the HS PHY which does not 
-to be honest.
+I understand your concerns, but let me explain the reasons about why I have
+choosed this implementation in more detail.
 
-If we predicate a name change on fixing the namespace then we should fix 
-the namespace instead of reuse existing for expediency.
+The driver declares three distinct clocks for the three different PLL types it
+supports. Each one of these clocks are using different register maps and clock
+operations which in a whole uniquely identifies the type of the PLL. In contrary
+to this, the CLK_ALPHA_PLL_TYPE_* values assigned to 'pll_type' are only
+indicating that which register map should be used for the given PLL. However
+this is also specified indirectly through the 'regs' member of the clocks so
+this is a redundant information.
 
-$0.02
+Additionally, using the CLK_ALPHA_PLL_TYPE_*  for anything other than for
+specifying the register map is misleading.  For example, here are some snippets
+from the driver before the patch:
 
----
-bod
+static struct clk_alpha_pll ipq_pll_stromer_plus = {
+	...
+	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_STROMER],
+	...
+
+static struct apss_pll_data ipq5332_pll_data = {
+	.pll_type = CLK_ALPHA_PLL_TYPE_STROMER_PLUS,
+	.pll = &ipq_pll_stromer_plus,
+	...
+
+Since it is not obvious at a first glance, one could ask that why the two
+CLK_ALPHA_PLL_TYPE_* values are different?
+
+Although my opinion that it is redundant still stand, but I'm not against
+keeping the pll_type. However if we keep that, then at least we should use
+private enums (IPQ_APSS_PLL_TYPE_* or similar) for that in order to make it more
+obvious that it means a different thing than the CLK_ALPHA_PLL_TYPE_* values.
+
+This solution would be more acceptable?
+
+Regards,
+Gabor
+
 
