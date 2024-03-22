@@ -1,128 +1,199 @@
-Return-Path: <linux-arm-msm+bounces-14841-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 45D58886D7D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 14:41:34 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id AFEF5886D81
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 14:42:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EFC321F2131A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 13:41:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B0BE21C232C4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Mar 2024 13:42:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0440F4E1DD;
-	Fri, 22 Mar 2024 13:28:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CCEA524DD;
+	Fri, 22 Mar 2024 13:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eMk4zdrd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="m9oZnKah"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD464D5BD
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 13:28:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD3E47A74
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 13:31:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711114099; cv=none; b=Oe/sWHWSR0KEUmnOIVPhIh1a9rctgRDDNgM5nhfObN4WRfJk2j4N9rZ8/eGIn41rVdeulX+bhb9f5ZmV2+3y+ADhf+0/WitWVDfBMqs/hiTxdgxwZe6g07tGdAbO5HxzFCPdduZy5EU4/Omq2+kYIrAmjcK8SG5M+IqqpKzj5nA=
+	t=1711114268; cv=none; b=NRp5LAveh6JlYPP6ehK+uSmVfZoCV4DswasIwMPakP0s1hgLUnW7b/mqCj7eysYI1Q7Fm3OjwlH5ao7SHL4m4/r0mA9l4DtQDM/tlKTWoRIm0k6hQZuVUCS16KXcazk4jDLqRguynxt6M0R2t2nEdXLUhVSNDZ8XBI6LCqrV+bo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711114099; c=relaxed/simple;
-	bh=IzOAEu+wO6bc93he6oyR3C00QDPujoCbNJiCwFw/ehk=;
+	s=arc-20240116; t=1711114268; c=relaxed/simple;
+	bh=fjlEwvkpQII5i2bDla7lCnCyEwxFpi5Bc5TaAal25w8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dpLz7E3CZsUhGhMrzq4KlYvERs8DUa7Pjb/9vdoY/bX3MS7mP062mWsV27jxApqKsYIuLbbNqziGpEi+QkjIQ/kyBujuRksrfPxxmsgx8DrpCR773QfYB3aiHPOeMVwnnTzp4h85eIL4LnVRbNvVkmPvktjZUSVx+CKyl8lH7rs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eMk4zdrd; arc=none smtp.client-ip=209.85.219.179
+	 To:Cc:Content-Type; b=aUYYEhVP8ZTYxznTr+wkoygRvkGVFGG1xamD8bLlFgBAjg1uMcwOpiPXXFmQkI5d9vv9Q5T52j9nOP2XnSOCyPpczsFSKHQdQQIRddjmQPlN719mLR7kxWXDdOb8uAJK5TiodwMuQvGx42rRiXdGCHf3STEsrC1Iwvmg5WNJaK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=m9oZnKah; arc=none smtp.client-ip=209.85.219.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-dd10ebcd702so2110656276.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 06:28:17 -0700 (PDT)
+Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-dc238cb1b17so2202674276.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 06:31:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711114097; x=1711718897; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1711114265; x=1711719065; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=R9g57H/zZx4/H4WjLHlsjs71ZcYJXW78b4kk7aQ8Rnc=;
-        b=eMk4zdrdkcGXx2x4J+q1Y5EkVIxWSr2/lrylt9TjrsUqAZAH9pNQftmEmSKALzpDUM
-         EUi/wTRVTlO5C3R5gtD1mZiOl41QI5evKJtAWC5XeyPZp2kGH8hk+eFyNpz78gR01zib
-         JsGH469nn/YaOzdUVxD6XQz1105B0vblG0yIlrYx1eTF3HzjQVpwHDTiKlH+o3/OY010
-         bii8EAI2794cKFXQGnsjv/+x1tnGzcIMVbt5uJ8CRUhC90UhbxNp1P42F1HKejgzKI8g
-         QIbFG5PLw80Z2Uv8BW2InoGNnKyCe2QCEK0lRVDp7/YhfPI0J2ha2f6Hxu/FAPNtftul
-         8idA==
+        bh=nKSrfsCzVcwON1miF/nJghTVlXIY9BQztSw13EPVqsY=;
+        b=m9oZnKahXY3EoyEJbdwisIQJszHqgXEYiTYam02+GPyhHUX4X8W1TVuTyVZ81huOrb
+         TIjNhYJNVs0Sn+dEQgJqlelZNBltyBB1PFO2AClDk2yo1RaNeOwhUWq76b+7Io5BCK2x
+         fha5Sbpw2Kja2I0aY9nsswtuMsvjGcI/GpTCxyvqDO760FqmFDKJeZ4RPrv6Ol33WvwF
+         ycDxAaOyo1nGjrPGtjEekAwNqa5lvYUHAeyyF5NeUekSvaNO9ZOkqrADG4x0OsxpjksI
+         v4fCmROtaEpoBu7Z2/fiDVjsZfi1gMOn0IoXUKV8D1lmphDMiw7iwNHFNsZPL6whI+3R
+         ekxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711114097; x=1711718897;
+        d=1e100.net; s=20230601; t=1711114265; x=1711719065;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=R9g57H/zZx4/H4WjLHlsjs71ZcYJXW78b4kk7aQ8Rnc=;
-        b=SK10JZtZ2eoZkgdDqYrC7/65h/gAiZE3OciZ1qxKfkB3qLdytaDFLxaEwzy7QBTvtT
-         MgPy1a/++8IgkDwobQIxLfXV8ubWHlgdTmh1py+xuP3E95VTyT80M+NpNUuZLY4fgzBP
-         JkRwMMKU6G4m1BM4FKIrded360KqdF3UDtV4L+vDCcOtPtVz6t7SUMYXtca/zW7mJbMD
-         zaK9Jb3jar2Rbz6u1iMg4H4bi9p2Qve4fHIo/UkYvzmm6zDPj2LoW14wAKafAX8+feeB
-         cHuG5C44OqRi+laS1NxeRgR7HaTUUmDA/m9SUUvoF25Bc4cnHyns04O/NJ9+2H+I5i8U
-         sr0w==
-X-Forwarded-Encrypted: i=1; AJvYcCVw0jMIj5PCKdTkdgUxRS/KF1xf7pqJl4/c2aTwZVMnRpgSMaDUf4aQD9XWrONicTYgumiD3vVieaDGVK5I1ZtFHAzOe/Se+nzSgN484Q==
-X-Gm-Message-State: AOJu0YytpcMJKhzwJJjHqcAbyiQ1n1qynSsGWm3ZKMkuqwBILHbbSZxi
-	YRd2ZXdFMvOIdV7SxX679qSjWVpTkssUffyPN7GRBcuLbJ6dx3BnlSxIQ4Jkh7b4YdulurVftxF
-	r4/h+LjJen9w5Wnkk3TZfYNfIZZN0b7fAooIrplT4YuNcVWBO1RM=
-X-Google-Smtp-Source: AGHT+IH7CzRuo8/gSz47w0tiHuUL2Af6cUjw8esZFVf+qHXlReq8WQsMmc4NMNSha+DBw0ccFVOkoUZTkavB9NoA+Do=
-X-Received: by 2002:a25:aea0:0:b0:dcc:4b44:336c with SMTP id
- b32-20020a25aea0000000b00dcc4b44336cmr2133365ybj.53.1711114097008; Fri, 22
- Mar 2024 06:28:17 -0700 (PDT)
+        bh=nKSrfsCzVcwON1miF/nJghTVlXIY9BQztSw13EPVqsY=;
+        b=LTtVhHp48AMWqpMHkUgMntSXajNh9SGEc9jfmiNUU7mr4Er1rBYIXpeM7DbRfzTbhN
+         tbydEWNXg+JmvSKuHRWMRahd+fcScafw/0hzomIhPppirt9uk7oiUqSLA09hv0XEy7qk
+         pLfp1PdG8Pw1E1Rv3m4DcRnYYj5xmvVOFWRPDjud6zt4/P9tzqCrui0KD3fL+3qd2oTO
+         EHZJavW6eZyQ9m0hlo78lcPn3feKYMo4N2tmNSnXSHOeL6dvclJtoZvpGXPdj7zDmcu7
+         2QRpwWhm3uceUfuJgBivY/Y2uASS04pkbajUaQNZCwTwe8DYVy+f0MC9QRTAVVIDr6ca
+         JeGg==
+X-Forwarded-Encrypted: i=1; AJvYcCWlnOKJAzb/5D688+lerGaeRfhhN0cX/UQMhS1EwI/UaJTcRjBrNpz3ECZ8uaVH5oLEYRgdIdkaVyQhgvbYIOLHAxANzcLUJ/h6bIxduQ==
+X-Gm-Message-State: AOJu0YwsnVDtTh3owLDQDk6dxhG9bYgPUXs8Ldn3uXvFj5UbzP2kxZ4z
+	xyamCfeHOWnTXVZZlGaBpC8gtq33DCjFBteLsRJSo284HTKYc6mZFXMG4UFO3FhcrJMRHMl6HZA
+	gUePEIxk2h1s8JbpTkXGdpZEA1Bp5PZvyjrsGWw==
+X-Google-Smtp-Source: AGHT+IH5D7oINyyS4I7mJfjQsUG8tjEnZb27UduJJvC4NRi0Ic4EVPL4891T5fcpIsZnAyGZGlX1vXTstxDaw+yL7Vk=
+X-Received: by 2002:a25:84ca:0:b0:dcc:d694:b4a6 with SMTP id
+ x10-20020a2584ca000000b00dccd694b4a6mr2044325ybm.15.1711114265437; Fri, 22
+ Mar 2024 06:31:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240322-typec-fix-example-v1-0-6b01c347419e@linaro.org>
- <20240322-typec-fix-example-v1-1-6b01c347419e@linaro.org> <230eab52-9751-43fd-8e47-fbfe12410e44@linaro.org>
-In-Reply-To: <230eab52-9751-43fd-8e47-fbfe12410e44@linaro.org>
+References: <20240322-x1e80100-display-refactor-connector-v3-0-af14c29af665@linaro.org>
+ <20240322-x1e80100-display-refactor-connector-v3-1-af14c29af665@linaro.org>
+In-Reply-To: <20240322-x1e80100-display-refactor-connector-v3-1-af14c29af665@linaro.org>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 22 Mar 2024 15:28:05 +0200
-Message-ID: <CAA8EJprD3fM966pLV4QXPUu=bFTn24fvPMKOaGqtqkAbdz7sOQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: usb: qcom,pmic-typec: drop port description
-To: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rob Herring <robh@kernel.org>, 
+Date: Fri, 22 Mar 2024 15:30:54 +0200
+Message-ID: <CAA8EJpp6V5qVzbYtnU=JjO8FX45fcxBvWsD3PWQ5bu5wuv-T=g@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] drm/msm/dp: Add support for determining the eDP/DP
+ mode from DT
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+	Kuogee Hsieh <quic_khsieh@quicinc.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Johan Hovold <johan@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 22 Mar 2024 at 14:35, Bryan O'Donoghue
-<bryan.odonoghue@linaro.org> wrote:
+On Fri, 22 Mar 2024 at 15:22, Abel Vesa <abel.vesa@linaro.org> wrote:
 >
-> On 22/03/2024 11:52, Dmitry Baryshkov wrote:
-> > The PMIC Type-C controller doesn't have separate role-switching signal.
-> > Instead it has an HS signal connection between embedded USB-C connector
-> > node and the HS port of the USB controller.
->
-> I take your point on port as a signal but the way type-c determines
-> data-role is via the DR_Swap message.
->
-> https://www.embedded.com/usb-type-c-and-power-delivery-101-power-delivery-protocol/
->
-> We receive an IRQ which is a packet containing DR_Swap - TCPM consumes
-> that data and does a data-role switch.
->
-> The port then establishes the link between typec-port and redriver or PHY.
->
-> So, I think HS should be dropped from the commit logs and names in both
-> series.
+> Instead of relying on different compatibles for eDP and DP, lookup
+> the panel node in devicetree to figure out the connector type and
+> then pass on that information to the PHY. External DP is not described
 
-Then the actual usage doesn't match the schema. usb-c-connector
-clearly defines HS, SS and SBU ports
-The snps,dwc3.yaml describes ports as ones handling usb-role-switch,
-but then clearly writes that port@0 is HS and port@1 is SS. As such, I
-think, the correct name for the ports is to have _hs_ in the name
+Nit: External DP doesn't have a panel described in DT...
 
-We have pmic-typec/port, separate graph port for role-switching
-(supported by TCPM code), but we didn't use it at all on our platforms
-(nor do we need it, as we use the HS port).
-
+> in DT, therefore, assume it's eDP if panel node is present.
 >
-> BTW for the GLINK devices I think the adsp firmware just notifies the
-> APSS of the data-role switch so, these types of devices probably should
-> have an epdoint with "usb_role_switch" in the name.
->
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
-> bod
+>  drivers/gpu/drm/msm/dp/dp_display.c | 43 +++++++++++++++++++++++++++++++++----
+>  1 file changed, 39 insertions(+), 4 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index c4cb82af5c2f..c9763f77c832 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -726,6 +726,14 @@ static int dp_init_sub_modules(struct dp_display_private *dp)
+>         if (IS_ERR(phy))
+>                 return PTR_ERR(phy);
+>
+> +       rc = phy_set_mode_ext(phy, PHY_MODE_DP,
+> +                             dp->dp_display.is_edp ? PHY_SUBMODE_EDP : PHY_SUBMODE_DP);
+> +       if (rc) {
+> +               DRM_ERROR("failed to set phy submode, rc = %d\n", rc);
+> +               dp->catalog = NULL;
+> +               goto error;
+> +       }
+> +
+>         dp->catalog = dp_catalog_get(dev);
+>         if (IS_ERR(dp->catalog)) {
+>                 rc = PTR_ERR(dp->catalog);
+> @@ -734,9 +742,7 @@ static int dp_init_sub_modules(struct dp_display_private *dp)
+>                 goto error;
+>         }
+>
+> -       dp->aux = dp_aux_get(dev, dp->catalog,
+> -                            phy,
+> -                            dp->dp_display.is_edp);
+> +       dp->aux = dp_aux_get(dev, dp->catalog, phy, dp->dp_display.is_edp);
+
+Unrelated
+
+>         if (IS_ERR(dp->aux)) {
+>                 rc = PTR_ERR(dp->aux);
+>                 DRM_ERROR("failed to initialize aux, rc = %d\n", rc);
+> @@ -1241,6 +1247,35 @@ static int dp_auxbus_done_probe(struct drm_dp_aux *aux)
+>         return dp_display_probe_tail(aux->dev);
+>  }
+>
+> +static int dp_display_get_connector_type(struct platform_device *pdev,
+> +                                        const struct msm_dp_desc *desc)
+> +{
+> +       struct device *dev = &pdev->dev;
+> +       struct device_node *aux_bus;
+> +       struct device_node *panel;
+> +       int ret = DRM_MODE_CONNECTOR_DisplayPort;
+> +
+> +       /* legacy platforms specify connector type in match data */
+> +       if (desc->connector_type == DRM_MODE_CONNECTOR_eDP ||
+> +               desc->connector_type == DRM_MODE_CONNECTOR_DisplayPort)
+
+misaligned
+
+> +               return desc->connector_type;
+
+Can we drop this part completely?
+
+> +
+> +       aux_bus = of_get_child_by_name(dev->of_node, "aux-bus");
+> +       if (!aux_bus)
+> +               goto out;
+> +
+> +       panel = of_get_child_by_name(aux_bus, "panel");
+> +       if (!panel)
+> +               goto out;
+> +
+> +       ret = DRM_MODE_CONNECTOR_eDP;
+> +
+> +out:
+> +       of_node_put(panel);
+> +       of_node_put(aux_bus);
+> +       return ret;
+> +}
+> +
+>  static int dp_display_probe(struct platform_device *pdev)
+>  {
+>         int rc = 0;
+> @@ -1263,7 +1298,7 @@ static int dp_display_probe(struct platform_device *pdev)
+>         dp->dp_display.pdev = pdev;
+>         dp->name = "drm_dp";
+>         dp->id = desc->id;
+> -       dp->dp_display.connector_type = desc->connector_type;
+> +       dp->dp_display.connector_type = dp_display_get_connector_type(pdev, desc);
+>         dp->wide_bus_supported = desc->wide_bus_supported;
+>         dp->dp_display.is_edp =
+>                 (dp->dp_display.connector_type == DRM_MODE_CONNECTOR_eDP);
+>
+> --
+> 2.34.1
 >
 
 
