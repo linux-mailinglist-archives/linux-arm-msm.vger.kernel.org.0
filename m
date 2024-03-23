@@ -1,124 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-14929-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14930-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1014D8877BE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Mar 2024 10:20:46 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 09D0F8877E1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Mar 2024 11:05:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8D188B2183E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Mar 2024 09:20:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B9A632827F0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Mar 2024 10:05:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BA0EDF59;
-	Sat, 23 Mar 2024 09:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5378BFBE9;
+	Sat, 23 Mar 2024 10:04:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AmGkF125"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cKz05Y6f"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFED7DDC5;
-	Sat, 23 Mar 2024 09:20:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B242C80;
+	Sat, 23 Mar 2024 10:04:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711185637; cv=none; b=ncOmAjFw4nEPoF0J2y/49n7YILGtVM/GZBxJPRBw7iGx8Q3CF1vxx75esN0JU+6OiKH8slJCUM7G2sYETfMhHBbpRJ7CpCBwHVf9u+7Oyej1He8OBtFzL0YYOMFdz/B17Y3BzBgzDeYdlmG37+laJae/kelDEGxseod/p95RRAM=
+	t=1711188297; cv=none; b=SAJh/BraoioIo5r5DwWbL+GxXVgzaiL7o8hqHuTj6p+d79kXALBMrTxqDL7JvVwB5TxBYq2IxlPMT9lFjfhiZNaY+EDf7+EHrmJ2bFLCC+vG8LZD8OB5zRI76EvXZaY80P2Hu+oNyMuSSsbfbvkG05PQ0dtVLwOS4XlSEaSI1C8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711185637; c=relaxed/simple;
-	bh=aGTQuZy7vZpxuhlc2uWM1FWO2cNVLUpXYHPr+30NYM4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Rh0DSAdSQVNBS1adbiZGMY4peRzHf0OTI1CLdrkJl+mE1QbOUeJ4y6uzhifAP3lPqxAJ+LIqYAI9lNkveAzkyTTykksIouPaF+eEm+Dp1DBn5jBle6zAmfSWwrlcPoHoim7asJCNSjOC4eFVZF68Wj1uh+JRYU+LavkF/Ophhpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AmGkF125; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D51C0C433F1;
-	Sat, 23 Mar 2024 09:20:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711185636;
-	bh=aGTQuZy7vZpxuhlc2uWM1FWO2cNVLUpXYHPr+30NYM4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=AmGkF125xegySFWAiHvPntmZ+07s8hZQPC/0IVIftdkxYeMJTqDHDoBaq087Sl4Ry
-	 qKx2QcAVw6S410SG7j4biAqt4/h5dTjc1vKUs5R8LJBjxtJSQyMNE1PxZTAhzLwpa+
-	 ZvDOHlqhfPGo+3K1JP9tq5K11rxRL31gNRIYe4fcfJjyAcpNQmozM0AzDwGqt7aAAm
-	 vL1bo7yWAyyXHWJXICav98Il7syCI5t9aEO0HLvfyTQ7cJVQX5WfpHiaD8JmvRG1Zm
-	 VmI4taBLphr2uo/nVmCk1uj3x3TE6/IYqaCXMkAcTk/3yvQe9KoaZIneVeSaGY4Thk
-	 hCCXd6I1k2Bcg==
-Date: Sat, 23 Mar 2024 10:20:32 +0100
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc: linux-i2c@vger.kernel.org, asahi@lists.linux.dev, 
-	chrome-platform@lists.linux.dev, imx@lists.linux.dev, linux-actions@lists.infradead.org, 
-	linux-amlogic@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org, 
-	linux-mediatek@lists.infradead.org, linux-mips@vger.kernel.org, linux-omap@vger.kernel.org, 
-	linuxppc-dev@lists.ozlabs.org, linux-renesas-soc@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org, 
-	linux-rpi-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
-	openbmc@lists.ozlabs.org, virtualization@lists.linux.dev
-Subject: Re: [PATCH 00/64] i2c: reword i2c_algorithm according to newest
- specification
-Message-ID: <ug266trshvhhbsln3eoh53fmsuj3l63ziz6gavcl7rv2jhjr5t@3av5givh5n7m>
-References: <20240322132619.6389-1-wsa+renesas@sang-engineering.com>
+	s=arc-20240116; t=1711188297; c=relaxed/simple;
+	bh=mYKDpuTZ3EY3JPjM1cY2bRM/CW/Ophp7wIDj7iCnfZ8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bjitlbCRftu2UrIojtzB0fi/73dabrHW5K3BT07tHaBbRKSVZdmCmYFNvZO+3e8oTPFxwtDn+WlxkGZYBy9cnPBIYM7YEulXv1Lp0sIFKKNnwN+9jw6v30x8UcjNR6k6XnreSzd6pDu6fNQvv8s/Vu6masRzSHhvXF5JpyYhE88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cKz05Y6f; arc=none smtp.client-ip=209.85.216.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-29b7164eef6so2161350a91.2;
+        Sat, 23 Mar 2024 03:04:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711188295; x=1711793095; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=VddLd/wi/hh0VChb93jRd8h5amxI6kZmImE+BpCXwms=;
+        b=cKz05Y6fp9gFkrJ+saZiz0ajbC+IIpWEnXvaJVwnEQ1Tu48U4gDRxeghuUJCAPXojC
+         LPv2Pbb9G9atDn3TFuUZX/PDKp9uheygZEDyVcveyFIN/Sb3KrYryA7cbNauWQQguubf
+         r98Kirrd0DE6FaSgY80JVcxuT2iQR5cuGADXCFpo3r48tKDmogyY2MBwMbryhcXB93Rx
+         dD6i3gpgpdQwfnTPqxIsKvJPCsM4qDZaWnt43Z79cGy2ZOFV1Bh5Xa8YrX50xiJlGQee
+         5KuXYVD9E3Djh75j/C1ZYq+qaCmvCo20TJGzR6RtNFMHUTB6qB6QKWg0FJMLbQm3nO7F
+         uSRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711188295; x=1711793095;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VddLd/wi/hh0VChb93jRd8h5amxI6kZmImE+BpCXwms=;
+        b=JyV4o9HMPWqu0V8BvhdtxV4oSEUI8jk/1iNY8QLMAkCqnbYe4RxKX+dfBelUrqjyGp
+         25d9A4q77T1FHwCFZHgUjQ4XWD1zT+cxhkF7Y5lBS25qR8h7e98DMCLv3B+V6/9lY0f3
+         H4nLPw0o1atkDA85mu5V8g3fBjKyaH9aItCFm9uJe36XYZC2RdL1MHk0uUPUV+IDxret
+         43yPT8puO0HQ9eVYljn2CSJn9I7QltJo+tSng8S7DzYQcRDxXOW4oa+H76U242zhn/7b
+         YSGBTqi/7HXy6TfL+a5RhXfUIYmOskSjarVwOO/foafKvJfL5AnS5bY7VbJEYHhGBic2
+         zXYw==
+X-Forwarded-Encrypted: i=1; AJvYcCUNv4r5IqC7L0+cBh9WUuKrEje4Y0C0wA34vAhJ/T5DCDh3Ap9vO8qUR0PEaY3CyHZgkmGsy1WQiqwmf/0Z9t38YlfkfwqXkHX1B2dnh7phTkxqOrfR3uyDKn/Ot3KVrBYFirNwA/sIiA==
+X-Gm-Message-State: AOJu0YwafdoJtLpvdjYtRUyW9hdHGXImQbXE6o1eUKSRIZ5KKX5D3F3o
+	5SnPJpaF84T/rmxmuUKasTsr7/AkPLgw86VT8xLEeKRBjkI+T1htDN+W67Je9LY=
+X-Google-Smtp-Source: AGHT+IHHapQvAw6lAaSMn3aBbi50gvCb3gNUuuZzwFhRwPdbTfyMRZyMRM9i28QJTkhWoZ4LMaUtmw==
+X-Received: by 2002:a17:90b:806:b0:2a0:4bc9:a4e0 with SMTP id bk6-20020a17090b080600b002a04bc9a4e0mr1625304pjb.4.1711188295173;
+        Sat, 23 Mar 2024 03:04:55 -0700 (PDT)
+Received: from localhost.localdomain ([103.149.249.231])
+        by smtp.gmail.com with ESMTPSA id sl3-20020a17090b2e0300b002a0304e158bsm2352931pjb.41.2024.03.23.03.04.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 23 Mar 2024 03:04:54 -0700 (PDT)
+From: Jianhua Lu <lujianhua000@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Jianhua Lu <lujianhua000@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sm8250-xiaomi-elish: set pm8150b_vbus regulator-min-microamp and regulator-max-microamp
+Date: Sat, 23 Mar 2024 18:04:43 +0800
+Message-ID: <20240323100443.2478-1-lujianhua000@gmail.com>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240322132619.6389-1-wsa+renesas@sang-engineering.com>
+Content-Transfer-Encoding: 8bit
 
-Hi Wolfram,
+Fix the dtb check warnings:
+  sm8250-xiaomi-elish-boe.dtb: usb-vbus-regulator@1100: 'regulator-min-microamp' is a required property
+  sm8250-xiaomi-elish-boe.dtb: usb-vbus-regulator@1100: 'regulator-max-microamp' is a required property
 
-On Fri, Mar 22, 2024 at 02:24:53PM +0100, Wolfram Sang wrote:
-> Okay, we need to begin somewhere...
-> 
-> Start changing the wording of the I2C main header wrt. the newest I2C
-> v7, SMBus 3.2, I3C specifications and replace "master/slave" with more
-> appropriate terms. This first step renames the members of struct
-> i2c_algorithm. Once all in-tree users are converted, the anonymous union
-> will go away again. All this work will also pave the way for finally
-> seperating the monolithic header into more fine-grained headers like
-> "i2c/clients.h" etc. So, this is not a simple renaming-excercise but
-> also a chance to update the I2C core to recent Linux standards.
+Fixes: 69652787279d ("arm64: dts: qcom: sm8250-xiaomi-elish: Add pm8150b type-c node and enable usb otg")
+Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
+---
+ arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-yes, very good! It's clearly stated in all three documentations
-that Target replaces Slave and Controller replaces Master (i3c is
-at the 1.1.1 version).
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+index 2042020eb0dd..41f117474872 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+@@ -668,6 +668,8 @@ pm8150b_role_switch_in: endpoint {
+ };
+ 
+ &pm8150b_vbus {
++	regulator-min-microamp = <500000>;
++	regulator-max-microamp = <3000000>;
+ 	status = "okay";
+ };
+ 
+-- 
+2.44.0
 
-> My motivation is to improve the I2C core API, in general. My motivation
-> is not to clean each and every driver. I think this is impossible
-> because register names based on official documentation will need to stay
-> as they are. But the Linux-internal names should be updated IMO.
-
-Also because some drivers have been written based on previous
-specifications where master/slave was used.
-
-> That being said, I worked on 62 drivers in this series beyond plain
-> renames inside 'struct i2c_algorithm' because the fruits were so
-> low-hanging. Before this series, 112 files in the 'busses/' directory
-> contained 'master' and/or 'slave'. After the series, only 57. Why not?
-> 
-> Next step is updating the drivers outside the 'i2c'-folder regarding
-> 'struct i2c_algorithm' so we can remove the anonymous union ASAP. To be
-> able to work on this with minimal dependencies, I'd like to apply this
-> series between -rc1 and -rc2.
-> 
-> I hope this will work for you guys. The changes are really minimal. If
-> you are not comfortable with changes to your driver or need more time to
-> review, please NACK the patch and I will drop the patch and/or address
-> the issues separeately.
-> 
-> @Andi: are you okay with this approach? It means you'd need to merge
-> -rc2 into your for-next branch. Or rebase if all fails.
-
-I think it's a good plan, I'll try to support you with it.
-
-> Speaking of Andi, thanks a lot to him taking care of the controller
-> drivers these days. His work really gives me the freedom to work on I2C
-> core issues again.
-
-Thank you, Wolfram!
-
-Andi
 
