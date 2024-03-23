@@ -1,73 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-14921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14922-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C87A08875F4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Mar 2024 01:11:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D15F2887609
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Mar 2024 01:22:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 241531F236A1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Mar 2024 00:11:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 48A951F2102F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Mar 2024 00:22:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F09AA20;
-	Sat, 23 Mar 2024 00:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AACB182;
+	Sat, 23 Mar 2024 00:22:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="H3oW9gJi"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HmwdVPgT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82063623
-	for <linux-arm-msm@vger.kernel.org>; Sat, 23 Mar 2024 00:11:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CE7372
+	for <linux-arm-msm@vger.kernel.org>; Sat, 23 Mar 2024 00:22:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711152700; cv=none; b=Mbzwu4bQpAoJk7kJ7W/7EuGALDl/OKt62owDcW+5Lyjyx19fN06xXQn9vTLf9egB8g4BP2S2rnZYowJ0hLwayQP+QYuIUCgm0WTx1CaP1co5ccpdENS8TTlsZducwtNWU7wJxjBTItv7Odahm9w+4sauASPrv3MkSgGizTkeefE=
+	t=1711153359; cv=none; b=nDXFRAlHDVQnWFFsvhVepIQ4lQL25J1C3eSmeSauLUN4g8aXzVTe/b0AzTVjX3UMiwq3fXgtlwVBJ5zp3vYvK7LZsUs1KQMGzIWm7mIFXfZl03YHsncIrlLPqU5+MoPnLPsa2Bqn5RTratsXNM8FLIk2p3i0Oj28rYpXo737AJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711152700; c=relaxed/simple;
-	bh=P/EP+P6BnH9TyUaUed9aOUzEfM5ZQWRlxn2Pg6ia2PE=;
+	s=arc-20240116; t=1711153359; c=relaxed/simple;
+	bh=L7+9l9T2QmTtHUT05szPg/MIy2qIavylZgBbehnqygI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WBdLyoXH3+V/Ry2mYnaVOxhSZFchddOIUHZArGEfWPn28C4MuXtKn5mKvJh31uNaaA+4mtdHLz6T4D6lPrBDG2GCi6nCNLqcyY+3VqRDtvGhV+G4myoZmmLHRrH+MSOZDadZpCVnpMrkVagJ6PEEtRf6Ekim3iT9glwbGgi5NiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=H3oW9gJi; arc=none smtp.client-ip=209.85.167.51
+	 In-Reply-To:Content-Type; b=c0rGkULaIRrADTszwZg/WU3toiuGmPJ73RC4EG2JU9LnCGmCSeojCBAQvC0xBy9nwHUxva0sORRVyG72OnPaKzxQnjTHEGeQiJvfG6u85AwSVMbICFDiS0V8GV3wowcma4iY4fcyD9+XI+LwDPtoYWg1YX4VteS4k5DwtUvdGyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HmwdVPgT; arc=none smtp.client-ip=209.85.218.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-513d23be0b6so3180690e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 17:11:37 -0700 (PDT)
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a47385a4379so140945966b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 17:22:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711152695; x=1711757495; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1711153355; x=1711758155; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=m3MCFSvMO/tlYKEIBdXDWMBZUwgIizoQXcUu+EHJkdE=;
-        b=H3oW9gJi0BtcFA5C8+buZiXV1xpIgH2zLlCZ1mb7+poN6srbvB7b/kW5OdV8pC08MT
-         SCkB1Iuowpf/8HClZicSLLzBF8d1UEFjJQqdPwQ61ne4Ex5p+CniK1qAwf3w7TXbC+5c
-         XT8KHYD8zPtIgcxEvhSX7aCmHtg32fWv9LTPJE8BObbr/naa0RVCijgmnqMGOAS0EaYL
-         SZPcA0ejWjU6/zOaK1ShEF/z1O+8butI+9yoMOrAxUjBEHYGzJuyyChBv02uV8Q+L26F
-         TnQbEOuAb3ZXs2GNzBwLgJCTvIch5Tq8ncbVGeSkmjsJyM07ktq7NhsThkbITvb01ljT
-         wKiQ==
+        bh=58yjr++p7fDA387lI742mHf4CyLdjO1DHyQT9HaMHKk=;
+        b=HmwdVPgTJ/W2Jd/dDiaSqxru72XoNkZzauNZnd1ubtiPyyz1C7q94lWyirBPj1iLsW
+         6zHMSqNnlEV//DiUmlhzZAXKccnIplQEC3f4nZpqxGEwk1ac1hCZIZqwx1q8lvTz6kv4
+         KnszWl3eckuyQuQkhBApDJgYLz62GbFH95tNqNElW4V24oqXlBZP81RWXRLSTMsRMct4
+         285ZDcYpaUXuVJYXPO/oSL8vUceazev0YK4348lErh0/gA139aaG8aPotBzomiLHp5nW
+         vt2BUAjdMoZSuC89u+IznPzBCk8Viv8tliCJ/Bv/CheEJetgkolMgR8vWzvzmEpKwJux
+         Pv4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711152695; x=1711757495;
+        d=1e100.net; s=20230601; t=1711153355; x=1711758155;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=m3MCFSvMO/tlYKEIBdXDWMBZUwgIizoQXcUu+EHJkdE=;
-        b=kL3nJR9r18d2yUHsrRK/gV+UswOQPJfQLGUjfLZsgAQnGZlhsczItZGYejskQs6I7B
-         gK35nzJXuARB/Nr10e185yCi/rhl4gNeG+r9SRMGiVN4WYtgkzKipVF9V7Bm5f0REh5k
-         TymkzANGD74HoacPu12bo6d9m+YRzVAKzhpaJCBOCz8U0SxuYhhIL0hV+JISotccJq+N
-         fZCEOq/gzdhQ9DeVQMCGWBivBp1nfpmklJeZBESdfb6INoIoYrd+zVW7GgRLrJayuYYE
-         Or2zScTRy9i9r0BG6YmbLJr8qkxL0mcHk447gS/m3/H5+T28HnOJL3XX+LUl55LO7iV4
-         C7sg==
-X-Gm-Message-State: AOJu0YyJSDsjFPERJQFWV+603W0fBC2hgDEzXW0AFrLp9ZKJjzsmGZJI
-	ICsT3IC/KjeUjQN9fh8n2BbfPv1zB74gMQ+NTXkeJYwOuJKBgDDXuUDdVyQlt04=
-X-Google-Smtp-Source: AGHT+IFry0RlYQGrAAhXRAPDON49IcLTGX1hJRc3YJNRYsvqjBsTp4W4Yr1IHjDKv2LU9H9QWOR04g==
-X-Received: by 2002:a19:5f46:0:b0:515:9aa9:ecb7 with SMTP id a6-20020a195f46000000b005159aa9ecb7mr667861lfj.27.1711152695471;
-        Fri, 22 Mar 2024 17:11:35 -0700 (PDT)
+        bh=58yjr++p7fDA387lI742mHf4CyLdjO1DHyQT9HaMHKk=;
+        b=roe+cShpFE8fCzDSEx29fB2MUXWjEzjAeHmCMiI06vO28rm6+p9WX3ND6yJBUUrHN1
+         1M/qz4Z+tx2ouKL7Wac/boVCrDR3/vfPZM79UUjDT0jWke7TvIuZ8f0k1L97xOnmGSgF
+         2wNptoTaXbCwsXzxk3AP3HYQt7/m2dEZdJGd/hqAl5HjzWAZOwn9An/M3wj3rOREWzkp
+         whKgF6NOaVfyaYdw0r4zSOVZqm8vWj3vQeIL3y1gi3xHErSotOF8bAzd3OEatFvLsi99
+         tAiLSlSJyQcluzp05qpvSxCWuYlfMHQrUmQglToZx8S8CpvIU8dSn37+ojfhq2mSuASP
+         XfAQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWKc2Ml83Ml0IV5B1exVXLtk3IINg/uAEOxcB9NUu0LbOYN+KiKb6aXJBTVjEZexBONDk07q5r7NXGpoAeFwBDTeIx0p8qoaYNxX955Ng==
+X-Gm-Message-State: AOJu0YzyjQefISpUXX3qB3DHWGja2UkCaXFAPY2l3P0H7N4ovpjRkCLJ
+	e9KXfNLwQrXRNhy6KChr27/GSurCws9R277b+511bx1w1CrNCCnc2qesYY4+Z2U=
+X-Google-Smtp-Source: AGHT+IHeVso4/sOgvQ74mwbg2tg2J4qx5kBhIl3p69FrctbsvC/8FGL2ESxX0Mi2glRRdSW0ckaveA==
+X-Received: by 2002:a17:907:7625:b0:a46:fb47:7752 with SMTP id jy5-20020a170907762500b00a46fb477752mr395711ejc.23.1711153355480;
+        Fri, 22 Mar 2024 17:22:35 -0700 (PDT)
 Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id i8-20020a17090671c800b00a46d4e26301sm341615ejk.27.2024.03.22.17.11.34
+        by smtp.gmail.com with ESMTPSA id l14-20020a1709067d4e00b00a46af0fbf5dsm344011ejp.103.2024.03.22.17.22.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Mar 2024 17:11:34 -0700 (PDT)
-Message-ID: <cf8fb32d-3061-42e7-aa7d-4624c2bf413b@linaro.org>
-Date: Sat, 23 Mar 2024 01:11:33 +0100
+        Fri, 22 Mar 2024 17:22:35 -0700 (PDT)
+Message-ID: <d9616001-e64e-4fe6-ba53-4dc90555d226@linaro.org>
+Date: Sat, 23 Mar 2024 01:22:32 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,16 +76,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/21] Add PCIe bridge node in DT for Qcom SoCs
+Subject: Re: [PATCH v2 2/3] PCI: qcom: Add equalization settings for gen4
 Content-Language: en-US
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org,
- Rob Herring <robh@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
-References: <20240321-pcie-qcom-bridge-dts-v2-0-1eb790c53e43@linaro.org>
+To: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>,
+ agross@kernel.org, andersson@kernel.org, mani@kernel.org
+Cc: quic_msarkar@quicinc.com, quic_kraravin@quicinc.com,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Jingoo Han <jingoohan1@gmail.com>,
+ Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+ Serge Semin <fancer.lancer@gmail.com>,
+ Conor Dooley <conor.dooley@microchip.com>, linux-kernel@vger.kernel.org,
+ linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20240320071527.13443-1-quic_schintav@quicinc.com>
+ <20240320071527.13443-3-quic_schintav@quicinc.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -121,29 +129,72 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240321-pcie-qcom-bridge-dts-v2-0-1eb790c53e43@linaro.org>
+In-Reply-To: <20240320071527.13443-3-quic_schintav@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 21.03.2024 12:16, Manivannan Sadhasivam wrote:
-> On Qcom SoCs, the PCIe host bridge is connected to a single PCIe bridge
-> for each controller instance. Hence, this series adds a DT node for the
-> PCIe bridges across all SoCs.
+On 20.03.2024 08:14, Shashank Babu Chinta Venkata wrote:
+> GEN3_RELATED_OFFSET is being used as shadow register for generation4 and
+> generation5 data rates based on rate select mask settings on this register.
+> Select relevant mask and equalization settings for generation4 operation.
 > 
-> There is no functionality change with this series, but the PCIe bridge
-> representation in DT will be necessary to add the DT node for the client
-> devices like the one proposed in power sequencing series [1].
-> 
-> - Mani
-> 
-> [1] https://lore.kernel.org/linux-arm-msm/20240216203215.40870-8-brgl@bgdev.pl/
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
 > ---
 
-Everything looks good
+[...]
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> +
+> +#define GEN3_EQ_FB_MODE_DIR_CHANGE_OFF          0x8ac
+> +#define GEN3_EQ_FMDC_T_MIN_PHASE23_MASK         GENMASK(4, 0)
+> +#define GEN3_EQ_FMDC_N_EVALS_MASK               GENMASK(9, 5)
+> +#define GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA_MASK  GENMASK(13, 10)
+> +#define GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA_MASK	GENMASK(17, 14)
+> +#define GEN3_EQ_FMDC_N_EVALS_SHIFT			5
+> +#define GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA_SHIFT		10
+> +#define GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA_SHIFT	14
 
-Konrad
+The beauty of bitops.h is you no longer need to define these shifts..
+Just use FIELD_GET/FIELD_PREP with the field! Please also drop _MASK
+from the leftover definitions.
+
+> +void qcom_pcie_cmn_set_16gt_eq_settings(struct dw_pcie *pci)
+> +{
+> +	u32 reg;
+> +
+> +	/*
+> +	 * GEN3_RELATED_OFF is repurposed to be used with GEN4(16GT/s) rate
+> +	 * as well based on RATE_SHADOW_SEL_MASK settings on this register.
+> +	 */
+
+Given this comment and the commit message, should setting of this field
+be factored out to a function that would accept a generation argument?
+
+> +	reg = dw_pcie_readl_dbi(pci, GEN3_RELATED_OFF);
+> +	reg &= ~GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL;
+> +	reg &= ~GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK;
+> +	reg |= (0x1 << GEN3_RELATED_OFF_RATE_SHADOW_SEL_SHIFT);
+> +	dw_pcie_writel_dbi(pci, GEN3_RELATED_OFF, reg);
+> +
+> +	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF);
+> +	reg &= ~GEN3_EQ_FMDC_T_MIN_PHASE23_MASK;
+> +	reg &= ~GEN3_EQ_FMDC_N_EVALS_MASK;
+> +	reg |= (GEN3_EQ_FMDC_N_EVALS_16GT_VAL <<
+> +		GEN3_EQ_FMDC_N_EVALS_SHIFT);
+> +	reg &= ~GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA_MASK;
+> +	reg |= (GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA_16GT_VAL <<
+> +		GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA_SHIFT);
+> +	reg &= ~GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA_MASK;
+> +	reg |= (GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA_16GT_VAL <<
+> +		GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA_SHIFT);
+> +	dw_pcie_writel_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF, reg);
+> +
+> +	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
+> +	reg &= ~GEN3_EQ_CONTROL_OFF_FB_MODE_MASK;
+> +	reg &= ~GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE;
+> +	reg &= ~GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL;
+> +	reg &= ~GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC_MASK;
+> +	dw_pcie_writel_dbi(pci, GEN3_EQ_CONTROL_OFF, reg);
+> +}
+
+
 
