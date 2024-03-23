@@ -1,73 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-14926-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D7354887624
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Mar 2024 01:33:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BCF2A88762B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Mar 2024 01:38:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4DDC31F2205D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Mar 2024 00:33:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2B3251F22426
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Mar 2024 00:38:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B4B97FD;
-	Sat, 23 Mar 2024 00:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F065A7F;
+	Sat, 23 Mar 2024 00:38:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zGlgkUMb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZEZOa/dm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43DAD621
-	for <linux-arm-msm@vger.kernel.org>; Sat, 23 Mar 2024 00:33:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC91623
+	for <linux-arm-msm@vger.kernel.org>; Sat, 23 Mar 2024 00:38:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711154004; cv=none; b=Rk9/isLiu2xFL2ej23XEvkWDAXiLDtLD8z/7H4V4XkpJ7l/y9sMYXM5AOPeImOhLlGWMctNqztxuiUtzEPzkDO6Xfshyn9mP7rBoXColHgQAxbOhC5Vv0bMJTalUW3c25E3w11Fe8cOup4PLZ5z38tUryO07/UrTkQ8dhrI1JMU=
+	t=1711154295; cv=none; b=YduXqQnFg5QwhCv5U6YvqWobaS6vcKIvTM8ifTS+im4fGNLbphpCQPEF5RRJpRqUvR+oITx6YQzuY2FB4C3i5qxWS9gM7uJEmnHvFQ69x/oc4Y1EOx/LYy3O6a7MKoezLUl2R6Apaq5ESpwCDHdwbP0xDxYJCNBoKpx0uXecta4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711154004; c=relaxed/simple;
-	bh=qRatC590E6b0IOeG6lRfhCABOutlgVwESB/qkgefRXU=;
+	s=arc-20240116; t=1711154295; c=relaxed/simple;
+	bh=AE3xnRVlGYJCyG8Do9Ao+NxdpxAAngAQ2OdxeDa7GRA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iMQ0ekLfMM9+45vnLl5t+MspOlV3axolaeVDBE3MGDhc4UpHUGtlI7aywJ9e9YLxlWibXNkVqETyzuCWZgVX/Kqs9gHmY/Na9tICoYfJ8jOcte6o1eeCHrDqxz5xX0+dReduwl8RcbEheZWZQrwk9g8RvBlBP7aYgrHv76P/590=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zGlgkUMb; arc=none smtp.client-ip=209.85.208.172
+	 In-Reply-To:Content-Type; b=V+mRv4b2VDHeEiJaOQF73jXVQ80Sbc+S+NBz2sMRryAJgLkbER4jx2K9qjd1krjVD0UTwmlAlwSKbzBjqj4khkrHqglJUcApYsOkk3ce5Pu0OnfjdSRVWMnUxWBb9ZRlc62FIn2mulvZoLg7mks2flRGnGDXFduoeHOifkMlB+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZEZOa/dm; arc=none smtp.client-ip=209.85.208.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2d220e39907so38328071fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 17:33:22 -0700 (PDT)
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2d4360ab3daso44127721fa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Mar 2024 17:38:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711154000; x=1711758800; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1711154292; x=1711759092; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=1K9Gr4xxseb63O+ZIp/M+lMupGMpWBFPhuDFz3NoIi4=;
-        b=zGlgkUMbzclH1HSqRwzgDFzsqKGpOSwHKMAzNDPAoiYmY0Fm6NrkVA6lI2HVmYqp/2
-         LIhxqi1yRKTpYV2ZhMz+54Fo67Qt1IezGdvfja0RpntlON3Varc51V/ln//AY97riS8m
-         Q4ipJHNkROBYX8ZhEqSj2N7+KlLTE+fcg9BL1am+EHlhFoQqZ6E674/8nGMojhFMb0CI
-         uFRyXPGcUKli0KpwxxEVzGUMG0PlWgRYjpn3Pl6Wu6HpPuvCJVSSpUen587kBkw6tXQj
-         wBKcW+ooM5z2MIE6Be4CPdmalDASnqO2HPQ7jM0cOjTFldKUj91regDXr6cRfGNq2zGe
-         IBSQ==
+        bh=YXYbUIcUaqbCMNnOwgX5pVKCDFhUStNAb/+Z+Tw410k=;
+        b=ZEZOa/dmtjn9VAb/EWXKtdD19ATrUHLVFk6MHX3djlyaU9M+RhRsuiEol8no9W5Ovk
+         9+XJ0g1BzPfBrqY8pmHP0vsZRpg9LbbGm+4aHnhFwQbDqmDTgwU8ryuq7np5DfPpGr/n
+         Ztqnc0TwCvy+k+id2c7l+qDUVYvY9yZ1KXwKFTvOLLq/2R+7nt9O2gLk+bvXkUbIdkmP
+         qAcvRi7yg8yVTL8uTXKFktuUGXUWaLigjiRayilMwwtyV1tyYKANVBvgqmzw614hOCQZ
+         ML2UIQUVS3ZHFFngk+dwhwlNn6jr34kC3nS3kHVmytCCkhDWjxQHSAZOsGfhlxEx+HSL
+         cnfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711154000; x=1711758800;
+        d=1e100.net; s=20230601; t=1711154292; x=1711759092;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1K9Gr4xxseb63O+ZIp/M+lMupGMpWBFPhuDFz3NoIi4=;
-        b=E12dif4Qdw76HQWOudad/+rw4R9maoLUEzbnNWOP2x1fVgxDaUNH/SSbt2Bb8B5x3Z
-         ZftACN9P6/mMi3wJAttgmR/w4WPd2qhGuBVaTK4OqIENiA/KAlUjw2vKPNNwzujp+put
-         Kip7VeTpDjKIwYnNMN2u8oUz+Utfd2WfDTKeTohnuOGmo8Vdq6ASnwqd8FrZ11DBxUK1
-         2evlutFQNh2EOEr8GSVbknTAn1m0gZLxPXyNBxiTfXIAMbKrxD6JjXp2C+VINbX/tPxk
-         7UtVhfiZkTFG13bXqyjQIEonrelD5/H8UboUAcjT9iB8YO1OFrgzpEm3VVbjPYWHDm7j
-         YRcw==
-X-Gm-Message-State: AOJu0Yyda107feWylnK1G7mwuYM4DCNPhtwSSHHr7nc0Dmi4YCNcxPoZ
-	xEXgGnSknKYfcxkyVx69ssaHDMr5Fl7wKX0FdrdPaIo7GH3a8gVNJS9Tn2471ws=
-X-Google-Smtp-Source: AGHT+IEnQFm26TVm1mHLqzW2v5Ftxjgc99itX5oz1q6CRFPx53zTkewQtYDpJdM5QfEG/6fafz+e6w==
-X-Received: by 2002:a05:6512:54e:b0:513:22f0:c3af with SMTP id h14-20020a056512054e00b0051322f0c3afmr547669lfl.4.1711154000463;
-        Fri, 22 Mar 2024 17:33:20 -0700 (PDT)
+        bh=YXYbUIcUaqbCMNnOwgX5pVKCDFhUStNAb/+Z+Tw410k=;
+        b=epbG+8XVAbdK7yuUArCtUWaP+WQWmd94Jejru7OzqGYShwZ26UIfoodH2m7oMTwDxN
+         tfLQqIEn2FOLb4o9VMpk86mcBCtYQSlIpbsOrV3l0hlGQ/XxV7baMsbcwHIGW9QCmjXZ
+         DHGHbWkGPtpWnnyhpS0Bx6pc7qVUBVlxZfZqQzisMq419qQvjqWyrvhHTj/oPdu71cKr
+         ltt7YEMCUmdf4/zrKMPfAgFOZiFqQnHghzGCrc+ow04rIpEXele7203UZj9Ufls8kuAN
+         Mpdm69X6EM2J2k0CacPttmDLqpFXMjE0LwcAbWGuQFSuek3pLUCRBv83yqsogqVlaqMh
+         Og8A==
+X-Gm-Message-State: AOJu0YwJriL9UzgGuVIseJuroVRg7GdL6+A9S5pRs/RKORvRmJlH20TP
+	5TBStC9SsiOrBHISufu5EndW0dY2kM+ETTmK0VSWgNglqaytRbf5Hx2YPLEkrKM=
+X-Google-Smtp-Source: AGHT+IG7poEMyw3iZwnRApWq19u4JHkklQp1U1Y040GIjkbqTKczkDnbRhutORPLxdcbBTIc7LACIQ==
+X-Received: by 2002:a2e:95d7:0:b0:2d2:6193:6d53 with SMTP id y23-20020a2e95d7000000b002d261936d53mr700422ljh.13.1711154292482;
+        Fri, 22 Mar 2024 17:38:12 -0700 (PDT)
 Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id n19-20020a170906119300b00a4660b63502sm360863eja.12.2024.03.22.17.33.18
+        by smtp.gmail.com with ESMTPSA id x18-20020aa7dad2000000b0056b9ba7adecsm341157eds.93.2024.03.22.17.38.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Mar 2024 17:33:20 -0700 (PDT)
-Message-ID: <9ac4117c-755e-4e49-b3a2-661e7195a7ed@linaro.org>
-Date: Sat, 23 Mar 2024 01:33:17 +0100
+        Fri, 22 Mar 2024 17:38:12 -0700 (PDT)
+Message-ID: <1e8dbaae-8fe4-455d-989f-aef51d72d42d@linaro.org>
+Date: Sat, 23 Mar 2024 01:38:10 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,25 +75,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 RESEND 6/6] arm64: dts: qcom: sm8650: Add video and
- camera clock controllers
+Subject: Re: [PATCH v2] arm64: dts: qcom: sm8450: Update SNPS Phy parameters
+ for QRD platform
 Content-Language: en-US
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Jagadeesh Kona <quic_jkona@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+To: Udipto Goswami <quic_ugoswami@quicinc.com>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Taniya Das <quic_tdas@quicinc.com>,
- Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
- Ajit Pandey <quic_ajipan@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>
-References: <20240321092529.13362-1-quic_jkona@quicinc.com>
- <20240321092529.13362-7-quic_jkona@quicinc.com>
- <0a7da687-18fb-437f-b33a-e4a1de20177e@linaro.org>
+ Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240321062834.21510-1-quic_ugoswami@quicinc.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -130,84 +121,18 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <0a7da687-18fb-437f-b33a-e4a1de20177e@linaro.org>
+In-Reply-To: <20240321062834.21510-1-quic_ugoswami@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 21.03.2024 14:07, Vladimir Zapolskiy wrote:
-> Hello Jagadeesh,
+On 21.03.2024 07:28, Udipto Goswami wrote:
+> Update SNPS Phy tuning parameters for sm8450 QRD platform to fix
+> electrical compliance failures.
 > 
-> On 3/21/24 11:25, Jagadeesh Kona wrote:
->> Add device nodes for video and camera clock controllers on Qualcomm
->> SM8650 platform.
->>
->> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/sm8650.dtsi | 28 ++++++++++++++++++++++++++++
->>   1 file changed, 28 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
->> index 32c0a7b9aded..d862aa6be824 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
->> @@ -4,6 +4,8 @@
->>    */
->>     #include <dt-bindings/clock/qcom,rpmh.h>
->> +#include <dt-bindings/clock/qcom,sm8450-videocc.h>
->> +#include <dt-bindings/clock/qcom,sm8650-camcc.h>
->>   #include <dt-bindings/clock/qcom,sm8650-dispcc.h>
->>   #include <dt-bindings/clock/qcom,sm8650-gcc.h>
->>   #include <dt-bindings/clock/qcom,sm8650-gpucc.h>
->> @@ -3110,6 +3112,32 @@ opp-202000000 {
->>               };
->>           };
->>   +        videocc: clock-controller@aaf0000 {
->> +            compatible = "qcom,sm8650-videocc";
->> +            reg = <0 0x0aaf0000 0 0x10000>;
->> +            clocks = <&bi_tcxo_div2>,
->> +                 <&gcc GCC_VIDEO_AHB_CLK>;
->> +            power-domains = <&rpmhpd RPMHPD_MMCX>;
->> +            required-opps = <&rpmhpd_opp_low_svs>;
-> 
-> Please add default status = "disabled";
-> 
->> +            #clock-cells = <1>;
->> +            #reset-cells = <1>;
->> +            #power-domain-cells = <1>;
->> +        };
->> +
->> +        camcc: clock-controller@ade0000 {
->> +            compatible = "qcom,sm8650-camcc";
->> +            reg = <0 0x0ade0000 0 0x20000>;
->> +            clocks = <&gcc GCC_CAMERA_AHB_CLK>,
->> +                 <&bi_tcxo_div2>,
->> +                 <&bi_tcxo_ao_div2>,
->> +                 <&sleep_clk>;
->> +            power-domains = <&rpmhpd RPMHPD_MMCX>;
->> +            required-opps = <&rpmhpd_opp_low_svs>;
-> 
-> Please add default status = "disabled";
-> 
->> +            #clock-cells = <1>;
->> +            #reset-cells = <1>;
->> +            #power-domain-cells = <1>;
->> +        };
->> +
->>           mdss: display-subsystem@ae00000 {
->>               compatible = "qcom,sm8650-mdss";
->>               reg = <0 0x0ae00000 0 0x1000>;
-> 
-> After disabling the clock controllers
+> Signed-off-by: Udipto Goswami <quic_ugoswami@quicinc.com>
+> ---
 
-Clock controllers should never be disabled period, that defeats the
-entire point of having unused clk/pd cleanup.
-
-The only reason for them to be disabled is for cases where platform
-crashes on access due to stinky "security" settings (like with audio
-clocks), or when people are too lazy to upstream panel drivers and
-end up partially upstreaming display-related changes and continue
-using the bootloader-initialized framebuffer. This takes away from
-the very little determinism we have.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
