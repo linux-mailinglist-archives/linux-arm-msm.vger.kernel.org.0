@@ -1,336 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-14936-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83504887C3E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Mar 2024 11:30:27 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D039D887C5B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Mar 2024 11:55:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3792A281CC1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Mar 2024 10:30:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5A3B41F21119
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Mar 2024 10:55:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7AF1B7465;
-	Sun, 24 Mar 2024 10:30:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F14E175A1;
+	Sun, 24 Mar 2024 10:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="N2g+X6T8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UQdMRJgm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8510A15E86;
-	Sun, 24 Mar 2024 10:30:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B0928E7
+	for <linux-arm-msm@vger.kernel.org>; Sun, 24 Mar 2024 10:55:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711276221; cv=none; b=FZnpAju2vZFXr0uo7MB55bfrJpLPIqVBYkWobyIU99mxgrjO6aRTGMoiAE3Ao+zIatUl0XJOXDi8OCEu/16csYRET6hy0vQQklGj6KM4roAGD9H84OBepyxKvuponQ+ltx3Vek4iPffcGnBWrA4hy+eDBlKdslKQ4Md0VAQgPvU=
+	t=1711277755; cv=none; b=OkkpEkhxS6J3QkvhDNpPLD0LmzJAfjhfEdaSBYpboo5aOVCC9E5VzINPkeYDhESQIZSPCHeDaxgN2Zk7+WCNLjOSO/5edZzGdsIFN/gsac9cWUBhvFxBWEaIZtL3nYI4XNmub/y6YhGVwrwkFckmn/bBBM5myUB+hYM20tBkbsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711276221; c=relaxed/simple;
-	bh=Zgn5RhLhw+1fcNEFWwcm+4LZra6J79bA+SrmpCAXALM=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZWeiYomXkEyU4q0wVm0KxzDPEt9B/XTFL+q0gl/1ATRYzYA5MtR4kFvf45HFCjjkpkbFZ/BpH4aQEZQzC7QLKWhzK2AkrwDLhrttMcF3PD9MajG5dwYQiVHWBuAX5f7QCVBlLVs4cfdRrSLtsLDChjtvCtWMl+ghTy25yicV5Ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=N2g+X6T8; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42OATna9027493;
-	Sun, 24 Mar 2024 10:29:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=01l9OWQey/10bufH0pudv
-	gUPTWWJEzRzlXPQ8vQGRQE=; b=N2g+X6T8mMMviI1va5+EOg2w1vA3hGqWJmNZM
-	sjkPbRxLsp3fBEdxGx+x9qoUIeSe6uI557cT4FqLELEj6ddZfUny9DxPl5/4SVJw
-	gmRUqYR/rjUnwL/4XU/4gZ8Sd01x92ovZxHHPThGqrTLXJNwxsbUCUpO2I0a9jmy
-	ClIupbuqMPMqrh89txibMXK9uD9x4ecysFUDDpM5blK4OL0O9XeEqnbtfetE+8Kg
-	lM4TtRwFbDUReeS8yHDeSEgmIlnzgCg1KzBRcIge15ePuwdNSiHdqZc0qwI7Cac5
-	v75hqbVzeldVU+kLtORtbTvp6j8GGH7lPyO/U6TqtCHB67C7w==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x1mskmefs-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 24 Mar 2024 10:29:49 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42OATmKA022831
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 24 Mar 2024 10:29:48 GMT
-Received: from hu-akhilpo-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Sun, 24 Mar 2024 03:29:44 -0700
-Date: Sun, 24 Mar 2024 15:59:36 +0530
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Masahiro Yamada <masahiroy@kernel.org>,
-        Nathan Chancellor
-	<nathan@kernel.org>,
-        Nicolas Schier <nicolas@fjasle.eu>, Rob Clark
-	<robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul
-	<sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        "David
- Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        <linux-kbuild@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>
-Subject: Re: [PATCH v4 10/16] drm/msm: generate headers on the fly
-Message-ID: <20240324102936.6eojmk3k2qabtasq@hu-akhilpo-hyd.qualcomm.com>
-References: <20240323-fd-xml-shipped-v4-0-cca5e8457b9e@linaro.org>
- <20240323-fd-xml-shipped-v4-10-cca5e8457b9e@linaro.org>
+	s=arc-20240116; t=1711277755; c=relaxed/simple;
+	bh=DOwSL7mXDyPOAjM0UkBuYKsf3EoBGfoyowiAFlRJIsU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VwJTr3sNBl2k4QQ/ggNKWVMXSjhg3uOPrfvkTBAMRLHUx3Nl80QjjoAe8G9rZHTyRzjGq0oc+Ys0NNvhAdAYoO5r72ECYrNy+jKdB/kjZAREudooaV5nhUwfDGPXoy+dkePBk5urUSY1T6ywiDqg84cCP5GMPXsjkEe1Kh0QbFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UQdMRJgm; arc=none smtp.client-ip=209.85.219.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-dc745927098so3099613276.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Mar 2024 03:55:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1711277753; x=1711882553; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DOwSL7mXDyPOAjM0UkBuYKsf3EoBGfoyowiAFlRJIsU=;
+        b=UQdMRJgmLJHvmCiShSG2dwpgUsED1zrEULD12xEdXiXrANAbNW4siyhRdC7Zlr2T4r
+         03tp9Ylc7DxyB+ah8AcTAckckAjeKIUgfRSThIPTPHW17ZgmiXOs19EazWiqlPQnTwQk
+         NBUSm+/E8uPlVbQZH23YS+vxY3TNeHRY4V+9BHyzjtbM1igPgWYU5QCEtzZyH2xLWyZi
+         B5qAbrDmuME0NC0wfzUdq7iFBJ27+jBgP3AeL7Hy8ASFRWJSOkL3KU+uFycsNNikgRS6
+         ggQkCOszC2+LLhUh3vL7qDbOe1N6l3VGrmuqdvuQxHaXxrsZrgngpi+P/gNx95swnCiB
+         jrjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711277753; x=1711882553;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DOwSL7mXDyPOAjM0UkBuYKsf3EoBGfoyowiAFlRJIsU=;
+        b=MMKR2mdgOveqb38e1++NAYx/lyYuOnGibDtbE8IwQ68YnsCaCDHRddEG7rYkU1TXJJ
+         Dy9AQa96p0v0CGwOiGkxU66lbCisdcb+X5KwUFcALgc8qHgZTmY8g7s3TzGejwbBYZ+O
+         dlENzLuTdvb2B7UHFf0Zd1YYIftPWLZxnvwbbJhoofocPmIQa3sVIADxCoyxx6UUZKl8
+         WrzyFcjptcsEPWBoX1DiA7JWgTY1/9QIOkUn9TUxzAmH1AqRyqtDu8waKCj4owTmcXXA
+         Ib5Mqr+hvZqxEy0iAlEb6ew7Gug5aPiglJLNXbJakuJXXD1A6y0QOGEUKQMSv7C3sMc2
+         9RHA==
+X-Forwarded-Encrypted: i=1; AJvYcCUcSii52kW4BfhcXl8Doojznm45NQkm4LkJM6BDqaxBIDTTfLfdnEFQFVQ+gpAi8bMaHbd3CHPr8lMT3crDblSW8nPqhdr1cWhfHaee8w==
+X-Gm-Message-State: AOJu0Ywr0tc8cPziN77XGRA3ZrSZS+gWoIYPTdMbmc7lcExJSxRzzqg6
+	lzCEG5Ck2ZaSp/jOsB/AV7tEAFNgnwprjwziSNmOhharKshfQttdvhYkJCO2ZzJP5NLVJpjYLxb
+	57Gi36U+y6I5OvtLG2WZUUsEdFmDm5fI+S/qPQw==
+X-Google-Smtp-Source: AGHT+IExyKjpZseSV1kpJ7RcBkKqU6Q57JVG4+6PiFJV0gPMfZO9nn0Edo5Fex/bx491hEBPiYAPOfEi0VViYT9ql54=
+X-Received: by 2002:a5b:181:0:b0:dce:2e9:a637 with SMTP id r1-20020a5b0181000000b00dce02e9a637mr2807424ybl.20.1711277752811;
+ Sun, 24 Mar 2024 03:55:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240323-fd-xml-shipped-v4-10-cca5e8457b9e@linaro.org>
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Du1qeUnsdDiaXHQJcozNXRl8JxztSbpy
-X-Proofpoint-GUID: Du1qeUnsdDiaXHQJcozNXRl8JxztSbpy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-24_07,2024-03-21_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=999
- bulkscore=0 mlxscore=0 malwarescore=0 clxscore=1015 spamscore=0
- adultscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2403240066
+References: <20240321-apss-ipq-pll-cleanup-v2-0-201f3cf79fd4@gmail.com>
+ <20240321-apss-ipq-pll-cleanup-v2-3-201f3cf79fd4@gmail.com>
+ <CAA8EJprr4E1CM4f+eBzdRN41nm33xY-hRPQDn3peR94vLyJsYQ@mail.gmail.com>
+ <ca4d85f1-397e-4c43-8548-436b9238e85e@gmail.com> <CAA8EJpp9jyCHgMSEBMumSz7xXUkMRm3wapjUdjzeOuJSpH5g5w@mail.gmail.com>
+ <a34f1ab4-e505-4281-9a8f-b72c62beed5d@gmail.com>
+In-Reply-To: <a34f1ab4-e505-4281-9a8f-b72c62beed5d@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Sun, 24 Mar 2024 12:55:41 +0200
+Message-ID: <CAA8EJpqDzKnwuHVwKpKURELB+fnGFEB221z+pOSYypCUy2MwuA@mail.gmail.com>
+Subject: Re: [PATCH v2 3/6] clk: qcom: apss-ipq-pll: remove 'pll_type' field
+ from struct 'apss_pll_data'
+To: Gabor Juhos <j4g8y7@gmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, Mar 23, 2024 at 12:57:02AM +0200, Dmitry Baryshkov wrote:
-> Generate DRM/MSM headers on the fly during kernel build. This removes a
-> need to push register changes to Mesa with the following manual
-> synchronization step. Existing headers will be removed in the following
-> commits (split away to ease reviews).
+On Sun, 24 Mar 2024 at 09:29, Gabor Juhos <j4g8y7@gmail.com> wrote:
+>
+> 2024. 03. 22. 23:33 keltez=C3=A9ssel, Dmitry Baryshkov =C3=ADrta:
+>
+> ...
+>
+> >> Although my opinion that it is redundant still stand, but I'm not agai=
+nst
+> >> keeping the pll_type. However if we keep that, then at least we should=
+ use
+> >> private enums (IPQ_APSS_PLL_TYPE_* or similar) for that in order to ma=
+ke it more
+> >> obvious that it means a different thing than the CLK_ALPHA_PLL_TYPE_* =
+values.
+> >>
+> >> This solution would be more acceptable?
+> >
+> > This looks like a slight overkill, but yes, it is more acceptable. The
+> > logic should be type =3D> functions, not the other way around.
+> >
+> >
+>
+> If that is overkill, it does not worth the change. I will drop the patch =
+and
+> send an updated series.
 
-Is this approach common in upstream kernel? Isn't it a bit awkward from
-legal perspective to rely on a source file outside of kernel during
-compilation?
+Either way is fine to me.
 
--Akhil
 
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/gpu/drm/msm/.gitignore |  1 +
->  drivers/gpu/drm/msm/Makefile   | 97 +++++++++++++++++++++++++++++++++---------
->  drivers/gpu/drm/msm/msm_drv.c  |  3 +-
->  drivers/gpu/drm/msm/msm_gpu.c  |  2 +-
->  4 files changed, 80 insertions(+), 23 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/.gitignore b/drivers/gpu/drm/msm/.gitignore
-> new file mode 100644
-> index 000000000000..9ab870da897d
-> --- /dev/null
-> +++ b/drivers/gpu/drm/msm/.gitignore
-> @@ -0,0 +1 @@
-> +generated/
-> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
-> index 26ed4f443149..c861de58286c 100644
-> --- a/drivers/gpu/drm/msm/Makefile
-> +++ b/drivers/gpu/drm/msm/Makefile
-> @@ -1,10 +1,11 @@
->  # SPDX-License-Identifier: GPL-2.0
->  ccflags-y := -I $(srctree)/$(src)
-> +ccflags-y += -I $(obj)/generated
->  ccflags-y += -I $(srctree)/$(src)/disp/dpu1
->  ccflags-$(CONFIG_DRM_MSM_DSI) += -I $(srctree)/$(src)/dsi
->  ccflags-$(CONFIG_DRM_MSM_DP) += -I $(srctree)/$(src)/dp
->  
-> -msm-y := \
-> +adreno-y := \
->  	adreno/adreno_device.o \
->  	adreno/adreno_gpu.o \
->  	adreno/a2xx_gpu.o \
-> @@ -18,7 +19,11 @@ msm-y := \
->  	adreno/a6xx_gmu.o \
->  	adreno/a6xx_hfi.o \
->  
-> -msm-$(CONFIG_DRM_MSM_HDMI) += \
-> +adreno-$(CONFIG_DEBUG_FS) += adreno/a5xx_debugfs.o \
-> +
-> +adreno-$(CONFIG_DRM_MSM_GPU_STATE)	+= adreno/a6xx_gpu_state.o
-> +
-> +msm-display-$(CONFIG_DRM_MSM_HDMI) += \
->  	hdmi/hdmi.o \
->  	hdmi/hdmi_audio.o \
->  	hdmi/hdmi_bridge.o \
-> @@ -31,7 +36,7 @@ msm-$(CONFIG_DRM_MSM_HDMI) += \
->  	hdmi/hdmi_phy_8x74.o \
->  	hdmi/hdmi_pll_8960.o \
->  
-> -msm-$(CONFIG_DRM_MSM_MDP4) += \
-> +msm-display-$(CONFIG_DRM_MSM_MDP4) += \
->  	disp/mdp4/mdp4_crtc.o \
->  	disp/mdp4/mdp4_dsi_encoder.o \
->  	disp/mdp4/mdp4_dtv_encoder.o \
-> @@ -42,7 +47,7 @@ msm-$(CONFIG_DRM_MSM_MDP4) += \
->  	disp/mdp4/mdp4_kms.o \
->  	disp/mdp4/mdp4_plane.o \
->  
-> -msm-$(CONFIG_DRM_MSM_MDP5) += \
-> +msm-display-$(CONFIG_DRM_MSM_MDP5) += \
->  	disp/mdp5/mdp5_cfg.o \
->  	disp/mdp5/mdp5_cmd_encoder.o \
->  	disp/mdp5/mdp5_ctl.o \
-> @@ -55,7 +60,7 @@ msm-$(CONFIG_DRM_MSM_MDP5) += \
->  	disp/mdp5/mdp5_plane.o \
->  	disp/mdp5/mdp5_smp.o \
->  
-> -msm-$(CONFIG_DRM_MSM_DPU) += \
-> +msm-display-$(CONFIG_DRM_MSM_DPU) += \
->  	disp/dpu1/dpu_core_perf.o \
->  	disp/dpu1/dpu_crtc.o \
->  	disp/dpu1/dpu_encoder.o \
-> @@ -85,14 +90,16 @@ msm-$(CONFIG_DRM_MSM_DPU) += \
->  	disp/dpu1/dpu_vbif.o \
->  	disp/dpu1/dpu_writeback.o
->  
-> -msm-$(CONFIG_DRM_MSM_MDSS) += \
-> +msm-display-$(CONFIG_DRM_MSM_MDSS) += \
->  	msm_mdss.o \
->  
-> -msm-y += \
-> +msm-display-y += \
->  	disp/mdp_format.o \
->  	disp/mdp_kms.o \
->  	disp/msm_disp_snapshot.o \
->  	disp/msm_disp_snapshot_util.o \
-> +
-> +msm-y += \
->  	msm_atomic.o \
->  	msm_atomic_tracepoints.o \
->  	msm_debugfs.o \
-> @@ -115,12 +122,12 @@ msm-y += \
->  	msm_submitqueue.o \
->  	msm_gpu_tracepoints.o \
->  
-> -msm-$(CONFIG_DEBUG_FS) += adreno/a5xx_debugfs.o \
-> -	dp/dp_debug.o
-> +msm-$(CONFIG_DRM_FBDEV_EMULATION) += msm_fbdev.o
->  
-> -msm-$(CONFIG_DRM_MSM_GPU_STATE)	+= adreno/a6xx_gpu_state.o
-> +msm-display-$(CONFIG_DEBUG_FS) += \
-> +	dp/dp_debug.o
->  
-> -msm-$(CONFIG_DRM_MSM_DP)+= dp/dp_aux.o \
-> +msm-display-$(CONFIG_DRM_MSM_DP)+= dp/dp_aux.o \
->  	dp/dp_catalog.o \
->  	dp/dp_ctrl.o \
->  	dp/dp_display.o \
-> @@ -130,21 +137,69 @@ msm-$(CONFIG_DRM_MSM_DP)+= dp/dp_aux.o \
->  	dp/dp_audio.o \
->  	dp/dp_utils.o
->  
-> -msm-$(CONFIG_DRM_FBDEV_EMULATION) += msm_fbdev.o
-> -
-> -msm-$(CONFIG_DRM_MSM_HDMI_HDCP) += hdmi/hdmi_hdcp.o
-> +msm-display-$(CONFIG_DRM_MSM_HDMI_HDCP) += hdmi/hdmi_hdcp.o
->  
-> -msm-$(CONFIG_DRM_MSM_DSI) += dsi/dsi.o \
-> +msm-display-$(CONFIG_DRM_MSM_DSI) += dsi/dsi.o \
->  			dsi/dsi_cfg.o \
->  			dsi/dsi_host.o \
->  			dsi/dsi_manager.o \
->  			dsi/phy/dsi_phy.o
->  
-> -msm-$(CONFIG_DRM_MSM_DSI_28NM_PHY) += dsi/phy/dsi_phy_28nm.o
-> -msm-$(CONFIG_DRM_MSM_DSI_20NM_PHY) += dsi/phy/dsi_phy_20nm.o
-> -msm-$(CONFIG_DRM_MSM_DSI_28NM_8960_PHY) += dsi/phy/dsi_phy_28nm_8960.o
-> -msm-$(CONFIG_DRM_MSM_DSI_14NM_PHY) += dsi/phy/dsi_phy_14nm.o
-> -msm-$(CONFIG_DRM_MSM_DSI_10NM_PHY) += dsi/phy/dsi_phy_10nm.o
-> -msm-$(CONFIG_DRM_MSM_DSI_7NM_PHY) += dsi/phy/dsi_phy_7nm.o
-> +msm-display-$(CONFIG_DRM_MSM_DSI_28NM_PHY) += dsi/phy/dsi_phy_28nm.o
-> +msm-display-$(CONFIG_DRM_MSM_DSI_20NM_PHY) += dsi/phy/dsi_phy_20nm.o
-> +msm-display-$(CONFIG_DRM_MSM_DSI_28NM_8960_PHY) += dsi/phy/dsi_phy_28nm_8960.o
-> +msm-display-$(CONFIG_DRM_MSM_DSI_14NM_PHY) += dsi/phy/dsi_phy_14nm.o
-> +msm-display-$(CONFIG_DRM_MSM_DSI_10NM_PHY) += dsi/phy/dsi_phy_10nm.o
-> +msm-display-$(CONFIG_DRM_MSM_DSI_7NM_PHY) += dsi/phy/dsi_phy_7nm.o
-> +
-> +msm-y += $(adreno-y) $(msm-display-y)
->  
->  obj-$(CONFIG_DRM_MSM)	+= msm.o
-> +
-> +quiet_cmd_headergen = GENHDR  $@
-> +      cmd_headergen = mkdir -p $(obj)/generated && $(PYTHON3) $(srctree)/$(src)/registers/gen_header.py --rnn $(srctree)/$(src)/registers --xml $< c-defines > $@
-> +
-> +$(obj)/generated/%.xml.h: $(src)/registers/adreno/%.xml \
-> +		$(src)/registers/adreno/adreno_common.xml \
-> +		$(src)/registers/adreno/adreno_pm4.xml \
-> +		$(src)/registers/freedreno_copyright.xml \
-> +		$(src)/registers/gen_header.py \
-> +		$(src)/registers/rules-fd.xsd \
-> +		FORCE
-> +	$(call if_changed,headergen)
-> +
-> +$(obj)/generated/%.xml.h: $(src)/registers/display/%.xml \
-> +		$(src)/registers/freedreno_copyright.xml \
-> +		$(src)/registers/gen_header.py \
-> +		$(src)/registers/rules-fd.xsd \
-> +		FORCE
-> +	$(call if_changed,headergen)
-> +
-> +ADRENO_HEADERS = \
-> +	generated/a2xx.xml.h \
-> +	generated/a3xx.xml.h \
-> +	generated/a4xx.xml.h \
-> +	generated/a5xx.xml.h \
-> +	generated/a6xx.xml.h \
-> +	generated/a6xx_gmu.xml.h \
-> +	generated/adreno_common.xml.h \
-> +	generated/adreno_pm4.xml.h \
-> +
-> +DISPLAY_HEADERS = \
-> +	generated/dsi_phy_7nm.xml.h \
-> +	generated/dsi_phy_10nm.xml.h \
-> +	generated/dsi_phy_14nm.xml.h \
-> +	generated/dsi_phy_20nm.xml.h \
-> +	generated/dsi_phy_28nm_8960.xml.h \
-> +	generated/dsi_phy_28nm.xml.h \
-> +	generated/dsi.xml.h \
-> +	generated/hdmi.xml.h \
-> +	generated/mdp4.xml.h \
-> +	generated/mdp5.xml.h \
-> +	generated/mdp_common.xml.h \
-> +	generated/sfpb.xml.h
-> +
-> +$(addprefix $(obj)/,$(adreno-y)): $(addprefix $(obj)/,$(ADRENO_HEADERS))
-> +$(addprefix $(obj)/,$(msm-display-y)): $(addprefix $(obj)/,$(DISPLAY_HEADERS))
-> +
-> +targets += $(ADRENO_HEADERS) $(DISPLAY_HEADERS)
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index 97790faffd23..9c33f4e3f822 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -17,8 +17,9 @@
->  
->  #include "msm_drv.h"
->  #include "msm_debugfs.h"
-> +#include "msm_gem.h"
-> +#include "msm_gpu.h"
->  #include "msm_kms.h"
-> -#include "adreno/adreno_gpu.h"
->  
->  /*
->   * MSM driver version:
-> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-> index 655002b21b0d..cd185b9636d2 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu.c
-> +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> @@ -11,7 +11,7 @@
->  #include "msm_mmu.h"
->  #include "msm_fence.h"
->  #include "msm_gpu_trace.h"
-> -#include "adreno/adreno_gpu.h"
-> +//#include "adreno/adreno_gpu.h"
->  
->  #include <generated/utsrelease.h>
->  #include <linux/string_helpers.h>
-> 
-> -- 
-> 2.39.2
-> 
-> 
+--=20
+With best wishes
+Dmitry
 
