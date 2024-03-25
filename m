@@ -1,138 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-15091-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15092-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7472C88AF68
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 20:07:23 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6834388AFB7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 20:21:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0D3512E2E6B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 19:07:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9984C1C61DAC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 19:21:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F56F8836;
-	Mon, 25 Mar 2024 19:07:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37D1E14A9D;
+	Mon, 25 Mar 2024 19:21:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nrcrqrb9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aSJvs0IV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4457763A5;
-	Mon, 25 Mar 2024 19:07:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76954EAF1
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 19:21:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711393640; cv=none; b=IRaHDA+YvoFFYeRvfkp8GvRYXUlDryuuiX13DSNdfI8BfPhWZVNCS3EjqWQNcq0qRH4lsVQ/LPmUcbVN5jjv6FAWM41s2CCR4oaCfayoOSUu4f3c3jDzzqexVE3EqqEs5EROCGguV6Nq5mTBBUzMeo011W74gFU4wrZ1+Ear0BU=
+	t=1711394490; cv=none; b=rLICQxA7pHpOEGnarkHv50W4eZJBnl8gd4NWXWpQgfoXvVXM9py8KvqafZUGWhMxzbTEjMp6f5sslfJEGBiY8eZlDYVb2pjbs98R2sxb59MEUdYMRSeVnAqNh93pezsC+oOLfVGMunc9EZXhccyuBZK8R5h2DP81TeMYODf7byk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711393640; c=relaxed/simple;
-	bh=R1gMQnITYg/OSZ7ny+xj4dwu+8HA375SzGX3LTp4nDs=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bsftOcXpu9gNZY7hWwonOv/k2ljVcaycsT10KeButT4u2ghghIleOm93ANtbsDt/jFm2Bytb019/YM5n4eCoq2y0+11n4bLcXo4YIla3Gv0YF/hFPSiLE926ihkQPZY8Xbm5eSICzVO8zO5s5JOc+EjV4EoJ0pFa2jbm0rRj8d8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nrcrqrb9; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-34100f4f9a2so2803609f8f.2;
-        Mon, 25 Mar 2024 12:07:19 -0700 (PDT)
+	s=arc-20240116; t=1711394490; c=relaxed/simple;
+	bh=VYRIildENsaBXvR73Y1yIYCKG+Egv5wNELgCKWLzyUI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NgK66cDEKVRM/uM2fGFLxBh5OLFm1nFCr153GOTOw4tzxX3MAPMre5c61G5z42JgIRvUasnWF///VHDFhOfsZsJzOuOPncL3/XRu8PJumU4kxoURLCFWQo9HkXdmG9Ek3BSv5qPHlkW5K2YMVP/zisv1LhK9b6Bkqoi7yKDmAyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aSJvs0IV; arc=none smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-515b3077d09so217853e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 12:21:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711393637; x=1711998437; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=qdQF1e0DPL90+YfbR/8OadJounnRa7UNnfPsT8scWp8=;
-        b=nrcrqrb9CEYFxIWOC0GDtP8nI8HlAFvAV0PouQJM7UITUdo5V/EgoguLCgNKfYg0Y6
-         z3Zhr2P7j93/wHc5g92kidwfV40r7P5A/GacbxRQOio/icqLwJOf1B+KsaVB6pwCWXEx
-         iP2L+xQ7Z+mRsbdeuhSMq2Qe/uCwi2dI0dWpz6w1JSznpp7cc3PYD6Z/MDyVoE3bNEOi
-         1SES6gherOiC6T3f4td1B2lkaQ/HGIFqjAcW85j2XKAExGnGkkqjdxYP4AoON150fOID
-         s2QTdrQNDkgK+b3UQ5u6pn/YFohGczKqqf+ziSbCoAciQjj+FUpYf5UUJAACIYnZLw+C
-         1LsA==
+        d=linaro.org; s=google; t=1711394487; x=1711999287; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=7aRdVW7qgX5bNi5oK/bW7TDpJ2AMVEjlX5d8Z7H+qH8=;
+        b=aSJvs0IV/g9UFspWMEOVVg4EVdV307eripfZBG6FHJ/LgDFtDnyHyer8K+n4WEVe9U
+         En2TzRJszJDRkVRWZ3A8uuh0gDbW2kRz3QL9u+n3RRDJ/5T8Vgn++0ECmWiigB0M2Ldb
+         3fjFMKF1gSCJKPCHJ69cPKcNn46j4WkGOwZqKT/cTWVJKh/sYsMemVBTtocdFK721ty3
+         GLfJ7gl5ThPAJZP4SNhpluP9DmrqvZM/lQrADq25i76Zq6FOErS8vxlHo4BIgTZ41FrQ
+         pHfS67pWHkNOoWUxksCEO0kouXHqzgwj1ItrmFtWyFVx+1jUNoakYyVhmK29n4WRhnGN
+         VMSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711393637; x=1711998437;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qdQF1e0DPL90+YfbR/8OadJounnRa7UNnfPsT8scWp8=;
-        b=GsJXY5DvTj4Gjdjqxvi4rVp81kh1//7YsS5BCY3QJDorCMHC3K6YtQy6FH8EMm7IT0
-         oo8lRAMn4piqHdcDMMS9//oy3+ZiUWGofW25g3h8Sdh7SYipXHog6zlUXwLhF4eNJ3OQ
-         IK8wtyN+5h4eNFWsjDCab2rqAYJlklxE9xdOlNR0/1mIwdDJ09wYxv6CGEp2WOJr6YvX
-         /D7Qs6UwKfLNN53Lq1f9G+pAOlMq/SrqzuCiG/d7MSv1eg3nl8JsV3yPFhjJpOQrVeYE
-         joKYocGyH7wtValzT+zm0FDAeT4EcioSXJibwW/l1x7wtRLTu3nI+dXq5oVfzyJ/tDd0
-         GhNA==
-X-Forwarded-Encrypted: i=1; AJvYcCVGPCwjB3rN2u2t0tjDhCp3Cjoqb4As6qdMqV4G/7DiDmyNKeksYjHsUghFS2eMG8DnFTt4tjg2s0aWCtLM0IYZz4w5DtwT49SzsWixcIYqRN3+t+Dgfg9lhqQemSUe9wpDyCybyBUcCe+wTle6JPptkbBd7milZp8PQPkRDN08/d4gN6V/pzB3ww1fkdGwbqBwfoyMoV4ChtL+eg==
-X-Gm-Message-State: AOJu0YyGHsWucimrO9OO1u5j6YsOsYP4btMerCDGVTLPXYSijkyBhZ88
-	HCrlhVe64vEmZJrZns9QSoYbZ2p4MmsUWfxDWCtQc/yOEjfdkOvt
-X-Google-Smtp-Source: AGHT+IENJ2YH4rBbHJIjWpOfKAtf1CaSVXXM3dTe50OdTvMGqH+p41Vt6oGnzPE/SuDaUCicZYLPBg==
-X-Received: by 2002:adf:fa8b:0:b0:341:c449:d735 with SMTP id h11-20020adffa8b000000b00341c449d735mr4311383wrr.44.1711393637344;
-        Mon, 25 Mar 2024 12:07:17 -0700 (PDT)
-Received: from localhost.localdomain (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
-        by smtp.googlemail.com with ESMTPSA id ay9-20020a5d6f09000000b0033b87c2725csm10356163wrb.104.2024.03.25.12.07.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Mar 2024 12:07:16 -0700 (PDT)
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: Andrew Lunn <andrew@lunn.ch>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	netdev@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: William Wortel <wwortel@dorpstraat.com>,
-	stable@vger.kernel.org
-Subject: [net PATCH] net: phy: qcom: at803x: fix kernel panic with at8031_probe
-Date: Mon, 25 Mar 2024 20:06:19 +0100
-Message-ID: <20240325190621.2665-1-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.43.0
+        d=1e100.net; s=20230601; t=1711394487; x=1711999287;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7aRdVW7qgX5bNi5oK/bW7TDpJ2AMVEjlX5d8Z7H+qH8=;
+        b=lJxTiusia4cONd2vbYYgs7RTr7Su+Sw/VhlCP3sq+wRQI2bnU6WJ1/7NBCplA/VAVs
+         z7Jg5/YSiXz2fS79TJq08weVzLMqMcRikufgTecF2VNgVm+AOIknhmIaviuC5SyuA+KF
+         Rf06Z+hak0sxN8pJJScjkMNqo2CxporZp3hada55wvs1BzkJwlgb5LauhoFEwDyd9Dwn
+         dEer8X5RLAAdI4ikyQeNGLjsdaeZbyAf9TutszTumHT2iwDcNlLP1ZFLQJOiIKb2z760
+         LvSrkdrPHjTRh7PNIEXUX9tAoISWneMMdwczK9MeNdUBEGa0rfRYm2o69dyU31kkLEZ5
+         VjvA==
+X-Forwarded-Encrypted: i=1; AJvYcCXPXFBgmVkZ3Aboo10y9boHNgAMVFe3xOddwug8aGRujODlajqtGJaU4UakPBIZCPaTG+RCzyTRhjJYcWFjh4kJYDNO8alxl9c+B+rWpw==
+X-Gm-Message-State: AOJu0YxhE+DT5SYC0gs8ocYGukQgphxT8leafEwP9wI4Jw2jaNDH+tyj
+	58/1jgvZVS3zJrqoTbaAKEWFchBep4iaHFP61XN4Mpk9Bf8ALc2eBzRaX+lPZnQ=
+X-Google-Smtp-Source: AGHT+IEyItUn9hdMpAk8rPYqPH5OSZ8RVw98PyI0tvTq+a/OYosBp+4XMzaXdqBEC6fwQvPpHMe5aQ==
+X-Received: by 2002:a05:6512:6d3:b0:515:8653:80d9 with SMTP id u19-20020a05651206d300b00515865380d9mr6475912lff.57.1711394486439;
+        Mon, 25 Mar 2024 12:21:26 -0700 (PDT)
+Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id b4-20020a170906708400b00a46da83f7fdsm3368114ejk.145.2024.03.25.12.21.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Mar 2024 12:21:26 -0700 (PDT)
+Message-ID: <bf2c507d-2320-425e-8bc2-8a2858281559@linaro.org>
+Date: Mon, 25 Mar 2024 20:21:24 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] clk: qcom: gdsc: treat optional supplies as optional
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Mark Brown <broonie@kernel.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240325081957.10946-1-johan+linaro@kernel.org>
+ <9b2a7e9f-dbb2-4acb-91a7-fcc64d5cfabd@sirena.org.uk>
+ <CAA8EJpqvYYCFRJVr732VORyHgpU-H2nif+n6hB6pJbXsqCH3_Q@mail.gmail.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
+ BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
+ HGWdmtO+RvadOVi6CoUDqALsmfS3MUG5Pj2Ne9+0jRg4hEnB92AyF9rW2G3qisFcwPgvatt7
+ TXD5E38mLyOPOUyXNj9XpDbt1hNwKQfiidmPh5e7VNAWRnW1iCMMoKqzM1Anzq7e5Afyeifz
+ zRcQPLaqrPjnKqZGL2BKQSZDh6NkI5ZLRhhHQf61fkWcUpTp1oDC6jWVfT7hwRVIQLrrNj9G
+ MpPzrlN4YuAqKeIer1FMt8cq64ifgTzxHzXsMcUdclzq2LTk2RXaPl6Jg/IXWqUClJHbamSk
+ t1bfif3SnmhA6TiNvEpDKPiT3IDs42THU6ygslrBxyROQPWLI9IL1y8S6RtEh8H+NZQWZNzm
+ UQ3imZirlPjxZtvz1BtnnBWS06e7x/UEAguj7VHCuymVgpl2Za17d1jj81YN5Rp5L9GXxkV1
+ aUEwONM3eCI3qcYm5JNc5X+JthZOWsbIPSC1Rhxz3JmWIwP1udr5E3oNRe9u2LIEq+wH/toH
+ kpPDhTeMkvt4KfE5m5ercid9+ZXAqoaYLUL4HCEw+HW0DXcKDwARAQABzShLb25yYWQgRHli
+ Y2lvIDxrb25yYWQuZHliY2lvQGxpbmFyby5vcmc+wsGOBBMBCAA4FiEEU24if9oCL2zdAAQV
+ R4cBcg5dfFgFAmQ5bqwCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQR4cBcg5dfFjO
+ BQ//YQV6fkbqQCceYebGg6TiisWCy8LG77zV7DB0VMIWJv7Km7Sz0QQrHQVzhEr3trNenZrf
+ yy+o2tQOF2biICzbLM8oyQPY8B///KJTWI2khoB8IJSJq3kNG68NjPg2vkP6CMltC/X3ohAo
+ xL2UgwN5vj74QnlNneOjc0vGbtA7zURNhTz5P/YuTudCqcAbxJkbqZM4WymjQhe0XgwHLkiH
+ 5LHSZ31MRKp/+4Kqs4DTXMctc7vFhtUdmatAExDKw8oEz5NbskKbW+qHjW1XUcUIrxRr667V
+ GWH6MkVceT9ZBrtLoSzMLYaQXvi3sSAup0qiJiBYszc/VOu3RbIpNLRcXN3KYuxdQAptacTE
+ mA+5+4Y4DfC3rUSun+hWLDeac9z9jjHm5rE998OqZnOU9aztbd6zQG5VL6EKgsVXAZD4D3RP
+ x1NaAjdA3MD06eyvbOWiA5NSzIcC8UIQvgx09xm7dThCuQYJR4Yxjd+9JPJHI6apzNZpDGvQ
+ BBZzvwxV6L1CojUEpnilmMG1ZOTstktWpNzw3G2Gis0XihDUef0MWVsQYJAl0wfiv/0By+XK
+ mm2zRR+l/dnzxnlbgJ5pO0imC2w0TVxLkAp0eo0LHw619finad2u6UPQAkZ4oj++iIGrJkt5
+ Lkn2XgB+IW8ESflz6nDY3b5KQRF8Z6XLP0+IEdLOOARkOW7yEgorBgEEAZdVAQUBAQdAwmUx
+ xrbSCx2ksDxz7rFFGX1KmTkdRtcgC6F3NfuNYkYDAQgHwsF2BBgBCAAgFiEEU24if9oCL2zd
+ AAQVR4cBcg5dfFgFAmQ5bvICGwwACgkQR4cBcg5dfFju1Q//Xta1ShwL0MLSC1KL1lXGXeRM
+ 8arzfyiB5wJ9tb9U/nZvhhdfilEDLe0jKJY0RJErbdRHsalwQCrtq/1ewQpMpsRxXzAjgfRN
+ jc4tgxRWmI+aVTzSRpywNahzZBT695hMz81cVZJoZzaV0KaMTlSnBkrviPz1nIGHYCHJxF9r
+ cIu0GSIyUjZ/7xslxdvjpLth16H27JCWDzDqIQMtg61063gNyEyWgt1qRSaK14JIH/DoYRfn
+ jfFQSC8bffFjat7BQGFz4ZpRavkMUFuDirn5Tf28oc5ebe2cIHp4/kajTx/7JOxWZ80U70mA
+ cBgEeYSrYYnX+UJsSxpzLc/0sT1eRJDEhI4XIQM4ClIzpsCIN5HnVF76UQXh3a9zpwh3dk8i
+ bhN/URmCOTH+LHNJYN/MxY8wuukq877DWB7k86pBs5IDLAXmW8v3gIDWyIcgYqb2v8QO2Mqx
+ YMqL7UZxVLul4/JbllsQB8F/fNI8AfttmAQL9cwo6C8yDTXKdho920W4WUR9k8NT/OBqWSyk
+ bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
+ nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
+ izWDgYvmBE8=
+In-Reply-To: <CAA8EJpqvYYCFRJVr732VORyHgpU-H2nif+n6hB6pJbXsqCH3_Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On reworking and splitting the at803x driver, in splitting function of
-at803x PHYs it was added a NULL dereference bug where priv is referenced
-before it's actually allocated and then is tried to write to for the
-is_1000basex and is_fiber variables in the case of at8031, writing on
-the wrong address.
+On 25.03.2024 3:10 PM, Dmitry Baryshkov wrote:
+> On Mon, 25 Mar 2024 at 16:01, Mark Brown <broonie@kernel.org> wrote:
+>>
+>> On Mon, Mar 25, 2024 at 09:19:57AM +0100, Johan Hovold wrote:
+>>> Since commit deebc79b28d6 ("clk: qcom: gpucc-sc8280xp: Add external
+>>> supply for GX gdsc") the GDSC supply must be treated as optional to
+>>> avoid warnings like:
+>>>
+>>>       gpu_cc-sc8280xp 3d90000.clock-controller: supply vdd-gfx not found, using dummy regulator
+>>>
+>>> on SC8280XP.
+>>
+>> Can this device actually run with the supply physically disconnected?
+> 
+> On SC8280XP this is supplied via power-domain instead of the supply.
 
-Fix this by correctly setting priv local variable only after
-at803x_probe is called and actually allocates priv in the phydev struct.
+I think Dmitry is asking about this bit:
 
-Reported-by: William Wortel <wwortel@dorpstraat.com>
-Cc: <stable@vger.kernel.org>
-Fixes: 25d2ba94005f ("net: phy: at803x: move specific at8031 probe mode check to dedicated probe")
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
----
- drivers/net/phy/qcom/at803x.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+if (ret != -ENODEV)
+	return ret;
 
-diff --git a/drivers/net/phy/qcom/at803x.c b/drivers/net/phy/qcom/at803x.c
-index 4717c59d51d0..e79657f76bea 100644
---- a/drivers/net/phy/qcom/at803x.c
-+++ b/drivers/net/phy/qcom/at803x.c
-@@ -797,7 +797,7 @@ static int at8031_parse_dt(struct phy_device *phydev)
- 
- static int at8031_probe(struct phy_device *phydev)
- {
--	struct at803x_priv *priv = phydev->priv;
-+	struct at803x_priv *priv;
- 	int mode_cfg;
- 	int ccr;
- 	int ret;
-@@ -806,6 +806,8 @@ static int at8031_probe(struct phy_device *phydev)
- 	if (ret)
- 		return ret;
- 
-+	priv = phydev->priv;
-+
- 	/* Only supported on AR8031/AR8033, the AR8030/AR8035 use strapping
- 	 * options.
- 	 */
--- 
-2.43.0
+which is basically repeating the difference that _optional makes
 
+Konrad
 
