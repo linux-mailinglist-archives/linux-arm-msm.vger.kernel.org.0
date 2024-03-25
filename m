@@ -1,71 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-14984-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14985-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9250988A3F6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 15:15:37 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E13A488A3FA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 15:15:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 461892E305D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 14:15:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1ED601C3ACEA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 14:15:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7027181BAF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF6DE181BB8;
 	Mon, 25 Mar 2024 10:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="mX+EpAHb"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="S247ssFR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A7AF19668F
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 10:04:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409C4196696
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 10:04:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711361054; cv=none; b=P03bqgywdBJSyy3hrG/En5wgO+016J+ktlZGusJujuVLlkQTied2xiXTAZn413rsgrmY0H7mZAiK9swHUyxYWbqQmgSqbg7Gr+bstIDQbmrw8ZdzGj/k40993Ee2yPfSU8mPKIzuRH4EkHqAwj/c4pisCJeJsQyWu5CHjxSVgRs=
+	t=1711361054; cv=none; b=I+9zZbtNdjQ9nLhBNWR0ZO2W9To8n+keuKBM/t2AouRw1cunokgEQXaEl1VZn63hX8jO+5V9023SahzMsWDUMa/tmzGZJMbN5Ccvp8A0jnTEIq/bvToTo9qOUcUTiiNyOl/nV7EoUHQSXyty/0s0qJgP65FPF1z4Ddm0Hudvdh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1711361054; c=relaxed/simple;
-	bh=Xu1f+RPnvEjBRa3DS5LFCyEe2cJ9nWGA+wJiNMQI+rs=;
+	bh=yc3TA3xqOHykGX9wkzx96KfZURh2W53MzHIuanKsFYQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=bkn/KZp5+c/BJcSZ2mxgJ6Q6hQH1jhjtK8JJs7fNKWhX1/+1Lds6x0GEoFvX5B/ZqaJyZbYveuzxMSLF/cHiTSBiULoj5m3rJteabCXfYPrw0/rEb7Jvb1g4Jut5vdDe3kLVqf8pb2ZLf//wOUFPTIFg10gVEexE44pqFbemRrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=mX+EpAHb; arc=none smtp.client-ip=209.85.221.46
+	 MIME-Version; b=aburRwcuGb1+ThF28Z/5NWt0J6mcsS5ynfKZFmAvFHkMZ08H/wb5/zycchtebL9f16GCYzNPz7bQuTP9dYJzAVHSJp4vLIixdT3hPuf3gjEHaYrsIXOewmaaL0A1G7F/MVXVEAO9NTd9yRudjc5tbgFvMBpWzuKyodCHeqrmvZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=S247ssFR; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-33ecb04e018so2910288f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 03:04:11 -0700 (PDT)
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-33ec7e1d542so2899496f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 03:04:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1711361050; x=1711965850; darn=vger.kernel.org;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1711361052; x=1711965852; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8fl37vGRYSy2kvf67OGkupfqZ+uqFGGpfw8NF9/514Q=;
-        b=mX+EpAHbM6wART6kFGrGyie3b+83UlT/m431IWSyrQT/ktQ/hCO9Ba1BqfJcCIqolS
-         zgZMv5hQUNLDor5Ef+QgPyRQWGwhoYdkBdYjH1ZDYDpgQQlCq+mbfO86gAhxwmUPYcDu
-         Y3z9W5rINGQAEW0biEnfQ1+g9I++8ts3ybxh42oFRs7/JWzy2cH0pdYz3GOwOMaOG9Nd
-         I0tPrwYypTQHXpTUfOwj+NsZBsb0jfv+tQ+EbDklhXUrp1qP075wSm5pnoNMHtd367e1
-         +Rt6v+eg0Q2i0j5T7mIqWhjHRIj0YouDTZHX5sfvcYTTN9g8II/SHK/XdqZcXRp/DUDR
-         PA/A==
+        bh=2Pvx+Hod+Kla6c/44/4Di1ACsNH6U9GMcNcbC9Uj+TQ=;
+        b=S247ssFRUwdSk8T9nwaJeFrXqaE3XsUzH+RHlg1oLRmzeXvswXL4MENvqO53kz5ATl
+         bPedPuaqgCAGf83V6kT1FBlSZwdeg70mVJH9OKD/IHSkvG6nc7Fm98O1o2ngcoL/8Mcw
+         2W0nh9u/RjDwe9Xva3qmi8YtzaFOiqMQQwj1LnNVTNvjRnPO55hzozlbhNG/XaVSUglf
+         opybVWEmLZLEIbXR32/cLqD/MNCcvhUK2d9B4geEcG45H29uDUwyzV8sw2sRolwTgeCV
+         ZngxA/2+RUXh2mI0GN56nlwdMc4wrshEUEjD9QyUZttInUDK7HLXRsvZK4h4KuKkviOf
+         G8bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711361050; x=1711965850;
+        d=1e100.net; s=20230601; t=1711361052; x=1711965852;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8fl37vGRYSy2kvf67OGkupfqZ+uqFGGpfw8NF9/514Q=;
-        b=bfnJqWnSdxnVDnjUsYyJS9P6p4XvfVQMl3iBZO2+iYL3IyMVAtCcQZ5xlVGHoZ1miP
-         bJ3axySHmpvn8+UuK5fLMEfg4w7SlO/h+pqcVZH6xZU+I3iv+sgKwr9nc00ZL3Qkx1O+
-         tGFdT/xDh9P5A3WYRmRw1E4oeNmhX35o+/WlPNdWoZsyvjJI5KMgH7lsLE6WRaCvr2LA
-         VH7FWQX2UvKkVASG2ASPYV5KjtxmroDw9ph1Sp0x5AgIYkfplmP24rJYaVHXGISVi5bY
-         TTXi7xaj/GYL4d/G18854/LO27C0I4Xj8frz9y0VBT36Deq59Uy9Ejodu6D4BGXjqTmB
-         Rc/A==
-X-Gm-Message-State: AOJu0YzclLevV4fIUAVs4V7iMEIGVeb2bP1+QqQk+7H1gGaucBBcq9Sv
-	NJ5Aa+MD2YoSl/JsFboOc0JdE8K7VEIUVSOHTmGXUGRTWlaak4A8Q1oDgBxWjRg=
-X-Google-Smtp-Source: AGHT+IH+hhp3hOA7UiKIPybzE1EoKjoYoyhlQKM6glQr3E4kR6w3ftf3S8vD8LlexgRD9oDYqvKJUA==
-X-Received: by 2002:a5d:4084:0:b0:33e:c924:5486 with SMTP id o4-20020a5d4084000000b0033ec9245486mr4958754wrp.46.1711361050341;
-        Mon, 25 Mar 2024 03:04:10 -0700 (PDT)
+        bh=2Pvx+Hod+Kla6c/44/4Di1ACsNH6U9GMcNcbC9Uj+TQ=;
+        b=OWgsUi9z90TqQo/7ZIQMCctGoYF2ZYjNBKBM30G5nqZCvTD54iZ8F1tgu2rRU1MSQJ
+         JVRh77+pxjV3Qs9dPHHXfX8v9vZLrnvnFHDeVOF5xlze3MCUVX8LZes/01hq19z+uVvy
+         MAh5zhWw6RH/sGx8VLSGfTwDloqqrJh50zE1ltSoRnPPBC0vn/PooBWHZ9WdHCJMwk+a
+         bUqKjDGrTdx17qjXpN93kUzy2x2LZj8Hy2l5hZU2OKWJYNIa7dnGSVvs2VOu/e38vbQ1
+         LVZWg/Q1U/WAbUvjQPRm2KWRDIrFyZDmExNw0jHhVzuF7ufqvEf1/QVaiqpL8ZmTQ1TM
+         qW/A==
+X-Gm-Message-State: AOJu0YxCrcynznNmfrTjbL9U2iT04maD+1ilLz4nmkU6RoSDG8bvNm65
+	ePRYr/JNciWP6do/fcqeeGqZK1n/G94qP8UUbO280V4WbRMOMHJR3LVdx6pXLTQ=
+X-Google-Smtp-Source: AGHT+IF/JifOKum2RJKJjuImyaM+c3DW2K0mf/mB+xqoUjr7FECmMn9fB6GN+Y/rnUOjDbOdeYspBA==
+X-Received: by 2002:adf:e8c6:0:b0:33e:7a71:1a34 with SMTP id k6-20020adfe8c6000000b0033e7a711a34mr4747426wrn.57.1711361051756;
+        Mon, 25 Mar 2024 03:04:11 -0700 (PDT)
 Received: from brgl-uxlite.home ([2a01:cb1d:75a:e000:861d:8b72:a859:4ce9])
-        by smtp.gmail.com with ESMTPSA id dv13-20020a0560000d8d00b0033e25c39ac3sm9086874wrb.80.2024.03.25.03.04.09
+        by smtp.gmail.com with ESMTPSA id dv13-20020a0560000d8d00b0033e25c39ac3sm9086874wrb.80.2024.03.25.03.04.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Mar 2024 03:04:09 -0700 (PDT)
+        Mon, 25 Mar 2024 03:04:10 -0700 (PDT)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
 To: Andy Gross <agross@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
@@ -84,9 +84,9 @@ Cc: linux-arm-msm@vger.kernel.org,
 	kernel@quicinc.com,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Deepti Jaggi <quic_djaggi@quicinc.com>
-Subject: [PATCH v9 05/13] firmware: qcom: scm: make qcom_scm_ice_set_key() use the TZ allocator
-Date: Mon, 25 Mar 2024 11:03:51 +0100
-Message-Id: <20240325100359.17001-6-brgl@bgdev.pl>
+Subject: [PATCH v9 06/13] firmware: qcom: scm: make qcom_scm_lmh_dcvsh() use the TZ allocator
+Date: Mon, 25 Mar 2024 11:03:52 +0100
+Message-Id: <20240325100359.17001-7-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20240325100359.17001-1-brgl@bgdev.pl>
 References: <20240325100359.17001-1-brgl@bgdev.pl>
@@ -109,51 +109,46 @@ Tested-by: Andrew Halaney <ahalaney@redhat.com> # sc8280xp-lenovo-thinkpad-x13s
 Tested-by: Deepti Jaggi <quic_djaggi@quicinc.com> #sa8775p-ride
 Reviewed-by: Elliot Berman <quic_eberman@quicinc.com>
 ---
- drivers/firmware/qcom/qcom_scm.c | 21 +++++----------------
- 1 file changed, 5 insertions(+), 16 deletions(-)
+ drivers/firmware/qcom/qcom_scm.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index cd47389ac80c..de66319cbfb9 100644
+index de66319cbfb9..feb44cc03d2c 100644
 --- a/drivers/firmware/qcom/qcom_scm.c
 +++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -1200,32 +1200,21 @@ int qcom_scm_ice_set_key(u32 index, const u8 *key, u32 key_size,
- 		.args[4] = data_unit_size,
+@@ -1343,8 +1343,6 @@ EXPORT_SYMBOL_GPL(qcom_scm_lmh_profile_change);
+ int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
+ 		       u64 limit_node, u32 node_id, u64 version)
+ {
+-	dma_addr_t payload_phys;
+-	u32 *payload_buf;
+ 	int ret, payload_size = 5 * sizeof(u32);
+ 
+ 	struct qcom_scm_desc desc = {
+@@ -1359,7 +1357,9 @@ int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
  		.owner = ARM_SMCCC_OWNER_SIP,
  	};
--	void *keybuf;
--	dma_addr_t key_phys;
-+
- 	int ret;
  
--	/*
--	 * 'key' may point to vmalloc()'ed memory, but we need to pass a
--	 * physical address that's been properly flushed.  The sanctioned way to
--	 * do this is by using the DMA API.  But as is best practice for crypto
--	 * keys, we also must wipe the key after use.  This makes kmemdup() +
--	 * dma_map_single() not clearly correct, since the DMA API can use
--	 * bounce buffers.  Instead, just use dma_alloc_coherent().  Programming
--	 * keys is normally rare and thus not performance-critical.
--	 */
--
--	keybuf = dma_alloc_coherent(__scm->dev, key_size, &key_phys,
--				    GFP_KERNEL);
-+	void *keybuf __free(qcom_tzmem) = qcom_tzmem_alloc(__scm->mempool,
-+							   key_size,
-+							   GFP_KERNEL);
- 	if (!keybuf)
+-	payload_buf = dma_alloc_coherent(__scm->dev, payload_size, &payload_phys, GFP_KERNEL);
++	u32 *payload_buf __free(qcom_tzmem) = qcom_tzmem_alloc(__scm->mempool,
++							       payload_size,
++							       GFP_KERNEL);
+ 	if (!payload_buf)
  		return -ENOMEM;
- 	memcpy(keybuf, key, key_size);
--	desc.args[1] = key_phys;
-+	desc.args[1] = qcom_tzmem_to_phys(keybuf);
+ 
+@@ -1369,11 +1369,10 @@ int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
+ 	payload_buf[3] = 1;
+ 	payload_buf[4] = payload_val;
+ 
+-	desc.args[0] = payload_phys;
++	desc.args[0] = qcom_tzmem_to_phys(payload_buf);
  
  	ret = qcom_scm_call(__scm->dev, &desc, NULL);
  
- 	memzero_explicit(keybuf, key_size);
- 
--	dma_free_coherent(__scm->dev, key_size, keybuf, key_phys);
+-	dma_free_coherent(__scm->dev, payload_size, payload_buf, payload_phys);
  	return ret;
  }
- EXPORT_SYMBOL_GPL(qcom_scm_ice_set_key);
+ EXPORT_SYMBOL_GPL(qcom_scm_lmh_dcvsh);
 -- 
 2.40.1
 
