@@ -1,63 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-15076-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15075-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9FEF88AD39
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 19:11:54 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70F1688AD0F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 19:09:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 764961F66E9C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 18:11:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A2B761C34637
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 18:09:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F17D6F08A;
-	Mon, 25 Mar 2024 17:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4020B12E1FA;
+	Mon, 25 Mar 2024 17:30:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IlJCckWo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mc21567.ispgateway.de (mc21567.ispgateway.de [134.119.19.28])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8948512D1E5
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 17:39:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=134.119.19.28
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E4512E1E5;
+	Mon, 25 Mar 2024 17:30:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711388384; cv=none; b=Q5sdQqaA7WB9cRX1nB1C/IXonGAH+0KmU0Knia10nyVEhz5LlkwjZRyGaXkaAho1GDUTRM0KmgMujKEziDDBgFDZAewtHRvIAOkka3n76Eoc8iWZFWoABP4CTnKBsk6CwuoHHghGhDo+WQYi1CFRSZfr8vDZA0GDTgu/aM3RwjU=
+	t=1711387820; cv=none; b=lY7iecpmpuEjhRix9RdfUWOrnw5DWxr790kYXLiYlDpnMRbhiaxvo8C0XP15IRRfexWPWqN5C1t3tp9OmBKFAyNLUdyeKW5xUsuIW+FYR1CY4Qdc3OWfF/+n+o5QMdVnW+rvdj8YeNcUEfuTTSC9iAK+aHHdDghMCc4bK00WbI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711388384; c=relaxed/simple;
-	bh=uahksBDk/Po99AbMYQgYwijbwGgoK8wgAUe5rmjes4c=;
-	h=To:Subject:Date:From:Message-ID:MIME-Version:Content-Type; b=G4SlvLamYYQm/EE9KRCkqHakWwfBLY0tjdt4iyf9r+ReVNPRULeStFISR/0g+l8aHgBgLXglsAzRWsrTDjfGPeyq3UFy8EDXApGal43sjqsJw/R3dQL2yUpAlz7zaus6o2Z1JZ+k1zzsVn6jc6BT0w79c45Yq/C/vJCxSLiVrmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cm-ol.de; spf=pass smtp.mailfrom=morbitzer-media.de; arc=none smtp.client-ip=134.119.19.28
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cm-ol.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=morbitzer-media.de
-Received: from mc21567.ispgateway.de (php82.df_default [IPv6:fd00:dead:beef::8])
-	by mc21567.ispgateway.de (Postfix) with ESMTPS id 044D966E94
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 18:29:43 +0100 (CET)
-Received: (from re839580@localhost)
-	by mc21567.ispgateway.de (8.15.2/8.15.2/Submit) id 42PHTg3X811858;
-	Mon, 25 Mar 2024 18:29:42 +0100
-X-Authentication-Warning: mc21567.ispgateway.de: re839580 set sender to bm@morbitzer-media.de using -f
-To: linux-arm-msm@vger.kernel.org
-Subject: =?us-ascii?Q?Ihre_Nachricht_an_uns:_"Wishing_for_Your_Undivi?=
- =?us-ascii?Q?ded_Attention"?=
-X-PHP-Originating-Script: 839580:PHPMailer.php
-Date: Mon, 25 Mar 2024 17:29:42 +0000
-From: WordPress <info@cm-ol.de>
-Message-ID: <xu5MAX9mADDDXfCJCQ4k7mit0DlHwJvT0jotY3CUiU@chancenmanagement.net>
-X-Mailer: PHPMailer 6.8.1 (https://github.com/PHPMailer/PHPMailer)
+	s=arc-20240116; t=1711387820; c=relaxed/simple;
+	bh=MZEKCbTRYkyqe+9HBejrDZkLY/jTlsFTwN+TfksBPzo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=XrxdHuTOdXJQtul1HrtUyL894s0fnR9WRo0ousF5ef+LT43clkIxFcAhu5oMrnok02DWQ2DNZ3RHrBkcPj1/F0n+xVH3qaC/6Jtx17LRGZ2HcPU3ciJdeo6VcVWq2otEbqnrXSfsTFp41l9cX/sjuWMwJPv/Sy7UTDqE4qhbsB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IlJCckWo; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42PExqJv003871;
+	Mon, 25 Mar 2024 17:30:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=nKJL2glUN1khhJxllTuVn8romkg29EQEStQj/muOjcg=; b=Il
+	JCckWoU67Kqz/FOZCLWvU4Rn+5yl56EFp1UkP+zz/ZHIg+SNYshi3oFgdkpEc6JH
+	xZW4/w11pU2d9PYrNdJzbUo5jTLPw4Jc3FZsOunSXBx7ayv7LgKftX6aZoioodyi
+	4IQpgAnQ/vNRceFOBjTRVDvC09kqPUNNopnCzvcAm32vTphYAsFTn55Lf/tRouG3
+	zunuYK2uYsKTDrqq6eXCoeDm2pbI6iELnj4lUzCJsv8XUOP2NV1Zh8Lk9l/8lAa8
+	vCbIDFt8vx3zDcwsJgWdBtzaHWhDcog2NVddYCHmFiOqFS/FOxGTrHMWJFXR11XH
+	SxwiaNl+Iwt+0viozAbg==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x31wssrrf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 25 Mar 2024 17:30:11 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42PHUALv027223
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 25 Mar 2024 17:30:10 GMT
+Received: from [10.216.25.244] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 25 Mar
+ 2024 10:30:04 -0700
+Message-ID: <807015d4-c5ed-4e04-9948-fd1ff894a04e@quicinc.com>
+Date: Mon, 25 Mar 2024 22:59:49 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v16 7/9] usb: dwc3: qcom: Refactor IRQ handling in glue
+ driver
+To: Johan Hovold <johan@kernel.org>
+CC: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring
+	<robh+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Wesley Cheng
+	<quic_wcheng@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Greg
+ Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Felipe Balbi
+	<balbi@kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_ppratap@quicinc.com>,
+        <quic_jackp@quicinc.com>
+References: <20240307062052.2319851-1-quic_kriskura@quicinc.com>
+ <20240307062052.2319851-8-quic_kriskura@quicinc.com>
+ <ZgFyukBXIIwZo7v-@hovoldconsulting.com>
+ <50926b91-3c61-4dbf-85c9-7558ab96e628@quicinc.com>
+ <ZgF6zvaT2OkrbkHK@hovoldconsulting.com>
+Content-Language: en-US
+From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <ZgF6zvaT2OkrbkHK@hovoldconsulting.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: fv_zp3OmKnWSlRlXye2O5YSOpWEYu8CD
+X-Proofpoint-ORIG-GUID: fv_zp3OmKnWSlRlXye2O5YSOpWEYu8CD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-25_15,2024-03-21_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ clxscore=1015 malwarescore=0 priorityscore=1501 phishscore=0 bulkscore=0
+ adultscore=0 spamscore=0 mlxscore=0 mlxlogscore=792 impostorscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403210001 definitions=main-2403250101
 
-Vielen Dank,
-wir haben Ihre Nachricht erhalten und werden uns schnellst möglich mit Ihnen in Verbindung setzen.
 
-Ihre Nachricht: My one and only, your love is my anchor. 
-Should you have a spare moment, would you kindly check out my page through this link: https://tinyurl.com/22zuveho I've uploaded some recent photos and updates from recent events there. It would be wonderful to catch up and share our experiences.
 
--- 
-Diese E-Mail wurde automatisch erstellt.
+On 3/25/2024 6:53 PM, Johan Hovold wrote:
+> On Mon, Mar 25, 2024 at 06:45:07PM +0530, Krishna Kurapati PSSNV wrote:
+>>>> +static int dwc3_qcom_setup_irq(struct platform_device *pdev)
+>>>> +{
+>>>> +	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
+>>>> +	bool is_multiport;
+>>>> +	int ret;
+>>>> +	int i;
+>>>> +
+>>>> +	qcom->num_ports = dwc3_qcom_find_num_ports(pdev);
+>>>> +	if (qcom->num_ports < 0)
+>>>> +		return -ENOMEM;
+>>>
+>>> Just return 'ret' directly.
+>>
+>> Sure, will init ret to -ENOMEM and return ret here. >
+Hi Johan,
 
+> I meant that you should return whatever error dwc3_qcom_find_num_ports()
+> returns, so perhaps something like:
+> 
+
+Got it. Any error that might come up in interrupt reading as well.
+> 	
+> 	ret = dwc3_qcom_find_num_ports(pdev);
+> 	if (ret < 0)
+> 		return ret;
+> 
+> 	qcom->num_ports = ret;
+> 
+> It looks like dwc3_qcom_find_num_ports() can also return 0 (e.g. on
+> malformed DT), which also needs to be handled somehow. I missed that
+> earlier.
+> 
+
+ From what I remember, Konrad mentioned that we might not need to 
+support incomplete or improper DT [1]. Also since this is close to 
+getting merged, can we take up any changes for Malformed DT handling 
+later given that only one or two devices are present and less likely to 
+be given a malformed DT.
+
+[1]: 
+https://lore.kernel.org/all/c8d77d4f-6696-4dc9-8030-daf1d10b114b@linaro.org/
+
+Regards,
+Krishna,
 
