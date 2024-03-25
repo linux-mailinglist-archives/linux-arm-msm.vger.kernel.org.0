@@ -1,110 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-14965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6A7B88A1C6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 14:24:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E5EDE88A367
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 14:59:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E78331C38484
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 13:24:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 23B871C3A080
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 13:59:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB1281448FE;
-	Mon, 25 Mar 2024 09:49:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DC1F1598E2;
+	Mon, 25 Mar 2024 10:37:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="oQULipp7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fTN4Rt79"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay6-d.mail.gandi.net (relay6-d.mail.gandi.net [217.70.183.198])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5851D158DB5;
-	Mon, 25 Mar 2024 09:19:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.198
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053C41836E8;
+	Mon, 25 Mar 2024 09:38:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711358383; cv=none; b=oyjUZisAAlDGuZupBIFGKEJYV3eOTkKrhUvTYTk/+sWZVawDY4tRTThGU1WycQ4bslSXTMgiIkeX7BbulC9ptBMUQkILSD/zsy/FJWvGNmHZE4XX7qIfgnXmEGZzqEF1u251pQQyfmH7LToqYoV62IRFz7lN2mCZVitf9OgvNUc=
+	t=1711359491; cv=none; b=Up61atS5TAskIRsqvff/ZuCf2TVeq/UFNOKrmMvxc2hwuNwvFEvhWKqPRL6aF0JaTg54NnP6uTwnqkEzoXNnmWSj2GwUqzke73y5oDdrhVqgZrnaB+x9y01V1hzcLgNcpucA30CgDX8qbMVOpqDr9aXSDjcBQL1m4LkAdxcKJvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711358383; c=relaxed/simple;
-	bh=H3V7nr7fyekfvV8hDUpZrAFWcpoaN+qI3h65nywyXl4=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rMdKo0dwOAa964Q/JPfaOuEPP5Go4pKnVYEE3nynCkMZASx4QlowBBkGfB2X+ueKl31J6GQVzcaYArSP/3navCZ0/Tbvebi6n36aGrBGQEdjK6GHpnPHI38CLeW3lyWkgfrDh9CmZ05AJ/Zb6TgUqkR9vEPh+JScc31B6TL+CGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=oQULipp7; arc=none smtp.client-ip=217.70.183.198
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id E2A8FC000E;
-	Mon, 25 Mar 2024 09:19:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1711358372;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qU3idiONxQ8MOsIGn2G3Z38vry1Zi7EOzhSXkBaZx3c=;
-	b=oQULipp7fpuoLENxFEYSzusTa1N+3RT+c29MLC61RSlUAX89wB4XuGe2h/91Is/HVsnDLe
-	1JB5u38X7Yt6TEYS3+2WbV7uIBIBTYaaRoNGULhdRvDjj/qUh3KqiS1WjXWYJAJlnPuQba
-	DvXrnZ1Ms9dX/jhDnqfFcCv8xtTg0ElkoUZEVRcittP8umfxjanofuuFPxuV3TyRlL8ANJ
-	ASwAvZRvzp53EHJkUTgng/7li2TTo46X+0nj41A3KvDP3ppm9qda7+0QExcXYoy8AJLKhy
-	2jj747yfAYmAv1ivg/v5IWzu2EsyLXRCXaQzGzOz9Q4BeZrEhKBQH6UIlHLPNA==
-Date: Mon, 25 Mar 2024 10:19:30 +0100
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Christian Marangi <ansuelsmth@gmail.com>, Richard Weinberger
- <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>, Sricharan
- Ramabadhran <quic_srichara@quicinc.com>, Md Sadre Alam
- <quic_mdalam@quicinc.com>, linux-mtd@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- stable@vger.kernel.org
-Subject: Re: [PATCH] mtd: rawnand: qcom: Fix broken misc_cmd_type in exec_op
-Message-ID: <20240325101930.13ed914d@xps-13>
-In-Reply-To: <20240322150510.GC3774@thinkpad>
-References: <20240320001141.16560-1-ansuelsmth@gmail.com>
-	<20240322150510.GC3774@thinkpad>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1711359491; c=relaxed/simple;
+	bh=LYP5Vsr+Zdn9vmu5oX47MSKUEjdDr89roznGdVIV8NQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FvE8n63QKlC4X19OCKq+ohz1noDfmu/woh3TXv1TKZTuqshE3faFJZlguICzP4FPMww14C8S/K7LemuIjX4AWSAOWtC4ikYheTv1Adrh4JiBU+sptBNMvhny0HHrdZGDBxA0IJfQCwWz2G+gQQtPU0rObCN+C08l8YXOKzHeY/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fTN4Rt79; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C3BCC43399;
+	Mon, 25 Mar 2024 09:38:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711359490;
+	bh=LYP5Vsr+Zdn9vmu5oX47MSKUEjdDr89roznGdVIV8NQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fTN4Rt79eQEh52TaxQ9rjiVbMydp1wnV9526o8VNh1Ii+/xtIoPqzDnXQsfw0rxTL
+	 mvMKcIb0wVzFAgG8lCfBr8SoWJtnCPLE8J34W6f6ovMEy4bMtFfLrrS8e9hrdSv5D+
+	 juoxqHH7QCQm1276XDdfOWC6P3ZoPn5B3WO7IhT4UR+neTTpQC6BSp6iaD7AbYeQ72
+	 lW9HdUUMtGlLMuSbZhaFUs6a63NlPwxrVyMgH6wXJXgJk0qVCbNLk+ziK02qF5oNXC
+	 SSAFzzJA1sgWWU3vuXqF96QuvsDkrv6+3yziAo0edcIhLqB2s2JdDKTY84v0lZa+Jn
+	 0FPiuR1GVs0fw==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rogmW-000000006zS-1WeW;
+	Mon, 25 Mar 2024 10:38:17 +0100
+Date: Mon, 25 Mar 2024 10:38:16 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v4 3/8] clk: qcom: gpucc-sc8280xp: Add external supply
+ for GX gdsc
+Message-ID: <ZgFGCGgbY-4Xd_2k@hovoldconsulting.com>
+References: <20240125-sa8295p-gpu-v4-0-7011c2a63037@quicinc.com>
+ <20240125-sa8295p-gpu-v4-3-7011c2a63037@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-GND-Sasl: miquel.raynal@bootlin.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240125-sa8295p-gpu-v4-3-7011c2a63037@quicinc.com>
 
-Hi,
+On Thu, Jan 25, 2024 at 01:05:09PM -0800, Bjorn Andersson wrote:
+> On SA8295P and SA8540P the GFX rail is powered by a dedicated external
+> regulator, instead of the rpmh-controlled "gfx.lvl".
+> 
+> Define the "vdd-gfx" as the supply regulator for the GDSC, to cause the
+> gdsc logic to look for, and control, this external power supply.
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> ---
+>  drivers/clk/qcom/gpucc-sc8280xp.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/clk/qcom/gpucc-sc8280xp.c b/drivers/clk/qcom/gpucc-sc8280xp.c
+> index 8e147ee294ee..e2b3bc000c71 100644
+> --- a/drivers/clk/qcom/gpucc-sc8280xp.c
+> +++ b/drivers/clk/qcom/gpucc-sc8280xp.c
+> @@ -399,6 +399,7 @@ static struct gdsc gx_gdsc = {
+>  	},
+>  	.pwrsts = PWRSTS_OFF_ON,
+>  	.flags = CLAMP_IO | RETAIN_FF_ENABLE,
+> +	.supply = "vdd-gfx",
 
-manivannan.sadhasivam@linaro.org wrote on Fri, 22 Mar 2024 20:35:10
-+0530:
+This change now triggers warnings on SC8280XP which does not have this
+supply:
 
-> On Wed, Mar 20, 2024 at 01:11:39AM +0100, Christian Marangi wrote:
-> > misc_cmd_type in exec_op have multiple problems. With commit a82990c8a4=
-09
-> > ("mtd: rawnand: qcom: Add read/read_start ops in exec_op path") it was
-> > reworked and generalized but actually dropped the handling of the
-> > RESET_DEVICE command.
-> >=20
-> > The rework itself was correct with supporting case where a single misc
-> > command is handled, but became problematic by the addition of exiting
-> > early if we didn't had an ERASE or an OP_PROGRAM_PAGE operation.
-> >=20
-> > Also additional logic was added without clear explaination causing the
-> > erase command to be broken on testing it on a ipq806x nandc.
-> >  =20
->=20
-> Interesting. I believe Alam tested the rework on IPQ platforms and not su=
-re how
-> it got missed.
->=20
-> > Add some additional logic to restore RESET_DEVICE command handling and
-> > fix erase command.
-> >  =20
->=20
-> This sounds like two independent fixes, no? Please split them into separa=
-te
-> patches.
+	gpu_cc-sc8280xp 3d90000.clock-controller: supply vdd-gfx not found, using dummy regulator
 
-Might be split indeed. @Christian, do you plan on sending a v2?
+I've sent a change to start treating this optional supply as truly
+optional here (even if it has not shown up in lore yet):
 
-Thanks,
-Miqu=C3=A8l
+	https://lore.kernel.org/r/20240325081957.10946-1-johan+linaro@kernel.org
+
+But why are we still using the same compatible string for sc8280xp and
+sa8540p and sa8295p if they differ in such a way?
+
+Shouldn't these structures be different for the two classes of SoCs,
+which would avoid such issues and which would allow us to continue to
+warn if the supply is missing on a sa8540p derivative platforms where it
+appears to be required.
+
+Johan
 
