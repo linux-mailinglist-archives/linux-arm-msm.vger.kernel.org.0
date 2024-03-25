@@ -1,181 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-15049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0DF588A89B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 17:14:03 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A90E88A898
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 17:13:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 44E9834139B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 16:12:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 627E932217B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 16:13:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 149011422D5;
-	Mon, 25 Mar 2024 14:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 023F041C66;
+	Mon, 25 Mar 2024 14:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NbuS3/n5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PInVnx/1"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C750412DDB2;
-	Mon, 25 Mar 2024 14:01:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C9714A8B;
+	Mon, 25 Mar 2024 14:02:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711375304; cv=none; b=ZRtXmcciNCS6rTE4+Dp2hAWOhgP6aO8dKR4eY9xnVLqK6Oikp0p9l1QPt9F2tFUq9lxFb1brKYmTSGjGpcDFapCyKCjFbwJD18UbF0BHu8NwXCtSXSrTkucXkmykacDx68nF9j5PR29H/ztert6NV+jOfCPY2ljTvw/mO8wSqmg=
+	t=1711375376; cv=none; b=XtUmuo+Madrl3nYJhBfkaNoEMuiwCd+72JMJ4rvSPL1WQV+svCt2aAxLwnlC+McWf0fr435dBkRpXdjsEBy47023CHMxcJmFGGE8nXditbR/bi2QmxeS3LY2BBJNvDwZ018ybSTrLMjV3f7L+aHDpwbYMScbJk8wIQuBEnqmTY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711375304; c=relaxed/simple;
-	bh=DO7jBH35/9WDTi4g3mhk+XjVvY8I/yCvQNhtDF49C3Y=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=BW4lmgHytmqsEvliqe6HJC15ItSC8JJA89rZ4J0fksHMaWc2uMTWKFFNpqBjFsgVKeD/KOCjL7HsdeeP06V/VfySFjv4g8ZD4JJQ65acUQeU+l5sR8vlCVsrQZSOI5p+s/GeJeq5FUpLi+LTfcSEcFTCcFVIHyJKDMMh1EJvRiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NbuS3/n5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90712C433C7;
-	Mon, 25 Mar 2024 14:01:35 +0000 (UTC)
+	s=arc-20240116; t=1711375376; c=relaxed/simple;
+	bh=LK9smWuFEaz05Mp9x+m54fvpRDKiNeTfa5BBHlCzGmc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rnZ+dyz7hgrAFES0LzH6sknoG2e3Sw/AvUN28cVMEjJ1JRMK76t+m9qjdQTNHh1EFOuA+HtqtksyGZg++GpiIb7xWP93cTJ4SufW98/j6vibL3MVtl0VHv/5R3NttHf2a+5ZoOKp3QFqrdWcpe6TQ8Lg6tsP/Izmv36DdS74yMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PInVnx/1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 886A0C433F1;
+	Mon, 25 Mar 2024 14:02:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711375303;
-	bh=DO7jBH35/9WDTi4g3mhk+XjVvY8I/yCvQNhtDF49C3Y=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-	b=NbuS3/n5VaJ3t+uqiUn8hjAphJOP6TrrhjpklOG7s+HEHCvy+brGcrw7drMMfhZyH
-	 3NGmYhv2ffnscuPpXBo2fsDUb03qsxtnR1/FQ6wb0zgJfel0YhFBQ+JF9R7SOnU6EP
-	 rhJZtHgrpC+fOTyOCGBhe67ss7mHyEk2OlLi+PsonIHbkbrFvjFYP1dGy8JeuSe86Z
-	 geJjzBaFG0ReAmT1PJGivL5pbXtJwPjdTNwxlAc2Dpx1oksqaeXxkDFCyzQCn6hc8C
-	 9OrnK3dCRXAjTI010gcSTZoSSRkD68anC+i37dBeW7KnyCoIepm8mkxtLZlnt6GAht
-	 xBjBjIDOXz4MQ==
-From: Kalle Valo <kvalo@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Marcel Holtmann <marcel@holtmann.org>,  Luiz Augusto von Dentz
- <luiz.dentz@gmail.com>,  "David S . Miller" <davem@davemloft.net>,  Eric
- Dumazet <edumazet@google.com>,  Jakub Kicinski <kuba@kernel.org>,  Paolo
- Abeni <pabeni@redhat.com>,  Rob Herring <robh@kernel.org>,  Krzysztof
- Kozlowski <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley
- <conor+dt@kernel.org>,  Bjorn Andersson <andersson@kernel.org>,  Konrad
- Dybcio <konrad.dybcio@linaro.org>,  Liam Girdwood <lgirdwood@gmail.com>,
-  Mark Brown <broonie@kernel.org>,  Catalin Marinas
- <catalin.marinas@arm.com>,  Will Deacon <will@kernel.org>,  Bjorn Helgaas
- <bhelgaas@google.com>,  Saravana Kannan <saravanak@google.com>,  Geert
- Uytterhoeven <geert+renesas@glider.be>,  Arnd Bergmann <arnd@arndb.de>,
-  Neil Armstrong <neil.armstrong@linaro.org>,  Marek Szyprowski
- <m.szyprowski@samsung.com>,  Alex Elder <elder@linaro.org>,  Srini
- Kandagatla <srinivas.kandagatla@linaro.org>,  Greg Kroah-Hartman
- <gregkh@linuxfoundation.org>,  Abel Vesa <abel.vesa@linaro.org>,
-  Manivannan Sadhasivam <mani@kernel.org>,  Lukas Wunner <lukas@wunner.de>,
-  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-  linux-bluetooth@vger.kernel.org,  netdev@vger.kernel.org,
-  devicetree@vger.kernel.org,  linux-kernel@vger.kernel.org,
-  linux-wireless@vger.kernel.org,  linux-arm-msm@vger.kernel.org,
-  linux-arm-kernel@lists.infradead.org,  linux-pci@vger.kernel.org,
-  linux-pm@vger.kernel.org,  Bartosz Golaszewski
- <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v6 05/16] dt-bindings: net: wireless: describe the
- ath12k PCI module
-References: <20240325131624.26023-1-brgl@bgdev.pl>
-	<20240325131624.26023-6-brgl@bgdev.pl>
-Date: Mon, 25 Mar 2024 16:01:33 +0200
-In-Reply-To: <20240325131624.26023-6-brgl@bgdev.pl> (Bartosz Golaszewski's
-	message of "Mon, 25 Mar 2024 14:16:13 +0100")
-Message-ID: <87msqm8l6q.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	s=k20201202; t=1711375376;
+	bh=LK9smWuFEaz05Mp9x+m54fvpRDKiNeTfa5BBHlCzGmc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=PInVnx/1wR5q2p6s1rAvd7TaCX+K8ktpCtuW0gLM/Kn1O1r4FnLG83UzhLEB5HclE
+	 rY+S2DUIfqXXEPGhl1g53LMhAwYz0FyqbMdFn4TtET3D4SK1/zlqtq6P48pfhMhJdi
+	 X9YWGgOYEP3r50Mf7reLFz/P14hTZlR9nKIUyTBwwELk9lwZXyw29LgyPV0BzC8Gak
+	 LzS4S9BtBisprlsuS9/XpCivHB3hGklkHQ7IqefIwAqu7G73Q0PvOi4/eEJBiOWf/M
+	 /pEuPlUGpwdjQUkQo0vni/gmlfWGMD0OMvt93XK0Sh/UdRzJCuknav2ktdLIE9YNlo
+	 CTOhy3QdaNCdA==
+Date: Mon, 25 Mar 2024 09:02:53 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] clk: qcom: gdsc: treat optional supplies as optional
+Message-ID: <jdnylcw35fofffszbtwd4pq3tltowmbzhugxeiuthjqnpnrjkw@bjfpfgrhk4p2>
+References: <20240325085835.26158-1-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240325085835.26158-1-johan+linaro@kernel.org>
 
-Bartosz Golaszewski <brgl@bgdev.pl> writes:
+On Mon, Mar 25, 2024 at 09:58:35AM +0100, Johan Hovold wrote:
+> Since commit deebc79b28d6 ("clk: qcom: gpucc-sc8280xp: Add external
+> supply for GX gdsc") the GDSC supply must be treated as optional to
+> avoid warnings like:
+> 
+> 	gpu_cc-sc8280xp 3d90000.clock-controller: supply vdd-gfx not found, using dummy regulator
+> 
+> on SC8280XP.
+> 
+> Fortunately, the driver is already prepared to handle this by checking
+> that the regulator pointer is non-NULL before use.
+> 
+> This also avoids triggering a potential deadlock on SC8280XP even if the
+> underlying issue still remains for the derivative platforms like SA8295P
+> that actually use the supply.
+> 
+> Fixes: deebc79b28d6 ("clk: qcom: gpucc-sc8280xp: Add external supply for GX gdsc")
+> Link: https://lore.kernel.org/lkml/Zf25Sv2x9WaCFuIH@hovoldconsulting.com/
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->
-> Add device-tree bindings for the ATH12K module found in the WCN7850
-> package.
->
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Thanks for fixing this, it never made it off my todo list...
+
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+
+Regards,
+Bjorn
+
 > ---
->  .../bindings/net/wireless/qcom,ath12k.yaml    | 100 ++++++++++++++++++
->  1 file changed, 100 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/net/wireless/qcom,ath12k.yaml
->
-> diff --git a/Documentation/devicetree/bindings/net/wireless/qcom,ath12k.yaml b/Documentation/devicetree/bindings/net/wireless/qcom,ath12k.yaml
-> new file mode 100644
-> index 000000000000..c0aad4815953
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/net/wireless/qcom,ath12k.yaml
-> @@ -0,0 +1,100 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +# Copyright (c) 2024 Linaro Limited
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/net/wireless/qcom,ath12k.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>  drivers/clk/qcom/gdsc.c | 11 ++++++++---
+>  1 file changed, 8 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+> index e7a4068b9f39..df9618ab7eea 100644
+> --- a/drivers/clk/qcom/gdsc.c
+> +++ b/drivers/clk/qcom/gdsc.c
+> @@ -487,9 +487,14 @@ int gdsc_register(struct gdsc_desc *desc,
+>  		if (!scs[i] || !scs[i]->supply)
+>  			continue;
+>  
+> -		scs[i]->rsupply = devm_regulator_get(dev, scs[i]->supply);
+> -		if (IS_ERR(scs[i]->rsupply))
+> -			return PTR_ERR(scs[i]->rsupply);
+> +		scs[i]->rsupply = devm_regulator_get_optional(dev, scs[i]->supply);
+> +		if (IS_ERR(scs[i]->rsupply)) {
+> +			ret = PTR_ERR(scs[i]->rsupply);
+> +			if (ret != -ENODEV)
+> +				return ret;
 > +
-> +title: Qualcomm Technologies ath12k wireless devices (PCIe)
-> +
-> +maintainers:
-> +  - Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-
-IMHO it would be better to have just driver maintainers listed here.
-
-> +  - Jeff Johnson <quic_jjohnson@quicinc.com>
-> +  - Kalle Valo <kvalo@kernel.org>
-> +
-> +description:
-> +  Qualcomm Technologies IEEE 802.11ax PCIe devices.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - pci17cb,1107  # WCN7850
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  vddaon-supply:
-> +    description: VDD_AON supply regulator handle
-> +
-> +  vddwlcx-supply:
-> +    description: VDD_WLCX supply regulator handle
-> +
-> +  vddwlmx-supply:
-> +    description: VDD_WLMX supply regulator handle
-> +
-> +  vddrfacmn-supply:
-> +    description: VDD_RFA_CMN supply regulator handle
-> +
-> +  vddrfa0p8-supply:
-> +    description: VDD_RFA_0P8 supply regulator handle
-> +
-> +  vddrfa1p2-supply:
-> +    description: VDD_RFA_1P2 supply regulator handle
-> +
-> +  vddrfa1p8-supply:
-> +    description: VDD_RFA_1P8 supply regulator handle
-> +
-> +  vddpcie0p9-supply:
-> +    description: VDD_PCIE_0P9 supply regulator handle
-> +
-> +  vddpcie1p8-supply:
-> +    description: VDD_PCIE_1P8 supply regulator handle
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - vddaon-supply
-> +  - vddwlcx-supply
-> +  - vddwlmx-supply
-> +  - vddrfacmn-supply
-> +  - vddrfa0p8-supply
-> +  - vddrfa1p2-supply
-> +  - vddrfa1p8-supply
-> +  - vddpcie0p9-supply
-> +  - vddpcie1p8-supply
-
-Same comment here as in patch 4. There are also ath12k PCI devices which
-don't need DT at all. I don't know if that should be reflected in the
-bindings doc but I want to point out this.
-
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+> +			scs[i]->rsupply = NULL;
+> +		}
+>  	}
+>  
+>  	data->num_domains = num;
+> -- 
+> 2.43.0
+> 
 
