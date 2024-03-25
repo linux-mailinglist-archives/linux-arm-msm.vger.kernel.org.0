@@ -1,132 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-15083-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15084-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B0A388AE77
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 19:35:58 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BDE9488AEE9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 19:50:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 499F91C61055
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 18:35:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5F4911FA72D2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 18:50:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EA571292D8;
-	Mon, 25 Mar 2024 18:17:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8013C74424;
+	Mon, 25 Mar 2024 18:42:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dMEbxDLv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a2Xzm23o"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EFC4128836;
-	Mon, 25 Mar 2024 18:17:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC8C73167;
+	Mon, 25 Mar 2024 18:42:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711390638; cv=none; b=Nbmba2qX2f7kNdgSiHjwatxmIvHnVGvIaBSgwVvHRhk6cDYbbkq18MxOUxj9tUa798HRmzPKcuQcgXEEXGLhwwOzqoDTnEeW92uBEwXnecOcFxWKQMmos50S+ZcmJipGuxYcasl7Fp1s3jrNwwclf6fqK7YqjasPYwxz5gHKi3k=
+	t=1711392126; cv=none; b=oeC/wjmAEnSZkNBqspm++ZRQEjq2dblNzLTwixy9o0lZNFRoIAea9XvREAxaxarAcax1YTSEq5XsAhXBKZD1HL9FTT/cpllKYw+hfe1PI2kEwAOjxMV4FI7gFcXitBLuu9XEoiNTAs4gc/gu6SLkex4ivh9L4GclX6ESMKnhvdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711390638; c=relaxed/simple;
-	bh=bt605nCebDtgxsxpVybVsIf1PZRWEuFTtQ9mjuWYnLk=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bXVWLJkfOi2IHf4ZA3OhgvLuKkDniUIZtxUDAMn1kM3XXl7JZ/vTf2wKG8en0DazTJOyjFCSoPnG2FHmsXEjW/65i9Ns5uromzr955aVI9nWMLJvLBvR8K93j4rVqLP9vGasdnjXdllCax9sAu4KK4uh2onGQZdYiqPZDGjMHWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dMEbxDLv; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42PIBeq9003315;
-	Mon, 25 Mar 2024 18:17:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-type; s=qcppdkim1; bh=H0txKNlY/ulNqwjtmNUw
-	yFVi7rSzw1l52qKD0CZVQL8=; b=dMEbxDLvy+3OpxvZojATkhhY27jZuvj9njS8
-	wZtGizMdcxnNRZcElO3p+ewW9VGcQEXolUp+svMCp2EHluspDyGCD2w1KXjhVynt
-	x48/9xpgCcSsvmWohN4l17t3Lh0TKtb141EtMKw/fjSdZC4V7PUCgEm41XinL632
-	/I8iAW95umi9JkOQ32MgcKU2STS9OerY20ZlYg64SiNWxy7w6lbP7B9i0ooElMq8
-	dYOEOWePDRHTPsv+8g5jbmHRfFc/r80qVukmh9ZMpgs1Ssr36+uEsus+TojXWMWu
-	V//6wde8HcuGRiC7BVppNwFpLB5UDbvHzgJKBj1RQQDWi/0RqQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x34c2ska7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 25 Mar 2024 18:17:12 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42PIHBta028653
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 25 Mar 2024 18:17:11 GMT
-Received: from hu-okukatla-hyd.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Mon, 25 Mar 2024 11:17:07 -0700
-From: Odelu Kukatla <quic_okukatla@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: Kees Cook <keescook@chromium.org>, <cros-qcom-dts-watchers@chromium.org>,
-        "Gustavo A . R . Silva" <gustavoars@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-hardening@vger.kernel.org>, <quic_rlaggysh@quicinc.com>,
-        <quic_mdtipton@quicinc.com>
-Subject: [PATCH v4 4/4] arm64: dts: qcom: sc7280: Add clocks for QOS configuration
-Date: Mon, 25 Mar 2024 23:46:28 +0530
-Message-ID: <20240325181628.9407-5-quic_okukatla@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20240325181628.9407-1-quic_okukatla@quicinc.com>
-References: <20240325181628.9407-1-quic_okukatla@quicinc.com>
+	s=arc-20240116; t=1711392126; c=relaxed/simple;
+	bh=KK1BOwhrvf6vsv6qu1VwuPcqqUAsXuisaEG+Fzrn2qg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=T1gvHRSLg+GXMSeRlkr1lSFOZXlaUmIW8s8ZtuKGBaKO+pME8DWQEB3/n1Y70EtChijaUjONUJhKXecjobhCrtjKnuhRxAsrFcI1nViv6sOo7fxXY1VFLFPbaXQiwMnlHOMcuUi+DEAmORH1N1iaVhoeOJORj2aCq0PlaJiFcZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a2Xzm23o; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A3D3C433C7;
+	Mon, 25 Mar 2024 18:42:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711392125;
+	bh=KK1BOwhrvf6vsv6qu1VwuPcqqUAsXuisaEG+Fzrn2qg=;
+	h=From:To:Cc:Subject:Date:From;
+	b=a2Xzm23ob7lHh90BbhizLk/ttOU1oAOWRh0I68/hD7CQ1oPY5heoy1nItym7sOgyl
+	 85Zar8EjOVxAIHUMYWyElYQ5N4kEFszvvPZE/wKfx6JnE+6+Y4twbX3L/LGzlItdwH
+	 6AdKjbxbYr3wneDpKKru5bxw2xjbSjhh4AuyvXXF/4iNmYqaIuAddKLM+qOoopnd1P
+	 c9zcnMhnGC1PKS7saGqHrQnMKbG7+YMp3cojjOADDHCb0U7/eLsvCqHaT3npE8KIq9
+	 eQKN1GLPSBPLIDnxRcUqpdmObW0Kk9DEQQ4mLdlE5y+i8dVw+Gz80bsS3jLWSuumJ7
+	 YUk+g7QCkUI3g==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
+	Douglas Anderson <dianders@chromium.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH v2 0/5] Fix a deadlock with clk_pm_runtime_get()
+Date: Mon, 25 Mar 2024 11:41:54 -0700
+Message-ID: <20240325184204.745706-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.44.0.396.g6e790dbe36-goog
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: swI1NVnYdfpNkupkF5WqmpiWdWn-OUpv
-X-Proofpoint-ORIG-GUID: swI1NVnYdfpNkupkF5WqmpiWdWn-OUpv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-25_16,2024-03-21_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 mlxscore=0 malwarescore=0 lowpriorityscore=0
- adultscore=0 impostorscore=0 mlxlogscore=999 suspectscore=0 spamscore=0
- phishscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2403250107
+Content-Transfer-Encoding: 8bit
 
-Add handles for required clocks to be enabled for configuring
-QoS on sc7280.
+This patch series fixes a deadlock reported[1] on ChromeOS devices
+(Qualcomm sc7180 Trogdor). To get there, we allow __clk_release() to run
+without the prepare_lock held. Then we add runtime PM enabled clk_core
+structs to a list that we iterate and enable runtime PM for each entry
+before grabbing the prepare_lock to walk the clk tree. The details are
+in patch #4.
 
-Signed-off-by: Odelu Kukatla <quic_okukatla@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+The patch after that is based on the analysis in the disable unused
+patch. We similarly resume devices from runtime suspend when walking the
+clk tree for the debugfs clk_summary.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 41f51d326111..981f66a88967 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -2129,6 +2129,8 @@
- 			reg = <0 0x016e0000 0 0x1c080>;
- 			#interconnect-cells = <2>;
- 			qcom,bcm-voters = <&apps_bcm_voter>;
-+			clocks = <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
-+				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>;
- 		};
- 
- 		aggre2_noc: interconnect@1700000 {
-@@ -2136,6 +2138,7 @@
- 			compatible = "qcom,sc7280-aggre2-noc";
- 			#interconnect-cells = <2>;
- 			qcom,bcm-voters = <&apps_bcm_voter>;
-+			clocks = <&rpmhcc RPMH_IPA_CLK>;
- 		};
- 
- 		mmss_noc: interconnect@1740000 {
+Unfortunately this doesn't fix all problems with the usage of runtime PM
+in the clk framework. We still have a problem if preparing a clk happens
+in parallel to the device providing that clk runtime resuming or
+suspending. In that case, the task will go to sleep waiting for the
+runtime PM state to change, and we'll deadlock. This is primarily a
+problem with the global prepare_lock. I suspect we'll be able to fix
+this by implementing per-clk locking, because then we will be able to
+split up the big prepare_lock into smaller locks that don't deadlock on
+some device runtime PM transitions.
+
+I'll start working on that problem in earnest now because I'm worried
+we're going to run into that problem very soon.
+
+Changes from v1 (https://lore.kernel.org/r/):
+ * Check return value of clk_pm_runtime_get_all() in last patch
+ * Fix order of args for error print in clk_pm_runtime_get_all()
+ * Pick up review tags
+ * Move clk_pm_runtime_{get,put}_all() to the pm runtime section
+ * Use kernel-doc for function comments
+ * Drop clk_pm_runtime_{get,put}() calls when they're not doing anything
+
+Stephen Boyd (5):
+  clk: Remove prepare_lock hold assertion in __clk_release()
+  clk: Don't hold prepare_lock when calling kref_put()
+  clk: Initialize struct clk_core kref earlier
+  clk: Get runtime PM before walking tree during disable_unused
+  clk: Get runtime PM before walking tree for clk_summary
+
+ drivers/clk/clk.c | 173 ++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 135 insertions(+), 38 deletions(-)
+
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Marek Szyprowski <m.szyprowski@samsung.com>
+Cc: Taniya Das <quic_tdas@quicinc.com>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>
+
+[1] https://lore.kernel.org/all/20220922084322.RFC.2.I375b6b9e0a0a5348962f004beb3dafee6a12dfbb@changeid/
+
+base-commit: e8f897f4afef0031fe618a8e94127a0934896aba
 -- 
-2.17.1
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
 
 
