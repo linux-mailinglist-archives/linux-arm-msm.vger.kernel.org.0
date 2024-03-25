@@ -1,132 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-15043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B11A88A840
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 17:05:59 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9073C88A854
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 17:07:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3B9C11C395BF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 16:05:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ABCF5344707
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 16:06:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 850C2130E46;
-	Mon, 25 Mar 2024 13:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B85F86CDC1;
+	Mon, 25 Mar 2024 13:50:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nWrJzki3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jScDh8yJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C14D5131721
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 13:47:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FEA16EB7A
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 13:50:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711374474; cv=none; b=qx3lD9lOkkANMXpBSwKooN9ymC4V/TK5B0Y5MpXbAh5dx/EPQYvpqkfDzi+6uLNmTKbfRmVjwK73ocGT8ylrWVL8ArWsRsP5hyJyDQ+mD66dotNPxua681wnCrGbuNBDKCHc4xMbchzx7hV2CX7V6hk2B0UV6GAbNa+HktVUfP4=
+	t=1711374614; cv=none; b=be23UfXU/+/Hc1sq0YJexWh6YAwYfN4neaNSkTjqNGRU/U0bYadjNPPdNs2D8Dob39QiI4/a/pePCdk7flQK9GDc8/s6ayNdIIqMsta/ZE3q+jYR2cS81/nIrCma/6VRFfGm+LS17tyz+HAXwJSi71it+WPiMnTJWOtm4yHvTJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711374474; c=relaxed/simple;
-	bh=nMf1WG+zD/X74g08b7umYWJmp6JqbGTrUZ6iLiTrD9U=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Ap79RY9SA0swBT5q7F3ErjY5Q7sbvKgrBiGd/9PLaHYIMgoidsuSErGCxDO9y/1WB5naPHpIB72uOlkYWtgpY+oxtFMH4np3p1PDc770b4rA5Ed1Zbk48M31itN9DRkJz/DF4vLLkr7Ql3drPN5+oV4n+gHT2GAFPoy++SJ3YGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nWrJzki3; arc=none smtp.client-ip=209.85.208.176
+	s=arc-20240116; t=1711374614; c=relaxed/simple;
+	bh=Q/O4TzucTAKDX/kg7bNrMLHybrgmo/JFI2rvZKGDjBc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ftv27uLsJKQ/gJsIKfvuj24iN78RhmQeSXGfekGWhMu8SjiqoTb4CuiWqMaeiKB6x470elLO+CK0HBStbG4JegNN6k+MzEAU9zfY1Lj5qEltL9jXlDRzV9ZtZgK/a58T6jwUPEaFAsNZ42vE/CgGiXJpGUN8LJqltXxoyoka7Fs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jScDh8yJ; arc=none smtp.client-ip=209.85.219.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2d47a92cfefso51981601fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 06:47:52 -0700 (PDT)
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-dc23bf7e5aaso4265552276.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 06:50:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711374471; x=1711979271; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=7eTxGOGhr0BwiGOYsGylgWeWRP59BGZREX+842aBrQI=;
-        b=nWrJzki3PpjzV2XMqOM1/iLjBeo404ltQ5TRONm7OweDuTthCh4H/n/MswRB4SPzRD
-         rci9mCBTKFle13nwyNqQka4oEZrAg4tyUwVa0pjDes1HesUghFLfEB64VemtAb+9IyRf
-         +/newokc81kJ0rLocVZ5ZM23u6zRDc+4BcwDKNTIjlnbpRSrEbQDchcL7rpO6XLS6GCW
-         mU6WEVt1M5mNpq5kGrIFTToGFyiBZIO7bO10ioGoxxEyFhme9xWAtdH2+b0VlCCFRsF8
-         s4kQxE/WeHcBiYpZqvHjcMOAaszGnCzrT/E3DzYCX+PLYLsYVTwnOeZEOPQ3LbOgnksc
-         I06g==
+        d=linaro.org; s=google; t=1711374612; x=1711979412; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=xY4s7Y2TDs9zFkoIeirDMHTppdLgQXMLcHGPVUr4u2w=;
+        b=jScDh8yJSyXQXu1ywGwkBZCVALCAObT5jLVPpzSwKXYaAuWnlSzgub5700nFX8VmKn
+         9BAAF0MS7cdkfr8UjaUDQJrn56t3gbfTtqHMW5/jphkAv0aGkqz276n/JaTyPjPXYPqW
+         gNfpAD+HNcfvfk3ygNL6i/F0Yd/FFSQfGnyzb5BQCjijzDKDXigQ7WsNbHcI945iNSpD
+         c4H5u5xvI8svMEAxXGr2XN4hDQaaxUVVCkXvKHprOEldPRCmO6npNztMBZe6kDPZ5RjF
+         SVzZG8eDhw2Xu5/9Egi/BDtbieCivgDFs5Btr3YKPTVvoX7hfK6q0zMWH+nXmmyWm9CY
+         TEBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711374471; x=1711979271;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1711374612; x=1711979412;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=7eTxGOGhr0BwiGOYsGylgWeWRP59BGZREX+842aBrQI=;
-        b=hbED0ZZJjnLKnimJPk8S0yBgAVUDH3b24qMaDDG/nIYzf3r8u7UV4hIjNCDD02RIxn
-         zRK8SWlFXz1HLGLS/7ZxQObmqNqSmi0TE0y8RmQDXfTK41t1EcridLbIeN3OGtVrT+EG
-         /Ei/tii46ZhxKut61uuTyXHBcjAduu5ZAIkS95H464oYxs7ZKO8CrPRVQHiHWjMIjryr
-         jRQIf0eSvMh1Nj/oo0kEkytpW/BE6UWBUw6Yw1+MgT23tNHAK66bxGvIX7HDo7GekE7g
-         xpDtqa9876okNtlCrmi/L+oKtvcpvn3op+un30kFqMKJJnKDQqcHpHcuKboh5VYHRFuj
-         Gv1Q==
-X-Gm-Message-State: AOJu0YxK5OL0oRa0TM4ySHgIXDAX/he5gdEqg3CNmBVmbsJC4+YXfo/j
-	TYGi3j7vXG4b0DjrpcojiZnAbJnHLSP/tJmSUDfzOnbylFOBn49zGUO8UQ3An7o=
-X-Google-Smtp-Source: AGHT+IEjpCeqjy8Ax2vgLqRidCnvcSUNUBRVQXWSbQ+VZmOCXPqkhCRVZmJuq0F+SPXH99Pwwo4nEA==
-X-Received: by 2002:a2e:9a90:0:b0:2d4:1700:34a2 with SMTP id p16-20020a2e9a90000000b002d4170034a2mr4915678lji.33.1711374470954;
-        Mon, 25 Mar 2024 06:47:50 -0700 (PDT)
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id x1-20020a2e8381000000b002d2697570fcsm1453340ljg.93.2024.03.25.06.47.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Mar 2024 06:47:50 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 25 Mar 2024 15:46:52 +0200
-Subject: [PATCH] arm64: configs: enable REGULATOR_QCOM_USB_VBUS
+        bh=xY4s7Y2TDs9zFkoIeirDMHTppdLgQXMLcHGPVUr4u2w=;
+        b=W3d4HypG7bUa8G9xrgC2vTn7ezPXC6L6zHZ1XwU5BUZQQcjOua1wiwZg+3YrrigJr0
+         zkLOlTJRjrwhkRz93caHAUjUiJ6iFSAWkoOcKBXzmWO8tbMc84a+TGPPwS8AGG0MQMqv
+         P0rem0gk78/oDjmr3U9h8Ln3ysaxSPUO+7aO3Ezi9cyLbN1IV4Nn0+U0F5qvcmegKktr
+         sM+T9u6W6k/RjCYxLTjMKUKaERY2KCxj3hK3/Uu7Xv+hyhGRs9YNElkPq1yUNoEXs9Il
+         NJol9EWVuUb7dd4COzfB9W8rW6NgtvMyANxi18iUxfBAdPrzzELTebDwdtLwDB2pbHzp
+         IWXw==
+X-Forwarded-Encrypted: i=1; AJvYcCWIFy4/a7pmTkDCNNcbmfE5FmTPEapQU7uZdtple3OuMz6aNg0baabqBX7E377a2yjKb0rO33nxjIDyScO/tD/IvcckutdLJZ8lyqDKjg==
+X-Gm-Message-State: AOJu0YxglwsKEyoKZXT/rO4gPPKKdxGyRXNwCOzx0NuQr3N//Q/iDFb2
+	71xEk/w0McfEDW43tv0Obh5QDp2O0czOMR6oWo7O7VhTULN5DyL1by3vSntgqQFleFsX36Z2tZ0
+	XKihLl6SKKYzHhfL7zBxpSRX1idjyTtJVwZ7eow==
+X-Google-Smtp-Source: AGHT+IHYjl0eFIojoJcLVm6Q3FikVODclbSrKrXlRZtK626pzzHApRK7eCpxDKYvNTGQRZ5CWm9dXvBcGq57I2cLYIQ=
+X-Received: by 2002:a5b:941:0:b0:dd0:76e:d630 with SMTP id x1-20020a5b0941000000b00dd0076ed630mr5054565ybq.53.1711374612032;
+ Mon, 25 Mar 2024 06:50:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240325-arm64-config-usb-vbus-v1-1-d14601f81d08@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAEuAAWYC/x3MMQ6AIAxA0auYzjZBBAavYhwUC3YQDY3GhHh3i
- eMb/i8glJkEhqZAppuFj1TRtQ34bU6RkNdq0Eob1WuLc96dQX+kwBEvWfBeLkGvSFlr1tCRg9q
- emQI//3ec3vcDxqP3vGcAAAA=
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=957;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=nMf1WG+zD/X74g08b7umYWJmp6JqbGTrUZ6iLiTrD9U=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmAYCGwlQyHmR1G36XbSiu1u78FxQKD2Xza8LEh
- clmh8fI7QGJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZgGAhgAKCRCLPIo+Aiko
- 1aCXCACpcfddrwnCyW2l1Qv6Yg0wybUus9mtQFofCGUpEbce1TyN01D4OsSr3TE39g+q/bJ+Qs9
- ODy+Q/37E/WZFd+PmYCrSDTi+K5k6DIIMPLJsC97q8ysP27CSoj7wspIVFjvP5bkJ5z/Cp9/8oR
- Vhmz1doHOv/+egVcw4ZGT0I2ObjOW4hvSOc0yFdQclLTJXIb+ULEtui3TvEmCs4uw52ZoB1d0Ya
- yd3NrHqUGe/LHa8CefNKU5x1AD5eBD+lhYf7wmJYNp3dkv18gzaEZULPbs31IptUOCz+tX/DkuR
- nNjiGhI2kxR44CJ4eT+sK3UlTtpHOd0vuyAm5S4yJ4wuxZua
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+References: <20240323-fd-xml-shipped-v4-0-cca5e8457b9e@linaro.org>
+ <20240323-fd-xml-shipped-v4-10-cca5e8457b9e@linaro.org> <20240324102936.6eojmk3k2qabtasq@hu-akhilpo-hyd.qualcomm.com>
+ <CAA8EJppO8zMq5R7hBPG04Zsr9c3-Z9mqpnJQ88Dbjv3uYDbrUQ@mail.gmail.com> <20240325133252.o6taik5ezrsqtl7g@hu-akhilpo-hyd.qualcomm.com>
+In-Reply-To: <20240325133252.o6taik5ezrsqtl7g@hu-akhilpo-hyd.qualcomm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 25 Mar 2024 15:50:00 +0200
+Message-ID: <CAA8EJppK6o0gsashG8yCLrOLbSVFDbHYEgzqBgP5ts65uTWgfw@mail.gmail.com>
+Subject: Re: [PATCH v4 10/16] drm/msm: generate headers on the fly
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Masahiro Yamada <masahiroy@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
+	Nicolas Schier <nicolas@fjasle.eu>, Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, linux-kbuild@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 
-Enable the VBUS regulator used on Qualcomm platforms (RB1, RB2, RB5) to
-supply VBUS voltage to the USB-C connector.
+On Mon, 25 Mar 2024 at 15:33, Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+>
+> On Sun, Mar 24, 2024 at 12:57:43PM +0200, Dmitry Baryshkov wrote:
+> > On Sun, 24 Mar 2024 at 12:30, Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+> > >
+> > > On Sat, Mar 23, 2024 at 12:57:02AM +0200, Dmitry Baryshkov wrote:
+> > > > Generate DRM/MSM headers on the fly during kernel build. This removes a
+> > > > need to push register changes to Mesa with the following manual
+> > > > synchronization step. Existing headers will be removed in the following
+> > > > commits (split away to ease reviews).
+> > >
+> > > Is this approach common in upstream kernel? Isn't it a bit awkward from
+> > > legal perspective to rely on a source file outside of kernel during
+> > > compilation?
+> >
+> > As long as the source file for that file is available. For examples of
+> > non-trivial generated files see
+> > arch/arm64/include/generated/sysreg-defs.h and
+> > arch/arm64/include/generated/cpucap-defs.h
+>
+> I see that the xml files import a GPL compatible license, so I guess
+> those are fine. The gen_header.py script doesn't include any license.
+> Shouldn't it have one?
 
-Reported-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+True. Rob, could you please add copyright / licence header to the gen_header.py?
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 6c45a465a071..a86e94aea63e 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -772,6 +772,7 @@ CONFIG_REGULATOR_PWM=y
- CONFIG_REGULATOR_QCOM_RPMH=y
- CONFIG_REGULATOR_QCOM_SMD_RPM=y
- CONFIG_REGULATOR_QCOM_SPMI=y
-+CONFIG_REGULATOR_QCOM_USB_VBUS=m
- CONFIG_REGULATOR_RAA215300=y
- CONFIG_REGULATOR_RK808=y
- CONFIG_REGULATOR_S2MPS11=y
 
----
-base-commit: 13ee4a7161b6fd938aef6688ff43b163f6d83e37
-change-id: 20240325-arm64-config-usb-vbus-c0e0554df1e6
 
-Best regards,
 -- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+With best wishes
+Dmitry
 
