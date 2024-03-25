@@ -1,123 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-15068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CBE9288AB95
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 18:27:06 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C2BD88ABAA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 18:29:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0435D1C37CE2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 17:27:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CEC8B281E18
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 17:29:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1A5E13048D;
-	Mon, 25 Mar 2024 16:20:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF3B412D748;
+	Mon, 25 Mar 2024 16:23:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="n19dpSU2"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="bNg693gY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187D312FB32
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 16:20:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013447FBD9
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 16:23:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711383613; cv=none; b=kfwIRdSJN3aZF7Lgf9to0enFnBgqFDql9zLy8QwJu1E2OcrGOZZihXGhBYEO7srC93SPuL/USeMcyp8dgLTDNKBV3AOpPAqTP5ivht6YKnAkQq6qJNRZngyMerJJAJImdHwhAQ/pZChAqfzkIlO0zVD67kD7VQBOBjHcu9zEIL4=
+	t=1711383829; cv=none; b=IfNz6KFjh5zUT3zd5dMmbE3loBBrSnmR2AZaE+r8BMNCGqwREU5Ebvuqi9fV4w7IoowoJn3VhiEgLpvrR6Rd0yF1bEJXRITsKRH9KRxl1MN556bealrPRzmTbPEmIj6p6LK+ZuulGmNV0a5VCSxcLgdzzY0eawxtbkVABFOnUUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711383613; c=relaxed/simple;
-	bh=A843Ssrq3Y9wYnaYppe8XjmG2PpCDGW6HiDXf0QJKws=;
+	s=arc-20240116; t=1711383829; c=relaxed/simple;
+	bh=YFrRYJmE2c0Njd/WjfccaQYzVP23csJig+MqZX6xV88=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YjtPJ6AZM5DsBNYRKd1N8W4jmlSQOclSrjPtl6z1j4xzjmSP1IWmLoFDwKShd2fqNVwvQQHHgNI/gCVG7AO7TM8C2BVXVHDB9m+hzyRUd8yCPDhbfxBuLC1lHMhcxHkProDesNGkPns6dJBhJSHK00zhXkRxnNKTZ3JG0ww5Rm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=n19dpSU2; arc=none smtp.client-ip=209.85.210.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-6dc8b280155so2755811a34.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 09:20:11 -0700 (PDT)
+	 To:Cc:Content-Type; b=j4XKfqpuqfruf/RLBzP/53A+kejd0dJybVxXEhcJIzvd7fywJU+xxulSHD6tVUCqXKf5jv8qlOQ06W9V6jf3ET5dR3d7/JeE9pSjRjzZyCk7sGdvyqox7zHn6uTDZHlJ0w1i763Zmcd3o9/mxmhbL6QeOGzHD8bPo/uUR/TZXUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=bNg693gY; arc=none smtp.client-ip=209.85.208.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2d29aad15a5so57863751fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 09:23:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1711383609; x=1711988409; darn=vger.kernel.org;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1711383826; x=1711988626; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=O9xAtZXJvpwpsev5gWghEp0MSIRB0SQuoLdXgBJreDE=;
-        b=n19dpSU249zLiPm5edX5Zp2uHEo3MCkOcxs2fSxJybq6D7AinHeGetOAXgwzGEtTAS
-         yn948OrHgMhG6D0oLEuw7ZN7//CKVGgSvEOuIF8ADc+jZly5EbkMkhfjeXUk0gLTYMWS
-         Pa5oB7+l9N+TT/8dqvJcRXibDS/KVKTYsqQ6o=
+        bh=rFcfwD2v6qpH4vAhBOADFCJxvrI715+cznBhJwreFCA=;
+        b=bNg693gYe+XqMbXPLwytAj1DW4TWOdFgIkYynhGZ5jLpywIn73CoqucTs3oAz8BXmi
+         k/Ivm6vwfw2fk13UUlQTvpD+XOJqmL2smuv253/e4EYqGUVC/F5E55gbZGVSFIV6c4T+
+         IVRcHRt10DBkqxd5bu307cFUdzzSJqs/CYXplnrB6BT3w61HjpmbKzV8QK9aDcLsxUpA
+         tSUOE5VIYP4vR+gbt0xhK1NDwyiYNMC2LIPd8ySb9bAaD2IfUqEJAYyc9Nmbc5bbHsfZ
+         nR/Q3Rp3A50GLOyCF5d4juoXyxED0bdEXlmhBJf0CX1jnARlkRekA2F/tTDZ8zCtahKJ
+         urXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711383609; x=1711988409;
+        d=1e100.net; s=20230601; t=1711383826; x=1711988626;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=O9xAtZXJvpwpsev5gWghEp0MSIRB0SQuoLdXgBJreDE=;
-        b=h4JGsYBYwaiyo292gUvo6C6NINC6frFtrCDl+UoaVuw98ddS6X/5jCuAsUikRiNrRP
-         HDz2cKFiLo20KpkZf7TuOa2faHCf1xWTfEJTzE3WZSW+nCifCtwg1PFiLzz34oCTONoK
-         dP9CRoEjIviz7QRL3krjc8HqZGJzEv1AW0wgyUuo3H6orT5D+wup4J4BnaNdqCWYwFOt
-         f5DukQEguhW5UFcUF2X1lqZy84CD9/gkdYqYTIRfhph7tDytORdyvcRlWGsWjzwfvjIC
-         Az4OnqtnazjYBWv7OyKOq6SWuUDqJSp+C3C+YBTpF9fIJhAoSEhrjmc/LHeTLWOoG4WS
-         9vUg==
-X-Forwarded-Encrypted: i=1; AJvYcCWxSY61Zkiz5wziPUX7kVBbqDuxU4JqjZD6RTvtBB92zHVDcnPzdLaUSNykzC6rzkI14nQQULT8ETeZbekHmahRrJyTj2x05rGv/Dm2tQ==
-X-Gm-Message-State: AOJu0YyxwrCCVxGrCHXVZD09DsjJcPGX1pSK4QAQ7B/TUJzVSfxjJphs
-	PnsoUnejXpidghJeXgGDqDMSpbmnzTMGVvVk8VfIAaQNYo4C0E1UnVooGqN48oJWqvEMnddhhCA
-	=
-X-Google-Smtp-Source: AGHT+IHShUVJUINwPkB08JgKVy5186OQ6nNNfo0qIOcFyc7gTArAWzqXH43l2XVw3GubqxK+TYSFmQ==
-X-Received: by 2002:a05:6870:9714:b0:229:cea1:243e with SMTP id n20-20020a056870971400b00229cea1243emr7304938oaq.0.1711383608940;
-        Mon, 25 Mar 2024 09:20:08 -0700 (PDT)
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com. [209.85.160.178])
-        by smtp.gmail.com with ESMTPSA id n16-20020ac86750000000b00431665237f0sm198830qtp.47.2024.03.25.09.20.08
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Mar 2024 09:20:08 -0700 (PDT)
-Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-431347c6c99so487761cf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 09:20:08 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCX+qtT6b0B2eNNbXKZdu474Uxl1jOXPszyrB4I8Loh07ajdfkVq992zL0mVPcXsSek5qtpIbxBJj8+MikVZQeNo72hfcmMWwDvUNP8bsA==
-X-Received: by 2002:a05:622a:3c7:b0:430:a5df:a3af with SMTP id
- k7-20020a05622a03c700b00430a5dfa3afmr1093586qtx.5.1711383607574; Mon, 25 Mar
- 2024 09:20:07 -0700 (PDT)
+        bh=rFcfwD2v6qpH4vAhBOADFCJxvrI715+cznBhJwreFCA=;
+        b=SSQa0EqKNZ9ofsHCFOTYV0NJSydO4ZnRqWtfFtgQFN0PTlyhR4wkdrz7JmNR05B3eI
+         YHAY6aeWd8bhVDk3qC6/eP1o3OVwC/w5JDcyeD2mM+XVtXVVGp12pBmNnxtKBxhYGMmr
+         2sMla1O+vjY/Rm8c/lI2cMsSL5zlX2O0Ed5yCVeoMSfavWfoh7wdYIhhOqizzdb3a+6q
+         Tg6SajiCC8seU5r3JY6/1Rfmq6y+oTBxV51czl2/002j4mjT9zrqa6aRqr4dEpR6Gxja
+         EVuMZl7y4ulM0bMsaqYlXPk1GCEqRMCgicQvPinbYv+LUrpeexx7JV2jnWOnVhdfTloE
+         9yRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVmd5JDoZJk4HC6SiE1EHku2peu2zRRL66JUuiCXzQGIUdOOmYJ9nxpTtR7YoQEVn3K0/ykTr9Z1nlhGCgqQVhwTLDP0aZqHFUS57GCyw==
+X-Gm-Message-State: AOJu0YysxvQ7wtIJgBU40SEFyDM9HW9d8RdotAJ7kKtTlHBArZuDoACA
+	kwm9ye7KS5inhrZHF28ielLfKYHWjhXsnFbG5j0Efqc/85LM2LlpUKLmzHsAmZDGWcULLny3hvo
+	/TUZpGfg1n6pauKXJAQV1+jjZRqEoQiCa4gojkQ==
+X-Google-Smtp-Source: AGHT+IH4j5PPquST9xGKo8St/ikKbO6tk+Yedi+DAtFkCTZT5UC4mlTlEQkIXAn9mq4Oivrt7Ob9WJnK0Bj5SKvyufE=
+X-Received: by 2002:a2e:8085:0:b0:2d4:ffe:c55e with SMTP id
+ i5-20020a2e8085000000b002d40ffec55emr4716403ljg.25.1711383826136; Mon, 25 Mar
+ 2024 09:23:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240325054403.592298-1-sboyd@kernel.org> <20240325054403.592298-6-sboyd@kernel.org>
-In-Reply-To: <20240325054403.592298-6-sboyd@kernel.org>
-From: Doug Anderson <dianders@chromium.org>
-Date: Mon, 25 Mar 2024 09:19:51 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=X13_5Kubq3A=y8gnz==6tt2bsfc0PiFAj06HX9V7_+mg@mail.gmail.com>
-Message-ID: <CAD=FV=X13_5Kubq3A=y8gnz==6tt2bsfc0PiFAj06HX9V7_+mg@mail.gmail.com>
-Subject: Re: [PATCH 5/5] clk: Get runtime PM before walking tree for clk_summary
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, 
-	linux-clk@vger.kernel.org, patches@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>
+References: <20240325131624.26023-1-brgl@bgdev.pl> <20240325131624.26023-5-brgl@bgdev.pl>
+ <87r0fy8lde.fsf@kernel.org> <CAMRc=Mc2Tc8oHr5NVo=aHAADkJtGCDAVvJs+7V-19m2zGi-vbw@mail.gmail.com>
+ <87frwe8jiu.fsf@kernel.org>
+In-Reply-To: <87frwe8jiu.fsf@kernel.org>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Mon, 25 Mar 2024 17:23:35 +0100
+Message-ID: <CAMRc=MdCv+vTMZML-wzRQqZZavquV3DABYM4KYw-HwqS47sTyw@mail.gmail.com>
+Subject: Re: [PATCH v6 04/16] dt-bindings: net: wireless: qcom,ath11k:
+ describe the ath11k on QCA6390
+To: Kalle Valo <kvalo@kernel.org>
+Cc: Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	"David S . Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Saravana Kannan <saravanak@google.com>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Arnd Bergmann <arnd@arndb.de>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Marek Szyprowski <m.szyprowski@samsung.com>, 
+	Alex Elder <elder@linaro.org>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Abel Vesa <abel.vesa@linaro.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Lukas Wunner <lukas@wunner.de>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, linux-bluetooth@vger.kernel.org, 
+	netdev@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-pci@vger.kernel.org, linux-pm@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, ath11k@lists.infradead.org, 
+	Johan Hovold <johan@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
-
-On Sun, Mar 24, 2024 at 10:44=E2=80=AFPM Stephen Boyd <sboyd@kernel.org> wr=
-ote:
+On Mon, Mar 25, 2024 at 3:37=E2=80=AFPM Kalle Valo <kvalo@kernel.org> wrote=
+:
 >
-> Similar to the previous commit, we should make sure that all devices are
-> runtime resumed before printing the clk_summary through debugfs. Failure
-> to do so would result in a deadlock if the thread is resuming a device
-> to print clk state and that device is also runtime resuming in another
-> thread, e.g the screen is turning on and the display driver is starting
-> up.
+> Bartosz Golaszewski <brgl@bgdev.pl> writes:
 >
-> Fixes: 1bb294a7981c ("clk: Enable/Disable runtime PM for clk_summary")
-> Cc: Taniya Das <quic_tdas@quicinc.com>
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-> ---
->  drivers/clk/clk.c | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
+> > On Mon, Mar 25, 2024 at 2:57=E2=80=AFPM Kalle Valo <kvalo@kernel.org> w=
+rote:
+> >
+> >>
+> >> Bartosz Golaszewski <brgl@bgdev.pl> writes:
+> >>
+> >> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >> >
+> >> > Add a PCI compatible for the ATH11K module on QCA6390 and describe t=
+he
+> >> > power inputs from the PMU that it consumes.
+> >> >
+> >> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >>
+> >> [...]
+> >>
+> >> > +allOf:
+> >> > +  - if:
+> >> > +      properties:
+> >> > +        compatible:
+> >> > +          contains:
+> >> > +            const: pci17cb,1101
+> >> > +    then:
+> >> > +      required:
+> >> > +        - vddrfacmn-supply
+> >> > +        - vddaon-supply
+> >> > +        - vddwlcx-supply
+> >> > +        - vddwlmx-supply
+> >> > +        - vddrfa0p8-supply
+> >> > +        - vddrfa1p2-supply
+> >> > +        - vddrfa1p7-supply
+> >> > +        - vddpcie0p9-supply
+> >> > +        - vddpcie1p8-supply
+> >>
+> >> I don't know DT well enough to know what the "required:" above means,
+> >> but does this take into account that there are normal "plug&play" type
+> >> of QCA6390 boards as well which don't need any DT settings?
+> >
+> > Do they require a DT node though for some reason?
+>
+> You can attach the device to any PCI slot, connect the WLAN antenna and
+> it just works without DT nodes. I'm trying to make sure here that basic
+> setup still works.
+>
 
-Shouldn't this also squash in a revert of commit 1bb294a7981c ("clk:
-Enable/Disable runtime PM for clk_summary")? As it is,
-clk_summary_show_subtree() is left with an extra/unnecessary
-clk_pm_runtime_get() / clk_pm_runtime_put(), right?
+Sure, definitely. I there's no DT node, then the binding doesn't apply
+and the driver (the platform part of it) will not probe.
 
-Other than that, this looks good to me:
+> Adding also Johan and ath11k list. For example, I don't know what's the
+> plan with Lenovo X13s, will it use this framework? I guess in theory we
+> could have devices which use qcom,ath11k-calibration-variant from DT but
+> not any of these supply properties?
+>
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Good point. I will receive the X13s in a month from now. I do plan on
+upstreaming correct support for WLAN and BT for it as well.
+
+I guess we can always relax the requirements once a valid use-case appears?
+
+Bart
+
+> --
+> https://patchwork.kernel.org/project/linux-wireless/list/
+>
+> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpa=
+tches
 
