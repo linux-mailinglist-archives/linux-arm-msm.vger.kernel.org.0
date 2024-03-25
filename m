@@ -1,233 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-15106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F67288B646
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 01:42:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 57F6088B43D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 23:37:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 03FF7B273FD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 20:56:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 12C89B35D70
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 21:08:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 252285B5BB;
-	Mon, 25 Mar 2024 20:56:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF37862A02;
+	Mon, 25 Mar 2024 21:08:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FwlzIbJe"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="DQVPqagL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474C72C87C
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 20:56:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6DDD60267
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 21:08:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711400195; cv=none; b=VZygngISkJa0aKBwy2NUI2aA8pnsm+BYEM6wCrhsXlrJXpIcAZ3Isplv9tR7n75bqsttPnXaL26PhP5cPV2u3jFk5lVhG15EE0X2t4MQIuIoc/yDiBoVb10tgPY3aBajlT5bZgFST55gKO3LCDomoGpQjvcYZNMDwNX1iiw0srA=
+	t=1711400895; cv=none; b=bp1DkW4QORWSrHylMbdB2/YlYPbCi9Zu6MebmRL6IUM1pnGOqSWskck6t70qTQVZGfWy/xiNwuOATSXlSTooqvWvS5tI+ci/Y7+ISDPlprVfS5xJ/hGi5lGKB0qI9nw2YFkjPIFUtQ5tACXo8eWHlfCt2I6Uu7lSsOCbjiIZxAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711400195; c=relaxed/simple;
-	bh=9UYGMc9oR0eHzWyKCyGIWWDkMJdM4kvKdBugGGt2fxw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qoMRkL4P507BZUabJ32j/XF29lJhDfX1uIVxwDnInA1h9KnC9nkUqItbOjvpRhpMzssMG1/CIPIhp8lKDAgqTl4+P3ohU9tThZRZO84tKClr/E067Ti7M3me/SaZ/sYdyFbG5rjGMFmcsz4ywILPaKdEsFdcN54Yj08NZHxG/pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FwlzIbJe; arc=none smtp.client-ip=209.85.219.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-dc6cbe1ac75so3777569276.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 13:56:33 -0700 (PDT)
+	s=arc-20240116; t=1711400895; c=relaxed/simple;
+	bh=lniH+K6uobF32tHcdj8snosy2n/Wm+ZT7d9jUBOBkIA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XQaCQDseUEB0qIMprHKmWaFCfw1wJI5ss9ryePcLd4Xnl3bER4DCOYlsbSeGjMsXOfDk1KkmLUSIN02AdMuolcRp/z+ZYG76QLKQ+w5Jpw8l+ihAY+yVsStSvgMOmRds+YIWfwU7FNCyausUeCVcB5BD4xG4QXwDLsgU/5xGjOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=DQVPqagL; arc=none smtp.client-ip=209.85.210.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-6ea9a60f7f5so1805938b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 14:08:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711400192; x=1712004992; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=besxki1zzZKLyiavhPEaN+iJiY/oxhKxhbXBWHJWvKo=;
-        b=FwlzIbJeELfv5Ko6y9n0xiEPM2nFmhlZWb3RYhTIi9eI7sFnvC3FoSSqCFQPIbRsqU
-         ypGEeH9gGg0R3wIMO/hgZ7XxSo4URcsU618LZ1YJZDbhZ2/Es1QIPGVyd5RD0R9GyHZH
-         WtB3hET7cCdOxgTA3j1D2OoverPycgyhr/H+UMXgdyI9ff9Kcc1KnVjNoEJybsCy9oeD
-         sGMzWQ4UV7CnaxlDUj8QIMoWxGzevxVS10+7O0LCp2DZRBlpt6Pv5pSgkRNWrAIyq2mU
-         XFI2uh1MrJE/rd1cD7uH8TRUUYhLR0Q4vsuHw+93MIhBv0uT0hTNtTiRQtH+8j1wLcoD
-         snWw==
+        d=chromium.org; s=google; t=1711400893; x=1712005693; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mOw6fcswQwxOvYHww+pfzlL0zz/FCwx/qV0ISLCzS6k=;
+        b=DQVPqagLnY5YLX7LfPp1gAEJzf5UnUSoy5UASsi3mXrRxzhUpiBZvsdxw94MK92Pnr
+         uZIUh0pcacrNkTpTJp39fTSQSswvTIQqJsDlHPOumED4u8s8RtEknTc+hDLWduBq6H91
+         f5VMWxi3bG0DhZpszI7Z82xa7bDanWZG4I0lA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711400192; x=1712004992;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1711400893; x=1712005693;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=besxki1zzZKLyiavhPEaN+iJiY/oxhKxhbXBWHJWvKo=;
-        b=fppmcngohR98nCOfa8OqY5mNEKRGvNjkO8f/90ZQk5XOVJjVfeuyprdXkjWWd1uUfW
-         /Rbw1IXv0G6TXMXgfVdawxpgYm243aR0z/BUajIq0gD2TpUyFpOSG1Aw75jB01JwwGc4
-         JI3rAEtrat9lV86dTMYl3A0CPUz1LU+acbBPJHLKikYiLtaLuFEbO431b2hU0nW7/5qG
-         WwK+D1mrgVSI7C01QD7sy0o8aySiyx4mrnkH4VLv/z5hoe3H5oBQSBR1vNOLGzTyNw1D
-         dLgXobj0rnn/EN8GdpiKJGiTkHWQSy+rkDyOyrZu/aAs0OGM8TfinHIwDzraA4UzKOxp
-         7SmQ==
-X-Forwarded-Encrypted: i=1; AJvYcCULB8/sYSgRg/kt6qUocxY6LCWykk1o18OvdvwFLi5jvFLgksYG5uztYIOmakzsrrICk/KUoXVfp9+OOZPh3jrjl7Dsmh/8kvJbUAU99w==
-X-Gm-Message-State: AOJu0Yyq4Ur0yEY14nZQ/0N9vw3EVHpy2OH0jf4Te50mzguGRI5yEVnd
-	ccvO8I9Ga8oAYxWh/WLOEj9QEWRtnpTWi7Qu2bZiJqAcVL1LA/jg6gOP/zKO/+IULVI98JU+NQG
-	gB1N+SQGd+sa/CObq2fztdii58fDAcDjrZtRfaQ==
-X-Google-Smtp-Source: AGHT+IHGDdQ7jXrkcSrON57XhBZ3l9DnPEzT4z7nR2v3+oetUEyIZcbZO1m/thzWE25cnAXAr4k+8VB4qHNQUa4YEwo=
-X-Received: by 2002:a25:7411:0:b0:dd1:6cad:8fd3 with SMTP id
- p17-20020a257411000000b00dd16cad8fd3mr3677424ybc.27.1711400192183; Mon, 25
- Mar 2024 13:56:32 -0700 (PDT)
+        bh=mOw6fcswQwxOvYHww+pfzlL0zz/FCwx/qV0ISLCzS6k=;
+        b=WgVye6JbZgN3WnjDzufTQ8hVjyezMEddIGwwv8HUomZjQ8wTkp8RA7MPJiQVqxdM4N
+         SmWo1s4Bi3wmP610/VuarDXB7c3WWSzHrEQ0U9F46JrkUS81gy+q9gcF9JW0asOMp3i6
+         WtYmKq0FzX+iXP77XU2rChPCF02p7ub6q4+1+F+vBE2kqA2tgYQn/vOdhpjJqLMaLhHV
+         I1RoiT20plitqXCkHVY3AUbGr6Z/YRZ2IX9eLz1BRFNBpeU7vT/kaq3NlKPGV3aHmXw+
+         IAPd4wRoCwHvnyxlmQIQHOJ29/XchgWRvNDgr8KmB7srrix3Mq2SFaycd+f03mwZZR3H
+         oRfg==
+X-Forwarded-Encrypted: i=1; AJvYcCUUJmm1hxt096Th2oDOxU2YK0ygvcf/7FS2uBbGs61Lo+T5cK3ePZYnyF7VHlluuYBGJJd5Dak74Hop/aljdXkkbQOGChXVkCthjHzHcw==
+X-Gm-Message-State: AOJu0YzaKYPh434JworsyvnGpQoixcEfz8Sw6ZptLS7JgI1vRPz+gnTi
+	YytNR+B0bl8pUoDql55tDOSa341GrnarPOenr5TQjJ7cfQ2yDBQwpIZ4REphjQ==
+X-Google-Smtp-Source: AGHT+IFNMzzlQS+M2WzYTzH5qd5yGumfrSL44l9e2y2KmdW8eGoSNDQ4K0XzusabfDNfOaNLkU2CdA==
+X-Received: by 2002:a05:6a20:12d2:b0:1a3:4671:2285 with SMTP id v18-20020a056a2012d200b001a346712285mr7841746pzg.44.1711400893255;
+        Mon, 25 Mar 2024 14:08:13 -0700 (PDT)
+Received: from localhost (4.198.125.34.bc.googleusercontent.com. [34.125.198.4])
+        by smtp.gmail.com with UTF8SMTPSA id fn18-20020a056a002fd200b006e4e93f4f17sm4584180pfb.117.2024.03.25.14.08.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Mar 2024 14:08:12 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org
+Subject: [PATCH] drm/msm: Add newlines to some debug prints
+Date: Mon, 25 Mar 2024 14:08:09 -0700
+Message-ID: <20240325210810.1340820-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.44.0.396.g6e790dbe36-goog
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240313-qcom-ucsi-fixes-v1-0-74d90cb48a00@linaro.org> <Zf12vSHvDiFTufLE@hovoldconsulting.com>
-In-Reply-To: <Zf12vSHvDiFTufLE@hovoldconsulting.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 25 Mar 2024 22:56:21 +0200
-Message-ID: <CAA8EJprAzy41pn7RMtRgbA-3MO8LoMf8UXQqJ3hD-SzHS_=AOg@mail.gmail.com>
-Subject: Re: [PATCH 0/7] usb: typec: ucsi: fix several issues manifesting on
- Qualcomm platforms
-To: Johan Hovold <johan@kernel.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Guenter Roeck <linux@roeck-us.net>, 
-	Bjorn Andersson <andersson@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Johan Hovold <johan+linaro@kernel.org>, 
-	linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Fri, 22 Mar 2024 at 14:16, Johan Hovold <johan@kernel.org> wrote:
->
-> On Wed, Mar 13, 2024 at 05:54:10AM +0200, Dmitry Baryshkov wrote:
-> > Fix several issues discovered while debugging UCSI implementation on
-> > Qualcomm platforms (ucsi_glink). With these patches I was able to
-> > get a working Type-C port managament implementation. Tested on SC8280XP
-> > (Lenovo X13s laptop) and SM8350-HDK.
->
-> > Dmitry Baryshkov (7):
-> >       usb: typec: ucsi: fix race condition in connection change ACK'ing
-> >       usb: typec: ucsi: acknowledge the UCSI_CCI_NOT_SUPPORTED
-> >       usb: typec: ucsi: make ACK_CC_CI rules more obvious
-> >       usb: typec: ucsi: allow non-partner GET_PDOS for Qualcomm devices
-> >       usb: typec: ucsi: limit the UCSI_NO_PARTNER_PDOS even further
-> >       usb: typec: ucsi: properly register partner's PD device
->
-> >       soc: qcom: pmic_glink: reenable UCSI on sc8280xp
->
-> I just gave this series a quick spin on my X13s and it seems there are
-> still some issues that needs to be resolved before merging at least the
-> final patch in this series:
->
-> [    7.786167] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: unknown error 0
-> [    7.786445] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: UCSI_GET_PDOS failed (-5)
-> [    7.883493] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: unknown error 0
-> [    7.883614] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: UCSI_GET_PDOS failed (-5)
-> [    7.905194] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: unknown error 0
-> [    7.905295] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: UCSI_GET_PDOS failed (-5)
-> [    7.913340] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: unknown error 0
-> [    7.913409] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: UCSI_GET_PDOS failed (-5)
+These debug prints are missing newlines, leading to multiple messages
+being printed on one line and hard to read logs. Add newlines to have
+the debug prints on separate lines. The DBG macro used to add a newline,
+but I missed that while migrating to drm_dbg wrappers.
 
-I have traced what is causing these messages. During UCSI startup the
-ucsi_register_port() function queries for PDOs associated with the
-on-board USB-C port. This is allowed by the spec. Qualcomm firmware
-detects that there is no PD-device connected and instead of returning
-corresponding set of PDOs returns Eerror Indicator set to 1b but then
-it returns zero error status in response to GET_ERROR_STATUS, causing
-"unknown error 0" code. I have checked the PPM, it doesn't even have
-the code to set the error status properly in this case (not to mention
-that asking for device's PDOs should not be an error, unless the
-command is inappropriate for the target.
+Fixes: 7cb017db1896 ("drm/msm: Move FB debug prints to drm_dbg_state()")
+Fixes: 721c6e0c6aed ("drm/msm: Move vblank debug prints to drm_dbg_vbl()")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ drivers/gpu/drm/msm/msm_fb.c  | 6 +++---
+ drivers/gpu/drm/msm/msm_kms.c | 4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-Thus said, I think the driver is behaving correctly. Granted that
-these messages are harmless, we can ignore them for now. I'll later
-check if we can update PD information for the device's ports when PD
-device is attached. I have verified that once the PD device is
-attached, corresponding GET_PDOS command returns correct set of PD
-objects. Ccurrently the driver registers usb_power_delivery devices,
-but with neither source nor sink set of capabilities.
+diff --git a/drivers/gpu/drm/msm/msm_fb.c b/drivers/gpu/drm/msm/msm_fb.c
+index e3f61c39df69..80166f702a0d 100644
+--- a/drivers/gpu/drm/msm/msm_fb.c
++++ b/drivers/gpu/drm/msm/msm_fb.c
+@@ -89,7 +89,7 @@ int msm_framebuffer_prepare(struct drm_framebuffer *fb,
+ 
+ 	for (i = 0; i < n; i++) {
+ 		ret = msm_gem_get_and_pin_iova(fb->obj[i], aspace, &msm_fb->iova[i]);
+-		drm_dbg_state(fb->dev, "FB[%u]: iova[%d]: %08llx (%d)",
++		drm_dbg_state(fb->dev, "FB[%u]: iova[%d]: %08llx (%d)\n",
+ 			      fb->base.id, i, msm_fb->iova[i], ret);
+ 		if (ret)
+ 			return ret;
+@@ -176,7 +176,7 @@ static struct drm_framebuffer *msm_framebuffer_init(struct drm_device *dev,
+ 	const struct msm_format *format;
+ 	int ret, i, n;
+ 
+-	drm_dbg_state(dev, "create framebuffer: mode_cmd=%p (%dx%d@%4.4s)",
++	drm_dbg_state(dev, "create framebuffer: mode_cmd=%p (%dx%d@%4.4s)\n",
+ 			mode_cmd, mode_cmd->width, mode_cmd->height,
+ 			(char *)&mode_cmd->pixel_format);
+ 
+@@ -232,7 +232,7 @@ static struct drm_framebuffer *msm_framebuffer_init(struct drm_device *dev,
+ 
+ 	refcount_set(&msm_fb->dirtyfb, 1);
+ 
+-	drm_dbg_state(dev, "create: FB ID: %d (%p)", fb->base.id, fb);
++	drm_dbg_state(dev, "create: FB ID: %d (%p)\n", fb->base.id, fb);
+ 
+ 	return fb;
+ 
+diff --git a/drivers/gpu/drm/msm/msm_kms.c b/drivers/gpu/drm/msm/msm_kms.c
+index 84c21ec2ceea..af6a6fcb1173 100644
+--- a/drivers/gpu/drm/msm/msm_kms.c
++++ b/drivers/gpu/drm/msm/msm_kms.c
+@@ -149,7 +149,7 @@ int msm_crtc_enable_vblank(struct drm_crtc *crtc)
+ 	struct msm_kms *kms = priv->kms;
+ 	if (!kms)
+ 		return -ENXIO;
+-	drm_dbg_vbl(dev, "crtc=%u", crtc->base.id);
++	drm_dbg_vbl(dev, "crtc=%u\n", crtc->base.id);
+ 	return vblank_ctrl_queue_work(priv, crtc, true);
+ }
+ 
+@@ -160,7 +160,7 @@ void msm_crtc_disable_vblank(struct drm_crtc *crtc)
+ 	struct msm_kms *kms = priv->kms;
+ 	if (!kms)
+ 		return;
+-	drm_dbg_vbl(dev, "crtc=%u", crtc->base.id);
++	drm_dbg_vbl(dev, "crtc=%u\n", crtc->base.id);
+ 	vblank_ctrl_queue_work(priv, crtc, false);
+ }
+ 
 
-An alternative option is to drop patches 4 and 5, keeping
-'NO_PARTNER_PDOS' quirk equivalent to 'don't send GET_PDOS at all'.
-However I'd like to abstain from this option, since it doesn't allow
-us to check PD capabilities of the attached device.
-
-Heikki, Johan, WDYT?
-
-For reference, here is a trace of relevant messages exchanged over the
-GLINK interface during UCSI bootstrap:
-
-[   11.030838] write: 00000000: 10 00 01 00 07 00 00 00
-
-GET_PDOS(connection 1, Source, 3 PDOs)
-
-[   11.044171] write ack: 0
-[   11.044263] notify: 00000000: 00 00 00 c0 00 00 00 00
-
-Command Complete, Error
-
-[   11.044458] read: 00000000: 00 01 00 00 00 00 00 c0 00 00 00 00 00 00 00 00
-[   11.044460] read: 00000010: e7 3f 00 00 00 00 00 00 02 00 20 01 00 03 30 01
-[   11.044462] read: 00000020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[   11.059790] read: 00000000: 00 01 00 00 00 00 00 c0 00 00 00 00 00 00 00 00
-[   11.059797] read: 00000010: e7 3f 00 00 00 00 00 00 02 00 20 01 00 03 30 01
-[   11.059801] read: 00000020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[   11.059814] write: 00000000: 04 00 02 00 00 00 00 00
-
-Ack_CC command
-
-[   11.075509] write ack: 0
-[   11.075544] notify: 00000000: 00 00 00 20 00 00 00 00
-
-Ack for Ack_CC
-
-[   11.091828] read: 00000000: 00 01 00 00 00 00 00 20 00 00 00 00 00 00 00 00
-[   11.091864] read: 00000010: e7 3f 00 00 00 00 00 00 02 00 20 01 00 03 30 01
-[   11.091879] read: 00000020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[   11.092339] write: 00000000: 13 00 00 00 00 00 00 00
-
-GET_ERROR_STATUS
-
-[   11.106398] write ack: 0
-[   11.106435] notify: 00000000: 00 10 00 80 00 00 00 00
-
-command complete, 0x10 bytes of response
-
-[   11.122729] read: 00000000: 00 01 00 00 00 10 00 80 00 00 00 00 00 00 00 00
-[   11.122758] read: 00000010: 00 00 00 00 00 00 00 00 02 00 20 01 00 03 30 01
-[   11.122770] read: 00000020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-
-Zero response data
-
-
-[   11.137523] read: 00000000: 00 01 00 00 00 10 00 80 00 00 00 00 00 00 00 00
-[   11.137548] read: 00000010: 00 00 00 00 00 00 00 00 02 00 20 01 00 03 30 01
-[   11.137559] read: 00000020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[   11.153028] read: 00000000: 00 01 00 00 00 10 00 80 00 00 00 00 00 00 00 00
-[   11.153064] read: 00000010: 00 00 00 00 00 00 00 00 02 00 20 01 00 03 30 01
-[   11.153080] read: 00000020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[   11.153492] write: 00000000: 04 00 02 00 00 00 00 00
-
-Ack_CC for the GET_ERROR_STATUS command
-
-[   11.169060] write ack: 0
-[   11.169108] notify: 00000000: 00 00 00 20 00 00 00 00
-
-Ack for ACK_CC
-
-[   11.184114] read: 00000000: 00 01 00 00 00 00 00 20 00 00 00 00 00 00 00 00
-[   11.184140] read: 00000010: 00 00 00 00 00 00 00 00 02 00 20 01 00 03 30 01
-[   11.184152] read: 00000020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[   11.184548] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: unknown error 0
-[   11.184695] ------------[ cut here ]------------
-[   11.184703] WARNING: CPU: 2 PID: 28 at
-drivers/usb/typec/ucsi/ucsi.c:140 ucsi_exec_command+0x284/0x328
-[typec_ucsi]
-[   11.185488] Call trace:
-[   11.185494]  ucsi_exec_command+0x284/0x328 [typec_ucsi]
-[   11.185519]  ucsi_send_command+0x54/0x118 [typec_ucsi]
-[   11.185543]  ucsi_read_pdos+0x5c/0xdc [typec_ucsi]
-[   11.185567]  ucsi_get_pdos+0x30/0xa4 [typec_ucsi]
-[   11.185590]  ucsi_init_work+0x3bc/0x82c [typec_ucsi]
-[   11.185614]  process_one_work+0x148/0x2a0
-[   11.185638]  worker_thread+0x2fc/0x40c
-[   11.185655]  kthread+0x110/0x114
-[   11.185668]  ret_from_fork+0x10/0x20
-
-Then comes the same log for the Connector=1, Sink PDOs, Connector=2
-Source PDOs and finally Connector=2 Sink PDOs.
-
-
+base-commit: 4cece764965020c22cff7665b18a012006359095
 -- 
-With best wishes
-Dmitry
+https://chromeos.dev
+
 
