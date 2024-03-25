@@ -1,114 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-15109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15110-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7A8688B2F0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 22:39:28 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 49E1088B4E8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 00:02:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 732AE3015EB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 21:39:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7908A1C2FD0C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 23:02:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7ECEF6E5FD;
-	Mon, 25 Mar 2024 21:39:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BB728120A;
+	Mon, 25 Mar 2024 23:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pis1j0nd"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="BNOI6Q12"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5DC733995;
-	Mon, 25 Mar 2024 21:39:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38AB45A0EA;
+	Mon, 25 Mar 2024 23:02:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711402763; cv=none; b=nsuR88cZRIZ1CuKh/zJjRnMOZS8RGYCwJ0Wr+zhDYE1v16/OUMbKuFT/8nl7BS2u9oLJeJ6vSWObXck61f7LxjV1cXCj3WOBRhTl7c7R/gGGZ1RAMEUrArQUH7MSrS/PFLv+OeCBoaip1udcOs0dYCy/MH81OyFSEMZ7dQccKfg=
+	t=1711407725; cv=none; b=T1FvhWoxZMKgnq5K3tSzEiR/ZNIqRFa53TEzDvGw2FfZzUwMNtf7+d1R434rU8ThEO5soLeQR1axRhkKITVuCzoF4/19tdlrzzRhyADdb0NPQrgUZTG2itk2DnUJusE/2KONlxiHA07k1MSUwFFYM7aj9I37MhXboDj/8mLGZzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711402763; c=relaxed/simple;
-	bh=C2sNYIaC01kmO3LHkAq7V6ASMBF5rWFrTRg9atwYGx8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=qbw1KYGfOsIJGI8jynm4kZmofXTTjNDQnRL28y1WIfI9oVjg5UMgSJchJkkcnkHZ8NeAxlZ9mh+Jyols6jpetXSD2ZFKEn6eZK7FJssfzTWmqQCepLlG0IWVkA/ycivRv2bpgT5UHFqvDCgS8WFwKGeuYrKvV+fCthbVOydQLdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pis1j0nd; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42PLNbd4012736;
-	Mon, 25 Mar 2024 21:39:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=0jLGL4SMuqDxWHqmlXOEG0WE44DYRZawG79sF/kR754=; b=pi
-	s1j0ndkzxZgqgS56A7sv42VCkAaU8tBoR/bhLQXBXLclpGP7YJYL1rOqUIhNoJN4
-	TSGuOJK40x2SXnFB2uhoCcXcL3YLAqOJTmDYWmO4GKdiViqq9aCbh1bU6HIv65+A
-	70Yxt1uS2hAV5xAbWqPWlNvij4MwBBINmhq1FD+0ckkXFeQBO5UD/mguc2oPDzQV
-	UZVFo8haUXOYHbDi6P4Epn/SG4pAy7zl0X5X6CJsT3YSXq6eyEX8bPbux1moB5Gj
-	JOhxzZMoCO2RmkrvLtXA2PEnAtmCTQioV9CZPO6emNMJtPAoqAvxAri79PCeY+kR
-	veOO/OZzd3K3QC+vTk2w==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x3h52r0s7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 25 Mar 2024 21:39:18 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42PLdGLx018575
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 25 Mar 2024 21:39:16 GMT
-Received: from [10.110.56.183] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 25 Mar
- 2024 14:39:14 -0700
-Message-ID: <6220c995-5893-9da3-e7c6-e1f8d292be64@quicinc.com>
-Date: Mon, 25 Mar 2024 14:39:12 -0700
+	s=arc-20240116; t=1711407725; c=relaxed/simple;
+	bh=bFdl8JXJ77NvIlDmZP/5H64Hrz2n2pfJV5U3jXvdse0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oPJgn8kVzCEq/OqOo4Kt2UCFpl68Zz0C33gTZyuHG8Bp71I3Ym5GLpHzzN37uwF84yRVYbvmH1eiWWKbmseu/BwRjDjm76DjDagCAyRodSxTucjulrbo0px7hvLoIfIpw3XgOj1xqAnVP0w8b+phzImuYGuFLpFW7rKVy4bM0es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=BNOI6Q12; arc=none smtp.client-ip=46.235.227.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1711407720;
+	bh=bFdl8JXJ77NvIlDmZP/5H64Hrz2n2pfJV5U3jXvdse0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=BNOI6Q12cS8Ek7mkTm+z7Ht8BFiiCxIHsmiIJTJWod2vxVbuJwWMbdQ9L0tYvaCDL
+	 rjDUbAEM5t6PqGKpTeZoDbcLJVqcDCfLKTJ4j2VNyYw0S6s7ev5GQsTisM3lLGyNuG
+	 oo8NN/Pz3Lo0LfciU62565hqu23SSTWx40Kx7o8Aw/gaO7aMPLvvnnVE3moN0tW7rt
+	 T0x55lm8PjjnltTTNeY7pW5jpmxdMBaa0AOLWwxIiYdgsQ/GAZDcNTpwF9RozJBvGa
+	 TVwFpPat4ZXXGrlb0vZbGnn7JZDI4xJxRHPw1hpSParbx8Z/0aStaeqmHmDyEzy0sK
+	 bosBxHvjPWP/A==
+Received: from notapiano (zone.collabora.co.uk [167.235.23.81])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: nfraprado)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 1A10E37820E1;
+	Mon, 25 Mar 2024 23:01:56 +0000 (UTC)
+Date: Mon, 25 Mar 2024 19:01:55 -0400
+From: =?utf-8?B?TsOtY29sYXMgRi4gUi4gQS4=?= Prado <nfraprado@collabora.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	Amit Kucheria <amitk@kernel.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	stable@vger.kernel.org, Loic Poulain <loic.poulain@linaro.org>
+Subject: Re: [PATCH v2 0/3] QCM2290 LMH
+Message-ID: <8e0cc005-0b3a-4475-bfe4-82ec46d918a5@notapiano>
+References: <20240308-topic-rb1_lmh-v2-0-bac3914b0fe3@linaro.org>
+ <d8ed4e6c-549f-4c04-b38a-2d788df8b707@notapiano>
+ <dbe90a1c-bac2-4176-8eba-7ad96a182313@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH] drm/msm: Add newlines to some debug prints
-Content-Language: en-US
-To: Stephen Boyd <swboyd@chromium.org>, Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20240325210810.1340820-1-swboyd@chromium.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240325210810.1340820-1-swboyd@chromium.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 26ruocLNZy91ePL63B0oOr9hcAWZJxyH
-X-Proofpoint-GUID: 26ruocLNZy91ePL63B0oOr9hcAWZJxyH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-25_21,2024-03-21_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
- suspectscore=0 priorityscore=1501 bulkscore=0 mlxlogscore=898
- malwarescore=0 spamscore=0 lowpriorityscore=0 phishscore=0 clxscore=1011
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2403250134
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <dbe90a1c-bac2-4176-8eba-7ad96a182313@linaro.org>
 
-
-
-On 3/25/2024 2:08 PM, Stephen Boyd wrote:
-> These debug prints are missing newlines, leading to multiple messages
-> being printed on one line and hard to read logs. Add newlines to have
-> the debug prints on separate lines. The DBG macro used to add a newline,
-> but I missed that while migrating to drm_dbg wrappers.
+On Mon, Mar 25, 2024 at 08:59:55PM +0100, Krzysztof Kozlowski wrote:
+> On 20/03/2024 20:08, Nícolas F. R. A. Prado wrote:
+> >> Loic Poulain (1):
+> >>       arm64: dts: qcom: qcm2290: Add LMH node
+> >>
+> >>  Documentation/devicetree/bindings/thermal/qcom-lmh.yaml | 12 ++++++++----
+> >>  arch/arm64/boot/dts/qcom/qcm2290.dtsi                   | 14 +++++++++++++-
+> >>  drivers/thermal/qcom/lmh.c                              |  3 +++
+> >>  3 files changed, 24 insertions(+), 5 deletions(-)
+> > 
+> > Hi,
+> > 
+> > I've started tracking the results of 'make dtbs_check' on linux-next, and I've
+> > noticed that on today's next, next-20240320, there's a new warning coming from
+> > this. The reason is that the DT change has landed, but the binding has not,
+> > since it goes through a separate tree. I thought the binding was supposed to
+> > always land before the driver and DT that make use of it, but looking through
 > 
-> Fixes: 7cb017db1896 ("drm/msm: Move FB debug prints to drm_dbg_state()")
-> Fixes: 721c6e0c6aed ("drm/msm: Move vblank debug prints to drm_dbg_vbl()")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->   drivers/gpu/drm/msm/msm_fb.c  | 6 +++---
->   drivers/gpu/drm/msm/msm_kms.c | 4 ++--
->   2 files changed, 5 insertions(+), 5 deletions(-)
-> 
+> There is no such rule. Of course new binding should be documented in
+> earlier or the same kernel release cycle as users get in, but it's not a
+> requirement.
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+So, after giving the documentation a second look, I found this:
+
+"For new platforms, or additions to existing ones, make dtbs_check should not
+add any new warnings."
+
+Source: https://www.kernel.org/doc/html/latest/process/maintainer-soc.html#validating-devicetree-files
+
+What is not clear there is what the reference point is: is it on linux-next?
+Mainline release?
+
+As Konrad pointed out it's tricky (and maybe not worth it) to guarantee this for
+linux-next. But for mainline release it seems feasible (and IMO the target, as
+after that stability guarantees should apply).
+
+> 
+> 
+> > the dt-binding documentation pages I couldn't find anything confirming or
+> > denying that.
+> > 
+> > I expect this to happen again in the future, which is why I'm reaching out to
+> > understand better how to deal with this kind of situation.
+> 
+> Deal as what to do? Are you asking in terms of maintenance of some
+> subsystem or sending some patches? In this particular case here, I don't
+> think there is anything on your side to deal with.
+
+I'm asking what's the most helpful way to you the maintainers for me to report
+these failures in the future.
+
+Rob has already automated running dtbs_check for patches coming into the mailing
+list. And I have set up KernelCI to run dtbs_check on linux-next in order to
+catch any issues that might slip through, or happen during integration of the
+trees, etc. 
+
+Now, if we agree that dtbs_check regressions on linux-next are acceptable, at
+least ones like this, where the issue is just synchronization between
+maintainers, then I can simply not report them in the future. But we should
+have some point where dtbs_check should not regress, and mainline release seems
+the reasonable choice, because if we don't then dtbs_check warnings would just
+keep growing forever.
+
+Thanks,
+Nícolas
 
