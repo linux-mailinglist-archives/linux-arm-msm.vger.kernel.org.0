@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-15016-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91B2D88A67C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 16:28:32 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 64EA888A685
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 16:29:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BCE611C3CB82
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 15:28:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D39D22E43DD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 15:29:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DADA613DDBF;
-	Mon, 25 Mar 2024 12:48:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA3A216A9AC;
+	Mon, 25 Mar 2024 12:50:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q0CfJBIT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j+EHva/Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC977440B;
-	Mon, 25 Mar 2024 12:48:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED1E16A98E;
+	Mon, 25 Mar 2024 12:50:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711370931; cv=none; b=hZKzIHODgqOyZF7L+3IEc2CLIG3DV3FB5YUzJx7QBJ8bloslk+HawjdFC3HT1X2b4Sju0YM/s2R+b75B4DgW9fC3Ogpekyet7o0val94xL6+mazgvcG1SZZg/pD4JJYALBhFQV043L3vx9UbAz5KB9fzf0bS6zNoDargCJ9nelo=
+	t=1711371010; cv=none; b=JGljEX2WOGlub+lYZGF6cTtr2HoI/ywOaxU4NoKNts26VqthqtUFMLCBg4DZZyhP1Bb/TgS+S8aCOhmnupLdb6iX1GeFbLQnLleYA+Fmaosx0/RsAGgLQcniZ8v/GCvUlQxN4oHKSeK32nEjqG/g8j0lPyxxPsHEb8PiaB1k940=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711370931; c=relaxed/simple;
-	bh=iRD16UiH7hTocRQ9SdX7iMdmAToWubYP+iIOkYgDzLQ=;
+	s=arc-20240116; t=1711371010; c=relaxed/simple;
+	bh=MQyP8Cbvbfb+NAFnJuG/Jpo0myxuH0p0Tsd7Fl2/voM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bmNq0m8sQLmfYSqkHBcorMFzlcZI6KfOI4qOi+NK4lxVSbMhi1v/qsKIG46EsH3Ce0HMWbJMnMaEXtTtGuZHuXRKMI7wLeBLI5pqD73q4BjxErbSjSdVEj6r+5YurD/XX1dv+1zGEc307KLDNBjF6G/jGRybObnJZ5jOa70Ji08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q0CfJBIT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B90DC433F1;
-	Mon, 25 Mar 2024 12:48:51 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=EwW+CSBB1HRHi85VPD39dFiAUUiBhrtWOxha9H97Zn3woV0J+N5sBWMaI8ycl17Z6h27Y3K8CjPjMP3XKzDDakWenHFtz5cxmXlSRUvX2nDvLYPTynWUH6fS/lJOAjPD5L3xrryO03ja2ib1uFW8dYC2CbVKvMibQcUFsHwbbFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j+EHva/Y; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D398C433C7;
+	Mon, 25 Mar 2024 12:50:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711370931;
-	bh=iRD16UiH7hTocRQ9SdX7iMdmAToWubYP+iIOkYgDzLQ=;
+	s=k20201202; t=1711371009;
+	bh=MQyP8Cbvbfb+NAFnJuG/Jpo0myxuH0p0Tsd7Fl2/voM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Q0CfJBITHHlgzbXGUIqXuGHxZsFtaZAjXZsCOb44hqcSFKVOUea+fCBltGLe8T2Lc
-	 W/YlY6rIziro2yZhYt7f1cK4jXZuqERJRiSLryMwiPB5rbmA8rib43EgtBBXCNNu4C
-	 rjlgkDp5c9SAFeHRgq071PLm6ofKJmJIA01A+1cmXZJ9DaQomCmoWDoYDJNSI/tuHc
-	 ZZs2ToX8NBuo/bpyMtlf7LHisyL/jGr7jjbPVzw3Mk+zsn6JhndcYLxTsXaRhCufIT
-	 ycKGVVw4dfWedG+1c/+nqqM9DSwsalrSrfdu88uNP8CfBg4ZumIdg/cevcK2dZwvqa
-	 +KXI40WQWktdQ==
+	b=j+EHva/YW/yeyj9fLBo/9Fmbks6yAcEAuW2gfJXWKUVuTPzJWLupbZo7MJxbKF0/O
+	 +lyfEULjCwj1g9SVzkGcH15gKqHEafihTsZqmRQJkfj+fciO0s9+/uvsHk/jYgn+uO
+	 nSPlseLGlcrBy1wu29L0kcjaikbrDRV/FupikG9v5apaq2KAxYYs8Ycy9yC9F33RJ7
+	 CMq3tfZMgHFjq02AbQSswi03Y1zDQI4rxoF7RkCBGc9bNubAQT5jExBmMZoScBleiK
+	 qbsJWHfwOIMhg/HBWG6gw8UUyZnJQ3PxFalfrUtFhzdXNnhnF0yp2PRIfE1SKuNAYC
+	 dU1FDAIaPpG4g==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan@kernel.org>)
-	id 1rojl4-000000001Up-0XcL;
-	Mon, 25 Mar 2024 13:48:58 +0100
-Date: Mon, 25 Mar 2024 13:48:58 +0100
+	id 1rojmK-000000001VZ-0fwr;
+	Mon, 25 Mar 2024 13:50:16 +0100
+Date: Mon, 25 Mar 2024 13:50:16 +0100
 From: Johan Hovold <johan@kernel.org>
 To: Krishna Kurapati <quic_kriskura@quicinc.com>
 Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -60,11 +60,11 @@ Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
 	linux-kernel@vger.kernel.org, quic_ppratap@quicinc.com,
 	quic_jackp@quicinc.com
-Subject: Re: [PATCH v16 7/9] usb: dwc3: qcom: Refactor IRQ handling in glue
- driver
-Message-ID: <ZgFyukBXIIwZo7v-@hovoldconsulting.com>
+Subject: Re: [PATCH v16 8/9] usb: dwc3: qcom: Enable wakeup for applicable
+ ports of multiport
+Message-ID: <ZgFzCKXxo63ckbe-@hovoldconsulting.com>
 References: <20240307062052.2319851-1-quic_kriskura@quicinc.com>
- <20240307062052.2319851-8-quic_kriskura@quicinc.com>
+ <20240307062052.2319851-9-quic_kriskura@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,89 +73,14 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240307062052.2319851-8-quic_kriskura@quicinc.com>
+In-Reply-To: <20240307062052.2319851-9-quic_kriskura@quicinc.com>
 
-On Thu, Mar 07, 2024 at 11:50:50AM +0530, Krishna Kurapati wrote:
-> On multiport supported controllers, each port has its own DP/DM
-> and SS (if super speed capable) interrupts. As per the bindings,
-> their interrupt names differ from standard ones having "_x" added
-> as suffix (x indicates port number). Identify from the interrupt
-> names whether the controller is a multiport controller or not.
-> Refactor dwc3_qcom_setup_irq() call to parse multiport interrupts
-> along with non-multiport ones accordingly..
+On Thu, Mar 07, 2024 at 11:50:51AM +0530, Krishna Kurapati wrote:
+> DWC3 Qcom wrapper currently supports only wakeup configuration
+> for single port controllers. Read speed of each port connected
+> to the controller and enable wakeup for each of them accordingly.
 > 
 > Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> ---
->  drivers/usb/dwc3/dwc3-qcom.c | 146 +++++++++++++++++++++++++++--------
->  1 file changed, 112 insertions(+), 34 deletions(-)
-
-This is much better. Just a couple of nits below.
-
-> +static int dwc3_qcom_find_num_ports(struct platform_device *pdev)
-> +{
-> +	const char *irq_name;
-> +	int port_index;
-> +	int irq;
-> +
-> +	irq = platform_get_irq_byname_optional(pdev, "qusb2_phy");
-> +	if (irq > 0)
-> +		return 1;
-> +
-> +	irq = platform_get_irq_byname_optional(pdev, "dp_hs_phy_irq");
-> +	if (irq > 0)
-> +		return 1;
-> +
-> +	for (port_index = 0; port_index < DWC3_MAX_PORTS; port_index++) {
-> +		irq_name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "dp_hs_phy_%d", port_index + 1);
-
-Please use a stack allocated buffer for these strings as we don't need
-them any more after this function returns.
-
-> +		if (!irq_name)
-> +			return -ENOMEM;
-> +
-> +		irq = platform_get_irq_byname_optional(pdev, irq_name);
-> +		if (irq <= 0)
-> +			return port_index;
-> +	}
-> +
-> +	return port_index;
-
-I think explicitly returning DWC3_MAX_PORTS here would be more readable.
-
-> +}
-> +
-> +static int dwc3_qcom_setup_irq(struct platform_device *pdev)
-> +{
-> +	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
-> +	bool is_multiport;
-> +	int ret;
-> +	int i;
-> +
-> +	qcom->num_ports = dwc3_qcom_find_num_ports(pdev);
-> +	if (qcom->num_ports < 0)
-> +		return -ENOMEM;
-
-Just return 'ret' directly.
-
-> +
-> +	is_multiport = (qcom->num_ports > 1) ? true : false;
-
-And no need for the ternary operator:
-
-	is_multiport = (qcom->num_ports > 1);
-
-> +
-> +	for (i = 0; i < qcom->num_ports; i++) {
-> +		ret = dwc3_qcom_setup_port_irq(pdev, i, is_multiport);
->  		if (ret)
->  			return ret;
-> -		qcom->ss_phy_irq = irq;
->  	}
->  
->  	return 0;
-
-With that fixed:
 
 Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
 
