@@ -1,182 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-15066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 09BCD88AB90
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 18:26:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E32488AB93
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 18:26:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A74DE2C1ABE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 17:26:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D6D212E6B1D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 17:26:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68EBC12D761;
-	Mon, 25 Mar 2024 16:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 322FD12FB26;
+	Mon, 25 Mar 2024 16:20:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="XLLBaugm"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Grt+7jrK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE76812F385
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 16:19:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7850A12F396
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 16:19:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711383579; cv=none; b=VG98Y0AXrRplCL3ZUl6RcgkTwZ3rzyYkvn7p+jqk7oKh0J7xKW0PXBrWrouXJXpVUeJslZyVbnhvPxzID9mwN1EYWenL9faBxsekNSvUmR5ITitP+hElLYPBwkQk6MKiNYyaedDZuVxj8UBPh2KfnDLKQ5agyQz6NshYably7E4=
+	t=1711383600; cv=none; b=gZDN8u8U10Efw3E91aJUk7IfvwWhoJ3PD61bz/RYUVl2BqNaNautqkKlQkK1cKDWCqPZpeyszpAuntpTnB4iHD/pKCFfnyQidfph0IbKQPyLHlPvw79LRKFulmCkqeO7U+rkLw+ZDpO7ezM/Gr9dhzuwaZ1sW6q1mFPhxsrzcuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711383579; c=relaxed/simple;
-	bh=uh9WFKIeWkaAivfeZSQMhbdOFpPDb/6h8qrwur73QbE=;
+	s=arc-20240116; t=1711383600; c=relaxed/simple;
+	bh=uOV5MCWT9pDoDGzplATxiEhOJo8GdM18dNDgTj0skJA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fv8LQajGnTr+edHLo/+nREuUiEb6lNuvWzPss9EKOV26lMMlrKoQvpnafpWUY90HmUfaYrvfoP/YFlS7OJYmTXhOTUXn8g9irs2engIwtdLwN9FN1Vtp3zPdxyUIFrCx+xKBFPMFFaL5ghQue7nTtGt755r/DuOMIEopJXPAjJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=XLLBaugm; arc=none smtp.client-ip=209.85.160.180
+	 To:Cc:Content-Type; b=R/qYXeIK/f3HrkhBvEE5m6dzrMheurnm1N+vnMQWYVYjLqN0kIYMwDciIrLL/dYrRkS6MvE55oOG7Q1bo2JeI8jYIVZLlVk1YVdELgyBtYW4OtK9E6k/TbUpFxoP6wPfn7ME6amPDIbJXjvNHWdUEWTPhQv6qqADhHCX6MB6qSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Grt+7jrK; arc=none smtp.client-ip=209.85.160.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-430ca04b09bso33681571cf.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 09:19:37 -0700 (PDT)
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-430c63d4da9so34287081cf.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 09:19:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1711383575; x=1711988375; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1711383595; x=1711988395; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ipKnULZuL+tAFscQ7D07riaZRlX7/8LgeP9Tufvdjpg=;
-        b=XLLBaugmiPhoNGtKG73uPzqJiCtlYMpyH4dUevRSjdhxmykhJTTypVfEsU/yZgsMGV
-         WJZ+UxEy7BnWNSg7QGhxdBl+6uxr44ZqX6Fg0M1fr+zfpQMP4BAozvxGeGxUVTubgt4D
-         U+d+WQK6R2mTuERnuSzeWhx97qTykJBGXKiHo=
+        bh=/M+RNRaHQeXuCFayOM1dYEtW20x69QDnHCFDaOPJPF0=;
+        b=Grt+7jrK3HlzN2+0um0h4Ab0fbyCWhM6vYXhyThG9kOM4CB4r44ibZfeaVayrYjGp5
+         Cz+ZVpmoPG9TBD/UbE57VPZ2KNOHkmWYKn1IHErD8e1TpWUsfteCRPzj79erzcZZJqx3
+         YrgrJdvWe/5ZaxLneClFNqXPTmB+tqqfgillo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711383575; x=1711988375;
+        d=1e100.net; s=20230601; t=1711383595; x=1711988395;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ipKnULZuL+tAFscQ7D07riaZRlX7/8LgeP9Tufvdjpg=;
-        b=VXYOPTLyAmSlGsrmGxn+8yFlicFY3E/eyBcvFO7paZMbQxwx9ed6pFMyKcpMTWk2l1
-         SuqwHWKnAHIArwz1tzeXEi7g1apSzxjzb1KcVlEhi23TxC2CBY1mzoqEJyyLOf2ycA1N
-         EVqELwT73+QiUlV/Xr+m4d+pc65LfJXT/eVnlflcVEloMR/1hohGcQmoEuJj6iqiGZ1z
-         1Yf7Ro9a9fjLkj0uSn4/2hJpm6w4eQyTcq2YPqJISqfLFp2dTFK2+A8msLN2jA0r1KQt
-         1CChFovPCslyVANdMAs5Oqu5JaX4dWqVoDSDHTgMEs4WjchDS3cnvXLsaCxA0ZbeqGpx
-         udfw==
-X-Forwarded-Encrypted: i=1; AJvYcCVZ+e4HZvv7vlMgVaGAE94S+fExar68FcrLDjdUlOUZW7dY6XXrVEmTjhtI2rl6ZWdisNci/jmf3AXuYQNa6sWwbmO/E2bL7YG0rK3h0w==
-X-Gm-Message-State: AOJu0YxC7kCoVi8NfEju4z/vSz6jGK8BUvUUFfWLig0hh4A0nFm7+Yri
-	ox1dD8N82cRuXmC/A14L16Amsb+QsrSmCEzWnJg1Us6m7BZGWw502F/OYyIk4E8xlKCJosvIasA
+        bh=/M+RNRaHQeXuCFayOM1dYEtW20x69QDnHCFDaOPJPF0=;
+        b=M2G4t/Zojk1chePu4HRwFoVXCOpb8hBeL6HLSYzdTTHpBuTBie3n1o7sGfVRRO19Cb
+         /UE0nErWgVEEyuC79oWzFwvb09W5UbNhJdcXCBg208tybeJ6G59Xr92p121AuZwqnP04
+         54FdOmoBHynr2/ocaMeC4pp9Mb7kNQt9GV+mEQaCyqWz7yAkcBl2c+5dqxQttNgMm7q2
+         0QNKI7SFNAcVGaQUkgoqNl6j+RdeTYVAgMSXNG1oBbtrzyh+UJiSrzz5f0f3Xutr3VKk
+         clVtsQL8n27Hfiqcqumcd+k9IMU0/yH1yYj2XJNXyUfpMwjPWBMS5bPB9ajMCWzBHxiO
+         d5QA==
+X-Forwarded-Encrypted: i=1; AJvYcCX+S+SSBGx8tU62gN4iwvRuGBTdmArfpwLYKQFyN3wpchGCAxuFA7FxFYXn5d/Eg8Zt7RMd4ZIIZPZqbZIRTwRoiUTpbrk1O0IEJ/KVhg==
+X-Gm-Message-State: AOJu0YxTJogqwzaBRXNwmp4GZPZr1n2D24F2b3D7AoohIlsO/Iha04VL
+	8+ad/uQxClVfTX9GwNvuINtxxuM6CFyg7ItJWXpER74jGKawVY5NUDbNbRDs08vAlZMU1m3nv2o
 	=
-X-Google-Smtp-Source: AGHT+IFS95JMiOi6587/zRCax+MplR1Pc1kxELnX4RmRLFoFuSZ9TMPX0aCegZM3PndySdh2aUg/HA==
-X-Received: by 2002:ac8:59d4:0:b0:431:5aa1:b6b5 with SMTP id f20-20020ac859d4000000b004315aa1b6b5mr3304126qtf.37.1711383575373;
-        Mon, 25 Mar 2024 09:19:35 -0700 (PDT)
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com. [209.85.160.171])
-        by smtp.gmail.com with ESMTPSA id a5-20020ac87205000000b00430bd60afa5sm2727568qtp.48.2024.03.25.09.19.34
+X-Google-Smtp-Source: AGHT+IEEvozJJMlvM5txZu7HgvbCuNc1lx6a7xO6mwJgtpLwPrwmKUzT8nYU2jLyNuZdfhAc9YXWhA==
+X-Received: by 2002:ac8:570a:0:b0:430:f76c:3c4a with SMTP id 10-20020ac8570a000000b00430f76c3c4amr8796056qtw.4.1711383595369;
+        Mon, 25 Mar 2024 09:19:55 -0700 (PDT)
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com. [209.85.160.173])
+        by smtp.gmail.com with ESMTPSA id f9-20020a05622a114900b0043140cd9996sm2499851qty.38.2024.03.25.09.19.54
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Mar 2024 09:19:34 -0700 (PDT)
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-42ee0c326e8so413691cf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 09:19:34 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXGSkSddPl2GRMjUqDqhV4tRRR2F+dCf9BK/o2YsIg7wNoQS2KfKJ/4XwXm4fYoSZyt9ZSQo4WMCGITn5+945a4LGYnxUm/vmjliA1gCg==
-X-Received: by 2002:ac8:5c0f:0:b0:431:1e00:996a with SMTP id
- i15-20020ac85c0f000000b004311e00996amr1088763qti.27.1711383574002; Mon, 25
- Mar 2024 09:19:34 -0700 (PDT)
+        Mon, 25 Mar 2024 09:19:54 -0700 (PDT)
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-431347c6c99so487661cf.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 09:19:54 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCW/FcP++/GiNwow70MnJrRv3sbVbcahHR2jf64XgYOEgxcV5WQnVzZZNVxByDPLqoeudHV876Tp6/Nhb1QMccE8MKJ75VwHzfH2pq3Hjw==
+X-Received: by 2002:a05:622a:1909:b0:431:c35:150f with SMTP id
+ w9-20020a05622a190900b004310c35150fmr1202359qtc.14.1711383594159; Mon, 25 Mar
+ 2024 09:19:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240325054403.592298-1-sboyd@kernel.org> <20240325054403.592298-4-sboyd@kernel.org>
-In-Reply-To: <20240325054403.592298-4-sboyd@kernel.org>
+References: <20240325054403.592298-1-sboyd@kernel.org> <20240325054403.592298-5-sboyd@kernel.org>
+In-Reply-To: <20240325054403.592298-5-sboyd@kernel.org>
 From: Doug Anderson <dianders@chromium.org>
-Date: Mon, 25 Mar 2024 09:19:18 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Vc-oe=JVJmg4w50VB_-AyxNoWe5KotnXPzrXUfgqhpkQ@mail.gmail.com>
-Message-ID: <CAD=FV=Vc-oe=JVJmg4w50VB_-AyxNoWe5KotnXPzrXUfgqhpkQ@mail.gmail.com>
-Subject: Re: [PATCH 3/5] clk: Initialize struct clk_core kref earlier
+Date: Mon, 25 Mar 2024 09:19:37 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Ws-LYcpiitibPBPRhqrbS8rTo_7xtPPw2kA+qBzybOxQ@mail.gmail.com>
+Message-ID: <CAD=FV=Ws-LYcpiitibPBPRhqrbS8rTo_7xtPPw2kA+qBzybOxQ@mail.gmail.com>
+Subject: Re: [PATCH 4/5] clk: Get runtime PM before walking tree during disable_unused
 To: Stephen Boyd <sboyd@kernel.org>
 Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, 
 	linux-clk@vger.kernel.org, patches@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org
+	linux-arm-msm@vger.kernel.org, Marek Szyprowski <m.szyprowski@samsung.com>, 
+	Ulf Hansson <ulf.hansson@linaro.org>, Krzysztof Kozlowski <krzk@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hik
+Hi,
 
 On Sun, Mar 24, 2024 at 10:44=E2=80=AFPM Stephen Boyd <sboyd@kernel.org> wr=
 ote:
 >
-> Initialize this kref once we allocate memory for the struct clk_core so
-> that we can reuse the release function to free any memory associated
-> with the structure. This mostly consolidates code, but also clarifies
-> that the kref lifetime exists once the container structure (struct
-> clk_core) is allocated instead of leaving it in a half-baked state for
-> most of __clk_core_init().
->
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-> ---
->  drivers/clk/clk.c | 28 +++++++++++++---------------
->  1 file changed, 13 insertions(+), 15 deletions(-)
->
-> diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-> index 9fc522c26de8..ee80b21f2824 100644
-> --- a/drivers/clk/clk.c
-> +++ b/drivers/clk/clk.c
-> @@ -3959,8 +3959,6 @@ static int __clk_core_init(struct clk_core *core)
->         }
->
->         clk_core_reparent_orphans_nolock();
-> -
-> -       kref_init(&core->ref);
->  out:
->         clk_pm_runtime_put(core);
->  unlock:
-> @@ -4189,6 +4187,16 @@ static void clk_core_free_parent_map(struct clk_co=
-re *core)
->         kfree(core->parents);
->  }
->
-> +/* Free memory allocated for a struct clk_core */
-> +static void __clk_release(struct kref *ref)
-> +{
-> +       struct clk_core *core =3D container_of(ref, struct clk_core, ref)=
-;
-> +
-> +       clk_core_free_parent_map(core);
-> +       kfree_const(core->name);
-> +       kfree(core);
-> +}
-> +
->  static struct clk *
->  __clk_register(struct device *dev, struct device_node *np, struct clk_hw=
- *hw)
->  {
-> @@ -4209,6 +4217,8 @@ __clk_register(struct device *dev, struct device_no=
-de *np, struct clk_hw *hw)
->                 goto fail_out;
->         }
->
-> +       kref_init(&core->ref);
-> +
->         core->name =3D kstrdup_const(init->name, GFP_KERNEL);
->         if (!core->name) {
->                 ret =3D -ENOMEM;
-> @@ -4263,12 +4273,10 @@ __clk_register(struct device *dev, struct device_=
-node *np, struct clk_hw *hw)
->         hw->clk =3D NULL;
->
->  fail_create_clk:
-> -       clk_core_free_parent_map(core);
->  fail_parents:
->  fail_ops:
-> -       kfree_const(core->name);
->  fail_name:
-> -       kfree(core);
-> +       kref_put(&core->ref, __clk_release);
->  fail_out:
->         return ERR_PTR(ret);
+> Introduce a list of clk_core structures that have been registered, or
+> are in the process of being registered, that require runtime PM to
+> operate. Iterate this list and call clk_pm_runtime_get() on each of them
+> without holding the prepare_lock during clk_disable_unused(). This way
+> we can be certain that the runtime PM state of the devices will be
+> active and resumed so we can't schedule away while walking the clk tree
+> with the prepare_lock held. Similarly, call clk_pm_runtime_put() without
+> the prepare_lock held to properly drop the runtime PM reference.
 
-If it were me, I probably would have:
+There's a part of me that worries about the fact that we'll now be
+doing a pm_runtime get() on _all clocks_ (even those that are used) at
+bootup now. I worry that some device out there will be unhappy about
+it. ...but I guess the device passed in here is already documented to
+be one that the clock framework can get/put whenever it needs to
+prepare the clock, so that makes me feel like it should be fine.
 
-* Removed "fail_out" and turned the one "goto fail_out" to just return
-the error.
+Anyway, no action item, just documenting my thoughts...
 
-* Consolidated the rest of the labels into a single "fail" label.
+Oh, funny. After reading the next patch, I guess I'm even less
+concerned. I guess we were already grabbing the pm_runtime state for
+all clocks while printing the clock summary. While that's a debugfs
+function, it's still something that many people have likely exercised
+and it's likely not going to introduce random/long tail problems.
 
-That's definitely just a style opinion though, and IMO the patch is
-fine as-is and overall cleans up the code.
+
+> +/*
+> + * Call clk_pm_runtime_get() on all runtime PM enabled clks in the clk t=
+ree so
+> + * that disabling unused clks avoids a deadlock where a device is runtim=
+e PM
+> + * resuming/suspending and the runtime PM callback is trying to grab the
+> + * prepare_lock for something like clk_prepare_enable() while
+> + * clk_disable_unused_subtree() holds the prepare_lock and is trying to =
+runtime
+> + * PM resume/suspend the device as well.
+> + */
+> +static int clk_pm_runtime_get_all(void)
+
+nit: It'd be nice if this documented that it acquired / held the lock.
+Could be in comments, or, might as well use the syntax like this (I
+think):
+
+__acquires(&clk_rpm_list_lock);
+
+...similar with the put function.
+
+
+> +       /*
+> +        * Runtime PM "get" all the devices that are needed for the clks
+> +        * currently registered. Do this without holding the prepare_lock=
+, to
+> +        * avoid the deadlock.
+> +        */
+> +       hlist_for_each_entry(core, &clk_rpm_list, rpm_node) {
+> +               ret =3D clk_pm_runtime_get(core);
+> +               if (ret) {
+> +                       failed =3D core;
+> +                       pr_err("clk: Failed to runtime PM get '%s' for cl=
+k '%s'\n",
+> +                              failed->name, dev_name(failed->dev));
+
+If I'm reading this correctly, the strings are backward in your error
+print. Right now you're printing:
+
+clk: Failed to runtime PM get '<clk_name>' for clk '<dev_name>'
+
+
+With the printout fixed and some type of documentation that
+clk_pm_runtime_get_all() and clk_pm_runtime_put_all() grab/release the
+mutex:
 
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
