@@ -1,104 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-15046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15047-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D0FE88A85A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 17:08:21 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6BCED88A86C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 17:10:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F0A9B1F3EC9A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 16:08:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9CC031C2C95D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 16:10:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 712A313A898;
-	Mon, 25 Mar 2024 13:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7590713C3EB;
+	Mon, 25 Mar 2024 13:57:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VZ8vvA8w"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xl/hE/zs"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401AD13A88B;
-	Mon, 25 Mar 2024 13:55:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B80284D33;
+	Mon, 25 Mar 2024 13:57:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711374939; cv=none; b=cIBAJqinW+jeaXyfwStePRqFVdDdpPGre+BCbJy6+fn8dOgbIRLBSHhXAtNCzlAJJesGnHHVnZ9zB3HfiGAx4/P19l1UXonfAEdgizcOA9ioV+s8cKXlfDXMU1VFR1qM+bkSTuCVWJxqW2+gx5Ps0VyZ5DalZeZVgpCSkw6rR9o=
+	t=1711375063; cv=none; b=Wqc2L3+1NjOdoi9de+hY3+eZo6NlvoETtdwpcLQbZ61NVzNlEybntI+3mvxcM4g/4YWzbrBsK7pK03lTYrg3shd8gfmi9JXIWsrX7B4SiI9Q5khjPD6kx6Ns4GnjJwyEsAKdP1O4iho4Xzj6M3kXO7VQ8HhrxaVLV2Y95GuD1pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711374939; c=relaxed/simple;
-	bh=D61EWznHl1PQPwhFhPh0ucTPJDZRKnDy5Hwth2zSCVY=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=cVLR+Ypp6kgSmtSSVH3D73qK7nV/q/XNeW4bfbhCXLjOX/pIq6TZ6cJBIFv8yt3IIavPbvEQ7rQZzp7W/CvicXmuiGn6VDFA+FuSojFKcdPnQkO0zOPfMYX9CVPApxZY0D/7a9epOiF7Lwo0LWIR1uC9Ten21FT+1HqPSDUbCCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VZ8vvA8w; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94501C433A6;
-	Mon, 25 Mar 2024 13:55:38 +0000 (UTC)
+	s=arc-20240116; t=1711375063; c=relaxed/simple;
+	bh=0IIk7fdt/ij7Y30RYxIc4VnrAUsxe7XFLjeK+gaFxHc=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=t/TU1UMryzQj19zrZU+2Y8RpMt1V0+ApAkudlbCJZo6YGG8H4BEfFtJDG0PX8o3yIM8Jt0CqwvILbV2goJP2vjTXr695ifJCZgfhURDrMr3t9CQXkIJqVDtRr99Mk+pEwEIBpEytjWfs2o9MYDgusB5GX+Fb2JFuoemVFCOVhfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xl/hE/zs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5954C433F1;
+	Mon, 25 Mar 2024 13:57:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711374938;
-	bh=D61EWznHl1PQPwhFhPh0ucTPJDZRKnDy5Hwth2zSCVY=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=VZ8vvA8wSXhcmeM+jmsTEVCXzgT2/HxOjFjwK9wHTB6h/18eB1gp3WPDfshnmCa9P
-	 pGERQU89hgEqh73EZYpDO7zOssf3xCCYQTevM6ZdDxYIozYt6tnTEjR9orQeyJ00m/
-	 N4/d66k10ro7sXvp0qEe94wceFwKui/EaKSzD6vpghskeQznG6bk6Mix1En9sP6Ow+
-	 yGywbgFdW+6wI8eV2DvAt48eXvtRhxn1g1bnv3nlUDECrn1TG9FEbij2lKHEcPLGT5
-	 H0l8bog0s4BOwEb+UR3SkMCppef+Cn1eVbhvs1m+/UZFXSjlbQyzvDfdnuu30Xvac7
-	 XUnra2SUZNsBA==
-Date: Mon, 25 Mar 2024 08:55:37 -0500
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8bit
+	s=k20201202; t=1711375062;
+	bh=0IIk7fdt/ij7Y30RYxIc4VnrAUsxe7XFLjeK+gaFxHc=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=Xl/hE/zsFcn+ly77x4fZ3ZW5Fcq/0aXBJM4eWJY7Soms+8FR0uHNz51ckpxVOF84p
+	 XROI8xNa4rDlaggLK+yGMSwjivxoa7IL293/w3IBlduPatwoyIzsiCY+o31fKTCTf7
+	 LdsZtzzLHEsGhtGiDNrpCBnUwdKhDUagvU2KAQbB/of3CkNv/XRwhhcnpzdGBwhbx7
+	 YVk/AnxOuf0W1U1b3ScunsyArv4+T7QDY/8OVTTSIKI71d7el/27SmZM1IzlRUp1wC
+	 kCV8SVX+NJS5erHEexMcfI/snqTblbuWstFTOT9d2ZHpnCKT3ITU2NwnhhGX46rico
+	 CKbAyFpjQJBAA==
+From: Kalle Valo <kvalo@kernel.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Marcel Holtmann <marcel@holtmann.org>,  Luiz Augusto von Dentz
+ <luiz.dentz@gmail.com>,  "David S . Miller" <davem@davemloft.net>,  Eric
+ Dumazet <edumazet@google.com>,  Jakub Kicinski <kuba@kernel.org>,  Paolo
+ Abeni <pabeni@redhat.com>,  Rob Herring <robh@kernel.org>,  Krzysztof
+ Kozlowski <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley
+ <conor+dt@kernel.org>,  Bjorn Andersson <andersson@kernel.org>,  Konrad
+ Dybcio <konrad.dybcio@linaro.org>,  Liam Girdwood <lgirdwood@gmail.com>,
+  Mark Brown <broonie@kernel.org>,  Catalin Marinas
+ <catalin.marinas@arm.com>,  Will Deacon <will@kernel.org>,  Bjorn Helgaas
+ <bhelgaas@google.com>,  Saravana Kannan <saravanak@google.com>,  Geert
+ Uytterhoeven <geert+renesas@glider.be>,  Arnd Bergmann <arnd@arndb.de>,
+  Neil Armstrong <neil.armstrong@linaro.org>,  Marek Szyprowski
+ <m.szyprowski@samsung.com>,  Alex Elder <elder@linaro.org>,  Srini
+ Kandagatla <srinivas.kandagatla@linaro.org>,  Greg Kroah-Hartman
+ <gregkh@linuxfoundation.org>,  Abel Vesa <abel.vesa@linaro.org>,
+  Manivannan Sadhasivam <mani@kernel.org>,  Lukas Wunner <lukas@wunner.de>,
+  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+  linux-bluetooth@vger.kernel.org,  netdev@vger.kernel.org,
+  devicetree@vger.kernel.org,  linux-kernel@vger.kernel.org,
+  linux-wireless@vger.kernel.org,  linux-arm-msm@vger.kernel.org,
+  linux-arm-kernel@lists.infradead.org,  linux-pci@vger.kernel.org,
+  linux-pm@vger.kernel.org,  Bartosz Golaszewski
+ <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v6 04/16] dt-bindings: net: wireless: qcom,ath11k:
+ describe the ath11k on QCA6390
+References: <20240325131624.26023-1-brgl@bgdev.pl>
+	<20240325131624.26023-5-brgl@bgdev.pl>
+Date: Mon, 25 Mar 2024 15:57:33 +0200
+In-Reply-To: <20240325131624.26023-5-brgl@bgdev.pl> (Bartosz Golaszewski's
+	message of "Mon, 25 Mar 2024 14:16:12 +0100")
+Message-ID: <87r0fy8lde.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Stanislav Jakubek <stano.jakubek@gmail.com>
-Cc: Conor Dooley <conor+dt@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
- phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, devicetree@vger.kernel.org
-In-Reply-To: <f5d4d71cd59f25b80889ef88fa044aa3a4268d46.1711288736.git.stano.jakubek@gmail.com>
-References: <f5d4d71cd59f25b80889ef88fa044aa3a4268d46.1711288736.git.stano.jakubek@gmail.com>
-Message-Id: <171137470670.3264858.14092936502635914730.robh@kernel.org>
-Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Add Motorola Moto G (2013)
+Content-Type: text/plain
 
+Bartosz Golaszewski <brgl@bgdev.pl> writes:
 
-On Sun, 24 Mar 2024 15:03:59 +0100, Stanislav Jakubek wrote:
-> Document the Motorola Moto G (2013), which is a smartphone based
-> on the Qualcomm MSM8226 SoC.
-> 
-> Signed-off-by: Stanislav Jakubek <stano.jakubek@gmail.com>
-> ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>
+> Add a PCI compatible for the ATH11K module on QCA6390 and describe the
+> power inputs from the PMU that it consumes.
+>
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
+[...]
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
+> +allOf:
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const: pci17cb,1101
+> +    then:
+> +      required:
+> +        - vddrfacmn-supply
+> +        - vddaon-supply
+> +        - vddwlcx-supply
+> +        - vddwlmx-supply
+> +        - vddrfa0p8-supply
+> +        - vddrfa1p2-supply
+> +        - vddrfa1p7-supply
+> +        - vddpcie0p9-supply
+> +        - vddpcie1p8-supply
 
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
+I don't know DT well enough to know what the "required:" above means,
+but does this take into account that there are normal "plug&play" type
+of QCA6390 boards as well which don't need any DT settings?
 
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
 
-  pip3 install dtschema --upgrade
-
-
-New warnings running 'make CHECK_DTBS=y qcom/msm8226-motorola-falcon.dtb' for f5d4d71cd59f25b80889ef88fa044aa3a4268d46.1711288736.git.stano.jakubek@gmail.com:
-
-arch/arm/boot/dts/qcom/msm8226-motorola-falcon.dtb: syscon@f9011000: compatible: 'anyOf' conditional failed, one must be fixed:
-	['syscon'] is too short
-	'syscon' is not one of ['allwinner,sun8i-a83t-system-controller', 'allwinner,sun8i-h3-system-controller', 'allwinner,sun8i-v3s-system-controller', 'allwinner,sun50i-a64-system-controller', 'amd,pensando-elba-syscon', 'brcm,cru-clkset', 'freecom,fsg-cs2-system-controller', 'fsl,imx93-aonmix-ns-syscfg', 'fsl,imx93-wakeupmix-syscfg', 'hisilicon,dsa-subctrl', 'hisilicon,hi6220-sramctrl', 'hisilicon,pcie-sas-subctrl', 'hisilicon,peri-subctrl', 'hpe,gxp-sysreg', 'intel,lgm-syscon', 'loongson,ls1b-syscon', 'loongson,ls1c-syscon', 'marvell,armada-3700-usb2-host-misc', 'mediatek,mt8135-pctl-a-syscfg', 'mediatek,mt8135-pctl-b-syscfg', 'mediatek,mt8365-syscfg', 'microchip,lan966x-cpu-syscon', 'microchip,sparx5-cpu-syscon', 'mstar,msc313-pmsleep', 'nuvoton,ma35d1-sys', 'nuvoton,wpcm450-shm', 'rockchip,px30-qos', 'rockchip,rk3036-qos', 'rockchip,rk3066-qos', 'rockchip,rk3128-qos', 'rockchip,rk3228-qos', 'rockchip,rk3288-qos', 'rockchip,rk3368-qos', 'rockchip,rk3399-qos', 'rockchip,rk3568-qos', '
- rockchip,rk3588-qos', 'rockchip,rv1126-qos', 'starfive,jh7100-sysmain', 'ti,am62-usb-phy-ctrl', 'ti,am654-dss-oldi-io-ctrl', 'ti,am654-serdes-ctrl', 'ti,j784s4-pcie-ctrl']
-	from schema $id: http://devicetree.org/schemas/mfd/syscon.yaml#
-
-
-
-
-
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
