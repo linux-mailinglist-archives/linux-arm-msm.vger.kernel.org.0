@@ -1,138 +1,233 @@
-Return-Path: <linux-arm-msm+bounces-15105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8EDDD88B146
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 21:25:20 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F67288B646
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 01:42:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 42F571F641BB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 20:25:20 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 03FF7B273FD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 20:56:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4725946435;
-	Mon, 25 Mar 2024 20:25:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 252285B5BB;
+	Mon, 25 Mar 2024 20:56:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ENM5X+VU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FwlzIbJe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874454597D;
-	Mon, 25 Mar 2024 20:25:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474C72C87C
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 20:56:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711398310; cv=none; b=dJEBgZtWPpKM1x2oV8bVKIMtE6VdkZgWcwdOmRHGqNF0u45IPSuazC7+ziE5kmR8CwBTc37kKgsMnpjfSNdY2KekfH7nLw79hkjao8YAgOSGsEphh2J6iqfG/5zmTNs11oN/YO9iNZLgFsIERqtueEyK5r5WXS+qjzNLo9P5BwE=
+	t=1711400195; cv=none; b=VZygngISkJa0aKBwy2NUI2aA8pnsm+BYEM6wCrhsXlrJXpIcAZ3Isplv9tR7n75bqsttPnXaL26PhP5cPV2u3jFk5lVhG15EE0X2t4MQIuIoc/yDiBoVb10tgPY3aBajlT5bZgFST55gKO3LCDomoGpQjvcYZNMDwNX1iiw0srA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711398310; c=relaxed/simple;
-	bh=DBk0mGRrqs3fXNbMGeMFrYvbKXWx16IUFmAGJWlOobc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZTZHj5GXcpkpVjlQmauUagHt2kc+ndX4rWiI0aDU3WUce6gcC9E7F8B8ILKexJ1mjDgSiI4GfOjxDGAGR3hD2WBqq2g0bC8Js+grlL5ztpmD91PT/eonCvcKgCx7RbCTtxyScFGdisM08CpF2+xmeffXvk6rR+CI38FXCR5A+Vc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ENM5X+VU; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a46de423039so274387966b.0;
-        Mon, 25 Mar 2024 13:25:08 -0700 (PDT)
+	s=arc-20240116; t=1711400195; c=relaxed/simple;
+	bh=9UYGMc9oR0eHzWyKCyGIWWDkMJdM4kvKdBugGGt2fxw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qoMRkL4P507BZUabJ32j/XF29lJhDfX1uIVxwDnInA1h9KnC9nkUqItbOjvpRhpMzssMG1/CIPIhp8lKDAgqTl4+P3ohU9tThZRZO84tKClr/E067Ti7M3me/SaZ/sYdyFbG5rjGMFmcsz4ywILPaKdEsFdcN54Yj08NZHxG/pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FwlzIbJe; arc=none smtp.client-ip=209.85.219.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-dc6cbe1ac75so3777569276.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 13:56:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711398307; x=1712003107; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=JKap+w2F/mavcZpUAHIDLIPh2s+384u67vVZTtB6BQw=;
-        b=ENM5X+VUEZFbxXuDnMO9uulUHLWG+w2RulePa3K6m1e8te/PVHIe0f8jww/i6u653m
-         95QZ5qOLfppntJ5ORq/2WqKCOY/PE49nUE2hS3CUpGs/4wyRA/nEyDtMFRfuzEKRXcy9
-         PiNlGhgAiU20lHTYcVGx4spRwD1yvYkF2ZM+y5SL93Jov+tX1UajAbvF2HR9zQwxflFW
-         XQ5Gip6HREEFeQkGAdB++kZIewKIz6J0I85qEMTpnNAsWBPYikT3F07Q5DvDOctaYK8p
-         T3h6XBp6Oa7Xdln3ghOsROBOTvUbne7NgfU5HMHln0sv0jpqJ9JBc49WvtODKka5pJMA
-         8U1Q==
+        d=linaro.org; s=google; t=1711400192; x=1712004992; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=besxki1zzZKLyiavhPEaN+iJiY/oxhKxhbXBWHJWvKo=;
+        b=FwlzIbJeELfv5Ko6y9n0xiEPM2nFmhlZWb3RYhTIi9eI7sFnvC3FoSSqCFQPIbRsqU
+         ypGEeH9gGg0R3wIMO/hgZ7XxSo4URcsU618LZ1YJZDbhZ2/Es1QIPGVyd5RD0R9GyHZH
+         WtB3hET7cCdOxgTA3j1D2OoverPycgyhr/H+UMXgdyI9ff9Kcc1KnVjNoEJybsCy9oeD
+         sGMzWQ4UV7CnaxlDUj8QIMoWxGzevxVS10+7O0LCp2DZRBlpt6Pv5pSgkRNWrAIyq2mU
+         XFI2uh1MrJE/rd1cD7uH8TRUUYhLR0Q4vsuHw+93MIhBv0uT0hTNtTiRQtH+8j1wLcoD
+         snWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711398307; x=1712003107;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JKap+w2F/mavcZpUAHIDLIPh2s+384u67vVZTtB6BQw=;
-        b=ejyVRxE3fTCyFbKgQGv1sa6rJa8Rhmm4BlqiSYHmoaOTxOFTVZB4QAv3UH0NRLP77x
-         7WLEXwcrTSjNmi4+tJOvzLkbygS1giSURf84goVPafuIkLWXn9ctal28WqLTDO5jW+KW
-         Oj0/l/NcBzzMNaqf+MNOHiRzCyyWrmqZcpp96/LkyTXdsof93l6KgYUMfQ+Jwm2y+WRR
-         qZsTU24AbbaakD48G4I+JZCfB9lQfNTk4z+NSS7hIyVrUc4etz1sy4GvOfsAekN3KQ4k
-         ihWzrU7RQddC3E5x9vhvMyCgeLisDV3nxJthcyMVC0EIQOhx8/RcJzXZkUujqzSLzsRX
-         bOQQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXulkDdGLnfICWW4/W1N+CqGYmUxEjMh6BbRs7IdM4lnmX2/If5VG03Rk1aM6ghJeQO4mXWeKos+q3DET445QehPa/ZT1McqGIyBTcK623U7SALpHNcLilZVxYHejVXc5rFJO2IJpfr8uGtkOhvpu1SujnbjWlpMzOXLpWHVBez140MlwFn13etcpvt+3nWwzlZyeR3NeMkirpt2n7DUa99CFyusQ==
-X-Gm-Message-State: AOJu0YxOh2fB0pHKHkbjMiiDkgP6Emzzh7DOuXI+bo4nyFADrOydYxRa
-	UUIqX2jj2f+/sNTvLtXFdDszQGZ12z5Ycfz8y2ESBQOoq5IkThy5
-X-Google-Smtp-Source: AGHT+IH3MYHwbMtQtubhWVjxi/2gtr5wMVHSj9eDzomJs3JTaxIPbZAKJDw+94DvZ7YPRH86G7VJGg==
-X-Received: by 2002:a50:d484:0:b0:568:c6a2:f411 with SMTP id s4-20020a50d484000000b00568c6a2f411mr5723974edi.32.1711398306520;
-        Mon, 25 Mar 2024 13:25:06 -0700 (PDT)
-Received: from standask-GA-A55M-S2HP (lu-nat-113-247.ehs.sk. [188.123.113.247])
-        by smtp.gmail.com with ESMTPSA id c36-20020a509fa7000000b0056bdec673c3sm3456565edf.38.2024.03.25.13.25.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Mar 2024 13:25:06 -0700 (PDT)
-Date: Mon, 25 Mar 2024 21:25:04 +0100
-From: Stanislav Jakubek <stano.jakubek@gmail.com>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] ARM: dts: qcom: Add support for Motorola Moto G
- (2013)
-Message-ID: <ZgHdoK6luxRcKgRx@standask-GA-A55M-S2HP>
-References: <f5d4d71cd59f25b80889ef88fa044aa3a4268d46.1711288736.git.stano.jakubek@gmail.com>
- <b35ad5ff8a13f9df415b6e6700b3b5d3f13bfce8.1711288736.git.stano.jakubek@gmail.com>
- <ffa93b4a-608a-4cf5-b111-0d1f8520afdd@linaro.org>
+        d=1e100.net; s=20230601; t=1711400192; x=1712004992;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=besxki1zzZKLyiavhPEaN+iJiY/oxhKxhbXBWHJWvKo=;
+        b=fppmcngohR98nCOfa8OqY5mNEKRGvNjkO8f/90ZQk5XOVJjVfeuyprdXkjWWd1uUfW
+         /Rbw1IXv0G6TXMXgfVdawxpgYm243aR0z/BUajIq0gD2TpUyFpOSG1Aw75jB01JwwGc4
+         JI3rAEtrat9lV86dTMYl3A0CPUz1LU+acbBPJHLKikYiLtaLuFEbO431b2hU0nW7/5qG
+         WwK+D1mrgVSI7C01QD7sy0o8aySiyx4mrnkH4VLv/z5hoe3H5oBQSBR1vNOLGzTyNw1D
+         dLgXobj0rnn/EN8GdpiKJGiTkHWQSy+rkDyOyrZu/aAs0OGM8TfinHIwDzraA4UzKOxp
+         7SmQ==
+X-Forwarded-Encrypted: i=1; AJvYcCULB8/sYSgRg/kt6qUocxY6LCWykk1o18OvdvwFLi5jvFLgksYG5uztYIOmakzsrrICk/KUoXVfp9+OOZPh3jrjl7Dsmh/8kvJbUAU99w==
+X-Gm-Message-State: AOJu0Yyq4Ur0yEY14nZQ/0N9vw3EVHpy2OH0jf4Te50mzguGRI5yEVnd
+	ccvO8I9Ga8oAYxWh/WLOEj9QEWRtnpTWi7Qu2bZiJqAcVL1LA/jg6gOP/zKO/+IULVI98JU+NQG
+	gB1N+SQGd+sa/CObq2fztdii58fDAcDjrZtRfaQ==
+X-Google-Smtp-Source: AGHT+IHGDdQ7jXrkcSrON57XhBZ3l9DnPEzT4z7nR2v3+oetUEyIZcbZO1m/thzWE25cnAXAr4k+8VB4qHNQUa4YEwo=
+X-Received: by 2002:a25:7411:0:b0:dd1:6cad:8fd3 with SMTP id
+ p17-20020a257411000000b00dd16cad8fd3mr3677424ybc.27.1711400192183; Mon, 25
+ Mar 2024 13:56:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ffa93b4a-608a-4cf5-b111-0d1f8520afdd@linaro.org>
+References: <20240313-qcom-ucsi-fixes-v1-0-74d90cb48a00@linaro.org> <Zf12vSHvDiFTufLE@hovoldconsulting.com>
+In-Reply-To: <Zf12vSHvDiFTufLE@hovoldconsulting.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 25 Mar 2024 22:56:21 +0200
+Message-ID: <CAA8EJprAzy41pn7RMtRgbA-3MO8LoMf8UXQqJ3hD-SzHS_=AOg@mail.gmail.com>
+Subject: Re: [PATCH 0/7] usb: typec: ucsi: fix several issues manifesting on
+ Qualcomm platforms
+To: Johan Hovold <johan@kernel.org>
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Guenter Roeck <linux@roeck-us.net>, 
+	Bjorn Andersson <andersson@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Johan Hovold <johan+linaro@kernel.org>, 
+	linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Mar 25, 2024 at 08:28:27PM +0100, Konrad Dybcio wrote:
-> On 24.03.2024 3:04 PM, Stanislav Jakubek wrote:
-> > Add a device tree for the Motorola Moto G (2013) smartphone based
-> > on the Qualcomm MSM8226 SoC.
-> > 
-> > Initially supported features:
-> >   - Buttons (Volume Down/Up, Power)
-> >   - eMMC
-> >   - Hall Effect Sensor
-> >   - SimpleFB display
-> >   - TMP108 temperature sensor
-> >   - Vibrator
-> > 
-> > Signed-off-by: Stanislav Jakubek <stano.jakubek@gmail.com>
-> > ---
-> 
-> [...]
-> 
-> > +		hob-ram@f500000 {
-> > +			reg = <0x0f500000 0x40000>,
-> > +			      <0x0f540000 0x2000>;
-> > +			no-map;
-> > +		};
-> 
-> Any reason it's in two parts? Should it be one contiguous region, or
-> two separate nodes?
-> 
-> lgtm otherwise
+On Fri, 22 Mar 2024 at 14:16, Johan Hovold <johan@kernel.org> wrote:
+>
+> On Wed, Mar 13, 2024 at 05:54:10AM +0200, Dmitry Baryshkov wrote:
+> > Fix several issues discovered while debugging UCSI implementation on
+> > Qualcomm platforms (ucsi_glink). With these patches I was able to
+> > get a working Type-C port managament implementation. Tested on SC8280XP
+> > (Lenovo X13s laptop) and SM8350-HDK.
+>
+> > Dmitry Baryshkov (7):
+> >       usb: typec: ucsi: fix race condition in connection change ACK'ing
+> >       usb: typec: ucsi: acknowledge the UCSI_CCI_NOT_SUPPORTED
+> >       usb: typec: ucsi: make ACK_CC_CI rules more obvious
+> >       usb: typec: ucsi: allow non-partner GET_PDOS for Qualcomm devices
+> >       usb: typec: ucsi: limit the UCSI_NO_PARTNER_PDOS even further
+> >       usb: typec: ucsi: properly register partner's PD device
+>
+> >       soc: qcom: pmic_glink: reenable UCSI on sc8280xp
+>
+> I just gave this series a quick spin on my X13s and it seems there are
+> still some issues that needs to be resolved before merging at least the
+> final patch in this series:
+>
+> [    7.786167] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: unknown error 0
+> [    7.786445] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: UCSI_GET_PDOS failed (-5)
+> [    7.883493] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: unknown error 0
+> [    7.883614] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: UCSI_GET_PDOS failed (-5)
+> [    7.905194] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: unknown error 0
+> [    7.905295] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: UCSI_GET_PDOS failed (-5)
+> [    7.913340] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: unknown error 0
+> [    7.913409] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: UCSI_GET_PDOS failed (-5)
 
-Hi Konrad, I copied this from downstream as-is.
-According to the downstream docs [1]:
+I have traced what is causing these messages. During UCSI startup the
+ucsi_register_port() function queries for PDOs associated with the
+on-board USB-C port. This is allowed by the spec. Qualcomm firmware
+detects that there is no PD-device connected and instead of returning
+corresponding set of PDOs returns Eerror Indicator set to 1b but then
+it returns zero error status in response to GET_ERROR_STATUS, causing
+"unknown error 0" code. I have checked the PPM, it doesn't even have
+the code to set the error status properly in this case (not to mention
+that asking for device's PDOs should not be an error, unless the
+command is inappropriate for the target.
 
-HOB RAM MMAP Device provides ability for userspace to access the
-hand over block memory to read out modem related parameters.
+Thus said, I think the driver is behaving correctly. Granted that
+these messages are harmless, we can ignore them for now. I'll later
+check if we can update PD information for the device's ports when PD
+device is attached. I have verified that once the PD device is
+attached, corresponding GET_PDOS command returns correct set of PD
+objects. Ccurrently the driver registers usb_power_delivery devices,
+but with neither source nor sink set of capabilities.
 
-And the two regs are the "DHOB partition" and "SHOB partition".
+An alternative option is to drop patches 4 and 5, keeping
+'NO_PARTNER_PDOS' quirk equivalent to 'don't send GET_PDOS at all'.
+However I'd like to abstain from this option, since it doesn't allow
+us to check PD capabilities of the attached device.
 
-I suppose this is something Motorola (firmware?) specific (since the
-downstream compatible is mmi,hob_ram [2]).
-Should I split this into 2 nodes - dhob@f500000 and shob@f540000?
+Heikki, Johan, WDYT?
 
-Stanislav
+For reference, here is a trace of relevant messages exchanged over the
+GLINK interface during UCSI bootstrap:
 
-[1] https://github.com/LineageOS/android_kernel_motorola_msm8226/blob/cm-14.1/Documentation/devicetree/bindings/misc/hob_ram.txt
-[2] https://github.com/LineageOS/android_kernel_motorola_msm8226/blob/cm-14.1/arch/arm/boot/dts/msm8226-moto-common.dtsi#L258
+[   11.030838] write: 00000000: 10 00 01 00 07 00 00 00
+
+GET_PDOS(connection 1, Source, 3 PDOs)
+
+[   11.044171] write ack: 0
+[   11.044263] notify: 00000000: 00 00 00 c0 00 00 00 00
+
+Command Complete, Error
+
+[   11.044458] read: 00000000: 00 01 00 00 00 00 00 c0 00 00 00 00 00 00 00 00
+[   11.044460] read: 00000010: e7 3f 00 00 00 00 00 00 02 00 20 01 00 03 30 01
+[   11.044462] read: 00000020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   11.059790] read: 00000000: 00 01 00 00 00 00 00 c0 00 00 00 00 00 00 00 00
+[   11.059797] read: 00000010: e7 3f 00 00 00 00 00 00 02 00 20 01 00 03 30 01
+[   11.059801] read: 00000020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   11.059814] write: 00000000: 04 00 02 00 00 00 00 00
+
+Ack_CC command
+
+[   11.075509] write ack: 0
+[   11.075544] notify: 00000000: 00 00 00 20 00 00 00 00
+
+Ack for Ack_CC
+
+[   11.091828] read: 00000000: 00 01 00 00 00 00 00 20 00 00 00 00 00 00 00 00
+[   11.091864] read: 00000010: e7 3f 00 00 00 00 00 00 02 00 20 01 00 03 30 01
+[   11.091879] read: 00000020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   11.092339] write: 00000000: 13 00 00 00 00 00 00 00
+
+GET_ERROR_STATUS
+
+[   11.106398] write ack: 0
+[   11.106435] notify: 00000000: 00 10 00 80 00 00 00 00
+
+command complete, 0x10 bytes of response
+
+[   11.122729] read: 00000000: 00 01 00 00 00 10 00 80 00 00 00 00 00 00 00 00
+[   11.122758] read: 00000010: 00 00 00 00 00 00 00 00 02 00 20 01 00 03 30 01
+[   11.122770] read: 00000020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+Zero response data
+
+
+[   11.137523] read: 00000000: 00 01 00 00 00 10 00 80 00 00 00 00 00 00 00 00
+[   11.137548] read: 00000010: 00 00 00 00 00 00 00 00 02 00 20 01 00 03 30 01
+[   11.137559] read: 00000020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   11.153028] read: 00000000: 00 01 00 00 00 10 00 80 00 00 00 00 00 00 00 00
+[   11.153064] read: 00000010: 00 00 00 00 00 00 00 00 02 00 20 01 00 03 30 01
+[   11.153080] read: 00000020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   11.153492] write: 00000000: 04 00 02 00 00 00 00 00
+
+Ack_CC for the GET_ERROR_STATUS command
+
+[   11.169060] write ack: 0
+[   11.169108] notify: 00000000: 00 00 00 20 00 00 00 00
+
+Ack for ACK_CC
+
+[   11.184114] read: 00000000: 00 01 00 00 00 00 00 20 00 00 00 00 00 00 00 00
+[   11.184140] read: 00000010: 00 00 00 00 00 00 00 00 02 00 20 01 00 03 30 01
+[   11.184152] read: 00000020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   11.184548] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: unknown error 0
+[   11.184695] ------------[ cut here ]------------
+[   11.184703] WARNING: CPU: 2 PID: 28 at
+drivers/usb/typec/ucsi/ucsi.c:140 ucsi_exec_command+0x284/0x328
+[typec_ucsi]
+[   11.185488] Call trace:
+[   11.185494]  ucsi_exec_command+0x284/0x328 [typec_ucsi]
+[   11.185519]  ucsi_send_command+0x54/0x118 [typec_ucsi]
+[   11.185543]  ucsi_read_pdos+0x5c/0xdc [typec_ucsi]
+[   11.185567]  ucsi_get_pdos+0x30/0xa4 [typec_ucsi]
+[   11.185590]  ucsi_init_work+0x3bc/0x82c [typec_ucsi]
+[   11.185614]  process_one_work+0x148/0x2a0
+[   11.185638]  worker_thread+0x2fc/0x40c
+[   11.185655]  kthread+0x110/0x114
+[   11.185668]  ret_from_fork+0x10/0x20
+
+Then comes the same log for the Connector=1, Sink PDOs, Connector=2
+Source PDOs and finally Connector=2 Sink PDOs.
+
+
+-- 
+With best wishes
+Dmitry
 
