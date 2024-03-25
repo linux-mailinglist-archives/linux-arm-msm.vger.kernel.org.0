@@ -1,181 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-15104-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20A5C88B0C7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 21:04:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8EDDD88B146
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 21:25:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9AC741FA0402
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 20:04:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 42F571F641BB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 20:25:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCD622E3E0;
-	Mon, 25 Mar 2024 20:04:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4725946435;
+	Mon, 25 Mar 2024 20:25:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SomlfL+H"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ENM5X+VU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2286F10940;
-	Mon, 25 Mar 2024 20:04:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874454597D;
+	Mon, 25 Mar 2024 20:25:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711397061; cv=none; b=pAKuCscD2od867yhXbdUTsPEzIQ2KuUitpZ2I4+z15m4ZPxdZmQhdXem1kXKvDPokCjYvjYIuW8rUS4O9XuPWk6MF976PiJ3luq3bJMBqinuMy/ZsH3K9CFLyfo7q3CD20xK9rT5r8m2j1M7AGgsV7zhu29pWNwJroIfXsLmV1k=
+	t=1711398310; cv=none; b=dJEBgZtWPpKM1x2oV8bVKIMtE6VdkZgWcwdOmRHGqNF0u45IPSuazC7+ziE5kmR8CwBTc37kKgsMnpjfSNdY2KekfH7nLw79hkjao8YAgOSGsEphh2J6iqfG/5zmTNs11oN/YO9iNZLgFsIERqtueEyK5r5WXS+qjzNLo9P5BwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711397061; c=relaxed/simple;
-	bh=7LbosvrRoSaOFVXQNHiQGzHq/d1asJ/LAmMmK1qoAOY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=uZ9XpgQ9agVbCYDc8NnSxR6j8tAmnLIdp2L/j+/nAEVWi0rhWFuQHVgAx74p2sMSQdkhV3wgnXx4qzZRZ0xoS49VZpYnLtmaz4tOXRHzbKjlHe4+E9LCQvLZFbAN/AdqNSeDq93Hm3xce/JW4rPIwBt4P5H2ac6EHCqVLNGKgWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SomlfL+H; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42PIuBuO017962;
-	Mon, 25 Mar 2024 20:03:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=h+1UxwxuvCslZU2aNyiMM9f3pn/NiRqoN5yz+kk6g5M=; b=So
-	mlfL+HDTZJC1n3IMkgeXNeqt1HUmnWw6VJ03VK+CJ6SDIWdofyQdB9DoVuaCtpYK
-	7vFB/JC803KoaRTgSGWX1PJrR6FAH7tVfAEW5P6mOmjtmu6hmFjcuSrFwfQywpnN
-	RQK760jtY3C0n+qV4AD+ynWyNzoyfO1HezeRJ9KeCu85B2OOyzAGXSmFXF4pXLmV
-	p72il8IfVsl8zz9S/Nnq2E5fkKfa/htkMcJqBAMoM2CO0cQey3CyKWlsdXcDmfRY
-	yN7HzpZZCmfhlKOnNEEjbEQdExAP+22NBvOsX6U/K+lP5bqkGR5SmdyB5VmsclXM
-	DOtgk/Dph0FZOJpqh08A==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x34hssqwf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 25 Mar 2024 20:03:48 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42PK3lQt002408
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 25 Mar 2024 20:03:47 GMT
-Received: from [10.227.110.203] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 25 Mar
- 2024 13:03:45 -0700
-Message-ID: <8019f005-efaa-4b31-90d7-fdefd5f6191e@quicinc.com>
-Date: Mon, 25 Mar 2024 13:03:44 -0700
+	s=arc-20240116; t=1711398310; c=relaxed/simple;
+	bh=DBk0mGRrqs3fXNbMGeMFrYvbKXWx16IUFmAGJWlOobc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZTZHj5GXcpkpVjlQmauUagHt2kc+ndX4rWiI0aDU3WUce6gcC9E7F8B8ILKexJ1mjDgSiI4GfOjxDGAGR3hD2WBqq2g0bC8Js+grlL5ztpmD91PT/eonCvcKgCx7RbCTtxyScFGdisM08CpF2+xmeffXvk6rR+CI38FXCR5A+Vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ENM5X+VU; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a46de423039so274387966b.0;
+        Mon, 25 Mar 2024 13:25:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711398307; x=1712003107; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=JKap+w2F/mavcZpUAHIDLIPh2s+384u67vVZTtB6BQw=;
+        b=ENM5X+VUEZFbxXuDnMO9uulUHLWG+w2RulePa3K6m1e8te/PVHIe0f8jww/i6u653m
+         95QZ5qOLfppntJ5ORq/2WqKCOY/PE49nUE2hS3CUpGs/4wyRA/nEyDtMFRfuzEKRXcy9
+         PiNlGhgAiU20lHTYcVGx4spRwD1yvYkF2ZM+y5SL93Jov+tX1UajAbvF2HR9zQwxflFW
+         XQ5Gip6HREEFeQkGAdB++kZIewKIz6J0I85qEMTpnNAsWBPYikT3F07Q5DvDOctaYK8p
+         T3h6XBp6Oa7Xdln3ghOsROBOTvUbne7NgfU5HMHln0sv0jpqJ9JBc49WvtODKka5pJMA
+         8U1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711398307; x=1712003107;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JKap+w2F/mavcZpUAHIDLIPh2s+384u67vVZTtB6BQw=;
+        b=ejyVRxE3fTCyFbKgQGv1sa6rJa8Rhmm4BlqiSYHmoaOTxOFTVZB4QAv3UH0NRLP77x
+         7WLEXwcrTSjNmi4+tJOvzLkbygS1giSURf84goVPafuIkLWXn9ctal28WqLTDO5jW+KW
+         Oj0/l/NcBzzMNaqf+MNOHiRzCyyWrmqZcpp96/LkyTXdsof93l6KgYUMfQ+Jwm2y+WRR
+         qZsTU24AbbaakD48G4I+JZCfB9lQfNTk4z+NSS7hIyVrUc4etz1sy4GvOfsAekN3KQ4k
+         ihWzrU7RQddC3E5x9vhvMyCgeLisDV3nxJthcyMVC0EIQOhx8/RcJzXZkUujqzSLzsRX
+         bOQQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXulkDdGLnfICWW4/W1N+CqGYmUxEjMh6BbRs7IdM4lnmX2/If5VG03Rk1aM6ghJeQO4mXWeKos+q3DET445QehPa/ZT1McqGIyBTcK623U7SALpHNcLilZVxYHejVXc5rFJO2IJpfr8uGtkOhvpu1SujnbjWlpMzOXLpWHVBez140MlwFn13etcpvt+3nWwzlZyeR3NeMkirpt2n7DUa99CFyusQ==
+X-Gm-Message-State: AOJu0YxOh2fB0pHKHkbjMiiDkgP6Emzzh7DOuXI+bo4nyFADrOydYxRa
+	UUIqX2jj2f+/sNTvLtXFdDszQGZ12z5Ycfz8y2ESBQOoq5IkThy5
+X-Google-Smtp-Source: AGHT+IH3MYHwbMtQtubhWVjxi/2gtr5wMVHSj9eDzomJs3JTaxIPbZAKJDw+94DvZ7YPRH86G7VJGg==
+X-Received: by 2002:a50:d484:0:b0:568:c6a2:f411 with SMTP id s4-20020a50d484000000b00568c6a2f411mr5723974edi.32.1711398306520;
+        Mon, 25 Mar 2024 13:25:06 -0700 (PDT)
+Received: from standask-GA-A55M-S2HP (lu-nat-113-247.ehs.sk. [188.123.113.247])
+        by smtp.gmail.com with ESMTPSA id c36-20020a509fa7000000b0056bdec673c3sm3456565edf.38.2024.03.25.13.25.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Mar 2024 13:25:06 -0700 (PDT)
+Date: Mon, 25 Mar 2024 21:25:04 +0100
+From: Stanislav Jakubek <stano.jakubek@gmail.com>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] ARM: dts: qcom: Add support for Motorola Moto G
+ (2013)
+Message-ID: <ZgHdoK6luxRcKgRx@standask-GA-A55M-S2HP>
+References: <f5d4d71cd59f25b80889ef88fa044aa3a4268d46.1711288736.git.stano.jakubek@gmail.com>
+ <b35ad5ff8a13f9df415b6e6700b3b5d3f13bfce8.1711288736.git.stano.jakubek@gmail.com>
+ <ffa93b4a-608a-4cf5-b111-0d1f8520afdd@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 04/16] dt-bindings: net: wireless: qcom,ath11k:
- describe the ath11k on QCA6390
-Content-Language: en-US
-To: Bartosz Golaszewski <brgl@bgdev.pl>, Kalle Valo <kvalo@kernel.org>
-CC: Marcel Holtmann <marcel@holtmann.org>,
-        Luiz Augusto von Dentz
-	<luiz.dentz@gmail.com>,
-        "David S . Miller" <davem@davemloft.net>,
-        Eric
- Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni
-	<pabeni@redhat.com>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown
-	<broonie@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon
-	<will@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-        Saravana Kannan
-	<saravanak@google.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Arnd
- Bergmann <arnd@arndb.de>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Marek
- Szyprowski <m.szyprowski@samsung.com>,
-        Alex Elder <elder@linaro.org>,
-        Srini
- Kandagatla <srinivas.kandagatla@linaro.org>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Manivannan
- Sadhasivam <mani@kernel.org>,
-        Lukas Wunner <lukas@wunner.de>,
-        Dmitry
- Baryshkov <dmitry.baryshkov@linaro.org>,
-        <linux-bluetooth@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-wireless@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-pci@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>,
-        Bartosz Golaszewski
-	<bartosz.golaszewski@linaro.org>
-References: <20240325131624.26023-1-brgl@bgdev.pl>
- <20240325131624.26023-5-brgl@bgdev.pl> <87r0fy8lde.fsf@kernel.org>
- <CAMRc=Mc2Tc8oHr5NVo=aHAADkJtGCDAVvJs+7V-19m2zGi-vbw@mail.gmail.com>
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
-In-Reply-To: <CAMRc=Mc2Tc8oHr5NVo=aHAADkJtGCDAVvJs+7V-19m2zGi-vbw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: amv7YH_YeBwotbXxq6Rf_df94OWD9htV
-X-Proofpoint-GUID: amv7YH_YeBwotbXxq6Rf_df94OWD9htV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-25_18,2024-03-21_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
- spamscore=0 phishscore=0 lowpriorityscore=0 mlxscore=0 bulkscore=0
- impostorscore=0 clxscore=1011 mlxlogscore=999 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2403250121
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ffa93b4a-608a-4cf5-b111-0d1f8520afdd@linaro.org>
 
-On 3/25/2024 7:09 AM, Bartosz Golaszewski wrote:
-> On Mon, Mar 25, 2024 at 2:57 PM Kalle Valo <kvalo@kernel.org> wrote:
->>
->> Bartosz Golaszewski <brgl@bgdev.pl> writes:
->>
->>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>>
->>> Add a PCI compatible for the ATH11K module on QCA6390 and describe the
->>> power inputs from the PMU that it consumes.
->>>
->>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>
->> [...]
->>
->>> +allOf:
->>> +  - if:
->>> +      properties:
->>> +        compatible:
->>> +          contains:
->>> +            const: pci17cb,1101
->>> +    then:
->>> +      required:
->>> +        - vddrfacmn-supply
->>> +        - vddaon-supply
->>> +        - vddwlcx-supply
->>> +        - vddwlmx-supply
->>> +        - vddrfa0p8-supply
->>> +        - vddrfa1p2-supply
->>> +        - vddrfa1p7-supply
->>> +        - vddpcie0p9-supply
->>> +        - vddpcie1p8-supply
->>
->> I don't know DT well enough to know what the "required:" above means,
->> but does this take into account that there are normal "plug&play" type
->> of QCA6390 boards as well which don't need any DT settings?
->>
+On Mon, Mar 25, 2024 at 08:28:27PM +0100, Konrad Dybcio wrote:
+> On 24.03.2024 3:04 PM, Stanislav Jakubek wrote:
+> > Add a device tree for the Motorola Moto G (2013) smartphone based
+> > on the Qualcomm MSM8226 SoC.
+> > 
+> > Initially supported features:
+> >   - Buttons (Volume Down/Up, Power)
+> >   - eMMC
+> >   - Hall Effect Sensor
+> >   - SimpleFB display
+> >   - TMP108 temperature sensor
+> >   - Vibrator
+> > 
+> > Signed-off-by: Stanislav Jakubek <stano.jakubek@gmail.com>
+> > ---
 > 
-> Do they require a DT node though for some reason?
+> [...]
+> 
+> > +		hob-ram@f500000 {
+> > +			reg = <0x0f500000 0x40000>,
+> > +			      <0x0f540000 0x2000>;
+> > +			no-map;
+> > +		};
+> 
+> Any reason it's in two parts? Should it be one contiguous region, or
+> two separate nodes?
+> 
+> lgtm otherwise
 
-I would not expect the "PC" flavor of the card to require DT.
-The "mobile" and "automotive" flavors would probably require it.
+Hi Konrad, I copied this from downstream as-is.
+According to the downstream docs [1]:
 
+HOB RAM MMAP Device provides ability for userspace to access the
+hand over block memory to read out modem related parameters.
+
+And the two regs are the "DHOB partition" and "SHOB partition".
+
+I suppose this is something Motorola (firmware?) specific (since the
+downstream compatible is mmi,hob_ram [2]).
+Should I split this into 2 nodes - dhob@f500000 and shob@f540000?
+
+Stanislav
+
+[1] https://github.com/LineageOS/android_kernel_motorola_msm8226/blob/cm-14.1/Documentation/devicetree/bindings/misc/hob_ram.txt
+[2] https://github.com/LineageOS/android_kernel_motorola_msm8226/blob/cm-14.1/arch/arm/boot/dts/msm8226-moto-common.dtsi#L258
 
