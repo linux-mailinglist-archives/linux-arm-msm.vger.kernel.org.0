@@ -1,97 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-15070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8017C88ADBE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 19:21:33 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8183E88AC45
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 18:49:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B8ED4B47CA6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 17:37:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B2D6D1C3FC56
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 17:49:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C334713CC56;
-	Mon, 25 Mar 2024 16:40:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A91073E468;
+	Mon, 25 Mar 2024 17:02:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uYckELU5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="j4TDEOJp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABEA130E4F;
-	Mon, 25 Mar 2024 16:40:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2379117579
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 17:02:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711384829; cv=none; b=oqaA6kt8UkIr4qihTJoKtjuifutZmR89/C+PpBYXws6Pl2hmkUInFj7OeolvfbbKPn7BO8+0LaP859qn3OXPsnx79A4HAYD25Bt7TiJn1TA4DQ3rP3Hxd+ncxY5GyAUSAFZCBlfYqHrhewlVqhOJfSLnzQLFzdyuOhxr5YXej4c=
+	t=1711386135; cv=none; b=VssEQQKBxvMC6NubNTV1z/r4bQ07oy/DjzQOKKTTdXgWzgKxLM9KAu5XLET+XR5V6kPNNMinkTvpduoDpcDagISXdcSwbxhPSTJ68JBrO+5r2tOMMM67FsGwLNhrczA70plpKadZxi85aHJnLykEWa8ereQFrpR4R82w3g7PYk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711384829; c=relaxed/simple;
-	bh=Slq/eDTLuhoRN5Z+0B7+H1DisJleCn95vap4bZ0KkEM=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=mybIKfMuKp6xSMb2IX41XGRKwHBy32WSlq77fU9ftclN7sSHKBywkKYbKgBdC+2SRbChEXDtqt0V9gJHVEs3d4vv/ou79NC7nVIaSfsFCZffHtfKYwc007NqvTfPUr4Dp9AQk26SbYprA8x4EamdqgajQ7vlOEDV5IjSjFhiV7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uYckELU5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 2E127C433F1;
-	Mon, 25 Mar 2024 16:40:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711384829;
-	bh=Slq/eDTLuhoRN5Z+0B7+H1DisJleCn95vap4bZ0KkEM=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=uYckELU5c1ZZjIPjlyBzbPhsQ0j6jRQDO1ubaWmSaRnRnKs4KX455RPu0buKw53zB
-	 9SH2Ss0yHhJv52ixvBLiYaZz+d5K7QR72Ge5JovyzmflukJxGklVWnKpM2axGl4oGO
-	 07uwRkoupzGHRdy5Rsnu4wiA+2tFccc6LXWtNe3n+tqsdpXypQZYm8ufLkOsjalgPR
-	 vmts92D7oC/IyMnr47qW/XkcaJrFnf8Q4xk+H0Tm9iiZb0gtq6ssrTfNPjFjvZ9uQR
-	 K+Za0+1jh2N1pj5UJaJ4G0O49zxAV030jK7ib3qRhATqwZHbExzW0fc4G1WMcIFVq+
-	 UuQVpNLhOzeDQ==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 1B1CAD2D0ED;
-	Mon, 25 Mar 2024 16:40:29 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1711386135; c=relaxed/simple;
+	bh=m7fd1//5IrrtHgWOoWmDIMhE55eFKjHMazQpwfZnFEo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UHRrgtRUj1AS8IyG6cr2rmxM8fTF5C6f/CqrpqlPN5cT1XPfrLslk5+Ngml3B15Iinrfjv7MXkNx4hUDSrsYSZC1faOHR16Ed34YoAhFwa9tds7PuH1yHN7ozX5IriUtpRqxr771E8FT4yCUwmT7QVtBM3ET46ArlheL0l3YWzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=j4TDEOJp; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-1dffa5e3f2dso28390075ad.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 10:02:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1711386133; x=1711990933; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vah2WWF295ZE3+NJIAmiLCanZHCiZpOAIq/DGlaX/m0=;
+        b=j4TDEOJpgZPlK1iGd3bAtEv718O0qwIIWD4PsFVpNJB5j16SDAU/485RxdV/Xel6LN
+         Yj2+QVTww+LvWAdVDPgwgNWNdAQvROp4BWt062JSFXiubP/mszpAN1sJNmQnYJengAoa
+         qypBq9dfIOajy48eUpaYQn+FIJlnnVIeKRRx1HMMdZ+BUqCY1HiI5kZ9njgi9abEEaT0
+         5Y9jJXLnuff5QbeBIBXLfLu95anTWBcIkdmE7BLatuxwF761nKB92e+OfgYd72jHRjlS
+         ZgiRtNV3TOnZrrSRveA3WQQIKokMknFL8fgdmqUiIZ/ILdgIz50Y4I3b8UfrDDMcxIMd
+         DBdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711386133; x=1711990933;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vah2WWF295ZE3+NJIAmiLCanZHCiZpOAIq/DGlaX/m0=;
+        b=vGOzGcbeWZl0yyYft1sgSHCWyL58zLFZwhDJPj54v0Fc0xWBLELYahDpZfdaMQ82XS
+         4LbCj+O2wG5qfWf6evnOTSET3ihpWFvgPg4OvwT84pojTHN/TfK5wjT7AmWL74ux+xjD
+         OocSA7+jovGPDWvIzyiD5tCG3PF2+pURtb3OYLlbpAcnT/5U4CrO4vWXf94ELJkSl3w8
+         1lB2+ThN0JX+6BZNTxw4/uqV0m6xtDM6g92tYHVhE5edvbhDBeYFI/mdHohR+sD7wTvd
+         2SYkBcbmEP6XSnNkCp+UZ5i3VDoPqFXWDrFT5Qo31oueURFdLnNgQKObMlJqRdIVqE1/
+         cLjw==
+X-Forwarded-Encrypted: i=1; AJvYcCXX7GiV1VXZcBORWzSsDt+1hMlEzxjKWLUc5EnZQqJiKCNLRQtvK88q0G74U6hLjGtczvI2hlGY/Tt9Bnip3u2udpl6LzWKcS3zMwSnWw==
+X-Gm-Message-State: AOJu0Ywlb6zi4AkmwxDKBhvqUXdGFNoHB4R8crkt+gpMCXsu1wh4FEXH
+	RQ6mdsA+jE3jjzxTjqzXhPkjpguwfjrxelDAxI+d37lt1zxXK7zsho6USPBeCzU=
+X-Google-Smtp-Source: AGHT+IFJQtr9KLesreEA+rN5I4oDbq/kaNwSDF9SvVqoxxKVyxbnhcLw/w3S4d4CON2KX2+9wkYT0g==
+X-Received: by 2002:a17:902:eb8d:b0:1e0:115c:e03c with SMTP id q13-20020a170902eb8d00b001e0115ce03cmr7194945plg.53.1711386133516;
+        Mon, 25 Mar 2024 10:02:13 -0700 (PDT)
+Received: from [192.168.0.102] ([176.61.106.68])
+        by smtp.gmail.com with ESMTPSA id p2-20020a170902780200b001deeac592absm4983213pll.180.2024.03.25.10.02.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Mar 2024 10:02:13 -0700 (PDT)
+Message-ID: <3bac1efe-ad49-4d13-8a50-0726b568a9d6@linaro.org>
+Date: Mon, 25 Mar 2024 17:02:08 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 0/3] Bluetooth: Convert to platform remove callback returning
- void
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <171138482910.29632.1995561805577774426.git-patchwork-notify@kernel.org>
-Date: Mon, 25 Mar 2024 16:40:29 +0000
-References: <cover.1710193561.git.u.kleine-koenig@pengutronix.de>
-In-Reply-To: <cover.1710193561.git.u.kleine-koenig@pengutronix.de>
-To: =?utf-8?q?Uwe_Kleine-K=C3=B6nig_=3Cu=2Ekleine-koenig=40pengutronix=2Ede=3E?=@codeaurora.org
-Cc: marcel@holtmann.org, luiz.dentz@gmail.com, andersson@kernel.org,
- konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
- linux-bluetooth@vger.kernel.org, kernel@pengutronix.de
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] dt-bindings: clock: qcom: Fix x1e80100 camcc
+ power-domain declaration
+To: Rob Herring <robh@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Abel Vesa <abel.vesa@linaro.org>, Rajendra Nayak <quic_rjendra@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240313-linux-next-camcc-fixes-v2-0-9426da94ae37@linaro.org>
+ <20240313-linux-next-camcc-fixes-v2-1-9426da94ae37@linaro.org>
+ <20240315151613.GA1256230-robh@kernel.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20240315151613.GA1256230-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hello:
+On 15/03/2024 15:16, Rob Herring wrote:
+> Add new entries onto the end of existing ones. IOW, MMCX should always
+> be 1st. Then you can move the descriptions to the top level and just put
+> minItems or maxItems as appropriate here.
 
-This series was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+So for the CAMCC MXC should be switched on first per spec but, TBH I 
+don't think that's a real dependency that matters.
 
-On Mon, 11 Mar 2024 22:49:51 +0100 you wrote:
-> Hello,
-> 
-> this series converts all platform drivers below drivers/bluetooth to
-> stop using struct platform_driver::remove(). See commit 5c5a7680e67b
-> ("platform: Provide a remove callback that returns no value") for an
-> extended explanation and the eventual goal.
-> 
-> [...]
+I can probably make this change with no functional impact.
 
-Here is the summary with links:
-  - [1/3] Bluetooth: btqcomsmd: Convert to platform remove callback returning void
-    https://git.kernel.org/bluetooth/bluetooth-next/c/5bffd666f4ac
-  - [2/3] Bluetooth: hci_bcm: Convert to platform remove callback returning void
-    https://git.kernel.org/bluetooth/bluetooth-next/c/526f6c35de83
-  - [3/3] Bluetooth: hci_intel: Convert to platform remove callback returning void
-    https://git.kernel.org/bluetooth/bluetooth-next/c/0dc3ce6b3c1f
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+---
+bod
 
