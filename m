@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-15092-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15093-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6834388AFB7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 20:21:34 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3825488AFC7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 20:23:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9984C1C61DAC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 19:21:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E18A11F3B354
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 19:23:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37D1E14A9D;
-	Mon, 25 Mar 2024 19:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 453541BC2A;
+	Mon, 25 Mar 2024 19:23:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aSJvs0IV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Zj7iGGjt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76954EAF1
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 19:21:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57C971B96B
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 19:23:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711394490; cv=none; b=rLICQxA7pHpOEGnarkHv50W4eZJBnl8gd4NWXWpQgfoXvVXM9py8KvqafZUGWhMxzbTEjMp6f5sslfJEGBiY8eZlDYVb2pjbs98R2sxb59MEUdYMRSeVnAqNh93pezsC+oOLfVGMunc9EZXhccyuBZK8R5h2DP81TeMYODf7byk=
+	t=1711394607; cv=none; b=ZOMpCq5w7+KtfBXY61WqbHjXiHoU0yeMe8XjNY6+lkFT+lMeABzfuLycHfEfoCd9ht8k3kyg2wR6F+lHlauefR7dTQGoK1LX62opMsfzQiCg5tpNW/j5ILEbvZ45hYAFVKwcl3X6QAlLokYTOfk9nGaqgqUMIWsvDX/q+/lsLec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711394490; c=relaxed/simple;
-	bh=VYRIildENsaBXvR73Y1yIYCKG+Egv5wNELgCKWLzyUI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NgK66cDEKVRM/uM2fGFLxBh5OLFm1nFCr153GOTOw4tzxX3MAPMre5c61G5z42JgIRvUasnWF///VHDFhOfsZsJzOuOPncL3/XRu8PJumU4kxoURLCFWQo9HkXdmG9Ek3BSv5qPHlkW5K2YMVP/zisv1LhK9b6Bkqoi7yKDmAyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aSJvs0IV; arc=none smtp.client-ip=209.85.167.45
+	s=arc-20240116; t=1711394607; c=relaxed/simple;
+	bh=FjY4GYVXr3k8uuStxgi4b+AOUxwzWPNNLCmKPoWQjp0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=I9X2kwffK6Cbdqe0Bi3m9w0tn+A6S9o9MY2Ucfw8TPckhmAVg52pIWreRUa4U6j0BPc4Faqo5PuynjBnfSjB03v74XzrsozU09gINP42gls4udmHoqfmKuf4pvRNcgFMZFMdkJgM1SxeCZ70V6Av1XQmO/qx5iFXEDT16VWPjxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Zj7iGGjt; arc=none smtp.client-ip=209.85.218.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-515b3077d09so217853e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 12:21:28 -0700 (PDT)
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a45f257b81fso554071766b.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 12:23:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711394487; x=1711999287; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1711394603; x=1711999403; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=7aRdVW7qgX5bNi5oK/bW7TDpJ2AMVEjlX5d8Z7H+qH8=;
-        b=aSJvs0IV/g9UFspWMEOVVg4EVdV307eripfZBG6FHJ/LgDFtDnyHyer8K+n4WEVe9U
-         En2TzRJszJDRkVRWZ3A8uuh0gDbW2kRz3QL9u+n3RRDJ/5T8Vgn++0ECmWiigB0M2Ldb
-         3fjFMKF1gSCJKPCHJ69cPKcNn46j4WkGOwZqKT/cTWVJKh/sYsMemVBTtocdFK721ty3
-         GLfJ7gl5ThPAJZP4SNhpluP9DmrqvZM/lQrADq25i76Zq6FOErS8vxlHo4BIgTZ41FrQ
-         pHfS67pWHkNOoWUxksCEO0kouXHqzgwj1ItrmFtWyFVx+1jUNoakYyVhmK29n4WRhnGN
-         VMSA==
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=I2AtToWe7Efdj6aJ4/2uX4LyPVqOVDYs0OVfwHkOouk=;
+        b=Zj7iGGjtc/8+nvsIBkYm/TZ9d8oNFmH5XPCDjDecbTfiDWjdJiCkMWvHRHphhcWG35
+         LKZVMOfQZMj+I7uwDUXZ1ApH/mzBDIkyU6WJgXMT9IvOk8YiFwYfhA326i3oKoqQR6Uz
+         lCevjdSgst6xRs8c1HUZW9f/tJcnYRg7hQGPTjVb8stkHf8N5TdqnJs7xgQBpEh/Coks
+         /EYF4G/8tURAZQdOdPUz4YZrSgUukuXQDSOJ8pYCF3u9w4tdx7sB14saJ357EWt/q+Hg
+         S+YfTJNUaoQsqRtIJbk0Xi8ONNe6pboDYtk1uehsq/dfLi8KdAo1B3N4UWFTkQmVMy+d
+         wlfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711394487; x=1711999287;
+        d=1e100.net; s=20230601; t=1711394603; x=1711999403;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7aRdVW7qgX5bNi5oK/bW7TDpJ2AMVEjlX5d8Z7H+qH8=;
-        b=lJxTiusia4cONd2vbYYgs7RTr7Su+Sw/VhlCP3sq+wRQI2bnU6WJ1/7NBCplA/VAVs
-         z7Jg5/YSiXz2fS79TJq08weVzLMqMcRikufgTecF2VNgVm+AOIknhmIaviuC5SyuA+KF
-         Rf06Z+hak0sxN8pJJScjkMNqo2CxporZp3hada55wvs1BzkJwlgb5LauhoFEwDyd9Dwn
-         dEer8X5RLAAdI4ikyQeNGLjsdaeZbyAf9TutszTumHT2iwDcNlLP1ZFLQJOiIKb2z760
-         LvSrkdrPHjTRh7PNIEXUX9tAoISWneMMdwczK9MeNdUBEGa0rfRYm2o69dyU31kkLEZ5
-         VjvA==
-X-Forwarded-Encrypted: i=1; AJvYcCXPXFBgmVkZ3Aboo10y9boHNgAMVFe3xOddwug8aGRujODlajqtGJaU4UakPBIZCPaTG+RCzyTRhjJYcWFjh4kJYDNO8alxl9c+B+rWpw==
-X-Gm-Message-State: AOJu0YxhE+DT5SYC0gs8ocYGukQgphxT8leafEwP9wI4Jw2jaNDH+tyj
-	58/1jgvZVS3zJrqoTbaAKEWFchBep4iaHFP61XN4Mpk9Bf8ALc2eBzRaX+lPZnQ=
-X-Google-Smtp-Source: AGHT+IEyItUn9hdMpAk8rPYqPH5OSZ8RVw98PyI0tvTq+a/OYosBp+4XMzaXdqBEC6fwQvPpHMe5aQ==
-X-Received: by 2002:a05:6512:6d3:b0:515:8653:80d9 with SMTP id u19-20020a05651206d300b00515865380d9mr6475912lff.57.1711394486439;
-        Mon, 25 Mar 2024 12:21:26 -0700 (PDT)
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=I2AtToWe7Efdj6aJ4/2uX4LyPVqOVDYs0OVfwHkOouk=;
+        b=HzZQWtAp85py6rXmFhIfWi3tlZewFOnRhRjhYRUWwl72OQLeWnBH9viaM8FEJCu0wG
+         bEtXnfXN6hGwbLIwGfgidOoXKZkpIwxFHiKsIAW6UMx9Nk/hfl38+w8+3JEv8Kvws6Mm
+         IOt6Uls/Dh2Yq8tQYN/M+k3aDTqaYj7lSlCiRfGVIzxescmc1YyMYPjbxxkKS1tSbnO8
+         tG6u5yBwtlzkrx0p0DcSKmE5k1i22GmgJGC5X/jfMcUF5OChkxXqvVNFnn1UUb7P0KXd
+         l5oio8JbjK6/akFybDSAxjAFL8dnsCibtSVcKUpIY2bUaoEySgpnwYscXN3feGPTfdgk
+         hvBQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVedf1E8mg0Ea/4tkkVBYLkcL6kwHeNJPl+u35VOQ8eZ73R8dfqmtiyHAepquWWr9qwJiBWsn/U9T0liX6oan1w4pp4JmY+UxIlOcn8aQ==
+X-Gm-Message-State: AOJu0YzzCBoA0AA4gS/qZbVAYmwIJN6xeSQsZNRHZhCjdcw/dOLMMKBg
+	KQCGHt4UcGlY9pT4gvpiysez0YXN1Rd/+Mc81GdjogLjlDg9clAnnpzO637dVNU=
+X-Google-Smtp-Source: AGHT+IFJk6SRM+6U3z7hDZmnH7BBwAQIbn/6FyxaLUpn9jAktkYp4Qj6rmfhKfQ1b+g/dKkhdtpYjw==
+X-Received: by 2002:a17:907:1184:b0:a49:fa33:a413 with SMTP id uz4-20020a170907118400b00a49fa33a413mr3016087ejb.69.1711394603570;
+        Mon, 25 Mar 2024 12:23:23 -0700 (PDT)
 Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id b4-20020a170906708400b00a46da83f7fdsm3368114ejk.145.2024.03.25.12.21.25
+        by smtp.gmail.com with ESMTPSA id jo10-20020a170906f6ca00b00a457a55b814sm3357754ejb.73.2024.03.25.12.23.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Mar 2024 12:21:26 -0700 (PDT)
-Message-ID: <bf2c507d-2320-425e-8bc2-8a2858281559@linaro.org>
-Date: Mon, 25 Mar 2024 20:21:24 +0100
+        Mon, 25 Mar 2024 12:23:23 -0700 (PDT)
+Message-ID: <531f7c92-9520-45f2-81b0-a45fa3f472fd@linaro.org>
+Date: Mon, 25 Mar 2024 20:23:22 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,18 +77,13 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: qcom: gdsc: treat optional supplies as optional
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Mark Brown <broonie@kernel.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240325081957.10946-1-johan+linaro@kernel.org>
- <9b2a7e9f-dbb2-4acb-91a7-fcc64d5cfabd@sirena.org.uk>
- <CAA8EJpqvYYCFRJVr732VORyHgpU-H2nif+n6hB6pJbXsqCH3_Q@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sdx75: add unit address to soc node
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240325102924.26820-1-krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -126,32 +121,20 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <CAA8EJpqvYYCFRJVr732VORyHgpU-H2nif+n6hB6pJbXsqCH3_Q@mail.gmail.com>
+In-Reply-To: <20240325102924.26820-1-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 25.03.2024 3:10 PM, Dmitry Baryshkov wrote:
-> On Mon, 25 Mar 2024 at 16:01, Mark Brown <broonie@kernel.org> wrote:
->>
->> On Mon, Mar 25, 2024 at 09:19:57AM +0100, Johan Hovold wrote:
->>> Since commit deebc79b28d6 ("clk: qcom: gpucc-sc8280xp: Add external
->>> supply for GX gdsc") the GDSC supply must be treated as optional to
->>> avoid warnings like:
->>>
->>>       gpu_cc-sc8280xp 3d90000.clock-controller: supply vdd-gfx not found, using dummy regulator
->>>
->>> on SC8280XP.
->>
->> Can this device actually run with the supply physically disconnected?
+On 25.03.2024 11:29 AM, Krzysztof Kozlowski wrote:
+> Soc node has ranges, thus it must have an unit address. This fixes W=1
+> dtc warning:
 > 
-> On SC8280XP this is supplied via power-domain instead of the supply.
+>   sdx75.dtsi:399.11-736.4: Warning (unit_address_vs_reg): /soc: node has a reg or ranges property, but no unit name
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
 
-I think Dmitry is asking about this bit:
-
-if (ret != -ENODEV)
-	return ret;
-
-which is basically repeating the difference that _optional makes
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
