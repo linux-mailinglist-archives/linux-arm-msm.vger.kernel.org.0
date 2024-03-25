@@ -1,130 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-14978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14989-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C404D88A3E8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 15:14:47 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F50E88A39B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 15:05:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 444FC1F3DC2D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 14:14:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 326B41C38A49
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 14:05:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2650D181319;
-	Mon, 25 Mar 2024 10:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE75B178892;
+	Mon, 25 Mar 2024 10:47:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="OONMxdDp"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="lbC9nKs2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E98B1966AA
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 10:04:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88571182F15
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 10:08:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711361063; cv=none; b=T0VDTvFned8Qbrq2zI2DK51IrKENotkXqd0NQzi2ciInD/grcq7ciKz5Otkoa+dUsNk6ZbD9+5VYXNaPdvPQCBuTVYBabqFtxppSSCFWlzHp0/n/aJVPGhyQmNBw24iI1KOV1Ns+8hObQTcOmQ/kVLtOe9JtvTjpuiVqhe14Vi4=
+	t=1711361295; cv=none; b=DrsEv2GCNjOkMlIz0FQumn+VMgtMorz8ozXc4kDP7XExWQpC7LYbbppbSdYsqroDbFGV/ad7iUX7Qgw1Whz6otmOs8LKE2BXZj/koMrl4D7YIhsJYV1YZ49i7FxiKTDPlBOA5d+YneI+0XGxNlh1WPOPYPItANVpLHqZ9Sz+GFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711361063; c=relaxed/simple;
-	bh=6xEiiGScK7JJxdpF/lD70fvnsCf+NygXdoWJFOV3UZk=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=BKXU29Nd15AmA8fuoPIQYu9MH1t0ljoeFALLYQb1o1tia3hbtpE1cqHrnMbRiHD52nMpsoYAFDXS2+9SC/cxPOQmShmuFv5RLgxCl2e25Z9BqAsHZZAE816T51xqOIdlOTS4Gg0+o3RJs9fVe9ZTEmXK8xc4WgKF9TPDdk/eb0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=OONMxdDp; arc=none smtp.client-ip=209.85.221.51
+	s=arc-20240116; t=1711361295; c=relaxed/simple;
+	bh=aj12qcWxwHOSiW5ip0+Q6r8HCwXXVgYZqcmXwDmc6a0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Bty2qlAd574vgi3Z5EcOmTy76fKBQ8QA72PdRZxBJBi0M1/m5gB0bsefkwMlcb7TZcNeQgT7fO/lY0flcMEJcut2DSDDofwFcEWDT6kBypUZe/xWg9BqJvOG1Z57nqVDrzELfzghq26blxc1GsX5S9Yiz9VlOt3zafAEK8XMEkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=lbC9nKs2; arc=none smtp.client-ip=209.85.208.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-341b01dbebbso2948170f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 03:04:22 -0700 (PDT)
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2d2509c66daso50045031fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 03:08:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1711361060; x=1711965860; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1711361292; x=1711966092; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WaZeoNiyzTwiMheeiYsNuMRt9KraQvAJ66Q4WnMYg4o=;
-        b=OONMxdDpfNMhCCIftkO33kqBib4Z4lJT6Ch9RFTT+bUsfbXkjj9WNDPn2UJyJ8ig++
-         ruiGSsytPHv7fzyZZ2YVw7FrJ4/NgAW+AjN7EUkbN2JhfZpJ7sp9L6KvzYtkLGqViUra
-         wEKkwnwQSEgzKckD4X5CoHS6q25s06Bs7cc11Odt7YOOGuHepPc0SzKAqbyWC0XmQv6N
-         XPhCkIVs4eT5kUpGF2BUnhxKx4f8kHyy7jY7Y35E2KpmcPd6TIPqPG1N08ip+5s7ItGk
-         9Dp7kVTiElIXk1fUeGFq7KwLT14zlVBBjEAE/hMUsPLsEByHuxIDwv4uQLwINcSOwO4C
-         PL/Q==
+        bh=aj12qcWxwHOSiW5ip0+Q6r8HCwXXVgYZqcmXwDmc6a0=;
+        b=lbC9nKs27h5vbZyk2ozArc1COjHhnZCpbml9EUiMxVGntXUuzJ9C6moWhn8OTHWChN
+         ESI55WR4+mqGvfC8kJTMIhP05wx+fuXXiWnJR+mKR2SswXCdXvvF1Ndkt2WQykUsGzlv
+         wfneF1MZ3SbpRBriIKsDw9MLlI8obEquBNjTgUtCRN/6a1Y86R55GpRXhIFXKa95LdMy
+         710WP69IOOn/ryhFNhMWhR4HGL8jo8JYSo+zCsUzwaxes1zUfdVRFgSvKKMsIam06b6x
+         TbtLUlpg2l3/qLExCJjJM0ei8ilfyV12aWp7eZJr8VOQInjhVA4OqIwPVai59ZLhM1DM
+         N5Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711361060; x=1711965860;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1711361292; x=1711966092;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WaZeoNiyzTwiMheeiYsNuMRt9KraQvAJ66Q4WnMYg4o=;
-        b=pjiNPvHBr3O381j764PPvtgjJZB3LZilUMSg7YBsvDS0CP19vo41t9QYWYZOMWuwhT
-         jw45l9dYg7MemOkIhJAY1yafbmRu8yorxZtBHD5jNfpYx37V88JHUpN8xJuW4enJ+8z5
-         FyRuL6+wQ8fHdBmd18AH4WaCbK8IS5xK7/A/Nvtr6yGOxuI8x9cup6ba3ysfB+thqqlc
-         GM6sREwspNg6eXDFIyme7OLh20AJ1ApGBEUvQ0Bb/QgGd4r3Q00+9nIG9SynjS/loKwB
-         YQUXzmuGyYBhxBho148QIn0obZjQed19ULNYxIhCtoS0029u8cUKblWL5r/95whcG0q1
-         joSw==
-X-Gm-Message-State: AOJu0YytFTKEgMUxsilaR71cTcES5c7CLTIulEziVknthp1sO4/ZcR3J
-	Xq3GvVsvCkPW2/7zITAOakxpmKrfMPNpogWPWxGqPLoLaIA10c/0kibBdqH0lGo=
-X-Google-Smtp-Source: AGHT+IHujk/ZzEH2RHwabsHqfC9LHoEHea4fncmGvBpbM34nOuQQYGhnlfRPNRlbV05z0T5eyAWzgQ==
-X-Received: by 2002:adf:ed06:0:b0:33d:3566:b5c8 with SMTP id a6-20020adfed06000000b0033d3566b5c8mr5472793wro.13.1711361060775;
-        Mon, 25 Mar 2024 03:04:20 -0700 (PDT)
-Received: from brgl-uxlite.home ([2a01:cb1d:75a:e000:861d:8b72:a859:4ce9])
-        by smtp.gmail.com with ESMTPSA id dv13-20020a0560000d8d00b0033e25c39ac3sm9086874wrb.80.2024.03.25.03.04.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Mar 2024 03:04:20 -0700 (PDT)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-To: Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Elliot Berman <quic_eberman@quicinc.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Guru Das Srinagesh <quic_gurus@quicinc.com>,
-	Andrew Halaney <ahalaney@redhat.com>,
-	Maximilian Luz <luzmaximilian@gmail.com>,
-	Alex Elder <elder@linaro.org>,
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	kernel@quicinc.com,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Deepti Jaggi <quic_djaggi@quicinc.com>
-Subject: [PATCH v9 13/13] arm64: defconfig: enable SHM Bridge support for the TZ memory allocator
-Date: Mon, 25 Mar 2024 11:03:59 +0100
-Message-Id: <20240325100359.17001-14-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20240325100359.17001-1-brgl@bgdev.pl>
-References: <20240325100359.17001-1-brgl@bgdev.pl>
+        bh=aj12qcWxwHOSiW5ip0+Q6r8HCwXXVgYZqcmXwDmc6a0=;
+        b=gTqLe+kQ0GiuteQAgxdcnoQ7HG8Gd6z/hCOFguwshxXGs2d5TKmbZ755GUKtKQnbko
+         XJBqq15dTUhsf+UfFVV4kDCpUqXGfKIgCps0Y6Ay+GgtC6B577RqUHsvQ9R54xa9/XS6
+         nQq5kikHWo4QYjHs2AtovyodlLRIJJ1OX0PFF+guE3SbMvi1yHxmCSpAtucS/jBtJkzh
+         2V+aAO4x1BBl68v07N6f9MYNkgAMPaTK+a12r0uXsUrS9p5JZndobPtk6uVra66o2TI0
+         AqzygegInZSCEdIsVj/BMFsLKgFHmyGpawrkzjdggmw1I1tTk66+x5eibKkxnarpOxl5
+         aSLw==
+X-Gm-Message-State: AOJu0YxDyvnX16fSjMqBZ5XHDbmpruLpJRV+97yhBiZqfPZGx3ABbMoD
+	WvdQKCKnOCANlMU7ZQ2XGL7bv5BadzfykmzWOY4iRIXCO3PHcnlb7zAWA3N/C9nt+WxNwz5QrpA
+	bGLFucJnGh0wSEOo3JvihFmZIijd0cmhSFsvi7A==
+X-Google-Smtp-Source: AGHT+IH9KsyrfR/oKQyP2zv2f4o4+YRFGfWSuYi0Uy5IBlHlqm5xWOl/0UOfEfiHPiDAIWTH17Eaxwh+L1AjnnpG9i8=
+X-Received: by 2002:a2e:a0c5:0:b0:2d6:87ab:2543 with SMTP id
+ f5-20020a2ea0c5000000b002d687ab2543mr3735612ljm.30.1711361291815; Mon, 25 Mar
+ 2024 03:08:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240325100359.17001-1-brgl@bgdev.pl>
+In-Reply-To: <20240325100359.17001-1-brgl@bgdev.pl>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Mon, 25 Mar 2024 11:08:00 +0100
+Message-ID: <CAMRc=Mce+PbCYdBOrWT=aFBUj+c=SU54z0=CJqr4HsrCgzKoEA@mail.gmail.com>
+Subject: Re: [PATCH v9 00/13] firmware: qcom: qseecom: convert to using the TZ allocator
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Elliot Berman <quic_eberman@quicinc.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+	Guru Das Srinagesh <quic_gurus@quicinc.com>, Andrew Halaney <ahalaney@redhat.com>, 
+	Maximilian Luz <luzmaximilian@gmail.com>, Alex Elder <elder@linaro.org>, 
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>, Arnd Bergmann <arnd@arndb.de>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, kernel@quicinc.com, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Mon, Mar 25, 2024 at 11:04=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.pl=
+> wrote:
+>
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>
+> SCM calls that take memory buffers as arguments require that they be
+> page-aligned, physically continuous and non-cachable. The same
+> requirements apply to the buffer used to pass additional arguments to SCM
+> calls that take more than 4.
+>
+> To that end drivers typically use dma_alloc_coherent() to allocate memory
+> of suitable format which is slow and inefficient space-wise.
+>
+> SHM Bridge is a safety mechanism that - once enabled - will only allow
+> passing buffers to the TrustZone that have been explicitly marked as
+> shared. It improves the overall system safety with SCM calls and is
+> required by the upcoming scminvoke functionality.
+>
+> The end goal of this series is to enable SHM bridge support for those
+> architectures that support it but to that end we first need to unify the
+> way memory for SCM calls is allocated. This in itself is beneficial as
+> the current approach of using dma_alloc_coherent() in most places is quit=
+e
+> slow.
+>
+> First let's add a new TZ Memory allocator that allows users to create
+> dynamic memory pools of format suitable for sharing with the TrustZone.
+> Make it ready for implementing multiple build-time modes.
+>
+> Convert all relevant drivers to using it. Add separate pools for SCM core
+> and for qseecom.
+>
+> Finally add support for SHM bridge and make it the default mode of
+> operation with the generic allocator as fallback for the platforms that
+> don't support SHM bridge.
+>
+> Tested on db410c, RB5, sm8550-qrd. Previous iteration tested also on
+> sa8775p-ride and lenovo X13s (please do retest on those platforms if you
+> can).
+>
 
-Enable SHM Bridge support in the Qualcomm TrustZone allocator by default
-as even on architectures that don't support it, we automatically fall
-back to the generic allocator.
+The Subject should have been "firmware: qcom: implement support for
+and enable SHM bridge", sorry for the mixup.
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Tested-by: Andrew Halaney <ahalaney@redhat.com> # sc8280xp-lenovo-thinkpad-x13s
-Tested-by: Deepti Jaggi <quic_djaggi@quicinc.com> #sa8775p-ride
-Reviewed-by: Elliot Berman <quic_eberman@quicinc.com>
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 6c45a465a071..37280815dc6f 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -255,6 +255,7 @@ CONFIG_GOOGLE_CBMEM=m
- CONFIG_GOOGLE_COREBOOT_TABLE=m
- CONFIG_EFI_CAPSULE_LOADER=y
- CONFIG_IMX_SCU=y
-+CONFIG_QCOM_TZMEM_MODE_SHMBRIDGE=y
- CONFIG_QCOM_QSEECOM=y
- CONFIG_QCOM_QSEECOM_UEFISECAPP=y
- CONFIG_GNSS=m
--- 
-2.40.1
-
+Bartosz
 
