@@ -1,121 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-15044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9073C88A854
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 17:07:46 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB47388B139
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 21:22:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ABCF5344707
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 16:06:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 513E8C01493
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 16:08:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B85F86CDC1;
-	Mon, 25 Mar 2024 13:50:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16F7A13A27E;
+	Mon, 25 Mar 2024 13:55:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jScDh8yJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BCIqHz2a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FEA16EB7A
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 13:50:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD7B9535C9;
+	Mon, 25 Mar 2024 13:55:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711374614; cv=none; b=be23UfXU/+/Hc1sq0YJexWh6YAwYfN4neaNSkTjqNGRU/U0bYadjNPPdNs2D8Dob39QiI4/a/pePCdk7flQK9GDc8/s6ayNdIIqMsta/ZE3q+jYR2cS81/nIrCma/6VRFfGm+LS17tyz+HAXwJSi71it+WPiMnTJWOtm4yHvTJU=
+	t=1711374937; cv=none; b=Qph0oVKIDnewviTyJSSL8kjFwcIUwKCEp2+Gxe0XhZexrFCfYrklR7+K5s2CK5lHWK29Px6oX9BzeM161fmXQbUxAxpcy9hCTPkIdzJwDrg7w8b9Lm8wmR30XaoKfPSWqJbPUXJif4DW8x+7wh2LKvLfELhofg/hwusOTdSKBdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711374614; c=relaxed/simple;
-	bh=Q/O4TzucTAKDX/kg7bNrMLHybrgmo/JFI2rvZKGDjBc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ftv27uLsJKQ/gJsIKfvuj24iN78RhmQeSXGfekGWhMu8SjiqoTb4CuiWqMaeiKB6x470elLO+CK0HBStbG4JegNN6k+MzEAU9zfY1Lj5qEltL9jXlDRzV9ZtZgK/a58T6jwUPEaFAsNZ42vE/CgGiXJpGUN8LJqltXxoyoka7Fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jScDh8yJ; arc=none smtp.client-ip=209.85.219.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-dc23bf7e5aaso4265552276.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 06:50:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711374612; x=1711979412; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=xY4s7Y2TDs9zFkoIeirDMHTppdLgQXMLcHGPVUr4u2w=;
-        b=jScDh8yJSyXQXu1ywGwkBZCVALCAObT5jLVPpzSwKXYaAuWnlSzgub5700nFX8VmKn
-         9BAAF0MS7cdkfr8UjaUDQJrn56t3gbfTtqHMW5/jphkAv0aGkqz276n/JaTyPjPXYPqW
-         gNfpAD+HNcfvfk3ygNL6i/F0Yd/FFSQfGnyzb5BQCjijzDKDXigQ7WsNbHcI945iNSpD
-         c4H5u5xvI8svMEAxXGr2XN4hDQaaxUVVCkXvKHprOEldPRCmO6npNztMBZe6kDPZ5RjF
-         SVzZG8eDhw2Xu5/9Egi/BDtbieCivgDFs5Btr3YKPTVvoX7hfK6q0zMWH+nXmmyWm9CY
-         TEBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711374612; x=1711979412;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xY4s7Y2TDs9zFkoIeirDMHTppdLgQXMLcHGPVUr4u2w=;
-        b=W3d4HypG7bUa8G9xrgC2vTn7ezPXC6L6zHZ1XwU5BUZQQcjOua1wiwZg+3YrrigJr0
-         zkLOlTJRjrwhkRz93caHAUjUiJ6iFSAWkoOcKBXzmWO8tbMc84a+TGPPwS8AGG0MQMqv
-         P0rem0gk78/oDjmr3U9h8Ln3ysaxSPUO+7aO3Ezi9cyLbN1IV4Nn0+U0F5qvcmegKktr
-         sM+T9u6W6k/RjCYxLTjMKUKaERY2KCxj3hK3/Uu7Xv+hyhGRs9YNElkPq1yUNoEXs9Il
-         NJol9EWVuUb7dd4COzfB9W8rW6NgtvMyANxi18iUxfBAdPrzzELTebDwdtLwDB2pbHzp
-         IWXw==
-X-Forwarded-Encrypted: i=1; AJvYcCWIFy4/a7pmTkDCNNcbmfE5FmTPEapQU7uZdtple3OuMz6aNg0baabqBX7E377a2yjKb0rO33nxjIDyScO/tD/IvcckutdLJZ8lyqDKjg==
-X-Gm-Message-State: AOJu0YxglwsKEyoKZXT/rO4gPPKKdxGyRXNwCOzx0NuQr3N//Q/iDFb2
-	71xEk/w0McfEDW43tv0Obh5QDp2O0czOMR6oWo7O7VhTULN5DyL1by3vSntgqQFleFsX36Z2tZ0
-	XKihLl6SKKYzHhfL7zBxpSRX1idjyTtJVwZ7eow==
-X-Google-Smtp-Source: AGHT+IHYjl0eFIojoJcLVm6Q3FikVODclbSrKrXlRZtK626pzzHApRK7eCpxDKYvNTGQRZ5CWm9dXvBcGq57I2cLYIQ=
-X-Received: by 2002:a5b:941:0:b0:dd0:76e:d630 with SMTP id x1-20020a5b0941000000b00dd0076ed630mr5054565ybq.53.1711374612032;
- Mon, 25 Mar 2024 06:50:12 -0700 (PDT)
+	s=arc-20240116; t=1711374937; c=relaxed/simple;
+	bh=KBJrko7buamvh8iloVHARutw2KLDprcA2ANvVbJ26OU=;
+	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
+	 Message-Id:Subject; b=aeD3Rw0UKjK9KBwVDNXVmR+y3GiDYsizbI8QUzqCUN7DKYYbvxO4guuS/YqKwZqbxE3tmssGHYBsZIPIAT11NfNLNZQH6j0SJsZNbTJUvLP7Q0TH4K+iYkJfysRf8i/KDN5SH/OHEmdcNf3x9J9NrtSskHxKXOXECGO9b+DuHpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BCIqHz2a; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F23C433F1;
+	Mon, 25 Mar 2024 13:55:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711374936;
+	bh=KBJrko7buamvh8iloVHARutw2KLDprcA2ANvVbJ26OU=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+	b=BCIqHz2alZOEkIrki/rwIh/hIOrQaqfw/p+jhC0d7yWTnoOpPdbOUXa/5HKjpLTpf
+	 XPcjZyDzYsTtEe7NisYZaqLHnWeIRLhGH4HBnsFLdSDq/wF4+QAmSUjqpkeHRS88w6
+	 PkYJHHTvk4hv//5qpetmQ68wwJ2MnzvFVLu2+rttqF3kqoiQpUF1n/KfaXz9IRC/Tx
+	 HflsNp2VROvbTZf8cQU1UQSJ8fN+G4CgAcEX9uDmWopJ/SK58fA5FoQalMQxCzy92M
+	 X/60+v6S3PKOzAbFSAH88wfojN3THLPAVpzf8XB8ZNWB4d//4L5jeoRfdjHEhW1+xt
+	 xYC+KxtL3380Q==
+Date: Mon, 25 Mar 2024 08:55:35 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240323-fd-xml-shipped-v4-0-cca5e8457b9e@linaro.org>
- <20240323-fd-xml-shipped-v4-10-cca5e8457b9e@linaro.org> <20240324102936.6eojmk3k2qabtasq@hu-akhilpo-hyd.qualcomm.com>
- <CAA8EJppO8zMq5R7hBPG04Zsr9c3-Z9mqpnJQ88Dbjv3uYDbrUQ@mail.gmail.com> <20240325133252.o6taik5ezrsqtl7g@hu-akhilpo-hyd.qualcomm.com>
-In-Reply-To: <20240325133252.o6taik5ezrsqtl7g@hu-akhilpo-hyd.qualcomm.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 25 Mar 2024 15:50:00 +0200
-Message-ID: <CAA8EJppK6o0gsashG8yCLrOLbSVFDbHYEgzqBgP5ts65uTWgfw@mail.gmail.com>
-Subject: Re: [PATCH v4 10/16] drm/msm: generate headers on the fly
-To: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc: Masahiro Yamada <masahiroy@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
-	Nicolas Schier <nicolas@fjasle.eu>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, linux-kbuild@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-
-On Mon, 25 Mar 2024 at 15:33, Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
->
-> On Sun, Mar 24, 2024 at 12:57:43PM +0200, Dmitry Baryshkov wrote:
-> > On Sun, 24 Mar 2024 at 12:30, Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
-> > >
-> > > On Sat, Mar 23, 2024 at 12:57:02AM +0200, Dmitry Baryshkov wrote:
-> > > > Generate DRM/MSM headers on the fly during kernel build. This removes a
-> > > > need to push register changes to Mesa with the following manual
-> > > > synchronization step. Existing headers will be removed in the following
-> > > > commits (split away to ease reviews).
-> > >
-> > > Is this approach common in upstream kernel? Isn't it a bit awkward from
-> > > legal perspective to rely on a source file outside of kernel during
-> > > compilation?
-> >
-> > As long as the source file for that file is available. For examples of
-> > non-trivial generated files see
-> > arch/arm64/include/generated/sysreg-defs.h and
-> > arch/arm64/include/generated/cpucap-defs.h
->
-> I see that the xml files import a GPL compatible license, so I guess
-> those are fine. The gen_header.py script doesn't include any license.
-> Shouldn't it have one?
-
-True. Rob, could you please add copyright / licence header to the gen_header.py?
+From: Rob Herring <robh@kernel.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ linux-kernel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org
+In-Reply-To: <20240325-topic-sm8650-upstream-hdk-v3-0-4f365d7932af@linaro.org>
+References: <20240325-topic-sm8650-upstream-hdk-v3-0-4f365d7932af@linaro.org>
+Message-Id: <171137470639.3264818.9434918263402918385.robh@kernel.org>
+Subject: Re: [PATCH v3 0/3] arm64: qcom: sm8650: add support for the
+ SM8650-HDK board
 
 
+On Mon, 25 Mar 2024 11:26:36 +0100, Neil Armstrong wrote:
+> The SM8650-HDK is an embedded development platforms for the
+> Snapdragon 8 Gen 3 SoC aka SM8650, with the following features:
+> - Qualcomm SM8650 SoC
+> - 16GiB On-board LPDDR5
+> - On-board WiFi 7 + Bluetooth 5.3/BLE
+> - On-board UFS4.0
+> - M.2 Key B+M Gen3x2 PCIe Slot
+> - HDMI Output
+> - USB-C Connector with DP Almode & Audio Accessory mode
+> - Micro-SDCard Slot
+> - Audio Jack with Playback and Microphone
+> - 2 On-board Analog microphones
+> - 2 On-board Speakers
+> - 96Boards Compatible Low-Speed and High-Speed connectors [1]
+> - For Camera, Sensors and external Display cards
+> - Compatible with the Linaro Debug board [2]
+> - SIM Slot for Modem
+> - Debug connectors
+> - 6x On-Board LEDs
+> 
+> An optional Display Card kit can be connected on top,
+> an overlay is handled to add support for the DSI Display
+> and Touch Controller.
+> 
+> Product Page: [3]
+> 
+> Build Dependencies: None
+> 
+> Functional Dependencies:
+> - PCIe 1 PHY AUX Clock: https://lore.kernel.org/all/20240322-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v2-0-3ec0a966d52f@linaro.org/
+> - PCI-MSI Fix: https://lore.kernel.org/all/20240318-pci-bdf-sid-fix-v1-3-acca6c5d9cf1@linaro.org/
+> - UCSI Fix: https://lore.kernel.org/all/20240315171836.343830-1-jthies@google.com/
+> - USB IRQs DT check fix: https://lore.kernel.org/all/20240314-topic-sm8650-upstream-usb-dt-irq-fix-v1-1-ea8ab2051869@linaro.org/
+> 
+> [1] https://www.96boards.org/specifications/
+> [2] https://git.codelinaro.org/linaro/qcomlt/debugboard
+> [3] https://www.lantronix.com/products/snapdragon-8-gen-3-mobile-hardware-development-kit/
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+> Changes in v3:
+> - fixed regulator node name to fix ordering
+> - deleted pcie_1_phy_aux clock
+> - removed undeeded mdss_mdp status okay
+> - collected revied & tested tags
+> - Link to v2: https://lore.kernel.org/r/20240318-topic-sm8650-upstream-hdk-v2-0-b63a5d45a784@linaro.org
+> 
+> Changes in v2:
+> - Fixed commit messages with links, and recently added product page URL
+> - Swapped i2c3/i2c6 nodes
+> - Moved pcie_1_phy_aux_clk under pcie1_phy
+> - Removed duplicate mdp_vsync pinctrl state
+> - Collected review & tested tags
+> - Link to v1: https://lore.kernel.org/r/20240223-topic-sm8650-upstream-hdk-v1-0-ccca645cd901@linaro.org
+> 
+> ---
+> Neil Armstrong (3):
+>       dt-bindings: arm: qcom: Document the HDK8650 board
+>       arm64: dts: qcom: sm8650: add support for the SM8650-HDK board
+>       arch: arm64: dts: sm8650-hdk: add support for the Display Card overlay
+> 
+>  Documentation/devicetree/bindings/arm/qcom.yaml    |    1 +
+>  arch/arm64/boot/dts/qcom/Makefile                  |    5 +
+>  .../boot/dts/qcom/sm8650-hdk-display-card.dtso     |  144 +++
+>  arch/arm64/boot/dts/qcom/sm8650-hdk.dts            | 1251 ++++++++++++++++++++
+>  4 files changed, 1401 insertions(+)
+> ---
+> base-commit: 0cd9d04a3ce7cd228d32adaf99a56708161a6b8a
+> change-id: 20240223-topic-sm8650-upstream-hdk-e21cfd6f1de8
+> 
+> Best regards,
+> --
+> Neil Armstrong <neil.armstrong@linaro.org>
+> 
+> 
+> 
 
--- 
-With best wishes
-Dmitry
+
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
+
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
+
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
+
+  pip3 install dtschema --upgrade
+
+
+New warnings running 'make CHECK_DTBS=y qcom/sm8650-hdk.dtb' for 20240325-topic-sm8650-upstream-hdk-v3-0-4f365d7932af@linaro.org:
+
+arch/arm64/boot/dts/qcom/sm8650-hdk.dtb: pcie-1-phy-aux-clk: 'clock-frequency' is a required property
+	from schema $id: http://devicetree.org/schemas/clock/fixed-clock.yaml#
+arch/arm64/boot/dts/qcom/sm8650-hdk.dtb: usb@a6f8800: interrupt-names:0: 'pwr_event' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/sm8650-hdk.dtb: usb@a6f8800: interrupt-names:1: 'hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/sm8650-hdk.dtb: usb@a6f8800: interrupt-names:2: 'dp_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/sm8650-hdk.dtb: usb@a6f8800: interrupt-names:3: 'dm_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/sm8650-hdk.dtb: usb@a6f8800: interrupt-names: ['hs_phy_irq', 'ss_phy_irq', 'dm_hs_phy_irq', 'dp_hs_phy_irq'] is too short
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+
+
+
+
+
 
