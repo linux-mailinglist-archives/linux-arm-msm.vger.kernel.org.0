@@ -1,161 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-15075-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70F1688AD0F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 19:09:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4AA0588AD7C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 19:16:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A2B761C34637
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 18:09:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7CA371C3CFC4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 18:16:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4020B12E1FA;
-	Mon, 25 Mar 2024 17:30:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A32A13C3D3;
+	Mon, 25 Mar 2024 17:44:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IlJCckWo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yz8AQU2p"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E4512E1E5;
-	Mon, 25 Mar 2024 17:30:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9D42F37;
+	Mon, 25 Mar 2024 17:44:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711387820; cv=none; b=lY7iecpmpuEjhRix9RdfUWOrnw5DWxr790kYXLiYlDpnMRbhiaxvo8C0XP15IRRfexWPWqN5C1t3tp9OmBKFAyNLUdyeKW5xUsuIW+FYR1CY4Qdc3OWfF/+n+o5QMdVnW+rvdj8YeNcUEfuTTSC9iAK+aHHdDghMCc4bK00WbI0=
+	t=1711388687; cv=none; b=lkttYXWoL+EYu5uTy9Q/NkrHf6ssQrX/EddInwSXf1Xbzp8YGNiVz+9pE/v1T7KIiusge0pNtyAF2sAFBZ8ocjIaHGx3VVDYPFMfWGnzFrcxpQwGwEswCzzzMZfPut1YWl5aOP7bAJf2LNorMrTL0kk9Fqj+W7I4FSoPjSwvtzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711387820; c=relaxed/simple;
-	bh=MZEKCbTRYkyqe+9HBejrDZkLY/jTlsFTwN+TfksBPzo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=XrxdHuTOdXJQtul1HrtUyL894s0fnR9WRo0ousF5ef+LT43clkIxFcAhu5oMrnok02DWQ2DNZ3RHrBkcPj1/F0n+xVH3qaC/6Jtx17LRGZ2HcPU3ciJdeo6VcVWq2otEbqnrXSfsTFp41l9cX/sjuWMwJPv/Sy7UTDqE4qhbsB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IlJCckWo; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42PExqJv003871;
-	Mon, 25 Mar 2024 17:30:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=nKJL2glUN1khhJxllTuVn8romkg29EQEStQj/muOjcg=; b=Il
-	JCckWoU67Kqz/FOZCLWvU4Rn+5yl56EFp1UkP+zz/ZHIg+SNYshi3oFgdkpEc6JH
-	xZW4/w11pU2d9PYrNdJzbUo5jTLPw4Jc3FZsOunSXBx7ayv7LgKftX6aZoioodyi
-	4IQpgAnQ/vNRceFOBjTRVDvC09kqPUNNopnCzvcAm32vTphYAsFTn55Lf/tRouG3
-	zunuYK2uYsKTDrqq6eXCoeDm2pbI6iELnj4lUzCJsv8XUOP2NV1Zh8Lk9l/8lAa8
-	vCbIDFt8vx3zDcwsJgWdBtzaHWhDcog2NVddYCHmFiOqFS/FOxGTrHMWJFXR11XH
-	SxwiaNl+Iwt+0viozAbg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x31wssrrf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 25 Mar 2024 17:30:11 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42PHUALv027223
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 25 Mar 2024 17:30:10 GMT
-Received: from [10.216.25.244] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 25 Mar
- 2024 10:30:04 -0700
-Message-ID: <807015d4-c5ed-4e04-9948-fd1ff894a04e@quicinc.com>
-Date: Mon, 25 Mar 2024 22:59:49 +0530
+	s=arc-20240116; t=1711388687; c=relaxed/simple;
+	bh=sGxgdgp8IdZweLfej/ZPALfocbt++oorzgjstiDxN2g=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=pnjVkdzfIwECXgDd4Wb2jo83E8JRIg9HDiMkYL3XdPYLRbMdsWpnzpdrBcFk5oYMqtd9swSAGo2c1BQZ09/JkbNF8DJmac7+Qv2kCK9SpcnpI/ZG8EvGKS0O0BEX29LYIEUZ1XI4BgGxRLWXoy0nBlLEyEJaVRCJtp6EK+ysv0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yz8AQU2p; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3BF7C43394;
+	Mon, 25 Mar 2024 17:44:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711388686;
+	bh=sGxgdgp8IdZweLfej/ZPALfocbt++oorzgjstiDxN2g=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=Yz8AQU2pf0m8iCdqgpUDqgULidA/gav9A6k8kAFVuOmJpP4CsOW98If+/vkoh05yM
+	 fXhNkOkr2v2lY3vyrYiV6e6RjYGmpbWteHnaJNxqO9WKpyXFfEEJnPK7GuHU0OakQM
+	 jG1La1JOKMR/YS5hZkOfPfJMSkchrTwUFY1/nq9YBHy5m5xMWcTJPbzVzeQyutDfDt
+	 /Kuz9bdAXkt70jMbd/JpGOgzaDvtAqo1X5cdNoRRPOg0IKEWdTOccn4PL5OkOOGcWX
+	 OmxUTE6wLwzfnZ+sUtsSqZbhBdEsePVrp5HVzeYQASol3Gpg7yjb6ZReH7Ql7v3i5K
+	 kW7fhrLJxzkFg==
+From: Mark Brown <broonie@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ Luca Weiss <luca.weiss@fairphone.com>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-usb@vger.kernel.org
+In-Reply-To: <20240322-fp4-tcpm-v1-0-c5644099d57b@fairphone.com>
+References: <20240322-fp4-tcpm-v1-0-c5644099d57b@fairphone.com>
+Subject: Re: (subset) [PATCH 0/5] Add TCPM support for PM7250B and
+ Fairphone 4
+Message-Id: <171138868340.327260.16162463727167389208.b4-ty@kernel.org>
+Date: Mon, 25 Mar 2024 17:44:43 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 7/9] usb: dwc3: qcom: Refactor IRQ handling in glue
- driver
-To: Johan Hovold <johan@kernel.org>
-CC: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring
-	<robh+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Wesley Cheng
-	<quic_wcheng@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Felipe Balbi
-	<balbi@kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>
-References: <20240307062052.2319851-1-quic_kriskura@quicinc.com>
- <20240307062052.2319851-8-quic_kriskura@quicinc.com>
- <ZgFyukBXIIwZo7v-@hovoldconsulting.com>
- <50926b91-3c61-4dbf-85c9-7558ab96e628@quicinc.com>
- <ZgF6zvaT2OkrbkHK@hovoldconsulting.com>
-Content-Language: en-US
-From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <ZgF6zvaT2OkrbkHK@hovoldconsulting.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: fv_zp3OmKnWSlRlXye2O5YSOpWEYu8CD
-X-Proofpoint-ORIG-GUID: fv_zp3OmKnWSlRlXye2O5YSOpWEYu8CD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-25_15,2024-03-21_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- clxscore=1015 malwarescore=0 priorityscore=1501 phishscore=0 bulkscore=0
- adultscore=0 spamscore=0 mlxscore=0 mlxlogscore=792 impostorscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2403250101
+X-Mailer: b4 0.14-dev
 
-
-
-On 3/25/2024 6:53 PM, Johan Hovold wrote:
-> On Mon, Mar 25, 2024 at 06:45:07PM +0530, Krishna Kurapati PSSNV wrote:
->>>> +static int dwc3_qcom_setup_irq(struct platform_device *pdev)
->>>> +{
->>>> +	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
->>>> +	bool is_multiport;
->>>> +	int ret;
->>>> +	int i;
->>>> +
->>>> +	qcom->num_ports = dwc3_qcom_find_num_ports(pdev);
->>>> +	if (qcom->num_ports < 0)
->>>> +		return -ENOMEM;
->>>
->>> Just return 'ret' directly.
->>
->> Sure, will init ret to -ENOMEM and return ret here. >
-Hi Johan,
-
-> I meant that you should return whatever error dwc3_qcom_find_num_ports()
-> returns, so perhaps something like:
+On Fri, 22 Mar 2024 09:01:31 +0100, Luca Weiss wrote:
+> This series adds support for Type-C Port Management on the Fairphone 4
+> which enables USB role switching and orientation switching.
 > 
-
-Got it. Any error that might come up in interrupt reading as well.
-> 	
-> 	ret = dwc3_qcom_find_num_ports(pdev);
-> 	if (ret < 0)
-> 		return ret;
+> This enables a user for example to plug in a USB stick or a USB keyboard
+> to the Type-C port.
 > 
-> 	qcom->num_ports = ret;
 > 
-> It looks like dwc3_qcom_find_num_ports() can also return 0 (e.g. on
-> malformed DT), which also needs to be handled somehow. I missed that
-> earlier.
-> 
+> [...]
 
- From what I remember, Konrad mentioned that we might not need to 
-support incomplete or improper DT [1]. Also since this is close to 
-getting merged, can we take up any changes for Malformed DT handling 
-later given that only one or two devices are present and less likely to 
-be given a malformed DT.
+Applied to
 
-[1]: 
-https://lore.kernel.org/all/c8d77d4f-6696-4dc9-8030-daf1d10b114b@linaro.org/
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
-Regards,
-Krishna,
+Thanks!
+
+[1/5] dt-bindings: regulator: qcom,usb-vbus-regulator: Add PM7250B compatible
+      commit: 0c5f77f4eaef8ed9fe752d21f40ac471dd511cfc
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
 
