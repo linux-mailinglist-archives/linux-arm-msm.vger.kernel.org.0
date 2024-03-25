@@ -1,151 +1,91 @@
-Return-Path: <linux-arm-msm+bounces-15089-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15090-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0812C88AEF9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 19:51:35 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2FC6D88AEFE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 19:52:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9C7111FA73A3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 18:51:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D729B3237B5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 18:52:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 110EF83A03;
-	Mon, 25 Mar 2024 18:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DA8611733;
+	Mon, 25 Mar 2024 18:44:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ixlys0Fv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jneoR6nW"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4324839E1;
-	Mon, 25 Mar 2024 18:42:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57CEEA50;
+	Mon, 25 Mar 2024 18:44:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711392129; cv=none; b=bjcb0DmLIAm78cJGspaJ8Sw03C0CdrrrHLtXcS0Xh8zsgIMZgTqb55776DtHaK6Yct+C+EEHlh/glYz3szBUXzzQ8JgjBmmjYhSdEKj8loImupwBDXs5puXZwoRd0zv8Kvcu/zrxeOFQwNxoUpqiQmZZFK/iOTkWM8iRIQKTsSg=
+	t=1711392269; cv=none; b=F6NB1cy0YVge6SLuU0z8iRX6dKQHYOV5H/Cbw6JS9LNc+1llrLTzoU7R+SItsZ6RIseFu316rUM9U/xXNWvu7YuojjlSlN/phrJEGiV1GFwT6obZy2elHA4j0Zz5SGKcU7srw8jjfcQi0VQPdWvQpoN9se193+Qmxdu+DlOIFPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711392129; c=relaxed/simple;
-	bh=0vGqEsBz6kkNYMQIbmmcvc1xkmF5mwH8qDi9HlBTkJs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MLIyiGu+lYz9dfaRAhDu/Ifruw774jZ/x4GdbLYA5A6voExYSzzaREebBaWPvlABtAaiQMl2SEIbyjHgG4++9AmcDOV733cvCBRwFFFx5rgKhlzkMot9eLZSLPIPurX30koUEsQHR5CPGOaMAfW66Af+Grcj7wB63Di9UAwADXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ixlys0Fv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18283C433F1;
-	Mon, 25 Mar 2024 18:42:08 +0000 (UTC)
+	s=arc-20240116; t=1711392269; c=relaxed/simple;
+	bh=KjVbKX/1JnTQ8KZWhFzZU8Xw/T8i1qrk1vDw7Qq3Mws=;
+	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
+	 Subject:From:Cc:To:Date; b=fZGYjc691XA+L7fcBj3/eU/FxqsrwgEhKrpcYUMi+xV+JeKfohti5a9bo7W8ivJ3JiBtb19cvndsfG0HzArQpn8kN990fbEH9S5rMEIoE3k1Lhf/SZmpo99zAfGBemYWejhekwfO7OhIdjLyzFqp/O3bCdll2+9AFULZ6NNmksg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jneoR6nW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2500C433C7;
+	Mon, 25 Mar 2024 18:44:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711392128;
-	bh=0vGqEsBz6kkNYMQIbmmcvc1xkmF5mwH8qDi9HlBTkJs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ixlys0FvPCjjjZBr1Qs/lEGMZqYVEM+XiVzLoQ7H5oI72By/NxK2ZcTz0CU8Ch15l
-	 +K4lW0o/ay78ArqVnDSDhDh++clj3uJ2vjjcXt5SC82Y7J/m+jdXZyZuehSWA+t9ki
-	 6mRXTPJW4w1oX6ONyVYBE4xSFXKWCW+lWcvabLstDowPzZrUw1f12U0MSVGbAvIszp
-	 iALYaGNhutZ6ullydsOxkWsK13m1TAaOzsRiJdOiGXprNc/HqQOGCEX5xue3X/tyDn
-	 wCrhnpUICngyLiGIrywWLEx/Eiq4VBuYgJn2tzfmOKI3ieU1Er70wP8FwqUveBLBqE
-	 uCE3An6XRbqZA==
-From: Stephen Boyd <sboyd@kernel.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH v2 5/5] clk: Get runtime PM before walking tree for clk_summary
-Date: Mon, 25 Mar 2024 11:41:59 -0700
-Message-ID: <20240325184204.745706-6-sboyd@kernel.org>
-X-Mailer: git-send-email 2.44.0.396.g6e790dbe36-goog
-In-Reply-To: <20240325184204.745706-1-sboyd@kernel.org>
-References: <20240325184204.745706-1-sboyd@kernel.org>
+	s=k20201202; t=1711392268;
+	bh=KjVbKX/1JnTQ8KZWhFzZU8Xw/T8i1qrk1vDw7Qq3Mws=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=jneoR6nWazV1lIQm6ihGRYD3oocADsEu2qxM9y0EsyA6kAnDvfMmppLBIJ1LUb3k7
+	 jzjSgjfPyugq476VFyifljkzRf6k+VPh2BAzjmFyspcCZpnpHbFvmSOUKTejhaihg7
+	 GVAUDewsHvnN6yK8s6HLnaC+EjMcWbj7CfQCVoSpv7IgcVp+BIASR+B0qfAzfVm1la
+	 14glH/x0UdADmnN0I5TupdRs9O8PIWh8QnsPECNkzOdwE3S9Z4PTEgIA4blbWzlTbN
+	 GDf6b1gV67xZZLAQKZFjSTh6GS93DERFuz9FdzjEW58X9FM2JNFI1PkYpO6SHSHSOR
+	 jcTuCGIDJvCLA==
+Message-ID: <6c8ed50511cbcbf07ef165d900c689e2.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20240325184204.745706-1-sboyd@kernel.org>
+References: <20240325184204.745706-1-sboyd@kernel.org>
+Subject: Re: [PATCH v2 0/5] Fix a deadlock with clk_pm_runtime_get()
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, linux-arm-msm@vger.kernel.org, Douglas Anderson <dianders@chromium.org>, Krzysztof Kozlowski <krzk@kernel.org>, Marek Szyprowski <m.szyprowski@samsung.com>, Taniya Das <quic_tdas@quicinc.com>, Ulf Hansson <ulf.hansson@linaro.org>
+To: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
+Date: Mon, 25 Mar 2024 11:44:26 -0700
+User-Agent: alot/0.10
 
-Similar to the previous commit, we should make sure that all devices are
-runtime resumed before printing the clk_summary through debugfs. Failure
-to do so would result in a deadlock if the thread is resuming a device
-to print clk state and that device is also runtime resuming in another
-thread, e.g the screen is turning on and the display driver is starting
-up. We remove the calls to clk_pm_runtime_{get,put}() in this path
-because they're superfluous now that we know the devices are runtime
-resumed. This also squashes a bug where the return value of
-clk_pm_runtime_get() wasn't checked, leading to an RPM count underflow
-on error paths.
+Quoting Stephen Boyd (2024-03-25 11:41:54)
+> This patch series fixes a deadlock reported[1] on ChromeOS devices
+> (Qualcomm sc7180 Trogdor). To get there, we allow __clk_release() to run
+> without the prepare_lock held. Then we add runtime PM enabled clk_core
+> structs to a list that we iterate and enable runtime PM for each entry
+> before grabbing the prepare_lock to walk the clk tree. The details are
+> in patch #4.
+>=20
+> The patch after that is based on the analysis in the disable unused
+> patch. We similarly resume devices from runtime suspend when walking the
+> clk tree for the debugfs clk_summary.
+>=20
+> Unfortunately this doesn't fix all problems with the usage of runtime PM
+> in the clk framework. We still have a problem if preparing a clk happens
+> in parallel to the device providing that clk runtime resuming or
+> suspending. In that case, the task will go to sleep waiting for the
+> runtime PM state to change, and we'll deadlock. This is primarily a
+> problem with the global prepare_lock. I suspect we'll be able to fix
+> this by implementing per-clk locking, because then we will be able to
+> split up the big prepare_lock into smaller locks that don't deadlock on
+> some device runtime PM transitions.
+>=20
+> I'll start working on that problem in earnest now because I'm worried
+> we're going to run into that problem very soon.
+>=20
+> Changes from v1 (https://lore.kernel.org/r/):
 
-Fixes: 1bb294a7981c ("clk: Enable/Disable runtime PM for clk_summary")
-Cc: Taniya Das <quic_tdas@quicinc.com>
-Cc: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
----
- drivers/clk/clk.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-index c69de47afaba..3539675ea846 100644
---- a/drivers/clk/clk.c
-+++ b/drivers/clk/clk.c
-@@ -3318,9 +3318,7 @@ static void clk_summary_show_subtree(struct seq_file *s, struct clk_core *c,
- {
- 	struct clk_core *child;
- 
--	clk_pm_runtime_get(c);
- 	clk_summary_show_one(s, c, level);
--	clk_pm_runtime_put(c);
- 
- 	hlist_for_each_entry(child, &c->children, child_node)
- 		clk_summary_show_subtree(s, child, level + 1);
-@@ -3330,11 +3328,15 @@ static int clk_summary_show(struct seq_file *s, void *data)
- {
- 	struct clk_core *c;
- 	struct hlist_head **lists = s->private;
-+	int ret;
- 
- 	seq_puts(s, "                                 enable  prepare  protect                                duty  hardware                            connection\n");
- 	seq_puts(s, "   clock                          count    count    count        rate   accuracy phase  cycle    enable   consumer                         id\n");
- 	seq_puts(s, "---------------------------------------------------------------------------------------------------------------------------------------------\n");
- 
-+	ret = clk_pm_runtime_get_all();
-+	if (ret)
-+		return ret;
- 
- 	clk_prepare_lock();
- 
-@@ -3343,6 +3345,7 @@ static int clk_summary_show(struct seq_file *s, void *data)
- 			clk_summary_show_subtree(s, c, 0);
- 
- 	clk_prepare_unlock();
-+	clk_pm_runtime_put_all();
- 
- 	return 0;
- }
-@@ -3390,8 +3393,14 @@ static int clk_dump_show(struct seq_file *s, void *data)
- 	struct clk_core *c;
- 	bool first_node = true;
- 	struct hlist_head **lists = s->private;
-+	int ret;
-+
-+	ret = clk_pm_runtime_get_all();
-+	if (ret)
-+		return ret;
- 
- 	seq_putc(s, '{');
-+
- 	clk_prepare_lock();
- 
- 	for (; *lists; lists++) {
-@@ -3404,6 +3413,7 @@ static int clk_dump_show(struct seq_file *s, void *data)
- 	}
- 
- 	clk_prepare_unlock();
-+	clk_pm_runtime_put_all();
- 
- 	seq_puts(s, "}\n");
- 	return 0;
--- 
-https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
-https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
-
+Oops this is https://lore.kernel.org/r/20240325054403.592298-1-sboyd@kernel=
+.org
 
