@@ -1,121 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-15050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A90E88A898
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 17:13:55 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A727B88A8AB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 17:15:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 627E932217B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 16:13:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 476DD1F679D3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Mar 2024 16:15:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 023F041C66;
-	Mon, 25 Mar 2024 14:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 227CC1474B9;
+	Mon, 25 Mar 2024 14:09:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PInVnx/1"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="QRUuEYaJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C9714A8B;
-	Mon, 25 Mar 2024 14:02:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7CF313C3E7
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 14:09:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711375376; cv=none; b=XtUmuo+Madrl3nYJhBfkaNoEMuiwCd+72JMJ4rvSPL1WQV+svCt2aAxLwnlC+McWf0fr435dBkRpXdjsEBy47023CHMxcJmFGGE8nXditbR/bi2QmxeS3LY2BBJNvDwZ018ybSTrLMjV3f7L+aHDpwbYMScbJk8wIQuBEnqmTY8=
+	t=1711375768; cv=none; b=ntN9J1zh9URKsOfax7QXWJwgHo8SnV/HMMDOe+LiXoEeTEuVKv8PKvHGYgxT8g+uAEqi56O10ItzNubduYNT5gzOLJ1XBax/TOzgvH0kPhSU+Qz5EMNhUrXNcwaz14gOO/mafbWn06Dl+pb+/ENVcs3MbjeCCRLQA9KZeDrOGpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711375376; c=relaxed/simple;
-	bh=LK9smWuFEaz05Mp9x+m54fvpRDKiNeTfa5BBHlCzGmc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rnZ+dyz7hgrAFES0LzH6sknoG2e3Sw/AvUN28cVMEjJ1JRMK76t+m9qjdQTNHh1EFOuA+HtqtksyGZg++GpiIb7xWP93cTJ4SufW98/j6vibL3MVtl0VHv/5R3NttHf2a+5ZoOKp3QFqrdWcpe6TQ8Lg6tsP/Izmv36DdS74yMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PInVnx/1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 886A0C433F1;
-	Mon, 25 Mar 2024 14:02:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711375376;
-	bh=LK9smWuFEaz05Mp9x+m54fvpRDKiNeTfa5BBHlCzGmc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=PInVnx/1wR5q2p6s1rAvd7TaCX+K8ktpCtuW0gLM/Kn1O1r4FnLG83UzhLEB5HclE
-	 rY+S2DUIfqXXEPGhl1g53LMhAwYz0FyqbMdFn4TtET3D4SK1/zlqtq6P48pfhMhJdi
-	 X9YWGgOYEP3r50Mf7reLFz/P14hTZlR9nKIUyTBwwELk9lwZXyw29LgyPV0BzC8Gak
-	 LzS4S9BtBisprlsuS9/XpCivHB3hGklkHQ7IqefIwAqu7G73Q0PvOi4/eEJBiOWf/M
-	 /pEuPlUGpwdjQUkQo0vni/gmlfWGMD0OMvt93XK0Sh/UdRzJCuknav2ktdLIE9YNlo
-	 CTOhy3QdaNCdA==
-Date: Mon, 25 Mar 2024 09:02:53 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] clk: qcom: gdsc: treat optional supplies as optional
-Message-ID: <jdnylcw35fofffszbtwd4pq3tltowmbzhugxeiuthjqnpnrjkw@bjfpfgrhk4p2>
-References: <20240325085835.26158-1-johan+linaro@kernel.org>
+	s=arc-20240116; t=1711375768; c=relaxed/simple;
+	bh=Q186ZwCP59wb65acR46Ym/x35a2ynPh5L0W6/TiLR8U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Y1FOVsA37rowIY0O3h0s68aCRtAJkKqdmjDYKevkX0n10oRfqQsez3F46fzTylv1fzlOeJ0Kri/GWZ8nLUI2CK4Rg5GPZyrb6ZOyyc8/JxsqxiMhEGczntohONeN+J+MIEtixK8KZ0WpgX9VlcCFH6eZBvz8CsseFRxv9D3Xa8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=QRUuEYaJ; arc=none smtp.client-ip=209.85.208.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2d476d7972aso70981791fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Mar 2024 07:09:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1711375764; x=1711980564; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CfuObMCkrCoZSR2Wc4+k3mUI6EGOtW5n3H7jAAQzsO8=;
+        b=QRUuEYaJWrnftGnBemS05m1T5cXGEomfYiCsWFZXCjdNRXCcZmsL7BZLlhWiRCN2vu
+         Q1tHYVdnJgNpynusyfNkbWelCltqFsu9g5EqJ/ZRlLbYnpPEKEvdEdzcOKfvKrIEfOkA
+         1EjcBYVy51FpDVJX6F7TGkFVcvqn3unil0+D6Cat2FVJprbQGuoJhR8reNm33dp7amG6
+         JDgQkuWJgVtyK+r+2xxDneepDbxQKIqJSLbXjJ8Zs2Hyz2hvKGhEs5C+QcwZTAxHCNBp
+         j+2JWTB6vMEWp6de1QHco2cs55wikJo0Pd0PqTKnLqE2F1AjU6nGBEDCzDasSbDML0/8
+         j7QA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711375764; x=1711980564;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=CfuObMCkrCoZSR2Wc4+k3mUI6EGOtW5n3H7jAAQzsO8=;
+        b=Bk7RWU5c4+Zfui0cl32P4DjLYCL844xNB2PqXn0WxOK9VZKBTZ8c3E0VmTDCBmyrzA
+         S8uz075K2jQaimCDhf7bcfpYPUFOPu82l3bxkssJQys1rcvN+PEtA+XpOXPcW13uXiBj
+         2XCKOMkGuPpWPLablTO3X/8aRv8JrNSGEzv+MkzaeYDV3W1ExnzdYUAP2TIlunKyLztL
+         YhSk7zQp4DtyxCqpd3aaRMCCfrkbxSLInSpQSBuvRxTsIJMVaOzVUz8FD6LlKMmCK02r
+         7FVwyOTw5ygrDhVkfBmMWKvG+ja+jvB0uSkZlOrQtQcM6qd0/mG5buteX+Q817BUIRfu
+         qhTw==
+X-Forwarded-Encrypted: i=1; AJvYcCUyXWKFonOOI6wkENz/Nh47TR7F7axDmjHv1shgoJSIhPblssf7z0SGO3FnKuh1gajTMYHyWtj8VcTMrUuPBH5/yo0MQ84/t00lChx8aQ==
+X-Gm-Message-State: AOJu0Yy6ZNNE+J4GHfMUDvSetftgUU35FpH4QaJE4jCD6ljJYU2hUlNd
+	YGWPKxNVC770+ZxpmYDOAddJYhxnwGV54xj4dLHn/yyGUOZaeWDFS/Bf92CQMoiTBWqXR1dFpzB
+	NtEI4ez8yyIywMIhZDY0LlUb+PeKAZxJs+ekFAg==
+X-Google-Smtp-Source: AGHT+IEvJFLfJKGkEqnYgSEId2a/oSfTm8lmiWB7lZbWVsuHFW1Kj1Md8cKVyFWUl5FdFvxVvX1pTsDznN8+aT1HRMo=
+X-Received: by 2002:a2e:a590:0:b0:2d4:62b7:4c7b with SMTP id
+ m16-20020a2ea590000000b002d462b74c7bmr5582449ljp.51.1711375763943; Mon, 25
+ Mar 2024 07:09:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240325085835.26158-1-johan+linaro@kernel.org>
+References: <20240325131624.26023-1-brgl@bgdev.pl> <20240325131624.26023-5-brgl@bgdev.pl>
+ <87r0fy8lde.fsf@kernel.org>
+In-Reply-To: <87r0fy8lde.fsf@kernel.org>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Mon, 25 Mar 2024 15:09:12 +0100
+Message-ID: <CAMRc=Mc2Tc8oHr5NVo=aHAADkJtGCDAVvJs+7V-19m2zGi-vbw@mail.gmail.com>
+Subject: Re: [PATCH v6 04/16] dt-bindings: net: wireless: qcom,ath11k:
+ describe the ath11k on QCA6390
+To: Kalle Valo <kvalo@kernel.org>
+Cc: Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	"David S . Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Saravana Kannan <saravanak@google.com>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Arnd Bergmann <arnd@arndb.de>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Marek Szyprowski <m.szyprowski@samsung.com>, 
+	Alex Elder <elder@linaro.org>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Abel Vesa <abel.vesa@linaro.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Lukas Wunner <lukas@wunner.de>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, linux-bluetooth@vger.kernel.org, 
+	netdev@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-pci@vger.kernel.org, linux-pm@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Mar 25, 2024 at 09:58:35AM +0100, Johan Hovold wrote:
-> Since commit deebc79b28d6 ("clk: qcom: gpucc-sc8280xp: Add external
-> supply for GX gdsc") the GDSC supply must be treated as optional to
-> avoid warnings like:
-> 
-> 	gpu_cc-sc8280xp 3d90000.clock-controller: supply vdd-gfx not found, using dummy regulator
-> 
-> on SC8280XP.
-> 
-> Fortunately, the driver is already prepared to handle this by checking
-> that the regulator pointer is non-NULL before use.
-> 
-> This also avoids triggering a potential deadlock on SC8280XP even if the
-> underlying issue still remains for the derivative platforms like SA8295P
-> that actually use the supply.
-> 
-> Fixes: deebc79b28d6 ("clk: qcom: gpucc-sc8280xp: Add external supply for GX gdsc")
-> Link: https://lore.kernel.org/lkml/Zf25Sv2x9WaCFuIH@hovoldconsulting.com/
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+On Mon, Mar 25, 2024 at 2:57=E2=80=AFPM Kalle Valo <kvalo@kernel.org> wrote=
+:
+>
+> Bartosz Golaszewski <brgl@bgdev.pl> writes:
+>
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > Add a PCI compatible for the ATH11K module on QCA6390 and describe the
+> > power inputs from the PMU that it consumes.
+> >
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>
+> [...]
+>
+> > +allOf:
+> > +  - if:
+> > +      properties:
+> > +        compatible:
+> > +          contains:
+> > +            const: pci17cb,1101
+> > +    then:
+> > +      required:
+> > +        - vddrfacmn-supply
+> > +        - vddaon-supply
+> > +        - vddwlcx-supply
+> > +        - vddwlmx-supply
+> > +        - vddrfa0p8-supply
+> > +        - vddrfa1p2-supply
+> > +        - vddrfa1p7-supply
+> > +        - vddpcie0p9-supply
+> > +        - vddpcie1p8-supply
+>
+> I don't know DT well enough to know what the "required:" above means,
+> but does this take into account that there are normal "plug&play" type
+> of QCA6390 boards as well which don't need any DT settings?
+>
 
-Thanks for fixing this, it never made it off my todo list...
+Do they require a DT node though for some reason?
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-
-Regards,
-Bjorn
-
-> ---
->  drivers/clk/qcom/gdsc.c | 11 ++++++++---
->  1 file changed, 8 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> index e7a4068b9f39..df9618ab7eea 100644
-> --- a/drivers/clk/qcom/gdsc.c
-> +++ b/drivers/clk/qcom/gdsc.c
-> @@ -487,9 +487,14 @@ int gdsc_register(struct gdsc_desc *desc,
->  		if (!scs[i] || !scs[i]->supply)
->  			continue;
->  
-> -		scs[i]->rsupply = devm_regulator_get(dev, scs[i]->supply);
-> -		if (IS_ERR(scs[i]->rsupply))
-> -			return PTR_ERR(scs[i]->rsupply);
-> +		scs[i]->rsupply = devm_regulator_get_optional(dev, scs[i]->supply);
-> +		if (IS_ERR(scs[i]->rsupply)) {
-> +			ret = PTR_ERR(scs[i]->rsupply);
-> +			if (ret != -ENODEV)
-> +				return ret;
-> +
-> +			scs[i]->rsupply = NULL;
-> +		}
->  	}
->  
->  	data->num_domains = num;
-> -- 
-> 2.43.0
-> 
+Bart
 
