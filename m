@@ -1,114 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-15248-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15249-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A639188CB7E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 19:05:10 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46B8488CBD4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 19:16:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5E2A23202FA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 18:05:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 013DA340BCB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 18:16:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEA2B20B20;
-	Tue, 26 Mar 2024 18:05:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88F698527A;
+	Tue, 26 Mar 2024 18:16:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R3vsMRQ3"
+	dkim=pass (2048-bit key) header.d=ravnborg.org header.i=@ravnborg.org header.b="nyeOTCdX";
+	dkim=permerror (0-bit key) header.d=ravnborg.org header.i=@ravnborg.org header.b="rL+ukD2Q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailrelay5-1.pub.mailoutpod3-cph3.one.com (mailrelay5-1.pub.mailoutpod3-cph3.one.com [46.30.211.244])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4344D1CAA6;
-	Tue, 26 Mar 2024 18:05:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D3D6F07B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 18:16:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.30.211.244
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711476302; cv=none; b=tgLP3wvcaApkMoLzoqsbyGYZzIYh51XB8Jhp5cKXJqkLanjd7lABjdt7c5qOoSRUt7tTpM6d/NYI7t/3tY8Zist7rIpAwSU6SeEMmFYdi7GHeGY/tmdjftq9raf4ER5D9SQCL44vuQHObYqR+WgBPStLLvYMsCQTnEpaM7pEzEA=
+	t=1711476974; cv=none; b=lOvGL8+cj6v5jN/o9bUrSOmnY4pXRvLwN4gv92m/BwDMA2M9yz1sfYU16wRgY77CxfqJCP9dhYKSh8AWonxtRnYZtLcyxi3J1EbNnKtdzwUKeu6desBDhcwsJ4VbFsga/nw/XUZIvc967uZaEnGrYVSvtVaP/hOOLtQWlROf6bQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711476302; c=relaxed/simple;
-	bh=FaCP1X4xsv77SJjjy+RF+r5fjTpHS6ox04MrkiMrTpQ=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=NTfnsf3mVkxMNfbLMeWlG+IkimXYLvQvOBIpbGuetQy1S8hciphXBTFqgcWxrwEQouyaamr0ztSODc9Ml+ho4vvlJ2SI5lLSRhYFGSxOLLWvhYYo5R/002y7d8LygJpPjQGFVTejPAWjiWVCfauI0gkkkWPtw6jynRq4qkIjsGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R3vsMRQ3; arc=none smtp.client-ip=209.85.215.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-5dbcfa0eb5dso4457001a12.3;
-        Tue, 26 Mar 2024 11:05:01 -0700 (PDT)
+	s=arc-20240116; t=1711476974; c=relaxed/simple;
+	bh=OQxXZfgehtfbFagTkSKRUD8y2GHLUHk2uynjOfd4oRI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=chajFYIPzXgkR6dunbQLOWt4jFOn4Kd9R8HwcL/3KPo/om2KvhxjmQFyJvfkKnOTNQPCx8vO1Od43YAStVqK/CNttebA4Zb1koM/MAkPtiS1PE9v7wY2zb7H+kZxs8MT197GliprKpXDmA4YduBNCSB1LQzHfCRxIlBWJxUERHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ravnborg.org; spf=none smtp.mailfrom=ravnborg.org; dkim=pass (2048-bit key) header.d=ravnborg.org header.i=@ravnborg.org header.b=nyeOTCdX; dkim=permerror (0-bit key) header.d=ravnborg.org header.i=@ravnborg.org header.b=rL+ukD2Q; arc=none smtp.client-ip=46.30.211.244
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ravnborg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ravnborg.org
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711476300; x=1712081100; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=7eMWpGiB38YJtVZd9B9lRA2TBkHD9tD0FrImJN6Sv8A=;
-        b=R3vsMRQ3aR8mPwsTVnJRZdkErSTe+F/1saWkGykRCWbofOK1DF+6XkZY/8dpn/INYS
-         y8U60d+o+6lGTP6wg1wCmiyNAIz41iju/mvY1jacQYiBilxYn5lXXVbgmnqHFJYcNUi5
-         Motf1F0wlDj8MPCZkTZMx1ZZkXgsmbPH0A/jSnzQ/RcnS+OWVCPOC6fkdc9OeWpBv4gJ
-         6mfbh9hqyHuyBF786OXO0ZQNzDGFTydrn/4jwCEaFROxkO3QZ1GFtpgySBTlDHsXu33U
-         OYlu/QxLB5NTP2yfYzLCutT05/SDOs2nKvvPXg93r23vOcZkT2hHhJBesLqSwcOWLszw
-         IFxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711476300; x=1712081100;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7eMWpGiB38YJtVZd9B9lRA2TBkHD9tD0FrImJN6Sv8A=;
-        b=jKo5B5e7eayHhB/4MfdBIR0fMfXsD21qdtQ80zojsds6Z4kXBTnaDYsFR/2z3z1ucm
-         xTt4qqSJ1BYFy8jfi5p0ffN8VR7+lT/n5rk9C4VB4xb2c9R50N9/IzPf+VbSjM5lTH8G
-         kc84XOTaXnrYbRrKkpw5A//JI50k85lX2dSzRhbGhGHCh750Wdxk53uxOLDwOk7a1b7x
-         tQiB1UGCKSIbitkaMPKO8z2DVj4LYTg7PlZIZaEd3TcLxYo9F88vG8KngAmmglOtkqyo
-         7oAHe0/lO7qLcxIvHmHa60bHidg7WGHzpa3dMw/LSFc96qbT7n9CrYCuz++tTQbsaaHC
-         yaxQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW7rrggmjIphTU7NJtYnP0g/Y33GwvQjVxoYXFSG3YK8Jz1X1NepM/oyjz7uofWlWCHRaCHvZiaNynZMmnieoPVHZn8jZUmqo2RV7t7fDvPbadpw6UQG9ComCz/qzfKfyL97d004j+LreVuqw==
-X-Gm-Message-State: AOJu0Yy5r1xCORtTM7Mb15HTqfH8PcDt5I+T1rUe4y+GGHLVDjBDHVjd
-	cgplbICegFxuvB1UZbZVlcNQCJAGIvNE3EVyBbAei90lqV+MFGgGF4XXiqd0BY/bJRllqJGspxr
-	PKC7CZbgNIOUkD5ztMBuYpZyq2Dw=
-X-Google-Smtp-Source: AGHT+IGvvgt2+h25XM0X3VAXSRyRgKXJ48v9Kzeutnr3W8gcWQwcEQKbgUgAeAh3qw6Qfjc+OoTfXR99bSWeh+7bAwo=
-X-Received: by 2002:a17:90a:d150:b0:2a0:4a33:c3a6 with SMTP id
- t16-20020a17090ad15000b002a04a33c3a6mr3012373pjw.44.1711476300538; Tue, 26
- Mar 2024 11:05:00 -0700 (PDT)
+	d=ravnborg.org; s=rsa2;
+	h=in-reply-to:content-type:mime-version:references:message-id:subject:cc:to:
+	 from:date:from;
+	bh=8cfX7j0cZTLxYnTUI6w58EoQmIDSw6kaORCfZyfLSls=;
+	b=nyeOTCdXkrX+AnYb2SH2o8UNaN7MEL/eLOuR/HxjUcCojfmUxEf1IYSvFe57aGwCXPRpwJnc2eKvF
+	 IgVer08UY4ywfd6yHdwNmVKKsRplrooqtKDG3xkplHga149okVZxGGy9GInR2g3HT1EKFlEQgQiI6/
+	 UskNZ+kb3sCMlzUq7OWUJ8PNQG9121mKwNR04NB58zJFOYpyjgEF4Bal4nwnL9WKEfF5dYXjMgU4fa
+	 ufj3SWJcgNd/3HKna6TzqZNQOCM8nFm4hnfFS26/dBKYNRmJso1M4n6mF9Sl0icrUSk6rEE+NCUHfW
+	 Ff2IMnIPUeikUZZpj8PhtuY9h0mersw==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed;
+	d=ravnborg.org; s=ed2;
+	h=in-reply-to:content-type:mime-version:references:message-id:subject:cc:to:
+	 from:date:from;
+	bh=8cfX7j0cZTLxYnTUI6w58EoQmIDSw6kaORCfZyfLSls=;
+	b=rL+ukD2QXe4F+m5MLDkbUa/qyyilhQ/TiMT4rGWt3HqeijcmTmhKSIz4EVkcvr5PlEK0+Oj/0biOq
+	 Ngc23tKDA==
+X-HalOne-ID: c19233ce-eb9c-11ee-bd8a-9fce02cdf4bb
+Received: from ravnborg.org (2-105-2-98-cable.dk.customer.tdc.net [2.105.2.98])
+	by mailrelay5.pub.mailoutpod3-cph3.one.com (Halon) with ESMTPSA
+	id c19233ce-eb9c-11ee-bd8a-9fce02cdf4bb;
+	Tue, 26 Mar 2024 18:15:01 +0000 (UTC)
+Date: Tue, 26 Mar 2024 19:15:00 +0100
+From: Sam Ravnborg <sam@ravnborg.org>
+To: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: linux-kernel@vger.kernel.org, linux-crypto@vger.kernel.org,
+	Chris Zankel <chris@zankel.net>, Max Filippov <jcmvbkbc@gmail.com>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Oded Gabbay <ogabbay@kernel.org>,
+	Thomas =?iso-8859-1?Q?Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>,
+	intel-xe@lists.freedesktop.org, linux-mips@vger.kernel.org,
+	sparclinux@vger.kernel.org
+Subject: Re: Build regressions/improvements in v6.9-rc1
+Message-ID: <20240326181500.GA1501083@ravnborg.org>
+References: <CAHk-=wgOw_13JuuX4khpn4K+n09cRG3EBQWufAPBWoa0GLLQ0A@mail.gmail.com>
+ <20240325200315.3896021-1-geert@linux-m68k.org>
+ <8d78894-dd89-9f4d-52bb-1b873c50be9c@linux-m68k.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Tue, 26 Mar 2024 19:04:33 +0100
-Message-ID: <CANiq72mjc5t4n25SQvYSrOEhxxpXYPZ4pPzneSJHEnc3qApu2Q@mail.gmail.com>
-Subject: drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:843:6: error: variable
- 'out' set but not used
-To: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	linux-arm-msm <linux-arm-msm@vger.kernel.org>, dri-devel <dri-devel@lists.freedesktop.org>, 
-	freedreno@lists.freedesktop.org, linux-kernel <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8d78894-dd89-9f4d-52bb-1b873c50be9c@linux-m68k.org>
 
-Hi,
+Hi all.
 
-In today's next, I got:
+>   + error: arch/sparc/kernel/process_32.o: relocation truncated to fit: R_SPARC_WDISP22 against `.text':  => (.fixup+0xc), (.fixup+0x4)
+>   + error: arch/sparc/kernel/signal_32.o: relocation truncated to fit: R_SPARC_WDISP22 against `.text':  => (.fixup+0x18), (.fixup+0x8), (.fixup+0x0), (.fixup+0x20), (.fixup+0x10)
+>   + error: relocation truncated to fit: R_SPARC_WDISP22 against `.init.text':  => (.head.text+0x5100), (.head.text+0x5040)
+>   + error: relocation truncated to fit: R_SPARC_WDISP22 against symbol `leon_smp_cpu_startup' defined in .text section in arch/sparc/kernel/trampoline_32.o:  => (.init.text+0xa4)
 
-    drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:843:6: error: variable
-'out' set but not used [-Werror,-Wunused-but-set-variable]
+Looks like something is too big for the available space here.
+Any hints how to dig into this would be nice.
 
-`out` seems to be there since commit 64d6255650d4 ("drm/msm: More
-fully implement devcoredump for a7xx").
+Note: this is a sparc32 allmodconfig build
 
-Untested diff below assuming `dumper->iova` is constant -- if you want
-a formal patch, please let me know.
-
-Cheers,
-Miguel
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-index 1f5245fc2cdc..a847a0f7a73c 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -852,7 +852,7 @@ static void a6xx_get_shader_block(struct msm_gpu *gpu,
-             (block->type << 8) | i);
-
-         in += CRASHDUMP_READ(in, REG_A6XX_HLSQ_DBG_AHB_READ_APERTURE,
--            block->size, dumper->iova + A6XX_CD_DATA_OFFSET);
-+            block->size, out);
-
-         out += block->size * sizeof(u32);
-     }
+	Sam
 
