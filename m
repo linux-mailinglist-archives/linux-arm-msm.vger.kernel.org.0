@@ -1,147 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-15255-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D73FE88CCD0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 20:12:29 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0E89A88CCDC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 20:15:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 59BD5B259E8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 19:12:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B9C54301656
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 19:15:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1056713CFAD;
-	Tue, 26 Mar 2024 19:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B85C513CAA8;
+	Tue, 26 Mar 2024 19:15:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qy0V3mfP"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KzWHNqHF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D886913CAA0;
-	Tue, 26 Mar 2024 19:12:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A1713CA91;
+	Tue, 26 Mar 2024 19:15:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711480325; cv=none; b=JBZzguvOCDPmWGp428T7gI9CfsZ0y0f+oVUk8j6xzjWSzT5ViQD0UvF5CBjdqXpiOtGLJoSHpuSJ7InHEkcEMLc/I2DcHbAz0Z+HA/axjJz+wHLeNjxrul5+cUhyMNGi9JomA+jr37Fd8LNGbCtoxNVMyTmiHSy5wQ9VKWHfcuE=
+	t=1711480513; cv=none; b=fARzKKNALE+WDu7+zo/WjJwZ2Jb5ezBi+n1YJ4mYdcKAFt0FgL+7nJjHZalyNCGgGXx/ZW5vMm1PQ26lL7dCObxYrz1j9JIgRAxZPztxRJ9sJ1zXCRTkJ5HlNCRbSR/xLy8K95Z8zxLfoW8QUujHTTVVFyb560Vhpr6b3dfrPa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711480325; c=relaxed/simple;
-	bh=r7A8UhBAZMQRKdSkLqXqxInqIJpvVLlrAu8hcUy+4xs=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=JhsqnSu6V9Dct4R+OrUGIq2oM3FqV3IUQvBK34xQrKBjsA2J10r4DvT5ditcALxYonwbJsJ595tP4VEQZ3MMp8Mw5vjmZelC6mOWB/1ZQs8aQhfocxpoAHIqUfU0RkP/gqm/BnGCpYMhl9iCi0qvtvcrw0zLJFAkcSlgOk8NJIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qy0V3mfP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4567AC433A6;
-	Tue, 26 Mar 2024 19:12:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711480324;
-	bh=r7A8UhBAZMQRKdSkLqXqxInqIJpvVLlrAu8hcUy+4xs=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=Qy0V3mfPZguVh4nEhAJTVFMlkuVJcnui/QskwNfYjzLDBFZp0EXqgCKtoYxAM+d9u
-	 7N9EHTkDrKnYFM92g7s5ZGaxIeG+GCa8IiF/5ZBnYmuKgVCl9JP2QyF0NPk+u/EjU5
-	 X2bgcr9dXP7nASYJ4UYLaOluIXDvoitohDkZHdGqeZ6sU0mwxcsLHtChq3ov7DnXud
-	 jymKDy427V3mUwrUbPkGdA3HDZw3torUDn/3OVZykCYorZiKGJ0hjalLZsbWlXo62b
-	 jE7oMzSoUUtXF0S2lAaknipnbjwLt3YG7j7GjKOkQDeDwWpfOQyRBMyaenKV9BtnA+
-	 uteNxATNQjSgQ==
-Date: Tue, 26 Mar 2024 14:12:03 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1711480513; c=relaxed/simple;
+	bh=lcXIQeQPpJSsjJa4r3+xmC6l2y1ERylB+XQntlhKESw=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hP5uWogDWWCYEvBPbi1QX4rUW0lD8t6ZLDU5xIbbloevav8+PSURZEOPHXyCkpwfLgVVdNG1yQIYJ0AEXbmxmbiV+m6ZvG91/eNZ4cLGgEq1Fz45PSHdwmSuPW6sWw68nMsoYeBhP4Q9UuHCh35537mO2GyT3IsMUqqR6V6aU7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KzWHNqHF; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42QIgd9r006771;
+	Tue, 26 Mar 2024 19:14:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=dnefISPJ3uXmoKMiF9edx
+	eaKbGhHLoEqhLnEFMxNj1U=; b=KzWHNqHFGhjE6iKcaCl3yybXAxfsFp9Da0HA/
+	TsceNQ0Nmev7iFQVkboVv5/46afmV1oou8oHQibcz3wqhczBnVgZUs4JQNgtyR2+
+	xz8jLt2hpAC+Oq4t+FEPt2k2ZQYUmw82raXaNCwa1cZxWvVbokLj7mSBcsoJ3S7R
+	hrHfrbiwfhIJkr43GIdfAUyRe5WiR4uP8wT6by2xH/obPz5O7eCvqR7ZZAM05xmO
+	TupczWBen9ZIKGpWU51MnTcgI8CEt5kJI8XZuj8XVDX7cPl2McgkmgqO6qUo3Nud
+	ADphLCXNd9Z8n54y66QAHOnnxXDNbIeJr6jXjoJXqsMonBu+Q==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x41k68g47-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 26 Mar 2024 19:14:57 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42QJEu1m025863
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 26 Mar 2024 19:14:56 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Tue, 26 Mar 2024 12:14:55 -0700
+Date: Tue, 26 Mar 2024 12:14:54 -0700
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+To: Abel Vesa <abel.vesa@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        "Maarten
+ Lankhorst" <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard
+	<mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Johan Hovold <johan@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v4 1/2] drm/msm/dp: Add support for determining the
+ eDP/DP mode from DT
+Message-ID: <20240326191454.GA1637694@hu-bjorande-lv.qualcomm.com>
+References: <20240324-x1e80100-display-refactor-connector-v4-0-e0ebaea66a78@linaro.org>
+ <20240324-x1e80100-display-refactor-connector-v4-1-e0ebaea66a78@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Gabor Juhos <j4g8y7@gmail.com>
-Cc: devicetree@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Conor Dooley <conor.dooley@microchip.com>, linux-arm-msm@vger.kernel.org, 
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- linux-kernel@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>
-In-Reply-To: <20240326-archer-ax55-v1-v4-0-dc5b54a4bb00@gmail.com>
-References: <20240326-archer-ax55-v1-v4-0-dc5b54a4bb00@gmail.com>
-Message-Id: <171148006675.3222706.1993091559957014299.robh@kernel.org>
-Subject: Re: [PATCH v4 0/2] arm64: add minimal boot support for TP-Link
- Archer AX55 v1
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20240324-x1e80100-display-refactor-connector-v4-1-e0ebaea66a78@linaro.org>
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: uSZvd6OyOHb8pCzyFT3mtMm9FBgQ7dxU
+X-Proofpoint-GUID: uSZvd6OyOHb8pCzyFT3mtMm9FBgQ7dxU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-26_08,2024-03-21_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
+ lowpriorityscore=0 clxscore=1011 mlxlogscore=999 priorityscore=1501
+ malwarescore=0 phishscore=0 spamscore=0 adultscore=0 suspectscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403210001 definitions=main-2403260138
 
+On Sun, Mar 24, 2024 at 08:56:51PM +0200, Abel Vesa wrote:
+> Instead of relying on different compatibles for eDP and DP, lookup
+> the panel node in devicetree to figure out the connector type and
+> then pass on that information to the PHY. External DP doesn't have
+> a panel described in DT, therefore, assume it's eDP if panel node
+> is present.
+> 
 
-On Tue, 26 Mar 2024 15:52:26 +0100, Gabor Juhos wrote:
-> The purpose of this series to add minimal boot support for the
-> TP-Link Archer AX55 v1 dual-band wireless router.
-> 
-> There are two patches:
->   - the first one adds the compatible for the board into the dt-bindings
->     documentation,
->   - the second patch introduces a minimal device tree source which can be
->     used for booting initramfs images
-> 
+Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+
+Regards,
+Bjorn
+
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
-> Changes in v4:
->   - change patch 2/2 to use new LED_FUNCTION_* definitions introduced
->     in v6.9-rc1
->   - rebase on top of v6.9-rc1
->   - Link to v3: https://lore.kernel.org/r/20240313-archer-ax55-v1-v3-0-cd9402efab59@gmail.com
+>  drivers/gpu/drm/msm/dp/dp_display.c | 29 ++++++++++++++++++++++++++++-
+>  1 file changed, 28 insertions(+), 1 deletion(-)
 > 
-> Changes in v3:
->   - change pin configuration to use "gpio20" and "gpio21" for UART pins
->     in patch 2/2
->   - rebase on top of v6.8
->   - Link to v2: https://lore.kernel.org/r/20240226-archer-ax55-v1-v2-0-3776eb61f432@gmail.com
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index c4cb82af5c2f..9169a739cc54 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -726,6 +726,14 @@ static int dp_init_sub_modules(struct dp_display_private *dp)
+>  	if (IS_ERR(phy))
+>  		return PTR_ERR(phy);
+>  
+> +	rc = phy_set_mode_ext(phy, PHY_MODE_DP,
+> +			      dp->dp_display.is_edp ? PHY_SUBMODE_EDP : PHY_SUBMODE_DP);
+> +	if (rc) {
+> +		DRM_ERROR("failed to set phy submode, rc = %d\n", rc);
+> +		dp->catalog = NULL;
+> +		goto error;
+> +	}
+> +
+>  	dp->catalog = dp_catalog_get(dev);
+>  	if (IS_ERR(dp->catalog)) {
+>  		rc = PTR_ERR(dp->catalog);
+> @@ -1241,6 +1249,25 @@ static int dp_auxbus_done_probe(struct drm_dp_aux *aux)
+>  	return dp_display_probe_tail(aux->dev);
+>  }
+>  
+> +static int dp_display_get_connector_type(struct platform_device *pdev,
+> +					 const struct msm_dp_desc *desc)
+> +{
+> +	struct device_node *node = pdev->dev.of_node;
+> +	struct device_node *aux_bus = of_get_child_by_name(node, "aux-bus");
+> +	struct device_node *panel = of_get_child_by_name(aux_bus, "panel");
+> +	int connector_type;
+> +
+> +	if (panel)
+> +		connector_type = DRM_MODE_CONNECTOR_eDP;
+> +	else
+> +		connector_type = DRM_MODE_SUBCONNECTOR_DisplayPort;
+> +
+> +	of_node_put(panel);
+> +	of_node_put(aux_bus);
+> +
+> +	return connector_type;
+> +}
+> +
+>  static int dp_display_probe(struct platform_device *pdev)
+>  {
+>  	int rc = 0;
+> @@ -1263,7 +1290,7 @@ static int dp_display_probe(struct platform_device *pdev)
+>  	dp->dp_display.pdev = pdev;
+>  	dp->name = "drm_dp";
+>  	dp->id = desc->id;
+> -	dp->dp_display.connector_type = desc->connector_type;
+> +	dp->dp_display.connector_type = dp_display_get_connector_type(pdev, desc);
+>  	dp->wide_bus_supported = desc->wide_bus_supported;
+>  	dp->dp_display.is_edp =
+>  		(dp->dp_display.connector_type == DRM_MODE_CONNECTOR_eDP);
 > 
-> Changes in v2:
->   - reorder pin configuration properties in patch 2/2
->   - add 'Acked-by' tag to patch 1/2
->   - Link to v1: https://lore.kernel.org/r/20240223-archer-ax55-v1-v1-0-99f8fa2c3858@gmail.com
+> -- 
+> 2.34.1
 > 
-> ---
-> Gabor Juhos (2):
->       dt-bindings: arm: qcom: add TP-Link Archer AX55 v1
->       arm64: dts: qcom: add TP-Link Archer AX55 v1
-> 
->  Documentation/devicetree/bindings/arm/qcom.yaml    |   1 +
->  arch/arm64/boot/dts/qcom/Makefile                  |   1 +
->  .../dts/qcom/ipq5018-tplink-archer-ax55-v1.dts     | 128 +++++++++++++++++++++
->  3 files changed, 130 insertions(+)
-> ---
-> base-commit: b55a22fa35e9d4e07d3ee6ab2557a41c2711433b
-> change-id: 20240221-archer-ax55-v1-73ed91a97c6e
-> 
-> Best regards,
-> --
-> Gabor Juhos <j4g8y7@gmail.com>
-> 
-> 
-> 
-
-
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
-
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-New warnings running 'make CHECK_DTBS=y qcom/ipq5018-tplink-archer-ax55-v1.dtb' for 20240326-archer-ax55-v1-v4-0-dc5b54a4bb00@gmail.com:
-
-arch/arm64/boot/dts/qcom/ipq5018-tplink-archer-ax55-v1.dtb: usb@8af8800: interrupts: [[0, 62, 4]] is too short
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-arch/arm64/boot/dts/qcom/ipq5018-tplink-archer-ax55-v1.dtb: usb@8af8800: interrupt-names: ['hs_phy_irq'] is too short
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-arch/arm64/boot/dts/qcom/ipq5018-tplink-archer-ax55-v1.dtb: usb@8af8800: interrupts: [[0, 62, 4]] is too short
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-arch/arm64/boot/dts/qcom/ipq5018-tplink-archer-ax55-v1.dtb: usb@8af8800: interrupt-names:0: 'pwr_event' was expected
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-arch/arm64/boot/dts/qcom/ipq5018-tplink-archer-ax55-v1.dtb: usb@8af8800: interrupt-names: ['hs_phy_irq'] is too short
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-
-
-
-
-
 
