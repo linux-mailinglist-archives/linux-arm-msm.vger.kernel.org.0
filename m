@@ -1,76 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-15132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7100288BC5F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 09:29:35 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF8DF88BC73
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 09:31:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A20A21C2FD79
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 08:29:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7A1AE2E0FE6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 08:31:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A21491350C0;
-	Tue, 26 Mar 2024 08:28:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 549511847;
+	Tue, 26 Mar 2024 08:31:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QPX+K2s6"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l7PZyTEa"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FDA8134422;
-	Tue, 26 Mar 2024 08:28:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D0A4A22;
+	Tue, 26 Mar 2024 08:31:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711441712; cv=none; b=apgpVcIwBOAzF844+6yhSBortkIurwKa7OmMXkpRUJEFUI+b8NjQ764gQcel7kJ4OlYG2rP0To5+CXYSZ6o5zx4AHee8UMUpjE7mu/4FKEqpxoquSCDKSu5XiRACCSiyfOaGvfnICnT47GIS1Xs4R+Fe4iXTs1TQ7kwb3m/yTHk=
+	t=1711441863; cv=none; b=EEuNev6rVMcd2W1lUg7NtJ2Ef5qFCfC10UtA+O9w3FMUlsV+i94d7WVM96RMJvV8Is0ExkHPtr9LhtasXJR+CyA5USR/8WK/c333nu697aGWz2co6FopDYSJ+PMMMLey7RtvHC55Ft80uhEne8337JOTKQH6qCTzgs5e2pg75pM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711441712; c=relaxed/simple;
-	bh=rAq3xkAVaETYPSPHUg5emdE8mb8m91SeBHFnjLnSNn8=;
+	s=arc-20240116; t=1711441863; c=relaxed/simple;
+	bh=IbF+4N6tEo6brIIuoUu69sJaSGZduUjBfVe4VkI9ggU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SloYujdLCU+fF3FxFixPxdUOMrLqhMGBudM1MO/ZpMoCjGl2GJGdaPabkB66HHKqX+jdtXJZTWxNaGEPQiBIsBMA/v1QyZxmfNNsDHRgPNxq1mEfOkVm0sobCT0qSbIo7wq/iQsI5Fw5CLZMxwc9SK7yHzUf0YgRf3HJnzTAZhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QPX+K2s6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC61C43390;
-	Tue, 26 Mar 2024 08:28:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711441712;
-	bh=rAq3xkAVaETYPSPHUg5emdE8mb8m91SeBHFnjLnSNn8=;
+	 Content-Type:Content-Disposition:In-Reply-To; b=lXguXkBhxROIfIH7SKMamsjGD75K1Uwi1AApjyfT+UQPMwB7cMkOxRwdezxUv6NIjq2U8VthxlDnIHwr0n+0wIc0jLF+IiF9l1bH/+h6X8QakRVPuhTYZ1gTncA+b9zGfQ4Fc6B71kOCHEb541vOZPW8DKxoFDH7yssh5xxdf9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l7PZyTEa; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2376BC43390;
+	Tue, 26 Mar 2024 08:31:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1711441862;
+	bh=IbF+4N6tEo6brIIuoUu69sJaSGZduUjBfVe4VkI9ggU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QPX+K2s6Vr6NTDLfB3RrMOcdU+ZZLsM3yi6/UuG1rCLWGYX+tW6sSPLzry0FeTlqg
-	 P/ZWca+hJGB2i/WX4iK9602OM20iNmLSN2gdhbKNT9wIn2yp/uUJy++OrzzRuhRDqs
-	 ggx07RkbJigaK8eTh8Asbbpd29MpB7P34PzZMBU0NzxjJXhXbgvg7/7FZHo/3UTnhK
-	 JcKUrZ8WIA5I0UbhzsY9cEY3gg5rT0w1Stga4RJUAySOJ8nhfubewH1k6a6H283WWC
-	 pyoqRKPvhhYj2tsqznMU3vZqc9g4oP2xVCKmufFZ4UdB+fM6ttcXopv0p6gbxMNZMw
-	 O1nkLix+uYzWA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rp2Ag-0000000060q-3Qe3;
-	Tue, 26 Mar 2024 09:28:39 +0100
-Date: Tue, 26 Mar 2024 09:28:38 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
+	b=l7PZyTEaAbZVjqEgN51Gs5Ln4nm5SOxprbKcaO1HqS7na2znZekEVm9KXF+DG25sK
+	 0JsMSj+qPOLqOiDfiFMq7OBUcpmCK9RUf/9Gb+V//CV/PEOybJkNP3CtGRhxqZfla2
+	 VSoyTLiUJMjtNhblUgzaVlwMZyR0pwiothCB8IcU=
+Date: Tue, 26 Mar 2024 09:30:59 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Komal Bajaj <quic_kbajaj@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Felipe Balbi <balbi@kernel.org>, devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_ppratap@quicinc.com,
-	quic_jackp@quicinc.com
-Subject: Re: [PATCH v16 7/9] usb: dwc3: qcom: Refactor IRQ handling in glue
- driver
-Message-ID: <ZgKHNuziNtBhGO9V@hovoldconsulting.com>
-References: <20240307062052.2319851-1-quic_kriskura@quicinc.com>
- <20240307062052.2319851-8-quic_kriskura@quicinc.com>
- <ZgFyukBXIIwZo7v-@hovoldconsulting.com>
- <50926b91-3c61-4dbf-85c9-7558ab96e628@quicinc.com>
- <ZgF6zvaT2OkrbkHK@hovoldconsulting.com>
- <807015d4-c5ed-4e04-9948-fd1ff894a04e@quicinc.com>
- <ZgHUR-Rk-YzqiTtt@hovoldconsulting.com>
- <7b4a6d7f-76ad-471f-a178-dc598fbc0e22@quicinc.com>
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-usb@vger.kernel.org
+Subject: Re: [PATCH 0/4] Add USB Support on Qualcomm's QDU/QRU1000 Platform
+Message-ID: <2024032637-sessions-outcast-888a@gregkh>
+References: <20240319090729.14674-1-quic_kbajaj@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,57 +63,40 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <7b4a6d7f-76ad-471f-a178-dc598fbc0e22@quicinc.com>
+In-Reply-To: <20240319090729.14674-1-quic_kbajaj@quicinc.com>
 
-On Tue, Mar 26, 2024 at 01:41:52PM +0530, Krishna Kurapati PSSNV wrote:
-> On 3/26/2024 1:15 AM, Johan Hovold wrote:
+On Tue, Mar 19, 2024 at 02:37:24PM +0530, Komal Bajaj wrote:
+> This series adds support of USB3 PHY support for Qualcomm's QDU/QRU1000 Platform.
 > 
-> > Just change the logic in dwc3_qcom_find_num_ports() so that it returns 1
-> > if "dp_hs_phy_1" is missing, and otherwise you determine the number of
-> > ports by iterating from 2 to DWC3_MAX_PORTS - 1.
-
-> I made this change and it works. Removed any return value check for the 
-> find_num_ports call as it can return only 1/2/3/4 now.
+> ---------
+> Changes in v2:
+> * Dropped extra lines
+> * Sorted the tables alphabetically
+> * Link to v1: https://lore.kernel.org/linux-arm-msm/20240311120215.16845-1-quic_kbajaj@quicinc.com/
 > 
-> ---
->      irq = platform_get_irq_byname_optional(pdev, "qusb2_phy");
->          if (irq > 0)
->                  return 1;
+> Komal Bajaj (4):
+>   dt-bindings: phy: qcom,usb-snps-femto-v2: Add bindings for QDU1000
+>   dt-bindings: phy: qcom,qmp-usb: Add QDU1000 USB3 PHY
+>   dt-bindings: usb: dwc3: Add QDU1000 compatible
+>   phy: qcpm-qmp-usb: Add support for QDU1000/QRU1000
 > 
->          irq = platform_get_irq_byname_optional(pdev, "dp_hs_phy_irq");
->          if (irq > 0)
->                  return 1;
-
-As I mentioned above, these two lookups are no longer needed and should
-be removed.
- 
->          irq = platform_get_irq_byname_optional(pdev, "dp_hs_phy_1");
->          if (irq <= 0)
->                  return 1;
-
-Just assume it's a single port controller unless "dp_hs_phy_1" is
-present.
- 
->          for (port_index = 1; port_index < DWC3_MAX_PORTS - 1; 
-> port_index++) {
-
-I think this would be more readable if you use port (num) as iterator
-(2..DWC3_MAX_PORTS) as you're returning a number of ports.
-
->                  sprintf(irq_name, "dp_hs_phy_%d", port_index + 1);
-
-Then this would use just "port";
-
+>  .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml   |  2 +
+>  .../bindings/phy/qcom,usb-snps-femto-v2.yaml  |  1 +
+>  .../devicetree/bindings/usb/qcom,dwc3.yaml    |  3 ++
+>  drivers/phy/qualcomm/phy-qcom-qmp-usb.c       | 49 +++++++++++++++++++
+>  4 files changed, 55 insertions(+)
 > 
->                  irq = platform_get_irq_byname_optional(pdev, irq_name);
->                  if (irq <= 0)
->                          return port_index;
-
-And return "port - 1" here.
-
->          }
+> --
+> 2.42.0
 > 
->          return DWC3_MAX_PORTS;
+> 
 
-Johan
+The subject line here does not say v2, so I'm confused as to which one
+is which :(
+
+Please fix up and send a v3.
+
+thanks,
+
+greg k-h
 
