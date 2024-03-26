@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-15283-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15284-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43BEF88CF59
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 21:47:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 14FE688CF5C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 21:48:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C1EAF1F868C2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 20:47:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 960691F86A9B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 20:48:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB99A12AAF3;
-	Tue, 26 Mar 2024 20:47:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A033126F15;
+	Tue, 26 Mar 2024 20:48:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oPDGCwdr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yPsQ/qsz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37EC12AAF6
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 20:47:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767507442F
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 20:48:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711486027; cv=none; b=Bo4eZkQk5BJyL387qDmXJW03j1+6z3aDQs7Ph0WawA2ZkkmkRMyzgMIAY8z9xr0Ze8qh60B6gGtN1djBqgYj2TBnrCwtAs/6ANBDtLjyUvaiutsh1kmPlEJ3ZmqHiY694eEWiM9Xq62lPkAj1y4vQLTMe0jh8n+dxKuAYzhe/gk=
+	t=1711486118; cv=none; b=fUyMpa5Y+gVmw0eGzpavK0Wm7kvWWQgNuGdgcqbRUoj/kddswh1Wun0FvDLIYiPuyF6Q5MWW6o4ZgB6/HejUDkgpEI3uHQxJscsua1glhxB4UR/LxLKG3KaZWwH+D3r99ljc6DixYESXkijJq+ontpWIViAxg/V9vKxt4/8zoWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711486027; c=relaxed/simple;
-	bh=uNSS8OeKjTPm6oEJ3i7K+QOQIGEd2JgO4lb41gv8RNw=;
+	s=arc-20240116; t=1711486118; c=relaxed/simple;
+	bh=urJyeXZnDDwgM5949YY+/cyU9zg6bB0ky9ypE7HM3A8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HeHssxKghPST4yNirecnhBl0HPy4iTzdr7ZVHjTzvh/6DvkZeNR3CwKgPp7/FY0QZV9k2GGY/WhOqoIUUK0U5VLLZ+PT5ZlijKMJaP4SyN5UpVxt2DeYfPbPhd7kN2pX9vharP6K7K1BKprqe6MvrskWdqRplNuDFED6bc+tXOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oPDGCwdr; arc=none smtp.client-ip=209.85.167.53
+	 In-Reply-To:Content-Type; b=pnusueZDNBpZGjrxDxDAvJHo6si3AaVnxebkv7RFeoOx3OJogQ5HilWEeZNH9RuGxrJ0zFRCn27sW7XkVRQXczZmJGIwr+WxJdfQQJvr7Z0ZH4SY94clxgknn2JHsFrrEzOFPH8c+bGKxmPSXTggJhqW57yzRRD+Vu2krfKoJeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yPsQ/qsz; arc=none smtp.client-ip=209.85.218.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-513e89d0816so7483377e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 13:47:05 -0700 (PDT)
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a44f2d894b7so737228266b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 13:48:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711486024; x=1712090824; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1711486115; x=1712090915; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=dbNLbXj4wxFVMaesPfHoigxn1O2SIlJbMIzmZQ+voWs=;
-        b=oPDGCwdraiitK3jVgpU5O9WVSVCt2H6JDH4Kgrh7sCBv6KxSfbCzS0AuwWT5gkFOkx
-         K3BHQdMRCNFOChFqZijIHYlmededRqoVPRc9f76ZJOrPWHV49q1mfpFL58xyg1J/iCiC
-         TumriEtvg+/Rr868jdsxokB/ZDAscLrGT4d0ArTiaCq/yFrvV00ennJDsxDFdMkhtVtO
-         H8tWTmwpAvbeNGeY5VnBVTH/A9g0AlsRa2CyAIAEnXKV9GLun1vTqxoIMh3BmCrc3SHD
-         x3Nt0+ufRAyNA8Wv/rFeITz6yfeDnhEEMF0aJvaff8VVn+GMCiCOQy1ubB56hIxOym3n
-         lEpw==
+        bh=0x2T28eezAs91HOxMcg6JN1+2OrXJY88X4xpF1P2/yU=;
+        b=yPsQ/qszUeAfCV6/I+6h005OBMJJ2lWKK7CuGGfk3ldJ6bkUabY3QPzQHxzEU8Qkld
+         dgg+ZxjwHJ7fX9+hqpkGgNxSDQPvnu8JBQvC6OMES1MfXN4Ed/2mlFlRwCsDOpS0gHjz
+         Pb1hgSa/cLZuqYpPesiwWGMeFGHngctSvq3sMCraDfQyzVhA24yUFghVQkYhSKPurZwH
+         OYNO8/lJFVxPF8sr0KFUcwk+T1DKXZZqzNd/SgwSnXUyJ3snDUXvtZp28zOjVeqeoXQP
+         T6ehKDBHAPm7SIrSTTZ5l8v8p2MW9p7C670wUp2NdU+YQsyP2hCsW6d7Ua3OvHg3sXKg
+         NkIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711486024; x=1712090824;
+        d=1e100.net; s=20230601; t=1711486115; x=1712090915;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dbNLbXj4wxFVMaesPfHoigxn1O2SIlJbMIzmZQ+voWs=;
-        b=NnuCPTogN96gH0zW0iEt5zqCH46dsOo0ydVW/uws+fVW49pcPOSae8zYBVD+WbBZvw
-         dDb/Di7GP5wozZ1zmt97nSfNfjCiTy4pANY/s+rkTZGNcC81OZJAwO+wEYmhIbRbGBHs
-         XnvOsoiimzVbFjct+qaPHJup1Nli6JYt2heQWDkOzUffp0Ft2sYkpCs2ebuEfNrh+Mog
-         /FpXQP+nDKkIGZCHACbIqy6PjTpK7ssvS/A7dmfIqsVkRMHMcEu/hBqwIRZyEIjE42I2
-         iHmcRmJRAx52Zlu2+M2TlYdbTydq2fygxlE3vnxpk4KyhaXpGCuPGZNZbTWxrc9t6NQJ
-         angw==
-X-Gm-Message-State: AOJu0Ywa8i4ORF0+3zQO4m3W1O/lHSGjW6Q6wqKSTBoKnBNUOKuA9daZ
-	DUFjI5GKP9rt9ObnL06TBuOoE65vUbS6HAhxFrdMTHY5WweUflsWdhTF3igfY2I=
-X-Google-Smtp-Source: AGHT+IEzjUp/vTYsBOQZTGKIY00DqKSbtiFFOUibMou6UOd++I1OcMA69m/hXjV13F70gJ/kBI3z3A==
-X-Received: by 2002:a05:6512:456:b0:513:2b35:2520 with SMTP id y22-20020a056512045600b005132b352520mr7326424lfk.58.1711486023920;
-        Tue, 26 Mar 2024 13:47:03 -0700 (PDT)
+        bh=0x2T28eezAs91HOxMcg6JN1+2OrXJY88X4xpF1P2/yU=;
+        b=LaoX3p85Av4PuH/9H56KhBPDVcCYq5+mzTcLIxsif/Bspkw1le76SwxEDE7dI+6OLr
+         jKLk3i+ffvj5MeFMt3atjSzMbGR79Bk3BvUq277+x0fFmjK/W87Zpr/Vn+CXRcYg5oK2
+         FQLadpkWyLGTSDr8Lg3ZurqYz4Ij0h1Qp5j42rl0NNsuzvsAuIDPjCBwNE5XLpzxq6Qj
+         3UEWWAVCtHh9pPmu9tZvCHPvZ9dvTMYEcKSnJPLoBzDVP+/wut6cxBHXjgY0wLe45euO
+         g5sWF1Jfv6VKZOZFXSk6EQmtYseEj6iTBigqpY9xKcqiBi4YpCdfeGdjGK0a/tfqccwP
+         YB9A==
+X-Gm-Message-State: AOJu0Ywx9oqZY1LmYruraQ6dB9oOs1YFIx9gadVJN0dTOIFm72NEvL82
+	e3FJFUP6YAJtHFaWJiMOUgfGgYQZ3H0AIiNKNIR2wd9JxOj3Y++OjWYVhlbYoxU=
+X-Google-Smtp-Source: AGHT+IGSv5Yd1/jmwEVatb4Euh9npBW0MkL+XeEkC4x4F7lQauM2Jnw/aFhCjV6UMels6T2jsjpcVA==
+X-Received: by 2002:a17:906:eb0c:b0:a47:4ee6:9035 with SMTP id mb12-20020a170906eb0c00b00a474ee69035mr2583525ejb.29.1711486114654;
+        Tue, 26 Mar 2024 13:48:34 -0700 (PDT)
 Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id s10-20020a170906354a00b00a47a33b3aa2sm3082641eja.157.2024.03.26.13.47.02
+        by smtp.gmail.com with ESMTPSA id qk6-20020a170906d9c600b00a466af74ef2sm4569474ejb.2.2024.03.26.13.48.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Mar 2024 13:47:03 -0700 (PDT)
-Message-ID: <36864c25-4de8-4323-80b1-79e18918fd36@linaro.org>
-Date: Tue, 26 Mar 2024 21:47:01 +0100
+        Tue, 26 Mar 2024 13:48:34 -0700 (PDT)
+Message-ID: <d0633ae2-7f95-4dac-9f36-73886bf2e8dd@linaro.org>
+Date: Tue, 26 Mar 2024 21:48:32 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,14 +76,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2: Enable UFS
-To: Bjorn Andersson <quic_bjorande@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+Subject: Re: [PATCH] clk: qcom: apss-ipq-pll: fix PLL rate for IPQ5018
+To: Gabor Juhos <j4g8y7@gmail.com>, Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+ Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  linux-kernel@vger.kernel.org
-References: <20240326-rb3gen2-ufs-v1-1-8c5c2dae1e64@quicinc.com>
+References: <20240326-fix-ipq5018-apss-pll-rate-v1-1-82ab31c9da7e@gmail.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -121,50 +122,27 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240326-rb3gen2-ufs-v1-1-8c5c2dae1e64@quicinc.com>
+In-Reply-To: <20240326-fix-ipq5018-apss-pll-rate-v1-1-82ab31c9da7e@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 26.03.2024 7:02 PM, Bjorn Andersson wrote:
-> The rb3gen2 has UFS memory, adjust the necessary supply voltage and add
-> the controller and phy nodes to enable this.
+On 26.03.2024 2:34 PM, Gabor Juhos wrote:
+> According to ipq5018.dtsi, the maximum supported rate by the
+> CPU is 1.008 GHz on the IPQ5018 platform, however the current
+> configuration of the PLL results in 1.2 GHz rate.
 > 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> Change the 'L' value in the PLL configuration to limit the
+> rate to 1.008 GHz. The downstream kernel also uses the same
+> value [1]. Also add a comment to indicate the desired
+> frequency.
+> 
+> [1] https://git.codelinaro.org/clo/qsdk/oss/kernel/linux-ipq-5.4/-/blob/NHSS.QSDK.12.4/drivers/clk/qcom/apss-ipq5018.c?ref_type=heads#L151
+> 
+> Fixes: 50492f929486 ("clk: qcom: apss-ipq-pll: add support for IPQ5018")
+> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
 > ---
->  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 23 +++++++++++++++++++++--
->  1 file changed, 21 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> index 63ebe0774f1d..0177d93ecd1d 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> @@ -221,8 +221,8 @@ vreg_l6b_1p2: ldo6 {
->  
->  		vreg_l7b_2p952: ldo7 {
->  			regulator-name = "vreg_l7b_2p952";
-> -			regulator-min-microvolt = <2400000>;
-> -			regulator-max-microvolt = <3544000>;
-> +			regulator-min-microvolt = <2952000>;
-> +			regulator-max-microvolt = <2952000>;
->  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->  		};
->  
-> @@ -508,6 +508,25 @@ &usb_1_qmpphy {
->  	status = "okay";
->  };
->  
-> +&ufs_mem_hc {
-> +	reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
-> +	vcc-supply = <&vreg_l7b_2p952>;
-> +	vcc-max-microamp = <800000>;
-> +	vccq-supply = <&vreg_l9b_1p2>;
-> +	vccq-max-microamp = <900000>;
-> +	vccq2-supply = <&vreg_l9b_1p2>;
-> +	vccq2-max-microamp = <900000>;
 
-This probably requires adding supported modes and allow-set-mode to
-these regs
-
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
