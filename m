@@ -1,119 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-15305-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3DFF888D049
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 22:45:00 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2DE588D056
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 22:53:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9944FB22A0A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 21:44:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6D98F2E6F3C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 21:53:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DF2712AAF6;
-	Tue, 26 Mar 2024 21:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55A2E13D538;
+	Tue, 26 Mar 2024 21:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MU8ZBJWV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qa1qfIcC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C61173;
-	Tue, 26 Mar 2024 21:44:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A6F3A8D0
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 21:52:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711489495; cv=none; b=QRix6ivF0QxezuBuHbdNWC66nyb3FQ/BcOqnx01g+pvyQjwdkA3KPkyp3yXQmGytvrpmh3Ut0mzHoz2ndgdWt5fp3Kk3EysdtdQiFE69ttiktKqzlG9PeGEkG/bRuyGmVvzDNqfvdKgoijHniyhidNluxZ8ZkyHFlTiF9zvNAjc=
+	t=1711489979; cv=none; b=hF+aG2Msd32si9dJV24w67rN9j0nqEFTgNssHraHAElyhVFPUdpvuV1o05Kt2ieWihrSoGf4dJHOIJXPU1fhQ+/d3xQjF8+is/sQ14EqVYtRxznaGtJkuN3MO1Kogu8blv89IPTWO8OS6ANuYMft275LDyZX6UvngN9iZbdqx6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711489495; c=relaxed/simple;
-	bh=5QEmV1wRpgEdWulKSxQ7qqQ8WnqYdPhjMauVEmnhVxM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=cFEaL/wbuU6SSVBAbuYw0cP+1MGsH9o1rtQMVHEcK5TpYvDlN0F+sUDg487t5g9NJedraoYGhj7nqLjf1YnN1jW+VBAX+1epWzlVoGA8/NVjFH5OBNmvrdmaSv/3xG5sW2maqBKE3SBpAL7Gak9z+QC/9AA/g3w2gLd787OKLrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MU8ZBJWV; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42QIggQP001165;
-	Tue, 26 Mar 2024 21:44:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=Ibga8IhzZtvB4MdcpifkU9QjegJ9QLS82Ilvt9YFZUM=; b=MU
-	8ZBJWVqbrovN4FJVwrgozhG8g58UXLmcFwqDtTv583O6oP5hzCWRETBvgW5nKVvN
-	x+xXLn2nuJiEXMo1GwzYv9z5zHSiwjdIBYK92yjIVfYFrL8euNWSBDuYvT6s3hFj
-	82dCR6VNg2YOQWawa2fUeagh5BHofteNQNc1hVRIETAh95OfwC9rEiGOPyEpimsf
-	Gc8cbPMczNIlsflcrmANrU7ulSS6pA6s2b0VxbINIyN6dj4DYVJA2DS/JbeiWYTJ
-	XT/ZkhGfqJb2bjl+fg6LqfrnyNhb9VWTaOeE7xTvvFWsNK7H7sm4YtDy3fUG9XVw
-	gsm2nLyBpFngJ+8ML9jg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x3w1h9njk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 26 Mar 2024 21:44:38 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42QLibsY003666
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 26 Mar 2024 21:44:37 GMT
-Received: from [10.71.109.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 26 Mar
- 2024 14:44:34 -0700
-Message-ID: <33ea1ad9-e1af-b3f4-66e1-d2b88566158a@quicinc.com>
-Date: Tue, 26 Mar 2024 14:44:33 -0700
+	s=arc-20240116; t=1711489979; c=relaxed/simple;
+	bh=Gd1KTyIORpHu4vSk6I3cEpHpWoYXH312uryFOO6D0Vg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uDhqxB8n9nbcWXjkLlrp5eYLXTiPU51bNKUdZWpJtGVmDv0WCyorA6oxFG8yTDtBRic2q3jim9FcvG0Aaj6NmKTUVQqSeWcUx8TH/oo+zMBF8Zv2VB5DcceUOSr0b3/yBJsIPdXk+RcT/PtHPiKtwz3fbOsBa8CrhBNR+J4zltc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qa1qfIcC; arc=none smtp.client-ip=209.85.128.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-61130dd21c1so39239837b3.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 14:52:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1711489976; x=1712094776; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=SLKQTjO7evp8ff/Z4Z6Ri3JN3vYy5yYHtQbf9bGHDrA=;
+        b=qa1qfIcCb2xRJpEXEHvzJzWJQKdSC4a8psSfD1MsJfKFO7rZAM8+S9RXfMx8DAeT2C
+         o/OlQcXTmBwqs0SPKy/SoyQqeyOzGhEiOpA0LzHsGIn8nRsjL9+w7JL9LDNajCsZ4udw
+         hTH5hPab/frxPigvRBbV11PwB56d+EeFr3ogwLrzaYUapLO5J46IQqAMAKKuzyHWSpZX
+         ms1Z6KQz2R1Javtc/O5ddSyyVc68SdwW+l6P+gI6X/dfvyb6YTMfntj04QsEk/CNGl0f
+         qtJSKRbonw4Cdegb0T9wOes2UJy/cepdc0Wq1+PTo5WK6NM4tZa97pQWx/ve5aIbDs17
+         3mng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711489976; x=1712094776;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SLKQTjO7evp8ff/Z4Z6Ri3JN3vYy5yYHtQbf9bGHDrA=;
+        b=tYW7NHHl/0S0KPW0KXOhR3D0s9N8R++3+EppXBH0Mf5PCvp386dEGz5878LC2tfc0+
+         BRcu4vNLLFDBRVfpPFDaNiv4RdaOYhjRvOSotmk3dQchBC4Dlx23R5oENNBt9LAWT0Ls
+         rhyHQIrUSl1nk2uxtGChSYqZWn8ELRgjj2e0pZ1MgHx/snSl2ywIV+Vwp1EW2fBQ2Fz3
+         Wt3ZSB2tJy6wJ3QE13pLAn832pzM6ovJavRtCJLyk7OqOcedXi6QKV1gIvt9oPVtz55L
+         XCZVqPeRR8V3pJHxd6mHoJLYDYkfccX8gcbCAaolTxZ2QCzNmt5YvMIm7z6QIKhkyVWV
+         WtNw==
+X-Forwarded-Encrypted: i=1; AJvYcCVAGM8IWTdTYUXWv4dkGN0EcwnlwGPY+56OgkA4+XSzfwXNFuqBKY5fFNrnVogql3XSzy4+givtp+y5/Fwhq9GExnsrRyZMZb1bvMz68g==
+X-Gm-Message-State: AOJu0YwWEoxML5UJi30tg00d9UGDSEAhyM5XefoAraTDvoeTYtyHQq31
+	y0zLLavzYZzXhAn8NilI0eZ2BVH64t0KuJ1+TS/RefZDDrzNuc+xZmEImIcEWanXQ2vQl55UAEt
+	MwSI6thayKKlpuMMSFoXMH9pTDd+4JCGORwlkGw==
+X-Google-Smtp-Source: AGHT+IHwmwht+jbFfFX/AO7g6m6kcu9g5ldVuD/vPH3YDlyYIZOkuMHWGLBTx0aLMf5TKE4lY0jQzKUPbM8GlApUefw=
+X-Received: by 2002:a25:10c1:0:b0:dcd:3d6:68ad with SMTP id
+ 184-20020a2510c1000000b00dcd03d668admr981590ybq.0.1711489976441; Tue, 26 Mar
+ 2024 14:52:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v4 03/16] drm/msm/dsi: drop mmss_cc.xml.h
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Masahiro Yamada
-	<masahiroy@kernel.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nicolas Schier
-	<nicolas@fjasle.eu>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul
-	<sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David
- Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-CC: <linux-kbuild@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>
 References: <20240323-fd-xml-shipped-v4-0-cca5e8457b9e@linaro.org>
- <20240323-fd-xml-shipped-v4-3-cca5e8457b9e@linaro.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240323-fd-xml-shipped-v4-3-cca5e8457b9e@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8y6KAnld2D4U7a_nq30euMFjUVM0s22B
-X-Proofpoint-ORIG-GUID: 8y6KAnld2D4U7a_nq30euMFjUVM0s22B
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-26_08,2024-03-21_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=782 lowpriorityscore=0 suspectscore=0 mlxscore=0 adultscore=0
- priorityscore=1501 spamscore=0 malwarescore=0 clxscore=1015 bulkscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2403260156
+ <20240323-fd-xml-shipped-v4-1-cca5e8457b9e@linaro.org> <d2670f94-213c-bc82-7ae6-a3668f9721df@quicinc.com>
+In-Reply-To: <d2670f94-213c-bc82-7ae6-a3668f9721df@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 26 Mar 2024 23:52:45 +0200
+Message-ID: <CAA8EJprmeSqgMNVDw9Z=n4xBhmCtBzTJuSQKzLSg9NyPegYyFw@mail.gmail.com>
+Subject: Re: [PATCH v4 01/16] drm/msm/mdp5: add writeback block bases
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Masahiro Yamada <masahiroy@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
+	Nicolas Schier <nicolas@fjasle.eu>, Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, linux-kbuild@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+
+On Tue, 26 Mar 2024 at 23:39, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>
+>
+>
+> On 3/22/2024 3:56 PM, Dmitry Baryshkov wrote:
+> > In order to stop patching the mdp5 headers, import definitions for the
+> > writeback blocks. This part is extracted from the old Rob's patch.
+> >
+> > Co-developed-by: Rob Clark <robdclark@gmail.com>
+> > Signed-off-by: Rob Clark <robdclark@gmail.com>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >   drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h | 11 +++++++++++
+> >   1 file changed, 11 insertions(+)
+> >
+>
+> This is unused today right?
+>
+> Is it just being migrated now in advance as all the mesa mdp5 headers
+> are moving to kernel?
+>
+
+Exactly. I had three options: pick up this patch, implement applying
+'fixup' patches or drop corresponding doffests from the mdp5.xml. I've
+chosen the first option.
 
 
-
-On 3/22/2024 3:56 PM, Dmitry Baryshkov wrote:
-> The mmss_cc.xml.h file describes bits of the MMSS clock controller on
-> APQ8064 / MSM8960 platforms. They are not used by the driver and do not
-> belong to the DRM MSM driver. Drop the file.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/dsi/mmss_cc.xml.h | 131 ----------------------------------
->   1 file changed, 131 deletions(-)
-> 
-
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+--
+With best wishes
+Dmitry
 
