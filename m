@@ -1,173 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-15160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6014F88BF82
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 11:31:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C7FC88BFB6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 11:37:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 15C541F62947
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 10:31:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 318091F3ED65
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 10:37:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDE047868D;
-	Tue, 26 Mar 2024 10:29:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42EE7610D;
+	Tue, 26 Mar 2024 10:37:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Jct6hplu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XIOgLcin"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D3773533;
-	Tue, 26 Mar 2024 10:29:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBFFD748A;
+	Tue, 26 Mar 2024 10:37:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711448986; cv=none; b=oUfto7VmeI6JnPUnsXhf0pv4z31XcYp8IxpAqgvTNItWKYZTh+O7Mkp8+cupcqVMYGeIq8qTfiBN0bhP9QfQQ6kxo4egPEF5+1QjYSb3JJa1u7TAjGJzUbrMFmmQxxOKSzHcjjho4NxkAqeHGkoD8psYnCx+VmMvZFWpNa4nYMo=
+	t=1711449452; cv=none; b=W+/w/NyByAbk1vzJKKPIYCdzOohsMMNlOamtPIvbJ+C6i1+UmteclnM39I+2dm+qzOyZ+wo+ILFL1ldO6vZaOWwkEyXHVDIM98WltPhv2XQeMmamjzK7OxlyU4Fu1W6UjkquWhYZcIh4P5bkQybQwNSsqNO2PirYWmevQzXrzY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711448986; c=relaxed/simple;
-	bh=CzpPya17rTt1Zek9UJn68nt2er922OD0kuS2fjisXSc=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=up2P31KK+wImepA1GwMtnPmjc2dmnYQFj3m0TwI+lwa/A6RNlMSMUyCn4oS1ezjcbtwU14YHNca/O23EjM1Ea1QJrxDi1sJDCD+ktkfUCypAGmYpgzA8ZdMxwoIzaPPMuqyHf8IyfW0V3Voj+wRZdKbJh7Adp+/k+I5t+uHt32M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Jct6hplu; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42Q6Zcxr015198;
-	Tue, 26 Mar 2024 10:29:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=O1jhtF+6LeV7nIcb4IBhtIsdKOL+6JFICh68FWa7Nc4=; b=Jc
-	t6hpluGpH/0IyERK0hDzq2dEn4DLId35Nwtlk9acTzCLgJR3VcsgLDTLUMjp1VX9
-	+YFgYqV6rWe7JA8smY5At7b5u3gpn3DYjDBWLARHlcVuCjtn5ACtqK9Jew1D1o64
-	wu4Aywoxth30L6COSxXVlmkJr/dO8NVEeoELx3Mkb48y5kivw22dlsUBw231epPH
-	tkm1KciYgq1OEMjb7DOOPEGxlni5zpbDN59qVkldxlkbUVyhVDpIMRSip0ZMCcJz
-	CjuTiFW+PZduwFqZ8BRSxdinZDSGc995+7wiT5OTlkOLAU5Ne8GmqcpyXXiSdLOP
-	MR3lO2y1bS8IrQ7UEzeg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x3s7n0mkq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 26 Mar 2024 10:29:24 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42QATNvH019504
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 26 Mar 2024 10:29:23 GMT
-Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 26 Mar 2024 03:29:17 -0700
-From: Krishna Kurapati <quic_kriskura@quicinc.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring
-	<robh@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        Wesley Cheng
-	<quic_wcheng@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Felipe Balbi
-	<balbi@kernel.org>, Johan Hovold <johan@kernel.org>
-CC: <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>,
-        Krishna Kurapati
-	<quic_kriskura@quicinc.com>,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v17 9/9] usb: dwc3: qcom: Add multiport suspend/resume support for wrapper
-Date: Tue, 26 Mar 2024 15:58:09 +0530
-Message-ID: <20240326102809.2940123-10-quic_kriskura@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240326102809.2940123-1-quic_kriskura@quicinc.com>
-References: <20240326102809.2940123-1-quic_kriskura@quicinc.com>
+	s=arc-20240116; t=1711449452; c=relaxed/simple;
+	bh=aNOwmWd+mF/9qimz0zNFCCBFCUwOQRmpJaxlHlvMnnc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=f8F1LhlAhtJqGoJemYA6Vaj5zv3HTbyZwtDkWmZsm9r91bhTXwWbdXeXU7ubuQuXr0VwHJXcLBmYy0+HiIcxFg8aM7oMM5jz5S+np0hp1aCXGBtBZTNMH+Am0jiZURy61/Jihw7Ady4dXrN5EhAG+9UsQwTdvpbsUTiFvw9YRAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XIOgLcin; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E18C433F1;
+	Tue, 26 Mar 2024 10:37:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711449451;
+	bh=aNOwmWd+mF/9qimz0zNFCCBFCUwOQRmpJaxlHlvMnnc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=XIOgLcinpEW/3DD10dKAmt20XSXw/wj2ovE7KJ+luqJH8KeQLkI4WIiONF3PbzjZM
+	 kmrN0WnM2jAVQeBqDEsCS1AHiPCAuTIILET97TDFdWiqpHA5sXhijYWgM9LjRvFuK3
+	 W8YaQsr+nAezIsRM/s0VEIBom9jn/rY+Ivt9UFSRsXnKPQ7mkdrj/gXQNCPpOYc5Ts
+	 F06tgwJDSPfn2FxKugm6mczz/segB1UmYiSkXJvhHcGUidyMNj8eMfL9p5/S0xQ4Ij
+	 05yQ1+4IWRXCDl4/E7t805EFCN7afgtUN8/W99o4ZaQOF31CKivlKVMUXO6xsfDAN6
+	 TPrDcunPxK0gg==
+Date: Tue, 26 Mar 2024 11:37:25 +0100
+From: Niklas Cassel <cassel@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
+	linux-tegra@vger.kernel.org
+Subject: Re: [PATCH 01/11] PCI: qcom-ep: Disable resources unconditionally
+ during PERST# assert
+Message-ID: <ZgKlZU-vbzjUhn_e@ryzen>
+References: <20240314-pci-epf-rework-v1-0-6134e6c1d491@linaro.org>
+ <20240314-pci-epf-rework-v1-1-6134e6c1d491@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: KqcLm5xMXE9mP6QZ7WPg-9XLeGkjHZad
-X-Proofpoint-ORIG-GUID: KqcLm5xMXE9mP6QZ7WPg-9XLeGkjHZad
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-26_04,2024-03-21_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 adultscore=0 suspectscore=0 mlxscore=0 priorityscore=1501
- impostorscore=0 clxscore=1015 phishscore=0 mlxlogscore=999 bulkscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2403260071
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240314-pci-epf-rework-v1-1-6134e6c1d491@linaro.org>
 
-Power event IRQ is used for wakeup in cases:
-a) where the controller is super speed capable and missing an
-ss_phy interrupt.
-b) where the GIC is not capable of detecting DP/DM hs phy irq's.
+On Thu, Mar 14, 2024 at 08:53:40PM +0530, Manivannan Sadhasivam wrote:
+> All EP specific resources are enabled during PERST# deassert. As a counter
+> operation, all resources should be disabled during PERST# assert. There is
+> no point in skipping that if the link was not enabled.
+> 
+> This will also result in enablement of the resources twice if PERST# got
+> deasserted again. So remove the check from qcom_pcie_perst_assert() and
+> disable all the resources unconditionally.
+> 
+> Fixes: f55fee56a631 ("PCI: qcom-ep: Add Qualcomm PCIe Endpoint controller driver")
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c | 6 ------
+>  1 file changed, 6 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> index 2fb8c15e7a91..50b1635e3cbb 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> @@ -500,12 +500,6 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
+>  static void qcom_pcie_perst_assert(struct dw_pcie *pci)
+>  {
+>  	struct qcom_pcie_ep *pcie_ep = to_pcie_ep(pci);
+> -	struct device *dev = pci->dev;
+> -
+> -	if (pcie_ep->link_status == QCOM_PCIE_EP_LINK_DISABLED) {
+> -		dev_dbg(dev, "Link is already disabled\n");
+> -		return;
+> -	}
+>  
+>  	dw_pcie_ep_cleanup(&pci->ep);
+>  	qcom_pcie_disable_resources(pcie_ep);
+> 
+> -- 
+> 2.25.1
+> 
 
-Power event IRQ stat register indicates whether high speed phy
-entered and exited L2 successfully during suspend and resume.
-Indicate the same for all ports of multiport.
+It would be nice if you could do a similar change to pcie-tegra,
+so that the drivers are in sync, as that is not strictly related:
 
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
----
- drivers/usb/dwc3/dwc3-qcom.c | 22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index f8d3c9ecf461..2d06f83a4f4b 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -52,6 +52,13 @@
- #define APPS_USB_AVG_BW 0
- #define APPS_USB_PEAK_BW MBps_to_icc(40)
- 
-+static const u32 pwr_evnt_irq_stat_reg[DWC3_MAX_PORTS] = {
-+	0x58,
-+	0x1dc,
-+	0x228,
-+	0x238,
-+};
-+
- struct dwc3_qcom_port {
- 	int			qusb2_phy_irq;
- 	int			dp_hs_phy_irq;
-@@ -421,9 +428,11 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
- 	if (qcom->is_suspended)
- 		return 0;
- 
--	val = readl(qcom->qscratch_base + PWR_EVNT_IRQ_STAT_REG);
--	if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
--		dev_err(qcom->dev, "HS-PHY not in L2\n");
-+	for (i = 0; i < qcom->num_ports; i++) {
-+		val = readl(qcom->qscratch_base + pwr_evnt_irq_stat_reg[i]);
-+		if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
-+			dev_err(qcom->dev, "port-%d HS-PHY not in L2\n", i + 1);
-+	}
- 
- 	for (i = qcom->num_clocks - 1; i >= 0; i--)
- 		clk_disable_unprepare(qcom->clks[i]);
-@@ -472,8 +481,11 @@ static int dwc3_qcom_resume(struct dwc3_qcom *qcom, bool wakeup)
- 		dev_warn(qcom->dev, "failed to enable interconnect: %d\n", ret);
- 
- 	/* Clear existing events from PHY related to L2 in/out */
--	dwc3_qcom_setbits(qcom->qscratch_base, PWR_EVNT_IRQ_STAT_REG,
--			  PWR_EVNT_LPM_IN_L2_MASK | PWR_EVNT_LPM_OUT_L2_MASK);
-+	for (i = 0; i < qcom->num_ports; i++) {
-+		dwc3_qcom_setbits(qcom->qscratch_base,
-+				  pwr_evnt_irq_stat_reg[i],
-+				  PWR_EVNT_LPM_IN_L2_MASK | PWR_EVNT_LPM_OUT_L2_MASK);
-+	}
- 
- 	qcom->is_suspended = false;
- 
--- 
-2.34.1
-
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
 
