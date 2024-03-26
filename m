@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-15295-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A10A988CFC0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 22:12:25 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B73C588CFE8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 22:23:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5D6CE3293B2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 21:12:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DB5A61C630E5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 21:23:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF2A8173;
-	Tue, 26 Mar 2024 21:12:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98F3213D53A;
+	Tue, 26 Mar 2024 21:23:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C0ueIFGU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TZHZNtBu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD2E13D24A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 21:12:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFFF113D528
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 21:23:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711487542; cv=none; b=rWklJlqQYaVWx3fRA+WSxhrA8IW0IlXKNwtYGEinIljsQsR3pTuI15bRwp/zhGTDnQgOb0YU0+byzwnXmG25JXb1y3lIiPqs4WJ1CLHmeKyxNTjKvnG/isyJqXFDAzvPePxnXS7BRj/ZpfudrkxUq1hAGBY2hhs1mj7L9TFwpw4=
+	t=1711488205; cv=none; b=jetf0CuToNgHNDGSp11LyVtQ9LIpApJZvkxLT2fGIfmWJlImVPCVuMHvKC0QGaEvE/uKDwo8mGyUXh+x+0jEXG2YAE+mNx77E1RYxWyCf2mu5lmMlc5e7u5EsHc4MqlYO+twYH1D9/MjuNI/pSQGH27ph3wK0D7fOW1bxp4NkdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711487542; c=relaxed/simple;
-	bh=0F+X70AWDarLptOn48RiTTiG3E2O6A30qLqNPJ7uOUQ=;
+	s=arc-20240116; t=1711488205; c=relaxed/simple;
+	bh=KB3fBfKAsAsVahX2Imwy63fUY9kwoiUJhzg1hqHbxNc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dzHcnEszkh/LJ/6ZABWhsm0Vyn4eHrlLj2+Izxfs0qbT3QH6rxy+BZ4zwauVGnc3ce4iByKkfQkNuVhaQhWTyOsl5o8UOwu/2c6IHN76yoAB2eUzQ63QB1PMzR4iUN7XTsNCFVG5s1PydCrazON7Nfr1GpOeKM/H5UrcfS98E+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=C0ueIFGU; arc=none smtp.client-ip=209.85.218.43
+	 In-Reply-To:Content-Type; b=sFj5mUDDpcbIqJ2RScAGYnMWxdihgRdxYZIbbOWlmZEOn9TrgrfL5kN2kt+cIPaYQRIVCtiDtxLYLOcKPjXCOCNAJDE5PKS4TwAz5d7NcdZ7Lk3u/yO2PCGgMIasal1qwiPvlp3kmx80KrU2x87CysM+7OB6y3dM8hNxNxNz9Vs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TZHZNtBu; arc=none smtp.client-ip=209.85.208.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a466a27d30aso744213366b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 14:12:20 -0700 (PDT)
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2d23114b19dso89023131fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 14:23:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711487539; x=1712092339; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1711488202; x=1712093002; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Esfbc3Ag4sk4mR5JiEPjgl2V8thBIUnXRFUq7g9Wfhk=;
-        b=C0ueIFGUMKh0JS3zSge+kT1jYbUoTfGWe0X+nnVnbZVg27tkURonrQ7EYUntfkfkaY
-         r1RMgLBeyyawRZ1jSxhbT9nvca3qTcYHxBaEigDq6uIgjq9FuGbeC5QWLmUcZWKCTpL4
-         nYw0SJddg+Z3vqhXL7djb2qjMkFbtT5ksHO7MMEARDE18zqbOGDU+HPqWaI/pQgGlFwP
-         jez36wVMRzJLlZ19xPBBL9QBuRPGx9FOzcZsoteV/s6UXdUUk9pDJ2q4u1YxaXs93jqC
-         wDELRBbvJOoXKfBUcmCOLb+kpb0wwWFEiSYmJx0NwwpzrWP5wTt1NkJwtngD5ZlebUsq
-         Mgpg==
+        bh=aUA1eKIjstzPMAQh15tq67r3z7acaeD1KAeNR4PnxL4=;
+        b=TZHZNtBuLJTiLGqG3Cz+jsO2Co6J/qYZUHJh69HsNw1Xtq+qRUmZ1+WYwDHtx4CTyq
+         NENS6IQ6rnVXCKdfZRWvXnGSYT8SSOpXAjFXC6dSIXNC681mKJPAQhNQtLWnjGA85EHq
+         1UHiPkCeKqh7Ky3OE9JggYbFwe3jsk/OczqhQP03OVSazZAFfFwuad5Qw0F1IOsKhf82
+         pGfh+zIiS94qSF5TjGBU/2cWDnpWg5Ewi/vW+JmsDwu9GyFrc8knkJsBZV6gN26y6yHl
+         /24zuwRyAKTM5DLHnj5SvXeYLqhOg4R0Nvu1Zb4QUsERdNSRBsfJTLH2bvx12X3abYJx
+         SYDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711487539; x=1712092339;
+        d=1e100.net; s=20230601; t=1711488202; x=1712093002;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Esfbc3Ag4sk4mR5JiEPjgl2V8thBIUnXRFUq7g9Wfhk=;
-        b=X4nV0oEDICYJqszo0SiC1zXrv/835B2U4JaZYdasfG7btGKvyUTV/jYDifR8GKJ2kM
-         8oTFd29wMHgUyIs8LGNdMW9gQvstJLqFs1zbThbtR6wqfuQTkiKYnkEwh4O9lpRbeNBq
-         wBZlGudS9/9AESoFPOS+1xikfOl8KnESYW3+yUlKVWKpfuw8ulpq+87Yrvxj4Tjh/eko
-         pnPtQ1jYjYmbyQtD0N8CsZp9lrb388U/xOLY1ZPxTXYKhgJEU828RzKfplqw2kIwStrA
-         IMBg4nUyi2f7NWbiyX2FT+d1C0d2PHCIBn9Fqrg1i+hHhdUlacTW9X/YAav+q2GqWxDZ
-         az7w==
-X-Forwarded-Encrypted: i=1; AJvYcCVdsrfTn52psokymYfojs75xknwdXbekDJyQCyjDOp2ZR1/WTJNaTFP1KnOKlRZF1fHbpFEFnwQnXR/+RrnZg3iEGHnnIh0kt7JVgSodQ==
-X-Gm-Message-State: AOJu0YxgjI/eoOCOH6gD/vJDPjuKTUvKjarD6yW+mKNRGY0pSbLYa3eG
-	IEEKYz6C+wESjFl5ss7GrwtXryKcN+CGPvbFSNajJCuSKntXQOb6m0elJoiToS8=
-X-Google-Smtp-Source: AGHT+IFhPdAh4ot4NumYAC6S676xljYyytiKnFIYNPBSdI9pf8Rc4hlPwytEGQYHqeAnOZJ1cyUVxQ==
-X-Received: by 2002:a17:906:398f:b0:a47:3526:2e0f with SMTP id h15-20020a170906398f00b00a4735262e0fmr7584171eje.75.1711487539223;
-        Tue, 26 Mar 2024 14:12:19 -0700 (PDT)
+        bh=aUA1eKIjstzPMAQh15tq67r3z7acaeD1KAeNR4PnxL4=;
+        b=PWxDPDllDI24nOaScLAeaR1aAUQC6PI3C2Rvl0viAMA5BFVUTwqH0ur4s8EBUZFgX+
+         C8OD+gfBRiOCbQlEv0tWDAVoa099wQLBDzP/YTzD1MQXLjF/TTlnQ4ZDVVmWyRgUbJUT
+         N6y1A1H3Ou4yLNk1qQYdTtsIBXDIXPwZgzxUuLhTRW59EvQq/3sdZM5lSoXpjm9XPtgx
+         v0L7vhdTD0jaBJLg94GNQk9LptPZvJc46syjDHIWizwkCAv9+rZOcchkqlVMuWRSxz13
+         M9caXyFU6rDJds3ML0S01U3rav+e5jUpPivaL3ZQ2i1KPCFWj/I9DnfwtVxsJNOsuscH
+         Cykg==
+X-Forwarded-Encrypted: i=1; AJvYcCWhPD6bJkgHp+9/M8p488of+cBJFNMd73bUOXsyYPsslfLyoftuKiJtGSTZaUnbAU60b3sx0mAJgM/465+pJ3iRin5PNrTtfAfGilcmtA==
+X-Gm-Message-State: AOJu0YwCN7R3XXpYMKHhrXUDUtB3RNA7kn0wUEkOSXiISU6Uo+xFI2k5
+	7yrJXB72l64k9t83gUADct8IZzNyjO+gOmGBNCK5m6WOe0c+pC+WyUUAN+YMhxA=
+X-Google-Smtp-Source: AGHT+IF0AgRSqTva0bG8hoc/EnLu0gzYyV20H+4JEOL9JUGZpUWDSMN6vPuZ9jhSy3BqEksd4kPafw==
+X-Received: by 2002:a2e:998a:0:b0:2d4:96ae:2d9d with SMTP id w10-20020a2e998a000000b002d496ae2d9dmr2971574lji.33.1711488201897;
+        Tue, 26 Mar 2024 14:23:21 -0700 (PDT)
 Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id z23-20020a170906271700b00a473766cfeasm4630496ejc.217.2024.03.26.14.12.17
+        by smtp.gmail.com with ESMTPSA id p29-20020a056402501d00b0056c051e59bfsm3660362eda.9.2024.03.26.14.23.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Mar 2024 14:12:18 -0700 (PDT)
-Message-ID: <1e138728-f78e-4bfe-b59b-297e599759ab@linaro.org>
-Date: Tue, 26 Mar 2024 22:12:16 +0100
+        Tue, 26 Mar 2024 14:23:21 -0700 (PDT)
+Message-ID: <30945f7a-b18b-483a-bc43-99f913fb98c3@linaro.org>
+Date: Tue, 26 Mar 2024 22:23:19 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,17 +77,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] interconnect: qcom: icc-rpm: Remodel how QoS settings
- are stored
-To: Stephan Gerhold <stephan@gerhold.net>
-Cc: Bjorn Andersson <andersson@kernel.org>, Georgi Djakov
- <djakov@kernel.org>, Shawn Guo <shawn.guo@linaro.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+Subject: Re: [PATCH v2 03/20] media: venus: pm_helpers: Add kerneldoc to
+ venus_clks_get()
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  linux-kernel@vger.kernel.org
-References: <20240326-topic-rpm_icc_qos_cleanup-v1-0-357e736792be@linaro.org>
- <20240326-topic-rpm_icc_qos_cleanup-v1-4-357e736792be@linaro.org>
- <ZgM2naP4mGLKwbCV@gerhold.net>
+References: <20230911-topic-mars-v2-0-3dac84b88c4b@linaro.org>
+ <20230911-topic-mars-v2-3-3dac84b88c4b@linaro.org>
+ <b6d6beab-39f5-4f00-8427-52b662181864@linaro.org>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -125,51 +131,36 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <ZgM2naP4mGLKwbCV@gerhold.net>
+In-Reply-To: <b6d6beab-39f5-4f00-8427-52b662181864@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 26.03.2024 9:57 PM, Stephan Gerhold wrote:
-> On Tue, Mar 26, 2024 at 08:42:35PM +0100, Konrad Dybcio wrote:
->> Currently, the QoS settings are stored in the node data, even though
->> they're a property of the bus/provider instead. Moreover, they are only
->> needed during the probe step, so they can be easily moved into struct
->> qcom_icc_desc.
->>
->> Reshuffle things around to make it anywhere near readable & comparable
->> with a reference. As a nice bonus, a lot of bytes are shaved off and
->> a few miliseconds are shaved off here and there.
->>
->> As an example, bloat-o-meter reports this on sm6115.o:
->> Total: Before=14799, After=13263, chg -10.38%
+On 6.03.2024 1:20 PM, Bryan O'Donoghue wrote:
+> On 09/02/2024 21:09, Konrad Dybcio wrote:
+>> To make it easier to understand the various clock requirements within
+>> this driver, add kerneldoc to venus_clk_get() explaining the fluff.
 >>
 >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 >> ---
-
-[...]
-
-
-> Nitpick: Why is the u16 const when the other (non-pointer) members are
-> not? The u16 also feels a bit like overkill here. The struct would have
-> exactly the same size with a full unsigned int because of padding.
-
-That's just my brain performing premature (and as you can see invalid)
-optimizations.. I can change it to u32
-
+>>   drivers/media/platform/qcom/venus/pm_helpers.c | 28 ++++++++++++++++++++++++++
+>>   1 file changed, 28 insertions(+)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+>> index ac7c83404c6e..ea0a7d4601e2 100644
+>> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
+>> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+>> @@ -23,6 +23,34 @@
+>>     static bool legacy_binding;
+>>   +/**
+>> + * venus_clks_get() - Get Venus clocks that are not bound to a vcodec
 > 
-> Alternatively, you could consider using an empty last entry as sentinel
-> instead of adding the count (i.e. with NOC_QOS_MODE_INVALID = 0). Not
-> sure what is cleaner here.
+> Get non-codec Venus clocks.
 
-Nah, let's keep the counter
+No, this is not necessarily the case.. these may still include
+vcodec clocks, that are specified under the root venus node (which
+is the only way we'd like to keep)
 
-> 
-> I haven't looked closely at the actual conversion of the definitions in
-> the drivers. What is the chance that you made an accidental mistake in
-> there? Or was it scripted? :D
-
-By hand. After this change, it should hopefully be very easy and
-convenient to check against downstream.
+I applied the rest of your suggestions, do I keep your rb?
 
 Konrad
 
