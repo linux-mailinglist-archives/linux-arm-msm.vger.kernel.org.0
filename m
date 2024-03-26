@@ -1,173 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-15174-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15177-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2CE9688C0D3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 12:36:38 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE52888C10F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 12:44:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5D80AB247A2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 11:36:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 62DD42E4BF3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 11:44:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37A0B768E7;
-	Tue, 26 Mar 2024 11:34:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0CDD59B6F;
+	Tue, 26 Mar 2024 11:44:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hi6hUhiY"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="e/E902rc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA387641A;
-	Tue, 26 Mar 2024 11:34:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EEB255E58
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 11:44:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711452855; cv=none; b=nwkzSwUTC80WtVW7n77CsRLHerVsjrxf7/pCzMbdy0i2jJhK5DxsTgFfnepWuWmbyh/Ln4dkQGWZ2r4neH047gOd3gUgSMxtzQc6stP/AV3kqRTuA/myWkOMJF2aDnvfSybys7YrZGD23JsL64YbX5rmXGVX/fTwy7Jy4QK/XzY=
+	t=1711453489; cv=none; b=RrhdNNwHJ4tDHErSqfo9aRPzDgX+Ku2mHDW3kx6dDnmd5ae8jU8Ek3AVUWhuJ9TQ6K5xsfmey0+hq0BOFTbnGrubuK7etqpGwnN+DGSTBluD46fvr5A61q+LB9kJCBOAIc4SKWywgvDlNHQ27BNVvv3nzREj/+bTPoQ13pXQL9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711452855; c=relaxed/simple;
-	bh=NNdTGMeI3BKJSbRWKcY6O6EwK/hyTYU9C4WsrkgvkGY=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lMAbcM70H4whI4V+nfn6lKmhHvX/9TO4oeTujBaJuqEUKfvkulz5Sy78lwPEW8zZmpenGw2ecaU41RoEJJTPZyJLpr6DnV3bjVk3jGEBy9w7m7sYu5zUKu7KTtaHTYlHHvvSS8qTm+tzDJzxdVJcwpiD4e0sS1or/bJNez6pI3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hi6hUhiY; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42Q1sm9G004230;
-	Tue, 26 Mar 2024 11:34:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=PTV5+DQ7ryKEZGv3mJS+ywNkymvYkqTD/TtVct3tAaE=; b=hi
-	6hUhiY63nSSAqn9nX+4iVjBVX78+t/JjWYht0TioHPDiytuukiqtjrS5uKNanbsS
-	iQRXPcJAwAPBXhZWo7koLSFc51tV4IDrzNlFghK1Shy6LdzPBNK3JcLrXk1YSp7f
-	5zDMRwbjDs5qMYyrpcYbeuyPAoqkZ5v7WxCJ4MXs5hg2yPbFuq00I87kHqKPLzOz
-	dCDNscX+AZ5v6ORp1LSr5F3a4P3I8f+Hv4bJk+MIQCKM/QhVqFDjkNQcgYcuoSlE
-	DR3N2kbhBa0mVMmywqygjeJN1+SVNaTO36ShDUiEz3DP5Ee6QuZbV4aXbQywQ8mA
-	zE+AnN20/+ft+eh2cu6g==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x3memsfyw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 26 Mar 2024 11:34:08 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42QBY7Gm018362
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 26 Mar 2024 11:34:07 GMT
-Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 26 Mar 2024 04:34:01 -0700
-From: Krishna Kurapati <quic_kriskura@quicinc.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring
-	<robh@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        Wesley Cheng
-	<quic_wcheng@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Felipe Balbi
-	<balbi@kernel.org>, Johan Hovold <johan@kernel.org>
-CC: <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>,
-        Krishna Kurapati
-	<quic_kriskura@quicinc.com>,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v18 9/9] usb: dwc3: qcom: Add multiport suspend/resume support for wrapper
-Date: Tue, 26 Mar 2024 17:02:53 +0530
-Message-ID: <20240326113253.3010447-10-quic_kriskura@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240326113253.3010447-1-quic_kriskura@quicinc.com>
-References: <20240326113253.3010447-1-quic_kriskura@quicinc.com>
+	s=arc-20240116; t=1711453489; c=relaxed/simple;
+	bh=TPWhwv+KRlzro9i+G8q+7WgX8bFtID9eaqSCRuZ9k0U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WZVuHsruRdiiwSPIMglZh2cZyvLtJB9Y+A1KoKzpKHuxDf20OLyMSRime5j32dDu6CiLAl55xdu9RNkNfebwoQB3Y8nIGLyAllW9+7y6K6I6A4jXl+PtSanst/am0tVz5v+qIf6YiORl6Uj5Y6GySoCT2ZNrsioV93Kd4qm9usY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=e/E902rc; arc=none smtp.client-ip=209.85.219.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-dcc71031680so4767057276.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 04:44:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1711453487; x=1712058287; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=BfBBobQhbSAjaX8cbUm1iPx6XRVWHf0Hxnofb3snX04=;
+        b=e/E902rcoK6lKu76/5fKrq/W/yEWigitVZNzjK6KLES4JbcBg+jH4dTqaYpuyk8b1g
+         bl+mb1KeIpFlVBNzr9Ufkznbo1zERhHC7hLS8HpUfk5X/0Sh681Dblt3Pw7dvtKwShUy
+         k9zeJJGjvj77LKeWW5j6xgN/akL27HLHeKGDrEcscYKKr8KqObit7cNmDkHhIEu8l+FN
+         qpdgcQpgD78hD5GwIPZ8DDRUzpS/ETzEK4m3Fh/tCZOwJJSDffk+M55B3kSxhd14PBlm
+         ExKGFOJUq2upRiGaAURoBO0L3zfTz3NOALakp+baVXYqsm7ZXOSclh7IWmjx1aW3yTuU
+         SpXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711453487; x=1712058287;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BfBBobQhbSAjaX8cbUm1iPx6XRVWHf0Hxnofb3snX04=;
+        b=ZonKbKy/fmGOmsV6C59nWFgHsMFcG+3YK1BCpKIKYtB5dTykVjTO7O3FzjaPJAWHzo
+         AiT2n5iA4kluX4RwM1E4h1T5Cfl8MroYqmGCeKB93QY4DpwTizs5OVpV5bKWlxCbaqvs
+         l7h3vtedLd+jiu3AywfzTI+ZaKqPVpTwpxtVg/WPey6dbP4fpxWG9L50v4/b71B63waI
+         RsgGLlcIeEQSasswIRFlq8dXNYXXHhGcgO3n7J4yN+2bickk4ViCyMzzK2oOOcHAaqCD
+         0zBZBVlN2cv6k7TblYElJ/vXi7lwe9xX6+4PzFv3soyAF3SUJ4hifLJHY5xxQiIKwD5u
+         Ek5g==
+X-Forwarded-Encrypted: i=1; AJvYcCWAuTbZEXiNMB7A0hrYKjsjH2mVYVDhK6VWNeezlR9uDjjbECpPyLZbajHOv0oLht4M5AwXz6diOBJT00QMCpCVNjjZt2REWKlobTaRjw==
+X-Gm-Message-State: AOJu0YytCcqveLoLdLYyiuKByrcZASfsAxcg6vQCNlZfeVUz8+HvWhFA
+	fUT30VIHNgqJQ89uDfRDDbH872OsrH/HF72i2dc19RwQ3+WcF1Kl6FFq29MXDPO8hPoF8OSW+7q
+	P24x8bvNYlKELSn9jQPC0/G5ufhLPyDq11t9E/g==
+X-Google-Smtp-Source: AGHT+IGV/IldNegl7UYglh8OXyeCtrfkDEESctYYnN7ssFWk68NS2pWqE1mYEGrxWJii7Mh94ms6U2padYaxYpTntPM=
+X-Received: by 2002:a25:ac8e:0:b0:dc6:d6f6:cc13 with SMTP id
+ x14-20020a25ac8e000000b00dc6d6f6cc13mr7595962ybi.20.1711453487051; Tue, 26
+ Mar 2024 04:44:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Fl6hUoqf-_Q8FuE5o-xDpMGxvchdj8Zq
-X-Proofpoint-ORIG-GUID: Fl6hUoqf-_Q8FuE5o-xDpMGxvchdj8Zq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-26_05,2024-03-21_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
- mlxlogscore=999 priorityscore=1501 impostorscore=0 lowpriorityscore=0
- spamscore=0 bulkscore=0 suspectscore=0 clxscore=1015 mlxscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2403260079
+References: <20240313-qcom-ucsi-fixes-v1-0-74d90cb48a00@linaro.org>
+ <Zf12vSHvDiFTufLE@hovoldconsulting.com> <CAA8EJprAzy41pn7RMtRgbA-3MO8LoMf8UXQqJ3hD-SzHS_=AOg@mail.gmail.com>
+ <ZgKKPyLUr8qoMi9t@hovoldconsulting.com> <CAA8EJpqwYrskXMLyyYwW_4e-NXPPS0+MGbumEvXXNwj0p1u12A@mail.gmail.com>
+In-Reply-To: <CAA8EJpqwYrskXMLyyYwW_4e-NXPPS0+MGbumEvXXNwj0p1u12A@mail.gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 26 Mar 2024 13:44:35 +0200
+Message-ID: <CAA8EJpoUwcyEkQJoX2X0tnbXZQ3F=HbcWuhsiyRdSqypyqRHNQ@mail.gmail.com>
+Subject: Re: [PATCH 0/7] usb: typec: ucsi: fix several issues manifesting on
+ Qualcomm platforms
+To: Johan Hovold <johan@kernel.org>
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Guenter Roeck <linux@roeck-us.net>, 
+	Bjorn Andersson <andersson@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Johan Hovold <johan+linaro@kernel.org>, 
+	linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Power event IRQ is used for wakeup in cases:
-a) where the controller is super speed capable and missing an
-ss_phy interrupt.
-b) where the GIC is not capable of detecting DP/DM hs phy irq's.
+On Tue, 26 Mar 2024 at 12:22, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Tue, 26 Mar 2024 at 10:41, Johan Hovold <johan@kernel.org> wrote:
+> >
+> > On Mon, Mar 25, 2024 at 10:56:21PM +0200, Dmitry Baryshkov wrote:
+> > > On Fri, 22 Mar 2024 at 14:16, Johan Hovold <johan@kernel.org> wrote:
+> >
+> > > > I just gave this series a quick spin on my X13s and it seems there are
+> > > > still some issues that needs to be resolved before merging at least the
+> > > > final patch in this series:
+> > > >
+> > > > [    7.786167] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: unknown error 0
+> > > > [    7.786445] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: UCSI_GET_PDOS failed (-5)
+> > > > [    7.883493] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: unknown error 0
+> > > > [    7.883614] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: UCSI_GET_PDOS failed (-5)
+> > > > [    7.905194] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: unknown error 0
+> > > > [    7.905295] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: UCSI_GET_PDOS failed (-5)
+> > > > [    7.913340] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: unknown error 0
+> > > > [    7.913409] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: UCSI_GET_PDOS failed (-5)
+> > >
+> > > I have traced what is causing these messages. During UCSI startup the
+> > > ucsi_register_port() function queries for PDOs associated with the
+> > > on-board USB-C port. This is allowed by the spec. Qualcomm firmware
+> > > detects that there is no PD-device connected and instead of returning
+> > > corresponding set of PDOs returns Eerror Indicator set to 1b but then
+> > > it returns zero error status in response to GET_ERROR_STATUS, causing
+> > > "unknown error 0" code. I have checked the PPM, it doesn't even have
+> > > the code to set the error status properly in this case (not to mention
+> > > that asking for device's PDOs should not be an error, unless the
+> > > command is inappropriate for the target.
+> > >
+> > > Thus said, I think the driver is behaving correctly. Granted that
+> > > these messages are harmless, we can ignore them for now. I'll later
+> > > check if we can update PD information for the device's ports when PD
+> > > device is attached. I have verified that once the PD device is
+> > > attached, corresponding GET_PDOS command returns correct set of PD
+> > > objects. Ccurrently the driver registers usb_power_delivery devices,
+> > > but with neither source nor sink set of capabilities.
+> > >
+> > > An alternative option is to drop patches 4 and 5, keeping
+> > > 'NO_PARTNER_PDOS' quirk equivalent to 'don't send GET_PDOS at all'.
+> > > However I'd like to abstain from this option, since it doesn't allow
+> > > us to check PD capabilities of the attached device.
+> > >
+> > > Heikki, Johan, WDYT?
+> >
+> > Whatever you do, you need to suppress those errors above before enabling
+> > anything more on sc8280xp (e.g. even if it means adding a quirk to the
+> > driver).
+>
+> Why? The errors are legitimate.
 
-Power event IRQ stat register indicates whether high speed phy
-entered and exited L2 successfully during suspend and resume.
-Indicate the same for all ports of multiport.
+Just to expand my answer. We have the 'driver should be quiet by
+default' policy. Which usually means that there should be no 'foo
+registered' or 'foo bound' messages if everything goes smooth. We do
+not have 'don't warn about manufacturer issues' or 'don't barf if
+firmware returns an error' kind of requirements. We can be nicer and
+skip something if we know that it may return an error. But we don't
+have to.
 
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
----
- drivers/usb/dwc3/dwc3-qcom.c | 22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index 12182e0f8f45..d3e6d5d5e8bf 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -52,6 +52,13 @@
- #define APPS_USB_AVG_BW 0
- #define APPS_USB_PEAK_BW MBps_to_icc(40)
- 
-+static const u32 pwr_evnt_irq_stat_reg[DWC3_MAX_PORTS] = {
-+	0x58,
-+	0x1dc,
-+	0x228,
-+	0x238,
-+};
-+
- struct dwc3_qcom_port {
- 	int			qusb2_phy_irq;
- 	int			dp_hs_phy_irq;
-@@ -421,9 +428,11 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
- 	if (qcom->is_suspended)
- 		return 0;
- 
--	val = readl(qcom->qscratch_base + PWR_EVNT_IRQ_STAT_REG);
--	if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
--		dev_err(qcom->dev, "HS-PHY not in L2\n");
-+	for (i = 0; i < qcom->num_ports; i++) {
-+		val = readl(qcom->qscratch_base + pwr_evnt_irq_stat_reg[i]);
-+		if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
-+			dev_err(qcom->dev, "port-%d HS-PHY not in L2\n", i + 1);
-+	}
- 
- 	for (i = qcom->num_clocks - 1; i >= 0; i--)
- 		clk_disable_unprepare(qcom->clks[i]);
-@@ -472,8 +481,11 @@ static int dwc3_qcom_resume(struct dwc3_qcom *qcom, bool wakeup)
- 		dev_warn(qcom->dev, "failed to enable interconnect: %d\n", ret);
- 
- 	/* Clear existing events from PHY related to L2 in/out */
--	dwc3_qcom_setbits(qcom->qscratch_base, PWR_EVNT_IRQ_STAT_REG,
--			  PWR_EVNT_LPM_IN_L2_MASK | PWR_EVNT_LPM_OUT_L2_MASK);
-+	for (i = 0; i < qcom->num_ports; i++) {
-+		dwc3_qcom_setbits(qcom->qscratch_base,
-+				  pwr_evnt_irq_stat_reg[i],
-+				  PWR_EVNT_LPM_IN_L2_MASK | PWR_EVNT_LPM_OUT_L2_MASK);
-+	}
- 
- 	qcom->is_suspended = false;
- 
--- 
-2.34.1
-
+--
+With best wishes
+Dmitry
 
