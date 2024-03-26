@@ -1,124 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-15311-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15312-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0FD088D081
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 23:08:35 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F01488D09B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 23:17:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1F65E1C63EE6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 22:08:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 140182E77C1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 22:17:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 516BD13E031;
-	Tue, 26 Mar 2024 22:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83C9313DDB3;
+	Tue, 26 Mar 2024 22:16:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bq4JPGa5"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VND7f/sE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C0013C831;
-	Tue, 26 Mar 2024 22:07:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D266D13DBA8;
+	Tue, 26 Mar 2024 22:16:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711490877; cv=none; b=IICtmMiZqmQIJr8rTTb44wlITAMHvpZR4Sn76sQEoX1lSSn5BSiR1/599WeExRBEtCHoo362gIVazI/jmN5zgVB4GxAlQBKDQDnDEA48mEXqDEZQdIBYIdEk0YOb9x4AfUSeQ48PhzQag12Pl/wqlJR4kU6ujThLK45cVSjAnPg=
+	t=1711491410; cv=none; b=SczkwVPEGxyr4eJ1+AhOCHj0jcjUZy/cHj0TxfMoWd0dHOHUDnl5tyV5QXor8k/rasblS/rEi0RM7lZeH/7EM2pHmAamPNOrIyBMKD3rFskODm+jXG9+S4kedMIELOlIUY3jxZkzx84pQLaYK5aWpLLU6B7qZFM9raPuJGGKfhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711490877; c=relaxed/simple;
-	bh=CtoW2U2L9I6aqRU0VG++PXGjDIEMVTdW3x7RksF9IKo=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dpsnwl9Szw2F1TILOm3gFp66p5+dgsG91keSxjCUiVEfHbodUCPydstfxpHqk8cunSHQBw0vtXD+mNya0FZDSjO7L/e6mQ6jnAKw+jKVavhLnte6kkRWszczLbMOmukxvx91Ekv0Qc5iDjQLkAYxPFcALNdRp6oNY4kcoPjL+iY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bq4JPGa5; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42QLmfHk010909;
-	Tue, 26 Mar 2024 22:07:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=Zgxwg7uJVHlBXDOPGfrotLqvlIAAOq5YURI+c9KDQ38=; b=bq
-	4JPGa5rAm0RW8h44m+eKxcTWgOadN1jUyBOVb2F2oVxUHb51Eaa5zAZxlWKYvQw5
-	d1Xk1RAZCAsuJEQAKM4m53LoX1h8VmWGZwjIaZey3JeKT00sxi0Yb96XwntgwaFm
-	5U1axXF4hJLkGos8yxUotTvwZBzWh8koXwBL4tNIRAaSCGsK15di36/Vm3fw041z
-	Hl9QIuDa4uUyeLthvMhL3CzK0IAytAqt/ANsWibgSFCYcsWSWipZBmOHgWq+eLjV
-	uCyPi8Tn06k6Y18bJ79b3HfaX0WvW6hV/r/lq2oR3vCnEHZ1KlCCyuzFPQRZDzbC
-	bKWZBPDHqv7SuY2UEBDQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x41k68sxg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 26 Mar 2024 22:07:52 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42QM7pih024561
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 26 Mar 2024 22:07:51 GMT
-Received: from hu-amelende-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 26 Mar 2024 15:07:51 -0700
-From: Anjelique Melendez <quic_amelende@quicinc.com>
-To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linus.walleij@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_subbaram@quicinc.com>, <quic_collinsd@quicinc.com>,
-        <quic_jprakash@quicinc.com>,
-        Anjelique Melendez <quic_amelende@quicinc.com>
-Subject: [PATCH v2 4/4] pinctrl: qcom: spmi-gpio: Add PMIH0108 and PMD8028 support
-Date: Tue, 26 Mar 2024 15:06:30 -0700
-Message-ID: <20240326220628.2392802-5-quic_amelende@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240326220628.2392802-1-quic_amelende@quicinc.com>
-References: <20240326220628.2392802-1-quic_amelende@quicinc.com>
+	s=arc-20240116; t=1711491410; c=relaxed/simple;
+	bh=J0RnoOCSqOqlajOtrlqrGQ/DJiRxB7k7ItoWaD5DBwA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QyZ6rc9rgTvoQw+V1AXuvItmg0xVkjHUwuy6X8d3K9ORZpPWgmE+MYfnQfNGK5v+xRzj4idlIPNSQxd9TjpUjODWkI/mYr0PYkKbKMRtFDgh/0aXsdV1Xt+6wqula42fDdL9f1l4IBHm0qzBKxDhpBPqHNrpAW8nVtqB0+ISMGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VND7f/sE; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a2f22bfb4e6so798076366b.0;
+        Tue, 26 Mar 2024 15:16:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711491407; x=1712096207; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=YplBHOu9LgYYYqj2137kfj3IsGRSUTd9LNfjx3vcjjg=;
+        b=VND7f/sEDAFF7XvR5ueTwdplEJHudc8dVOmZi6EYUgqSK7gS77Mi2Ea4zFM9tQ5LrE
+         MvswvLp0qDXwnX31C+iC1dFIyH3vsEypr676SWSHv2ecasn/6eo3iY9+F1nr3uyLAlUD
+         sClPUKTi604GXEcfq97XKTYuWPhtyNkG3Kvom7D9KerN587y3BLuEiu2SoxDQPuB1ndq
+         /tGxWxGQ2hnNiF27xJ6Qhk1xLUlMq2uHhWW4R9h8cJec0AqkWZ7Y+JPewmcZNUrDvkl0
+         kDKySvZN+xe227lemoKG9XzemJdMEngaYQRnagQe64xLCzs/kbRnFloJvB5N20u5CduK
+         GQpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711491407; x=1712096207;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YplBHOu9LgYYYqj2137kfj3IsGRSUTd9LNfjx3vcjjg=;
+        b=ai1QlrJhfbvLuRb7bT2bdNmMqpve2rW+TKWLktycLGXZCJX2mht3dXuMXf1pfo2AAU
+         qvESzLu8OD+CuMGmjVl1sYM32bb26inX22HDHiLBazxud1XJu1hRXfeOcSEbp0D4bHIx
+         l3QU/GGeaepMmsE8kRtNSk6mwJY+c8ph1TDdQwZ66njGP8ZgpmYBub9zexLORzcCNFaV
+         X5OODMU91F5wcDAMsKXmiK7z8qSW2GT6EODK0WK1xRyk34q0ggCjwNrKRpY3x3ZpGvKY
+         +4teTQ7qGBTlUK7/wAQbGJeaSebRr4uYPHNik50A0tV+x7jIuadpTbIxwvKmk+IejxSN
+         ja2A==
+X-Forwarded-Encrypted: i=1; AJvYcCVI57Qu80ONvA0+kNtaXYj3qbKCvTkh4JaHUlwQlROveIPTGHAGy2n6eobxxpWiU2etUjoJlLVdZ8xIWbao6M+JMoAGSAwxm8ERaTAH508SEbLuxH+ZDwlboaUCqRC4ZabDJI3WjZWKXrGoQ7KoGL/HbhrqQSFvKdE5FDx+xSTd
+X-Gm-Message-State: AOJu0YwtAupbVw55DBuC5CnABHQ/vMTJVlwumXgkAY8UyLjGMz6Y0uy3
+	qVWqTAMM78ALNH/IBtiKkizKLYg+YUKyKy3Dw8Arv6H95K85JNrnlUgwfzY50YQ=
+X-Google-Smtp-Source: AGHT+IEMQ/FGGPjdWPwfIps8GVz+mdG3Mk7kmNLcwzNisJ9N/wYV9naSZ1NmkPkEuqFh+dHus6mQbA==
+X-Received: by 2002:a17:906:c111:b0:a47:4b76:6258 with SMTP id do17-20020a170906c11100b00a474b766258mr7482552ejc.25.1711491407123;
+        Tue, 26 Mar 2024 15:16:47 -0700 (PDT)
+Received: from [192.168.20.170] (57657817.catv.pool.telekom.hu. [87.101.120.23])
+        by smtp.gmail.com with ESMTPSA id l11-20020a170906414b00b00a46c39e6a47sm4724191ejk.148.2024.03.26.15.16.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Mar 2024 15:16:46 -0700 (PDT)
+Message-ID: <d81eb0dd-f1ee-4a54-aa04-9ebe8b8eff88@gmail.com>
+Date: Tue, 26 Mar 2024 23:16:47 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] clk: qcom: clk-alpha-pll: fix rate setting for Stromer
+ PLLs
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Varadarajan Narayanan <quic_varada@quicinc.com>,
+ Sricharan R <quic_srichara@quicinc.com>,
+ Kathiravan T <quic_kathirav@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org
+References: <20240326-alpha-pll-fix-stromer-set-rate-v2-1-48ae83af71c8@gmail.com>
+ <87af7b7e-9c2f-41e1-af97-01d3f29f5970@linaro.org>
+Content-Language: hu
+From: Gabor Juhos <j4g8y7@gmail.com>
+In-Reply-To: <87af7b7e-9c2f-41e1-af97-01d3f29f5970@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: KKYziXN8VHZl52fdqv55D6sV7zbCPe0B
-X-Proofpoint-GUID: KKYziXN8VHZl52fdqv55D6sV7zbCPe0B
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-26_09,2024-03-21_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
- lowpriorityscore=0 clxscore=1015 mlxlogscore=995 priorityscore=1501
- malwarescore=0 phishscore=0 spamscore=0 adultscore=0 suspectscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2403260159
 
-Add support for qcom,pmih0108-gpio and qcom,pmd8028-gpio.
+2024. 03. 26. 21:51 keltezéssel, Konrad Dybcio írta:
 
-Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
----
- drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 2 ++
- 1 file changed, 2 insertions(+)
+...
+>> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+>> index 8a412ef47e163..8e98198d4b4b6 100644
+>> --- a/drivers/clk/qcom/clk-alpha-pll.c
+>> +++ b/drivers/clk/qcom/clk-alpha-pll.c
+>> @@ -2490,6 +2490,10 @@ static int clk_alpha_pll_stromer_set_rate(struct clk_hw *hw, unsigned long rate,
+>>  	rate = alpha_pll_round_rate(rate, prate, &l, &a, ALPHA_REG_BITWIDTH);
+>>  
+>>  	regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
+>> +
+>> +	if (ALPHA_REG_BITWIDTH > ALPHA_BITWIDTH)
+>> +		a <<= ALPHA_REG_BITWIDTH - ALPHA_BITWIDTH;
+> 
+> Uh.. that's not right, this is comparing two constants
+> 
+> Did you mean to use pll_alpha_width()?
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-index 54ffb7e1189a..4e80c7204e5f 100644
---- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-+++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-@@ -1235,10 +1235,12 @@ static const struct of_device_id pmic_gpio_of_match[] = {
- 	{ .compatible = "qcom,pm8994-gpio", .data = (void *) 22 },
- 	{ .compatible = "qcom,pm8998-gpio", .data = (void *) 26 },
- 	{ .compatible = "qcom,pma8084-gpio", .data = (void *) 22 },
-+	{ .compatible = "qcom,pmd8028-gpio", .data = (void *) 4 },
- 	{ .compatible = "qcom,pmi632-gpio", .data = (void *) 8 },
- 	{ .compatible = "qcom,pmi8950-gpio", .data = (void *) 2 },
- 	{ .compatible = "qcom,pmi8994-gpio", .data = (void *) 10 },
- 	{ .compatible = "qcom,pmi8998-gpio", .data = (void *) 14 },
-+	{ .compatible = "qcom,pmih0108-gpio", .data = (void *) 18 },
- 	{ .compatible = "qcom,pmk8350-gpio", .data = (void *) 4 },
- 	{ .compatible = "qcom,pmk8550-gpio", .data = (void *) 6 },
- 	{ .compatible = "qcom,pmm8155au-gpio", .data = (void *) 10 },
--- 
-2.34.1
+No, not in this patch at least.
+
+The clk_alpha_pll_stromer_set_rate() function assumes that the alpha register is
+40 bits wide, and currently it does not use pll_alpha_width() at all.
+Originally, I have converted the function to use it, but that made the change
+unnecessarily complex since it was a mix of a fix and of a rework.
+
+The current patch is a simplified version of that, but i forgot to drop the
+comparison at the end of the process.
+
+In order to keep this fix as simple as possible and backportable to stable
+kernels, I would rather remove the comparison to reduce the change to a
+single-line addition. Then modifying the code to use pll_alpha_width() can be
+done in a separate change.
+
+Regards,
+Gabor
 
 
