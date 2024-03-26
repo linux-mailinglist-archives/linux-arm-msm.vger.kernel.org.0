@@ -1,185 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-15287-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15288-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1EE7188CF7B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 21:57:18 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0BF5888CF94
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 22:03:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9E57A1F391E4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 20:57:17 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7359CB22336
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 21:02:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF84912AAFD;
-	Tue, 26 Mar 2024 20:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B615412B158;
+	Tue, 26 Mar 2024 21:02:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="ngmyCWld";
-	dkim=permerror (0-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="/Uvl4QaV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nVwTIcUc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8234D1E51D;
-	Tue, 26 Mar 2024 20:57:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=85.215.255.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711486632; cv=pass; b=bjrWVrw9UuwfyCNHIJerOhtRmuD83X313Hwd9q+d+G2XHl0cVvmSqVc9YabK9+f/vFXR3qbTSLOBZSXkiTaxF7iG4kJUc4Lgw8j4JvZ8TpnDpY3Ihj5xVzElmNfho7W8zzskhotggdYuZ6llZpruNNOlhOmDkmB05TZJIi0Ulq8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711486632; c=relaxed/simple;
-	bh=ZtadjjEnLI0Oyh5yZHN/h9uEzlNcXQprvGYtgzryMws=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Y4BQO6x1n/bxwb9x9i1GjRU5nAvzNJAQjgyLFUcufEf2DerF/gx86WWSmws6UOSz3ebcX1mh6Q9Ld2Cao2WVVOakzaDFdoa3zIULfs+Us/wGPN7TC7UCGiC0J+PErkluzpgi1C7UPqtcugoPjtVx/wbDOtk3q+wBn9O9yXfV9MI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gerhold.net; spf=none smtp.mailfrom=gerhold.net; dkim=pass (2048-bit key) header.d=gerhold.net header.i=@gerhold.net header.b=ngmyCWld; dkim=permerror (0-bit key) header.d=gerhold.net header.i=@gerhold.net header.b=/Uvl4QaV; arc=pass smtp.client-ip=85.215.255.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gerhold.net
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=gerhold.net
-ARC-Seal: i=1; a=rsa-sha256; t=1711486627; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=M2lhtyVfu1Km00AyKzgBlhk+q9Gi6ZZb6QtyACdW8NCdG7ubG1xrKkZ6Begdw0SozD
-    qxtTPh6qR96TygrvYc3I1JF+iMcvRf09Wg8SaW4NYn7vP+aPH3wtcifj1ysZVhNMWf4a
-    1QxlfP72a2q3iE4mmY6yS+JKyuw1aeuaraU6Cl+Mv2pDUXxVCEuAB27QYKAfm5j2tumn
-    rCGA5W1WhAHotg7XCH6/fgEggyeT4O6Pv8AnuitNn5RlMpdMrpw4UqdhGOh2xUSWDU+G
-    QnpiSUsQMHQDpla5te3GIhl/KTOFuwe+LNRaYTmqv387nQH9V7ENYLRDMPdD/IU3sfXn
-    W+fQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1711486627;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=3WyCESPFX/jeAoBv0SUgbR0KTj4t/YtTwCDbEx3hi44=;
-    b=MKFZCfaFWfCSHmQ4EDdsO3f1mOCWRTv2NNuchAFmmmEL+V2hX+8KaV9pPUGSAzTfrW
-    aJCCE4QcE4cheGTEHNEDV3V1vDFyF+ABfRkUy3CA9uTmH4Mo/HI2v7JAM+X1D4Il31Ax
-    7+MmMB0jAIWbJLHo88o7avl9PnBvQubxGQ29ipF9455JMMO41kPBKSFhYGeRWKQRKmIB
-    7QmWhgt7CPJziRYujLEEftDgRLuOOP3eEoMGCbOvW88Fpgz72DKiZC2LvmUWa8HKEzd0
-    /TaQ2GwU5SGRvx2YBvyHDN+Pm4LZcuSDyHSh+DGtW8ZnpJqHZlgpNJJxTphAJZSv+p77
-    FtJw==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1711486627;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=3WyCESPFX/jeAoBv0SUgbR0KTj4t/YtTwCDbEx3hi44=;
-    b=ngmyCWldqGNscBEejeCUmk+5R4FO+kvbyoI76wk9VXX9Q94mfkDsT1giq3GNsi82dS
-    PlgW3bne0PC8qO2lPc0eac0IsELUwTgyZaWTyng88ddtf0qnQgQQUg86Kp60abXYhmR+
-    mhwBMUcn2Z2bHHxENOAPnv36YT7awRoH5TFxj5jaPier9krKq3gAj4Kl3Ec5CXL72evu
-    QA8snovtqF1qLlFLrEMx3AT6K+cYsXt5sOsDqPRExwwqR20+JgxlqYnmFG011L3xJZrd
-    1OZf78qQXQgtBoznyelgPAMj8QiZ0CEcii/SqdBUx3GAS7noDGJqYqbSsBr+k9pIgK49
-    /E/w==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1711486627;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=3WyCESPFX/jeAoBv0SUgbR0KTj4t/YtTwCDbEx3hi44=;
-    b=/Uvl4QaVHvco9HIf32MTqks+nSvLQHU/v4e021dPtfRHghhGfuUhuSBkE5XjoBs7Rw
-    jxbhuibFfNEC+mK6C0AQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA8piJ1A=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 50.3.2 SBL|AUTH)
-    with ESMTPSA id Raf12502QKv7LD8
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Tue, 26 Mar 2024 21:57:07 +0100 (CET)
-Date: Tue, 26 Mar 2024 21:57:01 +0100
-From: Stephan Gerhold <stephan@gerhold.net>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>, Shawn Guo <shawn.guo@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 4/4] interconnect: qcom: icc-rpm: Remodel how QoS
- settings are stored
-Message-ID: <ZgM2naP4mGLKwbCV@gerhold.net>
-References: <20240326-topic-rpm_icc_qos_cleanup-v1-0-357e736792be@linaro.org>
- <20240326-topic-rpm_icc_qos_cleanup-v1-4-357e736792be@linaro.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4AF112B14F
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 21:02:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1711486953; cv=none; b=SAYHErAzY8wofMGOArlb+vMWSBnSfMroqr+W5F7vyFRFgxmD+jYpRlBesn1Jso1qn+nujrvcH7yx9vjhE4SDahaGFKiCr015XOH34OxdP2hB9IqR6SdFmJ87U0Z6CecRenoxf+642c5u6O1oyumSJS84IQYz0kb8XOel4UFsCcU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1711486953; c=relaxed/simple;
+	bh=on7uOmWOeWqBAIBMJG/2+F6UGZUMHF6+ikg65Ma31Fg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KkXHwQuIiAv9rNKSy22kgNBAsurBwKB7jfk+kNPCC/2+PxHaeAl/C5kjanNzVagqs1gNvfzubA1xfQnRoewwX+kC35S2A0QNoHfi6Ge4tqQyAPNU6GCCp8pw9G1VNufHBcryCAfHvMQSlWdDpdGDpp4fC82i/Y1fLod1pj0Ozl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nVwTIcUc; arc=none smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5101cd91017so7062047e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 14:02:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1711486950; x=1712091750; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=09Zf5P5vGBpmvdrWtx4RMS92d4LIttiFFqXDuisdloo=;
+        b=nVwTIcUcBWmpw19MfsTFbDa9g1RT0fjCQE4UVgtF5ofdyFWJhX6L4R+TByF85E6Q74
+         8x+In79VynjQCBElmRfXCF3ofmkHRlRA00hf16CuO8FwGTSZ7zdmNw9Or9y7DA9r7tfY
+         hfjXs62xv7xWcbv5tT/zE4yrKq96ZSBrOPVqlxc/towdqq69NGJRzQfmbzkYENcml2f0
+         MW3Ryjku+pWDB5ZWqyfCaxqa/uH0vmEsbMFzqPM+ehjN9UT3zDHmh4r+Mc6eBiV3Wl/H
+         Bdi3He0xOoVY17MevmEdGMdTdxFUrYY7LOHuCesYQTru4ps9ws8aFTS+Vc/J/O50nA9G
+         s8XQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711486950; x=1712091750;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=09Zf5P5vGBpmvdrWtx4RMS92d4LIttiFFqXDuisdloo=;
+        b=uEfhPdBHgFdeKl913+BQkvFhPFKufm8Wdr2ZBL9r34Z1CJg/5JfYl5FHi3q8PQUynN
+         WMQ/YFn7TCI0sCSqBkQV/3gSpZW1XWDCcPsdtFt+aLoyIrqG8ARa450yEyVS9TQYyt1n
+         LQ+UJWjqqzooS4Ah3Efgu1dLvdih1X9PpOq7AxQqwH/lfgWIbPsQtROlPrMN4nLaWXw+
+         3zTUYu8jxAuTXZZVcPeSI2knj07S+e136i0z4ZumY898VeoJ2KOk+FSvjt5y6kuTWstv
+         kcvL5Iuo2WUzpX3ekkpT5z7j03p/e0yvAUFG+C36XarIGZZIx0cbqNVYtrtZ2NKdiwR1
+         62FQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVqRajQDfPTqJByprxK8N2vdJcZ7uCE/iUr/qoZ9epT/c34/wheUzbMQnhgrIsdi3cmhyd3aAtflBQ3aDbZmZ3uJzl5Xz1FsEhQCxkpYA==
+X-Gm-Message-State: AOJu0YyT3K92b3A5AAUkLat5x4hy/Uc+QWQxGec6vR36BEY8f+a5/tQg
+	SbDendOZcu0Fxct/QE+7RPMT7msZ8Q4yvO1jFvbnjfTuEoxU7m5v19pSuYlZVKM=
+X-Google-Smtp-Source: AGHT+IGY+1iLe+1YFwBHQoSnDeRUdrevgbO3flkn+8e6KQZaVK+F/yHcPIiR4gvMFTdxihmoS6apsQ==
+X-Received: by 2002:ac2:4ecf:0:b0:513:e21:2a64 with SMTP id p15-20020ac24ecf000000b005130e212a64mr1645468lfr.31.1711486949970;
+        Tue, 26 Mar 2024 14:02:29 -0700 (PDT)
+Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id x18-20020a170906b09200b00a47df55cf5esm3123065ejy.13.2024.03.26.14.02.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Mar 2024 14:02:29 -0700 (PDT)
+Message-ID: <236a104c-fc16-4b3d-9a00-e16517c00e3a@linaro.org>
+Date: Tue, 26 Mar 2024 22:02:27 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240326-topic-rpm_icc_qos_cleanup-v1-4-357e736792be@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFT 0/7] arm64: qcom: allow up to 4 lanes for the Type-C
+ DisplayPort Altmode
+To: Bjorn Andersson <andersson@kernel.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Luca Weiss <luca.weiss@fairphone.com>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Abhinav Kumar
+ <quic_abhinavk@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240229-topic-sm8x50-upstream-phy-combo-typec-mux-v1-0-07e24a231840@linaro.org>
+ <CZUHV429NTF7.1GW9TN9NXB4J1@fairphone.com>
+ <7a7aa05f-9ae6-4ca0-a423-224fc78fbd0c@linaro.org>
+ <liah4xvkfattlen7s2zi3vt2bl5pbbxqgig3k5ljqpveoao656@iacnommxkjkt>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <liah4xvkfattlen7s2zi3vt2bl5pbbxqgig3k5ljqpveoao656@iacnommxkjkt>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On Tue, Mar 26, 2024 at 08:42:35PM +0100, Konrad Dybcio wrote:
-> Currently, the QoS settings are stored in the node data, even though
-> they're a property of the bus/provider instead. Moreover, they are only
-> needed during the probe step, so they can be easily moved into struct
-> qcom_icc_desc.
+On 16.03.2024 5:01 PM, Bjorn Andersson wrote:
+> On Fri, Mar 15, 2024 at 06:35:15PM +0100, Neil Armstrong wrote:
+>> On 15/03/2024 18:19, Luca Weiss wrote:
+>>> On Thu Feb 29, 2024 at 2:07 PM CET, Neil Armstrong wrote:
+>>>> Register a typec mux in order to change the PHY mode on the Type-C
+>>>> mux events depending on the mode and the svid when in Altmode setup.
+>>>>
+>>>> The DisplayPort phy should be left enabled if is still powered on
+>>>> by the DRM DisplayPort controller, so bail out until the DisplayPort
+>>>> PHY is not powered off.
+>>>>
+>>>> The Type-C Mode/SVID only changes on plug/unplug, and USB SAFE states
+>>>> will be set in between of USB-Only, Combo and DisplayPort Only so
+>>>> this will leave enough time to the DRM DisplayPort controller to
+>>>> turn of the DisplayPort PHY.
+>>>>
+>>>> The patchset also includes bindings changes and DT changes.
+>>>>
+>>>> This has been successfully tested on an SM8550 board, but the
+>>>> Thinkpad X13s deserved testing between non-PD USB, non-PD DisplayPort,
+>>>> PD USB Hubs and PD Altmode Dongles to make sure the switch works
+>>>> as expected.
+>>>>
+>>>> The DisplayPort 4 lanes setup can be check with:
+>>>> $ cat /sys/kernel/debug/dri/ae01000.display-controller/DP-1/dp_debug
+>>>> 	name = msm_dp
+>>>> 	drm_dp_link
+>>>> 		rate = 540000
+>>>> 		num_lanes = 4
+>>>
+>>> Hi Neil,
+>>>
+>>> I tried this on QCM6490/SC7280 which should also support 4-lane DP but I
+>>> haven't had any success so far.
+>>>
+> [..]
+>>> [ 1775.563969] [drm:dp_ctrl_link_train] *ERROR* max v_level reached
+>>> [ 1775.564031] [drm:dp_ctrl_link_train] *ERROR* link training #1 failed. ret=-11
+>>
+>> Interesting #1 means the 4 lanes are not physically connected to the other side,
+>> perhaps QCM6490/SC7280 requires a specific way to enable the 4 lanes in the PHY,
+>> or some fixups in the init tables.
+>>
 > 
-> Reshuffle things around to make it anywhere near readable & comparable
-> with a reference. As a nice bonus, a lot of bytes are shaved off and
-> a few miliseconds are shaved off here and there.
+> I tested the same on rb3gen2 (qcs6490) a couple of weeks ago, with the
+> same outcome. Looking at the AUX reads, after switching to 4-lane the
+> link training is failing on all 4 lanes, in contrast to succeeding only
+> on the first 2 if you e.g. forget to mux the other two.
 > 
-> As an example, bloat-o-meter reports this on sm6115.o:
-> Total: Before=14799, After=13263, chg -10.38%
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  drivers/interconnect/qcom/icc-rpm.c | 123 +++++----
->  drivers/interconnect/qcom/icc-rpm.h |  13 +-
->  drivers/interconnect/qcom/msm8909.c | 268 ++++++++++---------
->  drivers/interconnect/qcom/msm8916.c | 153 ++++++-----
->  drivers/interconnect/qcom/msm8939.c | 157 ++++++-----
->  drivers/interconnect/qcom/msm8996.c | 517 +++++++++++++++++-------------------
->  drivers/interconnect/qcom/qcm2290.c | 416 +++++++++++++++++------------
->  drivers/interconnect/qcom/sdm660.c  | 393 +++++++++++++--------------
->  drivers/interconnect/qcom/sm6115.c  | 239 ++++++++++++-----
->  9 files changed, 1224 insertions(+), 1055 deletions(-)
-> 
-> [...]
-> @@ -70,20 +68,18 @@ struct qcom_icc_provider {
->  };
->  
->  /**
-> - * struct qcom_icc_qos - Qualcomm specific interconnect QoS parameters
-> + * struct qcom_icc_qos_data - Qualcomm specific interconnect QoS parameters
->   * @areq_prio: node requests priority
->   * @prio_level: priority level for bus communication
->   * @limit_commands: activate/deactivate limiter mode during runtime
-> - * @ap_owned: indicates if the node is owned by the AP or by the RPM
->   * @qos_mode: default qos mode for this node
->   * @qos_port: qos port number for finding qos registers of this node
->   * @urg_fwd_en: enable urgent forwarding
->   */
-> -struct qcom_icc_qos {
-> +struct qcom_icc_qos_data {
->  	u32 areq_prio;
->  	u32 prio_level;
->  	bool limit_commands;
-> -	bool ap_owned;
->  	int qos_mode;
->  	int qos_port;
->  	bool urg_fwd_en;
+> As such, my expectation is that there's something wrong in the QMP PHY
+> (or possibly redriver) for this platform.
 
-Side note: There is a potential for more micro-optimization here: You
-could save 4 bytes of padding if you move all bools together at the end
-of the struct. :D
+Do we have any downstream tag where 4lane dp works? I'm willing to believe
+the PHY story..
 
-> [...]
-> @@ -134,6 +131,8 @@ struct qcom_icc_desc {
->  	bool keep_alive;
->  	enum qcom_icc_type type;
->  	const struct regmap_config *regmap_cfg;
-> +	const struct qcom_icc_qos_data * const qos_data;
-> +	const u16 qos_data_num;
->  	unsigned int qos_offset;
-
-Nitpick: Why is the u16 const when the other (non-pointer) members are
-not? The u16 also feels a bit like overkill here. The struct would have
-exactly the same size with a full unsigned int because of padding.
-
-Alternatively, you could consider using an empty last entry as sentinel
-instead of adding the count (i.e. with NOC_QOS_MODE_INVALID = 0). Not
-sure what is cleaner here.
-
-I haven't looked closely at the actual conversion of the definitions in
-the drivers. What is the chance that you made an accidental mistake in
-there? Or was it scripted? :D
-
-Thanks,
-Stephan
+Konrad
 
