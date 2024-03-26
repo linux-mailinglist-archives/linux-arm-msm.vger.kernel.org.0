@@ -1,137 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-15294-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15295-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADC0988CFB3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 22:09:40 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A10A988CFC0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 22:12:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 65324328456
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 21:09:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5D6CE3293B2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 21:12:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4ADD13DBB3;
-	Tue, 26 Mar 2024 21:08:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF2A8173;
+	Tue, 26 Mar 2024 21:12:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bSl86VrA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C0ueIFGU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD90E13DBBF
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 21:08:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD2E13D24A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 21:12:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711487325; cv=none; b=qPV8OVIfOLa+dBGPz67zdZZSGJfWG9rl34X/POr+qGF9azRjevHYZfOybJRUaByy5dbmMhy0yJCw46adRulXIJwsGFpaXeg6m0uKYs0EI4Q9meaJUVQVxeOVAEzwih8Wr5J4KJHIY7Vf5DLliiRsJmosPk5vQTZiBIpq1tKgi54=
+	t=1711487542; cv=none; b=rWklJlqQYaVWx3fRA+WSxhrA8IW0IlXKNwtYGEinIljsQsR3pTuI15bRwp/zhGTDnQgOb0YU0+byzwnXmG25JXb1y3lIiPqs4WJ1CLHmeKyxNTjKvnG/isyJqXFDAzvPePxnXS7BRj/ZpfudrkxUq1hAGBY2hhs1mj7L9TFwpw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711487325; c=relaxed/simple;
-	bh=mCf/bTGrYhIVVZWnC5IuKCe8qNqug2N56zzO/86GYUw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=iLJzgZjIqEwChgdvpYbC6y6i3dtqI6Tl7JniJOZ/4YqEcMaAfuyripBCWHMWg8nXq916sa1iu2FF7O81oiARjRfdFHLu0ARf3XmUHssW2zE3wbFIAZMZMxo6xjcuO61om7+0rf+ju0SU7zJRXeyX21dTGRA3X8++Kz1L7dFwOV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bSl86VrA; arc=none smtp.client-ip=209.85.167.54
+	s=arc-20240116; t=1711487542; c=relaxed/simple;
+	bh=0F+X70AWDarLptOn48RiTTiG3E2O6A30qLqNPJ7uOUQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dzHcnEszkh/LJ/6ZABWhsm0Vyn4eHrlLj2+Izxfs0qbT3QH6rxy+BZ4zwauVGnc3ce4iByKkfQkNuVhaQhWTyOsl5o8UOwu/2c6IHN76yoAB2eUzQ63QB1PMzR4iUN7XTsNCFVG5s1PydCrazON7Nfr1GpOeKM/H5UrcfS98E+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=C0ueIFGU; arc=none smtp.client-ip=209.85.218.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-513d599dbabso7801964e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 14:08:43 -0700 (PDT)
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a466a27d30aso744213366b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 14:12:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711487322; x=1712092122; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BCRKVJibLLQ4yVCmcxgTjymNUgecCXO5D8tWd3XLDOo=;
-        b=bSl86VrAzYvnumuMkUOwOKdBQK7GkcW4riS2r99EO8HSz17Vizup5PTV7AivT/lVbD
-         ATGg1OQSLJCeYByKrSCkPQrjDZ6582Bs7dm6gueGnuT52ewiVCVukZH40RTEQ8S7xH7d
-         NLdpiEnCzc/+7suLshzdorXAXVAbsR3Eu/NJcq+t72uPaT5OEeeLU77PWyU5oPQMbmuQ
-         tXPWgQpfv9cZOMIn4k9K/8riUtBsCLZC6eGJvNiQlRjgVOAgwqSaubPqprjO9QebYXoO
-         7oiNqu6wGMB+T/6TXIABDy1NYneECCWVAP0lgzeSfpDUdS2iRJKO9hxGOig+snO7LA6E
-         cPVA==
+        d=linaro.org; s=google; t=1711487539; x=1712092339; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Esfbc3Ag4sk4mR5JiEPjgl2V8thBIUnXRFUq7g9Wfhk=;
+        b=C0ueIFGUMKh0JS3zSge+kT1jYbUoTfGWe0X+nnVnbZVg27tkURonrQ7EYUntfkfkaY
+         r1RMgLBeyyawRZ1jSxhbT9nvca3qTcYHxBaEigDq6uIgjq9FuGbeC5QWLmUcZWKCTpL4
+         nYw0SJddg+Z3vqhXL7djb2qjMkFbtT5ksHO7MMEARDE18zqbOGDU+HPqWaI/pQgGlFwP
+         jez36wVMRzJLlZ19xPBBL9QBuRPGx9FOzcZsoteV/s6UXdUUk9pDJ2q4u1YxaXs93jqC
+         wDELRBbvJOoXKfBUcmCOLb+kpb0wwWFEiSYmJx0NwwpzrWP5wTt1NkJwtngD5ZlebUsq
+         Mgpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711487322; x=1712092122;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BCRKVJibLLQ4yVCmcxgTjymNUgecCXO5D8tWd3XLDOo=;
-        b=bNJYdlu/lXVb64hT2AG0V9rOlRuIDCqvjQ5F9tlQVqhd5yNk0QEXvWy4uxbujD66bw
-         65rPaMbJXj98CqL8a1j6zCaFwW2/8Cz8xRGEwaYhvQYUxJxg2EPC8Pc3e9PrOQDnH9IY
-         8l/rmKALTuxPWmlYi6yXLsAujNdN+iHsTYLxIOmNntg1tAcsAZCyRhxw815BNIHgxPOo
-         vAVHP62WXCLRxyfFQxWR9HufdvdOz7LosATcgCgak9r0b3+IPi0DnwyrWq31G6xcB4u/
-         RrslHTJP8VX5e/jQoc0R7958sa2wqqPwzlFeHIWpjn6de41CVfEWTTHgyzLbAuR0ySzW
-         ks+g==
-X-Forwarded-Encrypted: i=1; AJvYcCXc8Oqpq02tFhh8PDouFO/Oo1wrrSh7C7Cch0VXk3XXCcOWv+bBOAaS1+PJ9fNGmFVLmQEji4sUwRhY+X2tVb0Z+5vTNuYEdjDAVn8gVw==
-X-Gm-Message-State: AOJu0Yz6pvIUv5QiGltLYKU9y3ssBZBdjTK7LzrNIjMniyI/GN6XfeCr
-	KyADMehCFSkBI2oxEiiHDl7mE3EYIUUZOQjD6Yb7J8ndTe6MI1MTM5XAc3I6lfj7Nt+nf4ektsM
-	D
-X-Google-Smtp-Source: AGHT+IGTGNZKpviJEN8pv+U1aUTSHC/yaalgj2SyAQw9yZTAD8zmDwSBnctqneOnRGCf4mdA7HawFw==
-X-Received: by 2002:a19:e04f:0:b0:512:ee61:c32b with SMTP id g15-20020a19e04f000000b00512ee61c32bmr7948217lfj.43.1711487321879;
-        Tue, 26 Mar 2024 14:08:41 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1711487539; x=1712092339;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Esfbc3Ag4sk4mR5JiEPjgl2V8thBIUnXRFUq7g9Wfhk=;
+        b=X4nV0oEDICYJqszo0SiC1zXrv/835B2U4JaZYdasfG7btGKvyUTV/jYDifR8GKJ2kM
+         8oTFd29wMHgUyIs8LGNdMW9gQvstJLqFs1zbThbtR6wqfuQTkiKYnkEwh4O9lpRbeNBq
+         wBZlGudS9/9AESoFPOS+1xikfOl8KnESYW3+yUlKVWKpfuw8ulpq+87Yrvxj4Tjh/eko
+         pnPtQ1jYjYmbyQtD0N8CsZp9lrb388U/xOLY1ZPxTXYKhgJEU828RzKfplqw2kIwStrA
+         IMBg4nUyi2f7NWbiyX2FT+d1C0d2PHCIBn9Fqrg1i+hHhdUlacTW9X/YAav+q2GqWxDZ
+         az7w==
+X-Forwarded-Encrypted: i=1; AJvYcCVdsrfTn52psokymYfojs75xknwdXbekDJyQCyjDOp2ZR1/WTJNaTFP1KnOKlRZF1fHbpFEFnwQnXR/+RrnZg3iEGHnnIh0kt7JVgSodQ==
+X-Gm-Message-State: AOJu0YxgjI/eoOCOH6gD/vJDPjuKTUvKjarD6yW+mKNRGY0pSbLYa3eG
+	IEEKYz6C+wESjFl5ss7GrwtXryKcN+CGPvbFSNajJCuSKntXQOb6m0elJoiToS8=
+X-Google-Smtp-Source: AGHT+IFhPdAh4ot4NumYAC6S676xljYyytiKnFIYNPBSdI9pf8Rc4hlPwytEGQYHqeAnOZJ1cyUVxQ==
+X-Received: by 2002:a17:906:398f:b0:a47:3526:2e0f with SMTP id h15-20020a170906398f00b00a4735262e0fmr7584171eje.75.1711487539223;
+        Tue, 26 Mar 2024 14:12:19 -0700 (PDT)
 Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id l19-20020a17090612d300b00a46cffe6d06sm4621697ejb.42.2024.03.26.14.08.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Mar 2024 14:08:41 -0700 (PDT)
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Tue, 26 Mar 2024 22:08:27 +0100
-Subject: [PATCH v3 5/5] arm64: dts: qcom: qrb2210-rb1: Enable the GPU
+        by smtp.gmail.com with ESMTPSA id z23-20020a170906271700b00a473766cfeasm4630496ejc.217.2024.03.26.14.12.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Mar 2024 14:12:18 -0700 (PDT)
+Message-ID: <1e138728-f78e-4bfe-b59b-297e599759ab@linaro.org>
+Date: Tue, 26 Mar 2024 22:12:16 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] interconnect: qcom: icc-rpm: Remodel how QoS settings
+ are stored
+To: Stephan Gerhold <stephan@gerhold.net>
+Cc: Bjorn Andersson <andersson@kernel.org>, Georgi Djakov
+ <djakov@kernel.org>, Shawn Guo <shawn.guo@linaro.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240326-topic-rpm_icc_qos_cleanup-v1-0-357e736792be@linaro.org>
+ <20240326-topic-rpm_icc_qos_cleanup-v1-4-357e736792be@linaro.org>
+ <ZgM2naP4mGLKwbCV@gerhold.net>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <ZgM2naP4mGLKwbCV@gerhold.net>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240219-topic-rb1_gpu-v3-5-86f67786539a@linaro.org>
-References: <20240219-topic-rb1_gpu-v3-0-86f67786539a@linaro.org>
-In-Reply-To: <20240219-topic-rb1_gpu-v3-0-86f67786539a@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, 
- linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1711487311; l=915;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=mCf/bTGrYhIVVZWnC5IuKCe8qNqug2N56zzO/86GYUw=;
- b=ddqMsNfNeNvixGsx0pFhAimc2uyI22UJVbkqFIijsDLdFwb7PSKxyRbTaVNF12ceQY5kGkvYr
- yDMRS4PAalMDaPHzlmj/8gczrQ0AevbaHPQL3B5p7AhQRMiBf2gs5vX
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-Enable the A702 GPU (also marketed as "3D accelerator by qcom [1], lol).
+On 26.03.2024 9:57 PM, Stephan Gerhold wrote:
+> On Tue, Mar 26, 2024 at 08:42:35PM +0100, Konrad Dybcio wrote:
+>> Currently, the QoS settings are stored in the node data, even though
+>> they're a property of the bus/provider instead. Moreover, they are only
+>> needed during the probe step, so they can be easily moved into struct
+>> qcom_icc_desc.
+>>
+>> Reshuffle things around to make it anywhere near readable & comparable
+>> with a reference. As a nice bonus, a lot of bytes are shaved off and
+>> a few miliseconds are shaved off here and there.
+>>
+>> As an example, bloat-o-meter reports this on sm6115.o:
+>> Total: Before=14799, After=13263, chg -10.38%
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
 
-[1] https://docs.qualcomm.com/bundle/publicresource/87-61720-1_REV_A_QUALCOMM_ROBOTICS_RB1_PLATFORM__QUALCOMM_QRB2210__PRODUCT_BRIEF.pdf
+[...]
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb2210-rb1.dts | 8 ++++++++
- 1 file changed, 8 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-index fca341300521..c54ad9f02e76 100644
---- a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-@@ -199,6 +199,14 @@ &gpi_dma0 {
- 	status = "okay";
- };
- 
-+&gpu {
-+	status = "okay";
-+
-+	zap-shader {
-+		firmware-name = "qcom/qcm2290/a702_zap.mbn";
-+	};
-+};
-+
- &i2c2 {
- 	clock-frequency = <400000>;
- 	status = "okay";
+> Nitpick: Why is the u16 const when the other (non-pointer) members are
+> not? The u16 also feels a bit like overkill here. The struct would have
+> exactly the same size with a full unsigned int because of padding.
 
--- 
-2.44.0
+That's just my brain performing premature (and as you can see invalid)
+optimizations.. I can change it to u32
 
+> 
+> Alternatively, you could consider using an empty last entry as sentinel
+> instead of adding the count (i.e. with NOC_QOS_MODE_INVALID = 0). Not
+> sure what is cleaner here.
+
+Nah, let's keep the counter
+
+> 
+> I haven't looked closely at the actual conversion of the definitions in
+> the drivers. What is the chance that you made an accidental mistake in
+> there? Or was it scripted? :D
+
+By hand. After this change, it should hopefully be very easy and
+convenient to check against downstream.
+
+Konrad
 
