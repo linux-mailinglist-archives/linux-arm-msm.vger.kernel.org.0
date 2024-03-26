@@ -1,150 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-15266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15267-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D70D88CD8C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 20:52:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 881B988CD9E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 20:56:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5884A3277C8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 19:52:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3D7FD322A21
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 19:56:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3197D481A3;
-	Tue, 26 Mar 2024 19:52:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C1FD13D26D;
+	Tue, 26 Mar 2024 19:56:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WFHEfosP"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Urn1WrZK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6887913D258;
-	Tue, 26 Mar 2024 19:52:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F3813D265;
+	Tue, 26 Mar 2024 19:56:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711482728; cv=none; b=DE+A42wSIlxUN6c9hhAy0m3RWadROXlaMve7Q7/xHizTwzoXH4RMF9YM3mSiQdTlB+xNj+z+on17l1Q2+oYX17VghBwg6+9nCrnOFZI3hlcmvB0z9ruvp37mM2YZa086t1Ahpn7S6hmJTHzZeQbAg87LaogoMjJoNDejZNoMels=
+	t=1711482979; cv=none; b=vA1Vyp1i1IikJZ6WCIcvi1kyYpGFpmhTdy0r847NK/OxAXAeJGPW12QKpYnha4pn5rYgBbX43OCcZZLDKPagJKQtQ+GhxS07frn4XX2z52ADH6V2CP4osTZQjOClxljnle1yHUSWUHYqCBmgKx/IvG/sixLpdUWm3eQXZ/iodXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711482728; c=relaxed/simple;
-	bh=xw5Af1WArsxfJQD3EHAiOmg03E5rcDaK8qUkbAkOVyk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=K/Uq786FecQB4cen77efVXBadmtQP7Z3y94bzthrvcVNKaJXF2tEBUi7rUnZzUqY7BuiXIHW6J9+Ph2vZWiZaQOuhg9hw356w7Yl4fTPt5iFSDsu2Z0kawXcB029aPkY7BJPP7Pb9UVQMqVA1+KieaHpq6g+lf3oDb4snr4/szo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WFHEfosP; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-33ff53528ceso3911755f8f.0;
-        Tue, 26 Mar 2024 12:52:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711482724; x=1712087524; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VoJ7Xgxb57e+lLV6U4E0sAWdkd/64u+XAVmAgLbMPw0=;
-        b=WFHEfosPhrbIgpN7rbTTnF3k3ERg7SUUzr2nOZj9QVPy8/ro5RgFcX0w7SbBu8iaSP
-         DiEoXOveK+twBQtAICUbENHEycMU03G0HMuF2QVq9bA1V+e2PQNitbv3qNzNqKlVB7jl
-         pFs/q51X85LzyKeKLOAb+zmPlr4ufWPrB3sRIbaZgzsPqIKpD5y+6tsGxFIfkVsR4oI0
-         uUOVW50Udv57Z2PubSX3FJPiY78VzsaEVF80YVt/1fG6p2fg7mnrlmqVhoAMr+6HlvU4
-         /J5DSuefDwUaYIffUanSQ2h4ZX6/To9Dh6j+P9dXAUaJW0h98+/oEtCaEO+NbESNDurM
-         hrEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711482724; x=1712087524;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VoJ7Xgxb57e+lLV6U4E0sAWdkd/64u+XAVmAgLbMPw0=;
-        b=Jg/HcpP/RoitU/Gg6dOed5RqtY+Y8KJ/b/wUeRloycyj4CJUs0Pgqdmel0AeInRc97
-         JKu1WlZ2SVy19KyQODbUGjW/MEReTAVA8oi/Asi0ffm6PPCg7xuyQfOa3ibhoy6ALGQ2
-         UJW63s2/iW0Xkewy9MXl6xX+GUZ3SAEoQQNoi756QVpw/T8Ltv6qBP2v0Dun1bxiv2KJ
-         uCnetQMf+pVu04NUnab5Yo9uJ803MOWuYT8HvxILzZWqf1AcKTOQWi76y4iyczJqu5KO
-         f1dPcXaKY/1gts4e2rJoa//0049WaBquC+oArXRczo6haIm54XKYXVYPGKi8szMVgPZp
-         OI3A==
-X-Forwarded-Encrypted: i=1; AJvYcCXaAWv0wI47gXerQak4y19S4URJgWBBHnD19IhKw2LTjQD0MzW3JjsLAZm1r1PRrMTlsvwQ9QzWGnvOUxJslrxVnolSp6PXwgOHILHtV0eS5hVfp30eFZ41N2MFoDdxZGbqhqcnUF9LIUWx7A==
-X-Gm-Message-State: AOJu0YwGhxojIu+wjIEdKqlASV8q5+UqwYzX7b/Jp4z17yac28zNi9zW
-	fiGGCYe6CSePmbriPbbgF3KlEZ/DWA0RaKc86SLi7gDI6JTdIeJeZtINSXEpufdtsNH7EGkExPs
-	48SLjy52wetQj/SNhL5ivDnfo0yo=
-X-Google-Smtp-Source: AGHT+IFdWjE4WHoVtPjuQcx0WsU75NBlLUIGPA+pXpYqfXBQ6kNVdedZPLpDt+1PDG/+8EGDVjm0fb4X9eM/yrOADWQ=
-X-Received: by 2002:a5d:640c:0:b0:341:bfe2:da36 with SMTP id
- z12-20020a5d640c000000b00341bfe2da36mr1745593wru.6.1711482724438; Tue, 26 Mar
- 2024 12:52:04 -0700 (PDT)
+	s=arc-20240116; t=1711482979; c=relaxed/simple;
+	bh=sPzkDeSQXglsm1dp8gUCTJnA8tjKoR1gtSKn1zXU9Gs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=g86IHLotYzsJsYdRrJPvePR3a/V4TFGt/5pz5zbzLUQ4V5AyFwcYB+TZXjodRzBdxzgYUsZTXcibwTVXIQeuynKDsqHad5xkK5zccQB2rlNn3w2TveLPLnYA+UT7NKy8uDw+vmCfvv3OGfMkQNQS5OqoLeTPwj3kB4ecTn/8U+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Urn1WrZK; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42QJUE3X008406;
+	Tue, 26 Mar 2024 19:56:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=R+nb9lS6hms8hfdO9EwdnZGylgYhz9FMnJ+uf2rzXRE=; b=Ur
+	n1WrZK3aeBHQ+fRR13VkTmoRkmjb9+zt+TaR/FdscTiU5DxgccUPQ6A/UouVKI1X
+	qojt1Zxm7XAOhobVcBL5rslwGpEzXtS/+rbJhT1LP3Ig04XbdbBRt6Y/bylu/nXz
+	Cgkbfy26P2NG3aKEHyo2ljYPtwKHwxrWvr8/I/R9arI9DU3vgxjYzKnmM82Zok4p
+	I8UqrF0IWcIAr7Mg2tXekoq2RmdsVW6SCczOSEasLu9nyw0obPDT9Cqf1IKoBE8D
+	xbltzTaRPn4b8YcsAiOWQM3MbhLU+lXiVo+/64onnHAUovx/rhg1ss7e6qUprFrL
+	d9q8sf+maamJsxW9sK/Q==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x3tvy9vkj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 26 Mar 2024 19:56:09 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42QJu7vp030959
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 26 Mar 2024 19:56:07 GMT
+Received: from [10.71.109.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 26 Mar
+ 2024 12:56:05 -0700
+Message-ID: <0280fa9a-cdb0-5bf7-7940-3c2cda1da829@quicinc.com>
+Date: Tue, 26 Mar 2024 12:56:03 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CANiq72mjc5t4n25SQvYSrOEhxxpXYPZ4pPzneSJHEnc3qApu2Q@mail.gmail.com>
- <CAA8EJprTNFgKJ_3cdZz4f_LCkYFghi-cfaj3bZmYh3oA63my6A@mail.gmail.com>
- <85204b78-7b24-61cd-4bae-3e7abc6e4fd3@quicinc.com> <CAA8EJppqrF10J1qExM=gopiF4GPDt7v4TB6LrQxx5OGyAL9hSg@mail.gmail.com>
- <671d2662-df4e-4350-0084-476eb1671cc1@quicinc.com> <CAA8EJpppre8ibYqN7gZObyvzR08yVbTevC6hDEDCKQVf8gRVRg@mail.gmail.com>
-In-Reply-To: <CAA8EJpppre8ibYqN7gZObyvzR08yVbTevC6hDEDCKQVf8gRVRg@mail.gmail.com>
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Tue, 26 Mar 2024 19:51:53 +0000
-Message-ID: <CACu1E7HhCKMJd6fixZSPiNAz6ekoZnkMTHTcLFVmbZ-9VoLxKg@mail.gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
 Subject: Re: drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:843:6: error:
  variable 'out' set but not used
+Content-Language: en-US
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>, Rob Clark <robdclark@gmail.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	linux-arm-msm <linux-arm-msm@vger.kernel.org>, dri-devel <dri-devel@lists.freedesktop.org>, 
-	freedreno@lists.freedesktop.org, linux-kernel <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+CC: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel
+ Vetter <daniel@ffwll.ch>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>,
+        linux-kernel
+	<linux-kernel@vger.kernel.org>
+References: <CANiq72mjc5t4n25SQvYSrOEhxxpXYPZ4pPzneSJHEnc3qApu2Q@mail.gmail.com>
+ <CAA8EJprTNFgKJ_3cdZz4f_LCkYFghi-cfaj3bZmYh3oA63my6A@mail.gmail.com>
+ <85204b78-7b24-61cd-4bae-3e7abc6e4fd3@quicinc.com>
+ <CAA8EJppqrF10J1qExM=gopiF4GPDt7v4TB6LrQxx5OGyAL9hSg@mail.gmail.com>
+ <671d2662-df4e-4350-0084-476eb1671cc1@quicinc.com>
+ <CAA8EJpppre8ibYqN7gZObyvzR08yVbTevC6hDEDCKQVf8gRVRg@mail.gmail.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJpppre8ibYqN7gZObyvzR08yVbTevC6hDEDCKQVf8gRVRg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Qbi3sBaUcbYKyvfA2vrlKfpgK8S3TX12
+X-Proofpoint-ORIG-GUID: Qbi3sBaUcbYKyvfA2vrlKfpgK8S3TX12
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-26_08,2024-03-21_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=999
+ clxscore=1015 priorityscore=1501 adultscore=0 suspectscore=0
+ lowpriorityscore=0 phishscore=0 bulkscore=0 malwarescore=0 spamscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403210001 definitions=main-2403260143
 
-On Tue, Mar 26, 2024 at 7:47=E2=80=AFPM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Tue, 26 Mar 2024 at 21:32, Abhinav Kumar <quic_abhinavk@quicinc.com> w=
-rote:
-> >
-> >
-> >
-> > On 3/26/2024 12:10 PM, Dmitry Baryshkov wrote:
-> > > On Tue, 26 Mar 2024 at 20:31, Abhinav Kumar <quic_abhinavk@quicinc.co=
-m> wrote:
-> > >>
-> > >>
-> > >>
-> > >> On 3/26/2024 11:19 AM, Dmitry Baryshkov wrote:
-> > >>> On Tue, 26 Mar 2024 at 20:05, Miguel Ojeda
-> > >>> <miguel.ojeda.sandonis@gmail.com> wrote:
-> > >>>>
-> > >>>> Hi,
-> > >>>>
-> > >>>> In today's next, I got:
-> > >>>>
-> > >>>>       drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:843:6: error: va=
-riable
-> > >>>> 'out' set but not used [-Werror,-Wunused-but-set-variable]
-> > >>>>
-> > >>>> `out` seems to be there since commit 64d6255650d4 ("drm/msm: More
-> > >>>> fully implement devcoredump for a7xx").
-> > >>>>
-> > >>>> Untested diff below assuming `dumper->iova` is constant -- if you =
-want
-> > >>>> a formal patch, please let me know.
-> > >>>
-> > >>> Please send a proper patch that we can pick up.
-> > >>>
-> > >>
-> > >> This should be fixed with https://patchwork.freedesktop.org/patch/58=
-1853/.
-> > >
-> > > Is that a correct fix? If you check other usage locations for
-> > > CRASHDUMP_READ, you'll see that `out` is the last parameter and it is
-> > > being incremented.
-> > >
-> >
-> > Right but in this function out is not the last parameter of CRASHDUMP_R=
-EAD.
->
+
+
+On 3/26/2024 12:47 PM, Dmitry Baryshkov wrote:
+> On Tue, 26 Mar 2024 at 21:32, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 3/26/2024 12:10 PM, Dmitry Baryshkov wrote:
+>>> On Tue, 26 Mar 2024 at 20:31, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>>>
+>>>>
+>>>>
+>>>> On 3/26/2024 11:19 AM, Dmitry Baryshkov wrote:
+>>>>> On Tue, 26 Mar 2024 at 20:05, Miguel Ojeda
+>>>>> <miguel.ojeda.sandonis@gmail.com> wrote:
+>>>>>>
+>>>>>> Hi,
+>>>>>>
+>>>>>> In today's next, I got:
+>>>>>>
+>>>>>>        drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:843:6: error: variable
+>>>>>> 'out' set but not used [-Werror,-Wunused-but-set-variable]
+>>>>>>
+>>>>>> `out` seems to be there since commit 64d6255650d4 ("drm/msm: More
+>>>>>> fully implement devcoredump for a7xx").
+>>>>>>
+>>>>>> Untested diff below assuming `dumper->iova` is constant -- if you want
+>>>>>> a formal patch, please let me know.
+>>>>>
+>>>>> Please send a proper patch that we can pick up.
+>>>>>
+>>>>
+>>>> This should be fixed with https://patchwork.freedesktop.org/patch/581853/.
+>>>
+>>> Is that a correct fix? If you check other usage locations for
+>>> CRASHDUMP_READ, you'll see that `out` is the last parameter and it is
+>>> being incremented.
+>>>
+>>
+>> Right but in this function out is not the last parameter of CRASHDUMP_READ.
+> 
 > Yes. I think in this case the patch from this email is more correct.
+> 
 
-Yes, this patch is more correct than the other one. I tried to fix a
-bug with a6xx that I noticed while adding support for a7xx, which I
-forgot to split out from "drm/msm: More fully implement devcoredump
-for a7xx" into a separate commit, and this hunk was missing. Sorry
-about that.
+Alright, in that case, Miguel can you please repost this with the Fixes 
+tags and in a patch form.
 
-Connor
+>>
+>> Maybe you or Rob can correct me but I thought the fix looked sane
+>> although noone commented on that patch.
+> 
+>>
+>>>>
+>>>> We can pickup that one with a Fixes tag applied.
+>>>>
+>>>>>>
+>>>>>> Cheers,
+>>>>>> Miguel
+>>>>>>
+>>>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+>>>>>> b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+>>>>>> index 1f5245fc2cdc..a847a0f7a73c 100644
+>>>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+>>>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+>>>>>> @@ -852,7 +852,7 @@ static void a6xx_get_shader_block(struct msm_gpu *gpu,
+>>>>>>                 (block->type << 8) | i);
+>>>>>>
+>>>>>>             in += CRASHDUMP_READ(in, REG_A6XX_HLSQ_DBG_AHB_READ_APERTURE,
+>>>>>> -            block->size, dumper->iova + A6XX_CD_DATA_OFFSET);
+>>>>>> +            block->size, out);
+>>>>>>
+>>>>>>             out += block->size * sizeof(u32);
+>>>>>>         }
+>>>>>
+>>>>>
+>>>>>
+>>>
+>>>
+>>>
+> 
+> 
+> 
 
