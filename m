@@ -1,65 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-15161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C7FC88BFB6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 11:37:58 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8916288BFC7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 11:44:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 318091F3ED65
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 10:37:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ECC41B235CC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 10:44:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42EE7610D;
-	Tue, 26 Mar 2024 10:37:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 207524C7D;
+	Tue, 26 Mar 2024 10:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XIOgLcin"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nfuy0lN/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBFFD748A;
-	Tue, 26 Mar 2024 10:37:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB3629A0;
+	Tue, 26 Mar 2024 10:43:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711449452; cv=none; b=W+/w/NyByAbk1vzJKKPIYCdzOohsMMNlOamtPIvbJ+C6i1+UmteclnM39I+2dm+qzOyZ+wo+ILFL1ldO6vZaOWwkEyXHVDIM98WltPhv2XQeMmamjzK7OxlyU4Fu1W6UjkquWhYZcIh4P5bkQybQwNSsqNO2PirYWmevQzXrzY8=
+	t=1711449837; cv=none; b=hElQiJnLtf5m0tSObpbP8q7/0W4X8MEf7qcJAFQUW+bOH4GMonLSisBFGEyDEevNBYKs2j3K4vMq+1IjVq/dahCU6sPfbaFKZkeJMnB2UEoTplWxs45eYVxv5P4KM5B/cafs+Bjz8bCAd2XJlDZp89kyggJkay2/567mCkDdkC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711449452; c=relaxed/simple;
-	bh=aNOwmWd+mF/9qimz0zNFCCBFCUwOQRmpJaxlHlvMnnc=;
+	s=arc-20240116; t=1711449837; c=relaxed/simple;
+	bh=vwyF+iRB3lA+0ZCjAOIqFFU72W87k8/58YHoJa8WpLw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=f8F1LhlAhtJqGoJemYA6Vaj5zv3HTbyZwtDkWmZsm9r91bhTXwWbdXeXU7ubuQuXr0VwHJXcLBmYy0+HiIcxFg8aM7oMM5jz5S+np0hp1aCXGBtBZTNMH+Am0jiZURy61/Jihw7Ady4dXrN5EhAG+9UsQwTdvpbsUTiFvw9YRAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XIOgLcin; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E18C433F1;
-	Tue, 26 Mar 2024 10:37:28 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=HlcWIUdl8TTxxrBA+DM1rv/N9HovJUE9YBGsq/iDWXmkZqrlrRlyPYk+qY08bEm3R+tGEuTWva9uN+3N4rHWnjQkHClL9vbh64LtG0PDzGxeTHzg7QiCS7pO9NQg9ScXBakB87Rk2SAPUjnznwItqiqSUrRU00tx5cycbvNgdog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nfuy0lN/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66389C433C7;
+	Tue, 26 Mar 2024 10:43:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711449451;
-	bh=aNOwmWd+mF/9qimz0zNFCCBFCUwOQRmpJaxlHlvMnnc=;
+	s=k20201202; t=1711449836;
+	bh=vwyF+iRB3lA+0ZCjAOIqFFU72W87k8/58YHoJa8WpLw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=XIOgLcinpEW/3DD10dKAmt20XSXw/wj2ovE7KJ+luqJH8KeQLkI4WIiONF3PbzjZM
-	 kmrN0WnM2jAVQeBqDEsCS1AHiPCAuTIILET97TDFdWiqpHA5sXhijYWgM9LjRvFuK3
-	 W8YaQsr+nAezIsRM/s0VEIBom9jn/rY+Ivt9UFSRsXnKPQ7mkdrj/gXQNCPpOYc5Ts
-	 F06tgwJDSPfn2FxKugm6mczz/segB1UmYiSkXJvhHcGUidyMNj8eMfL9p5/S0xQ4Ij
-	 05yQ1+4IWRXCDl4/E7t805EFCN7afgtUN8/W99o4ZaQOF31CKivlKVMUXO6xsfDAN6
-	 TPrDcunPxK0gg==
-Date: Tue, 26 Mar 2024 11:37:25 +0100
-From: Niklas Cassel <cassel@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
-	linux-tegra@vger.kernel.org
-Subject: Re: [PATCH 01/11] PCI: qcom-ep: Disable resources unconditionally
- during PERST# assert
-Message-ID: <ZgKlZU-vbzjUhn_e@ryzen>
-References: <20240314-pci-epf-rework-v1-0-6134e6c1d491@linaro.org>
- <20240314-pci-epf-rework-v1-1-6134e6c1d491@linaro.org>
+	b=nfuy0lN/KkDKyqzc/6Jezrot7iUFD9NrHKfw8jx5XhqWYXw4VTEgWxdF8ZsikQrfG
+	 90McEfcuNo4rsreuwIZZI7U5HkFMULmFC/hM4VAuYElGq5C4xiXGnXzwfN+TON4H6V
+	 nwWWJD6dzlo6+eob9+tLpY9kngamg1oT322hcGqHVdeKEpx+OTyBjdJDB8g+MnF31L
+	 xawQ5PDCIHt4xgFxu1PQewr/PTUgmYk79IHOwCBkw2HElDS3Eod8msriyEEZCw/7Rc
+	 66x8oMX/NVKqNFewcYObhvp/UfVNZZmWyQgUq0huGHEhDhMlgEzl7t82KXmyEfxwwz
+	 KEhKlBv+uVfHQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rp4Hj-000000007jO-0ymj;
+	Tue, 26 Mar 2024 11:44:03 +0100
+Date: Tue, 26 Mar 2024 11:44:03 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Felipe Balbi <balbi@kernel.org>, devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_ppratap@quicinc.com,
+	quic_jackp@quicinc.com, Johan Hovold <johan+linaro@kernel.org>
+Subject: Re: [PATCH v17 7/9] usb: dwc3: qcom: Refactor IRQ handling in glue
+ driver
+Message-ID: <ZgKm89rq4D8SqYQL@hovoldconsulting.com>
+References: <20240326102809.2940123-1-quic_kriskura@quicinc.com>
+ <20240326102809.2940123-8-quic_kriskura@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,47 +73,72 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240314-pci-epf-rework-v1-1-6134e6c1d491@linaro.org>
+In-Reply-To: <20240326102809.2940123-8-quic_kriskura@quicinc.com>
 
-On Thu, Mar 14, 2024 at 08:53:40PM +0530, Manivannan Sadhasivam wrote:
-> All EP specific resources are enabled during PERST# deassert. As a counter
-> operation, all resources should be disabled during PERST# assert. There is
-> no point in skipping that if the link was not enabled.
+On Tue, Mar 26, 2024 at 03:58:07PM +0530, Krishna Kurapati wrote:
+> On multiport supported controllers, each port has its own DP/DM
+> and SS (if super speed capable) interrupts. As per the bindings,
+> their interrupt names differ from standard ones having "_x" added
+> as suffix (x indicates port number). Identify from the interrupt
+> names whether the controller is a multiport controller or not.
+> Refactor dwc3_qcom_setup_irq() call to parse multiport interrupts
+> along with non-multiport ones accordingly..
 > 
-> This will also result in enablement of the resources twice if PERST# got
-> deasserted again. So remove the check from qcom_pcie_perst_assert() and
-> disable all the resources unconditionally.
-> 
-> Fixes: f55fee56a631 ("PCI: qcom-ep: Add Qualcomm PCIe Endpoint controller driver")
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->  drivers/pci/controller/dwc/pcie-qcom-ep.c | 6 ------
->  1 file changed, 6 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> index 2fb8c15e7a91..50b1635e3cbb 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> @@ -500,12 +500,6 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
->  static void qcom_pcie_perst_assert(struct dw_pcie *pci)
+>  drivers/usb/dwc3/dwc3-qcom.c | 137 ++++++++++++++++++++++++++---------
+>  1 file changed, 103 insertions(+), 34 deletions(-) 
+
+> -static int dwc3_qcom_setup_irq(struct platform_device *pdev)
+> +static int dwc3_qcom_setup_port_irq(struct platform_device *pdev, int port_num, bool is_multiport)
+
+Here you use "port_num", when it's really a (zero-based) port index.
+
+Please change to "port_index".
+
 >  {
->  	struct qcom_pcie_ep *pcie_ep = to_pcie_ep(pci);
-> -	struct device *dev = pci->dev;
-> -
-> -	if (pcie_ep->link_status == QCOM_PCIE_EP_LINK_DISABLED) {
-> -		dev_dbg(dev, "Link is already disabled\n");
-> -		return;
-> -	}
+>  	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
+> +	const char *irq_name;
+>  	int irq;
+>  	int ret;
 >  
->  	dw_pcie_ep_cleanup(&pci->ep);
->  	qcom_pcie_disable_resources(pcie_ep);
-> 
-> -- 
-> 2.25.1
-> 
+> -	irq = platform_get_irq_byname_optional(pdev, "qusb2_phy");
+> +	if (is_multiport)
+> +		irq_name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "dp_hs_phy_%d", port_num + 1);
+> +	else
+> +		irq_name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "dp_hs_phy_irq");
+> +	if (!irq_name)
+> +		return -ENOMEM;
 
-It would be nice if you could do a similar change to pcie-tegra,
-so that the drivers are in sync, as that is not strictly related:
+> +static int dwc3_qcom_find_num_ports(struct platform_device *pdev)
+> +{
+> +	char irq_name[14];
+> +	int port_index;
+> +	int irq;
+> +
+> +	irq = platform_get_irq_byname_optional(pdev, "dp_hs_phy_1");
+> +	if (irq <= 0)
+> +		return 1;
+> +
+> +	for (port_index = 2; port_index <= DWC3_MAX_PORTS; port_index++) {
 
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
+And here you use port_index, when it's really a one-based port number.
+
+I explicitly used "port" when we discussed the update here for this
+reason ("port_num" works too).
+
+Please fix this last thing in a v18 and we're good to go.
+
+> +		sprintf(irq_name, "dp_hs_phy_%d", port_index);
+> +
+> +		irq = platform_get_irq_byname_optional(pdev, irq_name);
+> +		if (irq <= 0)
+> +			return port_index - 1;
+> +	}
+> +
+> +	return DWC3_MAX_PORTS;
+> +}
+
+Johan
 
