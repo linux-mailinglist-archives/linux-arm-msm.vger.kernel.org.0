@@ -1,122 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-15136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E4EE88BCA6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 09:41:34 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DEED588BCFC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 10:00:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3554B1F34BD6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 08:41:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7D5D91F3C108
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 09:00:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCC38FBFC;
-	Tue, 26 Mar 2024 08:41:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBE0C1773D;
+	Tue, 26 Mar 2024 08:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hC0vCnzR"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ctcqXrim"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2C13DAC01;
-	Tue, 26 Mar 2024 08:41:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5AC547A52;
+	Tue, 26 Mar 2024 08:59:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711442489; cv=none; b=DuJvcbGMoCYjnn+UMV2mHz472iokcwfCDO4dP9LRUMjQI74EOJKzyNQnNh74UBa98wSj19WebYvX/F4OqVTDHGXLe6eoz8WtRFI/OavQE+atLX2AfSz/IaVx82mupJn7WFaOq03NTu8afsjs2r+Hbe5JD1GanXGiDzPu1HabaPA=
+	t=1711443595; cv=none; b=An+i8LctJFUe7ZK++N5YsCatETY/p0JBtOCyKNlNv6X8ShIKAA0c9fdZCCa5VBjiaZeezQ/yC41/PN6g3fKYoaItaZY6k4rdWMaEVFtv/Ww/VAHQgrgK7/08qj2wllSI79vJWqCPYqR82zXqEZ8K9D6KEqPosgTr+vxzHyyTVGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711442489; c=relaxed/simple;
-	bh=s3Y5LkcJQN20xjSmIYi1tJZcUYC36nkGzb2O3cLJfks=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CGzjaE1080ILAfdDNopuXNMeWfMdDNldPtQDddm4o8iWMNhAb9itChJdzzaBuE8ege/yDAXwWmLFOnkYdIYbXjLftZcq3QVbQ7auWyZcK5131YNCh91V1hpuLs6vIAYzeOcYxHTF4/hqKR8axYzQ0/a2bwpMRruB2jq9Fv/s6ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hC0vCnzR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFA52C433C7;
-	Tue, 26 Mar 2024 08:41:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711442489;
-	bh=s3Y5LkcJQN20xjSmIYi1tJZcUYC36nkGzb2O3cLJfks=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hC0vCnzR0lDXbfPmyt935zY387vwAbBeh34M7cQylYiHXqTHcf4OATBDQL0NnZK5H
-	 XWDWmU6MKNlq4I7lNLsoXXtxmlH2kOHs3z76CgX/ChBXlcFNp7M71YuL1da7XVdn35
-	 6w2scdmrbPpeefSxKC+BxCRrkvU3nCNorbV4Kyg3xWspkctp0gQMywhqJWbXHrJ2aK
-	 rZw1Igvl7QaRd4+w+TZG7F4AwfUgzqw2HxAwTKs4tLJDD9RrfnaAh36rbQCVhoIYYT
-	 NoAVz2z2w/6UAuhyziKbydXFP2RQnvPdPpVSoHvyQkPJqcLw0Tu5kzdlxcTCMIMo4v
-	 gT1vCp8w59Ejw==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rp2ND-00000000635-2rSm;
-	Tue, 26 Mar 2024 09:41:36 +0100
-Date: Tue, 26 Mar 2024 09:41:35 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>, linux-usb@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH 0/7] usb: typec: ucsi: fix several issues manifesting on
- Qualcomm platforms
-Message-ID: <ZgKKPyLUr8qoMi9t@hovoldconsulting.com>
-References: <20240313-qcom-ucsi-fixes-v1-0-74d90cb48a00@linaro.org>
- <Zf12vSHvDiFTufLE@hovoldconsulting.com>
- <CAA8EJprAzy41pn7RMtRgbA-3MO8LoMf8UXQqJ3hD-SzHS_=AOg@mail.gmail.com>
+	s=arc-20240116; t=1711443595; c=relaxed/simple;
+	bh=4uDjqygHv4DTuZmqzarwUnS5AROPK4sqXpSLqkeaM10=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YdJrXeYyMka5Cjg7/QoaUKWcnRNH4l8J0EsUAJlWibzAGgTVVmKpebg5adC0zuW3zkuPtCnVsHZIFmdRFCQd04QMJJge9Jnm4k6AaFNzRttcciroXsS0cAvZve4rKS+6ydv/1Olm3rFd0KIgIUmoIW7LuBZPDMHsnadSYm250jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ctcqXrim; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42Q66XbV004610;
+	Tue, 26 Mar 2024 08:59:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=SbrMPaH2oADH1vwWJwZWD
+	SkzPzttEAqCuqJGgMzYDn4=; b=ctcqXrimT+81u4eT0KvX2YDhZ1BF6guYm1Z00
+	g/VjpSfog8sJRHOr+tDqlPHinBO/0H6/q5H7szlP0GfDqWVhWRsA78xr36hlkfUj
+	RfiDEnLIxFaxw622DuaOKHOtor5w7damxpnV5QyF11YbKPGCgNrc1CK/RpDOL/Cg
+	M9zoGygykXpnuTQuVKvo1BHTBJjPm7OV/3Y9InNCFUhOCJlDC+5YpH4Oi97QSpNq
+	mMBf90rWyeOCIhLI6VgFJ7blb6aSL4hqDyOgYiU1V1CrkSqWuHmHaTwvnbTxudzH
+	wIi5A++bT0IdMcGDJy+qtRM28m7OeuCk1yP5ky2gRNuH4kMqw==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x3rt80fm5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 26 Mar 2024 08:59:49 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42Q8xOTf009240
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 26 Mar 2024 08:59:24 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Tue, 26 Mar 2024 01:59:19 -0700
+Date: Tue, 26 Mar 2024 14:29:16 +0530
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>, <robh@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <djakov@kernel.org>, <quic_anusha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH v2 2/4] dt-bindings: interconnect: Add Qualcomm IPQ9574
+ support
+Message-ID: <ZgKOZGDxqGD8dmAn@hu-varada-blr.qualcomm.com>
+References: <20240325102036.95484-1-quic_varada@quicinc.com>
+ <20240325102036.95484-3-quic_varada@quicinc.com>
+ <4e7ff99f-f362-4d58-b2f0-ca2dc1fe4b55@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <CAA8EJprAzy41pn7RMtRgbA-3MO8LoMf8UXQqJ3hD-SzHS_=AOg@mail.gmail.com>
+In-Reply-To: <4e7ff99f-f362-4d58-b2f0-ca2dc1fe4b55@linaro.org>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: JNx53uo_Xs9A_D8dPCMbJA1vWSMfwqlj
+X-Proofpoint-ORIG-GUID: JNx53uo_Xs9A_D8dPCMbJA1vWSMfwqlj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-26_04,2024-03-21_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
+ priorityscore=1501 suspectscore=0 malwarescore=0 mlxscore=0 clxscore=1015
+ spamscore=0 mlxlogscore=942 phishscore=0 lowpriorityscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2403210001
+ definitions=main-2403260061
 
-On Mon, Mar 25, 2024 at 10:56:21PM +0200, Dmitry Baryshkov wrote:
-> On Fri, 22 Mar 2024 at 14:16, Johan Hovold <johan@kernel.org> wrote:
-
-> > I just gave this series a quick spin on my X13s and it seems there are
-> > still some issues that needs to be resolved before merging at least the
-> > final patch in this series:
+On Tue, Mar 26, 2024 at 07:49:00AM +0100, Krzysztof Kozlowski wrote:
+> On 25/03/2024 11:20, Varadarajan Narayanan wrote:
+> > Add master/slave ids for Qualcomm IPQ9574 Network-On-Chip
+> > interfaces. This will be used by the gcc-ipq9574 driver
+> > that will for providing interconnect services using the
+> > icc-clk framework.
 > >
-> > [    7.786167] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: unknown error 0
-> > [    7.786445] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: UCSI_GET_PDOS failed (-5)
-> > [    7.883493] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: unknown error 0
-> > [    7.883614] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: UCSI_GET_PDOS failed (-5)
-> > [    7.905194] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: unknown error 0
-> > [    7.905295] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: UCSI_GET_PDOS failed (-5)
-> > [    7.913340] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: unknown error 0
-> > [    7.913409] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: UCSI_GET_PDOS failed (-5)
-> 
-> I have traced what is causing these messages. During UCSI startup the
-> ucsi_register_port() function queries for PDOs associated with the
-> on-board USB-C port. This is allowed by the spec. Qualcomm firmware
-> detects that there is no PD-device connected and instead of returning
-> corresponding set of PDOs returns Eerror Indicator set to 1b but then
-> it returns zero error status in response to GET_ERROR_STATUS, causing
-> "unknown error 0" code. I have checked the PPM, it doesn't even have
-> the code to set the error status properly in this case (not to mention
-> that asking for device's PDOs should not be an error, unless the
-> command is inappropriate for the target.
-> 
-> Thus said, I think the driver is behaving correctly. Granted that
-> these messages are harmless, we can ignore them for now. I'll later
-> check if we can update PD information for the device's ports when PD
-> device is attached. I have verified that once the PD device is
-> attached, corresponding GET_PDOS command returns correct set of PD
-> objects. Ccurrently the driver registers usb_power_delivery devices,
-> but with neither source nor sink set of capabilities.
-> 
-> An alternative option is to drop patches 4 and 5, keeping
-> 'NO_PARTNER_PDOS' quirk equivalent to 'don't send GET_PDOS at all'.
-> However I'd like to abstain from this option, since it doesn't allow
-> us to check PD capabilities of the attached device.
-> 
-> Heikki, Johan, WDYT?
+> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> > ---
+> > v2: Rename master slave macros
+> >     Fix license identifier
+>
+> Both patches should be squashed. Header is parts of bindings and your
+> previous patch adds the interconnects, doesn't it?
+>
+>
+> > ---
+> >  .../dt-bindings/interconnect/qcom,ipq9574.h   | 62 +++++++++++++++++++
+> >  1 file changed, 62 insertions(+)
+> >  create mode 100644 include/dt-bindings/interconnect/qcom,ipq9574.h
+> >
+> > diff --git a/include/dt-bindings/interconnect/qcom,ipq9574.h b/include/dt-bindings/interconnect/qcom,ipq9574.h
+> > new file mode 100644
+> > index 000000000000..b7b32aa6bbb1
+> > --- /dev/null
+> > +++ b/include/dt-bindings/interconnect/qcom,ipq9574.h
+> > @@ -0,0 +1,62 @@
+> > +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
+> > +#ifndef INTERCONNECT_QCOM_IPQ9574_H
+> > +#define INTERCONNECT_QCOM_IPQ9574_H
+> > +
+> > +#define IPQ_APPS_ID			9574	/* some unique value */
+>
+> Why random unique values are bindings? Why this cannot be 0? Please
+> explain how this is used by DTS and driver.
 
-Whatever you do, you need to suppress those errors above before enabling
-anything more on sc8280xp (e.g. even if it means adding a quirk to the
-driver).
+This 'id' is not used by the driver or DTS. It is a unique id that
+is initialized for the node by the interconnect driver framework.
+A random value was chosen such that it does not conflict with an
+already existing node id. Chose 9574 based on this comment from
+clk-cbf-msm8996.c
 
-Johan
+	/* Random ID that doesn't clash with main qnoc and OSM */
+	#define CBF_MASTER_NODE 2000
+
+> > +#define IPQ_NSS_ID			(IPQ_APPS_ID * 2)
+>
+> This does not seem right.
+
+Doubled the NSS id so that APPS node ids dont clash.
+
+Thanks
+Varada
 
