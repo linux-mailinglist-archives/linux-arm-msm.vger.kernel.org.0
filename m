@@ -1,134 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-15312-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15313-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F01488D09B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 23:17:07 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F8CE88D0A6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 23:19:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 140182E77C1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 22:17:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E8EE91F3890F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 22:19:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83C9313DDB3;
-	Tue, 26 Mar 2024 22:16:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CCD513D8BA;
+	Tue, 26 Mar 2024 22:19:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VND7f/sE"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="M3dwunM9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D266D13DBA8;
-	Tue, 26 Mar 2024 22:16:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE1D173;
+	Tue, 26 Mar 2024 22:19:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711491410; cv=none; b=SczkwVPEGxyr4eJ1+AhOCHj0jcjUZy/cHj0TxfMoWd0dHOHUDnl5tyV5QXor8k/rasblS/rEi0RM7lZeH/7EM2pHmAamPNOrIyBMKD3rFskODm+jXG9+S4kedMIELOlIUY3jxZkzx84pQLaYK5aWpLLU6B7qZFM9raPuJGGKfhQ=
+	t=1711491590; cv=none; b=ELmAPgzCybjoshmT5aXVDFHjpMYSbHEAzldbbzcVYqZVxN6pSZfiXHEVolie/eLNELumas6a+k0GNxOXHWC3a1rXD529oCYQhuSLCtkTjmAAfz2myIU4kPKgEJLIIQ9h0EAkXgySiLCGGB/er4jTtmdeJRJiSf+se6lA2ci33vY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711491410; c=relaxed/simple;
-	bh=J0RnoOCSqOqlajOtrlqrGQ/DJiRxB7k7ItoWaD5DBwA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QyZ6rc9rgTvoQw+V1AXuvItmg0xVkjHUwuy6X8d3K9ORZpPWgmE+MYfnQfNGK5v+xRzj4idlIPNSQxd9TjpUjODWkI/mYr0PYkKbKMRtFDgh/0aXsdV1Xt+6wqula42fDdL9f1l4IBHm0qzBKxDhpBPqHNrpAW8nVtqB0+ISMGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VND7f/sE; arc=none smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a2f22bfb4e6so798076366b.0;
-        Tue, 26 Mar 2024 15:16:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711491407; x=1712096207; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=YplBHOu9LgYYYqj2137kfj3IsGRSUTd9LNfjx3vcjjg=;
-        b=VND7f/sEDAFF7XvR5ueTwdplEJHudc8dVOmZi6EYUgqSK7gS77Mi2Ea4zFM9tQ5LrE
-         MvswvLp0qDXwnX31C+iC1dFIyH3vsEypr676SWSHv2ecasn/6eo3iY9+F1nr3uyLAlUD
-         sClPUKTi604GXEcfq97XKTYuWPhtyNkG3Kvom7D9KerN587y3BLuEiu2SoxDQPuB1ndq
-         /tGxWxGQ2hnNiF27xJ6Qhk1xLUlMq2uHhWW4R9h8cJec0AqkWZ7Y+JPewmcZNUrDvkl0
-         kDKySvZN+xe227lemoKG9XzemJdMEngaYQRnagQe64xLCzs/kbRnFloJvB5N20u5CduK
-         GQpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711491407; x=1712096207;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YplBHOu9LgYYYqj2137kfj3IsGRSUTd9LNfjx3vcjjg=;
-        b=ai1QlrJhfbvLuRb7bT2bdNmMqpve2rW+TKWLktycLGXZCJX2mht3dXuMXf1pfo2AAU
-         qvESzLu8OD+CuMGmjVl1sYM32bb26inX22HDHiLBazxud1XJu1hRXfeOcSEbp0D4bHIx
-         l3QU/GGeaepMmsE8kRtNSk6mwJY+c8ph1TDdQwZ66njGP8ZgpmYBub9zexLORzcCNFaV
-         X5OODMU91F5wcDAMsKXmiK7z8qSW2GT6EODK0WK1xRyk34q0ggCjwNrKRpY3x3ZpGvKY
-         +4teTQ7qGBTlUK7/wAQbGJeaSebRr4uYPHNik50A0tV+x7jIuadpTbIxwvKmk+IejxSN
-         ja2A==
-X-Forwarded-Encrypted: i=1; AJvYcCVI57Qu80ONvA0+kNtaXYj3qbKCvTkh4JaHUlwQlROveIPTGHAGy2n6eobxxpWiU2etUjoJlLVdZ8xIWbao6M+JMoAGSAwxm8ERaTAH508SEbLuxH+ZDwlboaUCqRC4ZabDJI3WjZWKXrGoQ7KoGL/HbhrqQSFvKdE5FDx+xSTd
-X-Gm-Message-State: AOJu0YwtAupbVw55DBuC5CnABHQ/vMTJVlwumXgkAY8UyLjGMz6Y0uy3
-	qVWqTAMM78ALNH/IBtiKkizKLYg+YUKyKy3Dw8Arv6H95K85JNrnlUgwfzY50YQ=
-X-Google-Smtp-Source: AGHT+IEMQ/FGGPjdWPwfIps8GVz+mdG3Mk7kmNLcwzNisJ9N/wYV9naSZ1NmkPkEuqFh+dHus6mQbA==
-X-Received: by 2002:a17:906:c111:b0:a47:4b76:6258 with SMTP id do17-20020a170906c11100b00a474b766258mr7482552ejc.25.1711491407123;
-        Tue, 26 Mar 2024 15:16:47 -0700 (PDT)
-Received: from [192.168.20.170] (57657817.catv.pool.telekom.hu. [87.101.120.23])
-        by smtp.gmail.com with ESMTPSA id l11-20020a170906414b00b00a46c39e6a47sm4724191ejk.148.2024.03.26.15.16.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Mar 2024 15:16:46 -0700 (PDT)
-Message-ID: <d81eb0dd-f1ee-4a54-aa04-9ebe8b8eff88@gmail.com>
-Date: Tue, 26 Mar 2024 23:16:47 +0100
+	s=arc-20240116; t=1711491590; c=relaxed/simple;
+	bh=e0wXVTKPjfF8xvFP/dTcmKbPQuKDM+c6dXMdR3gPEwE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=mvuxpwXDdtagYzdSCkfCTk4rvklzm70l5f6K1+hx24JAwdgjmeM7zfco72aFyl/BnJ0Sh8tuxzOvIGfHaJ+yV5WDExtG8w17NnZvtJuSIcifCML/UrrQIVZpmVkheo50zJobxAJDlwXRvP2/6CvF9ZVgu01qms395/EfQ2e2XGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=M3dwunM9; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42QMBilY006721;
+	Tue, 26 Mar 2024 22:19:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=v/h8fn+ezmmVCUczdMEJ+P7+lSq+OzxeYrR2eeze/Qs=; b=M3
+	dwunM9KvVp2lUsbHhwYCRKZB+2f7urn9ON+PgFkO44rSuY17kqHSt1Bj9XO42o1K
+	wVo8p52RzAGcNriQRwrxAXiE0aVQldXdXS8datCkI8U+uWyZCuI0YwBL44vFITSm
+	zGeBIbDlgqCXqlEbUJ+n7C2LJCGwGua9DUDvJJ/LRmmFxDYiubgny1dEsFQRK6em
+	nv+cE0oqaI557AXpj8fl4A59Zzfj9ZzeBs3pj5EkoFcvY/V6JPMYeFsi2X8AfwGQ
+	XmarEDjQUk9cDiNTqUbRkRpAzvylAc1J212MGUM+i4g6z0fJC9sTZsVXcnCFSviv
+	cBInGUiclI5zTaKrA5bQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x3w1h9qch-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 26 Mar 2024 22:19:32 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42QMJVrF011126
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 26 Mar 2024 22:19:31 GMT
+Received: from [10.71.109.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 26 Mar
+ 2024 15:19:28 -0700
+Message-ID: <510de518-da75-f0c4-479d-c5f95c7c72b6@quicinc.com>
+Date: Tue, 26 Mar 2024 15:19:26 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] clk: qcom: clk-alpha-pll: fix rate setting for Stromer
- PLLs
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Varadarajan Narayanan <quic_varada@quicinc.com>,
- Sricharan R <quic_srichara@quicinc.com>,
- Kathiravan T <quic_kathirav@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org
-References: <20240326-alpha-pll-fix-stromer-set-rate-v2-1-48ae83af71c8@gmail.com>
- <87af7b7e-9c2f-41e1-af97-01d3f29f5970@linaro.org>
-Content-Language: hu
-From: Gabor Juhos <j4g8y7@gmail.com>
-In-Reply-To: <87af7b7e-9c2f-41e1-af97-01d3f29f5970@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v4 09/16] drm/msm: import gen_header.py script from Mesa
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Masahiro Yamada
+	<masahiroy@kernel.org>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Nicolas Schier
+	<nicolas@fjasle.eu>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul
+	<sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David
+ Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+CC: <linux-kbuild@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>
+References: <20240323-fd-xml-shipped-v4-0-cca5e8457b9e@linaro.org>
+ <20240323-fd-xml-shipped-v4-9-cca5e8457b9e@linaro.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240323-fd-xml-shipped-v4-9-cca5e8457b9e@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: wT24LDR8rBdvp_3-w7Z2S5PA9O97t9hy
+X-Proofpoint-ORIG-GUID: wT24LDR8rBdvp_3-w7Z2S5PA9O97t9hy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-26_09,2024-03-21_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ mlxlogscore=999 lowpriorityscore=0 suspectscore=0 mlxscore=0 adultscore=0
+ priorityscore=1501 spamscore=0 malwarescore=0 clxscore=1015 bulkscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403210001 definitions=main-2403260159
 
-2024. 03. 26. 21:51 keltezéssel, Konrad Dybcio írta:
 
-...
->> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
->> index 8a412ef47e163..8e98198d4b4b6 100644
->> --- a/drivers/clk/qcom/clk-alpha-pll.c
->> +++ b/drivers/clk/qcom/clk-alpha-pll.c
->> @@ -2490,6 +2490,10 @@ static int clk_alpha_pll_stromer_set_rate(struct clk_hw *hw, unsigned long rate,
->>  	rate = alpha_pll_round_rate(rate, prate, &l, &a, ALPHA_REG_BITWIDTH);
->>  
->>  	regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
->> +
->> +	if (ALPHA_REG_BITWIDTH > ALPHA_BITWIDTH)
->> +		a <<= ALPHA_REG_BITWIDTH - ALPHA_BITWIDTH;
+
+On 3/22/2024 3:57 PM, Dmitry Baryshkov wrote:
+> Import the gen_headers.py script from Mesa, commit FIXME. This script
+> will be used to generate MSM register files on the fly during
+> compilation.
 > 
-> Uh.. that's not right, this is comparing two constants
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/registers/gen_header.py | 957 ++++++++++++++++++++++++++++
+>   1 file changed, 957 insertions(+)
 > 
-> Did you mean to use pll_alpha_width()?
+> diff --git a/drivers/gpu/drm/msm/registers/gen_header.py b/drivers/gpu/drm/msm/registers/gen_header.py
+> new file mode 100644
+> index 000000000000..ae39b7e6cde8
+> --- /dev/null
+> +++ b/drivers/gpu/drm/msm/registers/gen_header.py
+> @@ -0,0 +1,957 @@
+> +#!/usr/bin/python3
+> +
 
-No, not in this patch at least.
+We need a licence and copyright here.
 
-The clk_alpha_pll_stromer_set_rate() function assumes that the alpha register is
-40 bits wide, and currently it does not use pll_alpha_width() at all.
-Originally, I have converted the function to use it, but that made the change
-unnecessarily complex since it was a mix of a fix and of a rework.
+Also is something like a "based on" applicable here?
 
-The current patch is a simplified version of that, but i forgot to drop the
-comparison at the end of the process.
+<snip>
 
-In order to keep this fix as simple as possible and backportable to stable
-kernels, I would rather remove the comparison to reduce the change to a
-single-line addition. Then modifying the code to use pll_alpha_width() can be
-done in a separate change.
+> +import xml.parsers.expat
+> +import sys
+> +import os
+> +import collections
+> +import argparse
+> +import time
+> +import datetime
+> +
+> +class Error(Exception):
+> +This file was generated by the rules-ng-ng gen_header.py tool in this git repository:
+> +http://gitlab.freedesktop.org/mesa/mesa/
+> +git clone https://gitlab.freedesktop.org/mesa/mesa.git
+> +
+> +The rules-ng-ng source files this header was generated from are:
 
-Regards,
-Gabor
+Is this still applicable ?
+
+Now gen_header.py is moved to kernel.
 
 
