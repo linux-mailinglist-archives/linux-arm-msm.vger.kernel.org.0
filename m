@@ -1,92 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-15128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5AC2F88BBCF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 08:58:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4DF5088BC02
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 09:11:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0DD1C2A6261
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 07:58:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 06BEA28ADB8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 08:11:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 593A3134407;
-	Tue, 26 Mar 2024 07:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6674C133414;
+	Tue, 26 Mar 2024 08:11:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iQT2vt1v"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sJWLaQVr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4BA013281B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 07:58:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FEF18C38;
+	Tue, 26 Mar 2024 08:11:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711439924; cv=none; b=DADVVbHG/WOUoA2Y/KNHVh90IMw0YEeKk2NU/DWl4gO44Gs2f7QeZsKmwKqTWdsdLp3Ntt9g2+DKJz+HYHoY5wCqmuxFQafCHOMa0hWbngiMVPLzGk/PwkN41SSDiWZEIYFm1mxQR9I45tlXi18XcB8f0+rgmAn2tDOuhoDAX80=
+	t=1711440670; cv=none; b=mCao3r+ICnaeWiYyqrn71CHPzSWWqYhhx+BFqqlfdxkdDwhHOklE1iTQVwHR1B39e3k5mhRcntZyMuZohEj7QYZHB4ImFDn/V21JURDF2N0c6Lp8SNVAh1HKINXMhZt2DMhbhKIdJv0OugnP2wZabSXhiDvJg4hBqb4OFQ7dwy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711439924; c=relaxed/simple;
-	bh=U3xCdkOz3Y6db80cb2T+j82R67/2org97QFbp/aelS8=;
+	s=arc-20240116; t=1711440670; c=relaxed/simple;
+	bh=qgPYrZ/NPDwrw9n8R5vjfsAIwZpztvwYlvGEZ1/cqwk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tAa59m1tQxapq4wUOurJFLWjosUeID98nS8u1jchCr0Q8B/pbIzhIjDMhRRe2nalqSfayC0yKNjbN6KBqpm2TIsl4pLSzZKBGxteZ0VbqEFozqO+bFoGhfHEqyNqyXaS+l3TDYbNWBcUQZWLNI1KAdSc5bH9eN1l29Bw3mWgOV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iQT2vt1v; arc=none smtp.client-ip=209.85.210.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-6ea7f2d093aso3410012b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 00:58:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711439922; x=1712044722; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=0ei96n8N9QJh0d9X1yKZBGiIbUh+v5D+5m1+0jv93vk=;
-        b=iQT2vt1v94gSjh7pqRMx7PT/panzVAw8nHQMABDHdK1vsNvZ+x9CugU55icmytu974
-         Oq1GDgjNgwy4ZIU7HSerm4ulLIzU7M2YQwphuCuIYjcdzJPu2ZBCGGo9gkeYCeGUZBmc
-         MQ5MsXZoPE00QWHRNzCe+G9gVkeFGg/azZ9wpwjnHL8t3yOGEnz5A2WjKtPQmlYin5Qr
-         f6wtXrVmzzo8pXiOsU7QJp9vOuVZ9a3oKzGEQXzEHYCDIFpjzYOzdxwbCRNfGM0ZZJwP
-         VDPAHz/biKqEpK7Uv/8MsO1eR8qk9+XVUtnk+mCPDyps7tdutRX7MMCvV1rzl0N5idPU
-         n1Jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711439922; x=1712044722;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0ei96n8N9QJh0d9X1yKZBGiIbUh+v5D+5m1+0jv93vk=;
-        b=kLQwvW2u2sysv14XGELCa2SuXzdvycCLgS3HP9qrLoAeH0CpEYGt3BCOaFfNkd9H1V
-         sf33xPqDVlW0hFiUlWVeVjbkvA0HWHqSVqImBPu5xD/fcZzYMoiRwAXdaANLK3ngFhHH
-         GofPe4ZKqTFkqOrx6FLQm3hVn5PaGaUy/DEXh07meYsTHXuD2FMa8GcDjpwZcxd0rSKZ
-         4A4sCNqOjv7K1lmnfciM9AQVd4RmIuncNjvrxJ6GuID3FdYl8bpqQ0yzWc/tRhpac1N7
-         6IwumBlTxx5CuW4Mhe7SF/OxZcGzJ6VMdhGr0EcW2FiLmb4gsmL53jfJUfAqb/r+Fuhg
-         1jAw==
-X-Forwarded-Encrypted: i=1; AJvYcCVK/S+2xzeF4OleM50PPxPnePpRaAS/gwZPDI1uUTZ8tAZB725hQIRo91L4/yVUTrGN+c1rnk/ds7xz0Q5CI+CCNu4qIAMxcUJHpCk/NA==
-X-Gm-Message-State: AOJu0YyD4zweRysPW/BOE4dG4py+pWdQIOVtBioxRbb39bQL+5rktyJ3
-	UM/gksEvNKXm0Pp8HnuZHjsH+iElXB/isYMXAzCXoAU50QsNXFWEcD93mDbY3w==
-X-Google-Smtp-Source: AGHT+IFz/oPx9WopcTjERuotcpV7GtWEpMwMOVPLqcsvgxQg6MYrAOsudE1j4AmrmZhsiVdq3PIv2A==
-X-Received: by 2002:a05:6a00:391b:b0:6e6:b68a:86f8 with SMTP id fh27-20020a056a00391b00b006e6b68a86f8mr435524pfb.14.1711439921739;
-        Tue, 26 Mar 2024 00:58:41 -0700 (PDT)
-Received: from thinkpad ([117.207.28.168])
-        by smtp.gmail.com with ESMTPSA id fb16-20020a056a002d9000b006e5c464c0a9sm5339740pfb.23.2024.03.26.00.58.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Mar 2024 00:58:41 -0700 (PDT)
-Date: Tue, 26 Mar 2024 13:28:34 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Niklas Cassel <cassel@kernel.org>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
-	linux-tegra@vger.kernel.org
-Subject: Re: [PATCH 04/11] PCI: epf-test: Refactor pci_epf_test_unbind()
- function
-Message-ID: <20240326075834.GF9565@thinkpad>
-References: <20240314-pci-epf-rework-v1-0-6134e6c1d491@linaro.org>
- <20240314-pci-epf-rework-v1-4-6134e6c1d491@linaro.org>
- <Zf2tH67WRvOGK7-O@ryzen>
+	 Content-Type:Content-Disposition:In-Reply-To; b=NG/FvRiOnM/tp0nL8UZO09SsUKws9rSqGBUw8pt/iXXrcdsArP2t3fR+qYh2NQrVvehU81SLE4MYa8vqhTvCH+zPP/tsk6gfy1IEvajX3IB85fOL2bHuvPbpHjzHT0/WMr4Qheo1f441JjLCucNNyQVF2UDlBZmFGRPB+kbKh1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sJWLaQVr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9209BC433F1;
+	Tue, 26 Mar 2024 08:11:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711440669;
+	bh=qgPYrZ/NPDwrw9n8R5vjfsAIwZpztvwYlvGEZ1/cqwk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=sJWLaQVrmHkXdPfZu2CLehPVBt1a3A07VW9D2hHdhmdx1dfdxfVkVKCTg3D62osKG
+	 covenVtPafFo/IsLWh5g6/g3y4hUOYHVaYVuutRm+dDNWvFegJiXJkyb9LPukcVk1u
+	 m2VKGv9L+iOGqzN1zqikyJWB7X2H+66W3diLGpPYXcd955q0ivSrK5+w1rrysq8ScW
+	 jQgegNSKueMZQeTO9BeBWfCCjyuJE8rYmEQ3DowcaWuUvoIMe1slI1gbwfkLgkTh5p
+	 0SWFa6/UJfRQdfXuO3A8YQwEULv6J+4OPmMdm50N29USGF6PCDE72cs+NvDxnyRPel
+	 LHLk7KAb/beXQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rp1tr-000000005vk-2JeX;
+	Tue, 26 Mar 2024 09:11:16 +0100
+Date: Tue, 26 Mar 2024 09:11:15 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Kalle Valo <kvalo@kernel.org>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
+	Marcel Holtmann <marcel@holtmann.org>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	"David S . Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Saravana Kannan <saravanak@google.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Alex Elder <elder@linaro.org>,
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Lukas Wunner <lukas@wunner.de>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-wireless@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	ath11k@lists.infradead.org
+Subject: Re: [PATCH v6 04/16] dt-bindings: net: wireless: qcom,ath11k:
+ describe the ath11k on QCA6390
+Message-ID: <ZgKDI4Es11aN5nx7@hovoldconsulting.com>
+References: <20240325131624.26023-1-brgl@bgdev.pl>
+ <20240325131624.26023-5-brgl@bgdev.pl>
+ <87r0fy8lde.fsf@kernel.org>
+ <CAMRc=Mc2Tc8oHr5NVo=aHAADkJtGCDAVvJs+7V-19m2zGi-vbw@mail.gmail.com>
+ <87frwe8jiu.fsf@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -96,113 +99,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Zf2tH67WRvOGK7-O@ryzen>
+In-Reply-To: <87frwe8jiu.fsf@kernel.org>
 
-On Fri, Mar 22, 2024 at 05:09:03PM +0100, Niklas Cassel wrote:
-> On Thu, Mar 14, 2024 at 08:53:43PM +0530, Manivannan Sadhasivam wrote:
-> > Move the pci_epc_clear_bar() and pci_epf_free_space() code to respective
-> > helper functions. This allows reusing the helpers in future commits.
-> > 
-> > This also requires moving the pci_epf_test_unbind() definition below
-> > pci_epf_test_bind() to avoid forward declaration of the above helpers.
-> > 
-> > No functional change.
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  drivers/pci/endpoint/functions/pci-epf-test.c | 63 ++++++++++++++++++---------
-> >  1 file changed, 42 insertions(+), 21 deletions(-)
-> > 
-> > diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
-> > index 1dae0fce8fc4..2fac36553633 100644
-> > --- a/drivers/pci/endpoint/functions/pci-epf-test.c
-> > +++ b/drivers/pci/endpoint/functions/pci-epf-test.c
-> > @@ -686,27 +686,6 @@ static void pci_epf_test_cmd_handler(struct work_struct *work)
-> >  			   msecs_to_jiffies(1));
-> >  }
-> >  
-> > -static void pci_epf_test_unbind(struct pci_epf *epf)
-> > -{
-> > -	struct pci_epf_test *epf_test = epf_get_drvdata(epf);
-> > -	struct pci_epc *epc = epf->epc;
-> > -	struct pci_epf_bar *epf_bar;
-> > -	int bar;
-> > -
-> > -	cancel_delayed_work(&epf_test->cmd_handler);
-> > -	pci_epf_test_clean_dma_chan(epf_test);
-> > -	for (bar = 0; bar < PCI_STD_NUM_BARS; bar++) {
-> > -		epf_bar = &epf->bar[bar];
-> > -
-> > -		if (epf_test->reg[bar]) {
-> > -			pci_epc_clear_bar(epc, epf->func_no, epf->vfunc_no,
-> > -					  epf_bar);
-> > -			pci_epf_free_space(epf, epf_test->reg[bar], bar,
-> > -					   PRIMARY_INTERFACE);
-> > -		}
-> > -	}
-> > -}
-> > -
-> >  static int pci_epf_test_set_bar(struct pci_epf *epf)
-> >  {
-> >  	int bar, add;
-> > @@ -746,6 +725,22 @@ static int pci_epf_test_set_bar(struct pci_epf *epf)
-> >  	return 0;
-> >  }
-> >  
-> > +static void pci_epf_test_clear_bar(struct pci_epf *epf)
-> > +{
-> > +	struct pci_epf_test *epf_test = epf_get_drvdata(epf);
-> > +	struct pci_epc *epc = epf->epc;
-> > +	struct pci_epf_bar *epf_bar;
-> > +	int bar;
-> > +
-> > +	for (bar = 0; bar < PCI_STD_NUM_BARS; bar++) {
-> > +		epf_bar = &epf->bar[bar];
-> > +
-> > +		if (epf_test->reg[bar])
-> > +			pci_epc_clear_bar(epc, epf->func_no, epf->vfunc_no,
-> > +					  epf_bar);
-> > +	}
-> > +}
-> > +
-> >  static int pci_epf_test_epc_init(struct pci_epf *epf)
-> >  {
-> >  	struct pci_epf_test *epf_test = epf_get_drvdata(epf);
-> > @@ -885,6 +880,22 @@ static int pci_epf_test_alloc_space(struct pci_epf *epf)
-> >  	return 0;
-> >  }
-> >  
-> > +static void pci_epf_test_free_space(struct pci_epf *epf)
-> > +{
-> > +	struct pci_epf_test *epf_test = epf_get_drvdata(epf);
-> > +	struct pci_epf_bar *epf_bar;
-> > +	int bar;
-> > +
-> > +	for (bar = 0; bar < PCI_STD_NUM_BARS; bar++) {
-> > +		epf_bar = &epf->bar[bar];
-> > +
-> > +		if (epf_test->reg[bar]) {
-> > +			pci_epf_free_space(epf, epf_test->reg[bar], bar,
-> > +					   PRIMARY_INTERFACE);
-> > +		}
+On Mon, Mar 25, 2024 at 04:37:29PM +0200, Kalle Valo wrote:
+> Bartosz Golaszewski <brgl@bgdev.pl> writes:
+> > On Mon, Mar 25, 2024 at 2:57 PM Kalle Valo <kvalo@kernel.org> wrote:
+> >> Bartosz Golaszewski <brgl@bgdev.pl> writes:
+> >> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >> >
+> >> > Add a PCI compatible for the ATH11K module on QCA6390 and describe the
+> >> > power inputs from the PMU that it consumes.
+> >> >
+> >> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >>
+> >> [...]
+> >>
+> >> > +allOf:
+> >> > +  - if:
+> >> > +      properties:
+> >> > +        compatible:
+> >> > +          contains:
+> >> > +            const: pci17cb,1101
+> >> > +    then:
+> >> > +      required:
+> >> > +        - vddrfacmn-supply
+> >> > +        - vddaon-supply
+> >> > +        - vddwlcx-supply
+> >> > +        - vddwlmx-supply
+> >> > +        - vddrfa0p8-supply
+> >> > +        - vddrfa1p2-supply
+> >> > +        - vddrfa1p7-supply
+> >> > +        - vddpcie0p9-supply
+> >> > +        - vddpcie1p8-supply
+> >>
+> >> I don't know DT well enough to know what the "required:" above means,
+> >> but does this take into account that there are normal "plug&play" type
+> >> of QCA6390 boards as well which don't need any DT settings?
+> >
+> > Do they require a DT node though for some reason?
 > 
-> Nit: No need for braces here. (Just like you don't have braces in
-> pci_epf_test_clear_bar()).
+> You can attach the device to any PCI slot, connect the WLAN antenna and
+> it just works without DT nodes. I'm trying to make sure here that basic
+> setup still works.
 > 
-> Like you said in the other thread, this commit clashes with changes done
-> in my series.
-> 
+> Adding also Johan and ath11k list. For example, I don't know what's the
+> plan with Lenovo X13s, will it use this framework? I guess in theory we
+> could have devices which use qcom,ath11k-calibration-variant from DT but
+> not any of these supply properties?
 
-I think I should just rebase this series on top of yours.
+In theory we could, but at least the WCN6855 in the X13s has a similar
+set of supplies and enable gpios which are currently not fully described
+in the devicetree as there has been no support for doing so thus far.
+Instead we rely on the bootloader to enable the module.
 
-> However, except for the small nit, the commit looks good:
-> Reviewed-by: Niklas Cassel <cassel@kernel.org>
->
+I haven't had time to look at the latest attempt on adding support for
+handling such resources, but eventually we'll need to address this in
+some way.
 
-Thanks!
- 
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Johan
 
