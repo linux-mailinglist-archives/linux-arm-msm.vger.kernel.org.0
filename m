@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-15281-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15283-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91C1288CF50
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 21:46:26 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43BEF88CF59
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 21:47:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0371BB252D9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 20:45:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C1EAF1F868C2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 20:47:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C27E517591;
-	Tue, 26 Mar 2024 20:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB99A12AAF3;
+	Tue, 26 Mar 2024 20:47:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BGz+873r"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oPDGCwdr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39F174E3A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 20:45:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37EC12AAF6
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 20:47:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711485922; cv=none; b=Ga7a412Q42T6tzW+LfcDeu+6b/F+KHbU0GLxd1vwMQVnxpW4nwwfaNUjC17XEJaSTOq/K+tIEo/L6Pp/IRssv3vfq8FDtM9fVfCZ7Kojw+iHT4xrVp4WmrESERY+LoxBx40AYZVwA2YRk5gg4Db/TTQIytHLJiMmJA03L70RbXA=
+	t=1711486027; cv=none; b=Bo4eZkQk5BJyL387qDmXJW03j1+6z3aDQs7Ph0WawA2ZkkmkRMyzgMIAY8z9xr0Ze8qh60B6gGtN1djBqgYj2TBnrCwtAs/6ANBDtLjyUvaiutsh1kmPlEJ3ZmqHiY694eEWiM9Xq62lPkAj1y4vQLTMe0jh8n+dxKuAYzhe/gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711485922; c=relaxed/simple;
-	bh=bKXbnOtJYrdlG3PHh8HDEB5z5LJ6iIjYT610bIiPvVI=;
+	s=arc-20240116; t=1711486027; c=relaxed/simple;
+	bh=uNSS8OeKjTPm6oEJ3i7K+QOQIGEd2JgO4lb41gv8RNw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ogj0mMwTtmgmRdvR7gebjabdfOSZ/kLRMlVA0qLJWz8S8lUWmIOsVzyI37zghw6vH9alVJJ245jMQBbZTwNJvQyjNUmsFFAvu30mdQh7MuYT94cGAffnNpYZhYm09683b6v3qbVM9x21bDVBQhSYdZV6HPrUsZ/izKTjs42L/Rk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BGz+873r; arc=none smtp.client-ip=209.85.218.46
+	 In-Reply-To:Content-Type; b=HeHssxKghPST4yNirecnhBl0HPy4iTzdr7ZVHjTzvh/6DvkZeNR3CwKgPp7/FY0QZV9k2GGY/WhOqoIUUK0U5VLLZ+PT5ZlijKMJaP4SyN5UpVxt2DeYfPbPhd7kN2pX9vharP6K7K1BKprqe6MvrskWdqRplNuDFED6bc+tXOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oPDGCwdr; arc=none smtp.client-ip=209.85.167.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a44f2d894b7so736952166b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 13:45:20 -0700 (PDT)
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-513e89d0816so7483377e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 13:47:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711485919; x=1712090719; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1711486024; x=1712090824; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=jd1p+UCPXhOO4ogs196NyusAYt2QT6k4NT43IJKJnyQ=;
-        b=BGz+873r+uYvWdeWTZ8hpSlv/pwErwgvtHrxMPcHqrYVVequGqx/igqnic9p2tiMf0
-         FFygYDx1PoVVvEeBqLFLMlcVzNpEa9zQiQq6zZX59GCOdCG9DluFtjSWkWbucsIKiJJn
-         sQvYhydH3LfMVGhObZ4tO1Y36gKvpUJSjwXDrO5VxL3jGweQiZYWFny8hYvEthHkWFYG
-         qkIbTJwIiTW8C7dNdeXltLTUljieiTGhfaW83VmTpT/mr1+bxe/aPPr/tD2S+fyN8+D+
-         FKQC3lm3y/HDLmvNcBG1g4eLbPiEIoLfTmro5hKXvm5nEBGT0rTlmk80MPNxri3KqF2R
-         ezcA==
+        bh=dbNLbXj4wxFVMaesPfHoigxn1O2SIlJbMIzmZQ+voWs=;
+        b=oPDGCwdraiitK3jVgpU5O9WVSVCt2H6JDH4Kgrh7sCBv6KxSfbCzS0AuwWT5gkFOkx
+         K3BHQdMRCNFOChFqZijIHYlmededRqoVPRc9f76ZJOrPWHV49q1mfpFL58xyg1J/iCiC
+         TumriEtvg+/Rr868jdsxokB/ZDAscLrGT4d0ArTiaCq/yFrvV00ennJDsxDFdMkhtVtO
+         H8tWTmwpAvbeNGeY5VnBVTH/A9g0AlsRa2CyAIAEnXKV9GLun1vTqxoIMh3BmCrc3SHD
+         x3Nt0+ufRAyNA8Wv/rFeITz6yfeDnhEEMF0aJvaff8VVn+GMCiCOQy1ubB56hIxOym3n
+         lEpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711485919; x=1712090719;
+        d=1e100.net; s=20230601; t=1711486024; x=1712090824;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jd1p+UCPXhOO4ogs196NyusAYt2QT6k4NT43IJKJnyQ=;
-        b=oJYdqcED8M4/zeXIJCeKLpXxkjp1WjmfNfUg6K0MBABYUAHr1H+LR6pXnxtF0WWK7S
-         WQFuylkrqKIDc3glJorSjDgYzQq7u1VuzShXXp0Rvt6RmSCs3+KZssRf2Ogc6EKHhNPz
-         BYKn//JdsVH9esPH0dUK4TH2hroNPhUU2KCtGsS0fJ8oVZlUctmm0xPGKVaIFdnIH6D2
-         8Jbfhik3CKSM7fotb8iqRdkUAJN5md/zXSYafo6vC0njw6wwkaXM1NyhYRVVvrSagiz8
-         dZ0hJGxyIW2s2oWfgv5tNaPzzyGw6KIx/PrFKheTv6OaJax2gvQv02c1d6liJAHouqXi
-         JXbg==
-X-Forwarded-Encrypted: i=1; AJvYcCVS71CcimCw0hqeZYCo13pnN9QKrHCxfwhrRw7iqRgQ4vjb2rWk6CPW72Dyn5JbzcDGnlAsFMXs0Fmd+n5aLtNqfJBqfg8icDhsLMYs4Q==
-X-Gm-Message-State: AOJu0YyTjisp9kAACJ6MAkLWIXSMqDOO67pSkpMzfMkB2+mnSd9RoI+R
-	CKDCuLpt9n7l+/ThcAArWTe4s2YB6yuhcNs+tv2NuHbk5aidlVAdHvLsSIB8JUA=
-X-Google-Smtp-Source: AGHT+IHTpSvPq0BzgDUrRfmAXwsJW68zOOnR0J+5B4NsMGX+LBaW748FkLH7jX/vwcpWP8uWJ9F2qQ==
-X-Received: by 2002:a17:906:716:b0:a47:53b2:2042 with SMTP id y22-20020a170906071600b00a4753b22042mr2891726ejb.2.1711485919021;
-        Tue, 26 Mar 2024 13:45:19 -0700 (PDT)
+        bh=dbNLbXj4wxFVMaesPfHoigxn1O2SIlJbMIzmZQ+voWs=;
+        b=NnuCPTogN96gH0zW0iEt5zqCH46dsOo0ydVW/uws+fVW49pcPOSae8zYBVD+WbBZvw
+         dDb/Di7GP5wozZ1zmt97nSfNfjCiTy4pANY/s+rkTZGNcC81OZJAwO+wEYmhIbRbGBHs
+         XnvOsoiimzVbFjct+qaPHJup1Nli6JYt2heQWDkOzUffp0Ft2sYkpCs2ebuEfNrh+Mog
+         /FpXQP+nDKkIGZCHACbIqy6PjTpK7ssvS/A7dmfIqsVkRMHMcEu/hBqwIRZyEIjE42I2
+         iHmcRmJRAx52Zlu2+M2TlYdbTydq2fygxlE3vnxpk4KyhaXpGCuPGZNZbTWxrc9t6NQJ
+         angw==
+X-Gm-Message-State: AOJu0Ywa8i4ORF0+3zQO4m3W1O/lHSGjW6Q6wqKSTBoKnBNUOKuA9daZ
+	DUFjI5GKP9rt9ObnL06TBuOoE65vUbS6HAhxFrdMTHY5WweUflsWdhTF3igfY2I=
+X-Google-Smtp-Source: AGHT+IEzjUp/vTYsBOQZTGKIY00DqKSbtiFFOUibMou6UOd++I1OcMA69m/hXjV13F70gJ/kBI3z3A==
+X-Received: by 2002:a05:6512:456:b0:513:2b35:2520 with SMTP id y22-20020a056512045600b005132b352520mr7326424lfk.58.1711486023920;
+        Tue, 26 Mar 2024 13:47:03 -0700 (PDT)
 Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id e21-20020a170906081500b00a4df251a601sm1203408ejd.77.2024.03.26.13.45.17
+        by smtp.gmail.com with ESMTPSA id s10-20020a170906354a00b00a47a33b3aa2sm3082641eja.157.2024.03.26.13.47.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Mar 2024 13:45:18 -0700 (PDT)
-Message-ID: <e97918b3-ddc7-437c-a9e9-36131366a0e3@linaro.org>
-Date: Tue, 26 Mar 2024 21:45:16 +0100
+        Tue, 26 Mar 2024 13:47:03 -0700 (PDT)
+Message-ID: <36864c25-4de8-4323-80b1-79e18918fd36@linaro.org>
+Date: Tue, 26 Mar 2024 21:47:01 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,18 +76,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] clk: qcom: gpucc-sc8280xp: make cc descriptor const
-To: Johan Hovold <johan+linaro@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2: Enable UFS
+To: Bjorn Andersson <quic_bjorande@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Mark Brown <broonie@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
-References: <20240326140108.21307-1-johan+linaro@kernel.org>
- <20240326140108.21307-4-johan+linaro@kernel.org>
+References: <20240326-rb3gen2-ufs-v1-1-8c5c2dae1e64@quicinc.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -126,18 +121,50 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240326140108.21307-4-johan+linaro@kernel.org>
+In-Reply-To: <20240326-rb3gen2-ufs-v1-1-8c5c2dae1e64@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 26.03.2024 3:01 PM, Johan Hovold wrote:
-> Add the missing 'const' keyword to mark the Qualcomm clock controller
-> descriptor data as constant.
+On 26.03.2024 7:02 PM, Bjorn Andersson wrote:
+> The rb3gen2 has UFS memory, adjust the necessary supply voltage and add
+> the controller and phy nodes to enable this.
 > 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
+>  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 23 +++++++++++++++++++++--
+>  1 file changed, 21 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> index 63ebe0774f1d..0177d93ecd1d 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> @@ -221,8 +221,8 @@ vreg_l6b_1p2: ldo6 {
+>  
+>  		vreg_l7b_2p952: ldo7 {
+>  			regulator-name = "vreg_l7b_2p952";
+> -			regulator-min-microvolt = <2400000>;
+> -			regulator-max-microvolt = <3544000>;
+> +			regulator-min-microvolt = <2952000>;
+> +			regulator-max-microvolt = <2952000>;
+>  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>  		};
+>  
+> @@ -508,6 +508,25 @@ &usb_1_qmpphy {
+>  	status = "okay";
+>  };
+>  
+> +&ufs_mem_hc {
+> +	reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
+> +	vcc-supply = <&vreg_l7b_2p952>;
+> +	vcc-max-microamp = <800000>;
+> +	vccq-supply = <&vreg_l9b_1p2>;
+> +	vccq-max-microamp = <900000>;
+> +	vccq2-supply = <&vreg_l9b_1p2>;
+> +	vccq2-max-microamp = <900000>;
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+This probably requires adding supported modes and allow-set-mode to
+these regs
+
 
 Konrad
 
