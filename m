@@ -1,131 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-15268-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15269-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A2CC88CDA4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 20:57:27 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D983C88CDBC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 21:03:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 20D69322D0E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 19:57:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 08C741C37D71
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 20:03:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDC6813D287;
-	Tue, 26 Mar 2024 19:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F96113D290;
+	Tue, 26 Mar 2024 20:03:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xA3G8AJq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="t6mXq35j"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3FC13D26D
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 19:57:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A23B11F95A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 20:02:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711483040; cv=none; b=iqsiyREE8cpBj7VnenMiYfmMhbx2sP81d11Y6xShx8jjsNK4ppINxweXFzInVAZvOmXZ358ShJQ/KNvlEyBrQy2PmmCnrTHFWGR9TiiiilEZmbbKXpu59cRQCai4kz3HH3AKhMdXIrqX3JAvROo6PcKY09FBIL3+7GWe4zZ+uEY=
+	t=1711483381; cv=none; b=JnV3KpgcZaQyK8/lxzXuk1QQMPuvmuYbZefcc9ky8uL7NnAtCyVtcGrSOLtNKqa0gVhJb+za2skj+/bTsliQeYoiJQ2b5v2F/kFR4AE+ZT5/Lr3lG1a7hykdWV54YMe3mGIDBRkfaEXcxsD1DbKu1+jgYm+qw4BctyjaoLXqqqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711483040; c=relaxed/simple;
-	bh=2H+94qUfoDYhhZONEATXwrtmuXduQiExbMEmAQ6bX3M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Emzq/XBORlVwMWMNQ/Hx5BKGQnxWHVm57Jm9Qxal+EeYl3u0U3MEkQ+Cgr1M04ql7tBQ+LX2EHuvo6twkIAhBaJApC8aRYI5EBVcCJWzzYyo4Rv/8ZSshPxUoOaOZyWaEPhlMYhjiZ41eadJH5Ydgp0vSCSuE1wm97xP8s2noXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xA3G8AJq; arc=none smtp.client-ip=209.85.218.49
+	s=arc-20240116; t=1711483381; c=relaxed/simple;
+	bh=RWQXQAKN7KVRdFiOpjgCoEEoGNI1cTcKyz/5WyufIYY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=cOQnPRtTNR6ak2BKXleCRLwGPYOzx5V1IJcm/66VesA0zYR81LhfjtwCAKgrkvqEw/jY+kzmeSxKud1Wf/JFt9v8DQ0gGVJxsNE8j/RvlT72IjMpjDcy1BqiOBX4AbedV0r+2yQm8Aqt4pzlQy0Sdx2BP//qB3xsDXkSNMQbSUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=t6mXq35j; arc=none smtp.client-ip=209.85.167.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a466e53f8c0so786425266b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 12:57:17 -0700 (PDT)
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-513e89d0816so7436977e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 13:02:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711483036; x=1712087836; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=UMZemv+treJRJZKcndzvb56dHiZdwvWPeQfGgJVwwG0=;
-        b=xA3G8AJq7vHx44Pq3fe5DhK6XN9N6wMyDC0N3fZze5T88C9qxp+xxhoneP68/iL/yj
-         VWUSmhxxuq5CT0cidP4h3nQWiYlZ2Oh3BHptgmqWZ1wAZk42aHQJctKRdC4FBh/89CzF
-         ZK48PW67qllN1fWMW0uem6wNo+eAoyqFSnYtA6uswb9TvkhO3jKGt35lRFT2eq9d9pGy
-         RY7SAGl+AL6dOOJMvcY+1gesmt2qLTD5UiTV5k52c7nW7BYmo8vrmHth2t5mPEMxB/qo
-         YEykDzlO9loWo6gklYer3Wi8AiwbUNnUNs8u1UmFK5afcei9lZQMxze830/HaBCBhS9h
-         ty7w==
+        d=linaro.org; s=google; t=1711483378; x=1712088178; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=j2lHV/OHCqfe7Nek5g8QCJ5Ns0UmvS2CSdkqiB49C5E=;
+        b=t6mXq35jMiFGTFHU5ItgoCHBuQ1QeEMYBPM3E/0TR/N7WYWq0mkmgSYZwz2q+t4Rce
+         0w9CfNJ2bRQzrVakmYweh3kMmd/9Z//zwGj5AFRuUlJ5VyuqQRQB9EVod+8JutORoCkt
+         gAEcxhBc+3UbDS+TXcfYW0l/qo9OY+HwNzDJOILnfBS3/D47Fr0Xx3/yJ98jlD51gk5K
+         gCJB4CkKDrZwvokkWe79Ph17Mass+1XZqR5Hktzri1X8AV6I5WQOwUQEY1icROPsuUXl
+         hk9n/sk+1znSf0ZWJ6IFBAkxkZw7LkwEHf++NwaAmwcZxlSGdJDPw65H77vWjpUXYpFf
+         YbQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711483036; x=1712087836;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UMZemv+treJRJZKcndzvb56dHiZdwvWPeQfGgJVwwG0=;
-        b=qLmO5Vu1QIlNSpXO/bn5qXRjlkOUE76OnUM1uXACPrzCtZeAktdxF8OH6EyPWU8HpZ
-         9LFsRCy26Z6Pj/OFaqTR6ihCXmPGYKPsf4P+/jJagO53o8TxRcyrH4WEyj2qdBjmKLkM
-         MeYCgrrAi7PVYQ6OA6379bXTIKflVk7sZEWMF0ZqvsUozsE+j1fK+U21x/C4NnB11TuF
-         yMiwi7HzQN9ZdvFAYnozawDMNrqf5LbAzMkpEs5wSw0+GzknADSbpXGwhHcHhR2Lh1JC
-         HwYsZyEk98oAbiN7i+Qo4aodqOfC9GmNRIlxqqQKrUZgvxmcD40sN0IFnZ7l7a/3T5/p
-         SIpA==
-X-Forwarded-Encrypted: i=1; AJvYcCVfiCoBom3LsHweqQPQSeUe1lC6JZp06thnXzZa2Vgwp9aN31hNVih8BpbHbYaIZ5ER7HEyREKTsZoAjyJzNh57HcErPOmqcYG2mL6Rrg==
-X-Gm-Message-State: AOJu0YzNh5QvSfWHg0QZNkIEEAtCuHyiTbF0jJwCkSEzPOYfDoWzi89S
-	t/MN/SrpaRmGWyPyhu82KfuT/mY7mWbFEFe9VZMDE3jo0B3QoRvzBZy3bk7LVLM=
-X-Google-Smtp-Source: AGHT+IGV8Lxx+KB8zTQRgaBH6RRCSCr9jlkk5+m4uBMdcvsOQYxK7zl7jHLINOfQjQLorKVjX4b3oA==
-X-Received: by 2002:a17:907:970f:b0:a47:4293:947f with SMTP id jg15-20020a170907970f00b00a474293947fmr9602283ejc.8.1711483036185;
-        Tue, 26 Mar 2024 12:57:16 -0700 (PDT)
-Received: from linaro.org ([79.114.172.194])
-        by smtp.gmail.com with ESMTPSA id w17-20020a17090633d100b00a4df82aa6a7sm758313eja.219.2024.03.26.12.57.14
+        d=1e100.net; s=20230601; t=1711483378; x=1712088178;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=j2lHV/OHCqfe7Nek5g8QCJ5Ns0UmvS2CSdkqiB49C5E=;
+        b=TEtpvn0kI4wyntYXbUyDqX/yDxa9mVksarqqvBv7rZmaiMQpqiDwyg/hovF0GDK77Q
+         THGYZXJrI2ILR+YWdeS2iIpu6sfFemdrEAA3LUVlL78l9tBUKSb52T0eCMjJyj2bB9bE
+         SnxD/5cfID1tx4YR7LmGkSyYnR6LZX8gJ5U/u9eUPIBI0XE/JvqqHACa8GkVrqTEXKE5
+         VM9LmEkl1Ookepg7V8vEcoCUAf6BZWUjK1MZ/d2ez5M5skvU3K1z7wGlzxI+YZy1wryM
+         3Z20p8knEUO7pKnbSDMPncH8tReep/vs1YUumi6TFO/mx+TGcub3HWccmKeHaLD3Mod+
+         JJYw==
+X-Gm-Message-State: AOJu0Yz/i3DQm0omS0uvPNTwSw3L12SbRHHlO0V9ssXFRK3YzszHiEdM
+	4IJHNQijGAyg52QnOyHW4JMB5umEKwi/7HDHJk7ET83axjt09ARQ90dgi6uRuvc=
+X-Google-Smtp-Source: AGHT+IGZo3966n6r9TccyzZ0QA/JixvswpLjAc92CRn92e6XWXB6dSZNAnLZOUf4kh4wEQURJripFg==
+X-Received: by 2002:a19:5e58:0:b0:513:a724:3b9f with SMTP id z24-20020a195e58000000b00513a7243b9fmr7416124lfi.7.1711483377475;
+        Tue, 26 Mar 2024 13:02:57 -0700 (PDT)
+Received: from umbar.lan ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id a21-20020ac25e75000000b00515a7984acbsm1279408lfr.94.2024.03.26.13.02.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Mar 2024 12:57:15 -0700 (PDT)
-Date: Tue, 26 Mar 2024 21:57:14 +0200
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Rob Herring <robh@kernel.org>
-Cc: Stephen Boyd <sboyd@kernel.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-	Johan Hovold <johan@kernel.org>, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-mediatek@lists.infradead.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH RESEND v6 0/5] spmi: pmic-arb: Add support for multiple
- buses
-Message-ID: <ZgMomo9Uw19Ll10N@linaro.org>
-References: <20240326-spmi-multi-master-support-v6-0-1c87d8306c5b@linaro.org>
- <20240326193203.GA3252922-robh@kernel.org>
+        Tue, 26 Mar 2024 13:02:57 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 0/4] arm64: dts: fix several display-related schema
+ warnings
+Date: Tue, 26 Mar 2024 22:02:53 +0200
+Message-Id: <20240326-fd-fix-schema-v1-0-4475d6d6d633@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240326193203.GA3252922-robh@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAO0pA2YC/x2MywqAIBAAfyX23ILPwH4lOliuuYceKEQg/XvSc
+ RhmKhTKTAXGrkKmmwufRwPZd7Amf2yEHBqDEsoIrQaMASM/WNZEu8fFyeiMd1ZqC625MjX7/6b
+ 5fT95QY4XXwAAAA==
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=798;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=RWQXQAKN7KVRdFiOpjgCoEEoGNI1cTcKyz/5WyufIYY=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmAynw3ac+cfKVGKWXENlS14UmEQ6NE7Jl+Axwr
+ 5bJiyMEMS+JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZgMp8AAKCRCLPIo+Aiko
+ 1ZKpB/wLHJQ+d79aFqPld+Jyd1moiwje+nvFXrNZvI0OwBY4KfhCPBGJyMCLmbv2MWbfghtwoZC
+ vgLZAzOOzxoZrCcSZCIVxU5Pvh2TeZuj0Ra33TkWVq8pciT54nuX3C+RMGoLIrJ7pULKtgY0EKg
+ NtloV5GhibGmeWDpNMBpfEGHj7EJFUOS+Lv+B0Po5rWooujP8wmquvSB3vyFU1BiSyOxUjjV+9+
+ 8IRq5XoW5JX3pmi/LuG4F/n/CdkjjcPvp+ouXYZZpCham6Cf/AsaLHNLz0/Qr2uAesUHNc9pHo2
+ xpq75TuFHXy0uc56XHQm3FB4id6o2edrSozRii80L06RcHIx
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-On 24-03-26 14:32:03, Rob Herring wrote:
-> On Tue, Mar 26, 2024 at 06:28:15PM +0200, Abel Vesa wrote:
-> > This RFC prepares for and adds support for 2 buses, which is supported
-> > in HW starting with version 7. Until now, none of the currently
-> > supported platforms in upstream have used the second bus. The X1E80100
-> > platform, on the other hand, needs the second bus for the USB2.0 to work
-> > as there are 3 SMB2360 PMICs which provide eUSB2 repeaters and they are
-> > all found on the second bus.
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> > Changes in v6:
-> > - Changed the compatible to platform specific (X1E80100) along with the
-> >   schema. Fixed the spmi buses unit addresses and added the empty ranges
-> >   property. Added missing properties to the spmi buses and the
-> >   "unevaluatedProperties: false".
-> > - Deprecated the "qcom,bus-id" in the legacy schema.
-> > - Changed the driver to check for legacy compatible first
-> > - Link to v5: https://lore.kernel.org/r/20240221-spmi-multi-master-support-v5-0-3255ca413a0b@linaro.org
-> 
-> Where are Krzysztof's Reviewed-by tags?
+Fix several warnings produced by the display nodes.
 
-Urgh, did "b4 send --resend" which only sent the v5 as it was before the
-Reviewed-by tags have been picked up.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Dmitry Baryshkov (4):
+      dt-bindings: display/msm: sm8150-mdss: add DP node
+      arm64: dts: qcom: sc8180x: drop legacy property #stream-id-cells
+      arm64: dts: qcom: sc8180x: Drop flags for mdss irqs
+      arm64: dts: qcom: sc8180x: add dp_p1 register blocks to DP nodes
 
-My bad.
+ .../devicetree/bindings/display/msm/qcom,sm8150-mdss.yaml   | 10 ++++++++++
+ arch/arm64/boot/dts/qcom/sc8180x.dtsi                       | 13 +++++++------
+ 2 files changed, 17 insertions(+), 6 deletions(-)
+---
+base-commit: 13ee4a7161b6fd938aef6688ff43b163f6d83e37
+change-id: 20240326-fd-fix-schema-b91f94a95135
 
-I'll send a v6 with the tags appended.
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-> 
-> Rob
 
