@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-15227-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15228-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8BFFB88C859
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 17:00:39 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DF4CC88C866
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 17:03:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3F56E1F3C8BE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 16:00:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8DA0832386A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Mar 2024 16:03:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CBC413C9D2;
-	Tue, 26 Mar 2024 15:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7204B13C9C0;
+	Tue, 26 Mar 2024 16:02:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jxJAfeHA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TMFmvJag"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F268013C9C9;
-	Tue, 26 Mar 2024 15:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42E3013C8ED;
+	Tue, 26 Mar 2024 16:02:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711468790; cv=none; b=MUqJA7f+cqbsv4CdfqPCRiLtgVb7nCV8ReNiuoTqVOsZkp2bxWuLREEecB/q0ivTkFSBpOxiF0gltcIQsTfdQJ5TGxMX0kXDjQn41PJJ3LmKUvtS2zlyaH7BaDAOq1/oUQa6BYfh86c7PgN341Zq4kQ/b0VdWcC9LQMT5KNOup0=
+	t=1711468971; cv=none; b=M34DJ9NF52OQe7OvMBYZcPM2CWyD0/YiIUi6mpVp1GudYRHmVqTjxOxwWLUH5zPhmhD3jgsPsCYjx1lreFJYYG4ekGXTd7VUwrcA0exldAnQox6e8aaHJQ6n5V/hcWS8i2EzqArrajVL1GPFJAPOiOS09FXPgIDr3NfW4hldiEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711468790; c=relaxed/simple;
-	bh=TJNBS3lfeWVqLqK+0GJDBRxc46WmxEu8kjT1yWM00fM=;
+	s=arc-20240116; t=1711468971; c=relaxed/simple;
+	bh=E5HdPeWOi8tUkoAFzWHaxj4/RdItXmJ4dO3CAfsETMQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jVCuKAHCsvZCFTrUvYvapgP1xDpH/wo+yEPrcbmsBuKj8AD/o39Rw0dHIGeI2KW+o3bMGIKUimwhmrJRBuxcp8iVKxWlTKE3l+iooiXpZruSlcrl7hcAQc/GDktZzsv5j/bEqP7I3mE3+J2wYJl4jjdEukDCYWZQc1z+Q7WYCdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jxJAfeHA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B27AC433C7;
-	Tue, 26 Mar 2024 15:59:46 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=NZJEaHYtN9UnF1LcYqnj8k5s0DhN2rbXI4G1Za9mkoAqH8EwAQtPB8IfVHUADQLCAgscnTv8S6lQ4wDCFy12pWyG/4ZjCED0blfVRG+kMrmuwUzuLdfljI1G2CRkBykIXAi1PjxTzGq0VDzhHMbkMleJz4QQXYnFT2FYbC427WE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TMFmvJag; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1072C433C7;
+	Tue, 26 Mar 2024 16:02:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711468789;
-	bh=TJNBS3lfeWVqLqK+0GJDBRxc46WmxEu8kjT1yWM00fM=;
+	s=k20201202; t=1711468970;
+	bh=E5HdPeWOi8tUkoAFzWHaxj4/RdItXmJ4dO3CAfsETMQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=jxJAfeHA20urkXwf1TGJH4ESHxB30OzTdUrgDvLY/7ID6TGbt7xytqHzTKgbTM03p
-	 n5uCb1hVpzmOWnk4oJ3i0znecLWgx3X1x6VHsQgE2X/z/vb/55UWs2PEhZavKJns0p
-	 laePbJ9xdjBv2cstxwY8rQBR5V4MN8MWQbcg5POlM1HgK1K/ux7VEf0SHBhMrbrwbj
-	 U3xgPLnI/dRas9t49/MIUGovUtD9bZTxuByjrO2XrzT5/QTyyotRV6l4xTZidoXxaF
-	 6524QBoxr3qXO0e5F9tuMhIp7YvUDw/w793uPFqi5akCXV5yprE8SEaFqEDL/XV6fb
-	 GnfFNVwdA50AA==
-Message-ID: <a6fbbfd3-516b-4269-b4b2-611979b62fd7@kernel.org>
-Date: Tue, 26 Mar 2024 16:59:43 +0100
+	b=TMFmvJagARhzcQUPkfTH4/UmpstIIxaLgwAi0QohHUNj2WkNMp2xcCknC3Io/VKHu
+	 AC2SRW+9+qqtj7r+7EhrI9xQUQDx6gzyiG7tnG0U9+bzzOJhqWb/LPZLUc4DZagiGk
+	 elqpPXbnEoeBUyYi5A7puMLkY/ZkJYHSM4CkH1FQno9HrdQe8wsbHifU28cbcG65CD
+	 2TXIVJ9BKRFqIdAM8O72fZH+7zky9zyfMtlACE0JNbB/6E5Ia8agP4ab2urSsS0u16
+	 Q04XkCjVOjDiwqskerwzAfF2+AW8SitpBaK5KKDn9PsfG7ZTskDBVIz+IvzbqCdBvd
+	 fu/zrWyvZsk+A==
+Message-ID: <af7ef0d4-031d-42ac-aad5-c8ce86deff96@kernel.org>
+Date: Tue, 26 Mar 2024 17:02:43 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] dt-bindings: clock: qcom: add SA8540P gpucc
+Subject: Re: [PATCH 2/5] arm64: dts: qcom: sa8540p: use sa8540p gpucc
+ compatible
 To: Johan Hovold <johan+linaro@kernel.org>,
  Bjorn Andersson <andersson@kernel.org>
 Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -62,7 +63,7 @@ Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
  linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20240326140108.21307-1-johan+linaro@kernel.org>
- <20240326140108.21307-2-johan+linaro@kernel.org>
+ <20240326140108.21307-3-johan+linaro@kernel.org>
 Content-Language: en-US
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,7 +109,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240326140108.21307-2-johan+linaro@kernel.org>
+In-Reply-To: <20240326140108.21307-3-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
@@ -116,52 +117,30 @@ On 26/03/2024 15:01, Johan Hovold wrote:
 > The SA8540P platform is closely related to SC8280XP but differs in that
 > it uses an external supply for the GX power domain.
 > 
-> Add a new compatible string for the SA8540P GPU clock controller so that
-> the OS can determine which resources to look for.
+> Use the new SA8540P compatible string for the GPU clock controller so
+> that the OS can determine which resources to look for.
 > 
-> Fixes: e60b95d2b687 ("dt-bindings: clock: qcom: Allow VDD_GFX supply to GX")
-
-I don't get why adding new device support is a fix. Commit msg did not
-help me to understand it.
-
-
+> Note that a fallback SC8280XP compatible is added temporarily to avoid
+> any temporary regressions for sa8295p-adp.
+> 
+> Fixes: fd5821a1a83c ("arm64: dts: qcom: sa8540p: Drop gfx.lvl as power-domain for gpucc")
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->  Documentation/devicetree/bindings/clock/qcom,gpucc.yaml | 1 +
->  1 file changed, 1 insertion(+)
+>  arch/arm64/boot/dts/qcom/sa8540p.dtsi | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml b/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
-> index f57aceddac6b..5b385e4976b6 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
-> @@ -28,6 +28,7 @@ properties:
->    compatible:
->      enum:
->        - qcom,sdm845-gpucc
-> +      - qcom,sa8540p-gpucc
+> diff --git a/arch/arm64/boot/dts/qcom/sa8540p.dtsi b/arch/arm64/boot/dts/qcom/sa8540p.dtsi
+> index 23888029cc11..3b31a9ea3492 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8540p.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8540p.dtsi
+> @@ -168,6 +168,8 @@ opp-2592000000 {
+>  };
+>  
+>  &gpucc {
+> +	compatible = "qcom,sa8540p-gpucc", "qcom,sc8280xp-gpucc";
 
-This looks fine and pretty trivial, but I really do not understand why
-skipping our list for automated testing.
-
-<standard letter>
-Please use scripts/get_maintainers.pl to get a list of necessary people
-and lists to CC. It might happen, that command when run on an older
-kernel, gives you outdated entries. Therefore please be sure you base
-your patches on recent Linux kernel.
-
-Tools like b4 or scripts/get_maintainer.pl provide you proper list of
-people, so fix your workflow. Tools might also fail if you work on some
-ancient tree (don't, instead use mainline), work on fork of kernel
-(don't, instead use mainline) or you ignore some maintainers (really
-don't). Just use b4 and everything should be fine, although remember
-about `b4 prep --auto-to-cc` if you added new patches to the patchset.
-
-You missed at least devicetree list (maybe more), so this won't be
-tested by automated tooling. Performing review on untested code might be
-a waste of time.
-
-Please kindly resend and include all necessary To/Cc entries.
-</standard letter>
+This introduces new dtbs_check failures. Please fix the binding and drop
+the last patch in the series.
 
 Best regards,
 Krzysztof
