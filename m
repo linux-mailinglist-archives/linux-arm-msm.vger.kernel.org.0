@@ -1,122 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-15349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15350-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0CB7E88D8B4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 09:22:20 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFBCA88D8BD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 09:24:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 202C51C234A1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 08:22:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3148A1F2A7CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 08:24:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AC7C2D059;
-	Wed, 27 Mar 2024 08:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2460E2D61B;
+	Wed, 27 Mar 2024 08:24:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DdWltAI7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j9P2tUw6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B0F24B26;
-	Wed, 27 Mar 2024 08:22:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4EFF23D7;
+	Wed, 27 Mar 2024 08:24:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711527735; cv=none; b=Ggvga6T2zEx919cwX+5IQVbwhqN1CqcLG1iuTJ/gUfRFujurJfj+yeFTCXcN8+e1TzefglrUVM//PoEhnKwFNdZujLfJZxzOR5426zvXLodcpeL1dHiEm5GUTODgjaOHbtOufYhBBdyJhdbU6Di33KrGfadSQS2nizHqQ1i0T0o=
+	t=1711527857; cv=none; b=m+JWvhog5MEVNwYp9IzZ6yaoDtN0FdmGo37iX6l6Nn/QJPhOrL3Eqc6Igjj7b+4uVg9T0ITn2F6WJcIS1bmrWhOFrS3Shi7IuB5E2VRszkqSSVnToNG17jj8RGfNnIRbHLQX3m8NRS87Q476MT91f5dEG7FNNu3aKf/5IBU7bv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711527735; c=relaxed/simple;
-	bh=DVhc/DiH6aBTQ49+AvbMyiv/Jw2lQu94miyyYFAiNkc=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d1dgjdUvqBdVmPM+zeGwKoByZrRxr71e0eVcBr6tKZ9qj8xZK7tIfrC4s7PAuJa+hwAXcC8zs3pUtLu5z5ur8QvqMjUkDm6GQxAITTYIPPG2xTGK6fLtiNby8OiqnwBTxYvC6kcWh3GyuSc4n4Rt9Wpbj8Yr+p/mbbcboQUFqzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DdWltAI7; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42R7l1oT025841;
-	Wed, 27 Mar 2024 08:22:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=DVhc/DiH6aBTQ49+AvbMy
-	iv/Jw2lQu94miyyYFAiNkc=; b=DdWltAI7U0u7wa4A8PA5IMynwD0ERXrPlPhvS
-	XexbDaRh54iRQgkXYKOUoP4MezPzOsm4ByhbYbE2nfrBZQ7CObW/+bzEC7ULF9lQ
-	gOJ/4OLV0wXvsN5ycYsXL4XxFCg2ga7sW7F1HIDFjp8iXin/1NzUX2h2KKMcqtla
-	TAYoLPypt8QCi+HsEgKzKU03lJy6memzFRol8fMb9N+I1CRM2pQLbdiwcUwkbuQ7
-	ofCbsoAbjKLWM6SyUiBUstBN7lOuzmbrR6g0bje1sHkeRln6X5W17PxCBzA/VRPU
-	YOL8QNyj1/NFPGT7ZqsODqMmkm8dURav/daRGbmViFQU0y4EQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x4fbq82u6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 27 Mar 2024 08:22:09 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42R8M77Y006560
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 27 Mar 2024 08:22:07 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Wed, 27 Mar 2024 01:22:02 -0700
-Date: Wed, 27 Mar 2024 13:51:58 +0530
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>, <robh@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <djakov@kernel.org>, <quic_anusha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH v3 2/3] clk: qcom: add IPQ9574 interconnect clocks support
-Message-ID: <ZgPXJr2T0GLIo4g+@hu-varada-blr.qualcomm.com>
-References: <20240326121312.1702701-1-quic_varada@quicinc.com>
- <20240326121312.1702701-3-quic_varada@quicinc.com>
- <CAA8EJpq5ng2K_Y481FbsjSXCaGM5_2+xkwWqFzfzXv2ZOBpMgw@mail.gmail.com>
+	s=arc-20240116; t=1711527857; c=relaxed/simple;
+	bh=3O9nZkHhgz3EfvIBaPtrSnSZtIgGhJoXhwNgfGO7CX4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TuM8BlSrv0Vi3Mc34CER48MKyLtAyVBCRYjuvLH2/tNq5ynzGELanQ9MJbrlL5olT74GOTe3FuHf86PrLJQNvvzSETqj1hPRNVWoMJPxKKROZcHmkvPOMb7zJmBFiw2ET5sryYibWGmSyDgyhS/8O0Q8shFEZEpM/ZQOMNYqp2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j9P2tUw6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45900C433C7;
+	Wed, 27 Mar 2024 08:24:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711527856;
+	bh=3O9nZkHhgz3EfvIBaPtrSnSZtIgGhJoXhwNgfGO7CX4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=j9P2tUw6edMJRhnwzoQrRs+XIKbS+xEweeBhXY3zZJ/RTj1R7mEa72z4U16yo2TFn
+	 TTKFt09jLYgi53FcEGhDm66V9WckqMs2OYk5+vXbuIujHZJf73/C+nKdb+iA1xKIY6
+	 rHkR+o+nsulOr5cG12CVo9mBfpkH1/g1HQ+1dAdY+m/PXy2bbfYTOUlHganupZ5qLh
+	 pLD11oUCAnIfexzwab73/UDv/S5Rhf454RM6Xx784Fz2Pd4QsiNYieUTq33RxtDsm4
+	 3Bbha4ZBIbxb7aP1ggVF9M/Fy+raS/QVk+WadLk70POHbqsgb7Flx63WH6p3JgFWs7
+	 kPtY29Xau5cEw==
+Date: Wed, 27 Mar 2024 09:24:05 +0100
+From: Niklas Cassel <cassel@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Jingoo Han <jingoohan1@gmail.com>,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Marek Vasut <marek.vasut+renesas@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Kishon Vijay Abraham I <kishon@ti.com>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	NXP Linux Team <linux-imx@nxp.com>,
+	Minghuan Lian <minghuan.Lian@nxp.com>,
+	Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Jesper Nilsson <jesper.nilsson@axis.com>,
+	Srikanth Thokala <srikanth.thokala@intel.com>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Heiko Stuebner <heiko@sntech.de>, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
+	linux-omap@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linuxppc-dev@lists.ozlabs.org, linux-arm-kernel@axis.com,
+	linux-rockchip@lists.infradead.org
+Subject: Re: [PATCH v11 8/8] PCI: endpoint: Remove "core_init_notifier" flag
+Message-ID: <ZgPXpZgoMqVn8QHt@ryzen>
+References: <20240327-pci-dbi-rework-v11-0-6f5259f90673@linaro.org>
+ <20240327-pci-dbi-rework-v11-8-6f5259f90673@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAA8EJpq5ng2K_Y481FbsjSXCaGM5_2+xkwWqFzfzXv2ZOBpMgw@mail.gmail.com>
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: KRpQO8Mmk6U_gNDAuR-4qoFy4TeKdVlN
-X-Proofpoint-ORIG-GUID: KRpQO8Mmk6U_gNDAuR-4qoFy4TeKdVlN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-27_05,2024-03-21_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
- phishscore=0 lowpriorityscore=0 mlxscore=0 malwarescore=0
- priorityscore=1501 clxscore=1015 mlxlogscore=700 bulkscore=0 adultscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2403270055
+In-Reply-To: <20240327-pci-dbi-rework-v11-8-6f5259f90673@linaro.org>
 
-Dmitry,
+Hello Mani,
 
-On Tue, Mar 26, 2024 at 02:37:20PM +0200, Dmitry Baryshkov wrote:
-> On Tue, 26 Mar 2024 at 14:14, Varadarajan Narayanan
-> <quic_varada@quicinc.com> wrote:
-> >
-> > Unlike MSM platforms that manage NoC related clocks and scaling
-> > from RPM, IPQ SoCs dont involve RPM in managing NoC related
-> > clocks and there is no NoC scaling.
-> >
-> > However, there is a requirement to enable some NoC interface
-> > clocks for accessing the peripheral controllers present on
-> > these NoCs. Though exposing these as normal clocks would work,
-> > having a minimalistic interconnect driver to handle these clocks
-> > would make it consistent with other Qualcomm platforms resulting
-> > in common code paths. This is similar to msm8996-cbf's usage of
-> > icc-clk framework.
-> >
-> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+On Wed, Mar 27, 2024 at 12:05:54PM +0530, Manivannan Sadhasivam wrote:
+> "core_init_notifier" flag is set by the glue drivers requiring refclk from
+> the host to complete the DWC core initialization. Also, those drivers will
+> send a notification to the EPF drivers once the initialization is fully
+> completed using the pci_epc_init_notify() API. Only then, the EPF drivers
+> will start functioning.
+> 
+> For the rest of the drivers generating refclk locally, EPF drivers will
+> start functioning post binding with them. EPF drivers rely on the
+> 'core_init_notifier' flag to differentiate between the drivers.
+> Unfortunately, this creates two different flows for the EPF drivers.
+> 
+> So to avoid that, let's get rid of the "core_init_notifier" flag and follow
+> a single initialization flow for the EPF drivers. This is done by calling
+> the dw_pcie_ep_init_notify() from all glue drivers after the completion of
+> dw_pcie_ep_init_registers() API. This will allow all the glue drivers to
+> send the notification to the EPF drivers once the initialization is fully
+> completed.
+> 
+> Only difference here is that, the drivers requiring refclk from host will
+> send the notification once refclk is received, while others will send it
+> during probe time itself.
+> 
+> But this also requires the EPC core driver to deliver the notification
+> after EPF driver bind. Because, the glue driver can send the notification
+> before the EPF drivers bind() and in those cases the EPF drivers will miss
+> the event. To accommodate this, EPC core is now caching the state of the
+> EPC initialization in 'init_complete' flag and pci-ep-cfs driver sends the
+> notification to EPF drivers based on that after each EPF driver bind.
+> 
+> Tested-by: Niklas Cassel <cassel@kernel.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  drivers/pci/controller/cadence/pcie-cadence-ep.c  |  2 ++
+>  drivers/pci/controller/dwc/pci-dra7xx.c           |  2 ++
+>  drivers/pci/controller/dwc/pci-imx6.c             |  2 ++
+>  drivers/pci/controller/dwc/pci-keystone.c         |  2 ++
+>  drivers/pci/controller/dwc/pci-layerscape-ep.c    |  2 ++
+>  drivers/pci/controller/dwc/pcie-artpec6.c         |  2 ++
+>  drivers/pci/controller/dwc/pcie-designware-ep.c   |  1 +
+>  drivers/pci/controller/dwc/pcie-designware-plat.c |  2 ++
+>  drivers/pci/controller/dwc/pcie-keembay.c         |  2 ++
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c         |  1 -
+>  drivers/pci/controller/dwc/pcie-rcar-gen4.c       |  2 ++
+>  drivers/pci/controller/dwc/pcie-tegra194.c        |  1 -
+>  drivers/pci/controller/dwc/pcie-uniphier-ep.c     |  2 ++
+>  drivers/pci/controller/pcie-rcar-ep.c             |  2 ++
+>  drivers/pci/controller/pcie-rockchip-ep.c         |  2 ++
+>  drivers/pci/endpoint/functions/pci-epf-test.c     | 18 +++++-------------
+>  drivers/pci/endpoint/pci-ep-cfs.c                 |  9 +++++++++
+>  drivers/pci/endpoint/pci-epc-core.c               | 22 ++++++++++++++++++++++
+>  include/linux/pci-epc.h                           |  7 ++++---
+>  19 files changed, 65 insertions(+), 18 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/cadence/pcie-cadence-ep.c b/drivers/pci/controller/cadence/pcie-cadence-ep.c
+> index 2d0a8d78bffb..da67a06ee790 100644
+> --- a/drivers/pci/controller/cadence/pcie-cadence-ep.c
+> +++ b/drivers/pci/controller/cadence/pcie-cadence-ep.c
+> @@ -734,6 +734,8 @@ int cdns_pcie_ep_setup(struct cdns_pcie_ep *ep)
+>  
+>  	spin_lock_init(&ep->lock);
+>  
+> +	dw_pcie_ep_init_notify(&pci->ep);
 
-Have posted the next version addressing your comments.
-Please review.
+This looks wrong (and I think that you have not build tested this).
 
-Thanks
-Varada
+dw_* prefix indicates DWC, so it is a DWC specific function.
+
+I don't think that you can use this function for the 3 non-DWC EPC drivers.
+I think that you need to use call pci_epc_init_notify() directly.
+
+
+(Also perhaps rebase your series on v6.9-rc1, I got conflicts when trying
+to apply it to v6.9-rc1, because it looks like the series is still based
+on v6.8-rc1.)
+
+
+Kind regards,
+Niklas
 
