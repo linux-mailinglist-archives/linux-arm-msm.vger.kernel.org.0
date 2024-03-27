@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-15455-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3AE0188EF58
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 20:37:17 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D0B588EF5B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 20:37:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E562E2A39EF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 19:37:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 412B51C23DBA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 19:37:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96F812D047;
-	Wed, 27 Mar 2024 19:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82ACB13E3E4;
+	Wed, 27 Mar 2024 19:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WJKj/KXw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QwS9S3ir"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF991E52C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 19:37:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D9F21350
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 19:37:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711568232; cv=none; b=GmdvuPW1MV5G7BY+FSa6qmvGJLO74AlWhUgGM62zIifp9Zqr5FEN671Jwd3eE0V1HnsBgCC1pz8X41uu1t8ywQQ6H7NNEwBqP6RZ/5pkGXiNZVSsVDB3nY5xP90bCkP9p/YE29c6+37bN8Eq1UOJrV4egguMKTSglqqUKJLwVZI=
+	t=1711568268; cv=none; b=s3sZ+fI7WXZB3yvPNXmmfOT935r3atsau34IaU9j1gPzdmYR7Q212Sy2RWTeJEg9Uj6g/lfAO56n0JKwSlNcjKPnG92PlzrLF+82Q+/uSb3BwvSEo6Unpkfrwv7wVldbfIvWYnujqr+lVeH8UQ9AD+u7+3j1Qv9Ur3knrpOdHCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711568232; c=relaxed/simple;
-	bh=3oGmH2jG0eLuQD39ybBoUf/MFkybfkYMHfa6XQxQ3+Y=;
+	s=arc-20240116; t=1711568268; c=relaxed/simple;
+	bh=2gqZ4R2kRz1uznHqor1WK2GlQpJzKrC2SE0LyqyvmYo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jIXAQ81nqrIUDWHCDvDKLuG5ekaDGE8Ca/1c9P5L1wv85bmWs7K+pBQZlDh50Oartu6T7xWT6ye3YxcItm34eIsNBSfks7Y7lzm2pcV6F07mcbE8GSYeX5b42gWVwBj0qbEoyyBPZ5K7B++laBaAHk0r1JIhTDHDLxk/rf4nl9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WJKj/KXw; arc=none smtp.client-ip=209.85.208.50
+	 In-Reply-To:Content-Type; b=tq4Rx3xAELNf6+2mKEw1TACtlUfsu0wHXTK0W0GNz5BaKUe/EmIRVHtvAgQpmBzQUCZWRRLTxW5aezvnhOaitUkNZ+n+Vb/gb34QlIgXBQCiu5COpT9aELwcIdfZ+1OrJ3eHmgGWmspK+WmnQqudb45yJZBsDgpdxUBejPFJzaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QwS9S3ir; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-56c0bd07e7bso246955a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 12:37:09 -0700 (PDT)
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-513e14b2bd9so142513e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 12:37:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711568228; x=1712173028; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1711568265; x=1712173065; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=4T/B+VzBjIp5hRTTUsSLTcK3F2fOLlbjWnZQngFg5ZU=;
-        b=WJKj/KXwQL49rnyqiIG3sWPvk2l05/wA+9/15kn/6cZPFrWKBsYHPqfI5iiQSHCmcp
-         uXue/mO1KdD3la1LqpaHyeVb+K9LXgszaUp4cvJkrTIZXjHo7BXAEW1YkEq8Cl/gPNc6
-         /oapSodGsnzsCeMLJKwt2hvvRBzB+EihW+/uWa0JI57nw7XsJkm7k7vSjMt5AxCHz3mz
-         B1xZWvparkk9KLHKr87sz+vY9OjQpC01qSzQ34UFhkNR5Qz+Ds7TdwHaAa9c6E3Is/pl
-         TY5coq61OadUY9fg6qCKeZ3q7rFo013N+baSFHngEB8kb0waeFgsCgQpkjT3BTY5U/bL
-         RqOw==
+        bh=dzIicXHMZ050qTLYUr+hlMJXN5VMIm4RTBB+qAp88c4=;
+        b=QwS9S3ir3Cf7b8aflI4zEEKy2c28C9K87cz5YrYzldHkjz2vV3X85d8DM5u7WV6xe5
+         kx9gxgC7yBRyL2fObiRku/ZBQ76FRKIBb3+YW0ehwW1h/Q/NFJTwpGER3N1sS73Y4j+3
+         PtlYFA8ZlR23HpSOZSOpjd2CvpXno3ssJq6DfsJZXaKf5XzDQOUx00gdI5ZLJOISjn2u
+         zntNFhPx0MKAz1dCy+NOUjBRzK3QXLu9cSxZz/bxpYXB32FAg1Yn8naGxjGuuw6nC44U
+         lY0mCYpSIYe4uC++NnfdtmIObsjCpghqN8GowootOwFut4kENtu7y/WJHWi4/cTuuR6h
+         +yIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711568228; x=1712173028;
+        d=1e100.net; s=20230601; t=1711568265; x=1712173065;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4T/B+VzBjIp5hRTTUsSLTcK3F2fOLlbjWnZQngFg5ZU=;
-        b=ZEjfa+kGfuqUZFs9v/4EjUlrdyDdQ63b5fd1pwhesBX1nCvnQ/sn3sVPv+HX9Rf4ZG
-         uQIYfuc7fiQ8WfrZFdOwI9nNZEEHE/5TnRO8GMMW59XJoz21DJQZ2kYFQ34jMfOrNNoR
-         mBqtmMH9HNymdlmoelF/dGVTJDvfJuPf2eqzI7Z79BoTskYDwRmDENaPGblg31694FoD
-         72OyOg91vxOsvevMKD4MU20KUvHYS9NuPX4For67Q0O07MKWlrGV+LD5qnVQSNL71sOD
-         2M0PwHZtEAfT0iJKxZ9+HbBUV/qlmFHFpdQdG8bJUwLLRyfksfijAnRXArYcw17Qq61H
-         OEcA==
-X-Gm-Message-State: AOJu0YytlUJHhXVfREhGCJCRejPndmbRhP0JUKimjBWjG+/3ZmsdhWEJ
-	u5S816tTysVI5CHcRG21Jc1qr+inhZKKU0DIZ4ubCpnm/oeeHVZUi8zEwl3TIBg=
-X-Google-Smtp-Source: AGHT+IFsk8GCWOEwMowsrVcmDSuO4DptdbCJiKVpNb2Akf6RhttP0MkwZhgNrWajwTPm3VPOQHv+TQ==
-X-Received: by 2002:a17:906:5fd8:b0:a4d:f9b1:6e7d with SMTP id k24-20020a1709065fd800b00a4df9b16e7dmr286185ejv.76.1711568228023;
-        Wed, 27 Mar 2024 12:37:08 -0700 (PDT)
+        bh=dzIicXHMZ050qTLYUr+hlMJXN5VMIm4RTBB+qAp88c4=;
+        b=LB8ra5AzZQpgY9/79xpiFOYUBzMxu2I0iJPrCubDhu6J8zB+CHxEcoslVNXNZS+NzU
+         QAvwz7y+lsBUzZVS3Y6qdCaQXUXsa//AXQjZMhtIS+pME0nAbCrUW62sQVUI2W8+1cy9
+         iWR2rXfTHnwS1VyscN01ACEIH7I6ZlJfRz1MmmXNQbvG6tNvtP8tVsbq0kxNPT8TTQv6
+         Lpj/Golp0pNsJ0WD3PcQPuuSloFaojPZ/7JNLSmITif2es7R3jSMR5sjP4jDIHyhVK3t
+         4XfcbuQCJYhjLF9f6MGR4qqHiy/1GXEfVBxT322rT9xVVFQpO/5tE+L7TFNbE8CxMa1f
+         mnew==
+X-Forwarded-Encrypted: i=1; AJvYcCXECSG6xykDHdz+0zscgtyggfJIe4JMpKd7pf74qFUHQGZcNSafzW7km7wt4UrCpCoZjD35pAoVGdaNRFX19emHmIn+6docfKotwRR5jw==
+X-Gm-Message-State: AOJu0YzqsYK1TSXENTG+6IcC9NinsaDFf+vGW0HeqTf9n83l2UHWG7aH
+	wLZbeRcbze1lD4Hxn1Axj2Vib9eeitbhyhZ527wy8kfZUny9ihILiFRoeu1/vLA=
+X-Google-Smtp-Source: AGHT+IEf6n8+HGB5mPHNgIKF1cfGwXBuWdfrKeOX34punTu2BHULBlgFX79zgN9ioE38kwy+ZKWXww==
+X-Received: by 2002:a19:5e4b:0:b0:513:21a9:79a8 with SMTP id z11-20020a195e4b000000b0051321a979a8mr242105lfi.62.1711568264830;
+        Wed, 27 Mar 2024 12:37:44 -0700 (PDT)
 Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id i27-20020a170906265b00b00a471481ef3csm5715694ejc.124.2024.03.27.12.37.05
+        by smtp.gmail.com with ESMTPSA id lm9-20020a170906980900b00a4761c94a5esm4327268ejb.107.2024.03.27.12.37.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Mar 2024 12:37:07 -0700 (PDT)
-Message-ID: <653f43a4-c05a-4086-b87f-abed88dbb28b@linaro.org>
-Date: Wed, 27 Mar 2024 20:37:04 +0100
+        Wed, 27 Mar 2024 12:37:44 -0700 (PDT)
+Message-ID: <11a193b1-7a3f-43ca-b885-cac8fdf2190b@linaro.org>
+Date: Wed, 27 Mar 2024 20:37:43 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,20 +77,22 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] PCI: qcom: properly implement RC shutdown/power up
-To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
+Subject: Re: [PATCH v2 2/3] PCI: qcom: Read back PARF_LTSSM register
+To: Johan Hovold <johan@kernel.org>
+Cc: Bjorn Helgaas <helgaas@kernel.org>, Bjorn Andersson
+ <andersson@kernel.org>,
  Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
  Lorenzo Pieralisi <lpieralisi@kernel.org>,
  =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
  Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Philipp Zabel <p.zabel@pengutronix.de>
-Cc: linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
- linux-kernel@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>,
- Bjorn Andersson <quic_bjorande@quicinc.com>
-References: <20240210-topic-8280_pcie-v2-0-1cef4b606883@linaro.org>
- <20240210-topic-8280_pcie-v2-3-1cef4b606883@linaro.org>
- <39f28d21-e178-68df-c7b6-eef30f0584e3@quicinc.com>
+ Philipp Zabel <p.zabel@pengutronix.de>, linux-arm-msm@vger.kernel.org,
+ linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Johan Hovold <johan+linaro@kernel.org>
+References: <20240215161114.GA1292081@bhelgaas>
+ <bc7d9859-f7ec-41c5-8a9e-170ccdfff46a@linaro.org>
+ <Zc8GHrgdF7jJBgyu@hovoldconsulting.com>
+ <c1f85249-32b1-41e2-adc3-5aa4ad7609b9@linaro.org>
+ <ZfR7uCcflCiFTvBh@hovoldconsulting.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -127,61 +130,36 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <39f28d21-e178-68df-c7b6-eef30f0584e3@quicinc.com>
+In-Reply-To: <ZfR7uCcflCiFTvBh@hovoldconsulting.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 20.02.2024 5:12 AM, Krishna Chaitanya Chundru wrote:
+On 15.03.2024 5:47 PM, Johan Hovold wrote:
+> On Fri, Mar 15, 2024 at 11:16:59AM +0100, Konrad Dybcio wrote:
+>> On 2/16/24 07:52, Johan Hovold wrote:
 > 
+>>> This makes no sense. As Bjorn already said, you're just polling for the
+>>> link to come up (for a second). And unless you have something else that
+>>> depends on the write to have reached the device, there is no need to
+>>> read it back. It's not going to be cached indefinitely if that's what
+>>> you fear.
+>>
+>> The point is, if we know that the hardware is expected to return "done"
+>> within the polling timeout value of receiving the request to do so, we
+>> are actively taking away an unknown amount of time from that timeout.
 > 
-> On 2/10/2024 10:40 PM, Konrad Dybcio wrote:
->> Currently, we've only been minimizing the power draw while keeping the
->> RC up at all times. This is suboptimal, as it draws a whole lot of power
->> and prevents the SoC from power collapsing.
->>
->> Implement full shutdown and re-initialization to allow for powering off
->> the controller.
->>
->> This is mainly indended for SC8280XP with a broken power rail setup,
->> which requires a full RC shutdown/reinit in order to reach SoC-wide
->> power collapse, but sleeping is generally better than not sleeping and
->> less destructive suspend can be implemented later for platforms that
->> support it.
->>
->> Co-developed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
+> We're talking about microseconds, not milliseconds or seconds as you
+> seem to believe.
+> 
+>> So, if the polling condition becomes true after 980ms, but due to write
+>> buffering the value reached the PCIe hardware after 21 ms, we're gonna
+>> hit a timeout. Or under truly extreme circumstances, the polling may
+>> time out before the write has even arrived at the PCIe hw.
+> 
+> So the write latency is not an issue here.
 
-[...]
-
-
->> +    if (pcie->soc_is_rpmh) {
->> +        /*
->> +         * The PCIe RC may be covertly accessed by the secure firmware
->> +         * on sleep exit. Use the WAKE bucket to let RPMh pull the plug
->> +         * on PCIe in sleep, but guarantee it comes back up for resume.
->> +         */
->> +        icc_set_tag(pcie->icc_mem, QCOM_ICC_TAG_WAKE);
->> +
->> +        /* Flush the tag change */
->> +        ret = icc_enable(pcie->icc_mem);
->> +        if (ret) {
->> +            dev_err(pcie->pci->dev, "failed to icc_enable %d\n", ret);
->> +
->> +            /* Revert everything and pray icc calls succeed */
->> +            return qcom_pcie_resume_noirq(dev);
->> +        }
->> +    } else {
->> +        /*
->> +         * Set minimum bandwidth required to keep data path functional
->> +         * during suspend.
->> +         */
-> calling qcom_pcie_host_deinit(&pcie->pci->pp) above will turn off all the resources, setting BW to 1Kbps will not make sense here.
-
-This is preserving the current behavior, it may be revised later.
-
-See ad9b9b6e36c9 ("PCI: qcom: Add support for system suspend and resume")
-that introduced it, in a perhaps overly 8280-centric fashion.
+Right, I'm willing to believe the CPU will kick the can down the road
+for this long. I'll drop this.
 
 Konrad
 
