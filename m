@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-15368-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15369-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BBC8E88DA23
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 10:21:05 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8D7988DA37
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 10:24:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3F7EE1F2C73A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 09:21:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ECDD21C280B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 09:24:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D20F6374F9;
-	Wed, 27 Mar 2024 09:20:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F72937710;
+	Wed, 27 Mar 2024 09:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="reHV/YbG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ORXzJ1tC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F358D37162
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 09:20:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B17C374EA
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 09:24:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711531259; cv=none; b=t9uHNIg8ZazT9wnDr3tU41Dxe1jh8+CcBK6FROlU0VCTDPO9A+NSKWgJ4YXY+Wg6UjjMxGM/EKhTPQFW4pJbXQx8KCz7nlSLqz6Cb6Owx86UNoZWnRZ1WDAhwiOsWzzTJOpRZcQdP1orW7Y5vPfBc3dCY9JdAHrWO+157k70/gU=
+	t=1711531445; cv=none; b=sISEbS4w7EIKS2EKO2JujA4Z7pfA6ctyNMbeUCWPIJwxNB6Gw0EDsGFJv762HpN+myrw4YDAbqhV8DA5nLtUB6QOsnV6DeJ6ZOT/3eDiDY4Au93Kjt8Lbeji6/Dyz4+urIWDvOa6YFeWIMQYcffNBjx2ylpX/xHZNIoAQ9Asp8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711531259; c=relaxed/simple;
-	bh=RQnGNQln6HUSRmZMM9YhXnc19rJih+6Fo79tXSwzJ3g=;
+	s=arc-20240116; t=1711531445; c=relaxed/simple;
+	bh=bkoOwCv/XTWP9VmzVwpOstmW1ro23JeyiLdyNeJIdGo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=O3zeT3NxZSudzgrVyMJX1KOXtNxYldHLn6TuygNdgSpNktUR0ZGxvFvepNOWpUQlwXjolBaEJQT8pdNbEOK0GeE3F4wE8QvgiHxHjIgNfFxU5dK+UU4LQGQO0PIHwy9htG9z/LIGTmciHpdt74onVWLR62YpGZvYsZflZ54BWBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=reHV/YbG; arc=none smtp.client-ip=209.85.208.49
+	 In-Reply-To:Content-Type; b=ooSoBc0NBBFve61UUYM09haGI2vp21NgPP70/W1TVczrfqgDTLW948/TQF4qP5R/htW+DBA5DbJYE7xB8ghcXCoJfn8K8454YxX+3qP+fuPBcsHmYUL+BttBoyx3EZ32zdm5vkzqsi0QSZKC24o3+ShVISc9qeaWCcXzsGIjgGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ORXzJ1tC; arc=none smtp.client-ip=209.85.218.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-56a2bb1d84eso1092417a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 02:20:57 -0700 (PDT)
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a46a7208eedso880416066b.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 02:24:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711531256; x=1712136056; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1711531441; x=1712136241; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=PVUyFVDIZulXwICyQlj9QTD9tz8APS9bTNZy6SBhqeM=;
-        b=reHV/YbG94hTYmJcJro+lWhwny99Mxa/ZBH4NhI74tSCw34cwmeUHnzbZrJyTIEzpw
-         6/UYODV1PeNs/l93dW/7RSqF8UT1ImH4d+mm1b3MDqA3UXiX99CL3Ojf56ljvukC2ktB
-         Jczed/E7CkAbetR7OKEQM6KbWgQQ5tshhXztPDQII1JOqf5Vsh6s0qZCTt0C9c+Bae2v
-         T0Z9UV32v0K3tvCLjerE6vNUKgSS5DcJ3WONCIWpQYwdt52lLP9aSoyil600e6SuxbDy
-         r9RBN0AvHXNMHxa7hrBAuoqeRv/5wnaaykxqiuVP9GHr4YLx7SjpUezDGvKBjWYhdR8C
-         rcnw==
+        bh=cTJ3w7P7U+hKgqOO13U5dm12YU1iLhncD8QPeYjqVFk=;
+        b=ORXzJ1tCp114TTcVSZTArZTHXspJck4kjGKvgIq+pF6JIxSOIH20LEqu7GufOWlhwP
+         t0t6SxwBc1oQfARmFyWD08nGfqAvJGlkaXxOyeFwyz2DK38IIbLxxFgdhbctObYgreEu
+         63jeeAacy0wimw0QEDo0tdlIwpLDbnWo2mKjb83Wm7WvcS2BaT1y7bA5ELdq+R8Rjq0n
+         xQfJ0+K35q2C1en/p6z30myaH3EFSnhdb5G6+wP16LptP2Q+rr/00V+sPN2mG5N4Qp4K
+         BnG4AWws9yH9YPbrWugxbXLUMwQ9RhM9f51TBuiBtVXtjK3wW3sgnvxLLwVccrpa7k6v
+         Y+TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711531256; x=1712136056;
+        d=1e100.net; s=20230601; t=1711531441; x=1712136241;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PVUyFVDIZulXwICyQlj9QTD9tz8APS9bTNZy6SBhqeM=;
-        b=IGAB9WxD4WJsJN/DFkUms9pB6cJSlAKPdR5CnhDRUi5OD6CUDUBby9Vj4JGyI+rqxE
-         v0w13ZNbHpBmf+EP86JBhtVT9D00PKiABnm3XxukUYhAdbkAaBhHPe9G6AKYo7lX4Ucp
-         LCi67J81THFnu114OWYNGRhlcTO5QkSZ6kSe2P6GemrNmv4HMHC+4hYpPs//2imQky5z
-         3wU+MSCcvPeSXk5sk+I9w1t6zpzF6PjEbmqXwOohGjfPSRKH10+xkMgkYcjBov5UCqvD
-         UQ4OHi19DXNKAK4ygXkaC6NAx66yblD7c2GXPcnPMncJhpq+LpW+b2/3l0z5AwhP7jHS
-         x3CA==
-X-Forwarded-Encrypted: i=1; AJvYcCW3TjXjHigRjGSn4A61aVHoMfpHNWGxHH2mZ4Yiay4DQcNTAS5To18GWgdJyrxgLE28dNa+oxM0OF82FiBTiLnbvPbcjTm7G20bBpQtTQ==
-X-Gm-Message-State: AOJu0YzWRaZr9/c/5F/h8SBn7NmKO6yEVKohhQ8+qed4BtYq10VMlgWl
-	5iA6CZ1cCcTZfaOJ6U0XeDUaCEHErruaLiotQZhWcoJsjpCrYocVmyii1m5b7GI=
-X-Google-Smtp-Source: AGHT+IGLscm5Y0ou+WRFTa1lB0ylXsfaScVPOvRTVPiEOHnOb++TwNjd6k7n3DNGtNl+LNVgThDk1w==
-X-Received: by 2002:a05:6402:1654:b0:56b:aaf5:e546 with SMTP id s20-20020a056402165400b0056baaf5e546mr3294677edx.16.1711531256342;
-        Wed, 27 Mar 2024 02:20:56 -0700 (PDT)
+        bh=cTJ3w7P7U+hKgqOO13U5dm12YU1iLhncD8QPeYjqVFk=;
+        b=mSMpr1HptKgPavXuuZLpA/nfq8SHitycUpgTZzGCmXeEqaOU3tC2EmAuby5WDWHuWT
+         x7Iwc6xgXJ/ZHhATwLixvqsc5CMSyQBh7Kq32+9wn+0wThnhE9cjkbWdu/Viig06sKeT
+         IP3mJq9R5liJw0pbVVcZ93FCBHtkVGvpFMGA3PKUU9dMZKih5g3oiqi26LBXLxTo4Ifb
+         eQWPIshMLvbGsjWrZPq4QUayea/pXFPsQqajho0lERvsMlwzfCePWjiFE7wN/KHmQcYw
+         A4LCL2dGgcL5e40fyXezK6IbCdvCIWhYW7jz+o4h63OiW9wGsz1UHBL3y6NSvfavbfHM
+         pIJg==
+X-Forwarded-Encrypted: i=1; AJvYcCVlzb4OYlNeTexza4v+b+zJ73q4vKaTbmqN3b1ut77V3g+tWE2ZkUd2SRk9SCpV2fIBGPb/ytKW4BSiZIT5tQkvEDwOkcjxil2AqKlUPg==
+X-Gm-Message-State: AOJu0Yyfw493JewmoqzQAPkoDygtBtJveVLMBamcgR/54ldplnwql8ul
+	pyEnmN6Gi583eJZ3rEpVH07s2wioEMDbPg/5RT2XffQY4ObotexJ9R0xs9Ltqso=
+X-Google-Smtp-Source: AGHT+IG0RwG0+H2jhpdsWqWZxbpBKn/+UEcFQnWCYoskwFE7R031tcRGub/KlNQ1BbNLEC86vEgSPQ==
+X-Received: by 2002:a17:906:2898:b0:a47:3b7b:e7a7 with SMTP id o24-20020a170906289800b00a473b7be7a7mr2457501ejd.54.1711531441533;
+        Wed, 27 Mar 2024 02:24:01 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.206.205])
-        by smtp.gmail.com with ESMTPSA id f13-20020a056402004d00b005689bfe2688sm5114415edu.39.2024.03.27.02.20.53
+        by smtp.gmail.com with ESMTPSA id ao18-20020a170907359200b00a46aba003eesm5162687ejc.215.2024.03.27.02.23.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Mar 2024 02:20:55 -0700 (PDT)
-Message-ID: <30f470b8-e243-4d6f-b626-7f509b6a9858@linaro.org>
-Date: Wed, 27 Mar 2024 10:20:53 +0100
+        Wed, 27 Mar 2024 02:24:01 -0700 (PDT)
+Message-ID: <d213f262-ba0e-4cf8-af0e-66745ffea429@linaro.org>
+Date: Wed, 27 Mar 2024 10:23:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,21 +77,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/1] dt-bindings: display/msm: gpu: Split Adreno
- schemas into separate files
-To: Adam Skladowski <a39.skl@gmail.com>
-Cc: phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Rob Herring <robh+dt@kernel.org>,
+Subject: Re: [PATCH RESEND v6 0/5] spmi: pmic-arb: Add support for multiple
+ buses
+To: Abel Vesa <abel.vesa@linaro.org>, Stephen Boyd <sboyd@kernel.org>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240326201140.10561-1-a39.skl@gmail.com>
- <20240326201140.10561-2-a39.skl@gmail.com>
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+ Johan Hovold <johan@kernel.org>, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-mediatek@lists.infradead.org, devicetree@vger.kernel.org
+References: <20240326-spmi-multi-master-support-v6-0-1c87d8306c5b@linaro.org>
 Content-Language: en-US
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -138,40 +140,25 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240326201140.10561-2-a39.skl@gmail.com>
+In-Reply-To: <20240326-spmi-multi-master-support-v6-0-1c87d8306c5b@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 26/03/2024 21:05, Adam Skladowski wrote:
-> Split shared schema into per-gen and group adrenos by clocks used.
+On 26/03/2024 17:28, Abel Vesa wrote:
+> This RFC prepares for and adds support for 2 buses, which is supported
+> in HW starting with version 7. Until now, none of the currently
+> supported platforms in upstream have used the second bus. The X1E80100
+> platform, on the other hand, needs the second bus for the USB2.0 to work
+> as there are 3 SMB2360 PMICs which provide eUSB2 repeaters and they are
+> all found on the second bus.
 > 
-> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
->  .../devicetree/bindings/display/msm/gpu.yaml  | 317 ++----------------
->  .../bindings/display/msm/qcom,adreno-306.yaml | 115 +++++++
->  .../bindings/display/msm/qcom,adreno-330.yaml | 111 ++++++
->  .../bindings/display/msm/qcom,adreno-405.yaml | 135 ++++++++
->  .../bindings/display/msm/qcom,adreno-506.yaml | 184 ++++++++++
->  .../bindings/display/msm/qcom,adreno-530.yaml | 161 +++++++++
->  .../bindings/display/msm/qcom,adreno-540.yaml | 154 +++++++++
->  .../bindings/display/msm/qcom,adreno-6xx.yaml | 160 +++++++++
->  .../display/msm/qcom,adreno-common.yaml       | 112 +++++++
->  9 files changed, 1157 insertions(+), 292 deletions(-)
+> Changes in v6:
+> - Changed the compatible to platform specific (X1E80100) along with the
+>   schema. Fixed the spmi buses unit addresses and added the empty ranges
 
-One huge patch of 1150 insertions... please split it, e.g. first move
-the common parts to common schema and include it in msm/gpu. Then move
-device by device.
-
->  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,adreno-306.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,adreno-330.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,adreno-405.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,adreno-506.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,adreno-530.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,adreno-540.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,adreno-6xx.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,adreno-common.yaml
-> 
-
+Why resending after few days? And why without reviews?
 
 Best regards,
 Krzysztof
