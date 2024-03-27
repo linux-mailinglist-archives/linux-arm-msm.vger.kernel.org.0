@@ -1,148 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-15408-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15409-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 804C688EBA3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 17:51:44 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9305288EBB6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 17:55:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 359A42969B6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 16:51:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4998E1F2D470
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 16:55:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E55AE14D281;
-	Wed, 27 Mar 2024 16:51:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8C9414D29A;
+	Wed, 27 Mar 2024 16:55:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="OlCqOZhR"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O9UtOMh9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay1-d.mail.gandi.net (relay1-d.mail.gandi.net [217.70.183.193])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 806E412F5A2;
-	Wed, 27 Mar 2024 16:51:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E239130A6F;
+	Wed, 27 Mar 2024 16:55:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711558299; cv=none; b=cUhoFSGz99CY8g0Aw8Oqn6C9H7CEdRIKeUZEL7CqQN/SLfx+DOt0Xj8uJskZvVjz090MpeOgaip0yWiKFNc9wzCF6109UN3IFrHxi9Mxtrb9o+lggt+jFxSGnOkwbTPk5kng7IDmu055qja8/LU//aSmwSjtaibwfoWt8I7JpXs=
+	t=1711558536; cv=none; b=uOGHYnicUHW6rF39U/IyJbaEv0EObOUXFregTx9c5mlOgUqa5Hr4K0gx+cO0xA5DYQZFdpkyPh9iD13KjV2Mxm+lrEWKMuIlGaVkFjITMpw0jz1UTbnYGRGY35nXB9sN/0TpqZpABfyC4jI2f60upJnmYbxjTxtHiMM65xyDooQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711558299; c=relaxed/simple;
-	bh=LM8sbbiZKaeBPMakgJ3MutVIXuYeOb/HCEs0DQyWv2s=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nZ2nGNmNo43CkXIDmLuAheSjYZsFmkdsiTQFgP060ixXj5gIOves2qUeGUltiKzQrvaUoYY79o9fJvZaISdIbRRiwH9NCnnRBNFtBwBRqMusFp/wrsHuJlxzxGFSAlzXSz1wh4MQcgeKu5qKaaDJhQhrLDQYNPCG7jvisM6iUlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=OlCqOZhR; arc=none smtp.client-ip=217.70.183.193
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 1B652240008;
-	Wed, 27 Mar 2024 16:51:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1711558294;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=8dkDsTM+CyF3T1RfUsZvTaGtiJGxz0u7kuWWxBLiq70=;
-	b=OlCqOZhRUE+LEglVKAzyRaIJnfHwR7NpVwTLoTmHNcTFLc1l2Ze/9ictqKZcclr3fbO0nE
-	JFO/Ll9eSZm0QJZUc7JFGocaYue1wLCziUiLa/3wRMVohIQ2NLg7RI87xwUd3YtaU+owPM
-	Vll6eIkZQFjuJGT1soHhKBI2DemQ2JnZx3vT1lIb+F2cQ2AuT2ZTc9LDO+/YBI6d+FnvGW
-	kDbQt4FW3pInjRk5kBdRExWdgGsNnLTQbx3ypV2enI06lf+G8BbHC05YFWikJ+bJHQBIA+
-	7arwt6GAfJQ/f6JD3pTIs/h0gSnDzYG4vuEA8A/B3CVYNpBvSNN/iujE0U5JhA==
-Date: Wed, 27 Mar 2024 17:51:31 +0100
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: Christian Marangi <ansuelsmth@gmail.com>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Richard
- Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>, Md
- Sadre Alam <quic_mdalam@quicinc.com>, Sricharan Ramabadhran
- <quic_srichara@quicinc.com>, linux-mtd@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- stable@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] mtd: rawnand: qcom: Fix broken erase in
- misc_cmd_type in exec_op
-Message-ID: <20240327175131.3c0100c3@xps-13>
-In-Reply-To: <66044bea.050a0220.dee16.c250@mx.google.com>
-References: <20240325103053.24408-1-ansuelsmth@gmail.com>
-	<20240326072512.GA8436@thinkpad>
-	<66044bea.050a0220.dee16.c250@mx.google.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1711558536; c=relaxed/simple;
+	bh=vpDkfUBtWL+UxBwjuUm5gYeL/cEacWfXEPKG81vcE0M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tVUCvvyh7H5EYkD1QI3uGSyjr4ez9q64CAjIvv58Baou9v6c4H+DRBtMU1+t5xKscrj6q0dEEdqG5fjCxIeFviFZahdLj00I9hOxqMFMN6Y1gB0sX0/h7PyL8QGDLextS2sgjSoKJBleZY9ULG6mJfeeYJ+DgWKUMqBvNcJ9lpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O9UtOMh9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ABDBC433C7;
+	Wed, 27 Mar 2024 16:55:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1711558535;
+	bh=vpDkfUBtWL+UxBwjuUm5gYeL/cEacWfXEPKG81vcE0M=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=O9UtOMh9NhK8uq0mZiMXt2LKgdT1qaV4eqkqQ4OpNjzEIBfNH8AxnSa5LKMbuNnuj
+	 139SwlhRdsUzFtHFa7nm692D1Q6Maoi8Dc8aCzxaDG36oyEKDDYttLwvcqzFnSbA0P
+	 DJD28wQMsDmrT4Kh7AowzV2l5JSL5uf6ZAH6m6jc=
+Date: Wed, 27 Mar 2024 17:55:31 +0100
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Allen Pais <apais@linux.microsoft.com>
+Cc: linux-kernel@vger.kernel.org, tj@kernel.org, keescook@chromium.org,
+	vkoul@kernel.org, marcan@marcan.st, sven@svenpeter.dev,
+	florian.fainelli@broadcom.com, rjui@broadcom.com,
+	sbranden@broadcom.com, paul@crapouillou.net,
+	Eugeniy.Paltsev@synopsys.com, manivannan.sadhasivam@linaro.org,
+	vireshk@kernel.org, Frank.Li@nxp.com, leoyang.li@nxp.com,
+	zw@zh-kernel.org, wangzhou1@hisilicon.com, haijie1@huawei.com,
+	shawnguo@kernel.org, s.hauer@pengutronix.de, sean.wang@mediatek.com,
+	matthias.bgg@gmail.com, angelogioacchino.delregno@collabora.com,
+	afaerber@suse.de, logang@deltatee.com, daniel@zonque.org,
+	haojian.zhuang@gmail.com, robert.jarzmik@free.fr,
+	andersson@kernel.org, konrad.dybcio@linaro.org, orsonzhai@gmail.com,
+	baolin.wang@linux.alibaba.com, zhang.lyra@gmail.com,
+	patrice.chotard@foss.st.com, linus.walleij@linaro.org,
+	wens@csie.org, jernej.skrabec@gmail.com, peter.ujfalusi@gmail.com,
+	kys@microsoft.com, haiyangz@microsoft.com, wei.liu@kernel.org,
+	decui@microsoft.com, jassisinghbrar@gmail.com, mchehab@kernel.org,
+	maintainers@bluecherrydvr.com, aubin.constans@microchip.com,
+	ulf.hansson@linaro.org, manuel.lauss@gmail.com,
+	mirq-linux@rere.qmqm.pl, jh80.chung@samsung.com, oakad@yahoo.com,
+	hayashi.kunihiko@socionext.com, mhiramat@kernel.org,
+	brucechang@via.com.tw, HaraldWelte@viatech.com, pierre@ossman.eu,
+	duncan.sands@free.fr, stern@rowland.harvard.edu, oneukum@suse.com,
+	openipmi-developer@lists.sourceforge.net, dmaengine@vger.kernel.org,
+	asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+	linux-rpi-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
+	imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
+	linux-mediatek@lists.infradead.org,
+	linux-actions@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-riscv@lists.infradead.org, linux-sunxi@lists.linux.dev,
+	linux-tegra@vger.kernel.org, linux-hyperv@vger.kernel.org,
+	linux-rdma@vger.kernel.org, linux-media@vger.kernel.org,
+	linux-mmc@vger.kernel.org, linux-omap@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org, linux-s390@vger.kernel.org,
+	netdev@vger.kernel.org, linux-usb@vger.kernel.org
+Subject: Re: [PATCH 4/9] USB: Convert from tasklet to BH workqueue
+Message-ID: <2024032753-probable-blatancy-80bf@gregkh>
+References: <20240327160314.9982-1-apais@linux.microsoft.com>
+ <20240327160314.9982-5-apais@linux.microsoft.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-GND-Sasl: miquel.raynal@bootlin.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240327160314.9982-5-apais@linux.microsoft.com>
 
-Hi,
+On Wed, Mar 27, 2024 at 04:03:09PM +0000, Allen Pais wrote:
+> The only generic interface to execute asynchronously in the BH context is
+> tasklet; however, it's marked deprecated and has some design flaws. To
+> replace tasklets, BH workqueue support was recently added. A BH workqueue
+> behaves similarly to regular workqueues except that the queued work items
+> are executed in the BH context.
+> 
+> This patch converts drivers/infiniband/* from tasklet to BH workqueue.
 
-ansuelsmth@gmail.com wrote on Wed, 27 Mar 2024 16:20:58 +0100:
+No it does not, I think your changelog is wrong :(
 
-> On Tue, Mar 26, 2024 at 12:55:12PM +0530, Manivannan Sadhasivam wrote:
-> > On Mon, Mar 25, 2024 at 11:30:47AM +0100, Christian Marangi wrote: =20
-> > > misc_cmd_type in exec_op have multiple problems. With commit a82990c8=
-a409
-> > > ("mtd: rawnand: qcom: Add read/read_start ops in exec_op path") it was
-> > > reworked and generalized but actually broke the handling of the
-> > > ERASE_BLOCK command.
-> > >=20
-> > > Additional logic was added to the erase command cycle without clear
-> > > explaination causing the erase command to be broken on testing it on
-> > > a ipq806x nandc.
-> > >=20
-> > > Fix the erase command by reverting the additional logic and only addi=
-ng
-> > > the NAND_DEV0_CFG0 additional call (required for erase command).
-> > >=20
-> > > Fixes: a82990c8a409 ("mtd: rawnand: qcom: Add read/read_start ops in =
-exec_op path")
-> > > Cc: stable@vger.kernel.org
-> > > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> > > ---
-> > > Changes v2:
-> > > - Split this and rework commit description and title
-> > >=20
-> > >  drivers/mtd/nand/raw/qcom_nandc.c | 5 ++---
-> > >  1 file changed, 2 insertions(+), 3 deletions(-)
-> > >=20
-> > > diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw=
-/qcom_nandc.c
-> > > index b079605c84d3..19d76e345a49 100644
-> > > --- a/drivers/mtd/nand/raw/qcom_nandc.c
-> > > +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-> > > @@ -2830,9 +2830,8 @@ static int qcom_misc_cmd_type_exec(struct nand_=
-chip *chip, const struct nand_sub
-> > >  	nandc_set_reg(chip, NAND_EXEC_CMD, 1);
-> > > =20
-> > >  	write_reg_dma(nandc, NAND_FLASH_CMD, instrs, NAND_BAM_NEXT_SGL);
-> > > -	(q_op.cmd_reg =3D=3D OP_BLOCK_ERASE) ? write_reg_dma(nandc, NAND_DE=
-V0_CFG0,
-> > > -	2, NAND_BAM_NEXT_SGL) : read_reg_dma(nandc,
-> > > -	NAND_FLASH_STATUS, 1, NAND_BAM_NEXT_SGL);
-> > > +	if (q_op.cmd_reg =3D=3D OP_BLOCK_ERASE)
-> > > +		write_reg_dma(nandc, NAND_DEV0_CFG0, 2, NAND_BAM_NEXT_SGL); =20
-> >=20
-> > So this only avoids the call to, 'read_reg_dma(nandc, NAND_FLASH_STATUS=
-, 1,
-> > NAND_BAM_NEXT_SGL)' if q_op.cmd_reg !=3D OP_BLOCK_ERASE. But for q_op.c=
-md_reg =3D=3D
-> > OP_BLOCK_ERASE, the result is the same.
-> >=20
-> > I'm wondering how it results in fixing the OP_BLOCK_ERASE command.
-> >=20
-> > Can you share the actual issue that you are seeing? Like error logs etc=
-...
-> > =20
->=20
-> Issue is that nandc goes to ADM timeout as soon as a BLOCK_ERASE is
-> called. BLOCK_ERASE operation match also another operation from MTD
-> read. (parser also maps to other stuff)
->=20
-> I will be away from the testing board for 7-10 days so I can't provide
-> logs currently.
+> 
+> Based on the work done by Tejun Heo <tj@kernel.org>
+> Branch: https://git.kernel.org/pub/scm/linux/kernel/git/tj/wq.git for-6.10
+> 
+> Signed-off-by: Allen Pais <allen.lkml@gmail.com>
+> ---
+>  drivers/usb/atm/usbatm.c            | 55 +++++++++++++++--------------
+>  drivers/usb/atm/usbatm.h            |  3 +-
+>  drivers/usb/core/hcd.c              | 22 ++++++------
+>  drivers/usb/gadget/udc/fsl_qe_udc.c | 21 +++++------
+>  drivers/usb/gadget/udc/fsl_qe_udc.h |  4 +--
+>  drivers/usb/host/ehci-sched.c       |  2 +-
+>  drivers/usb/host/fhci-hcd.c         |  3 +-
+>  drivers/usb/host/fhci-sched.c       | 10 +++---
+>  drivers/usb/host/fhci.h             |  5 +--
+>  drivers/usb/host/xhci-dbgcap.h      |  3 +-
+>  drivers/usb/host/xhci-dbgtty.c      | 15 ++++----
+>  include/linux/usb/cdc_ncm.h         |  2 +-
+>  include/linux/usb/usbnet.h          |  2 +-
+>  13 files changed, 76 insertions(+), 71 deletions(-)
+> 
+> diff --git a/drivers/usb/atm/usbatm.c b/drivers/usb/atm/usbatm.c
+> index 2da6615fbb6f..74849f24e52e 100644
+> --- a/drivers/usb/atm/usbatm.c
+> +++ b/drivers/usb/atm/usbatm.c
+> @@ -17,7 +17,7 @@
+>   *  		- Removed the limit on the number of devices
+>   *  		- Module now autoloads on device plugin
+>   *  		- Merged relevant parts of sarlib
+> - *  		- Replaced the kernel thread with a tasklet
+> + *  		- Replaced the kernel thread with a work
 
-So, shall we wait for additional logs from Christian or shall I merge
-the two-patches series? I'm not sure what's the status anymore.
+a "work"?
 
-Thanks,
-Miqu=C3=A8l
+>   *  		- New packet transmission code
+>   *  		- Changed proc file contents
+>   *  		- Fixed all known SMP races
+> @@ -68,6 +68,7 @@
+>  #include <linux/wait.h>
+>  #include <linux/kthread.h>
+>  #include <linux/ratelimit.h>
+> +#include <linux/workqueue.h>
+>  
+>  #ifdef VERBOSE_DEBUG
+>  static int usbatm_print_packet(struct usbatm_data *instance, const unsigned char *data, int len);
+> @@ -249,7 +250,7 @@ static void usbatm_complete(struct urb *urb)
+>  	/* vdbg("%s: urb 0x%p, status %d, actual_length %d",
+>  	     __func__, urb, status, urb->actual_length); */
+>  
+> -	/* Can be invoked from task context, protect against interrupts */
+> +	/* Can be invoked from work context, protect against interrupts */
+
+"workqueue"?  This too seems wrong.
+
+Same for other comment changes in this patch.
+
+thanks,
+
+greg k-h
 
