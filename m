@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-15456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15457-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D0B588EF5B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 20:37:52 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 68FAD88EF5F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 20:38:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 412B51C23DBA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 19:37:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D82FC288E78
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 19:38:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82ACB13E3E4;
-	Wed, 27 Mar 2024 19:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DF7A14A634;
+	Wed, 27 Mar 2024 19:38:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QwS9S3ir"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="st+1odux"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D9F21350
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 19:37:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53093150983
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 19:38:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711568268; cv=none; b=s3sZ+fI7WXZB3yvPNXmmfOT935r3atsau34IaU9j1gPzdmYR7Q212Sy2RWTeJEg9Uj6g/lfAO56n0JKwSlNcjKPnG92PlzrLF+82Q+/uSb3BwvSEo6Unpkfrwv7wVldbfIvWYnujqr+lVeH8UQ9AD+u7+3j1Qv9Ur3knrpOdHCU=
+	t=1711568296; cv=none; b=MuvQencAOINDp5BHSt0/Q8A/Bj8NxkMnCMMu0T1Px07OwozJi1UnYqmtzK0kYyvKw7t/fUucktjt7Nz24kaVcyUH8gANlX43ANwc2fAEXMHfIpbfFDGOSFwDZGrtoFYbzwgqfY2OzDM4r/ZUfX/TXDbq/lZlbBre+hnkaceAPeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711568268; c=relaxed/simple;
-	bh=2gqZ4R2kRz1uznHqor1WK2GlQpJzKrC2SE0LyqyvmYo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tq4Rx3xAELNf6+2mKEw1TACtlUfsu0wHXTK0W0GNz5BaKUe/EmIRVHtvAgQpmBzQUCZWRRLTxW5aezvnhOaitUkNZ+n+Vb/gb34QlIgXBQCiu5COpT9aELwcIdfZ+1OrJ3eHmgGWmspK+WmnQqudb45yJZBsDgpdxUBejPFJzaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QwS9S3ir; arc=none smtp.client-ip=209.85.167.48
+	s=arc-20240116; t=1711568296; c=relaxed/simple;
+	bh=zisQaeaGvkOWC9X2Vel/dognSj33myR5t5hDQWeBfys=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=jVTNv/ihOUcliRh5Ejgf/LDgDVAqDF/WGJcLF3/xxX7+AOfBGSu2XQzOI7NroxcnFet1VhEy9rOlUFk2HZ0AGHhdKNcLA8cZgEVzro7RGiXAC7gyeFXl/XaS6XCKjObmVxQS2lIkz6AejPbCc2elq1hsTUBwZqo/OtQ3aaPBNQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=st+1odux; arc=none smtp.client-ip=209.85.208.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-513e14b2bd9so142513e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 12:37:46 -0700 (PDT)
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-56c0bd07e7bso248084a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 12:38:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711568265; x=1712173065; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=dzIicXHMZ050qTLYUr+hlMJXN5VMIm4RTBB+qAp88c4=;
-        b=QwS9S3ir3Cf7b8aflI4zEEKy2c28C9K87cz5YrYzldHkjz2vV3X85d8DM5u7WV6xe5
-         kx9gxgC7yBRyL2fObiRku/ZBQ76FRKIBb3+YW0ehwW1h/Q/NFJTwpGER3N1sS73Y4j+3
-         PtlYFA8ZlR23HpSOZSOpjd2CvpXno3ssJq6DfsJZXaKf5XzDQOUx00gdI5ZLJOISjn2u
-         zntNFhPx0MKAz1dCy+NOUjBRzK3QXLu9cSxZz/bxpYXB32FAg1Yn8naGxjGuuw6nC44U
-         lY0mCYpSIYe4uC++NnfdtmIObsjCpghqN8GowootOwFut4kENtu7y/WJHWi4/cTuuR6h
-         +yIA==
+        d=linaro.org; s=google; t=1711568292; x=1712173092; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :references:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=akaDXAIrRxfiXTC20v/6jAvRSqSRGmSUb7NNJN/u/r8=;
+        b=st+1oduxcF+ETxU78CFOfDvoFj/U/IiG2HRx+zYSBYz85QiGNlmcHt1uWLVp7wmoxH
+         g1b/MnNffJg0ZdT6HGhMQ4LZPGlpMswctnxodHcVgzu6yNdY39vZDbGQYhbdIvyWm/oX
+         XAlFnGg3I6PrEhkSBxK7dULvDlD1IntHNGTqhCi7TiJ938fgdJZYrt2UgtUi/8A/EOCY
+         iVQQbqd6tFhgBj7fRtJoi8hXxbuc1MWM0shGkricgIdl1IRIQMpk4Ppa04Zo2RxPVyc4
+         lF8QEnsuZFg8PyekOBW6dYkbkK2gEBZsYsIUWJPkZgscn+7Io/9cKFSHCQLsbv7wqMRZ
+         JCgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711568265; x=1712173065;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dzIicXHMZ050qTLYUr+hlMJXN5VMIm4RTBB+qAp88c4=;
-        b=LB8ra5AzZQpgY9/79xpiFOYUBzMxu2I0iJPrCubDhu6J8zB+CHxEcoslVNXNZS+NzU
-         QAvwz7y+lsBUzZVS3Y6qdCaQXUXsa//AXQjZMhtIS+pME0nAbCrUW62sQVUI2W8+1cy9
-         iWR2rXfTHnwS1VyscN01ACEIH7I6ZlJfRz1MmmXNQbvG6tNvtP8tVsbq0kxNPT8TTQv6
-         Lpj/Golp0pNsJ0WD3PcQPuuSloFaojPZ/7JNLSmITif2es7R3jSMR5sjP4jDIHyhVK3t
-         4XfcbuQCJYhjLF9f6MGR4qqHiy/1GXEfVBxT322rT9xVVFQpO/5tE+L7TFNbE8CxMa1f
-         mnew==
-X-Forwarded-Encrypted: i=1; AJvYcCXECSG6xykDHdz+0zscgtyggfJIe4JMpKd7pf74qFUHQGZcNSafzW7km7wt4UrCpCoZjD35pAoVGdaNRFX19emHmIn+6docfKotwRR5jw==
-X-Gm-Message-State: AOJu0YzqsYK1TSXENTG+6IcC9NinsaDFf+vGW0HeqTf9n83l2UHWG7aH
-	wLZbeRcbze1lD4Hxn1Axj2Vib9eeitbhyhZ527wy8kfZUny9ihILiFRoeu1/vLA=
-X-Google-Smtp-Source: AGHT+IEf6n8+HGB5mPHNgIKF1cfGwXBuWdfrKeOX34punTu2BHULBlgFX79zgN9ioE38kwy+ZKWXww==
-X-Received: by 2002:a19:5e4b:0:b0:513:21a9:79a8 with SMTP id z11-20020a195e4b000000b0051321a979a8mr242105lfi.62.1711568264830;
-        Wed, 27 Mar 2024 12:37:44 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1711568292; x=1712173092;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :references:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=akaDXAIrRxfiXTC20v/6jAvRSqSRGmSUb7NNJN/u/r8=;
+        b=VcU+LrqDKnz5JtEI3lxaTOjpLapzQFeMtso0DWltAyi0efXjwyi90E4+0hSiwGTLZP
+         kbf85sTi2+djOYa4emqc/AbjtoRv5HGkP38rR7J4lqOaa8+AnDhhcjQWj9V36eDVwV3S
+         J9F9zuMrKlIESzM3ZNGaBpDJWl7doKTseNEVwGEt9qj3TqRzw4WqMqbm9yjMp8RChU42
+         nHfXEwvUo/dyq3RkRUoWNY/w02meKPxVKBiwxN2sZtCxODnjZsLadtZEpWfkaqY/Mooj
+         f/CuDwuf2ca5NOxiG5ZxCmuSd1bY3wQiX23NrKwDSoTaeCRIbrekrrtdd3Kah3Vvei2r
+         cDxQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUH33pyoOjTVCCB8/ePxHVcBF22Xo7FocDFik83dW4u91THoZs/ApUO/z7C2oMLUf5sFNUmztG8gggIRdjL880Kg4hDR9noKBFLg8Mhwg==
+X-Gm-Message-State: AOJu0YzttpW/k4+n+9so3DgtIIyiYrypdiHvftS00REbrhr1vDNQAA2w
+	cKbTSKKItWJ3lXAHxTkd0SL9SccLDMhXe1yeotKL+fDBFVFi6TZ25+noyZRmHA0=
+X-Google-Smtp-Source: AGHT+IHygbZ7e2xIDjuQaMHBUNr5h40HzWBpsLIuw/vZPJxrtuB8Zmpa8YKlspyllfJr2T/tXROamA==
+X-Received: by 2002:a17:906:4757:b0:a47:340b:df71 with SMTP id j23-20020a170906475700b00a47340bdf71mr322084ejs.2.1711568292671;
+        Wed, 27 Mar 2024 12:38:12 -0700 (PDT)
 Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id lm9-20020a170906980900b00a4761c94a5esm4327268ejb.107.2024.03.27.12.37.43
+        by smtp.gmail.com with ESMTPSA id e12-20020a170906504c00b00a46ab33f970sm5741119ejk.163.2024.03.27.12.38.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Mar 2024 12:37:44 -0700 (PDT)
-Message-ID: <11a193b1-7a3f-43ca-b885-cac8fdf2190b@linaro.org>
-Date: Wed, 27 Mar 2024 20:37:43 +0100
+        Wed, 27 Mar 2024 12:38:12 -0700 (PDT)
+Message-ID: <32c44e30-d94a-404c-8143-175bcc6de10f@linaro.org>
+Date: Wed, 27 Mar 2024 20:38:09 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,6 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 2/3] PCI: qcom: Read back PARF_LTSSM register
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 To: Johan Hovold <johan@kernel.org>
 Cc: Bjorn Helgaas <helgaas@kernel.org>, Bjorn Andersson
  <andersson@kernel.org>,
@@ -93,8 +94,8 @@ References: <20240215161114.GA1292081@bhelgaas>
  <Zc8GHrgdF7jJBgyu@hovoldconsulting.com>
  <c1f85249-32b1-41e2-adc3-5aa4ad7609b9@linaro.org>
  <ZfR7uCcflCiFTvBh@hovoldconsulting.com>
+ <11a193b1-7a3f-43ca-b885-cac8fdf2190b@linaro.org>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
  BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
@@ -130,36 +131,39 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <ZfR7uCcflCiFTvBh@hovoldconsulting.com>
+In-Reply-To: <11a193b1-7a3f-43ca-b885-cac8fdf2190b@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 15.03.2024 5:47 PM, Johan Hovold wrote:
-> On Fri, Mar 15, 2024 at 11:16:59AM +0100, Konrad Dybcio wrote:
->> On 2/16/24 07:52, Johan Hovold wrote:
-> 
->>> This makes no sense. As Bjorn already said, you're just polling for the
->>> link to come up (for a second). And unless you have something else that
->>> depends on the write to have reached the device, there is no need to
->>> read it back. It's not going to be cached indefinitely if that's what
->>> you fear.
+On 27.03.2024 8:37 PM, Konrad Dybcio wrote:
+> On 15.03.2024 5:47 PM, Johan Hovold wrote:
+>> On Fri, Mar 15, 2024 at 11:16:59AM +0100, Konrad Dybcio wrote:
+>>> On 2/16/24 07:52, Johan Hovold wrote:
 >>
->> The point is, if we know that the hardware is expected to return "done"
->> within the polling timeout value of receiving the request to do so, we
->> are actively taking away an unknown amount of time from that timeout.
+>>>> This makes no sense. As Bjorn already said, you're just polling for the
+>>>> link to come up (for a second). And unless you have something else that
+>>>> depends on the write to have reached the device, there is no need to
+>>>> read it back. It's not going to be cached indefinitely if that's what
+>>>> you fear.
+>>>
+>>> The point is, if we know that the hardware is expected to return "done"
+>>> within the polling timeout value of receiving the request to do so, we
+>>> are actively taking away an unknown amount of time from that timeout.
+>>
+>> We're talking about microseconds, not milliseconds or seconds as you
+>> seem to believe.
+>>
+>>> So, if the polling condition becomes true after 980ms, but due to write
+>>> buffering the value reached the PCIe hardware after 21 ms, we're gonna
+>>> hit a timeout. Or under truly extreme circumstances, the polling may
+>>> time out before the write has even arrived at the PCIe hw.
+>>
+>> So the write latency is not an issue here.
 > 
-> We're talking about microseconds, not milliseconds or seconds as you
-> seem to believe.
-> 
->> So, if the polling condition becomes true after 980ms, but due to write
->> buffering the value reached the PCIe hardware after 21 ms, we're gonna
->> hit a timeout. Or under truly extreme circumstances, the polling may
->> time out before the write has even arrived at the PCIe hw.
-> 
-> So the write latency is not an issue here.
+> Right, I'm willing to believe the CPU will kick the can down the road
+> for this long. I'll drop this.
 
-Right, I'm willing to believe the CPU will kick the can down the road
-for this long. I'll drop this.
+will not kick the can down the road for this long*
 
 Konrad
 
