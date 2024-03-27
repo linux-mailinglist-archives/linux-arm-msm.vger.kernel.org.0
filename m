@@ -1,103 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-15406-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15408-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D349388EB01
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 17:22:33 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 804C688EBA3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 17:51:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8DA3D28E5EC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 16:22:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 359A42969B6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 16:51:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C09E52F7E;
-	Wed, 27 Mar 2024 16:22:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E55AE14D281;
+	Wed, 27 Mar 2024 16:51:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="vSMCQaVH"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="OlCqOZhR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EACBE83A0B;
-	Wed, 27 Mar 2024 16:22:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
+Received: from relay1-d.mail.gandi.net (relay1-d.mail.gandi.net [217.70.183.193])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 806E412F5A2;
+	Wed, 27 Mar 2024 16:51:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711556549; cv=none; b=sxcwfFNWRtw+5ePIjGoTIYPF7/Jzh8s/pJa8oVl153xykUYcCoYQpF7MzU5te9YlHsDWN6OmyjCvpuoYF5pBrQ4Mn61ZFAwmrlk6kxd/L+xqH2z4Ua04Dd0cGlFqdTD4a4BsFaS9tF0mnKlQfTfeBtc/onoRSLPVe1cjKIL6Tyo=
+	t=1711558299; cv=none; b=cUhoFSGz99CY8g0Aw8Oqn6C9H7CEdRIKeUZEL7CqQN/SLfx+DOt0Xj8uJskZvVjz090MpeOgaip0yWiKFNc9wzCF6109UN3IFrHxi9Mxtrb9o+lggt+jFxSGnOkwbTPk5kng7IDmu055qja8/LU//aSmwSjtaibwfoWt8I7JpXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711556549; c=relaxed/simple;
-	bh=g9NIYWY7Zqq4Jpe3GVuphoABvUpR98WMNlTO/PqC+cM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=W0+VZwtK9f5Ae2J1rFarexkkZwPR1vpW8002AGfSHYDd7Xed82yj7jzhz/Di+7pHWcGWPlzlI0pbIJfaG5z4y99fRqwAKYIIplpNsaNRvbmAVUo+tiNcdRLsCwvT2nLS/09pfrz9RnXVM88O83NjtRigXMMuIhNyQT+QRzHhPL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=vSMCQaVH; arc=none smtp.client-ip=212.27.42.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
-Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
-	by smtpfb2-g21.free.fr (Postfix) with ESMTP id 75DD44C8DC;
-	Wed, 27 Mar 2024 17:22:16 +0100 (CET)
-Received: from [IPV6:2a01:e0a:255:1000:f49a:79c4:c3c6:eaf3] (unknown [IPv6:2a01:e0a:255:1000:f49a:79c4:c3c6:eaf3])
-	(Authenticated sender: duncan.sands@free.fr)
-	by smtp5-g21.free.fr (Postfix) with ESMTPSA id A3A9F60142;
-	Wed, 27 Mar 2024 17:20:26 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1711556526;
-	bh=g9NIYWY7Zqq4Jpe3GVuphoABvUpR98WMNlTO/PqC+cM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=vSMCQaVHDvOS+MJTVx5PjO8YOXxmIEoXqqAuvBYuRC535uirpZWCAg3Zcduu9rDtt
-	 KXKCxUyreW9ES5/mQaKWuQmfTpoSpYf8IwCcPc988GMFZvS+1wbAKCcOjbSk3mXiD9
-	 ZK8Hamum4SVmsMBE1c9pxQwBG+dsyo12O4SxF8j/IiVpKDUrPYQJdtKDuV/HWRo3xL
-	 PYIWjDHKv6Iwt5jWnepwy1J7Y+fjiF4JTHXVaKfZ4ukUUftUNKj+3Aem3Jcxh8PUFu
-	 tZQKCHeE4q+71+QXSA4TwBR2eiNJVHnD/WyXCPKNPqsgcwl7VuDNvLoWg/63fz6oE5
-	 pvkLMrw2O9NMA==
-Message-ID: <7297be25-a3c8-4e8b-9a80-ff720ccddc90@free.fr>
-Date: Wed, 27 Mar 2024 17:20:26 +0100
+	s=arc-20240116; t=1711558299; c=relaxed/simple;
+	bh=LM8sbbiZKaeBPMakgJ3MutVIXuYeOb/HCEs0DQyWv2s=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=nZ2nGNmNo43CkXIDmLuAheSjYZsFmkdsiTQFgP060ixXj5gIOves2qUeGUltiKzQrvaUoYY79o9fJvZaISdIbRRiwH9NCnnRBNFtBwBRqMusFp/wrsHuJlxzxGFSAlzXSz1wh4MQcgeKu5qKaaDJhQhrLDQYNPCG7jvisM6iUlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=OlCqOZhR; arc=none smtp.client-ip=217.70.183.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 1B652240008;
+	Wed, 27 Mar 2024 16:51:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1711558294;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=8dkDsTM+CyF3T1RfUsZvTaGtiJGxz0u7kuWWxBLiq70=;
+	b=OlCqOZhRUE+LEglVKAzyRaIJnfHwR7NpVwTLoTmHNcTFLc1l2Ze/9ictqKZcclr3fbO0nE
+	JFO/Ll9eSZm0QJZUc7JFGocaYue1wLCziUiLa/3wRMVohIQ2NLg7RI87xwUd3YtaU+owPM
+	Vll6eIkZQFjuJGT1soHhKBI2DemQ2JnZx3vT1lIb+F2cQ2AuT2ZTc9LDO+/YBI6d+FnvGW
+	kDbQt4FW3pInjRk5kBdRExWdgGsNnLTQbx3ypV2enI06lf+G8BbHC05YFWikJ+bJHQBIA+
+	7arwt6GAfJQ/f6JD3pTIs/h0gSnDzYG4vuEA8A/B3CVYNpBvSNN/iujE0U5JhA==
+Date: Wed, 27 Mar 2024 17:51:31 +0100
+From: Miquel Raynal <miquel.raynal@bootlin.com>
+To: Christian Marangi <ansuelsmth@gmail.com>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Richard
+ Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>, Md
+ Sadre Alam <quic_mdalam@quicinc.com>, Sricharan Ramabadhran
+ <quic_srichara@quicinc.com>, linux-mtd@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ stable@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] mtd: rawnand: qcom: Fix broken erase in
+ misc_cmd_type in exec_op
+Message-ID: <20240327175131.3c0100c3@xps-13>
+In-Reply-To: <66044bea.050a0220.dee16.c250@mx.google.com>
+References: <20240325103053.24408-1-ansuelsmth@gmail.com>
+	<20240326072512.GA8436@thinkpad>
+	<66044bea.050a0220.dee16.c250@mx.google.com>
+Organization: Bootlin
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/9] USB: Convert from tasklet to BH workqueue
-To: Allen Pais <apais@linux.microsoft.com>, linux-kernel@vger.kernel.org
-Cc: tj@kernel.org, keescook@chromium.org, vkoul@kernel.org, marcan@marcan.st,
- sven@svenpeter.dev, florian.fainelli@broadcom.com, rjui@broadcom.com,
- sbranden@broadcom.com, paul@crapouillou.net, Eugeniy.Paltsev@synopsys.com,
- manivannan.sadhasivam@linaro.org, vireshk@kernel.org, Frank.Li@nxp.com,
- leoyang.li@nxp.com, zw@zh-kernel.org, wangzhou1@hisilicon.com,
- haijie1@huawei.com, shawnguo@kernel.org, s.hauer@pengutronix.de,
- sean.wang@mediatek.com, matthias.bgg@gmail.com,
- angelogioacchino.delregno@collabora.com, afaerber@suse.de,
- logang@deltatee.com, daniel@zonque.org, haojian.zhuang@gmail.com,
- robert.jarzmik@free.fr, andersson@kernel.org, konrad.dybcio@linaro.org,
- orsonzhai@gmail.com, baolin.wang@linux.alibaba.com, zhang.lyra@gmail.com,
- patrice.chotard@foss.st.com, linus.walleij@linaro.org, wens@csie.org,
- jernej.skrabec@gmail.com, peter.ujfalusi@gmail.com, kys@microsoft.com,
- haiyangz@microsoft.com, wei.liu@kernel.org, decui@microsoft.com,
- jassisinghbrar@gmail.com, mchehab@kernel.org, maintainers@bluecherrydvr.com,
- aubin.constans@microchip.com, ulf.hansson@linaro.org,
- manuel.lauss@gmail.com, mirq-linux@rere.qmqm.pl, jh80.chung@samsung.com,
- oakad@yahoo.com, hayashi.kunihiko@socionext.com, mhiramat@kernel.org,
- brucechang@via.com.tw, HaraldWelte@viatech.com, pierre@ossman.eu,
- stern@rowland.harvard.edu, oneukum@suse.com,
- openipmi-developer@lists.sourceforge.net, dmaengine@vger.kernel.org,
- asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
- linux-rpi-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
- imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
- linux-mediatek@lists.infradead.org, linux-actions@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, linux-riscv@lists.infradead.org,
- linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
- linux-hyperv@vger.kernel.org, linux-rdma@vger.kernel.org,
- linux-media@vger.kernel.org, linux-mmc@vger.kernel.org,
- linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
- linux-s390@vger.kernel.org, netdev@vger.kernel.org, linux-usb@vger.kernel.org
-References: <20240327160314.9982-1-apais@linux.microsoft.com>
- <20240327160314.9982-5-apais@linux.microsoft.com>
-Content-Language: en-GB
-From: Duncan Sands <duncan.sands@free.fr>
-In-Reply-To: <20240327160314.9982-5-apais@linux.microsoft.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-GND-Sasl: miquel.raynal@bootlin.com
 
-Hi Allen, the usbatm bits look very reasonable to me.  Unfortunately I don't 
-have the hardware to test any more.  Still, for what it's worth:
+Hi,
 
-Signed-off-by: Duncan Sands <duncan.sands@free.fr>
+ansuelsmth@gmail.com wrote on Wed, 27 Mar 2024 16:20:58 +0100:
+
+> On Tue, Mar 26, 2024 at 12:55:12PM +0530, Manivannan Sadhasivam wrote:
+> > On Mon, Mar 25, 2024 at 11:30:47AM +0100, Christian Marangi wrote: =20
+> > > misc_cmd_type in exec_op have multiple problems. With commit a82990c8=
+a409
+> > > ("mtd: rawnand: qcom: Add read/read_start ops in exec_op path") it was
+> > > reworked and generalized but actually broke the handling of the
+> > > ERASE_BLOCK command.
+> > >=20
+> > > Additional logic was added to the erase command cycle without clear
+> > > explaination causing the erase command to be broken on testing it on
+> > > a ipq806x nandc.
+> > >=20
+> > > Fix the erase command by reverting the additional logic and only addi=
+ng
+> > > the NAND_DEV0_CFG0 additional call (required for erase command).
+> > >=20
+> > > Fixes: a82990c8a409 ("mtd: rawnand: qcom: Add read/read_start ops in =
+exec_op path")
+> > > Cc: stable@vger.kernel.org
+> > > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> > > ---
+> > > Changes v2:
+> > > - Split this and rework commit description and title
+> > >=20
+> > >  drivers/mtd/nand/raw/qcom_nandc.c | 5 ++---
+> > >  1 file changed, 2 insertions(+), 3 deletions(-)
+> > >=20
+> > > diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw=
+/qcom_nandc.c
+> > > index b079605c84d3..19d76e345a49 100644
+> > > --- a/drivers/mtd/nand/raw/qcom_nandc.c
+> > > +++ b/drivers/mtd/nand/raw/qcom_nandc.c
+> > > @@ -2830,9 +2830,8 @@ static int qcom_misc_cmd_type_exec(struct nand_=
+chip *chip, const struct nand_sub
+> > >  	nandc_set_reg(chip, NAND_EXEC_CMD, 1);
+> > > =20
+> > >  	write_reg_dma(nandc, NAND_FLASH_CMD, instrs, NAND_BAM_NEXT_SGL);
+> > > -	(q_op.cmd_reg =3D=3D OP_BLOCK_ERASE) ? write_reg_dma(nandc, NAND_DE=
+V0_CFG0,
+> > > -	2, NAND_BAM_NEXT_SGL) : read_reg_dma(nandc,
+> > > -	NAND_FLASH_STATUS, 1, NAND_BAM_NEXT_SGL);
+> > > +	if (q_op.cmd_reg =3D=3D OP_BLOCK_ERASE)
+> > > +		write_reg_dma(nandc, NAND_DEV0_CFG0, 2, NAND_BAM_NEXT_SGL); =20
+> >=20
+> > So this only avoids the call to, 'read_reg_dma(nandc, NAND_FLASH_STATUS=
+, 1,
+> > NAND_BAM_NEXT_SGL)' if q_op.cmd_reg !=3D OP_BLOCK_ERASE. But for q_op.c=
+md_reg =3D=3D
+> > OP_BLOCK_ERASE, the result is the same.
+> >=20
+> > I'm wondering how it results in fixing the OP_BLOCK_ERASE command.
+> >=20
+> > Can you share the actual issue that you are seeing? Like error logs etc=
+...
+> > =20
+>=20
+> Issue is that nandc goes to ADM timeout as soon as a BLOCK_ERASE is
+> called. BLOCK_ERASE operation match also another operation from MTD
+> read. (parser also maps to other stuff)
+>=20
+> I will be away from the testing board for 7-10 days so I can't provide
+> logs currently.
+
+So, shall we wait for additional logs from Christian or shall I merge
+the two-patches series? I'm not sure what's the status anymore.
+
+Thanks,
+Miqu=C3=A8l
 
