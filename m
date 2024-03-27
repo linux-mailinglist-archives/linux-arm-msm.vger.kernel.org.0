@@ -1,193 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-15410-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15411-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A665088EBD3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 17:58:36 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C44E88EC3C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 18:13:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 30FF11F2F812
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 16:58:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E60781F25BF6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 17:13:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A9B714D70A;
-	Wed, 27 Mar 2024 16:58:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6BF1149E1F;
+	Wed, 27 Mar 2024 17:13:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ckfkJpte"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C4ImFvaf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com [209.85.217.42])
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1354148835;
-	Wed, 27 Mar 2024 16:58:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69DB012D747
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 17:13:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711558706; cv=none; b=NamUCOA6s8va22fN1OXqR9cz0GO31GxqzVh4wM4FmWwHTP1ou/QtBcGPzmtsMM/RDky7oG1+l1cNQb5sWYQx1AOPVH+9cuw3906q7OCNAiZLeHwxvv7uAgAJvMGlFmTTLvuectVWX5hIMWTwOow2XSagvX6xQHSqU/XorqiexMs=
+	t=1711559617; cv=none; b=qQovgyj30Yci1enoZ20M/bkXewcjSJBI91qkCfNsrK/yw1yJ2BeMaALc0qYcyapzbeBAg3sgLpe2fEsm6s6YTeeIKwyPk6j/7LkUY2dyjFMtUuWSw1YP2e+vdN6xme5E8pE8Kd+7FHWymbUDVE2/UqWel6l0v3XH+J+GBaFxT/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711558706; c=relaxed/simple;
-	bh=68oAjuOe+OtmBLErtbaq8rH3+7CTr5nb8XNBRGIt+ms=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=B4p2lr+qVpZCC7imiw5JoN5CUaazlBgoNXP5JqJceMvz4+DeHa9uHzyshOCAQaXInYOHmpI0JEnbcY/4Q8X3sKMbdV1gIGGec0YsFUQk187B0bizsVAQcaRgaM5I2oyS/AQb5hSLvmAyeGkIdplgzBGf8Zh1TbtxJHksgPF3/oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ckfkJpte; arc=none smtp.client-ip=209.85.217.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vs1-f42.google.com with SMTP id ada2fe7eead31-476794adf30so2697024137.1;
-        Wed, 27 Mar 2024 09:58:24 -0700 (PDT)
+	s=arc-20240116; t=1711559617; c=relaxed/simple;
+	bh=BQ++1TKgyYe89FUaeUKqio0CwutHDxtXZThE0UXwUPY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=iSYndlh3+hohFUHE4frJzrU6lawhS000IspcV/7MIrlKjNspLrJ9bO70xLzAx7wEt7v/KTV9wdCoHFsdNO9MI7bMutPdYJmCgvx2EgZ5A/8rOSISfGq6QAy3KGcgQaSmiizB4QPs1WGnxtw5e+NdcobWMnsK12rX/wqWM8xMqF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=C4ImFvaf; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-56c1922096cso82323a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 10:13:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711558704; x=1712163504; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=yUltN/NJxMhxZV1CH62BOvzy406AgQtlnwGFiPeOm1M=;
-        b=ckfkJpteGm7XCNtho31GGIx7rxeiwCLcEehHDPmagJO6GPaPsWqjOulaA7fSfUpWoR
-         hgUj3obgxGj/lPR48GbOHyNuU2HKlqGvmSHhhUSj5CQy8SsiWlhkwnbzcP9ln2NghDLN
-         mBJH/c8bZdVY7fqCuSfLf9TVA5f8Gsl/zxuFprg8bmtGhe3atKajWGyi1MSWoiFVe5A0
-         6bBYOndui4T4Jo1unOE4DIHpb0JkW+kc3oCeZundaguc/nPxmxax2GkNBPYa11vHe6cL
-         G1NSBEolZikMOWPAYyQVb16SEbKd7IMl7LVlXZ/hJeQQ1NGF5XsLvcQzWfcHkJpRrEnE
-         F15A==
+        d=linaro.org; s=google; t=1711559614; x=1712164414; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=j2we6UHQ0w2iyi00K6wubXlbq/w34rz1Dsx4RB5h8d0=;
+        b=C4ImFvafkvZSAWjIu+aseurE0GbzGXp1KRtXmazUdHcmWUpQCOo0UUXhqHnoqLFCsu
+         ta5x36DmbFoVbNuWC7efmQSjP1BZ6uvDiy62Vcim5EjKya5uqwbs/6Gq7CvA6zfgbE0J
+         tDqEPkEKkCnMX8SfxuvjPKOW88yD4NunGdDTpG4jgIorRKv6ZgVDuTtM3bb4glkuLTty
+         30u6orJZc4jqUKZz3JEH6JSfGKJNy5tW9e0wTtkRFC1gVdinQ+TRDiJhJPD0O1oR2fdQ
+         ZgoiGZyayypaQb9NCnzrk47jqoevYFm10BYGjsU3K/asUbLCwui6yAY4ZnBuHeGQGWlZ
+         h9Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711558704; x=1712163504;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yUltN/NJxMhxZV1CH62BOvzy406AgQtlnwGFiPeOm1M=;
-        b=NKQ12SJFoFCjMiu00meIisUAH99XJ+YdaN2UVhlUWPfndyYs3NsfFVaYTrlnbvGfrG
-         UtIrJLyqDVrDTn0yDNT82InomIaYFgEl9Ife35vrv+/gFsA6FbZTcHeiEeu2r7wDEkuZ
-         Fo/qwiUmXHTG/pGCf3vLM2PQuDtqhxpONR6iPpqVyAb2WlnEVaO/MpE6HclyEHztvhZl
-         kMbNDqxGZY/UG8f/HMQhZRm4zBaNvA3GeswpjS42+/kASTixhu99mgwqV0OMJEjeaK5r
-         JjeelFNnv6T/SPpeOyEdbPk9MsSZVH8ALqnERB105wg7ft6rfzwdwF6gntlTM5ZaZDYZ
-         EVWA==
-X-Forwarded-Encrypted: i=1; AJvYcCULFYzDpcr45FafFATbKzaC4rFzgGCcNAmUm9bSqi7dJu7CyTfwNBAfcXWW1+ZYsOjNY0tKTeRdC1fb53E+gIdT1vZmPdPIvZ1SA+ilcx5uG25vD1UK2SVkb0T11xVilFfd8Ec1jpuAliGdmnIiXNjI15hMAgQ93AF2qOMutKsUvAaiELn3jFmqG0WHmj2MkSgQxn+pBVRR1QBhcar0i5u2lV0UkUDrT/NPLWVyTWTnjez+aXpZozP4IB25x0cS83Ulvah1a+2LtL1NBSkUePPLc6VwR1x0QcOOhtPot9rGFSZCIZH+0J8HSj11KppR26/R3/8SymJXSqLS7fjhxtLY7Qdjz8p/qOV1Nd2X6Y6sdoX3+ybC9OoRl2op5p2feUivOz1Q2xXVLbOg9kW7co2Dbu31ZJmdzISl4C0v1SkWum3Bc168LggOiQKO5A7hySxdLRKn0J58eo7GHXQX1GD+o2d6H32mnQgvpOKAUdVqv0725cIfSaYGpfXFYaA5zRnpw/Y1Dgj+x6RfWqDRLx/+fMQttTNky+r98U5CNHd//FRYzGWHKShU5TLTqWWFpXihdCRQBN5bZow7fvvU3C4=
-X-Gm-Message-State: AOJu0Yz6IZ0/Jwk9cnnAAAKCmz6PUwebNCazfsdzXY5JmW/KALiVNNI8
-	jT9niDdu7bjt+B7F/fCZVUvTh+FGKWa6rjMt3YBPkRYKHEC7tm7ijuamn90sR/hK0KnWquZCWRl
-	xLvBVC13cU6dkbxwdHXCz3hggp/Y=
-X-Google-Smtp-Source: AGHT+IG2+7fcvBBedZik6uQF+4M2q3ObjFc26qAotYqTJVzVn8pG6NuXX7LEd77qXX8Tn8MdeN0ijCK67x3Q8xGLlB4=
-X-Received: by 2002:a05:6102:3b83:b0:472:64aa:403f with SMTP id
- z3-20020a0561023b8300b0047264aa403fmr602964vsu.26.1711558703814; Wed, 27 Mar
- 2024 09:58:23 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1711559614; x=1712164414;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=j2we6UHQ0w2iyi00K6wubXlbq/w34rz1Dsx4RB5h8d0=;
+        b=nC+1hJtNcH+yXFv4QH9xLX0mAYIKSvHFuPn1IDkMx0kd9zVAv9X5LDTZ3KsNRo0XZB
+         tOESx6/7hhOUZoP5uIDVrz7kxFCrmgIkw0B8oOAXoqhbkD2n6DdTWQgP/EqFWVicloTG
+         8X0Cw6Nj3AMAn/hkf0AHeQmgXVg/O5zsiNGArre8sCY/6JYv9WaOYjbuyyQ49MiDR7U3
+         dKHyQwhyIXJQi9JAXZxYf8tz9nWtN/z/bFH96SF4iLi3KUwOrAp/W5GmHjKNhUQnUJWj
+         ConwUm93DhKEOXk2xproNNMNIZxWdV21VNb9lN0PUtQkliDwv8imONNdXmKm2CqTEpzR
+         SAWg==
+X-Gm-Message-State: AOJu0Yzku1u0CDXYIA0W5HTHg54SC1XPL5EWEphgsGH9SkqCjNsmgqxU
+	vEypeiivFcaWjurcTAEI2j3D25zloNqMmmL9OfSYMKrvZJnqCzOAELDZl8SSb+M=
+X-Google-Smtp-Source: AGHT+IGxm+smE9sqD4W5OZ3skLViUgcz+ZipxlZfsluEHwe9WRLdyhZf2fsuu1KBSQlx8zW0y1VBWQ==
+X-Received: by 2002:a50:cd9d:0:b0:56b:eb90:f3a2 with SMTP id p29-20020a50cd9d000000b0056beb90f3a2mr285715edi.16.1711559613761;
+        Wed, 27 Mar 2024 10:13:33 -0700 (PDT)
+Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id u14-20020a056402110e00b0056bfc48406csm5056187edv.7.2024.03.27.10.13.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Mar 2024 10:13:32 -0700 (PDT)
+Message-ID: <f7c0fd6d-0c5b-4705-9b43-23979d4220c5@linaro.org>
+Date: Wed, 27 Mar 2024 18:13:30 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240327160314.9982-1-apais@linux.microsoft.com>
- <20240327160314.9982-5-apais@linux.microsoft.com> <2024032753-probable-blatancy-80bf@gregkh>
-In-Reply-To: <2024032753-probable-blatancy-80bf@gregkh>
-From: Allen <allen.lkml@gmail.com>
-Date: Wed, 27 Mar 2024 09:58:12 -0700
-Message-ID: <CAOMdWSLipPfm3OZTpjZz4uF4M+E_8QAoTeMcKBXawLnkTQx6Jg@mail.gmail.com>
-Subject: Re: [PATCH 4/9] USB: Convert from tasklet to BH workqueue
-To: Greg KH <gregkh@linuxfoundation.org>
-Cc: Allen Pais <apais@linux.microsoft.com>, linux-kernel@vger.kernel.org, tj@kernel.org, 
-	keescook@chromium.org, vkoul@kernel.org, marcan@marcan.st, sven@svenpeter.dev, 
-	florian.fainelli@broadcom.com, rjui@broadcom.com, sbranden@broadcom.com, 
-	paul@crapouillou.net, Eugeniy.Paltsev@synopsys.com, 
-	manivannan.sadhasivam@linaro.org, vireshk@kernel.org, Frank.Li@nxp.com, 
-	leoyang.li@nxp.com, zw@zh-kernel.org, wangzhou1@hisilicon.com, 
-	haijie1@huawei.com, shawnguo@kernel.org, s.hauer@pengutronix.de, 
-	sean.wang@mediatek.com, matthias.bgg@gmail.com, 
-	angelogioacchino.delregno@collabora.com, afaerber@suse.de, 
-	logang@deltatee.com, daniel@zonque.org, haojian.zhuang@gmail.com, 
-	robert.jarzmik@free.fr, andersson@kernel.org, konrad.dybcio@linaro.org, 
-	orsonzhai@gmail.com, baolin.wang@linux.alibaba.com, zhang.lyra@gmail.com, 
-	patrice.chotard@foss.st.com, linus.walleij@linaro.org, wens@csie.org, 
-	jernej.skrabec@gmail.com, peter.ujfalusi@gmail.com, kys@microsoft.com, 
-	haiyangz@microsoft.com, wei.liu@kernel.org, decui@microsoft.com, 
-	jassisinghbrar@gmail.com, mchehab@kernel.org, maintainers@bluecherrydvr.com, 
-	aubin.constans@microchip.com, ulf.hansson@linaro.org, manuel.lauss@gmail.com, 
-	mirq-linux@rere.qmqm.pl, jh80.chung@samsung.com, oakad@yahoo.com, 
-	hayashi.kunihiko@socionext.com, mhiramat@kernel.org, brucechang@via.com.tw, 
-	HaraldWelte@viatech.com, pierre@ossman.eu, duncan.sands@free.fr, 
-	stern@rowland.harvard.edu, oneukum@suse.com, 
-	openipmi-developer@lists.sourceforge.net, dmaengine@vger.kernel.org, 
-	asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
-	linux-rpi-kernel@lists.infradead.org, linux-mips@vger.kernel.org, 
-	imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org, 
-	linux-mediatek@lists.infradead.org, linux-actions@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
-	linux-hyperv@vger.kernel.org, linux-rdma@vger.kernel.org, 
-	linux-media@vger.kernel.org, linux-mmc@vger.kernel.org, 
-	linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	linux-s390@vger.kernel.org, netdev@vger.kernel.org, linux-usb@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/4] pinctrl: qcom: spmi-gpio: Add PMXR2230 and PM6450
+ support
+To: Anjelique Melendez <quic_amelende@quicinc.com>, andersson@kernel.org,
+ linus.walleij@linaro.org, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ quic_subbaram@quicinc.com, quic_collinsd@quicinc.com,
+ quic_jprakash@quicinc.com
+References: <20240326220628.2392802-1-quic_amelende@quicinc.com>
+ <20240326220628.2392802-4-quic_amelende@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240326220628.2392802-4-quic_amelende@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-> > The only generic interface to execute asynchronously in the BH context is
-> > tasklet; however, it's marked deprecated and has some design flaws. To
-> > replace tasklets, BH workqueue support was recently added. A BH workqueue
-> > behaves similarly to regular workqueues except that the queued work items
-> > are executed in the BH context.
-> >
-> > This patch converts drivers/infiniband/* from tasklet to BH workqueue.
->
-> No it does not, I think your changelog is wrong :(
+On 26.03.2024 11:06 PM, Anjelique Melendez wrote:
+> Add support for qcom,pmxr2230-gpio and qcom,pm6450-gpio.
+> 
+> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
+> ---
 
-Whoops, sorry about that. I messed up the commit messages. I will fix it in v2.
->
-> >
-> > Based on the work done by Tejun Heo <tj@kernel.org>
-> > Branch: https://git.kernel.org/pub/scm/linux/kernel/git/tj/wq.git for-6.10
-> >
-> > Signed-off-by: Allen Pais <allen.lkml@gmail.com>
-> > ---
-> >  drivers/usb/atm/usbatm.c            | 55 +++++++++++++++--------------
-> >  drivers/usb/atm/usbatm.h            |  3 +-
-> >  drivers/usb/core/hcd.c              | 22 ++++++------
-> >  drivers/usb/gadget/udc/fsl_qe_udc.c | 21 +++++------
-> >  drivers/usb/gadget/udc/fsl_qe_udc.h |  4 +--
-> >  drivers/usb/host/ehci-sched.c       |  2 +-
-> >  drivers/usb/host/fhci-hcd.c         |  3 +-
-> >  drivers/usb/host/fhci-sched.c       | 10 +++---
-> >  drivers/usb/host/fhci.h             |  5 +--
-> >  drivers/usb/host/xhci-dbgcap.h      |  3 +-
-> >  drivers/usb/host/xhci-dbgtty.c      | 15 ++++----
-> >  include/linux/usb/cdc_ncm.h         |  2 +-
-> >  include/linux/usb/usbnet.h          |  2 +-
-> >  13 files changed, 76 insertions(+), 71 deletions(-)
-> >
-> > diff --git a/drivers/usb/atm/usbatm.c b/drivers/usb/atm/usbatm.c
-> > index 2da6615fbb6f..74849f24e52e 100644
-> > --- a/drivers/usb/atm/usbatm.c
-> > +++ b/drivers/usb/atm/usbatm.c
-> > @@ -17,7 +17,7 @@
-> >   *           - Removed the limit on the number of devices
-> >   *           - Module now autoloads on device plugin
-> >   *           - Merged relevant parts of sarlib
-> > - *           - Replaced the kernel thread with a tasklet
-> > + *           - Replaced the kernel thread with a work
->
-> a "work"?
- will fix the comments.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
->
-> >   *           - New packet transmission code
-> >   *           - Changed proc file contents
-> >   *           - Fixed all known SMP races
-> > @@ -68,6 +68,7 @@
-> >  #include <linux/wait.h>
-> >  #include <linux/kthread.h>
-> >  #include <linux/ratelimit.h>
-> > +#include <linux/workqueue.h>
-> >
-> >  #ifdef VERBOSE_DEBUG
-> >  static int usbatm_print_packet(struct usbatm_data *instance, const unsigned char *data, int len);
-> > @@ -249,7 +250,7 @@ static void usbatm_complete(struct urb *urb)
-> >       /* vdbg("%s: urb 0x%p, status %d, actual_length %d",
-> >            __func__, urb, status, urb->actual_length); */
-> >
-> > -     /* Can be invoked from task context, protect against interrupts */
-> > +     /* Can be invoked from work context, protect against interrupts */
->
-> "workqueue"?  This too seems wrong.
->
-> Same for other comment changes in this patch.
-
-Thanks for the quick review, I will fix the comments and send out v2.
-
-- Alle
-
-> thanks,
->
-> greg k-h
->
+Konrad
 
