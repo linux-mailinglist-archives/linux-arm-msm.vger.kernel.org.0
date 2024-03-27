@@ -1,206 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-15424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15425-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 548DA88EDA5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 19:07:49 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2440788EDAE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 19:09:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7F3031C3241F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 18:07:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D382429C46F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 18:09:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9879F14F113;
-	Wed, 27 Mar 2024 18:07:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2989C14F126;
+	Wed, 27 Mar 2024 18:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="b7frO0Gj";
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="A8Y/Qx0Z"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Yufmib9p"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fallback16.i.mail.ru (fallback16.i.mail.ru [79.137.243.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B08D14EC57;
-	Wed, 27 Mar 2024 18:07:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5605F14EC62
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 18:08:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711562835; cv=none; b=XzY97bcG2jXZdlyhWWR4Z11jXWHIrQakoL3kfim29n78vXsjCNleLhXVOfwV4bXPbPO01XgGzhKeUxhDF3N2r52RPLFcMIb9eV103AwSmTlwWY15eqzM78NCRmbbcmlNqsjRsUne2eEDzsjwO3CrKKBSlVxLRoKfgOGLAg3I4hI=
+	t=1711562930; cv=none; b=QOO96bIrL3EURqpsYsgz68vD2Yjyusv8UkN580XRNzI4N9yZLepZiIh1xkxITWC8J9ThqBvx7vFSJr6P1aa+csi1T3OkJSvBF2LfTKZ5rZvY7iyrl9AFahueEjSdEf7UTvfZR9JzPDgmY+yjAcrsX2w7iFSgvsSFiZi1/MEtlNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711562835; c=relaxed/simple;
-	bh=Q2ivrMpVCi3K5NV6K6D+hZ8loNb2uQYQBczxXJuAqhM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tXfMQ+aBdIxiK7lbck643Fv5BbdEjAxG/FuKHs0et9/KcZLVEzkKfeTWhvRBy19lgmM0SxsDcDn7Y29C0hCykH7LQl/4US2cNJY8FGHVAWJy8EktSIm+6LZeVz9DbxFyQ3Nhe4Ug/vNCzo1KL2hJJU19a3QrqYK4v7vzdtyBawI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com; spf=pass smtp.mailfrom=jiaxyga.com; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=b7frO0Gj; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=A8Y/Qx0Z; arc=none smtp.client-ip=79.137.243.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jiaxyga.com
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com; s=mailru;
-	h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=wAzGoYWZyEefzk/CfNs+kioGra/NotAzdFZgUGZt4QI=;
-	t=1711562833;x=1711652833; 
-	b=b7frO0GjXJ2s0hkxo1wW1dWbsm8I8qwlEc8BLVBuxqbnrWBd/QqOWJW2BmBEi9K9aOSC/j0kJB8E1tkL8YcoP2NypUjZ5lUC74pC4mU4OFZuQanvvAduaB96A99fQhBeHmdk3kAAKQpYF09tpqpBb/p5IVFKw99yqjEmTeevitU=;
-Received: from [10.12.4.29] (port=44124 helo=smtp51.i.mail.ru)
-	by fallback16.i.mail.ru with esmtp (envelope-from <danila@jiaxyga.com>)
-	id 1rpXg0-007Gjq-85; Wed, 27 Mar 2024 21:07:04 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
-	; s=mailru; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
-	Message-ID:Date:Subject:Cc:To:From:From:Sender:Reply-To:To:Cc:Content-Type:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
-	X-Cloud-Ids:Disposition-Notification-To;
-	bh=wAzGoYWZyEefzk/CfNs+kioGra/NotAzdFZgUGZt4QI=; t=1711562824; x=1711652824; 
-	b=A8Y/Qx0ZYLzOkCcL807Ispa0epp68IqYJtHenFvXArDsnMvJJBe6tYy3rriKeTlDZYhhgV3rLxW
-	7ceAOA5m7hTjO01MAE1uSeqVr0C48c2sIaFGXD/pjSVXLZ6FsslDrF2sFyYn029nUzAJ2aasf12nb
-	FQ4vIBnScPTA0OAJGwU=;
-Received: by smtp51.i.mail.ru with esmtpa (envelope-from <danila@jiaxyga.com>)
-	id 1rpXfk-0000000E2q5-3KhN; Wed, 27 Mar 2024 21:06:49 +0300
-From: Danila Tikhonov <danila@jiaxyga.com>
-To: andersson@kernel.org,
-	konrad.dybcio@linaro.org,
-	vkoul@kernel.org,
-	kishon@kernel.org,
-	robh@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Danila Tikhonov <danila@jiaxyga.com>
-Subject: [PATCH 2/2] phy: qcom-qmp-ufs: Add SM8475 support
-Date: Wed, 27 Mar 2024 21:06:42 +0300
-Message-ID: <20240327180642.20146-3-danila@jiaxyga.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240327180642.20146-1-danila@jiaxyga.com>
-References: <20240327180642.20146-1-danila@jiaxyga.com>
+	s=arc-20240116; t=1711562930; c=relaxed/simple;
+	bh=5X+Zdn4J7Sx+vjlv+C+dpGZruk8KxdzwFk8UAnYkPF4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=pQMhBpFIs3GBOway0Ng7gPeR5qy24kaKMLA99HLfZNUHx0Yth2bwKxvzaImoCJKrOoAygLQS6oQpTKzCYBEma4K1dfXZJEyC29a3PdhbPG9TVJBvMePa4fSDNFxQT/9dBbR+0OdBn0B3ocAJgGJ43yhwW757bSOTuAFSdZWAPeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Yufmib9p; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-515a81928a1so39734e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 11:08:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1711562925; x=1712167725; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=do7k3J6OUzMnWn5ao/YpVOVlw0nFNOEmqZtivosXkIA=;
+        b=Yufmib9pIfvNT2RB9COaqausn3Cp5swoANb65IGCAJvYOZ+F+4h7h63V2GI/DSdLZv
+         9O+XtTPYISjX6VFtF6hSezeAEhIzBHqpHMbhTx6CtGL3Sb0l0dclfi2JuBnZz1ZIPTNu
+         xPtuhPj+eTUXPqFTsAwdE5CasJKUGGOsTo3vX/MQ9xqcpzaaZTdzdlOkGYZfCUSXC5hl
+         KIKjEqOXMsV7Rg9OoI/ctvDHWSuNcHryORiZ3N3+QVTPbf2FPYgJxxyMkNuxnBRBx+Ph
+         FC/4V4m5p5OJ+QihFi0UwwuSgE/uTZV7GpZkGEC3AxpNZ73wWXRSaJ0w4IQAbtoljzoI
+         M68w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711562925; x=1712167725;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=do7k3J6OUzMnWn5ao/YpVOVlw0nFNOEmqZtivosXkIA=;
+        b=eILeGk2KVfG0SfQaZ8+4yBFrxMWVAsZ5GhwnFYFuzSqM0UbxlInSFWNjIWpkD7J1OU
+         GrH2bb8FxQo9oa0EQTqsE49T0re8uHvCLv0F52S4rhKJkEUUebUU1IWoW6UQn3RXjwCh
+         hLEiIIS3+hC/q0YAyPGqmkP5I+naC6ujkb/vNYcGFj6lVdb7IXWdo55GR9Grlpu7Cy1J
+         MpF/zGSSaTUmYBUr9ixvjXdTykLCLbmQUCZS0Qa7MQWkX8Oj9W5eFCSgQwy934KcFz0M
+         zDu3WHEPZbrSSvZjN173/HlEuzWLps9qqYftcCP/nWrbiBfjCf/lWxwrcG+W7/ZNVs/Z
+         JlCw==
+X-Forwarded-Encrypted: i=1; AJvYcCU6iDvapPoWmWj/PXqwUQruf6YkPyOF4Vg2u5eh61qMegFJooewa0PNPvvUxa3Pn5XWgEczVshT02Esyr3i6tz/PeZZJlb9qQD2ro6S0w==
+X-Gm-Message-State: AOJu0YwrxQPPByxUmodiRyIr+fy2Om1tTvQ15AiSeo2it/P2UbHOGv9/
+	gVjDkaDN5bXoY1d5abgCXZRK/3LwlVEBmCPDujiYpSIoY5uyD5AMZHup2E1zwZQ=
+X-Google-Smtp-Source: AGHT+IGpn/tQC08ltoDLTaVOSOPnAOIJ4a0jkUhyNNQh+Sb/xS2v6hWrvFWPwQTJlIOixwmQn1hcJg==
+X-Received: by 2002:a05:6512:52b:b0:513:226c:651d with SMTP id o11-20020a056512052b00b00513226c651dmr211712lfc.2.1711562925508;
+        Wed, 27 Mar 2024 11:08:45 -0700 (PDT)
+Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id z2-20020a1709060be200b00a45f2dc6795sm5702733ejg.137.2024.03.27.11.08.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Mar 2024 11:08:45 -0700 (PDT)
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v3 00/19] Venus cleanups
+Date: Wed, 27 Mar 2024 19:08:38 +0100
+Message-Id: <20230911-topic-mars-v3-0-79f23b81c261@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Mailru-Src: smtp
-X-4EC0790: 10
-X-7564579A: 646B95376F6C166E
-X-77F55803: 4F1203BC0FB41BD9D135BF24EC7C3B8467D85483E9EA2C72D4DE81C4A4EEAA95182A05F5380850407E018E00233D19F103ED270C30F246C56F6699296FBB1D8BFEB17DC202E68E3061CD1C36FF7CC69F
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE792C68BF9CD4C0E9EEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637FC59FE045852DCED8638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D8FCC1F24D3E27711287CFF8390119370736FCECA83F9E0E7CCC7F00164DA146DAFE8445B8C89999728AA50765F79006370277CA7F994D7EF5389733CBF5DBD5E9C8A9BA7A39EFB766F5D81C698A659EA7CC7F00164DA146DA9985D098DBDEAEC8C2B5EEE3591E0D35F6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA73AA81AA40904B5D9A18204E546F3947C67F1C1C3ABB44F3ABA3038C0950A5D36C8A9BA7A39EFB766D91E3A1F190DE8FDBA3038C0950A5D36D5E8D9A59859A8B605968FE12AFC105A3AA81AA40904B5D99C9F4D5AE37F343AD1F44FA8B9022EA23BBE47FD9DD3FB595F5C1EE8F4F765FC2EE5AD8F952D28FBE2021AF6380DFAD18AA50765F790063735872C767BF85DA227C277FBC8AE2E8B5D9D64F11F3A190A75ECD9A6C639B01B4E70A05D1297E1BBCB5012B2E24CD356
-X-C1DE0DAB: 0D63561A33F958A5052FD897965A51085002B1117B3ED696B026D4B528DAFB9A69995D676B7B4CBE823CB91A9FED034534781492E4B8EEAD21D4E6D365FE45D1C79554A2A72441328621D336A7BC284946AD531847A6065A535571D14F44ED41
-X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF3FED46C3ACD6F73ED3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CFB2A1E6D698E158005EB6F90307662FAB6170503ED00B04057DD4EA3502D7286F9FECE8BBF8D52592F212F37558E72466CB2A1A86CAF0EB7DE5E1C781D7312E8B6BCF8D82D5D595E042BF32D1DA1046D202C26D483E81D6BE72B480F99247062FEE42F474E8A1C6FD34D382445848F2F3
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojRawEQSF5Utsl2ZsQV5oBAA==
-X-Mailru-Sender: 9EB879F2C80682A09F26F806C7394981DE6AB1E6944A41F4CC811723C208B417DAA0BAA3F9E9587B971FBB9D065B44AB2C62728BC403A049225EC17F3711B6CF1A6F2E8989E84EC137BFB0221605B344978139F6FA5A77F05FEEDEB644C299C0ED14614B50AE0675
-X-Mras: Ok
-X-7564579A: 646B95376F6C166E
-X-77F55803: 6242723A09DB00B469FED0CC4E03BFC3F7F23553880BB0CD9CE392CF4222AACB049FFFDB7839CE9E088A9832E8528485691FEC0817A47E6AA4C88C78471F2B8398535CA0A1BB9714
-X-7FA49CB5: 0D63561A33F958A55BBB17C0A6DF7F19AEDA6AFD1FE1C0937D67B4EF99483F558941B15DA834481FA18204E546F3947C5DFC16F0B797518DF6B57BC7E64490618DEB871D839B7333395957E7521B51C2DFABB839C843B9C08941B15DA834481F8AA50765F7900637101E20BD66E287C2389733CBF5DBD5E9B5C8C57E37DE458BD96E472CDF7238E0725E5C173C3A84C3BC6666B89C28E7B035872C767BF85DA2F004C90652538430E4A6367B16DE6309
-X-87b9d050: 1
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojRawEQSF5UtusZBJx0XorKg==
-X-Mailru-MI: 8000000000000800
-X-Mras: Ok
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKZgBGYC/3WNywqDMBQFf0WybkoeorGr/kfpIjeJesEmktjQI
+ v57o7tCu5wDM2clyUV0iVyqlUSXMWHwBeSpImbUfnAUbWEimJCs45wuYUZDHzom6hoGIETT1Zy
+ TIoBOjkLU3oxF8c9pKuMcXY+v4+F2LzxiWkJ8H4eZ7+vPduaUUd1aqaBXLVi4Tuh1DOcQB7J3s
+ vjviuJKq42qQSlTf7vbtn0AJLJI8PYAAAA=
+To: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, 
+ Vikash Garodia <quic_vgarodia@quicinc.com>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Dikshita Agarwal <quic_dikshita@quicinc.com>, 
+ Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ Stanimir Varbanov <stanimir.varbanov@linaro.org>, 
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, 
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1711562923; l=3124;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=5X+Zdn4J7Sx+vjlv+C+dpGZruk8KxdzwFk8UAnYkPF4=;
+ b=vKUdBGHf+ENd3xkN9oa4QX3veaesQOVSsEeRFOn++rx0HaowqdxeRlSfl+H6YVr5Z57tKnCjG
+ E85RANWYhiPBUTmPzg6v8CBARh9bvqUC0chKbEFkjGFEGmCwiDaOtX1
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-Add the tables and constants for init sequences for UFS QMP phy found in
-SM8475 SoC.
+With the driver supporting multiple generations of hardware, some mold
+has definitely grown over the code..
 
-Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+This series attempts to amend this situation a bit by commonizing some
+code paths and fixing some bugs while at it.
+
+Only tested on SM8250.
+
+Definitely needs testing on:
+
+- SDM845 with old bindings
+- SDM845 with new bindings or 7180
+- MSM8916
+- MSM8996
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 71 +++++++++++++++++++++++++
- 1 file changed, 71 insertions(+)
+Changes in v3:
+- Drop const within const patch
+- Pick up tags
+- Some stylistic fixes in kerneldoc
+- Link to v2: https://lore.kernel.org/r/20230911-topic-mars-v2-0-3dac84b88c4b@linaro.org
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-index 590432d581f9..ddc0def0ae61 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-@@ -722,6 +722,38 @@ static const struct qmp_phy_init_tbl sm8350_ufsphy_g4_pcs[] = {
- 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_UFS_BIST_FIXED_PAT_CTRL, 0x0a),
- };
- 
-+static const struct qmp_phy_init_tbl sm8475_ufsphy_serdes[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SYSCLK_EN_SEL, 0xd9),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CMN_CONFIG_1, 0x16),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_HSCLK_SEL_1, 0x11),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_HSCLK_HS_SWITCH_SEL_1, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP_EN, 0x01),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_INITVAL2, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE0, 0x82),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE0, 0x18),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE0, 0x18),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE0, 0xff),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE0, 0x0c),
-+};
-+
-+static const struct qmp_phy_init_tbl sm8475_ufsphy_g4_serdes[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_MAP, 0x04),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_IVCO, 0x0f),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE0, 0x14),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE1, 0x98),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE1, 0x14),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE1, 0x18),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE1, 0x18),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE1, 0x32),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE1, 0x0f),
-+};
-+
-+static const struct qmp_phy_init_tbl sm8475_ufsphy_g4_pcs[] = {
-+	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_PLL_CNTL, 0x0b),
-+	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_HSGEAR_CAPABILITY, 0x04),
-+	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_RX_HSGEAR_CAPABILITY, 0x04),
-+};
-+
- static const struct qmp_phy_init_tbl sm8550_ufsphy_serdes[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SYSCLK_EN_SEL, 0xd9),
- 	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CMN_CONFIG_1, 0x16),
-@@ -1346,6 +1378,42 @@ static const struct qmp_phy_cfg sm8450_ufsphy_cfg = {
- 	.regs			= ufsphy_v5_regs_layout,
- };
- 
-+static const struct qmp_phy_cfg sm8475_ufsphy_cfg = {
-+	.lanes			= 2,
-+
-+	.offsets		= &qmp_ufs_offsets_v6,
-+	.max_supported_gear	= UFS_HS_G4,
-+
-+	.tbls = {
-+		.serdes		= sm8475_ufsphy_serdes,
-+		.serdes_num	= ARRAY_SIZE(sm8475_ufsphy_serdes),
-+		.tx		= sm8550_ufsphy_tx,
-+		.tx_num		= ARRAY_SIZE(sm8550_ufsphy_tx),
-+		.rx		= sm8550_ufsphy_rx,
-+		.rx_num		= ARRAY_SIZE(sm8550_ufsphy_rx),
-+		.pcs		= sm8550_ufsphy_pcs,
-+		.pcs_num	= ARRAY_SIZE(sm8550_ufsphy_pcs),
-+	},
-+	.tbls_hs_b = {
-+		.serdes		= sm8550_ufsphy_hs_b_serdes,
-+		.serdes_num	= ARRAY_SIZE(sm8550_ufsphy_hs_b_serdes),
-+	},
-+	.tbls_hs_overlay[0] = {
-+		.serdes		= sm8475_ufsphy_g4_serdes,
-+		.serdes_num	= ARRAY_SIZE(sm8475_ufsphy_g4_serdes),
-+		.tx		= sm8550_ufsphy_g4_tx,
-+		.tx_num		= ARRAY_SIZE(sm8550_ufsphy_g4_tx),
-+		.rx		= sm8550_ufsphy_g4_rx,
-+		.rx_num		= ARRAY_SIZE(sm8550_ufsphy_g4_rx),
-+		.pcs		= sm8475_ufsphy_g4_pcs,
-+		.pcs_num	= ARRAY_SIZE(sm8475_ufsphy_g4_pcs),
-+		.max_gear	= UFS_HS_G4,
-+	},
-+	.vreg_list		= qmp_phy_vreg_l,
-+	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-+	.regs			= ufsphy_v6_regs_layout,
-+};
-+
- static const struct qmp_phy_cfg sm8550_ufsphy_cfg = {
- 	.lanes			= 2,
- 
-@@ -1941,6 +2009,9 @@ static const struct of_device_id qmp_ufs_of_match_table[] = {
- 	}, {
- 		.compatible = "qcom,sm8450-qmp-ufs-phy",
- 		.data = &sm8450_ufsphy_cfg,
-+	}, {
-+		.compatible = "qcom,sm8475-qmp-ufs-phy",
-+		.data = &sm8475_ufsphy_cfg,
- 	}, {
- 		.compatible = "qcom,sm8550-qmp-ufs-phy",
- 		.data = &sm8550_ufsphy_cfg,
+Changes in v2:
+- Fix "set but unused" warning in "Drop cache properties in resource struct"
+- Fix modular build with "Commonize vdec_get()"
+- Rebase
+- Test again on 8250, since nobody else tested other platforms since the last
+  submission (or at least hasn't reported that), I'm assuming nobody cares
+- Needs to be tested atop [1] and similar, it's in latest -next already
+- Link to v1: https://lore.kernel.org/r/20230911-topic-mars-v1-0-a7d38bf87bdb@linaro.org
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit/?h=for-next&id=d2cd22c9c384aa50c0b4530e842bd078427e6279
+
+---
+Konrad Dybcio (19):
+      media: venus: pm_helpers: Only set rate of the core clock in core_clks_enable
+      media: venus: pm_helpers: Rename core_clks_get to venus_clks_get
+      media: venus: pm_helpers: Add kerneldoc to venus_clks_get()
+      media: venus: core: Set OPP clkname in a common code path
+      media: venus: pm_helpers: Kill dead code
+      media: venus: pm_helpers: Move reset acquisition to common code
+      media: venus: core: Deduplicate OPP genpd names
+      media: venus: core: Get rid of vcodec_num
+      media: venus: core: Drop cache properties in resource struct
+      media: venus: core: Use GENMASK for dma_mask
+      media: venus: core: Remove cp_start
+      media: venus: pm_helpers: Commonize core_power
+      media: venus: pm_helpers: Remove pm_ops->core_put
+      media: venus: core: Define a pointer to core->res
+      media: venus: pm_helpers: Simplify vcodec clock handling
+      media: venus: pm_helpers: Commonize getting clocks and GenPDs
+      media: venus: pm_helpers: Commonize vdec_get()
+      media: venus: pm_helpers: Commonize venc_get()
+      media: venus: pm_helpers: Use reset_bulk API
+
+ drivers/media/platform/qcom/venus/core.c       | 139 ++++-------
+ drivers/media/platform/qcom/venus/core.h       |  22 +-
+ drivers/media/platform/qcom/venus/firmware.c   |   3 +-
+ drivers/media/platform/qcom/venus/hfi_venus.c  |  10 +-
+ drivers/media/platform/qcom/venus/pm_helpers.c | 323 +++++++++----------------
+ drivers/media/platform/qcom/venus/pm_helpers.h |  10 +-
+ drivers/media/platform/qcom/venus/vdec.c       |   9 +-
+ drivers/media/platform/qcom/venus/venc.c       |   9 +-
+ 8 files changed, 191 insertions(+), 334 deletions(-)
+---
+base-commit: 26074e1be23143b2388cacb36166766c235feb7c
+change-id: 20230911-topic-mars-e60bb2269411
+
+Best regards,
 -- 
-2.44.0
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
 
