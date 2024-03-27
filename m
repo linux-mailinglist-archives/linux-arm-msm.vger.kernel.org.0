@@ -1,154 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-15461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15471-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id DEDE988EF85
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 20:50:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BA0EC88F0DF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 22:25:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6F36429E822
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 19:50:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6ECFE2972F6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 21:25:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44EB515218E;
-	Wed, 27 Mar 2024 19:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DE4C153560;
+	Wed, 27 Mar 2024 21:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gNbpt7vF"
+	dkim=pass (2048-bit key) header.d=epam.com header.i=@epam.com header.b="TOtCBBlr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0039f301.pphosted.com (mx0a-0039f301.pphosted.com [148.163.133.242])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C041514E9
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 19:50:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711569013; cv=none; b=NXz4eH/dEAqZH8t5AJfxSjB75OwY9qGQUCzjP1X6OEZs2+TXYJqbhpiSGOXzOrFrPFDGzVQfKoiDBuZhlnmCZr4rhnj0Hb1/nfY4R8i94rnhTK7Jm7KawJvepcTqDvKWkUfsqs4yqtlvZ5OfNVpO17ETu96/foopwgCOYA64FJI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711569013; c=relaxed/simple;
-	bh=wuxCCv8VQBgulT0IC8qi8fq3uXjMWvgWTlKCDOY8Ffw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jIgrSEgpet//3ipImQ2g76hg0HBvewRKnvAhBEaToxppicWR81PnTNn/MpeyQYtiPdIBqewTCf6rkG3tseVxUkGeF676DC+VHiwkCe6wZuBXE6nyCvBxh0sIEkxdaslc2DrAsSMRUJjmAjrEjR+9e+edsJs2pSdvKewisW4HCEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gNbpt7vF; arc=none smtp.client-ip=209.85.218.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a4a387ff7acso22947366b.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 12:50:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711569010; x=1712173810; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=+bMAqCJ8t7P3InP0WP0DeRsP6LlfPzKdNMqUuNEm/4E=;
-        b=gNbpt7vF6Lp7b1WE+806lp21l16X8JpQKm9TyOC95a//5gvRvfOayyyEYXPkwukkHN
-         HTm/pwT+/VAxZ/W3dWlWIqFix4pdANMkIKCn0O87whZhbDXENo7vptE+ST+I6qBq8h/u
-         GDLqHI7pKtNKAhSnhlsPWnsCw/ld6wpTrm3MaasqZik13sD9AolXmFHjoXJV+dSC4FXK
-         tyOdeArf5Uzy1r6eSrdxBUGPJ+W347rs9p1PYzypMqREkvV9dbm786ULDvL1HmdA1fM3
-         VpAx5HmCuavm4e4g9XN0k/sAA2wZ3x2XcTZU2+N8nLWLx7skwuSWvV4B2vKgUJ3Gl/VE
-         FAow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711569010; x=1712173810;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+bMAqCJ8t7P3InP0WP0DeRsP6LlfPzKdNMqUuNEm/4E=;
-        b=exeuTyCg3+Cp0IbbX5Z+KOVlW/NkxdLp5fIuMXuKTNgB+aKP+aEnToGu9KJT7EoBlQ
-         pyiCrC/LtD3hWfrezxoBZF0Ve+lQiMvgqiHckPkhSt5jCkIDdbJwqJbL8Phm4QDHnOEY
-         1wy2kAWj6qL3OCn70LdBzRen32Na05A+5n5IgdcyMv5iwXxp6OMysqcl6yeftqnAnGyo
-         pq0EefFxsGOfJnl9jFNWZNL8rUObL03s8KnFU0MlFWHyIkkjeZhdO5jXF/s4GYJ97hCo
-         Dpy0M7gKz6kXyvfvgYz79h5UjdOPuxEXIDosw4E4yWUB9m1ogxvyMFyMVZgOvw3lSrbr
-         aQgw==
-X-Gm-Message-State: AOJu0YwIeU8XPTrtl60SJz5cfPcv7CUJF3ZFlZ/pk47GRirX6+xFrjOZ
-	Uj+S4WyTarXEOX4yxpPA0HmOKv66sY7GCb5bRHvHzJiSpohwnldIj+CGwUQOgOM=
-X-Google-Smtp-Source: AGHT+IEK1FEdv++g2vsCy21f89ME56VjBd3DO8jXMfxko/7+tJDQKxkB0s3d5Wy0ekpNPimPsqDxwQ==
-X-Received: by 2002:a17:906:2a0c:b0:a47:3c66:b396 with SMTP id j12-20020a1709062a0c00b00a473c66b396mr294393eje.64.1711569009863;
-        Wed, 27 Mar 2024 12:50:09 -0700 (PDT)
-Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id z15-20020a170906270f00b00a46b8cd9b51sm5834772ejc.185.2024.03.27.12.50.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Mar 2024 12:50:09 -0700 (PDT)
-Message-ID: <60428572-a611-4c43-a185-a850ef69d2de@linaro.org>
-Date: Wed, 27 Mar 2024 20:50:07 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03E04CB38;
+	Wed, 27 Mar 2024 21:25:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.133.242
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1711574753; cv=fail; b=qzcD7k5fadK2FtmGDonPTwgZNpugzx02QW6sqLEwrtB35H40Lud6MBCCuL60rAgLaONmIzrldGUYSLLgAVpTjK35Kvjx+b9eY+Revm4JRyq+6FXLpYXXHNFjoyDoAFwlXgMYE38LV4C6T1Y3GdpkNsWMTOdPR/Q9HC2ZDiPPGVQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1711574753; c=relaxed/simple;
+	bh=0XvGh4CIDYX1cvJz1FJ06ime7tKXc9dTeCCxFvOFAsY=;
+	h=From:CC:Subject:Date:Message-ID:Content-Type:MIME-Version; b=qx31flMzpM2YqsjQZDCGjlXFn3DyrhGNw6P5L87PGYgMmNh6Mb5v5/gersA4EhLcZoiISzjMleYCtx9Z28hXsfmVBZtRuBzcd4HUQtSpHU9tXgcyNdsUfh03VHD4pS2zHKOPFY5h3Q5v2YeqAkFfxmnrXeFQvJYA38wOquZW8DU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=epam.com; spf=pass smtp.mailfrom=epam.com; dkim=pass (2048-bit key) header.d=epam.com header.i=@epam.com header.b=TOtCBBlr; arc=fail smtp.client-ip=148.163.133.242
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=epam.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=epam.com
+Received: from pps.filterd (m0174677.ppops.net [127.0.0.1])
+	by mx0a-0039f301.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42RJkB3n021877;
+	Wed, 27 Mar 2024 20:09:39 GMT
+Received: from eur04-he1-obe.outbound.protection.outlook.com (mail-he1eur04lp2051.outbound.protection.outlook.com [104.47.13.51])
+	by mx0a-0039f301.pphosted.com (PPS) with ESMTPS id 3x4gurt059-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 27 Mar 2024 20:09:39 +0000 (GMT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=JwBECxNedck1mIJVnKB4YrSzTwoaqHVuICaaBKt20ApxyN8zZ7xCCkr3tC5JYo7kJu2rMsc/t7w3kHwi3rszwDqgOvmTghLP5E+MBGIG0V+X0W9XxDnbWQdFFspqAmdapZCnOwjggerDtzbIkPwC60xI1QAJlh3VIz+4enLWyfaygrgvz4iteRiPoCURIPi2OhWIP4uIM9SJy3QByObBhijSzObL2FValCuu73g6oGA6EkzeCG79iVutL+83hDUVd2J7JEH9xr97+xcMuvdgpwYfOl7O2er5C2KKXbEySAmcnjWI67KbPy/HqSvuel+9XFcJZQ53ON8KaVb8O9+uyw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fqJ+DEJeF9LwZt1m1i77SrFVz2k3naYfPGBzuYCgFHg=;
+ b=kJnvEuPFnzV0ugSQ57cxUme4c6CvnhR1+HVqTqQoidJJPoFcXXIF7tfK695O95x7UovQtB/+pzW5d32OjRbcmVIkPpWnvYuqt0V4oEJEK/l7Kp/x6nPEC1FMaf0jmBNhB+2Xc85xQ85ZjZ/wsr6HnUT4+LgZq7iqTIcZPhPw9LHX8plj8U96v9oG+daBHbkWA2B4d5lZ1BJYhWMZZ6fyTIzLhDxqvRT/Y+2VnRiVcmHM0E/cLlx/UOKI0nGFPyaRtxUHoP790HYUg08fjDfjEy4LeffyZ5w5vLy2r0erFBRoVob6JV8oM5Gsp2WWVDGlN5gxH3pZctvXcLZofGSTdw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=epam.com; dmarc=pass action=none header.from=epam.com;
+ dkim=pass header.d=epam.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epam.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fqJ+DEJeF9LwZt1m1i77SrFVz2k3naYfPGBzuYCgFHg=;
+ b=TOtCBBlrPkLoOZDdhfNBPuLTrOVSWMGCLYy7H5oi0XwzvDKoI+7TcyH/BsQzVPQoFddbm35UREdHLqhMvo2lcDb2XcSTDT0PzwdshgGScPf7mR/qbSwLaGNrdLuOvbb/wbh/hUokoJu8sMCmlYXfzlAY552zFTmJpiZbRWZ/WBjSz1rI8VjYMAj4H0VyLYLRg95PIfFIo0s/sA84yji5g7/G2/SQZYHfl9EeU/dLiVkNf3cDte4C9ekNoUw2Tm0m0du+kMOpH4DfUzv0/Ju+GIZpVhJymFNIpsAzPhXcGRAKNHW7C3ARxI0f3+OfNMTnFx49KIwOovr64g9jNdeNdA==
+Received: from GV1PR03MB10456.eurprd03.prod.outlook.com
+ (2603:10a6:150:16a::21) by DU0PR03MB9079.eurprd03.prod.outlook.com
+ (2603:10a6:10:466::6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.26; Wed, 27 Mar
+ 2024 20:09:34 +0000
+Received: from GV1PR03MB10456.eurprd03.prod.outlook.com
+ ([fe80::74c9:2488:1dd7:b976]) by GV1PR03MB10456.eurprd03.prod.outlook.com
+ ([fe80::74c9:2488:1dd7:b976%3]) with mapi id 15.20.7409.028; Wed, 27 Mar 2024
+ 20:09:34 +0000
+From: Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>
+CC: Caleb Connolly <caleb.connolly@linaro.org>,
+        Volodymyr Babchuk
+	<Volodymyr_Babchuk@epam.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad
+ Dybcio <konrad.dybcio@linaro.org>,
+        "linux-arm-msm@vger.kernel.org"
+	<linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>
+Subject: [PATCH] soc: qcom: cmd-db: map shared memory as WT, not WB
+Thread-Topic: [PATCH] soc: qcom: cmd-db: map shared memory as WT, not WB
+Thread-Index: AQHagIKviCrPH112HEOpsjr5BCtYWA==
+Date: Wed, 27 Mar 2024 20:09:34 +0000
+Message-ID: <20240327200917.2576034-1-volodymyr_babchuk@epam.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-mailer: git-send-email 2.43.0
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: GV1PR03MB10456:EE_|DU0PR03MB9079:EE_
+x-ms-office365-filtering-correlation-id: 5beb3eab-a157-43a2-8054-08dc4e99d245
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 
+ 7gzB/v8dtrRH2ff5rFGjSpwKyhkcEwppklXHFSTRsTBWTCdYZ+MXM81FWj9zorvFKmThoJuQ4CLEsiA7CDmI7oEAEK+4n87B6rl6nFdGe2/iP1feMYe0+tdBZ+cunC1lDSgsWzP+o1Y8+xwpVqA4cIKys6GDlnR+6wuoWYB3dvf2X8EF6Ph5z4QAPnFlVAQv1hWQy4QlCNJsOB2Tk5v+PC3ZBs6mvjXRj3UCpDbYzvDCkgvdvWGI9OF2Pa5v/rzJAW/ILlRqNIn0KBxkvTvHqiUF6dmPaYuMTomyWa+70u/dpcBa8PjPp5JsP0OH08zFW5t8mx5IAhIiKX0Vg9++UMVM7CZwU0jz/FZvke4vkBZr9HrPeI68cc23oFEVg//Df4nXlcBqmM6efBX+dyIE3nMX72sMfrLkXrTXQd2pyCS471GJ41J5ANV957Ii2OrYe2YLEe30AHF611LRvCr5zhWZ7l8cA2xQ0LxKGefthp6IBgnTcX7xg7VbNGYLqTLo/5LeXzIX4dUGCDzxmYTFJ5NjgfDW9AtdKzKZfsz78b7trxEqnYXaq05XiaRJDqu3IJpv5Obh1F9MptDZ1zcwLwm/udNaqFkr2nmezgetZQMAqJwB0ebFz1LDky4WrtWxTU7APHTBcAQSCvrzwsfo0cWrdcPiYNQkIXzmzK5ymPtMtnKnhRGBh93JTP77wP0Dc+HECFF1lyKhC2hhgtoxOK8ssiHcvdoRUUi6BVGogLE=
+x-forefront-antispam-report: 
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV1PR03MB10456.eurprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376005)(1800799015)(366007)(38070700009);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: 
+ =?iso-8859-1?Q?yXQubbxLZivy9Mc3XDBF6MTJ1XXTC1ubqkeaOamul4kctLSHHoQj2AG8Vl?=
+ =?iso-8859-1?Q?1XzhdAGptYLJdZc9mpZk6DUCjR1D7FXlP+5YQR+cwl/1i/5bV7log1vn4Y?=
+ =?iso-8859-1?Q?6+2SZ45wKK1F7YpArX03lEEW6AVfVoEZ/QUdS3GKOPilCX46L4c/oCPPmA?=
+ =?iso-8859-1?Q?gX/Tyb5meYNMMZPT/p8eyoW7N04vD4nm2vpATPqCuaGstBQBI85fTXL3IQ?=
+ =?iso-8859-1?Q?A03u4k+dPndvIAccbL98aT7DKfY6zCL0TCDxkqa446I/7pWzLbLkQqwXE3?=
+ =?iso-8859-1?Q?CwTEldrdXDLML55MCj/hv6RUwnzCIV9F0nK8iUaOoPY2AhJ1MIq/e6o3FM?=
+ =?iso-8859-1?Q?ImjWHDRxC0rpiUNILWzmjwidg2ESxLloNKQYLki81PsYuv5IHMYuMA4BCR?=
+ =?iso-8859-1?Q?bgsysiG3XUGw3xub4k4Dn17pYTkB7+9PUx5sxVAmAVhpfbeFB8HCo1xLOa?=
+ =?iso-8859-1?Q?dzU/1wRVUuXrdR3S31l5JM/19sbo75drO87bpv2NDIFaZMYfljZCfLKw0z?=
+ =?iso-8859-1?Q?6MQ9tTWzaDZnYajxEW+WU4UbKsukA3t/toqfsvx4+HTZMsX1eUPvl7A5z4?=
+ =?iso-8859-1?Q?P17zpSutzwT3HY7wpuUCx0UEsEDTICzeny/W14QXJVbjktTU3IF7ln3rKV?=
+ =?iso-8859-1?Q?1+IFm0OAFQYsMObKcC4V/j2W0GgcvHIoR0Ls6dZNDnqRnHKU2Wnuh9lo6V?=
+ =?iso-8859-1?Q?L5FWOrsXKq77MtZkTd5frw/uNxHsk4lzk2M1zj1FFNRs/FUYeAmAq1Sa3s?=
+ =?iso-8859-1?Q?HzPiQbYGW60RzdTLgJti7XqXXOBKV75TU3q7pSAd/R4BG+DkWMdtJudg/B?=
+ =?iso-8859-1?Q?+lSAiPCF3ohg9xrbPYh4UhSjHaMjXVZ9/9nM9g3CqGQkVA38XbJQIonWYM?=
+ =?iso-8859-1?Q?NtvF+E5QijcHBs576lssyRqSiHkgb4rBPAeZM1TOms6/1TLjnQbrkb5df9?=
+ =?iso-8859-1?Q?s155dZxZw3PdSSswyKT4DvJ1qcoenMpwsyJkCopGNJ+dSXKFafkbgsQ3X6?=
+ =?iso-8859-1?Q?lCKwsX379DorEuldBK286R6R7IRj2UZXRUFALFVoeqz8KwJPKmXBMPxP6P?=
+ =?iso-8859-1?Q?eZPafTHD4d5XXc6E1NB0vErJmiiCEgRELZD77RjcfAYny126DDNVKEBw2w?=
+ =?iso-8859-1?Q?1C8luytEv5TGWjnSiCeVDHITg0na53Luo80xkzB/SqRcjmg+ysmtKsGLyp?=
+ =?iso-8859-1?Q?F4rRZ3H85TT5dnVYM+HeGQiZkcljWBXouylGEPgaT3/pB7QxrLX6zif9jE?=
+ =?iso-8859-1?Q?s07VMmGl2Q20u/icls97RJSYQMJHF/JVfY82+AcBsuOX4U5GbFRR46ahJJ?=
+ =?iso-8859-1?Q?U1vxlA2Q7HHA7Oyp3aPDavMVqXrznleolDL/IPciRAEidgjsZ/2LvfqHzC?=
+ =?iso-8859-1?Q?YDwPg4QGKJdwpUJlC+3SFzTMqOCUZLhQbcCb70q8O8f9gg0o9g+bmvn5bu?=
+ =?iso-8859-1?Q?g3xCzob31U2vDmjGJgFFYRyKxEeoIr+obmw/obGr68Pyf+58izRKmLbIsi?=
+ =?iso-8859-1?Q?1yM3t03ly64JHE/KR8FeOzaabU21sohPA4YouFNkK17n6bqZ674d8GTeVl?=
+ =?iso-8859-1?Q?vA8IHibfVXrIfT/6IuER5a0/Jf311U3Rmz7keCjQkOHti5vMdq+GLm8FuY?=
+ =?iso-8859-1?Q?2Gjd6t+hn0O9B+ZuVnilc9ymHhHvirEC1KkfdGAlYK+NH7mr2wLKFdAw?=
+ =?iso-8859-1?Q?=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] ARM: dts: qcom: Add support for Motorola Moto G
- (2013)
-To: Stanislav Jakubek <stano.jakubek@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, phone-devel@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <32c507337ab80c550fb1df08f7014d1e31eb4c32.1711454680.git.stano.jakubek@gmail.com>
- <8c605fb9cff8364ea6ac321b5a3fc265c5686def.1711454680.git.stano.jakubek@gmail.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <8c605fb9cff8364ea6ac321b5a3fc265c5686def.1711454680.git.stano.jakubek@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-OriginatorOrg: epam.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: GV1PR03MB10456.eurprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5beb3eab-a157-43a2-8054-08dc4e99d245
+X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Mar 2024 20:09:34.4056
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: b41b72d0-4e9f-4c26-8a69-f949f367c91d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: RXi1iDFmrHb+FOclbG3j6Dgc5Qa1l+Zsm3YJGAv2oNEDHOJlcYUpd/0xbutwLZMN6Ykck+Z9akiroI3Xn2qbI9wYfgAOZRlHuSfjQSyibCA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0PR03MB9079
+X-Proofpoint-GUID: hrQiV7ga_2B1QjQttbWtUkoSeUBYr2Nv
+X-Proofpoint-ORIG-GUID: hrQiV7ga_2B1QjQttbWtUkoSeUBYr2Nv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-27_16,2024-03-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ bulkscore=0 phishscore=0 mlxlogscore=911 impostorscore=0 adultscore=0
+ malwarescore=0 suspectscore=0 mlxscore=0 spamscore=0 priorityscore=1501
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403210001 definitions=main-2403270142
 
-On 26.03.2024 1:11 PM, Stanislav Jakubek wrote:
-> Add a device tree for the Motorola Moto G (2013) smartphone based
-> on the Qualcomm MSM8226 SoC.
-> 
-> Initially supported features:
->   - Buttons (Volume Down/Up, Power)
->   - eMMC
->   - Hall Effect Sensor
->   - SimpleFB display
->   - TMP108 temperature sensor
->   - Vibrator
-> 
-> Note: the dhob and shob reserved-memory regions are seemingly a part of some
-> Motorola specific (firmware?) mechanism, see [1].
-> 
-> [1] https://github.com/LineageOS/android_kernel_motorola_msm8226/blob/cm-14.1/Documentation/devicetree/bindings/misc/hob_ram.txt
-> 
-> Signed-off-by: Stanislav Jakubek <stano.jakubek@gmail.com>
-> ---
+It appears that hardware does not like cacheable accesses to this
+region. Trying to access this shared memory region as Normal Memory
+leads to secure interrupt which causes an endless loop somewhere in
+Trust Zone.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+The only reason it is working right now is because Qualcomm Hypervisor
+maps the same region as Non-Cacheable memory in Stage 2 translation
+tables. The issue manifests if we want to use another hypervisor (like
+Xen or KVM), which does not know anything about those specific
+mappings. This patch fixes the issue by mapping the shared memory as
+Write-Through. This removes dependency on correct mappings in Stage 2
+tables.
 
-Konrad
+I tested this on SA8155P with Xen.
+
+Signed-off-by: Volodymyr Babchuk <volodymyr_babchuk@epam.com>
+---
+ drivers/soc/qcom/cmd-db.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
+index a5fd68411bed5..dd5ababdb476c 100644
+--- a/drivers/soc/qcom/cmd-db.c
++++ b/drivers/soc/qcom/cmd-db.c
+@@ -324,7 +324,7 @@ static int cmd_db_dev_probe(struct platform_device *pde=
+v)
+ 		return -EINVAL;
+ 	}
+=20
+-	cmd_db_header =3D memremap(rmem->base, rmem->size, MEMREMAP_WB);
++	cmd_db_header =3D memremap(rmem->base, rmem->size, MEMREMAP_WT);
+ 	if (!cmd_db_header) {
+ 		ret =3D -ENOMEM;
+ 		cmd_db_header =3D NULL;
+--=20
+2.43.0
 
