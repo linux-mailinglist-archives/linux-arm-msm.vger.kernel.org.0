@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-15472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74DFA88F0E4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 22:27:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9BD1B88F108
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 22:34:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9B4FC29CA12
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 21:27:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4FB5E29E16F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 21:34:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 848A5153509;
-	Wed, 27 Mar 2024 21:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C29DD15250F;
+	Wed, 27 Mar 2024 21:34:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pS5I75bz"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="de5rGAFx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69E71DA24
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 21:27:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC2E1152195
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 21:34:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711574841; cv=none; b=VIGhEH+Pddmwp71c2uY9Ld6pzqWP2iElgsKVBtUK0XuVYpX/Op2JLS2uiZp9kCt8gvU3xATuTpxxzNJ1F7FuQeFuoDtYDo75J8GYWRRAjucuU1q7DZ4lA1G8tTKcmqaiLuCh9Mxhp16LWleKnM2hmVLgFGegP8Vo1+iiXUnJJJc=
+	t=1711575252; cv=none; b=uAVjHc7m+S4mL/DQWPDb01T2ZQRQW7whVGWG9zvsibf/EGsZNNnGBPqBmz3P4LfZGFNrRO+EqZnQv92eZbYgyEl2YyqUSiH0AVKOkdag0M7E7x0Le4UPsszJeWJRrtd4MJA6MsQxqJ2pcwhHlsxtfg08kF9hYO/jhO4qoB618nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711574841; c=relaxed/simple;
-	bh=yc5HwDxh0Cq57l5em6EJgDWkC64vTATP/bKHfpjFDTY=;
+	s=arc-20240116; t=1711575252; c=relaxed/simple;
+	bh=uNmhgt+DPkbrA1TAlnzDHSWQFJYNFD30M1MPoNpmNWk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j51NLfCfvTXVhFU3de8qjecTcC95td5U85eQYx7iImVReYcNeXwDIgsw7qCXrY0JeMaEam/UxEnMWqgpGtv4Td9o7YrdH2MFfOrO6M+hwXw9DZzMr9sHs/wVgUsWr6AnGOjJTrLe94GMSBsnf4gCf4rh8v5CkH7uqQhLJasfxhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pS5I75bz; arc=none smtp.client-ip=209.85.218.46
+	 In-Reply-To:Content-Type; b=XYCNeWuTBgzw8KXQBu5YPFImtVIb3jjnKMudnjKv1nTt3+ep0GhYuO1AYhJxZ8QGObQZVQ5eY5BJELRZn+CKe9g/8WZ3B9peaCIvH2/49CTXhKFfo8RztTMei672fXMpHHwGewGUkS5JYpA2RJjpvxYXEDj7CoefuJ869tkCAP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=de5rGAFx; arc=none smtp.client-ip=209.85.208.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a46d0a8399aso232437866b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 14:27:19 -0700 (PDT)
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-56b8e4f38a2so356282a12.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 14:34:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711574838; x=1712179638; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1711575249; x=1712180049; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=K+tGtRil4SrQkzoQjrHa8/2JGLOrwO/8SeqSS+CQSpY=;
-        b=pS5I75bznfK9M0wDjAlmJcWT+OlqcjQlVyAvvGAQmvXTmCOwHTdSGTGNRDe026ZNmv
-         KBGNmjeck/HN30dgNmRQtUOApAh8ecgJ4X2CfQcZn2L6GQoanAojyctqtc9rRz3c455b
-         8oY0IgdgzzaHVcF1dupvVr8mgNqX4USovOVsERTyo7NPhEfXtZaeY85fJ9S/3RaDhQ/8
-         gNwdz64SgJvtY9eZp3Qcm1B+loWkeBdNeFEMDWk/XB+JIYVl4glJctFz/K7rFuTD28eD
-         Cs/pRnAUNDSsGoxbZ0tQyTqXcZ4Thlz55OA214TKo9Et16KueS+Cyl8IeaUkMYbNoxsS
-         4vRw==
+        bh=5Z+UzAYrVvdJAWKN2jU1pBtV2WcylIKnFACHwU9dAWU=;
+        b=de5rGAFxA+89hYgRZwiSA3s1ovJ0lWYATid1MaJPsLaiRzU7NIp2kkSy4hJMbnGqYI
+         0aTk7DLNq2eRPeQRhMpSwM8yhwvjDZTZD8t6aJ8FmNYbuzroVwTdSeJ3jsTm+HVLiJmI
+         mdYCU5McYMv4E+vcUzXx8YrmAdD5qitFUzDEUVQBLIqYKc/m/DbwKT9mlPnZhrp3FxVo
+         vpq4qfeVC0T6xkPDzFvwRvrPcj6RgF5DtW2EVMprqExlEIsBOnhP6JEdvuCuOJ5s0ypo
+         eeIl55MRzDYSAW1evS00/TQxxJIywvFRFyOq/EfzuZURYgWEQbCWPJNxuJ/4IGY/+TMF
+         A2VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711574838; x=1712179638;
+        d=1e100.net; s=20230601; t=1711575249; x=1712180049;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=K+tGtRil4SrQkzoQjrHa8/2JGLOrwO/8SeqSS+CQSpY=;
-        b=ObhhGSU8OyCpkq35ZuBnMPxn55O/igSZq0lrPRsh/X7U59+KDroJoNbF9JFpbd2oEo
-         loEe9HUOp/Vf9Bi8DkK+Y4NkJam3MkJ5rmkTU/XNFYJh2W+22tyCG9oOeKp8uaGQ0AwO
-         JQzVgtVLDlWC3d9k+5f3QiEQ1zwgwqnVjFaY9EzUCMJ8EvuKF9ZCE1j7CW5z9bH5NVC3
-         Jgq7TzR6I+KUAeyNIme7XmVqiG6U5KimwSgyhVz6QcfqCstEcoOdpR4u15eb+hXlgOuZ
-         KceCCRoNTnE/ioY/7TlaAK5UtHBpyy1YXrwk7WsF8PUn+aDMEjKcbF9HJZKOXM7rkdUu
-         9ypg==
-X-Forwarded-Encrypted: i=1; AJvYcCX92+QYCuBq/+8HEYy/TpqXnH4GqkYJZ9IwTNZvujLSrBDyVG4SS449EJ6qxagElaWcepDzIwAh6k5xEfKdGXCNfWVr7BFbENrjtsBBEg==
-X-Gm-Message-State: AOJu0YzYovZInN63EexrXOCiC0ih93TFohOpyfp9MKVv/YcR6UQSN5ri
-	SXxfSbJDUuWnb6guJzl6npmoJKmy33xqL1J/FaJGNa0uCuQoYUhP81IH49o25VY=
-X-Google-Smtp-Source: AGHT+IEIGpR3f17YdTWAAOTiogXj/c4pPIi1qELLH+nIQPdfM/SxKE08Tx3x1OZ6MeNR1E7mfSFDig==
-X-Received: by 2002:a17:906:1682:b0:a46:a8b8:f4cf with SMTP id s2-20020a170906168200b00a46a8b8f4cfmr367819ejd.35.1711574838038;
-        Wed, 27 Mar 2024 14:27:18 -0700 (PDT)
+        bh=5Z+UzAYrVvdJAWKN2jU1pBtV2WcylIKnFACHwU9dAWU=;
+        b=BniQ6TX4TkrX6WV5DlNELBR+pXBxtG9p3YJDhGaeAWOvRMZ6EirKtetSWtkh6ikgxm
+         xnhMGLGq3bToMnBolYqREyPw07UDU9w0Leua/PaILK8t4WFAvxxemGBuV33wc9DtJxbf
+         UOVWEl+OJAX44k2+E+UfF3JAlEgSS0XVRFC3PwRFq+7qUAm27eLA2dsQOz3FJC4Qz6Xf
+         LcUcaJCST0/CaEwkCGQ2FEM4fo6qo8S7R0gH1mLDbyWJSQ5FMUu3MgrETFglOJMbYOsa
+         z7aw0OuSJIV6f0BrdwQ0kyz4wpKujCODxKnQ4yFJQ/6Da/YXWhvsKGOjF3TpqF3hQuD8
+         IPuw==
+X-Forwarded-Encrypted: i=1; AJvYcCXOAEYl9W23g5F338Q7UkXd1XxpeUx84pdJ+1DqVRVWbgq2/iUtywUQM68tbkLkvIhBuzHnNqrvAau48haKTxNKKyWd7Qqgfwpy4oM/+Q==
+X-Gm-Message-State: AOJu0YxqJB0ibvbjLtTvIuM9TYMG6Hb2u7r4YR7JII/goVkD16MtBn/1
+	OQS1Olc1vKxbljO9ViHSjyYzi3tXgm5rKefaaEkFCNDdaX6OyJlaAxOtN60OLuE=
+X-Google-Smtp-Source: AGHT+IFNa+gOgt0M4HZIlSz3Nu+an+rSzVrU5NorBMJZZdaN0POvqtdPbYOHzxoyFu//ZGEG4381HA==
+X-Received: by 2002:a17:907:9689:b0:a47:1d3f:b2ac with SMTP id hd9-20020a170907968900b00a471d3fb2acmr569978ejc.76.1711575248851;
+        Wed, 27 Mar 2024 14:34:08 -0700 (PDT)
 Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id b2-20020a1709062b4200b00a4725e4f53asm5877732ejg.40.2024.03.27.14.27.16
+        by smtp.gmail.com with ESMTPSA id d9-20020a1709063ec900b00a4737dbff13sm5865811ejj.3.2024.03.27.14.34.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Mar 2024 14:27:17 -0700 (PDT)
-Message-ID: <fc72ee13-db3d-423a-9ac2-15b13f42ef5e@linaro.org>
-Date: Wed, 27 Mar 2024 22:27:15 +0100
+        Wed, 27 Mar 2024 14:34:08 -0700 (PDT)
+Message-ID: <8eb45771-096a-443f-b017-3ec8bc4940ba@linaro.org>
+Date: Wed, 27 Mar 2024 22:34:05 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,19 +77,24 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] PCI: qcom: properly implement RC shutdown/power up
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Philipp Zabel <p.zabel@pengutronix.de>, linux-arm-msm@vger.kernel.org,
- linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
- Johan Hovold <johan+linaro@kernel.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Bjorn Andersson <quic_bjorande@quicinc.com>
-References: <20240327212050.GA1538555@bhelgaas>
+Subject: Re: [PATCH RFT] arm64: dts: qcom: sm8350: Reenable crypto & cryptobam
+To: Luca Weiss <luca.weiss@fairphone.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bhupesh Sharma
+ <bhupesh.linux@gmail.com>, David Heidelberg <david@ixit.cz>,
+ Stephan Gerhold <stephan@gerhold.net>,
+ ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240108-sm8350-qce-v1-1-b7d586ff38af@fairphone.com>
+ <a5923bf7-0a05-43bd-b282-b45e5653ac4d@linaro.org>
+ <CY9E4ZCHOMWU.C18NR0H7V1QX@fairphone.com>
+ <CAA8EJppCAMXds5F4bgeb9VJSwph-+4ekVsJ=rGib5=RR5m0DPg@mail.gmail.com>
+ <CZ6FR855VPP7.3GHX4EO9WEZIH@fairphone.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -127,50 +132,126 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240327212050.GA1538555@bhelgaas>
+In-Reply-To: <CZ6FR855VPP7.3GHX4EO9WEZIH@fairphone.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 27.03.2024 10:20 PM, Bjorn Helgaas wrote:
-> On Wed, Mar 27, 2024 at 08:49:09PM +0100, Konrad Dybcio wrote:
->> Currently, we've only been minimizing the power draw while keeping the
->> RC up at all times. This is suboptimal, as it draws a whole lot of power
->> and prevents the SoC from power collapsing.
+On 16.02.2024 11:36 AM, Luca Weiss wrote:
+> On Mon Jan 8, 2024 at 11:45 PM CET, Dmitry Baryshkov wrote:
+>> On Mon, 8 Jan 2024 at 16:23, Luca Weiss <luca.weiss@fairphone.com> wrote:
+>>>
+>>> On Mon Jan 8, 2024 at 3:18 PM CET, Konrad Dybcio wrote:
+>>>> On 8.01.2024 14:49, Luca Weiss wrote:
+>>>>> When num-channels and qcom,num-ees is not provided in devicetree, the
+>>>>> driver will try to read these values from the registers during probe but
+>>>>> this fails if the interconnect is not on and then crashes the system.
+>>>>>
+>>>>> So we can provide these properties in devicetree (queried after patching
+>>>>> BAM driver to enable the necessary interconnect) so we can probe
+>>>>> cryptobam without reading registers and then also use the QCE as
+>>>>> expected.
+>>>>
+>>>> This really feels a bit backwards.. Enable the resource to query the
+>>>> hardware for numbers, so that said resource can be enabled, but
+>>>> slightly later :/
+>>>
+>>> If you think adding interconnect support to driver and dtsi is better,
+>>> let me know.
 >>
->> Implement full shutdown and re-initialization to allow for powering off
->> the controller.
+>> I'd say, adding the proper interconnect is a better option. Otherwise
+>> we just depend on the QCE itself to set up the vote for us.
+> 
+> Yes, currently we depend on that.
+> 
 >>
->> This is mainly intended for SC8280XP with a broken power rail setup,
->> which requires a full RC shutdown/reinit in order to reach SoC-wide
->> power collapse, but sleeping is generally better than not sleeping and
->> less destructive suspend can be implemented later for platforms that
->> support it.
+>>>
+>>> Stephan (+CC) mentioned it should be okay like this *shrug*
+>>>
+>>> For the record, this is the same way I got the values for sc7280[0] and
+>>> sm6350[1].
+>>>
+>>> [0] https://lore.kernel.org/linux-arm-msm/20231229-sc7280-cryptobam-fixup-v1-1-bd8f68589b80@fairphone.com/
+>>> [1] https://lore.kernel.org/linux-arm-msm/20240105-sm6350-qce-v1-0-416e5c7319ac@fairphone.com/
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+>>> index b46236235b7f..cd4dd9852d9e 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+>>> @@ -1756,8 +1756,8 @@ cryptobam: dma-controller@1dc4000 {
+>>>                         qcom,controlled-remotely;
+>>>                         iommus = <&apps_smmu 0x594 0x0011>,
+>>>                                  <&apps_smmu 0x596 0x0011>;
+>>> -                       /* FIXME: Probing BAM DMA causes some abort and system hang */
+>>> -                       status = "fail";
+>>> +                       interconnects = <&aggre2_noc MASTER_CRYPTO 0 &mc_virt SLAVE_EBI1 0>;
+>>> +                       interconnect-names = "memory";
+>>>                 };
+>>>
+>>>                 crypto: crypto@1dfa000 {
+>>> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+>>> index 5e7d332731e0..9de28f615639 100644
+>>> --- a/drivers/dma/qcom/bam_dma.c
+>>> +++ b/drivers/dma/qcom/bam_dma.c
+>>> @@ -40,6 +40,7 @@
+>>>  #include <linux/circ_buf.h>
+>>>  #include <linux/clk.h>
+>>>  #include <linux/dmaengine.h>
+>>> +#include <linux/interconnect.h>
+>>>  #include <linux/pm_runtime.h>
+>>>
+>>>  #include "../dmaengine.h"
+>>> @@ -394,6 +395,7 @@ struct bam_device {
+>>>         const struct reg_offset_data *layout;
+>>>
+>>>         struct clk *bamclk;
+>>> +       struct icc_path *mem_path;
+>>>         int irq;
+>>>
+>>>         /* dma start transaction tasklet */
+>>> @@ -1206,6 +1208,7 @@ static int bam_init(struct bam_device *bdev)
+>>>                 bdev->num_channels = val & BAM_NUM_PIPES_MASK;
+>>>         }
+>>>
+>>> +       printk(KERN_ERR "%s:%d DBG num_ees=%u num_channels=%u\n", __func__, __LINE__, bdev->num_ees, bdev->num_channels);
+>>>         /* Reset BAM now if fully controlled locally */
+>>>         if (!bdev->controlled_remotely && !bdev->powered_remotely)
+>>>                 bam_reset(bdev);
+>>> @@ -1298,6 +1301,14 @@ static int bam_dma_probe(struct platform_device *pdev)
+>>>                 return ret;
+>>>         }
+>>>
+>>> +       bdev->mem_path = devm_of_icc_get(bdev->dev, "memory");
+>>> +       if (IS_ERR(bdev->mem_path))
+>>> +               return PTR_ERR(bdev->mem_path);
+>>> +
+>>> +       ret = icc_set_bw(bdev->mem_path, 1, 1);
+>>
+>> Probably this needs some more sensible value.
 > 
-> Second try (first at
-> https://lore.kernel.org/all/20240212213216.GA1145794@bhelgaas/):
+> So downstream qcedev driver uses 384 for the interconnect. But this is
+> crypto-specific and probably different BAMs have different minimum
+> requirements?
 > 
->   - Capitalize subject lines to match history (sorry, I didn't mention
->     the first time)
+> #define CRYPTO_AVG_BW			384
+> #define CRYPTO_PEAK_BW			384
+> https://github.com/xiaomi-sm8450-kernel/android_kernel_platform_msm-kernel/blob/lineage-20/drivers/crypto/msm/qce.h#L57
 > 
->   - Drop or replace "properly" with something specific
-> 
->   - "... minimizing power draw while keeping RC up at all times ...
->     draws a whole lot of power" doesn't quite make sense to me
-> 
->   - Reword or explain "power collapse"
-> 
->   - No COMPILE_TEST provision (maybe it turned out to be impractical?)
-> 
->   - Magic delay numbers below with no citation or explanation.  Even a
->     short comment could be a hint about how to verify and potentially
->     change in the future.  A #define for readl_poll_timeout() would be
->     helpful as a place for a comment and because the name could
->     include "_US" to show the units.
-> 
->   - Add "()" after function names in comments
+> Do you have any suggestion what to use here?
 
-Sorry Bjorn, I came back to this series after some time and didn't revisit
-your message. I'll be sure not to forget the next time around.
+I'dve expected this to mean anything, but apparently not.
+
+My immediate guess is that the 384 was the lowest magic value that didn't
+result in the bus getting kicked offline.. 1 should be fine upstream due
+to commit 91e045b93db7 ("interconnect: qcom: Fix small BW votes being
+truncated to zero").
+
+> 
+> Also I'd assume that with pm_runtime suspended we'd need to clear the
+> votes in the driver so we don't keep the interconnect alive
+> unnecessarily?
+
+My naive understanding is that the power should only be necessary when
+the thing is in use, so early probe and pm-active sounds about sane..
 
 Konrad
 
