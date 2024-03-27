@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-15412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD34588EC3F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 18:13:57 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB44688EC6A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 18:20:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0534F1C2E5D0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 17:13:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6031C29F984
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 17:20:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5323114D70C;
-	Wed, 27 Mar 2024 17:13:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D89F014E2D3;
+	Wed, 27 Mar 2024 17:19:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u24CyQ9i"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ceIN2Pv7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E593142E9E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 17:13:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A1414E2EA
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 17:19:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711559624; cv=none; b=twBFdK/MpcVXIEcmOjaShnPGcphL60S5znVgIoPYzslZX+wKBwdbrz78KS66Minpjr5GiLqhXrj8MWqqli/v/qP2UD47xbbm84k2AlFCpkucldeuB3I40F6lSL0U6DywqygxmkFXPpeUQO6XXbQDXLvlHg3XjlOlOHZJW1fP8Do=
+	t=1711559983; cv=none; b=Zx5H2doDqrzMi2/Td8kCLLrViqXxDL6zMaF1SU7u+/TSaZ6Z33+axd6y95ztA/aMkj0uAm1CtGfmy0IF9hdwzTKn0AQRz1CKPCJIo4u6RI+cjc0LnZ2WxnLdE1kJLFsQVSydlViLNMHcN9PSk1vEDnGiyj6LrsZR1o1JJKeX9xI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711559624; c=relaxed/simple;
-	bh=xbY2q6DRS7RicrCydGVyY6S+bGxs1by5hytA6w9CBNk=;
+	s=arc-20240116; t=1711559983; c=relaxed/simple;
+	bh=EACyQ0dCN1p5NBiTEuE07Oir5iuNHSD9x/x2VQSMiYI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=V5ymYagzKZMgRHp10ez8JqKVQOyHHld+wwvni11d8c39veg8rYysotcb8XoNcVZwgtBiWsipPgma4VUWTw8woEP5eALU66x15tr4Rv/DLYXXUlh5Sz1fktBucBSK4ZrIZ880fMZSBJ4vgB5QWDVd4eTMFJO/MpGuvUCtwtkXep0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u24CyQ9i; arc=none smtp.client-ip=209.85.208.48
+	 In-Reply-To:Content-Type; b=LOYZ9Y+P9VUHWtZmbPfAWdD1GYgW735Hojk5Yy73CXvQQNa+H6Z1nS6C7FbuVKONuk8bhB9ec+G+epmTDwUckPqWYgAsNhweodUFDh6oZw4V93Y0ArUJXLkxttxx9bjETyUKD1HwSYF+FdpQXznFT9YgarJ7R0/ox3fCv3l4bFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ceIN2Pv7; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-56c1a65275bso35317a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 10:13:42 -0700 (PDT)
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-56c441e66a5so96379a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 10:19:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711559621; x=1712164421; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1711559980; x=1712164780; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Jh9shS3i73IGOIOWjBed8Am9PLNuJSBVxZDUKee4P1U=;
-        b=u24CyQ9iwF/a8j3brbs1D3icqqHJM803dq5ZkCdLxZad8q/OZwcQFO3v45eH03l/CX
-         OUKD0tW5N6dOyn2lxee3CINOhYG0dZBoFRoAPCXRg1lhKWSGG+5Q0c6jCKD046NuGDaA
-         WlEsmWlBMwW+RgzXg05WSHKSf3Tz8K/i1buUTsoUzQs6FVlc5AiD8fjSzMTd1ncjYVmR
-         oNcZkqPV/tqcYBmaa01sUdSIkvVX8L8+9ZxNq8hmRNIAi7twaGloq4G1koOGIifMDxFB
-         0OVNm4GfiIgeMgAKHcYaoDpTwTY32EURepqygDUaiV9sx04hyK2atc7RcONd557CqrCL
-         5maw==
+        bh=kQtgzA5CXrcP9fG7SMoOjnla5ydIx1T+KyWoBJs/UBI=;
+        b=ceIN2Pv7P3Czgt1c3nGVfnNNwXgml1Sc0HABaCjSEUa5qA7fRtUTYsbEAJ2gRevM+8
+         +ZobNtmrs/hsjxNeAOBBWK0rf2ONwRZkSioBKWWg9jCWR7J1YZdH6Ejxa3+nsjllFGOT
+         RwMh7g8uOwgE+QcIxFbAAIyC6by3MzzC1cwfQyXA+sTDi3WwvT+f3LdFSAMpbywf+ndK
+         /2cp7PKQJfc1jajXl/62xOWv072nfhHAmbcPU7xaIq2MoKNaX9xoXyC8GPdGSlx/B4HG
+         8PDvmZrOmZ+YrEhS2D7d4/FrTTi6FTivxyQXUdb9tlKP7QytaBZzyhejfdBqpIaqblYX
+         fRKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711559621; x=1712164421;
+        d=1e100.net; s=20230601; t=1711559980; x=1712164780;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Jh9shS3i73IGOIOWjBed8Am9PLNuJSBVxZDUKee4P1U=;
-        b=g1Nj8YSk32UKBChWlm3ltvGmOfAqVTGmR/1g750LgKwXIQ2sUSsPdUCF6BfY748skq
-         5QVHRp7aCjYYKNxpBLBMLHaLXZ7/CfSlbowF7SytJZRYaUjLqhZtiaF5ezqNNhCRpokG
-         OQYoNe+uDrwX3o1knh5XaRgRCnpBZ56hKQ81lWU1qmD3U/bn/8xvUZGcz01wukjY9xH+
-         3hkj5rJB/qYEXxBxGS0uWegHM+2tnpIPWY1WmeIxuLWbl1d0F8tBpyYoTB3GeL0A/GBR
-         xv4GfScSXXyKyu7b0IpcaRIysjPWcbabtfqdanI67UEF+Gkl2xixavgHOUur6eYeApNF
-         KDFg==
-X-Gm-Message-State: AOJu0Yzpgkp1DEi0ww09FdKXkUuRJwCsjZNFsbWpE6GIqg6ZQn6CLDz/
-	dP2pYDuC4C9lBHyffPlI1aeJ596CejPcd1WPkQf3bXOaXZ/x1H83jqWLrzB5IH8=
-X-Google-Smtp-Source: AGHT+IEfDiqHvV97l8zslXZUDoQyIs5PzffcO444PHe79XCaGJi6M+TZTtly6KyH4ufleoNHoTr0CA==
-X-Received: by 2002:a50:d65c:0:b0:566:b09e:8d24 with SMTP id c28-20020a50d65c000000b00566b09e8d24mr431892edj.12.1711559620675;
-        Wed, 27 Mar 2024 10:13:40 -0700 (PDT)
+        bh=kQtgzA5CXrcP9fG7SMoOjnla5ydIx1T+KyWoBJs/UBI=;
+        b=lmoVEpbY15j+cFdMKCph2udWUr/514i1qGxeKgF1TDKfvTmPPCyAjvpa8r7PHI6twN
+         JqZgmch0TA4+6lvSQ8WLKsLRxzcRnNfTidNCpl1KECh46kJqJJ7quhUbsIisaxilj5g9
+         nEVYgEgaCq+P0aI5hOTOC++/0fOABUv+z8lNiMbC5Oi6zZtUebKM1HM+ccuBtDdJ+kRl
+         G9XWDbGKMBRJoF6ph+/croxKtuJGLINz1YiBcoXBIxYE+x/CWo2eyqE3ddufVomdhzCt
+         orQDJv95aai0h2rNXBDFMkMrgPvn/KOKHIG3Nd02R23TLQEbwQV7pYxYnGksXUdpJldi
+         U+Rw==
+X-Gm-Message-State: AOJu0YxibpZkYJKGCkJPBQ6ZgrTB3cU3bmXvt4p+//7M5xxJsZVjkJb6
+	buTwPCtVxOhwyoTO1Oby/o3SGKJPZHzx7mZyJO5n6Z3BKNaWV1lau8Y5MytrhS4=
+X-Google-Smtp-Source: AGHT+IEZXjMNpIU2AYuz4S9ZE4vfAo0A6M9d+eYLiCGrnPbrhVwWQ3VS40d1kNVmTGM7HbBQFro7bQ==
+X-Received: by 2002:a50:ba8c:0:b0:566:13a2:3008 with SMTP id x12-20020a50ba8c000000b0056613a23008mr350991ede.6.1711559979994;
+        Wed, 27 Mar 2024 10:19:39 -0700 (PDT)
 Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id u14-20020a056402110e00b0056bfc48406csm5056187edv.7.2024.03.27.10.13.38
+        by smtp.gmail.com with ESMTPSA id o22-20020aa7dd56000000b0056c07b6924csm4517254edw.41.2024.03.27.10.19.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Mar 2024 10:13:40 -0700 (PDT)
-Message-ID: <32abb873-9a05-460d-a434-f474fda2bcd0@linaro.org>
-Date: Wed, 27 Mar 2024 18:13:38 +0100
+        Wed, 27 Mar 2024 10:19:39 -0700 (PDT)
+Message-ID: <85ee1029-39df-472f-81cb-518c2191fe2b@linaro.org>
+Date: Wed, 27 Mar 2024 18:19:36 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,17 +76,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] pinctrl: qcom: spmi-gpio: Add PMIH0108 and PMD8028
- support
-To: Anjelique Melendez <quic_amelende@quicinc.com>, andersson@kernel.org,
- linus.walleij@linaro.org, robh+dt@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- quic_subbaram@quicinc.com, quic_collinsd@quicinc.com,
- quic_jprakash@quicinc.com
-References: <20240326220628.2392802-1-quic_amelende@quicinc.com>
- <20240326220628.2392802-5-quic_amelende@quicinc.com>
+Subject: Re: [PATCH v2] clk: qcom: clk-alpha-pll: fix rate setting for Stromer
+ PLLs
+To: Gabor Juhos <j4g8y7@gmail.com>, Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Varadarajan Narayanan <quic_varada@quicinc.com>,
+ Sricharan R <quic_srichara@quicinc.com>,
+ Kathiravan T <quic_kathirav@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org
+References: <20240326-alpha-pll-fix-stromer-set-rate-v2-1-48ae83af71c8@gmail.com>
+ <87af7b7e-9c2f-41e1-af97-01d3f29f5970@linaro.org>
+ <d81eb0dd-f1ee-4a54-aa04-9ebe8b8eff88@gmail.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -124,17 +125,46 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240326220628.2392802-5-quic_amelende@quicinc.com>
+In-Reply-To: <d81eb0dd-f1ee-4a54-aa04-9ebe8b8eff88@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 26.03.2024 11:06 PM, Anjelique Melendez wrote:
-> Add support for qcom,pmih0108-gpio and qcom,pmd8028-gpio.
+On 26.03.2024 11:16 PM, Gabor Juhos wrote:
+> 2024. 03. 26. 21:51 keltezéssel, Konrad Dybcio írta:
 > 
-> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
-> ---
+> ...
+>>> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+>>> index 8a412ef47e163..8e98198d4b4b6 100644
+>>> --- a/drivers/clk/qcom/clk-alpha-pll.c
+>>> +++ b/drivers/clk/qcom/clk-alpha-pll.c
+>>> @@ -2490,6 +2490,10 @@ static int clk_alpha_pll_stromer_set_rate(struct clk_hw *hw, unsigned long rate,
+>>>  	rate = alpha_pll_round_rate(rate, prate, &l, &a, ALPHA_REG_BITWIDTH);
+>>>  
+>>>  	regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
+>>> +
+>>> +	if (ALPHA_REG_BITWIDTH > ALPHA_BITWIDTH)
+>>> +		a <<= ALPHA_REG_BITWIDTH - ALPHA_BITWIDTH;
+>>
+>> Uh.. that's not right, this is comparing two constants
+>>
+>> Did you mean to use pll_alpha_width()?
+> 
+> No, not in this patch at least.
+> 
+> The clk_alpha_pll_stromer_set_rate() function assumes that the alpha register is
+> 40 bits wide, and currently it does not use pll_alpha_width() at all.
+> Originally, I have converted the function to use it, but that made the change
+> unnecessarily complex since it was a mix of a fix and of a rework.
+> 
+> The current patch is a simplified version of that, but i forgot to drop the
+> comparison at the end of the process.
+> 
+> In order to keep this fix as simple as possible and backportable to stable
+> kernels, I would rather remove the comparison to reduce the change to a
+> single-line addition. Then modifying the code to use pll_alpha_width() can be
+> done in a separate change.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Sounds good
 
 Konrad
 
