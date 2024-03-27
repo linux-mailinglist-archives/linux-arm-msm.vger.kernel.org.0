@@ -1,151 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-15407-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB51C88EBF3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 18:00:18 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3181688E995
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 16:43:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E8C02B22035
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 16:40:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 631781C30FB4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 15:43:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC2BB149C6C;
-	Wed, 27 Mar 2024 16:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 333E8131BB7;
+	Wed, 27 Mar 2024 15:41:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hy056Bx4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cj5/o/+b"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB34412E1F0;
-	Wed, 27 Mar 2024 16:40:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07037130E53;
+	Wed, 27 Mar 2024 15:41:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711557614; cv=none; b=PdlSA6wLkS0LuWyT+GMxWo9HwBgPYhKC7YQDQ1zf3FLdNBDS8f0YsxGqZ5ZR5xXGAPhGQXm53A0DUH/p9wYxTpo4BEwKAFR8G47wzpUTer4dlTf36gu4nVbsZNjbzqwudN4igPA4uEPIlYIIp475mExJOWD7FTVCcMJik6TrtfY=
+	t=1711554073; cv=none; b=D/u6M53GnkzxzTcGvftbzvJU2qxSDIbfFBkcCCMQ/6r7HVoIZFrxW5l9bU7HA2lWan8jjx7A7p/h5kw6L+8WCso3l79iVndTMcRpERfJRu0qFebzXqAEuiPKSH5GdDuDIxLV2QJJi54WHo72vHAUIi7hgRMXoPVRabglcfa2SWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711557614; c=relaxed/simple;
-	bh=55FixKpVvBnRnD4FrdIIFh3o0roqfl9/GYXUPXMDM48=;
-	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uTPMFVr2XXkYoKgBevHCIjwL0VaYd0Upgmy90pxyRgtCLqNSEk7OQtEkKXpeJuTHP0pz1UAyLHtO4HMT5AaeG1jREEBUvFMiNuLQrhr50mgSwRSkEM8WjYk59BMsTvumyb2TR3Gii+XExYp3/KlqafQDcGCRNBaxeq3Ikp9UuzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hy056Bx4; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-414a2679222so1590985e9.1;
-        Wed, 27 Mar 2024 09:40:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711557611; x=1712162411; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=vlQkpxaGQW3p984RRGKWywyzWKD0TWHivq5zfU3FFHY=;
-        b=hy056Bx4noBqiSSlfbowKe78cKS4+d6L8JNOtnzmvYwEdXLhXp9JnAI80hPmv1wQrT
-         5wCWKlTU4idNVGQANaTBbn5Li3Y0+zCoyRjCg5A6FX7MkBDlyd34D2ZuFKS9egScd0AS
-         dkSIo8FueHghi2tdnnHK9FN045iXbU+agY26bsWfDUnslFSaKVnX6RAcp92Q7FgGv6Yz
-         EslhNAhfmVBKNsPGrjjbraQv7IB7Y5TNNapNuliOqQwuRuByOCWssfwvR6zE1eJKLvX4
-         h2W35Pw3RC4F4T5UkW3jFwsZ0SULZ2/M6bLp2GuiBRctMvXCHNP/44SNctVDgamlQJsJ
-         pNYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711557611; x=1712162411;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vlQkpxaGQW3p984RRGKWywyzWKD0TWHivq5zfU3FFHY=;
-        b=xVgmRGvjj/LwKRX2n9V7J92CzvTKBLYsjQmYrPbdHYOQ9uRBeJnb96uY9AmOVzxwoB
-         IWOdhWBGRguKhHCXtkphBLTnodnLGN5b38Td0Bf2tWPBqcIuuMmUTInAmyW/Qs/9Ne6W
-         inHu98o5KLlUByPxmc8I1MrGdBjDqhvGcD2mUCOFm77lEPxaw1YRE5ADNMBnycU2J6tq
-         WXW5AtVdewMcYgaryN8njqHcnb9TpcL4AXorqpwog6qJtcvtg1vqnXZIQ+D3ke5Xym60
-         rweUTWqNjNK4BeLYBW3OtAf/WxYIODS9MfpEvIGLrWI2YjYDgyDkzvknSDUFNZiko7J2
-         0UCg==
-X-Forwarded-Encrypted: i=1; AJvYcCUC0DRtyqhhAu15ZxxGVnXvcxWbxB8cdL0cj698esnehM0f9XC8Pk2eQCUiEDgJ2NucM4BMRWMDXMkw+sKKT2+lvgudQPrvVdS9BuyatqPslbosxKa2jzm7sr/Sgqrd5B6GH8jhbXUHcCdISS33ZLodlvR1tlndIFsjylxcOqTnN5bqZg==
-X-Gm-Message-State: AOJu0YxPvvKIUFAWmctwWugtLpFw9Tsrlj/I/eY799i2+N9TVodw4hD/
-	AeVC4rZGtPOMBxqfC+aQPHCH2bD9DpuO70+0Wl/xP6Nja94P7gZm
-X-Google-Smtp-Source: AGHT+IGlxMmgSl6wOcskjtwSMRobLESUDTi3KLNM9ekBedCGEFAVz8OWGEvAAhpMa74zmpbd08FWtw==
-X-Received: by 2002:a05:600c:4ed0:b0:414:8894:213d with SMTP id g16-20020a05600c4ed000b004148894213dmr382271wmq.35.1711557611033;
-        Wed, 27 Mar 2024 09:40:11 -0700 (PDT)
-Received: from Ansuel-XPS. (host-95-247-253-192.retail.telecomitalia.it. [95.247.253.192])
-        by smtp.gmail.com with ESMTPSA id j19-20020a05600c191300b00414924f307csm2630583wmq.26.2024.03.27.09.39.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Mar 2024 09:40:10 -0700 (PDT)
-Message-ID: <66044bea.050a0220.dee16.c250@mx.google.com>
-X-Google-Original-Message-ID: <ZgQ5RmS3eWaiVdwB@Ansuel-XPS.>
-Date: Wed, 27 Mar 2024 16:20:58 +0100
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Miquel Raynal <miquel.raynal@bootlin.com>,
-	Richard Weinberger <richard@nod.at>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Md Sadre Alam <quic_mdalam@quicinc.com>,
-	Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-	linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] mtd: rawnand: qcom: Fix broken erase in
- misc_cmd_type in exec_op
-References: <20240325103053.24408-1-ansuelsmth@gmail.com>
- <20240326072512.GA8436@thinkpad>
+	s=arc-20240116; t=1711554073; c=relaxed/simple;
+	bh=adYfPRPaAgnaF9zHKCuXMObwFPX0P5v8n8aSuJcpmQQ=;
+	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
+	 Message-Id:Subject; b=PBfCQ78LaeEMHDcU49/CScIW0XOyDBXQjOjGcrPnMQXQpXztb3OWlJgDyd0WUscrQIHTpo2le6v9AyBteSt1B7XONwc3tX5LTnYW0VuLreWQ512fXTj3JrclJ5Wayp5DNdugN7bFfuv7JMsR1sQRtwiSxO39bfRcF9H/421NjzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cj5/o/+b; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 654E1C433F1;
+	Wed, 27 Mar 2024 15:41:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711554072;
+	bh=adYfPRPaAgnaF9zHKCuXMObwFPX0P5v8n8aSuJcpmQQ=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+	b=Cj5/o/+bnOXnQrLBgaU6cUkrj6Y1099utNdVKiwpcHSgZCbqgdtZA4VrSqbwhkh59
+	 rjPirSP2fx9l+24onWBSR/DkhEzKOnBkHl0zT0+rdULWOOkDkmWQ2xWytbnZyKBH6R
+	 e/vsDjagnUBBtF130I0myqCApuJ1B06snWduwskBu1RPJvAZX4sBfuVKmzOBr2o+JX
+	 NayP4V4EzgdISd1O61FCfjtUfVXWS/8Q1Ae/75yL4CEuyjIdbTD9elaG7mqZ1f99kA
+	 PUHLEoH8lpRMNyjgEAPlNejKWgqdEAPidSsAqhRp9M5MzWf3WG7092zxeYApGCRkp/
+	 wocW8SoBMRo+w==
+Date: Wed, 27 Mar 2024 10:41:11 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240326072512.GA8436@thinkpad>
+From: Rob Herring <robh@kernel.org>
+To: Sumit Garg <sumit.garg@linaro.org>
+Cc: krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org, 
+ benjamin.missey@non.se.com, konrad.dybcio@linaro.org, 
+ dmitry.baryshkov@linaro.org, neil.armstrong@linaro.org, 
+ pascal.eberhard@se.com, devicetree@vger.kernel.org, andersson@kernel.org, 
+ daniel.thompson@linaro.org, jimmy.lalande@se.com, conor+dt@kernel.org, 
+ stephan@gerhold.net, linux-arm-msm@vger.kernel.org, 
+ caleb.connolly@linaro.org, abdou.saker@se.com, linux-kernel@vger.kernel.org, 
+ laetitia.mariottini@se.com
+In-Reply-To: <20240327063734.3236117-1-sumit.garg@linaro.org>
+References: <20240327063734.3236117-1-sumit.garg@linaro.org>
+Message-Id: <171155390164.3454213.14779164019451021567.robh@kernel.org>
+Subject: Re: [PATCH v4 0/3] arm64: dts: qcom: apq8016: Add Schneider HMIBSC
+ board DTS
 
-On Tue, Mar 26, 2024 at 12:55:12PM +0530, Manivannan Sadhasivam wrote:
-> On Mon, Mar 25, 2024 at 11:30:47AM +0100, Christian Marangi wrote:
-> > misc_cmd_type in exec_op have multiple problems. With commit a82990c8a409
-> > ("mtd: rawnand: qcom: Add read/read_start ops in exec_op path") it was
-> > reworked and generalized but actually broke the handling of the
-> > ERASE_BLOCK command.
-> > 
-> > Additional logic was added to the erase command cycle without clear
-> > explaination causing the erase command to be broken on testing it on
-> > a ipq806x nandc.
-> > 
-> > Fix the erase command by reverting the additional logic and only adding
-> > the NAND_DEV0_CFG0 additional call (required for erase command).
-> > 
-> > Fixes: a82990c8a409 ("mtd: rawnand: qcom: Add read/read_start ops in exec_op path")
-> > Cc: stable@vger.kernel.org
-> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> > ---
-> > Changes v2:
-> > - Split this and rework commit description and title
-> > 
-> >  drivers/mtd/nand/raw/qcom_nandc.c | 5 ++---
-> >  1 file changed, 2 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-> > index b079605c84d3..19d76e345a49 100644
-> > --- a/drivers/mtd/nand/raw/qcom_nandc.c
-> > +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-> > @@ -2830,9 +2830,8 @@ static int qcom_misc_cmd_type_exec(struct nand_chip *chip, const struct nand_sub
-> >  	nandc_set_reg(chip, NAND_EXEC_CMD, 1);
-> >  
-> >  	write_reg_dma(nandc, NAND_FLASH_CMD, instrs, NAND_BAM_NEXT_SGL);
-> > -	(q_op.cmd_reg == OP_BLOCK_ERASE) ? write_reg_dma(nandc, NAND_DEV0_CFG0,
-> > -	2, NAND_BAM_NEXT_SGL) : read_reg_dma(nandc,
-> > -	NAND_FLASH_STATUS, 1, NAND_BAM_NEXT_SGL);
-> > +	if (q_op.cmd_reg == OP_BLOCK_ERASE)
-> > +		write_reg_dma(nandc, NAND_DEV0_CFG0, 2, NAND_BAM_NEXT_SGL);
+
+On Wed, 27 Mar 2024 12:07:31 +0530, Sumit Garg wrote:
+> Add Schneider Electric HMIBSC board DTS. The HMIBSC board is an IIoT Edge
+> Box Core board based on the Qualcomm APQ8016E SoC. For more information
+> refer to the product page [1].
 > 
-> So this only avoids the call to, 'read_reg_dma(nandc, NAND_FLASH_STATUS, 1,
-> NAND_BAM_NEXT_SGL)' if q_op.cmd_reg != OP_BLOCK_ERASE. But for q_op.cmd_reg ==
-> OP_BLOCK_ERASE, the result is the same.
+> One of the major difference from db410c is serial port where HMIBSC board
+> uses UART1 as the debug console with a default RS232 mode (UART1 mode mux
+> configured via gpio99 and gpio100).
 > 
-> I'm wondering how it results in fixing the OP_BLOCK_ERASE command.
+> Support for Schneider Electric HMIBSC. Features:
+> - Qualcomm Snapdragon 410C SoC - APQ8016 (4xCortex A53, Adreno 306)
+> - 1GiB RAM
+> - 8GiB eMMC, SD slot
+> - WiFi and Bluetooth
+> - 2x Host, 1x Device USB port
+> - HDMI
+> - Discrete TPM2 chip over SPI
+> - USB ethernet adaptors (soldered)
 > 
-> Can you share the actual issue that you are seeing? Like error logs etc...
->
+> This series is a v2 since v1 of this DTS file has been reviewed on the
+> U-Boot mailing list [2].
+> 
+> Changes in v4:
+> - Dropped IRQ_TYPE_EDGE_FALLING for pm8916_resin given the expectations
+>   of Linux kernel driver. Instead depend on systemd workaround suggested
+>   by Caleb to get expected HMIBSC reset behaviour.
+> - Incorporated further DT coding style comments from Stephen.
+> - Warnings reported by Rob's DT check bot aren't related to HMIBSC
+>   board DTS but rather they are due to msm8916.dtsi or extcon-usb-gpio.txt
+>   still not converted to YAML format.
+> 
+> Changes in v3:
+> - Picked up tags.
+> - Fixed further DT schema warnings.
+> - Configure resin/power button interrupt as falling edge.
+> - Incorporate DTS coding style comments from Krzysztof and Konrad.
+> 
+> Changes in v2:
+> - Fix DT schema warnings.
+> - Incorporate suggestions from Stephan.
+> - Document UART1 mode GPIOs based mux.
+> 
+> [1] https://www.se.com/us/en/product/HMIBSCEA53D1L0T/iiot-edge-box-core-harmony-ipc-emmc-dc-linux-tpm/
+> [2] https://patchwork.ozlabs.org/project/uboot/patch/20240311111027.44577-6-sumit.garg@linaro.org/
+> 
+> Sumit Garg (3):
+>   dt-bindings: vendor-prefixes: Add Schneider Electric
+>   dt-bindings: arm: qcom: Add Schneider Electric HMIBSC board
+>   arm64: dts: qcom: apq8016: Add Schneider HMIBSC board DTS
+> 
+>  .../devicetree/bindings/arm/qcom.yaml         |   1 +
+>  .../devicetree/bindings/vendor-prefixes.yaml  |   2 +
+>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>  .../dts/qcom/apq8016-schneider-hmibsc.dts     | 490 ++++++++++++++++++
+>  4 files changed, 494 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
+> 
+> --
+> 2.34.1
+> 
+> 
+> 
 
-Issue is that nandc goes to ADM timeout as soon as a BLOCK_ERASE is
-called. BLOCK_ERASE operation match also another operation from MTD
-read. (parser also maps to other stuff)
 
-I will be away from the testing board for 7-10 days so I can't provide
-logs currently.
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
 
--- 
-	Ansuel
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
+
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
+
+  pip3 install dtschema --upgrade
+
+
+New warnings running 'make CHECK_DTBS=y qcom/apq8016-schneider-hmibsc.dtb' for 20240327063734.3236117-1-sumit.garg@linaro.org:
+
+arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb: /soc@0/audio-codec@771c000: failed to match any schema with compatible: ['qcom,msm8916-wcd-digital-codec']
+arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb: /soc@0/power-manager@b088000: failed to match any schema with compatible: ['qcom,msm8916-acc']
+arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb: /soc@0/power-manager@b098000: failed to match any schema with compatible: ['qcom,msm8916-acc']
+arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb: /soc@0/power-manager@b0a8000: failed to match any schema with compatible: ['qcom,msm8916-acc']
+arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb: /soc@0/power-manager@b0b8000: failed to match any schema with compatible: ['qcom,msm8916-acc']
+arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb: /usb-id: failed to match any schema with compatible: ['linux,extcon-usb-gpio']
+
+
+
+
+
 
