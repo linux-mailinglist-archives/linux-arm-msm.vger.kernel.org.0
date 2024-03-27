@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-15448-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15449-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D932888EE5E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 19:38:04 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A525388EE68
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 19:41:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 777B61F3012A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 18:38:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DCE7F1C329D7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 18:41:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85B4114D44F;
-	Wed, 27 Mar 2024 18:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33C8C14F9F3;
+	Wed, 27 Mar 2024 18:41:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fKMCeS9C"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pj81pryz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584FF32189;
-	Wed, 27 Mar 2024 18:37:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B0732189;
+	Wed, 27 Mar 2024 18:41:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711564680; cv=none; b=QA0lXZ2XFdL4xBsoILH1fRNR9kfnCLN0Q/HV0J7SbhXrIryo4bM55RouQyCS3BBcEf6PwkStAyXuq3PNuLqEfOgBEGKpq/hjTjLluaRevV88cBoemNJoJvPSQQ9LTWRZMltdojiCS3im/wOlugnNPrlh8EF7qDLx5wzhlmXSRcc=
+	t=1711564863; cv=none; b=Lt7KOBrUh5vthv7JcrBOyO0xoERNp2WQhVoE4G4JfQkEy4wdQeyaKpGizk3+3Edr5/tpMZuC1e9V5nUcZgynOnLVv5HEG399Gdp0B+wnN4go8afk2xig7e+uMzvLa5cQYUP4y/cGVUO089oouYvhz0quUlxSnMZvV3D4eWPq594=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711564680; c=relaxed/simple;
-	bh=rvKlp7A+GhsOn9WQYmn0tsHsaC6qJPiyY94EPiSsmlQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=H+q/RADqmGr88lTQfHDR08naZ7PKvgjvEFPH0XR8oOLIWOvngizz9ni1IvDB1UZyov5K8DrnXjP8elNyk0+x8rB43M+oSw28C5aJuao/YHmH7yUKZg3exOYCMAUZv7LtE+oOhSJTzps+GdKK7wYWZqMmXWCTPDPs+vqtJ7x4llU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fKMCeS9C; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E9AC433F1;
-	Wed, 27 Mar 2024 18:37:56 +0000 (UTC)
+	s=arc-20240116; t=1711564863; c=relaxed/simple;
+	bh=TZ4Ulkq08cyhbUI/jnfti4CmHEbiymxV7WOwc0rr1uI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=My4VF6Veq6G9h9v0uj+Yt6mvWELEfBE5bxQpELyZU3l0UOlv2pO+ce9PJou1yP/ZB9oflV2jG2yHI5eDvz368tSEGQRo+tcH+ZxBdYjG6eFM5aG1Cgvcx07Vv2g98MRRqgSS60ZrCy/k0iAMQ0bGjLlGc7+qcE0yG/h5GYztxss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pj81pryz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B6ECC433F1;
+	Wed, 27 Mar 2024 18:40:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711564679;
-	bh=rvKlp7A+GhsOn9WQYmn0tsHsaC6qJPiyY94EPiSsmlQ=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=fKMCeS9CmTEJZANi+StxmdFH/+52D6Qj2te72eN9maWbQRc3f8POjbD1FqwYuvJHt
-	 Elul0RdRTvK/5YK+5HDniQQ0+kEK8gR4zjZCIczqhuK5fwpU8Q74MYsT/IXAeqe0aQ
-	 O0rMkZbljnsRV0JglE/jxtRqG8cpOQP/l0ZKoHMeLtgajizbj2hv69FUIfb7+5YDoR
-	 /cCXJFykfSybzOLQYK2dxP42rmu3K0yUz9ZPCzHe+9GmLNuz2Jv4As2+Y17acFTm3o
-	 j/rRgc4l1ZOXMonPNxkRNw5epZGumt903YOyEK8PiSV8/YFnM1pCcRRcs6xA0BgMVP
-	 jq7w5ZHieKnXA==
-Message-ID: <917e99f1-3b4c-4f4d-b264-cb9b764a9222@kernel.org>
-Date: Wed, 27 Mar 2024 19:37:53 +0100
+	s=k20201202; t=1711564862;
+	bh=TZ4Ulkq08cyhbUI/jnfti4CmHEbiymxV7WOwc0rr1uI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=pj81pryzKZm3enDLIqHOLc6rQPmEYuKD0TaNSte22QKi2P6ILqMI0C+w5gL9gjHtW
+	 kFN2LV58M0YGeHooivyaRQYM8EybaNc0vmCAGdwOmMWg0ZSY97/6RrkA4EjbMmWYzW
+	 Kr6AWTRJzLcuWAVzLsoM6UIGlvEwrSnrPC2Mo16dISa3Inav/EL0XN/NgpsOnOEV97
+	 ssnn0H6SlTVwLER1CmKpJS2YbpjF9rzKeAxs+BK8o1RgnAeXb4MR4PDiA+7AasvBSZ
+	 HktjMckhTFReV4UuSTfOGPhxXn9Hza6q0ABCRimtg+e6HbxMPhY+0xCmxrgYlzkUm5
+	 quTAbc8NCrt5w==
+Message-ID: <f30daa5c-1002-40f0-885e-265104a98525@kernel.org>
+Date: Wed, 27 Mar 2024 19:40:54 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,17 +50,24 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/2] ASoC: dt-bindings: qcom,qcm6490: Add qcm6490 snd
- qcs6490 sound card
-To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
- srinivas.kandagatla@linaro.org, bgoswami@quicinc.com, broonie@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, andersson@kernel.org,
- konrad.dybcio@linaro.org, lgirdwood@gmail.com, tiwai@suse.com,
- quic_rohkumar@quicinc.com, linux-kernel@vger.kernel.org,
- alsa-devel@alsa-project.org, linux-sound@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20240327113228.1706975-1-quic_mohs@quicinc.com>
- <20240327113228.1706975-2-quic_mohs@quicinc.com>
+Subject: Re: [PATCH RESEND v6 1/5] dt-bindings: spmi: Add X1E80100 SPMI PMIC
+ ARB schema
+To: Abel Vesa <abel.vesa@linaro.org>, Stephen Boyd <sboyd@kernel.org>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+ Johan Hovold <johan@kernel.org>, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-mediatek@lists.infradead.org, devicetree@vger.kernel.org
+References: <20240326-spmi-multi-master-support-v6-0-1c87d8306c5b@linaro.org>
+ <20240326-spmi-multi-master-support-v6-1-1c87d8306c5b@linaro.org>
 Content-Language: en-US
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,39 +113,25 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240327113228.1706975-2-quic_mohs@quicinc.com>
+In-Reply-To: <20240326-spmi-multi-master-support-v6-1-1c87d8306c5b@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 27/03/2024 12:32, Mohammad Rafi Shaik wrote:
-> Document bindings for the Qualcomm qcm6490 and qcs6490 SoC sound card.
-> The bindings are the same as for other newer Qualcomm ADSP sound cards,
-> thus keep them in existing qcom,sm8250.yaml file, even though Linux driver
-> is separate.
-> 
-> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-> ---
+On 26/03/2024 17:28, Abel Vesa wrote:
+> +  qcom,channel:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    minimum: 0
+> +    maximum: 5
+> +    description: >
+> +      which of the PMIC Arb provided channels to use for accesses
+> +
+> +patternProperties:
+> +  "spmi@[a-f0-9]+$":
 
-Patch is trivial, yet people make whitespace mistakes also in trivial
-stuff. Therefore please be sure the patch is being tested by CC-ing
-appropriate mailing lists.
+Missing '^' in the pattern. I did not notice it earlier because only
+since ~2 weeks I have lei filter for ABI based on node names. And your
+driver created ABI based on node names, so this must be fixed. Sorry. :(
 
-Please use scripts/get_maintainers.pl to get a list of necessary people
-and lists to CC. It might happen, that command when run on an older
-kernel, gives you outdated entries. Therefore please be sure you base
-your patches on recent Linux kernel.
-
-Tools like b4 or scripts/get_maintainer.pl provide you proper list of
-people, so fix your workflow. Tools might also fail if you work on some
-ancient tree (don't, instead use mainline), work on fork of kernel
-(don't, instead use mainline) or you ignore some maintainers (really
-don't). Just use b4 and everything should be fine, although remember
-about `b4 prep --auto-to-cc` if you added new patches to the patchset.
-
-You missed at least devicetree list (maybe more), so this won't be
-tested by automated tooling.
-
-Please kindly resend and include all necessary To/Cc entries.
 
 Best regards,
 Krzysztof
