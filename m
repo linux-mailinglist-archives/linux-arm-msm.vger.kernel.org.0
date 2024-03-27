@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-15467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15468-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 646F088F09C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 22:06:22 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C86688F0B2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 22:14:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 788531C29D6E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 21:06:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A57491C27EB6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 21:14:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C32DF153510;
-	Wed, 27 Mar 2024 21:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CA5A14F12A;
+	Wed, 27 Mar 2024 21:14:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="R0zYsOC3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BJhJrezr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5771514F2
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 21:06:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB0A14F9E6
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 21:14:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711573577; cv=none; b=BUrufUQGgyqMBgtqIsNevQOLhlY8rLds9iY6n9cYg+bilnnptZ7f2s5CKswR9b0HRgqMhlaCnoTSVm2ejFNrnXQdkAG501IGabIBYw7YqNL+l+7p27QzS3EJYigKT1BzhJLGtxkzsIuSxh8ttJeYxHYDXiWdx8xeHHU62vKu5wM=
+	t=1711574058; cv=none; b=NNDVp9uQTomOvu4yW0JGJK5QD9JImE5cXnyjo+nrI7grjSICdpW1ktuGxFk3ZS4lmzwk0xjInolKexh515kiiolcqNUe2MMwaXAhtPaBqYH/Y90mC+5iR6yrmnlnKTE1V+8XZdUsh9/HnMl9vjJSvYOzN40GFBGHGYg9/bp8tNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711573577; c=relaxed/simple;
-	bh=txwLarapxjPZmto0nAB8MNIy+S7CGgxhK6ZcCA+LSkg=;
+	s=arc-20240116; t=1711574058; c=relaxed/simple;
+	bh=n2ZUulc3Eq3AAzZI8Ftjfz81QNys3b1pF4B57iF/n3g=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cA9KsTIFCGlYPg1pmb9boXnioLAEYRo0GutvaUQi6pPxyMScdN4bB61cbKCBCettABoKZa5Q06wA4iK0JdhHxetNxFwlZeiwWwuUrQ9Lpx2GD6Gw0Agj6dSvxzM5HIqmFFwYpl67L2mdBjz0pEX2oCMAAhC5LRYti3IaUFWNm4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=R0zYsOC3; arc=none smtp.client-ip=209.85.208.48
+	 In-Reply-To:Content-Type; b=lZuBaH/uVPA1H1VQBwEv/8GGRnepBitQcbFTzzRw3561SWTVcKXgCQGazaH9jzVrdmt1nUI+Sqhimp5z5F6rz1H0POqcNJ2RMiF4tCdwBoTuAqIvDppIjbeFJNhsjh+hybzMfmfme3rHykZCLNmoIBRHTxPe13NuykI9yN3hIws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BJhJrezr; arc=none smtp.client-ip=209.85.208.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-56c0a249bacso343218a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 14:06:15 -0700 (PDT)
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5684db9147dso274967a12.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 14:14:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711573574; x=1712178374; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1711574055; x=1712178855; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=LJMvh1U1g5i2ZCyHMLTGdnwDxmPIIFiD/UlBteVN5OA=;
-        b=R0zYsOC3oPIT1N1a/iiVrroH2uHTv393R8gBsjCWvenGrFqM5Ow8ib16PYwjvWULBx
-         oq93Qg81MCqR5A6EpufJOv6vx5Kmd+oItZbB2H1EledKlQ3vNTUSL5M1sIXfDe/Q4989
-         qHPUwBQODUjswCkWQu8Yi6f9fmm9VVFWgU2dVb606PjwhfFtCmqbKxXnnOu7StxVhwVH
-         8XpHWzhUm1qxEvac2wcYfslLyB+sudW2bj5vzo+CnLujbWOCM71kEnJZYDcdw+7bm3yB
-         sLdneccYu/Fsy3313OPcjFdcLJU9BqNKiPSbpuKNelWoNFj/RbWOXIG28/AdB5ld1qwe
-         QVeA==
+        bh=n2ZUulc3Eq3AAzZI8Ftjfz81QNys3b1pF4B57iF/n3g=;
+        b=BJhJrezrdYYS1OO2DMwhrRK0/VCOK1243JgX+gqNqXK8guKqK9TuGPaRcuQGsE05oj
+         WOBpJkVf7//Hwx2famwzgYvzP85CgibefbVg01Pwf59VJDiKrhbzkszVy81LLbDWehQd
+         4TmSMXBwk+y+CNvxY/7cxM+K8m90YEnP+Oa7+Q5jPJPL54u4wwOnYKw/k2kFy9xuYDcS
+         vp5u98XUE1KD1EihEIoe99v41Hln716ZF7XmjlJm5jWhOAcvYhyPox6p56rvWQl2mw8X
+         BBDWHhIiPRTSzbsNtDkFcomvOkn66pLxDCNhhDYRoRg2WfsaCjTyIdpbD5oCNL1S0Ekn
+         Lq5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711573574; x=1712178374;
+        d=1e100.net; s=20230601; t=1711574055; x=1712178855;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LJMvh1U1g5i2ZCyHMLTGdnwDxmPIIFiD/UlBteVN5OA=;
-        b=dVb8XRiGT8ySzPK4vwBu1twO0tPW1E3qXp1defsxsZ5efwos+ntjt3yyhKomqv9unD
-         wBA64pKWnty6tdapT6Xc6fcCjZYYFA2udrHWXOddditDv8NYOswO0A3RaGMBfEQ/STYE
-         KJA4VLu8fzwDYk15CsCMw9ofqKOcxMXrgegZ0bopiv+xFh9E+vK5FGsBfh4jbq4veZIK
-         7+GNaOcDDSvEbxUj06gvzgs3UXWbuCFK9Uynjd0+B/irxInHohHsIhcLcssT57geFoLf
-         kgszsZEM/eRAdfX1gw0Ot5fAzr46t0cFUmwhfm37hwzciFHmjjtUS7DGY13LIcCcE/LT
-         xc1A==
-X-Forwarded-Encrypted: i=1; AJvYcCX8rsc8F7/uQiKn6K05hR0emsxFSv1RSz8FGx2UUC3kD/iqw+L1KEzjy/PAL6xt16i3Lt0y2PBC/BLz8K8Bmg6JZfg58jjE4m4aduY3/A==
-X-Gm-Message-State: AOJu0YyNsiORoWLtc6Flbcmsg4dHsDO/VVXyuJFL2z44z3tmWYzo6sPR
-	/ZO3LbJP5N+wKADgIgJifQdburHWX+wcwQYbd7Mh1FPZMkHbO+0NnW/jTZY9Iwc=
-X-Google-Smtp-Source: AGHT+IEOd7ZGQ1iXrOms8ViLIB02MVphw46zQAODE3pyuuxQfB8dxFqGpQCqAi//HAKtNolmAri5XA==
-X-Received: by 2002:a50:8adc:0:b0:56b:a91c:ebcd with SMTP id k28-20020a508adc000000b0056ba91cebcdmr690345edk.7.1711573574255;
-        Wed, 27 Mar 2024 14:06:14 -0700 (PDT)
+        bh=n2ZUulc3Eq3AAzZI8Ftjfz81QNys3b1pF4B57iF/n3g=;
+        b=vElAaNltcLpkvS+nYcF21VvlL2oFptmv6+rehu3tlrdzN7DxeiSaehxyLhLEohfPtK
+         mGhbDYa+RU3pOHCTzKWLn0a8b7LCkHVpUrLrfVAI3NgyZLPFRGWLKJyNpn9NGWZHMcDE
+         XVmYT+BUqXYZrf8Hodu4cUSngXAcw2IDAkxB8QD7hjCviJuZGONYLr6MIVYpviZ918cC
+         uxRu/bK+r31lpnun498IPqEba5cJHLhmCizsoY9goPfVSe8jtDhNaRpP+tvVTOyoTavB
+         zM6X6p39kBDl6So57FmC+5+UXWW82wZcasjlzfTlTiPhXOjLx8deK0J/JK2PtL0BfFp4
+         +Gjw==
+X-Gm-Message-State: AOJu0YxfN0SrAKmy9vyTd/EK4t0+VbIjFsBOliJWsv0ra7kpO4ArpIot
+	PAAzUBh/hhB1KUqTCdI+JHQ9WGepGaONEtZPFZbHerVchnO5+SGlYuUNRHsgMyA=
+X-Google-Smtp-Source: AGHT+IE0ljPxnm4x1rpfPXYtNekRJT6Hwophjp4u4vEIGusaxfBHvkBco+v+6ad0FZuyCp//Ec9HNA==
+X-Received: by 2002:a50:cd04:0:b0:56b:9ef8:f630 with SMTP id z4-20020a50cd04000000b0056b9ef8f630mr733887edi.2.1711574054667;
+        Wed, 27 Mar 2024 14:14:14 -0700 (PDT)
 Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id ek25-20020a056402371900b0056bdc4a5cd6sm10509edb.62.2024.03.27.14.06.13
+        by smtp.gmail.com with ESMTPSA id j17-20020aa7de91000000b0056bfb7004basm16259edv.90.2024.03.27.14.14.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Mar 2024 14:06:13 -0700 (PDT)
-Message-ID: <f4ebe819-9718-42c3-9874-037151587d0c@linaro.org>
-Date: Wed, 27 Mar 2024 22:06:12 +0100
+        Wed, 27 Mar 2024 14:14:14 -0700 (PDT)
+Message-ID: <c16777bd-9f17-4d13-bba5-110e6626afb4@linaro.org>
+Date: Wed, 27 Mar 2024 22:14:11 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,15 +76,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] soc: qcom: cmd-db: map shared memory as WT, not WB
-To: Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>
-Cc: Caleb Connolly <caleb.connolly@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- Douglas Anderson <dianders@chromium.org>, Rob Clark <robdclark@gmail.com>
-References: <20240327200917.2576034-1-volodymyr_babchuk@epam.com>
- <e0586d43-284c-4bef-a8be-4ffbc12bf787@linaro.org> <87a5mjz8s3.fsf@epam.com>
+Subject: Re: [PATCH v2 1/7] clk: qcom: gcc-sm7150: Make clk_init_data const
+ and various fixes
+To: Danila Tikhonov <danila@jiaxyga.com>, andersson@kernel.org,
+ mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+ david@mainlining.org, adrian@travitia.xyz
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240321202814.59835-1-danila@jiaxyga.com>
+ <20240321202814.59835-2-danila@jiaxyga.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -123,50 +123,22 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <87a5mjz8s3.fsf@epam.com>
+In-Reply-To: <20240321202814.59835-2-danila@jiaxyga.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 27.03.2024 10:04 PM, Volodymyr Babchuk wrote:
-> 
-> Hi Konrad,
-> 
-> Konrad Dybcio <konrad.dybcio@linaro.org> writes:
-> 
->> On 27.03.2024 9:09 PM, Volodymyr Babchuk wrote:
->>> It appears that hardware does not like cacheable accesses to this
->>> region. Trying to access this shared memory region as Normal Memory
->>> leads to secure interrupt which causes an endless loop somewhere in
->>> Trust Zone.
->>>
->>> The only reason it is working right now is because Qualcomm Hypervisor
->>> maps the same region as Non-Cacheable memory in Stage 2 translation
->>> tables. The issue manifests if we want to use another hypervisor (like
->>> Xen or KVM), which does not know anything about those specific
->>> mappings. This patch fixes the issue by mapping the shared memory as
->>> Write-Through. This removes dependency on correct mappings in Stage 2
->>> tables.
->>>
->>> I tested this on SA8155P with Xen.
->>>
->>> Signed-off-by: Volodymyr Babchuk <volodymyr_babchuk@epam.com>
->>> ---
->>
->> Interesting..
->>
->> +Doug, Rob have you ever seen this on Chrome? (FYI, Volodymyr, chromebooks
->> ship with no qcom hypervisor)
-> 
-> Well, maybe I was wrong when called this thing "hypervisor". All I know
-> that it sits in hyp.mbn partition and all what it does is setup EL2
-> before switching to EL1 and running UEFI.
-> 
-> In my experiments I replaced contents of hyp.mbn with U-Boot, which gave
-> me access to EL2 and I was able to boot Xen and then Linux as Dom0.
+On 21.03.2024 9:28 PM, Danila Tikhonov wrote:
+> - The clk_init_data structures are never modified, make
+> them const.
+> - Add missing comma
 
-Yeah we're talking about the same thing. I was just curious whether
-the Chrome folks have heard of it, or whether they have any changes/
-workarounds for it.
+Highly debatable given you're not expecting to enlarge this enum
+
+> - Add dependencies on "ARM64 or COMPILE_TEST"
+
+Please split this up into two patches (or if you really care about
+that comma, I won't snitch on you if you squash it together with adding
+const specifiers)
 
 Konrad
 
