@@ -1,89 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-15380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BCF288DC99
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 12:34:05 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C97988DCA5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 12:36:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 41219B269CB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 11:34:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C19FA296768
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 11:36:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DD1D82884;
-	Wed, 27 Mar 2024 11:33:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7F24839EB;
+	Wed, 27 Mar 2024 11:36:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YA8pe27b"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Z2wah1ZL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6193D81AC5;
-	Wed, 27 Mar 2024 11:33:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39ACA1EF13;
+	Wed, 27 Mar 2024 11:36:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711539234; cv=none; b=ApjDXO0qn8jecZE+oYxKHAkwVmBld5QBoEDE3Hb6eNxVd2HK4zeVrQo7ISDA0dEzidcqjagMrisNaaetuhsTM7iOpaYf+/TFQTVt2Relr/r3m/z/x64cbiUP5LYNmjxM0N0OxlJ/gUNi8qVWwyw6oipXrKuTfa8bPfmSOWJaImM=
+	t=1711539362; cv=none; b=Vgfb6KhdKe9n4GalZwSCdhMZyStk5WfmYLbfte5TqIAtFFtg8oRFQBR9GO2+ufqVGbjTEPL1OCFGHk191Lz93TaSMIi1yspXAj0gHlZFo/MmLisKe27e6VIxux6aOouxwA5dLJen4dis3aFSN1SBVhtq7W5YRnr9Vrj8JwIpC04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711539234; c=relaxed/simple;
-	bh=ZmZY4klLx60T3u+pxYJnT+s1JREgAnxFC27meQibGHo=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JX3hGBPNm6hSWLyfgJhMwiyPK8oEG8OVhYK0lMqMTAwQsliEmDVzYI3dR6FeDL0vmxovINvDWxkbF/EVIvQ707CfpUuted4c/yQoxrLlM53oqrHDASPkscQekUEOHvBGCVUMMLEB/0gYX9ovhSjZOKxVTlHMZtbGEgq7HVzYSHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YA8pe27b; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1711539362; c=relaxed/simple;
+	bh=ounXj3DhlrTptsGP5PqADS/b/FXdUIsxRjKDXHyl+/o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=F20FtbFSU4aEfJBLshzC9vRRywCi+X4TA2Kov1UbevsqRCiXPdKZLl41MGa/PdXoYRVk/DauhhG9OFEWz0SujkEsLm5ZQpSZGOhNAsRdHOUnCmLKTw9fe5xUMvChpH1HXe2y5QvqZaRP9XgFKjwoPtF4rmDpQDUYtNhwyliX/Ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Z2wah1ZL; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42RAZM3E023786;
-	Wed, 27 Mar 2024 11:33:34 GMT
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42RAZBVg023622;
+	Wed, 27 Mar 2024 11:35:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=snMIH5GFrI8kPEs9bEqq+/1eqkN3sd/QEbs6jLOH8UM=; b=YA
-	8pe27bBy/A0E3nofalczo9lW+2+2S6ZxOeNx6C+3PxJ4zQK8sglAZJwxsfIauj/6
-	Nvny/QjrImQN2BcemXkpSZUZv5bI9lnNheKIrgj2Ln2IEBbDJLv/FvIEM65+O+ev
-	TzcDX8NzGwlp2yaPcdXDta9fHKG3Ch3GgjiMeHhLYLmPscelqoE1dAHv+FDAp6qB
-	qpPPj6pF6fqAs3Y8hKSmmhcvA9tq6aOUvZVmWiE1JzQ4IsWH47J8wJLQl5EYwodr
-	eCGfQvL9qlydHxNzlhEj0kN7hJeBjRe6F/QuXaDa6QCirrVcGmVj7TWcsmEitWuu
-	YQNbq9yvr55yuvOEJ90g==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x4hu2r4e4-1
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=xBYM6f70ZR2pcj3sl/OZMO6mlexMav1G0aYjspFRsUI=; b=Z2
+	wah1ZLardwVK8j6pZFVzFjlZ6Q+4suun75QYkbW/cndriRiTKgAaCAd6AnhKvaiL
+	UWfbBfVbOKb6PyUnfIZ/gjPf3GmUG3CwxMd5wtM8XWie+jcllSMVPAGn17PIVxbQ
+	l4idVPBXW0a9NRuyBtBYAHrR9xKqOlqzID+epIqzb/OoYctVtx8rjAfM4TxqY48D
+	mXtM/qWA/CyVgnMIelnF/uHimhNcp0/UtOa72DRt9e2pvxyi2y9P0OAvyCcMERhn
+	4vh9RTR7eJS4tr4Z1mpu87U3IE13dNdN93t4kb45VpcYQ0Wzmakpc9buTBWPCJJM
+	qM8k5vLGwZ5Eb12mO4SA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x4hu2r4he-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 27 Mar 2024 11:33:34 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42RBXXLw000457
+	Wed, 27 Mar 2024 11:35:55 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42RBZsQC012332
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 27 Mar 2024 11:33:33 GMT
-Received: from hu-mohs-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Wed, 27 Mar 2024 04:33:29 -0700
-From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-To: <srinivas.kandagatla@linaro.org>, <bgoswami@quicinc.com>,
-        <broonie@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <lgirdwood@gmail.com>, <tiwai@suse.com>, <quic_rohkumar@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        <linux-sound@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-CC: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Subject: [PATCH v1 2/2] ASoC: qcom: qcm6490: Add machine driver for qcm6490
-Date: Wed, 27 Mar 2024 17:02:28 +0530
-Message-ID: <20240327113228.1706975-3-quic_mohs@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240327113228.1706975-1-quic_mohs@quicinc.com>
-References: <20240327113228.1706975-1-quic_mohs@quicinc.com>
+	Wed, 27 Mar 2024 11:35:54 GMT
+Received: from [10.50.35.38] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 27 Mar
+ 2024 04:35:46 -0700
+Message-ID: <e95634ba-b186-4fee-b93b-1ac4662fd2c4@quicinc.com>
+Date: Wed, 27 Mar 2024 17:05:43 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/4] dt-bindings: interconnect: add clock property to
+ enable QOS on SC7280
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Georgi
+ Djakov" <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: Kees Cook <keescook@chromium.org>, <cros-qcom-dts-watchers@chromium.org>,
+        "Gustavo A . R . Silva" <gustavoars@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-hardening@vger.kernel.org>, <quic_rlaggysh@quicinc.com>,
+        <quic_mdtipton@quicinc.com>
+References: <20240325181628.9407-1-quic_okukatla@quicinc.com>
+ <20240325181628.9407-4-quic_okukatla@quicinc.com>
+ <a259fa95-bfc3-4959-a159-8683df473e66@linaro.org>
+Content-Language: en-US
+From: Odelu Kukatla <quic_okukatla@quicinc.com>
+In-Reply-To: <a259fa95-bfc3-4959-a159-8683df473e66@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: iKC408_5rAsw8AZoUPNKKH92s9V9FzS3
-X-Proofpoint-GUID: iKC408_5rAsw8AZoUPNKKH92s9V9FzS3
+X-Proofpoint-ORIG-GUID: yr9u7FbR8chIvxO5mMICAlHjtDjNN2Sz
+X-Proofpoint-GUID: yr9u7FbR8chIvxO5mMICAlHjtDjNN2Sz
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-03-27_08,2024-03-21_02,2023-05-22_02
@@ -91,248 +104,66 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorit
  phishscore=0 adultscore=0 spamscore=0 mlxlogscore=999 suspectscore=0
  mlxscore=0 bulkscore=0 malwarescore=0 clxscore=1015 impostorscore=0
  lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2403270078
+ engine=8.19.0-2403210001 definitions=main-2403270079
 
-Add machine driver for qcm6490 SoC.
 
-This initial supports which includes WSA883x Speakers with onboard DMIC
-connected to internal LPASS codec via VA macros respectively and also
-WCD937x based headset.
 
-Add compatible for sound card on Qualcomm qcs6490 boards.
+On 3/26/2024 1:00 PM, Krzysztof Kozlowski wrote:
+> On 25/03/2024 19:16, Odelu Kukatla wrote:
+>> Added clock property to enable clocks required for accessing
+>> qos registers.
+>>
+>> Signed-off-by: Odelu Kukatla <quic_okukatla@quicinc.com>
+>> ---
+>>  .../bindings/interconnect/qcom,sc7280-rpmh.yaml    | 14 ++++++++++++++
+>>  1 file changed, 14 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,sc7280-rpmh.yaml b/Documentation/devicetree/bindings/interconnect/qcom,sc7280-rpmh.yaml
+>> index b135597d9489..950ecdd5252e 100644
+>> --- a/Documentation/devicetree/bindings/interconnect/qcom,sc7280-rpmh.yaml
+>> +++ b/Documentation/devicetree/bindings/interconnect/qcom,sc7280-rpmh.yaml
+>> @@ -35,6 +35,10 @@ properties:
+>>    reg:
+>>      maxItems: 1
+>>  
+>> +  clocks:
+>> +    minItems: 1
+>> +    maxItems: 2
+> 
+> Why is this flexible? Nothing in commit msg explains that. I gave the
+> same talk twice, gave there examples, yet it is not enough...
+> 
 
-Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
----
- sound/soc/qcom/Kconfig   |  13 +++
- sound/soc/qcom/Makefile  |   2 +
- sound/soc/qcom/qcm6490.c | 173 +++++++++++++++++++++++++++++++++++++++
- 3 files changed, 188 insertions(+)
- create mode 100644 sound/soc/qcom/qcm6490.c
+Clocks property is optional, and can be either 1 or 2 or none.
+I think "minItems: 1" should be removed. If no clock property is mentioned in node that means no clock is required to be enabled for QoS configuration.
 
-diff --git a/sound/soc/qcom/Kconfig b/sound/soc/qcom/Kconfig
-index 762491d6f2f2..0bc536766872 100644
---- a/sound/soc/qcom/Kconfig
-+++ b/sound/soc/qcom/Kconfig
-@@ -151,6 +151,19 @@ config SND_SOC_MSM8996
- 	  APQ8096 SoC-based systems.
- 	  Say Y if you want to use audio device on this SoCs
- 
-+config SND_SOC_QCM6490
-+	tristate "SoC Machine driver for QCM6490 boards"
-+	depends on QCOM_APR && SOUNDWIRE
-+	depends on COMMON_CLK
-+	select SND_SOC_QDSP6
-+	select SND_SOC_QCOM_COMMON
-+	select SND_SOC_QCOM_SDW
-+	help
-+	  Add support for audio on Qualcomm Technologies Inc.
-+	  QCM6490 SoC-based systems.
-+	  To compile this driver say Y or M if you want to
-+	  use audio device on this SoCs.
-+
- config SND_SOC_SDM845
- 	tristate "SoC Machine driver for SDM845 boards"
- 	depends on QCOM_APR && I2C && SOUNDWIRE
-diff --git a/sound/soc/qcom/Makefile b/sound/soc/qcom/Makefile
-index 34f3fcb8ee9a..feb2c164be69 100644
---- a/sound/soc/qcom/Makefile
-+++ b/sound/soc/qcom/Makefile
-@@ -22,6 +22,7 @@ obj-$(CONFIG_SND_SOC_LPASS_SC7280) += snd-soc-lpass-sc7280.o
- snd-soc-storm-objs := storm.o
- snd-soc-apq8016-sbc-objs := apq8016_sbc.o
- snd-soc-apq8096-objs := apq8096.o
-+snd-soc-qcm6490-objs := qcm6490.o
- snd-soc-sc7180-objs := sc7180.o
- snd-soc-sc7280-objs := sc7280.o
- snd-soc-sdm845-objs := sdm845.o
-@@ -34,6 +35,7 @@ snd-soc-x1e80100-objs := x1e80100.o
- obj-$(CONFIG_SND_SOC_STORM) += snd-soc-storm.o
- obj-$(CONFIG_SND_SOC_APQ8016_SBC) += snd-soc-apq8016-sbc.o
- obj-$(CONFIG_SND_SOC_MSM8996) += snd-soc-apq8096.o
-+obj-$(CONFIG_SND_SOC_QCM6490) += snd-soc-qcm6490.o
- obj-$(CONFIG_SND_SOC_SC7180) += snd-soc-sc7180.o
- obj-$(CONFIG_SND_SOC_SC7280) += snd-soc-sc7280.o
- obj-$(CONFIG_SND_SOC_SC8280XP) += snd-soc-sc8280xp.o
-diff --git a/sound/soc/qcom/qcm6490.c b/sound/soc/qcom/qcm6490.c
-new file mode 100644
-index 000000000000..5b0dc95963f5
---- /dev/null
-+++ b/sound/soc/qcom/qcm6490.c
-@@ -0,0 +1,173 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+// Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-+
-+#include <dt-bindings/sound/qcom,q6afe.h>
-+#include <linux/input.h>
-+#include <linux/module.h>
-+#include <linux/platform_device.h>
-+#include <linux/of_device.h>
-+#include <sound/core.h>
-+#include <sound/soc.h>
-+#include <sound/soc-dapm.h>
-+#include <sound/pcm.h>
-+#include <linux/soundwire/sdw.h>
-+#include <sound/jack.h>
-+#include <sound/pcm_params.h>
-+#include "lpass.h"
-+#include "qdsp6/q6afe.h"
-+#include "common.h"
-+#include "sdw.h"
-+
-+struct qcm6490_snd_data {
-+	bool stream_prepared[AFE_PORT_MAX];
-+	struct snd_soc_card *card;
-+	struct sdw_stream_runtime *sruntime[AFE_PORT_MAX];
-+	struct snd_soc_jack jack;
-+	bool jack_setup;
-+};
-+
-+static int qcm6490_snd_init(struct snd_soc_pcm_runtime *rtd)
-+{
-+	struct qcm6490_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
-+	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
-+
-+	switch (cpu_dai->id) {
-+	case TX_CODEC_DMA_TX_3:
-+	case LPASS_CDC_DMA_TX3:
-+	case RX_CODEC_DMA_RX_0:
-+		return qcom_snd_wcd_jack_setup(rtd, &data->jack, &data->jack_setup);
-+	case VA_CODEC_DMA_TX_0:
-+	case WSA_CODEC_DMA_RX_0:
-+		return 0;
-+	default:
-+		dev_err(rtd->dev, "%s: invalid dai id 0x%x\n", __func__, cpu_dai->id);
-+	}
-+
-+	return -EINVAL;
-+}
-+
-+static int qcm6490_be_hw_params_fixup(struct snd_soc_pcm_runtime *rtd,
-+				      struct snd_pcm_hw_params *params)
-+{
-+	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
-+	struct snd_interval *rate = hw_param_interval(params,
-+					SNDRV_PCM_HW_PARAM_RATE);
-+	struct snd_interval *channels = hw_param_interval(params,
-+					SNDRV_PCM_HW_PARAM_CHANNELS);
-+
-+	rate->min = 48000;
-+	rate->max = 48000;
-+	channels->min = 2;
-+	channels->max = 2;
-+	switch (cpu_dai->id) {
-+	case TX_CODEC_DMA_TX_0:
-+	case TX_CODEC_DMA_TX_1:
-+	case TX_CODEC_DMA_TX_2:
-+	case TX_CODEC_DMA_TX_3:
-+		channels->min = 1;
-+		break;
-+	default:
-+		break;
-+	}
-+
-+	return 0;
-+}
-+
-+static int qcm6490_snd_hw_params(struct snd_pcm_substream *substream,
-+				 struct snd_pcm_hw_params *params)
-+{
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
-+	struct qcm6490_snd_data *pdata = snd_soc_card_get_drvdata(rtd->card);
-+
-+	return qcom_snd_sdw_hw_params(substream, params, &pdata->sruntime[cpu_dai->id]);
-+}
-+
-+static int qcm6490_snd_prepare(struct snd_pcm_substream *substream)
-+{
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
-+	struct qcm6490_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
-+	struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
-+
-+	return qcom_snd_sdw_prepare(substream, sruntime,
-+				    &data->stream_prepared[cpu_dai->id]);
-+}
-+
-+static int qcm6490_snd_hw_free(struct snd_pcm_substream *substream)
-+{
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	struct qcm6490_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
-+	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
-+	struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
-+
-+	return qcom_snd_sdw_hw_free(substream, sruntime,
-+				    &data->stream_prepared[cpu_dai->id]);
-+}
-+
-+static const struct snd_soc_ops qcm6490_be_ops = {
-+	.hw_params = qcm6490_snd_hw_params,
-+	.hw_free = qcm6490_snd_hw_free,
-+	.prepare = qcm6490_snd_prepare,
-+};
-+
-+static void qcm6490_add_be_ops(struct snd_soc_card *card)
-+{
-+	struct snd_soc_dai_link *link;
-+	int i;
-+
-+	for_each_card_prelinks(card, i, link) {
-+		if (link->no_pcm == 1) {
-+			link->init = qcm6490_snd_init;
-+			link->be_hw_params_fixup = qcm6490_be_hw_params_fixup;
-+			link->ops = &qcm6490_be_ops;
-+		}
-+	}
-+}
-+
-+static int qcm6490_platform_probe(struct platform_device *pdev)
-+{
-+	struct snd_soc_card *card;
-+	struct qcm6490_snd_data *data;
-+	struct device *dev = &pdev->dev;
-+	int ret;
-+
-+	card = devm_kzalloc(dev, sizeof(*card), GFP_KERNEL);
-+	if (!card)
-+		return -ENOMEM;
-+	card->owner = THIS_MODULE;
-+	/* Allocate the private data */
-+	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
-+	if (!data)
-+		return -ENOMEM;
-+
-+	card->dev = dev;
-+	dev_set_drvdata(dev, card);
-+	snd_soc_card_set_drvdata(card, data);
-+	ret = qcom_snd_parse_of(card);
-+	if (ret)
-+		return ret;
-+
-+	card->driver_name = of_device_get_match_data(dev);
-+	qcm6490_add_be_ops(card);
-+	return devm_snd_soc_register_card(dev, card);
-+}
-+
-+static const struct of_device_id snd_qcm6490_dt_match[] = {
-+	{.compatible = "qcom,qcm6490-sndcard", "qcm6490"},
-+	{.compatible = "qcom,qcs6490-sndcard", "qcs6490"},
-+	{}
-+};
-+
-+MODULE_DEVICE_TABLE(of, snd_qcm6490_dt_match);
-+
-+static struct platform_driver snd_qcm6490_driver = {
-+	.probe  = qcm6490_platform_probe,
-+	.driver = {
-+		.name = "snd-qcm6490",
-+		.of_match_table = snd_qcm6490_dt_match,
-+	},
-+};
-+module_platform_driver(snd_qcm6490_driver);
-+MODULE_DESCRIPTION("qcm6490 ASoC Machine Driver");
-+MODULE_LICENSE("GPL");
--- 
-2.25.1
+I will add back specific number of clocks based on interconnect compatible similar to what i did in v3.
 
+> https://elixir.bootlin.com/linux/v6.8/source/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml#L132
+> 
+>> +
+>>  required:
+>>    - compatible
+>>  
+>> @@ -57,6 +61,7 @@ unevaluatedProperties: false
+>>  
+>>  examples:
+>>    - |
+>> +    #include <dt-bindings/clock/qcom,gcc-sc7280.h>
+>>      interconnect {
+>>          compatible = "qcom,sc7280-clk-virt";
+>>          #interconnect-cells = <2>;
+>> @@ -69,3 +74,12 @@ examples:
+>>          #interconnect-cells = <2>;
+>>          qcom,bcm-voters = <&apps_bcm_voter>;
+> 
+> If all devices have clocks, then you could add them here. It seems not
+> all of them have clocks...
+> 
+> Best regards,
+> Krzysztof
+> 
+
+Thanks,
+Odelu
 
