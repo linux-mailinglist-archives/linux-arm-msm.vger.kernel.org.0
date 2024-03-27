@@ -1,147 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-15420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6806C88ED8B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 19:04:02 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46F3B88ED9B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 19:06:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8C00C1C32596
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 18:04:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 67C5E1C3247C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 18:06:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11E3E12836A;
-	Wed, 27 Mar 2024 18:02:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BB55133414;
+	Wed, 27 Mar 2024 18:06:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KTAUPWts"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NQmy7JUC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E3FDDD7
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 18:02:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E15785227;
+	Wed, 27 Mar 2024 18:06:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711562530; cv=none; b=jMYBfP1c700c75IIXXbU9Wu2M5EaxSe0CWsGiUZFvdfIbKv3qh3IJe+F02f3NNjPGLD5NGEmJxqU6uuNQi2cpeZTuQhE+TO4luolU1bYoQmQaUxkJlO6cUoKeIqQOKq2k/jgHuFVb0x4UhCKFq2CCYEn7iQCurZSL043FpbsxTw=
+	t=1711562797; cv=none; b=Gh5/oAkHJzjFLiXXJYU0nDRzkhfxJiueaayFYfjMdtBSER87twIbKr4g/z4efGwAfMTL4BqNtgDRBd+fNGrhLI2qeFlrLQdLfwkg2/DWwN88RQ0MeNuaGwUCETNbdy/ua+rNq7vS3w+NazxHTSYhlcmJo7gWIF4TPXOJjoJBwOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711562530; c=relaxed/simple;
-	bh=5u26rLbRQMp5PLZVa3f+ZWPCwDNex6/EPYjSFskA7uM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lrlh81FnhC/YUfY601OpE8PYzt2YumfvCvFBW9b25FPtZhPBIKIP0yw1Rgrt7DnMkrIlM4O/JUDE4X09gIXEuieeJk5MDTRX+EfFujgIFQm8bP5NmPDqJh9iHAf7VWDRX4A/CkxqVzdUiA748Ym90j8wOuNIIDLWK0Pz3ggOCsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KTAUPWts; arc=none smtp.client-ip=209.85.208.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2d228a132acso554581fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 11:02:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711562526; x=1712167326; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Hri8V3f2oTKyW4xHT2FPkWxO9/7KdTilVzTVJ704t1E=;
-        b=KTAUPWtswYqrRvXtf8YgLF93vACvJbM4wvBl0SVAofxcfEh/2qlrC/p4zFetXDDZrR
-         qVEVfQtKOK/1DhEgoWlLpWDdVUQDpnM4LFTQKE6X7SQFkRCnP/mfkZiSj9vhCLAD1MM1
-         OwyhbMD92sUKKvjGDFYFOc6GT7WXHxNx1aWbBkdqd975wVqd3SB1F+1VXT0mo4pahaZ0
-         B6mwf64kpoCFvbZgiAtVqagDNn8zzb0SCH2vneW0oSPLZ4A4pUPCz2vKVCrJP8knsO+b
-         3uMxCpA5lrSNBVFCPjYU7qrCFdyG2CXvCJIhkC44RSspN1UbBK0NPwljxxhqjlDo2NS5
-         NxjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711562526; x=1712167326;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Hri8V3f2oTKyW4xHT2FPkWxO9/7KdTilVzTVJ704t1E=;
-        b=J3d0AFcWp32C7s67SV22nPj9CxlYGWvWU8QQPj+pWrW03W1C7rjcSxJjc3nu7JCG7X
-         eJP2dTNX1w6xW43zBDYfhZIBTZpFc+HtQDQBacXuJ0B8QrU/cKFCFNOTJ2eWsUd08GoI
-         CwR89uWlKvOVz0g3THRuIutm+clKfL37yImJ1IHW1yH4fQyRfWDWuVWVAiPTcK7EENZU
-         7t3OQaXzNkCVquDLbahNgvT5AUdUCJKlzMjMf2IrxGn8B3zaYExP6KvSUHax4knyat3Q
-         lD/ztqGsNeMv912sNAiHdhDninl5gpf10xPv+4z0apyoYIiR3iv7xA028BRYgSvLYKjC
-         gvqg==
-X-Gm-Message-State: AOJu0YzboJtN0j8IyOKJOgz6zVcNBNMQPcc0/lRRH6QUgPz6rROg34xO
-	2MQH3KFtEz+216nH8vPQLKmkuB91jRJRN/N0Q+t2fuC5hq/fmGhX9ETQoqVC77Q=
-X-Google-Smtp-Source: AGHT+IG3JpBB1fM/hLzE0DwDDSbEcJzbeI62ofpAg4XFckNPl+DeAabUlcVSdklCf/aUXYQC/mIqIQ==
-X-Received: by 2002:ac2:5f9a:0:b0:515:9475:513b with SMTP id r26-20020ac25f9a000000b005159475513bmr120135lfe.67.1711562526325;
-        Wed, 27 Mar 2024 11:02:06 -0700 (PDT)
-Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id w12-20020a170907270c00b00a469be48551sm5705878ejk.45.2024.03.27.11.02.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Mar 2024 11:02:05 -0700 (PDT)
-Message-ID: <655defd9-ba4f-4839-8210-203e53405e5b@linaro.org>
-Date: Wed, 27 Mar 2024 19:02:02 +0100
+	s=arc-20240116; t=1711562797; c=relaxed/simple;
+	bh=ELmyXwcV+FV9/p8zH/5M6gKnn4Kq8bGt1DVRV4LDDKQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AtG4u3LJXZJrB1Z9BZFShmUwnRWY6TQnHuy6oizg2Ji7P7NgHVM3sHtvIA/RjOzwS0JyPmDhxGuaa2YzOLlRbN/ENbIco1PeFZKaxCJNWtQDhihM/5y+mtMULljNfNRbgtre5CZ09E2Q3QyLW/IhGjDzp/cK9wgc4Vg5U3Zrqoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NQmy7JUC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB0FC433C7;
+	Wed, 27 Mar 2024 18:06:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711562796;
+	bh=ELmyXwcV+FV9/p8zH/5M6gKnn4Kq8bGt1DVRV4LDDKQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=NQmy7JUCEZ0RxIGKKgDxesVr/zBZBlOhbpw6BuiwYqInjUm2QolaDyoi93Z/1ZIDT
+	 fXfeILsnH6JFGEkhARAkWC6/HiE8+5o5m9o69ef2b1DjI4qtlbtnt2G+4LIovO2GXr
+	 g8N9dGuVaSpcBXK61RpiAK3G9bs75gKErf40XvBIqRcumFGtD5EzKfM+JNIORC1NhX
+	 st47971wfU0D30xAqoe5lON13N9ktrWVS7ajto4z++ZpfmvSVkP6wOKqsLplbObd2/
+	 JOpORRStz3LnZXXYI+T59a1Haaiihp6vUslg8pJvBAmv3w5p1XyLystGyO8RAqQvpU
+	 XNZcGuAQYU0Pg==
+Date: Wed, 27 Mar 2024 19:06:30 +0100
+From: Niklas Cassel <cassel@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
+	linux-tegra@vger.kernel.org
+Subject: Re: [PATCH 07/11] PCI: dwc: ep: Add a generic dw_pcie_ep_linkdown()
+ API to handle Link Down event
+Message-ID: <ZgRgJsOT_bzXM1wK@ryzen>
+References: <20240314-pci-epf-rework-v1-0-6134e6c1d491@linaro.org>
+ <20240314-pci-epf-rework-v1-7-6134e6c1d491@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/5] clk: qcom: clk-cbf-8996: use HUAYRA_APPS register
- map for cbf_pll
-To: Gabor Juhos <j4g8y7@gmail.com>, Bjorn Andersson <andersson@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240326-apss-ipq-pll-cleanup-v3-0-15c4aeeb14ac@gmail.com>
- <20240326-apss-ipq-pll-cleanup-v3-5-15c4aeeb14ac@gmail.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20240326-apss-ipq-pll-cleanup-v3-5-15c4aeeb14ac@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240314-pci-epf-rework-v1-7-6134e6c1d491@linaro.org>
 
-On 26.03.2024 1:57 PM, Gabor Juhos wrote:
-> The register map used for 'cbf_pll' is the same as the one defined for
-> the CLK_ALPHA_PLL_TYPE_HUAYRA_APSS indice in the 'clk_alpha_pll_regs'
-> array.
+Hello Mani,
+
+On Thu, Mar 14, 2024 at 08:53:46PM +0530, Manivannan Sadhasivam wrote:
+> As per the PCIe base spec r5.0, section 5.2, Link Down event can happen
+> under any of the following circumstances:
 > 
-> Drop the local register map and use the global one instead to reduce
-> code duplication.
+> 1. Fundamental/Hot reset
+> 2. Link disable transmission by upstream component
+> 3. Moving from L2/L3 to L0
 > 
-> No functional changes intended. Compile tested only.
+> In those cases, Link Down causes some non-sticky DWC registers to loose the
+> state (like REBAR, etc...). So the drivers need to reinitialize them to
+> function properly once the link comes back again.
 > 
-> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+> This is not a problem for drivers supporting PERST# IRQ, since they can
+> reinitialize the registers in the PERST# IRQ callback. But for the drivers
+> not supporting PERST#, there is no way they can reinitialize the registers
+> other than relying on Link Down IRQ received when the link goes down. So
+> let's add a DWC generic API dw_pcie_ep_linkdown() that reinitializes the
+> non-sticky registers and also notifies the EPF drivers about link going
+> down.
+> 
+> This API can also be used by the drivers supporting PERST# to handle the
+> scenario (2) mentioned above.
+> 
+> NOTE: For the sake of code organization, move the dw_pcie_ep_linkup()
+> definition just above dw_pcie_ep_linkdown().
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
+>  drivers/pci/controller/dwc/pcie-designware-ep.c | 93 ++++++++++++++++---------
+>  drivers/pci/controller/dwc/pcie-designware.h    |  5 ++
+>  2 files changed, 67 insertions(+), 31 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+> index 3893a8c1a11c..5451057ca74b 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+> @@ -14,18 +14,6 @@
+>  #include <linux/pci-epc.h>
+>  #include <linux/pci-epf.h>
+>  
+> -/**
+> - * dw_pcie_ep_linkup - Notify EPF drivers about link up event
+> - * @ep: DWC EP device
+> - */
+> -void dw_pcie_ep_linkup(struct dw_pcie_ep *ep)
+> -{
+> -	struct pci_epc *epc = ep->epc;
+> -
+> -	pci_epc_linkup(epc);
+> -}
+> -EXPORT_SYMBOL_GPL(dw_pcie_ep_linkup);
+> -
+>  /**
+>   * dw_pcie_ep_init_notify - Notify EPF drivers about EPC initialization
+>   *			    complete
+> @@ -672,6 +660,29 @@ static unsigned int dw_pcie_ep_find_ext_capability(struct dw_pcie *pci, int cap)
+>  	return 0;
+>  }
+>  
+> +static void dw_pcie_ep_init_non_sticky_registers(struct dw_pcie *pci)
+> +{
+> +	unsigned int offset;
+> +	unsigned int nbars;
+> +	u32 reg, i;
+> +
+> +	offset = dw_pcie_ep_find_ext_capability(pci, PCI_EXT_CAP_ID_REBAR);
+> +
+> +	dw_pcie_dbi_ro_wr_en(pci);
+> +
+> +	if (offset) {
+> +		reg = dw_pcie_readl_dbi(pci, offset + PCI_REBAR_CTRL);
+> +		nbars = (reg & PCI_REBAR_CTRL_NBAR_MASK) >>
+> +			PCI_REBAR_CTRL_NBAR_SHIFT;
+> +
+> +		for (i = 0; i < nbars; i++, offset += PCI_REBAR_CTRL)
+> +			dw_pcie_writel_dbi(pci, offset + PCI_REBAR_CAP, 0x0);
+> +	}
+> +
+> +	dw_pcie_setup(pci);
+> +	dw_pcie_dbi_ro_wr_dis(pci);
+> +}
+> +
+>  /**
+>   * dw_pcie_ep_init_registers - Initialize DWC EP specific registers
+>   * @ep: DWC EP device
+> @@ -686,13 +697,11 @@ int dw_pcie_ep_init_registers(struct dw_pcie_ep *ep)
+>  	struct dw_pcie_ep_func *ep_func;
+>  	struct device *dev = pci->dev;
+>  	struct pci_epc *epc = ep->epc;
+> -	unsigned int offset, ptm_cap_base;
+> -	unsigned int nbars;
+> +	u32 ptm_cap_base, reg;
+>  	u8 hdr_type;
+>  	u8 func_no;
+> -	int i, ret;
+>  	void *addr;
+> -	u32 reg;
+> +	int ret;
+>  
+>  	hdr_type = dw_pcie_readb_dbi(pci, PCI_HEADER_TYPE) &
+>  		   PCI_HEADER_TYPE_MASK;
+> @@ -755,20 +764,8 @@ int dw_pcie_ep_init_registers(struct dw_pcie_ep *ep)
+>  	if (ep->ops->init)
+>  		ep->ops->init(ep);
+>  
+> -	offset = dw_pcie_ep_find_ext_capability(pci, PCI_EXT_CAP_ID_REBAR);
+>  	ptm_cap_base = dw_pcie_ep_find_ext_capability(pci, PCI_EXT_CAP_ID_PTM);
+>  
+> -	dw_pcie_dbi_ro_wr_en(pci);
+> -
+> -	if (offset) {
+> -		reg = dw_pcie_readl_dbi(pci, offset + PCI_REBAR_CTRL);
+> -		nbars = (reg & PCI_REBAR_CTRL_NBAR_MASK) >>
+> -			PCI_REBAR_CTRL_NBAR_SHIFT;
+> -
+> -		for (i = 0; i < nbars; i++, offset += PCI_REBAR_CTRL)
+> -			dw_pcie_writel_dbi(pci, offset + PCI_REBAR_CAP, 0x0);
+> -	}
+> -
+>  	/*
+>  	 * PTM responder capability can be disabled only after disabling
+>  	 * PTM root capability.
+> @@ -785,9 +782,6 @@ int dw_pcie_ep_init_registers(struct dw_pcie_ep *ep)
+>  		dw_pcie_dbi_ro_wr_dis(pci);
+>  	}
+>  
+> -	dw_pcie_setup(pci);
+> -	dw_pcie_dbi_ro_wr_dis(pci);
+> -
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Your previous series had:
 
-Konrad
+-       dw_pcie_setup(pci);
+-       dw_pcie_dbi_ro_wr_dis(pci);
++       dw_pcie_ep_init_non_sticky_registers(pci);
+
+Here.
+I tested this series, but it did not work for me (the Resizable BARs did
+not get resized) since you removed the call to
+dw_pcie_ep_init_non_sticky_registers().
+
+By readding the call to dw_pcie_ep_init_non_sticky_registers(),
+the BARs get Resized again.
+
+
+BTW do you have a git branch with both your series somewhere?
+(Possibly even rebased on
+https://lore.kernel.org/linux-pci/20240320113157.322695-1-cassel@kernel.org/T/#t
+like you suggested in your other mail.)
+
+
+Kind regards,
+Niklas
 
