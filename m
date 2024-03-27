@@ -1,324 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-15356-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A9CF88D978
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 09:50:23 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10E6F88D97F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 09:52:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5ED5E1C218C0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 08:50:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4C2171C23E23
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 08:52:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8186374D2;
-	Wed, 27 Mar 2024 08:50:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DEAB364AE;
+	Wed, 27 Mar 2024 08:52:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Rq5zoPr2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vPlHszCa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E8037141
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 08:50:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FE7364A1
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 08:52:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711529410; cv=none; b=ZYYhH14PHd7bC8bP5WXf5fux3s+xVf33UtiCCPBxqHwCUkSFmworJ3/f0yQIhnblqPq4+1bqVU90xCUJ4kuLrYo8PqgmVBLG20VdxB5S2y74uk5i/Si4flEdcpZzwzGExMUfhKY9y+O6vVYot2o9NB4XeyFC1Rr0W0ijEraa18I=
+	t=1711529535; cv=none; b=RB8Zsxh6wRjzmb8v15uxDvuLgCQ6IYCR5Cb5v/iQiP7JE3wjQkeXYreSQJY4VlDLvpxa1NJlyJNIDxcUgptSRenGex/wzvuPAsizmJ/p6VZF9aH20bNZu+uzmW+ENM7Nb9oOhgccHrHSxLfSfisPAV9lw3LBmtrKjgAiVWzi+FI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711529410; c=relaxed/simple;
-	bh=G1T8j6kmbh5YKnwus41DkuQV/P9KjTNsZ6i0EFzmw3U=;
+	s=arc-20240116; t=1711529535; c=relaxed/simple;
+	bh=iFn6xwlqPNDgTzUBASCRnysiro/0I08ilbuODvY79Gw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gi/aIZkCg6pzh8uE6kIAVaL+wLN5mjj64pIJIS6nKjz2cT0FdrwnfCU40Mq7PetyKpA94ihYJFhCo3rnFVTdmSsbUV0JXZF09FOAlQ1KGgYYXGG01ICDdo/4IynKYKq+teX3Y5uJmH2PeQzYciVwSfNv7UfzSIyTor8151ZEjVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Rq5zoPr2; arc=none smtp.client-ip=209.85.219.169
+	 To:Cc:Content-Type; b=LhZOxrv2JkqgHVa/R2W1IW2LG2cudUz379D7VgRm57AC5JIbkyrfMgPmcDqW2CjqyTLSn8GpDdJ/i8y28yvUoJstw0YfIpb/PPPry9le7b62HA57Sz7BlT3nwzeyaGJX+XxwUTyEoO9RUK970IpS9aFXlLgCt4kYa4OBWTzh4wY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vPlHszCa; arc=none smtp.client-ip=209.85.219.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-dcbc6a6808fso6120175276.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 01:50:07 -0700 (PDT)
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-dcbf82cdf05so5814772276.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 01:52:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711529407; x=1712134207; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1711529533; x=1712134333; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=pLYlN16RyWsxEwBzjLz8ThQC9SQHV7u2gPr9C5zHFq8=;
-        b=Rq5zoPr2vFNS3kDEmj8NfosnY1yFn+nDuLgPdtu3u8ogbcqnfAT4xNf5v8J35D53QF
-         E1S+NKtzbm0ovV34T9i/NJvNg+3zhxNeSD1D5jGci6ltHW0rcmhqs8qzUtCl5f2rgL8b
-         f9VblLDCChd1kM1RPXHmBLc8zcPnqQENBUG9c4yRuNW9AgjMW30uoFFQHNwDOpr1bFnb
-         z3WnK9WheVbFJcciKmqFkUqTVeG/PWmxXqADYzo/FLLV4QJuqppFn8sR80dPcn3zqgei
-         MoBO2VRCz4xuhB6k2Elgajc/TZS8fjzQEADpysiuug6vyZdcVbIIuK78ARo2duZGsDDy
-         bKRg==
+        bh=QKDxo5SiDJux2nq6LZtCe3mC0jTYYBUZBjVfmvT96ys=;
+        b=vPlHszCa+kHz5KTLBUTUmMFnQJOWDp7KVdZ+Yzxj92ksyTNSG4rSCXor+oDPaef24P
+         ezlUxWIUufxj67QGvR+hZY6X+0eN6a88egvrZizvmcEquMf2mo0avS+toIYZT4GdLlZU
+         jY+JyFihpa+eVtV65wH9msJ2yni+jrmhfBOYxVBYDGOcDALixpZVu0Pnen7HxN6B9Uyn
+         rVfe5030W/US5k1D30hY/sZXS8mAnf/Wq96pHJ1U2FgA5lVEnRpk+7zDamQRIcSZ7Tnh
+         aWCkDb2E/EltlZm6hekbfR3N2t25VZQsHygTSqYs002lxAHKF+k8NAf06CJnBPCIGERM
+         oKMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711529407; x=1712134207;
+        d=1e100.net; s=20230601; t=1711529533; x=1712134333;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=pLYlN16RyWsxEwBzjLz8ThQC9SQHV7u2gPr9C5zHFq8=;
-        b=kJVqYgQUBUCeVK2p1RKpHYh9uwqtydOe8ecmT/M598PGryxg11YbOpqDAWdGe/CGhT
-         0cPxZMAVfuEujJlern7o38AgiKUVVpLL9/xHXqB/tfIMg1InF9POHFWn4abCdgvV0YF4
-         c3p000N3NRECc9LPVhqxNkp296Kvd2Wc2pZfrjLa0HAMGvLolxkvXGissNulFKIWrKLR
-         REjkbMURvwYpl1bjz+RL7PiYEI0/ndNhr8/aw73cZ7jEJdvSa794l5a18ndJDdZtNq6a
-         WO5kntEge2fO3IcmNp9mItaYBKooq10z/NtACptaE/uPMJgq+fJU74aHE55YZ5jrQzrD
-         tneg==
-X-Forwarded-Encrypted: i=1; AJvYcCVA01ru2XVTN5AL3hfHVuSrZ4bx0T1jLvJmBCqTYH6XsCV4EBlN8TCzWnJR5Jds7H6SYI7pKJP9f4DDuPNvvaRpuXepzqsUBaLfOC/ILw==
-X-Gm-Message-State: AOJu0YyAfbgPpa//QfoZT8X103W2Md09uMhD+7fWDrVPbqbBZ9ZfHatK
-	DXo7TtRrYKJIIcT+DOhn9EXwoIGj38nXTsN7XC32c3orzblDd4W7P/Ykis0p7QixCYyR99Qyzi9
-	HkpMBBZivzCHZoEvzyR8oUXLYhd94WrKuGrZOkw==
-X-Google-Smtp-Source: AGHT+IEABw9Q0JdmDvKgiS8uA31+HMp3kqLbyi2CuT4KgMzzWprj2LtLDfwFy6/eU3DS2O0M+a/cPSxeZju9nn66sIY=
-X-Received: by 2002:a25:aa4b:0:b0:dc7:3166:ad25 with SMTP id
- s69-20020a25aa4b000000b00dc73166ad25mr414150ybi.25.1711529407085; Wed, 27 Mar
- 2024 01:50:07 -0700 (PDT)
+        bh=QKDxo5SiDJux2nq6LZtCe3mC0jTYYBUZBjVfmvT96ys=;
+        b=qW2DTui+J0ylWiCkp+P5z0rnNKpd2mwS1YF31oce6za3ksr3qLX1k3wjAW6VwOLXJ+
+         rTMKwOahfD9i9I0/leQeJvUtKZqf58AceBxwKumFKLyk3mrd/SWXUx/6+LfokEKrU8E1
+         xjtlp0yeopHMebPXMq3HjtfeNabY+T+H/67XkAtfGZ784adWLmIZPnPc3zIT87uUYJ5Y
+         CF/NJLnCaNAaRsNyVcN/NKTZ2x9W5avXdVXSKXGEzUS3SKxmwHMRWQhA/mfWEnFhWc2C
+         SxTG5a0ijbE/yJ4+R35EzUtdbY4Jn0LzzYIFg2wQy8NZYmJPlfr7ZQl76FUwbZkabzU1
+         8dLQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWu1SuS2+xV0ezucw8YQ5RhC8tatKF9iesg+Mt4pqMW7eyfSK4SHDp+w9UM12bJsqr7ok437cQ5dnW2W23w4ofeVHxQ+Eiese00Up5WZw==
+X-Gm-Message-State: AOJu0YybDhyD1HZcDuhJMOx9tkimSkQ7O3+QqwwjR49YdBxmiglZW1iq
+	tVodsJzKs73y8zkl7flHruqm6b5EMqLtWgrOrk0wpWZppJuIyV5V+5Hy+nekMIytO5TQcQDpZOI
+	JeliwOsrAGbyNuSsgWmAohWOMFIXFccfP/MR/Lg==
+X-Google-Smtp-Source: AGHT+IHT7KGPtquwpuaNGQTzLwDxTjgBrwNcRbeqAf2i/0d4TNxkYwnbGP08o1u9++zU+7flQ/+MYOMmfXQVv2GFuRs=
+X-Received: by 2002:a05:6902:1366:b0:dcc:a61b:1a72 with SMTP id
+ bt6-20020a056902136600b00dcca61b1a72mr1960452ybb.47.1711529533479; Wed, 27
+ Mar 2024 01:52:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240327081850.2924870-1-quic_varada@quicinc.com> <20240327081850.2924870-3-quic_varada@quicinc.com>
-In-Reply-To: <20240327081850.2924870-3-quic_varada@quicinc.com>
+References: <20240326-fd-fix-schema-v1-0-4475d6d6d633@linaro.org>
+ <20240326-fd-fix-schema-v1-1-4475d6d6d633@linaro.org> <e9ce004a-952a-4a94-abe9-2a8dd96b37fb@linaro.org>
+In-Reply-To: <e9ce004a-952a-4a94-abe9-2a8dd96b37fb@linaro.org>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 27 Mar 2024 10:49:56 +0200
-Message-ID: <CAA8EJpoFw3Qyq+NRffe5HBUbCfdYv03oWgoUwkB6pbdVrF6LEg@mail.gmail.com>
-Subject: Re: [PATCH v4 2/3] clk: qcom: add IPQ9574 interconnect clocks support
-To: Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org, mturquette@baylibre.com, 
-	sboyd@kernel.org, robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, 
-	conor+dt@kernel.org, djakov@kernel.org, quic_anusha@quicinc.com, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-pm@vger.kernel.org
+Date: Wed, 27 Mar 2024 10:52:02 +0200
+Message-ID: <CAA8EJprg55BkRL5KUZ+6gNniq9TZjEem8MLqQdMZcXntvttEVg@mail.gmail.com>
+Subject: Re: [PATCH 1/4] dt-bindings: display/msm: sm8150-mdss: add DP node
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	devicetree@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 27 Mar 2024 at 10:21, Varadarajan Narayanan
-<quic_varada@quicinc.com> wrote:
+On Wed, 27 Mar 2024 at 10:45, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 >
-> Unlike MSM platforms that manage NoC related clocks and scaling
-> from RPM, IPQ SoCs dont involve RPM in managing NoC related
-> clocks and there is no NoC scaling.
+> On 26/03/2024 21:02, Dmitry Baryshkov wrote:
+> > diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm8150-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm8150-mdss.yaml
+> > index c0d6a4fdff97..40b077fb20aa 100644
+> > --- a/Documentation/devicetree/bindings/display/msm/qcom,sm8150-mdss.yaml
+> > +++ b/Documentation/devicetree/bindings/display/msm/qcom,sm8150-mdss.yaml
+> > @@ -53,6 +53,16 @@ patternProperties:
+> >        compatible:
+> >          const: qcom,sm8150-dpu
+> >
+> > +  "^displayport-controller@[0-9a-f]+$":
+> > +    type: object
+> > +    additionalProperties: true
+> > +
+> > +    properties:
+> > +      compatible:
+> > +        items:
+> > +          - const: qcom,sm8150-dp
+> > +          - const: qcom,sm8350-dp
 >
-> However, there is a requirement to enable some NoC interface
-> clocks for accessing the peripheral controllers present on
-> these NoCs. Though exposing these as normal clocks would work,
-> having a minimalistic interconnect driver to handle these clocks
-> would make it consistent with other Qualcomm platforms resulting
-> in common code paths. This is similar to msm8996-cbf's usage of
-> icc-clk framework.
->
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> ---
-> v4: Use clk_hw instead of indices
->     Do icc register in qcom_cc_probe() call stream
->     Add icc clock info to qcom_cc_desc structure
-> v3: Use indexed identifiers here to avoid confusion
->     Fix error messages and move to common.c
-> v2: Move DTS to separate patch
->     Update commit log
->     Auto select CONFIG_INTERCONNECT & CONFIG_INTERCONNECT_CLK to fix build error
-> ---
->  drivers/clk/qcom/Kconfig       |  2 ++
->  drivers/clk/qcom/common.c      | 34 ++++++++++++++++++++-
->  drivers/clk/qcom/common.h      |  4 ++-
->  drivers/clk/qcom/gcc-ipq9574.c | 54 ++++++++++++++++++++++++++++++++++
+> This does not look right. sm8350 has its own mdss binding file.
 
-These changes must be separate.
-
->  4 files changed, 92 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-> index 8ab08e7b5b6c..af73a0b396eb 100644
-> --- a/drivers/clk/qcom/Kconfig
-> +++ b/drivers/clk/qcom/Kconfig
-> @@ -243,6 +243,8 @@ config IPQ_GCC_8074
->
->  config IPQ_GCC_9574
->         tristate "IPQ9574 Global Clock Controller"
-> +       select INTERCONNECT
-> +       select INTERCONNECT_CLK
->         help
->           Support for global clock controller on ipq9574 devices.
->           Say Y if you want to use peripheral devices such as UART, SPI,
-> diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
-> index 75f09e6e057e..523d30d0ccbc 100644
-> --- a/drivers/clk/qcom/common.c
-> +++ b/drivers/clk/qcom/common.c
-> @@ -8,6 +8,8 @@
->  #include <linux/regmap.h>
->  #include <linux/platform_device.h>
->  #include <linux/clk-provider.h>
-> +#include <linux/interconnect-clk.h>
-> +#include <linux/interconnect-provider.h>
->  #include <linux/reset-controller.h>
->  #include <linux/of.h>
->
-> @@ -234,6 +236,36 @@ static struct clk_hw *qcom_cc_clk_hw_get(struct of_phandle_args *clkspec,
->         return cc->rclks[idx] ? &cc->rclks[idx]->hw : NULL;
->  }
->
-> +static int qcom_cc_icc_register(struct device *dev,
-> +                               const struct qcom_cc_desc *desc)
-> +{
-> +#if IS_ENABLED(CONFIG_INTERCONNECT_CLK)
-
-General recommendation is to avoid #ifs inside function code. Please
-move them outside and add an empty stub.
-
-> +       struct icc_provider *provider;
-> +       struct icc_clk_data *icd;
-> +       int i;
-> +
-> +       if (!desc->icc_hws)
-> +               return 0;
-> +
-> +       icd = devm_kcalloc(dev, desc->num_icc_hws, sizeof(*icd), GFP_KERNEL);
-> +       if (!icd)
-> +               return dev_err_probe(dev, -ENOMEM, "malloc for icc clock data failed\n");
-
-No need to.
-
-> +
-> +       for (i = 0; i < desc->num_icc_hws; i++) {
-> +               icd[i].clk = devm_clk_hw_get_clk(dev, desc->icc_hws[i], "");
-
-Passing an empty string is not correct from the CCF point of view.
-
-> +               if (IS_ERR_OR_NULL(icd[i].clk))
-> +                       return dev_err_probe(dev, -ENOENT, "icc clock not found\n");
-
-No, just IS_ERR and PTR_ERR. Don't throw away the resulting code.
-In most of the case IS_ERR_OR_NULL is not correct. The function either
-returns NULL or returns an error pointer. It can not be both.
-
-> +               icd[i].name = clk_hw_get_name(desc->icc_hws[i]);
-> +       }
-> +
-> +       provider = icc_clk_register(dev, desc->first_id, desc->num_icc_hws, icd);
-> +       if (IS_ERR_OR_NULL(provider))
-
-just use PTR_ERR_OR_ZERO
-
-Also note that there is no qcom_cc_remove, so please add
-devm_icc_clk_register() and use it here:
-
-return PTR_ERR_OR_ZERO(devm_icc_clk_register(dev, ...));
-
-> +               return dev_err_probe(dev, PTR_ERR(provider),
-> +                                    "icc_clk_register failed\n");
-> +#endif
-> +       return 0;
-> +}
-> +
->  int qcom_cc_really_probe(struct platform_device *pdev,
->                          const struct qcom_cc_desc *desc, struct regmap *regmap)
->  {
-> @@ -303,7 +335,7 @@ int qcom_cc_really_probe(struct platform_device *pdev,
->         if (ret)
->                 return ret;
->
-> -       return 0;
-> +       return qcom_cc_icc_register(dev, desc);
->  }
->  EXPORT_SYMBOL_GPL(qcom_cc_really_probe);
->
-> diff --git a/drivers/clk/qcom/common.h b/drivers/clk/qcom/common.h
-> index 9c8f7b798d9f..3c3a07f6dcb9 100644
-> --- a/drivers/clk/qcom/common.h
-> +++ b/drivers/clk/qcom/common.h
-> @@ -29,6 +29,9 @@ struct qcom_cc_desc {
->         size_t num_gdscs;
->         struct clk_hw **clk_hws;
->         size_t num_clk_hws;
-> +       struct clk_hw **icc_hws;
-> +       size_t num_icc_hws;
-> +       unsigned int first_id;
->  };
->
->  /**
-> @@ -65,5 +68,4 @@ extern int qcom_cc_probe(struct platform_device *pdev,
->                          const struct qcom_cc_desc *desc);
->  extern int qcom_cc_probe_by_index(struct platform_device *pdev, int index,
->                                   const struct qcom_cc_desc *desc);
-> -
->  #endif
-> diff --git a/drivers/clk/qcom/gcc-ipq9574.c b/drivers/clk/qcom/gcc-ipq9574.c
-> index 0a3f846695b8..187fd9dcdf49 100644
-> --- a/drivers/clk/qcom/gcc-ipq9574.c
-> +++ b/drivers/clk/qcom/gcc-ipq9574.c
-> @@ -12,6 +12,7 @@
->
->  #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
->  #include <dt-bindings/reset/qcom,ipq9574-gcc.h>
-> +#include <dt-bindings/interconnect/qcom,ipq9574.h>
->
->  #include "clk-alpha-pll.h"
->  #include "clk-branch.h"
-> @@ -4301,6 +4302,56 @@ static const struct qcom_reset_map gcc_ipq9574_resets[] = {
->         [GCC_WCSS_Q6_TBU_BCR] = { 0x12054, 0 },
->  };
->
-> +#define IPQ_APPS_ID                    9574    /* some unique value */
-> +
-> +enum {
-> +       ICC_ANOC_PCIE0,
-> +       ICC_SNOC_PCIE0,
-> +       ICC_ANOC_PCIE1,
-> +       ICC_SNOC_PCIE1,
-> +       ICC_ANOC_PCIE2,
-> +       ICC_SNOC_PCIE2,
-> +       ICC_ANOC_PCIE3,
-> +       ICC_SNOC_PCIE3,
-> +       ICC_SNOC_USB,
-> +       ICC_ANOC_USB_AXI,
-> +       ICC_NSSNOC_NSSCC,
-> +       ICC_NSSNOC_SNOC_0,
-> +       ICC_NSSNOC_SNOC_1,
-> +       ICC_NSSNOC_PCNOC_1,
-> +       ICC_NSSNOC_QOSGEN_REF,
-> +       ICC_NSSNOC_TIMEOUT_REF,
-> +       ICC_NSSNOC_XO_DCD,
-> +       ICC_NSSNOC_ATB,
-> +       ICC_MEM_NOC_NSSNOC,
-> +       ICC_NSSNOC_MEMNOC,
-> +       ICC_NSSNOC_MEM_NOC_1,
-> +};
-> +
-> +static struct clk_hw *icc_ipq9574_hws[] = {
-> +       [ICC_ANOC_PCIE0] = &gcc_anoc_pcie0_1lane_m_clk.clkr.hw,
-> +       [ICC_SNOC_PCIE0] = &gcc_anoc_pcie1_1lane_m_clk.clkr.hw,
-> +       [ICC_ANOC_PCIE1] = &gcc_anoc_pcie2_2lane_m_clk.clkr.hw,
-> +       [ICC_SNOC_PCIE1] = &gcc_anoc_pcie3_2lane_m_clk.clkr.hw,
-> +       [ICC_ANOC_PCIE2] = &gcc_snoc_pcie0_1lane_s_clk.clkr.hw,
-> +       [ICC_SNOC_PCIE2] = &gcc_snoc_pcie1_1lane_s_clk.clkr.hw,
-> +       [ICC_ANOC_PCIE3] = &gcc_snoc_pcie2_2lane_s_clk.clkr.hw,
-> +       [ICC_SNOC_PCIE3] = &gcc_snoc_pcie3_2lane_s_clk.clkr.hw,
-> +       [ICC_SNOC_USB] = &gcc_snoc_usb_clk.clkr.hw,
-> +       [ICC_ANOC_USB_AXI] = &gcc_anoc_usb_axi_clk.clkr.hw,
-> +       [ICC_NSSNOC_NSSCC] = &gcc_nssnoc_nsscc_clk.clkr.hw,
-> +       [ICC_NSSNOC_SNOC_0] = &gcc_nssnoc_snoc_clk.clkr.hw,
-> +       [ICC_NSSNOC_SNOC_1] = &gcc_nssnoc_snoc_1_clk.clkr.hw,
-> +       [ICC_NSSNOC_PCNOC_1] = &gcc_nssnoc_pcnoc_1_clk.clkr.hw,
-> +       [ICC_NSSNOC_QOSGEN_REF] = &gcc_nssnoc_qosgen_ref_clk.clkr.hw,
-> +       [ICC_NSSNOC_TIMEOUT_REF] = &gcc_nssnoc_timeout_ref_clk.clkr.hw,
-> +       [ICC_NSSNOC_XO_DCD] = &gcc_nssnoc_xo_dcd_clk.clkr.hw,
-> +       [ICC_NSSNOC_ATB] = &gcc_nssnoc_atb_clk.clkr.hw,
-> +       [ICC_MEM_NOC_NSSNOC] = &gcc_mem_noc_nssnoc_clk.clkr.hw,
-> +       [ICC_NSSNOC_MEMNOC] = &gcc_nssnoc_memnoc_clk.clkr.hw,
-> +       [ICC_NSSNOC_MEM_NOC_1] = &gcc_nssnoc_mem_noc_1_clk.clkr.hw,
-> +};
-> +
->  static const struct of_device_id gcc_ipq9574_match_table[] = {
->         { .compatible = "qcom,ipq9574-gcc" },
->         { }
-> @@ -4323,6 +4374,9 @@ static const struct qcom_cc_desc gcc_ipq9574_desc = {
->         .num_resets = ARRAY_SIZE(gcc_ipq9574_resets),
->         .clk_hws = gcc_ipq9574_hws,
->         .num_clk_hws = ARRAY_SIZE(gcc_ipq9574_hws),
-> +       .icc_hws = icc_ipq9574_hws,
-> +       .num_icc_hws = ARRAY_SIZE(icc_ipq9574_hws),
-> +       .first_id = IPQ_APPS_ID,
->  };
->
->  static int gcc_ipq9574_probe(struct platform_device *pdev)
-> --
-> 2.34.1
->
->
-
+So just a single entry here, even though SM8150 uses fallback compat string?
 
 -- 
 With best wishes
