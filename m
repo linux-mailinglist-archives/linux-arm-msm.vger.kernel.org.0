@@ -1,213 +1,270 @@
-Return-Path: <linux-arm-msm+bounces-15358-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15359-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 974D388D9A2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 09:55:16 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B5DF88D9D6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 10:14:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4E68629A2E7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 08:55:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B1E191F2B1D7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 09:14:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2ACF4364D2;
-	Wed, 27 Mar 2024 08:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1DD95376EB;
+	Wed, 27 Mar 2024 09:14:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NxiMsAr8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IcKPRZhz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF214AEF2
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 08:54:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4434B1C11
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 09:14:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711529656; cv=none; b=Dld4oL6wOjdm2Yw1hG3uP02you5K5D2xgR23x0I1xB4CK8Lqvm1sSicPK4I/F20mpOWo+EYvhhV0BPp0S2mI+hNCWURcGV/0fouVOW2wLGVTg50UW0wmg8vCLuJu5TnEayUei9UnbvDUeOuB0a2RZKOOAlPan+23v8J9HAb3KBg=
+	t=1711530843; cv=none; b=XH5f21pL1VL/s02CG+dIiMHPbrbUNapdAgqouRayl9yljCbuXEslpj2IgGvhjSDCtQ7s0TpWggRx4yE7jGky3a8H83XNquHSVz2tX/ro4vs+I2xFB0EGilawu5NowI6nZs4zcFPOwgrCF+K40KFEgT/3wyCXY2Uy0h5GMRjh1qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711529656; c=relaxed/simple;
-	bh=hkf8WnDvTMlPg6vYOz0rZWJ004dc3isL15eaguR8UQc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aPWJTPgUY+lAzevbRX/I9XCULL+iQ4zaUDF8G79ey0wMc3hw1RwpO+GZudK6+XNC0maFydNWvIBtX3aZVtUtWfNAs2PiD688VZSZ3O2vaLxD1aGD+t3pCr/eqpd3Da+mtV6pl0VojznUdJA49LlVlx3MRE0qmSjG4KMZkzUANB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NxiMsAr8; arc=none smtp.client-ip=209.85.167.44
+	s=arc-20240116; t=1711530843; c=relaxed/simple;
+	bh=iO9oNvG+QPX6EBHlzWrbZgkGzqEkhIYMPjFQURkQp1E=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=A+utqVE+4hRsCydfqNGtX8WJMDVGdRtct4ClbKrG0QCPs8GlfcN86xKR1gScnyHL9AWjWmQgu+HptFqoaqQXWnZIAnxUAt5/JEb5Ua4/6sXelUJLh82n/+4lxa9kjczMIFZGOGyuji7aNQCmJd+IQlXmw4JrwUNDCG2W1PQeliU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IcKPRZhz; arc=none smtp.client-ip=209.85.210.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-513d717269fso8034047e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 01:54:13 -0700 (PDT)
+Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-6e6888358dfso2898775a34.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 02:14:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711529652; x=1712134452; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q42Xx003fo9Z8ScGicRWE6228uDZ9drjWZazb7fWQns=;
-        b=NxiMsAr8rP/4p6fLTrXpJK7AjR24hFIM+Skt84C0lG1jA2q86kdzx2R8LgjJ+bM4ap
-         iSntd0SWNl5BtT/T73QUMAyz+w6RN3rv0Czr6Kegwojup0tgRbU99scHkgmQZ6kx14uH
-         Q3Mgj56ax2caak1/RfZMRLnulSHPTGILxXp4DpRebhS5hE6xhtv8lHHxoes4sLz3PuDl
-         aGLAZdWvJp4Gk5QPqHQgDqQ4hceMWtOAMAN/qvS3DpSPPu5HReG3AcX/jgWhTmrn0kjj
-         83WG0JXjM5X4ocI3ZMhz2Ug+Rg7nMpTnSddgUyY8RY0husqAKOZFCpcRukPeucvGnFXA
-         SU0g==
+        d=linaro.org; s=google; t=1711530839; x=1712135639; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=m7YoevRtWoIrX5inKpmhV/jNINZnpRhSbmQj7YxoH3s=;
+        b=IcKPRZhzBxsVoMKJCIFCqtYXft62VqgsDo8rX1MvH6oBHhTuLS3xMgKEdynu1A4WE3
+         YO5M4nVvUH/f0BsbbrTEeyYFj8XA8YRSEiKRnaECszKP5pG7LllZMgmYl7oZazfsAr+5
+         axK5c9ZrBRYH1P6aoZe9Q8Lj9MRLBCUZASOO9bpvDVs1zHmL6DSqRxN6f5JIiEeiJ5GE
+         DD13rMf+8klJXI2fKrc5b4gbYazwVm6ixS+1T+RUEODP8he5ltvtYvudzxhGBMnszKfX
+         tE5pSuTCBFt+MuWvJHAXon08m1/2Prb6686QGZxybQfI4BfsVDblcyUx13IyZKaANxMy
+         nx6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711529652; x=1712134452;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Q42Xx003fo9Z8ScGicRWE6228uDZ9drjWZazb7fWQns=;
-        b=jZlqpCzd8Wg0zv5C7p/Cx9cgei9IJhmRHU7WmOflIcRrmow+rqX4LqfIQPAlMTeTVK
-         0qDfehd8y1E1OjaJ+q4pFsbegoKv1H/Wpk6B64lLXk24SbeGQ+Jmen60/OQkxSf7k9sv
-         ZereuYl/vvlh1c4Zs0mj5LlA6sYRnvtofdQEOUeictyz1Z63Gl16qXTmSbtSt68jWmVX
-         QjETCIwi0ipq8su+6MRMm7wzPcXpNjEnTXDjEQvuoxqFWEdalPM4mSKxSVxlHWVb2sXR
-         /AE5HPpoSVDAwbNnmSIstFeNAqq68UavHWPpe86iS/UN2O1ZULqZIam7DdochhCQU5ys
-         rS0w==
-X-Forwarded-Encrypted: i=1; AJvYcCXN/K8KWwMbNw8drHdgy6cPGj01EKTvf/FN5a6a4Vypgt6donSfcz/GMBOVfusr/84RWNIKdSszqhoTcXnpr5gX4z01NES5SOF2YDdqFw==
-X-Gm-Message-State: AOJu0YyFgugZwcb+01q9Zk4wkCrzGbfYIP1RVFH0zu/JDRQp7Zw10GGA
-	eFI3TvNqEnaOpKIET3ImCXeNqtnd7j1bshyMUP/SndD8JNc3OobrZoWjWR4CKVA=
-X-Google-Smtp-Source: AGHT+IFGqdMX0eI8HzGYgZWnnEWT/3VvnRNpPIfN+vapB2rLZsqbXL0Ikzt3PaKKJIzPYNbY3akEsA==
-X-Received: by 2002:a05:6512:1395:b0:515:bf94:cd38 with SMTP id fc21-20020a056512139500b00515bf94cd38mr550686lfb.36.1711529652297;
-        Wed, 27 Mar 2024 01:54:12 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.206.205])
-        by smtp.gmail.com with ESMTPSA id ij5-20020a056402158500b0056c09fda4e6sm3651763edb.54.2024.03.27.01.54.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Mar 2024 01:54:11 -0700 (PDT)
-Message-ID: <7bed14be-2850-42b0-abb4-43aad25a19cb@linaro.org>
-Date: Wed, 27 Mar 2024 09:54:09 +0100
+        d=1e100.net; s=20230601; t=1711530839; x=1712135639;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=m7YoevRtWoIrX5inKpmhV/jNINZnpRhSbmQj7YxoH3s=;
+        b=Pamac+KTNCNKblKZpuHAF+YOkVSNqXlq6UhkKogbnA4D31QFEr82BH/OBaj+YM/bpm
+         hTc3zybqoi0WR3EHZKdKuA9Q/7Hk9TwiwvEkEHv4ctT20jvrjqFYgxo3VkCpR2iXgkKA
+         MYwXEoTLkHt/E0BW/bVjGF+hRc3t8AiX5SDaA9plmgpbhuQeQv11TwxSwBtE/eGG4i3b
+         ZaiIL0xHoUwdOhSyMvx5kYSuMKl1yBeks2gQeouFIE+hFl0heRMFYrwO0gxB5N1FR+iw
+         6Ope1y0d/1jgn1aa1tvbd+uTfm2HkOh1FlM960VKRg7qlCHXi7oDR0Uka9LY2cONVxV9
+         mhQQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXBtcQSj9f94XN1NS1tN5xj4SCVMtSM+nEeyy6EYu0bpu7DIXCNAm++QaiiGmGCjkgMhdORY55ksFL80yCwDLrnNf0DaOjDg0V1DmtiNw==
+X-Gm-Message-State: AOJu0Yxi4KedxSPr/piV9HZRujgVutWPnKA/zulPbgSjNQ8PTYtzeTel
+	wKVoDWbIm4UikzaslExzR6sSbt7SDTm03R7oh3XBcSt/XyUHHfbdqpJL702hsg==
+X-Google-Smtp-Source: AGHT+IHLrC+cElHqEJHgQI6bNudg5V3T5UyMpSvlDNp0VTqd68nwYnF3OIdtHfvbZn/Wx5NtZMwQqQ==
+X-Received: by 2002:a9d:4f07:0:b0:6e6:ded0:8a69 with SMTP id d7-20020a9d4f07000000b006e6ded08a69mr5193012otl.31.1711530839288;
+        Wed, 27 Mar 2024 02:13:59 -0700 (PDT)
+Received: from [127.0.1.1] ([120.60.52.77])
+        by smtp.gmail.com with ESMTPSA id h190-20020a6383c7000000b005dc4fc80b21sm8673871pge.70.2024.03.27.02.13.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Mar 2024 02:13:58 -0700 (PDT)
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v12 0/8] PCI: dwc: ep: Fix DBI access failure for drivers
+ requiring refclk from host
+Date: Wed, 27 Mar 2024 14:43:29 +0530
+Message-Id: <20240327-pci-dbi-rework-v12-0-082625472414@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] dt-bindings: clock: qcom: add SA8540P gpucc
-To: Johan Hovold <johan@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Mark Brown <broonie@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240326140108.21307-1-johan+linaro@kernel.org>
- <20240326140108.21307-2-johan+linaro@kernel.org>
- <a6fbbfd3-516b-4269-b4b2-611979b62fd7@kernel.org>
- <ZgL6fE8bFx7H41kr@hovoldconsulting.com>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzTRLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnp5c3p0b2Yua296bG93c2tpQGxpbmFyby5vcmc+wsGUBBMBCgA+FiEE
- m9B+DgxR+NWWd7dUG5NDfTtBYpsFAmI+BxMCGwMFCRRfreEFCwkIBwIGFQoJCAsCBBYCAwEC
- HgECF4AACgkQG5NDfTtBYptgbhAAjAGunRoOTduBeC7V6GGOQMYIT5n3OuDSzG1oZyM4kyvO
- XeodvvYv49/ng473E8ZFhXfrre+c1olbr1A8pnz9vKVQs9JGVa6wwr/6ddH7/yvcaCQnHRPK
- mnXyP2BViBlyDWQ71UC3N12YCoHE2cVmfrn4JeyK/gHCvcW3hUW4i5rMd5M5WZAeiJj3rvYh
- v8WMKDJOtZFXxwaYGbvFJNDdvdTHc2x2fGaWwmXMJn2xs1ZyFAeHQvrp49mS6PBQZzcx0XL5
- cU9ZjhzOZDn6Apv45/C/lUJvPc3lo/pr5cmlOvPq1AsP6/xRXsEFX/SdvdxJ8w9KtGaxdJuf
- rpzLQ8Ht+H0lY2On1duYhmro8WglOypHy+TusYrDEry2qDNlc/bApQKtd9uqyDZ+rx8bGxyY
- qBP6bvsQx5YACI4p8R0J43tSqWwJTP/R5oPRQW2O1Ye1DEcdeyzZfifrQz58aoZrVQq+innR
- aDwu8qDB5UgmMQ7cjDSeAQABdghq7pqrA4P8lkA7qTG+aw8Z21OoAyZdUNm8NWJoQy8m4nUP
- gmeeQPRc0vjp5JkYPgTqwf08cluqO6vQuYL2YmwVBIbO7cE7LNGkPDA3RYMu+zPY9UUi/ln5
- dcKuEStFZ5eqVyqVoZ9eu3RTCGIXAHe1NcfcMT9HT0DPp3+ieTxFx6RjY3kYTGLOwU0EVUNc
- NAEQAM2StBhJERQvgPcbCzjokShn0cRA4q2SvCOvOXD+0KapXMRFE+/PZeDyfv4dEKuCqeh0
- hihSHlaxTzg3TcqUu54w2xYskG8Fq5tg3gm4kh1Gvh1LijIXX99ABA8eHxOGmLPRIBkXHqJY
- oHtCvPc6sYKNM9xbp6I4yF56xVLmHGJ61KaWKf5KKWYgA9kfHufbja7qR0c6H79LIsiYqf92
- H1HNq1WlQpu/fh4/XAAaV1axHFt/dY/2kU05tLMj8GjeQDz1fHas7augL4argt4e+jum3Nwt
- yupodQBxncKAUbzwKcDrPqUFmfRbJ7ARw8491xQHZDsP82JRj4cOJX32sBg8nO2N5OsFJOcd
- 5IE9v6qfllkZDAh1Rb1h6DFYq9dcdPAHl4zOj9EHq99/CpyccOh7SrtWDNFFknCmLpowhct9
- 5ZnlavBrDbOV0W47gO33WkXMFI4il4y1+Bv89979rVYn8aBohEgET41SpyQz7fMkcaZU+ok/
- +HYjC/qfDxT7tjKXqBQEscVODaFicsUkjheOD4BfWEcVUqa+XdUEciwG/SgNyxBZepj41oVq
- FPSVE+Ni2tNrW/e16b8mgXNngHSnbsr6pAIXZH3qFW+4TKPMGZ2rZ6zITrMip+12jgw4mGjy
- 5y06JZvA02rZT2k9aa7i9dUUFggaanI09jNGbRA/ABEBAAHCwXwEGAEKACYCGwwWIQSb0H4O
- DFH41ZZ3t1Qbk0N9O0FimwUCYDzvagUJFF+UtgAKCRAbk0N9O0Fim9JzD/0auoGtUu4mgnna
- oEEpQEOjgT7l9TVuO3Qa/SeH+E0m55y5Fjpp6ZToc481za3xAcxK/BtIX5Wn1mQ6+szfrJQ6
- 59y2io437BeuWIRjQniSxHz1kgtFECiV30yHRgOoQlzUea7FgsnuWdstgfWi6LxstswEzxLZ
- Sj1EqpXYZE4uLjh6dW292sO+j4LEqPYr53hyV4I2LPmptPE9Rb9yCTAbSUlzgjiyyjuXhcwM
- qf3lzsm02y7Ooq+ERVKiJzlvLd9tSe4jRx6Z6LMXhB21fa5DGs/tHAcUF35hSJrvMJzPT/+u
- /oVmYDFZkbLlqs2XpWaVCo2jv8+iHxZZ9FL7F6AHFzqEFdqGnJQqmEApiRqH6b4jRBOgJ+cY
- qc+rJggwMQcJL9F+oDm3wX47nr6jIsEB5ZftdybIzpMZ5V9v45lUwmdnMrSzZVgC4jRGXzsU
- EViBQt2CopXtHtYfPAO5nAkIvKSNp3jmGxZw4aTc5xoAZBLo0OV+Ezo71pg3AYvq0a3/oGRG
- KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
- fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <ZgL6fE8bFx7H41kr@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADnjA2YC/3XPS2oDMQyA4asEr+Mgy56Huuo9SheOLSeiYRw8Z
+ doS5u71ZNME06UE/yd0UzMX4Vm97G6q8CKz5KkOBvc7Fc5+OrGWWBcKAR0gOn0NouNRdOGvXD7
+ 0EZnI90gWgqrRtXCS77v49l7ns8yfufzcDyzjtv2XWkYNundhSBFC4t69XmTyJR9yOanNWuivt
+ 9D2VHuk6KyNRCH6pjfwAJgWMFAF47zrQufJjtwK5kHAoRXM9kPqsKNE0A/2SVjX9ReJR8rQcgE
+ AAA==
+To: Jingoo Han <jingoohan1@gmail.com>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+ Marek Vasut <marek.vasut+renesas@gmail.com>, 
+ Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, 
+ Thierry Reding <thierry.reding@gmail.com>, 
+ Jonathan Hunter <jonathanh@nvidia.com>, Vidya Sagar <vidyas@nvidia.com>, 
+ Vignesh Raghavendra <vigneshr@ti.com>, Richard Zhu <hongxing.zhu@nxp.com>, 
+ Lucas Stach <l.stach@pengutronix.de>, Shawn Guo <shawnguo@kernel.org>, 
+ Sascha Hauer <s.hauer@pengutronix.de>, 
+ Pengutronix Kernel Team <kernel@pengutronix.de>, 
+ Fabio Estevam <festevam@gmail.com>, NXP Linux Team <linux-imx@nxp.com>, 
+ Minghuan Lian <minghuan.Lian@nxp.com>, Mingkai Hu <mingkai.hu@nxp.com>, 
+ Roy Zang <roy.zang@nxp.com>, 
+ Kunihiko Hayashi <hayashi.kunihiko@socionext.com>, 
+ Masami Hiramatsu <mhiramat@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Jesper Nilsson <jesper.nilsson@axis.com>, 
+ Srikanth Thokala <srikanth.thokala@intel.com>, 
+ Shawn Lin <shawn.lin@rock-chips.com>, Heiko Stuebner <heiko@sntech.de>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>
+Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, linuxppc-dev@lists.ozlabs.org, 
+ Niklas Cassel <cassel@kernel.org>, linux-arm-kernel@axis.com, 
+ linux-rockchip@lists.infradead.org, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Frank Li <Frank.Li@nxp.com>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6302;
+ i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
+ bh=iO9oNvG+QPX6EBHlzWrbZgkGzqEkhIYMPjFQURkQp1E=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBmA+NIo/FDU1Qzm8K9RhxHEI8Jtmbq4KExhILxr
+ h8EcXGlx0SJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZgPjSAAKCRBVnxHm/pHO
+ 9XMZB/9ZVvwo9sSG/E7aVel5CSG/nMG/jLxOi0rHJgyMN7yji8HK5ajSrTKUXs0jT4mdCTclZ8j
+ yGj4IxADoOnlwcHIjiz7NfE8eueVtUlnoWSzqXxWV9FrLNUtwYp98RXIOc3UvpMlvG/0QgbH3uv
+ K7YTyqGd4NsP7zM3fHjaWXkw0pB60QsEos4YQLk9lBpRKQxz40KLuAET6DwRV5ZNfua1ew+4L65
+ zr+NXa5ghbAqbrbm05gK3xe5iivUEFGH7lu9dMy5+yyytQgKM7Qf1VrUGShOtJKMAPZ0TB5p/5R
+ pFm/tz8l8TQYBVCiCxd0wAYH21S9gVFyCpuDBh/w4ikx2xHy
+X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
 
-On 26/03/2024 17:40, Johan Hovold wrote:
-> On Tue, Mar 26, 2024 at 04:59:43PM +0100, Krzysztof Kozlowski wrote:
->> On 26/03/2024 15:01, Johan Hovold wrote:
->>> The SA8540P platform is closely related to SC8280XP but differs in that
->>> it uses an external supply for the GX power domain.
->>>
->>> Add a new compatible string for the SA8540P GPU clock controller so that
->>> the OS can determine which resources to look for.
->>>
->>> Fixes: e60b95d2b687 ("dt-bindings: clock: qcom: Allow VDD_GFX supply to GX")
->>
->> I don't get why adding new device support is a fix. Commit msg did not
->> help me to understand it.
-> 
-> Yeah, perhaps I could have expanded on the problem a bit more here.
-> 
-> Hopefully it's clear if you look at the cover letter, but the commit
-> referred to above should have added a new compatible for SA8540P which
-> uses the new supply so that the OS can determine when it should try to
-> look it up and when it is required.
-> 
-> The Fixes tag can also be dropped, I admit this is not clear-cut.
+Hello,
 
-Some sort of short explanation would be good in the commit msg, so Fixes
-can stay.
+This series is the continuation of previous work by Vidya Sagar [1] to fix the
+issues related to accessing DBI register space before completing the core
+initialization in some EP platforms like Tegra194/234 and Qcom EP.
 
-> 
->>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
->>> ---
->>>  Documentation/devicetree/bindings/clock/qcom,gpucc.yaml | 1 +
->>>  1 file changed, 1 insertion(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml b/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
->>> index f57aceddac6b..5b385e4976b6 100644
->>> --- a/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
->>> +++ b/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
->>> @@ -28,6 +28,7 @@ properties:
->>>    compatible:
->>>      enum:
->>>        - qcom,sdm845-gpucc
->>> +      - qcom,sa8540p-gpucc
->>
->> This looks fine and pretty trivial, but I really do not understand why
->> skipping our list for automated testing.
->>
->> <standard letter>
-> ...
->> </standard letter>
-> 
-> Spare me the rant. This was obviously a mistake from reusing and
-> manually amending a git-send-email command from shell history and
-> failing to notice that this series also should have been CCed the
-> devicetree list.
+Since Vidya is busy, I took over the series based on his consent (off-list
+discussion).
 
-That's not a rant but a template. :) You know, some people don't Cc DT
-list on purpose, claiming "it is trivial patch and I already Cc'ed other
-mailing lists". I don't know what was the reason here.
+NOTE
+====
 
-I forgot one more template to add:
+Based on the comments received in v7 [2], I've heavily modified the series
+to fix several other issues reported by Bjorn and Niklas. One noticeable
+change is getting rid of the 'core_init_notifer' flag added to differentiate
+between glue drivers requiring refclk from host and drivers getting refclk
+locally.
 
-P.S. This review might include comments based on templates. My intention
-is not to offend or patronize but streamline my review process. Thank
-you for understanding.
+By getting rid of this flag, now both the DWC EP driver and the EPF drivers
+can use a single flow and need not distinguish between the glue drivers.
+
+We can also get rid of the 'link_up_notifier' flag in the future by following
+the same convention.
+
+Testing
+=======
+
+I've tested the series on Qcom SM8450 based dev board that depends on refclk
+from host with EPF_MHI driver. It'd be good to test this series on platforms
+that generate refclk locally and also with EPF_TEST driver.
+
+- Mani
+
+[1] https://lore.kernel.org/linux-pci/20221013175712.7539-1-vidyas@nvidia.com/
+[2] https://lore.kernel.org/linux-pci/20231120084014.108274-1-manivannan.sadhasivam@linaro.org/
+
+Changes in v12:
+- Fixed the init_notify() API used in non-dwc drivers (thanks Niklas)
+- Dropped Gustavo from CC since his email is bouncing
+- Link to v11: https://lore.kernel.org/r/20240327-pci-dbi-rework-v11-0-6f5259f90673@linaro.org
+
+Changes in v11:
+- Minor cleanups reported by Niklas
+- 'epc->init_complete = false' is set in dw_pcie_ep_cleanup() to avoid
+  triggering init complete notification before refclk. This will be moved to EPC
+  core in the following series adding deinit notifier.
+- Collected review tags.
+- Link to v10: https://lore.kernel.org/r/20240314-pci-dbi-rework-v10-0-14a45c5a938e@linaro.org
+
+Changes in v10:
+- Reordered the commits by moving the independent fixes/cleanups first (Niklas)
+- Addressed several comments from Niklas
+- Moved PTM register setting out of dw_pcie_ep_init_non_sticky_registers() (Niklas)
+- Addressed the issue that EPF drivers were missing init notification after the
+  removal of core_init_notifier (Niklas)
+- Dropped a few cleanup patches to be clubbed with the follow up series
+- Collected review tags
+- Dropped the review tags for patch 8/8 as it got changed
+- Link to v9: https://lore.kernel.org/r/20240304-pci-dbi-rework-v9-0-29d433d99cda@linaro.org
+
+Changes in v9:
+- Incorporated changes for missing drivers (Niklas)
+- Reworded the dw_pcie_ep_cleanup() API kdoc (Niklas)
+- Reworded the description of patch 6/10 (Frank)
+- Collected reviews
+- Link to v8: https://lore.kernel.org/r/20240224-pci-dbi-rework-v8-0-64c7fd0cfe64@linaro.org
+
+Changes in v8:
+
+- Rebased on top of v6.8-rc1
+- Removed the deinit callback from struct dw_pcie_ep_ops
+- Renamed dw_pcie_ep_exit() to dw_pcie_ep_deinit()
+- Introduced dw_pcie_ep_cleanup() API for drivers supporting PERST#
+- Renamed dw_pcie_ep_init_complete() to dw_pcie_ep_init_registers()
+- Called dw_pcie_ep_init_registers() API directly from all glue drivers
+- Removed "core_init_notifier" flag
+- Added a generic dw_pcie_ep_linkdown() API to handle LINK_DOWN event and used
+  it in qcom driver
+- Added Kernel-doc comments for DWC EP APIs
+
+Changes in v7:
+
+- Rebased on top of v6.7-rc1
+- Kept the current dw_pcie_ep_init_complete() API instead of renaming it to
+  dw_pcie_ep_init_late(), since changing the name causes a slight ambiguity.
+- Splitted the change that moves pci_epc_init_notify() inside
+  dw_pcie_ep_init_notify() to help bisecting and also to avoid build issue.
+- Added a new patch that moves pci_epc_init_notify() inside
+  dw_pcie_ep_init_notify().
+- Took over the authorship and dropped the previous Ack as the patches are
+  heavily modified.
+
+Changes in v6:
+
+- Rebased on top of pci/next (6e2fca71e187)
+- removed ep_init_late() callback as it is no longer necessary
+
+For previous changelog, please refer [1].
+
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+Manivannan Sadhasivam (8):
+      PCI: dwc: ep: Fix DBI access failure for drivers requiring refclk from host
+      PCI: dwc: ep: Add Kernel-doc comments for APIs
+      PCI: dwc: ep: Remove deinit() callback from struct dw_pcie_ep_ops
+      PCI: dwc: ep: Rename dw_pcie_ep_exit() to dw_pcie_ep_deinit()
+      PCI: dwc: ep: Introduce dw_pcie_ep_cleanup() API for drivers supporting PERST#
+      PCI: dwc: ep: Rename dw_pcie_ep_init_complete() to dw_pcie_ep_init_registers()
+      PCI: dwc: ep: Call dw_pcie_ep_init_registers() API directly from all glue drivers
+      PCI: endpoint: Remove "core_init_notifier" flag
+
+ drivers/pci/controller/cadence/pcie-cadence-ep.c  |   2 +
+ drivers/pci/controller/dwc/pci-dra7xx.c           |   9 +
+ drivers/pci/controller/dwc/pci-imx6.c             |  10 +
+ drivers/pci/controller/dwc/pci-keystone.c         |  11 +
+ drivers/pci/controller/dwc/pci-layerscape-ep.c    |   9 +
+ drivers/pci/controller/dwc/pcie-artpec6.c         |  15 +-
+ drivers/pci/controller/dwc/pcie-designware-ep.c   | 238 +++++++++++++++-------
+ drivers/pci/controller/dwc/pcie-designware-plat.c |  11 +
+ drivers/pci/controller/dwc/pcie-designware.h      |  14 +-
+ drivers/pci/controller/dwc/pcie-keembay.c         |  18 +-
+ drivers/pci/controller/dwc/pcie-qcom-ep.c         |   4 +-
+ drivers/pci/controller/dwc/pcie-rcar-gen4.c       |  28 ++-
+ drivers/pci/controller/dwc/pcie-tegra194.c        |   5 +-
+ drivers/pci/controller/dwc/pcie-uniphier-ep.c     |  15 +-
+ drivers/pci/controller/pcie-rcar-ep.c             |   2 +
+ drivers/pci/controller/pcie-rockchip-ep.c         |   2 +
+ drivers/pci/endpoint/functions/pci-epf-test.c     |  18 +-
+ drivers/pci/endpoint/pci-ep-cfs.c                 |   9 +
+ drivers/pci/endpoint/pci-epc-core.c               |  22 ++
+ include/linux/pci-epc.h                           |   7 +-
+ 20 files changed, 338 insertions(+), 111 deletions(-)
+---
+base-commit: 4cece764965020c22cff7665b18a012006359095
+change-id: 20240224-pci-dbi-rework-b2e99a62930c
 
 Best regards,
-Krzysztof
+-- 
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 
