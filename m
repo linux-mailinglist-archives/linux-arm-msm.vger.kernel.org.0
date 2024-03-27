@@ -1,192 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-15371-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6DC288DA6D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 10:42:13 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 647E488DA9D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 10:56:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9B37B296360
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 09:42:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7D9B91C20885
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 09:56:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E87DC381CD;
-	Wed, 27 Mar 2024 09:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CEE438382;
+	Wed, 27 Mar 2024 09:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lolKwOzN"
+	dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b="O9YMWmJx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FF43BBE5;
-	Wed, 27 Mar 2024 09:42:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682CB1F606
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 09:55:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711532527; cv=none; b=DRZnqiYudlvP+OgPcfYT7nLR9l3MSDdAlweFM7ZLEqxfToadKoc94mgGM7ztPvGYlzO2EXWdySpMu8BT8mhdtguORG1PrY9zsg3slFlkyIhnhnM/97oSDN5CPjzGb6vFNpoVnLb3udFP1UjNj6AgiXDdeBXg4QWFova3cGWMoKU=
+	t=1711533361; cv=none; b=KkxxpD3hLZnKhH0VADHIDDYnEGHWUNg4gBow5BXvThtzo6+J4j4ReljsflcyU58rLRhgfJOXJlUuF2kjJbAGJWCDSrfwyz5LqJf34WJziGGTkySkhqlNPoxJMAHxDzcfBYN2iBGDfvWng2xLIgz5mLFsOQ2tjmV7+SaEwuQJoyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711532527; c=relaxed/simple;
-	bh=hWUAK11CpJBnVKM2jEGkjru0rPyl94fH4NidPC8K7EI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Nl+JXvGdRpRo3kamPz0BoIkJackmbS7qzNfLPL3zjrOmOLt2HjiaTcBZCwcRyLtpP8rEAv0XcoAbAFR7vGPUliWmF74BxSkI0rNo05nYeK6t6aImH7oZ+IwTxGv0CvjcsA77tk3SnjN2h7qOR1IxczHGM0v1tunCHbjoUQyZcXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lolKwOzN; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42R8N50V017995;
-	Wed, 27 Mar 2024 09:41:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=RHgqAYWuH0ztZm81QykXQjA6jmRzc17bFBveiiOIgZg=; b=lo
-	lKwOzNPXyqzCZzhU2JDSz0RPh+OIePEDydpptilcRzEEv8/KWpay6mdIEQiOdkmk
-	JMEcMvyc4B37umrfFpm+egjqs420gqMxRcXejmc3oDaZZKEC8OQVKuU5MBSdvIVr
-	Ewd3pHKmtBhrsw0+/XEfT7J01x5Vx4OM35fBRNuMVD08vQAo9niJMOhG0Z+5UTEs
-	RNVj0zLKAe7ycS9/Hp94lBJ6KmJRq+PZ2aRqCUZdQ8uhX2d6bl6pBT07FloOdql+
-	6Im2GQ9lsHAiWKn00i5/sCUShKxW0aeWNlQ3G1xebgeHeQquPlPD+pjz/HTh8bYt
-	7xKq92JWGIlGuYXbaiuw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x4etk8am9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 27 Mar 2024 09:41:55 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42R9fsQm000651
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 27 Mar 2024 09:41:54 GMT
-Received: from [10.218.47.125] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 27 Mar
- 2024 02:41:50 -0700
-Message-ID: <05d95845-85ce-bf83-57a7-135265a7508d@quicinc.com>
-Date: Wed, 27 Mar 2024 15:11:47 +0530
+	s=arc-20240116; t=1711533361; c=relaxed/simple;
+	bh=bsl5mlaY8cNqyw4oUG32H7euTa4u8AfSfG4rvl5y9Qw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BauzGEUGkIa6Jq9y6vAGAe4AZfmDCUZydKVrBTPqT3RA3r93qqzFdbVDFhMidGPZB0GjwTvbSUGyTiu7W7ENQM8DCA75qjpCt6DIAclvFZ68OsMBGXeTcKd2u7ohm3hjd8T8ajnjnE5SIBu6b702NTrv5Kc+4dHmm47zpB97oYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie; spf=none smtp.mailfrom=nexus-software.ie; dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b=O9YMWmJx; arc=none smtp.client-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=nexus-software.ie
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2d47a92cfefso77591821fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 02:55:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nexus-software-ie.20230601.gappssmtp.com; s=20230601; t=1711533357; x=1712138157; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jSvnWidHd7x1wPI9eyKH1ULMOk/MMh1qH/IqJxdxFNI=;
+        b=O9YMWmJxyTmLmP4Q8HFMVUUm5LcC+0Z7AxIJToprD9IMmfh/KN2dsIdgnSAayv7Zx1
+         BrzSvWTykeYyGJgqHRM3mzLgLH6Qr7V0mZun6bkLCFybHLS7EB6rK08c6GK4gkPHmO95
+         w+5Z82RhLPmP/AcElwFRx/Pu0tnIWugG4dRbAuj1WSKtME4IWtbb8WLcsLlRrGeAM1u8
+         lAo9Xfy18nkxG82mYA3Jr+LuCkoOkOqrG0qzAb6+vuWRBRlNs0a0DKxNC/c/emBbcGtP
+         8gdSHT+qSrHCUUA0WlhCMGLA94d0j04nJoBgIxrvcL11n5AgR1KOGwDaJwqILQ2kosjN
+         z3HQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711533357; x=1712138157;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jSvnWidHd7x1wPI9eyKH1ULMOk/MMh1qH/IqJxdxFNI=;
+        b=a5oA4NIWKW+AKo5HQ+hd8xn2dK4bxDF2Z+g7Fof8rwPWnDJuSYc+YdOub6xnVcIjpV
+         AmjJ339Cb2elKHOS+w7JRnnD0tqgtll/hW7SBAzuYZDDVbIIzpQd0NEPpYKRJGF0mAhW
+         pnUWCLRXGswAh0NNCPWPUlXTkAN1s3Ycl3wPjbATk4zaGMq2vYTXK/HLDq0VuU7wyCdW
+         Ro2Ilfqt+iWvbfiMlMYK5lyFFt/JpK7FKrfNMAPFLAyOVdSd+KyB9gQGR9V26VTocpD0
+         r/x8DtSYcvOjFqqaB7yXytfiBN0VUoWTgWaqri81mug44tvUFH7KQUpvZPV/kJFnaVbI
+         XGAw==
+X-Forwarded-Encrypted: i=1; AJvYcCWjBw+pIn1wkAWy0owDCq5kEcWY154swS5zg7KEOFoq8xDQwMQOI4JBuwHMAy4guxKpLAWjRAM+WS6eTVqudbtSCoe0HDlNWUaRSOwRLA==
+X-Gm-Message-State: AOJu0YwUVvkD/UeU+LJXCpLQXVvC4KYRoS3sP9Mpxjag3BIb34Y+Qens
+	ExmCRo0c8n9IzbGOUP8HYBbeymv0wiV8bM2SE05gO6UiiKp1C2/QAURiRc+2PWs=
+X-Google-Smtp-Source: AGHT+IFw/7ZLAi36bN7TwpWrmHEI/IaB3nTNikltKHCbY/u3xwMKPK8WN26Ir2ty+IvIQZGG0TLPYA==
+X-Received: by 2002:a2e:b5ae:0:b0:2d6:f67a:cca9 with SMTP id f14-20020a2eb5ae000000b002d6f67acca9mr1150752ljn.33.1711533357297;
+        Wed, 27 Mar 2024 02:55:57 -0700 (PDT)
+Received: from [192.168.0.102] ([176.61.106.68])
+        by smtp.gmail.com with ESMTPSA id d8-20020a05600c3ac800b004149455335csm1532653wms.12.2024.03.27.02.55.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Mar 2024 02:55:56 -0700 (PDT)
+Message-ID: <072aacd2-fedf-485a-970e-a705748cc92e@nexus-software.ie>
+Date: Wed, 27 Mar 2024 09:55:55 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH v4] thermal/drivers/tsens: Add suspend to RAM support for
- tsens
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 03/20] media: venus: pm_helpers: Add kerneldoc to
+ venus_clks_get()
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20230911-topic-mars-v2-0-3dac84b88c4b@linaro.org>
+ <20230911-topic-mars-v2-3-3dac84b88c4b@linaro.org>
+ <b6d6beab-39f5-4f00-8427-52b662181864@linaro.org>
+ <30945f7a-b18b-483a-bc43-99f913fb98c3@linaro.org>
 Content-Language: en-US
-To: Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria
-	<amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Bjorn
- Andersson" <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
-        <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC: <quic_manafm@quicinc.com>
-References: <20240326074033.17002-1-quic_priyjain@quicinc.com>
- <9bea167d-edcf-4d66-8ec7-051e97c8dffd@linaro.org>
-From: Priyansh Jain <quic_priyjain@quicinc.com>
-In-Reply-To: <9bea167d-edcf-4d66-8ec7-051e97c8dffd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Bryan O'Donoghue <pure.logic@nexus-software.ie>
+In-Reply-To: <30945f7a-b18b-483a-bc43-99f913fb98c3@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 1iZRwThsh78bXt1gyKQhA617x7F5brAa
-X-Proofpoint-ORIG-GUID: 1iZRwThsh78bXt1gyKQhA617x7F5brAa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-27_05,2024-03-21_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
- bulkscore=0 phishscore=0 spamscore=0 impostorscore=0 mlxlogscore=999
- priorityscore=1501 clxscore=1015 suspectscore=0 lowpriorityscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2403270065
 
-
-
-On 3/26/2024 4:30 PM, Daniel Lezcano wrote:
-> On 26/03/2024 08:40, Priyansh Jain wrote:
->> As part of suspend to RAM, tsens hardware will be turned off.
->> While resume callback, re-initialize tsens hardware.
+On 26/03/2024 21:23, Konrad Dybcio wrote:
+> On 6.03.2024 1:20 PM, Bryan O'Donoghue wrote:
+>> On 09/02/2024 21:09, Konrad Dybcio wrote:
+>>> To make it easier to understand the various clock requirements within
+>>> this driver, add kerneldoc to venus_clk_get() explaining the fluff.
+>>>
+>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> ---
+>>>    drivers/media/platform/qcom/venus/pm_helpers.c | 28 ++++++++++++++++++++++++++
+>>>    1 file changed, 28 insertions(+)
+>>>
+>>> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+>>> index ac7c83404c6e..ea0a7d4601e2 100644
+>>> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
+>>> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+>>> @@ -23,6 +23,34 @@
+>>>      static bool legacy_binding;
+>>>    +/**
+>>> + * venus_clks_get() - Get Venus clocks that are not bound to a vcodec
 >>
->> Signed-off-by: Priyansh Jain <quic_priyjain@quicinc.com>
->> ---
->> V3 -> V4: Make tsens_reinit function specific to tsens v2. Add
->> NULL resume callback support for platform whose versions < ver_2_x
->> in tsens ops.
->> V2 -> V3: Remove suspend callback & interrupt enablement part from
->> resume callback.
->> V1 -> V2: Update commit text to explain the necessity of this patch
->>
->>   drivers/thermal/qcom/tsens-v0_1.c |  6 +++++
->>   drivers/thermal/qcom/tsens-v1.c   |  3 +++
->>   drivers/thermal/qcom/tsens-v2.c   |  1 +
->>   drivers/thermal/qcom/tsens.c      | 37 +++++++++++++++++++++++++++++++
->>   drivers/thermal/qcom/tsens.h      |  5 +++++
->>   5 files changed, 52 insertions(+)
->>
->> diff --git a/drivers/thermal/qcom/tsens-v0_1.c 
->> b/drivers/thermal/qcom/tsens-v0_1.c
->> index 32d2d3e33287..7ed85379247b 100644
->> --- a/drivers/thermal/qcom/tsens-v0_1.c
->> +++ b/drivers/thermal/qcom/tsens-v0_1.c
->> @@ -329,6 +329,7 @@ static const struct tsens_ops ops_8226 = {
->>       .init        = init_8226,
->>       .calibrate    = tsens_calibrate_common,
->>       .get_temp    = get_temp_common,
->> +    .resume        = NULL,
+>> Get non-codec Venus clocks.
 > 
-> As a static variable it is already set to NULL. Why do you need to 
-> explicitly set them everywhere ?
+> No, this is not necessarily the case.. these may still include
+> vcodec clocks, that are specified under the root venus node (which
+> is the only way we'd like to keep)
 > 
-It was asked in last version to explicitly add (.resume = NULL). So 
-added this for all the tsens platforms for which resume callback is not
-validated.
+> I applied the rest of your suggestions, do I keep your rb?
+> 
+> Konrad
+> 
 
-> [ ... ]
-> 
->> +#ifdef CONFIG_SUSPEND
->> +static int tsens_reinit(struct tsens_priv *priv)
->> +{
->> +    unsigned long flags;
->> +
->> +    spin_lock_irqsave(&priv->ul_lock, flags);
-> 
-> What this lock is protecting ?
-> 
-Yes this lock can be removed, will remove this in next patch.
+Sure
 
->> +    if (tsens_version(priv) >= VER_2_X) {
-> 
-> May be move this test before the lock ?
-> 
->> +        /*
->> +         * Re-enable the watchdog, unmask the bark.
->> +         * Disable cycle completion monitoring
->> +         */
->> +        if (priv->feat->has_watchdog) {
->> +            regmap_field_write(priv->rf[WDOG_BARK_MASK], 0);
->> +            regmap_field_write(priv->rf[CC_MON_MASK], 1);
->> +        }
->> +
->> +        /* Re-enable interrupts */
->> +        tsens_enable_irq(priv);
->> +    }
->> +
->> +    spin_unlock_irqrestore(&priv->ul_lock, flags);
->> +
->> +    return 0;
->> +}
->> +
->> +int tsens_resume_common(struct tsens_priv *priv)
->> +{
->> +    if (pm_suspend_target_state == PM_SUSPEND_MEM)
->> +        tsens_reinit(priv);
->> +
->> +    return 0;
->> +}
->> +
->> +#endif /* !CONFIG_SUSPEND */
-> 
-> 
+BTW, I plan to test this series when I can - do you have a working tree ?
+
+---
+bod
 
