@@ -1,180 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-15417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4FA1988EC8D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 18:24:07 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 051DF88EDB0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 19:09:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B74A5B21EBC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 17:24:03 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BF0F1B2B177
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 18:00:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06DCB137764;
-	Wed, 27 Mar 2024 17:23:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sNIDloCM"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25B931514D2;
+	Wed, 27 Mar 2024 17:55:14 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35138142E9E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 17:23:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+Received: from netrider.rowland.org (netrider.rowland.org [192.131.102.5])
+	by smtp.subspace.kernel.org (Postfix) with SMTP id 77FE71514C4
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 17:55:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.131.102.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711560238; cv=none; b=oRldwym5keeW20bmlHnIQTPGjWVPNwa/if+HDZdG5z7PSxM76jN9lV78iDL/3tebL7Tm7k2s/HghTxaxroSSxlnvzOBWLTFxgJJM4z/zAZcy58h/ZdDrPkSo8ipmb3JHJjMjmYPbg7R0eyODe9+Ma9gq7GCYaJGW6IGZpS1DvQA=
+	t=1711562114; cv=none; b=paBVbQL/Z0GoC2ubd7E4Zcx1ZrKKSSZCQyjwrzRanpuNnsIF6fK3k11Zq2KOkYjTHNTW4Vlf2XBbsMs0QwfoYWtoaQjzmPTy3SXHpRRr6ADBkdsdQHbptjVvlVNSeB0lStTyxHMySADLfuNQip7q9TDLmSR44hyDeyWzsqTjP+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711560238; c=relaxed/simple;
-	bh=gU8hpSisSp+6BtuvXahGOiszAjF5oU9mclXS6lx1AdM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dJxWXXZpFbJd2vtm8TU8nwhg0TWlcMierS4fGxrZXtQ77KY7XPReE2cjdmmu8x7Occo5dLqlwBCPMkuAxKOl+Oeh4Zhzj4mpOE0BaJXJfXCWEZiJ0mrgI53I0b8f+aG9UmpfvwcErv+B30wGd5mXroqnRmnaQ25u5ULH5wzAzf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sNIDloCM; arc=none smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-56890b533aaso75320a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 10:23:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711560235; x=1712165035; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=xl0fD+b7ivyyV0fNt3GA+UpFmy9R06Vg+zROf9ZHvoA=;
-        b=sNIDloCMFJjqu9QYGz+fcYzLrwblJ6WnlXcfYvpReT6sGciRciHKqGjA7d6sFWTOYP
-         wb/eDze/zs7d6/QAyxik/ZOmPpWTqsIFCdLc8T67xQs1U2BLrWYVaaCq5O52FG03mS5b
-         rUcp2v/Tif4SZC2BCurhklGeH/+gIP9jOCQWjLipLTq2mhQ4k1wHvVVLZkB9bciY6NQG
-         +fVVy7Rx8iQj+DNE8Z3EthCJnKt7f/oecOqmNA3ltWuZ/cBHqJw56Y6GAo6mh8VtE14+
-         YKe3/QPISRoNMSQrew4FiJrplO54exMDT7Bj7mi6fGZztoPiYE7GEpSeykY1Xsh3Fw4z
-         bRfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711560235; x=1712165035;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xl0fD+b7ivyyV0fNt3GA+UpFmy9R06Vg+zROf9ZHvoA=;
-        b=xQnfNEOnJ55Jm20uUYglj9yZ+o//TxS1wRCD1me3wabYsa2UEAYebEOkYrhfJjI59V
-         frm7H4w3PqymxkQ2NMt35Ozfd5xubQP0D1t/V2mgYacUKk491GvBZzSf0eQ9XmLxG0ZP
-         xcjykwMUYT8gsv3/HJ2Ikxr+rt3A58HKKP+n9FTxMy9eMebO4WP9/63LvIQhLUezY9mi
-         13cWmFBpZHhFinmoetG0Lwt1S8WdSSwe/B8yYoQj7XL0IohWhT6X/9cW4qRwV9sBJfwh
-         O15J5UVKVkUhD+4Nw7mIxNgFnscd5Yp4OZUcFuGx51hzpN9AJ4FLB+xQrWMsrEsLA9Fn
-         RsFw==
-X-Forwarded-Encrypted: i=1; AJvYcCWU3zbC/fTJqbtsCbnLKPO/1kXwX2qRsW7BrEnfqLCImG7vWp1DqzuOmOlTkljpCH2g4v2x21WduYvVq+BWYX/2KrBtU2fLViTsClAD6Q==
-X-Gm-Message-State: AOJu0YygsLgYTY7oIEva/Ij2yAz67Zd4WRzrz8K0NNsKDCw9oBxiPYcN
-	Fkx0y2JjRH68lRqbMa+YnSKOSpyisxtkyBZGH5zziM3knH27qvpgNHYU5x1GNC8=
-X-Google-Smtp-Source: AGHT+IEluCUtWzQOjSzFx0UVf3642SUO5zAamjkbF8COFcQKtz+ZNExwbdYYcnuiqXsnawLe5A2SLQ==
-X-Received: by 2002:a50:8a9c:0:b0:56b:d158:c5de with SMTP id j28-20020a508a9c000000b0056bd158c5demr306607edj.16.1711560235543;
-        Wed, 27 Mar 2024 10:23:55 -0700 (PDT)
-Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id cs12-20020a0564020c4c00b0056bf96985adsm5299194edb.32.2024.03.27.10.23.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Mar 2024 10:23:53 -0700 (PDT)
-Message-ID: <98a00291-8a8c-43c4-936a-cc337f5e1d7c@linaro.org>
-Date: Wed, 27 Mar 2024 18:23:49 +0100
+	s=arc-20240116; t=1711562114; c=relaxed/simple;
+	bh=2em/62sKNa2uOySIrx3SPAGa+oAkz9sarrrAbR/FclA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MDyEJ1ZD7046XfQpINELpuhB9VKCbcXQaNlsXoXeqUkpaxnd/MNCPonm1CgsIJSBGGofyUdLWwz69Phl8MhILAhd0FIg2+Ac7ytTXQmmLo5LOCkGqMrrXi7f/Hbqgigp7eKZM8egiq/41GdfU4OKDqvDu1ZzFzmkx16WgmcPyfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=rowland.harvard.edu; spf=pass smtp.mailfrom=netrider.rowland.org; arc=none smtp.client-ip=192.131.102.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=rowland.harvard.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=netrider.rowland.org
+Received: (qmail 935614 invoked by uid 1000); 27 Mar 2024 13:55:00 -0400
+Date: Wed, 27 Mar 2024 13:55:00 -0400
+From: Alan Stern <stern@rowland.harvard.edu>
+To: Allen Pais <apais@linux.microsoft.com>
+Cc: linux-kernel@vger.kernel.org, tj@kernel.org, keescook@chromium.org,
+  vkoul@kernel.org, marcan@marcan.st, sven@svenpeter.dev,
+  florian.fainelli@broadcom.com, rjui@broadcom.com, sbranden@broadcom.com,
+  paul@crapouillou.net, Eugeniy.Paltsev@synopsys.com,
+  manivannan.sadhasivam@linaro.org, vireshk@kernel.org, Frank.Li@nxp.com,
+  leoyang.li@nxp.com, zw@zh-kernel.org, wangzhou1@hisilicon.com,
+  haijie1@huawei.com, shawnguo@kernel.org, s.hauer@pengutronix.de,
+  sean.wang@mediatek.com, matthias.bgg@gmail.com,
+  angelogioacchino.delregno@collabora.com, afaerber@suse.de,
+  logang@deltatee.com, daniel@zonque.org, haojian.zhuang@gmail.com,
+  robert.jarzmik@free.fr, andersson@kernel.org, konrad.dybcio@linaro.org,
+  orsonzhai@gmail.com, baolin.wang@linux.alibaba.com, zhang.lyra@gmail.com,
+  patrice.chotard@foss.st.com, linus.walleij@linaro.org, wens@csie.org,
+  jernej.skrabec@gmail.com, peter.ujfalusi@gmail.com, kys@microsoft.com,
+  haiyangz@microsoft.com, wei.liu@kernel.org, decui@microsoft.com,
+  jassisinghbrar@gmail.com, mchehab@kernel.org, maintainers@bluecherrydvr.com,
+  aubin.constans@microchip.com, ulf.hansson@linaro.org,
+  manuel.lauss@gmail.com, mirq-linux@rere.qmqm.pl, jh80.chung@samsung.com,
+  oakad@yahoo.com, hayashi.kunihiko@socionext.com, mhiramat@kernel.org,
+  brucechang@via.com.tw, HaraldWelte@viatech.com, pierre@ossman.eu,
+  duncan.sands@free.fr, oneukum@suse.com,
+  openipmi-developer@lists.sourceforge.net, dmaengine@vger.kernel.org,
+  asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+  linux-rpi-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
+  imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
+  linux-mediatek@lists.infradead.org, linux-actions@lists.infradead.org,
+  linux-arm-msm@vger.kernel.org, linux-riscv@lists.infradead.org,
+  linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+  linux-hyperv@vger.kernel.org, linux-rdma@vger.kernel.org,
+  linux-media@vger.kernel.org, linux-mmc@vger.kernel.org,
+  linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+  linux-s390@vger.kernel.org, netdev@vger.kernel.org,
+  linux-usb@vger.kernel.org
+Subject: Re: [PATCH 4/9] USB: Convert from tasklet to BH workqueue
+Message-ID: <42c445b4-a156-4c43-bf98-bd2a9ac7a4fa@rowland.harvard.edu>
+References: <20240327160314.9982-1-apais@linux.microsoft.com>
+ <20240327160314.9982-5-apais@linux.microsoft.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/20] media: venus: pm_helpers: Add kerneldoc to
- venus_clks_get()
-To: Bryan O'Donoghue <pure.logic@nexus-software.ie>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Philipp Zabel <p.zabel@pengutronix.de>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- Stanimir Varbanov <stanimir.varbanov@linaro.org>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20230911-topic-mars-v2-0-3dac84b88c4b@linaro.org>
- <20230911-topic-mars-v2-3-3dac84b88c4b@linaro.org>
- <b6d6beab-39f5-4f00-8427-52b662181864@linaro.org>
- <30945f7a-b18b-483a-bc43-99f913fb98c3@linaro.org>
- <072aacd2-fedf-485a-970e-a705748cc92e@nexus-software.ie>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <072aacd2-fedf-485a-970e-a705748cc92e@nexus-software.ie>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240327160314.9982-5-apais@linux.microsoft.com>
 
-On 27.03.2024 10:55 AM, Bryan O'Donoghue wrote:
-> On 26/03/2024 21:23, Konrad Dybcio wrote:
->> On 6.03.2024 1:20 PM, Bryan O'Donoghue wrote:
->>> On 09/02/2024 21:09, Konrad Dybcio wrote:
->>>> To make it easier to understand the various clock requirements within
->>>> this driver, add kerneldoc to venus_clk_get() explaining the fluff.
->>>>
->>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>> ---
->>>>    drivers/media/platform/qcom/venus/pm_helpers.c | 28 ++++++++++++++++++++++++++
->>>>    1 file changed, 28 insertions(+)
->>>>
->>>> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
->>>> index ac7c83404c6e..ea0a7d4601e2 100644
->>>> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
->>>> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
->>>> @@ -23,6 +23,34 @@
->>>>      static bool legacy_binding;
->>>>    +/**
->>>> + * venus_clks_get() - Get Venus clocks that are not bound to a vcodec
->>>
->>> Get non-codec Venus clocks.
->>
->> No, this is not necessarily the case.. these may still include
->> vcodec clocks, that are specified under the root venus node (which
->> is the only way we'd like to keep)
->>
->> I applied the rest of your suggestions, do I keep your rb?
->>
->> Konrad
->>
+On Wed, Mar 27, 2024 at 04:03:09PM +0000, Allen Pais wrote:
+> The only generic interface to execute asynchronously in the BH context is
+> tasklet; however, it's marked deprecated and has some design flaws. To
+> replace tasklets, BH workqueue support was recently added. A BH workqueue
+> behaves similarly to regular workqueues except that the queued work items
+> are executed in the BH context.
 > 
-> Sure
+> This patch converts drivers/infiniband/* from tasklet to BH workqueue.
 > 
-> BTW, I plan to test this series when I can - do you have a working tree ?
+> Based on the work done by Tejun Heo <tj@kernel.org>
+> Branch: https://git.kernel.org/pub/scm/linux/kernel/git/tj/wq.git for-6.10
+> 
+> Signed-off-by: Allen Pais <allen.lkml@gmail.com>
+> ---
 
-next + the patchset in question is a working tree..
+> diff --git a/drivers/usb/core/hcd.c b/drivers/usb/core/hcd.c
+> index c0e005670d67..88d8e1c366cd 100644
+> --- a/drivers/usb/core/hcd.c
+> +++ b/drivers/usb/core/hcd.c
 
-Konrad
+> @@ -1662,10 +1663,9 @@ static void __usb_hcd_giveback_urb(struct urb *urb)
+>  	usb_put_urb(urb);
+>  }
+>  
+> -static void usb_giveback_urb_bh(struct work_struct *work)
+> +static void usb_giveback_urb_bh(struct work_struct *t)
+>  {
+> -	struct giveback_urb_bh *bh =
+> -		container_of(work, struct giveback_urb_bh, bh);
+> +	struct giveback_urb_bh *bh = from_work(bh, t, bh);
+>  	struct list_head local_list;
+>  
+>  	spin_lock_irq(&bh->lock);
+
+Is there any reason for this apparently pointless change of a local
+variable's name?
+
+Alan Stern
 
