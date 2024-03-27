@@ -1,180 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-15328-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15329-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3EF2788D54D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 05:04:35 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EE7CA88D648
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 07:18:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A979D1F2D3AD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 04:04:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9D37629D3E7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 06:18:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02B4522F02;
-	Wed, 27 Mar 2024 04:04:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2B5D1BF31;
+	Wed, 27 Mar 2024 06:18:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GbhTlD05"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BpAs1eki"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D2CA2576F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 04:04:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F981DA24
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 06:18:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711512269; cv=none; b=aXQ2o+3A2IHpb9OxGD/8Qe2AqQdAmk0yvC7EzAE3QXy2aVVG1IQk0OforKQZZnHMuWkb5UzqHeLDPua7v2dJ1PdTONo5MoquUwM6Y89qbWCBXK8VQsObuwpLLeZgvx70hZMT5Ne/KcEGMLXA06J/0AclGfRZy5ZiNIaZ657OrHw=
+	t=1711520314; cv=none; b=iWn3JS65oR4Sv9aMV3MZGlxhyKw7ugQEKLPQ1uBrq1VjhXuGhELYudBv9GUr1eYp41Uo8QvPEEP+tNRVV6Cu0fPwq6/0LQycHc62FLcuoUQ1DMz/5g/bG36cu8ggpb3lYbYPwL+X7D55Cw8xVWmVn6K0+RV8dWPzRZt7Yl7jqDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711512269; c=relaxed/simple;
-	bh=dnWx/tOA3ujLDTRjAPgH5cNpRXyNmOoS+V1Uc6WEI74=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=t72L9n1W9ifDjC6Z5jwV1NA8tJMAmXQ0lBlBW0dwxSXlgEZKfSivknP3aRX13EsxhrcHCnfPMuILcSbZ2dzD9dTibnsK6TbRnFZQiFOw95YU7iVJeOKRE9I3L5sV5leSk1hLFWR6AO1ZCEe3GyuHhxxDeHMCASk0HUFMVHH2vvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GbhTlD05; arc=none smtp.client-ip=209.85.218.45
+	s=arc-20240116; t=1711520314; c=relaxed/simple;
+	bh=QSWOd5QSD/Mwb0i+vtxbpmvy9IlXp1/N645iLIzqlgI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SwB+xf9EOSdnzKZ8bFUmYKlsnqa7hnEVYw5wwjHOPh5+eYtGg0GzcBl7Q++CjMZmktgSsi87TpYBE7Vhg6XVmt+diLhmllQchApRvI9gfxYwS8AWyAkc89LAZJ+g4RVEwe7ZUOXjYE8yfwEb6p7Bl+0jPJB/gcnZN+3hR0aJXKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BpAs1eki; arc=none smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a4749eecff7so398971366b.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 21:04:27 -0700 (PDT)
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-1e0b213efa3so26157925ad.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 23:18:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711512266; x=1712117066; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ylqoaINJKjY6KxvMr7XBu8tTBBrVTZkDyFAlF9BL3/I=;
-        b=GbhTlD059MDl6RkQExk6EVfYd2nP52OEGB+NyDjTpqPS+9wg/zElGUBhQmYwTkbWw3
-         /lZ+TGU2oREu/P+S5+A2mcT2mWTYe2fe0LebhF2XV7qlK7p8Y6aMG3U7CvkSjm/aRaXk
-         8e/7UaIJi2RFVG1s3iP9Ix0glZ3Ykdk9gmpwlFVCTbYHQKdHezQem0zB819iJTudOjOd
-         IZ0v/qFp5dntfZyqxnp+zEeb8klt+M5FeCqjkKYTKvpoUgYc8QP6diCbQCp0LRKV7A6p
-         vVlgyLO16R8h9/MHtcXlAdz4oEUEZSW1URZn6W6OGIs+ISgFuW7DD58PKD/WRtb1o6Gy
-         l2LQ==
+        d=linaro.org; s=google; t=1711520312; x=1712125112; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=o0gjg83GHJ5iMw1grXSKgZDAg4bzhxIcgbatUtZtL1w=;
+        b=BpAs1eki9UcYrHbYskq6BTJRGnVazUjcNoYWEcquZ4go4y217O2heUBhTAbAlfzi63
+         hcoyCJ3Oby3LR2S9jIX3VYjp5dAS678VcM5fHkGB+lnQkCjXBAA4eXyMvNcXfxq7LuXc
+         NnfTzf31USr8FlizdgP65bvOVRkRpAgZinQHTC245Q3qTKcrikksDiSPvK045vWwjxK4
+         92JGmLIRGiN+D0dmWpeJe/hiBereYxVFb2Yu3Y3Xt+uETckXSMGCpGxeLRdjX9K1tuKY
+         jx8Fn6wx9TckYgbZJN3GtHIh+siE8ohRialiOjTJCSZuvdXDKMvuRKWEJz/vsVmHqAUu
+         0oPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711512266; x=1712117066;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ylqoaINJKjY6KxvMr7XBu8tTBBrVTZkDyFAlF9BL3/I=;
-        b=LYBmXHbnQBmfdSgHVIsbDU81dO+x/OjElpSrZoYa1h8qFqtu53rKsGzHMtpkhIvpJE
-         AfR+uxp3nVZZEIx/4Tbfq9fuNOOHtIHI+R/t4VWoDO0fvW9htSqIuqpCgkuSpr/Mmlx0
-         6LsVv66Rit9Zpk1v97uASub78zjRpTQB+Qr6ZV53JdD02Z+peaySOhwzQ3HFYsGLylic
-         BGpihnpTEqJSqCyx0t07yYrjOxKL0A97dxV0W39DO8K/UwaR+5iW9QeMVC3C4mohJYKM
-         jPdb5JhOQwKLYT+WTnq3U5yNDV5woW4muV8ySNJv1lPEesuMpYxGC1vxpc3SImUFWtf7
-         zQYg==
-X-Forwarded-Encrypted: i=1; AJvYcCV2KEkz8fEuX3Ztu/NpOcsf1RUkkiCy8iCvcUiYDUVnyZNvQN0knT3Ud3FzPI7J2wDd+85+96NIjUMQIV9E+Vi0Zzmi6Yr5sP45tj51qw==
-X-Gm-Message-State: AOJu0YyW4ktXnRN2WbSwU6Y0skgDB6zLQkFCDwFobFv9Cr6X2UsTA6wB
-	YiJxWW0bC8NGPJwMbMqS1I7kEoRlkA6kyEKaVyUWDhL8apaYawC8dYnKqnrOd6Y=
-X-Google-Smtp-Source: AGHT+IHLRvepEW/fgdeY0FRotqmd3js3U30b3tZgzw6lU1Fy65zuTFJVcFKec+SLMfuDkmHNZofZ6A==
-X-Received: by 2002:a17:907:9449:b0:a4e:693:3089 with SMTP id dl9-20020a170907944900b00a4e06933089mr295277ejc.2.1711512266321;
-        Tue, 26 Mar 2024 21:04:26 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.222.44])
-        by smtp.gmail.com with ESMTPSA id w12-20020a170907270c00b00a469be48551sm4912138ejk.45.2024.03.26.21.04.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Mar 2024 21:04:25 -0700 (PDT)
-Message-ID: <b5938894-3e8b-4928-b82b-f13e5c196f87@linaro.org>
-Date: Wed, 27 Mar 2024 05:04:23 +0100
+        d=1e100.net; s=20230601; t=1711520312; x=1712125112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=o0gjg83GHJ5iMw1grXSKgZDAg4bzhxIcgbatUtZtL1w=;
+        b=IR2wVQi5mOFHSKs18JRUkFS4b1kg0C4mbH56Hm8jsb7IFGDjtmSzpI9xlR/7++g3mK
+         SuR/f2V45WafpMZGK0y3Fbnnmr4FO+gM0tl32WOW+zSsr3Lk/A6pOrMXCnThzT4G9dAj
+         /Amp7BfxXv7BEGVGeFqSFo4cmqorx/WEMFz/PuVmW9zLjXrdRNrHhWKd4BYQvXFOw4lc
+         OdbBoMTYbIEHQ9wfhMuyPd3TBwwIspI6VBPaJvQSCS+zkEPs49Hl9HHplOSsLog+1gnP
+         GLO0oE92TMcHQT0dySw1i2COyePzqoSmCFdoMc/+t9iA9sGm7faxHu5qoNngLtubDWCu
+         wJBQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUdnL+4V9CJgrbBb7pPZIlrpI9xZL8+VowDA0XurQYNDADulFGgN2wbntvZdRnOC46F9Ss1z+/FDvmJWx8CvQIgmgNr4n9OAtTt+0gTSw==
+X-Gm-Message-State: AOJu0YwnRVPdMdqS3gkmjtDf7pQ+WQGVOdC3RwJluoGYGZJ8cqhxxi05
+	kQ5aNR6TXJqiORY58EFp+/KFMJPGebQcGu7LT5GM5+0h7WDTBytQgIRfYUsdCSaHsfDyoldyYyw
+	=
+X-Google-Smtp-Source: AGHT+IHji7g8cihtAriwVgPqznOHJahJLJB2a+jqLM2ts6GNSuhe4SxcmmyVioUmpWFcQTqU1N0vyg==
+X-Received: by 2002:a17:902:ecc5:b0:1e0:342b:af6f with SMTP id a5-20020a170902ecc500b001e0342baf6fmr3668522plh.16.1711520311993;
+        Tue, 26 Mar 2024 23:18:31 -0700 (PDT)
+Received: from thinkpad ([117.207.28.168])
+        by smtp.gmail.com with ESMTPSA id h10-20020a170902f54a00b001e02875930asm8003160plf.25.2024.03.26.23.18.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Mar 2024 23:18:31 -0700 (PDT)
+Date: Wed, 27 Mar 2024 11:48:19 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Niklas Cassel <cassel@kernel.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
+	linux-tegra@vger.kernel.org
+Subject: Re: [PATCH 05/11] PCI: epf-{mhi/test}: Move DMA initialization to
+ EPC init callback
+Message-ID: <20240327055457.GA2742@thinkpad>
+References: <20240314-pci-epf-rework-v1-0-6134e6c1d491@linaro.org>
+ <20240314-pci-epf-rework-v1-5-6134e6c1d491@linaro.org>
+ <Zf2tXgKo-gc3qy1D@ryzen>
+ <20240326082636.GG9565@thinkpad>
+ <ZgKsBoTvPWWhPO9e@ryzen>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] QCM2290 LMH
-To: =?UTF-8?B?TsOtY29sYXMgRi4gUi4gQS4gUHJhZG8=?= <nfraprado@collabora.com>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, "Rafael J. Wysocki"
- <rafael@kernel.org>, Daniel Lezcano <daniel.lezcano@linaro.org>,
- Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
- Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Thara Gopinath
- <thara.gopinath@gmail.com>, Amit Kucheria <amitk@kernel.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, stable@vger.kernel.org,
- Loic Poulain <loic.poulain@linaro.org>
-References: <20240308-topic-rb1_lmh-v2-0-bac3914b0fe3@linaro.org>
- <d8ed4e6c-549f-4c04-b38a-2d788df8b707@notapiano>
- <dbe90a1c-bac2-4176-8eba-7ad96a182313@linaro.org>
- <8e0cc005-0b3a-4475-bfe4-82ec46d918a5@notapiano>
- <68dbebe0-acaa-40f0-9a5c-fd49d265ae08@linaro.org>
- <33cb5ab6-1b15-4903-a5fa-f0d2f86fb438@notapiano>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <33cb5ab6-1b15-4903-a5fa-f0d2f86fb438@notapiano>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZgKsBoTvPWWhPO9e@ryzen>
 
-On 26/03/2024 15:07, Nícolas F. R. A. Prado wrote:
->> Other reports, like for cases when only parts of patch is applied, could
->> be also useful but I am afraid you will generate way too much of them.
->> Binding is supposed to go via subsystem, DTS via SoC, so basically 90%
->> of patchsets might have some sort of delays resulting in dtbs_check
->> false positive warnings.
->>
->> For my SoC I check my trees, mainline and next, and keep adding list of
->> exceptions for expected issues. What's useful for Qualcomm? Konrad,
+On Tue, Mar 26, 2024 at 12:05:42PM +0100, Niklas Cassel wrote:
+> On Tue, Mar 26, 2024 at 01:56:36PM +0530, Manivannan Sadhasivam wrote:
+> > On Fri, Mar 22, 2024 at 05:10:06PM +0100, Niklas Cassel wrote:
+> > > On Thu, Mar 14, 2024 at 08:53:44PM +0530, Manivannan Sadhasivam wrote:
+> > > > To maintain uniformity across EPF drivers, let's move the DMA
+> > > > initialization to EPC init callback. This will also allow us to deinit DMA
+> > > > during PERST# assert in the further commits.
+> > > > 
+> > > > For EPC drivers without PERST#, DMA deinit will only happen during driver
+> > > > unbind.
+> > > > 
+> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > > ---
+> > > 
+> > > Reviewed-by: Niklas Cassel <cassel@kernel.org>
+> > > 
+> > > 
+> > > For the record, I was debugging a problem related to EPF DMA recently
+> > > and was dumping the DMA mask for the struct device of the epf driver.
+> > > I was a bit confused to see it as 32-bits, even though the EPC driver
+> > > has it set to 64-bits.
+> > > 
+> > > The current code works, because e.g., pci_epf_test_write(), etc,
+> > > does:
+> > > struct device *dma_dev = epf->epc->dev.parent;
+> > > dma_map_single(dma_dev, ...);
+> > > 
+> > > but it also means that all EPF drivers will do this uglyness.
+> > > 
+> > 
+> > This ugliness is required as long as the dmaengine is associated only with the
+> > EPC.
+> > 
+> > > 
+> > > 
+> > > However, if a EPF driver does e.g.
+> > > dma_alloc_coherent(), and sends in the struct *device for the EPF,
+> > > which is the most logical thing to do IMO, it will use the wrong DMA
+> > > mask.
+> > > 
+> > > Perhaps EPF or EPC code should make sure that the struct *device
+> > > for the EPF will get the same DMA mask as epf->epc->dev.parent,
+> > > so that EPF driver developer can use the struct *epf when calling
+> > > e.g. dma_alloc_coherent().
+> > > 
+> > 
+> > Makes sense. I think it can be done during bind() in the EPC core. Feel free to
+> > submit a patch if you like, otherwise I'll keep it in my todo list.
 > 
-> Is that list of exceptions in-tree? If there are known false-positives (issues
+> So we still want to test:
+> -DMA API using the eDMA
+> -DMA API using the "dummy" memcpy dma-channel.
+> 
 
-None of the warnings - C, sparse, smatch, coccinelle, Coverity, dtc,
-dtbs_check - are stored in-tree. I don't think dtbs_check should be here
-exception, because all these warnings can be fixed - it's just a matter
-of effort. ARM64 Exynos is warning free since a year. ARM Exynos
-similarly, but with one undocumented compatible and few bumps due to
-intra-cycle DTS changes.
+IMO, the test driver should just test one form of data transfer. Either CPU
+memcpy (using iATU or something similar) or DMA. But I think the motive behind
+using DMA memcpy is that to support platforms that do not pass DMA slave
+channels in devicetree.
 
-> that can't be "properly" fixed), they should be public knowledge. And if we all
+It is applicable to test driver but not to MHI driver since all DMA supported
+MHI platforms will pass the DMA slave channels in devicetree.
 
-They are "public":
-https://github.com/krzk/tools/blob/master/buildbot/master_build_common.py#L26
+> However, it seems like both pci-epf-mhi.c and pci-epf-test.c
+> do either:
+> -Use DMA API
+> or
+> -Use memcpy_fromio()/memcpy_toio() instead of DMA API
+> 
+> 
+> To me, it seems like we should always be able to use
+> DMA API (using either a eDMA or "dummy" memcpy).
+> 
 
-but I don't know how to make them public and usable knowledge.
+No, there are platforms that don't support DMA at all. Like Qcom SDX55, so we
+still need to do CPU memcpy.
 
-Best regards,
-Krzysztof
+> I don't really see the need to have the path that does:
+> memcpy_fromio()/memcpy_toio().
+> 
+> I know that for DWC, when using memcpy (and this also
+> memcpy via DMA API), we need to map the address using
+> iATU first.
+> 
+> But that could probably be done using another flag,
+> perhaps rename that flag FLAG_USE_DMA to NEEDS_MAP or
+> something.
+> (Such that we can change these drivers to only have a
+> code path that uses DMA API.)
+> (...and making sure that inheriting the DMA mask does
+> not affect the DMA mask for DMA_MEMCPY.)
+> 
+> But perhaps I am missing something... and DMA_MEMCPY is
+> not always available?
+> 
 
+Yes.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
