@@ -1,300 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-15382-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15383-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BCE888DCAE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 12:39:20 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B5B2788DCC0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 12:42:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2FA1A1C23A2F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 11:39:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 688C7299E10
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 11:42:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4A7D86650;
-	Wed, 27 Mar 2024 11:39:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEE561272D2;
+	Wed, 27 Mar 2024 11:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IthzmOWE"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GNUi/WB5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9283E86637;
-	Wed, 27 Mar 2024 11:39:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5033658131;
+	Wed, 27 Mar 2024 11:42:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711539556; cv=none; b=jLUuWqwF00nZ7+xmWNua4VsnmLDCv+51Vhkbw6ecR/QGgjoyeJ3ZXe9ips3j01ECZWftOstGWlTp9r/4kKhkXHMOEvV5CaLNegykfSoQsEb80STPFxmutzgropcvdBjCd9bpnFwS9Ci8VRuU4aATOG40RKxyPG4R2MO3oFzSVoo=
+	t=1711539766; cv=none; b=MbLk2gnBiGoCy0nBSFyfhHeBMOch6qLkqCS73H/jV9Wu6qR5GH16BYtcceFS+a3oT7ro3FuWR99tXWm7n3AT5v6RIsIb8uo+Sw/8CCfyMVuK28jogCuQ2cAkRHj3rzvXku87bq1x8+gaH21bjvhH7gVxLrbFCfpLzvgzZYwDnfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711539556; c=relaxed/simple;
-	bh=0aSLD8v9FhdgjLmAm4FFNYvpmf51+GglcayqfEF6akk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g7RSQL8XAaQH3Y/25amUOzpfC9PkCMps5QW58P6H+itaqyU1i8auYm95f9XKQ9+YzoWhP8ZyNlQeHtXti6QCqmfqZc9z+FuHb49bxuP0qbVYiElIHRS0qFkqdKr0/hMEfWVYEtBEn/WI237WFxqxpyM2DwA6kJWVeHjqi7Ux28g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IthzmOWE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 182F0C433F1;
-	Wed, 27 Mar 2024 11:39:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711539556;
-	bh=0aSLD8v9FhdgjLmAm4FFNYvpmf51+GglcayqfEF6akk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IthzmOWEN3mIomGFkzEB7rdFo+sVY9NJoykWW/JaltxLd6FaeS7t/4TOEz67p3nBA
-	 I2PXY+Edpozu3HFBTHNyT4zD/Azr4mbYlQRfgb6n9+XFE5/gwjk+qBrtCirGC2MBXy
-	 40Vm1apsToyMQazDpvK1j/JQECLhCY+uKKtTb8Rk+zmaVwPutLbZMgVN7Ay9795nig
-	 7CxFS0O+CM3rImV6sFyLghl93bs/Xd++nzFgCZ+/2Lml/PgqNJdLN32kTDTUuCh8+z
-	 hY7WnKKpYAPsim7YtilIQtXPf0BXRhDH01VvkLB+AVUADNreC4+pK58Czcd49svPpX
-	 lt8nvzqZXMZuA==
-Date: Wed, 27 Mar 2024 12:39:10 +0100
-From: Niklas Cassel <cassel@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
-	linux-tegra@vger.kernel.org
-Subject: Re: [PATCH 05/11] PCI: epf-{mhi/test}: Move DMA initialization to
- EPC init callback
-Message-ID: <ZgQFXsgqpeLbXMTb@ryzen>
-References: <20240314-pci-epf-rework-v1-0-6134e6c1d491@linaro.org>
- <20240314-pci-epf-rework-v1-5-6134e6c1d491@linaro.org>
- <Zf2tXgKo-gc3qy1D@ryzen>
- <20240326082636.GG9565@thinkpad>
- <ZgKsBoTvPWWhPO9e@ryzen>
- <20240327055457.GA2742@thinkpad>
+	s=arc-20240116; t=1711539766; c=relaxed/simple;
+	bh=jKerGuDBFpQHbzKd+ZNzzf/kDL+W5sx53L+ccsWbyuQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=XyVVEviq8LbqpHGVgDLBtsKAv+e/dvJTwZ8c/N6jn6Z9yx1Pk2NGwO/teW90ErIybew3wG/QaLgfeD9aQD2HMgdG9V21+GfqE8rbR7TzSiOLoWSb9AUUSjbvz7vvm58ILlx5MAZeIRZdskcrkW7N7T6Hu5FD6wBR2bWiLyqk45Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GNUi/WB5; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42RARhUZ027583;
+	Wed, 27 Mar 2024 11:42:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=IRzo6j6PI/VAljRrgfvgQpUyrCe4gj1qQNWtNSI1tYU=; b=GN
+	Ui/WB5ygXp2ctlzQrYTpAy8H1RRWqvFzIGyPHSAtDIuHBAcLvLLr2zyiBE6Z+a4P
+	JLa1qm6aKFlE+fhnxfV/0pSHmaSe5G+fu8EFkLCJtULjGkAv67x1RzckQSSwVhcr
+	frYf4DwgwQ6f/Gf+qed7ZBRsNkKlvD/1+VDrvq07LP9nIewGf1ZIBKt5osL0+HWk
+	nBVs8vpD3e4JnyB7eUOcGtrSAk+fH3FsDqeKZKAuAdsT9rnDA5zs8s8Bwo1Du6fV
+	gGa6NqzWi/QloK1Pp3sEQCd6fZEzo+IWAwu0CtjAVuvlQk4KS9nma3KwKhZAToGI
+	p7XV6DKipgRr7yCjkwmw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x47839k5v-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 27 Mar 2024 11:42:34 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42RBgXJE009973
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 27 Mar 2024 11:42:33 GMT
+Received: from [10.50.35.38] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 27 Mar
+ 2024 04:42:28 -0700
+Message-ID: <1e1fcedb-d001-4883-9046-58f3933ff185@quicinc.com>
+Date: Wed, 27 Mar 2024 17:12:25 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240327055457.GA2742@thinkpad>
-
-+CC Vinod
-
-Hello Vinod,
-
-I didn't know the answer, so I chose the "call a friend option" ;)
-I hope that you can help me out :)
-
-
-If you take a look at drivers/pci/endpoint/functions/pci-epf-test.c
-https://github.com/torvalds/linux/blob/v6.9-rc1/drivers/pci/endpoint/functions/pci-epf-test.c#L448-L471
-
-You can see that the driver always does pci_epc_map_addr(),
-then it will either use:
-DMA API, e.g. dma_map_single() etc.
-or
-memcpy_fromio()/memcpy_toio()
-
-based on flag FLAG_USE_DMA.
-
-This flag is set via ioctl, so if we run:
-/usr/bin/pcitest -d
-the flag will be set, without the -d parameter the flag won't be set.
-
-
-If you look at how the DMA channel is requested:
-https://github.com/torvalds/linux/blob/v6.9-rc1/drivers/pci/endpoint/functions/pci-epf-test.c#L224-L258
-
-If will try to get a private DMA channel, if that fails,
-it will use the "dummy memcpy" DMA channel.
-
-If the FLAG_USE_DMA is set, the transfers itself will use:
-https://github.com/torvalds/linux/blob/v6.9-rc1/drivers/pci/endpoint/functions/pci-epf-test.c#L139-L155
-either dmaengine_prep_slave_single() or dmaengine_prep_dma_memcpy(),
-depending on if we are using "dummy memcpy" or not.
-
-
-
-If you take e.g. the DWC PCIe EP controller, it can have an embedded DMA
-controller on the PCIe controller, and we will try to detect it when
-initializing the PCIe EP controller using dw_pcie_edma_detect():
-https://github.com/torvalds/linux/blob/v6.9-rc1/drivers/pci/controller/dwc/pcie-designware-ep.c#L759
-
-For the PCIe EP controller that I am using, which have eDMA built-in,
-I noticed that if I do not enable the eDMA driver (# CONFIG_DW_EDMA is not
-set), I noticed that I can still run:
-/usr/bin/pcitest -d
-
-Which will use the "dummy memcpy" DMA channel.
-Yes, the performance is poor, but it still works, so it appears that the
-fallback code is working properly.
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/4] interconnect: qcom: icc-rpmh: Add QoS
+ configuration support
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Georgi
+ Djakov" <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: Kees Cook <keescook@chromium.org>, <cros-qcom-dts-watchers@chromium.org>,
+        "Gustavo A . R . Silva" <gustavoars@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-hardening@vger.kernel.org>, <quic_rlaggysh@quicinc.com>,
+        <quic_mdtipton@quicinc.com>
+References: <20240325181628.9407-1-quic_okukatla@quicinc.com>
+ <20240325181628.9407-2-quic_okukatla@quicinc.com>
+ <d59896bb-a559-4013-a615-37bb43278b2e@linaro.org>
+ <73e5a697-2eb4-45d3-84eb-60401ea10cc1@linaro.org>
+Content-Language: en-US
+From: Odelu Kukatla <quic_okukatla@quicinc.com>
+In-Reply-To: <73e5a697-2eb4-45d3-84eb-60401ea10cc1@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 2yAyAHPi8QB0wCAF0w1KJLEba2MA0PaQ
+X-Proofpoint-ORIG-GUID: 2yAyAHPi8QB0wCAF0w1KJLEba2MA0PaQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-27_08,2024-03-21_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxscore=0
+ suspectscore=0 mlxlogscore=999 impostorscore=0 lowpriorityscore=0
+ phishscore=0 spamscore=0 priorityscore=1501 clxscore=1015 malwarescore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403210001 definitions=main-2403270079
 
 
-If I enable the eDMA driver (CONFIG_DW_EDMA=y),
-I can run:
-/usr/bin/pcitest -d
 
-And the performance is good.
-
-
-So my question is:
-Is the "dummy memcpy" DMA channel always available?
-
-Because if it is, I think we could drop the path in the pci-epf-test.c
-driver which uses memcpy_fromio()/memcpy_toio() instead of DMA API.
-(Since just having a single path to do I/O in the driver would simplify
-the driver IMO.)
-
-I assume that the "dummy memcpy" DMA channel just uses memcpy_fromio() and
-memcpy_toio() under the hood, so I assume that using the memcpy_fromio()/
-memcpy_toio/() is equivalent to using DMA API + dmaengine_prep_dma_memcpy().
-
-Although it would be nice if we didn't need to have the two separate paths
-in pci_epf_test_data_transfer() (dmaengine_prep_slave_single() vs
-dmaengine_prep_dma_memcpy()) to support the "dummy memcpy" channel.
-But I guess that is not possible...
-
-
-I hope that you can bring some clarity Vinod.
-(Please read my replies to Mani below before you compose your email,
-as it does provide more insight to this mess.)
-
-Mani, I tried to reply to you inline below, with my limited understanding
-of how dmaengine works.
-
-
-On Wed, Mar 27, 2024 at 11:48:19AM +0530, Manivannan Sadhasivam wrote:
-> > So we still want to test:
-> > -DMA API using the eDMA
-> > -DMA API using the "dummy" memcpy dma-channel.
-> > 
+On 3/27/2024 2:14 PM, Krzysztof Kozlowski wrote:
+> On 26/03/2024 21:56, Konrad Dybcio wrote:
+>> On 25.03.2024 7:16 PM, Odelu Kukatla wrote:
+>>> It adds QoS support for QNOC device and includes support for
+>>> configuring priority, priority forward disable, urgency forwarding.
+>>> This helps in priortizing the traffic originating from different
+>>> interconnect masters at NoC(Network On Chip).
+>>>
+>>> Signed-off-by: Odelu Kukatla <quic_okukatla@quicinc.com>
+>>> ---
+>>
+>> [...]
+>>
+>>>  
+>>> +	if (desc->config) {
+>>> +		struct resource *res;
+>>> +		void __iomem *base;
+>>> +
+>>> +		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+>>> +		if (!res)
+>>> +			goto skip_qos_config;
+>>> +
+>>> +		base = devm_ioremap_resource(dev, res);
+>>
+>> You were asked to substitute this call like 3 times already..
+>>
+>> devm_platform_get_and_ioremap_resource
+>>
+>> or even better, devm_platform_ioremap_resource
 > 
-> IMO, the test driver should just test one form of data transfer. Either CPU
-> memcpy (using iATU or something similar) or DMA. But I think the motive behind
-> using DMA memcpy is that to support platforms that do not pass DMA slave
-> channels in devicetree.
+> Yeah, I wonder what else from my feedback got ignored :(
 > 
-> It is applicable to test driver but not to MHI driver since all DMA supported
-> MHI platforms will pass the DMA slave channels in devicetree.
 
-I don't understand how device tree is relevant here, e.g. qcom-ep.c
-specifies pcie_ep->pci.edma.nr_irqs = 1;
-https://github.com/torvalds/linux/blob/v6.9-rc1/drivers/pci/controller/dwc/pcie-qcom-ep.c#L818
-which is sufficient for you to be able to probe/detect eDMA successfully,
-no need for anything in device tree at all.
-
+There was a misinterpretation of your comment from my side. Got it now, I will address this.
 
 > 
-> > However, it seems like both pci-epf-mhi.c and pci-epf-test.c
-> > do either:
-> > -Use DMA API
-> > or
-> > -Use memcpy_fromio()/memcpy_toio() instead of DMA API
-> > 
-> > 
-> > To me, it seems like we should always be able to use
-> > DMA API (using either a eDMA or "dummy" memcpy).
-> > 
+> Best regards,
+> Krzysztof
 > 
-> No, there are platforms that don't support DMA at all. Like Qcom SDX55, so we
-> still need to do CPU memcpy.
 
-I assume that you mean the the PCIe controller used in SDX55 does not
-have the eDMA on the PCIe controller, so dw_pcie_edma_detect() will
-fail to detect any eDMA. That is fine no?
-
-I assume that this SoC will still able to use the "dummy" memcpy dma-channel?
-
-
-> 
-> > I don't really see the need to have the path that does:
-> > memcpy_fromio()/memcpy_toio().
-> > 
-> > I know that for DWC, when using memcpy (and this also
-> > memcpy via DMA API), we need to map the address using
-> > iATU first.
-> > 
-> > But that could probably be done using another flag,
-> > perhaps rename that flag FLAG_USE_DMA to NEEDS_MAP or
-> > something.
-> > (Such that we can change these drivers to only have a
-> > code path that uses DMA API.)
-> > (...and making sure that inheriting the DMA mask does
-> > not affect the DMA mask for DMA_MEMCPY.)
-
-I was wrong here, pci-epf-test always calls pci_epc_map_addr()
-regardless if FLAG_USE_DMA is set or not.
-
-(Even though this should be unnecessary when using the eDMA.)
-
-However, if we look at pci-epf-mhi.c we can see that it does
-NOT call pci_epc_map_addr() when using DMA API + dmaengine.
-
-Is it really safe to avoid pci_epc_map_addr() in all EPC controllers?
-I assume that it should be safe for all "real" DMA channels.
-We can see that it is not safe when using DMA API + "dummy" memcpy
-dma-channel. (That is why I was asking if we need a NEEDS_MAP, or
-MAP_NOT_NEEDED flag.)
-
-
-> > 
-> > But perhaps I am missing something... and DMA_MEMCPY is
-> > not always available?
-
-Right now pci-epf-test driver has three ways:
--DMA API + dmaengine dmaengine_prep_slave_single()
--DMA API + dmaengine dmaengine_prep_dma_memcpy()
--memcpy_toio()/memcpy_fromio().
-
-pci-epf-mhi.c driver has two ways:
--DMA API + dmaengine dmaengine_prep_slave_single()
--memcpy_toio()/memcpy_fromio().
-
-
-pci-epf-test.c:
--Always calls pci_epc_map_addr() when using DMA API.
-
-pci-epf-mhi.c:
--Never calls pci_epc_map_addr() when using DMA API.
-
-
-I honestly don't see any point of having three paths
-for pci-epf-test. Ideally I would want one, max two.
-
-If you think that:
--DMA API + dmaengine dmaengine_prep_slave_single()
-+
--memcpy_toio()/memcpy_fromio().
-
-is more logical than:
--DMA API + dmaengine dmaengine_prep_slave_single()
-+
--DMA API + dmaengine dmaengine_prep_dma_memcpy()
-
-Then I think we should rip out the:
--DMA API + dmaengine dmaengine_prep_dma_memcpy()
-it serves no purpose... if you don't have a "real" DMA channel,
-just run without the -d flag.
-
-Or, if you argue that the dmaengine_prep_dma_memcpy() is there
-to test the DMA API code (which I can't say that it does, since
-it doesn't use the exact same code path as a "real" DMA channel, see:
-https://github.com/torvalds/linux/blob/v6.9-rc1/drivers/pci/endpoint/functions/pci-epf-test.c#L139-L155
-so this argument is questionable).
-
-Put it under a --use_dummy_dma, and return failure by default
-if no "real" DMA channel is found.
-
-
-But even so, that would not address the pci-epf-test and
-pci-mhi-test inconsistency WRT pci_epc_map_addr().
-
-I think if we rip out:
--DMA API + dmaengine dmaengine_prep_dma_memcpy()
-we could also move the pci_epc_map_addr() so that it is
-only used for the memcpy_toio()/memcpy_fromio() path.
-
-(Or if we add a --use_dummy_dma, we can move the pci_epc_map_addr() to
-that path, and remove it from the dmaengine_prep_slave_single() path.)
-
-
-Kind regards,
-Niklas
+Thanks,
+Odelu
 
