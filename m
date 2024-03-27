@@ -1,220 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-15405-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15406-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9CEF88EAE3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 17:16:23 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D349388EB01
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 17:22:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ED8B01C31D55
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 16:16:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8DA3D28E5EC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 16:22:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B24CB12E1F1;
-	Wed, 27 Mar 2024 16:16:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C09E52F7E;
+	Wed, 27 Mar 2024 16:22:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="afq6nzfs"
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="vSMCQaVH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1CE42A91;
-	Wed, 27 Mar 2024 16:16:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EACBE83A0B;
+	Wed, 27 Mar 2024 16:22:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711556177; cv=none; b=lO5vQ9Owg8p3Hvs72DSZ2x9lICrOs3YR8ckJc2bP73d1q4/bllIw7U1Ui0ZVxzoXQoreGubZEKA2QLXh2+mrzc2TFV76RiZDYFX+pkXUkE22JxgrmF4LcO6S6yo5br8RgePjGBe6ArrBQtyKLGnAekRgQqyyEhB7/L7PXyJqDp0=
+	t=1711556549; cv=none; b=sxcwfFNWRtw+5ePIjGoTIYPF7/Jzh8s/pJa8oVl153xykUYcCoYQpF7MzU5te9YlHsDWN6OmyjCvpuoYF5pBrQ4Mn61ZFAwmrlk6kxd/L+xqH2z4Ua04Dd0cGlFqdTD4a4BsFaS9tF0mnKlQfTfeBtc/onoRSLPVe1cjKIL6Tyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711556177; c=relaxed/simple;
-	bh=On495Vosho8yghuPe/ZcVehrvgix78EySfxCo6i6kY8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z+opMG5L+mMnnm9+EZpVPLYvhXkM+TZ/Oov3Wea/FE2H7hUd1ojdSGt5v8+H6bwfVo3t/puUXt43JPM+5EDVaLj9maqkM70U2YpEhaLpcRItvHrvrKsGJqNFGJVleo0Lg3jcwUWewKJJ4kARuqSHbt6p3IIsE1imUxEmbZhM2zM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=afq6nzfs; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5CADC433C7;
-	Wed, 27 Mar 2024 16:16:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711556177;
-	bh=On495Vosho8yghuPe/ZcVehrvgix78EySfxCo6i6kY8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=afq6nzfsTajwNl8LvbUonLyvoZy88ahtEF+Fkmr8Gp55VWkjLs02RvASLRTcGlPw9
-	 A3k0+c1v5Oru+8yj3BFHimVUIVe4OlixbdFKebF2ujjugw6eNhDo/O9u9W8H8tIN3l
-	 YydxW0Vv+8AEQLXDLSm04PLqYwyGSDe6yaspn7eTWUW80gV+PCVCEWC7il7Ul4mNrY
-	 SwqO6F0OkjmS2ihwcJsLxTCZShaQsiShwljjoSa214PxaVDT/DjdHpGCmWS9dlAORe
-	 v7dPwEHLncbOl4VOkta++OzMHyOOBBuAXEiCm2WRsWW2f74aR42cEmKBCqEIFLKCDP
-	 Q2VEXR1vc5xmg==
-Date: Wed, 27 Mar 2024 16:16:07 +0000
-From: Simon Horman <horms@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Marcel Holtmann <marcel@holtmann.org>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	"David S . Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Kalle Valo <kvalo@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Saravana Kannan <saravanak@google.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Alex Elder <elder@linaro.org>,
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Lukas Wunner <lukas@wunner.de>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-wireless@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v6 12/16] PCI/pwrctl: add PCI power control core code
-Message-ID: <20240327161607.GQ403975@kernel.org>
-References: <20240325131624.26023-1-brgl@bgdev.pl>
- <20240325131624.26023-13-brgl@bgdev.pl>
+	s=arc-20240116; t=1711556549; c=relaxed/simple;
+	bh=g9NIYWY7Zqq4Jpe3GVuphoABvUpR98WMNlTO/PqC+cM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=W0+VZwtK9f5Ae2J1rFarexkkZwPR1vpW8002AGfSHYDd7Xed82yj7jzhz/Di+7pHWcGWPlzlI0pbIJfaG5z4y99fRqwAKYIIplpNsaNRvbmAVUo+tiNcdRLsCwvT2nLS/09pfrz9RnXVM88O83NjtRigXMMuIhNyQT+QRzHhPL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=vSMCQaVH; arc=none smtp.client-ip=212.27.42.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
+	by smtpfb2-g21.free.fr (Postfix) with ESMTP id 75DD44C8DC;
+	Wed, 27 Mar 2024 17:22:16 +0100 (CET)
+Received: from [IPV6:2a01:e0a:255:1000:f49a:79c4:c3c6:eaf3] (unknown [IPv6:2a01:e0a:255:1000:f49a:79c4:c3c6:eaf3])
+	(Authenticated sender: duncan.sands@free.fr)
+	by smtp5-g21.free.fr (Postfix) with ESMTPSA id A3A9F60142;
+	Wed, 27 Mar 2024 17:20:26 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1711556526;
+	bh=g9NIYWY7Zqq4Jpe3GVuphoABvUpR98WMNlTO/PqC+cM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=vSMCQaVHDvOS+MJTVx5PjO8YOXxmIEoXqqAuvBYuRC535uirpZWCAg3Zcduu9rDtt
+	 KXKCxUyreW9ES5/mQaKWuQmfTpoSpYf8IwCcPc988GMFZvS+1wbAKCcOjbSk3mXiD9
+	 ZK8Hamum4SVmsMBE1c9pxQwBG+dsyo12O4SxF8j/IiVpKDUrPYQJdtKDuV/HWRo3xL
+	 PYIWjDHKv6Iwt5jWnepwy1J7Y+fjiF4JTHXVaKfZ4ukUUftUNKj+3Aem3Jcxh8PUFu
+	 tZQKCHeE4q+71+QXSA4TwBR2eiNJVHnD/WyXCPKNPqsgcwl7VuDNvLoWg/63fz6oE5
+	 pvkLMrw2O9NMA==
+Message-ID: <7297be25-a3c8-4e8b-9a80-ff720ccddc90@free.fr>
+Date: Wed, 27 Mar 2024 17:20:26 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240325131624.26023-13-brgl@bgdev.pl>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/9] USB: Convert from tasklet to BH workqueue
+To: Allen Pais <apais@linux.microsoft.com>, linux-kernel@vger.kernel.org
+Cc: tj@kernel.org, keescook@chromium.org, vkoul@kernel.org, marcan@marcan.st,
+ sven@svenpeter.dev, florian.fainelli@broadcom.com, rjui@broadcom.com,
+ sbranden@broadcom.com, paul@crapouillou.net, Eugeniy.Paltsev@synopsys.com,
+ manivannan.sadhasivam@linaro.org, vireshk@kernel.org, Frank.Li@nxp.com,
+ leoyang.li@nxp.com, zw@zh-kernel.org, wangzhou1@hisilicon.com,
+ haijie1@huawei.com, shawnguo@kernel.org, s.hauer@pengutronix.de,
+ sean.wang@mediatek.com, matthias.bgg@gmail.com,
+ angelogioacchino.delregno@collabora.com, afaerber@suse.de,
+ logang@deltatee.com, daniel@zonque.org, haojian.zhuang@gmail.com,
+ robert.jarzmik@free.fr, andersson@kernel.org, konrad.dybcio@linaro.org,
+ orsonzhai@gmail.com, baolin.wang@linux.alibaba.com, zhang.lyra@gmail.com,
+ patrice.chotard@foss.st.com, linus.walleij@linaro.org, wens@csie.org,
+ jernej.skrabec@gmail.com, peter.ujfalusi@gmail.com, kys@microsoft.com,
+ haiyangz@microsoft.com, wei.liu@kernel.org, decui@microsoft.com,
+ jassisinghbrar@gmail.com, mchehab@kernel.org, maintainers@bluecherrydvr.com,
+ aubin.constans@microchip.com, ulf.hansson@linaro.org,
+ manuel.lauss@gmail.com, mirq-linux@rere.qmqm.pl, jh80.chung@samsung.com,
+ oakad@yahoo.com, hayashi.kunihiko@socionext.com, mhiramat@kernel.org,
+ brucechang@via.com.tw, HaraldWelte@viatech.com, pierre@ossman.eu,
+ stern@rowland.harvard.edu, oneukum@suse.com,
+ openipmi-developer@lists.sourceforge.net, dmaengine@vger.kernel.org,
+ asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+ linux-rpi-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
+ imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
+ linux-mediatek@lists.infradead.org, linux-actions@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-riscv@lists.infradead.org,
+ linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+ linux-hyperv@vger.kernel.org, linux-rdma@vger.kernel.org,
+ linux-media@vger.kernel.org, linux-mmc@vger.kernel.org,
+ linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+ linux-s390@vger.kernel.org, netdev@vger.kernel.org, linux-usb@vger.kernel.org
+References: <20240327160314.9982-1-apais@linux.microsoft.com>
+ <20240327160314.9982-5-apais@linux.microsoft.com>
+Content-Language: en-GB
+From: Duncan Sands <duncan.sands@free.fr>
+In-Reply-To: <20240327160314.9982-5-apais@linux.microsoft.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Mar 25, 2024 at 02:16:20PM +0100, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> Some PCI devices must be powered-on before they can be detected on the
-> bus. Introduce a simple framework reusing the existing PCI OF
-> infrastructure.
-> 
-> The way this works is: a DT node representing a PCI device connected to
-> the port can be matched against its power control platform driver. If
-> the match succeeds, the driver is responsible for powering-up the device
-> and calling pcie_pwrctl_device_set_ready() which will trigger a PCI bus
-> rescan as well as subscribe to PCI bus notifications.
-> 
-> When the device is detected and created, we'll make it consume the same
-> DT node that the platform device did. When the device is bound, we'll
-> create a device link between it and the parent power control device.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Hi Allen, the usbatm bits look very reasonable to me.  Unfortunately I don't 
+have the hardware to test any more.  Still, for what it's worth:
 
-Hi Bartosz,
-
-some minor Kernel doc nits from my side.
-
-...
-
-> diff --git a/drivers/pci/pwrctl/core.c b/drivers/pci/pwrctl/core.c
-
-...
-
-> +/**
-> + * devm_pci_pwrctl_device_set_ready - Managed variant of
-> + * pci_pwrctl_device_set_ready().
-> + *
-
-nit: @dev should be documented here
-
-> + * @pwrctl: PCI power control data
-> + *
-> + * Returns:
-> + * 0 on success, negative error number on error.
-> + */
-> +int devm_pci_pwrctl_device_set_ready(struct device *dev,
-> +				     struct pci_pwrctl *pwrctl)
-> +{
-> +	int ret;
-> +
-> +	ret = pci_pwrctl_device_set_ready(pwrctl);
-> +	if (ret)
-> +		return ret;
-> +
-> +	return devm_add_action_or_reset(dev,
-> +					devm_pci_pwrctl_device_unset_ready,
-> +					pwrctl);
-> +}
-> +EXPORT_SYMBOL_GPL(devm_pci_pwrctl_device_set_ready);
-> +
-> +MODULE_AUTHOR("Bartosz Golaszewski <bartosz.golaszewski@linaro.org>");
-> +MODULE_DESCRIPTION("PCI Device Power Control core driver");
-> +MODULE_LICENSE("GPL");
-> diff --git a/include/linux/pci-pwrctl.h b/include/linux/pci-pwrctl.h
-> new file mode 100644
-> index 000000000000..ae8324ea7eeb
-> --- /dev/null
-> +++ b/include/linux/pci-pwrctl.h
-> @@ -0,0 +1,51 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (C) 2024 Linaro Ltd.
-> + */
-> +
-> +#ifndef __PCI_PWRCTL_H__
-> +#define __PCI_PWRCTL_H__
-> +
-> +#include <linux/notifier.h>
-> +
-> +struct device;
-> +struct device_link;
-> +
-> +/*
-> + * This is a simple framework for solving the issue of PCI devices that require
-> + * certain resources (regulators, GPIOs, clocks) to be enabled before the
-> + * device can actually be detected on the PCI bus.
-> + *
-> + * The idea is to reuse the platform bus to populate OF nodes describing the
-> + * PCI device and its resources, let these platform devices probe and enable
-> + * relevant resources and then trigger a rescan of the PCI bus allowing for the
-> + * same device (with a second associated struct device) to be registered with
-> + * the PCI subsystem.
-> + *
-> + * To preserve a correct hierarchy for PCI power management and device reset,
-> + * we create a device link between the power control platform device (parent)
-> + * and the supplied PCI device (child).
-> + */
-> +
-> +/**
-> + * struct pci_pwrctl - PCI device power control context.
-> + * @dev - Address of the power controlling device.
-
-nit: I think this should be "@dev: " rather than "@dev - "
-     As is, "./scripts/kernel-doc -none" complains.
-> + *
-> + * An object of this type must be allocated by the PCI power control device and
-> + * passed to the pwrctl subsystem to trigger a bus rescan and setup a device
-> + * link with the device once it's up.
-> + */
-> +struct pci_pwrctl {
-> +	struct device *dev;
-> +
-> +	/* Private, don't use. */
-
-I think Private needs to be followed by a ':' rather than a ',' to keep
-kernel-doc happy.
-
-> +	struct notifier_block nb;
-> +	struct device_link *link;
-> +};
-> +
-> +int pci_pwrctl_device_set_ready(struct pci_pwrctl *pwrctl);
-> +void pci_pwrctl_device_unset_ready(struct pci_pwrctl *pwrctl);
-> +int devm_pci_pwrctl_device_set_ready(struct device *dev,
-> +				     struct pci_pwrctl *pwrctl);
-> +
-> +#endif /* __PCI_PWRCTL_H__ */
-> -- 
-> 2.40.1
-> 
-> 
+Signed-off-by: Duncan Sands <duncan.sands@free.fr>
 
