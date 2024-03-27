@@ -1,639 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-15340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15344-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CC0888D6A3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 07:40:08 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A30E488D873
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 09:10:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C0FF61C25192
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 06:40:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4D97729D9F6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Mar 2024 08:10:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A080E3613D;
-	Wed, 27 Mar 2024 06:38:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DADBD2C859;
+	Wed, 27 Mar 2024 08:10:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OVbQgCKi"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="t4f54gd7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DE424B28
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 06:38:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140372C877
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 08:10:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711521487; cv=none; b=hdzvv6qZW5nh6/AdW+tTTYQbgOz7ow2MqmMcQs9Qf2Hp3bz9/agfY6/T5aK8ugiI5ECQ8BLNWKOxUEZgquzeMakB4IBOIJP+ZfPhGmn1tgI5yiIcGIGSFDTIp35LoeD6VzABc9SRMZF+cwnjKEGrgHPp3+iQxz5PRYJ/MBidLRE=
+	t=1711527008; cv=none; b=qobq34m0uaEGdgXa5WVlTAGlx+1pq3o1yCRLOG3tlDTQN3BQ2b0izVPq74ypwmz3Z9YxsSxE79Iv2ezzNQ8twfRXvJizVYdGDSVq3cZjpsAXvzG1Mcl5TF9KxGHhpgGULVbPUryvSjEX7XnYn1W9LFJn2ueWpcEoCcUGTeGQoi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711521487; c=relaxed/simple;
-	bh=/zgPoTsWQ8+Px7pH2aiN0stelTOuQg4rAQjnNvIUR4s=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=JFFZdeD4Pvhl/AiaPexcvFB2yHqiqwBFTTrTxj5641x4waGAHyQsBGAw39FITETcs4oHtXAe8f3u4HZgkZ1Z8HELGxQNIZj2duBMpSPXHcNAxYahOSP8JLllVqquvO2ytPK0ehagOUppD3GKvP9eBpF4zgZvJkkxDR+GCtdCcdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OVbQgCKi; arc=none smtp.client-ip=209.85.215.172
+	s=arc-20240116; t=1711527008; c=relaxed/simple;
+	bh=bSLT1ckrZkvCxE/ti+u0s/6SMSLCXuZLGnrSJB9NYWI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BxBtvlg+8nRP9q8Nrh+gvp1N0grSHDKcT43jhqH2bEjXzgWzrLiFWzhu70JGyh6pm03zajCd+5d41OQ4s7jlePNS0jDNdmwIUpP0j9DO3Z00hEajqvPcMnlX1w+YkkIZ5QsRIoZpQeXG+Ap9iatwm+1fZj/KJ8CqrWJ0+YzWjiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=t4f54gd7; arc=none smtp.client-ip=209.85.218.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-5c66b093b86so409231a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Mar 2024 23:38:05 -0700 (PDT)
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a474c4faf5eso401102766b.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 01:10:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711521485; x=1712126285; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/XNik2O3V0WKV7eei4+cw3tetLyilzp5Bhin/NLKwTE=;
-        b=OVbQgCKiIZdEYX3oZZc+HKw+duzu3vCPzvyHHC7ln7829dAlh2gvCUksWUJi7cTlne
-         aQi8fKLR5EfS53U4U2ciN24qe4/ZP4dJcvaTf7N+RbF8vwLzOFRFa6fcwNYDy7I8M8Xc
-         wImPGAgJJPi6hlvI+pFcSesanXvAUn4Q2XMBoIkOiCPT6OzAwDyCs9MhDuVjlfER5gQ3
-         hdyH6TyG5U02QCg/gkqOnwfZ1mU2CcmDek0WhfTqBliVx3vWMqUjflmTihlHn7+R57/K
-         NdqpSPJTAkVWtibsPtiuHXX06v7ZSIdc74AgIiraU/D3Vp2i1kOEQcz0kLiYiESNkRju
-         YUpg==
+        d=linaro.org; s=google; t=1711527005; x=1712131805; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Wq/3nMtB3kAMM8TKkfwzNiZm3IuvnpbGzBzBC5JpFqs=;
+        b=t4f54gd7IbQ1huI17Go1m8Qir2YYGEwqqwnVcDycfOjTA+KSLdu+kJJ1IoYDt+iNyP
+         wXxPVukFekEjPtwK/SqvsqVgOZZr7E7OS/85O8RVR3bAklQyMmBrpIYIPSHLcc/Y8dKt
+         tXJ3cdXCQuEHJI1qyFmW7uifyKfAwTYpmCnskuDqODlszwDQAf9gGJct35BFsw8EOZcj
+         kbwZRulwY+mVLFYrTAMF7mrCNZk4vp9hosS9qlh8YXIsZB79X30t3nTwdSVuAPadDS/2
+         8gpT81fNTv3QA2t4zRwZUOZZBwxJNBI2mbCtBVhD49N5Hgpm4IY3wU3vP92spfcYXz2g
+         FYwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711521485; x=1712126285;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/XNik2O3V0WKV7eei4+cw3tetLyilzp5Bhin/NLKwTE=;
-        b=KLHBLUBXAsVxp0TdLNz8gvPRYu71YTK5eRHOzZGJVGryjHN/iAgwR3z+CowLpqtdyK
-         yjTNOyov0mqIYLYkU6Jj1dKpIdvOB0bNLMhunQBHaUJFKlYe2TvWG35BSxr2fgH6CD9K
-         8ZvXCJyH3ZgxApKdb83xmkbuhqu1qjgE7ndR98BMZqBcr6AlEtpTVybFvBm9MAMDcO8W
-         DVsx+bN741/9KbCuL+6esjdbVAbkJzEYFjDmxRXNwYpXIsDbuscjFunywY14K2JA320C
-         IHDt6nrrbHCtU4BOiImeQ0JtVu/LTNZjqZGduGO+uXxZtNqjhxKyi9DUklZrJuxNW2/y
-         W1NQ==
-X-Gm-Message-State: AOJu0Yz6shSJUu23AwOPRL4zt0tM7KUcmF/KtHtZVDATc7K8PlKQvI3f
-	SF9fdyM82DYq12fgHuJXZHtmCTtyt9sdFuxN1CGEBA9Qi2spnpScDVARctOQn3LEuh81G+6KyRy
-	O
-X-Google-Smtp-Source: AGHT+IEF5G4b01ViVP2gw2u01FEvPPxA8D+nBgRJJXgS2E/XShyqcT5N4YyxRiEVjAeBNGzqovr48A==
-X-Received: by 2002:a17:90a:bb0f:b0:29c:570d:7f5d with SMTP id u15-20020a17090abb0f00b0029c570d7f5dmr5458717pjr.9.1711521484691;
-        Tue, 26 Mar 2024 23:38:04 -0700 (PDT)
-Received: from sumit-X1.. ([223.178.208.127])
-        by smtp.gmail.com with ESMTPSA id qd5-20020a17090b3cc500b002a02f8d350fsm772765pjb.53.2024.03.26.23.37.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Mar 2024 23:38:04 -0700 (PDT)
-From: Sumit Garg <sumit.garg@linaro.org>
-To: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org
-Cc: andersson@kernel.org,
-	konrad.dybcio@linaro.org,
-	robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org,
-	stephan@gerhold.net,
-	caleb.connolly@linaro.org,
-	neil.armstrong@linaro.org,
-	dmitry.baryshkov@linaro.org,
-	laetitia.mariottini@se.com,
-	pascal.eberhard@se.com,
-	abdou.saker@se.com,
-	jimmy.lalande@se.com,
-	benjamin.missey@non.se.com,
-	daniel.thompson@linaro.org,
-	linux-kernel@vger.kernel.org,
-	Sumit Garg <sumit.garg@linaro.org>,
-	Jagdish Gediya <jagdish.gediya@linaro.org>
-Subject: [PATCH v4 3/3] arm64: dts: qcom: apq8016: Add Schneider HMIBSC board DTS
-Date: Wed, 27 Mar 2024 12:07:34 +0530
-Message-Id: <20240327063734.3236117-4-sumit.garg@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240327063734.3236117-1-sumit.garg@linaro.org>
-References: <20240327063734.3236117-1-sumit.garg@linaro.org>
+        d=1e100.net; s=20230601; t=1711527005; x=1712131805;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Wq/3nMtB3kAMM8TKkfwzNiZm3IuvnpbGzBzBC5JpFqs=;
+        b=A/+dNNXX0g6umsT/dmv76rUivUN/iEWDhzHG4feRdq7vVw7Q5r/zGC+tR79elOu5eq
+         MZVbP0YdgikVIFA2ubjc4+mop4pIQHJ8Lkg5VUXR2Q2PdofxV+GbHvsmHkteGii7VuXG
+         9tSmwasZWmy5OCxM8j3zeaqjSoG3FXEyKjppogiVDjEzJgl9hTjxa6+enp7XuCk7fPfT
+         AMrBKC5VIzSVQPtQNtBJ+QrL21C53qJ1XuxiDHao4lh2yNy4s1E9SCkzp6tJqZXEmXro
+         UvLhXB9BSTr0upJaM36kjv4b1FvuLmasVFub4Fhk0tPMNh4gFIwJKKOnT+2OlQ8fggT6
+         zqyA==
+X-Gm-Message-State: AOJu0YwPOV5yhINtfHWmtJuyx9lPp5HO3I1bOx+UCxbvn51m42TaRQQ1
+	LCIQGpXcUW3qS9FlG4fzNzHS2PF4sGmFLKAS6yYKHyKbVqhUbJz9B6cWpHBpAuQ=
+X-Google-Smtp-Source: AGHT+IHT1kN8rSIQ3ZENm+jczb1uQffvIF4vu5AxdS2BcFV/1xRqgZHvscMP2JaHl0k46Oyf5bSK5g==
+X-Received: by 2002:a17:906:c15:b0:a46:b809:4b22 with SMTP id s21-20020a1709060c1500b00a46b8094b22mr283511ejf.45.1711527005416;
+        Wed, 27 Mar 2024 01:10:05 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.206.205])
+        by smtp.gmail.com with ESMTPSA id ht22-20020a170907609600b00a4df061728fsm1797748ejc.83.2024.03.27.01.10.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Mar 2024 01:10:04 -0700 (PDT)
+Message-ID: <fa1a39c3-16fb-4f4b-841a-74141045e860@linaro.org>
+Date: Wed, 27 Mar 2024 09:10:03 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/4] dt-bindings: pinctrl: qcom,pmic-gpio: Add PMIH0108
+ and PMD8028 support
+To: Anjelique Melendez <quic_amelende@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, linus.walleij@linaro.org, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ quic_subbaram@quicinc.com, quic_collinsd@quicinc.com,
+ quic_jprakash@quicinc.com
+References: <20240326220628.2392802-1-quic_amelende@quicinc.com>
+ <20240326220628.2392802-3-quic_amelende@quicinc.com>
+Content-Language: en-US
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20240326220628.2392802-3-quic_amelende@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Add Schneider Electric HMIBSC board DTS. The HMIBSC board is an IIoT Edge
-Box Core board based on the Qualcomm APQ8016E SoC.
+On 26/03/2024 23:06, Anjelique Melendez wrote:
+> Update the Qualcomm Technologies, Inc. PMIC GPIO binding documentation
+> to include compatible strings for PMIH0108 and PMD8028 PMICs.
+> 
+> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
+> ---
 
-Support for Schneider Electric HMIBSC. Features:
-- Qualcomm Snapdragon 410C SoC - APQ8016 (4xCortex A53, Adreno 306)
-- 1GiB RAM
-- 8GiB eMMC, SD slot
-- WiFi and Bluetooth
-- 2x Host, 1x Device USB port
-- HDMI
-- Discrete TPM2 chip over SPI
-- USB ethernet adaptors (soldered)
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Co-developed-by: Jagdish Gediya <jagdish.gediya@linaro.org>
-Signed-off-by: Jagdish Gediya <jagdish.gediya@linaro.org>
-Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
-Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
----
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../dts/qcom/apq8016-schneider-hmibsc.dts     | 490 ++++++++++++++++++
- 2 files changed, 491 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 39889d5f8e12..ad55e52e950b 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -5,6 +5,7 @@ apq8016-sbc-usb-host-dtbs	:= apq8016-sbc.dtb apq8016-sbc-usb-host.dtbo
- 
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc-usb-host.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc-d3-camera-mezzanine.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-schneider-hmibsc.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8039-t2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8094-sony-xperia-kitakami-karin_windy.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
-diff --git a/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts b/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
-new file mode 100644
-index 000000000000..62ce862ff5c0
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
-@@ -0,0 +1,490 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2015, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2024, Linaro Ltd.
-+ */
-+
-+/dts-v1/;
-+
-+#include "msm8916-pm8916.dtsi"
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/input.h>
-+#include <dt-bindings/leds/common.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-mpp.h>
-+#include <dt-bindings/sound/apq8016-lpass.h>
-+
-+/ {
-+	model = "Schneider Electric HMIBSC Board";
-+	compatible = "schneider,apq8016-hmibsc", "qcom,apq8016";
-+
-+	aliases {
-+		i2c1 = &blsp_i2c6;
-+		i2c3 = &blsp_i2c4;
-+		i2c4 = &blsp_i2c3;
-+		mmc0 = &sdhc_1; /* eMMC */
-+		mmc1 = &sdhc_2; /* SD card */
-+		serial0 = &blsp_uart1;
-+		serial1 = &blsp_uart2;
-+		spi0 = &blsp_spi5;
-+		usid0 = &pm8916_0;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0";
-+	};
-+
-+	hdmi-out {
-+		compatible = "hdmi-connector";
-+		type = "a";
-+
-+		port {
-+			hdmi_con: endpoint {
-+				remote-endpoint = <&adv7533_out>;
-+			};
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+		autorepeat;
-+		pinctrl-0 = <&msm_key_volp_n_default>;
-+		pinctrl-names = "default";
-+
-+		button {
-+			label = "Volume Up";
-+			linux,code = <KEY_VOLUMEUP>;
-+			gpios = <&tlmm 107 GPIO_ACTIVE_LOW>;
-+		};
-+	};
-+
-+	leds {
-+		compatible = "gpio-leds";
-+		pinctrl-0 = <&pm8916_mpps_leds>;
-+		pinctrl-names = "default";
-+
-+		led-1 {
-+			function = LED_FUNCTION_WLAN;
-+			color = <LED_COLOR_ID_YELLOW>;
-+			gpios = <&pm8916_mpps 2 GPIO_ACTIVE_HIGH>;
-+			linux,default-trigger = "phy0tx";
-+			default-state = "off";
-+		};
-+
-+		led-2 {
-+			function = LED_FUNCTION_BLUETOOTH;
-+			color = <LED_COLOR_ID_BLUE>;
-+			gpios = <&pm8916_mpps 3 GPIO_ACTIVE_HIGH>;
-+			linux,default-trigger = "bluetooth-power";
-+			default-state = "off";
-+		};
-+	};
-+
-+	memory@80000000 {
-+		reg = <0 0x80000000 0 0x40000000>;
-+	};
-+
-+	reserved-memory {
-+		ramoops@bff00000 {
-+			compatible = "ramoops";
-+			reg = <0x0 0xbff00000 0x0 0x100000>;
-+			record-size = <0x20000>;
-+			console-size = <0x20000>;
-+			ftrace-size = <0x20000>;
-+			ecc-size = <16>;
-+		};
-+	};
-+
-+	usb-hub {
-+		compatible = "smsc,usb3503";
-+		reset-gpios = <&pm8916_gpios 1 GPIO_ACTIVE_LOW>;
-+		initial-mode = <1>;
-+	};
-+
-+	usb_id: usb-id {
-+		compatible = "linux,extcon-usb-gpio";
-+		id-gpios = <&tlmm 110 GPIO_ACTIVE_HIGH>;
-+		pinctrl-0 = <&usb_id_default>;
-+		pinctrl-names = "default";
-+	};
-+};
-+
-+&blsp_i2c3 {
-+	status = "okay";
-+
-+	eeprom@50 {
-+		compatible = "atmel,24c32";
-+		reg = <0x50>;
-+	};
-+};
-+
-+&blsp_i2c4 {
-+	status = "okay";
-+
-+	adv_bridge: bridge@39 {
-+		compatible = "adi,adv7533";
-+		reg = <0x39>;
-+		interrupts-extended = <&tlmm 31 IRQ_TYPE_EDGE_FALLING>;
-+
-+		adi,dsi-lanes = <4>;
-+		clocks = <&rpmcc RPM_SMD_BB_CLK2>;
-+		clock-names = "cec";
-+		pd-gpios = <&tlmm 32 GPIO_ACTIVE_HIGH>;
-+
-+		avdd-supply = <&pm8916_l6>;
-+		a2vdd-supply = <&pm8916_l6>;
-+		dvdd-supply = <&pm8916_l6>;
-+		pvdd-supply = <&pm8916_l6>;
-+		v1p2-supply = <&pm8916_l6>;
-+		v3p3-supply = <&pm8916_l17>;
-+
-+		pinctrl-0 = <&adv7533_int_active &adv7533_switch_active>;
-+		pinctrl-1 = <&adv7533_int_suspend &adv7533_switch_suspend>;
-+		pinctrl-names = "default","sleep";
-+		#sound-dai-cells = <0>;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+				adv7533_in: endpoint {
-+					remote-endpoint = <&mdss_dsi0_out>;
-+				};
-+			};
-+
-+			port@1 {
-+				reg = <1>;
-+				adv7533_out: endpoint {
-+					remote-endpoint = <&hdmi_con>;
-+				};
-+			};
-+		};
-+	};
-+};
-+
-+&blsp_i2c6 {
-+	status = "okay";
-+
-+	rtc@30 {
-+		compatible = "sii,s35390a";
-+		reg = <0x30>;
-+	};
-+
-+	eeprom@50 {
-+		compatible = "atmel,24c256";
-+		reg = <0x50>;
-+	};
-+};
-+
-+&blsp_spi5 {
-+	cs-gpios = <&tlmm 18 GPIO_ACTIVE_LOW>;
-+	status = "okay";
-+
-+	tpm@0 {
-+		compatible = "infineon,slb9670", "tcg,tpm_tis-spi";
-+		reg = <0>;
-+		spi-max-frequency = <500000>;
-+	};
-+};
-+
-+&blsp_uart1 {
-+	label = "UART0";
-+	status = "okay";
-+};
-+
-+&blsp_uart2 {
-+	label = "UART1";
-+	status = "okay";
-+};
-+
-+&lpass {
-+	status = "okay";
-+};
-+
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mdss_dsi0_out {
-+	data-lanes = <0 1 2 3>;
-+	remote-endpoint = <&adv7533_in>;
-+};
-+
-+&pm8916_codec {
-+	qcom,mbhc-vthreshold-low = <75 150 237 450 500>;
-+	qcom,mbhc-vthreshold-high = <75 150 237 450 500>;
-+	status = "okay";
-+};
-+
-+&pm8916_gpios {
-+	gpio-line-names =
-+		"USB_HUB_RESET_N_PM",
-+		"USB_SW_SEL_PM",
-+		"NC",
-+		"NC";
-+
-+	usb_hub_reset_pm: usb-hub-reset-pm-state {
-+		pins = "gpio1";
-+		function = PMIC_GPIO_FUNC_NORMAL;
-+		input-disable;
-+		output-high;
-+	};
-+
-+	usb_hub_reset_pm_device: usb-hub-reset-pm-device-state {
-+		pins = "gpio1";
-+		function = PMIC_GPIO_FUNC_NORMAL;
-+		output-low;
-+	};
-+
-+	usb_sw_sel_pm: usb-sw-sel-pm-state {
-+		pins = "gpio2";
-+		function = PMIC_GPIO_FUNC_NORMAL;
-+		power-source = <PM8916_GPIO_VPH>;
-+		input-disable;
-+		output-high;
-+	};
-+
-+	usb_sw_sel_pm_device: usb-sw-sel-pm-device-state {
-+		pins = "gpio2";
-+		function = PMIC_GPIO_FUNC_NORMAL;
-+		power-source = <PM8916_GPIO_VPH>;
-+		input-disable;
-+		output-low;
-+	};
-+};
-+
-+&pm8916_mpps {
-+	gpio-line-names =
-+		"NC",
-+		"WLAN_LED_CTRL",
-+		"BT_LED_CTRL",
-+		"NC";
-+
-+	pm8916_mpps_leds: pm8916-mpps-state {
-+		pins = "mpp2", "mpp3";
-+		function = "digital";
-+		output-low;
-+	};
-+};
-+
-+&pm8916_resin {
-+	linux,code = <KEY_POWER>;
-+	status = "okay";
-+};
-+
-+&pm8916_rpm_regulators {
-+	pm8916_l17: l17 {
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+};
-+
-+&sdhc_1 {
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	pinctrl-0 = <&sdc2_default &sdc2_cd_default>;
-+	pinctrl-1 = <&sdc2_sleep &sdc2_cd_default>;
-+	pinctrl-names = "default", "sleep";
-+	cd-gpios = <&tlmm 38 GPIO_ACTIVE_LOW>;
-+	status = "okay";
-+};
-+
-+&sound {
-+	pinctrl-0 = <&cdc_pdm_default &sec_mi2s_default>;
-+	pinctrl-1 = <&cdc_pdm_sleep &sec_mi2s_sleep>;
-+	pinctrl-names = "default", "sleep";
-+	model = "HMIBSC";
-+	audio-routing =
-+		"AMIC2", "MIC BIAS Internal2",
-+		"AMIC3", "MIC BIAS External1";
-+	status = "okay";
-+
-+	quaternary-dai-link {
-+		link-name = "ADV7533";
-+		cpu {
-+			sound-dai = <&lpass MI2S_QUATERNARY>;
-+		};
-+		codec {
-+			sound-dai = <&adv_bridge 0>;
-+		};
-+	};
-+
-+	primary-dai-link {
-+		link-name = "WCD";
-+		cpu {
-+			sound-dai = <&lpass MI2S_PRIMARY>;
-+		};
-+		codec {
-+			sound-dai = <&lpass_codec 0>, <&pm8916_codec 0>;
-+		};
-+	};
-+
-+	tertiary-dai-link {
-+		link-name = "WCD-Capture";
-+		cpu {
-+			sound-dai = <&lpass MI2S_TERTIARY>;
-+		};
-+		codec {
-+			sound-dai = <&lpass_codec 1>, <&pm8916_codec 1>;
-+		};
-+	};
-+};
-+
-+&tlmm {
-+	pinctrl-0 = <&uart1_mux0_rs232_high &uart1_mux1_rs232_low>;
-+	pinctrl-names = "default";
-+
-+	adv7533_int_active: adv533-int-active-state {
-+		pins = "gpio31";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+	};
-+
-+	adv7533_int_suspend: adv7533-int-suspend-state {
-+		pins = "gpio31";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	adv7533_switch_active: adv7533-switch-active-state {
-+		pins = "gpio32";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+	};
-+
-+	adv7533_switch_suspend: adv7533-switch-suspend-state {
-+		pins = "gpio32";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	msm_key_volp_n_default: msm-key-volp-n-default-state {
-+		pins = "gpio107";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-up;
-+	};
-+
-+	sdc2_cd_default: sdc2-cd-default-state {
-+		pins = "gpio38";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	/*
-+	 * UART1 being the debug console supports various modes of
-+	 * operation (RS-232/485/422) controlled via GPIOs configured
-+	 * mux as follows:
-+	 *
-+	 *   gpio100    gpio99    UART mode
-+	 *   0          0         loopback
-+	 *   0          1         RS-232
-+	 *   1          0         RS-485
-+	 *   1          1         RS-422
-+	 *
-+	 * The default mode configured here is RS-232 mode.
-+	 */
-+	uart1_mux0_rs232_high: uart1-mux0-rs232-state {
-+		bootph-all;
-+		pins = "gpio99";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+		output-high;
-+	};
-+
-+	uart1_mux1_rs232_low: uart1-mux1-rs232-state {
-+		bootph-all;
-+		pins = "gpio100";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+		output-low;
-+	};
-+
-+	usb_id_default: usb-id-default-state {
-+		pins = "gpio110";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-up;
-+	};
-+};
-+
-+&usb {
-+	extcon = <&usb_id>, <&usb_id>;
-+	pinctrl-0 = <&usb_sw_sel_pm &usb_hub_reset_pm>;
-+	pinctrl-1 = <&usb_sw_sel_pm_device &usb_hub_reset_pm_device>;
-+	pinctrl-names = "default", "device";
-+	status = "okay";
-+};
-+
-+&usb_hs_phy {
-+	extcon = <&usb_id>;
-+};
-+
-+&wcnss {
-+	firmware-name = "qcom/apq8016/wcnss.mbn";
-+	status = "okay";
-+};
-+
-+&wcnss_ctrl {
-+	firmware-name = "qcom/apq8016/WCNSS_qcom_wlan_nv_sbc.bin";
-+};
-+
-+&wcnss_iris {
-+	compatible = "qcom,wcn3620";
-+};
-+
-+&wcnss_mem {
-+	status = "okay";
-+};
-+
-+/* PINCTRL - additions to nodes defined in msm8916.dtsi */
-+
-+/*
-+ * 2mA drive strength is not enough when connecting multiple
-+ * I2C devices with different pull up resistors.
-+ */
-+&blsp_i2c4_default {
-+	drive-strength = <16>;
-+};
-+
-+&blsp_i2c6_default {
-+	drive-strength = <16>;
-+};
-+
-+&blsp_uart1_default {
-+	bootph-all;
-+};
-+
-+/* Enable CoreSight */
-+&cti0 { status = "okay"; };
-+&cti1 { status = "okay"; };
-+&cti12 { status = "okay"; };
-+&cti13 { status = "okay"; };
-+&cti14 { status = "okay"; };
-+&cti15 { status = "okay"; };
-+&debug0 { status = "okay"; };
-+&debug1 { status = "okay"; };
-+&debug2 { status = "okay"; };
-+&debug3 { status = "okay"; };
-+&etf { status = "okay"; };
-+&etm0 { status = "okay"; };
-+&etm1 { status = "okay"; };
-+&etm2 { status = "okay"; };
-+&etm3 { status = "okay"; };
-+&etr { status = "okay"; };
-+&funnel0 { status = "okay"; };
-+&funnel1 { status = "okay"; };
-+&replicator { status = "okay"; };
-+&stm { status = "okay"; };
-+&tpiu { status = "okay"; };
--- 
-2.34.1
+Best regards,
+Krzysztof
 
 
