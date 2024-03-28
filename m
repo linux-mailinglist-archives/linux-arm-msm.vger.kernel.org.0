@@ -1,319 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-15569-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15571-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 18796890200
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 15:36:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 95050890225
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 15:43:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DB9CB1C2D448
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 14:36:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C2BD71C22FF0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 14:43:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A3A912F5B4;
-	Thu, 28 Mar 2024 14:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12FC312A157;
+	Thu, 28 Mar 2024 14:43:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s6mXgQ3V"
+	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="uX75/+yJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sonic309-20.consmr.mail.ne1.yahoo.com (sonic309-20.consmr.mail.ne1.yahoo.com [66.163.184.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2263912F59E;
-	Thu, 28 Mar 2024 14:35:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7AC129E81
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 14:43:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.163.184.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711636529; cv=none; b=Rj6N+w7H9XDPWfKezDIzd8VpO/qDNEI6r1oKUYfh0NiNCiyWt5gahsTF//0xNcNh0xQdpkzEu6z6VKU0G6YRKOPwoqWhU7YG7Upez+N7gWSttEZprAutknacFoCseCdi7/i2skCrU5OSVE92UDY1DUsL6WxARB6+3MQa2GNVrJc=
+	t=1711636988; cv=none; b=aZop5k/qO7p5kYuLX1Py2oebFScz1dWjUGN0AGqfR5AoUQG80TlrrhggqXS4DuOMLWkVtsmmIu1oM+iHR4hna3ahlPrsfwN5h+4NUVyl6TonIbXd5ajv7eBU1uZZvPrb8AoIxik4icztx7Lajm49hLutINWPZnJPlSK71Wa8vXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711636529; c=relaxed/simple;
-	bh=Kr9lQ3sO2i8J+JqxBgX/JkrQt58EHLLHgmBCd+Xz7iY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=byoQSa28hLg/1JGj+JFehepYTy1wRlEZqRvLAXwDPjU/OCj96s2XwEdn1q5X63wJRStDRLwCwKmz68lZJsx4/fI95WpeJ7/6UCLms1+C0K1iZGQCvDK87fU8MMffIHVwDqmusdCbux3Q6RPS2V6y4x0WPAMj+3bOlruimrPR6u4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s6mXgQ3V; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D270C4166B;
-	Thu, 28 Mar 2024 14:35:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711636529;
-	bh=Kr9lQ3sO2i8J+JqxBgX/JkrQt58EHLLHgmBCd+Xz7iY=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=s6mXgQ3VfJMRXPIHeqp54ulRg1m7Q8tLnbwpIR1GiaLXoMvoJLtEybBSe8lHYHb0o
-	 7k7rikFnytieQPO0JXQkRSY9HgsKoH5CMPfpdKFAQNSpqqVMm/QWOMK+/K9aOqZihD
-	 SqYWJ6pg1s+pj0n1E9CVVwUrvFMJtFpr2IqfUnlyICq98oQ4xgMdjDWr6vsXnAVb6u
-	 fGPsyPEgkcmM9Jb/jsivc9J3zpjumLKxVV9jWqgCJJO3zteRg03vrpZ2lT86qczji3
-	 zERN52E2SKLqk9qh1wzr8XWlFFbpwrlhb32WHaREUcXx6ZKOeARQZggCLOmiZmEAAo
-	 7jnieO1JfadhQ==
-From: Bjorn Andersson <andersson@kernel.org>
-Date: Thu, 28 Mar 2024 07:40:05 -0700
-Subject: [PATCH v2 6/6] drm/msm/dp: Use function arguments for audio
- operations
+	s=arc-20240116; t=1711636988; c=relaxed/simple;
+	bh=bZGqD1Qko3l8gQBtb0dEESAh+VdOR3Psbbmt/CLYtqs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Gdwptpn8HR2vBkDWgOgi5CKoaqIfkJ4hH+A0xC+5maR/EO8cpBnO1bWLnKu4S6jnBu/7HZvgBM4ovj8HkhSdW0EC7GcvlCM3sG6mql94Yv7LwVvsvkWJ9ck5QXaS2VVqfNAjeIkTZkCYWc50BhYkCjlnbkw7RneXKQfBQzfXVkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=uX75/+yJ; arc=none smtp.client-ip=66.163.184.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1711636980; bh=g1anJ9SArd8svSUwZTdW2RVW0ATJLmdpNNQgfHQxsYM=; h=Date:Subject:To:Cc:References:From:In-Reply-To:From:Subject:Reply-To; b=uX75/+yJGtvxLlsg8k6Osju8giMukFoeDCN7vRznFDRe5fTD2qwi91ES1HWF1OQGcgYHkgsAtkl5qAsUYCJNmvwZB8CyVRHX7Ww73tZnQNVcsQEv3ZiU9DPba6j0zUeM6gOlCXbfoG3M6QusQHFSkYSDaAk1UEji40EjDEG1gPN4s/tg78D+hnnFYts5qugnwL8b2wk6OO9NDQNuW41P88me8K34Rd0f2hbCRJNJczhIupN+/Jlpo6LY3wRvOYEtd01KX0ZgdhhM7VlgEkN6MGwBjm4gNKspt7VuvXnvJ+1c/bZ32/DwMjxgV7yCe8HHGHoAyFoGJ/MF+vh4H2HKLA==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1711636980; bh=sEeIUzNwSaiytCMALB8Zm+O498jy0t7jmE7z6F1Veqb=; h=X-Sonic-MF:Date:Subject:To:From:From:Subject; b=ZrYNoncDRxbXgTW6X/fM01KS7QuH58t4az+INfb7IjPbqdwfWL6/dPcZSaS9TZ4V/8OqfpE0PH1VDssPjvSIUzuqw+GO94Pr0zmIWnNGN8GtbfME0bUIPlI5LAwp4On2E2jtrANTmt61Mk5I8PAIlsStc3JW8JJXPN57NUdMybp+T3BQ1pZQHdh6keWs0rnyaPzLMgNGw5bN82trQ7cVHqfNLE1GhFNDbyLYhq8PnJUDeHEw3QyFsyFfxIVe9++C10Cq6Kt+qG1QKErgJeOqNFufNHI29y+XC0pKUxJnY4VTVUSvukhXSvE3dWE86myBHIiJX5xL9lFi1V1fPYJDCA==
+X-YMail-OSG: o0BZUZ4VM1koiDp.F2VfpVIV3CO06UgKnbH3BsGIhukliMPxbb8_6MPmDXyY3fo
+ WD1ApgEFpUur3Z9.QpznACQZAA8pSIHjbS6exB_n7SYTaly.HvyR.Axg.XKk0EDAMTrV8N_5jEHZ
+ wT0H.yQakV4eVsKMTHyuwxJzDmMKW6cKq56IXluTmZN8pEUFx.VGUwzag9VX8qqAMDbE7CRBqgcr
+ X0bKxuZv1D8T2n8jMFBdfelZzPHv2gDak3oRQVrh0CnbJ8fzzKz6uGulApwx7TN9ssjb4mpNbuiX
+ UmPYKHcDBoXH.H_atFfYmAs5iOEOVLmHVcGeZ4uvMhL1aszEejINoMY4P6zH0qbUeg5v53nJtXB8
+ jb2oUnebU6W.hyzJ.FlgqAgqK6u5yhC218BWbqs6QfKhk_XC8ClrUgVBwDPaFXblqIz74j415Cll
+ 6LHafRNAHvqjbwbulO2eTkIUhld6lqo27.W6QkWWJNkYFLkky3_5Tm0ZC62LsKc90aRt8tc60Q0Z
+ bJbOVu0HUk62soWwFJHSwDcfuNCs.lwfJNwRhuSh8uu3Xh9qyzU6XRCIIiYVNqGrBEedZlhEr6ck
+ B99TPDGfnzHhIIDjYkTOkPiGulmkR5e1uI9a0pwgOHpWUGUiFgnrTbpqQ7Ik_QyllwoBDn5v2.c6
+ FvpZ7S5JDl7FwoGOsgjook.2DDm6t6xK5KHe5VmLjc3d._21ge.yq4CcVlIK12bpDo795F4rkzIB
+ .IJ0d8QTRWYzAxnxQF38Gh1ISGryzTna3WojPgEpG7MDmmTxC13HWdCNydn65auxqdBSJqYEP3s4
+ 7Hexq_4s0BnMfsSlU4pW_ege9BD9f.m7OHpfsklBHt3IdUuzEqbtSlofEN.dFs4J1STboGDJdBf7
+ bvNsA36OzbHNNM7ZKJiXmUcCOcFJP9PxrjLxgtoC_dNmIWAH8DWyR_eDSWhHv2FLU7fUktEkDjHW
+ 5ebCXkaPfgQaRSHRhzYGSv0SQKN9azmdFzm45FF7.tRBYUTWQc0TO8CfPaNYM1rIIvBTGvMeK5ld
+ Oba6R49xybTzKxhJEsDlOJnOQKPolzvUe4C6hpxp3Jmd_jJKw.QNcOcwYxcQDe5slVam7bePvOC7
+ e_4OMbUcvQ2Q6dUj4s1GI6vOf4JyAEun5SX1KOIQlSKOxS5YI_T_2tkBpwQAich0cKrQY1I85_R3
+ Q2bVX8jghiU3yZVhZDbvDxXuTCEOuoruxb_736cZOrsx1xK_rWpfvIV9_RfcjZ65b7qEzP3RFeNr
+ sUGCRuw5ZkvGKAgGtcnzdbctNW_6CpYtxm6gmvejTKgbiglKCGlnwb76TSSZDIYC.eAM68_EVSK5
+ 1loBBDyYxxzOAUqftmXIqvSZt6TCEN4LTPHZAU1nXxZ..OV7_InN17arMduCktYDbFOqTBIUjLjE
+ synLShQkYmEzqRYBmvTELvpVpWq61ondtj5v88NVK1rjs.9uf8GzyCni3gqTtBa2Yfx0Vh33usO2
+ _j4WbFxaBqi6DGnt1JVTvXjMvoWHpETop_wJngUzr_sfpvEp9bqBdRS1AjflBgvFX1SQ6X8nsC.O
+ TQlBtgJJtU1lwHjyOKtzSQjNEVOhMlvQf63itd7O6uVIgre9zX1C2Pwj8iLB2YwsjIKeqQjpX0NK
+ QdiMFL1bVHj0t1R_A4QRQbBMfBIfLX5CcIpIj4NnP9Hf_NhFzi6OG2Q5V1xOEym20QMX4hHNtn2x
+ JOVU_z434g7R3zvZ53.64LbaGhVo.50kLrhEUU5oGSk0kC8DRO16A2XRj.hZ566xfGxZ0HzDfMAW
+ TRPnvco6wP37dcowsVlnCP9ysaH3Gwbras9jpGUlp3FxlbziG88qZ0ZXb5vOFE1ufYRjFdn5Yw3v
+ Azc4iYnKdYklKSaaHVwyt5dgAgeQHZtJO38_ajM9oLr9NxAQETpQUnmyYnDQx6LYpOAls5ubxCj_
+ BcjC4Ujjb0Wx9P4ZIG3YtRSqBAijcUYANXhWOcpqvfm7YCsN4Tp6m93nG5gsknT84Id332gf3D1i
+ csn4EjZmyh3f3vg.k3DKml_xcbvgzS5cdANOV8ACozyaaT1hMQ5kt0Ax1Fch1PHhvSK7_A4mIvrV
+ knMBmNwhblTziQupON4neJjMXYOhrPccAmJQxxd5RuRzqKikp581Zda3BWqfqKRXYAcY1G2dNdSy
+ ZZt5zauvTXG7sc8NB806HPJ6Xnz3R2MseY3G9d4pTdM.UJF032qq.A7j9uNS61FEYyw01HSI2eAy
+ .170qRYH6mduThmmwO8wv5JuEdPI6n9w7CS8tLsIar3MD753eGTtBjL4WdXY-
+X-Sonic-MF: <serdeliuk@yahoo.com>
+X-Sonic-ID: dcae60cb-a63d-4564-bbef-99fbb1cf4b6a
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic309.consmr.mail.ne1.yahoo.com with HTTP; Thu, 28 Mar 2024 14:43:00 +0000
+Received: by hermes--production-ir2-7bc88bfc75-ll9h2 (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID bd83f5bdb12ca9d1f475c97b948ec81a;
+          Thu, 28 Mar 2024 14:42:55 +0000 (UTC)
+Message-ID: <33e23d1c-5b6f-4111-9631-0f8db1100d0c@yahoo.com>
+Date: Thu, 28 Mar 2024 15:42:52 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240328-msm-dp-cleanup-v2-6-a5aed9798d32@quicinc.com>
-References: <20240328-msm-dp-cleanup-v2-0-a5aed9798d32@quicinc.com>
-In-Reply-To: <20240328-msm-dp-cleanup-v2-0-a5aed9798d32@quicinc.com>
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Bjorn Andersson <quic_bjorande@quicinc.com>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8343;
- i=quic_bjorande@quicinc.com; h=from:subject:message-id;
- bh=LkCwztOrVV+hfqYB41Cl8YqF/cppd90OpyDB9gSFXnA=;
- b=owEBgwJ8/ZANAwAIAQsfOT8Nma3FAcsmYgBmBYFIC0R8+CRkJwGR7ZPxfU8HQh/c3dF+taX28
- mTd0sRZ4DeJAkkEAAEIADMWIQQF3gPMXzXqTwlm1SULHzk/DZmtxQUCZgWBSBUcYW5kZXJzc29u
- QGtlcm5lbC5vcmcACgkQCx85Pw2ZrcWRuA/5AUu0jBvNPPxQCAtzZNSeEQwpKTLJlBBzNy9rpvf
- KB3kZwAQ/ZtMX7SsvbMdZxuWeKDkenrsQ7ay3kC+xGSzln86OsRJzNgJY3TWkP++flaw9xRErVX
- 5LPykqHf1VEYahW+fiiURKOFhIbuZ/kMEZ/a072GSR1JA+D5AQaj83pyaiQMz5HAoSUsP3dVkzv
- 8/4tLnISk/qyM30K54DSKwzxm+uY8dvShrp5gNQa5yLv1q9rm335NrzDKlRKCa7S52ZTerVI57C
- 2Tnr3hjBIHpfECwOAvZmuLZ0ZLNxwOf8NtF34Rlsz84wsHfGZ3CFG4W+ENPQuY/vPima/UG6Mbw
- RUr4luJ9GJf+8g3HTdbH8sKtkb8MJSPcxwiYnCXSUqg1lh16dZf/u0TQ/WMd/YaqG76Tc2ikZWB
- XGjT7D03SabYVv/WHDYqNZ5FSzm1UzobPnVySd2/dgfwrDbfJs5vMGux/s1QuZgtaJ3kBYo09JH
- LC8BcfCMPVPq4diYYmGkbjJoYOPQrClEm0Cu5BdxwqX2w1vuNVm0+nh4NljeGQrzFlQME3EAmxW
- pA0fzyW9+gT0zI7iYozxGKiuO9lRmmgnaBtQZXhb9MyuRWO/4vYidLBjO+Yz7FEnL05Gr9K6f6s
- M+7JXR60U6nbN5/W4hEEe0j9GktxdRh2iirFjKyMmEjs=
-X-Developer-Key: i=quic_bjorande@quicinc.com; a=openpgp;
- fpr=05DE03CC5F35EA4F0966D5250B1F393F0D99ADC5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dt-bindings: arm: qcom: Add Samsung Galaxy Z Fold5
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240328-dt-bindings-arm-qcom-add-support-for-samsung-galaxy-zfold5-v1-1-cb612e3ade18@yahoo.com>
+ <ca4ed5e3-32ea-451a-82ca-25fba07877dc@linaro.org>
+Content-Language: en-US
+From: Alexandru Serdeliuc <serdeliuk@yahoo.com>
+In-Reply-To: <ca4ed5e3-32ea-451a-82ca-25fba07877dc@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Mailer: WebService/1.1.22205 mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
 
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
+Hi Konrad,
 
-The dp_audio read and write operations uses members in struct dp_catalog
-for passing arguments and return values. This adds unnecessary
-complexity to the implementation, as it turns out after detangling the
-logic that no state is actually held in these variables.
 
-Clean this up by using function arguments and return values for passing
-the data.
+Thanks, yes, I am new to b4 and sending patches, in a few minutes I will 
+add the second patch.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
----
- drivers/gpu/drm/msm/dp/dp_audio.c   | 20 +++++--------------
- drivers/gpu/drm/msm/dp/dp_catalog.c | 39 +++++++++++++------------------------
- drivers/gpu/drm/msm/dp/dp_catalog.h | 18 +++++++++--------
- 3 files changed, 28 insertions(+), 49 deletions(-)
+That actually add the device tree, but  without the previous patch it 
+showed me a warning, and with both patches provided another  warning 
+that i need to split them in two.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_audio.c b/drivers/gpu/drm/msm/dp/dp_audio.c
-index 7fd0c1793ba3..a599fc5d63c5 100644
---- a/drivers/gpu/drm/msm/dp/dp_audio.c
-+++ b/drivers/gpu/drm/msm/dp/dp_audio.c
-@@ -32,11 +32,7 @@ static u32 dp_audio_get_header(struct dp_catalog *catalog,
- 		enum dp_catalog_audio_sdp_type sdp,
- 		enum dp_catalog_audio_header_type header)
- {
--	catalog->sdp_type = sdp;
--	catalog->sdp_header = header;
--	dp_catalog_audio_get_header(catalog);
--
--	return catalog->audio_data;
-+	return dp_catalog_audio_get_header(catalog, sdp, header);
- }
- 
- static void dp_audio_set_header(struct dp_catalog *catalog,
-@@ -44,10 +40,7 @@ static void dp_audio_set_header(struct dp_catalog *catalog,
- 		enum dp_catalog_audio_sdp_type sdp,
- 		enum dp_catalog_audio_header_type header)
- {
--	catalog->sdp_type = sdp;
--	catalog->sdp_header = header;
--	catalog->audio_data = data;
--	dp_catalog_audio_set_header(catalog);
-+	dp_catalog_audio_set_header(catalog, sdp, header, data);
- }
- 
- static void dp_audio_stream_sdp(struct dp_audio_private *audio)
-@@ -317,8 +310,7 @@ static void dp_audio_setup_acr(struct dp_audio_private *audio)
- 		break;
- 	}
- 
--	catalog->audio_data = select;
--	dp_catalog_audio_config_acr(catalog);
-+	dp_catalog_audio_config_acr(catalog, select);
- }
- 
- static void dp_audio_safe_to_exit_level(struct dp_audio_private *audio)
-@@ -344,16 +336,14 @@ static void dp_audio_safe_to_exit_level(struct dp_audio_private *audio)
- 		break;
- 	}
- 
--	catalog->audio_data = safe_to_exit_level;
--	dp_catalog_audio_sfe_level(catalog);
-+	dp_catalog_audio_sfe_level(catalog, safe_to_exit_level);
- }
- 
- static void dp_audio_enable(struct dp_audio_private *audio, bool enable)
- {
- 	struct dp_catalog *catalog = audio->catalog;
- 
--	catalog->audio_data = enable;
--	dp_catalog_audio_enable(catalog);
-+	dp_catalog_audio_enable(catalog, enable);
- }
- 
- static struct dp_audio_private *dp_audio_get_data(struct platform_device *pdev)
-diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-index 00ad3ebaa5a1..970d62e1610c 100644
---- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-+++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-@@ -1159,34 +1159,28 @@ struct dp_catalog *dp_catalog_get(struct device *dev)
- 	return &catalog->dp_catalog;
- }
- 
--void dp_catalog_audio_get_header(struct dp_catalog *dp_catalog)
-+u32 dp_catalog_audio_get_header(struct dp_catalog *dp_catalog,
-+				enum dp_catalog_audio_sdp_type sdp,
-+				enum dp_catalog_audio_header_type header)
- {
- 	struct dp_catalog_private *catalog;
- 	u32 (*sdp_map)[DP_AUDIO_SDP_HEADER_MAX];
--	enum dp_catalog_audio_sdp_type sdp;
--	enum dp_catalog_audio_header_type header;
--
--	if (!dp_catalog)
--		return;
- 
- 	catalog = container_of(dp_catalog,
- 		struct dp_catalog_private, dp_catalog);
- 
- 	sdp_map = catalog->audio_map;
--	sdp     = dp_catalog->sdp_type;
--	header  = dp_catalog->sdp_header;
- 
--	dp_catalog->audio_data = dp_read_link(catalog,
--			sdp_map[sdp][header]);
-+	return dp_read_link(catalog, sdp_map[sdp][header]);
- }
- 
--void dp_catalog_audio_set_header(struct dp_catalog *dp_catalog)
-+void dp_catalog_audio_set_header(struct dp_catalog *dp_catalog,
-+				 enum dp_catalog_audio_sdp_type sdp,
-+				 enum dp_catalog_audio_header_type header,
-+				 u32 data)
- {
- 	struct dp_catalog_private *catalog;
- 	u32 (*sdp_map)[DP_AUDIO_SDP_HEADER_MAX];
--	enum dp_catalog_audio_sdp_type sdp;
--	enum dp_catalog_audio_header_type header;
--	u32 data;
- 
- 	if (!dp_catalog)
- 		return;
-@@ -1195,17 +1189,14 @@ void dp_catalog_audio_set_header(struct dp_catalog *dp_catalog)
- 		struct dp_catalog_private, dp_catalog);
- 
- 	sdp_map = catalog->audio_map;
--	sdp     = dp_catalog->sdp_type;
--	header  = dp_catalog->sdp_header;
--	data    = dp_catalog->audio_data;
- 
- 	dp_write_link(catalog, sdp_map[sdp][header], data);
- }
- 
--void dp_catalog_audio_config_acr(struct dp_catalog *dp_catalog)
-+void dp_catalog_audio_config_acr(struct dp_catalog *dp_catalog, u32 select)
- {
- 	struct dp_catalog_private *catalog;
--	u32 acr_ctrl, select;
-+	u32 acr_ctrl;
- 
- 	if (!dp_catalog)
- 		return;
-@@ -1213,7 +1204,6 @@ void dp_catalog_audio_config_acr(struct dp_catalog *dp_catalog)
- 	catalog = container_of(dp_catalog,
- 		struct dp_catalog_private, dp_catalog);
- 
--	select = dp_catalog->audio_data;
- 	acr_ctrl = select << 4 | BIT(31) | BIT(8) | BIT(14);
- 
- 	drm_dbg_dp(catalog->drm_dev, "select: %#x, acr_ctrl: %#x\n",
-@@ -1222,10 +1212,9 @@ void dp_catalog_audio_config_acr(struct dp_catalog *dp_catalog)
- 	dp_write_link(catalog, MMSS_DP_AUDIO_ACR_CTRL, acr_ctrl);
- }
- 
--void dp_catalog_audio_enable(struct dp_catalog *dp_catalog)
-+void dp_catalog_audio_enable(struct dp_catalog *dp_catalog, bool enable)
- {
- 	struct dp_catalog_private *catalog;
--	bool enable;
- 	u32 audio_ctrl;
- 
- 	if (!dp_catalog)
-@@ -1234,7 +1223,6 @@ void dp_catalog_audio_enable(struct dp_catalog *dp_catalog)
- 	catalog = container_of(dp_catalog,
- 		struct dp_catalog_private, dp_catalog);
- 
--	enable = !!dp_catalog->audio_data;
- 	audio_ctrl = dp_read_link(catalog, MMSS_DP_AUDIO_CFG);
- 
- 	if (enable)
-@@ -1329,10 +1317,10 @@ void dp_catalog_audio_init(struct dp_catalog *dp_catalog)
- 	catalog->audio_map = sdp_map;
- }
- 
--void dp_catalog_audio_sfe_level(struct dp_catalog *dp_catalog)
-+void dp_catalog_audio_sfe_level(struct dp_catalog *dp_catalog, u32 safe_to_exit_level)
- {
- 	struct dp_catalog_private *catalog;
--	u32 mainlink_levels, safe_to_exit_level;
-+	u32 mainlink_levels;
- 
- 	if (!dp_catalog)
- 		return;
-@@ -1340,7 +1328,6 @@ void dp_catalog_audio_sfe_level(struct dp_catalog *dp_catalog)
- 	catalog = container_of(dp_catalog,
- 		struct dp_catalog_private, dp_catalog);
- 
--	safe_to_exit_level = dp_catalog->audio_data;
- 	mainlink_levels = dp_read_link(catalog, REG_DP_MAINLINK_LEVELS);
- 	mainlink_levels &= 0xFE0;
- 	mainlink_levels |= safe_to_exit_level;
-diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
-index a82ab4856b50..cd1ad046a953 100644
---- a/drivers/gpu/drm/msm/dp/dp_catalog.h
-+++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
-@@ -48,9 +48,6 @@ enum dp_catalog_audio_header_type {
- };
- 
- struct dp_catalog {
--	enum dp_catalog_audio_sdp_type sdp_type;
--	enum dp_catalog_audio_header_type sdp_header;
--	u32 audio_data;
- 	bool wide_bus_en;
- };
- 
-@@ -114,12 +111,17 @@ void dp_catalog_panel_tpg_disable(struct dp_catalog *dp_catalog);
- struct dp_catalog *dp_catalog_get(struct device *dev);
- 
- /* DP Audio APIs */
--void dp_catalog_audio_get_header(struct dp_catalog *catalog);
--void dp_catalog_audio_set_header(struct dp_catalog *catalog);
--void dp_catalog_audio_config_acr(struct dp_catalog *catalog);
--void dp_catalog_audio_enable(struct dp_catalog *catalog);
-+u32 dp_catalog_audio_get_header(struct dp_catalog *dp_catalog,
-+				enum dp_catalog_audio_sdp_type sdp,
-+				enum dp_catalog_audio_header_type header);
-+void dp_catalog_audio_set_header(struct dp_catalog *dp_catalog,
-+				 enum dp_catalog_audio_sdp_type sdp,
-+				 enum dp_catalog_audio_header_type header,
-+				 u32 data);
-+void dp_catalog_audio_config_acr(struct dp_catalog *catalog, u32 select);
-+void dp_catalog_audio_enable(struct dp_catalog *catalog, bool enable);
- void dp_catalog_audio_config_sdp(struct dp_catalog *catalog);
- void dp_catalog_audio_init(struct dp_catalog *catalog);
--void dp_catalog_audio_sfe_level(struct dp_catalog *catalog);
-+void dp_catalog_audio_sfe_level(struct dp_catalog *catalog, u32 safe_to_exit_level);
- 
- #endif /* _DP_CATALOG_H_ */
 
--- 
-2.43.0
+Best regards,
 
+Marc
+
+
+On 28/3/24 15:39, Konrad Dybcio wrote:
+> On 28.03.2024 3:31 PM, Alexandru Marc Serdeliuc via B4 Relay wrote:
+>> From: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
+>>
+>> This documents Samsung Galaxy Z Fold5 (samsung,q5q)
+>> which is a foldable phone by Samsung based on the sm8550 SoC.
+>>
+>> Signed-off-by: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
+>> ---
+>> This documents Samsung Galaxy Z Fold5 (samsung,q5q)
+>> which is a foldable phone by Samsung based on the sm8550 SoC.
+>> ---
+> That's very welcome, but are you going to submit a devicetree for it?
+>
+> Konrad
 
