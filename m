@@ -1,109 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-15483-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15484-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 504F388F3C7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 01:44:16 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2571B88F4E9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 02:52:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 092DE299966
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 00:44:15 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AAC0FB2348D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 01:52:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9572717556;
-	Thu, 28 Mar 2024 00:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6982C210EC;
+	Thu, 28 Mar 2024 01:52:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k0b3NUmw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="D4GNVCUX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5692CEEB3;
-	Thu, 28 Mar 2024 00:44:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26D7F1804A
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 01:52:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711586650; cv=none; b=rL9m9vaW33ZEhNJRHg4ZIxD+mx6K/Q+iFOxZ6JrtnJ4KFS6zKk8CYwzqCZJgJTXNvpL7AI6mk8urHXrcBPCjlYiv7nXTWxk0O4SwG8rjJn/SUJkQDa5s2xGGMgitpFQ5D4gPev4UI65Cfe/eBnPCYxQ/5f1ileQarbskxyDjg1U=
+	t=1711590728; cv=none; b=khbjL9ded8OgTeXLBdxCLmBMZXtVfCNNvbWTyFIPPIu4LVkig1+b+AHknp40VGutGEoGysHDkIy/Z9JvEqOEcUVv0TIbec6cMDXdTPISl3hj30y8940YSSr0aejnHBzNUOlpcS2B5/XIPpRv/BXdj0+VtzVGIiwBkf7p7HwY4L8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711586650; c=relaxed/simple;
-	bh=9yBedKDcPA/JWXoQD3zRnrUUup+kGC60mJSL3m/qRBk=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=maywRB2hHy8yKa1HI+iVYH15CJ6KKoFWL3nK1ii8dfSP6utGvZtmeShLUODjkvWtaTjZAh5XLDjulTqLHLwHCWUjv8oLbuE6p8Ny8MOlrUNW7k/T84xflTC6JiSUpa6W+E8sZ/EcVI1OVPSsDV6IJUR2bTEAnyLhLviy1ITPnTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k0b3NUmw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A50CFC433C7;
-	Thu, 28 Mar 2024 00:44:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711586649;
-	bh=9yBedKDcPA/JWXoQD3zRnrUUup+kGC60mJSL3m/qRBk=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=k0b3NUmwq+BnFLFWIWucjZhg1KprqU86RePM+BsI/9FyN+FBiUsZuK6HehUrkbIhv
-	 XohkKQOGoXrHYLuepDj1R0vTMDtLU677RDtPsknUc7SxRraqNgE1EXR167ZH6RwBEv
-	 A84LVABMYGlRr+CNhffxt+QOswxv+vM/9tPMiUMD5Q4pXbzIScv+HaWNABkHKUeNuz
-	 BDUZOo0Qx+8KnEwdhwAMu3hMOR+rUWig3hQPa23fOh/OA1qVYFFd4wexX1Vb2kJAnM
-	 VxMFsxOXWMiypFy/VCSVVMI3afEsrhHzDChA0TagPRMlBsu0AKORQqBnZWl5lrD6bd
-	 reGtYhI+NZnIQ==
-Date: Wed, 27 Mar 2024 19:44:08 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1711590728; c=relaxed/simple;
+	bh=mkM6R0KgpBbz4KudbiA6fw95cLUuvRuwLR/2IvSvuQM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hgCsyVjqZqEXp5ZL+u/yuNf9CfQxSNx7TNFFNXwR3lqlKeYYqVUD4nO9juCdG8AOcDe0b/x8tgFeoaTJxZP7f40C4/xJJQm04rk6+6FjzN/q79D/EIhBuLmPX0NuYKgQU1iDdOb5RBLI0ANUdN9lDI2onhKyQDygtRMsei1igWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=D4GNVCUX; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-61130dd21c1so5249967b3.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 18:52:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1711590725; x=1712195525; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=xeRupraePyxNUCGKwkTwjgmBsjpIgZkoxz4iGu5JFgM=;
+        b=D4GNVCUXFpdKjKpZy4B4yr8vhONdvnIwjwp34MmdMERiVmsLzVW3kPf2NudIFy2BR+
+         UJ/yK0TsAFi2HUP8/puMsIEbzcrglnwrpDD1Kzg5sqwROPppvCjdm1Buw9MnfCK2JrhK
+         zPYdWB6GZjXx4ZfXn6KmoCRrAei2VActP8/S9zEVnthJSBj0xXRuTLA3vL3Z6l6Wq2Mj
+         stx5sdnH3F1rnExa8Bub81vBYPd1JKW8NFjWc7ih6snNSJCY1iHfowqRWFJu2wPmdtU5
+         IaNqDFSf+odUP/xp4jlncO4JdWzNZJC9UZb+BZaqykyi52jF7GPz2n8s7b4Eo+s20Tfz
+         So1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711590725; x=1712195525;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xeRupraePyxNUCGKwkTwjgmBsjpIgZkoxz4iGu5JFgM=;
+        b=e6ROSRtQaf3nhfYyp4kW+Z9yUhFLaGPfGz3ehqrSya7naca1EgAZtZI0wikzk9wky2
+         nt/f/Pxq54HXhVgCqeyzFD8xlHiIF8xbVIY4GBVBwvDhBbjll+g5uPmMz0PXNTTTLnsM
+         0tNbe7TMiJrOUhMkHvgiixr9kVkHUZCy/V/ejHTgCdku2KG5MCwfljUR2VwtKkSJlWYg
+         WnkDaxuWkWxIbhW1xBfu6SRTMb+hwoL/1tF1PW+AQ93q8YKfFcB7DeZBFPuVwRfk4q0c
+         xayu6eZPDyaK4MyJ8gcx2MKYwWYcJks8K5y6aTn3ol7++5s6F9RYEh9V+covX+0s9oqr
+         IGuw==
+X-Forwarded-Encrypted: i=1; AJvYcCW884iRY3d5JE26ZBOAmknKmiVJYyrc7VztTiBUujG0aHLVq8bjoHS5+DY5yAiOXW3rYnkfoGqBUPvw5EKuo789u2AXXGmWMcgABRC6sA==
+X-Gm-Message-State: AOJu0YwUDnM/BqUWAd0diknHGTrvO59muldaPD4Yz6Nv3Ff4Cgn4uvLL
+	QmUgzQLO5ldhAC5VXg60W0nBXFgT2Iunq0pO3EKyhyt96ooTqnfSkY9d8yM81EKgCjQYAefzTbT
+	Qh7PpiTp8WHwQnZvWrmpgxrBeYRhmE6T3hWFwyg==
+X-Google-Smtp-Source: AGHT+IHT/ujAoEbhu8rLTehIuWRBp/B6kdAP54AQCRbG7T5Aw1Z01ibd0Fm1N0Q2G2mnLCjO54IRJqd2ObldP8kjPj4=
+X-Received: by 2002:a25:29c4:0:b0:dd1:2f58:292b with SMTP id
+ p187-20020a2529c4000000b00dd12f58292bmr1517178ybp.9.1711590725160; Wed, 27
+ Mar 2024 18:52:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, linux-kernel@vger.kernel.org, 
- Kees Cook <keescook@chromium.org>, linux-arm-msm@vger.kernel.org, 
- Lee Jones <lee@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Pavel Machek <pavel@ucw.cz>, linux-hardening@vger.kernel.org, 
- Conor Dooley <conor+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Bjorn Andersson <andersson@kernel.org>, linux-leds@vger.kernel.org, 
- devicetree@vger.kernel.org, "Gustavo A. R. Silva" <gustavoars@kernel.org>
-In-Reply-To: <20240327-sy7802-v1-1-db74ab32faaf@apitzsch.eu>
-References: <20240327-sy7802-v1-0-db74ab32faaf@apitzsch.eu>
- <20240327-sy7802-v1-1-db74ab32faaf@apitzsch.eu>
-Message-Id: <171158664689.823785.11147473547097630411.robh@kernel.org>
-Subject: Re: [PATCH 1/3] dt-bindings: leds: Add Silergy SY7802 flash LED
+References: <20240326-rb3gen2-dp-connector-v2-0-a9f1bc32ecaf@quicinc.com> <20240326-rb3gen2-dp-connector-v2-2-a9f1bc32ecaf@quicinc.com>
+In-Reply-To: <20240326-rb3gen2-dp-connector-v2-2-a9f1bc32ecaf@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 28 Mar 2024 03:51:54 +0200
+Message-ID: <CAA8EJpoe7A94608V1GdQ-oU9UXagHPm0mVBUe4Yxi=HF2pMd7w@mail.gmail.com>
+Subject: Re: [PATCH v2 2/6] arm64: dts: qcom: qcs6490-rb3gen2: Add DP output
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: cros-qcom-dts-watchers@chromium.org, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
+	Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
 
-
-On Wed, 27 Mar 2024 23:51:33 +0100, André Apitzsch wrote:
-> Document Silergy SY7802 flash LED driver devicetree bindings.
-> 
-> Signed-off-by: André Apitzsch <git@apitzsch.eu>
+On Wed, 27 Mar 2024 at 04:04, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
+>
+> The RB3Gen2 board comes with a mini DP connector, describe this, enable
+> MDSS, DP controller and the PHY that drives this.
+>
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
->  .../devicetree/bindings/leds/silergy,sy7802.yaml   | 96 ++++++++++++++++++++++
->  1 file changed, 96 insertions(+)
-> 
+>  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 40 ++++++++++++++++++++++++++++
+>  1 file changed, 40 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> index 63ebe0774f1d..f90bf3518e98 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> @@ -39,6 +39,20 @@ chosen {
+>                 stdout-path = "serial0:115200n8";
+>         };
+>
+> +       dp-connector {
+> +               compatible = "dp-connector";
+> +               label = "DP";
+> +               type = "mini";
+> +
+> +               hpd-gpios = <&tlmm 60 GPIO_ACTIVE_HIGH>;
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Is it the standard hpd gpio? If so, is there any reason for using it
+through dp-connector rather than as a native HPD signal?
 
-yamllint warnings/errors:
+> +
+> +               port {
+> +                       dp_connector_in: endpoint {
+> +                               remote-endpoint = <&mdss_edp_out>;
+> +                       };
+> +               };
+> +       };
+> +
+>         reserved-memory {
+>                 xbl_mem: xbl@80700000 {
+>                         reg = <0x0 0x80700000 0x0 0x100000>;
+> @@ -471,6 +485,25 @@ &gcc {
+>                            <GCC_WPSS_RSCP_CLK>;
+>  };
+>
+> +&mdss {
+> +       status = "okay";
+> +};
+> +
+> +&mdss_edp {
+> +       status = "okay";
+> +};
+> +
+> +&mdss_edp_out {
+> +       data-lanes = <0 1 2 3>;
+> +       link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
+> +
+> +       remote-endpoint = <&dp_connector_in>;
+> +};
+> +
+> +&mdss_edp_phy {
+> +       status = "okay";
+> +};
+> +
+>  &qupv3_id_0 {
+>         status = "okay";
+>  };
+> @@ -511,3 +544,10 @@ &usb_1_qmpphy {
+>  &wifi {
+>         memory-region = <&wlan_fw_mem>;
+>  };
+> +
+> +/* PINCTRL - ADDITIONS TO NODES IN PARENT DEVICE TREE FILES */
+> +
+> +&edp_hot_plug_det {
+> +       function = "gpio";
+> +       bias-disable;
+> +};
+>
+> --
+> 2.25.1
+>
 
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/leds/silergy,sy7802.example.dts:23.13-26: Warning (reg_format): /example-0/flash-led-controller@53:reg: property has invalid length (4 bytes) (#address-cells == 1, #size-cells == 1)
-Documentation/devicetree/bindings/leds/silergy,sy7802.example.dtb: Warning (pci_device_reg): Failed prerequisite 'reg_format'
-Documentation/devicetree/bindings/leds/silergy,sy7802.example.dtb: Warning (pci_device_bus_num): Failed prerequisite 'reg_format'
-Documentation/devicetree/bindings/leds/silergy,sy7802.example.dtb: Warning (simple_bus_reg): Failed prerequisite 'reg_format'
-Documentation/devicetree/bindings/leds/silergy,sy7802.example.dtb: Warning (i2c_bus_reg): Failed prerequisite 'reg_format'
-Documentation/devicetree/bindings/leds/silergy,sy7802.example.dtb: Warning (spi_bus_reg): Failed prerequisite 'reg_format'
 
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240327-sy7802-v1-1-db74ab32faaf@apitzsch.eu
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+-- 
+With best wishes
+Dmitry
 
