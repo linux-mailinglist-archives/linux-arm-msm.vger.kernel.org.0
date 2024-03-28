@@ -1,347 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-15520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98D2388FA70
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 09:54:29 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id EEDF688FA7F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 09:57:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2369A1F232F3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 08:54:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 35F071C21F87
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 08:57:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0833051C5F;
-	Thu, 28 Mar 2024 08:54:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C001C54BDA;
+	Thu, 28 Mar 2024 08:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="v9lzhoU/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="i8meCpGh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E72FA28DD2
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 08:54:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F5F50246
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 08:57:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711616065; cv=none; b=Ewv+Qj8uX6JLdSrGdpSu9d15o1866AbIbR7l1NGOAJRi7anss84fEOms+ikjGxKyFraMQbvzo8l3qHmqJ44kj4+kNbzipN6kLkKH5CbHVEcnJ8pA0vqNH+xjGjG7WO01H4xvGZVmL7zwsc9KSf/v4idEnVzdRsE++YiGETZbKKk=
+	t=1711616243; cv=none; b=dgSetEgLFkG5FMUIJENZCy/JCU/u/x0REStlYkDvqn9iq9njLpSdST6FZ7Kes0XVg4axM/lNbgYzYLCUpuhh3FwCLfpOWVQ4nVIz8BLNdCybquCnMeCzNGylDqLG33mebsNHq08LuFeA2a387/IfFEHdvzZ6JNmM7qqH8EEn/Ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711616065; c=relaxed/simple;
-	bh=ZAjDv+8I1mJ8G/NPZ4kRVngMBY6TQmnkMW7G+NgNAh8=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=ZF+hHX0hwBgwIDsmUxcH4GtGP8QrRxCwGRdiu0RTjQf2la6bfobpMm9bwpVtk8NmlomdqXvhYUJncpkuT4EY1baSsuyDgSvjtaoA8RKXQ4y7LGAVErf6EAPhImwgbhFLPmyKd83csPw4ab3x5ad9vji71pU1ESEx5H8IIaOI1Ro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=v9lzhoU/; arc=none smtp.client-ip=209.85.221.44
+	s=arc-20240116; t=1711616243; c=relaxed/simple;
+	bh=4F3JozY+G9dFPmMVqsIC2mv1plVDgN7zok2F2MfKt6E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GycbSUO0/+ECKWJB/VhT95k0m47wo1E5Yv0cj1VjZR35ODz6EMKH8G1dtum5r0ePSGs6GZ30XkU9PIgFpA2Pcudjsg/VCPdEphj22bnhdqkRvVKH3EqRaZLIOiD0RfpQrzmZrIeB2Qx2MY6W9W31zMcg0eJeB+gSeHZEa5KMsgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=i8meCpGh; arc=none smtp.client-ip=209.85.219.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-33eee0258abso373609f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 01:54:23 -0700 (PDT)
+Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-dcbcea9c261so692459276.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 01:57:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711616062; x=1712220862; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Yty+7IW9qqNwqwNJtGSHLkt6EXl35mjOJg4EN6IRHIU=;
-        b=v9lzhoU/WEGh4jqJvWufa+SW6SQTWisDw6EXmtFPs/klGvGB4+vNfaOEt3Y2x7wwr7
-         QxTfJOeVtun1HbFco+SrM0HEaH9+S7UKrzV+QtBCXSio7Ye7iJlF6kNVpmCvH9WStxoM
-         6svICcgVXGEcE6t59pjP5HBLpqsqMOYjYrt0IOKy5OiPMt2WLOhDqwBjm02UsoSM7fV1
-         Z+kKv5ja3Y84KpMAW3jWVD7z/DdbhQTrtCYz3qjp2HNxUgtlDNvawdp5YcghLCSu/2vX
-         lwDtoNIB23nVOBAcYWTgcqZitd4wnZtLPnKzeQtn10ExR9uoZ4xv1QP/JthAR/qlIZBW
-         zApA==
+        d=linaro.org; s=google; t=1711616241; x=1712221041; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4F3JozY+G9dFPmMVqsIC2mv1plVDgN7zok2F2MfKt6E=;
+        b=i8meCpGhFn5xCiIILqhnwryOHOOlJrjwaZMRsfKs+/hdnNDugS+2YP4UTDf/j+wQMj
+         Bmpg3nV/aBY1ohvz1siMXvgdHv1c7mdN6N+2HOYAVB0KY3hPvyJF38+Q7uGb/nxSguZC
+         wAm+TZ4ohQzp9YtvGvygHsKCPov3V2mnGzCr7Wct/LVZm8ddgxmDR1nBUdoTHcKK1/Vo
+         oFApd8SgEnfvUga42RmRRMYjj3pgXMjuzkZ/8QSYK4mXoMbfI8nzwlH2B5gf4ryZ2/Hb
+         wca1vJCY67aMg+BEROiKoWMzcBexwB5J7AKoAY6hrTa8Xl4bYAWX6Yu5oQatvu81Q0Q9
+         lfIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711616062; x=1712220862;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Yty+7IW9qqNwqwNJtGSHLkt6EXl35mjOJg4EN6IRHIU=;
-        b=kVZYG3UiroM07Ahpr3bNnI/j5KhfjBal3lpOiR1U94Z7ebR3nxDTgE76Y9vey6DNU6
-         2TiMjFnTZlMqpTNXPWnH3b6q0fnwU4AQtRx0j0tKrEpys5PlP/uYEF/rCksovMky2Dsa
-         rhXhUZCbMOcZgoVRkObS6FnZhLuhZ7iw/50V19jGx6wI2C05W3tw38KYc/mbreK7CdW9
-         A6/zkuShaIuSjCtjhIcnSVVlygEyvAVGOMpsU5ceIL7cJnlikKJkIi1KyPjoAlpO5FXI
-         xoSPca3boT/+ROkT+bcJJVr/PLyv27jJdCa6ws/2lFloajhqII9xYfwdVreBaybB5rwH
-         VhQQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUPJJuoZ0fX87l+NutE3wyVOlMvRndYa9JlNtcXJebyvWfz3BMmkfWAFbXfuh6usjXagBDA1WBLFpg8GzbE5YxzKsysDbWBo8B6h8ZzZA==
-X-Gm-Message-State: AOJu0YwVGIPd308AUTeSwC18PdJ61MpeEgg3gCc22AqZIYY84J9IDCHj
-	LiUsW05+CMzXCUpLaCVmBP4rIiTp0zOj+L5IYxIlGixbC/p0S6JAtBSZJPNg2IM=
-X-Google-Smtp-Source: AGHT+IGhNmd4eosIUt8hQTsfXrAFZtWrwXc4JyihDC4LrVrFfCvzlvTm8CR/aKVaG8qZSxA9zhE01A==
-X-Received: by 2002:a5d:6651:0:b0:341:bdf0:f86e with SMTP id f17-20020a5d6651000000b00341bdf0f86emr1497687wrw.67.1711616062183;
-        Thu, 28 Mar 2024 01:54:22 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:6306:1c7a:72c2:892a? ([2a01:e0a:982:cbb0:6306:1c7a:72c2:892a])
-        by smtp.gmail.com with ESMTPSA id g1-20020adfa481000000b00341e7e52802sm1169999wrb.92.2024.03.28.01.54.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Mar 2024 01:54:21 -0700 (PDT)
-Message-ID: <56f4f0eb-7c6b-459a-bf90-1493e14fc106@linaro.org>
-Date: Thu, 28 Mar 2024 09:54:20 +0100
+        d=1e100.net; s=20230601; t=1711616241; x=1712221041;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4F3JozY+G9dFPmMVqsIC2mv1plVDgN7zok2F2MfKt6E=;
+        b=wnAJBKokq4dVmtkkunyN34U+btN7KgIK36zfIz+GEKYI+BkLQNIdYM9f3oK5tcqKfB
+         65cYHc4gxVCJXjNox2cWjYggoGxKVraKk8DY03ePHxUwB3E2fOgW1q0T9BhHaHGrJOdl
+         OABbgZYc3GZmLxZ1q+AVHy/5AXiMgKfnRsYGtEjcwbfgBAnOpn9mbCy7RlMWRaQLfT3g
+         +Uz0akE0ovIBTt2H8EUlcb6CouTD4cx0x+aqGkik68pwE3shuUJzEZPXVjDsyTewUlD0
+         TCgj+YbbX4r3o00HJ1L9DcIGlx32+yuNWrOGHcLW1qR88ciB+cJEVpREoKb+qWFwwGKw
+         Ix/A==
+X-Forwarded-Encrypted: i=1; AJvYcCXqlCzVLRiMxzsIQeJaCw12hCronsGZ2VdnGNpNbDOobIBGawqjFwvy+gPCkFyrwgGKKmZtXiFqiEtJCv+JrAZurB2yKHtWt1YY2HVOIA==
+X-Gm-Message-State: AOJu0YynUlv6njdWRZJyRGcaASoxIIR5e39jjm2SKhJia93xV5K56rxr
+	fOyUmGWxVgCICR9jT3nkOrDgtyrb0uS/l9NwEmDDAJaIu/I0mMTC7ufe7lnXZFk25thqTbIQk1v
+	pdFI8O4ETz7J21v9rZl2UifJ9j+mb7BWI8884Vw==
+X-Google-Smtp-Source: AGHT+IGKapoSLxpG9GrnNkjIeTSAnIkOLQk1JL/u0vi14kt6WJXVX3bRQ84jY5/TNx6lXuPoBgs2NzIE5E+MDpY0epU=
+X-Received: by 2002:a25:1606:0:b0:dc7:4725:56df with SMTP id
+ 6-20020a251606000000b00dc7472556dfmr1939509ybw.23.1711616241053; Thu, 28 Mar
+ 2024 01:57:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH RESEND v6 4/5] spmi: pmic-arb: Make core resources
- acquiring a version operation
-To: Abel Vesa <abel.vesa@linaro.org>, Stephen Boyd <sboyd@kernel.org>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: Srini Kandagatla <srinivas.kandagatla@linaro.org>,
- Johan Hovold <johan@kernel.org>, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-mediatek@lists.infradead.org, devicetree@vger.kernel.org
-References: <20240326-spmi-multi-master-support-v6-0-1c87d8306c5b@linaro.org>
- <20240326-spmi-multi-master-support-v6-4-1c87d8306c5b@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20240326-spmi-multi-master-support-v6-4-1c87d8306c5b@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20240312025807.26075-1-quic_tengfan@quicinc.com> <20240312025807.26075-3-quic_tengfan@quicinc.com>
+In-Reply-To: <20240312025807.26075-3-quic_tengfan@quicinc.com>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Thu, 28 Mar 2024 09:57:10 +0100
+Message-ID: <CACRpkdb6LbBkt7aSr_B9=xSpJrjaHhR_MNz9g+LYJwhxdUqDWA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] dt-bindings: pinctrl: qcom: update functions to
+ match with driver
+To: Tengfei Fan <quic_tengfan@quicinc.com>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, robh@kernel.org, 
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+	dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, kernel@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 26/03/2024 17:28, Abel Vesa wrote:
-> Rather than setting up the core, obsrv and chnls in probe by using
-> version specific conditionals, add a dedicated "get_core_resources"
-> version specific op and move the acquiring in there.
-> 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
->   drivers/spmi/spmi-pmic-arb.c | 113 +++++++++++++++++++++++++++----------------
->   1 file changed, 70 insertions(+), 43 deletions(-)
-> 
-> diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
-> index 38fed8a585fe..188252bfb95f 100644
-> --- a/drivers/spmi/spmi-pmic-arb.c
-> +++ b/drivers/spmi/spmi-pmic-arb.c
-> @@ -203,6 +203,7 @@ struct spmi_pmic_arb {
->    */
->   struct pmic_arb_ver_ops {
->   	const char *ver_str;
-> +	int (*get_core_resources)(struct platform_device *pdev, void __iomem *core);
->   	int (*init_apid)(struct spmi_pmic_arb *pmic_arb, int index);
->   	int (*ppid_to_apid)(struct spmi_pmic_arb *pmic_arb, u16 ppid);
->   	/* spmi commands (read_cmd, write_cmd, cmd) functionality */
-> @@ -956,6 +957,19 @@ static int pmic_arb_init_apid_min_max(struct spmi_pmic_arb *pmic_arb)
->   	return 0;
->   }
->   
-> +static int pmic_arb_get_core_resources_v1(struct platform_device *pdev,
-> +					  void __iomem *core)
-> +{
-> +	struct spmi_pmic_arb *pmic_arb = platform_get_drvdata(pdev);
-> +
-> +	pmic_arb->wr_base = core;
-> +	pmic_arb->rd_base = core;
-> +
-> +	pmic_arb->max_periphs = PMIC_ARB_MAX_PERIPHS;
-> +
-> +	return 0;
-> +}
-> +
->   static int pmic_arb_init_apid_v1(struct spmi_pmic_arb *pmic_arb, int index)
->   {
->   	u32 *mapping_table;
-> @@ -1063,6 +1077,33 @@ static u16 pmic_arb_find_apid(struct spmi_pmic_arb *pmic_arb, u16 ppid)
->   	return apid;
->   }
->   
-> +static int pmic_arb_get_obsrvr_chnls_v2(struct platform_device *pdev)
-> +{
-> +	struct spmi_pmic_arb *pmic_arb = platform_get_drvdata(pdev);
-> +
-> +	pmic_arb->rd_base = devm_platform_ioremap_resource_byname(pdev, "obsrvr");
-> +	if (IS_ERR(pmic_arb->rd_base))
-> +		return PTR_ERR(pmic_arb->rd_base);
-> +
-> +	pmic_arb->wr_base = devm_platform_ioremap_resource_byname(pdev, "chnls");
-> +	if (IS_ERR(pmic_arb->wr_base))
-> +		return PTR_ERR(pmic_arb->wr_base);
-> +
-> +	return 0;
-> +}
-> +
-> +static int pmic_arb_get_core_resources_v2(struct platform_device *pdev,
-> +					  void __iomem *core)
-> +{
-> +	struct spmi_pmic_arb *pmic_arb = platform_get_drvdata(pdev);
-> +
-> +	pmic_arb->core = core;
-> +
-> +	pmic_arb->max_periphs = PMIC_ARB_MAX_PERIPHS;
-> +
-> +	return pmic_arb_get_obsrvr_chnls_v2(pdev);
-> +}
-> +
->   static int pmic_arb_ppid_to_apid_v2(struct spmi_pmic_arb *pmic_arb, u16 ppid)
->   {
->   	u16 apid_valid;
-> @@ -1246,6 +1287,18 @@ static int pmic_arb_offset_v5(struct spmi_pmic_arb *pmic_arb, u8 sid, u16 addr,
->   	return offset;
->   }
->   
-> +static int pmic_arb_get_core_resources_v7(struct platform_device *pdev,
-> +					  void __iomem *core)
-> +{
-> +	struct spmi_pmic_arb *pmic_arb = platform_get_drvdata(pdev);
-> +
-> +	pmic_arb->core = core;
-> +
-> +	pmic_arb->max_periphs = PMIC_ARB_MAX_PERIPHS_V7;
-> +
-> +	return pmic_arb_get_obsrvr_chnls_v2(pdev);
-> +}
-> +
->   /*
->    * Only v7 supports 2 buses. Each bus will get a different apid count, read
->    * from different registers.
-> @@ -1469,6 +1522,7 @@ pmic_arb_apid_owner_v7(struct spmi_pmic_arb *pmic_arb, u16 n)
->   
->   static const struct pmic_arb_ver_ops pmic_arb_v1 = {
->   	.ver_str		= "v1",
-> +	.get_core_resources	= pmic_arb_get_core_resources_v1,
->   	.init_apid		= pmic_arb_init_apid_v1,
->   	.ppid_to_apid		= pmic_arb_ppid_to_apid_v1,
->   	.non_data_cmd		= pmic_arb_non_data_cmd_v1,
-> @@ -1484,6 +1538,7 @@ static const struct pmic_arb_ver_ops pmic_arb_v1 = {
->   
->   static const struct pmic_arb_ver_ops pmic_arb_v2 = {
->   	.ver_str		= "v2",
-> +	.get_core_resources	= pmic_arb_get_core_resources_v2,
->   	.init_apid		= pmic_arb_init_apid_v1,
->   	.ppid_to_apid		= pmic_arb_ppid_to_apid_v2,
->   	.non_data_cmd		= pmic_arb_non_data_cmd_v2,
-> @@ -1499,6 +1554,7 @@ static const struct pmic_arb_ver_ops pmic_arb_v2 = {
->   
->   static const struct pmic_arb_ver_ops pmic_arb_v3 = {
->   	.ver_str		= "v3",
-> +	.get_core_resources	= pmic_arb_get_core_resources_v2,
->   	.init_apid		= pmic_arb_init_apid_v1,
->   	.ppid_to_apid		= pmic_arb_ppid_to_apid_v2,
->   	.non_data_cmd		= pmic_arb_non_data_cmd_v2,
-> @@ -1514,6 +1570,7 @@ static const struct pmic_arb_ver_ops pmic_arb_v3 = {
->   
->   static const struct pmic_arb_ver_ops pmic_arb_v5 = {
->   	.ver_str		= "v5",
-> +	.get_core_resources	= pmic_arb_get_core_resources_v2,
->   	.init_apid		= pmic_arb_init_apid_v5,
->   	.ppid_to_apid		= pmic_arb_ppid_to_apid_v5,
->   	.non_data_cmd		= pmic_arb_non_data_cmd_v2,
-> @@ -1529,6 +1586,7 @@ static const struct pmic_arb_ver_ops pmic_arb_v5 = {
->   
->   static const struct pmic_arb_ver_ops pmic_arb_v7 = {
->   	.ver_str		= "v7",
-> +	.get_core_resources	= pmic_arb_get_core_resources_v7,
->   	.init_apid		= pmic_arb_init_apid_v7,
->   	.ppid_to_apid		= pmic_arb_ppid_to_apid_v5,
->   	.non_data_cmd		= pmic_arb_non_data_cmd_v2,
-> @@ -1565,16 +1623,6 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
->   	pmic_arb = spmi_controller_get_drvdata(ctrl);
->   	pmic_arb->spmic = ctrl;
->   
-> -	/*
-> -	 * Please don't replace this with devm_platform_ioremap_resource() or
-> -	 * devm_ioremap_resource().  These both result in a call to
-> -	 * devm_request_mem_region() which prevents multiple mappings of this
-> -	 * register address range.  SoCs with PMIC arbiter v7 may define two
-> -	 * arbiter devices, for the two physical SPMI interfaces, which  share
-> -	 * some register address ranges (i.e. "core", "obsrvr", and "chnls").
-> -	 * Ensure that both devices probe successfully by calling devm_ioremap()
-> -	 * which does not result in a devm_request_mem_region() call.
-> -	 */
+On Tue, Mar 12, 2024 at 3:59=E2=80=AFAM Tengfei Fan <quic_tengfan@quicinc.c=
+om> wrote:
 
-Can you explain in the commit message why you remove this comment ?
+> Some functions were consolidated in the SM4450 pinctrl driver, but they
+> had not been updated in the binding file before the previous SM4450
+> pinctrl patch series was merged.
+(...)
+> Fixes: 7bf8b78f86db ("dt-bindings: pinctrl: qcom: Add SM4450 pinctrl")
+> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
 
->   	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "core");
->   	core = devm_ioremap(&ctrl->dev, res->start, resource_size(res));
->   	if (IS_ERR(core))
-> @@ -1584,44 +1632,23 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
->   
->   	hw_ver = readl_relaxed(core + PMIC_ARB_VERSION);
->   
-> -	if (hw_ver < PMIC_ARB_VERSION_V2_MIN) {
-> +	if (hw_ver < PMIC_ARB_VERSION_V2_MIN)
->   		pmic_arb->ver_ops = &pmic_arb_v1;
-> -		pmic_arb->wr_base = core;
-> -		pmic_arb->rd_base = core;
-> -	} else {
-> -		pmic_arb->core = core;
-> -
-> -		if (hw_ver < PMIC_ARB_VERSION_V3_MIN)
-> -			pmic_arb->ver_ops = &pmic_arb_v2;
-> -		else if (hw_ver < PMIC_ARB_VERSION_V5_MIN)
-> -			pmic_arb->ver_ops = &pmic_arb_v3;
-> -		else if (hw_ver < PMIC_ARB_VERSION_V7_MIN)
-> -			pmic_arb->ver_ops = &pmic_arb_v5;
-> -		else
-> -			pmic_arb->ver_ops = &pmic_arb_v7;
-> -
-> -		res = platform_get_resource_byname(pdev, IORESOURCE_MEM,
-> -						   "obsrvr");
-> -		pmic_arb->rd_base = devm_ioremap(&ctrl->dev, res->start,
-> -						 resource_size(res));
-> -		if (IS_ERR(pmic_arb->rd_base))
-> -			return PTR_ERR(pmic_arb->rd_base);
-> -
-> -		res = platform_get_resource_byname(pdev, IORESOURCE_MEM,
-> -						   "chnls");
-> -		pmic_arb->wr_base = devm_ioremap(&ctrl->dev, res->start,
-> -						 resource_size(res));
-> -		if (IS_ERR(pmic_arb->wr_base))
-> -			return PTR_ERR(pmic_arb->wr_base);
-> -	}
-> +	else if (hw_ver < PMIC_ARB_VERSION_V3_MIN)
-> +		pmic_arb->ver_ops = &pmic_arb_v2;
-> +	else if (hw_ver < PMIC_ARB_VERSION_V5_MIN)
-> +		pmic_arb->ver_ops = &pmic_arb_v3;
-> +	else if (hw_ver < PMIC_ARB_VERSION_V7_MIN)
-> +		pmic_arb->ver_ops = &pmic_arb_v5;
-> +	else
-> +		pmic_arb->ver_ops = &pmic_arb_v7;
->   
->   	dev_info(&ctrl->dev, "PMIC arbiter version %s (0x%x)\n",
->   		 pmic_arb->ver_ops->ver_str, hw_ver);
->   
-> -	if (hw_ver < PMIC_ARB_VERSION_V7_MIN)
-> -		pmic_arb->max_periphs = PMIC_ARB_MAX_PERIPHS;
-> -	else
-> -		pmic_arb->max_periphs = PMIC_ARB_MAX_PERIPHS_V7;
-> +	err = pmic_arb->ver_ops->get_core_resources(pdev, core);
-> +	if (err)
-> +		return err;
->   
->   	err = pmic_arb->ver_ops->init_apid(pmic_arb, 0);
->   	if (err)
-> 
+Patch applied.
 
-With that added:
-
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Yours,
+Linus Walleij
 
