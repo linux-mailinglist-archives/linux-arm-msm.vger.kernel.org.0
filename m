@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-15516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15517-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8119688FA2D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 09:42:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9DB2988FA46
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 09:50:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3796F297F89
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 08:42:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CF06E1C28FE7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 08:50:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E3A64F894;
-	Thu, 28 Mar 2024 08:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DBF0524BD;
+	Thu, 28 Mar 2024 08:50:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="B0UL+l+N"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KXaf481e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED21538396
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 08:42:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A4551C3E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 08:50:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711615372; cv=none; b=u5y+tL4/qpV6fGibh4nlHIuJ42obKsqy3qorHvO7CQZFfUstLAfrwC51Kg/dlg3Eh5Zmru3ZCHPfsVSgBIse28faAVo12JFFf82IE96YXzqwjji6jzMybE3CLd2g4LTXf1kT1AwX6gBdjevvLaOk25bbgdtR3OwfQGD0uPUiODY=
+	t=1711615822; cv=none; b=LIKAOOYYV7nsUbw7yH9l58pQCGYGkCZavOzxRGC3OOLwkZm4u+BA9PQJTv4PwqSS9bwjMJAhZ7v0YciiUDy7gWZ0853p0O99AZPpLMKlFGIm7I0Irvx6UR82JRv2sKi1Vryw9YpSQY8EXOd8FeW2wydOw4JJvsROpeGI2nZPJlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711615372; c=relaxed/simple;
-	bh=Mz08MBmv/TLW0E34cCyhk9wLI+1PaxiSUouvxZ7QPoY=;
+	s=arc-20240116; t=1711615822; c=relaxed/simple;
+	bh=A0R6lmR1m+yAfOyrg4Hmzgx1/lM9XoICSF/GiNOEEd0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tnV2no/3ChB1HmpMN+YjjpOJivMAJpvJ9jjWULmh8yco4huf1SYKbY2UJdObyDVkVlEDWCUyQMYR4IKpCZDdsUl63v6B7QOEMoRBJtex3HQpRA8ttwYxfZxtqvJuhZFgTukg/UKb//soxZejpFK2TYiKXlNlpWQYYwxiWNnk65E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=B0UL+l+N; arc=none smtp.client-ip=209.85.221.50
+	 In-Reply-To:Content-Type; b=d3sb0l1S0zV2J/4ENR9Eg6U47IKZ8rz29lewPbGWkRrcJzJWiHQ/zsJ58wO5ygLSOABmxHVmvfX+CfkZFa8Tl1cIcZGFa3JcwVqQfLIdN88Mo4il38JmnFBrlUxp4CI4aHvYThozNsKjxEfbm+j5Ke6j0sh/OrUPJDpFh9lTma8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KXaf481e; arc=none smtp.client-ip=209.85.221.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-33ececeb19eso355458f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 01:42:50 -0700 (PDT)
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-33ddd1624beso423993f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 01:50:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711615369; x=1712220169; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1711615819; x=1712220619; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=IyzncL5cnTkcEyELjRoDnejJJaLdygqwKBsCziBuTRg=;
-        b=B0UL+l+Nc4N+uSRZ4yxSJizg0EdYJ7ytVoCdL2Lcj3auaM08rbmO1HqsfOL648jeSF
-         uy0Z/2z8PwlUDmpyu9Sw06LxPilCxT8aOWbT4s+GFZ/tLyEdLTVd6dIoJlgUDUiLvPyp
-         bowjVIZMlKqbcoFGDJkwg1tWhCt4Y2Xv1nTjBOJfyqfAQhtcCp6FIpaDvVdc1mhl2h+v
-         Vw6acBlXagOzM5XFqVSawq/YXD8cQNbRse+h0kxKxuWsLupm8Wk5QyHd3vksnykOO3Ds
-         hXwGoZrKYwT6lpcSayyPfzUHFGTg39TVoecDX7qp3dzd2LM3ap0RXT0Qin8/1RUtM5Na
-         8wHA==
+        bh=oZ+YBLkNV6VEF2rUgGOJxYuEYM/uMvvAYGZ9fwfCJXw=;
+        b=KXaf481ejzp4bbnckOJKMGotwe5DDEoy6qxFqc4RbWO105c8Dv6y1WHLI1foQIGmpV
+         Y2JsQFfxkRwS6aQzenBfm7xSvzR8FM+IFp+mZoiN7C/pQ853MUdlqdwL5b1km9LEPVkC
+         1kU0weqyYdnbRxD+BLLskEWgqmhhx8yPoEVGxt7SzIMeAMdW4kpBYvOxxhkgrOGduCLw
+         DOmrYgb5noKDACmYRymLkdGaX3Z/xSq3dDE8MGzukYVvwH17WN0CnKbrTRIvTh3r4j+g
+         ryiNViGtSyD1aBUxPy3jR2fb8EdTnT4uCqpcMuSKfMor9jDm0C0Fd9qUKNp/SACA9P8A
+         Nl2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711615369; x=1712220169;
+        d=1e100.net; s=20230601; t=1711615819; x=1712220619;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IyzncL5cnTkcEyELjRoDnejJJaLdygqwKBsCziBuTRg=;
-        b=LhINAKBjLdyw4i3+xQO9RjEvCzN5i1S7/bhnmdWuZ6IgAJRvTVptjIz3ZFZVoQScwo
-         LVma+DC0VldzQCd1oVPtQZhmBqMLX0XAwF/NtmeHOlpHJRi/inp/L4BK9fLEuORf+OhR
-         SSYrIPJLUxSlMlRSP3LnqAq0vCOigbDpx47lmHAeUmgnH2j5Y0qNqspRvOQEp3DGPLcg
-         XL29MznZpgXN2YifBdmsSVMoVEj5cY8YDWX16cJ7ad6epG3vWTnXdpHAAc4z5PZqcIPX
-         lVccPQrD77bsQNPx0qVKOh2RVXGgYvaZR+YuMB7uL+abFhEeWnXN24ndCB8/7YEUqMDv
-         phMQ==
-X-Gm-Message-State: AOJu0YzpQlYRKb5wa20EqS4PLMidAmv9FsJ/ZbJpsQFxutl568WJ3Rxb
-	8g7n6DVr58Fi0vLaZHqbM5Fx3215BRwLr+NP4cHeBH8ILkg8yjMo2i/ZYVPx4Qk=
-X-Google-Smtp-Source: AGHT+IEwGjHhFX12BU0RvqzmnlnMkOcFAw/SThih3PygvPfWTifQMHd3oHG/g5aViPIyRnyQXxKuCQ==
-X-Received: by 2002:a5d:4883:0:b0:342:74c9:5be8 with SMTP id g3-20020a5d4883000000b0034274c95be8mr1448110wrq.24.1711615368737;
-        Thu, 28 Mar 2024 01:42:48 -0700 (PDT)
+        bh=oZ+YBLkNV6VEF2rUgGOJxYuEYM/uMvvAYGZ9fwfCJXw=;
+        b=crvEt120epV1pc5A0uh1L7P+70a4d9fIADeWiFy7HP0xAjXAEEhcN9sjC7qgyUXNub
+         GDUh2NiiRgPFIuBqxsp31QlRnsVAQaR3Fx8rzSj1MjRtc5cvYatZ0iHoq1HxE8C8zSB8
+         TKKwj9iv3fjnw1kA/Qi3qF5D53KOOFxOxhXPfRn1bFv5uNVCp8o9gP9n9cp6xu+TYzJP
+         0KKNxdeg3LrjlaQWbVtY5agAl0D0jT8pVHvyImQNhAAmCIW1/9YRengi9np3siJWcfHJ
+         OY5RqmGzqfuRz0jT4XaD2/06Diswqm28/E8zrw+Namj/7Zv3Jtpf5+5NdmuBD36be0Ta
+         0xmw==
+X-Forwarded-Encrypted: i=1; AJvYcCWN5Clo/SXRYeASO1JMdfE/tzoxpAlGPbu2t6JzFMpYZFJFQ1rNSfZU0ZbJNGyu8mz6Ef23BKAm7zjmU6tsRCV02HEoldnERIOmPl2VGw==
+X-Gm-Message-State: AOJu0Yzx1RU9oMXd11I80N5WtQ+bL59AbiYiJDuAGi4MK9cSf1IwOwih
+	+2hgd1bFDyl+JUavfBYPj1EdUCcodw5/QWPGpTM47OZtccL5Miq5ANCMTotrG1w=
+X-Google-Smtp-Source: AGHT+IHtezabxk0LaPOL3zQ45H75rf+nCNsKrfQeSAmSXeRy5hUrXy9WJyMTcEop3ixcKCztrypIPg==
+X-Received: by 2002:a5d:540b:0:b0:341:a63c:58bc with SMTP id g11-20020a5d540b000000b00341a63c58bcmr1177900wrv.2.1711615818960;
+        Thu, 28 Mar 2024 01:50:18 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.148])
-        by smtp.gmail.com with ESMTPSA id i4-20020adfefc4000000b0033b6e26f0f9sm1141593wrp.42.2024.03.28.01.42.47
+        by smtp.gmail.com with ESMTPSA id dv10-20020a0560000d8a00b00341ce1b64f0sm1156645wrb.17.2024.03.28.01.50.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Mar 2024 01:42:48 -0700 (PDT)
-Message-ID: <b73034c3-a512-46b6-a9e8-4d43fd3b39e6@linaro.org>
-Date: Thu, 28 Mar 2024 09:42:46 +0100
+        Thu, 28 Mar 2024 01:50:18 -0700 (PDT)
+Message-ID: <ace20109-fc4e-43f6-b82b-2ae7c2905b99@linaro.org>
+Date: Thu, 28 Mar 2024 09:50:16 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,15 +77,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: phy: Add QMP UFS PHY comptible for
- SM8475
-To: Danila Tikhonov <danila@jiaxyga.com>, andersson@kernel.org,
- konrad.dybcio@linaro.org, vkoul@kernel.org, kishon@kernel.org,
- robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240327180642.20146-1-danila@jiaxyga.com>
- <20240327180642.20146-2-danila@jiaxyga.com>
+Subject: Re: [PATCH v2 0/2] Add board-id support for multiple DT selection
+To: Amrit Anand <quic_amrianan@quicinc.com>, robh@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, agross@kernel.org,
+ andersson@kernel.org, konrad.dybcio@linaro.org
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, kernel@quicinc.com, peter.griffin@linaro.org,
+ caleb.connolly@linaro.org, linux-riscv@lists.infradead.org,
+ chrome-platform@lists.linux.dev, linux-mediatek@lists.infradead.org
+References: <1710418312-6559-1-git-send-email-quic_amrianan@quicinc.com>
 Content-Language: en-US
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -131,22 +132,36 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240327180642.20146-2-danila@jiaxyga.com>
+In-Reply-To: <1710418312-6559-1-git-send-email-quic_amrianan@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 27/03/2024 19:06, Danila Tikhonov wrote:
-> Document the QMP UFS PHY compatible for SM8475.
+On 14/03/2024 13:11, Amrit Anand wrote:
+> The software packages are shipped with multiple device tree blobs supporting
+> multiple boards. For instance, suppose we have 3 SoC, each with 4 boards supported,
+> along with 2 PMIC support for each case which would lead to total of 24 DTB files.
+> Along with these configurations, OEMs may also add certain additional board variants.
+> Hence, a mechanism is required to pick the correct DTB for the board on which the
+> software package is deployed. Introduce a unique property for adding board identifiers
+> to device trees. Here, board-id property provides a mechanism for Qualcomm based
+> bootloaders to select the appropriate DTB.
 > 
-> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
-> ---
->  .../devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml      | 2 ++
->  1 file changed, 2 insertions(+)
+> Isn't that what the compatible property is for?
+> -----------------------------------------------
+> The compatible property can be used for board matching, but requires
+> bootloaders and/or firmware to maintain a database of possible strings
+> to match against or have complex compatible string parsing and matching.
+> Compatible string matching becomes complicated when there are multiple
+> versions of the same board. It becomes difficult for the device tree
+> selection mechanism to recognize the right DTB to pick, with minor
+> differences in compatible strings.
 > 
+> The solution proposed here is simpler to implement and doesn't require the need
+> to update bootloader for every new board.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-(not reviewed, please provide link to DTS)
+One of the concerns you got in v1 was: show us second user, so I believe
+in your interest is to Cc other platform maintainers which could support
+this idea.
 
 Best regards,
 Krzysztof
