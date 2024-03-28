@@ -1,199 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-15492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15493-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB51188F61A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 04:59:31 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D2B3088F6B2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 05:50:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 66181297F5F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 03:59:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7C7A41F2984E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 04:50:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88A53381C8;
-	Thu, 28 Mar 2024 03:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 554173FBB8;
+	Thu, 28 Mar 2024 04:50:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fCFBP2sg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jdc+Jjoo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 398662D046
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 03:59:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 315223FBA5
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 04:50:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711598360; cv=none; b=GFYnhjTDykD1W3TI0IFBpqQGvqSfWKpGbIbJ6X0aDOo3ZACtIDP5fNg3qn9iEJDlkLsSZmbmyOaxeRbyyFAAJBaNJ1j3kv5lzZB/Jhq7LzbRYb9y+eImFBXOP74m2yNrSebWo6c1ZCW/54l4Pi3v+c+h+eyxGelPNqMlFsXfWP8=
+	t=1711601429; cv=none; b=GlaDeF0GuoEZ8zVp1oKNENGM1BetQqJTYS6jzpzg2jrp9BTZQwlyZRqKHh8KC2iDUHSJ13I9m/P+AyP0MBwBqQyZd4G1tFbQHul2ZMfZGamvep+aH+V1Jsy6Wx1Gi0neKMBOm+2dWhTi5UNvE02fTPYonT5xl3Dzf4VR5h/oX3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711598360; c=relaxed/simple;
-	bh=okEn6utwbpITb9k2PX8tO4MtO7QZXQhboupRJ92hruA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nH7bLGZL899IpW/Pa07nkk+VcieBRj1I9p7mLLBxmcJpNAPAQvAvTmdI7KjV8r6F9GAuNvlPfESkW9vh9NfGGLMChjiIG95XtQgCBF5IaLmui3jxHIAAB7CBY5ZHtNtHY1sagRaSJIT0FaQqLtdpXcQQuqaHAa0bFzMO6HbM7PU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fCFBP2sg; arc=none smtp.client-ip=209.85.210.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-6e703e0e5deso475315b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 20:59:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711598357; x=1712203157; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=w17nDhuJOeSnSYP0vy+UdWxKC15io0olSqGdTX2vBVs=;
-        b=fCFBP2sgNWLDoxvKDzQOeIKkI0RuXre5WOVQUC7hg0JeEyhSwGPs/ZOmJVcHHRi0BN
-         JdFsfeTKiD/hpxpCWvFJtmFgmPsyUQWoApl2yxt3hT82OvAM+nAT+wiodWbfd4iGVPG8
-         jpABTCYmTyffN8LZWNQZpvNVUAwei5tXV294R5JxhA47xLVNOSXmWFbZCzIu9tSVIm3T
-         Am9nsWQhcWv8KmoFRBmjOjmXlMYluondvX5qNrnQqYF+8N0pGCWhypqU/cXB8tfXP8z+
-         4QmkUkCbD8/ypyhRLhebcANtziX9aAJRdPElWZTInCA+yZsHkmzqZzZxTBNN1gvJXvOU
-         YeXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711598357; x=1712203157;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=w17nDhuJOeSnSYP0vy+UdWxKC15io0olSqGdTX2vBVs=;
-        b=fhKAmOrbSCoaWwQv0z/QqVCIF75CjzKBm7KnLezIpdd6yeZd88610xK7c/NaodQNQG
-         CAWyPlIWFeDl426YktQY6f+EVdVENY7B/ndOvLKWvKtPz16BTASRej18vYzG5z78lMCH
-         tUlemfqktQDy+fkD7yQq0iY8Cox9ub2uKKq6gaJU0gkMLZo1iWmo2BvdgKamjJ/jDFLB
-         EFMOMynVKfS2CIJAgpfwQ8gaUsbe+SALdwANIWXz0aLqBRRqsvcUybHHD5U89NcPRzgV
-         yKaxrEybk91qlj6BT8O1Y3gjnzNNA7f60eGJutxM5E12oE9AN6Zr+yr9mmBxynLSNtLX
-         OcmA==
-X-Forwarded-Encrypted: i=1; AJvYcCXnIj1d7FJEH548ssBEAmVB1JDSdN3OHCUraTGzJ8CAsRtqJwWGymWn4vq3u/9r1ISh0ZyKF5q9OIrMnFcVKB+CQw6a84Q4jRt7C0AK8Q==
-X-Gm-Message-State: AOJu0YxeY1aWe8BgbVspYWFoiWQNMiKr0RzIWQOtJnWfO0yc07fuQRCA
-	4KX3YyrLuCpYaFvuDTkMDwfLWUtYVeOh8JX4v3e9lRSHSkFU7MxmQCOUfdaKnw==
-X-Google-Smtp-Source: AGHT+IEUbeEwMLKQUFqnunvwzqrLUk2M2HSuYDMYCQ9/F1sqZywek+e6UuBrqRFaBAI4gnDY+N/LLg==
-X-Received: by 2002:a05:6a20:548a:b0:1a3:aa06:38c1 with SMTP id i10-20020a056a20548a00b001a3aa0638c1mr2329538pzk.13.1711598357453;
-        Wed, 27 Mar 2024 20:59:17 -0700 (PDT)
-Received: from thinkpad ([2409:40f2:201b:315f:8cec:6523:95f2:3f93])
-        by smtp.gmail.com with ESMTPSA id i11-20020a17090a718b00b0029b59bf77b4sm2489300pjk.42.2024.03.27.20.59.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Mar 2024 20:59:17 -0700 (PDT)
-Date: Thu, 28 Mar 2024 09:29:09 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/3] dt-bindings: ufs: qcom: document SC7180 UFS
-Message-ID: <20240328035909.GB3212@thinkpad>
-References: <20240326174632.209745-1-krzysztof.kozlowski@linaro.org>
- <20240326174632.209745-2-krzysztof.kozlowski@linaro.org>
+	s=arc-20240116; t=1711601429; c=relaxed/simple;
+	bh=xY/HNhI1nvghGP/OSzgUM0x0YxXVXvi/u/5b00HnsE8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cceBpZwOOO9d9DSpCyArx/Jn1r4R9tGs6RPtFhm2KvqzZbwI+8yhJ9DCMEKk5qi3HZCusZZsEXgrP90D6x8gs6GN1St24zJRiR5CrN6O7C3oVtIp1VH0B4blyNhHEAAy1o7YIsGcOxx7ZeqhMGUFCYXiTMiUjgJeU7ftddcVfjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jdc+Jjoo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8159C4160D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 04:50:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711601428;
+	bh=xY/HNhI1nvghGP/OSzgUM0x0YxXVXvi/u/5b00HnsE8=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=Jdc+Jjoo6pXlAr89uOoUeHYOafMkPdLKwde2gkD1wCaKJaVmBUOPesJv9xozeU6l4
+	 ZMXJkS0t6gqx/EgoubmKk3XLatstrXAogTzk5P4FoDokRL8MmRyeQWGmM7ita1ToYW
+	 PzTYWOZ4c6af91b9oBZBfxmonfRGZS8haQ4iLGDEGNWi7Jce5ey9MZjlGMXvStKJEW
+	 bet5GEODEZNMG/WpHhEu9cuPRGD8b219a9Wy7PeEl93+vjByrTPgXJ/S3kbTf/go/V
+	 2x6qvxa0ynUxn33poU3gtWeMfnWT3B0clQojwOPiJbC4gbehKX34l93oInAUAKVTLn
+	 rukzO35zP80dA==
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a4715991c32so63491466b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 21:50:28 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCXMfW9k+efPBmShXkQnZ8knJMJ552vX7GhtcDx+hl7d6Ch3ECu0fUl82CwOg//oeQPorwp27mnKt9cm4eMatkvaCPi7P96tcVa2xigjyw==
+X-Gm-Message-State: AOJu0YzNuIEeAC55a5GRL+6fvWZUWzozBB2wTuFvuUCSyCXTzmt+l4TE
+	wikWkuDu/UhbFiSu9V6GyLqcYmB61DODT3AGUSX6ywn47jQfrM3YSQULpXP1q1O7e+FNxUhSnDV
+	AzPUBXHNEorGQMVjS/BSrzhhD154oSxi6WlRdyA==
+X-Google-Smtp-Source: AGHT+IEm55nBivDBKmxEjdKFbUvUfnIwT9rouZunAhi1aFtOcHvo3G0pJiyBhJ/1+PibUmlWLC2dNrkwWfqWh5slCe8=
+X-Received: by 2002:a17:906:718a:b0:a47:3428:2b2f with SMTP id
+ h10-20020a170906718a00b00a4734282b2fmr878468ejk.64.1711601427303; Wed, 27 Mar
+ 2024 21:50:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240326174632.209745-2-krzysztof.kozlowski@linaro.org>
+References: <20240326074033.17002-1-quic_priyjain@quicinc.com>
+ <9bea167d-edcf-4d66-8ec7-051e97c8dffd@linaro.org> <05d95845-85ce-bf83-57a7-135265a7508d@quicinc.com>
+In-Reply-To: <05d95845-85ce-bf83-57a7-135265a7508d@quicinc.com>
+From: Amit Kucheria <amitk@kernel.org>
+Date: Thu, 28 Mar 2024 10:20:16 +0530
+X-Gmail-Original-Message-ID: <CAHLCerM-iD0k-gOEtRP0y7J1k_mJpiNp1RUFhJg12V6eN7evSw@mail.gmail.com>
+Message-ID: <CAHLCerM-iD0k-gOEtRP0y7J1k_mJpiNp1RUFhJg12V6eN7evSw@mail.gmail.com>
+Subject: Re: [PATCH v4] thermal/drivers/tsens: Add suspend to RAM support for tsens
+To: Priyansh Jain <quic_priyjain@quicinc.com>
+Cc: Daniel Lezcano <daniel.lezcano@linaro.org>, Thara Gopinath <thara.gopinath@gmail.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	"Rafael J . Wysocki" <rafael@kernel.org>, Zhang Rui <rui.zhang@intel.com>, 
+	Lukasz Luba <lukasz.luba@arm.com>, linux-pm@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	quic_manafm@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Mar 26, 2024 at 06:46:31PM +0100, Krzysztof Kozlowski wrote:
-> Document already upstreamed and used Qualcomm SC7180 UFS host controller
-> to fix dtbs_check warnings like:
-> 
->   sc7180-idp.dtb: ufshc@1d84000: compatible:0: 'qcom,sc7180-ufshc' is not one of ...
->   sc7180-idp.dtb: ufshc@1d84000: clocks: [[39, 99], [39, 7], [39, 98], [39, 107], [36, 0], [39, 106], [39, 105]] is too short
->   sc7180-idp.dtb: ufshc@1d84000: clock-names: ['core_clk', 'bus_aggr_clk', 'iface_clk', 'core_clk_unipro', ...] is too short
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../devicetree/bindings/ufs/qcom,ufs.yaml     | 34 ++++++++++++++++---
->  1 file changed, 30 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> index 1ab3d16917ac..7e6d442545ad 100644
-> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> @@ -27,6 +27,7 @@ properties:
->            - qcom,msm8996-ufshc
->            - qcom,msm8998-ufshc
->            - qcom,sa8775p-ufshc
-> +          - qcom,sc7180-ufshc
->            - qcom,sc7280-ufshc
->            - qcom,sc8180x-ufshc
->            - qcom,sc8280xp-ufshc
-> @@ -43,11 +44,11 @@ properties:
->        - const: jedec,ufs-2.0
->  
->    clocks:
-> -    minItems: 8
-> +    minItems: 7
->      maxItems: 11
->  
->    clock-names:
-> -    minItems: 8
-> +    minItems: 7
->      maxItems: 11
->  
->    dma-coherent: true
-> @@ -113,6 +114,31 @@ required:
->  allOf:
->    - $ref: ufs-common.yaml
->  
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,sc7180-ufshc
-> +    then:
-> +      properties:
-> +        clocks:
-> +          minItems: 7
-> +          maxItems: 7
-> +        clock-names:
-> +          items:
-> +            - const: core_clk
-> +            - const: bus_aggr_clk
-> +            - const: iface_clk
-> +            - const: core_clk_unipro
-> +            - const: ref_clk
-> +            - const: tx_lane0_sync_clk
-> +            - const: rx_lane0_sync_clk
-> +        reg:
-> +          maxItems: 1
-> +        reg-names:
-> +          maxItems: 1
-> +
->    - if:
->        properties:
->          compatible:
-> @@ -250,7 +276,7 @@ allOf:
->          reg:
->            maxItems: 1
->          clocks:
-> -          minItems: 8
-> +          minItems: 7
->            maxItems: 8
->      else:
->        properties:
-> @@ -258,7 +284,7 @@ allOf:
->            minItems: 1
->            maxItems: 2
->          clocks:
-> -          minItems: 8
-> +          minItems: 7
+On Wed, Mar 27, 2024 at 3:12=E2=80=AFPM Priyansh Jain <quic_priyjain@quicin=
+c.com> wrote:
+> On 3/26/2024 4:30 PM, Daniel Lezcano wrote:
+> > On 26/03/2024 08:40, Priyansh Jain wrote:
+> >> As part of suspend to RAM, tsens hardware will be turned off.
+> >> While resume callback, re-initialize tsens hardware.
+> >>
+> >> Signed-off-by: Priyansh Jain <quic_priyjain@quicinc.com>
+> >> ---
+> >> V3 -> V4: Make tsens_reinit function specific to tsens v2. Add
+> >> NULL resume callback support for platform whose versions < ver_2_x
+> >> in tsens ops.
+> >> V2 -> V3: Remove suspend callback & interrupt enablement part from
+> >> resume callback.
+> >> V1 -> V2: Update commit text to explain the necessity of this patch
+> >>
+> >>   drivers/thermal/qcom/tsens-v0_1.c |  6 +++++
+> >>   drivers/thermal/qcom/tsens-v1.c   |  3 +++
+> >>   drivers/thermal/qcom/tsens-v2.c   |  1 +
+> >>   drivers/thermal/qcom/tsens.c      | 37 +++++++++++++++++++++++++++++=
+++
+> >>   drivers/thermal/qcom/tsens.h      |  5 +++++
+> >>   5 files changed, 52 insertions(+)
+> >>
+> >> diff --git a/drivers/thermal/qcom/tsens-v0_1.c
+> >> b/drivers/thermal/qcom/tsens-v0_1.c
+> >> index 32d2d3e33287..7ed85379247b 100644
+> >> --- a/drivers/thermal/qcom/tsens-v0_1.c
+> >> +++ b/drivers/thermal/qcom/tsens-v0_1.c
+> >> @@ -329,6 +329,7 @@ static const struct tsens_ops ops_8226 =3D {
+> >>       .init        =3D init_8226,
+> >>       .calibrate    =3D tsens_calibrate_common,
+> >>       .get_temp    =3D get_temp_common,
+> >> +    .resume        =3D NULL,
+> >
+> > As a static variable it is already set to NULL. Why do you need to
+> > explicitly set them everywhere ?
+> >
+> It was asked in last version to explicitly add (.resume =3D NULL). So
+> added this for all the tsens platforms for which resume callback is not
+> validated.
 
-I'm getting confused by the clock requirements for qcom,ice. Why does specifying
-the qcom,ice phandle require these clocks? These are the UFSHC clocks and
-already defined above.
-
-- Mani
-
->            maxItems: 11
->  
->  unevaluatedProperties: false
-> -- 
-> 2.34.1
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+Daniel's right, you can lose this bit now that your reinit function
+will only work for 2.x.
 
