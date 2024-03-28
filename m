@@ -1,118 +1,94 @@
-Return-Path: <linux-arm-msm+bounces-15603-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15604-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9A8F8908DA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 20:09:55 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E5608908F8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 20:19:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4CF4D297E5C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 19:09:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 18E5CB21613
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 19:19:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2331413790B;
-	Thu, 28 Mar 2024 19:09:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9511113792C;
+	Thu, 28 Mar 2024 19:18:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZsfSL6SA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jftcwO4r"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96B03BBC7;
-	Thu, 28 Mar 2024 19:09:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68CC4136E13;
+	Thu, 28 Mar 2024 19:18:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711652991; cv=none; b=DetpGr+oIdfhkFDhvXEZpuFpCJW3sMbdDVEF4U3WINzUwcqSBHxImHLTDJJfXRSEbuq0fyKyCXImz7sgNEMKg7+30juD2VthheHzFQv8QTufWn8wEWwJBq9tEUErqMsNaKmkj042ByXnSGZm07lG0Mh/bbtJqL6ZC+3+d1HXMrs=
+	t=1711653535; cv=none; b=rlYhcpQeBOAdZSPUGJZgkaji4DhQCQXUx+rgwBNpnWGTI7x8VnqDwKXHXpiBT4C9T31Iey0D6mWuHoTh1mAi6SSlbl4v+8L7KVzcTcfOee/Euq8WPXopFIQBCKyVaAVrtn1ZiLegu5XyAV07zTLqnePG7Rov7TLg7XCe3259P+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711652991; c=relaxed/simple;
-	bh=TMEu0+59Wnpc9lTJ7rgOQpvFhUV4iddHo0yol/6QleA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OMW1jYooNU7LFFrZ0gqj1G4UPm0dNMm8sPnMhr7Lg3Z4SPP4O/qmjCX4u71OR2cgcxIPgAujk+39FTDbsu7oTfHe20JQkDItwPQ2Ds72wOfwrvNs3pYVSVihiTIgiFsZGKxP0x0K2CuoWRQMAFUBPSTSAIDeASuVNbyiTZh+DFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZsfSL6SA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68186C433C7;
-	Thu, 28 Mar 2024 19:09:49 +0000 (UTC)
+	s=arc-20240116; t=1711653535; c=relaxed/simple;
+	bh=/2FwrcuxW2z/ha9sIbh7100tVXqzXgvk1gda2cIs5nE=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=C6AmgatxdrLWufvbxdP9DKiYRBBm4zlu1vsmiU5NirrmYXubb7JNEwilC1ZrPWyDlAOu9jNmb+IZMIQsxXnKpja/jTrQlmNV9jE3rkTFEFHYRCZ8oDKSjk8Sn2O51zL3Izj3in2uH4CjHzzeHI4eW0qlfUdDISSa6RdIuwq3eOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jftcwO4r; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 031CBC433C7;
+	Thu, 28 Mar 2024 19:18:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711652990;
-	bh=TMEu0+59Wnpc9lTJ7rgOQpvFhUV4iddHo0yol/6QleA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ZsfSL6SAEIvmGd/G6gIk+Ub44Yfp4ePHgsHWG1qsAu9ZbVG6Xmfjyk6U3c0EXV8FL
-	 7mSv7BrntwCF013gkD26eEd7ViKb1pH9fSBXskn6HuKUH6v0OIMMIvIXDb/zPhSJNP
-	 5eNRO0nVVY5VcsqSC0j8fB04JzzCUDgjZC6i/bmcENRjZEld3A5O/pIim/D+45e95j
-	 qNk0PoL6pNIZHGed1wtBNs5y51KGT44u+dnDE5Fo2LACwR8cZcWqDEfkZqn0h6eUUy
-	 z7Taib4nQOSLuFhFHfz3WF3zpqu/jQnbnPlVOPh0mD4xM8zJYuvL3fWXO3KVrlQjij
-	 5DlXvgc0MIzuA==
-Date: Fri, 29 Mar 2024 00:39:45 +0530
+	s=k20201202; t=1711653535;
+	bh=/2FwrcuxW2z/ha9sIbh7100tVXqzXgvk1gda2cIs5nE=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=jftcwO4rh+t+5iSEKiw4//3BPGSDqE225ZiJLIkwXVLno6+pnx8oayEnKYBp2VDKu
+	 W73Dws42e20irofCdvDtVM5PuDXBLb8j39L9gl3s5jXWXRuv2kJdCSp+gbQfT+79BM
+	 zNxc6bnX7oV3oEW6ab2IXbNc41KAWVdaZ2N9rNoWvfcLX0UC8CU3PDo1M0g5ihzq1b
+	 IyfKD06Wrz94YX+ODmpHaXVHObLIpByI2Umk/9D34gegd1FR8yzSb+fiYyexKu8CBK
+	 8thgdmZNGyyldMX8uUJfw6Zt4iMv+H4drImBnvw6eCZAHUwiZQlq1ThUyuVYwM4aKK
+	 n1J8ESUJsgGeg==
 From: Vinod Koul <vkoul@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Abel Vesa <abel.vesa@linaro.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Johan Hovold <johan@kernel.org>,
-	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH RESEND v5 1/2] phy: Add Embedded DisplayPort and
- DisplayPort submodes
-Message-ID: <ZgXAec_utD_8yIs4@matsya>
+To: Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Johan Hovold <johan@kernel.org>, Abel Vesa <abel.vesa@linaro.org>
+Cc: linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+In-Reply-To: <20240324-x1e80100-phy-edp-compatible-refactor-v5-0-a0db5f3150bc@linaro.org>
 References: <20240324-x1e80100-phy-edp-compatible-refactor-v5-0-a0db5f3150bc@linaro.org>
- <20240324-x1e80100-phy-edp-compatible-refactor-v5-1-a0db5f3150bc@linaro.org>
- <CAA8EJprPgZJ7hZooJEs1ysn2Py=M_rJguuVdXFuBK757q86ZAQ@mail.gmail.com>
+Subject: Re: [PATCH RESEND v5 0/2] phy: qcom: edp: Allow eDP/DP configuring
+ via set_mode op
+Message-Id: <171165353052.152303.10328548451703763437.b4-ty@kernel.org>
+Date: Fri, 29 Mar 2024 00:48:50 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJprPgZJ7hZooJEs1ysn2Py=M_rJguuVdXFuBK757q86ZAQ@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.12.3
 
-On 24-03-24, 23:26, Dmitry Baryshkov wrote:
-> On Sun, 24 Mar 2024 at 20:50, Abel Vesa <abel.vesa@linaro.org> wrote:
-> >
-> > In some cases, a DP PHY needs to be configured to work in eDP mode.
-> > So add submodes for both DP and eDP so they can be used by the
-> > controllers for specifying the mode the PHY should be configured in.
-> >
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> >  include/linux/phy/phy-dp.h | 3 +++
-> >  1 file changed, 3 insertions(+)
+
+On Sun, 24 Mar 2024 20:50:16 +0200, Abel Vesa wrote:
+> Until now, all platform that supported both eDP and DP had different
+> compatibles for each mode. Using different compatibles for basically
+> the same IP block but for a different configuration is bad way all
+> around. There is a new compute platform from Qualcomm that supports
+> both eDP and DP with the same PHY. So instead of following the old
+> method, we should allow the submode to be configured via set_mode from
+> the controller driver.
 > 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> Vinod, we'd need an immutable branch or a tag for this patch, so that
-> we can merge DP changes during this cycle
+> [...]
 
-The following changes since commit 4cece764965020c22cff7665b18a012006359095:
+Applied, thanks!
 
-  Linux 6.9-rc1 (2024-03-24 14:10:05 -0700)
+[1/2] phy: Add Embedded DisplayPort and DisplayPort submodes
+      commit: 368d67dab4cc4a3ffd39fbd062b2f5796cdbb37b
+[2/2] phy: qcom: edp: Add set_mode op for configuring eDP/DP submode
+      commit: 6078b8ce070cad3f9a8ecfce65d0f6d595494f02
 
-are available in the Git repository at:
-
-  git://git.kernel.org/pub/scm/linux/kernel/git/phy/linux-phy.git tags/phy_dp_modes_6.10
-
-for you to fetch changes up to 6078b8ce070cad3f9a8ecfce65d0f6d595494f02:
-
-  phy: qcom: edp: Add set_mode op for configuring eDP/DP submode (2024-03-29 00:30:16 +0530)
-
-----------------------------------------------------------------
-phy_dp_modes_6.10
-
-This contains the dp submode definition and associated qcom driver change
-
-----------------------------------------------------------------
-Abel Vesa (2):
-      phy: Add Embedded DisplayPort and DisplayPort submodes
-      phy: qcom: edp: Add set_mode op for configuring eDP/DP submode
-
- drivers/phy/qualcomm/phy-qcom-edp.c | 76 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++--------------------
- include/linux/phy/phy-dp.h          |  3 +++
- 2 files changed, 59 insertions(+), 20 deletions(-)
-
-
+Best regards,
 -- 
 ~Vinod
+
+
 
