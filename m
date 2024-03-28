@@ -1,74 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-15553-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15555-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D3F388FDD4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 12:12:30 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 00A8E88FE87
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 13:02:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2C2C1B23C9B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 11:12:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1BDA31C22846
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 12:02:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E092E7D3E3;
-	Thu, 28 Mar 2024 11:12:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41B6C7EF1F;
+	Thu, 28 Mar 2024 12:01:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="zibkovI2"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gxC+Npgr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776F71BDD0;
-	Thu, 28 Mar 2024 11:12:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.87.146.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE7D7F7D5;
+	Thu, 28 Mar 2024 12:01:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711624342; cv=none; b=c6BzBM/o4UoxC9pBXgE0Q/PSv8cQ0ZTxgiPHt80WJCYQvne6VVts4zSqscYIGZ1hSlvdO+9lwWWSFWu/OocKS0zs0dmYoHQjpBQjbWKqr+c0U/m1stK8Ikx6ua5tmqeTYmXC+NdAaiM1Bn2XPbEyxjJkQT5SU0e5VelSJO/pZrI=
+	t=1711627286; cv=none; b=XAUgOSLve6lOZ00NpOKUEPU7Se0kHo1MCYtK0tmFFObq6UT/LIOuMnJ6MlgYcX4kdEMzy+fcniJ6CsnKbYM2lLpoJsHpf7U6J+wb2iDynIYq6wSRg3LByRx0/nKEa/6fXoxMAUUfZ5iZlm+15cQglTPq7398QJe1QNp8O1N9iXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711624342; c=relaxed/simple;
-	bh=y4W0sq1JvhtcJFh4/mQlcLdJUhReEnI0NDx8hrvcY6A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lLQ+azzzMVeWGra95w3yEQkoa0SkEqOr3k2JmX1WSdaVxg9pehsNdQoOFogYyQZKeG2j0tJW3lWQQadmol7lg6kjqSCt0ArDJo6WPpw83fkkKf07uAxX+NZHKzNeuwQ9Sa1E0s8vIehkxKzqAa3LWPa/wYRdsbKZlH3Ac47WCU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru; spf=pass smtp.mailfrom=trvn.ru; dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b=zibkovI2; arc=none smtp.client-ip=194.87.146.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trvn.ru
-Received: from authenticated-user (box.trvn.ru [194.87.146.52])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-	(No client certificate requested)
-	by box.trvn.ru (Postfix) with ESMTPSA id 78A1040142;
-	Thu, 28 Mar 2024 16:12:10 +0500 (+05)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-	t=1711624331; bh=y4W0sq1JvhtcJFh4/mQlcLdJUhReEnI0NDx8hrvcY6A=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=zibkovI2tPcPFPC+eF6mlRbQW1YbE9tvrvnqcRFFeg0B1cEOLJmoX86pIRLx19VAC
-	 IRLW1y6qDFRQH/HV5SwGxhlztiJLNLdLrzBq5ikZkZKSNdK6XAPHGzTnEN8kzsVBwB
-	 xc5kb2/vUAFCb4+zqg3PbhpINx4+v8Zr41BQPK5WDa43llBkzHTp2cCCBZsIpyuN3q
-	 /M2A3rjLW/+LhQAVSXTEDzw3OE15HuOEhpjTaHvezEk+OXV3bxlMxK+4qpGQkQgtkm
-	 Oj09oARs+dFFQA28Lq1zdGmdIdMf20L1MKayOOwA925b9GHHmFm8sZ/jszcsKctbm3
-	 nLYIdYu60ELhA==
-Date: Thu, 28 Mar 2024 16:12:07 +0500
-From: Nikita Travkin <nikita@trvn.ru>
-To: Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>
-Cc: Caleb Connolly <caleb.connolly@linaro.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] soc: qcom: cmd-db: map shared memory as WT, not WB
-Message-ID: <amrgxdv2iq32wrrn4w2xtxaknmyijr6cu37ivjuqez5rzftde6@wwraopwfqtw5>
-References: <20240327200917.2576034-1-volodymyr_babchuk@epam.com>
+	s=arc-20240116; t=1711627286; c=relaxed/simple;
+	bh=qQGL3KEVALIYTB3iaYhCLAJRzfoPdhBLQhivo5AcuHw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:CC:From:
+	 In-Reply-To:Content-Type; b=kmtIcoGqzm7+jtCy2RgOJgGBE85V6P+cam8MRNGj6/0ABMVpqjQqJ2eK8F3OTC/UHysnBWd5qwRlOOQ6vHLuyqc+Mx+SI9wFBViZV6enVGawiW4bDdNGw5KyH9AV74KK2XycNC01j8uREJxkeuHWT26rypFt5IWCxMo4izBuwSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gxC+Npgr; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42SAVtgk030829;
+	Thu, 28 Mar 2024 12:01:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:references:cc:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=zJ4nt5TmQ8B8l4dzJcYb0Pb3LyYOiQTCoq/dt1LSxRU=; b=gx
+	C+NpgruJtTLYOyZu5+jHAxl0uRsJIqXHlZK4/0WbkZx0cUQ6+K4lZ39ApazVT5yw
+	nRb3JpnBp2SJseOAX7VNwyW4EZLrG1ptpq8MV7uxy9cV06tSuOc8kJjBNb/hpEPr
+	UCvebmVcV6mxw029kTAbrurYxayRzu56CMwWbQfeskzIvtOvdSQhCMm8djhNmYvh
+	5oDqOeSEsR1PMcGDikcJpV1C7jtjWj+6PUG7uw7Fn1+N0nX5jnfYW8H0qje4vUYa
+	rau4JmZRjStd3WeE91BhVYlHDZKWx9Ppuw9qUmFFnfvgCHlpJUJJHVXdd62JZ3pU
+	umyaPREy6Ow34DxLnYxQ==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x4u2037qg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 28 Mar 2024 12:01:11 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42SC1Axq030884
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 28 Mar 2024 12:01:10 GMT
+Received: from [10.216.61.17] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 28 Mar
+ 2024 05:01:07 -0700
+Message-ID: <19bb6ff0-04ff-4e88-8c8a-499c054bdea4@quicinc.com>
+Date: Thu, 28 Mar 2024 17:31:04 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] soc: qcom: cmd-db: map shared memory as WT, not WB
+Content-Language: en-US
+To: Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>
+References: <20240327200917.2576034-1-volodymyr_babchuk@epam.com>
+CC: Caleb Connolly <caleb.connolly@linaro.org>, <Volodymyr_Babchuk@epam.com>,
+        "andersson@kernel.org >> Bjorn Andersson" <andersson@kernel.org>,
+        Konrad
+ Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm
+	<linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+From: "Maulik Shah (mkshah)" <quic_mkshah@quicinc.com>
 In-Reply-To: <20240327200917.2576034-1-volodymyr_babchuk@epam.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: vSol2qy5wNRC1Autn8p6AtWI4KUfl8yT
+X-Proofpoint-ORIG-GUID: vSol2qy5wNRC1Autn8p6AtWI4KUfl8yT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-28_11,2024-03-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ lowpriorityscore=0 spamscore=0 impostorscore=0 malwarescore=0 phishscore=0
+ adultscore=0 clxscore=1011 mlxlogscore=999 mlxscore=0 priorityscore=1501
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403210001 definitions=main-2403280081
 
-On Wed, Mar 27, 2024 at 08:09:34PM +0000, Volodymyr Babchuk wrote:
+
+
+On 3/28/2024 1:39 AM, Volodymyr Babchuk wrote:
 > It appears that hardware does not like cacheable accesses to this
 > region. Trying to access this shared memory region as Normal Memory
 > leads to secure interrupt which causes an endless loop somewhere in
 > Trust Zone.
+
+Linux does not write into cmd-db region. This region is write protected 
+by XPU. Making this region uncached magically solves the XPU write fault
+issue.
+
+Can you please include above details?
+
 > 
 > The only reason it is working right now is because Qualcomm Hypervisor
 > maps the same region as Non-Cacheable memory in Stage 2 translation
@@ -77,63 +117,35 @@ On Wed, Mar 27, 2024 at 08:09:34PM +0000, Volodymyr Babchuk wrote:
 > mappings. This patch fixes the issue by mapping the shared memory as
 > Write-Through. This removes dependency on correct mappings in Stage 2
 > tables.
+
+Using MEMREMAP_WC also resolves for qcm6490, see below comment.
+
 > 
 > I tested this on SA8155P with Xen.
 > 
-
-Hi!
-
-I observe a similar issue while trying to boot Linux in EL2 after taking
-over qcom's hyp on a sc7180 WoA device:
-
-[    0.337736] CPU: All CPU(s) started at EL2
-(...)
-[    0.475135] Serial: AMBA PL011 UART driver
-[    0.479649] Internal error: synchronous external abort: 0000000096000410 [#1] PREEMPT SMP
-[    0.488053] Modules linked in:
-[    0.491213] CPU: 6 PID: 1 Comm: swapper/0 Not tainted 6.7.0 #41
-[    0.497310] Hardware name: Acer Aspire 1 (DT)
-[    0.501800] pstate: 00400009 (nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[    0.508964] pc : cmd_db_dev_probe+0x38/0xc4
-[    0.513290] lr : cmd_db_dev_probe+0x2c/0xc4
-[    0.517606] sp : ffff8000817ebab0
-[    0.521019] x29: ffff8000817ebab0 x28: 0000000000000000 x27: ffff800081346050
-                     <uart cuts out>
-
-Unfortunately this patch doesn't help in this case (I beileve I even
-tried same/similar change a while back when trying to debug this)
-
-Currently I can work around this by just reocationg the cmd-db while
-still under the qcom's hyp [1] but it would be nice to find a generic
-solution that doesn't need pre-boot hacks...
-
-AFAIK this is not observed on at least sc8280xp WoA devices and I'd
-assume cros is not affected because they don't use qcom's TZ and instead
-use TF-A (which is overall more friendly, though still uses qcom's
-proprietary qtiseclib under the hood)
-
-Nikita
-
-[1] https://github.com/TravMurav/slbounce/blob/main/src/dtbhack_main.c#L17
-
 > Signed-off-by: Volodymyr Babchuk <volodymyr_babchuk@epam.com>
 > ---
->  drivers/soc/qcom/cmd-db.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>   drivers/soc/qcom/cmd-db.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
 > index a5fd68411bed5..dd5ababdb476c 100644
 > --- a/drivers/soc/qcom/cmd-db.c
 > +++ b/drivers/soc/qcom/cmd-db.c
 > @@ -324,7 +324,7 @@ static int cmd_db_dev_probe(struct platform_device *pdev)
->  		return -EINVAL;
->  	}
->  
+>   		return -EINVAL;
+>   	}
+>   
 > -	cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WB);
 > +	cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WT);
->  	if (!cmd_db_header) {
->  		ret = -ENOMEM;
->  		cmd_db_header = NULL;
-> -- 
-> 2.43.0
+
+In downstream, we have below which resolved similar issue on qcm6490.
+
+cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WC);
+
+Downstream SA8155P also have MEMREMAP_WC. Can you please give it a try 
+on your device?
+
+Thanks,
+Maulik
 
