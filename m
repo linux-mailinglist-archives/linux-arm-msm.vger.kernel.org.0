@@ -1,173 +1,250 @@
-Return-Path: <linux-arm-msm+bounces-15496-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15497-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F01E88F76A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 06:50:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A74A588F783
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 06:55:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D46C41F24635
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 05:50:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1E4221F27238
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 05:55:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81BD74DA06;
-	Thu, 28 Mar 2024 05:49:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 139AE2B9C6;
+	Thu, 28 Mar 2024 05:55:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="EqO1qpxd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hysjLZhk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B3B4CB38
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 05:49:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93913DAC11;
+	Thu, 28 Mar 2024 05:55:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711604999; cv=none; b=Zd5Aj74ATxC4V7XvM4EOL9i839O2Wq1QmXHWpTNk14ClqJiEQHcP1/AG9OP2veTzwax0axgBpo1F/gC6lo/s7wfMcTk4NIeKRYNpCMuTs3pogT862AtL349I0J+QwX0ThNxNLfgYZtcF1zDqzpyxgN59SB10wT7OfXvfpS8a/98=
+	t=1711605347; cv=none; b=J3Ds7r5eOMEbWMfQ7uqDEJlqtCz+JrTHmxnGm4WED/Cy4b1CkuubQ1a/CYrY8lzS8tsG/9TCriJTZenJnvbwuM3Q4VbJr8g79ZddLaknWhon35QjmHZ4MsrmmJ6j3GwirWSyoLAKChtFvN40iHQ5/flt0i/ln//S4hLoN3CPkfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711604999; c=relaxed/simple;
-	bh=cn31nvUNUjuzpJBbAgPyDFbqbILk+7I0RyNp0AFjRSE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=n1yEjqESFZKKl3pTUyy0+HJq8dajM+4RmwKmEB8Ues57bufOnWw54vPaEZdfkPKRLeMfCjgrsnK/gdkSc2s0vNvsvkw7K9AX3dNgoxDuMfLA/9hyC8cDSIrsk+l+txjCi88Sck0dT09KX+IsuRNSV0YghD4MyBW4y1guvS1DkL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=EqO1qpxd; arc=none smtp.client-ip=209.85.167.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-515b43b39fdso530485e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Mar 2024 22:49:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1711604996; x=1712209796; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cn31nvUNUjuzpJBbAgPyDFbqbILk+7I0RyNp0AFjRSE=;
-        b=EqO1qpxdgMVAy4qt4wi/S7W10sSAb99s7msAvI4h8uz8vL1JW1DivGxFbJKCO2CmVi
-         uhno3Jc4F4VV312ZgktGxCVAHbFv3g4lC2Zs3yj0YSrA4l0ABpAZAqtVfub7B9yiEOn1
-         qxc2TOsTmOGR94M9neC4O67OAtULhJNcHnWm8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711604996; x=1712209796;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cn31nvUNUjuzpJBbAgPyDFbqbILk+7I0RyNp0AFjRSE=;
-        b=PhPDZ4bdTT1h9rNtNRjE3Uk6aWdeM9rIb0yHimQ/IS/SWx3/EMO+DxaoeVEo2F25Jy
-         egOCkpfYU6U8A1U1mzUBMeC8dNpOdysSgBlh78zRjxELRBrDLAakLxphvClRrJwJPvvs
-         Om+c9ZRI5Itwj26HOOQDQVEUgU5oO6moTmZOgSFzJ0PtmxA5/FruAsO066NFzyZz04vq
-         /XpJlA2GsPQPoDxpw8zGJvbRcXFbOJ3jmkFyPlaxwJwQ+aqeGgkFJCTLy45n8nYkY5rp
-         GBEI3o2r8EtKBw47KDqFwHbZhzRvTNZDY8k/+MEpAzJkp9IeVLvlR7khNtcoSXcw8GI2
-         5pfQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVL4Bcl0VAr7LcRG0qi45uX1rtgsFFudxFgjQjaUIayVSmCvc+JC5/8MrxIKXpMo+6I03Ym+erY8oqvz/nqhU17dqv6ci2y1XWHOdqFyw==
-X-Gm-Message-State: AOJu0YxLNyOdZm7nvSCNqcetDdSj9Ov1U5LMyk2bfUdF9Qdjngj9UIl4
-	TT12CEp7BJ2UJAMA+ZLHw4ok2IlPB8+SAVLGG5gvYIm+2wDn5oUvI55UlaDBqI9iOGWInwrEcTJ
-	mU5ukbh4DIN87slihWKnr2+R8II3bvBwnmS8g
-X-Google-Smtp-Source: AGHT+IE9E7br29oy9RDRD35SwQNl2vwFiBtmvYXASR4vX3jKO04LtgAi9c4oMgaAsLskFkIEeHikqvJMsXTcDn6BjM0=
-X-Received: by 2002:a05:6512:32bb:b0:513:dfac:b29e with SMTP id
- q27-20020a05651232bb00b00513dfacb29emr414742lfe.26.1711604995631; Wed, 27 Mar
- 2024 22:49:55 -0700 (PDT)
+	s=arc-20240116; t=1711605347; c=relaxed/simple;
+	bh=C6skgkr2NMPDni3brGoFkl+5/I4LRqRBMa9zmdDL9uY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OLlER+IyhNXi5cnVjcrG/OL81p81BVQFfPzNN3Zk1SeAZj0z82TyWSUGM40COJDwd2xQkSZ6tyNK4gyFtFA5dLU3naWd19RAA53MPAz6HSVVU5QQzQTPdqi6lAd72Jw7gVyEpVhqsNjM9jesmL6Ppa5Ujox0TN6hi0BOjZwwDac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hysjLZhk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E6DC433F1;
+	Thu, 28 Mar 2024 05:55:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711605346;
+	bh=C6skgkr2NMPDni3brGoFkl+5/I4LRqRBMa9zmdDL9uY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=hysjLZhkEnvXnxd+HtHwjnxShxKJsdr7YRORWMMbG9CAv2Wo4v/3W17f+9SmlwjYP
+	 AyxLZuXRv9YJGW7TBEhuFvjqai5JqAqlAjT7kP1ISp5EH8RS9fJ2YPnuq82HTriscX
+	 k3oc9NY2bXpiP0jGnfR7dbOxiqpXyBbLE3Kr+zaoP4w8AQS+EkbA1t2gSCobYQ2KlV
+	 32f78em/AA4bHgFdo/ljQvmpapnRbgSvmNw6bLqNSxN3FzIz/Su4hMEut3jzJjbgI6
+	 ErlOb5+1jhqeBVqohmzPhEaaC6pQ2kHQXfpk3998EVOS2mUbOgGjtxbSO/uM8abY2C
+	 N/IIGvRGfpoEA==
+Date: Thu, 28 Mar 2024 11:25:41 +0530
+From: Vinod Koul <vkoul@kernel.org>
+To: Allen Pais <apais@linux.microsoft.com>
+Cc: linux-kernel@vger.kernel.org, tj@kernel.org, keescook@chromium.org,
+	marcan@marcan.st, sven@svenpeter.dev, florian.fainelli@broadcom.com,
+	rjui@broadcom.com, sbranden@broadcom.com, paul@crapouillou.net,
+	Eugeniy.Paltsev@synopsys.com, manivannan.sadhasivam@linaro.org,
+	vireshk@kernel.org, Frank.Li@nxp.com, leoyang.li@nxp.com,
+	zw@zh-kernel.org, wangzhou1@hisilicon.com, haijie1@huawei.com,
+	shawnguo@kernel.org, s.hauer@pengutronix.de, sean.wang@mediatek.com,
+	matthias.bgg@gmail.com, angelogioacchino.delregno@collabora.com,
+	afaerber@suse.de, logang@deltatee.com, daniel@zonque.org,
+	haojian.zhuang@gmail.com, robert.jarzmik@free.fr,
+	andersson@kernel.org, konrad.dybcio@linaro.org, orsonzhai@gmail.com,
+	baolin.wang@linux.alibaba.com, zhang.lyra@gmail.com,
+	patrice.chotard@foss.st.com, linus.walleij@linaro.org,
+	wens@csie.org, jernej.skrabec@gmail.com, peter.ujfalusi@gmail.com,
+	kys@microsoft.com, haiyangz@microsoft.com, wei.liu@kernel.org,
+	decui@microsoft.com, jassisinghbrar@gmail.com, mchehab@kernel.org,
+	maintainers@bluecherrydvr.com, aubin.constans@microchip.com,
+	ulf.hansson@linaro.org, manuel.lauss@gmail.com,
+	mirq-linux@rere.qmqm.pl, jh80.chung@samsung.com, oakad@yahoo.com,
+	hayashi.kunihiko@socionext.com, mhiramat@kernel.org,
+	brucechang@via.com.tw, HaraldWelte@viatech.com, pierre@ossman.eu,
+	duncan.sands@free.fr, stern@rowland.harvard.edu, oneukum@suse.com,
+	openipmi-developer@lists.sourceforge.net, dmaengine@vger.kernel.org,
+	asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+	linux-rpi-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
+	imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
+	linux-mediatek@lists.infradead.org,
+	linux-actions@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-riscv@lists.infradead.org, linux-sunxi@lists.linux.dev,
+	linux-tegra@vger.kernel.org, linux-hyperv@vger.kernel.org,
+	linux-rdma@vger.kernel.org, linux-media@vger.kernel.org,
+	linux-mmc@vger.kernel.org, linux-omap@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org, linux-s390@vger.kernel.org,
+	netdev@vger.kernel.org, linux-usb@vger.kernel.org
+Subject: Re: [PATCH 2/9] dma: Convert from tasklet to BH workqueue
+Message-ID: <ZgUGXTKPVhrA1tam@matsya>
+References: <20240327160314.9982-1-apais@linux.microsoft.com>
+ <20240327160314.9982-3-apais@linux.microsoft.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <1710418312-6559-1-git-send-email-quic_amrianan@quicinc.com>
- <1710418312-6559-3-git-send-email-quic_amrianan@quicinc.com>
- <f6f317d9-830d-4c38-998f-b229b3d9f95a@linaro.org> <20240316-germinate-browsing-6865db3a44d7@spud>
- <20240316-herring-skies-6ee1d4a9c0d2@spud> <CAD=FV=VZB9Dqsw6+2WBdWxaQVA9NgK_W2n0okBOU0haDMSogPw@mail.gmail.com>
-In-Reply-To: <CAD=FV=VZB9Dqsw6+2WBdWxaQVA9NgK_W2n0okBOU0haDMSogPw@mail.gmail.com>
-From: Chen-Yu Tsai <wenst@chromium.org>
-Date: Thu, 28 Mar 2024 13:49:44 +0800
-Message-ID: <CAGXv+5HchqvT=J7_qsJMB7OthX-gtGp0E64Xfk3i3=DDX6o1=g@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] dt-bindings: qcom: Update DT bindings for multiple DT
-To: Doug Anderson <dianders@chromium.org>, Amrit Anand <quic_amrianan@quicinc.com>
-Cc: Conor Dooley <conor@kernel.org>, Caleb Connolly <caleb.connolly@linaro.org>, robh@kernel.org, 
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, agross@kernel.org, 
-	andersson@kernel.org, konrad.dybcio@linaro.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	kernel@quicinc.com, peter.griffin@linaro.org, linux-riscv@lists.infradead.org, 
-	chrome-platform@lists.linux.dev, linux-mediatek@lists.infradead.org, 
-	Simon Glass <sjg@chromium.org>, Julius Werner <jwerner@chromium.org>, 
-	Elliot Berman <quic_eberman@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240327160314.9982-3-apais@linux.microsoft.com>
 
-On Tue, Mar 19, 2024 at 5:36=E2=80=AFAM Doug Anderson <dianders@chromium.or=
-g> wrote:
->
-> Hi,
->
-> On Sat, Mar 16, 2024 at 9:51=E2=80=AFAM Conor Dooley <conor@kernel.org> w=
-rote:
-> >
-> > On Sat, Mar 16, 2024 at 04:20:03PM +0000, Conor Dooley wrote:
-> > > On Thu, Mar 14, 2024 at 02:20:38PM +0000, Caleb Connolly wrote:
-> > > > On 14/03/2024 12:11, Amrit Anand wrote:
-> > > > 2. A top level board-id property that isn't namespaced implies that=
- it
-> > > > isn't vendor specific, but the proposed implementation doesn't even
-> > > > pretend to be vendor agnostic.
-> > >
-> > > I pointed out previously that the Chromebook guys had some similar
-> > > issues with dtb selection when the OEM varies parts but there does no=
-t
-> > > seem to be any of them on CC here.
-> >
-> > That's maybe a bit harsh of me actually, I see that there's a
-> > chrome-platform address on CC, but I don't know if that's gonna reach
-> > the guys that work on these devices (Chen-Yu Tsai and Doug Anderson in
-> > particular).
->
-> Thanks for the CC. Yeah, I don't watch the "chrome-platform" list
-> myself, though maybe I should...
->
-> The Chromebook boot flow and how we've handled this so far is
-> documented in the kernel [1]. This method is what we've been using
-> (with slight modifications over the years) since the earlier ARM
-> Chromebooks and is, I believe, supported in both the depthcharge
-> loader (used in Chromebooks) and also in U-Boot, though it's possible
-> (?) that the U-Boot rules might vary ever so slightly. I haven't tried
-> using U-Boot to boot a Chromebook in years.
->
-> The current way things work for Chromebooks involves a heavy amount of
-> duplication. We bundle an entire "DTB" for every relevant
-> board/rev/sku combination even though many of those DTBs are 99% the
-> same as the other ones. The DTBs have been relatively small and we
-> compress them so this hasn't been a massive deal, but it's always been
-> on the TODO list to come up with a scheme to use DT overlays. We've
-> also talked about bundling a device tree that has the superset of
-> components and then using an in-kernel driver to set the status of
-> some components to okay and there is some overlap there in the
-> possible way to represent board variants. I think Chen-Yu is going to
-> talk about a few of these topics next month at EOSS [2].
+Hi Allen,
 
-That's right. It's the last talk before the closing game on the last day.
+Subsytem is dmaengine, can you rename this to dmaengine: ...
 
-Elliot is also presenting the board-id proposal at EOSS [3], which is the
-last talk of day 2.
+On 27-03-24, 16:03, Allen Pais wrote:
+> The only generic interface to execute asynchronously in the BH context is
+> tasklet; however, it's marked deprecated and has some design flaws. To
+> replace tasklets, BH workqueue support was recently added. A BH workqueue
+> behaves similarly to regular workqueues except that the queued work items
+> are executed in the BH context.
 
-> In terms of looking at your specific proposal, it's definitely trying
-> to factor in a lot more things than the current one that Chromebooks
-> use. The Chromebook model was "simple" enough that we could just
-> leverage the compatible string, though the way we leverage it has
-> ended up controversial over the years. Yours is definitely too
-> complicated to work the same way. It seems like device tree overlays
-> would be a better fit? I'm not an expert so maybe this is already
-> solved somewhere, but I'd imagine the hard part is getting everyone to
-> agree on how to specify stuff in the DT overlay that allows the
-> bootloader to know whether to overlay it or not...
+Thanks for conversion, am happy with BH alternative as it helps in
+dmaengine where we need shortest possible time between tasklet and
+interrupt handling to maximize dma performance
 
-I think qcom,board-id + qcom,oem-id maps to our board name + SKU ID + revis=
-ion.
-The difference is probably because we make our device codenames public? We
-don't actually have integer identifiers for each board family, though I do
-see the appeal of it.
+> 
+> This patch converts drivers/dma/* from tasklet to BH workqueue.
 
-So it looks like this proposal is more about identifying boards without
-polluting (?) the compatible namespace with all sorts of combinations
-and hacks like we have.
+> 
+> Based on the work done by Tejun Heo <tj@kernel.org>
+> Branch: git://git.kernel.org/pub/scm/linux/kernel/git/tj/wq.git for-6.10
+> 
+> Signed-off-by: Allen Pais <allen.lkml@gmail.com>
+> ---
+>  drivers/dma/altera-msgdma.c                   | 15 ++++----
+>  drivers/dma/apple-admac.c                     | 15 ++++----
+>  drivers/dma/at_hdmac.c                        |  2 +-
+>  drivers/dma/at_xdmac.c                        | 15 ++++----
+>  drivers/dma/bcm2835-dma.c                     |  2 +-
+>  drivers/dma/dma-axi-dmac.c                    |  2 +-
+>  drivers/dma/dma-jz4780.c                      |  2 +-
+>  .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    |  2 +-
+>  drivers/dma/dw-edma/dw-edma-core.c            |  2 +-
+>  drivers/dma/dw/core.c                         | 13 +++----
+>  drivers/dma/dw/regs.h                         |  3 +-
+>  drivers/dma/ep93xx_dma.c                      | 15 ++++----
+>  drivers/dma/fsl-edma-common.c                 |  2 +-
+>  drivers/dma/fsl-qdma.c                        |  2 +-
+>  drivers/dma/fsl_raid.c                        | 11 +++---
+>  drivers/dma/fsl_raid.h                        |  2 +-
+>  drivers/dma/fsldma.c                          | 15 ++++----
+>  drivers/dma/fsldma.h                          |  3 +-
+>  drivers/dma/hisi_dma.c                        |  2 +-
+>  drivers/dma/hsu/hsu.c                         |  2 +-
+>  drivers/dma/idma64.c                          |  4 +--
+>  drivers/dma/img-mdc-dma.c                     |  2 +-
+>  drivers/dma/imx-dma.c                         | 27 +++++++-------
+>  drivers/dma/imx-sdma.c                        |  6 ++--
+>  drivers/dma/ioat/dma.c                        | 17 ++++-----
+>  drivers/dma/ioat/dma.h                        |  5 +--
+>  drivers/dma/ioat/init.c                       |  2 +-
+>  drivers/dma/k3dma.c                           | 19 +++++-----
+>  drivers/dma/mediatek/mtk-cqdma.c              | 35 ++++++++++---------
+>  drivers/dma/mediatek/mtk-hsdma.c              |  2 +-
+>  drivers/dma/mediatek/mtk-uart-apdma.c         |  4 +--
+>  drivers/dma/mmp_pdma.c                        | 13 +++----
+>  drivers/dma/mmp_tdma.c                        | 11 +++---
+>  drivers/dma/mpc512x_dma.c                     | 17 ++++-----
+>  drivers/dma/mv_xor.c                          | 13 +++----
+>  drivers/dma/mv_xor.h                          |  5 +--
+>  drivers/dma/mv_xor_v2.c                       | 23 ++++++------
+>  drivers/dma/mxs-dma.c                         | 13 +++----
+>  drivers/dma/nbpfaxi.c                         | 15 ++++----
+>  drivers/dma/owl-dma.c                         |  2 +-
+>  drivers/dma/pch_dma.c                         | 17 ++++-----
+>  drivers/dma/pl330.c                           | 31 ++++++++--------
+>  drivers/dma/plx_dma.c                         | 13 +++----
+>  drivers/dma/ppc4xx/adma.c                     | 17 ++++-----
+>  drivers/dma/ppc4xx/adma.h                     |  5 +--
+>  drivers/dma/pxa_dma.c                         |  2 +-
+>  drivers/dma/qcom/bam_dma.c                    | 35 ++++++++++---------
+>  drivers/dma/qcom/gpi.c                        | 18 +++++-----
+>  drivers/dma/qcom/hidma.c                      | 11 +++---
+>  drivers/dma/qcom/hidma.h                      |  5 +--
+>  drivers/dma/qcom/hidma_ll.c                   | 11 +++---
+>  drivers/dma/qcom/qcom_adm.c                   |  2 +-
+>  drivers/dma/sa11x0-dma.c                      | 27 +++++++-------
+>  drivers/dma/sf-pdma/sf-pdma.c                 | 23 ++++++------
+>  drivers/dma/sf-pdma/sf-pdma.h                 |  5 +--
+>  drivers/dma/sprd-dma.c                        |  2 +-
+>  drivers/dma/st_fdma.c                         |  2 +-
+>  drivers/dma/ste_dma40.c                       | 17 ++++-----
+>  drivers/dma/sun6i-dma.c                       | 33 ++++++++---------
+>  drivers/dma/tegra186-gpc-dma.c                |  2 +-
+>  drivers/dma/tegra20-apb-dma.c                 | 19 +++++-----
+>  drivers/dma/tegra210-adma.c                   |  2 +-
+>  drivers/dma/ti/edma.c                         |  2 +-
+>  drivers/dma/ti/k3-udma.c                      | 11 +++---
+>  drivers/dma/ti/omap-dma.c                     |  2 +-
+>  drivers/dma/timb_dma.c                        | 23 ++++++------
+>  drivers/dma/txx9dmac.c                        | 29 +++++++--------
+>  drivers/dma/txx9dmac.h                        |  5 +--
+>  drivers/dma/virt-dma.c                        |  9 ++---
+>  drivers/dma/virt-dma.h                        |  9 ++---
+>  drivers/dma/xgene-dma.c                       | 21 +++++------
+>  drivers/dma/xilinx/xilinx_dma.c               | 23 ++++++------
+>  drivers/dma/xilinx/xilinx_dpdma.c             | 21 +++++------
+>  drivers/dma/xilinx/zynqmp_dma.c               | 21 +++++------
+>  74 files changed, 442 insertions(+), 395 deletions(-)
+> 
+> diff --git a/drivers/dma/altera-msgdma.c b/drivers/dma/altera-msgdma.c
+> index a8e3615235b8..611b5290324b 100644
+> --- a/drivers/dma/altera-msgdma.c
+> +++ b/drivers/dma/altera-msgdma.c
+> @@ -20,6 +20,7 @@
+>  #include <linux/platform_device.h>
+>  #include <linux/slab.h>
+>  #include <linux/of_dma.h>
+> +#include <linux/workqueue.h>
+>  
+>  #include "dmaengine.h"
+>  
+> @@ -170,7 +171,7 @@ struct msgdma_sw_desc {
+>  struct msgdma_device {
+>  	spinlock_t lock;
+>  	struct device *dev;
+> -	struct tasklet_struct irq_tasklet;
+> +	struct work_struct irq_work;
 
-> [1] https://docs.kernel.org/arch/arm/google/chromebook-boot-flow.html
-> [2] https://eoss24.sched.com/event/1aBGe/second-source-component-probing-=
-on-device-tree-platforms-chen-yu-tsai-google-llc
+Can we name these as bh_work to signify that we are always in bh
+context? here and everywhere please
 
-[3] https://eoss24.sched.com/event/1aBFy/shipping-multiple-devicetrees-how-=
-to-identify-which-dtb-is-for-my-board-elliot-berman-qualcomm
+
+>  	struct list_head pending_list;
+>  	struct list_head free_list;
+>  	struct list_head active_list;
+> @@ -676,12 +677,12 @@ static int msgdma_alloc_chan_resources(struct dma_chan *dchan)
+>  }
+>  
+>  /**
+> - * msgdma_tasklet - Schedule completion tasklet
+> + * msgdma_work - Schedule completion work
+
+...
+
+> @@ -515,7 +516,7 @@ struct gpii {
+>  	enum gpi_pm_state pm_state;
+>  	rwlock_t pm_lock;
+>  	struct gpi_ring ev_ring;
+> -	struct tasklet_struct ev_task; /* event processing tasklet */
+> +	struct work_struct ev_task; /* event processing work */
+>  	struct completion cmd_completion;
+>  	enum gpi_cmd gpi_cmd;
+>  	u32 cntxt_type_irq_msk;
+> @@ -755,7 +756,7 @@ static void gpi_process_ieob(struct gpii *gpii)
+>  	gpi_write_reg(gpii, gpii->ieob_clr_reg, BIT(0));
+>  
+>  	gpi_config_interrupts(gpii, MASK_IEOB_SETTINGS, 0);
+> -	tasklet_hi_schedule(&gpii->ev_task);
+> +	queue_work(system_bh_highpri_wq, &gpii->ev_task);
+
+This is good conversion, thanks for ensuring system_bh_highpri_wq is
+used here
+-- 
+~Vinod
 
