@@ -1,161 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-15498-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15499-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4E1988F824
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 07:52:54 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3519888F875
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 08:18:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6AB462907C6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 06:52:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C94E91F26605
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 07:18:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E4AB4F213;
-	Thu, 28 Mar 2024 06:52:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F04CB51C36;
+	Thu, 28 Mar 2024 07:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LbsYaQvh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VYVaxlFb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1441DA23;
-	Thu, 28 Mar 2024 06:52:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9491E89C
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 07:17:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711608769; cv=none; b=utq1VMGNXzh4GIydbcp5QAjJwwqyzqV4MyegaQWtPOwH8hGjQ2Z+HyLsX9un6jMA79P4Cw/Ju6mxj9V2jwkS7YAq4JZf+IOT+y+5mjjWIPJ78QMIRe0hZYeu8Au74feYP9Uvp2gcHv/Rt9i3NbHsKOXvpqw+/+fx5dVp6C25kn8=
+	t=1711610279; cv=none; b=U46sKD/5AgwnP/lhqyedN45WLPGgtPES8m4lPUTBLofznjpDHs3JEAsjdUx+wti+B/1zN6VGijb+XfBLv4X8rUJicbQKGFv1g/e9zEQ3ylUSn0PkepRkJO7RnPTCRfSuKVlGlJ6s+Q0I33QAm8VkUL9EVEsXx+tvNlxzBO9r5TA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711608769; c=relaxed/simple;
-	bh=4EAw4hrm5SLQWoL6ok0UmCfpnmz3syQ2181RJA575C0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=dTY+rt59US+i+JXOJ2Iz9QT16thk3Y6LUreRSdTXQ3ruI5W4jWsdvFLCZieprOL2pQxtov5FmnZtQ1X4Xi9kWmJ1yhUGtBs6E2yjQj4MobJ4eNnjXhFlaNC+3Dr8x0ac7LBMDf1rDx9q/ddrLSJUhGmUEd+SZnhzqu/us/3oB8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LbsYaQvh; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42S0M7tb013493;
-	Thu, 28 Mar 2024 06:52:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=N2NmkPTrfmlwNwwNOPuDMTNzfMflldO7CI9GXiOZ+fQ=; b=Lb
-	sYaQvhsDeGgmoLjL+rq7c4qOY4TpjOZr3yD9HTQvXJC3tV5zIJQoiVZireK/1l+C
-	KomUhrrqFv5uG5Fs7p3NCrCrz9o/3rmt+5lVRyNOOujBCf2xG7IsSfO4P8CGLKGx
-	vacBXSGn5hldGUQkvMZ6lCtHAWIg2fhEMaxfe4HmVPe7yg9Gi0KinXGgaG5eIr27
-	KMFIcmZmE6FgSqPBQj90ETGNywQCtUq5hTah9j6JXvvU51uTTvrSqS9DDu3zrxZa
-	N1oK9L+zME3nexAgKf5kdS8m1O5EWgccL0dh/6qO+HxkWcTS28sqY2TUc8C/wGIu
-	66zGt/zg7ibPXejQjaow==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x4u20j80d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 28 Mar 2024 06:52:41 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42S6qduS021399
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 28 Mar 2024 06:52:39 GMT
-Received: from [10.253.14.163] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 27 Mar
- 2024 23:52:36 -0700
-Message-ID: <98c668b6-7595-2c0a-ebe5-2f729d29b618@quicinc.com>
-Date: Thu, 28 Mar 2024 14:52:32 +0800
+	s=arc-20240116; t=1711610279; c=relaxed/simple;
+	bh=e3TsQW5CY+DiFJrBUgx3tqgW0jRYzt0+Fwa8TDWMo50=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ss88EFy73ZS+3vQs0NfhNrYYIuUB0nPHJh3FSurpH3Bc+hB06XYY+YXbvENSfS1ZK0EtEyK/JY0eir/yb7MLYGz4b+DUkT3P2fnzVov/YhnktgV5wbkwrB2ArDprXd/pqkP5qgS+ingXrEcnfbDgF9/Rm3bD9UI+UDMyt3V4MDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VYVaxlFb; arc=none smtp.client-ip=209.85.219.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-ddaad2aeab1so583691276.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 00:17:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1711610276; x=1712215076; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=6ihW+00hHUH2XZI6tZKebUjXbUcr4a+DW8yDOiac6M4=;
+        b=VYVaxlFblLvWF1hleSptMIwbPIwY7o/rc4bHGu8RB/E713yfdlV4dEP2WMlxvvswj2
+         B/GjqKAyBahBqu9KJT+P9MxSLNuVn3Y4wpyaaVfvNSRVVtT7WGygk74Cy+oMYKTWtiTv
+         qD2OqZmF/WvmWY5cx/OnmO1dJVVCPK2OqdeN9sE6NWV1QXLTS2u8Sfh++IsS4UkQm89p
+         Qlqm4x3zoHgExB6AYG8+rin6r6MqTX2YPhWTZnFd69p670rqQENKZh4cYRPN0c4SVS6o
+         LB00KViCYDSY2a/dLXPnix2DDqDdLoobxtG+znPD/eUMEUEbUPim61xWi57MVTCs4ix3
+         2ojw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711610276; x=1712215076;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6ihW+00hHUH2XZI6tZKebUjXbUcr4a+DW8yDOiac6M4=;
+        b=Jw0ZiQWVC8hGvH4+gBsCBaU5DEBXPC59a97orqoh7V5YINfs033N0u5ilhm4GWo8Um
+         Hi88Ex8SCR7jo1+dE1sObONLEMQRz7DfDeq4NrjB80x0fOhCF29RUGMtN128u9PRjN7X
+         HgySyHsvqe07kCXkWEjXnRB6FA1F91/2OOJc0TrbwzEKJftyq5XFdGY8mlKATqOpJ7Fs
+         s2Aem9X0BXzdP/HQgTiaSwzxnRDjEmwh8sj89W2SGqAEQdeHshCLAGCtG0IjrmhPe+6R
+         wNS9WLGR4I2WbhckSZcqg2FyrBvVtH0bURX1758jIG3AHWKwOM1lTX4wJkxmu1bBS12f
+         1mSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWj744h1b7rOAVnLO9y4X0fn1YCdQki6EXo0VS8H1d0Ww8XEscn00Lkmte1G5hA2rwlwmLYjZMUngemv7BYppdSZNiCsStvm5qj8lq0bQ==
+X-Gm-Message-State: AOJu0Yxl0QknORJOvoEBq4k3e63KJZAno59P9j0+Z+NShw7L/yV4e7im
+	Z30clhwn1bW7Ej7g4CazUn22XwYG+UaPXDdW/9YxFDVGURKWwDdkk/CEG/cRw87HtdBkqMg8TJJ
+	DI7XEj5zXa1PAEwhPf/yU5LpxfM9g5J1Z5G3FYbtwMF+mMVgt
+X-Google-Smtp-Source: AGHT+IEh7ltdvjmqokZX1mqaVmTxtOfiE1W0lZY/2IXhSyRr8yXSFfBb7Z2USzLFbbSRnmfNcqF7FjfSn9MSZjkmb5M=
+X-Received: by 2002:a25:3109:0:b0:dc6:d093:8622 with SMTP id
+ x9-20020a253109000000b00dc6d0938622mr1819201ybx.15.1711610276654; Thu, 28 Mar
+ 2024 00:17:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Subject: Re: [RESEND PATCH v6 3/3] input: pm8xxx-vibrator: add new SPMI
- vibrator support
-Content-Language: en-US
-To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <robh+dt@kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        <linux-input@vger.kernel.org>, <quic_collinsd@quicinc.com>,
-        <quic_subbaram@quicinc.com>, <quic_kamalw@quicinc.com>,
-        <jestar@qti.qualcomm.com>, Luca Weiss
-	<luca.weiss@fairphone.com>
-References: <20230922083801.3056724-1-quic_fenglinw@quicinc.com>
- <20230922083801.3056724-4-quic_fenglinw@quicinc.com>
- <CAA8EJpoW8DJOTVHBu9_+BQs5DtxyJu3xrCfDNyYHn2MeHZHV4w@mail.gmail.com>
- <12887370-0ada-359b-8a4f-18a28495c69a@quicinc.com>
- <ZRhKAWYBLcBZHc73@google.com>
-From: Fenglin Wu <quic_fenglinw@quicinc.com>
-In-Reply-To: <ZRhKAWYBLcBZHc73@google.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ma9H1W9QcbP1vqR2emR-ZoEwdYE7ALfs
-X-Proofpoint-GUID: ma9H1W9QcbP1vqR2emR-ZoEwdYE7ALfs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-28_05,2024-03-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- lowpriorityscore=0 spamscore=0 bulkscore=0 priorityscore=1501 phishscore=0
- malwarescore=0 mlxscore=0 mlxlogscore=999 suspectscore=0 clxscore=1011
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2403210001
- definitions=main-2403280042
+References: <20240326-rb3gen2-dp-connector-v2-0-a9f1bc32ecaf@quicinc.com>
+ <20240326-rb3gen2-dp-connector-v2-2-a9f1bc32ecaf@quicinc.com>
+ <CAA8EJpoe7A94608V1GdQ-oU9UXagHPm0mVBUe4Yxi=HF2pMd7w@mail.gmail.com> <zsjzysb7h3wi3cfpaozl46l4jnsd7e3lxttzm5vptozjx24cqo@vqmyhl65q7ay>
+In-Reply-To: <zsjzysb7h3wi3cfpaozl46l4jnsd7e3lxttzm5vptozjx24cqo@vqmyhl65q7ay>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 28 Mar 2024 09:17:45 +0200
+Message-ID: <CAA8EJppCuoOnaB03GsjXGYSs5Q9iQ2uXHWQqfkPA5jKzdHc8NQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/6] arm64: dts: qcom: qcs6490-rb3gen2: Add DP output
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Bjorn Andersson <quic_bjorande@quicinc.com>, cros-qcom-dts-watchers@chromium.org, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+
+On Thu, 28 Mar 2024 at 05:07, Bjorn Andersson <andersson@kernel.org> wrote:
+>
+> On Thu, Mar 28, 2024 at 03:51:54AM +0200, Dmitry Baryshkov wrote:
+> > On Wed, 27 Mar 2024 at 04:04, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
+> > >
+> > > The RB3Gen2 board comes with a mini DP connector, describe this, enable
+> > > MDSS, DP controller and the PHY that drives this.
+> > >
+> > > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 40 ++++++++++++++++++++++++++++
+> > >  1 file changed, 40 insertions(+)
+> > >
+> > > diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> > > index 63ebe0774f1d..f90bf3518e98 100644
+> > > --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> > > +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> > > @@ -39,6 +39,20 @@ chosen {
+> > >                 stdout-path = "serial0:115200n8";
+> > >         };
+> > >
+> > > +       dp-connector {
+> > > +               compatible = "dp-connector";
+> > > +               label = "DP";
+> > > +               type = "mini";
+> > > +
+> > > +               hpd-gpios = <&tlmm 60 GPIO_ACTIVE_HIGH>;
+> >
+> > Is it the standard hpd gpio? If so, is there any reason for using it
+> > through dp-connector rather than as a native HPD signal?
+> >
+>
+> I added it because you asked for it. That said, I do like having it
+> clearly defined in the devicetree.
+
+I asked for the dp-connector device, not for the HPD function change.
 
 
-
-On 2023/10/1 0:17, Dmitry Torokhov wrote:
-> On Mon, Sep 25, 2023 at 10:54:45AM +0800, Fenglin Wu wrote:
->>
->>
->> On 9/24/2023 3:07 AM, Dmitry Baryshkov wrote:
->>>> +
->>>> +       switch (vib->data->hw_type) {
->>>> +       case SSBI_VIB:
->>>>                   mask = SSBI_VIB_DRV_LEVEL_MASK;
->>>>                   shift = SSBI_VIB_DRV_SHIFT;
->>>> +               break;
->>>> +       case SPMI_VIB:
->>>> +               mask = SPMI_VIB_DRV_LEVEL_MASK;
->>>> +               shift = SPMI_VIB_DRV_SHIFT;
->>>> +               break;
->>>> +       case SPMI_VIB_GEN2:
->>>> +               mask = SPMI_VIB_GEN2_DRV_MASK;
->>>> +               shift = SPMI_VIB_GEN2_DRV_SHIFT;
->>>> +               break;
->>>> +       default:
->>>> +               return -EINVAL;
->>> Could you please move the switch to the previous patch? Then it would
->>> be more obvious that you are just adding the SPMI_VIB_GEN2 here.
->>>
->>> Other than that LGTM.
->>
->> Sure, I can move the switch to the previous refactoring patch.
-> 
-> Actually, the idea of having a const "reg" or "chip", etc. structure is
-> to avoid this kind of runtime checks based on hardware type and instead
-> use common computation. I believe you need to move mask and shift into
-> the chip-specific structure and avoid defining hw_type.
-> 
-> Thanks.
-
-Hi Dmitry,
-
-The v7 changes have been pending for a while, I am not sure if you are 
-still insist on this. As I explained, I actually did it this way in v2 
-and it got updated to this by following other comments.
-
-Can you respond and tell me if you prefer changes similar to v2? I can 
-update and push v8 by following your suggestion.
-
-v7: 
-https://lore.kernel.org/linux-arm-msm/20231108-pm8xxx-vibrator-v7-0-632c731d25a8@quicinc.com/
-
-v2: 
-https://lore.kernel.org/linux-arm-msm/20230718062639.2339589-3-quic_fenglinw@quicinc.com/
-
-Thanks
-> 
+-- 
+With best wishes
+Dmitry
 
