@@ -1,131 +1,253 @@
-Return-Path: <linux-arm-msm+bounces-15626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15631-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 584FB890C3A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 22:08:25 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C2DE890C68
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 22:18:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EBCF51F23385
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 21:08:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A9851B23F5E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 21:18:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E248A13AA59;
-	Thu, 28 Mar 2024 21:07:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D4BB13B5BE;
+	Thu, 28 Mar 2024 21:17:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fvu49aws"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aaJ3ODN8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63BA113AA4E;
-	Thu, 28 Mar 2024 21:07:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7372713B596;
+	Thu, 28 Mar 2024 21:17:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711660058; cv=none; b=GxbjpyoBL1YIECeYvJON5gSNI+UG54+Cbo7uLxBtvklxutm9HNht9yvBL1kSio5tt6rRZ2By68F+Kd9pnGG2+RIIbOWpwJ7PHM7zafHRTGBnLsFmIhimCcPyUhW3yLKzPyRbSMBOHkWaVgr1FfzVI99X9V6GBg8pmQ28GfA8m+s=
+	t=1711660672; cv=none; b=D2wUSOLer22E1XwIbbE/WHA86EywoPVGdvTSsccZ+4qRQBRLvVDLD7n+yW/RG9briGRN0r3NMPyC8z0yuOpFfCnbhQTt0UtkXgFMxkHQ2XF/KAA3OrY27BAix/qrZc3b8YKQv5eGF8rTa4Dfxqj7YTx0zcyugc1Y2NstI9aIcBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711660058; c=relaxed/simple;
-	bh=ajrl5xFbmylF1E3F9VzWsJKto7vjAyCDVhsDuTeVjBA=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=QRQUvUdhMYBlS1HjdTPnDwk/0xnHluig1ArkC2w7E/w67cY/6skwFF/RgnxvDQ7TYyfcK++bKS4vOBDsvGPOHsS8WIWf+c78g/WQKVGo2sCN+U25XKkEygxXr018Y2Gwu4HK60iyCls0NwqNah7WF5IUrIaTShVWra7b48hxSf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fvu49aws; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1711660672; c=relaxed/simple;
+	bh=j0JGGPFhy/onZUZbbAhS1IVqM5lPLVs9j9gED/C9V1A=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=CVhPO10svPqQFpK51Rb6RQ+/L4Sho85bGCj+O6Oep4DILqvNW8kvxiV8afbzEdSFBz65GOba9we0PpFEgE5v/PFs49l5BcNGqJya85TIuVUseKVOvkCYA3umigwdYnuYOQKA4coFJrxvmaqIYkmVIiCTci2dmUgIRjt8tp0Hr08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aaJ3ODN8; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42SIJV4g022597;
-	Thu, 28 Mar 2024 21:07:25 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42SKgQPB024748;
+	Thu, 28 Mar 2024 21:16:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version:content-type; s=
-	qcppdkim1; bh=JOF2Pbv30CLpNYimCGXkm/AAsQpZuvKl6VsyKwY+MtM=; b=fv
-	u49awsQlGVBan5iThbE8Y9qeMaX1KEAUK9JUhm0714nanPZ7oSDRmJKNtBkQTsL8
-	G9VrrgRXEIQqGUz/qhP0u6dY08k4o0m8Z6hFHvSfQjTRMlTX3ctYYjY6w1RGCNvm
-	BL7xfz8Yg8gBhx9yV5HTiNCzNhJa2PUqGVtp/kzuieXVrOR/yzTE0tGVGOgXXY3m
-	yMdQLjwqxVVMUwso0/Zbgs4Zff/Ts3e8qhPXs8eDS4ScLJ2LOvwPWPdZfSNnqfzv
-	RhO//+DKsR0+y9Z7Q7DTvyn+WkNz3b0sxgus+6o8gsBE9E2cnqMTMdYi2wrH/gDv
-	PaN0UZD8+VqVYQwp55DA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x562rhtpe-1
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=D8O5+mH
+	IUcg/G6ki6b37Wx2+aNdV3Y2NASjj7xE/r8Y=; b=aaJ3ODN87+28iow01lBjOwG
+	hOJrrM66I+BtPGs3P2jv0yvSKX4XRvD53k3hInkFDgDkd/yQhv4zyNLgfDl+psuX
+	HYVCTj4iZ7Uf+OcXqrKGFoGymGFoyC4z3DDCv5QcUv1eUtLXNKIANSPduMS9Wnos
+	c64TEVTK3NYO4BY+OaYcxyowCmmZQLfps7QNaeZv1Ut9nOIuJdGKP0QyBadKJZAI
+	v+5jecUNK52zgHF2aGvKww3IBUvsBGpHZ0TTiEhf1G908DEto0bgrSxkBIvlrZ9y
+	bkse1jv2q9i8p1KxaZeZncF8MwA7RyhBifpoMPz+4pNeWQXq+UjWsL1LIBOLRhA=
+	=
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x5fs8827d-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 28 Mar 2024 21:07:25 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42SL7NR0031485
+	Thu, 28 Mar 2024 21:16:35 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42SLGY8n032402
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 28 Mar 2024 21:07:23 GMT
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+	Thu, 28 Mar 2024 21:16:34 GMT
+Received: from hu-obabatun-lv.qualcomm.com (10.49.16.6) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Thu, 28 Mar 2024 14:07:23 -0700
-From: Kuogee Hsieh <quic_khsieh@quicinc.com>
-To: <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <abel.vesa@linaro.org>, <andersson@kernel.org>
-CC: Kuogee Hsieh <quic_khsieh@quicinc.com>, <quic_abhinavk@quicinc.com>,
-        <quic_jesszhan@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <marijn.suijten@somainline.org>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v1] phy/qcom-qmp-combo: propagate correct return value at phy_power_on()
-Date: Thu, 28 Mar 2024 14:07:15 -0700
-Message-ID: <1711660035-9656-1-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+ 15.2.1118.40; Thu, 28 Mar 2024 14:16:31 -0700
+From: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
+To: <catalin.marinas@arm.com>, <will@kernel.org>, <robh+dt@kernel.org>,
+        <frowand.list@gmail.com>, <vgupta@kernel.org>, <arnd@arndb.de>,
+        <olof@lixom.net>, <soc@kernel.org>, <guoren@kernel.org>,
+        <monstr@monstr.eu>, <palmer@dabbelt.com>, <aou@eecs.berkeley.edu>,
+        <dinguyen@kernel.org>, <chenhuacai@kernel.org>,
+        <tsbogend@alpha.franken.de>, <jonas@southpole.se>,
+        <stefan.kristiansson@saunalahti.fi>, <shorne@gmail.com>,
+        <mpe@ellerman.id.au>, <ysato@users.sourceforge.jp>, <dalias@libc.org>,
+        <glaubitz@physik.fu-berlin.de>, <richard@nod.at>,
+        <anton.ivanov@cambridgegreys.com>, <johannes@sipsolutions.net>,
+        <chris@zankel.net>, <jcmvbkbc@gmail.com>
+CC: <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <kernel@quicinc.com>, Oreoluwa Babatunde <quic_obabatun@quicinc.com>
+Subject: [PATCH v5 0/4] Dynamic Allocation of the reserved_mem array
+Date: Thu, 28 Mar 2024 14:15:39 -0700
+Message-ID: <20240328211543.191876-1-quic_obabatun@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: KTSCs0on7MkxkVW-TvwmjEUi-JuSKZSE
-X-Proofpoint-GUID: KTSCs0on7MkxkVW-TvwmjEUi-JuSKZSE
+X-Proofpoint-GUID: dRAOY21zhi6KXxMrbJqojpnpkqq8auss
+X-Proofpoint-ORIG-GUID: dRAOY21zhi6KXxMrbJqojpnpkqq8auss
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-03-28_17,2024-03-28_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- phishscore=0 spamscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0
- priorityscore=1501 lowpriorityscore=0 impostorscore=0 clxscore=1015
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2403280151
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ priorityscore=1501 phishscore=0 mlxlogscore=999 spamscore=0 suspectscore=0
+ mlxscore=0 adultscore=0 malwarescore=0 impostorscore=0 clxscore=1015
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403210001 definitions=main-2403280152
 
-Currently qmp_combo_dp_power_on() always return 0 in regardless of
-return value of cfg->configure_dp_phy(). This patch propagate
-return value of cfg->configure_dp_phy() all the way back to caller.
+The reserved_mem array is used to store data for the different
+reserved memory regions defined in the DT of a device.  The array
+stores information such as region name, node reference, start-address,
+and size of the different reserved memory regions.
 
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
----
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+The array is currently statically allocated with a size of
+MAX_RESERVED_REGIONS(64). This means that any system that specifies a
+number of reserved memory regions greater than MAX_RESERVED_REGIONS(64)
+will not have enough space to store the information for all the regions.
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index 36632fa..884973a 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -2754,6 +2754,7 @@ static int qmp_combo_dp_power_on(struct phy *phy)
- 	const struct qmp_phy_cfg *cfg = qmp->cfg;
- 	void __iomem *tx = qmp->dp_tx;
- 	void __iomem *tx2 = qmp->dp_tx2;
-+	int ret = 0;
- 
- 	mutex_lock(&qmp->phy_mutex);
- 
-@@ -2766,11 +2767,11 @@ static int qmp_combo_dp_power_on(struct phy *phy)
- 	cfg->configure_dp_tx(qmp);
- 
- 	/* Configure link rate, swing, etc. */
--	cfg->configure_dp_phy(qmp);
-+	ret = cfg->configure_dp_phy(qmp);
- 
- 	mutex_unlock(&qmp->phy_mutex);
- 
--	return 0;
-+	return ret;
- }
- 
- static int qmp_combo_dp_power_off(struct phy *phy)
+This can be fixed by making the reserved_mem array a dynamically sized
+array which is allocated using memblock_alloc() based on the exact
+number of reserved memory regions defined in the DT.
+
+On architectures such as arm64, memblock allocated memory is not
+writable until after the page tables have been setup.
+This is an issue because the current implementation initializes the
+reserved memory regions and stores their information in the array before
+the page tables are setup. Hence, dynamically allocating the
+reserved_mem array and attempting to write information to it at this
+point will fail.
+
+Therefore, the allocation of the reserved_mem array will need to be done
+after the page tables have been setup, which means that the reserved
+memory regions will also need to wait until after the page tables have
+been setup to be stored in the array.
+
+When processing the reserved memory regions defined in the DT, these
+regions are marked as reserved by calling memblock_reserve(base, size).
+Where:  base = base address of the reserved region.
+	size = the size of the reserved memory region.
+
+Depending on if that region is defined using the "no-map" property,
+memblock_mark_nomap(base, size) is also called.
+
+The "no-map" property is used to indicate to the operating system that a
+mapping of the specified region must NOT be created. This also means
+that no access (including speculative accesses) is allowed on this
+region of memory except when it is coming from the device driver that
+this region of memory is being reserved for.[1]
+
+Therefore, it is important to call memblock_reserve() and
+memblock_mark_nomap() on all the reserved memory regions before the
+system sets up the page tables so that the system does not unknowingly
+include any of the no-map reserved memory regions in the memory map.
+
+There are two ways to define how/where a reserved memory region is
+placed in memory:
+i) Statically-placed reserved memory regions
+i.e. regions defined with a set start address and size using the
+     "reg" property in the DT.
+ii) Dynamically-placed reserved memory regions.
+i.e. regions defined by specifying a range of addresses where they can
+     be placed in memory using the "alloc_ranges" and "size" properties
+     in the DT.
+
+The dynamically-placed reserved memory regions get assigned a start
+address only at runtime. And this needs to  be done before the page
+tables are setup so that memblock_reserve() and memblock_mark_nomap()
+can be called on the allocated region as explained above.
+Since the dynamically allocated reserved_mem array can only available
+after the page tables have been setup, the information for the
+dynamically-placed reserved memory regions needs to be stored somewhere
+temporarily until the reserved_mem array is available.
+
+Therefore, this series makes use of a temporary static array to store
+the information of the dynamically-placed reserved memory regions until
+the reserved_mem array is allocated.
+Once the reserved_mem array is available, the information is copied over
+from the temporary array into the reserved_mem array, and the memory for
+the temporary array is freed back to the system.
+
+The information for the statically-placed reserved memory regions does
+not need to be stored in a temporary array because their starting
+address is already stored in the devicetree.
+Hence, the only thing that needs to be done for these regions before the
+page tables are setup is to call memblock_reserve() and
+memblock_mark_nomap().
+Once the reserved_mem array is allocated, the information for the
+statically-placed reserved memory regions is added to the array.
+
+Note:
+Because of the use of a temporary array to store the information of the
+dynamically-placed reserved memory regions, there still exists a
+limitation of 64 for this particular kind of reserved memory regions.
+From my observation, these regions are typically small in number and
+hence I expect this to not be an issue for now.
+
+Dependency:
+This series is dependent on the acceptance of the below patchset for
+proper behavior on the sh architecture. The patchset has already been
+sent out and is pending review from the sh maintainters.
+https://lore.kernel.org/all/1707524971-146908-1-git-send-email-quic_obabatun@quicinc.com/
+
+Patch Versions:
+v5 (Current Patchset):
+- Rebased changes on top of v6.9-rc1.
+- Addressed minor code comments from v4.
+
+v4:
+- Move fdt_init_reserved_mem() back into the unflatten_device_tree()
+  function.
+- Fix warnings found by Kernel test robot:
+  https://lore.kernel.org/all/202401281219.iIhqs1Si-lkp@intel.com/
+  https://lore.kernel.org/all/202401281304.tsu89Kcm-lkp@intel.com/
+  https://lore.kernel.org/all/202401291128.e7tdNh5x-lkp@intel.com/
+
+v3:
+https://lore.kernel.org/all/20240126235425.12233-1-quic_obabatun@quicinc.com/
+- Make use of __initdata to delete the temporary static array after
+  dynamically allocating memory for reserved_mem array using memblock.
+- Move call to fdt_init_reserved_mem() out of the
+  unflatten_device_tree() function and into architecture specific setup
+  code.
+- Breaking up the changes for the individual architectures into separate
+  patches.
+
+v2:
+https://lore.kernel.org/all/20231204041339.9902-1-quic_obabatun@quicinc.com/
+- Extend changes to all other relevant architectures by moving
+  fdt_init_reserved_mem() into the unflatten_device_tree() function.
+- Add code to use unflatten devicetree APIs to process the reserved
+  memory regions.
+
+v1:
+https://lore.kernel.org/all/20231019184825.9712-1-quic_obabatun@quicinc.com/
+
+
+References:
+[1]
+https://github.com/devicetree-org/dt-schema/blob/main/dtschema/schemas/reserved-memory/reserved-memory.yaml#L79
+
+Oreoluwa Babatunde (4):
+  of: reserved_mem: Restruture how the reserved memory regions are
+    processed
+  of: reserved_mem: Add code to dynamically allocate reserved_mem array
+  of: reserved_mem: Use the unflatten_devicetree APIs to scan reserved
+    mem. nodes
+  of: reserved_mem: Rename fdt_* functions to refelct use of
+    unflatten_devicetree APIs
+
+ drivers/of/fdt.c                |   5 +-
+ drivers/of/of_private.h         |   3 +-
+ drivers/of/of_reserved_mem.c    | 249 ++++++++++++++++++++++++--------
+ include/linux/of_reserved_mem.h |   2 +-
+ kernel/dma/coherent.c           |   8 +-
+ kernel/dma/contiguous.c         |   8 +-
+ kernel/dma/swiotlb.c            |  10 +-
+ 7 files changed, 209 insertions(+), 76 deletions(-)
+
 -- 
-2.7.4
+2.34.1
 
 
