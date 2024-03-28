@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-15583-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15584-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D68758904BE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 17:16:26 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1CC048904E1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 17:20:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0611E1C2F106
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 16:16:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 73104295D62
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 16:20:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DC4D12F5B1;
-	Thu, 28 Mar 2024 16:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE4948004E;
+	Thu, 28 Mar 2024 16:19:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="a5dwj2gd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="T7fDezgi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C8A8626D
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 16:16:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90AC081751
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 16:19:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711642581; cv=none; b=m4turrv96qM4lauOoaZrDV4xreYgPelc44V7hNsLKRxF3W6s7F1d5GMXgiSm3+xpQ23Wwj+OuhWRcUOjCNZiQehcXS/Ngpz3ainlS0fkuObrnyHPj4rThKuUqB5UGz8p1B3FhDGvZLO1HuUdSPKJcSefaJni+haOQTYQQUblCkE=
+	t=1711642796; cv=none; b=BHu5+ZJY32og3jAPcT8Li6CIWvzgebMstf/jWQ2DDcUyuRnEO+2OvlCsbGex519P2i1yPJgrIZFomaN5YIsKExjILsItuZsbJZ3wbKJh/1d6hzP2Aw39MlSFXG7hw4zppIAWFtVjdmcgYSGug+mGamU2qWXLvyU++xwe4GT+Fcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711642581; c=relaxed/simple;
-	bh=Q77ebNP8k5nDYzLkeIAD1Snfdt/pFWInqzdIcP5qPeU=;
+	s=arc-20240116; t=1711642796; c=relaxed/simple;
+	bh=m7myC/SYP+kTV0h8G6w/dCsON2QETfkjfB7eCc9epTM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FUshtfawqQ+fb52riagcb68rGWFNsGflHzLFBeDj4Xf5iJuiI/W6+s8MDkoEWLTVMbkzG1nwLPg7z6WsTfw14QcWaHYOdbsGrVnXwDOSuCodVdqExZaQDltIfJdxvhAibVN8bZsMRQQsNEhxS4zMtkU7drTEirihMT2S8HDoiT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=a5dwj2gd; arc=none smtp.client-ip=209.85.208.175
+	 In-Reply-To:Content-Type; b=eqmL6aNYJq5gwv9WdTiLelsbYT9YivTqgmIqoxoSawl2R4TWFdVa8WU9pKr+uPXVy+KTgXYypB0HFh/r9V720FxroHQA6kC292HGkrtKkm5cArYRNyiSRsv5NcRYB4tDNfoce2zrcwWLvkz2mJKaJWSCWE83JddJfN7AvpvgNpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=T7fDezgi; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2d228a132acso13474161fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 09:16:19 -0700 (PDT)
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-33ff53528ceso754748f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 09:19:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711642578; x=1712247378; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1711642792; x=1712247592; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=choVS2l7j9v8YZ4XB6cn6HH4AXOKlJetjKz9GMOi3i0=;
-        b=a5dwj2gdVnVZTeB49FTupTDajoW/mbUaFuh6NCgmkurANp7YAVa87MsY7XzipU6tRa
-         bMFfj3gdIq4kWKRIehaAuYxJvp4xyQwI5FmkeXU4YTnvGGVuOsEC63g4ZJCYtudmZt74
-         N6RgGsmCGSUu2Np4+N5IKrCzLzoAF5G7Bxs3UpwvlahQl1a1ePJTGlmntO5oM2eDCrh4
-         Y7MORb9TY75xG+DXcJb3HIV+qxa/D5+p5FFB5P4hG4+TY5xhmyDM87pF3M1Bgj+EGJkz
-         Or0gOrHiwt3AYEa8LFJsJYa3YlF/EO6RFs+Z0egciAgZsb1aKQVz0uC+YDSICHgT9pOP
-         A53w==
+        bh=G2u+U9wqSirUY12k+S7Qg17vyc8DYGQIfxsE9hdd9FA=;
+        b=T7fDezgitoFuD4osR2RQdP6xIDzeVLnuy0xsgefs7aWQq26/H3qNLK+ECufsxrI/jm
+         dpxXzscd7XVHrncnC1Rp3gTnnSlePP5jfrzuQ9PqrZpEJfGlFrwmmbNwal72LEvPIhp2
+         +3BwkA8S3Bv+IvV3qee099qWft8BmIVczfFdWA8pLTcTNygYcZuC5EQvT4CqPSODnaO0
+         I6TS58FKQaU8cPku56V10AMVifZGuYPbPWWDTUqrpfRr81sL0T8wPqGq2tTudvEYqg71
+         Ic1Zhi1GCIV2TtHE/Vh4TQAM07Ce4eGJ+Hd8jONRC2vQWk2RPo5DvqJoulHXRG9U9/ar
+         uBuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711642578; x=1712247378;
+        d=1e100.net; s=20230601; t=1711642792; x=1712247592;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=choVS2l7j9v8YZ4XB6cn6HH4AXOKlJetjKz9GMOi3i0=;
-        b=nB3OQOUjrJmH580/tEabSYifo9itl8bv7/WTzHf/3Yv3SXg/I+mgZgcLH957yfREan
-         u/EvwxUfmZQziSMetwbpfc1E2lfsditBqD5BHDvPTmFKSzL/oggJsyqihgUbGWZC3bIu
-         aopTv/807qUnvS7h0+um1fx1z4Tf+R5LANokS44smrM+i1j+P/vPFJLn8brDBYTwcdMc
-         8HVeJFkPcLiOnPLJo9i9VJvvwPU9Y1JihavpIGDxmwIEe1sMCgSsn7fWV5F37W5SYLwx
-         imi77FcGJtOwlhbeQtpj2SdehCDxtKVw4bvMz0acid5dbFzwnDfpUvvzp3Rsgzqo8VQa
-         +VUQ==
-X-Gm-Message-State: AOJu0YzgGQ8TDkYltDYWuupRWauyn8ANHQpWr35m+s5SziEM69X31vcS
-	F8ObBJ8t438leeQYcYFHnyaJteTF2C0nesmX3jCLRh1R/zZvwUKzLhxMpwAteFk=
-X-Google-Smtp-Source: AGHT+IHCfBE2md8mspyKXhaadpdAdtYooolQXavVjt8w2vbgfwVwHRxfZPv+lc+rTUN5hh/uqO8tPA==
-X-Received: by 2002:a2e:7d12:0:b0:2d6:d4ca:fa8b with SMTP id y18-20020a2e7d12000000b002d6d4cafa8bmr3137950ljc.34.1711642577650;
-        Thu, 28 Mar 2024 09:16:17 -0700 (PDT)
+        bh=G2u+U9wqSirUY12k+S7Qg17vyc8DYGQIfxsE9hdd9FA=;
+        b=wRQRDmCk6n3iIHcwJ+DF9qZIeeWI6S+DNRTo9ZA4A3h8PQvbndj6zXEuY8JS4wdz8d
+         4yYW7oC9U1p5/0peEsxDAm+eC94jF6jo2jcsGxc/Y4TFaW+FjyVztUQJVyc3ucaL04ct
+         WB82h6uhVnfTo5997Da6kW7a9ajfIWnCoqPu0kinuOmvnigpsakq17abyKlMfiRVYFe8
+         7DPzeT3n/AS8dyk1LhdMg8HBJg7J4KtxDzwui0aNminA9c9XDOY4pn9vYW8WqXBA9nbm
+         rtZpXwAnf4GBEotBRBjUNzyFZ5f+w/+V5/ZFYfsP+aDDyrqSwqVDhotaJpR94kVKFISz
+         OKDg==
+X-Gm-Message-State: AOJu0Yx6kfM65z0VCftoRSmeebGZhCmG86lbpnw62q3e4uk30wsAn8d/
+	el4ekpMFSLjBZ01DQPQ36SDM39+RAjW39rCzHxD5KvooLKE97nuVwhqcZreFojo=
+X-Google-Smtp-Source: AGHT+IHD9UhA3UlcvW9LOFeUE/4Vo7+h90D+iwCtJmsM1IgOO4wkyxdRad3YygXO6wcUTbPpWIvKuA==
+X-Received: by 2002:adf:cc87:0:b0:341:a6d9:841 with SMTP id p7-20020adfcc87000000b00341a6d90841mr2433278wrj.0.1711642791744;
+        Thu, 28 Mar 2024 09:19:51 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.223.50])
-        by smtp.gmail.com with ESMTPSA id j8-20020a05600c190800b0041496b92502sm4551244wmq.31.2024.03.28.09.16.15
+        by smtp.gmail.com with ESMTPSA id g4-20020a5d4884000000b0033e7603987dsm2128964wrq.12.2024.03.28.09.19.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Mar 2024 09:16:17 -0700 (PDT)
-Message-ID: <ccd0a1e1-5a37-4dd3-9ec3-4e9e42050cff@linaro.org>
-Date: Thu, 28 Mar 2024 17:16:14 +0100
+        Thu, 28 Mar 2024 09:19:51 -0700 (PDT)
+Message-ID: <3c4e63af-1b03-460f-8dc1-24d80b39f054@linaro.org>
+Date: Thu, 28 Mar 2024 17:19:49 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,14 +76,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: arm: qcom: Add Samsung Galaxy Z Fold5
+Subject: Re: [PATCH] arm64: dts: qcom: Add support for Samsung Galaxy Z Fold5
 To: serdeliuk@yahoo.com, Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
  Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
-References: <20240328-dt-bindings-arm-qcom-add-support-for-samsung-galaxy-zfold5-v1-1-cb612e3ade18@yahoo.com>
+References: <20240328-arm64-dts-add-support-for-samsung-galaxy-zfold5-v1-1-9434150d0465@yahoo.com>
 Content-Language: en-US
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -130,41 +130,287 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240328-dt-bindings-arm-qcom-add-support-for-samsung-galaxy-zfold5-v1-1-cb612e3ade18@yahoo.com>
+In-Reply-To: <20240328-arm64-dts-add-support-for-samsung-galaxy-zfold5-v1-1-9434150d0465@yahoo.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 28/03/2024 15:31, Alexandru Marc Serdeliuc via B4 Relay wrote:
+On 28/03/2024 15:57, Alexandru Marc Serdeliuc via B4 Relay wrote:
 > From: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
 > 
-> This documents Samsung Galaxy Z Fold5 (samsung,q5q)
-> which is a foldable phone by Samsung based on the sm8550 SoC.
+> Add support for Samsung Galaxy Z Fold5 (q5q) foldable phone
+> 
+> Currently working features:
+> - Framebuffer
+> - UFS
+> - i2c
+> - Buttons
 > 
 > Signed-off-by: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
 > ---
-> This documents Samsung Galaxy Z Fold5 (samsung,q5q)
-> which is a foldable phone by Samsung based on the sm8550 SoC.
+>  arch/arm64/boot/dts/qcom/Makefile               |   1 +
+>  arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts | 616 ++++++++++++++++++++++++
+>  2 files changed, 617 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 7d40ec5e7d21..a7503fd35b6c 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -241,6 +241,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-sony-xperia-nagara-pdx224.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-hdk.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-mtp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-qrd.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-samsung-q5q.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-mtp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-qrd.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-crd.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts b/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts
+> new file mode 100644
+> index 000000000000..ac8392022a7f
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts
+> @@ -0,0 +1,616 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2024, Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
+> + * Copyright (c) 2024, David Wronek <david@mainlining.org>
+> + * Copyright (c) 2022, Linaro Limited
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +#include "sm8550.dtsi"
+> +#include "pm8550.dtsi"
+> +#include "pm8550vs.dtsi"
+> +#include "pmk8550.dtsi"
+> +
+> +/ {
+> +	model = "Samsung Galaxy Z Fold5";
+> +	compatible = "samsung,q5q", "qcom,sm8550";
+> +	#address-cells = <0x02>;
+> +	#size-cells = <0x02>;
+> +	chassis-type = "handset";
+> +
+> +	aliases {
+> +		serial0 = &uart7;
+> +	};
+> +
+> +	chosen {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges;
+> +
+> +		bootargs = "console=tty0 clk_ignore_unused pd_ignore_unused";
 
-Please always send DTS and its binding together.
+Console should be chosed via stdout. The "unused" are not parts of
+hardware description, so drop entire bootargs.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> +
+> +		framebuffer: framebuffer@b8000000 {
+> +			compatible = "simple-framebuffer";
+> +			reg = <0x0 0xb8000000 0x0 0x2b00000>;
+> +			width = <2176>;
+> +			height = <1812>;
+> +			stride = <(2176 * 4)>;
+> +			format = "a8r8g8b8";
+> +		};
+> +	};
+> +
+> +	gpio-keys {
+> +		compatible = "gpio-keys";
+> +		pinctrl-0 = <&volume_up_n>;
+> +		pinctrl-names = "default";
+> +
+> +		key-volume-up {
+> +			label = "Volume Up";
+> +			linux,code = <KEY_VOLUMEUP>;
+> +			gpios = <&pm8550_gpios 6 GPIO_ACTIVE_LOW>;
+> +			debounce-interval = <15>;
+> +			linux,can-disable;
+> +			wakeup-source;
+> +		};
+> +	};
+> +
+> +	vph_pwr: vph-pwr-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vph_pwr";
+> +		regulator-min-microvolt = <3700000>;
+> +		regulator-max-microvolt = <3700000>;
+> +		regulator-always-on;
+> +		regulator-boot-on;
+> +	};
+> +
+> +	reserved-memory {
+> +		chipinfo_region@81cf4000 {
+
+Underscores are not allowed, use hyphens.
+
+It does not look like you tested the DTS against bindings. Please run
+`make dtbs_check W=1` (see
+Documentation/devicetree/bindings/writing-schema.rst or
+https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
+for instructions).
+
+> +			reg = <0x0 0x81cf4000 0x0 0x1000>;
+> +			no-map;
+> +		};
+> +
+> +		kaslr_region@b01ff000 {
+> +			reg = <0x0 0xb01ff000 0x0 0x1000>;
+> +			no-map;
+> +		};
+> +
+> +		uh_guest_region {
+
+It does not look like you tested the DTS against bindings. Please run
+`make dtbs_check W=1` (see
+Documentation/devicetree/bindings/writing-schema.rst or
+https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
+for instructions).
+
+> +			reg = <0x0 0xb1000000 0x0 0x3000000>;
+> +			no-map;
+> +		};
+> +
+> +		uh_heap_region {
+> +			reg = <0x0 0xb0200000 0x0 0x40000>;
+> +			no-map;
+> +		};
+> +
+> +/*
+> + * The bootloader will only keep display hardware enabled
+> + * if this memory region is named exactly 'splash_region'
+> + */
+
+Missing indentation
+
+> +		splash_region {
+> +			reg = <0x0 0xb8000000 0x0 0x2b00000>;
+> +			no-map;
+> +		};
+> +	}; // end reserved-memory
+
+Drop such comments. There is no such code in any mainline DTS. Please
+use mainline DTS as your starting point.
+
+You now duplicated a lot of issues which we solved already. That's not
+how you upstream your board.
 
 
----
+...
 
-This is an automated instruction, just in case, because many review tags
-are being ignored. If you know the process, you can skip it (please do
-not feel offended by me posting it here - no bad intentions intended).
-If you do not know the process, here is a short explanation:
+> +	}; // end regulators-0
 
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions, under or above your Signed-off-by tag. Tag is "received", when
-provided in a message replied to you on the mailing list. Tools like b4
-can help here. However, there's no need to repost patches *only* to add
-the tags. The upstream maintainer will do that for tags received on the
-version they apply.
+Really, drop the comment.
 
-https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
+...
+
+> +
+> +&pcie0 {
+> +	status = "okay";
+
+Status is the last property.
+
+> +	wake-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
+> +	perst-gpios = <&tlmm 94 GPIO_ACTIVE_LOW>;
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pcie0_default_state>;
+
+Reverse these two.
+
+> +};
+> +
+> +&pcie0_phy {
+> +	status = "okay";
+> +	vdda-phy-supply = <&vreg_l1e_0p88>;
+> +	vdda-pll-supply = <&vreg_l3e_1p2>;
+> +};
+> +
+> +&pcie1 {
+> +	status = "okay";
+> +	wake-gpios = <&tlmm 99 GPIO_ACTIVE_HIGH>;
+> +	perst-gpios = <&tlmm 97 GPIO_ACTIVE_LOW>;
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pcie1_default_state>;
+> +};
+> +
+> +&pcie1_phy {
+> +	vdda-phy-supply = <&vreg_l3c_0p91>;
+> +	vdda-pll-supply = <&vreg_l3e_1p2>;
+> +	vdda-qref-supply = <&vreg_l1e_0p88>;
+> +	status = "okay";
+> +};
+> +
+> +&pm8550_gpios {
+> +	volume_up_n: volume-up-n-state {
+> +		pins = "gpio6";
+> +		function = "normal";
+> +		power-source = <1>;
+> +		bias-pull-up;
+> +		input-enable;
+> +	};
+> +};
+> +
+> +&qupv3_id_0 {
+> +	status = "okay";
+> +};
+> +
+> +&remoteproc_adsp {
+> +	status = "okay";
+> +	firmware-name = "qcom/sm8550/adsp.mbn",
+> +			"qcom/sm8550/adsp_dtb.mbn";
+> +};
+> +
+> +&remoteproc_cdsp {
+> +	status = "okay";
+> +	firmware-name = "qcom/sm8550/cdsp.mbn",
+> +			"qcom/sm8550/cdsp_dtb.mbn";
+> +};
+> +
+> +&remoteproc_mpss {
+> +	status = "okay";
+> +	firmware-name = "qcom/sm8550/modem.mbn",
+> +			"qcom/sm8550/modem_dtb.mbn";
+> +};
+> +
+> +&sleep_clk {
+> +	clock-frequency = <32000>;
+> +};
+> +
+> +&tlmm {
+> +	gpio-reserved-ranges = <36 4>, <50 2>;
+> +};
+> +
+> +&ufs_mem_hc {
+> +	status = "okay";
+> +	reset-gpios = <&tlmm 210 GPIO_ACTIVE_LOW>;
+> +	vcc-supply = <&vreg_l17b_2p5>;
+> +	vcc-max-microamp = <1300000>;
+> +	vccq-supply = <&vreg_l1g_1p2>;
+> +	vccq-max-microamp = <1200000>;
+> +	vdd-hba-supply = <&vreg_l3g_1p2>;
+> +};
+> +
+> +&ufs_mem_phy {
+> +	status = "okay";
+> +	vdda-phy-supply = <&vreg_l1d_0p88>;
+> +	vdda-pll-supply = <&vreg_l3e_1p2>;
+> +};
+> +
+> +&xo_board {
+> +	clock-frequency = <76800000>;
+> +};
+> +
+> +&dispcc {
+> +	status = "disabled";
+> +};
+> +
+> +&pon_pwrkey {
+
+Does not look ordered by name. Keep alphanetical order of node
+overrides. Just like all other DTS does, which you should take as
+starting point.
 
 Best regards,
 Krzysztof
