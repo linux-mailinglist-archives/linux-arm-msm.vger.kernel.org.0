@@ -1,143 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-15558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C8AD1890069
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 14:37:34 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B608989012A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 15:07:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EABC51C22533
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 13:37:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 76E2529A271
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 14:07:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AA237FBCD;
-	Thu, 28 Mar 2024 13:37:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94ACE12DDA7;
+	Thu, 28 Mar 2024 14:06:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gquCu54b"
+	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="mi1cdOJ+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB64199BC
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 13:37:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B032B5223;
+	Thu, 28 Mar 2024 14:06:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.87.146.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711633045; cv=none; b=cjDiI10XF9UC4a3il9qnlNzKQQfskAzaQuczEjfbeGJIDze5QXS8o1DRXFiuYJb4SqEreHJ5fr6vvE0s6nPdHkcSivtSdDAiQpWFlKdazIay6fWb6qOuXaQMlL4Swomdh+WsUWGB5OCoiMqsMQLAtNazM/gaHFURF1aXyQEemyk=
+	t=1711634816; cv=none; b=TAB6goeA0urFy+9ZbUelVTRqAw0B4kFE8N7eEuRv3Req5LZXwWIcqiOjXXE6vjlt1kYN0I2zQF5dvcsp8aYPJEFOXQXdrRhgt8w8Idgi+HJwDCMms0qntrW6XoUgcj9jJFs//dV+P2P0vGEt83sNoRluGiKpsuW/14Sj/Zii/PA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711633045; c=relaxed/simple;
-	bh=vhptj9/Vq4Rm0PoGzxaGiCJqIgDUZwkAbXDvc9ksjDI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AgN6inN/ovWlrjJszV3kOk9Gb1jIBPa0jYUZNi3OGakT8xG0bzJipNNDl0lRViN+cSJthN3n8PyMIrfYShxRNrta+z2yqrwCf9ULwx7d2dZYlCdr32Av9KkCljuanvikuF/ZzXfBTv8BRdyTKmy9/VZ7zp13K4SUpLP5oZBKYg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gquCu54b; arc=none smtp.client-ip=209.85.219.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-dc742543119so993851276.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 06:37:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711633042; x=1712237842; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vhptj9/Vq4Rm0PoGzxaGiCJqIgDUZwkAbXDvc9ksjDI=;
-        b=gquCu54b7my9LLg/q4oPnqkKhGJwkL7ltG07Je+mkXnkO0tce3QQpinYIyA7vcMP/8
-         Sauy3czMzIHrSZ3M3UhQ+GugaxC245fv7DBzi8sGuKlDvKv23NV1VgjUUzcezwu/i0ml
-         3HrBrO9F758spxgQNWF+Ci5uC4PqVuJlKBak5mCFxHIhRfXo6w6Nmf2on3E6OtKniUNV
-         LT+M+VYkCIqd8Ya+BOtEl1V3iANk+gyZjZ1mB7ci4WB+l2OjnJnP7F4pH66J5T09vOM3
-         DIs8FWa5IPBud/6lNqR+RP9dQvkjXcvuHeTQr6oNe2jFd3rTU0IALrzYHbQvhymkZzQM
-         YC1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711633042; x=1712237842;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vhptj9/Vq4Rm0PoGzxaGiCJqIgDUZwkAbXDvc9ksjDI=;
-        b=XwAoPEWQhUDj1GVt4gGde6lHhgcH0p/JsNwK7B5tPDM7FMbyhoDKSZ1nIvdmtWUYB4
-         vLXr3DqL3C4KnJiWzQy6Hjw/qzCiBluRvHY0ptSgR4bmX7Ti430MLqGHVd5UkaNnnKSi
-         QCpmTRx9j7ZabzhQDEb8LiVjVLYOEu4o87dghkLkvxy9eChm/ic7wwMIz1Tbmt0PQzqt
-         /3OmdfYugMIpWnM/wlfLznDhNqOgmduVXVDlV073FjgkMth+BaS+ZOa+O5VOiOf47u1h
-         5UGwo+JEvnWFXkXoyO2KGpYuSqc2W8W2YQae5/dmkxxbG9htABOc+CPnRj3R/IjNUB5y
-         zUlg==
-X-Forwarded-Encrypted: i=1; AJvYcCVRQCJkP3GnxJB9MQ+0eAtxrgJGS7vUFe6u3ZcbrT9I3a7FRJQY8E9jnlxEw/+vKRLmrEbW7oVtl7sIfwoDkw84HetORpLfoMpekklvPw==
-X-Gm-Message-State: AOJu0YylnStLXMzL5JQyzSLLLvAAudlUKr3+XpVCfNQkSie0UZg8NUVQ
-	CSjZhDny7xGdntV2op7TLJAjD9l2BS6tWuO078Gea8rzVgE2FcU2yNeKqAw4dW4FwFC5KtCJ/P7
-	LqU+Z3ZkK5MIu0RUbKv76vWozjVFjzj9RPe87mw==
-X-Google-Smtp-Source: AGHT+IGjGHEbsk10nKTaVGgOOQzkHc5Qm9STf87bHGVpMP0DEmjO9lKjEWUgvRJ23UvcJC23rRkiymMtwiTmbVMLRs0=
-X-Received: by 2002:a25:b9ca:0:b0:dd1:3cc1:5352 with SMTP id
- y10-20020a25b9ca000000b00dd13cc15352mr2820459ybj.15.1711633040798; Thu, 28
- Mar 2024 06:37:20 -0700 (PDT)
+	s=arc-20240116; t=1711634816; c=relaxed/simple;
+	bh=eiv8+tfk5bWrbiEVZpxkUQotxO8sNqN4KDVcKJwpU/Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=E/FleuxKUhhC3HudwDcdBz7g/oCVjuDPxA50gp15i0HesnWrYMoXBOg5+AcyFJDhHmhTTfGh+g1HSlhFufEtX5KJ0bZXBbPa1rxOyosA14d6K378zjojadkdVrdbLDNUvk8H737foDL1TgbL+D/tSVMaMVA/GpIli15fqRVhsyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru; spf=pass smtp.mailfrom=trvn.ru; dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b=mi1cdOJ+; arc=none smtp.client-ip=194.87.146.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trvn.ru
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+	(No client certificate requested)
+	by box.trvn.ru (Postfix) with ESMTPSA id 7055A40142;
+	Thu, 28 Mar 2024 19:06:47 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+	t=1711634808; bh=eiv8+tfk5bWrbiEVZpxkUQotxO8sNqN4KDVcKJwpU/Y=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=mi1cdOJ+MdfkpQEGxu+GhAMI5qnPYO3q2aBzlk22/sXOkAlqbv6MnIeOYcTKIdagi
+	 jrQ8xKMU70ID/sizfpmYGLZUya6q98z4i0lTWCB0ThXBBf7H/6gHoA183TPGKE+7Mi
+	 KMHgSaFBzUHbbxwV2IeZLBiF2BJhnQboK/b609L2koLMKAplmjmYOhB8R1g3sw3jpV
+	 61td261jYTuO+s5PDg7bRhgob5GgyYWYbWVnctPXL+bozm7KgKvijvjmcj1c0Tcx+q
+	 vkCLFNtoX8Umem9fLnroVmhL5DX04qkT2Hl6pw1b4+4NPKypG8xNNbLPFhVofJ1GW0
+	 R9+t7Y8pRB3eA==
+Date: Thu, 28 Mar 2024 19:06:45 +0500
+From: Nikita Travkin <nikita@trvn.ru>
+To: Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>
+Cc: Caleb Connolly <caleb.connolly@linaro.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] soc: qcom: cmd-db: map shared memory as WT, not WB
+Message-ID: <fz2fqji5uqeijyos3rp4lcjionmwjfw736jdcch4mmlnvhxu7q@zvjqizqhnx4x>
+References: <20240327200917.2576034-1-volodymyr_babchuk@epam.com>
+ <amrgxdv2iq32wrrn4w2xtxaknmyijr6cu37ivjuqez5rzftde6@wwraopwfqtw5>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240327160314.9982-1-apais@linux.microsoft.com>
- <20240327160314.9982-10-apais@linux.microsoft.com> <CAPDyKFpuKadPQv6+61C2pE4x4FE-DUC5W6WCCPu9Nb2DnDB56g@mail.gmail.com>
-In-Reply-To: <CAPDyKFpuKadPQv6+61C2pE4x4FE-DUC5W6WCCPu9Nb2DnDB56g@mail.gmail.com>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Thu, 28 Mar 2024 14:37:09 +0100
-Message-ID: <CACRpkdZ7wAbtTUmmLCef7KnATmfZeAL26Q-gLqnGe3CdZ3+O3A@mail.gmail.com>
-Subject: Re: [PATCH 9/9] mmc: Convert from tasklet to BH workqueue
-To: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: Allen Pais <apais@linux.microsoft.com>, linux-kernel@vger.kernel.org, tj@kernel.org, 
-	keescook@chromium.org, vkoul@kernel.org, marcan@marcan.st, sven@svenpeter.dev, 
-	florian.fainelli@broadcom.com, rjui@broadcom.com, sbranden@broadcom.com, 
-	paul@crapouillou.net, Eugeniy.Paltsev@synopsys.com, 
-	manivannan.sadhasivam@linaro.org, vireshk@kernel.org, Frank.Li@nxp.com, 
-	leoyang.li@nxp.com, zw@zh-kernel.org, wangzhou1@hisilicon.com, 
-	haijie1@huawei.com, shawnguo@kernel.org, s.hauer@pengutronix.de, 
-	sean.wang@mediatek.com, matthias.bgg@gmail.com, 
-	angelogioacchino.delregno@collabora.com, afaerber@suse.de, 
-	logang@deltatee.com, daniel@zonque.org, haojian.zhuang@gmail.com, 
-	robert.jarzmik@free.fr, andersson@kernel.org, konrad.dybcio@linaro.org, 
-	orsonzhai@gmail.com, baolin.wang@linux.alibaba.com, zhang.lyra@gmail.com, 
-	patrice.chotard@foss.st.com, wens@csie.org, jernej.skrabec@gmail.com, 
-	peter.ujfalusi@gmail.com, kys@microsoft.com, haiyangz@microsoft.com, 
-	wei.liu@kernel.org, decui@microsoft.com, jassisinghbrar@gmail.com, 
-	mchehab@kernel.org, maintainers@bluecherrydvr.com, 
-	aubin.constans@microchip.com, manuel.lauss@gmail.com, mirq-linux@rere.qmqm.pl, 
-	jh80.chung@samsung.com, oakad@yahoo.com, hayashi.kunihiko@socionext.com, 
-	mhiramat@kernel.org, brucechang@via.com.tw, HaraldWelte@viatech.com, 
-	pierre@ossman.eu, duncan.sands@free.fr, stern@rowland.harvard.edu, 
-	oneukum@suse.com, openipmi-developer@lists.sourceforge.net, 
-	dmaengine@vger.kernel.org, asahi@lists.linux.dev, 
-	linux-arm-kernel@lists.infradead.org, linux-rpi-kernel@lists.infradead.org, 
-	linux-mips@vger.kernel.org, imx@lists.linux.dev, 
-	linuxppc-dev@lists.ozlabs.org, linux-mediatek@lists.infradead.org, 
-	linux-actions@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, linux-sunxi@lists.linux.dev, 
-	linux-tegra@vger.kernel.org, linux-hyperv@vger.kernel.org, 
-	linux-rdma@vger.kernel.org, linux-media@vger.kernel.org, 
-	linux-mmc@vger.kernel.org, linux-omap@vger.kernel.org, 
-	linux-renesas-soc@vger.kernel.org, linux-s390@vger.kernel.org, 
-	netdev@vger.kernel.org, linux-usb@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <amrgxdv2iq32wrrn4w2xtxaknmyijr6cu37ivjuqez5rzftde6@wwraopwfqtw5>
 
-On Thu, Mar 28, 2024 at 1:54=E2=80=AFPM Ulf Hansson <ulf.hansson@linaro.org=
-> wrote:
+On Thu, Mar 28, 2024 at 04:12:11PM +0500, Nikita Travkin wrote:
+> On Wed, Mar 27, 2024 at 08:09:34PM +0000, Volodymyr Babchuk wrote:
+> > It appears that hardware does not like cacheable accesses to this
+> > region. Trying to access this shared memory region as Normal Memory
+> > leads to secure interrupt which causes an endless loop somewhere in
+> > Trust Zone.
+> > 
+> > The only reason it is working right now is because Qualcomm Hypervisor
+> > maps the same region as Non-Cacheable memory in Stage 2 translation
+> > tables. The issue manifests if we want to use another hypervisor (like
+> > Xen or KVM), which does not know anything about those specific
+> > mappings. This patch fixes the issue by mapping the shared memory as
+> > Write-Through. This removes dependency on correct mappings in Stage 2
+> > tables.
+> > 
+> > I tested this on SA8155P with Xen.
+> > 
+> 
+> Hi!
+> 
+> I observe a similar issue while trying to boot Linux in EL2 after taking
+> over qcom's hyp on a sc7180 WoA device:
+> 
+> [    0.337736] CPU: All CPU(s) started at EL2
+> (...)
+> [    0.475135] Serial: AMBA PL011 UART driver
+> [    0.479649] Internal error: synchronous external abort: 0000000096000410 [#1] PREEMPT SMP
+> [    0.488053] Modules linked in:
+> [    0.491213] CPU: 6 PID: 1 Comm: swapper/0 Not tainted 6.7.0 #41
+> [    0.497310] Hardware name: Acer Aspire 1 (DT)
+> [    0.501800] pstate: 00400009 (nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+> [    0.508964] pc : cmd_db_dev_probe+0x38/0xc4
+> [    0.513290] lr : cmd_db_dev_probe+0x2c/0xc4
+> [    0.517606] sp : ffff8000817ebab0
+> [    0.521019] x29: ffff8000817ebab0 x28: 0000000000000000 x27: ffff800081346050
+>                      <uart cuts out>
+> 
+> Unfortunately this patch doesn't help in this case (I beileve I even
+> tried same/similar change a while back when trying to debug this)
+> 
 
-> At this point we have suggested to drivers to switch to use threaded
-> irq handlers (and regular work queues if needed too). That said,
-> what's the benefit of using the BH work queue?
+I'm sorry, it looks like I made a mistake in my tooling while testing
+this patch, which I only realized after trying Maulik's suggestion...
 
-Context:
-https://lwn.net/Articles/960041/
-"Tasklets, in particular, remain because they offer lower latency than
-workqueues which, since they must go through the CPU scheduler,
-can take longer to execute a deferred-work item."
+Both _WT and _WC fix the issue I see on sc7180 WoA, so whether you keep
+the patch as is or change it to _WC as suggested:
 
-The BH WQ is controlled by a software IRQ and quicker than an
-ordinary work item.
+Tested-By: Nikita Travkin <nikita@trvn.ru> # sc7180 WoA in EL2
 
-I don't know if this little latency could actually affect any MMC
-device, I doubt it.
+Thanks for looking into this!
+Nikita
 
-The other benefit IIUC is that it is easy to mechanically rewrite tasklets
-to BH workqueues and be sure that it is as fast as the tasklet, if you want
-to switch to threaded IRQ handlers or proper work, you need to write a
-lot of elaborate code and test it (preferably on real hardware).
-
-Yours,
-Linus Walleij
+> Currently I can work around this by just reocationg the cmd-db while
+> still under the qcom's hyp [1] but it would be nice to find a generic
+> solution that doesn't need pre-boot hacks...
+> 
+> AFAIK this is not observed on at least sc8280xp WoA devices and I'd
+> assume cros is not affected because they don't use qcom's TZ and instead
+> use TF-A (which is overall more friendly, though still uses qcom's
+> proprietary qtiseclib under the hood)
+> 
+> Nikita
+> 
+> [1] https://github.com/TravMurav/slbounce/blob/main/src/dtbhack_main.c#L17
+> 
+> > Signed-off-by: Volodymyr Babchuk <volodymyr_babchuk@epam.com>
+> > ---
+> >  drivers/soc/qcom/cmd-db.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
+> > index a5fd68411bed5..dd5ababdb476c 100644
+> > --- a/drivers/soc/qcom/cmd-db.c
+> > +++ b/drivers/soc/qcom/cmd-db.c
+> > @@ -324,7 +324,7 @@ static int cmd_db_dev_probe(struct platform_device *pdev)
+> >  		return -EINVAL;
+> >  	}
+> >  
+> > -	cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WB);
+> > +	cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WT);
+> >  	if (!cmd_db_header) {
+> >  		ret = -ENOMEM;
+> >  		cmd_db_header = NULL;
+> > -- 
+> > 2.43.0
 
