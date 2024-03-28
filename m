@@ -1,155 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-15635-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15636-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC6A3890C93
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 22:37:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5381D890CAE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 22:51:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3BD9A1F235CB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 21:37:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0819A1F23288
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 21:51:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38DF81327EF;
-	Thu, 28 Mar 2024 21:36:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BAC3713AA43;
+	Thu, 28 Mar 2024 21:51:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EAfXeDLD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="esHe22s8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E93B1311AC;
-	Thu, 28 Mar 2024 21:36:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8412681752;
+	Thu, 28 Mar 2024 21:51:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711661819; cv=none; b=pqv/7s4LkT4CSOPqJ7ocsQp0TKAIcvu1mYbjczveMfzokvTGehiNW2rj9UYz6FWsRYjku5fLZsLpNzvaKXG3Ejz40eZzhWMgRqQIb/ri22x+z5rHf5ag0IE+1hOoNjazdYFPNbqw2haoxkg7JqkZdlrC3i95+MuFTa5YS63retk=
+	t=1711662672; cv=none; b=J3Qm5FK1yfrpB92QRbAft/ULqiEWWlSaGJ+lo/haKdqNOQ6NKEnJ5N+lFITJ/cGsWedG+wmDlfNLvikPtzwj0xej9Mmhfccayka4XlcrehzmyR4T71+YO0cC90XxE7W2ZTpbTqfKhbJ7lEOm+cAnB+Uj18lyhjjZZcXOFJBjM+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711661819; c=relaxed/simple;
-	bh=ciS7g8D3sOmPOyXh80G8O8KJ4mZPNq5m0pw5JpgEEQg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=DSH+aHAjKlR/iXmmgFRfk0BJ8oxNfNvDsL4SzswmGcvK9IPK4r5LM3sb9VVcd9ghdJF1/McMGNc245zAwNkRGHWQEhUCasfDsfAvNckZ4DrQpeaG01O7uDxm0GOnrO7Cxaqn36BLqNIwWLNpy4jLohf4H5a149n9ia/9DSMKshk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EAfXeDLD; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42SKccpk027858;
-	Thu, 28 Mar 2024 21:36:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=Wbl8mTdmFirTVbOxG3JDWlBj+qx60dTg3W8aC3GMrxw=; b=EA
-	fXeDLDFqnYyPGPvHRkRv1qmR2hvcIo7u8Al/6UOgcVSwe4rmzhmx+A8M2qP0Zkj3
-	kEAtMKR7/vvx9sxT13Gs/5UtwpWjgWXVS0C0/vjQbM6kpHp12dQAsxHA4fg+AWuC
-	kewuz07C9C5iZ2zuPtJ7jF++WsWlktNaoYXpmTidcpIELwyE7V5jvh0QFUkyZTrr
-	e6MFiCBovxxPxIi7au64Mf0tgJvek7EjX+zpX2iWAWlhfXMNP3Xb2rhBbKUcWbeK
-	9/qYNXVTBaT1c+Z+Dz9v3IF0h9jIkpAX14+WL+GP9Ey9ixzL+oSkgf3C2Vz7X686
-	A58FKv+1NZIkNOqGL96w==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x5fr7g3ak-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 28 Mar 2024 21:36:47 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42SLakvL008709
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 28 Mar 2024 21:36:46 GMT
-Received: from [10.71.109.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 28 Mar
- 2024 14:36:42 -0700
-Message-ID: <6641b5c9-1685-3d90-ac15-0b2e9d546bc5@quicinc.com>
-Date: Thu, 28 Mar 2024 14:36:40 -0700
+	s=arc-20240116; t=1711662672; c=relaxed/simple;
+	bh=kDwe9Nhm7lE8AL8JY1vMlWhsHIywSrYlJ13DQOehe5w=;
+	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
+	 Subject:From:To:Date; b=UNkCzQoKqkq++bvBlUzJ3ppbtsaJS+/W8gk6MfcW8n33rNpNCs/51v1LryFSM5kVAAbjom8Bb2Yims/HUy8WmFgX/GldH/bOMZ1JH/lpufkVWnMTNXhXKBFAOxc0XPU5fMTDxncUNOHs7zFPEzymi16Jd6Z1TPsqMyiOKq+2+Hw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=esHe22s8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2DD5C433C7;
+	Thu, 28 Mar 2024 21:51:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711662672;
+	bh=kDwe9Nhm7lE8AL8JY1vMlWhsHIywSrYlJ13DQOehe5w=;
+	h=In-Reply-To:References:Subject:From:To:Date:From;
+	b=esHe22s85rralJGnhs8eo4vhoGNOF3mAbLKgBYcVJ7P+tP31vCRN6vLDmchmII1ha
+	 nPgeDao773r95dEb4iflh+8KUj/uHtBo8Hz/pOT4LByEgFT2odyrzr9VkiFA+ppOB3
+	 Kg6hkx18pm6KthBhxVMFOQFKATxliKE7AGFyTmFoTjLYJdSFus8K6/FuKhKa5tHwpf
+	 qvQyJZNX8IhQU01riZSw6sVKta4qJ5w8bD60iAgcrKVNC84g+SxiQ/tBln+Y1E6PSK
+	 ICuuEYcoLBnQ6JWklfKfNsGHxVzozqAl0iqQuLaoO3hTbM3cnk7IAz+5l+Ng2pEURz
+	 57saOLSBf/cgQ==
+Message-ID: <95f4e99a60cc97770fc3cee850b62faf.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v1] phy/qcom-qmp-combo: propagate correct return value at
- phy_power_on()
-Content-Language: en-US
-To: Kuogee Hsieh <quic_khsieh@quicinc.com>, <dri-devel@lists.freedesktop.org>,
-        <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
-        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
-        <airlied@gmail.com>, <agross@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <abel.vesa@linaro.org>,
-        <andersson@kernel.org>
-CC: <quic_jesszhan@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <marijn.suijten@somainline.org>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <1711660035-9656-1-git-send-email-quic_khsieh@quicinc.com>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <1711660035-9656-1-git-send-email-quic_khsieh@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: H9Ik6Um8WmXRdJ6Uc54PceshbDXUWukj
-X-Proofpoint-ORIG-GUID: H9Ik6Um8WmXRdJ6Uc54PceshbDXUWukj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-28_17,2024-03-28_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
- bulkscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0 phishscore=0
- mlxscore=0 impostorscore=0 adultscore=0 mlxlogscore=999 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2403210001
- definitions=main-2403280154
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20240328075936.223461-5-quic_varada@quicinc.com>
+References: <20240328075936.223461-1-quic_varada@quicinc.com> <20240328075936.223461-5-quic_varada@quicinc.com>
+Subject: Re: [PATCH v5 4/5] clk: qcom: ipq9574: Use icc-clk for enabling NoC related clocks
+From: Stephen Boyd <sboyd@kernel.org>
+To: andersson@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, djakov@kernel.org, dmitry.baryshkov@linaro.org, konrad.dybcio@linaro.org, krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, mturquette@baylibre.com, quic_anusha@quicinc.com, quic_varada@quicinc.com, robh@kernel.org
+Date: Thu, 28 Mar 2024 14:51:09 -0700
+User-Agent: alot/0.10
 
+Quoting Varadarajan Narayanan (2024-03-28 00:59:35)
+> diff --git a/drivers/clk/qcom/gcc-ipq9574.c b/drivers/clk/qcom/gcc-ipq957=
+4.c
+> index 0a3f846695b8..187fd9dcdf49 100644
+> --- a/drivers/clk/qcom/gcc-ipq9574.c
+> +++ b/drivers/clk/qcom/gcc-ipq9574.c
+> @@ -4301,6 +4302,56 @@ static const struct qcom_reset_map gcc_ipq9574_res=
+ets[] =3D {
+>         [GCC_WCSS_Q6_TBU_BCR] =3D { 0x12054, 0 },
+>  };
+> =20
+> +#define IPQ_APPS_ID                    9574    /* some unique value */
 
+How is this supposed to stay unique? I don't understand
+icc_node_create() API quite honestly. Why can't icc_clk_register()
+maintain some ida of allocated numbers? Or is there some global number
+space that we can "reserve" from? I'm quite amazed this is how things
+are connected in interconnect framework.
 
-On 3/28/2024 2:07 PM, Kuogee Hsieh wrote:
-> Currently qmp_combo_dp_power_on() always return 0 in regardless of
-> return value of cfg->configure_dp_phy(). This patch propagate
-> return value of cfg->configure_dp_phy() all the way back to caller.
-> 
+> +
+> +enum {
+> +       ICC_ANOC_PCIE0,
+> +       ICC_SNOC_PCIE0,
+> +       ICC_ANOC_PCIE1,
+> +       ICC_SNOC_PCIE1,
+> +       ICC_ANOC_PCIE2,
+> +       ICC_SNOC_PCIE2,
+> +       ICC_ANOC_PCIE3,
+> +       ICC_SNOC_PCIE3,
+> +       ICC_SNOC_USB,
+> +       ICC_ANOC_USB_AXI,
+> +       ICC_NSSNOC_NSSCC,
+> +       ICC_NSSNOC_SNOC_0,
+> +       ICC_NSSNOC_SNOC_1,
+> +       ICC_NSSNOC_PCNOC_1,
+> +       ICC_NSSNOC_QOSGEN_REF,
+> +       ICC_NSSNOC_TIMEOUT_REF,
+> +       ICC_NSSNOC_XO_DCD,
+> +       ICC_NSSNOC_ATB,
+> +       ICC_MEM_NOC_NSSNOC,
+> +       ICC_NSSNOC_MEMNOC,
+> +       ICC_NSSNOC_MEM_NOC_1,
+> +};
 
-This is good. But I am also thinking if we should add some prints in 
-this driver like it doesnt even tell where it failed like here
+Are these supposed to be in a dt-binding header?
 
-
-         ret = qmp_v456_configure_dp_phy(qmp);
-         if (ret < 0)
-                 return ret;
-
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-
-Also, I think we should have
-
-Fixes: 94a407cc17a4 ("phy: qcom-qmp: create copies of QMP PHY driver")
-
-If there is a better fixes tag for this, please let me know.
-
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> index 36632fa..884973a 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> @@ -2754,6 +2754,7 @@ static int qmp_combo_dp_power_on(struct phy *phy)
->   	const struct qmp_phy_cfg *cfg = qmp->cfg;
->   	void __iomem *tx = qmp->dp_tx;
->   	void __iomem *tx2 = qmp->dp_tx2;
-> +	int ret = 0;
->   
->   	mutex_lock(&qmp->phy_mutex);
->   
-> @@ -2766,11 +2767,11 @@ static int qmp_combo_dp_power_on(struct phy *phy)
->   	cfg->configure_dp_tx(qmp);
->   
->   	/* Configure link rate, swing, etc. */
-> -	cfg->configure_dp_phy(qmp);
-> +	ret = cfg->configure_dp_phy(qmp);
->   
->   	mutex_unlock(&qmp->phy_mutex);
->   
-> -	return 0;
-> +	return ret;
->   }
->   
->   static int qmp_combo_dp_power_off(struct phy *phy)
+> +
+> +static struct clk_hw *icc_ipq9574_hws[] =3D {
+> +       [ICC_ANOC_PCIE0] =3D &gcc_anoc_pcie0_1lane_m_clk.clkr.hw,
+> +       [ICC_SNOC_PCIE0] =3D &gcc_anoc_pcie1_1lane_m_clk.clkr.hw,
+> +       [ICC_ANOC_PCIE1] =3D &gcc_anoc_pcie2_2lane_m_clk.clkr.hw,
+> +       [ICC_SNOC_PCIE1] =3D &gcc_anoc_pcie3_2lane_m_clk.clkr.hw,
+> +       [ICC_ANOC_PCIE2] =3D &gcc_snoc_pcie0_1lane_s_clk.clkr.hw,
+> +       [ICC_SNOC_PCIE2] =3D &gcc_snoc_pcie1_1lane_s_clk.clkr.hw,
 
