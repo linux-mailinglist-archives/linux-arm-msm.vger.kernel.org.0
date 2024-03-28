@@ -1,105 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-15625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5345A890C1F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 22:01:29 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 584FB890C3A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 22:08:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E7C6DB21E79
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 21:01:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EBCF51F23385
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 21:08:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53AE113AA38;
-	Thu, 28 Mar 2024 21:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E248A13AA59;
+	Thu, 28 Mar 2024 21:07:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PmadlwR1"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fvu49aws"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242AC13667F;
-	Thu, 28 Mar 2024 21:01:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63BA113AA4E;
+	Thu, 28 Mar 2024 21:07:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711659671; cv=none; b=DAfEXvSG01HABwB1ohki49LsEuczOjo3clUJc8W0DFuxzMadfuvzSD0AELL+qrjh49xcc+Yh+cABaZxjSVHxGb3TpiTf/XvPwQhZbbICYrKi5JPJtoXC0agT2ct11PNraGG6Sdc38TSjkQIlbpuP3B8EZZJ3HbZ8gojrjzkcFMo=
+	t=1711660058; cv=none; b=GxbjpyoBL1YIECeYvJON5gSNI+UG54+Cbo7uLxBtvklxutm9HNht9yvBL1kSio5tt6rRZ2By68F+Kd9pnGG2+RIIbOWpwJ7PHM7zafHRTGBnLsFmIhimCcPyUhW3yLKzPyRbSMBOHkWaVgr1FfzVI99X9V6GBg8pmQ28GfA8m+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711659671; c=relaxed/simple;
-	bh=9tI10ajN+JijMfK6bOhgV+LGZE7UBieQZIKMF2CWjK4=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=uIZnLylWneksHyGgwGBe3fk/EldvU9eWfFMnkmFIbYYs7Bmt4dEOil4RAWRi4DTRIpTxd2qG7+sp9v/e/N9AACB80kBPFscVX70iC/+fNgSbSd8iHgNgUxUlMMtld1qI5ukF+rtiTn3BZw1H521k77JzIJT8Fec9eILrM92FmCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PmadlwR1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D46C433C7;
-	Thu, 28 Mar 2024 21:01:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711659671;
-	bh=9tI10ajN+JijMfK6bOhgV+LGZE7UBieQZIKMF2CWjK4=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=PmadlwR18Uqa0t7sR34+JCHWqf2SG4NUWAiLSKN0PEYbMvmBDFriUNOnPq96yaMvq
-	 Cf3tTRazSCN8ANmbcNsuR8NAyCnYLkJ7AuIEJliUwfw4gAdx9fpbb17l4EQtsm5hmv
-	 pyOKu9woDsxpdG65MhhbO3yk5E9V0mhwTBOM5RRQuy6NvISeSNuKcS4XsLis5zpMbS
-	 tB8zPYteQPboMQfFjkWdG9pCuBXLC/8q+vJ81cQjL5mL2m0WTm+qZmcZ34QFCL3wjL
-	 u8B8E8F9zW2c0ZdVo3nkl8zqf4pTBuwEHGOweRObHkSdY4wJx9SaAeXSfC/v8XeJ8u
-	 HkuGLOkolK/gg==
-Date: Thu, 28 Mar 2024 16:01:09 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1711660058; c=relaxed/simple;
+	bh=ajrl5xFbmylF1E3F9VzWsJKto7vjAyCDVhsDuTeVjBA=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=QRQUvUdhMYBlS1HjdTPnDwk/0xnHluig1ArkC2w7E/w67cY/6skwFF/RgnxvDQ7TYyfcK++bKS4vOBDsvGPOHsS8WIWf+c78g/WQKVGo2sCN+U25XKkEygxXr018Y2Gwu4HK60iyCls0NwqNah7WF5IUrIaTShVWra7b48hxSf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fvu49aws; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42SIJV4g022597;
+	Thu, 28 Mar 2024 21:07:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version:content-type; s=
+	qcppdkim1; bh=JOF2Pbv30CLpNYimCGXkm/AAsQpZuvKl6VsyKwY+MtM=; b=fv
+	u49awsQlGVBan5iThbE8Y9qeMaX1KEAUK9JUhm0714nanPZ7oSDRmJKNtBkQTsL8
+	G9VrrgRXEIQqGUz/qhP0u6dY08k4o0m8Z6hFHvSfQjTRMlTX3ctYYjY6w1RGCNvm
+	BL7xfz8Yg8gBhx9yV5HTiNCzNhJa2PUqGVtp/kzuieXVrOR/yzTE0tGVGOgXXY3m
+	yMdQLjwqxVVMUwso0/Zbgs4Zff/Ts3e8qhPXs8eDS4ScLJ2LOvwPWPdZfSNnqfzv
+	RhO//+DKsR0+y9Z7Q7DTvyn+WkNz3b0sxgus+6o8gsBE9E2cnqMTMdYi2wrH/gDv
+	PaN0UZD8+VqVYQwp55DA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x562rhtpe-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 28 Mar 2024 21:07:25 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42SL7NR0031485
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 28 Mar 2024 21:07:23 GMT
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Thu, 28 Mar 2024 14:07:23 -0700
+From: Kuogee Hsieh <quic_khsieh@quicinc.com>
+To: <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <abel.vesa@linaro.org>, <andersson@kernel.org>
+CC: Kuogee Hsieh <quic_khsieh@quicinc.com>, <quic_abhinavk@quicinc.com>,
+        <quic_jesszhan@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <marijn.suijten@somainline.org>, <freedreno@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v1] phy/qcom-qmp-combo: propagate correct return value at phy_power_on()
+Date: Thu, 28 Mar 2024 14:07:15 -0700
+Message-ID: <1711660035-9656-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Bjorn Andersson <andersson@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-In-Reply-To: <20240328-arm64-dts-add-support-for-samsung-galaxy-zfold5-v1-1-9434150d0465@yahoo.com>
-References: <20240328-arm64-dts-add-support-for-samsung-galaxy-zfold5-v1-1-9434150d0465@yahoo.com>
-Message-Id: <171165955986.338182.13447687008547587577.robh@kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: Add support for Samsung Galaxy Z
- Fold5
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: KTSCs0on7MkxkVW-TvwmjEUi-JuSKZSE
+X-Proofpoint-GUID: KTSCs0on7MkxkVW-TvwmjEUi-JuSKZSE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-28_17,2024-03-28_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
+ phishscore=0 spamscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0
+ priorityscore=1501 lowpriorityscore=0 impostorscore=0 clxscore=1015
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403210001 definitions=main-2403280151
 
+Currently qmp_combo_dp_power_on() always return 0 in regardless of
+return value of cfg->configure_dp_phy(). This patch propagate
+return value of cfg->configure_dp_phy() all the way back to caller.
 
-On Thu, 28 Mar 2024 15:57:44 +0100, Alexandru Marc Serdeliuc wrote:
-> Add support for Samsung Galaxy Z Fold5 (q5q) foldable phone
-> 
-> Currently working features:
-> - Framebuffer
-> - UFS
-> - i2c
-> - Buttons
-> 
-> Signed-off-by: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile               |   1 +
->  arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts | 616 ++++++++++++++++++++++++
->  2 files changed, 617 insertions(+)
-> 
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+---
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
-
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-New warnings running 'make CHECK_DTBS=y qcom/sm8550-samsung-q5q.dtb' for 20240328-arm64-dts-add-support-for-samsung-galaxy-zfold5-v1-1-9434150d0465@yahoo.com:
-
-arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dtb: /: failed to match any schema with compatible: ['samsung,q5q', 'qcom,sm8550']
-
-
-
-
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+index 36632fa..884973a 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -2754,6 +2754,7 @@ static int qmp_combo_dp_power_on(struct phy *phy)
+ 	const struct qmp_phy_cfg *cfg = qmp->cfg;
+ 	void __iomem *tx = qmp->dp_tx;
+ 	void __iomem *tx2 = qmp->dp_tx2;
++	int ret = 0;
+ 
+ 	mutex_lock(&qmp->phy_mutex);
+ 
+@@ -2766,11 +2767,11 @@ static int qmp_combo_dp_power_on(struct phy *phy)
+ 	cfg->configure_dp_tx(qmp);
+ 
+ 	/* Configure link rate, swing, etc. */
+-	cfg->configure_dp_phy(qmp);
++	ret = cfg->configure_dp_phy(qmp);
+ 
+ 	mutex_unlock(&qmp->phy_mutex);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int qmp_combo_dp_power_off(struct phy *phy)
+-- 
+2.7.4
 
 
