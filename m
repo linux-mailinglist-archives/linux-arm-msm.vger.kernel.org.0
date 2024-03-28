@@ -1,169 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-15507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D19188F93A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 08:54:54 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D04E88F951
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 09:01:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B0EC61C2A20A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 07:54:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AB0FD1F2CB95
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 08:01:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D4E75380F;
-	Thu, 28 Mar 2024 07:54:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA73454663;
+	Thu, 28 Mar 2024 08:00:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gtHr+Wsr"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aBiiNIEa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 528CC537E0;
-	Thu, 28 Mar 2024 07:54:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C8951C21;
+	Thu, 28 Mar 2024 08:00:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711612490; cv=none; b=N57xoxsTPP65lmTwxiMtFoptx3YHnPR0/kS/3B4B8FZGMOTBiXPMU6HfPNP7O6Vx7q9fqYHS9Xqul1rqp2ip6uspl8EKuBjz7ckKiMb09U/oLmOVgmrw2vdLSe6KsJBo9JAfU3jQU94ut4DpCfpa3IgmKXytaynh37x2dVuBlAk=
+	t=1711612856; cv=none; b=kScndVJBBI6Z7HTFt5gErII+1K7gGw2r3RDviM8V1I8ceCSBRv3VUQw+G2b/jjt/QGl3HjEr97YpZPUinbYZRaPdQxSPufA1NObd5bnLR9qQCyzxHNqwwuFwut6FbB29GrW9h/jlThx+a6oh8AilEVggLJUU25X8wDo085/UUXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711612490; c=relaxed/simple;
-	bh=7TuQoMUJ6APooA15msUPA1QoRn2CnlT4blDuFPO0e+k=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=G7RsTgsVGmgTB8g2727+BBqfzUDURwy2lMEyxGd3RTCYxsdQbxsiZ/yMmFBa56W4HWTj7S8cJTctTcubxTpSkBMkinRGcVomBjKBmVQS+8kejE8PjVT0KND4Hwm805vdV/ue8Un2USOxMDw544UlXg00MPe6mQDFmAkiSz+CPdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gtHr+Wsr; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-415482307b0so1023405e9.0;
-        Thu, 28 Mar 2024 00:54:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711612487; x=1712217287; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=z/9k825Fqxzz9jmkn3nJFGHIDNvvQD/xvUg6iDj53dY=;
-        b=gtHr+WsrSWA3TwdphK7gmjAqWeh6VER4m13wzcLh6z/zZJ4MbVmT6Eo7TEWHFfp1c5
-         nU5khv7GGnyu/lYIBg5h3uzfKRgLsdgfVWg6w2YZ8DTzoUxqXG3umew/FCnUdtwdNsSg
-         itValM0uX0VCix9FLXMg5JRbP8LUWBDvjNyjzukI+DwuzBes13K9ZopXZVAsnGzwN3M9
-         bn+C1ekZFA9vgicGoBiY3wiJgNDn/NJJD6n8S2I0zjHqX/OOD9fZQfPobsXp7lcioboq
-         Aj5dk6x+U+2UNhr50PrQ5ioyFNDyabNe+dWIQz4zMoZhqiQJmxU3NHys84wV5v4Qghig
-         nXZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711612487; x=1712217287;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=z/9k825Fqxzz9jmkn3nJFGHIDNvvQD/xvUg6iDj53dY=;
-        b=j9QSYyTb7c34ojK8UxcsTyiWHT5ziIs5H+A6bGwlPNSNUSedPkaQWKXyI28/IAtIRB
-         BTCqD/ERgZUCBX4aNLVZvm8R3Dyc1sjfhXFtTkSJ/2FLvwN2O8uZ32WZRgwMi+5l0m6y
-         xxxfRSceV8BMPmKQ/Oq4uort363tbH0BG73Tg+ypR+YWvfprqqk2t8HH2+wPwmfXsIDz
-         E2mVnc/i1nqOxqnNSJd25YczLhK4tkBR1TiuZd7R/NPntN4SYEM78pOKVIvg4pus5Qd/
-         Es8sMGrsAeHpOb6tdXvFQqfytrkXP4gkN64T8MIzOlf/hh2yWJqvc38RDPHxFMBvtoBQ
-         0exg==
-X-Forwarded-Encrypted: i=1; AJvYcCX+hrH2sjLeQ39KQkLmD3Bx1GzVS+E8DFsFRzXZugGGc2PMu9LCVTTUmRpH29yWJIDvK6NyUgikHrREMBpCQUMike+1cafBoeDfukjuImDcsXAD7leW6m2UAwN0dfK7Eh1/zZXJX5d2yk4nHJ+ifxq/q75zfP4QzRxqmuQGvvzV
-X-Gm-Message-State: AOJu0YzUQtEOC8xWkWjq+9EAFyAv5SHEZoZkGr4HfQNdemkyC1wjbYXF
-	JR0oYWmC3GTeUSFvQoIrOhQtTLn6yBpq/pLazc4UOZlFLAFfvSlqswBwG5bMn0k=
-X-Google-Smtp-Source: AGHT+IHZs9twLePrVnJ1cVOtuujAwLRvaOgRuObZxlafswz4BIhH6CPle3cRX9DVemoO803NyyQIMg==
-X-Received: by 2002:a05:600c:3505:b0:413:7f3:8d5 with SMTP id h5-20020a05600c350500b0041307f308d5mr2229096wmq.0.1711612486695;
-        Thu, 28 Mar 2024 00:54:46 -0700 (PDT)
-Received: from [192.168.20.102] (57657817.catv.pool.telekom.hu. [87.101.120.23])
-        by smtp.googlemail.com with ESMTPSA id v12-20020a05600c470c00b004131310a29fsm1425083wmo.15.2024.03.28.00.54.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Mar 2024 00:54:46 -0700 (PDT)
-From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Thu, 28 Mar 2024 08:54:31 +0100
-Subject: [PATCH v3] clk: qcom: clk-alpha-pll: fix rate setting for Stromer
- PLLs
+	s=arc-20240116; t=1711612856; c=relaxed/simple;
+	bh=6D/XBrDpS3VYWEo5+olO35vs2lsCDJRt08g98ENovZA=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=PCGu7QBieUvZvfVOboP8Z4nytXpntqZSELcPJgAg4d8+j57GRgD1JGz3iYl0sbds5/TbjLvgXvnGEUlRyDbXn7Bgm2AwzE2VDnITgTYC6TzNLuaW2yoAA3v96OYXTnpBSLH3a4ynmn/GzH3gKLTpaezjMvCe9okpdx8HG2VTX3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aBiiNIEa; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42S51Dfk032357;
+	Thu, 28 Mar 2024 08:00:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=ZRmfsnh
+	BGaXe0d3EUk9FYQYhFIOlTI7BeG7C6Lnr2FI=; b=aBiiNIEa7AZrziOq4x7HEcL
+	1fQCJzxEepl/QsSGYuPZj2mfpWxXOHZc0im1RtGSx0z6+/qKL3ky3YREL7ns862O
+	VPMpVm/9Eiqp19+ITxcXsD4tjhvjkcezcuF2sBTYL1k7yj6Bs8YKfBakUDvUDJMA
+	X3CO1dIvW4nP20GUa9BAQFSXDTeNnUbUIlGP/HHrvunD8YwlzzO1fOjk3uug8nzj
+	hcDO3jQDtmiEtMOBJ2JTDzBosXpc1Y1sYmDs/hkFpJ2vnTVD3YRYMhSy14BRGHa8
+	pWO648dYWJize+U1LxTIoxmt74y9pvnG+c9YjBTIiRpOF1D5ahgrR5dn6qONAXg=
+	=
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x4u212fp4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 28 Mar 2024 08:00:50 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42S80nYw009784
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 28 Mar 2024 08:00:49 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Thu, 28 Mar 2024 01:00:44 -0700
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>, <robh@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <djakov@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <quic_varada@quicinc.com>, <quic_anusha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>
+Subject: [PATCH v5 0/5] Add interconnect driver for IPQ9574 SoC
+Date: Thu, 28 Mar 2024 13:29:31 +0530
+Message-ID: <20240328075936.223461-1-quic_varada@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240328-alpha-pll-fix-stromer-set-rate-v3-1-1b79714c78bc@gmail.com>
-X-B4-Tracking: v=1; b=H4sIADYiBWYC/43NQQ6CMBCF4auYrh3TTgtFV97DuCg4QBOgpG0aD
- eHuFlbsdPlPJt9bWCBvKbDbaWGekg3WTTnk+cSa3kwdgX3lZshRcYkKzDD3BuZhgNa+IUTvRvI
- QKII3kUBplLqkElXLWUZmT/lvH3g8c/c2ROc/+14S2/VvOgkQIGVR81oUGsX13o3GDpfGjWyjE
- x658ieHmVOVoUqaVoumOnLrun4BROUC6hsBAAA=
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, 
- Varadarajan Narayanan <quic_varada@quicinc.com>, 
- Sricharan R <quic_srichara@quicinc.com>, 
- Kathiravan T <quic_kathirav@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Gabor Juhos <j4g8y7@gmail.com>
-X-Mailer: b4 0.13.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 2Gs2P9hx7qEGPO9qnt2cIfO2Z2clUP35
+X-Proofpoint-GUID: 2Gs2P9hx7qEGPO9qnt2cIfO2Z2clUP35
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-28_07,2024-03-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 mlxscore=0 clxscore=1015 phishscore=0 suspectscore=0
+ mlxlogscore=999 adultscore=0 bulkscore=0 malwarescore=0 lowpriorityscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403210001 definitions=main-2403280052
 
-The clk_alpha_pll_stromer_set_rate() function writes inproper
-values into the ALPHA_VAL{,_U} registers which results in wrong
-clock rates when the alpha value is used.
+MSM platforms manage NoC related clocks and scaling from RPM.
+However, in IPQ SoCs, RPM is not involved in managing NoC
+related clocks and there is no NoC scaling.
 
-The broken behaviour can be seen on IPQ5018 for example, when
-dynamic scaling sets the CPU frequency to 800000 KHz. In this
-case the CPU cores are running only at 792031 KHz:
-
-  # cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq
-  800000
-  # cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_cur_freq
-  792031
-
-This happens because the function ignores the fact that the alpha
-value calculated by the alpha_pll_round_rate() function is only
-32 bits wide which must be extended to 40 bits if it is used on
-a hardware which supports 40 bits wide values.
-
-Extend the clk_alpha_pll_stromer_set_rate() function to convert
-the alpha value to 40 bits before wrinting that into the registers
-in order to ensure that the hardware really uses the requested rate.
-
-After the change the CPU frequency is correct:
-
-  # cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq
-  800000
-  # cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_cur_freq
-  800000
-
-Cc: stable@vger.kernel.org
-Fixes: e47a4f55f240 ("clk: qcom: clk-alpha-pll: Add support for Stromer PLLs")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
----
-Changes in v3:
-  - remove constants' comparison (Konrad)
-  - Link to v2: https://lore.kernel.org/r/20240326-alpha-pll-fix-stromer-set-rate-v2-1-48ae83af71c8@gmail.com
-
-Changes in v2:
-  - fix subject prefix
-  - rebase on v6.9-rc1
-  - Link to v1: https://lore.kernel.org/r/20240324-alpha-pll-fix-stromer-set-rate-v1-1-335b0b157219@gmail.com
-
-Depends on the following patch:
-  https://lore.kernel.org/r/20240315-apss-ipq-pll-ipq5018-hang-v2-1-6fe30ada2009@gmail.com
----
- drivers/clk/qcom/clk-alpha-pll.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-index 8a412ef47e16..8a8abb429577 100644
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -2490,6 +2490,8 @@ static int clk_alpha_pll_stromer_set_rate(struct clk_hw *hw, unsigned long rate,
- 	rate = alpha_pll_round_rate(rate, prate, &l, &a, ALPHA_REG_BITWIDTH);
- 
- 	regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
-+
-+	a <<= ALPHA_REG_BITWIDTH - ALPHA_BITWIDTH;
- 	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL(pll), a);
- 	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL_U(pll),
- 		     a >> ALPHA_BITWIDTH);
+However, there is a requirement to enable some NoC interface
+clocks for the accessing the peripherals present in the
+system. Hence add a minimalistic interconnect driver that
+establishes a path from the processor/memory to those peripherals
+and vice versa.
 
 ---
-base-commit: 4cece764965020c22cff7665b18a012006359095
-change-id: 20240324-alpha-pll-fix-stromer-set-rate-472376e624f0
+v5:
+	Split gcc-ipq9574.c and common.c changes into separate patches
+	Introduce devm_icc_clk_register
+	Fix error handling
+v4:
+gcc-ipq9574.c
+	Use clk_hw instead of indices
+common.c
+	Do icc register in qcom_cc_probe() call stream
+common.h
+	Add icc clock info to qcom_cc_desc structure
 
-Best regards,
+v3:
+qcom,ipq9574.h
+	Move 'first id' define to clock driver
+gcc-ipq9574.c:
+	Use indexed identifiers here to avoid confusion
+	Fix error messages and move code to common.c as it can be
+	shared with future SoCs
+
+v2:
+qcom,ipq9574.h
+	Fix license identifier
+	Rename macros
+qcom,ipq9574-gcc.yaml
+	Include interconnect-cells
+gcc-ipq9574.c
+	Update commit log
+	Remove IS_ENABLED(CONFIG_INTERCONNECT) and auto select it from Kconfig
+ipq9574.dtsi
+	Moved to separate patch
+	Include interconnect-cells to clock controller node
+drivers/clk/qcom/Kconfig:
+	Auto select CONFIG_INTERCONNECT & CONFIG_INTERCONNECT_CLK
+
+Varadarajan Narayanan (5):
+  dt-bindings: interconnect: Add Qualcomm IPQ9574 support
+  interconnect: icc-clk: Add devm_icc_clk_register
+  clk: qcom: common: Add interconnect clocks support
+  clk: qcom: ipq9574: Use icc-clk for enabling NoC related clocks
+  arm64: dts: qcom: ipq9574: Add icc provider ability to gcc
+
+ .../bindings/clock/qcom,ipq9574-gcc.yaml      |  3 +
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi         |  2 +
+ drivers/clk/qcom/Kconfig                      |  2 +
+ drivers/clk/qcom/common.c                     | 39 +++++++++++-
+ drivers/clk/qcom/common.h                     |  3 +
+ drivers/clk/qcom/gcc-ipq9574.c                | 54 +++++++++++++++++
+ drivers/interconnect/icc-clk.c                | 29 +++++++++
+ .../dt-bindings/interconnect/qcom,ipq9574.h   | 59 +++++++++++++++++++
+ include/linux/interconnect-clk.h              |  4 ++
+ 9 files changed, 194 insertions(+), 1 deletion(-)
+ create mode 100644 include/dt-bindings/interconnect/qcom,ipq9574.h
+
 -- 
-Gabor Juhos <j4g8y7@gmail.com>
+2.34.1
 
 
