@@ -1,75 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-15524-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E312388FABB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 10:07:28 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C669388FAC2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 10:08:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B4F781C2D162
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 09:07:27 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3073AB25818
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 09:08:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4E875F865;
-	Thu, 28 Mar 2024 09:07:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 114B25F569;
+	Thu, 28 Mar 2024 09:07:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xo0Sfd9/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="chZdz0rP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438EA5FBAF
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 09:07:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E9454BCB
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 09:07:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711616844; cv=none; b=BdNOgcMKO0K05wEEYtm2rxGsViyM28I28dlt8YEpXj+8GTsQXioiEyN3VB0lixsUa+sMeOVtrcPUYATa7G4JT3upW001K8gxU7DQW6HxHqLyGkFM8rrXNvGDl+A7HZGlLKJj+/qOCXc4c8+VcUkPXAakuZZAJ84bFfBOi5xlpCI=
+	t=1711616877; cv=none; b=kiNH6TsEbdw4wdpedl4eFJPKHjXkCxeOY4i79fyiilZDPxX71jzOEGjXE5asrz2EcmS9YYlku3XzO7aiHpwWz3RP1TKk7dRez7Sc3HxPVaXRJE9SX8dIAfrhmXB+LBH3YsS6JYsT1Y6SvYKlcpmJtWTWMeo34gBXdJO8nsaiHhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711616844; c=relaxed/simple;
-	bh=B5P2QmTqG+zV/6zmv5Tkk3zk8lAWVapCRSaMTRw5r0A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PrW2+HqmdrxB2TuyyZtrb4D6suJLi02XAzTAD12C4d74/kYEbeoYcoZzEBXmB+jPSSdpQGYXGWVZ4GfHXQRjP0RmNf4YrJONwTFLgJ2zKnPHrjGzwtkENPMtoEaqgkkq/xb+HS1A0CXZ5J5w0wMEEMKloyLcUWZsHHOCLB5rYbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xo0Sfd9/; arc=none smtp.client-ip=209.85.128.42
+	s=arc-20240116; t=1711616877; c=relaxed/simple;
+	bh=r07Cs5KLVKu0tASlS5/D4hIpCN56cfKcWsy0e5UUZQk=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=BCcH3zpMpXb4C2JsOnQsArcUM6bPIFgJOuiTYNx29xbzW4y5o23Y62bxuK2WFlYoyLDuu0ZhA8vMtymxvTVHyGaeJW0ZrQADHJnkWryJYBkfqQFUt3GXPxZDBdUruAi8TPvWGAkt1mBMyPjcv5jm8qKYXgOWXn01sVJDFSF6zIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=chZdz0rP; arc=none smtp.client-ip=209.85.208.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4154819c1adso1265435e9.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 02:07:21 -0700 (PDT)
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2d6dda3adb9so7164391fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 02:07:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711616840; x=1712221640; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=kR7691QsLdiheg/qYlTvIwafZmDVMgMpzMu7f9J689k=;
-        b=xo0Sfd9/qBWj+gMrKlvyBeZ13v1Gi5WBWhsmVGYZJQHT3h4OaHMb3TbLrqwYJttNxv
-         HMecEWGEDtk4ZmyHUVpkv/2HxCb/lPya+P8yYcBtbPH64KS0Lpcoo0xc4Up6aQQ0q0HT
-         MpRutvmz4y48q8MTuCPaX+Yrj+NfmGs3uWm9ZhMYJWqjhXOWT6ahAhtum5JqCdB+cXTS
-         /YDCx39LT+LDwFQVZ8wXiJlg3+LSjBkv9skFr3cC5r/A1i1ZTntlFYBtCNOyktEEet7K
-         nUZmEML54bB9lnm1QCAAQO+/4FuDYHUoo/WEmQ0wgFIB7ym0E1a99L/9aVX1uNrOlMYK
-         v4kA==
+        d=linaro.org; s=google; t=1711616873; x=1712221673; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yKXwHmc4cXcL+3XlaHJcygoE0sPqn2G65Y8JY5URJDs=;
+        b=chZdz0rPXJUzdYHUXGX1+Tn54hZrjswXrlrLcfzv40119yQ693s8sTA84l1I0fEsRo
+         cajI5SNFlgxDdD7Bif4X8MKJq60AqXYEAMn8yDCxM4exhqmaHOWA9S8ysK9lzXXW72s+
+         jKz3qn5LTjXJJqqvRWmHd3pzrrwdYSUMoRkeQ3r9ZOEsUOz2yOiJrIGbNkZ38DIwupC8
+         WjXo5xY+HVS5DTg117m7XBqnn6tFvBqR0yvkR0r/izJvmRI9Ak1Jr01v4jRXV3RjFgik
+         +f7Qj+K8Wb24U98Y50bEE+NJ2Kjb9u/uMXMaDiee4DSz/oBQs2l5Qef2//mzbDKtpeHm
+         F/Zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711616840; x=1712221640;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kR7691QsLdiheg/qYlTvIwafZmDVMgMpzMu7f9J689k=;
-        b=skN3iuABAWAINRSP2dc0sotqqgMtHOhX38NYGMS+ETopgoAEr4zVTQpm2Xh9n659r7
-         xLeQGGIdBwoX4hIYJFOPz4PmxWNJqN5U1J7EJL00ZSozXZLOrmWtR8mWlegGraJ9MpT2
-         kxIrpyqC8lao13XIHsV7+VJmhH+t31Me3tQmPkOqXoYxN1YRlmfIpWOMJaE7v8rE5DGb
-         Vw1BYZ5hYY5EltBUWBswjivC8KuoUWyV3cPxWgn4gMqpG+60ldLqjaGPsdK2wdofVUef
-         ZyjrgPd+cA5ap1DHVkNpdpUD/mqvF++w4IOcCTwj9DZxyfAgqGdMTgp2wn4tKk6M3po+
-         mN+w==
-X-Forwarded-Encrypted: i=1; AJvYcCVwB0fMUXqIKwRIw8ZN6TL5eMl3RxsxTNRChB20fR5e/aDICZS6nxv828RqVhnx4i8qQv2OJRxuHumcVaUyidddz4kowcra3R7mPJmV8w==
-X-Gm-Message-State: AOJu0YxDD/AWSmEvwDJiaJCcHm/tkkX8ae2rbkZkI1mfQguIchUZpM2c
-	4GgKoGkezW6G8c6c1lQn6Y99tTJoDVs5eUp2fhVX9v/TNU5xx84YIsvSV8jwzIA=
-X-Google-Smtp-Source: AGHT+IFcH20TzPyDooBAuXCMccHixkHgImEVAVGVV0gG91HKEAKRs5otgy4+usrR2yWejLzN7oXoiw==
-X-Received: by 2002:a05:600c:1c23:b0:414:222:ad5e with SMTP id j35-20020a05600c1c2300b004140222ad5emr1870691wms.11.1711616840331;
-        Thu, 28 Mar 2024 02:07:20 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.148])
-        by smtp.gmail.com with ESMTPSA id w11-20020a05600c474b00b00414927b21f6sm4746668wmo.22.2024.03.28.02.07.17
+        d=1e100.net; s=20230601; t=1711616873; x=1712221673;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=yKXwHmc4cXcL+3XlaHJcygoE0sPqn2G65Y8JY5URJDs=;
+        b=a0LsPWl9i2ZY6gZDkEhICBLRfSphUQeLR6TjbvjGgxb4aopgv/4tbBmS3uIbawxFZF
+         cOA+J2nsz6P34+rHFWboPHmsGb8+6HtakXYKYY17xJY+g7yszCHZcbUN2MrLhBYsmF8E
+         L5xhR3sbqYcUdHkZS2NP0mm70MDdQGpEjrTOrhvexjd2gSoOJQKV3tsU/Dr/2XviSGnL
+         6/pXTMn10uMJtvFz44i5bIC8PSZixaK6RyN27upPIkv5eqFlWQsoUvydoThr4tO+zn1d
+         PTWYbhwD5VNdevz1Qfj+zway1cwWK7hcxrNyCyjPBsaRiKD4vx8qRHy+9OEEWsd9Np7m
+         Q3Mg==
+X-Forwarded-Encrypted: i=1; AJvYcCXF5G5X9/YPdkfHu5t5iw06KbeBZETF9o6ZrtO2TMVjhxxa4+iICSrcMASS/j9d32g7YerGh9NGpmxYvTz9ChKqlZ8q53qR7mk+/Wq+dA==
+X-Gm-Message-State: AOJu0Yww6mal9mMjmzfN9WKJvc4nvuiqeAy1GQUghjyUY/3pM/JF0hcW
+	/sHyalbpsvbB/vypsAcXtgUkQ9NSGIfm4YmL68BRO69FvFyMPcXsBEOO2k2j4/I=
+X-Google-Smtp-Source: AGHT+IFan8kG+r3iVU6A8LgXX5xHcdF5eGLJCwQMzUJRaJjaVzQi8QQwkp8heq/oAlpdTtpsfmu/wg==
+X-Received: by 2002:a2e:a40e:0:b0:2d6:ec7b:b69b with SMTP id p14-20020a2ea40e000000b002d6ec7bb69bmr1228173ljn.7.1711616873130;
+        Thu, 28 Mar 2024 02:07:53 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:6306:1c7a:72c2:892a? ([2a01:e0a:982:cbb0:6306:1c7a:72c2:892a])
+        by smtp.gmail.com with ESMTPSA id hg6-20020a05600c538600b004148ff6ef54sm1622433wmb.29.2024.03.28.02.07.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Mar 2024 02:07:19 -0700 (PDT)
-Message-ID: <dfebb955-6fbc-4e1b-bde3-13f9ddc33365@linaro.org>
-Date: Thu, 28 Mar 2024 10:07:17 +0100
+        Thu, 28 Mar 2024 02:07:52 -0700 (PDT)
+Message-ID: <ab749f2d-269f-40bb-b6ab-b19fd7243eed@linaro.org>
+Date: Thu, 28 Mar 2024 10:07:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,100 +78,143 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 01/16] regulator: dt-bindings: describe the PMU module
- of the QCA6390 package
-To: Bartosz Golaszewski <brgl@bgdev.pl>, Marcel Holtmann
- <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
- "David S . Miller" <davem@davemloft.net>, Eric Dumazet
- <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Kalle Valo <kvalo@kernel.org>,
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH RESEND v6 0/5] spmi: pmic-arb: Add support for multiple
+ buses
+To: Abel Vesa <abel.vesa@linaro.org>, Stephen Boyd <sboyd@kernel.org>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
  Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Liam Girdwood
- <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
- Bjorn Helgaas <bhelgaas@google.com>, Saravana Kannan <saravanak@google.com>,
- Geert Uytterhoeven <geert+renesas@glider.be>, Arnd Bergmann <arnd@arndb.de>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Marek Szyprowski <m.szyprowski@samsung.com>, Alex Elder <elder@linaro.org>,
- Srini Kandagatla <srinivas.kandagatla@linaro.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Abel Vesa <abel.vesa@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>,
- Lukas Wunner <lukas@wunner.de>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-wireless@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org,
- linux-pm@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20240325131624.26023-1-brgl@bgdev.pl>
- <20240325131624.26023-2-brgl@bgdev.pl>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240325131624.26023-2-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+ Johan Hovold <johan@kernel.org>, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-mediatek@lists.infradead.org, devicetree@vger.kernel.org
+References: <20240326-spmi-multi-master-support-v6-0-1c87d8306c5b@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20240326-spmi-multi-master-support-v6-0-1c87d8306c5b@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 25/03/2024 14:16, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Hi Abel,
+
+On 26/03/2024 17:28, Abel Vesa wrote:
+> This RFC prepares for and adds support for 2 buses, which is supported
+> in HW starting with version 7. Until now, none of the currently
+> supported platforms in upstream have used the second bus. The X1E80100
+> platform, on the other hand, needs the second bus for the USB2.0 to work
+> as there are 3 SMB2360 PMICs which provide eUSB2 repeaters and they are
+> all found on the second bus.
+
+@Dmitry, @Konrad, @Bjorn, could you apply those patches and test an devices
+you have to make sure there's no regression ?
+
 > 
-> The QCA6390 package contains discreet modules for WLAN and Bluetooth. They
-> are powered by the Power Management Unit (PMU) that takes inputs from the
-> host and provides LDO outputs. This document describes this module.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
+> Changes in v6:
+> - Changed the compatible to platform specific (X1E80100) along with the
+>    schema. Fixed the spmi buses unit addresses and added the empty ranges
+>    property. Added missing properties to the spmi buses and the
+>    "unevaluatedProperties: false".
+> - Deprecated the "qcom,bus-id" in the legacy schema.
+> - Changed the driver to check for legacy compatible first
+> - Link to v5: https://lore.kernel.org/r/20240221-spmi-multi-master-support-v5-0-3255ca413a0b@linaro.org
+> 
+> Changes in v5:
+> - Dropped the RFC as there aren't any concerns about the approach anymore
+> - Dropped the unused dev and res variables from pmic_arb_get_obsrvr_chnls_v2
+> - Link to v4: https://lore.kernel.org/r/20240220-spmi-multi-master-support-v4-0-dc813c878ba8@linaro.org
+> 
+> Changes in v4:
+> - Fixed comment above pmic_arb_init_apid_v7 by dropping the extra "bus" word
+> - Swicthed to devm_platform_ioremap_resource_byname for obsrvr and chnls.
+>    The core remains with platform_get_resource_byname as we need the core size.
+> - Dropped comment from probe related to the need of platform_get_resource_byname
+>    as it not true anymore.
+> - Dropped the qcom,bus-id optional property.
+> - Link to v3: https://lore.kernel.org/r/20240214-spmi-multi-master-support-v3-0-0bae0ef04faf@linaro.org
+> 
+> Changes in v3:
+> - Split the change into 3 separate patches. First 2 patches are moving
+>    apid init and core resources into version specific ops. Third one is
+>    adding the support for 2 buses and dedicated compatible.
+> - Added separate bindings patch
+> - Link to v2: https://lore.kernel.org/r/20240213-spmi-multi-master-support-v2-1-b3b102326906@linaro.org
+> 
+> Changes in v2:
+> - Reworked it so that it registers a spmi controller for each bus
+>    rather than relying on the generic framework to pass on the bus
+>    (master) id.
+> - Link to v1: https://lore.kernel.org/r/20240207-spmi-multi-master-support-v1-0-ce57f301c7fd@linaro.org
+> 
+> ---
+> Abel Vesa (5):
+>        dt-bindings: spmi: Add X1E80100 SPMI PMIC ARB schema
+>        dt-bindings: spmi: Deprecate qcom,bus-id
 
+Forgot to add, but please fix this in a v7:
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>        spmi: pmic-arb: Make the APID init a version operation
 
-Best regards,
-Krzysztof
+drivers/spmi/spmi-pmic-arb.c:180: warning: Function parameter or struct member 'core' not described in 'spmi_pmic_arb'
+drivers/spmi/spmi-pmic-arb.c:180: warning: Function parameter or struct member 'core_size' not described in 'spmi_pmic_arb'
+drivers/spmi/spmi-pmic-arb.c:180: warning: Function parameter or struct member 'mapping_table_valid' not described in 'spmi_pmic_arb'
+drivers/spmi/spmi-pmic-arb.c:243: warning: Function parameter or struct member 'pmic_arb' not described in 'pmic_arb_read_data'
+drivers/spmi/spmi-pmic-arb.c:257: warning: Function parameter or struct member 'pmic_arb' not described in 'pmic_arb_write_data'
+
+>        spmi: pmic-arb: Make core resources acquiring a version operation
+
+drivers/spmi/spmi-pmic-arb.c:180: warning: Function parameter or struct member 'core' not described in 'spmi_pmic_arb'
+drivers/spmi/spmi-pmic-arb.c:180: warning: Function parameter or struct member 'core_size' not described in 'spmi_pmic_arb'
+drivers/spmi/spmi-pmic-arb.c:180: warning: Function parameter or struct member 'mapping_table_valid' not described in 'spmi_pmic_arb'
+drivers/spmi/spmi-pmic-arb.c:222: warning: Function parameter or struct member 'get_core_resources' not described in 'pmic_arb_ver_ops'
+drivers/spmi/spmi-pmic-arb.c:244: warning: Function parameter or struct member 'pmic_arb' not described in 'pmic_arb_read_data'
+drivers/spmi/spmi-pmic-arb.c:258: warning: Function parameter or struct member 'pmic_arb' not described in 'pmic_arb_write_data'
+
+>        spmi: pmic-arb: Add multi bus support
+> 
+>   .../bindings/spmi/qcom,spmi-pmic-arb.yaml          |   1 +
+>   .../bindings/spmi/qcom,x1e80100-spmi-pmic-arb.yaml | 136 +++
+>   drivers/spmi/spmi-pmic-arb.c                       | 948 +++++++++++++--------
+>   3 files changed, 715 insertions(+), 370 deletions(-)
+> ---
+> base-commit: 4893c639cc3659cefaa675bf1e59f4e7571afb5c
+> change-id: 20240207-spmi-multi-master-support-832a704b779b
+> 
+> Best regards,
+
+Thanks,
+Neil
 
 
