@@ -1,91 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-15618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15620-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E78D890B45
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 21:26:14 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D7625890B89
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 21:39:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3405A1F28187
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 20:26:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 189D8B23AFC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 20:39:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4219A13B288;
-	Thu, 28 Mar 2024 20:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C469B13AA23;
+	Thu, 28 Mar 2024 20:39:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ErpvbV5s"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WBgEDQy7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C438313AD36;
-	Thu, 28 Mar 2024 20:24:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC39913A405
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 20:39:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711657484; cv=none; b=jMTJ9ovDnozDEOx74VfyIFcWVzNJybITRHaR1+A7PwuKYfC+UhViMdFXVL2xQk/+qKHiVMqAAbcdZzYufC1eJig63lmy9ezqiqZjGf0O75+j3h73RQO+34J1A5V097PkA0OGWF5GC8GbIM1TvbFvZQT+ZsIgNlNKHaUrknVtf7o=
+	t=1711658350; cv=none; b=H9kA/HqdRN/XAGOTxOqbYOytcpa9DJ914k/6BDTqRwMslX21BAf4CB13U3R7o15bVeJlnnxVE1wAnzJFQMmOPNtCXTxGhZaTwr36S1eqa9kLQC4ZpJe8tdFzoS3RJ7V0aBkw7fCMwWsjIYRvKtinofxXVxKRSJzji4xzwip0Frg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711657484; c=relaxed/simple;
-	bh=nsgSRkxzMwcL9nY3tuBJREALrbXEDPSiM7Rc2uwkNbU=;
+	s=arc-20240116; t=1711658350; c=relaxed/simple;
+	bh=c76w6ANOZw/3hvDVKikFOR104FP3uq0xGTMZX9yqf8I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AMYD40H8xYuTaeXrqTnz56PhiaGPYrOHC49fpjgKhqFM6sARgPFQPCEwiXh8Bhrx8Msy7nhN942ciW2JAKrMNmEXWOvJiMwaVD7/IuHC4RtshdIZmGFdbix5lB+3Jab2/MBfZj4L7xWMNWvH7o6X2a6rdA7ixik2FlFsag/6KbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ErpvbV5s; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-1e0f0398553so13914345ad.3;
-        Thu, 28 Mar 2024 13:24:42 -0700 (PDT)
+	 Content-Type:Content-Disposition:In-Reply-To; b=NA+x4qZ5p0qsqeejsbQqcTJ7qn9KXT/bwOCWJ8RFA2o7TERrmPKrpFCfqiiyv/cy92a2kwYMNlXTOpUJ+XF05NOWDTnxjd2v2lP+Z2ZljkMI6+BMVyL9MkrFWdJrd4JAdl9dgQYC/ZK0oREsdpdJBLBWIa+4ORFqKOdbTQvCvUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WBgEDQy7; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a4715d4c2cbso185904066b.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 13:39:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711657482; x=1712262282; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1711658347; x=1712263147; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=OSBQzFqQufqwBm+U4G6XPdH75Rro6F7rWhWjrRhCESc=;
-        b=ErpvbV5sYBYqnyUlP91TonlqNUcq9w763iSlMGk34Cfzztx61tp83qndlir+ezUN3m
-         XgkNbscKIg3LDNoJ6g5phYPsFdbNbViKAxDm1tnG37rF/a0NHPWlnCwyUR0/2G6HgGlQ
-         5Y5UaiI6jYICgizegSXDN6R/1ig7GXZAJANzF1S2NgarF/11OQ6ua+NIDPoAR+dAW2hD
-         mTiE3JvT8rFj1FHqUZItgFRsFx9uT/voLvQX7qYyQa60MjZTAuMZtpc3A6TUpzLeoY0Z
-         UhnS7zYCe7lz9YvrxnPzB5dKQ7SsK3q2j8hOfylVUpJ2MeufGUbSVuP8DhM0bCFsNk7e
-         dvTQ==
+        bh=vXXOSZfz8O5OKgyE9PyGnB12GSSexqRiRe1MSPJ2Dvs=;
+        b=WBgEDQy7jidLSUfSCwFur8lXCW6mFyw0ulkGHuki29/26T/2wHrX6X0Bjgh2Bkw83+
+         Bmc/hIjvy0KLSttN3MLGxbM8+YA8Tc35p6aYG/9ADdu9TxPPV8ir23EKvL3FQgU9hVqE
+         I3oB0dPHhag3EjamTZPjCVnq9AAsCP/gSa84RxZMBiM0qzESuug1q5r1YkII7peSkYqM
+         dqCGjF5IqkTvqbz+937bJICfienaLYlEVGxCVxKN9QEeQ3lh+aWNi1tvM5ZOj+B85bUQ
+         yCTqq0et3426MtSKEaiCPltTPzpjwAmlldOh5CXtex73ZqPz+gQAbE/S00snahLvCuiL
+         jT9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711657482; x=1712262282;
+        d=1e100.net; s=20230601; t=1711658347; x=1712263147;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OSBQzFqQufqwBm+U4G6XPdH75Rro6F7rWhWjrRhCESc=;
-        b=lI8ZqGKWCPC/PQnVT7Li52/H1rI26hfbkKpbWdjWNj6OZmZNxOrmokZwMIbUR49kiu
-         /Km1zxQKDqcfHqRAN30PnmCr3dAtDTY9DwJ8Ab+Yv6I1utcU57bsXh2rrIH0r64MF648
-         7y/JH0IdyEtn1zDB/mmltU1RNKZho3U2ByzEJcPdrnDttP/erR9Boe15yV/sECT28yWq
-         FZKIWNL1655fAbcdlODBXQt8WWDZdR3tFaCT0Nmvf5w6TSSQ27kFf26hJmU9SHOvNwqZ
-         Ad/FljIGj2c/CPADM1CDWvHmUTyM0k8JBndCJOzBYujeMd6YRO7PqdmGY4J0wkQA+zjm
-         dAmQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX5ZYi5SrRqSEhTgvuE5J7yjjYph3E1icgTPQvtGyFH+2liiTB9Wu9AXNQV6/M5E9ak9TNdcpCXSm0nmL4tFB8lJF5VabfwaVeh/m01lRvB+CrerGoexnTMzBuzSG4d6V1HxbWLSuQGRDIgdfYRXxb1UUNpVjhHZKuhFt2M260CRWllXDfQkPTK
-X-Gm-Message-State: AOJu0Yypyiy0Vbp/c6l0DXQiYUft/zxbDE1ylBXEc+ZYKNme8tde6wgm
-	LyjRdl+9YcBFtb0mXnr3b9ckqoI2V/Kr7tjZRp5ItFRVBtrTs3p9iufR5EjV
-X-Google-Smtp-Source: AGHT+IEYm311DmU2l4RYrADp6NKGy1vTeD+bo97fMWmOcok6ACRQLIIZgeJAuM+ZhBOnrLw6hHfubA==
-X-Received: by 2002:a17:902:dacd:b0:1dc:7bc:d025 with SMTP id q13-20020a170902dacd00b001dc07bcd025mr770219plx.4.1711657481885;
-        Thu, 28 Mar 2024 13:24:41 -0700 (PDT)
-Received: from google.com ([2620:15c:9d:2:493e:82a3:49f9:d88])
-        by smtp.gmail.com with ESMTPSA id c3-20020a170903234300b001db594c9d17sm2051032plh.254.2024.03.28.13.24.40
+        bh=vXXOSZfz8O5OKgyE9PyGnB12GSSexqRiRe1MSPJ2Dvs=;
+        b=wHKhu5lDL7EfkRj+bPqxZRPCh8vhBOHjKBMFptcBY3DWsdnY0iuhyjYfFrWneiT9Jk
+         Db9WZGy/hNnwhUXCHSqpVFNpx1DY8nYHE8QeJIoMCykhwwyRn4lefnn2fLMSDSDmXgao
+         K4L8zAeAkrM45MH+Gka0EqAmWkuVApxLu6G5L9epPYcDlJNFyras4Tf+eIVFnvYOef/+
+         LNoHeEtt++tGSbopYTZmg+1AaLMYuGo0IpiH22n0M6TkxTTh3EZztTg7ap3udGOCO0RT
+         0zxU7a1/2QaeEF8jWDpp6a/DUAt1mBUfSHQELTsZqlOe1TfaxcRDkrQF10Giv5Ur8Xwc
+         Ix1g==
+X-Forwarded-Encrypted: i=1; AJvYcCWjIHUk+ON8/8HBg+YaMmCEO+hJyLUtoWkaLICBCx9azAA7N/wuReVa398KSedRw4OSZHwnr9Y4ThmzvxF8lI2WdwM0qqUq6zjCDWeX5w==
+X-Gm-Message-State: AOJu0Yzir5cNL7O3wzSiy8DXWIan7UD/ifmule7MQQ4rBgCOQQLmUO1o
+	cRO07E3qTTRPFAcD+XdgPA/JtG0BYmxuU7wgIzU7huV2MzmpgRX7KpNGNb9wD+Y=
+X-Google-Smtp-Source: AGHT+IEfI6/ElqbxX011QI3EBz6Tqo72909UkKh+kFTHngulAL02ypmJA9aR2eFcAe+MhiuYzBH3uw==
+X-Received: by 2002:a17:906:2654:b0:a4d:d356:fd69 with SMTP id i20-20020a170906265400b00a4dd356fd69mr219001ejc.12.1711658346886;
+        Thu, 28 Mar 2024 13:39:06 -0700 (PDT)
+Received: from linaro.org ([79.114.172.194])
+        by smtp.gmail.com with ESMTPSA id mf9-20020a170906cb8900b00a46faaf7427sm1133467ejb.121.2024.03.28.13.39.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Mar 2024 13:24:41 -0700 (PDT)
-Date: Thu, 28 Mar 2024 13:24:38 -0700
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To: Fenglin Wu <quic_fenglinw@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
-	agross@kernel.org, andersson@kernel.org,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-input@vger.kernel.org, quic_collinsd@quicinc.com,
-	quic_subbaram@quicinc.com, quic_kamalw@quicinc.com,
-	jestar@qti.qualcomm.com, Luca Weiss <luca.weiss@fairphone.com>
-Subject: Re: [RESEND PATCH v6 3/3] input: pm8xxx-vibrator: add new SPMI
- vibrator support
-Message-ID: <ZgXSBiQcBEbwF060@google.com>
-References: <20230922083801.3056724-1-quic_fenglinw@quicinc.com>
- <20230922083801.3056724-4-quic_fenglinw@quicinc.com>
- <CAA8EJpoW8DJOTVHBu9_+BQs5DtxyJu3xrCfDNyYHn2MeHZHV4w@mail.gmail.com>
- <12887370-0ada-359b-8a4f-18a28495c69a@quicinc.com>
- <ZRhKAWYBLcBZHc73@google.com>
- <98c668b6-7595-2c0a-ebe5-2f729d29b618@quicinc.com>
+        Thu, 28 Mar 2024 13:39:06 -0700 (PDT)
+Date: Thu, 28 Mar 2024 22:39:04 +0200
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc: dri-devel@lists.freedesktop.org, robdclark@gmail.com, sean@poorly.run,
+	swboyd@chromium.org, dianders@chromium.org, vkoul@kernel.org,
+	daniel@ffwll.ch, airlied@gmail.com, agross@kernel.org,
+	dmitry.baryshkov@linaro.org, andersson@kernel.org,
+	quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
+	quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
+	freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1] drm/msm/dp: assign correct DP controller ID to
+ interface table
+Message-ID: <ZgXVaA6mbbUbVR0p@linaro.org>
+References: <1711656246-3483-1-git-send-email-quic_khsieh@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -94,75 +89,93 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <98c668b6-7595-2c0a-ebe5-2f729d29b618@quicinc.com>
+In-Reply-To: <1711656246-3483-1-git-send-email-quic_khsieh@quicinc.com>
 
-Hi Fenglin,
+On 24-03-28 13:04:05, Kuogee Hsieh wrote:
+> At current x1e80100 interface table, interface #3 is wrongly
+> connected to DP controller #0 and interface #4 wrongly connected
+> to DP controller #2. Fix this problem by connect Interface #3 to
+> DP controller #0 and interface #4 connect to DP controller #1.
+> Also add interface #6, #7 and #8 connections to DP controller to
+> complete x1e80100 interface table.
+> 
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> ---
 
-On Thu, Mar 28, 2024 at 02:52:32PM +0800, Fenglin Wu wrote:
-> 
-> 
-> On 2023/10/1 0:17, Dmitry Torokhov wrote:
-> > On Mon, Sep 25, 2023 at 10:54:45AM +0800, Fenglin Wu wrote:
-> > > 
-> > > 
-> > > On 9/24/2023 3:07 AM, Dmitry Baryshkov wrote:
-> > > > > +
-> > > > > +       switch (vib->data->hw_type) {
-> > > > > +       case SSBI_VIB:
-> > > > >                   mask = SSBI_VIB_DRV_LEVEL_MASK;
-> > > > >                   shift = SSBI_VIB_DRV_SHIFT;
-> > > > > +               break;
-> > > > > +       case SPMI_VIB:
-> > > > > +               mask = SPMI_VIB_DRV_LEVEL_MASK;
-> > > > > +               shift = SPMI_VIB_DRV_SHIFT;
-> > > > > +               break;
-> > > > > +       case SPMI_VIB_GEN2:
-> > > > > +               mask = SPMI_VIB_GEN2_DRV_MASK;
-> > > > > +               shift = SPMI_VIB_GEN2_DRV_SHIFT;
-> > > > > +               break;
-> > > > > +       default:
-> > > > > +               return -EINVAL;
-> > > > Could you please move the switch to the previous patch? Then it would
-> > > > be more obvious that you are just adding the SPMI_VIB_GEN2 here.
-> > > > 
-> > > > Other than that LGTM.
-> > > 
-> > > Sure, I can move the switch to the previous refactoring patch.
-> > 
-> > Actually, the idea of having a const "reg" or "chip", etc. structure is
-> > to avoid this kind of runtime checks based on hardware type and instead
-> > use common computation. I believe you need to move mask and shift into
-> > the chip-specific structure and avoid defining hw_type.
-> > 
-> > Thanks.
-> 
-> Hi Dmitry,
-> 
-> The v7 changes have been pending for a while, I am not sure if you are still
-> insist on this. As I explained, I actually did it this way in v2 and it got
-> updated to this by following other comments.
-> 
-> Can you respond and tell me if you prefer changes similar to v2? I can
-> update and push v8 by following your suggestion.
-> 
-> v7: https://lore.kernel.org/linux-arm-msm/20231108-pm8xxx-vibrator-v7-0-632c731d25a8@quicinc.com/
-> 
-> v2: https://lore.kernel.org/linux-arm-msm/20230718062639.2339589-3-quic_fenglinw@quicinc.com/
+Nitpick: Probably mention the x1e80100 in the subject line somehow.
 
-Yes, I believe what you had in v2 was better, and Dmitry Baryshkov's
-comments on v2 were also great.
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
 
-You can have 2 styles of code - you have a hw type for each regulator
-and then use it to do conditional logic in the code. If you do it this
-way you and you need to add a new device type or model you have to go
-through the code and validate all the checks. Or you could have a
-structure that is defined flexibly enough to cover all existing
-permutations, and you rely on the data in it to control the behavior.
-You should not mix the 2 styles, as this just makes the code more
-confusing.
-
-Thanks.
-
--- 
-Dmitry
+>  .../drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h   | 34 ++++++++++++++++++++--
+>  1 file changed, 31 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
+> index 9a9f709..a3e60ac 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
+> @@ -324,6 +324,7 @@ static const struct dpu_wb_cfg x1e80100_wb[] = {
+>  	},
+>  };
+>  
+> +/* TODO: INTF 3, 8 and 7 are used for MST, marked as INTF_NONE for now */
+>  static const struct dpu_intf_cfg x1e80100_intf[] = {
+>  	{
+>  		.name = "intf_0", .id = INTF_0,
+> @@ -358,8 +359,8 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
+>  		.name = "intf_3", .id = INTF_3,
+>  		.base = 0x37000, .len = 0x280,
+>  		.features = INTF_SC7280_MASK,
+> -		.type = INTF_DP,
+> -		.controller_id = MSM_DP_CONTROLLER_1,
+> +		.type = INTF_NONE,
+> +		.controller_id = MSM_DP_CONTROLLER_0,	/* pair with intf_0 for DP MST */
+>  		.prog_fetch_lines_worst_case = 24,
+>  		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
+>  		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31),
+> @@ -368,7 +369,7 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
+>  		.base = 0x38000, .len = 0x280,
+>  		.features = INTF_SC7280_MASK,
+>  		.type = INTF_DP,
+> -		.controller_id = MSM_DP_CONTROLLER_2,
+> +		.controller_id = MSM_DP_CONTROLLER_1,
+>  		.prog_fetch_lines_worst_case = 24,
+>  		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 20),
+>  		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 21),
+> @@ -381,6 +382,33 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
+>  		.prog_fetch_lines_worst_case = 24,
+>  		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 22),
+>  		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 23),
+> +	}, {
+> +		.name = "intf_6", .id = INTF_6,
+> +		.base = 0x3A000, .len = 0x280,
+> +		.features = INTF_SC7280_MASK,
+> +		.type = INTF_DP,
+> +		.controller_id = MSM_DP_CONTROLLER_2,
+> +		.prog_fetch_lines_worst_case = 24,
+> +		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 17),
+> +		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 16),
+> +	}, {
+> +		.name = "intf_7", .id = INTF_7,
+> +		.base = 0x3b000, .len = 0x280,
+> +		.features = INTF_SC7280_MASK,
+> +		.type = INTF_NONE,
+> +		.controller_id = MSM_DP_CONTROLLER_2,	/* pair with intf_6 for DP MST */
+> +		.prog_fetch_lines_worst_case = 24,
+> +		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 18),
+> +		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 19),
+> +	}, {
+> +		.name = "intf_8", .id = INTF_8,
+> +		.base = 0x3c000, .len = 0x280,
+> +		.features = INTF_SC7280_MASK,
+> +		.type = INTF_NONE,
+> +		.controller_id = MSM_DP_CONTROLLER_1,	/* pair with intf_4 for DP MST */
+> +		.prog_fetch_lines_worst_case = 24,
+> +		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12),
+> +		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13),
+>  	},
+>  };
+>  
+> -- 
+> 2.7.4
+> 
 
