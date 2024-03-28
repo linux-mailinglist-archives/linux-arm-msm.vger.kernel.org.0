@@ -1,138 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-15514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 323D488F97B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 09:04:02 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 88FFA88F9B1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 09:06:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D71881F2FBF6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 08:04:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B6DDF1C2B8B7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 08:06:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA9D754679;
-	Thu, 28 Mar 2024 08:02:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="NGK7V3cu"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A0075380F;
+	Thu, 28 Mar 2024 08:06:18 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53CF557874
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 08:02:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 177C74645B;
+	Thu, 28 Mar 2024 08:06:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711612973; cv=none; b=E2jZyUXo7sw7rX452DQ0aBre8N7JmfRwvkZtPwMrKrp/FlZizcZ4MDaRrz7CH4Kpv09gGiuPFgathfuBbqq9ADj7ptQx3f6dJDVshMgfK6RKoIRvjdBjD+HQaQZCV4PNj9gnV89MalX/DLflTn5Dk+1FKTgv1piaIEVOPauBuFc=
+	t=1711613178; cv=none; b=qLUgnhlvDEcROjwntab8qMbNQI3dR/LCb8pYuOXYNyVY2J811vs4NSfPbQlpdxQOS9kluAZF33tuZoFz8Dxz0mZt8XFPYmG4rWBWxeVc9N/eEhn/IT1KttRX5AhzdoU7K93XD2C3djUGD05/Zdamw8NJ/1vKFsjyJ5hgtxVTEhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711612973; c=relaxed/simple;
-	bh=nGY94ctV99RKSBmKBzu+ogs72YCJk1Ocz9yUA3kt8vQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Vq5ZW8KPDV5tstOWpjmnfEAfo0XcPol5tSIPHche5wmyRFWzmfhS9b9tZGkbUkNC2lZ3ZvRxG86qplKS9EedgcN1RZiyaj7sn468epq8viA0VlV4hcYOuzXaLXXP/CpBEBTFKBBVwnp0Xw7IEhhlAbalkIZKgvfwH6RcI4IMy9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=NGK7V3cu; arc=none smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-56c50e8f578so601222a12.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 01:02:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1711612969; x=1712217769; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=5mODnViOF43Qf7BlbaL1yV7bCzvxW2J00s0tf+KV++c=;
-        b=NGK7V3cu1N3eCHO7pKGFeXE2/+iBgqPFGDgdQHHmx9BOhZz7y41ZMJIJEPQhTZYbRH
-         aGU9jhn4IYYGh/5fR2hkxRweWs03Qk0gRc97LwvRbYaAOpdqsb8lkM2q4N3bqxd/WVPf
-         JuRBPRxS7R2dptVwHCjhBTskzfOI3+W6csCnal4lfGGGgzcON7vjP6rzcq8utYFcKSwD
-         x9BezZo0owHo9f37QG+wlMIz9RAP0Ls7jslqr3xgwxBXVq8lr5b/0cJyJMrx4DcngDgh
-         j9HXbxo0L+PuJCbv31raxkLLQd8m7/ZQbUadMdWxMW5qvkFcTvBr2kjJ3GuP26fFpIni
-         ZspA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711612969; x=1712217769;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5mODnViOF43Qf7BlbaL1yV7bCzvxW2J00s0tf+KV++c=;
-        b=sOgEr8e2ksn6ktFMcEPal7svHyqffgrRMipN//T0mv8lwS+sxDX41qH/JmhuZuHckY
-         n4zxFJ8wx3gZafklao/1QoxqoSWl8JaVJKMpCAf2yliGw5/fhVV1wsrqd/TmYIdyRrS1
-         sqNInoa93T0rH04FkC/ZR1hy9iKTRWuiTfah00mUUuMfmoOtid89L3PVMKX+QP0O8HY2
-         BZ6ntlcuXVhYxgq7rNFZqpMSKohRIITSRrXcfwCGPbsfOflUYbD6bD+kNY+tkAybeL+B
-         yKu4/tS3fnqdttW9csTqUDIU/RhhfD19CGgxCT9qFjVNVzWinxdxuwNIrk3K5EMHQBrm
-         5bhg==
-X-Forwarded-Encrypted: i=1; AJvYcCUIWBMQoIMtUwK/t1qySZbxCqa7DqVEmAjMeQ74kIHcslB+oUrDgYtIwGwWtBy7RsvL6W1xrQuazhvnKqnvt+x5b0pidayuKad/4aPiSg==
-X-Gm-Message-State: AOJu0Yxxqt81TCsQAj0e8Wh3En0Aq9XIkesNm14gcS1LvsMKMiyrTh+I
-	z/c5tjEtlANsj2KMkXg6TaNMprJS6ZKDeLibX8zOMPu2BPiZIhvD9JTnUpzwLSI=
-X-Google-Smtp-Source: AGHT+IGvGtijoBb4YavjO3REnAE+9JEFT1LLiQTDvEwJxSta1iXIKu06X+xRwMugSsM6ImuZbjFbHw==
-X-Received: by 2002:a50:9519:0:b0:568:a226:6685 with SMTP id u25-20020a509519000000b00568a2266685mr1455890eda.8.1711612968600;
-        Thu, 28 Mar 2024 01:02:48 -0700 (PDT)
-Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id k7-20020aa7c047000000b0056c443ce781sm522618edo.85.2024.03.28.01.02.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Mar 2024 01:02:48 -0700 (PDT)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Thu, 28 Mar 2024 09:02:45 +0100
-Subject: [PATCH] drm/msm/adreno: Set highest_bank_bit for A619
+	s=arc-20240116; t=1711613178; c=relaxed/simple;
+	bh=OhxLny5ouqoUh402yVUwWKVNAn7UzL8QP3wDxdEi4LQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JbB18lQMLU00pn8+PiTFcLRMsTzfe4U4XDPzVHHin6kcOIy7SZWYPHhKp832t8fQ1cdy0CNjaVdxC2oM5H3Jj7eAnnS+IQgVtv049wctK5ma6JUDgcsLgSFKYla4JEq17iTqijeScG6capVkTxahXiAJBFZNga8HgbRAsY/VnPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4CDC82F4;
+	Thu, 28 Mar 2024 01:06:49 -0700 (PDT)
+Received: from [10.57.73.83] (unknown [10.57.73.83])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 50AD83F64C;
+	Thu, 28 Mar 2024 01:06:13 -0700 (PDT)
+Message-ID: <dd73443d-d4fc-4dcb-8e68-6be11e134428@arm.com>
+Date: Thu, 28 Mar 2024 08:06:12 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V4 2/2] cpufreq: scmi: Register for limit change
+ notifications
+Content-Language: en-US
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: linux-arm-kernel@lists.infradead.org, pierre.gondois@arm.com,
+ dietmar.eggemann@arm.com, morten.rasmussen@arm.com, viresh.kumar@linaro.org,
+ cristian.marussi@arm.com, linux-pm@vger.kernel.org, rafael@kernel.org,
+ linux-kernel@vger.kernel.org, quic_mdtipton@quicinc.com,
+ linux-arm-msm@vger.kernel.org, sudeep.holla@arm.com
+References: <20240328074131.2839871-1-quic_sibis@quicinc.com>
+ <20240328074131.2839871-3-quic_sibis@quicinc.com>
+From: Lukasz Luba <lukasz.luba@arm.com>
+In-Reply-To: <20240328074131.2839871-3-quic_sibis@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240328-a619-hbb-v1-1-cd135e2d22a7@fairphone.com>
-X-B4-Tracking: v=1; b=H4sIACUkBWYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDYyML3UQzQ0vdjKQk3UTjJLOklETLVJNEcyWg8oKi1LTMCrBR0bG1tQC
- NjGDnWgAAAA==
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Akhil P Oommen <quic_akhilpo@quicinc.com>, 
- Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- Rob Clark <robdclark@chromium.org>, linux-arm-msm@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
- linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.13.0
 
-The default highest_bank_bit of 15 didn't seem to cause issues so far
-but downstream defines it to be 14. But similar to [0] leaving it on 14
-(or 15 for that matter) causes some corruption issues with some
-resolutions with DisplayPort, like 1920x1200.
 
-So set it to 13 for now so that there's no screen corruption.
 
-[0] commit 6a0dbcd20ef2 ("drm/msm/a6xx: set highest_bank_bit to 13 for a610")
+On 3/28/24 07:41, Sibi Sankar wrote:
+> Register for limit change notifications if supported and use the throttled
+> frequency from the notification to apply HW pressure.
+> 
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+> 
+> v4:
+> * Use a interim variable to show the khz calc. [Lukasz]
+> * Use driver_data to pass on the handle and scmi_dev instead of using
+>    global variables. Dropped Lukasz's Rb due to adding these minor
+>    changes.
+> 
+>   drivers/cpufreq/scmi-cpufreq.c | 44 ++++++++++++++++++++++++++++++++++
+>   1 file changed, 44 insertions(+)
+> 
+> diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
+> index 3b4f6bfb2f4c..d946b7a08258 100644
+> --- a/drivers/cpufreq/scmi-cpufreq.c
+> +++ b/drivers/cpufreq/scmi-cpufreq.c
+> @@ -21,11 +21,18 @@
+>   #include <linux/types.h>
+>   #include <linux/units.h>
+>   
+> +struct scmi_cpufreq_driver_data {
+> +	struct scmi_device *sdev;
+> +	const struct scmi_handle *handle;
+> +};
+> +
+>   struct scmi_data {
+>   	int domain_id;
+>   	int nr_opp;
+>   	struct device *cpu_dev;
+> +	struct cpufreq_policy *policy;
+>   	cpumask_var_t opp_shared_cpus;
+> +	struct notifier_block limit_notify_nb;
+>   };
+>   
+>   static struct scmi_protocol_handle *ph;
+> @@ -174,6 +181,22 @@ static struct freq_attr *scmi_cpufreq_hw_attr[] = {
+>   	NULL,
+>   };
+>   
+> +static int scmi_limit_notify_cb(struct notifier_block *nb, unsigned long event, void *data)
+> +{
+> +	struct scmi_data *priv = container_of(nb, struct scmi_data, limit_notify_nb);
+> +	struct scmi_perf_limits_report *limit_notify = data;
+> +	struct cpufreq_policy *policy = priv->policy;
+> +	unsigned int limit_freq_khz;
+> +
+> +	limit_freq_khz = limit_notify->range_max_freq / HZ_PER_KHZ;
+> +
+> +	policy->max = clamp(limit_freq_khz, policy->cpuinfo.min_freq, policy->cpuinfo.max_freq);
+> +
+> +	cpufreq_update_pressure(policy);
+> +
+> +	return NOTIFY_OK;
+> +}
+> +
+>   static int scmi_cpufreq_init(struct cpufreq_policy *policy)
+>   {
+>   	int ret, nr_opp, domain;
+> @@ -181,6 +204,7 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
+>   	struct device *cpu_dev;
+>   	struct scmi_data *priv;
+>   	struct cpufreq_frequency_table *freq_table;
+> +	struct scmi_cpufreq_driver_data *data = cpufreq_get_driver_data();
+>   
+>   	cpu_dev = get_cpu_device(policy->cpu);
+>   	if (!cpu_dev) {
+> @@ -294,6 +318,17 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
+>   		}
+>   	}
+>   
+> +	priv->limit_notify_nb.notifier_call = scmi_limit_notify_cb;
+> +	ret = data->handle->notify_ops->devm_event_notifier_register(data->sdev, SCMI_PROTOCOL_PERF,
+> +							SCMI_EVENT_PERFORMANCE_LIMITS_CHANGED,
+> +							&domain,
+> +							&priv->limit_notify_nb);
+> +	if (ret)
+> +		dev_warn(cpu_dev,
+> +			 "failed to register for limits change notifier for domain %d\n", domain);
+> +
+> +	priv->policy = policy;
+> +
+>   	return 0;
+>   
+>   out_free_opp:
+> @@ -366,12 +401,21 @@ static int scmi_cpufreq_probe(struct scmi_device *sdev)
+>   	int ret;
+>   	struct device *dev = &sdev->dev;
+>   	const struct scmi_handle *handle;
+> +	struct scmi_cpufreq_driver_data *data;
+>   
+>   	handle = sdev->handle;
+>   
+>   	if (!handle)
+>   		return -ENODEV;
+>   
+> +	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
+> +	if (!data)
+> +		return -ENOMEM;
+> +
+> +	data->sdev = sdev;
+> +	data->handle = handle;
+> +	scmi_cpufreq_driver.driver_data = data;
+> +
+>   	perf_ops = handle->devm_protocol_get(sdev, SCMI_PROTOCOL_PERF, &ph);
+>   	if (IS_ERR(perf_ops))
+>   		return PTR_ERR(perf_ops);
 
-Fixes: b7616b5c69e6 ("drm/msm/adreno: Add A619 support")
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
-@Akhil: Dmitry & Abhinav said I should ping you specifically to take a
-look if you have an idea why HBB=13 works but HBB=14 causes issues.
----
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 4 ++++
- 1 file changed, 4 insertions(+)
+LGTM,
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 0674aca0f8a3..cf0b1de1c071 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1377,6 +1377,10 @@ static void a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
- 	if (adreno_is_a618(gpu))
- 		gpu->ubwc_config.highest_bank_bit = 14;
- 
-+	if (adreno_is_a619(gpu))
-+		/* TODO: Should be 14 but causes corruption at e.g. 1920x1200 on DP */
-+		gpu->ubwc_config.highest_bank_bit = 13;
-+
- 	if (adreno_is_a619_holi(gpu))
- 		gpu->ubwc_config.highest_bank_bit = 13;
- 
-
----
-base-commit: d5a436a7b5958caa6fc0dcda6c842f9d951be73b
-change-id: 20240328-a619-hbb-a3b6bda9e4a7
-
-Best regards,
--- 
-Luca Weiss <luca.weiss@fairphone.com>
-
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
 
