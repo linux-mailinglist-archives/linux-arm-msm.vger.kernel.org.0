@@ -1,116 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-15562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15570-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 070818901E2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 15:34:42 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C4DF89020F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 15:39:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 70759B23747
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 14:34:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1EA18291D1A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 14:39:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64C9512F386;
-	Thu, 28 Mar 2024 14:32:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E2AD1272AC;
+	Thu, 28 Mar 2024 14:39:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nvW1KE+9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fY+4BPeN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C3142061;
-	Thu, 28 Mar 2024 14:32:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4707381AD5
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 14:39:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711636342; cv=none; b=T0OA4yWB2fwfUFfyoTri3uHnpw33BfyH1EfnRESsh4PdnZCxMreu5xT1tl9duXohib8d0sBbKWO/bP2WrRIKAobjqZXWZXmcYu4OpxCSQ0Lj99bI+5N/EYWYd/JL/9ADBt6bX/wRDoaifyCLvLY8rvAvsDNsYDOwvTHVnuZD+eo=
+	t=1711636760; cv=none; b=cFJNU6gnZJB/cNwD3tyqCNzxK4TEE3WMc2kx8TmSwLEQoEoM0/ydKQhK6VNWUXJq9h0c89S4BoFpmfjZ7ksg1N9Dyz4sMxJU7ZvdeFC8bEK09kSEI3xbMVmV4OAv8qIn2HSrzb6cElhaPov2vXbuZAxZOPiHjIhDC6OvoZJCyDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711636342; c=relaxed/simple;
-	bh=DniBv7HDuOSFJ9Q/K/rkEYhPtiwkAM9wDfWrElmwlbM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=V9/kIokIuLHVy0j5j1MGuDWXvcoxHVVXmIcwNWYiPOUzfDJMhm83hmJWAWur6yKZRoobi4YonEh5RGwwsxgfLAw7mU+LArGqFXB4hlP4Z3tDZSp9QcD8+VMdq7F1+vIw32p4YR+f2u0GoGZMu0A/gksdNWuHYpufLKws4kRciLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nvW1KE+9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id A04D9C433F1;
-	Thu, 28 Mar 2024 14:32:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711636341;
-	bh=DniBv7HDuOSFJ9Q/K/rkEYhPtiwkAM9wDfWrElmwlbM=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=nvW1KE+9FE0GhHRQIATdCjTTgBBITil9f1CWyHaYGjAgwuPPZ6NTGa+eTUMepBmdo
-	 AW26qtGpKx9GY94U86oDEy3SniVBDdNo42uNTncueyCdTD1iU4c67bzrGTk8+6tOuy
-	 gGF0iSNBqxn3/WeYggTzJGRPjj0VwqFO8lW3EHJ6gemLnrroZg2AW8dzJwkQjHDlN7
-	 g5LzMD1b8tKh1Y/dWJcdziMsKvdQW5qpDOXxG2Q3pHXhRpKbfLm+aypl/kpy4ZgIbG
-	 PXs55R6f+rJCzkI2RUH+VZKuZTlggBhkOM9BKC++oiUhFp6qcEpQStaGCDX9BzvUmI
-	 yJ6DN4D5+xryw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86769CD1283;
-	Thu, 28 Mar 2024 14:32:21 +0000 (UTC)
-From: Alexandru Marc Serdeliuc via B4 Relay <devnull+serdeliuk.yahoo.com@kernel.org>
-Date: Thu, 28 Mar 2024 15:31:54 +0100
-Subject: [PATCH] dt-bindings: arm: qcom: Add Samsung Galaxy Z Fold5
+	s=arc-20240116; t=1711636760; c=relaxed/simple;
+	bh=Ru308I4dDHQiIDd0ZiPEniDzXfl3CyUPaMxijJK+YwI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lQL0yhAcfb6sMT/HSCpS6eAXTeDU6W379fl+6PPTSN7BAXZCz0lxuaInlxWa/Z8vUu/JFZDehvkgFKk+U6hkUjAqTiakHP6foI8OWYow9fI12OKLMopVfL++2IzWWVbUtKqCa+L+SjmgKxy87PkuJbfeYACfR3yVdTzOfNYAdY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fY+4BPeN; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a468226e135so129134966b.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 07:39:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1711636756; x=1712241556; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=kaCBaHT7hXldldYcPC8G9uij87AF1KjDiODyYjR9hp0=;
+        b=fY+4BPeNsU2XsdlfAFI7zNmN/jwpmZeXCORa39REAyNEO2Xbg3jAPZ/XTUV5ejoPQv
+         RYs5hcUqIcaoCKdHQ1Zz0BX8QaJ563L5nBjyMmXBXWSx5JDHTnos84DHxPAOKssrTtz4
+         UxBXLZsaVa799pghmzT7y2230UwYeL79vtWSgbaK7n6XQmoVqtDiz2ULQElxVgk0bo56
+         5EkMQeJ7o58xLbRoHxa6GeMWpXXKNZ8jlCu9WkYYsdor8sle5DLyHKECDGXHxrrtlABK
+         gDnHF632qMg1Qvp3DcufurD0wB1e4SboKKgTxNupo2rqg6lBqKTbs1/p7WoWA1/vN/LR
+         uvSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711636756; x=1712241556;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kaCBaHT7hXldldYcPC8G9uij87AF1KjDiODyYjR9hp0=;
+        b=MPmlwOsteBB+r4pf3Z2iPEijiyiKelTYF9mglyU14eLyxrW0OIKyGQAUiaQ1sroniV
+         8wJgJPkftWRv9jpt1sof7BNpOCM04IMnCYD6+UGp8tc3apEYXP2X6lNh3YlQQyHWmU1S
+         te0f7OVvaxVqDnz8vBzmv2zlQoFSnRijhGm1CStPOhHcKbDP0dhxD4N2RNwjrDvtnLW5
+         vo53ivc58NpRxCYtSJvgS2kEp3vJuY7wpFCKwwcF0J3E2nc9XS5Ix5naNjgn8TAxVfuT
+         qM2K0LGN9ZxMfE9GgKdKfmK/wpDOJF6ZVxHpw/W/45o6On/nyhOsAKvqUm2299DM/oDg
+         JKDA==
+X-Gm-Message-State: AOJu0YxqzS3Yw0eNqxSBcAv6G7ZgUWq5Ic9zSmyntLmpLhBYS7XZMGxW
+	tn/ngnPW+5HxZ9wo6bCQL+XE3mmL9R0b8zoBHG9Yav4cayDarTvaTwjoRE4+nIM=
+X-Google-Smtp-Source: AGHT+IG5ySbk25KDg1IH7yUwoP5tNphiX6f6ec9FGdW4V/pSvWueZlNdwyorw/Ub0Cs2Qi+Xd7vkvQ==
+X-Received: by 2002:a17:907:b9c8:b0:a4e:2ac2:bb26 with SMTP id xa8-20020a170907b9c800b00a4e2ac2bb26mr432053ejc.1.1711636756566;
+        Thu, 28 Mar 2024 07:39:16 -0700 (PDT)
+Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id d6-20020a1709063ec600b00a474c3c2f9dsm817982ejj.38.2024.03.28.07.39.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 28 Mar 2024 07:39:16 -0700 (PDT)
+Message-ID: <ca4ed5e3-32ea-451a-82ca-25fba07877dc@linaro.org>
+Date: Thu, 28 Mar 2024 15:39:14 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240328-dt-bindings-arm-qcom-add-support-for-samsung-galaxy-zfold5-v1-1-cb612e3ade18@yahoo.com>
-X-B4-Tracking: v=1; b=H4sIAFl/BWYC/x3Nyw6CMBBA0V8hXTtJRUysv2JcDH05CX04AwQl/
- LuNy7O5d1fimbyoe7cr9isJldxwPnXKvjBHD+SaVa/7QV/6G7gZRsqOchRATvC2JQE6B7LUWni
- GUBgEkyw5QsQJtw98Q5ncFbQxg9XGttao2qCyD7T954/ncfwAtNAm74wAAAA=
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dt-bindings: arm: qcom: Add Samsung Galaxy Z Fold5
+To: serdeliuk@yahoo.com, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
  Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1711636340; l=1106;
- i=serdeliuk@yahoo.com; s=20240326; h=from:subject:message-id;
- bh=IpQsriBYvSNLQMd2YJDhHVpK6OXYCGczgxGgUDxifKw=;
- b=Z4u1H1PWLX9nzxHNm1NxgRKIFZIAJe45DtsuFdFLAk59N198RnTlEnBQXghV2Try2UAsBPFQx
- C9trdRB/AT4AnGa0/edd20Wic9fm4u6aQ+D37uW+jv726xKpDaUko4b
-X-Developer-Key: i=serdeliuk@yahoo.com; a=ed25519;
- pk=aWyveUE11qfDOOlRIFayXukrNn39BvZ9k9uq94dAsgY=
-X-Endpoint-Received: by B4 Relay for serdeliuk@yahoo.com/20240326 with
- auth_id=147
-X-Original-From: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
-Reply-To: serdeliuk@yahoo.com
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240328-dt-bindings-arm-qcom-add-support-for-samsung-galaxy-zfold5-v1-1-cb612e3ade18@yahoo.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240328-dt-bindings-arm-qcom-add-support-for-samsung-galaxy-zfold5-v1-1-cb612e3ade18@yahoo.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-From: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
+On 28.03.2024 3:31 PM, Alexandru Marc Serdeliuc via B4 Relay wrote:
+> From: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
+> 
+> This documents Samsung Galaxy Z Fold5 (samsung,q5q)
+> which is a foldable phone by Samsung based on the sm8550 SoC.
+> 
+> Signed-off-by: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
+> ---
+> This documents Samsung Galaxy Z Fold5 (samsung,q5q)
+> which is a foldable phone by Samsung based on the sm8550 SoC.
+> ---
 
-This documents Samsung Galaxy Z Fold5 (samsung,q5q)
-which is a foldable phone by Samsung based on the sm8550 SoC.
+That's very welcome, but are you going to submit a devicetree for it?
 
-Signed-off-by: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
----
-This documents Samsung Galaxy Z Fold5 (samsung,q5q)
-which is a foldable phone by Samsung based on the sm8550 SoC.
----
- Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 66beaac60e1d..dea2a23b8fc2 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -1003,6 +1003,7 @@ properties:
-               - qcom,sm8550-hdk
-               - qcom,sm8550-mtp
-               - qcom,sm8550-qrd
-+              - samsung,q5q
-           - const: qcom,sm8550
- 
-       - items:
-
----
-base-commit: 4cece764965020c22cff7665b18a012006359095
-change-id: 20240328-dt-bindings-arm-qcom-add-support-for-samsung-galaxy-zfold5-0994c09c202b
-
-Best regards,
--- 
-Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
-
-
+Konrad
 
