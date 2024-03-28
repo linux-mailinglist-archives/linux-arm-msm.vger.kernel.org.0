@@ -1,220 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-15536-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15538-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41EAC88FBDF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 10:43:44 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0601088FC01
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 10:49:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EA14129A32F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 09:43:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 36D9B1C2C613
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 09:49:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 462817C08E;
-	Thu, 28 Mar 2024 09:43:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42381657DF;
+	Thu, 28 Mar 2024 09:49:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="uezifShB"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="m+kIphZG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4857317D
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 09:43:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C5E158230
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 09:49:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711618988; cv=none; b=nwazNQhWlm0fBqoB4Dq23swGIsevN/1lvDYoiJKZtlJ98c6x6KlgT3SBllJumjk+E80NMbijnP4JQ2rRLMQroVakc5wR9xisu+Zi8bKhoFeswsmC2jlZPMqLc4ZjUrJig659dTosFLiUqh/dVoXFieMUENCucuyylLdyCXJ4hTM=
+	t=1711619364; cv=none; b=VbfTDr/i3Nxz5HKBi/PR1VPIK4rDl71RbjzTYSnxw+rUonp4zM+5E2ROGCJFGcj/Qy4BRApr5iM0G8tcEGyMejuHXv3k0yAagE4S1HZGfPFksQ23WOQEAlrOgioy/J8zYuw3Ys6f3yKPNz3BF9OeVoSUy0i6UEuptPi8qBuykcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711618988; c=relaxed/simple;
-	bh=jS0gUBcbIu+ubLTGyGNXFxfk5voz45VrMtkV8CJFN7k=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=eq+A9+mgARL2leUJFSKZrbts/sZQ74Kdnas6JZ26YyM28tIZP31xHTOEbhX4fTBbItzFEXLXYOItY181kqLp6LkVMhmI/lZ/RyUBkbsoPCv92ctV1OMZyn7NSE9YJiLwHd1XwrnGPgJt01olMU8SN7jQ/d8ia4taj+6e2St9TqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=uezifShB; arc=none smtp.client-ip=209.85.208.53
+	s=arc-20240116; t=1711619364; c=relaxed/simple;
+	bh=NGAu0Wues6upFNlxfKrI9TDym/OgXLE2E4Jz/pnzxis=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=SYSucUd6T578UvVvQ7JvyxYq7LIGrhZV6uyLRm299Z6zS9/jMoJJHFjGtY7mbMDQgr/JpoEhTWb+HqHMxEsukdYFLWZu4x1QU+50a345bX0YpeNm2s3gd/xLZk+rxOCjfHf1JOkHdVYlwtBbypXV0K+RGATK/DogRo5+askUYFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=m+kIphZG; arc=none smtp.client-ip=209.85.218.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-56be32b9775so817532a12.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 02:43:06 -0700 (PDT)
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a450bedffdfso82641366b.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 02:49:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1711618985; x=1712223785; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mMlfiDzriuD+cu/wjObegNb+/syb0i9il2tTyX7RS7Q=;
-        b=uezifShBlSM/+BjlXimMZwxeD8ucKhZm8FeO91hzzezNwdmiZ7etVOTGla0/vJMZKi
-         5ffhpDGXPT32GTrpkRuh1KHHYstyGVA3lZ9iPz3UwlR2J5+E3NgM1O2ApgVBBnnEQkgt
-         DUKvSjBJjZiQdcPVZ4JLJtwhtMr4fWT0N3FAKD6qUFEG+Ivtts+Jnc74L2LHjOgd8ZJv
-         6VBhjvq4G/QQwBvG6sbHMlenZJa0IKj6eP8ZiZQIM7XVWI0wgX/UGbokgPsIdtg8v70M
-         mkJYAwNDDQOd0px0nYCegZpxvuRI3usYiBMzxVSNukfZmN1qzOEiHAvwIbJBcd11bQ6f
-         SYRQ==
+        d=fairphone.com; s=fair; t=1711619360; x=1712224160; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=s2FlcFMwv9/mxZZUbTMV8sm8mZF2ziq8g+DEQybJDFU=;
+        b=m+kIphZGysprPE69JLfucvUfx8YVagZTGnFKino86wl2sfLIT5cFasJgkSnJAQEl22
+         cH4+i7tkd7CxHhpZlwDV8auDxJ+GMg7Gpn7SRoCwjCQ/kzhuA/kR0SYR5xwh3R6Wmv5L
+         VCxv+GtERDajDWYLn3VEvBQhMrgXol+qSc4dEiCL9kvPfByWv29tL/nZKVUtR2y0ae79
+         jeU4hxazH2wHNbmleWbghqCViIh4JGXQLoZlQLJssfSGe/1jpFsW61RTsCNEcg8OVmdj
+         MyZJg6OTbmmT+JUFQynVVf+aQQf7Xjp+thSmjm2aGSzl4hTq2WPY2I89eYWYCuXsB0uM
+         Sw/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711618985; x=1712223785;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mMlfiDzriuD+cu/wjObegNb+/syb0i9il2tTyX7RS7Q=;
-        b=vvpoYzgd/pL/DNNFJw6IcO7TyByTvU9rjj7uCtwfsBI9runSh1hN03o0c5xOovGcZv
-         citNqx44MbW8gIbK/TPUaLESJa3chFUVDIKw91bUHkT2JiRFH0f63WNyuJLaN2CNJUg9
-         l10uv/SGNQr9C52AKAU8P1WwwHPJmFiYKm82Dh6kcB2jA0t6wSukvn4qA+D5wTUsl4AA
-         TVtgURjqUfwYcV1YGL/lAEFv+cpSdMfaFIhpOidsXGyJbYMNmCrqIGx5E6Us11J8QJFU
-         Ea4QDkZcZaKJR5jjJ7IYfC8dCNeX9oB1PV12QAimTioeiyl3dWsqXVA+Jgk/DXVlao6a
-         6Lng==
-X-Forwarded-Encrypted: i=1; AJvYcCUG8r8UiCSFCCVmVYPuvpiHtdFCK73MDwAFCUFZ19yx9X6/3TGAysTTI4uzl7g3e/WPF+TzKXNHCnFHPIOykKNxkxOQZbef1jkoeMHQGw==
-X-Gm-Message-State: AOJu0YxCE0PowwO4EvG7ScGfysjQJeEiUbLt/tMefHFB7Npxy5kmh11I
-	BT9kRei0vtZvbwUgYA/UnZRsl+MNKs7NFEFskgDGOURdsh8GBmILNzGvMUVGhdk=
-X-Google-Smtp-Source: AGHT+IHdcM/mh0t3Gi4q9lyyrXi7Rv7pOtysjwB3fu9r0BHc1uHuutv4DERQBvDamLZ59FU09Yffcg==
-X-Received: by 2002:a50:9e65:0:b0:565:7ce5:abdc with SMTP id z92-20020a509e65000000b005657ce5abdcmr1494032ede.10.1711618984945;
-        Thu, 28 Mar 2024 02:43:04 -0700 (PDT)
-Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id l2-20020aa7c302000000b005645961ad39sm631362edq.47.2024.03.28.02.43.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Mar 2024 02:43:04 -0700 (PDT)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Thu, 28 Mar 2024 10:42:46 +0100
-Subject: [PATCH 3/3] arm64: dts: qcom: sm6350: Add DisplayPort controller
+        d=1e100.net; s=20230601; t=1711619360; x=1712224160;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=s2FlcFMwv9/mxZZUbTMV8sm8mZF2ziq8g+DEQybJDFU=;
+        b=QKV8vng8SQotnvIce2SiKIiK/tabWN2Hi5AMmxSMTQXfsrCYyWjwvpHk2XmBkYmwDo
+         D0eyRVhVUjONrFhRWTeefhK9MgG56L4kMNxbEz0AFMfZJK2w8D4+oyNoNFKhw1h++kII
+         AwYJ908SIdlmnU1u9ksQ936liq3dRtF17RzGJj7ZVWuydrv70//PJ9L6sz5urDT2Y0mb
+         hB1vV5Hfi+zkiuNxm5IELFs+qb1XS1mAlJLJmOG+EoQ9cMFNAz/YYB4bE2FQjASyBOgL
+         K7njz/1vvQZQ3DIg/ILKboALMTlsM0zjg9QaIrqMotI5/lwnEWHNCfSu6+i5lCvsfZIq
+         XgRg==
+X-Forwarded-Encrypted: i=1; AJvYcCWcnz48q8h0/wkMJI02X4RPN4ElTi2kJD0XYjqNXNsJzNKxv4Wiatk7Clo/D//9XTqleJ50/c0L0PgUOfRqs9F3uGvax2xYV1C2Go8//A==
+X-Gm-Message-State: AOJu0Yzvb7j8K5Y54N5yY2cmO39pCYg/bo/Mfx+TRtlOaec+eMKggXaj
+	bxxnx9ns6rRxQ/993O4San0yhE4/l92MBEHRLO+rh8om2Oi2qOd+NCbfZPvXXmc=
+X-Google-Smtp-Source: AGHT+IHQj43uF1oRw2agLwmax83BUP4TUUSTe802FM7CxRtHEbgYpfc/GypNFhLDLarI2m22J/4eHg==
+X-Received: by 2002:a17:906:26db:b0:a46:8c40:7a3a with SMTP id u27-20020a17090626db00b00a468c407a3amr1170962ejc.26.1711619360465;
+        Thu, 28 Mar 2024 02:49:20 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id cd1-20020a170906b34100b00a4a396ba54asm555999ejb.93.2024.03.28.02.49.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 28 Mar 2024 02:49:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240328-sm6350-dp-v1-3-215ca2b81c35@fairphone.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 28 Mar 2024 10:49:19 +0100
+Message-Id: <D05AFAI1G7CY.3EURGL4VGKHB@fairphone.com>
+Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+ <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 1/3] dt-bindings: display: msm: dp-controller: document
+ SM8250 compatible
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Luca Weiss" <luca.weiss@fairphone.com>, "Rob Clark"
+ <robdclark@gmail.com>, "Abhinav Kumar" <quic_abhinavk@quicinc.com>, "Dmitry
+ Baryshkov" <dmitry.baryshkov@linaro.org>, "Sean Paul" <sean@poorly.run>,
+ "Marijn Suijten" <marijn.suijten@somainline.org>, "Maarten Lankhorst"
+ <maarten.lankhorst@linux.intel.com>, "Maxime Ripard" <mripard@kernel.org>,
+ "Thomas Zimmermann" <tzimmermann@suse.de>, "David Airlie"
+ <airlied@gmail.com>, "Daniel Vetter" <daniel@ffwll.ch>, "Rob Herring"
+ <robh@kernel.org>, "Krzysztof Kozlowski"
+ <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ "Kuogee Hsieh" <quic_khsieh@quicinc.com>, "Krishna Manikandan"
+ <quic_mkrishn@quicinc.com>, "Bjorn Andersson" <andersson@kernel.org>,
+ "Konrad Dybcio" <konrad.dybcio@linaro.org>
+X-Mailer: aerc 0.15.2
 References: <20240328-sm6350-dp-v1-0-215ca2b81c35@fairphone.com>
-In-Reply-To: <20240328-sm6350-dp-v1-0-215ca2b81c35@fairphone.com>
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
- Krishna Manikandan <quic_mkrishn@quicinc.com>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.13.0
+ <20240328-sm6350-dp-v1-1-215ca2b81c35@fairphone.com>
+In-Reply-To: <20240328-sm6350-dp-v1-1-215ca2b81c35@fairphone.com>
 
-Add the node for the DisplayPort controller found on the SM6350 SoC.
+Stupid typo in subject, should of course be SM6350, not SM8250.
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- arch/arm64/boot/dts/qcom/sm6350.dtsi | 88 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 88 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-index 24bcec3366ef..d7cf4b5ceea6 100644
---- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-@@ -2033,6 +2033,14 @@ dpu_intf1_out: endpoint {
- 							remote-endpoint = <&mdss_dsi0_in>;
- 						};
- 					};
-+
-+					port@2 {
-+						reg = <2>;
-+
-+						dpu_intf0_out: endpoint {
-+							remote-endpoint = <&mdss_dp_in>;
-+						};
-+					};
- 				};
- 
- 				mdp_opp_table: opp-table {
-@@ -2070,6 +2078,86 @@ opp-560000000 {
- 				};
- 			};
- 
-+			mdss_dp: displayport-controller@ae90000 {
-+				compatible = "qcom,sm6350-dp", "qcom,sm8350-dp";
-+				reg = <0 0xae90000 0 0x200>,
-+				      <0 0xae90200 0 0x200>,
-+				      <0 0xae90400 0 0x600>,
-+				      <0 0xae91000 0 0x400>,
-+				      <0 0xae91400 0 0x400>;
-+				interrupt-parent = <&mdss>;
-+				interrupts = <12>;
-+				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DP_AUX_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DP_LINK_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DP_LINK_INTF_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>;
-+				clock-names = "core_iface",
-+					      "core_aux",
-+					      "ctrl_link",
-+					      "ctrl_link_iface",
-+					      "stream_pixel";
-+
-+				assigned-clocks = <&dispcc DISP_CC_MDSS_DP_LINK_CLK_SRC>,
-+						  <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
-+				assigned-clock-parents = <&usb_1_qmpphy QMP_USB43DP_DP_LINK_CLK>,
-+							 <&usb_1_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>;
-+
-+				phys = <&usb_1_qmpphy QMP_USB43DP_DP_PHY>;
-+				phy-names = "dp";
-+
-+				#sound-dai-cells = <0>;
-+
-+				operating-points-v2 = <&dp_opp_table>;
-+				power-domains = <&rpmhpd SM6350_CX>;
-+
-+				status = "disabled";
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+
-+						mdss_dp_in: endpoint {
-+							remote-endpoint = <&dpu_intf0_out>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+
-+						mdss_dp_out: endpoint {
-+						};
-+					};
-+				};
-+
-+				dp_opp_table: opp-table {
-+					compatible = "operating-points-v2";
-+
-+					opp-160000000 {
-+						opp-hz = /bits/ 64 <160000000>;
-+						required-opps = <&rpmhpd_opp_low_svs>;
-+					};
-+
-+					opp-270000000 {
-+						opp-hz = /bits/ 64 <270000000>;
-+						required-opps = <&rpmhpd_opp_svs>;
-+					};
-+
-+					opp-540000000 {
-+						opp-hz = /bits/ 64 <540000000>;
-+						required-opps = <&rpmhpd_opp_svs_l1>;
-+					};
-+
-+					opp-810000000 {
-+						opp-hz = /bits/ 64 <810000000>;
-+						required-opps = <&rpmhpd_opp_nom>;
-+					};
-+				};
-+			};
-+
- 			mdss_dsi0: dsi@ae94000 {
- 				compatible = "qcom,sm6350-dsi-ctrl", "qcom,mdss-dsi-ctrl";
- 				reg = <0 0x0ae94000 0 0x400>;
-
--- 
-2.44.0
+On Thu Mar 28, 2024 at 10:42 AM CET, Luca Weiss wrote:
+> Add the compatible string for the DisplayPort controller on SM6350 which
+> is compatible with the one on SM8350.
+>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+>  Documentation/devicetree/bindings/display/msm/dp-controller.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.=
+yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> index ae53cbfb2193..97993feda193 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> @@ -29,6 +29,7 @@ properties:
+>            - qcom,sm8650-dp
+>        - items:
+>            - enum:
+> +              - qcom,sm6350-dp
+>                - qcom,sm8150-dp
+>                - qcom,sm8250-dp
+>                - qcom,sm8450-dp
 
 
