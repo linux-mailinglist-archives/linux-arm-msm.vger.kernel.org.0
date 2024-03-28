@@ -1,153 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-15559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15560-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B608989012A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 15:07:44 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75EAB890195
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 15:21:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 76E2529A271
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 14:07:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A706F1C2BB0B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 14:21:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94ACE12DDA7;
-	Thu, 28 Mar 2024 14:06:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E82208626D;
+	Thu, 28 Mar 2024 14:20:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="mi1cdOJ+"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="bPnho7Ph"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B032B5223;
-	Thu, 28 Mar 2024 14:06:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.87.146.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 780A780027;
+	Thu, 28 Mar 2024 14:20:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711634816; cv=none; b=TAB6goeA0urFy+9ZbUelVTRqAw0B4kFE8N7eEuRv3Req5LZXwWIcqiOjXXE6vjlt1kYN0I2zQF5dvcsp8aYPJEFOXQXdrRhgt8w8Idgi+HJwDCMms0qntrW6XoUgcj9jJFs//dV+P2P0vGEt83sNoRluGiKpsuW/14Sj/Zii/PA=
+	t=1711635647; cv=none; b=Ptw6tDTASqvbU30qGNFFlbOs0Z6Bx0Ofzoz+I7btGqBIv7xOxOaXWZUgmQXbm0QF+390nCpO+x8Lj69/sKnajrjm1Vmjk5Zt0REklKu5hrT/s908uw4tYGRb5xMRcKcyUZcrdTpwfNbiiwapCn0OFsFZrP4TVAciIIMBJSZ1Tow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711634816; c=relaxed/simple;
-	bh=eiv8+tfk5bWrbiEVZpxkUQotxO8sNqN4KDVcKJwpU/Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=E/FleuxKUhhC3HudwDcdBz7g/oCVjuDPxA50gp15i0HesnWrYMoXBOg5+AcyFJDhHmhTTfGh+g1HSlhFufEtX5KJ0bZXBbPa1rxOyosA14d6K378zjojadkdVrdbLDNUvk8H737foDL1TgbL+D/tSVMaMVA/GpIli15fqRVhsyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru; spf=pass smtp.mailfrom=trvn.ru; dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b=mi1cdOJ+; arc=none smtp.client-ip=194.87.146.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trvn.ru
-Received: from authenticated-user (box.trvn.ru [194.87.146.52])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-	(No client certificate requested)
-	by box.trvn.ru (Postfix) with ESMTPSA id 7055A40142;
-	Thu, 28 Mar 2024 19:06:47 +0500 (+05)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-	t=1711634808; bh=eiv8+tfk5bWrbiEVZpxkUQotxO8sNqN4KDVcKJwpU/Y=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=mi1cdOJ+MdfkpQEGxu+GhAMI5qnPYO3q2aBzlk22/sXOkAlqbv6MnIeOYcTKIdagi
-	 jrQ8xKMU70ID/sizfpmYGLZUya6q98z4i0lTWCB0ThXBBf7H/6gHoA183TPGKE+7Mi
-	 KMHgSaFBzUHbbxwV2IeZLBiF2BJhnQboK/b609L2koLMKAplmjmYOhB8R1g3sw3jpV
-	 61td261jYTuO+s5PDg7bRhgob5GgyYWYbWVnctPXL+bozm7KgKvijvjmcj1c0Tcx+q
-	 vkCLFNtoX8Umem9fLnroVmhL5DX04qkT2Hl6pw1b4+4NPKypG8xNNbLPFhVofJ1GW0
-	 R9+t7Y8pRB3eA==
-Date: Thu, 28 Mar 2024 19:06:45 +0500
-From: Nikita Travkin <nikita@trvn.ru>
-To: Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>
-Cc: Caleb Connolly <caleb.connolly@linaro.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] soc: qcom: cmd-db: map shared memory as WT, not WB
-Message-ID: <fz2fqji5uqeijyos3rp4lcjionmwjfw736jdcch4mmlnvhxu7q@zvjqizqhnx4x>
-References: <20240327200917.2576034-1-volodymyr_babchuk@epam.com>
- <amrgxdv2iq32wrrn4w2xtxaknmyijr6cu37ivjuqez5rzftde6@wwraopwfqtw5>
+	s=arc-20240116; t=1711635647; c=relaxed/simple;
+	bh=RHBQDa4sqkolqdfPMgVVfKoXTaMJUPy5Hr+BBM0MJbQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pnOivNgoKqAxE6aiRY/ZEjwMXqG9mbfgbylTODyJOKZs+XuGIb12SYgbZMULQRtzmR/24uXrc/Mz7uevatdOOi8O6nTVbb52s7Svuy/2oFgw91SAhYmGnklQnfoN37wJBzMQMmQAgxchJK/vbw8nVEspS6NJQNpmEnTaPknMI8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=bPnho7Ph; arc=none smtp.client-ip=192.198.163.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1711635646; x=1743171646;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=RHBQDa4sqkolqdfPMgVVfKoXTaMJUPy5Hr+BBM0MJbQ=;
+  b=bPnho7PhEEpHaD+dhFpQJ1WsxGe2DYMnn4tCktXs6WctQTQfPB1N1cix
+   wG90aWWoEg2yNdiuzen7f3h1wmeMSvkKNcd4W5XwrvBbzBGWCB0FAAm8Z
+   aOy0sqNyaJmLZ40xHP+NicKI2ex7bGz6ai55jHRckRmPidNSqg12oybmp
+   G9hT4ivNQ7DBjsX2fO/XWEnN5W9FXEk93QUSuKKa3jX50P1Uw6vD+TmaB
+   KY8LhgEMOxklSup1XbQTdkGO7M4LtfGrQup3AVaEh5YlR3Kg/h+863FRQ
+   riDBE/VDJXfc+EYbEFbh7BHFo9ueqsutGxuBpTIJs6lERb0HTJS6cF514
+   g==;
+X-CSE-ConnectionGUID: yrPlAn79SDum241O2KdMVA==
+X-CSE-MsgGUID: vZzb4beyTCW6qUs2vh7CYg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11026"; a="9747664"
+X-IronPort-AV: E=Sophos;i="6.07,162,1708416000"; 
+   d="scan'208";a="9747664"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Mar 2024 07:20:41 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,162,1708416000"; 
+   d="scan'208";a="21128607"
+Received: from ahunter6-mobl1.ger.corp.intel.com (HELO [10.0.2.15]) ([10.252.39.195])
+  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Mar 2024 07:20:38 -0700
+Message-ID: <5bce008a-8354-4ccd-af1f-b7f2b2caf3bc@intel.com>
+Date: Thu, 28 Mar 2024 16:20:33 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <amrgxdv2iq32wrrn4w2xtxaknmyijr6cu37ivjuqez5rzftde6@wwraopwfqtw5>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mmc: sdhci-msm: pervent access to suspended controller
+To: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: Mantas Pucka <mantas@8devices.com>, Bjorn Andersson
+ <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Georgi Djakov <djakov@kernel.org>, Pramod Gurav <pramod.gurav@linaro.org>,
+ Ritesh Harjani <ritesh.list@gmail.com>, linux-mmc@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ stable@vger.kernel.org
+References: <20240321-sdhci-mmc-suspend-v1-1-fbc555a64400@8devices.com>
+ <2e712cf6-7521-4c0b-b6fd-76bacc309496@intel.com>
+ <CAPDyKFoBgwWDXhcXsbCfBD_nJ=3w1e5eReqHgDQ1BiPf0zJRxw@mail.gmail.com>
+Content-Language: en-US
+From: Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+In-Reply-To: <CAPDyKFoBgwWDXhcXsbCfBD_nJ=3w1e5eReqHgDQ1BiPf0zJRxw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Mar 28, 2024 at 04:12:11PM +0500, Nikita Travkin wrote:
-> On Wed, Mar 27, 2024 at 08:09:34PM +0000, Volodymyr Babchuk wrote:
-> > It appears that hardware does not like cacheable accesses to this
-> > region. Trying to access this shared memory region as Normal Memory
-> > leads to secure interrupt which causes an endless loop somewhere in
-> > Trust Zone.
-> > 
-> > The only reason it is working right now is because Qualcomm Hypervisor
-> > maps the same region as Non-Cacheable memory in Stage 2 translation
-> > tables. The issue manifests if we want to use another hypervisor (like
-> > Xen or KVM), which does not know anything about those specific
-> > mappings. This patch fixes the issue by mapping the shared memory as
-> > Write-Through. This removes dependency on correct mappings in Stage 2
-> > tables.
-> > 
-> > I tested this on SA8155P with Xen.
-> > 
+On 27/03/24 17:17, Ulf Hansson wrote:
+> On Tue, 26 Mar 2024 at 11:25, Adrian Hunter <adrian.hunter@intel.com> wrote:
+>>
+>> On 21/03/24 16:30, Mantas Pucka wrote:
+>>> Generic sdhci code registers LED device and uses host->runtime_suspended
+>>> flag to protect access to it. The sdhci-msm driver doesn't set this flag,
+>>> which causes a crash when LED is accessed while controller is runtime
+>>> suspended. Fix this by setting the flag correctly.
+>>>
+>>> Cc: stable@vger.kernel.org
+>>> Fixes: 67e6db113c90 ("mmc: sdhci-msm: Add pm_runtime and system PM support")
+>>> Signed-off-by: Mantas Pucka <mantas@8devices.com>
+>>
+>> Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 > 
-> Hi!
+> Looks like this problem may exist for other sdhci drivers too. In
+> particular for those that enables runtime PM, don't set
+> SDHCI_QUIRK_NO_LED and don't use sdhci_runtime|suspend_resume_host().
 > 
-> I observe a similar issue while trying to boot Linux in EL2 after taking
-> over qcom's hyp on a sc7180 WoA device:
-> 
-> [    0.337736] CPU: All CPU(s) started at EL2
-> (...)
-> [    0.475135] Serial: AMBA PL011 UART driver
-> [    0.479649] Internal error: synchronous external abort: 0000000096000410 [#1] PREEMPT SMP
-> [    0.488053] Modules linked in:
-> [    0.491213] CPU: 6 PID: 1 Comm: swapper/0 Not tainted 6.7.0 #41
-> [    0.497310] Hardware name: Acer Aspire 1 (DT)
-> [    0.501800] pstate: 00400009 (nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> [    0.508964] pc : cmd_db_dev_probe+0x38/0xc4
-> [    0.513290] lr : cmd_db_dev_probe+0x2c/0xc4
-> [    0.517606] sp : ffff8000817ebab0
-> [    0.521019] x29: ffff8000817ebab0 x28: 0000000000000000 x27: ffff800081346050
->                      <uart cuts out>
-> 
-> Unfortunately this patch doesn't help in this case (I beileve I even
-> tried same/similar change a while back when trying to debug this)
-> 
+> Don't know if there is a better way to address this, if not on a case
+> by case basis. Do you have any thoughts about this?
 
-I'm sorry, it looks like I made a mistake in my tooling while testing
-this patch, which I only realized after trying Maulik's suggestion...
+Yes probably case by case, but I will look at it.
 
-Both _WT and _WC fix the issue I see on sc7180 WoA, so whether you keep
-the patch as is or change it to _WC as suggested:
+> 
+> Kind regards
+> Uffe
+> 
+>>
+>>> ---
+>>>  drivers/mmc/host/sdhci-msm.c | 16 +++++++++++++++-
+>>>  1 file changed, 15 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+>>> index 668e0aceeeba..e113b99a3eab 100644
+>>> --- a/drivers/mmc/host/sdhci-msm.c
+>>> +++ b/drivers/mmc/host/sdhci-msm.c
+>>> @@ -2694,6 +2694,11 @@ static __maybe_unused int sdhci_msm_runtime_suspend(struct device *dev)
+>>>       struct sdhci_host *host = dev_get_drvdata(dev);
+>>>       struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+>>>       struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+>>> +     unsigned long flags;
+>>> +
+>>> +     spin_lock_irqsave(&host->lock, flags);
+>>> +     host->runtime_suspended = true;
+>>> +     spin_unlock_irqrestore(&host->lock, flags);
+>>>
+>>>       /* Drop the performance vote */
+>>>       dev_pm_opp_set_rate(dev, 0);
+>>> @@ -2708,6 +2713,7 @@ static __maybe_unused int sdhci_msm_runtime_resume(struct device *dev)
+>>>       struct sdhci_host *host = dev_get_drvdata(dev);
+>>>       struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+>>>       struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+>>> +     unsigned long flags;
+>>>       int ret;
+>>>
+>>>       ret = clk_bulk_prepare_enable(ARRAY_SIZE(msm_host->bulk_clks),
+>>> @@ -2726,7 +2732,15 @@ static __maybe_unused int sdhci_msm_runtime_resume(struct device *dev)
+>>>
+>>>       dev_pm_opp_set_rate(dev, msm_host->clk_rate);
+>>>
+>>> -     return sdhci_msm_ice_resume(msm_host);
+>>> +     ret = sdhci_msm_ice_resume(msm_host);
+>>> +     if (ret)
+>>> +             return ret;
+>>> +
+>>> +     spin_lock_irqsave(&host->lock, flags);
+>>> +     host->runtime_suspended = false;
+>>> +     spin_unlock_irqrestore(&host->lock, flags);
+>>> +
+>>> +     return ret;
+>>>  }
+>>>
+>>>  static const struct dev_pm_ops sdhci_msm_pm_ops = {
+>>>
+>>> ---
+>>> base-commit: e8f897f4afef0031fe618a8e94127a0934896aba
+>>> change-id: 20240321-sdhci-mmc-suspend-34f4af1d0286
+>>>
+>>> Best regards,
+>>
 
-Tested-By: Nikita Travkin <nikita@trvn.ru> # sc7180 WoA in EL2
-
-Thanks for looking into this!
-Nikita
-
-> Currently I can work around this by just reocationg the cmd-db while
-> still under the qcom's hyp [1] but it would be nice to find a generic
-> solution that doesn't need pre-boot hacks...
-> 
-> AFAIK this is not observed on at least sc8280xp WoA devices and I'd
-> assume cros is not affected because they don't use qcom's TZ and instead
-> use TF-A (which is overall more friendly, though still uses qcom's
-> proprietary qtiseclib under the hood)
-> 
-> Nikita
-> 
-> [1] https://github.com/TravMurav/slbounce/blob/main/src/dtbhack_main.c#L17
-> 
-> > Signed-off-by: Volodymyr Babchuk <volodymyr_babchuk@epam.com>
-> > ---
-> >  drivers/soc/qcom/cmd-db.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
-> > index a5fd68411bed5..dd5ababdb476c 100644
-> > --- a/drivers/soc/qcom/cmd-db.c
-> > +++ b/drivers/soc/qcom/cmd-db.c
-> > @@ -324,7 +324,7 @@ static int cmd_db_dev_probe(struct platform_device *pdev)
-> >  		return -EINVAL;
-> >  	}
-> >  
-> > -	cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WB);
-> > +	cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WT);
-> >  	if (!cmd_db_header) {
-> >  		ret = -ENOMEM;
-> >  		cmd_db_header = NULL;
-> > -- 
-> > 2.43.0
 
