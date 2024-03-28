@@ -1,232 +1,249 @@
-Return-Path: <linux-arm-msm+bounces-15586-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB16989062C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 17:48:49 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4D08890654
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 17:52:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DED611C3043D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 16:48:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 723CE1F23EAE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 16:52:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0F0B2C6B7;
-	Thu, 28 Mar 2024 16:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE22B3CF73;
+	Thu, 28 Mar 2024 16:50:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="nb/LoVgx"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QV91+89y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com [209.85.222.53])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8FA34437B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 16:40:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F662C6AD;
+	Thu, 28 Mar 2024 16:50:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711644014; cv=none; b=RHeT8fqTm3WceH5NdGGmKTfasoi9VG8+/MrB7loiwa31Cao1lDl8OAmysGOQS6H0KTGHCTfei+V8PDv9Jk3ml/EvX4rQFFM3NlsG2M22mpmUBrH3shcEKwVuKbDZOOh0jpkT8xlLQlQXP/xQ/FMGNqatOWED65KO5v2Cs2fjtsY=
+	t=1711644657; cv=none; b=P9WxAncn8ngjUQCddT+HS8hi6QkCjvRNHGhabYWPutOwL7RD2U5E5biX/K48vAnahZNhgswI3q7rLxivdgtMHNhB9/M7EXZ+iG2lzP0NzIYpEGTY6lIjJXhDbbBayGvhD9FLTj3Y6vfIuoieFb75olnMBmz5/lwHssQEsgvNfZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711644014; c=relaxed/simple;
-	bh=JukYux1lE2QutH9NWRSXKyGW55kBvsXf0kklaYf/Sz8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=loiqLCEh+lY0lENnyDZTnGFOYTpe6hYelmIYgx+nY/oYsNZ0B2aWHugkU9SHhrVjartD5ZmEup3KXdVMLKyy4ucf2erDr0yDmo5tqpD/iIQE23IuFNlek2mvHKhMRf3AdZfg747D2cMKZtBI4t2Mtw1t5oXK+XPm0HQyyWIpg1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=nb/LoVgx; arc=none smtp.client-ip=209.85.222.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-7e31fd5553dso185377241.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 09:40:12 -0700 (PDT)
+	s=arc-20240116; t=1711644657; c=relaxed/simple;
+	bh=x1AyqEYNuJV2UdALsxFxIpanpDIO/c/Kl2yTynX7pAw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CBlrTadecfenaaPJBid8K/JgBOWsOJiyCVQVJ99QKAsc5bPhenk/f3rbNYTeiYrV56/Qw/exCwyliMbJH3pWml/w9QMaQ6AyoLzKX19N8Qm27MFeRPKj02kd6ezDKmJ4rr8j2vxq+kagB443F294opsOm/a6y88S6eno945FfKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QV91+89y; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4149529f410so11334285e9.3;
+        Thu, 28 Mar 2024 09:50:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1711644011; x=1712248811; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JPv1IlNNd25MIWO2snW+UJ+Z3ASjHN9LM0c86t+nKQY=;
-        b=nb/LoVgxECTD/jgkpqdIR0iuQY6P4fPaxNuA92u13369jPFao+MV/T15iXw19tpQHv
-         Fg94Zom/hFeHwBj5J7HXQasUbv1KBr68FITnPkjZn0UAkzNyHzK2e1USNnBZkweYUQas
-         PA1+sTq0rmvmR1Xk2jqkPHBiVKCQkIgzKdZ4o=
+        d=gmail.com; s=20230601; t=1711644654; x=1712249454; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=chohju5qcWqn7tKOE6qaWFPc2NP1b0y320pfvMTbTjs=;
+        b=QV91+89yY9WR2dZHMJRjfb7acOBcQSYfWUJcjHfF5wTGYrHmso7zcw7KhAzxsooRPt
+         U2Aov8jWpjhu371XToCHkEvewv4Olo5HFUtfIgZKLHA5/gtDJXBrglDNgCzLYQ46Lhzi
+         wpBzn5hv/M8fBKOLZYXHaehBzmi3n509ys2gQWeWw8uidzipUTpgUfAMq1pLLDAetgUk
+         QfGxBQJxGNoB6flbXnD+oD+FIIwIna9A0nuzzUXZJNcLWM4ylJ4MWBiEYAefJyCZjwdg
+         XliLw99iQIuCRMvrdmJrT0M/pVkzQuoowXdxBAStxiR7fz5JfgUilljpOVown6L9mDMk
+         xC1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711644011; x=1712248811;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JPv1IlNNd25MIWO2snW+UJ+Z3ASjHN9LM0c86t+nKQY=;
-        b=j5wpWYi+mVCl9ei7K+eI1dMJWnukv7Fo3i1E0O8E4LSNEV6j5thyVH8IIdsQG6I//D
-         6cz170Kx+x6Cd7edTMhhyRcusI68Bk+vYG+IcXZrvL8ejgdP4t10WQZ21FqbcjkkZ5Wc
-         9YRD7TWxXafgSr4tgbc6Ra1PFhgI3P5d50b5vkT49iBU6gpnnbylxg8qy9R8ugbcxyjA
-         UGoP3AnTSergkelCo/cEnFiJPvnUF2JDL/vZlaZgD0VUh9RmwnxoDGSghzabMWrX+V6G
-         hfxVtPMABemlf2lkuc0tItmjrENdN+NqZHZwImUNE+ATUy+5KppOG6XUCFJjvv34tr7H
-         djqA==
-X-Forwarded-Encrypted: i=1; AJvYcCVt5KpcR90SRCB4D5uxGt/jtLcMa42o/jaW6g9wlfjwctqmz1LFMA9lo3tTHf+3ix41hQiou1VKItfVXi7gqwD7Tpl+VLomNvA6YJXI8Q==
-X-Gm-Message-State: AOJu0YycPVooe9LtuYHJfxozlMh5ahCB3/ZV04xicN0Yyd8mo9VZI5JB
-	Y8h9QfJygPSBdo73p18a+JF/ujRSgNk8v5uPZ+LUu/9giS9FrjOFsD0eSlRSygEhlp1wD34k/8Q
-	=
-X-Google-Smtp-Source: AGHT+IEi+B3aGvPI2/djiqnnAkhJXI+fdtWBKG9UD9VC7dJijG9g/DfpqOuvDg0OhfKuywaLzi6t6Q==
-X-Received: by 2002:a05:6122:1998:b0:4d3:37d1:5a70 with SMTP id bv24-20020a056122199800b004d337d15a70mr4090427vkb.7.1711644010992;
-        Thu, 28 Mar 2024 09:40:10 -0700 (PDT)
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com. [209.85.160.178])
-        by smtp.gmail.com with ESMTPSA id fn3-20020ad45d63000000b00696934de5f7sm776855qvb.62.2024.03.28.09.40.09
-        for <linux-arm-msm@vger.kernel.org>
+        d=1e100.net; s=20230601; t=1711644654; x=1712249454;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=chohju5qcWqn7tKOE6qaWFPc2NP1b0y320pfvMTbTjs=;
+        b=BUls/s9/3xaLpgxY6ibI3+MhupG0oXaT0n4gEMy3Xh2qWgHOJ0qzS38n8BRCFcjrT1
+         MRc2Mck3JzQmPxnqxXGun3MtTNB+SaUh4mu7oHZt+kjnd+1l+he+vClhCHJ6j+FPZD6b
+         h9Ln8mUYmonw1jt0bb/DqmW5TbXj2HsYLlkUP1araISEiKztECcwmFDJKdUSeeCYFe1y
+         DBBCYwKWWlYzz6CSTvY1rEupbpblBzsAyl64BY5anoN/NOSWbuuETQAC3Z8YzSfJGgKY
+         6Q+hAMmv0tDulHQlEjmRGFtqHSoXOaI/KkF2simXhrxtwdVamHYat3Hv1j4UaOIvA+5l
+         eR7Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXZbW/tMkkotyHDO/+6pc5At7FEfkVfYrf5lkwOKmzeYDLTCDGMmR6Qc6fKLwmZf+sq96NKVch/HxwaoJgovn5VwSMk9tjj5RjRZRP9
+X-Gm-Message-State: AOJu0YzqrrdUVCaoo3doTFaBxEFe3jNdZ+gK4LV5q3J3Ng66N+ibxnyD
+	h0axzOId7+o1PlbHMi03+yg6630QB6wKwplmEaQzA45Ji8i08kVz
+X-Google-Smtp-Source: AGHT+IHlPZoWC72x/V2tooq6/pfiy/K3I1AwpGjIRrjYz6bFc1EMb5duZvZ3isfVAtYC/g9ESpWjCg==
+X-Received: by 2002:a05:600c:4fd2:b0:412:beee:36b3 with SMTP id o18-20020a05600c4fd200b00412beee36b3mr3655877wmq.7.1711644654068;
+        Thu, 28 Mar 2024 09:50:54 -0700 (PDT)
+Received: from ?IPV6:2a02:8071:b783:140:927c:82ba:d32d:99c1? ([2a02:8071:b783:140:927c:82ba:d32d:99c1])
+        by smtp.gmail.com with ESMTPSA id je14-20020a05600c1f8e00b00414887d9329sm2803754wmb.46.2024.03.28.09.50.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Mar 2024 09:40:09 -0700 (PDT)
-Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-430d3fcc511so1271cf.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 09:40:09 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXiacPt1gl1nM5cD5q0iVPxHNQZdZZ2/Q/GjvgY5FyM8eXGgnB0CWu8Vu9P5KX5sGf69ajYtgZLCvhnhUnlYCKc8wC3aiCq3eUcrX3jRw==
-X-Received: by 2002:a05:622a:410a:b0:431:8151:e7c1 with SMTP id
- cc10-20020a05622a410a00b004318151e7c1mr379066qtb.4.1711644008766; Thu, 28 Mar
- 2024 09:40:08 -0700 (PDT)
+        Thu, 28 Mar 2024 09:50:53 -0700 (PDT)
+Message-ID: <56e1c63a-4c09-4d92-9ef2-aad5390879cc@gmail.com>
+Date: Thu, 28 Mar 2024 17:50:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240327202740.3075378-1-swboyd@chromium.org>
-In-Reply-To: <20240327202740.3075378-1-swboyd@chromium.org>
-From: Doug Anderson <dianders@chromium.org>
-Date: Thu, 28 Mar 2024 09:39:54 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VLwa0AFsrXXxKGG+hcyW+h7u7-tyg3uoDB8M_XdPti_Q@mail.gmail.com>
-Message-ID: <CAD=FV=VLwa0AFsrXXxKGG+hcyW+h7u7-tyg3uoDB8M_XdPti_Q@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Fix a black screen on sc7180 Trogdor devices
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org, 
-	linux-clk@vger.kernel.org, patches@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Taniya Das <quic_tdas@quicinc.com>, Laura Nao <laura.nao@collabora.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 00/13] firmware: qcom: qseecom: convert to using the TZ
+ allocator
+To: Bartosz Golaszewski <brgl@bgdev.pl>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Elliot Berman <quic_eberman@quicinc.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Guru Das Srinagesh <quic_gurus@quicinc.com>,
+ Andrew Halaney <ahalaney@redhat.com>, Alex Elder <elder@linaro.org>,
+ Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+ Arnd Bergmann <arnd@arndb.de>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, kernel@quicinc.com,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20240325100359.17001-1-brgl@bgdev.pl>
+Content-Language: en-US
+From: Maximilian Luz <luzmaximilian@gmail.com>
+In-Reply-To: <20240325100359.17001-1-brgl@bgdev.pl>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi,
+On 3/25/24 11:03 AM, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> SCM calls that take memory buffers as arguments require that they be
+> page-aligned, physically continuous and non-cachable. The same
+> requirements apply to the buffer used to pass additional arguments to SCM
+> calls that take more than 4.
+> 
+> To that end drivers typically use dma_alloc_coherent() to allocate memory
+> of suitable format which is slow and inefficient space-wise.
+> 
+> SHM Bridge is a safety mechanism that - once enabled - will only allow
+> passing buffers to the TrustZone that have been explicitly marked as
+> shared. It improves the overall system safety with SCM calls and is
+> required by the upcoming scminvoke functionality.
+> 
+> The end goal of this series is to enable SHM bridge support for those
+> architectures that support it but to that end we first need to unify the
+> way memory for SCM calls is allocated. This in itself is beneficial as
+> the current approach of using dma_alloc_coherent() in most places is quite
+> slow.
+> 
+> First let's add a new TZ Memory allocator that allows users to create
+> dynamic memory pools of format suitable for sharing with the TrustZone.
+> Make it ready for implementing multiple build-time modes.
+> 
+> Convert all relevant drivers to using it. Add separate pools for SCM core
+> and for qseecom.
+> 
+> Finally add support for SHM bridge and make it the default mode of
+> operation with the generic allocator as fallback for the platforms that
+> don't support SHM bridge.
+> 
+> Tested on db410c, RB5, sm8550-qrd. Previous iteration tested also on
+> sa8775p-ride and lenovo X13s (please do retest on those platforms if you
+> can).
 
-On Wed, Mar 27, 2024 at 1:27=E2=80=AFPM Stephen Boyd <swboyd@chromium.org> =
-wrote:
->
-> This patch series fixes a black screen seen at boot on Trogdor devices.
-> The details of that problem are in the second patch, but the TL;DR is
-> that shared RCGs report the wrong parent to the clk framework and shared
-> RCGs never get turned off if they're left force enabled out of boot,
-> wedging the display GDSC causing the display bridge to fail to probe
-> because it can't turn on DSI.
->
-> The first patch is basically a hack. It avoids a problem where the mdss
-> driver probes, turns on and off the mdp clk, and hangs the rotator clk
-> because the rotator clk is using the same parent. We don't care about
-> this case on sc7180, so we simply disable the clk at driver probe so it
-> can't get stuck on.
->
-> The second patch fixes the shared RCG implementation so that the parent
-> is properly reported and so that the force enable bit is cleared. Fixing
-> the parent causes the problem that the first patch is avoiding, which is
-> why that patch is first. Just applying this second patch will make it so
-> that disabling the mdp clk disables the display pll that the rotator clk
-> is also using, causing the rotator clk to be stuck on.
->
-> This problem comes about because of a combination of issues. The clk
-> framework doesn't handle the case where two clks share the same parent
-> and are enabled at boot. The first clk to enable and disable will turn
-> off the parent. The mdss driver doesn't stay out of runtime suspend
-> while populating the child devices. In fact, of_platform_populate()
-> triggers runtime resume and suspend of the mdss device multiple times
-> while devices are being added. These patches side-step the larger issues
-> here with the goal of fixing Trogdor in the short-term. Long-term we
-> need to fix the clk framework and display driver so that shared parents
-> aren't disabled during boot and so that mdss can't runtime suspend until
-> the display pipeline/card is fully formed.
->
-> Stephen Boyd (2):
->   clk: qcom: dispcc-sc7180: Force off rotator clk at probe
->   clk: qcom: Properly initialize shared RCGs upon registration
->
->  drivers/clk/qcom/clk-rcg2.c      | 19 +++++++++++++++++++
->  drivers/clk/qcom/dispcc-sc7180.c | 14 ++++++++++++++
->  2 files changed, 33 insertions(+)
+Not sure in which version things changed (I haven't really kept up with
+that, sorry), but this version (with the generic allocator selected in
+the config) fails reading EFI vars on my Surface Pro X (sc8180x):
 
-I spent a bunch of time discussing this offline with Stephen and I'll
-try to summarize. Hopefully this isn't too much nonsense...
+[    2.381020] BUG: scheduling while atomic: mount/258/0x00000002
+[    2.383356] Modules linked in:
+[    2.385669] Preemption disabled at:
+[    2.385672] [<ffff800080f7868c>] qcom_tzmem_alloc+0x7c/0x224
+[    2.390325] CPU: 1 PID: 258 Comm: mount Not tainted 6.8.0-1-surface-dev #2
+[    2.392632] Hardware name: Microsoft Corporation Surface Pro X/Surface Pro X, BIOS 7.620.140 08/11/2023
+[    2.394955] Call trace:
+[    2.397269]  dump_backtrace+0x94/0x114
+[    2.399583]  show_stack+0x18/0x24
+[    2.401883]  dump_stack_lvl+0x48/0x60
+[    2.404181]  dump_stack+0x18/0x24
+[    2.406476]  __schedule_bug+0x84/0xa0
+[    2.408770]  __schedule+0x6f4/0x7fc
+[    2.411051]  schedule+0x30/0xf0
+[    2.413323]  synchronize_rcu_expedited+0x158/0x1ec
+[    2.415594]  lru_cache_disable+0x28/0x74
+[    2.417853]  __alloc_contig_migrate_range+0x68/0x210
+[    2.420122]  alloc_contig_range+0x140/0x280
+[    2.422384]  cma_alloc+0x128/0x404
+[    2.424643]  cma_alloc_aligned+0x44/0x6c
+[    2.426881]  dma_alloc_contiguous+0x30/0x44
+[    2.429111]  __dma_direct_alloc_pages.isra.0+0x60/0x20c
+[    2.431343]  dma_direct_alloc+0x6c/0x2ec
+[    2.433569]  dma_alloc_attrs+0x80/0xf4
+[    2.435786]  qcom_tzmem_pool_add_memory+0x8c/0x178
+[    2.438008]  qcom_tzmem_alloc+0xe8/0x224
+[    2.440232]  qsee_uefi_get_next_variable+0x78/0x2cc
+[    2.442443]  qcuefi_get_next_variable+0x50/0x94
+[    2.444643]  efivar_get_next_variable+0x20/0x2c
+[    2.446832]  efivar_init+0x8c/0x29c
+[    2.449009]  efivarfs_fill_super+0xd4/0xec
+[    2.451182]  get_tree_single+0x74/0xbc
+[    2.453349]  efivarfs_get_tree+0x18/0x24
+[    2.455513]  vfs_get_tree+0x28/0xe8
+[    2.457680]  vfs_cmd_create+0x5c/0xf4
+[    2.459840]  __do_sys_fsconfig+0x458/0x598
+[    2.461993]  __arm64_sys_fsconfig+0x24/0x30
+[    2.464143]  invoke_syscall+0x48/0x110
+[    2.466281]  el0_svc_common.constprop.0+0x40/0xe0
+[    2.468415]  do_el0_svc+0x1c/0x28
+[    2.470546]  el0_svc+0x34/0xb4
+[    2.472669]  el0t_64_sync_handler+0x120/0x12c
+[    2.474793]  el0t_64_sync+0x190/0x194
 
-1. We'll likely land the patches downstream in ChromeOS for now while
-we're figuring things out since we're seeing actual breakages. Whether
-to land upstream is a question. The first patch is a bit of a hack but
-unlikely to cause any real problems. The second patch seems correct
-but it also feels like it's going to cause stuck clocks for a pile of
-other SoCs because we're not adding hacks similar to the sc7180 hack
-for all the other SoCs. I guess we could hope we get lucky or play
-whack-a-mole? ...or we try to find a more generic solution... Dunno
-what others think.
+and subsequently
 
-2. One thing we talked about would be adding something like
-`CLK_OPS_PARENT_ENABLE_FOR_DISABLE` for all the RCGs. That should get
-rid of the actual error we're seeing. Essentially what we're seeing
-today is:
+[    2.477613] DEBUG_LOCKS_WARN_ON(val > preempt_count())
+[    2.477618] WARNING: CPU: 4 PID: 258 at kernel/sched/core.c:5889 preempt_count_sub+0x90/0xd4
+[    2.478682] Modules linked in:
+[    2.479214] CPU: 4 PID: 258 Comm: mount Tainted: G        W          6.8.0-1-surface-dev #2
+[    2.479752] Hardware name: Microsoft Corporation Surface Pro X/Surface Pro X, BIOS 7.620.140 08/11/2023
+[    2.480296] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[    2.480839] pc : preempt_count_sub+0x90/0xd4
+[    2.481380] lr : preempt_count_sub+0x90/0xd4
+[    2.481917] sp : ffff8000857cbb00
+[    2.482450] x29: ffff8000857cbb00 x28: ffff8000806b759c x27: 8000000000000005
+[    2.482988] x26: 0000000000000000 x25: ffff0000802cbaa0 x24: ffff0000809228b0
+[    2.483525] x23: 0000000000000000 x22: ffff800082b462f0 x21: 0000000000001000
+[    2.484062] x20: ffff80008363d000 x19: ffff000080922880 x18: fffffffffffc9660
+[    2.484600] x17: 0000000000000020 x16: 0000000000000000 x15: 0000000000000038
+[    2.485137] x14: 0000000000000000 x13: ffff800082649258 x12: 00000000000006db
+[    2.485674] x11: 0000000000000249 x10: ffff8000826fc930 x9 : ffff800082649258
+[    2.486207] x8 : 00000000ffffdfff x7 : ffff8000826f9258 x6 : 0000000000000249
+[    2.486738] x5 : 0000000000000000 x4 : 40000000ffffe249 x3 : 0000000000000000
+[    2.487267] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff0000841fa300
+[    2.487792] Call trace:
+[    2.488311]  preempt_count_sub+0x90/0xd4
+[    2.488831]  _raw_spin_unlock_irqrestore+0x1c/0x44
+[    2.489352]  qcom_tzmem_alloc+0x1cc/0x224
+[    2.489873]  qsee_uefi_get_next_variable+0x78/0x2cc
+[    2.490390]  qcuefi_get_next_variable+0x50/0x94
+[    2.490907]  efivar_get_next_variable+0x20/0x2c
+[    2.491420]  efivar_init+0x8c/0x29c
+[    2.491931]  efivarfs_fill_super+0xd4/0xec
+[    2.492440]  get_tree_single+0x74/0xbc
+[    2.492948]  efivarfs_get_tree+0x18/0x24
+[    2.493453]  vfs_get_tree+0x28/0xe8
+[    2.493957]  vfs_cmd_create+0x5c/0xf4
+[    2.494459]  __do_sys_fsconfig+0x458/0x598
+[    2.494963]  __arm64_sys_fsconfig+0x24/0x30
+[    2.495468]  invoke_syscall+0x48/0x110
+[    2.495972]  el0_svc_common.constprop.0+0x40/0xe0
+[    2.496475]  do_el0_svc+0x1c/0x28
+[    2.496976]  el0_svc+0x34/0xb4
+[    2.497475]  el0t_64_sync_handler+0x120/0x12c
+[    2.497975]  el0t_64_sync+0x190/0x194
+[    2.498466] ---[ end trace 0000000000000000 ]---
+[    2.507347] qcom_scm firmware:scm: qseecom: scm call failed with error -22
+[    2.507813] efivars: get_next_variable: status=8000000000000007
 
-* RCG1 is parented on a PLL
-* RCG2 is parented on the same PLL
-* RCG1, RCG2, and the PLL are left enabled by the BIOS
+If I understand correctly, it enters an atomic section in
+qcom_tzmem_alloc() and then tries to schedule somewhere down the line.
+So this shouldn't be qseecom specific.
 
-When we enable/disable RCG1 then the PLL turns off (since we propagate
-our disable to our parent and nothing else is keeping the PLL on). At
-this time RCG2 is implicitly off (it's not producing a clock) since
-its parent (the PLL) is off. ...but the hardware "force enable" bit
-for RCG2 is still set to on and the kernel still thinks the child of
-this clock is on.
+I should probably also say that I'm currently testing this on a patched
+v6.8 kernel, so there's a chance that it's my fault. However, as far as
+I understand, it enters an atomic section in qcom_tzmem_alloc() and then
+later tries to expand the pool memory with dma_alloc_coherent(). Which
+AFAIK is allowed to sleep with GFP_KERNEL (and I guess that that's the
+issue here).
 
-If, after this, we "disabled" a branch clock child of RCG2 (because
-it's unused and we get to the part of the kernel that disables unused
-clocks) then we were getting the error since you can't change the
-hardware "enable" bit for a branch clock if its parent is not
-clocking.
+I've also tried the shmem allocator option, but that seems to get stuck
+quite early at boot, before I even have usb-serial access to get any
+logs. If I can find some more time, I'll try to see if I can get some
+useful output for that.
 
-...so `CLK_OPS_PARENT_ENABLE_FOR_DISABLE` would fix this specific case
-because we'd turn the PLL on for the duration of the "disable" call.
-
-...but there is still the concern here that there will be a period of
-time that the RCG2 child is "stuck" even if we're not paying attention
-to it. This would be the period of time between when we turned the PLL
-off and we got around to disabling the RCG2 child because it was
-unused. Stephen thought that perhaps something else in hardware
-(perhaps a GDSC) might notice that the RCG2 child's hardware "enable"
-bit was set and would assume that it was clocking. Then that other bit
-of hardware would be unhappy because no clock came out. This concern
-made us think that perhaps `CLK_OPS_PARENT_ENABLE_FOR_DISABLE` isn't
-the right way to go.
-
-3. Another idea was essentially to implement the long talked about
-idea of "handoff". Essentially check the state of the clocks at boot
-and if they're enabled then propagate the enable to our parents.
-
-If we implement this then it would solve the problem because RCG1 and
-RCG2 would add an implicit request for the PLL to be on. If we
-enable/disable RCG1 at boot then the PLL will still stay on because
-there's a request from RCG2. If/when we disable children of RCG2 then
-the PLL will lose its request but that's fine. In no cases will we
-have a hardware "enable" bit set without the parent.
-
-This seems solid and probably the right solution.
-
-
-Stephen was a bit concerned, though, because you don't know when all
-your children have been registered. If a child shows up after "disable
-unused" runs then you can get back into the situation again. That
-probably isn't concern for the immediate problem at hand because all
-the clocks involved show up in early boot, but it means that the
-problem is half solved and that's not super satisfying.
-
-To solve this, we need to overall solve the "disable_unused" problem
-to be at the right time, after everything has had a chance to probe.
-To me this feels a bit like the "sync state" problem with all the
-baggage involved there. Specifically (like sync state) I think it
-would have to be heavily based on analysis of the device tree and
-links and that has the standard problem where you never enter sync
-state when DT has a node "enabled" but you didn't happen to enable the
-relevant driver in your kernel config. ...though I guess we've "sorta"
-solved that with the timeout. NOTE: if I understand correctly this
-would only be possible if drivers are using "struct clk_parent_data"
-and not if they're just using global names to match clocks.
-
-I'll also note that in general I believe Stephen isn't a fan of
-"disable_unused", but (my opinion) is that it's important to have
-something in the kernel that disables unused clocks when everything is
-done loading. Without this we add a lot of complexity to the firmware
-to turn off all the clocks that the SoC might have had on by default
-and that's non-ideal.
-
--Doug
+Best regards,
+Max
 
