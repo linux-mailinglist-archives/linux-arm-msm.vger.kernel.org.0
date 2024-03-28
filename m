@@ -1,128 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-15533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A71488FBD0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 10:43:08 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B141088FBE7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 10:44:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CEA711F22F3B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 09:43:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D5E821C2E7C2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Mar 2024 09:44:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BB6E651B3;
-	Thu, 28 Mar 2024 09:43:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FDA67BAE5;
+	Thu, 28 Mar 2024 09:43:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="A517Hecg"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="m+A08gF5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69ECF2C857
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 09:43:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A947B3C1;
+	Thu, 28 Mar 2024 09:43:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711618984; cv=none; b=QdF2Usxsei4y2O60kfXOa4y18bpEsJa1wSDXclUmhpqLTnrV43NJKnmoUsTuG4mtX4h9D0kxVpDc1AMiyfmUn/bSFIqP0sWSrRnLP2CCuO5AcVDRzFT6TBy5necl0RxCngbJUaAAYZzshB0lcWLigBnKYFxAGtDbabetQ5b4qTk=
+	t=1711619010; cv=none; b=rgqYDdmiFXFJNtp7g4hA7y8tsUvR0gyMUau2pXdp+7AsemS3P+x3mEmV39zWa/tDMmZCSwYBN+wEkYLafe9Foe9AzU8SkBVoe8OToXymnbupc3JeCU/4wbvmxuYSC5VJHKOFwMo67sHuqBl/peGxXPjohtzkZcNT5hCNPGZrn8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711618984; c=relaxed/simple;
-	bh=LGEkUHOJ/ZabB/vOZCvlgo1ZTv4zJQZ2hEQTHroQ8lw=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=US0zSPQ7h6xKgLJxv0ddWJ+4/9+ff36oom1aDwRNEXfliQmSmMgBreZ20qHMcJrlU9XpnFlZZGMG7KY+yRosivdbbPzuYkUUNNlhwQAcabFg0mZvQ0nMz8CqnatYiiVLLTij4KCW1fPP63q27F2nB752hEoG/FPur4QJtvE2aA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=A517Hecg; arc=none smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-56b8e4f38a2so877688a12.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 02:43:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1711618981; x=1712223781; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=E8hsC6NRPdxLP7lp60lSArweYtIzuit1meomkaj/K1Q=;
-        b=A517Hecg8ITw0yfx99kApqt+m7/6d4suTbkNYg8e5J4q+tW5b1UPuFPxLIBNRXrfdT
-         nrSBaNC2eH5arcETlpqVfyqxOmR66VR2jVIcL3nQ70NFYvkSOu7SOjWkRYt6THH/EE41
-         TFVOyDwRdZ0qRsIba0gv4vuinG4trJ2o3TnHXkJYRSY6aC21wg25Fho6+q8KqeXgd7UJ
-         A4ne8I/YwysPf1SivN6+7AXC8H78U9PQ2rsd5rUtrFz5cdm6ybfLSVlcvxBw9zONkpji
-         o33prPxXjkFaCwOkNtA/f/OLve7Qqn6OmkefHR1qpxUdixQVz3/yFDjj6c75UdmYflka
-         DDrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711618981; x=1712223781;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=E8hsC6NRPdxLP7lp60lSArweYtIzuit1meomkaj/K1Q=;
-        b=Xst+lFlh9yhxy4S1/1mRB7Bp5/bRk6//px/9J9uuQYYN7QYLnmGOKv/oOJf9qLnzVl
-         T9f/uNvjDO7n3nhwfISxeceBaEDFbCl2ywIbS2gpt2LC2ij7bUt5pDg6tnhElhZo6wNp
-         SVK6BB7V4DEnUmd7SjD50oaqVLXHlGEPBHiaVpu5FqR9V6Ost0O9hiHjwLN71zrKH3oV
-         F3gxvFFKJVUdarNuRC6ojQVa9kD2Sq08yaL51NCFrOKbAO9q/1zU1uhZ60s/wXzNZcTc
-         1wO2+NZQp7PfKbIf5I8nhgPY5OtnDirEslUdw8DpOEm0onHLJIXX6UwR1NXPcFmwpOMI
-         anlw==
-X-Forwarded-Encrypted: i=1; AJvYcCWFdNoYo50C1rhSHLSE+ho0r9WPKUD31Ap7nJMpaA3FeXelPbGN2NgoBDYs48c9VoUSuVR0grHtGrg7dqr3vHy+msPmnLZv7/8lvjtS/g==
-X-Gm-Message-State: AOJu0Yyuq5aHuafxU3UJEfJVxddMvJfPhUjayiXtai3YEzttn92zn9iS
-	2f4rldtp2XyqPVGsde8Z0qU1AmNxjn7ixVVgq6sAXsIPbYR1u0vMM5Qsl/G2IXI=
-X-Google-Smtp-Source: AGHT+IGZx9AnkUFMackC9AU36r/cR4Kcv7nBXW0BJa3Ktjw3YvY08GtNzCtirWitkr3VymvIRKiZQA==
-X-Received: by 2002:a05:6402:348d:b0:56c:26aa:f786 with SMTP id v13-20020a056402348d00b0056c26aaf786mr40326edc.10.1711618980811;
-        Thu, 28 Mar 2024 02:43:00 -0700 (PDT)
-Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id l2-20020aa7c302000000b005645961ad39sm631362edq.47.2024.03.28.02.42.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Mar 2024 02:43:00 -0700 (PDT)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Subject: [PATCH 0/3] DisplayPort support for SM6350/SM7225
-Date: Thu, 28 Mar 2024 10:42:43 +0100
-Message-Id: <20240328-sm6350-dp-v1-0-215ca2b81c35@fairphone.com>
+	s=arc-20240116; t=1711619010; c=relaxed/simple;
+	bh=DsOYXRT/v11AAbXEmr9oFC35rGzLxKHOc/GmW81UJXc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=JQdU2xxskidrCUQzqt40jUl7IXfLUGMrElPyKCshC535A3c1yNQmn+f1bOCx/imM5+qhT8AIySLnoGPnhWyw62r8/RUn9pIsb/YV7N2mK1sa9t5C41X6suKpbz/qm3NmtuRIqsztOp9b/yXiZ8GX6b3Ts2J/tnD/4z7gjzDYJ9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=m+A08gF5; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42S9f3aF002634;
+	Thu, 28 Mar 2024 09:42:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=4ACx3BzRLnkSLELQdhTON0qmLJABnyra3fg9okQ/1v8=; b=m+
+	A08gF5zUjjvRo+CvPdSeb96NwYWdf+2A+IFSWPy693+ZLWVZZaqfA3PlRoetgqyW
+	PansN4cfY1n+MRmoJI4uEjXgF1rOz1R7bX6r99LR3BIBOFaGfnr/YOD7gOkZJbvu
+	HPuTNmYlObgXNwL4gdG42QQFSMk7mJjWSMRVe8lLei6ZNPAvmlcfT8VwNboFKK3H
+	QQRMQCwUAuhWuDS9zJBjx16dCf2YEYNb7o53B+F4deRD6Kjd81RS423yoXQcyZBZ
+	/kSQcyJmPNpLjQLtRo4axBtZvc5LHc7Lnd2cC9JvcbFPS3J47SobBT/dWDPcgt6s
+	byNvyT5mFBvZlpPOEaRQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x53nxgnah-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 28 Mar 2024 09:42:56 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42S9gtF1008864
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 28 Mar 2024 09:42:55 GMT
+Received: from [10.218.19.46] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 28 Mar
+ 2024 02:42:49 -0700
+Message-ID: <ee2db6f0-7fab-9a45-27ba-bf6e58bcf3b1@quicinc.com>
+Date: Thu, 28 Mar 2024 15:12:44 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH 4/5] clk: qcom: Add camera clock controller driver for
+ SM8150
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Michael
+ Turquette" <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Abhishek Sahu <absahu@codeaurora.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Stephen Boyd <sboyd@codeaurora.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, Ajit Pandey
+	<quic_ajipan@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        "Taniya
+ Das" <quic_tdas@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>
+References: <20240229-camcc-support-sm8150-v1-0-8c28c6c87990@quicinc.com>
+ <20240229-camcc-support-sm8150-v1-4-8c28c6c87990@quicinc.com>
+ <18567989-fb60-49ae-92e6-94e1bc2fa1c7@linaro.org>
+ <83fd1995-a06e-b76a-d91b-de1c1a6ab0ea@quicinc.com>
+ <4817a5b0-5407-4437-b94a-fc8a1bfcd25d@linaro.org>
+ <e2627a99-307f-1e10-abfd-ce688cc2ec03@quicinc.com>
+ <CAA8EJpogCOQ4W26hkBm6v_yemZ2F30z2TsO5vLKLUqRKkfYxvg@mail.gmail.com>
+From: "Satya Priya Kakitapalli (Temp)" <quic_skakitap@quicinc.com>
+In-Reply-To: <CAA8EJpogCOQ4W26hkBm6v_yemZ2F30z2TsO5vLKLUqRKkfYxvg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAJM7BWYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDYyML3eJcM2NTA92UAl0TQyNjC0NT4yQTEwsloPqCotS0zAqwWdGxtbU
- AQBFn8VsAAAA=
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
- Krishna Manikandan <quic_mkrishn@quicinc.com>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.13.0
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: pbvZ-_yj-kL7_jxmIZ3bXC6Wc11X3dFt
+X-Proofpoint-ORIG-GUID: pbvZ-_yj-kL7_jxmIZ3bXC6Wc11X3dFt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-28_09,2024-03-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=999 impostorscore=0 spamscore=0 bulkscore=0 mlxscore=0
+ lowpriorityscore=0 priorityscore=1501 phishscore=0 malwarescore=0
+ adultscore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403210001 definitions=main-2403280064
 
-Add the required changes to support DisplayPort (normally(?) available
-via the USB-C connector) on the SM6350/SM7225 SoC.
 
-This has been tested on a Fairphone 4 smartphone with additional changes
-not included in this series (mostly just wiring up TCPM and the SBU
-mux).
+On 3/8/2024 5:24 PM, Dmitry Baryshkov wrote:
+> On Fri, 8 Mar 2024 at 12:47, Satya Priya Kakitapalli (Temp)
+> <quic_skakitap@quicinc.com> wrote:
+>>
+>> On 3/6/2024 7:25 PM, Bryan O'Donoghue wrote:
+>>> On 06/03/2024 08:30, Satya Priya Kakitapalli (Temp) wrote:
+>>>>> Anyway I suspect the right thing to do is to define a
+>>>>> titan_top_gdsc_clk with shared ops to "park" the GDSC clock to 19.2
+>>>>> MHz instead of turning it off.
+>>>>>
+>>>>> You can get rid of the hard-coded always-on and indeed represent the
+>>>>> clock in /sysfs - which is preferable IMO to just whacking registers
+>>>>> to keep clocks always-on in probe anyway.
+>>>>>
+>>>>> Please try to define the titan_top_gdsc_clk as a shared_ops clock
+>>>>> instead of hard coding to always on.
+>>>>>
+>>>> Defining the gdsc clk allows consumers to control it, we do not want
+>>>> this clock to be disabled/controlled from consumers. Hence it is
+>>>> better to not model this clock and just keep it always on from probe.
+>>> Not if you mark it critical
+>>>
+>> Marking the clock as critical keeps the associated power domain
+>> always-on which impacts power. For this reason we are not using
+>> CLK_IS_CRITICAL and instead making them always on from probe.
+> Please consider using pm_clk instead. This is a cleaner solution
+> compared to keeping the clocks always on.
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
-Luca Weiss (3):
-      dt-bindings: display: msm: dp-controller: document SM8250 compatible
-      dt-bindings: display: msm: sm6350-mdss: document DP controller subnode
-      arm64: dts: qcom: sm6350: Add DisplayPort controller
 
- .../bindings/display/msm/dp-controller.yaml        |  1 +
- .../bindings/display/msm/qcom,sm6350-mdss.yaml     | 10 +++
- arch/arm64/boot/dts/qcom/sm6350.dtsi               | 88 ++++++++++++++++++++++
- 3 files changed, 99 insertions(+)
----
-base-commit: 871760455183dc66b3e185f8d3ed2184cc9fac25
-change-id: 20240328-sm6350-dp-41238153b448
+In this case i think we cannot use pm_clk because, the clock that we are 
+trying to keep always on here belongs to same camcc and it is not 
+possible to create a PM dependency with the same dev that is camcc itself.
 
-Best regards,
--- 
-Luca Weiss <luca.weiss@fairphone.com>
 
+>>> static struct clk_branch cam_cc_gdsc_clk = {
+>>>          .halt_reg = 0xc1e4,
+>>>          .halt_check = BRANCH_HALT,
+>>>          .clkr = {
+>>>                  .enable_reg = 0xc1e4,
+>>>                  .enable_mask = BIT(0),
+>>>                  .hw.init = &(struct clk_init_data){
+>>>                          .name = "cam_cc_gdsc_clk",
+>>>                          .parent_hws = (const struct clk_hw*[]){
+>>>                                  &cam_cc_xo_clk_src.clkr.hw
+>>>                          },
+>>>                          .num_parents = 1,
+>>>                          .flags = CLK_IS_CRITICAL | CLK_SET_RATE_PARENT,
+>>>                          .ops = &clk_branch2_ops,
+>>>                  },
+>>>          },
+>>> };
+>>>
+>>> and then add this to your camss clocks
+>>>
+>>> <&clock_camcc CAM_CC_GDSC_CLK>;
+>>>
+>>> The practice we have of just whacking clocks always-on in the probe()
+>>> of the clock driver feels lazy to me, leaving the broken cleanups we
+>>> have aside.
+>>>
+>>> As a user of the system I'd rather see correct/complete data in
+>>> /sys/kernel/debug/clk/clk_summary
+>>>
+>>> Anyway I'm fine with setting the clock always on, I can always send
+>>> out a series to address this bug-bear myself.
+>>>
+>>> So yeah just fix the cleanup and then please feel free to add my
+>>>
+>>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>
 
