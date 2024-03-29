@@ -1,167 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-15795-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15796-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8127892670
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 22:55:49 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF589892693
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 23:03:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 48EC5B2371D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 21:55:47 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 577CBB2170D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 22:03:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE40613D251;
-	Fri, 29 Mar 2024 21:54:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BF1213CAA1;
+	Fri, 29 Mar 2024 22:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fKdsPb2U"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HggGyXoF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF3C813CFB6;
-	Fri, 29 Mar 2024 21:54:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A53823D0C4;
+	Fri, 29 Mar 2024 22:02:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711749280; cv=none; b=TBvw4HgdvNM6TLbX63gtHYuMclrKSoD+EQa8k9z6ovD7BghszI7JzXFFxBy5MGRpbQTCNhHlwC6SkwobEakLC9lsq87T8Hi0s/lboB59edOqWWIxwQJ67qkEcHzfiIS3vW5VkLyS15tM244YVbjLBenK27QS8ls4FEkMEiaHahg=
+	t=1711749776; cv=none; b=kf8IIbtpoUWn3JqsAMXkBeCxXlgXh6DXWB5ZVN23kn64EJvOETKal34zXHid3fsJpwMxQt8C0vu61AIzLUDDcmBUn7UiOyVSCCG7KNOVMfuqe8luKIS0zba6H2iDP1To+2j9pYep78ep18NTajRA2wOYhw0sEwxWKQqba0UX/Mk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711749280; c=relaxed/simple;
-	bh=Yn8bzggNIrMa+0R7bvxUaO/IzMm910e79pkJIvx8Hnc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BKRTpClhAqfwGsFSPez5rabrricXyBvdVqGjpBpyIqVfdkySdj+6McU5/DACG5XBLDcF1UNiS6i5nBcRClElpZOxm4i5Ek/YQ2ETDBYbiRxkV0KS5JZwMhC3iH7M+vjL2lroUY/exhu4gr/0HfwadBwPLSgWQWsARg13GGotOms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fKdsPb2U; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C83AC433C7;
-	Fri, 29 Mar 2024 21:54:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711749280;
-	bh=Yn8bzggNIrMa+0R7bvxUaO/IzMm910e79pkJIvx8Hnc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fKdsPb2UFJgihUWr17wPQxP+Tdvkpf4bKqJLLWHNAyUl0/HqzhCd9qeckgyPi1nOo
-	 7W8VcGKAWIiVHrlXZWYYRfTokXIvJSK01h9pS04Bh1mJSEWAD3XfgLNbn8o5sHzj1k
-	 P6se1H4guq5J368QwdB1F2PQeeLT0cMYSjNbP4X/YjhY/LHZAzeYILF7qumb4ZmBn6
-	 7QaCUBWMkHrTJWZwB9UU5CLzshD+G+z+6oPukZ6IcpO7jSSA1BF7aOLNLihf0TVwvL
-	 C/4ozm4iw8yElwUMdTExrFHw+vegnhd9jR2LjY53D0IzRTQXNKFOxFYxdcpiokpJg7
-	 ZqvzoQUWSf/8Q==
-Date: Fri, 29 Mar 2024 22:54:36 +0100
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Cc: konrad.dybcio@linaro.org, andersson@kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org, 
-	quic_vdadhani@quicinc.com, Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH v1] i2c: i2c-qcom-geni: Serve transfer during early
- resume stage
-Message-ID: <j5zai7pw7pxe2owjsoq2ncwhsmwe2llmcvb7vp46xi757eamub@inefovgffgpp>
-References: <20240328123743.1713696-1-quic_msavaliy@quicinc.com>
+	s=arc-20240116; t=1711749776; c=relaxed/simple;
+	bh=zuNKML6X04ZMsTG+tD12IpXq04Qn4pO/1pafB7Njz5g=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ViZMnFThP7uPYJSzUi2IJDu9fsTUAiiAKggCzq3A7gu9YtN5ehaGgFit20zWLSzO7nzHL5mKbuRcn4EJDk7221aZ+9mm3BIjOb6eeraK1izNNkoS1JfP6LxRYNGcYwSWZjhbtD7x+Q9AIh/wguCcDtTFh3gedEqc/PZYUKTosmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HggGyXoF; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42TKZXnP030324;
+	Fri, 29 Mar 2024 22:02:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=silHeXabMsGAwpFBE/tyN
+	s2CsQVMk9jO5ZsDAbGARJI=; b=HggGyXoFYfZW/5ef6WcHvbe5vazYJV/G8SLg1
+	3ZULnmubPc7qe/Ec/24QSc55JQapzqQhUtlgoO0ym6Sn1LclUY/0W6GURlA+criv
+	2bGVpbbg9YAAjjAd+HhVF3JUgWAZtJfnq5lWvcBy4akmM8/x+0EAyiPHKOUlUKFI
+	wu7sniwn/qZ6ycpXeJypT74rSvp6YZ9wWuCFcL7YtrW15QnYPWV/5OeNkrEIq1Hf
+	rissf+hOad1ZtIw9YSlJe/k7AsPkytPF3vDvI8amQ+MNirzQmdEDGgSVqoXqE90T
+	ULFqI7yfOVteHItyqXCYASjNUqkMovKwfOTXa53/9QRCToH3g==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x5uccsnur-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 Mar 2024 22:02:49 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42TM2mWW006741
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 Mar 2024 22:02:48 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.4; Fri, 29 Mar 2024 15:02:46 -0700
+Date: Fri, 29 Mar 2024 15:02:44 -0700
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+To: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>
+Subject: Re: [PATCH v4 2/5] soc: qcom: llcc: Add regmap for Broadcast_AND
+ region
+Message-ID: <20240329220244.GX3213752@hu-bjorande-lv.qualcomm.com>
+References: <20240329-llcc-broadcast-and-v4-0-107c76fd8ceb@quicinc.com>
+ <20240329-llcc-broadcast-and-v4-2-107c76fd8ceb@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20240328123743.1713696-1-quic_msavaliy@quicinc.com>
+In-Reply-To: <20240329-llcc-broadcast-and-v4-2-107c76fd8ceb@quicinc.com>
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: L8_oDKfs6pKfviablY9o3uZ4SnNDHXlX
+X-Proofpoint-ORIG-GUID: L8_oDKfs6pKfviablY9o3uZ4SnNDHXlX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-29_13,2024-03-28_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ mlxlogscore=631 impostorscore=0 spamscore=0 priorityscore=1501
+ lowpriorityscore=0 phishscore=0 adultscore=0 mlxscore=0 bulkscore=0
+ suspectscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2403210001 definitions=main-2403290196
 
-Hi Mukesh,
-
-On Thu, Mar 28, 2024 at 06:07:43PM +0530, Mukesh Kumar Savaliya wrote:
-> pm_runtime_get_sync() function fails during PM early resume and returning
-> -EACCES because runtime PM for the device is disabled at the early stage
-> causing i2c transfer to fail. Make changes to serve transfer with force
-> resume.
+On Fri, Mar 29, 2024 at 02:53:41PM -0700, Unnathi Chalicheemala wrote:
+> Define new regmap structure for Broadcast_AND region and initialize
+> this regmap when HW block version is greater than 4.1, otherwise
+> initialize as a NULL pointer for backwards compatibility.
 > 
-> 1. Register interrupt with IRQF_EARLY_RESUME and IRQF_NO_SUSPEND flags
->    to avoid timeout of transfer when IRQ is not enabled during early stage.
-> 2. Do force resume if pm_runtime_get_sync() is failing after system
->    suspend when runtime PM is not enabled.
-> 3. Increment power usage count after forced resume to balance
->    it against regular runtime suspend.
+> Switch from broadcast_OR to broadcast_AND region (when defined in DT)
+> for checking status bit 1 as Broadcast_OR region checks only for bit 0.
 > 
-> Co-developed-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
 
-Is this a fix? O mostly an improvement?
+Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-...
-
->  	gi2c->err = 0;
->  	reinit_completion(&gi2c->done);
-> -	ret = pm_runtime_get_sync(gi2c->se.dev);
-> -	if (ret < 0) {
-> -		dev_err(gi2c->se.dev, "error turning SE resources:%d\n", ret);
-> -		pm_runtime_put_noidle(gi2c->se.dev);
-> -		/* Set device in suspended since resume failed */
-> -		pm_runtime_set_suspended(gi2c->se.dev);
-> -		return ret;
-> +
-> +	if (!pm_runtime_enabled(dev) && gi2c->suspended) {
-> +		dev_dbg(gi2c->se.dev, "RT_PM disabled, Do force resume, usage_count:%d\n",
-
-dev
-
-nit: you could leave a space after the ':'.
-
-> +			atomic_read(&dev->power.usage_count));
-> +		ret = geni_i2c_force_resume(gi2c);
-> +		if (ret)
-> +			return ret;
-> +	} else {
-> +		ret = pm_runtime_get_sync(dev);
-> +		if (ret == -EACCES && gi2c->suspended) {
-> +			dev_dbg(gi2c->se.dev, "PM get_sync() failed-%d, force resume\n", ret);
-
-dev
-
-> +			ret = geni_i2c_force_resume(gi2c);
-> +			if (ret)
-> +				return ret;
-> +		}
-
-Are we missing some cases here? Do we need a few more else's?
-
-Andi
-
->  	}
->  
->  	qcom_geni_i2c_conf(gi2c);
-> @@ -702,8 +730,15 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
->  	else
->  		ret = geni_i2c_fifo_xfer(gi2c, msgs, num);
->  
-> -	pm_runtime_mark_last_busy(gi2c->se.dev);
-> -	pm_runtime_put_autosuspend(gi2c->se.dev);
-> +	if (!pm_runtime_enabled(dev) && !gi2c->suspended) {
-> +		pm_runtime_put_noidle(dev);
-> +		pm_runtime_set_suspended(dev);
-
-this looks like repeated code, how about making it a function?
-
-> +		gi2c->suspended = 0;
-> +	} else {
-> +		pm_runtime_mark_last_busy(gi2c->se.dev);
-> +		pm_runtime_put_autosuspend(gi2c->se.dev);
-> +	}
-> +
->  	gi2c->cur = NULL;
->  	gi2c->err = 0;
->  	return ret;
-> @@ -820,7 +855,7 @@ static int geni_i2c_probe(struct platform_device *pdev)
->  	init_completion(&gi2c->done);
->  	spin_lock_init(&gi2c->lock);
->  	platform_set_drvdata(pdev, gi2c);
-> -	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, 0,
-> +	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, IRQF_EARLY_RESUME | IRQF_NO_SUSPEND,
-
-Can you provide a bit more information on how an early interrupt
-would be handled once the device is resumed?
-
-Thanks,
-Andi
-
->  			       dev_name(dev), gi2c);
->  	if (ret) {
->  		dev_err(dev, "Request_irq failed:%d: err:%d\n",
-> -- 
-> 2.25.1
-> 
+Regards,
+Bjorn
 
