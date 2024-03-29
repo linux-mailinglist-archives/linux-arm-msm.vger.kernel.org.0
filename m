@@ -1,152 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-15690-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15691-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A6488917BC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 12:28:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4EAC6891860
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 13:10:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1A64D1F22BE7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 11:28:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7FF861F2317C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 12:10:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D4B06A33F;
-	Fri, 29 Mar 2024 11:28:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E4F68563E;
+	Fri, 29 Mar 2024 12:10:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BakRuTwx"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="arDsjhrv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AAAF446B2;
-	Fri, 29 Mar 2024 11:28:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C58BF9E9
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 12:10:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711711709; cv=none; b=SkUCsWnAuEA0NELuqdDCMq77ZHb23qrf+sJdqDnzL2tB6CEOi0JFa6rD9YL5DXm9c2K9ZcKSOf6MT2cxscs9NijUG6pqyw25H1rxHT1SnsxEcS8kQbqGkaKiTHQ5fj5keeMj/mRS8fMlzRZlTBsSpFt6ktGudWPeXG8UocpMN/U=
+	t=1711714210; cv=none; b=HJVx+9/Kyfz8UJz4JCehLv20WrMFgGo7clitxaT863SRC73WEwakZoPwHdmWS8URd7/Z0v7a/ovkuW9Hmgu1yTC2sXW/hVKmbJVAVN5KNa0UONijtNFN5q/pg83uZHzeD4EQXINAxjn0mCLGfmkXmwmITItd9viN7DePFSjskqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711711709; c=relaxed/simple;
-	bh=NIOkjnFC38GcPFlXJwdE+/CNLvVugThWMjsERzNTYaM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=f1WhBKTBhSjs13kTKmAMtbr7yeQftmEzb5IblzvEav3Tm/1rcM8nrpoMFU12YTPb328MEA9ePzzfcaPN9XtGJThy3T+fwpjF6lwfk92nVC9rC40Q0wx79IIZdfu9eyMMOs2K6wspXsxt5umW6x5aGZDMb/iIrYnah+4bB8BPFnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BakRuTwx; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42T3qN9d006076;
-	Fri, 29 Mar 2024 11:28:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=HadpWlGoEqIQpIknOArzjZAsQSAnIpSED8hj8Tde5Tc=; b=Ba
-	kRuTwxXl8t4xsu+MNoP2L7KQn3c7Bb73t84bXyX7gpCMPYZI43zJp4ZnWphq1Lcs
-	GiU0coUr9bfS/q1i0VJGV9ZxkXtyEbV8C04yIHwdawsW9RM5d/amxxE/L6oL39r+
-	m/HbIWtt3cq7Y81nOnv2YBHIPiCGO0Ctm2FygfLRbvM5JNEFyZgUmd/KLxghLAwF
-	vshxXFoZtdyGgAWZwhTg1TeuJZK1sv9YVbVtQzjJsq2izCvF8DoqonJm9Q6F8F7r
-	sCTJUbXodQdYfEpKFVzlT9+dk/XdEFadvbXkN1JYTJMZEitct5aElfGTKwcBpUzd
-	KIHYfutfktuHCBbI9gZg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x5hskhq3m-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 29 Mar 2024 11:28:15 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42TBSBch021885
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 29 Mar 2024 11:28:11 GMT
-Received: from [10.214.67.128] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 29 Mar
- 2024 04:28:07 -0700
-Message-ID: <bdcb6680-f9e0-6629-4b56-2f7d18324045@quicinc.com>
-Date: Fri, 29 Mar 2024 16:58:04 +0530
+	s=arc-20240116; t=1711714210; c=relaxed/simple;
+	bh=90VA0QRkzFCHjjzptHhuCk6ko7WZh1MGGqvVdOqYNOs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NVlofG0JLR4WffGPBzRHKYi9oZSLU/ctIenGswsFhqaD1Pkr7rNiI9I1gBFbN+d6iAwI7/5jBmKBgkPJxn0nk9jLwbgDY7UeCKJF4wBExg6j/JTCHJZuX/706k/dfchQJ9Gl5qSUuNacwnL9mXLqqtsxq3ZOi8Gxz3CS7QAvMmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=arDsjhrv; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-41494c0405eso11535995e9.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 05:10:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1711714207; x=1712319007; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Mx53Ho+h705KudOYprlwABkMXqM2QEFDHzS3aw4XkWw=;
+        b=arDsjhrvE5RqbQzdv6XELMnqzj8VC3DgRWYKDzacIhDAR12qM/BD+svNXoc5qFJzfp
+         AtUYEeKRzk4krEYjxlxDb2jRSb3Y5lrgS0lmXvkWBbYC/9U9pOO+byHbD6t2/Dz2M6pw
+         2SZEgHtTto6f5G+oiiFKXG8hGx6+1AewbSJQs1chhE3u7fIZab4NAKdK06Pm+SK9HGGb
+         H3jNzT2JbicdZL5VS8g+dxwGLg9mIoMHGP7jT1NLtnt52gI38sxlqgLVQKuY2MNKRXzy
+         GjYwT5VSCIn4SXbtx+fahRzroe1t8YtFS4WCm8OLEwvzORd2g5C+RjFAShD+hIdVLb0T
+         CCCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711714207; x=1712319007;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Mx53Ho+h705KudOYprlwABkMXqM2QEFDHzS3aw4XkWw=;
+        b=ZkZ8dDPH54/LkUlP7p+nsbO8Qh/u9VSoc9uUHjjjN3Stkoccr/wqatpDbfGQoPYFhq
+         QWqO0BX2y8U01zvs83Aw5WA+U30VSStphexwFUD/N38Wvo7yFTCyDPySJyb81NJGENJ8
+         LZCel8GN46BakFRNj8JKXzhmISA/Wn+BPaQqWz8IrQj7WcGsXJRc5JGUy6AuLjO3Luie
+         MuzX0+pYk7J9DoBm4Nqx5oLb4YMElzQUS4nrAgXBMSig2pS8MJMEuGjrLdh+XaZmsogJ
+         /8WM+4WhkIIhdDh/oMVo5and4HuSuihD59xOMwjSHylIsjvCIhq92HvA/J+X7b5PlxVW
+         uAVA==
+X-Forwarded-Encrypted: i=1; AJvYcCXOqz62uIMPftSWeiX1aiP9/pcLDT423AFJ345+p00odi61VSB8cNCp2HxGYTRwJ3WJ45FkHOye56d2qcuxzXgx9UPvEiRHbHi01yqbrQ==
+X-Gm-Message-State: AOJu0YzVDLJDElesxKsrvXYEhKgsJpX1OgJLrX5A1YTioCQD8Yig4KCH
+	B4P3NX9lL4IYoXaahz0DMeVgW9oUqkSJ9OeJqp1J/Qplt8LPlepUcBepYfQWBmA=
+X-Google-Smtp-Source: AGHT+IGdkUJHuyGcvFRg8PxzTiztlFrx/8w5tyad1ZYe4AJ+FrbuWcSdMKz+VAm+mVo5ZrWdNoqQRw==
+X-Received: by 2002:adf:fa50:0:b0:33e:6056:6b8b with SMTP id y16-20020adffa50000000b0033e60566b8bmr1386402wrr.7.1711714205279;
+        Fri, 29 Mar 2024 05:10:05 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.50])
+        by smtp.gmail.com with ESMTPSA id d14-20020adff84e000000b0033b66c2d61esm4010336wrq.48.2024.03.29.05.10.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Mar 2024 05:10:04 -0700 (PDT)
+Message-ID: <031d0a35-b192-4161-beef-97b89d5d1da6@linaro.org>
+Date: Fri, 29 Mar 2024 13:10:03 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH 0/4] Add USB Support on Qualcomm's QDU/QRU1000 Platform
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 4/5] clk: qcom: ipq9574: Use icc-clk for enabling NoC
+ related clocks
+To: Varadarajan Narayanan <quic_varada@quicinc.com>,
+ Stephen Boyd <sboyd@kernel.org>
+Cc: andersson@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
+ djakov@kernel.org, dmitry.baryshkov@linaro.org, konrad.dybcio@linaro.org,
+ krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org, mturquette@baylibre.com, quic_anusha@quicinc.com,
+ robh@kernel.org
+References: <20240328075936.223461-1-quic_varada@quicinc.com>
+ <20240328075936.223461-5-quic_varada@quicinc.com>
+ <95f4e99a60cc97770fc3cee850b62faf.sboyd@kernel.org>
+ <ZgaeGZL7QXh75aSA@hu-varada-blr.qualcomm.com>
 Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        "Kishon Vijay
- Abraham I" <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>
-References: <20240319090729.14674-1-quic_kbajaj@quicinc.com>
- <2024032637-sessions-outcast-888a@gregkh>
-From: Komal Bajaj <quic_kbajaj@quicinc.com>
-In-Reply-To: <2024032637-sessions-outcast-888a@gregkh>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <ZgaeGZL7QXh75aSA@hu-varada-blr.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: dIF0wtyfcPYOwtyE7FmJ0Ax5fhgeZoa3
-X-Proofpoint-ORIG-GUID: dIF0wtyfcPYOwtyE7FmJ0Ax5fhgeZoa3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-29_11,2024-03-28_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=758 phishscore=0
- clxscore=1011 bulkscore=0 suspectscore=0 priorityscore=1501 malwarescore=0
- impostorscore=0 adultscore=0 mlxscore=0 spamscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2403210001
- definitions=main-2403290100
 
-
-
-On 3/26/2024 2:00 PM, Greg Kroah-Hartman wrote:
-> On Tue, Mar 19, 2024 at 02:37:24PM +0530, Komal Bajaj wrote:
->> This series adds support of USB3 PHY support for Qualcomm's QDU/QRU1000 Platform.
+On 29/03/2024 11:55, Varadarajan Narayanan wrote:
+>>> +
+>>> +enum {
+>>> +       ICC_ANOC_PCIE0,
+>>> +       ICC_SNOC_PCIE0,
+>>> +       ICC_ANOC_PCIE1,
+>>> +       ICC_SNOC_PCIE1,
+>>> +       ICC_ANOC_PCIE2,
+>>> +       ICC_SNOC_PCIE2,
+>>> +       ICC_ANOC_PCIE3,
+>>> +       ICC_SNOC_PCIE3,
+>>> +       ICC_SNOC_USB,
+>>> +       ICC_ANOC_USB_AXI,
+>>> +       ICC_NSSNOC_NSSCC,
+>>> +       ICC_NSSNOC_SNOC_0,
+>>> +       ICC_NSSNOC_SNOC_1,
+>>> +       ICC_NSSNOC_PCNOC_1,
+>>> +       ICC_NSSNOC_QOSGEN_REF,
+>>> +       ICC_NSSNOC_TIMEOUT_REF,
+>>> +       ICC_NSSNOC_XO_DCD,
+>>> +       ICC_NSSNOC_ATB,
+>>> +       ICC_MEM_NOC_NSSNOC,
+>>> +       ICC_NSSNOC_MEMNOC,
+>>> +       ICC_NSSNOC_MEM_NOC_1,
+>>> +};
 >>
->> ---------
->> Changes in v2:
->> * Dropped extra lines
->> * Sorted the tables alphabetically
->> * Link to v1: https://lore.kernel.org/linux-arm-msm/20240311120215.16845-1-quic_kbajaj@quicinc.com/
->>
->> Komal Bajaj (4):
->>    dt-bindings: phy: qcom,usb-snps-femto-v2: Add bindings for QDU1000
->>    dt-bindings: phy: qcom,qmp-usb: Add QDU1000 USB3 PHY
->>    dt-bindings: usb: dwc3: Add QDU1000 compatible
->>    phy: qcpm-qmp-usb: Add support for QDU1000/QRU1000
->>
->>   .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml   |  2 +
->>   .../bindings/phy/qcom,usb-snps-femto-v2.yaml  |  1 +
->>   .../devicetree/bindings/usb/qcom,dwc3.yaml    |  3 ++
->>   drivers/phy/qualcomm/phy-qcom-qmp-usb.c       | 49 +++++++++++++++++++
->>   4 files changed, 55 insertions(+)
->>
->> --
->> 2.42.0
->>
->>
+>> Are these supposed to be in a dt-binding header?
 > 
-> The subject line here does not say v2, so I'm confused as to which one
-> is which :(
-> 
-> Please fix up and send a v3.
+> Since these don't directly relate to the ids in the dt-bindings
+> not sure if they will be permitted there. Will move and post a
+> new version and get feedback.
 
-Apologies, forgot to mark patches as v2.
-Will soon send v3 series with proper marking.
+You can answer this by yourself by looking at your DTS. Do you use them
+as well in the DTS?
 
-Thanks
-Komal
+It's a pity we see here only parts of DTS, instead of full interconnect
+usage.
 
-> 
-> thanks,
-> 
-> greg k-h
+Best regards,
+Krzysztof
+
 
