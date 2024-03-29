@@ -1,184 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-15760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15761-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 138CA892477
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 20:47:00 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 24769892479
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 20:47:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C37092850A0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 19:46:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 477ED1C213F9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 19:47:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BAD6139578;
-	Fri, 29 Mar 2024 19:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85BAA139D04;
+	Fri, 29 Mar 2024 19:47:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IFjh+8YT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="A25Bg9vF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98942139D04;
-	Fri, 29 Mar 2024 19:46:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF25913AD1E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 19:46:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711741615; cv=none; b=eNGBWYZhfcfnRXAdMZQok4v1ZdEdZJZ4XDTc+nUL/JTTZFPNiXl2HTooORig6+lsQ7CJc2qe3LC/SLpYfUhblKe9hviYJDTHXrGr6a/oFKDjykxdBcwTjAzEFopGfG+EdwYIXfqHLjXJqiogM5vEJeeBBySgJ+thyW53vqtHli0=
+	t=1711741621; cv=none; b=gljObZX8jnkcR9jIrzITDrj/mU2rPtIJ/vNUzo+qLDR5FSJcPinP/2n3kz41Qc1y8FnqJRHnc/fNgIxQzGU4XNQ4HXU/7cOLyiZaLF3cTieEkIT7rnRFvovfAo4xHOk80G6VA5N3VqFjaXWgDqdp3mT9abFVq2zop6N8vOowGug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711741615; c=relaxed/simple;
-	bh=sEQf6CnSvy+gsfHmMbdCzoWhb1Yw2wM8Mgp7wb8eskQ=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=tKMkbQtKfunBCMltOiI87AoI9NIWxGUpHj6GkoP6SDDTSTHZTXM6yIJY7TS7EBURHpPdv0qTKgxGWXzgO3CFsPkjN/7ZUPYs/H2Hmydg4h2uR52gzjI+TNdpllYSBK7pFDy30JFZoS8OYdfiKxFcUYYQm1Ls0HBGpK5LLxKOMGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IFjh+8YT; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42THeogV013524;
-	Fri, 29 Mar 2024 19:46:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version:content-type; s=
-	qcppdkim1; bh=LAxtLydJPleoJCOd3e+tShPjSv1jB48d2EKqaJMIysE=; b=IF
-	jh+8YT+vn8MCESavNSYJOT/HdL5aQaYHUXzv653HD6WAz9oPapt3Pf6DlBnYU50r
-	UxTl5r9aIpe9LA9ShVJx8FvfFpJxqSORguoAaZtSVVYpyiXNyWiUwBl1pIRGn8Xf
-	icANIKlJ1rOl6dqDrK/hCbQkNJWH8UDvt5brjrWl7QSNeXU/IBPRo3kawBdF93eL
-	mYojcZJ/0oNe8DrdjJ9iC67UGMnKWUAoGhd4NsNhQXIZrb1PkhcZNOgt1CpiLL0t
-	lDbmZZr65NDsAlAjcBI1hb6BW1idl7NUbdsp2z5DoASe2ewtaFX6hz4Wg4F+DQ2A
-	Q08fuaY7hYPWS4JXG8Lw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x5vn991ny-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 29 Mar 2024 19:46:37 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42TJkaWe013541
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 29 Mar 2024 19:46:36 GMT
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Fri, 29 Mar 2024 12:46:35 -0700
-From: Kuogee Hsieh <quic_khsieh@quicinc.com>
-To: <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <abel.vesa@linaro.org>, <andersson@kernel.org>
-CC: Kuogee Hsieh <quic_khsieh@quicinc.com>, <quic_abhinavk@quicinc.com>,
-        <quic_jesszhan@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <marijn.suijten@somainline.org>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v3] drm/msm/dp: assign correct DP controller ID to x1e80100 interface table
-Date: Fri, 29 Mar 2024 12:46:26 -0700
-Message-ID: <1711741586-9037-1-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+	s=arc-20240116; t=1711741621; c=relaxed/simple;
+	bh=s8LTLkiOqhoQx9nKUjUGrsIhCVuP+jNs3wYFq5ptfmU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OAXEnP3doX9nki9YfB4UViqpK61/Ov8ZIX+3nXN/KtUCueaBeNVJpZA86OHD1S5DZ8guE8HNJ1Itzlz59boibXujZdjBgyY2EKu4Z8T/FgDcNLIycGGSEDlYLxotAB4u7DcFIR8C/doVCcVP30zTKBOnyJDMO6WHqyo3BDOmge0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=A25Bg9vF; arc=none smtp.client-ip=209.85.128.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-6143266c9ddso13676897b3.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 12:46:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1711741619; x=1712346419; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=s8LTLkiOqhoQx9nKUjUGrsIhCVuP+jNs3wYFq5ptfmU=;
+        b=A25Bg9vFL/yvir9byw0wqM3rgGjI1MWzywXMbs3+SZCD2qnvVeudt/pE0SI1z1pkFL
+         Np9Th7I8F2+68bRiihCQ5Bg0yhl92yUg3p7MLwNw4ygGBr8SdtdPhTcr4w3xWgzslhym
+         GZCNAQ2Xa///EPo6WK+ZeE0aqIqanGg76S/T+Oj0EWBdsS9oWe3g28CJCUygJeiZDvIu
+         0MnB5iEvrlaBusZWRoRyxtXc0ZXDOaoDB0PVp6XgD8+SDuBd8EVrkUWobkMdERBuRDfk
+         oRuMkobp+g+9slssqTTmcNWw4rueVFN8wKn+6JsV4LnmSsZ0EyAFsJCPTLJxMZDhuksu
+         ubmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711741619; x=1712346419;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=s8LTLkiOqhoQx9nKUjUGrsIhCVuP+jNs3wYFq5ptfmU=;
+        b=WeE4FcrsjtlsE2ZjVis2GzZ6zvAGOjFgRYqbt0ff/lHF77KFEPOb5yB35gyi5glbWv
+         i05UvqsY3wc6ZT2H1f9jt8JcbxDTTNpIS31vcjchLMuZp36gAukpJBKrGzzTS9a8kig+
+         GnWI5fw8gQ7RLIB2VUKxlBseCii2+SzS2G80GzqwNMmIe+7pFYqJsSWhK70rAyNrvJKW
+         zLpKMPQQI8Nr8eDABHhWIBsLKKrbyR7ECFbhLN3xYo6MXkWeF1M6EOZmDcju1EwKSxby
+         OHCmma/EZJijbzvMwMd+8Bvu1UoO/7FiaqFzu9TFBIyxVVdTawGDwSKGuEvxDPF/EAUI
+         MtIw==
+X-Forwarded-Encrypted: i=1; AJvYcCWMjd15WmGyf4z9ULyMSviM4V/hBN2iuShbR3DkRG00r0nXU1PfKzNKFEuS+ANLACtbKPKjr0kk31xrxDhzLKeCdMpHRXQvRSjZlE5T0A==
+X-Gm-Message-State: AOJu0Ywihk0tcrUeXGZHCtWvH+BHUemjTxsp6Kwhsb7H4436DmsatEd9
+	+qTVTZvjZt+GzPdNIQ8pkt9bLx0R9feJt0cnEoFd85+cTBjeDTnB8MTa2idHlJDrqWg8015oyOT
+	bzLLOmLzKMqshd0PTBTGyJlsQfOVcSnLXRA9Bkg==
+X-Google-Smtp-Source: AGHT+IFP75qnlI+7OWttRgssl4+y5s2yWymZzuPS/gH2JCV2G5l9/7PLZafJPbyi2RtseP1tlvKpO1i4BIwpvjFl3Ew=
+X-Received: by 2002:a25:b10:0:b0:dcd:1b8f:e6d3 with SMTP id
+ 16-20020a250b10000000b00dcd1b8fe6d3mr2059070ybl.48.1711741618942; Fri, 29 Mar
+ 2024 12:46:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ZzA3Ud7yVWBvIk4yOqwb7wHuwySHghy2
-X-Proofpoint-GUID: ZzA3Ud7yVWBvIk4yOqwb7wHuwySHghy2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-29_13,2024-03-28_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- mlxscore=0 clxscore=1015 adultscore=0 priorityscore=1501 mlxlogscore=999
- phishscore=0 impostorscore=0 malwarescore=0 suspectscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2403290177
+References: <20240325100359.17001-1-brgl@bgdev.pl> <56e1c63a-4c09-4d92-9ef2-aad5390879cc@gmail.com>
+ <CAMRc=Mf_pvrh2VMfTVE-ZTypyO010p=to-cd8Q745DzSDXLGFw@mail.gmail.com>
+ <CAMRc=MfsVWcoMC-dB-fdxy332h-ucUPTfEUMAnCt5L-q3zJxWg@mail.gmail.com>
+ <82f94b54-82d1-49b9-badf-63d948b347fc@gmail.com> <97e1f121-9e84-4e63-9c9c-57e2de0b29d7@gmail.com>
+ <CAMRc=McLJFGcy-A6PZNmjgDXnvx8z0J4k-Dbak-txvWnycHG2A@mail.gmail.com>
+ <2b1dc031-d645-494c-9103-a2bb422ea60b@gmail.com> <CAMRc=MdoSPuedbGhy4toDEkw0vSzESDz2bXGpyt_=R4hqXW+Uw@mail.gmail.com>
+ <9b1e5ea0-bb32-4c42-b2e9-204bde31b905@gmail.com>
+In-Reply-To: <9b1e5ea0-bb32-4c42-b2e9-204bde31b905@gmail.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Date: Fri, 29 Mar 2024 20:46:48 +0100
+Message-ID: <CACMJSesvM6_PhhR_2sP4JX6bR4ytVVg=MwWBEVrCHf5FNp2JXw@mail.gmail.com>
+Subject: Re: [PATCH v9 00/13] firmware: qcom: qseecom: convert to using the TZ allocator
+To: Maximilian Luz <luzmaximilian@gmail.com>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Andy Gross <agross@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Elliot Berman <quic_eberman@quicinc.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+	Guru Das Srinagesh <quic_gurus@quicinc.com>, Andrew Halaney <ahalaney@redhat.com>, 
+	Alex Elder <elder@linaro.org>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
+	Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, kernel@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
-At current x1e80100 interface table, interface #3 is wrongly
-connected to DP controller #0 and interface #4 wrongly connected
-to DP controller #2. Fix this problem by connect Interface #3 to
-DP controller #0 and interface #4 connect to DP controller #1.
-Also add interface #6, #7 and #8 connections to DP controller to
-complete x1e80100 interface table.
+On Fri, 29 Mar 2024 at 20:39, Maximilian Luz <luzmaximilian@gmail.com> wrote:
+>
+> On 3/29/24 8:26 PM, Bartosz Golaszewski wrote:
+> > On Fri, 29 Mar 2024 at 20:22, Maximilian Luz <luzmaximilian@gmail.com> wrote:
+> >>
+> >> On 3/29/24 8:07 PM, Bartosz Golaszewski wrote:
+> >>>
+> >>> Both with and without SHM bridge?
+> >>
+> >> With CONFIG_QCOM_TZMEM_MODE_GENERIC=y (and the upcoming fix) everything
+> >> works. With CONFIG_QCOM_TZMEM_MODE_SHMBRIDGE=y things unfortunately
+> >> still get stuck at boot (regardless of the fix). I think that's
+> >> happening even before anything efivar related should come up.
+> >>
+> >
+> > This is on X13s? I will get one in 3 weeks. Can you get the bootlog
+> > somehow? Does the laptop have any serial console?
+>
+> Surface Pro X (sc8180x), but it should be similar enough to the X13s in
+> that regard. At least from what people with access to the X13s told me,
+> the qseecom stuff seems to behave the same.
+>
+> Unfortunately I don't have a direct serial console. Best I have is
+> USB-serial, but it's not even getting there. I'll have to try and see if
+> I can get some more info on the screen.
+>
 
-Changs in V3:
--- add v2 changes log
+I have access to a sc8180x-primus board, does it make sense to test
+with this one? If so, could you give me instructions on how to do it?
 
-Changs in V2:
--- add x1e80100 to subject
--- add Fixes
-
-Fixes: e3b1f369db5a ("drm/msm/dpu: Add X1E80100 support")
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
----
- .../drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h   | 34 ++++++++++++++++++++--
- 1 file changed, 31 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
-index 9a9f709..a3e60ac 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
-@@ -324,6 +324,7 @@ static const struct dpu_wb_cfg x1e80100_wb[] = {
- 	},
- };
- 
-+/* TODO: INTF 3, 8 and 7 are used for MST, marked as INTF_NONE for now */
- static const struct dpu_intf_cfg x1e80100_intf[] = {
- 	{
- 		.name = "intf_0", .id = INTF_0,
-@@ -358,8 +359,8 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
- 		.name = "intf_3", .id = INTF_3,
- 		.base = 0x37000, .len = 0x280,
- 		.features = INTF_SC7280_MASK,
--		.type = INTF_DP,
--		.controller_id = MSM_DP_CONTROLLER_1,
-+		.type = INTF_NONE,
-+		.controller_id = MSM_DP_CONTROLLER_0,	/* pair with intf_0 for DP MST */
- 		.prog_fetch_lines_worst_case = 24,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31),
-@@ -368,7 +369,7 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
- 		.base = 0x38000, .len = 0x280,
- 		.features = INTF_SC7280_MASK,
- 		.type = INTF_DP,
--		.controller_id = MSM_DP_CONTROLLER_2,
-+		.controller_id = MSM_DP_CONTROLLER_1,
- 		.prog_fetch_lines_worst_case = 24,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 20),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 21),
-@@ -381,6 +382,33 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
- 		.prog_fetch_lines_worst_case = 24,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 22),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 23),
-+	}, {
-+		.name = "intf_6", .id = INTF_6,
-+		.base = 0x3A000, .len = 0x280,
-+		.features = INTF_SC7280_MASK,
-+		.type = INTF_DP,
-+		.controller_id = MSM_DP_CONTROLLER_2,
-+		.prog_fetch_lines_worst_case = 24,
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 17),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 16),
-+	}, {
-+		.name = "intf_7", .id = INTF_7,
-+		.base = 0x3b000, .len = 0x280,
-+		.features = INTF_SC7280_MASK,
-+		.type = INTF_NONE,
-+		.controller_id = MSM_DP_CONTROLLER_2,	/* pair with intf_6 for DP MST */
-+		.prog_fetch_lines_worst_case = 24,
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 18),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 19),
-+	}, {
-+		.name = "intf_8", .id = INTF_8,
-+		.base = 0x3c000, .len = 0x280,
-+		.features = INTF_SC7280_MASK,
-+		.type = INTF_NONE,
-+		.controller_id = MSM_DP_CONTROLLER_1,	/* pair with intf_4 for DP MST */
-+		.prog_fetch_lines_worst_case = 24,
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13),
- 	},
- };
- 
--- 
-2.7.4
-
+Bart
 
