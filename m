@@ -1,138 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-15673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15675-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21D858913A0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 07:17:36 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 87D29891475
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 08:43:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 44CEE1C22FF4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 06:17:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 438F2283669
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 07:43:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 861B337714;
-	Fri, 29 Mar 2024 06:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB4213C6BA;
+	Fri, 29 Mar 2024 07:43:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xjzz6fHQ"
+	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="bazsBhoL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+Received: from sonic316-22.consmr.mail.ne1.yahoo.com (sonic316-22.consmr.mail.ne1.yahoo.com [66.163.187.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991D84E1DC
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 06:15:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0AFF4086E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 07:43:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.163.187.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711692953; cv=none; b=RIWJNm3FK2t+9pC2QSKRgzlyjx+Koht2XoIULU3YWCPZkgukNa0Ye4vkoGsGRoFHmIzf0k2NSGK1MNY/co+LCFkwkuPX78KE+pPc38ip3G8PsiX01trHHdwBpycRFSV7b5AKcvA3p+X97OXKcVPW8XzEEhrjly1bfirKpHlZpqg=
+	t=1711698227; cv=none; b=NetgpcnQanyMOqRQRlEJTgjgfOLVbCRBNJ5U/okeYZxOwyb1+2bFJIz0FTvDeNJrtufNrtw8CQTZ2qW+jxIq3egQbtuzws0Im1OUWGvRqQxPTdvwdr4i2/ba/rfbaTEx20KfatwDUmFK9L5CioBEsrcaROItfFAgMALlM9Q6tLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711692953; c=relaxed/simple;
-	bh=FNeZFewSvhBuxQ3csqXQFOnbclapSSlOktRlQsrIAHc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Y+6gVLzMiBlPFHJP3V2c12GkwVWxC1kRKwBlo24Ku+D0u6LfRR66U1swbOigoMvxry5ORwvpSpzWUoc/xywSnhCXpXjK3Mj184GSUBXp6EUsF2ldVrCgzQ6gWM/iZbd525qWlp7tTvJSmzab9GrkJtYPEZN56FKn/RkXABsOd44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xjzz6fHQ; arc=none smtp.client-ip=209.85.208.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2d52e65d4a8so22887471fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 23:15:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711692950; x=1712297750; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YEJihiEeWvLfK57ti4sg0AX62I32E+gTiiYv2sVj33U=;
-        b=xjzz6fHQCuh/dAoUt+DbxL68pbi+rg6CErP/r0xPzEVdT9z5lmpxoVxqCt03nBK0cy
-         CvjmP1rNQkrl1hVM+lZLg1aWoKrdImH+Xmtfl+j+NrPhJ2ssIkq/uYJ/leYGGjXWm70X
-         VKutAwK21xyw/AbXq7sGpLB4mATEvwI8pj7C34yoUiYBVJMUV2p66WN13/h5QFczV/Az
-         oMFFW/c0RMlPoKVcQLZcmlWD+nRbkWR4Nc0KdwzLnnHFniymVlAQv18o/gfM6fOvuOla
-         X7ntd35FGpKH6VXxCRHKtFGNQeXi8xFK56tmjjyvpyCz755Z+3Twy9gjscS9JDhsI8ot
-         TF0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711692950; x=1712297750;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YEJihiEeWvLfK57ti4sg0AX62I32E+gTiiYv2sVj33U=;
-        b=LsIhc94kEIFly+zJ64j7vL/T00LeZWWs1SxmR72rLso2n1tN4ONldiTWPwNwqXNM91
-         tzViJOgulccqHTYReaUruSxPIr4zTIWOvQlpHZkx3VmSyjS0HwZNf3ODHmfhXwiHH5z2
-         4ZUgq96wVSD8ryGKtR7S4N0Vq4G1Tq5mi+3ftF9FW7joqE+VGvJCsu4+m4A3TLjmKl78
-         yHiT4p6bikXJLVzakGsggc1IiA6aizML9VNgDjVT7Uz344iq2E8TktSrlFtzyOFGhlhr
-         OnRBtFPvFK3EZPS1w8DecSKSiu3PY4f+qSzZGKNWhKPFxlnT0RfMZjl0MRg8itx2SQ9/
-         b1HQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUm8forsUHIHJvfMwVh3IF/7QmsG7S6t5gaHwdcj+cK3kRFa57v+8dXMqQOpavnAO215vHQBtJals10AdWFR2EX/4TW8ioWpDhbsMSxMg==
-X-Gm-Message-State: AOJu0YzpPGdiBwPo9WfOAyGq8mrOC0oahjIxrcgxNZV97sdDYAicPE+m
-	pwBCLMx/8t/ukX6nma3Vpze5Xr5pOF6ggpMqtiwPPNtIUaorRs/9GJvwjR1qp2o=
-X-Google-Smtp-Source: AGHT+IGGHKJDbeJ+KDR74ze9xUn1QQ2t9J+gNQvHakqGHDuXL08XBt38JlXNIIW1R3H4pdpMsPIKYg==
-X-Received: by 2002:a2e:800a:0:b0:2d6:c0d5:b96e with SMTP id j10-20020a2e800a000000b002d6c0d5b96emr653911ljg.24.1711692949955;
-        Thu, 28 Mar 2024 23:15:49 -0700 (PDT)
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id k17-20020a05651c0a1100b002d6cdee339csm494539ljq.103.2024.03.28.23.15.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Mar 2024 23:15:49 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 29 Mar 2024 08:15:43 +0200
-Subject: [PATCH v2 11/11] soc: qcom: pmic_glink: enable UCSI on sc8180x
+	s=arc-20240116; t=1711698227; c=relaxed/simple;
+	bh=3zB3Gcc8KXNMcKPXSSPa0Bhb4MhzReR+4gGltLBn2+I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QjGkIBtopPu5aRatRDmDRhCf7+xrKT2bfmNTuoCH7nDBfo5+id12cHT61qqYxijxhOcRCSDnimhcRgINlXvI1FUXa0mxV80egvdHZ6A/v51RgAqUZWehbs9VAgw+Q+XY2KZuuZiOfxeA6A2PtClaKSr28gzr5i3c4Cn2RxWFHjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=bazsBhoL; arc=none smtp.client-ip=66.163.187.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1711698225; bh=3zB3Gcc8KXNMcKPXSSPa0Bhb4MhzReR+4gGltLBn2+I=; h=Date:Subject:To:Cc:References:From:In-Reply-To:From:Subject:Reply-To; b=bazsBhoLb5D/tNPJS7aFpOe5hVH2Vd7bSLXAaEOzj9ruzlHuBSroJk0e+bRFlZxXuKBf7e2dlObNGFmK/T9NNF5oE/43RcP+K4RjkNJrQNwkQ6c8FVeEDhrSmPzNdbe/F32fPu0PdsIHhEJWHyZk/Tt9zS/7OfqJDkD3zVOnUA9dpMJJqXYBFMuqOs4Q5AdKhmhFCsRS5dmRmA91x6wRzHkNJIlJKuBbmCLig/KqBSsiyMKTTsMIIjYGubYQBV72VwbksvVX5VLZPWFJ8Yv9uZhq5ICKkmfUc33I1V39y57vNETQCqgLRmAPw6+Anvx/R8j+vwDhjyY1kHJngZVVEg==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1711698225; bh=olrSnGhWzn/FU8w84rCee9VzDgUXdEltLPvqKeTuiye=; h=X-Sonic-MF:Date:Subject:To:From:From:Subject; b=PUJkeIGq59uqg2sZNetPS76Z8zsCuMLxEGyKk8KzcI+GNQMrUrk3HDPsmw3BFT6etF/9aNpMf+pf6fMSxDWR7cZS8IJpPPA6hYWOqXQHkDlzqwhIo/6kZCy6U1jUOFvk6/5Cjr1WdGjc8731oAKIyyLAYsxzjzVlhza9q16yxnoNR6Rf4d7kJ/D98uqt/emdOp5nKWavJP/5sqYQcfpwQY7h/AK7/s9MDHPGbK9s4iBxKXf2Lk6rpgXl21RcrpoD9W0pQ+YLTOLxc5cIhF0hUnjt55u85B9J25hfZz+lfrgSnDseGfEjA3M8eaCI1DTKmfs61tFdzrXyh48vyJ3ZmA==
+X-YMail-OSG: D8Yl0X8VM1kyGkdFxhlOEuA2MLGab6rZvotUhS7KDnrSEQ8A1W5fY8EtiW06WqZ
+ 3rdmDdZ5uNQAdJqglpZAXxooRnA00F8w3pGErHj1QR2gbL2h2tET49_Iag0svDhfnebeOiawU4PY
+ P4bLHyfisuxkDzGvnfKMoLz2q1gYsf4M4zvaD.txgKoct4dMIkaEERsRZi8eV51xER_c01AAMkXA
+ OiF1m6xNVgL_EyzKYwkkXy4De75ECRsrQGDb9UaNxEI0qizhsY7gGHAMldggYH5Ca8pXqVoMaV.T
+ WyG8rt59SpAcdV3ea345koxqWFeRj6BSe8KIWs68NZFyYl2C_.eBLIGbSPPJhrSQ7xdB37anu.Ac
+ eKZHN5LczITHBQXrsRLhb3yB11LCIOegRan3hqiWiGN96TdE4Dk37EKpn9nOaVp.t6yEd7FpJcsW
+ NnHk6oxRW9_YUL9T0SPRw.9kdzR77n440EO_7hh_BqT0UEoB0x3AhP.zbIVHh6NO2WQUjM6DAxV3
+ fxqY6L1uvR4p0wxLFBmtwk4I2MFGmWQIuCF8Qofhk9YpGMvRzzCZpfrqtt1apyhpwi.mINnEeg4d
+ D7gvaBEJPoVSAzYmls4sieWaBrqGqWhLaIIjG42xJ567EjrknICyQq0ZmiT2Z94Xxna36A3cFM1z
+ mNUl4kUuJVpPKC4aKcx1hXuT.Op925C87oKOFK7QOLpd0W8Wf5RfOeuen8r0hDFQZBLNql2jP6Qf
+ Hr4LY56aowGSIS_JOcFOU5VrjV6IpS0sGH8hCc3RfUv0wyjhL.vLHiKzqn9O7BLQARs5Ciw4AQhQ
+ g67dO8FHYsYOJqbs.KFHlGVlndxR.Zuayp5f3oNkfYdPygzNCl0lwMNrtZAHPVwFrkfPYyqPgaUY
+ V0H5FrtXtSdhjs0vkKrTZ1slfaOblqj96Er9gAuyYna_hAAZDLvfiaS2slETc5Q7cB_MpAX77KCD
+ ORoq9UiWRXtFEHuYG6PUXt0xblbWo6NWKnhvMDLByEE_LlrJUyvcEoIZYyJViSaZXJmiJVxABxWb
+ MDmfUDsEdHrPejY93quQ7YdtBefwDz8iavlH2MvVHkl2D6_Dl_8.9c8_HIIP2i.n0WrAP_MYgt4X
+ HEPd0mqqikfQ6Zt6ukucwEEJzTwy9wGc6Kg2Kfd8.Oink3OJXZHSBkD4FbIlV9oLQYRyG8debQlr
+ Xyq.A62RUemZt3ztFMyQKlDetxKBLte7diDOuWK954M8raLpXXJ_EiRJG1qOcK.c2Q7ibV_PZLwx
+ 6hUe5o3e4ryNotdaRQhtLOoM3slpVU7Xt2N44PFz8p9dk9wcaSps_0Z7imoAKvcol5bPoAsBzz.z
+ AqEmHpttqescCRTWUvH1Y.6VLpGciICzfZYxp.o9xFgnB6BPPqZLibFkuhWZWERJKY_C23uBpSQC
+ .9BGv2aKoQ5can0rAz3V.11a8NXslCkW9vUra.T4iV.xebOFdIjG0rutZC6elyUp2wlG6OGq7ar0
+ 4BaDoE5tMO7RBgwrmNRmCYVaH6bmuBFA961bWoVAaWK1dDxuxEvSGc_GhUeZa_9eyMQwp67wHpRH
+ 3_xyp_tlWvP7g0GY8ifMC5Fs4bF9t1mUw403NElvafFR9W9_5yRzlt7hyCKDfpxke3O1bK9SDjGy
+ h5.hzu4oVWzBptTfGo4aXMfU5jGD_ss.EOsKGpiLczE8_BxNeD4RHIk4g.gAUg6FkM43DO8i1BOZ
+ 2gIKRBXXQ3_o_SEhzQZWjbf7Ay2vrOitExzSd6mnXfrksWYZvXZNy7EwZpLA8ZISLXWvFgDv1iUk
+ e..EoE35qwVAyWRV1Qw8sH0oYuhxS78eQ0OYLJdQmMYXRR7Spu0HapGKZhGMzrFi3zgN5X1vR6GK
+ x0virE9PpyTmkScfcJhuLA8wbnKFZxEATCidi6wSuQBZ3To6apcjlJCRJ9iPkKjSPCK5wDa4FVm3
+ vGVK1RDP2RsIbvy1kt.uoyPnj_nVfqbp._xMKH.5tMSTBB5Ambra83m_cpraxQzx_xKOBAvYdccY
+ symCd3qf5qq_lDy8zDb36l0zuCSPSzAT.8ryPHGUcDuCBl7GZIjtkKYqPUuVIYETbcrEx54u5eZf
+ cZqzkuZvlG9OfnEyQ4Wkf87H3x_6J4bEvruK.9e3TCpGcV0JYMm6UmBV_bmnaH4A03kEwkhE2jHI
+ baD1cFlE3PFzHeFe3rVhAkLZI5xYWpOVF0yXtMWdRSoeftpuOdz8mlq9mPgRAHSrFC5WSEpDNG0r
+ qz0lO4WSX6jIzm9V8H5_0CYqT.hhhizcsHDBxMg5Y2j82MT8owj9x0C0Vy.HMu7GpmRQ-
+X-Sonic-MF: <serdeliuk@yahoo.com>
+X-Sonic-ID: 6c97460c-e784-4241-8f28-8e2d8036dd0f
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic316.consmr.mail.ne1.yahoo.com with HTTP; Fri, 29 Mar 2024 07:43:45 +0000
+Received: by hermes--production-ir2-7bc88bfc75-7f2jw (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID 7d954246ec0744b9efc2d2bb63deca80;
+          Fri, 29 Mar 2024 07:23:27 +0000 (UTC)
+Message-ID: <673ce5e1-edcd-414f-9346-ae50bccd88a5@yahoo.com>
+Date: Fri, 29 Mar 2024 08:23:25 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] v2 arm64: dts: qcom: Add support for Samsung Galaxy Z
+ Fold5
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240329-v2-dts-add-support-for-samsung-galaxy-zfold5-v1-0-9a91e635cacc@yahoo.com>
+ <20240329-v2-dts-add-support-for-samsung-galaxy-zfold5-v1-2-9a91e635cacc@yahoo.com>
+ <4e1c225f-9b9a-4300-b4d3-2fc38c9b573c@linaro.org>
+Content-Language: en-US
+From: Alexandru Serdeliuc <serdeliuk@yahoo.com>
+In-Reply-To: <4e1c225f-9b9a-4300-b4d3-2fc38c9b573c@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240329-qcom-ucsi-fixes-v2-11-0f5d37ed04db@linaro.org>
-References: <20240329-qcom-ucsi-fixes-v2-0-0f5d37ed04db@linaro.org>
-In-Reply-To: <20240329-qcom-ucsi-fixes-v2-0-0f5d37ed04db@linaro.org>
-To: Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Guenter Roeck <linux@roeck-us.net>, Bjorn Andersson <andersson@kernel.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>, linux-usb@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1138;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=FNeZFewSvhBuxQ3csqXQFOnbclapSSlOktRlQsrIAHc=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmBlyNmGIBuVhU4gfN28LpZjdh7YgctgnqxE1E0
- KsohJsxZoKJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZgZcjQAKCRCLPIo+Aiko
- 1SOwCACbroRYofwqqtJBc4WH7gWH+m6z605qzhkOa3DeXh9HM2Y7QoayQt36RhIldcY9tA+yjYW
- ZyYh4rtfY6YqQzm1G8Wcyo8SMOIwNs0uUTxM0Npyrvyi9+omUIWt/K8Lt4lYvwzVVQpix7u8VfT
- tcwhZxzRJ5Ez6ITnLte5q1ADP7F2rwmzD1CxKa5HrNklEUsHa8E3iTBAqsgG2mpJTy7OFQLvbR6
- hMSb2WpbFeWWJqGrAkyKp8fjEE6suhFaurGdtWNm1bOLcs25NA07dopiX6mGXRcECzf/v1O/MVp
- lS9ErAZLf3lDayifUsYiE/CJ+su1Nop6pNqgv2WHwf2c1uBR
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+X-Mailer: WebService/1.1.22205 mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
 
-Now as all UCSI issues have been fixed, enable UCSI subdevice on the
-Qualcomm SC8180X platform.
+Thanks, indeed, v3 will contain the right messages
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/soc/qcom/pmic_glink.c | 4 ----
- 1 file changed, 4 deletions(-)
-
-diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
-index e5a591733a0f..c2f71d393bbb 100644
---- a/drivers/soc/qcom/pmic_glink.c
-+++ b/drivers/soc/qcom/pmic_glink.c
-@@ -334,15 +334,11 @@ static void pmic_glink_remove(struct platform_device *pdev)
- 	mutex_unlock(&__pmic_glink_lock);
- }
- 
--static const unsigned long pmic_glink_sc8180x_client_mask = BIT(PMIC_GLINK_CLIENT_BATT) |
--							    BIT(PMIC_GLINK_CLIENT_ALTMODE);
--
- static const unsigned long pmic_glink_sm8450_client_mask = BIT(PMIC_GLINK_CLIENT_BATT) |
- 							   BIT(PMIC_GLINK_CLIENT_ALTMODE) |
- 							   BIT(PMIC_GLINK_CLIENT_UCSI);
- 
- static const struct of_device_id pmic_glink_of_match[] = {
--	{ .compatible = "qcom,sc8180x-pmic-glink", .data = &pmic_glink_sc8180x_client_mask },
- 	{ .compatible = "qcom,pmic-glink", .data = &pmic_glink_sm8450_client_mask },
- 	{}
- };
-
--- 
-2.39.2
-
+On 29/3/24 1:54, Konrad Dybcio wrote:
+> On 29.03.2024 12:08 AM, Alexandru Marc Serdeliuc via B4 Relay wrote:
+>> From: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
+>>
+>> Add support for Samsung Galaxy Z Fold5 (q5q) foldable phone
+>>
+>> Currently working features:
+>> - Framebuffer
+>> - UFS
+>> - i2c
+>> - Buttons
+>>
+>> Signed-off-by: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
+>> ---
+> Looks like the commit message and contents got mixed up!
+>
+> Konrad
 
