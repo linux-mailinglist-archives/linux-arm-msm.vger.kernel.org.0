@@ -1,63 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-15700-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15701-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B40F8891914
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 13:35:10 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65648891924
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 13:36:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6A5611F216C4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 12:35:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 96E371C24882
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 12:36:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A200C142E65;
-	Fri, 29 Mar 2024 12:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5C55143C47;
+	Fri, 29 Mar 2024 12:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ek7Ve/lD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DrVpzndg"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C9812DD92;
-	Fri, 29 Mar 2024 12:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0681327F3;
+	Fri, 29 Mar 2024 12:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711715270; cv=none; b=gyyKQJrTOz4iwVAsNkMhzP1GC827tVr2jnjsbqNQUrE9mq31jNWHv3gMxx9UixxRLU65UuCfQsfBnjpQ1C4ZdpP2jDUYGkNCziq3h23trP0+9Nqud1YClIOrIgNDSQhDEjh2B2gPEQbfniXE8FYjUiYxBgS6or+OVcOKrY51xYU=
+	t=1711715276; cv=none; b=Frb/JQsqiD3+L+iZNRXwcSrgGcO2meVCricPxF7FrkSmk8GErzsEPGf75zvx7DY8pCeManejeI4Rnm+umCThw8F3IYc1v3kFwfNvfjy5C4l5iGomL/rX7ub5U95GITtoZYMlc+DU61Qg8V1SEn1Fq7099zvcnaUPW54x+URmCnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711715270; c=relaxed/simple;
-	bh=gp+qQNDIXBTr3j2Cxv3o0dcbn3KSps6lPF3MT/eFmrI=;
+	s=arc-20240116; t=1711715276; c=relaxed/simple;
+	bh=my/elSpyjr/TnRLeoRL6MxnBmfoFrfy+xZT2hl4f2+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XlPzUCSxDAznLuE58tz6/t5PZnCTgu6e1CdeJLSWVV6K7ZGIcTdjY60sdPF0OdleHTaerRPz5K+oxMQSe91FQkcm8f1oO116/q8b7JV9fgkmOcYNiYY4MyYY9tt2tMYa/D6t7c6ciQjJEc8aTv6TC+7Z1K8d1pcVbufubDiSgnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ek7Ve/lD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE92CC43399;
-	Fri, 29 Mar 2024 12:27:48 +0000 (UTC)
+	 MIME-Version; b=iU6ZT9TgR6D5q0Mbat3CkiJv+P333ymC9KZF8j9VMqf3mju1wY2qjO63vQheQvvw+2cHgWKq5Trd7CluKaz1sZROLV85lY2TIlb/ql9Vez9iZElo0CPYKpHdLRwfjZkhntswL+O2p/OKyLtPaQOHXW9vGaOTBk6dBVZ+falzl/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DrVpzndg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB771C433C7;
+	Fri, 29 Mar 2024 12:27:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711715270;
-	bh=gp+qQNDIXBTr3j2Cxv3o0dcbn3KSps6lPF3MT/eFmrI=;
+	s=k20201202; t=1711715276;
+	bh=my/elSpyjr/TnRLeoRL6MxnBmfoFrfy+xZT2hl4f2+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ek7Ve/lDZHRy2GihJpX+szc82zAVeL5MJhyyEZKkr0XC6SmNyv7F8JgTw234QKUSW
-	 NF/gr3nmYz0DRWe6tqHaTV+DfYqjctdgMoK1AQatM11aujZX3vaGbRcKAku7+ZIziy
-	 Hj8LHC68AE3oPDfSy+inY1tMyF6R4j44lYZN5OUpEtYhcjn59otuZkCWoTw0J74R60
-	 HCQGivM8+6xRfwagTNGHnCWHmAwiMXhHTkGp7W5vg8WYCQzjfxrLz1YSpezVjHTcfQ
-	 q+QEDirTs+9GLWkz+P/HPgBDZbwL6ud45JwF24KSGifkAW9ifAg+UbnEtlv5kfb9Dp
-	 BD6U+8AlUhOCQ==
+	b=DrVpzndgvu7kIXB4sgIzWbqqCXHwzfHw5nNOtFToJ1mEAbTyP40LBRegSXR5aviLs
+	 jRbRx76IT9qfrKmm36JOU3YefopLQF1Dr2f9a/22Sf0Lv3DbipELWs6zS5wu+lWYSk
+	 KHPiICbgiPhv8EOt01H/AaMPwlUTT8Gqp9wZhMaH343VzVDJ+DaaKGuWP5PLVCTn9v
+	 DiVB8Z8B3xn1e3LM30eEMVKbus5BSCwOiikKtGe/JMChzPISXr3AqR9u6zD2GF9r8k
+	 y/Xl9zU5/u94Xzo44fdENqHO5X/AvEoq5nRW7WLoPegdLW7KBsMOb9P/h4aQMj/Wu8
+	 rqJxdX7mm2TvA==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
-Cc: Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
+	konrad.dybcio@linaro.org,
 	robh@kernel.org,
 	krzysztof.kozlowski+dt@linaro.org,
 	conor+dt@kernel.org,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.8 29/68] arm64: dts: qcom: qcs6490-rb3gen2: Declare GCC clocks protected
-Date: Fri, 29 Mar 2024 08:25:25 -0400
-Message-ID: <20240329122652.3082296-29-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.8 32/68] arm64: dts: sc8280xp: correct DMIC2 and DMIC3 pin config node names
+Date: Fri, 29 Mar 2024 08:25:28 -0400
+Message-ID: <20240329122652.3082296-32-sashal@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240329122652.3082296-1-sashal@kernel.org>
 References: <20240329122652.3082296-1-sashal@kernel.org>
@@ -72,57 +70,58 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.8.2
 Content-Transfer-Encoding: 8bit
 
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 7c6bef576a8891abce08d448165b53328032aa5f ]
+[ Upstream commit 61474b18e762671a69b2df9665f3cec5c87a38af ]
 
-The SC7280 GCC binding describes clocks which, due to the difference in
-security model, are not accessible on the RB3gen2 - in the same way seen
-on QCM6490.
+Correct the TLMM pin configuration and muxing node names used for DMIC2
+and DMIC3 (dmic01 -> dmic23).  This has no functional impact, but
+improves code readability and avoids any confusion when reading the DTS.
 
-Mark these clocks as protected, to allow the board to boot. In contrast
-to the present QCM6490 boards GCC_EDP_CLKREF_EN is left out, as this
-does not need to be "protected" and is used on the RB3Gen2 board.
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Luca Weiss <luca.weiss@fairphone.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Link: https://lore.kernel.org/r/20240209-qcm6490-gcc-protected-clocks-v2-1-11cd5fc13bd0@quicinc.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240212172335.124845-1-krzysztof.kozlowski@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 2 +-
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi                     | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-index 8bb7d13d85f66..ebbe2c1123f6e 100644
---- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-@@ -413,6 +413,23 @@ vreg_bob_3p296: bob {
- 	};
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+index eb657e544961d..5fca27f668a5b 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+@@ -1204,7 +1204,7 @@ &usb_1_role_switch {
  };
  
-+&gcc {
-+	protected-clocks = <GCC_CFG_NOC_LPASS_CLK>,
-+			   <GCC_MSS_CFG_AHB_CLK>,
-+			   <GCC_MSS_GPLL0_MAIN_DIV_CLK_SRC>,
-+			   <GCC_MSS_OFFLINE_AXI_CLK>,
-+			   <GCC_MSS_Q6SS_BOOT_CLK_SRC>,
-+			   <GCC_MSS_Q6_MEMNOC_AXI_CLK>,
-+			   <GCC_MSS_SNOC_AXI_CLK>,
-+			   <GCC_QSPI_CNOC_PERIPH_AHB_CLK>,
-+			   <GCC_QSPI_CORE_CLK>,
-+			   <GCC_QSPI_CORE_CLK_SRC>,
-+			   <GCC_SEC_CTRL_CLK_SRC>,
-+			   <GCC_WPSS_AHB_BDG_MST_CLK>,
-+			   <GCC_WPSS_AHB_CLK>,
-+			   <GCC_WPSS_RSCP_CLK>;
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
+ &vamacro {
+-	pinctrl-0 = <&dmic01_default>, <&dmic02_default>;
++	pinctrl-0 = <&dmic01_default>, <&dmic23_default>;
+ 	pinctrl-names = "default";
+ 
+ 	vdd-micb-supply = <&vreg_s10b>;
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+index febf28356ff8b..38351e8ea8b33 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -2978,7 +2978,7 @@ data-pins {
+ 				};
+ 			};
+ 
+-			dmic02_default: dmic02-default-state {
++			dmic23_default: dmic23-default-state {
+ 				clk-pins {
+ 					pins = "gpio8";
+ 					function = "dmic2_clk";
+@@ -2994,7 +2994,7 @@ data-pins {
+ 				};
+ 			};
+ 
+-			dmic02_sleep: dmic02-sleep-state {
++			dmic23_sleep: dmic23-sleep-state {
+ 				clk-pins {
+ 					pins = "gpio8";
+ 					function = "dmic2_clk";
 -- 
 2.43.0
 
