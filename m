@@ -1,145 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-15684-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15685-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A8348916AA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 11:22:22 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 02D5C89170A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 11:48:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BBC781C216F7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 10:22:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8B1911F215FD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 10:48:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AAB252F89;
-	Fri, 29 Mar 2024 10:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C05669E00;
+	Fri, 29 Mar 2024 10:48:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="D5nmmMwQ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VSNS8107"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E4A39FD1
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 10:22:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B551869DF4;
+	Fri, 29 Mar 2024 10:48:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711707737; cv=none; b=cvfpLSnY3nRRdBcEXsvhp7eW6Pst65MbOC/Du0B/iwhWgMZvbFFq+vvimjTRS0143mmqbWATcBYV/CeTJPjUbKDZtqJec1+AsA9THi7I3h06lUAJ7aCuj03Jo8FnZ96ICwpRDE/iE4zXdMCf2hsE9sRHa8U5FNcEwwRi8AzOXqo=
+	t=1711709321; cv=none; b=kfS4zVTdY/WK3LIB/FUY+goFuwpqvDx8CJFgBWZlbqqix90zdDZboci7sPSTXlSvaKROak/kMZDF6b30Z70xUzZx4gBEcr8JVWKFcK7mHa1mQecklPJbdNVUt9AtMxYjDEKzDUphVQG8DdBVFQk0+mFweVAxyjei7BsBRa+Nsb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711707737; c=relaxed/simple;
-	bh=5iGLeKg1B+c+xy7usHfD7DuolFxdePCGQGv5moChJAs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=POJdbvkQrbZRKOu3LArM2pvl2+ftUcOsKNLhZCXShH4jmKfb/iWRSJPCklgFiJAlCevBFWNPCX8yMQocxcvKdu8rUR6XzoIIPNXe+GP2imjpOUUM+sBkLAR+BFqNo96vEbmdmNo7I5P6waoKBveOT7s7Ws3jpAiYfi0FqcMHCGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=D5nmmMwQ; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-515d44d2101so38906e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 03:22:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1711707733; x=1712312533; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/J6gP3oWZ32r+n62bhK72ncVvhRHUkReUApoR4TBfF0=;
-        b=D5nmmMwQBHIiDlqLVRDTEsQLdm1ly5ZHftIyHaPe8srZRdnuGX+n96g8iKxNVrUFeD
-         0g0R55AGwWIXOppIRnwfxG8n5FLVIWRTeHPOAhU7WmD6LCUDf37VdquWLcfTTf09e3pi
-         YTXapUgA0utZLEpAzs2ol+4mKyjSA2FGcUtqSBHE3kST0wv0y0Mo/ShyZTBgi9OUZaN3
-         OZsjSFr3EY8qICdJq6zkAGq0W37g2CylDcFM+jbq0eN4X9lkeHLm5f0dqtDIFKygBnm1
-         RFyK/C0b2RTdWcErBeKUQl0KCj8hCa46piyyHkjYw4yW/NGQm+TZf1Rf6RuS5CqBqToc
-         lVRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711707733; x=1712312533;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/J6gP3oWZ32r+n62bhK72ncVvhRHUkReUApoR4TBfF0=;
-        b=J9DVyF7tftEnfmBZxDeaQhgW+1Lv1V98gUbXCRJbf4JxJ1i+qfJLs2E1oybAJM7vPH
-         6xPfe92WTLzcxEeHe9s56/ChLKUGt3DNe17SW4kDk1md7avKX6HWFGycaygM4oG+vjxf
-         59ppBg3XtadotCH311u7cWweHbLLaKOAlz8Q5kSWV09OvTj3vBsy4Q6yoQ5AGYsoPcBn
-         SuG7AnRa9WGvMTG/VZwsd+KCXEfuGWRadppl0Z5mxLA6+z3/uGdNyqAAqG2Sk2RI1LyA
-         fmNZGfvN7OBsqV6ZtScBG79yqur9pry/9zUEA8hdM8A5uBv4k1kdodtSVkxqgYxWcIUy
-         83lg==
-X-Forwarded-Encrypted: i=1; AJvYcCUu1BW+YLAO7AXGsD+X07E7NgvGQdZbprhVfHlTIPs/NQzoPsPofTkp5n/pDtEbgsnNXYdS2O6qtpqMIIBqlisXxJIkmjnc1oXRijEZGQ==
-X-Gm-Message-State: AOJu0Yy+1gwMgyJjiVIr1PTODHT7PL8NUd53p/0bfMk/kwvnEfzx59/2
-	79UTNtyHFjXWwpIC0qLMSavl2AWf30NeX9hZdV4nGqHtVnWfz3j2p4CpwNX4xzM4gkUD6MG9vne
-	XnXCwkF38YyY7p7X6x9pxwP5nXCeDsOaeyl4vsA==
-X-Google-Smtp-Source: AGHT+IFR4sAXfJH8jLEP1t7TjlkcUZ9XMDWJPhv7FUv8k9zXllRTrbpTxelFPbzAnEHArC8D9K4FgriWWJSfYZnh8xk=
-X-Received: by 2002:a05:6512:6cd:b0:513:5e6b:a191 with SMTP id
- u13-20020a05651206cd00b005135e6ba191mr1439757lff.50.1711707733433; Fri, 29
- Mar 2024 03:22:13 -0700 (PDT)
+	s=arc-20240116; t=1711709321; c=relaxed/simple;
+	bh=BezfkLUIoQfVoMQnu64WTtKfJYFHwMBtnDPgDuHAb50=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sfi2YF6/bzFu6IMAa5CS7Td1t1JjxLK45JGVGLDRgvPFYp6OY1d9WKaJU334GcGBa0kDG3QnxWV7pyagqGlmaZzNtAvcMJyVuAVPnJthZk6W53nbk1l6l5u+ltRRB2sr4VEsoelEmN8PBb7aHU0KMyPjbaM84HVq/VTS9mgjfZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VSNS8107; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42T7pCUO008287;
+	Fri, 29 Mar 2024 10:48:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=AOcFCVlQixidLBpUiZJsE
+	HbwIXHHYvnLMJmcdbFLxII=; b=VSNS8107vcFw66O20qqghVaz0kE5kJJHCjQfy
+	6a3cQYqr44+/bV6ZghbvzUfuGxbHK7aFT1L08nkRQgm2ib3UlmXlLpRcTqjoZ3he
+	f73fEUy2ovNbifz9k6Qu60dzxT4bof7UYjqPFSMYM8PPJDJrG/HLMRQ1LrDgI50y
+	HQp6g6+THybePPOK9mMIu8sCAUKc4+SLSHveU5BLdpZeJQi807nXd5O9t7LtjzBs
+	jiljWNMzCGGKJkEClZs8GLwnhmw6nqf+E/YSpEQ99kpjy68dGXn7Gf17AzkD0tMx
+	oRB6E5iVMBZAKn2QV4iNRkpaVi+QWXnPwj3ih7kO1WUT4MWGg==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x5sm6gf64-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 Mar 2024 10:48:34 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42TAmWJI016710
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 Mar 2024 10:48:32 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Fri, 29 Mar 2024 03:48:28 -0700
+Date: Fri, 29 Mar 2024 16:18:24 +0530
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: Stephen Boyd <sboyd@kernel.org>
+CC: <andersson@kernel.org>, <conor+dt@kernel.org>,
+        <devicetree@vger.kernel.org>, <djakov@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <konrad.dybcio@linaro.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <mturquette@baylibre.com>,
+        <quic_anusha@quicinc.com>, <robh@kernel.org>
+Subject: Re: [PATCH v5 3/5] clk: qcom: common: Add interconnect clocks support
+Message-ID: <ZgaceJT2FMsQVoPa@hu-varada-blr.qualcomm.com>
+References: <20240328075936.223461-1-quic_varada@quicinc.com>
+ <20240328075936.223461-4-quic_varada@quicinc.com>
+ <80131262978e6e4799864cdfd0784fdf.sboyd@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240325100359.17001-1-brgl@bgdev.pl> <56e1c63a-4c09-4d92-9ef2-aad5390879cc@gmail.com>
- <CAMRc=Mf_pvrh2VMfTVE-ZTypyO010p=to-cd8Q745DzSDXLGFw@mail.gmail.com>
-In-Reply-To: <CAMRc=Mf_pvrh2VMfTVE-ZTypyO010p=to-cd8Q745DzSDXLGFw@mail.gmail.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Fri, 29 Mar 2024 11:22:02 +0100
-Message-ID: <CAMRc=MfsVWcoMC-dB-fdxy332h-ucUPTfEUMAnCt5L-q3zJxWg@mail.gmail.com>
-Subject: Re: [PATCH v9 00/13] firmware: qcom: qseecom: convert to using the TZ allocator
-To: Maximilian Luz <luzmaximilian@gmail.com>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Elliot Berman <quic_eberman@quicinc.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
-	Guru Das Srinagesh <quic_gurus@quicinc.com>, Andrew Halaney <ahalaney@redhat.com>, 
-	Alex Elder <elder@linaro.org>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, kernel@quicinc.com, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <80131262978e6e4799864cdfd0784fdf.sboyd@kernel.org>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: HQybzIkZ1Aavu6sA6qT7jMBWnIMsifQm
+X-Proofpoint-GUID: HQybzIkZ1Aavu6sA6qT7jMBWnIMsifQm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-29_09,2024-03-28_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ priorityscore=1501 adultscore=0 mlxlogscore=999 suspectscore=0
+ impostorscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0 clxscore=1015
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403210001 definitions=main-2403290094
 
-On Thu, Mar 28, 2024 at 7:55=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.pl>=
- wrote:
+On Thu, Mar 28, 2024 at 02:54:52PM -0700, Stephen Boyd wrote:
+> Quoting Varadarajan Narayanan (2024-03-28 00:59:34)
+> > diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
+> > index 75f09e6e057e..9fa271812373 100644
+> > --- a/drivers/clk/qcom/common.c
+> > +++ b/drivers/clk/qcom/common.c
+> > @@ -8,6 +8,8 @@
+> >  #include <linux/regmap.h>
+> >  #include <linux/platform_device.h>
+> >  #include <linux/clk-provider.h>
+> > +#include <linux/interconnect-clk.h>
+> > +#include <linux/interconnect-provider.h>
 >
-> On Thu, Mar 28, 2024 at 5:50=E2=80=AFPM Maximilian Luz <luzmaximilian@gma=
-il.com> wrote:
+> Do we need the second include?
+
+Will remove.
+
+> >  #include <linux/reset-controller.h>
+> >  #include <linux/of.h>
 > >
-> > If I understand correctly, it enters an atomic section in
-> > qcom_tzmem_alloc() and then tries to schedule somewhere down the line.
-> > So this shouldn't be qseecom specific.
+> > @@ -234,6 +236,41 @@ static struct clk_hw *qcom_cc_clk_hw_get(struct of_phandle_args *clkspec,
+> >         return cc->rclks[idx] ? &cc->rclks[idx]->hw : NULL;
+> >  }
 > >
-> > I should probably also say that I'm currently testing this on a patched
-> > v6.8 kernel, so there's a chance that it's my fault. However, as far as
-> > I understand, it enters an atomic section in qcom_tzmem_alloc() and the=
-n
-> > later tries to expand the pool memory with dma_alloc_coherent(). Which
-> > AFAIK is allowed to sleep with GFP_KERNEL (and I guess that that's the
-> > issue here).
+> > +#if IS_ENABLED(CONFIG_INTERCONNECT_CLK)
+> > +static int qcom_cc_icc_register(struct device *dev,
+> > +                               const struct qcom_cc_desc *desc)
+> > +{
+> > +       struct icc_clk_data *icd;
+> > +       int i;
+> > +
+> > +       if (!desc->icc_hws)
+> > +               return 0;
+> > +
+> > +       icd = devm_kcalloc(dev, desc->num_icc_hws, sizeof(*icd), GFP_KERNEL);
+> > +       if (!icd)
+> > +               return -ENOMEM;
+> > +
+> > +       for (i = 0; i < desc->num_icc_hws; i++) {
+> > +               icd[i].clk = devm_clk_hw_get_clk(dev, desc->icc_hws[i], "qcom");
+>
+> Make the con_id "icc" instead please, so we know the consumer is
+> icc_clk.
+
+Ok.
+
+> Even better would be for the icc_clk device itself to be the
+> one requesting with devm_clk_hw_get_clk() so that we associate the clk
+> handle with the consumer device. It would also help us make it so that
+> drivers defer probe until their clk isn't an orphan.
+
+Not sure if I understand the comments correctly.
+
+In one of the previous patches, had
+	icd[i].clk = clks[noc_clks[i]]->hw.clk;
+
+This was said to be error prone since the clock would not be
+ref counted. Hence used devm_clk_hw_get_clk before doing
+icc_clk_register.
+
+Now, are you suggesting to use the direct clock pointer
+and do a devm_clk_hw_get_clk from the consumer driver?
+This will take care of the refcounting. However, we will
+have to add these clock entries to the consumer DT node.
+Is this ok?
+
+> > +               if (IS_ERR(icd[i].clk))
+> > +                       return dev_err_probe(dev, PTR_ERR(icd[i].clk),
+> > +                                            "get clock failed (%ld)\n",
+> > +                                            PTR_ERR(icd[i].clk));
+> > +
+> > +               icd[i].name = clk_hw_get_name(desc->icc_hws[i]);
+> > +       }
+> > +
+> > +       return PTR_ERR_OR_ZERO(devm_icc_clk_register(dev, desc->first_id,
+> > +                                                    desc->num_icc_hws, icd));
+> > +}
+> > +#else
+> > +static int qcom_cc_icc_register(struct device *dev,
+> > +                               const struct qcom_cc_desc *desc)
+> > +{
+> > +       return 0;
+> > +}
+>
+> Instead of this please have an
+>
+> 	if (!IS_ENABLED(CONFIG_INTERCONNECT_CLK))
+> 		return 0;
+
+Ok.
+
+> > +#endif
+> > +
+> >  int qcom_cc_really_probe(struct platform_device *pdev,
+> >                          const struct qcom_cc_desc *desc, struct regmap *regmap)
+> >  {
+> > @@ -303,7 +340,7 @@ int qcom_cc_really_probe(struct platform_device *pdev,
+> >         if (ret)
+> >                 return ret;
 > >
-> > I've also tried the shmem allocator option, but that seems to get stuck
-> > quite early at boot, before I even have usb-serial access to get any
-> > logs. If I can find some more time, I'll try to see if I can get some
-> > useful output for that.
+> > -       return 0;
+> > +       return qcom_cc_icc_register(dev, desc);
+> >  }
+> >  EXPORT_SYMBOL_GPL(qcom_cc_really_probe);
 > >
+> > diff --git a/drivers/clk/qcom/common.h b/drivers/clk/qcom/common.h
+> > index 9c8f7b798d9f..d8ac26d83f3c 100644
+> > --- a/drivers/clk/qcom/common.h
+> > +++ b/drivers/clk/qcom/common.h
+> > @@ -29,6 +29,9 @@ struct qcom_cc_desc {
+> >         size_t num_gdscs;
+> >         struct clk_hw **clk_hws;
+> >         size_t num_clk_hws;
+> > +       struct clk_hw **icc_hws;
+> > +       size_t num_icc_hws;
+> > +       unsigned int first_id;
 >
-> Ah, I think it happens here:
->
-> +       guard(spinlock_irqsave)(&pool->lock);
-> +
-> +again:
-> +       vaddr =3D gen_pool_alloc(pool->genpool, size);
-> +       if (!vaddr) {
-> +               if (qcom_tzmem_try_grow_pool(pool, size, gfp))
-> +                       goto again;
->
-> We were called with GFP_KERNEL so this is what we pass on to
-> qcom_tzmem_try_grow_pool() but we're now holding the spinlock. I need
-> to revisit it. Thanks for the catch!
->
-> Bart
+> 'first_id' is gross.
 
-Can you try the following tree?
+will change it to 'icc_id'.
 
-    https://git.codelinaro.org/bartosz_golaszewski/linux.git
-topic/shm-bridge-v10
-
-gen_pool_alloc() and gen_pool_add_virt() can be used without external
-serialization. We only really need to protect the list of areas in the
-pool when adding a new element. We could possibly even use
-list_add_tail_rcu() as it updates the pointers atomically and go
-lockless.
-
-Bart
+Thanks
+Varada
 
