@@ -1,130 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-15743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0CA0892374
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 19:39:24 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0A1D89237A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 19:39:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 599D028681E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 18:39:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 628661F23FD3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 18:39:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B991638DD3;
-	Fri, 29 Mar 2024 18:39:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C07AC39FFD;
+	Fri, 29 Mar 2024 18:39:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VKZOYBAW"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aHCraI5U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23EC639FEB
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 18:39:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433CB39FFE;
+	Fri, 29 Mar 2024 18:39:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711737561; cv=none; b=gYduuA48XGjY5La+PWxl3XdvomLoyWQzkh4+Araq3+96PTczEXv/7/17ws6mhjDt3OU0B+CZPfATBwlCd+GkzEyYiSCKNpHTExgwS/HXBsJxuzK4dLyLRAUSvtZVp4+JqwC9b7HPZLydvOyu6/rTjOr+vqVfeA46OgqG76Q+xgY=
+	t=1711737569; cv=none; b=ZFZ997cpmPM16jqFEBdwK4szwJOn/lt/StfFl5VvjK760St8maBGjfcRRS9vSRAPL43KLwAvjdpZ0G9PrixvOxwFRGd9ye11iZBsDUw+4hvBuaqQSezWAQdC+qj6Gj/xxSyxURkUZ1T/2z80hnCkq3Wsk+0yBxgv9BlXrlwtU9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711737561; c=relaxed/simple;
-	bh=qw+LyXS4Jxo0zDRbwxDiYKHnX2Jw5hLsTZxGE8VC8ss=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tQCWHJwRkDG0nMryrJguu1U4Hd4r405b8tf4wDFD57bRAywnj87OfT8Acy4F7CfWWZtN130NvYSQhyu8NXOlriJ1REoWFSrgQWkPIawn6d03zKhXnE2pmVJlU/i7nrZp08Q1sJg9wG+Il9FFKTki0BSwR0XSzwhxnibVW2AwGaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VKZOYBAW; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-60a104601dcso23189477b3.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 11:39:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711737559; x=1712342359; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=3lLr/63FZWa2U7lSsfTE/HR44aBZA5xAziz+mA0POm4=;
-        b=VKZOYBAWIFzcgAl+/tnYagcx8bjcRV0nljVD0rIR7EV/k2KcqNWxuur0Bdy1NN0Agu
-         a0tLFRvQsZxz9AGE5LwZl5rxPCIbyN8NQe1VeuzY49LOzfbuVLxLu/+xv2wiurPqhvmn
-         AJdu24FYZUHT061l9qKyiwyPdt3QVpQCyut72E41oYChQT2wrfaf6P629rSscBBXtalT
-         5O/QaBwA9uzmazKMStkXoxbozwmfwav2ADcNCSJtaZVZwMiC9uDUDnQ1+AceYL8BSy73
-         yo2KLvs3coj/r0+eC313LBG2X7Ny3S2o9rImIMoLLii2eMd80bZF+UT4PPwaLAk/nrkk
-         eKWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711737559; x=1712342359;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3lLr/63FZWa2U7lSsfTE/HR44aBZA5xAziz+mA0POm4=;
-        b=ntgKMYKZps857ZXWX73LAG443K8Cinue+6YRbSH3M5aCDC8fI+qWUDr+TxEs8J1eI0
-         EHi9UdvhOS+yHEER9XjrKgvrsG2HCj1T5AldJil+23BYVE8B8Rs6zqoDrtEpj32CI1Pf
-         Ow9xE0Xwue/xK/1Envua6fjyAABMQi3qSsT5TXOyHOkPI9fh1NcqWDdGYbGnF8wnjZkU
-         BJTv2AH0qj5B7OUC0iURwFUz+krGP0Foa9/eKMsusPa6pSIydnUmYvfstB3K2C1EkPJM
-         ZRSBZWdRCGuuW41MpKQ5kZj2NAf1p/TCF+jOURNPj/iQtYe9K3fMQL0qGclApUJybEfP
-         yHnA==
-X-Forwarded-Encrypted: i=1; AJvYcCUrkRzBAsmyVwM840Whah7k7QaPlJM6K7rdXCMOAdv5aakv4xjEo15h7Q/nbc/3kcTRpxq5ITAbobaobV514bt+iyJRsFwTsYSPzsAjSQ==
-X-Gm-Message-State: AOJu0YyHQIG5rC3wfJPEA71HX8CBwmYwx8dIDZCJkCsoSeYf7luWpv5P
-	nTis+alguBXes9iyOMCY5O2bzPtQpEtROwkW+7PS1x5+d1KGxtYNRyOEN/JfKbjBLa/ybvUPxrj
-	/Z1+gBa1M07iK5fnD+kEUk3gv3bap+7BrXG5ORg==
-X-Google-Smtp-Source: AGHT+IG6LHCIDykcmLA6i5jn5Wvc80VbM5tLJ6fDDXX2T5HcQwx31rikXyypNkMk6YErFbMKbGLu3vNXn1mOcGtZ810=
-X-Received: by 2002:a25:f622:0:b0:dd0:972b:d218 with SMTP id
- t34-20020a25f622000000b00dd0972bd218mr3373650ybd.41.1711737559195; Fri, 29
- Mar 2024 11:39:19 -0700 (PDT)
+	s=arc-20240116; t=1711737569; c=relaxed/simple;
+	bh=0wmSmgoOywQrbyPUt9U489p4pzF17Ln+ybkakmRaWic=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=mYPtZoA0F0i/SnmpIVMuU6FKFtuA+j/g0w/s6DJVAMqhohXvTXmWsn4PdfgC9f4f2jtZwLZoO3PIqr6qLhR4bia+9KvZ6OIQjNvhdNSaEqfzvxM7QZzJ8d0jLHWN058z0qljWORljEZ6dynRzJl7ilOUtqlBUKYUCkOosXJpjRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aHCraI5U; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42THvciQ015978;
+	Fri, 29 Mar 2024 18:39:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=yRTwX+qHIYV9yXVJsqfoQZk6JWIEWiuhlYjrIn5+DXs=; b=aH
+	CraI5USeigX/vwtHYajXj9vCMHNSl452e2ql/1xW7eEDwgkwhmWqQK+ytMx9J8r1
+	uZywaiYb32zK3GSPsX2hyPMNIpK0szHL3JCryQb1/JGC9zXnsYIqnZwc1deFZppM
+	1Edusrnr0QfgTSIFifCZT/xW3mefb2xQkBO7BrFbaTRL+ved2SpDiDaf76HMWdpY
+	d3t0ooM0KFWHjtUavM5nMDcO4BVayvK4blCVf/HZwlP9O1dyrOp121Vr8Tc6flrB
+	IVQFf3gbA3sC+AG9sx49KVveHHmwwZd4v3fZt/7bitMtKiWveg5nPZPE8YplBuZq
+	ME6V/eWhm/cU+l7kiZSA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x5w6g0tbq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 Mar 2024 18:39:17 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42TIdGoU005391
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 Mar 2024 18:39:16 GMT
+Received: from [10.110.118.161] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 29 Mar
+ 2024 11:39:13 -0700
+Message-ID: <da9dcd58-41c1-089c-2061-be3bad6349a7@quicinc.com>
+Date: Fri, 29 Mar 2024 11:39:11 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240327113228.1706975-1-quic_mohs@quicinc.com>
- <20240327113228.1706975-3-quic_mohs@quicinc.com> <CAA8EJpqh0emOFUPSj8rPaKr2hZRWwOh9NNTco8fyJCtwXe9sSA@mail.gmail.com>
- <92b449da-1569-40f9-d8c9-48949c986853@quicinc.com>
-In-Reply-To: <92b449da-1569-40f9-d8c9-48949c986853@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 29 Mar 2024 20:39:08 +0200
-Message-ID: <CAA8EJprLB6+i4H5tK9LbJYOEH8v9QF78u-+HMmqPqfpvz5J8zw@mail.gmail.com>
-Subject: Re: [PATCH v1 2/2] ASoC: qcom: qcm6490: Add machine driver for qcm6490
-To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Cc: srinivas.kandagatla@linaro.org, bgoswami@quicinc.com, broonie@kernel.org, 
-	krzysztof.kozlowski+dt@linaro.org, andersson@kernel.org, 
-	konrad.dybcio@linaro.org, lgirdwood@gmail.com, tiwai@suse.com, 
-	quic_rohkumar@quicinc.com, linux-kernel@vger.kernel.org, 
-	alsa-devel@alsa-project.org, linux-sound@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-
-Hi,
-
-On Fri, 29 Mar 2024 at 17:20, Mohammad Rafi Shaik <quic_mohs@quicinc.com> wrote:
->
->
-> On 3/27/2024 6:39 PM, Dmitry Baryshkov wrote:
->
-> On Wed, 27 Mar 2024 at 13:34, Mohammad Rafi Shaik <quic_mohs@quicinc.com> wrote:
-
-Please turn off HTML mail composition and never ever send HTML email
-to OSS mailing lists.
-Now quotation levels are broken...
-
->
-> Add machine driver for qcm6490 SoC.
->
-> This initial supports which includes WSA883x Speakers with onboard DMIC
-> connected to internal LPASS codec via VA macros respectively and also
-> WCD937x based headset.
->
-> Add compatible for sound card on Qualcomm qcs6490 boards.
->
-> Granted that qcm6490 is similar to sc7280, is there any reason why you
-> can not use one of the existing sound card drivers? Like sc7280.c or
-> sc8280xp.c?
->
-> The qcs6490/qcm6490 has additional interfaces like MI2S, which requires additional machine driver modification.
->
-> Example : Required new DAPM widget change in machine driver for MI2S interface which is specific to qcs6490/qcm6490.
->
-> So, using new qcm6490 machine driver.
->
-> Will try to use existing sc8280xp.c machine driver.
-
-What about sc7280? In the end, qcm6490 is sc7280 with different firmware / spin.
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH] drm/msm: fix the `CRASHDUMP_READ` target of
+ `a6xx_get_shader_block()`
+Content-Language: en-US
+To: Miguel Ojeda <ojeda@kernel.org>, Rob Clark <robdclark@gmail.com>,
+        Dmitry
+ Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel
+ Vetter <daniel@ffwll.ch>,
+        Connor Abbott <cwabbott0@gmail.com>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20240326212324.185832-1-ojeda@kernel.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240326212324.185832-1-ojeda@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: P0GcQC4Y0AiUXacx71zjBPF3HBkp2tqH
+X-Proofpoint-ORIG-GUID: P0GcQC4Y0AiUXacx71zjBPF3HBkp2tqH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-29_13,2024-03-28_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 suspectscore=0
+ malwarescore=0 adultscore=0 spamscore=0 lowpriorityscore=0 mlxlogscore=948
+ impostorscore=0 priorityscore=1501 bulkscore=0 mlxscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2403210001
+ definitions=main-2403290165
 
 
--- 
-With best wishes
-Dmitry
+
+On 3/26/2024 2:23 PM, Miguel Ojeda wrote:
+> Clang 14 in an (essentially) defconfig arm64 build for next-20240326
+> reports [1]:
+> 
+>      drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:843:6: error:
+>      variable 'out' set but not used [-Werror,-Wunused-but-set-variable]
+> 
+> The variable `out` in these functions is meant to compute the `target` of
+> `CRASHDUMP_READ()`, but in this case only the initial value (`dumper->iova
+> + A6XX_CD_DATA_OFFSET`) was being passed.
+> 
+> Thus use `out` as it was intended by Connor [2].
+> 
+> There was an alternative patch at [3] that removed the variable
+> altogether, but that would only use the initial value.
+> 
+> Fixes: 64d6255650d4 ("drm/msm: More fully implement devcoredump for a7xx")
+> Closes: https://lore.kernel.org/lkml/CANiq72mjc5t4n25SQvYSrOEhxxpXYPZ4pPzneSJHEnc3qApu2Q@mail.gmail.com/ [1]
+> Link: https://lore.kernel.org/lkml/CACu1E7HhCKMJd6fixZSPiNAz6ekoZnkMTHTcLFVmbZ-9VoLxKg@mail.gmail.com/ [2]
+> Link: https://lore.kernel.org/lkml/20240307093727.1978126-1-colin.i.king@gmail.com/ [3]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> ---
+
+
+LGTM,
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
