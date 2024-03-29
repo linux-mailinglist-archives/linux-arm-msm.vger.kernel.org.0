@@ -1,352 +1,216 @@
-Return-Path: <linux-arm-msm+bounces-15647-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15648-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EEFC7890FD0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 01:42:46 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 66AE3890FDC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 01:52:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1DB311C280CF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 00:42:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CE21D1F23398
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 00:52:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11BD138F84;
-	Fri, 29 Mar 2024 00:40:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5203101C6;
+	Fri, 29 Mar 2024 00:52:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="J9Pv8F9v"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="g3VHvE81"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4ECB383A0
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 00:40:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65BEF9CC
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 00:52:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711672854; cv=none; b=E8cwoSxiOdwZI+9q6x++z5yba38vUTkq9sy90auaQ8bUlqDWJKLnAgnxSIe+gBlnLAkjHJyzeqiB0LUxF/Rp2nT0ZVFITRMDSoXYvtYV5yY0pU148KT9vZtOJgGrF5meTdeqPG2E2T2YvRQ2nsTuOIY8hFYR+Kd+D5gTSmy+adw=
+	t=1711673533; cv=none; b=tnEgVNVEiRdUOcNkPdmy9iF4ex///umI1QOEXWpbmsdde2D3ohhRyVdqtuXuxiYwciGWs61F3OCp0ycTa3ihcAf3kpfsw4lL73JrLVuixTHpRFMLZGeRvCYi/WpgO+TEeoQhT4Nt56vKbRNrNKpZ00wosmp2DdFy82IvJ8qWxQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711672854; c=relaxed/simple;
-	bh=+bAuhnv5ztlMtsCbhgujhU7lsWw+qA+HQ0jw4pbPpNA=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WLRiUr+rIaNCGFkZX/6Poxk1aft6NqmREsh2/MHRsVw3sjqiZg7TFilp/kCP23YxBSsHAD40iNMSE91z4RNf9Jixd/XAF5Jlk6lW6sPtE9vX0CediT/W9Z0z5znUJh/k7nSjApSXYSYnA6M2qZxxeklDlybg5nfMmIhoLA2uYA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=J9Pv8F9v; arc=none smtp.client-ip=209.85.167.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-512bde3d197so1106973e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 17:40:51 -0700 (PDT)
+	s=arc-20240116; t=1711673533; c=relaxed/simple;
+	bh=27aZ2S742GNSBlNOae1k6F/LljR7D6xbIdvdSXbZJ6E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=btY3OcECPL7xvsyH5PzUFUGmk8+Rg9HIuynRTyPWmhyYvp67qjxyv1jFHQe0bECHypck5RmLP10WYUqio4eT1oBZLPUw4aakHiv4VGiJtjlw/+w7XerLPmmE5oRw1kxMI80ZeSWCE7TSjWE3vZiD+XoTsBq+KY97z+zv0md9hm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=g3VHvE81; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a4749eecff7so168092766b.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 17:52:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1711672850; x=1712277650; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5wi1ZNjaokpo1/2/WGAYx2F1Noa8brMlLmLxb7LsoaM=;
-        b=J9Pv8F9vWDneqZU1kkROGaC5Rp/EXlFp4sFt+3w0NYzQ8xAiT0otxpFw3ATHeYbqvD
-         HZilD6BqbANU1lz850xH/nXvcjvIL4ccDZBpInoNNwyOKkJYoDliMCzauedBN8uiJpRa
-         fbZ3RhYzwIb0oMlDbskqyh6hqNeMpfT+YROjU=
+        d=linaro.org; s=google; t=1711673530; x=1712278330; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=odkXG5UmuQtNgheOiTVLTUF5waPTq7lcQlYOQN78IpQ=;
+        b=g3VHvE81yaqWe3HRe91W5i42nR695SdZlH3mvpaD+QLDFxZ0OjrmaP96xcY6T4sq7X
+         XslZxiq0Eb1LAxxd2JIJNp81DB32apRrLENIqOF+O7usGbIjMWSu4Q8zeSzsjFP5OymX
+         FdLzw84OMZ9REAeqKgm6nckFjKHFC9N6kwIkQNbq/wIZoGYOyMSNLftwODbtZpbKaX+o
+         /ubmy4UXQogkGCEfz+zSJbXMS5JnbBRzaAsgae+7mMGR+eDX7jbkb7usTevtJhmqfqaa
+         p9Ocx60bnEyyN4CsG7Uq1JjXmdloWzLI+KSLBqiavFuky3aX9Og2zGo7rF0RbBFdqhcY
+         6x8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711672850; x=1712277650;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1711673530; x=1712278330;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5wi1ZNjaokpo1/2/WGAYx2F1Noa8brMlLmLxb7LsoaM=;
-        b=Ufzil+QpmVkxWJpjERFfKTlt4wgkW788LVKT12Q7Jeynkr5TJCMqc20ZBhsriAI8aa
-         2B4YwhDXdP3MMCwCOL5XYSNR08wSeuYD8aktZ2UzlAbwtgpxNiWK6G79v1odC+7gZUdf
-         XdOLxcC/8ug9FPE/iEdKP3zb3ArcjkRx1qcnxhMtdT11YqKj4oTzEVRIu8d3yBZ3Lk73
-         CPvl3tVqwoP/BZkimXpEabbcWr07iK16h7ap765tRLd00o2xBWKuHQxDlk4HDf3rCKxY
-         km9EI49ihTm0gecf0uR2d8T1NgdFUMeDxDaliO4AY7aSGRjrWBNTwq/VR6P9p//emx3T
-         JBjg==
-X-Forwarded-Encrypted: i=1; AJvYcCUr20pz1z65SNOwCbfaBnGPm2T8Ny+kswWnzSv5FWALYQ8LlNMeJyS3B74jl9ru9thV2cHtu7PaiTbzY9HvY5f4eNNKJ7xvKmlyUONI8w==
-X-Gm-Message-State: AOJu0YxiRf+tJFUBcfEfrlRqoYcgRKWGGQptIMkdV7kxeK9kr7v3H8wQ
-	OBwOzBDaEyyUtAw9MV9LdPPGCz1cbwI0l2fCZvkQMOSTfjmyEA3ztbGf+NT8YOks0wwIN9vFtT4
-	y4vsrhjZfYEPNLzurAwqjXsHJaVkKHWPOEAGG
-X-Google-Smtp-Source: AGHT+IEsbKY2aRvY5yWihO7/+jcjcpxM6ugrZbZSLKPkJmxYyn0oQJdVeEkFZ+TDLC4qf1QQoTU2xrs2RS0Q1lOd+o8=
-X-Received: by 2002:ac2:5dc8:0:b0:513:aef9:7159 with SMTP id
- x8-20020ac25dc8000000b00513aef97159mr634579lfq.39.1711672849780; Thu, 28 Mar
- 2024 17:40:49 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 28 Mar 2024 19:40:49 -0500
+        bh=odkXG5UmuQtNgheOiTVLTUF5waPTq7lcQlYOQN78IpQ=;
+        b=Sf7EchRejhUFXveXqZDQl9UfnKDD8XXZD88YOu4Sm9od0iAbiH3QtCrS0XYh3v8PpT
+         mTdCuLo0eDiaOyLgO6Gm6N6GJ4xe6soLOrhfRZ9UMe8Ofidev/bBuRy59EHwlhPJC5t2
+         IlssQGx0AjU3i9RKYQkRj8E3aoBits8mfsT+SrKsg0XDd/xH334x0DG79zphe1sGhpyW
+         vwqOtJrJC+V0d6tYIGAbnCeM036Sm71tcChLnWtoYKzvZrC+I48ZBbHWKnsstbqHBuow
+         4m+yhoTmvaUCGIwa8FmK8PYKUg5vF3vw30E1I3md3JnL0i9BXYTsF8u56c6kGOjUhORq
+         LDiA==
+X-Gm-Message-State: AOJu0Yy+m7PdHbdrqqPfess7cIBQlDfWhpNfyLSzmj9NErWGl6pCpj3i
+	11uQl1kDw/3ObFmj7lox6xepBYCG/Ye+nTbX2V35Pmx5A+1dNrccpQpKlqViPVQ=
+X-Google-Smtp-Source: AGHT+IHnj4Nlv4eeyrNBkDOlQWG8EVF9Kh3wXl02RSVfH7VpLYdXSfgW7V5uo0kdCttb94qY/EI8EA==
+X-Received: by 2002:a17:906:5653:b0:a4e:183d:8893 with SMTP id v19-20020a170906565300b00a4e183d8893mr475463ejr.60.1711673529980;
+        Thu, 28 Mar 2024 17:52:09 -0700 (PDT)
+Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id ag12-20020a1709069a8c00b00a4e222225ebsm1270983ejc.15.2024.03.28.17.52.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 28 Mar 2024 17:52:09 -0700 (PDT)
+Message-ID: <1cdbd387-e937-4d5c-bedb-b4275fdf84cc@linaro.org>
+Date: Fri, 29 Mar 2024 01:52:07 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <ZgU_YDUhBeyS5wuh@gerhold.net>
-References: <20240327200917.2576034-1-volodymyr_babchuk@epam.com>
- <e0586d43-284c-4bef-a8be-4ffbc12bf787@linaro.org> <87a5mjz8s3.fsf@epam.com>
- <f4ebe819-9718-42c3-9874-037151587d0c@linaro.org> <cd549ee8-22dc-4bc4-af09-9c5c925ee03a@linaro.org>
- <ZgU_YDUhBeyS5wuh@gerhold.net>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Thu, 28 Mar 2024 19:40:49 -0500
-Message-ID: <CAE-0n50BGLccCTDfCmOd0Bcbmp7SMwsJd8qTVPWioKvbaD0A0w@mail.gmail.com>
-Subject: Re: [PATCH] soc: qcom: cmd-db: map shared memory as WT, not WB
-To: Caleb Connolly <caleb.connolly@linaro.org>, Stephan Gerhold <stephan@gerhold.net>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>, Bjorn Andersson <andersson@kernel.org>, 
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>, 
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, Douglas Anderson <dianders@chromium.org>, 
-	Rob Clark <robdclark@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] V2 arm64: dts: qcom: Add support for Samsung Galaxy Z
+ Fold5
+To: serdeliuk@yahoo.com, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240329-v2-dts-add-support-for-samsung-galaxy-zfold5-v1-0-9a91e635cacc@yahoo.com>
+ <20240329-v2-dts-add-support-for-samsung-galaxy-zfold5-v1-1-9a91e635cacc@yahoo.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
+ BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
+ HGWdmtO+RvadOVi6CoUDqALsmfS3MUG5Pj2Ne9+0jRg4hEnB92AyF9rW2G3qisFcwPgvatt7
+ TXD5E38mLyOPOUyXNj9XpDbt1hNwKQfiidmPh5e7VNAWRnW1iCMMoKqzM1Anzq7e5Afyeifz
+ zRcQPLaqrPjnKqZGL2BKQSZDh6NkI5ZLRhhHQf61fkWcUpTp1oDC6jWVfT7hwRVIQLrrNj9G
+ MpPzrlN4YuAqKeIer1FMt8cq64ifgTzxHzXsMcUdclzq2LTk2RXaPl6Jg/IXWqUClJHbamSk
+ t1bfif3SnmhA6TiNvEpDKPiT3IDs42THU6ygslrBxyROQPWLI9IL1y8S6RtEh8H+NZQWZNzm
+ UQ3imZirlPjxZtvz1BtnnBWS06e7x/UEAguj7VHCuymVgpl2Za17d1jj81YN5Rp5L9GXxkV1
+ aUEwONM3eCI3qcYm5JNc5X+JthZOWsbIPSC1Rhxz3JmWIwP1udr5E3oNRe9u2LIEq+wH/toH
+ kpPDhTeMkvt4KfE5m5ercid9+ZXAqoaYLUL4HCEw+HW0DXcKDwARAQABzShLb25yYWQgRHli
+ Y2lvIDxrb25yYWQuZHliY2lvQGxpbmFyby5vcmc+wsGOBBMBCAA4FiEEU24if9oCL2zdAAQV
+ R4cBcg5dfFgFAmQ5bqwCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQR4cBcg5dfFjO
+ BQ//YQV6fkbqQCceYebGg6TiisWCy8LG77zV7DB0VMIWJv7Km7Sz0QQrHQVzhEr3trNenZrf
+ yy+o2tQOF2biICzbLM8oyQPY8B///KJTWI2khoB8IJSJq3kNG68NjPg2vkP6CMltC/X3ohAo
+ xL2UgwN5vj74QnlNneOjc0vGbtA7zURNhTz5P/YuTudCqcAbxJkbqZM4WymjQhe0XgwHLkiH
+ 5LHSZ31MRKp/+4Kqs4DTXMctc7vFhtUdmatAExDKw8oEz5NbskKbW+qHjW1XUcUIrxRr667V
+ GWH6MkVceT9ZBrtLoSzMLYaQXvi3sSAup0qiJiBYszc/VOu3RbIpNLRcXN3KYuxdQAptacTE
+ mA+5+4Y4DfC3rUSun+hWLDeac9z9jjHm5rE998OqZnOU9aztbd6zQG5VL6EKgsVXAZD4D3RP
+ x1NaAjdA3MD06eyvbOWiA5NSzIcC8UIQvgx09xm7dThCuQYJR4Yxjd+9JPJHI6apzNZpDGvQ
+ BBZzvwxV6L1CojUEpnilmMG1ZOTstktWpNzw3G2Gis0XihDUef0MWVsQYJAl0wfiv/0By+XK
+ mm2zRR+l/dnzxnlbgJ5pO0imC2w0TVxLkAp0eo0LHw619finad2u6UPQAkZ4oj++iIGrJkt5
+ Lkn2XgB+IW8ESflz6nDY3b5KQRF8Z6XLP0+IEdLOOARkOW7yEgorBgEEAZdVAQUBAQdAwmUx
+ xrbSCx2ksDxz7rFFGX1KmTkdRtcgC6F3NfuNYkYDAQgHwsF2BBgBCAAgFiEEU24if9oCL2zd
+ AAQVR4cBcg5dfFgFAmQ5bvICGwwACgkQR4cBcg5dfFju1Q//Xta1ShwL0MLSC1KL1lXGXeRM
+ 8arzfyiB5wJ9tb9U/nZvhhdfilEDLe0jKJY0RJErbdRHsalwQCrtq/1ewQpMpsRxXzAjgfRN
+ jc4tgxRWmI+aVTzSRpywNahzZBT695hMz81cVZJoZzaV0KaMTlSnBkrviPz1nIGHYCHJxF9r
+ cIu0GSIyUjZ/7xslxdvjpLth16H27JCWDzDqIQMtg61063gNyEyWgt1qRSaK14JIH/DoYRfn
+ jfFQSC8bffFjat7BQGFz4ZpRavkMUFuDirn5Tf28oc5ebe2cIHp4/kajTx/7JOxWZ80U70mA
+ cBgEeYSrYYnX+UJsSxpzLc/0sT1eRJDEhI4XIQM4ClIzpsCIN5HnVF76UQXh3a9zpwh3dk8i
+ bhN/URmCOTH+LHNJYN/MxY8wuukq877DWB7k86pBs5IDLAXmW8v3gIDWyIcgYqb2v8QO2Mqx
+ YMqL7UZxVLul4/JbllsQB8F/fNI8AfttmAQL9cwo6C8yDTXKdho920W4WUR9k8NT/OBqWSyk
+ bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
+ nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
+ izWDgYvmBE8=
+In-Reply-To: <20240329-v2-dts-add-support-for-samsung-galaxy-zfold5-v1-1-9a91e635cacc@yahoo.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Quoting Stephan Gerhold (2024-03-28 02:58:56)
->
-> FWIW: This old patch series from Stephen Boyd is closely related:
-> https://lore.kernel.org/linux-arm-msm/20190910160903.65694-1-swboyd@chromium.org/
->
-> > The main use case I have is to map the command-db memory region on
-> > Qualcomm devices with a read-only mapping. It's already a const marked
-> > pointer and the API returns const pointers as well, so this series
-> > makes sure that even stray writes can't modify the memory.
->
-> Stephen, what was the end result of that patch series? Mapping the
-> cmd-db read-only sounds cleaner than trying to be lucky with the right
-> set of cache flags.
->
+On 29.03.2024 12:08 AM, Alexandru Marc Serdeliuc via B4 Relay wrote:
+> From: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
+> 
+> Add support for Samsung Galaxy Z Fold5 (q5q) foldable phone
+> 
+> Currently working features:
+> - Framebuffer
+> - UFS
+> - i2c
+> - Buttons
+> 
+> Signed-off-by: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
+> ---
 
-I dropped it because I got busy with other stuff. Feel free to pick it
-back up. It looks like the part where I left off was where we had to
-make the API fallback to mapping the memory as writeable if read-only
-isn't supported on the architecture. I also wanted to return a const
-pointer. The other weird thing was that we passed both MEMREMAP_RO and
-MEMREMAP_WB to indicate what sort of fallback we want. Perhaps that can
-be encoded in the architecture layer so that you get the closest thing
-to read-only memory (i.e. any sort of write side caching is removed) and
-you don't have to pass a fallback mapping type.
+Your commit title now includes "V2". Move it inside the square braces the
+next time around, so it's like [PATCH v3 1/2]. With b4, this should be done
+automagically, though..
 
-Here's my stash patch on top of the branch (from 2019!).
+[...]
 
----8<----
-From: Stephen Boyd <swboyd@chromium.org>
-Date: Tue, 14 May 2019 13:22:01 -0700
-Subject: [PATCH] stash const iounmap
+> +/ {
+> +	model = "Samsung Galaxy Z Fold5";
+> +	compatible = "samsung,q5q", "qcom,sm8550";
+> +	#address-cells = <0x02>;
+> +	#size-cells = <0x02>;
 
----
- arch/arm64/include/asm/io.h   |  2 +-
- arch/arm64/mm/ioremap.c       |  9 +++++----
- arch/x86/mm/ioremap.c         |  2 +-
- drivers/firmware/google/vpd.c | 22 +++++++++++-----------
- drivers/soc/qcom/rmtfs_mem.c  |  5 ++---
- include/asm-generic/io.h      |  2 +-
- include/linux/io.h            |  2 +-
- include/linux/mmiotrace.h     |  2 +-
- kernel/iomem.c                |  2 +-
- 9 files changed, 24 insertions(+), 24 deletions(-)
+These two can go
 
-diff --git a/arch/arm64/include/asm/io.h b/arch/arm64/include/asm/io.h
-index 245bd371e8dc..0fd4f1678300 100644
---- a/arch/arm64/include/asm/io.h
-+++ b/arch/arm64/include/asm/io.h
-@@ -178,7 +178,7 @@ extern void __memset_io(volatile void __iomem *,
-int, size_t);
-  * I/O memory mapping functions.
-  */
- extern void __iomem *__ioremap(phys_addr_t phys_addr, size_t size,
-pgprot_t prot);
--extern void __iounmap(volatile void __iomem *addr);
-+extern void __iounmap(const volatile void __iomem *addr);
- extern void __iomem *ioremap_cache(phys_addr_t phys_addr, size_t size);
+[...]
 
- #define ioremap(addr, size)		__ioremap((addr), (size),
-__pgprot(PROT_DEVICE_nGnRE))
-diff --git a/arch/arm64/mm/ioremap.c b/arch/arm64/mm/ioremap.c
-index c4c8cd4c31d4..e39fb2cb6042 100644
---- a/arch/arm64/mm/ioremap.c
-+++ b/arch/arm64/mm/ioremap.c
-@@ -80,16 +80,17 @@ void __iomem *__ioremap(phys_addr_t phys_addr,
-size_t size, pgprot_t prot)
- }
- EXPORT_SYMBOL(__ioremap);
+> +	reserved-memory {
+> +		/*
+> +		 * The bootloader will only keep display hardware enabled
+> +		 * if this memory region is named exactly 'splash_region'
+> +		 */
 
--void __iounmap(volatile void __iomem *io_addr)
-+void __iounmap(const volatile void __iomem *io_addr)
- {
--	unsigned long addr = (unsigned long)io_addr & PAGE_MASK;
-+	const unsigned long addr = (const unsigned long)io_addr & PAGE_MASK;
-+	const void *vaddr = (const void __force *)addr;
+Ouch.
 
- 	/*
- 	 * We could get an address outside vmalloc range in case
- 	 * of ioremap_cache() reusing a RAM mapping.
- 	 */
--	if (is_vmalloc_addr((void *)addr))
--		vunmap((void *)addr);
-+	if (is_vmalloc_addr(vaddr))
-+		vunmap(vaddr);
- }
- EXPORT_SYMBOL(__iounmap);
+[...]
 
-diff --git a/arch/x86/mm/ioremap.c b/arch/x86/mm/ioremap.c
-index 0029604af8a4..e9a2910d0c63 100644
---- a/arch/x86/mm/ioremap.c
-+++ b/arch/x86/mm/ioremap.c
-@@ -392,7 +392,7 @@ EXPORT_SYMBOL(ioremap_prot);
-  *
-  * Caller must ensure there is only one unmapping for the same pointer.
-  */
--void iounmap(volatile void __iomem *addr)
-+void iounmap(const volatile void __iomem *addr)
- {
- 	struct vm_struct *p, *o;
+> +		vreg_l15b_1p8: ldo15 {
+> +			regulator-name = "vreg_l15b_1p8";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allow-set-load;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-always-on;
 
-diff --git a/drivers/firmware/google/vpd.c b/drivers/firmware/google/vpd.c
-index c0c0b4e4e281..7428f189999e 100644
---- a/drivers/firmware/google/vpd.c
-+++ b/drivers/firmware/google/vpd.c
-@@ -48,7 +48,7 @@ struct vpd_section {
- 	const char *name;
- 	char *raw_name;                /* the string name_raw */
- 	struct kobject *kobj;          /* vpd/name directory */
--	char *baseaddr;
-+	const char *baseaddr;
- 	struct bin_attribute bin_attr; /* vpd/name_raw bin_attribute */
- 	struct list_head attribs;      /* key/value in vpd_attrib_info list */
- };
-@@ -187,19 +187,19 @@ static int vpd_section_create_attribs(struct
-vpd_section *sec)
- 	return 0;
- }
+Any particular reason as to why?
 
--static int vpd_section_init(const char *name, struct vpd_section *sec,
-+static int vpd_section_init(struct device *dev, const char *name,
-struct vpd_section *sec,
- 			    phys_addr_t physaddr, size_t size)
- {
- 	int err;
+[...]
 
--	sec->baseaddr = memremap(physaddr, size, MEMREMAP_WB);
--	if (!sec->baseaddr)
--		return -ENOMEM;
-+	sec->baseaddr = devm_memremap(physaddr, size, MEMREMAP_RO | MEMREMAP_WB);
-+	if (IS_ERR(sec->baseaddr))
-+		return PTR_ERR(sec->baseaddr);
+> +&remoteproc_adsp {
+> +	firmware-name = "qcom/sm8550/adsp.mbn",
+> +			"qcom/sm8550/adsp_dtb.mbn";
+> +	status = "okay";
+> +};
+> +
+> +&remoteproc_cdsp {
+> +	firmware-name = "qcom/sm8550/cdsp.mbn",
+> +			"qcom/sm8550/cdsp_dtb.mbn";
+> +	status = "okay";
+> +};
+> +
+> +&remoteproc_mpss {
+> +	firmware-name = "qcom/sm8550/modem.mbn",
+> +			"qcom/sm8550/modem_dtb.mbn";
+> +	status = "okay";
 
- 	sec->name = name;
+Unless you stole one from the factory, these firmwares will not
+load on your phone..
 
- 	/* We want to export the raw partition with name ${name}_raw */
--	sec->raw_name = kasprintf(GFP_KERNEL, "%s_raw", name);
-+	sec->raw_name = devm_kasprintf(GFP_KERNEL, "%s_raw", name);
- 	if (!sec->raw_name) {
- 		err = -ENOMEM;
- 		goto err_memunmap;
-@@ -252,11 +252,12 @@ static int vpd_section_destroy(struct vpd_section *sec)
- 	return 0;
- }
+> +};
+> +
+> +&sleep_clk {
+> +	clock-frequency = <32000>;
+> +};
+> +
+> +&tlmm {
+> +	gpio-reserved-ranges = <36 4>, <50 2>;
 
--static int vpd_sections_init(phys_addr_t physaddr)
-+static int vpd_sections_init(struct coreboot_device *cdev)
- {
- 	struct vpd_cbmem __iomem *temp;
- 	struct vpd_cbmem header;
- 	int ret = 0;
-+	phys_addr_t physaddr = cdev->cbmem_ref.cbmem_addr;
+Would you have an idea what these GPIOs are used for?
 
- 	temp = memremap(physaddr, sizeof(struct vpd_cbmem), MEMREMAP_WB);
- 	if (!temp)
-@@ -269,7 +270,7 @@ static int vpd_sections_init(phys_addr_t physaddr)
- 		return -ENODEV;
-
- 	if (header.ro_size) {
--		ret = vpd_section_init("ro", &ro_vpd,
-+		ret = vpd_section_init(&cdev->dev, "ro", &ro_vpd,
- 				       physaddr + sizeof(struct vpd_cbmem),
- 				       header.ro_size);
- 		if (ret)
-@@ -294,10 +295,9 @@ static int vpd_probe(struct coreboot_device *dev)
- 	int ret;
-
- 	vpd_kobj = kobject_create_and_add("vpd", firmware_kobj);
--	if (!vpd_kobj)
--		return -ENOMEM;
-+	if (!vpd_kobj) return -ENOMEM;
-
--	ret = vpd_sections_init(dev->cbmem_ref.cbmem_addr);
-+	ret = vpd_sections_init(dev);
- 	if (ret) {
- 		kobject_put(vpd_kobj);
- 		return ret;
-diff --git a/drivers/soc/qcom/rmtfs_mem.c b/drivers/soc/qcom/rmtfs_mem.c
-index 6f5e8be9689c..137e5240d916 100644
---- a/drivers/soc/qcom/rmtfs_mem.c
-+++ b/drivers/soc/qcom/rmtfs_mem.c
-@@ -212,10 +212,9 @@ static int qcom_rmtfs_mem_probe(struct
-platform_device *pdev)
- 	rmtfs_mem->dev.groups = qcom_rmtfs_mem_groups;
- 	rmtfs_mem->dev.release = qcom_rmtfs_mem_release_device;
-
--	rmtfs_mem->base = devm_memremap(&rmtfs_mem->dev, rmtfs_mem->addr,
--					rmtfs_mem->size, MEMREMAP_WC);
-+	rmtfs_mem->base = devm_memremap_reserved_mem(&pdev->dev,
-+						     MEMREMAP_WC);
- 	if (IS_ERR(rmtfs_mem->base)) {
--		dev_err(&pdev->dev, "failed to remap rmtfs_mem region\n");
- 		ret = PTR_ERR(rmtfs_mem->base);
- 		goto put_device;
- 	}
-diff --git a/include/asm-generic/io.h b/include/asm-generic/io.h
-index 303871651f8a..d675a574eeb3 100644
---- a/include/asm-generic/io.h
-+++ b/include/asm-generic/io.h
-@@ -982,7 +982,7 @@ static inline void __iomem *__ioremap(phys_addr_t
-offset, size_t size,
- #ifndef iounmap
- #define iounmap iounmap
-
--static inline void iounmap(void __iomem *addr)
-+static inline void iounmap(const void __iomem *addr)
- {
- }
- #endif
-diff --git a/include/linux/io.h b/include/linux/io.h
-index 16c7f4498869..82e6c4d6bdd3 100644
---- a/include/linux/io.h
-+++ b/include/linux/io.h
-@@ -163,7 +163,7 @@ enum {
- };
-
- void *memremap(resource_size_t offset, size_t size, unsigned long flags);
--void memunmap(void *addr);
-+void memunmap(const void *addr);
-
- /*
-  * On x86 PAT systems we have memory tracking that keeps track of
-diff --git a/include/linux/mmiotrace.h b/include/linux/mmiotrace.h
-index 88236849894d..04607c468b73 100644
---- a/include/linux/mmiotrace.h
-+++ b/include/linux/mmiotrace.h
-@@ -47,7 +47,7 @@ extern int kmmio_handler(struct pt_regs *regs,
-unsigned long addr);
- /* Called from ioremap.c */
- extern void mmiotrace_ioremap(resource_size_t offset, unsigned long size,
- 							void __iomem *addr);
--extern void mmiotrace_iounmap(volatile void __iomem *addr);
-+extern void mmiotrace_iounmap(const volatile void __iomem *addr);
-
- /* For anyone to insert markers. Remember trailing newline. */
- extern __printf(1, 2) int mmiotrace_printk(const char *fmt, ...);
-diff --git a/kernel/iomem.c b/kernel/iomem.c
-index 8d3cf74a32cb..22d0fa336360 100644
---- a/kernel/iomem.c
-+++ b/kernel/iomem.c
-@@ -130,7 +130,7 @@ void *memremap(resource_size_t offset, size_t
-size, unsigned long flags)
- }
- EXPORT_SYMBOL(memremap);
-
--void memunmap(void *addr)
-+void memunmap(const void *addr)
- {
- 	if (is_vmalloc_addr(addr))
- 		iounmap((void __iomem *) addr);
-
-base-commit: 9e98c678c2d6ae3a17cb2de55d17f69dddaa231b
-prerequisite-patch-id: 62119e27c0c0686e02f0cb55c296b878fb7f5e47
-prerequisite-patch-id: bda32cfc1733c245ae3f141d7c27b18e4adcc628
-prerequisite-patch-id: b8f8097161bd15e87d54dcfbfa67b9ca1abc7204
-prerequisite-patch-id: cd374fb6e39941b8613d213b4a75909749409d63
-prerequisite-patch-id: d8dbc8485a0f86353a314ab5c22fc92d8eac1cc0
-prerequisite-patch-id: e539621b0eccf82aabf9891de69c30398abf76a0
-prerequisite-patch-id: 59d60033b80dec940201edd5aefed22726122a37
-prerequisite-patch-id: 0d16b23cec20eaab7f45ee84fd8d2950657dc72e
--- 
-https://chromeos.dev
+Konrad
 
