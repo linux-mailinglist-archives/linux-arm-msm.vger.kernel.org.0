@@ -1,133 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-15759-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D583D89245B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 20:39:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 138CA892477
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 20:47:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8E890284E05
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 19:39:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C37092850A0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 19:46:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB3DF48CCD;
-	Fri, 29 Mar 2024 19:39:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BAD6139578;
+	Fri, 29 Mar 2024 19:46:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IuzZrdPn"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IFjh+8YT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447171E893;
-	Fri, 29 Mar 2024 19:39:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98942139D04;
+	Fri, 29 Mar 2024 19:46:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711741143; cv=none; b=N+twxni0JW1S2WONBV7uxhpK2U67Ka2CpCIi6KztVTZ6zLPsAnMK4CXo6aHIMInT9bGoYxIz0DiFzpvgw2O0Xlm3nszWM3At5iY7hOlC/nOU4lk2N1p0BHUK1JGbhmMpFb2C2uidVOfb0A3MOgD79/Y0S7DSXcXXpb4ShYpg0SU=
+	t=1711741615; cv=none; b=eNGBWYZhfcfnRXAdMZQok4v1ZdEdZJZ4XDTc+nUL/JTTZFPNiXl2HTooORig6+lsQ7CJc2qe3LC/SLpYfUhblKe9hviYJDTHXrGr6a/oFKDjykxdBcwTjAzEFopGfG+EdwYIXfqHLjXJqiogM5vEJeeBBySgJ+thyW53vqtHli0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711741143; c=relaxed/simple;
-	bh=wSB7X6CdTUWKKiKpXypnRNMqXkfS9aaSpZFlc2ToL18=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Bvu+u1Ih9p2z2d9nAC+5qqRBEtOETCt2vVJTdfFTp4rM49Vq2fUFZg7hjiqWtVGQguBO/czbCv5vgepcOKNsO4g6lgmzqzqSl2uCTgLi3pWYHbGHEu43D2MRuZ6xca/TqWz/wxHtzDEoZEWddAExCO5o/jUmVC6J+6D8h+hKxJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IuzZrdPn; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4154464f150so11362035e9.0;
-        Fri, 29 Mar 2024 12:39:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711741141; x=1712345941; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3gyvJa28tEZj4J+N9+Nm6NWKKDqYmD65rg3x6weXC2w=;
-        b=IuzZrdPnbVjYrRmHc91+wOmkJBr0rPJPf8ZOEAOzdnRMemAuuGUeo8VYihA0COv6Cq
-         44bwJhideegf8CpXyIOOkGqu9HhlaibZNv/wHJ46vUZIZQQTY65838FkQ41apXuEbTCe
-         JqekXxILK08CKgmUealN+kTZ87vhNqCLXyJgYWQNLmWm9xoQ8Kq0eszAK9Q/C4+2UnSQ
-         Y673x3i2LN/eEfVROfWeUHbRR3yLyAZxyqTfMLorjgRJVhaZ6AMWCjerC7eD9MXOFeRN
-         EmbUK7XSJE4u+WQe5DgF4hJPq+t4zyQfYDKQKsuVgUHNsENa610zUdIKV3raG4+aeLJm
-         rWZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711741141; x=1712345941;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3gyvJa28tEZj4J+N9+Nm6NWKKDqYmD65rg3x6weXC2w=;
-        b=tKtMwUPLA1hdKjyqZA30EKfGotSCtVTNUJiWqtADgePdTwEO0vfGLMJopvGCxCNkHB
-         Z0S+V/7jAMKd2CvME/EVEHOpzVzzrknp7GiebUqOna7i5KQTM1gsfg7iGZoU74udY6Q6
-         2w8fs44p4L4jN5lIQLzcxeo4b3gsn0GuHNT9yrUv0VxkdP8LG+PSv4LGitD0bQB75WKq
-         pCOtL8UR9k7vj3l1AZx5SC8u1+OEcZY9KZi1N2cRDTZbstLP7sluTsjL2gt5DHPaYKZp
-         9p5IRPi6Lyz9WngPDboG04GHT3dx1tZnu7+18iJYt+YUJ7os69EyJTr/oYBV99GHfx5U
-         mamA==
-X-Forwarded-Encrypted: i=1; AJvYcCURW7cWs554D0MLPch3EtIczyZC2xOGKZppAsAmtH+EifTwl7omfAqGjAfYZ17WiLPiXm7p+YSxSojJpPJc259UlWvkP4rOJE/Nct/jNVz735cZa5xtmAzMmuXfERWY4EfHEfngohgJxb4wPw==
-X-Gm-Message-State: AOJu0Yw3tmhYpeqKbSBDfM2AYWZKz0uil+eNkNtwSClKLGHtbnOBaS1L
-	Wxg09GaN/qTW1gRR3KVMBbzgp/hpKi00be2j8T4XcMPP2elzWo99
-X-Google-Smtp-Source: AGHT+IG10lQFIOImBLBD41zMRXhhu9cohhiJEff+GDmy229Zo6LdaVmWzU2lUFMswpnlw9rsedNXiw==
-X-Received: by 2002:a05:600c:3ca1:b0:414:96d8:bc48 with SMTP id bg33-20020a05600c3ca100b0041496d8bc48mr2491616wmb.20.1711741140441;
-        Fri, 29 Mar 2024 12:39:00 -0700 (PDT)
-Received: from ?IPV6:2a02:8071:b783:140:927c:82ba:d32d:99c1? ([2a02:8071:b783:140:927c:82ba:d32d:99c1])
-        by smtp.gmail.com with ESMTPSA id t12-20020a05600c450c00b004154853f778sm5152221wmo.48.2024.03.29.12.38.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Mar 2024 12:38:59 -0700 (PDT)
-Message-ID: <9b1e5ea0-bb32-4c42-b2e9-204bde31b905@gmail.com>
-Date: Fri, 29 Mar 2024 20:38:56 +0100
+	s=arc-20240116; t=1711741615; c=relaxed/simple;
+	bh=sEQf6CnSvy+gsfHmMbdCzoWhb1Yw2wM8Mgp7wb8eskQ=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=tKMkbQtKfunBCMltOiI87AoI9NIWxGUpHj6GkoP6SDDTSTHZTXM6yIJY7TS7EBURHpPdv0qTKgxGWXzgO3CFsPkjN/7ZUPYs/H2Hmydg4h2uR52gzjI+TNdpllYSBK7pFDy30JFZoS8OYdfiKxFcUYYQm1Ls0HBGpK5LLxKOMGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IFjh+8YT; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42THeogV013524;
+	Fri, 29 Mar 2024 19:46:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version:content-type; s=
+	qcppdkim1; bh=LAxtLydJPleoJCOd3e+tShPjSv1jB48d2EKqaJMIysE=; b=IF
+	jh+8YT+vn8MCESavNSYJOT/HdL5aQaYHUXzv653HD6WAz9oPapt3Pf6DlBnYU50r
+	UxTl5r9aIpe9LA9ShVJx8FvfFpJxqSORguoAaZtSVVYpyiXNyWiUwBl1pIRGn8Xf
+	icANIKlJ1rOl6dqDrK/hCbQkNJWH8UDvt5brjrWl7QSNeXU/IBPRo3kawBdF93eL
+	mYojcZJ/0oNe8DrdjJ9iC67UGMnKWUAoGhd4NsNhQXIZrb1PkhcZNOgt1CpiLL0t
+	lDbmZZr65NDsAlAjcBI1hb6BW1idl7NUbdsp2z5DoASe2ewtaFX6hz4Wg4F+DQ2A
+	Q08fuaY7hYPWS4JXG8Lw==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x5vn991ny-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 Mar 2024 19:46:37 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42TJkaWe013541
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 Mar 2024 19:46:36 GMT
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Fri, 29 Mar 2024 12:46:35 -0700
+From: Kuogee Hsieh <quic_khsieh@quicinc.com>
+To: <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <abel.vesa@linaro.org>, <andersson@kernel.org>
+CC: Kuogee Hsieh <quic_khsieh@quicinc.com>, <quic_abhinavk@quicinc.com>,
+        <quic_jesszhan@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <marijn.suijten@somainline.org>, <freedreno@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v3] drm/msm/dp: assign correct DP controller ID to x1e80100 interface table
+Date: Fri, 29 Mar 2024 12:46:26 -0700
+Message-ID: <1711741586-9037-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 00/13] firmware: qcom: qseecom: convert to using the TZ
- allocator
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Elliot Berman <quic_eberman@quicinc.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Guru Das Srinagesh <quic_gurus@quicinc.com>,
- Andrew Halaney <ahalaney@redhat.com>, Alex Elder <elder@linaro.org>,
- Srini Kandagatla <srinivas.kandagatla@linaro.org>,
- Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- kernel@quicinc.com, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20240325100359.17001-1-brgl@bgdev.pl>
- <56e1c63a-4c09-4d92-9ef2-aad5390879cc@gmail.com>
- <CAMRc=Mf_pvrh2VMfTVE-ZTypyO010p=to-cd8Q745DzSDXLGFw@mail.gmail.com>
- <CAMRc=MfsVWcoMC-dB-fdxy332h-ucUPTfEUMAnCt5L-q3zJxWg@mail.gmail.com>
- <82f94b54-82d1-49b9-badf-63d948b347fc@gmail.com>
- <97e1f121-9e84-4e63-9c9c-57e2de0b29d7@gmail.com>
- <CAMRc=McLJFGcy-A6PZNmjgDXnvx8z0J4k-Dbak-txvWnycHG2A@mail.gmail.com>
- <2b1dc031-d645-494c-9103-a2bb422ea60b@gmail.com>
- <CAMRc=MdoSPuedbGhy4toDEkw0vSzESDz2bXGpyt_=R4hqXW+Uw@mail.gmail.com>
-Content-Language: en-US
-From: Maximilian Luz <luzmaximilian@gmail.com>
-In-Reply-To: <CAMRc=MdoSPuedbGhy4toDEkw0vSzESDz2bXGpyt_=R4hqXW+Uw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ZzA3Ud7yVWBvIk4yOqwb7wHuwySHghy2
+X-Proofpoint-GUID: ZzA3Ud7yVWBvIk4yOqwb7wHuwySHghy2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-29_13,2024-03-28_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
+ mlxscore=0 clxscore=1015 adultscore=0 priorityscore=1501 mlxlogscore=999
+ phishscore=0 impostorscore=0 malwarescore=0 suspectscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403210001 definitions=main-2403290177
 
-On 3/29/24 8:26 PM, Bartosz Golaszewski wrote:
-> On Fri, 29 Mar 2024 at 20:22, Maximilian Luz <luzmaximilian@gmail.com> wrote:
->>
->> On 3/29/24 8:07 PM, Bartosz Golaszewski wrote:
->>>
->>> Both with and without SHM bridge?
->>
->> With CONFIG_QCOM_TZMEM_MODE_GENERIC=y (and the upcoming fix) everything
->> works. With CONFIG_QCOM_TZMEM_MODE_SHMBRIDGE=y things unfortunately
->> still get stuck at boot (regardless of the fix). I think that's
->> happening even before anything efivar related should come up.
->>
-> 
-> This is on X13s? I will get one in 3 weeks. Can you get the bootlog
-> somehow? Does the laptop have any serial console?
+At current x1e80100 interface table, interface #3 is wrongly
+connected to DP controller #0 and interface #4 wrongly connected
+to DP controller #2. Fix this problem by connect Interface #3 to
+DP controller #0 and interface #4 connect to DP controller #1.
+Also add interface #6, #7 and #8 connections to DP controller to
+complete x1e80100 interface table.
 
-Surface Pro X (sc8180x), but it should be similar enough to the X13s in
-that regard. At least from what people with access to the X13s told me,
-the qseecom stuff seems to behave the same.
+Changs in V3:
+-- add v2 changes log
 
-Unfortunately I don't have a direct serial console. Best I have is
-USB-serial, but it's not even getting there. I'll have to try and see if
-I can get some more info on the screen.
+Changs in V2:
+-- add x1e80100 to subject
+-- add Fixes
 
-Best regards,
-Max
+Fixes: e3b1f369db5a ("drm/msm/dpu: Add X1E80100 support")
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+---
+ .../drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h   | 34 ++++++++++++++++++++--
+ 1 file changed, 31 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
+index 9a9f709..a3e60ac 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
+@@ -324,6 +324,7 @@ static const struct dpu_wb_cfg x1e80100_wb[] = {
+ 	},
+ };
+ 
++/* TODO: INTF 3, 8 and 7 are used for MST, marked as INTF_NONE for now */
+ static const struct dpu_intf_cfg x1e80100_intf[] = {
+ 	{
+ 		.name = "intf_0", .id = INTF_0,
+@@ -358,8 +359,8 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
+ 		.name = "intf_3", .id = INTF_3,
+ 		.base = 0x37000, .len = 0x280,
+ 		.features = INTF_SC7280_MASK,
+-		.type = INTF_DP,
+-		.controller_id = MSM_DP_CONTROLLER_1,
++		.type = INTF_NONE,
++		.controller_id = MSM_DP_CONTROLLER_0,	/* pair with intf_0 for DP MST */
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31),
+@@ -368,7 +369,7 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
+ 		.base = 0x38000, .len = 0x280,
+ 		.features = INTF_SC7280_MASK,
+ 		.type = INTF_DP,
+-		.controller_id = MSM_DP_CONTROLLER_2,
++		.controller_id = MSM_DP_CONTROLLER_1,
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 20),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 21),
+@@ -381,6 +382,33 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 22),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 23),
++	}, {
++		.name = "intf_6", .id = INTF_6,
++		.base = 0x3A000, .len = 0x280,
++		.features = INTF_SC7280_MASK,
++		.type = INTF_DP,
++		.controller_id = MSM_DP_CONTROLLER_2,
++		.prog_fetch_lines_worst_case = 24,
++		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 17),
++		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 16),
++	}, {
++		.name = "intf_7", .id = INTF_7,
++		.base = 0x3b000, .len = 0x280,
++		.features = INTF_SC7280_MASK,
++		.type = INTF_NONE,
++		.controller_id = MSM_DP_CONTROLLER_2,	/* pair with intf_6 for DP MST */
++		.prog_fetch_lines_worst_case = 24,
++		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 18),
++		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 19),
++	}, {
++		.name = "intf_8", .id = INTF_8,
++		.base = 0x3c000, .len = 0x280,
++		.features = INTF_SC7280_MASK,
++		.type = INTF_NONE,
++		.controller_id = MSM_DP_CONTROLLER_1,	/* pair with intf_4 for DP MST */
++		.prog_fetch_lines_worst_case = 24,
++		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12),
++		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13),
+ 	},
+ };
+ 
+-- 
+2.7.4
+
 
