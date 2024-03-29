@@ -1,119 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-15683-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15684-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A03389163B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 10:43:45 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A8348916AA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 11:22:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9BFCE1C235ED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 09:43:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BBC781C216F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 10:22:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8F973B19C;
-	Fri, 29 Mar 2024 09:43:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AAB252F89;
+	Fri, 29 Mar 2024 10:22:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="gixJf+hl"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="D5nmmMwQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sonic310-23.consmr.mail.ne1.yahoo.com (sonic310-23.consmr.mail.ne1.yahoo.com [66.163.186.204])
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D1841215
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 09:43:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.163.186.204
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E4A39FD1
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 10:22:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711705422; cv=none; b=tjxegpJlGODG9guAlLxA9/T5GKQ4Q8oiEPcr+vGrzesXmsTw6N7Gd2XjfLnTzF7es9hYOiDxXx+AXoh8TSMLqLbRWLK1Nga3R53XCqBW8L7JXFqP9zg6C7rTgyue6zH/jP2F1wGUhjERf9JqFKVJFh6+fxiKIvTtBhndHf3gs+4=
+	t=1711707737; cv=none; b=cvfpLSnY3nRRdBcEXsvhp7eW6Pst65MbOC/Du0B/iwhWgMZvbFFq+vvimjTRS0143mmqbWATcBYV/CeTJPjUbKDZtqJec1+AsA9THi7I3h06lUAJ7aCuj03Jo8FnZ96ICwpRDE/iE4zXdMCf2hsE9sRHa8U5FNcEwwRi8AzOXqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711705422; c=relaxed/simple;
-	bh=n/r5359ncoRgLk31WmLZK1PeCWCsoqFgsUDIyJPug4c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OHc8PNOvKEQ1ORWoi1eF5jtcYTnyfqNbuCfTdP9uUT76ySDvy8MIHYqm7xqRCbPe8ERlc284ppnqJmUD6Ic7Mnbbb8JbECUF002NudCWzS8e/4tEBUl+fPS32Tb8vXd2jh24bxz4f4LjFZieJybvzZ7Iwn9hio4iPvonJBXWgT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=gixJf+hl; arc=none smtp.client-ip=66.163.186.204
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1711705420; bh=n/r5359ncoRgLk31WmLZK1PeCWCsoqFgsUDIyJPug4c=; h=Date:Subject:To:Cc:References:From:In-Reply-To:From:Subject:Reply-To; b=gixJf+hlaOfuNNnnT9u4+lXahMNuBzeuwJigPUmwFf2nSMmBn2bPlKML9AnF2nek9XPsO3LxL35wg67sy11rAult4brOaVLEt5xGnGvhfqnyT1BRSzma7wmf5vvCrcw4hENUGRo8uk+Vk3xR3t+ghxCZI1t/OAi8Wi6ebXaZDQPx/LOKVqhyUd1mvZexUh8Vg0En+SJzo2Qsm8NFr1XuwMSKf4EsM4P8IU3HlNy9fhO+ry/bkNIwSKyJKC4H+/XVumtXcJ0xlAaDM3RlQt9aN38HG9XFgO7nDN3A6dwWTPZNXy5exYqMTSS/nRtmNYkKD34zebhTL0d/f8KIAn1t6Q==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1711705420; bh=4E5jNqMX/HeKEDOW9q8fSqiQGUlQ25EuPCNIZtof4SN=; h=X-Sonic-MF:Date:Subject:To:From:From:Subject; b=cW59ifvZ5J6QJ2yj/icpyITF+wDPzd4Qo9Srb4+LWWE0HHdxHuhjwRRuLy2vIpa95lenwEz60fLGxNOcLsdbQRk3KeK97+NQ067j7ICTpANFVlJMpWEKsgHWa9LBiLk+eiifZns2h+P0m6hOTgQpuXrBDK4NbVNnmJSQiuTeGoM1/73WrKZPCBz83Ba3HgIDg1vULyAhhCHJlJqerNUm6pY+lPZZXiDmHFpIIJCvklTdnQ3/Mw8iRiw95GhX9c30eYtRY6cslvvtEDLex8wZdGeZGC+P5eBSTc8mdkENXJacosIjvB7UFpJD8l3eHx6PdxwS22VDSV+T3MMMu8Y2GQ==
-X-YMail-OSG: gatqklUVM1nK7lnaC4hA2iHDUiutYnW3878aJxrfsAiGyoZcHzynGN1D2KAy7KE
- y6fEZ1H5r0I7SDOHwQds6tNMz85EbkqdxakYmR1f.97wINRQsPLdXm6BhkPX9_.BaqSdLmAa5Qs4
- 6HPbPHEnSupsgRlAEQ234tuu5AiYQfRyS6iBa2IhBdWv2TKXwOqP_H1s7tmp_X6bnhP97xWYe17Z
- Mzp3qwC.oIUQeQceY4Xx2NPQBbJsEDzM06gpcmbGWwvK_B9IdrmL1zfd4oU4x_c01m2DKbur9Hjw
- .boxiyS4xNNFuvKqfr0uuefK5ujAENlcEaOO_GziGUibMxqixG0qJI2ewx4FIxs.RUp0wgZOHJge
- 2rmIcW_2qbMG6OYxo3bZWiwkZMmLwrKSEbNIljkjo9i0r_LJww8GxWPGEf2k3PL7vPnUkDiO6GTy
- fSQi6K.gMGx0655cAvd60vQ2swqThEv8VSXVFCH2geW.yDuDCKbCXYE4W67wjYRkAB_s86wPOrlL
- vh5u8a6hipLqxseuIqDYWFDzR6WRJ6jl0uNHX8ERwCgRExfkv8spld.3DL5bG5aOpMIQtCyRbRhT
- 7rHUJ1Ko21nofKkACI7MuxgdrhAZ2H22Jbw9UvpmSBlravSM2BdsIN1hCskKWfcWOX4d56InbnN3
- fzObNh_n6gEV4D__re2cx8gt7KGo6do6iwMvYBztPjVeS9k.H3pvKGw44LT7RvSnei22euNvt_su
- u6R_LCUDiKSimUKAuZi5Uk2VOCzPfQQoBcQLjrG5HmYxcRfjjgMldWdRyC4fk3I4PMmXIjNkuq.X
- H5Q0Lj21zeNJxm_rFtB14e9pqWicuNSo8NKuZ6hCsUsg679qYB9uMjFC55oiOJr9rzz.5TVdxSbr
- UqhUUg_P9Pqe6AmJgNyl5LvW3BFKSBSnmctf4sztBt91xQQsa9vI5VSVLfbG3jHIb4I1yEVMeHle
- NCaixOWbrNjT4Q8kZUmFIYwzjN_KlWT7cjNzByOuD11JsNpDsMuIRd9vQC8LxfgAbysKrsD9EV.8
- u8MRLkmkt4d1LDrMaIeukEZfI1RftZC7fHue4Zm9kLmCHzNmgJ94MBn.o3JMpBewNC1nmuOGPXaa
- HH7k.o7FG25B.f44V6wMN8RuZ3nzoskRJZTfzbxAo5wAXbwRH.3xdxRIvoH6KYMnfKDpRe0cgUiM
- yAd6vVijVNj9E6MiCA5O7k6rY_BmauWYL9TbvL6l0BZ_iJuw1cein1QnZfSUNuuXcvp5wIVGldA.
- sTnimpze948zAjX.TntjLc3L1NIJCadE4wHghHx7HD7jDyWASCHSwNblMK7_SkOAfL43mmz5oks6
- AXVhBwZHWoEmVPKgdycX2REL7YlJGaF1_TzrjONx7.a_lY.FFuaMzs3TJgzAe7d7ABYP4K7n4kXc
- KD5uIvMjhgpAWkwai7QJw8U1tQDdht1AnG_QXlsk.gRJexUtQ82RrHw1o8rllS5t31IK9exNmUuI
- dAQ8K4AS5KRlEixf8WRpdW9GM2lpztsJrjMBQmTNHkdWx.loS0CHttr3x6mIkImIQRyabnTa.7HD
- 9WZd9niMiZ9MYmRfjqS3wojN.EzHQsPUn6zn4ogno9tYvXSpp5iEeLcWiq4P4kDa.Z_nbkCXzTcL
- LMcaeuUo8g90caZtGYonxlB9hCCzVy2wbKPd1SmQJ9DFnc.mIY_I2Wj4CXXtNd7V0AfJOc81DAPT
- YAl0t9GrBX9ihP3Ze539ICZOgwLI2arGdLcHwuntcrL680c5n8BXhVE_LaeGjFI.IrvizYAFoH4o
- I6H9OcbK3G0K2oyUYnnbKJecHg81FLYiUzUw7haiB_P6neLt0VBa6DBx1NnaJeh.XeVJySew4nkS
- 9nrEZ0rUT7F2U0Ynnbab6AYJWgnymeyDtAuYhQjPHy_7hNYM4NyJ9IAm_jdioZoFTHjgVh6dqsXl
- Zvxw9SQoekK2UHSu_jixvXqsgfIoImwdiIIhhBNkLkXpvt6EozrNmygxIP16Jo1gUZvhFtW0fn74
- _iiLB8WRIL1MkHXBS.FtS7HoLJJqxOKSWOLU13jXI.hpR71TaF_XgDYmFLkZ4ZqSXMlA1BCDaSvR
- JrztMtxOdLS5OCFZuYFpHV2IT6yW5Joy9NvRqseuRwe7vkZBpbC2Uzoe9Ly6O3n9wFZwe0MFHHeQ
- xjgOOtQh7Ip0w_A26cOwhGTHgvWMD9AFIBRT2a8XVGEP.5qpPxqr78OSaMFl21d.iG_N6Q38r9yv
- meg2fCj59ZCA.raSEGF3OsyPyEwd373hVJOQmoHIEBt1KdqrJNwCzcEdn0DD3oi6nWgA-
-X-Sonic-MF: <serdeliuk@yahoo.com>
-X-Sonic-ID: 06ccd97a-1e5a-4aae-86f1-788dad51b5c5
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic310.consmr.mail.ne1.yahoo.com with HTTP; Fri, 29 Mar 2024 09:43:40 +0000
-Received: by hermes--production-ir2-7bc88bfc75-fnx47 (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID db49365c74ea4e99f33b0d4965486713;
-          Fri, 29 Mar 2024 09:43:38 +0000 (UTC)
-Message-ID: <532b9b28-da4c-4af4-8d66-edde58f4d6a3@yahoo.com>
-Date: Fri, 29 Mar 2024 10:43:36 +0100
+	s=arc-20240116; t=1711707737; c=relaxed/simple;
+	bh=5iGLeKg1B+c+xy7usHfD7DuolFxdePCGQGv5moChJAs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=POJdbvkQrbZRKOu3LArM2pvl2+ftUcOsKNLhZCXShH4jmKfb/iWRSJPCklgFiJAlCevBFWNPCX8yMQocxcvKdu8rUR6XzoIIPNXe+GP2imjpOUUM+sBkLAR+BFqNo96vEbmdmNo7I5P6waoKBveOT7s7Ws3jpAiYfi0FqcMHCGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=D5nmmMwQ; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-515d44d2101so38906e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 03:22:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1711707733; x=1712312533; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/J6gP3oWZ32r+n62bhK72ncVvhRHUkReUApoR4TBfF0=;
+        b=D5nmmMwQBHIiDlqLVRDTEsQLdm1ly5ZHftIyHaPe8srZRdnuGX+n96g8iKxNVrUFeD
+         0g0R55AGwWIXOppIRnwfxG8n5FLVIWRTeHPOAhU7WmD6LCUDf37VdquWLcfTTf09e3pi
+         YTXapUgA0utZLEpAzs2ol+4mKyjSA2FGcUtqSBHE3kST0wv0y0Mo/ShyZTBgi9OUZaN3
+         OZsjSFr3EY8qICdJq6zkAGq0W37g2CylDcFM+jbq0eN4X9lkeHLm5f0dqtDIFKygBnm1
+         RFyK/C0b2RTdWcErBeKUQl0KCj8hCa46piyyHkjYw4yW/NGQm+TZf1Rf6RuS5CqBqToc
+         lVRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711707733; x=1712312533;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/J6gP3oWZ32r+n62bhK72ncVvhRHUkReUApoR4TBfF0=;
+        b=J9DVyF7tftEnfmBZxDeaQhgW+1Lv1V98gUbXCRJbf4JxJ1i+qfJLs2E1oybAJM7vPH
+         6xPfe92WTLzcxEeHe9s56/ChLKUGt3DNe17SW4kDk1md7avKX6HWFGycaygM4oG+vjxf
+         59ppBg3XtadotCH311u7cWweHbLLaKOAlz8Q5kSWV09OvTj3vBsy4Q6yoQ5AGYsoPcBn
+         SuG7AnRa9WGvMTG/VZwsd+KCXEfuGWRadppl0Z5mxLA6+z3/uGdNyqAAqG2Sk2RI1LyA
+         fmNZGfvN7OBsqV6ZtScBG79yqur9pry/9zUEA8hdM8A5uBv4k1kdodtSVkxqgYxWcIUy
+         83lg==
+X-Forwarded-Encrypted: i=1; AJvYcCUu1BW+YLAO7AXGsD+X07E7NgvGQdZbprhVfHlTIPs/NQzoPsPofTkp5n/pDtEbgsnNXYdS2O6qtpqMIIBqlisXxJIkmjnc1oXRijEZGQ==
+X-Gm-Message-State: AOJu0Yy+1gwMgyJjiVIr1PTODHT7PL8NUd53p/0bfMk/kwvnEfzx59/2
+	79UTNtyHFjXWwpIC0qLMSavl2AWf30NeX9hZdV4nGqHtVnWfz3j2p4CpwNX4xzM4gkUD6MG9vne
+	XnXCwkF38YyY7p7X6x9pxwP5nXCeDsOaeyl4vsA==
+X-Google-Smtp-Source: AGHT+IFR4sAXfJH8jLEP1t7TjlkcUZ9XMDWJPhv7FUv8k9zXllRTrbpTxelFPbzAnEHArC8D9K4FgriWWJSfYZnh8xk=
+X-Received: by 2002:a05:6512:6cd:b0:513:5e6b:a191 with SMTP id
+ u13-20020a05651206cd00b005135e6ba191mr1439757lff.50.1711707733433; Fri, 29
+ Mar 2024 03:22:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] v2 arm64: dts: qcom: Add support for Samsung Galaxy Z
- Fold5
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240329-v2-dts-add-support-for-samsung-galaxy-zfold5-v1-0-9a91e635cacc@yahoo.com>
- <20240329-v2-dts-add-support-for-samsung-galaxy-zfold5-v1-2-9a91e635cacc@yahoo.com>
- <4e1c225f-9b9a-4300-b4d3-2fc38c9b573c@linaro.org>
-Content-Language: en-US
-From: Alexandru Serdeliuc <serdeliuk@yahoo.com>
-In-Reply-To: <4e1c225f-9b9a-4300-b4d3-2fc38c9b573c@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Mailer: WebService/1.1.22205 mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
+References: <20240325100359.17001-1-brgl@bgdev.pl> <56e1c63a-4c09-4d92-9ef2-aad5390879cc@gmail.com>
+ <CAMRc=Mf_pvrh2VMfTVE-ZTypyO010p=to-cd8Q745DzSDXLGFw@mail.gmail.com>
+In-Reply-To: <CAMRc=Mf_pvrh2VMfTVE-ZTypyO010p=to-cd8Q745DzSDXLGFw@mail.gmail.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Fri, 29 Mar 2024 11:22:02 +0100
+Message-ID: <CAMRc=MfsVWcoMC-dB-fdxy332h-ucUPTfEUMAnCt5L-q3zJxWg@mail.gmail.com>
+Subject: Re: [PATCH v9 00/13] firmware: qcom: qseecom: convert to using the TZ allocator
+To: Maximilian Luz <luzmaximilian@gmail.com>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Elliot Berman <quic_eberman@quicinc.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+	Guru Das Srinagesh <quic_gurus@quicinc.com>, Andrew Halaney <ahalaney@redhat.com>, 
+	Alex Elder <elder@linaro.org>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
+	Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, kernel@quicinc.com, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks, indeed, v3 will contain the right messages
-
-
-On 29/3/24 1:54, Konrad Dybcio wrote:
-> On 29.03.2024 12:08 AM, Alexandru Marc Serdeliuc via B4 Relay wrote:
->> From: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
->>
->> Add support for Samsung Galaxy Z Fold5 (q5q) foldable phone
->>
->> Currently working features:
->> - Framebuffer
->> - UFS
->> - i2c
->> - Buttons
->>
->> Signed-off-by: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
->> ---
-> Looks like the commit message and contents got mixed up!
+On Thu, Mar 28, 2024 at 7:55=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.pl>=
+ wrote:
 >
-> Konrad
+> On Thu, Mar 28, 2024 at 5:50=E2=80=AFPM Maximilian Luz <luzmaximilian@gma=
+il.com> wrote:
+> >
+> > If I understand correctly, it enters an atomic section in
+> > qcom_tzmem_alloc() and then tries to schedule somewhere down the line.
+> > So this shouldn't be qseecom specific.
+> >
+> > I should probably also say that I'm currently testing this on a patched
+> > v6.8 kernel, so there's a chance that it's my fault. However, as far as
+> > I understand, it enters an atomic section in qcom_tzmem_alloc() and the=
+n
+> > later tries to expand the pool memory with dma_alloc_coherent(). Which
+> > AFAIK is allowed to sleep with GFP_KERNEL (and I guess that that's the
+> > issue here).
+> >
+> > I've also tried the shmem allocator option, but that seems to get stuck
+> > quite early at boot, before I even have usb-serial access to get any
+> > logs. If I can find some more time, I'll try to see if I can get some
+> > useful output for that.
+> >
+>
+> Ah, I think it happens here:
+>
+> +       guard(spinlock_irqsave)(&pool->lock);
+> +
+> +again:
+> +       vaddr =3D gen_pool_alloc(pool->genpool, size);
+> +       if (!vaddr) {
+> +               if (qcom_tzmem_try_grow_pool(pool, size, gfp))
+> +                       goto again;
+>
+> We were called with GFP_KERNEL so this is what we pass on to
+> qcom_tzmem_try_grow_pool() but we're now holding the spinlock. I need
+> to revisit it. Thanks for the catch!
+>
+> Bart
+
+Can you try the following tree?
+
+    https://git.codelinaro.org/bartosz_golaszewski/linux.git
+topic/shm-bridge-v10
+
+gen_pool_alloc() and gen_pool_add_virt() can be used without external
+serialization. We only really need to protect the list of areas in the
+pool when adding a new element. We could possibly even use
+list_add_tail_rcu() as it updates the pointers atomically and go
+lockless.
+
+Bart
 
