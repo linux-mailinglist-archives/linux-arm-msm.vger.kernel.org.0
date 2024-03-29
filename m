@@ -1,156 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-15651-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15652-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5E5389107F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 02:44:58 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08F8B891086
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 02:47:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A4BF928AC38
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 01:44:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B805628AC4A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 01:47:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F48717C77;
-	Fri, 29 Mar 2024 01:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43C7B10A26;
+	Fri, 29 Mar 2024 01:47:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mM5Lhc0Y"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SzaX/4y5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311D112E61
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 01:44:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909524404;
+	Fri, 29 Mar 2024 01:47:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711676693; cv=none; b=caUXQ2+bBv63pAOK2uNSS9YmlNqnRIrMUnvwhT6yRs9IxeSLF2FafCqhRjbCdMgkqT0h02CUd1ikGKRj44225ScDTV/M+9jLHClx+vIZETvl9yc0KU4RSKVKdjuaahIIyQKQWAhiiqMFRvYsnEGre5Cj+rBe0fuSJ414C+YK9+Q=
+	t=1711676834; cv=none; b=esh3zl54SiTwMcfh1tPQ2jyc/MteYNye/070C/oe7CV8rtihuhPzRmj+14UUJjyMGISc6vZ7d13B1dZThLueBE6M+hk1p6mHRGa+ZcC1IaJ4hKJokkrUd4uv3Qioh7CcIMU/zw8Auhr051Dq5PFiUNML1pDHVfKbHAXKerND4xg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711676693; c=relaxed/simple;
-	bh=gEA8K8t4hqBPN9wzG8A+ksg0xWJK4mQ9uMlSu+sQHVw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=T4Um+wqnD8fcbmUu0CyHcocGlJa4wpRxbBaOesVqxrNxK6aoXK0kk83OSUlDSLNO4JXUplYu8vDULeJzdhD4dZtFI3f9j5mPTYn/nnzRtoGZvGRvtpKTll1/bw2GVtzYIZxkIDQ3yBj7u8Vgbs21GTyMdbyaKXwM9HqNSvR2guQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mM5Lhc0Y; arc=none smtp.client-ip=209.85.219.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-dbed179f0faso1884831276.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 18:44:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711676691; x=1712281491; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=gNux39GZ9PplhhfClr7WIbvdC+MvZFr9TXEFrMsn6O0=;
-        b=mM5Lhc0YVM/b1yf9ozjetAr704YUJa1qPpL/bAcnBE8l1Zlze9DcDuVkAwDAUZ7BVk
-         fDIs77jE7Ahx7HcT905rUyHUQeWVJZcFd7v2JFCk2BulBYxYT7mWXCfMLRPN1KhnZ2J/
-         crHWkjuZcJPcLz7HcXCSldqcNabXLp0RVGTcm+nz1YgB6acLHLd1KdUjUJw3zdvlQTkk
-         OJkPem+Y6/RdTQTzgVOCKZPW1fjJgAO8fcY6NzeOB35hbOd0gA6fzc7Iazqre0VBmneJ
-         2dap+kosvCeOSfZoqQPJej+NFGjzSdUNxnRPl5HLyltnE7FOM7LMkVqau2TUJHvbpWz3
-         /Yrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711676691; x=1712281491;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gNux39GZ9PplhhfClr7WIbvdC+MvZFr9TXEFrMsn6O0=;
-        b=VPdnjt2eAAGo6JVFZaW//z5qP6dMBWSgVsGbjl/73FOMOJPBjfNfUJaIj+Oo0GlhsF
-         U++gb4jZqvFKyaOWBxmAqqMlI/n+LWBlPbM8j4mNSFaelYBCifb0cIHNIDyNYhKyztQH
-         bBZB3olbBxDv6u+D9tl4b8Ig0Ge+MSA8BcG/U4uV/swVhg0MlsWMuJIq7TKzAnrQi2A6
-         3AD/LPAuHhxSBm2kffDml6bLTh5u+tRL1QDAkDLKmmjItvUKDMFKqmo5YYgQzc5KF90L
-         ko6H/NtKhI7cX6yjn4tAWIwnKD3yv7W74XdepCTUGWaRU7NOWEq+/Jisy8ZWxOTV0cSW
-         9AaQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXd8znU/r5J0j1hz7ymUqcFPr52O09hYDbsxWIB56F2N23ZJFHsbdGiY2/5TPliNkizhEaziErvsOn+eKgxlisDUsnIWS/B5FTBPMZf9g==
-X-Gm-Message-State: AOJu0YyJ5tpJliYCPnFWVe+ng5ZR/x617bTmoRYGBIA21Q9zpGkkMpz0
-	/Bd9kmbGnYFFahjG9IQD4Bctj3Js6r2IhPe46uNtk1/mYZiPS9/xG57TEAEzON73jrw/i+NE7F+
-	FD4HzOVd6ZBAJxsGbsPGE0E3xrgo8E/lCK8RawA==
-X-Google-Smtp-Source: AGHT+IGxfnvK0C6jYBVF3IdKUncdJRXqGZuc12A+brjW4rLyifQ3TUqQCJTqSsWeIO2NfwC901j3J8D6X4T+rMTwmHs=
-X-Received: by 2002:a25:2e44:0:b0:dc6:d258:c694 with SMTP id
- b4-20020a252e44000000b00dc6d258c694mr2970896ybn.19.1711676691033; Thu, 28 Mar
- 2024 18:44:51 -0700 (PDT)
+	s=arc-20240116; t=1711676834; c=relaxed/simple;
+	bh=F/sT9vaXPLUPwUeBzt5/uud/lk3lyS5/k6aWahlMOCI=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TpHzGeyBFwyM48Vw4VbYe97BAIiWYfgzfOHG2Ca2tQ1VR+HpyGMh1Itgrey6QfVD7LGWoz+C+emS8+SzT9SYzPGz3szr1Vw07/mDzIPmvQTRCN5dpGbH2p3onckktrMyR48i8sjiXWoBm9i+aCL/We0GXd+NvhIfXbklh9AdzKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SzaX/4y5; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42T0Ym6D013197;
+	Fri, 29 Mar 2024 01:47:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=Qm1gZFAKo7P2AmUjvUjLL
+	//GeY28er1Yk8y2KajYbD0=; b=SzaX/4y5lVN6F8A1QkBk9qkCTVLzooZ42qcK9
+	9nE6o/OsWfkQ9QZ8+FHnyatHc3zDki8huP1CoViAI1ft8rs0Zi6a/NfjYKQJwKaa
+	5O1ubtePcZa3rMoQybLumcteycKQ7qhi7sqBpirMaBxdT1atblN6sGgVbD0uN4e9
+	EE72n/7AhRe/oQ3djjvxrnVjJ0hDyF4ZRyOu9nMgGxG+9wXelc80veKDnRSqRe2E
+	wExJE/+LM1iyaadOg1PwhWvU5xFJFMW4VdkHiTy5/RIvgdxV8tMaxMXWelhwYN7r
+	x3bF8Gk1Igod6n6b301Bw1bNaVjj76yaVM3Gi8mVpf7kPLmSA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x5fs88fqk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 Mar 2024 01:47:02 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42T1l0VY007397
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 Mar 2024 01:47:00 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Thu, 28 Mar 2024 18:47:00 -0700
+Date: Thu, 28 Mar 2024 18:46:59 -0700
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+CC: Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Johan Hovold <johan@kernel.org>,
+        Kuogee Hsieh
+	<quic_khsieh@quicinc.com>, <abel.vesa@linaro.org>,
+        <agross@kernel.org>, <airlied@gmail.com>, <daniel@ffwll.ch>,
+        <dianders@chromium.org>, <dmitry.baryshkov@linaro.org>,
+        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <vkoul@kernel.org>, <quic_jesszhan@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v1] drm/msm/dp: use dp_hpd_plug_handle() and
+ dp_hpd_unplug_handle() directly
+Message-ID: <20240329014659.GA3478031@hu-bjorande-lv.qualcomm.com>
+References: <1711656246-3483-1-git-send-email-quic_khsieh@quicinc.com>
+ <1711656246-3483-2-git-send-email-quic_khsieh@quicinc.com>
+ <55debb0a-c7af-ef71-c49a-414c7ab4f59d@quicinc.com>
+ <CAE-0n503FwcwreZ14MMKgdzu8QybWYtMdLOKasiCwmE8pCJOSw@mail.gmail.com>
+ <23de89e9-3ef3-c52d-7abf-93dc2dbb51a4@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240326-rb3gen2-dp-connector-v2-0-a9f1bc32ecaf@quicinc.com>
- <20240326-rb3gen2-dp-connector-v2-2-a9f1bc32ecaf@quicinc.com>
- <CAA8EJpoe7A94608V1GdQ-oU9UXagHPm0mVBUe4Yxi=HF2pMd7w@mail.gmail.com>
- <zsjzysb7h3wi3cfpaozl46l4jnsd7e3lxttzm5vptozjx24cqo@vqmyhl65q7ay>
- <CAA8EJppCuoOnaB03GsjXGYSs5Q9iQ2uXHWQqfkPA5jKzdHc8NQ@mail.gmail.com> <20240329013743.GA3476498@hu-bjorande-lv.qualcomm.com>
-In-Reply-To: <20240329013743.GA3476498@hu-bjorande-lv.qualcomm.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 29 Mar 2024 03:44:39 +0200
-Message-ID: <CAA8EJpp1VBm5-x4W-yGrt+zq9keHWxTrucgsHCYqfLp-Fib1qg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/6] arm64: dts: qcom: qcs6490-rb3gen2: Add DP output
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <23de89e9-3ef3-c52d-7abf-93dc2dbb51a4@quicinc.com>
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Mvc90LBEJ9wz1w-GwCBhTGUkO7Uz7eFJ
+X-Proofpoint-ORIG-GUID: Mvc90LBEJ9wz1w-GwCBhTGUkO7Uz7eFJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-28_19,2024-03-28_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ priorityscore=1501 phishscore=0 mlxlogscore=970 spamscore=0 suspectscore=0
+ mlxscore=0 adultscore=0 malwarescore=0 impostorscore=0 clxscore=1011
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403210001 definitions=main-2403290012
 
-On Fri, 29 Mar 2024 at 03:37, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
->
-> On Thu, Mar 28, 2024 at 09:17:45AM +0200, Dmitry Baryshkov wrote:
-> > On Thu, 28 Mar 2024 at 05:07, Bjorn Andersson <andersson@kernel.org> wrote:
-> > >
-> > > On Thu, Mar 28, 2024 at 03:51:54AM +0200, Dmitry Baryshkov wrote:
-> > > > On Wed, 27 Mar 2024 at 04:04, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
-> > > > >
-> > > > > The RB3Gen2 board comes with a mini DP connector, describe this, enable
-> > > > > MDSS, DP controller and the PHY that drives this.
-> > > > >
-> > > > > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> > > > > ---
-> > > > >  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 40 ++++++++++++++++++++++++++++
-> > > > >  1 file changed, 40 insertions(+)
-> > > > >
-> > > > > diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> > > > > index 63ebe0774f1d..f90bf3518e98 100644
-> > > > > --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> > > > > +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> > > > > @@ -39,6 +39,20 @@ chosen {
-> > > > >                 stdout-path = "serial0:115200n8";
-> > > > >         };
-> > > > >
-> > > > > +       dp-connector {
-> > > > > +               compatible = "dp-connector";
-> > > > > +               label = "DP";
-> > > > > +               type = "mini";
-> > > > > +
-> > > > > +               hpd-gpios = <&tlmm 60 GPIO_ACTIVE_HIGH>;
-> > > >
-> > > > Is it the standard hpd gpio? If so, is there any reason for using it
-> > > > through dp-connector rather than as a native HPD signal?
-> > > >
-> > >
-> > > I added it because you asked for it. That said, I do like having it
-> > > clearly defined in the devicetree.
-> >
-> > I asked for the dp-connector device, not for the HPD function change.
-> >
->
-> I didn't realize that you could have a dp-connector device without
-> defining the hpd-gpios, but it looks like you're right.
->
-> Do we have any reason for using the internal HPD, when we're already
-> spending the memory to allocate the dp-connector device?
+On Thu, Mar 28, 2024 at 02:21:14PM -0700, Abhinav Kumar wrote:
+> 
+> 
+> On 3/28/2024 1:58 PM, Stephen Boyd wrote:
+> > Quoting Abhinav Kumar (2024-03-28 13:24:34)
+> > > + Johan and Bjorn for FYI
+> > > 
+> > > On 3/28/2024 1:04 PM, Kuogee Hsieh wrote:
+> > > > For internal HPD case, hpd_event_thread is created to handle HPD
+> > > > interrupts generated by HPD block of DP controller. It converts
+> > > > HPD interrupts into events and executed them under hpd_event_thread
+> > > > context. For external HPD case, HPD events is delivered by way of
+> > > > dp_bridge_hpd_notify() under thread context. Since they are executed
+> > > > under thread context already, there is no reason to hand over those
+> > > > events to hpd_event_thread. Hence dp_hpd_plug_handle() and
+> > > > dp_hpd_unplug_hanlde() are called directly at dp_bridge_hpd_notify().
+> > > > 
+> > > > Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> > > > ---
+> > > >    drivers/gpu/drm/msm/dp/dp_display.c | 5 +++--
+> > > >    1 file changed, 3 insertions(+), 2 deletions(-)
+> > > > 
+> > > 
+> > > Fixes: 542b37efc20e ("drm/msm/dp: Implement hpd_notify()")
+> > 
+> > Is this a bug fix or an optimization? The commit text doesn't tell me.
+> > 
+> 
+> I would say both.
+> 
+> optimization as it avoids the need to go through the hpd_event thread
+> processing.
+> 
+> bug fix because once you go through the hpd event thread processing it
+> exposes and often breaks the already fragile hpd handling state machine
+> which can be avoided in this case.
+> 
 
-No, no particular reason. I was trying to understand if there was any
-reason for that from your side.
+It removes the main users of the thread, but there's still code paths
+which will post events on the thread.
 
-Then:
+I think I like the direction this is taking, but does it really fix the
+whole problem, or just patch one case?
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-> PS. It's recommended that you dynamically switch to GPIO-based HPD in
-> lower-power scenarios, as this allow you to turn off the DP controller
-> and still detect plug events...
+PS. Please read go/upstream and switch to b4, to avoid some practical
+issues with the way you posted this patch.
 
-I don't think rb3g2 is a low-power device, but I think this is still a
-valid argument.
+Thanks,
+Bjorn
 
--- 
-With best wishes
-Dmitry
+> > > 
+> > > Looks right to me,
+> > > 
+> > > Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
