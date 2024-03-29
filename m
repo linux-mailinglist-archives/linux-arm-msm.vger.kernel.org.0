@@ -1,127 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-15761-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24769892479
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 20:47:14 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1B5A8924A0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 20:52:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 477ED1C213F9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 19:47:13 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 588BEB246BA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 19:52:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85BAA139D04;
-	Fri, 29 Mar 2024 19:47:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC90613A41A;
+	Fri, 29 Mar 2024 19:50:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="A25Bg9vF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XhZxwfMs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF25913AD1E
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 19:46:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A39D10942;
+	Fri, 29 Mar 2024 19:50:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711741621; cv=none; b=gljObZX8jnkcR9jIrzITDrj/mU2rPtIJ/vNUzo+qLDR5FSJcPinP/2n3kz41Qc1y8FnqJRHnc/fNgIxQzGU4XNQ4HXU/7cOLyiZaLF3cTieEkIT7rnRFvovfAo4xHOk80G6VA5N3VqFjaXWgDqdp3mT9abFVq2zop6N8vOowGug=
+	t=1711741856; cv=none; b=r66PdmsVqQRcKKsuwiJEzLJyp96+TYNnMd+WDhwkO456SsKT99djVopeXreHvYv77qnjh5JLoJSFoEGso8txNpUdsyI+zv5+P7ACfKjTAP5OkXBzK09YNW6IA1kNkaKi9+1EKbk6m1M7SZbhU/FaP+sfA3VGcRPoD4AEVi6ptwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711741621; c=relaxed/simple;
-	bh=s8LTLkiOqhoQx9nKUjUGrsIhCVuP+jNs3wYFq5ptfmU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OAXEnP3doX9nki9YfB4UViqpK61/Ov8ZIX+3nXN/KtUCueaBeNVJpZA86OHD1S5DZ8guE8HNJ1Itzlz59boibXujZdjBgyY2EKu4Z8T/FgDcNLIycGGSEDlYLxotAB4u7DcFIR8C/doVCcVP30zTKBOnyJDMO6WHqyo3BDOmge0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=A25Bg9vF; arc=none smtp.client-ip=209.85.128.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-6143266c9ddso13676897b3.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 12:46:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711741619; x=1712346419; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=s8LTLkiOqhoQx9nKUjUGrsIhCVuP+jNs3wYFq5ptfmU=;
-        b=A25Bg9vFL/yvir9byw0wqM3rgGjI1MWzywXMbs3+SZCD2qnvVeudt/pE0SI1z1pkFL
-         Np9Th7I8F2+68bRiihCQ5Bg0yhl92yUg3p7MLwNw4ygGBr8SdtdPhTcr4w3xWgzslhym
-         GZCNAQ2Xa///EPo6WK+ZeE0aqIqanGg76S/T+Oj0EWBdsS9oWe3g28CJCUygJeiZDvIu
-         0MnB5iEvrlaBusZWRoRyxtXc0ZXDOaoDB0PVp6XgD8+SDuBd8EVrkUWobkMdERBuRDfk
-         oRuMkobp+g+9slssqTTmcNWw4rueVFN8wKn+6JsV4LnmSsZ0EyAFsJCPTLJxMZDhuksu
-         ubmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711741619; x=1712346419;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=s8LTLkiOqhoQx9nKUjUGrsIhCVuP+jNs3wYFq5ptfmU=;
-        b=WeE4FcrsjtlsE2ZjVis2GzZ6zvAGOjFgRYqbt0ff/lHF77KFEPOb5yB35gyi5glbWv
-         i05UvqsY3wc6ZT2H1f9jt8JcbxDTTNpIS31vcjchLMuZp36gAukpJBKrGzzTS9a8kig+
-         GnWI5fw8gQ7RLIB2VUKxlBseCii2+SzS2G80GzqwNMmIe+7pFYqJsSWhK70rAyNrvJKW
-         zLpKMPQQI8Nr8eDABHhWIBsLKKrbyR7ECFbhLN3xYo6MXkWeF1M6EOZmDcju1EwKSxby
-         OHCmma/EZJijbzvMwMd+8Bvu1UoO/7FiaqFzu9TFBIyxVVdTawGDwSKGuEvxDPF/EAUI
-         MtIw==
-X-Forwarded-Encrypted: i=1; AJvYcCWMjd15WmGyf4z9ULyMSviM4V/hBN2iuShbR3DkRG00r0nXU1PfKzNKFEuS+ANLACtbKPKjr0kk31xrxDhzLKeCdMpHRXQvRSjZlE5T0A==
-X-Gm-Message-State: AOJu0Ywihk0tcrUeXGZHCtWvH+BHUemjTxsp6Kwhsb7H4436DmsatEd9
-	+qTVTZvjZt+GzPdNIQ8pkt9bLx0R9feJt0cnEoFd85+cTBjeDTnB8MTa2idHlJDrqWg8015oyOT
-	bzLLOmLzKMqshd0PTBTGyJlsQfOVcSnLXRA9Bkg==
-X-Google-Smtp-Source: AGHT+IFP75qnlI+7OWttRgssl4+y5s2yWymZzuPS/gH2JCV2G5l9/7PLZafJPbyi2RtseP1tlvKpO1i4BIwpvjFl3Ew=
-X-Received: by 2002:a25:b10:0:b0:dcd:1b8f:e6d3 with SMTP id
- 16-20020a250b10000000b00dcd1b8fe6d3mr2059070ybl.48.1711741618942; Fri, 29 Mar
- 2024 12:46:58 -0700 (PDT)
+	s=arc-20240116; t=1711741856; c=relaxed/simple;
+	bh=hy4KenGj6FJNKXWaQloIhutlC4pmT6yKuVEgMSdejsQ=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=f4SrvmgdTxv9qvqpHswxj/fcDze518f9xluZwySRrFMoA7vzypd6Qq8l6j5kNHKPlsUbLhIn8UNpWAGdIGOTQH24dHKYsCddMch9kmwLRN9hi/mFKDfU2J0tnQkwBsSqTbZrKRw0G0ThhLxo4RWgunXCsFybeR4Z0rlzysgcF7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XhZxwfMs; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42TJeOW0000759;
+	Fri, 29 Mar 2024 19:50:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version:content-type; s=
+	qcppdkim1; bh=7rock+tuzQRHkqfp1Y4Kn8OYDsz+pZ5CBU3sKrV+tGY=; b=Xh
+	ZxwfMs8QqAYUMJTt0PVclF0OA6lmtWlvL0fvd/65OkvkRNgURFP4+b5FhRZ7yTqU
+	xt3rDG9BlstBviwg/6vMjo9KXlRdu3op3E0zT20w4vZAcugchV4Raoxk/oqeqsX0
+	2MPY20vEaQX86v+uSIrRJbt4r+bOTHLfMqDFY6HatcOr+HlHSYL4NQXFeP35Ac05
+	VQnp/sk88sLm17xFeRgrXCRZfZDacT52N0tJPIJrNxvj20weLYph1a9VQipUtPFq
+	Dkp7LRVnie9AUYWJXHmDww6atpNtLLKWYIylwXceVdKLjPnFQTCQ3FepwuACy+lo
+	iol8t6dARICIgH/A05ZA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x5w6g0x66-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 Mar 2024 19:50:44 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42TJohgu024049
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 Mar 2024 19:50:43 GMT
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Fri, 29 Mar 2024 12:50:43 -0700
+From: Kuogee Hsieh <quic_khsieh@quicinc.com>
+To: <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <abel.vesa@linaro.org>, <andersson@kernel.org>
+CC: Kuogee Hsieh <quic_khsieh@quicinc.com>, <quic_abhinavk@quicinc.com>,
+        <quic_jesszhan@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <marijn.suijten@somainline.org>, <freedreno@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v3] phy/qcom-qmp-combo: propagate correct return value at phy_power_on()
+Date: Fri, 29 Mar 2024 12:50:35 -0700
+Message-ID: <1711741835-10044-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240325100359.17001-1-brgl@bgdev.pl> <56e1c63a-4c09-4d92-9ef2-aad5390879cc@gmail.com>
- <CAMRc=Mf_pvrh2VMfTVE-ZTypyO010p=to-cd8Q745DzSDXLGFw@mail.gmail.com>
- <CAMRc=MfsVWcoMC-dB-fdxy332h-ucUPTfEUMAnCt5L-q3zJxWg@mail.gmail.com>
- <82f94b54-82d1-49b9-badf-63d948b347fc@gmail.com> <97e1f121-9e84-4e63-9c9c-57e2de0b29d7@gmail.com>
- <CAMRc=McLJFGcy-A6PZNmjgDXnvx8z0J4k-Dbak-txvWnycHG2A@mail.gmail.com>
- <2b1dc031-d645-494c-9103-a2bb422ea60b@gmail.com> <CAMRc=MdoSPuedbGhy4toDEkw0vSzESDz2bXGpyt_=R4hqXW+Uw@mail.gmail.com>
- <9b1e5ea0-bb32-4c42-b2e9-204bde31b905@gmail.com>
-In-Reply-To: <9b1e5ea0-bb32-4c42-b2e9-204bde31b905@gmail.com>
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Date: Fri, 29 Mar 2024 20:46:48 +0100
-Message-ID: <CACMJSesvM6_PhhR_2sP4JX6bR4ytVVg=MwWBEVrCHf5FNp2JXw@mail.gmail.com>
-Subject: Re: [PATCH v9 00/13] firmware: qcom: qseecom: convert to using the TZ allocator
-To: Maximilian Luz <luzmaximilian@gmail.com>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Andy Gross <agross@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Elliot Berman <quic_eberman@quicinc.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
-	Guru Das Srinagesh <quic_gurus@quicinc.com>, Andrew Halaney <ahalaney@redhat.com>, 
-	Alex Elder <elder@linaro.org>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, kernel@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: cvI2yOkFUv_7WnJ4YM2eSZGnz7rLQjSe
+X-Proofpoint-ORIG-GUID: cvI2yOkFUv_7WnJ4YM2eSZGnz7rLQjSe
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-29_13,2024-03-28_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
+ malwarescore=0 adultscore=0 spamscore=0 lowpriorityscore=0 mlxlogscore=999
+ impostorscore=0 priorityscore=1501 bulkscore=0 mlxscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2403210001
+ definitions=main-2403290178
 
-On Fri, 29 Mar 2024 at 20:39, Maximilian Luz <luzmaximilian@gmail.com> wrote:
->
-> On 3/29/24 8:26 PM, Bartosz Golaszewski wrote:
-> > On Fri, 29 Mar 2024 at 20:22, Maximilian Luz <luzmaximilian@gmail.com> wrote:
-> >>
-> >> On 3/29/24 8:07 PM, Bartosz Golaszewski wrote:
-> >>>
-> >>> Both with and without SHM bridge?
-> >>
-> >> With CONFIG_QCOM_TZMEM_MODE_GENERIC=y (and the upcoming fix) everything
-> >> works. With CONFIG_QCOM_TZMEM_MODE_SHMBRIDGE=y things unfortunately
-> >> still get stuck at boot (regardless of the fix). I think that's
-> >> happening even before anything efivar related should come up.
-> >>
-> >
-> > This is on X13s? I will get one in 3 weeks. Can you get the bootlog
-> > somehow? Does the laptop have any serial console?
->
-> Surface Pro X (sc8180x), but it should be similar enough to the X13s in
-> that regard. At least from what people with access to the X13s told me,
-> the qseecom stuff seems to behave the same.
->
-> Unfortunately I don't have a direct serial console. Best I have is
-> USB-serial, but it's not even getting there. I'll have to try and see if
-> I can get some more info on the screen.
->
+Currently qmp_combo_dp_power_on() always return 0 in regardless of
+return value of cfg->configure_dp_phy(). This patch propagate
+return value of cfg->configure_dp_phy() all the way back to caller.
 
-I have access to a sc8180x-primus board, does it make sense to test
-with this one? If so, could you give me instructions on how to do it?
+Changes in V3:
+-- add v2 changes log
 
-Bart
+Changes in V2:
+-- add Fixes tag
+-- add dev_err() to qmp_v3_configure_dp_phy()
+-- add dev_err() to qmp_v4_configure_dp_phy()
+
+Fixes: 52e013d0bffa ("phy: qcom-qmp: Add support for DP in USB3+DP combo phy")
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+---
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+index 36632fa..513d99d 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -2343,8 +2343,10 @@ static int qmp_v3_configure_dp_phy(struct qmp_combo *qmp)
+ 	writel(0x05, qmp->dp_dp_phy + QSERDES_V3_DP_PHY_TX2_TX3_LANE_CTL);
+ 
+ 	ret = qmp_combo_configure_dp_clocks(qmp);
+-	if (ret)
++	if (ret) {
++		dev_err(qmp->dev, "dp phy configure failed, err=%d\n", ret);
+ 		return ret;
++	}
+ 
+ 	writel(0x04, qmp->dp_dp_phy + QSERDES_DP_PHY_AUX_CFG2);
+ 	writel(0x01, qmp->dp_dp_phy + QSERDES_DP_PHY_CFG);
+@@ -2519,8 +2521,10 @@ static int qmp_v4_configure_dp_phy(struct qmp_combo *qmp)
+ 	int ret;
+ 
+ 	ret = qmp_v456_configure_dp_phy(qmp);
+-	if (ret < 0)
++	if (ret < 0) {
++		dev_err(qmp->dev, "dp phy configure failed, err=%d\n", ret);
+ 		return ret;
++	}
+ 
+ 	/*
+ 	 * At least for 7nm DP PHY this has to be done after enabling link
+@@ -2754,6 +2758,7 @@ static int qmp_combo_dp_power_on(struct phy *phy)
+ 	const struct qmp_phy_cfg *cfg = qmp->cfg;
+ 	void __iomem *tx = qmp->dp_tx;
+ 	void __iomem *tx2 = qmp->dp_tx2;
++	int ret;
+ 
+ 	mutex_lock(&qmp->phy_mutex);
+ 
+@@ -2766,11 +2771,11 @@ static int qmp_combo_dp_power_on(struct phy *phy)
+ 	cfg->configure_dp_tx(qmp);
+ 
+ 	/* Configure link rate, swing, etc. */
+-	cfg->configure_dp_phy(qmp);
++	ret = cfg->configure_dp_phy(qmp);
+ 
+ 	mutex_unlock(&qmp->phy_mutex);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int qmp_combo_dp_power_off(struct phy *phy)
+-- 
+2.7.4
+
 
