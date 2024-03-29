@@ -1,97 +1,94 @@
-Return-Path: <linux-arm-msm+bounces-15876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0B5F893272
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Mar 2024 18:08:43 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65CEE8933C7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Mar 2024 18:48:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 65B821F20F93
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Mar 2024 16:08:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1B50E28AE29
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Mar 2024 16:48:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6FC0146A82;
-	Sun, 31 Mar 2024 16:03:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA757154431;
+	Sun, 31 Mar 2024 16:40:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=acm.org header.i=@acm.org header.b="NvrFdpa8"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oSbp8YXl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from a.mx.secunet.com (a.mx.secunet.com [62.96.220.36])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6616146A79;
-	Sun, 31 Mar 2024 16:03:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=62.96.220.36
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D02F15359D;
+	Sun, 31 Mar 2024 16:40:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=62.96.220.36
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711901006; cv=fail; b=IisEmO/z/ShC21fvvkIFVAhS27wW4+Mjb92wrFmzwjq4/TTrPci2PeHfyH2MTTBXLHq3ZDzd3UyEG1kV0IpnQ7xaZ7Wv4p2hblxsNiNAVSf+ASBjZlkkQTHDtB2mq9cmHKoNrSLLFzhdDEuiAYRqo43j0VuM8/dYVz5QOjghNE0=
+	t=1711903203; cv=pass; b=GdIXlynGrHmogHdq5coD0KGSEVgUqfE4hdmYtz3GuOXliB2Uo0LBiMiBdU+q0VXUA+4cfhKTzy4O1r4UdK41DhRSq/whARthlhJb0K269WiMi1i6lyh2xdYwmUPVvjrEGH1GFF2g8T/kzFmAo57kxFLkUxrSoEr6nZ5I/cJnIbs=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711901006; c=relaxed/simple;
-	bh=FRIggP1YvWWV3rj+5WU1Cj2nMoZrQOSbDSPE/2jMC40=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=dAMhML4pQIVa5dHULjmFUZQOBSzJFd2Q18IHSecV3IARRiZ8FuPqvLSv6CJ5uEw5p/ee3TH01cNUZLepqymji5jnffYw6+P9ZxAts69umLyIqEJMSmQqB7xG8fDWdZwMDLbkjPu/3IH/9DXxtMqD9bdKrjLppqhDnrbhKrf/0wg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=acm.org; spf=fail smtp.mailfrom=acm.org; dkim=fail (2048-bit key) header.d=acm.org header.i=@acm.org header.b=NvrFdpa8 reason="signature verification failed"; arc=none smtp.client-ip=199.89.1.12; dmarc=pass (p=none dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; arc=fail smtp.client-ip=62.96.220.36
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=acm.org
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=acm.org
+	s=arc-20240116; t=1711903203; c=relaxed/simple;
+	bh=ZzhPYKeso27bmveGBa0hhOsC2JsybKzAElLAwye66BE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
+	 In-Reply-To:To:CC; b=QO4Gn7n7f5pn6jSRCYHVz2r8A/QEBXqdM/VRASjZVL5OfvpTkae9lZy8S3+eckfwT+CuJkz0479Rqz35a5E68QgdBqalYwnTeVtftK4i4Ql2ubuI0vxDdJfF1lLPHh52Zc6Y1WzLjsdg109yAqxPX2F8TrghtmHQH8RE6EPJfqk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=fail smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oSbp8YXl; arc=none smtp.client-ip=205.220.168.131; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; arc=pass smtp.client-ip=62.96.220.36
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=quicinc.com
 Received: from localhost (localhost [127.0.0.1])
-	by a.mx.secunet.com (Postfix) with ESMTP id 7CEE0208D1;
-	Sun, 31 Mar 2024 18:03:23 +0200 (CEST)
+	by a.mx.secunet.com (Postfix) with ESMTP id 18B7F20892;
+	Sun, 31 Mar 2024 18:40:00 +0200 (CEST)
 X-Virus-Scanned: by secunet
 Received: from a.mx.secunet.com ([127.0.0.1])
 	by localhost (a.mx.secunet.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0VvftS3fp1pd; Sun, 31 Mar 2024 18:03:23 +0200 (CEST)
+	with ESMTP id MNmwGse4vKLa; Sun, 31 Mar 2024 18:39:59 +0200 (CEST)
 Received: from mailout1.secunet.com (mailout1.secunet.com [62.96.220.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by a.mx.secunet.com (Postfix) with ESMTPS id AE068207B2;
-	Sun, 31 Mar 2024 18:03:22 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 a.mx.secunet.com AE068207B2
+	by a.mx.secunet.com (Postfix) with ESMTPS id 8340F207C6;
+	Sun, 31 Mar 2024 18:39:59 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 a.mx.secunet.com 8340F207C6
 Received: from cas-essen-01.secunet.de (unknown [10.53.40.201])
-	by mailout1.secunet.com (Postfix) with ESMTP id A0605800055;
-	Sun, 31 Mar 2024 18:03:22 +0200 (CEST)
+	by mailout1.secunet.com (Postfix) with ESMTP id 76A7580004A;
+	Sun, 31 Mar 2024 18:39:59 +0200 (CEST)
 Received: from mbx-essen-01.secunet.de (10.53.40.197) by
  cas-essen-01.secunet.de (10.53.40.201) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Sun, 31 Mar 2024 18:03:22 +0200
+ 15.1.2507.35; Sun, 31 Mar 2024 18:39:59 +0200
 Received: from Pickup by mbx-essen-01.secunet.de with Microsoft SMTP Server id
- 15.1.2507.17; Sun, 31 Mar 2024 15:52:40 +0000
-X-sender: <linux-kernel+bounces-125453-steffen.klassert=secunet.com@vger.kernel.org>
-X-Receiver: <steffen.klassert@secunet.com>
- ORCPT=rfc822;steffen.klassert@secunet.com NOTIFY=NEVER;
- X-ExtendedProps=BQAVABYAAgAAAAUAFAARAPDFCS25BAlDktII2g02frgPADUAAABNaWNyb3NvZnQuRXhjaGFuZ2UuVHJhbnNwb3J0LkRpcmVjdG9yeURhdGEuSXNSZXNvdXJjZQIAAAUAagAJAAEAAAAAAAAABQAWAAIAAAUAQwACAAAFAEYABwADAAAABQBHAAIAAAUAEgAPAGIAAAAvbz1zZWN1bmV0L291PUV4Y2hhbmdlIEFkbWluaXN0cmF0aXZlIEdyb3VwIChGWURJQk9IRjIzU1BETFQpL2NuPVJlY2lwaWVudHMvY249U3RlZmZlbiBLbGFzc2VydDY4YwUACwAXAL4AAACheZxkHSGBRqAcAp3ukbifQ049REI2LENOPURhdGFiYXNlcyxDTj1FeGNoYW5nZSBBZG1pbmlzdHJhdGl2ZSBHcm91cCAoRllESUJPSEYyM1NQRExUKSxDTj1BZG1pbmlzdHJhdGl2ZSBHcm91cHMsQ049c2VjdW5ldCxDTj1NaWNyb3NvZnQgRXhjaGFuZ2UsQ049U2VydmljZXMsQ049Q29uZmlndXJhdGlvbixEQz1zZWN1bmV0LERDPWRlBQAOABEABiAS9uuMOkqzwmEZDvWNNQUAHQAPAAwAAABtYngtZXNzZW4tMDIFADwAAgAADwA2AAAATWljcm9zb2Z0LkV4Y2hhbmdlLlRyYW5zcG9ydC5NYWlsUmVjaXBpZW50LkRpc3BsYXlOYW1lDwARAAAAS2xhc3NlcnQsIFN0ZWZmZW4FAAwAAgAABQBsAAIAAAUAWAAXAEoAAADwxQktuQQJQ5LSCNoNNn64Q049S2xhc3NlcnQgU3RlZmZlbixPVT1Vc2VycyxPVT1NaWdyYXRpb24sREM9c2VjdW5ldCxEQz1kZQUAJgACAAEFACIADwAxAAAAQXV0b1Jlc3BvbnNlU3VwcHJlc3M6IDANClRyYW5zbWl0SGlzdG9ye
-	TogRmFsc2UNCg8ALwAAAE1pY3Jvc29mdC5FeGNoYW5nZS5UcmFuc3BvcnQuRXhwYW5zaW9uR3JvdXBUeXBlDwAVAAAATWVtYmVyc0dyb3VwRXhwYW5zaW9uBQAjAAIAAQ==
+ 15.1.2507.17; Sun, 31 Mar 2024 16:36:42 +0000
+X-sender: <linux-kernel+bounces-125460-steffen.klassert=secunet.com@vger.kernel.org>
+X-Receiver: <steffen.klassert@secunet.com> ORCPT=rfc822;steffen.klassert@secunet.com
 X-CreatedBy: MSExchange15
-X-HeloDomain: a.mx.secunet.com
-X-ExtendedProps: BQBjAAoAeAxrGbMv3AgFAGEACAABAAAABQA3AAIAAA8APAAAAE1pY3Jvc29mdC5FeGNoYW5nZS5UcmFuc3BvcnQuTWFpbFJlY2lwaWVudC5Pcmdhbml6YXRpb25TY29wZREAAAAAAAAAAAAAAAAAAAAAAAUASQACAAEFAAQAFCABAAAAHAAAAHN0ZWZmZW4ua2xhc3NlcnRAc2VjdW5ldC5jb20FAAYAAgABBQApAAIAAQ8ACQAAAENJQXVkaXRlZAIAAQUAAgAHAAEAAAAFAAMABwAAAAAABQAFAAIAAQUAYgAKAJMAAADLigAABQBkAA8AAwAAAEh1Yg==
-X-Source: SMTP:Default MBX-ESSEN-01
-X-SourceIPAddress: 62.96.220.36
-X-EndOfInjectedXHeaders: 10959
+X-HeloDomain: mbx-essen-01.secunet.de
+X-ExtendedProps: BQBjAAoALkimlidQ3AgFADcAAgAADwA8AAAATWljcm9zb2Z0LkV4Y2hhbmdlLlRyYW5zcG9ydC5NYWlsUmVjaXBpZW50Lk9yZ2FuaXphdGlvblNjb3BlEQAAAAAAAAAAAAAAAAAAAAAADwA/AAAATWljcm9zb2Z0LkV4Y2hhbmdlLlRyYW5zcG9ydC5EaXJlY3RvcnlEYXRhLk1haWxEZWxpdmVyeVByaW9yaXR5DwADAAAATG93
+X-Source: SMTP:Default MBX-ESSEN-02
+X-SourceIPAddress: 10.53.40.197
+X-EndOfInjectedXHeaders: 12407
 X-Virus-Scanned: by secunet
-Received-SPF: Pass (sender SPF authorized) identity=mailfrom; client-ip=147.75.48.161; helo=sy.mirrors.kernel.org; envelope-from=linux-kernel+bounces-125453-steffen.klassert=secunet.com@vger.kernel.org; receiver=steffen.klassert@secunet.com 
-DKIM-Filter: OpenDKIM Filter v2.11.0 a.mx.secunet.com 2E8C020561
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.12
+Received-SPF: Pass (sender SPF authorized) identity=mailfrom; client-ip=147.75.80.249; helo=am.mirrors.kernel.org; envelope-from=linux-kernel+bounces-125460-steffen.klassert=secunet.com@vger.kernel.org; receiver=steffen.klassert@secunet.com 
+DKIM-Filter: OpenDKIM Filter v2.11.0 a.mx.secunet.com DFD8220883
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal: i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711748972; cv=none; b=imRoeGH5xl/m3DLOY7eCKUi7sprzA+ulAK+xbNkaFo1euIRtzYwvf3H4dlb7hLHe045/baQJ6cSZTbqo4R0pL5Iq5tUuITKZmKpTYKmEOpE+WR28JBkuvtdReqGO578erBnsayEER+gE0FpTbm2ORQ89kva6JAlO77OMhce+VuA=
+	t=1711749268; cv=none; b=E1kTb3O1ObpF4ofYR3NSK/VNelTwTcHsdeE/v005QGBKCF9vuc2TDlgcjUA4uaFI0q/zx0LzRk+Rx+4yyLGsqv2PyJVcwePgZ9BMOwFjVAfW7OGkhy4+9QRWYvRBwbKH+qI5QI1SfHb97Cv+629u5Prdxs8Vf0b1/dyuWafjnU0=
 ARC-Message-Signature: i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711748972; c=relaxed/simple;
-	bh=FRIggP1YvWWV3rj+5WU1Cj2nMoZrQOSbDSPE/2jMC40=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aJ5QcVIvIx+WnKyttgMHvYUQSlytXOS/S8mBHQM9Hu5SDmV6w8EaoneOQybOr2ia90h2pcCFuJ1qFgW2XHSKtq+rRo65+VyKB6HL7YMvKRvWoAljPnBIY1gT3eXWaHgGvBhyjfxIlHgqm5rqfVcUscZbRMZfQIZ/pKdrt3mA6mw=
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=NvrFdpa8; arc=none smtp.client-ip=199.89.1.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=acm.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
-	content-transfer-encoding:content-type:content-type:in-reply-to
-	:from:from:content-language:references:subject:subject
-	:user-agent:mime-version:date:date:message-id:received:received;
-	 s=mr01; t=1711748967; x=1714340968; bh=FRIggP1YvWWV3rj+5WU1Cj2n
-	MoZrQOSbDSPE/2jMC40=; b=NvrFdpa8pcA9cG+NIiJnuoeRqa/nPyhvnOtdKtLd
-	WqtQBmfv5Xxa/dgMQibjBYWpMQXU99b6524nnJyI8pR/Q1lbHWv1wXDr0wGHEsNl
-	MnIwbJxL0DpSjF8SNG2GSqM2pNOxYN5q/Qkk1lddJBYelx8ypgvgvClefq1Mhl24
-	H0gUpQPwbjzLn0glITC1tXYRk/I87LnqCSGaNh3fPf4IJnFVILDFulxZED+xaII6
-	iBr5thFOG0UqWCqaTUezS8lMnQIdJZ40OgJlZMfMAGoHuNfec/Jn1agU0vb5QT1L
-	9pHLevDlEg286EulZVVF/0rInaBlREIxgEGvUz37Avt+XA==
-X-Virus-Scanned: by MailRoute
-Message-ID: <ecd24b64-0f27-486b-a7aa-b4b51b7b16de@acm.org>
-Date: Fri, 29 Mar 2024 14:49:21 -0700
+	s=arc-20240116; t=1711749268; c=relaxed/simple;
+	bh=ZzhPYKeso27bmveGBa0hhOsC2JsybKzAElLAwye66BE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
+	 In-Reply-To:To:CC; b=IMu1Ln8MCtfnXxGEt7py/U0DhV6xmKS7+eZ8tjPXWUjG2tlQLckiVCDCBrUxeHvzzPH5vLt/iFA/vDGiAbfjx1S327V5kK6gtogdbqT3kGAOkmF/9sq0UjzVyafNu33Wxxt2NFsLbzo7ON4lxzS45GLmMelsWPSivnVgjahUJu0=
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oSbp8YXl; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:date:subject:mime-version:content-type
+	:content-transfer-encoding:message-id:references:in-reply-to:to
+	:cc; s=qcppdkim1; bh=+bd0p8wZ946dzDtJnkM1g8zAvJ0EnKW+xUBI80TUAm4
+	=; b=oSbp8YXlgxZ7cBUyE9PakifZY0YNGB6iKKitZ5mnPyfuxJ6vEYg3UEMGNjQ
+	8PwG/mPLu2IS6eirsr+fWmFWbBF2n30CI/3UXnJN1H7gxUTMKt31F8EYiSyyfUkc
+	jHrz/fyhmjKPz0BW6UufVwBpCyRhN+84SHNx9EJ7c7cSzpPIySlsSsQPPjv4RBM4
+	jxrbkenoYJmTvXpxhWjBloeN+mK+Mhl7IxUe2wI1gzNaIMLmpVg2c2yI/q1cFSgY
+	c7d+GXYpENhowLb7om6Y2s7rhkGNpzpZi3hul5w1W2Jh5A3K71/wmfQm5GTOA5bA
+	FiagKjBsNblIjQFkuLhOVdNHYWg==
+From: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
+Date: Fri, 29 Mar 2024 14:53:41 -0700
+Subject: [PATCH v4 2/5] soc: qcom: llcc: Add regmap for Broadcast_AND
+ region
 Precedence: bulk
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -99,28 +96,124 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 11/11] scsi: ufs: core: Remove unnecessary wmb() prior
- to writing run/stop regs
-To: Andrew Halaney <ahalaney@redhat.com>, Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio
-	<konrad.dybcio@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>, "James
- E.J. Bottomley" <jejb@linux.ibm.com>, "Martin K. Petersen"
-	<martin.petersen@oracle.com>, Hannes Reinecke <hare@suse.de>, Janek Kotas
-	<jank@cadence.com>, Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman
-	<avri.altman@wdc.com>, Can Guo <quic_cang@quicinc.com>, Anjana Hari
-	<quic_ahari@quicinc.com>
-CC: Will Deacon <will@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-	<linux-scsi@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20240329-ufs-reset-ensure-effect-before-delay-v5-0-181252004586@redhat.com>
- <20240329-ufs-reset-ensure-effect-before-delay-v5-11-181252004586@redhat.com>
-Content-Language: en-US
-From: Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <20240329-ufs-reset-ensure-effect-before-delay-v5-11-181252004586@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-ID: <20240329-llcc-broadcast-and-v4-2-107c76fd8ceb@quicinc.com>
+References: <20240329-llcc-broadcast-and-v4-0-107c76fd8ceb@quicinc.com>
+In-Reply-To: <20240329-llcc-broadcast-and-v4-0-107c76fd8ceb@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
+        Unnathi Chalicheemala
+	<quic_uchalich@quicinc.com>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1711749240; l=2997;
+ i=quic_uchalich@quicinc.com; s=20240202; h=from:subject:message-id;
+ bh=ZzhPYKeso27bmveGBa0hhOsC2JsybKzAElLAwye66BE=;
+ b=bJ/sdVUC6uTHBFFWKL0jMoOCUbWVpQaRsrVwgBC7rRPkYNvYjudtzMaCUwWQp3aXPhtpFoS+W
+ mRlPQ0jqbMHCPVG6xFlvkRJwBk5pVyv3TXT8ZMRxLnc7YxhNMO8/cGE
+X-Developer-Key: i=quic_uchalich@quicinc.com; a=ed25519;
+ pk=8n+IFmsCDcEIg91sUP/julv9kf7kmyIKT2sR+1yFd4A=
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Bc2BnW1Hs3ISyKMHGMNa6NVFWXmoGuMz
+X-Proofpoint-ORIG-GUID: Bc2BnW1Hs3ISyKMHGMNa6NVFWXmoGuMz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-29_13,2024-03-28_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
+ malwarescore=0 adultscore=0 spamscore=0 lowpriorityscore=0 mlxlogscore=943
+ impostorscore=0 priorityscore=1501 bulkscore=0 mlxscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2403210001
+ definitions=main-2403290195
 X-EXCLAIMER-MD-CONFIG: 2c86f778-e09b-4440-8b15-867914633a10
 
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Define new regmap structure for Broadcast_AND region and initialize
+this regmap when HW block version is greater than 4.1, otherwise
+initialize as a NULL pointer for backwards compatibility.
+
+Switch from broadcast_OR to broadcast_AND region (when defined in DT)
+for checking status bit 1 as Broadcast_OR region checks only for bit 0.
+
+Signed-off-by: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
+---
+ drivers/soc/qcom/llcc-qcom.c       | 14 +++++++++++++-
+ include/linux/soc/qcom/llcc-qcom.h |  4 +++-
+ 2 files changed, 16 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+index cbef0dea1d5d..727d00c527f1 100644
+--- a/drivers/soc/qcom/llcc-qcom.c
++++ b/drivers/soc/qcom/llcc-qcom.c
+@@ -821,6 +821,7 @@ EXPORT_SYMBOL_GPL(llcc_slice_putd);
+ static int llcc_update_act_ctrl(u32 sid,
+ 				u32 act_ctrl_reg_val, u32 status)
+ {
++	struct regmap *regmap;
+ 	u32 act_ctrl_reg;
+ 	u32 act_clear_reg;
+ 	u32 status_reg;
+@@ -849,7 +850,8 @@ static int llcc_update_act_ctrl(u32 sid,
+ 		return ret;
+ 
+ 	if (drv_data->version >= LLCC_VERSION_4_1_0_0) {
+-		ret = regmap_read_poll_timeout(drv_data->bcast_regmap, status_reg,
++		regmap = drv_data->bcast_and_regmap ?: drv_data->bcast_regmap;
++		ret = regmap_read_poll_timeout(regmap, status_reg,
+ 				      slice_status, (slice_status & ACT_COMPLETE),
+ 				      0, LLCC_STATUS_READ_DELAY);
+ 		if (ret)
+@@ -1284,6 +1286,16 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+ 
+ 	drv_data->version = version;
+ 
++	/* Applicable only when drv_data->version >= 4.1 */
++	drv_data->bcast_and_regmap = qcom_llcc_init_mmio(pdev, i + 1, "llcc_broadcast_and_base");
++	if (IS_ERR(drv_data->bcast_and_regmap)) {
++		ret = PTR_ERR(drv_data->bcast_and_regmap);
++		if (ret == -EINVAL)
++			drv_data->bcast_and_regmap = NULL;
++		else
++			goto err;
++	}
++
+ 	llcc_cfg = cfg->sct_data;
+ 	sz = cfg->size;
+ 
+diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
+index 1a886666bbb6..9e9f528b1370 100644
+--- a/include/linux/soc/qcom/llcc-qcom.h
++++ b/include/linux/soc/qcom/llcc-qcom.h
+@@ -115,7 +115,8 @@ struct llcc_edac_reg_offset {
+ /**
+  * struct llcc_drv_data - Data associated with the llcc driver
+  * @regmaps: regmaps associated with the llcc device
+- * @bcast_regmap: regmap associated with llcc broadcast offset
++ * @bcast_regmap: regmap associated with llcc broadcast OR offset
++ * @bcast_and_regmap: regmap associated with llcc broadcast AND offset
+  * @cfg: pointer to the data structure for slice configuration
+  * @edac_reg_offset: Offset of the LLCC EDAC registers
+  * @lock: mutex associated with each slice
+@@ -129,6 +130,7 @@ struct llcc_edac_reg_offset {
+ struct llcc_drv_data {
+ 	struct regmap **regmaps;
+ 	struct regmap *bcast_regmap;
++	struct regmap *bcast_and_regmap;
+ 	const struct llcc_slice_config *cfg;
+ 	const struct llcc_edac_reg_offset *edac_reg_offset;
+ 	struct mutex lock;
+
+-- 
+2.25.1
+
 
 
