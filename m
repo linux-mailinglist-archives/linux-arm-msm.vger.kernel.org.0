@@ -1,189 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-15654-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15655-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E97B8911B4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 03:38:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E507A8911C4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 03:47:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 23B4C28A31F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 02:38:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A7D7B289C42
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 02:47:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A5B62E40C;
-	Fri, 29 Mar 2024 02:38:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EB852E821;
+	Fri, 29 Mar 2024 02:47:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JgtRMcCH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ePUTI/l2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D989E2DF7D;
-	Fri, 29 Mar 2024 02:38:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95ED6A47
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 02:47:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711679888; cv=none; b=LD1q/1LcfjEBZ6bw7Z4t22PgS4F/GKr3P3vZPFfqD3HnFdB87Gvuc5isJG4Lq3gik/4UdD+a5O4Fy7d7iIMTJJEqmynRXQYpVoh5yec60ZV6XGcLzERPXniIS8CdhtTaA3TDjIBWq2jBm/g/GFvRt8jT/KVE4Ltprc7hD/7rw+4=
+	t=1711680459; cv=none; b=ssHjROdD7aklq//218NZldTHjE72iQvghGpdM4CyAEObzF47AuxnssBPpz5iXyfPZYT3XidUe+cMLoUZkEj+4OG5THLuu6dF2xleTllAKc5NjQYf74SU62HtpHJyebqD5Rl3BfeduDskM4GPh0lM5DnIrvmVNZRS8VqxHu2kLYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711679888; c=relaxed/simple;
-	bh=lvUn0Rt1L8GduKweGKMduCHqPlOdlNDE1cQtCBoduns=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=oqmckQF37QH6EWdGPtP59QXP5HZVgHPihakGaVQmt01m39XsAqw9PG7O/kdkruHQ3OZzAI3jTw2/Nu1gjfpa8MLLSD3Jq/8Vp0lalWuUWPt7NtXvfx8Bl9gxnbIJBQcSoTSqz3aJg7t5+gNH/E9ETB2v+OXCHihOoRRbsi/QC6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JgtRMcCH; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42T011a7014147;
-	Fri, 29 Mar 2024 02:37:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=iKisYioMzEBw7Rwi9M/qvtiGP/9dquh4W1P2njpTQLs=; b=Jg
-	tRMcCHE+NXcFdcrYUowoEq8Q/kVfiPMphig3SeJkqWWt5LKxIlJ/9mBiBBs3GbDm
-	pMFlDv39NejJQMztfLr9L9dtDFN9Qgys6XJgvuoFI/hK94cAGBZe4dC9x03F7SXM
-	7pQRDSTzMvYUps9uDM7AjtynzaAJ5r+xFAfntUhd8xU6N8n8srbNmu0h+KBNwt5X
-	PzM8oPVzG8kfVvh4oc908VqzvtI29Y2l7cQ4zhEHAFavVWMwajnR/A1h1TMISNZK
-	y83TztW/85D+lbwVJlPXOdLpqVcfj5E5mgMWlUsoQzsbw/BFDzvDY9j7eJo9/qy6
-	Xx5+Zp3w+rvHM02HMUSg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x5aeg9hdk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 29 Mar 2024 02:37:53 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42T2brZO030242
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 29 Mar 2024 02:37:53 GMT
-Received: from [10.110.118.161] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 28 Mar
- 2024 19:37:44 -0700
-Message-ID: <3bb6722c-5186-6d25-a4a2-c1ef92977dac@quicinc.com>
-Date: Thu, 28 Mar 2024 19:37:42 -0700
+	s=arc-20240116; t=1711680459; c=relaxed/simple;
+	bh=JcUlEBF0Uv9a/XmjG4SVUjUXRSCAaEzJPk5xjGT+c8E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mAggWikOHFt3cv9R8RwGdfvDYwiazdvhJx7zml45DKWNRocEoCfZ7bF0RzuTh4qaFlohuG55gt6W/zjnnP0R6VFLOZMNuKE9VuIlJd33JrpMtEzq0UeqfH51zYTK/hWffA4+SzvIGoPwPoyJDaFZ1GKB+5IaR8MiFjY0DxSX4UY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ePUTI/l2; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2d29aad15a5so18320661fa.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 19:47:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1711680456; x=1712285256; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rSETHpMqQALVwCbYm94Jc+2S/pi/8MN4MsDFLYYekkU=;
+        b=ePUTI/l2sVg14Bts8QlIm97x2JpvhLc3QTmcBNbAHKvZkMho1f4MdAnjG94YmVbyA8
+         ZJ5gN1BpHEwRao7WHrcg0zJP5bWIVEiM2CnvL9nHN65ncC974n1ltvkHybnZVFI5vljR
+         iCMa0DYdq8Ve/w3Rs6btUnNW8Y2gjrivPOAEF41NNsbhqorUvl5lcgvtd3GEZutxYi57
+         sh6PpsWoTvxWIxJHQVJ8nu3rohXm+82g1jqEuAPWwtMBmGhmGFuHcMazUCdB9jCz9AEi
+         uxoXoiMHl2AX66MN6Kh83oPkD2BHAUtwRWkiqwxxM+6xzjBBrsbvM4p/mtkeBJRDEa7/
+         VWyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711680456; x=1712285256;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rSETHpMqQALVwCbYm94Jc+2S/pi/8MN4MsDFLYYekkU=;
+        b=NDMI64sLpKvmyad9mUeIGEKrhqo/iA2e44va+S/0JY9Ka89LMVebmwceFJWdHUSb8W
+         i0vZ7pqueZk3GEF7cT6OCGsjRv+U4v9rPvVjUgcuFVJVcRDfObCjmV18sxRW2ojY7hZY
+         /J8626Slu6K8je/4sPJIILNf4A1gK62Jy8/PcK/unAInOYvam94Pm1cBvoBneN7hJFSE
+         8uUgZXFyX37cios7s+yQoUoLzm51Z9u73hp9XmNVxD/o62t8RXU40B73XPTfM7/wphXX
+         Lqa6CRLUxpPsAybHEO72Ze7k3JOBIbTEdFMvYqXa79NK8K224dfSvO1pCoTXgSiDo052
+         Dl+A==
+X-Forwarded-Encrypted: i=1; AJvYcCUl4KnMHJMdhpO5PvZZ/dNJmdoVQqI4FpCLX4bXWnBpUtJsgKRxPEcQ0yBaPLqWUWx/JiBtcAfUFhApMonCj9zoi8DHRemmVqf3i/hTeQ==
+X-Gm-Message-State: AOJu0YwAKnsEj/YbRLDx/84I4bUfEQ8tmzzg8uHrUVXMQ398JL8DBMbd
+	iHSJYA6eoptE6bsK5/CJDnesmmbGf6rSu3hVaTPOO14PP7BXCHLMvWylPZAa6BMI1WxjW6O9Wki
+	dhIfHHL5K88yTSvgnnRbhgp2ki7bfFKCZgVowbg==
+X-Google-Smtp-Source: AGHT+IGkPfHE2Cb4ujRPE2lteIEJE/6vhbAkZFZyGBXNMNjknZyJOjV3GSO913me8KPFw4nJCc4SYzvo3L5pLLRwgX4=
+X-Received: by 2002:a2e:bc21:0:b0:2d6:a699:4bae with SMTP id
+ b33-20020a2ebc21000000b002d6a6994baemr603365ljf.6.1711680455712; Thu, 28 Mar
+ 2024 19:47:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v1] drm/msm/dp: use dp_hpd_plug_handle() and
- dp_hpd_unplug_handle() directly
-Content-Language: en-US
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-CC: Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Johan Hovold <johan@kernel.org>,
-        Kuogee Hsieh
-	<quic_khsieh@quicinc.com>, <abel.vesa@linaro.org>,
-        <agross@kernel.org>, <airlied@gmail.com>, <daniel@ffwll.ch>,
-        <dianders@chromium.org>, <dmitry.baryshkov@linaro.org>,
-        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <vkoul@kernel.org>, <quic_jesszhan@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1711656246-3483-1-git-send-email-quic_khsieh@quicinc.com>
- <1711656246-3483-2-git-send-email-quic_khsieh@quicinc.com>
- <55debb0a-c7af-ef71-c49a-414c7ab4f59d@quicinc.com>
- <CAE-0n503FwcwreZ14MMKgdzu8QybWYtMdLOKasiCwmE8pCJOSw@mail.gmail.com>
- <23de89e9-3ef3-c52d-7abf-93dc2dbb51a4@quicinc.com>
- <20240329014659.GA3478031@hu-bjorande-lv.qualcomm.com>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240329014659.GA3478031@hu-bjorande-lv.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: QpIVvtzj8E2DmWjqFm2Yz6BEgVmeMtSk
-X-Proofpoint-GUID: QpIVvtzj8E2DmWjqFm2Yz6BEgVmeMtSk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-29_02,2024-03-28_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- lowpriorityscore=0 malwarescore=0 priorityscore=1501 mlxscore=0
- clxscore=1015 mlxlogscore=999 impostorscore=0 adultscore=0 suspectscore=0
- phishscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2403290020
+References: <20240328111158.2074351-1-jun.nie@linaro.org> <CAA8EJpq7eHgryrNnnR=Yh46PdkAQA-YNzTz_0gaWbr_g9CWSxA@mail.gmail.com>
+In-Reply-To: <CAA8EJpq7eHgryrNnnR=Yh46PdkAQA-YNzTz_0gaWbr_g9CWSxA@mail.gmail.com>
+From: Jun Nie <jun.nie@linaro.org>
+Date: Fri, 29 Mar 2024 10:47:24 +0800
+Message-ID: <CABymUCOdZO7K1F3FMR_KD5sgCUCSKreSYr3BWbNdYMO==+AErA@mail.gmail.com>
+Subject: Re: [PATCH 1/3] drm/msm/dpu: fix DSC for DSI video mode
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: neil.armstrong@linaro.org, sam@ravnborg.org, airlied@gmail.com, 
+	daniel@ffwll.ch, quic_parellan@quicinc.com, freedreno@lists.freedesktop.org, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org, 
+	quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com, 
+	marijn.suijten@somainline.org, sean@poorly.run
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2024=E5=B9=B43=E6=
+=9C=8828=E6=97=A5=E5=91=A8=E5=9B=9B 23:05=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Thu, 28 Mar 2024 at 13:12, Jun Nie <jun.nie@linaro.org> wrote:
+> >
+> > Fix DSC timing and control configurations in DPU for DSI video mode.
+> > Only compression ratio 3:1 is handled and tested.
+> >
+> > This patch is modified from patchs of Jonathan Marek.
+> >
+> > Signed-off-by: Jun Nie <jun.nie@linaro.org>
+>
+> This almost looks like a joke, except it isn't the 1st of April yet.
+> The patch lacks proper Author / Sign-off tags from Jonathan.
+> This is pretty close to copyright infringement. I'm sorry, but I'd
+> have to ask you to abstain from sending patches w/o prior internal
+> review.
 
+Thanks for pointing me the previous version. I am not aware of it actually.
+The only version I knew is from internal repo. It is my fault. I see the sl=
+ides
+says that Jonathan does not want to disturbed, so only his name is
+mentioned in the commit message.
 
-On 3/28/2024 6:46 PM, Bjorn Andersson wrote:
-> On Thu, Mar 28, 2024 at 02:21:14PM -0700, Abhinav Kumar wrote:
->>
->>
->> On 3/28/2024 1:58 PM, Stephen Boyd wrote:
->>> Quoting Abhinav Kumar (2024-03-28 13:24:34)
->>>> + Johan and Bjorn for FYI
->>>>
->>>> On 3/28/2024 1:04 PM, Kuogee Hsieh wrote:
->>>>> For internal HPD case, hpd_event_thread is created to handle HPD
->>>>> interrupts generated by HPD block of DP controller. It converts
->>>>> HPD interrupts into events and executed them under hpd_event_thread
->>>>> context. For external HPD case, HPD events is delivered by way of
->>>>> dp_bridge_hpd_notify() under thread context. Since they are executed
->>>>> under thread context already, there is no reason to hand over those
->>>>> events to hpd_event_thread. Hence dp_hpd_plug_handle() and
->>>>> dp_hpd_unplug_hanlde() are called directly at dp_bridge_hpd_notify().
->>>>>
->>>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->>>>> ---
->>>>>     drivers/gpu/drm/msm/dp/dp_display.c | 5 +++--
->>>>>     1 file changed, 3 insertions(+), 2 deletions(-)
->>>>>
->>>>
->>>> Fixes: 542b37efc20e ("drm/msm/dp: Implement hpd_notify()")
->>>
->>> Is this a bug fix or an optimization? The commit text doesn't tell me.
->>>
->>
->> I would say both.
->>
->> optimization as it avoids the need to go through the hpd_event thread
->> processing.
->>
->> bug fix because once you go through the hpd event thread processing it
->> exposes and often breaks the already fragile hpd handling state machine
->> which can be avoided in this case.
->>
-> 
-> It removes the main users of the thread, but there's still code paths
-> which will post events on the thread.
-> 
-> I think I like the direction this is taking, but does it really fix the
-> whole problem, or just patch one case?
-> 
+What's the patch set status? I do not see it in mainline yet. If it is
+in pipeline,
+I can just forget the DPU side change.
 
-So kuogee's idea behind this that NON-hpd_isr events need not go through 
-event thread at all.
+Thanks!
+Jun
 
-We did not run into any special scenario or issue without this. It was a 
-code walkthrough fix.
-
-> 
-> PS. Please read go/upstream and switch to b4, to avoid some practical
-> issues with the way you posted this patch.
-> 
-> Thanks,
-> Bjorn
-> 
-
-Just to elaborate the practical issues so that developers know what you 
-encountered:
-
--> no need of v1 on the PATCH
--> somehow this patch was linked "in-reply-to" another patch 
-https://lore.kernel.org/all/1711656246-3483-2-git-send-email-quic_khsieh@quicinc.com/ 
-. This is quite strange and not sure how it happened. But will double 
-check if we did something wrong here.
-
-Thanks for sharing these.
-
-
->>>>
->>>> Looks right to me,
->>>>
->>>> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>
+> > ---
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   |  2 +-
+> >  .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  2 +-
+> >  .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  | 12 +++++
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c   | 10 +++-
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h   |  1 +
+> >  drivers/gpu/drm/msm/dsi/dsi.xml.h             |  1 +
+> >  drivers/gpu/drm/msm/dsi/dsi_host.c            | 48 +++++++++++--------
+> >  include/drm/display/drm_dsc.h                 |  4 ++
+>
+> Ok. The feedback for the original patchset [1]  was that it should be
+> split logically. Instead you pile everything together into a single
+> patch. This is a complete no-go.
+>
+> Also, this patchset lacks changelog in comparison to the previous
+> patchseris. I don't think I'll continue the review of this patch.
+> Please rework it properly and add corresponding changelog.
+>
+> [1] https://patchwork.freedesktop.org/patch/567518/?series=3D126430&rev=
+=3D1
+>
+> >  8 files changed, 56 insertions(+), 24 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/=
+drm/msm/disp/dpu1/dpu_encoder.c
+> > index 6a4b489d44e5..c1b9da06dde2 100644
+>
+> --
+> With best wishes
+> Dmitry
 
