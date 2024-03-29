@@ -1,177 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-15739-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 623988921EF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 17:48:49 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1E3A8921FE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 17:56:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CB713B22DD4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 16:48:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8163BB213E0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 16:56:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBEC72C19F;
-	Fri, 29 Mar 2024 16:48:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1CA17E788;
+	Fri, 29 Mar 2024 16:56:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QT2vnQ8F"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cJ5kh/eF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314B311721;
-	Fri, 29 Mar 2024 16:48:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DAC136E01;
+	Fri, 29 Mar 2024 16:56:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711730918; cv=none; b=UpT83RlfjTgHQ0TdCQy2GKaYC31OM0yKUDQ9lp+eVmwxk+tXMhSFCz955MWRkRBQ+/8A3Jgk3PnC54hSNYK3UPWpZbg60+vO8RrTsyz2wFISj+2/GCvmHfQujI1DDapRQ6Nxs4IOLm92KuCcYswH3b7ZcLi3j/xEnZAmFpmmj+8=
+	t=1711731369; cv=none; b=qsFs/zd/S9xfVw8F+TV9LgwTxba6E96bWDuZxBaS5Qj1ubplY3PADA5WE+qEqzhvcFkQtRYXh7ShCTea/lfkGkLYnSDs6wQsNBmbWqNVj96kLKla3iraa6hYnxS/UZhFfqbtH2rr0OJzB/L56dZxrQk8MB0DrC3jYsSoPJMw8LE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711730918; c=relaxed/simple;
-	bh=hvHg/9C+3eVnHYXATalmrgecb+1ZlS3+7aYSID2BU90=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=FCCaFtBIeSi0Wu1u91WWNnzUVhsdZpF8iXJKZVoGm9gX7sAnYbpdP1eWwAjpKVI9b53HhVEQv+/8ZpbrE5XsbBTb6wn7Fu2/2HQiodX+Sgo1J5ASKV/dR8vMKIeSinXXAovyRSA+hBQU26gT7h5HjtSfuL7HMrLjAxykk4lxJs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QT2vnQ8F; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42TGZAux016124;
-	Fri, 29 Mar 2024 16:48:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version:content-type; s=
-	qcppdkim1; bh=NQ3gGO7tawnFzTN0sD8TN9O73Rb37GQlk0B1YwEqEpI=; b=QT
-	2vnQ8F29WshB2ogPHhWd1ODeEWjkD6WNNCBMFS/TSkD7h4Gqj9cEa8eEoHNPqSWZ
-	w1iHhFmWs5qZTGIf5GcZJ/ecpdpD2odEJhrUwGH/WQpjT0/IkeqnUg/6u1zN/GL4
-	rr7fkzp1ODtG16iM9LCLVKrcOo3+IRoXZGeYTza8mkSvs3WTlRaOggSlsuUvlRrd
-	nuK6bjc53DEELMHzHqwCPkMgPdT2wHZ+78uZwLegLGFL2xWJK+YpfPXyV1UL1kge
-	2JRC1OwM2caMsxNusMwSTt42Yw9yNeNu283mmVjL8GFukTHI85oHaxE2k9Eces2H
-	iRGV1nFwAzVOk8iG/L1w==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x5ybmr910-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 29 Mar 2024 16:48:27 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42TGmQdd004467
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 29 Mar 2024 16:48:26 GMT
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Fri, 29 Mar 2024 09:48:25 -0700
-From: Kuogee Hsieh <quic_khsieh@quicinc.com>
-To: <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <abel.vesa@linaro.org>, <andersson@kernel.org>
-CC: Kuogee Hsieh <quic_khsieh@quicinc.com>, <quic_abhinavk@quicinc.com>,
-        <quic_jesszhan@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <marijn.suijten@somainline.org>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2] drm/msm/dp: assign correct DP controller ID to x1e80100 interface table
-Date: Fri, 29 Mar 2024 09:48:16 -0700
-Message-ID: <1711730896-16637-1-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+	s=arc-20240116; t=1711731369; c=relaxed/simple;
+	bh=isBCBT3seLZHai1OgzPx3zwWr4nR668ZJ3SMftDDp6g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=e9JA8JdPw6KqBrpIY9pXMYvbEQs3MUKMrqQskz/eiEXcg0mutRw53ntwlvEemGzCVsjT32CCCr3ecEO7UCrQWREdnLCeJpNdP25y3br4CQk5URtGVRfLEsLKuh0b9KCri0WwLX11FrH8g82zF36jVJak4hszoinLR9V0DA97oeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cJ5kh/eF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6422C433C7;
+	Fri, 29 Mar 2024 16:56:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711731369;
+	bh=isBCBT3seLZHai1OgzPx3zwWr4nR668ZJ3SMftDDp6g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=cJ5kh/eFxvCB7x0HP9o7GJ025aeWR+BDUKfpEeIIYigLiXrGXi/gyZYGwm1M0wIw5
+	 RZ7k6YyugQtGNOCHPSI/Q4LFhlBCbcdGgTklkcpMx2V6f1IKOTHs3ZB7QZp5eTIoi3
+	 u69yhID5We6VtYO8ucXLvNOvfoHL49CS+sepNyKzW/J+NZiNXTMRZZ5eCqZ31Td+68
+	 NorqtgqaNH6A+ShOFysLPth9FfYCFQRw+4Ee/lBwRRpg+k7tLDNIGmNb8Tw1HHP4OY
+	 JF+SGtwvPX0HWLRAzSBautwu9NJ3voJxFVUp7Q4aSyekrr0TY8y9HkKV0JlF4BXBmG
+	 VMUerY5p90Fgw==
+Date: Fri, 29 Mar 2024 22:26:05 +0530
+From: Vinod Koul <vkoul@kernel.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFT 3/7] phy: qcom: qmp-combo: introduce QPHY_MODE
+Message-ID: <ZgbypXhhTGep1r8-@matsya>
+References: <20240229-topic-sm8x50-upstream-phy-combo-typec-mux-v1-0-07e24a231840@linaro.org>
+ <20240229-topic-sm8x50-upstream-phy-combo-typec-mux-v1-3-07e24a231840@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: wHWfh20e3zFEdn7IxfT62se4JQRvdaHj
-X-Proofpoint-GUID: wHWfh20e3zFEdn7IxfT62se4JQRvdaHj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-29_13,2024-03-28_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- lowpriorityscore=0 malwarescore=0 bulkscore=0 phishscore=0 mlxlogscore=999
- suspectscore=0 adultscore=0 priorityscore=1501 mlxscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2403210001
- definitions=main-2403290148
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240229-topic-sm8x50-upstream-phy-combo-typec-mux-v1-3-07e24a231840@linaro.org>
 
-At current x1e80100 interface table, interface #3 is wrongly
-connected to DP controller #0 and interface #4 wrongly connected
-to DP controller #2. Fix this problem by connect Interface #3 to
-DP controller #0 and interface #4 connect to DP controller #1.
-Also add interface #6, #7 and #8 connections to DP controller to
-complete x1e80100 interface table.
+On 29-02-24, 14:07, Neil Armstrong wrote:
+> Introduce an enum for the QMP Combo PHY modes, use it in the
+> QMP commmon phy init function and default to COMBO mode.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 41 +++++++++++++++++++++++++++----
+>  1 file changed, 36 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> index 3721bbea9eae..ac5d528fd7a1 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> @@ -61,6 +61,12 @@
+>  
+>  #define PHY_INIT_COMPLETE_TIMEOUT		10000
+>  
+> +enum qphy_mode {
+> +	QPHY_MODE_COMBO = 0,
+> +	QPHY_MODE_DP_ONLY,
+> +	QPHY_MODE_USB_ONLY,
+> +};
+> +
+>  /* set of registers with offsets different per-PHY */
+>  enum qphy_reg_layout {
+>  	/* PCS registers */
+> @@ -1491,6 +1497,7 @@ struct qmp_combo {
+>  
+>  	struct mutex phy_mutex;
+>  	int init_count;
+> +	enum qphy_mode init_mode;
+>  
+>  	struct phy *usb_phy;
+>  	enum phy_mode mode;
+> @@ -2531,12 +2538,33 @@ static int qmp_combo_com_init(struct qmp_combo *qmp, bool force)
+>  	if (qmp->orientation == TYPEC_ORIENTATION_REVERSE)
+>  		val |= SW_PORTSELECT_VAL;
+>  	writel(val, com + QPHY_V3_DP_COM_TYPEC_CTRL);
+> -	writel(USB3_MODE | DP_MODE, com + QPHY_V3_DP_COM_PHY_MODE_CTRL);
+>  
+> -	/* bring both QMP USB and QMP DP PHYs PCS block out of reset */
+> -	qphy_clrbits(com, QPHY_V3_DP_COM_RESET_OVRD_CTRL,
+> -			SW_DPPHY_RESET_MUX | SW_DPPHY_RESET |
+> -			SW_USB3PHY_RESET_MUX | SW_USB3PHY_RESET);
+> +	switch (qmp->init_mode) {
+> +		case QPHY_MODE_COMBO:
 
-Fixes: e3b1f369db5a ("drm/msm/dpu: Add X1E80100 support")
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
----
- .../drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h   | 34 ++++++++++++++++++++--
- 1 file changed, 31 insertions(+), 3 deletions(-)
+Case should be at same indent as switch :-) coding style 101
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
-index 9a9f709..a3e60ac 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
-@@ -324,6 +324,7 @@ static const struct dpu_wb_cfg x1e80100_wb[] = {
- 	},
- };
- 
-+/* TODO: INTF 3, 8 and 7 are used for MST, marked as INTF_NONE for now */
- static const struct dpu_intf_cfg x1e80100_intf[] = {
- 	{
- 		.name = "intf_0", .id = INTF_0,
-@@ -358,8 +359,8 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
- 		.name = "intf_3", .id = INTF_3,
- 		.base = 0x37000, .len = 0x280,
- 		.features = INTF_SC7280_MASK,
--		.type = INTF_DP,
--		.controller_id = MSM_DP_CONTROLLER_1,
-+		.type = INTF_NONE,
-+		.controller_id = MSM_DP_CONTROLLER_0,	/* pair with intf_0 for DP MST */
- 		.prog_fetch_lines_worst_case = 24,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31),
-@@ -368,7 +369,7 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
- 		.base = 0x38000, .len = 0x280,
- 		.features = INTF_SC7280_MASK,
- 		.type = INTF_DP,
--		.controller_id = MSM_DP_CONTROLLER_2,
-+		.controller_id = MSM_DP_CONTROLLER_1,
- 		.prog_fetch_lines_worst_case = 24,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 20),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 21),
-@@ -381,6 +382,33 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
- 		.prog_fetch_lines_worst_case = 24,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 22),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 23),
-+	}, {
-+		.name = "intf_6", .id = INTF_6,
-+		.base = 0x3A000, .len = 0x280,
-+		.features = INTF_SC7280_MASK,
-+		.type = INTF_DP,
-+		.controller_id = MSM_DP_CONTROLLER_2,
-+		.prog_fetch_lines_worst_case = 24,
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 17),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 16),
-+	}, {
-+		.name = "intf_7", .id = INTF_7,
-+		.base = 0x3b000, .len = 0x280,
-+		.features = INTF_SC7280_MASK,
-+		.type = INTF_NONE,
-+		.controller_id = MSM_DP_CONTROLLER_2,	/* pair with intf_6 for DP MST */
-+		.prog_fetch_lines_worst_case = 24,
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 18),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 19),
-+	}, {
-+		.name = "intf_8", .id = INTF_8,
-+		.base = 0x3c000, .len = 0x280,
-+		.features = INTF_SC7280_MASK,
-+		.type = INTF_NONE,
-+		.controller_id = MSM_DP_CONTROLLER_1,	/* pair with intf_4 for DP MST */
-+		.prog_fetch_lines_worst_case = 24,
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13),
- 	},
- };
- 
+> +			writel(USB3_MODE | DP_MODE, com + QPHY_V3_DP_COM_PHY_MODE_CTRL);
+> +
+> +			/* bring both QMP USB and QMP DP PHYs PCS block out of reset */
+> +			qphy_clrbits(com, QPHY_V3_DP_COM_RESET_OVRD_CTRL,
+> +					SW_DPPHY_RESET_MUX | SW_DPPHY_RESET |
+> +					SW_USB3PHY_RESET_MUX | SW_USB3PHY_RESET);
+> +			break;
+> +
+> +		case QPHY_MODE_DP_ONLY:
+> +			writel(DP_MODE, com + QPHY_V3_DP_COM_PHY_MODE_CTRL);
+> +
+> +			/* bring QMP DP PHY PCS block out of reset */
+> +			qphy_clrbits(com, QPHY_V3_DP_COM_RESET_OVRD_CTRL,
+> +					SW_DPPHY_RESET_MUX | SW_DPPHY_RESET);
+> +			break;
+> +
+> +		case QPHY_MODE_USB_ONLY:
+> +			writel(USB3_MODE, com + QPHY_V3_DP_COM_PHY_MODE_CTRL);
+> +
+> +			/* bring QMP USB PHY PCS block out of reset */
+> +			qphy_clrbits(com, QPHY_V3_DP_COM_RESET_OVRD_CTRL,
+> +					SW_USB3PHY_RESET_MUX | SW_USB3PHY_RESET);
+> +			break;
+> +	}
+>  
+>  	qphy_clrbits(com, QPHY_V3_DP_COM_SWI_CTRL, 0x03);
+>  	qphy_clrbits(com, QPHY_V3_DP_COM_SW_RESET, SW_RESET);
+> @@ -3545,6 +3573,9 @@ static int qmp_combo_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		goto err_node_put;
+>  
+> +	/* Set PHY_MODE as combo by default */
+> +	qmp->init_mode = QPHY_MODE_COMBO;
+> +
+>  	qmp->usb_phy = devm_phy_create(dev, usb_np, &qmp_combo_usb_phy_ops);
+>  	if (IS_ERR(qmp->usb_phy)) {
+>  		ret = PTR_ERR(qmp->usb_phy);
+> 
+> -- 
+> 2.34.1
+
 -- 
-2.7.4
-
+~Vinod
 
