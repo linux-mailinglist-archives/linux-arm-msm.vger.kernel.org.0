@@ -1,146 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-15659-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15660-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C5A038912FF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 05:54:05 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id D22B3891326
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 06:23:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 79B6B1F22A6B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 04:54:05 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 466A4B22524
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 05:23:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32F753BBDF;
-	Fri, 29 Mar 2024 04:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89A773BBDF;
+	Fri, 29 Mar 2024 05:23:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JAmhu/UQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zxEAibZs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A1F53BBE7;
-	Fri, 29 Mar 2024 04:53:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2AC2C85A
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 05:23:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711687984; cv=none; b=TqwNJ/14I1RNYJ/KsNOpyDJF9Fg+Tpxg/qdd8rvlU+mPMq/TGdslZPu5ufTWd1MlAsaT5W3CTH5E2eXksErXLYgWAnmcBk3C9RfNlRoBol8QQxO2iRhHMGtLbKQvR1u2anQ+RbobdwNmCNZNvszn2ymmg7NxzH7/eBMgY1KauxU=
+	t=1711689802; cv=none; b=qTNEJptRMOgj37IHilkyX9fD7aKBdSCHAfKGiYS4KT59FktCdXHT5e0+f6MANDTyBwjW5nk9dZkwPAyI4cGVcblQxSIUBaFbQJyV+NNT3oMwYocdkkrqQ287OnEikFzPBvibUpeR8Ny/5IsEzQ2cSEIlQlANMpfOkPnbqzZBJes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711687984; c=relaxed/simple;
-	bh=wLGfAPWKXVpxSgIMKoReYsUkio66paCqJj9/69GyG9g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=BdUfc3WgIbcacA2SFjW9gaD/2w4sH3JaamyAl0Eq2xbvhGtF1u+NN9RPauCrsyw7aRnBc4H6h4bNw2XAlxKFmdhBgZ2o23yIxV1cP5nfldz3tyz8VNlDfYEhII9MGWXfcX0WVZVd4Qj+fmeKoAHm5vBilRHFlkn6cTh5hzG/6ag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JAmhu/UQ; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42T4kM2D010584;
-	Fri, 29 Mar 2024 04:52:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=S+GCcASrxJq76sRMrKUGLRDKIKYjXFT1jdsvjPx0vwI=; b=JA
-	mhu/UQK4G8m7c9589X7yAY80nqYMss8AGCLTpiEK3Xan5eYVmjgRd6pea2vWqSC0
-	D7ag/WoYKB/yrjb5pEd/MRkrmUKeAdeos6BFQ5d7bF/wzn3gaGbOju1n4lKH0cLx
-	8Q4pXaoB/JiJpza2PreYEAIjMfeG6t+0TGzGi4KdiPbQIeyWj7KMjtgWeXJMPeEs
-	8x1FRc8KxC9Q8jIYZ5wIKmGv0iy1qFlv+1ZJNreQXXEOzzm2sBGoT/Gf5XW0S1+z
-	g7RzBhMNHnezln2CsMHx5o1LlaAg9cF9rfGvYDgwsmxbQ9J3YPrtSAsJbcbxc+ic
-	yxQp9EG4+5X133ISm53w==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x5fs88tqw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 29 Mar 2024 04:52:56 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42T4qtSf012819
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 29 Mar 2024 04:52:55 GMT
-Received: from [10.216.16.39] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 28 Mar
- 2024 21:52:52 -0700
-Message-ID: <629a2983-8db4-4ae0-8f68-72750985d5b3@quicinc.com>
-Date: Fri, 29 Mar 2024 10:22:47 +0530
+	s=arc-20240116; t=1711689802; c=relaxed/simple;
+	bh=mJ5LsSO6W1N7YY1WyTTwcvcNL5EQd+avC7w6e5xz4gA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UoPSrXELPwfz2wBAeg7HEP3aHUOzYfgxIHmRmwyB2+Nt860zou2ptCUypa3ya1dG9IiBSJsuf9fBE7ZJQFkkQwIp4Qchj21VqjDQ0Cbjn61a3frcsndhcJxI0rIlz3l5xOlF3R0G37aRNJhP8MnVZd2hP5JqYosshk+zJu9LKjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zxEAibZs; arc=none smtp.client-ip=209.85.219.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-dccb1421bdeso1612318276.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Mar 2024 22:23:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1711689799; x=1712294599; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=y1cnsQ+TYX5gevtZTdSvBbUB7ZdNL1NVBjO5UpPgLkY=;
+        b=zxEAibZspcZYo4HmzwyX5kEia6PonCJcSPjBaC2GeTskCOOX05nqTsqYGVyLklFgqI
+         19+wPgbbq4pjThoQjZgZbqZSDSoYnqanY1hCERJrlIRHj/IXRZfsZyjrqv8PfL2Zff0I
+         gQ+wDwHOMAczqKdlaaI5tzO7ZLwv+aipK1B3Vy7XKjN3i8zMp1j7zoJBV28E+vFmltv4
+         mmijwrBFKyCgcUnOclI8gyvQW47PdLgtzkzEpHQ5E/4N99aCtYtXrV/DhDWOk/AFThHm
+         ScGz7tJZUY5Hi72V2UufN8+8bYR5597pTmwCQYUcsJFLM968zBz6sxrQ3VvAYxbH9uZF
+         a+0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711689799; x=1712294599;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=y1cnsQ+TYX5gevtZTdSvBbUB7ZdNL1NVBjO5UpPgLkY=;
+        b=SPvDsTHS5ZkOZ/DPheeSTf+R2XepomOx0h8lB1go4/oysVjhVVFuS6Pe0OjkjIEDjF
+         3hVC81w6cdDF2getInnCJAFWbNxXtX1Gibl/V3QaQVeeWJ8DhYuzvwcNdDlE7csJaSAr
+         hWoV6klKdxUtxom8V4cj/KPCaapT/cLEzOe+pf0MdVLXu1hCVia4eIgI+XpWq4LaeX4I
+         C78Vq4/soutVNCspexWHIyt/ZfKyxLMXCbPSLlG8M6VnfSuKhE5qYu0acbbZBlL486Zv
+         pFZ65cLZuOjUusrjneF6u0MkeT/SIJiTOBCjcOn0RTzWMe/9FTFG7hmqTsE0Gyrrlq5B
+         tCXA==
+X-Forwarded-Encrypted: i=1; AJvYcCX6vEusVIjMrfDO94n44p84vDXMITVhbSsml6hGARbPzyAVgEZIOt36JfZUc528RozWPfCm07CkdfJDUgwAC16ghay7nflNvDmzaAAPeQ==
+X-Gm-Message-State: AOJu0YwtmxOTMCiW5qlASoprwC7UDDIXZXAch+h36rq4L4E8UkSifN9n
+	3Ax4TCF/j8yDltqecDyKgd6ywznjBSoS2ebbA65cEpY82JtFpRn+drsZr7oMHQmn49MPILGMYQV
+	xsiKb0GnDklFmBQfVU8U/9eh7wWLhudKvEmgfww==
+X-Google-Smtp-Source: AGHT+IHnJYTaJIdFKWO6mQBmk67+u6vknOcIRVk7XoYypNIe5sbgqFqIgY39n1Yb+IQT5e5iuAOhWt+sHM/xZb5wm1g=
+X-Received: by 2002:a25:8110:0:b0:dd0:76e:d630 with SMTP id
+ o16-20020a258110000000b00dd0076ed630mr1272196ybk.53.1711689798692; Thu, 28
+ Mar 2024 22:23:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] soc: qcom: cmd-db: map shared memory as WT, not WB
-To: Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>
-CC: Caleb Connolly <caleb.connolly@linaro.org>,
-        "andersson@kernel.org >> Bjorn
- Andersson" <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML
-	<linux-kernel@vger.kernel.org>
-References: <20240327200917.2576034-1-volodymyr_babchuk@epam.com>
- <19bb6ff0-04ff-4e88-8c8a-499c054bdea4@quicinc.com> <87sf0axanc.fsf@epam.com>
-Content-Language: en-US
-From: "Maulik Shah (mkshah)" <quic_mkshah@quicinc.com>
-In-Reply-To: <87sf0axanc.fsf@epam.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Dx0Qi2HUMurn-Om-psDQk0AKtsoLxGrB
-X-Proofpoint-ORIG-GUID: Dx0Qi2HUMurn-Om-psDQk0AKtsoLxGrB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-29_03,2024-03-28_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 phishscore=0 mlxlogscore=990 spamscore=0 suspectscore=0
- mlxscore=0 adultscore=0 malwarescore=0 impostorscore=0 clxscore=1015
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2403290037
+References: <20240328-dp-connector-type-cleanup-v1-1-9bf84c5a6082@quicinc.com>
+In-Reply-To: <20240328-dp-connector-type-cleanup-v1-1-9bf84c5a6082@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 29 Mar 2024 07:23:07 +0200
+Message-ID: <CAA8EJpoNBA7L3FMqf+4korbbYfrptHq3Fke86DpfNcbpiBaqzQ@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dp: Remove now unused connector_type from desc
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, Abel Vesa <abel.vesa@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+
+On Fri, 29 Mar 2024 at 06:02, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
+>
+> Now that the connector_type is dynamically determined, the
+> connector_type of the struct msm_dp_desc is unused. Clean it up.
+>
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> ---
+> This cleans up after, and hence depends on,
+> https://lore.kernel.org/all/20240324-x1e80100-display-refactor-connector-v4-1-e0ebaea66a78@linaro.org/
+> ---
+>  drivers/gpu/drm/msm/dp/dp_display.c | 41 ++++++++++++++++++-------------------
+>  1 file changed, 20 insertions(+), 21 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 521cba76d2a0..a18fb8b32c16 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -119,55 +119,54 @@ struct dp_display_private {
+>  struct msm_dp_desc {
+>         phys_addr_t io_start;
+>         unsigned int id;
+> -       unsigned int connector_type;
+>         bool wide_bus_supported;
+>  };
+>
+>  static const struct msm_dp_desc sc7180_dp_descs[] = {
+> -       { .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .connector_type = DRM_MODE_CONNECTOR_DisplayPort },
+> +       { .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0 },
+>         {}
+>  };
+>
+>  static const struct msm_dp_desc sc7280_dp_descs[] = {
+> -       { .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_supported = true },
+> -       { .io_start = 0x0aea0000, .id = MSM_DP_CONTROLLER_1, .connector_type = DRM_MODE_CONNECTOR_eDP, .wide_bus_supported = true },
+> +       { .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+> +       { .io_start = 0x0aea0000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true },
+>         {}
+>  };
+>
+>  static const struct msm_dp_desc sc8180x_dp_descs[] = {
+> -       { .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .connector_type = DRM_MODE_CONNECTOR_DisplayPort },
+> -       { .io_start = 0x0ae98000, .id = MSM_DP_CONTROLLER_1, .connector_type = DRM_MODE_CONNECTOR_DisplayPort },
+> -       { .io_start = 0x0ae9a000, .id = MSM_DP_CONTROLLER_2, .connector_type = DRM_MODE_CONNECTOR_eDP },
+> +       { .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0 },
+> +       { .io_start = 0x0ae98000, .id = MSM_DP_CONTROLLER_1 },
+> +       { .io_start = 0x0ae9a000, .id = MSM_DP_CONTROLLER_2 },
+>         {}
+>  };
+>
+>  static const struct msm_dp_desc sc8280xp_dp_descs[] = {
+> -       { .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_supported = true },
+> -       { .io_start = 0x0ae98000, .id = MSM_DP_CONTROLLER_1, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_supported = true },
+> -       { .io_start = 0x0ae9a000, .id = MSM_DP_CONTROLLER_2, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_supported = true },
+> -       { .io_start = 0x0aea0000, .id = MSM_DP_CONTROLLER_3, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_supported = true },
+> -       { .io_start = 0x22090000, .id = MSM_DP_CONTROLLER_0, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_supported = true },
+> -       { .io_start = 0x22098000, .id = MSM_DP_CONTROLLER_1, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_supported = true },
+> -       { .io_start = 0x2209a000, .id = MSM_DP_CONTROLLER_2, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_supported = true },
+> -       { .io_start = 0x220a0000, .id = MSM_DP_CONTROLLER_3, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_supported = true },
+> +       { .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+> +       { .io_start = 0x0ae98000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true },
+> +       { .io_start = 0x0ae9a000, .id = MSM_DP_CONTROLLER_2, .wide_bus_supported = true },
+> +       { .io_start = 0x0aea0000, .id = MSM_DP_CONTROLLER_3, .wide_bus_supported = true },
+> +       { .io_start = 0x22090000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+> +       { .io_start = 0x22098000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true },
+> +       { .io_start = 0x2209a000, .id = MSM_DP_CONTROLLER_2, .wide_bus_supported = true },
+> +       { .io_start = 0x220a0000, .id = MSM_DP_CONTROLLER_3, .wide_bus_supported = true },
+>         {}
+>  };
+>
+>  static const struct msm_dp_desc sc8280xp_edp_descs[] = {
+
+This can now be merged with sc8280xp_dp_descs
+
+> -       { .io_start = 0x0ae9a000, .id = MSM_DP_CONTROLLER_2, .connector_type = DRM_MODE_CONNECTOR_eDP, .wide_bus_supported = true },
+> -       { .io_start = 0x0aea0000, .id = MSM_DP_CONTROLLER_3, .connector_type = DRM_MODE_CONNECTOR_eDP, .wide_bus_supported = true },
+> -       { .io_start = 0x2209a000, .id = MSM_DP_CONTROLLER_2, .connector_type = DRM_MODE_CONNECTOR_eDP, .wide_bus_supported = true },
+> -       { .io_start = 0x220a0000, .id = MSM_DP_CONTROLLER_3, .connector_type = DRM_MODE_CONNECTOR_eDP, .wide_bus_supported = true },
+> +       { .io_start = 0x0ae9a000, .id = MSM_DP_CONTROLLER_2, .wide_bus_supported = true },
+> +       { .io_start = 0x0aea0000, .id = MSM_DP_CONTROLLER_3, .wide_bus_supported = true },
+> +       { .io_start = 0x2209a000, .id = MSM_DP_CONTROLLER_2, .wide_bus_supported = true },
+> +       { .io_start = 0x220a0000, .id = MSM_DP_CONTROLLER_3, .wide_bus_supported = true },
+>         {}
+>  };
+>
+>  static const struct msm_dp_desc sm8350_dp_descs[] = {
+
+same as sc7180_dp
+
+> -       { .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .connector_type = DRM_MODE_CONNECTOR_DisplayPort },
+> +       { .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0 },
+>         {}
+>  };
+>
+>  static const struct msm_dp_desc sm8650_dp_descs[] = {
+> -       { .io_start = 0x0af54000, .id = MSM_DP_CONTROLLER_0, .connector_type = DRM_MODE_CONNECTOR_DisplayPort },
+> +       { .io_start = 0x0af54000, .id = MSM_DP_CONTROLLER_0 },
+>         {}
+>  };
+>
 
 
-
-On 3/29/2024 3:49 AM, Volodymyr Babchuk wrote:
-> 
-> Hi Maulik
-> 
-> "Maulik Shah (mkshah)" <quic_mkshah@quicinc.com> writes:
-> 
->> On 3/28/2024 1:39 AM, Volodymyr Babchuk wrote:
->>> It appears that hardware does not like cacheable accesses to this
->>> region. Trying to access this shared memory region as Normal Memory
->>> leads to secure interrupt which causes an endless loop somewhere in
->>> Trust Zone.
->>
->> Linux does not write into cmd-db region. This region is write
->> protected by XPU. Making this region uncached magically solves the XPU
->> write fault
->> issue.
->>
->> Can you please include above details?
-> 
-> Sure, I'll add this to the next version.
-> 
-
-Thanks.
-
->>
->> In downstream, we have below which resolved similar issue on qcm6490.
->>
->> cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WC);
->>
->> Downstream SA8155P also have MEMREMAP_WC. Can you please give it a try
->> on your device?
-> 
-> Yes, MEMREMAP_WC works as well. This opens the question: which type is
-> more correct? I have no deep understanding in QCOM internals so it is
-> hard to me to answer this question.
-> 
-
-XPU may have falsely detected clean cache eviction as "write" into the 
-write protected region so using uncached flag MEMREMAP_WC may be helping 
-here and is more correct in my understanding.
-
-This can also be included in commit message.
-
-Thanks,
-Maulik
+-- 
+With best wishes
+Dmitry
 
