@@ -1,62 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-15709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15710-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5210891BBD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 14:32:28 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id EE6FA891BC5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 14:33:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2294D1C25AD5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 13:32:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8475A1F27122
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 13:33:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 067A0145FE3;
-	Fri, 29 Mar 2024 12:39:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFCFF1465B0;
+	Fri, 29 Mar 2024 12:40:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gxNPQxE3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="da6CrC5I"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0CB145B3B;
-	Fri, 29 Mar 2024 12:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21B51465AB;
+	Fri, 29 Mar 2024 12:40:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711715976; cv=none; b=BnveuIl1UFwQkyzUXguRmSBrD3XC4FlUhfrY0srEeomhSkDG6HFkX/taAuLQVnAFRHL2OueISdntrYhmHek1u3vIWvBsDA21YduTanZ/XKaIQyCpoaASn6ptU11yFzKZ5DPCofB8gMmt99rhiKz/xqcHWpV+PTapqW+nqtmNa3s=
+	t=1711716008; cv=none; b=ok3yxt/rXamV1y0pKBjo1msUtQePLs/V8+GWTx7RM/eq8ctYBtLeViokxzmie1aprqaNAUHmvP78/vUo5GiW6gLt1k30DjaKY5oN6cv1v8tdSk6x6CuKYNGoRoNTRttJPxafgwPNPQdP23ZmqtNtT5UgLhaT+6ZiwJNNIbMCqSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711715976; c=relaxed/simple;
-	bh=DL9ydJy4+MkNqRrWlZjVU5Jee/u9kzyIN7uk54AxvzA=;
+	s=arc-20240116; t=1711716008; c=relaxed/simple;
+	bh=0Unq+1iE7ipc/KKZheYH+mrLHQ+V8/V5iM4qZIxwmTM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kQ9TcatsQOSDo2aY95+LiBf5jixXFsdrdnZCnlUE0j3RJgA9ASiJofO3eOqV8xKv/qelimn7TTmlL/shsAbxRNPIboR3VRzVDG11mz79G/s0sOoL1axgvrPgYzTnZRlFpYnFMglC5eBX6T+t8p+F3oMHY4Dse4WTT8ORSNf/k7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gxNPQxE3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EBF9C433A6;
-	Fri, 29 Mar 2024 12:39:35 +0000 (UTC)
+	 MIME-Version; b=ar1Y15oNXm2JTvmMRT8C3g6dUqlQDC4Cg4tz84R2TPfVObpN89sNeRWB5q/kB/0iZ9us8JZ69Xmbhysu1ybxr5LhNYJxKpXj86Zy+mLfGl3gy8WStx+CjlwiYgVtd4cmQ/xSxlUIKqaXmtfHKKcp7w6PPWsZ1TMHGaYnDecgqjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=da6CrC5I; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A7F1C43394;
+	Fri, 29 Mar 2024 12:40:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711715976;
-	bh=DL9ydJy4+MkNqRrWlZjVU5Jee/u9kzyIN7uk54AxvzA=;
+	s=k20201202; t=1711716008;
+	bh=0Unq+1iE7ipc/KKZheYH+mrLHQ+V8/V5iM4qZIxwmTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gxNPQxE3WPZFxGcBYxJehh6SdHsRctFLDB5fmmEHfayAd1FTDpZJ6pYAoqHxVHeWF
-	 gshvJzud6ViWykQ3wHznT6kJSPL9GZ5PGLw9Qimyf9dN4ePK20b6SzkguKiAP4VUsZ
-	 dpnjuzc4rUqajoXDEck89oiyEXfltjvgk+Vl67lIAgG2dvlULrYNXbS5pSwwhMBjyG
-	 WphDMTNAub8qTihcY5FlZSaxkAthgCSNAd1bq69yeMzVRiRZ05IpM1rsHTCDjTjGsV
-	 ZIaabMeaRP7L5M7cxAirV6egvjCTKtgMCeS55q+kc8ONZ2N4NBCU3L8lXadJ4QZe9U
-	 sVPFlVFLucyYg==
+	b=da6CrC5IhYcZH5873WJ7wgarKOm0Dq2E/V/8kROPyX3L9Jql0/naWY+iCO+0acDMP
+	 xnabL3zA7YnbQOQlSbJta3EDDhZqB4ysfeuyQfuJ11UwqY7f0UwaLDlVHOXZawW4XG
+	 E9mNY266Pa42xVBbvw2xe3nR2ljR3mxcDPEraF3ob9IIDcYIBUDJQ73X5jaiqUILOg
+	 kS/K7+nguSrW8plOEpaaBIJsnOkeP5KcAjIFeKqL7cvRnmMIqDao8Cl8Um1tayHqXw
+	 cquV2wkwhmfeZf3B3zHw9gSzCiHtemRDMYrazA4eQOuXqlH150I4CeIt5C3vTi7mRO
+	 as8kzzlO9Oa5Q==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
-Cc: Eric Chanudet <echanude@redhat.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Andrew Halaney <ahalaney@redhat.com>,
-	"Martin K . Petersen" <martin.petersen@oracle.com>,
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	andersson@kernel.org,
-	konrad.dybcio@linaro.org,
-	jejb@linux.ibm.com,
+	robh@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	linux-scsi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.8 08/98] scsi: ufs: qcom: Avoid re-init quirk when gears match
-Date: Fri, 29 Mar 2024 08:36:39 -0400
-Message-ID: <20240329123919.3087149-8-sashal@kernel.org>
+	devicetree@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.8 11/98] arm64: dts: qcom: sdm630: add USB QMP PHY support
+Date: Fri, 29 Mar 2024 08:36:42 -0400
+Message-ID: <20240329123919.3087149-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240329123919.3087149-1-sashal@kernel.org>
 References: <20240329123919.3087149-1-sashal@kernel.org>
@@ -71,54 +70,148 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.8.2
 Content-Transfer-Encoding: 8bit
 
-From: Eric Chanudet <echanude@redhat.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 10a39667a117daf0c1baaebcbe589715ee79178b ]
+[ Upstream commit bb5009a24ec3f2f2ec1e2ed7b8a5dcde9a9e28d9 ]
 
-On sa8775p-ride, probing the HBA will go through the
-UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH path although the power info is
-the same during the second init.
+Define USB3 QMP PHY presend on the SDM630 / SDM660 platforms. Enable it by
+default in the USB3 host, but (for compatibility), force USB 2.0 mode
+for all defined boards. The boards should opt-in to enable USB 3.0
+support.
 
-The REINIT quirk only applies starting with controller v4. For these,
-ufs_qcom_get_hs_gear() reads the highest supported gear when setting the
-host_params. After the negotiation, if the host and device are on the same
-gear, it is the highest gear supported between the two. Skip REINIT to save
-some time.
-
-Signed-off-by: Eric Chanudet <echanude@redhat.com>
-Link: https://lore.kernel.org/r/20240123192854.1724905-4-echanude@redhat.com
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8775p-ride
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240116-sdm660-usb3-support-v1-3-2fbd683aea77@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-qcom.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ .../boot/dts/qcom/sda660-inforce-ifc6560.dts  |  6 ++++
+ .../dts/qcom/sdm630-sony-xperia-nile.dtsi     |  6 ++++
+ arch/arm64/boot/dts/qcom/sdm630.dtsi          | 36 ++++++++++++++-----
+ .../boot/dts/qcom/sdm660-xiaomi-lavender.dts  |  6 ++++
+ 4 files changed, 46 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 39eef470f8fa5..f7dba7236c6e5 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -738,8 +738,17 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
- 		 * the second init can program the optimal PHY settings. This allows one to start
- 		 * the first init with either the minimum or the maximum support gear.
- 		 */
--		if (hba->ufshcd_state == UFSHCD_STATE_RESET)
--			host->phy_gear = dev_req_params->gear_tx;
-+		if (hba->ufshcd_state == UFSHCD_STATE_RESET) {
-+			/*
-+			 * Skip REINIT if the negotiated gear matches with the
-+			 * initial phy_gear. Otherwise, update the phy_gear to
-+			 * program the optimal gear setting during REINIT.
-+			 */
-+			if (host->phy_gear == dev_req_params->gear_tx)
-+				hba->quirks &= ~UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH;
-+			else
-+				host->phy_gear = dev_req_params->gear_tx;
-+		}
+diff --git a/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts b/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
+index 2ed39d402d3f6..21fae799c816a 100644
+--- a/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
++++ b/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
+@@ -454,10 +454,16 @@ &usb2_dwc3 {
+ };
  
- 		/* enable the device ref clock before changing to HS mode */
- 		if (!ufshcd_is_hs_mode(&hba->pwr_info) &&
+ &usb3 {
++	qcom,select-utmi-as-pipe-clk;
++
+ 	status = "okay";
+ };
+ 
+ &usb3_dwc3 {
++	maximum-speed = "high-speed";
++	phys = <&qusb2phy0>;
++	phy-names = "usb2-phy";
++
+ 	dr_mode = "peripheral";
+ 	extcon = <&extcon_usb>;
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
+index 87d0293c728d8..f06a9f0cf97c1 100644
+--- a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
+@@ -658,10 +658,16 @@ cam_vdig_default: cam-vdig-default-state {
+ };
+ 
+ &usb3 {
++	qcom,select-utmi-as-pipe-clk;
++
+ 	status = "okay";
+ };
+ 
+ &usb3_dwc3 {
++	maximum-speed = "high-speed";
++	phys = <&qusb2phy0>;
++	phy-names = "usb2-phy";
++
+ 	dr_mode = "peripheral";
+ 	extcon = <&extcon_usb>;
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+index 513fe5e76b688..28489fb58b200 100644
+--- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+@@ -1286,7 +1286,6 @@ usb3: usb@a8f8800 {
+ 			interrupt-names = "hs_phy_irq", "ss_phy_irq";
+ 
+ 			power-domains = <&gcc USB_30_GDSC>;
+-			qcom,select-utmi-as-pipe-clk;
+ 
+ 			resets = <&gcc GCC_USB_30_BCR>;
+ 
+@@ -1297,17 +1296,38 @@ usb3_dwc3: usb@a800000 {
+ 				snps,dis_u2_susphy_quirk;
+ 				snps,dis_enblslpm_quirk;
+ 
+-				/*
+-				 * SDM630 technically supports USB3 but I
+-				 * haven't seen any devices making use of it.
+-				 */
+-				maximum-speed = "high-speed";
+-				phys = <&qusb2phy0>;
+-				phy-names = "usb2-phy";
++				phys = <&qusb2phy0>, <&usb3_qmpphy>;
++				phy-names = "usb2-phy", "usb3-phy";
+ 				snps,hird-threshold = /bits/ 8 <0>;
+ 			};
+ 		};
+ 
++		usb3_qmpphy: phy@c010000 {
++			compatible = "qcom,sdm660-qmp-usb3-phy";
++			reg = <0x0c010000 0x1000>;
++
++			clocks = <&gcc GCC_USB3_PHY_AUX_CLK>,
++				 <&gcc GCC_USB3_CLKREF_CLK>,
++				 <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
++				 <&gcc GCC_USB3_PHY_PIPE_CLK>;
++			clock-names = "aux",
++				      "ref",
++				      "cfg_ahb",
++				      "pipe";
++			clock-output-names = "usb3_phy_pipe_clk_src";
++			#clock-cells = <0>;
++			#phy-cells = <0>;
++
++			resets = <&gcc GCC_USB3_PHY_BCR>,
++				 <&gcc GCC_USB3PHY_PHY_BCR>;
++			reset-names = "phy",
++				      "phy_phy";
++
++			qcom,tcsr-reg = <&tcsr_regs_1 0x6b244>;
++
++			status = "disabled";
++		};
++
+ 		qusb2phy0: phy@c012000 {
+ 			compatible = "qcom,sdm660-qusb2-phy";
+ 			reg = <0x0c012000 0x180>;
+diff --git a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
+index 3c47410ba94c0..7167f75bced3f 100644
+--- a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
++++ b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
+@@ -413,10 +413,16 @@ &tlmm {
+ };
+ 
+ &usb3 {
++	qcom,select-utmi-as-pipe-clk;
++
+ 	status = "okay";
+ };
+ 
+ &usb3_dwc3 {
++	maximum-speed = "high-speed";
++	phys = <&qusb2phy0>;
++	phy-names = "usb2-phy";
++
+ 	dr_mode = "peripheral";
+ 	extcon = <&extcon_usb>;
+ };
 -- 
 2.43.0
 
