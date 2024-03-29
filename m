@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-15691-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EAC6891860
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 13:10:35 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2045B891868
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 13:12:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7FF861F2317C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 12:10:34 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8C0B6B226CD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 12:11:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E4F68563E;
-	Fri, 29 Mar 2024 12:10:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C41B85629;
+	Fri, 29 Mar 2024 12:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="arDsjhrv"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="D9mE3A+F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C58BF9E9
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 12:10:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49338823CD
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 12:11:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711714210; cv=none; b=HJVx+9/Kyfz8UJz4JCehLv20WrMFgGo7clitxaT863SRC73WEwakZoPwHdmWS8URd7/Z0v7a/ovkuW9Hmgu1yTC2sXW/hVKmbJVAVN5KNa0UONijtNFN5q/pg83uZHzeD4EQXINAxjn0mCLGfmkXmwmITItd9viN7DePFSjskqo=
+	t=1711714312; cv=none; b=tME844XuEGxv3TEjt8fEtRJ2Z2hiAJk/RWSlIcakVi4meDLfcpLJsV+IuUTrR6E2A99jg1b4cw7hT79p4vMW6DWArcZzNPQYuLcLN7m6nHKWPATQDbktC6TWPukG1HEujuCJzDFbJ+QksjsNPIfgNcA2PTanbQrNgC11ivfexfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711714210; c=relaxed/simple;
-	bh=90VA0QRkzFCHjjzptHhuCk6ko7WZh1MGGqvVdOqYNOs=;
+	s=arc-20240116; t=1711714312; c=relaxed/simple;
+	bh=kjiAXsVkNlFhMTTXqcgqI2CTxaiMzd/cdUiEDAtzlm0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NVlofG0JLR4WffGPBzRHKYi9oZSLU/ctIenGswsFhqaD1Pkr7rNiI9I1gBFbN+d6iAwI7/5jBmKBgkPJxn0nk9jLwbgDY7UeCKJF4wBExg6j/JTCHJZuX/706k/dfchQJ9Gl5qSUuNacwnL9mXLqqtsxq3ZOi8Gxz3CS7QAvMmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=arDsjhrv; arc=none smtp.client-ip=209.85.128.54
+	 In-Reply-To:Content-Type; b=c0rgvUMguV2Jei0LrWkVPQmr8b2q7Z3GBuM+HgHq0NL5RuR+3B7PZjr2tmc8E3ZZlli4phxvtndXthjO6tq12cDw/tTOGwXklKHeZKb1oDfIR9SPedzS8KQ6JXFWtD4/uai+eYIJix+018zmO5msyAOYkKzqCj25JiyVcTunNGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=D9mE3A+F; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-41494c0405eso11535995e9.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 05:10:08 -0700 (PDT)
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-415515178ceso1999015e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 05:11:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711714207; x=1712319007; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1711714309; x=1712319109; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Mx53Ho+h705KudOYprlwABkMXqM2QEFDHzS3aw4XkWw=;
-        b=arDsjhrvE5RqbQzdv6XELMnqzj8VC3DgRWYKDzacIhDAR12qM/BD+svNXoc5qFJzfp
-         AtUYEeKRzk4krEYjxlxDb2jRSb3Y5lrgS0lmXvkWBbYC/9U9pOO+byHbD6t2/Dz2M6pw
-         2SZEgHtTto6f5G+oiiFKXG8hGx6+1AewbSJQs1chhE3u7fIZab4NAKdK06Pm+SK9HGGb
-         H3jNzT2JbicdZL5VS8g+dxwGLg9mIoMHGP7jT1NLtnt52gI38sxlqgLVQKuY2MNKRXzy
-         GjYwT5VSCIn4SXbtx+fahRzroe1t8YtFS4WCm8OLEwvzORd2g5C+RjFAShD+hIdVLb0T
-         CCCw==
+        bh=ReEYp5lJLMaSRPsCPugDzUu3cnCJt2quJWHyXPFvz2M=;
+        b=D9mE3A+FzvhPGn3I+YiILm0yQWwhczCWDhZ28wlsh4DJT30u0+TciigYVAuMnTehA9
+         SPCgJjSleGBfl1XFE9Q4sVmFu64Wrh0PbGNtXQhtDcWbPg1k/k946cXV8oqMMACD8H4L
+         0xa4kQ0+DzzDgEBZij0Hv+Wk/pbEqH8MNu0J3XXw4WXafQ54j4SnkVYsUKvBv37qb6iC
+         eMjiAzarsm7MUFDvvoRyY/eVe1x7WbK8gK+XiFnQCRKkVSbn8pKNncPybNQ1cyA241c3
+         HfYEy/R0S14msANRSIQhxKNKfE2Bh0QjpZZdPTJ70+ukefwLkzy+o3AXMNaFihvtmhdk
+         0ifw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711714207; x=1712319007;
+        d=1e100.net; s=20230601; t=1711714309; x=1712319109;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Mx53Ho+h705KudOYprlwABkMXqM2QEFDHzS3aw4XkWw=;
-        b=ZkZ8dDPH54/LkUlP7p+nsbO8Qh/u9VSoc9uUHjjjN3Stkoccr/wqatpDbfGQoPYFhq
-         QWqO0BX2y8U01zvs83Aw5WA+U30VSStphexwFUD/N38Wvo7yFTCyDPySJyb81NJGENJ8
-         LZCel8GN46BakFRNj8JKXzhmISA/Wn+BPaQqWz8IrQj7WcGsXJRc5JGUy6AuLjO3Luie
-         MuzX0+pYk7J9DoBm4Nqx5oLb4YMElzQUS4nrAgXBMSig2pS8MJMEuGjrLdh+XaZmsogJ
-         /8WM+4WhkIIhdDh/oMVo5and4HuSuihD59xOMwjSHylIsjvCIhq92HvA/J+X7b5PlxVW
-         uAVA==
-X-Forwarded-Encrypted: i=1; AJvYcCXOqz62uIMPftSWeiX1aiP9/pcLDT423AFJ345+p00odi61VSB8cNCp2HxGYTRwJ3WJ45FkHOye56d2qcuxzXgx9UPvEiRHbHi01yqbrQ==
-X-Gm-Message-State: AOJu0YzVDLJDElesxKsrvXYEhKgsJpX1OgJLrX5A1YTioCQD8Yig4KCH
-	B4P3NX9lL4IYoXaahz0DMeVgW9oUqkSJ9OeJqp1J/Qplt8LPlepUcBepYfQWBmA=
-X-Google-Smtp-Source: AGHT+IGdkUJHuyGcvFRg8PxzTiztlFrx/8w5tyad1ZYe4AJ+FrbuWcSdMKz+VAm+mVo5ZrWdNoqQRw==
-X-Received: by 2002:adf:fa50:0:b0:33e:6056:6b8b with SMTP id y16-20020adffa50000000b0033e60566b8bmr1386402wrr.7.1711714205279;
-        Fri, 29 Mar 2024 05:10:05 -0700 (PDT)
+        bh=ReEYp5lJLMaSRPsCPugDzUu3cnCJt2quJWHyXPFvz2M=;
+        b=t38Ll2x0WtSQbOV6+TxM17hKxMmuaDRXX4CWVbwkRzTaoFroCgJc9pcEu/tn6X7TYN
+         tZ5/8WeTn2kMjRfwoWY/fXA31mXhOT1TIEl8Y0sN2lANrsHtQpp4QkjG4IcAfhfDBLKA
+         AGfHG+FUZZj0O5a4PXGvBs+nriV/G+f/+n328y0mPNG6rOxqUgVpiwyg/8Vrgjhocjv0
+         Q7eBeopGvhApoAhJ1Q4nFUkEVWhPVO22vpnFrhE+OKxA6O09GJy8Ow7Ommu+YeZt26hL
+         7sSr1nKMERgydfY982ijs7WyjNzZYx5u3gT4FWcPXRtUpnymcgfZ+HMfPrpKDWzIPkWQ
+         qVBQ==
+X-Gm-Message-State: AOJu0YyDciSE38SqaDjaZ97/G9tPrd0RLR9AvGYFyNx/Uo1YSY1txKvJ
+	CSUyUYKFR1wfAnAVJjE7aDsgJjOrh4N91Hob/Qnt0OEsVIJyJNb+XaQyb7ijMyU=
+X-Google-Smtp-Source: AGHT+IGFTtBqNZOO7qBvxyPNcN2rE/ev37EDigYcL1r2jxwAU6KmBa3flnz0xULrGU09VxJQXTdkuQ==
+X-Received: by 2002:a05:600c:a4b:b0:414:887f:617a with SMTP id c11-20020a05600c0a4b00b00414887f617amr1642165wmq.38.1711714309572;
+        Fri, 29 Mar 2024 05:11:49 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.223.50])
-        by smtp.gmail.com with ESMTPSA id d14-20020adff84e000000b0033b66c2d61esm4010336wrq.48.2024.03.29.05.10.03
+        by smtp.gmail.com with ESMTPSA id n2-20020a056000170200b0034335e47102sm2063760wrc.113.2024.03.29.05.11.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Mar 2024 05:10:04 -0700 (PDT)
-Message-ID: <031d0a35-b192-4161-beef-97b89d5d1da6@linaro.org>
-Date: Fri, 29 Mar 2024 13:10:03 +0100
+        Fri, 29 Mar 2024 05:11:49 -0700 (PDT)
+Message-ID: <27ad7293-4a8b-4571-a97a-fb5c894a70de@linaro.org>
+Date: Fri, 29 Mar 2024 13:11:47 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,20 +76,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/5] clk: qcom: ipq9574: Use icc-clk for enabling NoC
- related clocks
-To: Varadarajan Narayanan <quic_varada@quicinc.com>,
- Stephen Boyd <sboyd@kernel.org>
-Cc: andersson@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
- djakov@kernel.org, dmitry.baryshkov@linaro.org, konrad.dybcio@linaro.org,
- krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, mturquette@baylibre.com, quic_anusha@quicinc.com,
- robh@kernel.org
-References: <20240328075936.223461-1-quic_varada@quicinc.com>
- <20240328075936.223461-5-quic_varada@quicinc.com>
- <95f4e99a60cc97770fc3cee850b62faf.sboyd@kernel.org>
- <ZgaeGZL7QXh75aSA@hu-varada-blr.qualcomm.com>
+Subject: Re: [PATCH 2/2] v2 arm64: dts: qcom: Add support for Samsung Galaxy Z
+ Fold5
+To: serdeliuk@yahoo.com, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240329-v2-dts-add-support-for-samsung-galaxy-zfold5-v1-0-9a91e635cacc@yahoo.com>
+ <20240329-v2-dts-add-support-for-samsung-galaxy-zfold5-v1-2-9a91e635cacc@yahoo.com>
 Content-Language: en-US
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -137,47 +132,31 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <ZgaeGZL7QXh75aSA@hu-varada-blr.qualcomm.com>
+In-Reply-To: <20240329-v2-dts-add-support-for-samsung-galaxy-zfold5-v1-2-9a91e635cacc@yahoo.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29/03/2024 11:55, Varadarajan Narayanan wrote:
->>> +
->>> +enum {
->>> +       ICC_ANOC_PCIE0,
->>> +       ICC_SNOC_PCIE0,
->>> +       ICC_ANOC_PCIE1,
->>> +       ICC_SNOC_PCIE1,
->>> +       ICC_ANOC_PCIE2,
->>> +       ICC_SNOC_PCIE2,
->>> +       ICC_ANOC_PCIE3,
->>> +       ICC_SNOC_PCIE3,
->>> +       ICC_SNOC_USB,
->>> +       ICC_ANOC_USB_AXI,
->>> +       ICC_NSSNOC_NSSCC,
->>> +       ICC_NSSNOC_SNOC_0,
->>> +       ICC_NSSNOC_SNOC_1,
->>> +       ICC_NSSNOC_PCNOC_1,
->>> +       ICC_NSSNOC_QOSGEN_REF,
->>> +       ICC_NSSNOC_TIMEOUT_REF,
->>> +       ICC_NSSNOC_XO_DCD,
->>> +       ICC_NSSNOC_ATB,
->>> +       ICC_MEM_NOC_NSSNOC,
->>> +       ICC_NSSNOC_MEMNOC,
->>> +       ICC_NSSNOC_MEM_NOC_1,
->>> +};
->>
->> Are these supposed to be in a dt-binding header?
+On 29/03/2024 00:08, Alexandru Marc Serdeliuc via B4 Relay wrote:
+> From: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
 > 
-> Since these don't directly relate to the ids in the dt-bindings
-> not sure if they will be permitted there. Will move and post a
-> new version and get feedback.
+> Add support for Samsung Galaxy Z Fold5 (q5q) foldable phone
 
-You can answer this by yourself by looking at your DTS. Do you use them
-as well in the DTS?
+Please use subject prefixes matching the subsystem. You can get them for
+example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
+your patch is touching.
 
-It's a pity we see here only parts of DTS, instead of full interconnect
-usage.
+v2 is for sure wrong prefix. Other parts are also wrong, which above
+command will tell you.
+> 
+> Currently working features:
+> - Framebuffer
+> - UFS
+> - i2c
+> - Buttons
+> 
+> Signed-off-by: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
+
+Please go back and read my response.
 
 Best regards,
 Krzysztof
