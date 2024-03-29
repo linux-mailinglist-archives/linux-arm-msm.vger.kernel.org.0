@@ -1,187 +1,460 @@
-Return-Path: <linux-arm-msm+bounces-15754-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15755-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 643CF8923D6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 20:07:30 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 859428923F8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 20:16:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C61101F22FF9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 19:07:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A86241C223D9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 19:16:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 671E36A010;
-	Fri, 29 Mar 2024 19:07:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20BC858127;
+	Fri, 29 Mar 2024 19:16:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="zxu6Ok3S"
+	dkim=pass (1024-bit key) header.d=nxp.com header.i=@nxp.com header.b="oiNfQ6d0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from EUR02-AM0-obe.outbound.protection.outlook.com (mail-am0eur02on2119.outbound.protection.outlook.com [40.107.247.119])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA2785C43
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 19:07:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711739244; cv=none; b=ioN86Meoe7+B3SjilxwVo3+eRj34y2LIX4JP6y87IWoFxx5XNCl2IlKUut7n4LXkoc4mMHy17c+X5c+EuYHup6uREMg9gbVhP7RAaHnJiGURmtfxuG19bJSM1u9Gd4BwlyJU7WWJhUEEM5h5tRyF3QkWbZxLj61ts/vofx0Svtw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711739244; c=relaxed/simple;
-	bh=Fiz7j7M49zhe+tECsOMRO0HilNSxFrTJwPrSXI1ehPw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bd5EKI+bawe6Mt5p6XCorozQl/eKzIjnydUWR74DrYfnEh2rqTf8S15v71FUPvrcsJ4V0i4bQ8COXyoW7N4gxvMG3+TpdmRLUMEWTPVNYNz1hZQ4utpTnmpZvRFvVJDmglL5QFNl62auZlP1NA5uOtqbL/VXWNKf+3fOFEA9FE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=zxu6Ok3S; arc=none smtp.client-ip=209.85.167.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-515b43b39fdso1964325e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 12:07:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1711739241; x=1712344041; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jsdBG0vRP2yUpfQaPKhnal9fapiJWVoX07rz+DB9uPU=;
-        b=zxu6Ok3StkBnsAIssjxaNZ8kNsISb+zJZCbaUQI4cH4Gr4TJltDTuyVgN+bFGWxwNd
-         7kGQSpGY0EnCyi+GWhE4464AO1bbwbpK98xb7ymp4ICZ+yJznUrqykt6ofAYdILZpHde
-         Twm21r8sF3InKiEZsjl3BIbDBUN4SG4WuZ2qD8qiYKVqugvGfq7Xo5W1zcxubquCsyIY
-         SUjhUJw9f151Kh651q3WrVVQ7xepz+QFtUSOi+hOdMYUrqRzktT0OxMBVv+MwycdcRYg
-         t3Wid8Ktekrxi9FpHFcLm8sm9OZX38eEgygQNz7WfcDWmBKF84yO8409Ge9dCzrm+Z0q
-         lf3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711739241; x=1712344041;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jsdBG0vRP2yUpfQaPKhnal9fapiJWVoX07rz+DB9uPU=;
-        b=CJFQ4V4765bhAeVaiUY2UDUZcENJSssrUEyods93iAnfVEWCeYyA4CELtSZgy3O9aS
-         EM/hJp32/gq+3pVZ7jw3rBCD/CFxgkDZTb+pmhMU9Bl+R3IIDG5XLl3VJpPq7Ysa21zw
-         LHOvqLJUuKVt3skYEir5dRCYRa0Uqx0cZq9a0d80Rd2C5EQPP7CIsr2yUWs59/0jQidQ
-         lxCIZlh+EH4/rdZEbGg4H2GbBUhkxszQSoT1jjvCuKZCIfhdRwlr+jUSO0RJ4/baEml9
-         MTO160pexSHn0mgKfQSM/XeRZZIklJLKCoWA8vZ1qJND6HNPRMpBhrOMsgazFUmRv0n9
-         31iQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUr3X8QCHTcpniM787gOtNX/fj7GcXKoAtoz2dfxbghed+EuF8nDySdL+uBEsKMPz4gsc3B84HO5E6juDo4J6cb5gG2JEE5wAYcxoa3Kw==
-X-Gm-Message-State: AOJu0Yxegs5SlpSPKDxNLjGMwJvnWPS/YWMarxiQkadreJtFjcezx65s
-	vsF4B5nosCWBKr2smnNnd4bQm0ZqBCcnwY+iyzBVCjPNqHINxCLmlp3rigYftTvMMP0xlqKz2W9
-	ECpb4jgXBwBmwy/LLvzphMqm8xqQC/t+iWqKtyQ==
-X-Google-Smtp-Source: AGHT+IHDWRMoxcd1Mlgu1tyGjFBl2EBCV2TtX1HZvUeiaGduYEhnrGywQ/gnvwpFytuqrMbJ58lOACD5ROn1xGB+f74=
-X-Received: by 2002:ac2:5f70:0:b0:515:d3e4:4581 with SMTP id
- c16-20020ac25f70000000b00515d3e44581mr566058lfc.30.1711739240427; Fri, 29 Mar
- 2024 12:07:20 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532B0225A8;
+	Fri, 29 Mar 2024 19:16:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.247.119
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1711739783; cv=fail; b=Hm9Xy2KvbEhVgJRo15Wqu+cTzzKPFiU/SvvZ1cXPYNFsdcTJjxjd1Vgvqx1yhzF7XYHceJ/7N/9bSB94OoHQOTMLeVApMUCOQpiN+iEvE4riA1p2YNBOH0vI3zm2Fyh3NidJqMpV86RvWCHf3wctbn1kYxvUDuTgwcWdNmvYN2g=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1711739783; c=relaxed/simple;
+	bh=nRCoRFro8AdRt6WBfD8XJsJfCTgfwEVggRh979xTtfo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=ZXtHSVseSqjIo+hcDFHSNXkmBBu1A3ohRVx/4R/e7kfIH5TY6ZmXoHPyWXIKAdb8/epNB9iHNa0BCM+DuYkIRt2gB1xzx+yxfTgJkJ9DzGyl1mx2ACvpC/NdYJ07pCiwgCUgGnk3vRC9iX69aYKsv/7wgz8y0+lECfIQgbxaJ1E=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (1024-bit key) header.d=nxp.com header.i=@nxp.com header.b=oiNfQ6d0; arc=fail smtp.client-ip=40.107.247.119
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=YtKDypFkFICJCHuAiZORDG//MnVNwUl7Mb7OWNdpxovo0QkFeRSJ0mpERdBaOuSwCwppKcX/W2u96EDwgHyhAdkD9r2wBcKuCqPX7Z3Cjg/6faoBTxO5gwJcHekjV1NL4O+x/hf+nMiW4SToPtIrYTHvYjufs3AyEGSFo7wsSm6hAfXxsPn7eroZ8WrID95D3F6yscxQrS+PeSqdEAjdKrWpZiHErYaqsRjHFr21iXCmtdZCA0woB5tBH5AlGLZGVu776sDgek0GJKz9RlOtqlcEcFCDNq9Zu4/j+3HF1bz8AtpS6LdCg1fiiG7LeZGiYr/dpbZ+WYTQA8GqHVGmSQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=A8AYQ6FZplMeVwqAs4M+y7QWehTbEKcT9XNZyNNZmow=;
+ b=MRipVClNMyjpfQolRPhkXHgGNvEBReIuqUU/fY1WwsSnLnmrqI6SLEZVz3lqw/DwkebHOs8DLvxpvyelEgG/gnnPxgqGTf0YssC5/eo36u5D0T4OMsfCvrV4dBptUSiFM5b7u2wsA6MXOpZTwc3j8uw4iStOe/x4lXWxaPwvUo6c54k2+/qWQWnrmZWiDEgPB54SSaiTB2FFMAbm6I9lUp7+Z9Ji0Cu85mk7px2mmdH21TQLia5QIXsF80weJ5MdRaPMkOnkulwN9ioM1nBYjmOovc4rPUrBrzVp2OSmyylkYTH7cU01cad6nKTaKy1GKLRXQeJrn8wrfXTTMQfTEA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=A8AYQ6FZplMeVwqAs4M+y7QWehTbEKcT9XNZyNNZmow=;
+ b=oiNfQ6d0D3lkXeO4i+yLib/tIBD5/2EgfLbip400D4SXOZlQFQ2iEGLoGfckwgHMDKGq7UfCIjGO+ENupZXi0Q0FJrwYYovdwhgZhlOpaBWXUCr7qYD0/s+nB2vxnHPNatQa6iMnFdBphUyApBSpE81fLyZNmh8oYkUQhoN+ER0=
+Received: from PAXPR04MB9642.eurprd04.prod.outlook.com (2603:10a6:102:240::14)
+ by AS8PR04MB8578.eurprd04.prod.outlook.com (2603:10a6:20b:425::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.42; Fri, 29 Mar
+ 2024 19:16:16 +0000
+Received: from PAXPR04MB9642.eurprd04.prod.outlook.com
+ ([fe80::3168:91:27c6:edf6]) by PAXPR04MB9642.eurprd04.prod.outlook.com
+ ([fe80::3168:91:27c6:edf6%3]) with mapi id 15.20.7409.039; Fri, 29 Mar 2024
+ 19:16:16 +0000
+Date: Fri, 29 Mar 2024 15:16:03 -0400
+From: Frank Li <Frank.li@nxp.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Jingoo Han <jingoohan1@gmail.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Marek Vasut <marek.vasut+renesas@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	NXP Linux Team <linux-imx@nxp.com>,
+	Minghuan Lian <minghuan.Lian@nxp.com>,
+	Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Jesper Nilsson <jesper.nilsson@axis.com>,
+	Srikanth Thokala <srikanth.thokala@intel.com>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Heiko Stuebner <heiko@sntech.de>, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
+	linux-omap@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linuxppc-dev@lists.ozlabs.org, Niklas Cassel <cassel@kernel.org>,
+	linux-arm-kernel@axis.com, linux-rockchip@lists.infradead.org
+Subject: Re: [PATCH v12 7/8] PCI: dwc: ep: Call dw_pcie_ep_init_registers()
+ API directly from all glue drivers
+Message-ID: <ZgcTc9q4I9K9GA4c@lizhi-Precision-Tower-5810>
+References: <20240327-pci-dbi-rework-v12-0-082625472414@linaro.org>
+ <20240327-pci-dbi-rework-v12-7-082625472414@linaro.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240327-pci-dbi-rework-v12-7-082625472414@linaro.org>
+X-ClientProxiedBy: SJ0PR03CA0147.namprd03.prod.outlook.com
+ (2603:10b6:a03:33c::32) To PAXPR04MB9642.eurprd04.prod.outlook.com
+ (2603:10a6:102:240::14)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240325100359.17001-1-brgl@bgdev.pl> <56e1c63a-4c09-4d92-9ef2-aad5390879cc@gmail.com>
- <CAMRc=Mf_pvrh2VMfTVE-ZTypyO010p=to-cd8Q745DzSDXLGFw@mail.gmail.com>
- <CAMRc=MfsVWcoMC-dB-fdxy332h-ucUPTfEUMAnCt5L-q3zJxWg@mail.gmail.com>
- <82f94b54-82d1-49b9-badf-63d948b347fc@gmail.com> <97e1f121-9e84-4e63-9c9c-57e2de0b29d7@gmail.com>
-In-Reply-To: <97e1f121-9e84-4e63-9c9c-57e2de0b29d7@gmail.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Fri, 29 Mar 2024 20:07:09 +0100
-Message-ID: <CAMRc=McLJFGcy-A6PZNmjgDXnvx8z0J4k-Dbak-txvWnycHG2A@mail.gmail.com>
-Subject: Re: [PATCH v9 00/13] firmware: qcom: qseecom: convert to using the TZ allocator
-To: Maximilian Luz <luzmaximilian@gmail.com>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Elliot Berman <quic_eberman@quicinc.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
-	Guru Das Srinagesh <quic_gurus@quicinc.com>, Andrew Halaney <ahalaney@redhat.com>, 
-	Alex Elder <elder@linaro.org>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, kernel@quicinc.com, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PAXPR04MB9642:EE_|AS8PR04MB8578:EE_
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	74KJ7diYFNJ7dZE7jQAbFYmWwy30vNLSUk8kjps95bKr9HtxnN4fQ02pyQHd3dBhzTp3gwEoiYoNeFzK2T/1GJbGYotytXyoG6u78JKhp4f/hGrJLi34ANXsHXqf2v7s4EHp/NXI6zcLx2j7D3wOuImAvHuX+wPG3CbfqA6HDoygYxQdGDI28eTTzV9QZyHfAyRVaqCyEVmOC18jJEayzVT6mOd3ZVfRoMCfDBwzovtITlrFD5ogxayapAYD3GgnbXgqCzdkgsi0FCub6Be+SNWkUnZwM7eASOoewbsJV95bLRu4IQiQXfrwzXTZ7lm3BQhC6CzeOooS0oZ1BWaVN59Y6tv3aUVAb05/Nwe70LJO8bBtL08msRoSDHkQXmTKhS4H3/9Iu7cZk3ah7pluaJcKh8jAw/fT9hBhlphYh/IA+BCd1T57rqIGVzEfzTXwnDl4n+1JytgEuWmVpcczJHE0L/w70Hc7Mh/15mfCDfs4ur4Qzg/KnQ3FXrOTDG8GI2UAqYpwA3zW1KLvyAcDuxcRsGW2DYV4ZU04nhqFq06GhVZ7gtyTn5F421KClIU3V08pSWE4g+DcLowwe0e0QzzIIsu3AAolWVrG50dkFLqg4XjbsBPbIFWNXk1HObs39pjJ/07wBxgmhvS45JvW6zqdfK3FGFbbPhQoHKANou9Oq36kjjQiO7U6OE3LBOwrWHAkkh5vJyoaOIoOpuPU8ARSFXz/tSbhYXaoddBXimw=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR04MB9642.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(376005)(7416005)(52116005)(366007)(38350700005);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?pZMtGtcmg/RJTeMNebUdoZq1RBQx+5EGyM4jJLU0o/babCZBVP/rE5B1aWvv?=
+ =?us-ascii?Q?QQAgLd0ig5znGEaqqfJjpiHY45JqVEeKPPDm3mCWyRvS2tHr4VdxvMFqgcoo?=
+ =?us-ascii?Q?6dXRO9xpgV/V7SNk7l7RYfyx7zXcVLC9q2yMsPvdPW0p2zs30Riq0FZkh087?=
+ =?us-ascii?Q?RVkHB3bx4icK88ckpoC83I13dvspHu6smvmsQ0wOnOHrBhbNhvcYezpBTgGu?=
+ =?us-ascii?Q?c5Pe1UZDFAdK3oMpWO91QvQI2K6mSDEs/8AppOMhC7PPz7evWGEmiuNyf1ud?=
+ =?us-ascii?Q?inPGZT/48Z493UiLj9DPLeJIzHIJI92nMTGSCKpeBiUkCntICqNevn6ntvKX?=
+ =?us-ascii?Q?tdnpHHXpL0Sag/tKkPhoCFzzG9RA53r7COLeUDdFp7iPLSY0UW8/KnA2ZuWI?=
+ =?us-ascii?Q?M9mJ1/pjMUMCuAUv1sPEysLvMu9pRekcKTLO+VFpzw8SdYF9vIQu2MVCG7+3?=
+ =?us-ascii?Q?V7piLmZHuO0d/he+Xc9NtV6EFA07cvVzBKOFCR5j3axoGjXH0xvaajuQ45ER?=
+ =?us-ascii?Q?iygxgFlUqaztkGsqpMkh4INaS60ZkGKqqNJBvRJHFGJ9mP9GMz/LnnAYbGnO?=
+ =?us-ascii?Q?xJvPOERgWuv2HPAbkfp3ILmh9Gy0lgAoZhNUQL3OKnNFMzp0Gd2LXcSAfYFl?=
+ =?us-ascii?Q?i7yUWb9LIFJPAXImzmWqwIyhMxYJXXoQUZwHqPrdJdLYzJMWhoZw6kssdh6D?=
+ =?us-ascii?Q?gZs7mCxI/fNcTwMjSPmSAnvuy2Bg9XvKBGaYrCCG2a9oNvpnbibqyviQxh6Y?=
+ =?us-ascii?Q?/+9PKYjye1CRoFF95DwEADn6omOFvvSjoMKFxpPNGnMLqMo8NtIuJvXtj3+P?=
+ =?us-ascii?Q?H4zNyHUjiWXVqlhpHIeZ3dkmwZY60QxX1MfINxCcCJxowoImUeUt/W5xNwMy?=
+ =?us-ascii?Q?cRdKDZOtrn+L7GCv3SEZo7d+vOoKUhAzyXiA5BNeySgRUQyn5qez4VBclfPC?=
+ =?us-ascii?Q?q3jpX3+AbbENMZWC+rY8y1GreAiwJna5amOEUnoMKapYGGM4VXfuyAR+sdmc?=
+ =?us-ascii?Q?GzCKi+XwSwWZPJ3ooGkiSE9DilVZh+V4n2cK38Mbf+DycJNdw60NNrQJgpwq?=
+ =?us-ascii?Q?rqkkpQnWoqlsqX/bcKZmBBYKIjQycRmpmNaf5kJzyEjvJb/SB9qPuIC9cu4g?=
+ =?us-ascii?Q?iZNOhAhyd3MiyYFaBh7EHbCSjfLMD1j45BPvNS+OehfGrPxSkyiEdBvwxbTf?=
+ =?us-ascii?Q?KC7WTUarXOpXi6R4f16b90A3XFZrtLyh2GgvUPuAZuMELjeI7meb4JZlFuD3?=
+ =?us-ascii?Q?EIHSTASy+xkhtA4qovCPYVNQhdV8SW+4pRXBOzZuPF/6ZCjFY9IWaTvLiqgE?=
+ =?us-ascii?Q?6HdyZqNfXQGeAh4FMBEH1EweMK7ChrDIXSEaD66dlc8njaQzIeyTeHXHvBj4?=
+ =?us-ascii?Q?UcUniWzkKRSq4Q6tXjYySJ3V39RfxoCq/tI555e0Bjms2zydRjDlkQIw+Bw7?=
+ =?us-ascii?Q?E0R2iv6rD166LigBaTj9ndNOFIk1JGq0XVrKcY3gsasrN3oPv3z5ObeTYKw6?=
+ =?us-ascii?Q?443KemyJ/HAyBIUjVLODkcECxGtalGGCdn/NTcY1hS8c7vvoWP5ihIoInI7m?=
+ =?us-ascii?Q?9lYaLyAdj8/aB0k2jPjV055x1D0fF+cCMJdbhPhU?=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6ea6d61e-e4dd-4f41-86f3-08dc5024b4db
+X-MS-Exchange-CrossTenant-AuthSource: PAXPR04MB9642.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Mar 2024 19:16:16.4965
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ovFnF/n1lV31r4SNNbvkuiVgp6NKYZ6fT/S1cGcHzbY8X8StkbzuXvTmx3k1Q02OKXOFFCpG7VafoAjSuTSfdQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB8578
 
-On Fri, Mar 29, 2024 at 7:56=E2=80=AFPM Maximilian Luz <luzmaximilian@gmail=
-.com> wrote:
->
->
->
-> On 3/29/24 7:53 PM, Maximilian Luz wrote:
-> > On 3/29/24 11:22 AM, Bartosz Golaszewski wrote:
-> >> On Thu, Mar 28, 2024 at 7:55=E2=80=AFPM Bartosz Golaszewski <brgl@bgde=
-v.pl> wrote:
-> >>>
-> >>> On Thu, Mar 28, 2024 at 5:50=E2=80=AFPM Maximilian Luz <luzmaximilian=
-@gmail.com> wrote:
-> >>>>
-> >>>> If I understand correctly, it enters an atomic section in
-> >>>> qcom_tzmem_alloc() and then tries to schedule somewhere down the lin=
-e.
-> >>>> So this shouldn't be qseecom specific.
-> >>>>
-> >>>> I should probably also say that I'm currently testing this on a patc=
-hed
-> >>>> v6.8 kernel, so there's a chance that it's my fault. However, as far=
- as
-> >>>> I understand, it enters an atomic section in qcom_tzmem_alloc() and =
-then
-> >>>> later tries to expand the pool memory with dma_alloc_coherent(). Whi=
-ch
-> >>>> AFAIK is allowed to sleep with GFP_KERNEL (and I guess that that's t=
-he
-> >>>> issue here).
-> >>>>
-> >>>> I've also tried the shmem allocator option, but that seems to get st=
-uck
-> >>>> quite early at boot, before I even have usb-serial access to get any
-> >>>> logs. If I can find some more time, I'll try to see if I can get som=
-e
-> >>>> useful output for that.
-> >>>>
-> >>>
-> >>> Ah, I think it happens here:
-> >>>
-> >>> +       guard(spinlock_irqsave)(&pool->lock);
-> >>> +
-> >>> +again:
-> >>> +       vaddr =3D gen_pool_alloc(pool->genpool, size);
-> >>> +       if (!vaddr) {
-> >>> +               if (qcom_tzmem_try_grow_pool(pool, size, gfp))
-> >>> +                       goto again;
-> >>>
-> >>> We were called with GFP_KERNEL so this is what we pass on to
-> >>> qcom_tzmem_try_grow_pool() but we're now holding the spinlock. I need
-> >>> to revisit it. Thanks for the catch!
-> >>>
-> >>> Bart
-> >>
-> >> Can you try the following tree?
-> >>
-> >>      https://git.codelinaro.org/bartosz_golaszewski/linux.git
-> >> topic/shm-bridge-v10
-> >>
-> >> gen_pool_alloc() and gen_pool_add_virt() can be used without external
-> >> serialization. We only really need to protect the list of areas in the
-> >> pool when adding a new element. We could possibly even use
-> >> list_add_tail_rcu() as it updates the pointers atomically and go
-> >> lockless.
-> >
-> > Thanks! That fixes the allocations for CONFIG_QCOM_TZMEM_MODE_GENERIC=
-=3Dy.
-> > Unfortunately, with the shmbridge mode it still gets stuck at boot (and
-> > I haven't had the time to look into it yet).
-> >
-> > And for more bad news: It looks like the new allocator now fully expose=
-s
-> > a bug that I've been tracking down the last couple of days. In short,
-> > uefisecapp doesn't seem to be happy when we split the allocations for
-> > request and response into two, causing commands to fail. Instead it
-> > wants a single buffer for both. Before, it seemed to be fairly sporadic
-> > (likely because kzalloc in sequence just returned consecutive memory
-> > almost all of the time) but now it's basically every call that fails.
-> >
-> > I have a fix for that almost ready and I'll likely post it in the next
-> > hour. But that means that you'll probably have to rebase this series
-> > on top of it...
->
-> Forgot to mention: I tested it with the fix and this series, and that
-> works.
->
+On Wed, Mar 27, 2024 at 02:43:36PM +0530, Manivannan Sadhasivam wrote:
+> Currently, dw_pcie_ep_init_registers() API is directly called by the glue
+> drivers requiring active refclk from host. But for the other drivers, it is
+> getting called implicitly by dw_pcie_ep_init(). This is due to the fact
+> that this API initializes DWC EP specific registers and that requires an
+> active refclk (either from host or generated locally by endpoint itsef).
+> 
+> But, this causes a discrepancy among the glue drivers. So to avoid this
+> confusion, let's call this API directly from all glue drivers irrespective
+> of refclk dependency. Only difference here is that the drivers requiring
+> refclk from host will call this API only after the refclk is received and
+> other drivers without refclk dependency will call this API right after
+> dw_pcie_ep_init().
+> 
+> With this change, the check for 'core_init_notifier' flag can now be
+> dropped from dw_pcie_ep_init() API. This will also allow us to remove the
+> 'core_init_notifier' flag completely in the later commits.
+> 
+> Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+> Reviewed-by: Niklas Cassel <cassel@kernel.org>
 
-Both with and without SHM bridge?
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 
-If so, please Cc me on the fix.
-
-Bart
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  drivers/pci/controller/dwc/pci-dra7xx.c           |  7 +++++++
+>  drivers/pci/controller/dwc/pci-imx6.c             |  8 ++++++++
+>  drivers/pci/controller/dwc/pci-keystone.c         |  9 +++++++++
+>  drivers/pci/controller/dwc/pci-layerscape-ep.c    |  7 +++++++
+>  drivers/pci/controller/dwc/pcie-artpec6.c         | 13 ++++++++++++-
+>  drivers/pci/controller/dwc/pcie-designware-ep.c   | 22 ----------------------
+>  drivers/pci/controller/dwc/pcie-designware-plat.c |  9 +++++++++
+>  drivers/pci/controller/dwc/pcie-keembay.c         | 16 +++++++++++++++-
+>  drivers/pci/controller/dwc/pcie-rcar-gen4.c       | 12 +++++++++++-
+>  drivers/pci/controller/dwc/pcie-uniphier-ep.c     | 13 ++++++++++++-
+>  10 files changed, 90 insertions(+), 26 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pci-dra7xx.c b/drivers/pci/controller/dwc/pci-dra7xx.c
+> index 0e406677060d..395042b29ffc 100644
+> --- a/drivers/pci/controller/dwc/pci-dra7xx.c
+> +++ b/drivers/pci/controller/dwc/pci-dra7xx.c
+> @@ -467,6 +467,13 @@ static int dra7xx_add_pcie_ep(struct dra7xx_pcie *dra7xx,
+>  		return ret;
+>  	}
+>  
+> +	ret = dw_pcie_ep_init_registers(ep);
+> +	if (ret) {
+> +		dev_err(dev, "Failed to initialize DWC endpoint registers\n");
+> +		dw_pcie_ep_deinit(ep);
+> +		return ret;
+> +	}
+> +
+>  	return 0;
+>  }
+>  
+> diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
+> index 99a60270b26c..8d28ecc381bc 100644
+> --- a/drivers/pci/controller/dwc/pci-imx6.c
+> +++ b/drivers/pci/controller/dwc/pci-imx6.c
+> @@ -1123,6 +1123,14 @@ static int imx6_add_pcie_ep(struct imx6_pcie *imx6_pcie,
+>  		dev_err(dev, "failed to initialize endpoint\n");
+>  		return ret;
+>  	}
+> +
+> +	ret = dw_pcie_ep_init_registers(ep);
+> +	if (ret) {
+> +		dev_err(dev, "Failed to initialize DWC endpoint registers\n");
+> +		dw_pcie_ep_deinit(ep);
+> +		return ret;
+> +	}
+> +
+>  	/* Start LTSSM. */
+>  	imx6_pcie_ltssm_enable(dev);
+>  
+> diff --git a/drivers/pci/controller/dwc/pci-keystone.c b/drivers/pci/controller/dwc/pci-keystone.c
+> index 844de4418724..81ebac520650 100644
+> --- a/drivers/pci/controller/dwc/pci-keystone.c
+> +++ b/drivers/pci/controller/dwc/pci-keystone.c
+> @@ -1286,6 +1286,13 @@ static int ks_pcie_probe(struct platform_device *pdev)
+>  		ret = dw_pcie_ep_init(&pci->ep);
+>  		if (ret < 0)
+>  			goto err_get_sync;
+> +
+> +		ret = dw_pcie_ep_init_registers(&pci->ep);
+> +		if (ret) {
+> +			dev_err(dev, "Failed to initialize DWC endpoint registers\n");
+> +			goto err_ep_init;
+> +		}
+> +
+>  		break;
+>  	default:
+>  		dev_err(dev, "INVALID device type %d\n", mode);
+> @@ -1295,6 +1302,8 @@ static int ks_pcie_probe(struct platform_device *pdev)
+>  
+>  	return 0;
+>  
+> +err_ep_init:
+> +	dw_pcie_ep_deinit(&pci->ep);
+>  err_get_sync:
+>  	pm_runtime_put(dev);
+>  	pm_runtime_disable(dev);
+> diff --git a/drivers/pci/controller/dwc/pci-layerscape-ep.c b/drivers/pci/controller/dwc/pci-layerscape-ep.c
+> index 1f6ee1460ec2..9eb2233e3d7f 100644
+> --- a/drivers/pci/controller/dwc/pci-layerscape-ep.c
+> +++ b/drivers/pci/controller/dwc/pci-layerscape-ep.c
+> @@ -279,6 +279,13 @@ static int __init ls_pcie_ep_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		return ret;
+>  
+> +	ret = dw_pcie_ep_init_registers(&pci->ep);
+> +	if (ret) {
+> +		dev_err(dev, "Failed to initialize DWC endpoint registers\n");
+> +		dw_pcie_ep_deinit(&pci->ep);
+> +		return ret;
+> +	}
+> +
+>  	return ls_pcie_ep_interrupt_init(pcie, pdev);
+>  }
+>  
+> diff --git a/drivers/pci/controller/dwc/pcie-artpec6.c b/drivers/pci/controller/dwc/pcie-artpec6.c
+> index 9ed0a9ba7619..a6095561db4a 100644
+> --- a/drivers/pci/controller/dwc/pcie-artpec6.c
+> +++ b/drivers/pci/controller/dwc/pcie-artpec6.c
+> @@ -441,7 +441,18 @@ static int artpec6_pcie_probe(struct platform_device *pdev)
+>  
+>  		pci->ep.ops = &pcie_ep_ops;
+>  
+> -		return dw_pcie_ep_init(&pci->ep);
+> +		ret = dw_pcie_ep_init(&pci->ep);
+> +		if (ret)
+> +			return ret;
+> +
+> +		ret = dw_pcie_ep_init_registers(&pci->ep);
+> +		if (ret) {
+> +			dev_err(dev, "Failed to initialize DWC endpoint registers\n");
+> +			dw_pcie_ep_deinit(&pci->ep);
+> +			return ret;
+> +		}
+> +
+> +		break;
+>  	default:
+>  		dev_err(dev, "INVALID device type %d\n", artpec6_pcie->mode);
+>  	}
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+> index 761d3012a073..2063cf2049e5 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+> @@ -821,7 +821,6 @@ int dw_pcie_ep_init(struct dw_pcie_ep *ep)
+>  	struct device *dev = pci->dev;
+>  	struct platform_device *pdev = to_platform_device(dev);
+>  	struct device_node *np = dev->of_node;
+> -	const struct pci_epc_features *epc_features;
+>  
+>  	INIT_LIST_HEAD(&ep->func_list);
+>  
+> @@ -867,29 +866,8 @@ int dw_pcie_ep_init(struct dw_pcie_ep *ep)
+>  		goto err_exit_epc_mem;
+>  	}
+>  
+> -	if (ep->ops->get_features) {
+> -		epc_features = ep->ops->get_features(ep);
+> -		if (epc_features->core_init_notifier)
+> -			return 0;
+> -	}
+> -
+> -	/*
+> -	 * NOTE:- Avoid accessing the hardware (Ex:- DBI space) before this
+> -	 * step as platforms that implement 'core_init_notifier' feature may
+> -	 * not have the hardware ready (i.e. core initialized) for access
+> -	 * (Ex: tegra194). Any hardware access on such platforms result
+> -	 * in system hang.
+> -	 */
+> -	ret = dw_pcie_ep_init_registers(ep);
+> -	if (ret)
+> -		goto err_free_epc_mem;
+> -
+>  	return 0;
+>  
+> -err_free_epc_mem:
+> -	pci_epc_mem_free_addr(epc, ep->msi_mem_phys, ep->msi_mem,
+> -			      epc->mem->window.page_size);
+> -
+>  err_exit_epc_mem:
+>  	pci_epc_mem_exit(epc);
+>  
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-plat.c b/drivers/pci/controller/dwc/pcie-designware-plat.c
+> index 778588b4be70..ca9b22e654cd 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-plat.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-plat.c
+> @@ -145,6 +145,15 @@ static int dw_plat_pcie_probe(struct platform_device *pdev)
+>  
+>  		pci->ep.ops = &pcie_ep_ops;
+>  		ret = dw_pcie_ep_init(&pci->ep);
+> +		if (ret)
+> +			return ret;
+> +
+> +		ret = dw_pcie_ep_init_registers(&pci->ep);
+> +		if (ret) {
+> +			dev_err(dev, "Failed to initialize DWC endpoint registers\n");
+> +			dw_pcie_ep_deinit(&pci->ep);
+> +		}
+> +
+>  		break;
+>  	default:
+>  		dev_err(dev, "INVALID device type %d\n", dw_plat_pcie->mode);
+> diff --git a/drivers/pci/controller/dwc/pcie-keembay.c b/drivers/pci/controller/dwc/pcie-keembay.c
+> index 5e8e54f597dd..b2556dbcffb5 100644
+> --- a/drivers/pci/controller/dwc/pcie-keembay.c
+> +++ b/drivers/pci/controller/dwc/pcie-keembay.c
+> @@ -396,6 +396,7 @@ static int keembay_pcie_probe(struct platform_device *pdev)
+>  	struct keembay_pcie *pcie;
+>  	struct dw_pcie *pci;
+>  	enum dw_pcie_device_mode mode;
+> +	int ret;
+>  
+>  	data = device_get_match_data(dev);
+>  	if (!data)
+> @@ -430,11 +431,24 @@ static int keembay_pcie_probe(struct platform_device *pdev)
+>  			return -ENODEV;
+>  
+>  		pci->ep.ops = &keembay_pcie_ep_ops;
+> -		return dw_pcie_ep_init(&pci->ep);
+> +		ret = dw_pcie_ep_init(&pci->ep);
+> +		if (ret)
+> +			return ret;
+> +
+> +		ret = dw_pcie_ep_init_registers(&pci->ep);
+> +		if (ret) {
+> +			dev_err(dev, "Failed to initialize DWC endpoint registers\n");
+> +			dw_pcie_ep_deinit(&pci->ep);
+> +			return ret;
+> +		}
+> +
+> +		break;
+>  	default:
+>  		dev_err(dev, "Invalid device type %d\n", pcie->mode);
+>  		return -ENODEV;
+>  	}
+> +
+> +	return 0;
+>  }
+>  
+>  static const struct keembay_pcie_of_data keembay_pcie_rc_of_data = {
+> diff --git a/drivers/pci/controller/dwc/pcie-rcar-gen4.c b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+> index de4bdfaecab3..e155a905fb4f 100644
+> --- a/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+> +++ b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+> @@ -416,6 +416,7 @@ static const struct dw_pcie_ep_ops pcie_ep_ops = {
+>  static int rcar_gen4_add_dw_pcie_ep(struct rcar_gen4_pcie *rcar)
+>  {
+>  	struct dw_pcie_ep *ep = &rcar->dw.ep;
+> +	struct device *dev = rcar->dw.dev;
+>  	int ret;
+>  
+>  	if (!IS_ENABLED(CONFIG_PCIE_RCAR_GEN4_EP))
+> @@ -424,8 +425,17 @@ static int rcar_gen4_add_dw_pcie_ep(struct rcar_gen4_pcie *rcar)
+>  	ep->ops = &pcie_ep_ops;
+>  
+>  	ret = dw_pcie_ep_init(ep);
+> -	if (ret)
+> +	if (ret) {
+>  		rcar_gen4_pcie_ep_deinit(rcar);
+> +		return ret;
+> +	}
+> +
+> +	ret = dw_pcie_ep_init_registers(ep);
+> +	if (ret) {
+> +		dev_err(dev, "Failed to initialize DWC endpoint registers\n");
+> +		dw_pcie_ep_deinit(ep);
+> +		rcar_gen4_pcie_ep_deinit(rcar);
+> +	}
+>  
+>  	return ret;
+>  }
+> diff --git a/drivers/pci/controller/dwc/pcie-uniphier-ep.c b/drivers/pci/controller/dwc/pcie-uniphier-ep.c
+> index 639bc2e12476..0e5e7344de48 100644
+> --- a/drivers/pci/controller/dwc/pcie-uniphier-ep.c
+> +++ b/drivers/pci/controller/dwc/pcie-uniphier-ep.c
+> @@ -399,7 +399,18 @@ static int uniphier_pcie_ep_probe(struct platform_device *pdev)
+>  		return ret;
+>  
+>  	priv->pci.ep.ops = &uniphier_pcie_ep_ops;
+> -	return dw_pcie_ep_init(&priv->pci.ep);
+> +	ret = dw_pcie_ep_init(&priv->pci.ep);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = dw_pcie_ep_init_registers(&priv->pci.ep);
+> +	if (ret) {
+> +		dev_err(dev, "Failed to initialize DWC endpoint registers\n");
+> +		dw_pcie_ep_deinit(&priv->pci.ep);
+> +		return ret;
+> +	}
+> +
+> +	return 0;
+>  }
+>  
+>  static const struct uniphier_pcie_ep_soc_data uniphier_pro5_data = {
+> 
+> -- 
+> 2.25.1
+> 
 
