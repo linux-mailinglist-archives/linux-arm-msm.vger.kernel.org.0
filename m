@@ -1,161 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-15776-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15778-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDF6C89259E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 21:51:29 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0AE6B8925D3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 22:07:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6BC00284D5B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 20:51:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 707D91F2330E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 21:07:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CBC413CF85;
-	Fri, 29 Mar 2024 20:50:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B78013B59A;
+	Fri, 29 Mar 2024 21:07:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="F9gR20l5"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jzrX4h+1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B410413CC63
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 20:50:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A22EE39FFD;
+	Fri, 29 Mar 2024 21:07:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711745453; cv=none; b=epZ82yfLYGRiZC6y4z93OR9O/jdZ2w3DLE/ngwrFWfSLSnxnldPHRVJvuxQNYdj2vdXIaj/UDHJgggjmABASMeeWvFsAVdipkv+9Tthw6b9Z5WJJa825GOwGwIbcmGUqTBKYdcDLQyWVTCDfFR0zhireYtmgqSFaKSubpEi3Rko=
+	t=1711746442; cv=none; b=DCWbzxMBUriK0tfmcz2/MQkwbHBKKdPDjm24TcxhiGHWZAsrHQpFbEkEWo+/l94dI0yc/cBfteuoZaVQLN3PDmr69oil2grUth+a0BoC/bytvRKsSpCHAwhqJFM6fr51cxNSHzTjWm1po0YclqgwOaloqq9DVCKOhhWrJt5thRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711745453; c=relaxed/simple;
-	bh=BGXknjcLA50bcUKtFtKJCi5N6HFf284Wv0+1aI9g+Qk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YkZpnHxrRdtp0bE2I1jh4BCz6HZENtiPAnvsNs0MSjDp3TaoGqbTeoyCexpqeuWTJrLV2bEyPhhLmc3R5JIEhyctf4cktAbu8GOOeVg1T01gSht6wr7h9t5nCPi3S9hYrH00HtHKEc3M5tCm/nEpgmyi3tVfCn99eyiJMYj4i1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=F9gR20l5; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1711745450;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Uf4SOXbG4RAjshjCtScug3Y0ECaz5dSCoqxe3hdLj3E=;
-	b=F9gR20l5kkJUOdbFC/a/+Q1MbFPY0o+pmrofmwlg0E9g6iazivYS5TCBFecsq4zwK0lZgR
-	gCvvqjnukbAd/KlO5jIiD9CP3rb7CU4AqpH9GUyM+kBhSg20ch7F+d/9ML4nBsnZiRqaPc
-	ke7T0/fNNA+q1vHXG4s843OFJYK7Q7E=
-Received: from mail-ua1-f69.google.com (mail-ua1-f69.google.com
- [209.85.222.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-604-5KmXAsEyPlugG5Rk_IZSIA-1; Fri, 29 Mar 2024 16:50:49 -0400
-X-MC-Unique: 5KmXAsEyPlugG5Rk_IZSIA-1
-Received: by mail-ua1-f69.google.com with SMTP id a1e0cc1a2514c-7e05b1ef83dso1098493241.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 13:50:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711745448; x=1712350248;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Uf4SOXbG4RAjshjCtScug3Y0ECaz5dSCoqxe3hdLj3E=;
-        b=hTqwR2SkAwwFQsgXCQUaWNqIdVSZFxKSSS2QwE0TOhxr653/Ass4ZtbdL7BLVCKlrx
-         2TLchsRNq/xZmKxVTkRpwUFtfSieMyktnhRc93JNwWb887GjNIPdvXZVvuqdepXcGbQl
-         jXbqMJBM2NEwe58ZqfAFQi6emvSJjlo1UE8y+MhlzjudEJxapUnRAGUAgKA0ff5rRruo
-         w9+Mt9qrv/35Xo5L8mYBAptYI0/ZGOADgnQdmujtHhcEmLUQbpR04OLsySTr6vp6ozQV
-         uyaKkToueoWvOBxhrl7I+l7Twi+8crArk06LVHt/JG6PuaPQNvAULHr0PJbZ5pQPjtCx
-         MKfw==
-X-Forwarded-Encrypted: i=1; AJvYcCUmBxHaxnUOqBdwlvXFsyJYfAZzbG5o3TX3WFrCycfqp+6ToE0pGHwsvY9ttgZUH9vKUVq1sunVSRV7+12PmKIDlgBTpMFEHpaZIheH5Q==
-X-Gm-Message-State: AOJu0YyKls743SRZC7edIDw+dDjqd+8meF+BcDsTqrgpy8xLJ5Fa9m3L
-	Q8a16yXxWd6MrKtq8sDGjzyfkSCwLYvO+r9aW6KOLdSmEySVcPerFZRmkB4C5DzdGIRgD1OLQ2r
-	PJSI1o7RUoRQw7APD/b8VrBhSF3M3Tbspx2Xhb+5uEWQFHvb4hBGpcBq9ZyEOtpg=
-X-Received: by 2002:a05:6102:dd3:b0:476:fab9:237d with SMTP id e19-20020a0561020dd300b00476fab9237dmr3651558vst.2.1711745448249;
-        Fri, 29 Mar 2024 13:50:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHbJHgBjF3eN8i3ddN3z1R3cQ/XH02K5EBI2mtVmXktFIkJdXz1ZhnDrVZGUZxKmIZMOtcJjg==
-X-Received: by 2002:a05:6102:dd3:b0:476:fab9:237d with SMTP id e19-20020a0561020dd300b00476fab9237dmr3651537vst.2.1711745447887;
-        Fri, 29 Mar 2024 13:50:47 -0700 (PDT)
-Received: from x1gen2nano.redhat.com ([2600:1700:1ff0:d0e0::33])
-        by smtp.gmail.com with ESMTPSA id jz10-20020a0562140e6a00b00698f27c6460sm794271qvb.110.2024.03.29.13.50.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Mar 2024 13:50:44 -0700 (PDT)
-From: Andrew Halaney <ahalaney@redhat.com>
-To: Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Hannes Reinecke <hare@suse.de>,
-	Janek Kotas <jank@cadence.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Can Guo <quic_cang@quicinc.com>,
-	Anjana Hari <quic_ahari@quicinc.com>
-Cc: Andrew Halaney <ahalaney@redhat.com>,
-	Will Deacon <will@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-scsi@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v5 11/11] scsi: ufs: core: Remove unnecessary wmb() prior
- to writing run/stop regs
-Date: Fri, 29 Mar 2024 15:46:53 -0500
-Message-ID: <20240329-ufs-reset-ensure-effect-before-delay-v5-11-181252004586@redhat.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240329-ufs-reset-ensure-effect-before-delay-v5-0-181252004586@redhat.com>
-References: <20240329-ufs-reset-ensure-effect-before-delay-v5-0-181252004586@redhat.com>
+	s=arc-20240116; t=1711746442; c=relaxed/simple;
+	bh=RUIuhwXg360PNUqr02z7uRrDgeyGxM/SpzcOwWtGtiE=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=PGtf+IFZ4SmOBM0987waBGRUAAg/waLYyM8jgatziw379K/dCOM74bmt/COYBxPj31v+8AL63WRfbMiwyByFzREWYLx+8SSTYLLZCZegejw+WhjIkyKkeLmLjHyDS+fUKd+Gq3lK386TV9LKBHy374f9gKe9jjQgYw9GF+KXPFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jzrX4h+1; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42TKMcYO009950;
+	Fri, 29 Mar 2024 21:07:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=5gIpoWw
+	aQ+AsQZOJ+Ssuz3gvEydTtwSTBLTdQwWmEpE=; b=jzrX4h+1lbSMmw3jz3B8bfl
+	MMU+uxt6lQRZloEyL/I6Xj3Q7qg2BqRc40D0beHQ8QNek9x3Sn6nqU12zjhCE0gk
+	AvKH7tkyLwkmwfDdtDbAUsmBAIyrPuKHJzkZIaOrEVz2SwjdhFTSeqcwGIWQNi7x
+	zuBOOpXYBZt0ryBCDSZHcbSoA9L+3vRJwzceFtmOnvYs/wlF261hpC/eeBHxZC1M
+	mlY8Yo9wOZyU7WuPbe1Emz6k5x3mGKIqySau8BgVOYQt+dhUxlOgHz/pRtqSHbsW
+	mHbAkZkMG7H5/+ZuvG4niqx7X7ajFXOJXcmMCa6JrGDsqO+wz257CLyNiJ/633Q=
+	=
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x5ybmrux6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 Mar 2024 21:07:07 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42TL7635027744
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 Mar 2024 21:07:06 GMT
+Received: from hu-c-gdjako-lv.qualcomm.com (10.49.16.6) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Fri, 29 Mar 2024 14:07:05 -0700
+From: Georgi Djakov <quic_c_gdjako@quicinc.com>
+To: <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>,
+        <iommu@lists.linux.dev>
+CC: <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <devicetree@vger.kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <robdclark@gmail.com>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_cgoldswo@quicinc.com>, <quic_sukadev@quicinc.com>,
+        <quic_pdaly@quicinc.com>, <quic_sudaraja@quicinc.com>,
+        <djakov@kernel.org>
+Subject: [PATCH v7 0/7] Add support for Translation Buffer Units
+Date: Fri, 29 Mar 2024 14:06:31 -0700
+Message-ID: <20240329210638.3647523-1-quic_c_gdjako@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-X-Mailer: b4 0.13.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: WhE4aYoNGM6sQB3iEVDyUecjH7n6WqJW
+X-Proofpoint-GUID: WhE4aYoNGM6sQB3iEVDyUecjH7n6WqJW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-29_13,2024-03-28_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 impostorscore=0
+ lowpriorityscore=0 malwarescore=0 bulkscore=0 phishscore=0 mlxlogscore=999
+ suspectscore=0 adultscore=0 priorityscore=1501 mlxscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2403210001
+ definitions=main-2403290188
 
-Currently a wmb() is used to ensure that writes to the=0D
-UTP_TASK_REQ_LIST_BASE* regs are completed prior to following writes to=0D
-the run/stop registers.=0D
-=0D
-wmb() ensure that the write completes, but completion doesn't mean that=0D
-it isn't stored in a buffer somewhere. The recommendation for=0D
-ensuring the bits have taken effect on the device is to perform a read=0D
-back to force it to make it all the way to the device. This is=0D
-documented in device-io.rst and a talk by Will Deacon on this can=0D
-be seen over here:=0D
-=0D
-    https://youtu.be/i6DayghhA8Q?si=3DMiyxB5cKJXSaoc01&t=3D1678=0D
-=0D
-But, none of that is necessary here. All of the writel()/readl()'s here=0D
-are to the same endpoint, so they will be ordered. There's no subsequent=0D
-delay() etc that requires it to have taken effect already, so no=0D
-readback is necessary here.=0D
-=0D
-For that reason just drop the wmb() altogether.=0D
-=0D
-Fixes: 897efe628d7e ("scsi: ufs: add missing memory barriers")=0D
-Signed-off-by: Andrew Halaney <ahalaney@redhat.com>=0D
----=0D
- drivers/ufs/core/ufshcd.c | 6 ------=0D
- 1 file changed, 6 deletions(-)=0D
-=0D
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c=0D
-index a2f2941450fd..cf6a24e550f0 100644=0D
---- a/drivers/ufs/core/ufshcd.c=0D
-+++ b/drivers/ufs/core/ufshcd.c=0D
-@@ -4769,12 +4769,6 @@ int ufshcd_make_hba_operational(struct ufs_hba *hba)=
-=0D
- 	ufshcd_writel(hba, upper_32_bits(hba->utmrdl_dma_addr),=0D
- 			REG_UTP_TASK_REQ_LIST_BASE_H);=0D
- =0D
--	/*=0D
--	 * Make sure base address and interrupt setup are updated before=0D
--	 * enabling the run/stop registers below.=0D
--	 */=0D
--	wmb();=0D
--=0D
- 	/*=0D
- 	 * UCRDY, UTMRLDY and UTRLRDY bits must be 1=0D
- 	 */=0D
-=0D
--- =0D
-2.44.0=0D
-=0D
+The TCUs (Translation Control Units) and TBUs (Translation Buffer
+Units) are key components of the MMU-500. Multiple TBUs are connected
+to a single TCU over an interconnect. Each TBU contains a TLB that
+caches page tables. The MMU-500 implements a TBU for each connected
+master, and the TBU is designed, so that it is local to the master.
+A common TBU DT schema is added to describe the TBUs.
+
+The Qualcomm SDM845 and SC7280 platforms have an implementation of the
+SMMU-500, that has multiple TBUs. A vendor-specific DT schema is added
+to describe the resources for each TBU (register space, power-domains,
+interconnects and clocks).
+
+The TBU driver will manage the resources and allow the system to
+operate the TBUs during a context fault to obtain details by doing
+s1 inv, software + hardware page table walks etc. This is implemented
+with ATOS/eCATs as the ATS feature is not supported. Being able to
+query the TBUs is useful for debugging various hardware/software
+issues on these platforms.
+
+v7:
+- Pick Reviewed-by for the DT binding (Rob)
+- Don't spam the log if the dts changes are not there (Konrad)
+
+v6: https://lore.kernel.org/r/20240307190525.395291-1-quic_c_gdjako@quicinc.com/
+- Use SoC-specific compatibles (Krzysztof)
+- Use additionalProperties: false (Krzysztof)
+- Wrap description text to 80 cols (Krzysztof)
+
+v5: https://lore.kernel.org/r/20240226172218.69486-1-quic_c_gdjako@quicinc.com
+- Drop the common TBU bindings and child nodes. These TBU functionalities
+  are only Qualcomm specific and not generic. In the unmodified ARM MMU-500
+  implementation there are no TBU-specific resources, so just make them
+  standalone DT nodes. (Robin)
+- The "qcom,stream-id-range" DT property now takes a phandle to the smmu
+  and a stream ID range.
+
+v4: https://lore.kernel.org/r/20240201210529.7728-1-quic_c_gdjako@quicinc.com/
+- Create a common TBU schema. Move the vendor-specific properties into
+  a separate schema that references the common one. (Rob)
+- Drop unused DT labels in example, fix regex. (Rob)
+- Properly rebase on latest code.
+
+v3: https://lore.kernel.org/r/20231220060236.18600-1-quic_c_gdjako@quicinc.com
+- Having a TBU is not Qualcomm specific, so allow having TBU child
+  nodes with no specific constraints on properties. For some of the
+  vendor compatibles however, add a schema to describe specific
+  properties and allow validation. (Rob)
+- Drop the useless reg-names DT property on TBUs. (Rob)
+- Make the stream-id-range DT property a common one. (Rob)
+- Fix the DT example. (Rob)
+- Minor fixes on the TBU driver.
+- Add support for SC7280 platforms.
+
+v2: https://lore.kernel.org/r/20231118042730.2799-1-quic_c_gdjako@quicinc.com
+- Improve DT binding description, add full example. (Konrad)
+- Drop Qcom specific stuff from the generic binding. (Rob)
+- Unconditionally try to populate subnodes. (Konrad)
+- Improve TBU driver commit text, remove memory barriers. (Bjorn)
+- Move TBU stuff into separate file. Make the driver builtin.
+- TODO: Evaluate whether to keep TBU support as a separate driver
+  or just instantiate things from qcom_smmu_impl_init()
+
+v1: https://lore.kernel.org/r/20231019021923.13939-1-quic_c_gdjako@quicinc.com
+
+Georgi Djakov (7):
+  dt-bindings: iommu: Add Qualcomm TBU
+  iommu/arm-smmu-qcom-tbu: Add Qualcomm TBU driver
+  iommu/arm-smmu: Allow using a threaded handler for context interrupts
+  iommu/arm-smmu-qcom: Use a custom context fault handler for sdm845
+  arm64: dts: qcom: sdm845: Add DT nodes for the TBUs
+  iommu/arm-smmu-qcom: Use the custom fault handler on more platforms
+  arm64: dts: qcom: sc7280: Add DT nodes for the TBUs
+
+ .../devicetree/bindings/iommu/qcom,tbu.yaml   |  69 +++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          |  89 +++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  70 +++
+ drivers/iommu/Kconfig                         |   9 +
+ drivers/iommu/arm/arm-smmu/Makefile           |   1 +
+ .../iommu/arm/arm-smmu/arm-smmu-qcom-tbu.c    | 515 ++++++++++++++++++
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c    |   8 +
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h    |   2 +
+ drivers/iommu/arm/arm-smmu/arm-smmu.c         |  12 +-
+ drivers/iommu/arm/arm-smmu/arm-smmu.h         |   3 +
+ 10 files changed, 776 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/iommu/qcom,tbu.yaml
+ create mode 100644 drivers/iommu/arm/arm-smmu/arm-smmu-qcom-tbu.c
 
 
