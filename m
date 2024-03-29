@@ -1,121 +1,219 @@
-Return-Path: <linux-arm-msm+bounces-15797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9AF38927A9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 00:08:07 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9EB888927D1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 00:29:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 645F41F24D58
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 23:08:07 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D4CD6B21B8E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 23:29:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0CE513E893;
-	Fri, 29 Mar 2024 23:07:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46B0E13E05E;
+	Fri, 29 Mar 2024 23:29:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="dwRtPzMU"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fJM2RB/W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073E913F426
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 23:07:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A3D13D627;
+	Fri, 29 Mar 2024 23:29:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711753658; cv=none; b=gJydKcq9lWWpQsT40RYonLUNOAWzOd2q9gbbvgTEqLfHr2KfUqaTiXQAEk+DtXilVyT6aTUYE1p8taBr91ayMF47y5DsBOsv3vRzSp6n54fQhBC2nsTsGXPDp+mEKS8UHui45/+b7ysYjaapfwEHEvorXca9MUO9z+X/I7vsUtA=
+	t=1711754963; cv=none; b=mznyCDOY6fdg0ivDbI7EMyqvUsoI5qKF41XLWttz4zx1oiL+K0NnXLfObhQjf835aT3pu2ESkwT3iYeUM3tGG5u2cExrG5/Kr2SPbC9F4G2KDuXU9rp95tsl9Y2CyOQzeeSZDxSpl9nmqCjxOEtSbOpUUj3K3y19/aSMrSqGYwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711753658; c=relaxed/simple;
-	bh=GOG9nQkJ3j4XMjXWBRs3++Jv3kNj4yHvRlPiPEOjmxc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SsvuSHzXkCc1jl1K4QHylNfSS1eWVa4r8fN2w+pOQGmURMtmmUryf2l07KdF0mRy8KY/TgkSnIpnShQeqbhpmzdrAFMqUQsxaNxqrxDeC6Xp1iLKr6v0egLocwWSbMOdTZgXlCY1uVrMbDtSZbJZNCTUkukEsYwF3pe51Y/PF1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=dwRtPzMU; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-513da1c1f26so2771204e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 16:07:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1711753653; x=1712358453; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9cr9T9XoNSyunraFcKw53Bz81zs+cGU+Fn9O3EurmnE=;
-        b=dwRtPzMUp9PxwdikHGD6o8e2TEicDtLSQcKSfENEh/IEYixfmjnXyEl1dE/f5fPYpf
-         tsvt4H22dVtE35EXqtKMnzRg447FGZLrVfEt/QMvxgGEGgx48Tk9LYq7TgxTMR9o7vpm
-         BDHcrk8C1fUYQDhq5BrOvO6vDe/V9aWCch/7Q=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711753653; x=1712358453;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9cr9T9XoNSyunraFcKw53Bz81zs+cGU+Fn9O3EurmnE=;
-        b=KZehSWEexwerckYRadJDaD4lnYkiJsUgeLGZO+Yt0WPMHakYSC54YX8UHD59ZInAhe
-         0G9z+HqC0NAyp+ykSCNZoF2KLvU24gX2jhmHdiyDO5QlvNUQIOZlGFN/gGpV+NHR6OTY
-         j8W8jEGkO2SuaJ4S5gcUxtPp4lNGaVmBYmwIkzKRTYWsR7lOzuBl4fYznVLDShKwcixB
-         N8VdT8UhGxFjSfB9UlT+FJ0xhN2EBa0lA+chPYoVsWHUFZ2FL8kem6iqT6/GSKGuhGt3
-         uoUgpFA4R5OcmIrxlVzPvAxE6SBLx1vQMKWp9YEqMV9+Vyf5BveZ563BFvUYneSfytp1
-         Fuyg==
-X-Forwarded-Encrypted: i=1; AJvYcCVb55IzdLh6aZylSYGS8HrN3iMkh8mJfwgYT1VcU7vj/9Ord0c98HcCx7DiqFrjsBOYOYH7O1TpAcSkIKcb7Z9z6OpttP/9j2cKmu5PJA==
-X-Gm-Message-State: AOJu0YxFc4+fB0PrYgC1cvr/3BaxocvylVTf1KsrR9S/wlhZ1N4cyOB9
-	OjOOtyw3iBAWFRIEvFE5TlZazle/KldRuEWDx60NaoNSwOonHeWYWCTY/6VYiL43iSKRGS4Ehfb
-	Xpg==
-X-Google-Smtp-Source: AGHT+IHQvesFvpzWKSgwwopmVNp1AN72yj4ddBj4jIiSXr54nZPhjFs35+VK0esLlhamrGMTfDPJWA==
-X-Received: by 2002:ac2:4830:0:b0:515:ba14:a466 with SMTP id 16-20020ac24830000000b00515ba14a466mr2195996lft.18.1711753652850;
-        Fri, 29 Mar 2024 16:07:32 -0700 (PDT)
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com. [209.85.208.49])
-        by smtp.gmail.com with ESMTPSA id r10-20020a17090609ca00b00a4733982ba9sm2378663eje.160.2024.03.29.16.07.31
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Mar 2024 16:07:31 -0700 (PDT)
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-56c63f4a468so12255a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 16:07:31 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXKlJwwJMURGqiFjakmUamdWjv9cz49mIl6DNVriU/B4wAUuHKcldiyS3lTJjAfgBe8NT5D6hBogaHx4oNIE2tHT5uE2FZ6YEDwy/wIuw==
-X-Received: by 2002:a05:6402:389:b0:56d:c058:79d with SMTP id
- o9-20020a056402038900b0056dc058079dmr2456edv.5.1711753651272; Fri, 29 Mar
- 2024 16:07:31 -0700 (PDT)
+	s=arc-20240116; t=1711754963; c=relaxed/simple;
+	bh=FljFVK0LWL0DBJZBpjYAK+fE0M46Xdu18dgr3xy1rEo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=dYAQLLPR9yo5Bq+IMd0Ytl4vq08KZFY+AMwXNyrp4S8ibws10sKXLftPR4ySrASianfxXiFWx91hOmDuxDlbDgu5gSpBD35DbOqat2tvgCJY0tFY6zml31O+UO5N1bQjI6lkG9eeP9d86Y3FhO23VYgYo4srgBInANJiqgdx/Wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fJM2RB/W; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42TNMHWS018441;
+	Fri, 29 Mar 2024 23:28:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=bI0G/uiG1h+1qLw6ZNxCnhLtyJ0F1AJmbQvh02bXtl4=; b=fJ
+	M2RB/WcQeiFYW5p/LrMXn0AtrzeYVmHZAdhFbZBrKs56Zl935Ns2CAOTiQ19konP
+	ZHksVSvI/AU5VlhxumAJtyHtBonJQBemKB1Mc5HOk2c/WtDKxo700ifs7uCo47Yn
+	DVdTRNsB2L70s6ymNLOdlurLYszmmat6RmUkCuuHqiEESsnuuqD0QQFHk+1xOG1k
+	fsZZsDTzhfGUV7VbCe+QfpP95dCs/LuMV5fZB25zKFYRhqz+KZZY5wIVCPzrRGfv
+	HAkgK4b6x7oiFxDHDZoD6n9l7iAeT3KPDVRCoopxXMIntKj0dXbxqcW9JqkuDAmx
+	uZq85+Z6/RvSTKTs2Xvg==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x60wd8w6q-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 Mar 2024 23:28:57 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42TNSuWx013284
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 Mar 2024 23:28:56 GMT
+Received: from [10.110.26.53] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 29 Mar
+ 2024 16:28:55 -0700
+Message-ID: <4ee6a5e4-0cad-ae44-2b42-d1b03c64f467@quicinc.com>
+Date: Fri, 29 Mar 2024 16:28:49 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240203-dp-swing-3-v1-1-6545e1706196@linaro.org>
-In-Reply-To: <20240203-dp-swing-3-v1-1-6545e1706196@linaro.org>
-From: Doug Anderson <dianders@chromium.org>
-Date: Fri, 29 Mar 2024 16:07:14 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WYsi4Cp2SWySA6jwfTr-xssvfMc4Bt669MEMK4iiyrkA@mail.gmail.com>
-Message-ID: <CAD=FV=WYsi4Cp2SWySA6jwfTr-xssvfMc4Bt669MEMK4iiyrkA@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dp: allow voltage swing / pre emphasis of 3
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
-	Stephen Boyd <swboyd@chromium.org>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v18 00/41] Introduce QC USB SND audio offloading support
+To: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
+        <lgirdwood@gmail.com>, <andersson@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <gregkh@linuxfoundation.org>,
+        <Thinh.Nguyen@synopsys.com>, <broonie@kernel.org>,
+        <bgoswami@quicinc.com>, <tiwai@suse.com>, <robh+dt@kernel.org>,
+        <konrad.dybcio@linaro.org>
+CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>
+References: <20240228013619.29758-1-quic_wcheng@quicinc.com>
+Content-Language: en-US
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <20240228013619.29758-1-quic_wcheng@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: pMgXXbMWyru5-yP8KYxdhCnYAu_wDKrv
+X-Proofpoint-ORIG-GUID: pMgXXbMWyru5-yP8KYxdhCnYAu_wDKrv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-29_13,2024-03-28_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
+ malwarescore=0 spamscore=0 lowpriorityscore=0 impostorscore=0 mlxscore=0
+ phishscore=0 clxscore=1011 bulkscore=0 suspectscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2403210001
+ definitions=main-2403290208
 
 Hi,
 
-On Sat, Feb 3, 2024 at 5:47=E2=80=AFAM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> Both dp_link_adjust_levels() and dp_ctrl_update_vx_px() limit swing and
-> pre-emphasis to 2, while the real maximum value for the sum of the
-> voltage swing and pre-emphasis is 3. Fix the DP code to remove this
-> limitation.
->
-> Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/gpu/drm/msm/dp/dp_ctrl.c |  6 +++---
->  drivers/gpu/drm/msm/dp/dp_link.c | 22 +++++++++++-----------
->  drivers/gpu/drm/msm/dp/dp_link.h | 14 +-------------
->  3 files changed, 15 insertions(+), 27 deletions(-)
+On 2/27/2024 5:35 PM, Wesley Cheng wrote:
+> Several Qualcomm based chipsets can support USB audio offloading to a
+> dedicated audio DSP, which can take over issuing transfers to the USB
+> host controller.  The intention is to reduce the load on the main
+> processors in the SoC, and allow them to be placed into lower power modes.
+> There are several parts to this design:
+>    1. Adding ASoC binding layer
+>    2. Create a USB backend for Q6DSP
+>    3. Introduce XHCI interrupter support
+>    4. Create vendor ops for the USB SND driver
+> 
+>        USB                          |            ASoC
+> --------------------------------------------------------------------
+>                                     |  _________________________
+>                                     | |sm8250 platform card     |
+>                                     | |_________________________|
+>                                     |         |           |
+>                                     |      ___V____   ____V____
+>                                     |     |Q6USB   | |Q6AFE    |
+>                                     |     |"codec" | |"cpu"    |
+>                                     |     |________| |_________|
+>                                     |         ^  ^        ^
+>                                     |         |  |________|
+>                                     |      ___V____    |
+>                                     |     |SOC-USB |   |
+>     ________       ________               |        |   |
+>    |USB SND |<--->|QC offld|<------------>|________|   |
+>    |(card.c)|     |        |<----------                |
+>    |________|     |________|___     | |                |
+>        ^               ^       |    | |    ____________V_________
+>        |               |       |    | |   |APR/GLINK             |
+>     __ V_______________V_____  |    | |   |______________________|
+>    |USB SND (endpoint.c)     | |    | |              ^
+>    |_________________________| |    | |              |
+>                ^               |    | |   ___________V___________
+>                |               |    | |->|audio DSP              |
+>     ___________V_____________  |    |    |_______________________|
+>    |XHCI HCD                 |<-    |
+>    |_________________________|      |
+> 
+> 
+> Adding ASoC binding layer:
+> soc-usb: Intention is to treat a USB port similar to a headphone jack.
+> The port is always present on the device, but cable/pin status can be
+> enabled/disabled.  Expose mechanisms for USB backend ASoC drivers to
+> communicate with USB SND.
+> 
+> Create a USB backend for Q6DSP:
+> q6usb: Basic backend driver that will be responsible for maintaining the
+> resources needed to initiate a playback stream using the Q6DSP.  Will
+> be the entity that checks to make sure the connected USB audio device
+> supports the requested PCM format.  If it does not, the PCM open call will
+> fail, and userpsace ALSA can take action accordingly.
+> 
+> Introduce XHCI interrupter support:
+> XHCI HCD supports multiple interrupters, which allows for events to be routed
+> to different event rings.  This is determined by "Interrupter Target" field
+> specified in Section "6.4.1.1 Normal TRB" of the XHCI specification.
+> 
+> Events in the offloading case will be routed to an event ring that is assigned
+> to the audio DSP.
+> 
+> Create vendor ops for the USB SND driver:
+> qc_audio_offload: This particular driver has several components associated
+> with it:
+> - QMI stream request handler
+> - XHCI interrupter and resource management
+> - audio DSP memory management
+> 
+> When the audio DSP wants to enable a playback stream, the request is first
+> received by the ASoC platform sound card.  Depending on the selected route,
+> ASoC will bring up the individual DAIs in the path.  The Q6USB backend DAI
+> will send an AFE port start command (with enabling the USB playback path), and
+> the audio DSP will handle the request accordingly.
+> 
+> Part of the AFE USB port start handling will have an exchange of control
+> messages using the QMI protocol.  The qc_audio_offload driver will populate the
+> buffer information:
+> - Event ring base address
+> - EP transfer ring base address
+> 
+> and pass it along to the audio DSP.  All endpoint management will now be handed
+> over to the DSP, and the main processor is not involved in transfers.
+> 
+> Overall, implementing this feature will still expose separate sound card and PCM
+> devices for both the platorm card and USB audio device:
+>   0 [SM8250MTPWCD938]: sm8250 - SM8250-MTP-WCD9380-WSA8810-VA-D
+>                        SM8250-MTP-WCD9380-WSA8810-VA-DMIC
+>   1 [Audio          ]: USB-Audio - USB Audio
+>                        Generic USB Audio at usb-xhci-hcd.1.auto-1.4, high speed
+> 
+> This is to ensure that userspace ALSA entities can decide which route to take
+> when executing the audio playback.  In the above, if card#1 is selected, then
+> USB audio data will take the legacy path over the USB PCM drivers, etc...
+> 
+> This feature was validated using:
+> - tinymix: set/enable the multimedia path to route to USB backend
+> - tinyplay: issue playback on platform card
+> 
+> Changelog
+> --------------------------------------------
+> Changes in v18:
+> - Rebased to usb-next, which merged in part of the series.  Removed these patches.
+> - Reworked Kconfigs for the ASoC USB related components from QCOM Q6DSP drivers
+>    to keep dependencies in place for SoC USB and USB SND.
+> - Removed the repurposing of the stop ep sync API into existing XHCI operations.
+>    This will be solely used by the XHCI sideband for now.
+> 
 
-What ever happened with this patch? It seemed important so I've been
-trying to check back on it, but it seems to still be in limbo. I was
-assuming that (maybe?) Abhinav would check things against the hardware
-documentation and give it a Reviewed-by and then it would land...
+Wanted to give a friendly ping to see if there were any more 
+concerns/feedback about this series before I submit a new revision that 
+rebases to the latest kernel codebase?
 
--Doug
+Thanks
+Wesley Cheng
 
