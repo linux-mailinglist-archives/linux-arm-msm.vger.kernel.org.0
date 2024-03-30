@@ -1,107 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-15799-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F57F8927F6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 00:55:04 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A59A8928B5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 02:15:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1F31A284060
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Mar 2024 23:55:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CA80E28366E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 01:15:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7E7F13CFA8;
-	Fri, 29 Mar 2024 23:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF72515C3;
+	Sat, 30 Mar 2024 01:15:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dRBBhENU"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Rwil++6Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830AA85644;
-	Fri, 29 Mar 2024 23:55:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB8015A5
+	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Mar 2024 01:15:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711756500; cv=none; b=Sn5EsEj6iku1JlPCEJgWPKiSXqYwTQSllmrdpUCOXpiAJodvqrW7N2FXCYwH5t5y1QXIVJLgQ4SFTNUo3cTKgdbmLpj1rTcFBbmx6zsKW7pumm6KtEfWbj3Q3IYoNTPIlmA4/rICrmEi9QkkemSy/z/rodYPPKSAkaU4GtdYUTY=
+	t=1711761341; cv=none; b=JsYta4niocWrJ4DVyQB+GFZAk166/e7LXcXroBwbHvRDlFOhtldvnm3AQ8EDfK1qV/42Xzd14eh0+j/U4q73oziBqX/Ne56R3AvGOQT23a4V+/4o29HOm5XYINlsrSrPCryWpwpxcrlcrli4gR0jvsLnkheCEvyM5JXm15ZzuvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711756500; c=relaxed/simple;
-	bh=qeoez9ZPUzTd3Q2NKfA2e2k8lx5b8TFJ7Z/BE/D0yCE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DeIsdWQYI1iIS2yeLTK1iZCH25/D0bttRCqaLl406QMz4kJAS552he+Y+WNUELyU77wrOlzif81bcDX4Mr+DP+bhc60wrnvIyHGOXmwXyyJJlEyRc95FLeMjoQW6DYJgRqHc6gSyhIp93nr0McXRH+fhaDVshrrKyqpKLdSZGfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dRBBhENU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D6BC433C7;
-	Fri, 29 Mar 2024 23:54:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711756500;
-	bh=qeoez9ZPUzTd3Q2NKfA2e2k8lx5b8TFJ7Z/BE/D0yCE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=dRBBhENUyWeK+c09cMAQRqguYXZ1dBOm/LTKAqwzBcauccPYHPByg+R1fipX9gmPh
-	 nWzfgMy/zyKclpTbZJxJBNhipDPNdGozdiS1m+eupU54SnYaq2HJxnwNuKK/1otZXZ
-	 Q7mr7SXYLnPFzLLX9yS3VD7IjHSEIaPqTbscerPbABf2T5WvvWMNsj1zZKHbmp+lwJ
-	 Z22idm+2ThIfkJ1wqVcRd1AY71BJyUJsDPFavEYF4HzNBX4u0PTl97Fl4RSIZ4k37t
-	 JfbGJ5+h1PG//0YTiA7Aal/RKqtxyiEzk6hLUO5auhEB7/4ebbozJsqjm5mQrTFGct
-	 K1FdDXDePepcA==
-Date: Sat, 30 Mar 2024 00:54:56 +0100
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: konrad.dybcio@linaro.org, andersson@kernel.org, wsa@kernel.org, 
-	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-i2c@vger.kernel.org, Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>, 
-	quic_vdadhani@quicinc.com, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v4] i2c: i2c-qcom-geni: Parse Error correctly in i2c GSI
- mode
-Message-ID: <mo7d5ayw4gy2lqb6e5o4ijegodx6a5naytatwmoblujftwdjfg@sc4amlo3va7g>
-References: <20240313052639.1747078-1-quic_msavaliy@quicinc.com>
- <171161140136.2698925.4294566764047886777.b4-ty@kernel.org>
- <ZgbwJAb7Ffktf554@matsya>
+	s=arc-20240116; t=1711761341; c=relaxed/simple;
+	bh=/LLwUtJc0s2nHQC4N4DmMlk61P9p4mAHZl3jsHsR6/4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=H4omSUm7jrLYM2zpeM0UzYSUuOUZsloFGHd/fdumAFHK5Rsu9JvvK9Y7bZQ/Nqjh8x3xi0Epj6nLDLQzgP3d3iRDKS1Sz5jjfYzWbWguv+gJ/qnaWfkhC+wNHj90rnRltb68zKvoL0IpBSMU4Xo692Adc1ncpSGrMyikaB0mOsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Rwil++6Y; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42U0rAgA011883;
+	Sat, 30 Mar 2024 01:15:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=RkVNn6MDg6Dgg+fumtXYcl+5uglNdoTu5XTC7Jr4eNA=; b=Rw
+	il++6YvRecVGmHAJw0YsXroC+VWuS1mxySbs956gNUuAVGBdFbClNC12xhnDaN/m
+	gM+U2c/b/Zm4ZFHMQWSy6aAAQwjVmWwxdfbEcIxyve5aAX8L+0sfdJ2U13CYEpAf
+	Lqe0MwK2BWjy+iaW7S3aGARlAsUCRG1H0mIKR4lnjtJyGaPhuPCm/XROEbW4Nr6w
+	hT2sXpNKtUl48bfrAue9x70HwxxbaXMo4t9gUEQIfcyxArXwMnvEfubTfYv0lxr9
+	aS4Klq3tZg12RxjuGFcChFRnqza29l2MpgwtJ/yhm9/1mHSvis38CJvUS66unGDn
+	5yGtLctYgJGlPMkei1+w==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x5sm6j91t-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 30 Mar 2024 01:15:28 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42U1FR8v014057
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 30 Mar 2024 01:15:27 GMT
+Received: from [10.110.118.161] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 29 Mar
+ 2024 18:15:24 -0700
+Message-ID: <8b3108e1-2cb4-4531-576e-0b9791caa71d@quicinc.com>
+Date: Fri, 29 Mar 2024 18:15:22 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZgbwJAb7Ffktf554@matsya>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH] drm/msm/dp: allow voltage swing / pre emphasis of 3
+Content-Language: en-US
+To: Doug Anderson <dianders@chromium.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "Marijn
+ Suijten" <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>
+References: <20240203-dp-swing-3-v1-1-6545e1706196@linaro.org>
+ <CAD=FV=WYsi4Cp2SWySA6jwfTr-xssvfMc4Bt669MEMK4iiyrkA@mail.gmail.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAD=FV=WYsi4Cp2SWySA6jwfTr-xssvfMc4Bt669MEMK4iiyrkA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: kRcQd22DnptL-pbhL2zQzUwtYLo1eqEl
+X-Proofpoint-GUID: kRcQd22DnptL-pbhL2zQzUwtYLo1eqEl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-29_13,2024-03-28_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ priorityscore=1501 adultscore=0 mlxlogscore=835 suspectscore=0
+ impostorscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0 clxscore=1015
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403210001 definitions=main-2403300007
 
-Hi Vinod,
+Hi Doug
 
-On Fri, Mar 29, 2024 at 10:15:24PM +0530, Vinod Koul wrote:
-> On 28-03-24, 08:36, Andi Shyti wrote:
-> > On Wed, 13 Mar 2024 10:56:39 +0530, Mukesh Kumar Savaliya wrote:
-> > > I2C driver currently reports "DMA txn failed" error even though it's
-> > > NACK OR BUS_PROTO OR ARB_LOST. Detect NACK error when no device ACKs
-> > > on the bus instead of generic transfer failure which doesn't give any
-> > > specific clue.
-> > > 
-> > > Make Changes inside i2c driver callback handler function
-> > > i2c_gpi_cb_result() to parse these errors and make sure GSI driver
-> > > stores the error status during error interrupt.
-> > > 
-> > > [...]
-> > 
-> > Applied to i2c/i2c-host-next on
-> > 
-> > git://git.kernel.org/pub/scm/linux/kernel/git/local tree
+On 3/29/2024 4:07 PM, Doug Anderson wrote:
+> Hi,
 > 
-> You applied changes to dmaengine driver without my ack! I dont agree to
-> the approach here, we could do better
+> On Sat, Feb 3, 2024 at 5:47 AM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+>>
+>> Both dp_link_adjust_levels() and dp_ctrl_update_vx_px() limit swing and
+>> pre-emphasis to 2, while the real maximum value for the sum of the
+>> voltage swing and pre-emphasis is 3. Fix the DP code to remove this
+>> limitation.
+>>
+>> Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   drivers/gpu/drm/msm/dp/dp_ctrl.c |  6 +++---
+>>   drivers/gpu/drm/msm/dp/dp_link.c | 22 +++++++++++-----------
+>>   drivers/gpu/drm/msm/dp/dp_link.h | 14 +-------------
+>>   3 files changed, 15 insertions(+), 27 deletions(-)
+> 
+> What ever happened with this patch? It seemed important so I've been
+> trying to check back on it, but it seems to still be in limbo. I was
+> assuming that (maybe?) Abhinav would check things against the hardware
+> documentation and give it a Reviewed-by and then it would land...
+> 
+> -Doug
 
-This patch has been around for quite some time and there has been
-time to review it. Altrady two people have approved it.
+The issue for which this patch was originally made (DP link training 
+issue on x1e80100) was not getting fixed by this patch.
 
-This patch has already been merged once via the i2c with the
-agreement of everyone, but reverted for a trivial failure.
+That one turned out as actually a PLL locking issue. So this kind of 
+went off the radar as it was not immediately needed to fix anything.
 
-Your review come after I have merged the patch (I did merge it
-even earlier, but forgot to send the notification, which was
-anyway sent before your review).
-
-Above all, I appreciate your review, but it wouldn't be fair to
-revert it now. If Mukesh is OK, I can do it, otherwise we can
-send subsequent patches.
-
-Mukesh, please let me know what's your preference.
-
-Andi
+I will wait for Kuogee's response on this patch. He was OOO entire Feb 
+so this got missed.
 
