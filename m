@@ -1,172 +1,509 @@
-Return-Path: <linux-arm-msm+bounces-15814-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15818-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B855892A0E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 10:30:48 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A4D5D892A8C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 11:45:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D5D2F28328B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 09:30:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DD5DFB21A7D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 10:45:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 626AFD310;
-	Sat, 30 Mar 2024 09:30:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="k+gimahY"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D9CC33DF;
+	Sat, 30 Mar 2024 10:45:18 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7009EADF;
-	Sat, 30 Mar 2024 09:30:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8AA17745;
+	Sat, 30 Mar 2024 10:45:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.165
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711791043; cv=none; b=Xk1D5/Kz3G29JBjVrvjgy0mtwRkdO4z8gjd7gFg4J0ly+xWxncuzmG0UQbOlVSQ61EFeS8eJ2n5oy4pZ+znvmw6uLsr09NulpVPPPo97UV/8qU6OZxdpreKjMBDwhgv+kyYLL3RPM4DCE2t/IbwVTYwb5xMbQRva20XTL+wevH4=
+	t=1711795518; cv=none; b=RvsApLYE80HIF4bykh9xFw22PGAP+PptSB1JifCsPNgR6/XDtC8KEATmKV+FI5LRtYRp8oU50CffS2wXY9a0wIdFmVIbjN9c+W+WXTXdYLWp5zvZttaCeNP6Qi6snKIklfUAhPsVbORkYKi3rNIecx0jaW5tUL30NGCv9epZYPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711791043; c=relaxed/simple;
-	bh=O31tmMlYNDhIfcohA+3IDTmFUeZNs3Ca+9iLfjyJ85k=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cGvbP1PmWOpvJZULGO9m+z6ijjKq3aOGr097bfH4W/honWRCbaya2ZKXt6qn/8+bNB7sObM6KcMp6/C8AttWqY+ASpmYpd2vN8xWPBCyTh95VP/ssft58lca1a6phO7b9YN4zzCPXzEQItnHeGhUm2/fZC19nve9Ubl7s2FgiXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=k+gimahY; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42U8mGiO024176;
-	Sat, 30 Mar 2024 09:30:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=BqN2enxxA0AlYVe5KnB8a
-	zdCJIlxTCplM68XTDaCFuY=; b=k+gimahYOblSKVY7s0EYR27OPf6KvbJUGFBB6
-	2CWILwFB/Y4oujnIO3WsqY0lShUOqKWDJ41JoneZ+WYiHxQT2u3LWl09brp2kvzS
-	t+YL+RB1j2St3Ris/8htcPLbYRpKoOEuDr9ASaJWV2mJZ88vVv71p8j7q0rQj1Ox
-	kUhIi/Nx4s8ZGflc5VEgdv8ZJFzp9k21Pw7key4divm+oA4xehHNOv5BqBQu4pWE
-	O03mIm8xfQ9LOqu8f0UPVLWWVfl5uQCKfVk0BJYSCkDhdcdhwgtmOYr+L3w3Wx0H
-	xmKrSDz7FTcbRXPCOkqox5W0PWZpcowIVF4WMQkUGOquBZ2Mg==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x69pvrpx9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 30 Mar 2024 09:30:37 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42U9UZSZ030761
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 30 Mar 2024 09:30:35 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Sat, 30 Mar 2024 02:30:31 -0700
-Date: Sat, 30 Mar 2024 15:00:27 +0530
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-CC: Stephen Boyd <sboyd@kernel.org>, <andersson@kernel.org>,
-        <conor+dt@kernel.org>, <devicetree@vger.kernel.org>,
-        <djakov@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <konrad.dybcio@linaro.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <mturquette@baylibre.com>, <quic_anusha@quicinc.com>,
-        <robh@kernel.org>
-Subject: Re: [PATCH v5 4/5] clk: qcom: ipq9574: Use icc-clk for enabling NoC
- related clocks
-Message-ID: <Zgfbs5SFN2cA0gSK@hu-varada-blr.qualcomm.com>
-References: <20240328075936.223461-1-quic_varada@quicinc.com>
- <20240328075936.223461-5-quic_varada@quicinc.com>
- <95f4e99a60cc97770fc3cee850b62faf.sboyd@kernel.org>
- <ZgaeGZL7QXh75aSA@hu-varada-blr.qualcomm.com>
- <031d0a35-b192-4161-beef-97b89d5d1da6@linaro.org>
+	s=arc-20240116; t=1711795518; c=relaxed/simple;
+	bh=c8N08nzajbS7Tgl5ZlzhtT3eqkrPtdhcztfed5kdWJU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=F9My9aD6aszmZYqFPVW7cqq7BJ8J0rKIQ1C1r/imUqEql7y8Xnt1H+phrgRo7NgM5pVBlpPoMfFkFaSXcQcUvI5W18JzECkRgAAhrfcpmjHtzEbNFyv/fewmIc0L5lj+zxZs3UZoPmk2JPyYUK22qscFxxxn9lF63+SbqHlSrgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.165
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 750A92025B;
+	Sat, 30 Mar 2024 11:27:34 +0100 (CET)
+Date: Sat, 30 Mar 2024 11:27:32 +0100
+From: Marijn Suijten <marijn.suijten@somainline.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Sumit Semwal <sumit.semwal@linaro.org>, 
+	Caleb Connolly <caleb.connolly@linaro.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>, 
+	Caleb Connolly <caleb@connolly.tech>
+Subject: Re: [PATCH 3/3] drm: panel: Add LG sw43408 panel driver
+Message-ID: <554zkisebym7gbbom3657ws7kqvyidggfmcvetjm6vrnwts3gl@l53hejt72b5q>
+References: <20240330-lg-sw43408-panel-v1-0-f5580fc9f2da@linaro.org>
+ <20240330-lg-sw43408-panel-v1-3-f5580fc9f2da@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <031d0a35-b192-4161-beef-97b89d5d1da6@linaro.org>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: MCE8G2q1LBiie2LNQErgRJhK3oRwQD5V
-X-Proofpoint-GUID: MCE8G2q1LBiie2LNQErgRJhK3oRwQD5V
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-30_05,2024-03-28_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- suspectscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0 spamscore=0
- mlxscore=0 malwarescore=0 mlxlogscore=750 clxscore=1015 bulkscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2403300077
+In-Reply-To: <20240330-lg-sw43408-panel-v1-3-f5580fc9f2da@linaro.org>
 
-On Fri, Mar 29, 2024 at 01:10:03PM +0100, Krzysztof Kozlowski wrote:
-> On 29/03/2024 11:55, Varadarajan Narayanan wrote:
-> >>> +
-> >>> +enum {
-> >>> +       ICC_ANOC_PCIE0,
-> >>> +       ICC_SNOC_PCIE0,
-> >>> +       ICC_ANOC_PCIE1,
-> >>> +       ICC_SNOC_PCIE1,
-> >>> +       ICC_ANOC_PCIE2,
-> >>> +       ICC_SNOC_PCIE2,
-> >>> +       ICC_ANOC_PCIE3,
-> >>> +       ICC_SNOC_PCIE3,
-> >>> +       ICC_SNOC_USB,
-> >>> +       ICC_ANOC_USB_AXI,
-> >>> +       ICC_NSSNOC_NSSCC,
-> >>> +       ICC_NSSNOC_SNOC_0,
-> >>> +       ICC_NSSNOC_SNOC_1,
-> >>> +       ICC_NSSNOC_PCNOC_1,
-> >>> +       ICC_NSSNOC_QOSGEN_REF,
-> >>> +       ICC_NSSNOC_TIMEOUT_REF,
-> >>> +       ICC_NSSNOC_XO_DCD,
-> >>> +       ICC_NSSNOC_ATB,
-> >>> +       ICC_MEM_NOC_NSSNOC,
-> >>> +       ICC_NSSNOC_MEMNOC,
-> >>> +       ICC_NSSNOC_MEM_NOC_1,
-> >>> +};
-> >>
-> >> Are these supposed to be in a dt-binding header?
-> >
-> > Since these don't directly relate to the ids in the dt-bindings
-> > not sure if they will be permitted there. Will move and post a
-> > new version and get feedback.
->
-> You can answer this by yourself by looking at your DTS. Do you use them
-> as well in the DTS?
+On 2024-03-30 05:59:30, Dmitry Baryshkov wrote:
+> From: Sumit Semwal <sumit.semwal@linaro.org>
+> 
+> LG SW43408 is 1080x2160, 4-lane MIPI-DSI panel, used in some Pixel3
+> phones.
+> 
+> Whatever init sequence we have for this panel isn't capable of
+> initialising it completely, toggling the reset gpio ever causes the
+> panel to die. Until this is resolved we avoid resetting the panel. The
 
-I can use them in the DTS. The icc-clk framework automatically
-creates master and slave nodes as 'n' and 'n+1'. Hence I can have
-something like this in the dt-bindings include file
+Are you sure it is avoided?  This patch seems to be toggling reset_gpio in
+sw43408_prepare()?
 
-	#define ICC_ANOC_PCIE0		0
-	#define ICC_SNOC_PCIE0		1
-		.
-		.
-		.
-	#define ICC_NSSNOC_MEM_NOC_1	20
+> disable/unprepare functions only put the panel to sleep mode and
+> disable the backlight.
+> 
+> Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
+> [vinod: Add DSC support]
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> [caleb: cleanup and support turning off the panel]
+> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+> [DB: partially rewrote the driver and fixed DSC programming]
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  MAINTAINERS                              |   8 +
+>  drivers/gpu/drm/panel/Kconfig            |  11 ++
+>  drivers/gpu/drm/panel/Makefile           |   1 +
+>  drivers/gpu/drm/panel/panel-lg-sw43408.c | 322 +++++++++++++++++++++++++++++++
+>  4 files changed, 342 insertions(+)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 4b511a55101c..f4cf7ee97376 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -6755,6 +6755,14 @@ S:	Maintained
+>  F:	Documentation/devicetree/bindings/display/panel/jadard,jd9365da-h3.yaml
+>  F:	drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c
+>  
+> +DRM DRIVER FOR LG SW43408 PANELS
+> +M:	Sumit Semwal <sumit.semwal@linaro.org>
+> +M:	Caleb Connolly <caleb.connolly@linaro.org>
+> +S:	Maintained
+> +T:	git git://anongit.freedesktop.org/drm/drm-misc
+> +F:	Documentation/devicetree/bindings/display/panel/lg,sw43408.yaml
+> +F:	drivers/gpu/drm/panel/panel-lg-sw43408.c
+> +
+>  DRM DRIVER FOR LOGICVC DISPLAY CONTROLLER
+>  M:	Paul Kocialkowski <paul.kocialkowski@bootlin.com>
+>  S:	Supported
+> diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
+> index d037b3b8b999..f94c702735cb 100644
+> --- a/drivers/gpu/drm/panel/Kconfig
+> +++ b/drivers/gpu/drm/panel/Kconfig
+> @@ -335,6 +335,17 @@ config DRM_PANEL_LG_LG4573
+>  	  Say Y here if you want to enable support for LG4573 RGB panel.
+>  	  To compile this driver as a module, choose M here.
+>  
+> +config DRM_PANEL_LG_SW43408
+> +	tristate "LG SW43408 panel"
+> +	depends on OF
+> +	depends on DRM_MIPI_DSI
+> +	depends on BACKLIGHT_CLASS_DEVICE
+> +	help
+> +	  Say Y here if you want to enable support for LG sw43408 panel.
+> +	  The panel has a 1080x2160 resolution and uses
+> +	  24 bit RGB per pixel. It provides a MIPI DSI interface to
+> +	  the host and has a built-in LED backlight.
+> +
+>  config DRM_PANEL_MAGNACHIP_D53E6EA8966
+>  	tristate "Magnachip D53E6EA8966 DSI panel"
+>  	depends on OF && SPI
+> diff --git a/drivers/gpu/drm/panel/Makefile b/drivers/gpu/drm/panel/Makefile
+> index f156d7fa0bcc..a75687d13caf 100644
+> --- a/drivers/gpu/drm/panel/Makefile
+> +++ b/drivers/gpu/drm/panel/Makefile
+> @@ -34,6 +34,7 @@ obj-$(CONFIG_DRM_PANEL_LEADTEK_LTK050H3146W) += panel-leadtek-ltk050h3146w.o
+>  obj-$(CONFIG_DRM_PANEL_LEADTEK_LTK500HD1829) += panel-leadtek-ltk500hd1829.o
+>  obj-$(CONFIG_DRM_PANEL_LG_LB035Q02) += panel-lg-lb035q02.o
+>  obj-$(CONFIG_DRM_PANEL_LG_LG4573) += panel-lg-lg4573.o
+> +obj-$(CONFIG_DRM_PANEL_LG_SW43408) += panel-lg-sw43408.o
+>  obj-$(CONFIG_DRM_PANEL_MAGNACHIP_D53E6EA8966) += panel-magnachip-d53e6ea8966.o
+>  obj-$(CONFIG_DRM_PANEL_NEC_NL8048HL11) += panel-nec-nl8048hl11.o
+>  obj-$(CONFIG_DRM_PANEL_NEWVISION_NV3051D) += panel-newvision-nv3051d.o
+> diff --git a/drivers/gpu/drm/panel/panel-lg-sw43408.c b/drivers/gpu/drm/panel/panel-lg-sw43408.c
+> new file mode 100644
+> index 000000000000..365d25e14d54
+> --- /dev/null
+> +++ b/drivers/gpu/drm/panel/panel-lg-sw43408.c
+> @@ -0,0 +1,322 @@
+> +// SPDX-License-Identifier: GPL-2.0+
+> +/*
+> + * Copyright (C) 2019-2024 Linaro Ltd
+> + * Author: Sumit Semwal <sumit.semwal@linaro.org>
+> + *	 Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> + */
+> +
+> +#include <linux/backlight.h>
+> +#include <linux/delay.h>
+> +#include <linux/gpio/consumer.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/regulator/consumer.h>
+> +
+> +#include <video/mipi_display.h>
+> +
+> +#include <drm/drm_mipi_dsi.h>
+> +#include <drm/drm_panel.h>
+> +#include <drm/drm_probe_helper.h>
+> +#include <drm/display/drm_dsc.h>
+> +#include <drm/display/drm_dsc_helper.h>
+> +
+> +#define NUM_SUPPLIES 2
+> +
+> +struct sw43408_panel {
+> +	struct drm_panel base;
+> +	struct mipi_dsi_device *link;
+> +
+> +	const struct drm_display_mode *mode;
+> +
+> +	struct regulator_bulk_data supplies[NUM_SUPPLIES];
+> +
+> +	struct gpio_desc *reset_gpio;
+> +};
+> +
+> +static inline struct sw43408_panel *to_panel_info(struct drm_panel *panel)
+> +{
+> +	return container_of(panel, struct sw43408_panel, base);
+> +}
+> +
+> +static int sw43408_unprepare(struct drm_panel *panel)
+> +{
+> +	struct sw43408_panel *ctx = to_panel_info(panel);
+> +	int ret;
+> +
+> +	ret = mipi_dsi_dcs_set_display_off(ctx->link);
+> +	if (ret < 0)
+> +		dev_err(panel->dev, "set_display_off cmd failed ret = %d\n", ret);
+> +
+> +	ret = mipi_dsi_dcs_enter_sleep_mode(ctx->link);
+> +	if (ret < 0)
+> +		dev_err(panel->dev, "enter_sleep cmd failed ret = %d\n", ret);
+> +
+> +	msleep(100);
+> +
+> +	gpiod_set_value(ctx->reset_gpio, 1);
+> +
+> +	return regulator_bulk_disable(ARRAY_SIZE(ctx->supplies), ctx->supplies);
+> +}
+> +
+> +static int sw43408_program(struct drm_panel *panel)
+> +{
+> +	struct sw43408_panel *ctx = to_panel_info(panel);
+> +	struct drm_dsc_picture_parameter_set pps;
+> +	u8 dsc_en = 0x11;
 
-	#define MASTER(x)	((ICC_ ## x) * 2)
-	#define SLAVE(x)	(MASTER(x) + 1)
+Yeah, this is completely strange. Bit 0, 0x1, is to enable DSC which is
+normal. 0x10 however, which is bit 4, selects PPS table 2.  Do you ever set
+pps_identifier in struct drm_dsc_picture_parameter_set to 2?  Or is the table
+that you send below bogus and/or not used?  Maybe the Driver IC on the other
+end of the DSI link has a default PPS table with identifier 2 that works out of
+the box?
 
-> It's a pity we see here only parts of DTS, instead of full interconnect
-> usage.
+> +	mipi_dsi_dcs_write_seq(ctx->link, MIPI_DCS_SET_GAMMA_CURVE, 0x02);
+> +
+> +	mipi_dsi_dcs_set_tear_on(ctx->link, MIPI_DSI_DCS_TEAR_MODE_VBLANK);
+> +
+> +	mipi_dsi_dcs_write_seq(ctx->link, 0x53, 0x0c, 0x30);
+> +	mipi_dsi_dcs_write_seq(ctx->link, 0x55, 0x00, 0x70, 0xdf, 0x00, 0x70, 0xdf);
+> +	mipi_dsi_dcs_write_seq(ctx->link, 0xf7, 0x01, 0x49, 0x0c);
+> +
+> +	mipi_dsi_dcs_exit_sleep_mode(ctx->link);
+> +
+> +	msleep(135);
+> +
+> +	mipi_dsi_compression_mode_raw(ctx->link, &dsc_en, 1);
 
-Unfortunately cannot include the pcie dts changes with this
-patch, but you can refer to them at https://lore.kernel.org/linux-arm-msm/20230519090219.15925-5-quic_devipriy@quicinc.com/
+Even though I think we should change this function to describe the known
+bit layout of command 0x7 per the VESA DSI spec, for now replace 1 with
+sizeof(dsc_en)?
 
-The above macros will be used in the pcie node as follows
+> +
+> +	mipi_dsi_dcs_write_seq(ctx->link, 0xb0, 0xac);
+> +	mipi_dsi_dcs_write_seq(ctx->link, 0xe5,
+> +			       0x00, 0x3a, 0x00, 0x3a, 0x00, 0x0e, 0x10);
+> +	mipi_dsi_dcs_write_seq(ctx->link, 0xb5,
+> +			       0x75, 0x60, 0x2d, 0x5d, 0x80, 0x00, 0x0a, 0x0b,
+> +			       0x00, 0x05, 0x0b, 0x00, 0x80, 0x0d, 0x0e, 0x40,
+> +			       0x00, 0x0c, 0x00, 0x16, 0x00, 0xb8, 0x00, 0x80,
+> +			       0x0d, 0x0e, 0x40, 0x00, 0x0c, 0x00, 0x16, 0x00,
+> +			       0xb8, 0x00, 0x81, 0x00, 0x03, 0x03, 0x03, 0x01,
+> +			       0x01);
+> +	msleep(85);
+> +	mipi_dsi_dcs_write_seq(ctx->link, 0xcd,
+> +			       0x00, 0x00, 0x00, 0x19, 0x19, 0x19, 0x19, 0x19,
+> +			       0x19, 0x19, 0x19, 0x19, 0x19, 0x19, 0x19, 0x19,
+> +			       0x16, 0x16);
+> +	mipi_dsi_dcs_write_seq(ctx->link, 0xcb, 0x80, 0x5c, 0x07, 0x03, 0x28);
+> +	mipi_dsi_dcs_write_seq(ctx->link, 0xc0, 0x02, 0x02, 0x0f);
+> +	mipi_dsi_dcs_write_seq(ctx->link, 0x55, 0x04, 0x61, 0xdb, 0x04, 0x70, 0xdb);
+> +	mipi_dsi_dcs_write_seq(ctx->link, 0xb0, 0xca);
+> +
+> +	mipi_dsi_dcs_set_display_on(ctx->link);
 
-pcie0: pci@28000000 {
-	compatible = "qcom,pcie-ipq9574";
-	. . .
-	interconnects = <&gcc MASTER(ANOC_PCIE0) &gcc SLAVE(ANOC_PCIE0)>,
-			<&gcc MASTER(SNOC_PCIE0) &gcc SLAVE(SNOC_PCIE0)>;
-	interconnect-names = "pcie-mem", "cpu-pcie";
-	. . .
-};
+Any specific reason to not have the (un)blanking sequence in the enable/disable
+callbacks and leaving display configuration in (un)prepare?
 
-Hope this is acceptable.
+> +	msleep(50);
+> +
+> +	ctx->link->mode_flags &= ~MIPI_DSI_MODE_LPM;
+> +
+> +	drm_dsc_pps_payload_pack(&pps, ctx->link->dsc);
+> +	mipi_dsi_picture_parameter_set(ctx->link, &pps);
 
-Thanks
-Varada
+I'm always surprised why this is sent _after_ turning the display on (unblanking
+it).  Wouldn't that cause unnecessary corruption?
+
+> +
+> +	ctx->link->mode_flags |= MIPI_DSI_MODE_LPM;
+> +
+> +	return 0;
+> +}
+> +
+> +static int sw43408_prepare(struct drm_panel *panel)
+> +{
+> +	struct sw43408_panel *ctx = to_panel_info(panel);
+> +	int ret;
+> +
+> +	ret = regulator_bulk_enable(ARRAY_SIZE(ctx->supplies), ctx->supplies);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	usleep_range(5000, 6000);
+> +
+> +	gpiod_set_value(ctx->reset_gpio, 0);
+> +	usleep_range(9000, 10000);
+> +	gpiod_set_value(ctx->reset_gpio, 1);
+> +	usleep_range(1000, 2000);
+> +	gpiod_set_value(ctx->reset_gpio, 0);
+> +	usleep_range(9000, 10000);
+> +
+> +	ret = sw43408_program(panel);
+> +	if (ret)
+> +		goto poweroff;
+> +
+> +	return 0;
+> +
+> +poweroff:
+> +	gpiod_set_value(ctx->reset_gpio, 1);
+> +	regulator_bulk_disable(ARRAY_SIZE(ctx->supplies), ctx->supplies);
+> +	return ret;
+> +}
+> +
+> +static int sw43408_get_modes(struct drm_panel *panel,
+> +			      struct drm_connector *connector)
+> +{
+> +	struct sw43408_panel *ctx = to_panel_info(panel);
+> +
+> +	return drm_connector_helper_get_modes_fixed(connector, ctx->mode);
+> +}
+> +
+> +static int sw43408_backlight_update_status(struct backlight_device *bl)
+> +{
+> +	struct mipi_dsi_device *dsi = bl_get_data(bl);
+> +	uint16_t brightness = backlight_get_brightness(bl);
+> +
+> +	return mipi_dsi_dcs_set_display_brightness_large(dsi, brightness);
+> +}
+> +
+> +const struct backlight_ops sw43408_backlight_ops = {
+> +	.update_status = sw43408_backlight_update_status,
+> +};
+> +
+> +static int sw43408_backlight_init(struct sw43408_panel *ctx)
+> +{
+> +	struct device *dev = &ctx->link->dev;
+> +	const struct backlight_properties props = {
+> +		.type = BACKLIGHT_PLATFORM,
+> +		.brightness = 255,
+> +		.max_brightness = 255,
+> +	};
+> +
+> +	ctx->base.backlight = devm_backlight_device_register(dev, dev_name(dev), dev,
+> +							ctx->link,
+> +							&sw43408_backlight_ops,
+> +							&props);
+> +
+> +	if (IS_ERR(ctx->base.backlight))
+> +		return dev_err_probe(dev, PTR_ERR(ctx->base.backlight),
+> +				     "Failed to create backlight\n");
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct drm_panel_funcs sw43408_funcs = {
+> +	.unprepare = sw43408_unprepare,
+> +	.prepare = sw43408_prepare,
+> +	.get_modes = sw43408_get_modes,
+> +};
+> +
+> +static const struct drm_display_mode sw43408_default_mode = {
+> +	.clock = 152340,
+> +
+> +	.hdisplay = 1080,
+> +	.hsync_start = 1080 + 20,
+> +	.hsync_end = 1080 + 20 + 32,
+> +	.htotal = 1080 + 20 + 32 + 20,
+> +
+> +	.vdisplay = 2160,
+> +	.vsync_start = 2160 + 20,
+> +	.vsync_end = 2160 + 20 + 4,
+> +	.vtotal = 2160 + 20 + 4 + 20,
+> +
+> +	.width_mm = 62,
+> +	.height_mm = 124,
+> +
+> +	.type = DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED,
+> +};
+> +
+> +static const struct of_device_id sw43408_of_match[] = {
+> +	{ .compatible = "lg,sw43408", .data = &sw43408_default_mode },
+> +	{ /* sentinel */ }
+> +};
+> +MODULE_DEVICE_TABLE(of, sw43408_of_match);
+> +
+> +static int sw43408_add(struct sw43408_panel *ctx)
+> +{
+> +	struct device *dev = &ctx->link->dev;
+> +	int ret;
+> +
+> +	ctx->supplies[0].supply = "vddi"; /* 1.88 V */
+> +	ctx->supplies[0].init_load_uA = 62000;
+> +	ctx->supplies[1].supply = "vpnl"; /* 3.0 V */
+> +	ctx->supplies[1].init_load_uA = 857000;
+> +
+> +	ret = devm_regulator_bulk_get(dev, ARRAY_SIZE(ctx->supplies),
+> +				      ctx->supplies);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	ctx->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
+> +	if (IS_ERR(ctx->reset_gpio)) {
+> +		dev_err(dev, "cannot get reset gpio %ld\n",
+> +			      PTR_ERR(ctx->reset_gpio));
+> +		return PTR_ERR(ctx->reset_gpio);
+> +	}
+> +
+> +	ret = sw43408_backlight_init(ctx);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	ctx->base.prepare_prev_first = true;
+> +
+> +	drm_panel_init(&ctx->base, dev, &sw43408_funcs, DRM_MODE_CONNECTOR_DSI);
+> +
+> +	drm_panel_add(&ctx->base);
+> +	return ret;
+> +}
+> +
+> +static int sw43408_probe(struct mipi_dsi_device *dsi)
+> +{
+> +	struct sw43408_panel *ctx;
+> +	struct drm_dsc_config *dsc;
+> +	int ret;
+> +
+> +	ctx = devm_kzalloc(&dsi->dev, sizeof(*ctx), GFP_KERNEL);
+> +	if (!ctx)
+> +		return -ENOMEM;
+> +
+> +	ctx->mode = of_device_get_match_data(&dsi->dev);
+> +	dsi->mode_flags = MIPI_DSI_MODE_LPM;
+> +	dsi->format = MIPI_DSI_FMT_RGB888;
+> +	dsi->lanes = 4;
+> +
+> +	ctx->link = dsi;
+> +	mipi_dsi_set_drvdata(dsi, ctx);
+> +
+> +	ret = sw43408_add(ctx);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	/* The panel is DSC panel only, set the dsc params */
+> +	dsc = devm_kzalloc(&dsi->dev, sizeof(*dsc), GFP_KERNEL);
+
+We've recently decided to store struct drm_dsc_config in struct sw43408_panel
+and save on an extra allocation.
+
+> +	if (!dsc)
+> +		return -ENOMEM;
+> +
+> +	dsc->dsc_version_major = 0x1;
+> +	dsc->dsc_version_minor = 0x1;
+> +
+> +	dsc->slice_height = 16;
+> +	dsc->slice_width = 540;
+> +	dsc->slice_count = 2;
+
+Maybe incorporate with a comment that slice_count * slice_width == the width of
+the mode?
+
+- Marijn
+
+> +	dsc->bits_per_component = 8;
+> +	dsc->bits_per_pixel = 8 << 4;
+> +	dsc->block_pred_enable = true;
+> +
+> +	dsi->dsc = dsc;
+> +
+> +	return mipi_dsi_attach(dsi);
+> +}
+> +
+> +static void sw43408_remove(struct mipi_dsi_device *dsi)
+> +{
+> +	struct sw43408_panel *ctx = mipi_dsi_get_drvdata(dsi);
+> +	int ret;
+> +
+> +	ret = sw43408_unprepare(&ctx->base);
+> +	if (ret < 0)
+> +		dev_err(&dsi->dev, "failed to unprepare panel: %d\n",
+> +			      ret);
+> +
+> +	ret = mipi_dsi_detach(dsi);
+> +	if (ret < 0)
+> +		dev_err(&dsi->dev, "failed to detach from DSI host: %d\n", ret);
+> +
+> +	drm_panel_remove(&ctx->base);
+> +}
+> +
+> +static struct mipi_dsi_driver sw43408_driver = {
+> +	.driver = {
+> +		.name = "panel-lg-sw43408",
+> +		.of_match_table = sw43408_of_match,
+> +	},
+> +	.probe = sw43408_probe,
+> +	.remove = sw43408_remove,
+> +};
+> +module_mipi_dsi_driver(sw43408_driver);
+> +
+> +MODULE_AUTHOR("Sumit Semwal <sumit.semwal@linaro.org>");
+> +MODULE_DESCRIPTION("LG SW436408 MIPI-DSI LED panel");
+> +MODULE_LICENSE("GPL");
+> 
+> -- 
+> 2.39.2
+> 
 
