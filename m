@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-15824-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15825-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7E07892AEB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 12:46:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D2116892AF4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 12:49:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E586C1C20D57
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 11:46:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 016261C20B9B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 11:49:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FC622DF84;
-	Sat, 30 Mar 2024 11:46:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D00F236B01;
+	Sat, 30 Mar 2024 11:49:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="n5h/uOFr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GpGRAOsD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2296BE6F
-	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Mar 2024 11:46:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87DE738DE5
+	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Mar 2024 11:49:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711799191; cv=none; b=ELRf8dtwVWGY7RQpdqcGeJD1WPOvYeMpVWKZ4g7CHg+uJz5MiHJ1FyNdP65p6258GLZw9qNofrSA2u7ZsCfxBiCTIIGd4J/GEtHF3DsvpJif8zgkiYRc6CkFlKFzmjlltqNw60rAlg177MgTmmILnObTHYSM+1bkut+fozdwVJ4=
+	t=1711799387; cv=none; b=p7R8vZlUARDmmMGaWkvMiQjb91A6/OlQ0Z2uiGWgMuIDFIpdaW4hU0aMXlZ2xcgMOoDese5DH4Lw3Wf2U1Ny2EVv5DlRI3Clc/swlg7dj3twTglIA+YDmVpNFMuCDE9p03pdoW17SpslZD8iHHG8ZG9oMa9te00N2PkVvP07PHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711799191; c=relaxed/simple;
-	bh=nDnJp8XF/zw1aA5vl1kh4mTSuUfliiJCeQP1o73zw88=;
+	s=arc-20240116; t=1711799387; c=relaxed/simple;
+	bh=xbuoScj4pssG5EXKLugy7LSe0tT28kpGntRZ2m7QEvI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=H4IDpiPijCp3w/En/jamKU/nzwKoksxrlvhHfVzMOjh4wlhFza4R0rd2ut3GuAwjpMqAXlGzyoWrSftW45mKQURkWcGEzOBNlSC8P1YlKJqRC3hjKGA/zt34pcrnJOkFhiGeMs7Sz5gNxC26C74c+3xVYwCEQ4Z35/nS6CeQ17Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=n5h/uOFr; arc=none smtp.client-ip=209.85.221.41
+	 In-Reply-To:Content-Type; b=T4Ecavo/GeykNy+CQ1RodcWizWpukUuGNee0XXE6mFsuxNDpbSOhQB1ABfQ3mLU/wT5w8/Ylb/UzEHzGCLf+WnRDzqStJV4ABwYELqlWOaetR3Ls2ERtuOIqIVHCaDO7A3xWwcHN8V+MiOL5L6UhzvDrJLqzn6+8g05nL73y0bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GpGRAOsD; arc=none smtp.client-ip=209.85.208.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-33ed4d8e9edso2120128f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Mar 2024 04:46:29 -0700 (PDT)
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2d52e65d4a8so36456761fa.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Mar 2024 04:49:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711799188; x=1712403988; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1711799383; x=1712404183; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=flb2sceZGeMo+7mqoXsVVwFaBDIsSMNyF6H27QzTvtk=;
-        b=n5h/uOFrAq/kmUY4tR1ww11BeSZFHRsHihogxJZJkq8cofGPZFx+laxM165ihBKhfW
-         ZlfhTYrI+KKiQIQxdx18hvpEh3HGo8BMhpFSoiSVHCFqgSVWafiBGsPLIiw1GwJ28q4V
-         coATt/lGg5Y6leCvDfFRe0ruTXauTH81ZJr+5Xwv5AUrEgGCmn6EdKCQBtsifq0DMLPT
-         I3cIxEofjAYnWEIBizjA3O5lfHNFg+/nJaqiPqeIwiQEd3SiiA3cWjkEi1Z6DdF0Bxud
-         xkv6CKneRbaaLn6ytb7kSb738Wo7MkS7tfv+gMdgpXrBOQ3RrGXuVh5H7VQJBMtgxvHP
-         FSlw==
+        bh=7bPfp/nDK6inXePvhC4ekcgpIMLABB4RRjLFkj75U+4=;
+        b=GpGRAOsDYSFBdGYo/M8zFBKfW3qYjbrc/GSnAftKPkJ7gC8Npl/q8faJQc1GC1PjhE
+         462OVRjPEyxYQLiiWr9/hit4/YEI7eJFVimyeVOIHs1my3rJJkudZxoQqLcAYblssWo5
+         I+fqQ6Gy0DepYtOq3ZnBW1NyJ209ICOqtDNRgyICkAeVSNFg3G+1BSGBKKbg3OndifHf
+         Z2mC+uyj6E3W9LR+tHpbuJGuOFNRNvSAlhRvFkAesgmv4DYxRUX90QO8T8xlSbdHN3xQ
+         Gqs1BD3uw1KbjGzeINtlwoMAFXCfTlM1l8051Uu3P+uUo/JG4iFzXOZsYYh9W8t/KhG5
+         gxpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711799188; x=1712403988;
+        d=1e100.net; s=20230601; t=1711799383; x=1712404183;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=flb2sceZGeMo+7mqoXsVVwFaBDIsSMNyF6H27QzTvtk=;
-        b=npPmrUd2ryNPJf9Vs/I022O7q7n3rYmFEtVSmAShVjI1X/kA7DconaDEw4Xl3shDue
-         6x9n724OIlsYL4Koi8NoNez2wX9XkpBjpfLplw5vCyB9CNvjwY1fTNlHFTG62zGAEeHt
-         FsiyBeQxUat6Wa60TSDihEPJDKsaTvICcmvRuUyTHEoRE2fiZwWAIhRY6fE56JuXKSJF
-         lsBMTL13w4FerTcvh3W6sR7a2efIvpQQB/3XVq3jqnL45s6YDm8iyfRrVrtXcRzcpoGq
-         Zps018n/0Rx0wyF4ZgUb/87XLaRtwK5RHap6gm6sBPivovqf2tTJZposlwEq5R7QDYkj
-         cXYg==
-X-Gm-Message-State: AOJu0YxePG11rcGhEBM7BrmdObjHbbkggPHdH9Q9Dz7qNzgIYYgvCkH4
-	ECGBRSV6ebhfvcyWEwquiqSM4rK59WmQ7enK4WH44XFIwWNo/qzPGkWqR7tiRGE=
-X-Google-Smtp-Source: AGHT+IE1gEdHicUgGPo2BqNk4UwXpeuxHhKW55jxUbvv1GvwuzjIBRq3/NYcBvcrjImp6KgUE/fodQ==
-X-Received: by 2002:a05:6000:1743:b0:33e:4969:f05a with SMTP id m3-20020a056000174300b0033e4969f05amr2683763wrf.37.1711799188247;
-        Sat, 30 Mar 2024 04:46:28 -0700 (PDT)
+        bh=7bPfp/nDK6inXePvhC4ekcgpIMLABB4RRjLFkj75U+4=;
+        b=dbSX9vrvjgkbd4zMnJtCPhGIZRkpxogWvUWPYTBx7X9b+nAP8ZmgHv+FIPIwGTLqY6
+         lCDeiEBlVOzDP2UmnjdA0G2qiAAtYNH/HOg3eXeosdUNTp8g8OnQaTEKiHUoEYEucEI+
+         WhsntBf3P7YjID4ITLLNRQLVlvr1syzfIMpW3ed5Dj3NkvRApQrqH6gDFKIMh1gjP/Lf
+         t5QS+aOf0c8J16iTBuxj+C0HfF1XjzlKR4V59ZTzlAOVwnBSP3Fo7wBtfbn50vHJz2Ks
+         UnZScMFkOAoQBnZ/tkehifoKxZ9WSMnzVkvRcZmU9on8ZWFulOzxtpEImC7DQFrAg/jX
+         Df7g==
+X-Forwarded-Encrypted: i=1; AJvYcCXgLwLBGVcp9BOPtfuNS38wEGS6v0w7rzfDhPBBzasr8vjLIeZQyuKOWM9qjuHSeQeIYNkd27nP3U4GwEU4adcN7z/I5g7RarH1Ekd4Kg==
+X-Gm-Message-State: AOJu0YxnPIz8z4EgeyQAe9ceFfIGPPZ7SA/JIOEVGfUCZSTXfBIisOud
+	blHjY5qA9scsUzpP0M6IYJT8UtOzn8HorxgUDFsk9jvzrZHEPlMBJB5IiosOa5Q=
+X-Google-Smtp-Source: AGHT+IFv2IplabyjySpygRi2+gjjwUtTVD/mUgEhhJDPBn1cO9Tz+kQP6v0mFvLt+Xm4Z3Q+sHRstg==
+X-Received: by 2002:a2e:9c82:0:b0:2d2:b840:1c78 with SMTP id x2-20020a2e9c82000000b002d2b8401c78mr2935006lji.48.1711799382607;
+        Sat, 30 Mar 2024 04:49:42 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.223.16])
-        by smtp.gmail.com with ESMTPSA id d8-20020adfef88000000b0033ed7181fd1sm6267909wro.62.2024.03.30.04.46.26
+        by smtp.gmail.com with ESMTPSA id g11-20020a05600c4ecb00b004154f05f023sm4635594wmq.11.2024.03.30.04.49.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 30 Mar 2024 04:46:27 -0700 (PDT)
-Message-ID: <d6b0f9d2-a489-4c0e-9c77-0e3eab49d3cb@linaro.org>
-Date: Sat, 30 Mar 2024 12:46:26 +0100
+        Sat, 30 Mar 2024 04:49:42 -0700 (PDT)
+Message-ID: <efc43bb4-51ca-4706-9748-dba3b4b3209c@linaro.org>
+Date: Sat, 30 Mar 2024 12:49:39 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,17 +77,27 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/5] soc: qcom: llcc: Add regmap for Broadcast_AND
- region
-To: Unnathi Chalicheemala <quic_uchalich@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v2 2/3] dt-bindings: display: msm: sm6350-mdss: document
+ DP controller subnode
+To: Luca Weiss <luca.weiss@fairphone.com>, Rob Clark <robdclark@gmail.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20240329-llcc-broadcast-and-v4-0-107c76fd8ceb@quicinc.com>
- <20240329-llcc-broadcast-and-v4-2-107c76fd8ceb@quicinc.com>
+ Conor Dooley <conor+dt@kernel.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>,
+ Krishna Manikandan <quic_mkrishn@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240329-sm6350-dp-v2-0-e46dceb32ef5@fairphone.com>
+ <20240329-sm6350-dp-v2-2-e46dceb32ef5@fairphone.com>
 Content-Language: en-US
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -133,40 +144,17 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240329-llcc-broadcast-and-v4-2-107c76fd8ceb@quicinc.com>
+In-Reply-To: <20240329-sm6350-dp-v2-2-e46dceb32ef5@fairphone.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29/03/2024 22:53, Unnathi Chalicheemala wrote:
-> Define new regmap structure for Broadcast_AND region and initialize
-> this regmap when HW block version is greater than 4.1, otherwise
-> initialize as a NULL pointer for backwards compatibility.
+On 29/03/2024 08:45, Luca Weiss wrote:
+> Document the displayport controller subnode of the SM6350 MDSS.
 > 
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
 
-> +	struct regmap *regmap;
->  	u32 act_ctrl_reg;
->  	u32 act_clear_reg;
->  	u32 status_reg;
-> @@ -849,7 +850,8 @@ static int llcc_update_act_ctrl(u32 sid,
->  		return ret;
->  
->  	if (drv_data->version >= LLCC_VERSION_4_1_0_0) {
-> -		ret = regmap_read_poll_timeout(drv_data->bcast_regmap, status_reg,
-> +		regmap = drv_data->bcast_and_regmap ?: drv_data->bcast_regmap;
-> +		ret = regmap_read_poll_timeout(regmap, status_reg,
->  				      slice_status, (slice_status & ACT_COMPLETE),
->  				      0, LLCC_STATUS_READ_DELAY);
->  		if (ret)
-> @@ -1284,6 +1286,16 @@ static int qcom_llcc_probe(struct platform_device *pdev)
->  
->  	drv_data->version = version;
->  
-> +	/* Applicable only when drv_data->version >= 4.1 */
-> +	drv_data->bcast_and_regmap = qcom_llcc_init_mmio(pdev, i + 1, "llcc_broadcast_and_base");
-> +	if (IS_ERR(drv_data->bcast_and_regmap)) {
-
-I am pretty sure this breaks all users. Can you please explain how do
-you maintain ABI and that IS_ERR() is applied only for version >= 4.1?
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
