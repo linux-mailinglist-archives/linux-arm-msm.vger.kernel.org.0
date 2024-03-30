@@ -1,117 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-15808-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15809-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2C1D3892968
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 05:48:53 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4FA18929A2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 08:07:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DA6D8283109
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 04:48:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D8B8BB2258F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 07:07:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B44C479C3;
-	Sat, 30 Mar 2024 04:48:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0733917EF;
+	Sat, 30 Mar 2024 07:07:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="n4jRuRhl"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NeyEXKqN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D9EB1C0DEE
-	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Mar 2024 04:48:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A877FB;
+	Sat, 30 Mar 2024 07:07:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711774128; cv=none; b=q81fnR5rGCmRNSEgxJy97kUP9uX3Zvpem/PASi6zHQrODkh4ArIHghWkvGJZBA0Ga4/NQrg4CDIBZK5a3Q0+8HrCBbXzWKQtrUAsW2/R+QHqKahXePEpUZgj7g0focfHBdTfsW0gmVGLqY0bhQkF3C0ji5F7ydjO51wpppzdrbM=
+	t=1711782441; cv=none; b=uY9be6TA5YgBR1vdjV9O1UprbpD+Yt706tDSgMnZEqrN9gl3y1RrVvylv/b2KVZp7A2/2jJJzDQ9FMEoFRDMjF4yJ6W+AIHd20jHurL8RdT9H33kuOXSV04FO3242RMypGrl11L8meAuyP/rAjKGdWNsknmGpwmdoXXa1/lYsXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711774128; c=relaxed/simple;
-	bh=o+nKkZe94VWx8t6q3SdvuRVkmQRBhP7zPZY3k1IAtk8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jVRk8cB8mLtizgovFrcV0GJabNPmfF/+wICwHQo1SmJCS5c2Zl/QHTLGNxas6pheUstftcrRF2hx/B6C4XVcdM47bqnhG/ICsAa9uEl40KyVFwk/kvTKcIU4H/5PdeEMlPQfeHTGmxq2ysYlTgSb8oTTRzlPuThMvJXauPHPuH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=n4jRuRhl; arc=none smtp.client-ip=209.85.219.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-ddaad2aeab1so2157585276.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 21:48:46 -0700 (PDT)
+	s=arc-20240116; t=1711782441; c=relaxed/simple;
+	bh=DfKe1GaAeO1jSPZfHRONUECzOmyixsLd6boX2xS42Hs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=dYQyR/cLKPGvKbl3909fyViErfkt31yBbkJgAiU6SmEhe4juZwvvxObv6e7o2CF1dQVVnzJ1//CpsEJHw9ObgceKIJ8yCWWjW/N1s2jux9wvNn38vAfMcQltmUE2npd+xzfvisUfiPHEMRMaD4Uw3X4YNAMpm2CrEK2nnHgYYp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NeyEXKqN; arc=none smtp.client-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a466fc8fcccso328923866b.1;
+        Sat, 30 Mar 2024 00:07:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711774126; x=1712378926; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=JqKtRTcCfUHDOcX0tKilt4xKnfEps6Hgq5SW6oavRVg=;
-        b=n4jRuRhlhbzlg0jnOUyUtpQJkaBYJcBHxJICscOFXlB4D3gDdtgunZB1JsSdj1xeZO
-         gbz/nBHhqhAXZzfEIHWADkro/x9kl1FXqqimgF4JNSkyTeif4pwUNfYdFNv7QytwI1As
-         H4/n3MzHXfSgln5vbNwg9+zIZ+F/3yAbvxQEJdRVsTlG1mkU1hp3jSkKAfCK0mKE5yBB
-         3cqRXCE/+BsaYGYAnoiqzmtSzhVSLCAnuLIzrRHmZwLC3xmCUlFSHChOyOn62m4jOr7+
-         AnJMoYFHFTfjTxU1yn3JvkzTVCdtgRq776WsQV5Lxj8RVsS9OyWAgHKBHoxa1NmlotvI
-         UGpQ==
+        d=gmail.com; s=20230601; t=1711782439; x=1712387239; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nckLeDqGhSQaqNal+sJU1eNl+/6Kt+Tu4bK8s4J+tVs=;
+        b=NeyEXKqNbpSZqQdkx4eXQV4GEHa4AHnO2H+mh49jerAkN7M+KiwdtDpoG4n4KpCklG
+         uINAQQwVkwdvTp0kXkDW7paGgoyLe2UpDNBuYQ6YH76zkcnko6eawEPWCJoSne81tm/5
+         i7UMcw+0/Qz2r5yQJ+9IkAPAYatW5MJh38Nz1TSQLpuQnHQ1YaKK8LjxVCcVzkMS8q0F
+         SWlMx9d41xvUVPz+GbLTHNEAguQZH5mWwyqVoO1lS0n6qQeZqxvkXnWfuLwWxW22upBJ
+         7IB8Aum8OkYjeLf9km2bMvQ2s1iPfoAaQAs8RXvmLHzPdodXUyINNojak/osw22EEmWE
+         fj2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711774126; x=1712378926;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JqKtRTcCfUHDOcX0tKilt4xKnfEps6Hgq5SW6oavRVg=;
-        b=u+ZrwZ5I816kw68PbX1JFQTYCjocSKozoc0fdnv0cVu1Ye2mW9GvWbI6FQ83ptN6Lu
-         FAHypYykldPNBKuNmcMQynCc3pNXxNadV+V2rMgFlaMkohjU9HNWoqJcKQyyQE+VLVwE
-         wJWHX18QU3fN1N5HigqWkVMqnoQq/Znv4YLNfVxQ6tVHwsM8aV7pgBmTZMX9n2hAUNCK
-         AMj6CMzyA7h7QBF3Mftl4opkcZJQrJX0fqS8KMzGqCnH6UsKU8VMKVgL+6vMhJvUfaO6
-         gwfKFuAV2oInxcPmj3CdR3XV0QsDpoqakjXWR/W1JNdQSYAW0aMvM4hdgra8KqIUZGCo
-         od7Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVEafaSS5anXsrO3H8UtqJ+BFRbHpQLs/7QAKi3agQuPtfO5eNhQgfWHuy4lCq2m+aNzUD+W8M2tBhV/WXb7jimby3tkrLPyZBXYagpqw==
-X-Gm-Message-State: AOJu0Yxbey2twG25Aab47iQil0wMA3EMlud4RUg9fgzXQZJK+kf6J6LZ
-	1wc7OPZrMlHNiRZYdaiPdaE1DJPIInARHiW+Yhqc/0CiqffcdmqATTkGUuf/F4kB1EqiYa8J9Fs
-	RQqEQLV37BKVFJuJJfGeDZHSThlaUAz16c16GV9MqgSs/482xMYY=
-X-Google-Smtp-Source: AGHT+IFWNUW2zHPnWC7CSZVJWYNfuXeyZlox9i9KNp7LapLl16BvX4i/tRfOuabu6Hn2towKb2gtcAyZRB8/FIQKbH4=
-X-Received: by 2002:a25:bec1:0:b0:dcf:56c1:5a12 with SMTP id
- k1-20020a25bec1000000b00dcf56c15a12mr3656604ybm.38.1711774126160; Fri, 29 Mar
- 2024 21:48:46 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1711782439; x=1712387239;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nckLeDqGhSQaqNal+sJU1eNl+/6Kt+Tu4bK8s4J+tVs=;
+        b=Yqrhxr4LH/MO/GFK4v/Xjuc2V941+s8C9pK1Fb4Xhfp/K4mn1hf+Hdp5LtfK0HL4Rh
+         T4ueQFURX5BG4IxU2rkvKvbKDC3nNhoXaxbnsywiPud9QZNxx+0OTCUKUvPPCyXYiy80
+         Uvzkefs+BqxM693D+CoHZI3Ksk1x2mc3ji/kM1v709zdlYsNu9fldLdqWYnf2OI36vGB
+         XnsP7bNIbXggNrYz2ySKQ4nKU/KDZZ93IbUR5RHLMA96AnRo27D+x3DmKs7RDwelDe8h
+         NBj2zFWMW0wMXB3wH1G3h9rDHl3j6C3MtFFbZbAKh++peaTXZvV2w1aOn+2nNR1RHlp9
+         Lrww==
+X-Forwarded-Encrypted: i=1; AJvYcCWYOjQ5RDdWXfYo/D1tyDLU2/mGy7zmwSHozSGrZDA3XSpDgD7MGzqEUp6sRztDiaXb0Hu+i0O35b1wqkVAAO/8Io3SWkANgUU3eUgfj36rDXi04sj9SURz07DP7LO3r6mcGaXS05a1k36G05J2XLG8ZUziqjvQ8z5quQv9SSZhU+6yesExdLs=
+X-Gm-Message-State: AOJu0Yzxu8TiYNFtnKa27NoCR82yhDSwDr65KgRJOgWyAOyrtWVdHQvr
+	w5xLaf087xxU/MVl/+zyqmn+YHESiO8OutoP9AB8QdqYfqYXTcVie+fxIR7x
+X-Google-Smtp-Source: AGHT+IEZKo3sEI9j0pgyjhXR0Dis29fDjDPCuR8TI/LqmJF0b4bRohk7FKqThfOON2B2k1sCZwVTdg==
+X-Received: by 2002:a17:906:57cc:b0:a4e:488d:aa90 with SMTP id u12-20020a17090657cc00b00a4e488daa90mr672540ejr.74.1711782438510;
+        Sat, 30 Mar 2024 00:07:18 -0700 (PDT)
+Received: from [192.168.20.170] (57657817.catv.pool.telekom.hu. [87.101.120.23])
+        by smtp.gmail.com with ESMTPSA id p6-20020a170906a00600b00a46d04b6117sm2789504ejy.64.2024.03.30.00.07.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 30 Mar 2024 00:07:18 -0700 (PDT)
+Message-ID: <7f28584c-0e9a-44bf-b0c1-7f7a2acfb847@gmail.com>
+Date: Sat, 30 Mar 2024 08:07:16 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240130-wcn3990-board-fw-v1-0-738f7c19a8c8@linaro.org>
-In-Reply-To: <20240130-wcn3990-board-fw-v1-0-738f7c19a8c8@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 30 Mar 2024 06:48:35 +0200
-Message-ID: <CAA8EJprsjs8SWZmpTisyQcAZ9VC8g3_GEEc1hhp8bMZrm-hyaw@mail.gmail.com>
-Subject: Re: [PATCH 0/3] wifi: ath10k: fix board file loading for wcn3990 devices
-To: Kalle Valo <kvalo@kernel.org>, Jeff Johnson <quic_jjohnson@quicinc.com>
-Cc: ath10k@lists.infradead.org, linux-wireless@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, Yongqin Liu <yongqin.liu@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: pm6150: correct Type-C compatible
+Content-Language: hu
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Danila Tikhonov <danila@jiaxyga.com>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240328074544.5076-1-krzysztof.kozlowski@linaro.org>
+From: Gabor Juhos <j4g8y7@gmail.com>
+In-Reply-To: <20240328074544.5076-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, 30 Jan 2024 at 08:47, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> The ath10k driver fails to properly handle fallback from board-2.bin to
-> board.bin for WCN3990 cards. This happens because the
-> ath10k_hw_params_list doesn't include .fw.board* parameters for the
-> WCN3990 platform.
->
-> Add board data configuration for WCN3990. While we are at it, merge
-> common pieces of BDF support: drop .board and .eboard names from struct
-> ath10k_hw_params_fw and use the common name instead.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+2024. 03. 28. 8:45 keltezéssel, Krzysztof Kozlowski írta:
+> The first part of the compatible of Type-C node misses ending quote,
+> thus we have one long compatible consisting of two compatible strings
+> leading to dtbs_check warnings:
+> 
+>   sc7180-idp.dtb: usb-vbus-regulator@1100: compatible:0: 'qcom,pm6150-vbus-reg,\n qcom,pm8150b-vbus-reg' does not match '^[a-zA-Z0-9][a-zA-Z0-9,+\\-._/]+$'
+>   sc7180-idp.dtb: /soc@0/spmi@c440000/pmic@0/usb-vbus-regulator@1100: failed to match any schema with compatible: ['qcom,pm6150-vbus-reg,\n          qcom,pm8150b-vbus-reg']
+> 
+> Reported-by: Rob Herring <robh@kernel.org>
+> Fixes: f81c2f01cad6 ("arm64: dts: qcom: pm6150: define USB-C related blocks")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
-> Dmitry Baryshkov (3):
->       wifi: ath10k: populate board data for WCN3990
->       wifi: ath10k: drop chip-specific board data file name
->       wifi: ath10k: drop fw.eboard file name
->
->  drivers/net/wireless/ath/ath10k/core.c      | 32 ++++-------------------------
->  drivers/net/wireless/ath/ath10k/hw.h        | 14 ++-----------
->  drivers/net/wireless/ath/ath10k/pci.c       | 10 ++++-----
->  drivers/net/wireless/ath/ath10k/targaddrs.h |  3 +++
->  4 files changed, 14 insertions(+), 45 deletions(-)
-> ---
-> base-commit: 596764183be8ebb13352b281a442a1f1151c9b06
-> change-id: 20240129-wcn3990-board-fw-a2d97507a712
+>  arch/arm64/boot/dts/qcom/pm6150.dtsi | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/pm6150.dtsi b/arch/arm64/boot/dts/qcom/pm6150.dtsi
+> index 11158c2bd524..b20a639cddf3 100644
+> --- a/arch/arm64/boot/dts/qcom/pm6150.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/pm6150.dtsi
+> @@ -71,8 +71,8 @@ pm6150_vbus: usb-vbus-regulator@1100 {
+>  		};
+>  
+>  		pm6150_typec: typec@1500 {
+> -			compatible = "qcom,pm6150-typec,
+> -				      qcom,pm8150b-typec";
+> +			compatible = "qcom,pm6150-typec",
+> +				     "qcom,pm8150b-typec";
 
-Kalle, Jeff, is there anything pending on me on this series?
+The warning in the commit description is related to the
+'usb-vbus-regulator@1100' node, whereas this fixes the compatible of a different
+one.
 
--- 
-With best wishes
-Dmitry
+Did you want to fix both?
+
+Regards,
+Gabor
 
