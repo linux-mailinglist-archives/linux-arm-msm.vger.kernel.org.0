@@ -1,165 +1,566 @@
-Return-Path: <linux-arm-msm+bounces-15826-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15827-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3B81892AF5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 12:52:46 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE230892B8F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 15:37:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E13A81C20BD0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 11:52:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6EDAF282E2A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 14:37:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AEFB2D057;
-	Sat, 30 Mar 2024 11:52:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA82426AC6;
+	Sat, 30 Mar 2024 14:37:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KF2KyvBL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VG+DMPCH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E0228389
-	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Mar 2024 11:52:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FDBA17BDA
+	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Mar 2024 14:37:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711799564; cv=none; b=KoQfWb03P+iXSgOkz+iHw0usBqDLukqThMOm3TxqOysBtudq23MbyPrTcjFOYzAkeWfbbQAsHKZ4kfIJl2dxotVLqv0rP8pi4S2WU5NNlwbouYyA1YkTqVOll6U28bvRZhPPCzL32+xXl7FtG0roCHaHJwRoyH9WkKTB3GrpGM4=
+	t=1711809444; cv=none; b=UkNYLmPyg5gvRicGH/g1BUhhnBYSt+UO8et/lz9XE8S4M/AN4KNMvFsK9BrHtPBGLDP2aIRHWTEdrRPAhM4SuQLWZX6KiaIMFSHJBsZaWhco59dI5EomlfFGTOfkA5WXccU6AAQf374NWQ+r89PNnDbmAhGByoIY5QZBQXYhVF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711799564; c=relaxed/simple;
-	bh=0QtPBbhMoQ9oyAsZSa8xCg4u3E/gr9h5IngVYXAvmIc=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=aJYA35zIaSskRluLkdjFgt98kRRRwhsR82K4YPV4NU6pkiNA3hp4VZ4gnIDmXJgE2Y/IpcZeGWaW9vReIUzj5nj9UNJ/ROibgiWuBkOOS1f1RME4QvQ8Y37YpcM5bDsh+Z94glxTA+M1QEVRNUf1s3rLVkwd+InJ6HjytkYt8Xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KF2KyvBL; arc=none smtp.client-ip=209.85.128.48
+	s=arc-20240116; t=1711809444; c=relaxed/simple;
+	bh=X6ODqOaKdqQ029HON8uGnO5+XwM9dsThu74kjUSfDYs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hIWqcLIzK99Xv3fIEiu9WkYBPYfz9TNqyAufoBnRMjQXxtPsQ4axMPaS27MI2t5aSzyiZAyM4eqLxlDHjAGbTlofTZp6yVyO/k7Y3FLn3ppr/2dSyNTsyhb10NgUedj9VFpxSxQ228qXxWsX0W/ZAJyWdekYXWfWxd5mMV0fyqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VG+DMPCH; arc=none smtp.client-ip=209.85.219.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4155baa696eso937725e9.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Mar 2024 04:52:42 -0700 (PDT)
+Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-dcd9e34430cso2920749276.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Mar 2024 07:37:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711799561; x=1712404361; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ltsq+ON8EW/Oezl3IwpOo+eIMtIHCkMDHt/1NdkWYr0=;
-        b=KF2KyvBLrRpCCql8hB9iJYwXlflS9oYKcfXhCYXjRaSgEUgVt/svmuac2imK0fNVqj
-         7wiyWszyfN5vUeSMxlbcR0vlvO8DT5xTSgWdgX/CtZOwZ7WHaBsQ6nUyzoC2178YCAJU
-         OpAKROJmxcQpappwJD2GBknehMZncMufsb93cRGoxmp4JawKs04F+UZcRW2ddeZ4LP2U
-         7YDH1frYhcunGVRNcsjwVpYhQqg2A4+ai/kQ+1rJv4PnalY/bdXAPg2diYLbNGFBGtDL
-         epXc3fCrue9Qr7hsj2u7e8qVlSEcZ3y1Ctmfv/jklbUjtnBFbO8OIhVSPlV2vVunryv4
-         oC+A==
+        d=linaro.org; s=google; t=1711809441; x=1712414241; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=aJ6ElGYrFyYktQQmezQwKd2C5y/rvXGmDf2faO7h/lU=;
+        b=VG+DMPCHNq60uYPvy1vpZpPoQAse4Bv7IrEBQ0H2+t+Rbg5/6BjPPGNAW9DdjSrG1O
+         NQCZwXQ1vnanmBGnuPLGx6Gz3VSEyRZSnd6aH/Db8wekszmkxpmiQxGqs7z/1hGkHpWs
+         vgcB4wFvCERfY5Ftze9DcAuKd8iPsG3Cq7w2a9hp0N4weeEBBkojaWoLo7aE1+83CLJR
+         OEUCmAOpdBw+PUSOewi+PkUoi3ou4kiZ37U3eA+PWaChPeASkM+5xAbI0RRNNFLfUoCr
+         YvbFbU1iOrFj7szBdNeGdKfJPe5iEkHiheWkh1Pcn3wDHJ05z5VzwCtAb+rjZvO3wJIr
+         bz5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711799561; x=1712404361;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1711809441; x=1712414241;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ltsq+ON8EW/Oezl3IwpOo+eIMtIHCkMDHt/1NdkWYr0=;
-        b=bs3NzDJUdk9wH0F/Ai/wvkRKSQH50YPs8XMW02vuu6oDT+/nfIidYC2Z7WbU9yQzAP
-         ZiTojd1RFVSE9YH0FWzpqS2iBZniCZ7+gjycGlgzwEqCA1uzP2OcnyxmZG9g/cneuLs/
-         ELDR8PJujnqMJluOB+sFif41RR+Uj38imGqE1czvEvfXREgNcueA3ALzSMG96PnmNtHL
-         JKJBxsjC/fcTK+ir+KxCFMzOXs73OkQZyUBopEHWF6+DjseLBYzLDy9ZVeumQ0WqRI5s
-         G+gx0T5tkx2ucYnVh80E3ftK+A1RgHjznjk1X6b+nu8hrDcI8+LK7PYTNebMs7quwBpp
-         Fgmg==
-X-Gm-Message-State: AOJu0YxFKuSgsJ8KhRo4tfPu8BWZiK7hoq/zNGY5pe7JTEluGwOV73Dr
-	+7YetewA9yWXNBsvySLKOLql6zvFl7g71QbfK3nnkg0eVT66jz8nut1VV9HG520=
-X-Google-Smtp-Source: AGHT+IFAIrRiybRfK4SOAOlAiWPXyhIsmVVRlktPj0GEvk3Sgv2EbPK0JGvn6Vyf5bejarmfr6RjsQ==
-X-Received: by 2002:a05:600c:a04:b0:414:653f:26cd with SMTP id z4-20020a05600c0a0400b00414653f26cdmr3417192wmp.18.1711799560855;
-        Sat, 30 Mar 2024 04:52:40 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.16])
-        by smtp.gmail.com with ESMTPSA id j8-20020a05600c190800b0041496b92502sm10141903wmq.31.2024.03.30.04.52.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 30 Mar 2024 04:52:40 -0700 (PDT)
-Message-ID: <b5531bde-d257-4323-83a8-2aca95270ec5@linaro.org>
-Date: Sat, 30 Mar 2024 12:52:38 +0100
+        bh=aJ6ElGYrFyYktQQmezQwKd2C5y/rvXGmDf2faO7h/lU=;
+        b=iHyl+UrTyDVsPaAdmQfL0A0QTx85IhYU2E1gGHmlkk9EMNYMHWyzj45TT+BrkcUhx4
+         0aTCD7+fF4Zf9xH8nZNbFJs1NFQ90NrD+OWEiFbbzkdozrw8NVnmB34vK5kzDbA3AprA
+         1vQgBAHUtcR/Np9ubTuKUl3Yt8OWlsSVf5reAMFhTNmgCa6KbmJqs3K/rlWvH8PfShX5
+         aiAKCFFJZAQLQGj2ZxY+kOkTHVvSL3gqLyGIPH8L/j6daO/Y0iY7tyV1ESR3doKcr2un
+         6dRrVWA/ruhLsZUuwxzJyT/AUnkD8vxl5lC8Ocboyalbx2RaPJvGWoJWRn66pg+AAzkm
+         66vQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU7FXIiUpJP+H0vBKcExayk8ND0x3ZUgn8xgMyHbP70ALbBhnLxZT9cuMDgLPYV3m8EtaBXK7Ip6kZfBjjv+R7JYBp+J2X4wV8ZD3N77A==
+X-Gm-Message-State: AOJu0YwZnYOYB7pSL6z43/3gVGtXsQWy432n0wA2P1JumsLEbmQLIHZJ
+	cJKGzH7+SIOK/rqzOgTE2n2J97Lbwu3qCltTT2dW51guuDlR24eWfA1xYHxTAYRVQmOE4XfhlJv
+	vV9K6DxEj5/g7vUmKODOs9o/sqm141ILA7DZL/w==
+X-Google-Smtp-Source: AGHT+IH7FEymf0/ZUu8aE3f+ww08PAGmNhwefwqgicnvViRFEsmrpjgWc3y8UweL0/u6U9pVhxR7kmYnE/bQ6jNrfno=
+X-Received: by 2002:a25:80c1:0:b0:dc6:b820:bb45 with SMTP id
+ c1-20020a2580c1000000b00dc6b820bb45mr4279294ybm.27.1711809441398; Sat, 30 Mar
+ 2024 07:37:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] dt-bindings: display/msm: sm8150-mdss: add DP node
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-References: <20240326-fd-fix-schema-v1-0-4475d6d6d633@linaro.org>
- <20240326-fd-fix-schema-v1-1-4475d6d6d633@linaro.org>
- <966deb7d-847f-451b-8f93-017d703b50c3@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <966deb7d-847f-451b-8f93-017d703b50c3@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20240330-lg-sw43408-panel-v1-0-f5580fc9f2da@linaro.org>
+ <20240330-lg-sw43408-panel-v1-3-f5580fc9f2da@linaro.org> <554zkisebym7gbbom3657ws7kqvyidggfmcvetjm6vrnwts3gl@l53hejt72b5q>
+In-Reply-To: <554zkisebym7gbbom3657ws7kqvyidggfmcvetjm6vrnwts3gl@l53hejt72b5q>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Sat, 30 Mar 2024 16:37:08 +0200
+Message-ID: <CAA8EJpowdjcN8KzGRVLrGx8L8Fi5Drs-C62VZKd5VbmDHsCg+Q@mail.gmail.com>
+Subject: Re: [PATCH 3/3] drm: panel: Add LG sw43408 panel driver
+To: Marijn Suijten <marijn.suijten@somainline.org>
+Cc: Sumit Semwal <sumit.semwal@linaro.org>, Caleb Connolly <caleb.connolly@linaro.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Sam Ravnborg <sam@ravnborg.org>, David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Vinod Koul <vkoul@kernel.org>, Caleb Connolly <caleb@connolly.tech>
+Content-Type: text/plain; charset="UTF-8"
 
-On 27/03/2024 11:11, Krzysztof Kozlowski wrote:
-> On 26/03/2024 21:02, Dmitry Baryshkov wrote:
->> As Qualcomm SM8150 got support for the DisplayPort, add displayport@
->> node as a valid child to the MDSS node.
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On Sat, 30 Mar 2024 at 12:27, Marijn Suijten
+<marijn.suijten@somainline.org> wrote:
+>
+> On 2024-03-30 05:59:30, Dmitry Baryshkov wrote:
+> > From: Sumit Semwal <sumit.semwal@linaro.org>
+> >
+> > LG SW43408 is 1080x2160, 4-lane MIPI-DSI panel, used in some Pixel3
+> > phones.
+> >
+> > Whatever init sequence we have for this panel isn't capable of
+> > initialising it completely, toggling the reset gpio ever causes the
+> > panel to die. Until this is resolved we avoid resetting the panel. The
+>
+> Are you sure it is avoided?  This patch seems to be toggling reset_gpio in
+> sw43408_prepare()?
+>
+> > disable/unprepare functions only put the panel to sleep mode and
+> > disable the backlight.
+> >
+> > Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
+> > [vinod: Add DSC support]
+> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> > [caleb: cleanup and support turning off the panel]
+> > Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+> > [DB: partially rewrote the driver and fixed DSC programming]
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  MAINTAINERS                              |   8 +
+> >  drivers/gpu/drm/panel/Kconfig            |  11 ++
+> >  drivers/gpu/drm/panel/Makefile           |   1 +
+> >  drivers/gpu/drm/panel/panel-lg-sw43408.c | 322 +++++++++++++++++++++++++++++++
+> >  4 files changed, 342 insertions(+)
+> >
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index 4b511a55101c..f4cf7ee97376 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -6755,6 +6755,14 @@ S:     Maintained
+> >  F:   Documentation/devicetree/bindings/display/panel/jadard,jd9365da-h3.yaml
+> >  F:   drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c
+> >
+> > +DRM DRIVER FOR LG SW43408 PANELS
+> > +M:   Sumit Semwal <sumit.semwal@linaro.org>
+> > +M:   Caleb Connolly <caleb.connolly@linaro.org>
+> > +S:   Maintained
+> > +T:   git git://anongit.freedesktop.org/drm/drm-misc
+> > +F:   Documentation/devicetree/bindings/display/panel/lg,sw43408.yaml
+> > +F:   drivers/gpu/drm/panel/panel-lg-sw43408.c
+> > +
+> >  DRM DRIVER FOR LOGICVC DISPLAY CONTROLLER
+> >  M:   Paul Kocialkowski <paul.kocialkowski@bootlin.com>
+> >  S:   Supported
+> > diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
+> > index d037b3b8b999..f94c702735cb 100644
+> > --- a/drivers/gpu/drm/panel/Kconfig
+> > +++ b/drivers/gpu/drm/panel/Kconfig
+> > @@ -335,6 +335,17 @@ config DRM_PANEL_LG_LG4573
+> >         Say Y here if you want to enable support for LG4573 RGB panel.
+> >         To compile this driver as a module, choose M here.
+> >
+> > +config DRM_PANEL_LG_SW43408
+> > +     tristate "LG SW43408 panel"
+> > +     depends on OF
+> > +     depends on DRM_MIPI_DSI
+> > +     depends on BACKLIGHT_CLASS_DEVICE
+> > +     help
+> > +       Say Y here if you want to enable support for LG sw43408 panel.
+> > +       The panel has a 1080x2160 resolution and uses
+> > +       24 bit RGB per pixel. It provides a MIPI DSI interface to
+> > +       the host and has a built-in LED backlight.
+> > +
+> >  config DRM_PANEL_MAGNACHIP_D53E6EA8966
+> >       tristate "Magnachip D53E6EA8966 DSI panel"
+> >       depends on OF && SPI
+> > diff --git a/drivers/gpu/drm/panel/Makefile b/drivers/gpu/drm/panel/Makefile
+> > index f156d7fa0bcc..a75687d13caf 100644
+> > --- a/drivers/gpu/drm/panel/Makefile
+> > +++ b/drivers/gpu/drm/panel/Makefile
+> > @@ -34,6 +34,7 @@ obj-$(CONFIG_DRM_PANEL_LEADTEK_LTK050H3146W) += panel-leadtek-ltk050h3146w.o
+> >  obj-$(CONFIG_DRM_PANEL_LEADTEK_LTK500HD1829) += panel-leadtek-ltk500hd1829.o
+> >  obj-$(CONFIG_DRM_PANEL_LG_LB035Q02) += panel-lg-lb035q02.o
+> >  obj-$(CONFIG_DRM_PANEL_LG_LG4573) += panel-lg-lg4573.o
+> > +obj-$(CONFIG_DRM_PANEL_LG_SW43408) += panel-lg-sw43408.o
+> >  obj-$(CONFIG_DRM_PANEL_MAGNACHIP_D53E6EA8966) += panel-magnachip-d53e6ea8966.o
+> >  obj-$(CONFIG_DRM_PANEL_NEC_NL8048HL11) += panel-nec-nl8048hl11.o
+> >  obj-$(CONFIG_DRM_PANEL_NEWVISION_NV3051D) += panel-newvision-nv3051d.o
+> > diff --git a/drivers/gpu/drm/panel/panel-lg-sw43408.c b/drivers/gpu/drm/panel/panel-lg-sw43408.c
+> > new file mode 100644
+> > index 000000000000..365d25e14d54
+> > --- /dev/null
+> > +++ b/drivers/gpu/drm/panel/panel-lg-sw43408.c
+> > @@ -0,0 +1,322 @@
+> > +// SPDX-License-Identifier: GPL-2.0+
+> > +/*
+> > + * Copyright (C) 2019-2024 Linaro Ltd
+> > + * Author: Sumit Semwal <sumit.semwal@linaro.org>
+> > + *    Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > + */
+> > +
+> > +#include <linux/backlight.h>
+> > +#include <linux/delay.h>
+> > +#include <linux/gpio/consumer.h>
+> > +#include <linux/module.h>
+> > +#include <linux/of.h>
+> > +#include <linux/regulator/consumer.h>
+> > +
+> > +#include <video/mipi_display.h>
+> > +
+> > +#include <drm/drm_mipi_dsi.h>
+> > +#include <drm/drm_panel.h>
+> > +#include <drm/drm_probe_helper.h>
+> > +#include <drm/display/drm_dsc.h>
+> > +#include <drm/display/drm_dsc_helper.h>
+> > +
+> > +#define NUM_SUPPLIES 2
+> > +
+> > +struct sw43408_panel {
+> > +     struct drm_panel base;
+> > +     struct mipi_dsi_device *link;
+> > +
+> > +     const struct drm_display_mode *mode;
+> > +
+> > +     struct regulator_bulk_data supplies[NUM_SUPPLIES];
+> > +
+> > +     struct gpio_desc *reset_gpio;
+> > +};
+> > +
+> > +static inline struct sw43408_panel *to_panel_info(struct drm_panel *panel)
+> > +{
+> > +     return container_of(panel, struct sw43408_panel, base);
+> > +}
+> > +
+> > +static int sw43408_unprepare(struct drm_panel *panel)
+> > +{
+> > +     struct sw43408_panel *ctx = to_panel_info(panel);
+> > +     int ret;
+> > +
+> > +     ret = mipi_dsi_dcs_set_display_off(ctx->link);
+> > +     if (ret < 0)
+> > +             dev_err(panel->dev, "set_display_off cmd failed ret = %d\n", ret);
+> > +
+> > +     ret = mipi_dsi_dcs_enter_sleep_mode(ctx->link);
+> > +     if (ret < 0)
+> > +             dev_err(panel->dev, "enter_sleep cmd failed ret = %d\n", ret);
+> > +
+> > +     msleep(100);
+> > +
+> > +     gpiod_set_value(ctx->reset_gpio, 1);
+> > +
+> > +     return regulator_bulk_disable(ARRAY_SIZE(ctx->supplies), ctx->supplies);
+> > +}
+> > +
+> > +static int sw43408_program(struct drm_panel *panel)
+> > +{
+> > +     struct sw43408_panel *ctx = to_panel_info(panel);
+> > +     struct drm_dsc_picture_parameter_set pps;
+> > +     u8 dsc_en = 0x11;
+>
+> Yeah, this is completely strange. Bit 0, 0x1, is to enable DSC which is
+> normal. 0x10 however, which is bit 4, selects PPS table 2.  Do you ever set
+> pps_identifier in struct drm_dsc_picture_parameter_set to 2?  Or is the table
+> that you send below bogus and/or not used?  Maybe the Driver IC on the other
+> end of the DSI link has a default PPS table with identifier 2 that works out of
+> the box?
 
-If there is going to be resend, please switch to "contains" and only
-sm8150 compatible just like:
+Note, MIPI standard also requires two bytes argument. I suspect that
+LG didn't fully follow the standard here.
+Basically that's the reason why I went for the _raw function instead
+of adding PPS and codec arguments to the existing function.
 
-https://lore.kernel.org/all/20240329-sm6350-dp-v2-2-e46dceb32ef5@fairphone.com/
+>
+> > +     mipi_dsi_dcs_write_seq(ctx->link, MIPI_DCS_SET_GAMMA_CURVE, 0x02);
+> > +
+> > +     mipi_dsi_dcs_set_tear_on(ctx->link, MIPI_DSI_DCS_TEAR_MODE_VBLANK);
+> > +
+> > +     mipi_dsi_dcs_write_seq(ctx->link, 0x53, 0x0c, 0x30);
+> > +     mipi_dsi_dcs_write_seq(ctx->link, 0x55, 0x00, 0x70, 0xdf, 0x00, 0x70, 0xdf);
+> > +     mipi_dsi_dcs_write_seq(ctx->link, 0xf7, 0x01, 0x49, 0x0c);
+> > +
+> > +     mipi_dsi_dcs_exit_sleep_mode(ctx->link);
+> > +
+> > +     msleep(135);
+> > +
+> > +     mipi_dsi_compression_mode_raw(ctx->link, &dsc_en, 1);
+>
+> Even though I think we should change this function to describe the known
+> bit layout of command 0x7 per the VESA DSI spec, for now replace 1 with
+> sizeof(dsc_en)?
 
-(but no need to resend just for that)
+If dsc_en were an array, it would have been a proper thing. Maybe I
+should change it to the array to remove confusion.
 
-Best regards,
-Krzysztof
+>
+> > +
+> > +     mipi_dsi_dcs_write_seq(ctx->link, 0xb0, 0xac);
+> > +     mipi_dsi_dcs_write_seq(ctx->link, 0xe5,
+> > +                            0x00, 0x3a, 0x00, 0x3a, 0x00, 0x0e, 0x10);
+> > +     mipi_dsi_dcs_write_seq(ctx->link, 0xb5,
+> > +                            0x75, 0x60, 0x2d, 0x5d, 0x80, 0x00, 0x0a, 0x0b,
+> > +                            0x00, 0x05, 0x0b, 0x00, 0x80, 0x0d, 0x0e, 0x40,
+> > +                            0x00, 0x0c, 0x00, 0x16, 0x00, 0xb8, 0x00, 0x80,
+> > +                            0x0d, 0x0e, 0x40, 0x00, 0x0c, 0x00, 0x16, 0x00,
+> > +                            0xb8, 0x00, 0x81, 0x00, 0x03, 0x03, 0x03, 0x01,
+> > +                            0x01);
+> > +     msleep(85);
+> > +     mipi_dsi_dcs_write_seq(ctx->link, 0xcd,
+> > +                            0x00, 0x00, 0x00, 0x19, 0x19, 0x19, 0x19, 0x19,
+> > +                            0x19, 0x19, 0x19, 0x19, 0x19, 0x19, 0x19, 0x19,
+> > +                            0x16, 0x16);
+> > +     mipi_dsi_dcs_write_seq(ctx->link, 0xcb, 0x80, 0x5c, 0x07, 0x03, 0x28);
+> > +     mipi_dsi_dcs_write_seq(ctx->link, 0xc0, 0x02, 0x02, 0x0f);
+> > +     mipi_dsi_dcs_write_seq(ctx->link, 0x55, 0x04, 0x61, 0xdb, 0x04, 0x70, 0xdb);
+> > +     mipi_dsi_dcs_write_seq(ctx->link, 0xb0, 0xca);
+> > +
+> > +     mipi_dsi_dcs_set_display_on(ctx->link);
+>
+> Any specific reason to not have the (un)blanking sequence in the enable/disable
+> callbacks and leaving display configuration in (un)prepare?
 
+We are back to the question on when it's fine to send the commands. I
+think the current agreement is to send everything in the
+prepare/unprepare, because of some strange hosts.
+
+> > +     msleep(50);
+> > +
+> > +     ctx->link->mode_flags &= ~MIPI_DSI_MODE_LPM;
+> > +
+> > +     drm_dsc_pps_payload_pack(&pps, ctx->link->dsc);
+> > +     mipi_dsi_picture_parameter_set(ctx->link, &pps);
+>
+> I'm always surprised why this is sent _after_ turning the display on (unblanking
+> it).  Wouldn't that cause unnecessary corruption?
+
+No idea. I followed the dowsntream command sequences here. Most likely
+the panel is not fully on until it receives the full frame to be
+displayed.
+
+> > +
+> > +     ctx->link->mode_flags |= MIPI_DSI_MODE_LPM;
+> > +
+> > +     return 0;
+> > +}
+> > +
+> > +static int sw43408_prepare(struct drm_panel *panel)
+> > +{
+> > +     struct sw43408_panel *ctx = to_panel_info(panel);
+> > +     int ret;
+> > +
+> > +     ret = regulator_bulk_enable(ARRAY_SIZE(ctx->supplies), ctx->supplies);
+> > +     if (ret < 0)
+> > +             return ret;
+> > +
+> > +     usleep_range(5000, 6000);
+> > +
+> > +     gpiod_set_value(ctx->reset_gpio, 0);
+> > +     usleep_range(9000, 10000);
+> > +     gpiod_set_value(ctx->reset_gpio, 1);
+> > +     usleep_range(1000, 2000);
+> > +     gpiod_set_value(ctx->reset_gpio, 0);
+> > +     usleep_range(9000, 10000);
+> > +
+> > +     ret = sw43408_program(panel);
+> > +     if (ret)
+> > +             goto poweroff;
+> > +
+> > +     return 0;
+> > +
+> > +poweroff:
+> > +     gpiod_set_value(ctx->reset_gpio, 1);
+> > +     regulator_bulk_disable(ARRAY_SIZE(ctx->supplies), ctx->supplies);
+> > +     return ret;
+> > +}
+> > +
+> > +static int sw43408_get_modes(struct drm_panel *panel,
+> > +                           struct drm_connector *connector)
+> > +{
+> > +     struct sw43408_panel *ctx = to_panel_info(panel);
+> > +
+> > +     return drm_connector_helper_get_modes_fixed(connector, ctx->mode);
+> > +}
+> > +
+> > +static int sw43408_backlight_update_status(struct backlight_device *bl)
+> > +{
+> > +     struct mipi_dsi_device *dsi = bl_get_data(bl);
+> > +     uint16_t brightness = backlight_get_brightness(bl);
+> > +
+> > +     return mipi_dsi_dcs_set_display_brightness_large(dsi, brightness);
+> > +}
+> > +
+> > +const struct backlight_ops sw43408_backlight_ops = {
+> > +     .update_status = sw43408_backlight_update_status,
+> > +};
+> > +
+> > +static int sw43408_backlight_init(struct sw43408_panel *ctx)
+> > +{
+> > +     struct device *dev = &ctx->link->dev;
+> > +     const struct backlight_properties props = {
+> > +             .type = BACKLIGHT_PLATFORM,
+> > +             .brightness = 255,
+> > +             .max_brightness = 255,
+> > +     };
+> > +
+> > +     ctx->base.backlight = devm_backlight_device_register(dev, dev_name(dev), dev,
+> > +                                                     ctx->link,
+> > +                                                     &sw43408_backlight_ops,
+> > +                                                     &props);
+> > +
+> > +     if (IS_ERR(ctx->base.backlight))
+> > +             return dev_err_probe(dev, PTR_ERR(ctx->base.backlight),
+> > +                                  "Failed to create backlight\n");
+> > +
+> > +     return 0;
+> > +}
+> > +
+> > +static const struct drm_panel_funcs sw43408_funcs = {
+> > +     .unprepare = sw43408_unprepare,
+> > +     .prepare = sw43408_prepare,
+> > +     .get_modes = sw43408_get_modes,
+> > +};
+> > +
+> > +static const struct drm_display_mode sw43408_default_mode = {
+> > +     .clock = 152340,
+> > +
+> > +     .hdisplay = 1080,
+> > +     .hsync_start = 1080 + 20,
+> > +     .hsync_end = 1080 + 20 + 32,
+> > +     .htotal = 1080 + 20 + 32 + 20,
+> > +
+> > +     .vdisplay = 2160,
+> > +     .vsync_start = 2160 + 20,
+> > +     .vsync_end = 2160 + 20 + 4,
+> > +     .vtotal = 2160 + 20 + 4 + 20,
+> > +
+> > +     .width_mm = 62,
+> > +     .height_mm = 124,
+> > +
+> > +     .type = DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED,
+> > +};
+> > +
+> > +static const struct of_device_id sw43408_of_match[] = {
+> > +     { .compatible = "lg,sw43408", .data = &sw43408_default_mode },
+> > +     { /* sentinel */ }
+> > +};
+> > +MODULE_DEVICE_TABLE(of, sw43408_of_match);
+> > +
+> > +static int sw43408_add(struct sw43408_panel *ctx)
+> > +{
+> > +     struct device *dev = &ctx->link->dev;
+> > +     int ret;
+> > +
+> > +     ctx->supplies[0].supply = "vddi"; /* 1.88 V */
+> > +     ctx->supplies[0].init_load_uA = 62000;
+> > +     ctx->supplies[1].supply = "vpnl"; /* 3.0 V */
+> > +     ctx->supplies[1].init_load_uA = 857000;
+> > +
+> > +     ret = devm_regulator_bulk_get(dev, ARRAY_SIZE(ctx->supplies),
+> > +                                   ctx->supplies);
+> > +     if (ret < 0)
+> > +             return ret;
+> > +
+> > +     ctx->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
+> > +     if (IS_ERR(ctx->reset_gpio)) {
+> > +             dev_err(dev, "cannot get reset gpio %ld\n",
+> > +                           PTR_ERR(ctx->reset_gpio));
+> > +             return PTR_ERR(ctx->reset_gpio);
+> > +     }
+> > +
+> > +     ret = sw43408_backlight_init(ctx);
+> > +     if (ret < 0)
+> > +             return ret;
+> > +
+> > +     ctx->base.prepare_prev_first = true;
+> > +
+> > +     drm_panel_init(&ctx->base, dev, &sw43408_funcs, DRM_MODE_CONNECTOR_DSI);
+> > +
+> > +     drm_panel_add(&ctx->base);
+> > +     return ret;
+> > +}
+> > +
+> > +static int sw43408_probe(struct mipi_dsi_device *dsi)
+> > +{
+> > +     struct sw43408_panel *ctx;
+> > +     struct drm_dsc_config *dsc;
+> > +     int ret;
+> > +
+> > +     ctx = devm_kzalloc(&dsi->dev, sizeof(*ctx), GFP_KERNEL);
+> > +     if (!ctx)
+> > +             return -ENOMEM;
+> > +
+> > +     ctx->mode = of_device_get_match_data(&dsi->dev);
+> > +     dsi->mode_flags = MIPI_DSI_MODE_LPM;
+> > +     dsi->format = MIPI_DSI_FMT_RGB888;
+> > +     dsi->lanes = 4;
+> > +
+> > +     ctx->link = dsi;
+> > +     mipi_dsi_set_drvdata(dsi, ctx);
+> > +
+> > +     ret = sw43408_add(ctx);
+> > +     if (ret < 0)
+> > +             return ret;
+> > +
+> > +     /* The panel is DSC panel only, set the dsc params */
+> > +     dsc = devm_kzalloc(&dsi->dev, sizeof(*dsc), GFP_KERNEL);
+>
+> We've recently decided to store struct drm_dsc_config in struct sw43408_panel
+> and save on an extra allocation.
+>
+> > +     if (!dsc)
+> > +             return -ENOMEM;
+> > +
+> > +     dsc->dsc_version_major = 0x1;
+> > +     dsc->dsc_version_minor = 0x1;
+> > +
+> > +     dsc->slice_height = 16;
+> > +     dsc->slice_width = 540;
+> > +     dsc->slice_count = 2;
+>
+> Maybe incorporate with a comment that slice_count * slice_width == the width of
+> the mode?
+
+ack
+
+>
+> - Marijn
+>
+> > +     dsc->bits_per_component = 8;
+> > +     dsc->bits_per_pixel = 8 << 4;
+> > +     dsc->block_pred_enable = true;
+> > +
+> > +     dsi->dsc = dsc;
+> > +
+> > +     return mipi_dsi_attach(dsi);
+> > +}
+> > +
+> > +static void sw43408_remove(struct mipi_dsi_device *dsi)
+> > +{
+> > +     struct sw43408_panel *ctx = mipi_dsi_get_drvdata(dsi);
+> > +     int ret;
+> > +
+> > +     ret = sw43408_unprepare(&ctx->base);
+> > +     if (ret < 0)
+> > +             dev_err(&dsi->dev, "failed to unprepare panel: %d\n",
+> > +                           ret);
+> > +
+> > +     ret = mipi_dsi_detach(dsi);
+> > +     if (ret < 0)
+> > +             dev_err(&dsi->dev, "failed to detach from DSI host: %d\n", ret);
+> > +
+> > +     drm_panel_remove(&ctx->base);
+> > +}
+> > +
+> > +static struct mipi_dsi_driver sw43408_driver = {
+> > +     .driver = {
+> > +             .name = "panel-lg-sw43408",
+> > +             .of_match_table = sw43408_of_match,
+> > +     },
+> > +     .probe = sw43408_probe,
+> > +     .remove = sw43408_remove,
+> > +};
+> > +module_mipi_dsi_driver(sw43408_driver);
+> > +
+> > +MODULE_AUTHOR("Sumit Semwal <sumit.semwal@linaro.org>");
+> > +MODULE_DESCRIPTION("LG SW436408 MIPI-DSI LED panel");
+> > +MODULE_LICENSE("GPL");
+> >
+> > --
+> > 2.39.2
+> >
+
+
+
+-- 
+With best wishes
+Dmitry
 
