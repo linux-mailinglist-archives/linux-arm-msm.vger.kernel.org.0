@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-15833-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15834-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E8A1892C50
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 19:11:05 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7BBC892C5E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 19:20:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5413B2832E9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 18:11:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E4F011C21354
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 18:20:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2729F3C484;
-	Sat, 30 Mar 2024 18:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D9573BB3D;
+	Sat, 30 Mar 2024 18:20:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UwWLEZ7e"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Phey7Lb9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED113BBC8
-	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Mar 2024 18:10:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A181A374C3
+	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Mar 2024 18:20:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711822261; cv=none; b=JWP3/hQ1pMDtVTsfULirTnHXaTQrRMeGISrtGe1bzjHLIoQFDZ5KgnMPNRjwyJIV6nFvrKQJoyjb6NCk3+HAcral0jNqtpHywkmb2xrw/0sRtIjEC2cxPl+nfTpOCOnB0Mxlg55K0E1AQTBGHETxMhkVfKwVMgVfP4Rwpij+fRo=
+	t=1711822841; cv=none; b=pJJGxu/ETRFeGHj6R8oqQT6ALRYy9iQTu5hGGYzNh8e/IYJnqnKca25qfxsh31MEVm7n9PN9FLoWT8anHx48V2/0yKnyzt3lJk29kArb7USuAw5fUG+8Lltub6wTvPkvtpTej3LkjANZKysSOreAXT42RtgyzsaYmYLeu9+HfmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711822261; c=relaxed/simple;
-	bh=gGWtJStY0jzHlXUNZ/qFEKVUAZbJEmuy2Rf+iVSRPpo=;
+	s=arc-20240116; t=1711822841; c=relaxed/simple;
+	bh=wNuMAvDTh49PUf4kB/WvTjgLBYhqXw0RciUfSLcbIPk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pPvGk8tjhTaoVqrMhCKm1ukJffJ5q5xBPO5XHkWTP/2426szUyaGeRsZATkRXiKy1kHX/pTkQmz2mxrEoPlIzGA1PbqmkXIfp6obsFrYdqyoKF1cumYEyTC91uzsd3nfIv8BltQFmtT+9ks9MlFOy1ZjTC1KebVVBl6/i2jgP38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UwWLEZ7e; arc=none smtp.client-ip=209.85.221.54
+	 In-Reply-To:Content-Type; b=j7T6r+KFmXyZ2I7nCjHx5BQXwEhptfppyiyroYeCCy5yeuFPdHlhe2ZnBNLoijUVkyx5gV0WidSyvSfB+VUf+UrAwTpnlacrqGkz7hU3stmQuC9KpfRgHU0TNBqF9v3gIFbPEQjsAPRrrSgrXzqg4zA5cyZR5tbKOJ57b3HDIJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Phey7Lb9; arc=none smtp.client-ip=209.85.208.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-34175878e30so2228546f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Mar 2024 11:10:59 -0700 (PDT)
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2d6fc3adaacso41035941fa.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Mar 2024 11:20:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711822258; x=1712427058; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1711822838; x=1712427638; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=87ffxS2Z4k6pRWwiORZe6AOO57FJg09xK1iXk/x6q88=;
-        b=UwWLEZ7eVXbJTXRBz0PJCBT0pAN1ONKhOIoi5iZ0KywaZiMzwYFF/QTeg+5wA+vpr8
-         DejMWA79w6qxypNy01R9GuaS5nM1dHy54m13IeROW3SA6hbmIk+jCLSSaZMaNJkExPTP
-         A9lxEDe1Ur62DLzNi0NaAPGpou1ggx4ecwqzl4MEc4ftaLef4f4jYkigexWa19PbspR8
-         AH3S8cnMhrYo9S6n3ZJsUq3Jdf0UqTN0bLWffzXNSHfcZrKuouNtFmuaS6n6SMcKVzqQ
-         jcB4Q+Fk6HwjIpLRB+ladmM7dqhPbyN7bURebl2TgBykwYe9J5r8nmKmmKkdHGMD4ABM
-         YQFA==
+        bh=BprUUVg1fU6jJ/GEGPbOksdY3kkfFu6n4Yk2rAaYkcI=;
+        b=Phey7Lb9hn1d/EOBzDVDs+WQDWGQoV6rq/l7usrWQAYyj7usAX1Kf4O2S5Nsywl37R
+         VL4aOz1d0Z3TGiQjheNwlPFo6JCY78bwHxQJwMFNGbpmlZM6dZPpkkX1PIoXgwpZoCQi
+         4iqsYNM4UHTPUoMIMsYEEwtLvRFdsHGkWebnKZ86D/oKwIyRYToTeisOIkganUHV/ROM
+         JnQ7ZH+Zw3jN9nwYeVEIegSV4XkmcMwADnDOtArmEsXi8YhskZxE6irK3gM0k3ndJUA9
+         2WfCiwVetAwwWKABYsjWm1CHvX6CijT2Br1KOLpO+GsCYy2T1PVTd4OnpCQu8b2CRauQ
+         yXgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711822258; x=1712427058;
+        d=1e100.net; s=20230601; t=1711822838; x=1712427638;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=87ffxS2Z4k6pRWwiORZe6AOO57FJg09xK1iXk/x6q88=;
-        b=L9Lj1mWCC4/pmm9gNIqp1ntcpqcW8Etub9McbCFMeH0Adl8N8cAr2IpjvFp/PMt13B
-         AbaUkRkJHbz6gxXVxRGhhxkrdEufp8rc7MffqZtBI3CtcrCMoL/du08BmeuNwKhquGbI
-         i3wJcHEAEMTHJwHVesnKKjdf31F3/UjzYhBUJvMEhviIuqv4B6CSPOUJrdysCKLgfMgE
-         mLrmxXesC+JhgAUdQHLNuNfOZfZ7fkExrT/Xv+KV69hl83+qHejjq3BTCvKJrzZRCgSz
-         yeJjWSgkvbfjvjFwXtqbL09iIwiwfjUQMfNPn2+rcO1wt3eU1IJYNlpu6v336t8gJKWW
-         d0xw==
-X-Forwarded-Encrypted: i=1; AJvYcCU95vat2sOch+Z3ZZQz38sIuYN9/Dxra4Ltv296/91tQ4d4f2jBCYr+S5LjDXjOoIzAE6v3wHa3q6lJZJEc+B/BHUKDMY8a8A8VeNCjCg==
-X-Gm-Message-State: AOJu0Yyk1PyP9rjZmul64iZNl2xfndJLAmlyaD83BxtPfbJU01+/UTt2
-	FtwE/Xd3ow1sjERrGI/qjijNXALp7JwKWn4LaGECXcei6HIrwl4t+0P7fT07+2Q=
-X-Google-Smtp-Source: AGHT+IHSf24MHXCFM2oQnqc68fb0JfkbU/gQmTyhVXOzuBlSPPZgAtBdkIdsxpek5LvHWlT7coitEw==
-X-Received: by 2002:a5d:4a41:0:b0:341:cf18:70b3 with SMTP id v1-20020a5d4a41000000b00341cf1870b3mr4563234wrs.27.1711822257669;
-        Sat, 30 Mar 2024 11:10:57 -0700 (PDT)
+        bh=BprUUVg1fU6jJ/GEGPbOksdY3kkfFu6n4Yk2rAaYkcI=;
+        b=aeamSYct8yfMOBCbsqxR4vG//DXL8aNC7hAcVz1xcziJMhW3J8+sVqmBqVfR6oAeOF
+         TU9oLLWKhhdqUf2ZpFaGPGWwd8ril7YemuhHqY443BObEDR8JGPFKyoEhjwH1uExPx1M
+         kaX0ksR6zFrGW3r8UfloVAThVvI16iKqv/cnAzMQl1/dJzAEkJe3M5Ct5Zq7mjSj7PYG
+         +iA4NIHpwuS8ysn2Af8DORv68cKqAmbKFK0mkSYiFnYrPEgIr47YuQLBABBhMxj7z+vs
+         Q8NcJkpM5U6tXXxrT2yoDyd9I8o5Xw2KLtJ1YlLFV34wjNURMO4svSLtgw+MXmltKtsP
+         lkXA==
+X-Forwarded-Encrypted: i=1; AJvYcCX0rZttohY3PDnKXZKHvep8kOPxayo1y5z/NA2RrY9oJvLqFbE/+CLtVg606WYs7b7w3PQn4G9tLa2z4npfglYzFSlOvz3EqLRgYjj+4g==
+X-Gm-Message-State: AOJu0YxIFCN2FSkOhfIGbAZuxSanL58fZNPPUjl+J+T171PuIob2DneN
+	WmhpAhsE+HzvZIhz+g3DBrorg7IvrfSww+N52Bxjjtq98YGucuhDo4cpPvHv2O4=
+X-Google-Smtp-Source: AGHT+IEzyvThCaBaeMRRwfrtv2z/vxb/zVg57/dM9GTavbvcYcBPB6yuHiIk8KAPT6bZBiQ6LZwvQg==
+X-Received: by 2002:a2e:a455:0:b0:2d4:5f50:1fa with SMTP id v21-20020a2ea455000000b002d45f5001famr3089501ljn.41.1711822837746;
+        Sat, 30 Mar 2024 11:20:37 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.223.16])
-        by smtp.gmail.com with ESMTPSA id ce8-20020a5d5e08000000b003433e4c6d43sm3312954wrb.32.2024.03.30.11.10.55
+        by smtp.gmail.com with ESMTPSA id ay8-20020a05600c1e0800b0041559c59ee3sm2361398wmb.12.2024.03.30.11.20.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 30 Mar 2024 11:10:56 -0700 (PDT)
-Message-ID: <e1a013e3-52df-441c-b0b0-06b6a877f151@linaro.org>
-Date: Sat, 30 Mar 2024 19:10:54 +0100
+        Sat, 30 Mar 2024 11:20:37 -0700 (PDT)
+Message-ID: <72c162cc-45e0-48b6-8d90-d59fac299375@linaro.org>
+Date: Sat, 30 Mar 2024 19:20:35 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,23 +77,22 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] dt-bindings: panel: Add LG SW43408 MIPI-DSI panel
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Sumit Semwal <sumit.semwal@linaro.org>,
- Caleb Connolly <caleb.connolly@linaro.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v2 1/3] dt-bindings: net: wireless: ath10k: add
+ qcom,no-msa-ready-indicator prop
+To: Marc Gonzalez <mgonzalez@freebox.fr>, Kalle Valo <kvalo@kernel.org>,
+ Jeff Johnson <quic_jjohnson@quicinc.com>, ath10k <ath10k@lists.infradead.org>
+Cc: wireless <linux-wireless@vger.kernel.org>, DT
+ <devicetree@vger.kernel.org>, MSM <linux-arm-msm@vger.kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- Vinod Koul <vkoul@kernel.org>, Caleb Connolly <caleb@connolly.tech>
-References: <20240330-lg-sw43408-panel-v2-0-293a58717b38@linaro.org>
- <20240330-lg-sw43408-panel-v2-1-293a58717b38@linaro.org>
+ Conor Dooley <conor+dt@kernel.org>,
+ Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Jami Kettunen <jamipkettunen@gmail.com>,
+ Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+References: <fd26ce4a-a9f3-4ada-8d46-ed36fb2456ca@freebox.fr>
+ <84f20fb5-5d48-419c-8eff-d7044afb81c0@freebox.fr>
 Content-Language: en-US
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -140,24 +139,23 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240330-lg-sw43408-panel-v2-1-293a58717b38@linaro.org>
+In-Reply-To: <84f20fb5-5d48-419c-8eff-d7044afb81c0@freebox.fr>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 30/03/2024 16:00, Dmitry Baryshkov wrote:
-> From: Sumit Semwal <sumit.semwal@linaro.org>
+On 28/03/2024 18:36, Marc Gonzalez wrote:
+> The ath10k driver waits for an "MSA_READY" indicator
+> to complete initialization. If the indicator is not
+> received, then the device remains unusable.
 > 
-> LG SW43408 is 1080x2160, 4-lane MIPI-DSI panel present on Google Pixel 3
-> phones.
+> cf. ath10k_qmi_driver_event_work()
 > 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
-> [caleb: convert to yaml]
-> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+> Several msm8998-based devices are affected by this issue.
+> Oddly, it seems safe to NOT wait for the indicator, and
+> proceed immediately when QMI_EVENT_SERVER_ARRIVE.
+> 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+This is v2, so where is the changelog?
 
 Best regards,
 Krzysztof
