@@ -1,75 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-15804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15805-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 18048892925
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 04:59:43 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E47E89292D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 05:00:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3B3BF1C2132A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 03:59:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 98A641F21FA6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Mar 2024 04:00:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6E638F40;
-	Sat, 30 Mar 2024 03:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 964FBBA26;
+	Sat, 30 Mar 2024 03:59:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yX3NSfMs"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wbXSA4pc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D470879F0
-	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Mar 2024 03:59:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4D0847B
+	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Mar 2024 03:59:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711771174; cv=none; b=oUwO8qPOMOj2FLMt6osSc5KEAALP0o/sWn8AFFrUzjGWH8c73UqNbCcq7oOu+gA49PIPxFALPS17S5gSAztki1sF4+Fpqj6+d0BPvfJC1ULgKTlqepNn9Kij1KIowCBELl4khvxUrYU1tvGCZIEd9Ip2BkqD4qcw58bdnEefeDw=
+	t=1711771176; cv=none; b=CVYaUm+EVAM/YJJx2oTnLJ1nLCQQSPxFZRCzHnaXgmBxpyw6Ahl4vF+TijMJOnuPBoKZGRuUjmRn0tYHCzB47oaNeXk2Q+yUlnm4193EgrVYiR1LJN+1nma6mi/8HJQZSabiH6UQPibVwO7Vm5NtPThHspR8xRSwMqFp43HRAYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711771174; c=relaxed/simple;
-	bh=0TS/PBZqHhbO4PC1chvE0gJF6KfO5JaOJ80vREZUMSw=;
+	s=arc-20240116; t=1711771176; c=relaxed/simple;
+	bh=1dHUwNPq/ZE2lZqujLo0paqKG5T8bLmbO34BUbpj00o=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=iC/waf/a+9mN8Y9xvem+BxJjFCvP/j6seiAiimSbVyVvlqCEjIZimk+BtZeBy1S3qi2zNJgMa1cOYTiaqf2A/sDoaEQlug5Fx8/Bjr/M7867PdVTmLulK1NpLRA0ovML46lyDSpKOMy2lzmWXGDvUsIfQzdRFBWawfpHVkvsdAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yX3NSfMs; arc=none smtp.client-ip=209.85.167.51
+	 In-Reply-To:To:Cc; b=A730ZKA5ZG3Jf99TX35MUF+3/aqmI3dlKtDg0PQPUQO9gIRR/BdOG2pH/RE6TnrAQIshCxMo9sGny0wE3G0q1kfJ6ruzLaheCAbXHruT7n0bMOx0zQtB7D67dc7cttWHWtqYIRknsKSYGK8Iw0SqIGezggxawqKk0blT/BvViMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wbXSA4pc; arc=none smtp.client-ip=209.85.167.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-515b43b39fdso2170829e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 20:59:32 -0700 (PDT)
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-515c198e835so2760642e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Mar 2024 20:59:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711771171; x=1712375971; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1711771172; x=1712375972; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=nEHv7161rF10nD2iZaJbFgvPRz2VUElIFclun8j93Iw=;
-        b=yX3NSfMsc1FZcHp3FchjJ8MZtF8CIUZfs+T4I+f1q2KWrknQJPo8XN63SnHQ9qkRqP
-         Guhw0r11Ir2m9OkyjO5PNH8QasBwkp1gEdgzUmlYJGsNP9lcNiWmsDkehzu12lyVQiz+
-         p0BIX1Yx+3wCEcSmVcIpp81rd1YBOgv4uSl4HaBBTpKfcXwxChBSCYlt51howHQEj1OQ
-         vOTMsMQLBQd5MHi8KmvFyI774h8+5DzVD9oEhisH8uXiLaQXGYzNa9sIgFISlEESToLw
-         y52heSqjEaYlc9DgDde1FYb0mcRmdeYgXMFGt0uxjggUK4cyxyPEGRZfa3Z1i2Wwfpag
-         ueQQ==
+        bh=gXi248XgYEI1aNqzH18MSPcwgnE2Ghs0byyxqmpezB8=;
+        b=wbXSA4pceBAT+JanKxYoSV0QT1ODm2PVY6mSOjfJUVpirr789WP7mcSeYGWKudR2lK
+         C+Wpw9eUVt3jAV2xuZ3zB98ee5A/ORFEt1GNsmH/PwrrVhwWE5uEe1xDODrGuH2JgXEg
+         YwmaJjKkdzmgTNGDl3bQrcXVVL1SwDaIQyWEAq5TDPO/DhRXi0hWX5x3GxZyg7CnAPVM
+         P3nQbJBBD+TTzC9FY8ijqNU8f+61Yy/LVVP5W30TvGSQtwGMf8LrmnM0OjaH8tXPk+jO
+         2A9859m9YcfDMLfrs+pZHmsZPFF1EVoGpsAQ0ng35H+yzvKt+wF5QbRAJjH4+y/KRsc4
+         Wgvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711771171; x=1712375971;
+        d=1e100.net; s=20230601; t=1711771172; x=1712375972;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=nEHv7161rF10nD2iZaJbFgvPRz2VUElIFclun8j93Iw=;
-        b=EG03q1bUf/CHMYGfaVEIj4ez7vy16Qy/DWFgUTFfquS/xVSL4xSUP6dPNdYEiWdMXR
-         PppBF6SanGR32plNNbfSlvVnuozKpQqSz9nzDhXBDyS1r5aO+vVFHHXl2DIqBUE2tnl6
-         FWNylHyTsCnokJMbQhAanS3YQStwZrIOuaX8y0SSzfYzWCQv0dga8AGvTPNt+39Z3eIn
-         bCfLIS0H1iyocC509EqxuMbwc7R1fBjgJKyw47Gf79FEY4QM8fFObCHgXzr++XtdaumT
-         q0ZexKE1tqjzgAitDcmn8NMWqyWYzRi2FwZOvZCmCT7EEfHkK1ANiJVCrArtvQ3i/P4v
-         53fQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWPT+V4ywk5HIXPOUv5ZfRSkwT404itYzCWSdyYBZb09vKKWf+xd19mgafpVhB5C9byS3UbGdbRAdnllkZLIkMtTt+Lb0Ftn+0RHmPhyQ==
-X-Gm-Message-State: AOJu0YzfrC7EffgF3OjHcuvjvvMVLu2F5FIM2KYg/D3nOMGloQoZcsVa
-	VM+0JDKmlAPlpZeGC20ODxR0n+9ZYHgPIXRAYniy2OEXRdxMUERWHjvBp+5niSo=
-X-Google-Smtp-Source: AGHT+IE1ThAnidcAuJUVgaWX29h3ZaFTTmFMn3wvVDDkWWIpuaRfERN6frP0sFDgQn0vjwNXMb6wXw==
-X-Received: by 2002:a05:6512:3b8d:b0:513:922a:4334 with SMTP id g13-20020a0565123b8d00b00513922a4334mr1661298lfv.1.1711771171043;
+        bh=gXi248XgYEI1aNqzH18MSPcwgnE2Ghs0byyxqmpezB8=;
+        b=Hx7cHX6Cn8L7+iTql8XCh/B4UEV/dco4dGCiaj61dP8oTkmop5QMN2JERJFlfb0R6x
+         y6ZaOMRFl85dboaUx1svJvjwNqh4E3RMaM8YP1aGbJ8B2yd/Rk6jnD6kXvHE4LqbAyQm
+         xuGyD0+3kabpptnJ3KsjRdrHnhLt3fd3J5YN125JFqM0F8y0JIycMwfplnfdbMgwXVh4
+         JpcFk8UAOrnSotTkgxc6fh8Fp731ssQ0v3J/0syzyzEJLEnx8wDx3FjSAZcO1RzEFdWr
+         WhFdnZjC+iCn84ehew3f+bNP9gCa/0j/1i6HEF3/HE4Gq8MQCklz8ftjCUYXhj+EAIyr
+         1XCQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUc6Hw8TkGnGzUUJK8cCtLFSwYvmM2MMgb4iyi3VM+Za/eZMJmENBnXGpa2xjOg/tG1ifklRFggb7r+Z0W8y3IlOuXRSlakAr4EB7dIpw==
+X-Gm-Message-State: AOJu0YxKV2/sC+ac9Vqb1uiqp9lcxtB30MOJTt2EFD2vcCbectZw7Xas
+	GTggYam/Dcy6Db0cLrpdx6aMNr4Ir3HykPav1bWYPo15/YB+sXk9/9uc5djJJilCmcwk1FMppMR
+	G
+X-Google-Smtp-Source: AGHT+IExcqjcMc4gAFYkWcvF9qS8XkNUfR5sfZy2OcV9JbTxQHLoeNf+8x0CjweH/JN0g99cIN+OxA==
+X-Received: by 2002:a05:6512:48d:b0:513:cb0a:9632 with SMTP id v13-20020a056512048d00b00513cb0a9632mr2244206lfq.50.1711771171680;
         Fri, 29 Mar 2024 20:59:31 -0700 (PDT)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id br2-20020a056512400200b00515d1393f3csm423957lfb.104.2024.03.29.20.59.30
+        by smtp.gmail.com with ESMTPSA id br2-20020a056512400200b00515d1393f3csm423957lfb.104.2024.03.29.20.59.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Mar 2024 20:59:30 -0700 (PDT)
+        Fri, 29 Mar 2024 20:59:31 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 30 Mar 2024 05:59:28 +0200
-Subject: [PATCH 1/3] dt-bindings: panel: Add LG SW43408 MIPI-DSI panel
+Date: Sat, 30 Mar 2024 05:59:29 +0200
+Subject: [PATCH 2/3] drm/mipi-dsi: add mipi_dsi_compression_mode_raw()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,7 +79,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240330-lg-sw43408-panel-v1-1-f5580fc9f2da@linaro.org>
+Message-Id: <20240330-lg-sw43408-panel-v1-2-f5580fc9f2da@linaro.org>
 References: <20240330-lg-sw43408-panel-v1-0-f5580fc9f2da@linaro.org>
 In-Reply-To: <20240330-lg-sw43408-panel-v1-0-f5580fc9f2da@linaro.org>
 To: Sumit Semwal <sumit.semwal@linaro.org>, 
@@ -92,79 +93,104 @@ To: Sumit Semwal <sumit.semwal@linaro.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
  Conor Dooley <conor+dt@kernel.org>
 Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Vinod Koul <vkoul@kernel.org>, Caleb Connolly <caleb@connolly.tech>
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1583;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3402;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=LJ+girYe4vykYjxl7S4n4qmMz70uzdqbzojIgAwohpA=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmB44hkYXDEZ4U1NN773kLK8OhcQ/ESozP9fWl1
- 6XuWJvjcSuJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZgeOIQAKCRCLPIo+Aiko
- 1YwHCACTsVHb+AVpPFVAJZeqrxDPnebzaXXZ/O+m+gWCihSTksXW7Gac675ctl4z+1HouDBncPg
- c8NqCesf1zSkhB6cZ9frhnjvw0ruayMxBT5Zc4BRNohFGv7Urz6TZ1/++ylmGBCZVpvvvEIiP4O
- 1dkz1t1/EH6Vn3l9deKIiHqsVZxErRmZHWU96y95BJJc6Fd3dwlipgy6iSBZJorrrokMw5E2gTJ
- IdnD2wX3506sW1Vq0T80gc35BydEVKi502pYN2itI8nv5pHrMvyeEEnZLMqp9s4I02EgxoSAhWI
- zDqreN34UTlIpRoy5sWYQ2kmxkIVp1GoEnkdCHNr886ueVko
+ bh=1dHUwNPq/ZE2lZqujLo0paqKG5T8bLmbO34BUbpj00o=;
+ b=owGbwMvMwMXYbdNlx6SpcZXxtFoSQxp7n2LDer59c2eE62z6cLjhcvt1pn18ebOVrm3jbOacZ
+ XOrNXp6J6MxCwMjF4OsmCKLT0HL1JhNyWEfdkythxnEygQyhYGLUwAm8oeJ/a9MuG3iCbHu+3Y/
+ ivvue7oeWlJ+I/HySrsnf+J/5AcJvXoqIOivkp8c9urdu3iRhXyT/P4uO82181qg+b32U591bby
+ N1dZJcProb4/sUuk2Td1+RCC9Ymt/G1PW6yxNdzGLkEOyTNFX1JXnVPpfjzu/uF3xtmvKpYdXis
+ ybTuUWZy9Sr0uvnV7z8li88pZdcxLfOTmXLpfRfNjTM1N18bmazvhn10xCXTwm6QbP9+yavOn03
+ ObZutxeF46d9eXUvapwZAOH4cKulZpWQmmmoaoWv8J4c2Yc99+7+uGrtv47sfzSdf3bzc5HHLlW
+ evmzq6zyvcgQVrOIwD2XIs0bllVu2Zt391DC1/KVE+WNAA==
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-From: Sumit Semwal <sumit.semwal@linaro.org>
+The LG SW43408 panel requires sending non-standard data as a part of the
+MIPI_DSI_COMPRESSION_MODE packet. Rather than hacking existing
+mipi_dsi_compression_mode() add mipi_dsi_compression_mode_raw(), which
+accepts raw data buffer and length.
 
-LG SW43408 is 1080x2160, 4-lane MIPI-DSI panel present on Google Pixel 3
-phones.
-
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
-[caleb: convert to yaml]
-Signed-off-by: Caleb Connolly <caleb@connolly.tech>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../bindings/display/panel/lg,sw43408.yaml         | 37 ++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ drivers/gpu/drm/drm_mipi_dsi.c | 34 ++++++++++++++++++++++++++--------
+ include/drm/drm_mipi_dsi.h     |  1 +
+ 2 files changed, 27 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/display/panel/lg,sw43408.yaml b/Documentation/devicetree/bindings/display/panel/lg,sw43408.yaml
-new file mode 100644
-index 000000000000..f3c9c9343c4f
---- /dev/null
-+++ b/Documentation/devicetree/bindings/display/panel/lg,sw43408.yaml
-@@ -0,0 +1,37 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/display/panel/lg,sw43408.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
+index ef6e416522f8..f340d1e0a9a5 100644
+--- a/drivers/gpu/drm/drm_mipi_dsi.c
++++ b/drivers/gpu/drm/drm_mipi_dsi.c
+@@ -645,29 +645,47 @@ int mipi_dsi_set_maximum_return_packet_size(struct mipi_dsi_device *dsi,
+ EXPORT_SYMBOL(mipi_dsi_set_maximum_return_packet_size);
+ 
+ /**
+- * mipi_dsi_compression_mode() - enable/disable DSC on the peripheral
++ * mipi_dsi_compression_mode_raw() - control DSC on the peripheral
+  * @dsi: DSI peripheral device
+- * @enable: Whether to enable or disable the DSC
++ * @data: data to be sent to the device
++ * @len: size of the data buffer
+  *
+- * Enable or disable Display Stream Compression on the peripheral using the
++ * Control the Display Stream Compression on the peripheral using the
+  * default Picture Parameter Set and VESA DSC 1.1 algorithm.
+  *
+  * Return: 0 on success or a negative error code on failure.
+  */
+-ssize_t mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
++ssize_t mipi_dsi_compression_mode_raw(struct mipi_dsi_device *dsi, void *data, size_t len)
+ {
+-	/* Note: Needs updating for non-default PPS or algorithm */
+-	u8 tx[2] = { enable << 0, 0 };
+ 	struct mipi_dsi_msg msg = {
+ 		.channel = dsi->channel,
+ 		.type = MIPI_DSI_COMPRESSION_MODE,
+-		.tx_len = sizeof(tx),
+-		.tx_buf = tx,
++		.tx_len = len,
++		.tx_buf = data,
+ 	};
+ 	int ret = mipi_dsi_device_transfer(dsi, &msg);
+ 
+ 	return (ret < 0) ? ret : 0;
+ }
++EXPORT_SYMBOL(mipi_dsi_compression_mode_raw);
 +
-+title: LG SW43408 1080x2160 DSI panel
++/**
++ * mipi_dsi_compression_mode() - enable/disable DSC on the peripheral
++ * @dsi: DSI peripheral device
++ * @enable: Whether to enable or disable the DSC
++ *
++ * Enable or disable Display Stream Compression on the peripheral using the
++ * default Picture Parameter Set and VESA DSC 1.1 algorithm.
++ *
++ * Return: 0 on success or a negative error code on failure.
++ */
++ssize_t mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
++{
++	/* Note: Needs updating for non-default PPS or algorithm */
++	u8 tx[2] = { enable << 0, 0 };
 +
-+maintainers:
-+  - Caleb Connolly <caleb.connolly@linaro.org>
-+
-+description: |
-+  This panel is used on the Pixel 3, it is a 60hz OLED panel which
-+  required DSC (Display Stream Compression) and has rounded corners.
-+
-+allOf:
-+  - $ref: panel-common.yaml#
-+
-+properties:
-+  compatible:
-+    items:
-+      - const: lg,sw43408
-+
-+  reg: true
-+  port: true
-+  vddi-supply: true
-+  vpnl-supply: true
-+  reset-gpios: true
-+
-+additionalProperties: false
-+
-+required:
-+  - compatible
-+  - vddi-supply
-+  - vpnl-supply
-+  - reset-gpios
-+...
++	return mipi_dsi_compression_mode_raw(dsi, tx, sizeof(tx));
++}
+ EXPORT_SYMBOL(mipi_dsi_compression_mode);
+ 
+ /**
+diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
+index c0aec0d4d664..321d2b019687 100644
+--- a/include/drm/drm_mipi_dsi.h
++++ b/include/drm/drm_mipi_dsi.h
+@@ -242,6 +242,7 @@ int mipi_dsi_turn_on_peripheral(struct mipi_dsi_device *dsi);
+ int mipi_dsi_set_maximum_return_packet_size(struct mipi_dsi_device *dsi,
+ 					    u16 value);
+ ssize_t mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable);
++ssize_t mipi_dsi_compression_mode_raw(struct mipi_dsi_device *dsi, void *data, size_t len);
+ ssize_t mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
+ 				       const struct drm_dsc_picture_parameter_set *pps);
+ 
 
 -- 
 2.39.2
