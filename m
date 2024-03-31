@@ -1,158 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-15880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2C50B893302
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Mar 2024 18:33:26 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 118EE8935E8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Mar 2024 22:46:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AD7F61F25883
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Mar 2024 16:33:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 791CDB21BCA
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Mar 2024 20:45:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC7CD14D297;
-	Sun, 31 Mar 2024 16:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF8BC14534F;
+	Sun, 31 Mar 2024 20:45:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p0K703y1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="e0hcGdwP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from a.mx.secunet.com (a.mx.secunet.com [62.96.220.36])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4428514C5B1;
-	Sun, 31 Mar 2024 16:27:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=62.96.220.36
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711902434; cv=fail; b=jM4BMfCVe0ZU4pFi82PHUaW5aMBGAGt6/34Yymr3iGWF8XRxO+vZboZritUESD70WYTTvg4YeKYrWrJR2B6xoixnadPcsVh/pBVa7lAy5myQ8GaJrYO0a2ytFsc7ckE9XmNZtPBJ4nzLqhHC0sIp6hFXOhHJy+RkzJW2H6fkvCY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711902434; c=relaxed/simple;
-	bh=ynEEvfZfM0Uvl7G9oYl7YDpYAQvFFwcG5qLQbWzN4Tw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jOhgq4w4BlaJgBnOqfJQPAqKekLOaZiuDk3YKq6ldwCIoXCSWFYJTJkUhk2tGfDrfvB0kW/ePHiRZ6IpYHlyJ9zXzgQ5tFgN87waPn/bQool4alk7r6gOEMKLucn+wfpVc0S1E3kpHmZ7iUSlFumYt+w6lglD0H6d2I7vRxaM0k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=fail smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0K703y1; arc=none smtp.client-ip=10.30.226.201; arc=fail smtp.client-ip=62.96.220.36
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=linuxfoundation.org
-Received: from localhost (localhost [127.0.0.1])
-	by a.mx.secunet.com (Postfix) with ESMTP id F0A80208B5;
-	Sun, 31 Mar 2024 18:27:10 +0200 (CEST)
-X-Virus-Scanned: by secunet
-Received: from a.mx.secunet.com ([127.0.0.1])
-	by localhost (a.mx.secunet.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id STjrsczGbzaL; Sun, 31 Mar 2024 18:27:10 +0200 (CEST)
-Received: from mailout2.secunet.com (mailout2.secunet.com [62.96.220.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by a.mx.secunet.com (Postfix) with ESMTPS id 3C11D20185;
-	Sun, 31 Mar 2024 18:27:10 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 a.mx.secunet.com 3C11D20185
-Received: from cas-essen-01.secunet.de (unknown [10.53.40.201])
-	by mailout2.secunet.com (Postfix) with ESMTP id 2F850800051;
-	Sun, 31 Mar 2024 18:27:10 +0200 (CEST)
-Received: from mbx-essen-01.secunet.de (10.53.40.197) by
- cas-essen-01.secunet.de (10.53.40.201) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Sun, 31 Mar 2024 18:27:10 +0200
-Received: from Pickup by mbx-essen-01.secunet.de with Microsoft SMTP Server id
- 15.1.2507.17; Sun, 31 Mar 2024 16:24:01 +0000
-X-sender: <linux-usb+bounces-8673-peter.schumann=secunet.com@vger.kernel.org>
-X-Receiver: <peter.schumann@secunet.com>
- ORCPT=rfc822;peter.schumann@secunet.com NOTIFY=NEVER;
- X-ExtendedProps=BQAVABYAAgAAAAUAFAARAJ05ab4WgQhHsqdZ7WUjHykPADUAAABNaWNyb3NvZnQuRXhjaGFuZ2UuVHJhbnNwb3J0LkRpcmVjdG9yeURhdGEuSXNSZXNvdXJjZQIAAAUAagAJAAEAAAAAAAAABQAWAAIAAAUAQwACAAAFAEYABwADAAAABQBHAAIAAAUAEgAPAGAAAAAvbz1zZWN1bmV0L291PUV4Y2hhbmdlIEFkbWluaXN0cmF0aXZlIEdyb3VwIChGWURJQk9IRjIzU1BETFQpL2NuPVJlY2lwaWVudHMvY249UGV0ZXIgU2NodW1hbm41ZTcFAAsAFwC+AAAAQ5IZ35DtBUiRVnd98bETxENOPURCNCxDTj1EYXRhYmFzZXMsQ049RXhjaGFuZ2UgQWRtaW5pc3RyYXRpdmUgR3JvdXAgKEZZRElCT0hGMjNTUERMVCksQ049QWRtaW5pc3RyYXRpdmUgR3JvdXBzLENOPXNlY3VuZXQsQ049TWljcm9zb2Z0IEV4Y2hhbmdlLENOPVNlcnZpY2VzLENOPUNvbmZpZ3VyYXRpb24sREM9c2VjdW5ldCxEQz1kZQUADgARAC7JU/le071Fhs0mWv1VtVsFAB0ADwAMAAAAbWJ4LWVzc2VuLTAxBQA8AAIAAA8ANgAAAE1pY3Jvc29mdC5FeGNoYW5nZS5UcmFuc3BvcnQuTWFpbFJlY2lwaWVudC5EaXNwbGF5TmFtZQ8ADwAAAFNjaHVtYW5uLCBQZXRlcgUADAACAAAFAGwAAgAABQBYABcASAAAAJ05ab4WgQhHsqdZ7WUjHylDTj1TY2h1bWFubiBQZXRlcixPVT1Vc2VycyxPVT1NaWdyYXRpb24sREM9c2VjdW5ldCxEQz1kZQUAJgACAAEFACIADwAxAAAAQXV0b1Jlc3BvbnNlU3VwcHJlc3M6IDANClRyYW5zbWl0SGlzdG9yeTogRmFsc
-	2UNCg8ALwAAAE1pY3Jvc29mdC5FeGNoYW5nZS5UcmFuc3BvcnQuRXhwYW5zaW9uR3JvdXBUeXBlDwAVAAAATWVtYmVyc0dyb3VwRXhwYW5zaW9uBQAjAAIAAQ==
-X-CreatedBy: MSExchange15
-X-HeloDomain: a.mx.secunet.com
-X-ExtendedProps: BQBjAAoAULJAQuxQ3AgFAGEACAABAAAABQA3AAIAAA8APAAAAE1pY3Jvc29mdC5FeGNoYW5nZS5UcmFuc3BvcnQuTWFpbFJlY2lwaWVudC5Pcmdhbml6YXRpb25TY29wZREAAAAAAAAAAAAAAAAAAAAAAAUASQACAAEFAGIACgA3AAAArYoAAAUABAAUIAEAAAAaAAAAcGV0ZXIuc2NodW1hbm5Ac2VjdW5ldC5jb20FAAYAAgABBQApAAIAAQ8ACQAAAENJQXVkaXRlZAIAAQUAAgAHAAEAAAAFAAMABwAAAAAABQAFAAIAAQUAZAAPAAMAAABIdWI=
-X-Source: SMTP:Default MBX-DRESDEN-01
-X-SourceIPAddress: 62.96.220.36
-X-EndOfInjectedXHeaders: 12995
-X-Virus-Scanned: by secunet
-Received-SPF: Pass (sender SPF authorized) identity=mailfrom; client-ip=147.75.199.223; helo=ny.mirrors.kernel.org; envelope-from=linux-usb+bounces-8673-peter.schumann=secunet.com@vger.kernel.org; receiver=peter.schumann@secunet.com 
-DKIM-Filter: OpenDKIM Filter v2.11.0 a.mx.secunet.com 8524220847
-X-Original-To: linux-usb@vger.kernel.org
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal: i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711869445; cv=none; b=URiIMmqg3vMhLCPF9eYcYfECIz/8h5qgSKfXojPEbiMli8G+bUo/fvX+lpBTbj1aiH6CQwQL8dJ9zccFG0cRs4yQ78oxewAc8GoS1DOzxry8qIkhR32aH3L2Y5e56mzkzMppb4FroBqRcSkFdb2MJDtesr3JMLzmvyK9GK9RJKU=
-ARC-Message-Signature: i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711869445; c=relaxed/simple;
-	bh=ynEEvfZfM0Uvl7G9oYl7YDpYAQvFFwcG5qLQbWzN4Tw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PkMeU64h4ZoduPUpE2whIoVclOwTuvDkOHkdrsJluCMckqV/Hp3rCibkHe2G7zITGDVL11AX2aPyFk/UPaLsyRdoizg/FqC6ddTOEMdi6Ee9wijxCVpQJ99BQ3Mt2dP5FkY75LzPXjLrI3NgJYiERxYBYDMgt9Zdeg7XN95Xn0o=
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0K703y1; arc=none smtp.client-ip=10.30.226.201
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711869444;
-	bh=ynEEvfZfM0Uvl7G9oYl7YDpYAQvFFwcG5qLQbWzN4Tw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=p0K703y1ptIrBg6wSmIE2iJATRRk+tuDS7C4g0yH7VF+WjMxh4jJBcxnbmARGkU0v
-	 RjK8m1E7iNw6y9t4+0Nwlgr8qM1YGbpaBKRF2+FZLztwRaEzEHsp4tGR/aosV6qdd6
-	 YADyRuIiqGwQ7PLMdeFOSjvqIZctA0adkvhEEwIs=
-Date: Sun, 31 Mar 2024 09:17:20 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-Subject: Re: [PATCH v2] dt-bindings: usb: qcom,pmic-typec: update example to
- follow connector schema
-Message-ID: <2024033109-reporter-blooming-5217@gregkh>
-References: <20240331-typec-fix-example-v2-1-f56fffe4f37c@linaro.org>
-Precedence: bulk
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C3C26AE1
+	for <linux-arm-msm@vger.kernel.org>; Sun, 31 Mar 2024 20:45:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1711917953; cv=none; b=MKh/rBHtDYlEyqOw1P+gJ5cHxFmolAcOux/5Vgas0+Fq7fTypxUvN/N3IQsl4VqJ/aAHn+kQIp4qilqbQ00J7SzYymH1ZZre8X5X3FCio4g7+WwS79F3Ark/gji/xihwCN42i7n2RSDOv4xIU6RmSZIfL/scXLeu0Cx+CaOxp/M=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1711917953; c=relaxed/simple;
+	bh=WxrAGCcX9y1DQjbk7j8vNeh8QM9ep0NwfvNj5+enTf0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=JM2UON1NgBTmefOX9RS69IXh55/Rc97DRgKkwnC8ei96iMLCzxZbWH9fvJhA63MBJdbrw2Ej+3znQTUEqZMTgF1bavN94G60Zfy9BqoSYO5BckseuadEILl/ifptSHIh7AIUFGyk+of44oK0ZLdc+k95+7/2u4tsMuDiaVpIlaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=e0hcGdwP; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2d48d75ab70so49909891fa.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 31 Mar 2024 13:45:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1711917950; x=1712522750; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1twafGTjkCxgep99iHCP909BFtwNP/9s0Y+i/DCt0V4=;
+        b=e0hcGdwPgDrW1eEQN2d3mn8y7vZqJa6Q+90z3EhkzdxS882V7PjNf4oX77lYiRjio4
+         nlyx/iU9QrOEeaqkVlz6jDvnasHZYQBdVRd+8c8guprIX3QtuoSLwnluDj5/G85rbzXr
+         5uAsME7Q65BgDhdnsPnOEeWLNckuS4Whok99JZJgTG4W6HYrc9NDE6otc7vHyhy19an5
+         LSUHllWkHci4Lja6ZgiT/2R1iwAms80DChW8bnMTXLWH7Hr6rdOClQFFpwnqJqFubF3e
+         F6ENgWbbEmCkv4wj93KF2AnbVNgduEkOTXSVg/55Ub2AoFFcBHmooW4F9ZIHrbq3eMDW
+         1TDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711917950; x=1712522750;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1twafGTjkCxgep99iHCP909BFtwNP/9s0Y+i/DCt0V4=;
+        b=I/xXNTQ6Vb8VXFFjzHGtalkJw10bTjpnvsbITzoPq9Jj7tPW+5hhM1Qs6Dm8xBd3Pc
+         +UX8vbMelaEXs511rmGQirjEqsPatWapKsKAHcfU6qJhkUUxO6tiDXaTGbYQ7vd4JH2+
+         KvKziN38BiaZJvmWE53ankEJe8UHLa+fc+C8Zheh6J0p0JCKvvVwpGhoFHl+tQaiR2Iv
+         78U3sD2DZ3uctZEQjXjZlbA5l8wkv8lcq3Wj5PTMAl/FMX5Y0gDIly+JtLlDtMaHP2tp
+         7vE3wl31TAma84Gll94YWnJAZ0BWM4qC9ycsVs1OtpLC+x2sR3xKsF6yiL0umMgCXiQw
+         B8vg==
+X-Forwarded-Encrypted: i=1; AJvYcCXN7pLJj1D1CNtiP3b/M64/aEeugP1laTk5xztn9VxIRdPwbbyLXfpLN13YhqgcBV1t9xs0wd8Ms/9Ksa8uKgFW0lquLM6a3tDewSUm0w==
+X-Gm-Message-State: AOJu0Yx3naVeNOtQocOuaemD29WEeuY2AtKwhSlqaQoCH1WtN9gRdYiv
+	7BgE2gcH9TobAwZYPuC32+6xLrYadFmKwAtA/aEwL5wc88YpJ733y0etewfNJ0TA4lUiN+1/bxA
+	7
+X-Google-Smtp-Source: AGHT+IGlgUpLxGZ4IMDU22PvHtUiUcw9q544xvbLVNB/NIOVdBQC05kVxrUPyAPTwFbgqpUnP6n0mg==
+X-Received: by 2002:a05:6512:2395:b0:516:a148:2f2 with SMTP id c21-20020a056512239500b00516a14802f2mr3343912lfv.38.1711917949956;
+        Sun, 31 Mar 2024 13:45:49 -0700 (PDT)
+Received: from umbar.lan ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id x21-20020a056512047500b00515cf449059sm907445lfd.166.2024.03.31.13.45.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 31 Mar 2024 13:45:49 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Sun, 31 Mar 2024 23:45:48 +0300
+Subject: [PATCH v2] drm/bridge: adv7511: make it honour next bridge in DT
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240331-typec-fix-example-v2-1-f56fffe4f37c@linaro.org>
-X-EXCLAIMER-MD-CONFIG: 2c86f778-e09b-4440-8b15-867914633a10
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240331-adv7511-next-bridge-v2-1-7356d61dc7b2@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAHvLCWYC/32NSw7CMAxEr1J5TVCcNvxW3AN1kRC3tYQS5FRRU
+ dW7E3oAlm8082aFTMKU4dasIFQ4c4oVzKGB5+TiSIpDZTDadLrVV+VCOVtEFWmZlRcOtYI6XLw
+ nbbuOoC7fQgMvu/XRV544z0k++0nBX/rfV1ChCuiCNYaGk2nvL45O0jHJCP22bV+Hzav+twAAA
+ A==
+To: Andrzej Hajda <andrzej.hajda@intel.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
+ Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2494;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=WxrAGCcX9y1DQjbk7j8vNeh8QM9ep0NwfvNj5+enTf0=;
+ b=owGbwMvMwMXYbdNlx6SpcZXxtFoSQxrn6do86d0p16N2qpopXnc5PcnV94P2+5/VXR+jtq/ep
+ Sz4X92mk9GYhYGRi0FWTJHFp6Blasym5LAPO6bWwwxiZQKZwsDFKQAT8fjJ/j/69wF9i7UnthZX
+ ORmXdDguv5Em8enOwsneDRms5TUx90TvZS3b72olc/XTc2cTkZ6eaeHVlXqsRzbcnvhT935W1aI
+ 1GoLZld5KLPyRQZl7kzMYJfx9uXP//RGQazogdvmmU9OHqRveOl2YkRXoorBmz64yzh/cmz0CGe
+ P4GKI3b9cTUmecuPqIjdW7PuvNApExZybvU204IKYnGGTvE1rhY9v09JipR5u2Pkt715obbJPen
+ b/zLKdSNfl/Q97CvZEsBhHPvrKLTqsPrrZXD9h5XyVY5u19V6Yc9skbzqfJy784xDzvvfvneIns
+ jfZ+81K37Fo4/2Wxofw179zn1inHDcIS9nMEHsz82ZoNAA==
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-On Sun, Mar 31, 2024 at 12:21:15AM +0200, Dmitry Baryshkov wrote:
-> Update Qualcomm PMIC Type-C examples to follow the USB-C connector
-> schema. The USB-C connector should have three ports (USB HS @0,
-> SSTX/RX @1 and SBU @2 lanes). Reorder ports accordingly and add SBU port
-> connected to the SBU mux (e.g. FSA4480).
-> 
-> Fixes: 00bb478b829e ("dt-bindings: usb: Add Qualcomm PMIC Type-C")
-> Reported-by: Luca Weiss <luca.weiss@fairphone.com>
-> Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-> Update examples to follow usb-c-connector schema wrt. ports definitions.
-> ---
+DT bindings for adv7511 and adv7533 bridges specify HDMI output to be
+present at the port@1. This allows board DT to add e.g. HDMI connector
+nodes or any other next chained bridge. Make adv7511 driver discover
+that bridge and attach it to the chain.
 
-Hi,
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Changes in v2:
+- Fixed the absent next bridge usecase
+- Link to v1: https://lore.kernel.org/r/20240309-adv7511-next-bridge-v1-1-d1ad522ef623@linaro.org
+---
+ drivers/gpu/drm/bridge/adv7511/adv7511.h     |  1 +
+ drivers/gpu/drm/bridge/adv7511/adv7511_drv.c | 12 ++++++++++++
+ 2 files changed, 13 insertions(+)
 
-This is the friendly patch-bot of Greg Kroah-Hartman.  You have sent him
-a patch that has triggered this response.  He used to manually respond
-to these common problems, but in order to save his sanity (he kept
-writing the same thing over and over, yet to different people), I was
-created.  Hopefully you will not take offence and will fix the problem
-in your patch and resubmit it so that it can be accepted into the Linux
-kernel tree.
+diff --git a/drivers/gpu/drm/bridge/adv7511/adv7511.h b/drivers/gpu/drm/bridge/adv7511/adv7511.h
+index 39c9ece373b0..ea271f62b214 100644
+--- a/drivers/gpu/drm/bridge/adv7511/adv7511.h
++++ b/drivers/gpu/drm/bridge/adv7511/adv7511.h
+@@ -356,6 +356,7 @@ struct adv7511 {
+ 	enum drm_connector_status status;
+ 	bool powered;
+ 
++	struct drm_bridge *next_bridge;
+ 	struct drm_display_mode curr_mode;
+ 
+ 	unsigned int f_tmds;
+diff --git a/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c b/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
+index b5518ff97165..c50d994a33b5 100644
+--- a/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
++++ b/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
+@@ -17,6 +17,7 @@
+ #include <drm/drm_atomic.h>
+ #include <drm/drm_atomic_helper.h>
+ #include <drm/drm_edid.h>
++#include <drm/drm_of.h>
+ #include <drm/drm_print.h>
+ #include <drm/drm_probe_helper.h>
+ 
+@@ -946,6 +947,12 @@ static int adv7511_bridge_attach(struct drm_bridge *bridge,
+ 	struct adv7511 *adv = bridge_to_adv7511(bridge);
+ 	int ret = 0;
+ 
++	if (adv->next_bridge) {
++		ret = drm_bridge_attach(bridge->encoder, adv->next_bridge, bridge, flags);
++		if (ret)
++			return ret;
++	}
++
+ 	if (!(flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR)) {
+ 		ret = adv7511_connector_init(adv);
+ 		if (ret < 0)
+@@ -1216,6 +1223,11 @@ static int adv7511_probe(struct i2c_client *i2c)
+ 
+ 	memset(&link_config, 0, sizeof(link_config));
+ 
++	ret = drm_of_find_panel_or_bridge(dev->of_node, 1, -1, NULL,
++					  &adv7511->next_bridge);
++	if (ret && ret != -ENODEV)
++		return ret;
++
+ 	if (adv7511->info->link_config)
+ 		ret = adv7511_parse_dt(dev->of_node, &link_config);
+ 	else
 
-You are receiving this message because of the following common error(s)
-as indicated below:
+---
+base-commit: 1843e16d2df9d98427ef8045589571749d627cf7
+change-id: 20240309-adv7511-next-bridge-10d8bbe0544e
 
-- You have marked a patch with a "Fixes:" tag for a commit that is in an
-  older released kernel, yet you do not have a cc: stable line in the
-  signed-off-by area at all, which means that the patch will not be
-  applied to any older kernel releases.  To properly fix this, please
-  follow the documented rules in the
-  Documentation/process/stable-kernel-rules.rst file for how to resolve
-  this.
-
-If you wish to discuss this problem further, or you have questions about
-how to resolve this issue, please feel free to respond to this email and
-Greg will reply once he has dug out from the pending patches received
-from other developers.
-
-thanks,
-
-greg k-h's patch email bot
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 
