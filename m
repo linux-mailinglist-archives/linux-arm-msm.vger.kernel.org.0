@@ -1,155 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-15868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15869-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 782F3892EFD
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Mar 2024 10:30:22 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F35C893149
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Mar 2024 12:56:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1D106281F7A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Mar 2024 08:30:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 32C0A28264A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Mar 2024 10:56:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FDEA6ABA;
-	Sun, 31 Mar 2024 08:30:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96C2C143C74;
+	Sun, 31 Mar 2024 10:56:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fuV4ZEmW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ABVlfCbw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA4F4409;
-	Sun, 31 Mar 2024 08:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682BB40C1F;
+	Sun, 31 Mar 2024 10:56:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711873819; cv=none; b=QETR1sTFNLW8aj1+Wy8WZnhOZZHSyLcHy88rW45Ht+9jejCgcE7XZRCHYPZo8xyFc1Fe7yanCitf1Z6uNddXZuOHm1C4QzNtFz0pvoU1QdQPLJCYVCxaX6TdUH0HMBSYCcyNek7y2WBJ7qvbgEqMbHx6srpqSUn+1nXo6U+EpZE=
+	t=1711882601; cv=none; b=HGDVbGxUTMlX0ba6TpKk22dNKC9fEjY4tvvrIhXjQYH04vkv0z4NIiC2Qtp0A2pAarZsPHxP8U36fU1oBCOwaJxRgqoo48iCjhbwZEp5I3q0DEEbGyNNcjKpu/l+Dq9P6vO49elzB0DOTzDUJ5NSawpBFacg4k+ANGPmm29bWi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711873819; c=relaxed/simple;
-	bh=dQzk63YPnHbPVUzHBsx8dQI2TrMgqZIp3W7LaHXbqDA=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=rHMcsibojOkAvKQ2zWFN2fy1AZX2ZBY7dbKhlsJ01Awv6AS3/EMdGasD98s2wH8sttZuwS/ikUnXTfAXZYhWzBo740xL/x3YPp/1eiVlgHGWTxbvN0DKq/xxP5VbsMKyUbOnyXV/6MeXnKbsT7wHFK+1I0lm6d2JDtOBTNvdrKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fuV4ZEmW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF3BBC433C7;
-	Sun, 31 Mar 2024 08:30:13 +0000 (UTC)
+	s=arc-20240116; t=1711882601; c=relaxed/simple;
+	bh=3JA8zXWvxduJPtSIA4N0SAo+czSCUXl4wrmxDz54JAg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=A5aUFe1uzpPv6lwEhSQY3bXTKeUTlf6DpiM18adPRDNHxeIWB6h+Ks4S4G1mtsPAsDAJfmmBn81G9/x/4I2JGWQ3j8ap+D7Je57Q0mniREA00UaY6mcr5c3uVVUf5ghxcbf7Z5PmzzC3mlJpT4bWdDxwbkf+HLUnyKW8eVpZUdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ABVlfCbw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 001B5C433F1;
+	Sun, 31 Mar 2024 10:56:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711873818;
-	bh=dQzk63YPnHbPVUzHBsx8dQI2TrMgqZIp3W7LaHXbqDA=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=fuV4ZEmWphOxBgMVV88D3vpVU+UM9F1c5VPZW7btmUIdteaqc41QnsyimY3KsP5u7
-	 E/WB4MSbXky759OKiTW2Y5WutaSu4damX6F0TyDDCvrlJcY/lJDCxOS2M7P1MWbw2o
-	 C/AKnx4G13f73/J2KWrYUT626qgYVAqJg1gTZn4jjpt76oXF2l4g2WgTZIzfjGBkn0
-	 eIlkkmhmyui+uGfTRJla2K8SCZi/hL2dp6/D3wO8bjSf1VMb5xRWHajwnhnSMRKHIy
-	 Dyr/EJwrpG1h35WTCpnsuZ3TFLgeNpctP7H7ixpGbY1jqaX50I0A2QWlLjIgKeyhkw
-	 6il8MeF4kMaaQ==
-Message-ID: <79dd5585-db7f-4a02-bb89-b83f91067956@kernel.org>
-Date: Sun, 31 Mar 2024 10:30:10 +0200
+	s=k20201202; t=1711882601;
+	bh=3JA8zXWvxduJPtSIA4N0SAo+czSCUXl4wrmxDz54JAg=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=ABVlfCbwMiW/9N4ITnMIQxVipnhX3WCOEcm5TLDqwm/gl7AqAADEMFWrXpueCob2r
+	 0DefuuurTABydQhoRV81V/zBVsde3CW0qfvWMVhymniBPeTzaKH75sUkCcaj3aL6ox
+	 7Qxbd+gW/EG35pflYh5oacEnij+YVMv0xV2/XQbTSHHxmm+yc4FWhH+SiEaOVbxe6J
+	 d56fmXDWF8nftG9FD4u9Nkk8m+MyFVraaJebONX1ZJxpd4D+BvyBvdJBRc0jDnVMN1
+	 uoza2+I5K+j10U124LlneqIUVnjo6v1vEC8U/0tzpwnDQTfvL0K7XupCBj3nCq23T0
+	 dhvuYFXVLOCJg==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3A06CD128A;
+	Sun, 31 Mar 2024 10:56:40 +0000 (UTC)
+From: Alexandru Marc Serdeliuc via B4 Relay <devnull+serdeliuk.yahoo.com@kernel.org>
+Subject: [PATCH v3 0/2] Samsung Galaxy Z Fold5 initial support
+Date: Sun, 31 Mar 2024 12:56:38 +0200
+Message-Id: <20240331-samsung-galaxy-zfold5-q5q-v3-0-17ae8d0a9fba@yahoo.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/7] dt-bindings: clock: qcom: Add GPUCC clocks for SM4450
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Ajit Pandey <quic_ajipan@quicinc.com>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>,
- Jagadeesh Kona <quic_jkona@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>,
- Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-References: <20240330182817.3272224-1-quic_ajipan@quicinc.com>
- <20240330182817.3272224-7-quic_ajipan@quicinc.com>
- <06bcdb86-ad14-4b52-b61b-44191d6ca22d@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <06bcdb86-ad14-4b52-b61b-44191d6ca22d@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAGZBCWYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyjHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDY2ND3eLE3OLSvHTd9MScxIpK3aq0/JwUU91C00LdVOM0YxOLNDMTc1N
+ zJaD+gqLUtMwKsNnRsbW1ABNhBOJrAAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1711882599; l=884;
+ i=serdeliuk@yahoo.com; s=20240326; h=from:subject:message-id;
+ bh=3JA8zXWvxduJPtSIA4N0SAo+czSCUXl4wrmxDz54JAg=;
+ b=aDq6wusCtpMghuggUJWzAmv91MkJfuMGcoau1D3E95KEyBKJtJ9oK6lw6cLQ4OZDBtiQdC54p
+ iWgCy20wZV4BQxlAEf220eEyC68d7ITJVC67iRmpLT1zdSFwa5aMIP5
+X-Developer-Key: i=serdeliuk@yahoo.com; a=ed25519;
+ pk=aWyveUE11qfDOOlRIFayXukrNn39BvZ9k9uq94dAsgY=
+X-Endpoint-Received: by B4 Relay for serdeliuk@yahoo.com/20240326 with
+ auth_id=147
+X-Original-From: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
+Reply-To: serdeliuk@yahoo.com
 
-On 31/03/2024 10:18, Krzysztof Kozlowski wrote:
-> On 30/03/2024 19:28, Ajit Pandey wrote:
->> Add support for qcom display clock controller bindings
->> for SM4450 platform.
->>
->> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
->> ---
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+This documents and add intial dts support for Samsung Galaxy Z Fold5 (samsung,q5q)
+which is a foldable phone by Samsung based on the sm8550 SoC.
 
-Un-reviewed. I did not notice that this was not tested at all.
+Currently working features:
+- Framebuffer
+- UFS
+- i2c
+- Buttons
 
-NAK
+Signed-off-by: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
+---
+Alexandru Marc Serdeliuc (2):
+      dt-bindings: arm: qcom: Document the Samsung Galaxy Z Fold5
+      arm64: dts: qcom: sm8550: Add support for Samsung Galaxy Z Fold5
 
-Please use scripts/get_maintainers.pl to get a list of necessary people
-and lists to CC. It might happen, that command when run on an older
-kernel, gives you outdated entries. Therefore please be sure you base
-your patches on recent Linux kernel.
-
-Tools like b4 or scripts/get_maintainer.pl provide you proper list of
-people, so fix your workflow. Tools might also fail if you work on some
-ancient tree (don't, instead use mainline), work on fork of kernel
-(don't, instead use mainline) or you ignore some maintainers (really
-don't). Just use b4 and everything should be fine, although remember
-about `b4 prep --auto-to-cc` if you added new patches to the patchset.
-
-You missed at least devicetree list (maybe more), so this won't be
-tested by automated tooling. Performing review on untested code might be
-a waste of time, thus I will skip this patch entirely till you follow
-the process allowing the patch to be tested.
-
-Please kindly resend and include all necessary To/Cc entries.
-
+ Documentation/devicetree/bindings/arm/qcom.yaml |   1 +
+ arch/arm64/boot/dts/qcom/Makefile               |   1 +
+ arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts | 582 ++++++++++++++++++++++++
+ 3 files changed, 584 insertions(+)
+---
+base-commit: 4cece764965020c22cff7665b18a012006359095
+change-id: 20240331-samsung-galaxy-zfold5-q5q-e3f348f64757
 
 Best regards,
-Krzysztof
+-- 
+Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
+
 
 
