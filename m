@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-15866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3985892EED
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Mar 2024 10:18:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E5E00892EF1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Mar 2024 10:18:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A950D1F2173B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Mar 2024 08:18:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9C2A11F2163F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Mar 2024 08:18:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 463778F5C;
-	Sun, 31 Mar 2024 08:18:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EB0F947A;
+	Sun, 31 Mar 2024 08:18:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WDNTsfkb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a+SLyrKE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162858C09;
-	Sun, 31 Mar 2024 08:18:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B79946C;
+	Sun, 31 Mar 2024 08:18:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711873101; cv=none; b=Odf8qQkIoLtYnKk0O4SbIplOFk/btdsByuPI8cv0XM1jeKZxkyxNpJbQrSq2LKd/fMde12fmoxoFHShGrr8BdDoJZBp0Tq5hmbOt+H5aokvBgihaJ5dVeRmk5qsGkqV6Q29hgO558lkNsIiHhXZ4pGNU/D9gTFaZvi0p1/srF2Q=
+	t=1711873136; cv=none; b=c+CrQvNmpbaocRPH9+WkUQnPkwyOLEYpsccNUH9YrDO6lubcn4vgIgjVmT/xzcSlxy/wMOALbRwkkZ1U19MOwrg9llZMpzrgYUHSkVnEp5LmuHWV5MmD6P6/XN8GPBYo2qA1tyOw5U3z37Nr0ykh7bsN1oX+Xo9ySHcV+aM8qeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711873101; c=relaxed/simple;
-	bh=zPXlxYk2n5lTcOrEhVJfPclTV7bgzYy3+pZGoVh9AfU=;
+	s=arc-20240116; t=1711873136; c=relaxed/simple;
+	bh=01jlShOpdm2GHS3skypxtT3uZ5p7jcBc+r1fh38tJK8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kyFlgu/nnd5lJ1UOXeuYROxSevDOsCi+xoVX9eSFaics6Pk9Xjzx80F/fP97ufrV8GN8WMRvt9NEx55gMDVxAglGeV7vHN3BEwWQMMtIBjFVyKvCVrU1S6Mu/UJMbD9jHFv5oLm9j/kE/nG54wCn4xfj6cYK42TEO8Jy0p/OP0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WDNTsfkb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4700FC433F1;
-	Sun, 31 Mar 2024 08:18:16 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Nc3MN38rELP2JjrMYbYFSOt4Vqh6B44J6bVbNMQK77FR7trhNPlRqQi5tDZlYV+ghj0uUWPipyUAq7wIy6sJ/+U851iC7756cCCO32co3mCFLw66+qEkFVwMmx4JQVxCCUbEbby26UrPpmqSuFcsmZ6WLbi6MjawwDCaTwTi1jA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a+SLyrKE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1B68C433C7;
+	Sun, 31 Mar 2024 08:18:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711873100;
-	bh=zPXlxYk2n5lTcOrEhVJfPclTV7bgzYy3+pZGoVh9AfU=;
+	s=k20201202; t=1711873134;
+	bh=01jlShOpdm2GHS3skypxtT3uZ5p7jcBc+r1fh38tJK8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=WDNTsfkbg9eUawF6AH/RrHc1DhN2haNWyYYTALFnKvfW/4UL5Ui5rycP4gGVCfSWw
-	 6hYMUNNRYk1j5JPojFrvAyZRrAlKq8r2EZEEA4ds+JyRNOY3+6Z2bUi/JrYALAxk6h
-	 v1hhNWcUOg25qzMmJB7gcF9MNrGVSbHQpzht5YM2czL7KtQVaCzUXGcyFp6EZhKFFs
-	 OZMTnvxcOUD95JO3wVudW1FsFutvf7uY+S9+viQGzqmQSxCHAGCSkZZKng2LlEja/8
-	 Yy65Ni/nB7ZTytyAU4m5JUw//oHjjdtI7EYovPrAW+6cIX2/CuooEmYivF4GBj94Vk
-	 rh4LQHb1SIo8Q==
-Message-ID: <6ed29b3c-a963-4f67-928c-40e316ed13b2@kernel.org>
-Date: Sun, 31 Mar 2024 10:18:13 +0200
+	b=a+SLyrKEZ4187UNdhFPQ8I4JU2L0ISSTcZnTswJISqs+/xfMm/s1fomSNK6nf72ks
+	 yieNRYNzWXt/TVH0sEGx9JotgDufc2dPuzO6MPTR9dYkq/qsuJFH34jWZrWonwtgnp
+	 lz26u8ej5F2mg9QdHAnKONVt0QkwERIf/jpfuh0O3uSpMPose43IVPKdNk7D+UzE9R
+	 ON/hPF7p5DLBU2HFsBTlyrAPCqUcXFAtxxx3DOaXZbjgne05Yts0eF7+A2qliaNdoP
+	 +WiRSRq1FLOi7JkOlWrlC72uVrOqQj785jRFE07Mx5IrR4WZgY610aHm7jjtJBv7sD
+	 wqoBRSXzVJAfA==
+Message-ID: <06bcdb86-ad14-4b52-b61b-44191d6ca22d@kernel.org>
+Date: Sun, 31 Mar 2024 10:18:47 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/7] dt-bindings: clock: qcom: Add CAMCC clocks for SM4450
+Subject: Re: [PATCH 6/7] dt-bindings: clock: qcom: Add GPUCC clocks for SM4450
 To: Ajit Pandey <quic_ajipan@quicinc.com>,
  Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
  <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -64,7 +64,7 @@ Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  Imran Shaik <quic_imrashai@quicinc.com>,
  Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 References: <20240330182817.3272224-1-quic_ajipan@quicinc.com>
- <20240330182817.3272224-5-quic_ajipan@quicinc.com>
+ <20240330182817.3272224-7-quic_ajipan@quicinc.com>
 Content-Language: en-US
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,23 +110,35 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240330182817.3272224-5-quic_ajipan@quicinc.com>
+In-Reply-To: <20240330182817.3272224-7-quic_ajipan@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 30/03/2024 19:28, Ajit Pandey wrote:
-> +
-> +  '#clock-cells':
-> +    const: 1
-> +
-> +  '#reset-cells':
-> +    const: 1
-> +
-> +  '#power-domain-cells':
-> +    const: 1
+> Add support for qcom display clock controller bindings
+> for SM4450 platform.
+> 
+> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
+> ---
 
-Same comments.
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 
+
+---
+
+This is an automated instruction, just in case, because many review tags
+are being ignored. If you know the process, you can skip it (please do
+not feel offended by me posting it here - no bad intentions intended).
+If you do not know the process, here is a short explanation:
+
+Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+versions, under or above your Signed-off-by tag. Tag is "received", when
+provided in a message replied to you on the mailing list. Tools like b4
+can help here. However, there's no need to repost patches *only* to add
+the tags. The upstream maintainer will do that for tags received on the
+version they apply.
+
+https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
 
 Best regards,
 Krzysztof
