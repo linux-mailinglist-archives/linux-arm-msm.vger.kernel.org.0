@@ -1,141 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-15982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15983-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 268FB894618
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 22:35:33 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8B4E89463F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 22:49:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BBD312818C9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 20:35:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 87AD51F21A01
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 20:49:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C45D58210;
-	Mon,  1 Apr 2024 20:33:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 891102E3EB;
+	Mon,  1 Apr 2024 20:49:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lJFdxoSl"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gWUhY/nD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3029756B8E
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Apr 2024 20:33:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D00D717552;
+	Mon,  1 Apr 2024 20:49:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712003633; cv=none; b=N4HPGLHurgX2poA4UXa3MYE8R+s/TRSS7dbdGcf5RoioH3XxyQd+3fnMKzZlMg5q7HeZDUmY/Dx1cjmfQfW8IMhVJHsPCL75fEZl0pYqyWKd4S0tVSDXQuXLwRscJbDhHT0DM/e7S7ICQvD/Wv+3fzofiGJ3r9I5k4Hy8gE1kK0=
+	t=1712004580; cv=none; b=mrz/l4E9opuQCtQrJMoyvz9XLOwakPhAsmut7bFVOS3EQHnT4X3fFb8h7qr0U8OCldVc2Am1GE/zvnFhZ6bIYJxzZu8orK//GtO3wRJGYQySuW0h0MVcrP9dfc0nGbfmS+jxGCx2BJT2qGMzW0t8BUr8FfvDO309HdfW3syNO/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712003633; c=relaxed/simple;
-	bh=+m4KcknPtPtiYtZonTjzGx6OYYK5R2lRlFqksVKoy6E=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=AtZtGCwy9/mIxxyrdjP1kg37kTIbbKnp+v7AoJaQuPSb09elZcTdLB72uWDo431PqmdGUFZXUXASqOV2dh823rbYEmBVgMcDBKssfa0ZeTBEshHAF2qB9tlwARrb4mNqYplnHcbUgC6B9OoKI6ahUaFBDeeJfRKy2Z8lHY56bLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lJFdxoSl; arc=none smtp.client-ip=209.85.167.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-515d515e28dso1964698e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Apr 2024 13:33:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712003629; x=1712608429; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QA39XfS6kFKT4ejZVfv3YPVU/6vd+JV/fWoR8cy3Hug=;
-        b=lJFdxoSlm/M0aZoVMaULjVN3txSdpIH/3YcqThTKXHk9sUVS1uin2sD0+HbLJcBZEH
-         PLBQXPzZaQJ7JCWvsrJTlIErjfaOzxcPNEQDuHYleqQt0S3JdG7yMiGNDNU2mqCHrWxg
-         ptvnOxGH8ifGYsnnzL0yrssZdOyQbtHaDVc4wPsF02BGlPZR6dSjqmCC2++RtcXe00vv
-         g+l+45ZnBjdDT5kbv/NFGr1QHa3Um4OuRxNj0gtboyKnLFVjZ8fy4lRKHd0lPrFDWBVW
-         1/cX2EUIuLyuVCMQh0lPRljrF0Dt5VnwJLl/GupH4uyvLtJkx5sjyOlES32Z6Z/Ldn5i
-         aAUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712003629; x=1712608429;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QA39XfS6kFKT4ejZVfv3YPVU/6vd+JV/fWoR8cy3Hug=;
-        b=MuJIJHfgP+JuShKE/xj/7RUONLV77/Nj/RgBTerqAV1Z0WvqY4NBGZw2VUlpeOoX0h
-         p+xvmmXVG1EpwjR+IbDwOjAihlDVjfvOybMJqdblFJeZiuHv9jI/UsErO2iUejwHrj5a
-         Tsz30OkRdHbZyxwgv4ldT502zIrs4969WdjxdW4IFg97bB1aNR46/UQ4fhqKjif/evzx
-         aSp3NL40vbGUpIBqeSgzmnwrbkKThyLBZe5ob/QnPy8HGrLB9IMB6Mfe1RB5d/r0Gy85
-         GoDuruhlAuRAk4SqjZMTt6XDsBR8Gd+6ELlst9e9ZM9ilnychxcepsP8fcbQIfmhw0il
-         +NLw==
-X-Gm-Message-State: AOJu0Yzn4zcnDLesQQabZOu/n0r3GHZBqoR3FTduv5rnz15ySRHtBGw8
-	WTBSw8w/pZKENfMGPQErnirXxsFl9Xj8w2njEOiOsnvuE/Fa6RsJ38cxhyaMNTU=
-X-Google-Smtp-Source: AGHT+IEX2xucaNOqEi45e6rA7xWiaBbHHqTl57NjxOHbuJYOV2LS1R05RrcHUWwFbQgnVwIACR9hfA==
-X-Received: by 2002:a05:6512:3e4:b0:515:ccd8:37c2 with SMTP id n4-20020a05651203e400b00515ccd837c2mr6005739lfq.44.1712003629119;
-        Mon, 01 Apr 2024 13:33:49 -0700 (PDT)
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id j11-20020ac2550b000000b00515a6e4bdbdsm1478342lfk.250.2024.04.01.13.33.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Apr 2024 13:33:48 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 01 Apr 2024 23:33:48 +0300
-Subject: [PATCH v3 9/9] arm64: dts: qcom: sm8150-hdk: rename Type-C HS
- endpoints
+	s=arc-20240116; t=1712004580; c=relaxed/simple;
+	bh=ZGg73G5kdSdc6/MO4BB/Q5ripgdhYtNLKWJWVmNze30=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=e/VEjp7oBRrQNhlqzDik8n9sIlKXlP6lt7fTC51x+geIC6Xko4kYSv5Pd3Xepd7xGUkBmvehACPPWXFoiEP/s8aTQiEyy5ikgpalwH5S6f5eMliZsWHFlKWAn4BsiRhig7dSVNLCMtaTQwnW0yTJ9jT0mXXiIDISrChuEm3b/qY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gWUhY/nD; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 431JQQrU010966;
+	Mon, 1 Apr 2024 20:49:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=SDPpPZr
+	Ybjlj5SIHl69Y3/3Hon0AHxjShyC0S7sqTuw=; b=gWUhY/nDw1O3b2HSJpQdJ1S
+	YLecUNRaBOdOmUCT1FsK7GcH0MCJacbe4K2KKMjypFqphpo9q6zvpIHfDFiRJTpn
+	hVmuGtYstGQvCtIWILH0zktBsJV5G/bN9eYwxI4fY0D5dK6kEEdNnUoCOcH4jXTp
+	52jDKptCDyrTb3Bo6tXIWxf+dE4I3WzMwOCQHw8O+YIvJRVLqURvVVZ6YIPUCKk6
+	/f7mC9YYjhc3gUrvUYLQ9xI9rb33rythwSWizub8ZFygUxj4/iQNJ0bAW0bekVU5
+	ggPT1uKZS9f6Mh+19isyr6EUaInRhg5QcdP75bSk99a7jNOTbhqHl0H/hcvR6Jg=
+	=
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x8320r41y-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 01 Apr 2024 20:49:22 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 431KnKoA003393
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 1 Apr 2024 20:49:20 GMT
+Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Mon, 1 Apr 2024 13:49:20 -0700
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+To: Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Helen Koike <helen.koike@collabora.com>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH] drm: ci: fix the xfails for apq8016
+Date: Mon, 1 Apr 2024 13:48:58 -0700
+Message-ID: <20240401204859.24223-1-quic_abhinavk@quicinc.com>
+X-Mailer: git-send-email 2.43.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240401-typec-fix-sm8250-v3-9-604dce3ad103@linaro.org>
-References: <20240401-typec-fix-sm8250-v3-0-604dce3ad103@linaro.org>
-In-Reply-To: <20240401-typec-fix-sm8250-v3-0-604dce3ad103@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=948;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=+m4KcknPtPtiYtZonTjzGx6OYYK5R2lRlFqksVKoy6E=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmCxomu5aU5NG+Z/64wI5iPLxDf2d2pJXxtC/9V
- Rx789XMZ+WJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZgsaJgAKCRCLPIo+Aiko
- 1W9oB/4wBdn4/QHKK+hmLb6lInouPt5uF6PHRC0lKI3zIsxUg16wXXI51U/eaV/RNDk9pdHaLT2
- cOAt0rJnUmgWfnPWEay58qAIQvzAsCrrcWzaa1nxo1b6l77uZiPOS2Q2WjUe/Bodju8/nO/lOAK
- Bp4IJsH/hI5PJxhM3OrE/3Vb843jIurkukowYDFHkLW3optfQyWNSA4K6q0dTvOpwEGR1unUtQ9
- qkVDpDGcLTwEnhwmEKJqzYecFpVqA6h3i1bC+UQHJngXJkCEAN3y1yrbidup8fJybfWBIBRZaMw
- KoPnzwMlDq2mGU0o7eeJqeF2tCOieBcQVC0svm+3y/5XIszQ
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: WUNq6n4cZHd7jJtRqt-PHtW2RFpAY2OW
+X-Proofpoint-GUID: WUNq6n4cZHd7jJtRqt-PHtW2RFpAY2OW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-01_14,2024-04-01_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
+ bulkscore=0 suspectscore=0 priorityscore=1501 mlxlogscore=999 spamscore=0
+ clxscore=1011 mlxscore=0 adultscore=0 impostorscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2403210001
+ definitions=main-2404010145
 
-Follow other Qualcomm platforms and rename pm8150b_role_switch_in to
-pm8150_hs_in. Corresponding port is described as HS port rather than
-role switching.
+After IGT migrating to dynamic sub-tests, the pipe prefixes
+in the expected fails list are incorrect. Lets drop those
+to accurately match the expected fails.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In addition, update the xfails list to match the current passing
+list. This should have ideally failed in the CI run because some
+tests were marked as fail even though they passed but due to the
+mismatch in test names, the matching didn't correctly work and was
+resulting in those failures not being seen.
+
+Here is the passing pipeline for apq8016 with this change:
+
+https://gitlab.freedesktop.org/drm/msm/-/jobs/57050562
+
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 ---
- arch/arm64/boot/dts/qcom/sm8150-hdk.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt | 13 +------------
+ 1 file changed, 1 insertion(+), 12 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150-hdk.dts b/arch/arm64/boot/dts/qcom/sm8150-hdk.dts
-index de670b407ef1..857ccc5de085 100644
---- a/arch/arm64/boot/dts/qcom/sm8150-hdk.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8150-hdk.dts
-@@ -556,7 +556,7 @@ ports {
- 
- 			port@0 {
- 				reg = <0>;
--				pm8150b_role_switch_in: endpoint {
-+				pm8150b_hs_in: endpoint {
- 					remote-endpoint = <&usb_1_dwc3_hs>;
- 				};
- 			};
-@@ -703,7 +703,7 @@ &usb_1_dwc3 {
- };
- 
- &usb_1_dwc3_hs {
--	remote-endpoint = <&pm8150b_role_switch_in>;
-+	remote-endpoint = <&pm8150b_hs_in>;
- };
- 
- &usb_1_dwc3_ss {
-
+diff --git a/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt b/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt
+index 44a5c62dedad..b14d4e884971 100644
+--- a/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt
++++ b/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt
+@@ -1,17 +1,6 @@
+ kms_3d,Fail
+ kms_addfb_basic@addfb25-bad-modifier,Fail
+-kms_cursor_legacy@all-pipes-forked-bo,Fail
+-kms_cursor_legacy@all-pipes-forked-move,Fail
+-kms_cursor_legacy@all-pipes-single-bo,Fail
+-kms_cursor_legacy@all-pipes-single-move,Fail
+-kms_cursor_legacy@all-pipes-torture-bo,Fail
+-kms_cursor_legacy@all-pipes-torture-move,Fail
+-kms_cursor_legacy@pipe-A-forked-bo,Fail
+-kms_cursor_legacy@pipe-A-forked-move,Fail
+-kms_cursor_legacy@pipe-A-single-bo,Fail
+-kms_cursor_legacy@pipe-A-single-move,Fail
+-kms_cursor_legacy@pipe-A-torture-bo,Fail
+-kms_cursor_legacy@pipe-A-torture-move,Fail
++kms_cursor_legacy@torture-bo,Fail
+ kms_force_connector_basic@force-edid,Fail
+ kms_hdmi_inject@inject-4k,Fail
+ kms_selftest@drm_format,Timeout
 -- 
-2.39.2
+2.43.2
 
 
