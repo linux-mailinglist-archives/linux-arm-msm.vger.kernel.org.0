@@ -1,75 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-15952-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15953-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0842F893D6B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 17:54:02 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD616893D6D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 17:54:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 629E0B21438
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 15:53:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9219E281671
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 15:54:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 649CE54FB1;
-	Mon,  1 Apr 2024 15:51:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6451B4AEDA;
+	Mon,  1 Apr 2024 15:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="P9pXu6xj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rVVQeIBm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D4F54FAC
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Apr 2024 15:51:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61894778E
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Apr 2024 15:51:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986691; cv=none; b=aYilBzCRlFP5IWEtPMRCH81PTG14G3cWWsMIQNpfluuCSH7sfw1RrvDApflznD/Z8Ga/zUI+N5XU7KLtFOlG6UWgZCH3oRAKYf+ua8h0grB4lDElkko0Zhg7+Xt5IHltM6+2XkVYRbMPsdY/ay1CX44MlICChGvJ/9pXPQKWU3I=
+	t=1711986694; cv=none; b=ABh7Ad5wyYt/xyp/nbcnIEVvUlY4eGUNXubCIQlfSf8LjkURWc44723VvIGzNmHqBWxQASt8ykk2IDpbzSkPWRKX/0T3OKexfaTt2B0IA4WKzONJFWvHakI53gnGy7AHHE8fgonypgxcarHRErCZUJeRqpmpQXUFNr5YDRH1msk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986691; c=relaxed/simple;
-	bh=0VVJOyo7HYBClUhbt/r9EGxfFQ/l05qtU//Fuoa9X0U=;
+	s=arc-20240116; t=1711986694; c=relaxed/simple;
+	bh=nMpZPnhw9L+pUj1D059OFEbCKZXS4KgCBMCDJdioW0Q=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=trgK7xM5sCEdbZgwupUUE77hLxezdYO/mFQF2Ub+EU7mTNLeWGEpDQlua7ZelfeclyfpIz6g73PzdeyAxnGLwn+qeo2USiR8SRisffE/uddIAKVqu7Hqi9QL5RX4rRnsN84U3nqZGaPnlSZVt2cUrLFNPiy9qlCpEOFhtrkd1nQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=P9pXu6xj; arc=none smtp.client-ip=209.85.214.182
+	 In-Reply-To:To:Cc; b=QS5iIQ2j3S/NGS80522wZT9iQKATxZg1EdDuLbAGLweB5FjkgDCpqkY0RaoTZSzAJ5XCi5q4TNOLGgEG9jRAl3BspqhKdx/hvbqfiuBEK2l36qXlYHYCXf3XBEr34TR3toGVJTeqZEIqWW2SCxcO4iEKRcO/vEaK3+FEzXXJxCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rVVQeIBm; arc=none smtp.client-ip=209.85.214.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-1e0bec01232so31807295ad.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Apr 2024 08:51:28 -0700 (PDT)
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1e25ff43904so2407805ad.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Apr 2024 08:51:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711986688; x=1712591488; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1711986692; x=1712591492; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Egao7uSXQjGCmJvCzduzURkl6MWaOn6AeXM5PE50vzE=;
-        b=P9pXu6xjiv1n2LdLz9sxrbaNNK1ooye2idGcwBaNZgmM0t6k1pP2DNEadAkkZJEzLh
-         oHjXiEWAdwwdprvR+5swlAvrjJ8qvYx35Vz2IZ/PKpOwjME0mB1DCEkkQH5tjHbmfjPx
-         uVE9cvtu5Pc//5+3W1qIe9QORXu2yd7C71a56shyqRbKjW/vmcJOh5dt7HrBObr6uVyo
-         pNY/Xb0i4RNAMNTV3M+0EDtzNxTQ5NPpj1g2dETI0evdskgYuu2cftaOp7yNSBx1RCGl
-         Q6I4yhPe7GhTFAFJmnxNjZPFScBsCUEfeuZ/xpTywc2sw1aK9g0qTzOR9un2/AZg0wvb
-         fjBw==
+        bh=makyLP4le5wSVl0G8mOZnW4dGLqrps4D2r71XeJTz5Y=;
+        b=rVVQeIBmwd9GDM9kUxHihd/AJGUZIITwGSXvAO3qd7L0ZUzpMCzsRutVF28ChU2TxH
+         8mDTpbcn0f9UAjnFErHb294akOiwWvMUx8XzqsMEIk/ZV1+zz1N0Ze7hz7znBVWrU1tL
+         7X5g+cftPrgq4gnyWECo7n2lp3Az1h2ZnifTvyasl0RvRdXcXfCrbis8n05sge8Gxs/a
+         FIaJHmjDQBaFdjHZn4bGPjbVw2vESrzKBdDaN/6dad+sEhyb5qGyWhvCrGbZ/1NvVPcu
+         XYfkhRiVTGzAOiMh1h++7lIs1k6+atOomWWn9x8GkFaTg3uhQgUadwKUoL7I80yT1U+V
+         qs4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711986688; x=1712591488;
+        d=1e100.net; s=20230601; t=1711986692; x=1712591492;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Egao7uSXQjGCmJvCzduzURkl6MWaOn6AeXM5PE50vzE=;
-        b=KRYHyMOYBeoioPKjKD7iyVt04zpVs638/Ddb1oRmdmozjW68s1X4K2P7E57Wh02vg9
-         nKVXdhWaFGSp18iGnBAHXfVzWoEt/d01bwsh5cZ15NXMHgy4vhpyzyqxHnHCUEBRPEzk
-         RuIMCVr5g+/cy8fGlP6FfTt+McE1w+ieozpEIGfgkMTmpdW4anBG006GX1oEivnYJsmF
-         rie5lXOFCfULBt4nUoGH3A8vmpAPWkBl1vUrzavCbBFMUzMjdRGKUrOPbETD4krjDQsN
-         UaittKc8zpELO6Hj8WyTUdlMer+BEcWWPcUdcK1NXtUb/Si71pbOvkheVyorRyhKtLR7
-         N4jQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU6oj475mD+Rd7lweIbUJwtoPXtK3o8aV9SvTEqPq1OtGJRr0YnoR22sAUXZmGo5qfuQvHjRXIbU8wBRcKQ+NZgPnjF/aXgUVfoY53d2g==
-X-Gm-Message-State: AOJu0YyVT1GYBRfnNetcMgmTpFixvxCRshLmv054vJIvLCsnRXxqiPHz
-	yvTqECcjeEQD65nODxAovV9fwZGo1Ou0K4sFwYW0A25tBggI7Kv+eXee9pIXpA==
-X-Google-Smtp-Source: AGHT+IFZ1iI9X61JOVfLjJcNjUx4HTJc1QjyHGxJNsBixdS93EWD4TZi1DlIoDdys9j2ZBxKnmF4Hw==
-X-Received: by 2002:a17:903:246:b0:1e1:18a:be88 with SMTP id j6-20020a170903024600b001e1018abe88mr8787651plh.10.1711986687672;
-        Mon, 01 Apr 2024 08:51:27 -0700 (PDT)
+        bh=makyLP4le5wSVl0G8mOZnW4dGLqrps4D2r71XeJTz5Y=;
+        b=q8cSrMRpZSRSLzY81QPmE/68P4MOAurfE5rqpC+k33gR2coxri4SqZFURDFE5jZGt0
+         BDD/xE/zfNDd0VN8OFqohczhJgDSpI1F+Zf9vz2gK4I9fqqIWGCULRfQ8fugXCZrmVLn
+         elV/tMuBm/PnEu6kGQ7lLOE/5V7Uq6uHN+dm+av8vCgH3AOTyghdm+H8ATT3HM3MSU6E
+         UzKq63VKCS7hs0XUAuoe3K6bMcCF6oDe7fSi9HLKEG4Y10f37O7jeoTSsl48mW67MSO8
+         oeFdaBmSADyybNoR5kDrX9dYp+fPZUJdBI29rMwbt5VgpX57L/GWLEoHPEjri4d20OmI
+         /Dtg==
+X-Forwarded-Encrypted: i=1; AJvYcCU0mUzRJlXkc+kB18eb7kuRD89taOrncJoHBr5zhPNSYBA7/N2we9NarhXt07fa2/bgJ0zraJbTCZ4uO4CP5KPggWQXaRcE7tkCxdrGtQ==
+X-Gm-Message-State: AOJu0YxdxAuNmcEyO52tN1yo7+Lv4hOznjfe87TINtZ3TBM/7GT3J3gY
+	3LuqJxFm7GYIadVSmAnp6dfV5XTGGJ49RPVazgRXAWHaqmVRurTD9oysxg9yeQ==
+X-Google-Smtp-Source: AGHT+IHuYkm5JMXP6REnNNqu79HonjQ2rY+2E62XKXihjL/57m1yCgv6vHhEwaf3qQo9xV4etiD08w==
+X-Received: by 2002:a17:902:fc4f:b0:1e2:54ed:5c5f with SMTP id me15-20020a170902fc4f00b001e254ed5c5fmr3370500plb.45.1711986691849;
+        Mon, 01 Apr 2024 08:51:31 -0700 (PDT)
 Received: from [127.0.1.1] ([103.28.246.102])
-        by smtp.gmail.com with ESMTPSA id kh6-20020a170903064600b001e21957fecdsm8949076plb.246.2024.04.01.08.51.23
+        by smtp.gmail.com with ESMTPSA id kh6-20020a170903064600b001e21957fecdsm8949076plb.246.2024.04.01.08.51.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Apr 2024 08:51:27 -0700 (PDT)
+        Mon, 01 Apr 2024 08:51:31 -0700 (PDT)
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Date: Mon, 01 Apr 2024 21:20:35 +0530
-Subject: [PATCH v2 09/10] PCI: epf-test: Handle Link Down event
+Date: Mon, 01 Apr 2024 21:20:36 +0530
+Subject: [PATCH v2 10/10] PCI: qcom: Implement shutdown() callback to
+ properly reset the endpoint devices
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,7 +79,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240401-pci-epf-rework-v2-9-970dbe90b99d@linaro.org>
+Message-Id: <20240401-pci-epf-rework-v2-10-970dbe90b99d@linaro.org>
 References: <20240401-pci-epf-rework-v2-0-970dbe90b99d@linaro.org>
 In-Reply-To: <20240401-pci-epf-rework-v2-0-970dbe90b99d@linaro.org>
 To: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
@@ -92,71 +93,62 @@ Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  linux-tegra@vger.kernel.org, Niklas Cassel <cassel@kernel.org>, 
  Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2042;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1844;
  i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
- bh=0VVJOyo7HYBClUhbt/r9EGxfFQ/l05qtU//Fuoa9X0U=;
- b=owGbwMvMwMUYOl/w2b+J574ynlZLYkjjun6NwfB+osb3Gw3udvGrly46IJGU+5V9Ya31upt8x
- 2var3Pu6mQ0ZmFg5GKQFVNkSV/qrNXocfrGkgj16TCDWJnApnBxCsBEbmWx/2a33f+qbG3GhEC/
- d0npmUbBwsVvNVOerJFnZS/+f/R2IOvnqmP274tTA1U9VF7Ir90hmM8byRTrFMi7hemERjb/mZ0
- N0iJ3fl5ak5JqNl/Judb/wwJpte+ud+N2rFH/ta9OxMrvR8fnkr4JvxZ57lMxWbTS+LMX46mQb/
- fqZXNYr55knZ72LifbcK9GmGTbM/7dPW/+RNfvYlOO2+xwhTs7eOIf5bgFjZWHeRPsbdK/eK7b9
- 3VpT3dEOEtAjI++8uRvZ1cfL3zXELeL/YZiZMRZL6u5xSKG9sXne+btjfj792vpAT/Dq1Zfo6oV
- vm7dK8B5sHaHGUvK9ZnnLrD975oowN/NvP/3G8lm3eebAQ==
+ bh=nMpZPnhw9L+pUj1D059OFEbCKZXS4KgCBMCDJdioW0Q=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBmCtfWCU/F5EBeT9Xc6kKS8bi0avjvP5/hATJSX
+ 6Xt16CcsX2JATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZgrX1gAKCRBVnxHm/pHO
+ 9a9NB/4gACCmhLBAg0hBUkiwLW1J1dbyKzPeiUuI7Dr8bRC9iEpC+3WlfjzUVbSG7/t+r5XK/59
+ zpRMd2CHRveu9TpZva8J+kie6ynO6lb1ht+R+V9g0B+kaOEA150N6p6Sx/S7HabwKSa7tCRjudu
+ GVuFNvYLQNV2z4tK4whsZNb+GyYPlnU8aqBnPAU2aU1ow/O3Iucn2keYnBe4EnCF9rB10mBokzH
+ MzRH4/qxYjmgMxg2Za3Y6kChv05gMwYJWcp6w5F41uYyIkboJO6DbWdVL6/AEnNt7y5P2gvEPVT
+ SJ6NBuehBlYYr0IQVGxb74HOUYDIRBOUnH6F7CdWAD3keYRS
 X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
  fpr=C668AEC3C3188E4C611465E7488550E901166008
 
-As per the PCIe base spec r5.0, section 5.2, Link Down event can happen
-under any of the following circumstances:
+PCIe host controller drivers are supposed to properly reset the endpoint
+devices during host shutdown/reboot. Currently, Qcom driver doesn't do
+anything during host shutdown/reboot, resulting in both PERST# and refclk
+getting disabled at the same time. This prevents the endpoint device
+firmware to properly reset the state machine. Because, if the refclk is
+cutoff immediately along with PERST#, access to device specific registers
+within the endpoint will result in a firmware crash.
 
-1. Fundamental/Hot reset
-2. Link disable transmission by upstream component
-3. Moving from L2/L3 to L0
+To address this issue, let's call qcom_pcie_host_deinit() inside the
+shutdown callback, that asserts PERST# and then cuts off the refclk with a
+delay of 1ms, thus allowing the endpoint device firmware to properly
+cleanup the state machine.
 
-When the event happens, the EPC driver capable of detecting it may pass the
-notification to the EPF driver through link_down() callback in 'struct
-pci_epc_bus_event_ops'.
-
-While the PCIe spec has not defined the actual behavior of the endpoint
-when the Link Down event happens, we may assume that at least the ongoing
-transactions need to be stopped as the link won't be active. So let's
-cancel the command handler work in the callback implementation
-pci_epf_test_link_down(). The work will be started again in
-pci_epf_test_link_up() once the link comes back again.
-
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-test.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/pci/controller/dwc/pcie-qcom.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
-index 5933788b0e68..2264e72115e5 100644
---- a/drivers/pci/endpoint/functions/pci-epf-test.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-test.c
-@@ -809,6 +809,15 @@ static int pci_epf_test_link_up(struct pci_epf *epf)
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 14772edcf0d3..b2803978c0ad 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -1655,6 +1655,13 @@ static int qcom_pcie_resume_noirq(struct device *dev)
  	return 0;
  }
  
-+static int pci_epf_test_link_down(struct pci_epf *epf)
++static void qcom_pcie_shutdown(struct platform_device *pdev)
 +{
-+	struct pci_epf_test *epf_test = epf_get_drvdata(epf);
++	struct qcom_pcie *pcie = platform_get_drvdata(pdev);
 +
-+	cancel_delayed_work(&epf_test->cmd_handler);
-+
-+	return 0;
++	qcom_pcie_host_deinit(&pcie->pci->pp);
 +}
 +
- static const struct pci_epc_event_ops pci_epf_test_epc_event_ops = {
- 	.init = pci_epf_test_epc_init,
- 	.deinit = pci_epf_test_epc_deinit,
-@@ -816,6 +825,7 @@ static const struct pci_epc_event_ops pci_epf_test_epc_event_ops = {
- 
- static const struct pci_epc_bus_event_ops pci_epf_test_bus_event_ops = {
- 	.link_up = pci_epf_test_link_up,
-+	.link_down = pci_epf_test_link_down,
+ static const struct of_device_id qcom_pcie_match[] = {
+ 	{ .compatible = "qcom,pcie-apq8064", .data = &cfg_2_1_0 },
+ 	{ .compatible = "qcom,pcie-apq8084", .data = &cfg_1_0_0 },
+@@ -1708,5 +1715,6 @@ static struct platform_driver qcom_pcie_driver = {
+ 		.pm = &qcom_pcie_pm_ops,
+ 		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
+ 	},
++	.shutdown = qcom_pcie_shutdown,
  };
- 
- static int pci_epf_test_alloc_space(struct pci_epf *epf)
+ builtin_platform_driver(qcom_pcie_driver);
 
 -- 
 2.25.1
