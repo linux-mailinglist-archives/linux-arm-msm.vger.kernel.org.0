@@ -1,92 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-15964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15967-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 18B9D894438
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 19:23:05 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5DC188944BD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 20:23:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 844AF1F236F3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 17:23:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1A7122829D2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 18:23:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E18FE53378;
-	Mon,  1 Apr 2024 17:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2669E524B8;
+	Mon,  1 Apr 2024 18:23:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fXnYthvW"
+	dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="rGiJUWy2";
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="xyl5F/SX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fallback23.i.mail.ru (fallback23.i.mail.ru [79.137.243.77])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B7B051C52;
-	Mon,  1 Apr 2024 17:22:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4A54F1E5;
+	Mon,  1 Apr 2024 18:23:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.77
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711992130; cv=none; b=nJ7lb4KrY1MyQy+YfA7JfqecIapkUZb6AgyMUHWN8r9GIylWKi1lEFM/J/eVp1bkdhxvW0Pr+ekxJm40nL/hA2SLHxgVJv8IKvz/SPgYfiBpQ6of6cecrCUSyJTNXBOgE5R3ekaMq6Rqtj47lA98MitTITXkXWHMJv9fBTx+1Lk=
+	t=1711995793; cv=none; b=kAn7PnmY/7Mac+P+5/aE8Ej+BCawpSwzJNqZqAEa++zEpmZ13UpIsyCxjd85XC/rNW6KheFWwMU0137dnKVLJh+2FRwT1mgGW5xuOzwXCPxf7HGi5IaVxGvxLWJUa2MP5R7jEO89l2gx6sf988ZUEVSSCskfLauSpz/E0RmBE9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711992130; c=relaxed/simple;
-	bh=QZgCgD+pDmfzTboyomfPDIaQwmmi1D2si8FkQh7TzwE=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=nLGxcyUdS4zW4A+YetmNr/Tc3L/iJSvyXvXcbd3NBAHPZRt6Yw3kVI3IfQgYgRWpRYaON4lcPAqUBLULItoWVmVOkfjgrJTqWf39CJxIHQRnljG6+fBclXX/I+lZ+LM42ZZ4HE2Nd2eCu5RxVaOzKJRxIxxREx4dMaeVcO7vSdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fXnYthvW; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-515d515e28dso1789538e87.0;
-        Mon, 01 Apr 2024 10:22:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711992127; x=1712596927; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ew+Rv+h3xO004AjwxMfY/c/AUT9eZb4PNwe0Tj37/ak=;
-        b=fXnYthvWMtq21oe0xWtC9/HG0geKV9jLtDaWC6fi+j5kX5eHwGJhGzHHWoczsTcgWy
-         qPkOkglatDaXq/u1N8q6q+CS7g9hfdHRLkh8dZCaAJTgrNmkfOIrzlBg9s6fuTq6EfbZ
-         NZTbD8fz4RBAX4UBzHZuvNSeRDI991JGSz9kUQcJH9bCtFAeMcFqsRrYUYjca51Qx+zO
-         eUFow1vBzpESdIUcM1nFpl9/G6c94uqVIK40VAgTYiSFtdRDG8ZyPqr/LFtZxGWGUQEJ
-         1ZSWrtd6vzQnLZ9hsnEj0sQrFTv+XNIJPNj8PrTfVmPAiwimCQAqx6n3HvPO43cbCxD0
-         sENQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711992127; x=1712596927;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ew+Rv+h3xO004AjwxMfY/c/AUT9eZb4PNwe0Tj37/ak=;
-        b=bMHG5U0vWUBLYBguLJXvB94ns1uI+aYEPDAEw1og3G5RaLJvlhzcQ3C69IT6QtYBwR
-         JS+FkBEseHHVbcQ/a790zBBpcyJgpf5l+2k380pmApxT7AH7g33cNDMTU7OrV9XJgSx4
-         OQg2BXdte4G3a2YffFnMXkrdyECTvWFvv1EpJmH4t+dXB60dg+98bK55Zuf9TRM9Bh5k
-         mMkDuCyCuJC6VqZxbErv2G/58n/G/fHQLrC844uKe1gYR1U3wlP1KSqiTVZ3w3pcIEQS
-         8FJ+56oJgQhog6X8ENwz7AM3c+AFOdd5HSGH0L69XaRJ6bIGAXesOEcN1QFNwsSEyeDo
-         wt6w==
-X-Forwarded-Encrypted: i=1; AJvYcCVZiDeMBJZg1H4l99o1y97P8lbTgFczCuzTvaznlqBK9iQEkqsfHQItEE4+RLMy6CM/Tg2Ao31BcFCYDys6vi4baztaHDVp/ycBy9HiqesKD8FXl/ACAGjKOqUmRc06DNR38/aATx3qCtvTZOYBUqhllWxaT3xbQgARMXEZ2cfMktFO5bEJbnM=
-X-Gm-Message-State: AOJu0YySEhobYU5gdSnvO52BUsqcQ/Qr8eALD9pNK9KPm4CINscr0sUl
-	k+jLElpVm8AR7in/eLGPuKbH1VjO57fXRJ4R8KWzwNwI7gqsJ7+TJFyzn+rGkZk=
-X-Google-Smtp-Source: AGHT+IHD0PSqP84JkC+CvhhJ2s2SBxucZkTKCBPDRSoaA74HpBEd2Z1Ez/nUJqDtrwe5KK2+gEw0bQ==
-X-Received: by 2002:ac2:5b4b:0:b0:516:a2fc:9099 with SMTP id i11-20020ac25b4b000000b00516a2fc9099mr3475138lfp.60.1711992126528;
-        Mon, 01 Apr 2024 10:22:06 -0700 (PDT)
-Received: from localhost.localdomain (ccu40.neoplus.adsl.tpnet.pl. [83.30.144.40])
-        by smtp.gmail.com with ESMTPSA id xi7-20020a170906dac700b00a4e23486a5dsm5347949ejb.20.2024.04.01.10.22.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Apr 2024 10:22:06 -0700 (PDT)
-From: Adam Skladowski <a39.skl@gmail.com>
-To: 
-Cc: phone-devel@vger.kernel.org,
-	~postmarketos/upstreaming@lists.sr.ht,
-	Adam Skladowski <a39.skl@gmail.com>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
+	s=arc-20240116; t=1711995793; c=relaxed/simple;
+	bh=YUtnO/HRuRkk2kX8LJRlnCGpFK7W9keZuPRRh9eedas=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TAD632T/Z2Kap388PZnuz6eAvY+eO0ZOZ1nK9FjAtucIiil8W/sB0hVvHw0czrPejTN8M3yAVGUi3P0G0/gpbXNXTtIwAF9SVguEDdfo+M5MtPrYxgrZ8MjrTl8XjwuZpfC63ffrTv3heFbOMW+iAkQlrAQQZ0DhiBeReTI3R/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com; spf=pass smtp.mailfrom=jiaxyga.com; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=rGiJUWy2; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=xyl5F/SX; arc=none smtp.client-ip=79.137.243.77
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jiaxyga.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com; s=mailru;
+	h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:Cc:To:From:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=ShGyo1CUXQ5HPR3+k6tqEEBbNMUAZ7JWfYNb5Y/jwgo=;
+	t=1711995791;x=1712085791; 
+	b=rGiJUWy2vPO1OxJ1CvUK15eJfepzmT6FFU+ejL58TshwmN7gb/VniULD/z+jx9q09SMHW4x49FWEjGGCkapZBPWRVYLROjuSoi58tQ+NKTatGOFMcnak5RLwV2nAMs2Qj0iRB+Mhy0kKy+xKf66Er8waS7LehOnBHUzkCPmvRmk=;
+Received: from [10.12.4.7] (port=60032 helo=smtp33.i.mail.ru)
+	by fallback23.i.mail.ru with esmtp (envelope-from <danila@jiaxyga.com>)
+	id 1rrMJB-009y8P-Ud; Mon, 01 Apr 2024 21:23:02 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
+	; s=mailru; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
+	Cc:To:From:From:Sender:Reply-To:To:Cc:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
+	X-Cloud-Ids:Disposition-Notification-To;
+	bh=ShGyo1CUXQ5HPR3+k6tqEEBbNMUAZ7JWfYNb5Y/jwgo=; t=1711995781; x=1712085781; 
+	b=xyl5F/SXJK7c1K5tn+IHz4aSxqpRlRAoK9wPakvXfLfmblc6N7SDNWp3M6ViCtzZ6CDUwP9dHjM
+	1dOPsI2kmzfKXSM+ZY6Ps6UrMZB4fTRS2lmHlhUCdZaLgKozyhAe45nVOyv4KJ6Gt/GL8ffYd7FuK
+	fgbZe9ybTmQuZUScy+w=;
+Received: by smtp33.i.mail.ru with esmtpa (envelope-from <danila@jiaxyga.com>)
+	id 1rrMIt-00000002IQ2-1ZbC; Mon, 01 Apr 2024 21:22:44 +0300
+From: Danila Tikhonov <danila@jiaxyga.com>
+To: andersson@kernel.org,
+	konrad.dybcio@linaro.org,
+	vkoul@kernel.org,
+	kishon@kernel.org,
+	robh@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org,
+	cros-qcom-dts-watchers@chromium.org,
+	manivannan.sadhasivam@linaro.org,
+	davidwronek@gmail.com
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 4/4] arm64: dts: qcom: msm8976: Add WCNSS node
-Date: Mon,  1 Apr 2024 19:21:53 +0200
-Message-Id: <20240401172153.9231-5-a39.skl@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240401172153.9231-1-a39.skl@gmail.com>
-References: <20240401172153.9231-1-a39.skl@gmail.com>
+	linux-kernel@vger.kernel.org,
+	Danila Tikhonov <danila@jiaxyga.com>
+Subject: [PATCH 0/2] phy: qcom-qmp-ufs: Fix PHY QMP clocks for SC7180
+Date: Mon,  1 Apr 2024 21:22:38 +0300
+Message-ID: <20240401182240.55282-1-danila@jiaxyga.com>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -94,136 +78,57 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Mailru-Src: smtp
+X-7564579A: B8F34718100C35BD
+X-77F55803: 4F1203BC0FB41BD9D135BF24EC7C3B8467D85483E9EA2C72D4DE81C4A4EEAA95182A05F5380850402B52B0DDFBE73495F378A8CA21F699D64179DF9C447BBFCD754E9BE2FEC5E1B818FB9CDCE596FCA9
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE77633BACAB33B9508C2099A533E45F2D0395957E7521B51C2CFCAF695D4D8E9FCEA1F7E6F0F101C6778DA827A17800CE721AF84DC1D70954DEA1F7E6F0F101C6723150C8DA25C47586E58E00D9D99D84E1BDDB23E98D2D38B73AB1701401CD871F6D061299D4DFACDFCDFBA1F025B8584A17D34953EC636E0A471835C12D1D9774AD6D5ED66289B5278DA827A17800CE7820CF4CC0E318EFB9FA2833FD35BB23D2EF20D2F80756B5F868A13BD56FB6657A471835C12D1D977725E5C173C3A84C37EF884183F8E4D67117882F4460429728AD0CFFFB425014E868A13BD56FB6657D81D268191BDAD3DC09775C1D3CA48CFA4DC95554899BC9EBA3038C0950A5D36C8A9BA7A39EFB766D91E3A1F190DE8FDBA3038C0950A5D36D5E8D9A59859A8B6D4C4ECAC619A54F376E601842F6C81A1F004C906525384303E02D724532EE2C3F43C7A68FF6260569E8FC8737B5C22494854413538E1713FE827F84554CEF50127C277FBC8AE2E8BA83251EDC214901ED5E8D9A59859A8B6A8DADCFA31BDB70175ECD9A6C639B01B4E70A05D1297E1BBCB5012B2E24CD356
+X-C1DE0DAB: 0D63561A33F958A53162F1C686CC645C5002B1117B3ED696AA99809DCD2E960B30C8F815570A3530823CB91A9FED034534781492E4B8EEADB71243024C627CEAC79554A2A72441328621D336A7BC284946AD531847A6065A535571D14F44ED41
+X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF77DD89D51EBB7742D3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CFEA8A2686A51622C3E5B9F373AF52626300E8ADEC78EC0D7DC2807A2F3F6B43D1E80DAFFC47B24EFF58CF1FE2B37DBE10001FABD5F0BBD70D66FC8896552336569188EE975B8B1B39457F7985AD47CF5C02C26D483E81D6BE72B480F99247062FEE42F474E8A1C6FD34D382445848F2F3
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojZkLXUwYT7t9vcwvJsGGJ/Q==
+X-Mailru-Sender: 9EB879F2C80682A09F26F806C739498113902588151D385CEA62B7A4765414871F283CC98C034A737BFAD2062C45D6D62C62728BC403A049225EC17F3711B6CF1A6F2E8989E84EC137BFB0221605B344978139F6FA5A77F05FEEDEB644C299C0ED14614B50AE0675
+X-Mras: Ok
+X-7564579A: B8F34718100C35BD
+X-77F55803: 6242723A09DB00B469FED0CC4E03BFC3F7F23553880BB0CD60F3889908575E02049FFFDB7839CE9E676DC208F0F4A05787DBD83E3C3C6ADC3723A190316B2DE923FA25777803A10D
+X-7FA49CB5: 0D63561A33F958A5839001B5FD176FC06B951A06F851E1BE35B5EAECE2A4CD458941B15DA834481FA18204E546F3947C07E7064A143892FBF6B57BC7E64490618DEB871D839B7333395957E7521B51C2DFABB839C843B9C08941B15DA834481F8AA50765F79006377827508AE46B0BF5389733CBF5DBD5E9B5C8C57E37DE458BD96E472CDF7238E0725E5C173C3A84C34B556A7116F344E835872C767BF85DA2F004C90652538430E4A6367B16DE6309
+X-87b9d050: 1
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojZkLXUwYT7t9Tv9QF8esWHA==
+X-Mailru-MI: 8000000000000800
+X-Mras: Ok
 
-Add node describing wireless connectivity subsystem.
+This series of patches is based on the series from Manivannan:
+https://lore.kernel.org/all/20240131-ufs-phy-clock-v3-0-58a49d2f4605@linaro.org/
 
-Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
----
- arch/arm64/boot/dts/qcom/msm8976.dtsi | 104 ++++++++++++++++++++++++++
- 1 file changed, 104 insertions(+)
+Patch from David adding a UFS nodes for SC7180(SM7125):
+https://lore.kernel.org/all/20240121-sm7125-upstream-v4-6-f7d1212c8ebb@gmail.com/
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8976.dtsi b/arch/arm64/boot/dts/qcom/msm8976.dtsi
-index 77670fce9b8f..41c748c78347 100644
---- a/arch/arm64/boot/dts/qcom/msm8976.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8976.dtsi
-@@ -771,6 +771,36 @@ blsp2_i2c4_sleep: blsp2-i2c4-sleep-state {
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
-+
-+			wcss_wlan_default: wcss-wlan-default-state  {
-+				wcss-wlan2-pins {
-+					pins = "gpio40";
-+					function = "wcss_wlan2";
-+					drive-strength = <6>;
-+					bias-pull-up;
-+				};
-+
-+				wcss-wlan1-pins {
-+					pins = "gpio41";
-+					function = "wcss_wlan1";
-+					drive-strength = <6>;
-+					bias-pull-up;
-+				};
-+
-+				wcss-wlan0-pins {
-+					pins = "gpio42";
-+					function = "wcss_wlan0";
-+					drive-strength = <6>;
-+					bias-pull-up;
-+				};
-+
-+				wcss-wlan-pins {
-+					pins = "gpio43", "gpio44";
-+					function = "wcss_wlan";
-+					drive-strength = <6>;
-+					bias-pull-up;
-+				};
-+			};
- 		};
- 
- 		gcc: clock-controller@1800000 {
-@@ -1446,6 +1476,80 @@ blsp2_i2c4: i2c@7af8000 {
- 			status = "disabled";
- 		};
- 
-+		wcnss: remoteproc@a204000 {
-+			compatible = "qcom,pronto-v3-pil", "qcom,pronto";
-+			reg = <0x0a204000 0x2000>,
-+			      <0x0a202000 0x1000>,
-+			      <0x0a21b000 0x3000>;
-+			reg-names = "ccu",
-+				    "dxe",
-+				    "pmu";
-+
-+			memory-region = <&wcnss_fw_mem>;
-+
-+			interrupts-extended = <&intc GIC_SPI 149 IRQ_TYPE_EDGE_RISING>,
-+					      <&wcnss_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
-+					      <&wcnss_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
-+					      <&wcnss_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
-+					      <&wcnss_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
-+			interrupt-names = "wdog",
-+					  "fatal",
-+					  "ready",
-+					  "handover",
-+					  "stop-ack";
-+
-+			power-domains = <&rpmpd MSM8976_VDDCX>,
-+					<&rpmpd MSM8976_VDDMX>;
-+			power-domain-names = "cx", "mx";
-+
-+			qcom,smem-states = <&wcnss_smp2p_out 0>;
-+			qcom,smem-state-names = "stop";
-+
-+			pinctrl-0 = <&wcss_wlan_default>;
-+			pinctrl-names = "default";
-+
-+			status = "disabled";
-+
-+			wcnss_iris: iris {
-+				/* Separate chip, compatible is board-specific */
-+				clocks = <&rpmcc RPM_SMD_RF_CLK2>;
-+				clock-names = "xo";
-+			};
-+
-+			smd-edge {
-+				interrupts = <GIC_SPI 142 IRQ_TYPE_EDGE_RISING>;
-+
-+				qcom,ipc = <&apcs 8 17>;
-+				qcom,smd-edge = <6>;
-+				qcom,remote-pid = <4>;
-+
-+				label = "pronto";
-+
-+				wcnss_ctrl: wcnss {
-+					compatible = "qcom,wcnss";
-+					qcom,smd-channels = "WCNSS_CTRL";
-+
-+					qcom,mmio = <&wcnss>;
-+
-+					wcnss_bt: bluetooth {
-+						compatible = "qcom,wcnss-bt";
-+					};
-+
-+					wcnss_wifi: wifi {
-+						compatible = "qcom,wcnss-wlan";
-+
-+						interrupts = <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
-+							     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>;
-+						interrupt-names = "tx", "rx";
-+
-+						qcom,smem-states = <&apps_smsm 10>, <&apps_smsm 9>;
-+						qcom,smem-state-names = "tx-enable",
-+									"tx-rings-empty";
-+					};
-+				};
-+			};
-+		};
-+
- 		intc: interrupt-controller@b000000 {
- 			compatible = "qcom,msm-qgic2";
- 			reg = <0x0b000000 0x1000>, <0x0b002000 0x1000>;
+The patch submitted by David and a series of patches submitted by Manivannan
+were both applied at approximately the same time. As a result, David's patch
+did not include this change.
+
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+To: Vinod Koul <vkoul@kernel.org>
+To: Kishon Vijay Abraham I <kishon@kernel.org>
+To: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+To: Conor Dooley <conor+dt@kernel.org>
+To: cros-qcom-dts-watchers@chromium.org
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: David Wronek <davidwronek@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-phy@lists.infradead.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+
+Danila Tikhonov (2):
+  dt-bindings: phy: qmp-ufs: Fix PHY clocks for SC7180
+  arm64: dts: qcom: sc7180: Fix UFS PHY clocks
+
+ .../bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml          | 1 +
+ arch/arm64/boot/dts/qcom/sc7180.dtsi                     | 9 ++++++---
+ 2 files changed, 7 insertions(+), 3 deletions(-)
+
 -- 
 2.44.0
 
