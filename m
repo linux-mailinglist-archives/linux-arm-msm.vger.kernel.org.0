@@ -1,87 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-15959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10A21894421
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 19:17:23 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 338F989442D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 19:22:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C0D322832B3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 17:17:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 116D81C21482
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 17:22:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62D1D4AEE4;
-	Mon,  1 Apr 2024 17:17:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 239F24C62A;
+	Mon,  1 Apr 2024 17:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WvUwOOqr"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IiV77F5z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CE08F5C;
-	Mon,  1 Apr 2024 17:17:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC4D4AEC3;
+	Mon,  1 Apr 2024 17:22:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991838; cv=none; b=TtcTU822aySpSxZS/V73OdKLOJX1yWZ7gs3JBPAgtKIu72hRofnJJcHyj3tEk+lI11d+a9hdLlbt0lZNBI4vynH61RRN0mIZq8EwmHzuIV/yF6TW7CoOVkLKRazX5o72EMjPvkEPU/l8X6AFfxIgCUOxycNkmgFHHgrhhmPB+yI=
+	t=1711992122; cv=none; b=h+6/PmMGUZtEdT43D0XR4i8xur/zJVJ1/e71lsP2r6vU9uXm8XT0aHFOufA6FBwrQK+iqQnZmWhRPZ2Oro4TdujsgVPuqJ+6M85FKYUId8r4CKiUsjv7IXgKystWTtFkh5KI4FSkHbHjWxbw2EmzFu0MjQ8w/P2p4Or7S2Y3B0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991838; c=relaxed/simple;
-	bh=Xs8Q6CDyDIOEE03oPZLb/he7FAlRg+HMWx+Axg6xlnY=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=F1Cu+EKCJruAr4u69LDSvLvEnIy9h8ES5MTBhemsItS9v7T+37KD+QgmNYkrt1HySAKQUuPOypVNGYY/8JX1w7TEYVLCC60SbCnYVfaZOOGD1CTIdhWMrgBTvqr4gEwPRQBHsLKpri5QOITl2sD9uiMjK+BYVoY6Q6a8QaTt+HE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WvUwOOqr; arc=none smtp.client-ip=209.85.167.42
+	s=arc-20240116; t=1711992122; c=relaxed/simple;
+	bh=yGSMWtyTvsNKYw3IzNfdUL7VvAd5Xekz8J7V3atz0kA=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=jdE3zEdrELSSmvQsjSQ3dOnpRMw/6AiZpKTWhJ+XB62oibpUQbxQ1WATdjg2REwHzJokZp/oY5ZzhWGG4aj2Vt2z5GIYRMrb6PV0F8oW3KIqa5aYAJAd94HrTa26h/7EmHkrMcS3rdhUqdtXYoj6ASouhmqeQYWp36X3H8LnEtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IiV77F5z; arc=none smtp.client-ip=209.85.208.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-516a97b3139so1109840e87.2;
-        Mon, 01 Apr 2024 10:17:16 -0700 (PDT)
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-56dd16630d8so942350a12.0;
+        Mon, 01 Apr 2024 10:22:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711991834; x=1712596634; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1711992118; x=1712596918; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=lNGvPCSXiECHoP3UreuKKK40O4Mox4jdXXntNPnjoX4=;
-        b=WvUwOOqrk/iHUMPp61B5LbXc1HoKyPkur0bFy93qvaCz46PmMajb4tiK4iVEzx7vpf
-         LZiX55+3ur4e15Zcc1v6efwnSJDo3gbAPXk+lQRbruGwYiuKYqtfnbuoh0uBZ+tYaU4B
-         eLfDY8N3Kfhcymdes4EZiuV8p8r3Iz+R9KYs1rZwvDaYMuJX2l+lmmXS/FDxERIaDRqm
-         nKSmGmSWH1mOqMTXMr3OJWHmL2AbeBVAG95lFsLuNiDDmNFoEZafsJabKP2cnNEg2HX7
-         XOC3g3bieecVF3+mqU4S+SkCk6j39NTPMYc9fEJJD755GnG45WflIX6h6VuFkwTiGfOv
-         877A==
+        bh=cFKQ5iAv9Q4vsIgWAjjOKXP7jVa9L0LaTnYCKK3WFF4=;
+        b=IiV77F5zUu06GtqP/E1HGs3pYrE3GvM9FT7Ei3Z9ToYBeIRAl3e13kapvD/bDFD45B
+         sJRgniWwacQN6TP5QaQx4i52ecMZv5e6JWir1pB5VsueNOvdy5aqjK+gHHiiPrUyZvw1
+         Xu8OB0kh63vM3P+i/4419t7tpCbAXTIomVZ0YF3BoqXGdp1TMuah90XmuHW7IO+6Fse7
+         uoodgwqNIqpp+gP+z6OWr2CobwI1WykeXc+1qVi5UwqN/8cr0dJCZh2HvHfc3VW28SGH
+         3yzVH1LTQ4LprO0CTy/mheEN05X7r3B3Lw1dXzDOzexBIWU4nUK3rlPvDG4IHd18OOiy
+         GTMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711991834; x=1712596634;
+        d=1e100.net; s=20230601; t=1711992118; x=1712596918;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=lNGvPCSXiECHoP3UreuKKK40O4Mox4jdXXntNPnjoX4=;
-        b=hEb8cSC96q3RJqbnzjw89KMbQSHMBnXvCo8UPgb5Bm7IsLAd5XCFMv9tVig5S8sHZ5
-         OKXWdfL+aP463YXv9PAmoZ7s6ET/Tb+MNykekrLKp33arrh/LsWP+QNIfEGNGUFiI33z
-         4gBG1GZXhigYOMrNtOn4JNgNCTJueoRYGKgnCoXSR9bEQWBe/zI/c1IFwhW4tPHK9eOp
-         YvVwRaaLbsRgE96njYuihqg1XfzwCEOjHa64S8PYcv0KCdvLhQzHM20Inz0aVDRzIMPn
-         uytnn58vdudhLzIopyNyB9s1E1qbvHFWMYL+P6O0wxuc5icEUwACnQ4RI1CpNwFZjocr
-         RJ1Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWggMF9Dgai4aaeQI8RC366hYqv74JOdlc3KUSFoFKkYz2Az6tIsB612zrHJyPTDa22PSmAIVGnJTrOQrvp3+JO65TXj+Po97fCGwMbOtnP6+hpYBjSzsHOfsrfSRqevb7MGxT/2JVml3yYN5l4m7vmO8PXnOiRh/UvjPNuDAByzsCPCesakw==
-X-Gm-Message-State: AOJu0YzX9Ekvirk/cgTYrbHxoJ0JK/mCI3A3PszO/2IMJtJEeFazPmm4
-	yQ/y27LMFfkZf702dbl/bqwATLG+Ns2Tgz8i0l8qjzENS465xkyYou2L7bLyG0Y=
-X-Google-Smtp-Source: AGHT+IFE1cBOnyqgKEuUC+S8xM0ABqAsAE+UMb9sHziXV/4h3sU6jqH0t2nkLVVigWdzn188zOSSTQ==
-X-Received: by 2002:a05:6512:3711:b0:513:172d:5b46 with SMTP id z17-20020a056512371100b00513172d5b46mr6264509lfr.39.1711991833982;
-        Mon, 01 Apr 2024 10:17:13 -0700 (PDT)
+        bh=cFKQ5iAv9Q4vsIgWAjjOKXP7jVa9L0LaTnYCKK3WFF4=;
+        b=e0LASU/o/x5Zv1FUgD0UWpSeCcBopM9qJfv/FuvN8IvA/OJy8RdZbh8ZfmYrQMWybh
+         ou9Hqz3s1CBSTmegKBN40hnrF46OY/SDzq2xVUdhMVrlF4r2KS+WTCj5IlXq+dakOYEP
+         De/f+vffSM/fCtsc5Zpmi1ht1jySL7NvhuRjdFqfChbanrLpjMLtJ5myQ7zNiLyxgj3c
+         pHbPj8Ms8BZZejkVpDcFSgBC8EKGxS2NVoDE3JMR4rhAtOotGWgQNWDPlwFOUP5pyfgQ
+         ZYviXEVZWhpb4LZrS6TQRRxQZIKDSxmW32YZc1s5iKv7TgaDWen0oN0mhQWvBLC99fq/
+         a4yA==
+X-Forwarded-Encrypted: i=1; AJvYcCVZwCtUkNWpQjYhzDGNrEbximYmLj04+uBix4lA4+pJjiErmcbqUFeOdjZaRe4BJ2M9US3bFy8F51ISyq+GzXmhLmVbvwAhC2guDpm6YdJsQMpNuMUCc14VzXo4fzZZLoLlNTtSd8bsFNnA+mrpfdzrkHqY15fvd502jpzi24U5cwPjLIoyrJo=
+X-Gm-Message-State: AOJu0Yx7x2tlE1+rGLnLuSIpP9RLR5qTY0FLCwLafyTHpYDC3cIM2yZB
+	jOhb7hAqCr/MTAf4uVb+PsuQKyUIsFJCcQHmf2OSjOuyeS9Sf2HdAqkQE0gPypM=
+X-Google-Smtp-Source: AGHT+IHA4HhwZKjoCKMwQeG/ipnWsYQ2yEZNIYKMejNh6H2iV9+YIsf3PBnYkhMAIQ/U3ef4vYeK/A==
+X-Received: by 2002:a17:907:c1f:b0:a4e:d43:dc4b with SMTP id ga31-20020a1709070c1f00b00a4e0d43dc4bmr8607122ejc.58.1711992118052;
+        Mon, 01 Apr 2024 10:21:58 -0700 (PDT)
 Received: from localhost.localdomain (ccu40.neoplus.adsl.tpnet.pl. [83.30.144.40])
-        by smtp.gmail.com with ESMTPSA id g4-20020a17090669c400b00a4673706b4dsm5505600ejs.78.2024.04.01.10.17.12
+        by smtp.gmail.com with ESMTPSA id xi7-20020a170906dac700b00a4e23486a5dsm5347949ejb.20.2024.04.01.10.21.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Apr 2024 10:17:13 -0700 (PDT)
+        Mon, 01 Apr 2024 10:21:57 -0700 (PDT)
 From: Adam Skladowski <a39.skl@gmail.com>
 To: 
 Cc: phone-devel@vger.kernel.org,
 	~postmarketos/upstreaming@lists.sr.ht,
 	Adam Skladowski <a39.skl@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
 	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 1/1] clk: qcom: smd-rpm: Restore msm8976 num_clk
-Date: Mon,  1 Apr 2024 19:16:39 +0200
-Message-Id: <20240401171641.8979-1-a39.skl@gmail.com>
+Subject: [PATCH v2 0/4] MSM8976 MDSS/GPU/WCNSS support
+Date: Mon,  1 Apr 2024 19:21:49 +0200
+Message-Id: <20240401172153.9231-1-a39.skl@gmail.com>
 X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -91,26 +91,25 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-During rework somehow msm8976 num_clk got removed, restore it.
+This patch series provide support for display subsystem, gpu
+and also adds wireless connectivity subsystem support.
 
-Fixes: d6edc31f3a68 ("clk: qcom: smd-rpm: Separate out interconnect bus clocks")
-Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
----
- drivers/clk/qcom/clk-smd-rpm.c | 1 +
- 1 file changed, 1 insertion(+)
+Changes since v1
+================
+1. Addressed feedback
+2. Dropped already applied dt-bindings patches
+3. Dropped sdc patch as it was submitted as part of other series
+4. Dropped dt-bindings patch for Adreno, also separate now
 
-diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
-index 8602c02047d0..45c5255bcd11 100644
---- a/drivers/clk/qcom/clk-smd-rpm.c
-+++ b/drivers/clk/qcom/clk-smd-rpm.c
-@@ -768,6 +768,7 @@ static struct clk_smd_rpm *msm8976_clks[] = {
- 
- static const struct rpm_smd_clk_desc rpm_clk_msm8976 = {
- 	.clks = msm8976_clks,
-+	.num_clks = ARRAY_SIZE(msm8976_clks),
- 	.icc_clks = bimc_pcnoc_snoc_smmnoc_icc_clks,
- 	.num_icc_clks = ARRAY_SIZE(bimc_pcnoc_snoc_smmnoc_icc_clks),
- };
+Adam Skladowski (4):
+  arm64: dts: qcom: msm8976: Add IOMMU nodes
+  arm64: dts: qcom: msm8976: Add MDSS nodes
+  arm64: dts: qcom: msm8976: Add Adreno GPU
+  arm64: dts: qcom: msm8976: Add WCNSS node
+
+ arch/arm64/boot/dts/qcom/msm8976.dtsi | 524 +++++++++++++++++++++++++-
+ 1 file changed, 520 insertions(+), 4 deletions(-)
+
 -- 
 2.44.0
 
