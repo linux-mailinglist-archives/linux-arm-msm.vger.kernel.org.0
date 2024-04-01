@@ -1,145 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-15983-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15985-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8B4E89463F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 22:49:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AD2F1894689
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 23:24:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 87AD51F21A01
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 20:49:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4E1D81F21F60
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 21:24:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 891102E3EB;
-	Mon,  1 Apr 2024 20:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D5C755C3C;
+	Mon,  1 Apr 2024 21:24:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gWUhY/nD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EpC6pCTP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D00D717552;
-	Mon,  1 Apr 2024 20:49:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E1654FAC;
+	Mon,  1 Apr 2024 21:24:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712004580; cv=none; b=mrz/l4E9opuQCtQrJMoyvz9XLOwakPhAsmut7bFVOS3EQHnT4X3fFb8h7qr0U8OCldVc2Am1GE/zvnFhZ6bIYJxzZu8orK//GtO3wRJGYQySuW0h0MVcrP9dfc0nGbfmS+jxGCx2BJT2qGMzW0t8BUr8FfvDO309HdfW3syNO/8=
+	t=1712006655; cv=none; b=gnL0fpOR5tslnqjhxQbAdBJU+jGm+4I6n4lzW0vOkeczvIAsdPs/jjIz1sCWKXi0cxRMO5lVntBFpS06FV9E6KN96crg6bnjw7qRmOG51o8Tg9DsGFFZ0PrIlcguCfnZje3nSe42tNEQ/PYwPISHgcPrv1yb7YIT/3YmaLT1Io8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712004580; c=relaxed/simple;
-	bh=ZGg73G5kdSdc6/MO4BB/Q5ripgdhYtNLKWJWVmNze30=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=e/VEjp7oBRrQNhlqzDik8n9sIlKXlP6lt7fTC51x+geIC6Xko4kYSv5Pd3Xepd7xGUkBmvehACPPWXFoiEP/s8aTQiEyy5ikgpalwH5S6f5eMliZsWHFlKWAn4BsiRhig7dSVNLCMtaTQwnW0yTJ9jT0mXXiIDISrChuEm3b/qY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gWUhY/nD; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 431JQQrU010966;
-	Mon, 1 Apr 2024 20:49:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version
-	:content-transfer-encoding:content-type; s=qcppdkim1; bh=SDPpPZr
-	Ybjlj5SIHl69Y3/3Hon0AHxjShyC0S7sqTuw=; b=gWUhY/nDw1O3b2HSJpQdJ1S
-	YLecUNRaBOdOmUCT1FsK7GcH0MCJacbe4K2KKMjypFqphpo9q6zvpIHfDFiRJTpn
-	hVmuGtYstGQvCtIWILH0zktBsJV5G/bN9eYwxI4fY0D5dK6kEEdNnUoCOcH4jXTp
-	52jDKptCDyrTb3Bo6tXIWxf+dE4I3WzMwOCQHw8O+YIvJRVLqURvVVZ6YIPUCKk6
-	/f7mC9YYjhc3gUrvUYLQ9xI9rb33rythwSWizub8ZFygUxj4/iQNJ0bAW0bekVU5
-	ggPT1uKZS9f6Mh+19isyr6EUaInRhg5QcdP75bSk99a7jNOTbhqHl0H/hcvR6Jg=
-	=
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x8320r41y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 01 Apr 2024 20:49:22 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 431KnKoA003393
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 1 Apr 2024 20:49:20 GMT
-Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Mon, 1 Apr 2024 13:49:20 -0700
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-To: Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Helen Koike <helen.koike@collabora.com>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH] drm: ci: fix the xfails for apq8016
-Date: Mon, 1 Apr 2024 13:48:58 -0700
-Message-ID: <20240401204859.24223-1-quic_abhinavk@quicinc.com>
-X-Mailer: git-send-email 2.43.2
+	s=arc-20240116; t=1712006655; c=relaxed/simple;
+	bh=JvZ9DjATerhrdZXHJcR5iNqmcuYJoWGExgpd7+c6UhM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ovJE1wQgLQ8roWTbiq4ANJuKooTxfU9QqYymUHodRdCctST6BDYn2E4jvK0ZQjy71gmoEvYcxe7wPKwVmItkyh4jGirWqi/WG1giRmTzIhe5fxBvGr26WsArYobxOuSmJfvEPTd9hQRmIMLVgJwdiGujYeIHIjg4U2bGw4np9EY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EpC6pCTP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id A7D01C433F1;
+	Mon,  1 Apr 2024 21:24:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712006654;
+	bh=JvZ9DjATerhrdZXHJcR5iNqmcuYJoWGExgpd7+c6UhM=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=EpC6pCTP/4yn8SsPctg6qvbKEvmTz3dFwiMhjTjvZ0FiEqFF4zeoyxn4tmhJ6O6Ro
+	 YXHkYqTs+PuzgL4ZZfv7ipdnVnBnJeMxTXbiJ4UF6a44M7KUAe8Hmb4prTKU8nmHUo
+	 U9oBRSDeILQgnCZJNFkJAqYXPRzzYjUL4cL+3rqp7mKyrZqcEcLHNpJzkzRztWYO5C
+	 MEwoKc/IEx4VsGjL+8m24mJDmmZ5EgFeTW8Jpnr3yvpqt3/8LPgdECVEaDYdbtVlLN
+	 LjfNAZRyQKur93gwm8YWCBIgb+dwCZWjtYoRjXG6IwAZryBBba5nIBDAvjXo9G4KRB
+	 gQx3jY7P9i62A==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91971CD1294;
+	Mon,  1 Apr 2024 21:24:14 +0000 (UTC)
+From: =?utf-8?q?Andr=C3=A9_Apitzsch_via_B4_Relay?= <devnull+git.apitzsch.eu@kernel.org>
+Subject: [PATCH v2 0/3] Add sy7802 flash led driver
+Date: Mon, 01 Apr 2024 23:23:54 +0200
+Message-Id: <20240401-sy7802-v2-0-1138190a7448@apitzsch.eu>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: WUNq6n4cZHd7jJtRqt-PHtW2RFpAY2OW
-X-Proofpoint-GUID: WUNq6n4cZHd7jJtRqt-PHtW2RFpAY2OW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-01_14,2024-04-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
- bulkscore=0 suspectscore=0 priorityscore=1501 mlxlogscore=999 spamscore=0
- clxscore=1011 mlxscore=0 adultscore=0 impostorscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2403210001
- definitions=main-2404010145
+X-B4-Tracking: v=1; b=H4sIAOolC2YC/zXMQQ6DIBCF4auYWZcGR9Cmq96jcYEIZTZqGEtqD
+ XcvNXH5v7x8O7CL5Bju1Q7RJWKapxJ4qcAGM72coLE0oEQlG9SCt+4mUXglvW29bjVqKOclOk+
+ fA3r2pQPxOsftcFP9X0+iO4lUCynGoVNmaNAb4x9mofXLNlzdG/qc8w897YTOngAAAA==
+To: Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>, 
+ Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Kees Cook <keescook@chromium.org>, 
+ "Gustavo A. R. Silva" <gustavoars@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-leds@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
+ phone-devel@vger.kernel.org, 
+ =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1712006653; l=1363;
+ i=git@apitzsch.eu; s=20240325; h=from:subject:message-id;
+ bh=JvZ9DjATerhrdZXHJcR5iNqmcuYJoWGExgpd7+c6UhM=;
+ b=CsSah5WnQVUtjNjrlw5gu4Gao8S8QY2nMFQ6MIhCxS6uoASsfJ8db1HQdi0pBimstKMB/Wsz7
+ BYz4yP8sITnBiqcqs5eQgZrY8IR7yz9VdSWr2xW2mJX2gL5YTJP3gay
+X-Developer-Key: i=git@apitzsch.eu; a=ed25519;
+ pk=wxovcZRfvNYBMcTw4QFFtNEP4qv39gnBfnfyImXZxiU=
+X-Endpoint-Received: by B4 Relay for git@apitzsch.eu/20240325 with
+ auth_id=142
+X-Original-From: =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
+Reply-To: git@apitzsch.eu
 
-After IGT migrating to dynamic sub-tests, the pipe prefixes
-in the expected fails list are incorrect. Lets drop those
-to accurately match the expected fails.
+This series introduces a driver for the Silergy SY7802 charge pump used
+in the BQ Aquaris M5 and X5 smartphones.
 
-In addition, update the xfails list to match the current passing
-list. This should have ideally failed in the CI run because some
-tests were marked as fail even though they passed but due to the
-mismatch in test names, the matching didn't correctly work and was
-resulting in those failures not being seen.
+The implementation is based on information extracted from downstream as
+the datasheet provided by a distributor of the hardware didn't include
+any information about the i2c register description.
 
-Here is the passing pipeline for apq8016 with this change:
-
-https://gitlab.freedesktop.org/drm/msm/-/jobs/57050562
-
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: André Apitzsch <git@apitzsch.eu>
 ---
- drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt | 13 +------------
- 1 file changed, 1 insertion(+), 12 deletions(-)
+Changes in v2:
+- bindings: remove unneeded allOf
+- bindings: example: move flash-led-controller under i2c node to fix
+  check error
+- Cc to phone-devel
+- Link to v1: https://lore.kernel.org/r/20240327-sy7802-v1-0-db74ab32faaf@apitzsch.eu
 
-diff --git a/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt b/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt
-index 44a5c62dedad..b14d4e884971 100644
---- a/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt
-+++ b/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt
-@@ -1,17 +1,6 @@
- kms_3d,Fail
- kms_addfb_basic@addfb25-bad-modifier,Fail
--kms_cursor_legacy@all-pipes-forked-bo,Fail
--kms_cursor_legacy@all-pipes-forked-move,Fail
--kms_cursor_legacy@all-pipes-single-bo,Fail
--kms_cursor_legacy@all-pipes-single-move,Fail
--kms_cursor_legacy@all-pipes-torture-bo,Fail
--kms_cursor_legacy@all-pipes-torture-move,Fail
--kms_cursor_legacy@pipe-A-forked-bo,Fail
--kms_cursor_legacy@pipe-A-forked-move,Fail
--kms_cursor_legacy@pipe-A-single-bo,Fail
--kms_cursor_legacy@pipe-A-single-move,Fail
--kms_cursor_legacy@pipe-A-torture-bo,Fail
--kms_cursor_legacy@pipe-A-torture-move,Fail
-+kms_cursor_legacy@torture-bo,Fail
- kms_force_connector_basic@force-edid,Fail
- kms_hdmi_inject@inject-4k,Fail
- kms_selftest@drm_format,Timeout
+---
+André Apitzsch (3):
+      dt-bindings: leds: Add Silergy SY7802 flash LED
+      leds: sy7802: Add support for Silergy SY7802 flash LED controller
+      arm64: dts: qcom: msm8939-longcheer-l9100: Add rear flash
+
+ .../devicetree/bindings/leds/silergy,sy7802.yaml   | 100 ++++
+ .../boot/dts/qcom/msm8939-longcheer-l9100.dts      |  26 +
+ drivers/leds/flash/Kconfig                         |  11 +
+ drivers/leds/flash/Makefile                        |   1 +
+ drivers/leds/flash/leds-sy7802.c                   | 532 +++++++++++++++++++++
+ 5 files changed, 670 insertions(+)
+---
+base-commit: a6bd6c9333397f5a0e2667d4d82fef8c970108f2
+change-id: 20240325-sy7802-f40fc6f56525
+
+Best regards,
 -- 
-2.43.2
+André Apitzsch <git@apitzsch.eu>
+
 
 
