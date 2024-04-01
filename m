@@ -1,110 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-15954-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15955-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF171893DB6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 17:56:01 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE029893FAD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 18:19:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 571B1B20A3E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 15:55:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 63B101F21982
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 16:19:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE1A153384;
-	Mon,  1 Apr 2024 15:54:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B392347A62;
+	Mon,  1 Apr 2024 16:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="L8i+EQ+I"
+	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="Eojp17Uj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 068D4481DB;
-	Mon,  1 Apr 2024 15:54:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0666C129;
+	Mon,  1 Apr 2024 16:19:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.87.146.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986879; cv=none; b=pvxuSv7d6PTiXzBFkq9RDafZmr1GqLi9czLSI3bU0JhdbeQxbh2mrl2SVLQgwMOIHA3QOc+qAT0AwJTb2eFmPnJq0KCyz5y5geY0wwUm6VTx7A9DRLUbuw82wvhp0dXxc91MVZxoMRrfczwpB5EiFijMoP1+MeVUrE4o5c8s0HY=
+	t=1711988392; cv=none; b=iClr+h4tRDmWFE/5FeGmvNncNN275cNvCLSa5LzNZ4g6tcT4FZWX2L/Y2x9ZgFkaRpSremne/0BnTgqbhHh9InuitoscV93SK43bA0eFMtDmJg3P6C84P0bhHQgOnhdxu0pN6tUm+lv7rFjo6entS1VaO/ZUIq4e5RKNC2xOAxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986879; c=relaxed/simple;
-	bh=m7eoAdTO/BKzFu9Jl2RbaqPrtSBW0xXzh2n8+x+UQdQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=H8IOYwE59TtzGgup6LHQUDi83jZ6Dx1c3fp8PifQonZYrI3Wf87eQ/Pv1GV+zsgZFy5SRhvBVU1stuAbbVEHPklLWYv8Vx1O/5PV/QIYIZfDu4eavyFJ5gmdg38UcwaY8XeVU+aYeE+jrdjsGUiWfG7ySSDXpnxlWeogbHlS1oI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=L8i+EQ+I; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 431A6c8T015307;
-	Mon, 1 Apr 2024 15:54:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=VcChgHfKeOYZ2vjgkmVzNAEWknG0rYWnKYsVIbgSYH8=; b=L8
-	i+EQ+INglfkpH1O4FOKUYlylaYVs3SmZf15aM6E+0nrzpjvY588U3yiBfJXmK1/z
-	PlqNgslNLemjuWO0Cr8QhpJQvxZBWBuMWOKKPEwvxnQKflIKD63NI80KGwqSFagB
-	F+tMEjZJ6JMsOm+KI8ENbzYdFCCs78+ciQKkZnptoUsP9JhC1htj0cBGY/0t51er
-	iMyezYNuDatjZhLHxQ6nwviBg8yG0mndyK+8EbC75Hwwg57arTFL4mIdLTkVKHtp
-	pH8nSIImQbEEITMAw35aOwIVh8ds9GoRkeFXtVVzrxdQpehM4uaIE1RYXxIB6G2F
-	PR/qjfr+bXElJOZm8Qtg==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x7tgqrqba-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 01 Apr 2024 15:54:21 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 431FsKfc014013
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 1 Apr 2024 15:54:20 GMT
-Received: from [10.110.91.214] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 1 Apr
- 2024 08:54:15 -0700
-Message-ID: <31f0b5d2-5b92-cc74-68bd-94fd42527a22@quicinc.com>
-Date: Mon, 1 Apr 2024 08:54:14 -0700
+	s=arc-20240116; t=1711988392; c=relaxed/simple;
+	bh=mR/cOeAw4E7C++Ggf0FcfRIhKkLkJCA2eKgJ7ORve1k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dvOEz5wUMf/jOdQFVgfHA6FrEnYPcUDtQnYppoDgBee7s8ORGselIOFlOAMuqyE+pk54S9JEAjHgMaAvQpmsi5O/GWxlyO2RtRq8PRw8sLswU8luy/P/nnlkbDycJP2d2Z20Riqk797aS3+UbVlNtKLSgy7spd4/DNeoFKPFNXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru; spf=pass smtp.mailfrom=trvn.ru; dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b=Eojp17Uj; arc=none smtp.client-ip=194.87.146.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trvn.ru
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+	(No client certificate requested)
+	by box.trvn.ru (Postfix) with ESMTPSA id 8EC74401B8;
+	Mon,  1 Apr 2024 21:19:39 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+	t=1711988380; bh=mR/cOeAw4E7C++Ggf0FcfRIhKkLkJCA2eKgJ7ORve1k=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Eojp17Ujo/uMpf1fwFbzjNhysujUbTNg10EALJdjfAVRyC5AVKkKURjF5xuKJv9vf
+	 FEVsiPPAT63k0DW5SMMjWK6EeW4DQBySzJ4zD5L76TzKckXGw+A4i8g7kTkLdEliOu
+	 ShR9wGrQxaSd+9o7/R4cIn08s/SKudbqSh/u+rZMpp1WwkPj5qHsQs2f3UCauExHSA
+	 AQWtOEP000HS9JfmwiXwxBp3NdbrJItZYSl6zZ/FljI9G3IPwiK7PeH8FDxgr7IJJr
+	 yx0RdOhAYpu2qJ79AJIAIVl0YgpYH7/No5LYU8uhr/SOdqdOe1/SYiiCxMKx9bPt31
+	 jhf9PBM8g9bqA==
+Date: Mon, 1 Apr 2024 21:19:36 +0500
+From: Nikita Travkin <nikita@trvn.ru>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Jonathan Corbet <corbet@lwn.net>, workflows@vger.kernel.org, 
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] docs: submitting-patches: describe additional tags
+Message-ID: <gkxxcernzydrduvmzgyyj22evukzhuxe7mr2nbn5p4cft23s6h@koerky6gc3bf>
+References: <20240401-additional-trailers-v1-1-f472bf158d2f@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v6 RESEND 0/4] arm64: qcom: add AIM300 AIoT board support
-To: Tengfei Fan <quic_tengfan@quicinc.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC: <keescook@chromium.org>, <tony.luck@intel.com>, <gpiccoli@igalia.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
-        <kernel@quicinc.com>
-References: <20240401093843.2591147-1-quic_tengfan@quicinc.com>
-Content-Language: en-US
-From: Trilok Soni <quic_tsoni@quicinc.com>
-In-Reply-To: <20240401093843.2591147-1-quic_tengfan@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: WMHuqxjh4wI1g-PgDNttw0KXqsQaFEp4
-X-Proofpoint-GUID: WMHuqxjh4wI1g-PgDNttw0KXqsQaFEp4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-01_10,2024-04-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- malwarescore=0 bulkscore=0 adultscore=0 mlxscore=0 spamscore=0
- priorityscore=1501 clxscore=1011 suspectscore=0 mlxlogscore=757
- lowpriorityscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2403210001 definitions=main-2404010112
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240401-additional-trailers-v1-1-f472bf158d2f@linaro.org>
 
-On 4/1/2024 2:38 AM, Tengfei Fan wrote:
-> Here is a diagram of AIM300 AIoT Carrie Board and SoM
->  +--------------------------------------------------+
->  |             AIM300 AIOT Carrie Board             |
+On Mon, Apr 01, 2024 at 08:17:03AM +0300, Dmitry Baryshkov wrote:
+> Described tags do not fully cover development needs. For example the LKP
+> robot insists on using Reported-by: tag, but that's not fully correct.
+> The robot reports an issue with the patch, not the issue that is being
+> fixed by the patch. Describe additional tags to be used while submitting
+> patches.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  Documentation/process/submitting-patches.rst | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+> 
+> diff --git a/Documentation/process/submitting-patches.rst b/Documentation/process/submitting-patches.rst
+> index 66029999b587..3a24d90fa385 100644
+> --- a/Documentation/process/submitting-patches.rst
+> +++ b/Documentation/process/submitting-patches.rst
+> @@ -544,6 +544,25 @@ future patches, and ensures credit for the testers.
+>  Reviewed-by:, instead, indicates that the patch has been reviewed and found
+>  acceptable according to the Reviewer's Statement:
+>  
+> +Additional tags to be used while submitting patches
+> +---------------------------------------------------
+> +
+> +The tags described previously do not always cover the needs of the development
+> +process.
+> +
+> +For example, if the kernel test robot reports an issue in the patch, the robot
+> +insists that the next version of the patch gets the Reported-by: and Closes:
+> +tags.  While the Closes: tag can be considered correct in such a case, the
+> +Reported-by: tag is definitely not correct. The LKP robot hasn't reported the
+> +issue that is being fixed by the patch, but instead it has reported an issue
+> +with the patch. To be more precise you may use the Improved-thanks-to: tag for
+> +the next version of the patch.
+> +
+> +Another frequent case is when you want to express gratitude to the colleagues,
+> +who helped to improve the patch, but neither the Co-developed-by: nor
+> +Suggested-by: tags are appropriate. In such case you might prefer to use
+> +Discussed-with:, Listened-by:, or Discussed-over-a-beer-with: tags.
+> +
 
-spellcheck
+This is an amazing idea!
 
-s/Carrie/Carrier ? 
+Though I wonder if we should use the industry standard X- prefix for those:
+i.e. X-Code-generator: or X-Sent-some-messages-about-this-that-were-left-unread-to:
+to clarify they are extensions to the usual workflow.
 
--- 
----Trilok Soni
+I think the decision on this would be pretty obvious after reading the
+current recommendation for X- prefixes in RFC 6648.
 
+I like this change!
+Nikita
+
+>  Reviewer's statement of oversight
+>  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  
+> 
+> ---
+> base-commit: 13ee4a7161b6fd938aef6688ff43b163f6d83e37
+> change-id: 20240401-additional-trailers-2b764f3e4aee
+> 
+> Best regards,
+> -- 
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
