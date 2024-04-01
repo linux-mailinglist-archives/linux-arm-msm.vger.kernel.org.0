@@ -1,73 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-15922-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15926-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9EDCB893810
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 07:17:45 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DFDEE893915
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 10:39:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F3F86B20F60
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 05:17:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 95E641F216AD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 08:39:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F0EA79DD;
-	Mon,  1 Apr 2024 05:17:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2AB2DEED0;
+	Mon,  1 Apr 2024 08:39:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eo93+2kQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RoPw3f60"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6576579F9
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Apr 2024 05:17:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0AEFCA4A;
+	Mon,  1 Apr 2024 08:39:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711948657; cv=none; b=ntdOsizJ14s1XtvoBthiH7v5HWkuREdEZV5osxzowvkBWiuhzYnkLfYrRRR75LD15+GJ7xLhilLn4BoXJQLImaLCqWm5EzgsFoEBry5Z/d4m8EYvwDNVV+X5O2NsLz3PRCVMRDIuix9SKH8eMsaxjvj2+lZV9iszrtN16WHCZO4=
+	t=1711960780; cv=none; b=oDrBC0BvZGGV8Gj0Xc2RYBMfJ6ztivurZg/J+VtIgJNmCG9p0lr2yfc+4uRho+ltNh6L3upnvbpSlaYoX7/HpFPu4klokfrgl5kStlTXV1xGT60uwR21k7GBUu3lFYBDjf7OK9ZdRlHAxHpz3kulK/68ylmSCBgwhOoDrsSxNWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711948657; c=relaxed/simple;
-	bh=tBglxvlDUeCZXU4OkTWfXJTuUNjdjT468JtqkKvyze8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=pjyy0q+q6fbscXwmLWN8uuxCk2LJAWkC9drLz4FaVaN31FwgXIjhV2nPqzrClWivY0/Lf9IghercTtYibmkxQV4wzhf3XbKMbbPUj4FlBDbewlPMXE0ft8BRENMihivKX6qTWF194uJMQvpwwZYbX3NOSCk9+SpvGZvmXmR9gJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eo93+2kQ; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-515a68d45faso3820532e87.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 31 Mar 2024 22:17:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711948652; x=1712553452; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=cOj27ZZTllvPcuA8dCQrQVFTBK3f2AC/nEUUJ3KrkZY=;
-        b=eo93+2kQtOjwj4VoyAZppsLLX11hY+nTWnj4nc5z45OXZGdRs45L4fDq6qoCHExTk9
-         OhqEelZDErc0Z1ky61klV9H2OunI8/VPZtyo4A3C/3moik9WiKhhxtJrZOftYGfIaZix
-         nnDUQ9gMjNDWzXSXLAFfSRogBARjncAwTZggoy5mhYVn4AaepzVOLiFnvE6QI9ZsTBd6
-         ZKeq9N3GHgZkoVRy+E3KA1aZ3VbJC+qGZKO20JHLamF7kjC8FBpoMLB8mzNpsT9yA7xe
-         ArsEN6jxFSSqudOsmQJb5/qvAcogtwptdEl/HZsCNye4k9aoxKfya1OGqA+7ZNjb4lE8
-         uvgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711948652; x=1712553452;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cOj27ZZTllvPcuA8dCQrQVFTBK3f2AC/nEUUJ3KrkZY=;
-        b=riE2hlfA6q3h9QCPn5KIIbBpaNPCF+Q/xFm0dyTUqfrlH0wFFje6bFRTLeou3gS5GQ
-         cDFH4qLr1KDh+b1uU7C+mj/OfeA8LnLNo9sQmXziXZLP2j58jafwQp7o872+M3/UafRk
-         D39cYoyjfbTQPFc8vc+2veEMEUyoa2Al7XVcCQr4aOYQ5rameOjkKR98Jv9opi+0C7Ok
-         PLUk0UZ6JB2/QfWUA7d8Txn/LQPlsESFgWggE574rXRLYVqPfGG5jUeXi29habGcolHF
-         y0wbgKbIuvhLTmy5olwBzZ3iu/a9RXhzRU45uXX8HN88XpS4FTlnwL4LikjiVoQtpVVG
-         L/wQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWwvRwGXSt0a3DvNExmI+CYhSfitDQLaKkqW3Tbu1BYl8Hbz9DnIY2gkRAR+CY2BJkAv2E6AqcoDX2kN4jo8hlMo1RX1r0xzLHgyYEYEA==
-X-Gm-Message-State: AOJu0Yz/Wbm4j46cyNMjBoB/OFD7RqiVSPnfDXwr49SVbur8TYDLB/ZP
-	wbl0SqFzAaL0av2zAY+MwpKGec1nVNImcZlUsx+RUfetFSPOHruKq46aY/6iYxQ=
-X-Google-Smtp-Source: AGHT+IG3yOIWJMlaa6+5jb3PNL7kJftD0rwMRnODCA6mYOj73UqdrbvoQaH734IsVUARtuD+e2Vc6A==
-X-Received: by 2002:ac2:5f86:0:b0:513:cb7a:7cf7 with SMTP id r6-20020ac25f86000000b00513cb7a7cf7mr5147397lfe.63.1711948652453;
-        Sun, 31 Mar 2024 22:17:32 -0700 (PDT)
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id x12-20020a056512078c00b00513e4086815sm1324342lfr.162.2024.03.31.22.17.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 31 Mar 2024 22:17:32 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 01 Apr 2024 08:17:03 +0300
-Subject: [PATCH] docs: submitting-patches: describe additional tags
+	s=arc-20240116; t=1711960780; c=relaxed/simple;
+	bh=9sR5QfNpiTPaletTSuPl2Qr1q1tOHKLjI3foe7yAieE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=VGJujciXs+/qygahaAVNDjq2HhRrw/CZbOIQzx7WmfJViAek/HfMD3mLviv8351ZeWrGLrM3OTejVB9E4UIQ/WjLqRxP3mmpZKLsCLNCJ3kJQS1Aqh9PBVmINOMU2qJvChBwvKfov7GYDfUFeNTVuDyVtgVGPtKdtzeox8n3MjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RoPw3f60; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 70BC5C433F1;
+	Mon,  1 Apr 2024 08:39:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711960779;
+	bh=9sR5QfNpiTPaletTSuPl2Qr1q1tOHKLjI3foe7yAieE=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=RoPw3f60TujtkMdT3uUOU2yHDntIYg+7fAV3rdnKZZph5zdOpCkuB1YRK4/SSela6
+	 /6b2mQ5JyalEAn7H+KDZ2hAi+T8C7VXy7akVbZYki17yowUdSBsgOanwMZvs2yiY2C
+	 XlzwwxAz11j/HU6Q6nbD+G4GGiPplhY4VNUXET1qlNbxrZz3C/ZFKrTOMieN4uT7PH
+	 k1VszBb0afNHcWt0J0kY9nTkAgoA/SWz+mbWxYN4PoExYCT8qV3B7Hih0sX6rATioZ
+	 g9Nltc9ZxiMdbUzWh9vIhl1E6TiCdtb4luxWlkyG3aA7lOSbvsvKQMoJExfJGEvot1
+	 R2803hmownmOQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65B61CD1288;
+	Mon,  1 Apr 2024 08:39:39 +0000 (UTC)
+From: Fenglin Wu via B4 Relay <devnull+quic_fenglinw.quicinc.com@kernel.org>
+Subject: [PATCH v8 0/3] Add support for vibrator in multiple PMICs
+Date: Mon, 01 Apr 2024 16:38:49 +0800
+Message-Id: <20240401-pm8xxx-vibrator-new-design-v8-0-6f2b8b03b4c7@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,76 +55,92 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240401-additional-trailers-v1-1-f472bf158d2f@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAE5DCmYC/x2M0QpAQBQFf0X32dZaG+VX5OGyZ7kldFdS8u82j
- 1Mz81CCChJ1xUOKS5LsW4aqLGhaeJthJGQmZ5233laGQ5AzS7yaU1lWaDJubBsfa3gGKJeHIsr
- 9X/vhfT8zfY/GZQAAAA==
-To: Jonathan Corbet <corbet@lwn.net>
-Cc: workflows@vger.kernel.org, linux-doc@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+X-B4-Tracking: v=1; b=H4sIAJpyCmYC/x3MQQqDMBAF0KvIrDugqcLUq0gXafPVWTTKRGxAv
+ LvB5du8gxJMkaivDjLsmnSJBfKo6Dv7OIE1FJOrXVs/nfD6k5wz7/oxvy3GEX8OSDpFRidN40P
+ 3gngqwWoYNd/58D7PCwrs4JNsAAAA
+To: kernel@quicinc.com, Andy Gross <agross@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+ Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2220;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=tBglxvlDUeCZXU4OkTWfXJTuUNjdjT468JtqkKvyze8=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmCkNrIW2CbJPlEIiAtlkvjFoDoy+gKdyBxndam
- HItDuxWtu2JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZgpDawAKCRCLPIo+Aiko
- 1cHiCACqii0cJWQpxMm9UTq68xxNtctI48gh9Ma5qGRTEvzCaub8Jg/6AwxCbwDtbmBiwpkMZcT
- ASQ58aPDcqe7ctxXTxSYljbaUh3cy+FCcG+86/dc2FR0HCpTyMOZQFrIVA0M0b0zgW7uF7c914G
- tEfWr1/yPCrhb+JWD5ux9xB+rVYFAsLyt2a0UIL2lrJjHVKW20G6TGYMzyEVX+U4atm1ZoELVUX
- hxYXFrfoeZN9c8MBtGm1m71q017FYwV3JDEO77BVoDy79vzZiH1eGAFXJPgG3ebnCUau2KJbfan
- waSyQntx3ReP50HhuOh0sLRhVsQyWt9kFsUs1NyvKYLS1pBZ
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+Cc: linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+ Fenglin Wu <quic_fenglinw@quicinc.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.13-dev-83828
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1711960777; l=2439;
+ i=quic_fenglinw@quicinc.com; s=20240327; h=from:subject:message-id;
+ bh=9sR5QfNpiTPaletTSuPl2Qr1q1tOHKLjI3foe7yAieE=;
+ b=vxSSjcoZjDjlM71j+pfG1Y2wEW2s+9FhbNnW1W0eQbYIaeR0k9Im7UNqBBj+ksAxOq/rZ2b6f
+ D8E1ZG/OTUBABS7NGj2cDsd7Ra/oPmXceOeC/2UlRusN6Xal2aAHPl6
+X-Developer-Key: i=quic_fenglinw@quicinc.com; a=ed25519;
+ pk=BF8SA4IVDk8/EBCwlBehKtn2hp6kipuuAuDAHh9s+K4=
+X-Endpoint-Received: by B4 Relay for quic_fenglinw@quicinc.com/20240327
+ with auth_id=146
+X-Original-From: Fenglin Wu <quic_fenglinw@quicinc.com>
+Reply-To: quic_fenglinw@quicinc.com
 
-Described tags do not fully cover development needs. For example the LKP
-robot insists on using Reported-by: tag, but that's not fully correct.
-The robot reports an issue with the patch, not the issue that is being
-fixed by the patch. Describe additional tags to be used while submitting
-patches.
+Add SW support for the vibrator module inside PMI632, PM7250B, PM7325B, PM7550BA.
+It is very similar to the vibrator module inside PM8916 which is supported in
+pm8xxx-vib driver but just the drive amplitude is controlled with 2 registers,
+and the register base offset in each PMIC is different.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Changes in v8:
+  1. Remove hw_type, and still keep the register info in match data
+  2. Update to use register offset in pm8xxx_regs, and the base address
+     defined in DT for SPMI vibrator will be added in register access
+  3. Update voltage output range for SPMI vibrator which has 2 bytes drive
+     registers
+
+Changes in v7:
+  1. Fix a typo: SSBL_VIB_DRV_REG --> SSBI_VIB_DRV_REG
+  2. Move the hw_type switch case in pm8xxx_vib_set() to the refactoring
+     change.
+
+Changes in v6:
+  1. Add "qcom,pmi632-vib" as a standalone compatible string.
+
+Changes in v5:
+  1. Drop "qcom,spmi-vib-gen2" generic compatible string as requested
+     and use device specific compatible strings only.
+
+Changes in v4:
+  1. Update to use the combination of the HW type and register offset
+     as the constant match data, the register base address defined in
+     'reg' property will be added when accessing SPMI registers using
+     regmap APIs.
+  2. Remove 'qcom,spmi-vib-gen1' generic compatible string.
+
+Changes in v3:
+  1. Refactor the driver to support different type of the vibrators with
+    better flexibility by introducing the HW type with corresponding
+    register fields definitions.
+  2. Add 'qcom,spmi-vib-gen1' and 'qcom,spmi-vib-gen2' compatible
+    strings, and add PMI632, PM7250B, PM7325B, PM7550BA as compatbile as
+    spmi-vib-gen2.
+
+Changes in v2:
+  Remove the "pm7550ba-vib" compatible string as it's compatible with pm7325b.
+
+Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
 ---
- Documentation/process/submitting-patches.rst | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+Fenglin Wu (3):
+      input: pm8xxx-vibrator: refactor to support new SPMI vibrator
+      dt-bindings: input: qcom,pm8xxx-vib: add new SPMI vibrator module
+      input: pm8xxx-vibrator: add new SPMI vibrator support
 
-diff --git a/Documentation/process/submitting-patches.rst b/Documentation/process/submitting-patches.rst
-index 66029999b587..3a24d90fa385 100644
---- a/Documentation/process/submitting-patches.rst
-+++ b/Documentation/process/submitting-patches.rst
-@@ -544,6 +544,25 @@ future patches, and ensures credit for the testers.
- Reviewed-by:, instead, indicates that the patch has been reviewed and found
- acceptable according to the Reviewer's Statement:
- 
-+Additional tags to be used while submitting patches
-+---------------------------------------------------
-+
-+The tags described previously do not always cover the needs of the development
-+process.
-+
-+For example, if the kernel test robot reports an issue in the patch, the robot
-+insists that the next version of the patch gets the Reported-by: and Closes:
-+tags.  While the Closes: tag can be considered correct in such a case, the
-+Reported-by: tag is definitely not correct. The LKP robot hasn't reported the
-+issue that is being fixed by the patch, but instead it has reported an issue
-+with the patch. To be more precise you may use the Improved-thanks-to: tag for
-+the next version of the patch.
-+
-+Another frequent case is when you want to express gratitude to the colleagues,
-+who helped to improve the patch, but neither the Co-developed-by: nor
-+Suggested-by: tags are appropriate. In such case you might prefer to use
-+Discussed-with:, Listened-by:, or Discussed-over-a-beer-with: tags.
-+
- Reviewer's statement of oversight
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- 
-
+ .../devicetree/bindings/input/qcom,pm8xxx-vib.yaml | 16 +++-
+ drivers/input/misc/pm8xxx-vibrator.c               | 87 ++++++++++++++++------
+ 2 files changed, 78 insertions(+), 25 deletions(-)
 ---
-base-commit: 13ee4a7161b6fd938aef6688ff43b163f6d83e37
-change-id: 20240401-additional-trailers-2b764f3e4aee
+base-commit: 650cda2ce25f08e8fae391b3ba6be27e7296c6a5
+change-id: 20240328-pm8xxx-vibrator-new-design-e5811ad59e8a
 
 Best regards,
 -- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fenglin Wu <quic_fenglinw@quicinc.com>
+
 
 
