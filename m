@@ -1,76 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-15949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46CBE893D58
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 17:53:01 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D7047893D5E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 17:53:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CA1B01F22ABC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 15:53:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8D7212830F2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 15:53:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D139C53380;
-	Mon,  1 Apr 2024 15:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 304E053E01;
+	Mon,  1 Apr 2024 15:51:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u4lbsKRr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qGqm6nd9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DDFE481D0
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Apr 2024 15:51:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76FA3537F7
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Apr 2024 15:51:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986677; cv=none; b=N8Op5WxR+EFjrik453YdN0i+OXjytyNKJintMoIsyVEuSKOajhEMXGv4mIcVIgo7dX35aPRGXvZ4yxBORvl6B2hozcD0g7dJyPqCdFwFN/ZE2w9gKta/qoIyYJxYPqnP5MLhLeRdP6bte3xfaKhSHDvQtXlIf3q2GfVoYAYpDAU=
+	t=1711986682; cv=none; b=tHVfFiHSLNUXYj0Qb+kB/leLlDD6u53OCNLffWz2BV2jlUmrZOCbNYfTiT8Cd4oS83eHe3n+BC7lUHFMT9vpRnKlzVnz4hORGlVgNQePkLURTAWpzhsca3nUwBo5MnGwpnrF5/Nto4pcLv67p6mKyb6rCIyOJtP3T3G3FW3aURA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986677; c=relaxed/simple;
-	bh=Vc/z3bg7iR0DVyjnmsrW91gdlaGDMMW4LWUaKvK6QqA=;
+	s=arc-20240116; t=1711986682; c=relaxed/simple;
+	bh=o26SriN4DO3Oj59xWZYfB2GhSdR1CNJUmn+kDdBgIjw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VF1zgZaCVpCVbbRAbPKRzfAEEwRuwTto1hQx6sNwgBYIXRmX23FHCZ61iwAJiOFLzjieG0x+2RTkmohRNBJykPzWa17psdPLYYQhAzAQzQ2jVmauxWrZ6UZvKUK2oWeWZMDl+6uJ95KAy/sgxPEnZT/2Db/jZmzLFDXkIRq14eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u4lbsKRr; arc=none smtp.client-ip=209.85.215.179
+	 In-Reply-To:To:Cc; b=GQBCldWzuFNEmZanZvC4HJUUGOOlzQUGoLnzM6nGZFQGG6vCopheR9thdxk2fRmPAzVx39+OPW/wUdnQm9zrj8x8HPGwIqir2NxAJC2HS9VSQalukmZ1XbFCXLEkns1UQxTNeLHYVAKeMokAckuyzJj0OkY1L4qOkbEcOV31c0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qGqm6nd9; arc=none smtp.client-ip=209.85.214.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-53fbf2c42bfso3253780a12.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Apr 2024 08:51:15 -0700 (PDT)
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1e0edd0340fso37567345ad.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Apr 2024 08:51:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711986675; x=1712591475; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1711986680; x=1712591480; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=uDwUmdP1vEU79INAYOHEG2Uv5Heyb/Jl8ipwA/CjTc4=;
-        b=u4lbsKRrlA54HXtvbpomTkl0f6e6nWwCS9j2C9jotwbVppSbukXJmmPIfMy7NFes2P
-         MdFnHVCHPAMdoHkYOrXp4+L+7EfXDNBOV1NSbEsb7UxqVGQzTu9enoIZ0+r5/vWySrxo
-         iVBSoRv8LUHxDgsOJJl1sHMcni2L22eLEeC5tz1CJk7m0FshK5PCw8Dqt1gUh0fhNu3G
-         Yz0SelvQ0K8NsqGJC6Q9AsD9wdM1jYkcVA+qGJ622dJ3Ri90CFTTsJWlTvATkZBGAVUd
-         Jl9Tx7jvTz7ljIAdreJ9fbEMFC4pL+r/GyDLyb0o4OJks+DsufkevUoG2AEKJGSsiRJC
-         D+GA==
+        bh=tFiT88PKFBOrpOqMXMIRI/YWsJ4JPGHI2MIVO+PP/kw=;
+        b=qGqm6nd9i5aaDMinIC6lPZB1EiHklL2Qp4K5l89tc6/OBDXqhnOCDK7QaPdA2Q+O6u
+         nnR9buX0MXNHQEYIbJfCCGc7owi0SNIKE+ETrWH8Tpzn8l7EXjXvN04j4aDFwYnJ4d5T
+         hkMWylUbTpeyjzlrYqyWgMPCPwR7fbnhK1/rATJMVpXzNcMcj+7kSFcCHAxcGi6Z/uK+
+         ZAgDb2bhju6Rihlm5FkVpRwN+DZPRkvlygEeqC8rszmvYlNY+0V/orrKdEU4mcLlnwsS
+         +M4AsAIGG08XpBriTqqWCCJZyZuzmdE3uzdegsec1CmpRKOhNBkUF9sIKpaKdDq8JTtx
+         npRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711986675; x=1712591475;
+        d=1e100.net; s=20230601; t=1711986680; x=1712591480;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=uDwUmdP1vEU79INAYOHEG2Uv5Heyb/Jl8ipwA/CjTc4=;
-        b=KN6rJucONnud+SCgpF0mmF+i+OMhCvVvJXxPH971z4eUKjlSX4g5Tj788SKcc/ASC9
-         ynTHI8LucmLWL9tg0NDibY2kftMrevDMXQKmiCpZR0zWRI00h6S0j4YgipL7+aZlcaxt
-         LKgAGfuNd1wM4pONDBZEwpUHIgLminqPzBXnsLsuGluOj/PjQ6x1hHJt7Yp+cf5JkqKS
-         pJEUB9bVrAJYaik5v77UVS2NKw2RZFYqYwuAMrXOPwsIL+4UH66dgwcLurilkIc2DX+Y
-         lA9+UJ7pxah+kAm++OINtG2G4Rcq3ZMlhaYNhDzqmckE0HWJdPKvFO/zvbOlbQpKPmEt
-         +ucA==
-X-Forwarded-Encrypted: i=1; AJvYcCUrIRLmkiU1r3WXeuc6Y9rKUze7IbJ7NNGOCbhgKNVBshEMgaAnPdtNLmY6f+EKHUmNuJ+kkzVMqAznk6acLribq+n6uHy0gWC9z21N1Q==
-X-Gm-Message-State: AOJu0YxTDLzHL05+VV6O+alqBF8gWDfRQUZJNsjv7VuMleuY86s5FzeU
-	bkdVUXpIHDruSMoxsI46EAVilDmWClWv2aDvmcs15TtVyIK9IOmxF9u6mmBxbw==
-X-Google-Smtp-Source: AGHT+IEWLEyA4X9iGW1nJeFH+7vpltiFlXGG1Pb1HOUF6XAwuJM+5rXzQLQVUU2jmlmWt0Ii+4+lpw==
-X-Received: by 2002:a17:902:dac2:b0:1dd:ba2c:c1c7 with SMTP id q2-20020a170902dac200b001ddba2cc1c7mr9986116plx.60.1711986675327;
-        Mon, 01 Apr 2024 08:51:15 -0700 (PDT)
+        bh=tFiT88PKFBOrpOqMXMIRI/YWsJ4JPGHI2MIVO+PP/kw=;
+        b=eJWd+K8SDBnbZkPlFaGU+/0nequuENreS9AJkiZzXLftqh8Cbku6e1tmK8IblpHhRS
+         YWh6z+y4OUYCAqqZ2WMyzpecz3S2USM72SYRRY++dutzVSAwkbKhtmRRU6Lam/rtwueA
+         VtayhqS11+xK2BK4y4PiDba9OLiFRYTOY8rwaM8Tg1jOPwB2krYqfuUgK27b48EPKkTP
+         GSl4OB8bwCm+RgS2oG4PK3h5LzC9sH8os2vbM93ZYDC43hkB+r7XdSZya8jvqjCUyqGM
+         37wy9fYhI56HUUtR1NrODTBmPgmni28x6Op56SzU4szhBELIvewWsNxeO57/AP8e8Kyn
+         0tMw==
+X-Forwarded-Encrypted: i=1; AJvYcCW4BCLNcs4ZGYjWmJr2GZO5EewwMzQHhIdrvgR1n3rZ7+mjdMQbkZrVbURvD1WY7a2SFVpnV1vN2B8H+Hrap90YIwMMlPV04U0TM2ScDA==
+X-Gm-Message-State: AOJu0Yw2NvT3wIwzanLQ3Yj0UR2EcagxNzBNfgVsKcfVVPvV+pHifi4v
+	VVX+lZUDKmEZYqm4U10IZioEr4BLlqiSDmYkqRbT9+1Af2GgPW8/aeDSD3aH9HSAVhMSf1n+jr8
+	=
+X-Google-Smtp-Source: AGHT+IH0DEnfUBJAZAlQVIrgRQrSHOJlo8lrJRkd1PyXUeQVAQCFZc27RlJyY/B2jnT2reu9dapfig==
+X-Received: by 2002:a17:902:ea0b:b0:1e0:b287:c1d8 with SMTP id s11-20020a170902ea0b00b001e0b287c1d8mr12690936plg.5.1711986679571;
+        Mon, 01 Apr 2024 08:51:19 -0700 (PDT)
 Received: from [127.0.1.1] ([103.28.246.102])
-        by smtp.gmail.com with ESMTPSA id kh6-20020a170903064600b001e21957fecdsm8949076plb.246.2024.04.01.08.51.11
+        by smtp.gmail.com with ESMTPSA id kh6-20020a170903064600b001e21957fecdsm8949076plb.246.2024.04.01.08.51.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Apr 2024 08:51:14 -0700 (PDT)
+        Mon, 01 Apr 2024 08:51:19 -0700 (PDT)
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Date: Mon, 01 Apr 2024 21:20:32 +0530
-Subject: [PATCH v2 06/10] PCI: endpoint: Introduce EPC 'deinit' event and
- notify the EPF drivers
+Date: Mon, 01 Apr 2024 21:20:33 +0530
+Subject: [PATCH v2 07/10] PCI: dwc: ep: Add a generic dw_pcie_ep_linkdown()
+ API to handle Link Down event
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +80,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240401-pci-epf-rework-v2-6-970dbe90b99d@linaro.org>
+Message-Id: <20240401-pci-epf-rework-v2-7-970dbe90b99d@linaro.org>
 References: <20240401-pci-epf-rework-v2-0-970dbe90b99d@linaro.org>
 In-Reply-To: <20240401-pci-epf-rework-v2-0-970dbe90b99d@linaro.org>
 To: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
@@ -93,234 +94,223 @@ Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  linux-tegra@vger.kernel.org, Niklas Cassel <cassel@kernel.org>, 
  Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8443;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6705;
  i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
- bh=Vc/z3bg7iR0DVyjnmsrW91gdlaGDMMW4LWUaKvK6QqA=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBmCtfVC2gNAc4d1W5XxVGJHcgt6DgfU0nRKF4Bk
- qfVCMA0LJiJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZgrX1QAKCRBVnxHm/pHO
- 9XNKB/4n42hVfJ6bcUVIaKI8YyqRrAp6g3FvHapE59XufDq96qaF11CwQrZwaXdPnPCUux9+PLi
- fp6wmp5Uw63mJSD85Hx5EsoQ1DyxwhygV2BIn4Q3ZFrqIO4xhhF7frh21LYKS9uHRj0pJSWACLD
- DCbK79DlZul9bLaxhtZYGZZBKGsPYZjkXPJMsbizyc9s8yIwbzsiD1f1mtCbh65DWz707syUIfy
- WfjOQN76wkSBCARWl4RuneKdg/8AUL2QnDGobGg8vJb3hOb4Z9HCGfg/2xidX25vJZEQRnpnfMe
- VXsCWAD2NwKmuCoWG9I53fDX5p3nn+idbjMLRhJ3Q4r/hj/W
+ bh=o26SriN4DO3Oj59xWZYfB2GhSdR1CNJUmn+kDdBgIjw=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBmCtfVpr3mN+qfdEu8wKPMUeNA1iztJ0M5U6Gog
+ mePyVnYM0CJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZgrX1QAKCRBVnxHm/pHO
+ 9b8nB/9x2rOIrzKnp+uMJIEOgC1f7F6ZRVMKhffcA9WN2ExkPhRbxseRxs3HXuxDGxBq5qmxSnT
+ zkiRqZFf64MBoN/TYl8Dfw6zUpXWBpXJWsJgIlaXcURS6WJS7uGp2/MaD9ageFAWsP44wz9+iXK
+ auL4PHDI3zUK6rUsOsVMVzbtsGroDALLc9C2QgMQmPs0Gfbs4Nl72+FIw1NwN0StVmN83NImvz4
+ UXciF60BT2QwQRFMstOeVTT2qhzzj9ZM6eMwh6ZtRCZ71EuqmcLPUTdX2N1h0OzKl7EbMUIerDh
+ Fnvv1vv2qCXPr56Vr7XgPb6k7kRrJT21uwUky3s/2P26GGeg
 X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
  fpr=C668AEC3C3188E4C611465E7488550E901166008
 
-As like the EPC 'init' event, that is used to signal the EPF drivers about
-the EPC initialization, let's introduce 'deinit' event that is used to
-signal EPC deinitialization.
+As per the PCIe base spec r5.0, section 5.2, Link Down event can happen
+under any of the following circumstances:
 
-The EPC deinitialization applies only when any sort of fundamental reset
-is supported by the endpoint controller as per the PCIe spec.
+1. Fundamental/Hot reset
+2. Link disable transmission by upstream component
+3. Moving from L2/L3 to L0
 
-Reference: PCIe Base spec v5.0, sections 4.2.4.9.1 and 6.6.1.
+In those cases, Link Down causes some non-sticky DWC registers to loose the
+state (like REBAR, etc...). So the drivers need to reinitialize them to
+function properly once the link comes back again.
 
-Currently, some EPC drivers like pcie-qcom-ep and pcie-tegra194 support
-PERST# as the fundamental reset. So the 'deinit' event will be notified to
-the EPF drivers when PERST# assert happens in the above mentioned EPC
-drivers.
+This is not a problem for drivers supporting PERST# IRQ, since they can
+reinitialize the registers in the PERST# IRQ callback. But for the drivers
+not supporting PERST#, there is no way they can reinitialize the registers
+other than relying on Link Down IRQ received when the link goes down. So
+let's add a DWC generic API dw_pcie_ep_linkdown() that reinitializes the
+non-sticky registers and also notifies the EPF drivers about link going
+down.
 
-The EPF drivers, on receiving the event through the deinit() callback
-should reset the EPF state machine and also cleanup any configuration that
-got affected by the fundamental reset like BAR, DMA etc...
+This API can also be used by the drivers supporting PERST# to handle the
+scenario (2) mentioned above.
 
-This change also warrants skipping the cleanups in unbind() if already done
-in deinit().
+NOTE: For the sake of code organization, move the dw_pcie_ep_linkup()
+definition just above dw_pcie_ep_linkdown().
 
 Reviewed-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-ep.c |  1 -
- drivers/pci/controller/dwc/pcie-qcom-ep.c       |  1 +
- drivers/pci/controller/dwc/pcie-tegra194.c      |  1 +
- drivers/pci/endpoint/functions/pci-epf-mhi.c    | 19 +++++++++++++++++++
- drivers/pci/endpoint/functions/pci-epf-test.c   | 17 +++++++++++++++--
- drivers/pci/endpoint/pci-epc-core.c             | 25 +++++++++++++++++++++++++
- include/linux/pci-epc.h                         |  1 +
- include/linux/pci-epf.h                         |  2 ++
- 8 files changed, 64 insertions(+), 3 deletions(-)
+ drivers/pci/controller/dwc/pcie-designware-ep.c | 98 ++++++++++++++++---------
+ drivers/pci/controller/dwc/pcie-designware.h    |  5 ++
+ 2 files changed, 68 insertions(+), 35 deletions(-)
 
 diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index 47391d7d3a73..2063cf2049e5 100644
+index 2063cf2049e5..56b34267850e 100644
 --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
 +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -632,7 +632,6 @@ void dw_pcie_ep_cleanup(struct dw_pcie_ep *ep)
- 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
+@@ -15,18 +15,6 @@
+ #include <linux/pci-epc.h>
+ #include <linux/pci-epf.h>
  
- 	dw_pcie_edma_remove(pci);
--	ep->epc->init_complete = false;
- }
- EXPORT_SYMBOL_GPL(dw_pcie_ep_cleanup);
- 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-index 50b1635e3cbb..e4b742355d57 100644
---- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-@@ -501,6 +501,7 @@ static void qcom_pcie_perst_assert(struct dw_pcie *pci)
- {
- 	struct qcom_pcie_ep *pcie_ep = to_pcie_ep(pci);
- 
-+	pci_epc_deinit_notify(pci->ep.epc);
- 	dw_pcie_ep_cleanup(&pci->ep);
- 	qcom_pcie_disable_resources(pcie_ep);
- 	pcie_ep->link_status = QCOM_PCIE_EP_LINK_DISABLED;
-diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index ddc23602eca7..d2223821e122 100644
---- a/drivers/pci/controller/dwc/pcie-tegra194.c
-+++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-@@ -1715,6 +1715,7 @@ static void pex_ep_event_pex_rst_assert(struct tegra_pcie_dw *pcie)
- 	if (ret)
- 		dev_err(pcie->dev, "Failed to go Detect state: %d\n", ret);
- 
-+	pci_epc_deinit_notify(pcie->pci.ep.epc);
- 	dw_pcie_ep_cleanup(&pcie->pci.ep);
- 
- 	reset_control_assert(pcie->core_rst);
-diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-index 4d5c638744a1..005916722ede 100644
---- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-@@ -764,6 +764,24 @@ static int pci_epf_mhi_epc_init(struct pci_epf *epf)
+-/**
+- * dw_pcie_ep_linkup - Notify EPF drivers about Link Up event
+- * @ep: DWC EP device
+- */
+-void dw_pcie_ep_linkup(struct dw_pcie_ep *ep)
+-{
+-	struct pci_epc *epc = ep->epc;
+-
+-	pci_epc_linkup(epc);
+-}
+-EXPORT_SYMBOL_GPL(dw_pcie_ep_linkup);
+-
+ /**
+  * dw_pcie_ep_init_notify - Notify EPF drivers about EPC initialization complete
+  * @ep: DWC EP device
+@@ -673,6 +661,29 @@ static unsigned int dw_pcie_ep_find_ext_capability(struct dw_pcie *pci, int cap)
  	return 0;
  }
  
-+static void pci_epf_mhi_epc_deinit(struct pci_epf *epf)
++static void dw_pcie_ep_init_non_sticky_registers(struct dw_pcie *pci)
 +{
-+	struct pci_epf_mhi *epf_mhi = epf_get_drvdata(epf);
-+	const struct pci_epf_mhi_ep_info *info = epf_mhi->info;
-+	struct pci_epf_bar *epf_bar = &epf->bar[info->bar_num];
-+	struct mhi_ep_cntrl *mhi_cntrl = &epf_mhi->mhi_cntrl;
-+	struct pci_epc *epc = epf->epc;
++	unsigned int offset;
++	unsigned int nbars;
++	u32 reg, i;
 +
-+	if (mhi_cntrl->mhi_dev) {
-+		mhi_ep_power_down(mhi_cntrl);
-+		if (info->flags & MHI_EPF_USE_DMA)
-+			pci_epf_mhi_dma_deinit(epf_mhi);
-+		mhi_ep_unregister_controller(mhi_cntrl);
++	offset = dw_pcie_ep_find_ext_capability(pci, PCI_EXT_CAP_ID_REBAR);
++
++	dw_pcie_dbi_ro_wr_en(pci);
++
++	if (offset) {
++		reg = dw_pcie_readl_dbi(pci, offset + PCI_REBAR_CTRL);
++		nbars = (reg & PCI_REBAR_CTRL_NBAR_MASK) >>
++			PCI_REBAR_CTRL_NBAR_SHIFT;
++
++		for (i = 0; i < nbars; i++, offset += PCI_REBAR_CTRL)
++			dw_pcie_writel_dbi(pci, offset + PCI_REBAR_CAP, 0x0);
 +	}
 +
-+	pci_epc_clear_bar(epc, epf->func_no, epf->vfunc_no, epf_bar);
++	dw_pcie_setup(pci);
++	dw_pcie_dbi_ro_wr_dis(pci);
 +}
 +
- static int pci_epf_mhi_link_up(struct pci_epf *epf)
- {
- 	struct pci_epf_mhi *epf_mhi = epf_get_drvdata(epf);
-@@ -898,6 +916,7 @@ static void pci_epf_mhi_unbind(struct pci_epf *epf)
+ /**
+  * dw_pcie_ep_init_registers - Initialize DWC EP specific registers
+  * @ep: DWC EP device
+@@ -687,13 +698,11 @@ int dw_pcie_ep_init_registers(struct dw_pcie_ep *ep)
+ 	struct dw_pcie_ep_func *ep_func;
+ 	struct device *dev = pci->dev;
+ 	struct pci_epc *epc = ep->epc;
+-	unsigned int offset, ptm_cap_base;
+-	unsigned int nbars;
++	u32 ptm_cap_base, reg;
+ 	u8 hdr_type;
+ 	u8 func_no;
+-	int i, ret;
+ 	void *addr;
+-	u32 reg;
++	int ret;
  
- static const struct pci_epc_event_ops pci_epf_mhi_epc_event_ops = {
- 	.init = pci_epf_mhi_epc_init,
-+	.deinit = pci_epf_mhi_epc_deinit,
- };
+ 	hdr_type = dw_pcie_readb_dbi(pci, PCI_HEADER_TYPE) &
+ 		   PCI_HEADER_TYPE_MASK;
+@@ -756,25 +765,8 @@ int dw_pcie_ep_init_registers(struct dw_pcie_ep *ep)
+ 	if (ep->ops->init)
+ 		ep->ops->init(ep);
  
- static const struct pci_epc_bus_event_ops pci_epf_mhi_bus_event_ops = {
-diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
-index 8756ffc5977b..5933788b0e68 100644
---- a/drivers/pci/endpoint/functions/pci-epf-test.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-test.c
-@@ -790,6 +790,15 @@ static int pci_epf_test_epc_init(struct pci_epf *epf)
+-	offset = dw_pcie_ep_find_ext_capability(pci, PCI_EXT_CAP_ID_REBAR);
+ 	ptm_cap_base = dw_pcie_ep_find_ext_capability(pci, PCI_EXT_CAP_ID_PTM);
+ 
+-	dw_pcie_dbi_ro_wr_en(pci);
+-
+-	if (offset) {
+-		reg = dw_pcie_readl_dbi(pci, offset + PCI_REBAR_CTRL);
+-		nbars = (reg & PCI_REBAR_CTRL_NBAR_MASK) >>
+-			PCI_REBAR_CTRL_NBAR_SHIFT;
+-
+-		/*
+-		 * PCIe r6.0, sec 7.8.6.2 require us to support at least one
+-		 * size in the range from 1 MB to 512 GB. Advertise support
+-		 * for 1 MB BAR size only.
+-		 */
+-		for (i = 0; i < nbars; i++, offset += PCI_REBAR_CTRL)
+-			dw_pcie_writel_dbi(pci, offset + PCI_REBAR_CAP, BIT(4));
+-	}
+-
+ 	/*
+ 	 * PTM responder capability can be disabled only after disabling
+ 	 * PTM root capability.
+@@ -791,8 +783,7 @@ int dw_pcie_ep_init_registers(struct dw_pcie_ep *ep)
+ 		dw_pcie_dbi_ro_wr_dis(pci);
+ 	}
+ 
+-	dw_pcie_setup(pci);
+-	dw_pcie_dbi_ro_wr_dis(pci);
++	dw_pcie_ep_init_non_sticky_registers(pci);
+ 
  	return 0;
+ 
+@@ -803,6 +794,43 @@ int dw_pcie_ep_init_registers(struct dw_pcie_ep *ep)
  }
- 
-+static void pci_epf_test_epc_deinit(struct pci_epf *epf)
-+{
-+	struct pci_epf_test *epf_test = epf_get_drvdata(epf);
-+
-+	cancel_delayed_work(&epf_test->cmd_handler);
-+	pci_epf_test_clean_dma_chan(epf_test);
-+	pci_epf_test_clear_bar(epf);
-+}
-+
- static int pci_epf_test_link_up(struct pci_epf *epf)
- {
- 	struct pci_epf_test *epf_test = epf_get_drvdata(epf);
-@@ -802,6 +811,7 @@ static int pci_epf_test_link_up(struct pci_epf *epf)
- 
- static const struct pci_epc_event_ops pci_epf_test_epc_event_ops = {
- 	.init = pci_epf_test_epc_init,
-+	.deinit = pci_epf_test_epc_deinit,
- };
- 
- static const struct pci_epc_bus_event_ops pci_epf_test_bus_event_ops = {
-@@ -910,10 +920,13 @@ static int pci_epf_test_bind(struct pci_epf *epf)
- static void pci_epf_test_unbind(struct pci_epf *epf)
- {
- 	struct pci_epf_test *epf_test = epf_get_drvdata(epf);
-+	struct pci_epc *epc = epf->epc;
- 
- 	cancel_delayed_work(&epf_test->cmd_handler);
--	pci_epf_test_clean_dma_chan(epf_test);
--	pci_epf_test_clear_bar(epf);
-+	if (epc->init_complete) {
-+		pci_epf_test_clean_dma_chan(epf_test);
-+		pci_epf_test_clear_bar(epf);
-+	}
- 	pci_epf_test_free_space(epf);
- }
- 
-diff --git a/drivers/pci/endpoint/pci-epc-core.c b/drivers/pci/endpoint/pci-epc-core.c
-index fe3cb62dd866..05670c10371a 100644
---- a/drivers/pci/endpoint/pci-epc-core.c
-+++ b/drivers/pci/endpoint/pci-epc-core.c
-@@ -774,6 +774,31 @@ void pci_epc_notify_pending_init(struct pci_epc *epc, struct pci_epf *epf)
- }
- EXPORT_SYMBOL_GPL(pci_epc_notify_pending_init);
+ EXPORT_SYMBOL_GPL(dw_pcie_ep_init_registers);
  
 +/**
-+ * pci_epc_deinit_notify() - Notify the EPF device about EPC deinitialization
-+ * @epc: the EPC device whose deinitialization is completed
-+ *
-+ * Invoke to notify the EPF device that the EPC deinitialization is completed.
++ * dw_pcie_ep_linkup - Notify EPF drivers about Link Up event
++ * @ep: DWC EP device
 + */
-+void pci_epc_deinit_notify(struct pci_epc *epc)
++void dw_pcie_ep_linkup(struct dw_pcie_ep *ep)
 +{
-+	struct pci_epf *epf;
++	struct pci_epc *epc = ep->epc;
 +
-+	if (IS_ERR_OR_NULL(epc))
-+		return;
-+
-+	mutex_lock(&epc->list_lock);
-+	list_for_each_entry(epf, &epc->pci_epf, list) {
-+		mutex_lock(&epf->lock);
-+		if (epf->epc_event_ops && epf->epc_event_ops->deinit)
-+			epf->epc_event_ops->deinit(epf);
-+		mutex_unlock(&epf->lock);
-+	}
-+	epc->init_complete = false;
-+	mutex_unlock(&epc->list_lock);
++	pci_epc_linkup(epc);
 +}
-+EXPORT_SYMBOL_GPL(pci_epc_deinit_notify);
++EXPORT_SYMBOL_GPL(dw_pcie_ep_linkup);
++
++/**
++ * dw_pcie_ep_linkdown - Notify EPF drivers about Link Down event
++ * @ep: DWC EP device
++ *
++ * Non-sticky registers are also initialized before sending the notification to
++ * the EPF drivers. This is needed since the registers need to be initialized
++ * before the link comes back again.
++ */
++void dw_pcie_ep_linkdown(struct dw_pcie_ep *ep)
++{
++	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
++	struct pci_epc *epc = ep->epc;
++
++	/*
++	 * Initialize the non-sticky DWC registers as they would've reset post
++	 * Link Down. This is specifically needed for drivers not supporting
++	 * PERST# as they have no way to reinitialize the registers before the
++	 * link comes back again.
++	 */
++	dw_pcie_ep_init_non_sticky_registers(pci);
++
++	pci_epc_linkdown(epc);
++}
++EXPORT_SYMBOL_GPL(dw_pcie_ep_linkdown);
 +
  /**
-  * pci_epc_bme_notify() - Notify the EPF device that the EPC device has received
-  *			  the BME event from the Root complex
-diff --git a/include/linux/pci-epc.h b/include/linux/pci-epc.h
-index acc5f96161fe..69dd7246c9db 100644
---- a/include/linux/pci-epc.h
-+++ b/include/linux/pci-epc.h
-@@ -226,6 +226,7 @@ void pci_epc_linkup(struct pci_epc *epc);
- void pci_epc_linkdown(struct pci_epc *epc);
- void pci_epc_init_notify(struct pci_epc *epc);
- void pci_epc_notify_pending_init(struct pci_epc *epc, struct pci_epf *epf);
-+void pci_epc_deinit_notify(struct pci_epc *epc);
- void pci_epc_bme_notify(struct pci_epc *epc);
- void pci_epc_remove_epf(struct pci_epc *epc, struct pci_epf *epf,
- 			enum pci_epc_interface_type type);
-diff --git a/include/linux/pci-epf.h b/include/linux/pci-epf.h
-index f4c2aaa6674c..74a0713661af 100644
---- a/include/linux/pci-epf.h
-+++ b/include/linux/pci-epf.h
-@@ -71,9 +71,11 @@ struct pci_epf_ops {
- /**
-  * struct pci_epc_event_ops - Callbacks for capturing the EPC specific events
-  * @init: Callback for the EPC initialization event
-+ * @deinit: Callback for the EPC deinitialization event
-  */
- struct pci_epc_event_ops {
- 	int (*init)(struct pci_epf *epf);
-+	void (*deinit)(struct pci_epf *epf);
- };
+  * dw_pcie_ep_init - Initialize the endpoint device
+  * @ep: DWC EP device
+diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+index f8e5431a207b..152969545b0a 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.h
++++ b/drivers/pci/controller/dwc/pcie-designware.h
+@@ -668,6 +668,7 @@ static inline void __iomem *dw_pcie_own_conf_map_bus(struct pci_bus *bus,
  
- /**
+ #ifdef CONFIG_PCIE_DW_EP
+ void dw_pcie_ep_linkup(struct dw_pcie_ep *ep);
++void dw_pcie_ep_linkdown(struct dw_pcie_ep *ep);
+ int dw_pcie_ep_init(struct dw_pcie_ep *ep);
+ int dw_pcie_ep_init_registers(struct dw_pcie_ep *ep);
+ void dw_pcie_ep_init_notify(struct dw_pcie_ep *ep);
+@@ -688,6 +689,10 @@ static inline void dw_pcie_ep_linkup(struct dw_pcie_ep *ep)
+ {
+ }
+ 
++static inline void dw_pcie_ep_linkdown(struct dw_pcie_ep *ep)
++{
++}
++
+ static inline int dw_pcie_ep_init(struct dw_pcie_ep *ep)
+ {
+ 	return 0;
 
 -- 
 2.25.1
