@@ -1,134 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-15935-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15936-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36D49893A75
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 12:57:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B5BA0893A8E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 13:14:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C718B281F02
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 10:57:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7903C281CBA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 11:14:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE9B41F93F;
-	Mon,  1 Apr 2024 10:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BFC220B2E;
+	Mon,  1 Apr 2024 11:14:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c/djbk+g"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VNJqI4gL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7941B1119E;
-	Mon,  1 Apr 2024 10:57:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B8523BF;
+	Mon,  1 Apr 2024 11:14:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711969032; cv=none; b=aDU7H4wU/tgMDJw9MO+agb2DBa3QN1NASwfk2sryDpIcJFSG//BSBFEetf/y7G/RwxEJSpSYM7+3ORHzdFUrFzd4g9a58tM9HDkFsCj8UR0CpGBB9d1OVLD+c/82RCXYKyUlHi08nGzWQ/aSmkAZ/5OoXCR8G7v/lP8pw4CEPxk=
+	t=1711970092; cv=none; b=R7bMXP1b6qBdnBhPs5HOFrJQc3NbcTljMqpx5qE+2UW2jC3hTga1E85qpb2C1/woJ9B1VFTY1fcfZzWk0ogpgoTGimPwXBjuJfvMREEI49x5YnRqCIt3/o9PDpZ1JwRrOR/xOhwcdBYadKRO++1jJI2eaWmS1uubR6+J5ZmJkzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711969032; c=relaxed/simple;
-	bh=jRpsWbogVcg8DoKpQah04JxMdsxc7vRxdIryL7nab6M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Rzq3RUqxr9XGCMO+5vJb3Amt6xRlixmKadLIzLjyEmct+Q/BANDEItDHPNHGcA8DyzXoqm7mPEHDW8Ce2XKt2xm97rNjY7P53+n7hq4+Vkp+AYaxD3DrhQvnyZFhI/uzJoenqjm/rkxDztYfl2DRiuEgann377tbUJ9yh+JQmbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c/djbk+g; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F3B3C433C7;
-	Mon,  1 Apr 2024 10:57:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711969032;
-	bh=jRpsWbogVcg8DoKpQah04JxMdsxc7vRxdIryL7nab6M=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=c/djbk+ghlpRgAenqvHBKE4TEWj87ADVeCFBn3COGbgOd7/Vswne2os0bEPG4LWWi
-	 YN/IaR8x6cc63nvEloNlErjooCpL6BuMTIdhbvxxoYBbX6AhAh9D3RwxZnUSgk/sFU
-	 PlCN6kqEY5pz9inQ7ioBKU9iD0g9SnY2phljw+qM/qqQU5srjbPvJ9HrqvcgfVSRqg
-	 JFW/FnBdk8l1oXTnXdVZ8emdeavgqncqKvTmgh8SqX3Cl0oGSjXtx6vv5uLe8WJHlh
-	 5/TF6Vw9ThXY665tYa30gjpfX7+Zd/RZSkLakO+pS1W8Z+bFJHmraYbc1NHZflpmoj
-	 01NKbbHUWs4Qw==
-Date: Mon, 1 Apr 2024 11:57:07 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-Subject: Re: [PATCH v2] dt-bindings: usb: qcom,pmic-typec: update example to
- follow connector schema
-Message-ID: <20240401-ridden-handpick-2185d8dd02f6@spud>
-References: <20240331-typec-fix-example-v2-1-f56fffe4f37c@linaro.org>
- <2024033109-reporter-blooming-5217@gregkh>
+	s=arc-20240116; t=1711970092; c=relaxed/simple;
+	bh=uPpz1+YPk6pEFNyVGUm8Ju6ugEHPYyKo8BgAJkpwAgw=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=OD+4BYn3FSKw54ygXKFyCokjh3gKZrQl7Sf6vUzKhPTUeEXl/fyi1sFkKoWB9kAxVvPtft1igpYvekqO3gJnYs/VCrLRMsQXwIhOBWfkX2mUtdKCHD76f3oZB/xgX8wOvH3RPuHwaOgFPXOLuOfqgr6HWuM44fmMhX9GmkMcM0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VNJqI4gL; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 431BD6Z9008379;
+	Mon, 1 Apr 2024 11:14:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding:to:cc; s=qcppdkim1; bh=8Q1y9RxixJZneN
+	wyQJKf0rVZLRpRtKub62NwKg9kzY4=; b=VNJqI4gLYfqYCs4htaot7Kkog8tyP8
+	T+xq7SnzVzr2CbICE8aoJQ7+TkNiWrFOdHWMDZ1igUbJKSAzAxQ0sP1QQ6ESX9EA
+	v+eyYQ6r8KmMB8kcXGit+MWwl4sS0WmBGSRxBfhTSV5dA4oDxnrrvgMhQbsqx5rv
+	hVrO/YgihtUV/Tj0M0+Q9AyxnClXNPgwZN4IpMr7J7waZs9oBCSDWc/j3l9ujLHO
+	T81qCgz+9yiPI3KpdT6N81K5MlYekeFZWwfAyNgU8/ZNnZ2tUM4cCf0dgJquFUpF
+	76COGPy3xVWmyCUCvS+ML4w0nSxIZ/d84iMd1mjuVTwM6myqQ13LJzlA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x7ub382j2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 01 Apr 2024 11:14:46 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 431BEj31010692
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 1 Apr 2024 11:14:45 GMT
+Received: from hu-skakitap-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.4; Mon, 1 Apr 2024 04:14:40 -0700
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Subject: [PATCH v2 0/2] Add DT support for video clock controller on SM8150
+Date: Mon, 1 Apr 2024 16:44:22 +0530
+Message-ID: <20240401-videocc-sm8150-dt-node-v2-0-3b87cd2add96@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="PJKCTyDDSgQqIlcd"
-Content-Disposition: inline
-In-Reply-To: <2024033109-reporter-blooming-5217@gregkh>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAA6XCmYC/3WNyw6CMBBFf4V07Zg+EKsr/8OwwOkgs6DFFhsN4
+ d+txK3Lc5J77iISRaYkztUiImVOHHwBvasEDp2/E7ArLLTUtTTSQmZHARHSaNVBgpvBB0fQ9Ko
+ xt/qk+yOKMp4i9fzawte28MBpDvG9/WT1tb+kMv+SWYGEjiyhQas16svjycge9xhG0a7r+gFrD
+ g+NvgAAAA==
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Stephen
+ Boyd" <sboyd@kernel.org>
+CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Ajit Pandey
+	<quic_ajipan@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        "Taniya
+ Das" <quic_tdas@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        "Satya Priya
+ Kakitapalli" <quic_skakitap@quicinc.com>
+X-Mailer: b4 0.12.4
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: rzrwSoIdyXWypGfPYeCbuG39IukRXgLp
+X-Proofpoint-ORIG-GUID: rzrwSoIdyXWypGfPYeCbuG39IukRXgLp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-01_08,2024-03-28_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 clxscore=1015 mlxlogscore=787 mlxscore=0 bulkscore=0
+ spamscore=0 malwarescore=0 impostorscore=0 adultscore=0 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403210001 definitions=main-2404010080
 
+Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+---
+Changes in v2:
+- As per Dmitry's comments, there is no need to update to index based
+  lookup for already existing drivers, hence keeping clock-names property.
+- Updated the videocc bindings to add AHB clock for the sm8150 platform.
+- Link to v1: https://lore.kernel.org/r/20240313-videocc-sm8150-dt-node-v1-0-ae8ec3c822c2@quicinc.com
 
---PJKCTyDDSgQqIlcd
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+---
+Satya Priya Kakitapalli (2):
+      dt-bindings: clock: qcom: Update SM8150 videocc bindings
+      arm64: dts: qcom: sm8150: Add video clock controller node
 
-On Sun, Mar 31, 2024 at 09:17:20AM +0200, Greg Kroah-Hartman wrote:
-> On Sun, Mar 31, 2024 at 12:21:15AM +0200, Dmitry Baryshkov wrote:
-> > Update Qualcomm PMIC Type-C examples to follow the USB-C connector
-> > schema. The USB-C connector should have three ports (USB HS @0,
-> > SSTX/RX @1 and SBU @2 lanes). Reorder ports accordingly and add SBU port
-> > connected to the SBU mux (e.g. FSA4480).
-> >=20
-> > Fixes: 00bb478b829e ("dt-bindings: usb: Add Qualcomm PMIC Type-C")
-> > Reported-by: Luca Weiss <luca.weiss@fairphone.com>
-> > Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> > Update examples to follow usb-c-connector schema wrt. ports definitions.
-> > ---
->=20
-> Hi,
->=20
-> This is the friendly patch-bot of Greg Kroah-Hartman.  You have sent him
-> a patch that has triggered this response.  He used to manually respond
-> to these common problems, but in order to save his sanity (he kept
-> writing the same thing over and over, yet to different people), I was
-> created.  Hopefully you will not take offence and will fix the problem
-> in your patch and resubmit it so that it can be accepted into the Linux
-> kernel tree.
->=20
-> You are receiving this message because of the following common error(s)
-> as indicated below:
->=20
-> - You have marked a patch with a "Fixes:" tag for a commit that is in an
->   older released kernel, yet you do not have a cc: stable line in the
->   signed-off-by area at all, which means that the patch will not be
->   applied to any older kernel releases.  To properly fix this, please
->   follow the documented rules in the
->   Documentation/process/stable-kernel-rules.rst file for how to resolve
->   this.
->=20
-> If you wish to discuss this problem further, or you have questions about
-> how to resolve this issue, please feel free to respond to this email and
-> Greg will reply once he has dug out from the pending patches received
-> from other developers.
+ .../devicetree/bindings/clock/qcom,videocc.yaml         | 17 ++++++++++++++++-
+ arch/arm64/boot/dts/qcom/sa8155p.dtsi                   |  4 ++++
+ arch/arm64/boot/dts/qcom/sm8150.dtsi                    | 13 +++++++++++++
+ 3 files changed, 33 insertions(+), 1 deletion(-)
+---
+base-commit: 8ffc8b1bbd505e27e2c8439d326b6059c906c9dd
+change-id: 20240308-videocc-sm8150-dt-node-6f163b492f7c
 
-I'm not sure that something updating the example like this needs to go
-to stable in the first place.
+Best regards,
+-- 
+Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 
---PJKCTyDDSgQqIlcd
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZgqTAwAKCRB4tDGHoIJi
-0o+3AQD8d/HFel0B33OnmX67qk+scHD8c2BNetJjW+qY+jRRxQEAwn45hbTGUfQw
-VuD6+9irOwAu5NYApjR2fFjnA4BcsQE=
-=l7ox
------END PGP SIGNATURE-----
-
---PJKCTyDDSgQqIlcd--
 
