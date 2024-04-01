@@ -1,129 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-15989-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15990-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BAD87894728
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 00:12:01 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A968A894754
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 00:30:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3EE282820C1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 22:12:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 13D59B20A8B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 22:30:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5C8355E4F;
-	Mon,  1 Apr 2024 22:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5ADAC139;
+	Mon,  1 Apr 2024 22:30:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dOeUK2SB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtprelay06.ispgateway.de (smtprelay06.ispgateway.de [80.67.31.103])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D6F4683;
-	Mon,  1 Apr 2024 22:11:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.67.31.103
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6E3748E
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Apr 2024 22:30:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712009515; cv=none; b=jqaYBC7D91jE1wcuCj47ph2v+tyg+s/Xn3pefJy4QMML6L1ess+d6/Qrx+HHF8aNYtM6drQYJkTIASIqn7E6ShrNdFRiQzy5TF4+sKmY6RSPMd1aIZgm8P3eoRNB3oqZmY++gicUET5rJsOWZxgvQVSQ3VIzUVnh8ooFwwd2Gic=
+	t=1712010632; cv=none; b=IS3BeG2j30nJFAxKfUTF8Sj0CQlj6MN09fS2mSW/g3i/S2tkUTDz5C3wodIOqcDZWuo34+1udV5O0gb7IHXvFiNor30VrSB8zhYeQVEQ0lybjfLUl1XaXGnoiGxusF3mWIBKpKINrt59MTOPMrUydZXTFDmcvukf4HkIQ2m9IOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712009515; c=relaxed/simple;
-	bh=gZIvbC9QcJ+z4erMfxk2BKLYyhXqYUfIhZMoeDsxtTk=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=fkB88N5Cd6ccW24DHzmPtYsqPtjznrs2hSX14hvFBvH8WxTaAi8Ry8irCpo7yFYwtTdiZYvds2NWGKBdwHXTNp0MGmIrMR9bBy58ZPzL0P42fwPYDaubFpp8VQeXkDBlR7INGnZRNuEMNQ6rgGfcfpoUg9b2Od/CuPeqtsch+kM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=apitzsch.eu; spf=pass smtp.mailfrom=apitzsch.eu; arc=none smtp.client-ip=80.67.31.103
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=apitzsch.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=apitzsch.eu
-Received: from [92.206.191.65] (helo=note-book.lan)
-	by smtprelay06.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.97.1)
-	(envelope-from <git@apitzsch.eu>)
-	id 1rrPsV-000000008VN-0dPK;
-	Tue, 02 Apr 2024 00:11:43 +0200
-Message-ID: <e842cda99206852bce7f7acc99d5dd360e313639.camel@apitzsch.eu>
-Subject: Re: [PATCH v2 0/3] Add sy7802 flash led driver
-From: =?ISO-8859-1?Q?Andr=E9?= Apitzsch <git@apitzsch.eu>
-To: Trilok Soni <quic_tsoni@quicinc.com>
-Cc: Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>, Rob Herring
- <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-  Conor Dooley <conor+dt@kernel.org>, Kees Cook <keescook@chromium.org>,
- "Gustavo A. R. Silva" <gustavoars@kernel.org>, Bjorn Andersson
- <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
- linux-leds@vger.kernel.org,  devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org,  linux-hardening@vger.kernel.org,
- linux-arm-msm@vger.kernel.org,  ~postmarketos/upstreaming@lists.sr.ht,
- phone-devel@vger.kernel.org
-Date: Tue, 02 Apr 2024 00:11:41 +0200
-In-Reply-To: <d2de0a0e-6cbe-3472-0a84-797f827ac635@quicinc.com>
-References: <20240401-sy7802-v2-0-1138190a7448@apitzsch.eu>
-	 <d2de0a0e-6cbe-3472-0a84-797f827ac635@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.0 
+	s=arc-20240116; t=1712010632; c=relaxed/simple;
+	bh=AGtcxhiBL3iMSUu5OngGq6sVbaFB/izhrzI/JTU7NgQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YRqLSqPVaIRD2Qq1Z/QbC0svgF3vFTbFv4DS+maBCpRcReZeLqTuueU4nLTeCqBam/CeJl8MQwapL+Xoqk+0HTS0NCgYcGBbg9GO8dglbFFQLGyVieTwiqY+yJoDVzu1pdJ1dQETSzC4/uSzDVGM4TC87WabYEny4ai82Ei/KJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dOeUK2SB; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-341730bfc46so3237467f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Apr 2024 15:30:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712010629; x=1712615429; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=iZEEEP3WLdyzsBOF4rzSyiDMnZY/6RPAhCk5qQkVLQU=;
+        b=dOeUK2SBb2QttdB5GeFffoNbmvrSpEhPNcmIy9b+LzuHPUVIcC1VSt0T8wTNobsZtr
+         ANzkTfLBaW9PSqSzNHXTLsYr6MspliE6GPYdPx71yea19il96Ak5GQdcNRu6esB2tvIW
+         gC7G1NR4ptXkQlXgptPN76vxkxM360TQlqlwVtpN35HSxDrw9qdOxwFAq9Hy2K0ngTEV
+         BLxBOCwF8m7U69RnWjH4F3AYYR+vVu7K6aUcYY41kPlRlfgss2jJgdZa2ZJd53Kc4kw0
+         Hp+3ZII+o0FtFZGe277T3T/FIYyAzF7lQKMq0I7R2euSja1ROipryCjj4CW4iDrloDqN
+         N2zA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712010629; x=1712615429;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=iZEEEP3WLdyzsBOF4rzSyiDMnZY/6RPAhCk5qQkVLQU=;
+        b=XmsRFdT4e34od5vauJz6KbzVNS7eGxX82+Ls6QDB9qrp/1RGUJL9Qu9OnvN5uzjBIs
+         jnMvm1nMnW9BOMBcWsPT592rcFFhL9dd/2EmKxjD/mOJw1mf5HNv/vcP+ltfzykvRM0I
+         UpJXS1nXn+EUzL9Ymav7dUyEnry/PnOcUjKo+Oqqr3+DZAdqDnnh0mkPNoxx69tvWvep
+         bdIGY8oxT0eoONrHJOUD27dNpsIJMGZSrlFD6Yf75h2isSBSlKjzIt0NCB70WutpKlNI
+         lRrjglA066m3BUFSbVLnco4REBl1BA+NzFIhMxZCXQzFsc3LAIPMw8xmNFjPXnvSwDpx
+         dUrQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWwpMvnFZK8TM5QK4I0eHJZOQ5dZxctPHjh07fLUmj3Dk4JNScQM8+C9fCe1kqz2WO1xtnjYLgQfZJZpTvIL8sQoz43SkC/V5Ss9PKWNg==
+X-Gm-Message-State: AOJu0YxShwkeSVgboliFcWTasfx4PZk5P6rSlnKL29c1KuAPCOSpMaQL
+	ZvfJMEt7mHdKOOgoRGTReBhvlCSUwdQEqDUqde0iGv2vBV6Bozh0gUh51Sca34Y=
+X-Google-Smtp-Source: AGHT+IG+ZdFIcfD/b3TocEugIXWKQcUK9JvEnxxkCO8yj9ks7X3SQRNT1uHEIFteQ1t4L3d82zw8yQ==
+X-Received: by 2002:a5d:6505:0:b0:33e:7a1f:5824 with SMTP id x5-20020a5d6505000000b0033e7a1f5824mr7279820wru.0.1712010629385;
+        Mon, 01 Apr 2024 15:30:29 -0700 (PDT)
+Received: from [192.168.0.102] ([176.61.106.68])
+        by smtp.gmail.com with ESMTPSA id m28-20020a05600c3b1c00b00414688af147sm19132258wms.20.2024.04.01.15.30.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 01 Apr 2024 15:30:28 -0700 (PDT)
+Message-ID: <a54e7d95-79d3-40fa-8975-f0e107aeeb36@linaro.org>
+Date: Mon, 1 Apr 2024 23:30:27 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Df-Sender: YW5kcmVAYXBpdHpzY2guZXU=
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/8] media: qcom: camss: Add per sub-device type
+ resources
+Content-Language: en-US
+To: Gjorgji Rosikopulos <quic_grosikop@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, andersson@kernel.org, konrad.dybcio@linaro.org,
+ mchehab@kernel.org
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, laurent.pinchart@ideasonboard.com,
+ hverkuil-cisco@xs4all.nl, quic_hariramp@quicinc.com
+References: <20240319173935.481-1-quic_grosikop@quicinc.com>
+ <20240319173935.481-2-quic_grosikop@quicinc.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20240319173935.481-2-quic_grosikop@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Am Montag, dem 01.04.2024 um 14:45 -0700 schrieb Trilok Soni:
-> On 4/1/2024 2:23 PM, Andr=C3=A9 Apitzsch via B4 Relay wrote:
-> > This series introduces a driver for the Silergy SY7802 charge pump
-> > used
-> > in the BQ Aquaris M5 and X5 smartphones.
-> >=20
-> > The implementation is based on information extracted from
-> > downstream as
-> > the datasheet provided by a distributor of the hardware didn't
-> > include
-> > any information about the i2c register description.
-> >=20
-> > Signed-off-by: Andr=C3=A9 Apitzsch <git@apitzsch.eu>
->=20
->=20
-> Is this the right email address? "From" shows
-> devnull+git.apitzsch.eu@kernel.org.=20
->=20
-This was created by b4 using the web submission endpoint.
+On 19/03/2024 17:39, Gjorgji Rosikopulos wrote:
+> +		.csid = {
+> +			.hw_ops = &csid_ops_gen2
+> +		}
 
-Andr=C3=A9
+Thanks for rebasing
 
-> > ---
-> > Changes in v2:
-> > - bindings: remove unneeded allOf
-> > - bindings: example: move flash-led-controller under i2c node to
-> > fix
-> > =C2=A0 check error
-> > - Cc to phone-devel
-> > - Link to v1:
-> > https://lore.kernel.org/r/20240327-sy7802-v1-0-db74ab32faaf@apitzsch.eu
-> >=20
-> > ---
-> > Andr=C3=A9 Apitzsch (3):
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dt-bindings: leds: Add Silergy SY7802 fl=
-ash LED
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 leds: sy7802: Add support for Silergy SY=
-7802 flash LED
-> > controller
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 arm64: dts: qcom: msm8939-longcheer-l910=
-0: Add rear flash
-> >=20
-> > =C2=A0.../devicetree/bindings/leds/silergy,sy7802.yaml=C2=A0=C2=A0 | 10=
-0 ++++
-> > =C2=A0.../boot/dts/qcom/msm8939-longcheer-l9100.dts=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 |=C2=A0 26 +
-> > =C2=A0drivers/leds/flash/Kconfig=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 11 +
-> > =C2=A0drivers/leds/flash/Makefile=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 1 +
-> > =C2=A0drivers/leds/flash/leds-sy7802.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- | 532
-> > +++++++++++++++++++++
-> > =C2=A05 files changed, 670 insertions(+)
-> > ---
-> > base-commit: a6bd6c9333397f5a0e2667d4d82fef8c970108f2
-> > change-id: 20240325-sy7802-f40fc6f56525
-> >=20
-> > Best regards,
+rb3, rb5 and db410c all went well with my testing but x13s showed a few 
+missing resource entries - which I fixed and then it worked fine on x13s 
+too.
 
+https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/sc8280xp-6.9-rc1-camss-resource-change-verification?ref_type=heads
+
+Could you guys make a pass through these resource structs again - 
+especially for sc8280xp, sdm660 and 8996 and make sure there's nothing 
+else missing.
+
+---
+bod
 
