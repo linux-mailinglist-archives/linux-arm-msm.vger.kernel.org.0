@@ -1,121 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-15991-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15992-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D723F89475B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 00:36:08 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 174E189477E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 00:55:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5AF67B21A5B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 22:36:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 48C2A1C21FF7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 22:55:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CDFA56B62;
-	Mon,  1 Apr 2024 22:35:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4327C56473;
+	Mon,  1 Apr 2024 22:55:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ROhCidoQ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oum5Y+Kt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA1A56451
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Apr 2024 22:35:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914575644E;
+	Mon,  1 Apr 2024 22:55:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712010956; cv=none; b=KY7S3qyGcQ7tx2NVdkwRE8Wiu8mkL7F9p675ZizxYQOhp3MCjSvRfDEELamnOHK3f5sh/XzgSuyuur9NG8u43+lM0dfbl52N+WCkN2JnLu2dQVI0hTAU0yckeVVQw1kLzmtAx4/HMsHSZHhI93l6v8zzr8v/dYFgmzVdv31W5DQ=
+	t=1712012139; cv=none; b=WJXaWDq0VPOZ5H095PgeVftplTcJj6XOEBThUTBPSqhnY8ouiQ3xiVgIeBq0tjGagQLdu4qqbRLcbLEPnlUxx+z9x9UqW8nyHgT/3AxLwh3G8W4xGS2UGBmFTzqm/n7c3NCdff+g2lwH/WDCbhoIqETj9FPFPx3a7jmMOif4zoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712010956; c=relaxed/simple;
-	bh=xZfZznOOUrMnj9F7MOa3gdK1gMRnr0e6ZI2tSYWbdYE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LOvLd70bXNZAe4Jo9qo0mh6sja6MCKM9A6XYc66YE9+PkaSPJvpdGrx5AHCmk0ty1yHgp04I08Fl2vX5lwx04NYdpUQc5jy3AJEcwpYxc5vDdvO/c0V5wqStLXnrE5grRQbtfyKpkPCqJkMrLuYteCctt7/QajEGf7e4P6t190w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ROhCidoQ; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4156c76656bso5080005e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Apr 2024 15:35:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712010952; x=1712615752; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+vu7Ehehcol4xFG6h1WYhn2TyDJ5Skd8wIEgpO47rgU=;
-        b=ROhCidoQGQLUVKqStikY/x5DTwRkKqRKVAnzQsdAPdMv1OR38aSJRzPGusqD773aZs
-         KDrZZ4RXqXs0osB6sf39IcnPqapbO2SxBRBCaYGPxBkCWTxCDveAx0vBEIu23zvolkhI
-         QHWmG5QJW35jjnImS1CKG/KgjPhqqnDsmq8QmgkqLeUWC/qN1yO0Ebk6m8/hOK9jpYxi
-         qccaxY3QellUHYr7VVfpJ4qRwISUJ9PdAKgPxaFhSsIpYUGmHT7ISBcJl6vQbRQ++o2K
-         EMSYQRJCfuUpX9E1j11RRnPLHU+dvcMX1Hl5ynWc99NbgZKaXsGFRuc12B/ymKU7z5Zq
-         YtAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712010952; x=1712615752;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+vu7Ehehcol4xFG6h1WYhn2TyDJ5Skd8wIEgpO47rgU=;
-        b=QxYj2sr6dDd60kkGMYtbiE7Vqx21k7SaHFTrxVH1+byq8Lqc7s97bF6C9k+t4n1Lw5
-         MsDvBEuVuAtwvlrltzUAs4xx2tBPLNzgZn7MQ21kKMxQsRhxXgTo1RBQhBWe+qoZV5k5
-         eckSvp1iNnW4D+9NDP4ST74tYiL6XRinedv+Vy2/Lr/JrSRKlxusco3N102JRm5Vm8f1
-         fiEzyahJ/nygu2jHcBjF0rx4KAfQT2vd2JyxlVmdde21MZmTGx7C8sdg4bxeIzUa9pll
-         17HH4RFXtBTxRCamfQWDPZQQvcIefS7q1BOpcWPNKN6SgFJLfPvT8rId34ksp7kWC8ZL
-         XE8A==
-X-Forwarded-Encrypted: i=1; AJvYcCX13hJkMbYsok4fPRFxmdSglxhNEw7X6bsIgD82cQfzzLEiXiLFqer7oUEzTUOUknXbmkusNIARottKyti1Gi/Ud3rtWM3cHc8JmPve7w==
-X-Gm-Message-State: AOJu0YwO+Ggca0gWxUVZ+ydsp+urPscNxQMgw4CdJaNhZOtVu29N8mv4
-	Fifqyt94VkI8D+5fD0AAXWUCHQIB4uPnW6EETxZUN3iSIy8d7TPSpo96QEyB85w=
-X-Google-Smtp-Source: AGHT+IE8YS+EpdrZk5681b14c4WM8tS0DI17KBtmsVaBo2K8H6KY6wB04e9lnNeDiZB9YxmB5EK6JQ==
-X-Received: by 2002:a5d:4b45:0:b0:343:617e:26ba with SMTP id w5-20020a5d4b45000000b00343617e26bamr155174wrs.54.1712010951422;
-        Mon, 01 Apr 2024 15:35:51 -0700 (PDT)
-Received: from [192.168.0.102] ([176.61.106.68])
-        by smtp.gmail.com with ESMTPSA id p6-20020a05600c468600b0041477f3f99fsm18985589wmo.30.2024.04.01.15.35.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Apr 2024 15:35:51 -0700 (PDT)
-Message-ID: <60461c7b-b693-4560-ab29-8cd9d8ac4a44@linaro.org>
-Date: Mon, 1 Apr 2024 23:35:50 +0100
+	s=arc-20240116; t=1712012139; c=relaxed/simple;
+	bh=x3ePgie20BKz3/0JgExygH6c+y0Q/ablqbQfmT/CvFM=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=StBuOmcpeQjjgFWm4SfLW2cVrKWBzjOE20tJhQElfFOFRhVuNGoQFW70Pc+B5g67nkSHrN6w9l+kAX3DRzIk6vbQNCjxCJqOwA4sfLFMPKkgOj+MK0GNdg6bdQZ13dDBB0keyjCP+L4GAoyBFsdzhZn09kXePe1eLiSYIcU5al0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oum5Y+Kt; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 431LfiNu006910;
+	Mon, 1 Apr 2024 22:55:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=sGn7IBkoj6U5EbmA4fihg
+	co2JtnZzSxt6wX7u+QxBfg=; b=oum5Y+KtDn5Bu2vhXXTzUkECVGb0FTz7Jiejb
+	zmBfPdrrbOTjElQpQ3TqdtxoUf0IGWf6kXbGctnJv7VbdBKE2mS8jh7y3f2K3tVf
+	XeeRw2HurdnRf63maIWMsJ2l3cRfFA4X4qE57Eyox0uVpYCg20FVSquD+NvEyGZT
+	UL+Q8DDZ5XN4Avkj+Qa8zG2B9C7tVP6s2+5wOR/9Ae1u4MoK8IYQzIniGtIVCSPL
+	IyQuhIe72fr6UfJf9a+Qw6FXVsMzVPPtQ/WXx/GrLpYrGlz/qPpSnJ4xbt/mDDbO
+	dOkNzPyJ6b4LEymi2yIqAO38ht+YkeVwgPGYmBTdhmkk/T7Zw==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x803d8ujt-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 01 Apr 2024 22:55:31 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 431MtVJY008535
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 1 Apr 2024 22:55:31 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.4; Mon, 1 Apr 2024 15:55:30 -0700
+Date: Mon, 1 Apr 2024 15:55:29 -0700
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Komal Bajaj <quic_kbajaj@quicinc.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Amrit Anand <quic_amrianan@quicinc.com>
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: qdu1000-idp: enable USB nodes
+Message-ID: <Zgs7Yau1/jYvys4i@hu-bjorande-lv.qualcomm.com>
+References: <20240319091020.15137-1-quic_kbajaj@quicinc.com>
+ <20240319091020.15137-3-quic_kbajaj@quicinc.com>
+ <CAA8EJprXPvji8TgZu1idH7y4GtHtD4VmQABFBcRt-9BQaCberg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/8] Move camss version related defs in to resources
-Content-Language: en-US
-To: Gjorgji Rosikopulos <quic_grosikop@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, andersson@kernel.org, konrad.dybcio@linaro.org,
- mchehab@kernel.org
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, laurent.pinchart@ideasonboard.com,
- hverkuil-cisco@xs4all.nl, quic_hariramp@quicinc.com
-References: <20240319173935.481-1-quic_grosikop@quicinc.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20240319173935.481-1-quic_grosikop@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <CAA8EJprXPvji8TgZu1idH7y4GtHtD4VmQABFBcRt-9BQaCberg@mail.gmail.com>
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: E59YW7_rvDS6jE2ikFvPW9_UiCNBzOJV
+X-Proofpoint-GUID: E59YW7_rvDS6jE2ikFvPW9_UiCNBzOJV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-01_16,2024-04-01_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1011
+ mlxscore=0 spamscore=0 adultscore=0 malwarescore=0 priorityscore=1501
+ impostorscore=0 lowpriorityscore=0 phishscore=0 mlxlogscore=784
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403210001 definitions=main-2404010160
 
-On 19/03/2024 17:39, Gjorgji Rosikopulos wrote:
-> The different resources required for different camss soc versions are
-> split in to two groups:
+On Tue, Mar 19, 2024 at 11:52:15AM +0200, Dmitry Baryshkov wrote:
+> On Tue, 19 Mar 2024 at 11:11, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
+> >
+> > Enable both USB controllers and associated hsphy and qmp phy
+> > nodes on QDU1000 IDP. Add the usb type B port linked with the
+> > DWC3 USB controller switched to OTG mode and tagged with
+> > usb-role-switch.
+> >
+> > Co-developed-by: Amrit Anand <quic_amrianan@quicinc.com>
+> > Signed-off-by: Amrit Anand <quic_amrianan@quicinc.com>
+> > Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 65 ++++++++++++++++++++++++
+> >  1 file changed, 65 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+> > index 89b84fb0f70a..26442e707b5e 100644
+> > --- a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+> > +++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+> > @@ -46,6 +46,33 @@ ppvar_sys: ppvar-sys-regulator {
+> >                 regulator-boot-on;
+> >         };
+> >
+> > +       usb_conn_gpio: usb-conn-gpio {
+> > +               compatible = "gpio-usb-b-connector";
+> 
+> If this board has only a USB-B connector, can it really handle USB 3.0?
+> 
 
-General series comment =>
+Here's a USB 3.0 Type-B cable, so no problem there:
+https://en.wikipedia.org/wiki/USB_hardware#/media/File:USB_3.0_plug,_type_B_-_1709.jpg
 
-You need to add your Signed-off-by: Gjorgji Rosikopulos 
-<quic_grosikop@quicinc.com>
 
-for each of the patches you are submitting.
+@Komal, please confirm that this is the connector you have on the IDP?
 
-Perhaps yourself or some of the other people in the series deserve to 
-have Co-developed-by for some of the patches too ?
-
-I really like the reduction of code and the definition in one-place of 
-things so definitely the right direction.
-
-I won't do a deeper dive into the code until V3 but for reference here 
-are the branches I verified db410c, rb3, rb5 and x13s with.
-
-x13s:
-https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/sc8280xp-6.9-rc1-camss-resource-change-verification?ref_type=heads
-
-db410c/rb3/rb5:
-https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-stable-v6.7.9-camss-rb5-20240319173935.481-1-quic_grosikop@quicinc.com?ref_type=heads
-
----
-bod
+Regards,
+Bjorn
 
