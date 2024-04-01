@@ -1,324 +1,544 @@
-Return-Path: <linux-arm-msm+bounces-15970-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id ACB10894557
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 21:13:46 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 341FB89456F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 21:23:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D048F1C216AC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 19:13:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B51101F21EFE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 19:23:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53E3A51C4C;
-	Mon,  1 Apr 2024 19:13:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60370524DF;
+	Mon,  1 Apr 2024 19:22:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GEQjp8BQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EKYCWhLd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B0E42056
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Apr 2024 19:13:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADD15336D
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Apr 2024 19:22:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711998822; cv=none; b=Sa7MBtg9w3tYOgP2LBRAxmf8yp0FxIpK0CKtzQRrMjjgfc05S24uwRi+01VVhd6sCPHcNyEsLoUGMdW2U0gU9R3a0Uz4lDbSJax4Zj0DrPdym2wr8fbX4eLU/Bf9Jyye1g+sRHk7+zqbldYOZZ2i2VlJr0Iz9AgeDVVjiQ4iFK8=
+	t=1711999362; cv=none; b=UOPOQ3bFFC6jV7rA7BeMtxAtd0xPegeWMCw/buacD7Sl1j/enAv0tyldeZW6uVX6I7ZHt/48dDLWn+aniYdLPXYyYdI8msLH70O0Xtm4WIe3tsZQ9IxOaStsL4QYMxt+zxVTNxq6WXijqBMOqyo9Q9X5kg1YPezCNZ+BKiZPo18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711998822; c=relaxed/simple;
-	bh=xRA2kVWdLsLw32UwgsjnRYu7M6yDHMhVPmZxCGwEJAQ=;
+	s=arc-20240116; t=1711999362; c=relaxed/simple;
+	bh=z0TyYCmeCKFtlFcAlva4XJcOn8MH8YBfe34AMkoMOpY=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZESUjDr2Atfc4NS/kCsf//9IFQ7YbPURAT9xjM0UOspdn8C+Jz+kk/YnfXdmnk/lM57YK5FrdTJpYuocZBVXa1Oec6TLhWGkL9Dqc+nCHAfMuh4lB2ek6HtZlfQFjtqI3HKtHGqcwNldsAK2gNZFDHwWj3Q0WdkJuU3rcNnFMEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GEQjp8BQ; arc=none smtp.client-ip=209.85.128.177
+	 To:Cc:Content-Type; b=F/hDCs2bCflauW/38jwJYfuRqa6DXisIl4GsRRd2Ntb0bWXd2yku7Ld7bp1Zh6OyevaDlmd7QNaOIpkKgo4Z2kQL/3qkvvBA2bXyEVoeSNGU6Rv/4p7jSXDIvPPdv6jLYRYbjugxDaswz4Ej2SNGFtt5jMtMz3HFF8zQZXkncPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EKYCWhLd; arc=none smtp.client-ip=209.85.128.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-614b02f8ed6so9837067b3.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Apr 2024 12:13:40 -0700 (PDT)
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-61518d33293so1550767b3.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Apr 2024 12:22:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711998819; x=1712603619; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1711999359; x=1712604159; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Prq1QJJnQQU7u1iRcjMVZrhCj4xAy2Si6lydnwZRhuc=;
-        b=GEQjp8BQBHTGx4Qk+SOSFx59tIEZtTXojY3K60hTjWTtjeal0ufWWkq8d11UUYpTWI
-         2VpJ+Nv6l/7atUUN4KfB5UXjf3jz8ZvhVadbnqsbFpS7ItA3eeMi7pOeFGsEOFyYDwfx
-         S6GU0rhJDKVHiTslt0bTykbKbsYVWNxz5wqlwJcXpOlg5iarMgSijaSlRfIHSv9USLpx
-         MlYHPCNgBADoIje+h9ODRnirUS0GauxgWtYhnyHc+XfEDNWfxRtZOWvOW+ysdvvQZ28J
-         FqPLFjklrUGBVU1YQxiYMXEP3RkCb1NYKtM/Z72qV5sN37AeORdpu2opsIx6uRRovjD8
-         d00w==
+        bh=7Uz10MZlhGKllJSDw2j3vPUCAL03zsf7WqitsfzNhkw=;
+        b=EKYCWhLdqTJzPQxOMJsLTErN2YlZGrtpYFGcLkDtqWaDKHgXhupN2PtWPBXJ+chY9/
+         fNpUC+IA3+icUSmUVhs0L124sXMNPGZqNIamFFsBR5I9NbyQu8dySmRHK75RGjmIXK9k
+         bnHBDx7g+cU7e4uUilqpCMXz20F4YwOirLEuWNNWM8N8YeWXHzExXOUe6jkq/Sj0Z9WK
+         Ice5ZYOcdIz9Dnt6Z1bfJEUIy++KAYxskhzo6YYVLkHCkAKzxWZ7WdZOlnvliIIzGuWX
+         VJf1oZAZlYP1/EnhJrs/rOzHlWXgMiasVXlDgT89ImpkI/lJF1WvmLqdvpYSh3cZKrjr
+         /TSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711998819; x=1712603619;
+        d=1e100.net; s=20230601; t=1711999359; x=1712604159;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Prq1QJJnQQU7u1iRcjMVZrhCj4xAy2Si6lydnwZRhuc=;
-        b=qXcwaR+8NlIXYC5OPuIeOzgmCNT5aQI9C8VPZ32kHC5BfatJ/oRTbhJFUq1FBD4aP3
-         hT1WZ2ftJe9L3iPWpUY65z8I7vzYZgOGaNCsz9hGnQ6m8wk4DHrgg+J4FXjceh3T96Dm
-         nqQPs9kUGKoD8MdkGeflGmRYhT+zGDXBMzdz87QVy0XpuYtIvu6m7EhoEIVtXHytWd0c
-         CdNOHkyqCBN4rlGzDKnD1icqas1ylqD0UWOxfSqnRScuMNy7Nmnq2acB0Im/xil8S//m
-         kPd++9TjAyodZlT7Jd9O8iMa8jIMWU0VErGmGfmt2Cfex/AVRL4bM0y3M2KhSKnQyyxD
-         ziZg==
-X-Forwarded-Encrypted: i=1; AJvYcCWvdtocBuseBMjtHdbqjVG0JIzyOQqMDQVxo30OY+AEzP8b7sT3FmXVToGSCvpbVSPT5LrUIh+OT6INKho3nfvPQ3/fNhaZ950SL16u7A==
-X-Gm-Message-State: AOJu0Yw5pGgWSGrp/2CC9YhndsG+URH4RZLHptMZJDrSEnc4BJZygBVo
-	5vm7nHRdXDYoa6ZiKz3K+YPqoxPa0r7sa8NorljYQAkQWB2v4NCtJjqUScPIkOH6kN1GWrToI4k
-	X20lTNuddUuNUZdI6A85iJfZw8zFmZK4zC4Ogow==
-X-Google-Smtp-Source: AGHT+IH0/B1ZK59cE+3njkExu1/oK/oKfgca8fZUN4erCCFS3DlhCeWUIs/BPU37DZOaYWWikalNTl6N1DBcONTXIVM=
-X-Received: by 2002:a25:820d:0:b0:dcb:df38:1c20 with SMTP id
- q13-20020a25820d000000b00dcbdf381c20mr7122644ybk.24.1711998819458; Mon, 01
- Apr 2024 12:13:39 -0700 (PDT)
+        bh=7Uz10MZlhGKllJSDw2j3vPUCAL03zsf7WqitsfzNhkw=;
+        b=sUoW3ksHe90DYOuyQy/OX7pu3vs0SZQDOlfOt9yY+RuQkNPw6BOPOvbuPVOvbLkQI2
+         PBBsX9Y81htHE0w6yCkF2gts+Xgs61Sp1nDn+aLhfWjAuEiEKVfBICX1HyxNwjBZkfg2
+         FUHuGtaMYTXoPIqDTWd1ugvVtoEimN1H9jTlrVptKSCncTL5L9p5yG7qcyXgl528zqXs
+         VmIVuo7+ioKgnHvMbHvUJwEKVFk5qOZD5H2EgYjBuGWY++Hg/LlWlVRuZO8RwNhfO0gG
+         qLVwMgGMYsYTpX9fYRmIdeksaKP8g/heaLN1D2/ucs5DGzISFUMe/DakJoieDjs/Hv85
+         XHyQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUo53BUXLPiKiZdHh7xYGwWe1tgFx3dU1aYg03Z2n9wzIdOClEVwKLHNOSOPkKtxqYqGIdx1X3/r7R7sstN6SGBvK0E5mZbZMqzpGXNtA==
+X-Gm-Message-State: AOJu0YwcBZ6fkqQH4tlKvIESnDd5Y3kNg0BPnp7N1+DbVyxM2b78LyiA
+	SoxTPEufhjviOdaEro+L3+jtb1YuGv3fQFTzUhBLku3qx8lF/GWd7dK3dsICz0ZhxbTclP/IS0P
+	m6p3UX5743ekCb8Q4h8RKlbDQl5mWiEKzMlZhtQ==
+X-Google-Smtp-Source: AGHT+IGGyN4Yf36VxfeJVzeUvZZ+lsW0a5/Y6kiM7+h45e4SsuuzRQZ/AMDg4DWC//VcHVkLMztmTVDdqegiYAcW1Dg=
+X-Received: by 2002:a25:5f4e:0:b0:ddd:7456:d203 with SMTP id
+ h14-20020a255f4e000000b00ddd7456d203mr8773506ybm.41.1711999358969; Mon, 01
+ Apr 2024 12:22:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240401093843.2591147-1-quic_tengfan@quicinc.com> <20240401093843.2591147-3-quic_tengfan@quicinc.com>
-In-Reply-To: <20240401093843.2591147-3-quic_tengfan@quicinc.com>
+References: <20240401093843.2591147-1-quic_tengfan@quicinc.com> <20240401093843.2591147-5-quic_tengfan@quicinc.com>
+In-Reply-To: <20240401093843.2591147-5-quic_tengfan@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 1 Apr 2024 22:13:28 +0300
-Message-ID: <CAA8EJpqddAsgVGMfVi8A+cqCq9w5fDBfNuhiLK2t-q=6gBpy+Q@mail.gmail.com>
-Subject: Re: [PATCH v6 RESEND 2/4] arm64: dts: qcom: qcs8550: introduce
- qcs8550 dtsi
+Date: Mon, 1 Apr 2024 22:22:28 +0300
+Message-ID: <CAA8EJpoUgP8Ec-0-WO=65Sdzh0ASwsMqvMP-HUnZ0Q7sjLg-YQ@mail.gmail.com>
+Subject: Re: [PATCH v6 RESEND 4/4] arm64: dts: qcom: aim300: add AIM300 AIoT
 To: Tengfei Fan <quic_tengfan@quicinc.com>
 Cc: andersson@kernel.org, konrad.dybcio@linaro.org, robh@kernel.org, 
 	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, keescook@chromium.org, 
 	tony.luck@intel.com, gpiccoli@igalia.com, linux-arm-msm@vger.kernel.org, 
 	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-hardening@vger.kernel.org, kernel@quicinc.com
+	linux-hardening@vger.kernel.org, kernel@quicinc.com, 
+	Qiang Yu <quic_qianyu@quicinc.com>, Ziyue Zhang <quic_ziyuzhan@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
 
 On Mon, 1 Apr 2024 at 12:40, Tengfei Fan <quic_tengfan@quicinc.com> wrote:
 >
-> QCS8550 is derived from SM8550. The differnece between SM8550 and
-> QCS8550 is QCS8550 doesn't have modem RF system. QCS8550 is mainly used
-> in IoT scenarios.
-> QCS8550 firmware has different memory map with SM8550 firmware. The
-> memory map will be runtime added through bootloader.
-> There are 3 types of reserved memory regions here:
-> 1. Firmware related regions which aren't shared with kernel.
->     The device tree source in kernel doesn't need to have node to indicate
-> the firmware related reserved information. OS bootloader conveys the
-> information by update device tree in runtime.
->     This will be described as: UEFI saves the physical address of the
-> UEFI System Table to dts file's chosen node. Kernel read this table and
-> add reserved memory regions to efi config table. Current reserved memory
-> region may have reserved region which was not yet used, release note of
-> the firmware have such kind of information.
-> 2. Firmware related memory regions which are shared with Kernel
->     Each region has a specific node with specific label name for later
-> phandle reference from other driver dt node.
-> 3. PIL regions.
->     PIL regions will be reserved and then assigned to subsystem firmware
-> later.
-> Here is a reserved memory map for this platform:
-> 0x100000000 +------------------+
->             |                  |
->             | Firmware Related |
->             |                  |
->  0xd4d00000 +------------------+
->             |                  |
->             | Kernel Available |
->             |                  |
->  0xa7000000 +------------------+
->             |                  |
->             |    PIL Region    |
->             |                  |
->  0x8a800000 +------------------+
->             |                  |
->             | Firmware Related |
->             |                  |
->  0x80000000 +------------------+
-> Note that:
-> 0xa7000000..0xA8000000 is used by bootloader, when kernel boot up,
-> it is available for kernel usage. This region is not suggested to be
-> used by kernel features like ramoops, suspend resume etc.
+> Add AIM300 AIoT Carrier board DTS support, including usb, UART, PCIe,
+> I2C functions support.
+> Here is a diagram of AIM300 AIoT Carrie Board and SoM
+>  +--------------------------------------------------+
+>  |             AIM300 AIOT Carrie Board             |
+>  |                                                  |
+>  |           +-----------------+                    |
+>  |power----->| Fixed regulator |---------+          |
+>  |           +-----------------+         |          |
+>  |                                       |          |
+>  |                                       v VPH_PWR  |
+>  | +----------------------------------------------+ |
+>  | |                          AIM300 SOM |        | |
+>  | |                                     |VPH_PWR | |
+>  | |                                     v        | |
+>  | |   +-------+       +--------+     +------+    | |
+>  | |   | UFS   |       | QCS8550|     |PMIC  |    | |
+>  | |   +-------+       +--------+     +------+    | |
+>  | |                                              | |
+>  | +----------------------------------------------+ |
+>  |                                                  |
+>  |                    +----+          +------+      |
+>  |                    |USB |          | UART |      |
+>  |                    +----+          +------+      |
+>  +--------------------------------------------------+
 >
+> Co-developed-by: Qiang Yu <quic_qianyu@quicinc.com>
+> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> Co-developed-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
 > Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/qcs8550.dtsi | 169 ++++++++++++++++++++++++++
->  1 file changed, 169 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/qcs8550.dtsi
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-Minor nit below.
-
+>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>  .../boot/dts/qcom/qcs8550-aim300-aiot.dts     | 384 ++++++++++++++++++
+>  2 files changed, 385 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dts
 >
-> diff --git a/arch/arm64/boot/dts/qcom/qcs8550.dtsi b/arch/arm64/boot/dts/qcom/qcs8550.dtsi
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 7d40ec5e7d21..02d9bc3bfce7 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -96,6 +96,7 @@ dtb-$(CONFIG_ARCH_QCOM)       += qcm6490-idp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += qcs404-evb-1000.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += qcs404-evb-4000.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += qcs6490-rb3gen2.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)        += qcs8550-aim300-aiot.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += qdu1000-idp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += qrb2210-rb1.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += qrb4210-rb2.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dts b/arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dts
 > new file mode 100644
-> index 000000000000..a3ebf3d4e16d
+> index 000000000000..8188766c3d84
 > --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/qcs8550.dtsi
-> @@ -0,0 +1,169 @@
+> +++ b/arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dts
+> @@ -0,0 +1,384 @@
 > +// SPDX-License-Identifier: BSD-3-Clause
 > +/*
 > + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
 > + */
 > +
-> +#include "sm8550.dtsi"
+> +/dts-v1/;
 > +
-> +/delete-node/ &reserved_memory;
+> +#include <dt-bindings/leds/common.h>
+> +#include "qcs8550-aim300.dtsi"
+> +#include "pm8010.dtsi"
+> +#include "pmr735d_a.dtsi"
+> +#include "pmr735d_b.dtsi"
 > +
 > +/ {
-> +       reserved_memory: reserved-memory {
-> +               #address-cells = <2>;
-> +               #size-cells = <2>;
-> +               ranges;
+> +       model = "Qualcomm Technologies, Inc. QCS8550 AIM300 AIOT";
+> +       compatible = "qcom,qcs8550-aim300-aiot", "qcom,qcs8550-aim300", "qcom,qcs8550",
+> +                    "qcom,sm8550";
 > +
+> +       aliases {
+> +               serial0 = &uart7;
+> +       };
 > +
-> +               /* These are 3 types of reserved memory regions here:
-> +                * 1. Firmware related regions which aren't shared with kernel.
-> +                *     The device tree source in kernel doesn't need to have node to
-> +                * indicate the firmware related reserved information. OS bootloader
-> +                * conveys the information by update device tree in runtime.
-> +                *     This will be described as: UEFI saves the physical address of
-> +                * the UEFI System Table to dts file's chosen node. Kernel read this
-> +                * table and add reserved memory regions to efi config table. Current
-> +                * reserved memory region may have reserved region which was not yet
-> +                * used, release note of the firmware have such kind of information.
-> +                * 2. Firmware related memory regions which are shared with Kernel.
-> +                *     Each region has a specific node with specific label name for
-> +                * later phandle reference from other driver dt node.
-> +                * 3. PIL regions.
-> +                *     PIL regions will be reserved and then assigned to subsystem
-> +                * firmware later.
-> +                * Here is a reserved memory map for this platform:
-> +                * 0x100000000 +------------------+
-> +                *             |                  |
-> +                *             | Firmware Related |
-> +                *             |                  |
-> +                *  0xd4d00000 +------------------+
-> +                *             |                  |
-> +                *             | Kernel Available |
-> +                *             |                  |
-> +                *  0xa7000000 +------------------+
-> +                *             |                  |
-> +                *             |    PIL Region    |
-> +                *             |                  |
-> +                *  0x8a800000 +------------------+
-> +                *             |                  |
-> +                *             | Firmware Related |
-> +                *             |                  |
-> +                *  0x80000000 +------------------+
-> +                * Note that:
-> +                * 0xa7000000..0xA8000000 is used by bootloader, when kernel boot up,
-> +                * it is available for kernel usage. This region is not suggested to
-> +                * be used by kernel features like ramoops, suspend resume etc.
-> +                */
+> +       chosen {
+> +               stdout-path = "serial0:115200n8";
+> +       };
 > +
-> +               /*
-> +                * Firmware related regions, bootlader will possible reserve parts of
-> +                * region from 0x80000000..0x8a800000.
-> +                */
-> +               aop_image_mem: aop-image-region@81c00000 {
-> +                       reg = <0x0 0x81c00000 0x0 0x60000>;
-> +                       no-map;
-> +               };
+> +       gpio-keys {
+> +               compatible = "gpio-keys";
 > +
-> +               aop_cmd_db_mem: aop-cmd-db-region@81c60000 {
-> +                       compatible = "qcom,cmd-db";
-> +                       reg = <0x0 0x81c60000 0x0 0x20000>;
-> +                       no-map;
-> +               };
+> +               pinctrl-0 = <&volume_up_n>;
+> +               pinctrl-names = "default";
 > +
-> +               aop_config_mem: aop-config-region@81c80000 {
-> +                       no-map;
-> +                       reg = <0x0 0x81c80000 0x0 0x20000>;
-> +               };
-> +
-> +               smem_mem: smem-region@81d00000 {
-> +                       compatible = "qcom,smem";
-> +                       reg = <0x0 0x81d00000 0x0 0x200000>;
-> +                       hwlocks = <&tcsr_mutex 3>;
-> +                       no-map;
-> +               };
-> +
-> +               adsp_mhi_mem: adsp-mhi-region@81f00000 {
-> +                       reg = <0x0 0x81f00000 0x0 0x20000>;
-> +                       no-map;
-> +               };
-> +
-> +               /* PIL region */
-> +               mpss_mem: mpss-region@8a800000 {
-> +                       reg = <0x0 0x8a800000 0x0 0x10800000>;
-> +                       no-map;
-> +               };
-> +
-> +               q6_mpss_dtb_mem: q6-mpss-dtb-region@9b000000 {
-> +                       reg = <0x0 0x9b000000 0x0 0x80000>;
-> +                       no-map;
-> +               };
-> +
-> +               ipa_fw_mem: ipa-fw-region@9b080000 {
-> +                       reg = <0x0 0x9b080000 0x0 0x10000>;
-> +                       no-map;
-> +               };
-> +
-> +               ipa_gsi_mem: ipa-gsi-region@9b090000 {
-> +                       reg = <0x0 0x9b090000 0x0 0xa000>;
-> +                       no-map;
-> +               };
-> +
-> +               gpu_micro_code_mem: gpu-micro-code-region@9b09a000 {
-> +                       reg = <0x0 0x9b09a000 0x0 0x2000>;
-> +                       no-map;
-> +               };
-> +
-> +               spss_region_mem: spss-region@9b100000 {
-> +                       reg = <0x0 0x9b100000 0x0 0x180000>;
-> +                       no-map;
-> +               };
-> +
-> +               spu_secure_shared_memory_mem: spu-secure-shared-memory-region@9b280000 {
-> +                       reg = <0x0 0x9b280000 0x0 0x80000>;
-> +                       no-map;
-> +               };
-> +
-> +               camera_mem: camera-region@9b300000 {
-> +                       reg = <0x0 0x9b300000 0x0 0x800000>;
-> +                       no-map;
-> +               };
-> +
-> +               video_mem: video-region@9bb00000 {
-> +                       reg = <0x0 0x9bb00000 0x0 0x700000>;
-> +                       no-map;
-> +               };
-> +
-> +               cvp_mem: cvp-region@9c200000 {
-> +                       reg = <0x0 0x9c200000 0x0 0x700000>;
-> +                       no-map;
-> +               };
-> +
-> +               cdsp_mem: cdsp-region@9c900000 {
-> +                       reg = <0x0 0x9c900000 0x0 0x2000000>;
-> +                       no-map;
-> +               };
-> +
-> +               q6_cdsp_dtb_mem: q6-cdsp-dtb-region@9e900000 {
-> +                       reg = <0x0 0x9e900000 0x0 0x80000>;
-> +                       no-map;
-> +               };
-> +
-> +               q6_adsp_dtb_mem: q6-adsp-dtb-region@9e980000 {
-> +                       reg = <0x0 0x9e980000 0x0 0x80000>;
-> +                       no-map;
-> +               };
-> +
-> +               adspslpi_mem: adspslpi-region@9ea00000 {
-> +                       reg = <0x0 0x9ea00000 0x0 0x4080000>;
-> +                       no-map;
-> +               };
-> +
-> +               /*
-> +                * Firmware related regions, bootlader will possible reserve parts of
-
-Nit: bootloader will possibly...
-
-> +                * region from 0xd8000000..0x100000000.
-> +                */
-> +               mpss_dsm_mem: mpss_dsm_region@d4d00000 {
-> +                       reg = <0x0 0xd4d00000 0x0 0x3300000>;
-> +                       no-map;
+> +               key-volume-up {
+> +                       label = "Volume Up";
+> +                       debounce-interval = <15>;
+> +                       gpios = <&pm8550_gpios 6 GPIO_ACTIVE_LOW>;
+> +                       linux,code = <KEY_VOLUMEUP>;
+> +                       linux,can-disable;
+> +                       wakeup-source;
 > +               };
 > +       };
+> +
+> +       pmic-glink {
+> +               compatible = "qcom,sm8550-pmic-glink", "qcom,pmic-glink";
+> +               #address-cells = <1>;
+> +               #size-cells = <0>;
+> +               orientation-gpios = <&tlmm 11 GPIO_ACTIVE_HIGH>;
+> +
+> +               connector@0 {
+> +                       compatible = "usb-c-connector";
+> +                       reg = <0>;
+> +                       power-role = "dual";
+> +                       data-role = "dual";
+> +
+> +                       ports {
+> +                               #address-cells = <1>;
+> +                               #size-cells = <0>;
+> +
+> +                               port@0 {
+> +                                       reg = <0>;
+> +
+> +                                       pmic_glink_hs_in: endpoint {
+> +                                               remote-endpoint = <&usb_1_dwc3_hs>;
+> +                                       };
+> +                               };
+> +
+> +                               port@1 {
+> +                                       reg = <1>;
+> +
+> +                                       pmic_glink_ss_in: endpoint {
+> +                                               remote-endpoint = <&redriver_ss_out>;
+> +                                       };
+> +                               };
+> +
+> +                               port@2 {
+> +                                       reg = <2>;
+> +
+> +                                       pmic_glink_sbu: endpoint {
+> +                                               remote-endpoint = <&fsa4480_sbu_mux>;
+> +                                       };
+> +                               };
+> +                       };
+> +               };
+> +       };
+> +
+> +       vph_pwr: regulator-vph-pwr {
+> +               compatible = "regulator-fixed";
+> +               regulator-name = "vph_pwr";
+> +               regulator-min-microvolt = <3700000>;
+> +               regulator-max-microvolt = <3700000>;
+> +
+> +               regulator-always-on;
+> +               regulator-boot-on;
+> +       };
+> +};
+> +
+> +&apps_rsc {
+> +       regulators-0 {
+> +               vdd-bob1-supply = <&vph_pwr>;
+> +               vdd-bob2-supply = <&vph_pwr>;
+> +       };
+> +
+> +       regulators-3 {
+> +               vdd-s4-supply = <&vph_pwr>;
+> +               vdd-s5-supply = <&vph_pwr>;
+> +       };
+> +
+> +       regulators-4 {
+> +               vdd-s4-supply = <&vph_pwr>;
+> +       };
+> +
+> +       regulators-5 {
+> +               vdd-s1-supply = <&vph_pwr>;
+> +               vdd-s2-supply = <&vph_pwr>;
+> +               vdd-s3-supply = <&vph_pwr>;
+> +               vdd-s4-supply = <&vph_pwr>;
+> +               vdd-s5-supply = <&vph_pwr>;
+> +               vdd-s6-supply = <&vph_pwr>;
+> +       };
+> +};
+> +
+> +&i2c_hub_2 {
+> +       status = "okay";
+> +
+> +       typec-mux@42 {
+> +               compatible = "fcs,fsa4480";
+> +               reg = <0x42>;
+> +
+> +               vcc-supply = <&vreg_bob1>;
+> +
+> +               mode-switch;
+> +               orientation-switch;
+> +
+> +               port {
+> +                       fsa4480_sbu_mux: endpoint {
+> +                               remote-endpoint = <&pmic_glink_sbu>;
+> +                       };
+> +               };
+> +       };
+> +
+> +       typec-retimer@1c {
+> +               compatible = "onnn,nb7vpq904m";
+> +               reg = <0x1c>;
+> +
+> +               vcc-supply = <&vreg_l15b_1p8>;
+> +
+> +               orientation-switch;
+> +               retimer-switch;
+> +
+> +               ports {
+> +                       #address-cells = <1>;
+> +                       #size-cells = <0>;
+> +
+> +                       port@0 {
+> +                               reg = <0>;
+> +
+> +                               redriver_ss_out: endpoint {
+> +                                       remote-endpoint = <&pmic_glink_ss_in>;
+> +                               };
+> +                       };
+> +
+> +                       port@1 {
+> +                               reg = <1>;
+> +
+> +                               redriver_ss_in: endpoint {
+> +                                       data-lanes = <3 2 1 0>;
+> +                                       remote-endpoint = <&usb_dp_qmpphy_out>;
+> +                               };
+> +                       };
+> +               };
+> +       };
+> +};
+> +
+> +&mdss_dsi0 {
+> +       vdda-supply = <&vreg_l3e_1p2>;
+
+Is this wired on the carrier board or on the AIC300 SoM?
+
+> +       status = "okay";
+> +
+> +       panel@0 {
+> +               compatible = "visionox,vtdr6130";
+> +               reg = <0>;
+> +
+> +               pinctrl-0 = <&dsi_active>, <&te_active>;
+> +               pinctrl-1 = <&dsi_suspend>, <&te_suspend>;
+> +               pinctrl-names = "default", "sleep";
+> +
+> +               reset-gpios = <&tlmm 133 GPIO_ACTIVE_LOW>;
+> +
+> +               vci-supply = <&vreg_l13b_3p0>;
+> +               vdd-supply = <&vreg_l11b_1p2>;
+> +               vddio-supply = <&vreg_l12b_1p8>;
+> +
+> +               port {
+> +                       panel0_in: endpoint {
+> +                               remote-endpoint = <&mdss_dsi0_out>;
+> +                       };
+> +               };
+> +       };
+> +};
+> +
+> +&mdss_dsi0_out {
+> +       remote-endpoint = <&panel0_in>;
+> +       data-lanes = <0 1 2 3>;
+> +};
+> +
+> +&mdss_dsi0_phy {
+> +       vdds-supply = <&vreg_l1e_0p88>;
+
+This too
+
+> +       status = "okay";
+> +};
+> +
+> +&pcie0 {
+> +       perst-gpios = <&tlmm 94 GPIO_ACTIVE_LOW>;
+> +       wake-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
+
+And this
+
+> +
+> +       pinctrl-0 = <&pcie0_default_state>;
+> +       pinctrl-names = "default";
+> +
+> +       status = "okay";
+> +};
+> +
+> +&pcie0_phy {
+> +       vdda-phy-supply = <&vreg_l1e_0p88>;
+> +       vdda-pll-supply = <&vreg_l3e_1p2>;
+
+You guess the question. I think I'll stop here. Please review your
+changes here, which are really specific to the carrier board and which
+apply to the SoM.
+
+> +
+> +       status = "okay";
+> +};
+> +
+> +&pcie_1_phy_aux_clk {
+> +       clock-frequency = <1000>;
+> +};
+> +
+> +&pcie1 {
+> +       perst-gpios = <&tlmm 97 GPIO_ACTIVE_LOW>;
+> +       wake-gpios = <&tlmm 99 GPIO_ACTIVE_HIGH>;
+> +
+> +       pinctrl-0 = <&pcie1_default_state>;
+> +       pinctrl-names = "default";
+> +
+> +       status = "okay";
+> +};
+> +
+> +&pcie1_phy {
+> +       vdda-phy-supply = <&vreg_l3c_0p9>;
+> +       vdda-pll-supply = <&vreg_l3e_1p2>;
+> +       vdda-qref-supply = <&vreg_l1e_0p88>;
+> +
+> +       status = "okay";
+> +};
+> +
+> +&pm8550_gpios {
+> +       volume_up_n: volume-up-n-state {
+> +               pins = "gpio6";
+> +               function = "normal";
+> +               power-source = <1>;
+> +               bias-pull-up;
+> +               input-enable;
+> +       };
+> +};
+> +
+> +&pm8550b_eusb2_repeater {
+> +       vdd18-supply = <&vreg_l15b_1p8>;
+> +       vdd3-supply = <&vreg_l5b_3p1>;
+> +};
+> +
+> +
+> +&pon_pwrkey {
+> +       status = "okay";
+> +};
+> +
+> +&pon_resin {
+> +       linux,code = <KEY_VOLUMEDOWN>;
+> +
+> +       status = "okay";
+> +};
+> +
+> +&qupv3_id_0 {
+> +       status = "okay";
+> +};
+> +
+> +&remoteproc_adsp {
+> +       firmware-name = "qcom/qcs8550/adsp.mbn",
+> +                       "qcom/qcs8550/adsp_dtbs.elf";
+> +       status = "okay";
+> +};
+> +
+> +&remoteproc_cdsp {
+> +       firmware-name = "qcom/qcs8550/cdsp.mbn",
+> +                       "qcom/qcs8550/cdsp_dtbs.elf";
+> +       status = "okay";
+> +};
+> +
+> +&sleep_clk {
+> +       clock-frequency = <32000>;
+> +};
+> +
+> +&swr1 {
+> +       status = "okay";
+> +};
+> +
+> +&swr2 {
+> +       status = "okay";
+> +};
+> +
+> +&tlmm {
+> +       gpio-reserved-ranges = <32 8>;
+> +
+> +       dsi_active: dsi-active-state {
+> +               pins = "gpio133";
+> +               function = "gpio";
+> +               drive-strength = <8>;
+> +               bias-disable;
+> +       };
+> +
+> +       dsi_suspend: dsi-suspend-state {
+> +               pins = "gpio133";
+> +               function = "gpio";
+> +               drive-strength = <2>;
+> +               bias-pull-down;
+> +       };
+> +
+> +       te_active: te-active-state {
+> +               pins = "gpio86";
+> +               function = "mdp_vsync";
+> +               drive-strength = <2>;
+> +               bias-pull-down;
+> +       };
+> +
+> +       te_suspend: te-suspend-state {
+> +               pins = "gpio86";
+> +               function = "mdp_vsync";
+> +               drive-strength = <2>;
+> +               bias-pull-down;
+> +       };
+> +};
+> +
+> +&uart7 {
+> +       status = "okay";
+> +};
+> +
+> +&usb_1 {
+> +       status = "okay";
+> +};
+> +
+> +&usb_1_dwc3 {
+> +       dr_mode = "otg";
+> +       usb-role-switch;
+> +};
+> +
+> +&usb_1_dwc3_hs {
+> +       remote-endpoint = <&pmic_glink_hs_in>;
+> +};
+> +
+> +&usb_1_dwc3_ss {
+> +       remote-endpoint = <&usb_dp_qmpphy_usb_ss_in>;
+> +};
+> +
+> +&usb_1_hsphy {
+> +       phys = <&pm8550b_eusb2_repeater>;
+> +
+> +       vdd-supply = <&vreg_l1e_0p88>;
+> +       vdda12-supply = <&vreg_l3e_1p2>;
+> +
+> +       status = "okay";
+> +};
+> +
+> +&usb_dp_qmpphy {
+> +       vdda-phy-supply = <&vreg_l3e_1p2>;
+> +       vdda-pll-supply = <&vreg_l3f_0p88>;
+> +
+> +       orientation-switch;
+> +
+> +       status = "okay";
+> +};
+> +
+> +&usb_dp_qmpphy_out {
+> +       remote-endpoint = <&redriver_ss_in>;
+> +};
+> +
+> +&usb_dp_qmpphy_usb_ss_in {
+> +       remote-endpoint = <&usb_1_dwc3_ss>;
+> +};
+> +
+> +&xo_board {
+> +       clock-frequency = <76800000>;
 > +};
 > --
 > 2.25.1
