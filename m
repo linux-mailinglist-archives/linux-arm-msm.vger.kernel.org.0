@@ -1,264 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-15957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6AA638940CF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 18:34:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 714B78940F6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 18:36:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BAE78B20D80
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 16:34:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2C544282EA3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 16:36:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0FA3481BF;
-	Mon,  1 Apr 2024 16:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C299147A6B;
+	Mon,  1 Apr 2024 16:36:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bxqpg31C"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YPKIna4O"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 168DE38DD8
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Apr 2024 16:34:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9300238DD8;
+	Mon,  1 Apr 2024 16:36:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989275; cv=none; b=AsPkeAKlAzCEgdN3nQW1z4BljcI/3IDUg6NEoUdgrE3tUPR9lMM9lmXCYgnviJsT2tx9b/D5eShOsj7XCZ0Kiqk1jWkcJLOHeUoqgZQZ3aPOYm/8lfVLwin+3cV6Dt5unJ/TZfURMCB/N0VuDObz+4Rclpnx9PigXWWqzyqiczw=
+	t=1711989375; cv=none; b=selG8RkBbesRdaSeTmGQ62nHOQtYgKth6rih5K7nqHj1O132KkgdLMDZRmf8hLk7C7NCYiwuRudjFMDA78xype5OLmEuODDnZeyGsjhQWja951FYWfRwyUj2/eThy1wSFzwZ5Hz4exRcZGyFr+mqFkGdiCHx0JM2/FKEhu3o3B4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989275; c=relaxed/simple;
-	bh=eUPutGowJt1raeqUkz6idfgAosZAe5YLjWw+N/1N10g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S3jD7KkOdFVu6hLBtic2FMpBbY3DkLttIleHvUG37KO4YS0XcGYvPn1kSl/SLLQnvQkIvFWZ1v97T+C+nVK1vPbKGzDiiGTv7hatGw4Apjkr58yrc3gbTXXJ+ve8Q3VUz9iOzbdGeCeMWHCAieqB5IIgXBYm8TkY1mnpmfDUOEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bxqpg31C; arc=none smtp.client-ip=209.85.215.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-5cfd95130c6so2469875a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Apr 2024 09:34:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1711989273; x=1712594073; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=i2QERqZP+UE+1W3A6WXtVWjA32ukQFrW4fDp6eX7jZw=;
-        b=bxqpg31C2OxKkPqaebkA0fvf8FjLCJp6ClblIGHP/VQ4BYAYfwHd52QlOdRNbDXdHd
-         QcqWR5L/C3gRu6+hMsJxenLzZfrYy+GK6VZGqrtIZkZ7T8B1wtpjy9G9x+Z0QzSGNE4A
-         /0Bz10lrQB4Ohs+wKiXNmyBEP39exGc1tFBvkO96tk9BEYx/7jViMgDuCrCON4KFpCmO
-         j2bvQWBEgV8fvw3EYb4w1uByYsBjCJFZixsfZNoVfF95r8JClCNL1koAYoQMyO+P/zm0
-         xCSuXgc5q4cN1dHUEyTVJtD/LHucOXYg0/IpErWFj0d1at9VXLVMQIvUVNr/Gokgmoft
-         mQmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711989273; x=1712594073;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=i2QERqZP+UE+1W3A6WXtVWjA32ukQFrW4fDp6eX7jZw=;
-        b=TJ0Wyd0GEP5hPS8Lj4tThEkjr3ExZQ9VVFL2oc4BKsscpIWwnWzpfrxTrAcPqtxlcv
-         m/QXv4NZUOXVBrJ3sEAAOhMOjKVjbWdY1CiI9SwT4bgqsW2W1hN4ItueMoKGNGu2datJ
-         NWJ4oNA44PX4ju9/aMwNKaH7hPZVfkgj0Lc1r8E8MAaMBy1NJud1QtZCQyo+1zc6xl4V
-         V7juQXsKe3oIGkkh7p2X4SLoWmDY+ptp+ULxgHZyrcAeVlS7/2EP+lfKThjlGB1yzWoo
-         Q8vWAfGLtBwQg+8wLd600CSDOsi92P8bSfGwRE5jBCxyi6TpULyxWAqzMcz4usRzB1wN
-         9zOA==
-X-Forwarded-Encrypted: i=1; AJvYcCU5+FKmlT93Y7uqV6JCsJCzY2qRIoD+fWAS3LZk/UkQMnJakYMaSYsc1yUWqurOEyf8tNTqcfSi848F7xZTcWWBJPpT5lFf+34YAGut7g==
-X-Gm-Message-State: AOJu0YwT2wBvN+scXBHgcjpy8P/p8zK6HXqvFsCaQqXMre/rDVg6kOk/
-	eWn0KYK57mo6bjpNguKJ2c2rsI8H7xNG6PpU8ulG+8xV1L+XCsc+nU+Reo/B6A==
-X-Google-Smtp-Source: AGHT+IGPBBm1aqeryFso3Y2gTgKOchg5T7HwYiw0HyVJxMXg8KVXD+JO1JrIl2N8hldsrCGX2zz+cQ==
-X-Received: by 2002:a05:6a21:9212:b0:1a3:e4fe:f6f1 with SMTP id tl18-20020a056a21921200b001a3e4fef6f1mr9223908pzb.58.1711989273083;
-        Mon, 01 Apr 2024 09:34:33 -0700 (PDT)
-Received: from thinkpad ([103.246.195.48])
-        by smtp.gmail.com with ESMTPSA id m7-20020a170902bb8700b001e0573bbbbdsm9068595pls.218.2024.04.01.09.34.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Apr 2024 09:34:32 -0700 (PDT)
-Date: Mon, 1 Apr 2024 22:04:27 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Niklas Cassel <cassel@kernel.org>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
-	linux-tegra@vger.kernel.org
-Subject: Re: [PATCH 07/11] PCI: dwc: ep: Add a generic dw_pcie_ep_linkdown()
- API to handle Link Down event
-Message-ID: <20240401163427.GA2547@thinkpad>
-References: <20240314-pci-epf-rework-v1-0-6134e6c1d491@linaro.org>
- <20240314-pci-epf-rework-v1-7-6134e6c1d491@linaro.org>
- <ZgRgJsOT_bzXM1wK@ryzen>
+	s=arc-20240116; t=1711989375; c=relaxed/simple;
+	bh=HXLVHGH/TOLiue7tP0Zr/Bd2VZAc8udCE64cFWNoa9c=;
+	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
+	 Message-Id:Subject; b=ndowx6DHDd1iSJqEATh9YB2c1ersxkNFdboN7po+VuR4Db7vMe0aM0aME4ztqcy5VqvvAySE8kfdhD9HkoTBcbLKB/lo6cT1z321TCah6PcqC7pQnC9aawJKs+nZ4exMXAe/vIh244V1alFbz/keik2dXdhcDH9cScSWHubt7Qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YPKIna4O; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7B9C43390;
+	Mon,  1 Apr 2024 16:36:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711989374;
+	bh=HXLVHGH/TOLiue7tP0Zr/Bd2VZAc8udCE64cFWNoa9c=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+	b=YPKIna4OjgnRmmdfg4JufsVx4aK8UZ0/BIBbImkXrFC6YZd3TWk3qDb9aMmuSN7UH
+	 GgZgLYaNXuWZgckJ5SV1EOpxdNpiJ3XdXjVOJt6E72j42G+bm3m5sePybgN9z2yGou
+	 oFEw3TKex1CjphyOs+gYPWcFs6m+WxoUcXehgiZi5W2JyfBTQra3qgFdSiw3RlsIqC
+	 +z0liGXrS8IsPgLXgLjo/9rcSXXj0jdZawdfOwCwK5sw+TT4VLDDrGW/Yihn5/fzgr
+	 jKmNplbECvHAz4jOkanHGTVaBjNV5L0fKQlz6XwzISkwEOsyLNvt/KVcPrxdSR6zPB
+	 03DoYmNb2JcMQ==
+Date: Mon, 01 Apr 2024 11:36:13 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZgRgJsOT_bzXM1wK@ryzen>
+From: Rob Herring <robh@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Luca Weiss <luca.weiss@fairphone.com>, Conor Dooley <conor+dt@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20240331-typec-fix-sm8250-v2-0-857acb6bd88e@linaro.org>
+References: <20240331-typec-fix-sm8250-v2-0-857acb6bd88e@linaro.org>
+Message-Id: <171198916314.1093638.15006189720750656914.robh@kernel.org>
+Subject: Re: [PATCH v2 0/7] arm64: dts: qcom: fix description of the Type-C
+ signals
 
-On Wed, Mar 27, 2024 at 07:06:30PM +0100, Niklas Cassel wrote:
-> Hello Mani,
+
+On Sun, 31 Mar 2024 06:48:50 +0300, Dmitry Baryshkov wrote:
+> Rename the HS link between usb-c-connector and the DWC3 USB controller.
+> Add missing graph connection between the QMP PHY and DWC3 USB
+> controller.
 > 
-> On Thu, Mar 14, 2024 at 08:53:46PM +0530, Manivannan Sadhasivam wrote:
-> > As per the PCIe base spec r5.0, section 5.2, Link Down event can happen
-> > under any of the following circumstances:
-> > 
-> > 1. Fundamental/Hot reset
-> > 2. Link disable transmission by upstream component
-> > 3. Moving from L2/L3 to L0
-> > 
-> > In those cases, Link Down causes some non-sticky DWC registers to loose the
-> > state (like REBAR, etc...). So the drivers need to reinitialize them to
-> > function properly once the link comes back again.
-> > 
-> > This is not a problem for drivers supporting PERST# IRQ, since they can
-> > reinitialize the registers in the PERST# IRQ callback. But for the drivers
-> > not supporting PERST#, there is no way they can reinitialize the registers
-> > other than relying on Link Down IRQ received when the link goes down. So
-> > let's add a DWC generic API dw_pcie_ep_linkdown() that reinitializes the
-> > non-sticky registers and also notifies the EPF drivers about link going
-> > down.
-> > 
-> > This API can also be used by the drivers supporting PERST# to handle the
-> > scenario (2) mentioned above.
-> > 
-> > NOTE: For the sake of code organization, move the dw_pcie_ep_linkup()
-> > definition just above dw_pcie_ep_linkdown().
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  drivers/pci/controller/dwc/pcie-designware-ep.c | 93 ++++++++++++++++---------
-> >  drivers/pci/controller/dwc/pcie-designware.h    |  5 ++
-> >  2 files changed, 67 insertions(+), 31 deletions(-)
-> > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-> > index 3893a8c1a11c..5451057ca74b 100644
-> > --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-> > +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-> > @@ -14,18 +14,6 @@
-> >  #include <linux/pci-epc.h>
-> >  #include <linux/pci-epf.h>
-> >  
-> > -/**
-> > - * dw_pcie_ep_linkup - Notify EPF drivers about link up event
-> > - * @ep: DWC EP device
-> > - */
-> > -void dw_pcie_ep_linkup(struct dw_pcie_ep *ep)
-> > -{
-> > -	struct pci_epc *epc = ep->epc;
-> > -
-> > -	pci_epc_linkup(epc);
-> > -}
-> > -EXPORT_SYMBOL_GPL(dw_pcie_ep_linkup);
-> > -
-> >  /**
-> >   * dw_pcie_ep_init_notify - Notify EPF drivers about EPC initialization
-> >   *			    complete
-> > @@ -672,6 +660,29 @@ static unsigned int dw_pcie_ep_find_ext_capability(struct dw_pcie *pci, int cap)
-> >  	return 0;
-> >  }
-> >  
-> > +static void dw_pcie_ep_init_non_sticky_registers(struct dw_pcie *pci)
-> > +{
-> > +	unsigned int offset;
-> > +	unsigned int nbars;
-> > +	u32 reg, i;
-> > +
-> > +	offset = dw_pcie_ep_find_ext_capability(pci, PCI_EXT_CAP_ID_REBAR);
-> > +
-> > +	dw_pcie_dbi_ro_wr_en(pci);
-> > +
-> > +	if (offset) {
-> > +		reg = dw_pcie_readl_dbi(pci, offset + PCI_REBAR_CTRL);
-> > +		nbars = (reg & PCI_REBAR_CTRL_NBAR_MASK) >>
-> > +			PCI_REBAR_CTRL_NBAR_SHIFT;
-> > +
-> > +		for (i = 0; i < nbars; i++, offset += PCI_REBAR_CTRL)
-> > +			dw_pcie_writel_dbi(pci, offset + PCI_REBAR_CAP, 0x0);
-> > +	}
-> > +
-> > +	dw_pcie_setup(pci);
-> > +	dw_pcie_dbi_ro_wr_dis(pci);
-> > +}
-> > +
-> >  /**
-> >   * dw_pcie_ep_init_registers - Initialize DWC EP specific registers
-> >   * @ep: DWC EP device
-> > @@ -686,13 +697,11 @@ int dw_pcie_ep_init_registers(struct dw_pcie_ep *ep)
-> >  	struct dw_pcie_ep_func *ep_func;
-> >  	struct device *dev = pci->dev;
-> >  	struct pci_epc *epc = ep->epc;
-> > -	unsigned int offset, ptm_cap_base;
-> > -	unsigned int nbars;
-> > +	u32 ptm_cap_base, reg;
-> >  	u8 hdr_type;
-> >  	u8 func_no;
-> > -	int i, ret;
-> >  	void *addr;
-> > -	u32 reg;
-> > +	int ret;
-> >  
-> >  	hdr_type = dw_pcie_readb_dbi(pci, PCI_HEADER_TYPE) &
-> >  		   PCI_HEADER_TYPE_MASK;
-> > @@ -755,20 +764,8 @@ int dw_pcie_ep_init_registers(struct dw_pcie_ep *ep)
-> >  	if (ep->ops->init)
-> >  		ep->ops->init(ep);
-> >  
-> > -	offset = dw_pcie_ep_find_ext_capability(pci, PCI_EXT_CAP_ID_REBAR);
-> >  	ptm_cap_base = dw_pcie_ep_find_ext_capability(pci, PCI_EXT_CAP_ID_PTM);
-> >  
-> > -	dw_pcie_dbi_ro_wr_en(pci);
-> > -
-> > -	if (offset) {
-> > -		reg = dw_pcie_readl_dbi(pci, offset + PCI_REBAR_CTRL);
-> > -		nbars = (reg & PCI_REBAR_CTRL_NBAR_MASK) >>
-> > -			PCI_REBAR_CTRL_NBAR_SHIFT;
-> > -
-> > -		for (i = 0; i < nbars; i++, offset += PCI_REBAR_CTRL)
-> > -			dw_pcie_writel_dbi(pci, offset + PCI_REBAR_CAP, 0x0);
-> > -	}
-> > -
-> >  	/*
-> >  	 * PTM responder capability can be disabled only after disabling
-> >  	 * PTM root capability.
-> > @@ -785,9 +782,6 @@ int dw_pcie_ep_init_registers(struct dw_pcie_ep *ep)
-> >  		dw_pcie_dbi_ro_wr_dis(pci);
-> >  	}
-> >  
-> > -	dw_pcie_setup(pci);
-> > -	dw_pcie_dbi_ro_wr_dis(pci);
-> > -
+> Reported-by: Luca Weiss <luca.weiss@fairphone.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+> Changes in v2:
+> - Fixed other platforms in addition to sm8250 (Bryan)
+> - Link to v1: https://lore.kernel.org/r/20240322-typec-fix-sm8250-v1-0-1ac22b333ea9@linaro.org
 > 
-> Your previous series had:
+> ---
+> Dmitry Baryshkov (7):
+>       arm64: dts: qcom: sm8250: describe HS signals properly
+>       arm64: dts: qcom: sm8250: add a link between DWC3 and QMP PHY
+>       arm64: dts: qcom: sc8180x: switch USB+DP QMP PHYs to new bindings
+>       arm64: dts: qcom: sc8180x: describe USB signals properly
+>       arm64: dts: qcom: sc8280xp: describe USB signals properly
+>       arm64: dts: qcom: x1e80100: describe USB signals properly
+>       arm64: dts: qcom: sm8150-hdk: rename Type-C HS endpoints
 > 
-> -       dw_pcie_setup(pci);
-> -       dw_pcie_dbi_ro_wr_dis(pci);
-> +       dw_pcie_ep_init_non_sticky_registers(pci);
+>  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts           |   8 +-
+>  .../arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts |  16 +-
+>  arch/arm64/boot/dts/qcom/sc8180x-primus.dts        |  20 +--
+>  arch/arm64/boot/dts/qcom/sc8180x.dtsi              | 164 ++++++++++-----------
+>  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts          |  20 +--
+>  .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts     |  20 +--
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi             |  54 ++++++-
+>  arch/arm64/boot/dts/qcom/sm8150-hdk.dts            |   4 +-
+>  .../boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi  |   8 +-
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi               |  24 ++-
+>  arch/arm64/boot/dts/qcom/x1e80100.dtsi             | 149 ++++++++++++++++++-
+>  11 files changed, 340 insertions(+), 147 deletions(-)
+> ---
+> base-commit: 13ee4a7161b6fd938aef6688ff43b163f6d83e37
+> change-id: 20240322-typec-fix-sm8250-33c47a03a056
 > 
-> Here.
-> I tested this series, but it did not work for me (the Resizable BARs did
-> not get resized) since you removed the call to
-> dw_pcie_ep_init_non_sticky_registers().
+> Best regards,
+> --
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > 
-> By readding the call to dw_pcie_ep_init_non_sticky_registers(),
-> the BARs get Resized again.
 > 
 > 
 
-Ah, looks like rebase has gone bad. Will fix it in v2.
 
-> BTW do you have a git branch with both your series somewhere?
-> (Possibly even rebased on
-> https://lore.kernel.org/linux-pci/20240320113157.322695-1-cassel@kernel.org/T/#t
-> like you suggested in your other mail.)
-> 
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
 
-There it is: https://git.codelinaro.org/manivannan.sadhasivam/linux/-/tree/b4/pci-epf-rework
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
 
-- Mani
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
 
--- 
-மணிவண்ணன் சதாசிவம்
+  pip3 install dtschema --upgrade
+
+
+New warnings running 'make CHECK_DTBS=y qcom/qrb5165-rb5.dtb qcom/sc8180x-lenovo-flex-5g.dtb qcom/sc8180x-primus.dtb qcom/sc8280xp-crd.dtb qcom/sc8280xp-lenovo-thinkpad-x13s.dtb qcom/sm8150-hdk.dtb' for 20240331-typec-fix-sm8250-v2-0-857acb6bd88e@linaro.org:
+
+arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dtb: clock-controller@af00000: clocks: [[41, 0], [42], [95, 1], [95, 2], [99, 1], [99, 2], [125, 0], [125, 1]] is too long
+	from schema $id: http://devicetree.org/schemas/clock/qcom,dispcc-sm8x50.yaml#
+arch/arm64/boot/dts/qcom/sc8180x-primus.dtb: clock-controller@af00000: clocks: [[41, 0], [42], [97, 1], [97, 2], [101, 1], [101, 2], [127, 0], [127, 1]] is too long
+	from schema $id: http://devicetree.org/schemas/clock/qcom,dispcc-sm8x50.yaml#
+
+
+
+
+
 
