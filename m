@@ -1,139 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-15958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 714B78940F6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 18:36:19 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10A21894421
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 19:17:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2C544282EA3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 16:36:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C0D322832B3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 17:17:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C299147A6B;
-	Mon,  1 Apr 2024 16:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62D1D4AEE4;
+	Mon,  1 Apr 2024 17:17:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YPKIna4O"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WvUwOOqr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9300238DD8;
-	Mon,  1 Apr 2024 16:36:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CE08F5C;
+	Mon,  1 Apr 2024 17:17:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989375; cv=none; b=selG8RkBbesRdaSeTmGQ62nHOQtYgKth6rih5K7nqHj1O132KkgdLMDZRmf8hLk7C7NCYiwuRudjFMDA78xype5OLmEuODDnZeyGsjhQWja951FYWfRwyUj2/eThy1wSFzwZ5Hz4exRcZGyFr+mqFkGdiCHx0JM2/FKEhu3o3B4=
+	t=1711991838; cv=none; b=TtcTU822aySpSxZS/V73OdKLOJX1yWZ7gs3JBPAgtKIu72hRofnJJcHyj3tEk+lI11d+a9hdLlbt0lZNBI4vynH61RRN0mIZq8EwmHzuIV/yF6TW7CoOVkLKRazX5o72EMjPvkEPU/l8X6AFfxIgCUOxycNkmgFHHgrhhmPB+yI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989375; c=relaxed/simple;
-	bh=HXLVHGH/TOLiue7tP0Zr/Bd2VZAc8udCE64cFWNoa9c=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=ndowx6DHDd1iSJqEATh9YB2c1ersxkNFdboN7po+VuR4Db7vMe0aM0aME4ztqcy5VqvvAySE8kfdhD9HkoTBcbLKB/lo6cT1z321TCah6PcqC7pQnC9aawJKs+nZ4exMXAe/vIh244V1alFbz/keik2dXdhcDH9cScSWHubt7Qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YPKIna4O; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7B9C43390;
-	Mon,  1 Apr 2024 16:36:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711989374;
-	bh=HXLVHGH/TOLiue7tP0Zr/Bd2VZAc8udCE64cFWNoa9c=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=YPKIna4OjgnRmmdfg4JufsVx4aK8UZ0/BIBbImkXrFC6YZd3TWk3qDb9aMmuSN7UH
-	 GgZgLYaNXuWZgckJ5SV1EOpxdNpiJ3XdXjVOJt6E72j42G+bm3m5sePybgN9z2yGou
-	 oFEw3TKex1CjphyOs+gYPWcFs6m+WxoUcXehgiZi5W2JyfBTQra3qgFdSiw3RlsIqC
-	 +z0liGXrS8IsPgLXgLjo/9rcSXXj0jdZawdfOwCwK5sw+TT4VLDDrGW/Yihn5/fzgr
-	 jKmNplbECvHAz4jOkanHGTVaBjNV5L0fKQlz6XwzISkwEOsyLNvt/KVcPrxdSR6zPB
-	 03DoYmNb2JcMQ==
-Date: Mon, 01 Apr 2024 11:36:13 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1711991838; c=relaxed/simple;
+	bh=Xs8Q6CDyDIOEE03oPZLb/he7FAlRg+HMWx+Axg6xlnY=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=F1Cu+EKCJruAr4u69LDSvLvEnIy9h8ES5MTBhemsItS9v7T+37KD+QgmNYkrt1HySAKQUuPOypVNGYY/8JX1w7TEYVLCC60SbCnYVfaZOOGD1CTIdhWMrgBTvqr4gEwPRQBHsLKpri5QOITl2sD9uiMjK+BYVoY6Q6a8QaTt+HE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WvUwOOqr; arc=none smtp.client-ip=209.85.167.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-516a97b3139so1109840e87.2;
+        Mon, 01 Apr 2024 10:17:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711991834; x=1712596634; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lNGvPCSXiECHoP3UreuKKK40O4Mox4jdXXntNPnjoX4=;
+        b=WvUwOOqrk/iHUMPp61B5LbXc1HoKyPkur0bFy93qvaCz46PmMajb4tiK4iVEzx7vpf
+         LZiX55+3ur4e15Zcc1v6efwnSJDo3gbAPXk+lQRbruGwYiuKYqtfnbuoh0uBZ+tYaU4B
+         eLfDY8N3Kfhcymdes4EZiuV8p8r3Iz+R9KYs1rZwvDaYMuJX2l+lmmXS/FDxERIaDRqm
+         nKSmGmSWH1mOqMTXMr3OJWHmL2AbeBVAG95lFsLuNiDDmNFoEZafsJabKP2cnNEg2HX7
+         XOC3g3bieecVF3+mqU4S+SkCk6j39NTPMYc9fEJJD755GnG45WflIX6h6VuFkwTiGfOv
+         877A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711991834; x=1712596634;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lNGvPCSXiECHoP3UreuKKK40O4Mox4jdXXntNPnjoX4=;
+        b=hEb8cSC96q3RJqbnzjw89KMbQSHMBnXvCo8UPgb5Bm7IsLAd5XCFMv9tVig5S8sHZ5
+         OKXWdfL+aP463YXv9PAmoZ7s6ET/Tb+MNykekrLKp33arrh/LsWP+QNIfEGNGUFiI33z
+         4gBG1GZXhigYOMrNtOn4JNgNCTJueoRYGKgnCoXSR9bEQWBe/zI/c1IFwhW4tPHK9eOp
+         YvVwRaaLbsRgE96njYuihqg1XfzwCEOjHa64S8PYcv0KCdvLhQzHM20Inz0aVDRzIMPn
+         uytnn58vdudhLzIopyNyB9s1E1qbvHFWMYL+P6O0wxuc5icEUwACnQ4RI1CpNwFZjocr
+         RJ1Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWggMF9Dgai4aaeQI8RC366hYqv74JOdlc3KUSFoFKkYz2Az6tIsB612zrHJyPTDa22PSmAIVGnJTrOQrvp3+JO65TXj+Po97fCGwMbOtnP6+hpYBjSzsHOfsrfSRqevb7MGxT/2JVml3yYN5l4m7vmO8PXnOiRh/UvjPNuDAByzsCPCesakw==
+X-Gm-Message-State: AOJu0YzX9Ekvirk/cgTYrbHxoJ0JK/mCI3A3PszO/2IMJtJEeFazPmm4
+	yQ/y27LMFfkZf702dbl/bqwATLG+Ns2Tgz8i0l8qjzENS465xkyYou2L7bLyG0Y=
+X-Google-Smtp-Source: AGHT+IFE1cBOnyqgKEuUC+S8xM0ABqAsAE+UMb9sHziXV/4h3sU6jqH0t2nkLVVigWdzn188zOSSTQ==
+X-Received: by 2002:a05:6512:3711:b0:513:172d:5b46 with SMTP id z17-20020a056512371100b00513172d5b46mr6264509lfr.39.1711991833982;
+        Mon, 01 Apr 2024 10:17:13 -0700 (PDT)
+Received: from localhost.localdomain (ccu40.neoplus.adsl.tpnet.pl. [83.30.144.40])
+        by smtp.gmail.com with ESMTPSA id g4-20020a17090669c400b00a4673706b4dsm5505600ejs.78.2024.04.01.10.17.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Apr 2024 10:17:13 -0700 (PDT)
+From: Adam Skladowski <a39.skl@gmail.com>
+To: 
+Cc: phone-devel@vger.kernel.org,
+	~postmarketos/upstreaming@lists.sr.ht,
+	Adam Skladowski <a39.skl@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Andy Gross <agross@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 1/1] clk: qcom: smd-rpm: Restore msm8976 num_clk
+Date: Mon,  1 Apr 2024 19:16:39 +0200
+Message-Id: <20240401171641.8979-1-a39.skl@gmail.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Luca Weiss <luca.weiss@fairphone.com>, Conor Dooley <conor+dt@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240331-typec-fix-sm8250-v2-0-857acb6bd88e@linaro.org>
-References: <20240331-typec-fix-sm8250-v2-0-857acb6bd88e@linaro.org>
-Message-Id: <171198916314.1093638.15006189720750656914.robh@kernel.org>
-Subject: Re: [PATCH v2 0/7] arm64: dts: qcom: fix description of the Type-C
- signals
+Content-Transfer-Encoding: 8bit
 
+During rework somehow msm8976 num_clk got removed, restore it.
 
-On Sun, 31 Mar 2024 06:48:50 +0300, Dmitry Baryshkov wrote:
-> Rename the HS link between usb-c-connector and the DWC3 USB controller.
-> Add missing graph connection between the QMP PHY and DWC3 USB
-> controller.
-> 
-> Reported-by: Luca Weiss <luca.weiss@fairphone.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-> Changes in v2:
-> - Fixed other platforms in addition to sm8250 (Bryan)
-> - Link to v1: https://lore.kernel.org/r/20240322-typec-fix-sm8250-v1-0-1ac22b333ea9@linaro.org
-> 
-> ---
-> Dmitry Baryshkov (7):
->       arm64: dts: qcom: sm8250: describe HS signals properly
->       arm64: dts: qcom: sm8250: add a link between DWC3 and QMP PHY
->       arm64: dts: qcom: sc8180x: switch USB+DP QMP PHYs to new bindings
->       arm64: dts: qcom: sc8180x: describe USB signals properly
->       arm64: dts: qcom: sc8280xp: describe USB signals properly
->       arm64: dts: qcom: x1e80100: describe USB signals properly
->       arm64: dts: qcom: sm8150-hdk: rename Type-C HS endpoints
-> 
->  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts           |   8 +-
->  .../arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts |  16 +-
->  arch/arm64/boot/dts/qcom/sc8180x-primus.dts        |  20 +--
->  arch/arm64/boot/dts/qcom/sc8180x.dtsi              | 164 ++++++++++-----------
->  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts          |  20 +--
->  .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts     |  20 +--
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi             |  54 ++++++-
->  arch/arm64/boot/dts/qcom/sm8150-hdk.dts            |   4 +-
->  .../boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi  |   8 +-
->  arch/arm64/boot/dts/qcom/sm8250.dtsi               |  24 ++-
->  arch/arm64/boot/dts/qcom/x1e80100.dtsi             | 149 ++++++++++++++++++-
->  11 files changed, 340 insertions(+), 147 deletions(-)
-> ---
-> base-commit: 13ee4a7161b6fd938aef6688ff43b163f6d83e37
-> change-id: 20240322-typec-fix-sm8250-33c47a03a056
-> 
-> Best regards,
-> --
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> 
-> 
+Fixes: d6edc31f3a68 ("clk: qcom: smd-rpm: Separate out interconnect bus clocks")
+Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+---
+ drivers/clk/qcom/clk-smd-rpm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
-
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-New warnings running 'make CHECK_DTBS=y qcom/qrb5165-rb5.dtb qcom/sc8180x-lenovo-flex-5g.dtb qcom/sc8180x-primus.dtb qcom/sc8280xp-crd.dtb qcom/sc8280xp-lenovo-thinkpad-x13s.dtb qcom/sm8150-hdk.dtb' for 20240331-typec-fix-sm8250-v2-0-857acb6bd88e@linaro.org:
-
-arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dtb: clock-controller@af00000: clocks: [[41, 0], [42], [95, 1], [95, 2], [99, 1], [99, 2], [125, 0], [125, 1]] is too long
-	from schema $id: http://devicetree.org/schemas/clock/qcom,dispcc-sm8x50.yaml#
-arch/arm64/boot/dts/qcom/sc8180x-primus.dtb: clock-controller@af00000: clocks: [[41, 0], [42], [97, 1], [97, 2], [101, 1], [101, 2], [127, 0], [127, 1]] is too long
-	from schema $id: http://devicetree.org/schemas/clock/qcom,dispcc-sm8x50.yaml#
-
-
-
-
+diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
+index 8602c02047d0..45c5255bcd11 100644
+--- a/drivers/clk/qcom/clk-smd-rpm.c
++++ b/drivers/clk/qcom/clk-smd-rpm.c
+@@ -768,6 +768,7 @@ static struct clk_smd_rpm *msm8976_clks[] = {
+ 
+ static const struct rpm_smd_clk_desc rpm_clk_msm8976 = {
+ 	.clks = msm8976_clks,
++	.num_clks = ARRAY_SIZE(msm8976_clks),
+ 	.icc_clks = bimc_pcnoc_snoc_smmnoc_icc_clks,
+ 	.num_icc_clks = ARRAY_SIZE(bimc_pcnoc_snoc_smmnoc_icc_clks),
+ };
+-- 
+2.44.0
 
 
