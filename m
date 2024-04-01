@@ -1,176 +1,294 @@
-Return-Path: <linux-arm-msm+bounces-15933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FAAB893A38
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 12:38:25 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 367CC893A4F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 12:49:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 551EA1F22100
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 10:38:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 597EF1C20FDD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 10:49:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58BCB1CA94;
-	Mon,  1 Apr 2024 10:38:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 191751CD25;
+	Mon,  1 Apr 2024 10:49:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="q60fcdFE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [5.144.164.163])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FFBE1CA8F
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Apr 2024 10:38:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.163
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5058C1CA94
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Apr 2024 10:49:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711967903; cv=none; b=hKHKZylxle0XstwVVJ6aeTAgsiBcchQzXeyYxpYhlnxXBzoJnUAFRJnX7PgpC7L+LF1VSrsq0mjNlWxuj5fOtiTK7EOtY92+ofS+X6FjmLxgcY12RcF4+IzbteDNLq0SEt9ualGY7sVcgwfjRM0WdpuhgiPD1soLtY1Ltle1Gxs=
+	t=1711968556; cv=none; b=hjkzuhGpVf1iZy7oWze3KBQUB78j1aDE84mI8GTML0p5g2qDhqVpY3a5TmCu3XXVuqCloJYMWhie56jwKj13Bjt+hLH1FcNpZ+NpABFd1et63ZPZh+rkZ3idE3l5qnao+UsSVhuGYgpMJg5nHHfAivHrEy6+YXnyp06kJHmTiJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711967903; c=relaxed/simple;
-	bh=H7BslMtmEAho3K6c0yYeroJVhCd4s5RKvNp5WXCydPI=;
+	s=arc-20240116; t=1711968556; c=relaxed/simple;
+	bh=QJMJfCdLEuJ+FfMXIfDmDR+++PbMg13/naaZeMO3ZkM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GNHf2gwPBHY5yHkKbOV2ry55TvgluTD/50ERRd2TD4srSmV7/JPp4Nl4TnaEChWIUUBc+KtZoTUWG3ft26IncKqJsMQELLU03iPYOu9e4G/fcEltMMkzS9cYuoxx2OG+f6HLB8UQYIib2mSrVqUeJx+StJPcuRgVrN7OmR9RXsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 57FC01F950;
-	Mon,  1 Apr 2024 12:38:18 +0200 (CEST)
-Date: Mon, 1 Apr 2024 12:38:17 +0200
-From: Marijn Suijten <marijn.suijten@somainline.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Sumit Semwal <sumit.semwal@linaro.org>, 
-	Caleb Connolly <caleb.connolly@linaro.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/3] drm/mipi-dsi: add mipi_dsi_compression_mode_raw()
-Message-ID: <cmevrewvs4ultfn5yeo2yqxt3eo7kpw2bt4sgeoirv7k5oske5@qv2niojixnuy>
-References: <20240330-lg-sw43408-panel-v1-0-f5580fc9f2da@linaro.org>
- <20240330-lg-sw43408-panel-v1-2-f5580fc9f2da@linaro.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=Cm/S1bZicN3582AhOHM8+VIX/GJXhIGkBdAEMCnLhYyrDQlwsM7mNa9Dz60ZSz3lI0/b/Qe6wJKe70hfWVd7ZnPY872QmufeKSePFUM91B6YQsTnOc1tF0aoaYzPeC7pHLKABvU2rvHLNqK8Hfcewg+FnP1CZx4DNJMpWodP1mQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=q60fcdFE; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1e00d1e13a2so24846855ad.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Apr 2024 03:49:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1711968553; x=1712573353; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=tKCS9QdnAwWbuZtYBI4sT1iLB4Tt93btjF36mrIzaXY=;
+        b=q60fcdFEN4aNls9TEmF7ITGr2b9XQR2XAyKsqz4xSEAhGn6afQws0uCalOxuCQm20Q
+         BOuO+rD79N8bosPS0H1mekcXxAlJE5gRKc5ShT9Qo2UZXzn5Fcjn0vj9psT2yn+1ooyH
+         n+nVSUy7u6A47xsRykHLDj+fBxRQn74JEBHSTk7qHDVey/00vvEqcY67FptMghTpATFv
+         AiLBPDs5LcZU7qCq0q9V1Xb/eMfPjIGJu4HKMTeqx1zQu+FXiJ+2Xdve94lS+KeESGar
+         kAwZQ3P8ElobJG5x14x4MMwQcUPI54/RwlPtI82y49cYqGYm0TxCtoH6/cM66R9r1/TR
+         rDJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711968553; x=1712573353;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tKCS9QdnAwWbuZtYBI4sT1iLB4Tt93btjF36mrIzaXY=;
+        b=BBQqWtxZOepFoIGnfDx2b+bMlbs6JdNPtJjKhqpTPlei/fWHrJyhEDLWYUiIjtWSu7
+         ikpNPhICjKg6UjA9z0Cczg5YRNh8KLqDHR1mgxyEmgFjnNgGi0cS6bvqFMg++MGCi89o
+         LGblSZfFCsTUqAM2rhw+vQpSaMKYcK/FhKboWrbR8dP5s6zsRZpgEfBstxteaB7m8owS
+         MCxvGnr+bnTMxIVLODresjeYVABwiYupwVRHfx+oYoclf2ku6FVGmrh8YM7yrvTk8cNx
+         K+4AqFwgn9FHlI//hfey785D1p6FcaPZJLwmNeigNeCuCgYv3bsYbw8k9iPWtx14juCU
+         zuzw==
+X-Forwarded-Encrypted: i=1; AJvYcCWRyx4FWtjMOTDtFjXUh1V8MZ7Ojsne0000BLDfuuzfoqD/3Jk+4oFYPQP1tD5nAI6V6MfatCRzTk7NSHjSH6dRiWh+pLPkVjaycxBPwA==
+X-Gm-Message-State: AOJu0YwyJmWom3AOsQk6mfcLHVsxIh2PS4aurGvhDN5NEczavm2X2OIz
+	TUVShF2cP+0bVPhGM0UupTaNvqj+BRugpsL26gn9uogI/YngN0KZz2lSsbyJpfO64VEgkACeTPs
+	=
+X-Google-Smtp-Source: AGHT+IFF770fgs+yMHKwTIlLL3P039OFnIkWdfZJY4CvGxJUM7y7krgfn19E1tYKv8Gdk6uxTqFDKA==
+X-Received: by 2002:a17:902:e802:b0:1e0:b862:5330 with SMTP id u2-20020a170902e80200b001e0b8625330mr10121788plg.54.1711968553329;
+        Mon, 01 Apr 2024 03:49:13 -0700 (PDT)
+Received: from thinkpad ([103.28.246.102])
+        by smtp.gmail.com with ESMTPSA id u1-20020a170902e5c100b001e0b5eee802sm8552693plf.123.2024.04.01.03.49.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Apr 2024 03:49:12 -0700 (PDT)
+Date: Mon, 1 Apr 2024 16:19:08 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Baochen Qiang <quic_bqiang@quicinc.com>
+Cc: ath11k@lists.infradead.org, linux-wireless@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev,
+	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+	pabeni@redhat.com, netdev@vger.kernel.org
+Subject: Re: [PATCH v7 1/3] bus: mhi: host: add mhi_power_down_keep_dev()
+Message-ID: <20240401104908.GA234427@thinkpad>
+References: <20240305021320.3367-1-quic_bqiang@quicinc.com>
+ <20240305021320.3367-2-quic_bqiang@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240330-lg-sw43408-panel-v1-2-f5580fc9f2da@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240305021320.3367-2-quic_bqiang@quicinc.com>
 
-On 2024-03-30 05:59:29, Dmitry Baryshkov wrote:
-> The LG SW43408 panel requires sending non-standard data as a part of the
-> MIPI_DSI_COMPRESSION_MODE packet. Rather than hacking existing
-> mipi_dsi_compression_mode() add mipi_dsi_compression_mode_raw(), which
-> accepts raw data buffer and length.
+On Tue, Mar 05, 2024 at 10:13:18AM +0800, Baochen Qiang wrote:
+> ath11k fails to resume:
+> 
+> ath11k_pci 0000:06:00.0: timeout while waiting for restart complete
+> 
+> This happens because when calling mhi_sync_power_up() the MHI subsystem
+> eventually calls device_add() from mhi_create_devices() but the device
+> creation is deferred:
+> 
+> mhi mhi0_IPCR: Driver qcom_mhi_qrtr force probe deferral
+> 
+> The reason for deferring device creation is explained in dpm_prepare():
+> 
+>         /*
+>          * It is unsafe if probing of devices will happen during suspend or
+>          * hibernation and system behavior will be unpredictable in this case.
+>          * So, let's prohibit device's probing here and defer their probes
+>          * instead. The normal behavior will be restored in dpm_complete().
+>          */
+> 
+> Because the device probe is deferred, the qcom_mhi_qrtr_probe() is not
+> called and thus MHI channels are not prepared:
+> 
+> So what this means that QRTR is not delivering messages and the QMI connection
+> is not working between ath11k and the firmware, resulting a failure in firmware
+> initialization.
+> 
+> To fix this add new function mhi_power_down_keep_dev() which doesn't destroy
+> the devices for channels during power down. This way we avoid probe defer issue
+> and finally can get ath11k hibernation working with the following patches.
+> 
+> Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
+> 
+> Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
 
-Even though I doubt the usefulness of this _raw() command before further
-understanding the panel and driver (according the the review-followup sent a few
-minutes ago), let me review this a little bit.
+Applied to mhi-next! Note that this patch is also available in mhi-immutable
+branch for ath11k maintainers to pull into their tree.
 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+https://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git/log/?h=mhi-immutable
+
+- Mani
+
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Reviewed-by: Jeff Johnson <quic_jjohnson@quicinc.com>
 > ---
->  drivers/gpu/drm/drm_mipi_dsi.c | 34 ++++++++++++++++++++++++++--------
->  include/drm/drm_mipi_dsi.h     |  1 +
->  2 files changed, 27 insertions(+), 8 deletions(-)
+>  drivers/bus/mhi/host/internal.h |  4 +++-
+>  drivers/bus/mhi/host/pm.c       | 42 ++++++++++++++++++++++++++++-----
+>  include/linux/mhi.h             | 18 +++++++++++++-
+>  3 files changed, 56 insertions(+), 8 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
-> index ef6e416522f8..f340d1e0a9a5 100644
-> --- a/drivers/gpu/drm/drm_mipi_dsi.c
-> +++ b/drivers/gpu/drm/drm_mipi_dsi.c
-> @@ -645,29 +645,47 @@ int mipi_dsi_set_maximum_return_packet_size(struct mipi_dsi_device *dsi,
->  EXPORT_SYMBOL(mipi_dsi_set_maximum_return_packet_size);
+> diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
+> index 5fe49311b8eb..aaad40a07f69 100644
+> --- a/drivers/bus/mhi/host/internal.h
+> +++ b/drivers/bus/mhi/host/internal.h
+> @@ -80,6 +80,7 @@ enum dev_st_transition {
+>  	DEV_ST_TRANSITION_FP,
+>  	DEV_ST_TRANSITION_SYS_ERR,
+>  	DEV_ST_TRANSITION_DISABLE,
+> +	DEV_ST_TRANSITION_DISABLE_DESTROY_DEVICE,
+>  	DEV_ST_TRANSITION_MAX,
+>  };
 >  
->  /**
-> - * mipi_dsi_compression_mode() - enable/disable DSC on the peripheral
-> + * mipi_dsi_compression_mode_raw() - control DSC on the peripheral
->   * @dsi: DSI peripheral device
-> - * @enable: Whether to enable or disable the DSC
-> + * @data: data to be sent to the device
-> + * @len: size of the data buffer
->   *
-> - * Enable or disable Display Stream Compression on the peripheral using the
-> + * Control the Display Stream Compression on the peripheral using the
-
-+ mode?
-
->   * default Picture Parameter Set and VESA DSC 1.1 algorithm.
-
-This is no longer true.  Both the algoritm identifier and "default Picture
-Parameter Set" (which I assume means table *index*!) are described by the
-custom/raw bytes that one is allowed to pass.
-
-In fact, in the SW43408 driver that you reference in the commit message the
-custom data passed to the _raw() function is used to select the second PPS
-table (unless the panel interprets the input data in a non-standard way...), and
-further sets the PPS for the first table only :)
-
->   *
->   * Return: 0 on success or a negative error code on failure.
->   */
-> -ssize_t mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
-> +ssize_t mipi_dsi_compression_mode_raw(struct mipi_dsi_device *dsi, void *data, size_t len)
->  {
-> -	/* Note: Needs updating for non-default PPS or algorithm */
-> -	u8 tx[2] = { enable << 0, 0 };
->  	struct mipi_dsi_msg msg = {
->  		.channel = dsi->channel,
->  		.type = MIPI_DSI_COMPRESSION_MODE,
-> -		.tx_len = sizeof(tx),
-> -		.tx_buf = tx,
-> +		.tx_len = len,
-> +		.tx_buf = data,
->  	};
->  	int ret = mipi_dsi_device_transfer(dsi, &msg);
+> @@ -90,7 +91,8 @@ enum dev_st_transition {
+>  	dev_st_trans(MISSION_MODE,	"MISSION MODE")		\
+>  	dev_st_trans(FP,		"FLASH PROGRAMMER")	\
+>  	dev_st_trans(SYS_ERR,		"SYS ERROR")		\
+> -	dev_st_trans_end(DISABLE,	"DISABLE")
+> +	dev_st_trans(DISABLE,		"DISABLE")		\
+> +	dev_st_trans_end(DISABLE_DESTROY_DEVICE, "DISABLE (DESTROY DEVICE)")
 >  
->  	return (ret < 0) ? ret : 0;
+>  extern const char * const dev_state_tran_str[DEV_ST_TRANSITION_MAX];
+>  #define TO_DEV_STATE_TRANS_STR(state) (((state) >= DEV_ST_TRANSITION_MAX) ? \
+> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+> index 8b40d3f01acc..11c0e751f223 100644
+> --- a/drivers/bus/mhi/host/pm.c
+> +++ b/drivers/bus/mhi/host/pm.c
+> @@ -468,7 +468,8 @@ static int mhi_pm_mission_mode_transition(struct mhi_controller *mhi_cntrl)
 >  }
-> +EXPORT_SYMBOL(mipi_dsi_compression_mode_raw);
+>  
+>  /* Handle shutdown transitions */
+> -static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
+> +static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl,
+> +				      bool destroy_device)
+>  {
+>  	enum mhi_pm_state cur_state;
+>  	struct mhi_event *mhi_event;
+> @@ -530,8 +531,16 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
+>  	dev_dbg(dev, "Waiting for all pending threads to complete\n");
+>  	wake_up_all(&mhi_cntrl->state_event);
+>  
+> -	dev_dbg(dev, "Reset all active channels and remove MHI devices\n");
+> -	device_for_each_child(&mhi_cntrl->mhi_dev->dev, NULL, mhi_destroy_device);
+> +	/*
+> +	 * Only destroy the 'struct device' for channels if indicated by the
+> +	 * 'destroy_device' flag. Because, during system suspend or hibernation
+> +	 * state, there is no need to destroy the 'struct device' as the endpoint
+> +	 * device would still be physically attached to the machine.
+> +	 */
+> +	if (destroy_device) {
+> +		dev_dbg(dev, "Reset all active channels and remove MHI devices\n");
+> +		device_for_each_child(&mhi_cntrl->mhi_dev->dev, NULL, mhi_destroy_device);
+> +	}
+>  
+>  	mutex_lock(&mhi_cntrl->pm_mutex);
+>  
+> @@ -821,7 +830,10 @@ void mhi_pm_st_worker(struct work_struct *work)
+>  			mhi_pm_sys_error_transition(mhi_cntrl);
+>  			break;
+>  		case DEV_ST_TRANSITION_DISABLE:
+> -			mhi_pm_disable_transition(mhi_cntrl);
+> +			mhi_pm_disable_transition(mhi_cntrl, false);
+> +			break;
+> +		case DEV_ST_TRANSITION_DISABLE_DESTROY_DEVICE:
+> +			mhi_pm_disable_transition(mhi_cntrl, true);
+>  			break;
+>  		default:
+>  			break;
+> @@ -1175,7 +1187,8 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
+>  }
+>  EXPORT_SYMBOL_GPL(mhi_async_power_up);
+>  
+> -void mhi_power_down(struct mhi_controller *mhi_cntrl, bool graceful)
+> +static void __mhi_power_down(struct mhi_controller *mhi_cntrl, bool graceful,
+> +			     bool destroy_device)
+>  {
+>  	enum mhi_pm_state cur_state, transition_state;
+>  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> @@ -1211,15 +1224,32 @@ void mhi_power_down(struct mhi_controller *mhi_cntrl, bool graceful)
+>  	write_unlock_irq(&mhi_cntrl->pm_lock);
+>  	mutex_unlock(&mhi_cntrl->pm_mutex);
+>  
+> -	mhi_queue_state_transition(mhi_cntrl, DEV_ST_TRANSITION_DISABLE);
+> +	if (destroy_device)
+> +		mhi_queue_state_transition(mhi_cntrl,
+> +					   DEV_ST_TRANSITION_DISABLE_DESTROY_DEVICE);
+> +	else
+> +		mhi_queue_state_transition(mhi_cntrl,
+> +					   DEV_ST_TRANSITION_DISABLE);
+>  
+>  	/* Wait for shutdown to complete */
+>  	flush_work(&mhi_cntrl->st_worker);
+>  
+>  	disable_irq(mhi_cntrl->irq[0]);
+>  }
 > +
-> +/**
-> + * mipi_dsi_compression_mode() - enable/disable DSC on the peripheral
-> + * @dsi: DSI peripheral device
-> + * @enable: Whether to enable or disable the DSC
-> + *
-> + * Enable or disable Display Stream Compression on the peripheral using the
-> + * default Picture Parameter Set and VESA DSC 1.1 algorithm.
-
-And while fixing this up, let's make it clear that this doesn't change the
-PPS, just the *index* of which PPS to use (the PPS is updated with a different
-command).
-
-- Marijn
-
-> + *
-> + * Return: 0 on success or a negative error code on failure.
-> + */
-> +ssize_t mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
+> +void mhi_power_down(struct mhi_controller *mhi_cntrl, bool graceful)
 > +{
-> +	/* Note: Needs updating for non-default PPS or algorithm */
-> +	u8 tx[2] = { enable << 0, 0 };
-> +
-> +	return mipi_dsi_compression_mode_raw(dsi, tx, sizeof(tx));
+> +	__mhi_power_down(mhi_cntrl, graceful, true);
 > +}
->  EXPORT_SYMBOL(mipi_dsi_compression_mode);
+>  EXPORT_SYMBOL_GPL(mhi_power_down);
+>  
+> +void mhi_power_down_keep_dev(struct mhi_controller *mhi_cntrl,
+> +			       bool graceful)
+> +{
+> +	__mhi_power_down(mhi_cntrl, graceful, false);
+> +}
+> +EXPORT_SYMBOL_GPL(mhi_power_down_keep_dev);
+> +
+>  int mhi_sync_power_up(struct mhi_controller *mhi_cntrl)
+>  {
+>  	int ret = mhi_async_power_up(mhi_cntrl);
+> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> index 77b8c0a26674..cde01e133a1b 100644
+> --- a/include/linux/mhi.h
+> +++ b/include/linux/mhi.h
+> @@ -630,12 +630,28 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl);
+>  int mhi_sync_power_up(struct mhi_controller *mhi_cntrl);
 >  
 >  /**
-> diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
-> index c0aec0d4d664..321d2b019687 100644
-> --- a/include/drm/drm_mipi_dsi.h
-> +++ b/include/drm/drm_mipi_dsi.h
-> @@ -242,6 +242,7 @@ int mipi_dsi_turn_on_peripheral(struct mipi_dsi_device *dsi);
->  int mipi_dsi_set_maximum_return_packet_size(struct mipi_dsi_device *dsi,
->  					    u16 value);
->  ssize_t mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable);
-> +ssize_t mipi_dsi_compression_mode_raw(struct mipi_dsi_device *dsi, void *data, size_t len);
->  ssize_t mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
->  				       const struct drm_dsc_picture_parameter_set *pps);
+> - * mhi_power_down - Start MHI power down sequence
+> + * mhi_power_down - Power down the MHI device and also destroy the
+> + *                  'struct device' for the channels associated with it.
+> + *                  See also mhi_power_down_keep_dev() which is a variant
+> + *                  of this API that keeps the 'struct device' for channels
+> + *                  (useful during suspend/hibernation).
+>   * @mhi_cntrl: MHI controller
+>   * @graceful: Link is still accessible, so do a graceful shutdown process
+>   */
+>  void mhi_power_down(struct mhi_controller *mhi_cntrl, bool graceful);
 >  
-> 
+> +/**
+> + * mhi_power_down_keep_dev - Power down the MHI device but keep the 'struct
+> + *                           device' for the channels associated with it.
+> + *                           This is a variant of 'mhi_power_down()' and
+> + *                           useful in scenarios such as suspend/hibernation
+> + *                           where destroying of the 'struct device' is not
+> + *                           needed.
+> + * @mhi_cntrl: MHI controller
+> + * @graceful: Link is still accessible, so do a graceful shutdown process
+> + */
+> +void mhi_power_down_keep_dev(struct mhi_controller *mhi_cntrl, bool graceful);
+> +
+>  /**
+>   * mhi_unprepare_after_power_down - Free any allocated memory after power down
+>   * @mhi_cntrl: MHI controller
 > -- 
-> 2.39.2
+> 2.25.1
 > 
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
