@@ -1,139 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-15966-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15968-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 692F18944BA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 20:23:20 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2CF708944FD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 20:48:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 89DB01C21206
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 18:23:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DC13B281EA6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 18:48:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65DDA50255;
-	Mon,  1 Apr 2024 18:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 507DA446DB;
+	Mon,  1 Apr 2024 18:48:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="IqKeWSgv";
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="qkOvFeZg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ncyYBgv0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fallback21.i.mail.ru (fallback21.i.mail.ru [79.137.243.75])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E6944EB24;
-	Mon,  1 Apr 2024 18:23:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.75
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8B342056
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Apr 2024 18:48:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711995791; cv=none; b=hvv0V+rYJnq/hvCCiZMg2HEGs/MQrqaFa6rYhiNt+PwcMwwp2EUbtM6NwpX2dv1pE/n7fM+jU23qI0Ncqgw/JJ/0q3hpbSwtDXlinh8OEOQHlTuRiD0oAkan9Bh5GB17qLR9z29aqEF2IR33ld16aszF4zctDoVxChEHKuF/z/0=
+	t=1711997332; cv=none; b=EuGgE+f4cxx216UKdYZ+aQFS4Sj/pf+IxiIDBcjZMS6Br+afT5yPL9Jx5YZd0EzRdZ6MeJULsfzLY6cEiP6FEafjASVzf9g/C+vchm76Nc+NldkNoYt69uF3Jn57pzUWjs3qEpxeZ3oRTQCBYVrYWya581U95kyr6THH9qZ5/qk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711995791; c=relaxed/simple;
-	bh=lGQOcKlaKYR2HYLSfRyA7NBUV+cD9TYc1z17jPP3r9k=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BwMo7hPP60S8PZAGImb7jpnjm04I5hQsEHbyxlnvsz5P33B36jMjLC0rVOwF3JeeyWD16Gx+6zxOEvXYMqCqeUXUVawJ+sfjUyFbTW04ZqUd3ZuhcXnD8Vofl8DyxKHznxyygJK0L0mM700jT8JzqauVa5r+QriZDMqGSAli5U4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com; spf=pass smtp.mailfrom=jiaxyga.com; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=IqKeWSgv; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=qkOvFeZg; arc=none smtp.client-ip=79.137.243.75
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jiaxyga.com
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com; s=mailru;
-	h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=DpY9JXPC44/eMZj2gSpT6otT+n2T9KhHqd19vlxiZfY=;
-	t=1711995789;x=1712085789; 
-	b=IqKeWSgv6PGXxysuxKnrJq8iOZSdPdrtETmBt0zBseqSzq1/kRNIq9SUGUUQmZ3NR4nyfDzHWDdMZyyH9Fx2IEvM8F11nxPEIrcfe18c0bLBTb7y9okGI2Uhe2KB8weEq0w3KGZw/GeT7jDTaPRdFnRCEQmUV7Vx+uHgUsixA0k=;
-Received: from [10.12.4.7] (port=38382 helo=smtp33.i.mail.ru)
-	by fallback21.i.mail.ru with esmtp (envelope-from <danila@jiaxyga.com>)
-	id 1rrMJA-00Duyw-Kg; Mon, 01 Apr 2024 21:23:01 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
-	; s=mailru; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
-	Message-ID:Date:Subject:Cc:To:From:From:Sender:Reply-To:To:Cc:Content-Type:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
-	X-Cloud-Ids:Disposition-Notification-To;
-	bh=DpY9JXPC44/eMZj2gSpT6otT+n2T9KhHqd19vlxiZfY=; t=1711995780; x=1712085780; 
-	b=qkOvFeZgdG4rN0gU/N/ltAyyI/gp4GLleP4LcXfvwxkzVxLSqcb2PkM85l/PTacUPe7r37cSxAe
-	FJ1xWZnbyejEEBbNZ+GTDuTAv6+KkMKgorKkOiNKU+I1UAQXl/dAK3DlllyAVXjhbwAsr2akz3lB7
-	qJloLKO5Ym0FR2j97C0=;
-Received: by smtp33.i.mail.ru with esmtpa (envelope-from <danila@jiaxyga.com>)
-	id 1rrMIx-00000002IQ2-1hjU; Mon, 01 Apr 2024 21:22:47 +0300
-From: Danila Tikhonov <danila@jiaxyga.com>
-To: andersson@kernel.org,
-	konrad.dybcio@linaro.org,
-	vkoul@kernel.org,
-	kishon@kernel.org,
-	robh@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org,
-	cros-qcom-dts-watchers@chromium.org,
-	manivannan.sadhasivam@linaro.org,
-	davidwronek@gmail.com
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Danila Tikhonov <danila@jiaxyga.com>
-Subject: [PATCH 2/2] arm64: dts: qcom: sc7180: Fix UFS PHY clocks
-Date: Mon,  1 Apr 2024 21:22:40 +0300
-Message-ID: <20240401182240.55282-3-danila@jiaxyga.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240401182240.55282-1-danila@jiaxyga.com>
-References: <20240401182240.55282-1-danila@jiaxyga.com>
+	s=arc-20240116; t=1711997332; c=relaxed/simple;
+	bh=k7oaUCZYi+tFu3mnwGC2mP0W7sg5b2RBuxNglUKI9GM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YJ4atvpLnGbrZkaUOKrYSZo4Jh6wiswZcxHyewnKmnAyYZJtEODPPstuqK/1py/L6aZ+KOx3cbBjf7gZKXQ443xTkp37esuM66Ws9mzqnHwq0avkatblW53cyupRaona4dvX/s9ffILjjkfZxz9fmnL3oTkS+tJxd1gHotbIkI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ncyYBgv0; arc=none smtp.client-ip=209.85.128.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-614769887e6so13424197b3.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Apr 2024 11:48:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1711997329; x=1712602129; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NcJHXP6yoVOVq/0bTdnc0kU73nmqwp/JtuZqTmV7YiM=;
+        b=ncyYBgv04M6+IaU/aF9R++tmo5O1bf5bVkunC2O6vl8olSlKMx7IiD6bGCQ/A6c2Tn
+         JSczL4q3p27ASMLNS8+u+iUjtHxgixr6yXdhyczps40JlYZUwkfRrkDnVBqvtBqwsCnO
+         5ZbXS18asxuWZc1jftklXoNksODzZ/8++YrnECnz8F+IDo+jRhks8iJuwkOmZ9YSXoqW
+         abqo3OLOnXdV3KQDUyn1tDpvASRAE2omR6A5HhVgTAdTIHWFTDgayMrorFR58avF0OYP
+         BxTJqe0A8VbFvFFhwOBdbV/5mn8scUlbtMSbHYPyotcvUsg/wfksRnkr7eOxP9wsLEXQ
+         +/Bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711997329; x=1712602129;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NcJHXP6yoVOVq/0bTdnc0kU73nmqwp/JtuZqTmV7YiM=;
+        b=p27qr6OBBiNpZ6UJDxQHNDNGEPf0jo50JCrN9ZS+H138zTPoncvUEY8KORVK3t+ZYv
+         w7vI8ptSbYUY762bFg0ivc92C8sJdwsha2718iHloLUg8sq5FSPOJ7Qk9xJ8Q7jhwCJK
+         nsYFeICihaE9P91xMNqM90QTpe8XOyvtnLSqh2r7Zqc0FYSSakyUsoyIvT++4xWQLAF8
+         NVO++BFIkjAdXCrUuxG7gjnWfEWN6SxNKkx9nPMF1m8gE974rHV05zyjipxjRNu+BEGd
+         G6wKkoAo90cbRKeS5iTfxYY4teuG/Wdy33uE3yfFpa7Ged1DZGaixa+q73L8W3iwjOnK
+         IydA==
+X-Forwarded-Encrypted: i=1; AJvYcCW6pcP2MRKbSUS28aYAlmNNcHsVuqlJ6bc/sb2Huz2BRrEGkTj/DqJyj1CXC1Juin+aDPA+VyPdUMxBT6FwlGRFWTWb8+0qTXn7EZj/FQ==
+X-Gm-Message-State: AOJu0Yzh2VTByW6rqc6SOVkltoGbyuAai4X4APt7msbPu2oaHtw5uKQh
+	GuZfLgXozhyW4DLp7qsQ5sYodRqBEMtA8cbMiAis9iLfa8HwI6/D80+dT9Vzwy2caSoikXnqy8Z
+	FW2Q8pxSsu5HDvC2fMLhLz0v7tQwnngvI3I3W/w==
+X-Google-Smtp-Source: AGHT+IGuFi2qpwA8GW313d/Qlxd28TYnQmccY50m6PgePIkbBZYHq7P54q4cGA9c4m2MocI5lTc9YyYGxyOpaQB897U=
+X-Received: by 2002:a5b:845:0:b0:dc6:f0ac:6b53 with SMTP id
+ v5-20020a5b0845000000b00dc6f0ac6b53mr6523459ybq.15.1711997329387; Mon, 01 Apr
+ 2024 11:48:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Mailru-Src: smtp
-X-4EC0790: 10
-X-7564579A: 646B95376F6C166E
-X-77F55803: 4F1203BC0FB41BD9D135BF24EC7C3B84F4481F7E27D197A12AFDB31AE04A9497182A05F538085040425E929FF18E1F0EF378A8CA21F699D6ECF7839DC21535F8754E9BE2FEC5E1B8141B3585208100AE
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE75EB26DC3398F980CEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006372D22CC9620B7D5068638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D83807F9C9B80303AF33E3BBA4BC0C4FFBCD457F6DC05D41FFCC7F00164DA146DAFE8445B8C89999728AA50765F79006370277CA7F994D7EF5389733CBF5DBD5E9C8A9BA7A39EFB766F5D81C698A659EA7CC7F00164DA146DA9985D098DBDEAEC878444BBB7636F62AF6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA73AA81AA40904B5D9A18204E546F3947C89DDFE3E282F3DD1302FCEF25BFAB3454AD6D5ED66289B523666184CF4C3C14F6136E347CC761E07725E5C173C3A84C3B15E146EA45457A9BA3038C0950A5D36B5C8C57E37DE458B330BD67F2E7D9AF16D1867E19FE14079C09775C1D3CA48CF27ED053E960B195E1DD303D21008E298D5E8D9A59859A8B6B372FE9A2E580EFC725E5C173C3A84C30A3B31C63366F72535872C767BF85DA2F004C90652538430E4A6367B16DE6309
-X-C1DE0DAB: 0D63561A33F958A523916B9BD823608A5002B1117B3ED6969E4C888B65BB5CE092212597CCBD6D77823CB91A9FED034534781492E4B8EEAD09F854029C6BD0DAC79554A2A72441328621D336A7BC284946AD531847A6065A535571D14F44ED41
-X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF3FED46C3ACD6F73ED3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CF5D3E05D67DC882B47ACA4BE2584ABFD6EC07BC5E6CB5CCE69E9010FF0ED266489C8755E3AEA661EF58CF1FE2B37DBE108947428205F5841666FC8896552336569A5213D35D638E29457F7985AD47CF5C02C26D483E81D6BE72B480F99247062FEE42F474E8A1C6FD34D382445848F2F3
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojZkLXUwYT7t+hS+PkUqVHSA==
-X-Mailru-Sender: 9EB879F2C80682A09F26F806C739498113902588151D385CBC5A20191D90C84FFF12582E31AF308F694A01E8F937DE022C62728BC403A049225EC17F3711B6CF1A6F2E8989E84EC137BFB0221605B344978139F6FA5A77F05FEEDEB644C299C0ED14614B50AE0675
-X-Mras: Ok
-X-7564579A: 646B95376F6C166E
-X-77F55803: 6242723A09DB00B469FED0CC4E03BFC3F7F23553880BB0CD5F1683EE65406E99049FFFDB7839CE9E676DC208F0F4A0572A6A4F42B62CFAB10A1C130516C316F998D74572C4192BCF
-X-7FA49CB5: 0D63561A33F958A555E61FC64307F3699095D31F446F75AF60A3BB07E0CC0CB88941B15DA834481FA18204E546F3947C9EB6D914E8CED3EDCC7F00164DA146DAFE8445B8C89999729449624AB7ADAF37F6B57BC7E64490611E7FA7ABCAF51C9223F8577A6DFFEA7CF6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA775ECD9A6C639B01B78DA827A17800CE7668E9DCFC093FD7B731C566533BA786AA5CC5B56E945C8DA
-X-87b9d050: 1
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojZkLXUwYT7t9Emt9PUiT5Kg==
-X-Mailru-MI: 8000000000000800
-X-Mras: Ok
+References: <20240331-typec-fix-sm8250-v2-0-857acb6bd88e@linaro.org> <171198916314.1093638.15006189720750656914.robh@kernel.org>
+In-Reply-To: <171198916314.1093638.15006189720750656914.robh@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 1 Apr 2024 21:48:38 +0300
+Message-ID: <CAA8EJpp0dvvM=02r3L+Hztb--inJLPJX+BhGrNB8xhdFiKDF_w@mail.gmail.com>
+Subject: Re: [PATCH v2 0/7] arm64: dts: qcom: fix description of the Type-C signals
+To: Rob Herring <robh@kernel.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Luca Weiss <luca.weiss@fairphone.com>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-QMP PHY used in SC7180 requires 3 clocks:
+On Mon, 1 Apr 2024 at 19:36, Rob Herring <robh@kernel.org> wrote:
+>
+>
+> On Sun, 31 Mar 2024 06:48:50 +0300, Dmitry Baryshkov wrote:
+> > Rename the HS link between usb-c-connector and the DWC3 USB controller.
+> > Add missing graph connection between the QMP PHY and DWC3 USB
+> > controller.
+> >
+> > Reported-by: Luca Weiss <luca.weiss@fairphone.com>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> > Changes in v2:
+> > - Fixed other platforms in addition to sm8250 (Bryan)
+> > - Link to v1: https://lore.kernel.org/r/20240322-typec-fix-sm8250-v1-0-=
+1ac22b333ea9@linaro.org
+> >
+> > ---
+> > Dmitry Baryshkov (7):
+> >       arm64: dts: qcom: sm8250: describe HS signals properly
+> >       arm64: dts: qcom: sm8250: add a link between DWC3 and QMP PHY
+> >       arm64: dts: qcom: sc8180x: switch USB+DP QMP PHYs to new bindings
+> >       arm64: dts: qcom: sc8180x: describe USB signals properly
+> >       arm64: dts: qcom: sc8280xp: describe USB signals properly
+> >       arm64: dts: qcom: x1e80100: describe USB signals properly
+> >       arm64: dts: qcom: sm8150-hdk: rename Type-C HS endpoints
+> >
+> >  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts           |   8 +-
+> >  .../arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts |  16 +-
+> >  arch/arm64/boot/dts/qcom/sc8180x-primus.dts        |  20 +--
+> >  arch/arm64/boot/dts/qcom/sc8180x.dtsi              | 164 ++++++++++---=
+--------
+> >  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts          |  20 +--
+> >  .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts     |  20 +--
+> >  arch/arm64/boot/dts/qcom/sc8280xp.dtsi             |  54 ++++++-
+> >  arch/arm64/boot/dts/qcom/sm8150-hdk.dts            |   4 +-
+> >  .../boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi  |   8 +-
+> >  arch/arm64/boot/dts/qcom/sm8250.dtsi               |  24 ++-
+> >  arch/arm64/boot/dts/qcom/x1e80100.dtsi             | 149 +++++++++++++=
++++++-
+> >  11 files changed, 340 insertions(+), 147 deletions(-)
+> > ---
+> > base-commit: 13ee4a7161b6fd938aef6688ff43b163f6d83e37
+> > change-id: 20240322-typec-fix-sm8250-33c47a03a056
+> >
+> > Best regards,
+> > --
+> > Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >
+> >
+> >
+>
+>
+> My bot found new DTB warnings on the .dts files added or changed in this
+> series.
+>
+> Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+> are fixed by another series. Ultimately, it is up to the platform
+> maintainer whether these warnings are acceptable or not. No need to reply
+> unless the platform maintainer has comments.
+>
+> If you already ran DT checks and didn't see these error(s), then
+> make sure dt-schema is up to date:
+>
+>   pip3 install dtschema --upgrade
+>
+>
+> New warnings running 'make CHECK_DTBS=3Dy qcom/qrb5165-rb5.dtb qcom/sc818=
+0x-lenovo-flex-5g.dtb qcom/sc8180x-primus.dtb qcom/sc8280xp-crd.dtb qcom/sc=
+8280xp-lenovo-thinkpad-x13s.dtb qcom/sm8150-hdk.dtb' for 20240331-typec-fix=
+-sm8250-v2-0-857acb6bd88e@linaro.org:
+>
+> arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dtb: clock-controller@af0=
+0000: clocks: [[41, 0], [42], [95, 1], [95, 2], [99, 1], [99, 2], [125, 0],=
+ [125, 1]] is too long
+>         from schema $id: http://devicetree.org/schemas/clock/qcom,dispcc-=
+sm8x50.yaml#
+> arch/arm64/boot/dts/qcom/sc8180x-primus.dtb: clock-controller@af00000: cl=
+ocks: [[41, 0], [42], [97, 1], [97, 2], [101, 1], [101, 2], [127, 0], [127,=
+ 1]] is too long
+>         from schema $id: http://devicetree.org/schemas/clock/qcom,dispcc-=
+sm8x50.yaml#
 
-* ref - 19.2MHz reference clock from RPMh
-* ref_aux - Auxiliary reference clock from GCC
-* qref - QREF clock from GCC
+I don' t think it's new, it just had PHY indices changed. But let's
+fix it anyway.
 
-While at it, let's move 'clocks' property before 'clock-names' to match
-the style used commonly.
+>
+>
+>
+>
+>
 
-Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
----
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 2b481e20ae38..5c9ec8047f00 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -1585,9 +1585,12 @@ ufs_mem_phy: phy@1d87000 {
- 			compatible = "qcom,sc7180-qmp-ufs-phy",
- 				     "qcom,sm7150-qmp-ufs-phy";
- 			reg = <0 0x01d87000 0 0x1000>;
--			clocks = <&gcc GCC_UFS_MEM_CLKREF_CLK>,
--				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
--			clock-names = "ref", "ref_aux";
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
-+				 <&gcc GCC_UFS_MEM_CLKREF_CLK>;
-+			clock-names = "ref",
-+				      "ref_aux",
-+				      "qref";
- 			power-domains = <&gcc UFS_PHY_GDSC>;
- 			resets = <&ufs_mem_hc 0>;
- 			reset-names = "ufsphy";
--- 
-2.44.0
-
+--=20
+With best wishes
+Dmitry
 
