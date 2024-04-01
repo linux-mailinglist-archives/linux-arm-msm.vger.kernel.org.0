@@ -1,233 +1,264 @@
-Return-Path: <linux-arm-msm+bounces-15956-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96AAF89401F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 18:25:54 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6AA638940CF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 18:34:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0CC201F21E74
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 16:25:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BAE78B20D80
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 16:34:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2C304087B;
-	Mon,  1 Apr 2024 16:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0FA3481BF;
+	Mon,  1 Apr 2024 16:34:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JW/kPt1x"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bxqpg31C"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46851CA8F
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Apr 2024 16:25:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 168DE38DD8
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Apr 2024 16:34:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988751; cv=none; b=g5FWJorbjrsgz1ZB7sF/aiqXXYcpwGk8GTNXsc+5a4kXYCdb3ojNkIP9Doa443GPHyv8rUvf1kTU08i2DNm0QRk4iDHg5e5fg5RFApgJXAoCCI0t7C42wcSJN6CHSFSxQBoLy37HlMhhaNfmT6GSm15eIQsh37b6ZEwmkRhBDYQ=
+	t=1711989275; cv=none; b=AsPkeAKlAzCEgdN3nQW1z4BljcI/3IDUg6NEoUdgrE3tUPR9lMM9lmXCYgnviJsT2tx9b/D5eShOsj7XCZ0Kiqk1jWkcJLOHeUoqgZQZ3aPOYm/8lfVLwin+3cV6Dt5unJ/TZfURMCB/N0VuDObz+4Rclpnx9PigXWWqzyqiczw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988751; c=relaxed/simple;
-	bh=r46UaOjMryrJqNyXIP3ma2vEovSE6KK23RRNBEIG7LA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=qcpb71OdVnVI6CHprzBY2SlnD46szeRufyVe3DLLuNcYAReZhIsDP42/MpUGJyL1mJc4cC7qA4VyihoaYlI7/1iR1dxuBw139NGmuO1w75PdRFz7L+91zw56Y4vhXlm8qxk8M2KAYxdutrn3SC1KBI/oicb9K3a4olrnBUKPGCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JW/kPt1x; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 431C395B018486;
-	Mon, 1 Apr 2024 16:25:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=mYSAqFpPOac0Q6+KwUOlV0t7P9hKlNVa9/d09sClEc4=; b=JW
-	/kPt1x2vrEhOsg8D/QDIQYS712C5Zgo+oIOzHq1X/9NBQRmSQ0ZhQWNvxU9CjbHr
-	PA3lzHKPaKUH8qk12mifOu4jmX7t7gBQwtwKzsPexHT2fqFins9pmezKVRjDxy+Y
-	AP/+ZYSCaaMlUoPxbUAkFXyfoRqWNp2Ojh+fNuNoMajRh/5cnfvTGKCsgM9uZw+a
-	NX09d8JiYRJPejO4idQ92LpeX67tgDhSP8Cbg8RSwpUHgnCaDgScKbsQSoMZuy8v
-	9JrQ5Ls6rJc8+jWjfdPZeXsdXh+Ee8GyoFtZ9qNafIrACbhCCXDDZIPMov0w0nte
-	eWVGYc0mzEVJVyUOF3Jg==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x7r5713t7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 01 Apr 2024 16:25:41 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 431GPe6Y021453
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 1 Apr 2024 16:25:40 GMT
-Received: from [10.110.67.196] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 1 Apr
- 2024 09:25:39 -0700
-Message-ID: <1c71d83a-68de-8d6e-9719-29aa17a3db6c@quicinc.com>
-Date: Mon, 1 Apr 2024 09:25:10 -0700
+	s=arc-20240116; t=1711989275; c=relaxed/simple;
+	bh=eUPutGowJt1raeqUkz6idfgAosZAe5YLjWw+N/1N10g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=S3jD7KkOdFVu6hLBtic2FMpBbY3DkLttIleHvUG37KO4YS0XcGYvPn1kSl/SLLQnvQkIvFWZ1v97T+C+nVK1vPbKGzDiiGTv7hatGw4Apjkr58yrc3gbTXXJ+ve8Q3VUz9iOzbdGeCeMWHCAieqB5IIgXBYm8TkY1mnpmfDUOEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bxqpg31C; arc=none smtp.client-ip=209.85.215.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-5cfd95130c6so2469875a12.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Apr 2024 09:34:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1711989273; x=1712594073; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=i2QERqZP+UE+1W3A6WXtVWjA32ukQFrW4fDp6eX7jZw=;
+        b=bxqpg31C2OxKkPqaebkA0fvf8FjLCJp6ClblIGHP/VQ4BYAYfwHd52QlOdRNbDXdHd
+         QcqWR5L/C3gRu6+hMsJxenLzZfrYy+GK6VZGqrtIZkZ7T8B1wtpjy9G9x+Z0QzSGNE4A
+         /0Bz10lrQB4Ohs+wKiXNmyBEP39exGc1tFBvkO96tk9BEYx/7jViMgDuCrCON4KFpCmO
+         j2bvQWBEgV8fvw3EYb4w1uByYsBjCJFZixsfZNoVfF95r8JClCNL1koAYoQMyO+P/zm0
+         xCSuXgc5q4cN1dHUEyTVJtD/LHucOXYg0/IpErWFj0d1at9VXLVMQIvUVNr/Gokgmoft
+         mQmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711989273; x=1712594073;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=i2QERqZP+UE+1W3A6WXtVWjA32ukQFrW4fDp6eX7jZw=;
+        b=TJ0Wyd0GEP5hPS8Lj4tThEkjr3ExZQ9VVFL2oc4BKsscpIWwnWzpfrxTrAcPqtxlcv
+         m/QXv4NZUOXVBrJ3sEAAOhMOjKVjbWdY1CiI9SwT4bgqsW2W1hN4ItueMoKGNGu2datJ
+         NWJ4oNA44PX4ju9/aMwNKaH7hPZVfkgj0Lc1r8E8MAaMBy1NJud1QtZCQyo+1zc6xl4V
+         V7juQXsKe3oIGkkh7p2X4SLoWmDY+ptp+ULxgHZyrcAeVlS7/2EP+lfKThjlGB1yzWoo
+         Q8vWAfGLtBwQg+8wLd600CSDOsi92P8bSfGwRE5jBCxyi6TpULyxWAqzMcz4usRzB1wN
+         9zOA==
+X-Forwarded-Encrypted: i=1; AJvYcCU5+FKmlT93Y7uqV6JCsJCzY2qRIoD+fWAS3LZk/UkQMnJakYMaSYsc1yUWqurOEyf8tNTqcfSi848F7xZTcWWBJPpT5lFf+34YAGut7g==
+X-Gm-Message-State: AOJu0YwT2wBvN+scXBHgcjpy8P/p8zK6HXqvFsCaQqXMre/rDVg6kOk/
+	eWn0KYK57mo6bjpNguKJ2c2rsI8H7xNG6PpU8ulG+8xV1L+XCsc+nU+Reo/B6A==
+X-Google-Smtp-Source: AGHT+IGPBBm1aqeryFso3Y2gTgKOchg5T7HwYiw0HyVJxMXg8KVXD+JO1JrIl2N8hldsrCGX2zz+cQ==
+X-Received: by 2002:a05:6a21:9212:b0:1a3:e4fe:f6f1 with SMTP id tl18-20020a056a21921200b001a3e4fef6f1mr9223908pzb.58.1711989273083;
+        Mon, 01 Apr 2024 09:34:33 -0700 (PDT)
+Received: from thinkpad ([103.246.195.48])
+        by smtp.gmail.com with ESMTPSA id m7-20020a170902bb8700b001e0573bbbbdsm9068595pls.218.2024.04.01.09.34.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Apr 2024 09:34:32 -0700 (PDT)
+Date: Mon, 1 Apr 2024 22:04:27 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Niklas Cassel <cassel@kernel.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
+	linux-tegra@vger.kernel.org
+Subject: Re: [PATCH 07/11] PCI: dwc: ep: Add a generic dw_pcie_ep_linkdown()
+ API to handle Link Down event
+Message-ID: <20240401163427.GA2547@thinkpad>
+References: <20240314-pci-epf-rework-v1-0-6134e6c1d491@linaro.org>
+ <20240314-pci-epf-rework-v1-7-6134e6c1d491@linaro.org>
+ <ZgRgJsOT_bzXM1wK@ryzen>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH] drm/msm/dp: allow voltage swing / pre emphasis of 3
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul
-	<sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        "David
- Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-CC: Stephen Boyd <swboyd@chromium.org>, Doug Anderson <dianders@chromium.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20240203-dp-swing-3-v1-1-6545e1706196@linaro.org>
-From: Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <20240203-dp-swing-3-v1-1-6545e1706196@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: N4n3muH3oe_lu85u4K888MvKk6fhEnxo
-X-Proofpoint-ORIG-GUID: N4n3muH3oe_lu85u4K888MvKk6fhEnxo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-01_11,2024-04-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
- suspectscore=0 priorityscore=1501 spamscore=0 phishscore=0 impostorscore=0
- lowpriorityscore=0 adultscore=0 mlxscore=0 mlxlogscore=999 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2403210001
- definitions=main-2404010115
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZgRgJsOT_bzXM1wK@ryzen>
 
+On Wed, Mar 27, 2024 at 07:06:30PM +0100, Niklas Cassel wrote:
+> Hello Mani,
+> 
+> On Thu, Mar 14, 2024 at 08:53:46PM +0530, Manivannan Sadhasivam wrote:
+> > As per the PCIe base spec r5.0, section 5.2, Link Down event can happen
+> > under any of the following circumstances:
+> > 
+> > 1. Fundamental/Hot reset
+> > 2. Link disable transmission by upstream component
+> > 3. Moving from L2/L3 to L0
+> > 
+> > In those cases, Link Down causes some non-sticky DWC registers to loose the
+> > state (like REBAR, etc...). So the drivers need to reinitialize them to
+> > function properly once the link comes back again.
+> > 
+> > This is not a problem for drivers supporting PERST# IRQ, since they can
+> > reinitialize the registers in the PERST# IRQ callback. But for the drivers
+> > not supporting PERST#, there is no way they can reinitialize the registers
+> > other than relying on Link Down IRQ received when the link goes down. So
+> > let's add a DWC generic API dw_pcie_ep_linkdown() that reinitializes the
+> > non-sticky registers and also notifies the EPF drivers about link going
+> > down.
+> > 
+> > This API can also be used by the drivers supporting PERST# to handle the
+> > scenario (2) mentioned above.
+> > 
+> > NOTE: For the sake of code organization, move the dw_pcie_ep_linkup()
+> > definition just above dw_pcie_ep_linkdown().
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  drivers/pci/controller/dwc/pcie-designware-ep.c | 93 ++++++++++++++++---------
+> >  drivers/pci/controller/dwc/pcie-designware.h    |  5 ++
+> >  2 files changed, 67 insertions(+), 31 deletions(-)
+> > 
+> > diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+> > index 3893a8c1a11c..5451057ca74b 100644
+> > --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
+> > +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+> > @@ -14,18 +14,6 @@
+> >  #include <linux/pci-epc.h>
+> >  #include <linux/pci-epf.h>
+> >  
+> > -/**
+> > - * dw_pcie_ep_linkup - Notify EPF drivers about link up event
+> > - * @ep: DWC EP device
+> > - */
+> > -void dw_pcie_ep_linkup(struct dw_pcie_ep *ep)
+> > -{
+> > -	struct pci_epc *epc = ep->epc;
+> > -
+> > -	pci_epc_linkup(epc);
+> > -}
+> > -EXPORT_SYMBOL_GPL(dw_pcie_ep_linkup);
+> > -
+> >  /**
+> >   * dw_pcie_ep_init_notify - Notify EPF drivers about EPC initialization
+> >   *			    complete
+> > @@ -672,6 +660,29 @@ static unsigned int dw_pcie_ep_find_ext_capability(struct dw_pcie *pci, int cap)
+> >  	return 0;
+> >  }
+> >  
+> > +static void dw_pcie_ep_init_non_sticky_registers(struct dw_pcie *pci)
+> > +{
+> > +	unsigned int offset;
+> > +	unsigned int nbars;
+> > +	u32 reg, i;
+> > +
+> > +	offset = dw_pcie_ep_find_ext_capability(pci, PCI_EXT_CAP_ID_REBAR);
+> > +
+> > +	dw_pcie_dbi_ro_wr_en(pci);
+> > +
+> > +	if (offset) {
+> > +		reg = dw_pcie_readl_dbi(pci, offset + PCI_REBAR_CTRL);
+> > +		nbars = (reg & PCI_REBAR_CTRL_NBAR_MASK) >>
+> > +			PCI_REBAR_CTRL_NBAR_SHIFT;
+> > +
+> > +		for (i = 0; i < nbars; i++, offset += PCI_REBAR_CTRL)
+> > +			dw_pcie_writel_dbi(pci, offset + PCI_REBAR_CAP, 0x0);
+> > +	}
+> > +
+> > +	dw_pcie_setup(pci);
+> > +	dw_pcie_dbi_ro_wr_dis(pci);
+> > +}
+> > +
+> >  /**
+> >   * dw_pcie_ep_init_registers - Initialize DWC EP specific registers
+> >   * @ep: DWC EP device
+> > @@ -686,13 +697,11 @@ int dw_pcie_ep_init_registers(struct dw_pcie_ep *ep)
+> >  	struct dw_pcie_ep_func *ep_func;
+> >  	struct device *dev = pci->dev;
+> >  	struct pci_epc *epc = ep->epc;
+> > -	unsigned int offset, ptm_cap_base;
+> > -	unsigned int nbars;
+> > +	u32 ptm_cap_base, reg;
+> >  	u8 hdr_type;
+> >  	u8 func_no;
+> > -	int i, ret;
+> >  	void *addr;
+> > -	u32 reg;
+> > +	int ret;
+> >  
+> >  	hdr_type = dw_pcie_readb_dbi(pci, PCI_HEADER_TYPE) &
+> >  		   PCI_HEADER_TYPE_MASK;
+> > @@ -755,20 +764,8 @@ int dw_pcie_ep_init_registers(struct dw_pcie_ep *ep)
+> >  	if (ep->ops->init)
+> >  		ep->ops->init(ep);
+> >  
+> > -	offset = dw_pcie_ep_find_ext_capability(pci, PCI_EXT_CAP_ID_REBAR);
+> >  	ptm_cap_base = dw_pcie_ep_find_ext_capability(pci, PCI_EXT_CAP_ID_PTM);
+> >  
+> > -	dw_pcie_dbi_ro_wr_en(pci);
+> > -
+> > -	if (offset) {
+> > -		reg = dw_pcie_readl_dbi(pci, offset + PCI_REBAR_CTRL);
+> > -		nbars = (reg & PCI_REBAR_CTRL_NBAR_MASK) >>
+> > -			PCI_REBAR_CTRL_NBAR_SHIFT;
+> > -
+> > -		for (i = 0; i < nbars; i++, offset += PCI_REBAR_CTRL)
+> > -			dw_pcie_writel_dbi(pci, offset + PCI_REBAR_CAP, 0x0);
+> > -	}
+> > -
+> >  	/*
+> >  	 * PTM responder capability can be disabled only after disabling
+> >  	 * PTM root capability.
+> > @@ -785,9 +782,6 @@ int dw_pcie_ep_init_registers(struct dw_pcie_ep *ep)
+> >  		dw_pcie_dbi_ro_wr_dis(pci);
+> >  	}
+> >  
+> > -	dw_pcie_setup(pci);
+> > -	dw_pcie_dbi_ro_wr_dis(pci);
+> > -
+> 
+> Your previous series had:
+> 
+> -       dw_pcie_setup(pci);
+> -       dw_pcie_dbi_ro_wr_dis(pci);
+> +       dw_pcie_ep_init_non_sticky_registers(pci);
+> 
+> Here.
+> I tested this series, but it did not work for me (the Resizable BARs did
+> not get resized) since you removed the call to
+> dw_pcie_ep_init_non_sticky_registers().
+> 
+> By readding the call to dw_pcie_ep_init_non_sticky_registers(),
+> the BARs get Resized again.
+> 
+> 
 
-On 2/3/2024 5:47 AM, Dmitry Baryshkov wrote:
-> Both dp_link_adjust_levels() and dp_ctrl_update_vx_px() limit swing and
-> pre-emphasis to 2, while the real maximum value for the sum of the
-> voltage swing and pre-emphasis is 3. Fix the DP code to remove this
-> limitation.
->
-> Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/dp/dp_ctrl.c |  6 +++---
->   drivers/gpu/drm/msm/dp/dp_link.c | 22 +++++++++++-----------
->   drivers/gpu/drm/msm/dp/dp_link.h | 14 +-------------
->   3 files changed, 15 insertions(+), 27 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> index 77a8d9366ed7..26241970019f 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> @@ -1024,14 +1024,14 @@ static int dp_ctrl_update_vx_px(struct dp_ctrl_private *ctrl)
->   	if (ret)
->   		return ret;
->   
-> -	if (voltage_swing_level >= DP_TRAIN_VOLTAGE_SWING_MAX) {
-> +	if (voltage_swing_level >= DP_TRAIN_LEVEL_MAX) {
->   		drm_dbg_dp(ctrl->drm_dev,
->   				"max. voltage swing level reached %d\n",
->   				voltage_swing_level);
->   		max_level_reached |= DP_TRAIN_MAX_SWING_REACHED;
->   	}
->   
-> -	if (pre_emphasis_level >= DP_TRAIN_PRE_EMPHASIS_MAX) {
-> +	if (pre_emphasis_level >= DP_TRAIN_LEVEL_MAX) {
->   		drm_dbg_dp(ctrl->drm_dev,
->   				"max. pre-emphasis level reached %d\n",
->   				pre_emphasis_level);
-> @@ -1122,7 +1122,7 @@ static int dp_ctrl_link_train_1(struct dp_ctrl_private *ctrl,
->   		}
->   
->   		if (ctrl->link->phy_params.v_level >=
-> -			DP_TRAIN_VOLTAGE_SWING_MAX) {
-> +			DP_TRAIN_LEVEL_MAX) {
->   			DRM_ERROR_RATELIMITED("max v_level reached\n");
->   			return -EAGAIN;
->   		}
-> diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
-> index 98427d45e9a7..e7da0571ecff 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_link.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_link.c
-> @@ -1107,6 +1107,7 @@ int dp_link_get_colorimetry_config(struct dp_link *dp_link)
->   int dp_link_adjust_levels(struct dp_link *dp_link, u8 *link_status)
->   {
->   	int i;
-> +	u8 max_p_level;
->   	int v_max = 0, p_max = 0;
->   	struct dp_link_private *link;
->   
-> @@ -1138,30 +1139,29 @@ int dp_link_adjust_levels(struct dp_link *dp_link, u8 *link_status)
->   	 * Adjust the voltage swing and pre-emphasis level combination to within
->   	 * the allowable range.
->   	 */
-> -	if (dp_link->phy_params.v_level > DP_TRAIN_VOLTAGE_SWING_MAX) {
-> +	if (dp_link->phy_params.v_level > DP_TRAIN_LEVEL_MAX) {
->   		drm_dbg_dp(link->drm_dev,
->   			"Requested vSwingLevel=%d, change to %d\n",
->   			dp_link->phy_params.v_level,
-> -			DP_TRAIN_VOLTAGE_SWING_MAX);
-> -		dp_link->phy_params.v_level = DP_TRAIN_VOLTAGE_SWING_MAX;
-> +			DP_TRAIN_LEVEL_MAX);
-> +		dp_link->phy_params.v_level = DP_TRAIN_LEVEL_MAX;
->   	}
->   
-> -	if (dp_link->phy_params.p_level > DP_TRAIN_PRE_EMPHASIS_MAX) {
-> +	if (dp_link->phy_params.p_level > DP_TRAIN_LEVEL_MAX) {
->   		drm_dbg_dp(link->drm_dev,
->   			"Requested preEmphasisLevel=%d, change to %d\n",
->   			dp_link->phy_params.p_level,
-> -			DP_TRAIN_PRE_EMPHASIS_MAX);
-> -		dp_link->phy_params.p_level = DP_TRAIN_PRE_EMPHASIS_MAX;
-> +			DP_TRAIN_LEVEL_MAX);
-> +		dp_link->phy_params.p_level = DP_TRAIN_LEVEL_MAX;
->   	}
->   
-> -	if ((dp_link->phy_params.p_level > DP_TRAIN_PRE_EMPHASIS_LVL_1)
-> -		&& (dp_link->phy_params.v_level ==
-> -			DP_TRAIN_VOLTAGE_SWING_LVL_2)) {
-> +	max_p_level = DP_TRAIN_LEVEL_MAX - dp_link->phy_params.v_level;
-> +	if (dp_link->phy_params.p_level > max_p_level) {
->   		drm_dbg_dp(link->drm_dev,
->   			"Requested preEmphasisLevel=%d, change to %d\n",
->   			dp_link->phy_params.p_level,
-> -			DP_TRAIN_PRE_EMPHASIS_LVL_1);
-> -		dp_link->phy_params.p_level = DP_TRAIN_PRE_EMPHASIS_LVL_1;
-> +			max_p_level);
-> +		dp_link->phy_params.p_level = max_p_level;
->   	}
->   
->   	drm_dbg_dp(link->drm_dev, "adjusted: v_level=%d, p_level=%d\n",
-> diff --git a/drivers/gpu/drm/msm/dp/dp_link.h b/drivers/gpu/drm/msm/dp/dp_link.h
-> index 9dd4dd926530..79c3a02b8dac 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_link.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_link.h
-> @@ -19,19 +19,7 @@ struct dp_link_info {
->   	unsigned long capabilities;
->   };
->   
-> -enum dp_link_voltage_level {
-> -	DP_TRAIN_VOLTAGE_SWING_LVL_0	= 0,
-> -	DP_TRAIN_VOLTAGE_SWING_LVL_1	= 1,
-> -	DP_TRAIN_VOLTAGE_SWING_LVL_2	= 2,
-> -	DP_TRAIN_VOLTAGE_SWING_MAX	= DP_TRAIN_VOLTAGE_SWING_LVL_2,
-> -};
-> -
-> -enum dp_link_preemaphasis_level {
-> -	DP_TRAIN_PRE_EMPHASIS_LVL_0	= 0,
-> -	DP_TRAIN_PRE_EMPHASIS_LVL_1	= 1,
-> -	DP_TRAIN_PRE_EMPHASIS_LVL_2	= 2,
-> -	DP_TRAIN_PRE_EMPHASIS_MAX	= DP_TRAIN_PRE_EMPHASIS_LVL_2,
-> -};
-> +#define DP_TRAIN_LEVEL_MAX	3
->   
->   struct dp_link_test_video {
->   	u32 test_video_pattern;
->
-> ---
-> base-commit: 41d66f96d0f15a0a2ad6fa2208f6bac1a66cbd52
-> change-id: 20240203-dp-swing-3-b64ffce415d9
->
-> Best regards,
+Ah, looks like rebase has gone bad. Will fix it in v2.
+
+> BTW do you have a git branch with both your series somewhere?
+> (Possibly even rebased on
+> https://lore.kernel.org/linux-pci/20240320113157.322695-1-cassel@kernel.org/T/#t
+> like you suggested in your other mail.)
+> 
+
+There it is: https://git.codelinaro.org/manivannan.sadhasivam/linux/-/tree/b4/pci-epf-rework
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
