@@ -1,227 +1,234 @@
-Return-Path: <linux-arm-msm+bounces-15925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EFE36893911
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 10:39:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD902893979
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 11:39:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1F5FA1C20EDC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 08:39:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 830B42823F3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 09:39:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27421DF6C;
-	Mon,  1 Apr 2024 08:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B374610A31;
+	Mon,  1 Apr 2024 09:39:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YLKVOU1F"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QkU7b6/q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7FDBA49;
-	Mon,  1 Apr 2024 08:39:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C542B10799;
+	Mon,  1 Apr 2024 09:39:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711960780; cv=none; b=htkjAv4AkcT/tLOYW3MobmyRrRCD3xKPggvbXtdMxGc50LMHz+zwhapbSKprPGqM3OolKfiqMWPNA9DyBGntMMrsnwm/YA4NAaqAAoYKgXhoA+qjY0Jw5QQHiBR+mwPvMeRKorD0RpMKFZ7fxT0If2c4FjBx5TYuVYf5TISsGxI=
+	t=1711964361; cv=none; b=MUjdOM6UY+aoqB2cE1yDguoJvYglL3sJP0SX10sdE2pw2JQCGJg4MmBznSmWC8p25hQKKWYbJmGJSKpIfn80/+gOvcNxXOZDNc/KInSTnLT2LvP1rP8hFRPGQz7LMU9fRumpbOLtiUsjBQYfApO+hEbpMHMy/D6rCHBoLpMz0Ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711960780; c=relaxed/simple;
-	bh=T0Mfp3WVqeIB8i82ULSnxmrq7ZBFSs8aBDtdvf2WgnI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ogszAJh7ohuhXDTcqbCqUrwn1Eh5ghGWTSVbV+0fKcFcCgLx9V/5MHzJfFOXuo7XsRwX9ZarlbIn8FF/fdUtWuRuGRdmUKgoZ35JPrZuIoKcxfnPWZEeTdYfqlGWZa4x5S+/C8co+TmiU9cw6tnrVHLz823x/jhp1qBowT7UMTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YLKVOU1F; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 993A6C433B2;
-	Mon,  1 Apr 2024 08:39:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711960779;
-	bh=T0Mfp3WVqeIB8i82ULSnxmrq7ZBFSs8aBDtdvf2WgnI=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=YLKVOU1FX0386yqcsNvKVWx7DGKQ8Rkqlor+hgTHggLLHD9D6IPZJIEMK0I0Xfv/M
-	 Tt36eg6xRKPPDdDv2QJioAX6qbyTuUI/i99bVczTVzYN8CT8cKRM7h7V4Nq6ZenuJ9
-	 nHuHtyEYx+R3DDdFSnPnMMpZB+zrXJG0tAlXaPhR0rvsZFdaU+YjtYunMM/nYkZnBN
-	 x/jqN6JKG3f/gma0upLW3BoKaBfqglra29M4YQviHgJ+whI6byrq7PqTBqWvaSQ84d
-	 DEe8OEqLFlwDoQEuo9PbZZoWQbCxqUglEAY5sPqTF4DhVK7gPesn5/xPb97bKhe1ce
-	 HtcC+q4QczBUw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C88ACD1292;
-	Mon,  1 Apr 2024 08:39:39 +0000 (UTC)
-From: Fenglin Wu via B4 Relay <devnull+quic_fenglinw.quicinc.com@kernel.org>
-Date: Mon, 01 Apr 2024 16:38:52 +0800
-Subject: [PATCH v8 3/3] input: pm8xxx-vibrator: add new SPMI vibrator
- support
+	s=arc-20240116; t=1711964361; c=relaxed/simple;
+	bh=GDkJaI2NiV2yD5bGEtjzSyb61VjKRzyf5ADCDUWbmSw=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=UyMe/WuvrLpW7vyoihEt4Lj1sGhKhCWN62lKs61YDsV2Ji+IjFyZP0mQndAILhkYWbiQJiKoN3LRSsLQtCFUU/vbGRd+7tNW+KWnQ+FJLOIDYWloGGWFzCx7XaxgL3lcK4iGi97Kh1lHbkstd1d7qBDXQut7YVYf+Vxh+2I5350=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QkU7b6/q; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4316NYdc007999;
+	Mon, 1 Apr 2024 09:39:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=9BsDXd1
+	MG4iwSsj0EEVJv6vlxpdFNHE3d7mp0aKDrK8=; b=QkU7b6/qGcOz8iVogrscTts
+	nnyMZM/LtZTizyiMrix+Eue9UNAiR4feAvsDfHelI3OwJ4E/rrkdecrJCdlywvri
+	Xi8/J/kU9m72cQs8sS2Fu2mBluto87nhOgu6lcd04hV9m1w51tGsMLorOWp25SKd
+	kr001PK6x67ieabzqKFnbJmjOafMufnH0bU/xroM6M4b5RWXQZkiKpxk+TgGDBQW
+	fileg4SjrMhQWamsivZ5qnJaiCMNnCSTltHdd7YWqa4NwVTVdFn/fI/Fph5BAoKA
+	PTX854198YWhxgCvXX6nbe6VSAZrYCxwRd1e3h6IN0u37dh818W3AgbENDQ4/Vg=
+	=
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x7maggpgg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 01 Apr 2024 09:39:04 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4319d45J001896
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 1 Apr 2024 09:39:04 GMT
+Received: from tengfan-gv.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Mon, 1 Apr 2024 02:38:57 -0700
+From: Tengfei Fan <quic_tengfan@quicinc.com>
+To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
+CC: <keescook@chromium.org>, <tony.luck@intel.com>, <gpiccoli@igalia.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
+        <kernel@quicinc.com>, Tengfei Fan <quic_tengfan@quicinc.com>
+Subject: [PATCH v6 RESEND 0/4] arm64: qcom: add AIM300 AIoT board support
+Date: Mon, 1 Apr 2024 17:38:39 +0800
+Message-ID: <20240401093843.2591147-1-quic_tengfan@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240401-pm8xxx-vibrator-new-design-v8-3-6f2b8b03b4c7@quicinc.com>
-References: <20240401-pm8xxx-vibrator-new-design-v8-0-6f2b8b03b4c7@quicinc.com>
-In-Reply-To: <20240401-pm8xxx-vibrator-new-design-v8-0-6f2b8b03b4c7@quicinc.com>
-To: kernel@quicinc.com, Andy Gross <agross@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
- Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org, 
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
- Fenglin Wu <quic_fenglinw@quicinc.com>
-X-Mailer: b4 0.13-dev-83828
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1711960777; l=4499;
- i=quic_fenglinw@quicinc.com; s=20240327; h=from:subject:message-id;
- bh=KTKY6pvIVjfzHLnLf3c7IEWevUabtEPHzFZQuRWIpJU=;
- b=ckVKAUUpGCn6CBayzxswtJaUk5uvqlZf+zx9drwGyK2zmg6H1U8+Ut4ZTH/kV736rxzpAAEkH
- LCPWeKoHWJ4ACwQDB112nC5c+5VNwiXlyj3hTRLn9/A8i+MDAt/7QVQ
-X-Developer-Key: i=quic_fenglinw@quicinc.com; a=ed25519;
- pk=BF8SA4IVDk8/EBCwlBehKtn2hp6kipuuAuDAHh9s+K4=
-X-Endpoint-Received: by B4 Relay for quic_fenglinw@quicinc.com/20240327
- with auth_id=146
-X-Original-From: Fenglin Wu <quic_fenglinw@quicinc.com>
-Reply-To: quic_fenglinw@quicinc.com
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 1PabHd1YX6K_e6_H84-mPeo4_NfVZ9oa
+X-Proofpoint-ORIG-GUID: 1PabHd1YX6K_e6_H84-mPeo4_NfVZ9oa
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-01_06,2024-03-28_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ impostorscore=0 priorityscore=1501 bulkscore=0 mlxlogscore=999
+ suspectscore=0 spamscore=0 malwarescore=0 phishscore=0 adultscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403210001 definitions=main-2404010068
 
-From: Fenglin Wu <quic_fenglinw@quicinc.com>
+Add AIM300 AIoT support along with usb, ufs, regulators, serial, PCIe,
+and PMIC functions.
+AIM300 Series is a highly optimized family of modules designed to
+support AIoT applications. It integrates QCS8550 SoC, UFS and PMIC
+chip etc.
+Here is a diagram of AIM300 AIoT Carrie Board and SoM
+ +--------------------------------------------------+
+ |             AIM300 AIOT Carrie Board             |
+ |                                                  |
+ |           +-----------------+                    |
+ |power----->| Fixed regulator |---------+          |
+ |           +-----------------+         |          |
+ |                                       |          |
+ |                                       v VPH_PWR  |
+ | +----------------------------------------------+ |
+ | |                          AIM300 SOM |        | |
+ | |                                     |VPH_PWR | |
+ | |                                     v        | |
+ | |   +-------+       +--------+     +------+    | |
+ | |   | UFS   |       | QCS8550|     |PMIC  |    | |
+ | |   +-------+       +--------+     +------+    | |
+ | |                                              | |
+ | +----------------------------------------------+ |
+ |                                                  |
+ |                    +----+          +------+      |
+ |                    |USB |          | UART |      |
+ |                    +----+          +------+      |
+ +--------------------------------------------------+
+The following functions have been verified:
+  - uart
+  - usb
+  - ufs
+  - PCIe
+  - PMIC
+  - display
+  - adsp
+  - cdsp
+  - tlmm
 
-Add support for a new SPMI vibrator module which is very similar
-to the vibrator module inside PM8916 but has a finer drive voltage
-step and different output voltage range, its drive level control
-is expanded across 2 registers. The vibrator module can be found
-in following Qualcomm PMICs: PMI632, PM7250B, PM7325B, PM7550BA.
+Documentation for qcs8550[1] and sm8550[2]
+[1] https://docs.qualcomm.com/bundle/publicresource/87-61717-1_REV_A_Qualcomm_QCS8550_QCM8550_Processors_Product_Brief.pdf
+[2] https://www.qualcomm.com/content/dam/qcomm-martech/dm-assets/documents/Snapdragon-8-Gen-2-Product-Brief.pdf
 
-Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
 ---
- drivers/input/misc/pm8xxx-vibrator.c | 49 +++++++++++++++++++++++++++++-------
- 1 file changed, 40 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/input/misc/pm8xxx-vibrator.c b/drivers/input/misc/pm8xxx-vibrator.c
-index 3b6a2e949f30..59548cd9331c 100644
---- a/drivers/input/misc/pm8xxx-vibrator.c
-+++ b/drivers/input/misc/pm8xxx-vibrator.c
-@@ -12,9 +12,9 @@
- #include <linux/regmap.h>
- #include <linux/slab.h>
- 
--#define VIB_MAX_LEVEL_mV	(3100)
--#define VIB_MIN_LEVEL_mV	(1200)
--#define VIB_MAX_LEVELS		(VIB_MAX_LEVEL_mV - VIB_MIN_LEVEL_mV)
-+#define VIB_MAX_LEVEL_mV(vib)	(vib->drv2_addr ? (3544) : (3100))
-+#define VIB_MIN_LEVEL_mV(vib)	(vib->drv2_addr ? (1504) : (1200))
-+#define VIB_MAX_LEVELS(vib)	(VIB_MAX_LEVEL_mV(vib) - VIB_MIN_LEVEL_mV(vib))
- 
- #define MAX_FF_SPEED		0xff
- 
-@@ -25,6 +25,9 @@ struct pm8xxx_regs {
- 	unsigned int drv_offset;
- 	unsigned int drv_mask;
- 	unsigned int drv_shift;
-+	unsigned int drv2_offset;
-+	unsigned int drv2_mask;
-+	unsigned int drv2_shift;
- 	unsigned int drv_en_manual_mask;
- };
- 
-@@ -44,6 +47,18 @@ static struct pm8xxx_regs pm8916_regs = {
- 	.drv_en_manual_mask = 0,
- };
- 
-+static struct pm8xxx_regs pmi632_regs = {
-+	.enable_offset = 0x46,
-+	.enable_mask = BIT(7),
-+	.drv_offset = 0x40,
-+	.drv_mask = 0xFF,
-+	.drv_shift = 0,
-+	.drv2_offset = 0x41,
-+	.drv2_mask = 0x0F,
-+	.drv2_shift = 8,
-+	.drv_en_manual_mask = 0,
-+};
-+
- /**
-  * struct pm8xxx_vib - structure to hold vibrator data
-  * @vib_input_dev: input device supporting force feedback
-@@ -52,6 +67,7 @@ static struct pm8xxx_regs pm8916_regs = {
-  * @regs: registers' info
-  * @enable_addr: vibrator enable register
-  * @drv_addr: vibrator drive strength register
-+ * @drv2_addr: vibrator drive strength upper byte register
-  * @speed: speed of vibration set from userland
-  * @active: state of vibrator
-  * @level: level of vibration to set in the chip
-@@ -64,6 +80,7 @@ struct pm8xxx_vib {
- 	const struct pm8xxx_regs *regs;
- 	unsigned int enable_addr;
- 	unsigned int drv_addr;
-+	unsigned int drv2_addr;
- 	int speed;
- 	int level;
- 	bool active;
-@@ -92,6 +109,16 @@ static int pm8xxx_vib_set(struct pm8xxx_vib *vib, bool on)
- 
- 	vib->reg_vib_drv = val;
- 
-+	if (regs->drv2_mask) {
-+		if (on)
-+			val = (vib->level << regs->drv2_shift) & regs->drv2_mask;
-+		else
-+			val = 0;
-+		rc = regmap_write(vib->regmap, vib->drv2_addr, val);
-+		if (rc < 0)
-+			return rc;
-+	}
-+
- 	if (regs->enable_mask)
- 		rc = regmap_update_bits(vib->regmap, vib->enable_addr,
- 					regs->enable_mask, on ? ~0 : 0);
-@@ -114,19 +141,22 @@ static void pm8xxx_work_handler(struct work_struct *work)
- 		return;
- 
- 	/*
--	 * pmic vibrator supports voltage ranges from 1.2 to 3.1V, so
-+	 * pmic vibrator supports voltage ranges from MIN_LEVEL to MAX_LEVEL, so
- 	 * scale the level to fit into these ranges.
- 	 */
- 	if (vib->speed) {
- 		vib->active = true;
--		vib->level = ((VIB_MAX_LEVELS * vib->speed) / MAX_FF_SPEED) +
--						VIB_MIN_LEVEL_mV;
--		vib->level /= 100;
-+		vib->level = ((VIB_MAX_LEVELS(vib) * vib->speed) / MAX_FF_SPEED) +
-+						VIB_MIN_LEVEL_mV(vib);
- 	} else {
- 		vib->active = false;
--		vib->level = VIB_MIN_LEVEL_mV / 100;
-+		vib->level = VIB_MIN_LEVEL_mV(vib);
-+
- 	}
- 
-+	if (!vib->drv2_addr)
-+		vib->level /= 100;
-+
- 	pm8xxx_vib_set(vib, vib->active);
- }
- 
-@@ -202,7 +232,7 @@ static int pm8xxx_vib_probe(struct platform_device *pdev)
- 
- 	vib->enable_addr = reg_base + regs->enable_offset;
- 	vib->drv_addr = reg_base + regs->drv_offset;
--
-+	vib->drv2_addr = reg_base + regs->drv2_offset;
- 	/* operate in manual mode */
- 	error = regmap_read(vib->regmap, vib->drv_addr, &val);
- 	if (error < 0)
-@@ -256,6 +286,7 @@ static const struct of_device_id pm8xxx_vib_id_table[] = {
- 	{ .compatible = "qcom,pm8058-vib", .data = &pm8058_regs },
- 	{ .compatible = "qcom,pm8921-vib", .data = &pm8058_regs },
- 	{ .compatible = "qcom,pm8916-vib", .data = &pm8916_regs },
-+	{ .compatible = "qcom,pmi632-vib", .data = &pmi632_regs },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, pm8xxx_vib_id_table);
+v5 -> v6:
+  - move qcs8550 board info bebind sm8550 boards info in qcom.yaml
 
+v4 -> v5:
+  - "2023-2024" instead of "2023~2024" for License
+  - update patch commit message to previous comments and with an updated
+    board diagram
+  - use qcs8550.dtsi instead of qcm8550.dtsi
+  - remove the reserved memory regions which will be handled by
+    bootloader
+  - remove pm8550_flash, pm8550_pwm nodes, Type-C USB/DP function node,
+    remoteproc_mpss function node, audio sound DTS node, new patch will
+    be updated after respective team's end to end full verification
+  - address comments to vph_pwr, move vph_pwr node and related
+    references to qcs8550-aim300-aiot.dts
+  - use "regulator-vph-pwr" instead of "vph_pwr_regulator"
+  - add pcie0I AND pcie1 support together
+  - the following patches were applied, so remove these patches from new
+    patch series:
+      - https://lore.kernel.org/linux-arm-msm/20240119100621.11788-3-quic_tengfan@quicinc.com
+      - https://lore.kernel.org/linux-arm-msm/20240119100621.11788-4-quic_tengfan@quicinc.com
+  - verified with dtb check, and result is expected, because those
+    warnings are not introduced by current patch series.
+    DTC_CHK arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dtb
+    arch/arm64/boot/dts/qcom/sm8550.dtsi:3015.27-3070.6: Warning
+    (avoid_unnecessary_addr_size): /soc@0/display-subsystem@ae00000/dsi@ae96000: unnecessary
+    #address-cells/#size-cells without "ranges" or child "reg" property
+    arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dtb:
+    opp-table: opp-75000000:opp-hz:0: [75000000, 0, 0, 75000000, 0, 0, 0, 0] is too long
+        from schema $id: http://devicetree.org/schemas/opp/opp-v2.yaml#
+    arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dtb:
+    opp-table: opp-150000000:opp-hz:0: [150000000, 0, 0, 150000000, 0, 0, 0, 0] is too long
+        from schema $id: http://devicetree.org/schemas/opp/opp-v2.yaml#
+    arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dtb:
+    opp-table: opp-300000000:opp-hz:0: [300000000, 0, 0, 300000000, 0, 0, 0, 0] is too long
+        from schema $id: http://devicetree.org/schemas/opp/opp-v2.yaml#
+    arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dtb:
+    opp-table: Unevaluated properties are not allowed ('opp-150000000', 'opp-300000000', 'opp-75000000' were unexpected)
+        from schema $id: http://devicetree.org/schemas/opp/opp-v2.yaml#
+
+v3 -> v4:
+  - use qcm8550.dtsi instead of qcs8550.dtsi, qcs8550 is a QCS version
+    of qcm8550, another board with qcm8550 will be added later
+  - add AIM300 AIoT board string in qcom.yaml file
+  - add sm8550 and qcm8550 fallback compatible
+  - add qcm8550 SoC id
+  - add reserved memory map codes in qcm8550.dtsi
+  - pm8010 and pmr73d are splited into carrier board DTS file. Because
+    the regulators which in pm8550, pm8550ve and pm8550vs are present
+    on the SoM. The regulators which in pm8010 and pmr73d are present
+    on the carrier board.
+  - stay VPH_PWR at qcs8550-aim300.dtsi file
+      VPH_PWR is obtained by vonverting 12v voltage into 3.7 voltage
+      with a 3.7v buck. VPH_PWR is power supply for regulators in AIM300
+      SOM. VPH_PWR regulator is defined in AIM300 SOM dtsi file.
+
+v2 -> v3:
+  - introduce qcs8550.dtsi
+  - separate fix dtc W=1 warning patch to another patch series
+
+v1 -> v2:
+  - merge the splited dts patches into one patch
+  - update dts file name from qcom8550-aim300.dts to qcs8550-aim300 dts
+  - drop PCIe1 dts node due to it is not enabled
+  - update display node name for drop sde characters
+
+previous discussion here:
+[1] v5: https://lore.kernel.org/linux-arm-msm/20240301134113.14423-1-quic_tengfan@quicinc.com
+[2] v4: https://lore.kernel.org/linux-arm-msm/20240119100621.11788-1-quic_tengfan@quicinc.com
+[3] v3: https://lore.kernel.org/linux-arm-msm/20231219005007.11644-1-quic_tengfan@quicinc.com
+[4] v2: https://lore.kernel.org/linux-arm-msm/20231207092801.7506-1-quic_tengfan@quicinc.com
+[5] v1: https://lore.kernel.org/linux-arm-msm/20231117101817.4401-1-quic_tengfan@quicinc.com
+
+
+
+Tengfei Fan (4):
+  dt-bindings: arm: qcom: Document QCS8550 SoC and the AIM300 AIoT board
+  arm64: dts: qcom: qcs8550: introduce qcs8550 dtsi
+  arm64: dts: qcom: add base AIM300 dtsi
+  arm64: dts: qcom: aim300: add AIM300 AIoT
+
+ .../devicetree/bindings/arm/qcom.yaml         |   8 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/qcs8550-aim300-aiot.dts     | 384 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi  | 345 ++++++++++++++++
+ arch/arm64/boot/dts/qcom/qcs8550.dtsi         | 169 ++++++++
+ 5 files changed, 907 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/qcs8550.dtsi
+
+
+base-commit: a6bd6c9333397f5a0e2667d4d82fef8c970108f2
 -- 
 2.25.1
-
 
 
