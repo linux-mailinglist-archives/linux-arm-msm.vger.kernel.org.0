@@ -1,151 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-16099-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16100-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D7C28952E4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 14:25:40 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B51548952FB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 14:30:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BD49D1C21286
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 12:25:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 695641F2576E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 12:30:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F90679B87;
-	Tue,  2 Apr 2024 12:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A8EC5467B;
+	Tue,  2 Apr 2024 12:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Y/PM2lOG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L6uGxGOM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575EA77F12
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Apr 2024 12:25:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB8C3611A;
+	Tue,  2 Apr 2024 12:30:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712060730; cv=none; b=bvdGju1bQgkHcKbBdOI2QpVAu8Asu0zPaQz8fsaN2cIjEB8gOi5FiyJT0n5v1+k3aueavazcuGdBPeG0E6TmrDlOKPf2byu/JWK4UcyU6eesXAxTWZ17zGVoqzRlYcSyAV4I13R7CVKNLLjnqfIHZibwmYPPv1cjlWwxDanZNSM=
+	t=1712061033; cv=none; b=K9QUMjUsr9tf+b1QV1ExclP4vGpX67c/jBfl5Pz8HaThWUaYeEWGBdq7EkoUPbYtrf5YYzUTi/GXFeZIl02sfIymsiocHeQ4uAQinSjvhPkAOM+KBeS2AqR/ebnjO/ROXv4C23Vnmw0OIjRinUrDdy67ZopBkPwCrC2SbIRmxMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712060730; c=relaxed/simple;
-	bh=p/UeUz6BQzzlTj362U5Q+0hUyUg483V1OKi+HLKX4OI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IlgsdJBnSfLU0SEyPu4bAAAYflQPXtlv9i1V07Eu+M81XnVXrmu0pr+DDOqyXWmql5Djx5tfsE7cGqJ8zACZy8te9EGhuGgLh4uBwG5QUbueS6iD7Kjd7sExNiRaH0EUZarNq75cINw8o/3IJrupeEjK1jSZogf3mio7KcN5xos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Y/PM2lOG; arc=none smtp.client-ip=209.85.128.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-61495e769bdso19093557b3.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Apr 2024 05:25:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712060727; x=1712665527; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XYDEIQksW8zQ45WbeyUEVn5ldQ4luRyFOVVyheFSkHo=;
-        b=Y/PM2lOGfwWISYEdLESt2KTtPtlHr8yg1/CGBA9FdtQYocQGHfZ+cW0YX8gg6woOzV
-         GW2SDVi0/W3ULE54zcjGLCvAVZmtCbh3VTBP3+tIbEtfDVbLhIKmqb1+a4TsXXIi5Yzk
-         SmHdUNPRN3zFBd10rSJY/qlNyGVwoVukAF36q+yItox15kUXELlUSRxcl8Mpdx9vLxmG
-         OY2lC+VOGMvXLQpb+r8L51QY+HHC99dDGGT3DX0N/M8WeSY9BE+U/oYh+6bWOLo9Abss
-         DlybL2mtVJawsbxg5WOsIutmwfbaMVxbHlwZxE2sF43N12B5PAMcfpnEeYIqUQTLlbrm
-         fqRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712060727; x=1712665527;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XYDEIQksW8zQ45WbeyUEVn5ldQ4luRyFOVVyheFSkHo=;
-        b=OQ++nXBVJ/Wju2HnypcwDI6Oo7BhAtnmJKTwv/V0W+kfAfCua1RYdy34Lc/XycpMAr
-         BI4GCo7G1TWx+00jxk1nDp3lElPYh4EthP+vzSUPuA7JAOLu5EECIaKKHHb0ChLJhe7q
-         +7rUVk91NvAQ1Pp0AvF+sugm+eu9E/nlwkz/fcUuJIH8Xv8ATW2RRSiLo/pMGvSTBWNB
-         jnH/lxG5klG2+nIQke3C4VpW89+q6gJpCNYN/dBKMH9RdaXPB0LAn2MpALaQHJhs4zB2
-         xD0kPNPJK5fT4b2CqIkcq3fTuQPuyVtLi4O4WqDOLhhh8vlTAsTMdsLQwBU6F302Jq7w
-         mmUQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW2de3iHZNMvT8Q82e0cemq0Md/7sM+CZetpPI2MYlrylPDzcp6UUmtUhrjLQ+PKJNuT48EtNJRBYA3TSZaVOuKXbHgJjdjT3x1qXS6iQ==
-X-Gm-Message-State: AOJu0YwKEMzuGEunqj6elE/cvI0QEKV8HYBwG130cMxbJY0ZW2OSZcrB
-	k3Runh6PuKNTX07Du0HsscvLJiz2womLWiSc3VywGr7F61kuFOGfEkx/QxtM1cBSmTWUvFUQnsf
-	KN9JCxLBPnws+PA5OAjV7R5gK6oH2LuysJxM00Q==
-X-Google-Smtp-Source: AGHT+IFUrSspS0uEXi4Mtdf0lWq2f6Bt6/664idaePnQ5n7gs/Aofr4lkRbBJPYECBaOux5ZgxpPBc0T/C/GsKmHDRA=
-X-Received: by 2002:a5b:104:0:b0:dcc:ec02:38b0 with SMTP id
- 4-20020a5b0104000000b00dccec0238b0mr8733778ybx.64.1712060727251; Tue, 02 Apr
- 2024 05:25:27 -0700 (PDT)
+	s=arc-20240116; t=1712061033; c=relaxed/simple;
+	bh=ddqA/sogrh0pyj1HLmomLRqQ5T9jyI8YMNiLkUaOzcI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QTcNnmPqsqLp7xWqWs4vqv2qjSUKMbLwjmzxX1sMh2PY6Y9Rk4Ejvab1gaNIDfEsVadFIDAuleorRPwbBo4Bp0D04u/GVIB5YWjLvKcOTda6cCflk64X0zJ5dWTSJdOf0RlYusaUrUO/8TE334XXy/LLAfqsW1ZL8JjQN/6oUkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L6uGxGOM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9495FC433C7;
+	Tue,  2 Apr 2024 12:30:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712061032;
+	bh=ddqA/sogrh0pyj1HLmomLRqQ5T9jyI8YMNiLkUaOzcI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=L6uGxGOMQk52/JmF2EUy63XOCU5OVmz0jruepa9iYN8BIaRPWC4cQPUJVABnsPHCo
+	 0V/dQn+qiBGttarE3gSJtHt+n65PcRWWOZ/ncPZ+9YMPf/vTlMGZjxDwuoOJnLnOw5
+	 b01Hd3CE1m0ahH6nwzwV/ixQtfAb0jotPOEePH+lfXrt44kYyk/zrb99PFE7g22q3Q
+	 g17+6aUxxgGtnb7nupU9HSfQovlZECjlgDVNTIEnlCvoauqcfkM7b3Ja2ms74di4Wc
+	 LqwmIUeykZLTCNBdger75mNrnFgDlIx3otNqVb9uChA49IHevjsuS7GBJv7s7nsCg4
+	 akGBBITEnJpJg==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rrdHc-0000000050M-1X6I;
+	Tue, 02 Apr 2024 14:30:32 +0200
+Date: Tue, 2 Apr 2024 14:30:32 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Maximilian Luz <luzmaximilian@gmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Guru Das Srinagesh <quic_gurus@quicinc.com>,
+	Ard Biesheuvel <ardb@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] firmware: qcom: uefisecapp: Fix memory related IO errors
+ and crashes
+Message-ID: <Zgv6aJ4byNiujmo-@hovoldconsulting.com>
+References: <20240329201827.3108093-1-luzmaximilian@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240327160314.9982-1-apais@linux.microsoft.com> <20240327160314.9982-3-apais@linux.microsoft.com>
-In-Reply-To: <20240327160314.9982-3-apais@linux.microsoft.com>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Tue, 2 Apr 2024 14:25:15 +0200
-Message-ID: <CACRpkdaSBGe0EFm1gK-7qPK4e6T2H1dxFXjhJqO2hWCm1-bNdA@mail.gmail.com>
-Subject: Re: [PATCH 2/9] dma: Convert from tasklet to BH workqueue
-To: Allen Pais <apais@linux.microsoft.com>
-Cc: linux-kernel@vger.kernel.org, tj@kernel.org, keescook@chromium.org, 
-	vkoul@kernel.org, marcan@marcan.st, sven@svenpeter.dev, 
-	florian.fainelli@broadcom.com, rjui@broadcom.com, sbranden@broadcom.com, 
-	paul@crapouillou.net, Eugeniy.Paltsev@synopsys.com, 
-	manivannan.sadhasivam@linaro.org, vireshk@kernel.org, Frank.Li@nxp.com, 
-	leoyang.li@nxp.com, zw@zh-kernel.org, wangzhou1@hisilicon.com, 
-	haijie1@huawei.com, shawnguo@kernel.org, s.hauer@pengutronix.de, 
-	sean.wang@mediatek.com, matthias.bgg@gmail.com, 
-	angelogioacchino.delregno@collabora.com, afaerber@suse.de, 
-	logang@deltatee.com, daniel@zonque.org, haojian.zhuang@gmail.com, 
-	robert.jarzmik@free.fr, andersson@kernel.org, konrad.dybcio@linaro.org, 
-	orsonzhai@gmail.com, baolin.wang@linux.alibaba.com, zhang.lyra@gmail.com, 
-	patrice.chotard@foss.st.com, wens@csie.org, jernej.skrabec@gmail.com, 
-	peter.ujfalusi@gmail.com, kys@microsoft.com, haiyangz@microsoft.com, 
-	wei.liu@kernel.org, decui@microsoft.com, jassisinghbrar@gmail.com, 
-	mchehab@kernel.org, maintainers@bluecherrydvr.com, 
-	aubin.constans@microchip.com, ulf.hansson@linaro.org, manuel.lauss@gmail.com, 
-	mirq-linux@rere.qmqm.pl, jh80.chung@samsung.com, oakad@yahoo.com, 
-	hayashi.kunihiko@socionext.com, mhiramat@kernel.org, brucechang@via.com.tw, 
-	HaraldWelte@viatech.com, pierre@ossman.eu, duncan.sands@free.fr, 
-	stern@rowland.harvard.edu, oneukum@suse.com, 
-	openipmi-developer@lists.sourceforge.net, dmaengine@vger.kernel.org, 
-	asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
-	linux-rpi-kernel@lists.infradead.org, linux-mips@vger.kernel.org, 
-	imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org, 
-	linux-mediatek@lists.infradead.org, linux-actions@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
-	linux-hyperv@vger.kernel.org, linux-rdma@vger.kernel.org, 
-	linux-media@vger.kernel.org, linux-mmc@vger.kernel.org, 
-	linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	linux-s390@vger.kernel.org, netdev@vger.kernel.org, linux-usb@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240329201827.3108093-1-luzmaximilian@gmail.com>
 
-Hi Allen,
+On Fri, Mar 29, 2024 at 09:18:25PM +0100, Maximilian Luz wrote:
+> It turns out that while the QSEECOM APP_SEND command has specific fields
+> for request and response buffers, uefisecapp expects them both to be in
+> a single memory region. Failure to adhere to this has (so far) resulted
+> in either no response being written to the response buffer (causing an
+> EIO to be emitted down the line), the SCM call to fail with EINVAL
+> (i.e., directly from TZ/firmware), or the device to be hard-reset.
+> 
+> While this issue can be triggered deterministically, in the current form
+> it seems to happen rather sporadically (which is why it has gone
+> unnoticed during earlier testing). This is likely due to the two
+> kzalloc() calls (for request and response) being directly after each
+> other. Which means that those likely return consecutive regions most of
+> the time, especially when not much else is going on in the system.
+> 
+> Fix this by allocating a single memory region for both request and
+> response buffers, properly aligning both structs inside it. This
+> unfortunately also means that the qcom_scm_qseecom_app_send() interface
+> needs to be restructured, as it should no longer map the DMA regions
+> separately. Therefore, move the responsibility of DMA allocation (or
+> mapping) to the caller.
+> 
+> Fixes: 759e7a2b62eb ("firmware: Add support for Qualcomm UEFI Secure Application")
+> Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
 
-thanks for your patch!
+Thanks for tracking this down. I can confirm that this fixes the
+hypervisor reset I can trigger by repeatedly reading an EFI variable on
+the X13s. Before it triggered within minutes, now I ran it for 3 hours
+without any issues:
 
-On Wed, Mar 27, 2024 at 5:03=E2=80=AFPM Allen Pais <apais@linux.microsoft.c=
-om> wrote:
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
 
-> The only generic interface to execute asynchronously in the BH context is
-> tasklet; however, it's marked deprecated and has some design flaws. To
-> replace tasklets, BH workqueue support was recently added. A BH workqueue
-> behaves similarly to regular workqueues except that the queued work items
-> are executed in the BH context.
->
-> This patch converts drivers/dma/* from tasklet to BH workqueue.
->
-> Based on the work done by Tejun Heo <tj@kernel.org>
-> Branch: git://git.kernel.org/pub/scm/linux/kernel/git/tj/wq.git for-6.10
->
-> Signed-off-by: Allen Pais <allen.lkml@gmail.com>
-(...)
-> diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-(...)
->         if (d40c->pending_tx)
-> -               tasklet_schedule(&d40c->tasklet);
-> +               queue_work(system_bh_wq, &d40c->work);
+Even if the patch is a bit large it's straight-forward and fixes a
+critical bug so I think this needs to go to stable as well:
 
-Why is "my" driver not allowed to use system_bh_highpri_wq?
+Cc: stable@vger.kernel.org	# 6.7
 
-I can't see the reasoning between some drivers using system_bh_wq
-and others being highpri?
+A couple of comments below.
 
-Given the DMA usecase I would expect them all to be high prio.
+> @@ -277,10 +296,15 @@ static efi_status_t qsee_uefi_get_variable(struct qcuefi_client *qcuefi, const e
+>  	unsigned long buffer_size = *data_size;
+>  	efi_status_t efi_status = EFI_SUCCESS;
+>  	unsigned long name_length;
+> +	dma_addr_t cmd_buf_phys;
 
-Yours,
-Linus Walleij
+Throughout the patch, could you please refer to DMA addresses as DMA
+addresses rather than physical addresses, for example, by using a "_dma"
+rather than "_phys" suffix here?
+
+> +	size_t cmd_buf_size;
+> +	void *cmd_buf_virt;
+
+I'd also prefer if you dropped the "_virt" suffix from the buffer
+pointers.
+
+> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+> index 49ddbcab06800..fc59688227f43 100644
+> --- a/drivers/firmware/qcom/qcom_scm.c
+> +++ b/drivers/firmware/qcom/qcom_scm.c
+> @@ -1579,46 +1579,26 @@ EXPORT_SYMBOL_GPL(qcom_scm_qseecom_app_get_id);
+>  /**
+>   * qcom_scm_qseecom_app_send() - Send to and receive data from a given QSEE app.
+>   * @app_id:   The ID of the target app.
+> - * @req:      Request buffer sent to the app (must be DMA-mappable).
+> + * @req:      Physical address of the request buffer sent to the app.
+
+DMA address
+
+>   * @req_size: Size of the request buffer.
+> - * @rsp:      Response buffer, written to by the app (must be DMA-mappable).
+> + * @rsp:      Physical address of the response buffer, written to by the app.
+
+DMA address
+
+>   * @rsp_size: Size of the response buffer.
+>   *
+>   * Sends a request to the QSEE app associated with the given ID and read back
+> - * its response. The caller must provide two DMA memory regions, one for the
+> - * request and one for the response, and fill out the @req region with the
+> + * its response. The caller must provide two physical memory regions, one for
+
+DMA memory
+
+> + * the request and one for the response, and fill out the @req region with the
+>   * respective (app-specific) request data. The QSEE app reads this and returns
+>   * its response in the @rsp region.
+>   *
+>   * Return: Zero on success, nonzero on failure.
+>   */
+> -int qcom_scm_qseecom_app_send(u32 app_id, void *req, size_t req_size, void *rsp,
+> -			      size_t rsp_size)
+> +int qcom_scm_qseecom_app_send(u32 app_id, dma_addr_t req, size_t req_size,
+> +			      dma_addr_t rsp, size_t rsp_size)
+
+And similar throughout.
+
+With that fixed, feel free to add:
+
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+
+Johan
 
