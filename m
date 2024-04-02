@@ -1,41 +1,41 @@
-Return-Path: <linux-arm-msm+bounces-16163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47819895E35
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 23:00:44 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1EEC8895E74
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 23:09:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DC6801F237AA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 21:00:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 507BE1C23774
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 21:09:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA88415E211;
-	Tue,  2 Apr 2024 21:00:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0946815E5A7;
+	Tue,  2 Apr 2024 21:09:36 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [5.144.164.170])
+Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [5.144.164.164])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B141415DBB5;
-	Tue,  2 Apr 2024 21:00:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205DF15DBB5;
+	Tue,  2 Apr 2024 21:09:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.164
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712091636; cv=none; b=HdKYD9Gv1bP1ZbFhFhBpZeZ3gdaudHU8deOR2YcV0biucIKUcfheph12Rc85EEAuedevI9EqW1Tgt3UMXUgFJ/t25RYr9Sj1JpZUcIY9cXm/kO45iY9NaFPgmXWaEloTze5UWNtMSYKdpiMu2w+quCXx9NCp2wH7suTcqE8Mtwc=
+	t=1712092175; cv=none; b=Xlgx7hySIW1956Y3/TFxNnHp928JMNd3Ett4SonRM7629DSHDTGeaayuoZtoUG6Vcn32QEQYXKpG/WpokuC5+5yxwVNeD0rMQgWM8XzsGSLb21aZjlqpcFVcNvSc7ZtXBgEkUqYuPNGkXzZdTmGXCBsL0RY9mE1NFCfybziemUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712091636; c=relaxed/simple;
-	bh=8NTqXgOWWcuq40W6UaNmXdNJpMviS07rSOpM1sm2UEY=;
+	s=arc-20240116; t=1712092175; c=relaxed/simple;
+	bh=EOJFldhFJH635Qqc1irTWwT+rLVHQgHvJvxPJ5C6Zq8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GZxTwOGeapgxXxfl7t/CKImWV8rUx0c+4GaTsEISCZFJhvaOrfic12CNqVYLSQlmrcGEIBlOIzSOMs+FkX9RzFX+9YVKQ0y7DTjD6GxibnNq/uIGB5TeVOLomSQNXkbzTRFar48AD73kj1aubtQR2HFhXqP5Z8fBEMaPet7z4Ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=nwMHoGf4CWmAzv6uk33eXfsM467+JRmr4qGeBReO7V717BywmzCqA/oFCebm4zpy9hFroDN7r0kpI3hDvQFlrvzYu7CrMnlX8/PIrCEeRILRpjt2iRN61pUL3HVhFCAjVUc9rsOU0LMyrE5BEMNjWgi4mQq9VQChEfjgLzxRcAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.164
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
 Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id CF73D1F509;
-	Tue,  2 Apr 2024 23:00:31 +0200 (CEST)
-Date: Tue, 2 Apr 2024 23:00:30 +0200
+	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 1579C202FC;
+	Tue,  2 Apr 2024 23:09:31 +0200 (CEST)
+Date: Tue, 2 Apr 2024 23:09:29 +0200
 From: Marijn Suijten <marijn.suijten@somainline.org>
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc: Sumit Semwal <sumit.semwal@linaro.org>, 
@@ -47,11 +47,10 @@ Cc: Sumit Semwal <sumit.semwal@linaro.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
 	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 2/4] drm/mipi-dsi: use correct return type for the DSC
- functions
-Message-ID: <rqj27ry5bvh5mcnstptshynm4t74jjcnvnr2qw4d7plqy4nkxi@xlisoqjblidj>
+Subject: Re: [PATCH v3 3/4] drm/mipi-dsi: add mipi_dsi_compression_mode_ext()
+Message-ID: <dgvztw55cr4wsbfxhf4ondzhaetodfcv4pndfug73suae5vp3v@4ozlmmsemfbm>
 References: <20240402-lg-sw43408-panel-v3-0-144f17a11a56@linaro.org>
- <20240402-lg-sw43408-panel-v3-2-144f17a11a56@linaro.org>
+ <20240402-lg-sw43408-panel-v3-3-144f17a11a56@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,65 +59,129 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240402-lg-sw43408-panel-v3-2-144f17a11a56@linaro.org>
+In-Reply-To: <20240402-lg-sw43408-panel-v3-3-144f17a11a56@linaro.org>
 
-On 2024-04-02 02:51:13, Dmitry Baryshkov wrote:
-> The functions mipi_dsi_compression_mode() and
-> mipi_dsi_picture_parameter_set() return 0-or-error rather than a buffer
-> size. Follow example of other similar MIPI DSI functions and use int
-> return type instead of size_t.
+On 2024-04-02 02:51:14, Dmitry Baryshkov wrote:
+> Add the extended version of mipi_dsi_compression_mode(). It provides
+> a way to specify the algorithm and PPS selector.
 > 
-> Fixes: f4dea1aaa9a1 ("drm/dsi: add helpers for DSI compression mode and PPS packets")
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-
 > ---
->  drivers/gpu/drm/drm_mipi_dsi.c | 6 +++---
->  include/drm/drm_mipi_dsi.h     | 6 +++---
->  2 files changed, 6 insertions(+), 6 deletions(-)
+>  drivers/gpu/drm/drm_mipi_dsi.c | 33 +++++++++++++++++++++++++++------
+>  include/drm/drm_mipi_dsi.h     |  9 +++++++++
+>  2 files changed, 36 insertions(+), 6 deletions(-)
 > 
 > diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
-> index ef6e416522f8..9874ff6d4718 100644
+> index 9874ff6d4718..0ecbc811eb7a 100644
 > --- a/drivers/gpu/drm/drm_mipi_dsi.c
 > +++ b/drivers/gpu/drm/drm_mipi_dsi.c
-> @@ -654,7 +654,7 @@ EXPORT_SYMBOL(mipi_dsi_set_maximum_return_packet_size);
+> @@ -645,19 +645,24 @@ int mipi_dsi_set_maximum_return_packet_size(struct mipi_dsi_device *dsi,
+>  EXPORT_SYMBOL(mipi_dsi_set_maximum_return_packet_size);
+>  
+>  /**
+> - * mipi_dsi_compression_mode() - enable/disable DSC on the peripheral
+> + * mipi_dsi_compression_mode_ext() - enable/disable DSC on the peripheral
+>   * @dsi: DSI peripheral device
+>   * @enable: Whether to enable or disable the DSC
+> + * @algo: Selected algorithm
+> + * @pps_selector: The PPS selector
+
+Not a big fan of paraphrasing the parameter name, it adds no value.  How about
+describing what this parameter means and what it does?:
+
+	PPS table index to use.  Corresponds to a table pre-programmed on the peripheral
+	or a table programmed with &drm_dsc_picture_parameter_set.pps_identifier.
+
+(That should be a valid kernel-doc cross-reference to the field)
+
+>   *
+> - * Enable or disable Display Stream Compression on the peripheral using the
+> - * default Picture Parameter Set and VESA DSC 1.1 algorithm.
+> + * Enable or disable Display Stream Compression on the peripheral.
 >   *
 >   * Return: 0 on success or a negative error code on failure.
 >   */
-> -ssize_t mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
-> +int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
+> -int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
+> +int mipi_dsi_compression_mode_ext(struct mipi_dsi_device *dsi, bool enable,
+> +				  enum mipi_dsi_compression_algo algo,
+> +				  unsigned int pps_selector)
 >  {
->  	/* Note: Needs updating for non-default PPS or algorithm */
->  	u8 tx[2] = { enable << 0, 0 };
-> @@ -679,8 +679,8 @@ EXPORT_SYMBOL(mipi_dsi_compression_mode);
->   *
->   * Return: 0 on success or a negative error code on failure.
->   */
-> -ssize_t mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
-> -				       const struct drm_dsc_picture_parameter_set *pps)
-> +int mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
-> +				   const struct drm_dsc_picture_parameter_set *pps)
->  {
+> -	/* Note: Needs updating for non-default PPS or algorithm */
+> -	u8 tx[2] = { enable << 0, 0 };
+> +	u8 data = (enable << 0) |
+> +		(algo << 1) |
+> +		(pps_selector << 4);
+
+Do we need some size validation (if > 3 return -EINVAL)?  FIELD_PREP() might be
+too heavy though.
+
+> +	u8 tx[2] = { data, 0 };
 >  	struct mipi_dsi_msg msg = {
 >  		.channel = dsi->channel,
+>  		.type = MIPI_DSI_COMPRESSION_MODE,
+> @@ -668,6 +673,22 @@ int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
+>  
+>  	return (ret < 0) ? ret : 0;
+>  }
+> +EXPORT_SYMBOL(mipi_dsi_compression_mode_ext);
+> +
+> +/**
+> + * mipi_dsi_compression_mode() - enable/disable DSC on the peripheral
+> + * @dsi: DSI peripheral device
+> + * @enable: Whether to enable or disable the DSC
+> + *
+> + * Enable or disable Display Stream Compression on the peripheral using the
+> + * default Picture Parameter Set and VESA DSC 1.1 algorithm.
+> + *
+> + * Return: 0 on success or a negative error code on failure.
+> + */
+> +int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
+> +{
+> +	return mipi_dsi_compression_mode_ext(dsi, enable, 0, MIPI_DSI_COMPRESSION_DSC);
+
+I hope the compiler complains here that it should be MIPI_DSI_COMPRESSION_DSC,0
+
+(Enum algo first, int pps_selector last)
+
+> +}
+>  EXPORT_SYMBOL(mipi_dsi_compression_mode);
+>  
+>  /**
 > diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
-> index c0aec0d4d664..3011d33eccbd 100644
+> index 3011d33eccbd..78cb7b688b1d 100644
 > --- a/include/drm/drm_mipi_dsi.h
 > +++ b/include/drm/drm_mipi_dsi.h
-> @@ -241,9 +241,9 @@ int mipi_dsi_shutdown_peripheral(struct mipi_dsi_device *dsi);
->  int mipi_dsi_turn_on_peripheral(struct mipi_dsi_device *dsi);
+> @@ -226,6 +226,12 @@ static inline int mipi_dsi_pixel_format_to_bpp(enum mipi_dsi_pixel_format fmt)
+>  	return -EINVAL;
+>  }
+>  
+> +enum mipi_dsi_compression_algo {
+> +	MIPI_DSI_COMPRESSION_DSC = 0,
+
+Add 1.1?  Or does it also allow 1.2 (when the version is also set via PPS)?
+
+> +	MIPI_DSI_COMPRESSION_VENDOR = 3,
+> +	/* other two values are reserved, DSI 1.3 */
+> +};
+> +
+>  struct mipi_dsi_device *
+>  mipi_dsi_device_register_full(struct mipi_dsi_host *host,
+>  			      const struct mipi_dsi_device_info *info);
+> @@ -242,6 +248,9 @@ int mipi_dsi_turn_on_peripheral(struct mipi_dsi_device *dsi);
 >  int mipi_dsi_set_maximum_return_packet_size(struct mipi_dsi_device *dsi,
 >  					    u16 value);
-> -ssize_t mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable);
-> -ssize_t mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
-> -				       const struct drm_dsc_picture_parameter_set *pps);
-> +int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable);
-> +int mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
-> +				   const struct drm_dsc_picture_parameter_set *pps);
+>  int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable);
+> +int mipi_dsi_compression_mode_ext(struct mipi_dsi_device *dsi, bool enable,
+> +				  unsigned int pps_selector,
+> +				  enum mipi_dsi_compression_algo algo);
+
+Oh, this declaration is inverse from the definition...
+
+- Marijn
+
+>  int mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
+>  				   const struct drm_dsc_picture_parameter_set *pps);
 >  
->  ssize_t mipi_dsi_generic_write(struct mipi_dsi_device *dsi, const void *payload,
->  			       size_t size);
 > 
 > -- 
 > 2.39.2
