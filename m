@@ -1,63 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-16109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16110-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 477938955D1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 15:53:01 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 22CE0895686
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 16:25:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F059828472B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 13:52:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CAED4282E41
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 14:25:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9825E84A22;
-	Tue,  2 Apr 2024 13:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AB4086622;
+	Tue,  2 Apr 2024 14:25:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HtOEHrQ2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vQOYY85c"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95667764E;
-	Tue,  2 Apr 2024 13:52:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEE5B8625B
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Apr 2024 14:25:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712065968; cv=none; b=fo6EOrksSoFriTuAFZzvXEIbK8GDtb3UaKPnih6Pq5yXWR86r2HGuD0ZYAv2cF+y60lYnj93mr7IjnykW0tToYgaE11DWIPfJzp9GZAzAXVElQacCAkHLAY31JuuK9LyL9Hf5O9Hz1NRlY5hwr5gO8U/bljnTb8alpV3lpy462c=
+	t=1712067905; cv=none; b=W29JTU04eZdArJ0nLy4Eg6IpB4+tWb4NJDoWw8AIreHVQTJ5T3+Nt2T0L25iv/AIJN5Es6rfbJarCgI0JdMqY26v4HkGuoa12NUMVWPNIvSzLBGcj5kYaXk2ZxPzZFtOF4OcbbTz2pF63/399Gk9N2LaVzczNnnjUZA5Vm272S0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712065968; c=relaxed/simple;
-	bh=DB+ahEafpRni611DhU/MfKZ4/BJcBCai0etUoDOdEGw=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=IaFKbYtE3RgciIfB0C/Y2gIdrYxGEef6NayUfHV/GwpppnCIqu4J7xSPgk8e3blvL/E+263u9VHuC/lJUgPt6pPdYA4/3NEmU5OOoPen7Dbvcd55UATxghXc2GOIRyM325OWzJ0kNQGFgAjzK4TZhScV5QXJOJ2WKvyC2mB76Bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HtOEHrQ2; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 432BjQTE030223;
-	Tue, 2 Apr 2024 13:52:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:from:to:cc:references
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=PtUz8Bqtl00LR/OIst0NXPj5KZ5HG092nIuE6D4bz3o=; b=Ht
-	OEHrQ2pw2ojoN8ITPv9Xes5Zxdsi2w+hzWHiU0Qn4KrAfL2pHBi1J71nDqnXVlWc
-	vi9/dA1hK62fvfQkxdqrB+fyK9G30l57UF7LPLXK4aV00ofbJfyuKDhNMpy10xca
-	ncDfAAiiY8mp3RTTJJRwEYr9T4xUum00DOPy+joV9S4B8yrm8WC5nhwS6dcjDQSP
-	iub51IgZl5vugGAOgD3e4KoJwL7lnjbONqMbGO1ZVIVEPQVROKMiyuAweZWacpF1
-	Ts/kY7kO5O/olIXzmzhXpgoLyYCZlNthq/8j0rNrvCZIg4caV6dPrV9UkMckbk5I
-	6j2trHicOk5D/ULMU43A==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x8ha3gena-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 02 Apr 2024 13:52:43 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 432DqhE7031729
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 2 Apr 2024 13:52:43 GMT
-Received: from [10.253.10.145] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 2 Apr 2024
- 06:52:40 -0700
-Message-ID: <0cfac65c-8b71-4900-88a3-631c93aebc17@quicinc.com>
-Date: Tue, 2 Apr 2024 21:52:38 +0800
+	s=arc-20240116; t=1712067905; c=relaxed/simple;
+	bh=5wsKlMW6zuiZvmqCr9BLGY7yhgdT6UjqJaE2/GK7Dqw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dqNoiTJvM0/KrYwIzByYzQnGbHqa61LWxH5QruWp/DEn4lbse+UokW7BnJqcRbPrVotD6J++6GbVuaQ41umKvcMf0FFEtuMEruhelFWCGXGSgaaff6w61G4HRXif46iEgngdSJAHo4yrMMubFOQsP21upHz8CP6TZ6IZHUJRtYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vQOYY85c; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a4e79d7d21dso95660666b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Apr 2024 07:25:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712067902; x=1712672702; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=4hWsU1/H1ichuozopazuwmACCLdHZgCpChahByKTRKc=;
+        b=vQOYY85c7GcsJT5xtHv6+xdsQgN0rDTZLGxAqvoK7T3MSzi8jvEbztR7Ior3IRz1me
+         OgiGjXathKQZP7Bt4yrBYtHC/W52bYsqloya5W6Wuxy9D6MchipMMFOwaWRvqbcrbOtk
+         3SgSON4lLauchGcCEbKQzOhYjzM6vywRBE0TxRTjm1aFiQXmVTWtQzH4blTJMRIjc114
+         s8zCdvF2d2vBdAc18ogTWyc1cgyrdAWJFCRmOw9YWluFD8ipSc0EtDZoukeiVXImv8fU
+         AF3qMe40/8vYJwk5XS8ZPoGf1HxlhBGr9Rg0ZU04v+Nc4IXo+2y17fKqTD1ItRq+Sieg
+         XycQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712067902; x=1712672702;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4hWsU1/H1ichuozopazuwmACCLdHZgCpChahByKTRKc=;
+        b=jSetCS/qjNsw9ZuFB9vtz2wQfDA9z2OuIMfsNb2erKWpWoaiXmKuHmgvBgGBQBfTGD
+         s2Xe9LBrwK0/Ivl5FgBl8X1q1HfZRZPg93+soq1MRJ7bA9rhp3CnO4j9IWyKULEXlqU6
+         14Kd6csGFuzYYBewavOexGyeF36B7cEtLY9V6O/51ERi5r4LhkcP42SUE5xBdue2hiCd
+         y5P8qymSOqgvkO3lcYilVsMgKc8nYPRO5Ler26ys9fKPY8gzSYh1FYfZmz0hrzvY5T25
+         amh+91MgXlYOv7jZ5T2VRUVhI/ykKk/SEyYYPW/hJMsuzdU4Xcia+H2AOwpDpUBRUPIf
+         GAsA==
+X-Forwarded-Encrypted: i=1; AJvYcCV/bDzgPaqHPWtcHtAaIwhUy31FXAB6244wfh+WcyEy25vKKUSOKk5FG0ZFGvWd1g6BP2q2NmMTNu9N31RT7O7nFt1ltg4+bRm5xzFYmQ==
+X-Gm-Message-State: AOJu0YzUPFwiertPZdG+zlEXQZbHqVzNN4J5Deq9lBJmzWsJG84YyFJN
+	IYIdnYFe8ecwyGoKJboJVv3+slOyYmpSYYj45YgcdQCA9c24Aodi3LvXdCRKd0U=
+X-Google-Smtp-Source: AGHT+IE5yfHNcLZvYypEgIbF5cB/0sM4sPMsaHd89klD+N6G/0DtQYDrwwsOfaryz+F6DY+dpQM1Jg==
+X-Received: by 2002:a50:9fa7:0:b0:56c:995:5b with SMTP id c36-20020a509fa7000000b0056c0995005bmr1678629edf.11.1712067901982;
+        Tue, 02 Apr 2024 07:25:01 -0700 (PDT)
+Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id y11-20020aa7c24b000000b0056bdec673c3sm6997639edo.38.2024.04.02.07.24.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Apr 2024 07:25:01 -0700 (PDT)
+Message-ID: <51c84af2-73f7-4af4-8676-2276b6c7786d@linaro.org>
+Date: Tue, 2 Apr 2024 16:24:58 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,130 +77,91 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] bus: mhi: host: Add sysfs entry to force device to enter
- EDL
+Subject: Re: [PATCH v2] i2c: i2c-qcom-geni: Add support to share an I2C SE
+ from two subsystem
+To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>, andersson@kernel.org,
+ andi.shyti@kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
+ dmaengine@vger.kernel.org
+Cc: quic_vdadhani@quicinc.com, Vinod Koul <vkoul@kernel.org>
+References: <20240402062131.9836-1-quic_msavaliy@quicinc.com>
 Content-Language: en-US
-From: Qiang Yu <quic_qianyu@quicinc.com>
-To: Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Manivannan Sadhasivam
-	<mani@kernel.org>
-CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
-        <quic_mrana@quicinc.com>, Bhaumik Bhatt <quic_bbhatt@quicinc.com>
-References: <1703490474-84730-1-git-send-email-quic_qianyu@quicinc.com>
- <cff4b828-9566-a2bd-287a-138d74a76a59@quicinc.com>
- <20240102165229.GC4917@thinkpad>
- <90c0a654-a02f-46e2-96a9-34f6a30c95a0@quicinc.com>
- <a10439f1-0fcd-834c-12a3-677976529cf1@quicinc.com>
- <e78382b5-428e-4de8-be0d-b319534238f1@quicinc.com>
-In-Reply-To: <e78382b5-428e-4de8-be0d-b319534238f1@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: fMSS4H5zgWJO9_RmI54q6yj8Lfaq8Ri2
-X-Proofpoint-GUID: fMSS4H5zgWJO9_RmI54q6yj8Lfaq8Ri2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-02_07,2024-04-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
- priorityscore=1501 mlxlogscore=999 spamscore=0 lowpriorityscore=0
- clxscore=1015 adultscore=0 bulkscore=0 suspectscore=0 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2404020102
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240402062131.9836-1-quic_msavaliy@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+On 2.04.2024 8:21 AM, Mukesh Kumar Savaliya wrote:
+> Add feature to share an I2C serial engine between two subsystems(SS) so
+> that individual clients from different subsystems can access the same bus.
+> For example single i2c slave device can be accessed by Client driver from
+> APPS OR modem subsystem image. Same way we can have slave being accessed
+> between APPS and TZ subsystems.
+> 
+> This is possible in GSI mode where driver queues the TREs with required
+> descriptors and ensures to execute TREs in an mutually exclusive way.
+> Issue a "Lock TRE" command at the start of the transfer and an "Unlock TRE"
+> command at the end of the transfer. This prevents other subsystems from
+> concurrently performing DMA transfers and avoids disturbance to data path.
+> Change MAX_TRE macro to 5 from 3 because of these two additional TREs.
+> 
+> Since the GPIOs are also shared for the i2c bus, do not touch GPIO
+> configuration while going to runtime suspend and only turn off the
+> clocks. This will allow other SS to continue to transfer the data.
+> 
+> This feature needs to be controlled by DTSI flag to make it flexible
+> based on the usecase, hence during probe check the same from i2c driver.
+> 
+> Export function geni_se_clks_off() to call explicitly instead of
+> geni_se_resources_off() to not modify TLMM configuration as other SS might
+> perform the transfer while APPS SS can go to sleep.
+> 
+> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+> ---
+> v1 -> v2:
+> - Addressed review comments.
 
-On 4/2/2024 12:34 PM, Qiang Yu wrote:
->
-> On 1/12/2024 3:08 AM, Jeffrey Hugo wrote:
->> On 1/9/2024 2:20 AM, Qiang Yu wrote:
->>>
->>> On 1/3/2024 12:52 AM, Manivannan Sadhasivam wrote:
->>>> On Tue, Jan 02, 2024 at 08:31:15AM -0700, Jeffrey Hugo wrote:
->>>>> On 12/25/2023 12:47 AM, Qiang Yu wrote:
->>>>>> From: Bhaumik Bhatt <quic_bbhatt@quicinc.com>
->>>>>>
->>>>>> Forcing the device (eg. SDX75) to enter Emergency Download Mode 
->>>>>> involves
->>>>>> writing the 0xEDEDEDED cookie to the channel 91 doorbell register 
->>>>>> and
->>>>>> forcing an SOC reset afterwards. Allow users of the MHI bus to 
->>>>>> exercise the
->>>>>> sequence using a sysfs entry.
->>>>> I don't see this documented in the spec anywhere.  Is this 
->>>>> standard behavior
->>>>> for all MHI devices?
->>>>>
->>>>> What about devices that don't support EDL mode?
->>>>>
->>>>> How should the host avoid using this special cookie when EDL mode 
->>>>> is not
->>>>> desired?
->>>>>
->>>> All points raised by Jeff are valid. I had discussions with Hemant 
->>>> and Bhaumik
->>>> previously on allowing the devices to enter EDL mode in a generic 
->>>> manner and we
->>>> didn't conclude on one final approach.
->>>>
->>>> Whatever way we come up with, it should be properly described in 
->>>> the MHI spec
->>>> and _should_ be backwards compatible.
->>>
->>> Hi Mani, Jeff. The method of entering EDL mode is documented in MHI 
->>> spec v1.2, Chapter 13.2.
->>>
->>> Could you please check once?
->>
->> I do see it listed there.  However that was a FR for SDX55, so 
->> devices prior to that would not support this.  AIC100 predates this 
->> change and would not support the functionality.  I verified the 
->> AIC100 implementation is not aware of this cookie.
->>
->> Also, that functionality depends on channel 91 being reserved per the 
->> table 9-2, however that table only applies to modem class devices as 
->> it is under chapter 9 "Modem protocols over PCIe". Looking at the 
->> ath11k and ath12k implementations in upstream, it looks like they 
->> partially comply.  Other devices have different MHI channel definitions.
->>
->> Chapter 9 doesn't appear to be in older versions of the spec that I 
->> have, so it is unclear if this functionality is backwards compatible 
->> (was channel 91 used for another purpose in pre-SDX55 modems).
->>
->> I'm not convinced this belongs in the MHI core.  At a minimum, the 
->> MHI controller(s) for the applicable devices needs to opt-in to this.
->>
->> -Jeff
-> Hi Jeff
->
-> Sorry for reply so late. In older versions of the spec, there is no 
-> description about EDL doorbell. However, in MHI spec v1.2, section 13.2,
-> It explicitly says "To set the EDL cookie, the host writes 0xEDEDEDED 
-> to channel doorbell 91." So I think every device based on MHI spec v1.2
-> should reserve channel doorbell 91 for EDL mode.
->
-> So can we add another flag called mhi_ver in mhi controller to 
-> indicate its mhi version and then we can add mhi_ver checking to 
-> determine if this
-> device supports EDL sysfs operation?
->
-> Thanks,
-> Qiang
+The biggest one ("too many changes across the board") is still not
+addressed and the patch will not be further reviewed until that is done.
 
-I discussed with internal team, look like devices that reserve channel 
-doorbell 91 for EDL, thier MHIVER register value can still be 1.0 instead
-of 1.2. So even if we add a flag called mhi_ver to store the value read 
-from the MHIVER register. We still can not do EDL support check depend 
-on it.
+Each subsystem has different owners and each change requires an explanation
+(maintainers always "expect your patch to be wrong" and you need to
+convince them otherwise through commit messages)
 
-But I still think enter EDL mode by writing EDL cookie to channel 
-doorbell is a standard way. At least it's a standard way from MHI spec V1.2.
-
-In mhi_controller, we have a variable edl_image representing the name 
-and path of firmware. But We still can not determine if the device reserve
-channel doorbell 91 by checking this because some devices may enter EDL 
-mode in different way. Mayebe we have to add a flag in mhi_controller
-called edl_support to do the check.
+Konrad
 
