@@ -1,59 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-16162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A38C2895E2D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 22:59:22 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47819895E35
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 23:00:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D6C43B2650C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 20:59:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DC6801F237AA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 21:00:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE4D815E1F5;
-	Tue,  2 Apr 2024 20:59:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA88415E211;
+	Tue,  2 Apr 2024 21:00:36 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
+Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [5.144.164.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2253415DBB5;
-	Tue,  2 Apr 2024 20:59:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.165
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B141415DBB5;
+	Tue,  2 Apr 2024 21:00:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712091557; cv=none; b=DHr+t1iq2Y93yvjRT+zfA0p6C0MevudUIhdXX9bU+DpGrLEjXzJHtCaajVRLYQzFBaLhZi/t5VswRmvj/E1eN6tVievuVADdaPVf5jD92uxLC1o5+3e+q03M6Wkqr3fd4YnNdFjSBGrq+GnBxpLg2MzoDfIT8yIDn4lLpV8SqmI=
+	t=1712091636; cv=none; b=HdKYD9Gv1bP1ZbFhFhBpZeZ3gdaudHU8deOR2YcV0biucIKUcfheph12Rc85EEAuedevI9EqW1Tgt3UMXUgFJ/t25RYr9Sj1JpZUcIY9cXm/kO45iY9NaFPgmXWaEloTze5UWNtMSYKdpiMu2w+quCXx9NCp2wH7suTcqE8Mtwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712091557; c=relaxed/simple;
-	bh=A0BdsTR1uBpW9ybNTgIxTxAUIOaz9BckDqKRb1BNf0M=;
+	s=arc-20240116; t=1712091636; c=relaxed/simple;
+	bh=8NTqXgOWWcuq40W6UaNmXdNJpMviS07rSOpM1sm2UEY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Lc5sGow6RUV5A94J5K7hpV26zuY7kwC9AqUWcCD2ybge0VFkh9af37VODMEBKbwP/AxO1j8ugAeXE6aiuHYZe24IBreuDFihwCgohaIbbuXjLVaMFoGCrEg0i6qsAqfpLM8ueoXbgw6xfqhQt/AaEV7M/b4CyGI4z9rssVQmCko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.165
+	 Content-Type:Content-Disposition:In-Reply-To; b=GZxTwOGeapgxXxfl7t/CKImWV8rUx0c+4GaTsEISCZFJhvaOrfic12CNqVYLSQlmrcGEIBlOIzSOMs+FkX9RzFX+9YVKQ0y7DTjD6GxibnNq/uIGB5TeVOLomSQNXkbzTRFar48AD73kj1aubtQR2HFhXqP5Z8fBEMaPet7z4Ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
 Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 143DF20288;
-	Tue,  2 Apr 2024 22:59:13 +0200 (CEST)
-Date: Tue, 2 Apr 2024 22:59:11 +0200
+	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id CF73D1F509;
+	Tue,  2 Apr 2024 23:00:31 +0200 (CEST)
+Date: Tue, 2 Apr 2024 23:00:30 +0200
 From: Marijn Suijten <marijn.suijten@somainline.org>
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
-	Sumit Semwal <sumit.semwal@linaro.org>, Caleb Connolly <caleb.connolly@linaro.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	Sam Ravnborg <sam@ravnborg.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>, 
-	Caleb Connolly <caleb@connolly.tech>
-Subject: Re: [PATCH v3 1/4] dt-bindings: panel: Add LG SW43408 MIPI-DSI panel
-Message-ID: <t3cx5qxiteer27vsvysizbrxkbamxgrcbn2oafisodjopwas5z@nxlasb4rlnml>
+Cc: Sumit Semwal <sumit.semwal@linaro.org>, 
+	Caleb Connolly <caleb.connolly@linaro.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 2/4] drm/mipi-dsi: use correct return type for the DSC
+ functions
+Message-ID: <rqj27ry5bvh5mcnstptshynm4t74jjcnvnr2qw4d7plqy4nkxi@xlisoqjblidj>
 References: <20240402-lg-sw43408-panel-v3-0-144f17a11a56@linaro.org>
- <20240402-lg-sw43408-panel-v3-1-144f17a11a56@linaro.org>
- <9fbb9058-ccfe-436d-b413-b3ba27e4e5f9@linaro.org>
- <CAA8EJprwWd=ZtwnpTm3cVP8RBEqxCcSGyBu-bHj=iV=+X2=FyQ@mail.gmail.com>
+ <20240402-lg-sw43408-panel-v3-2-144f17a11a56@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,36 +60,67 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAA8EJprwWd=ZtwnpTm3cVP8RBEqxCcSGyBu-bHj=iV=+X2=FyQ@mail.gmail.com>
+In-Reply-To: <20240402-lg-sw43408-panel-v3-2-144f17a11a56@linaro.org>
 
-On 2024-04-02 10:23:22, Dmitry Baryshkov wrote:
-> On Tue, 2 Apr 2024 at 09:31, Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
-> >
-> > On 02/04/2024 01:51, Dmitry Baryshkov wrote:
-> > > From: Sumit Semwal <sumit.semwal@linaro.org>
-> > >
-> > > LG SW43408 is 1080x2160, 4-lane MIPI-DSI panel present on Google Pixel 3
-> > > phones.
-> > >
-> > > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > > Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
-> > > [caleb: convert to yaml]
-> > > Signed-off-by: Caleb Connolly <caleb@connolly.tech>
-> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > ---
-> >
-> > Tags missing.
-> >
-> > `b4 trailers -u`
+On 2024-04-02 02:51:13, Dmitry Baryshkov wrote:
+> The functions mipi_dsi_compression_mode() and
+> mipi_dsi_picture_parameter_set() return 0-or-error rather than a buffer
+> size. Follow example of other similar MIPI DSI functions and use int
+> return type instead of size_t.
 > 
-> Excuse me, I keep on forgetting it.
+> Fixes: f4dea1aaa9a1 ("drm/dsi: add helpers for DSI compression mode and PPS packets")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Does a similar thing exist for adding Cc: tags for all reviewers/replyers to an
-earlier version, even if said reviewer didn't yet provide R-b/A-b or other tags?
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 
-I'd like to have the next revisions in my inbox as well after leaving
-comments :)
-
-Thanks! - Marijn
+> ---
+>  drivers/gpu/drm/drm_mipi_dsi.c | 6 +++---
+>  include/drm/drm_mipi_dsi.h     | 6 +++---
+>  2 files changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
+> index ef6e416522f8..9874ff6d4718 100644
+> --- a/drivers/gpu/drm/drm_mipi_dsi.c
+> +++ b/drivers/gpu/drm/drm_mipi_dsi.c
+> @@ -654,7 +654,7 @@ EXPORT_SYMBOL(mipi_dsi_set_maximum_return_packet_size);
+>   *
+>   * Return: 0 on success or a negative error code on failure.
+>   */
+> -ssize_t mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
+> +int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
+>  {
+>  	/* Note: Needs updating for non-default PPS or algorithm */
+>  	u8 tx[2] = { enable << 0, 0 };
+> @@ -679,8 +679,8 @@ EXPORT_SYMBOL(mipi_dsi_compression_mode);
+>   *
+>   * Return: 0 on success or a negative error code on failure.
+>   */
+> -ssize_t mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
+> -				       const struct drm_dsc_picture_parameter_set *pps)
+> +int mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
+> +				   const struct drm_dsc_picture_parameter_set *pps)
+>  {
+>  	struct mipi_dsi_msg msg = {
+>  		.channel = dsi->channel,
+> diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
+> index c0aec0d4d664..3011d33eccbd 100644
+> --- a/include/drm/drm_mipi_dsi.h
+> +++ b/include/drm/drm_mipi_dsi.h
+> @@ -241,9 +241,9 @@ int mipi_dsi_shutdown_peripheral(struct mipi_dsi_device *dsi);
+>  int mipi_dsi_turn_on_peripheral(struct mipi_dsi_device *dsi);
+>  int mipi_dsi_set_maximum_return_packet_size(struct mipi_dsi_device *dsi,
+>  					    u16 value);
+> -ssize_t mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable);
+> -ssize_t mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
+> -				       const struct drm_dsc_picture_parameter_set *pps);
+> +int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable);
+> +int mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
+> +				   const struct drm_dsc_picture_parameter_set *pps);
+>  
+>  ssize_t mipi_dsi_generic_write(struct mipi_dsi_device *dsi, const void *payload,
+>  			       size_t size);
+> 
+> -- 
+> 2.39.2
+> 
 
