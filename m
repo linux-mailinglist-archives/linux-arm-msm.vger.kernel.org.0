@@ -1,143 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-16058-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16059-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25386895082
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 12:41:31 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3350A895084
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 12:41:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 98A6AB23940
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 10:41:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 659E51C225B0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 10:41:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96A804CDF9;
-	Tue,  2 Apr 2024 10:40:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AB615E060;
+	Tue,  2 Apr 2024 10:40:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Oa+x4i9P"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GE9/grAw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0554F897;
-	Tue,  2 Apr 2024 10:40:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCFEF5B5C5
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Apr 2024 10:40:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712054417; cv=none; b=lM8t07uBmkNobX5y1rbUlpHdlobePlCByO8fQrOCVZTIuXSfd/btPOhLTWqzTxplakDqgL51RerZk1wgcQ5uwkSachxUv9hjS384gKqmdMiGgNbwZ8cdX4irYzUtB2k+MwjFK+vYR4Lafo3+3SJ2q3V8Zq7rWHdsQXV4mJ6u8A4=
+	t=1712054446; cv=none; b=SQBlvUuICOa9FZ+9sZz0MGJZ3crYwUFb0940tQSh95cPxZF5A5wXnPgcTdrZG+EYnf37kCYPcVJJUooBO3gIDjx2KLXIinLiB5zdrz9Xpqkb0UaAM9dgEjKcHtqEHXTYx6hY0CC10VK2qc0sHZiIqCZ0NpFgd4qeGXY35Qx1Lyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712054417; c=relaxed/simple;
-	bh=znHWUavCj46z2XKYldokx9ecmiWhHaeLqUlAqoDEUQw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oi9RVqUnZ2L9iIJBbWpkOkjzZ0r94uVjmJegGDS5ZU4DfcVWX2ID3Fy2TAgQMVSeC6CYanEynSgjQ7tGkV09hbVvbncCInpch5phTPGJcFDmxaofIk2iTIO7vTtxZI5RQ44+1g7JdPoNXxYpvCkGvs3VEYQaQmdQhPlzGzpUHI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Oa+x4i9P; arc=none smtp.client-ip=192.198.163.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1712054416; x=1743590416;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=znHWUavCj46z2XKYldokx9ecmiWhHaeLqUlAqoDEUQw=;
-  b=Oa+x4i9PPq872rBr7bYLT3XvhAesQ6SWje28+zvHuT8dZo8RNXA+ijuH
-   fJZ8iKaigM5SuwBkU8atGmtl3112f7XtdrCjPexxbLyJ3EKE+qfU1kS5v
-   w8BBAsAcsIq1vAFhBgKGNnjt/IOE23+KF6bQvQFZYX/eZOIbUtcaFfBOr
-   xXXWOIsOQjcNBZHhL3BsxWxJilLoSaTgYI0Y1NUmkHOBDmUtOz63bA0VN
-   xtC9ERl3KFQgDuZMhjMKoQmp+XPDMWcColc29vCI3O7805f5Kq3IYTwj/
-   +7xMt1hzUjbt68R9dJK8o86IiV5OeDoarSnBr2TtIcR8HISTudDtHAdz2
-   Q==;
-X-CSE-ConnectionGUID: 4HsBUxDFQwaX422FnzJ4EQ==
-X-CSE-MsgGUID: 5Cdc5OMCShC9lKm7y9jGjw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11031"; a="7085669"
-X-IronPort-AV: E=Sophos;i="6.07,174,1708416000"; 
-   d="scan'208";a="7085669"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Apr 2024 03:40:15 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,11031"; a="937083296"
-X-IronPort-AV: E=Sophos;i="6.07,174,1708416000"; 
-   d="scan'208";a="937083296"
-Received: from kuha.fi.intel.com ([10.237.72.185])
-  by fmsmga001.fm.intel.com with SMTP; 02 Apr 2024 03:40:11 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Tue, 02 Apr 2024 13:40:11 +0300
-Date: Tue, 2 Apr 2024 13:40:11 +0300
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>, linux-usb@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 05/11] usb: typec: ucsi: simplify partner's PD caps
- registration
-Message-ID: <Zgvgi2yC5P9XaIZa@kuha.fi.intel.com>
-References: <20240329-qcom-ucsi-fixes-v2-0-0f5d37ed04db@linaro.org>
- <20240329-qcom-ucsi-fixes-v2-5-0f5d37ed04db@linaro.org>
+	s=arc-20240116; t=1712054446; c=relaxed/simple;
+	bh=UsPusJ70z/hTGNwQRA1c0DtkXeRzoz/bLJ9nq3UmtYo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HwW8RjJP1pnobj0kG0oWeCKyqvRnVOqVu9O6fCPF5WCSxHpZoHstTpX5J9YxYktYat24NVPN7SZE1GOvvnooQLywfmABC8uDu9M+tLIGfTv+GsYtQ5xZaLLv/5OUOsgmt3JjSXaR1oduMvQYNQj5gXMr6RQ+IgY4Ou/ywBXfUlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GE9/grAw; arc=none smtp.client-ip=209.85.219.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-dc74435c428so4777897276.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Apr 2024 03:40:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712054444; x=1712659244; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=9PYIxF4j0xg6PPKY6bKCHDAb7yDnCos1Y4nrGksgbb4=;
+        b=GE9/grAwXjS3vyGcP3xO2p7aY4SQE7kknB7whhEJj+RZknboC7Fkvp5M0xLcp1w1YF
+         9VpuKcerKq53qlB3n6JQSIHAjOlswb4uYVhXhsR6Ja9wE/rPHMag0KbrooFWPEMq+hLH
+         P7hhUzKBJNjEmLbY+0YEbZUL/slxVBYtziKTaXOC98GLtnQuknFdZYcC58bEU3+fj+W2
+         IWMHarmeQM/wegnsXs/iykS1bPnSwd1fzwdYT3pVsAfNRgxk2Eitfk8A7n60Oc/8jjkj
+         5aK16Le0kSOPc7dZXxF6fxVp/iJlt2UiWq0n4uKZsaqagXfsnZfC1fXvzH/ekK3lzCGj
+         xzbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712054444; x=1712659244;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9PYIxF4j0xg6PPKY6bKCHDAb7yDnCos1Y4nrGksgbb4=;
+        b=AiIMQdKnziTO7QjrvCss+qiqOh7+sQaSEK6nISnQB+5wWzee3g48pVwxaeAuT0uFrM
+         eIm0HYOabI/Nm/sFMTYg89S9giFyz76GZkuh0AVDkrG/FULswduPOvxTlF48t0rezOVE
+         2muNz4XheSuEwM/mg4IoCPadnS8nyXXEQ+Gl8ZML+Zb8kgpUZglJNzn4WHZTvQbBFeYm
+         LdP6e6dDDCmhsAJ4u/kpj8mV7F62YZ3v2YsFTIm/8S3IX9vUgUdKVe1yH7QZKXH8iRMQ
+         IK9cHz8YH/MtodQZxcjN0XrO5sP1SI62riODS0JPtbzQngk32fL0EyDn08EhMXX4M1uV
+         Rs6w==
+X-Forwarded-Encrypted: i=1; AJvYcCVx+ENwmBtb8V5ZV0kasIGx0C2GYQ7vaQJc47vZHqzomccrYts7g9WBnpoTN+qvlP5oM0ocPa3fHcTy/Gt/irtmJnlhRP9N0vABOx5M4g==
+X-Gm-Message-State: AOJu0YzpuB67dHej0QOUw4iEjzNcTUac361jugsD+lVnG13Rb7q/6mhD
+	8QoS9g7ZUi123IM6PaDm06S9eqQ/ULNPPqjbWQQlZao0s/WEaW3xOyOtsWY+dctQf8L/qhF2SiF
+	vjL+I6Pf+p31ZEz8D2JD0DANJann3p1fCpgljPA==
+X-Google-Smtp-Source: AGHT+IFJm9l+G9UEBddm5xRcgxHteNtcPg5V78UGOHmM+aa84AtnvwUHGqb/sEXQfiCIWlOZaAm0r9DYyPYH6p7uu4g=
+X-Received: by 2002:a5b:ccc:0:b0:dc6:de64:f74 with SMTP id e12-20020a5b0ccc000000b00dc6de640f74mr9783364ybr.9.1712054443883;
+ Tue, 02 Apr 2024 03:40:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240329-qcom-ucsi-fixes-v2-5-0f5d37ed04db@linaro.org>
+References: <20240402103406.3638821-1-quic_varada@quicinc.com> <20240402103406.3638821-4-quic_varada@quicinc.com>
+In-Reply-To: <20240402103406.3638821-4-quic_varada@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 2 Apr 2024 13:40:32 +0300
+Message-ID: <CAA8EJpphk_kqzBE7cKb73ipdpTi29t9ZSOOdSfq7pAGSs5NKeg@mail.gmail.com>
+Subject: Re: [PATCH v6 3/6] interconnect: icc-clk: Add devm_icc_clk_register
+To: Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, mturquette@baylibre.com, 
+	sboyd@kernel.org, robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, 
+	conor+dt@kernel.org, djakov@kernel.org, quic_anusha@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-pm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Mar 29, 2024 at 08:15:37AM +0200, Dmitry Baryshkov wrote:
-> In a way similar to the previous commit, move
-> typec_partner_set_usb_power_delivery() to be called after reading the PD
-> caps. This also removes calls to
-> usb_power_delivery_unregister_capabilities() from the error path. Keep
-> all capabilities registered until they are cleared by
-> ucsi_unregister_partner_pdos().
-> 
-> Fixes: b04e1747fbcc ("usb: typec: ucsi: Register USB Power Delivery Capabilities")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-
+On Tue, 2 Apr 2024 at 13:34, Varadarajan Narayanan
+<quic_varada@quicinc.com> wrote:
+>
+> Wrap icc_clk_register to create devm_icc_clk_register to be
+> able to release the resources properly.
+>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 > ---
->  drivers/usb/typec/ucsi/ucsi.c | 14 +-------------
->  1 file changed, 1 insertion(+), 13 deletions(-)
-> 
-> diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
-> index d1a45ce7f660..35366b1a3d78 100644
-> --- a/drivers/usb/typec/ucsi/ucsi.c
-> +++ b/drivers/usb/typec/ucsi/ucsi.c
-> @@ -826,12 +826,6 @@ static int ucsi_register_partner_pdos(struct ucsi_connector *con)
->  			return PTR_ERR(cap);
->  
->  		con->partner_source_caps = cap;
-> -
-> -		ret = typec_partner_set_usb_power_delivery(con->partner, con->partner_pd);
-> -		if (ret) {
-> -			usb_power_delivery_unregister_capabilities(con->partner_source_caps);
-> -			return ret;
-> -		}
->  	}
->  
->  	ret = ucsi_get_pdos(con, TYPEC_SINK, 1, caps.pdo);
-> @@ -846,15 +840,9 @@ static int ucsi_register_partner_pdos(struct ucsi_connector *con)
->  			return PTR_ERR(cap);
->  
->  		con->partner_sink_caps = cap;
-> -
-> -		ret = typec_partner_set_usb_power_delivery(con->partner, con->partner_pd);
-> -		if (ret) {
-> -			usb_power_delivery_unregister_capabilities(con->partner_sink_caps);
-> -			return ret;
-> -		}
->  	}
->  
-> -	return 0;
-> +	return typec_partner_set_usb_power_delivery(con->partner, con->partner_pd);
->  }
->  
->  static void ucsi_unregister_partner_pdos(struct ucsi_connector *con)
-> 
-> -- 
-> 2.39.2
+> v5: Introduced devm_icc_clk_register
+> ---
+>  drivers/interconnect/icc-clk.c   | 29 +++++++++++++++++++++++++++++
+>  include/linux/interconnect-clk.h |  4 ++++
+>  2 files changed, 33 insertions(+)
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
-heikki
+With best wishes
+Dmitry
 
