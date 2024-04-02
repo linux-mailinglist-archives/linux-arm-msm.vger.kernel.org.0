@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-16122-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16123-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99A30895774
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 16:51:19 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D7A689579D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 16:59:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 451EE284AA0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 14:51:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3371AB2F5B7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 14:51:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95F4812BF27;
-	Tue,  2 Apr 2024 14:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 180C2130E58;
+	Tue,  2 Apr 2024 14:49:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nba6eKTl"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ifShd6t0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0968626E
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Apr 2024 14:48:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C85712BF1F
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Apr 2024 14:49:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712069326; cv=none; b=uWkqfPrOLPnUnJWOVtObcbEmjmaNxdxkO++xqbEi6TCZK/yMVhJz9XZ7UJHcmQ1dMcbao2sadb3MLHaqOMRmyIPqusULgCiUYvFeHxXpU/ZS7YGGbzKkGVhYhr7AQlhzVmjbtcNhn2JCjPh29HghEdpTRZ22cHvfESLEApn5vuM=
+	t=1712069380; cv=none; b=PWviwIORfcXYcbVsRh5KBGYQ3QADtuIbwZVAs1igfaLythMim2s3D0dcGezdJkvVgJIYLCoKPTlJswdE9XSkWzXg5KJNeAAtWLDnjJHDdOIkL5Wgx/Ap2+dUfCmqcAdrMziUIBvuEbFlWo42PVveeYlfknzCyU4l19LvSbMwgGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712069326; c=relaxed/simple;
-	bh=ic4V7WnlJtfSyGKZ2TLFxgkfjXXzDHkprmFCWInZtUY=;
+	s=arc-20240116; t=1712069380; c=relaxed/simple;
+	bh=R6qde+iITv8Ux/EKpL1jJjmQD4xhkEmuDaLF7RETwOA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WClixxPm2y7ZiCEqP4VEuCM07K9Qgjvdyc4HLR4ls2yPbWL9dWBB3YVRzR+lbGVDIi3BfaZZCRMVYW7uFFgP5kSeZwUllActquzjjzQK0ydJEHummAL5Mev5Ye7m8DQ8WqqD0thJiLQ78adWEa6O2NT9aMeZgRHMsOBGoFQYDeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nba6eKTl; arc=none smtp.client-ip=209.85.167.45
+	 In-Reply-To:Content-Type; b=XGIEzPY9U37FhguCOyiJwxgfP2kfAloGo+vtZqX+013KjJWLPWbJHFjVjj7COMwunikPq9ilcfAMoyY/d1odl0ewamopD4DX1oFeVDPov8XV7KwPeaCKE3wcQPS10NUlrIpfrMkLQvUgMd2C0chPX16zz8QARb8O7IHyk0/Oe/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ifShd6t0; arc=none smtp.client-ip=209.85.218.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-516a97b3139so2246633e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Apr 2024 07:48:44 -0700 (PDT)
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a4a3a5e47baso617591366b.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Apr 2024 07:49:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712069323; x=1712674123; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1712069377; x=1712674177; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=UKa91rDf1nIX7qAe0v7E10VCzydbtalm9L4mheenyOk=;
-        b=nba6eKTlfP5lSR8pz8sNsMaDeB3SWjDvgGB9f6VTML5NtQ7nwLN/FqHyaa6+bzbtD5
-         chnXWAJKmZgm9RF8XA9/YgeyUTpJtib5Myhj0zdwX7l9Gw9x6KQu/XDYwXiKd/h+OTUo
-         SnNpsk/dIm2FiGk9Sw1TenVyB+VbX0y7jgduum40mH7msU5TULlfVoHwEwI3b68uAg6b
-         ENrAnDJ76IwQnbPWu7PS4G145u3xKrmXj2tK0Or0eHMpuMwxWcspGlWJzbyqTL05UNd6
-         chDB56FrZvuLcJB2cwwXgBuWWI5fvg1ZtrVXhyhZrAP1rP5qNPFDNwulq1c27JCUd1KH
-         VTsA==
+        bh=qLa+MN3bXJ5HxwNKiIPGEXS1wglnZiuZ2Ea5/Fw6iIM=;
+        b=ifShd6t0t41raE9O8TOLw/bl3gnuNErHtn2VQNJ8lvrgANbupd8YLKj/qr7dRj4kLw
+         N6/STJR+rtB86Xt3BBbD086vMel9IY4Y2vUBwoSV/32NZ8uZExqjwcmCDNkREnC8fvos
+         Lw2H0VSUTij3nL9vPENkzDtH1Hbo1wg3ZIFEknuN2zrFPG7Ilwoakuuwdt/fKhfS69Ju
+         jRm2hX4Jn1lBAO7Fc+3hAG2DFSe+Dzz1vaC07OxsNJMrjga+RJZWB4O6X+Yipqzz1Cwz
+         yn8kmPd4uTgoZSqE2vLW9atyh9iZwsId7Mz/ejQV7yM4GaB7EkOFCtyAGO+6419GcbUs
+         S4nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712069323; x=1712674123;
+        d=1e100.net; s=20230601; t=1712069377; x=1712674177;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=UKa91rDf1nIX7qAe0v7E10VCzydbtalm9L4mheenyOk=;
-        b=njh+pGnnNcOZ1WK5CmxmrrJnY6N55tEMdaOoNiKl9NDdHp2JYoYgXZyb5YKhEBUxbn
-         mTMQMr1IZQup+wjoRKWdWpHxU+rdokjuobyELtYMq/7KB/h/XyXkbEGRtCdPDbGhti8M
-         /jO/J4QAw/UG7rx0VbrvbbqpoySk00skDDitZk3YNOt3o2TOWofvniEPS6OeEOvr9lQO
-         AqYBidSJpFfqajOBA4w13+H5mW8WWLrpjBb8xJfgfWbuDtCLiPDD3HfaN7E8Y3ak6Jp2
-         CnBvjbw5Nj2eQPjnW914xD/WHsBMX/PGuKfKn/Z1CuyZa5nM+A3xHdgeW9Meqk4pJQbC
-         sE4g==
-X-Gm-Message-State: AOJu0YyvwygZZC+HCHp1REJRhEhfVGH9gh+teJdIySW7L/k2nYcaBIbW
-	UVXlTmIQP6w7uC8sXeiEmkoRBqMlgeXjNkiS8j/xzx21elnh7NmcKB1i/TGVoqmqCpv9X9eW52T
-	F
-X-Google-Smtp-Source: AGHT+IHDLBLNlhpjUxt6Kq3W/EygVN2qBukJRlMwGqfKKGDXH79X1SJfTm9XdmaPjLnSeKf3QNaGZg==
-X-Received: by 2002:a05:6512:943:b0:513:3d98:43f with SMTP id u3-20020a056512094300b005133d98043fmr7331964lft.61.1712069323025;
-        Tue, 02 Apr 2024 07:48:43 -0700 (PDT)
+        bh=qLa+MN3bXJ5HxwNKiIPGEXS1wglnZiuZ2Ea5/Fw6iIM=;
+        b=VmgpM4700isMM/v8ub13aEB3Jv4xyuzLk2lr0bd9dnTG/y6TgThX6HrXD+2hJhtw2K
+         vjZmYDnvOyqDQQaXQjn2lihyuVNYDkKtHNrFQ+ruEYWPVzd/gbREJZVJuG7FCy17Ne+W
+         Gt0ShZfbUJ2EcDAF2s+Ga7VG0X46IH8IIluoXjEY57dHHVqX65ZFDLHTdopicYR8324r
+         MvZoU0I/l98O/lvyG8//wjo0jgyY+NQuAwNoje65SoHmAVMEHaGPPC+aJuheXhZE1ANe
+         zdJt/o+K1bcGlcsfTgK2Ph2dn5Qfgy0CPGonwTY0M4b4PecT3HMAaNcVWNqkvof6jbZ9
+         0L8A==
+X-Forwarded-Encrypted: i=1; AJvYcCU18zxkgcG7k58wGTr///FTS12r4gRw1uLcNVkceDTwNhByIHY1WYiYsepcZ3IrKz/GNW7Y+SnkIspGBKqcu4SgDzs7jhoWvJHTId1RyQ==
+X-Gm-Message-State: AOJu0Yx/CVeN3yM2rpBrZrr78J+ESYrlPzgQJDfeMLRfQ4ZCZpgc2Uvx
+	Z7B8tTIqEkNC+us6iegh0xUQUuSMF/UAloog3V9Vlw7sEKmcEhxe6umPlQWjNhU=
+X-Google-Smtp-Source: AGHT+IGFYhRDcZm6Ii0rP7m5rmXlrAdHv5FZrzsVIj839wjWmHdgrYaO3ezpyXY/JT7It50aaa5OsA==
+X-Received: by 2002:a17:907:9286:b0:a4e:4e76:5fc7 with SMTP id bw6-20020a170907928600b00a4e4e765fc7mr8881269ejc.65.1712069376618;
+        Tue, 02 Apr 2024 07:49:36 -0700 (PDT)
 Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id ew12-20020a056402538c00b0056a033fa007sm6780885edb.64.2024.04.02.07.48.41
+        by smtp.gmail.com with ESMTPSA id q17-20020a1709060e5100b00a4623030893sm6527417eji.126.2024.04.02.07.49.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Apr 2024 07:48:42 -0700 (PDT)
-Message-ID: <e2206445-d560-43ad-8fb1-f0b4967493f2@linaro.org>
-Date: Tue, 2 Apr 2024 16:48:40 +0200
+        Tue, 02 Apr 2024 07:49:36 -0700 (PDT)
+Message-ID: <0e599137-4a23-40b9-9a22-3c32f795fa1b@linaro.org>
+Date: Tue, 2 Apr 2024 16:49:33 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,15 +77,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] scsi: ufs: qcom: Add missing interconnect bandwidth
- values for Gear 5
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- "James E.J. Bottomley" <jejb@linux.ibm.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
- linux-kernel@vger.kernel.org, Amit Pundir <amit.pundir@linaro.org>
-References: <20240401-ufs-icc-fix-v1-1-3bac41bdfa7a@linaro.org>
+Subject: Re: [PATCH v6 2/6] interconnect: icc-clk: Remove tristate from
+ INTERCONNECT_CLK
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc: andersson@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+ robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+ djakov@kernel.org, quic_anusha@quicinc.com, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+ kernel test robot <lkp@intel.com>
+References: <20240402103406.3638821-1-quic_varada@quicinc.com>
+ <20240402103406.3638821-3-quic_varada@quicinc.com>
+ <CAA8EJppyuagb5zkP4LCjjJwConw3mw3iS-+dO7YB01=7-waRTw@mail.gmail.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -123,23 +127,35 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240401-ufs-icc-fix-v1-1-3bac41bdfa7a@linaro.org>
+In-Reply-To: <CAA8EJppyuagb5zkP4LCjjJwConw3mw3iS-+dO7YB01=7-waRTw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 1.04.2024 5:09 PM, Manivannan Sadhasivam wrote:
-> These entries are necessary to scale the interconnect bandwidth while
-> operating in Gear 5.
+On 2.04.2024 12:39 PM, Dmitry Baryshkov wrote:
+> On Tue, 2 Apr 2024 at 13:34, Varadarajan Narayanan
+> <quic_varada@quicinc.com> wrote:
+>>
+>> drivers/clk/qcom/common.c uses devm_icc_clk_register under
+>> IS_ENABLED(CONFIG_INTERCONNECT_CLK). However, in kernel bot
+>> random config build test, with the following combination
+>>
+>>         CONFIG_COMMON_CLK_QCOM=y
+>>                 and
+>>         CONFIG_INTERCONNECT_CLK=m
+>>
+>> the following error is seen as devm_icc_clk_register is in a
+>> module and being referenced from vmlinux.
+>>
+>>         powerpc64-linux-ld: drivers/clk/qcom/common.o: in function `qcom_cc_really_probe':
+>>         >> common.c:(.text+0x980): undefined reference to `devm_icc_clk_register'
+>>
+>> Hence, ensure INTERCONNECT_CLK is not selected as a module.
 > 
-> Cc: Amit Pundir <amit.pundir@linaro.org>
-> Fixes: 03ce80a1bb86 ("scsi: ufs: qcom: Add support for scaling interconnects")
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
+> NAK. Please use `depends on INTERCONNECT_CLK || !INTERCONNECT_CLK` in
+> your Kconfig dependencies.
 
-Skimming through the code, could ufs_qcom_get_bw_table use a
-WARN_ON_ONCE(nullcheck)?
-
-FWIW, this change looks sane (without checking the numbers)
+Should icc-clk ever be built as a module? It really seems like it should be
+a part of the core framework.. And dependency management would be easier
 
 Konrad
 
