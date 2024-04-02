@@ -1,153 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-16147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16148-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDF94895C19
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 21:00:07 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E5748895C4E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 21:15:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6C067B23541
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 19:00:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E06191C2106A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 19:15:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 130B715B547;
-	Tue,  2 Apr 2024 19:00:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5ADDB15B567;
+	Tue,  2 Apr 2024 19:15:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="f0AqIV4K"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fnm/fKA0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A4E1756A;
-	Tue,  2 Apr 2024 18:59:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CBA12C9D
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Apr 2024 19:15:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712084400; cv=none; b=H8wMoch36zqOT9D9k8cXLiwkVdObMPm2WGlQkNbfYU1VfoUIXZmb9oyJYV4UrbSmVpz4/SwoMoUDKXChrmThShw2zvuTWbeNYfma/0JJppMxS2Gwc77LM9yeaLHz/9NQGBOi51MWz1HPJQPlky6xFbQI2NV6nZSt5jZF2Itim1k=
+	t=1712085355; cv=none; b=s7zwaDKb7H6H7UWxVg6Gc6KHgnrkGvjLrXlvHU9fvP3o69WHkGR+ulTNJ9f3j091umjPM/lYpR851/ScfticC5gnTaT42sohXuda9IBMKqIImpxqPbhXSAJfWrvctZkaiCgPyqR/c7wkV4E2v4joPB7yhC0yRPEiKqAbBPGIDiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712084400; c=relaxed/simple;
-	bh=XK2fdkBQ+MvvV6zIPd48I+1uIxWQKMWrst9IAvR7eiE=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KEDpN8kE8VNOSdN+LYAvdm5kCH83QmHtmHu96A01UhXomNyag560WVC6sMQfbmUjb9gQg2SIGzFJmynS4LfEAKE24pqu6o2rRldgEadBQEckFw1sLmEba8+yD9kh6mwQwz4KZ9yG314sNjm0y+plGHUH+XeLiiZKo0g1nbgJNek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=f0AqIV4K; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 432HKXhI002709;
-	Tue, 2 Apr 2024 18:59:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=VqCmabEEXms0gnwOlD8Gt
-	pYxp5nGccGkYx0Om8wRvMM=; b=f0AqIV4KVw+LUR32FIJomBJy82lsek0rN4FGg
-	+pWUVtIOQBeIzMbd1suTFVIGpFmKqCK0/nI5UWn2J9GNZ4Pij+OXv6kN57P9Qbhb
-	zYGc3ENoiLzqxBm3wiBXhw075yPStaD1qtpXaplFzg3/D7/ZywQIez9FKvBAh3ii
-	n19b9i2mVnciSQpwmAVubCFMb+uuKOjVTbqAJvnH7axh/kfW5/ME2ImFwIjAoeaT
-	iKJZfaeoXeLpWyNCgd+KaisD0TwZ4vWoa8tbe7u8hL1zesM7qICNpId5UgWYAyz7
-	FRKkZQM+bpO0C9cbn2xa2mpwqKrRhhZZj8BJcwQ9QKj56eXLw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x8gn5hc1d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 02 Apr 2024 18:59:55 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 432IxsSM008926
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 2 Apr 2024 18:59:54 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Tue, 2 Apr 2024 11:59:54 -0700
-Date: Tue, 2 Apr 2024 11:59:52 -0700
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Jonathan Corbet <corbet@lwn.net>, <workflows@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH] docs: submitting-patches: describe additional tags
-Message-ID: <ZgxVqIwPxiFtcBrB@hu-bjorande-lv.qualcomm.com>
-References: <20240401-additional-trailers-v1-1-f472bf158d2f@linaro.org>
+	s=arc-20240116; t=1712085355; c=relaxed/simple;
+	bh=erM4PWYWMUDv33GGqtPcaVibRwm0VbUgeCYyZHRWsr8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dTirMX0ejbkh+1NJLrpks5KBMSGOTQWiL8IsjVNw7V5Xvgs3oyFdOR8V/q63lXA2O370/xnxQe8FT8JnSGjma3l1EqAvHrYp5oyq/9tNmTa9QKc6DK/g/xQ8he6jFeWRrM1AoOSE26WAmV3iSJ/yU0oClHctqdq47EpdU/Ngyos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fnm/fKA0; arc=none smtp.client-ip=209.85.128.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-6153e169066so7081937b3.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Apr 2024 12:15:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712085352; x=1712690152; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=EX892uaKTvbPiElfAXE8taGWdycpJIJZ2ztX2TZ+lMk=;
+        b=fnm/fKA039ki9MhaENaloyJxdqhqHnsglSgWZVDdrwJOU+3xGprw322WWYdiZyOyaW
+         I8JJ3u/gZOhIrhV38WenJGFFtTcu8Aopb+Imzj3NWUdoX0nkKtB/YWOI+5VZZNKHA7DS
+         W4py0+Fo6yqPPRmoiOU716tDsj6rJ1NWiar/0R9MAlH0BipIiq8Z+MVKwSueastpEgtg
+         IMLoiWfBg1TRYR9PAAu/ebLHnVWOvJaxfZj5bsPGzFdzSRHmuuReBGU9VSv4LUNfjIUb
+         isDCvfvCjT9lIqQPjPD00nYzZQIYrtBfKpw/+b6A2L5lw6vjtcgT78a7x3YT4mb/9gUK
+         FDaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712085352; x=1712690152;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EX892uaKTvbPiElfAXE8taGWdycpJIJZ2ztX2TZ+lMk=;
+        b=lZyKj/FqPtpcd2eN7XVHL80Cv+VeQQe/zVxYALdlz52lqcBiDM2k1Cm2E7Srig+Ow/
+         lS1Krgge1g6tjHkKumfWw4BWFu3HwEbLa5hd/pvkJUznlBoeLnK6PkePez7vYpe964xZ
+         porOSvQeT4ZLluNPMcq0UpNhKx49DehAtyfMPJfA3B8/Tb1MY6tuKcVKBmGR9f0sXRG8
+         lCkVXIqsaxxzP6nYMZqEoy6cvFOyifDK0JKyvYV45IFazECSYVCUrfjNiy2CCuu+PzbE
+         0CZwMEo84oEvroUO8h1j1YCFiD0mk/bNrqCo5wBPOiEWjuV2aD19SNlAEs3tKhXWrbb6
+         KLFA==
+X-Forwarded-Encrypted: i=1; AJvYcCWsj6hYq4GXkxHdcFCzlak7Sy5swzixl1JIvBhQaa9C1yrVBxS5upvx+p7QzUBBkxIrjv3JPEL+2mPI4lPrDOQZA+mDATv3T0CJ+lSaOQ==
+X-Gm-Message-State: AOJu0Yy3Z8mDw3PBO5xB0TGJsYBwZ3a3gzZK/R2FepYbC5tm3J3g9UWU
+	+hDpXwyeIbDQTuwRhin//r/h8R46OawjFzxezz/v1IpDRpRVA0N7q7zkbz2McjXc0O4SUpIVjjQ
+	dw4lM1aqw7gkVyTmxQDEwfA0GnDffuxxc3UZaIg==
+X-Google-Smtp-Source: AGHT+IFCBa8eTLuJKWVEroA+txmQwHafWAoS12szYBdMuyOhdR0cHCmy/h/3SRVjBvxY1JSQLgHYg++LQJH+aSSkUCY=
+X-Received: by 2002:a25:98c7:0:b0:dcc:7b05:4cbb with SMTP id
+ m7-20020a2598c7000000b00dcc7b054cbbmr11583196ybo.31.1712085352700; Tue, 02
+ Apr 2024 12:15:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240401-additional-trailers-v1-1-f472bf158d2f@linaro.org>
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: c3j5-wwZOkjC5JO4VVjP782aDnzOvVlc
-X-Proofpoint-ORIG-GUID: c3j5-wwZOkjC5JO4VVjP782aDnzOvVlc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-02_12,2024-04-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 suspectscore=0
- lowpriorityscore=0 malwarescore=0 adultscore=0 mlxlogscore=999
- impostorscore=0 mlxscore=0 bulkscore=0 phishscore=0 priorityscore=1501
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2404020140
+References: <fd26ce4a-a9f3-4ada-8d46-ed36fb2456ca@freebox.fr>
+ <5cdad89c-282a-4df5-a286-b8404bc4dd81@freebox.fr> <252618e8-9e80-4774-a96c-caa7f838ef01@linaro.org>
+ <502322f1-4f66-4922-bc4e-46bacac23410@linaro.org> <0ca1221b-b707-450f-877d-ca07a601624d@freebox.fr>
+ <CAA8EJppeREj-0g9oGCzzKx5ywhg1mgmJR1q8yvXKN7N45do1Xg@mail.gmail.com> <36890ee7-ab9e-448c-ae30-7a75ac28b496@quicinc.com>
+In-Reply-To: <36890ee7-ab9e-448c-ae30-7a75ac28b496@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 2 Apr 2024 22:15:40 +0300
+Message-ID: <CAA8EJpo8-T4z3o6E0pid=rY19e05GcB-+ogj26Bi0Za3PmEcGw@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: msm8998: set qcom,no-msa-ready-indicator
+ for wifi
+To: Jeff Johnson <quic_jjohnson@quicinc.com>
+Cc: Marc Gonzalez <mgonzalez@freebox.fr>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Kalle Valo <kvalo@kernel.org>, 
+	ath10k <ath10k@lists.infradead.org>, wireless <linux-wireless@vger.kernel.org>, 
+	DT <devicetree@vger.kernel.org>, MSM <linux-arm-msm@vger.kernel.org>, 
+	Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>, 
+	Bjorn Andersson <andersson@kernel.org>, Jami Kettunen <jamipkettunen@gmail.com>, 
+	Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Apr 01, 2024 at 08:17:03AM +0300, Dmitry Baryshkov wrote:
-> Described tags do not fully cover development needs. For example the LKP
-> robot insists on using Reported-by: tag, but that's not fully correct.
-> The robot reports an issue with the patch, not the issue that is being
-> fixed by the patch. Describe additional tags to be used while submitting
-> patches.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  Documentation/process/submitting-patches.rst | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
-> 
-> diff --git a/Documentation/process/submitting-patches.rst b/Documentation/process/submitting-patches.rst
-> index 66029999b587..3a24d90fa385 100644
-> --- a/Documentation/process/submitting-patches.rst
-> +++ b/Documentation/process/submitting-patches.rst
-> @@ -544,6 +544,25 @@ future patches, and ensures credit for the testers.
->  Reviewed-by:, instead, indicates that the patch has been reviewed and found
->  acceptable according to the Reviewer's Statement:
->  
-> +Additional tags to be used while submitting patches
-> +---------------------------------------------------
-> +
-> +The tags described previously do not always cover the needs of the development
-> +process.
-> +
-> +For example, if the kernel test robot reports an issue in the patch, the robot
-> +insists that the next version of the patch gets the Reported-by: and Closes:
-> +tags.  While the Closes: tag can be considered correct in such a case, the
-> +Reported-by: tag is definitely not correct. The LKP robot hasn't reported the
-> +issue that is being fixed by the patch, but instead it has reported an issue
-> +with the patch. To be more precise you may use the Improved-thanks-to: tag for
-> +the next version of the patch.
-> +
-> +Another frequent case is when you want to express gratitude to the colleagues,
-> +who helped to improve the patch, but neither the Co-developed-by: nor
-> +Suggested-by: tags are appropriate. In such case you might prefer to use
-> +Discussed-with:, Listened-by:, or Discussed-over-a-beer-with: tags.
-> +
+On Tue, 2 Apr 2024 at 21:22, Jeff Johnson <quic_jjohnson@quicinc.com> wrote:
+>
+> On 4/2/2024 8:55 AM, Dmitry Baryshkov wrote:
+> > I'd say, we should take a step back and actually verify how this was
+> > handled in the vendor kernel.
+>
+> (error handling and other non-QMI code removed from the following for readability)
+>
+> In ath10k we unconditionally call the following in
+> ath10k_qmi_event_server_arrive():
+>         ret = ath10k_qmi_host_cap_send_sync(qmi);
+>         ret = ath10k_qmi_msa_mem_info_send_sync_msg(qmi);
+>         ret = ath10k_qmi_setup_msa_permissions(qmi);
+>         ret = ath10k_qmi_msa_ready_send_sync_msg(qmi);
+>         ret = ath10k_qmi_cap_send_sync_msg(qmi);
+>
+> In vendor icnss2 there is conditional logic in icnss_driver_event_server_arrive():
 
-I really like the idea of defining two additional tags for these
-purposes ("Improved-from-review-feedback/testing-by" and "Cred-to").
+Note, wcn3990 is icnss, not icnss2
 
-I do however think that in order to gain acceptance and widespread
-usage, they need to be defined in the same clear fashion as the entires
-under the "Using Reported-by:, Tested-by:, ..." section.
+>         if (priv->device_id == WCN6750_DEVICE_ID ||
+>             priv->device_id == WCN6450_DEVICE_ID) {
+>                 ret = wlfw_host_cap_send_sync(priv);
+>         }
+>
+>         if (priv->device_id == ADRASTEA_DEVICE_ID) {
+>                 ret = wlfw_msa_mem_info_send_sync_msg(priv);
+>                 ret = wlfw_msa_ready_send_sync_msg(priv);
+>         }
 
-Regards,
-Bjorn
+The problem with applying this approach is that here the discriminator
+is the WiFi device ID. WCN6750, WCN6450 and this ADRASTEA are
+different WiFi/BT chips. However for msm8998 and e.g. sdm845 there is
+no easy way to distinguish the WiFi chips. Both platforms use wcn3990
+device.
 
->  Reviewer's statement of oversight
->  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->  
-> 
-> ---
-> base-commit: 13ee4a7161b6fd938aef6688ff43b163f6d83e37
-> change-id: 20240401-additional-trailers-2b764f3e4aee
-> 
-> Best regards,
-> -- 
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
+>
+>         ret = wlfw_cap_send_sync_msg(priv);
+>
+> reference:
+> https://git.codelinaro.org/clo/la/platform/vendor/qcom-opensource/wlan/platform/-/blob/wlan-platform.lnx.1.0.r1-rel/icnss2/main.c?ref_type=heads#L890
+>
+> /jeff
+
+
+
+-- 
+With best wishes
+Dmitry
 
