@@ -1,146 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-16098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16099-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8E8789529E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 14:12:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D7C28952E4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 14:25:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 78EC81F24B9F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 12:12:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BD49D1C21286
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 12:25:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5433577F08;
-	Tue,  2 Apr 2024 12:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F90679B87;
+	Tue,  2 Apr 2024 12:25:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AcA7VeuH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Y/PM2lOG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407976995D
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Apr 2024 12:12:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575EA77F12
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Apr 2024 12:25:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712059939; cv=none; b=DVkxuZkFPyb8omxz2KTkAkkpKzIW6GV+AjMdkL1KYMe2/bPQ5WQWh/MvvVu0dA09iUAXbWeeE8Xb93f3FRJ5FYDBlHxY79ibesIfFU6oqO23MLKYxZMbtqCJsGY5D7bfcUZR2x7qFo8Ql81t08bb28iBIHC1MID2/NK7ycT9sw0=
+	t=1712060730; cv=none; b=bvdGju1bQgkHcKbBdOI2QpVAu8Asu0zPaQz8fsaN2cIjEB8gOi5FiyJT0n5v1+k3aueavazcuGdBPeG0E6TmrDlOKPf2byu/JWK4UcyU6eesXAxTWZ17zGVoqzRlYcSyAV4I13R7CVKNLLjnqfIHZibwmYPPv1cjlWwxDanZNSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712059939; c=relaxed/simple;
-	bh=ZU19AXGy1gTKu3ZdKgEYCn04X7EzHEkd9RdcAo9TIfw=;
+	s=arc-20240116; t=1712060730; c=relaxed/simple;
+	bh=p/UeUz6BQzzlTj362U5Q+0hUyUg483V1OKi+HLKX4OI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XZyg3tBT9VjaPJsFpn/AdtIFN4kaO6GVUyQQ0Py9z9gEc+fJegL7sJeXQdHqGXYcKqby/PpxVTRLfF7Vl3+H39/zaqTGQknwSkydEsMGt78lMf/9eJOUxb3PdBQd5ObeGGb0gY71hD6JiRwxgMw7yY01hCL6bQh+us33/TDDZHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AcA7VeuH; arc=none smtp.client-ip=209.85.219.174
+	 To:Cc:Content-Type; b=IlgsdJBnSfLU0SEyPu4bAAAYflQPXtlv9i1V07Eu+M81XnVXrmu0pr+DDOqyXWmql5Djx5tfsE7cGqJ8zACZy8te9EGhuGgLh4uBwG5QUbueS6iD7Kjd7sExNiRaH0EUZarNq75cINw8o/3IJrupeEjK1jSZogf3mio7KcN5xos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Y/PM2lOG; arc=none smtp.client-ip=209.85.128.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-dc6d8bd612dso5077031276.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Apr 2024 05:12:16 -0700 (PDT)
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-61495e769bdso19093557b3.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Apr 2024 05:25:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712059935; x=1712664735; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=59+8zgH9nKJkFqI+MIO5KUM5XCs5xUxjBY89iFUie7c=;
-        b=AcA7VeuH1lsru5Ic48tq2Mzw+fYeKQfYxFjlYwjbhNZqZiMZrNGnc49AfTH8KtU+0b
-         DwDdB06Yx0nGgRNQr+uRvtwU83f8Hp8Q3YDSknC+GKmD/9yb6AB6eCA9x8viSNQueEZt
-         uYM8BxMdZSBpD3/RlNksTZVVg7LbwVtnYBUo0fvBEt5o++7H3fmcd2+eG1yPEfDqc7T+
-         1a2hctcRPBQCQPZ3M+Mo+QUefjmwhsdkQ3xpeXIZV13P9tReqlvrlhdMvX/0ta0IyCJA
-         ipaVJnjftUGu38a9Mzynj+RSBpim/6yNCWqHBf5dNy/Y9Z+t1p63iXWoXgRy1kI0ZPin
-         hawg==
+        d=linaro.org; s=google; t=1712060727; x=1712665527; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XYDEIQksW8zQ45WbeyUEVn5ldQ4luRyFOVVyheFSkHo=;
+        b=Y/PM2lOGfwWISYEdLESt2KTtPtlHr8yg1/CGBA9FdtQYocQGHfZ+cW0YX8gg6woOzV
+         GW2SDVi0/W3ULE54zcjGLCvAVZmtCbh3VTBP3+tIbEtfDVbLhIKmqb1+a4TsXXIi5Yzk
+         SmHdUNPRN3zFBd10rSJY/qlNyGVwoVukAF36q+yItox15kUXELlUSRxcl8Mpdx9vLxmG
+         OY2lC+VOGMvXLQpb+r8L51QY+HHC99dDGGT3DX0N/M8WeSY9BE+U/oYh+6bWOLo9Abss
+         DlybL2mtVJawsbxg5WOsIutmwfbaMVxbHlwZxE2sF43N12B5PAMcfpnEeYIqUQTLlbrm
+         fqRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712059935; x=1712664735;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=59+8zgH9nKJkFqI+MIO5KUM5XCs5xUxjBY89iFUie7c=;
-        b=mtDbl3aZMpHX9yUBUCzdnnWa2tJ0x/w4Nd3/aLSreoOuS3RU4hCGuAUc8rgW43DXpW
-         igLv9FyODXOSrtzhfjbeHspssNzMWV/239Ss9fwLL8X+t4zj/54i86bMylRT5wzj+nD9
-         qklcn357qR51B+nFgmG4IMd8MMENjhd0HQ3ff3VD80WH5iz3QW2vCejzYY3/RxzJoxXZ
-         cNkrhlE5NuC4RfmRyyTNvSY9/M7RNfTuCmrwNg5l/1pqsDX/99J/xE7GQ82nX/JRZWoc
-         QITpaZSbJzaR5TcxFNRoLkmjKGOQw5Pj0q/N1zwID8ncaTbvtRwF07MUw0SN7ijl2dFE
-         X2qA==
-X-Forwarded-Encrypted: i=1; AJvYcCU1IwPqYFIAs8T+Vg+/5X2/+ff0n+Moi7Kz9EPAP9GG+PzxPF0auRSZOVAarjRzZEoet1nNrPooOxMyHp+dN+hA3qOKH3VSdxeaL2156Q==
-X-Gm-Message-State: AOJu0YxpMTNzj0LJQiTfw3+RemOLkhW/OfWQIA7w/Luokx6IIBBMqRDd
-	hCSaRbsg67K4auD5imQE1Al5Bz5gh20P386DJd3QP4I/fALTBuWghfWgMWRejPcb1aYkbQYzEJI
-	kHfV5kDwUbr+EY7UF+2XF3NIwIHi+RHlIb8TJ4w==
-X-Google-Smtp-Source: AGHT+IFkuZ7UzLaijf9AS20sbPh65/6NkxIIfNCV/NSfdOu3MxTu2vQNwQDFXF16gKf/9sOjZBiIcPSc2VfwYBA43k4=
-X-Received: by 2002:a25:8590:0:b0:dcc:a5dc:e9d6 with SMTP id
- x16-20020a258590000000b00dcca5dce9d6mr10343762ybk.30.1712059935303; Tue, 02
- Apr 2024 05:12:15 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1712060727; x=1712665527;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XYDEIQksW8zQ45WbeyUEVn5ldQ4luRyFOVVyheFSkHo=;
+        b=OQ++nXBVJ/Wju2HnypcwDI6Oo7BhAtnmJKTwv/V0W+kfAfCua1RYdy34Lc/XycpMAr
+         BI4GCo7G1TWx+00jxk1nDp3lElPYh4EthP+vzSUPuA7JAOLu5EECIaKKHHb0ChLJhe7q
+         +7rUVk91NvAQ1Pp0AvF+sugm+eu9E/nlwkz/fcUuJIH8Xv8ATW2RRSiLo/pMGvSTBWNB
+         jnH/lxG5klG2+nIQke3C4VpW89+q6gJpCNYN/dBKMH9RdaXPB0LAn2MpALaQHJhs4zB2
+         xD0kPNPJK5fT4b2CqIkcq3fTuQPuyVtLi4O4WqDOLhhh8vlTAsTMdsLQwBU6F302Jq7w
+         mmUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW2de3iHZNMvT8Q82e0cemq0Md/7sM+CZetpPI2MYlrylPDzcp6UUmtUhrjLQ+PKJNuT48EtNJRBYA3TSZaVOuKXbHgJjdjT3x1qXS6iQ==
+X-Gm-Message-State: AOJu0YwKEMzuGEunqj6elE/cvI0QEKV8HYBwG130cMxbJY0ZW2OSZcrB
+	k3Runh6PuKNTX07Du0HsscvLJiz2womLWiSc3VywGr7F61kuFOGfEkx/QxtM1cBSmTWUvFUQnsf
+	KN9JCxLBPnws+PA5OAjV7R5gK6oH2LuysJxM00Q==
+X-Google-Smtp-Source: AGHT+IFUrSspS0uEXi4Mtdf0lWq2f6Bt6/664idaePnQ5n7gs/Aofr4lkRbBJPYECBaOux5ZgxpPBc0T/C/GsKmHDRA=
+X-Received: by 2002:a5b:104:0:b0:dcc:ec02:38b0 with SMTP id
+ 4-20020a5b0104000000b00dccec0238b0mr8733778ybx.64.1712060727251; Tue, 02 Apr
+ 2024 05:25:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240402103406.3638821-1-quic_varada@quicinc.com>
- <20240402103406.3638821-4-quic_varada@quicinc.com> <CAA8EJpphk_kqzBE7cKb73ipdpTi29t9ZSOOdSfq7pAGSs5NKeg@mail.gmail.com>
- <CAA8EJpo=TMhu+Te+JE0cQzmjLOTDPi-Vv-h5Bch0Wfr_7iVi2w@mail.gmail.com>
- <ZgvlrbvvPNA6HRiL@hu-varada-blr.qualcomm.com> <CAA8EJpp2dgy0DcLoUuo6gz-8ee0RRwJ_mvCLGDbdvF-gVhREFg@mail.gmail.com>
- <ZgvqkhF2mTG82Rx2@hu-varada-blr.qualcomm.com>
-In-Reply-To: <ZgvqkhF2mTG82Rx2@hu-varada-blr.qualcomm.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 2 Apr 2024 15:12:04 +0300
-Message-ID: <CAA8EJprN3TuMF-v5PeFW_JUKk+a+MxB7poccZbi9biZNniRnTQ@mail.gmail.com>
-Subject: Re: [PATCH v6 3/6] interconnect: icc-clk: Add devm_icc_clk_register
-To: Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org, mturquette@baylibre.com, 
-	sboyd@kernel.org, robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, 
-	conor+dt@kernel.org, djakov@kernel.org, quic_anusha@quicinc.com, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-pm@vger.kernel.org
+References: <20240327160314.9982-1-apais@linux.microsoft.com> <20240327160314.9982-3-apais@linux.microsoft.com>
+In-Reply-To: <20240327160314.9982-3-apais@linux.microsoft.com>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Tue, 2 Apr 2024 14:25:15 +0200
+Message-ID: <CACRpkdaSBGe0EFm1gK-7qPK4e6T2H1dxFXjhJqO2hWCm1-bNdA@mail.gmail.com>
+Subject: Re: [PATCH 2/9] dma: Convert from tasklet to BH workqueue
+To: Allen Pais <apais@linux.microsoft.com>
+Cc: linux-kernel@vger.kernel.org, tj@kernel.org, keescook@chromium.org, 
+	vkoul@kernel.org, marcan@marcan.st, sven@svenpeter.dev, 
+	florian.fainelli@broadcom.com, rjui@broadcom.com, sbranden@broadcom.com, 
+	paul@crapouillou.net, Eugeniy.Paltsev@synopsys.com, 
+	manivannan.sadhasivam@linaro.org, vireshk@kernel.org, Frank.Li@nxp.com, 
+	leoyang.li@nxp.com, zw@zh-kernel.org, wangzhou1@hisilicon.com, 
+	haijie1@huawei.com, shawnguo@kernel.org, s.hauer@pengutronix.de, 
+	sean.wang@mediatek.com, matthias.bgg@gmail.com, 
+	angelogioacchino.delregno@collabora.com, afaerber@suse.de, 
+	logang@deltatee.com, daniel@zonque.org, haojian.zhuang@gmail.com, 
+	robert.jarzmik@free.fr, andersson@kernel.org, konrad.dybcio@linaro.org, 
+	orsonzhai@gmail.com, baolin.wang@linux.alibaba.com, zhang.lyra@gmail.com, 
+	patrice.chotard@foss.st.com, wens@csie.org, jernej.skrabec@gmail.com, 
+	peter.ujfalusi@gmail.com, kys@microsoft.com, haiyangz@microsoft.com, 
+	wei.liu@kernel.org, decui@microsoft.com, jassisinghbrar@gmail.com, 
+	mchehab@kernel.org, maintainers@bluecherrydvr.com, 
+	aubin.constans@microchip.com, ulf.hansson@linaro.org, manuel.lauss@gmail.com, 
+	mirq-linux@rere.qmqm.pl, jh80.chung@samsung.com, oakad@yahoo.com, 
+	hayashi.kunihiko@socionext.com, mhiramat@kernel.org, brucechang@via.com.tw, 
+	HaraldWelte@viatech.com, pierre@ossman.eu, duncan.sands@free.fr, 
+	stern@rowland.harvard.edu, oneukum@suse.com, 
+	openipmi-developer@lists.sourceforge.net, dmaengine@vger.kernel.org, 
+	asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+	linux-rpi-kernel@lists.infradead.org, linux-mips@vger.kernel.org, 
+	imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org, 
+	linux-mediatek@lists.infradead.org, linux-actions@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
+	linux-hyperv@vger.kernel.org, linux-rdma@vger.kernel.org, 
+	linux-media@vger.kernel.org, linux-mmc@vger.kernel.org, 
+	linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	linux-s390@vger.kernel.org, netdev@vger.kernel.org, linux-usb@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 2 Apr 2024 at 14:23, Varadarajan Narayanan
-<quic_varada@quicinc.com> wrote:
->
-> On Tue, Apr 02, 2024 at 02:16:56PM +0300, Dmitry Baryshkov wrote:
-> > On Tue, 2 Apr 2024 at 14:02, Varadarajan Narayanan
-> > <quic_varada@quicinc.com> wrote:
-> > >
-> > > On Tue, Apr 02, 2024 at 01:48:08PM +0300, Dmitry Baryshkov wrote:
-> > > > On Tue, 2 Apr 2024 at 13:40, Dmitry Baryshkov
-> > > > <dmitry.baryshkov@linaro.org> wrote:
-> > > > >
-> > > > > On Tue, 2 Apr 2024 at 13:34, Varadarajan Narayanan
-> > > > > <quic_varada@quicinc.com> wrote:
-> > > > > >
-> > > > > > Wrap icc_clk_register to create devm_icc_clk_register to be
-> > > > > > able to release the resources properly.
-> > > > > >
-> > > > > > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > > > > > ---
-> > > > > > v5: Introduced devm_icc_clk_register
-> > > > > > ---
-> > > > > >  drivers/interconnect/icc-clk.c   | 29 +++++++++++++++++++++++++++++
-> > > > > >  include/linux/interconnect-clk.h |  4 ++++
-> > > > > >  2 files changed, 33 insertions(+)
-> > > > >
-> > > > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > >
-> > > > Wait. Actually,
-> > > >
-> > > > Unreviewed-by: me
-> > > >
-> > > > Please return int from devm_icc_clk_register instead of returning the pointer.
-> > >
-> > > Wouldn't returning int break the general assumption that
-> > > devm_foo(), returns the same type as foo(). For example
-> > > devm_clk_hw_get_clk and clk_hw_get_clk return struct clk *?
-> >
-> > Not always. The only reason to return icc_provider was to make it
-> > possible to destroy it. With devres-managed function you don't have to
-> > do anything.
->
-> Ok. Will change as follows
->
->         return prov; -> return PTR_ERR_OR_ZERO(prov);
->
+Hi Allen,
 
-I think the code might become simpler if you first allocate the ICC
-provider and then just 'return devm_add_action_or_reset(dev,
-your_icc_clk_release, provider)'
+thanks for your patch!
 
+On Wed, Mar 27, 2024 at 5:03=E2=80=AFPM Allen Pais <apais@linux.microsoft.c=
+om> wrote:
 
--- 
-With best wishes
-Dmitry
+> The only generic interface to execute asynchronously in the BH context is
+> tasklet; however, it's marked deprecated and has some design flaws. To
+> replace tasklets, BH workqueue support was recently added. A BH workqueue
+> behaves similarly to regular workqueues except that the queued work items
+> are executed in the BH context.
+>
+> This patch converts drivers/dma/* from tasklet to BH workqueue.
+>
+> Based on the work done by Tejun Heo <tj@kernel.org>
+> Branch: git://git.kernel.org/pub/scm/linux/kernel/git/tj/wq.git for-6.10
+>
+> Signed-off-by: Allen Pais <allen.lkml@gmail.com>
+(...)
+> diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+(...)
+>         if (d40c->pending_tx)
+> -               tasklet_schedule(&d40c->tasklet);
+> +               queue_work(system_bh_wq, &d40c->work);
+
+Why is "my" driver not allowed to use system_bh_highpri_wq?
+
+I can't see the reasoning between some drivers using system_bh_wq
+and others being highpri?
+
+Given the DMA usecase I would expect them all to be high prio.
+
+Yours,
+Linus Walleij
 
