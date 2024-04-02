@@ -1,86 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-16131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8836F895970
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 18:16:05 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C6F91895999
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 18:22:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9B21228DB78
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 16:15:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 03FA91C23FD4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 16:22:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A64D614AD23;
-	Tue,  2 Apr 2024 16:15:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03C9814AD38;
+	Tue,  2 Apr 2024 16:22:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GYigrtOV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jkQzNcao"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76ADD14AD1D;
-	Tue,  2 Apr 2024 16:15:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF5D7A724;
+	Tue,  2 Apr 2024 16:22:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712074552; cv=none; b=NmBWCk/1ihaNM7zkyfGdhJnGOzSINU9uC86LsQzCaq2R9Dsgi8dwigCfEQTMqwkINmqSfV9BCv5gLXyO5dRNsZMX2MpZqY300pRh5fTMc+BQVwbVaCk9kCy+60jjc1M7r4saEymcgeay6OVxQUQYH+iC2VSYeHah1YPH7zI0KI8=
+	t=1712074965; cv=none; b=as3lIYekEBzfDUxAXXo+vHAWH3lPqTgz1o49uiPyySV2mseN582U3K+HpSedrxvuXvuKHGQypra09KCYVR3JPs0LpQvoJ8aNMgUCkmEM8A82AqEJNQYp8bcKGFRd7p1GN1UPoBAID4M78vAW8p2HTjwEOdrd/rDn/EEMeoHidKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712074552; c=relaxed/simple;
-	bh=4NxXywfhlZNac9KSvHpb7hWlGWljpny7k88YW/fGUtc=;
+	s=arc-20240116; t=1712074965; c=relaxed/simple;
+	bh=TTK9Ecf0wm/vTr19oRkExfQrntAv/w6u+rTBVzSrC0A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=flCQUwx41yutz/xZ2g/pzzDQyb1YNmm9jAtIKtnagD4CJOYWy2BgYvNm8b+UTvrdhWmdsyW4sdbUsbfvnb2Pbho98I+IZDL84BFzFmquWeJUGAJfKG+z5SWnU5jb6kchOJPjyZvld+MUU93T+uXoXWln/LUHXfxOdchIq6Lp2cE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GYigrtOV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B58D2C433F1;
-	Tue,  2 Apr 2024 16:15:51 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=iokVEWeo8AqFlWVPmyOa5HOJwDcR/HBnbzOphLsgm/7cKejL01NQot3uJbuj5lU4m5IH56qQiCpcbFNClsxaA650/GhVSAvduMVK0H+DeuPCJDayIDAigJFD/G/jvP6mtHohQ7bZwtmcuH1LdfhFMGWc97MCb5x7TcbMGrIAGXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jkQzNcao; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 011B0C433F1;
+	Tue,  2 Apr 2024 16:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712074552;
-	bh=4NxXywfhlZNac9KSvHpb7hWlGWljpny7k88YW/fGUtc=;
+	s=k20201202; t=1712074965;
+	bh=TTK9Ecf0wm/vTr19oRkExfQrntAv/w6u+rTBVzSrC0A=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GYigrtOV+u4k7E1CeM0cd+q9lkmsaFscaPs1nNLOAqFwYz8G17Ph2vC+xr8IdutUL
-	 cFM4JMecXBBoB1YV7yahrKuuGu9A/6+zF03a1bDuF1HwYEjwwUfVzKsMNTijLC4gmO
-	 zESBiNaA7778fOaKb1l5Mkv7YA8ytOSZ3dk8MNz5VKzheg7nh6/ugVelxwpD1mkurB
-	 Gk2GZlhaodniLa3fanI7P/eaAuHnjjYFMnM/FjCSix5fHcLFaAh2qhfNS5iniYKc2i
-	 AA1LjoO0ZnbBmT7b7Itx6P4OSeSol10+lJ8WY4nP7rUeEpD/CnxRpXj0k4Mb1VpETV
-	 fWb+aCVYfKDRA==
-Date: Tue, 2 Apr 2024 11:15:49 -0500
+	b=jkQzNcaoCwevoUeoCLg4BigA8IMxCym7HiDT863zs7+Pii441q8F35tDtduy0ntgy
+	 OR3v9fQ2dWUHIO6KDEaXsVRIq4tB+k89JgOa4cvaeKsHPsvMn+CRYv2xSIpTTYXqdM
+	 PCfraHV8VszI12uB8TzuR+1mgJY2ZaYcm+1jzCihNBCc4h3PAHCKcUqdeJvH7l3oTg
+	 d2Ui3/vaHlSo010byYBDrGruOgLSKbKZXXo2aWgg6B+1OrX9LQJjM9nbQ73/Ljew62
+	 mCeOWqsU2ePllVu3Xf2ABoO9bwdcC8B03yzuxUQU+9m3QhbELg1VI58BjrKi5zxxhz
+	 ghOi+Qlloj8YA==
+Date: Tue, 2 Apr 2024 11:22:42 -0500
 From: Rob Herring <robh@kernel.org>
-To: Danila Tikhonov <danila@jiaxyga.com>
-Cc: davidwronek@gmail.com, manivannan.sadhasivam@linaro.org,
-	krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-	konrad.dybcio@linaro.org, linux-phy@lists.infradead.org,
-	conor+dt@kernel.org, kishon@kernel.org, devicetree@vger.kernel.org,
-	andersson@kernel.org, vkoul@kernel.org,
-	linux-kernel@vger.kernel.org, cros-qcom-dts-watchers@chromium.org
-Subject: Re: [PATCH 1/2] dt-bindings: phy: qmp-ufs: Fix PHY clocks for SC7180
-Message-ID: <171207454539.241562.7875961224491277526.robh@kernel.org>
-References: <20240401182240.55282-1-danila@jiaxyga.com>
- <20240401182240.55282-2-danila@jiaxyga.com>
+To: =?iso-8859-1?Q?Andr=E9?= Apitzsch <git@apitzsch.eu>
+Cc: phone-devel@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-hardening@vger.kernel.org, linux-leds@vger.kernel.org,
+	~postmarketos/upstreaming@lists.sr.ht,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lee Jones <lee@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	Kees Cook <keescook@chromium.org>, Pavel Machek <pavel@ucw.cz>
+Subject: Re: [PATCH v2 1/3] dt-bindings: leds: Add Silergy SY7802 flash LED
+Message-ID: <171207496054.248936.15074257911967114651.robh@kernel.org>
+References: <20240401-sy7802-v2-0-1138190a7448@apitzsch.eu>
+ <20240401-sy7802-v2-1-1138190a7448@apitzsch.eu>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20240401182240.55282-2-danila@jiaxyga.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240401-sy7802-v2-1-1138190a7448@apitzsch.eu>
 
 
-On Mon, 01 Apr 2024 21:22:39 +0300, Danila Tikhonov wrote:
-> QMP UFS PHY used in SC7180 requires 3 clocks:
+On Mon, 01 Apr 2024 23:23:55 +0200, André Apitzsch wrote:
+> Document Silergy SY7802 flash LED driver devicetree bindings.
 > 
-> * ref - 19.2MHz reference clock from RPMh
-> * ref_aux - Auxiliary reference clock from GCC
-> * qref - QREF clock from GCC
-> 
-> This change obviously breaks the ABI, but it is inevitable since the
-> clock topology needs to be accurately described in the binding.
-> 
-> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+> Signed-off-by: André Apitzsch <git@apitzsch.eu>
 > ---
->  .../devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml       | 1 +
->  1 file changed, 1 insertion(+)
+>  .../devicetree/bindings/leds/silergy,sy7802.yaml   | 100 +++++++++++++++++++++
+>  1 file changed, 100 insertions(+)
 > 
 
-Acked-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
 
 
