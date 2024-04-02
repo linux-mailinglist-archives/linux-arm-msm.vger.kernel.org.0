@@ -1,458 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-16030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0C05894D61
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 10:26:07 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6A32894DCD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 10:44:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 215911C211B4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 08:26:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9C762283B08
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 08:44:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98FDB3DBBE;
-	Tue,  2 Apr 2024 08:25:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EECC45BF9;
+	Tue,  2 Apr 2024 08:44:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uxHa/Bdw"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="i/GPU6/P"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15733CF74
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Apr 2024 08:25:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 486F04501C
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Apr 2024 08:44:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712046359; cv=none; b=MGzCNPeZSxw4WJTKNdBShpYgcCdE/f8CNv4h/bdekzYyRcqWPY4jb3OAMTebqJy0lbd2afT0INa79GYYUUFeObj11fd4zHjNRZBkykNRHk5vuT34RZe3pZTTPu70lxpGYtbIhMsV/h3eGnobf0CBortrsU40uWjBMEds4MFYeJM=
+	t=1712047485; cv=none; b=sEdSLB/zySnSSpKmcf7zPF21yDUT0nTePLm99fgqf0CXqYSD5WX7manUDUScRD71amfEDFZj9YPasHnKqa0dl0d/gMxP0yRh3+TgX0MRvM50/k20F8fqkeyIWgd7ls3fEvDIlkvp4s4nihX760oLPrIqZp+dc8U1LYqcdZ7iLYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712046359; c=relaxed/simple;
-	bh=fE/GrvPu10LrqQikLFNhtRSkYkc0VazA8fK5bkQ4gl4=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=kMtvqoa2qG1pl2QdDbE1i1lOH9dOw9TUNQjE9kI8J5HF+UIzPJwNkMKLyD3ZjRfuN4FPYLoaiIvlSDTL94Ug6X9dWfjuC1l3l0+PzvItgDgJpwlUaBadDLreEWzSHTVhkRIzJM1UsaYwn7NOopAqN4YjleGvZwQ5RQdZsQDDY14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uxHa/Bdw; arc=none smtp.client-ip=209.85.208.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2d6ee81bc87so43274641fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Apr 2024 01:25:56 -0700 (PDT)
+	s=arc-20240116; t=1712047485; c=relaxed/simple;
+	bh=zcYPc3kIDg6rlnh2gZjjeIvpIPzvaeFy4b1q5o+QnUA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VH4J1hRp4+VvObEKZr/zNBFLlf1QRzQSJsqVc/JaMmR2tDEZRwMXK9RGQbZ2rwto+gQvdRk3fHjMV+hZB2w6RywNs2ZgnTN/se3gL9qBbLISIVIZxOaDo2LqhJWddc4Z6f0p3k/2szNwqkXz9dFJNn284fac50hvf7QzHoUgDQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=i/GPU6/P; arc=none smtp.client-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2d4360ab3daso63098441fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Apr 2024 01:44:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712046355; x=1712651155; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ptwXlaGD9tDE8mTVa0rkklwTmGVBAJpwHBXHiuDfoeM=;
-        b=uxHa/BdwAZSAyLyxZ51Zl4pit3d9WEqb5dJi3RYKPjzIljLSRCGLrqvDWsJiRagnOa
-         uJLxVMjWO7wM+Er2Ymg58C+8CjTBLG0By7UVo+jhcozVAjajSuyLRG4g7zhozafAxjZa
-         s+/7npt+mRSL+3vBoJSbTjTtf+WrM9uGiKnHCSzaK5eBusuACcC6m+s2Z5mtJMBAxnKH
-         FWAZB5aKVSCQS/qVYv0ecblzvu3BbMq+j2zSRY0b2dg8XZbOP7Kn0clfv+5tcebr5XC0
-         uCDGWaBzH8M1dr9Nu1p3fXexI1tVxxtFIszuhx2meW3BtuddT5UJmIcTLrNaUJEiFFna
-         VT/A==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1712047482; x=1712652282; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=q3IzUDTGA+qb6viFGbq1/XCjFFQY+f33uVg0Jns5ZNU=;
+        b=i/GPU6/PwF05cXrBInMN32uDAecOmqunsSopmS7f2fLx/OBCz3G1VAkP0LnVoD607v
+         p+xtEvySzVcPnyDOLLmhRY4kBFmNkESzSuX9FpUupZweABiGd8PR0c7/lnZnxfq0VQNt
+         PC7+ZPklPJSuuPQR+aLjKMTxIPt2mzEyulW+gfAxblF7eiVWeOTRHO6FFrg+1BSCUOcL
+         Lbn48bawRY5XmNfHfk+nzBtClwohr6eRI0EWrAM9qZIrkldq5MLuyWtLpDPiH51Ublpv
+         iFA9SZGYrhdHb6kXPRoXvN9iBiDk3dvtPAV8+qCglbChIkq1pi3xbz8UVQ1q6qducfJP
+         iBxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712046355; x=1712651155;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ptwXlaGD9tDE8mTVa0rkklwTmGVBAJpwHBXHiuDfoeM=;
-        b=qkjuW95yJ8OPKff5R1ps5y0Rzkv3zg3gKwa+Sv9NFEtHI169xImv5DQAVuuaUdNaO8
-         wzUYrQc1v2iuweHn2hW7JgNJW8k8sTsNCnk5qsG5uQFtZZxmzAAkHkpSM0em/VtgiCxn
-         PTmQx0MZ8qm6TMm1BK1aT0idT+HZhMjVph6alD2huEPY2EwVt1BCeJVBkne9TgVc0GET
-         KLzhh4WyFOe6ZfHciTUPYHNN9Bgz6M8tT/3FzOuQCwek9lhj8foegsfemF84glPy538o
-         4o61tcsbDSsq5f4fMBO3Led+uzbEC374yad3/HqfR/dpTWAPfK+u+DBptsEkXYwhM3Oz
-         dT2Q==
-X-Forwarded-Encrypted: i=1; AJvYcCX/IE4goxiDduFqb8aEWsXIwo81TX8QjBW6Nxa3hux0znO7jhXxV/jab9huKU8/c4u2R89C6WaXFqcfI1ubEmBGFONyZWFtHRYXsAQrmQ==
-X-Gm-Message-State: AOJu0YyYxuEWr466SPykpdqcFOLPjlKmFQS7XGacOYIZUpVJvhSQX18E
-	qEN91RphKt3rX5nc9naV1tTzIix9wAAE/XdiuQgHbJuLpId0o7fGQ9tJWNZjY48=
-X-Google-Smtp-Source: AGHT+IHbGTRgXgDEOXz39Kwi6dnXogIkIja+D9cZ58cXzTUEAXdsUhRYApSlhOsrJ5y6IaX1XEWuRA==
-X-Received: by 2002:a2e:b38c:0:b0:2d4:6f33:2e59 with SMTP id f12-20020a2eb38c000000b002d46f332e59mr6508586lje.30.1712046354452;
-        Tue, 02 Apr 2024 01:25:54 -0700 (PDT)
-Received: from [192.168.7.190] (82-64-249-211.subs.proxad.net. [82.64.249.211])
-        by smtp.gmail.com with ESMTPSA id n38-20020a05600c3ba600b00415509b11c3sm13276168wms.22.2024.04.02.01.25.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Apr 2024 01:25:53 -0700 (PDT)
-Message-ID: <871bc3f2-d4c3-4c83-ad0c-04c65ed15598@linaro.org>
-Date: Tue, 2 Apr 2024 10:25:52 +0200
+        d=1e100.net; s=20230601; t=1712047482; x=1712652282;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=q3IzUDTGA+qb6viFGbq1/XCjFFQY+f33uVg0Jns5ZNU=;
+        b=Iwx7uHgiMM8IUR5ZXZENHk++vXnzB7oz9EMX4OZ5Ch1CTwhP6F3hhCx6mBApq5EANC
+         POw+k+orlwYNAPCwoXdKY9Aq2lmxyQvS1SFqCjTz5rPcSMg9l74RPGjD5Kqzs7QPofNP
+         JdlHA1FBLwP+wkVSB7prPZqxJdTpXLBmr+BHCWaYcpzUlUeQRsVqf5Myl/3+yFHSpO+W
+         05kzaYSKQeBvpwcvrdxNB8BePpT803z4wcD1JgH47CECAc+6xjpznFe/lk2jdIZzXwvj
+         hR2ER9671C159AH53yALjn76e5bXtMccxinkyMS9fudo7cZv/GZNPOem1gZ06Uk7cIWm
+         YiXw==
+X-Forwarded-Encrypted: i=1; AJvYcCVvZqQ2M55LaXOvHTPJWZgrx0LCaOAlYfRfeop90WU0oUQzgudpsPcdPD1Sm1k0t+eIw43U2Wy99O3KMLxA7b3YCUuNNc4kimyJB6okOg==
+X-Gm-Message-State: AOJu0Yxzt0iLt5qh2IGZo+9AXCy2qpW7R9lY9jENnLb6fAGHclGeKfMe
+	wgOtoM5lXIiQnuTkBR+suH5HVwELPgHUMd51krv2mzkA22DUhUhU9V6VQpFRZcgQt5kbZEULprx
+	RQY1aUhvajDzu5lP3uhHL6CuSbnN3NHxF+WA59A==
+X-Google-Smtp-Source: AGHT+IFkAYNM/XEAIBAAOr81EfU+jKUMoadzrsQHB7L061fV8T1Dmp/9EAGJYHlLGFygqdYZr9Z+bOn9ffLbuXiHoqQ=
+X-Received: by 2002:a2e:9d97:0:b0:2d8:2422:c1d3 with SMTP id
+ c23-20020a2e9d97000000b002d82422c1d3mr1876534ljj.44.1712047482269; Tue, 02
+ Apr 2024 01:44:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v7 6/6] spmi: pmic-arb: Add multi bus support
-To: Abel Vesa <abel.vesa@linaro.org>, Stephen Boyd <sboyd@kernel.org>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: Srini Kandagatla <srinivas.kandagatla@linaro.org>,
- Johan Hovold <johan@kernel.org>, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-mediatek@lists.infradead.org, devicetree@vger.kernel.org
-References: <20240329-spmi-multi-master-support-v7-0-7b902824246c@linaro.org>
- <20240329-spmi-multi-master-support-v7-6-7b902824246c@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20240329-spmi-multi-master-support-v7-6-7b902824246c@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20240325100359.17001-1-brgl@bgdev.pl> <56e1c63a-4c09-4d92-9ef2-aad5390879cc@gmail.com>
+ <CAMRc=Mf_pvrh2VMfTVE-ZTypyO010p=to-cd8Q745DzSDXLGFw@mail.gmail.com>
+ <CAMRc=MfsVWcoMC-dB-fdxy332h-ucUPTfEUMAnCt5L-q3zJxWg@mail.gmail.com>
+ <82f94b54-82d1-49b9-badf-63d948b347fc@gmail.com> <97e1f121-9e84-4e63-9c9c-57e2de0b29d7@gmail.com>
+ <CAMRc=McLJFGcy-A6PZNmjgDXnvx8z0J4k-Dbak-txvWnycHG2A@mail.gmail.com>
+ <2b1dc031-d645-494c-9103-a2bb422ea60b@gmail.com> <CAMRc=MdoSPuedbGhy4toDEkw0vSzESDz2bXGpyt_=R4hqXW+Uw@mail.gmail.com>
+ <9b1e5ea0-bb32-4c42-b2e9-204bde31b905@gmail.com> <CACMJSesvM6_PhhR_2sP4JX6bR4ytVVg=MwWBEVrCHf5FNp2JXw@mail.gmail.com>
+ <9db0fc7b-f24a-4d76-b8bd-ec577ecba0c6@gmail.com> <CAMRc=Me9x1OXKXXxyhzZ6mxffmaoq=4QhMXCL6L71_xso2epWA@mail.gmail.com>
+In-Reply-To: <CAMRc=Me9x1OXKXXxyhzZ6mxffmaoq=4QhMXCL6L71_xso2epWA@mail.gmail.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Tue, 2 Apr 2024 10:44:30 +0200
+Message-ID: <CAMRc=Me0MamtJoPtQnucKyZx9pfkEPDAAZqWFWRU0CBcj+P50A@mail.gmail.com>
+Subject: Re: [PATCH v9 00/13] firmware: qcom: qseecom: convert to using the TZ allocator
+To: Maximilian Luz <luzmaximilian@gmail.com>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Elliot Berman <quic_eberman@quicinc.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+	Guru Das Srinagesh <quic_gurus@quicinc.com>, Andrew Halaney <ahalaney@redhat.com>, 
+	Alex Elder <elder@linaro.org>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
+	Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, kernel@quicinc.com, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Abel,
+On Sat, Mar 30, 2024 at 8:16=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.pl>=
+ wrote:
+>
+> On Fri, 29 Mar 2024 20:57:52 +0100, Maximilian Luz <luzmaximilian@gmail.c=
+om> said:
+> > On 3/29/24 8:46 PM, Bartosz Golaszewski wrote:
+> >> On Fri, 29 Mar 2024 at 20:39, Maximilian Luz <luzmaximilian@gmail.com>=
+ wrote:
+> >>>
+> >>> On 3/29/24 8:26 PM, Bartosz Golaszewski wrote:
+> >>>> On Fri, 29 Mar 2024 at 20:22, Maximilian Luz <luzmaximilian@gmail.co=
+m> wrote:
+> >>>>>
+> >>>>> On 3/29/24 8:07 PM, Bartosz Golaszewski wrote:
+> >>>>>>
+> >>>>>> Both with and without SHM bridge?
+> >>>>>
+> >>>>> With CONFIG_QCOM_TZMEM_MODE_GENERIC=3Dy (and the upcoming fix) ever=
+ything
+> >>>>> works. With CONFIG_QCOM_TZMEM_MODE_SHMBRIDGE=3Dy things unfortunate=
+ly
+> >>>>> still get stuck at boot (regardless of the fix). I think that's
+> >>>>> happening even before anything efivar related should come up.
+> >>>>>
+> >>>>
+> >>>> This is on X13s? I will get one in 3 weeks. Can you get the bootlog
+> >>>> somehow? Does the laptop have any serial console?
+> >>>
+> >>> Surface Pro X (sc8180x), but it should be similar enough to the X13s =
+in
+> >>> that regard. At least from what people with access to the X13s told m=
+e,
+> >>> the qseecom stuff seems to behave the same.
+> >>>
+> >>> Unfortunately I don't have a direct serial console. Best I have is
+> >>> USB-serial, but it's not even getting there. I'll have to try and see=
+ if
+> >>> I can get some more info on the screen.
+> >>>
+> >>
+> >> I have access to a sc8180x-primus board, does it make sense to test
+> >> with this one? If so, could you give me instructions on how to do it?
+> >
+> > I guess it's worth a shot.
+> >
+> >  From what I can tell, there shouldn't be any patches in my tree that
+> > would conflict with it. So I guess it should just be building it with
+> > CONFIG_QCOM_TZMEM_MODE_SHMBRIDGE=3Dy and booting.
+> >
+> > I am currently testing it on top of a patched v6.8 tree though (but tha=
+t
+> > should just contain patches to get the Pro X running). You can find the
+> > full tree at
+> >
+> >      https://github.com/linux-surface/kernel/tree/spx/v6.8
+> >
+> > The last commit is the fix I mentioned, so you might want to revert
+> > that, since the shmem issue triggers regardless of that and it prevents
+> > your series from applying cleanly.
+> >
+> > Best regards,
+> > Max
+> >
+>
+> sc8180x-primus' support upstream is quite flaky. The board boots 50% of t=
+ime.
+> However it's true that with SHM bridge it gets to:
+>
+> mount: mounting efivarfs on /sys/firmware/efi/efivars failed: Operation n=
+ot supported
+>
+> and stops 100% of the time. Without SHM bridge I cannot boot it either be=
+cause
+> I suppose I need the patch you sent yesterday. I haven't had the time to
+> rebase it yet, it's quite intrusive to my series.
+>
+> I can confirm that with that patch the board still boots but still 50% of=
+ the
+> time.
+>
+> Bart
 
-On 29/03/2024 19:54, Abel Vesa wrote:
-> Starting with HW version 7, there are actually two separate buses
-> (with two separate sets of wires). So add support for the second bus.
-> The first platform that needs this support for the second bus is the
-> Qualcomm X1 Elite, so add the compatible for it as well.
-> 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
->   drivers/spmi/spmi-pmic-arb.c | 138 +++++++++++++++++++++++++++++++++++++------
->   1 file changed, 120 insertions(+), 18 deletions(-)
-> 
-> diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
-> index 19ff8665f3d9..56f2b3190d82 100644
-> --- a/drivers/spmi/spmi-pmic-arb.c
-> +++ b/drivers/spmi/spmi-pmic-arb.c
-> @@ -13,6 +13,7 @@
->   #include <linux/kernel.h>
->   #include <linux/module.h>
->   #include <linux/of.h>
-> +#include <linux/of_address.h>
->   #include <linux/of_irq.h>
->   #include <linux/platform_device.h>
->   #include <linux/slab.h>
-> @@ -95,6 +96,8 @@ enum pmic_arb_channel {
->   	PMIC_ARB_CHANNEL_OBS,
->   };
->   
-> +#define PMIC_ARB_MAX_BUSES		2
-> +
->   /* Maximum number of support PMIC peripherals */
->   #define PMIC_ARB_MAX_PERIPHS		512
->   #define PMIC_ARB_MAX_PERIPHS_V7		1024
-> @@ -148,6 +151,7 @@ struct spmi_pmic_arb;
->    * @min_apid:		minimum APID (used for bounding IRQ search)
->    * @max_apid:		maximum APID
->    * @irq:		PMIC ARB interrupt.
-> + * @id:			unique ID of the bus
->    */
->   struct spmi_pmic_arb_bus {
->   	struct spmi_pmic_arb	*pmic_arb;
-> @@ -165,6 +169,7 @@ struct spmi_pmic_arb_bus {
->   	u16			min_apid;
->   	u16			max_apid;
->   	int			irq;
-> +	u8			id;
->   };
->   
->   /**
-> @@ -179,7 +184,8 @@ struct spmi_pmic_arb_bus {
->    * @ee:			the current Execution Environment
->    * @ver_ops:		version dependent operations.
->    * @max_periphs:	Number of elements in apid_data[]
-> - * @bus:		per arbiter bus instance
-> + * @buses:		per arbiter buses instances
-> + * @buses_available:	number of buses registered
->    */
->   struct spmi_pmic_arb {
->   	void __iomem		*rd_base;
-> @@ -191,7 +197,8 @@ struct spmi_pmic_arb {
->   	u8			ee;
->   	const struct pmic_arb_ver_ops *ver_ops;
->   	int			max_periphs;
-> -	struct spmi_pmic_arb_bus *bus;
-> +	struct spmi_pmic_arb_bus *buses[PMIC_ARB_MAX_BUSES];
-> +	int			buses_available;
->   };
->   
->   /**
-> @@ -219,7 +226,7 @@ struct spmi_pmic_arb {
->   struct pmic_arb_ver_ops {
->   	const char *ver_str;
->   	int (*get_core_resources)(struct platform_device *pdev, void __iomem *core);
-> -	int (*init_apid)(struct spmi_pmic_arb_bus *bus);
-> +	int (*init_apid)(struct spmi_pmic_arb_bus *bus, int index);
->   	int (*ppid_to_apid)(struct spmi_pmic_arb_bus *bus, u16 ppid);
->   	/* spmi commands (read_cmd, write_cmd, cmd) functionality */
->   	int (*offset)(struct spmi_pmic_arb_bus *bus, u8 sid, u16 addr,
-> @@ -308,8 +315,8 @@ static int pmic_arb_wait_for_done(struct spmi_controller *ctrl,
->   			}
->   
->   			if (status & PMIC_ARB_STATUS_FAILURE) {
-> -				dev_err(&ctrl->dev, "%s: %#x %#x: transaction failed (%#x)\n",
-> -					__func__, sid, addr, status);
-> +				dev_err(&ctrl->dev, "%s: %#x %#x: transaction failed (%#x) reg: 0x%x\n",
-> +					__func__, sid, addr, status, offset);
->   				WARN_ON(1);
->   				return -EIO;
->   			}
-> @@ -325,8 +332,8 @@ static int pmic_arb_wait_for_done(struct spmi_controller *ctrl,
->   		udelay(1);
->   	}
->   
-> -	dev_err(&ctrl->dev, "%s: %#x %#x: timeout, status %#x\n",
-> -		__func__, sid, addr, status);
-> +	dev_err(&ctrl->dev, "%s: %#x %#x %#x: timeout, status %#x\n",
-> +		__func__, bus->id, sid, addr, status);
->   	return -ETIMEDOUT;
->   }
->   
-> @@ -1005,11 +1012,17 @@ static int pmic_arb_get_core_resources_v1(struct platform_device *pdev,
->   	return 0;
->   }
->   
-> -static int pmic_arb_init_apid_v1(struct spmi_pmic_arb_bus *bus)
-> +static int pmic_arb_init_apid_v1(struct spmi_pmic_arb_bus *bus, int index)
->   {
->   	struct spmi_pmic_arb *pmic_arb = bus->pmic_arb;
->   	u32 *mapping_table;
->   
-> +	if (index) {
-> +		dev_err(&bus->spmic->dev, "Unsupported buses count %d detected\n",
-> +			index);
-> +		return -EINVAL;
-> +	}
+Hi!
 
-Shouldn't be here
+I was under the impression that until v8, the series worked on sc8180x
+but I'm seeing that even v7 has the same issue with SHM Bridge on
+sc8180x-primus. Could you confirm? Because I'm not sure if I should
+track the differences or the whole thing was broken for this platform
+from the beginning.
 
-> +
->   	mapping_table = devm_kcalloc(&bus->spmic->dev, pmic_arb->max_periphs,
->   				     sizeof(*mapping_table), GFP_KERNEL);
->   	if (!mapping_table)
-> @@ -1252,11 +1265,17 @@ static int pmic_arb_offset_v2(struct spmi_pmic_arb_bus *bus, u8 sid, u16 addr,
->   	return 0x1000 * pmic_arb->ee + 0x8000 * apid;
->   }
->   
-> -static int pmic_arb_init_apid_v5(struct spmi_pmic_arb_bus *bus)
-> +static int pmic_arb_init_apid_v5(struct spmi_pmic_arb_bus *bus, int index)
->   {
->   	struct spmi_pmic_arb *pmic_arb = bus->pmic_arb;
->   	int ret;
->   
-> +	if (index) {
-> +		dev_err(&bus->spmic->dev, "Unsupported buses count %d detected\n",
-> +			index);
-> +		return -EINVAL;
-> +	}
-
-Shouldn't be here
-
-> +
->   	bus->base_apid = 0;
->   	bus->apid_count = readl_relaxed(pmic_arb->core + PMIC_ARB_FEATURES) &
->   					   PMIC_ARB_FEATURES_PERIPH_MASK;
-> @@ -1328,6 +1347,50 @@ static int pmic_arb_get_core_resources_v7(struct platform_device *pdev,
->   	return pmic_arb_get_obsrvr_chnls_v2(pdev);
->   }
->   
-> +/*
-> + * Only v7 supports 2 buses. Each bus will get a different apid count, read
-> + * from different registers.
-> + */
-> +static int pmic_arb_init_apid_v7(struct spmi_pmic_arb_bus *bus, int index)
-> +{
-> +	struct spmi_pmic_arb *pmic_arb = bus->pmic_arb;
-> +	int ret;
-> +
-> +	if (index == 0) {
-> +		bus->base_apid = 0;
-> +		bus->apid_count = readl_relaxed(pmic_arb->core + PMIC_ARB_FEATURES) &
-> +						   PMIC_ARB_FEATURES_PERIPH_MASK;
-> +	} else if (index == 1) {
-> +		bus->base_apid = readl_relaxed(pmic_arb->core + PMIC_ARB_FEATURES) &
-> +						  PMIC_ARB_FEATURES_PERIPH_MASK;
-> +		bus->apid_count = readl_relaxed(pmic_arb->core + PMIC_ARB_FEATURES1) &
-> +						   PMIC_ARB_FEATURES_PERIPH_MASK;
-> +	} else {
-> +		dev_err(&bus->spmic->dev, "Unsupported buses count %d detected\n",
-> +			bus->id);
-> +		return -EINVAL;
-> +	}
-> +
-> +	if (bus->base_apid + bus->apid_count > pmic_arb->max_periphs) {
-> +		dev_err(&bus->spmic->dev, "Unsupported APID count %d detected\n",
-> +			bus->base_apid + bus->apid_count);
-> +		return -EINVAL;
-> +	}
-> +
-> +	ret = pmic_arb_init_apid_min_max(bus);
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = pmic_arb_read_apid_map_v5(bus);
-> +	if (ret) {
-> +		dev_err(&bus->spmic->dev, "could not read APID->PPID mapping table, rc= %d\n",
-> +			ret);
-> +		return ret;
-> +	}
-> +
-> +	return 0;
-> +}
-
-Shouldn't be here
-
-> +
->   /*
->    * v7 offset per ee and per apid for observer channels and per apid for
->    * read/write channels.
-> @@ -1580,7 +1643,7 @@ static const struct pmic_arb_ver_ops pmic_arb_v5 = {
->   static const struct pmic_arb_ver_ops pmic_arb_v7 = {
->   	.ver_str		= "v7",
->   	.get_core_resources	= pmic_arb_get_core_resources_v7,
-> -	.init_apid		= pmic_arb_init_apid_v5,
-> +	.init_apid		= pmic_arb_init_apid_v7,
-
-Shouldn't be here
-
->   	.ppid_to_apid		= pmic_arb_ppid_to_apid_v5,
->   	.non_data_cmd		= pmic_arb_non_data_cmd_v2,
->   	.offset			= pmic_arb_offset_v7,
-> @@ -1604,6 +1667,7 @@ static int spmi_pmic_arb_bus_init(struct platform_device *pdev,
->   				  struct device_node *node,
->   				  struct spmi_pmic_arb *pmic_arb)
->   {
-> +	int bus_index = pmic_arb->buses_available;
->   	struct spmi_pmic_arb_bus *bus;
->   	struct device *dev = &pdev->dev;
->   	struct spmi_controller *ctrl;
-> @@ -1622,7 +1686,7 @@ static int spmi_pmic_arb_bus_init(struct platform_device *pdev,
->   
->   	bus = spmi_controller_get_drvdata(ctrl);
->   
-> -	pmic_arb->bus = bus;
-> +	pmic_arb->buses[bus_index] = bus;
->   
->   	bus->ppid_to_apid = devm_kcalloc(dev, PMIC_ARB_MAX_PPID,
->   					 sizeof(*bus->ppid_to_apid),
-> @@ -1665,12 +1729,13 @@ static int spmi_pmic_arb_bus_init(struct platform_device *pdev,
->   	bus->cnfg = cnfg;
->   	bus->irq = irq;
->   	bus->spmic = ctrl;
-> +	bus->id = bus_index;
->   
-> -	ret = pmic_arb->ver_ops->init_apid(bus);
-> +	ret = pmic_arb->ver_ops->init_apid(bus, bus_index);
->   	if (ret)
->   		return ret;
->   
-> -	dev_dbg(&pdev->dev, "adding irq domain\n");
-> +	dev_dbg(&pdev->dev, "adding irq domain for bus %d\n", bus_index);
->   
->   	bus->domain = irq_domain_add_tree(dev->of_node,
->   					  &pmic_arb_irq_domain_ops, bus);
-> @@ -1683,14 +1748,53 @@ static int spmi_pmic_arb_bus_init(struct platform_device *pdev,
->   					 pmic_arb_chained_irq, bus);
->   
->   	ctrl->dev.of_node = node;
-> +	dev_set_name(&ctrl->dev, "spmi-%d", bus_index);
->   
->   	ret = devm_spmi_controller_add(dev, ctrl);
->   	if (ret)
->   		return ret;
->   
-> +	pmic_arb->buses_available++;
-> +
->   	return 0;
->   }
->   
-> +static int spmi_pmic_arb_register_buses(struct spmi_pmic_arb *pmic_arb,
-> +					struct platform_device *pdev)
-> +{
-> +	struct device *dev = &pdev->dev;
-> +	struct device_node *node = dev->of_node;
-> +	struct device_node *child;
-> +	int ret;
-> +
-> +	/* legacy mode doesn't provide child node for the bus */
-> +	if (of_device_is_compatible(node, "qcom,spmi-pmic-arb"))
-> +		return spmi_pmic_arb_bus_init(pdev, node, pmic_arb);
-> +
-> +	for_each_available_child_of_node(node, child) {
-> +		if (of_node_name_eq(child, "spmi")) {
-> +			ret = spmi_pmic_arb_bus_init(pdev, child, pmic_arb);
-> +			if (ret)
-> +				return ret;
-> +		}
-> +	}
-> +
-> +	return ret;
-> +}
-> +
-> +static void spmi_pmic_arb_deregister_buses(struct spmi_pmic_arb *pmic_arb)
-> +{
-> +	int i;
-> +
-> +	for (i = 0; i < PMIC_ARB_MAX_BUSES; i++) {
-> +		struct spmi_pmic_arb_bus *bus = pmic_arb->buses[i];
-> +
-> +		irq_set_chained_handler_and_data(bus->irq,
-> +						 NULL, NULL);
-> +		irq_domain_remove(bus->domain);
-> +	}
-> +}
-> +
->   static int spmi_pmic_arb_probe(struct platform_device *pdev)
->   {
->   	struct spmi_pmic_arb *pmic_arb;
-> @@ -1761,21 +1865,19 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
->   
->   	pmic_arb->ee = ee;
->   
-> -	return spmi_pmic_arb_bus_init(pdev, dev->of_node, pmic_arb);
-> +	return spmi_pmic_arb_register_buses(pmic_arb, pdev);
->   }
->   
->   static void spmi_pmic_arb_remove(struct platform_device *pdev)
->   {
->   	struct spmi_pmic_arb *pmic_arb = platform_get_drvdata(pdev);
-> -	struct spmi_pmic_arb_bus *bus = pmic_arb->bus;
->   
-> -	irq_set_chained_handler_and_data(bus->irq,
-> -					 NULL, NULL);
-> -	irq_domain_remove(bus->domain);
-> +	spmi_pmic_arb_deregister_buses(pmic_arb);
->   }
->   
->   static const struct of_device_id spmi_pmic_arb_match_table[] = {
->   	{ .compatible = "qcom,spmi-pmic-arb", },
-> +	{ .compatible = "qcom,x1e80100-spmi-pmic-arb", },
->   	{},
->   };
->   MODULE_DEVICE_TABLE(of, spmi_pmic_arb_match_table);
-> 
-
-With issues fixed, it looks fine.
-
-Thanks,
-Neil
+Bart
 
