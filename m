@@ -1,163 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-16120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16121-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 67281895767
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 16:49:49 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B8C7089576E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 16:50:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8B4511C228D6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 14:49:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 306FF1F21E81
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 14:50:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C43D4133439;
-	Tue,  2 Apr 2024 14:45:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 696B11350C7;
+	Tue,  2 Apr 2024 14:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="N9aaA2Hb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kEOYK3HN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6BA1332A5
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Apr 2024 14:45:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED1812C813
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Apr 2024 14:47:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712069137; cv=none; b=Sm4a9Q5a9Vx6dYQunjBim3Bs9kKqLoq0wEP7uFz0NuYMUMTPhxEHufewvdDhE3Gsv1uCsbO7b4+sciRh8aMmDXdkgEXXwFl0D01Gbowjq6VBSXIfIYgIU8s/PINeluBUO/yg/ATZutZ35VDmUU2FPvZtAvu2azZVxfXWaVJCqvI=
+	t=1712069250; cv=none; b=NFOMQ5xJ2jrmyA8nFy1LdGvSf6gVAm/bE3YP4C+qnZF2+FPxgyzz+DhGVaMbDJnGg1ijnAIPzaCvVpRQLrn0s1Io+IWRhyL00J8wnXjId8dRDwE6ywK4FqL+I41clIoZMKRsgQ7K7TFcPgkUdRTNd9zrJcdsNMmf3mtXp+oLt7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712069137; c=relaxed/simple;
-	bh=dQyII7vmQHRtc0XgOTiHPMjkmRblHUUbSglUykBczkI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hxQcfQnZELfqRAlN/yPdJY2d1ITT89pf2wAmJoMoWE1YoL1vL3T7YVV2IaGkQQAVuGyLchPLMLvGmwe9LPKvgKxcSvmW5XiHySz27pDs+dYCv627qyCE4cnJRIByII6Jp71h7mK7B6b/yTDJsS1c7rTmy7Y27N7gU5/GFOztx6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=N9aaA2Hb; arc=none smtp.client-ip=209.85.221.173
+	s=arc-20240116; t=1712069250; c=relaxed/simple;
+	bh=yOuFMfKt3fhU2KvOiQGXseYLvQBMDDOSvq+QfscMDJI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OSk6X0W5QICgb2uvmVBTqoiOn5CiS9KJVK9cbbjQE+u9X5lc2V6BRBAGPJDILQkIXUFWe7UHSm0JP1fHqQ61i/P8Wu1YVN01eyyOVrF4fvr4cIpJeD1oXIm339j+gksuHBi0YjOYNXTcdcvKbt1/dtL6WMeo8G7e1yIFRkrx0Iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kEOYK3HN; arc=none smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-4da702e48e0so577577e0c.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Apr 2024 07:45:35 -0700 (PDT)
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-568c714a9c7so6200473a12.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Apr 2024 07:47:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712069135; x=1712673935; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=b3+dZ1fpYzh0cVc/i51+AzoQt474NVYKn1M7saZ5Kp0=;
-        b=N9aaA2Hb10EPMMlN7M65sDBTOXyFqby+HyEuE0Q9QVVcL8LFF4qotWWzw8v8z1gnGE
-         Gj3k3n9rgXnFreOr4+AS6ncWjfDT3XprcWg5kNFeKGUtz9zMV6r9dURj3lh7UWksE6s3
-         yAhlOgmstcvX/vQFBHSswwdjkARbRAhCiKkNHgScPWHgJlRnxSuZqTq8hNtcHvHJSt+g
-         V4Vo7a4fswcB6uy0FdLt3035zxOfuXZpQ38o+CwhOW0sbZkmX5/t501qVH3uMYx9z2fJ
-         PQdN/J6AS9qekJrzux6dSCIGpe5azJoIMNCsn8e0iSwn8FfHQPmhxSt1xNJzDJoDH0gE
-         CkrQ==
+        d=linaro.org; s=google; t=1712069247; x=1712674047; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=hAVh7IlPzqGjm9NpZgxRf0H+NeU99flnbxeI0QSVaJg=;
+        b=kEOYK3HNYBoaLX9mLL2lizwyVaID20fE73Hc56G1UdRcle/UVuCx3hltn8614LQx4I
+         MnvcF6z3yNIYAEFXZU0hFsMKqCiuP56KSD6fhU2B0zp8I8OoKfkoQiFIZCpvPbgEVFtc
+         +Aalx1e5QgW8aYGoJ+l67mSmy+cHvtUWQOpbaHzBWhVm0Su2RGW5ANcQ77OHp1dcpart
+         XcLbUqy3jLBJaQg5zel1yX8eUGabfggA81c2/pop4T8BoTL6mUYSXTHIIqvSHi4kiq39
+         IxltSd6zcQWdv/kw+TIbuFUNwBZXB/YxApYHkCYEYyCI4QpoNHbL3sbqtTbWi10gYmpB
+         M28g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712069135; x=1712673935;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=b3+dZ1fpYzh0cVc/i51+AzoQt474NVYKn1M7saZ5Kp0=;
-        b=iHJInasGz0aa8w6Z6ETjQA16sYVDTUeIYYwL1y3geHGVpS35W7ltyn0PJJePy3Obmw
-         p2ivRKyLYJLmlqurL7X/pD1J6aBdn4/xEqe9vL9T58X78cKnRcerguQd6IaU6mp3wdzX
-         8fFBoW9Yijb9CqWWhQcKOb8xZT6OW3ncNaxDMpKcpEA8pAL8f9SZ88WnivOz4uZoo3DF
-         ufnmCwmKLd6U6ZUYFhE6NCJuZlTuEwreb2mR8wb5+RHtgteGF7BOofpOxFiva+FKwtrJ
-         7CJzHJlXB6rUHj67BnWK8v5QSpiuYpPAOokpCxdCnMaeNJL8+RAU4SHFHGXlLBDaIHf7
-         VA9g==
-X-Forwarded-Encrypted: i=1; AJvYcCWoQIUIzJKzvcxfUTEBdcAm8R3jso2pUCj5CRRK1pZz/uV58KZ12dCCq9on/zLtOSNsKsyg4xvrb4cSn9VSn5Wepw5XF9K6FXaZfLxcpQ==
-X-Gm-Message-State: AOJu0YxHhoo7arusKkczJBiFqGSflNqO7/zM7XeLWe0CTaMaXackkENo
-	OhvmXxDrfjGFYuayTqRdY1fdEnZKoYsoU32+d7sPIyJqCLnghnsFKjJBm8i1/jF7g+84ZYwWEOk
-	c0LzEESnvOf8KcoaEJrgpR36DKcm7w29Ra73wLw==
-X-Google-Smtp-Source: AGHT+IE1jgEZcgPnB/hD8dZF0oJ3NImwHK9mE9wkjXMjSPzUxoTXJ6/YZxwewKzVuNrajM6LQ0QOegrYmBEtmBqomwI=
-X-Received: by 2002:a1f:d5c4:0:b0:4d1:4e40:bd6f with SMTP id
- m187-20020a1fd5c4000000b004d14e40bd6fmr9290884vkg.10.1712069132468; Tue, 02
- Apr 2024 07:45:32 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1712069247; x=1712674047;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hAVh7IlPzqGjm9NpZgxRf0H+NeU99flnbxeI0QSVaJg=;
+        b=aUQowWtIduA7LU6nGWcf5Kgf288HiBnHRm9DzpR36kfnZy5I6pUhmKBVk/F1xHg58E
+         x/imgRdmIPyH0BGOVSL1vki6XPisgbZL8G8c6cxTj2GsKyd1hIHOdcnk+02dUaftkcPP
+         Q0w4l5Twkke33CqwpygIuDGoZAIjCMqh51aXkXuX2wUHMoV2v9gwyfAjabe35Chyn4B7
+         /LU6bxTe2lughUxJJKKPnRuHLNbrEReSA+o9UcfzLa8i4zvn7c8J8gsvMBpJ7YhjnuOG
+         bffK7ZjYj0W/ZrPYmEbwFzExpghZqv6x7ZbIEnhjyiLWy0pGOvaYKbM6mIreTEZqouY2
+         rjmQ==
+X-Gm-Message-State: AOJu0YwGNyojc+lT3XHNO/ob+1PzVxmAuoiZAMzn5RbIHJlzC7/xBmHF
+	Z/VWayFIMB8D5X5RbkdqMSmrql4/MnEalkFH8ZBNiL19pmoMbPA0dCM2ImOMu3Y=
+X-Google-Smtp-Source: AGHT+IFBVqcsXGsRjPp1iqC7U9wiXJJ38gF3zMb3VBwO2QsXOJos6FFUOnkxbTRiPODXCJMx8xQt8A==
+X-Received: by 2002:a05:6402:5190:b0:568:9ba8:8f1a with SMTP id q16-20020a056402519000b005689ba88f1amr9970535edd.7.1712069246823;
+        Tue, 02 Apr 2024 07:47:26 -0700 (PDT)
+Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id r1-20020aa7cb81000000b0056dd4bf7660sm2488730edt.52.2024.04.02.07.47.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Apr 2024 07:47:25 -0700 (PDT)
+Message-ID: <d9ba1e11-44ea-4c1f-ab33-56a8bf57ab63@linaro.org>
+Date: Tue, 2 Apr 2024 16:47:23 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240401-ufs-icc-fix-v1-1-3bac41bdfa7a@linaro.org>
-In-Reply-To: <20240401-ufs-icc-fix-v1-1-3bac41bdfa7a@linaro.org>
-From: Amit Pundir <amit.pundir@linaro.org>
-Date: Tue, 2 Apr 2024 20:14:56 +0530
-Message-ID: <CAMi1Hd2tLrP-Qm5tGSwjtYNjy6Di0PGMeW-j=scqj3jgM2RyjA@mail.gmail.com>
-Subject: Re: [PATCH] scsi: ufs: qcom: Add missing interconnect bandwidth
- values for Gear 5
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	"James E.J. Bottomley" <jejb@linux.ibm.com>, "Martin K. Petersen" <martin.petersen@oracle.com>, 
-	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] arm64: dts: msm8996: add fastrpc nodes
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Sibi Sankar <quic_sibis@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+References: <20240401-msm8996-remoteproc-v1-0-f02ab47fc728@linaro.org>
+ <20240401-msm8996-remoteproc-v1-3-f02ab47fc728@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240401-msm8996-remoteproc-v1-3-f02ab47fc728@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, 1 Apr 2024 at 20:39, Manivannan Sadhasivam
-<manivannan.sadhasivam@linaro.org> wrote:
->
-> These entries are necessary to scale the interconnect bandwidth while
-> operating in Gear 5.
-
-This fixes the UFS breakage we see on SM8550-HDK.
-
-Tested-by: Amit Pundir <amit.pundir@linaro.org>
-
-Regards,
-Amit Pundir
-
->
-> Cc: Amit Pundir <amit.pundir@linaro.org>
-> Fixes: 03ce80a1bb86 ("scsi: ufs: qcom: Add support for scaling interconnects")
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+On 31.03.2024 11:10 PM, Dmitry Baryshkov wrote:
+> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> 
+> The ADSP provides fastrpc/compute capabilities. Enable support for the
+> fastrpc on this DSP.
+> 
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  drivers/ufs/host/ufs-qcom.c | 8 +++++++-
->  1 file changed, 7 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index 8d68bd21ae73..696540ca835e 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -47,7 +47,7 @@ enum {
->         TSTBUS_MAX,
->  };
->
-> -#define QCOM_UFS_MAX_GEAR 4
-> +#define QCOM_UFS_MAX_GEAR 5
->  #define QCOM_UFS_MAX_LANE 2
->
->  enum {
-> @@ -67,26 +67,32 @@ static const struct __ufs_qcom_bw_table {
->         [MODE_PWM][UFS_PWM_G2][UFS_LANE_1] = { 1844,            1000 },
->         [MODE_PWM][UFS_PWM_G3][UFS_LANE_1] = { 3688,            1000 },
->         [MODE_PWM][UFS_PWM_G4][UFS_LANE_1] = { 7376,            1000 },
-> +       [MODE_PWM][UFS_PWM_G5][UFS_LANE_1] = { 14752,           1000 },
->         [MODE_PWM][UFS_PWM_G1][UFS_LANE_2] = { 1844,            1000 },
->         [MODE_PWM][UFS_PWM_G2][UFS_LANE_2] = { 3688,            1000 },
->         [MODE_PWM][UFS_PWM_G3][UFS_LANE_2] = { 7376,            1000 },
->         [MODE_PWM][UFS_PWM_G4][UFS_LANE_2] = { 14752,           1000 },
-> +       [MODE_PWM][UFS_PWM_G5][UFS_LANE_2] = { 29504,           1000 },
->         [MODE_HS_RA][UFS_HS_G1][UFS_LANE_1] = { 127796,         1000 },
->         [MODE_HS_RA][UFS_HS_G2][UFS_LANE_1] = { 255591,         1000 },
->         [MODE_HS_RA][UFS_HS_G3][UFS_LANE_1] = { 1492582,        102400 },
->         [MODE_HS_RA][UFS_HS_G4][UFS_LANE_1] = { 2915200,        204800 },
-> +       [MODE_HS_RA][UFS_HS_G5][UFS_LANE_1] = { 5836800,        409600 },
->         [MODE_HS_RA][UFS_HS_G1][UFS_LANE_2] = { 255591,         1000 },
->         [MODE_HS_RA][UFS_HS_G2][UFS_LANE_2] = { 511181,         1000 },
->         [MODE_HS_RA][UFS_HS_G3][UFS_LANE_2] = { 1492582,        204800 },
->         [MODE_HS_RA][UFS_HS_G4][UFS_LANE_2] = { 2915200,        409600 },
-> +       [MODE_HS_RA][UFS_HS_G5][UFS_LANE_2] = { 5836800,        819200 },
->         [MODE_HS_RB][UFS_HS_G1][UFS_LANE_1] = { 149422,         1000 },
->         [MODE_HS_RB][UFS_HS_G2][UFS_LANE_1] = { 298189,         1000 },
->         [MODE_HS_RB][UFS_HS_G3][UFS_LANE_1] = { 1492582,        102400 },
->         [MODE_HS_RB][UFS_HS_G4][UFS_LANE_1] = { 2915200,        204800 },
-> +       [MODE_HS_RB][UFS_HS_G5][UFS_LANE_1] = { 5836800,        409600 },
->         [MODE_HS_RB][UFS_HS_G1][UFS_LANE_2] = { 298189,         1000 },
->         [MODE_HS_RB][UFS_HS_G2][UFS_LANE_2] = { 596378,         1000 },
->         [MODE_HS_RB][UFS_HS_G3][UFS_LANE_2] = { 1492582,        204800 },
->         [MODE_HS_RB][UFS_HS_G4][UFS_LANE_2] = { 2915200,        409600 },
-> +       [MODE_HS_RB][UFS_HS_G5][UFS_LANE_2] = { 5836800,        819200 },
->         [MODE_MAX][0][0]                    = { 7643136,        307200 },
->  };
->
->
-> ---
-> base-commit: 4cece764965020c22cff7665b18a012006359095
-> change-id: 20240401-ufs-icc-fix-123c7ca1be45
->
-> Best regards,
-> --
-> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->
+>  arch/arm64/boot/dts/qcom/msm8996.dtsi | 57 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 57 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> index 7ae499fa7d91..cf7ab01f3af6 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> @@ -3545,6 +3545,63 @@ q6routing: routing {
+>  						};
+>  					};
+>  				};
+> +
+> +				fastrpc {
+> +					compatible = "qcom,fastrpc";
+> +					qcom,smd-channels = "fastrpcsmd-apps-dsp";
+> +					label = "adsp";
+> +					qcom,non-secure-domain;
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +
+> +					cb@8 {
+> +						compatible = "qcom,fastrpc-compute-cb";
+> +						reg = <8>;
+> +						iommus = <&lpass_q6_smmu 8>;
+> +					};
+> +
+> +					cb@9 {
+> +						compatible = "qcom,fastrpc-compute-cb";
+> +						reg = <9>;
+> +						iommus = <&lpass_q6_smmu 9>;
+> +					};
+> +
+> +					cb@10 {
+> +						compatible = "qcom,fastrpc-compute-cb";
+> +						reg = <10>;
+> +						iommus = <&lpass_q6_smmu 10>;
+> +					};
+> +
+> +					cb@11 {
+> +						compatible = "qcom,fastrpc-compute-cb";
+> +						reg = <11>;
+> +						iommus = <&lpass_q6_smmu 11>;
+> +					};
+> +
+> +					cb@12 {
+> +						compatible = "qcom,fastrpc-compute-cb";
+> +						reg = <12>;
+> +						iommus = <&lpass_q6_smmu 12>;
+> +					};
+> +
+> +					cb@5 {
+> +						compatible = "qcom,fastrpc-compute-cb";
+> +						reg = <5>;
+
+No need to copy downstream's creative alphabetical-but-not-numerical
+sorting.. The entries look OK though.. although, any reason we have
+such a weird binding including faux child nodes and not just an array
+of iommus? Is the only way to discover the fastrpc nodes' properties
+such as qcom,non-secure-domain or vmid belonging through hardcoding?
+
+Konrad
+
+Konrad
 
