@@ -1,144 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-16089-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16090-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CAB768951B8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 13:23:20 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 85446895277
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 14:08:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0847D1C22B6B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 11:23:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DC8AA286A6B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 12:08:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CAF9626A0;
-	Tue,  2 Apr 2024 11:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 413C174262;
+	Tue,  2 Apr 2024 12:08:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="USt2QAJo"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="l7YfhwwN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A53455A4C7;
-	Tue,  2 Apr 2024 11:23:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B866995D
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Apr 2024 12:07:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712056996; cv=none; b=JXomUOTz+WI/v0VOlwYSodAuHo+b0pWS4ZVuJzBa0iLhICx0u3SX+ggANGnJXhSQczipBMVSMOMvFFSYcJBGit9OlCQrx8k5wwC9G6DaN9nkcl8Dv8lycApdNHfXaS6uofKYIZ1GeO5etU0bniAQ+vfFCD0jpRWkJLVQe/45KvE=
+	t=1712059680; cv=none; b=SyAVXp5LthUX3xK/Fhv6bIC1ccIwZABdUrPkonHmJxy5KpetaQPKDYDYpLcYsXWTp1DjgsAa5hXb0zuBVPgOqEj2o0U5o8MaqmjS36Jpgk8vUZXpooKZTYi3ME8XtWlbN0loNS03nM7Z8ysltq+ZN1R/L3f738SNWmUTPh0kB5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712056996; c=relaxed/simple;
-	bh=morUMKR7wtRILPlFE9D6EyoFs/zj8kAJjMEuc8ZTiHQ=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OTiunl9CG983zSOzGf8MYzF4gik1w35OBN7WYGj6/6JFU4g4V6JOuHw/FH9JpEIxSNNX2vis0u7O14Jk/ULERjgXF8q2OwAbh6+hD2DpwBwIqeaUTfH7AhE0IQL4ZNVu+r+a7yIZdpCLByKkJy0nZhIXQLux/obQfJCerFJDEYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=USt2QAJo; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4323tw2w005834;
-	Tue, 2 Apr 2024 11:23:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=0we4webLnenUhy33WZLG0
-	feILlkWNth/g1ASVsyMqV8=; b=USt2QAJo1pUG3i+ESnZyQuCmwuWfMty04UEnq
-	f8LjyuKm3jmuXUcu0rxf0AGv5wEi9WK3dZqM+zCbOmLfAZzbOppJJlQt46N6e3fV
-	twriUhvn6ZTIok3OLFr83r95Js8PY183eKwfwHvcMUG8B/60wuUTD5v5pdWvotjs
-	0YVmnCTpCPI29vie+6ErS0Vh+isb5oUB/c50wk37/Irwd/cdMWSlrysZt58igtTE
-	/46aksgUueK+jub7ql66Jxz4lZszgYT6U+wMeL83Tp2TY68d4reATIR4mzR48rE4
-	kjOt31l5WYmZnUMzGdyv6Hantozv/dhDPSmjHKxohMXV1/APw==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x893ts59c-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 02 Apr 2024 11:23:07 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 432BN601023545
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 2 Apr 2024 11:23:06 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Tue, 2 Apr 2024 04:23:02 -0700
-Date: Tue, 2 Apr 2024 16:52:58 +0530
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>, <robh@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <djakov@kernel.org>, <quic_anusha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH v6 3/6] interconnect: icc-clk: Add devm_icc_clk_register
-Message-ID: <ZgvqkhF2mTG82Rx2@hu-varada-blr.qualcomm.com>
-References: <20240402103406.3638821-1-quic_varada@quicinc.com>
- <20240402103406.3638821-4-quic_varada@quicinc.com>
- <CAA8EJpphk_kqzBE7cKb73ipdpTi29t9ZSOOdSfq7pAGSs5NKeg@mail.gmail.com>
- <CAA8EJpo=TMhu+Te+JE0cQzmjLOTDPi-Vv-h5Bch0Wfr_7iVi2w@mail.gmail.com>
- <ZgvlrbvvPNA6HRiL@hu-varada-blr.qualcomm.com>
- <CAA8EJpp2dgy0DcLoUuo6gz-8ee0RRwJ_mvCLGDbdvF-gVhREFg@mail.gmail.com>
+	s=arc-20240116; t=1712059680; c=relaxed/simple;
+	bh=RdYy7z5iachCEuuENa519b3wQiF8DXGK8dF2mdWEPQQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=XqC+fnW8eTceI66+hV/wrMxvTzL52Rt1ebR2+gm3WoRvlUwJms1X7rYouDUzSh6lDvXRib58uR0sVCixGaaYiFV6cDVNxRqHZl+l/h0eXmFuVV5pk9Q6XFqzrNVy+l0+M5HCzizKHO49NLKS3sw8sNy+spxTq3gbn0GabahvjLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=l7YfhwwN; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a47385a4379so1075189466b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Apr 2024 05:07:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712059677; x=1712664477; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=m69UUoZHVCQbx+lpC9u1HsJi4g+Q71GhA5bw8lUD+Ps=;
+        b=l7YfhwwNEHrWEcidIpLHdehWC07iSzaZA6sGDNWKZ6QneU6Eu45LBBqsTq6YyxPbsj
+         X4EMGEhrIkn9A1mACIXc3Tpicrv+zOF/34hZTU5gH9zTJrx90AN4CXyhJoe94hQlNcSA
+         qZrs9RTUgqhWhPeW36+GHcuw+ZPBmoQpKffF3XAXyEirtBMkPP15xBZXaquuqXM1uhjc
+         SRb/LozScX0FBl5qKu8r9Qhbwm7XCveocrE0L0PWI9hJ0wOYmK9EqEUKnYJamtUGW3Jh
+         bVz98hjFFn4wtMNcsUVoVaizEW8DIA8gafzsl6JXzm1JwFKXlsxVcHkj7Rra+VqE4YhV
+         MGGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712059677; x=1712664477;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=m69UUoZHVCQbx+lpC9u1HsJi4g+Q71GhA5bw8lUD+Ps=;
+        b=XFxMYuSmDTsloX/H5jcDxOzKly3NgTG17MOHAVPUwrpWD970kcx00nU36GU36JNzWn
+         3bhiamAqmE/FOEYAEIcatncWmXVg7js1Jn21l3LGZkP4Ow3YhaUyRxDykOjLh6PxkJhX
+         1MD4lIXzARSSN93HxFTTr2usgqeMjS2QHF/ou2bIkOdF80EQgTJLvLYaXElxHAjs12YB
+         h3ixfF1iMhEUxxMMRc3/xmERdNw1l3diuS7ZDtYo508B7BMHEdQp2t22dL5bc9nucKIU
+         Rw/KzJ3A4y8dVOwOWzZ6O9rwozZD7QAOj4UJeqm/UpV5pmDkGDYtvTtT1m3lFXdYi+7J
+         s2WQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW/ngs9+kCRb9IhTd4G1a3tx5pOcL9UMGNYhG1MjIFTqG5fdGuRAD+UwLiihRLSBVY0fClnyxoygrHorvqpbhe8mT6vWlPe5TNKwPmrcQ==
+X-Gm-Message-State: AOJu0YzEXu3fGHTkQmG0bw49vSAyRXcQ8bx+Tp1bpM5r3whG154KNCvD
+	+CKU/9jE4uIbSYWzLcMLjc7SYvC8WtDY0ra/pKQZICIR2lSM2mDBxIagjmW3u9o=
+X-Google-Smtp-Source: AGHT+IHKukewzmJeKeo/a024DcR5+ftEC1nxaYgSzsfyeI5YLN2EgwKvBiCBODNT3VgQ0pOifNR46Q==
+X-Received: by 2002:a17:906:fb86:b0:a4e:8da0:8646 with SMTP id lr6-20020a170906fb8600b00a4e8da08646mr1172255ejb.29.1712059676318;
+        Tue, 02 Apr 2024 05:07:56 -0700 (PDT)
+Received: from [127.0.1.1] ([79.114.172.194])
+        by smtp.gmail.com with ESMTPSA id l13-20020a1709065a8d00b00a4df251a601sm6519384ejq.77.2024.04.02.05.07.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Apr 2024 05:07:55 -0700 (PDT)
+From: Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH v8 0/7] spmi: pmic-arb: Add support for multiple buses
+Date: Tue, 02 Apr 2024 15:07:29 +0300
+Message-Id: <20240402-spmi-multi-master-support-v8-0-ce6f2d14a058@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpp2dgy0DcLoUuo6gz-8ee0RRwJ_mvCLGDbdvF-gVhREFg@mail.gmail.com>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: P8z6DNFXNn9OXxV3Jd_cdILWQpXl28xC
-X-Proofpoint-ORIG-GUID: P8z6DNFXNn9OXxV3Jd_cdILWQpXl28xC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-02_05,2024-04-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 spamscore=0
- adultscore=0 impostorscore=0 phishscore=0 malwarescore=0 clxscore=1015
- priorityscore=1501 mlxscore=0 lowpriorityscore=0 bulkscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2404020082
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAH1C2YC/43OwWrDMAwG4FcpPs9Dlhzb2WnvMXawHbs1tE2w0
+ 7BR8u5ze1lGwOwi+AX/J91ZCTmFwt4Od5bDkkoarzWYlwPzJ3s9Bp6GmhkCSkDQvEyXxC+381y
+ nLXPIvNymacwzN4RWg3Ra947V/pRDTF9P++Oz5lMq85i/n6cW8dj+R10EB+5DpyOB8DoO7+d0t
+ Xl8HfORPdgFN5SgFoVccEdOABKqHtSOoi0lWxTVr8DZACGCjDbuKLmhEFqUrNTgjSBvtHHW7Kh
+ uS4kW1VWKsOu8lYIsuB2lthS2KFUp50kG23dKDHZH6V+KsG9RulLa9YAGJUrl/1Druv4AyCGlR
+ YUCAAA=
+To: Stephen Boyd <sboyd@kernel.org>, 
+ Matthias Brugger <matthias.bgg@gmail.com>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+ Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Johan Hovold <johan@kernel.org>, linux-kernel@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+ linux-mediatek@lists.infradead.org, devicetree@vger.kernel.org, 
+ Abel Vesa <abel.vesa@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4363; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=RdYy7z5iachCEuuENa519b3wQiF8DXGK8dF2mdWEPQQ=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBmC/UJKxCvuxK99yI3i9bYhRKNUKoVmH16XdiKc
+ Yx2QXkMatWJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZgv1CQAKCRAbX0TJAJUV
+ VrKjEADJnnbCbiAmLGLCu/YYNS6HVgsakDJBEmQpta9WcQ2seK8Wo5V1pSRzDWhTuNRYDWKL+t7
+ +3EA3HJC6a8iQPjbspAI0K1Fe6jOJCzMATd+WX1xvhevZdZuvXQc56thYTLdPphGhg95l3xultN
+ q9v42ydzLYkVvAUQ5iA/vlPIvRjBgPctHBxKULKER3MuYLcQ9hJX1574xamT3y0gJSafmDW8FIK
+ KHuezQDrSeqBl4on05kEHL9Jy/7rWigX0gXZ+jQM5T6MfRQe5fmlCaBSsSQj8IIX+ZlFeFjXg65
+ 2mn2aNmDaYh0aonniu2wWVpAVIxSHk5WjgDMnkVrK+5KTXWEfQuG56gMeHST+HMa7qrVQ0mnNkS
+ 4Mrlq2P+GjDstmEBNJBk1ThyYoOV0kAs2RexUCt1Fv19e3JZCQBZbpmphln6P+joCWks96ZbBKS
+ GoWQ3sNKMGKGhsmVveuTUJ2I6Gv5eKeom/sfbepIzedsLSREk/tz6npMZZFc2gwtHTxykNLe8E6
+ EA1wZcZw097on8AjRCsF0f6Zp22u66tcQ6A/XzZ/VOpnpNCMTCl4kEGxiNWH2n7XVvKJHpwwgWP
+ POYKoZ4utU2QPSxdr6YCHZphQct7mqQDyXgcGMuZASdUt/uJEYak+kx5Q1ovnYDwX7NzxHFAxBo
+ rXLq61FEdxc5fvQ==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-On Tue, Apr 02, 2024 at 02:16:56PM +0300, Dmitry Baryshkov wrote:
-> On Tue, 2 Apr 2024 at 14:02, Varadarajan Narayanan
-> <quic_varada@quicinc.com> wrote:
-> >
-> > On Tue, Apr 02, 2024 at 01:48:08PM +0300, Dmitry Baryshkov wrote:
-> > > On Tue, 2 Apr 2024 at 13:40, Dmitry Baryshkov
-> > > <dmitry.baryshkov@linaro.org> wrote:
-> > > >
-> > > > On Tue, 2 Apr 2024 at 13:34, Varadarajan Narayanan
-> > > > <quic_varada@quicinc.com> wrote:
-> > > > >
-> > > > > Wrap icc_clk_register to create devm_icc_clk_register to be
-> > > > > able to release the resources properly.
-> > > > >
-> > > > > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > > > > ---
-> > > > > v5: Introduced devm_icc_clk_register
-> > > > > ---
-> > > > >  drivers/interconnect/icc-clk.c   | 29 +++++++++++++++++++++++++++++
-> > > > >  include/linux/interconnect-clk.h |  4 ++++
-> > > > >  2 files changed, 33 insertions(+)
-> > > >
-> > > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > >
-> > > Wait. Actually,
-> > >
-> > > Unreviewed-by: me
-> > >
-> > > Please return int from devm_icc_clk_register instead of returning the pointer.
-> >
-> > Wouldn't returning int break the general assumption that
-> > devm_foo(), returns the same type as foo(). For example
-> > devm_clk_hw_get_clk and clk_hw_get_clk return struct clk *?
->
-> Not always. The only reason to return icc_provider was to make it
-> possible to destroy it. With devres-managed function you don't have to
-> do anything.
+This patchset prepares for and adds support for 2 buses, which is supported
+in HW starting with version 7. Until now, none of the currently
+supported platforms in upstream have used the second bus. The X1E80100
+platform, on the other hand, needs the second bus for the USB2.0 to work
+as there are 3 SMB2360 PMICs which provide eUSB2 repeaters and they are
+all found on the second bus.
 
-Ok. Will change as follows
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+Changes in v8:
+- Added Neil's R-b tag to the 3rd patch
+- Fixed compile warnings already existent by adding another patch
+- Fixed compile warning about get_core_resources, reported by Neil
+- Dropped and moved the spurious core removal changes, as suggested by Neil
+- Link to v7: https://lore.kernel.org/r/20240329-spmi-multi-master-support-v7-0-7b902824246c@linaro.org
 
-	return prov; -> return PTR_ERR_OR_ZERO(prov);
+Changes in v7:
+- This time really collected Krzysztof's R-b tags
+- Added Neil's R-b tag to the 4th patch
+- Split the multi bus patch into two separate patches, one for adding
+  the bus object and one for the secondary bus, as per Neil's suggestion
+- Fixed regression for single bus platforms triggered by casting to
+  pmic_arb instead of bus in pmic_arb_non_data_cmd_v1
+- Fixed bus object allocation by using ctrl drvdata instead
+- Prefixed the spmi node property in x1e80100 schema with '^'
+- Fixed struct and function documentation warnings reported by Neil
 
-Thanks
-Varada
+Changes in v6 (resend):
+- Collected Krzysztof's R-b tags
+- Link to v6: https://lore.kernel.org/r/20240222-spmi-multi-master-support-v6-0-bc34ea9561da@linaro.org
+
+Changes in v6:
+- Changed the compatible to platform specific (X1E80100) along with the
+  schema. Fixed the spmi buses unit addresses and added the empty ranges
+  property. Added missing properties to the spmi buses and the
+  "unevaluatedProperties: false".
+- Deprecated the "qcom,bus-id" in the legacy schema.
+- Changed the driver to check for legacy compatible first
+- Link to v5: https://lore.kernel.org/r/20240221-spmi-multi-master-support-v5-0-3255ca413a0b@linaro.org
+
+Changes in v5:
+- Dropped the RFC as there aren't any concerns about the approach anymore
+- Dropped the unused dev and res variables from pmic_arb_get_obsrvr_chnls_v2
+- Link to v4: https://lore.kernel.org/r/20240220-spmi-multi-master-support-v4-0-dc813c878ba8@linaro.org
+
+Changes in v4:
+- Fixed comment above pmic_arb_init_apid_v7 by dropping the extra "bus" word
+- Swicthed to devm_platform_ioremap_resource_byname for obsrvr and chnls.
+  The core remains with platform_get_resource_byname as we need the core size.
+- Dropped comment from probe related to the need of platform_get_resource_byname
+  as it not true anymore.
+- Dropped the qcom,bus-id optional property.
+- Link to v3: https://lore.kernel.org/r/20240214-spmi-multi-master-support-v3-0-0bae0ef04faf@linaro.org
+
+Changes in v3:
+- Split the change into 3 separate patches. First 2 patches are moving
+  apid init and core resources into version specific ops. Third one is
+  adding the support for 2 buses and dedicated compatible.
+- Added separate bindings patch
+- Link to v2: https://lore.kernel.org/r/20240213-spmi-multi-master-support-v2-1-b3b102326906@linaro.org
+
+Changes in v2:
+- Reworked it so that it registers a spmi controller for each bus
+  rather than relying on the generic framework to pass on the bus
+  (master) id.
+- Link to v1: https://lore.kernel.org/r/20240207-spmi-multi-master-support-v1-0-ce57f301c7fd@linaro.org
+
+---
+Abel Vesa (7):
+      dt-bindings: spmi: Add X1E80100 SPMI PMIC ARB schema
+      dt-bindings: spmi: Deprecate qcom,bus-id
+      spmi: pmic-arb: Fix some compile warnings about members not being described
+      spmi: pmic-arb: Make the APID init a version operation
+      spmi: pmic-arb: Make core resources acquiring a version operation
+      spmi: pmic-arb: Register controller for bus instead of arbiter
+      spmi: pmic-arb: Add multi bus support
+
+ .../bindings/spmi/qcom,spmi-pmic-arb.yaml          |   1 +
+ .../bindings/spmi/qcom,x1e80100-spmi-pmic-arb.yaml | 136 +++
+ drivers/spmi/spmi-pmic-arb.c                       | 952 +++++++++++++--------
+ 3 files changed, 723 insertions(+), 366 deletions(-)
+---
+base-commit: c0b832517f627ead3388c6f0c74e8ac10ad5774b
+change-id: 20240207-spmi-multi-master-support-832a704b779b
+
+Best regards,
+-- 
+Abel Vesa <abel.vesa@linaro.org>
+
 
