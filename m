@@ -1,84 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-16132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6F91895999
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 18:22:51 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CB7048959FA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 18:44:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 03FA91C23FD4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 16:22:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8530A287486
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 16:44:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03C9814AD38;
-	Tue,  2 Apr 2024 16:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 543601598FF;
+	Tue,  2 Apr 2024 16:44:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jkQzNcao"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ml65pl4R"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF5D7A724;
-	Tue,  2 Apr 2024 16:22:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F242AD1E;
+	Tue,  2 Apr 2024 16:44:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712074965; cv=none; b=as3lIYekEBzfDUxAXXo+vHAWH3lPqTgz1o49uiPyySV2mseN582U3K+HpSedrxvuXvuKHGQypra09KCYVR3JPs0LpQvoJ8aNMgUCkmEM8A82AqEJNQYp8bcKGFRd7p1GN1UPoBAID4M78vAW8p2HTjwEOdrd/rDn/EEMeoHidKE=
+	t=1712076290; cv=none; b=SHxKdqaMOjndG9iD3WFVddQf2iHJZ4AeUbQ1p9nFQB/2zih8JkA30aRh8QjdOd19co5HYwqn2lU5+YY7KBJ1IXnH83EWKkM+TC8y5UT5QZaI9Q7exx4r+aSMoJEUMKEyyixqSQQLXRURvCHyFod9yeWbZa1Sz05z7RVkTWZTLac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712074965; c=relaxed/simple;
-	bh=TTK9Ecf0wm/vTr19oRkExfQrntAv/w6u+rTBVzSrC0A=;
+	s=arc-20240116; t=1712076290; c=relaxed/simple;
+	bh=ArAEjvxRWa3ejxTAbxZrelEmPh3To0VkbfB3gGDLz/Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iokVEWeo8AqFlWVPmyOa5HOJwDcR/HBnbzOphLsgm/7cKejL01NQot3uJbuj5lU4m5IH56qQiCpcbFNClsxaA650/GhVSAvduMVK0H+DeuPCJDayIDAigJFD/G/jvP6mtHohQ7bZwtmcuH1LdfhFMGWc97MCb5x7TcbMGrIAGXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jkQzNcao; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 011B0C433F1;
-	Tue,  2 Apr 2024 16:22:44 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=VFFjcWz0j1R+hBa8kl2ZAsKnivJle4QrBl6E1wgJyV8FrTmhFWSCcNi1qSzMz5i3t/Wj0emNVOtTCaSyYi+5rQybQNwbsgPJIfJQB5fG/YUBtQbjTxgVCkx8jI9KagMxlJJzkemZQfQUKAewuTIlJKol7WYdLEA89CdsmydOdxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ml65pl4R; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A976C433C7;
+	Tue,  2 Apr 2024 16:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712074965;
-	bh=TTK9Ecf0wm/vTr19oRkExfQrntAv/w6u+rTBVzSrC0A=;
+	s=k20201202; t=1712076289;
+	bh=ArAEjvxRWa3ejxTAbxZrelEmPh3To0VkbfB3gGDLz/Q=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jkQzNcaoCwevoUeoCLg4BigA8IMxCym7HiDT863zs7+Pii441q8F35tDtduy0ntgy
-	 OR3v9fQ2dWUHIO6KDEaXsVRIq4tB+k89JgOa4cvaeKsHPsvMn+CRYv2xSIpTTYXqdM
-	 PCfraHV8VszI12uB8TzuR+1mgJY2ZaYcm+1jzCihNBCc4h3PAHCKcUqdeJvH7l3oTg
-	 d2Ui3/vaHlSo010byYBDrGruOgLSKbKZXXo2aWgg6B+1OrX9LQJjM9nbQ73/Ljew62
-	 mCeOWqsU2ePllVu3Xf2ABoO9bwdcC8B03yzuxUQU+9m3QhbELg1VI58BjrKi5zxxhz
-	 ghOi+Qlloj8YA==
-Date: Tue, 2 Apr 2024 11:22:42 -0500
-From: Rob Herring <robh@kernel.org>
-To: =?iso-8859-1?Q?Andr=E9?= Apitzsch <git@apitzsch.eu>
-Cc: phone-devel@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-hardening@vger.kernel.org, linux-leds@vger.kernel.org,
-	~postmarketos/upstreaming@lists.sr.ht,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Lee Jones <lee@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>, Pavel Machek <pavel@ucw.cz>
-Subject: Re: [PATCH v2 1/3] dt-bindings: leds: Add Silergy SY7802 flash LED
-Message-ID: <171207496054.248936.15074257911967114651.robh@kernel.org>
-References: <20240401-sy7802-v2-0-1138190a7448@apitzsch.eu>
- <20240401-sy7802-v2-1-1138190a7448@apitzsch.eu>
+	b=ml65pl4Rz73ExvROKIV9pAtzpNIFldag8HnsSViRoJwszA4hJKyPY/OrORzSjCPSn
+	 vkm7+hkRWP0JBGLe5oypYjAEqg2h4h2ln+i8ALPwxGu/m+Oeh8YJqLCzzwazA0wCSv
+	 7UbTHB1VYSSH0g47kNQ2tSki9Scpry0P5uV3+a1WSeF+Mf6dTwWZRVTWv0/z1EqLJ8
+	 9/uBJpMBCCD1VQouOK58kHguyucDy+L4rsfrGB/HtuTThzW4Of0AWd2G3HoAmklyED
+	 hgkZnTb6hwMMBL7QZgvUM8rdcAHSjpUx2/6s4WPTmz3m7wx4lA1I8RasK7rmXbhqab
+	 WaDB1RJQU7Ryg==
+Date: Tue, 2 Apr 2024 18:44:42 +0200
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Vinod Koul <vkoul@kernel.org>
+Cc: konrad.dybcio@linaro.org, andersson@kernel.org, wsa@kernel.org, 
+	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-i2c@vger.kernel.org, Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>, 
+	quic_vdadhani@quicinc.com, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v4] i2c: i2c-qcom-geni: Parse Error correctly in i2c GSI
+ mode
+Message-ID: <a76mmz5xrfipqpmq2ltsyobwc54dyw2d55gb4vta5d746dwb3i@5mm2ew5uudi3>
+References: <20240313052639.1747078-1-quic_msavaliy@quicinc.com>
+ <171161140136.2698925.4294566764047886777.b4-ty@kernel.org>
+ <ZgbwJAb7Ffktf554@matsya>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240401-sy7802-v2-1-1138190a7448@apitzsch.eu>
+In-Reply-To: <ZgbwJAb7Ffktf554@matsya>
 
+Hi Vinod,
 
-On Mon, 01 Apr 2024 23:23:55 +0200, André Apitzsch wrote:
-> Document Silergy SY7802 flash LED driver devicetree bindings.
+On Fri, Mar 29, 2024 at 10:15:24PM +0530, Vinod Koul wrote:
+> On 28-03-24, 08:36, Andi Shyti wrote:
+> > Hi
+> > 
+> > On Wed, 13 Mar 2024 10:56:39 +0530, Mukesh Kumar Savaliya wrote:
+> > > I2C driver currently reports "DMA txn failed" error even though it's
+> > > NACK OR BUS_PROTO OR ARB_LOST. Detect NACK error when no device ACKs
+> > > on the bus instead of generic transfer failure which doesn't give any
+> > > specific clue.
+> > > 
+> > > Make Changes inside i2c driver callback handler function
+> > > i2c_gpi_cb_result() to parse these errors and make sure GSI driver
+> > > stores the error status during error interrupt.
+> > > 
+> > > [...]
+> > 
+> > Applied to i2c/i2c-host-next on
+> > 
+> > git://git.kernel.org/pub/scm/linux/kernel/git/local tree
 > 
-> Signed-off-by: André Apitzsch <git@apitzsch.eu>
-> ---
->  .../devicetree/bindings/leds/silergy,sy7802.yaml   | 100 +++++++++++++++++++++
->  1 file changed, 100 insertions(+)
-> 
+> You applied changes to dmaengine driver without my ack! I dont agree to
+> the approach here, we could do better
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+this must be an error from b4 ty. The changes have been added to
 
+pub/scm/linux/kernel/git/andi.shyti/linux.git
+
+branch i2c/i2c-host, As it has been agreed from very long.
+
+Anyway, the changes are in -next. What do we do now? Do I revert
+it? Mukesh, can you please agree with Vinod?
+
+Andi
 
