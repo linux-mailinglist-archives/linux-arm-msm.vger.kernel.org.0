@@ -1,63 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-16159-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E1FC895CBC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 21:36:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0C85895D2C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 21:57:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1410A2828A9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 19:36:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7CDF71F2718E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 19:57:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7549B15B972;
-	Tue,  2 Apr 2024 19:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2514315CD70;
+	Tue,  2 Apr 2024 19:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cKm8hf0m"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KtQm2YaS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69CE15D5CA;
-	Tue,  2 Apr 2024 19:35:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536B015CD53;
+	Tue,  2 Apr 2024 19:56:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712086532; cv=none; b=NjCy8Ja9n01UkOEwFiFuq6yituwZhNH79QuYLwZ9/FEISi+u1L8Tl9iLHdlqjsJ6FOl8YvAEJRWJSxsg/l04qfl8wytxDxcNOlnF3q/bevqvhNB0EW4QVEBEj8yvA8OvDHVp6+7lNPEb+aTZfDbw2ZanZ7ATFLRECTmO9IKYwps=
+	t=1712087821; cv=none; b=QqEeXcbgza/dkAunEUTFihJxOppRGiqHNNSZJQMbrJXU2tpq17PGa0TbMA+LQpQoDYh5jpEAKkI6/Q2i6fTTQ18Oq+W2a2OmNlVp0zw8Bh324lO1xHmRCbyOkm2qxVCha+hkIlk7Nn+98OtC3QXXLbsj/uXgrYX30wuhRV5h7yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712086532; c=relaxed/simple;
-	bh=ztl3jzpEH+oOBeEaIlj9fwEFVjcmkBTvpm6G6RzO3KY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=NHJth0OsFix1WHq7FPpiyNxgKTD9Q1XWfhnAbilYbyLOzIspZRuqDkqQyx6sgnCZtUtI2q36yL64IKVNtvvDg6sI2eVxq21QRkjGLecbczQiMiBlXCFjGU0RYoM160bpEjv97rygFhVe8v7al0E7kPLlGD9MYFlHNOqbwVGI6dQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cKm8hf0m; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 432IiAWb030990;
-	Tue, 2 Apr 2024 19:35:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=vYbnRItG2WvNQmUFuvUHXC0F8bQ8viqKAjt1DyD1iHU=; b=cK
-	m8hf0m3FGfzqZswvVfnhXju51poeLVW5oe+dQQUkp9dAMwYsCO0EUoHhW48zH0oy
-	gh9WCfEErlpNZBovYGY22KKjdjT9htmAI3tJ2Jcj4zMo9ctmY89lUkAVcQQ0QXc3
-	3r8g8fF1YO/9XuumsiY0lai9gF/dFkKhNCe8laiP4NL05w5DnO+2d08kytprI8np
-	z5hxEHpNmAAxqMVrdcKhPULJQgUzZKF7twtgfZ89PBkJ2INopZxFgHOrK7qosJsr
-	F/1TpyEymZpY1Q99JpCYIpIV8ivONEQRuTdearYVjp27E0I+pk6ivaeAOndMngQP
-	vmOeUWIL4Bx4mQrRzYjw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x8ny5gbpr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 02 Apr 2024 19:35:21 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 432JZ16g023919
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 2 Apr 2024 19:35:01 GMT
-Received: from [10.71.108.209] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 2 Apr 2024
- 12:34:58 -0700
-Message-ID: <13ccc36a-c3cc-469a-ae0b-71fd0d24bf63@quicinc.com>
-Date: Tue, 2 Apr 2024 12:34:57 -0700
+	s=arc-20240116; t=1712087821; c=relaxed/simple;
+	bh=H+CJwRc2912b6nD2Ih3u13fV2MljjiN6PEppvJcgp20=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=s9oNaqv9t0XU86LNxvj7ot7rMo7Hhu0XlYNBGkaM0GYQgZpzM5c1DGreZwwxVyV3AcXwDaXbuL37/J5eAarChSmLyM/Sw61lkmn3WB9lDO6i+StCsdtn7STrAOoOuxBucf+cxtrwGn1Hv6nOz+aaXf9vaeeKB5vyox7dHEGteOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KtQm2YaS; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a4644bde1d4so755222066b.3;
+        Tue, 02 Apr 2024 12:56:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712087817; x=1712692617; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tVIGx7ik4JbWBNp+SY29/AwVMNtIA1b6xEQoLQV5riA=;
+        b=KtQm2YaS21CdKI47hT4Mu28X9YkzJqih6DbvX8u9jLFgJjHqwojvanyYi62Oqel0Dv
+         CtA8eagmj7UlOUpafv48rRom4ePni/mRFjXk/V+SJRw+IEANe+q6aA1zvV/x3mF5Hj22
+         u+c6Y284ss7t9+Wn4k6CevXXKQJj90mpqf+tI8N4CQY66b2QghKi7EJV5aFImXXmU+oI
+         AULP1CbiWEzEmqPK/B26JnN4M/8dNc/QyB00f9gZtVgu7aXsVGTr4E/CCNZWXwGwYowT
+         sxVWBc5fdSOfwLpXJTV8vnlL0zqV20z9Hj2EWo0MKmSieByXgea18gTb9T+JAvZyDwOS
+         c0ZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712087817; x=1712692617;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tVIGx7ik4JbWBNp+SY29/AwVMNtIA1b6xEQoLQV5riA=;
+        b=Rhyy/auXGn9QAcNAyurgHN9OYyY5PLFFtb7cbuleOEHWbs0LSfDy0d0Q0mQxbql6QW
+         sS2GKPBT6zRsBLNF6ubGDY18phsyDOD3tUIc/Vw8ZStPeFeNkRnpdhkKH3PqKunn3fNb
+         tJEqdTuR87t9PC0eCx6F+x+yOMmke9v90AEdWoKO0O10ctETJPaB8vm5zR7AGLNrW4P0
+         H5fuQoUuKeu4xLsIcHzZbhX4cxJpHXa5yC9dYpLoS9MF4gHCtw4N/nL7D0SDaSXKcV39
+         6S3oQRsqgc9VN1peeJfjbx6DFpiw1Z2B8LQPsBzDz/yPI2GkvYFrB+5mjRoKN4CcV0v5
+         6tNQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXAUBIn8T0K5wHZCL+yoKVMyWgyZM8j6Bi3JupE0Xyrcgonfqe4rnVg1489+bIuO258JZdM4qxieOfLn9u+MyT+O6tziMUkl3xOaP9o1j0esUVfJvkXQ4pbLDuZtjM++aIhHEAELWaB7DTY4zQ5pWvzkqcLxUgAuqfmjJbUTAoC2W1/pZkPYrA=
+X-Gm-Message-State: AOJu0YxOzNjXxXXsMNmCY4lGEDw+PgGoRx8cqOlcPtfx3UVazBcsnO0G
+	5isRjC2YUOFx+wnmoKYfnVi41Ajo/6Rwjp5uNPyEIaV5sfu+SLoQlJe6brF7
+X-Google-Smtp-Source: AGHT+IHd34X6G0IdGs3i8h40+amOyl+iU7TtyG8nE4zHIVY0wUHrry8OcOvNzFNz5x84BnJUYlloOQ==
+X-Received: by 2002:a17:906:594:b0:a47:32b3:18c5 with SMTP id 20-20020a170906059400b00a4732b318c5mr7875589ejn.68.1712087817348;
+        Tue, 02 Apr 2024 12:56:57 -0700 (PDT)
+Received: from [192.168.26.149] (031011218106.poznan.vectranet.pl. [31.11.218.106])
+        by smtp.googlemail.com with ESMTPSA id l3-20020a1709067d4300b00a466af74ef2sm6871329ejp.2.2024.04.02.12.56.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Apr 2024 12:56:56 -0700 (PDT)
+Message-ID: <3f817155-3660-439f-b6e5-8d32c866f5cf@gmail.com>
+Date: Tue, 2 Apr 2024 21:56:55 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,80 +76,76 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/5] soc: qcom: llcc: Add regmap for Broadcast_AND
- region
+Subject: Re: [PATCH 5/7] dt-bindings: phy: qcom,ipq8074-qmp-pcie: add ipq9574
+ gen3x2 PHY
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
-References: <20240329-llcc-broadcast-and-v4-0-107c76fd8ceb@quicinc.com>
- <20240329-llcc-broadcast-and-v4-2-107c76fd8ceb@quicinc.com>
- <d6b0f9d2-a489-4c0e-9c77-0e3eab49d3cb@linaro.org>
-From: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
-In-Reply-To: <d6b0f9d2-a489-4c0e-9c77-0e3eab49d3cb@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+To: Alexandru Gagniuc <mr.nuke.me@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: ansuelsmth@gmail.com, robimarko@gmail.com, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240402192555.1955204-1-mr.nuke.me@gmail.com>
+ <20240402192555.1955204-5-mr.nuke.me@gmail.com>
+From: =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>
+In-Reply-To: <20240402192555.1955204-5-mr.nuke.me@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: tT-YTDRg7tlai5cMvSdx_e4WcX8vpmoG
-X-Proofpoint-ORIG-GUID: tT-YTDRg7tlai5cMvSdx_e4WcX8vpmoG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-02_12,2024-04-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
- lowpriorityscore=0 phishscore=0 mlxscore=0 mlxlogscore=999 clxscore=1015
- bulkscore=0 adultscore=0 impostorscore=0 spamscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2403210001
- definitions=main-2404020145
 
-On 3/30/2024 4:46 AM, Krzysztof Kozlowski wrote:
-> On 29/03/2024 22:53, Unnathi Chalicheemala wrote:
->> Define new regmap structure for Broadcast_AND region and initialize
->> this regmap when HW block version is greater than 4.1, otherwise
->> initialize as a NULL pointer for backwards compatibility.
->>
-> 
->> +	struct regmap *regmap;
->>  	u32 act_ctrl_reg;
->>  	u32 act_clear_reg;
->>  	u32 status_reg;
->> @@ -849,7 +850,8 @@ static int llcc_update_act_ctrl(u32 sid,
->>  		return ret;
->>  
->>  	if (drv_data->version >= LLCC_VERSION_4_1_0_0) {
->> -		ret = regmap_read_poll_timeout(drv_data->bcast_regmap, status_reg,
->> +		regmap = drv_data->bcast_and_regmap ?: drv_data->bcast_regmap;
->> +		ret = regmap_read_poll_timeout(regmap, status_reg,
->>  				      slice_status, (slice_status & ACT_COMPLETE),
->>  				      0, LLCC_STATUS_READ_DELAY);
->>  		if (ret)
->> @@ -1284,6 +1286,16 @@ static int qcom_llcc_probe(struct platform_device *pdev)
->>  
->>  	drv_data->version = version;
->>  
->> +	/* Applicable only when drv_data->version >= 4.1 */
->> +	drv_data->bcast_and_regmap = qcom_llcc_init_mmio(pdev, i + 1, "llcc_broadcast_and_base");
->> +	if (IS_ERR(drv_data->bcast_and_regmap)) {
-> 
-> I am pretty sure this breaks all users. Can you please explain how do
-> you maintain ABI and that IS_ERR() is applied only for version >= 4.1?
-> 
-> Best regards,
-> Krzysztof
-> 
-IS_ERR() check is done for all versions.
-If new register isn't defined in DT(for version < 4.1) it simply sets bcast_and_regmap to NULL.
-Otherwise, for version >= 4.1, it goes to err(in the case bcast_and_regmap isn't set properly).
+One minor mistake (I believe)
 
-Thank you for reviewing Krzysztof!   
+On 2.04.2024 21:25, Alexandru Gagniuc wrote:
+> @@ -61,6 +61,43 @@ required:
+>     - clock-output-names
+>     - "#phy-cells"
+>   
+> +allOf:
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,ipq6018-qmp-pcie-phy
+> +              - qcom,ipq8074-qmp-gen3-pcie-phy
+> +              - qcom,ipq8074-qmp-pcie-phy
+> +    then:
+> +      properties:
+> +        clocks:
+> +          maxItems: 3
+> +        clock-names:
+> +          items:
+> +            - const: aux
+> +            - const: cfg_ahb
+> +            - const: pipe
+> +
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,ipq9574-qmp-gen3x2-pcie-phy
+> +    then:
+> +      properties:
+> +        clocks:
+> +          maxItems: 5
+
+This should probably be minItems: 5.
+You already have maxItems: 5 at global property.
+
+
+> +        clock-names:
+> +          items:
+> +            - const: aux
+> +            - const: cfg_ahb
+> +            - const: pipe
+> +            - const: anoc
+> +            - const: snoc
+> +
+>   additionalProperties: false
+>   
+>   examples:
 
 
