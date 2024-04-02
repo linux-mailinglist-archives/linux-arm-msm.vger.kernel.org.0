@@ -1,142 +1,274 @@
-Return-Path: <linux-arm-msm+bounces-16118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D181F89574D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 16:46:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4CDA8895756
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 16:48:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5CA2F1F26ECE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 14:46:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6F8AF1C20AAB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 14:48:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 005861353E3;
-	Tue,  2 Apr 2024 14:41:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="d6ywg7Ug"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 285F912BF35;
+	Tue,  2 Apr 2024 14:42:08 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A6512CD90
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Apr 2024 14:41:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9F8B135A6D;
+	Tue,  2 Apr 2024 14:42:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712068888; cv=none; b=MqtL0XzWi50aEJaEEFg9VPkM7avr5mRDGt9OVtU3OgMQ1zPgVxGwi0PT90MQy/F5N/+T9Cd4A/mTPunNChx+o0ziyxHIAr8VEUqa4/JFFnVuIq/OIBtsh7kxT5DKfpM7o1fyouEtLytLK28OAjJG4o7oUaPm3/RBAD+z75GK34w=
+	t=1712068928; cv=none; b=aAlWJvXc3+bLi0jg0mQz+mQHMxrfAlLsjvVLhSyJfVk9xxTy1oKCPSs/dpKuGewa4YTXqnwnN3K+r4t4vczPnKGyhrznGvHtGtAUYyc1xqvhhS0brnSaD5xojocbGbV1gP0hcKaX3LjYvQarLpNyBoNahfQg4j89PgIctc9G1Hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712068888; c=relaxed/simple;
-	bh=Ysma0vtrKLoIbWF37iKgt+8c9Ss2llY5FZIHQtgdOOs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SDAhKHeq5NEUgvFxPdWpzooVRyAU5yT4/gGvqGk58GJpT6cAomcR49dqw11r24FIKATkbuw8Po1Dp8w6ve6cmlF5ZtPQZssZX78THAjDhW9dVAJE4yBBhpvl3SFDTyI4vhe7A7qe8c6nWJdZJsVdpabK78UIVxNPVMGlx8tR6ok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=d6ywg7Ug; arc=none smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-56c0d1bddc1so6169171a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Apr 2024 07:41:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712068885; x=1712673685; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=E5xk+LWhRuGKsMpuDT0N5nt2ortkrtCLkgmGoaXyqzo=;
-        b=d6ywg7UgR7id6OIKSR0bVXnRLL+YMuWkgyeuBrsT23MLn/i6yQfQOeMNbBJXPi6M6n
-         +BppbNnkSqkPKfUYpCjQh63wDorUCtBzEtrVod569tiOfOmBcmjyUdkP8eotfgUtKUhD
-         76/qwWSk0CNZO1UwsEJtJbvG5l0QsPS8Z2kgwUeVWVhZW7J1yAj1xnCQSZ9YFlMPeae6
-         +V6s6KDaHhOkhlRpUbiPxzSWBOutN9jmsobWrZptybkGcgl9Wo4AbGD3GKxA5hnxOWs0
-         jmMtXiHCXQGF6jepXR4DYqV0ybsiuQAosJqKHfWnv826kdeH5yv299a+M7hT3FaHlOcv
-         7PVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712068885; x=1712673685;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=E5xk+LWhRuGKsMpuDT0N5nt2ortkrtCLkgmGoaXyqzo=;
-        b=HxzaMrTNufkAfjodaZ+rg/K2muNchzaL/6RxKY9kLzI7SFfAR0jEGAjrM3u9qmbyqi
-         EBvjtfR5XitbT9V9W2XdghyuEm6TxAeq5zW2fdCf2qc5iGlRdNFwbF7FYVdPmDE05la6
-         POwcQQ/WBu1Idj0ApeKsgg00+6EenjaHyXf6Suv5xmv5zlk9GMPiuUVV5z+y91Lz7iFA
-         einBaUBLwl5Phd3WT5OcSKIL4seEoENQw4TAbQIeCF9LNZe2pjSe2+TS7pSPgOOH+/1s
-         ghIXgIY0UMNMQp52bm7ZtBscMHGePq+uk7FQFBkiKTG8BDCh8RHInCX89TssigqqAFFp
-         wUcA==
-X-Gm-Message-State: AOJu0YyJl9PlaHMscHsFnlzfWoA4jV3AEVHiZeVAxsWUJnvZDw8tZz4K
-	PoavGg29sMnm+wX4qNSua+DEpz+brbbkTvMoxZPIvvzYBZQPhWhQkat1s3qFtZs=
-X-Google-Smtp-Source: AGHT+IE52rZCE7S0rVzKYptWwvsEDBxrBOh9UmHeApO6rUfnDxMuc6Q8QrROSvwy+dMnxjfS55UbYg==
-X-Received: by 2002:a05:6402:2351:b0:56d:f9dc:c82f with SMTP id r17-20020a056402235100b0056df9dcc82fmr513223eda.14.1712068885664;
-        Tue, 02 Apr 2024 07:41:25 -0700 (PDT)
-Received: from [192.168.92.47] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id y11-20020aa7c24b000000b0056bdec673c3sm7012729edo.38.2024.04.02.07.41.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Apr 2024 07:41:24 -0700 (PDT)
-Message-ID: <4dbb42f2-072f-422d-b716-7d9a20606a49@linaro.org>
-Date: Tue, 2 Apr 2024 16:41:22 +0200
+	s=arc-20240116; t=1712068928; c=relaxed/simple;
+	bh=/AAqIDQjFV7gvCRqscag5yk5TdtfYJl3vulAQY42ikA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uqhBm6ZKHdV2NVU/qf5CEesPLaRNseHU7izgn1iFGUZaO3rtAcwoZpE+auKec13W/3SeJEHkBFfsaBBitMUD/MY+m3nU/R4JnXeHVj07SK0LaENPwDZ4A5qetb7plXaRwNrpHpjAOrmUScEN71ktgLgcdNp6T9nsOrryV4bGCDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6268A1007;
+	Tue,  2 Apr 2024 07:42:36 -0700 (PDT)
+Received: from FVFF77S0Q05N (unknown [10.57.17.184])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C08043F64C;
+	Tue,  2 Apr 2024 07:42:02 -0700 (PDT)
+Date: Tue, 2 Apr 2024 15:41:51 +0100
+From: Mark Rutland <mark.rutland@arm.com>
+To: Dawei Li <dawei.li@shingroup.cn>
+Cc: will@kernel.org, xueshuai@linux.alibaba.com, renyu.zj@linux.alibaba.com,
+	yangyicong@hisilicon.com, jonathan.cameron@huawei.com,
+	andersson@kernel.org, konrad.dybcio@linaro.org,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 0/9] perf: Avoid explicit cpumask var allocation from
+ stack
+Message-ID: <ZgwZL679Tc1S3AxH@FVFF77S0Q05N>
+References: <20240402105610.1695644-1-dawei.li@shingroup.cn>
+ <ZgvoMunpbaE-x3jV@FVFF77S0Q05N>
+ <190FE91C35AB9AE8+ZgwKuORh3VzTkfeJ@centos8>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 9/9] arm64: dts: qcom: sm8150-hdk: rename Type-C HS
- endpoints
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-References: <20240401-typec-fix-sm8250-v3-0-604dce3ad103@linaro.org>
- <20240401-typec-fix-sm8250-v3-9-604dce3ad103@linaro.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20240401-typec-fix-sm8250-v3-9-604dce3ad103@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <190FE91C35AB9AE8+ZgwKuORh3VzTkfeJ@centos8>
 
-On 1.04.2024 10:33 PM, Dmitry Baryshkov wrote:
-> Follow other Qualcomm platforms and rename pm8150b_role_switch_in to
-> pm8150_hs_in. Corresponding port is described as HS port rather than
-> role switching.
+On Tue, Apr 02, 2024 at 09:40:08PM +0800, Dawei Li wrote:
+> Hi Mark,
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+> Thanks for the quick review.
+> 
+> On Tue, Apr 02, 2024 at 12:12:50PM +0100, Mark Rutland wrote:
+> > On Tue, Apr 02, 2024 at 06:56:01PM +0800, Dawei Li wrote:
+> > > Hi,
+> > > 
+> > > This series try to eliminate direct cpumask var allocation from stack
+> > > for perf subsystem.
+> > > 
+> > > Direct/explicit allocation of cpumask on stack could be dangerous since
+> > > it can lead to stack overflow for systems with big NR_CPUS or
+> > > CONFIG_CPUMASK_OFFSTACK=y.
+> > > 
+> > > For arm64, it's more urgent since commit 3fbd56f0e7c1 ("ARM64: Dynamically
+> > > allocate cpumasks and increase supported CPUs to 512").
+> > > 
+> > > It's sort of a pattern that almost every cpumask var in perf subystem
+> > > occurs in teardown callback of cpuhp. In which case, if dynamic
+> > > allocation failed(which is unlikely), we choose return 0 rather than
+> > > -ENOMEM to caller cuz:
+> > > @teardown is not supposed to fail and if it does, system crashes:
+> > 
+> > .. but we've left the system in an incorrect state, so that makes no sense.
+> > 
+> > As I commented on the first patch, NAK to dynamically allocating cpumasks in
+> > the CPUHP callbacks. Please allocate the necessry cpumasks up-front when we
+> > probe the PMU. At that time we can handle an allocation failure by cleaning up
+> > and failing to probe the PMU, and then the CPUHP callbacks don't need to
+> > allocate memory to offline a CPU...
+> 
+> Agreed that dynamically allocation in callbacks lead to inconsistency
+> to system.
+> 
+> My (original)alternative plan is simple but ugly, just make cpumask var
+> _static_ and add extra static lock to protect it.
+> 
+> The only difference between solution above and your proposal is static/
+> dynamic alloction. CPUHP's teardown cb is supposed to run in targetted
+> cpuhp thread for most cases, and it's racy. Even the cpumask var is
+> wrapped in dynamically allocated struct xxx_pmu, it's still shareable
+> between different threads/contexts and needs proper protection.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+I was under the impression that the cpuhp callbacks were *strictly* serialised.
+If that's not the case, the existing offlining callbacks are horrendously
+broken.
 
-Konrad
+Are you *certain* these can race?
+
+Regardless, adding additional locking here is not ok.
+
+> Simple as this(_untested_):
+> 
+> diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
+> index 7ef9c7e4836b..fa89c3db4d7d 100644
+> --- a/drivers/perf/arm-cmn.c
+> +++ b/drivers/perf/arm-cmn.c
+> @@ -1950,18 +1950,24 @@ static int arm_cmn_pmu_offline_cpu(unsigned int cpu, struct hlist_node *cpuhp_no
+>         struct arm_cmn *cmn;
+>         unsigned int target;
+>         int node;
+> -       cpumask_t mask;
+> +       static cpumask_t mask;
+> +       static DEFINE_SPINLOCK(cpumask_lock);
+> 
+>         cmn = hlist_entry_safe(cpuhp_node, struct arm_cmn, cpuhp_node);
+>         if (cpu != cmn->cpu)
+>                 return 0;
+> 
+> +       spin_lock(&cpumask_lock);
+> +
+>         node = dev_to_node(cmn->dev);
+>         if (cpumask_and(&mask, cpumask_of_node(node), cpu_online_mask) &&
+>             cpumask_andnot(&mask, &mask, cpumask_of(cpu)))
+>                 target = cpumask_any(&mask);
+>         else
+>                 target = cpumask_any_but(cpu_online_mask, cpu);
+> +
+> +       spin_unlock(&cpumask_lock);
+> +
+>         if (target < nr_cpu_ids)
+>                 arm_cmn_migrate(cmn, target);
+>         return 0;
+
+Looking at this case, the only reason we need the mask is because it made the
+logic a little easier to write. All we really want is to choose some CPU in the
+intersection of two masks ignoring a specific CPU, and there was no helper
+function to do that.
+
+We can add a new helper to do that for us, which would avoid redundant work to
+manipulate the entire mask, and it would make the existing code simpler.  I had
+a series a few years back to add cpumask_any_and_but():
+
+  https://lore.kernel.org/lkml/1486381132-5610-1-git-send-email-mark.rutland@arm.com/
+
+... and that's easy to use here, e.g.
+
+| diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
+| index 7ef9c7e4836b7..c6bbd387ccf8b 100644
+| --- a/drivers/perf/arm-cmn.c
+| +++ b/drivers/perf/arm-cmn.c
+| @@ -1950,17 +1950,15 @@ static int arm_cmn_pmu_offline_cpu(unsigned int cpu, struct hlist_node *cpuhp_no
+|         struct arm_cmn *cmn;
+|         unsigned int target;
+|         int node;
+| -       cpumask_t mask;
+|  
+|         cmn = hlist_entry_safe(cpuhp_node, struct arm_cmn, cpuhp_node);
+|         if (cpu != cmn->cpu)
+|                 return 0;
+|  
+|         node = dev_to_node(cmn->dev);
+| -       if (cpumask_and(&mask, cpumask_of_node(node), cpu_online_mask) &&
+| -           cpumask_andnot(&mask, &mask, cpumask_of(cpu)))
+| -               target = cpumask_any(&mask);
+| -       else
+| +       target = cpumask_any_and_but(cpu_online_mask, cpumask_of_node(node),
+| +                                    cpu);
+| +       if (target >= nr_cpu_ids)
+|                 target = cpumask_any_but(cpu_online_mask, cpu);
+|         if (target < nr_cpu_ids)
+|                 arm_cmn_migrate(cmn, target);
+
+It doesn't trivially rebase since the cpumask code has changed a fair amount,
+but I've managed to do that locally, and I can send that out as a
+seven-years-late v2 if it's useful.
+
+From a quick scan, it looks like that'd handle all cases in this series. Are
+there any patterns in this series for which that would not be sufficient?
+
+Mark.
+
+> 
+> And yes, static allocation is evil :) 
+> 
+> 
+> Thanks,
+> 
+>     Dawei
+> 
+> > 
+> > Also, for the titles it'd be better to say something like "avoid placing
+> > cpumasks on the stack", because "explicit cpumask var allocation" sounds like
+> > the use of alloc_cpumask_var().
+> 
+> Sound great! I will update it.
+> 
+> > 
+> > Mark.
+> > 
+> > > 
+> > > static int cpuhp_issue_call(int cpu, enum cpuhp_state state, bool bringup,
+> > >                             struct hlist_node *node)
+> > > {
+> > >         struct cpuhp_step *sp = cpuhp_get_step(state);
+> > >         int ret;
+> > > 
+> > >         /*
+> > >          * If there's nothing to do, we done.
+> > >          * Relies on the union for multi_instance.
+> > >          */
+> > >         if (cpuhp_step_empty(bringup, sp))
+> > >                 return 0;
+> > >         /*
+> > >          * The non AP bound callbacks can fail on bringup. On teardown
+> > >          * e.g. module removal we crash for now.
+> > >          */
+> > > 	#ifdef CONFIG_SMP
+> > >         if (cpuhp_is_ap_state(state))
+> > >                 ret = cpuhp_invoke_ap_callback(cpu, state, bringup, node);
+> > >         else
+> > >                 ret = cpuhp_invoke_callback(cpu, state, bringup, node,
+> > > 		NULL);
+> > > 	#else
+> > >         ret = cpuhp_invoke_callback(cpu, state, bringup, node, NULL);
+> > > 	#endif
+> > >         BUG_ON(ret && !bringup);
+> > >         return ret;
+> > > }
+> > > 
+> > > Dawei Li (9):
+> > >   perf/alibaba_uncore_drw: Avoid explicit cpumask var allocation from
+> > >     stack
+> > >   perf/arm-cmn: Avoid explicit cpumask var allocation from stack
+> > >   perf/arm_cspmu: Avoid explicit cpumask var allocation from stack
+> > >   perf/arm_dsu: Avoid explicit cpumask var allocation from stack
+> > >   perf/dwc_pcie: Avoid explicit cpumask var allocation from stack
+> > >   perf/hisi_pcie: Avoid explicit cpumask var allocation from stack
+> > >   perf/hisi_uncore: Avoid explicit cpumask var allocation from stack
+> > >   perf/qcom_l2: Avoid explicit cpumask var allocation from stack
+> > >   perf/thunder_x2: Avoid explicit cpumask var allocation from stack
+> > > 
+> > >  drivers/perf/alibaba_uncore_drw_pmu.c    | 13 +++++++++----
+> > >  drivers/perf/arm-cmn.c                   | 13 +++++++++----
+> > >  drivers/perf/arm_cspmu/arm_cspmu.c       | 13 +++++++++----
+> > >  drivers/perf/arm_dsu_pmu.c               | 18 +++++++++++++-----
+> > >  drivers/perf/dwc_pcie_pmu.c              | 17 +++++++++++------
+> > >  drivers/perf/hisilicon/hisi_pcie_pmu.c   | 15 ++++++++++-----
+> > >  drivers/perf/hisilicon/hisi_uncore_pmu.c | 13 +++++++++----
+> > >  drivers/perf/qcom_l2_pmu.c               | 15 ++++++++++-----
+> > >  drivers/perf/thunderx2_pmu.c             | 20 ++++++++++++--------
+> > >  9 files changed, 92 insertions(+), 45 deletions(-)
+> > > 
+> > > 
+> > > Thanks,
+> > > 
+> > >     Dawei
+> > > 
+> > > -- 
+> > > 2.27.0
+> > > 
+> > 
 
