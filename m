@@ -1,130 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-16087-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16088-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0298895196
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 13:17:24 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DCC18951A7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 13:19:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 96C802898D3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 11:17:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 216B21F28519
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 11:19:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1847F60DFB;
-	Tue,  2 Apr 2024 11:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23C9D627E8;
+	Tue,  2 Apr 2024 11:19:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xtz5tf/Q"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EtTzReyo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41AB765BBB
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Apr 2024 11:17:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F5162147;
+	Tue,  2 Apr 2024 11:19:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712056630; cv=none; b=dCR7c9v8byBh46C1vtmhvdEtwfcrKFGHUp471Znedn/lZpzBWXIGGAdkR4kSCf0B+MVqgQiE2jNzEB6IVv8ByYURpkgQO820zn1uW9OpoJmdR4OjfCqhW76W+NngWJKvoEbra5ACyUMCsqNXtFCgvjU4I/S5jNow76kbdZ1gSPA=
+	t=1712056741; cv=none; b=CzE6KXg7J0tc86SfuTn8zsNtUR6H82F3SuOqQbPhixTwDs1++WY8kDwwA9nCsUc5RDrQU+57PiyYZaq8kpSlI3m5IP0j1AdGosZs4WhftnH5yO35xtL/gkkGlZFmlaIY+NJQZM6EER/BL9g1aZV6w360Y1ecFvYkORmRh6lrE0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712056630; c=relaxed/simple;
-	bh=xYEx1wB0KeFh5dfJ6HSa7rT6aZpOvWbEWZUcFmvpOYM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=B/jRalVmDuGNrBFIT9bue4ZMiE1lD22eLHoUnt92aU9t5h//20P1yOpIhBp5Y1eZ6cTiQxZcHJLZ2sKirzAJB5qPrst2qW1Ojoc7ctQj4pOr2HG55O0xCjmB8qC1vpnGQIiaWK2/PwQrXlqtG1S6h3yrwlKdvHKjWZ6UYqlxDpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xtz5tf/Q; arc=none smtp.client-ip=209.85.219.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-dcc73148611so5147860276.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Apr 2024 04:17:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712056627; x=1712661427; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=mFAn5q7CQFxXq7JaY+/0V77lsWhz1Tz0icfhEeQZiIA=;
-        b=xtz5tf/QsdMLoKnoqx6rUztU2p56/IxKm4kRKm+X4rVcFkrg6e4owC085eK/kYL9kn
-         1tjX/ujIHU2cSIoDXA+qTG4MG/rMfvW26UTiwox3tRNqJOZ89Rk+y3ptLICVRhzHPQ6x
-         jkQbPlQehDn2Y+KS9/2U1QRPC2pEjlrfZbyjnzhgecb4F638Q1Nyz44id0neiJPxZLI6
-         qk/2LfRlq7Me3H7TwhUfQHDas1GKcuIiVc0CGuTn2F6ZLc2h41wtu7/tw81J7mVFKcap
-         3mAT8KO0GKbRQ1WL0Wyuc+RV03yzIC5f0jZ3AuBZT/oyofHnXGfIP5L9Or4GyuZLT078
-         Xqvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712056627; x=1712661427;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mFAn5q7CQFxXq7JaY+/0V77lsWhz1Tz0icfhEeQZiIA=;
-        b=vcG3Skig6FIODu6+RSZbtTPc9WMNrexff/RgThI4h7wLp3QcsTxrgbT4g5+iSxbXCe
-         Kb1Ovv+4rAT3SuoxzmbXstq7q4q8v9AOIoTsKWpCCENGjjxIWZeNlY6hEDpwrlLAay5J
-         klbS9Cz73bGcr6DYzNJ/kYRC1guMz1v1VsVBPrNr5TEvOEZsjWjIDroFLYyUQ+9TsRoH
-         9yAsNkroPLMHJKjZdPijWrzsWXhTIexNA8t5zYuhWEl82prwdtkD5p1WoUa6eXFB05GU
-         LlBcrP2EzLZKlkdTpJ/TgmUPTUrGACb+a8xaAhD8nDLv6jLrIbDmWJjIR4ksEuqwi3h1
-         9Qzg==
-X-Forwarded-Encrypted: i=1; AJvYcCVPeKB4J4wSLVcwuFMRdJex/X34GObJ6kuVKvCvBKs9duHAZEBwHQHUZWfqvzvQtB07HJ98p3GLyDwn+ckoGiHQJ95EZPeKdDInR5BRdg==
-X-Gm-Message-State: AOJu0YzFpZ0bG24NeGxg4m466SHayhrkGa+HWQkQVQ6LrWD+LqY0FN69
-	RKm3c273rgEZ7gUj5F7QOTJz1vA8/7PmFDFcnL0M17aHZ4NURpgPOjL2CIfB1a8RUfxdXRb17BP
-	9VAwuxMMWOMGtmJ93UxebVuKAiTH2oNcdTmXwpA==
-X-Google-Smtp-Source: AGHT+IEigHxfdu3Sh5IlyKpDafnA1zAw4DSQNtZfWejv/aZ9zNxq090wRE2n00r1tIubWICmJpip1//6zCXSEBerIZY=
-X-Received: by 2002:a25:640c:0:b0:dc6:cbb9:e with SMTP id y12-20020a25640c000000b00dc6cbb9000emr10783156ybb.41.1712056627317;
- Tue, 02 Apr 2024 04:17:07 -0700 (PDT)
+	s=arc-20240116; t=1712056741; c=relaxed/simple;
+	bh=EngvwcHPKVW3rJfsOG5BaNu6Bo2aD8qL+HdMGSHkZLw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QaV24Q0m34yBkbsou62BP/FhEcnu3zQqn7OLMj0a54wlSMEXgPabFc0enni/YUP9XhGffSfl72ClRV2JHcycVE1pdkA2CNrE1I5uwBw7B/uAfwPi8bzxDUph1Jx25r6Jll9wPzJ9OUZ7rEtAIWz5cSt3+B+Dmx/ISFaNhnaNDiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EtTzReyo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76550C43390;
+	Tue,  2 Apr 2024 11:18:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712056740;
+	bh=EngvwcHPKVW3rJfsOG5BaNu6Bo2aD8qL+HdMGSHkZLw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=EtTzReyodK1xQWsf7wOzHlNkClL3G0Dy9PtLO8GP8vyiKOeyny3m2hf2nJRxkWUPq
+	 tyr81a4IDQTWBhTvdKURIP9YdSruFnDn0HfcnNDuATtnvEwzrfV2hj7xwcX7Uem2we
+	 Jgx0MQD3iSS2WLJtoH9D5buPrymwAqjT5XfYWIGUkBms9I1w0UoUbcpAmk+FFAA1Eo
+	 2FqeUBWz4QW5nNEoae0lxWJhSleFR5XSSjnmHBF8qAxrNv1EA7rrpCaJ6XZng3Tm7i
+	 Wl4csOeBarC4k/bUvBejEXTMf+UJ0zbhy90nAsfwqTIrjOlq/KmtcMGXtz/hRE1ux5
+	 J2mda87IoJ9zw==
+Date: Tue, 2 Apr 2024 13:18:54 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	mhi@lists.linux.dev, linux-tegra@vger.kernel.org
+Subject: Re: [PATCH v2 10/10] PCI: qcom: Implement shutdown() callback to
+ properly reset the endpoint devices
+Message-ID: <ZgvpnqdjQ39JMRiV@ryzen>
+References: <20240401-pci-epf-rework-v2-0-970dbe90b99d@linaro.org>
+ <20240401-pci-epf-rework-v2-10-970dbe90b99d@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240402103406.3638821-1-quic_varada@quicinc.com>
- <20240402103406.3638821-4-quic_varada@quicinc.com> <CAA8EJpphk_kqzBE7cKb73ipdpTi29t9ZSOOdSfq7pAGSs5NKeg@mail.gmail.com>
- <CAA8EJpo=TMhu+Te+JE0cQzmjLOTDPi-Vv-h5Bch0Wfr_7iVi2w@mail.gmail.com> <ZgvlrbvvPNA6HRiL@hu-varada-blr.qualcomm.com>
-In-Reply-To: <ZgvlrbvvPNA6HRiL@hu-varada-blr.qualcomm.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 2 Apr 2024 14:16:56 +0300
-Message-ID: <CAA8EJpp2dgy0DcLoUuo6gz-8ee0RRwJ_mvCLGDbdvF-gVhREFg@mail.gmail.com>
-Subject: Re: [PATCH v6 3/6] interconnect: icc-clk: Add devm_icc_clk_register
-To: Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org, mturquette@baylibre.com, 
-	sboyd@kernel.org, robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, 
-	conor+dt@kernel.org, djakov@kernel.org, quic_anusha@quicinc.com, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-pm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240401-pci-epf-rework-v2-10-970dbe90b99d@linaro.org>
 
-On Tue, 2 Apr 2024 at 14:02, Varadarajan Narayanan
-<quic_varada@quicinc.com> wrote:
->
-> On Tue, Apr 02, 2024 at 01:48:08PM +0300, Dmitry Baryshkov wrote:
-> > On Tue, 2 Apr 2024 at 13:40, Dmitry Baryshkov
-> > <dmitry.baryshkov@linaro.org> wrote:
-> > >
-> > > On Tue, 2 Apr 2024 at 13:34, Varadarajan Narayanan
-> > > <quic_varada@quicinc.com> wrote:
-> > > >
-> > > > Wrap icc_clk_register to create devm_icc_clk_register to be
-> > > > able to release the resources properly.
-> > > >
-> > > > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > > > ---
-> > > > v5: Introduced devm_icc_clk_register
-> > > > ---
-> > > >  drivers/interconnect/icc-clk.c   | 29 +++++++++++++++++++++++++++++
-> > > >  include/linux/interconnect-clk.h |  4 ++++
-> > > >  2 files changed, 33 insertions(+)
-> > >
-> > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >
-> > Wait. Actually,
-> >
-> > Unreviewed-by: me
-> >
-> > Please return int from devm_icc_clk_register instead of returning the pointer.
->
-> Wouldn't returning int break the general assumption that
-> devm_foo(), returns the same type as foo(). For example
-> devm_clk_hw_get_clk and clk_hw_get_clk return struct clk *?
+On Mon, Apr 01, 2024 at 09:20:36PM +0530, Manivannan Sadhasivam wrote:
+> PCIe host controller drivers are supposed to properly reset the endpoint
+> devices during host shutdown/reboot. Currently, Qcom driver doesn't do
+> anything during host shutdown/reboot, resulting in both PERST# and refclk
+> getting disabled at the same time. This prevents the endpoint device
+> firmware to properly reset the state machine. Because, if the refclk is
+> cutoff immediately along with PERST#, access to device specific registers
+> within the endpoint will result in a firmware crash.
+> 
+> To address this issue, let's call qcom_pcie_host_deinit() inside the
+> shutdown callback, that asserts PERST# and then cuts off the refclk with a
+> delay of 1ms, thus allowing the endpoint device firmware to properly
+> cleanup the state machine.
 
-Not always. The only reason to return icc_provider was to make it
-possible to destroy it. With devres-managed function you don't have to
-do anything.
+Hm... a QCOM EP device could be attached to any of the PCIe RC drivers that
+we have in the kernel, so it seems a bit weird to fix this problem by
+patching the QCOM RC driver only.
+
+Which DBI call is it that causes this problem during perst assert on EP side?
+
+I assume that it is pci-epf-test:deinit() callback that calls
+pci_epc_clear_bar(), which calls dw_pcie_ep_clear_bar(), which will both:
+-clear local data structures, e.g.
+ep->epf_bar[bar] = NULL;
+ep->bar_to_atu[bar] = 0;
+
+but also call:
+__dw_pcie_ep_reset_bar()
+dw_pcie_disable_atu()
 
 
--- 
-With best wishes
-Dmitry
+Do we perhaps need to redesign the .deinit EPF callback?
+
+Considering that we know that .deinit() will only be called on platforms
+where there will be a fundamental core reset, I guess we could do something
+like introduce a __dw_pcie_ep_clear_bar() which will only clear the local
+data structures. (It might not need to do any DBI writes, since the
+fundamental core reset should have reset all values.)
+
+Or perhaps instead of letting pci_epf_test_epc_deinit() call
+pci_epf_test_clear_bar()/__pci_epf_test_clear_bar() directly, perhaps let
+pci_epf_test_epc_deinit() call add a .deinit()/.cleanup() defined in the
+EPC driver.
+
+This EPC .deinit()/.cleanup() callback would then only clear the
+local data structures (no DBI writes...).
+
+Something like that?
+
+
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 14772edcf0d3..b2803978c0ad 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1655,6 +1655,13 @@ static int qcom_pcie_resume_noirq(struct device *dev)
+>  	return 0;
+>  }
+>  
+> +static void qcom_pcie_shutdown(struct platform_device *pdev)
+> +{
+> +	struct qcom_pcie *pcie = platform_get_drvdata(pdev);
+> +
+> +	qcom_pcie_host_deinit(&pcie->pci->pp);
+> +}
+> +
+>  static const struct of_device_id qcom_pcie_match[] = {
+>  	{ .compatible = "qcom,pcie-apq8064", .data = &cfg_2_1_0 },
+>  	{ .compatible = "qcom,pcie-apq8084", .data = &cfg_1_0_0 },
+> @@ -1708,5 +1715,6 @@ static struct platform_driver qcom_pcie_driver = {
+>  		.pm = &qcom_pcie_pm_ops,
+>  		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
+>  	},
+> +	.shutdown = qcom_pcie_shutdown,
+>  };
+>  builtin_platform_driver(qcom_pcie_driver);
+> 
+> -- 
+> 2.25.1
+> 
 
