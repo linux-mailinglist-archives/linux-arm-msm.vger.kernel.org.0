@@ -1,63 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-16045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DFD71895001
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 12:27:13 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7540895005
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 12:27:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4F5E11F22282
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 10:27:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D6C531C231D1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 10:27:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B38F5D8EB;
-	Tue,  2 Apr 2024 10:27:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FF535B694;
+	Tue,  2 Apr 2024 10:27:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YSFNzLx/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uVsEhz5X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DDB25D47B;
-	Tue,  2 Apr 2024 10:26:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ACE85F54D
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Apr 2024 10:27:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712053620; cv=none; b=PDew+OWt5qARoV+KX4kItj2DUJLvGiFBAf9WyaYtSQKlXLav+CoDOPWTRK3lqRpbbBmdDkCL2EKr+5QWpe/kd6t0PzK+ge4zf5R2T02Lzo0oLdH08C44i9iEYMuk2XOzjOU9eUHXhsGghOn/VGVIPriXfuaEpXkPNU+NJe6jfiY=
+	t=1712053625; cv=none; b=tMB6e5jgsLVWZsV/3AHbuAjiAMuzmggO+DvpgFxlpx+LkLfSkx77pXJIBH/XQmqSWfNHGSGrN3XL/c8KU0k45wmK0Qfjt1RzbRAkmNrZ2neq1pdEXVD7VWLCmNkqikVsN4sF9FK7ZfujeOHGJyTQH5qqet78dyu+CwSCQuNY4Jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712053620; c=relaxed/simple;
-	bh=+eFe3TBJLr87BtCWTElHnPERNcTzJNOrD7R50LH437Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Cma6r07gw9ChoI4DICAfBvinzMnHkU3eNRlWF3mD8vd3qI1wW60bHI7km02T66veP7neanqEEdkUWAwADKxcjWl4ES9stnSDJ1imq8TZZt7mCZsp/fxhyRWHMUxiTngMZS2ayXRenfVoeLhUM0ggkX2X/n5dYGCEwWoeHR8MQs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YSFNzLx/; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4325HKeM031770;
-	Tue, 2 Apr 2024 10:26:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=uksFEbTHLxU2cqRIXHLFh61JHGugwCO+k16/jtYBnrQ=; b=YS
-	FNzLx/+3/HEL784FHnepSpVEQIMwhtLSyJfH7F97XpvK2zveyf6HtNDZGi1h8ITM
-	lztHJxqT8MMAgIZeBKn9WTpo0vKJrmPie9384SnfCDF78t7utgTEhuR0YdiwX9SS
-	YtGMJqGbn0I9Zwg7AaL0o4AUq4+Cujiaj+HnKu59xfOM3yiYtvvJs3q2AxKkYUxh
-	sD8D595dWoxTwMNyo9RZJC6sqYNHam+W+wF1yrAKXsnJql8RMQzhnfVCQra4ibDU
-	2RVHR0YtIfue8uqu9yGwDNpuCdl/VT4zTONnOsq/LEU4FDvYAG5bK+IaNwcEpYSa
-	E/0e1gKTjfatyA8mPakA==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x88eh91k9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 02 Apr 2024 10:26:54 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 432AQsD4031657
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 2 Apr 2024 10:26:54 GMT
-Received: from [10.218.22.190] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 2 Apr 2024
- 03:26:51 -0700
-Message-ID: <1b247a4b-a260-4f89-bdcb-e821a47914d3@quicinc.com>
-Date: Tue, 2 Apr 2024 15:56:47 +0530
+	s=arc-20240116; t=1712053625; c=relaxed/simple;
+	bh=2lcDfu4xW0bculdHZpac3g3St6ttxpCAMyiLiPfvz8Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ROw1k38jRhUz6zAlGshGO6StJ6Fm7jmYLENv9opXyVnQf0tM/NveIYcTeY+GmfKuj55SYRjRsPLTSgdgaZmXUBc0vDxjl4pA21ZH91LyyaSTY7kkRSKmougZWvuVwT0/2BOg1Ku175M25lwjrhoUM/URyqXG+c6bn6kCJTpGvNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uVsEhz5X; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4161dae0c02so1388475e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Apr 2024 03:27:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712053620; x=1712658420; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=eOBZ55ixLA4dTfJhYr54OdUB1MaemoFEDKwq8GCXVLI=;
+        b=uVsEhz5XacY3RYea9PvmYx/oTz3KUTCz8u7FvA7LXnsaRHtGxCUsLSYCitbHlM9EHp
+         gSgAuZ5m1UG1TMdaS6XUjIE4gcBIp3aqdIu5w2qACLTn59b4V8rcU/NzSzPp448KOAsh
+         UOjVNOPSUc08797K7jucOhxsboprQzqzv1SU3tTgklixn2Hj05ajsLP+whD2jArOuBOE
+         GIyTsMkeGC1h4bvMm/EYcWMc0m+m7IUEwEfFOo7GK3aYy/9WDzFnJlUPrs1RCKy1gCSC
+         Zsg5qL9RJBK+Q7STrxNh64Cz40pfnSAIKTdLKUccO1N/ioMLtQ9HRkD8MZeU31XQMPCp
+         57iQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712053620; x=1712658420;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=eOBZ55ixLA4dTfJhYr54OdUB1MaemoFEDKwq8GCXVLI=;
+        b=kbGWQIYWquCYuOqyb9G0FSIxDWg/NUKuO0qy3cip+8U0wJc2OjZFR0snSy/trYAfcL
+         aiLudOGxMKvgPvsAqjOeE8j21OqNtjs/DOMxRSbOtGQftAGQFqMsSXC/JRpboR7CSK//
+         U1ZqrzmReUxQKyLUDM4qJm9sl0aeKAQY+JTgpmCDB4SAlouP9ygpUdjVAzSpMhw952RA
+         9YNxvr5LY2al3REV0tosX5cnXelIJYN5uVEL6yUmUZ8oFkQ22VLH5WMDwmjteoLdrW3P
+         I81993L7Y25iWDqlkHgu6ytrVQH6pHde1b4PbVmsKUOYwiVJyLsUbwGaA1k5Z1Etsxaz
+         VdHQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWkfC9ZzZTmbKJYjRCF0q22zyJvFMxbbbIkraSxejBMbjpu0Gydzg8ETncSw9GEvX0BsFkntksfZyVB5KP1dfgbJEcJQJ6oOL1eT+kKBg==
+X-Gm-Message-State: AOJu0YwPTCMyMGNP4CRUmCfHH0ymHTG/+BTf2ZSeyhdmOSyRksTDZ4gP
+	kn/wI/4mf44c1pxcxwDfo8Y9sY9bfJWOzURsbaWXXCYf9jGFzl6vaP8jTnWJsFU=
+X-Google-Smtp-Source: AGHT+IFfOeEwE73Mr8ZZizbJEWLfCXdGOlKeaDZvpcz6sDnmAoZebGN8m3vt0uWalY87R2DUD/pxoA==
+X-Received: by 2002:a05:600c:3549:b0:414:113b:36a6 with SMTP id i9-20020a05600c354900b00414113b36a6mr9267396wmq.25.1712053620231;
+        Tue, 02 Apr 2024 03:27:00 -0700 (PDT)
+Received: from [192.168.0.102] ([176.61.106.68])
+        by smtp.gmail.com with ESMTPSA id v28-20020a5d591c000000b00341d4722a9asm13734949wrd.21.2024.04.02.03.26.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Apr 2024 03:26:59 -0700 (PDT)
+Message-ID: <c4b34be0-ac1a-4816-8ad9-7091b2834762@linaro.org>
+Date: Tue, 2 Apr 2024 11:26:58 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,171 +76,112 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] i2c: i2c-qcom-geni: Serve transfer during early resume
- stage
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: msm8976: Add WCNSS node
 Content-Language: en-US
-To: Andi Shyti <andi.shyti@kernel.org>
-CC: <konrad.dybcio@linaro.org>, <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-i2c@vger.kernel.org>, <quic_vdadhani@quicinc.com>,
-        Vinod Koul
-	<vkoul@kernel.org>
-References: <20240328123743.1713696-1-quic_msavaliy@quicinc.com>
- <j5zai7pw7pxe2owjsoq2ncwhsmwe2llmcvb7vp46xi757eamub@inefovgffgpp>
-From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-In-Reply-To: <j5zai7pw7pxe2owjsoq2ncwhsmwe2llmcvb7vp46xi757eamub@inefovgffgpp>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: Adam Skladowski <a39.skl@gmail.com>
+Cc: phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240401172153.9231-1-a39.skl@gmail.com>
+ <20240401172153.9231-5-a39.skl@gmail.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20240401172153.9231-5-a39.skl@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: E_nVZxps7922X-EC98fYyVfOLaUjSpNz
-X-Proofpoint-ORIG-GUID: E_nVZxps7922X-EC98fYyVfOLaUjSpNz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-02_04,2024-04-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
- clxscore=1015 lowpriorityscore=0 impostorscore=0 mlxscore=0 malwarescore=0
- adultscore=0 bulkscore=0 mlxlogscore=916 priorityscore=1501 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2403210001
- definitions=main-2404020075
 
-Thanks Andi !
+On 01/04/2024 18:21, Adam Skladowski wrote:
+> Add node describing wireless connectivity subsystem.
+> 
+> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+> ---
+>   arch/arm64/boot/dts/qcom/msm8976.dtsi | 104 ++++++++++++++++++++++++++
+>   1 file changed, 104 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8976.dtsi b/arch/arm64/boot/dts/qcom/msm8976.dtsi
+> index 77670fce9b8f..41c748c78347 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8976.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8976.dtsi
+> @@ -771,6 +771,36 @@ blsp2_i2c4_sleep: blsp2-i2c4-sleep-state {
+>   				drive-strength = <2>;
+>   				bias-disable;
+>   			};
+> +
+> +			wcss_wlan_default: wcss-wlan-default-state  {
+> +				wcss-wlan2-pins {
+> +					pins = "gpio40";
+> +					function = "wcss_wlan2";
+> +					drive-strength = <6>;
+> +					bias-pull-up;
+> +				};
+> +
+> +				wcss-wlan1-pins {
+> +					pins = "gpio41";
+> +					function = "wcss_wlan1";
+> +					drive-strength = <6>;
+> +					bias-pull-up;
+> +				};
+> +
+> +				wcss-wlan0-pins {
+> +					pins = "gpio42";
+> +					function = "wcss_wlan0";
+> +					drive-strength = <6>;
+> +					bias-pull-up;
+> +				};
+> +
+> +				wcss-wlan-pins {
+> +					pins = "gpio43", "gpio44";
+> +					function = "wcss_wlan";
+> +					drive-strength = <6>;
+> +					bias-pull-up;
+> +				};
+> +			};
+>   		};
 
-On 3/30/2024 3:24 AM, Andi Shyti wrote:
-> Hi Mukesh,
-> 
-> On Thu, Mar 28, 2024 at 06:07:43PM +0530, Mukesh Kumar Savaliya wrote:
->> pm_runtime_get_sync() function fails during PM early resume and returning
->> -EACCES because runtime PM for the device is disabled at the early stage
->> causing i2c transfer to fail. Make changes to serve transfer with force
->> resume.
->>
->> 1. Register interrupt with IRQF_EARLY_RESUME and IRQF_NO_SUSPEND flags
->>     to avoid timeout of transfer when IRQ is not enabled during early stage.
->> 2. Do force resume if pm_runtime_get_sync() is failing after system
->>     suspend when runtime PM is not enabled.
->> 3. Increment power usage count after forced resume to balance
->>     it against regular runtime suspend.
->>
->> Co-developed-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
->> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
->> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-> 
-> Is this a fix? O mostly an improvement?
-It's an improvement to serve transfer during early resume time. Doesn't 
-fix any crash issue.
-> 
-> ...
-> 
->>   	gi2c->err = 0;
->>   	reinit_completion(&gi2c->done);
->> -	ret = pm_runtime_get_sync(gi2c->se.dev);
->> -	if (ret < 0) {
->> -		dev_err(gi2c->se.dev, "error turning SE resources:%d\n", ret);
->> -		pm_runtime_put_noidle(gi2c->se.dev);
->> -		/* Set device in suspended since resume failed */
->> -		pm_runtime_set_suspended(gi2c->se.dev);
->> -		return ret;
->> +
->> +	if (!pm_runtime_enabled(dev) && gi2c->suspended) {
->> +		dev_dbg(gi2c->se.dev, "RT_PM disabled, Do force resume, usage_count:%d\n",
-> 
-> dev
-> 
-Sure, Done.
+Doesn't look right
 
-> nit: you could leave a space after the ':'.
-> 
-Sure, Done.
+arch/arm64/boot/dts/qcom/msm8916.dtsi
+arch/arm64/boot/dts/qcom/msm8939.dtsi
 
->> +			atomic_read(&dev->power.usage_count));
->> +		ret = geni_i2c_force_resume(gi2c);
->> +		if (ret)
->> +			return ret;
->> +	} else {
->> +		ret = pm_runtime_get_sync(dev);
->> +		if (ret == -EACCES && gi2c->suspended) {
->> +			dev_dbg(gi2c->se.dev, "PM get_sync() failed-%d, force resume\n", ret);
-> 
-> dev
-> 
-Done.
->> +			ret = geni_i2c_force_resume(gi2c);
->> +			if (ret)
->> +				return ret;
->> +		}
-> 
-> Are we missing some cases here? Do we need a few more else's?
-> 
-> Andi
-> 
-No More else cases required.
->>   	}
->>   
->>   	qcom_geni_i2c_conf(gi2c);
->> @@ -702,8 +730,15 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
->>   	else
->>   		ret = geni_i2c_fifo_xfer(gi2c, msgs, num);
->>   
->> -	pm_runtime_mark_last_busy(gi2c->se.dev);
->> -	pm_runtime_put_autosuspend(gi2c->se.dev);
->> +	if (!pm_runtime_enabled(dev) && !gi2c->suspended) {
->> +		pm_runtime_put_noidle(dev);
->> +		pm_runtime_set_suspended(dev);
-> 
-> this looks like repeated code, how about making it a function?
-> 
-Checked it, but seems we need additional flag too to be added at one 
-place where as common part is 2 lines of code. If this code continues to 
-be repeated, i can think of keeping under a wrapper function. Please let 
-me know if still needed to make a separate function.
->> +		gi2c->suspended = 0;
->> +	} else {
->> +		pm_runtime_mark_last_busy(gi2c->se.dev);
->> +		pm_runtime_put_autosuspend(gi2c->se.dev);
->> +	}
->> +
->>   	gi2c->cur = NULL;
->>   	gi2c->err = 0;
->>   	return ret;
->> @@ -820,7 +855,7 @@ static int geni_i2c_probe(struct platform_device *pdev)
->>   	init_completion(&gi2c->done);
->>   	spin_lock_init(&gi2c->lock);
->>   	platform_set_drvdata(pdev, gi2c);
->> -	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, 0,
->> +	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, IRQF_EARLY_RESUME | IRQF_NO_SUSPEND,
-> 
-> Can you provide a bit more information on how an early interrupt
-> would be handled once the device is resumed?
-> 
-Sure, Let me go little descriptive here.
-Post system suspend when system resume starts (because of PCI/touch 
-device wakeup interrupt or anything else).
+wcss_wlan_default: wcss-wlan-default-state {
+	pins = "gpio40", "gpio41", "gpio42", "gpio43", "gpio44";
+	function = "wcss_wlan";
+	drive-strength = <6>;
+	bias-pull-up;
+};
 
-1.That time i2c client device handler will directly start i2c transfer, 
-but we could not serve transfer because device is runtime suspended and 
-runtime PM remains disabled. This happens during early_resume callback 
-time, hence we have added forced_resume()
 
-Basically system is still suspended and not reached to the point of 
-enabling runtime PM of the i2c master.
+>   
+>   		gcc: clock-controller@1800000 {
+> @@ -1446,6 +1476,80 @@ blsp2_i2c4: i2c@7af8000 {
+>   			status = "disabled";
+>   		};
+>   
+> +		wcnss: remoteproc@a204000 {
+> +			compatible = "qcom,pronto-v3-pil", "qcom,pronto";
+> +			reg = <0x0a204000 0x2000>,
+> +			      <0x0a202000 0x1000>,
+> +			      <0x0a21b000 0x3000>;
+> +			reg-names = "ccu",
+> +				    "dxe",
+> +				    "pmu";
+> +
+> +			memory-region = <&wcnss_fw_mem>;
 
-2. If the IRQF_EARLY_RESUME is not registered, then we get timeout as 
-the interrupt is not enabled. kernel/irq/pm.c has function which Enables 
-interrupt lines having IRQF_EARLY_RESUME set during syscore instead of 
-device resume time.
+For preference and consistency "wcnss_fw_mem" should be "wcnss_mem"
 
-irq_pm_syscore_resume() => resume_irqs() => __enable_irq()
+The ordering of the compatible/reg/interrupt is different to 8916/8939 too.
 
-> Thanks,
-> Andi
-> 
->>   			       dev_name(dev), gi2c);
->>   	if (ret) {
->>   		dev_err(dev, "Request_irq failed:%d: err:%d\n",
->> -- 
->> 2.25.1
->>
+I'm not sure which is currently the preferred order of declaration but 
+for V3 of this series would appreciate if you could find out and add the 
+comment to your cover letter.
+
+Otherwise LGTM.
+
+Please CC me on V3.
+
+---
+bod
 
