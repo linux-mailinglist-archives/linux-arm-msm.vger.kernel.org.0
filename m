@@ -1,359 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-16023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70104894B4B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 08:21:58 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A591B894B6D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 08:31:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F0A391F2281C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 06:21:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5A8C128308F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 06:31:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3658A199B0;
-	Tue,  2 Apr 2024 06:21:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F28A1CA8F;
+	Tue,  2 Apr 2024 06:31:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NFL9ydoa"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OD0GGBs6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCA7182BD;
-	Tue,  2 Apr 2024 06:21:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9095313FE7
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Apr 2024 06:31:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712038905; cv=none; b=KwnvhNRnYyBdy2xrU0n4QvQbY8uqvgVk7sB0iURmTuQBJOlse9GgzlfJdKo3Nl6dhqBriEk9GbEznpplpTkeE1g5cBDQNzvm6IPam8xrHTMiET5r8AXKnAncQRFTa3l5kUKbeIR90Y2Er7HR01cmSthzli2XLKlb8MOEAEC5B1A=
+	t=1712039487; cv=none; b=UDQerRP7MT7CIFuOvi0nIx8bz4kW/ri0MIdU/osu2eJUt97OES+m98fST/pcpfoRzm4VtXaR8D39ndHWhGmLpDCZ9E1uD40MqBOrKQeudMWBGocP4XsdnIrN5sK3yhIHrW9rrkYOSPs1QCeQHlRy1DFd5RuCpnM2hhy8nwOOses=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712038905; c=relaxed/simple;
-	bh=mRZWwTUnefPwVr6kgskXNOs3H2EcvZobDxeInjclxC8=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=u5r9vefY6FlZyx4C4fw4yuDB2y8gLPv8AbTbMkIV2f0Y1JY6rliqxjUMb5nde+I/OIRphu7tCfzYqDoZNkXdNqc7YGd9OMoERiBQDLTC5YMBpmqkQ8dMw1XzZ/+J8gIc8by2CXtPhW1SWI2VTAZjwaFFHOBd+XBWowZBKf2N0tU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NFL9ydoa; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4325PdbO028066;
-	Tue, 2 Apr 2024 06:21:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version
-	:content-transfer-encoding; s=qcppdkim1; bh=/+1f+75ym5lr/23i7Ex3
-	zI4bWC6Au1tzEOaaj98blyA=; b=NFL9ydoad2tJlFkPBvuOq2Vr0bwMtAJQWabj
-	/GkVwtOwipM+O4taGqkGmKfGXYGvV+mXyQr/a5XLGr9haq8FkOLqhkkRdZeujTPI
-	moU+FIMJ9FxfcOT9ZEzELB8bMk1zrOKDGj0JpMDS0V2KlG4Hcf9/zHkZ45sjwoKj
-	xTUgPZl3fF7xBu702GdZkaL/jMySfCBRehoiS1YR13tZbs8EWySJTJeZSJ4SnPOP
-	djQ1PPBFLsTkeizxnb/dcs9zSnJYraoHy801ZUlZWsHW4eOfbIS50/Ad/WR7gKfU
-	KxAMN2g7mo0dyfFjUTrI5s4xb7BIbsBcERir9UGCoKr+Wn6ZQQ==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x80w5hawm-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 02 Apr 2024 06:21:38 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 4326LZfD001980;
-	Tue, 2 Apr 2024 06:21:35 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3x6btm4hrm-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 02 Apr 2024 06:21:35 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4326LZoY001975;
-	Tue, 2 Apr 2024 06:21:35 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-msavaliy-hyd.qualcomm.com [10.213.110.207])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4326LYpD001974
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 02 Apr 2024 06:21:35 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 429934)
-	id D5348240F0; Tue,  2 Apr 2024 11:51:33 +0530 (+0530)
-From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-To: konrad.dybcio@linaro.org, andersson@kernel.org, andi.shyti@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-i2c@vger.kernel.org, dmaengine@vger.kernel.org
-Cc: quic_vdadhani@quicinc.com, Vinod Koul <vkoul@kernel.org>,
-        Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Subject: [PATCH v2] i2c: i2c-qcom-geni: Add support to share an I2C SE from two subsystem
-Date: Tue,  2 Apr 2024 11:51:31 +0530
-Message-Id: <20240402062131.9836-1-quic_msavaliy@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1712039487; c=relaxed/simple;
+	bh=tOmPo85PDaiDGLN8GnmN5ne28Sok9cr7yeCvksTtLqM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=n6dLf3fEXvb/h2OZoxwshgwAiB8BiJ0ovAAaRZB4jNWMobgWjP6vsv/u5oS753OSaqEANAOtpy/Ac7xMGtG4lCvBKCxiVZi/taKQlRpHQLn13HW+m7h/T7gsgNo1vQsePnZp86vCbthsSTg73omwaMrbJlFLY7WU18Q7d3epLPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OD0GGBs6; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-56de2c62463so912835a12.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Apr 2024 23:31:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712039484; x=1712644284; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=6+vlLXjky3Atpmt0lf3Kbf09psjaA35dSHB1HXPaz7o=;
+        b=OD0GGBs6P2A+P8MR/Z0lvoVSJxuoiwUCayWKAWnAcJ1R6ez38pwP1T8DgkzgVjnfHi
+         AOI5SpZ1WqL6Rov5cQ1kdC/c8xXWks3ZL9NvShSGtivKYJX+4dWZPPlbYvGiA8DcejYI
+         JwU89CtE+1mr1LbUK6txvT6js2k9vg3w5puigpW4dSW6l0b2S5WSAWfks4pXV8ff1+g4
+         VR9DqmcDXuxAAo4zJWdiedXTc5NA1nWIGx9EagIYenuYIO1cUg7Z9g0vk/6yLF1XcVVy
+         AqedIsg8rkC36iXFsiTVU6uVhoqn32TkIE7w/KEdUSu7Oy8y1lEVUTQCXPy7jRgAt+fV
+         vZ8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712039484; x=1712644284;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6+vlLXjky3Atpmt0lf3Kbf09psjaA35dSHB1HXPaz7o=;
+        b=mU4/+yQENBdBAXvqbKA2Eu2fJ8HtGLSBXc8al30smKbAvKwqV/yNenx80yaNZ4nxJk
+         FQkzrp9xhRgjYW3Vrw2XD65uuEXjErTTaK1dwdhsWqF8i+V8Bmatk77FiCyh6aLHWaXi
+         c0vXGW1zDh5dlHoATeAGlEmQY0T9n1RYHMop43xjRXJEJf5hNlgHdghkQSPsnMmaRFvI
+         jeFys1wyZKGKZTuktvYPUegimZy4tgIUrU+DbuWxxwcfzQwfZuwpaxGTAgYR8qPOFhrH
+         YsZwQpo5DfqSFc0U57ElrWaH/5a7vh0+HtETxeCg4OGtaMJuQzSNh3sBVb1WVcA+XEQR
+         BtZw==
+X-Forwarded-Encrypted: i=1; AJvYcCWLz++7qFO3Y6AxlGojYIgjcXfADpS7Tm1gBC/hX+81WoeU/I8JGBm3VnKMPjZiIi/XLBibArtU7FcUyv4PORqrhcUdHEEnC4o2vD9JQg==
+X-Gm-Message-State: AOJu0YzxvggZ0gkpCV1pXLJqFEnidQCp2RKb3ciIjzQz1HkwO3zo+83f
+	oaw6Cf6RoGCiufZPBLHsEblhOIzhlJwpGjcCBKZMD00tRNSzqVWR12ToK448cJs=
+X-Google-Smtp-Source: AGHT+IEvYVBq4mYN6QHso3bBO8aAt4t4jaFjF4KVJvS7kYn0aYJ9OCRic+0gYI6AH4BZdjkSZ7gJfw==
+X-Received: by 2002:a17:907:7b9e:b0:a4e:512a:903c with SMTP id ne30-20020a1709077b9e00b00a4e512a903cmr7519468ejc.32.1712039483886;
+        Mon, 01 Apr 2024 23:31:23 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.16])
+        by smtp.gmail.com with ESMTPSA id z3-20020a170906714300b00a4650ec48d0sm6212152ejj.140.2024.04.01.23.31.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 01 Apr 2024 23:31:23 -0700 (PDT)
+Message-ID: <9fbb9058-ccfe-436d-b413-b3ba27e4e5f9@linaro.org>
+Date: Tue, 2 Apr 2024 08:31:21 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: AnpG9WzQgGF5zV3Zo6Q1Qhv0UhwltM7V
-X-Proofpoint-ORIG-GUID: AnpG9WzQgGF5zV3Zo6Q1Qhv0UhwltM7V
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-02_02,2024-04-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- lowpriorityscore=0 phishscore=0 bulkscore=0 clxscore=1015 suspectscore=0
- priorityscore=1501 adultscore=0 impostorscore=0 mlxscore=0 malwarescore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2404020043
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/4] dt-bindings: panel: Add LG SW43408 MIPI-DSI panel
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Sumit Semwal <sumit.semwal@linaro.org>,
+ Caleb Connolly <caleb.connolly@linaro.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ Vinod Koul <vkoul@kernel.org>, Caleb Connolly <caleb@connolly.tech>
+References: <20240402-lg-sw43408-panel-v3-0-144f17a11a56@linaro.org>
+ <20240402-lg-sw43408-panel-v3-1-144f17a11a56@linaro.org>
+Content-Language: en-US
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20240402-lg-sw43408-panel-v3-1-144f17a11a56@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Add feature to share an I2C serial engine between two subsystems(SS) so
-that individual clients from different subsystems can access the same bus.
-For example single i2c slave device can be accessed by Client driver from
-APPS OR modem subsystem image. Same way we can have slave being accessed
-between APPS and TZ subsystems.
+On 02/04/2024 01:51, Dmitry Baryshkov wrote:
+> From: Sumit Semwal <sumit.semwal@linaro.org>
+> 
+> LG SW43408 is 1080x2160, 4-lane MIPI-DSI panel present on Google Pixel 3
+> phones.
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
+> [caleb: convert to yaml]
+> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
 
-This is possible in GSI mode where driver queues the TREs with required
-descriptors and ensures to execute TREs in an mutually exclusive way.
-Issue a "Lock TRE" command at the start of the transfer and an "Unlock TRE"
-command at the end of the transfer. This prevents other subsystems from
-concurrently performing DMA transfers and avoids disturbance to data path.
-Change MAX_TRE macro to 5 from 3 because of these two additional TREs.
+Tags missing.
 
-Since the GPIOs are also shared for the i2c bus, do not touch GPIO
-configuration while going to runtime suspend and only turn off the
-clocks. This will allow other SS to continue to transfer the data.
+`b4 trailers -u`
 
-This feature needs to be controlled by DTSI flag to make it flexible
-based on the usecase, hence during probe check the same from i2c driver.
-
-Export function geni_se_clks_off() to call explicitly instead of
-geni_se_resources_off() to not modify TLMM configuration as other SS might
-perform the transfer while APPS SS can go to sleep.
-
-Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
----
-v1 -> v2:
-- Addressed review comments.
-- Removed unwanted comments from the gpi_create_i2c_tre().
-- Enhanced logic by removing ternary assignment in i2c-qcom-geni.c.
-- Confirmed dt-bindings change is required too in separate patch.
-- Formed LOCK_TRE and UNLOCK_TRE by using BIT fields similar to other TREs.
----
- drivers/dma/qcom/gpi.c             | 37 +++++++++++++++++++++++++++++-
- drivers/i2c/busses/i2c-qcom-geni.c | 24 ++++++++++++++-----
- drivers/soc/qcom/qcom-geni-se.c    |  4 +++-
- include/linux/dma/qcom-gpi-dma.h   |  6 +++++
- include/linux/soc/qcom/geni-se.h   |  3 +++
- 5 files changed, 66 insertions(+), 8 deletions(-)
-
-diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-index 1c93864e0e4d..0997210df6b1 100644
---- a/drivers/dma/qcom/gpi.c
-+++ b/drivers/dma/qcom/gpi.c
-@@ -2,6 +2,7 @@
- /*
-  * Copyright (c) 2017-2020, The Linux Foundation. All rights reserved.
-  * Copyright (c) 2020, Linaro Limited
-+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #include <dt-bindings/dma/qcom-gpi.h>
-@@ -65,6 +66,14 @@
- /* DMA TRE */
- #define TRE_DMA_LEN		GENMASK(23, 0)
- 
-+/* Lock TRE */
-+#define TRE_I2C_LOCK		BIT(0)
-+#define TRE_MINOR_TYPE		GENMASK(19, 16)
-+#define TRE_MAJOR_TYPE		GENMASK(23, 20)
-+
-+/* Unlock TRE */
-+#define TRE_I2C_UNLOCK		BIT(8)
-+
- /* Register offsets from gpi-top */
- #define GPII_n_CH_k_CNTXT_0_OFFS(n, k)	(0x20000 + (0x4000 * (n)) + (0x80 * (k)))
- #define GPII_n_CH_k_CNTXT_0_EL_SIZE	GENMASK(31, 24)
-@@ -522,7 +531,7 @@ struct gpii {
- 	bool ieob_set;
- };
- 
--#define MAX_TRE 3
-+#define MAX_TRE 5
- 
- struct gpi_desc {
- 	struct virt_dma_desc vd;
-@@ -1644,6 +1653,19 @@ static int gpi_create_i2c_tre(struct gchan *chan, struct gpi_desc *desc,
- 	struct gpi_tre *tre;
- 	unsigned int i;
- 
-+	/* create lock tre for first tranfser */
-+	if (i2c->shared_se && i2c->first_msg) {
-+		tre = &desc->tre[tre_idx];
-+		tre_idx++;
-+
-+		tre->dword[0] = 0;
-+		tre->dword[1] = 0;
-+		tre->dword[2] = 0;
-+		tre->dword[3] = u32_encode_bits(1, TRE_I2C_LOCK);
-+		tre->dword[3] |= u32_encode_bits(0, TRE_MINOR_TYPE);
-+		tre->dword[3] |= u32_encode_bits(3, TRE_MAJOR_TYPE);
-+	}
-+
- 	/* first create config tre if applicable */
- 	if (i2c->set_config) {
- 		tre = &desc->tre[tre_idx];
-@@ -1702,6 +1724,19 @@ static int gpi_create_i2c_tre(struct gchan *chan, struct gpi_desc *desc,
- 		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
- 	}
- 
-+	/* Unlock tre for last transfer */
-+	if (i2c->shared_se && i2c->last_msg && i2c->op != I2C_READ) {
-+		tre = &desc->tre[tre_idx];
-+		tre_idx++;
-+
-+		tre->dword[0] = 0;
-+		tre->dword[1] = 0;
-+		tre->dword[2] = 0;
-+		tre->dword[3] = u32_encode_bits(1, TRE_I2C_UNLOCK);
-+		tre->dword[3] |= u32_encode_bits(1, TRE_MINOR_TYPE);
-+		tre->dword[3] |= u32_encode_bits(3, TRE_MAJOR_TYPE);
-+	}
-+
- 	for (i = 0; i < tre_idx; i++)
- 		dev_dbg(dev, "TRE:%d %x:%x:%x:%x\n", i, desc->tre[i].dword[0],
- 			desc->tre[i].dword[1], desc->tre[i].dword[2], desc->tre[i].dword[3]);
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index da94df466e83..fbfcd375c06f 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- // Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
-+// Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
- 
- #include <linux/acpi.h>
- #include <linux/clk.h>
-@@ -99,6 +100,7 @@ struct geni_i2c_dev {
- 	struct dma_chan *rx_c;
- 	bool gpi_mode;
- 	bool abort_done;
-+	bool is_shared;
- };
- 
- struct geni_i2c_desc {
-@@ -601,6 +603,7 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
- 	peripheral.clk_div = itr->clk_div;
- 	peripheral.set_config = 1;
- 	peripheral.multi_msg = false;
-+	peripheral.shared_se = gi2c->is_shared;
- 
- 	for (i = 0; i < num; i++) {
- 		gi2c->cur = &msgs[i];
-@@ -611,6 +614,8 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
- 		if (i < num - 1)
- 			peripheral.stretch = 1;
- 
-+		peripheral.first_msg = (i == 0);
-+		peripheral.last_msg = (i == num - 1);
- 		peripheral.addr = msgs[i].addr;
- 
- 		ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
-@@ -802,6 +807,11 @@ static int geni_i2c_probe(struct platform_device *pdev)
- 		gi2c->clk_freq_out = KHZ(100);
- 	}
- 
-+	if (of_property_read_bool(pdev->dev.of_node, "qcom,shared-se")) {
-+		gi2c->is_shared = true;
-+		dev_info(&pdev->dev, "Multi-EE usecase with shared SE\n");
-+	}
-+
- 	if (has_acpi_companion(dev))
- 		ACPI_COMPANION_SET(&gi2c->adap.dev, ACPI_COMPANION(dev));
- 
-@@ -964,14 +974,16 @@ static int __maybe_unused geni_i2c_runtime_suspend(struct device *dev)
- 	struct geni_i2c_dev *gi2c = dev_get_drvdata(dev);
- 
- 	disable_irq(gi2c->irq);
--	ret = geni_se_resources_off(&gi2c->se);
--	if (ret) {
--		enable_irq(gi2c->irq);
--		return ret;
--
-+	if (gi2c->is_shared) {
-+		geni_se_clks_off(&gi2c->se);
- 	} else {
--		gi2c->suspended = 1;
-+		ret = geni_se_resources_off(&gi2c->se);
-+		if (ret) {
-+			enable_irq(gi2c->irq);
-+			return ret;
-+		}
- 	}
-+	gi2c->suspended = 1;
- 
- 	clk_disable_unprepare(gi2c->core_clk);
- 
-diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-index 2e8f24d5da80..20166c8fc919 100644
---- a/drivers/soc/qcom/qcom-geni-se.c
-+++ b/drivers/soc/qcom/qcom-geni-se.c
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- // Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
-+// Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
- 
- /* Disable MMIO tracing to prevent excessive logging of unwanted MMIO traces */
- #define __DISABLE_TRACE_MMIO__
-@@ -482,13 +483,14 @@ void geni_se_config_packing(struct geni_se *se, int bpw, int pack_words,
- }
- EXPORT_SYMBOL_GPL(geni_se_config_packing);
- 
--static void geni_se_clks_off(struct geni_se *se)
-+void geni_se_clks_off(struct geni_se *se)
- {
- 	struct geni_wrapper *wrapper = se->wrapper;
- 
- 	clk_disable_unprepare(se->clk);
- 	clk_bulk_disable_unprepare(wrapper->num_clks, wrapper->clks);
- }
-+EXPORT_SYMBOL_GPL(geni_se_clks_off);
- 
- /**
-  * geni_se_resources_off() - Turn off resources associated with the serial
-diff --git a/include/linux/dma/qcom-gpi-dma.h b/include/linux/dma/qcom-gpi-dma.h
-index 6680dd1a43c6..8589c711afae 100644
---- a/include/linux/dma/qcom-gpi-dma.h
-+++ b/include/linux/dma/qcom-gpi-dma.h
-@@ -65,6 +65,9 @@ enum i2c_op {
-  * @rx_len: receive length for buffer
-  * @op: i2c cmd
-  * @muli-msg: is part of multi i2c r-w msgs
-+ * @shared_se: bus is shared between subsystems
-+ * @bool first_msg: use it for tracking multimessage xfer
-+ * @bool last_msg: use it for tracking multimessage xfer
-  */
- struct gpi_i2c_config {
- 	u8 set_config;
-@@ -78,6 +81,9 @@ struct gpi_i2c_config {
- 	u32 rx_len;
- 	enum i2c_op op;
- 	bool multi_msg;
-+	bool shared_se;
-+	bool first_msg;
-+	bool last_msg;
- };
- 
- #endif /* QCOM_GPI_DMA_H */
-diff --git a/include/linux/soc/qcom/geni-se.h b/include/linux/soc/qcom/geni-se.h
-index 0f038a1a0330..caf2c0c4505b 100644
---- a/include/linux/soc/qcom/geni-se.h
-+++ b/include/linux/soc/qcom/geni-se.h
-@@ -1,6 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- /*
-  * Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #ifndef _LINUX_QCOM_GENI_SE
-@@ -494,6 +495,8 @@ int geni_se_resources_off(struct geni_se *se);
- 
- int geni_se_resources_on(struct geni_se *se);
- 
-+void geni_se_clks_off(struct geni_se *se);
-+
- int geni_se_clk_tbl_get(struct geni_se *se, unsigned long **tbl);
- 
- int geni_se_clk_freq_match(struct geni_se *se, unsigned long req_freq,
--- 
-2.25.1
+Best regards,
+Krzysztof
 
 
