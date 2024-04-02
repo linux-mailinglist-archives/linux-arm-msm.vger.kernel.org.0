@@ -1,81 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-16062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3B6E8950B0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 12:48:50 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF0DA8950BB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 12:49:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 33EB4B238B0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 10:48:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 63EA9285786
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 10:49:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2880060DDC;
-	Tue,  2 Apr 2024 10:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D13C5FB9D;
+	Tue,  2 Apr 2024 10:49:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UkVHyRKI"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fyr3C/ng"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C26360877
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Apr 2024 10:48:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F602657A7
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Apr 2024 10:49:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712054909; cv=none; b=DrhYtgIaKLeoYrhaW+j5c5vSOk7dpIzUwDgWs0bYi6KEpsqOQrgSPTo6q7thTD8Vw9aLV1jr+HtKt4atbUv9Bey0yzhf6Sb0BZ0j4BYc9sppKgiQJ1qdqjCunz1qzoT7pgjqvewfcDrjAABIGUOj+g8snaRDOs1UeQykb5CCry8=
+	t=1712054941; cv=none; b=jZ8T0Ug2BEhA2ycw+poXzSem8uIiTc0BCosxj2uy7Kf8mR3N96w0ibplW0oXSFPYTQofDAzsxlZOsYHFDo5hRCjZ9t9ztyP8WycKpda42lCfpMqhv+61SeJ2TOmcqe/yUZZGd9dBm/I3bLMsV/p9pk5/yVLpSORwqSdr6ehpUIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712054909; c=relaxed/simple;
-	bh=3EyCUbtnMkP+cwjwavYDGusXVngaEoTsr1iaAdtpXeA=;
+	s=arc-20240116; t=1712054941; c=relaxed/simple;
+	bh=ntfWqHpmDy4DIMcm7CKN+FPSTquvhkckHhRW34UWCtc=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HUyoPJ4ZdG89sX+17i3WpwU9vCur8Vd6HO+sYxjBanaC5/1SKWUhHeaPz5HojIqBakSvV+5WhaVhjKPjNawLg30QAjKjZguvRwvHM0P7lOgjQoI2iV0gJ8zkJ1Q84F/HcL5Sfk51t9b79RTCn1674PbFYzOOtE3Gshhlj7UJK1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UkVHyRKI; arc=none smtp.client-ip=209.85.219.175
+	 To:Cc:Content-Type; b=mX2ysF122Rejyg+1zRs2FdcEg6QcnmAGqqW+HV060psWE+952YtzrdwSQPu1SPAkVW+heHSNfEKNus/2zp8B1igGKwbpfivtMk9oSPFwIYICul7BHNbOUiT0C0e475/7wdjU+65mpScuRYQB3X9HSxwQ20VWCROpiOSUYSJXlfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fyr3C/ng; arc=none smtp.client-ip=209.85.219.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-dcbc6a6808fso4648131276.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Apr 2024 03:48:26 -0700 (PDT)
+Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-dcc7cdb3a98so4500420276.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Apr 2024 03:49:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712054905; x=1712659705; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1712054939; x=1712659739; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=mrrS39kMM3qSYmTTIfDrvL7v8BkqXr1H3y+hhGF7rb8=;
-        b=UkVHyRKITqATKyKjfs/CiavGPEGleKdak8ohMaHk8LcaQEZm0bB8GoFjSkDpzNw59H
-         bkwbp7u6lRoWskZq6B8SP3HRKuG6CX8pNjMF+Cbrp7rUCXaasn5WLzMGGQmnKiW7kshI
-         lRLfnblVRm4pQ4PCg19qVY1KY0asC+oEZSr5Oe5QIjZ7zcEvFwenhsIMToXcHBhhrfch
-         13aDuu5F/bIL2ppfSqIv3YwRe4rWn8CnrYw3yIQUVeQgzhteAkeJDXKMt256h/RV0Z0W
-         SlpSNbCLR4qk7rEn0jsewuPEeIpj8Gi9bPIBiVrlkPIr+cBY5W8PyLkM8h0VXvD/ax+z
-         x3/A==
+        bh=cL+6rU031lCbn4rJijXxXCPdj92d+pFHGEV2AGXf59Q=;
+        b=fyr3C/ngTM2VuxuFV12egZBfFLQ4AxVeiSt2FjHUuultNYQuRd3xWWLYOn9q3mU4J8
+         d1MQ+NGV6jqVWtDUpV2oE6xP+c44ufRS4UoTiZLWZR5qGp/IfZ09oW99yQDJR4DOGDQw
+         BgxV/At5a2wwkuBFn11ZDArQu68DcH+UHJpQe8H1gIUmsSlH/WLA1Q/p86qdMYFyhuH2
+         C1XqLR1YND2h0M/ld0sTne9OwweQ4NjxxQnoupiYz0mBDmMLs3AJ4v+57FTDSSeA8dU1
+         TU+Kv9kTi2nvbtaapvwsHUkC7iNHapr+LXW9ui80qroQUBdAofRDpMmZ72BqT8WxwbqN
+         azeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712054905; x=1712659705;
+        d=1e100.net; s=20230601; t=1712054939; x=1712659739;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=mrrS39kMM3qSYmTTIfDrvL7v8BkqXr1H3y+hhGF7rb8=;
-        b=G1bLQBtnZSxfkyvrqXVtx7H2HpaE3MRK19Qazp1u5YVEwR4qeT8RBN6HsymGGLpB8w
-         AmWVJeE8+YxGq2BRYYIBEr6ASycMC0z8KLX6iwCrY+gTa9xm0RxZDCy0lKpdZhs0ztvB
-         bPe4dyV0k/AYVyN1lFUTuDzy0fYJzmLmB/EH9b42rgqfDhIMkxt92bHHLVLzAShUOFRH
-         kcxxkKJJvXZAtf9fuz/xAH9C6pvKkcAEGib6MAFPVCmC2+q6EFVkt/pzUXlKWPhNcLz1
-         EJfCGruMjXIhjDR/BTYOvhaOOOMuEDqo98+C51VGmuCZo3MO8294XkveDXrubOmGR7v/
-         UR/A==
-X-Forwarded-Encrypted: i=1; AJvYcCW/JKwYucbhoOqlAt2NJ11WdaLcTU7BZeJ3g6AMtfWMDsE4NQfyNE7AGeVeZBWCuV9R4CxccY0VwX0fUCmt0e/P/Zq7Fl2mymg2ji79DQ==
-X-Gm-Message-State: AOJu0YwNPd/513mhfM1KFMnWV4fy3Y8yJHRe8b8k0UtzZd2b7H18bTUF
-	SqhvI6s8prHCnNvAKSvzkhqmwMiME14CBXGfDTUuRvQwpujgru2c+DfbcunBTyLAp4Jrv/X6zDw
-	tRISVxE4e1M5XJ0UAnoODsuJFydKN0//a5tLvvA==
-X-Google-Smtp-Source: AGHT+IGMS8R++k+DqPE5wOBv2ZX4JQLKxz537DSE/PbugTcEZ6Qe3cfzLMtzIJTZj021l7TVX9g5NKQZckcQNQwOnio=
-X-Received: by 2002:a25:4903:0:b0:dcd:a9ad:7d67 with SMTP id
- w3-20020a254903000000b00dcda9ad7d67mr10780266yba.8.1712054905465; Tue, 02 Apr
- 2024 03:48:25 -0700 (PDT)
+        bh=cL+6rU031lCbn4rJijXxXCPdj92d+pFHGEV2AGXf59Q=;
+        b=uo3TfqMOc2Ni1Z6H7tua5YNVap9mwZrR9QIp7t82ojHp8Kyp2rFjw8gPg5Tbk76UhI
+         egoXJnMVlai4FCT/ydZPW+zJSfMmJaYKzS/p/qzns9YZfI8XCAlpHx8qGwwfWLA1ypKR
+         NBnuSA9BhkDiE4+TGeTamu0ru4kq1cZOaw+S+bvh3MEMG2qpEaKoy/f3JAFDHL9/pmDF
+         aht+PwixEXnCziN7MQRRi70IK33c9BbniBnXj7Aeqvswmnad708LNK3Nz8AoEx60fnLs
+         KKe7sBjj7OqJknlZHBJ9u8bTqIYcEvbMjBArxzQ0qEnp+BcFnIIo25lhao/OYqrnFWCt
+         Fd0A==
+X-Forwarded-Encrypted: i=1; AJvYcCUnWY+Np7jGLPQH+XiLqNMjTz5yNLNBwIl12e6KezLRvNtDLJDi02GQHTdHU/67LgMO2v7sha5++5CLfVdklwvEh4pXofKbEmov3T34Zw==
+X-Gm-Message-State: AOJu0YyZH3OSe9gOvxTozx1V7o/mK7dOzYJbGssNPpbcEjgmdH6lLJp/
+	bXOIqp+mK60ccYhDgRMFz/xJBb+FjDI58GO/Vd2M5itj16Rz02GE6adH0zM+XVzPsBr8BkLezpN
+	cn2d05oqpxoPwjmwRPlIgilz6Kb+EFSd3ayeRGg==
+X-Google-Smtp-Source: AGHT+IF3amTy3mi9gx0Fg8qpLFvR2VZ42wU7eSSjKWNzlxbLx8pQTgtu/c6DCvvde5oLRreiYm6VwKWGKN3tbIa8iIE=
+X-Received: by 2002:a25:99c1:0:b0:dcd:aee6:fa9 with SMTP id
+ q1-20020a2599c1000000b00dcdaee60fa9mr8752476ybo.53.1712054939333; Tue, 02 Apr
+ 2024 03:48:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240402103406.3638821-1-quic_varada@quicinc.com> <20240402103406.3638821-5-quic_varada@quicinc.com>
-In-Reply-To: <20240402103406.3638821-5-quic_varada@quicinc.com>
+References: <20240402103406.3638821-1-quic_varada@quicinc.com> <20240402103406.3638821-7-quic_varada@quicinc.com>
+In-Reply-To: <20240402103406.3638821-7-quic_varada@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 2 Apr 2024 13:48:14 +0300
-Message-ID: <CAA8EJprP0m53B=g7jafAkfcqAQP4kE2ZvtxPXEe4s7ALjFXGSQ@mail.gmail.com>
-Subject: Re: [PATCH v6 4/6] clk: qcom: common: Add interconnect clocks support
+Date: Tue, 2 Apr 2024 13:48:48 +0300
+Message-ID: <CAA8EJpok9DzjSSt=ejegFo78zJqycs3S+bua76oXDivvzW7icg@mail.gmail.com>
+Subject: Re: [PATCH v6 6/6] arm64: dts: qcom: ipq9574: Add icc provider
+ ability to gcc
 To: Varadarajan Narayanan <quic_varada@quicinc.com>
 Cc: andersson@kernel.org, konrad.dybcio@linaro.org, mturquette@baylibre.com, 
 	sboyd@kernel.org, robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, 
@@ -88,130 +89,25 @@ Content-Type: text/plain; charset="UTF-8"
 On Tue, 2 Apr 2024 at 13:34, Varadarajan Narayanan
 <quic_varada@quicinc.com> wrote:
 >
-> Unlike MSM platforms that manage NoC related clocks and scaling
-> from RPM, IPQ SoCs dont involve RPM in managing NoC related
-> clocks and there is no NoC scaling.
+> IPQ SoCs dont involve RPM in managing NoC related clocks and
+> there is no NoC scaling. Linux itself handles these clocks.
+> However, these should not be exposed as just clocks and align
+> with other Qualcomm SoCs that handle these clocks from a
+> interconnect provider.
 >
-> However, there is a requirement to enable some NoC interface
-> clocks for accessing the peripheral controllers present on
-> these NoCs. Though exposing these as normal clocks would work,
-> having a minimalistic interconnect driver to handle these clocks
-> would make it consistent with other Qualcomm platforms resulting
-> in common code paths. This is similar to msm8996-cbf's usage of
-> icc-clk framework.
+> Hence include icc provider capability to the gcc node so that
+> peripherals can use the interconnect facility to enable these
+> clocks.
 >
 > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 > ---
-> v6: first_id -> icc_first_node_id
->     Remove clock get so that the peripheral that uses the clock
->     can do the clock get
-> v5: Split changes in common.c to separate patch
->     Fix error handling
->     Use devm_icc_clk_register instead of icc_clk_register
-> v4: Use clk_hw instead of indices
->     Do icc register in qcom_cc_probe() call stream
->     Add icc clock info to qcom_cc_desc structure
-> v3: Use indexed identifiers here to avoid confusion
->     Fix error messages and move to common.c
-> v2: Move DTS to separate patch
->     Update commit log
->     Auto select CONFIG_INTERCONNECT & CONFIG_INTERCONNECT_CLK to fix build error
-> ---
->  drivers/clk/qcom/common.c | 38 +++++++++++++++++++++++++++++++++++++-
->  drivers/clk/qcom/common.h |  3 +++
->  2 files changed, 40 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
-> index 75f09e6e057e..d5c008048994 100644
-> --- a/drivers/clk/qcom/common.c
-> +++ b/drivers/clk/qcom/common.c
-> @@ -8,6 +8,7 @@
->  #include <linux/regmap.h>
->  #include <linux/platform_device.h>
->  #include <linux/clk-provider.h>
-> +#include <linux/interconnect-clk.h>
->  #include <linux/reset-controller.h>
->  #include <linux/of.h>
->
-> @@ -234,6 +235,41 @@ static struct clk_hw *qcom_cc_clk_hw_get(struct of_phandle_args *clkspec,
->         return cc->rclks[idx] ? &cc->rclks[idx]->hw : NULL;
->  }
->
-> +static int qcom_cc_icc_register(struct device *dev,
-> +                               const struct qcom_cc_desc *desc)
-> +{
-> +       struct icc_clk_data *icd;
-> +       int i;
-> +
-> +       if (!IS_ENABLED(CONFIG_INTERCONNECT_CLK))
-> +               return 0;
-> +
-> +       if (!desc->icc_hws)
-> +               return 0;
-> +
-> +       icd = devm_kcalloc(dev, desc->num_icc_hws, sizeof(*icd), GFP_KERNEL);
-> +       if (!icd)
-> +               return -ENOMEM;
-> +
-> +       for (i = 0; i < desc->num_icc_hws; i++) {
-> +               /*
-> +                * get_clk will be done by the peripheral device using this
-> +                * clock with devm_clk_hw_get_clk() so that we can associate
-> +                * the clk handle with the consumer device. It would also help
-> +                * us make it so that drivers defer probe until their
-> +                * clk isn't an orphan.
+>  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 2 ++
+>  1 file changed, 2 insertions(+)
 
-How the clock instance returned to the peripheral driver is supposed
-to correspond to the clock instance used by the icc-clk?
-
-> +                */
-> +               icd[i].clk = desc->icc_hws[i]->clk;
-
-You again are abusing clk_hw->clk. Please don't do that.
-
-> +               if (!icd[i].clk)
-> +                       return dev_err_probe(dev, -ENOENT,
-> +                                            "(%d) clock entry is null\n", i);
-> +               icd[i].name = clk_hw_get_name(desc->icc_hws[i]);
-> +       }
-> +
-> +       return PTR_ERR_OR_ZERO(devm_icc_clk_register(dev, desc->icc_first_node_id,
-> +                                                    desc->num_icc_hws, icd));
-> +}
-> +
->  int qcom_cc_really_probe(struct platform_device *pdev,
->                          const struct qcom_cc_desc *desc, struct regmap *regmap)
->  {
-> @@ -303,7 +339,7 @@ int qcom_cc_really_probe(struct platform_device *pdev,
->         if (ret)
->                 return ret;
->
-> -       return 0;
-> +       return qcom_cc_icc_register(dev, desc);
->  }
->  EXPORT_SYMBOL_GPL(qcom_cc_really_probe);
->
-> diff --git a/drivers/clk/qcom/common.h b/drivers/clk/qcom/common.h
-> index 9c8f7b798d9f..9058ffd46260 100644
-> --- a/drivers/clk/qcom/common.h
-> +++ b/drivers/clk/qcom/common.h
-> @@ -29,6 +29,9 @@ struct qcom_cc_desc {
->         size_t num_gdscs;
->         struct clk_hw **clk_hws;
->         size_t num_clk_hws;
-> +       struct clk_hw **icc_hws;
-> +       size_t num_icc_hws;
-> +       unsigned int icc_first_node_id;
->  };
->
->  /**
-> --
-> 2.34.1
->
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 
---
+-- 
 With best wishes
-
 Dmitry
 
