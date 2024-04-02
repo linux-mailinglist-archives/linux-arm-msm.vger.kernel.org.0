@@ -1,174 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-16012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16013-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D79E894A87
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 06:35:59 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36589894A93
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 06:45:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 515591C22035
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 04:35:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B8E181F234A7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 04:45:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E45917BB6;
-	Tue,  2 Apr 2024 04:35:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 298DD17C60;
+	Tue,  2 Apr 2024 04:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OaUrQT2K"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lldcevvM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C78F52581;
-	Tue,  2 Apr 2024 04:35:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E5013AEE;
+	Tue,  2 Apr 2024 04:45:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712032554; cv=none; b=ekaLWbCbiXoY+xsadiY0tKNdiJnr6KTajnorO7U4bvj+sY8Z/0GtHFXjI0aiqTOel87pmWFcjdNDwNNYtmOQFd6WsjFiD5bZzHyPrJMO95vky+Sc5mhuuQnZh8dwQ17HKsXmSXdknVSO8RxuzUY7SMWcluWUW8itxJFWhTO4JxE=
+	t=1712033140; cv=none; b=MHXS2+DrWEF2VneKAnsTZ132LV+wLRuMFpHssxcGN526xGI8zS5+8qXVWpy1B3QMZATahnV5gwb5GAWgJUEKKzqsETcalhmDoPZd6ejFAGTx28gImzVxPCOcqW5hJ5debUaIXkDr5sMec8KbUmADUccP8aG9RepoqqEAfQ3Kxkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712032554; c=relaxed/simple;
-	bh=6E0gncyahqLdIZmjYurjLKkiLv9IqAKbu9Y8s4D03c8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=cc2PhW3gpFx2lOhZr/M2QJdTtNdGLU2S1LSfw+Ys2DKEXm7jlABMDuPlVjMXsHFOXNdyRRikMUobUUvkqhzgjlE9OrSiP32BBO/62D32GhbCD35dVkjEVHF3iE052MR1ZSpJFS2EYCAFuqIMyZ5o0ONJzLW21cDKVfwTB90+AXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OaUrQT2K; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 432304np019450;
-	Tue, 2 Apr 2024 04:35:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=lzKJU18hJQSyG8eJysHY81OevBjTN6oSacJs9+hF2cU=; b=Oa
-	UrQT2K3I+LnpC2jPFM8EHZwywPzNYMDbbRFmnBBwEmKMHBJTGKtf2fO7vOlnuHlJ
-	Jd4eu2hf0y8Z5TMymOVtWev7+VOiIdyjYyrvL50uEfzVDl9exvdAhwMTojiH0e2y
-	1FUCWKXPpshaZ1u+TgxMkH7JFVwI8ObLCmKA79nxHAP/jeQQsAw6PEAGul3w8TQq
-	jw10PClmaxDU/tiUbbq0+bCb3AwOsdazgivDiTo88/m5H8/o6pGIEjMwRQnIBzRH
-	vLjs2+vNbM83iVO8KPxZ0luO6E/Z8Pf324g4xGSVPf47iFkeRllz+WOi6TWpEj3g
-	7rmhizMUhdgP02VbGuMg==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x88eh88s5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 02 Apr 2024 04:35:39 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4324Zcev012366
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 2 Apr 2024 04:35:38 GMT
-Received: from [10.239.29.179] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 1 Apr 2024
- 21:35:36 -0700
-Message-ID: <e78382b5-428e-4de8-be0d-b319534238f1@quicinc.com>
-Date: Tue, 2 Apr 2024 12:34:33 +0800
+	s=arc-20240116; t=1712033140; c=relaxed/simple;
+	bh=P/mK1dfRFSt8ZMwYXQ0eLjKwfZhqrnGkRVKAy0mDLH0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bD6DQZUqX5m+H0gUaZld13Yqv09GPXeO55h4sMYbHhRQMrydAw9hW9GHGdlWErboEzQimSFen9TUSTjnoHpQ8Ad9adYedUcaayva3QQVfTBE3dKfrg0g+A+8XQTJoPMtSMtAfhEwXPo4WL9B+NEZhlvZVo5JQGWVUfsc0aCriJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lldcevvM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D641C433C7;
+	Tue,  2 Apr 2024 04:45:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712033139;
+	bh=P/mK1dfRFSt8ZMwYXQ0eLjKwfZhqrnGkRVKAy0mDLH0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=lldcevvM6nMb0MxEG/1nqJ7IZddtFhnWFb3M1iB3AzceW25f6gyqxYIV97iaMXSK3
+	 paUGiC9pG1RGQu1NRrTIz+DRUfq5LMps8oKKdhhDIGVlePHhexs7fsQVCfzrbtX4yH
+	 rcuMh4KupSUyfZr3K6PNNWImxHRKWSiT+aeyzXyI4DwJfwyyBQpEFqtCwUr5xvjYmT
+	 8WqzSS7/TcCIM4k7gt4BOryZWrtWtH6wGbdOjLnhGMMnDhZTPiG495ZLvi9TuEXZoc
+	 uT+cUEz4NkX5jHfj31o9r4NmKx/PLoNwVIYekU34E+JrQFxLBRdxXVOQ2qQuGdDrIf
+	 UWCrp1mn4TGKw==
+Date: Tue, 2 Apr 2024 10:15:29 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Andrew Halaney <ahalaney@redhat.com>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	"James E.J. Bottomley" <jejb@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Hannes Reinecke <hare@suse.de>, Janek Kotas <jank@cadence.com>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Can Guo <quic_cang@quicinc.com>,
+	Anjana Hari <quic_ahari@quicinc.com>, Will Deacon <will@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 02/11] scsi: ufs: qcom: Perform read back after
+ writing REG_UFS_SYS1CLK_1US
+Message-ID: <20240402044529.GB2933@thinkpad>
+References: <20240329-ufs-reset-ensure-effect-before-delay-v5-0-181252004586@redhat.com>
+ <20240329-ufs-reset-ensure-effect-before-delay-v5-2-181252004586@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] bus: mhi: host: Add sysfs entry to force device to enter
- EDL
-Content-Language: en-US
-To: Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Manivannan Sadhasivam
-	<mani@kernel.org>
-CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
-        <quic_mrana@quicinc.com>, Bhaumik Bhatt <quic_bbhatt@quicinc.com>
-References: <1703490474-84730-1-git-send-email-quic_qianyu@quicinc.com>
- <cff4b828-9566-a2bd-287a-138d74a76a59@quicinc.com>
- <20240102165229.GC4917@thinkpad>
- <90c0a654-a02f-46e2-96a9-34f6a30c95a0@quicinc.com>
- <a10439f1-0fcd-834c-12a3-677976529cf1@quicinc.com>
-From: Qiang Yu <quic_qianyu@quicinc.com>
-In-Reply-To: <a10439f1-0fcd-834c-12a3-677976529cf1@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Zje4CYopREeAD-Wvde_0CYqXrbZiWhvn
-X-Proofpoint-ORIG-GUID: Zje4CYopREeAD-Wvde_0CYqXrbZiWhvn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-02_01,2024-04-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
- clxscore=1011 lowpriorityscore=0 impostorscore=0 mlxscore=0 malwarescore=0
- adultscore=0 bulkscore=0 mlxlogscore=999 priorityscore=1501 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2403210001
- definitions=main-2404020030
+In-Reply-To: <20240329-ufs-reset-ensure-effect-before-delay-v5-2-181252004586@redhat.com>
 
+On Fri, Mar 29, 2024 at 03:46:44PM -0500, Andrew Halaney wrote:
+> Currently after writing to REG_UFS_SYS1CLK_1US a mb() is used to ensure
+> that write has gone through to the device.
+> 
+> mb() ensure that the write completes, but completion doesn't mean that
+> it isn't stored in a buffer somewhere. The recommendation for
+> ensuring this bit has taken effect on the device is to perform a read
+> back to force it to make it all the way to the device. This is
+> documented in device-io.rst and a talk by Will Deacon on this can
+> be seen over here:
+> 
+>     https://youtu.be/i6DayghhA8Q?si=MiyxB5cKJXSaoc01&t=1678
+> 
+> Let's do that to ensure the bit hits the device. Because the mb()'s
+> purpose wasn't to add extra ordering (on top of the ordering guaranteed
+> by writel()/readl()), it can safely be removed.
+> 
+> Fixes: f06fcc7155dc ("scsi: ufs-qcom: add QUniPro hardware support and power optimizations")
+> Reviewed-by: Can Guo <quic_cang@quicinc.com>
+> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
 
-On 1/12/2024 3:08 AM, Jeffrey Hugo wrote:
-> On 1/9/2024 2:20 AM, Qiang Yu wrote:
->>
->> On 1/3/2024 12:52 AM, Manivannan Sadhasivam wrote:
->>> On Tue, Jan 02, 2024 at 08:31:15AM -0700, Jeffrey Hugo wrote:
->>>> On 12/25/2023 12:47 AM, Qiang Yu wrote:
->>>>> From: Bhaumik Bhatt <quic_bbhatt@quicinc.com>
->>>>>
->>>>> Forcing the device (eg. SDX75) to enter Emergency Download Mode 
->>>>> involves
->>>>> writing the 0xEDEDEDED cookie to the channel 91 doorbell register and
->>>>> forcing an SOC reset afterwards. Allow users of the MHI bus to 
->>>>> exercise the
->>>>> sequence using a sysfs entry.
->>>> I don't see this documented in the spec anywhere.  Is this standard 
->>>> behavior
->>>> for all MHI devices?
->>>>
->>>> What about devices that don't support EDL mode?
->>>>
->>>> How should the host avoid using this special cookie when EDL mode 
->>>> is not
->>>> desired?
->>>>
->>> All points raised by Jeff are valid. I had discussions with Hemant 
->>> and Bhaumik
->>> previously on allowing the devices to enter EDL mode in a generic 
->>> manner and we
->>> didn't conclude on one final approach.
->>>
->>> Whatever way we come up with, it should be properly described in the 
->>> MHI spec
->>> and _should_ be backwards compatible.
->>
->> Hi Mani, Jeff. The method of entering EDL mode is documented in MHI 
->> spec v1.2, Chapter 13.2.
->>
->> Could you please check once?
->
-> I do see it listed there.  However that was a FR for SDX55, so devices 
-> prior to that would not support this.  AIC100 predates this change and 
-> would not support the functionality.  I verified the AIC100 
-> implementation is not aware of this cookie.
->
-> Also, that functionality depends on channel 91 being reserved per the 
-> table 9-2, however that table only applies to modem class devices as 
-> it is under chapter 9 "Modem protocols over PCIe". Looking at the 
-> ath11k and ath12k implementations in upstream, it looks like they 
-> partially comply.  Other devices have different MHI channel definitions.
->
-> Chapter 9 doesn't appear to be in older versions of the spec that I 
-> have, so it is unclear if this functionality is backwards compatible 
-> (was channel 91 used for another purpose in pre-SDX55 modems).
->
-> I'm not convinced this belongs in the MHI core.  At a minimum, the MHI 
-> controller(s) for the applicable devices needs to opt-in to this.
->
-> -Jeff
-Hi Jeff
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Sorry for reply so late. In older versions of the spec, there is no 
-description about EDL doorbell. However, in MHI spec v1.2, section 13.2,
-It explicitly says "To set the EDL cookie, the host writes 0xEDEDEDED to 
-channel doorbell 91." So I think every device based on MHI spec v1.2
-should reserve channel doorbell 91 for EDL mode.
+- Mani
 
-So can we add another flag called mhi_ver in mhi controller to indicate 
-its mhi version and then we can add mhi_ver checking to determine if this
-device supports EDL sysfs operation?
+> ---
+>  drivers/ufs/host/ufs-qcom.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 06859e17b67b..804dc8153e7b 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -501,7 +501,7 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
+>  		 * make sure above write gets applied before we return from
+>  		 * this function.
+>  		 */
+> -		mb();
+> +		ufshcd_readl(hba, REG_UFS_SYS1CLK_1US);
+>  	}
+>  
+>  	return 0;
+> 
+> -- 
+> 2.44.0
+> 
+> 
 
-Thanks,
-Qiang
+-- 
+மணிவண்ணன் சதாசிவம்
 
