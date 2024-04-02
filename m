@@ -1,135 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-16055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 351B089505F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 12:38:10 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B1964895076
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 12:40:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DD9EF1F21892
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 10:38:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E29311C20FED
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 10:40:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0BBD83CD0;
-	Tue,  2 Apr 2024 10:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B08A15D8EB;
+	Tue,  2 Apr 2024 10:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NdHPDFvM"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UVAmjj7K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544DB83CC9;
-	Tue,  2 Apr 2024 10:35:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055825D468;
+	Tue,  2 Apr 2024 10:38:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712054101; cv=none; b=IvSQHtr7IDVysbOYeAtD4Yj4Sx5TobBOBP5+ZnOliSkF129rq2Z1xPEMXVNg+bci3tXn8fIj9EtAuwhCSYb42uQZH+PHhv3lQZFJ+cCJVf4eW/6yB0V8ylm0vXwjpTmsJz5xodd0Ey2dhYuv5SEHZjo17nRu0w3JapQdEf6csN4=
+	t=1712054328; cv=none; b=afQnkouzKJUJaqed6qMP2BaVtaHMQbGjaOC9J3qyvE5tkCIbbcdkrvdv2YV3hodOoRliilMynNt/RXBvHDiuZxFX5JsGdASNnYbRmoaH7Sw0HMPPlPWYVN3SWesNQ8tnxoY+kDMs8vP8gKMHzo5dSToHOsTWqvBHLSQOz96mAlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712054101; c=relaxed/simple;
-	bh=IZEDql9TaCbLvfokZOmzizHXTAThB8A099ulSk6bvJ0=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=S0DJzJVHRACdz18ln7QQeXREBl2/6LQOMptU/MlP3hUhrnsV23yl2EiXiw4JJzasF2Ddzo3I1ivjcQ4Cr2EMjDuoHrTm2+iTWpWNHDfYPJ9FWFgwCHbQ908DYai1K/DEbTVe7Echudd9LBu0kHOIMqFvJ6OT9gDZ3T3Z0pH7Qps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NdHPDFvM; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4329g5q2026665;
-	Tue, 2 Apr 2024 10:34:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=vbsLvSNhMWyG2feJnl0G6Ip7uTubwqd7zr/AbRWBdro=; b=Nd
-	HPDFvMVUcTT96xfIJ28jpe+rcEEqgaWbRiI83jj6kdAVwC1LwGUWen9FWvET4G1t
-	7lNDREDvhIPlgb0Td3Fsv88lg4Jl8vxbtpyV8Vh1zKPf59SIcHa1bWY5eT1foDe1
-	GX6vWA7XKAUkzIun7I1djL9x/Zy5Q0nEKO/lK83OJtUER9rlzPKuNU+JzqKdA85L
-	fExTT61oTFxa2yiSjdS7mLqhIhFq+c4FcYKDvA3UB/pJrjKSxto4WOd0eFpow7nM
-	Ru5g+X7dLAbLQ6PehMEgiUFos9uzK1RdQFV8zolU6ANy313jSd3LAtaMDw6xEOKl
-	fb2gbMkdtK2oXC++I6Ow==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x8fm1r5nf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 02 Apr 2024 10:34:56 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 432AYts1017948
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 2 Apr 2024 10:34:55 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Tue, 2 Apr 2024 03:34:50 -0700
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>, <robh@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <djakov@kernel.org>, <quic_varada@quicinc.com>,
-        <dmitry.baryshkov@linaro.org>, <quic_anusha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>
-Subject: [PATCH v6 6/6] arm64: dts: qcom: ipq9574: Add icc provider ability to gcc
-Date: Tue, 2 Apr 2024 16:04:06 +0530
-Message-ID: <20240402103406.3638821-7-quic_varada@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240402103406.3638821-1-quic_varada@quicinc.com>
-References: <20240402103406.3638821-1-quic_varada@quicinc.com>
+	s=arc-20240116; t=1712054328; c=relaxed/simple;
+	bh=7KyO2JQO+KqWbpINOu308OaZUHEEE3om6QPwZYpGRQk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nTfcYrO6YnPHIGCyTr2FtvrZcHBnVV1uNLLQ1LOARUr+SKNHvd5T9mNPtWAxZToN+rAiuMoDWj95T1L9HLRvxYDUJSLAhOQdqOx00FCSH7+iTVBnq5DrkRsmCbdMjOM45Rhloc5xZ32pVy8/kyzclccjpMenhSMA0zAWZcUdmeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UVAmjj7K; arc=none smtp.client-ip=192.198.163.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1712054327; x=1743590327;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=7KyO2JQO+KqWbpINOu308OaZUHEEE3om6QPwZYpGRQk=;
+  b=UVAmjj7Kucn72xqLTaGnh+SipWFZmSHpd0fcHvznE9fycmZdgDfhtw0y
+   5P/gMScnk8gjJOH8Bt43JL7BhEcFWQVbykN9rIdfatsLpaVWjskT4yoqu
+   gnWAjtA3qDb42PtUCmX9SJ3Bp+ItEmsAFNdYiR55Ov09H222/tC8Ho5w7
+   NmyVYWps+t0WH4UsV/RiMmN13KC33BfqQsp3+/gDHslTPXMmWBFxgYlud
+   G1qFj0LmX7Uv901I4DgcNHiaKAr4/n8G7M1xnxQ/PiCCHA8MmJLhE9Umi
+   DAWiUG9ppvKXKnirbaDw9rPt8Iz/L1DR6CO9UV7HsrIo5n9mWTChhi/yk
+   A==;
+X-CSE-ConnectionGUID: D694rBfpQc+V1QsB78kGVQ==
+X-CSE-MsgGUID: HkmAWCmUQ028YIfMmclewg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11031"; a="7085580"
+X-IronPort-AV: E=Sophos;i="6.07,174,1708416000"; 
+   d="scan'208";a="7085580"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Apr 2024 03:38:46 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,11031"; a="937083295"
+X-IronPort-AV: E=Sophos;i="6.07,174,1708416000"; 
+   d="scan'208";a="937083295"
+Received: from kuha.fi.intel.com ([10.237.72.185])
+  by fmsmga001.fm.intel.com with SMTP; 02 Apr 2024 03:38:42 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Tue, 02 Apr 2024 13:38:42 +0300
+Date: Tue, 2 Apr 2024 13:38:42 +0300
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>, linux-usb@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 04/11] usb: typec: ucsi: always register a link to USB
+ PD device
+Message-ID: <ZgvgMtvUc1dq9/ks@kuha.fi.intel.com>
+References: <20240329-qcom-ucsi-fixes-v2-0-0f5d37ed04db@linaro.org>
+ <20240329-qcom-ucsi-fixes-v2-4-0f5d37ed04db@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 6q9RLj5_sOpvdOjVX6d2GS411X_4Fj8I
-X-Proofpoint-ORIG-GUID: 6q9RLj5_sOpvdOjVX6d2GS411X_4Fj8I
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-02_04,2024-04-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
- clxscore=1015 impostorscore=0 bulkscore=0 adultscore=0 priorityscore=1501
- mlxlogscore=999 suspectscore=0 lowpriorityscore=0 phishscore=0 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2403210001
- definitions=main-2404020076
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240329-qcom-ucsi-fixes-v2-4-0f5d37ed04db@linaro.org>
 
-IPQ SoCs dont involve RPM in managing NoC related clocks and
-there is no NoC scaling. Linux itself handles these clocks.
-However, these should not be exposed as just clocks and align
-with other Qualcomm SoCs that handle these clocks from a
-interconnect provider.
+On Fri, Mar 29, 2024 at 08:15:36AM +0200, Dmitry Baryshkov wrote:
+> UCSI driver will attempt to set a USB PD device only if it was able to
+> read PDOs from the firmware. This results in suboptimal behaviour, since
+> the PD device will be created anyway. Move calls to
+> typec_port_set_usb_power_delivery() out of conditional code and call it
+> after reading capabilities.
+> 
+> Fixes: b04e1747fbcc ("usb: typec: ucsi: Register USB Power Delivery Capabilities")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Hence include icc provider capability to the gcc node so that
-peripherals can use the interconnect facility to enable these
-clocks.
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
----
- arch/arm64/boot/dts/qcom/ipq9574.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+> ---
+>  drivers/usb/typec/ucsi/ucsi.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
+> index 7666142d8bbb..d1a45ce7f660 100644
+> --- a/drivers/usb/typec/ucsi/ucsi.c
+> +++ b/drivers/usb/typec/ucsi/ucsi.c
+> @@ -1569,7 +1569,6 @@ static int ucsi_register_port(struct ucsi *ucsi, struct ucsi_connector *con)
+>  		}
+>  
+>  		con->port_source_caps = pd_cap;
+> -		typec_port_set_usb_power_delivery(con->port, con->pd);
+>  	}
+>  
+>  	memset(&pd_caps, 0, sizeof(pd_caps));
+> @@ -1586,9 +1585,10 @@ static int ucsi_register_port(struct ucsi *ucsi, struct ucsi_connector *con)
+>  		}
+>  
+>  		con->port_sink_caps = pd_cap;
+> -		typec_port_set_usb_power_delivery(con->port, con->pd);
+>  	}
+>  
+> +	typec_port_set_usb_power_delivery(con->port, con->pd);
+> +
+>  	/* Alternate modes */
+>  	ret = ucsi_register_altmodes(con, UCSI_RECIPIENT_CON);
+>  	if (ret) {
+> 
+> -- 
+> 2.39.2
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-index 7f2e5cbf3bbb..5b3e69379b1f 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-@@ -8,6 +8,7 @@
- 
- #include <dt-bindings/clock/qcom,apss-ipq.h>
- #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
-+#include <dt-bindings/interconnect/qcom,ipq9574.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/reset/qcom,ipq9574-gcc.h>
- #include <dt-bindings/thermal/thermal.h>
-@@ -306,6 +307,7 @@ gcc: clock-controller@1800000 {
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
- 			#power-domain-cells = <1>;
-+			#interconnect-cells = <1>;
- 		};
- 
- 		tcsr_mutex: hwlock@1905000 {
 -- 
-2.34.1
-
+heikki
 
