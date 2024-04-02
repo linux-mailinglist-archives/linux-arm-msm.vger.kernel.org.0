@@ -1,156 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-16088-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16089-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DCC18951A7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 13:19:03 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CAB768951B8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 13:23:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 216B21F28519
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 11:19:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0847D1C22B6B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 11:23:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23C9D627E8;
-	Tue,  2 Apr 2024 11:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CAF9626A0;
+	Tue,  2 Apr 2024 11:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EtTzReyo"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="USt2QAJo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F5162147;
-	Tue,  2 Apr 2024 11:19:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A53455A4C7;
+	Tue,  2 Apr 2024 11:23:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712056741; cv=none; b=CzE6KXg7J0tc86SfuTn8zsNtUR6H82F3SuOqQbPhixTwDs1++WY8kDwwA9nCsUc5RDrQU+57PiyYZaq8kpSlI3m5IP0j1AdGosZs4WhftnH5yO35xtL/gkkGlZFmlaIY+NJQZM6EER/BL9g1aZV6w360Y1ecFvYkORmRh6lrE0g=
+	t=1712056996; cv=none; b=JXomUOTz+WI/v0VOlwYSodAuHo+b0pWS4ZVuJzBa0iLhICx0u3SX+ggANGnJXhSQczipBMVSMOMvFFSYcJBGit9OlCQrx8k5wwC9G6DaN9nkcl8Dv8lycApdNHfXaS6uofKYIZ1GeO5etU0bniAQ+vfFCD0jpRWkJLVQe/45KvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712056741; c=relaxed/simple;
-	bh=EngvwcHPKVW3rJfsOG5BaNu6Bo2aD8qL+HdMGSHkZLw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QaV24Q0m34yBkbsou62BP/FhEcnu3zQqn7OLMj0a54wlSMEXgPabFc0enni/YUP9XhGffSfl72ClRV2JHcycVE1pdkA2CNrE1I5uwBw7B/uAfwPi8bzxDUph1Jx25r6Jll9wPzJ9OUZ7rEtAIWz5cSt3+B+Dmx/ISFaNhnaNDiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EtTzReyo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76550C43390;
-	Tue,  2 Apr 2024 11:18:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712056740;
-	bh=EngvwcHPKVW3rJfsOG5BaNu6Bo2aD8qL+HdMGSHkZLw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=EtTzReyodK1xQWsf7wOzHlNkClL3G0Dy9PtLO8GP8vyiKOeyny3m2hf2nJRxkWUPq
-	 tyr81a4IDQTWBhTvdKURIP9YdSruFnDn0HfcnNDuATtnvEwzrfV2hj7xwcX7Uem2we
-	 Jgx0MQD3iSS2WLJtoH9D5buPrymwAqjT5XfYWIGUkBms9I1w0UoUbcpAmk+FFAA1Eo
-	 2FqeUBWz4QW5nNEoae0lxWJhSleFR5XSSjnmHBF8qAxrNv1EA7rrpCaJ6XZng3Tm7i
-	 Wl4csOeBarC4k/bUvBejEXTMf+UJ0zbhy90nAsfwqTIrjOlq/KmtcMGXtz/hRE1ux5
-	 J2mda87IoJ9zw==
-Date: Tue, 2 Apr 2024 13:18:54 +0200
-From: Niklas Cassel <cassel@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	mhi@lists.linux.dev, linux-tegra@vger.kernel.org
-Subject: Re: [PATCH v2 10/10] PCI: qcom: Implement shutdown() callback to
- properly reset the endpoint devices
-Message-ID: <ZgvpnqdjQ39JMRiV@ryzen>
-References: <20240401-pci-epf-rework-v2-0-970dbe90b99d@linaro.org>
- <20240401-pci-epf-rework-v2-10-970dbe90b99d@linaro.org>
+	s=arc-20240116; t=1712056996; c=relaxed/simple;
+	bh=morUMKR7wtRILPlFE9D6EyoFs/zj8kAJjMEuc8ZTiHQ=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OTiunl9CG983zSOzGf8MYzF4gik1w35OBN7WYGj6/6JFU4g4V6JOuHw/FH9JpEIxSNNX2vis0u7O14Jk/ULERjgXF8q2OwAbh6+hD2DpwBwIqeaUTfH7AhE0IQL4ZNVu+r+a7yIZdpCLByKkJy0nZhIXQLux/obQfJCerFJDEYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=USt2QAJo; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4323tw2w005834;
+	Tue, 2 Apr 2024 11:23:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=0we4webLnenUhy33WZLG0
+	feILlkWNth/g1ASVsyMqV8=; b=USt2QAJo1pUG3i+ESnZyQuCmwuWfMty04UEnq
+	f8LjyuKm3jmuXUcu0rxf0AGv5wEi9WK3dZqM+zCbOmLfAZzbOppJJlQt46N6e3fV
+	twriUhvn6ZTIok3OLFr83r95Js8PY183eKwfwHvcMUG8B/60wuUTD5v5pdWvotjs
+	0YVmnCTpCPI29vie+6ErS0Vh+isb5oUB/c50wk37/Irwd/cdMWSlrysZt58igtTE
+	/46aksgUueK+jub7ql66Jxz4lZszgYT6U+wMeL83Tp2TY68d4reATIR4mzR48rE4
+	kjOt31l5WYmZnUMzGdyv6Hantozv/dhDPSmjHKxohMXV1/APw==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x893ts59c-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 02 Apr 2024 11:23:07 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 432BN601023545
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 2 Apr 2024 11:23:06 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.4; Tue, 2 Apr 2024 04:23:02 -0700
+Date: Tue, 2 Apr 2024 16:52:58 +0530
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>, <robh@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <djakov@kernel.org>, <quic_anusha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH v6 3/6] interconnect: icc-clk: Add devm_icc_clk_register
+Message-ID: <ZgvqkhF2mTG82Rx2@hu-varada-blr.qualcomm.com>
+References: <20240402103406.3638821-1-quic_varada@quicinc.com>
+ <20240402103406.3638821-4-quic_varada@quicinc.com>
+ <CAA8EJpphk_kqzBE7cKb73ipdpTi29t9ZSOOdSfq7pAGSs5NKeg@mail.gmail.com>
+ <CAA8EJpo=TMhu+Te+JE0cQzmjLOTDPi-Vv-h5Bch0Wfr_7iVi2w@mail.gmail.com>
+ <ZgvlrbvvPNA6HRiL@hu-varada-blr.qualcomm.com>
+ <CAA8EJpp2dgy0DcLoUuo6gz-8ee0RRwJ_mvCLGDbdvF-gVhREFg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20240401-pci-epf-rework-v2-10-970dbe90b99d@linaro.org>
+In-Reply-To: <CAA8EJpp2dgy0DcLoUuo6gz-8ee0RRwJ_mvCLGDbdvF-gVhREFg@mail.gmail.com>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: P8z6DNFXNn9OXxV3Jd_cdILWQpXl28xC
+X-Proofpoint-ORIG-GUID: P8z6DNFXNn9OXxV3Jd_cdILWQpXl28xC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-02_05,2024-04-01_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 spamscore=0
+ adultscore=0 impostorscore=0 phishscore=0 malwarescore=0 clxscore=1015
+ priorityscore=1501 mlxscore=0 lowpriorityscore=0 bulkscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403210001 definitions=main-2404020082
 
-On Mon, Apr 01, 2024 at 09:20:36PM +0530, Manivannan Sadhasivam wrote:
-> PCIe host controller drivers are supposed to properly reset the endpoint
-> devices during host shutdown/reboot. Currently, Qcom driver doesn't do
-> anything during host shutdown/reboot, resulting in both PERST# and refclk
-> getting disabled at the same time. This prevents the endpoint device
-> firmware to properly reset the state machine. Because, if the refclk is
-> cutoff immediately along with PERST#, access to device specific registers
-> within the endpoint will result in a firmware crash.
-> 
-> To address this issue, let's call qcom_pcie_host_deinit() inside the
-> shutdown callback, that asserts PERST# and then cuts off the refclk with a
-> delay of 1ms, thus allowing the endpoint device firmware to properly
-> cleanup the state machine.
+On Tue, Apr 02, 2024 at 02:16:56PM +0300, Dmitry Baryshkov wrote:
+> On Tue, 2 Apr 2024 at 14:02, Varadarajan Narayanan
+> <quic_varada@quicinc.com> wrote:
+> >
+> > On Tue, Apr 02, 2024 at 01:48:08PM +0300, Dmitry Baryshkov wrote:
+> > > On Tue, 2 Apr 2024 at 13:40, Dmitry Baryshkov
+> > > <dmitry.baryshkov@linaro.org> wrote:
+> > > >
+> > > > On Tue, 2 Apr 2024 at 13:34, Varadarajan Narayanan
+> > > > <quic_varada@quicinc.com> wrote:
+> > > > >
+> > > > > Wrap icc_clk_register to create devm_icc_clk_register to be
+> > > > > able to release the resources properly.
+> > > > >
+> > > > > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> > > > > ---
+> > > > > v5: Introduced devm_icc_clk_register
+> > > > > ---
+> > > > >  drivers/interconnect/icc-clk.c   | 29 +++++++++++++++++++++++++++++
+> > > > >  include/linux/interconnect-clk.h |  4 ++++
+> > > > >  2 files changed, 33 insertions(+)
+> > > >
+> > > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > >
+> > > Wait. Actually,
+> > >
+> > > Unreviewed-by: me
+> > >
+> > > Please return int from devm_icc_clk_register instead of returning the pointer.
+> >
+> > Wouldn't returning int break the general assumption that
+> > devm_foo(), returns the same type as foo(). For example
+> > devm_clk_hw_get_clk and clk_hw_get_clk return struct clk *?
+>
+> Not always. The only reason to return icc_provider was to make it
+> possible to destroy it. With devres-managed function you don't have to
+> do anything.
 
-Hm... a QCOM EP device could be attached to any of the PCIe RC drivers that
-we have in the kernel, so it seems a bit weird to fix this problem by
-patching the QCOM RC driver only.
+Ok. Will change as follows
 
-Which DBI call is it that causes this problem during perst assert on EP side?
+	return prov; -> return PTR_ERR_OR_ZERO(prov);
 
-I assume that it is pci-epf-test:deinit() callback that calls
-pci_epc_clear_bar(), which calls dw_pcie_ep_clear_bar(), which will both:
--clear local data structures, e.g.
-ep->epf_bar[bar] = NULL;
-ep->bar_to_atu[bar] = 0;
-
-but also call:
-__dw_pcie_ep_reset_bar()
-dw_pcie_disable_atu()
-
-
-Do we perhaps need to redesign the .deinit EPF callback?
-
-Considering that we know that .deinit() will only be called on platforms
-where there will be a fundamental core reset, I guess we could do something
-like introduce a __dw_pcie_ep_clear_bar() which will only clear the local
-data structures. (It might not need to do any DBI writes, since the
-fundamental core reset should have reset all values.)
-
-Or perhaps instead of letting pci_epf_test_epc_deinit() call
-pci_epf_test_clear_bar()/__pci_epf_test_clear_bar() directly, perhaps let
-pci_epf_test_epc_deinit() call add a .deinit()/.cleanup() defined in the
-EPC driver.
-
-This EPC .deinit()/.cleanup() callback would then only clear the
-local data structures (no DBI writes...).
-
-Something like that?
-
-
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 14772edcf0d3..b2803978c0ad 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -1655,6 +1655,13 @@ static int qcom_pcie_resume_noirq(struct device *dev)
->  	return 0;
->  }
->  
-> +static void qcom_pcie_shutdown(struct platform_device *pdev)
-> +{
-> +	struct qcom_pcie *pcie = platform_get_drvdata(pdev);
-> +
-> +	qcom_pcie_host_deinit(&pcie->pci->pp);
-> +}
-> +
->  static const struct of_device_id qcom_pcie_match[] = {
->  	{ .compatible = "qcom,pcie-apq8064", .data = &cfg_2_1_0 },
->  	{ .compatible = "qcom,pcie-apq8084", .data = &cfg_1_0_0 },
-> @@ -1708,5 +1715,6 @@ static struct platform_driver qcom_pcie_driver = {
->  		.pm = &qcom_pcie_pm_ops,
->  		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
->  	},
-> +	.shutdown = qcom_pcie_shutdown,
->  };
->  builtin_platform_driver(qcom_pcie_driver);
-> 
-> -- 
-> 2.25.1
-> 
+Thanks
+Varada
 
