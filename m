@@ -1,148 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-16039-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D724894E86
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 11:21:22 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A0E9A894EE0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 11:41:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E227F1F2252A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 09:21:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D22CC1C20DFE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 09:41:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B33456763;
-	Tue,  2 Apr 2024 09:21:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 739855822A;
+	Tue,  2 Apr 2024 09:41:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hM5vBdEX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MjfO+tX0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69CB5731E;
-	Tue,  2 Apr 2024 09:21:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8B79454;
+	Tue,  2 Apr 2024 09:41:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712049677; cv=none; b=ocA8csYsvtxWUMyU8EFGWtatZphPE+1K70d0SkKk1acj/zMpve64tuLwP3lPJSXMX9Z35PQ368BDzLOVsXpwMC8A7rIUSpgTF/HcTZYNjJtDTHLCr/wyQ+UrBt9wW/jvn7brPTMDH8TEkZhqJQJcFXkYeJV1oVwDK/Lek4hE0Lc=
+	t=1712050867; cv=none; b=LJPcpNpcXfF58Sg3iCm/z757w+we48101aIRCxnqhA+rnck4YBktHFZmB65tF4g33C9qtwyqJV05dsepSP7q83i4FtDDiGwxs4eAYWZaI6qS0IQiUdZ2fYJ2ba6NoFh0Mzp2QUQAP0mP6nLt6dMA4Scg1WPbVPr/QurF9BXY9Ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712049677; c=relaxed/simple;
-	bh=Eqv+J/G8QDaPSz4YHEzz2rEQqjnD/zYLA18kwsleRu4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=XDIGw9KkurDgkyfhfdNnn1CjNs7QIn7+YVztiGnfsW5hRQNKbL90YAQsYsfdLAXP94KnlHg4BwHV63IV8HNsrWyJOLq9XYBRcgUTXpE5woqun0Um2KeJUtjY4pb5sMZEGce0rbA/KdosLNdDXOnH+BSOVjA+e5Ei1z7/bj62s2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hM5vBdEX; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4328MSfU014330;
-	Tue, 2 Apr 2024 09:21:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=pwVN48TC02wisPlvjwOGCqrWo60YyF0/BsQFmG2idY0=; b=hM
-	5vBdEX5ISE2GbzpWdDFGBL9sPfuomnuQH8/qqtqiynripjeXvr5yNYLo8A7wr2Ng
-	1p8jVVFbC2tSPDhaMktmoSV17YSR+BxtcOgpdHeTOv/GLo2f/0dtN4HoezQoE4hE
-	+i3p94RSoBuGV166CTLUtXffC7cnGGwdfivLQj3gvYKxL9ALcq4BlxAywa6UnKo6
-	s0s2H+66tuXQgGeHZznV0yteIHoqt6P6g30URmL+/Ve7akgwEJQfBmWLdTRXSmya
-	Nco2IiHEKecirUKvIt0OxeW3gGhxBtq0cSoSP7mnqDjikUQ13sq+FY1ugag6gnpX
-	UulcClPda1pJdOiQsTmw==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x81wdhheq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 02 Apr 2024 09:21:05 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4329L3wn001578
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 2 Apr 2024 09:21:03 GMT
-Received: from [10.216.25.199] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 2 Apr 2024
- 02:20:59 -0700
-Message-ID: <7cd89939-e0d0-c43b-fa2a-224bf60f4166@quicinc.com>
-Date: Tue, 2 Apr 2024 14:50:56 +0530
+	s=arc-20240116; t=1712050867; c=relaxed/simple;
+	bh=1+JbQzvwocmkPZJ25oUBQdFuhjuvVbr9C5IUSGthFBc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Zf/U+lRY2bd7mvrb8n6RygBagRjixogQDbgMSfQHzDi3SKShtuSHrCpT68V0TDOz2uTN0jEtj172y1F4/BUUetsbpFJ0P4v6Dj037eFiaAtk/n7raWxZHLNBaIGbeFHD80gQXzbEmu+K73cYB7kr8rZWP/uZYP8JV3eEPJ2+lUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MjfO+tX0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F73C433C7;
+	Tue,  2 Apr 2024 09:41:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712050866;
+	bh=1+JbQzvwocmkPZJ25oUBQdFuhjuvVbr9C5IUSGthFBc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=MjfO+tX0nuoKKP8XrPY8G8F08OlHHBr687YgRsWjw+KGshvwv+s7vv1nuxoh0Emt+
+	 1sB7jtbaP6R8XX6kjWyXpHozaPQ68IhvOxtsGqtq7lpx+cv+BG7rDUgp5FRsyMNJlf
+	 KuvkwCTDtGI/H7tf0bjtmDnNXDCgPWRjDKdgGdojXK1+S3bZ1h22u4BkwB9lBoxShJ
+	 KlBPIvuF3cKN4UrBldFxW0tWsOHzsL5RVKJhyxl17GHEkBAtZpi3fnwJff5YnKxhP+
+	 /6579sVQ9Lfj4Ss7v+K28yicNQ9gT0rq3tw5LIUD6eiiWKt3dcW/nprJIVrORHSUbe
+	 cWIZm61BAmyyw==
+Date: Tue, 2 Apr 2024 11:41:00 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	mhi@lists.linux.dev, linux-tegra@vger.kernel.org
+Subject: Re: [PATCH v2 00/10] PCI: endpoint: Make host reboot handling more
+ robust
+Message-ID: <ZgvSrLpvChG4jqQl@ryzen>
+References: <20240401-pci-epf-rework-v2-0-970dbe90b99d@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v1 2/2] ASoC: qcom: qcm6490: Add machine driver for
- qcm6490
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <srinivas.kandagatla@linaro.org>, <bgoswami@quicinc.com>,
-        <broonie@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <lgirdwood@gmail.com>, <tiwai@suse.com>, <quic_rohkumar@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        <linux-sound@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-References: <20240327113228.1706975-1-quic_mohs@quicinc.com>
- <20240327113228.1706975-3-quic_mohs@quicinc.com>
- <CAA8EJpqh0emOFUPSj8rPaKr2hZRWwOh9NNTco8fyJCtwXe9sSA@mail.gmail.com>
- <92b449da-1569-40f9-d8c9-48949c986853@quicinc.com>
- <CAA8EJprLB6+i4H5tK9LbJYOEH8v9QF78u-+HMmqPqfpvz5J8zw@mail.gmail.com>
-From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-In-Reply-To: <CAA8EJprLB6+i4H5tK9LbJYOEH8v9QF78u-+HMmqPqfpvz5J8zw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 53sTLWqDduGBXBvpBpergwhhBHBrJl1w
-X-Proofpoint-GUID: 53sTLWqDduGBXBvpBpergwhhBHBrJl1w
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-02_03,2024-04-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 priorityscore=1501
- malwarescore=0 bulkscore=0 spamscore=0 suspectscore=0 mlxlogscore=750
- phishscore=0 adultscore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2403210001
- definitions=main-2404020065
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240401-pci-epf-rework-v2-0-970dbe90b99d@linaro.org>
 
-On 3/30/2024 12:09 AM, Dmitry Baryshkov wrote:
-> Hi,
+On Mon, Apr 01, 2024 at 09:20:26PM +0530, Manivannan Sadhasivam wrote:
+> Hello,
 > 
-> On Fri, 29 Mar 2024 at 17:20, Mohammad Rafi Shaik <quic_mohs@quicinc.com> wrote:
->>
->>
->> On 3/27/2024 6:39 PM, Dmitry Baryshkov wrote:
->>
->> On Wed, 27 Mar 2024 at 13:34, Mohammad Rafi Shaik <quic_mohs@quicinc.com> wrote:
+> This is the follow up series of [1], to improve the handling of host reboot in
+> the endpoint subsystem. This involves refining the PERST# and Link Down event
+> handling in both the controller and function drivers.
 > 
-> Please turn off HTML mail composition and never ever send HTML email
-> to OSS mailing lists.
-> Now quotation levels are broken...
+> Testing
+> =======
 > 
->>
->> Add machine driver for qcm6490 SoC.
->>
->> This initial supports which includes WSA883x Speakers with onboard DMIC
->> connected to internal LPASS codec via VA macros respectively and also
->> WCD937x based headset.
->>
->> Add compatible for sound card on Qualcomm qcs6490 boards.
->>
->> Granted that qcm6490 is similar to sc7280, is there any reason why you
->> can not use one of the existing sound card drivers? Like sc7280.c or
->> sc8280xp.c?
->>
->> The qcs6490/qcm6490 has additional interfaces like MI2S, which requires additional machine driver modification.
->>
->> Example : Required new DAPM widget change in machine driver for MI2S interface which is specific to qcs6490/qcm6490.
->>
->> So, using new qcm6490 machine driver.
->>
->> Will try to use existing sc8280xp.c machine driver.
+> This series is tested on Qcom SM8450 based development board with both MHI_EPF
+> and EPF_TEST function drivers.
 > 
-> What about sc7280? In the end, qcm6490 is sc7280 with different firmware / spin.
+> Dependency
+> ==========
 > 
->
+> This series depends on [1] and [2].
+> 
+> - Mani
 
-The sc7280 is tightly linked with realtek codec. which will only support 
-for chrome.
+Hello Mani,
 
-The sc8280xp.c machine driver is more suitable for qcm6490, will use 
-same sc8280xp.
+> [1] https://lore.kernel.org/linux-pci/20240314-pci-dbi-rework-v10-0-14a45c5a938e@linaro.org/
+> [2] https://lore.kernel.org/linux-pci/20240320113157.322695-1-cassel@kernel.org/
 
+AFAICT both these series [1] (DBI rework v12, not v10) and [2] are fully
+reviewed and seem to be ready to go.
+
+Considering that we have patches depending on [1] and [2],
+namely the series in $subject, but also:
+https://lore.kernel.org/linux-pci/20240330041928.1555578-1-dlemoal@kernel.org/T/#t
+
+I think it would be a good idea if you could apply [1] and [2] to the
+pci/endpoint branch.
+
+(It is not easy for people to know that they will need to rebase their work on
+these (fully reviewed) series, when they have not been applied.)
+
+
+Kind regards,
+Niklas
+
+
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+> Changes in v2:
+> - Dropped the {start/stop}_link rework patches
+> - Incorporated comments from Niklas
+> - Collected review tags
+> - Rebased on top of v6.9-rc1 and https://lore.kernel.org/linux-pci/20240320113157.322695-1-cassel@kernel.org/
+> - Link to v1: https://lore.kernel.org/r/20240314-pci-epf-rework-v1-0-6134e6c1d491@linaro.org
+> 
+> ---
+> Manivannan Sadhasivam (10):
+>       PCI: qcom-ep: Disable resources unconditionally during PERST# assert
+>       PCI: endpoint: Decouple EPC and PCIe bus specific events
+>       PCI: endpoint: Rename core_init() callback in 'struct pci_epc_event_ops' to init()
+>       PCI: epf-test: Refactor pci_epf_test_unbind() function
+>       PCI: epf-{mhi/test}: Move DMA initialization to EPC init callback
+>       PCI: endpoint: Introduce EPC 'deinit' event and notify the EPF drivers
+>       PCI: dwc: ep: Add a generic dw_pcie_ep_linkdown() API to handle Link Down event
+>       PCI: qcom-ep: Use the generic dw_pcie_ep_linkdown() API to handle Link Down event
+>       PCI: epf-test: Handle Link Down event
+>       PCI: qcom: Implement shutdown() callback to properly reset the endpoint devices
+> 
+>  drivers/pci/controller/dwc/pcie-designware-ep.c |  99 ++++++++++++++---------
+>  drivers/pci/controller/dwc/pcie-designware.h    |   5 ++
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c       |   9 +--
+>  drivers/pci/controller/dwc/pcie-qcom.c          |   8 ++
+>  drivers/pci/controller/dwc/pcie-tegra194.c      |   1 +
+>  drivers/pci/endpoint/functions/pci-epf-mhi.c    |  47 ++++++++---
+>  drivers/pci/endpoint/functions/pci-epf-test.c   | 103 +++++++++++++++++-------
+>  drivers/pci/endpoint/pci-epc-core.c             |  53 ++++++++----
+>  include/linux/pci-epc.h                         |   1 +
+>  include/linux/pci-epf.h                         |  27 +++++--
+>  10 files changed, 248 insertions(+), 105 deletions(-)
+> ---
+> base-commit: e6377605ca734126533a0f8e4de2b4bac881f076
+> change-id: 20240314-pci-epf-rework-a6e65b103a79
+> 
+> Best regards,
+> -- 
+> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> 
 
