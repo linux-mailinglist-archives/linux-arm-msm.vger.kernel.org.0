@@ -1,202 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-16079-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C7DE89515C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 13:04:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D089895161
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 13:06:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 093281F2109D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 11:04:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 33E7B285EED
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 11:06:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31EAB5FBAA;
-	Tue,  2 Apr 2024 11:04:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EAC0B627FC;
+	Tue,  2 Apr 2024 11:05:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="OlwjWwff"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="V3XpspGH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9528D5D749;
-	Tue,  2 Apr 2024 11:04:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4205961694;
+	Tue,  2 Apr 2024 11:05:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712055875; cv=none; b=Ar0TAGhc1eoIe+tZ2myjQP4VZyhXCWGdqET3tLR+8HIYNwoJFatb7xU/x17uVjhOq0T8RFCfd8pmdb3Bz/dKSgNmRyzzVo+9jvca1BxCve45QJ2kFVD+jBw91HVn1tZ0ozBloK/N7QBx1jUQo+MEtD8ovjJ4YAtP7rYrAgOOakQ=
+	t=1712055954; cv=none; b=oR1bwONwTCi54rdavDBvqW0wJ+5K/WxFO2GI47y0JOP5zYLOzWGs6+MlEJx6cNP5QsOh5VK1ySTEeSdxZjfJCboCVwtLUHQA9WfPaGBauZBXSv0oMv+FLugpMLw/WY3xyuT9R8luhuOZWCSU2Q5h0vBPwkV/i2s7nbxbqIbUHvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712055875; c=relaxed/simple;
-	bh=Q+ko5XYgCGXp/6NOONUmVHwF2JgGCVehIIr780XeAek=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=K/V2Mmv97uFp8ZlFKOb0S/zDnD64c7MRS0cjwQ8FIZaZZXluA/5UQvZowAdPkJii103maM0cmLiq/WYTt2/V+h7opyh5Rm0J3URq+WOOCSuHyie3Q9GjsW4UMT/uj6Qi8XFaEzlBcJY4DokQBpcJwVIrtD9XYTW2YZyRZtqdyVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=OlwjWwff; arc=none smtp.client-ip=198.175.65.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1712055874; x=1743591874;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Q+ko5XYgCGXp/6NOONUmVHwF2JgGCVehIIr780XeAek=;
-  b=OlwjWwffOnNjvPKVk4VY+g3vNwuk+9OCFyos/hLJGazJZdbXQOv5jgwx
-   y5CBY7i0xgWiSbEV3A6xIUJ4UUb2tfPbKI0J7GUJKwAvHnCvPdJi0JoFS
-   EJUZoOgy+whyCTzefj28cKJ2IlMIHuLTvoygokRNbw4LyFuHzs8b60QyQ
-   SIAFEwrPFaKvCpsY/PQOFm7INZDk+WCTe1gvTOLxQXM/UORgUcGlEW/Z4
-   oBXsy8B7RQcYjtPd0JPb0AVXkaOh3S/kOjpjbiwNGePyX2Y5CxLL19mAU
-   KuCaMoMkj1fdrmH1EHSTffi8Ge2echQk7pLwFGutgtj27lhWrs1FXPUGN
-   w==;
-X-CSE-ConnectionGUID: abgEiq/rQJO/XSEQrfAzwA==
-X-CSE-MsgGUID: +x1WrPXCSDKT3WRdeXQysg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11031"; a="17790065"
-X-IronPort-AV: E=Sophos;i="6.07,174,1708416000"; 
-   d="scan'208";a="17790065"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Apr 2024 04:04:33 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,11031"; a="937083354"
-X-IronPort-AV: E=Sophos;i="6.07,174,1708416000"; 
-   d="scan'208";a="937083354"
-Received: from kuha.fi.intel.com ([10.237.72.185])
-  by fmsmga001.fm.intel.com with SMTP; 02 Apr 2024 04:04:29 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Tue, 02 Apr 2024 14:04:29 +0300
-Date: Tue, 2 Apr 2024 14:04:28 +0300
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+	s=arc-20240116; t=1712055954; c=relaxed/simple;
+	bh=maViU9w6Nq35eCSuJ9xeR8E4q+7Mo7Gd2IyWeQelOXk=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=P75g7747tIVjRGjhNv6LDU66XK/ZHcFFzl1agpc3+9m3s8rUF9p/Da7LSLm+nvT4R59PqQdR4pyAP0oDcccMOMCWTiNzH02VNOVBvXS0WaHsBDaT1shWbJrkb4c0zYzkVG4EcqgTARxGq7Y2uxxw6oclmY4bfVYPXsSOxGUnGUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=V3XpspGH; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4329pvKM019506;
+	Tue, 2 Apr 2024 11:05:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=02KKFCEynacobuhUj1x0R
+	gS0xlhYe7MiuCfxt6p8Ol4=; b=V3XpspGHpx/rSFtezGiclTP4yZWO43ZzL7Qfb
+	8d324RRd/SpBhrac4arjI+/sfPwVOvkyr8lFwKV1BX+QK12XzMdcdDgojGs9DwKe
+	bUkGeeZ0kBk0P5dssZtDPuGdPURJ0qLjdkIvni24aPM/cHlNIHWhMZBrTUIUmMw8
+	aWkvz+rmNXV//smcLz7ZuDFK7cThetbo3ifBsOycBI+gi3d6+Ko7oYJnee/pPREf
+	XDLJu6wOZnZ5plmVnSyg85/iuTe7UkfX/KRuqcB4yAmoY0APttIuVZgKsn35m+Mb
+	XC2UxH6CRp1PKQLckzCKCe4bNrXnfWG8f0I9U5vPjCGamCwAA==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x88eh96dg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 02 Apr 2024 11:05:48 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 432B5lF7001201
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 2 Apr 2024 11:05:47 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.4; Tue, 2 Apr 2024 04:05:43 -0700
+Date: Tue, 2 Apr 2024 16:35:39 +0530
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>, linux-usb@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 07/11] usb: typec: ucsi: support delaying GET_PDOS for
- device
-Message-ID: <ZgvmPPUEaqyOLchN@kuha.fi.intel.com>
-References: <20240329-qcom-ucsi-fixes-v2-0-0f5d37ed04db@linaro.org>
- <20240329-qcom-ucsi-fixes-v2-7-0f5d37ed04db@linaro.org>
+CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>, <robh@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <djakov@kernel.org>, <quic_anusha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH v6 4/6] clk: qcom: common: Add interconnect clocks support
+Message-ID: <ZgvmgyINMh2Rs7Yu@hu-varada-blr.qualcomm.com>
+References: <20240402103406.3638821-1-quic_varada@quicinc.com>
+ <20240402103406.3638821-5-quic_varada@quicinc.com>
+ <CAA8EJprP0m53B=g7jafAkfcqAQP4kE2ZvtxPXEe4s7ALjFXGSQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20240329-qcom-ucsi-fixes-v2-7-0f5d37ed04db@linaro.org>
+In-Reply-To: <CAA8EJprP0m53B=g7jafAkfcqAQP4kE2ZvtxPXEe4s7ALjFXGSQ@mail.gmail.com>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: UJQjXE2A8GDRI9hgD7s8nizicLLdoEgH
+X-Proofpoint-ORIG-GUID: UJQjXE2A8GDRI9hgD7s8nizicLLdoEgH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-02_05,2024-04-01_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
+ clxscore=1015 lowpriorityscore=0 impostorscore=0 mlxscore=0 malwarescore=0
+ adultscore=0 bulkscore=0 mlxlogscore=844 priorityscore=1501 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2403210001
+ definitions=main-2404020080
 
-On Fri, Mar 29, 2024 at 08:15:39AM +0200, Dmitry Baryshkov wrote:
-> Qualcomm firmware doesn't return sane information for device's PDOs
-> unless the partner is also using a PD mode. On SC8280XP this even
-> results in the Error bit being set in the UCSI response (with 0 error
-> status).
-> 
-> Add a quirk to delay reading USB PD capabilities for a device until we
-> detect a partner in PD mode.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On Tue, Apr 02, 2024 at 01:48:14PM +0300, Dmitry Baryshkov wrote:
+> On Tue, 2 Apr 2024 at 13:34, Varadarajan Narayanan
+> <quic_varada@quicinc.com> wrote:
+> >
+> > Unlike MSM platforms that manage NoC related clocks and scaling
+> > from RPM, IPQ SoCs dont involve RPM in managing NoC related
+> > clocks and there is no NoC scaling.
+> >
+> > However, there is a requirement to enable some NoC interface
+> > clocks for accessing the peripheral controllers present on
+> > these NoCs. Though exposing these as normal clocks would work,
+> > having a minimalistic interconnect driver to handle these clocks
+> > would make it consistent with other Qualcomm platforms resulting
+> > in common code paths. This is similar to msm8996-cbf's usage of
+> > icc-clk framework.
+> >
+> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> > ---
+> > v6: first_id -> icc_first_node_id
+> >     Remove clock get so that the peripheral that uses the clock
+> >     can do the clock get
+> > v5: Split changes in common.c to separate patch
+> >     Fix error handling
+> >     Use devm_icc_clk_register instead of icc_clk_register
+> > v4: Use clk_hw instead of indices
+> >     Do icc register in qcom_cc_probe() call stream
+> >     Add icc clock info to qcom_cc_desc structure
+> > v3: Use indexed identifiers here to avoid confusion
+> >     Fix error messages and move to common.c
+> > v2: Move DTS to separate patch
+> >     Update commit log
+> >     Auto select CONFIG_INTERCONNECT & CONFIG_INTERCONNECT_CLK to fix build error
+> > ---
+> >  drivers/clk/qcom/common.c | 38 +++++++++++++++++++++++++++++++++++++-
+> >  drivers/clk/qcom/common.h |  3 +++
+> >  2 files changed, 40 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
+> > index 75f09e6e057e..d5c008048994 100644
+> > --- a/drivers/clk/qcom/common.c
+> > +++ b/drivers/clk/qcom/common.c
+> > @@ -8,6 +8,7 @@
+> >  #include <linux/regmap.h>
+> >  #include <linux/platform_device.h>
+> >  #include <linux/clk-provider.h>
+> > +#include <linux/interconnect-clk.h>
+> >  #include <linux/reset-controller.h>
+> >  #include <linux/of.h>
+> >
+> > @@ -234,6 +235,41 @@ static struct clk_hw *qcom_cc_clk_hw_get(struct of_phandle_args *clkspec,
+> >         return cc->rclks[idx] ? &cc->rclks[idx]->hw : NULL;
+> >  }
+> >
+> > +static int qcom_cc_icc_register(struct device *dev,
+> > +                               const struct qcom_cc_desc *desc)
+> > +{
+> > +       struct icc_clk_data *icd;
+> > +       int i;
+> > +
+> > +       if (!IS_ENABLED(CONFIG_INTERCONNECT_CLK))
+> > +               return 0;
+> > +
+> > +       if (!desc->icc_hws)
+> > +               return 0;
+> > +
+> > +       icd = devm_kcalloc(dev, desc->num_icc_hws, sizeof(*icd), GFP_KERNEL);
+> > +       if (!icd)
+> > +               return -ENOMEM;
+> > +
+> > +       for (i = 0; i < desc->num_icc_hws; i++) {
+> > +               /*
+> > +                * get_clk will be done by the peripheral device using this
+> > +                * clock with devm_clk_hw_get_clk() so that we can associate
+> > +                * the clk handle with the consumer device. It would also help
+> > +                * us make it so that drivers defer probe until their
+> > +                * clk isn't an orphan.
+>
+> How the clock instance returned to the peripheral driver is supposed
+> to correspond to the clock instance used by the icc-clk?
+> > +                */
+> > +               icd[i].clk = desc->icc_hws[i]->clk;
+>
+> You again are abusing clk_hw->clk. Please don't do that.
 
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Ok, will clk_get in both the places.
 
-> ---
->  drivers/usb/typec/ucsi/ucsi.c | 41 ++++++++++++++++++++++++++++-------------
->  drivers/usb/typec/ucsi/ucsi.h |  1 +
->  2 files changed, 29 insertions(+), 13 deletions(-)
-> 
-> diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
-> index 18b2e4ffc57e..f5ec776b84d6 100644
-> --- a/drivers/usb/typec/ucsi/ucsi.c
-> +++ b/drivers/usb/typec/ucsi/ucsi.c
-> @@ -821,6 +821,28 @@ static int ucsi_check_altmodes(struct ucsi_connector *con)
->  	return ret;
->  }
->  
-> +static void ucsi_register_device_pdos(struct ucsi_connector *con)
-> +{
-> +	struct ucsi *ucsi = con->ucsi;
-> +	struct usb_power_delivery_desc desc = { ucsi->cap.pd_version };
-> +	struct usb_power_delivery_capabilities *pd_cap;
-> +
-> +	if (con->pd)
-> +		return;
-> +
-> +	con->pd = usb_power_delivery_register(ucsi->dev, &desc);
-> +
-> +	pd_cap = ucsi_get_pd_caps(con, TYPEC_SOURCE, false);
-> +	if (!IS_ERR(pd_cap))
-> +		con->port_source_caps = pd_cap;
-> +
-> +	pd_cap = ucsi_get_pd_caps(con, TYPEC_SINK, false);
-> +	if (!IS_ERR(pd_cap))
-> +		con->port_sink_caps = pd_cap;
-> +
-> +	typec_port_set_usb_power_delivery(con->port, con->pd);
-> +}
-> +
->  static int ucsi_register_partner_pdos(struct ucsi_connector *con)
->  {
->  	struct usb_power_delivery_desc desc = { con->ucsi->cap.pd_version };
-> @@ -981,6 +1003,9 @@ static int ucsi_register_partner(struct ucsi_connector *con)
->  		break;
->  	}
->  
-> +	if (pwr_opmode == UCSI_CONSTAT_PWR_OPMODE_PD)
-> +		ucsi_register_device_pdos(con);
-> +
->  	desc.identity = &con->partner_identity;
->  	desc.usb_pd = pwr_opmode == UCSI_CONSTAT_PWR_OPMODE_PD;
->  	desc.pd_revision = UCSI_CONCAP_FLAG_PARTNER_PD_MAJOR_REV_AS_BCD(con->cap.flags);
-> @@ -1465,8 +1490,6 @@ static struct fwnode_handle *ucsi_find_fwnode(struct ucsi_connector *con)
->  
->  static int ucsi_register_port(struct ucsi *ucsi, struct ucsi_connector *con)
->  {
-> -	struct usb_power_delivery_desc desc = { ucsi->cap.pd_version};
-> -	struct usb_power_delivery_capabilities *pd_cap;
->  	struct typec_capability *cap = &con->typec_cap;
->  	enum typec_accessory *accessory = cap->accessory;
->  	enum usb_role u_role = USB_ROLE_NONE;
-> @@ -1544,17 +1567,8 @@ static int ucsi_register_port(struct ucsi *ucsi, struct ucsi_connector *con)
->  		goto out;
->  	}
->  
-> -	con->pd = usb_power_delivery_register(ucsi->dev, &desc);
-> -
-> -	pd_cap = ucsi_get_pd_caps(con, TYPEC_SOURCE, false);
-> -	if (!IS_ERR(pd_cap))
-> -		con->port_source_caps = pd_cap;
-> -
-> -	pd_cap = ucsi_get_pd_caps(con, TYPEC_SINK, false);
-> -	if (!IS_ERR(pd_cap))
-> -		con->port_sink_caps = pd_cap;
-> -
-> -	typec_port_set_usb_power_delivery(con->port, con->pd);
-> +	if (!(ucsi->quirks & UCSI_DELAY_DEVICE_PDOS))
-> +		ucsi_register_device_pdos(con);
->  
->  	/* Alternate modes */
->  	ret = ucsi_register_altmodes(con, UCSI_RECIPIENT_CON);
-> @@ -1617,6 +1631,7 @@ static int ucsi_register_port(struct ucsi *ucsi, struct ucsi_connector *con)
->  	if (con->partner &&
->  	    UCSI_CONSTAT_PWR_OPMODE(con->status.flags) ==
->  	    UCSI_CONSTAT_PWR_OPMODE_PD) {
-> +		ucsi_register_device_pdos(con);
->  		ucsi_get_src_pdos(con);
->  		ucsi_check_altmodes(con);
->  	}
-> diff --git a/drivers/usb/typec/ucsi/ucsi.h b/drivers/usb/typec/ucsi/ucsi.h
-> index 591f734d457b..2caf2969668c 100644
-> --- a/drivers/usb/typec/ucsi/ucsi.h
-> +++ b/drivers/usb/typec/ucsi/ucsi.h
-> @@ -406,6 +406,7 @@ struct ucsi {
->  
->  	unsigned long quirks;
->  #define UCSI_NO_PARTNER_PDOS	BIT(0)	/* Don't read partner's PDOs */
-> +#define UCSI_DELAY_DEVICE_PDOS	BIT(1)	/* Reading PDOs fails until the parter is in PD mode */
->  };
->  
->  #define UCSI_MAX_SVID		5
-> 
-> -- 
-> 2.39.2
+Thanks
+Varada
 
--- 
-heikki
+> > +               if (!icd[i].clk)
+> > +                       return dev_err_probe(dev, -ENOENT,
+> > +                                            "(%d) clock entry is null\n", i);
+> > +               icd[i].name = clk_hw_get_name(desc->icc_hws[i]);
+> > +       }
+> > +
+> > +       return PTR_ERR_OR_ZERO(devm_icc_clk_register(dev, desc->icc_first_node_id,
+> > +                                                    desc->num_icc_hws, icd));
+> > +}
+> > +
+> >  int qcom_cc_really_probe(struct platform_device *pdev,
+> >                          const struct qcom_cc_desc *desc, struct regmap *regmap)
+> >  {
+> > @@ -303,7 +339,7 @@ int qcom_cc_really_probe(struct platform_device *pdev,
+> >         if (ret)
+> >                 return ret;
+> >
+> > -       return 0;
+> > +       return qcom_cc_icc_register(dev, desc);
+> >  }
+> >  EXPORT_SYMBOL_GPL(qcom_cc_really_probe);
+> >
+> > diff --git a/drivers/clk/qcom/common.h b/drivers/clk/qcom/common.h
+> > index 9c8f7b798d9f..9058ffd46260 100644
+> > --- a/drivers/clk/qcom/common.h
+> > +++ b/drivers/clk/qcom/common.h
+> > @@ -29,6 +29,9 @@ struct qcom_cc_desc {
+> >         size_t num_gdscs;
+> >         struct clk_hw **clk_hws;
+> >         size_t num_clk_hws;
+> > +       struct clk_hw **icc_hws;
+> > +       size_t num_icc_hws;
+> > +       unsigned int icc_first_node_id;
+> >  };
+> >
+> >  /**
+> > --
+> > 2.34.1
+> >
+>
+>
+> --
+> With best wishes
+>
+> Dmitry
 
