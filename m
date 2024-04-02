@@ -1,66 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-16017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3602C894AA1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 06:49:43 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DAC7894ADD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 07:33:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A3D251F241C2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 04:49:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 50D091C20C70
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 05:33:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 326B317C6A;
-	Tue,  2 Apr 2024 04:49:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19ECB1803A;
+	Tue,  2 Apr 2024 05:33:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZUhhC6Bo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PIFWoRW2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06FC717C69;
-	Tue,  2 Apr 2024 04:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2AB018035;
+	Tue,  2 Apr 2024 05:33:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712033378; cv=none; b=GboywZ5WOf8T6XsSjQFBouP28xHUwuhcBNWUrOZUT4rEwh1blXL83TchmWRsOZL8/x15wanCHtXs75d6pfOkStcgm4k7jTCTT/oC1Vdv9tIeF9yaKoy7849yS2hqX5Su2K4aRWosdq8xY66RDpk+cfKrF5Jb2TfWBdZNul7sa1A=
+	t=1712036022; cv=none; b=BKpU/HYuSoXZFVHXiAjvr2QXvQkDhoWgEo807rmZsyTTlPdT3mNIyXSMcKTPPpeykKU9ajWJzvWNv2IrCbQXepdwzQuUQN95fYgEUIMKvOAQINj4dyY51gbnNi6ruJo7vejwAqyVxvwqMTto9wWWynpc/EwwCKXA+UH6dvfXdac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712033378; c=relaxed/simple;
-	bh=HQDW3ERhmazGPaTptv5BcbYjzluSXrBysFXL+s0zZTI=;
+	s=arc-20240116; t=1712036022; c=relaxed/simple;
+	bh=U8GocIyJ8JL27TlL8K2vIcTd1SxG/GH4sOWgtewPVd0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CQKZIVAE3fXX8j0zcsv5C7FiBkG/YQTQhmvC4kHVR0ea3xP++1qfuvl29aqu7/yh8oQgI5e7BIGXt+U7CUC6vnLhK0mK9ZGOa/4fz0kco8PReV9IydhlMpss8VsMLxIkh0vU5ewEngTgYv5fkmKmvtfif5xc39esEuX+XZulOsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZUhhC6Bo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C899C433C7;
-	Tue,  2 Apr 2024 04:49:32 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ipzmggo0AiCICckJ1OQOmUpCV9jr7knucPlx5JdMrCvkwyhTwP/I9jg7b301/fpylUEvYkDwPulejaJW/l5jynQ87oY1F1J1ghvgPg7pgd1cZMKF5huRgGW9QTsN9nRES/MgVFOR70kxUKzAvWRzx+kQTC5gxcXCADKFLQjTVN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PIFWoRW2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2614DC433C7;
+	Tue,  2 Apr 2024 05:33:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712033377;
-	bh=HQDW3ERhmazGPaTptv5BcbYjzluSXrBysFXL+s0zZTI=;
+	s=k20201202; t=1712036021;
+	bh=U8GocIyJ8JL27TlL8K2vIcTd1SxG/GH4sOWgtewPVd0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ZUhhC6BorLMhZ9OipVKnviMUmboMnGAM7QgD2vHP0Pb3DPuUtRJRcmvFxo+1KPOYn
-	 xTRjo+n70N/9+xNo1aCYu2GbH5cdKNbnkCxxdfy7Y1M2InC86p57u4VbUrKw2NM+r7
-	 +mEodWczZ5zWVCzQufJmnjBOFaUB6f+vYPpkjlu+6YoosoTc1iuo3fIAMEbQ614V9Y
-	 30Op1vzJOE4vnfmwhENdvYdjZIoi9dwBOe68OvN3pMwJgoHzgyWcWTFbxyphuwPw1t
-	 FxUO0X7Uf79j0/h9ccYIMNv4WMZU9BlehJjUpRRz8qUyn8oOz1RUcXDiBlWahykLiw
-	 dX4rZlYLKGydw==
-Date: Tue, 2 Apr 2024 10:19:28 +0530
+	b=PIFWoRW2gXP7c8uLZukF6x8hnwwzTQ+OEWDy1ES+2mfPMHWCKGXdzIRmlH//DSWvT
+	 TS0ccMARxy4ohUXryUYONPi49dNJXimJxZWiMaSjnokqhUsWfE1wiHlrt9cIIbeQg8
+	 K68siudlso5GckQKuXk4wIztje8QTAgxg4Y6UXFRED4R7pf1vfMyQRH5WqDLLOIga4
+	 EWoJY/3DFhDy/LM1hmoS6oTNvm/HvxTkqbHWcv5uunogeALOw6sQjXve2gYUNDVW5s
+	 AIV+KLuh7cnBNZF3doduBTZdA0M5bBgYzuuTJPjVZegNOpyLX5YbsxX5/dCyjZygdU
+	 +VgROHZKd8dTg==
+Date: Tue, 2 Apr 2024 11:03:32 +0530
 From: Manivannan Sadhasivam <mani@kernel.org>
-To: Andrew Halaney <ahalaney@redhat.com>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Hannes Reinecke <hare@suse.de>, Janek Kotas <jank@cadence.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Can Guo <quic_cang@quicinc.com>,
-	Anjana Hari <quic_ahari@quicinc.com>, Will Deacon <will@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 11/11] scsi: ufs: core: Remove unnecessary wmb() prior
- to writing run/stop regs
-Message-ID: <20240402044928.GF2933@thinkpad>
-References: <20240329-ufs-reset-ensure-effect-before-delay-v5-0-181252004586@redhat.com>
- <20240329-ufs-reset-ensure-effect-before-delay-v5-11-181252004586@redhat.com>
+To: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
+Cc: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+	quic_msarkar@quicinc.com, quic_kraravin@quicinc.com,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] PCI: qcom: Refactor common code
+Message-ID: <20240402053332.GI2933@thinkpad>
+References: <20240320071527.13443-1-quic_schintav@quicinc.com>
+ <20240320071527.13443-2-quic_schintav@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,62 +70,213 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240329-ufs-reset-ensure-effect-before-delay-v5-11-181252004586@redhat.com>
+In-Reply-To: <20240320071527.13443-2-quic_schintav@quicinc.com>
 
-On Fri, Mar 29, 2024 at 03:46:53PM -0500, Andrew Halaney wrote:
-> Currently a wmb() is used to ensure that writes to the
-> UTP_TASK_REQ_LIST_BASE* regs are completed prior to following writes to
-> the run/stop registers.
-> 
-> wmb() ensure that the write completes, but completion doesn't mean that
-> it isn't stored in a buffer somewhere. The recommendation for
-> ensuring the bits have taken effect on the device is to perform a read
-> back to force it to make it all the way to the device. This is
-> documented in device-io.rst and a talk by Will Deacon on this can
-> be seen over here:
-> 
->     https://youtu.be/i6DayghhA8Q?si=MiyxB5cKJXSaoc01&t=1678
-> 
-> But, none of that is necessary here. All of the writel()/readl()'s here
-> are to the same endpoint, so they will be ordered. There's no subsequent
-> delay() etc that requires it to have taken effect already, so no
-> readback is necessary here.
-> 
-> For that reason just drop the wmb() altogether.
-> 
-> Fixes: 897efe628d7e ("scsi: ufs: add missing memory barriers")
-> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+On Wed, Mar 20, 2024 at 12:14:45AM -0700, Shashank Babu Chinta Venkata wrote:
+> Refactor common code from RC(Root Complex) and EP(End Point)
+> drivers and move them to a common repository. This acts as placeholder
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+s/repository/driver
+
+> for common source code for both drivers avoiding duplication.
+
+'thus avoiding'
+
+> 
+> Signed-off-by: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
+> ---
+>  drivers/pci/controller/dwc/Kconfig         |  5 ++
+>  drivers/pci/controller/dwc/Makefile        |  1 +
+>  drivers/pci/controller/dwc/pcie-qcom-cmn.c | 81 ++++++++++++++++++++++
+
+I'd prefer, pcie-qcom-common.c
+
+>  drivers/pci/controller/dwc/pcie-qcom-cmn.h | 14 ++++
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c  | 39 ++---------
+>  drivers/pci/controller/dwc/pcie-qcom.c     | 67 +++---------------
+>  6 files changed, 113 insertions(+), 94 deletions(-)
+>  create mode 100644 drivers/pci/controller/dwc/pcie-qcom-cmn.c
+>  create mode 100644 drivers/pci/controller/dwc/pcie-qcom-cmn.h
+> 
+> diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
+> index 8afacc90c63b..41d2746edc5f 100644
+> --- a/drivers/pci/controller/dwc/Kconfig
+> +++ b/drivers/pci/controller/dwc/Kconfig
+> @@ -265,12 +265,16 @@ config PCIE_DW_PLAT_EP
+>  	  order to enable device-specific features PCI_DW_PLAT_EP must be
+>  	  selected.
+>  
+> +config PCIE_QCOM_CMN
+
+I'd prefer, 'PCIE_QCOM_COMMON'.
+
+> +	bool
+> +
+>  config PCIE_QCOM
+>  	bool "Qualcomm PCIe controller (host mode)"
+>  	depends on OF && (ARCH_QCOM || COMPILE_TEST)
+>  	depends on PCI_MSI
+>  	select PCIE_DW_HOST
+>  	select CRC8
+> +	select PCIE_QCOM_CMN
+>  	help
+>  	  Say Y here to enable PCIe controller support on Qualcomm SoCs. The
+>  	  PCIe controller uses the DesignWare core plus Qualcomm-specific
+> @@ -281,6 +285,7 @@ config PCIE_QCOM_EP
+>  	depends on OF && (ARCH_QCOM || COMPILE_TEST)
+>  	depends on PCI_ENDPOINT
+>  	select PCIE_DW_EP
+> +	select PCIE_QCOM_CMN
+>  	help
+>  	  Say Y here to enable support for the PCIe controllers on Qualcomm SoCs
+>  	  to work in endpoint mode. The PCIe controller uses the DesignWare core
+> diff --git a/drivers/pci/controller/dwc/Makefile b/drivers/pci/controller/dwc/Makefile
+> index bac103faa523..521572093ebf 100644
+> --- a/drivers/pci/controller/dwc/Makefile
+> +++ b/drivers/pci/controller/dwc/Makefile
+> @@ -14,6 +14,7 @@ obj-$(CONFIG_PCI_LAYERSCAPE) += pci-layerscape.o
+>  obj-$(CONFIG_PCI_LAYERSCAPE_EP) += pci-layerscape-ep.o
+>  obj-$(CONFIG_PCIE_QCOM) += pcie-qcom.o
+>  obj-$(CONFIG_PCIE_QCOM_EP) += pcie-qcom-ep.o
+> +obj-$(CONFIG_PCIE_QCOM_CMN) += pcie-qcom-cmn.o
+>  obj-$(CONFIG_PCIE_ARMADA_8K) += pcie-armada8k.o
+>  obj-$(CONFIG_PCIE_ARTPEC6) += pcie-artpec6.o
+>  obj-$(CONFIG_PCIE_ROCKCHIP_DW_HOST) += pcie-dw-rockchip.o
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom-cmn.c b/drivers/pci/controller/dwc/pcie-qcom-cmn.c
+> new file mode 100644
+> index 000000000000..64fa412ec293
+> --- /dev/null
+> +++ b/drivers/pci/controller/dwc/pcie-qcom-cmn.c
+> @@ -0,0 +1,81 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2014-2015, 2020 The Linux Foundation. All rights reserved.
+> + * Copyright 2015, 2021 Linaro Limited.
+
+Copyright (c)
+
+> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> + *
+> + */
+> +
+> +#include <linux/debugfs.h>
+
+Why do you need this header in this patch?
+
+> +#include <linux/pci.h>
+> +#include <linux/interconnect.h>
+> +
+> +#include "../../pci.h"
+> +#include "pcie-designware.h"
+> +#include "pcie-qcom-cmn.h"
+> +
+> +#define QCOM_PCIE_LINK_SPEED_TO_BW(speed) \
+> +		Mbps_to_icc(PCIE_SPEED2MBS_ENC(pcie_link_speed[speed]))
+> +
+> +int qcom_pcie_cmn_icc_get_resource(struct dw_pcie *pci, struct icc_path *icc_mem)
+
+qcom_pcie_common_icc_get?
+
+> +{
+> +	if (IS_ERR(pci))
+> +		return PTR_ERR(pci);
+
+Why this check is needed?
+
+> +
+> +	icc_mem = devm_of_icc_get(pci->dev, "pcie-mem");
+> +	if (IS_ERR(icc_mem))
+> +		return PTR_ERR(icc_mem);
+> +
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_pcie_cmn_icc_get_resource);
+> +
+> +int qcom_pcie_cmn_icc_init(struct dw_pcie *pci, struct icc_path *icc_mem)
+
+qcom_pcie_common_icc_init?
+
+> +{
+> +	int ret;
+> +
+> +	if (IS_ERR(pci))
+> +		return PTR_ERR(pci);
+> +
+
+Again, why this is needed?
+
+> +	if (IS_ERR(icc_mem))
+> +		return PTR_ERR(icc_mem);
+> +
+
+If 'devm_of_icc_get' has failed previously we wouldn't reach here. And also,
+there is no need to check for NULL since the ICC core already does that.
+
+> +	/*
+> +	 * Some Qualcomm platforms require interconnect bandwidth constraints
+> +	 * to be set before enabling interconnect clocks.
+> +	 *
+> +	 * Set an initial peak bandwidth corresponding to single-lane Gen 1
+> +	 * for the pcie-mem path.
+> +	 */
+> +	ret = icc_set_bw(icc_mem, 0, QCOM_PCIE_LINK_SPEED_TO_BW(1));
+> +	if (ret) {
+> +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
+> +			ret);
+> +		return ret;
+> +	}
+> +
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_pcie_cmn_icc_init);
+> +
+> +void qcom_pcie_cmn_icc_update(struct dw_pcie *pci, struct icc_path *icc_mem)
+
+qcom_pcie_common_icc_update?
+
+> +{
+> +	u32 offset, status;
+> +	int speed, width;
+> +	int ret;
+> +
+> +	if (!icc_mem)
+> +		return;
+> +
+> +	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> +	status = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
+> +
+
+You can keep the link check here since that should work for both RC and EP.
+
+> +	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
+> +	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, status);
+> +
+> +	ret = icc_set_bw(icc_mem, 0, width * QCOM_PCIE_LINK_SPEED_TO_BW(speed));
+> +	if (ret)
+> +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
+> +			ret);
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_pcie_cmn_icc_update);
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom-cmn.h b/drivers/pci/controller/dwc/pcie-qcom-cmn.h
+> new file mode 100644
+> index 000000000000..845eda23ae59
+> --- /dev/null
+> +++ b/drivers/pci/controller/dwc/pcie-qcom-cmn.h
+> @@ -0,0 +1,14 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +/*
+> + * Copyright (c) 2014-2015, 2020 The Linux Foundation. All rights reserved.
+> + * Copyright 2015, 2021 Linaro Limited.
+> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/pci.h>
+> +#include "../../pci.h"
+> +#include "pcie-designware.h"
+
+Again, headers should be included only if it is used in the same file itself.
 
 - Mani
-
-> ---
->  drivers/ufs/core/ufshcd.c | 6 ------
->  1 file changed, 6 deletions(-)
-> 
-> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-> index a2f2941450fd..cf6a24e550f0 100644
-> --- a/drivers/ufs/core/ufshcd.c
-> +++ b/drivers/ufs/core/ufshcd.c
-> @@ -4769,12 +4769,6 @@ int ufshcd_make_hba_operational(struct ufs_hba *hba)
->  	ufshcd_writel(hba, upper_32_bits(hba->utmrdl_dma_addr),
->  			REG_UTP_TASK_REQ_LIST_BASE_H);
->  
-> -	/*
-> -	 * Make sure base address and interrupt setup are updated before
-> -	 * enabling the run/stop registers below.
-> -	 */
-> -	wmb();
-> -
->  	/*
->  	 * UCRDY, UTMRLDY and UTRLRDY bits must be 1
->  	 */
-> 
-> -- 
-> 2.44.0
-> 
-> 
 
 -- 
 மணிவண்ணன் சதாசிவம்
