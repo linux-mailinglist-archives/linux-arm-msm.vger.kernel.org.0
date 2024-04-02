@@ -1,519 +1,275 @@
-Return-Path: <linux-arm-msm+bounces-15997-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-15998-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31068894809
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 01:52:02 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4ACCF894857
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 02:16:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 84815B22815
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Apr 2024 23:51:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 699A31C22FB7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 00:16:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3700E58AC1;
-	Mon,  1 Apr 2024 23:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A078DE556;
+	Tue,  2 Apr 2024 00:14:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="y4QaeIYt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r8U+TmfV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D8057876
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Apr 2024 23:51:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C049E552;
+	Tue,  2 Apr 2024 00:14:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712015481; cv=none; b=aDOA3OhML+xvs4mrH7r+F8Sf8oDeGMvQHGsClAXp1IyJAqHYEjO69x14T0CaqsWiT7078JlHOO2lr+Wt40Ml0x+NyGcktvThEziJYULkOXTqznE5jGGjde3/FpB1bsUifrnAXwiwpLpEktpSWwBr4F5mLuBkWcTIKomCV5zShKI=
+	t=1712016864; cv=none; b=uVD6ZIcvthJHanl4oYjAcuXJ5O4F0yqHFbsRGdqANLBnUJVbfHYgvhbVFq8PtPvEtnak/1lB+j7p/T+zRgxDtMAQ11dZW5fXc2TbobDcSDUF5+Ff1TTGIljRsjkYUOBVd12zQ4v2l7ilHs1KCQLbX3f/vA0Dt86yn1kThlTHhCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712015481; c=relaxed/simple;
-	bh=+8CADZiS2wkSVK8yjmnv9snx1iy+VJCJMa45DSXJIe4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=RbhvPbJYz9hDaBUOyACFdGZFg81JT+hAT4kb7L8Wa2XCudARDPUXju0bBjkS+5zP9BOgL8aacKvAax2RU6d8HNjJNuCe45EI+fz/TwgELgwz+nC4pSv/dRi51S+P/0y0Px5EgLTRoAGwlM9I9xytvD2OO1nXDPF4e1qaA1XdL48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=y4QaeIYt; arc=none smtp.client-ip=209.85.167.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-516a0b7f864so1424195e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Apr 2024 16:51:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712015477; x=1712620277; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TImHaMPxC7KJyi9PLNXdSBnin8efgauOGmSl1YeMQhA=;
-        b=y4QaeIYtvTgnohWF0gpdrF7NIkmCU4eLlS9DGCy+sLtrCA+H1bDmUQWWnb6T9cV+i3
-         k8YbiXKY/ekLl/+8SSM+DBdxNYoq80IUBfjidNwl+iXk5nnzb2n+aGrtLtW4XMQQrCQF
-         iNwiNiRlSJ4IIl6lFvxWrkqY++gTQIXi5dytlEQMnm7JykjoHbUeXSBTvwryB++uRCDx
-         mldeexfEb4N6Qtizy2xmjDDPxyWYo2ZUTFgynzp9YZXOp/3bnxPMjiVCdjGEEQfRv//O
-         nRH51vfY/t91FbE5UKLeS/7vaZG2AcA/ObNg2jccMNL3ZwdfYB6HOLLft1xwQr7fw4YY
-         f4aQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712015477; x=1712620277;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TImHaMPxC7KJyi9PLNXdSBnin8efgauOGmSl1YeMQhA=;
-        b=h5HkwW33coqZLJ/OIF6ebOnEXD5RDrjDMa4W91e+J7SgxwORDpQwreKeJEza+3uXfv
-         GMPvM4KAbuUfCkhNhwwhlJx1x6DROiKfsaewpL82CxSQpOlsBkQDo7DlD1f009MEMrlq
-         AHleisjzCx+m4SSCNAhu9faHH2wKIehkhA3AwU7+D2rjWzuIeRsmg8TWZmHI1rYCZPaP
-         RJfPoWxVnVrnRQKeiqV47m+nTLxhvGCDkWrXlNR2dS+PfDR8CwFBTGtscrci36WVKiNC
-         L/3OTEW6Yn7+t8OLjfsF14x0MIlpCW+eDis6ssXZ26BE//pKwR0mrJ+cB0MR45rpZDPG
-         +Vrw==
-X-Forwarded-Encrypted: i=1; AJvYcCVh8mZr+sLW5xCRy7OeAAlXB1i6wOSwVeCGj0CUxMpUHChY3RbE+lfa8PpDWKaBddpFw3DrM3d5wSlQoOIRprmsXjzg9A9rCNK6LKWFNQ==
-X-Gm-Message-State: AOJu0YwkVoHzzoisDzXGlQDFpKDwhS4/gscyZp083sEaP75mxKiMOVmJ
-	yKEyh10dQzIPnI9v7i0oNKNfMM8cSEOf2eKZYHG8uZpdzP5SBZnq6YE/OAWS7qw=
-X-Google-Smtp-Source: AGHT+IFObr6upbk19CsbEk/hrnyseYTlL0kj+Bsy3TgaYS/NP7yMDUmNKlQBbbdk2H0Hrr++1Rq8mA==
-X-Received: by 2002:a05:6512:3b9d:b0:515:d16b:5ce5 with SMTP id g29-20020a0565123b9d00b00515d16b5ce5mr8784160lfv.7.1712015477198;
-        Mon, 01 Apr 2024 16:51:17 -0700 (PDT)
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id g28-20020a0565123b9c00b00515d127a399sm1176135lfv.58.2024.04.01.16.51.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Apr 2024 16:51:16 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 02 Apr 2024 02:51:15 +0300
-Subject: [PATCH v3 4/4] drm: panel: Add LG sw43408 panel driver
+	s=arc-20240116; t=1712016864; c=relaxed/simple;
+	bh=Y1r6F3EJQCsWu05mdM0m/RL9mp3ue/Gjw8EoC602RYY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jrVdWwSyg0NIEBdhzJuSAMade2qdU9pyT0DXlmPAnwJAyVvk6bgbl3wX1gNiprRQHjXfHhjYt4xlZsDRKW7vwNNOFfATz++dpIfDuax644KyGDUj/LhXV7eZ7meknKiG+Xe/msW6dTZwOoAcheTzCilDF6f2LrErOMR4kFQz9gQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r8U+TmfV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C150BC433C7;
+	Tue,  2 Apr 2024 00:14:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712016863;
+	bh=Y1r6F3EJQCsWu05mdM0m/RL9mp3ue/Gjw8EoC602RYY=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=r8U+TmfVVZ/2zSi5oYgBiPp1Nb+hWR6CaYSOEjZAKrgo5xp3sg7dK5CwDIdAXk9u4
+	 NgiDVNcciDxnNp3IfwVGznTuLSIVWMZjXcXwnbwe4XbOdvjf9DZ9vVzMyteNWp7xY7
+	 LL/wzbXs10Tdh0YIV+LpwBP/frBE7VQ47GA0mXwtV1MAwGnwF8E6dVEzviazcWoR7y
+	 1U01lgT81ggO+D38aFlgrDbklWzcwvLnnE2G4nRE0qmWtHjAEfnbRB+n6/WNrfYLfA
+	 SLvIJ4VeWHIWJ2X+70t4dCEmTbZftXAMpqUWp4u4RScbiqsOhpeXHIMWA0Bk3n7Lnw
+	 lDwkj3SGzuY2w==
+Message-ID: <45b2db99-2d03-469b-aa37-bc6c63cef141@kernel.org>
+Date: Tue, 2 Apr 2024 09:14:20 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 02/10] PCI: endpoint: Decouple EPC and PCIe bus
+ specific events
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Kishon Vijay Abraham I <kishon@kernel.org>,
+ Thierry Reding <thierry.reding@gmail.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>, Jingoo Han <jingoohan1@gmail.com>
+Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
+ linux-tegra@vger.kernel.org, Niklas Cassel <cassel@kernel.org>
+References: <20240401-pci-epf-rework-v2-0-970dbe90b99d@linaro.org>
+ <20240401-pci-epf-rework-v2-2-970dbe90b99d@linaro.org>
+Content-Language: en-US
+From: Damien Le Moal <dlemoal@kernel.org>
+Organization: Western Digital Research
+In-Reply-To: <20240401-pci-epf-rework-v2-2-970dbe90b99d@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240402-lg-sw43408-panel-v3-4-144f17a11a56@linaro.org>
-References: <20240402-lg-sw43408-panel-v3-0-144f17a11a56@linaro.org>
-In-Reply-To: <20240402-lg-sw43408-panel-v3-0-144f17a11a56@linaro.org>
-To: Sumit Semwal <sumit.semwal@linaro.org>, 
- Caleb Connolly <caleb.connolly@linaro.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Vinod Koul <vkoul@kernel.org>, Caleb Connolly <caleb@connolly.tech>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=12340;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=MNtQocnhPbn21d01nTwkNNinrQdzLkyr8DRma9TIYVw=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmC0hxpRxbtYshJNrsXySDiZuVd/ph6njfNGCw8
- UwfIDVBJuKJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZgtIcQAKCRCLPIo+Aiko
- 1RUqCACOH3WnFeD5VAvBwRUPH8zFdYMJMfHVIdncB+aoeA3We0Xr4uzyWrGO5WlU+pHiFRiL/Yy
- nM47AFrfLzljAjlowxd3NaAZdB3NPRznfSP0zUTxkWN/DN43T6KbdBnJjoRgmpiHjgIEXWqR7pe
- u8R4iA45lOBIUm4IRNsV/t5T5vMhN8JKItNZ02Z3ofnJZMer9fObN9kaLa71aRViy9apI8GEbEU
- dQzCgRPHhcgxJS+6+H0o49iqee4Xn7rWoCWADCsDFX56PjZDwxGKpVONBpe1D5YK/AM7blAlgIm
- /w1RvK4RyZBLVcDehP6H/dKAa4HzjAqNHipE6J/iGIFkINED
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-From: Sumit Semwal <sumit.semwal@linaro.org>
+On 4/2/24 00:50, Manivannan Sadhasivam wrote:
+> Currently, 'struct pci_epc_event_ops' has a bunch of events that are sent
+> from the EPC driver to EPF driver. But those events are a mix of EPC
+> specific events like core_init and PCIe bus specific events like LINK_UP,
+> LINK_DOWN, BME etc...
+> 
+> Let's decouple them to respective structs (pci_epc_event_ops,
+> pci_epc_bus_event_ops) to make the separation clear.
 
-LG SW43408 is 1080x2160, 4-lane MIPI-DSI panel, used in some Pixel3
-phones.
+I fail to see the benefits here. The event operation names are quite clear and,
+in my opinion, it is clear if an event op applies to the controller or to the
+bus/link. If anything, "core_init" could a little more clear, so renaming that
+"ep_controller_init" or something like that (clearly spelling out what is being
+initialized) seems enough to me. Similarly, the "bme" op name is very criptic.
+Renaming that to "bus_master_enable" would go a long way clarifying the code.
+For link events, "link_up", "link_down" are clear. So I think there is no need
+to split the event op struct like this. Renaming the ops is better.
 
-Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
-[vinod: Add DSC support]
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-[caleb: cleanup and support turning off the panel]
-Signed-off-by: Caleb Connolly <caleb@connolly.tech>
-[DB: partially rewrote the driver and fixed DSC programming]
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- MAINTAINERS                              |   8 +
- drivers/gpu/drm/panel/Kconfig            |  11 ++
- drivers/gpu/drm/panel/Makefile           |   1 +
- drivers/gpu/drm/panel/panel-lg-sw43408.c | 326 +++++++++++++++++++++++++++++++
- 4 files changed, 346 insertions(+)
+Note that I am not opposed to this patch, but I think it is just code churn
+that does not really bring any fundamental improvement. Regardless, renaming
+"core_init" and "bme" ops is I think desired.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index d36c19c1bf81..4cc43c16e07e 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -6789,6 +6789,14 @@ S:	Maintained
- F:	Documentation/devicetree/bindings/display/panel/jadard,jd9365da-h3.yaml
- F:	drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c
- 
-+DRM DRIVER FOR LG SW43408 PANELS
-+M:	Sumit Semwal <sumit.semwal@linaro.org>
-+M:	Caleb Connolly <caleb.connolly@linaro.org>
-+S:	Maintained
-+T:	git git://anongit.freedesktop.org/drm/drm-misc
-+F:	Documentation/devicetree/bindings/display/panel/lg,sw43408.yaml
-+F:	drivers/gpu/drm/panel/panel-lg-sw43408.c
-+
- DRM DRIVER FOR LOGICVC DISPLAY CONTROLLER
- M:	Paul Kocialkowski <paul.kocialkowski@bootlin.com>
- S:	Supported
-diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
-index 6dc451f58a3e..a55e9437c8cf 100644
---- a/drivers/gpu/drm/panel/Kconfig
-+++ b/drivers/gpu/drm/panel/Kconfig
-@@ -335,6 +335,17 @@ config DRM_PANEL_LG_LG4573
- 	  Say Y here if you want to enable support for LG4573 RGB panel.
- 	  To compile this driver as a module, choose M here.
- 
-+config DRM_PANEL_LG_SW43408
-+	tristate "LG SW43408 panel"
-+	depends on OF
-+	depends on DRM_MIPI_DSI
-+	depends on BACKLIGHT_CLASS_DEVICE
-+	help
-+	  Say Y here if you want to enable support for LG sw43408 panel.
-+	  The panel has a 1080x2160 resolution and uses
-+	  24 bit RGB per pixel. It provides a MIPI DSI interface to
-+	  the host and has a built-in LED backlight.
-+
- config DRM_PANEL_MAGNACHIP_D53E6EA8966
- 	tristate "Magnachip D53E6EA8966 DSI panel"
- 	depends on OF && SPI
-diff --git a/drivers/gpu/drm/panel/Makefile b/drivers/gpu/drm/panel/Makefile
-index 24a02655d726..0b40b010e8e7 100644
---- a/drivers/gpu/drm/panel/Makefile
-+++ b/drivers/gpu/drm/panel/Makefile
-@@ -34,6 +34,7 @@ obj-$(CONFIG_DRM_PANEL_LEADTEK_LTK050H3146W) += panel-leadtek-ltk050h3146w.o
- obj-$(CONFIG_DRM_PANEL_LEADTEK_LTK500HD1829) += panel-leadtek-ltk500hd1829.o
- obj-$(CONFIG_DRM_PANEL_LG_LB035Q02) += panel-lg-lb035q02.o
- obj-$(CONFIG_DRM_PANEL_LG_LG4573) += panel-lg-lg4573.o
-+obj-$(CONFIG_DRM_PANEL_LG_SW43408) += panel-lg-sw43408.o
- obj-$(CONFIG_DRM_PANEL_MAGNACHIP_D53E6EA8966) += panel-magnachip-d53e6ea8966.o
- obj-$(CONFIG_DRM_PANEL_NEC_NL8048HL11) += panel-nec-nl8048hl11.o
- obj-$(CONFIG_DRM_PANEL_NEWVISION_NV3051D) += panel-newvision-nv3051d.o
-diff --git a/drivers/gpu/drm/panel/panel-lg-sw43408.c b/drivers/gpu/drm/panel/panel-lg-sw43408.c
-new file mode 100644
-index 000000000000..c7611bfa796b
---- /dev/null
-+++ b/drivers/gpu/drm/panel/panel-lg-sw43408.c
-@@ -0,0 +1,326 @@
-+// SPDX-License-Identifier: GPL-2.0+
-+/*
-+ * Copyright (C) 2019-2024 Linaro Ltd
-+ * Author: Sumit Semwal <sumit.semwal@linaro.org>
-+ *	 Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-+ */
-+
-+#include <linux/backlight.h>
-+#include <linux/delay.h>
-+#include <linux/gpio/consumer.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+#include <linux/regulator/consumer.h>
-+
-+#include <video/mipi_display.h>
-+
-+#include <drm/drm_mipi_dsi.h>
-+#include <drm/drm_panel.h>
-+#include <drm/drm_probe_helper.h>
-+#include <drm/display/drm_dsc.h>
-+#include <drm/display/drm_dsc_helper.h>
-+
-+#define NUM_SUPPLIES 2
-+
-+struct sw43408_panel {
-+	struct drm_panel base;
-+	struct mipi_dsi_device *link;
-+
-+	const struct drm_display_mode *mode;
-+
-+	struct regulator_bulk_data supplies[NUM_SUPPLIES];
-+
-+	struct gpio_desc *reset_gpio;
-+
-+	struct drm_dsc_config dsc;
-+};
-+
-+static inline struct sw43408_panel *to_panel_info(struct drm_panel *panel)
-+{
-+	return container_of(panel, struct sw43408_panel, base);
-+}
-+
-+static int sw43408_unprepare(struct drm_panel *panel)
-+{
-+	struct sw43408_panel *ctx = to_panel_info(panel);
-+	int ret;
-+
-+	ret = mipi_dsi_dcs_set_display_off(ctx->link);
-+	if (ret < 0)
-+		dev_err(panel->dev, "set_display_off cmd failed ret = %d\n", ret);
-+
-+	ret = mipi_dsi_dcs_enter_sleep_mode(ctx->link);
-+	if (ret < 0)
-+		dev_err(panel->dev, "enter_sleep cmd failed ret = %d\n", ret);
-+
-+	msleep(100);
-+
-+	gpiod_set_value(ctx->reset_gpio, 1);
-+
-+	return regulator_bulk_disable(ARRAY_SIZE(ctx->supplies), ctx->supplies);
-+}
-+
-+static int sw43408_program(struct drm_panel *panel)
-+{
-+	struct sw43408_panel *ctx = to_panel_info(panel);
-+	struct drm_dsc_picture_parameter_set pps;
-+
-+	mipi_dsi_dcs_write_seq(ctx->link, MIPI_DCS_SET_GAMMA_CURVE, 0x02);
-+
-+	mipi_dsi_dcs_set_tear_on(ctx->link, MIPI_DSI_DCS_TEAR_MODE_VBLANK);
-+
-+	mipi_dsi_dcs_write_seq(ctx->link, 0x53, 0x0c, 0x30);
-+	mipi_dsi_dcs_write_seq(ctx->link, 0x55, 0x00, 0x70, 0xdf, 0x00, 0x70, 0xdf);
-+	mipi_dsi_dcs_write_seq(ctx->link, 0xf7, 0x01, 0x49, 0x0c);
-+
-+	mipi_dsi_dcs_exit_sleep_mode(ctx->link);
-+
-+	msleep(135);
-+
-+	/* COMPRESSION_MODE moved after setting the PPS */
-+
-+	mipi_dsi_dcs_write_seq(ctx->link, 0xb0, 0xac);
-+	mipi_dsi_dcs_write_seq(ctx->link, 0xe5,
-+			       0x00, 0x3a, 0x00, 0x3a, 0x00, 0x0e, 0x10);
-+	mipi_dsi_dcs_write_seq(ctx->link, 0xb5,
-+			       0x75, 0x60, 0x2d, 0x5d, 0x80, 0x00, 0x0a, 0x0b,
-+			       0x00, 0x05, 0x0b, 0x00, 0x80, 0x0d, 0x0e, 0x40,
-+			       0x00, 0x0c, 0x00, 0x16, 0x00, 0xb8, 0x00, 0x80,
-+			       0x0d, 0x0e, 0x40, 0x00, 0x0c, 0x00, 0x16, 0x00,
-+			       0xb8, 0x00, 0x81, 0x00, 0x03, 0x03, 0x03, 0x01,
-+			       0x01);
-+	msleep(85);
-+	mipi_dsi_dcs_write_seq(ctx->link, 0xcd,
-+			       0x00, 0x00, 0x00, 0x19, 0x19, 0x19, 0x19, 0x19,
-+			       0x19, 0x19, 0x19, 0x19, 0x19, 0x19, 0x19, 0x19,
-+			       0x16, 0x16);
-+	mipi_dsi_dcs_write_seq(ctx->link, 0xcb, 0x80, 0x5c, 0x07, 0x03, 0x28);
-+	mipi_dsi_dcs_write_seq(ctx->link, 0xc0, 0x02, 0x02, 0x0f);
-+	mipi_dsi_dcs_write_seq(ctx->link, 0x55, 0x04, 0x61, 0xdb, 0x04, 0x70, 0xdb);
-+	mipi_dsi_dcs_write_seq(ctx->link, 0xb0, 0xca);
-+
-+	mipi_dsi_dcs_set_display_on(ctx->link);
-+
-+	msleep(50);
-+
-+	ctx->link->mode_flags &= ~MIPI_DSI_MODE_LPM;
-+
-+	drm_dsc_pps_payload_pack(&pps, ctx->link->dsc);
-+	mipi_dsi_picture_parameter_set(ctx->link, &pps);
-+
-+	/* This panel uses shifted PPS selectors:
-+	 * 1 if pps_identifier is 0
-+	 * 2 if pps_identifier is 1
-+	 */
-+	mipi_dsi_compression_mode_ext(ctx->link, true,
-+				      MIPI_DSI_COMPRESSION_DSC, 1);
-+
-+	ctx->link->mode_flags |= MIPI_DSI_MODE_LPM;
-+
-+	return 0;
-+}
-+
-+static int sw43408_prepare(struct drm_panel *panel)
-+{
-+	struct sw43408_panel *ctx = to_panel_info(panel);
-+	int ret;
-+
-+	ret = regulator_bulk_enable(ARRAY_SIZE(ctx->supplies), ctx->supplies);
-+	if (ret < 0)
-+		return ret;
-+
-+	usleep_range(5000, 6000);
-+
-+	gpiod_set_value(ctx->reset_gpio, 0);
-+	usleep_range(9000, 10000);
-+	gpiod_set_value(ctx->reset_gpio, 1);
-+	usleep_range(1000, 2000);
-+	gpiod_set_value(ctx->reset_gpio, 0);
-+	usleep_range(9000, 10000);
-+
-+	ret = sw43408_program(panel);
-+	if (ret)
-+		goto poweroff;
-+
-+	return 0;
-+
-+poweroff:
-+	gpiod_set_value(ctx->reset_gpio, 1);
-+	regulator_bulk_disable(ARRAY_SIZE(ctx->supplies), ctx->supplies);
-+	return ret;
-+}
-+
-+static int sw43408_get_modes(struct drm_panel *panel,
-+			      struct drm_connector *connector)
-+{
-+	struct sw43408_panel *ctx = to_panel_info(panel);
-+
-+	return drm_connector_helper_get_modes_fixed(connector, ctx->mode);
-+}
-+
-+static int sw43408_backlight_update_status(struct backlight_device *bl)
-+{
-+	struct mipi_dsi_device *dsi = bl_get_data(bl);
-+	uint16_t brightness = backlight_get_brightness(bl);
-+
-+	return mipi_dsi_dcs_set_display_brightness_large(dsi, brightness);
-+}
-+
-+const struct backlight_ops sw43408_backlight_ops = {
-+	.update_status = sw43408_backlight_update_status,
-+};
-+
-+static int sw43408_backlight_init(struct sw43408_panel *ctx)
-+{
-+	struct device *dev = &ctx->link->dev;
-+	const struct backlight_properties props = {
-+		.type = BACKLIGHT_PLATFORM,
-+		.brightness = 255,
-+		.max_brightness = 255,
-+	};
-+
-+	ctx->base.backlight = devm_backlight_device_register(dev, dev_name(dev), dev,
-+							ctx->link,
-+							&sw43408_backlight_ops,
-+							&props);
-+
-+	if (IS_ERR(ctx->base.backlight))
-+		return dev_err_probe(dev, PTR_ERR(ctx->base.backlight),
-+				     "Failed to create backlight\n");
-+
-+	return 0;
-+}
-+
-+static const struct drm_panel_funcs sw43408_funcs = {
-+	.unprepare = sw43408_unprepare,
-+	.prepare = sw43408_prepare,
-+	.get_modes = sw43408_get_modes,
-+};
-+
-+static const struct drm_display_mode sw43408_default_mode = {
-+	.clock = 152340,
-+
-+	.hdisplay = 1080,
-+	.hsync_start = 1080 + 20,
-+	.hsync_end = 1080 + 20 + 32,
-+	.htotal = 1080 + 20 + 32 + 20,
-+
-+	.vdisplay = 2160,
-+	.vsync_start = 2160 + 20,
-+	.vsync_end = 2160 + 20 + 4,
-+	.vtotal = 2160 + 20 + 4 + 20,
-+
-+	.width_mm = 62,
-+	.height_mm = 124,
-+
-+	.type = DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED,
-+};
-+
-+static const struct of_device_id sw43408_of_match[] = {
-+	{ .compatible = "lg,sw43408", .data = &sw43408_default_mode },
-+	{ /* sentinel */ }
-+};
-+MODULE_DEVICE_TABLE(of, sw43408_of_match);
-+
-+static int sw43408_add(struct sw43408_panel *ctx)
-+{
-+	struct device *dev = &ctx->link->dev;
-+	int ret;
-+
-+	ctx->supplies[0].supply = "vddi"; /* 1.88 V */
-+	ctx->supplies[0].init_load_uA = 62000;
-+	ctx->supplies[1].supply = "vpnl"; /* 3.0 V */
-+	ctx->supplies[1].init_load_uA = 857000;
-+
-+	ret = devm_regulator_bulk_get(dev, ARRAY_SIZE(ctx->supplies),
-+				      ctx->supplies);
-+	if (ret < 0)
-+		return ret;
-+
-+	ctx->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
-+	if (IS_ERR(ctx->reset_gpio)) {
-+		dev_err(dev, "cannot get reset gpio %ld\n",
-+			      PTR_ERR(ctx->reset_gpio));
-+		return PTR_ERR(ctx->reset_gpio);
-+	}
-+
-+	ret = sw43408_backlight_init(ctx);
-+	if (ret < 0)
-+		return ret;
-+
-+	ctx->base.prepare_prev_first = true;
-+
-+	drm_panel_init(&ctx->base, dev, &sw43408_funcs, DRM_MODE_CONNECTOR_DSI);
-+
-+	drm_panel_add(&ctx->base);
-+	return ret;
-+}
-+
-+static int sw43408_probe(struct mipi_dsi_device *dsi)
-+{
-+	struct sw43408_panel *ctx;
-+	int ret;
-+
-+	ctx = devm_kzalloc(&dsi->dev, sizeof(*ctx), GFP_KERNEL);
-+	if (!ctx)
-+		return -ENOMEM;
-+
-+	ctx->mode = of_device_get_match_data(&dsi->dev);
-+	dsi->mode_flags = MIPI_DSI_MODE_LPM;
-+	dsi->format = MIPI_DSI_FMT_RGB888;
-+	dsi->lanes = 4;
-+
-+	ctx->link = dsi;
-+	mipi_dsi_set_drvdata(dsi, ctx);
-+
-+	ret = sw43408_add(ctx);
-+	if (ret < 0)
-+		return ret;
-+
-+	/* The panel is DSC panel only, set the dsc params */
-+	ctx->dsc.dsc_version_major = 0x1;
-+	ctx->dsc.dsc_version_minor = 0x1;
-+
-+	/* slice_count * slice_width == width */
-+	ctx->dsc.slice_height = 16;
-+	ctx->dsc.slice_width = 540;
-+	ctx->dsc.slice_count = 2;
-+	ctx->dsc.bits_per_component = 8;
-+	ctx->dsc.bits_per_pixel = 8 << 4;
-+	ctx->dsc.block_pred_enable = true;
-+
-+	dsi->dsc = &ctx->dsc;
-+
-+	return mipi_dsi_attach(dsi);
-+}
-+
-+static void sw43408_remove(struct mipi_dsi_device *dsi)
-+{
-+	struct sw43408_panel *ctx = mipi_dsi_get_drvdata(dsi);
-+	int ret;
-+
-+	ret = sw43408_unprepare(&ctx->base);
-+	if (ret < 0)
-+		dev_err(&dsi->dev, "failed to unprepare panel: %d\n",
-+			      ret);
-+
-+	ret = mipi_dsi_detach(dsi);
-+	if (ret < 0)
-+		dev_err(&dsi->dev, "failed to detach from DSI host: %d\n", ret);
-+
-+	drm_panel_remove(&ctx->base);
-+}
-+
-+static struct mipi_dsi_driver sw43408_driver = {
-+	.driver = {
-+		.name = "panel-lg-sw43408",
-+		.of_match_table = sw43408_of_match,
-+	},
-+	.probe = sw43408_probe,
-+	.remove = sw43408_remove,
-+};
-+module_mipi_dsi_driver(sw43408_driver);
-+
-+MODULE_AUTHOR("Sumit Semwal <sumit.semwal@linaro.org>");
-+MODULE_DESCRIPTION("LG SW436408 MIPI-DSI LED panel");
-+MODULE_LICENSE("GPL");
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  drivers/pci/endpoint/functions/pci-epf-mhi.c  |  8 ++++++--
+>  drivers/pci/endpoint/functions/pci-epf-test.c |  8 ++++++--
+>  drivers/pci/endpoint/pci-epc-core.c           | 20 ++++++++++----------
+>  include/linux/pci-epf.h                       | 23 ++++++++++++++++-------
+>  4 files changed, 38 insertions(+), 21 deletions(-)
+> 
+> diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+> index 2c54d80107cf..280863c0eeb9 100644
+> --- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
+> +++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+> @@ -896,8 +896,11 @@ static void pci_epf_mhi_unbind(struct pci_epf *epf)
+>  	pci_epc_clear_bar(epc, epf->func_no, epf->vfunc_no, epf_bar);
+>  }
+>  
+> -static const struct pci_epc_event_ops pci_epf_mhi_event_ops = {
+> +static const struct pci_epc_event_ops pci_epf_mhi_epc_event_ops = {
+>  	.core_init = pci_epf_mhi_core_init,
+> +};
+> +
+> +static const struct pci_epc_bus_event_ops pci_epf_mhi_bus_event_ops = {
+>  	.link_up = pci_epf_mhi_link_up,
+>  	.link_down = pci_epf_mhi_link_down,
+>  	.bme = pci_epf_mhi_bme,
+> @@ -919,7 +922,8 @@ static int pci_epf_mhi_probe(struct pci_epf *epf,
+>  	epf_mhi->info = info;
+>  	epf_mhi->epf = epf;
+>  
+> -	epf->event_ops = &pci_epf_mhi_event_ops;
+> +	epf->epc_event_ops = &pci_epf_mhi_epc_event_ops;
+> +	epf->bus_event_ops = &pci_epf_mhi_bus_event_ops;
+>  
+>  	mutex_init(&epf_mhi->lock);
+>  
+> diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
+> index 977fb79c1567..973db0b1bde2 100644
+> --- a/drivers/pci/endpoint/functions/pci-epf-test.c
+> +++ b/drivers/pci/endpoint/functions/pci-epf-test.c
+> @@ -798,8 +798,11 @@ static int pci_epf_test_link_up(struct pci_epf *epf)
+>  	return 0;
+>  }
+>  
+> -static const struct pci_epc_event_ops pci_epf_test_event_ops = {
+> +static const struct pci_epc_event_ops pci_epf_test_epc_event_ops = {
+>  	.core_init = pci_epf_test_core_init,
+> +};
+> +
+> +static const struct pci_epc_bus_event_ops pci_epf_test_bus_event_ops = {
+>  	.link_up = pci_epf_test_link_up,
+>  };
+>  
+> @@ -916,7 +919,8 @@ static int pci_epf_test_probe(struct pci_epf *epf,
+>  
+>  	INIT_DELAYED_WORK(&epf_test->cmd_handler, pci_epf_test_cmd_handler);
+>  
+> -	epf->event_ops = &pci_epf_test_event_ops;
+> +	epf->epc_event_ops = &pci_epf_test_epc_event_ops;
+> +	epf->bus_event_ops = &pci_epf_test_bus_event_ops;
+>  
+>  	epf_set_drvdata(epf, epf_test);
+>  	return 0;
+> diff --git a/drivers/pci/endpoint/pci-epc-core.c b/drivers/pci/endpoint/pci-epc-core.c
+> index 47d27ec7439d..f202ae07ffa9 100644
+> --- a/drivers/pci/endpoint/pci-epc-core.c
+> +++ b/drivers/pci/endpoint/pci-epc-core.c
+> @@ -692,8 +692,8 @@ void pci_epc_linkup(struct pci_epc *epc)
+>  	mutex_lock(&epc->list_lock);
+>  	list_for_each_entry(epf, &epc->pci_epf, list) {
+>  		mutex_lock(&epf->lock);
+> -		if (epf->event_ops && epf->event_ops->link_up)
+> -			epf->event_ops->link_up(epf);
+> +		if (epf->bus_event_ops && epf->bus_event_ops->link_up)
+> +			epf->bus_event_ops->link_up(epf);
+>  		mutex_unlock(&epf->lock);
+>  	}
+>  	mutex_unlock(&epc->list_lock);
+> @@ -718,8 +718,8 @@ void pci_epc_linkdown(struct pci_epc *epc)
+>  	mutex_lock(&epc->list_lock);
+>  	list_for_each_entry(epf, &epc->pci_epf, list) {
+>  		mutex_lock(&epf->lock);
+> -		if (epf->event_ops && epf->event_ops->link_down)
+> -			epf->event_ops->link_down(epf);
+> +		if (epf->bus_event_ops && epf->bus_event_ops->link_down)
+> +			epf->bus_event_ops->link_down(epf);
+>  		mutex_unlock(&epf->lock);
+>  	}
+>  	mutex_unlock(&epc->list_lock);
+> @@ -744,8 +744,8 @@ void pci_epc_init_notify(struct pci_epc *epc)
+>  	mutex_lock(&epc->list_lock);
+>  	list_for_each_entry(epf, &epc->pci_epf, list) {
+>  		mutex_lock(&epf->lock);
+> -		if (epf->event_ops && epf->event_ops->core_init)
+> -			epf->event_ops->core_init(epf);
+> +		if (epf->epc_event_ops && epf->epc_event_ops->core_init)
+> +			epf->epc_event_ops->core_init(epf);
+>  		mutex_unlock(&epf->lock);
+>  	}
+>  	epc->init_complete = true;
+> @@ -767,8 +767,8 @@ void pci_epc_notify_pending_init(struct pci_epc *epc, struct pci_epf *epf)
+>  {
+>  	if (epc->init_complete) {
+>  		mutex_lock(&epf->lock);
+> -		if (epf->event_ops && epf->event_ops->core_init)
+> -			epf->event_ops->core_init(epf);
+> +		if (epf->epc_event_ops && epf->epc_event_ops->core_init)
+> +			epf->epc_event_ops->core_init(epf);
+>  		mutex_unlock(&epf->lock);
+>  	}
+>  }
+> @@ -792,8 +792,8 @@ void pci_epc_bme_notify(struct pci_epc *epc)
+>  	mutex_lock(&epc->list_lock);
+>  	list_for_each_entry(epf, &epc->pci_epf, list) {
+>  		mutex_lock(&epf->lock);
+> -		if (epf->event_ops && epf->event_ops->bme)
+> -			epf->event_ops->bme(epf);
+> +		if (epf->bus_event_ops && epf->bus_event_ops->bme)
+> +			epf->bus_event_ops->bme(epf);
+>  		mutex_unlock(&epf->lock);
+>  	}
+>  	mutex_unlock(&epc->list_lock);
+> diff --git a/include/linux/pci-epf.h b/include/linux/pci-epf.h
+> index adee6a1b35db..77399fecaeb5 100644
+> --- a/include/linux/pci-epf.h
+> +++ b/include/linux/pci-epf.h
+> @@ -69,14 +69,21 @@ struct pci_epf_ops {
+>  };
+>  
+>  /**
+> - * struct pci_epc_event_ops - Callbacks for capturing the EPC events
+> - * @core_init: Callback for the EPC initialization complete event
+> - * @link_up: Callback for the EPC link up event
+> - * @link_down: Callback for the EPC link down event
+> - * @bme: Callback for the EPC BME (Bus Master Enable) event
+> + * struct pci_epc_event_ops - Callbacks for capturing the EPC specific events
+> + * @core_init: Callback for the EPC initialization event
+>   */
+>  struct pci_epc_event_ops {
+>  	int (*core_init)(struct pci_epf *epf);
+> +};
+> +
+> +/**
+> + * struct pci_epc_bus_event_ops - Callbacks for capturing the PCIe bus specific
+> + *                               events
+> + * @link_up: Callback for the PCIe bus link up event
+> + * @link_down: Callback for the PCIe bus link down event
+> + * @bme: Callback for the PCIe bus BME (Bus Master Enable) event
+> + */
+> +struct pci_epc_bus_event_ops {
+>  	int (*link_up)(struct pci_epf *epf);
+>  	int (*link_down)(struct pci_epf *epf);
+>  	int (*bme)(struct pci_epf *epf);
+> @@ -150,7 +157,8 @@ struct pci_epf_bar {
+>   * @is_vf: true - virtual function, false - physical function
+>   * @vfunction_num_map: bitmap to manage virtual function number
+>   * @pci_vepf: list of virtual endpoint functions associated with this function
+> - * @event_ops: Callbacks for capturing the EPC events
+> + * @epc_event_ops: Callbacks for capturing the EPC events
+> + * @bus_event_ops: Callbacks for capturing the PCIe bus events
+>   */
+>  struct pci_epf {
+>  	struct device		dev;
+> @@ -180,7 +188,8 @@ struct pci_epf {
+>  	unsigned int		is_vf;
+>  	unsigned long		vfunction_num_map;
+>  	struct list_head	pci_vepf;
+> -	const struct pci_epc_event_ops *event_ops;
+> +	const struct pci_epc_event_ops *epc_event_ops;
+> +	const struct pci_epc_bus_event_ops *bus_event_ops;
+>  };
+>  
+>  /**
+> 
 
 -- 
-2.39.2
+Damien Le Moal
+Western Digital Research
 
 
