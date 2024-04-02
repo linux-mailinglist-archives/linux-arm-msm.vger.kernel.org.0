@@ -1,174 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-16100-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16101-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B51548952FB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 14:30:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 66EA3895313
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 14:35:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 695641F2576E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 12:30:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1C319285C2A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Apr 2024 12:35:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A8EC5467B;
-	Tue,  2 Apr 2024 12:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F73E7E761;
+	Tue,  2 Apr 2024 12:35:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L6uGxGOM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uqLL0PKI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB8C3611A;
-	Tue,  2 Apr 2024 12:30:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B8F634EA
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Apr 2024 12:35:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712061033; cv=none; b=K9QUMjUsr9tf+b1QV1ExclP4vGpX67c/jBfl5Pz8HaThWUaYeEWGBdq7EkoUPbYtrf5YYzUTi/GXFeZIl02sfIymsiocHeQ4uAQinSjvhPkAOM+KBeS2AqR/ebnjO/ROXv4C23Vnmw0OIjRinUrDdy67ZopBkPwCrC2SbIRmxMg=
+	t=1712061333; cv=none; b=oQPstlpZhkotmcc4Kud8CJ6ApK789Mf8giZeH3TUiBuxOu0/dPpYMQSg27mzGTje03i6Rn8W4744e+KqRoITzkuza8k+Sh2bWsT/4vDDKKq7ImRbIsbILDc/BWtv+3/cuzq+BZTGUI1Su0L87obsRvScQOOUYfmWQkPbHQHr7v0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712061033; c=relaxed/simple;
-	bh=ddqA/sogrh0pyj1HLmomLRqQ5T9jyI8YMNiLkUaOzcI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QTcNnmPqsqLp7xWqWs4vqv2qjSUKMbLwjmzxX1sMh2PY6Y9Rk4Ejvab1gaNIDfEsVadFIDAuleorRPwbBo4Bp0D04u/GVIB5YWjLvKcOTda6cCflk64X0zJ5dWTSJdOf0RlYusaUrUO/8TE334XXy/LLAfqsW1ZL8JjQN/6oUkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L6uGxGOM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9495FC433C7;
-	Tue,  2 Apr 2024 12:30:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712061032;
-	bh=ddqA/sogrh0pyj1HLmomLRqQ5T9jyI8YMNiLkUaOzcI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=L6uGxGOMQk52/JmF2EUy63XOCU5OVmz0jruepa9iYN8BIaRPWC4cQPUJVABnsPHCo
-	 0V/dQn+qiBGttarE3gSJtHt+n65PcRWWOZ/ncPZ+9YMPf/vTlMGZjxDwuoOJnLnOw5
-	 b01Hd3CE1m0ahH6nwzwV/ixQtfAb0jotPOEePH+lfXrt44kYyk/zrb99PFE7g22q3Q
-	 g17+6aUxxgGtnb7nupU9HSfQovlZECjlgDVNTIEnlCvoauqcfkM7b3Ja2ms74di4Wc
-	 LqwmIUeykZLTCNBdger75mNrnFgDlIx3otNqVb9uChA49IHevjsuS7GBJv7s7nsCg4
-	 akGBBITEnJpJg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rrdHc-0000000050M-1X6I;
-	Tue, 02 Apr 2024 14:30:32 +0200
-Date: Tue, 2 Apr 2024 14:30:32 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Maximilian Luz <luzmaximilian@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Guru Das Srinagesh <quic_gurus@quicinc.com>,
-	Ard Biesheuvel <ardb@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] firmware: qcom: uefisecapp: Fix memory related IO errors
- and crashes
-Message-ID: <Zgv6aJ4byNiujmo-@hovoldconsulting.com>
-References: <20240329201827.3108093-1-luzmaximilian@gmail.com>
+	s=arc-20240116; t=1712061333; c=relaxed/simple;
+	bh=ZhodAsfbqQph/6Oss9KdocUA4jNT8v1VGBe4Vmslbbg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EGe5dQIiGRfuJ3CO0BRSmJZhIOr46PxDdEp2pdRIoQ1nikEC33j4rSBjXJloxTCVSLGIu7S5L0YwtrLHo9xFQ5l9glpxfhSyS6+DOh+iM7wDE41VZMQCD93xRYQvjMXNO3yUtcTl6FmlGrnGU+KnPd0OTc8RR61+kW8U2ftBG9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uqLL0PKI; arc=none smtp.client-ip=209.85.128.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-615019cd427so11884127b3.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Apr 2024 05:35:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712061329; x=1712666129; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZhodAsfbqQph/6Oss9KdocUA4jNT8v1VGBe4Vmslbbg=;
+        b=uqLL0PKItSDctSUqxZsS/uT7vhnfgQzNItY7LTWQwGtERIAfDHkmi9vTKM/KWSOnZG
+         5cWY4VnZ/zB0EU9JaX8HcKrzWY6Bfiyn9ZjC8emWdaKirfIk5c6cfhLRmfgpLLUReKr9
+         yRjumjg65uKbF7b/xAwkcwPx7RQ3tjsiJ3eg7KVDrDx5qEpqbRUaH0ee2bQTWeK8yRDw
+         IZeIcTsL4ZN8lmj5lCAuHZlu//3WUHVTZLeAUR178ssgzwE8qeahHVjiEj3sK9F9hh1f
+         udU2TW8C/q7xEaGt7K/yviWJwTmaKvKoOb960rlGVp9GAq3tJB90z8axILGKqiHa0Kpd
+         L6yQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712061329; x=1712666129;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZhodAsfbqQph/6Oss9KdocUA4jNT8v1VGBe4Vmslbbg=;
+        b=e5Nfai9HWw1lphmCRm5fL169Ves9M9gCV25Wqg7vVVYqi4/DlNLD/M9TqgPV5JFJ57
+         lahxIANzOOrI9gQDFpj9DegE3m2FsD7AYKZg0xdUXPsZ6dWq90/SQlouwdLZ9206j7dl
+         MfMo3/nhseDP3X5aUwDRshPkXXuThnExB+Hb+C6RE5jrbS+lUGLP/yMaY/09GiSWlTOp
+         cc+oX13VDnCc+Ga2DKZfnlzw7Q6oM/pPDrKCvQ2BHB0FBAva39m2vIXsb9ICU5Cb9i8K
+         q20c90PoxhSji6gD5W0v8ybH4auvKgSayGcrCmIaommcMzb01GLgIeP0xCd7U4aE70dg
+         7oRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWQINeCpD2f0Tro4wR9eBMoyd7NzsrtiO01FO3Dubspi0Tf/hxmg4keNp6RLgwc6vd1BJVfLKUYnf8l66eszl3Wz0omLB2jOx4j/CsuLg==
+X-Gm-Message-State: AOJu0Yz7JHw11GZfQ6VAtkfXVdWKkn73KGJwwCczFtKHs+YW8C/axQNn
+	X7MFQzXb7zTdH4cCFHoRy9ECyVbBRkzRWjWsS8IgfvQNGUH0/1hiOj2RiiC7NLUNLyKToXJ2VSA
+	7h5D2lG8B3NLy8aF4IYITMDNkUq+iMWpDr7WgJQ==
+X-Google-Smtp-Source: AGHT+IG5hxT/EMYnHoU6u7S6MkbvLw5l9U/Ss0P2rks8Fb0m+zQTGqjqkjSlSz0lY1KsLwpjx1moujtIXAN3uBffPV8=
+X-Received: by 2002:a25:6d86:0:b0:dc2:2d75:5fde with SMTP id
+ i128-20020a256d86000000b00dc22d755fdemr10687728ybc.29.1712061328813; Tue, 02
+ Apr 2024 05:35:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240329201827.3108093-1-luzmaximilian@gmail.com>
+References: <20240322132619.6389-1-wsa+renesas@sang-engineering.com> <20240322132619.6389-65-wsa+renesas@sang-engineering.com>
+In-Reply-To: <20240322132619.6389-65-wsa+renesas@sang-engineering.com>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Tue, 2 Apr 2024 14:35:17 +0200
+Message-ID: <CACRpkdbtRoDtWN4mnyZY_yEfWQFPCQaVudjBki8N1sOXxXWupQ@mail.gmail.com>
+Subject: Re: [PATCH 64/64] i2c: reword i2c_algorithm in drivers according to
+ newest specification
+To: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Cc: linux-i2c@vger.kernel.org, Elie Morisse <syniurge@gmail.com>, 
+	Shyam Sundar S K <shyam-sundar.s-k@amd.com>, Andi Shyti <andi.shyti@kernel.org>, 
+	Codrin Ciubotariu <codrin.ciubotariu@microchip.com>, 
+	Nicolas Ferre <nicolas.ferre@microchip.com>, 
+	Alexandre Belloni <alexandre.belloni@bootlin.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
+	Krzysztof Adamski <krzysztof.adamski@nokia.com>, Benson Leung <bleung@chromium.org>, 
+	Guenter Roeck <groeck@chromium.org>, Jarkko Nikula <jarkko.nikula@linux.intel.com>, 
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+	Mika Westerberg <mika.westerberg@linux.intel.com>, Jan Dabros <jsd@semihalf.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
+	Jean-Marie Verdun <verdun@hpe.com>, Nick Hawkins <nick.hawkins@hpe.com>, 
+	Yicong Yang <yangyicong@hisilicon.com>, Oleksij Rempel <o.rempel@pengutronix.de>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Shawn Guo <shawnguo@kernel.org>, 
+	Sascha Hauer <s.hauer@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
+	Paul Cercueil <paul@crapouillou.net>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, Khalil Blaiech <kblaiech@nvidia.com>, 
+	Asmaa Mnebhi <asmaa@nvidia.com>, Qii Wang <qii.wang@mediatek.com>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>, 
+	Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>, 
+	Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>, 
+	Ajay Gupta <ajayg@nvidia.com>, Peter Korsgaard <peter@korsgaard.com>, Andrew Lunn <andrew@lunn.ch>, 
+	Robert Richter <rric@kernel.org>, Aaro Koskinen <aaro.koskinen@iki.fi>, 
+	Janusz Krzysztofik <jmkrzyszt@gmail.com>, Tony Lindgren <tony@atomide.com>, Vignesh R <vigneshr@ti.com>, 
+	Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>, 
+	Christophe Leroy <christophe.leroy@csgroup.eu>, "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>, 
+	"Naveen N. Rao" <naveen.n.rao@linux.ibm.com>, Hector Martin <marcan@marcan.st>, 
+	Sven Peter <sven@svenpeter.dev>, Alyssa Rosenzweig <alyssa@rosenzweig.io>, 
+	Vladimir Zapolskiy <vz@mleia.com>, Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>, 
+	Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>, Alain Volmat <alain.volmat@foss.st.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Thierry Reding <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Laxman Dewangan <ldewangan@nvidia.com>, Dmitry Osipenko <digetx@gmail.com>, 
+	Conghui Chen <conghui.chen@intel.com>, Viresh Kumar <viresh.kumar@linaro.org>, 
+	Michal Simek <michal.simek@amd.com>, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, chrome-platform@lists.linux.dev, 
+	linux-samsung-soc@vger.kernel.org, imx@lists.linux.dev, 
+	linux-mips@vger.kernel.org, linux-amlogic@lists.infradead.org, 
+	linux-mediatek@lists.infradead.org, openbmc@lists.ozlabs.org, 
+	linux-omap@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, 
+	asahi@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
+	linux-renesas-soc@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
+	linux-tegra@vger.kernel.org, virtualization@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Mar 29, 2024 at 09:18:25PM +0100, Maximilian Luz wrote:
-> It turns out that while the QSEECOM APP_SEND command has specific fields
-> for request and response buffers, uefisecapp expects them both to be in
-> a single memory region. Failure to adhere to this has (so far) resulted
-> in either no response being written to the response buffer (causing an
-> EIO to be emitted down the line), the SCM call to fail with EINVAL
-> (i.e., directly from TZ/firmware), or the device to be hard-reset.
-> 
-> While this issue can be triggered deterministically, in the current form
-> it seems to happen rather sporadically (which is why it has gone
-> unnoticed during earlier testing). This is likely due to the two
-> kzalloc() calls (for request and response) being directly after each
-> other. Which means that those likely return consecutive regions most of
-> the time, especially when not much else is going on in the system.
-> 
-> Fix this by allocating a single memory region for both request and
-> response buffers, properly aligning both structs inside it. This
-> unfortunately also means that the qcom_scm_qseecom_app_send() interface
-> needs to be restructured, as it should no longer map the DMA regions
-> separately. Therefore, move the responsibility of DMA allocation (or
-> mapping) to the caller.
-> 
-> Fixes: 759e7a2b62eb ("firmware: Add support for Qualcomm UEFI Secure Application")
-> Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
+On Fri, Mar 22, 2024 at 2:27=E2=80=AFPM Wolfram Sang
+<wsa+renesas@sang-engineering.com> wrote:
 
-Thanks for tracking this down. I can confirm that this fixes the
-hypervisor reset I can trigger by repeatedly reading an EFI variable on
-the X13s. Before it triggered within minutes, now I ran it for 3 hours
-without any issues:
+> Match the wording in i2c_algorithm in I2C drivers wrt. the newest I2C
+> v7, SMBus 3.2, I3C specifications and replace "master/slave" with more
+> appropriate terms. For some drivers, this means no more conversions are
+> needed. For the others more work needs to be done but this will be
+> performed incrementally along with API changes/improvements. All these
+> changes here are simple search/replace results.
+>
+> Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
 
-Even if the patch is a bit large it's straight-forward and fixes a
-critical bug so I think this needs to go to stable as well:
-
-Cc: stable@vger.kernel.org	# 6.7
-
-A couple of comments below.
-
-> @@ -277,10 +296,15 @@ static efi_status_t qsee_uefi_get_variable(struct qcuefi_client *qcuefi, const e
->  	unsigned long buffer_size = *data_size;
->  	efi_status_t efi_status = EFI_SUCCESS;
->  	unsigned long name_length;
-> +	dma_addr_t cmd_buf_phys;
-
-Throughout the patch, could you please refer to DMA addresses as DMA
-addresses rather than physical addresses, for example, by using a "_dma"
-rather than "_phys" suffix here?
-
-> +	size_t cmd_buf_size;
-> +	void *cmd_buf_virt;
-
-I'd also prefer if you dropped the "_virt" suffix from the buffer
-pointers.
-
-> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-> index 49ddbcab06800..fc59688227f43 100644
-> --- a/drivers/firmware/qcom/qcom_scm.c
-> +++ b/drivers/firmware/qcom/qcom_scm.c
-> @@ -1579,46 +1579,26 @@ EXPORT_SYMBOL_GPL(qcom_scm_qseecom_app_get_id);
->  /**
->   * qcom_scm_qseecom_app_send() - Send to and receive data from a given QSEE app.
->   * @app_id:   The ID of the target app.
-> - * @req:      Request buffer sent to the app (must be DMA-mappable).
-> + * @req:      Physical address of the request buffer sent to the app.
-
-DMA address
-
->   * @req_size: Size of the request buffer.
-> - * @rsp:      Response buffer, written to by the app (must be DMA-mappable).
-> + * @rsp:      Physical address of the response buffer, written to by the app.
-
-DMA address
-
->   * @rsp_size: Size of the response buffer.
->   *
->   * Sends a request to the QSEE app associated with the given ID and read back
-> - * its response. The caller must provide two DMA memory regions, one for the
-> - * request and one for the response, and fill out the @req region with the
-> + * its response. The caller must provide two physical memory regions, one for
-
-DMA memory
-
-> + * the request and one for the response, and fill out the @req region with the
->   * respective (app-specific) request data. The QSEE app reads this and returns
->   * its response in the @rsp region.
->   *
->   * Return: Zero on success, nonzero on failure.
->   */
-> -int qcom_scm_qseecom_app_send(u32 app_id, void *req, size_t req_size, void *rsp,
-> -			      size_t rsp_size)
-> +int qcom_scm_qseecom_app_send(u32 app_id, dma_addr_t req, size_t req_size,
-> +			      dma_addr_t rsp, size_t rsp_size)
-
-And similar throughout.
-
-With that fixed, feel free to add:
-
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-
-Johan
+Yours,
+Linus Walleij
 
