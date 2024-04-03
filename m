@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-16184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80A96896322
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 05:44:06 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 15FF489632F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 05:44:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A4B231C2234D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 03:44:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 393A31C21340
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 03:44:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 042F23F9FC;
-	Wed,  3 Apr 2024 03:44:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8AFD3F9E9;
+	Wed,  3 Apr 2024 03:44:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ed5zLmT0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Hr7u0PgO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4713D76
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 03:43:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BB73F9E0
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 03:43:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712115840; cv=none; b=F5OcO/49BicX6kxRRKfan70iN6Dk0k3iFQ+q8Nu2CLy15M/SzKzwWa1gg8XPlIeqjQRbtPBCAdKOkUlg0rRxpYrRMlugbJkltmJuyHaYI8ivnRkLi3itwy8x8qvjap+yZ89dhjOS7c7McCnTRenUcTuRIF018RxagkBKZjQWEpE=
+	t=1712115843; cv=none; b=GjknVv47LNNKatyYlIBkJHVCDUy+dPC7EeVxa4NOViDErxblLQYw0Sa80SNJ3IKCSbxjk7mdP5vZutTRZ71SNO6zoMcTfDGqiUI3D4MgJtkBEkkX/3cABbeWlKPyQ7fQ9IybyUxqomczf90TOw3gJmEx4ZnXAt+GnPDLEEf9Tyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712115840; c=relaxed/simple;
-	bh=rSrTFe62I9QM/1EhNPjLmXRF/kaFAIciPwvaSniEBGQ=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=SSOSczHqD5ggcphhzBJ6rGuqwOVWJ3dGHNV7xomZQZ8Xaag/AtFKPSK7jBIvwpTA6RmfqN33CcmJAx2+58/upHF1wypP1M2Zd8w2k7isXOZEN0BNL1TKc8Hh1Zzxqgsvc/gra9GdFUGMEKUwAh7WVV7/iWLMw/RWLaFeCg7oFEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ed5zLmT0; arc=none smtp.client-ip=209.85.167.47
+	s=arc-20240116; t=1712115843; c=relaxed/simple;
+	bh=vWEb7jmHKp7plqaXgrmEtB1TTF7h90FJxtovdzgscyQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=faRI1yROZ3XfNalVvlvoAgxBodglhR7A7v292Hzx8jzc24Bo7MWNl9MnkIehi5gH+A+YBEXA6/WdUgKi61v88vi8QpBA4m4pBnucZmhwpIuz/NmBI4CTF3qG1YK7hbTsAjA92ZUyZ512PViaLbYAaiqEeDWtrVQ0MzXkhtHxx0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Hr7u0PgO; arc=none smtp.client-ip=209.85.167.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-516a01c8490so437047e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Apr 2024 20:43:58 -0700 (PDT)
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-516a01c8490so437057e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Apr 2024 20:43:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712115837; x=1712720637; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=XS0Lxu+/FVxjACw8JTLACxUWz4uzZ8rlXWaKKTuNDJE=;
-        b=Ed5zLmT0t7vr3aQVd1/cThzSG2DJ1Jlpoch1q3SqFNM097NosUAHpbVU4AuKeqJAF5
-         tytI4w8Fch3RNYb3wlldb61TLIOiWMLcano9DwG3tBRuh9SSqXkQcTPKHGt92U+pjNxn
-         ftW965xTJLKCK0ik241qyd2QHchllEUNv/TZSPq4bmloBS4NoeNl14HKaUZ+2YnYbbjr
-         rhbJukgvpnBdvLO8BlPW1nK8s54hThn+5O0axM7bBcrgSjqamxEFmiFknBDemVXzetYJ
-         2amtgu0TJ7zxPPlor6DuXXYffsD6boCqUhEJna0QI1ruEV/r7n89oZr+H9GjO10gjkvk
-         H4XQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712115837; x=1712720637;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1712115838; x=1712720638; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=XS0Lxu+/FVxjACw8JTLACxUWz4uzZ8rlXWaKKTuNDJE=;
-        b=FAMlMul6HYu8LgISYh3rKAO6KEjODSouuXJIGYct191gaizrfuWL4hdbca0i40NfDe
-         qdOd59tYliCiIbrGlM5u+pY4JsIXN8s0+txkLZjVa3oxG7UQ6KbVXOh8KA5AZ6M0zVql
-         5fAu73iZ8VoQnAqQ8ZBpyCnTh4T/cmRa4WI8QOToSlh0XHiWAayxNX39PSVwkZyrbdvm
-         jGfRRJmycHyn5R76sVJcEjgvU66z70HJrcmZoyiVNSH8Fv1Yc6Qx1Xx6mZkm+2OcKGSD
-         Hg3nkVlo3lBdQf2sjTBfwpA7aDQhL0SymMRq5CxesFZowTppGC8rjUJbXzjO+pIfAcbO
-         hRPg==
-X-Forwarded-Encrypted: i=1; AJvYcCUs3O1DV5ibo8LAdr7WRk3/9ghu8tEzf7SYgvycNkJPWdYz06D7lcNtzjQFbg9DdBY7BVmhPrKACP1GnuSJw4M4c1yYl8bPSHTwqnQEYA==
-X-Gm-Message-State: AOJu0YweOy8TmvFxEqK4oS5+B1TFn7yhXf9ft25v5B7p+KqnGvpgjcl+
-	2rbN+FiqW5O7QtUmuPQbOwVKf2tsQ7WN1cxFv/00QNUSVyqGPN7niGT4cw+USdM=
-X-Google-Smtp-Source: AGHT+IF9aIbDAcgO+2JkWLWVyE3Aa+9e7603ybY0IFrdKHtsB5NLBU4SZqZufrVWel33AjNRcwKlYw==
-X-Received: by 2002:a05:6512:3d92:b0:515:c0cb:3ca2 with SMTP id k18-20020a0565123d9200b00515c0cb3ca2mr306804lfv.16.1712115837026;
-        Tue, 02 Apr 2024 20:43:57 -0700 (PDT)
+        bh=OOB/W2al4fAWY1hZvIX+eyNZGmg0uhdq3Rfxx+fRp2E=;
+        b=Hr7u0PgOqi1kxHVQvk7qSANIQfDxTLkAHFKnCsvMun/d/n12lFoCzbzllOAN1uS9MM
+         eS9L7iFJxWhJKH1uMSF8QmxKTPYM13dhLxV3fY8UKOH9I6o/DnIvhAnVLjYREmIHbWfo
+         FYJYvrQP1taAphpHlh0RVVyJcl2GPyTa47U5ZtiOoM4QRlSGVhImaFGjXK5I3csdAXms
+         9Sh1VpgqetbmperuyEyUYs135vz5dwAkCRpXOb6vgc3IGo9HPbLbiFTYcbCq0jH1wJtB
+         tTyFvzwuYw1kfAkQFzPBP0hHupYFmzNN5f/GY++7gv+AVycDySTYGOhQ+wKZIfKHSBY8
+         Q3qg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712115838; x=1712720638;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=OOB/W2al4fAWY1hZvIX+eyNZGmg0uhdq3Rfxx+fRp2E=;
+        b=Sd9YItkFsblVIiKKmc+v1okQz1Ohwy0qkvl/kZ2LW4OiUsC4WW4AangHT9Q6tjvk7n
+         mvrHi7/CVMmUlwPwIBW0g7Aw0dLWEefKK0sE3PVnLJvTPWffeFRy+2arGK2ZZ5x8eYuj
+         EX9r6DVBTej19V4vIqPsK/plGz4wy79AsMVQFUValElvfSAd57/xE8b8EqBUFE1fAw0e
+         mWgnvZA//vZ+nqCFevxXCEiRbKMQ0tNCLTu967emZdFLb73GYqW2un5tbqM0rq6m0/A5
+         jawgfb3slfm0+y0KHug2pk7mmjKdTu+vo8PnOxEmaPMCtzRPrTqT3StdhDyq0OnGAHY1
+         p8OQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWFdgJgO+FMUuGxhy0kQ5cVyHM0hEutGosfNSC5avququJ+TcLBCv9Qu5fObloyFaeX3LYIVQTZOSl8LSmJXgLqdCIfnz9wHpRbVBN1/w==
+X-Gm-Message-State: AOJu0Yz4ZXA0nGFtcCfYCDAq0VjHUN1iyrbrf16LX09zh+FxwtGFZUV7
+	BKFyhiJOj0hgHw7dxhd5pTqBu53LP3EvtbBZcx4A9sc0dDzdayLZgQR6qJSDBIA=
+X-Google-Smtp-Source: AGHT+IFdp6MlJx8Q86tmUkW4rWuR7xllrv3RX4DfJ/SDa8Jrr3PQWwHeU5veK8Heu+WrR0BggbwFAw==
+X-Received: by 2002:a19:9144:0:b0:516:57d:e4f5 with SMTP id y4-20020a199144000000b00516057de4f5mr428324lfj.16.1712115838113;
+        Tue, 02 Apr 2024 20:43:58 -0700 (PDT)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id br31-20020a056512401f00b00516a69b1dcbsm940985lfb.78.2024.04.02.20.43.55
+        by smtp.gmail.com with ESMTPSA id br31-20020a056512401f00b00516a69b1dcbsm940985lfb.78.2024.04.02.20.43.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Apr 2024 20:43:56 -0700 (PDT)
+        Tue, 02 Apr 2024 20:43:57 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH v4 0/4] drm/panel: add support for LG SW43408 panel
-Date: Wed, 03 Apr 2024 06:43:54 +0300
-Message-Id: <20240403-lg-sw43408-panel-v4-0-a386d5d3b0c6@linaro.org>
+Date: Wed, 03 Apr 2024 06:43:55 +0300
+Subject: [PATCH v4 1/4] dt-bindings: panel: Add LG SW43408 MIPI-DSI panel
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,10 +78,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAHrQDGYC/4XNQQ7CIBCF4as0rMUwDFjqynsYF7SFlqShDRjUN
- L27tBtjNLr8XzLfzCSa4Ewkx2ImwSQX3ehziF1Bml77zlDX5iacccEQGR06Gm8CBVN00t4MtJa
- SWwHQSDQkn03BWHffyPMld+/idQyP7UOCdf2BJaCMWikVs01leatPg/M6jPsxdGTVEv8n8CzwC
- rVUJZQ1qg8BX4Jg/IuAWQAhLJQaQMvDm7AsyxMCbYOBNQEAAA==
+Message-Id: <20240403-lg-sw43408-panel-v4-1-a386d5d3b0c6@linaro.org>
+References: <20240403-lg-sw43408-panel-v4-0-a386d5d3b0c6@linaro.org>
+In-Reply-To: <20240403-lg-sw43408-panel-v4-0-a386d5d3b0c6@linaro.org>
 To: Sumit Semwal <sumit.semwal@linaro.org>, 
  Caleb Connolly <caleb.connolly@linaro.org>, 
  Neil Armstrong <neil.armstrong@linaro.org>, 
@@ -94,78 +94,106 @@ To: Sumit Semwal <sumit.semwal@linaro.org>,
 Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
  Vinod Koul <vkoul@kernel.org>, Caleb Connolly <caleb@connolly.tech>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Marijn Suijten <marijn.suijten@somainline.org>
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2546;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2202;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=rSrTFe62I9QM/1EhNPjLmXRF/kaFAIciPwvaSniEBGQ=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmDNB7zhW4VN0Mt3Ykhe6mHxo5gmToVRRcty6L/
- 96qwd8KEIOJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZgzQewAKCRCLPIo+Aiko
- 1dVYCAClZrnyDMoReMxsjxTCAr/g/ubBgEsq1nJgZqpasnETIH5l5OYfw0UyhSXvud3I3ZcTSJh
- DbErxRU911vMObQNS6sOz+RFRKMlHsRlrqRC7N4qgsz1I66c9qYWy3Ptqzl0iuZtbw1zoDmkPG7
- cKivUpmPkgC/VEpCnwZ7/3kJB7zPSV85vrpdlksU/uoXvf2V43wpW2RSq9rDZA0v30hHzZpnRsU
- eYTJJk7ZNoHPyJIjXeJJIp+mKGhsWwSdT1s7M9HI8m+u8uqVRkN3v2ABOB3MIkqyeOXi1VlbKN7
- V+qSIsXcZSIzug52vGfCWnQR+VeXJLLKz+n0zQo67XWCrRcx
+ bh=GwVgZdE26NDUHVKCdQIs4DldqMTJkpU3Pk/WgyxXJjg=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmDNB7ss42XbFQ/Rh0+k3rxq0P6Jbz3+FOfUfiD
+ DVWcLzhqb2JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZgzQewAKCRCLPIo+Aiko
+ 1UYIB/49YPYpkZtCCB7WnsVhlqTzEQjHe5iJJj1W9/Qwq0FgmL+5+K5z/b8IcGre5ssYS09Td7F
+ vG6sNUB+Y/7uAcrbPSjOeWvHI8AwjgfKNs6+U9wU/VUWcKMyx4xPVVrH3m7yJhhMjWo0+x6FPW8
+ IzJaJXaJk4LbyaoGMmAF1zPW0d6AXcHfntRdAbK4gy1vIt/DY8BkfU0nmFtVCh7Pp1vGpzg6aDa
+ dikDTmV1S7EXpqXMwb+JdcjaEbNAc4fsbXBYzqBSFnyAGp+TZ5jeGlPNfFPXr62uiXZJbsgAZj4
+ Q6wNTbIrbltQwaK89UARj2T2D064XYnLcQFJc6+WTcBvvQyQ
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-The LG SW43408 panel is used on Google Pixel3 devices. For a long time
-we could not submit the driver, as the panel was not coming up from the
-reset. The panel seems to be picky about some of the delays during init
-and it also uses non-standard payload for MIPI_DSI_COMPRESSION_MODE.
+From: Sumit Semwal <sumit.semwal@linaro.org>
 
+LG SW43408 is 1080x2160, 4-lane MIPI-DSI panel present on Google Pixel 3
+phones.
+
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
+[caleb: convert to yaml]
+Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
-Changes in v4:
-- Fix order of mipi_dsi_compression_mode_ext() args (Marijn)
-- Expanded kerneldoc coments for this function (Marijn)
-- And added arguments validation (Marijn)
-- In the panel driver send the COMPRESSION_MODE in LPM mode like it was
-  done originally
-- Expanded the .clock maths to show the reason behind the value (Marijn)
-- Moved the mode out of the match data (Marijn)
-- Link to v3: https://lore.kernel.org/r/20240402-lg-sw43408-panel-v3-0-144f17a11a56@linaro.org
+ .../bindings/display/panel/lg,sw43408.yaml         | 62 ++++++++++++++++++++++
+ 1 file changed, 62 insertions(+)
 
-Changes in v3:
-- Fixed return type of MIPI DSC functions
-- Replaced mipi_dsi_compression_mode_raw() with
-  mipi_dsi_compression_mode_ext() (Marijn)
-- Link to v2: https://lore.kernel.org/r/20240330-lg-sw43408-panel-v2-0-293a58717b38@linaro.org
+diff --git a/Documentation/devicetree/bindings/display/panel/lg,sw43408.yaml b/Documentation/devicetree/bindings/display/panel/lg,sw43408.yaml
+new file mode 100644
+index 000000000000..1e08648f5bc7
+--- /dev/null
++++ b/Documentation/devicetree/bindings/display/panel/lg,sw43408.yaml
+@@ -0,0 +1,62 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/display/panel/lg,sw43408.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: LG SW43408 1080x2160 DSI panel
++
++maintainers:
++  - Caleb Connolly <caleb.connolly@linaro.org>
++
++description:
++  This panel is used on the Pixel 3, it is a 60hz OLED panel which
++  required DSC (Display Stream Compression) and has rounded corners.
++
++allOf:
++  - $ref: panel-common.yaml#
++
++properties:
++  compatible:
++    items:
++      - const: lg,sw43408
++
++  reg: true
++  port: true
++  vddi-supply: true
++  vpnl-supply: true
++  reset-gpios: true
++
++required:
++  - compatible
++  - vddi-supply
++  - vpnl-supply
++  - reset-gpios
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/gpio/gpio.h>
++
++    dsi {
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        panel@0 {
++            compatible = "lg,sw43408";
++            reg = <0>;
++
++            vddi-supply = <&vreg_l14a_1p88>;
++            vpnl-supply = <&vreg_l28a_3p0>;
++
++            reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
++
++            port {
++                endpoint {
++                    remote-endpoint = <&mdss_dsi0_out>;
++                };
++            };
++        };
++    };
++...
 
-Changes in v2:
-- Removed formatting char from schema (Krzysztof)
-- Moved additionalProperties after required (Krzysztof)
-- Added example to the schema (Krzysztof)
-- Removed obsolete comment in the commit message (Marijn)
-- Moved DSC params to the panel struct (Marijn)
-- Changed dsc_en to be an array (Marijn)
-- Added comment regiarding slice_width and slice_count (Marijn)
-- Link to v1: https://lore.kernel.org/r/20240330-lg-sw43408-panel-v1-0-f5580fc9f2da@linaro.org
-
----
-Dmitry Baryshkov (2):
-      drm/mipi-dsi: use correct return type for the DSC functions
-      drm/mipi-dsi: add mipi_dsi_compression_mode_ext()
-
-Sumit Semwal (2):
-      dt-bindings: panel: Add LG SW43408 MIPI-DSI panel
-      drm: panel: Add LG sw43408 panel driver
-
- .../bindings/display/panel/lg,sw43408.yaml         |  62 ++++
- MAINTAINERS                                        |   8 +
- drivers/gpu/drm/drm_mipi_dsi.c                     |  45 ++-
- drivers/gpu/drm/panel/Kconfig                      |  11 +
- drivers/gpu/drm/panel/Makefile                     |   1 +
- drivers/gpu/drm/panel/panel-lg-sw43408.c           | 323 +++++++++++++++++++++
- include/drm/drm_mipi_dsi.h                         |  15 +-
- 7 files changed, 453 insertions(+), 12 deletions(-)
----
-base-commit: a6bd6c9333397f5a0e2667d4d82fef8c970108f2
-change-id: 20240330-lg-sw43408-panel-b552f411c53e
-
-Best regards,
 -- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+2.39.2
 
 
