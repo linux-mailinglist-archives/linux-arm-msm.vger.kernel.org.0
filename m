@@ -1,128 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-16298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16299-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86A8A897232
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:17:51 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7F10B897230
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:17:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 48EDAB298BE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 14:16:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3846228C362
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 14:17:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E08D149E18;
-	Wed,  3 Apr 2024 14:15:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bEcXgoo7"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D8A61494C9;
+	Wed,  3 Apr 2024 14:16:37 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF2714901C;
-	Wed,  3 Apr 2024 14:15:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B686168BD;
+	Wed,  3 Apr 2024 14:16:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712153758; cv=none; b=J/0XWHiVY0IcvPi2xrThEkOG+TQkPxjnxVHTLFK9Y6Shcxrn+JYvivqKyr3NzUCRg+3I1Z77hPBILQbXCYlZrvVIiPv98258WMccg67EO3QATyn4oeKjfmvhV6nPahN2VLZJ3knTV7fqNjzxmYgIZX5ha/36I9cc5nwC5aTZmW0=
+	t=1712153797; cv=none; b=b+qXL1xQOmkQ70InSLwFD7P9RC7eUbRIeyFDtALG73nlIFcNjcJkE4vcnHRuFbvHc9gD05NDA3V0jmcUH6ivAWIWhgGfN3FtefdcFKtV9RletHAmZlQAR12/7U++0xM6JFrBVT5TplAkBFf1bZvgVaGGIDrt6tAOLODUHbRJPxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712153758; c=relaxed/simple;
-	bh=nKxO2VchqXJpILlQ48hPBrQldYLcDRBj9v63t6GaFOQ=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=ra4oM+Z6xC9q5CqI/WBG9DJi3cp7iOchHGUwQQ5dW1uJlu2OMIbWVRA1nR1+qDZLy7J1r+mzUsV2KhSxYJVv6YG/7Zdf+Ko+blh1AOAfb8uGsT9T296l9TktXQSSm2sOWs68hGzvgGp+bEVCXrPD98f00c7sTy/c0ZqJV0pSNDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bEcXgoo7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95758C433C7;
-	Wed,  3 Apr 2024 14:15:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712153757;
-	bh=nKxO2VchqXJpILlQ48hPBrQldYLcDRBj9v63t6GaFOQ=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=bEcXgoo7DUdmA5yzjaN47PmRDvj8mbevDzBz3a8UK7Eau6zpXqfsXevvpf+k0BC2A
-	 FnrqhQub7/RYfiz9GJBE74ok/RnzVyQdNYIz2X4sAQZIHj7kZnp+DUDIDG7HPuif6j
-	 wB8R3w9rqrMqvgnATv+JQWl259Sp5rQwwVVtUexStL8geBRq4bzZUh5BauiNNEQHTH
-	 gn5D1Th+uMBnzl/cdgJ47YqWLpoVjSbX4yTt7RFPzjezjXcGi/UuTgWc92QM7h9M0V
-	 0IQx/qWYNFCvbPaGNju78eA7sqENCPP2jhUoZWzKBM4NogVTw9gvCmbkZS0ETJzeYD
-	 r+/4bxmHQaIXQ==
-Date: Wed, 03 Apr 2024 09:15:56 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1712153797; c=relaxed/simple;
+	bh=QVNG9klf635AF8QatLYX+kN3E3QTHjJIn6uyjkTeFnE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ejD7l6yCm9JT7jRyd/1XR1U75CoqXk3ivyHSS5JLodVbw1aniHEm1sv8dSpnh8s0UKyMPrUmr3tCXP6KMDa0SsQpfTdlgoOcMLIykIETWKixYtrOk9Gt1DPWO26LMnfEoPIqr1swJxQ9tu18rD6c+tzV4G/Zv+Me6VFpHESKd6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6EE391007;
+	Wed,  3 Apr 2024 07:17:05 -0700 (PDT)
+Received: from FVFF77S0Q05N (unknown [10.57.16.212])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2070E3F7B4;
+	Wed,  3 Apr 2024 07:16:31 -0700 (PDT)
+Date: Wed, 3 Apr 2024 15:16:24 +0100
+From: Mark Rutland <mark.rutland@arm.com>
+To: Dawei Li <dawei.li@shingroup.cn>
+Cc: will@kernel.org, yury.norov@gmail.com, linux@rasmusvillemoes.dk,
+	xueshuai@linux.alibaba.com, renyu.zj@linux.alibaba.com,
+	yangyicong@hisilicon.com, jonathan.cameron@huawei.com,
+	andersson@kernel.org, konrad.dybcio@linaro.org,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 02/10] perf/alibaba_uncore_drw: Avoid placing cpumask
+ var on stack
+Message-ID: <Zg1kuMCxcZWSnFdt@FVFF77S0Q05N>
+References: <20240403125109.2054881-1-dawei.li@shingroup.cn>
+ <20240403125109.2054881-3-dawei.li@shingroup.cn>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Alexander Reimelt <alexander.reimelt@posteo.de>
-Cc: conor+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- robh+dt@kernel.org, andersson@kernel.org, pvorel@suse.cz, 
- linux-arm-msm@vger.kernel.org, konrad.dybcio@linaro.org
-In-Reply-To: <20240403104415.30636-1-alexander.reimelt@posteo.de>
-References: <20240403104415.30636-1-alexander.reimelt@posteo.de>
-Message-Id: <171215356311.3499103.14484942655821414502.robh@kernel.org>
-Subject: Re: [PATCH 0/2] arm64: Add basic support for LG H815
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240403125109.2054881-3-dawei.li@shingroup.cn>
 
-
-On Wed, 03 Apr 2024 10:43:28 +0000, Alexander Reimelt wrote:
-> Hello,
+On Wed, Apr 03, 2024 at 08:51:01PM +0800, Dawei Li wrote:
+> For CONFIG_CPUMASK_OFFSTACK=y kernel, explicit allocation of cpumask
+> variable on stack is not recommended since it can cause potential stack
+> overflow.
 > 
-> These patches add initial support for the LG H815.
-> They are enough to boot the device on postmarketOS
-> and have some basic functionality. Connecting to the
-> device over USB networking via ssh, buttons, SD-Card,
-> eMMC and regulators work. The dtb_checker shows some
-> warnings, but they come from the msm8994.dtsi.
+> Instead, kernel code should always use *cpumask_var API(s) to allocate
+> cpumask var in config-neutral way, leaving allocation strategy to
+> CONFIG_CPUMASK_OFFSTACK.
 > 
-> For CPU bring up lk2nd is required. The DMA controller
-> module fails to load and from time to time the SMD clock
-> driver fails.
+> But dynamic allocation in cpuhp's teardown callback is somewhat problematic
+> for if allocation fails(which is unlikely but still possible):
+> - If -ENOMEM is returned to caller, kernel crashes for non-bringup
+>   teardown;
+> - If callback pretends nothing happened and returns 0 to caller, it may
+>   trap system into an in-consisitent/compromised state;
 > 
-> But I hope to prevent duplicate work and make it more accessible.
+> Use newly-introduced cpumask_any_and_but() to address all issues above.
+> It eliminates usage of temporary cpumask var in generic way, no matter how
+> the cpumask var is allocated.
+>
+> Suggested-by: Mark Rutland <mark.rutland@arm.com>
+> Signed-off-by: Dawei Li <dawei.li@shingroup.cn>
+
+I don't think we need to explain all the pitfalls of the approach we haven't
+taken. Could we please simplify this down to:
+
+Could we please get rid of the bit that says we should "always use the
+*cpumask_var API(s)", and simplify the commit message down to:
+
+| perf/alibaba_uncore_drw: Avoid placing cpumask on the stack
+| 
+| In general it's preferable to avoid placing cpumasks on the stack, as
+| for large values of NR_CPUS these can consume significant amounts of
+| stack space and make stack overflows more likely.
+| 
+| Use cpumask_any_and_but() to avoid the need for a temporary cpumask on
+| the stack.
+
+The logic looks good to me, so with that commit message:
+
+Reviewed-by: Mark Rutland <mark.rutland@arm.com>
+
+Mark.
+
+> ---
+>  drivers/perf/alibaba_uncore_drw_pmu.c | 10 +++-------
+>  1 file changed, 3 insertions(+), 7 deletions(-)
 > 
-> Best regards
-> Alex
+> diff --git a/drivers/perf/alibaba_uncore_drw_pmu.c b/drivers/perf/alibaba_uncore_drw_pmu.c
+> index a9277dcf90ce..d4d14b65c4a5 100644
+> --- a/drivers/perf/alibaba_uncore_drw_pmu.c
+> +++ b/drivers/perf/alibaba_uncore_drw_pmu.c
+> @@ -746,18 +746,14 @@ static int ali_drw_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
+>  	struct ali_drw_pmu_irq *irq;
+>  	struct ali_drw_pmu *drw_pmu;
+>  	unsigned int target;
+> -	int ret;
+> -	cpumask_t node_online_cpus;
+>  
+>  	irq = hlist_entry_safe(node, struct ali_drw_pmu_irq, node);
+>  	if (cpu != irq->cpu)
+>  		return 0;
+>  
+> -	ret = cpumask_and(&node_online_cpus,
+> -			  cpumask_of_node(cpu_to_node(cpu)), cpu_online_mask);
+> -	if (ret)
+> -		target = cpumask_any_but(&node_online_cpus, cpu);
+> -	else
+> +	target = cpumask_any_and_but(cpumask_of_node(cpu_to_node(cpu)),
+> +				     cpu_online_mask, cpu);
+> +	if (target >= nr_cpu_ids)
+>  		target = cpumask_any_but(cpu_online_mask, cpu);
+>  
+>  	if (target >= nr_cpu_ids)
+> -- 
+> 2.27.0
 > 
-> Alexander Reimelt (2):
->   dt-bindings: arm: qcom: Add LG G4 (h815)
->   arm64: dts: qcom: Add basic support for LG G4 (H815)
-> 
->  .../devicetree/bindings/arm/qcom.yaml         |   1 +
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  arch/arm64/boot/dts/qcom/msm8992-lg-h815.dts  | 422 ++++++++++++++++++
->  3 files changed, 424 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8992-lg-h815.dts
-> 
-> --
-> 2.44.0
-> 
-> 
-> 
-
-
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
-
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-New warnings running 'make CHECK_DTBS=y qcom/msm8992-lg-h815.dtb' for 20240403104415.30636-1-alexander.reimelt@posteo.de:
-
-arch/arm64/boot/dts/qcom/msm8992-lg-h815.dtb: usb@f92f8800: 'interrupt-names' is a required property
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-arch/arm64/boot/dts/qcom/msm8992-lg-h815.dtb: usb@f92f8800: 'oneOf' conditional failed, one must be fixed:
-	'interrupts' is a required property
-	'interrupts-extended' is a required property
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-
-
-
-
-
 
