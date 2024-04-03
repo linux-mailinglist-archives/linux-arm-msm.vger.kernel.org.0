@@ -1,39 +1,39 @@
-Return-Path: <linux-arm-msm+bounces-16300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75C6389725B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:21:54 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48EB4897271
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:24:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2FDAD282170
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 14:21:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7A61C1C266E5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 14:24:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7F3414900E;
-	Wed,  3 Apr 2024 14:21:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11EBA1494D0;
+	Wed,  3 Apr 2024 14:23:32 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 062B4148FF5;
-	Wed,  3 Apr 2024 14:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE4427172B;
+	Wed,  3 Apr 2024 14:23:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712154077; cv=none; b=VDTQ6IQh2MMRrIIFcab86AXfEnXo/L2st2KdnkDiOxleAR3Y/LWNxBYLEw9640wYaeFyyVUuUAKaM1lbk5EFXmESTRZyU+1uL4CnebNwnN8VQKR3rti3tbpVUXQymDtKkziF/HSd7AtM8q8vcFmXEWnffv1AJkWigCNpyTDpj/E=
+	t=1712154212; cv=none; b=l4wflsM7zIZPuizeNYNr8ReDy1Mtci3c4fXncyx7W/A/kkj9J0RUSiQL6VVrkJ4SVcpH2ddGReEONLU0ap/7GcOyTQAgWn9ocWMHfHicSLRzIRNe19SmFw2gbcqRHTSJg5p5yVFbamSUCknr//15E5qhpJ1AfqHWwVSjet39Frk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712154077; c=relaxed/simple;
-	bh=nqFwo/kHXwvxaX3Pir+qxJc7morMd5qBw4IR/1jIKSk=;
+	s=arc-20240116; t=1712154212; c=relaxed/simple;
+	bh=SFg47yxUbctV3PGgM85vXl4SA4wjFf1zK2RoTvmRxXc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GymRZjdYPtJv+vMdw4dOILRak3DPFq+QSh/xclZHabJDQUDX4hOSc6/bYEbUlnhw7z5+HUFFdZrwHvsnEtpdixMHpU4VZFvWsVYhJVN2Iq+Z+PFJQoPn077sejOfDSfBdCUvjg6q2uLZaX1KVvcV8A/0tIEMDa07l3OBYIG2iQU=
+	 Content-Type:Content-Disposition:In-Reply-To; b=F12na4f+sJEGmhTTodA9Y/yBIW4fYaDGxSX+2J7+IXvod24zGNdw1Od7BhERbo89eOaF7Na0tNk60TL3xKBrQAcRgE4RjSoeSrJrltzFghnLGOtWFU9pnNvwPCkx7ywZF9JU9y7F7p9nqn35O95SXkqedQzU8CkXqqJm5mHRHqc=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6C79E1007;
-	Wed,  3 Apr 2024 07:21:46 -0700 (PDT)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2A7ED1007;
+	Wed,  3 Apr 2024 07:24:00 -0700 (PDT)
 Received: from FVFF77S0Q05N (unknown [10.57.16.212])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 226733F7B4;
-	Wed,  3 Apr 2024 07:21:12 -0700 (PDT)
-Date: Wed, 3 Apr 2024 15:21:10 +0100
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CE21D3F7B4;
+	Wed,  3 Apr 2024 07:23:26 -0700 (PDT)
+Date: Wed, 3 Apr 2024 15:23:24 +0100
 From: Mark Rutland <mark.rutland@arm.com>
 To: Dawei Li <dawei.li@shingroup.cn>
 Cc: will@kernel.org, yury.norov@gmail.com, linux@rasmusvillemoes.dk,
@@ -42,11 +42,10 @@ Cc: will@kernel.org, yury.norov@gmail.com, linux@rasmusvillemoes.dk,
 	andersson@kernel.org, konrad.dybcio@linaro.org,
 	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 04/10] perf/arm_cspmu: Avoid placing cpumask var on
- stack
-Message-ID: <Zg1l1pxmLoHztM6Q@FVFF77S0Q05N>
+Subject: Re: [PATCH v2 03/10] perf/arm-cmn: Avoid placing cpumask var on stack
+Message-ID: <Zg1mXESq2BP8B0yz@FVFF77S0Q05N>
 References: <20240403125109.2054881-1-dawei.li@shingroup.cn>
- <20240403125109.2054881-5-dawei.li@shingroup.cn>
+ <20240403125109.2054881-4-dawei.li@shingroup.cn>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,9 +54,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240403125109.2054881-5-dawei.li@shingroup.cn>
+In-Reply-To: <20240403125109.2054881-4-dawei.li@shingroup.cn>
 
-On Wed, Apr 03, 2024 at 08:51:03PM +0800, Dawei Li wrote:
+On Wed, Apr 03, 2024 at 08:51:02PM +0800, Dawei Li wrote:
 > For CONFIG_CPUMASK_OFFSTACK=y kernel, explicit allocation of cpumask
 > variable on stack is not recommended since it can cause potential stack
 > overflow.
@@ -78,7 +77,6 @@ On Wed, Apr 03, 2024 at 08:51:03PM +0800, Dawei Li wrote:
 > the cpumask var is allocated.
 > 
 > Suggested-by: Mark Rutland <mark.rutland@arm.com>
-> 
 > Signed-off-by: Dawei Li <dawei.li@shingroup.cn>
 
 The logic looks good to me, but I'd like the commit message updated the same as
@@ -91,34 +89,38 @@ Reviewed-by: Mark Rutland <mark.rutland@arm.com>
 Mark.
 
 > ---
->  drivers/perf/arm_cspmu/arm_cspmu.c | 8 +++-----
->  1 file changed, 3 insertions(+), 5 deletions(-)
+>  drivers/perf/arm-cmn.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
 > 
-> diff --git a/drivers/perf/arm_cspmu/arm_cspmu.c b/drivers/perf/arm_cspmu/arm_cspmu.c
-> index b9a252272f1e..fd1004251665 100644
-> --- a/drivers/perf/arm_cspmu/arm_cspmu.c
-> +++ b/drivers/perf/arm_cspmu/arm_cspmu.c
-> @@ -1322,8 +1322,7 @@ static int arm_cspmu_cpu_online(unsigned int cpu, struct hlist_node *node)
+> diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
+> index 7ef9c7e4836b..6bfb0c4a1287 100644
+> --- a/drivers/perf/arm-cmn.c
+> +++ b/drivers/perf/arm-cmn.c
+> @@ -1950,20 +1950,20 @@ static int arm_cmn_pmu_offline_cpu(unsigned int cpu, struct hlist_node *cpuhp_no
+>  	struct arm_cmn *cmn;
+>  	unsigned int target;
+>  	int node;
+> -	cpumask_t mask;
 >  
->  static int arm_cspmu_cpu_teardown(unsigned int cpu, struct hlist_node *node)
->  {
-> -	int dst;
-> -	struct cpumask online_supported;
-> +	unsigned int dst;
->  
->  	struct arm_cspmu *cspmu =
->  		hlist_entry_safe(node, struct arm_cspmu, cpuhp_node);
-> @@ -1333,9 +1332,8 @@ static int arm_cspmu_cpu_teardown(unsigned int cpu, struct hlist_node *node)
+>  	cmn = hlist_entry_safe(cpuhp_node, struct arm_cmn, cpuhp_node);
+>  	if (cpu != cmn->cpu)
 >  		return 0;
 >  
->  	/* Choose a new CPU to migrate ownership of the PMU to */
-> -	cpumask_and(&online_supported, &cspmu->associated_cpus,
-> -		    cpu_online_mask);
-> -	dst = cpumask_any_but(&online_supported, cpu);
-> +	dst = cpumask_any_and_but(&cspmu->associated_cpus,
-> +				  cpu_online_mask, cpu);
->  	if (dst >= nr_cpu_ids)
->  		return 0;
+>  	node = dev_to_node(cmn->dev);
+> -	if (cpumask_and(&mask, cpumask_of_node(node), cpu_online_mask) &&
+> -	    cpumask_andnot(&mask, &mask, cpumask_of(cpu)))
+> -		target = cpumask_any(&mask);
+> -	else
+> +
+> +	target = cpumask_any_and_but(cpumask_of_node(node), cpu_online_mask, cpu);
+> +	if (target >= nr_cpu_ids)
+>  		target = cpumask_any_but(cpu_online_mask, cpu);
+> +
+>  	if (target < nr_cpu_ids)
+>  		arm_cmn_migrate(cmn, target);
+> +
+>  	return 0;
+>  }
 >  
 > -- 
 > 2.27.0
