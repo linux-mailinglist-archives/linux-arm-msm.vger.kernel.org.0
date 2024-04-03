@@ -1,202 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-16287-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16288-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C6B089712A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 15:33:49 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B0F9F89713C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 15:34:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B45601F2B62C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 13:33:48 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 20F1BB29F90
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 13:34:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C4301487E8;
-	Wed,  3 Apr 2024 13:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7ED29149C55;
+	Wed,  3 Apr 2024 13:33:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gU/enAze"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GFrcg6if"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1189B1487DE
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 13:32:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8381149C41;
+	Wed,  3 Apr 2024 13:33:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712151146; cv=none; b=ObauluAKxQx+kZG6qIXLlSJ8kwWvioU9h4NPXm3upnDtDuMW8bAKGN5LxTqUA49cq1DQx1XxTfhAmfIW50PKZ13V8tGOYvQH6YQqwhbxJz3hUAzov7zgo3BeWf3IL7g9XW+MRIpOAEX+Q8wzkCoxcU80Tt5HAwX1eviTvdZKncw=
+	t=1712151217; cv=none; b=r+iHO/4bXut4mVh9wfFKchJ3c6drs51yPxw/QW8QcDmt4QHQNVl0snSpqXj0shSIpzpFRjrZUDoGDdniTMUHbm7zONLRcoc/HeqByGXGKNHSylgdDYTsJWvULMCEi2HVio9NWY5e1UWNlGRmH9DKOEvGxOXQHlGmfxBiwzajXgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712151146; c=relaxed/simple;
-	bh=cSygu0lTdsE1mYb8kt8PaIRN/34pMtkOoObkW9tu3zs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jCNC1CbIj1Gc6vB5c4a82DUAv8aUVvqSHDF5/F4TWcl1XnxCuBZdt/C58dlxBETVOEdT0YNNMMMv9ClH8a3d5V18WwtGbsZ2wrRhKZYp3drv3vvO3DYH0slLnwJ4NLxL1m1fp03mjV6f8A4XjqWpPOoaKth2fKv7JoUDFSULt/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gU/enAze; arc=none smtp.client-ip=209.85.210.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-6eac64f2205so5291276b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 06:32:23 -0700 (PDT)
+	s=arc-20240116; t=1712151217; c=relaxed/simple;
+	bh=Qt01KTjE4NGp5XEomZDf90wNSv9JiA1QkpnnyKlsblA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=okKQmTJA9V2ou0EcVoPoGoTC20G11Agi2nqNNyDKJ8tTQsnOgKG1LMu1M6Xp6s6oTCGiH7vWSNo1cnufA0hlIGZ+YQcTZL/kg9g5hNJPlhyC1SR+SFZ+Y511y76nUsxaJpHGGVbnU1089qET6rNFvGOndKggCL/MavE3P+l0aEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GFrcg6if; arc=none smtp.client-ip=209.85.210.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-6e9e1a52b74so109541a34.0;
+        Wed, 03 Apr 2024 06:33:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712151143; x=1712755943; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=VgGe+WrjXHejFLqdWYYFDfvaGlNX9pe3wGgL1xVORjQ=;
-        b=gU/enAzegUlw0ZbyaOL3nGUPyIx37Tyh5PD7JY191UEN/H+JYvhFkNN4fPQ1rBtsC7
-         sX5rlTsAxwEzcRvAxkUSg6dEuwDgjLGUPwSfYm/Ig8D04zAlQ6pQPh/TmAIZF+LiN3r2
-         F7spliMW1kHKgKVybhC20rnxosGoYmEhI8uhi3QUNqoV3lRf1Tj/2ReDoHwK3LbxcEtN
-         jnwqKs3jXFcMst4k0MMFC47v9jFTwo3Fgx8Apu74FMLZqEuq0iKthSXoygF8XdSewz9+
-         9KlE8Mc7zGCjtrB9YgvT2fGC38cFbVoF76BpRxx95ojWrGPVASSgV40jyFHVT7MxKL89
-         LyBA==
+        d=gmail.com; s=20230601; t=1712151215; x=1712756015; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=UfJ432sdibD0Lka67Qj4+39whrzSunQCkb9XAcwEVWQ=;
+        b=GFrcg6ifPUmcvvrEYoC2e/fgnq3m6ynUXwoJW1avVY6MvV8MtWIreHzW8sGg+/Dgtb
+         +z1o1duNbklzWnVoJk6bAsd1lGlStxJqDkSJbsTd303lw/NCevYRZRs2auW6JrY6UC8l
+         Ykbe4uMJU6fRE5F7cS0aXAJMgQ7wf9U8FtznXnnQ0nJtQPNBguh7WC170paMLQNtV9Pc
+         76sO8TjKSQUENsdMu745TLGpx8ahkqAhaVQhC/AYElH6GpweItCj4bbWGDMuoQa3TyU2
+         oKXzfmQWcPrq/jeH/dvjNeNqnYRKHJbifBAzNRSK1DswOtLRgw09DdW/6BSoPyRPUi/e
+         U6zQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712151143; x=1712755943;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VgGe+WrjXHejFLqdWYYFDfvaGlNX9pe3wGgL1xVORjQ=;
-        b=KmtlD38/yozu44zIR1S7wx8kTKp9kb8hf2AEoJVriUQ1inpBk4zYRSWYdQZ9O8zx2I
-         Ha29sBhPqhCFogczReEfd82RqrG1pBX6/+MBiOwP8Q/3FVbEKOn3LyAV2O1QloGqlOXt
-         bml3R/HEdlDEB0xGKpzIAdH0aDicHv5N8f1E50HO587NTSy2pZvCHxk7Isg+ND4+aons
-         JgrZIbdDqaCHdEgPzuX+JgiVD8Px7yrO9YGUoEFsgeirgv2JuQQSu69PAWDgCX55mUcZ
-         qCmc7OxGA2oGPvVN0dgc1eRpVjPuP2tq5oHVPfaQpBK55FmFqT7PE1uO3x/Enq3zeOdH
-         BvjQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWr76ITQFAIKYIP8Ynvki6ZsyGa+NnKCz/Z7GgkqjN7LoPtvyAhLtESRa8INKgy3cD4wuomucmc3Uxf/soPFqWPy0r9ccEWDBXYfTZUTA==
-X-Gm-Message-State: AOJu0YwHIWqvu6+bDG8wL54NKlDMk/7ovtvS3comf9HUsVgI9NvILT0k
-	Gacpi5HvJfcfVSvwIQRF0JwVvpo4zDwPuJFJiufJNCKtbLafsGea9aJg0VF1Ow==
-X-Google-Smtp-Source: AGHT+IHd+nfXICNi5snDJqZSl05Xq7tsxxzc7MHxPup9L3i8nMVEIlDZk9E2mY6SCWVq0UJ0c/68VQ==
-X-Received: by 2002:a05:6a21:2d8c:b0:1a7:2d39:51cf with SMTP id ty12-20020a056a212d8c00b001a72d3951cfmr1429986pzb.26.1712151143220;
-        Wed, 03 Apr 2024 06:32:23 -0700 (PDT)
-Received: from thinkpad ([103.28.246.48])
-        by smtp.gmail.com with ESMTPSA id gs5-20020a056a004d8500b006eb3c2bde43sm6479798pfb.205.2024.04.03.06.32.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Apr 2024 06:32:22 -0700 (PDT)
-Date: Wed, 3 Apr 2024 19:02:17 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Niklas Cassel <cassel@kernel.org>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	mhi@lists.linux.dev, linux-tegra@vger.kernel.org
-Subject: Re: [PATCH v2 10/10] PCI: qcom: Implement shutdown() callback to
- properly reset the endpoint devices
-Message-ID: <20240403133217.GK25309@thinkpad>
-References: <20240401-pci-epf-rework-v2-0-970dbe90b99d@linaro.org>
- <20240401-pci-epf-rework-v2-10-970dbe90b99d@linaro.org>
- <ZgvpnqdjQ39JMRiV@ryzen>
+        d=1e100.net; s=20230601; t=1712151215; x=1712756015;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UfJ432sdibD0Lka67Qj4+39whrzSunQCkb9XAcwEVWQ=;
+        b=kO4xowc508/21GLenfR1n/ijywgGMDAoh34C7NC1/x8VvWeNw065QYnd5fiurnaspW
+         eP4mgmCJKUQ3S4Owsk2c6+3TPRoDcArZ9+2QlBZ94hqGF6a23oIv/0P7Of4McasxMh1O
+         1JOqLhxSPvM0RFgVQlBnw3eXy7eD5VYtKyVq3pHtt6doD2Klq1nLzK/yKmpfvw7hZEVl
+         6lvra/RXlBHacJpIpDkPDvkJNA/1lYZaMOxUJsWq5NhVjnS0TCqPOEYP+4FMnUQCpzIz
+         IBH/1UoIjTqgsKwP5m7E+nLlll7vh3gwEPjh4NBFVXtGI8Zbdoqj46H2Ly3lt7McwVPi
+         MPXw==
+X-Forwarded-Encrypted: i=1; AJvYcCWq/y2WuoLVfYku4/gGat76A4J4eCMNbwKOlTmpU+P1/U1wqGBPETnqCoMmtHfU7Y1jbk6SgAJsYXltYmlW8qYSJ5Bwi1TJCi/KOXG1LWji7veSWe6T8dokathTeNxjpSj3I36+aVLIPHMihgXkW5tuytoS0LCWNIczqMVfvcf3f8vsElQ7OBOlcQnfjyXVN7wuI++P0+DHwmCtSaOR4yrdZUiO4kIpoZ9ciIm0nrjZFWNRG/QhkUzgT5WcyTKHLPAgNcCiaM3PUm027V6fR+8wzw5xK1UDyv8ren/ktAqJBzQUgt6vcUSOzDuBX4XfrkyMp61Do8ofQaOsxVu9JLuhska0UShrxjtA4mtYcm1LazrqHr9Az1MjNmi8iIkib8CwVxTcDPUP9tXJwqu+O5VPhGK3a9nfLoxLTOc8qTDXo8sEz6X/+BR5bOKyZFFbuSK8Qo2ggiB/znPLEEX01EphopPbUGd9dH1mepavTKYaXW5nPXOCucF8G1cuD9m7fiqSXxDeQbb/Sn8UTyHPRWMaBIyAjpDy9KES9YUo98VBZ9QMne8WwdI4gBa5N8Tk+AsBW7zDX+O2oiApbXR9C80=
+X-Gm-Message-State: AOJu0YyAg0bfQn4eSM/nDFsw20mm33qDbjC45uaTrGRfKXWv8pY3m5+G
+	EQFxVkgoAqVTKbiUNFolH2xe5/RQXnXrKlXBCOxXySJ1HRR3QpNzUBLQ3H3QyxKMb4x/IhzW4j3
+	O27XhK+X9guVH61TyCqFhu+ik8dg=
+X-Google-Smtp-Source: AGHT+IFsoYFg4TPJZ/xBylk5B9Nfa55HU119ldFLC4g550cJsZKKSI+Id/ONzGwerMZ8W2tZHWzr/Kf097BxBvAdyL0=
+X-Received: by 2002:a05:6808:181d:b0:3c5:d426:9b87 with SMTP id
+ bh29-20020a056808181d00b003c5d4269b87mr1074785oib.23.1712151214780; Wed, 03
+ Apr 2024 06:33:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZgvpnqdjQ39JMRiV@ryzen>
+References: <20240327160314.9982-1-apais@linux.microsoft.com>
+ <20240327160314.9982-8-apais@linux.microsoft.com> <ea4ac7a3-13ae-4d22-a3d9-fcb7d9e8d751@linux.ibm.com>
+In-Reply-To: <ea4ac7a3-13ae-4d22-a3d9-fcb7d9e8d751@linux.ibm.com>
+From: Allen <allen.lkml@gmail.com>
+Date: Wed, 3 Apr 2024 06:33:23 -0700
+Message-ID: <CAOMdWS+wH9qZ_08nVSQV1sY0C=uHMC+3NmPuFjwKzBFCgMa7MQ@mail.gmail.com>
+Subject: Re: [PATCH 7/9] s390: Convert from tasklet to BH workqueue
+To: Alexandra Winter <wintera@linux.ibm.com>
+Cc: Allen Pais <apais@linux.microsoft.com>, linux-kernel@vger.kernel.org, tj@kernel.org, 
+	keescook@chromium.org, vkoul@kernel.org, marcan@marcan.st, sven@svenpeter.dev, 
+	florian.fainelli@broadcom.com, rjui@broadcom.com, sbranden@broadcom.com, 
+	paul@crapouillou.net, Eugeniy.Paltsev@synopsys.com, 
+	manivannan.sadhasivam@linaro.org, vireshk@kernel.org, Frank.Li@nxp.com, 
+	leoyang.li@nxp.com, zw@zh-kernel.org, wangzhou1@hisilicon.com, 
+	haijie1@huawei.com, shawnguo@kernel.org, s.hauer@pengutronix.de, 
+	sean.wang@mediatek.com, matthias.bgg@gmail.com, 
+	angelogioacchino.delregno@collabora.com, afaerber@suse.de, 
+	logang@deltatee.com, daniel@zonque.org, haojian.zhuang@gmail.com, 
+	robert.jarzmik@free.fr, andersson@kernel.org, konrad.dybcio@linaro.org, 
+	orsonzhai@gmail.com, baolin.wang@linux.alibaba.com, zhang.lyra@gmail.com, 
+	patrice.chotard@foss.st.com, linus.walleij@linaro.org, wens@csie.org, 
+	jernej.skrabec@gmail.com, peter.ujfalusi@gmail.com, kys@microsoft.com, 
+	haiyangz@microsoft.com, wei.liu@kernel.org, decui@microsoft.com, 
+	jassisinghbrar@gmail.com, mchehab@kernel.org, maintainers@bluecherrydvr.com, 
+	aubin.constans@microchip.com, ulf.hansson@linaro.org, manuel.lauss@gmail.com, 
+	mirq-linux@rere.qmqm.pl, jh80.chung@samsung.com, oakad@yahoo.com, 
+	hayashi.kunihiko@socionext.com, mhiramat@kernel.org, brucechang@via.com.tw, 
+	HaraldWelte@viatech.com, pierre@ossman.eu, duncan.sands@free.fr, 
+	stern@rowland.harvard.edu, oneukum@suse.com, 
+	openipmi-developer@lists.sourceforge.net, dmaengine@vger.kernel.org, 
+	asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+	linux-rpi-kernel@lists.infradead.org, linux-mips@vger.kernel.org, 
+	imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org, 
+	linux-mediatek@lists.infradead.org, linux-actions@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
+	linux-hyperv@vger.kernel.org, linux-rdma@vger.kernel.org, 
+	linux-media@vger.kernel.org, linux-mmc@vger.kernel.org, 
+	linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	linux-s390@vger.kernel.org, netdev@vger.kernel.org, linux-usb@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Apr 02, 2024 at 01:18:54PM +0200, Niklas Cassel wrote:
-> On Mon, Apr 01, 2024 at 09:20:36PM +0530, Manivannan Sadhasivam wrote:
-> > PCIe host controller drivers are supposed to properly reset the endpoint
-> > devices during host shutdown/reboot. Currently, Qcom driver doesn't do
-> > anything during host shutdown/reboot, resulting in both PERST# and refclk
-> > getting disabled at the same time. This prevents the endpoint device
-> > firmware to properly reset the state machine. Because, if the refclk is
-> > cutoff immediately along with PERST#, access to device specific registers
-> > within the endpoint will result in a firmware crash.
-> > 
-> > To address this issue, let's call qcom_pcie_host_deinit() inside the
-> > shutdown callback, that asserts PERST# and then cuts off the refclk with a
-> > delay of 1ms, thus allowing the endpoint device firmware to properly
-> > cleanup the state machine.
-> 
-> Hm... a QCOM EP device could be attached to any of the PCIe RC drivers that
-> we have in the kernel, so it seems a bit weird to fix this problem by
-> patching the QCOM RC driver only.
-> 
-> Which DBI call is it that causes this problem during perst assert on EP side?
-> 
-> I assume that it is pci-epf-test:deinit() callback that calls
-> pci_epc_clear_bar(), which calls dw_pcie_ep_clear_bar(), which will both:
-> -clear local data structures, e.g.
-> ep->epf_bar[bar] = NULL;
-> ep->bar_to_atu[bar] = 0;
-> 
-> but also call:
-> __dw_pcie_ep_reset_bar()
-> dw_pcie_disable_atu()
-> 
-> 
-> Do we perhaps need to redesign the .deinit EPF callback?
-> 
-> Considering that we know that .deinit() will only be called on platforms
-> where there will be a fundamental core reset, I guess we could do something
-> like introduce a __dw_pcie_ep_clear_bar() which will only clear the local
-> data structures. (It might not need to do any DBI writes, since the
-> fundamental core reset should have reset all values.)
-> 
-> Or perhaps instead of letting pci_epf_test_epc_deinit() call
-> pci_epf_test_clear_bar()/__pci_epf_test_clear_bar() directly, perhaps let
-> pci_epf_test_epc_deinit() call add a .deinit()/.cleanup() defined in the
-> EPC driver.
-> 
-> This EPC .deinit()/.cleanup() callback would then only clear the
-> local data structures (no DBI writes...).
-> 
-> Something like that?
-> 
-
-It is not just about the EPF test driver. A function driver may need to do many
-things to properly reset the state machine. Like in the case of MHI driver, it
-needs to reset channel state, mask interrupts etc... and all requires writing to
-some registers. So certainly there should be some time before cutting off the
-refclk.
-
-On x86 host machines, I can see that there is enough time before the host cuts
-off the refclk.
-
-But it is unfortunate that the PCIe spec didn't define it though.
-
-- Mani
-
-> 
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> >
+> > Signed-off-by: Allen Pais <allen.lkml@gmail.com>
 > > ---
-> >  drivers/pci/controller/dwc/pcie-qcom.c | 8 ++++++++
-> >  1 file changed, 8 insertions(+)
-> > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > index 14772edcf0d3..b2803978c0ad 100644
-> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > @@ -1655,6 +1655,13 @@ static int qcom_pcie_resume_noirq(struct device *dev)
-> >  	return 0;
-> >  }
-> >  
-> > +static void qcom_pcie_shutdown(struct platform_device *pdev)
-> > +{
-> > +	struct qcom_pcie *pcie = platform_get_drvdata(pdev);
-> > +
-> > +	qcom_pcie_host_deinit(&pcie->pci->pp);
-> > +}
-> > +
-> >  static const struct of_device_id qcom_pcie_match[] = {
-> >  	{ .compatible = "qcom,pcie-apq8064", .data = &cfg_2_1_0 },
-> >  	{ .compatible = "qcom,pcie-apq8084", .data = &cfg_1_0_0 },
-> > @@ -1708,5 +1715,6 @@ static struct platform_driver qcom_pcie_driver = {
-> >  		.pm = &qcom_pcie_pm_ops,
-> >  		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
-> >  	},
-> > +	.shutdown = qcom_pcie_shutdown,
-> >  };
-> >  builtin_platform_driver(qcom_pcie_driver);
-> > 
-> > -- 
-> > 2.25.1
-> > 
+> >  drivers/s390/block/dasd.c              | 42 ++++++++++++------------
+> >  drivers/s390/block/dasd_int.h          | 10 +++---
+> >  drivers/s390/char/con3270.c            | 27 ++++++++--------
+> >  drivers/s390/crypto/ap_bus.c           | 24 +++++++-------
+> >  drivers/s390/crypto/ap_bus.h           |  2 +-
+> >  drivers/s390/crypto/zcrypt_msgtype50.c |  2 +-
+> >  drivers/s390/crypto/zcrypt_msgtype6.c  |  4 +--
+> >  drivers/s390/net/ctcm_fsms.c           |  4 +--
+> >  drivers/s390/net/ctcm_main.c           | 15 ++++-----
+> >  drivers/s390/net/ctcm_main.h           |  5 +--
+> >  drivers/s390/net/ctcm_mpc.c            | 12 +++----
+> >  drivers/s390/net/ctcm_mpc.h            |  7 ++--
+> >  drivers/s390/net/lcs.c                 | 26 +++++++--------
+> >  drivers/s390/net/lcs.h                 |  2 +-
+> >  drivers/s390/net/qeth_core_main.c      |  2 +-
+> >  drivers/s390/scsi/zfcp_qdio.c          | 45 +++++++++++++-------------
+> >  drivers/s390/scsi/zfcp_qdio.h          |  9 +++---
+> >  17 files changed, 117 insertions(+), 121 deletions(-)
+> >
+>
+>
+> We're looking into the best way to test this.
+>
+> For drivers/s390/net/ctcm* and drivers/s390/net/lcs*:
+> Acked-by: Alexandra Winter <wintera@linux.ibm.com>
 
--- 
-மணிவண்ணன் சதாசிவம்
+ Thank you very much.
+
+>
+>
+> [...]
+> > diff --git a/drivers/s390/net/qeth_core_main.c b/drivers/s390/net/qeth_core_main.c
+> > index a0cce6872075..10ea95abc753 100644
+> > --- a/drivers/s390/net/qeth_core_main.c
+> > +++ b/drivers/s390/net/qeth_core_main.c
+> > @@ -2911,7 +2911,7 @@ static int qeth_init_input_buffer(struct qeth_card *card,
+> >       }
+> >
+> >       /*
+> > -      * since the buffer is accessed only from the input_tasklet
+> > +      * since the buffer is accessed only from the input_work
+> >        * there shouldn't be a need to synchronize; also, since we use
+> >        * the QETH_IN_BUF_REQUEUE_THRESHOLD we should never run  out off
+> >        * buffers
+>
+> I propose to delete the whole comment block. There have been many changes and
+> I don't think it is helpful for the current qeth driver.
+
+
+ Sure, I will have it fixed in v2.
+
+- Allen
 
