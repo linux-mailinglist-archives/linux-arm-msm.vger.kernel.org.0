@@ -1,126 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-16349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16350-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0999A8977A3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 19:59:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 741058977AC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 20:00:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3A1CB1C212BA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 17:59:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A3CED1C21E4E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 18:00:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 303E2152E11;
-	Wed,  3 Apr 2024 17:58:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B12EA152E19;
+	Wed,  3 Apr 2024 18:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WizGwgwq"
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="EjFAWg0w";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="3X2qWgdy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A601DFD6;
-	Wed,  3 Apr 2024 17:58:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0820152DE8;
+	Wed,  3 Apr 2024 18:00:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712167131; cv=none; b=ZbiR3d4BRYJ+s2Nfh+d9SjBI+qeCn//7eNEYK5Tj9kfeTHmYgdo1SGqF9A/ZOgDJ0KUS0KYR9OuKjQEajssIjDVPlF85RsKD1I5eqH+uJQ9+ruZy4NpkEzF/Tc2+IJZ7Vswu1gAFjGcsVDFZmkStMm+Vh4jdqVI/o4nrAvQpu2Y=
+	t=1712167205; cv=none; b=Kd5Kplc22AY7+1HHqUV68XCYR3APLTqQfOl6IBGDa06ifMww8JTTp+F7uMjkBdgL0WqFSnBqKXo1mLfLLT7S+KA9oBD8j5uE7ti2k+P8HaOSdKWSYs6XFdUkN0mB+bnT6cmnNFG6btjFyvKco2QKWttEjICS4O9Bnslo3ZiikUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712167131; c=relaxed/simple;
-	bh=T77JDQnJ0hsdJFUa5ETbkj6RTVt2ZW/eZKnQNpSp5PI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lDZ9Nn8ty/JUcwk7BwUkiL4+XFmyNXaMGZaWVQJ0hS/v8kfVdyDQD0VMQfKqGyBAbOioM+0nbAQLijhFySmNa+Wj0lUdh+ZcHqX5uQbarpQKXA02ECs4VHnelaVqsTx/PRu7V3oQWAlICXZGgx9PZu8JdrKoxMrlguZeimskSV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WizGwgwq; arc=none smtp.client-ip=209.85.210.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-6e9e46f1e03so87054a34.1;
-        Wed, 03 Apr 2024 10:58:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712167128; x=1712771928; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JrewaSl6Jc56kNZVXV/Ge3JfdB2Ym16uXrC4TB/dGqQ=;
-        b=WizGwgwqrO55Wl/Ys9cvOL3Ogs7Mje0ydhLphr0vTL3i+Q/I0oTTTcrS2TEFfY1KT3
-         1pmb+DLw7TVpUnB4RmXWujuXbb67TsdfCXrJh0+cxfo3bTGaKZ79TSO2F7EEWzy8u+8M
-         VaIlJri987Pj/5uIrRAQZVkYY9VG7rqimKpEFZ4eGmyRiyxATNqv9TZL5jCTLiKr/hT7
-         Dz302aiqOZgWyEC7lbqS/mJh5uNnvCU5qYVC6f5sPNwTDqdYmbza4ZmuwTNvNq+7OZI7
-         nWt2hzk3CUDxWK/jTarx6HpjncOykmvUcyUrx+THT7DIrgNEznkPAQyzSv8VxZzLIDn4
-         1AJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712167128; x=1712771928;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JrewaSl6Jc56kNZVXV/Ge3JfdB2Ym16uXrC4TB/dGqQ=;
-        b=Ng+GHkNZDa87zlCUI/Zwabas/TsAcO31ptELN3FuxIVbbQypSEwTqs7eZklUI6jboV
-         GAqN6Wpgx4NG5gKbYHQ5XjW3HYxYonV/D6SWiSBM7DUk8lW3UTBrqxh7aEBOa2AGNwGD
-         1TUtkzItEjQw4pJtWFQIgFyij3rLD+Ys09kwe8d0ScG4+oLehSQ9OVhxaMeRnrHTf1eq
-         jcAYMqJfw+VrXv53Ykam5BQiPDPVk2FFnV/b7+JOfWola2FfSQUIDFNM0xPZcTQsOL7I
-         qyzuOSQjuASZ6oWyUak70alUt4IYez5tWg7KlTGdcjim/ttaCj0ZA6BL6MwP4lVWSV/U
-         TM9w==
-X-Forwarded-Encrypted: i=1; AJvYcCWpkPImx1LwPNbzSq5FumoQ68aBp+vp7kJPCibihNkeL4vAfspj35PQ8u4B9rd8Q5Qmoh7p5ybGyRSl0P+GirhfcyzoqxcC+D93FIj9itay0bCszTR12NAR2U4WHsb9nk4cD5KU3ZXYpap9FZ0xv/cVIo31GueeG/N3eW+uTnHUPL+h/FmHWbSKdGT1hIC6eIcFdVeR0OC4v6kBEKlt5Cu4uF8=
-X-Gm-Message-State: AOJu0YywXzWc5LqnXnKc44RXSLlIjnpgKgvbF5fqb6EvdOFh1JzXIHu3
-	McPwMRSQ7JnXdUsLfcUQco+/C8chvL9JmedPmYPJWKfgO088Y3kI
-X-Google-Smtp-Source: AGHT+IGhLvfnk61jEqJuwTE8ZDrxA4/6Gc4gOsanVBK9ECZUWDl79PSn6cFET38D/6LqOpN6wTy68g==
-X-Received: by 2002:a05:6830:617:b0:6e8:af73:3b41 with SMTP id w23-20020a056830061700b006e8af733b41mr3590661oti.10.1712167128373;
-        Wed, 03 Apr 2024 10:58:48 -0700 (PDT)
-Received: from [192.168.7.169] (c-98-197-58-203.hsd1.tx.comcast.net. [98.197.58.203])
-        by smtp.gmail.com with ESMTPSA id m40-20020a05683032a800b006e6bf2cc882sm2732667ott.26.2024.04.03.10.58.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Apr 2024 10:58:47 -0700 (PDT)
-Message-ID: <54016e9d-b887-8ec4-b896-5ca2355180dd@gmail.com>
-Date: Wed, 3 Apr 2024 12:58:46 -0500
+	s=arc-20240116; t=1712167205; c=relaxed/simple;
+	bh=akMpuOYW8d21pNYolHALUYqWPtLngxJw4oM3B3EG6/Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jFyLHyicJkO9ezCi+vq2woZqjoYYC+Y9nZrYHBpWn5RU/wHatTYMCzTg0LIwskMbVTAOWEf6/9EyJ/gRTGPWUzh41viJF7tdJXpP9INhvFiE6VB7KgTpYeuGc5xGzBDWDMQIuvbfRca86aqdzg2sqrE+xTWXiqW/95oK9mNpAXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=EjFAWg0w; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=3X2qWgdy; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+Received: from imap2.dmz-prg2.suse.org (imap2.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:98])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 9827F5CFB7;
+	Wed,  3 Apr 2024 18:00:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1712167201;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=WVZeI3/RILOZMpa4/5S/fb/IdPQ20KwGhNOEMIQR25Y=;
+	b=EjFAWg0woE/7/zENyNkKM1nI4IOz76PCg5InEyg452gd/vSbAoOXuNhCKOofe6lS53snXC
+	aG08U6J/u7IhamP+v3aR795vEOQEKeeW0IudGvfCYLviQ54OeGQMfp9FjiEHwA2bzRFXoC
+	x71ewbIw0y8qcFguu6SN0Tp3R7ZJ4XI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1712167201;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=WVZeI3/RILOZMpa4/5S/fb/IdPQ20KwGhNOEMIQR25Y=;
+	b=3X2qWgdyewXf65o9zL329LriohAoYdNx66WMJt1P89kCDIJWBwHc5QGKF36iii0alMT/tS
+	mz8aO1JA722DadDg==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=none
+Received: from imap2.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap2.dmz-prg2.suse.org (Postfix) with ESMTPS id 0EF621331E;
+	Wed,  3 Apr 2024 18:00:01 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap2.dmz-prg2.suse.org with ESMTPSA
+	id qoLaASGZDWZeJAAAn2gu4w
+	(envelope-from <pvorel@suse.cz>); Wed, 03 Apr 2024 18:00:01 +0000
+Date: Wed, 3 Apr 2024 19:59:51 +0200
+From: Petr Vorel <pvorel@suse.cz>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Alexander Reimelt <alexander.reimelt@posteo.de>, andersson@kernel.org,
+	konrad.dybcio@linaro.org, robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: Add basic support for LG G4 (H815)
+Message-ID: <20240403175951.GB462665@pevik>
+Reply-To: Petr Vorel <pvorel@suse.cz>
+References: <20240403104415.30636-1-alexander.reimelt@posteo.de>
+ <20240403104415.30636-3-alexander.reimelt@posteo.de>
+ <10f02618-f16c-47d4-a27f-074b1ecffaa1@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 1/7] dt-bindings: clock: Add PCIe pipe related clocks for
- IPQ9574
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: ansuelsmth@gmail.com, robimarko@gmail.com, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240402192555.1955204-1-mr.nuke.me@gmail.com>
- <e392a1dd-20bc-447c-82ab-f6256bf2be69@linaro.org>
-From: mr.nuke.me@gmail.com
-In-Reply-To: <e392a1dd-20bc-447c-82ab-f6256bf2be69@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <10f02618-f16c-47d4-a27f-074b1ecffaa1@linaro.org>
+X-Spam-Score: -1.03
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spam-Flag: NO
+X-Spamd-Result: default: False [-1.03 / 50.00];
+	 ARC_NA(0.00)[];
+	 HAS_REPLYTO(0.30)[pvorel@suse.cz];
+	 REPLYTO_EQ_FROM(0.00)[];
+	 FROM_HAS_DN(0.00)[];
+	 TO_DN_SOME(0.00)[];
+	 RCVD_VIA_SMTP_AUTH(0.00)[];
+	 RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	 TAGGED_RCPT(0.00)[dt];
+	 MIME_GOOD(-0.10)[text/plain];
+	 NEURAL_HAM_LONG(-1.00)[-1.000];
+	 RCVD_COUNT_THREE(0.00)[3];
+	 TO_MATCH_ENVRCPT_SOME(0.00)[];
+	 DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	 MX_GOOD(-0.01)[];
+	 NEURAL_HAM_SHORT(-0.20)[-1.000];
+	 RCPT_COUNT_SEVEN(0.00)[10];
+	 DBL_BLOCKED_OPENRESOLVER(0.00)[posteo.de:email];
+	 MID_RHS_NOT_FQDN(0.50)[];
+	 FUZZY_BLOCKED(0.00)[rspamd.com];
+	 FROM_EQ_ENVFROM(0.00)[];
+	 R_DKIM_NA(2.20)[];
+	 MIME_TRACE(0.00)[0:+];
+	 RCVD_TLS_ALL(0.00)[];
+	 BAYES_HAM(-2.72)[98.80%];
+	 RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:98:from]
+X-Spam-Level: 
+X-Rspamd-Queue-Id: 9827F5CFB7
 
-On 4/3/24 02:10, Krzysztof Kozlowski wrote:
-> On 02/04/2024 21:25, Alexandru Gagniuc wrote:
->> Add defines for the missing PCIe PIPE clocks.
->>
->> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
->> ---
->>   include/dt-bindings/clock/qcom,ipq9574-gcc.h | 4 ++++
->>   1 file changed, 4 insertions(+)
-> 
-> I did not get half of this patchset. Are you sure you are CC-ing everyone?
+Hi all,
 
-The other changes are driver code that implements these DT bindings. I 
-used --cc-cmd of git send-email to find the maintainers. I'll manually 
-CC you to the other patches in V2.
+> On 03/04/2024 12:43, Alexander Reimelt wrote:
+> > To make it easier for downstream projects and avoid duplication of work.
+> > Makes the device bootable and enables all buttons, most regulators, hall sensor, eMMC and SD-Card.
 
-Alex
+> > Signed-off-by: Alexander Reimelt <alexander.reimelt@posteo.de>
+> > ---
+> >  arch/arm64/boot/dts/qcom/Makefile            |   1 +
+> >  arch/arm64/boot/dts/qcom/msm8992-lg-h815.dts | 422 +++++++++++++++++++
+> >  2 files changed, 423 insertions(+)
+> >  create mode 100644 arch/arm64/boot/dts/qcom/msm8992-lg-h815.dts
 
-> For this one:
-> 
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> 
-> 
-> Best regards,
-> Krzysztof
-> 
+
+> Please use subject prefixes matching the subsystem. You can get them for
+> example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
+> your patch is touching.
+
+@Alexander arm: would be for 32bit. Correct subject prefix is:
+arm64: dts: qcom: msm8992-lg-h815:
+
+Krzysztof's comments are obviously correct.
+Please Cc me on v2 to my gmail private mail. Thanks!
+
+Kind regards,
+Petr
 
