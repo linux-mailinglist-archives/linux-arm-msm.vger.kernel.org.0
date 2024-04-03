@@ -1,172 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-16319-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16320-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4FD25897485
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 17:52:21 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7469E89748C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 17:53:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6E3201C26CBF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 15:52:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2A9FC294B01
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 15:53:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 356E414AD12;
-	Wed,  3 Apr 2024 15:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C98814A631;
+	Wed,  3 Apr 2024 15:53:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DRMHnn/1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Wh0JsEq+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982BA14A4EC
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 15:51:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6C314A61C
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 15:53:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712159517; cv=none; b=NFNGrY7CSCmp1JQYDl+c4B8vxNcp9iqZQH38b5DCp+P3CDlZcDod1eYA7XOv7qLolOHiQmPN6ZznwNAhy+ox+ZSgb51kTTpcG5GjFw74rWeG559NZhD1Hj1trdoLOZUEbllLy+vq3KK6X1qjyILeqakc0BEw/SU8/4uSz9WhwXM=
+	t=1712159590; cv=none; b=lktM7fGXM0c71UK8wYKhJ72VOXjI8Nv75p1VHZYBVxRhq0OoUNvGJKpTuJx3g1cuoRmzFA+bK3XnyIz+GWyb3Aa3Hxsovk5kWevQuXydJtGLF3tWebd6ZrGhJujKRIW4RjOf0wk7fDm4I58RxE7VOgqS95gJMgRGjSp2t/ZL8Fo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712159517; c=relaxed/simple;
-	bh=qgIhgArIyknrMhYKo0pXG7L2hPF5611r14caIQJvQ9Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rR0mUVNVsQxDXnzqWitJQufOcztAqzr809jrB03AyswHY8kPk4G9fHyQKYBUtcknX9D3CNkdrLPECRK6kT4vkdjBoFe608pf/kuUVoN034NjynPHLxxSAybO0tTYDLr+4Bkf3Xb4w1uNOtncPS2iKzxeHQRLkpyHJGqHZOBVjes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DRMHnn/1; arc=none smtp.client-ip=209.85.210.179
+	s=arc-20240116; t=1712159590; c=relaxed/simple;
+	bh=ZDg0KQ0iWZU2ZGWemXowPBB9KN1D2XkPEqdi22YbXzk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rbm+sCpPslAj1HpcslbdcfNDCgvlY/uhgVserkSJsSJjOO0oVg6zXsdVqRPTyNJHEOqAdq7xW3A+F0tRWQqxdpMDULOX6xwykY0wNXJJTaHBs7lP56LU86GSzQ91FNmqme/gIuXDj+xoK4CLidBbMr/pjZUfzVFzLZaWkWQxb5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Wh0JsEq+; arc=none smtp.client-ip=209.85.219.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-6e73e8bdea2so5944166b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 08:51:53 -0700 (PDT)
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-dcd9e34430cso31076276.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 08:53:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712159513; x=1712764313; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=RxAX3IORBZmyZAmqt7k7cbWr6HJgfjLBGIug35aDNFY=;
-        b=DRMHnn/12hCEZ+EzEWkSqaeg3Kh/NKXno8djLNTpANfiRYgJ70crpONfAk9RPZiirF
-         ym4+eIlbnGzB4QlFFQNVkfJkmPCPhG1OxGDBvdBny6Se9dLEfXso7WpduMDWmNDSdQPX
-         R7lUMIBExyPDI8RJIxLrlb60MXKhb4MDhPkO9ZkWhDgKfEQkc7Be5ZM7Tkm0UdTjwMrf
-         AG3JtGao5TTxfFlTMEN5A6x8IvNL5RBJzDvylXEznCEajyb3jpvx5U1V+hMcPpcz91RA
-         wydNWp4nDOGPSqVypb3HxkuUEK4/kTwgYFtwuIVgb70X8qwZ8SjDaaoGs0JVa4YWWet0
-         RBeA==
+        d=linaro.org; s=google; t=1712159586; x=1712764386; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=/yiMC5R+kTJY6W41EC/ZaB+VdKDo+c8x7WrU9W465mY=;
+        b=Wh0JsEq+OFVG3C54nTcPrinCXF0Sl//GcG52gfP+W6HgPvQT9I69hgWDBhUHvGxPbC
+         GZNxtqNVzN0ri3mao7TwkRleubRkao+3LFJcDplllvKSuIE9eItKcrwJeopNqEcilIX5
+         K/6krrlLs0otfK5mhpig+Axg6N6wUlbUF9IK0OeWoeKSMmMD+ShpiDq5OvBBF1E6ZFzF
+         CyfKR16CGqo/SHq78DgIAkI7r0uWHdPflviGHWGaeVFObT2mJNtePkgqX7VMIdSQa8Cx
+         9x9avxB6ZEkrr84lhuZiDTJZBfH72QpGc3Lx3suHQ/AasaDiSeLu4STeIkRUyxFiJZFz
+         TNjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712159513; x=1712764313;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RxAX3IORBZmyZAmqt7k7cbWr6HJgfjLBGIug35aDNFY=;
-        b=e1qFovv8Nm8WEN+nmHusMFDzc2b36vTF8Yj7Gb0GDq7GOmqPBNoJR4DGyJ8o8rJ57S
-         1Z8lMkGJK4U3n4oLHgg5jI2u/t8TqakSCByajNAaSb5KKZBFgillpXa7viZs7rxjfvNF
-         TL8jJP/CHkuag+mJNtleRSimKornalpAHP2Rbn/CCRM5pD1Z6Q+sWscJM4pOJilTPLIc
-         1sIWpfRrNpPruLiE1scIykoTxcZMQIBrE5Z55lUFjnoZnPWBv1ICAtB4wVbTbeH+mt2G
-         T339zxZquYVvWEcCZ0kwZklC/wi7gi/ntPes25ZKAoK/ysPSB5evPQicGSiHrImkeA8i
-         hijg==
-X-Forwarded-Encrypted: i=1; AJvYcCWL+/ihDVih+DIAdEJ+d+IYLy7ji3veaRhTvUtmcyAR6HJXVusOamWNIN+O4XmI6ayfcLSbhP7ONAayZ9hEwj50TaD/jBXlPZCfzATCpQ==
-X-Gm-Message-State: AOJu0YzpXF2tNf8LBqe3ptT0RH1rPYYRHJHuvei7r9aUzdMsKcMqIFMM
-	Otngke2pM7nqDELYWCPcpznSJ+ypxcepx4MELkovCf5hWcpz5vSNm6kNlkdt3g==
-X-Google-Smtp-Source: AGHT+IFZ8An9frbeOoCjHLGX+h10+JkFjjcUHp5RZHkQCtQER4IRh2CUT8rqcKsB9n/M1uUV2ezDxQ==
-X-Received: by 2002:a05:6a20:6114:b0:1a3:e23d:6003 with SMTP id m20-20020a056a20611400b001a3e23d6003mr21825pzb.62.1712159512806;
-        Wed, 03 Apr 2024 08:51:52 -0700 (PDT)
-Received: from thinkpad ([103.28.246.48])
-        by smtp.gmail.com with ESMTPSA id a17-20020aa78e91000000b006e535bf8da4sm11747015pfr.57.2024.04.03.08.51.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Apr 2024 08:51:52 -0700 (PDT)
-Date: Wed, 3 Apr 2024 21:21:47 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Niklas Cassel <cassel@kernel.org>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	mhi@lists.linux.dev, linux-tegra@vger.kernel.org
-Subject: Re: [PATCH v2 03/10] PCI: endpoint: Rename core_init() callback in
- 'struct pci_epc_event_ops' to init()
-Message-ID: <20240403155147.GA85162@thinkpad>
-References: <20240401-pci-epf-rework-v2-0-970dbe90b99d@linaro.org>
- <20240401-pci-epf-rework-v2-3-970dbe90b99d@linaro.org>
- <ZgvjWtC0f1CY6DJs@ryzen>
- <20240403134600.GL25309@thinkpad>
+        d=1e100.net; s=20230601; t=1712159586; x=1712764386;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/yiMC5R+kTJY6W41EC/ZaB+VdKDo+c8x7WrU9W465mY=;
+        b=HgIysjWffQYx31pNyFG4Uciq7qOwyizvq/n30kB679Yoom/gvi5BAcky4/YmTzgNiH
+         IfT9Kbj9xFTEvydu8Ao8GKtLYcjQYbHcKwlJdToUrc5Z0g77Exiz69JVtKsHbvACrUAe
+         /0DmGhy/Y6E8bUNluXT5eIaGdVXCnOaHvHcUMsIKdBXBnB5T8pouHxS7dn9oSRLi/vWA
+         C6ZibcBn8m1o+dmXn5GaL7hHPdwlQJMpRdHAwEUlJMcAvbqwtvtdA0r6WlYCRpQhz78l
+         lVW0KgiQo8QjpydLQl/PDsPpJjUreVCw/ICXQcxOXa0WfGEVW4QlUMsOWDaEYYrEK2s2
+         dwxg==
+X-Forwarded-Encrypted: i=1; AJvYcCVenOzPWviOK5EGlTQ3853Sfo1ASHmztsqQlMFAbporskX4ZyhvxrJp336YPTYdjgm0UOd2ariHpoA8oOs9K5v7N58x/6c83aB0LvkGTw==
+X-Gm-Message-State: AOJu0YxGfntapr8UPRDNo9MAM1uChuq44tGFJkrGNjXL7FeIgyWgBzs9
+	9A/j+AYFkfzsM8dEty5FSOJ2WbwxvhPgUscjEHQ0FR/tgyXQ8gXioX3MWF7hmNrvXdljxaCCMyf
+	tzoEgj0ym0k0FLNkY4AUgth79IQiRSugmRoheaA==
+X-Google-Smtp-Source: AGHT+IFYYTj23BFPwhBEl3t/Qa3q2nRotj6Lz3gJyO4nsNuTMND7tLhJ6hpSru3fI59jMNl2QnjPzHz6m9ynV88kfR4=
+X-Received: by 2002:a5b:6cd:0:b0:dcf:c7ef:e4e0 with SMTP id
+ r13-20020a5b06cd000000b00dcfc7efe4e0mr2821320ybq.1.1712159585683; Wed, 03 Apr
+ 2024 08:53:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240403134600.GL25309@thinkpad>
+References: <20240319091020.15137-1-quic_kbajaj@quicinc.com>
+ <20240319091020.15137-3-quic_kbajaj@quicinc.com> <CAA8EJprXPvji8TgZu1idH7y4GtHtD4VmQABFBcRt-9BQaCberg@mail.gmail.com>
+ <Zgs7Yau1/jYvys4i@hu-bjorande-lv.qualcomm.com> <5354493b-63de-43bb-9871-73918f123661@quicinc.com>
+In-Reply-To: <5354493b-63de-43bb-9871-73918f123661@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 3 Apr 2024 18:52:54 +0300
+Message-ID: <CAA8EJppNZrLzT=vGS0NXnKJT_wL+bMB9jFhJ9K7b7FPgFQbcig@mail.gmail.com>
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: qdu1000-idp: enable USB nodes
+To: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Cc: Bjorn Andersson <quic_bjorande@quicinc.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Komal Bajaj <quic_kbajaj@quicinc.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Amrit Anand <quic_amrianan@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Apr 03, 2024 at 07:16:05PM +0530, Manivannan Sadhasivam wrote:
-> On Tue, Apr 02, 2024 at 12:52:10PM +0200, Niklas Cassel wrote:
-> > On Mon, Apr 01, 2024 at 09:20:29PM +0530, Manivannan Sadhasivam wrote:
-> > > core_init() callback is used to notify the EPC initialization event to the
-> > > EPF drivers. The 'core' prefix was used indicate that the controller IP
-> > > core has completed initialization. But it serves no purpose as the EPF
-> > > driver will only care about the EPC initialization as a whole and there is
-> > > no real benefit to distinguish the IP core part.
-> > > 
-> > > So let's rename the core_init() callback in 'struct pci_epc_event_ops' to
-> > > just init() to make it more clear.
-> > > 
-> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > ---
-> > >  drivers/pci/endpoint/functions/pci-epf-mhi.c  |  4 ++--
-> > >  drivers/pci/endpoint/functions/pci-epf-test.c |  4 ++--
-> > >  drivers/pci/endpoint/pci-epc-core.c           | 16 ++++++++--------
-> > >  include/linux/pci-epf.h                       |  4 ++--
-> > >  4 files changed, 14 insertions(+), 14 deletions(-)
-> > > 
-> > > diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-> > > index 280863c0eeb9..b3c26ffd29a5 100644
-> > > --- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
-> > > +++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-> > > @@ -716,7 +716,7 @@ static void pci_epf_mhi_dma_deinit(struct pci_epf_mhi *epf_mhi)
-> > >  	epf_mhi->dma_chan_rx = NULL;
-> > >  }
-> > >  
-> > > -static int pci_epf_mhi_core_init(struct pci_epf *epf)
-> > > +static int pci_epf_mhi_epc_init(struct pci_epf *epf)
-> > >  {
-> > >  	struct pci_epf_mhi *epf_mhi = epf_get_drvdata(epf);
-> > >  	const struct pci_epf_mhi_ep_info *info = epf_mhi->info;
-> > > @@ -897,7 +897,7 @@ static void pci_epf_mhi_unbind(struct pci_epf *epf)
-> > >  }
-> > >  
-> > >  static const struct pci_epc_event_ops pci_epf_mhi_epc_event_ops = {
-> > > -	.core_init = pci_epf_mhi_core_init,
-> > > +	.init = pci_epf_mhi_epc_init,
-> > >  };
-> > >  
-> > >  static const struct pci_epc_bus_event_ops pci_epf_mhi_bus_event_ops = {
-> > > diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
-> > > index 973db0b1bde2..abcb6ca61c4e 100644
-> > > --- a/drivers/pci/endpoint/functions/pci-epf-test.c
-> > > +++ b/drivers/pci/endpoint/functions/pci-epf-test.c
-> > > @@ -731,7 +731,7 @@ static int pci_epf_test_set_bar(struct pci_epf *epf)
-> > >  	return 0;
-> > >  }
-> > >  
-> > > -static int pci_epf_test_core_init(struct pci_epf *epf)
-> > > +static int pci_epf_test_epc_init(struct pci_epf *epf)
-> > 
-> > On V1 you agreed that it is better to remove 'epc' from the naming.
-> > (For both pci-epf-test and pci-epf-mhi).
-> > You seem to have forgotten to address this for V2.
-> > 
-> 
-> Oh yeah, sorry about that. I tried to address comments for both series and
-> apparently this one got missed.
-> 
+On Wed, 3 Apr 2024 at 10:50, Krishna Kurapati PSSNV
+<quic_kriskura@quicinc.com> wrote:
+>
+>
+>
+> On 4/2/2024 4:25 AM, Bjorn Andersson wrote:
+> > On Tue, Mar 19, 2024 at 11:52:15AM +0200, Dmitry Baryshkov wrote:
+> >> On Tue, 19 Mar 2024 at 11:11, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
+> >>>
+> >>> Enable both USB controllers and associated hsphy and qmp phy
+> >>> nodes on QDU1000 IDP. Add the usb type B port linked with the
+> >>> DWC3 USB controller switched to OTG mode and tagged with
+> >>> usb-role-switch.
+> >>>
+> >>> Co-developed-by: Amrit Anand <quic_amrianan@quicinc.com>
+> >>> Signed-off-by: Amrit Anand <quic_amrianan@quicinc.com>
+> >>> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+> >>> ---
+> >>>   arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 65 ++++++++++++++++++++++++
+> >>>   1 file changed, 65 insertions(+)
+> >>>
+> >>> diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+> >>> index 89b84fb0f70a..26442e707b5e 100644
+> >>> --- a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+> >>> +++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+> >>> @@ -46,6 +46,33 @@ ppvar_sys: ppvar-sys-regulator {
+> >>>                  regulator-boot-on;
+> >>>          };
+> >>>
+> >>> +       usb_conn_gpio: usb-conn-gpio {
+> >>> +               compatible = "gpio-usb-b-connector";
+> >>
+> >> If this board has only a USB-B connector, can it really handle USB 3.0?
+> >>
+> >
+> > Here's a USB 3.0 Type-B cable, so no problem there:
+> > https://en.wikipedia.org/wiki/USB_hardware#/media/File:USB_3.0_plug,_type_B_-_1709.jpg
+> >
+> >
+> > @Komal, please confirm that this is the connector you have on the IDP?
+> >
+>
+> Hi Bjorn,
+>
+>   Sorry for the confusion. The QDU1000 IDP has a Type-C connector. The
+> type-c switch present between SoC and the connector is HD3SS3220 (from TI).
+>
+>   I think Dmitry's comment was that if it is 3.0, is it Type-C ? and if
+> it is Type-C, then the compatible written in the being
+> "gpio-usb-b-connector" would mean that there is a Type-B connector for
+> someone who looks at the DT. (Dmitry, Please correct me if I understood
+> the comment wrong).
+>
+>   I tried to push a series for adding a compatible to gpio conn driver
+> [1] to resolve this and explained the connection specifics to Dmitry [2]
+> and he suggested me to add a compatible for just the switch present on
+> qdu1000 idp.
+>
+> Dmitry, Krzysztof,
+>
+> I was looking into the code again and it turns out there is a driver
+> specific to HD3SS3220 switch [3] in linux already. I tried to check if
+> it can be reused here but that driver relies on I2C communication
+> between the SoC and the HD3SS3220 chip to get information on role
+> switch. But in QDU1000 IDP board, there is no I2C communication present
+> between SoC and the switch. Those lines have been cut off. The SoC only
+> knows about VBUS/ID pins (other than DM/DP/SS Lanes) and no other I2C
+> connections between the switch and the SoC. We still need to make use of
+> vbus/id pins to decide which role we need to shift into. Can we still go
+> ahead with using usb-conn-gpio driver by adding the compatible
+> (qcom,qdu1000-hd3ss3220) and using it in DT ?
 
-Ok, now I remember that I kept the prefix intentionally. The module init
-functions are already named as pci_epf_{test/mhi}_init(), so cannot use the same
-name for the callback also. And using some other name didn't fit, so I kept
-'epc' as the prefix since the callback acts on the EPC initialization event
-anyway.
+Is Qualcomm a manufacturer of the device? It is not.
+Is qdu1000 a part of the device? It is not.
 
-- Mani
+So the compatible string should be "ti,hd3ss3220". Which is fine to be
+used in the platform driver. Just describe the differences in the
+schema.
+
+
+>
+> Let me know your thoughts on this.
+>
+> [1]:
+> https://lore.kernel.org/all/6f2df222-36d4-468e-99a7-9c48fae85aa9@quicinc.com/
+>
+> [2]:
+> https://lore.kernel.org/all/6f2df222-36d4-468e-99a7-9c48fae85aa9@quicinc.com/
+>
+> [3]:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/usb/typec/hd3ss3220.c?h=v6.9-rc2
+>
+> Regards,
+> Krishna,
+>
+>
+>
+
 
 -- 
-மணிவண்ணன் சதாசிவம்
+With best wishes
+Dmitry
 
