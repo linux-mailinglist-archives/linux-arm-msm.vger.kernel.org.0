@@ -1,194 +1,280 @@
-Return-Path: <linux-arm-msm+bounces-16345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1630789773E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 19:48:28 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 12CE1897760
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 19:53:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 09B831C25C8B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 17:48:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6F3A51F326BE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 17:53:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36B12156887;
-	Wed,  3 Apr 2024 17:24:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6476D154430;
+	Wed,  3 Apr 2024 17:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="e/zzmnXh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RYiUckUz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 895AB156888;
-	Wed,  3 Apr 2024 17:24:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C157153BFB
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 17:37:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712165061; cv=none; b=gfG/c8NE1zq8b1O/hYSjAtn0YyuQwOrnp1L1ZYhNmJgylSNnJ+j57wY6i9JOEWHLvCpzOfmIIXzoKHhcKjA3FWGJM9jK3fOu8iLOMBjjBJnDZZqc/6PmruDc7sXLAG6hUyRpsvoUWEichPCUXKh8vzjqyT9xYhm1dopG1lTIIyA=
+	t=1712165879; cv=none; b=XDJjxLRyRnMn6WLYECRWba7tdHapSlHgJA5jJWdlZSjZr9x5lm+FO5FXLREG+NO2pL6YBtRq71o4c0IgrbayuUhO1hOx7f+laAIxVziwxstsk2UbRVnqzCTly8XRXuilYxrsuO9YFGU4PKrLikYgRTYeSglQW4lflFVA7ZvaugY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712165061; c=relaxed/simple;
-	bh=B/y872zb6f2CvLaHGcqyZBTBXES6JFiuSyjS0w8aW5M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=DrJNbh4LwMYLYn64No7kjXJeeskn4v5OL9G/K6y3dXbLH5mwEJdtctCvXWRx1+ucws72V+naMT6KWdxByZ5JZpgZMWe4Jk4HP7aFw/rjMjsHgjHlfRrLRJVLqZSPXw0mihQ5GqUL9vD/7EqW9Lbj9IY/Tzd3T7P6somdzBTD/68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=e/zzmnXh; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 433GxAh1021447;
-	Wed, 3 Apr 2024 17:24:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=2JPx6TwP3TixIfu9uBlgTPj2U8PhmVwaQIll4DjjblI=; b=e/
-	zzmnXhLw+h39vMcc5PJ1xtHsmqliqbI/4lb8QLMxNVJdQvKHe3NVC9igEM9Bg7nD
-	foFGHxOuH3xdQ5JqtflSdOzy6eccmXf9Y5YjI1876ah0kwtxWhAKTk9XN+/ZiWg+
-	Px8tK94Q8KsCoaRUhoC7EGjTHcz8V3BfMwoyt8rYl5d+trL6xEv6dMLzZFcgEd96
-	Nf3VIfaNMMP/6qWsoAgT3pX3bl9f4DpmEW2GeYSRr05ALjasMmDPKLz7+20J9Odv
-	gEC1ytm1sx/Jn15WLUe5oHR7NiPhBENKOuo0IBD1HQXg2+AQjs4S/9qEMyYLfN8T
-	KA9UsCD/LJ/+y6GKItDA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x92hb1h87-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 03 Apr 2024 17:24:09 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 433HO8pK022925
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 3 Apr 2024 17:24:08 GMT
-Received: from [10.110.67.196] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 3 Apr 2024
- 10:24:07 -0700
-Message-ID: <f0dcfd6a-55cf-84d8-6599-319a700e1960@quicinc.com>
-Date: Wed, 3 Apr 2024 10:23:59 -0700
+	s=arc-20240116; t=1712165879; c=relaxed/simple;
+	bh=ra9udlrsP1LZeqsTZuzFHjBE/Jhohg/y6A5nl4xoNrs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=m9RU2eth2SrC8jM8NBha7y6c0mZOo145OwQ/uTVIZXZ9gLp4vLKOltgjE2tYQrxbclnAACkHmvx64Y/z//yWxJDN9Cfv/Btc0tKkh1xIBPBDT5X2egMmWBMQmkSjSlSClB6ixYWjGlslzC7yn9ZHMbkYSQ67DMSGr9YeMqpR0f8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RYiUckUz; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a4e692ca8c4so17943966b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 10:37:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712165876; x=1712770676; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=LxoI1opATw8Rb6R6z0Sf//pYUFJC5qhTSpe8fxqLo9Y=;
+        b=RYiUckUztvA0gPGFWfcSlMXLad8JdXLrJ0TQLB+F2KOEYffRzOspq+KKTjo2XZXGi3
+         KZVsY9BOeEnumTI5bzSzGDOUutu1b40NmL+UIcA/F7cjCU+skLNFaShjEJKkEKgBhpPy
+         y7ej+2AsiXk348T3ptiNOS5eQt09UWQqidq07CfSrMkro/qPeYkvdYiX03+yUE3S+7s+
+         J6cisHjTaiBFlPbTZdgBl9x8ZePkCDOh9+euIbyJgz75cDCDkDXZ00taTF+XN5W28oJd
+         Wq72k6SwedbX81we/hDbF+Wz4rAU9X6Wehm5GwfCVhU/27pIfHPskU0I05No79hkGnLO
+         37+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712165876; x=1712770676;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LxoI1opATw8Rb6R6z0Sf//pYUFJC5qhTSpe8fxqLo9Y=;
+        b=kHsBrKzrgNSbr7eDqpW7MA02++Rlp2H+6kIpCI2QRAR2LVO+UsWFxq9k4b6A3LF9yX
+         WUu7NOLm0YovJw2FfuBSUvOO/Ktaizy8fHBXqe9q2oo5dKbIzvkD4DqskzJvGjnXJTET
+         3mME/UaCqjjqpVQmktp7+sK2C28khgWNee3l93jE04H138Ecw4S1zaeU9023rChyaQVW
+         3wU4JMru79r/Q6S0iMgndTcdXhKqvzHyIgzuIeHBwC0QfRGBmn4EdPvPp1wNlr2s+Sqa
+         7B2kVdZnT+xMtkOt1X1+LYoCa/JweYfTzuogE12hVy9+5dwC/y8pwXkf8W25fPOJ9sy6
+         YBSQ==
+X-Gm-Message-State: AOJu0YwBzDshsTpY40Fg9dvLv+hV6flqEdkOIULL3+jQTo722ZxeHvGI
+	SB/I3o95Du8eMgKKb2pjgeth6My/Jf6y6d2n34aUmMOYhIoQuZ07ghFKMRzKiZU=
+X-Google-Smtp-Source: AGHT+IETxUK21A0KsNzK9uV4jSaqPiHsT4Z04ne4/mLarpl+PLnigTZaYl1e7uHL+dwx5qwbEwnH9Q==
+X-Received: by 2002:a17:906:a57:b0:a4f:c80c:1b69 with SMTP id x23-20020a1709060a5700b00a4fc80c1b69mr17634ejf.8.1712165875715;
+        Wed, 03 Apr 2024 10:37:55 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.16])
+        by smtp.gmail.com with ESMTPSA id ay12-20020a170906d28c00b00a46a9c38b16sm7954412ejb.138.2024.04.03.10.37.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Apr 2024 10:37:55 -0700 (PDT)
+Message-ID: <10f02618-f16c-47d4-a27f-074b1ecffaa1@linaro.org>
+Date: Wed, 3 Apr 2024 19:37:53 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v3] drm/msm/dp: assign correct DP controller ID to
- x1e80100 interface table
-To: <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <abel.vesa@linaro.org>, <andersson@kernel.org>
-CC: <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1711741586-9037-1-git-send-email-quic_khsieh@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: Add basic support for LG G4 (H815)
+To: Alexander Reimelt <alexander.reimelt@posteo.de>, andersson@kernel.org,
+ pvorel@suse.cz, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240403104415.30636-1-alexander.reimelt@posteo.de>
+ <20240403104415.30636-3-alexander.reimelt@posteo.de>
 Content-Language: en-US
-From: Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <1711741586-9037-1-git-send-email-quic_khsieh@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20240403104415.30636-3-alexander.reimelt@posteo.de>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: SvE6clYGD40F0jHrmd_JNjrin2kdEppU
-X-Proofpoint-ORIG-GUID: SvE6clYGD40F0jHrmd_JNjrin2kdEppU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-03_18,2024-04-03_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 mlxscore=0
- clxscore=1015 adultscore=0 spamscore=0 lowpriorityscore=0 phishscore=0
- malwarescore=0 priorityscore=1501 bulkscore=0 suspectscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2404030117
 
-Dmitry,
-
-any more comments?
-
-On 3/29/2024 12:46 PM, Kuogee Hsieh wrote:
-> At current x1e80100 interface table, interface #3 is wrongly
-> connected to DP controller #0 and interface #4 wrongly connected
-> to DP controller #2. Fix this problem by connect Interface #3 to
-> DP controller #0 and interface #4 connect to DP controller #1.
-> Also add interface #6, #7 and #8 connections to DP controller to
-> complete x1e80100 interface table.
->
-> Changs in V3:
-> -- add v2 changes log
->
-> Changs in V2:
-> -- add x1e80100 to subject
-> -- add Fixes
->
-> Fixes: e3b1f369db5a ("drm/msm/dpu: Add X1E80100 support")
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+On 03/04/2024 12:43, Alexander Reimelt wrote:
+> To make it easier for downstream projects and avoid duplication of work.
+> Makes the device bootable and enables all buttons, most regulators, hall sensor, eMMC and SD-Card.
+> 
+> Signed-off-by: Alexander Reimelt <alexander.reimelt@posteo.de>
 > ---
->   .../drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h   | 34 ++++++++++++++++++++--
->   1 file changed, 31 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
-> index 9a9f709..a3e60ac 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
-> @@ -324,6 +324,7 @@ static const struct dpu_wb_cfg x1e80100_wb[] = {
->   	},
->   };
->   
-> +/* TODO: INTF 3, 8 and 7 are used for MST, marked as INTF_NONE for now */
->   static const struct dpu_intf_cfg x1e80100_intf[] = {
->   	{
->   		.name = "intf_0", .id = INTF_0,
-> @@ -358,8 +359,8 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
->   		.name = "intf_3", .id = INTF_3,
->   		.base = 0x37000, .len = 0x280,
->   		.features = INTF_SC7280_MASK,
-> -		.type = INTF_DP,
-> -		.controller_id = MSM_DP_CONTROLLER_1,
-> +		.type = INTF_NONE,
-> +		.controller_id = MSM_DP_CONTROLLER_0,	/* pair with intf_0 for DP MST */
->   		.prog_fetch_lines_worst_case = 24,
->   		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
->   		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31),
-> @@ -368,7 +369,7 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
->   		.base = 0x38000, .len = 0x280,
->   		.features = INTF_SC7280_MASK,
->   		.type = INTF_DP,
-> -		.controller_id = MSM_DP_CONTROLLER_2,
-> +		.controller_id = MSM_DP_CONTROLLER_1,
->   		.prog_fetch_lines_worst_case = 24,
->   		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 20),
->   		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 21),
-> @@ -381,6 +382,33 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
->   		.prog_fetch_lines_worst_case = 24,
->   		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 22),
->   		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 23),
-> +	}, {
-> +		.name = "intf_6", .id = INTF_6,
-> +		.base = 0x3A000, .len = 0x280,
-> +		.features = INTF_SC7280_MASK,
-> +		.type = INTF_DP,
-> +		.controller_id = MSM_DP_CONTROLLER_2,
-> +		.prog_fetch_lines_worst_case = 24,
-> +		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 17),
-> +		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 16),
-> +	}, {
-> +		.name = "intf_7", .id = INTF_7,
-> +		.base = 0x3b000, .len = 0x280,
-> +		.features = INTF_SC7280_MASK,
-> +		.type = INTF_NONE,
-> +		.controller_id = MSM_DP_CONTROLLER_2,	/* pair with intf_6 for DP MST */
-> +		.prog_fetch_lines_worst_case = 24,
-> +		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 18),
-> +		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 19),
-> +	}, {
-> +		.name = "intf_8", .id = INTF_8,
-> +		.base = 0x3c000, .len = 0x280,
-> +		.features = INTF_SC7280_MASK,
-> +		.type = INTF_NONE,
-> +		.controller_id = MSM_DP_CONTROLLER_1,	/* pair with intf_4 for DP MST */
-> +		.prog_fetch_lines_worst_case = 24,
-> +		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12),
-> +		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13),
->   	},
->   };
->   
+>  arch/arm64/boot/dts/qcom/Makefile            |   1 +
+>  arch/arm64/boot/dts/qcom/msm8992-lg-h815.dts | 422 +++++++++++++++++++
+>  2 files changed, 423 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/msm8992-lg-h815.dts
+> 
+
+Please use subject prefixes matching the subsystem. You can get them for
+example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
+your patch is touching.
+
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 7d40ec5e7d21..5b7f8741006f 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -62,6 +62,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8956-sony-xperia-loire-kugo.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8956-sony-xperia-loire-suzu.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-lg-bullhead-rev-10.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-lg-bullhead-rev-101.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-lg-h815.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-msft-lumia-octagon-talkman.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-xiaomi-libra.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8994-huawei-angler-rev-101.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-h815.dts b/arch/arm64/boot/dts/qcom/msm8992-lg-h815.dts
+> new file mode 100644
+> index 000000000000..b7fa48337e25
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/msm8992-lg-h815.dts
+> @@ -0,0 +1,422 @@
+> +// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +/*
+> + * MSM8992 LG G4 (h815) device tree.
+> + *
+> + * Copyright (c) 2024, Alexander Reimelt <alexander.reimelt@posteo.de>
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "msm8992.dtsi"
+> +#include "pm8994.dtsi"
+> +#include "pmi8994.dtsi"
+> +#include <dt-bindings/leds/common.h>
+> +
+> +/* different mapping */
+> +/delete-node/ &cont_splash_mem;
+> +
+> +/* disabled downstream */
+> +/delete-node/ &dfps_data_mem;
+> +
+> +&CPU0 {
+> +	enable-method = "spin-table";
+> +};
+> +
+> +&CPU1 {
+> +	enable-method = "spin-table";
+> +};
+> +
+> +&CPU2 {
+> +	enable-method = "spin-table";
+> +};
+> +
+> +&CPU3 {
+> +	enable-method = "spin-table";
+> +};
+> +
+> +&CPU4 {
+> +	enable-method = "spin-table";
+> +};
+> +
+> +&CPU5 {
+> +	enable-method = "spin-table";
+> +};
+
+That's wrong order. Top level nodes goes after node deletions. Please
+observe DTS coding style.
+
+> +
+> +/ {
+> +	model = "LG G4 (International)";
+> +	compatible = "lg,h815", "qcom,msm8992";
+> +	chassis-type = "handset";
+> +
+> +	qcom,msm-id = <251 0>;
+> +	qcom,pmic-id = <0x10009 0x1000a 0x00 0x00>;
+> +	qcom,board-id = <0xb64 0>;
+> +
+> +	/* psci is broken */
+> +	/delete-node/ psci;
+> +
+> +	chosen {
+> +		bootargs = "earlycon=tty0 console=tty0";
+
+Drop
+
+> +	};
+> +
+> +	reserved-memory {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges;
+> +
+> +		spin-table@6000000 {
+> +			reg = <0 0x6000000 0 0x1000>;
+> +			no-map;
+> +		};
+> +
+> +		ramoops@ff00000 {
+> +			compatible = "ramoops";
+> +			reg = <0x0 0xff00000 0x0 0x100000>;
+> +			console-size = <0x20000>;
+> +			pmsg-size = <0x20000>;
+> +			record-size = <0x10000>;
+> +			ecc-size = <0x10>;
+> +		};
+> +
+> +		cont_splash_mem: fb@3400000 {
+> +			compatible = "framebuffer";
+> +			reg = <0 0x3400000 0 0xc00000>;
+> +			no-map;
+> +		};
+> +
+> +		crash_fb_mem: crash_fb@4000000 {
+
+No undercores in node names. Please open DTS coding style and follow it.
+
+....
+
+> +
+> +&pm8994_resin {
+> +	status = "okay";
+
+status is the last property.
+
+
+
+Best regards,
+Krzysztof
+
 
