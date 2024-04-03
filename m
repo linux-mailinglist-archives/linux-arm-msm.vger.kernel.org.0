@@ -1,156 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-16241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16242-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B98B896B34
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 11:58:02 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4298A896BA4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 12:08:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CF1471F28946
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 09:58:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F14FF2917FC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 10:08:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D3B41350DA;
-	Wed,  3 Apr 2024 09:57:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XSKY4F7v"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE61613666C;
+	Wed,  3 Apr 2024 10:06:09 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [5.144.164.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E081350D6
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 09:57:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB70313AA2E
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 10:06:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712138278; cv=none; b=CCihofqAtJo1QiV/h7X2Ang//QJKdGETsK1Odd1kBI+Go+rEVAIjoGchcnUlJvvBTowrvqkzYzq8ai3ECv94+w0XfBRqAN+SSaLw02WjFpTyyHGz140rSob6/UrDl0KrnIcMKRXVAb0yapJxD5HnfaNAJ2/gkOyqLugcRvD/HOo=
+	t=1712138769; cv=none; b=R2OAD47BF6tVuLKWd+4vrgPG5V5c2VmVKHhWn0YhHkr4DDcvjA5vf6acoH+7EDii0H59P8kyjzKHP+08TMTePVPAwuzaeNu7DI0q95XTnp+lfMzkVrkF2pcNlSOvOSVEmHt93Yo02l7Djpnz15W9Hj0vamnZqQo2knye1PMm7us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712138278; c=relaxed/simple;
-	bh=clUrUlr/bYZzcE/3wpdl5j0DuEea4953kfmh+QZqT4Y=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Lw5/D4beEfwNGnhAxdbDlD1vTFC3jlZ3B0epAWj7zsrrtozXOo0HDXoF2XhP5hjLDKexPTphIbspY8jnY/GF+Q/YP7uNatLEd48F9erbQzi9W1iFcgwQ6cXJ+9FsHtlt/tt9rr9OfL+026leoHgCoBZXeZCE94eFw8x+DcIw7z8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XSKY4F7v; arc=none smtp.client-ip=209.85.219.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-dd14d8e7026so5127483276.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 02:57:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712138275; x=1712743075; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=8a49vn1g2GfhymP3UDOjKfMABn27AFlfMB3+8PtG0hY=;
-        b=XSKY4F7vw+mebWwZ+kQcLA4SNbqV6d9xt43WK7UghmpojJsqSXScw0ne6vCzf9zcOb
-         dT4frnNuzOzX4jvcO7GcyIxNqZ4WD63uJvO2H9Yzu8hELeiqzzwKzdLuapvlxr0ZIcLu
-         0cNCrbI2g3VR/WCZJFAOTpGLn/1QWVKE5smna6/FGGQXsJ4LUWwZQYL8tgS3OCVvx1Ni
-         V4h4QGTWJ7CxF6bq900f0f2R0YDCu6kbGCyKqLg0g2u3KahC45FRR61oURm5g7cMsNfw
-         Zx4WnGgjy2lhM+/12LxdsjPCppM4XxWX9Z3H8CAzFrcl8bxBKTx7UN77zSuchTxL0/zh
-         sq/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712138275; x=1712743075;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8a49vn1g2GfhymP3UDOjKfMABn27AFlfMB3+8PtG0hY=;
-        b=fNxRdKXdMwdKRhDiip6+iBuUWqBIPp2m4NOrzt2kYT2P5xxGQ9GJdqtRERMcmlX1EB
-         SQ8VfFsDFlkHm9G5IokXnPIjo2DAuJ75NJ+tUkIevC/ATWLdfMTJ9wjmncrx9xRp20f3
-         /2iPHA33+t8ofgRHiYRuXghsP13McBIpvqmYUioBrilf95L5S8DB/SPOxfVvn0X/eVLz
-         lidjBSrhx+Cn05OcMnXO+qxNachMGSI0uuanH05YXqpqMTYXV04c/CXAOZ3jkEdROb8d
-         Z9Ncm3+r6NijyODA+WE65VAlNVxeKpYyOq2uVsbc6SOeUAPmIqeH99qg+SDUNK34nraD
-         pbSQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXk+8I5DOhM3I02tgBS0wE0+yHe34u2mVInm2yf99DPU7NpjuzbdlqqRNhL2k4U7Vs2BbfN3ZeTBvHBfOV8GjvudeyyikMMor7QB7X1JA==
-X-Gm-Message-State: AOJu0Yy+NMvTAtorH3y97GEnIuLT54FEZVheqLMSYI9+KwEPjdeNxYn5
-	v7ki/mLJF4plRcMbppA+BnwDQF8Miks17SqaFFj/OEf+NdKG/BRDL58l2fLQL498JERs7gDRgT0
-	A86W8MYVIwNqi+6j3egbPCAhIQ9XXJZEk1cYcfQ==
-X-Google-Smtp-Source: AGHT+IG8nlvk6XbQkC/Ui1tRnBB3XNXB6LgbVsTQjpZEjnESvNEsU3CRk8wWXBQbvmEg7ARzBiH2C1TQfqjjaNgmJqs=
-X-Received: by 2002:a5b:f07:0:b0:dc7:4c92:16a3 with SMTP id
- x7-20020a5b0f07000000b00dc74c9216a3mr11791901ybr.27.1712138275452; Wed, 03
- Apr 2024 02:57:55 -0700 (PDT)
+	s=arc-20240116; t=1712138769; c=relaxed/simple;
+	bh=PtsQ7BPoEhJdj1DTbguN0BEbC+PRqVWUfaWeLRN8KX0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=V2BaEO3egs+We93TZMvJBLyI7gS5zK93axSr29PBMWKBBoHSk5zwx34m6qnT+lae8QQdot2qHll1P5YMUlR9EXs2Adz/LNMQxE+FsykabBcasBIBjtZwlEjUtFSwOZ59ZFs3EwtP+lS88rfZo47lLuS+ksE/iAfO0Gc3QojIFQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by m-r2.th.seeweb.it (Postfix) with ESMTPSA id C482D3EDD1;
+	Wed,  3 Apr 2024 12:05:57 +0200 (CEST)
+Date: Wed, 3 Apr 2024 12:05:55 +0200
+From: Marijn Suijten <marijn.suijten@somainline.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Sumit Semwal <sumit.semwal@linaro.org>, 
+	Caleb Connolly <caleb.connolly@linaro.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>, 
+	Caleb Connolly <caleb@connolly.tech>
+Subject: Re: [PATCH v3 4/4] drm: panel: Add LG sw43408 panel driver
+Message-ID: <vcxytd7cxmvno3hb7tvxwfbnsupaw3mcqplt7mnrntjhkybklr@lxffwioi2bzn>
+References: <20240402-lg-sw43408-panel-v3-0-144f17a11a56@linaro.org>
+ <20240402-lg-sw43408-panel-v3-4-144f17a11a56@linaro.org>
+ <3hh7nfqflj73422q47p6do7aiormxwspwkfg557epeqn2krtcc@dsufsohfaz4l>
+ <pair66urg2ecqhob5gzzdtzuyofrmcf6rk7v2akggbotcpv7ld@bxhxftbd4xbn>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240403-msm-drm-dsc-dsi-video-upstream-v1-0-db5036443545@linaro.org>
- <20240403-msm-drm-dsc-dsi-video-upstream-v1-1-db5036443545@linaro.org>
-In-Reply-To: <20240403-msm-drm-dsc-dsi-video-upstream-v1-1-db5036443545@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 3 Apr 2024 12:57:44 +0300
-Message-ID: <CAA8EJpqF4rVsWG=A1fNYWWi7rjHDmu_ftZttXH1v41v8wBgAiQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/6] drm/msm/dpu: fix video mode DSC for DSI
-To: Jun Nie <jun.nie@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>, Vinod Koul <vkoul@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	Jonathan Marek <jonathan@marek.ca>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pair66urg2ecqhob5gzzdtzuyofrmcf6rk7v2akggbotcpv7ld@bxhxftbd4xbn>
 
-On Wed, 3 Apr 2024 at 12:11, Jun Nie <jun.nie@linaro.org> wrote:
->
-> From: Jonathan Marek <jonathan@marek.ca>
->
-> Add necessary DPU timing and control changes for DSC to work with DSI
-> video mode.
->
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 9 +++++++++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          | 8 ++++++++
->  2 files changed, 17 insertions(+)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> index d9e7dbf0499c..c7b009a60b63 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> @@ -115,6 +115,15 @@ static void drm_mode_to_intf_timing_params(
->                 timing->h_front_porch = timing->h_front_porch >> 1;
->                 timing->hsync_pulse_width = timing->hsync_pulse_width >> 1;
->         }
-> +
-> +       /*
-> +        * for DSI, if compression is enabled, then divide the horizonal active
-> +        * timing parameters by compression ratio.
-> +        */
-> +       if (phys_enc->hw_intf->cap->type != INTF_DP && timing->compression_en) {
-> +               timing->width = timing->width / 3; /* XXX: don't assume 3:1 compression ratio */
-> +               timing->xres = timing->width;
-> +       }
->  }
->
->  static u32 get_horizontal_total(const struct dpu_hw_intf_timing_params *timing)
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> index 965692ef7892..079efb48db05 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> @@ -167,6 +167,14 @@ static void dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *ctx,
->                 intf_cfg2 |= INTF_CFG2_DATABUS_WIDEN;
->
->         data_width = p->width;
-> +       if (p->wide_bus_en && !dp_intf)
-> +               data_width = p->width >> 1;
+On 2024-04-03 05:37:29, Dmitry Baryshkov wrote:
+> On Tue, Apr 02, 2024 at 11:17:52PM +0200, Marijn Suijten wrote:
+> > On 2024-04-02 02:51:15, Dmitry Baryshkov wrote:
+> > > From: Sumit Semwal <sumit.semwal@linaro.org>
+> > > 
+> > > LG SW43408 is 1080x2160, 4-lane MIPI-DSI panel, used in some Pixel3
+> > > phones.
+> > 
+> > @60Hz?
+> 
+> With the current settings and timings I'm only getting 30 Hz. I have to
+> double the mode->clock to get 60.
 
-How is wide_bus relevant to the DSC case?
-Is there a need for the Fixes tag?
+Still seems useful to mention (here and in Kconfig).  The proposed driver emits
+a mode to userspace of 60Hz, maybe the commit message should say that in the
+current state "something" prevents it from going that fast?
 
-> +
-> +       if (p->compression_en)
-> +               intf_cfg2 |= INTF_CFG2_DCE_DATA_COMPRESS;
-> +
-> +       if (p->compression_en && dp_intf)
-> +               DPU_ERROR("missing adjustments for DSC+DP\n");
->
->         hsync_data_start_x = hsync_start_x;
->         hsync_data_end_x =  hsync_start_x + data_width - 1;
->
-> --
-> 2.34.1
->
+Since I keep forgetting (because it's not mentioned anywhere) that this is a
+cmdmode panel (or at least configured for that with the current driver), I'd
+again suggest to play with sync_cfg_height.  If setting it to 0xfff0 results in
+timeouts, your tear GPIO is misconfigured and not making the MDP aware of the
+actual tick rate.
 
+Otherwise, more likely, just bump up the porches a bit, based on the discussions
+around reduce_pclk_for_compression() /not/ accounting for transfer time in
+cmdmode.  In one of my drivers (pending eternal cleanup hell) I inlined the
+calculation to reverse what the "right" porch should be based on a downstream
+clock rate:
 
--- 
-With best wishes
-Dmitry
+https://github.com/somainline/linux/commit/85978a69cde088a23963c03758dad5f1a2e79bab#diff-a9ac8689e45c59a4fe9aa150e4bd53675687f5c8b4aecb40b5b5b66b864257e0R353-R366
+
+And separately, though I cannot find it, there have been (more accurate?)
+calculations based on downstream `qcom,mdss-dsi-panel-jitter` and friends.
+
+- Marijn
 
