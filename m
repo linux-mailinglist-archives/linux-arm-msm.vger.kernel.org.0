@@ -1,125 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-16305-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BF4F8972A9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:32:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 227DA8972AC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:33:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9DDA31C26302
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 14:32:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B4F381F21867
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 14:33:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81E3352F99;
-	Wed,  3 Apr 2024 14:32:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EblNiMH5"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 655E940BE7;
+	Wed,  3 Apr 2024 14:33:24 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6B2433A7
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 14:32:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA9B09461;
+	Wed,  3 Apr 2024 14:33:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712154746; cv=none; b=KLC5P/1s1d8tlByfCVbuEmTtJuQNsqaQENi8IzndNJtBFX8G9cupXTBEvWIUKJ9fNzUgApbEfFccSXq6Ujm8uPUcExE9E+/evgCMK6kuXP9/L84Uk3GNvgu5jBnf5mbRHlzwjkPqbGEKxfGPLiPJGOP41/GEAIZRDNd3x+6e9QA=
+	t=1712154804; cv=none; b=YSxqUwnY69aWHmAJB+7AZ1EK0CDAwyh6xSOqAwZfXCOjcl9poYpe+09a3RyIGD5i7XblyxPwKDpx8WmdLFdwV7VWzK1nWJ8DY7NAoE0mKcFOriwY/suSgCZbosPFmWTD8rhwwX96kJK0duFYUFWNFQrf+0ZOn8uKsqoGsaMGy/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712154746; c=relaxed/simple;
-	bh=aipPs+nNO2Bho5jPcYvxXCxYtS5rlWyrH/B5Kl5LKTw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ioXfRQPyaFfVWc+kpgWhhHYiiPTg10QX1p5sI0hTVA5lpOqz01Hn+droK2MSQkali2OMpNE6ChUJK5ONW4qKTX7WhzDPo2uVol6gvTCcNsyovxqaQR96w0brmSPfuLb268+Ai4przKrFYVyt5zhK+AftB3c7aiOwtbbA4Duw+A0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EblNiMH5; arc=none smtp.client-ip=209.85.219.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-ddaebc9d6c9so6066420276.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 07:32:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712154743; x=1712759543; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=34CSkv0ffEjJCmKkTU1MygJJn6kuTYj1aCVEbSSRxPA=;
-        b=EblNiMH5l8EgC02lIbwS5FjXf1LFOG0qTTbXEn+bbZoFVgj3NdjO5FBBEG5XK1h/m8
-         GOlw7Xjzj/L+Kq9zo12noOv2ls4agJVOPJxNolzHVV973/U5kpLP2kZfaAaHoORG+Ks3
-         kNNt0KrklA1ui4B60kfShEs0gFNFrJUNvpq7QFEmOfVk8Bvb94M1u8ZaAU27uPtpOb/g
-         JX4lV4wu2a5wFIrl75S3dt690GzMg/qHWdJW+PenGawFinFsAxTAftvc8iQbnHBYVxau
-         etfBj6IKjmI6lzKIC5Pw4INxUk1v/l4qMPCBr4VJj0zIyY9JdwIrUAivx+oV0kZ6lc43
-         j9ZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712154743; x=1712759543;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=34CSkv0ffEjJCmKkTU1MygJJn6kuTYj1aCVEbSSRxPA=;
-        b=bj4vHntX2rf9YwjrdtKl7YayNYB6jMxBDpLlh5gRkWyqlgPw5mpZDJjbQCK9rOd5hV
-         TGRxS3V+cQYr/bTeCnPRE3RS1kjjVmh/yJfZxV6V6BnZfR3sA7xt6RMrTW+dMUn8fbQX
-         5dbqru55I/iYxiOYO0LpBqdjEMUbsZpHlobSNAYVutWZywDZE189BafUiri97QDyHAC1
-         9m49znnrXeJLGJvFA5pS9nTPW+JqEINn6WULU4QRSEuxMqDsXA4VdVnysoip01ulYi6o
-         nGsfBjMAeBZPz2a2P5ZfIorEGhchyatP0Qu9IvLZgNkfjLCMwSOHGpxRNcg/6OPPS+nJ
-         zlKw==
-X-Forwarded-Encrypted: i=1; AJvYcCVp4jP1XBNjTHEEYCy1xATGpkZ2iTtwRI0eQlVY4SmbmMJ/cV33eOmDAfxZT57HiKAq4J/rDIQT1dlfJ5J92eGO3d/+GBIFEa1cWDKDrQ==
-X-Gm-Message-State: AOJu0YzvC6I1GsGNXEA9TAB0G8ZxLRRmYDji4adFrrKKROKOKPTtK1Ab
-	AYXXcPXDf4PRNi1oXrRVQRAFG43nYNEqMYFiXyWUPlaN0Sw5TbwmQRf3yKqV1/KaDvXsTX/kGB3
-	ObRW33Wc9zLAy3qwyTFlpl5Q+N9RnFh3leEbX+Q==
-X-Google-Smtp-Source: AGHT+IH98EISaj94HpDi2rlmrd8w9Fj6vSdDh3ZnOjMDuCqy7Y1IBEY6ToBgt88nGS+ar9pdmZ/9uSUzzjKPwGwom1I=
-X-Received: by 2002:a25:c543:0:b0:dcf:3ef1:1997 with SMTP id
- v64-20020a25c543000000b00dcf3ef11997mr14153649ybe.1.1712154742988; Wed, 03
- Apr 2024 07:32:22 -0700 (PDT)
+	s=arc-20240116; t=1712154804; c=relaxed/simple;
+	bh=HqsbniXj2szSUCBQwyicUfJM4X8Rqg2MGkEXTwj3m1U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TlAio50/5WnahzJ017BfILDaExYk9H+dFa21NiIgCBcV6uQFqKyVueAyB5vJY2h9+N4MsmNJ3hFrQgO/XhtmCcuRtwhU4H2TD59u1Z0DSCewS/QUak1uXlb5J5D4rTEmIuMbJZMfNQHUHfiVf43g8PlYOrJQAn9I91tltO/ZvVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4E26F1007;
+	Wed,  3 Apr 2024 07:33:53 -0700 (PDT)
+Received: from FVFF77S0Q05N (unknown [10.57.16.212])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 01C423F7B4;
+	Wed,  3 Apr 2024 07:33:19 -0700 (PDT)
+Date: Wed, 3 Apr 2024 15:33:17 +0100
+From: Mark Rutland <mark.rutland@arm.com>
+To: Dawei Li <dawei.li@shingroup.cn>
+Cc: will@kernel.org, yury.norov@gmail.com, linux@rasmusvillemoes.dk,
+	xueshuai@linux.alibaba.com, renyu.zj@linux.alibaba.com,
+	yangyicong@hisilicon.com, jonathan.cameron@huawei.com,
+	andersson@kernel.org, konrad.dybcio@linaro.org,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 06/10] perf/dwc_pcie: Avoid placing cpumask var on
+ stack
+Message-ID: <Zg1orbZqAmVwm9s_@FVFF77S0Q05N>
+References: <20240403125109.2054881-1-dawei.li@shingroup.cn>
+ <20240403125109.2054881-7-dawei.li@shingroup.cn>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240403-msm-drm-dsc-dsi-video-upstream-v1-0-db5036443545@linaro.org>
- <CAA8EJprd78g0jM4u2uY-vZnqQibbWevjxqzXFaPohkvmyWHkHw@mail.gmail.com> <CABymUCO0cpixiC9Maz5cd-L91qzE3_4QF=4qvNodpzaOR4Vi-w@mail.gmail.com>
-In-Reply-To: <CABymUCO0cpixiC9Maz5cd-L91qzE3_4QF=4qvNodpzaOR4Vi-w@mail.gmail.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 3 Apr 2024 17:32:11 +0300
-Message-ID: <CAA8EJpoFA3JsxzYrCR7Py8AHcOSrxUZRPO4hMMMDr1SrQFsWRw@mail.gmail.com>
-Subject: Re: [PATCH v3 0/6] Add DSC support to DSI video panel
-To: Jun Nie <jun.nie@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>, Vinod Koul <vkoul@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	Jonathan Marek <jonathan@marek.ca>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240403125109.2054881-7-dawei.li@shingroup.cn>
 
-On Wed, 3 Apr 2024 at 17:27, Jun Nie <jun.nie@linaro.org> wrote:
->
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2024=E5=B9=B44=E6=
-=9C=883=E6=97=A5=E5=91=A8=E4=B8=89 17:49=E5=86=99=E9=81=93=EF=BC=9A
-> >
-> > On Wed, 3 Apr 2024 at 12:11, Jun Nie <jun.nie@linaro.org> wrote:
-> > >
-> > > This is follow up update to Jonathan's patch set.
-> > >
-> > > Changes vs V2:
-> > > - Rebase to latest mainline.
-> > > - Drop the INTF_CFG2_DATA_HCTL_EN change as it is handled in
-> > >     latest mainline code.
-> > > - Drop the bonded DSI patch as I do not have device to test it.
-> > > - Address comments from version 2.
-> >
-> > Which comments? "Adress comments" is the worst case of changelog.
-> Adopted. Will add more details in next version.
-> >
-> > Also, what do you consider as version 2? Jonathan Marek has only sent v=
-1.
->
-> It's wired. I see v2 in patch title of below link. Just notice that
-> there is v1 in the link address.
-> https://patchwork.freedesktop.org/patch/567518/?series=3D126430&rev=3D1
->
+On Wed, Apr 03, 2024 at 08:51:05PM +0800, Dawei Li wrote:
+> For CONFIG_CPUMASK_OFFSTACK=y kernel, explicit allocation of cpumask
+> variable on stack is not recommended since it can cause potential stack
+> overflow.
+> 
+> Instead, kernel code should always use *cpumask_var API(s) to allocate
+> cpumask var in config-neutral way, leaving allocation strategy to
+> CONFIG_CPUMASK_OFFSTACK.
+> 
+> But dynamic allocation in cpuhp's teardown callback is somewhat problematic
+> for if allocation fails(which is unlikely but still possible):
+> - If -ENOMEM is returned to caller, kernel crashes for non-bringup
+>   teardown;
+> - If callback pretends nothing happened and returns 0 to caller, it may
+>   trap system into an in-consisitent/compromised state;
+> 
+> Use newly-introduced cpumask_any_and_but() to address all issues above.
+> It eliminates usage of temporary cpumask var in generic way, no matter how
+> the cpumask var is allocated.
+> 
+> Suggested-by: Mark Rutland <mark.rutland@arm.com>
+> Signed-off-by: Dawei Li <dawei.li@shingroup.cn>
 
-Ack, I didn't remember that there was v2. Please excuse me then.
+The logic looks good to me, but I'd like the commit message updated the same as
+per my comment on patch 2.
 
+With that commit message:
 
---=20
-With best wishes
-Dmitry
+Reviewed-by: Mark Rutland <mark.rutland@arm.com>
+
+Mark.
+
+> ---
+>  drivers/perf/dwc_pcie_pmu.c | 10 ++++------
+>  1 file changed, 4 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/perf/dwc_pcie_pmu.c b/drivers/perf/dwc_pcie_pmu.c
+> index 957058ad0099..c5e328f23841 100644
+> --- a/drivers/perf/dwc_pcie_pmu.c
+> +++ b/drivers/perf/dwc_pcie_pmu.c
+> @@ -690,9 +690,8 @@ static int dwc_pcie_pmu_offline_cpu(unsigned int cpu, struct hlist_node *cpuhp_n
+>  {
+>  	struct dwc_pcie_pmu *pcie_pmu;
+>  	struct pci_dev *pdev;
+> -	int node;
+> -	cpumask_t mask;
+>  	unsigned int target;
+> +	int node;
+>  
+>  	pcie_pmu = hlist_entry_safe(cpuhp_node, struct dwc_pcie_pmu, cpuhp_node);
+>  	/* Nothing to do if this CPU doesn't own the PMU */
+> @@ -702,10 +701,9 @@ static int dwc_pcie_pmu_offline_cpu(unsigned int cpu, struct hlist_node *cpuhp_n
+>  	pcie_pmu->on_cpu = -1;
+>  	pdev = pcie_pmu->pdev;
+>  	node = dev_to_node(&pdev->dev);
+> -	if (cpumask_and(&mask, cpumask_of_node(node), cpu_online_mask) &&
+> -	    cpumask_andnot(&mask, &mask, cpumask_of(cpu)))
+> -		target = cpumask_any(&mask);
+> -	else
+> +
+> +	target = cpumask_any_and_but(cpumask_of_node(node), cpu_online_mask, cpu);
+> +	if (target >= nr_cpu_ids)
+>  		target = cpumask_any_but(cpu_online_mask, cpu);
+>  
+>  	if (target >= nr_cpu_ids) {
+> -- 
+> 2.27.0
+> 
 
