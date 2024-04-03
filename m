@@ -1,202 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-16211-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16212-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E0218965EC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 09:17:32 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA40C896650
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 09:24:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DA895B22E38
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 07:17:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 841F8287E31
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 07:24:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EF1F59B6C;
-	Wed,  3 Apr 2024 07:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C72B55B5B6;
+	Wed,  3 Apr 2024 07:24:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kBSDYUiM"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="NO1YjmOm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5635958AA9;
-	Wed,  3 Apr 2024 07:16:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC845BAC3;
+	Wed,  3 Apr 2024 07:23:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712128607; cv=none; b=eOQfiRhMgbv2EPqA0lwHTLgUC540n2BgozehsNufpZQjGrKwYG9PDz+9hA0dkpEbN6wTI4XyOS+XpSSCm35+PZIuVWrnimMctpJlFaNF5CM8jA29w3bwviUVhvXt9qFHZavg/7gZcSqaUm9t0J6OshCgJYEu/js088PX0FfP6MY=
+	t=1712129042; cv=none; b=UQpBu0LATLg6+D9gpQfHAFs5dLNtGqhGHKK+zzsaJvWQmN7ST/q3tAUB+9D+UZEXpaO0nB26cql5IIZlufknxQDMjhVa0OwTso5iH6XNNwACL4A++1ADvWkvG/3grs51xpIOUpYAI8tK3M6J7pICURSzptwU8MwYAlXlevtTGVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712128607; c=relaxed/simple;
-	bh=DNyuDMDOnU8oP0Fha06OgacP01yQsS5aEozJrYA4CHE=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=Xls6HxUxvDO30EK9zAJijAFt0GktEGQkbN4tt7PY0O+cU9r40UYNa4OY0lgzg4YlbLL500GGS/K+GxWT5uGhqA3TKwDUWhdzgOL2q3+t3XFjPoJ/diM4BhCeawW2g1L/eY/9j7tLfArxPc7Rhfsuw0RaPXpSplzpE1GC4L1gKF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kBSDYUiM; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4334vutI002584;
-	Wed, 3 Apr 2024 07:16:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:from:to:cc:references
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=qLOH31cZZRibZuXjooWD41InFzEidvYCw3H2VVRIAmU=; b=kB
-	SDYUiMRC7K+FAAEQz5Xsziv1eZoGK4DuTsD1J9gwJ8cVtJxTuZwL4fOVEL6FYjZR
-	xQ+hWw1hedLsHrhlHsr2+4+F4WiXX0YsDjRVgRLEvJ97hSTu0lo+nAqXZM0qbSYK
-	H8m0ktOd4TuSEq6sYV0SP93sLnhZ3PSySSEsEzX9FIfofo8LTGXVAC8itAp1DH0J
-	pqIdkhUl1sBmEKILGZhvj7s1FknpuqewjnnW9u/70HhxeuY6dVfa3T6dHZI1+OVX
-	IEl+sd4cEzWmhPcH+YtR5JABZ1JOoYkWPkPUcOK+0ieCJCGMpMP+aV1moWijadhm
-	w0v8+jE6BjrKr7detkzw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x8pj4hctw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 03 Apr 2024 07:16:39 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4337GcLg024861
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 3 Apr 2024 07:16:38 GMT
-Received: from [10.218.5.19] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 3 Apr 2024
- 00:16:32 -0700
-Message-ID: <b3464321-0c52-4c41-9198-e9e7b16aa419@quicinc.com>
-Date: Wed, 3 Apr 2024 12:46:19 +0530
+	s=arc-20240116; t=1712129042; c=relaxed/simple;
+	bh=B9cZH101MRCRvDHMjn71xmfUKTK2PzaYeQ+8AVc0k3Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Viog5RQmyqXHPJ0todv9i8o82SbfiAIIOkbEhFeIN04PPbE0ps2uuSXpaFBuAcclJJr+bQQpdKgqX0repjXDHhFXI4Dmk5zv07MdghHUDmncc60qi8o/mNt1ce4bzFuQuZt/4edzP/wlki+12mcTkgcDY6g0nHPSanqoCSTRLPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=NO1YjmOm; arc=none smtp.client-ip=217.70.183.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 0155A60007;
+	Wed,  3 Apr 2024 07:23:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1712129037;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=JwpvrR4xst+JurvZq9lJXg1ECrNmeKF2zXVGi9frShY=;
+	b=NO1YjmOmNTSHopJhB1/cb1Uygh4/SetG1hQdoHDCCrB9+qhaRZTzGeS4k80NxAgazAPLV2
+	X642w0kefoXUr+QXhfUkVpwg4DO0EH9hxGBbBW2xVDGYC9e3SmGA3C3sS/4VOWyKUJv6aI
+	MKHcvWGcTcMLtvhMbIB2zJ0/ynweYnYl9cx30cuBYdFM32baQuyKS7OomicMXgJVjwg/ZT
+	DV5Mr8RTyyqyQ/oU43mR5uoy8UyheGebmBV2KhL6V5J0rQ9qnXSboQ2SFE8MDos1MyDSXi
+	o7NJ2+4wvBG0baY3fxhzp+kMCkHcq1kX5E3DsZXYKQPQNdvNcOOss81J3am+VQ==
+Date: Wed, 3 Apr 2024 09:23:56 +0200
+From: Miquel Raynal <miquel.raynal@bootlin.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Christian Marangi <ansuelsmth@gmail.com>, Richard Weinberger
+ <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>, Sricharan
+ Ramabadhran <quic_srichara@quicinc.com>, Md Sadre Alam
+ <quic_mdalam@quicinc.com>, linux-mtd@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ stable@vger.kernel.org
+Subject: Re: [PATCH v3] mtd: rawnand: qcom: Fix broken misc_cmd_type in
+ exec_op
+Message-ID: <20240403092356.496e07ec@xps-13>
+In-Reply-To: <20240403063008.GA25309@thinkpad>
+References: <20240402214136.29237-1-ansuelsmth@gmail.com>
+	<20240403063008.GA25309@thinkpad>
+Organization: Bootlin
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 RESEND 6/6] arm64: dts: qcom: sm8650: Add video and
- camera clock controllers
-From: Jagadeesh Kona <quic_jkona@quicinc.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Taniya Das
-	<quic_tdas@quicinc.com>,
-        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik
-	<quic_imrashai@quicinc.com>
-References: <20240321092529.13362-1-quic_jkona@quicinc.com>
- <20240321092529.13362-7-quic_jkona@quicinc.com>
- <CAA8EJppHGS+W-aiXvJ2cE=jCbua8Y0Q+zv_QTs+C9V5+Y1vuZg@mail.gmail.com>
- <008d574f-9c9e-48c6-b64e-89fb469cbde4@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <008d574f-9c9e-48c6-b64e-89fb469cbde4@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: DWxmH7rUyjwJgd5YkLC4jXT5bdJ63qhi
-X-Proofpoint-GUID: DWxmH7rUyjwJgd5YkLC4jXT5bdJ63qhi
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-03_06,2024-04-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- bulkscore=0 impostorscore=0 clxscore=1015 spamscore=0 malwarescore=0
- lowpriorityscore=0 mlxlogscore=999 suspectscore=0 phishscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2404030048
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-GND-Sasl: miquel.raynal@bootlin.com
 
+Hi,
 
+manivannan.sadhasivam@linaro.org wrote on Wed, 3 Apr 2024 12:00:08
++0530:
 
-On 3/25/2024 11:38 AM, Jagadeesh Kona wrote:
-> 
-> 
-> On 3/21/2024 6:43 PM, Dmitry Baryshkov wrote:
->> On Thu, 21 Mar 2024 at 11:27, Jagadeesh Kona <quic_jkona@quicinc.com> 
->> wrote:
->>>
->>> Add device nodes for video and camera clock controllers on Qualcomm
->>> SM8650 platform.
->>>
->>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
->>> ---
->>>   arch/arm64/boot/dts/qcom/sm8650.dtsi | 28 ++++++++++++++++++++++++++++
->>>   1 file changed, 28 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi 
->>> b/arch/arm64/boot/dts/qcom/sm8650.dtsi
->>> index 32c0a7b9aded..d862aa6be824 100644
->>> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
->>> @@ -4,6 +4,8 @@
->>>    */
->>>
->>>   #include <dt-bindings/clock/qcom,rpmh.h>
->>> +#include <dt-bindings/clock/qcom,sm8450-videocc.h>
->>> +#include <dt-bindings/clock/qcom,sm8650-camcc.h>
->>>   #include <dt-bindings/clock/qcom,sm8650-dispcc.h>
->>>   #include <dt-bindings/clock/qcom,sm8650-gcc.h>
->>>   #include <dt-bindings/clock/qcom,sm8650-gpucc.h>
->>> @@ -3110,6 +3112,32 @@ opp-202000000 {
->>>                          };
->>>                  };
->>>
->>> +               videocc: clock-controller@aaf0000 {
->>> +                       compatible = "qcom,sm8650-videocc";
->>> +                       reg = <0 0x0aaf0000 0 0x10000>;
->>> +                       clocks = <&bi_tcxo_div2>,
->>> +                                <&gcc GCC_VIDEO_AHB_CLK>;
->>> +                       power-domains = <&rpmhpd RPMHPD_MMCX>;
->>> +                       required-opps = <&rpmhpd_opp_low_svs>;
->>
->> The required-opps should no longer be necessary.
->>
-> 
-> Sure, will check and remove this if not required.
+> On Tue, Apr 02, 2024 at 11:41:34PM +0200, Christian Marangi wrote:
+> > misc_cmd_type in exec_op have multiple problems. With commit a82990c8a4=
+09
+> > ("mtd: rawnand: qcom: Add read/read_start ops in exec_op path") it was
+> > reworked and generalized but actually dropped the handling of the
+> > OP_RESET_DEVICE command.
+> >=20
+> > The rework itself was correct with supporting case where a single misc
+> > command is handled, but became problematic by the addition of exiting
+> > early if we didn't had an OP_BLOCK_ERASE or an OP_PROGRAM_PAGE operatio=
+n.
+> >=20
+> > Also additional logic was added without clear explaination causing the
+> > OP_RESET_DEVICE command to be broken on testing it on a ipq806x nandc.
+> >=20
+> > Add some additional logic to restore OP_RESET_DEVICE command handling
+> > restoring original functionality.
+> >  =20
+>=20
+> I'd like to reword the commit subject and description as below. But I hope
+> Miquel can ammend it while applying:
 
-
-I checked further on this and without required-opps, if there is no vote 
-on the power-domain & its peer from any other consumers, when runtime 
-get is called on device, it enables the power domain just at the minimum 
-non-zero level. But in some cases, the minimum non-zero level of 
-power-domain could be just retention and is not sufficient for clock 
-controller to operate, hence required-opps property is needed to specify 
-the minimum level required on power-domain for this clock controller.
+I'm pretty busy, sending a v4 on which you both agree on would be
+simpler to me :-)
 
 Thanks,
-Jagadeesh
-
-> 
->>> +                       #clock-cells = <1>;
->>> +                       #reset-cells = <1>;
->>> +                       #power-domain-cells = <1>;
->>> +               };
->>> +
->>> +               camcc: clock-controller@ade0000 {
->>> +                       compatible = "qcom,sm8650-camcc";
->>> +                       reg = <0 0x0ade0000 0 0x20000>;
->>> +                       clocks = <&gcc GCC_CAMERA_AHB_CLK>,
->>> +                                <&bi_tcxo_div2>,
->>> +                                <&bi_tcxo_ao_div2>,
->>> +                                <&sleep_clk>;
->>> +                       power-domains = <&rpmhpd RPMHPD_MMCX>;
->>> +                       required-opps = <&rpmhpd_opp_low_svs>;
->>> +                       #clock-cells = <1>;
->>> +                       #reset-cells = <1>;
->>> +                       #power-domain-cells = <1>;
->>> +               };
->>> +
->>>                  mdss: display-subsystem@ae00000 {
->>>                          compatible = "qcom,sm8650-mdss";
->>>                          reg = <0 0x0ae00000 0 0x1000>;
->>> -- 
->>> 2.43.0
->>>
->>>
->>
->>
+Miqu=C3=A8l
 
