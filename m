@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-16297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD72B897224
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:16:12 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 86A8A897232
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:17:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0BF911C26CC3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 14:16:12 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 48EDAB298BE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 14:16:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23E07149C42;
-	Wed,  3 Apr 2024 14:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E08D149E18;
+	Wed,  3 Apr 2024 14:15:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dFoE512m"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bEcXgoo7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EECC51494DF;
-	Wed,  3 Apr 2024 14:15:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF2714901C;
+	Wed,  3 Apr 2024 14:15:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712153753; cv=none; b=EHUtmiQ3mgfhhwQHitbu7FMavk7innk3eBEypBn4173SziggITUfJnOKzdP3JNOJ0n0c+LjTt0aTmfBCdyRsiwVx4wzioahwn8SIUmbJpZ5zOEszBhx/AzBDO0a4iu3hrp0gi0QZNHkUyWiFkmnbkGc/XIQrb2IVtr1S0DrgMjo=
+	t=1712153758; cv=none; b=J/0XWHiVY0IcvPi2xrThEkOG+TQkPxjnxVHTLFK9Y6Shcxrn+JYvivqKyr3NzUCRg+3I1Z77hPBILQbXCYlZrvVIiPv98258WMccg67EO3QATyn4oeKjfmvhV6nPahN2VLZJ3knTV7fqNjzxmYgIZX5ha/36I9cc5nwC5aTZmW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712153753; c=relaxed/simple;
-	bh=AGm142b/yVCmNmu6A99sSruEUQ1gyoAnLozRBsZbhnw=;
+	s=arc-20240116; t=1712153758; c=relaxed/simple;
+	bh=nKxO2VchqXJpILlQ48hPBrQldYLcDRBj9v63t6GaFOQ=;
 	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=UZjKrhNavZVJpEeJs77du2jI2lXU+u0QMROVP/7NYObFy8KwbKLhGow1tJtEVNGMrmN2SB1TX3TgaLfHb0B/H2MZJpuapqYPozEbeVT4AmbYpQEV2OL269Qd5eSnZY6BqzXkSGzjVbv0ODK2MAHpy9PJ/S9oNKAihxKOcp1GNpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dFoE512m; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4419C433C7;
-	Wed,  3 Apr 2024 14:15:52 +0000 (UTC)
+	 Message-Id:Subject; b=ra4oM+Z6xC9q5CqI/WBG9DJi3cp7iOchHGUwQQ5dW1uJlu2OMIbWVRA1nR1+qDZLy7J1r+mzUsV2KhSxYJVv6YG/7Zdf+Ko+blh1AOAfb8uGsT9T296l9TktXQSSm2sOWs68hGzvgGp+bEVCXrPD98f00c7sTy/c0ZqJV0pSNDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bEcXgoo7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95758C433C7;
+	Wed,  3 Apr 2024 14:15:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712153752;
-	bh=AGm142b/yVCmNmu6A99sSruEUQ1gyoAnLozRBsZbhnw=;
+	s=k20201202; t=1712153757;
+	bh=nKxO2VchqXJpILlQ48hPBrQldYLcDRBj9v63t6GaFOQ=;
 	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=dFoE512mf4xSyfoyl8WsEY8iL2nSNb9RnbGkAVd/SYvwSGSQ25QRISABTzRig6yeG
-	 WHYmd77C2jCKU2sHmTkmANozc/xmzFPjFIpaxyRiGljVrX23UWfDV/gE31BqzQ+tac
-	 zhjBJv/KLPP2FUR1rsje5yFVi6FQfWbChL8D1wbw9hQIk3pRx1ZeBcXSniJ0KaKN4A
-	 EN71CQ05sai+593SdIAZqbsUaeUvE+DvwtOQWf2cmK3NBa9ju21J8U7RvVdiyAvqMk
-	 f/OJGON/m1mP0SBG/No5EAV8NxX8n/p3gXQDjmdjFiizs82DDTeL1fVhdM7Bt2zRX3
-	 ZNpHDs6qV84HA==
-Date: Wed, 03 Apr 2024 09:15:51 -0500
+	b=bEcXgoo7DUdmA5yzjaN47PmRDvj8mbevDzBz3a8UK7Eau6zpXqfsXevvpf+k0BC2A
+	 FnrqhQub7/RYfiz9GJBE74ok/RnzVyQdNYIz2X4sAQZIHj7kZnp+DUDIDG7HPuif6j
+	 wB8R3w9rqrMqvgnATv+JQWl259Sp5rQwwVVtUexStL8geBRq4bzZUh5BauiNNEQHTH
+	 gn5D1Th+uMBnzl/cdgJ47YqWLpoVjSbX4yTt7RFPzjezjXcGi/UuTgWc92QM7h9M0V
+	 0IQx/qWYNFCvbPaGNju78eA7sqENCPP2jhUoZWzKBM4NogVTw9gvCmbkZS0ETJzeYD
+	 r+/4bxmHQaIXQ==
+Date: Wed, 03 Apr 2024 09:15:56 -0500
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -51,88 +51,48 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 From: Rob Herring <robh@kernel.org>
-To: Sumit Garg <sumit.garg@linaro.org>
-Cc: devicetree@vger.kernel.org, neil.armstrong@linaro.org, 
- caleb.connolly@linaro.org, conor+dt@kernel.org, pascal.eberhard@se.com, 
- krzysztof.kozlowski+dt@linaro.org, stephan@gerhold.net, 
- linux-kernel@vger.kernel.org, benjamin.missey@non.se.com, 
- daniel.thompson@linaro.org, linux-arm-msm@vger.kernel.org, 
- andersson@kernel.org, dmitry.baryshkov@linaro.org, jimmy.lalande@se.com, 
- konrad.dybcio@linaro.org, robh+dt@kernel.org, laetitia.mariottini@se.com, 
- abdou.saker@se.com
-In-Reply-To: <20240403043416.3800259-1-sumit.garg@linaro.org>
-References: <20240403043416.3800259-1-sumit.garg@linaro.org>
-Message-Id: <171215356255.3499051.5100972545068729440.robh@kernel.org>
-Subject: Re: [PATCH v5 0/3] arm64: dts: qcom: apq8016: Add Schneider HMIBSC
- board DTS
+To: Alexander Reimelt <alexander.reimelt@posteo.de>
+Cc: conor+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ robh+dt@kernel.org, andersson@kernel.org, pvorel@suse.cz, 
+ linux-arm-msm@vger.kernel.org, konrad.dybcio@linaro.org
+In-Reply-To: <20240403104415.30636-1-alexander.reimelt@posteo.de>
+References: <20240403104415.30636-1-alexander.reimelt@posteo.de>
+Message-Id: <171215356311.3499103.14484942655821414502.robh@kernel.org>
+Subject: Re: [PATCH 0/2] arm64: Add basic support for LG H815
 
 
-On Wed, 03 Apr 2024 10:04:13 +0530, Sumit Garg wrote:
-> Add Schneider Electric HMIBSC board DTS. The HMIBSC board is an IIoT Edge
-> Box Core board based on the Qualcomm APQ8016E SoC. For more information
-> refer to the product page [1].
+On Wed, 03 Apr 2024 10:43:28 +0000, Alexander Reimelt wrote:
+> Hello,
 > 
-> One of the major difference from db410c is serial port where HMIBSC board
-> uses UART1 as the debug console with a default RS232 mode (UART1 mode mux
-> configured via gpio99 and gpio100).
+> These patches add initial support for the LG H815.
+> They are enough to boot the device on postmarketOS
+> and have some basic functionality. Connecting to the
+> device over USB networking via ssh, buttons, SD-Card,
+> eMMC and regulators work. The dtb_checker shows some
+> warnings, but they come from the msm8994.dtsi.
 > 
-> Support for Schneider Electric HMIBSC. Features:
-> - Qualcomm Snapdragon 410C SoC - APQ8016 (4xCortex A53, Adreno 306)
-> - 1GiB RAM
-> - 8GiB eMMC, SD slot
-> - WiFi and Bluetooth
-> - 2x Host, 1x Device USB port
-> - HDMI
-> - Discrete TPM2 chip over SPI
-> - USB ethernet adaptors (soldered)
+> For CPU bring up lk2nd is required. The DMA controller
+> module fails to load and from time to time the SMD clock
+> driver fails.
 > 
-> This series is a v2 since v1 of this DTS file has been reviewed on the
-> U-Boot mailing list [2].
+> But I hope to prevent duplicate work and make it more accessible.
 > 
-> Changes in v5:
-> - Addressed another nitpick from Stephen.
-> - Collected Stephen's review tag.
-> - Warnings reported by Rob's DT check bot aren't related to HMIBSC
->   board DTS but rather they are due to msm8916.dtsi or extcon-usb-gpio.txt
->   still not converted to YAML format.
+> Best regards
+> Alex
 > 
-> Changes in v4:
-> - Dropped IRQ_TYPE_EDGE_FALLING for pm8916_resin given the expectations
->   of Linux kernel driver. Instead depend on systemd workaround suggested
->   by Caleb to get expected HMIBSC reset behaviour.
-> - Incorporated further DT coding style comments from Stephen.
-> - Warnings reported by Rob's DT check bot aren't related to HMIBSC
->   board DTS but rather they are due to msm8916.dtsi or extcon-usb-gpio.txt
->   still not converted to YAML format.
-> 
-> Changes in v3:
-> - Picked up tags.
-> - Fixed further DT schema warnings.
-> - Configure resin/power button interrupt as falling edge.
-> - Incorporate DTS coding style comments from Krzysztof and Konrad.
-> 
-> Changes in v2:
-> - Fix DT schema warnings.
-> - Incorporate suggestions from Stephan.
-> - Document UART1 mode GPIOs based mux.
-> 
-> [1] https://www.se.com/us/en/product/HMIBSCEA53D1L0T/iiot-edge-box-core-harmony-ipc-emmc-dc-linux-tpm/
-> [2] https://patchwork.ozlabs.org/project/uboot/patch/20240311111027.44577-6-sumit.garg@linaro.org/
-> 
-> Sumit Garg (3):
->   dt-bindings: vendor-prefixes: Add Schneider Electric
->   dt-bindings: arm: qcom: Add Schneider Electric HMIBSC board
->   arm64: dts: qcom: apq8016: Add Schneider HMIBSC board DTS
+> Alexander Reimelt (2):
+>   dt-bindings: arm: qcom: Add LG G4 (h815)
+>   arm64: dts: qcom: Add basic support for LG G4 (H815)
 > 
 >  .../devicetree/bindings/arm/qcom.yaml         |   1 +
->  .../devicetree/bindings/vendor-prefixes.yaml  |   2 +
 >  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../dts/qcom/apq8016-schneider-hmibsc.dts     | 491 ++++++++++++++++++
->  4 files changed, 495 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
+>  arch/arm64/boot/dts/qcom/msm8992-lg-h815.dts  | 422 ++++++++++++++++++
+>  3 files changed, 424 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/msm8992-lg-h815.dts
 > 
 > --
-> 2.34.1
+> 2.44.0
 > 
 > 
 > 
@@ -152,18 +112,14 @@ make sure dt-schema is up to date:
   pip3 install dtschema --upgrade
 
 
-New warnings running 'make CHECK_DTBS=y qcom/apq8016-schneider-hmibsc.dtb' for 20240403043416.3800259-1-sumit.garg@linaro.org:
+New warnings running 'make CHECK_DTBS=y qcom/msm8992-lg-h815.dtb' for 20240403104415.30636-1-alexander.reimelt@posteo.de:
 
-arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb: pmic@0: gpio@c000:gpio-line-names: ['USB_HUB_RESET_N_PM', 'USB_SW_SEL_PM', 'NC', 'NC'] is too short
-	from schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
-arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb: gpio@c000: gpio-line-names: ['USB_HUB_RESET_N_PM', 'USB_SW_SEL_PM', 'NC', 'NC'] is too short
-	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,pmic-gpio.yaml#
-arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb: /soc@0/audio-codec@771c000: failed to match any schema with compatible: ['qcom,msm8916-wcd-digital-codec']
-arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb: /soc@0/power-manager@b088000: failed to match any schema with compatible: ['qcom,msm8916-acc']
-arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb: /soc@0/power-manager@b098000: failed to match any schema with compatible: ['qcom,msm8916-acc']
-arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb: /soc@0/power-manager@b0a8000: failed to match any schema with compatible: ['qcom,msm8916-acc']
-arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb: /soc@0/power-manager@b0b8000: failed to match any schema with compatible: ['qcom,msm8916-acc']
-arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb: /usb-id: failed to match any schema with compatible: ['linux,extcon-usb-gpio']
+arch/arm64/boot/dts/qcom/msm8992-lg-h815.dtb: usb@f92f8800: 'interrupt-names' is a required property
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8992-lg-h815.dtb: usb@f92f8800: 'oneOf' conditional failed, one must be fixed:
+	'interrupts' is a required property
+	'interrupts-extended' is a required property
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
 
 
 
