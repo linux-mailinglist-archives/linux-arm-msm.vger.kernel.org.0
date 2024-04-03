@@ -1,39 +1,39 @@
-Return-Path: <linux-arm-msm+bounces-16299-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F10B897230
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:17:32 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75C6389725B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:21:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3846228C362
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 14:17:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2FDAD282170
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 14:21:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D8A61494C9;
-	Wed,  3 Apr 2024 14:16:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7F3414900E;
+	Wed,  3 Apr 2024 14:21:17 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B686168BD;
-	Wed,  3 Apr 2024 14:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 062B4148FF5;
+	Wed,  3 Apr 2024 14:21:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712153797; cv=none; b=b+qXL1xQOmkQ70InSLwFD7P9RC7eUbRIeyFDtALG73nlIFcNjcJkE4vcnHRuFbvHc9gD05NDA3V0jmcUH6ivAWIWhgGfN3FtefdcFKtV9RletHAmZlQAR12/7U++0xM6JFrBVT5TplAkBFf1bZvgVaGGIDrt6tAOLODUHbRJPxY=
+	t=1712154077; cv=none; b=VDTQ6IQh2MMRrIIFcab86AXfEnXo/L2st2KdnkDiOxleAR3Y/LWNxBYLEw9640wYaeFyyVUuUAKaM1lbk5EFXmESTRZyU+1uL4CnebNwnN8VQKR3rti3tbpVUXQymDtKkziF/HSd7AtM8q8vcFmXEWnffv1AJkWigCNpyTDpj/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712153797; c=relaxed/simple;
-	bh=QVNG9klf635AF8QatLYX+kN3E3QTHjJIn6uyjkTeFnE=;
+	s=arc-20240116; t=1712154077; c=relaxed/simple;
+	bh=nqFwo/kHXwvxaX3Pir+qxJc7morMd5qBw4IR/1jIKSk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ejD7l6yCm9JT7jRyd/1XR1U75CoqXk3ivyHSS5JLodVbw1aniHEm1sv8dSpnh8s0UKyMPrUmr3tCXP6KMDa0SsQpfTdlgoOcMLIykIETWKixYtrOk9Gt1DPWO26LMnfEoPIqr1swJxQ9tu18rD6c+tzV4G/Zv+Me6VFpHESKd6k=
+	 Content-Type:Content-Disposition:In-Reply-To; b=GymRZjdYPtJv+vMdw4dOILRak3DPFq+QSh/xclZHabJDQUDX4hOSc6/bYEbUlnhw7z5+HUFFdZrwHvsnEtpdixMHpU4VZFvWsVYhJVN2Iq+Z+PFJQoPn077sejOfDSfBdCUvjg6q2uLZaX1KVvcV8A/0tIEMDa07l3OBYIG2iQU=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6EE391007;
-	Wed,  3 Apr 2024 07:17:05 -0700 (PDT)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6C79E1007;
+	Wed,  3 Apr 2024 07:21:46 -0700 (PDT)
 Received: from FVFF77S0Q05N (unknown [10.57.16.212])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2070E3F7B4;
-	Wed,  3 Apr 2024 07:16:31 -0700 (PDT)
-Date: Wed, 3 Apr 2024 15:16:24 +0100
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 226733F7B4;
+	Wed,  3 Apr 2024 07:21:12 -0700 (PDT)
+Date: Wed, 3 Apr 2024 15:21:10 +0100
 From: Mark Rutland <mark.rutland@arm.com>
 To: Dawei Li <dawei.li@shingroup.cn>
 Cc: will@kernel.org, yury.norov@gmail.com, linux@rasmusvillemoes.dk,
@@ -42,11 +42,11 @@ Cc: will@kernel.org, yury.norov@gmail.com, linux@rasmusvillemoes.dk,
 	andersson@kernel.org, konrad.dybcio@linaro.org,
 	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 02/10] perf/alibaba_uncore_drw: Avoid placing cpumask
- var on stack
-Message-ID: <Zg1kuMCxcZWSnFdt@FVFF77S0Q05N>
+Subject: Re: [PATCH v2 04/10] perf/arm_cspmu: Avoid placing cpumask var on
+ stack
+Message-ID: <Zg1l1pxmLoHztM6Q@FVFF77S0Q05N>
 References: <20240403125109.2054881-1-dawei.li@shingroup.cn>
- <20240403125109.2054881-3-dawei.li@shingroup.cn>
+ <20240403125109.2054881-5-dawei.li@shingroup.cn>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,9 +55,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240403125109.2054881-3-dawei.li@shingroup.cn>
+In-Reply-To: <20240403125109.2054881-5-dawei.li@shingroup.cn>
 
-On Wed, Apr 03, 2024 at 08:51:01PM +0800, Dawei Li wrote:
+On Wed, Apr 03, 2024 at 08:51:03PM +0800, Dawei Li wrote:
 > For CONFIG_CPUMASK_OFFSTACK=y kernel, explicit allocation of cpumask
 > variable on stack is not recommended since it can cause potential stack
 > overflow.
@@ -76,61 +76,50 @@ On Wed, Apr 03, 2024 at 08:51:01PM +0800, Dawei Li wrote:
 > Use newly-introduced cpumask_any_and_but() to address all issues above.
 > It eliminates usage of temporary cpumask var in generic way, no matter how
 > the cpumask var is allocated.
->
+> 
 > Suggested-by: Mark Rutland <mark.rutland@arm.com>
+> 
 > Signed-off-by: Dawei Li <dawei.li@shingroup.cn>
 
-I don't think we need to explain all the pitfalls of the approach we haven't
-taken. Could we please simplify this down to:
+The logic looks good to me, but I'd like the commit message updated the same as
+per my comment on patch 2.
 
-Could we please get rid of the bit that says we should "always use the
-*cpumask_var API(s)", and simplify the commit message down to:
-
-| perf/alibaba_uncore_drw: Avoid placing cpumask on the stack
-| 
-| In general it's preferable to avoid placing cpumasks on the stack, as
-| for large values of NR_CPUS these can consume significant amounts of
-| stack space and make stack overflows more likely.
-| 
-| Use cpumask_any_and_but() to avoid the need for a temporary cpumask on
-| the stack.
-
-The logic looks good to me, so with that commit message:
+With that commit message:
 
 Reviewed-by: Mark Rutland <mark.rutland@arm.com>
 
 Mark.
 
 > ---
->  drivers/perf/alibaba_uncore_drw_pmu.c | 10 +++-------
->  1 file changed, 3 insertions(+), 7 deletions(-)
+>  drivers/perf/arm_cspmu/arm_cspmu.c | 8 +++-----
+>  1 file changed, 3 insertions(+), 5 deletions(-)
 > 
-> diff --git a/drivers/perf/alibaba_uncore_drw_pmu.c b/drivers/perf/alibaba_uncore_drw_pmu.c
-> index a9277dcf90ce..d4d14b65c4a5 100644
-> --- a/drivers/perf/alibaba_uncore_drw_pmu.c
-> +++ b/drivers/perf/alibaba_uncore_drw_pmu.c
-> @@ -746,18 +746,14 @@ static int ali_drw_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
->  	struct ali_drw_pmu_irq *irq;
->  	struct ali_drw_pmu *drw_pmu;
->  	unsigned int target;
-> -	int ret;
-> -	cpumask_t node_online_cpus;
+> diff --git a/drivers/perf/arm_cspmu/arm_cspmu.c b/drivers/perf/arm_cspmu/arm_cspmu.c
+> index b9a252272f1e..fd1004251665 100644
+> --- a/drivers/perf/arm_cspmu/arm_cspmu.c
+> +++ b/drivers/perf/arm_cspmu/arm_cspmu.c
+> @@ -1322,8 +1322,7 @@ static int arm_cspmu_cpu_online(unsigned int cpu, struct hlist_node *node)
 >  
->  	irq = hlist_entry_safe(node, struct ali_drw_pmu_irq, node);
->  	if (cpu != irq->cpu)
+>  static int arm_cspmu_cpu_teardown(unsigned int cpu, struct hlist_node *node)
+>  {
+> -	int dst;
+> -	struct cpumask online_supported;
+> +	unsigned int dst;
+>  
+>  	struct arm_cspmu *cspmu =
+>  		hlist_entry_safe(node, struct arm_cspmu, cpuhp_node);
+> @@ -1333,9 +1332,8 @@ static int arm_cspmu_cpu_teardown(unsigned int cpu, struct hlist_node *node)
 >  		return 0;
 >  
-> -	ret = cpumask_and(&node_online_cpus,
-> -			  cpumask_of_node(cpu_to_node(cpu)), cpu_online_mask);
-> -	if (ret)
-> -		target = cpumask_any_but(&node_online_cpus, cpu);
-> -	else
-> +	target = cpumask_any_and_but(cpumask_of_node(cpu_to_node(cpu)),
-> +				     cpu_online_mask, cpu);
-> +	if (target >= nr_cpu_ids)
->  		target = cpumask_any_but(cpu_online_mask, cpu);
+>  	/* Choose a new CPU to migrate ownership of the PMU to */
+> -	cpumask_and(&online_supported, &cspmu->associated_cpus,
+> -		    cpu_online_mask);
+> -	dst = cpumask_any_but(&online_supported, cpu);
+> +	dst = cpumask_any_and_but(&cspmu->associated_cpus,
+> +				  cpu_online_mask, cpu);
+>  	if (dst >= nr_cpu_ids)
+>  		return 0;
 >  
->  	if (target >= nr_cpu_ids)
 > -- 
 > 2.27.0
 > 
