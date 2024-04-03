@@ -1,80 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-16176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16177-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83F0B896233
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 03:44:16 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D334A896293
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 04:35:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 23C0FB265C6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 01:44:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 88FD82822C0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 02:35:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF0001B95B;
-	Wed,  3 Apr 2024 01:43:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A663A1429B;
+	Wed,  3 Apr 2024 02:35:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dIkuELiv"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lne1jgL9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B531B946;
-	Wed,  3 Apr 2024 01:43:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD9679F2
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 02:35:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712108604; cv=none; b=ufP8YPyghntgRY733KHswZ+UI/uHXEmQhGO5U141u3XEE1M2xG2ROLFy3f9UWbjnqqe7kS93hS1KbFA/zTWa8vY42lBvXvMuzH06tCR66wzRdZxtPYSLkPYi4ZgldiKyoSJcsJkv3kYVJ87Aa4K1TquiRXMg2Ws9/ceBS3DHSgU=
+	t=1712111747; cv=none; b=atr6u9afBzuU5HPE/qmHteK8zzFvJLyWvLxbI5DvkgyyRYd6aOyaA9zNijGuDgF82VvkFNeQ8ZU5ak8eKzX5ckCN/oF6cVTh6E1sq8kaXDklWv6i97rRTmc1/+4qBgaof5Gj3BioyTlqIIZx0++db3TjGf/PJNmT6aHM+OYB08Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712108604; c=relaxed/simple;
-	bh=p3/vC/O60cW1sJhdzpZy97xlMwM5ZR+kBSjXW1h82SA=;
+	s=arc-20240116; t=1712111747; c=relaxed/simple;
+	bh=b7jgja4+NYvVsB/7E56PfTSynaKJrT20mBx1wX6uiZw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q61TZjz+/T66d/N5hSOurYQKTIQgvYcpFj2+dyCZpDjYCRuRQ7sO66GjHo85HmyR3T5O3kbQyPuvamxnKgyLLhP4u2aoHez0QeibLsMugM0AfbKo+oVb9tKahBEpG77HlsR40dVp8F8eSQuVzR4LaODlYtOKsbVkMde9G0yD918=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dIkuELiv; arc=none smtp.client-ip=192.198.163.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1712108603; x=1743644603;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=p3/vC/O60cW1sJhdzpZy97xlMwM5ZR+kBSjXW1h82SA=;
-  b=dIkuELivB2rOLvXIsAPmRN4lZRHY3mW+W3CkUTODf4INYDTh0Rnc4hAv
-   BQA76lHlkNu5lIDJqGkNG22eeIesEQ5PM/Om3xCXj3Buh1FVvOw0zOZ0g
-   dDfXCj1iRqo03JAU/E2Rb7uwN1MCcfe5i+bW6zLWnNBAdIHyiVsgYWtdh
-   atcFFVYlNSI8i+ayYPv89OZc37P/WvJ3NGdkPa5+f5AdvTKc68SEVWuGy
-   NSd+07IA4OM9E+lVnKMmthlS4q83A2Ry5nOSocC7kNajD1m5gtAgZp/Xs
-   9aD3tmTBeGAs2t3Bjw5vuW4GUgshnZ/DCN6RPzn6MaPyRP/j6Nr7B+zD6
-   g==;
-X-CSE-ConnectionGUID: WudfhBrsQayYf1vdWyvLtA==
-X-CSE-MsgGUID: 4eWWiqt5SamwosdhGOmz/A==
-X-IronPort-AV: E=McAfee;i="6600,9927,11032"; a="18681604"
-X-IronPort-AV: E=Sophos;i="6.07,176,1708416000"; 
-   d="scan'208";a="18681604"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Apr 2024 18:43:22 -0700
-X-CSE-ConnectionGUID: qRADzWEaS/e9qI/jWWDl5Q==
-X-CSE-MsgGUID: YMNiNCojRiCWuS+4okXJsg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,176,1708416000"; 
-   d="scan'208";a="22901528"
-Received: from lkp-server02.sh.intel.com (HELO 90ee3aa53dbd) ([10.239.97.151])
-  by fmviesa004.fm.intel.com with ESMTP; 02 Apr 2024 18:43:19 -0700
-Received: from kbuild by 90ee3aa53dbd with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1rrpem-0001k5-2a;
-	Wed, 03 Apr 2024 01:43:16 +0000
-Date: Wed, 3 Apr 2024 09:43:08 +0800
-From: kernel test robot <lkp@intel.com>
-To: Dawei Li <dawei.li@shingroup.cn>, will@kernel.org, mark.rutland@arm.com
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	xueshuai@linux.alibaba.com, renyu.zj@linux.alibaba.com,
-	yangyicong@hisilicon.com, jonathan.cameron@huawei.com,
-	andersson@kernel.org, konrad.dybcio@linaro.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, Dawei Li <dawei.li@shingroup.cn>
-Subject: Re: [PATCH 4/9] perf/arm_dsu: Avoid explicit cpumask var allocation
- from stack
-Message-ID: <202404030906.L4BhRzHw-lkp@intel.com>
-References: <20240402105610.1695644-5-dawei.li@shingroup.cn>
+	 Content-Type:Content-Disposition:In-Reply-To; b=Njk5lXpsgBsdEAseM+L+b1x8XPH3pF0rTa30917qdGDko7j3NSx/kA4AtXdiUTZ2Y6ZxLR56FEePdaxIZtfub6WsD6BGn2sczJ7fbPbSwbCWQOf3l90vTGFJEqNrnGeLMzTu13bywgwIi/dBX5WvT1TlR0iIIRYT80MR661ygQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lne1jgL9; arc=none smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-515ac73c516so443216e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Apr 2024 19:35:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712111743; x=1712716543; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=e8VzvbIvZUqUsbzF90itURicxpIVMmC97qdhjpsuRak=;
+        b=lne1jgL9PMNV9qFtfbn7TgsqJ0GEl1ZBISHIRHS9DP1ckF5QYIweqj6BBn3WkJk7jQ
+         u6jxSV0oKn0rd+O47aoDbnjvexrSbWrbBWOH/3E+kvglLb8rMypwJuHLWJgfBohEoENH
+         O/j9WjCPIrZPS7iwuNg4qdUa6o6ultRk0LkD1CUNOWUQ2NB3Q1vzIDilrPijuY1pxxVA
+         fhnccNakCR4U6Mt2MZhrPQrfn8O4zKWfZLwwewsMdUpRW3f/t/dowzMBGs8H0JThSNs+
+         ccxyiZoIZFeRkCcqdXjRkeB6SvL8y7FGzK30vGbM9XYmQSKmwE9Wp2rRXrHqDaXFXjtb
+         vayQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712111743; x=1712716543;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=e8VzvbIvZUqUsbzF90itURicxpIVMmC97qdhjpsuRak=;
+        b=scNPMVntLnsm7ZXDq5NB9j80N9vJVtlo1CqHTsKAFj2GqQhkG9OkYpXdd0oCR1X2RY
+         Ieo8twU5THebyodN7rcuc/k5F1uXIXK741S5XvdPVYRuCeNZUyvFd3sxXJb+4LHhKNdY
+         vEl/E823FIq8RWGZOc4vCUehH8uhyiKD2vP6A9CYDM5nLwIG+1aXpRNuMtPPwc50a1g8
+         /RkWtZDLR2xSLQVxAfnbVamsgoGe3BBxsGuk+Bq/Wg7NeCGdi9OIp6fF7I0YokczAPbf
+         OP/n/wRpfU8cby2Z8aRRVAubKPLZuTTqx9TqjWDt//tAin5gQ+kvsxhl158pv2owwFxj
+         1bFg==
+X-Forwarded-Encrypted: i=1; AJvYcCUFBaYKoeK+Yak5s7HY28xTE4x348EmXKfE3Bi+KlijNBi86y7RCYh7bUEDpm+7+qvK642f0PvAMmtnzA3RgbC8kwGGO6OfZRuNZwmtzA==
+X-Gm-Message-State: AOJu0Yxpeg4Rq82p5dpCG7X8Qyi3dgRGzy1D9Jo7H+5gvkZGgyG/lIbT
+	eMnnurZ6vfHPqKPLm6IvJXx0Lbsj/HK4vrDBnAh7oovRvPSFhLnfiVqTYs0GTNE=
+X-Google-Smtp-Source: AGHT+IEpBE/QniA46Q09+tzLd/yM8WPzlg3OeroU44yFIFF96IeElPJ3blpP497K5qTVuhDGY4AjvQ==
+X-Received: by 2002:ac2:4827:0:b0:515:c17f:725c with SMTP id 7-20020ac24827000000b00515c17f725cmr378282lft.2.1712111743419;
+        Tue, 02 Apr 2024 19:35:43 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzyjmhyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a00e:a300::227])
+        by smtp.gmail.com with ESMTPSA id j21-20020a056512109500b00515c7ec957fsm1878878lfg.220.2024.04.02.19.35.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Apr 2024 19:35:43 -0700 (PDT)
+Date: Wed, 3 Apr 2024 05:35:41 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Marijn Suijten <marijn.suijten@somainline.org>
+Cc: Sumit Semwal <sumit.semwal@linaro.org>, 
+	Caleb Connolly <caleb.connolly@linaro.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 3/4] drm/mipi-dsi: add mipi_dsi_compression_mode_ext()
+Message-ID: <h3tc6hc6pomfjegionssupcxqz3az7zhxexfbu4jwqxkpxyzp4@6gldlmtp2jxo>
+References: <20240402-lg-sw43408-panel-v3-0-144f17a11a56@linaro.org>
+ <20240402-lg-sw43408-panel-v3-3-144f17a11a56@linaro.org>
+ <dgvztw55cr4wsbfxhf4ondzhaetodfcv4pndfug73suae5vp3v@4ozlmmsemfbm>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,64 +91,154 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240402105610.1695644-5-dawei.li@shingroup.cn>
+In-Reply-To: <dgvztw55cr4wsbfxhf4ondzhaetodfcv4pndfug73suae5vp3v@4ozlmmsemfbm>
 
-Hi Dawei,
+On Tue, Apr 02, 2024 at 11:09:29PM +0200, Marijn Suijten wrote:
+> On 2024-04-02 02:51:14, Dmitry Baryshkov wrote:
+> > Add the extended version of mipi_dsi_compression_mode(). It provides
+> > a way to specify the algorithm and PPS selector.
+> > 
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  drivers/gpu/drm/drm_mipi_dsi.c | 33 +++++++++++++++++++++++++++------
+> >  include/drm/drm_mipi_dsi.h     |  9 +++++++++
+> >  2 files changed, 36 insertions(+), 6 deletions(-)
+> > 
+> > diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
+> > index 9874ff6d4718..0ecbc811eb7a 100644
+> > --- a/drivers/gpu/drm/drm_mipi_dsi.c
+> > +++ b/drivers/gpu/drm/drm_mipi_dsi.c
+> > @@ -645,19 +645,24 @@ int mipi_dsi_set_maximum_return_packet_size(struct mipi_dsi_device *dsi,
+> >  EXPORT_SYMBOL(mipi_dsi_set_maximum_return_packet_size);
+> >  
+> >  /**
+> > - * mipi_dsi_compression_mode() - enable/disable DSC on the peripheral
+> > + * mipi_dsi_compression_mode_ext() - enable/disable DSC on the peripheral
+> >   * @dsi: DSI peripheral device
+> >   * @enable: Whether to enable or disable the DSC
+> > + * @algo: Selected algorithm
+> > + * @pps_selector: The PPS selector
+> 
+> Not a big fan of paraphrasing the parameter name, it adds no value.  How about
+> describing what this parameter means and what it does?:
+> 
+> 	PPS table index to use.  Corresponds to a table pre-programmed on the peripheral
+> 	or a table programmed with &drm_dsc_picture_parameter_set.pps_identifier.
+> 
+> (That should be a valid kernel-doc cross-reference to the field)
 
-kernel test robot noticed the following build errors:
+I don't think such meaning is defined in the standard. In the end, the
+pps_identifier is 8-bit wide, while this field has just 2 bits and 4
+possible values. The standards are pretty vague about this field. 
 
-[auto build test ERROR on soc/for-next]
-[also build test ERROR on linus/master v6.9-rc2 next-20240402]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> 
+> >   *
+> > - * Enable or disable Display Stream Compression on the peripheral using the
+> > - * default Picture Parameter Set and VESA DSC 1.1 algorithm.
+> > + * Enable or disable Display Stream Compression on the peripheral.
+> >   *
+> >   * Return: 0 on success or a negative error code on failure.
+> >   */
+> > -int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
+> > +int mipi_dsi_compression_mode_ext(struct mipi_dsi_device *dsi, bool enable,
+> > +				  enum mipi_dsi_compression_algo algo,
+> > +				  unsigned int pps_selector)
+> >  {
+> > -	/* Note: Needs updating for non-default PPS or algorithm */
+> > -	u8 tx[2] = { enable << 0, 0 };
+> > +	u8 data = (enable << 0) |
+> > +		(algo << 1) |
+> > +		(pps_selector << 4);
+> 
+> Do we need some size validation (if > 3 return -EINVAL)?  FIELD_PREP() might be
+> too heavy though.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Dawei-Li/perf-alibaba_uncore_drw-Avoid-explicit-cpumask-var-allocation-from-stack/20240402-192244
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/soc/soc.git for-next
-patch link:    https://lore.kernel.org/r/20240402105610.1695644-5-dawei.li%40shingroup.cn
-patch subject: [PATCH 4/9] perf/arm_dsu: Avoid explicit cpumask var allocation from stack
-config: arm64-randconfig-001-20240403 (https://download.01.org/0day-ci/archive/20240403/202404030906.L4BhRzHw-lkp@intel.com/config)
-compiler: clang version 16.0.4 (https://github.com/llvm/llvm-project.git ae42196bc493ffe877a7e3dff8be32035dea4d07)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240403/202404030906.L4BhRzHw-lkp@intel.com/reproduce)
+Ack, let's add it.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202404030906.L4BhRzHw-lkp@intel.com/
+> 
+> > +	u8 tx[2] = { data, 0 };
+> >  	struct mipi_dsi_msg msg = {
+> >  		.channel = dsi->channel,
+> >  		.type = MIPI_DSI_COMPRESSION_MODE,
+> > @@ -668,6 +673,22 @@ int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
+> >  
+> >  	return (ret < 0) ? ret : 0;
+> >  }
+> > +EXPORT_SYMBOL(mipi_dsi_compression_mode_ext);
+> > +
+> > +/**
+> > + * mipi_dsi_compression_mode() - enable/disable DSC on the peripheral
+> > + * @dsi: DSI peripheral device
+> > + * @enable: Whether to enable or disable the DSC
+> > + *
+> > + * Enable or disable Display Stream Compression on the peripheral using the
+> > + * default Picture Parameter Set and VESA DSC 1.1 algorithm.
+> > + *
+> > + * Return: 0 on success or a negative error code on failure.
+> > + */
+> > +int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
+> > +{
+> > +	return mipi_dsi_compression_mode_ext(dsi, enable, 0, MIPI_DSI_COMPRESSION_DSC);
+> 
+> I hope the compiler complains here that it should be MIPI_DSI_COMPRESSION_DSC,0
 
-All errors (new ones prefixed by >>):
+Nope, it didn't. Both are integers.
 
->> drivers/perf/arm_dsu_pmu.c:243:24: error: incompatible pointer types passing 'cpumask_var_t *' (aka 'struct cpumask **') to parameter of type 'const struct cpumask *'; remove & [-Werror,-Wincompatible-pointer-types]
-           ret = cpumask_any_but(&online_supported, cpu);
-                                 ^~~~~~~~~~~~~~~~~
-   include/linux/cpumask.h:379:52: note: passing argument to parameter 'mask' here
-   unsigned int cpumask_any_but(const struct cpumask *mask, unsigned int cpu)
-                                                      ^
-   1 error generated.
+> 
+> (Enum algo first, int pps_selector last)
+> 
+> > +}
+> >  EXPORT_SYMBOL(mipi_dsi_compression_mode);
+> >  
+> >  /**
+> > diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
+> > index 3011d33eccbd..78cb7b688b1d 100644
+> > --- a/include/drm/drm_mipi_dsi.h
+> > +++ b/include/drm/drm_mipi_dsi.h
+> > @@ -226,6 +226,12 @@ static inline int mipi_dsi_pixel_format_to_bpp(enum mipi_dsi_pixel_format fmt)
+> >  	return -EINVAL;
+> >  }
+> >  
+> > +enum mipi_dsi_compression_algo {
+> > +	MIPI_DSI_COMPRESSION_DSC = 0,
+> 
+> Add 1.1?  Or does it also allow 1.2 (when the version is also set via PPS)?
 
+I have only DSI 1.3 at hand, which only talks about 1.1. I think 1.2 is
+allowed by inheritance. That's why I skipped the version here.
 
-vim +243 drivers/perf/arm_dsu_pmu.c
+> 
+> > +	MIPI_DSI_COMPRESSION_VENDOR = 3,
+> > +	/* other two values are reserved, DSI 1.3 */
+> > +};
+> > +
+> >  struct mipi_dsi_device *
+> >  mipi_dsi_device_register_full(struct mipi_dsi_host *host,
+> >  			      const struct mipi_dsi_device_info *info);
+> > @@ -242,6 +248,9 @@ int mipi_dsi_turn_on_peripheral(struct mipi_dsi_device *dsi);
+> >  int mipi_dsi_set_maximum_return_packet_size(struct mipi_dsi_device *dsi,
+> >  					    u16 value);
+> >  int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable);
+> > +int mipi_dsi_compression_mode_ext(struct mipi_dsi_device *dsi, bool enable,
+> > +				  unsigned int pps_selector,
+> > +				  enum mipi_dsi_compression_algo algo);
+> 
+> Oh, this declaration is inverse from the definition...
 
-   232	
-   233	static unsigned int dsu_pmu_get_online_cpu_any_but(struct dsu_pmu *dsu_pmu, int cpu)
-   234	{
-   235		cpumask_var_t online_supported;
-   236		unsigned int ret;
-   237	
-   238		if (!alloc_cpumask_var(&online_supported, GFP_KERNEL))
-   239			return -ENOMEM;
-   240	
-   241		cpumask_and(online_supported,
-   242			    &dsu_pmu->associated_cpus, cpu_online_mask);
- > 243		ret = cpumask_any_but(&online_supported, cpu);
-   244	
-   245		free_cpumask_var(online_supported);
-   246	
-   247		return ret;
-   248	}
-   249	
+I'll check it.
+
+> 
+> - Marijn
+> 
+> >  int mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
+> >  				   const struct drm_dsc_picture_parameter_set *pps);
+> >  
+> > 
+> > -- 
+> > 2.39.2
+> > 
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+With best wishes
+Dmitry
 
