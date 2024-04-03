@@ -1,102 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-16346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16351-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6397489785E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 20:41:22 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 106088977C4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 20:05:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9EA66B2A733
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 17:49:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4133C1C20D82
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 18:05:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7CF3153813;
-	Wed,  3 Apr 2024 17:26:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F65B15442C;
+	Wed,  3 Apr 2024 18:05:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tO+wqjp2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ae15G2wK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
+Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5585715351B
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 17:26:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16D215357D;
+	Wed,  3 Apr 2024 18:05:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712165206; cv=none; b=FJ3K5JsJy0jnAC0q0lv30iMJlQyp73PMlx1cLGTI9wLwvfypZlZiFZZrWYpp+vdVcQ/o2jaZgt4fXnnVeb4G1qBch1FJVvMcISXJ7r0/g//jKNRShm4lkaH9yZxOV92H7o7ojq8XTmM9C/YIwSiWL1YTWhhLEkztwrc7e1H8qx4=
+	t=1712167526; cv=none; b=or+QKFOXWkfV9nHnL83eS6KstS6PQQqlaxXNAoAkqQmbe3DcgkYNfPetsm4o8t/hr4R/lVNfRqoS5fKdOLxS0dmg3Tw5Jei9k8bZPfnvFSxhNBOKQ88TheJhktd6rd9HEiLAbPLa0vWVGRSHVtBcgFnyj4FUatTN2oHCW0iqtZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712165206; c=relaxed/simple;
-	bh=LnpTv88ibvNdXj6GVzP9xU4lqh7L6amljLmOCPnvIHc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=p9tZKBSkWhgG6ZAdowOg+GgE4TFEHwIPyC9VT/zn1am5neJ59YEEyg0XkJiHzbe+BZ+NtNwkrtGEFRPOqmzAEZCAlvoa5DNRuvIpBZ/iUUFAobXPRO9FgXjrJyutMqpzJIaQRDbDEhPxZlC/g+5RfFBCETWTbZqQrP/JNqhg3Qs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tO+wqjp2; arc=none smtp.client-ip=209.85.219.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-dde0b30ebe2so156937276.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 10:26:45 -0700 (PDT)
+	s=arc-20240116; t=1712167526; c=relaxed/simple;
+	bh=yzV8gvMbMG9aYQ19MBzqxr4amKzhod3/glCMw4VGUZE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oSv9ihzXp+9HPsOhWBzP7ZAqAKVHf/c4V2hKp9cqxndwa0WP3xmzT/1lOf3sIdzN2+govJbdjxcxtKvHqGqXv42SJgOY2clU4zwoqeM2hXCWr2EqHmczzKvBZvPiYXMdQiP6XXZKprzIhflK7ZcybDvNUGcv1vBBfsp1DaZrJBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ae15G2wK; arc=none smtp.client-ip=209.85.160.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-229661f57cbso70050fac.1;
+        Wed, 03 Apr 2024 11:05:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712165204; x=1712770004; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=W7QRRgKqsXwD5sSRDZZ8VcuFdOzjyZfFtngo+Xri/jk=;
-        b=tO+wqjp21AqO4hJzG6vcG0QYNqO+NiIc6NK9s/VeAEwXC2g81lBhNHJ485e1XaP/16
-         KkZpcnKuR36at5dVR3ZpkaSWlSxJTsBAee3xWvJAKXYEYCekARTSNacBB/FsbWh5EO5Q
-         KL7LLKKdA7fSxy8VUFCRH2KVO2qA923ZXTLunJXNnF/7Ub+X76pXRiRaQphg5Mh9jXjU
-         9x8c4Lc7Dt79QHREgvAPE5O9x2ZAEfriUnOznXooWXIGGT3ZeHMsmqN2QVd7SzmA4RR4
-         R/G0HvwNFKDJwJ4dTdqONupv9m4+pt8UiQ4RX65FeO3wvMcBKi10GEK+sarbkE0FF1rR
-         Ri3A==
+        d=gmail.com; s=20230601; t=1712167524; x=1712772324; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fZ75uqyXcKd8R5Pz7Ws9tVG0bayyM9hJ1Z1pvbSQndY=;
+        b=Ae15G2wK/YEC5vvYpf5FwQ/xNHB/FDO57tazsJYrpr+3JucPRuVBzAx2QQDyIJ6knf
+         hVn4YJr+jG9UKaNC4thE5A3TPrXg75PgSqEfYyaqNdMa2yxW5hU4AeGlhtoLCQ2xW09N
+         V5n2TdP8fe2OV9Zb9mQlT6lbG433DDg2KCM9Z9KPskRmEV5xy7qsWa6wXo0FdLkWYP+Y
+         BahQJvOPjRuHQDpWszrY5zLUPr/mrV582COYrQWqQ6IgqnYX7xE1B5vlC2WE5qx9hPPa
+         1clp9ErbkLzfPCXnRDr4rh4RM/EDOBW5lUkdGVxZdi/cNA2dWz5/1QpKdi7ogGcKSzmj
+         t3kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712165204; x=1712770004;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=W7QRRgKqsXwD5sSRDZZ8VcuFdOzjyZfFtngo+Xri/jk=;
-        b=DYZkAnOUWYHtxTYp4pDi05VVlial4OlzhV7h4AiMxB9pCzGjKrvqSgWH9hvSXHKXeb
-         OEnxv0+qLPLbaNbqFHp8w0jlSTCeHZY6ewionaKusnChrEw4ur19ufQg6RP8XGldzTpL
-         4iyfLZ/e+ZjaF7MiKYymXjDHTxxSjX58w2k0/G5AqwtqpHATS5U76NKPgEjHlBZ/gPYd
-         mx/kk+MsPfb4C62L6Y2ma/xTKfg8s7rogXoYUDjf3+Is5H2ZuQtw3VAjqhjtZFRuRhoE
-         +Xio0mhy96p+iBN5NnihsYxnMjxMoT6dq/6T1UxEBxvixC3PLgb6bowHM+HH7+4MbVDc
-         uKPg==
-X-Forwarded-Encrypted: i=1; AJvYcCUWw7c37KeELjyI3IlNn5sAZQO8H5Bk1rQy0pLqnCXvNb+L0gu7A71Tx8lP+VqiB7TwrBUgYdaASROByTUI7bU6MX1Y4KkkZdDW9yaC6g==
-X-Gm-Message-State: AOJu0YwtuXcohXfABiCM9w4lPCSRO4YfXrMpOgP+EUwQhJjYCUOa/TP1
-	TBPB3bPL9CARGAx3DSKoGC7zx6qHhjP6jEWl+BLmKbouZAMqRAP9QDFydJm2WN97zqrZT+bsqFI
-	5GAaX0QjMNfp8NVBnzfg+DSoo5G6uxk1aU3V3RA==
-X-Google-Smtp-Source: AGHT+IGKs4UZZu1uWec/JwUPIddWSalxBLmZpFq3atHbYhG7vywkXhdOnRse/O/THqsDCZtUL5neZXBtsuKX/2xQd+w=
-X-Received: by 2002:a5b:a92:0:b0:dcd:13ba:cdd6 with SMTP id
- h18-20020a5b0a92000000b00dcd13bacdd6mr116607ybq.47.1712165204168; Wed, 03 Apr
- 2024 10:26:44 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1712167524; x=1712772324;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fZ75uqyXcKd8R5Pz7Ws9tVG0bayyM9hJ1Z1pvbSQndY=;
+        b=lWJylmC9Y3HHD9KCaNpToIP0B38y59bK3eDBj+r6v8sdWkRNKaNle9ZKSUTG06kmc8
+         5QLkOf/I/5YRQsGOojY+ROQlow0xg96vhn6r/FMbImPRKgwMyZmJv0gS+QbGlnH2qKHF
+         EQ3sEoRQWp+k/tf8jLK2NQ4n5S5kd4a73zZidSziK5xlXT21EoZ7s84C2zCn4Obgpu6t
+         Rt18P1zQn2DrOhQO9xIfW2ffvaQiPdMaLAxK/S3u9X7W+hM0JUPQH+b5qlmCWf7OfZGm
+         FYXpfG1jEucu/BX14GBklTw2/Ir8c7G5oYJdMA/bz0JUcVihYNE/cNjkmTul9XDYTVwH
+         +gqg==
+X-Forwarded-Encrypted: i=1; AJvYcCXLOq92sWpzuAoX794TV7Cnod+VvRG8k1XCOXth/UTbPUyuTaBjggdSmmqGytaNQn4oYIwk7+Ng6XLqV8wPziVvJxeVcc7oJpez+yWud1PuUyJMDfJXaoT4Rv+Hw6cHGcvIQ/oznfFcW+f5SHoq47K3skOEzKbtx75uJMSK8w+oYU8k3DLOx4kaq6u3n4mLj4KLwu6hMlHvPLdkUVPNz96v/kU=
+X-Gm-Message-State: AOJu0YxItEXlZBQyJAtKbuRRFojbeYlWK4WTpi52tJfyB5LWPXhGXaiO
+	zEfjwMrq7D+1kiWE+2zWAqmMXOIxUGSd1/Jy1DO9A1W/ex4angmm
+X-Google-Smtp-Source: AGHT+IEtjndM4TcXGUt3GAQI11LA8n53NRmJwToTDskQZ/GbUK0jGW4KyyBCURII9akrd7cabDnLTA==
+X-Received: by 2002:a05:6870:5d85:b0:22a:b3cd:1d7e with SMTP id fu5-20020a0568705d8500b0022ab3cd1d7emr82627oab.27.1712167523575;
+        Wed, 03 Apr 2024 11:05:23 -0700 (PDT)
+Received: from [192.168.7.169] (c-98-197-58-203.hsd1.tx.comcast.net. [98.197.58.203])
+        by smtp.gmail.com with ESMTPSA id hi27-20020a056870c99b00b0022e9bd70567sm317220oab.31.2024.04.03.11.05.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Apr 2024 11:05:23 -0700 (PDT)
+Message-ID: <d35c96ca-24af-fbad-74fe-ad85a433caa2@gmail.com>
+Date: Wed, 3 Apr 2024 13:05:22 -0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <1711741586-9037-1-git-send-email-quic_khsieh@quicinc.com> <f0dcfd6a-55cf-84d8-6599-319a700e1960@quicinc.com>
-In-Reply-To: <f0dcfd6a-55cf-84d8-6599-319a700e1960@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 3 Apr 2024 20:26:33 +0300
-Message-ID: <CAA8EJpqWa0bcV_ucsyM5_sSu3d0_XFjnNdabUcbq0muHtx_YWg@mail.gmail.com>
-Subject: Re: [PATCH v3] drm/msm/dp: assign correct DP controller ID to
- x1e80100 interface table
-To: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc: dri-devel@lists.freedesktop.org, robdclark@gmail.com, sean@poorly.run, 
-	swboyd@chromium.org, dianders@chromium.org, vkoul@kernel.org, daniel@ffwll.ch, 
-	airlied@gmail.com, agross@kernel.org, abel.vesa@linaro.org, 
-	andersson@kernel.org, quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com, 
-	quic_sbillaka@quicinc.com, marijn.suijten@somainline.org, 
-	freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 3/7] dt-bindings: PCI: qcom: Add IPQ9574 PCIe controller
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Bjorn Helgaas
+ <bhelgaas@google.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: ansuelsmth@gmail.com, robimarko@gmail.com, linux-arm-msm@vger.kernel.org,
+ linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240402192555.1955204-1-mr.nuke.me@gmail.com>
+ <20240402192555.1955204-3-mr.nuke.me@gmail.com>
+ <bad88189-cf70-4200-9fa3-650ea923b4b8@linaro.org>
+From: mr.nuke.me@gmail.com
+In-Reply-To: <bad88189-cf70-4200-9fa3-650ea923b4b8@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, 3 Apr 2024 at 20:24, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
->
-> Dmitry,
->
-> any more comments?
->
 
-No, it was picked by Abhinav for msm-fixes.
 
--- 
-With best wishes
-Dmitry
+On 4/3/24 02:14, Krzysztof Kozlowski wrote:
+> On 02/04/2024 21:25, Alexandru Gagniuc wrote:
+>> IPQ9574 has PCIe controllers which are almost identical to IPQ6018.
+>> The only difference is that the "iface" clock is not required.
+>> Document this difference along with the compatible string.
+>>
+>> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+>> ---
+>>   .../devicetree/bindings/pci/qcom,pcie.yaml    | 32 +++++++++++++++++++
+>>   1 file changed, 32 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>> index cf9a6910b542..6eb29547c18e 100644
+>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>> @@ -26,6 +26,7 @@ properties:
+>>             - qcom,pcie-ipq8064-v2
+>>             - qcom,pcie-ipq8074
+>>             - qcom,pcie-ipq8074-gen3
+>> +          - qcom,pcie-ipq9574
+>>             - qcom,pcie-msm8996
+>>             - qcom,pcie-qcs404
+>>             - qcom,pcie-sdm845
+>> @@ -383,6 +384,35 @@ allOf:
+>>               - const: axi_s # AXI Slave clock
+>>               - const: axi_bridge # AXI bridge clock
+>>               - const: rchng
+>> +
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            enum:
+>> +              - qcom,pcie-ipq9574
+>> +    then:
+>> +      properties:
+>> +        clocks:
+>> +          minItems: 4
+>> +          maxItems: 4
+>> +        clock-names:
+>> +          items:
+>> +            - const: axi_m # AXI Master clock
+>> +            - const: axi_s # AXI Slave clock
+>> +            - const: axi_bridge # AXI bridge clock
+>> +            - const: rchng
+>> +
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            enum:
+>> +              - qcom,pcie-ipq6018
+>> +              - qcom,pcie-ipq8074-gen3
+>> +              - qcom,pcie-ipq9574
+>> +    then:
+> 
+> Do not introduce inconsistent style. All if:then: define both clocks and
+> resets, right? And after your patch not anymore?
+> 
+I kept the resets in one place because they are the same cross the ipq* 
+variants.
+
+Do I understand correctly that you wish me to split up the resets as well?
+
+     if ipq8074 ipq6018
+         clocks
+         resets
+
+     if ipq9754
+         clocks
+         resets
+
+Alex
+
+> Best regards,
+> Krzysztof
+> 
 
