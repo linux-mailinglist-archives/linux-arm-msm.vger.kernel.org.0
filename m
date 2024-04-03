@@ -1,208 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-16218-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16219-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71A2289671B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 09:49:04 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2CB47896737
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 09:51:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F00721F28BC4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 07:49:03 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 975A2B21E83
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 07:51:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3373C5FB85;
-	Wed,  3 Apr 2024 07:47:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A36C66B58;
+	Wed,  3 Apr 2024 07:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="VFy4ZSEC"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JKjT50fK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600BE5DF26
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 07:47:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B8D5C8E6;
+	Wed,  3 Apr 2024 07:51:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712130449; cv=none; b=CIfOLXBG3kaLJGFE8mK3GA1CBKb486Jx+2leG4iOpH0ePf32Ujp5vveZvYXC6f3rV8uNE9SRpfiCbWC5zAmAUpobJSux2lsYBuk3yPEGcAFdfavIFyJXQocUSI8oHyOSx2b6+dTRgF4vMDal6YYkQLquytoi+oQm3XiWlvP917g=
+	t=1712130662; cv=none; b=sTiqeqVd1CtIaK4BIJXOcvFrLMSYUFy0f6mfXyhzK48zXKOoEU4Cp5pUansZx3sdf+04Ssy1LJOs5/IygmhzkQ+Bj2sW0l9zOIduhRzVXji1KdtDWSjgly1Do05hadxfuRiK8R0ScktZPomj4Wtk7n9OAlQVgrsfP4TRhusv+UQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712130449; c=relaxed/simple;
-	bh=RKlf/aXBQSz4C5u/DS1c43o9FTCo579xxiqOL6jSNKM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RNx2xoNI8gsfqMWVOVm4qt53sD9ABXnqJtxnPAnED2mrFHpX6IojLkVHDZd5zeUrYr3zHn9ANltTegkcQl15hTnsnMnaCUP0uojohR0mzqT1Ckgj5EZjPvdRNpUkmjQKyU87NSfSk7gg/Y7YmeT3JUwiB4ojCX9Ow8hmsE6IFs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=VFy4ZSEC; arc=none smtp.client-ip=209.85.167.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-516c08c25e1so161589e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 00:47:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1712130445; x=1712735245; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cheZvOcC88OGFbj70O09gAsWEwU7K3V+qd/tt+SD81A=;
-        b=VFy4ZSECXxyd97ehUwk/nS0/q6C9mlFPZB3f7pI0N0xo8Jmw4E1YbB7m0aW1djqloe
-         g09ytQVqjaZZmmm32EqUMCi8ZoEiJnRn/14jz+HmUgQMxKr9sB82iPt2XvjVDvlLAT7v
-         /BFM18+Qo8WV930k71uZStsrjewGxFSyW45mOCQxxjIuaJtjcQs8dK7Ho70q9kBDm16Q
-         4CcvCS5KwclPCFrjgvyO4OkhreVz1j/k0QXpSvmqTsn3Tpvp3VBpg6k13fbE13UrRKY9
-         CVK9Dl/lMn8uhOkCP705N85nUZFduKhnUBS/6eFf/kQxYcZuGyGcJ0FxD/ZJs8mYEcv3
-         Iq2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712130445; x=1712735245;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cheZvOcC88OGFbj70O09gAsWEwU7K3V+qd/tt+SD81A=;
-        b=n1Ntgud+RPUGyd7mPUqyyXqdTEl+fkkYh3/FAcy+eb3ma1zdL8jtHhYNw7aPpJ623U
-         IGm3TnHpJ4uiVvKYZ8vqqo/p+sT9CrMJ6bUipQTIRHN/4WNKtEVU2xQOQihUBwb1p1oI
-         LBtYFWbKxe0ByV3dw5JLwrMjYYE5swC5IoxZSsxmhd30bCV9jbBgPNHHHjCuIvIPujtF
-         QAg+XoE+m4sbnaMKDKdXvF9/EOH3meiT7/J3wdoDURaDvIZKLOvm5cEaYedzj0UeHW5i
-         PuPNFrZmzsqueQCFaA8yksNuU8ihE/7a6mFsra5/OpE0yYzb00MNvwvsi187nBYSzamD
-         9w0w==
-X-Forwarded-Encrypted: i=1; AJvYcCXZxampw7F54EmjpMVtZ+fY6QcL84DtXXYqc9x4tM+ZRMPPowj+PxaFmIj1mohy3+DTCfI02j9K8QhkPOg93i89EaoWOJJ7b695tZBLdg==
-X-Gm-Message-State: AOJu0YxmjoM5SAuLLMUD1YlHhIubRfV4E/kGfMI206vxrBzPzh2Ntuuf
-	0k8PziQQhQxPJfAbGDQGGJVYWFWghVtGzWpyZPdCw5P9Jk3OkU8td3UGZRiV4hDsYiVdpZGr6/6
-	niSwLpJffu57GoKOxhkjy2E6aZEhKLmmbhNXTuA==
-X-Google-Smtp-Source: AGHT+IG5LvgOQGpY0trGQtWaTz+lv+ktFre9zbGKvzioVYu4AqCouNJCtNokmpW3qynaS7emWAxWzVE85+WNKemU6dY=
-X-Received: by 2002:ac2:5d44:0:b0:515:d445:6c13 with SMTP id
- w4-20020ac25d44000000b00515d4456c13mr8905032lfd.32.1712130445446; Wed, 03 Apr
- 2024 00:47:25 -0700 (PDT)
+	s=arc-20240116; t=1712130662; c=relaxed/simple;
+	bh=xXt761hXGOhChVVs4hvJ3+oYCtJUQLEzwivwDFsgV6o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ENkMpQJw8fbD/s7SqOhz4VjgtLeUfSS/2UGl4Ig6KoVD2WrPUtiv82xHzVZGz/cSTd54/9BOWV9YGAbJqeeoTaao1B6DH7+L844TBOgrmoyTbwHUJZf2TBs5MV/j8VTpO2E4aD9sfY3ehI9AQvF6AWUa/cWsB+HsOIssoGETZNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JKjT50fK; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4335Qtot010714;
+	Wed, 3 Apr 2024 07:50:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=5qlywn2ge3g3LY0/ZvHLN9/fbluGe4eXWRjDIrYfvhM=; b=JK
+	jT50fKoi9esukAGMTXCUXLabOHr36KpTdyAScChJ7DrxK3pUxx+tdsgtfgEXNIDp
+	blIGKKS4qRXiz9tFdp1FQCSmotWGYbsgPo2H23IlH/z78Sj/EyBk5WyZaAT+kqsM
+	kXAmScz4QERxaqWzC8qCSPjN5gC+2Kz/FKJBEL9HS3/U2QYKLT0B35Nojt5Ue3MP
+	/5j2gOsNHEhIWinzyGB5d45/DEwyVMKBThUPnKMK53pps60UOAKguCDqzvi1rPMz
+	qpH1vTzM/zY0mPNe9K+Lp4VzBN8QPoaycFbaYFvvK9dXSBUBAThVY0y+XUN5Kaww
+	sKJ7TuSv+bpkXpdfHkmA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x9077gb25-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 03 Apr 2024 07:50:55 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4337orN6013826
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 3 Apr 2024 07:50:53 GMT
+Received: from [10.216.63.221] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 3 Apr 2024
+ 00:50:49 -0700
+Message-ID: <5354493b-63de-43bb-9871-73918f123661@quicinc.com>
+Date: Wed, 3 Apr 2024 13:20:46 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240325100359.17001-1-brgl@bgdev.pl> <56e1c63a-4c09-4d92-9ef2-aad5390879cc@gmail.com>
- <CAMRc=Mf_pvrh2VMfTVE-ZTypyO010p=to-cd8Q745DzSDXLGFw@mail.gmail.com>
- <CAMRc=MfsVWcoMC-dB-fdxy332h-ucUPTfEUMAnCt5L-q3zJxWg@mail.gmail.com>
- <82f94b54-82d1-49b9-badf-63d948b347fc@gmail.com> <97e1f121-9e84-4e63-9c9c-57e2de0b29d7@gmail.com>
- <CAMRc=McLJFGcy-A6PZNmjgDXnvx8z0J4k-Dbak-txvWnycHG2A@mail.gmail.com>
- <2b1dc031-d645-494c-9103-a2bb422ea60b@gmail.com> <CAMRc=MdoSPuedbGhy4toDEkw0vSzESDz2bXGpyt_=R4hqXW+Uw@mail.gmail.com>
- <9b1e5ea0-bb32-4c42-b2e9-204bde31b905@gmail.com> <CACMJSesvM6_PhhR_2sP4JX6bR4ytVVg=MwWBEVrCHf5FNp2JXw@mail.gmail.com>
- <9db0fc7b-f24a-4d76-b8bd-ec577ecba0c6@gmail.com> <CAMRc=Me9x1OXKXXxyhzZ6mxffmaoq=4QhMXCL6L71_xso2epWA@mail.gmail.com>
- <CAMRc=Me0MamtJoPtQnucKyZx9pfkEPDAAZqWFWRU0CBcj+P50A@mail.gmail.com>
-In-Reply-To: <CAMRc=Me0MamtJoPtQnucKyZx9pfkEPDAAZqWFWRU0CBcj+P50A@mail.gmail.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 3 Apr 2024 09:47:14 +0200
-Message-ID: <CAMRc=McZ9dpD7Ws0vq-eYCN3smA6dHOLu_i1BL=x+CAaYr9S2w@mail.gmail.com>
-Subject: Re: [PATCH v9 00/13] firmware: qcom: qseecom: convert to using the TZ allocator
-To: Maximilian Luz <luzmaximilian@gmail.com>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Elliot Berman <quic_eberman@quicinc.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
-	Guru Das Srinagesh <quic_gurus@quicinc.com>, Andrew Halaney <ahalaney@redhat.com>, 
-	Alex Elder <elder@linaro.org>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, kernel@quicinc.com, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: qdu1000-idp: enable USB nodes
+Content-Language: en-US
+To: Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>
+CC: Komal Bajaj <quic_kbajaj@quicinc.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring
+	<robh+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Amrit Anand <quic_amrianan@quicinc.com>
+References: <20240319091020.15137-1-quic_kbajaj@quicinc.com>
+ <20240319091020.15137-3-quic_kbajaj@quicinc.com>
+ <CAA8EJprXPvji8TgZu1idH7y4GtHtD4VmQABFBcRt-9BQaCberg@mail.gmail.com>
+ <Zgs7Yau1/jYvys4i@hu-bjorande-lv.qualcomm.com>
+From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <Zgs7Yau1/jYvys4i@hu-bjorande-lv.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: BXDdKxPkfqVEz4Hil2WW7hUn9PBp4Ku3
+X-Proofpoint-ORIG-GUID: BXDdKxPkfqVEz4Hil2WW7hUn9PBp4Ku3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-03_06,2024-04-01_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ malwarescore=0 adultscore=0 suspectscore=0 clxscore=1015
+ priorityscore=1501 lowpriorityscore=0 spamscore=0 phishscore=0 bulkscore=0
+ impostorscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403210001 definitions=main-2404030053
 
-On Tue, Apr 2, 2024 at 10:44=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.pl>=
- wrote:
->
-> On Sat, Mar 30, 2024 at 8:16=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.p=
-l> wrote:
-> >
-> > On Fri, 29 Mar 2024 20:57:52 +0100, Maximilian Luz <luzmaximilian@gmail=
-.com> said:
-> > > On 3/29/24 8:46 PM, Bartosz Golaszewski wrote:
-> > >> On Fri, 29 Mar 2024 at 20:39, Maximilian Luz <luzmaximilian@gmail.co=
-m> wrote:
-> > >>>
-> > >>> On 3/29/24 8:26 PM, Bartosz Golaszewski wrote:
-> > >>>> On Fri, 29 Mar 2024 at 20:22, Maximilian Luz <luzmaximilian@gmail.=
-com> wrote:
-> > >>>>>
-> > >>>>> On 3/29/24 8:07 PM, Bartosz Golaszewski wrote:
-> > >>>>>>
-> > >>>>>> Both with and without SHM bridge?
-> > >>>>>
-> > >>>>> With CONFIG_QCOM_TZMEM_MODE_GENERIC=3Dy (and the upcoming fix) ev=
-erything
-> > >>>>> works. With CONFIG_QCOM_TZMEM_MODE_SHMBRIDGE=3Dy things unfortuna=
-tely
-> > >>>>> still get stuck at boot (regardless of the fix). I think that's
-> > >>>>> happening even before anything efivar related should come up.
-> > >>>>>
-> > >>>>
-> > >>>> This is on X13s? I will get one in 3 weeks. Can you get the bootlo=
-g
-> > >>>> somehow? Does the laptop have any serial console?
-> > >>>
-> > >>> Surface Pro X (sc8180x), but it should be similar enough to the X13=
-s in
-> > >>> that regard. At least from what people with access to the X13s told=
- me,
-> > >>> the qseecom stuff seems to behave the same.
-> > >>>
-> > >>> Unfortunately I don't have a direct serial console. Best I have is
-> > >>> USB-serial, but it's not even getting there. I'll have to try and s=
-ee if
-> > >>> I can get some more info on the screen.
-> > >>>
-> > >>
-> > >> I have access to a sc8180x-primus board, does it make sense to test
-> > >> with this one? If so, could you give me instructions on how to do it=
-?
-> > >
-> > > I guess it's worth a shot.
-> > >
-> > >  From what I can tell, there shouldn't be any patches in my tree that
-> > > would conflict with it. So I guess it should just be building it with
-> > > CONFIG_QCOM_TZMEM_MODE_SHMBRIDGE=3Dy and booting.
-> > >
-> > > I am currently testing it on top of a patched v6.8 tree though (but t=
-hat
-> > > should just contain patches to get the Pro X running). You can find t=
-he
-> > > full tree at
-> > >
-> > >      https://github.com/linux-surface/kernel/tree/spx/v6.8
-> > >
-> > > The last commit is the fix I mentioned, so you might want to revert
-> > > that, since the shmem issue triggers regardless of that and it preven=
-ts
-> > > your series from applying cleanly.
-> > >
-> > > Best regards,
-> > > Max
-> > >
-> >
-> > sc8180x-primus' support upstream is quite flaky. The board boots 50% of=
- time.
-> > However it's true that with SHM bridge it gets to:
-> >
-> > mount: mounting efivarfs on /sys/firmware/efi/efivars failed: Operation=
- not supported
-> >
-> > and stops 100% of the time. Without SHM bridge I cannot boot it either =
-because
-> > I suppose I need the patch you sent yesterday. I haven't had the time t=
-o
-> > rebase it yet, it's quite intrusive to my series.
-> >
-> > I can confirm that with that patch the board still boots but still 50% =
-of the
-> > time.
-> >
-> > Bart
->
-> Hi!
->
-> I was under the impression that until v8, the series worked on sc8180x
-> but I'm seeing that even v7 has the same issue with SHM Bridge on
-> sc8180x-primus. Could you confirm? Because I'm not sure if I should
-> track the differences or the whole thing was broken for this platform
-> from the beginning.
->
-> Bart
 
-Interestingly, it doesn't seem like a problem with qseecom - even if I
-disable the driver, the board still freezes after the first SCM call
-using SHM bridge. I suspect - and am trying to clarify that with qcom
-- that this architecture doesn't support SHM bridge but doesn't report
-it either unlike other older platforms. Or maybe there's some quirk
-somewhere. Anyway, I'm on it.
 
-Bart
+On 4/2/2024 4:25 AM, Bjorn Andersson wrote:
+> On Tue, Mar 19, 2024 at 11:52:15AM +0200, Dmitry Baryshkov wrote:
+>> On Tue, 19 Mar 2024 at 11:11, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
+>>>
+>>> Enable both USB controllers and associated hsphy and qmp phy
+>>> nodes on QDU1000 IDP. Add the usb type B port linked with the
+>>> DWC3 USB controller switched to OTG mode and tagged with
+>>> usb-role-switch.
+>>>
+>>> Co-developed-by: Amrit Anand <quic_amrianan@quicinc.com>
+>>> Signed-off-by: Amrit Anand <quic_amrianan@quicinc.com>
+>>> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 65 ++++++++++++++++++++++++
+>>>   1 file changed, 65 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+>>> index 89b84fb0f70a..26442e707b5e 100644
+>>> --- a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+>>> +++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+>>> @@ -46,6 +46,33 @@ ppvar_sys: ppvar-sys-regulator {
+>>>                  regulator-boot-on;
+>>>          };
+>>>
+>>> +       usb_conn_gpio: usb-conn-gpio {
+>>> +               compatible = "gpio-usb-b-connector";
+>>
+>> If this board has only a USB-B connector, can it really handle USB 3.0?
+>>
+> 
+> Here's a USB 3.0 Type-B cable, so no problem there:
+> https://en.wikipedia.org/wiki/USB_hardware#/media/File:USB_3.0_plug,_type_B_-_1709.jpg
+> 
+> 
+> @Komal, please confirm that this is the connector you have on the IDP?
+> 
+
+Hi Bjorn,
+
+  Sorry for the confusion. The QDU1000 IDP has a Type-C connector. The 
+type-c switch present between SoC and the connector is HD3SS3220 (from TI).
+
+  I think Dmitry's comment was that if it is 3.0, is it Type-C ? and if 
+it is Type-C, then the compatible written in the being 
+"gpio-usb-b-connector" would mean that there is a Type-B connector for 
+someone who looks at the DT. (Dmitry, Please correct me if I understood 
+the comment wrong).
+
+  I tried to push a series for adding a compatible to gpio conn driver 
+[1] to resolve this and explained the connection specifics to Dmitry [2] 
+and he suggested me to add a compatible for just the switch present on 
+qdu1000 idp.
+
+Dmitry, Krzysztof,
+
+I was looking into the code again and it turns out there is a driver 
+specific to HD3SS3220 switch [3] in linux already. I tried to check if 
+it can be reused here but that driver relies on I2C communication 
+between the SoC and the HD3SS3220 chip to get information on role 
+switch. But in QDU1000 IDP board, there is no I2C communication present 
+between SoC and the switch. Those lines have been cut off. The SoC only 
+knows about VBUS/ID pins (other than DM/DP/SS Lanes) and no other I2C 
+connections between the switch and the SoC. We still need to make use of 
+vbus/id pins to decide which role we need to shift into. Can we still go 
+ahead with using usb-conn-gpio driver by adding the compatible 
+(qcom,qdu1000-hd3ss3220) and using it in DT ?
+
+Let me know your thoughts on this.
+
+[1]: 
+https://lore.kernel.org/all/6f2df222-36d4-468e-99a7-9c48fae85aa9@quicinc.com/
+
+[2]: 
+https://lore.kernel.org/all/6f2df222-36d4-468e-99a7-9c48fae85aa9@quicinc.com/
+
+[3]: 
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/usb/typec/hd3ss3220.c?h=v6.9-rc2
+
+Regards,
+Krishna,
+
+
+
 
