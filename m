@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-16282-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16283-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5F338970B5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 15:25:12 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A72D8970BA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 15:25:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 18796B2604F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 13:25:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B83E3288A9A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 13:25:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 812941514DB;
-	Wed,  3 Apr 2024 13:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B977B15218F;
+	Wed,  3 Apr 2024 13:20:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VujnJ8vf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iJ+YzJ1F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A4114884B
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 13:20:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7245B152166
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 13:20:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712150418; cv=none; b=oBSbl977zXNjCV3Wl75VpULoTO7evFvXo3vZizXJX7GDs8nUeE89BYoFIU+/opkc6qKk/fcWJFU4FLH05rNGf23Cmk6LCefsh0AQUtUpDOlsXUCe7U7XizZzw7Q+zSVXewXLAJbHV9YuUNYq6pDwaP0OHcYEDshTd5JW4EecZkE=
+	t=1712150421; cv=none; b=mmmKhQhDYttrZBoqjtU+9nyB0Gd3eizgURnnZ2imx3/HtRQOIN7x5JEsRClvINttbSD7L472qZsQHg+TDzwnxX0ALWGTgx93vd9LPu94SvCgEpYlNPV41QklyTwvRlCDUby9X5oDX52FtRhDGkF/mCdjhOaiBKcUb1X3DgzGFuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712150418; c=relaxed/simple;
-	bh=j+6n+26l0q+cbh2OD40qdoIYeb8lwUxF6fcV5G1Psvs=;
+	s=arc-20240116; t=1712150421; c=relaxed/simple;
+	bh=QMLyC7z7wrC4cQg2eqM+Dfe+kl12AbyhXTxgQxg+dJQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aEeYMnmZCkAowhfAq56DfwMhhnDZCfHmTnwT9ikM0+PMuvGLCX53lbXzNaL4hs6CbgC3ZwgdIu5JEHuG/1gdIZ5Tul+Qa4h7ku6+jNs3EZK/jdqPJN7CWco8SR6wwDhoirmVBs1TDv4Xsf09nXsJqL0x3EzrEK3S0nOLAv0CP/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VujnJ8vf; arc=none smtp.client-ip=209.85.210.174
+	 In-Reply-To:To:Cc; b=Isv3SwWIqJgB/WpmQPY70vBbXRCOlJPVvo8MBTUKhogaB7eM5fhICB8jl0sIHiz0gEj5Qe30ynPv4TxvPIo8tMizisB12s+6P2OX9XZ0sz1llm0IMPQE/tAN2c0l6G5FVsaE5sPhvmf8MPg1pkgtsHzpMsu0gyIYkSlZKTgtyQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iJ+YzJ1F; arc=none smtp.client-ip=209.85.210.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-6eaf1a3e917so3509541b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 06:20:16 -0700 (PDT)
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-6eaf1005fcaso3007795b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 06:20:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712150416; x=1712755216; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1712150419; x=1712755219; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=kiJ0rq1wYp29cnToRCHnS5bZk38GY9Yz1Z7mmaTzhfM=;
-        b=VujnJ8vfOhzdcih+xDCcWwoX5v5pw1f+2ZWtznP+rhELVZ4lk21fGr6buOnA8/3JT6
-         EJpSPzEP0GlFZ6M8d3JFIDf8ogrBhGnXl/W4B+fEbxnNGnAq70KXHWDtzvGNOHBoywcm
-         tQYNdZUFE6L9uAN05qlNJ9oKhG7Gm85Bp0FQMkf4haIhOcCMyQXVYy/DXcox7UyWDtA3
-         li+Bgau0BmmWcRp9oUCydszoW5oh5AQ30SvAcLIs1lyiW2F0+kEE2CLN4Vioo4usfvfJ
-         +TqzpqAHxBV1D7LDGo83NQe6WxJGWkNVO6fMBCw/UjaEYJnnzzYx8fNhqBoAqan0JYZC
-         TrVg==
+        bh=KwQhYX2Mz1rNOgNCjbLm4vj/pn57/J/0LzejU91ZMaQ=;
+        b=iJ+YzJ1FnMTnDmmgSP+pBevtno1GL2cOETABb8IZDK3WtbxI2F5HAQNat8wZ0Z08Cj
+         GlgfpFSI87gT5r9iV8b95Fn/8Jd83EfRVtuT49Ixsv8JhSQPz2WWWwWywoyUxBEET35n
+         BHenb1XxJ/uD/tvhMScVHHbeHq3CNIZiuHHutjL8ro3pYV0EnBAf2g2EltTh7fPPqtZR
+         abpg5hXaR0cJNVkD1ftYGKmu+qTKZa5PfackTYsD1FR0vpvCV/rgvCx2IMBbfQK6PlUK
+         q+aJCV6jcocLsMaQxVLoE2pgd2roqIAj2XtyPARozxpFpeOorancxBXWXXUsHgxIZZ7t
+         YXxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712150416; x=1712755216;
+        d=1e100.net; s=20230601; t=1712150419; x=1712755219;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=kiJ0rq1wYp29cnToRCHnS5bZk38GY9Yz1Z7mmaTzhfM=;
-        b=aS7N0NtmDJmChVvz//b30gppunvAKY2l4WN8l83IfmXFKhWrSI73BLv2h0Sr5SdHn9
-         30hqZ27zr5j2xMAWBkPkvX0dvhziq/OLGm/MqB2vsgz/u0599QKsBnu0RMzgNjiZ1HTf
-         k1BlGDXY+S6OMzKezHY3TF3B3SeOOMwR5Xg58Ox602Ymoit9OW3POyH8cnhNGJrTbprt
-         E/adXGHRD1tcMu0QRA3KVwMtOP/x1Hkw+Q+lIX/6W1lAUFkhH2i6Te0UT3GXP48VRFcJ
-         PNRwhCb9MYMa/Igfs7c+XB/7aoeUDfyRoV/qmTGYQWN4tu4gd2JO6H81AL6I2U819gDA
-         1oHQ==
-X-Gm-Message-State: AOJu0YwoTmrejoVTJbU+di+kkUKZnJPPl49rqQeuO58pYfS/T/6286xK
-	GfJ9eN5FA5an2sHqwZ1Ct+HDe61/OHuQ4ceY9/tVu1gCl0xpeEZcPLGCPyLsKw==
-X-Google-Smtp-Source: AGHT+IE7wDcHnJkQ3Esm+caCHVovy19JtL5ItMSOUPXTnLu5fXc7L9qV6s9kjB+LTIyAhZX8T8yxcg==
-X-Received: by 2002:a05:6a00:2182:b0:6eb:1d6:6c8c with SMTP id h2-20020a056a00218200b006eb01d66c8cmr9760926pfi.30.1712150415952;
-        Wed, 03 Apr 2024 06:20:15 -0700 (PDT)
+        bh=KwQhYX2Mz1rNOgNCjbLm4vj/pn57/J/0LzejU91ZMaQ=;
+        b=o58Z+n6wtrmA8H2MH3LDDPD/gN8Q9dTczffP0uHpENjRJKO1OtBB2mGeDDUeFbxZSV
+         xeSwTEg+V2gf4z5XZDFhZAG5mlG5/DWs9h8+ggjDtJaLPRUrFnGPzb2RePm3cGfoVWGB
+         e2lU7pKwjJ90pQ1mRejejZJ3WV2h6y6NOy2Inzidbq/6EqIEgZC7Lln45ASyiC/+/twc
+         lPU1N/EBOvYuccHWlJrNV9sJLz21Gjq0uryxRZwNIpWwtJ0TjsYb74HbkpIVmD6r8XtJ
+         haYvx3Ac0HyyR3SvukdyrtUrYlGlD9+Uv0oLC8H86Ls4s8hPKZjqiHaBIsi4wgeJBfMM
+         rBPA==
+X-Gm-Message-State: AOJu0YznoFkGtY69ATyhRDA7+oNcZszxryg7ZkQh8Ii9x91nms82w/7x
+	lus+xWQoO3DPbyJHplm5aDq7TkooTHUHuhry0UncoRs1Zq4HtllphAfOlk+OyA==
+X-Google-Smtp-Source: AGHT+IGpQCGkn5PhcSonCc4+J0cwxJctvKaSt5maet/T2RTVHwqbp8l0HU6o47fJUh/H4LTbscQw3g==
+X-Received: by 2002:a05:6a00:8e06:b0:6e6:8c49:f2f6 with SMTP id io6-20020a056a008e0600b006e68c49f2f6mr16252144pfb.24.1712150418636;
+        Wed, 03 Apr 2024 06:20:18 -0700 (PDT)
 Received: from [127.0.1.1] ([103.28.246.48])
-        by smtp.gmail.com with ESMTPSA id r1-20020aa78441000000b006e69a142458sm11640518pfn.213.2024.04.03.06.20.13
+        by smtp.gmail.com with ESMTPSA id r1-20020aa78441000000b006e69a142458sm11640518pfn.213.2024.04.03.06.20.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Apr 2024 06:20:15 -0700 (PDT)
+        Wed, 03 Apr 2024 06:20:18 -0700 (PDT)
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Date: Wed, 03 Apr 2024 18:50:03 +0530
-Subject: [PATCH v2 1/2] scsi: ufs: qcom: Add missing interconnect bandwidth
- values for Gear 5
+Date: Wed, 03 Apr 2024 18:50:04 +0530
+Subject: [PATCH v2 2/2] scsi: ufs: qcom: Add sanity checks for gear/lane
+ values during ICC scaling
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240403-ufs-icc-fix-v2-1-958412a5eb45@linaro.org>
+Message-Id: <20240403-ufs-icc-fix-v2-2-958412a5eb45@linaro.org>
 References: <20240403-ufs-icc-fix-v2-0-958412a5eb45@linaro.org>
 In-Reply-To: <20240403-ufs-icc-fix-v2-0-958412a5eb45@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -87,79 +87,51 @@ To: Bjorn Andersson <andersson@kernel.org>,
  "Martin K. Petersen" <martin.petersen@oracle.com>
 Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, 
  linux-kernel@vger.kernel.org, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
- Amit Pundir <amit.pundir@linaro.org>
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2646;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1242;
  i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
- bh=j+6n+26l0q+cbh2OD40qdoIYeb8lwUxF6fcV5G1Psvs=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBmDVeJCKwdJUlxk65U7o9cYZS24i3ff7Owd3w8U
- d0xOoojvJ+JATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZg1XiQAKCRBVnxHm/pHO
- 9SpGCACbtNlDcvhflimXP3tOYiQh/JDHWSOo/zU3VL5Wj1OxuGg7HdyL18xxJuK1CGI8O+BoiXZ
- +kau14L3lkLRyAtCEpTMxxQJ7IuyX2RzPAQKn5FAep0EE8gYenRDgDZpZDUiS93mtC/OgDDDTQz
- vh1yFHp2s8CmAGwTw8N9Di1owAjzE6Soiv0YF0fygAikyVXnP6p5xnTYIV3At0aKwPrhamiTe5o
- wwyr2XV+CHPJSQOUO8hZlxPDrcePO8Rbxt0QtsnpYgx2Hg1KScY0EwYB5Am8OQrJHLeZ4EOW+9c
- iJfr4WLtrAjVTIBvzeL7kxxj9OixWFl+vLpAr5D/uhPpMlp5
+ bh=QMLyC7z7wrC4cQg2eqM+Dfe+kl12AbyhXTxgQxg+dJQ=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBmDVeJkgfnxTwqt6pwLJcFG/ywaqATm2PYnOmoZ
+ 8RiTomJs4KJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZg1XiQAKCRBVnxHm/pHO
+ 9WqlCACHiwIXIUVyW6PYemRimdhM9VGxKicBAzA1Xm4P8Jt7Xrv2D/sBmrrRoQ2ogK400Qpg9/G
+ zyg6R9fpCortdbyi1rWC8JVtgeZGaM1GB1XeDq6Mdrtjt2nO41OaktIhw+oqtfSotEyBJCw13jb
+ ItvI64Qq6igYPNiMd5WdO9Imo0yJuVQJ9tPcknCAHmzzWqCDDg7HaO03OJEjQf+O4KoU2WS2AOs
+ 6pttNv6l5wDwvSzq19R1TG/eypF21m0hvxKRibAiKXO2TzqFtFndSI46tAIJd9zwxt3Kqx8pz/F
+ bzI75lQksPSBnACjD+eg0zC78/FKcKIJFv622CeEIvRXX8nf
 X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
  fpr=C668AEC3C3188E4C611465E7488550E901166008
 
-These entries are necessary to scale the interconnect bandwidth while
-operating in Gear 5.
+Let's add the checks to warn the user if the ICC scaling is not supported
+for the gear/lane values and also fallback to the max value if that's the
+case.
 
-Cc: Amit Pundir <amit.pundir@linaro.org>
-Fixes: 03ce80a1bb86 ("scsi: ufs: qcom: Add support for scaling interconnects")
-Tested-by: Amit Pundir <amit.pundir@linaro.org>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/ufs/host/ufs-qcom.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/ufs/host/ufs-qcom.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 8d68bd21ae73..696540ca835e 100644
+index 696540ca835e..79b4ce05f7c5 100644
 --- a/drivers/ufs/host/ufs-qcom.c
 +++ b/drivers/ufs/host/ufs-qcom.c
-@@ -47,7 +47,7 @@ enum {
- 	TSTBUS_MAX,
- };
+@@ -696,6 +696,16 @@ static struct __ufs_qcom_bw_table ufs_qcom_get_bw_table(struct ufs_qcom_host *ho
+ 	int gear = max_t(u32, p->gear_rx, p->gear_tx);
+ 	int lane = max_t(u32, p->lane_rx, p->lane_tx);
  
--#define QCOM_UFS_MAX_GEAR 4
-+#define QCOM_UFS_MAX_GEAR 5
- #define QCOM_UFS_MAX_LANE 2
- 
- enum {
-@@ -67,26 +67,32 @@ static const struct __ufs_qcom_bw_table {
- 	[MODE_PWM][UFS_PWM_G2][UFS_LANE_1] = { 1844,		1000 },
- 	[MODE_PWM][UFS_PWM_G3][UFS_LANE_1] = { 3688,		1000 },
- 	[MODE_PWM][UFS_PWM_G4][UFS_LANE_1] = { 7376,		1000 },
-+	[MODE_PWM][UFS_PWM_G5][UFS_LANE_1] = { 14752,		1000 },
- 	[MODE_PWM][UFS_PWM_G1][UFS_LANE_2] = { 1844,		1000 },
- 	[MODE_PWM][UFS_PWM_G2][UFS_LANE_2] = { 3688,		1000 },
- 	[MODE_PWM][UFS_PWM_G3][UFS_LANE_2] = { 7376,		1000 },
- 	[MODE_PWM][UFS_PWM_G4][UFS_LANE_2] = { 14752,		1000 },
-+	[MODE_PWM][UFS_PWM_G5][UFS_LANE_2] = { 29504,		1000 },
- 	[MODE_HS_RA][UFS_HS_G1][UFS_LANE_1] = { 127796,		1000 },
- 	[MODE_HS_RA][UFS_HS_G2][UFS_LANE_1] = { 255591,		1000 },
- 	[MODE_HS_RA][UFS_HS_G3][UFS_LANE_1] = { 1492582,	102400 },
- 	[MODE_HS_RA][UFS_HS_G4][UFS_LANE_1] = { 2915200,	204800 },
-+	[MODE_HS_RA][UFS_HS_G5][UFS_LANE_1] = { 5836800,	409600 },
- 	[MODE_HS_RA][UFS_HS_G1][UFS_LANE_2] = { 255591,		1000 },
- 	[MODE_HS_RA][UFS_HS_G2][UFS_LANE_2] = { 511181,		1000 },
- 	[MODE_HS_RA][UFS_HS_G3][UFS_LANE_2] = { 1492582,	204800 },
- 	[MODE_HS_RA][UFS_HS_G4][UFS_LANE_2] = { 2915200,	409600 },
-+	[MODE_HS_RA][UFS_HS_G5][UFS_LANE_2] = { 5836800,	819200 },
- 	[MODE_HS_RB][UFS_HS_G1][UFS_LANE_1] = { 149422,		1000 },
- 	[MODE_HS_RB][UFS_HS_G2][UFS_LANE_1] = { 298189,		1000 },
- 	[MODE_HS_RB][UFS_HS_G3][UFS_LANE_1] = { 1492582,	102400 },
- 	[MODE_HS_RB][UFS_HS_G4][UFS_LANE_1] = { 2915200,	204800 },
-+	[MODE_HS_RB][UFS_HS_G5][UFS_LANE_1] = { 5836800,	409600 },
- 	[MODE_HS_RB][UFS_HS_G1][UFS_LANE_2] = { 298189,		1000 },
- 	[MODE_HS_RB][UFS_HS_G2][UFS_LANE_2] = { 596378,		1000 },
- 	[MODE_HS_RB][UFS_HS_G3][UFS_LANE_2] = { 1492582,	204800 },
- 	[MODE_HS_RB][UFS_HS_G4][UFS_LANE_2] = { 2915200,	409600 },
-+	[MODE_HS_RB][UFS_HS_G5][UFS_LANE_2] = { 5836800,	819200 },
- 	[MODE_MAX][0][0]		    = { 7643136,	307200 },
- };
- 
++	if (WARN_ONCE(gear > QCOM_UFS_MAX_GEAR,
++		      "ICC scaling for UFS Gear (%d) not supported. Using Gear (%d) bandwidth\n",
++		      gear, QCOM_UFS_MAX_GEAR))
++		gear = QCOM_UFS_MAX_GEAR;
++
++	if (WARN_ONCE(lane > QCOM_UFS_MAX_LANE,
++		      "ICC scaling for UFS Lane (%d) not supported. Using Lane (%d) bandwidth\n",
++		      lane, QCOM_UFS_MAX_LANE))
++		lane = QCOM_UFS_MAX_LANE;
++
+ 	if (ufshcd_is_hs_mode(p)) {
+ 		if (p->hs_rate == PA_HS_MODE_B)
+ 			return ufs_qcom_bw_table[MODE_HS_RB][gear][lane];
 
 -- 
 2.25.1
