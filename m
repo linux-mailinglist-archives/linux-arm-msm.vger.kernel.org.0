@@ -1,137 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-16294-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16295-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8872F897206
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:12:12 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 44A6489720D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:12:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B9C481C25BB6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 14:12:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F1F3F28C0C2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 14:12:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A83A8148FFA;
-	Wed,  3 Apr 2024 14:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3766148FFA;
+	Wed,  3 Apr 2024 14:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Lo/tyxa6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="N5KuUDxP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6CF43AB4
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 14:12:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E872C148308
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 14:12:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712153529; cv=none; b=nNqqhHzCi+4QfSmprzO4US/KVHhyWJQUwNUyVxnYnlnvomjGw7IzVei3Ls2F8pKRcD5pUV5OepuaEckSlMyjZLn95NJMq6WMCEl7YQrtPIUrgKNyflM87GyOCAUh80bY1IdLPY1jB0Ayw+wvJC4uWqWl02GjAzQegOfeDQDfTBc=
+	t=1712153564; cv=none; b=DpwnmRYBVWLguqRzrexJlRYrkS1dq2VBUEk2IF60kKJGsWHepCLC66RkdmD8TKrICt8+vhLgjJF0/QvpDv3nMR3mgU8nH8N09MPXipKNT7TrZJKfUHKhRkiurmZ/ZpVQaKI8N+ZOtYcg/Bwx0mxmiTzBsWK7RfFXtkp1JwLHo3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712153529; c=relaxed/simple;
-	bh=qCIolQRct0+IbGGd6jjPbW1ixYlGS5R/m+dU02mINLc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ebODO0XJS0lUsgCDvJ/5DDxnQaVU4xGJkmDhOdf35yeU8uPa6aFmXNOIpfGMozYpnQq9pu4F34bQGO5kpOS4nxzploTsEx+n1RUSegOUgFwLfue48SX3g8d0rO52V1bXquW4DXaReZnpL2fWdRn262aR7T1QPO8+kShZsjy4pQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Lo/tyxa6; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1712153527;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=r8o2fhiLcGwGsiCE3v1KVrR6VF/PZtpQmnAxVeKoH1c=;
-	b=Lo/tyxa6QuY93qBcmkitP34oUd//GzJ4Q7kx5TgXIZaiH/2t5qrAfv4NMyBckchG50SRXw
-	pTeoqcQFjG54DDLMISx0oImyMIBovNNbjEb0YYVUmNImyUx3KmkP66gEvQqNoTV0lYuOFU
-	69Ps4nvTdolzmOHmVO4MUn5n6jf0E2k=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-558-CMggTlKSO-2KfzRcpCQ1Hg-1; Wed, 03 Apr 2024 10:12:06 -0400
-X-MC-Unique: CMggTlKSO-2KfzRcpCQ1Hg-1
-Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-69654139bd5so62095506d6.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 07:12:05 -0700 (PDT)
+	s=arc-20240116; t=1712153564; c=relaxed/simple;
+	bh=L95afQaQo0dSJzbw6btPTwqY5s5R0D8EwWHW4Vk9aw8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=R9fu92kjVw6KCj8qldRZCcPaoKLCcSLko5fvTGHMNSmP3w3g5hsIYJ3uVDsMy7ZU7Src9ETZaC0Rv5gcNlhkPSKM4LMXA0YkPIJa8jUsHXmLKjrtjUdr0ocU9/3hyMLyfHtQC5rTjC2yY6adn/Qu93gvgsWMC/HDaPeagJTVh9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=N5KuUDxP; arc=none smtp.client-ip=209.85.219.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-dd02fb9a31cso5568364276.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 07:12:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712153562; x=1712758362; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=fwnBjxEZZcPm2O8OkmbkyXZ2vtpbjoy3qG8K3meKtNY=;
+        b=N5KuUDxPeTtvOETGQoXOjnUukdxRjSzmCSAN07612FebSllAPZ3iFBx9irggn2t1Yc
+         DNz2YC6sAMo3paj9C14gkiAeG+A/rrSaAfC2C8AwZd4i48xgTQLNqXiJf8tYhrR0iyj2
+         QI3Xzz84X7yITlQHtVPdSlSIVHNlPzb4ilb0An645AoUsinVBfmKZKJVYgvzeoS1jHZk
+         bzg4RwKeHx58iDz7oROX3moC3GN7R4DWN2olsyGrwJE09QHheXtS4HBunUnhNwuIMhb6
+         WZWyKXD9+pheRL7vOkxoBNl34p7N76vGXj8ZK/vqhfKjhaUgEJ2tbBrZq8AlNS1njE6h
+         DaWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712153525; x=1712758325;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=r8o2fhiLcGwGsiCE3v1KVrR6VF/PZtpQmnAxVeKoH1c=;
-        b=C6mLHQR+61xTuIEx5xl8AlIC6kzRzpwNJbl4CFhY8Owyvj3gZn9pwsvZEPTK/HX7hi
-         fxvAHWVu8dIakCbuSqapCb2v2OdaOa21VXVM2NY2+QoVaKoJOChjiea9GMUdk0zo4aag
-         UI+PF2vJlRXvwn5DLc3F5elFXq93ogKbn5vxUjw8iK5TJg76Pm0VttP7zxzpEXXu0CqO
-         Uxu8aDbhNXm83zM1fP87IH9rZD1NAOlfhGLUT3EMGNWMKahfYvr0R/AYKKIEuCe7CTKZ
-         02+tIG1SDNSzs0uj0F1a0x+ISwocbHBY6L576IA+CZ5EhHd3Ds18yew77dDTtU9Hnsaf
-         3KKQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW+FF5ZNgOgxBmKtMrLoU/zwdHO8909FjB1cLvfJOGou3kOOHWGAenikyjFJAchg4aimY1PxAM/ZiUIZPF0im5FA1yWCwhdZRqXduAm0A==
-X-Gm-Message-State: AOJu0YyzD0YlfotltmlBRkBf4yAeMNKCSsbPQo7c883Ta9ZnPphetFI6
-	M0VwHpcT0dO1sN8Squ5bTI1m5PM5mGmetH6OpCjL/K7jueRJxzZ8QTop+rd2BxZuEb/xOCOMk0k
-	8I4nTvqgxyO+TNy9ZOcM3eYZAoQCFmOxrZpnEC/tps6RzbOvmZN/cS0lCWsvDkXc=
-X-Received: by 2002:a0c:aad1:0:b0:699:1ff2:9a09 with SMTP id g17-20020a0caad1000000b006991ff29a09mr4124320qvb.24.1712153525082;
-        Wed, 03 Apr 2024 07:12:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEmph9CKAQHSAqdnGjo5kwoTYNhHOASdv2YNX6Z0heyycssEot4MPfxw4tGswUcwCvzRjjiGg==
-X-Received: by 2002:a0c:aad1:0:b0:699:1ff2:9a09 with SMTP id g17-20020a0caad1000000b006991ff29a09mr4124299qvb.24.1712153524689;
-        Wed, 03 Apr 2024 07:12:04 -0700 (PDT)
-Received: from x1gen2nano ([2600:1700:1ff0:d0e0::33])
-        by smtp.gmail.com with ESMTPSA id 11-20020a05621420cb00b006968a6fb010sm6531118qve.91.2024.04.03.07.12.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Apr 2024 07:12:04 -0700 (PDT)
-Date: Wed, 3 Apr 2024 09:12:02 -0500
-From: Andrew Halaney <ahalaney@redhat.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, "James E.J. Bottomley" <jejb@linux.ibm.com>, 
-	"Martin K. Petersen" <martin.petersen@oracle.com>, linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] scsi: ufs: qcom: Add sanity checks for gear/lane
- values during ICC scaling
-Message-ID: <ju2shpvxlc5tkazvclggdrqtfxa2r7yqdz7i5lc4hpjlfw7wvg@fp34s6mvncm3>
-References: <20240403-ufs-icc-fix-v2-0-958412a5eb45@linaro.org>
- <20240403-ufs-icc-fix-v2-2-958412a5eb45@linaro.org>
+        d=1e100.net; s=20230601; t=1712153562; x=1712758362;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fwnBjxEZZcPm2O8OkmbkyXZ2vtpbjoy3qG8K3meKtNY=;
+        b=uNv3tmTh6BOxPgSzrrTttyxVZ63SXBKQX59aEZXgBzDlJumXX2yYKOa9UkHgKy4H38
+         1r+1wNuoxfb8l8bKeHjp5cdGbGBkS9PyX3krjwaV7muFPM0Cg0GZtHSDip0XEyWdtwKA
+         yAx+7pNej++Ta17H/OZQ68qdXnJTP/3CSsNMGOSN2r7zIEPptWkNYZqSf0sKDQscRJCf
+         GZfHHbLaBLNWxpy2NYkg4bYA1Vw+UWMlMBBwONEj3fxQR1MGYiLDZLW6Kzohy4tIotNF
+         yoRYx5nqTE4GuEVxbrS7y8vjLOG6SPpKe8N/opZNi32FVNe5L1ILUVeoSik1i+uEQe2f
+         Txcw==
+X-Forwarded-Encrypted: i=1; AJvYcCVouo3omC764xOray8Cb5yBgjpuU/fZCdUxwu0drHds1Qal1bMAet24mi19ngihoRVHSq+JbSmuhHJ7uf6sdJAQLWgnHZGGeBrIQBelxw==
+X-Gm-Message-State: AOJu0YxupAri2PMp5EL9JGB2JXua+iUgEcu5MT9Hl5e4Dgd0hVNDyMNb
+	JpVlBzJtWQFKE89MrUifyr125LNb7C12rkdFD1OvZPeAoOgdi2nevYSKmiLQZXaOs2vhRadh/BO
+	oU2//ME9La60UBgptOEtG3mvo5puH2aK3HV4CGw==
+X-Google-Smtp-Source: AGHT+IFdlFDZF9JLA4BV3VvkLV2yX2UyfubxSqjpKX9avJfAKmAztGCS242oKGU4jwHzDnC9jCvS8z+XSH1kr3q9Uek=
+X-Received: by 2002:a05:6902:82:b0:dcc:140a:a71f with SMTP id
+ h2-20020a056902008200b00dcc140aa71fmr13245031ybs.60.1712153561979; Wed, 03
+ Apr 2024 07:12:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240403-ufs-icc-fix-v2-2-958412a5eb45@linaro.org>
+References: <fd26ce4a-a9f3-4ada-8d46-ed36fb2456ca@freebox.fr>
+ <5cdad89c-282a-4df5-a286-b8404bc4dd81@freebox.fr> <252618e8-9e80-4774-a96c-caa7f838ef01@linaro.org>
+ <502322f1-4f66-4922-bc4e-46bacac23410@linaro.org> <0ca1221b-b707-450f-877d-ca07a601624d@freebox.fr>
+ <CAA8EJppeREj-0g9oGCzzKx5ywhg1mgmJR1q8yvXKN7N45do1Xg@mail.gmail.com> <91031ed0-104a-4752-8b1e-0dbe15ebf201@freebox.fr>
+In-Reply-To: <91031ed0-104a-4752-8b1e-0dbe15ebf201@freebox.fr>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 3 Apr 2024 17:12:29 +0300
+Message-ID: <CAA8EJpooJLbV+nVWedru=r6fascd8ZxKumiMm_iyzzJwyQ-tig@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: msm8998: set qcom,no-msa-ready-indicator
+ for wifi
+To: Marc Gonzalez <mgonzalez@freebox.fr>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Kalle Valo <kvalo@kernel.org>, 
+	Jeff Johnson <quic_jjohnson@quicinc.com>, ath10k <ath10k@lists.infradead.org>, 
+	wireless <linux-wireless@vger.kernel.org>, DT <devicetree@vger.kernel.org>, 
+	MSM <linux-arm-msm@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>, 
+	Bjorn Andersson <andersson@kernel.org>, Jami Kettunen <jamipkettunen@gmail.com>, 
+	Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Apr 03, 2024 at 06:50:04PM +0530, Manivannan Sadhasivam wrote:
-> Let's add the checks to warn the user if the ICC scaling is not supported
-> for the gear/lane values and also fallback to the max value if that's the
-> case.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+On Wed, 3 Apr 2024 at 16:05, Marc Gonzalez <mgonzalez@freebox.fr> wrote:
+>
+> On 02/04/2024 17:55, Dmitry Baryshkov wrote:
+>
+> > On Tue, 2 Apr 2024 at 18:31, Marc Gonzalez wrote:
+> >
+> >> So, if I understand correctly, I take this to mean that I should:
+> >>
+> >> 1) DELETE the qcom,no-msa-ready-indicator boolean property,
+> >> 2) ADD a "qcom,msm8998-wifi" (name OK?) compatible,
+> >
+> > I'd say, this is not correct. There is no "msm8998-wifi".
+>
+> Can you explain what you mean by:
+> 'There is no "msm8998-wifi".' ?
+>
+> Do you mean that: this compatible string does not exist?
+> (I am proposing that it be created.)
+>
+> Or do you mean that: "msm8998-wifi" is a bad name?
 
-Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+I mean, it is qcom,wcn3990-wifi, because the chip is wcn3990.
 
-> ---
->  drivers/ufs/host/ufs-qcom.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
-> 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index 696540ca835e..79b4ce05f7c5 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -696,6 +696,16 @@ static struct __ufs_qcom_bw_table ufs_qcom_get_bw_table(struct ufs_qcom_host *ho
->  	int gear = max_t(u32, p->gear_rx, p->gear_tx);
->  	int lane = max_t(u32, p->lane_rx, p->lane_tx);
->  
-> +	if (WARN_ONCE(gear > QCOM_UFS_MAX_GEAR,
-> +		      "ICC scaling for UFS Gear (%d) not supported. Using Gear (%d) bandwidth\n",
-> +		      gear, QCOM_UFS_MAX_GEAR))
-> +		gear = QCOM_UFS_MAX_GEAR;
-> +
-> +	if (WARN_ONCE(lane > QCOM_UFS_MAX_LANE,
-> +		      "ICC scaling for UFS Lane (%d) not supported. Using Lane (%d) bandwidth\n",
-> +		      lane, QCOM_UFS_MAX_LANE))
-> +		lane = QCOM_UFS_MAX_LANE;
-> +
->  	if (ufshcd_is_hs_mode(p)) {
->  		if (p->hs_rate == PA_HS_MODE_B)
->  			return ufs_qcom_bw_table[MODE_HS_RB][gear][lane];
-> 
-> -- 
-> 2.25.1
-> 
-> 
+> And these strings in ath11k:
+>
+> Documentation/devicetree/bindings/net/wireless/qcom,ath11k.yaml:      - qcom,ipq8074-wifi
+> Documentation/devicetree/bindings/net/wireless/qcom,ath11k.yaml:      - qcom,ipq6018-wifi
+> Documentation/devicetree/bindings/net/wireless/qcom,ath11k.yaml:      - qcom,wcn6750-wifi
+> Documentation/devicetree/bindings/net/wireless/qcom,ath11k.yaml:      - qcom,ipq5018-wifi
 
+I must admit, I don't know the IPQ product naming (it well might be
+that it is both the name of the SoC and the WiFI SoC).
+
+>
+> > I'd say, we should take a step back and actually verify how this was
+> > handled in the vendor kernel.
+>
+> In our commercial product, we use the ath10k driver in the vendor kernel (v4.4 r38-rel).
+
+I see.
+
+> It looks like Jeff has already performed the code analysis
+> wrt vendor vs mainline (including user-space tools).
+
+From his message it looks like we are expected to get MSA READY even on msm8998.
+
+-- 
+With best wishes
+Dmitry
 
