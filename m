@@ -1,63 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-16213-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16214-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BCAB689669B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 09:36:53 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 02FA08966AE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 09:38:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5AB871F26EFF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 07:36:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ADB8328A29C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 07:38:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFF8A5FB8D;
-	Wed,  3 Apr 2024 07:33:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09A656CDBE;
+	Wed,  3 Apr 2024 07:35:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iV76gXcb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YDOWMJ4Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32FF082D7C;
-	Wed,  3 Apr 2024 07:33:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B946CDBF
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 07:35:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712129618; cv=none; b=VekOKK46ISUV0z0exHFGBu2X9tMI/3JSEDzrf73VBa7s1FsuzfzjLKeC0nhG1ZqgZbTfSr84ao2qhxPFmhcRuh2ibl7G7/ErIvSpiv82sK/MW5jOvQp+ZouHpGwaKuuZ+a2AA6mG1Wa6LlTxXyWaiq7Ilne4H/W2nuVhco/8Vvs=
+	t=1712129735; cv=none; b=IjUXl9cVV7/H75Qj50eZIohIA/yyyItb/bU+9kpl/NHDojCzQfVj1ySm5vArArvMCO1kYd0lVt8fYpwkhscDjStYlJbvyD3AyQAojkwnGTO00GO28VZq6wNUMcOLVE/yQlQLN06F4eT49cbe4FdMAYPKNOBzqzrL6jt51G2wMiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712129618; c=relaxed/simple;
-	bh=A/OR6DO71iCj8J60e0zgSTpWmgsrZqjY3mHCSsVS3Y8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=dVAL+lr3z2FNzy5PXfaRYajskUpU8KbBIDtgFeSIMjYJQts5kvyMy1V4jQ7AZrQxbQ2dlTOkROxexQIbMVNU521NSj3hnP/Bedc0Ons4rFN5E57Rc5LaQuEcjS4dxOeyt5NNE+Pb2k3VpDAFkMH1OjfwLJOw0/8aM59w1qAsvIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iV76gXcb; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4334dt9q013313;
-	Wed, 3 Apr 2024 07:33:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=+Jw9NbToDRM5ffmq/HmPeRrtpdoCyhAFrW68RwEoAh8=; b=iV
-	76gXcbODyTAEhYpCAF3yVID3NTVT6vNT3VFf4qT0sd8UbZCDsck0OlfNxNpfIkFP
-	QkV/h95eyGtvqNV9VKIrtpHWgh3/Kx8dLNQqbcv9VXiD5VVDR7iU1MdMZ+99ktuf
-	+LfXag/eXd9uVSduXaBWxZJorYFacTmS5XBzNNYfV1v2jNz1r+n0eXwbbJgIX+Z/
-	gmaJL+ujz8uhsMy9Kk4KRzQPDRdPW7HtgtF3iueFn9nAHY6VZMMmPDJ3YMPKdnJI
-	ev2WbsOaJlGZ8nkrX5CHyasnlhcxWjR+Ai1VyDl5Pqe94SjLBEDBuRhpJPadLnpj
-	8/Swf/53OtItQlswyMXw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x8xrx0er5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 03 Apr 2024 07:33:31 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4337XUI1021948
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 3 Apr 2024 07:33:30 GMT
-Received: from [10.216.63.221] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 3 Apr 2024
- 00:33:24 -0700
-Message-ID: <c30811e6-2a1e-4b26-8b94-7c67000b8568@quicinc.com>
-Date: Wed, 3 Apr 2024 13:03:21 +0530
+	s=arc-20240116; t=1712129735; c=relaxed/simple;
+	bh=x4a72RZmGjZKZGDt91umGicCKihZ9hBwXB13LJV9dto=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=bJVfsPEDb1oLs/EFfALDyG6c04Y+gvLomNRirmLRS6Qhc5rMpKk9TYtjb5nlmh2/S69MFxvjTu/m/TejQ1dU73vDfL2Q8Of80yzOh+l5XkDTDiHHfXmJ31TIGn6OHTqv34X0u/F2DB5z9gKIuVCl+744w3RemVBG/A4xKst6Drw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YDOWMJ4Z; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-41624c40b44so1005775e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 00:35:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712129731; x=1712734531; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Zk6yUkP6W1rULwKkjyUHjYr2nx3DKKi0BVPn7REXL4U=;
+        b=YDOWMJ4Z6RoW2CMue0O84bOIE+0CFMRCRNe6MJWeFNfMAYUxfihVtulPjWgrFZCQN+
+         3C92qEemeOo61JMEvDrWDarJuJnF25gJ7M4MvJwgu+6uPeg0aKgo6J/j+pQsJpJ/3fgn
+         kjHw9aya0sLiTR1ykP5RHmnQ7xCWudedUAuWTbuxXt7OBwQfJnRjvt2YI8s5GlNuMDEM
+         rCVa12HDt4wNuNzZKWeh4pDCKJzv40paXu+soCc7xABvCXjBVINVuts+Lm/RnBvom6H8
+         j/pFBH+laqAHzv+C3FLKgE1wf5iKXk74PZwj9hjjK5zNCKXYvOzYqh0Nd28CgcWltCZ0
+         Ahew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712129731; x=1712734531;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Zk6yUkP6W1rULwKkjyUHjYr2nx3DKKi0BVPn7REXL4U=;
+        b=KIC7n1/sNaiGo2kN3PLWqVNyBbfjdWF0DSotvMX+h34ts7I+uxjAmiyXlS9eLsixbG
+         SYSbyweOYrQb7CSDQ2IZa29JvVHCIXC2hdO1957rvgzZaORRyvdmgY4IHqioRWrpemlM
+         Ibr5235ZBfZcQS7HX/Bx5wyEfXPzQk90EJ79t6SY4SYJsXp4jpaUiQpnz7F91f5MKq7V
+         IjOu0KIewnVZioKg45AuLKXtfJUQCm/iozAgHVNkKMdGz7jER6ktXyKeUBS9au7ugFVr
+         J55viUuByLw+dZpD+Hnov6HFgN7peVeFOaiSu3cz5LU0o+4cabx26HOMaliOEEjO+9QU
+         qbRA==
+X-Forwarded-Encrypted: i=1; AJvYcCXf+eH0i2YA1r7k5I5ZOr5iqUwfRF3cS5q/EKd8pdn8rdRupJPUifB2OlG2VRFmPt6vpan7FPgAbl9pdXEqEq2nWF5+2NOAMUMwhVEeig==
+X-Gm-Message-State: AOJu0YzGawv+LlPRIUibxWitr8DwcGXOIi0ef6tAtHQdO4fDMm66pK1e
+	8HXCx/bTtUIVl7NDIyOWrgV+hwr7DFi5VbLuOKt+pz3c8HR97ACb/3pwoDNnsPc=
+X-Google-Smtp-Source: AGHT+IHXvAP8cSVNeOWnJluu8rIyEeTJzOcu+0z22O8FJUnGbtq1azSw+RrgCvrNebeugbuXKrMsXA==
+X-Received: by 2002:a05:600c:3b26:b0:414:9455:85e with SMTP id m38-20020a05600c3b2600b004149455085emr3363419wms.25.1712129731067;
+        Wed, 03 Apr 2024 00:35:31 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:d6d:8d9b:bb47:c974? ([2a01:e0a:982:cbb0:d6d:8d9b:bb47:c974])
+        by smtp.gmail.com with ESMTPSA id k4-20020a05600c1c8400b00414807ef8dfsm20792252wms.5.2024.04.03.00.35.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Apr 2024 00:35:30 -0700 (PDT)
+Message-ID: <43819edb-d65d-4639-80e9-1f3a505c016d@linaro.org>
+Date: Wed, 3 Apr 2024 09:35:29 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,104 +78,107 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v18 2/9] usb: dwc3: core: Access XHCI address space
- temporarily to read port info
-To: Johan Hovold <johan@kernel.org>
-CC: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        "Bjorn
- Andersson" <andersson@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>,
-        Conor Dooley <conor+dt@kernel.org>, "Felipe
- Balbi" <balbi@kernel.org>,
-        "devicetree@vger.kernel.org"
-	<devicetree@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org"
-	<linux-arm-msm@vger.kernel.org>,
-        "linux-usb@vger.kernel.org"
-	<linux-usb@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>,
-        "quic_ppratap@quicinc.com"
-	<quic_ppratap@quicinc.com>,
-        "quic_jackp@quicinc.com"
-	<quic_jackp@quicinc.com>,
-        Johan Hovold <johan+linaro@kernel.org>
-References: <20240326113253.3010447-1-quic_kriskura@quicinc.com>
- <20240326113253.3010447-3-quic_kriskura@quicinc.com>
- <20240402233218.5kngtj56qellnrmo@synopsys.com>
- <39010f95-b08f-4a57-b3af-f34eb1069865@quicinc.com>
- <Zgz_3AspRRfYqOwZ@hovoldconsulting.com>
-Content-Language: en-US
-From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <Zgz_3AspRRfYqOwZ@hovoldconsulting.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v8 3/7] spmi: pmic-arb: Fix some compile warnings about
+ members not being described
+To: Abel Vesa <abel.vesa@linaro.org>, Stephen Boyd <sboyd@kernel.org>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+ Johan Hovold <johan@kernel.org>, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-mediatek@lists.infradead.org, devicetree@vger.kernel.org
+References: <20240402-spmi-multi-master-support-v8-0-ce6f2d14a058@linaro.org>
+ <20240402-spmi-multi-master-support-v8-3-ce6f2d14a058@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20240402-spmi-multi-master-support-v8-3-ce6f2d14a058@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 0TmoQqVEfHcWGL7ekMy2hSYiQF2HMnKF
-X-Proofpoint-ORIG-GUID: 0TmoQqVEfHcWGL7ekMy2hSYiQF2HMnKF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-03_06,2024-04-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
- spamscore=0 adultscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0
- phishscore=0 impostorscore=0 priorityscore=1501 mlxscore=0 mlxlogscore=875
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2403210001
- definitions=main-2404030050
 
-
-
-On 4/3/2024 12:36 PM, Johan Hovold wrote:
-> On Wed, Apr 03, 2024 at 10:54:25AM +0530, Krishna Kurapati PSSNV wrote:
+On 02/04/2024 14:07, Abel Vesa wrote:
+> Fix the following compile warnings:
+> 
+>   warning: Function parameter or struct member 'core' not described in 'spmi_pmic_arb'
+>   warning: Function parameter or struct member 'core_size' not described in 'spmi_pmic_arb'
+>   warning: Function parameter or struct member 'mapping_table_valid' not described in 'spmi_pmic_arb'
+>   warning: Function parameter or struct member 'pmic_arb' not described in 'pmic_arb_read_data'
+>   warning: Function parameter or struct member 'pmic_arb' not described in 'pmic_arb_write_data'
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>   drivers/spmi/spmi-pmic-arb.c | 5 +++++
+>   1 file changed, 5 insertions(+)
+> 
+> diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
+> index 9ed1180fe31f..704fd4506971 100644
+> --- a/drivers/spmi/spmi-pmic-arb.c
+> +++ b/drivers/spmi/spmi-pmic-arb.c
+> @@ -132,6 +132,8 @@ struct apid_data {
+>    * @wr_base:		on v1 "core", on v2 "chnls"    register base off DT.
+>    * @intr:		address of the SPMI interrupt control registers.
+>    * @cnfg:		address of the PMIC Arbiter configuration registers.
+> + * @core:		core register base for v2 and above only (see above)
+> + * @core_size:		core register base size
+>    * @lock:		lock to synchronize accesses.
+>    * @channel:		execution environment channel to use for accesses.
+>    * @irq:		PMIC ARB interrupt.
+> @@ -144,6 +146,7 @@ struct apid_data {
+>    * @apid_count:		on v5 and v7: number of APIDs associated with the
+>    *			particular SPMI bus instance
+>    * @mapping_table:	in-memory copy of PPID -> APID mapping table.
+> + * @mapping_table_valid:bitmap containing valid-only periphs
+>    * @domain:		irq domain object for PMIC IRQ domain
+>    * @spmic:		SPMI controller object
+>    * @ver_ops:		version dependent operations.
+> @@ -232,6 +235,7 @@ static inline void pmic_arb_set_rd_cmd(struct spmi_pmic_arb *pmic_arb,
 >   
->>>> +static int dwc3_read_port_info(struct dwc3 *dwc)
->>>> +{
->>>> +	void __iomem *base;
->>>> +	u8 major_revision;
->>>> +	u32 offset;
->>>> +	u32 val;
->>>> +
->>>> +	/*
->>>> +	 * Remap xHCI address space to access XHCI ext cap regs since it is
->>>> +	 * needed to get information on number of ports present.
->>>> +	 */
->>>> +	base = ioremap(dwc->xhci_resources[0].start,
->>>> +		       resource_size(&dwc->xhci_resources[0]));
->>>> +	if (IS_ERR(base))
->>>> +		return PTR_ERR(base);
->>>
->>> Looks like you forgot to address some of the comments you said you'd
->>> update previously if you submit a new version to the series.
->>>
->>> [*] https://lore.kernel.org/linux-usb/af73110d-e13e-4183-af11-aed869ac0a31@quicinc.com/
->>>
->>
->> Apologies. I agree. I was too much focused on acpi removal and interrupt
->> cleanup, I forgot the last comment you gave.
->>
->> Can I send in a separate patch for this ?
-> 
-> The series has not been merged yet so you can address both issues in a
-> v19. Perhaps wait a day or two in case Thinh has further comments.
+>   /**
+>    * pmic_arb_read_data: reads pmic-arb's register and copy 1..4 bytes to buf
+> + * @pmic_arb:	the SPMI PMIC arbiter
+>    * @bc:		byte count -1. range: 0..3
+>    * @reg:	register's address
+>    * @buf:	output parameter, length must be bc + 1
+> @@ -246,6 +250,7 @@ pmic_arb_read_data(struct spmi_pmic_arb *pmic_arb, u8 *buf, u32 reg, u8 bc)
+>   
+>   /**
+>    * pmic_arb_write_data: write 1..4 bytes from buf to pmic-arb's register
+> + * @pmic_arb:	the SPMI PMIC arbiter
+>    * @bc:		byte-count -1. range: 0..3.
+>    * @reg:	register's address.
+>    * @buf:	buffer to write. length must be bc + 1.
 > 
 
-Sure Johan.
-
-Also after making the following two changes:
-
-1. Rename dwc3_read_port_info(...) to dwc3_get_num_ports(...)
-2. Changing "if (IS_ERR(base))" to "if (!base)"
-
-Can I still retain your RB tag ?
-
-Regards,
-Krishna,
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 
