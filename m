@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-16327-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16333-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC9E38974CC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 18:04:39 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 108FD8974D6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 18:06:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8C159B30B3E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:03:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B755A1F22FCA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:06:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 907EE14B068;
-	Wed,  3 Apr 2024 16:02:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 330B614C58F;
+	Wed,  3 Apr 2024 16:03:22 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpbg154.qq.com (smtpbg154.qq.com [15.184.224.54])
+Received: from smtpbgeu1.qq.com (smtpbgeu1.qq.com [52.59.177.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA7414A621;
-	Wed,  3 Apr 2024 16:02:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=15.184.224.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 631C914D2AF;
+	Wed,  3 Apr 2024 16:03:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.59.177.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712160150; cv=none; b=KdlmzNWxeU9uThxxajm29cks2Q9T3lM8LaMfiBE1geFmoojhxoRdPwDFlN+47oXnQK8Qb4dIcWskE6y/tfBxemWYWrK6EgSzLJTMsw6vi1TaYS6BaPSEvo2Z2p1OvMNkvcmWbwJXRaVbwJgmlFNAL0kSfYxLcmklJUQ2Dd+IeGw=
+	t=1712160202; cv=none; b=g/1X5OXrBBzB5fOtj1G+V9HIBYm+x5HImjuWoAPI9Qw4Wl1A/171esQ/C/BBVOfjCka3pBLZY/4kuS7V5xG+MrbxuCEebO431E2heOOh2It77R82WmMvyVpFgDDDFfvqM0js4JsRRRxmaTbPHwO2ZTx0H47vrAdug8IGLAF7MLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712160150; c=relaxed/simple;
-	bh=oPySJ8p+mlKJinHcQ1fw83hQfHtdra/wOhXRyCGkxPw=;
+	s=arc-20240116; t=1712160202; c=relaxed/simple;
+	bh=PGvQ1DmTBqcKZy8IUAzMM9T/InjRyf+NpsmDLx3U+hc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=kHlIPVYJ1+QJJgUj9cFVFiexe+q/SFQPJOJwS9BhZGz8rrfTJrco5E/Bn064yncmUN0bhYaH5CtS9N78Uj9S9w5YiC03WQn9epT7HoMt9oCnKapSpg42FlBRNiaRQk8J9H9ZFEls69XPcrwRaP3PZGAgxbHvS4b0hkSdSIe6TCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shingroup.cn; spf=pass smtp.mailfrom=shingroup.cn; arc=none smtp.client-ip=15.184.224.54
+	 MIME-Version; b=srebu2QUr5Ar4QjTfEpurPlRQmO3J0JFAqQkRtwq9HQKnFnWshwIBp9zyarEuIM95PvhrNfmy4jnfSG1sNs/JWqBZqMl65IN518CYJGGdDc7CLSnKCN7j0CP0wLkcip3zLIChd8pRMLNWcAdJkEa7xBjflIskDt7NQIVijjYdCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shingroup.cn; spf=pass smtp.mailfrom=shingroup.cn; arc=none smtp.client-ip=52.59.177.22
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shingroup.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shingroup.cn
-X-QQ-mid: bizesmtp77t1712160071t7uhmx0c
-X-QQ-Originating-IP: qWz66tfgfwR7lXO4Eucb0cwGAgI7XkPPskmUeAOD8Mg=
+X-QQ-mid: bizesmtp87t1712160078tqad960p
+X-QQ-Originating-IP: CLCSdPaBv+q3yW5ZWsSmxTywOJ3HOLzbmA5cfgnaREE=
 Received: from localhost ( [112.0.147.175])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 04 Apr 2024 00:01:10 +0800 (CST)
+	id ; Thu, 04 Apr 2024 00:01:16 +0800 (CST)
 X-QQ-SSF: 01400000000000704000000A0000000
-X-QQ-FEAT: sA5XmpK2fX6Ryuah/qO3FiPxqgkvCZ5z71zXIbnGQZLnJ6EqGLmAAYywsR7Cu
-	P6qfAYW7DHnc4fT29tjQec4spra/4RtUJmPFR8bQo77//JKx/9APNwHwFKzSHdbvOq3Qgfe
-	JR8hzGoT0LEN9HNz3rNnvuFP/x39/RUtumFc/A5znst/Jxc9FdM2dP2vxohsxqJaqeixIJv
-	POzRSNifr/cTK9HNVoRDkJie3tW754Sjy/zla9u+QH/XAm0Ke16Kf8U8UtABY9Z6UsAN+Rr
-	Lj2DdCaDioLZ7rDf9jly4ajHXVgjYG2jxRWUUhVaUvRkl3OLhI8uez29SkHguM8Y5edYnHm
-	vkDBNkZEkJ8CWceHD8hNm6g/L/hrrTUE3xdRxcPDcBa6vLweRggWMsP2BZNe4QhDROXWDsE
-	ofYsCTg25wk=
+X-QQ-FEAT: R3vftN8GVq/ejRh0RfRkulWkabSnEcU4uBTypdCPJ4NgGPhaTRxAVPQfHgYmO
+	cYOCpGN6kAcn8TTZ3dZOQbtERZ3dMH4W/9UmJBWuhYToqn5fKh9DUfB82RIVU9cpMjqkcZA
+	2GG37fIRu0ddTC+Xcf1ki5c0UKvjSvUEp8H7RQYM9sWKYhevWvFrhPxT++FlVRO4nPqL+83
+	SCOMyeS/+9Zyll3UVPT8+XKzesTjbAKFTEXqBdEwDeToQRx7+vrW8mYO8gKAxP7iX2gYBp6
+	lHnt0pKGPQziHzP13MOtRFOKHjpzsW2mar8kWCR5TzkKMpxVzUSskmm8aEdYTJOhdtJf/cw
+	FE4QWta+5sbQK3lY6Shvg0HlrLiDYiOwBUfH83EK7z23gOO2uXgWl4jcdNBtreP1g4facsh
+	sUwOL76yYy0=
 X-QQ-GoodBg: 2
-X-BIZMAIL-ID: 9547336712593428100
+X-BIZMAIL-ID: 8381501582707765668
 From: Dawei Li <dawei.li@shingroup.cn>
 To: will@kernel.org,
 	mark.rutland@arm.com,
@@ -59,9 +59,9 @@ Cc: xueshuai@linux.alibaba.com,
 	linux-kernel@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
 	Dawei Li <dawei.li@shingroup.cn>
-Subject: [PATCH v3 07/10] perf/hisi_pcie: Avoid placing cpumask on the stack
-Date: Wed,  3 Apr 2024 23:59:47 +0800
-Message-Id: <20240403155950.2068109-8-dawei.li@shingroup.cn>
+Subject: [PATCH v3 08/10] perf/hisi_uncore: Avoid placing cpumask on the stack
+Date: Wed,  3 Apr 2024 23:59:48 +0800
+Message-Id: <20240403155950.2068109-9-dawei.li@shingroup.cn>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20240403155950.2068109-1-dawei.li@shingroup.cn>
 References: <20240403155950.2068109-1-dawei.li@shingroup.cn>
@@ -86,36 +86,33 @@ Suggested-by: Mark Rutland <mark.rutland@arm.com>
 Reviewed-by: Mark Rutland <mark.rutland@arm.com>
 Signed-off-by: Dawei Li <dawei.li@shingroup.cn>
 ---
- drivers/perf/hisilicon/hisi_pcie_pmu.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/perf/hisilicon/hisi_uncore_pmu.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/perf/hisilicon/hisi_pcie_pmu.c b/drivers/perf/hisilicon/hisi_pcie_pmu.c
-index 5d1f0e9fdb08..06b192cc31d5 100644
---- a/drivers/perf/hisilicon/hisi_pcie_pmu.c
-+++ b/drivers/perf/hisilicon/hisi_pcie_pmu.c
-@@ -673,7 +673,6 @@ static int hisi_pcie_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
+diff --git a/drivers/perf/hisilicon/hisi_uncore_pmu.c b/drivers/perf/hisilicon/hisi_uncore_pmu.c
+index 04031450d5fe..ccc9191ad1b6 100644
+--- a/drivers/perf/hisilicon/hisi_uncore_pmu.c
++++ b/drivers/perf/hisilicon/hisi_uncore_pmu.c
+@@ -504,7 +504,6 @@ int hisi_uncore_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
  {
- 	struct hisi_pcie_pmu *pcie_pmu = hlist_entry_safe(node, struct hisi_pcie_pmu, node);
+ 	struct hisi_pmu *hisi_pmu = hlist_entry_safe(node, struct hisi_pmu,
+ 						     node);
+-	cpumask_t pmu_online_cpus;
  	unsigned int target;
--	cpumask_t mask;
- 	int numa_node;
  
- 	/* Nothing to do if this CPU doesn't own the PMU */
-@@ -684,10 +683,10 @@ static int hisi_pcie_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
+ 	if (!cpumask_test_and_clear_cpu(cpu, &hisi_pmu->associated_cpus))
+@@ -518,9 +517,8 @@ int hisi_uncore_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
+ 	hisi_pmu->on_cpu = -1;
  
- 	/* Choose a local CPU from all online cpus. */
- 	numa_node = dev_to_node(&pcie_pmu->pdev->dev);
--	if (cpumask_and(&mask, cpumask_of_node(numa_node), cpu_online_mask) &&
--	    cpumask_andnot(&mask, &mask, cpumask_of(cpu)))
--		target = cpumask_any(&mask);
--	else
-+
-+	target = cpumask_any_and_but(cpumask_of_node(numa_node),
+ 	/* Choose a new CPU to migrate ownership of the PMU to */
+-	cpumask_and(&pmu_online_cpus, &hisi_pmu->associated_cpus,
+-		    cpu_online_mask);
+-	target = cpumask_any_but(&pmu_online_cpus, cpu);
++	target = cpumask_any_and_but(&hisi_pmu->associated_cpus,
 +				     cpu_online_mask, cpu);
-+	if (target >= nr_cpu_ids)
- 		target = cpumask_any_but(cpu_online_mask, cpu);
+ 	if (target >= nr_cpu_ids)
+ 		return 0;
  
- 	if (target >= nr_cpu_ids) {
 -- 
 2.27.0
 
