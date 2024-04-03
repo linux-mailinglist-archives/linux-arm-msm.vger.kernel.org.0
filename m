@@ -1,166 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-16318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16319-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5789289745B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 17:48:22 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4FD25897485
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 17:52:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8875E1C251F1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 15:48:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6E3201C26CBF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 15:52:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93A8014A63A;
-	Wed,  3 Apr 2024 15:48:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 356E414AD12;
+	Wed,  3 Apr 2024 15:51:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Z8VILx7Z"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DRMHnn/1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B352E14A4C8;
-	Wed,  3 Apr 2024 15:47:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982BA14A4EC
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 15:51:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712159281; cv=none; b=PSRe62tpRwRoYIZ+kywnb5W5anQe3vc+FlfLD893G98k9GhYXQhuGZtZJbg0RHAPs0bYiUCN8yv0/CblFcM8383+YTjicZHf0B5i7xJD5LPvuSTuI5UlumhFyGMZqErM86+jmqeUpgbUcRE3Qx8W2Nxg/0/+xoMQMTm6nYZkQAM=
+	t=1712159517; cv=none; b=NFNGrY7CSCmp1JQYDl+c4B8vxNcp9iqZQH38b5DCp+P3CDlZcDod1eYA7XOv7qLolOHiQmPN6ZznwNAhy+ox+ZSgb51kTTpcG5GjFw74rWeG559NZhD1Hj1trdoLOZUEbllLy+vq3KK6X1qjyILeqakc0BEw/SU8/4uSz9WhwXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712159281; c=relaxed/simple;
-	bh=HHPDm+TLj1RKaDaIxeLlYDtf5KUMp/lQSPe/aTjr+IY=;
+	s=arc-20240116; t=1712159517; c=relaxed/simple;
+	bh=qgIhgArIyknrMhYKo0pXG7L2hPF5611r14caIQJvQ9Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GK4qPx4LClDZ1OtMsUdTyLCR9mqUvWzX6agR4++JUwcJSYdiC5uIZdpmL6Mlf1HrCLjPIU9IXH64EvrB2Php8YAVFGOrrgOBsdYrOLwtB9GGkDzzNMyXd537YrE9G+7/f0aFoysXSux9lieFA0jDAQVseWfY4uCNzLI1RiRVAwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Z8VILx7Z; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1712159280; x=1743695280;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=HHPDm+TLj1RKaDaIxeLlYDtf5KUMp/lQSPe/aTjr+IY=;
-  b=Z8VILx7ZHGanJgT8YehLXrvuMdIUbKUT2qXRpyMTCEGATGv/M3/rPM+2
-   hIRtOdwejeX+fJGtrJZ1/rMRun3Wkjwd+f3zIwWulgSFlg+UdlqSVRuO1
-   A0JIAtxbVICStED0GmQx6WSharEvLcpaKnazX2/E4lAvtg5M8tnY0KEve
-   n/rdRNRT2vwUsR2kc9oBX4y3oadY+F70BjWsLtkBbkO7k7YzQFJyVOXNd
-   VMLqx/Oz8yp+oq3RapWslAz7OIOYULgaL4r04Z7zR0Ic2w+B93FFd+wJ3
-   bKYtha8f5Ta2+BxkeJ0nwfDlaqWFHaEKW8frk87iMMIrl55lwqx1PhvO1
-   g==;
-X-CSE-ConnectionGUID: 4188y/KYR+qT4NpSWF74iQ==
-X-CSE-MsgGUID: DFuHLn/BQdSl54BSCXlJdQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11033"; a="18558397"
-X-IronPort-AV: E=Sophos;i="6.07,177,1708416000"; 
-   d="scan'208";a="18558397"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Apr 2024 08:47:59 -0700
-X-CSE-ConnectionGUID: Ynzp+NMBQ/SrwU4aUtba9g==
-X-CSE-MsgGUID: lnSkcc3aThqAee/09MNTdw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,177,1708416000"; 
-   d="scan'208";a="18397635"
-Received: from lkp-server02.sh.intel.com (HELO 90ee3aa53dbd) ([10.239.97.151])
-  by fmviesa010.fm.intel.com with ESMTP; 03 Apr 2024 08:47:54 -0700
-Received: from kbuild by 90ee3aa53dbd with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1rs2q8-0002Mo-03;
-	Wed, 03 Apr 2024 15:47:52 +0000
-Date: Wed, 3 Apr 2024 23:42:41 +0800
-From: kernel test robot <lkp@intel.com>
-To: Varadarajan Narayanan <quic_varada@quicinc.com>, andersson@kernel.org,
-	konrad.dybcio@linaro.org, mturquette@baylibre.com, sboyd@kernel.org,
-	robh@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org, djakov@kernel.org, dmitry.baryshkov@linaro.org,
-	quic_anusha@quicinc.com, linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH v6 2/6] interconnect: icc-clk: Remove tristate from
- INTERCONNECT_CLK
-Message-ID: <202404032328.7zrla6d9-lkp@intel.com>
-References: <20240402103406.3638821-3-quic_varada@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=rR0mUVNVsQxDXnzqWitJQufOcztAqzr809jrB03AyswHY8kPk4G9fHyQKYBUtcknX9D3CNkdrLPECRK6kT4vkdjBoFe608pf/kuUVoN034NjynPHLxxSAybO0tTYDLr+4Bkf3Xb4w1uNOtncPS2iKzxeHQRLkpyHJGqHZOBVjes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DRMHnn/1; arc=none smtp.client-ip=209.85.210.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-6e73e8bdea2so5944166b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 08:51:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712159513; x=1712764313; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=RxAX3IORBZmyZAmqt7k7cbWr6HJgfjLBGIug35aDNFY=;
+        b=DRMHnn/12hCEZ+EzEWkSqaeg3Kh/NKXno8djLNTpANfiRYgJ70crpONfAk9RPZiirF
+         ym4+eIlbnGzB4QlFFQNVkfJkmPCPhG1OxGDBvdBny6Se9dLEfXso7WpduMDWmNDSdQPX
+         R7lUMIBExyPDI8RJIxLrlb60MXKhb4MDhPkO9ZkWhDgKfEQkc7Be5ZM7Tkm0UdTjwMrf
+         AG3JtGao5TTxfFlTMEN5A6x8IvNL5RBJzDvylXEznCEajyb3jpvx5U1V+hMcPpcz91RA
+         wydNWp4nDOGPSqVypb3HxkuUEK4/kTwgYFtwuIVgb70X8qwZ8SjDaaoGs0JVa4YWWet0
+         RBeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712159513; x=1712764313;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RxAX3IORBZmyZAmqt7k7cbWr6HJgfjLBGIug35aDNFY=;
+        b=e1qFovv8Nm8WEN+nmHusMFDzc2b36vTF8Yj7Gb0GDq7GOmqPBNoJR4DGyJ8o8rJ57S
+         1Z8lMkGJK4U3n4oLHgg5jI2u/t8TqakSCByajNAaSb5KKZBFgillpXa7viZs7rxjfvNF
+         TL8jJP/CHkuag+mJNtleRSimKornalpAHP2Rbn/CCRM5pD1Z6Q+sWscJM4pOJilTPLIc
+         1sIWpfRrNpPruLiE1scIykoTxcZMQIBrE5Z55lUFjnoZnPWBv1ICAtB4wVbTbeH+mt2G
+         T339zxZquYVvWEcCZ0kwZklC/wi7gi/ntPes25ZKAoK/ysPSB5evPQicGSiHrImkeA8i
+         hijg==
+X-Forwarded-Encrypted: i=1; AJvYcCWL+/ihDVih+DIAdEJ+d+IYLy7ji3veaRhTvUtmcyAR6HJXVusOamWNIN+O4XmI6ayfcLSbhP7ONAayZ9hEwj50TaD/jBXlPZCfzATCpQ==
+X-Gm-Message-State: AOJu0YzpXF2tNf8LBqe3ptT0RH1rPYYRHJHuvei7r9aUzdMsKcMqIFMM
+	Otngke2pM7nqDELYWCPcpznSJ+ypxcepx4MELkovCf5hWcpz5vSNm6kNlkdt3g==
+X-Google-Smtp-Source: AGHT+IFZ8An9frbeOoCjHLGX+h10+JkFjjcUHp5RZHkQCtQER4IRh2CUT8rqcKsB9n/M1uUV2ezDxQ==
+X-Received: by 2002:a05:6a20:6114:b0:1a3:e23d:6003 with SMTP id m20-20020a056a20611400b001a3e23d6003mr21825pzb.62.1712159512806;
+        Wed, 03 Apr 2024 08:51:52 -0700 (PDT)
+Received: from thinkpad ([103.28.246.48])
+        by smtp.gmail.com with ESMTPSA id a17-20020aa78e91000000b006e535bf8da4sm11747015pfr.57.2024.04.03.08.51.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Apr 2024 08:51:52 -0700 (PDT)
+Date: Wed, 3 Apr 2024 21:21:47 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Niklas Cassel <cassel@kernel.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	mhi@lists.linux.dev, linux-tegra@vger.kernel.org
+Subject: Re: [PATCH v2 03/10] PCI: endpoint: Rename core_init() callback in
+ 'struct pci_epc_event_ops' to init()
+Message-ID: <20240403155147.GA85162@thinkpad>
+References: <20240401-pci-epf-rework-v2-0-970dbe90b99d@linaro.org>
+ <20240401-pci-epf-rework-v2-3-970dbe90b99d@linaro.org>
+ <ZgvjWtC0f1CY6DJs@ryzen>
+ <20240403134600.GL25309@thinkpad>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240402103406.3638821-3-quic_varada@quicinc.com>
+In-Reply-To: <20240403134600.GL25309@thinkpad>
 
-Hi Varadarajan,
+On Wed, Apr 03, 2024 at 07:16:05PM +0530, Manivannan Sadhasivam wrote:
+> On Tue, Apr 02, 2024 at 12:52:10PM +0200, Niklas Cassel wrote:
+> > On Mon, Apr 01, 2024 at 09:20:29PM +0530, Manivannan Sadhasivam wrote:
+> > > core_init() callback is used to notify the EPC initialization event to the
+> > > EPF drivers. The 'core' prefix was used indicate that the controller IP
+> > > core has completed initialization. But it serves no purpose as the EPF
+> > > driver will only care about the EPC initialization as a whole and there is
+> > > no real benefit to distinguish the IP core part.
+> > > 
+> > > So let's rename the core_init() callback in 'struct pci_epc_event_ops' to
+> > > just init() to make it more clear.
+> > > 
+> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > ---
+> > >  drivers/pci/endpoint/functions/pci-epf-mhi.c  |  4 ++--
+> > >  drivers/pci/endpoint/functions/pci-epf-test.c |  4 ++--
+> > >  drivers/pci/endpoint/pci-epc-core.c           | 16 ++++++++--------
+> > >  include/linux/pci-epf.h                       |  4 ++--
+> > >  4 files changed, 14 insertions(+), 14 deletions(-)
+> > > 
+> > > diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+> > > index 280863c0eeb9..b3c26ffd29a5 100644
+> > > --- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
+> > > +++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+> > > @@ -716,7 +716,7 @@ static void pci_epf_mhi_dma_deinit(struct pci_epf_mhi *epf_mhi)
+> > >  	epf_mhi->dma_chan_rx = NULL;
+> > >  }
+> > >  
+> > > -static int pci_epf_mhi_core_init(struct pci_epf *epf)
+> > > +static int pci_epf_mhi_epc_init(struct pci_epf *epf)
+> > >  {
+> > >  	struct pci_epf_mhi *epf_mhi = epf_get_drvdata(epf);
+> > >  	const struct pci_epf_mhi_ep_info *info = epf_mhi->info;
+> > > @@ -897,7 +897,7 @@ static void pci_epf_mhi_unbind(struct pci_epf *epf)
+> > >  }
+> > >  
+> > >  static const struct pci_epc_event_ops pci_epf_mhi_epc_event_ops = {
+> > > -	.core_init = pci_epf_mhi_core_init,
+> > > +	.init = pci_epf_mhi_epc_init,
+> > >  };
+> > >  
+> > >  static const struct pci_epc_bus_event_ops pci_epf_mhi_bus_event_ops = {
+> > > diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
+> > > index 973db0b1bde2..abcb6ca61c4e 100644
+> > > --- a/drivers/pci/endpoint/functions/pci-epf-test.c
+> > > +++ b/drivers/pci/endpoint/functions/pci-epf-test.c
+> > > @@ -731,7 +731,7 @@ static int pci_epf_test_set_bar(struct pci_epf *epf)
+> > >  	return 0;
+> > >  }
+> > >  
+> > > -static int pci_epf_test_core_init(struct pci_epf *epf)
+> > > +static int pci_epf_test_epc_init(struct pci_epf *epf)
+> > 
+> > On V1 you agreed that it is better to remove 'epc' from the naming.
+> > (For both pci-epf-test and pci-epf-mhi).
+> > You seem to have forgotten to address this for V2.
+> > 
+> 
+> Oh yeah, sorry about that. I tried to address comments for both series and
+> apparently this one got missed.
+> 
 
-kernel test robot noticed the following build errors:
+Ok, now I remember that I kept the prefix intentionally. The module init
+functions are already named as pci_epf_{test/mhi}_init(), so cannot use the same
+name for the callback also. And using some other name didn't fit, so I kept
+'epc' as the prefix since the callback acts on the EPC initialization event
+anyway.
 
-[auto build test ERROR on clk/clk-next]
-[also build test ERROR on robh/for-next linus/master v6.9-rc2 next-20240403]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Varadarajan-Narayanan/dt-bindings-interconnect-Add-Qualcomm-IPQ9574-support/20240402-223729
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git clk-next
-patch link:    https://lore.kernel.org/r/20240402103406.3638821-3-quic_varada%40quicinc.com
-patch subject: [PATCH v6 2/6] interconnect: icc-clk: Remove tristate from INTERCONNECT_CLK
-config: arm64-defconfig (https://download.01.org/0day-ci/archive/20240403/202404032328.7zrla6d9-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240403/202404032328.7zrla6d9-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202404032328.7zrla6d9-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   aarch64-linux-ld: Unexpected GOT/PLT entries detected!
-   aarch64-linux-ld: Unexpected run-time procedure linkages detected!
-   aarch64-linux-ld: drivers/clk/qcom/clk-cbf-8996.o: in function `qcom_msm8996_cbf_icc_remove':
->> drivers/clk/qcom/clk-cbf-8996.c:257:(.text+0x10): undefined reference to `icc_clk_unregister'
-   aarch64-linux-ld: drivers/clk/qcom/clk-cbf-8996.o: in function `qcom_msm8996_cbf_icc_register':
->> drivers/clk/qcom/clk-cbf-8996.c:244:(.text+0x360): undefined reference to `icc_clk_register'
-
-
-vim +257 drivers/clk/qcom/clk-cbf-8996.c
-
-12dc71953e664f Dmitry Baryshkov 2023-05-12  234  
-12dc71953e664f Dmitry Baryshkov 2023-05-12  235  static int qcom_msm8996_cbf_icc_register(struct platform_device *pdev, struct clk_hw *cbf_hw)
-12dc71953e664f Dmitry Baryshkov 2023-05-12  236  {
-12dc71953e664f Dmitry Baryshkov 2023-05-12  237  	struct device *dev = &pdev->dev;
-12dc71953e664f Dmitry Baryshkov 2023-05-12  238  	struct clk *clk = devm_clk_hw_get_clk(dev, cbf_hw, "cbf");
-12dc71953e664f Dmitry Baryshkov 2023-05-12  239  	const struct icc_clk_data data[] = {
-12dc71953e664f Dmitry Baryshkov 2023-05-12  240  		{ .clk = clk, .name = "cbf", },
-12dc71953e664f Dmitry Baryshkov 2023-05-12  241  	};
-12dc71953e664f Dmitry Baryshkov 2023-05-12  242  	struct icc_provider *provider;
-12dc71953e664f Dmitry Baryshkov 2023-05-12  243  
-12dc71953e664f Dmitry Baryshkov 2023-05-12 @244  	provider = icc_clk_register(dev, CBF_MASTER_NODE, ARRAY_SIZE(data), data);
-12dc71953e664f Dmitry Baryshkov 2023-05-12  245  	if (IS_ERR(provider))
-12dc71953e664f Dmitry Baryshkov 2023-05-12  246  		return PTR_ERR(provider);
-12dc71953e664f Dmitry Baryshkov 2023-05-12  247  
-12dc71953e664f Dmitry Baryshkov 2023-05-12  248  	platform_set_drvdata(pdev, provider);
-12dc71953e664f Dmitry Baryshkov 2023-05-12  249  
-12dc71953e664f Dmitry Baryshkov 2023-05-12  250  	return 0;
-12dc71953e664f Dmitry Baryshkov 2023-05-12  251  }
-12dc71953e664f Dmitry Baryshkov 2023-05-12  252  
-abaf59c470a7c9 Uwe Kleine-K�nig 2023-09-11  253  static void qcom_msm8996_cbf_icc_remove(struct platform_device *pdev)
-12dc71953e664f Dmitry Baryshkov 2023-05-12  254  {
-12dc71953e664f Dmitry Baryshkov 2023-05-12  255  	struct icc_provider *provider = platform_get_drvdata(pdev);
-12dc71953e664f Dmitry Baryshkov 2023-05-12  256  
-12dc71953e664f Dmitry Baryshkov 2023-05-12 @257  	icc_clk_unregister(provider);
-12dc71953e664f Dmitry Baryshkov 2023-05-12  258  }
-12dc71953e664f Dmitry Baryshkov 2023-05-12  259  #define qcom_msm8996_cbf_icc_sync_state icc_sync_state
-12dc71953e664f Dmitry Baryshkov 2023-05-12  260  #else
-12dc71953e664f Dmitry Baryshkov 2023-05-12  261  static int qcom_msm8996_cbf_icc_register(struct platform_device *pdev,  struct clk_hw *cbf_hw)
-12dc71953e664f Dmitry Baryshkov 2023-05-12  262  {
-12dc71953e664f Dmitry Baryshkov 2023-05-12  263  	dev_warn(&pdev->dev, "CONFIG_INTERCONNECT is disabled, CBF clock is fixed\n");
-12dc71953e664f Dmitry Baryshkov 2023-05-12  264  
-12dc71953e664f Dmitry Baryshkov 2023-05-12  265  	return 0;
-12dc71953e664f Dmitry Baryshkov 2023-05-12  266  }
-abaf59c470a7c9 Uwe Kleine-K�nig 2023-09-11  267  #define qcom_msm8996_cbf_icc_remove(pdev) { }
-12dc71953e664f Dmitry Baryshkov 2023-05-12  268  #define qcom_msm8996_cbf_icc_sync_state NULL
-12dc71953e664f Dmitry Baryshkov 2023-05-12  269  #endif
-12dc71953e664f Dmitry Baryshkov 2023-05-12  270  
+- Mani
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+மணிவண்ணன் சதாசிவம்
 
