@@ -1,73 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-16227-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16228-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81A49896A11
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 11:11:14 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C3601896A17
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 11:11:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B2B271C21B85
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 09:11:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 52E2D28CD7A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 09:11:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AC746F08A;
-	Wed,  3 Apr 2024 09:11:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 207442AE7C;
+	Wed,  3 Apr 2024 09:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YePQhhbJ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BZm9pBQs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D015F2AE7C
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 09:11:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8223E6F076
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 09:11:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712135471; cv=none; b=J2hPNAu7uXP/jIZ5kxpOJnyYqvOMdQ4SfD9zdrEKJfwudMvAHIW21XLzBz8yWJDXWPimWX9E35zCsThK/e8Hc1dLo5sTReZ0LfanWQha8rjp3VBrXBnv2nOHHF2SVKWsWSShnXiP+eHysMZpb5buK20rpkn7cMl4//UaRmRfUXw=
+	t=1712135479; cv=none; b=QwEpH9TS91+iehRf2TzM2yhAcHC9ONZi5iotVqramPxD0f6BUYpwcAmWW2IEabeFBbrJjw9UBnCMdFO18JHnOl+m1Ic0xM46oN3JQyV9FJjD2HLF5w/QmE7q8JKcyt6YPJiC7YiDadOs9yz3akFw1PcX8GCUcTlb435JBBSvvGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712135471; c=relaxed/simple;
-	bh=P541NbRWYuqXnx3+bGnLVMbeU44d3fPcyqmzLTRTyXg=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Yw/wTaZWPSH5RtrxNl7JW6zYun5ne31jIlxwDKS3xqZF+OnhQ3ljzRU1K+YWqiwUfnrN3xJBkMzGK4JQCiycSgyys4+F2oAcwbUutT5q8rmclke8hGnPBlPSLZKt47qPdT8h5gfFUE+mMk48VL7SHiBlVRnM1GePQmrqk5dKPCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YePQhhbJ; arc=none smtp.client-ip=209.85.214.176
+	s=arc-20240116; t=1712135479; c=relaxed/simple;
+	bh=17irNPUG8rONBYpdu5/zoIuYJGUsley5193TkmEMtIQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=AiO2XE2C3QzGdyldTcwNGKay01UiGeAHRyPlGz8cGFXF9qA9yPea+26MgIkGKYV7IQQ3bagbih5uTs+TXIstMAUK10JO2F9oBUjqkQW6KniuA3Lc7VXmoix0U6KMWexhtPiB+PhF2nTUv3q2q6hnrgE318atv5DQJleqzH2mOwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BZm9pBQs; arc=none smtp.client-ip=209.85.214.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-1e0fa980d55so49702045ad.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 02:11:09 -0700 (PDT)
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-1e2178b2cf2so47042145ad.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 02:11:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712135469; x=1712740269; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=7/O3Yye4pJUKSqqmi1ztO7+TuENg7PJXngjJtD8dhiA=;
-        b=YePQhhbJJgTfKf4awTWBBdsNXa18J+DO2yAvOcfga3kvVsstmG8w1J+rnz0Gneb5fc
-         lTcVEzxx8vKY/qlmcg5oIzxxMsHt0GVm8Kx4yluULd5pnyYwkPD+TZzq0mJGI/NEHYdE
-         oL4qyem9qOBUt8kaNklhowzGrPxoz5bpx+GQDYPCMtf5v2izkfln7/O9zgEvgIXEWljf
-         ljxSqe1o8pSpfgUkUypw1mnRuY+1sxZShNWqSA5UbQy+BjP8tHn2zJ+WfqJ5m7lbq059
-         qYxfNTKtT6QK5XGT0Ef7ROp/VwEveDP3b03+OWMlh2S+XG6qQz0GoyhmnCUVfCzmNUi+
-         VVvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712135469; x=1712740269;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1712135477; x=1712740277; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=7/O3Yye4pJUKSqqmi1ztO7+TuENg7PJXngjJtD8dhiA=;
-        b=K6RcmPjsiHPJi/FDiaqc/GWedoQRiPdyCw5UIYqCrIIVp/UGNdfr3AuwM+42FPOn9D
-         aKd2njEBi1h3XsnaZj6soZq9MKUzCwM0fXBrtajXALyRaWCsKqdZ8n/XDVBU1KxtV5KX
-         WF3g+Sf2riCXDqrE8NjtIEizPQNdKE9Sp2Z2MPHUGGeA9mfUlhxu3LvgiwxOYv+aR8I3
-         LVmnAaB+cR20b34CQJPm1EbGwCq/43CJR3GX7mk075n6go+Vw4K+FSydblcqJsOoYdzS
-         wkV07oJrgEinxdt1gAM+ygNnZwaKy4FokBxYxRY4qPb5s8DsqoQgyeKeHG4HwbQrfJSh
-         mCXg==
-X-Gm-Message-State: AOJu0Yw53O2feE3nfDZ0RbINJ928aT7H9is9MKjqE/P8PuNGOgY8VVZ5
-	cgX4RLAKk4wnkvmpu/ITP6jZFZEI1PbJtJj1BhszfBMKXSZzXpZS5FAkl1z1kVo=
-X-Google-Smtp-Source: AGHT+IF84q9hRu116oN3GLEOqf7CuYctkPWrAgQCygUpWta5lfkEIwl7OUv7gwt+uy43J5BmH7S/wA==
-X-Received: by 2002:a17:903:32ce:b0:1e0:b629:b009 with SMTP id i14-20020a17090332ce00b001e0b629b009mr2303646plr.20.1712135469129;
-        Wed, 03 Apr 2024 02:11:09 -0700 (PDT)
+        bh=NP1mArxks5bntvoBu6vgePRngXslO+DwNYzgIBI4xco=;
+        b=BZm9pBQsAb6QaI1UZQaT6yCYdUjdNkYtvI9CB1ZMkms/GDTLUFvEzrcU9p90qZk2Jy
+         T6G2YfVYJbsKficpr3E+mtLcJJz4eDYxqldzTtMs+wSnRjElsMCwmqhbQUKAEKt9HiIi
+         an/uvidR83fyZnAFTBYO82/1zaqDGl5+Zj5LLkMUTzd9NC2GndPks7ssapZMtMdKkcvL
+         oL6HI+VKtzG1KaErHFHHnGafjkOT3kVicePu4SZuOEsXBtNNz+ipnDCRRZLG/K8ALBdl
+         wKLt+2/yAyvpS6H8vFx163jCoiKdgb1+vZGGph8OpjKS7v0U+HzI7WdWzdUZpoJAYMgN
+         jkrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712135477; x=1712740277;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NP1mArxks5bntvoBu6vgePRngXslO+DwNYzgIBI4xco=;
+        b=H8k+lUFZTRVuUFqKXlH6ABgF2zLPor3aYMLAxE04z/we8dVTK/8Qj+zzlyxu5ZmzDF
+         3TxD1F0ha9H2euscFC/JR9351HMWhcYyR+62HlGUv9r+HzISAFqbfe/zJzrdJ/d3UzkB
+         kWw7i92mFkYm1qDMBENXn3M5WeOLYH4G6Jfy0hfQEdUdF8U3JOmMrFS0tjk52sP54M0H
+         Yf8BQejVyMWm3HAS2mh2c85EXpX4ufyskkgPR4eQnCFwO6KEP9lDaAAjO5GbDOoXgvO0
+         i2BP3aVrlXhmfLN2oLgxdPQWPBxlNt4uCRInoTU/FT2V647Em8gDGQdS1hS3JirnS23S
+         wVXw==
+X-Gm-Message-State: AOJu0YxeiukF28dzP1Da6ViGaa/BA+TrBq5ZCMqlt2vUOTwheHg+rLFB
+	lk4kkZBU3+gUL753IuwZri3vVqXU7UBuSNJeyS9WVRquiOLt091m/xETr0hcTraRIIPKTdkrzBT
+	b8eqE8w==
+X-Google-Smtp-Source: AGHT+IEvnZUXLpdEar+zDu2dEcKJ3XPbx7m6PBvpXM6ninTCE0WpaPkwirt2qnexBqWzAKnOJ5d/Zw==
+X-Received: by 2002:a17:903:2285:b0:1e0:b872:d862 with SMTP id b5-20020a170903228500b001e0b872d862mr19646560plh.52.1712135476796;
+        Wed, 03 Apr 2024 02:11:16 -0700 (PDT)
 Received: from [127.0.1.1] ([112.65.12.66])
-        by smtp.gmail.com with ESMTPSA id lo14-20020a170903434e00b001e0aded0ca7sm12688087plb.239.2024.04.03.02.11.01
+        by smtp.gmail.com with ESMTPSA id lo14-20020a170903434e00b001e0aded0ca7sm12688087plb.239.2024.04.03.02.11.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Apr 2024 02:11:08 -0700 (PDT)
+        Wed, 03 Apr 2024 02:11:16 -0700 (PDT)
 From: Jun Nie <jun.nie@linaro.org>
-Subject: [PATCH v3 0/6] Add DSC support to DSI video panel
-Date: Wed, 03 Apr 2024 17:10:56 +0800
-Message-Id: <20240403-msm-drm-dsc-dsi-video-upstream-v1-0-db5036443545@linaro.org>
+Date: Wed, 03 Apr 2024 17:10:57 +0800
+Subject: [PATCH v3 1/6] drm/msm/dpu: fix video mode DSC for DSI
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,9 +78,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIACAdDWYC/x2NMQ6DMAwAv4I811JMoEO/UnWIsKEeAshuIyTE3
- 2t1uOGWuxNcTMXh0Z1g0tR1W0Po1sH0LusiqBwOfeqHNKSM1SuyBT4Fik1ZNvzu/jEpFYnGOxO
- lMmaGiOwmsx7/wRNahtd1/QAmFaGKdAAAAA==
+Message-Id: <20240403-msm-drm-dsc-dsi-video-upstream-v1-1-db5036443545@linaro.org>
+References: <20240403-msm-drm-dsc-dsi-video-upstream-v1-0-db5036443545@linaro.org>
+In-Reply-To: <20240403-msm-drm-dsc-dsi-video-upstream-v1-0-db5036443545@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
  Abhinav Kumar <quic_abhinavk@quicinc.com>, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
@@ -89,47 +91,67 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
  Jun Nie <jun.nie@linaro.org>, Jonathan Marek <jonathan@marek.ca>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1712135460; l=1325;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1712135460; l=2016;
  i=jun.nie@linaro.org; s=20240403; h=from:subject:message-id;
- bh=P541NbRWYuqXnx3+bGnLVMbeU44d3fPcyqmzLTRTyXg=;
- b=HkqQZDXjFiMWF6ZF+Cd0bcaoeJOmDhaXwhg2bFQTfchp7QA89xl1gKuBfqywkMi9u/CrU+Rqg
- N1WZRF987sSDHY46unFNIz4C8AM5wiaqxvqBzLMDMKlkS8wAs1I5cIE
+ bh=m6HQvVN42IUfffBpA5rSrdSQLAGl00b8q3W/bbmwYL0=;
+ b=X1XSY5kWlW4EvhrnUx70p2aoQcx3f1DnnQ4OyjHIWQvbWeRXvcU2GduJDjEEDh2iXJNAm4MLN
+ Z3Bv1A5eBC0BqnYTDzQzUt3NZ19ccVql5AenjM0xwfQJWidDKXu80Ql
 X-Developer-Key: i=jun.nie@linaro.org; a=ed25519;
  pk=MNiBt/faLPvo+iJoP1hodyY2x6ozVXL8QMptmsKg3cc=
 
-This is follow up update to Jonathan's patch set.
+From: Jonathan Marek <jonathan@marek.ca>
 
-Changes vs V2:
-- Rebase to latest mainline.
-- Drop the INTF_CFG2_DATA_HCTL_EN change as it is handled in
-    latest mainline code.
-- Drop the bonded DSI patch as I do not have device to test it.
-- Address comments from version 2.
+Add necessary DPU timing and control changes for DSC to work with DSI
+video mode.
 
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 Signed-off-by: Jun Nie <jun.nie@linaro.org>
 ---
-Jonathan Marek (5):
-      drm/msm/dpu: fix video mode DSC for DSI
-      drm/msm/dsi: set video mode widebus enable bit when widebus is enabled
-      drm/msm/dsi: set VIDEO_COMPRESSION_MODE_CTRL_WC (fix video mode DSC)
-      drm/msm/dsi: add a comment to explain pkt_per_line encoding
-      drm/msm/dsi: support DSC configurations with slice_per_pkt > 1
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 9 +++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          | 8 ++++++++
+ 2 files changed, 17 insertions(+)
 
-Jun Nie (1):
-      drm/display: Add slice_per_pkt for dsc
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+index d9e7dbf0499c..c7b009a60b63 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+@@ -115,6 +115,15 @@ static void drm_mode_to_intf_timing_params(
+ 		timing->h_front_porch = timing->h_front_porch >> 1;
+ 		timing->hsync_pulse_width = timing->hsync_pulse_width >> 1;
+ 	}
++
++	/*
++	 * for DSI, if compression is enabled, then divide the horizonal active
++	 * timing parameters by compression ratio.
++	 */
++	if (phys_enc->hw_intf->cap->type != INTF_DP && timing->compression_en) {
++		timing->width = timing->width / 3; /* XXX: don't assume 3:1 compression ratio */
++		timing->xres = timing->width;
++	}
+ }
+ 
+ static u32 get_horizontal_total(const struct dpu_hw_intf_timing_params *timing)
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+index 965692ef7892..079efb48db05 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+@@ -167,6 +167,14 @@ static void dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *ctx,
+ 		intf_cfg2 |= INTF_CFG2_DATABUS_WIDEN;
+ 
+ 	data_width = p->width;
++	if (p->wide_bus_en && !dp_intf)
++		data_width = p->width >> 1;
++
++	if (p->compression_en)
++		intf_cfg2 |= INTF_CFG2_DCE_DATA_COMPRESS;
++
++	if (p->compression_en && dp_intf)
++		DPU_ERROR("missing adjustments for DSC+DP\n");
+ 
+ 	hsync_data_start_x = hsync_start_x;
+ 	hsync_data_end_x =  hsync_start_x + data_width - 1;
 
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |  9 +++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        |  8 +++++
- drivers/gpu/drm/msm/dsi/dsi.xml.h                  |  1 +
- drivers/gpu/drm/msm/dsi/dsi_host.c                 | 42 +++++++++++-----------
- include/drm/display/drm_dsc.h                      |  4 +++
- 5 files changed, 44 insertions(+), 20 deletions(-)
----
-base-commit: b1e6ec0a0fd0252af046e542f91234cd6c30b2cb
-change-id: 20240403-msm-drm-dsc-dsi-video-upstream-1156d110a53d
-
-Best regards,
 -- 
-Jun Nie <jun.nie@linaro.org>
+2.34.1
 
 
