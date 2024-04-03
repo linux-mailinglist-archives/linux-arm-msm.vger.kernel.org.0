@@ -1,48 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-16324-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B88E8974D8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 18:06:07 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id BBF358974E0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 18:08:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C5650B2FC8B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:01:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 75E27B2D939
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:02:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9127314B060;
-	Wed,  3 Apr 2024 16:01:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12E4A14AD06;
+	Wed,  3 Apr 2024 16:01:58 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpbguseast1.qq.com (smtpbguseast1.qq.com [54.204.34.129])
+Received: from smtpbg151.qq.com (smtpbg151.qq.com [18.169.211.239])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B1114AD16;
-	Wed,  3 Apr 2024 16:01:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.129
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E67149C48;
+	Wed,  3 Apr 2024 16:01:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.169.211.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712160083; cv=none; b=Ne1YAVjAgsYx1lVYnQKWjCRZl3XiTKxbVNk5WfMmE349+PZDSTl+9vB+HgNq9nTFJ5NGC7+D0xWmHiy2Q5IFiRvO4X94X//Pcr+XcEhIBSi+1ef6Z9n9K112K1RmXkZYjQ2Hor6P0dj4eAPyn02qwNSzDTXdk9S1qQOZoogti/c=
+	t=1712160118; cv=none; b=hHLQ4wb6n0IgC6Q6OyITl5uy/XRBLZ/p0f+L0DCs2/wb5xOwHpAyeGQ4W8cfIaJPbvV2pA9sDChkfm/0y0F4bMBU8OCfaVekmvKvl7/a/pofWBHpYk4HbEvP5CNmnA1dVVGUOkh5dpDTQ+XNgMJg6de69Kffpldmvw6oenjOuv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712160083; c=relaxed/simple;
-	bh=F+mXsbsBtwXCi5SGIYExSQ4DFRDs0WCi8xy62MEN6Wo=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=N/1QFEwYTUznCQA4g9GI4fRTbYYy0ou7Y5Sekis+6CdZhmseWUywVLie8X/NEh9MXSCHxjGu9AMRApEmiJKVoHc8wsUGr+gfK7nTtR9azXv550dojqes3vIc56o3xCUBmTb0RqOXFoyf28pD4PtOb6o41WYFHc+R02vU6XgkkcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shingroup.cn; spf=pass smtp.mailfrom=shingroup.cn; arc=none smtp.client-ip=54.204.34.129
+	s=arc-20240116; t=1712160118; c=relaxed/simple;
+	bh=LOH7VS37EK6ouw03EFhLhGPtaI7NGJ8+K47QutU/h5o=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=lPoBEvRe0K0AuF330VhlGa0txE4K3gaUoZmszNS8QEhKW1WQ6rfe4V9oAAdsXSlrEUV0oF33DvBeLA7nU1dKdkac31xWYfvhfUEa2MthNnhvjoVjUqgTY5bgITQ/8+ptwL89i7k/HwYsSSua6aQqeIva91QzWYCMsjJudFyV5kQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shingroup.cn; spf=pass smtp.mailfrom=shingroup.cn; arc=none smtp.client-ip=18.169.211.239
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shingroup.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shingroup.cn
-X-QQ-mid: bizesmtp78t1712159992t6njo4v7
-X-QQ-Originating-IP: pHJr87vrbCc1ofnl88X9CvVXg6F7BapJkb93YA7DMVU=
+X-QQ-mid: bizesmtp80t1712160036thxmnz8p
+X-QQ-Originating-IP: ffIYyfKtI7MEVmnEJYj0yTPiEbfNw9YcDBSN59vzuIU=
 Received: from localhost ( [112.0.147.175])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 03 Apr 2024 23:59:51 +0800 (CST)
+	id ; Thu, 04 Apr 2024 00:00:35 +0800 (CST)
 X-QQ-SSF: 01400000000000704000000A0000000
-X-QQ-FEAT: nOLHIySYvhh+CK+Ko5fE9E+vJIyoQ0sr8MduZU6gkv+fTySD2AjqTWq+tV9Ur
-	wpRok6DgZj2rp/2omAWwyTM/xEy+7ayFGvqM3ixvm55oGlpanZkoZcrBB/eGQ46tQjz7IXA
-	/HiG6s8qO0h4OAQMEbEi+84gvKNduvMa7xGF1sYuFHiKoCwGEEp0xiqDRgzRWuVri7OQxQ1
-	phbvv0krKC/OCZBEslPYNsmvJVLexs41LJoYpC01ymibwkpp/t1QqBf7XtyrPVgCak677uE
-	nO3AqTL//5Q4UpwtWr7k5gFPCUuKzKVWpRWkALsioIczMWzAiNSctkPQbjwpV/lk6vpkEpN
-	08ZQCEk3GxEbt3twGkiP8aCD1qRQu2Sj4xR05xIpvIwRHiLVgkuEpVh/rPdZGetyy3kV6H6
-	rZq/EvlHgYA4rIatWstu4Q==
+X-QQ-FEAT: /rrU+puPB7Ts3zb4GQHm/jElpaPN2fhf2qdiTWU8xhv0BMCe7+CIXQJiXcfYR
+	ubewNRzUSPlZvYRHv0TPGpOn4i9b8+/UUm0dLbZCfrJgCsPkebvx2ndKvMo141tmndI5K6l
+	lyLUDdMvdNLoG9C0QkySP1zyHLygAwFHMEjhczOvGwRusiuWgtdGPDHSQ5MawTrNWCIRcZb
+	q1HCABKiKsvMwNHoQzUcykHpn6LYRzhPBGIq1ZIRRY/nqhpKqG8FPBv0fu7khpgxt+3kBv5
+	EK5cZz+qMQgL2tKfa64c23UcLftPotDzW7HOjf4VvmAk3APbZrW0xTCTN3NFg/OScD7zwJc
+	hWNX13Cp31VbADNd2YnG93ZIsl0+ypaW8jtgBljRWtMwr3vewhjQJoDw+Hm65vzCzeMFwcu
+	Y90WXSmKYMc=
 X-QQ-GoodBg: 2
-X-BIZMAIL-ID: 6963273910614302494
+X-BIZMAIL-ID: 8707137984463615440
 From: Dawei Li <dawei.li@shingroup.cn>
 To: will@kernel.org,
 	mark.rutland@arm.com,
@@ -58,10 +59,12 @@ Cc: xueshuai@linux.alibaba.com,
 	linux-kernel@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
 	Dawei Li <dawei.li@shingroup.cn>
-Subject: [PATCH v3 00/10] perf: Avoid placing cpumask on the stack
-Date: Wed,  3 Apr 2024 23:59:40 +0800
-Message-Id: <20240403155950.2068109-1-dawei.li@shingroup.cn>
+Subject: [PATCH v3 03/10] perf/arm-cmn: Avoid placing cpumask on the stack
+Date: Wed,  3 Apr 2024 23:59:43 +0800
+Message-Id: <20240403155950.2068109-4-dawei.li@shingroup.cn>
 X-Mailer: git-send-email 2.27.0
+In-Reply-To: <20240403155950.2068109-1-dawei.li@shingroup.cn>
+References: <20240403155950.2068109-1-dawei.li@shingroup.cn>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,63 +75,50 @@ Content-Transfer-Encoding: 8bit
 X-QQ-SENDSIZE: 520
 Feedback-ID: bizesmtp:shingroup.cn:qybglogicsvrgz:qybglogicsvrgz5a-1
 
-Hi all,
+In general it's preferable to avoid placing cpumasks on the stack, as
+for large values of NR_CPUS these can consume significant amounts of
+stack space and make stack overflows more likely.
 
-This is v3 of previous series on elimination of placing cpumask var on
-stack.
+Use cpumask_any_and_but() to avoid the need for a temporary cpumask on
+the stack.
 
-Change since v2:
-- Update commit message for patch[2-10]. [Mark] 
-- Add Reviewed-by from Mark for patch[2-10].
+Suggested-by: Mark Rutland <mark.rutland@arm.com>
+Reviewed-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Dawei Li <dawei.li@shingroup.cn>
+---
+ drivers/perf/arm-cmn.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-Change since v1:
-- Change from dynamic allocation to a temporary var free helper:
-  cpumask_any_and_but().	[Mark]
-
-- Some minor coding style improvements, reverse chrismas tree e.g.
-
-- For cpumask_any_and_but() itself:
-  - Moved to cpumask.h, just like other helpers.
-  - Return value converted to unsigned int.
-  - Remove EXPORT_SYMBOL, for obvious reason.
-
-v1:
-https://lore.kernel.org/lkml/20240402105610.1695644-1-dawei.li@shingroup.cn/
-https://lore.kernel.org/lkml/1486381132-5610-1-git-send-email-mark.rutland@arm.com/
-
-v2:
-https://lore.kernel.org/lkml/20240403125109.2054881-1-dawei.li@shingroup.cn/
-
-Dawei Li (9):
-  perf/alibaba_uncore_drw: Avoid placing cpumask on the stack
-  perf/arm-cmn: Avoid placing cpumask on the stack
-  perf/arm_cspmu: Avoid placing cpumask on the stack
-  perf/arm_dsu: Avoid placing cpumask on the stack
-  perf/dwc_pcie: Avoid placing cpumask on the stack
-  perf/hisi_pcie: Avoid placing cpumask on the stack
-  perf/hisi_uncore: Avoid placing cpumask on the stack
-  perf/qcom_l2: Avoid placing cpumask on the stack
-  perf/thunderx2: Avoid placing cpumask on the stack
-
-Mark Rutland (1):
-  cpumask: add cpumask_any_and_but()
-
- drivers/perf/alibaba_uncore_drw_pmu.c    | 10 +++-------
- drivers/perf/arm-cmn.c                   | 10 +++++-----
- drivers/perf/arm_cspmu/arm_cspmu.c       |  8 +++-----
- drivers/perf/arm_dsu_pmu.c               | 19 ++++++-------------
- drivers/perf/dwc_pcie_pmu.c              | 10 ++++------
- drivers/perf/hisilicon/hisi_pcie_pmu.c   |  9 ++++-----
- drivers/perf/hisilicon/hisi_uncore_pmu.c |  6 ++----
- drivers/perf/qcom_l2_pmu.c               |  8 +++-----
- drivers/perf/thunderx2_pmu.c             | 10 +++-------
- include/linux/cpumask.h                  | 23 +++++++++++++++++++++++
- 10 files changed, 56 insertions(+), 57 deletions(-)
-
-Thanks,
-
-    Dawei
-
+diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
+index 7ef9c7e4836b..6bfb0c4a1287 100644
+--- a/drivers/perf/arm-cmn.c
++++ b/drivers/perf/arm-cmn.c
+@@ -1950,20 +1950,20 @@ static int arm_cmn_pmu_offline_cpu(unsigned int cpu, struct hlist_node *cpuhp_no
+ 	struct arm_cmn *cmn;
+ 	unsigned int target;
+ 	int node;
+-	cpumask_t mask;
+ 
+ 	cmn = hlist_entry_safe(cpuhp_node, struct arm_cmn, cpuhp_node);
+ 	if (cpu != cmn->cpu)
+ 		return 0;
+ 
+ 	node = dev_to_node(cmn->dev);
+-	if (cpumask_and(&mask, cpumask_of_node(node), cpu_online_mask) &&
+-	    cpumask_andnot(&mask, &mask, cpumask_of(cpu)))
+-		target = cpumask_any(&mask);
+-	else
++
++	target = cpumask_any_and_but(cpumask_of_node(node), cpu_online_mask, cpu);
++	if (target >= nr_cpu_ids)
+ 		target = cpumask_any_but(cpu_online_mask, cpu);
++
+ 	if (target < nr_cpu_ids)
+ 		arm_cmn_migrate(cmn, target);
++
+ 	return 0;
+ }
+ 
 -- 
 2.27.0
 
