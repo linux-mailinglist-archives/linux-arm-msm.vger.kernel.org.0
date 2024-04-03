@@ -1,146 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-16361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16362-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC555897B68
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 00:05:09 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A2715897BAE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 00:37:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 276E81C21221
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 22:05:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 596C21F22FF1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 22:37:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29F98156895;
-	Wed,  3 Apr 2024 22:05:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC1B46F524;
+	Wed,  3 Apr 2024 22:37:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="RN97NbKY"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="K6NfjiI6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4698A155A46
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 22:05:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08963139D;
+	Wed,  3 Apr 2024 22:37:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712181905; cv=none; b=rmfYyM0Vg5dmf20Yv7TA/v83jzQyRfMB9T3J8b2DM/w7W/H29wHn9rW/HtbPxuhhwXfhndcNexBwXREBoliYNs+PwbR76zeDBJqwOKyvcperYpsuUlK3fHDnuTkCvihOIzsI6wKsAjRGiwPgfMjuqrQGzS1qghw3ncgLvfRcd4M=
+	t=1712183840; cv=none; b=qmwjvEANRNhpapYxWl0C7+3wk+z2Tq1vKCcHOjDqDd59flervIgd+o9PdTs/MvcpHusP15/TZQn5Rg5/3/sEWZGWASzIFNo2WLkIVMDgax6sjHUtVy78aMBjMfo5FyqE0s48Z2ibmBc//mAkldNCyzNTSdkdGCKqsd9JdvpCUBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712181905; c=relaxed/simple;
-	bh=wMV6DGmC8+TexjV5H4CBihBSEOZEkPeyx4+1TZ0zHaI=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QdqdMxUD0YA7cV/FCxX0oLxFR5Vde8o+RnDcVHWnUVPd43a6qYrHQ3rCv7vGcql6JYo4xlz1CQlrmNxanHteCRqnv/lboLxQQ3ZtHSnuOXReTziv+GsX1EKiJMwXobhU4zCc1tBGK1744S0022SxgL8lG37uDp0t7wRDcpNENUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=RN97NbKY; arc=none smtp.client-ip=209.85.167.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-516a01c8490so1346273e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 15:05:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1712181901; x=1712786701; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wMV6DGmC8+TexjV5H4CBihBSEOZEkPeyx4+1TZ0zHaI=;
-        b=RN97NbKYBBm+/ifV/h3jg0DbB1kq0Ae8UAWCXk8pB65CuWAncf6u33UFllF3VqVwUl
-         BrWc4cyKDbHIrmzmehl7pa65kHzyT6/Vl+qaLL6i4SqJrn9RBACqg2x5thbyoFvcZNhb
-         MeeupNrSetWKmKSexy6ncQAgZGWvxla0RnRs8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712181901; x=1712786701;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wMV6DGmC8+TexjV5H4CBihBSEOZEkPeyx4+1TZ0zHaI=;
-        b=J+bmrvnQx+ULxkW18P55r1MzsQMPL7+2gqqIjF6q8xvfvlBbV+24ezSMu5Wtui55b1
-         LcIz+8qs2i2IZqiBkWlCFgwwHUKy36WJf8FkuiCZbZgeeRXXZvo+BlGSmN0aOwHwi6JK
-         rqrr1PpWHhgm2+lFL8t5q76Vh00u3bnlNxwFukYaSH1XiK2qrkUThBTCk5G/Iv0y2Yes
-         9l9it3MX5ibAQYKIb2p8dABJpaYdssvlwFAlk/dkFJSQPWWJoABGz96i2F7kHvqIPbHT
-         kiwjQ6/vo+arVgqblS7uwFKILWMxpEVDNI7wuw+Tdp4Nwew6t+frrYRce51jI2tkgqYW
-         tZ6g==
-X-Forwarded-Encrypted: i=1; AJvYcCVmuwqKmz7HSNE/g0sjia3TuMhHltWV+7AGXVYT1nLD4y1Vg8hXmfhnW5YlmuS08v1qtnUugqZNomeQAcLoqwQ6xWcclr9WZcXYI4YB7A==
-X-Gm-Message-State: AOJu0YwN84E5MK+uro2XSi7KS4Vt62kID9ursoM7X88CfsRYH6YCNut4
-	g4qu8jNPxJbux1X43lmkFVNVyY5odk/nQbnosoB1DuWBfOVmwT1xt+hQoYorhfRMk47OaDm2PEI
-	ACWXYzaOwWCqHSb5cOj3irHEj9OearBlLrvC3
-X-Google-Smtp-Source: AGHT+IGlGz6NwwFId6Uph2fl3g1kjsfJMQ9PNfKcdq6jZYYy7ZRg9sXlAEjcuxlOjhWg+5krSZlkS2bEyqTjCzrx7JQ=
-X-Received: by 2002:ac2:4253:0:b0:513:df5f:38cd with SMTP id
- m19-20020ac24253000000b00513df5f38cdmr1409240lfl.4.1712181901096; Wed, 03 Apr
- 2024 15:05:01 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 3 Apr 2024 18:05:00 -0400
+	s=arc-20240116; t=1712183840; c=relaxed/simple;
+	bh=t5QgvyF83tgaWo6fPsxfdOGZ6BsIZ6P3Qxjz6h+2Fog=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=evhQtRQcBMb3Y3EbaiLY5ZRKeF/Y54hB+YXspwBB83MTaQdsmakWl/U+gmJgcg8rnNdp9JrU7JCc/aWSwumPWyAwWyss3KirDBl6Lw/9dAqhtx8f8fHn7gjz+2XQysGbc8+yNcdsQGpUQv6srF8vhoZec8+StNKFGL6YhZt5Nh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=K6NfjiI6; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 433MRDDc005421;
+	Wed, 3 Apr 2024 22:37:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:content-transfer-encoding:in-reply-to; s=
+	qcppdkim1; bh=1kjqUDLoruOJc33VEnfrziBTIXjrzQkIRltrYmSFYBI=; b=K6
+	NfjiI6qy/JXvMbPrFzyUMwCX7PUba23CuTQTcGSbnSeIwZpGF45Y5SS2kOug7RK7
+	y8PwEpg8Q6Xj+0mfSjpzRurywQ+swe7VDDUVWikmG4tjxMnFJeY7SQXDKAXtwAZk
+	biQIKIJQHk3JAMnd7av7Xz5IBy3kJYei+ZueyQkKquWGjQaPWcxwsskCvIYDdkZb
+	qsp00dvII/XQB9r6F9wtiUMmhK51HwrwXDP2NRHe8oJfwXRbTKXP4Bhoh6CiSjhq
+	heyV9eCVJp6SHStEdHXkEGpUsaTmOX857deQT3hrbxnETwuLYrO6wHwqT6SfP5tO
+	OYUw1FfcgWdbYVdKEH8Q==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x9en004m6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 03 Apr 2024 22:37:13 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 433MbCeI020507
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 3 Apr 2024 22:37:12 GMT
+Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.4; Wed, 3 Apr 2024 15:37:11 -0700
+Date: Wed, 3 Apr 2024 15:37:11 -0700
+From: Elliot Berman <quic_eberman@quicinc.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+CC: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Johan Hovold
+	<johan+linaro@kernel.org>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        kernel test
+ robot <lkp@intel.com>
+Subject: Re: [PATCH] firmware: qcom: qcm: fix unused
+ qcom_scm_qseecom_allowlist
+Message-ID: <20240403153511225-0700.eberman@hu-eberman-lv.qualcomm.com>
+References: <20231120185623.338608-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <01ce1142-04ac-5978-9d5a-88f94b920055@quicinc.com>
-References: <1711741835-10044-1-git-send-email-quic_khsieh@quicinc.com>
- <CAE-0n50Z2pDGH+ncjQq-huDsn9jdN=1SfaaU+qw229nZpUVCDw@mail.gmail.com>
- <2f509949-7e7e-cbf6-c1d0-f25971c2d890@quicinc.com> <CAE-0n50qT2mHOGiU89NAmHdADQAAgs3aMP1RFOTTV8oCUbZKgw@mail.gmail.com>
- <01ce1142-04ac-5978-9d5a-88f94b920055@quicinc.com>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Wed, 3 Apr 2024 18:05:00 -0400
-Message-ID: <CAE-0n53MEQHAXsfoCrJdtu5vSTxbjgak-dLFsmLfboPQAawSzQ@mail.gmail.com>
-Subject: Re: [PATCH v3] phy/qcom-qmp-combo: propagate correct return value at phy_power_on()
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
-	abel.vesa@linaro.org, agross@kernel.org, airlied@gmail.com, 
-	andersson@kernel.org, daniel@ffwll.ch, dianders@chromium.org, 
-	dmitry.baryshkov@linaro.org, dri-devel@lists.freedesktop.org, 
-	robdclark@gmail.com, sean@poorly.run, vkoul@kernel.org
-Cc: quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com, 
-	marijn.suijten@somainline.org, freedreno@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20231120185623.338608-1-krzysztof.kozlowski@linaro.org>
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 0a9H2KpuDITUGNYxS4w5HdT0XZ2X1lgE
+X-Proofpoint-ORIG-GUID: 0a9H2KpuDITUGNYxS4w5HdT0XZ2X1lgE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-03_24,2024-04-03_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 impostorscore=0
+ suspectscore=0 mlxlogscore=826 bulkscore=0 adultscore=0 phishscore=0
+ priorityscore=1501 mlxscore=0 malwarescore=0 spamscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404030153
 
-Quoting Abhinav Kumar (2024-04-03 14:28:52)
->
->
-> On 4/3/2024 1:04 PM, Stephen Boyd wrote:
-> > Quoting Abhinav Kumar (2024-04-03 12:58:50)
-> >>
-> >>
-> >> On 4/3/2024 12:51 PM, Stephen Boyd wrote:
-> >>> Quoting Kuogee Hsieh (2024-03-29 12:50:35)
-> >>>> Currently qmp_combo_dp_power_on() always return 0 in regardless of
-> >>>> return value of cfg->configure_dp_phy(). This patch propagate
-> >>>> return value of cfg->configure_dp_phy() all the way back to caller.
-> >>>
-> >>> Is this found via code inspection or because the phy is failing to power
-> >>> on sometimes? I ask because I'm looking at a DP bug on Trogdor with
-> >>> chromeos' v6.6 based kernel and wondering if this is related.
-> >>>
-> >>
-> >> No, we actually hit an issue. This issue was originally reported as a
-> >> link training issue while bringing up DP on x1e80100.
-> >>
-> >> While debugging that we noticed that we should not have even proceeded
-> >> to link training because the PLL was not getting locked and it was
-> >> failing silently since there are no other error prints (and hence the
-> >> second part of the patch to improve the error logs), and we do not
-> >> return any error code from this driver, we could not catch the PLL
-> >> unlocked issue.
-> >
-> > Did link training succeed in that case and the screen was black? Also,
-> > did you figure out why the PLL failed to lock? I sometimes see reports
-> > now with an "Unexpected interrupt:" message from the DP driver and the
-> > interrupt is the PLL unlocked one (DP_INTR_PLL_UNLOCKED).
-> >
->
-> No the link training had failed.
->
-> Yes, root-cause was that the PLL registers were misconfigured in the
-> x1e80100 DP PHY for HBR2. Once we programmed the correct values it
-> worked. This was specific to x1e80100.
+On Mon, Nov 20, 2023 at 07:56:23PM +0100, Krzysztof Kozlowski wrote:
+> For !OF builds, the qcom_scm_qseecom_allowlist is unused:
+> 
+>   drivers/firmware/qcom/qcom_scm.c:1652:34: error: ‘qcom_scm_qseecom_allowlist’ defined but not used [-Werror=unused-const-variable=]
+> 
+> Fixes: 00b1248606ba ("firmware: qcom_scm: Add support for Qualcomm Secure Execution Environment SCM interface")
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/oe-kbuild-all/202311191654.S4wlVUrz-lkp@intel.com/
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Ah ok, so that's what the x1e80100 patch is about.
+Reviewed-by: Elliot Berman <quic_eberman@quicinc.com>
 
->
-> Yes, Doug mentioned this to me on IRC that this issue is still there.
-> Surprising because I thought we had pushed
-> https://patchwork.freedesktop.org/patch/551847/ long ago and it was
-> fixed. It certainly did that time when I had tested this.
+Hope this helps bump it :)
 
-I see it on v6.6 and it is also on v5.15.y (stable kernel) so that has
-been picked back. Somehow the aux interrupt is still happening though
-when the PLL isn't locked. Maybe that interrupt bit should be masked in
-most cases and only unmasked when something in the driver is going to
-care about it.
+> ---
+>  drivers/firmware/qcom/qcom_scm.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+> index 520de9b5633a..ecdb367dc9b8 100644
+> --- a/drivers/firmware/qcom/qcom_scm.c
+> +++ b/drivers/firmware/qcom/qcom_scm.c
+> @@ -1649,7 +1649,7 @@ EXPORT_SYMBOL_GPL(qcom_scm_qseecom_app_send);
+>   * We do not yet support re-entrant calls via the qseecom interface. To prevent
+>   + any potential issues with this, only allow validated machines for now.
+>   */
+> -static const struct of_device_id qcom_scm_qseecom_allowlist[] = {
+> +static const struct of_device_id qcom_scm_qseecom_allowlist[] __maybe_unused = {
+>  	{ .compatible = "lenovo,thinkpad-x13s", },
+>  	{ }
+>  };
+> -- 
+> 2.34.1
+> 
+> 
 
