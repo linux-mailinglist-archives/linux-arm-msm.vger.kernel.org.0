@@ -1,87 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-16335-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16336-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4134B897542
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 18:31:46 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B55D89755F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 18:39:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7189CB223FC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:31:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A63F7288411
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:39:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A914F45025;
-	Wed,  3 Apr 2024 16:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD22222EE3;
+	Wed,  3 Apr 2024 16:39:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ivWKiRt0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SJDAfjfn"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD5A58203;
-	Wed,  3 Apr 2024 16:31:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C66E13A88B;
+	Wed,  3 Apr 2024 16:39:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712161899; cv=none; b=PIHqhHVQdqj930zyMLSzMw2ZqFoG2SsMFM0qH+yDCNVE+IOMnQvd/kYRvAOVGWo/Mj2rhveWL8Hkj1gV8QrQVXVyoXbElMlIziEKMPKPXOEbxrZWL7Pc/lES4REU91ApUTwhrhAqn2RT82N3NrHaxzZqRoa1D4ZcmRjIgA4ssm0=
+	t=1712162346; cv=none; b=NaAauvL2bJqmj2hQwz2FHKfRvavyfSsnwv0jEKVNUELm8xkfO9G+w8zpEUoREtdpcGRG7YKc2lwtlDf/wqtIEopQGPT36tQx71n/orqUk4qWZRRQ86jFxGaVcUcS/TQ7HSQzLFmHcegtd9z2bxhIcel0EozoaknJV5QyXgabgLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712161899; c=relaxed/simple;
-	bh=wCGfbqkCjZqO1k85+SxiFGnS5gu5jwe8FmDhiwuzS+A=;
+	s=arc-20240116; t=1712162346; c=relaxed/simple;
+	bh=04A2OHYO7oPpV0UwEippYwFJ8UjAkwsNYssEoylXMfw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fyB3bjCjg6tjjMyrBMl8S6XsI+sgbriEJamIQSNqJEMloKodPcSk9II86Q0tL1hBYWOLrRAvsfPG7///haXj4TbkBjbacsejnVbgDKRFItT/EgPihdjJS1oW8oL/8UCTWB+imIzA0vbJaLsORjMWY2JzPqpA5neKFYLV9qS3LEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ivWKiRt0; arc=none smtp.client-ip=209.85.128.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=X7aU1hKbVJqFshZpyRsqEJPMGCQrBRbnJT2bMkNpOTHPA/SF88jvVjKSsEZO4qWcrSCDROmbLJRC+SPfBnXjveqCW5Eier/VF1k0gtYug1ydf8y6k5Sd39d+DM9X5OlGm46AFhB/LFq4sfgRctWZUj2ZmcqVl7hgqLSI+fXBAwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SJDAfjfn; arc=none smtp.client-ip=209.85.128.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-6154a3df493so9309877b3.1;
-        Wed, 03 Apr 2024 09:31:37 -0700 (PDT)
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-61428e80f0cso321507b3.2;
+        Wed, 03 Apr 2024 09:39:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712161897; x=1712766697; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1712162344; x=1712767144; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=WitudJQrPd2aFPqvPyORq1RfFG+UAlZFwAtUhdU5ix8=;
-        b=ivWKiRt0B2I5aWf5WtiQcklSaD7i3m4gyUU4q64TL77qsMSsAv08kPBSekgxpQ8XdT
-         WrRe2c+AbwjbCjDGcljSX3nzYI0QqYW1OfRVWgLGuG16B/CixIFG7ZRrHKxuYvrQvJGm
-         BRtOWkg75dm/dADPiGCP1obZfxjkNeL+VHwClWDvaXQLzM8UwcFIkC/TG3facQ/AI2/B
-         Rg8PZm+rF+paTsq3z2FrDf8YOz27g95vQ+dpuSHTfdRBkAV1Uc2bN3PZJssJ7ed1Nme1
-         pSg0P6l4YXJjYmWU40EeZgB8G9tGEiJU3Gtebo6f9d+XiNKxel5xA66JsvTNfu6EHABb
-         jE6w==
+        bh=xiQAnoqBtNMPeYbXhP6YbiPb7pzyLlVXR6yIGlyZoxw=;
+        b=SJDAfjfno+xlJySt9EUd6Wx7O45W7piNHdbElBJpVpUv1tTvVVM2la9ic415Ipdy+1
+         sKxHzZdoeP9GXwLfRCNkm8bEBOeGelAXUjDAtakmgpXR0Aa+JgwvQ4p+JaAcfO3ftgns
+         RX3O12eOrlpGdr6MzlCz7SMmuOWlzOes0LM6XA0GF5S1dYdRPnCYT/xDf+/lH+a/jK49
+         ljBcFQbrti7sYWgDmx1Ry2t5+GUQ3po1GYS5yMyJmZjaIfAubxslEMMXM/hQjT5bLtQn
+         P7ize0YfRkBm+w1abzQRPwGbJxzTSKScvVgsZZMVchaAdkOg955xMo+cTAq5VZ0/+HO9
+         /8Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712161897; x=1712766697;
+        d=1e100.net; s=20230601; t=1712162344; x=1712767144;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WitudJQrPd2aFPqvPyORq1RfFG+UAlZFwAtUhdU5ix8=;
-        b=tBVDtPgASNbvws4v57psZ5Akd6f3Rr+0yhNfF4+wwmS07HVGN6SFfVCXjYjuqPT2jy
-         MKEtqzeV2CKis61pAAjKhqTBLS5xcMdg4j/FQhFrptpkb+z3ijFKeWCLmwJby+ElhX++
-         QeMppoNxHytiSFJFUhke374wfXZyr1+O5PvGJmeCONd54CsH5Kj7TCihbj+k296B49uz
-         ZP/gq1LWFkKTSd1C4GrPoza1R2LYSJ0NAarJCmH2+vExHKjjehfjjcwloy6rjIEhUHFS
-         CsTourn9vaP1jJ3CTiW3Sp6rJMz0am1+a2GfpLEJyBBC8znKZIpur0idC9ufvpy9ZV+a
-         98uw==
-X-Forwarded-Encrypted: i=1; AJvYcCXB3e6G5LIVAlOpwEm0mVgE9tztboO/DvWhskP1brxjrpbZPdDOvyO/ABGAntxXy+sA9CH9fM+5/NPQ97l2wOz0t6CW+N0Y5Lh4M3a4co0xNoGjpJD07am3uLL76ny2jxhSNtgJYw/YAmwJyw==
-X-Gm-Message-State: AOJu0Yw3mLZ3FHFRLelqvAIjy1dv/7Oflty+dt9mkbuCiQeYRnB5RV2a
-	2hv/wRSbNv8BZpaHq/b9HmrMnGLIXBiIna7RrKdhiEIQj/EqHjlX
-X-Google-Smtp-Source: AGHT+IFMH30xboktbAbDIrpwyqMLjCXk6lM/Q2cAcPlVax5NsBs+K/Z/OsSe8cOBgGPht/3y2tq2Jw==
-X-Received: by 2002:a81:6cc2:0:b0:610:b545:6605 with SMTP id h185-20020a816cc2000000b00610b5456605mr1908655ywc.26.1712161897057;
-        Wed, 03 Apr 2024 09:31:37 -0700 (PDT)
+        bh=xiQAnoqBtNMPeYbXhP6YbiPb7pzyLlVXR6yIGlyZoxw=;
+        b=HBMb7OUYdedDDiEYSHxEoMUMoDqB0Nnzx3SUGnZkuRwwCfkIBlzA6L5/pc5Z87eLS0
+         qAlYNrKxdVRvw+m5p0Tf1dxA8MMcNdD33ymd5QA3mYJ4zFkVjVNqT7Pm3sOxj4HSV60w
+         v2Oj0TI+Z2yOUwxhVebRHHNxvAh4JiVHUs0QuuxJ8ooyvViqiqannInZ4JygIqSaOTeG
+         lWEiHh2yzvty3zYgN5kbKibgptIsuwAkJ6M7YSy8GBUQNcBjhoE0sVF3G5xVwUoEwAFi
+         8NIjPr3OEat6cOLCTLRMikT7bNXb+CY4jDP9YlKVdXhvPwdlbXysNu5iTuSwATdxU1/2
+         g55A==
+X-Forwarded-Encrypted: i=1; AJvYcCVGhBmgk2zLjAf1Yi+ZCf7H50jMLHMh3ulGwUEsdyWNIQVZPgOxAZ7OpfmGo9UOXx0xOj1GPYWFV7B24SKk3mle1qR39ZJnAN2FIkJ0KWsxihI+A0E4esfRnzWYyEy313ha8JUYFcLVvEggIQ==
+X-Gm-Message-State: AOJu0Yz1TJaYRbGhMkfrpobo6wKLrFu59eyrzMOVmjGbw1DSfU9QNvhO
+	wJsYvHu+wz6FTqH2VzL1gOGwQUyWvs+m5p1JAF8biRnRt1g+2Lx/
+X-Google-Smtp-Source: AGHT+IEayt2KU+YUNlfHvnp9fdUlFxEUvZ1E9Dnu+VFBi44KnDiK0FddM7x7AwhX2siDCFp/NXRJXw==
+X-Received: by 2002:a81:6054:0:b0:615:1860:551 with SMTP id u81-20020a816054000000b0061518600551mr3174145ywb.30.1712162344022;
+        Wed, 03 Apr 2024 09:39:04 -0700 (PDT)
 Received: from localhost ([2601:344:8301:57f0:e71b:60d3:a7cd:425b])
-        by smtp.gmail.com with ESMTPSA id l3-20020a81ad43000000b0061548271a57sm652178ywk.98.2024.04.03.09.31.36
+        by smtp.gmail.com with ESMTPSA id u68-20020a818447000000b006150c4478a5sm1227398ywf.102.2024.04.03.09.39.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Apr 2024 09:31:36 -0700 (PDT)
-Date: Wed, 3 Apr 2024 09:31:35 -0700
+        Wed, 03 Apr 2024 09:39:03 -0700 (PDT)
+Date: Wed, 3 Apr 2024 09:39:01 -0700
 From: Yury Norov <yury.norov@gmail.com>
 To: Dawei Li <dawei.li@shingroup.cn>
-Cc: will@kernel.org, mark.rutland@arm.com, linux@rasmusvillemoes.dk,
-	xueshuai@linux.alibaba.com, renyu.zj@linux.alibaba.com,
-	yangyicong@hisilicon.com, jonathan.cameron@huawei.com,
-	andersson@kernel.org, konrad.dybcio@linaro.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, Thomas Gleixner <tglx@linutronix.de>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Rusty Russell <rusty@rustcorp.com.au>
-Subject: Re: [PATCH v3 01/10] cpumask: add cpumask_any_and_but()
-Message-ID: <Zg2EZ6II4QNuO/QM@yury-ThinkPad>
-References: <20240403155950.2068109-1-dawei.li@shingroup.cn>
- <20240403155950.2068109-2-dawei.li@shingroup.cn>
+Cc: Mark Rutland <mark.rutland@arm.com>, will@kernel.org,
+	linux@rasmusvillemoes.dk, xueshuai@linux.alibaba.com,
+	renyu.zj@linux.alibaba.com, yangyicong@hisilicon.com,
+	jonathan.cameron@huawei.com, andersson@kernel.org,
+	konrad.dybcio@linaro.org, linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 00/10] perf: Avoid placing cpumask var on stack
+Message-ID: <Zg2GJdio2YSAkqZr@yury-ThinkPad>
+References: <20240403125109.2054881-1-dawei.li@shingroup.cn>
+ <Zg1qgxqrEi3sX3CA@FVFF77S0Q05N>
+ <5BCB924A8FA6320A+Zg1/xw9C493rZ868@centos8>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,38 +88,47 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240403155950.2068109-2-dawei.li@shingroup.cn>
+In-Reply-To: <5BCB924A8FA6320A+Zg1/xw9C493rZ868@centos8>
 
-On Wed, Apr 03, 2024 at 11:59:41PM +0800, Dawei Li wrote:
-> From: Mark Rutland <mark.rutland@arm.com>
+On Thu, Apr 04, 2024 at 12:11:51AM +0800, Dawei Li wrote:
+> Hi Mark,
 > 
-> In some cases, it's useful to be able to select a random cpu from the
-> intersection of two masks, excluding a particular CPU.
+> On Wed, Apr 03, 2024 at 03:41:07PM +0100, Mark Rutland wrote:
+> > On Wed, Apr 03, 2024 at 08:50:59PM +0800, Dawei Li wrote:
+> > > Hi all,
+> > 
+> > Hi,
+> > 
+> > > This is v2 of [1] and [2] which basically eliminate cpumask var allocation
+> > > on stack for perf subsystem.
+> > > 
+> > > Change since v1:
+> > > - Change from dynamic allocation to a temporary var free helper:
+> > >   cpumask_any_and_but().	[Mark]
+> > > 
+> > > - Some minor coding style improvements, reverse chrismas tree e.g.
+> > > 
+> > > - For cpumask_any_and_but() itself:
+> > >   - Moved to cpumask.h, just like other helpers.
+> > >   - Return value converted to unsigned int.
+> > >   - Remove EXPORT_SYMBOL, for obvious reason.
+> > 
+> > Thanks for this!
+> > 
+> > The logic all looks good; if you can spin a v3 with the updated commit messages
+> > I reckon we can queue this up shortly.
 > 
-> For example, in some systems an uncore PMU is shared by a subset of
-> CPUs, and management of this PMU is assigned to some arbitrary CPU in
-> this set. Whenever the management CPU is hotplugged out, we wish to
-> migrate responsibility to another arbitrary CPU which is both in this
-> set and online.
+> Thanks for review.
 > 
-> Today we can use cpumask_any_and() to select an arbitrary CPU in the
-> intersection of two masks. We can also use cpumask_any_but() to select
-> any arbitrary cpu in a mask excluding, a particular CPU.
+> v3 respinned:
+> https://lore.kernel.org/lkml/20240403155950.2068109-1-dawei.li@shingroup.cn/
 > 
-> To do both, we either need to use a temporary cpumask, which is
-> wasteful, or use some lower-level cpumask helpers, which can be unclear.
-> 
-> This patch adds a new cpumask_any_and_but() to cater for these cases.
-> 
-> Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-> Cc: Thomas Gleixner <tglx@linutronix.de>
-> Cc: Andrew Morton <akpm@linux-foundation.org>
-> Cc: Peter Zijlstra <peterz@infradead.org>
-> Cc: Rusty Russell <rusty@rustcorp.com.au>
-> Cc: linux-kernel@vger.kernel.org
-> Signed-off-by: Dawei Li <dawei.li@shingroup.cn>
+> If it's going through perf tree, do we need Acked-by from bitmap
+> maintainers for patch[1]?
 
-Thank you,
+There's only one bitmap-related patch, so I agree - the series should
+go through Mark's tree. I acked 1st patch in v3. Please go ahead.
 
-Acked-by: Yury Norov <yury.norov@gmail.com>
+Thanks,
+Yury
 
