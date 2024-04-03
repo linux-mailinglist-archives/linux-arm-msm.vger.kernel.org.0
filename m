@@ -1,39 +1,39 @@
-Return-Path: <linux-arm-msm+bounces-16306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 227DA8972AC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:33:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3936D8972B4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:35:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B4F381F21867
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 14:33:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6A4321C22B35
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 14:35:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 655E940BE7;
-	Wed,  3 Apr 2024 14:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7AD652F99;
+	Wed,  3 Apr 2024 14:35:18 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA9B09461;
-	Wed,  3 Apr 2024 14:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B3D057875;
+	Wed,  3 Apr 2024 14:35:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712154804; cv=none; b=YSxqUwnY69aWHmAJB+7AZ1EK0CDAwyh6xSOqAwZfXCOjcl9poYpe+09a3RyIGD5i7XblyxPwKDpx8WmdLFdwV7VWzK1nWJ8DY7NAoE0mKcFOriwY/suSgCZbosPFmWTD8rhwwX96kJK0duFYUFWNFQrf+0ZOn8uKsqoGsaMGy/s=
+	t=1712154918; cv=none; b=Iep7MKxu1rbwd046w7zYJ7dPkP6tcaiIMf+vuLIvK6Q4TtnrNfKnU585SAoZC4OMkcfhfmBNHICugJP2uCbXZ80MSwl2hMxcweHtUXAQcJcqNEhw+1GCS+qWGKuXJp4cOKyFaRKQQliNmwtYmGPQ8ooT3mLJMz/J0ZXZAOJQCgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712154804; c=relaxed/simple;
-	bh=HqsbniXj2szSUCBQwyicUfJM4X8Rqg2MGkEXTwj3m1U=;
+	s=arc-20240116; t=1712154918; c=relaxed/simple;
+	bh=RTGore1mMiwZPaN2GqgBvhB6ZDNGVsnEsd/hvDoQcBw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TlAio50/5WnahzJ017BfILDaExYk9H+dFa21NiIgCBcV6uQFqKyVueAyB5vJY2h9+N4MsmNJ3hFrQgO/XhtmCcuRtwhU4H2TD59u1Z0DSCewS/QUak1uXlb5J5D4rTEmIuMbJZMfNQHUHfiVf43g8PlYOrJQAn9I91tltO/ZvVw=
+	 Content-Type:Content-Disposition:In-Reply-To; b=dMVg58PGodaGKA8mz6u46tOfn++p+8TBdIta4AKxkY5kmS1PnakTxylQgL7C11bUZFZxvsPpDYDrBRodsY3MxBpSRhoHwWoQyYU3JdZezXinX1VgkZgdGDHcIjnn+4LU6riq17r9xISTU8ZOB6465ct0vvceyEhsYrOOhf9tt1c=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4E26F1007;
-	Wed,  3 Apr 2024 07:33:53 -0700 (PDT)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D1B3D1007;
+	Wed,  3 Apr 2024 07:35:46 -0700 (PDT)
 Received: from FVFF77S0Q05N (unknown [10.57.16.212])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 01C423F7B4;
-	Wed,  3 Apr 2024 07:33:19 -0700 (PDT)
-Date: Wed, 3 Apr 2024 15:33:17 +0100
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8A9943F7B4;
+	Wed,  3 Apr 2024 07:35:13 -0700 (PDT)
+Date: Wed, 3 Apr 2024 15:35:10 +0100
 From: Mark Rutland <mark.rutland@arm.com>
 To: Dawei Li <dawei.li@shingroup.cn>
 Cc: will@kernel.org, yury.norov@gmail.com, linux@rasmusvillemoes.dk,
@@ -42,11 +42,11 @@ Cc: will@kernel.org, yury.norov@gmail.com, linux@rasmusvillemoes.dk,
 	andersson@kernel.org, konrad.dybcio@linaro.org,
 	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 06/10] perf/dwc_pcie: Avoid placing cpumask var on
+Subject: Re: [PATCH v2 07/10] perf/hisi_pcie: Avoid placing cpumask var on
  stack
-Message-ID: <Zg1orbZqAmVwm9s_@FVFF77S0Q05N>
+Message-ID: <Zg1pHsWnzczoXBb4@FVFF77S0Q05N>
 References: <20240403125109.2054881-1-dawei.li@shingroup.cn>
- <20240403125109.2054881-7-dawei.li@shingroup.cn>
+ <20240403125109.2054881-8-dawei.li@shingroup.cn>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,9 +55,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240403125109.2054881-7-dawei.li@shingroup.cn>
+In-Reply-To: <20240403125109.2054881-8-dawei.li@shingroup.cn>
 
-On Wed, Apr 03, 2024 at 08:51:05PM +0800, Dawei Li wrote:
+On Wed, Apr 03, 2024 at 08:51:06PM +0800, Dawei Li wrote:
 > For CONFIG_CPUMASK_OFFSTACK=y kernel, explicit allocation of cpumask
 > variable on stack is not recommended since it can cause potential stack
 > overflow.
@@ -90,34 +90,32 @@ Reviewed-by: Mark Rutland <mark.rutland@arm.com>
 Mark.
 
 > ---
->  drivers/perf/dwc_pcie_pmu.c | 10 ++++------
->  1 file changed, 4 insertions(+), 6 deletions(-)
+>  drivers/perf/hisilicon/hisi_pcie_pmu.c | 9 ++++-----
+>  1 file changed, 4 insertions(+), 5 deletions(-)
 > 
-> diff --git a/drivers/perf/dwc_pcie_pmu.c b/drivers/perf/dwc_pcie_pmu.c
-> index 957058ad0099..c5e328f23841 100644
-> --- a/drivers/perf/dwc_pcie_pmu.c
-> +++ b/drivers/perf/dwc_pcie_pmu.c
-> @@ -690,9 +690,8 @@ static int dwc_pcie_pmu_offline_cpu(unsigned int cpu, struct hlist_node *cpuhp_n
+> diff --git a/drivers/perf/hisilicon/hisi_pcie_pmu.c b/drivers/perf/hisilicon/hisi_pcie_pmu.c
+> index 5d1f0e9fdb08..06b192cc31d5 100644
+> --- a/drivers/perf/hisilicon/hisi_pcie_pmu.c
+> +++ b/drivers/perf/hisilicon/hisi_pcie_pmu.c
+> @@ -673,7 +673,6 @@ static int hisi_pcie_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
 >  {
->  	struct dwc_pcie_pmu *pcie_pmu;
->  	struct pci_dev *pdev;
-> -	int node;
-> -	cpumask_t mask;
+>  	struct hisi_pcie_pmu *pcie_pmu = hlist_entry_safe(node, struct hisi_pcie_pmu, node);
 >  	unsigned int target;
-> +	int node;
+> -	cpumask_t mask;
+>  	int numa_node;
 >  
->  	pcie_pmu = hlist_entry_safe(cpuhp_node, struct dwc_pcie_pmu, cpuhp_node);
 >  	/* Nothing to do if this CPU doesn't own the PMU */
-> @@ -702,10 +701,9 @@ static int dwc_pcie_pmu_offline_cpu(unsigned int cpu, struct hlist_node *cpuhp_n
->  	pcie_pmu->on_cpu = -1;
->  	pdev = pcie_pmu->pdev;
->  	node = dev_to_node(&pdev->dev);
-> -	if (cpumask_and(&mask, cpumask_of_node(node), cpu_online_mask) &&
+> @@ -684,10 +683,10 @@ static int hisi_pcie_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
+>  
+>  	/* Choose a local CPU from all online cpus. */
+>  	numa_node = dev_to_node(&pcie_pmu->pdev->dev);
+> -	if (cpumask_and(&mask, cpumask_of_node(numa_node), cpu_online_mask) &&
 > -	    cpumask_andnot(&mask, &mask, cpumask_of(cpu)))
 > -		target = cpumask_any(&mask);
 > -	else
 > +
-> +	target = cpumask_any_and_but(cpumask_of_node(node), cpu_online_mask, cpu);
+> +	target = cpumask_any_and_but(cpumask_of_node(numa_node),
+> +				     cpu_online_mask, cpu);
 > +	if (target >= nr_cpu_ids)
 >  		target = cpumask_any_but(cpu_online_mask, cpu);
 >  
