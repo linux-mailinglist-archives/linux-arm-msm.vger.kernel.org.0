@@ -1,139 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-16304-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16305-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 729BE8972A5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:32:11 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6BF4F8972A9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:32:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 25F0F1F21913
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 14:32:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9DDA31C26302
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 14:32:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9A4E3716D;
-	Wed,  3 Apr 2024 14:32:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81E3352F99;
+	Wed,  3 Apr 2024 14:32:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EblNiMH5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4052FD272;
-	Wed,  3 Apr 2024 14:32:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6B2433A7
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 14:32:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712154729; cv=none; b=C+pX+icBgkaK37RYuW7+uwmNO+W3XJPEet0eeCjd8PExRvitTLlqDBjd2zUaVJSPsusG6vFCxPxOmfgQXWX3cCJy8nHODQR3U3EHhV/DbB3aCa10Ya2QaemDqHJRbD6WInWbLSJrRj18gBH28oW41kTWpJu3GkWhP7znRSK1hJE=
+	t=1712154746; cv=none; b=KLC5P/1s1d8tlByfCVbuEmTtJuQNsqaQENi8IzndNJtBFX8G9cupXTBEvWIUKJ9fNzUgApbEfFccSXq6Ujm8uPUcExE9E+/evgCMK6kuXP9/L84Uk3GNvgu5jBnf5mbRHlzwjkPqbGEKxfGPLiPJGOP41/GEAIZRDNd3x+6e9QA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712154729; c=relaxed/simple;
-	bh=IfavOBHuNBC7BA6z+t/e9bZRoESBeEMspQVXwHiTgtQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bgyj43GdJcYpqvFuaQeKsC7TXazfjB2J2rusqURVCvQ8eTU8SugUIBYDCXcPo16yQ0PgyaYOpzeVY9YM5fjEvKyZ8b7DxgsAIC3Lwuq30Ex9NEpxNx9DpNos3A105PAbtOPE5PYEHXoYE4IDu068HEa1Sivu5HCSNb6ExFVZORE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B81511007;
-	Wed,  3 Apr 2024 07:32:38 -0700 (PDT)
-Received: from FVFF77S0Q05N (unknown [10.57.16.212])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6C8843F7B4;
-	Wed,  3 Apr 2024 07:32:05 -0700 (PDT)
-Date: Wed, 3 Apr 2024 15:32:02 +0100
-From: Mark Rutland <mark.rutland@arm.com>
-To: Dawei Li <dawei.li@shingroup.cn>
-Cc: will@kernel.org, yury.norov@gmail.com, linux@rasmusvillemoes.dk,
-	xueshuai@linux.alibaba.com, renyu.zj@linux.alibaba.com,
-	yangyicong@hisilicon.com, jonathan.cameron@huawei.com,
-	andersson@kernel.org, konrad.dybcio@linaro.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 05/10] perf/arm_dsu: Avoid placing cpumask var on stack
-Message-ID: <Zg1oYr3DyEL3gTV7@FVFF77S0Q05N>
-References: <20240403125109.2054881-1-dawei.li@shingroup.cn>
- <20240403125109.2054881-6-dawei.li@shingroup.cn>
+	s=arc-20240116; t=1712154746; c=relaxed/simple;
+	bh=aipPs+nNO2Bho5jPcYvxXCxYtS5rlWyrH/B5Kl5LKTw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ioXfRQPyaFfVWc+kpgWhhHYiiPTg10QX1p5sI0hTVA5lpOqz01Hn+droK2MSQkali2OMpNE6ChUJK5ONW4qKTX7WhzDPo2uVol6gvTCcNsyovxqaQR96w0brmSPfuLb268+Ai4przKrFYVyt5zhK+AftB3c7aiOwtbbA4Duw+A0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EblNiMH5; arc=none smtp.client-ip=209.85.219.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-ddaebc9d6c9so6066420276.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 07:32:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712154743; x=1712759543; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=34CSkv0ffEjJCmKkTU1MygJJn6kuTYj1aCVEbSSRxPA=;
+        b=EblNiMH5l8EgC02lIbwS5FjXf1LFOG0qTTbXEn+bbZoFVgj3NdjO5FBBEG5XK1h/m8
+         GOlw7Xjzj/L+Kq9zo12noOv2ls4agJVOPJxNolzHVV973/U5kpLP2kZfaAaHoORG+Ks3
+         kNNt0KrklA1ui4B60kfShEs0gFNFrJUNvpq7QFEmOfVk8Bvb94M1u8ZaAU27uPtpOb/g
+         JX4lV4wu2a5wFIrl75S3dt690GzMg/qHWdJW+PenGawFinFsAxTAftvc8iQbnHBYVxau
+         etfBj6IKjmI6lzKIC5Pw4INxUk1v/l4qMPCBr4VJj0zIyY9JdwIrUAivx+oV0kZ6lc43
+         j9ZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712154743; x=1712759543;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=34CSkv0ffEjJCmKkTU1MygJJn6kuTYj1aCVEbSSRxPA=;
+        b=bj4vHntX2rf9YwjrdtKl7YayNYB6jMxBDpLlh5gRkWyqlgPw5mpZDJjbQCK9rOd5hV
+         TGRxS3V+cQYr/bTeCnPRE3RS1kjjVmh/yJfZxV6V6BnZfR3sA7xt6RMrTW+dMUn8fbQX
+         5dbqru55I/iYxiOYO0LpBqdjEMUbsZpHlobSNAYVutWZywDZE189BafUiri97QDyHAC1
+         9m49znnrXeJLGJvFA5pS9nTPW+JqEINn6WULU4QRSEuxMqDsXA4VdVnysoip01ulYi6o
+         nGsfBjMAeBZPz2a2P5ZfIorEGhchyatP0Qu9IvLZgNkfjLCMwSOHGpxRNcg/6OPPS+nJ
+         zlKw==
+X-Forwarded-Encrypted: i=1; AJvYcCVp4jP1XBNjTHEEYCy1xATGpkZ2iTtwRI0eQlVY4SmbmMJ/cV33eOmDAfxZT57HiKAq4J/rDIQT1dlfJ5J92eGO3d/+GBIFEa1cWDKDrQ==
+X-Gm-Message-State: AOJu0YzvC6I1GsGNXEA9TAB0G8ZxLRRmYDji4adFrrKKROKOKPTtK1Ab
+	AYXXcPXDf4PRNi1oXrRVQRAFG43nYNEqMYFiXyWUPlaN0Sw5TbwmQRf3yKqV1/KaDvXsTX/kGB3
+	ObRW33Wc9zLAy3qwyTFlpl5Q+N9RnFh3leEbX+Q==
+X-Google-Smtp-Source: AGHT+IH98EISaj94HpDi2rlmrd8w9Fj6vSdDh3ZnOjMDuCqy7Y1IBEY6ToBgt88nGS+ar9pdmZ/9uSUzzjKPwGwom1I=
+X-Received: by 2002:a25:c543:0:b0:dcf:3ef1:1997 with SMTP id
+ v64-20020a25c543000000b00dcf3ef11997mr14153649ybe.1.1712154742988; Wed, 03
+ Apr 2024 07:32:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240403125109.2054881-6-dawei.li@shingroup.cn>
+References: <20240403-msm-drm-dsc-dsi-video-upstream-v1-0-db5036443545@linaro.org>
+ <CAA8EJprd78g0jM4u2uY-vZnqQibbWevjxqzXFaPohkvmyWHkHw@mail.gmail.com> <CABymUCO0cpixiC9Maz5cd-L91qzE3_4QF=4qvNodpzaOR4Vi-w@mail.gmail.com>
+In-Reply-To: <CABymUCO0cpixiC9Maz5cd-L91qzE3_4QF=4qvNodpzaOR4Vi-w@mail.gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 3 Apr 2024 17:32:11 +0300
+Message-ID: <CAA8EJpoFA3JsxzYrCR7Py8AHcOSrxUZRPO4hMMMDr1SrQFsWRw@mail.gmail.com>
+Subject: Re: [PATCH v3 0/6] Add DSC support to DSI video panel
+To: Jun Nie <jun.nie@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, Vinod Koul <vkoul@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	Jonathan Marek <jonathan@marek.ca>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Apr 03, 2024 at 08:51:04PM +0800, Dawei Li wrote:
-> For CONFIG_CPUMASK_OFFSTACK=y kernel, explicit allocation of cpumask
-> variable on stack is not recommended since it can cause potential stack
-> overflow.
-> 
-> Instead, kernel code should always use *cpumask_var API(s) to allocate
-> cpumask var in config-neutral way, leaving allocation strategy to
-> CONFIG_CPUMASK_OFFSTACK.
-> 
-> But dynamic allocation in cpuhp's teardown callback is somewhat problematic
-> for if allocation fails(which is unlikely but still possible):
-> - If -ENOMEM is returned to caller, kernel crashes for non-bringup
->   teardown;
-> - If callback pretends nothing happened and returns 0 to caller, it may
->   trap system into an in-consisitent/compromised state;
-> 
-> Use newly-introduced cpumask_any_and_but() to address all issues above.
-> It eliminates usage of temporary cpumask var in generic way, no matter how
-> the cpumask var is allocated.
-> 
-> Suggested-by: Mark Rutland <mark.rutland@arm.com>
-> Signed-off-by: Dawei Li <dawei.li@shingroup.cn>
+On Wed, 3 Apr 2024 at 17:27, Jun Nie <jun.nie@linaro.org> wrote:
+>
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2024=E5=B9=B44=E6=
+=9C=883=E6=97=A5=E5=91=A8=E4=B8=89 17:49=E5=86=99=E9=81=93=EF=BC=9A
+> >
+> > On Wed, 3 Apr 2024 at 12:11, Jun Nie <jun.nie@linaro.org> wrote:
+> > >
+> > > This is follow up update to Jonathan's patch set.
+> > >
+> > > Changes vs V2:
+> > > - Rebase to latest mainline.
+> > > - Drop the INTF_CFG2_DATA_HCTL_EN change as it is handled in
+> > >     latest mainline code.
+> > > - Drop the bonded DSI patch as I do not have device to test it.
+> > > - Address comments from version 2.
+> >
+> > Which comments? "Adress comments" is the worst case of changelog.
+> Adopted. Will add more details in next version.
+> >
+> > Also, what do you consider as version 2? Jonathan Marek has only sent v=
+1.
+>
+> It's wired. I see v2 in patch title of below link. Just notice that
+> there is v1 in the link address.
+> https://patchwork.freedesktop.org/patch/567518/?series=3D126430&rev=3D1
+>
 
-The logic looks good to me, but I'd like the commit message updated the same as
-per my comment on patch 2.
+Ack, I didn't remember that there was v2. Please excuse me then.
 
-With that commit message:
 
-Reviewed-by: Mark Rutland <mark.rutland@arm.com>
-
-Mark.
-
-> ---
->  drivers/perf/arm_dsu_pmu.c | 19 ++++++-------------
->  1 file changed, 6 insertions(+), 13 deletions(-)
-> 
-> diff --git a/drivers/perf/arm_dsu_pmu.c b/drivers/perf/arm_dsu_pmu.c
-> index bae3ca37f846..adc0bbb5fafe 100644
-> --- a/drivers/perf/arm_dsu_pmu.c
-> +++ b/drivers/perf/arm_dsu_pmu.c
-> @@ -230,15 +230,6 @@ static const struct attribute_group *dsu_pmu_attr_groups[] = {
->  	NULL,
->  };
->  
-> -static int dsu_pmu_get_online_cpu_any_but(struct dsu_pmu *dsu_pmu, int cpu)
-> -{
-> -	struct cpumask online_supported;
-> -
-> -	cpumask_and(&online_supported,
-> -			 &dsu_pmu->associated_cpus, cpu_online_mask);
-> -	return cpumask_any_but(&online_supported, cpu);
-> -}
-> -
->  static inline bool dsu_pmu_counter_valid(struct dsu_pmu *dsu_pmu, u32 idx)
->  {
->  	return (idx < dsu_pmu->num_counters) ||
-> @@ -827,14 +818,16 @@ static int dsu_pmu_cpu_online(unsigned int cpu, struct hlist_node *node)
->  
->  static int dsu_pmu_cpu_teardown(unsigned int cpu, struct hlist_node *node)
->  {
-> -	int dst;
-> -	struct dsu_pmu *dsu_pmu = hlist_entry_safe(node, struct dsu_pmu,
-> -						   cpuhp_node);
-> +	struct dsu_pmu *dsu_pmu;
-> +	unsigned int dst;
-> +
-> +	dsu_pmu = hlist_entry_safe(node, struct dsu_pmu, cpuhp_node);
->  
->  	if (!cpumask_test_and_clear_cpu(cpu, &dsu_pmu->active_cpu))
->  		return 0;
->  
-> -	dst = dsu_pmu_get_online_cpu_any_but(dsu_pmu, cpu);
-> +	dst = cpumask_any_and_but(&dsu_pmu->associated_cpus,
-> +				  cpu_online_mask, cpu);
->  	/* If there are no active CPUs in the DSU, leave IRQ disabled */
->  	if (dst >= nr_cpu_ids)
->  		return 0;
-> -- 
-> 2.27.0
-> 
+--=20
+With best wishes
+Dmitry
 
