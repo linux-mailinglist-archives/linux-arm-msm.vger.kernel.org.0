@@ -1,134 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-16336-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B55D89755F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 18:39:12 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43928897576
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 18:44:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A63F7288411
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:39:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 710571C25EE8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:44:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD22222EE3;
-	Wed,  3 Apr 2024 16:39:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FA9D14C58A;
+	Wed,  3 Apr 2024 16:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SJDAfjfn"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i0GskreP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C66E13A88B;
-	Wed,  3 Apr 2024 16:39:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 923CB1B7F4;
+	Wed,  3 Apr 2024 16:44:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712162346; cv=none; b=NaAauvL2bJqmj2hQwz2FHKfRvavyfSsnwv0jEKVNUELm8xkfO9G+w8zpEUoREtdpcGRG7YKc2lwtlDf/wqtIEopQGPT36tQx71n/orqUk4qWZRRQ86jFxGaVcUcS/TQ7HSQzLFmHcegtd9z2bxhIcel0EozoaknJV5QyXgabgLk=
+	t=1712162654; cv=none; b=CDHlBXcmPRoxxJMZbyn5VkACDhQ9TUWXXR1fqJmAvuYqfAOrxh+6nWk9q0LkSvUDORa7/ntY57CeNM79DLrbFQTcOHCTE2ELiaQeWLf8yxujw+Gv4zKEcD503q8LZPHmFh9acDj/+Wtn9gPYKd8w9hVBMvubd0dUYwNAfYW6GzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712162346; c=relaxed/simple;
-	bh=04A2OHYO7oPpV0UwEippYwFJ8UjAkwsNYssEoylXMfw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X7aU1hKbVJqFshZpyRsqEJPMGCQrBRbnJT2bMkNpOTHPA/SF88jvVjKSsEZO4qWcrSCDROmbLJRC+SPfBnXjveqCW5Eier/VF1k0gtYug1ydf8y6k5Sd39d+DM9X5OlGm46AFhB/LFq4sfgRctWZUj2ZmcqVl7hgqLSI+fXBAwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SJDAfjfn; arc=none smtp.client-ip=209.85.128.169
+	s=arc-20240116; t=1712162654; c=relaxed/simple;
+	bh=M1neYOlhzngATdBbVyJaKe7fkRAK//9DrStR8GOcQu4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HZT2XFqARwF4Z+85DrgQGT9BNu/Qrhxwgl8kP7Kvm8wgPlOlU/6YaxP4O4hledGA1mkNbcaArPbCmwBNh874p01oMZ7M+zmfhwIFzX9WxPwNE6IJi2Zzcv3q9EeX9nmUg35ytnMDbJMJvOYA0YtYAitbeCsfo+gmgvjcjnhaH6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i0GskreP; arc=none smtp.client-ip=209.85.221.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-61428e80f0cso321507b3.2;
-        Wed, 03 Apr 2024 09:39:05 -0700 (PDT)
+Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-4da6995e58bso3887e0c.1;
+        Wed, 03 Apr 2024 09:44:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712162344; x=1712767144; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xiQAnoqBtNMPeYbXhP6YbiPb7pzyLlVXR6yIGlyZoxw=;
-        b=SJDAfjfno+xlJySt9EUd6Wx7O45W7piNHdbElBJpVpUv1tTvVVM2la9ic415Ipdy+1
-         sKxHzZdoeP9GXwLfRCNkm8bEBOeGelAXUjDAtakmgpXR0Aa+JgwvQ4p+JaAcfO3ftgns
-         RX3O12eOrlpGdr6MzlCz7SMmuOWlzOes0LM6XA0GF5S1dYdRPnCYT/xDf+/lH+a/jK49
-         ljBcFQbrti7sYWgDmx1Ry2t5+GUQ3po1GYS5yMyJmZjaIfAubxslEMMXM/hQjT5bLtQn
-         P7ize0YfRkBm+w1abzQRPwGbJxzTSKScvVgsZZMVchaAdkOg955xMo+cTAq5VZ0/+HO9
-         /8Uw==
+        d=gmail.com; s=20230601; t=1712162651; x=1712767451; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Aej6QFoETxeFvbQm8/sOYYAdEcWAnghw/7Ynm8n0ucQ=;
+        b=i0GskreP3bhVFE7L+jTrP55NTeLGEOiadN1sTEIYfQZF05ZqD7aFwgcHEWZzggB27p
+         Iu9pSvcSJvv9ctMRtptjRYbadJq2t5PSTI2cbljCYV4c1eP3C39UqNHbXsHjXVWPgRF4
+         cUNtQf66y29Ij0Ux473Ma14olhaOmCPIXPj2UkCmSyIiiLfd/Et1NmcTyn3tZ2/5CroR
+         JGJgD9ELhuJW4HPsYoaybFcG5Or8NO7kPPs+wVFcewF/98zylX3MkbB9YRRmtZLed4a1
+         /rF+ytNHfDippVqXcj/p/3MB6p+36Kb2Su2g3ayZiSDGs4JicOJMXB6apxu1GA4my1On
+         wA5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712162344; x=1712767144;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xiQAnoqBtNMPeYbXhP6YbiPb7pzyLlVXR6yIGlyZoxw=;
-        b=HBMb7OUYdedDDiEYSHxEoMUMoDqB0Nnzx3SUGnZkuRwwCfkIBlzA6L5/pc5Z87eLS0
-         qAlYNrKxdVRvw+m5p0Tf1dxA8MMcNdD33ymd5QA3mYJ4zFkVjVNqT7Pm3sOxj4HSV60w
-         v2Oj0TI+Z2yOUwxhVebRHHNxvAh4JiVHUs0QuuxJ8ooyvViqiqannInZ4JygIqSaOTeG
-         lWEiHh2yzvty3zYgN5kbKibgptIsuwAkJ6M7YSy8GBUQNcBjhoE0sVF3G5xVwUoEwAFi
-         8NIjPr3OEat6cOLCTLRMikT7bNXb+CY4jDP9YlKVdXhvPwdlbXysNu5iTuSwATdxU1/2
-         g55A==
-X-Forwarded-Encrypted: i=1; AJvYcCVGhBmgk2zLjAf1Yi+ZCf7H50jMLHMh3ulGwUEsdyWNIQVZPgOxAZ7OpfmGo9UOXx0xOj1GPYWFV7B24SKk3mle1qR39ZJnAN2FIkJ0KWsxihI+A0E4esfRnzWYyEy313ha8JUYFcLVvEggIQ==
-X-Gm-Message-State: AOJu0Yz1TJaYRbGhMkfrpobo6wKLrFu59eyrzMOVmjGbw1DSfU9QNvhO
-	wJsYvHu+wz6FTqH2VzL1gOGwQUyWvs+m5p1JAF8biRnRt1g+2Lx/
-X-Google-Smtp-Source: AGHT+IEayt2KU+YUNlfHvnp9fdUlFxEUvZ1E9Dnu+VFBi44KnDiK0FddM7x7AwhX2siDCFp/NXRJXw==
-X-Received: by 2002:a81:6054:0:b0:615:1860:551 with SMTP id u81-20020a816054000000b0061518600551mr3174145ywb.30.1712162344022;
-        Wed, 03 Apr 2024 09:39:04 -0700 (PDT)
-Received: from localhost ([2601:344:8301:57f0:e71b:60d3:a7cd:425b])
-        by smtp.gmail.com with ESMTPSA id u68-20020a818447000000b006150c4478a5sm1227398ywf.102.2024.04.03.09.39.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Apr 2024 09:39:03 -0700 (PDT)
-Date: Wed, 3 Apr 2024 09:39:01 -0700
-From: Yury Norov <yury.norov@gmail.com>
-To: Dawei Li <dawei.li@shingroup.cn>
-Cc: Mark Rutland <mark.rutland@arm.com>, will@kernel.org,
-	linux@rasmusvillemoes.dk, xueshuai@linux.alibaba.com,
-	renyu.zj@linux.alibaba.com, yangyicong@hisilicon.com,
-	jonathan.cameron@huawei.com, andersson@kernel.org,
-	konrad.dybcio@linaro.org, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 00/10] perf: Avoid placing cpumask var on stack
-Message-ID: <Zg2GJdio2YSAkqZr@yury-ThinkPad>
-References: <20240403125109.2054881-1-dawei.li@shingroup.cn>
- <Zg1qgxqrEi3sX3CA@FVFF77S0Q05N>
- <5BCB924A8FA6320A+Zg1/xw9C493rZ868@centos8>
+        d=1e100.net; s=20230601; t=1712162651; x=1712767451;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Aej6QFoETxeFvbQm8/sOYYAdEcWAnghw/7Ynm8n0ucQ=;
+        b=e8yBpGhE0mKo3L6OmYGnR55qeIfLG1anmLG/C9J7ZN+3APLmsWh6CvVnaVCYsjCiAq
+         hrNtZxk5KKZnV09ovVAOzQxwB01QW0NNKc7ScDXWNxQ0zT+i61WPf/HwALGzRKQ/BiSX
+         2r2pgmwbGI+J8jma1PQLhQpFVG8uK0yJELN2QNQ/ZEPXA5GxeVSzqk/IdcBm3yahGwRn
+         oed2hqf8dr7V23Fc6MYt4JHlKRTXO29I5BVGoVp8dN9jWEDGfcCwZ82JN9BHBfYpLw+e
+         /dx+zr5qFizvfFylmLkqTFSlx5t4y2pg5rZFtWvn0zdGhdzMxA2/t5cd0Hlv5PzNvCJT
+         s8PQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVpasyVqxm4S9hgcbs8dUy8q6r+F+STTWmT6MCdat3oYYGFf+6rfr/8BT6yKy29uM1AbAIolt6SJh3lZYGu+DdYx9rzuUZiacHksRrNK21d6PVKAmcA2bpy1ts6Yz9bGXjhHCps2uWJIbPr/dVtNNfyydVyE+K1ucGwYnGAjdY8ancrFK+L0hNax/c1XJjskEYv0wHpLr3QYcYae0jP0AbcIV7ty92/ff7x1UVKg/DHrQ4m6vd6MPfODU9MtPOA44TG4uH72P9SYMTl8iJ2Ymh/B+II5LqiE8dVCoxE0cInMo7xr933GhgCTU9KJIPBF0gQ+pJTOetPWCfC4PSf48Ob4/F3T0jmLDQrzHEiBXzlQ9uOWnlsVOsi4UII2DcFQsmqCVxhtgxyxlHQxh8eD2L7lMlo4zNFCgiUX02hHGzwheLA4FNBh6P5J9lVZbQvfyrD8swvpZGH79BZRxgEksXawYvBHZWkIm5bDVqAJDXTaUbQfuH7mx3HADTE5vaD85KO48aJ4TNlbvfSjEfa2sFySReyB4JFNhSFbk7HS6ecFe8=
+X-Gm-Message-State: AOJu0YwxuG7mpFcprqH+unaPXUWhDi4M8kWHnrmwwEENz8OeMEG3DaYw
+	/CXUPwT+I6xRjhFEM44yzLJqF6NH9qPNdRXdt6gxeHK+bYkky7/7uoKKDbs7asmf72EjxBTb0AM
+	t1tSGUHKch652xWodKB7wWjUMX4s=
+X-Google-Smtp-Source: AGHT+IFEFFEcpcdQfCxRWJYlDuuUETZ0sWBciDlGUMCvLnJmEBIY1oP87nAaJSL5QQDatxb4oTnFcly4MrzzQ8OrF5o=
+X-Received: by 2002:a05:6122:499a:b0:4d3:b326:5ae8 with SMTP id
+ ex26-20020a056122499a00b004d3b3265ae8mr10815788vkb.14.1712162651582; Wed, 03
+ Apr 2024 09:44:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5BCB924A8FA6320A+Zg1/xw9C493rZ868@centos8>
+References: <20240327160314.9982-1-apais@linux.microsoft.com> <20240327160314.9982-2-apais@linux.microsoft.com>
+In-Reply-To: <20240327160314.9982-2-apais@linux.microsoft.com>
+From: Allen <allen.lkml@gmail.com>
+Date: Wed, 3 Apr 2024 09:43:57 -0700
+Message-ID: <CAOMdWSLavg27YZgnfE2QHjO=4RNmFx_7veAURaPG_=qWX=KMVA@mail.gmail.com>
+Subject: Re: [PATCH 1/9] hyperv: Convert from tasklet to BH workqueue
+To: Allen Pais <apais@linux.microsoft.com>
+Cc: linux-kernel@vger.kernel.org, tj@kernel.org, keescook@chromium.org, 
+	vkoul@kernel.org, marcan@marcan.st, sven@svenpeter.dev, 
+	florian.fainelli@broadcom.com, rjui@broadcom.com, sbranden@broadcom.com, 
+	paul@crapouillou.net, Eugeniy.Paltsev@synopsys.com, 
+	manivannan.sadhasivam@linaro.org, vireshk@kernel.org, Frank.Li@nxp.com, 
+	leoyang.li@nxp.com, zw@zh-kernel.org, wangzhou1@hisilicon.com, 
+	haijie1@huawei.com, shawnguo@kernel.org, s.hauer@pengutronix.de, 
+	sean.wang@mediatek.com, matthias.bgg@gmail.com, 
+	angelogioacchino.delregno@collabora.com, afaerber@suse.de, 
+	logang@deltatee.com, daniel@zonque.org, haojian.zhuang@gmail.com, 
+	robert.jarzmik@free.fr, andersson@kernel.org, konrad.dybcio@linaro.org, 
+	orsonzhai@gmail.com, baolin.wang@linux.alibaba.com, zhang.lyra@gmail.com, 
+	patrice.chotard@foss.st.com, linus.walleij@linaro.org, wens@csie.org, 
+	jernej.skrabec@gmail.com, peter.ujfalusi@gmail.com, kys@microsoft.com, 
+	haiyangz@microsoft.com, wei.liu@kernel.org, decui@microsoft.com, 
+	jassisinghbrar@gmail.com, mchehab@kernel.org, maintainers@bluecherrydvr.com, 
+	aubin.constans@microchip.com, ulf.hansson@linaro.org, manuel.lauss@gmail.com, 
+	mirq-linux@rere.qmqm.pl, jh80.chung@samsung.com, oakad@yahoo.com, 
+	hayashi.kunihiko@socionext.com, mhiramat@kernel.org, brucechang@via.com.tw, 
+	HaraldWelte@viatech.com, pierre@ossman.eu, duncan.sands@free.fr, 
+	stern@rowland.harvard.edu, oneukum@suse.com, 
+	openipmi-developer@lists.sourceforge.net, dmaengine@vger.kernel.org, 
+	asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+	linux-rpi-kernel@lists.infradead.org, linux-mips@vger.kernel.org, 
+	imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org, 
+	linux-mediatek@lists.infradead.org, linux-actions@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
+	linux-hyperv@vger.kernel.org, linux-rdma@vger.kernel.org, 
+	linux-media@vger.kernel.org, linux-mmc@vger.kernel.org, 
+	linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	linux-s390@vger.kernel.org, netdev@vger.kernel.org, linux-usb@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Apr 04, 2024 at 12:11:51AM +0800, Dawei Li wrote:
-> Hi Mark,
-> 
-> On Wed, Apr 03, 2024 at 03:41:07PM +0100, Mark Rutland wrote:
-> > On Wed, Apr 03, 2024 at 08:50:59PM +0800, Dawei Li wrote:
-> > > Hi all,
-> > 
-> > Hi,
-> > 
-> > > This is v2 of [1] and [2] which basically eliminate cpumask var allocation
-> > > on stack for perf subsystem.
-> > > 
-> > > Change since v1:
-> > > - Change from dynamic allocation to a temporary var free helper:
-> > >   cpumask_any_and_but().	[Mark]
-> > > 
-> > > - Some minor coding style improvements, reverse chrismas tree e.g.
-> > > 
-> > > - For cpumask_any_and_but() itself:
-> > >   - Moved to cpumask.h, just like other helpers.
-> > >   - Return value converted to unsigned int.
-> > >   - Remove EXPORT_SYMBOL, for obvious reason.
-> > 
-> > Thanks for this!
-> > 
-> > The logic all looks good; if you can spin a v3 with the updated commit messages
-> > I reckon we can queue this up shortly.
-> 
-> Thanks for review.
-> 
-> v3 respinned:
-> https://lore.kernel.org/lkml/20240403155950.2068109-1-dawei.li@shingroup.cn/
-> 
-> If it's going through perf tree, do we need Acked-by from bitmap
-> maintainers for patch[1]?
+> The only generic interface to execute asynchronously in the BH context is
+> tasklet; however, it's marked deprecated and has some design flaws. To
+> replace tasklets, BH workqueue support was recently added. A BH workqueue
+> behaves similarly to regular workqueues except that the queued work items
+> are executed in the BH context.
+>
+> This patch converts drivers/hv/* from tasklet to BH workqueue.
+>
+> Based on the work done by Tejun Heo <tj@kernel.org>
+> Branch: https://git.kernel.org/pub/scm/linux/kernel/git/tj/wq.git for-6.10
+>
+> Signed-off-by: Allen Pais <allen.lkml@gmail.com>
+> ---
+>  drivers/hv/channel.c      |  8 ++++----
+>  drivers/hv/channel_mgmt.c |  5 ++---
+>  drivers/hv/connection.c   |  9 +++++----
+>  drivers/hv/hv.c           |  3 +--
+>  drivers/hv/hv_balloon.c   |  4 ++--
+>  drivers/hv/hv_fcopy.c     |  8 ++++----
+>  drivers/hv/hv_kvp.c       |  8 ++++----
+>  drivers/hv/hv_snapshot.c  |  8 ++++----
+>  drivers/hv/hyperv_vmbus.h |  9 +++++----
+>  drivers/hv/vmbus_drv.c    | 19 ++++++++++---------
+>  include/linux/hyperv.h    |  2 +-
+>  11 files changed, 42 insertions(+), 41 deletions(-)
 
-There's only one bitmap-related patch, so I agree - the series should
-go through Mark's tree. I acked 1st patch in v3. Please go ahead.
+Wei,
 
-Thanks,
-Yury
+ I need to send out a v2 as I did not include the second patch that
+updates drivers/pci/controller/pci-hyperv.c
+
+Thanks.
 
