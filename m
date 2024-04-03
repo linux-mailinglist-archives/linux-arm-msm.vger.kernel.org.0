@@ -1,102 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-16242-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16243-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4298A896BA4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 12:08:36 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0AFB1896BBB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 12:11:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F14FF2917FC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 10:08:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9FBB61F211F2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 10:11:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE61613666C;
-	Wed,  3 Apr 2024 10:06:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B51F6137C2F;
+	Wed,  3 Apr 2024 10:10:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BCFu8d3W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [5.144.164.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB70313AA2E
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 10:06:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E924137774
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 10:10:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712138769; cv=none; b=R2OAD47BF6tVuLKWd+4vrgPG5V5c2VmVKHhWn0YhHkr4DDcvjA5vf6acoH+7EDii0H59P8kyjzKHP+08TMTePVPAwuzaeNu7DI0q95XTnp+lfMzkVrkF2pcNlSOvOSVEmHt93Yo02l7Djpnz15W9Hj0vamnZqQo2knye1PMm7us=
+	t=1712139018; cv=none; b=nkLjJDqKpwOCW+77fTV4ZgNubvCLRh827KIWhmWxW4oi2jonnEZym7aIRnsirBKzZe31r/Hwv4USAjm+KDlA+ytGURxlxX9LP7ZCkE9eN23earBbTkGkPkmaGk0o5Od+IVajqyWhbGh4cYDQJP26m0yutFD8U9C4/nRBsj4pCt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712138769; c=relaxed/simple;
-	bh=PtsQ7BPoEhJdj1DTbguN0BEbC+PRqVWUfaWeLRN8KX0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=V2BaEO3egs+We93TZMvJBLyI7gS5zK93axSr29PBMWKBBoHSk5zwx34m6qnT+lae8QQdot2qHll1P5YMUlR9EXs2Adz/LNMQxE+FsykabBcasBIBjtZwlEjUtFSwOZ59ZFs3EwtP+lS88rfZo47lLuS+ksE/iAfO0Gc3QojIFQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by m-r2.th.seeweb.it (Postfix) with ESMTPSA id C482D3EDD1;
-	Wed,  3 Apr 2024 12:05:57 +0200 (CEST)
-Date: Wed, 3 Apr 2024 12:05:55 +0200
-From: Marijn Suijten <marijn.suijten@somainline.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Sumit Semwal <sumit.semwal@linaro.org>, 
-	Caleb Connolly <caleb.connolly@linaro.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>, 
-	Caleb Connolly <caleb@connolly.tech>
-Subject: Re: [PATCH v3 4/4] drm: panel: Add LG sw43408 panel driver
-Message-ID: <vcxytd7cxmvno3hb7tvxwfbnsupaw3mcqplt7mnrntjhkybklr@lxffwioi2bzn>
-References: <20240402-lg-sw43408-panel-v3-0-144f17a11a56@linaro.org>
- <20240402-lg-sw43408-panel-v3-4-144f17a11a56@linaro.org>
- <3hh7nfqflj73422q47p6do7aiormxwspwkfg557epeqn2krtcc@dsufsohfaz4l>
- <pair66urg2ecqhob5gzzdtzuyofrmcf6rk7v2akggbotcpv7ld@bxhxftbd4xbn>
+	s=arc-20240116; t=1712139018; c=relaxed/simple;
+	bh=xE6QTbHFKdSfTxh3//5Pv1bJxOb959BsmtpGeNd3Olo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lYnFW341X2dMCz/US6Va8Lk9VmCkvsvxuUscF91u54o/5v8aO8dEj/b2iOO3Kj1RSl8SL9UlU6D31wyu0LqORcgVHHGwGT7spAZg7kFMfE+XRxVdkSl/e4V03oRpWjRwzKsI5mj/8KQgVu4ccpNG67mq4zfc6WruUBKe0owtsao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BCFu8d3W; arc=none smtp.client-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-61518d33293so20801077b3.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 03:10:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712139015; x=1712743815; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=rx+/ODJmMo86rpamIh1rOudX2tVZC9qd0xdyuh7u+G8=;
+        b=BCFu8d3Wq0lTtUxJIp9yHcY1pClcdDtEI8J1B+waNcPk/dciwXxqn1s/V3Yncoa25a
+         jLDhsDns+pCUSkP+dtSq6qb8oR4k6P52p+whclFfwINl0T27DpsiPeEaq/OISmJGX5rr
+         EnAhC0M6SUedf9zqi1wctLhd8ME3ZNe0navo4aouzAO33F21GZzBb0mwGtQ1XgwlJvhG
+         aYYzIS2h+zT1deqp2fzNKBLpIo0X3QZRc/zCGmzxb+9BW12irGjg56bAyXGMjLVAZeYf
+         5F+1wKMuZMGzH+huC5KkPFesSki1Z/n+ZG/vkkF1IAUDKRSpH5kecaxvbLzB0VqCd50+
+         AlWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712139015; x=1712743815;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rx+/ODJmMo86rpamIh1rOudX2tVZC9qd0xdyuh7u+G8=;
+        b=We8tBQ3LXK028q5NZcQYD82wwqf+YZxT7/7qwz/NFsctL1cu5leFvs3u2x3zxIgJBC
+         R0LvYqU7X65la33rYP1s/654dKor8K8H7SFmm8/eHYrCooByGapalU9D5tgw6sfjUCNW
+         CScV6JcjZOihCPD7Vow9QkfYlDe+8HVotEb7gf3LQDxe4hv2HPLGQjOekx8W+24XVqll
+         GDbEJCy7k2fpzhYebcH2TU3sjC39mcg1o6QbiOeabKraGT+7j6qxd160C9d0QTUwaW/v
+         j6pvX6lAj+RgwlEeAK/kcJr6IhHnirDz5Vlf8Ok20WtGakT1JAmhqCH6ZW973baj5ihK
+         Diew==
+X-Forwarded-Encrypted: i=1; AJvYcCW9uRgNjbuYjibw86y2C1egBgnHemquGppkLZYv84CMQ4pWUuhAZy0oGGu6aq/Id4HFvBcO6URBujbdJ6z5FlwChZs2a+AvKcJ0jUsW8w==
+X-Gm-Message-State: AOJu0Yy1k1ri7FR5ODDlgT+NAD+W1etbTzMfsunVxtUHtRfSJAI+mziJ
+	sWdzjjQrTHN/MvMImL1xnkSfpYAyb1YCjqg0Iq6M54HKBs+vFhU7Rms+VqknAjeg52b33/haIoN
+	zz57a7oq1TaWA9Q/9lCaUMA/uweIunBrFI6H95A==
+X-Google-Smtp-Source: AGHT+IGjh7gnnBb9kNyO5PIPLl2Il5vz8QX1R3iBfDYBjyvguAc/FohIsajpw5mGOtCvkRWDwc/PlH4RwAJFT54eBCo=
+X-Received: by 2002:a25:ba42:0:b0:dcb:be59:25e1 with SMTP id
+ z2-20020a25ba42000000b00dcbbe5925e1mr12992717ybj.30.1712139015113; Wed, 03
+ Apr 2024 03:10:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pair66urg2ecqhob5gzzdtzuyofrmcf6rk7v2akggbotcpv7ld@bxhxftbd4xbn>
+References: <20240403-msm-drm-dsc-dsi-video-upstream-v1-0-db5036443545@linaro.org>
+ <20240403-msm-drm-dsc-dsi-video-upstream-v1-2-db5036443545@linaro.org>
+In-Reply-To: <20240403-msm-drm-dsc-dsi-video-upstream-v1-2-db5036443545@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 3 Apr 2024 13:10:03 +0300
+Message-ID: <CAA8EJpo-tZSOD+B+4znyBmFPVOjc6yocsVwYMXPN5d3WQfbr=Q@mail.gmail.com>
+Subject: Re: [PATCH v3 2/6] drm/msm/dsi: set video mode widebus enable bit
+ when widebus is enabled
+To: Jun Nie <jun.nie@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, Vinod Koul <vkoul@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	Jonathan Marek <jonathan@marek.ca>
+Content-Type: text/plain; charset="UTF-8"
 
-On 2024-04-03 05:37:29, Dmitry Baryshkov wrote:
-> On Tue, Apr 02, 2024 at 11:17:52PM +0200, Marijn Suijten wrote:
-> > On 2024-04-02 02:51:15, Dmitry Baryshkov wrote:
-> > > From: Sumit Semwal <sumit.semwal@linaro.org>
-> > > 
-> > > LG SW43408 is 1080x2160, 4-lane MIPI-DSI panel, used in some Pixel3
-> > > phones.
-> > 
-> > @60Hz?
-> 
-> With the current settings and timings I'm only getting 30 Hz. I have to
-> double the mode->clock to get 60.
+On Wed, 3 Apr 2024 at 12:11, Jun Nie <jun.nie@linaro.org> wrote:
+>
+> From: Jonathan Marek <jonathan@marek.ca>
+>
+> The value returned by msm_dsi_wide_bus_enabled() doesn't match what the
+> driver is doing in video mode. Fix that by actually enabling widebus for
+> video mode.
+>
+> Fixes: efcbd6f9cdeb ("drm/msm/dsi: Enable widebus for DSI")
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> Signed-off-by: Jun Nie <jun.nie@linaro.org>
 
-Still seems useful to mention (here and in Kconfig).  The proposed driver emits
-a mode to userspace of 60Hz, maybe the commit message should say that in the
-current state "something" prevents it from going that fast?
+You have ignored all the review comments that were provided for v1.
+None of the tags were picked up either.
 
-Since I keep forgetting (because it's not mentioned anywhere) that this is a
-cmdmode panel (or at least configured for that with the current driver), I'd
-again suggest to play with sync_cfg_height.  If setting it to 0xfff0 results in
-timeouts, your tear GPIO is misconfigured and not making the MDP aware of the
-actual tick rate.
+Have you posted this for internal review like I have explicitly asked you?
 
-Otherwise, more likely, just bump up the porches a bit, based on the discussions
-around reduce_pclk_for_compression() /not/ accounting for transfer time in
-cmdmode.  In one of my drivers (pending eternal cleanup hell) I inlined the
-calculation to reverse what the "right" porch should be based on a downstream
-clock rate:
+> ---
+>  drivers/gpu/drm/msm/dsi/dsi.xml.h  | 1 +
+>  drivers/gpu/drm/msm/dsi/dsi_host.c | 2 ++
+>  2 files changed, 3 insertions(+)
+>
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi.xml.h b/drivers/gpu/drm/msm/dsi/dsi.xml.h
+> index 2a7d980e12c3..f0b3cdc020a1 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi.xml.h
+> +++ b/drivers/gpu/drm/msm/dsi/dsi.xml.h
+> @@ -231,6 +231,7 @@ static inline uint32_t DSI_VID_CFG0_TRAFFIC_MODE(enum dsi_traffic_mode val)
+>  #define DSI_VID_CFG0_HSA_POWER_STOP                            0x00010000
+>  #define DSI_VID_CFG0_HBP_POWER_STOP                            0x00100000
+>  #define DSI_VID_CFG0_HFP_POWER_STOP                            0x01000000
+> +#define DSI_VID_CFG0_DATABUS_WIDEN                             0x02000000
+>  #define DSI_VID_CFG0_PULSE_MODE_HSA_HE                         0x10000000
 
-https://github.com/somainline/linux/commit/85978a69cde088a23963c03758dad5f1a2e79bab#diff-a9ac8689e45c59a4fe9aa150e4bd53675687f5c8b4aecb40b5b5b66b864257e0R353-R366
+From the top of the file:
 
-And separately, though I cannot find it, there have been (more accurate?)
-calculations based on downstream `qcom,mdss-dsi-panel-jitter` and friends.
+/* Autogenerated file, DO NOT EDIT manually!
 
-- Marijn
+>
+>  #define REG_DSI_VID_CFG1                                       0x0000001c
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 9d86a6aca6f2..2a0422cad6de 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -754,6 +754,8 @@ static void dsi_ctrl_enable(struct msm_dsi_host *msm_host,
+>                 data |= DSI_VID_CFG0_TRAFFIC_MODE(dsi_get_traffic_mode(flags));
+>                 data |= DSI_VID_CFG0_DST_FORMAT(dsi_get_vid_fmt(mipi_fmt));
+>                 data |= DSI_VID_CFG0_VIRT_CHANNEL(msm_host->channel);
+> +               if (msm_dsi_host_is_wide_bus_enabled(&msm_host->base))
+> +                       data |= DSI_VID_CFG0_DATABUS_WIDEN;
+>                 dsi_write(msm_host, REG_DSI_VID_CFG0, data);
+>
+>                 /* Do not swap RGB colors */
+>
+> --
+> 2.34.1
+>
+
+
+-- 
+With best wishes
+Dmitry
 
