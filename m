@@ -1,91 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-16175-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43BA18961A2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 02:51:21 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83F0B896233
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 03:44:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F3304285C4C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 00:51:19 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 23C0FB265C6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 01:44:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E7D5D53E;
-	Wed,  3 Apr 2024 00:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF0001B95B;
+	Wed,  3 Apr 2024 01:43:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BjBHlNMs"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dIkuELiv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 518E0D27D
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 00:51:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B531B946;
+	Wed,  3 Apr 2024 01:43:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712105477; cv=none; b=by3G8/vU78ug8Uh7Emh9UxAoeGyHZi7igqFYCoS/CpORD2T5ieP1TKTdYVGD3eQzC/DFkgzX8qNQPIXjZpxAGFz7qFvZrVqaLO/7E8z+qEMCKfCZBVUN+yOdOGyP4vok6HSF3d7m/iq5+8EiAa8z58W5TVKCXYAi2xxa8VMtZkg=
+	t=1712108604; cv=none; b=ufP8YPyghntgRY733KHswZ+UI/uHXEmQhGO5U141u3XEE1M2xG2ROLFy3f9UWbjnqqe7kS93hS1KbFA/zTWa8vY42lBvXvMuzH06tCR66wzRdZxtPYSLkPYi4ZgldiKyoSJcsJkv3kYVJ87Aa4K1TquiRXMg2Ws9/ceBS3DHSgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712105477; c=relaxed/simple;
-	bh=qTyq5Gw+MhcMN5mTb2IXkM6rqV32gk6sroaiKtJGkXE=;
+	s=arc-20240116; t=1712108604; c=relaxed/simple;
+	bh=p3/vC/O60cW1sJhdzpZy97xlMwM5ZR+kBSjXW1h82SA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nCB9w7oNdh+qeGtvFBx+5Ni0upkL7qkfhCcJq7OApGD8NPDAXg1kRKtIjBlXtL/9VBKbG63JrQx/c47zGJRDPn1a5O6nEbHMflEyswZcS8R6Ncmr5CMzPGBNjPgWdesI+NQXfQEu/1k15bag8xlRl9glG1tlYSbun8qGPEVVoVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BjBHlNMs; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-515a81928faso7156912e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Apr 2024 17:51:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712105473; x=1712710273; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GWHRA9QpgbMHjxrXRwpYcGFaFTNivreKL1s0uQUDObo=;
-        b=BjBHlNMsuKMrPTpm0v3kZcg9ARBBmXcwaAhXvRZdJ/RlZpd1kLWSDy1Pgtup6Hqm42
-         GTNAYY9plzVREjRPNW+vX7UYjzryMjOQQdo3Pj/+phPhVdN5ivwKhdE4zftnX8nkonJD
-         nMLML37UqMl5UXZgjB/UmCltjZaLA3UP10g/TyyZTJauxAve6AdGhcpN8pS9m3L7NqZy
-         /beLeWRXSKeR3gbQqw6Qw895/tkOlm0Uk70T3td5xuJFnPINBoJ6Bn3gKSCB3ZsNlNnZ
-         TxEDgUqFo2VTwGWZCuTWIWQz51dJDQbvSFj5bwYzLOSpPiZCiBnrptq62e9+n7VrhsyM
-         AZBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712105473; x=1712710273;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GWHRA9QpgbMHjxrXRwpYcGFaFTNivreKL1s0uQUDObo=;
-        b=lwQlEpzi5FHzAVmU8a6UVT8GRc6LgkvpC5beaoCRM+QjPEmJTIhd8n7P/mDUYprkFA
-         RQTEHm01uUrUNMlxzx0McDFGY6Td4KMaIXmtDXlwtXZXLtbFMnWUjb/rpxanoB0+7pWN
-         W6equwSD81BivawtafAjTkvTTvOKmcXCQYqks2yhaQwQS2uL79BxEY2sVKNBNJHUlQHS
-         RqaVza/p8xJ5izJM+zdJzzYJEe0IRqhvVW/D61X4XZ9ZLpGyk9T5fbhb9/RdIrxeGia8
-         ugCR1VO57M9AT8trTaEVdMdpoDeHElIMqp1/9GTt33a3GiGgSmwQQiCKtYDlld13G+Iy
-         uZIg==
-X-Forwarded-Encrypted: i=1; AJvYcCXFXOoxEtVzVOZZzNKiN/HIsTY/00Jnqf5X7kM2NVstTge5T8htl/n2D4f9mmg2iBfo1VAufJtOMhaCSRnGC0u/j1wxqlGany1Spg990Q==
-X-Gm-Message-State: AOJu0YwbJMIzHL3Dj6QDyQWYevpG4+hq2rm0fnOH7WbQIUaWjBtbiK72
-	IfHW2IafQetodCtf0ROetRHpl7s+cKEGdnesy1Sh2EvVr9x/8io6PHS/U7qHlF4=
-X-Google-Smtp-Source: AGHT+IFdYWW/kAAnQoA5IRo9Tv52gkqmNbWMJpe/JRsfmA/mRxHEpRhzCrfHlRnsuqaCYtAolee3xg==
-X-Received: by 2002:ac2:5631:0:b0:513:39a0:1fec with SMTP id b17-20020ac25631000000b0051339a01fecmr618732lff.66.1712105473384;
-        Tue, 02 Apr 2024 17:51:13 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzyjmhyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a00e:a300::227])
-        by smtp.gmail.com with ESMTPSA id f8-20020a193808000000b00515bbc2feedsm1907527lfa.102.2024.04.02.17.51.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Apr 2024 17:51:13 -0700 (PDT)
-Date: Wed, 3 Apr 2024 03:51:11 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Marijn Suijten <marijn.suijten@somainline.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
-	Sumit Semwal <sumit.semwal@linaro.org>, Caleb Connolly <caleb.connolly@linaro.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	Sam Ravnborg <sam@ravnborg.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>, 
-	Caleb Connolly <caleb@connolly.tech>
-Subject: Re: [PATCH v3 1/4] dt-bindings: panel: Add LG SW43408 MIPI-DSI panel
-Message-ID: <odtd5tfurh4kkhclsi3zmumrucmiz3jpqsukflbsvhmgvtyehl@bobsiymwtsys>
-References: <20240402-lg-sw43408-panel-v3-0-144f17a11a56@linaro.org>
- <20240402-lg-sw43408-panel-v3-1-144f17a11a56@linaro.org>
- <9fbb9058-ccfe-436d-b413-b3ba27e4e5f9@linaro.org>
- <CAA8EJprwWd=ZtwnpTm3cVP8RBEqxCcSGyBu-bHj=iV=+X2=FyQ@mail.gmail.com>
- <t3cx5qxiteer27vsvysizbrxkbamxgrcbn2oafisodjopwas5z@nxlasb4rlnml>
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q61TZjz+/T66d/N5hSOurYQKTIQgvYcpFj2+dyCZpDjYCRuRQ7sO66GjHo85HmyR3T5O3kbQyPuvamxnKgyLLhP4u2aoHez0QeibLsMugM0AfbKo+oVb9tKahBEpG77HlsR40dVp8F8eSQuVzR4LaODlYtOKsbVkMde9G0yD918=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dIkuELiv; arc=none smtp.client-ip=192.198.163.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1712108603; x=1743644603;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=p3/vC/O60cW1sJhdzpZy97xlMwM5ZR+kBSjXW1h82SA=;
+  b=dIkuELivB2rOLvXIsAPmRN4lZRHY3mW+W3CkUTODf4INYDTh0Rnc4hAv
+   BQA76lHlkNu5lIDJqGkNG22eeIesEQ5PM/Om3xCXj3Buh1FVvOw0zOZ0g
+   dDfXCj1iRqo03JAU/E2Rb7uwN1MCcfe5i+bW6zLWnNBAdIHyiVsgYWtdh
+   atcFFVYlNSI8i+ayYPv89OZc37P/WvJ3NGdkPa5+f5AdvTKc68SEVWuGy
+   NSd+07IA4OM9E+lVnKMmthlS4q83A2Ry5nOSocC7kNajD1m5gtAgZp/Xs
+   9aD3tmTBeGAs2t3Bjw5vuW4GUgshnZ/DCN6RPzn6MaPyRP/j6Nr7B+zD6
+   g==;
+X-CSE-ConnectionGUID: WudfhBrsQayYf1vdWyvLtA==
+X-CSE-MsgGUID: 4eWWiqt5SamwosdhGOmz/A==
+X-IronPort-AV: E=McAfee;i="6600,9927,11032"; a="18681604"
+X-IronPort-AV: E=Sophos;i="6.07,176,1708416000"; 
+   d="scan'208";a="18681604"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Apr 2024 18:43:22 -0700
+X-CSE-ConnectionGUID: qRADzWEaS/e9qI/jWWDl5Q==
+X-CSE-MsgGUID: YMNiNCojRiCWuS+4okXJsg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,176,1708416000"; 
+   d="scan'208";a="22901528"
+Received: from lkp-server02.sh.intel.com (HELO 90ee3aa53dbd) ([10.239.97.151])
+  by fmviesa004.fm.intel.com with ESMTP; 02 Apr 2024 18:43:19 -0700
+Received: from kbuild by 90ee3aa53dbd with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1rrpem-0001k5-2a;
+	Wed, 03 Apr 2024 01:43:16 +0000
+Date: Wed, 3 Apr 2024 09:43:08 +0800
+From: kernel test robot <lkp@intel.com>
+To: Dawei Li <dawei.li@shingroup.cn>, will@kernel.org, mark.rutland@arm.com
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	xueshuai@linux.alibaba.com, renyu.zj@linux.alibaba.com,
+	yangyicong@hisilicon.com, jonathan.cameron@huawei.com,
+	andersson@kernel.org, konrad.dybcio@linaro.org,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, Dawei Li <dawei.li@shingroup.cn>
+Subject: Re: [PATCH 4/9] perf/arm_dsu: Avoid explicit cpumask var allocation
+ from stack
+Message-ID: <202404030906.L4BhRzHw-lkp@intel.com>
+References: <20240402105610.1695644-5-dawei.li@shingroup.cn>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -94,44 +83,64 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <t3cx5qxiteer27vsvysizbrxkbamxgrcbn2oafisodjopwas5z@nxlasb4rlnml>
+In-Reply-To: <20240402105610.1695644-5-dawei.li@shingroup.cn>
 
-On Tue, Apr 02, 2024 at 10:59:11PM +0200, Marijn Suijten wrote:
-> On 2024-04-02 10:23:22, Dmitry Baryshkov wrote:
-> > On Tue, 2 Apr 2024 at 09:31, Krzysztof Kozlowski
-> > <krzysztof.kozlowski@linaro.org> wrote:
-> > >
-> > > On 02/04/2024 01:51, Dmitry Baryshkov wrote:
-> > > > From: Sumit Semwal <sumit.semwal@linaro.org>
-> > > >
-> > > > LG SW43408 is 1080x2160, 4-lane MIPI-DSI panel present on Google Pixel 3
-> > > > phones.
-> > > >
-> > > > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > > > Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
-> > > > [caleb: convert to yaml]
-> > > > Signed-off-by: Caleb Connolly <caleb@connolly.tech>
-> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > ---
-> > >
-> > > Tags missing.
-> > >
-> > > `b4 trailers -u`
-> > 
-> > Excuse me, I keep on forgetting it.
-> 
-> Does a similar thing exist for adding Cc: tags for all reviewers/replyers to an
-> earlier version, even if said reviewer didn't yet provide R-b/A-b or other tags?
-> 
-> I'd like to have the next revisions in my inbox as well after leaving
-> comments :)
+Hi Dawei,
 
-Unfortunately I don't know such option.
+kernel test robot noticed the following build errors:
 
-> 
-> Thanks! - Marijn
+[auto build test ERROR on soc/for-next]
+[also build test ERROR on linus/master v6.9-rc2 next-20240402]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Dawei-Li/perf-alibaba_uncore_drw-Avoid-explicit-cpumask-var-allocation-from-stack/20240402-192244
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/soc/soc.git for-next
+patch link:    https://lore.kernel.org/r/20240402105610.1695644-5-dawei.li%40shingroup.cn
+patch subject: [PATCH 4/9] perf/arm_dsu: Avoid explicit cpumask var allocation from stack
+config: arm64-randconfig-001-20240403 (https://download.01.org/0day-ci/archive/20240403/202404030906.L4BhRzHw-lkp@intel.com/config)
+compiler: clang version 16.0.4 (https://github.com/llvm/llvm-project.git ae42196bc493ffe877a7e3dff8be32035dea4d07)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240403/202404030906.L4BhRzHw-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202404030906.L4BhRzHw-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+>> drivers/perf/arm_dsu_pmu.c:243:24: error: incompatible pointer types passing 'cpumask_var_t *' (aka 'struct cpumask **') to parameter of type 'const struct cpumask *'; remove & [-Werror,-Wincompatible-pointer-types]
+           ret = cpumask_any_but(&online_supported, cpu);
+                                 ^~~~~~~~~~~~~~~~~
+   include/linux/cpumask.h:379:52: note: passing argument to parameter 'mask' here
+   unsigned int cpumask_any_but(const struct cpumask *mask, unsigned int cpu)
+                                                      ^
+   1 error generated.
+
+
+vim +243 drivers/perf/arm_dsu_pmu.c
+
+   232	
+   233	static unsigned int dsu_pmu_get_online_cpu_any_but(struct dsu_pmu *dsu_pmu, int cpu)
+   234	{
+   235		cpumask_var_t online_supported;
+   236		unsigned int ret;
+   237	
+   238		if (!alloc_cpumask_var(&online_supported, GFP_KERNEL))
+   239			return -ENOMEM;
+   240	
+   241		cpumask_and(online_supported,
+   242			    &dsu_pmu->associated_cpus, cpu_online_mask);
+ > 243		ret = cpumask_any_but(&online_supported, cpu);
+   244	
+   245		free_cpumask_var(online_supported);
+   246	
+   247		return ret;
+   248	}
+   249	
 
 -- 
-With best wishes
-Dmitry
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
