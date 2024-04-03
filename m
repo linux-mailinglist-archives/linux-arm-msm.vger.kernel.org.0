@@ -1,204 +1,221 @@
-Return-Path: <linux-arm-msm+bounces-16257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE839896D24
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 12:49:57 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7EB0896D2B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 12:51:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C6BDEB27B90
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 10:49:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EAE411C2660B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 10:51:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCF1113E40D;
-	Wed,  3 Apr 2024 10:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E3CC13666D;
+	Wed,  3 Apr 2024 10:51:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cwctwoeU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="q4SWlo4K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6100871B51;
-	Wed,  3 Apr 2024 10:49:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42580259C
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 10:51:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712141377; cv=none; b=KxdogYDCrsVe6RqI4fec2ZDXOTRtSArlzuA3cRXMYvSLh4RXGF+bYY2kIPryXZSprUgqB6k3vGui64VwCi95dqthISt2OEOKwh6N436V9iGWHENIDfHT/DHBIZv8CIcCEkRUi1OOUDEl+Vch7mqqoKWQNmmMqqb5GbiUNWZi5xk=
+	t=1712141478; cv=none; b=rgbjbv7KklYImO6GiqAMRLgZQM6cKWpzMOjgzrhfcnHpfm2Syt+5k8zex43ixaOMyf8/7TEz1JMytdjUqJdP5gTpsywDyhLsbRBnB2HJPLce87PC57XYbmJUATKf7MUe98UmTTeD7QbypT07a4Xj4C/SaxezuN31BKhJEKaOf0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712141377; c=relaxed/simple;
-	bh=SCIy0EG+uFbNOzL3613AqHOt6u3B/Y2aby5pgVdljDA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=u3FpoOsHOjPKqT7MVqx/VEnjH/G8w7h1kRePfQlADF5K47ZNn2V41E2DJ8tyHPyBdIyusP07Cun6mH3Ed/rFcVNdztTTB70RqLIO+z7FACeKYyIB96QPN7BE37FzAykkqtw4ttFBSL93nOIsgZR3/RnRfC7300v2P9SHJkAtHIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cwctwoeU; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 433AkTpg024670;
-	Wed, 3 Apr 2024 10:49:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=c67oN18iBtPSs/+q3UpsNdiS1NtB1a70D0ttgRP6p0A=; b=cw
-	ctwoeUgmumLbOWF69pxlzYJc6kxVz+JJEGD5I873QJEC6THFYO6MaQJqXizt0X38
-	VF4SMpUI/7laIotbkg6bYCnaTxwtAw0RiTSPN37b15HCnOkgpoIdKtX+Syyr1y8L
-	uEjNg6kRwUGOMcpCHqTdyR4aexrf3GPAFN2GYmyFiauJWSvCvbe+qje3qf7czVNo
-	GAQe+Ge8Qg9QGZBVjt22XKfLvaxl4UymcO9r1jj+eR6iY0Mq8ekKGuA6H+snraPS
-	i26qU7sCZ1ra1GvPN3nnKIo8oGQI4ZvK64lapc7/7VpDb3rKS5gOZAlP9cCdvADh
-	junHiTAa64+9HPFivTJQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x9377rbna-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 03 Apr 2024 10:49:32 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 433AnNUd006151
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 3 Apr 2024 10:49:23 GMT
-Received: from [10.218.10.146] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 3 Apr 2024
- 03:49:18 -0700
-Message-ID: <2e70f208-5a8e-3feb-d484-23b78c70d08f@quicinc.com>
-Date: Wed, 3 Apr 2024 16:19:14 +0530
+	s=arc-20240116; t=1712141478; c=relaxed/simple;
+	bh=JEF5Tfyng5ds06IeAh7i1GVKXOkoGcvDpFoJ+GtSRZM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tIgzHkpev7TyC8febhleZCMYBTMCfBxFolE8v/kNJjpyXxvt1gfxRtqfFa+g4EJh0X6Ur4hi3IjREu0K0Lx5pr3Lnl9YarrV3M3QswYfPwjp6QllQPqgjyx98PJwIwvYZtDtRByGe3YeHNQc3gUYS8bw2GXqYjTgJkdyWT4G+go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=q4SWlo4K; arc=none smtp.client-ip=209.85.219.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-dcc80d6004bso5709252276.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 03:51:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712141475; x=1712746275; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=9wQYgll8+YgZcGCKnnvI2FxMVky7cnKkeUfk2C0HI4g=;
+        b=q4SWlo4KNE6hxjRJ44pWS/kdEmQX3ArnVjkmpzRl3DxJFlPf0aT4MNwRnKDnWxhTp6
+         c9RV+rWBLt0yASPV9vgQEYUjOdKuTwzQgIbWmPiGvs4BMJM9+FXCVT3YmkEswlPT5hfn
+         B2Y3yO1Csx8oC3f7l2x7hvW+lOEe2clcKmYClfbojfkoFdiUwMCka3HL7k+2DOPk4FzV
+         6N+cnN8xP8kDMd1poWeLPbj+hox61axX+mJclHnIz+rZZWKHictGXP+NhmYuBHD8e9GD
+         pSZT8odQislEMb4g5ASfO9WUNBL0S8/st6ckU2JmvEm0+nyD9jmzp9TyvTLCewdB5Sw0
+         JXJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712141475; x=1712746275;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9wQYgll8+YgZcGCKnnvI2FxMVky7cnKkeUfk2C0HI4g=;
+        b=gg4LQ42MnucpQRgNMHR4fA6AH2N6eZE1JPxL/haZQon9YOVYbtmkpMBsxeDVP4A+y6
+         R+3BDVrgsLtRGRbCaD1YcSf+o+jZ+TLy6Ge/oBh+bkJ7RPviLaVGsotad+HJK/Kb89f+
+         f2RLae/Ectxsw2H+7qIuVGX2KReuyN7psay8SziIUcx+ML1HyIM61aeN+kqHbHLCmv9N
+         NISQKlpCIrnbBpqUD5wKKjvdfqNJQkHVbzTVWC5Y7XZyD2Ufu+6LSB7f5HXjM1DTqQ30
+         Cx7ZwKMNS0rP8KXgSOz4T0UoG+mtajMb/qHi69o1Pf8U7/b7MChGB9xVU1eHQPMgXJV+
+         MWVA==
+X-Forwarded-Encrypted: i=1; AJvYcCWEyPwDBbEefPiJzZMuaK899PUdJE6vcpnGCGnz7ILRfdKfuiFa8Hh+4WOhLUFJhnVjKGAQtievSRI2/Ovu7dK1ip6AYcx7+t1C51hRCQ==
+X-Gm-Message-State: AOJu0YxR5/UFizchirE3EigM+fvdASMML+mHb8U2VEEJoQ0c21S2woK4
+	UYa8y8HVpeRPZPMPYvofJgMpvuPuy4RptbuMYPDAMB+Tk0J3MmJpANfaPty44XMY1P20McY/ein
+	EosigaXrqXSpyX2VsVZDbGqfbJ/O0PIkldMbuOw==
+X-Google-Smtp-Source: AGHT+IFViT90qoDfNv/+HMMVSkIOCuMMMRX1j2q+fmbWxlh4TJnkk6Ect2I8Rn3bLy8gy7ZkC9SPpdBwFMOLjbGbeMI=
+X-Received: by 2002:a25:c141:0:b0:dc7:5c37:5420 with SMTP id
+ r62-20020a25c141000000b00dc75c375420mr13394794ybf.60.1712141475267; Wed, 03
+ Apr 2024 03:51:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH 7/7] clk: qcom: Add GPUCC driver support for SM4450
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
-	<sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Vladimir Zapolskiy
-	<vladimir.zapolskiy@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Taniya Das
-	<quic_tdas@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Imran Shaik
-	<quic_imrashai@quicinc.com>,
-        Satya Priya Kakitapalli
-	<quic_skakitap@quicinc.com>
-References: <20240330182817.3272224-1-quic_ajipan@quicinc.com>
- <20240330182817.3272224-8-quic_ajipan@quicinc.com>
- <CAA8EJprtCbePun+gpwxg5e6o5NaBnunEJrmDrCV+O8BdHEeuYQ@mail.gmail.com>
- <9106b0eb-e15d-f2fa-d681-4017412c4a76@quicinc.com>
- <CAA8EJprP4Skq0GxyuzoF7Eu9pF+2Vm2wwbu9m6jBohdSKjLR9g@mail.gmail.com>
-Content-Language: en-US
-From: Ajit Pandey <quic_ajipan@quicinc.com>
-In-Reply-To: <CAA8EJprP4Skq0GxyuzoF7Eu9pF+2Vm2wwbu9m6jBohdSKjLR9g@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: JKcuvSykRRqScDu95eStN6zVVCh2_z2h
-X-Proofpoint-ORIG-GUID: JKcuvSykRRqScDu95eStN6zVVCh2_z2h
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-03_10,2024-04-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- clxscore=1015 suspectscore=0 mlxlogscore=999 adultscore=0
- priorityscore=1501 spamscore=0 mlxscore=0 lowpriorityscore=0 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2404030075
+References: <20240403-msm-drm-dsc-dsi-video-upstream-v1-0-db5036443545@linaro.org>
+ <20240403-msm-drm-dsc-dsi-video-upstream-v1-6-db5036443545@linaro.org>
+In-Reply-To: <20240403-msm-drm-dsc-dsi-video-upstream-v1-6-db5036443545@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 3 Apr 2024 13:51:04 +0300
+Message-ID: <CAA8EJprvAiOYnzJNduhr9MZe6asfE5ygtupTNbp4dcXD-U8jsA@mail.gmail.com>
+Subject: Re: [PATCH v3 6/6] drm/msm/dsi: support DSC configurations with
+ slice_per_pkt > 1
+To: Jun Nie <jun.nie@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, Vinod Koul <vkoul@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	Jonathan Marek <jonathan@marek.ca>
+Content-Type: text/plain; charset="UTF-8"
 
+On Wed, 3 Apr 2024 at 12:11, Jun Nie <jun.nie@linaro.org> wrote:
+>
+> From: Jonathan Marek <jonathan@marek.ca>
+>
+> Support slice_per_pkt in msm driver.
+>
+> Note that the removed "pkt_per_line = slice_per_intf * slice_per_pkt"
+> comment is incorrect.
+>
+> Also trim the code to simplify the dsc reference.
+>
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/dsi/dsi_host.c | 35 ++++++++++++++---------------------
+>  1 file changed, 14 insertions(+), 21 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index b0507a42ee6a..0c6f40dbd25c 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -866,17 +866,10 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
+>         slice_per_intf = msm_dsc_get_slices_per_intf(dsc, hdisplay);
+>
+>         total_bytes_per_intf = dsc->slice_chunk_size * slice_per_intf;
+> -       bytes_per_pkt = dsc->slice_chunk_size; /* * slice_per_pkt; */
+> -
+> +       bytes_per_pkt = dsc->slice_chunk_size * dsc->slice_per_pkt;
 
+Please don't mix cleanup and functional changes.
 
-On 4/3/2024 12:53 AM, Dmitry Baryshkov wrote:
-> On Tue, 2 Apr 2024 at 21:26, Ajit Pandey <quic_ajipan@quicinc.com> wrote:
->>
->>
->>
->> On 3/31/2024 7:09 AM, Dmitry Baryshkov wrote:
->>> On Sat, 30 Mar 2024 at 20:30, Ajit Pandey <quic_ajipan@quicinc.com> wrote:
->>>>
->>>> Add Graphics Clock Controller (GPUCC) support for SM4450 platform.
->>>>
->>>> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
->>>> ---
->>>>    drivers/clk/qcom/Kconfig        |   9 +
->>>>    drivers/clk/qcom/Makefile       |   1 +
->>>>    drivers/clk/qcom/gpucc-sm4450.c | 806 ++++++++++++++++++++++++++++++++
->>>>    3 files changed, 816 insertions(+)
->>>>    create mode 100644 drivers/clk/qcom/gpucc-sm4450.c
->>>>
->>>
->>> [skipped]
->>>
->>>> +static int gpu_cc_sm4450_probe(struct platform_device *pdev)
->>>> +{
->>>> +       struct regmap *regmap;
->>>> +
->>>> +       regmap = qcom_cc_map(pdev, &gpu_cc_sm4450_desc);
->>>> +       if (IS_ERR(regmap))
->>>> +               return PTR_ERR(regmap);
->>>> +
->>>> +       clk_lucid_evo_pll_configure(&gpu_cc_pll0, regmap, &gpu_cc_pll0_config);
->>>> +       clk_lucid_evo_pll_configure(&gpu_cc_pll1, regmap, &gpu_cc_pll1_config);
->>>> +
->>>> +       /* Keep some clocks always enabled */
->>>> +       qcom_branch_set_clk_en(regmap, 0x93a4); /* GPU_CC_CB_CLK */
->>>> +       qcom_branch_set_clk_en(regmap, 0x9004); /* GPU_CC_CXO_AON_CLK */
->>>> +       qcom_branch_set_clk_en(regmap, 0x900c); /* GPU_CC_DEMET_CLK */
->>>
->>> Why? At least other drivers model these three clocks properly.
->>>
->> These clocks are POR on in SM4450 and required to be kept always enabled
->> for GPU functionality hence keep them enabled from probe only.
-> 
-> Please, check how this is handled on the other platforms, please.
-> Hint: `git grep GPU_CC_DEMET_CLK`
-> 
-yeah these clocks are modeled and handled via always enabled clk ops 
-(clk_branch2_aon_ops) in few other platforms like SM8450, SM8650 which 
-also do same functionality and keep them in always enabled POR state, 
-while we kept them enabled from GPUCC probe in SM8550.
-Since we need such clock to be always enabled irrespective of consumer 
-votes I guess modeling with aon_ops isn't really required and we can 
-simply keep them enabled in probe similar to other always on clocks.
->>
->>>> +
->>>> +       return qcom_cc_really_probe(pdev, &gpu_cc_sm4450_desc, regmap);
->>>> +}
->>>> +
->>>> +static struct platform_driver gpu_cc_sm4450_driver = {
->>>> +       .probe = gpu_cc_sm4450_probe,
->>>> +       .driver = {
->>>> +               .name = "gpucc-sm4450",
->>>> +               .of_match_table = gpu_cc_sm4450_match_table,
->>>> +       },
->>>> +};
->>>> +
->>>> +module_platform_driver(gpu_cc_sm4450_driver);
->>>> +
->>>> +MODULE_DESCRIPTION("QTI GPUCC SM4450 Driver");
->>>> +MODULE_LICENSE("GPL");
->>>> --
->>>> 2.25.1
->>>>
->>>>
->>>
->>>
->>
->> --
->> Thanks, and Regards
->> Ajit
-> 
-> 
-> 
+>         eol_byte_num = total_bytes_per_intf % 3;
+>
+> -       /*
+> -        * Typically, pkt_per_line = slice_per_intf * slice_per_pkt.
+> -        *
+> -        * Since the current driver only supports slice_per_pkt = 1,
+> -        * pkt_per_line will be equal to slice per intf for now.
+> -        */
+> -       pkt_per_line = slice_per_intf;
+> +       pkt_per_line = slice_per_intf / dsc->slice_per_pkt;
+>
+>         if (is_cmd_mode) /* packet data type */
+>                 reg = DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_DATATYPE(MIPI_DSI_DCS_LONG_WRITE);
+> @@ -916,6 +909,7 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
+>  static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>  {
+>         struct drm_display_mode *mode = msm_host->mode;
+> +       struct drm_dsc_config *dsc = msm_host->dsc;
+
+And here too. Please pull msm_host->dsc change to a separate patch.
+
+>         u32 hs_start = 0, vs_start = 0; /* take sync start as 0 */
+>         u32 h_total = mode->htotal;
+>         u32 v_total = mode->vtotal;
+> @@ -947,8 +941,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>                 hdisplay /= 2;
+>         }
+>
+> -       if (msm_host->dsc) {
+> -               struct drm_dsc_config *dsc = msm_host->dsc;
+> +       if (dsc) {
+>                 u32 bytes_per_pclk;
+>
+>                 /* update dsc params with timing params */
+> @@ -988,14 +981,14 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>                 else
+>                         bytes_per_pclk = 3;
+>
+> -               hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), bytes_per_pclk);
+> +               hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(dsc), bytes_per_pclk);
+>
+>                 h_total += hdisplay;
+>                 ha_end = ha_start + hdisplay;
+>         }
+>
+>         if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO) {
+> -               if (msm_host->dsc)
+> +               if (dsc)
+>                         dsi_update_dsc_timing(msm_host, false, mode->hdisplay);
+>
+>                 dsi_write(msm_host, REG_DSI_ACTIVE_H,
+> @@ -1016,21 +1009,17 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>                         DSI_ACTIVE_VSYNC_VPOS_START(vs_start) |
+>                         DSI_ACTIVE_VSYNC_VPOS_END(vs_end));
+>         } else {                /* command mode */
+> -               if (msm_host->dsc)
+> +               if (dsc)
+>                         dsi_update_dsc_timing(msm_host, true, mode->hdisplay);
+>
+>                 /* image data and 1 byte write_memory_start cmd */
+> -               if (!msm_host->dsc)
+> +               if (!dsc)
+>                         wc = hdisplay * mipi_dsi_pixel_format_to_bpp(msm_host->format) / 8 + 1;
+>                 else
+>                         /*
+>                          * When DSC is enabled, WC = slice_chunk_size * slice_per_pkt + 1.
+> -                        * Currently, the driver only supports default value of slice_per_pkt = 1
+> -                        *
+> -                        * TODO: Expand mipi_dsi_device struct to hold slice_per_pkt info
+> -                        *       and adjust DSC math to account for slice_per_pkt.
+>                          */
+> -                       wc = msm_host->dsc->slice_chunk_size + 1;
+> +                       wc = dsc->slice_chunk_size * dsc->slice_per_pkt + 1;
+>
+>                 dsi_write(msm_host, REG_DSI_CMD_MDP_STREAM0_CTRL,
+>                         DSI_CMD_MDP_STREAM0_CTRL_WORD_COUNT(wc) |
+> @@ -1657,8 +1646,12 @@ static int dsi_host_attach(struct mipi_dsi_host *host,
+>         msm_host->lanes = dsi->lanes;
+>         msm_host->format = dsi->format;
+>         msm_host->mode_flags = dsi->mode_flags;
+> -       if (dsi->dsc)
+> +       if (dsi->dsc) {
+>                 msm_host->dsc = dsi->dsc;
+> +               /* for backwards compatibility, assume 1 if not set */
+> +               if (!dsi->dsc->slice_per_pkt)
+> +                       dsi->dsc->slice_per_pkt = 1;
+> +       }
+>
+>         /* Some gpios defined in panel DT need to be controlled by host */
+>         ret = dsi_host_init_panel_gpios(msm_host, &dsi->dev);
+>
+> --
+> 2.34.1
+>
+
 
 -- 
-Thanks, and Regards
-Ajit
+With best wishes
+Dmitry
 
