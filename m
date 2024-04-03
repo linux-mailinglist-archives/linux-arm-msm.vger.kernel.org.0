@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-16196-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16197-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE38C896437
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 07:45:32 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4EAC896446
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 07:57:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 33ADB1F22C9F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 05:45:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2829B284468
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 05:57:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AD7C487B6;
-	Wed,  3 Apr 2024 05:45:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C33CE4CB4E;
+	Wed,  3 Apr 2024 05:56:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="E7QvwmVU"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GoXtO7Vv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B4A242ABE;
-	Wed,  3 Apr 2024 05:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2933A1870;
+	Wed,  3 Apr 2024 05:56:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712123129; cv=none; b=lSE2vhGoF/HF1Dhy9qtyqXBjBmndHECsgOYXCMk+rE3W+6oq8HJDuQBkGI+uhVSy03AQPlrKl0pRbXKwyfQ9XoqqVmanZkD/vA+JAx/RYK1BTCKNJr0s/Cb1aGFPn7VF1mOYmr8YmkilPmp83/nQlGC5O/gfvyHTsUXx+wXNz/4=
+	t=1712123816; cv=none; b=Qe8tr+OFdhc+hFKhZvV3VfqpknvxvEqAsKZZKhyy0MKOrBSSxIkYanVO6DM2Cqh4CB9tIAtXOkWwzSbOTR9XfH2s0RJdts8PVGSzTnNUkjBqS/VKwltWSSuEh/KmXQvJop19glr3x4g+COQ/dCT7jijDKRKpHycgBwjQsQgLEfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712123129; c=relaxed/simple;
-	bh=CV/Q7uxFMcZZPnqAzTvveXT/5dY3w+tWrPjnVQAT/Tk=;
+	s=arc-20240116; t=1712123816; c=relaxed/simple;
+	bh=1SHiij+ZVkWmkcRsHtsHy6EHB+og9wA1svshcDPXjog=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=PV6bIi7YQaYWrcNkjeLaP0oSrvT/TueAv7ps+s3pLj0nCNf7cajiI7u13qDtGJZjx/rcc7Ir9M1VPeEDziihZHf1+2fOgQJmsN42J2/qochaI6A+gXIvg2I+iH12iEIx0RnLmGWEWv5KNXrufAzrXB/YbkRlviHQVHacd0f4Fto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=E7QvwmVU; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=fNHPDiC0qcc1Usi5Mu5J/Y+T/31WgIK1pqXVkZ8OeJH9PuG0jbS+I1uTPg8K1TmZWJk9TfBcJvbywGavCEJg0gXJQWAWM+uy4lQbZt82Fuw/PRnTOYlEk80mYZyUedCDjRlx358S/VWnI+45tzsfk/CtqHDPkC23rrr99cDln0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GoXtO7Vv; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4333Hx1u019594;
-	Wed, 3 Apr 2024 05:45:24 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4335nfd9020372;
+	Wed, 3 Apr 2024 05:56:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=/ApTQr+jnvdGaKzYxs7CtdoBNOkj0HTduDfaBoyIizQ=; b=E7
-	QvwmVUwhEkRZ60VUDNwK2cNX9bnZKmE1Y+8QvKaua+C3pWwYkSVNW+FFufh6YpBb
-	tC08LSlQ/hzgc/9yAEWVSugv4xQ2r+06oeMlu61LIC3Krq6+XPyuwlClVT6Hmr1g
-	PlDlT+5BkxcA9SgXw5ltlXRJ1oPj+fLh89k9pf98OxvoDLiKJjL8BGttKKjHulp1
-	eh7xfrCU5s0qfQGlza95B5l+Ww8i55nGQKvD7QRzY3rXC65dE2MXShnDyP8WtlZq
-	1tn+SsrRdIgnMb5vF33WWcHiV8N16AT56Zof+ApjinUMY2gzWLOeCxAZOF6/tfZU
-	HWJaoj3abRUr7Y1vJitA==
+	qcppdkim1; bh=bBWpql9YNcSzSsaBXGPIGlFx897DY1V9TTw2Z7sR13U=; b=Go
+	XtO7Vv4N4X7km6mVAmHHWUgsmL/93Kn8H3S92Xaa9btoNRoGy8r71Xeof3DFxnH1
+	t37a9NiwtcEKS6EG/t+idiXnu5ern6qrVbhL8XgdJ/lUVvb4VQQJOgF+vBFOEAqx
+	m/zlblNSg14KD1Sih22VfQddKj4b8AdDrLibWxJX//MAF7z41hRro4yH++J4cTJv
+	UL7HFHMfgacoVg8u5VBlsj7AW2+AlD9Si9caQjsjeDFaTxkyYnXl+JQCBXYrxUfo
+	WJ7qcwdE7Zi4U3MoAWE9ab+rtrE2J4jQFkmeZd0Wm9aB4gX6DvcvdVTGKVL+Zoth
+	slf2/Exl/6dtiTdI+NjA==
 Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x8pj4h7e9-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x8v3f8j8t-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 03 Apr 2024 05:45:23 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4335j3mv003047
+	Wed, 03 Apr 2024 05:56:51 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4335uo6P022876
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 3 Apr 2024 05:45:03 GMT
-Received: from [10.239.29.179] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+	Wed, 3 Apr 2024 05:56:50 GMT
+Received: from [10.218.22.190] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 2 Apr 2024
- 22:45:01 -0700
-Message-ID: <fca73905-c6c7-4db1-88bd-fd8bc2d3b3b0@quicinc.com>
-Date: Wed, 3 Apr 2024 13:44:58 +0800
+ 22:56:46 -0700
+Message-ID: <669b516a-74c7-445a-b151-5463fe39b21b@quicinc.com>
+Date: Wed, 3 Apr 2024 11:26:42 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,168 +65,84 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] bus: mhi: host: Add sysfs entry to force device to enter
- EDL
+Subject: Re: [PATCH v2] i2c: i2c-qcom-geni: Add support to share an I2C SE
+ from two subsystem
 Content-Language: en-US
-To: Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Manivannan Sadhasivam
-	<mani@kernel.org>
-CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
-        <quic_mrana@quicinc.com>, Bhaumik Bhatt <quic_bbhatt@quicinc.com>
-References: <1703490474-84730-1-git-send-email-quic_qianyu@quicinc.com>
- <cff4b828-9566-a2bd-287a-138d74a76a59@quicinc.com>
- <20240102165229.GC4917@thinkpad>
- <90c0a654-a02f-46e2-96a9-34f6a30c95a0@quicinc.com>
- <a10439f1-0fcd-834c-12a3-677976529cf1@quicinc.com>
- <e78382b5-428e-4de8-be0d-b319534238f1@quicinc.com>
- <0cfac65c-8b71-4900-88a3-631c93aebc17@quicinc.com>
- <024549ba-4522-d8d0-08ea-c42966f850af@quicinc.com>
-From: Qiang Yu <quic_qianyu@quicinc.com>
-In-Reply-To: <024549ba-4522-d8d0-08ea-c42966f850af@quicinc.com>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, <andersson@kernel.org>,
+        <andi.shyti@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
+        <dmaengine@vger.kernel.org>
+CC: <quic_vdadhani@quicinc.com>, Vinod Koul <vkoul@kernel.org>
+References: <20240402062131.9836-1-quic_msavaliy@quicinc.com>
+ <51c84af2-73f7-4af4-8676-2276b6c7786d@linaro.org>
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+In-Reply-To: <51c84af2-73f7-4af4-8676-2276b6c7786d@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: dtS9jR-hEmYrdpKDW4IFAZPXEw6v2gop
-X-Proofpoint-GUID: dtS9jR-hEmYrdpKDW4IFAZPXEw6v2gop
+X-Proofpoint-ORIG-GUID: c9hYjDh4pB5He_4GPI0EtGI50ze-svD3
+X-Proofpoint-GUID: c9hYjDh4pB5He_4GPI0EtGI50ze-svD3
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-04-03_04,2024-04-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- bulkscore=0 impostorscore=0 clxscore=1015 spamscore=0 malwarescore=0
- lowpriorityscore=0 mlxlogscore=999 suspectscore=0 phishscore=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 priorityscore=1501 suspectscore=0 mlxscore=0 bulkscore=0
+ malwarescore=0 mlxlogscore=999 clxscore=1015 spamscore=0 impostorscore=0
  adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2404030037
+ engine=8.19.0-2403210001 definitions=main-2404030038
 
+Thanks Konrad. I understood.
 
-On 4/2/2024 11:33 PM, Jeffrey Hugo wrote:
-> On 4/2/2024 7:52 AM, Qiang Yu wrote:
+On 4/2/2024 7:54 PM, Konrad Dybcio wrote:
+> On 2.04.2024 8:21 AM, Mukesh Kumar Savaliya wrote:
+>> Add feature to share an I2C serial engine between two subsystems(SS) so
+>> that individual clients from different subsystems can access the same bus.
+>> For example single i2c slave device can be accessed by Client driver from
+>> APPS OR modem subsystem image. Same way we can have slave being accessed
+>> between APPS and TZ subsystems.
 >>
->> On 4/2/2024 12:34 PM, Qiang Yu wrote:
->>>
->>> On 1/12/2024 3:08 AM, Jeffrey Hugo wrote:
->>>> On 1/9/2024 2:20 AM, Qiang Yu wrote:
->>>>>
->>>>> On 1/3/2024 12:52 AM, Manivannan Sadhasivam wrote:
->>>>>> On Tue, Jan 02, 2024 at 08:31:15AM -0700, Jeffrey Hugo wrote:
->>>>>>> On 12/25/2023 12:47 AM, Qiang Yu wrote:
->>>>>>>> From: Bhaumik Bhatt <quic_bbhatt@quicinc.com>
->>>>>>>>
->>>>>>>> Forcing the device (eg. SDX75) to enter Emergency Download Mode 
->>>>>>>> involves
->>>>>>>> writing the 0xEDEDEDED cookie to the channel 91 doorbell 
->>>>>>>> register and
->>>>>>>> forcing an SOC reset afterwards. Allow users of the MHI bus to 
->>>>>>>> exercise the
->>>>>>>> sequence using a sysfs entry.
->>>>>>> I don't see this documented in the spec anywhere.  Is this 
->>>>>>> standard behavior
->>>>>>> for all MHI devices?
->>>>>>>
->>>>>>> What about devices that don't support EDL mode?
->>>>>>>
->>>>>>> How should the host avoid using this special cookie when EDL 
->>>>>>> mode is not
->>>>>>> desired?
->>>>>>>
->>>>>> All points raised by Jeff are valid. I had discussions with 
->>>>>> Hemant and Bhaumik
->>>>>> previously on allowing the devices to enter EDL mode in a generic 
->>>>>> manner and we
->>>>>> didn't conclude on one final approach.
->>>>>>
->>>>>> Whatever way we come up with, it should be properly described in 
->>>>>> the MHI spec
->>>>>> and _should_ be backwards compatible.
->>>>>
->>>>> Hi Mani, Jeff. The method of entering EDL mode is documented in 
->>>>> MHI spec v1.2, Chapter 13.2.
->>>>>
->>>>> Could you please check once?
->>>>
->>>> I do see it listed there.  However that was a FR for SDX55, so 
->>>> devices prior to that would not support this.  AIC100 predates this 
->>>> change and would not support the functionality.  I verified the 
->>>> AIC100 implementation is not aware of this cookie.
->>>>
->>>> Also, that functionality depends on channel 91 being reserved per 
->>>> the table 9-2, however that table only applies to modem class 
->>>> devices as it is under chapter 9 "Modem protocols over PCIe". 
->>>> Looking at the ath11k and ath12k implementations in upstream, it 
->>>> looks like they partially comply.  Other devices have different MHI 
->>>> channel definitions.
->>>>
->>>> Chapter 9 doesn't appear to be in older versions of the spec that I 
->>>> have, so it is unclear if this functionality is backwards 
->>>> compatible (was channel 91 used for another purpose in pre-SDX55 
->>>> modems).
->>>>
->>>> I'm not convinced this belongs in the MHI core.  At a minimum, the 
->>>> MHI controller(s) for the applicable devices needs to opt-in to this.
->>>>
->>>> -Jeff
->>> Hi Jeff
->>>
->>> Sorry for reply so late. In older versions of the spec, there is no 
->>> description about EDL doorbell. However, in MHI spec v1.2, section 
->>> 13.2,
->>> It explicitly says "To set the EDL cookie, the host writes 
->>> 0xEDEDEDED to channel doorbell 91." So I think every device based on 
->>> MHI spec v1.2
->>> should reserve channel doorbell 91 for EDL mode.
->>>
->>> So can we add another flag called mhi_ver in mhi controller to 
->>> indicate its mhi version and then we can add mhi_ver checking to 
->>> determine if this
->>> device supports EDL sysfs operation?
->>>
->>> Thanks,
->>> Qiang
+>> This is possible in GSI mode where driver queues the TREs with required
+>> descriptors and ensures to execute TREs in an mutually exclusive way.
+>> Issue a "Lock TRE" command at the start of the transfer and an "Unlock TRE"
+>> command at the end of the transfer. This prevents other subsystems from
+>> concurrently performing DMA transfers and avoids disturbance to data path.
+>> Change MAX_TRE macro to 5 from 3 because of these two additional TREs.
 >>
->> I discussed with internal team, look like devices that reserve 
->> channel doorbell 91 for EDL, thier MHIVER register value can still be 
->> 1.0 instead
->> of 1.2. So even if we add a flag called mhi_ver to store the value 
->> read from the MHIVER register. We still can not do EDL support check 
->> depend on it.
+>> Since the GPIOs are also shared for the i2c bus, do not touch GPIO
+>> configuration while going to runtime suspend and only turn off the
+>> clocks. This will allow other SS to continue to transfer the data.
 >>
->> But I still think enter EDL mode by writing EDL cookie to channel 
->> doorbell is a standard way. At least it's a standard way from MHI 
->> spec V1.2.
+>> This feature needs to be controlled by DTSI flag to make it flexible
+>> based on the usecase, hence during probe check the same from i2c driver.
 >>
->> In mhi_controller, we have a variable edl_image representing the name 
->> and path of firmware. But We still can not determine if the device 
->> reserve
->> channel doorbell 91 by checking this because some devices may enter 
->> EDL mode in different way. Mayebe we have to add a flag in 
->> mhi_controller
->> called edl_support to do the check.
->
-> So, not all devices support EDL mode (even v1.2 devices, which I know 
-> of one in development).  Of the devices that support EDL mode, not all 
-> of them use the same mechanism to enter EDL mode.
->
-> It appears all of this needs to be shoved to the controller.
->
-> At best, I think the controller can provide an optional EDL callback. 
-> If the callback is provided, then MHI creates a sysfs entry (similar 
-> to soc_reset) for the purpose of entering EDL mode.  If the sysfs 
-> entry is called, all MHI does is call the controller's callback.
->
-> -Jeff
+>> Export function geni_se_clks_off() to call explicitly instead of
+>> geni_se_resources_off() to not modify TLMM configuration as other SS might
+>> perform the transfer while APPS SS can go to sleep.
+>>
+>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>> ---
+>> v1 -> v2:
+>> - Addressed review comments.
+> 
+> The biggest one ("too many changes across the board") is still not
+> addressed and the patch will not be further reviewed until that is done.
+> 
+> Each subsystem has different owners and each change requires an explanation
+> (maintainers always "expect your patch to be wrong" and you need to
+> convince them otherwise through commit messages)
+> 
+Sure, I got it. Will send patch dividing logically between i2c, dma.
+I have already responded in just previous Mail to seek clarity as below.
+It was :
+"Please correct me if this is wrong. The overall change is for i2c in 
+GSI DMA mode. This also requires changes in resource control like TLMM 
+changes. But it's more like integrated feature.
+Are you suggesting to make 3 sub-patches under same change ? "
 
 
-Hi Jeff
 
-This idea looks good. We can add edl call back in mhi_pci_dev_info and 
-assgin it to mhi controller during probe.
-Meanwhile, we can get edl doorbell address in this callback instead of 
-mhi_init_mmio.
-
-Mani, what do you think about it? Can I implement the EDL sysfs entry 
-like this?
-
+> Konrad
 
