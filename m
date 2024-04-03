@@ -1,128 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-16310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16311-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 977298972C8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:38:26 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED9458972CB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 16:39:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 406AC28462B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 14:38:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8EA931F24BD6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 14:39:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29D5056B70;
-	Wed,  3 Apr 2024 14:38:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D28858AD4;
+	Wed,  3 Apr 2024 14:38:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="PVk7GYRn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 309CB56751;
-	Wed,  3 Apr 2024 14:38:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E71433C6
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 14:38:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712155102; cv=none; b=iZQ8l0wl6DrJxq8IDqIv7BYPLWEveAHIKwXyhQjg9i4F/taslUPUagD5qsEQNbYqrsGXvTPWUwx6ADBMvl4Xuhixh8ESw+31Hfwa+A8UcVxx2XU+BqC38e1vcJTTYTDQpsquODfy5dHh9cfDMjHd/RfZNjyXP1n61eWxfAwKuVs=
+	t=1712155136; cv=none; b=oJ1CalneOoFLysVPUS8jYYTnYDxxULFDvlHNGdffeonZbcvX5PEpUyQOOeumWSfcClC0aTI/96VcKTiTxhstnAL3gY5QQGVlVRDWyBo6SAlHX87sDFqaU4GOs5Ud/gMzQZzkGrEnBLndCVvr8a2LsCdjGn73JzS4eslNarQTp6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712155102; c=relaxed/simple;
-	bh=hfRqXl7ehF2sHdQ1hQLBRdQcRua85KKZsoNUiS1ESF0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fZQPC9LzFThiarJeAy0RGGH9eQf2Yk8ZApiZkZ5k1mzaKhzHpfjlNwkWIXfKZegt5Gk/W58Nhci5R+djvTosFkhUehbMFPXmbUrFaHGWhdggrKJBzrSOTPFwOsKaDxi5TM6MN8rPcQz8n4Dej+RE9ZYPZa7kHJmGdwSt38GqWiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A15131007;
-	Wed,  3 Apr 2024 07:38:50 -0700 (PDT)
-Received: from FVFF77S0Q05N (unknown [10.57.16.212])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 58A0E3F7B4;
-	Wed,  3 Apr 2024 07:38:17 -0700 (PDT)
-Date: Wed, 3 Apr 2024 15:38:14 +0100
-From: Mark Rutland <mark.rutland@arm.com>
-To: Dawei Li <dawei.li@shingroup.cn>
-Cc: will@kernel.org, yury.norov@gmail.com, linux@rasmusvillemoes.dk,
-	xueshuai@linux.alibaba.com, renyu.zj@linux.alibaba.com,
-	yangyicong@hisilicon.com, jonathan.cameron@huawei.com,
-	andersson@kernel.org, konrad.dybcio@linaro.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 10/10] perf/thunderx2: Avoid placing cpumask var on
- stack
-Message-ID: <Zg1p1qsqDpmk62CH@FVFF77S0Q05N>
-References: <20240403125109.2054881-1-dawei.li@shingroup.cn>
- <20240403125109.2054881-11-dawei.li@shingroup.cn>
+	s=arc-20240116; t=1712155136; c=relaxed/simple;
+	bh=XYcOgAxXGHkhdpIHXAt+v3lV5PqFxI4zDcRmVyPX0BI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RRr4cFj3tC3pW0frX00JiY+Dx9ATO5q/ia9/WfKapbzOavNWK2tae03n7iDZwPtz7lIa3gxYd/zNB3kgrwXIfR1uA0UXwk9Ps/eTjcaL0I/eH3QN8J8hsZ2TpqzmjjSDm9RNxJYZ8d22Ckv419ZuKtlqQmMluN3c+qnNGXb/2Ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=PVk7GYRn; arc=none smtp.client-ip=209.85.208.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2d700beb60bso107948371fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 07:38:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1712155132; x=1712759932; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=k+F+lR6B8bWc6SG6ZnyFSW9uZxcK09xY01XuwqgaSMg=;
+        b=PVk7GYRnfKz6yz53eg/cJXGpKTtvQEW/3g2GqQPguDKZwttK3x+bDoTwGRKA0KN6Ob
+         0tCtIZsCn21E/36H/k/mAYjBh3OstYKHU2t4riPHOpp4kSdsKNlgaHbks48vBwkf9Rg/
+         gN+/ZN4zlu6hwEJw/mDGAFo0dUPeVShg9FPHAyUN/AtaL3ezz9MIfn8CerDuVT8zFImC
+         D0aXKpGazKa1aKiOiixE1oZthylArBwj+kzVpaN9YEcUgNN9916boOBloC4BAlEY5O05
+         pm1+0N2YEe4pZmfV67GbnjfvYn9+Gx2UIbn11LeV07bisU6J/Zzwu2aOYW205JWu9v/5
+         KKYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712155132; x=1712759932;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=k+F+lR6B8bWc6SG6ZnyFSW9uZxcK09xY01XuwqgaSMg=;
+        b=YynMjqBc2sidpUeKpeB7t2hgx99FNRe0ohS/fCHFYQknTJsarr+AoCw+ceSsEGRpri
+         mQBtVJQzj3UHe1adFtgr+X3UozFxGl5iw/vO/OxIlsvcyXz/PGoaSTXBMa597QK/ooAK
+         zjYAAGccdK4xfBeSLQplCZpKS1yeAh/ELcZ/X6hsBXD1pJ5uN5Dip3XXMCBhpQbaOwJo
+         BC6/PLUFTPGqX0y8dLl72CBWXc+Hp1UZxOhLEoDFB3IKRCp+JySYeNhAB7lBFAcS67+O
+         RS6EMlmovIziWTTChvvh3J135DJJMTBkk8KPfr/bdGRhu4YD933XmTnFkp3NlmYupgn6
+         aNMQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXAcOpHkxt1HaQEy78d5toNq3rqr3wlHsTHBE8QU8gdGMgrBzPpnBc2HfzceACu2XL4F2iSWI5uEaG5vGydp4V0+G4tk6i5HnW6xYkh4g==
+X-Gm-Message-State: AOJu0YzEaGlLHZawvE3gvbw1gAedvgMo+opPJUm+2fNI9MxqJzrGhIeP
+	y0bBrOrNM1fXMlFSVJ3xAI5sj3joilwYOX8caQjHY3BT55jIx8EiydgN3kfovFraCSxTHQS4CbB
+	IA29kT5TD9JFgriDRmS/RYuiEVmNL3T+FWvUo5Q==
+X-Google-Smtp-Source: AGHT+IF1Albu6Nu5656ydaWZAfWTTjTKyHecYttGRSLH5VhQZv6FHYuZRgl2PbIf0IkYHQVJX9L0Pn5q/EpMAZjZ/CE=
+X-Received: by 2002:a05:651c:2320:b0:2d8:36f9:67af with SMTP id
+ bi32-20020a05651c232000b002d836f967afmr2199291ljb.44.1712155131493; Wed, 03
+ Apr 2024 07:38:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240403125109.2054881-11-dawei.li@shingroup.cn>
+References: <20240325085756.13843-1-brgl@bgdev.pl>
+In-Reply-To: <20240325085756.13843-1-brgl@bgdev.pl>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Wed, 3 Apr 2024 16:38:40 +0200
+Message-ID: <CAMRc=MfOWpwsRODOS4FO=b4CU4zsM0LVnb94FmAU_6QOSXCKcA@mail.gmail.com>
+Subject: Re: [RESEND PATCH] arm64: defconfig: build ath12k as a module
+To: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Bjorn Andersson <quic_bjorande@quicinc.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Arnd Bergmann <arnd@arndb.de>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Marek Szyprowski <m.szyprowski@samsung.com>, 
+	=?UTF-8?B?TsOtY29sYXMgRiAuIFIgLiBBIC4gUHJhZG8=?= <nfraprado@collabora.com>, 
+	Udit Kumar <u-kumar1@ti.com>, Andrew Halaney <ahalaney@redhat.com>, 
+	Maximilian Luz <luzmaximilian@gmail.com>, Alex Elder <elder@linaro.org>, 
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Jeff Johnson <quic_jjohnson@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Apr 03, 2024 at 08:51:09PM +0800, Dawei Li wrote:
-> For CONFIG_CPUMASK_OFFSTACK=y kernel, explicit allocation of cpumask
-> variable on stack is not recommended since it can cause potential stack
-> overflow.
-> 
-> Instead, kernel code should always use *cpumask_var API(s) to allocate
-> cpumask var in config-neutral way, leaving allocation strategy to
-> CONFIG_CPUMASK_OFFSTACK.
-> 
-> But dynamic allocation in cpuhp's teardown callback is somewhat problematic
-> for if allocation fails(which is unlikely but still possible):
-> - If -ENOMEM is returned to caller, kernel crashes for non-bringup
->   teardown;
-> - If callback pretends nothing happened and returns 0 to caller, it may
->   trap system into an in-consisitent/compromised state;
-> 
-> Use newly-introduced cpumask_any_and_but() to address all issues above.
-> It eliminates usage of temporary cpumask var in generic way, no matter how
-> the cpumask var is allocated.
-> 
-> Suggested-by: Mark Rutland <mark.rutland@arm.com>
-> Signed-off-by: Dawei Li <dawei.li@shingroup.cn>
-
-The logic looks good to me, but I'd like the commit message updated the same as
-per my comment on patch 2.
-
-With that commit message:
-
-Reviewed-by: Mark Rutland <mark.rutland@arm.com>
-
-Mark.
-
+On Mon, Mar 25, 2024 at 9:58=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.pl>=
+ wrote:
+>
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>
+> Qualcomm sm8550-qrd and sm8650-qrd boards have ath12k modules as part of
+> their on-board WCN7850 WLAN/BT packages. Enable the relevant driver in
+> defconfig.
+>
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> Acked-by: Arnd Bergmann <arnd@arndb.de>
+> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Reviewed-by: Jeff Johnson <quic_jjohnson@quicinc.com>
 > ---
->  drivers/perf/thunderx2_pmu.c | 10 +++-------
->  1 file changed, 3 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/perf/thunderx2_pmu.c b/drivers/perf/thunderx2_pmu.c
-> index e16d10c763de..b3377b662ffc 100644
-> --- a/drivers/perf/thunderx2_pmu.c
-> +++ b/drivers/perf/thunderx2_pmu.c
-> @@ -932,9 +932,8 @@ static int tx2_uncore_pmu_online_cpu(unsigned int cpu,
->  static int tx2_uncore_pmu_offline_cpu(unsigned int cpu,
->  		struct hlist_node *hpnode)
->  {
-> -	int new_cpu;
->  	struct tx2_uncore_pmu *tx2_pmu;
-> -	struct cpumask cpu_online_mask_temp;
-> +	unsigned int new_cpu;
->  
->  	tx2_pmu = hlist_entry_safe(hpnode,
->  			struct tx2_uncore_pmu, hpnode);
-> @@ -945,11 +944,8 @@ static int tx2_uncore_pmu_offline_cpu(unsigned int cpu,
->  	if (tx2_pmu->hrtimer_callback)
->  		hrtimer_cancel(&tx2_pmu->hrtimer);
->  
-> -	cpumask_copy(&cpu_online_mask_temp, cpu_online_mask);
-> -	cpumask_clear_cpu(cpu, &cpu_online_mask_temp);
-> -	new_cpu = cpumask_any_and(
-> -			cpumask_of_node(tx2_pmu->node),
-> -			&cpu_online_mask_temp);
-> +	new_cpu = cpumask_any_and_but(cpumask_of_node(tx2_pmu->node),
-> +				      cpu_online_mask, cpu);
->  
->  	tx2_pmu->cpu = new_cpu;
->  	if (new_cpu >= nr_cpu_ids)
-> -- 
-> 2.27.0
-> 
+>  arch/arm64/configs/defconfig | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index 6c45a465a071..937edf09f0aa 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -411,6 +411,7 @@ CONFIG_WCN36XX=3Dm
+>  CONFIG_ATH11K=3Dm
+>  CONFIG_ATH11K_AHB=3Dm
+>  CONFIG_ATH11K_PCI=3Dm
+> +CONFIG_ATH12K=3Dm
+>  CONFIG_BRCMFMAC=3Dm
+>  CONFIG_MWIFIEX=3Dm
+>  CONFIG_MWIFIEX_SDIO=3Dm
+> --
+> 2.40.1
+>
+
+Ping.
+
+Bartosz
 
