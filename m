@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-16342-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52DF589769D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 19:28:52 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFC938976CC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 19:34:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 75B841C28C04
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 17:28:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 395251F2F8F4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 17:34:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16C2C158D95;
-	Wed,  3 Apr 2024 17:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF84815F3F8;
+	Wed,  3 Apr 2024 17:19:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YeOvC0c+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oco9Qqhw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE62815538B;
-	Wed,  3 Apr 2024 17:18:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95DDC153BC4;
+	Wed,  3 Apr 2024 17:19:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712164702; cv=none; b=FUhQWMHEd1WeewSVCfRYo1rQHk0YCP7BfeiQpQroAsCkaZcQHJDuJ83cdjtWYJXPZhQ22qZ3amzMtkiGUheGVdFvDsNiSkTgsDZDugkonzVCzHG9javaGyXjsuV1ZuOchhTxytW8Me9Tp6hJRMby1nv4v8roLmtqs9/2mM7/iNc=
+	t=1712164756; cv=none; b=CR9y0yMKzxK5bJTmlbUKJD8Yqhw/w6DvlF6bGASbESEXUj6rqvgJJIcfNrQPQfZL9S/jBxOa+lMGd0+r2m6l0jBmyNJj/37XtTWsV6/BdkycquXCM4s1rRWGcip9OP46uOPuQu36T92wcof9s5B24J0pHC4s5xq6RUNg4pne0T4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712164702; c=relaxed/simple;
-	bh=uZxNfE4xgVcbpyibAGlkcWPWBwdn30GDAfqMG2u9zdI=;
+	s=arc-20240116; t=1712164756; c=relaxed/simple;
+	bh=AuWm8VPtxA3NvMNa5GLc39tWpB+s5a8wdjvLONGKg8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ofMWgvH1bUjX4kvk/vubtxOgk72/6SOmtBT/hLt1t+XBbOU636nqkuy04PgYBWHhZi11k6IbFr0FDSkTv1GMQiOWWQJ556DvZ0aGjEbHOF8AZWI7m8FFpy3iAhh6LvKiH9Wqu+V+GAerrKwOQ6VyoCj9j2Ubku8zAQxzVS2co60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YeOvC0c+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CC0FC43390;
-	Wed,  3 Apr 2024 17:18:20 +0000 (UTC)
+	 MIME-Version; b=ZwZUv7NwDH1MEABYx5XJVDgCBSXWLx3DwuuuUZiT+ajtC12qf42XA5rNdwfxMUNJxQLaakDjrluBtXp/V2yWXVpwmKD7FlfrKsCAbuFpdXG7w1HAU5qmAOI8kMwM6MUtFp4t6XzaDNQsAd/IqYcw4CHeYzxgpccfXLzUNrJ3Z2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oco9Qqhw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA6FCC433C7;
+	Wed,  3 Apr 2024 17:19:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712164701;
-	bh=uZxNfE4xgVcbpyibAGlkcWPWBwdn30GDAfqMG2u9zdI=;
+	s=k20201202; t=1712164756;
+	bh=AuWm8VPtxA3NvMNa5GLc39tWpB+s5a8wdjvLONGKg8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YeOvC0c+RqtQbl6241HZG2AxrCAbm5vxxlMq1Z3WKkHUiRZCWwaEp3MAc6tAmaR67
-	 aQ3k9HyvKcGMkRL0eyctcjbIHEkgCS2zSIt5GeN7CLyGHaE9ey6Pqm4TijZZO4tcPo
-	 frbYEVVxnBCyopo+zFf7wJJgJQs2DkrRKCGKlW3x7JE3i+oPcTBmOePhPl5f8PXGq8
-	 SjZsubBig6RNU36MG4gDBfTXD6hNUZWm05MtfWdmoom9OxwSYHQsY6pJYIaufXwZw6
-	 iUzPHXa6ps8LTuH9ouRmMgp+TdDKtfhr/fjtfDOhK/mt3t5VAQNErx7M3JXGLDRiSC
-	 /6Q9JPtq9F4yQ==
+	b=oco9Qqhw7DTIF/n97JmJIgnrxl7XDxpRUWRL5bYqceG/lwmyRedzpbNwOE7kTgIWo
+	 ebOlpFxrmtLX+EXTPC4UePVNg3/IQRA5bD8TH2FHjHEddcwcpfYWaVKjPnvIndnfep
+	 2ICDAllE1cTAubcvyho6j7Dd/YqRlM6Pc3schz0qctpKjebU6eM98zx4KhO1FCkD1X
+	 BQaj1m638mNYELbzed4RGzFmCFtQM7qFFOUn5wOTvlqyJYK6K0CBwg4NEAodi8mDCi
+	 1q8UBT50550vGnrUTY8YxPJkAv/nOno+J6rmxpr8tRf0WQ/o+lYH2SJVsQTd1K9sg3
+	 DLHGOeGZfPMhA==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
@@ -48,18 +48,19 @@ Cc: Jeffrey Hugo <quic_jhugo@quicinc.com>,
 	Carl Vanderlip <quic_carlv@quicinc.com>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	quic_krichai@quicinc.com,
+	quic_qianyu@quicinc.com,
 	Julia.Lawall@inria.fr,
 	quic_pkanojiy@quicinc.com,
-	quic_qianyu@quicinc.com,
+	quic_krichai@quicinc.com,
+	rostedt@goodmis.org,
 	mhi@lists.linux.dev,
 	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 03/20] bus: mhi: host: Add MHI_PM_SYS_ERR_FAIL state
-Date: Wed,  3 Apr 2024 13:17:44 -0400
-Message-ID: <20240403171815.342668-3-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.1 03/15] bus: mhi: host: Add MHI_PM_SYS_ERR_FAIL state
+Date: Wed,  3 Apr 2024 13:18:47 -0400
+Message-ID: <20240403171909.345570-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240403171815.342668-1-sashal@kernel.org>
-References: <20240403171815.342668-1-sashal@kernel.org>
+In-Reply-To: <20240403171909.345570-1-sashal@kernel.org>
+References: <20240403171909.345570-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,7 +69,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.6.24
+X-stable-base: Linux 6.1.84
 Content-Transfer-Encoding: 8bit
 
 From: Jeffrey Hugo <quic_jhugo@quicinc.com>
@@ -132,7 +133,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  3 files changed, 24 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-index f78aefd2d7a36..cfd17c02fe20e 100644
+index 04fbccff65ac2..60c1df048fa20 100644
 --- a/drivers/bus/mhi/host/init.c
 +++ b/drivers/bus/mhi/host/init.c
 @@ -62,6 +62,7 @@ static const char * const mhi_pm_state_str[] = {
@@ -144,7 +145,7 @@ index f78aefd2d7a36..cfd17c02fe20e 100644
  	[MHI_PM_STATE_LD_ERR_FATAL_DETECT] = "Linkdown or Error Fatal Detect",
  };
 diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
-index 2e139e76de4c0..d2858236af52b 100644
+index 01fd10a399b61..6abf09da4f618 100644
 --- a/drivers/bus/mhi/host/internal.h
 +++ b/drivers/bus/mhi/host/internal.h
 @@ -88,6 +88,7 @@ enum mhi_pm_state {
