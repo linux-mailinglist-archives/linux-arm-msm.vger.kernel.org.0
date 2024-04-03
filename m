@@ -1,641 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-16193-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16194-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8CDD89638D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 06:35:17 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CA3A8963F5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 07:25:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 41AD928607F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 04:35:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 75989284702
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 05:25:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65B3A46430;
-	Wed,  3 Apr 2024 04:34:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39F9E46537;
+	Wed,  3 Apr 2024 05:24:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="s5oHQ2IP"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gQRGGJUB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8350C4EB5F
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 04:34:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D8E645;
+	Wed,  3 Apr 2024 05:24:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712118889; cv=none; b=s+YUPtgQwzpGXKmMVqrSbYLBD0sLVHLYLDn7DC+S5/fbgRgO0jLE3Eo4C/GGr9MlkRaVH1A9xpLXWmU65FCgdApIcq1BrBnLs48OxcLqa0LjTkCh9rSGIrxh04FQdjLCkK8wdLerRsQcxCl38gKgSrH6RgwIDGbR/x2RwrZShbk=
+	t=1712121895; cv=none; b=GOS7b1rcEwPFhSNUrCpVdaNIOdS0Rx2AR4ij+nicb9OCg71zkV61YGgisIaOZwwl3SNdR1J4+NKV9J8yE8/8m3Az9YebrpfaszoMEZl1+bt0dEoyh3u9OZyzsKtnCMeeChSsBSKub2Ci/6JIca1B/u1Cy9z2JXe7dOqEW0bZhuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712118889; c=relaxed/simple;
-	bh=7GhYbOtb83rAmQ+qmPqwraB4zBIOCOW8vfT9dpSAQbM=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=EUGidnRmOO0e8BSkNFpua2ymqmhDA2rueKgoV66r0l/6mGTo9DfDBy3J8wl7LEZ5oA9Y4VSENs10MEj9Q8HUcerAB0BwrYh22CDfdZDANnNSeeOVa6o6SKW7drDBErqEFr/NNlpl/AekANRWgx1E2jDYz0SSDk8kEbrm8pmkr60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=s5oHQ2IP; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-1e296c7aa7cso496825ad.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Apr 2024 21:34:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712118886; x=1712723686; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XkhQVd82cIp1WKzy//c11C0Lv0bwxk73j3BRxuDvF6w=;
-        b=s5oHQ2IPOvcxdmAeT0GTRlNlaqRXldPjJYjx1qbxlvA0yWFsYubJ/TLr9Z9CHtt1k/
-         GZOnSGHAqvob0Wx8Z+HjgTki0QJ3D1L+h8yFUQb5pLUVD1HbdrMK3jLhGFAf+XpABZSQ
-         0fDmeYzxs1geFeofNB4dZC5UlvOwMIDT7uHe2uv5qcUBRWclGMf8Se8JkIvB350BQPDA
-         aSOT762FI/gtHMgUeXsIeBaWQP7AzJMOqD1SXfAM98v4ThlC5REUHllMDQBetiqoc13T
-         DCLB0M39NcnicpIIwHjWNvZLIP61UtX5RYP7RP7uy28hS98TYaSDu0tAl8O77Xpl0qmm
-         zVHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712118886; x=1712723686;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XkhQVd82cIp1WKzy//c11C0Lv0bwxk73j3BRxuDvF6w=;
-        b=uuuXQYvqma1up+ZxoHOl2MgIR1JGz6H8ct69vcJ6mJcSrN7U4YKbZDn9RF2K6vQSA2
-         +w/PuQ6/Oa/1wr/40idgi0OL1SVqfq3r/5h386soKUovf00Ao1Z3kDK25xhUtYFhnFPX
-         7eocqCxKJUU4CZPXUFAOXPrwxhTxUdjqCg3qIsungvvuhR4Dd9eLshyKmDydxkw42yWN
-         OZ/863FCZ9hEFApe3QsfgkRcQOkDJCCcpEEZknLeLANiPeOzqzA7RkN2255fHvha9XUB
-         z9sMqtwiCTghU8YHjuhe+kciprrnFeTe4SxITKQjL64mZ/NMuHkHxQ7syNmQpAeWZMb4
-         Hk2Q==
-X-Gm-Message-State: AOJu0YyIMKB/HG1q95rodWrDgQWO3A6ic374aAIXN9ut5Xyt1H8ZH3Ku
-	K35REGpBnrDahqhwa6cEbp0fmrcu477jb+H3txuw2EfOvcsO8TKDXd+BOft1kqeTDhQ2sQPH2Q5
-	C
-X-Google-Smtp-Source: AGHT+IH+y+4AYTrQz4RnCBhyIkuAaXWXdODny4WIkA4rX7Z1DQEXnbQvFuZ+ZrXKzFnLtjE7hC5JGw==
-X-Received: by 2002:a17:902:b588:b0:1e2:86f:d268 with SMTP id a8-20020a170902b58800b001e2086fd268mr13933462pls.19.1712118886357;
-        Tue, 02 Apr 2024 21:34:46 -0700 (PDT)
-Received: from sumit-X1.. ([223.178.212.199])
-        by smtp.gmail.com with ESMTPSA id cp12-20020a170902e78c00b001e2059a6386sm12074634plb.12.2024.04.02.21.34.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Apr 2024 21:34:46 -0700 (PDT)
-From: Sumit Garg <sumit.garg@linaro.org>
-To: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org
-Cc: andersson@kernel.org,
-	konrad.dybcio@linaro.org,
-	robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org,
-	stephan@gerhold.net,
-	caleb.connolly@linaro.org,
-	neil.armstrong@linaro.org,
-	dmitry.baryshkov@linaro.org,
-	laetitia.mariottini@se.com,
-	pascal.eberhard@se.com,
-	abdou.saker@se.com,
-	jimmy.lalande@se.com,
-	benjamin.missey@non.se.com,
-	daniel.thompson@linaro.org,
-	linux-kernel@vger.kernel.org,
-	Sumit Garg <sumit.garg@linaro.org>,
-	Jagdish Gediya <jagdish.gediya@linaro.org>
-Subject: [PATCH v5 3/3] arm64: dts: qcom: apq8016: Add Schneider HMIBSC board DTS
-Date: Wed,  3 Apr 2024 10:04:16 +0530
-Message-Id: <20240403043416.3800259-4-sumit.garg@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240403043416.3800259-1-sumit.garg@linaro.org>
-References: <20240403043416.3800259-1-sumit.garg@linaro.org>
+	s=arc-20240116; t=1712121895; c=relaxed/simple;
+	bh=Du0hVYDdHGGGFDiDuT8htJ0z77Z7XYzY9/952kknj2A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=JpbSymFtcFFLz1Gkc6ev/47fINUv6DPvTVaXpyRl6wZyBMQ7AYUj6MnYfTGuIW1dLPShOjr8QfDKzN4mv0uEIb43DsQg3530V9qmNBkRkhFkzDE+NQT9FwLpufVX3P+ORn6xL/0sBy0kYUbe0Xz2Xv8cXV6BeS6Sx19JQ3EF9lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gQRGGJUB; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4332l8Ul006839;
+	Wed, 3 Apr 2024 05:24:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=2Wc/XbMDySl7R/TtBB5r3KsAe9bMPmhTTdW6c2sQWGI=; b=gQ
+	RGGJUBpduVpOwFaNd8HSBNq91NXpI6QaEiaDkOchfyz89Dp35ypuSOP5YaEpSWjn
+	PHdaiJUeqeJXeKcxB30wIsQVvtPffw82cdr5EFWHQr12wWYvKfmbcRFAs3N6oDuC
+	8J3EKyuWLOiim8UXgTwDHMCz4jkd9CxmfuoVgX6IG65A3XHkwI1oPyliNt/1iGVA
+	5v/IVI9iLueCB6MyIt3lmFo3RIaLkgaN7zOjJ1oJAJJ6mJ76SdKLISyqBDPIsuRs
+	B5xKzjx0X1a6099PiBwLx4V7Tc9EThnWYdBv5n9EvJJwj1DYnjYZmvHv1PBZ5vrK
+	LnX+ZQnpdD7LgD5fTJlw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x8ua70jnk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 03 Apr 2024 05:24:35 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4335OYnn017242
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 3 Apr 2024 05:24:34 GMT
+Received: from [10.216.63.221] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 2 Apr 2024
+ 22:24:28 -0700
+Message-ID: <39010f95-b08f-4a57-b3af-f34eb1069865@quicinc.com>
+Date: Wed, 3 Apr 2024 10:54:25 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v18 2/9] usb: dwc3: core: Access XHCI address space
+ temporarily to read port info
+Content-Language: en-US
+To: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+CC: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring
+	<robh@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+        Wesley Cheng
+	<quic_wcheng@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Greg
+ Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, Felipe Balbi <balbi@kernel.org>,
+        Johan Hovold
+	<johan@kernel.org>,
+        "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org"
+	<linux-arm-msm@vger.kernel.org>,
+        "linux-usb@vger.kernel.org"
+	<linux-usb@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>,
+        "quic_ppratap@quicinc.com"
+	<quic_ppratap@quicinc.com>,
+        "quic_jackp@quicinc.com"
+	<quic_jackp@quicinc.com>,
+        Johan Hovold <johan+linaro@kernel.org>
+References: <20240326113253.3010447-1-quic_kriskura@quicinc.com>
+ <20240326113253.3010447-3-quic_kriskura@quicinc.com>
+ <20240402233218.5kngtj56qellnrmo@synopsys.com>
+From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <20240402233218.5kngtj56qellnrmo@synopsys.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: XSgbQFluxKfjXYTIj7h0H3Llybu0LODQ
+X-Proofpoint-GUID: XSgbQFluxKfjXYTIj7h0H3Llybu0LODQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-03_04,2024-04-01_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
+ lowpriorityscore=0 bulkscore=0 mlxlogscore=999 priorityscore=1501
+ clxscore=1015 adultscore=0 suspectscore=0 mlxscore=0 spamscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403210001 definitions=main-2404030034
 
-Add Schneider Electric HMIBSC board DTS. The HMIBSC board is an IIoT Edge
-Box Core board based on the Qualcomm APQ8016E SoC.
 
-Support for Schneider Electric HMIBSC. Features:
-- Qualcomm Snapdragon 410C SoC - APQ8016 (4xCortex A53, Adreno 306)
-- 1GiB RAM
-- 8GiB eMMC, SD slot
-- WiFi and Bluetooth
-- 2x Host, 1x Device USB port
-- HDMI
-- Discrete TPM2 chip over SPI
-- USB ethernet adaptors (soldered)
 
-Co-developed-by: Jagdish Gediya <jagdish.gediya@linaro.org>
-Signed-off-by: Jagdish Gediya <jagdish.gediya@linaro.org>
-Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
-Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
-Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
----
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../dts/qcom/apq8016-schneider-hmibsc.dts     | 491 ++++++++++++++++++
- 2 files changed, 492 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
+On 4/3/2024 5:02 AM, Thinh Nguyen wrote:
+> On Tue, Mar 26, 2024, Krishna Kurapati wrote:
+>> All DWC3 Multi Port controllers that exist today only support host mode.
+>> Temporarily map XHCI address space for host-only controllers and parse
+>> XHCI Extended Capabilities registers to read number of usb2 ports and
+>> usb3 ports present on multiport controller. Each USB Port is at least HS
+>> capable.
+>>
+>> The port info for usb2 and usb3 phy are identified as num_usb2_ports
+>> and num_usb3_ports. The intention is as follows:
+>>
+>> Wherever we need to perform phy operations like:
+>>
+>> LOOP_OVER_NUMBER_OF_AVAILABLE_PORTS()
+>> {
+>> 	phy_set_mode(dwc->usb2_generic_phy[i], PHY_MODE_USB_HOST);
+>> 	phy_set_mode(dwc->usb3_generic_phy[i], PHY_MODE_USB_HOST);
+>> }
+>>
+>> If number of usb2 ports is 3, loop can go from index 0-2 for
+>> usb2_generic_phy. If number of usb3-ports is 2, we don't know for sure,
+>> if the first 2 ports are SS capable or some other ports like (2 and 3)
+>> are SS capable. So instead, num_usb2_ports is used to loop around all
+>> phy's (both hs and ss) for performing phy operations. If any
+>> usb3_generic_phy turns out to be NULL, phy operation just bails out.
+>> num_usb3_ports is used to modify GUSB3PIPECTL registers while setting up
+>> phy's as we need to know how many SS capable ports are there for this.
+>>
+>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+>> ---
+>>   drivers/usb/dwc3/core.c | 61 +++++++++++++++++++++++++++++++++++++++++
+>>   drivers/usb/dwc3/core.h |  5 ++++
+>>   2 files changed, 66 insertions(+)
+>>
+>> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+>> index 3e55838c0001..fab7664c12c0 100644
+>> --- a/drivers/usb/dwc3/core.c
+>> +++ b/drivers/usb/dwc3/core.c
+>> @@ -39,6 +39,7 @@
+>>   #include "io.h"
+>>   
+>>   #include "debug.h"
+>> +#include "../host/xhci-ext-caps.h"
+>>   
+>>   #define DWC3_DEFAULT_AUTOSUSPEND_DELAY	5000 /* ms */
+>>   
+>> @@ -1879,10 +1880,56 @@ static int dwc3_get_clocks(struct dwc3 *dwc)
+>>   	return 0;
+>>   }
+>>   
+>> +static int dwc3_read_port_info(struct dwc3 *dwc)
+>> +{
+>> +	void __iomem *base;
+>> +	u8 major_revision;
+>> +	u32 offset;
+>> +	u32 val;
+>> +
+>> +	/*
+>> +	 * Remap xHCI address space to access XHCI ext cap regs since it is
+>> +	 * needed to get information on number of ports present.
+>> +	 */
+>> +	base = ioremap(dwc->xhci_resources[0].start,
+>> +		       resource_size(&dwc->xhci_resources[0]));
+>> +	if (IS_ERR(base))
+>> +		return PTR_ERR(base);
+> 
+> Looks like you forgot to address some of the comments you said you'd
+> update previously if you submit a new version to the series.
+> 
+> [*] https://lore.kernel.org/linux-usb/af73110d-e13e-4183-af11-aed869ac0a31@quicinc.com/
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 39889d5f8e12..ad55e52e950b 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -5,6 +5,7 @@ apq8016-sbc-usb-host-dtbs	:= apq8016-sbc.dtb apq8016-sbc-usb-host.dtbo
- 
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc-usb-host.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc-d3-camera-mezzanine.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-schneider-hmibsc.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8039-t2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8094-sony-xperia-kitakami-karin_windy.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
-diff --git a/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts b/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
-new file mode 100644
-index 000000000000..75c6137e5a11
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
-@@ -0,0 +1,491 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2015, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2024, Linaro Ltd.
-+ */
-+
-+/dts-v1/;
-+
-+#include "msm8916-pm8916.dtsi"
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/input.h>
-+#include <dt-bindings/leds/common.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-mpp.h>
-+#include <dt-bindings/sound/apq8016-lpass.h>
-+
-+/ {
-+	model = "Schneider Electric HMIBSC Board";
-+	compatible = "schneider,apq8016-hmibsc", "qcom,apq8016";
-+
-+	aliases {
-+		i2c1 = &blsp_i2c6;
-+		i2c3 = &blsp_i2c4;
-+		i2c4 = &blsp_i2c3;
-+		mmc0 = &sdhc_1; /* eMMC */
-+		mmc1 = &sdhc_2; /* SD card */
-+		serial0 = &blsp_uart1;
-+		serial1 = &blsp_uart2;
-+		spi0 = &blsp_spi5;
-+		usid0 = &pm8916_0;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0";
-+	};
-+
-+	hdmi-out {
-+		compatible = "hdmi-connector";
-+		type = "a";
-+
-+		port {
-+			hdmi_con: endpoint {
-+				remote-endpoint = <&adv7533_out>;
-+			};
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+		autorepeat;
-+		pinctrl-0 = <&msm_key_volp_n_default>;
-+		pinctrl-names = "default";
-+
-+		button {
-+			label = "Volume Up";
-+			linux,code = <KEY_VOLUMEUP>;
-+			gpios = <&tlmm 107 GPIO_ACTIVE_LOW>;
-+		};
-+	};
-+
-+	leds {
-+		compatible = "gpio-leds";
-+		pinctrl-0 = <&pm8916_mpps_leds>;
-+		pinctrl-names = "default";
-+
-+		led-1 {
-+			function = LED_FUNCTION_WLAN;
-+			color = <LED_COLOR_ID_YELLOW>;
-+			gpios = <&pm8916_mpps 2 GPIO_ACTIVE_HIGH>;
-+			linux,default-trigger = "phy0tx";
-+			default-state = "off";
-+		};
-+
-+		led-2 {
-+			function = LED_FUNCTION_BLUETOOTH;
-+			color = <LED_COLOR_ID_BLUE>;
-+			gpios = <&pm8916_mpps 3 GPIO_ACTIVE_HIGH>;
-+			linux,default-trigger = "bluetooth-power";
-+			default-state = "off";
-+		};
-+	};
-+
-+	memory@80000000 {
-+		reg = <0 0x80000000 0 0x40000000>;
-+	};
-+
-+	reserved-memory {
-+		ramoops@bff00000 {
-+			compatible = "ramoops";
-+			reg = <0x0 0xbff00000 0x0 0x100000>;
-+			record-size = <0x20000>;
-+			console-size = <0x20000>;
-+			ftrace-size = <0x20000>;
-+			ecc-size = <16>;
-+		};
-+	};
-+
-+	usb-hub {
-+		compatible = "smsc,usb3503";
-+		reset-gpios = <&pm8916_gpios 1 GPIO_ACTIVE_LOW>;
-+		initial-mode = <1>;
-+	};
-+
-+	usb_id: usb-id {
-+		compatible = "linux,extcon-usb-gpio";
-+		id-gpios = <&tlmm 110 GPIO_ACTIVE_HIGH>;
-+		pinctrl-0 = <&usb_id_default>;
-+		pinctrl-names = "default";
-+	};
-+};
-+
-+&blsp_i2c3 {
-+	status = "okay";
-+
-+	eeprom@50 {
-+		compatible = "atmel,24c32";
-+		reg = <0x50>;
-+	};
-+};
-+
-+&blsp_i2c4 {
-+	status = "okay";
-+
-+	adv_bridge: bridge@39 {
-+		compatible = "adi,adv7533";
-+		reg = <0x39>;
-+		interrupts-extended = <&tlmm 31 IRQ_TYPE_EDGE_FALLING>;
-+
-+		adi,dsi-lanes = <4>;
-+		clocks = <&rpmcc RPM_SMD_BB_CLK2>;
-+		clock-names = "cec";
-+		pd-gpios = <&tlmm 32 GPIO_ACTIVE_HIGH>;
-+
-+		avdd-supply = <&pm8916_l6>;
-+		a2vdd-supply = <&pm8916_l6>;
-+		dvdd-supply = <&pm8916_l6>;
-+		pvdd-supply = <&pm8916_l6>;
-+		v1p2-supply = <&pm8916_l6>;
-+		v3p3-supply = <&pm8916_l17>;
-+
-+		pinctrl-0 = <&adv7533_int_active &adv7533_switch_active>;
-+		pinctrl-1 = <&adv7533_int_suspend &adv7533_switch_suspend>;
-+		pinctrl-names = "default","sleep";
-+		#sound-dai-cells = <0>;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+				adv7533_in: endpoint {
-+					remote-endpoint = <&mdss_dsi0_out>;
-+				};
-+			};
-+
-+			port@1 {
-+				reg = <1>;
-+				adv7533_out: endpoint {
-+					remote-endpoint = <&hdmi_con>;
-+				};
-+			};
-+		};
-+	};
-+};
-+
-+&blsp_i2c6 {
-+	status = "okay";
-+
-+	rtc@30 {
-+		compatible = "sii,s35390a";
-+		reg = <0x30>;
-+	};
-+
-+	eeprom@50 {
-+		compatible = "atmel,24c256";
-+		reg = <0x50>;
-+	};
-+};
-+
-+&blsp_spi5 {
-+	cs-gpios = <&tlmm 18 GPIO_ACTIVE_LOW>;
-+	status = "okay";
-+
-+	tpm@0 {
-+		compatible = "infineon,slb9670", "tcg,tpm_tis-spi";
-+		reg = <0>;
-+		spi-max-frequency = <500000>;
-+	};
-+};
-+
-+&blsp_uart1 {
-+	label = "UART0";
-+	status = "okay";
-+};
-+
-+&blsp_uart2 {
-+	label = "UART1";
-+	status = "okay";
-+};
-+
-+&lpass {
-+	status = "okay";
-+};
-+
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mdss_dsi0_out {
-+	data-lanes = <0 1 2 3>;
-+	remote-endpoint = <&adv7533_in>;
-+};
-+
-+&pm8916_codec {
-+	qcom,mbhc-vthreshold-low = <75 150 237 450 500>;
-+	qcom,mbhc-vthreshold-high = <75 150 237 450 500>;
-+	status = "okay";
-+};
-+
-+&pm8916_gpios {
-+	gpio-line-names =
-+		"USB_HUB_RESET_N_PM",
-+		"USB_SW_SEL_PM",
-+		"NC",
-+		"NC";
-+
-+	usb_hub_reset_pm: usb-hub-reset-pm-state {
-+		pins = "gpio1";
-+		function = PMIC_GPIO_FUNC_NORMAL;
-+		input-disable;
-+		output-high;
-+	};
-+
-+	usb_hub_reset_pm_device: usb-hub-reset-pm-device-state {
-+		pins = "gpio1";
-+		function = PMIC_GPIO_FUNC_NORMAL;
-+		input-disable;
-+		output-low;
-+	};
-+
-+	usb_sw_sel_pm: usb-sw-sel-pm-state {
-+		pins = "gpio2";
-+		function = PMIC_GPIO_FUNC_NORMAL;
-+		power-source = <PM8916_GPIO_VPH>;
-+		input-disable;
-+		output-high;
-+	};
-+
-+	usb_sw_sel_pm_device: usb-sw-sel-pm-device-state {
-+		pins = "gpio2";
-+		function = PMIC_GPIO_FUNC_NORMAL;
-+		power-source = <PM8916_GPIO_VPH>;
-+		input-disable;
-+		output-low;
-+	};
-+};
-+
-+&pm8916_mpps {
-+	gpio-line-names =
-+		"NC",
-+		"WLAN_LED_CTRL",
-+		"BT_LED_CTRL",
-+		"NC";
-+
-+	pm8916_mpps_leds: pm8916-mpps-state {
-+		pins = "mpp2", "mpp3";
-+		function = "digital";
-+		output-low;
-+	};
-+};
-+
-+&pm8916_resin {
-+	linux,code = <KEY_POWER>;
-+	status = "okay";
-+};
-+
-+&pm8916_rpm_regulators {
-+	pm8916_l17: l17 {
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+};
-+
-+&sdhc_1 {
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	pinctrl-0 = <&sdc2_default &sdc2_cd_default>;
-+	pinctrl-1 = <&sdc2_sleep &sdc2_cd_default>;
-+	pinctrl-names = "default", "sleep";
-+	cd-gpios = <&tlmm 38 GPIO_ACTIVE_LOW>;
-+	status = "okay";
-+};
-+
-+&sound {
-+	pinctrl-0 = <&cdc_pdm_default &sec_mi2s_default>;
-+	pinctrl-1 = <&cdc_pdm_sleep &sec_mi2s_sleep>;
-+	pinctrl-names = "default", "sleep";
-+	model = "HMIBSC";
-+	audio-routing =
-+		"AMIC2", "MIC BIAS Internal2",
-+		"AMIC3", "MIC BIAS External1";
-+	status = "okay";
-+
-+	quaternary-dai-link {
-+		link-name = "ADV7533";
-+		cpu {
-+			sound-dai = <&lpass MI2S_QUATERNARY>;
-+		};
-+		codec {
-+			sound-dai = <&adv_bridge 0>;
-+		};
-+	};
-+
-+	primary-dai-link {
-+		link-name = "WCD";
-+		cpu {
-+			sound-dai = <&lpass MI2S_PRIMARY>;
-+		};
-+		codec {
-+			sound-dai = <&lpass_codec 0>, <&pm8916_codec 0>;
-+		};
-+	};
-+
-+	tertiary-dai-link {
-+		link-name = "WCD-Capture";
-+		cpu {
-+			sound-dai = <&lpass MI2S_TERTIARY>;
-+		};
-+		codec {
-+			sound-dai = <&lpass_codec 1>, <&pm8916_codec 1>;
-+		};
-+	};
-+};
-+
-+&tlmm {
-+	pinctrl-0 = <&uart1_mux0_rs232_high &uart1_mux1_rs232_low>;
-+	pinctrl-names = "default";
-+
-+	adv7533_int_active: adv533-int-active-state {
-+		pins = "gpio31";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+	};
-+
-+	adv7533_int_suspend: adv7533-int-suspend-state {
-+		pins = "gpio31";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	adv7533_switch_active: adv7533-switch-active-state {
-+		pins = "gpio32";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+	};
-+
-+	adv7533_switch_suspend: adv7533-switch-suspend-state {
-+		pins = "gpio32";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	msm_key_volp_n_default: msm-key-volp-n-default-state {
-+		pins = "gpio107";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-up;
-+	};
-+
-+	sdc2_cd_default: sdc2-cd-default-state {
-+		pins = "gpio38";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	/*
-+	 * UART1 being the debug console supports various modes of
-+	 * operation (RS-232/485/422) controlled via GPIOs configured
-+	 * mux as follows:
-+	 *
-+	 *   gpio100    gpio99    UART mode
-+	 *   0          0         loopback
-+	 *   0          1         RS-232
-+	 *   1          0         RS-485
-+	 *   1          1         RS-422
-+	 *
-+	 * The default mode configured here is RS-232 mode.
-+	 */
-+	uart1_mux0_rs232_high: uart1-mux0-rs232-state {
-+		bootph-all;
-+		pins = "gpio99";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+		output-high;
-+	};
-+
-+	uart1_mux1_rs232_low: uart1-mux1-rs232-state {
-+		bootph-all;
-+		pins = "gpio100";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+		output-low;
-+	};
-+
-+	usb_id_default: usb-id-default-state {
-+		pins = "gpio110";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-up;
-+	};
-+};
-+
-+&usb {
-+	extcon = <&usb_id>, <&usb_id>;
-+	pinctrl-0 = <&usb_sw_sel_pm &usb_hub_reset_pm>;
-+	pinctrl-1 = <&usb_sw_sel_pm_device &usb_hub_reset_pm_device>;
-+	pinctrl-names = "default", "device";
-+	status = "okay";
-+};
-+
-+&usb_hs_phy {
-+	extcon = <&usb_id>;
-+};
-+
-+&wcnss {
-+	firmware-name = "qcom/apq8016/wcnss.mbn";
-+	status = "okay";
-+};
-+
-+&wcnss_ctrl {
-+	firmware-name = "qcom/apq8016/WCNSS_qcom_wlan_nv_sbc.bin";
-+};
-+
-+&wcnss_iris {
-+	compatible = "qcom,wcn3620";
-+};
-+
-+&wcnss_mem {
-+	status = "okay";
-+};
-+
-+/* PINCTRL - additions to nodes defined in msm8916.dtsi */
-+
-+/*
-+ * 2mA drive strength is not enough when connecting multiple
-+ * I2C devices with different pull up resistors.
-+ */
-+&blsp_i2c4_default {
-+	drive-strength = <16>;
-+};
-+
-+&blsp_i2c6_default {
-+	drive-strength = <16>;
-+};
-+
-+&blsp_uart1_default {
-+	bootph-all;
-+};
-+
-+/* Enable CoreSight */
-+&cti0 { status = "okay"; };
-+&cti1 { status = "okay"; };
-+&cti12 { status = "okay"; };
-+&cti13 { status = "okay"; };
-+&cti14 { status = "okay"; };
-+&cti15 { status = "okay"; };
-+&debug0 { status = "okay"; };
-+&debug1 { status = "okay"; };
-+&debug2 { status = "okay"; };
-+&debug3 { status = "okay"; };
-+&etf { status = "okay"; };
-+&etm0 { status = "okay"; };
-+&etm1 { status = "okay"; };
-+&etm2 { status = "okay"; };
-+&etm3 { status = "okay"; };
-+&etr { status = "okay"; };
-+&funnel0 { status = "okay"; };
-+&funnel1 { status = "okay"; };
-+&replicator { status = "okay"; };
-+&stm { status = "okay"; };
-+&tpiu { status = "okay"; };
--- 
-2.34.1
+Apologies. I agree. I was too much focused on acpi removal and interrupt 
+cleanup, I forgot the last comment you gave.
 
+Can I send in a separate patch for this ?
+
+Regards,
+Krishna,
 
