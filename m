@@ -1,135 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-16279-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E741896F93
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 14:56:47 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 209B5896FD7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 15:05:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 900F71C261F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 12:56:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 79DB6B28718
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 13:05:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7301C149016;
-	Wed,  3 Apr 2024 12:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAAAE147C96;
+	Wed,  3 Apr 2024 13:05:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="Yp8+JLC4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A88E14900F;
-	Wed,  3 Apr 2024 12:54:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.34.216
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178151474DF
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 13:05:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712148889; cv=none; b=OUXBnnmTn9hPCRNj8yv0oE2XW87uo2hb338t/23YAzVurpC+bANO+sA8UPNG1p9PakelgCtwYP6g5UTlgiqMNkh0LW+9W37nvmy8PMPcPlehiIkIoWzZHvHygMcQq6RfvVTLNLGxC0uOz9FBLjA9EBk63Kd71uibf9pIdEVkIG8=
+	t=1712149539; cv=none; b=m8XFmCU8oTk/ljHj7Az5TwGuFrVvM6nbWlb28cmJTOp9FHu5PcOVHgAgIVy1633LUaTd1Z11CP5Oe6YcCktQLnbaE1fUD0TDR/5sLC1/EyNNH1OMO0JkXO3bai6tFUVuTJ9UN0IiEvXCbViTxy9dciGcXCpiX2FjY6QZ2hWwFK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712148889; c=relaxed/simple;
-	bh=xXJvc27158uMzeJNX4bgx6mUDVSgnlq9ce9aZe5v3B4=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=IlYhUpU2w0C4JRLtPrXLij458ZEHLIltfTx0VH6eDn2MK7D/kDeza49HLXhKmxtppc8Vf8RydM4Ut9udDFOaXUKlbXA06Qd/U3U3J9ghKRYpPFEHIKwsVpnIiGDXqpjHPZlymczP0Gt2TvHlOomqxFzxHWuFm1bEoKmLwQ4KC5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shingroup.cn; spf=pass smtp.mailfrom=shingroup.cn; arc=none smtp.client-ip=54.206.34.216
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shingroup.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shingroup.cn
-X-QQ-mid: bizesmtpsz1t1712148785t9jh8zy
-X-QQ-Originating-IP: glNtj0eRp0IOBFLCOi1CaGqaaEumMkerNThHocu9b+k=
-Received: from localhost ( [112.0.147.175])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 03 Apr 2024 20:53:04 +0800 (CST)
-X-QQ-SSF: 01400000000000704000000A0000000
-X-QQ-FEAT: +ynUkgUhZJkR1+2Xpbw3pa6lG4d42cKOBYOKy4eBM/Jbqbkv0AiQwK85DK9n1
-	983cnBzJioQLx2jW5n10h586uD5pFDBsC+v12PpxJYaKBi3CSH/AmSm88+X9mOQQH8/QZ63
-	PG3ju17FiN2Dd4TWCF7X1iXJfg63o8upsKBrlHBlhEbSbLEySN06aN/oYGc5jgiBcG8X5Bp
-	1lABsa0QVpzkBNFCbrjCZcdBy7xoNDq1ADjdWQkMU0CNhITXi0yskRVq33PqVBthi6fTNSt
-	IzpNnzIqNNQRwXPQN80AGwyXXnm3YBgOIxP8o71LF5W4AFOgcKSD/GXhC0ne4Zx83dF2qUs
-	DVPirTGQv4Rbo7GV7MzZpG3r4bkNn+xF135c0YgkOHUZKhO9xWOsAz+OjtOg5jvd7rZuX1h
-	qA68Tfvh8S+vNUKQNWDDAAbW7BaVf2NZ
-X-QQ-GoodBg: 2
-X-BIZMAIL-ID: 17308809335922861107
-From: Dawei Li <dawei.li@shingroup.cn>
-To: will@kernel.org,
-	mark.rutland@arm.com,
-	yury.norov@gmail.com,
-	linux@rasmusvillemoes.dk
-Cc: xueshuai@linux.alibaba.com,
-	renyu.zj@linux.alibaba.com,
-	yangyicong@hisilicon.com,
-	jonathan.cameron@huawei.com,
-	andersson@kernel.org,
-	konrad.dybcio@linaro.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Dawei Li <dawei.li@shingroup.cn>
-Subject: [PATCH v2 10/10] perf/thunderx2: Avoid placing cpumask var on stack
-Date: Wed,  3 Apr 2024 20:51:09 +0800
-Message-Id: <20240403125109.2054881-11-dawei.li@shingroup.cn>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20240403125109.2054881-1-dawei.li@shingroup.cn>
-References: <20240403125109.2054881-1-dawei.li@shingroup.cn>
+	s=arc-20240116; t=1712149539; c=relaxed/simple;
+	bh=9W7EaQCc71PpFxZtrRnJbzx0Wp7qmcJCqdZHuoipVxg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NFD69faGd7KmjAZt5SHJqW/Q9YXAt1bpywRlP1DQpMW+Xyripym9P6LL5hfkI44DrRzZu/3h7llGimZoWMIBmKZ2D6TNhzwXU6O3yJcgN5AjHUDgorFLPmm8u2UsHxqq78HSPNjWqxAMO4/M6IQtm5ECnGBS3kTdl1MiWhFnsoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=Yp8+JLC4; arc=none smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-56bc5a3aeb9so8185539a12.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 06:05:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1712149535; x=1712754335; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0Yy1+Kh6mnrNkIsDDzZC6QpS6YqOrI64OZBtZfxhZvo=;
+        b=Yp8+JLC4SPLKM4TkVloMV8ZmkijWh8KYEeT7OsNRtkFTs4qmfh9n529qIxghmpnjMY
+         eQxlytlGYbGqGR4wW70dYFyeylcLjxIBI+eIqb1P7/sNo7peVHKH5PTwVPzw6QeiEAXJ
+         rxgCHTGr5LSnH3/+gsa7cPWUJohayHeoPSd/iiW4nXYcN2lgz7Hf0DJMHAC9+aR6tfAQ
+         irMlf+VoSlICeF+Rert9dAhbURD8h/DyToyA29umQgNxbF7bIs76Sp1Q0yG94Tk51NyL
+         i3Mm1IdpXjQoTD79nIVW7RLnGui0K+G7sdygtdthLqyqK3y8ks1E2S/XDBIWDRPQqVc2
+         bicw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712149535; x=1712754335;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0Yy1+Kh6mnrNkIsDDzZC6QpS6YqOrI64OZBtZfxhZvo=;
+        b=a5QEaTpzlAiGmXDzy4//LigbkaihezuN1/yMEkdcrmxRozJOCE1wC8+0YGEz6QvX4B
+         /MFv5Ub5al9busQtdGfyH6d8+EvtCpTptSPhfFULwefFJPoNaWKB/rW8ugA79sGm1G6b
+         5hql0knhCPqDDluWba30a6JgXCZKPAPZcgE4l1h+QXeET1UB3sz3Qn6r49u/72QtserG
+         EUSqR33EFjR4ZVxOKTTTBfz7mu81Nam9Py7iSej2ELJrlvjAiuTDz5zNiSzzdaqEoL0R
+         KMN6gi1bOKAPZMQ2B39RPPzXqVj2BZsASjd57oHMRDaqhl7b+N/rHuVTApmC+4w3QpeE
+         5q5w==
+X-Forwarded-Encrypted: i=1; AJvYcCWMq932KCl8b7QW/f1nIo/j8pJzwegr1gFgGlbCGOqkeevXo4qDrxEAJO9vO+gZKy287TDDlfDSx6ncq6IrlZlHLwGCpynw8yrw5htSow==
+X-Gm-Message-State: AOJu0YxiZrIQsRUz65jlF0y2f9VdVN86aSeyKgpYzHsK/ZqFwDGcMRoJ
+	NRjaoYTk/KPerhOFFMRtfsSmOa1EpLyMlUV2QF439MZWjpTtLWAo3wd+YH55Zxw=
+X-Google-Smtp-Source: AGHT+IHvCjxIoDEM81ThMFGXmAee2lKZJYRPwGZglynP/ylH/CdDRIdN1evuMgXWrVvChyW1q2UCWw==
+X-Received: by 2002:a17:906:d28e:b0:a4e:648c:1138 with SMTP id ay14-20020a170906d28e00b00a4e648c1138mr6161495ejb.67.1712149535307;
+        Wed, 03 Apr 2024 06:05:35 -0700 (PDT)
+Received: from ?IPV6:2a02:8428:2a4:1a01:79e6:9288:5142:9623? ([2a02:8428:2a4:1a01:79e6:9288:5142:9623])
+        by smtp.gmail.com with ESMTPSA id xh12-20020a170906da8c00b00a4e579ce949sm4817000ejb.51.2024.04.03.06.05.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Apr 2024 06:05:35 -0700 (PDT)
+Message-ID: <91031ed0-104a-4752-8b1e-0dbe15ebf201@freebox.fr>
+Date: Wed, 3 Apr 2024 15:05:33 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: bizesmtpsz:shingroup.cn:qybglogicsvrgz:qybglogicsvrgz5a-1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: msm8998: set
+ qcom,no-msa-ready-indicator for wifi
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Kalle Valo <kvalo@kernel.org>, Jeff Johnson <quic_jjohnson@quicinc.com>,
+ ath10k <ath10k@lists.infradead.org>,
+ wireless <linux-wireless@vger.kernel.org>, DT <devicetree@vger.kernel.org>,
+ MSM <linux-arm-msm@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Jami Kettunen <jamipkettunen@gmail.com>,
+ Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+References: <fd26ce4a-a9f3-4ada-8d46-ed36fb2456ca@freebox.fr>
+ <5cdad89c-282a-4df5-a286-b8404bc4dd81@freebox.fr>
+ <252618e8-9e80-4774-a96c-caa7f838ef01@linaro.org>
+ <502322f1-4f66-4922-bc4e-46bacac23410@linaro.org>
+ <0ca1221b-b707-450f-877d-ca07a601624d@freebox.fr>
+ <CAA8EJppeREj-0g9oGCzzKx5ywhg1mgmJR1q8yvXKN7N45do1Xg@mail.gmail.com>
+Content-Language: en-US
+From: Marc Gonzalez <mgonzalez@freebox.fr>
+In-Reply-To: <CAA8EJppeREj-0g9oGCzzKx5ywhg1mgmJR1q8yvXKN7N45do1Xg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-For CONFIG_CPUMASK_OFFSTACK=y kernel, explicit allocation of cpumask
-variable on stack is not recommended since it can cause potential stack
-overflow.
+On 02/04/2024 17:55, Dmitry Baryshkov wrote:
 
-Instead, kernel code should always use *cpumask_var API(s) to allocate
-cpumask var in config-neutral way, leaving allocation strategy to
-CONFIG_CPUMASK_OFFSTACK.
+> On Tue, 2 Apr 2024 at 18:31, Marc Gonzalez wrote:
+>
+>> So, if I understand correctly, I take this to mean that I should:
+>>
+>> 1) DELETE the qcom,no-msa-ready-indicator boolean property,
+>> 2) ADD a "qcom,msm8998-wifi" (name OK?) compatible,
+> 
+> I'd say, this is not correct. There is no "msm8998-wifi".
 
-But dynamic allocation in cpuhp's teardown callback is somewhat problematic
-for if allocation fails(which is unlikely but still possible):
-- If -ENOMEM is returned to caller, kernel crashes for non-bringup
-  teardown;
-- If callback pretends nothing happened and returns 0 to caller, it may
-  trap system into an in-consisitent/compromised state;
+Can you explain what you mean by:
+'There is no "msm8998-wifi".' ?
 
-Use newly-introduced cpumask_any_and_but() to address all issues above.
-It eliminates usage of temporary cpumask var in generic way, no matter how
-the cpumask var is allocated.
+Do you mean that: this compatible string does not exist?
+(I am proposing that it be created.)
 
-Suggested-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Dawei Li <dawei.li@shingroup.cn>
----
- drivers/perf/thunderx2_pmu.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+Or do you mean that: "msm8998-wifi" is a bad name?
 
-diff --git a/drivers/perf/thunderx2_pmu.c b/drivers/perf/thunderx2_pmu.c
-index e16d10c763de..b3377b662ffc 100644
---- a/drivers/perf/thunderx2_pmu.c
-+++ b/drivers/perf/thunderx2_pmu.c
-@@ -932,9 +932,8 @@ static int tx2_uncore_pmu_online_cpu(unsigned int cpu,
- static int tx2_uncore_pmu_offline_cpu(unsigned int cpu,
- 		struct hlist_node *hpnode)
- {
--	int new_cpu;
- 	struct tx2_uncore_pmu *tx2_pmu;
--	struct cpumask cpu_online_mask_temp;
-+	unsigned int new_cpu;
- 
- 	tx2_pmu = hlist_entry_safe(hpnode,
- 			struct tx2_uncore_pmu, hpnode);
-@@ -945,11 +944,8 @@ static int tx2_uncore_pmu_offline_cpu(unsigned int cpu,
- 	if (tx2_pmu->hrtimer_callback)
- 		hrtimer_cancel(&tx2_pmu->hrtimer);
- 
--	cpumask_copy(&cpu_online_mask_temp, cpu_online_mask);
--	cpumask_clear_cpu(cpu, &cpu_online_mask_temp);
--	new_cpu = cpumask_any_and(
--			cpumask_of_node(tx2_pmu->node),
--			&cpu_online_mask_temp);
-+	new_cpu = cpumask_any_and_but(cpumask_of_node(tx2_pmu->node),
-+				      cpu_online_mask, cpu);
- 
- 	tx2_pmu->cpu = new_cpu;
- 	if (new_cpu >= nr_cpu_ids)
--- 
-2.27.0
+
+I meant to mimic these strings for various sub-blocks:
+
+arch/arm64/boot/dts/qcom/msm8998.dtsi:          compatible = "qcom,msm8998-rpm-proc", "qcom,rpm-proc";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                                  compatible = "qcom,msm8998-rpmpd";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                  compatible = "qcom,msm8998-qfprom", "qcom,qfprom";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                  compatible = "qcom,msm8998-tsens", "qcom,tsens-v2";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                  compatible = "qcom,msm8998-tsens", "qcom,tsens-v2";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                  compatible = "qcom,msm8998-smmu-v2", "qcom,smmu-v2";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                  compatible = "qcom,msm8998-smmu-v2", "qcom,smmu-v2";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                  compatible = "qcom,msm8998-qmp-pcie-phy";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                  compatible = "qcom,msm8998-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                  compatible = "qcom,msm8998-qmp-ufs-phy";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                  compatible = "qcom,msm8998-tcsr", "syscon";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                  compatible = "qcom,msm8998-tcsr", "syscon";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                  compatible = "qcom,msm8998-pinctrl";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                  compatible = "qcom,msm8998-mss-pil";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                  compatible = "qcom,msm8998-smmu-v2", "qcom,smmu-v2",
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                  compatible = "qcom,msm8998-gpucc";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                  compatible = "qcom,msm8998-slpi-pas";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                  compatible = "qcom,msm8998-dwc3", "qcom,dwc3";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                  compatible = "qcom,msm8998-qmp-usb3-phy";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                  compatible = "qcom,msm8998-qusb2-phy";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                  compatible = "qcom,msm8998-sdhci", "qcom,sdhci-msm-v4";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                  compatible = "qcom,msm8998-mdss";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                          compatible = "qcom,msm8998-dpu";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                          compatible = "qcom,msm8998-dsi-ctrl", "qcom,mdss-dsi-ctrl";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                          compatible = "qcom,msm8998-dsi-ctrl", "qcom,mdss-dsi-ctrl";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                  compatible = "qcom,msm8998-venus";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                  compatible = "qcom,msm8998-smmu-v2", "qcom,smmu-v2";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                  compatible = "qcom,msm8998-adsp-pas";
+arch/arm64/boot/dts/qcom/msm8998.dtsi:                  compatible = "qcom,msm8998-apcs-hmss-global",
+
+
+And these strings in ath11k:
+
+Documentation/devicetree/bindings/net/wireless/qcom,ath11k.yaml:      - qcom,ipq8074-wifi
+Documentation/devicetree/bindings/net/wireless/qcom,ath11k.yaml:      - qcom,ipq6018-wifi
+Documentation/devicetree/bindings/net/wireless/qcom,ath11k.yaml:      - qcom,wcn6750-wifi
+Documentation/devicetree/bindings/net/wireless/qcom,ath11k.yaml:      - qcom,ipq5018-wifi
+
+
+> I'd say, we should take a step back and actually verify how this was
+> handled in the vendor kernel.
+
+In our commercial product, we use the ath10k driver in the vendor kernel (v4.4 r38-rel).
+
+It looks like Jeff has already performed the code analysis
+wrt vendor vs mainline (including user-space tools).
+
+Regards
 
 
