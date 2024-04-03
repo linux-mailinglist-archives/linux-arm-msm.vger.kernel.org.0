@@ -1,190 +1,552 @@
-Return-Path: <linux-arm-msm+bounces-16259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E21AF896D4A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 12:53:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 77546896D82
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 12:58:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A8F5EB23BF7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 10:52:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E4FF11F22627
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 10:58:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C263513AA35;
-	Wed,  3 Apr 2024 10:52:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFA651411F8;
+	Wed,  3 Apr 2024 10:57:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V12PyVF6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Tmk3XL9O"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E81713A245
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 10:52:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8EAC1411ED
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 10:57:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712141564; cv=none; b=TT8gi/bk6OjDb8jDOx7SZVCj014bh7GdtiTjIAXhP7NXCmD6sEMWAyZV7xjlsQUxCu9SZXkl8ZVw8m+36oHOl+69TbLtXh23s8cHGJTdPF3geJxwimbSj7f7FjYsPsQM2e2iUS6jDZZjaiRDFMn4xkIPcvZaAgxkZOQFB+SXgDk=
+	t=1712141845; cv=none; b=m3u/FWulmusaui7yaAWk0LVThZ/BqGREpf6u3sZa45vmP6HhOeF6rb7YBS6XHqWA4vHftC9k5uHLNDLC7fm23b4t4mjozYMbh7ANkoop1eIjNW92lNqAw5kvRwRhlkIXkzYppQCW9y8BonvvtddZ4sk0SId1V+dmKQGV70p1KvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712141564; c=relaxed/simple;
-	bh=9Z5bHmFFVRTiCPLQRYLIroFmSupP0sNH5s9g/ohYz2g=;
+	s=arc-20240116; t=1712141845; c=relaxed/simple;
+	bh=m0zk9FRh18K+wDKJhpcfq1yf3TtUxVXllnWMP63G82g=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IcUUubwfN2Qjc+PYF9sugr1v/vIGcJvFTLE6yy0GxFSVJvdmU5Zeku0w/mYsMeCGP5Lg6iDyok3uEnCdLK/wkFCYgxP7n8lZdsrLbwbTicSTsPRUNqeKx7LAIIuYQPFUO9MY8q7borxPO8Zo7hVgDOpRuBEJwUWpv2T8VFvOYiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V12PyVF6; arc=none smtp.client-ip=209.85.219.177
+	 To:Cc:Content-Type; b=IDlk4BQsIHbSZo740+dBJ/B36yVw9S26XayF9GyAM1+WOioqs8jakqRZMGGtZHiNiNbRbjjWYhUrTRKXyUjiHcaGNY2mAcLA4ywCd0h39xRrPy/baSKu4NdFj6IVW6kUwxy4v/HwiUReJXB55LLJkgu3vngsCMpILFuBllH4+/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Tmk3XL9O; arc=none smtp.client-ip=209.85.128.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-dc6d8bd612dso6269728276.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 03:52:42 -0700 (PDT)
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-6114c9b4d83so46360767b3.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 03:57:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712141562; x=1712746362; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1712141843; x=1712746643; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=gS0Z5+rdal2y5BY6tsyqb8H9cNT55lBmngpYPZ201Xs=;
-        b=V12PyVF6wEKLoAC4Faa7kGa3ipXbETHkSLVg402T4E40GdBZ66fJfBHfG/6e5MlyRR
-         AXAaVA21ozJueeIPjJeLe1tCZbzzjJx1xmtS9UTTIOQRNoCzi/Q7e5ld1di4cLd7jdbJ
-         vB77DHbAJnp7B9Kuu0C8Y8ugB+cgCNLOHJkLQZD82jdrxsBMmfyjCDNEVKlZ9VPHCroL
-         dFjOMIXHcHLW1k9HbDVoqElE6E5vMvw22yoRm3uGw3Gea8YZS1Ht+jdEt+u9ugBi6zGc
-         7dvt1rvy3OpFN3bAxkdLkGn98gIY+t9759gte9GEXmGw/pq0RU9DmLFW0moV+ZKOnwb0
-         SSmQ==
+        bh=QbyTmTpoY0+1ocSTCWq7XN3ElG/TMFU5FD0sWO7oH58=;
+        b=Tmk3XL9OUSiu/VmGSdgcC1ZiaysxPh05mH+YzRknN0sRYOB7o3JRf6Isaw0nRSzfE2
+         CokEmhq8WF2juSnriedP4RJpFE2BTgzStMNB5oVnm6HAN8jn+b/QyxKOy4LjQU5+ggFG
+         Z5X2JFT1JfxracivCxhP7EoqBFtOQHs5bDdihrmFFMvD0ltHwibkjwqdyWIh0BhbUOGD
+         /ZBy/JEg9MHPneYX7RmIcVKolDZAGKQ155CVT8jtow0FBwO+ANNuj2yl5b281jLvyqyR
+         0ELlhqEJvYjkOj6vK0+eqUT9VszfSsVLq5rdu2J5IPHli6pZG2IAZW6batSWJWUREtTy
+         SEPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712141562; x=1712746362;
+        d=1e100.net; s=20230601; t=1712141843; x=1712746643;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=gS0Z5+rdal2y5BY6tsyqb8H9cNT55lBmngpYPZ201Xs=;
-        b=e9u/m01ozDhSJlcMiaRlIjPM45MQUrQGmeDE3obotLN6OZAgLpPG3z2iV+3Q3MVXH1
-         nbiRt+Zs2p4v+bMj+qI6uGzKZg5ltemWNTYP5UtB2ljDGr1Mc8YUy/0m4iDoqhVJMxy4
-         3J2rDLTvIE6b00jfV2965BAb9jxncg85YBoECbrAzTzDHIP4MNUMNpRpq7se5simrnQ9
-         83ymz9oaChgNwDxLqVtBNZTx7PcPo1AhRLtvDF/RGX0Nj8PrCjSM/jtq33YAW45NSNd3
-         qVw8RuZ3ZAUqmBx6c/R1SUibIOfSnPmuyWgX2bjAMmPEtCMGQ/q6LKUpxRDqORjNHJGv
-         QVNw==
-X-Forwarded-Encrypted: i=1; AJvYcCUR4XlvgAlsFKRLIE1VDL+S5N5P2iPaPMjk1pdLX/PeWMivprKomB+6UliW+2WqUlcnPMoymCThQd6xP8WJpQSjfj5YhT3TAclodV+XhQ==
-X-Gm-Message-State: AOJu0YwlZfP/2mAK7NYIs8oxBT9U57ncWau9+uBMIpkomzNy7WxMtVLD
-	2ZTEAKi6U2A4ysUFjQ5KgJzwiHi2Xmhq+STtk1FmgBYIpJ15mzKxBKHPlPDm1svf4gTvvgx66+q
-	rvSExMn9hGQOraLwelq21MVwaIK7fivCCavPkew==
-X-Google-Smtp-Source: AGHT+IEEx+Hm1VlBuPgg41RYUCAiHYUa6D2rWvGbAtMUtMb9ELHVG9UdlidCEQhp0jbJ3eoGyrjS1dVWy7ygd0zKrRc=
-X-Received: by 2002:a25:5887:0:b0:dc7:47b7:9053 with SMTP id
- m129-20020a255887000000b00dc747b79053mr12868622ybb.15.1712141562074; Wed, 03
- Apr 2024 03:52:42 -0700 (PDT)
+        bh=QbyTmTpoY0+1ocSTCWq7XN3ElG/TMFU5FD0sWO7oH58=;
+        b=r03p0dzdnYdkX/tOd4vHYFXMNlYxJbLNUKVzNKnfEnHJ4iJVGz/VjB8MPQ8V1UxlS3
+         C1CoSqoraQjfLFwrX0BYXFkCLve/iHPulOJXWyeKed0yD7nhWvIHVQ6KokpbDhOK25Qn
+         z0JKNcbPRDUziOIoEZ18vN7G/JesNpg/3z77hFfe4goueH0G1VF6HylKbxf+fWVZ2jlX
+         3fb5Wf47LSAeVQFrnMmwbr6Ik/gYByAP+4XsWIE7YMIPLVRb/moSfRws6pTjrLPRl73y
+         w9WpAA4Lx6comG+HT2X0/BlEhyOZbCHo5awTSzmLdqcLKXKBTm9oZA7hf3Svy2VJKDA+
+         /drA==
+X-Forwarded-Encrypted: i=1; AJvYcCVVhbfGLH3Xjv4tI/swh9NLvfvs4D5JHuOdL/6X0eZzYpkBFUGfwfg7PlUotnh/RyxWnh3Svv6ku9+KiO/4+pcW8WW2Z5+T0T08RdFfvw==
+X-Gm-Message-State: AOJu0YwlXjh5HAV/uszWDdzwj9InEMuKlPnbNXyS1Jzn9bNFGEbMwnP8
+	konfrIbATkeRTEUdgKoAPHCwlLHZex3gMO0QYxSvKzx8FQBzqdwVpBJm+oGbkHLhmYIydjdUZKu
+	57AoPUzkwUv16tLgHgigsfbD6kltfxxbzt4dBtg==
+X-Google-Smtp-Source: AGHT+IHzW2jF9neEIPgzxnPVJ1X4FEEg0VI4xdndQO62nW4/7QDCepVVu9WOtbxV33ia6Nj3o1T81R8EWNCcF04IL5M=
+X-Received: by 2002:a5b:889:0:b0:dcd:a28e:e5e0 with SMTP id
+ e9-20020a5b0889000000b00dcda28ee5e0mr1976843ybq.25.1712141842839; Wed, 03 Apr
+ 2024 03:57:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240330182817.3272224-1-quic_ajipan@quicinc.com>
- <20240330182817.3272224-8-quic_ajipan@quicinc.com> <CAA8EJprtCbePun+gpwxg5e6o5NaBnunEJrmDrCV+O8BdHEeuYQ@mail.gmail.com>
- <9106b0eb-e15d-f2fa-d681-4017412c4a76@quicinc.com> <CAA8EJprP4Skq0GxyuzoF7Eu9pF+2Vm2wwbu9m6jBohdSKjLR9g@mail.gmail.com>
- <2e70f208-5a8e-3feb-d484-23b78c70d08f@quicinc.com>
-In-Reply-To: <2e70f208-5a8e-3feb-d484-23b78c70d08f@quicinc.com>
+References: <20240403104415.30636-1-alexander.reimelt@posteo.de> <20240403104415.30636-3-alexander.reimelt@posteo.de>
+In-Reply-To: <20240403104415.30636-3-alexander.reimelt@posteo.de>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 3 Apr 2024 13:52:31 +0300
-Message-ID: <CAA8EJprPeGMvN49HDEjc+cLSA+cwd=yDKOt2neFnuAmoO44gsw@mail.gmail.com>
-Subject: Re: [PATCH 7/7] clk: qcom: Add GPUCC driver support for SM4450
-To: Ajit Pandey <quic_ajipan@quicinc.com>
-Cc: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Taniya Das <quic_tdas@quicinc.com>, Jagadeesh Kona <quic_jkona@quicinc.com>, 
-	Imran Shaik <quic_imrashai@quicinc.com>, 
-	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Date: Wed, 3 Apr 2024 13:57:12 +0300
+Message-ID: <CAA8EJppkSTbRyMVT==iWnDXQdDb3Pc-Q=a18WOWgGR1OtBXJMw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: Add basic support for LG G4 (H815)
+To: Alexander Reimelt <alexander.reimelt@posteo.de>
+Cc: andersson@kernel.org, pvorel@suse.cz, konrad.dybcio@linaro.org, 
+	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 3 Apr 2024 at 13:49, Ajit Pandey <quic_ajipan@quicinc.com> wrote:
+On Wed, 3 Apr 2024 at 13:46, Alexander Reimelt
+<alexander.reimelt@posteo.de> wrote:
 >
+> To make it easier for downstream projects and avoid duplication of work.
+> Makes the device bootable and enables all buttons, most regulators, hall sensor, eMMC and SD-Card.
 >
+> Signed-off-by: Alexander Reimelt <alexander.reimelt@posteo.de>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile            |   1 +
+>  arch/arm64/boot/dts/qcom/msm8992-lg-h815.dts | 422 +++++++++++++++++++
+>  2 files changed, 423 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/msm8992-lg-h815.dts
 >
-> On 4/3/2024 12:53 AM, Dmitry Baryshkov wrote:
-> > On Tue, 2 Apr 2024 at 21:26, Ajit Pandey <quic_ajipan@quicinc.com> wrote:
-> >>
-> >>
-> >>
-> >> On 3/31/2024 7:09 AM, Dmitry Baryshkov wrote:
-> >>> On Sat, 30 Mar 2024 at 20:30, Ajit Pandey <quic_ajipan@quicinc.com> wrote:
-> >>>>
-> >>>> Add Graphics Clock Controller (GPUCC) support for SM4450 platform.
-> >>>>
-> >>>> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
-> >>>> ---
-> >>>>    drivers/clk/qcom/Kconfig        |   9 +
-> >>>>    drivers/clk/qcom/Makefile       |   1 +
-> >>>>    drivers/clk/qcom/gpucc-sm4450.c | 806 ++++++++++++++++++++++++++++++++
-> >>>>    3 files changed, 816 insertions(+)
-> >>>>    create mode 100644 drivers/clk/qcom/gpucc-sm4450.c
-> >>>>
-> >>>
-> >>> [skipped]
-> >>>
-> >>>> +static int gpu_cc_sm4450_probe(struct platform_device *pdev)
-> >>>> +{
-> >>>> +       struct regmap *regmap;
-> >>>> +
-> >>>> +       regmap = qcom_cc_map(pdev, &gpu_cc_sm4450_desc);
-> >>>> +       if (IS_ERR(regmap))
-> >>>> +               return PTR_ERR(regmap);
-> >>>> +
-> >>>> +       clk_lucid_evo_pll_configure(&gpu_cc_pll0, regmap, &gpu_cc_pll0_config);
-> >>>> +       clk_lucid_evo_pll_configure(&gpu_cc_pll1, regmap, &gpu_cc_pll1_config);
-> >>>> +
-> >>>> +       /* Keep some clocks always enabled */
-> >>>> +       qcom_branch_set_clk_en(regmap, 0x93a4); /* GPU_CC_CB_CLK */
-> >>>> +       qcom_branch_set_clk_en(regmap, 0x9004); /* GPU_CC_CXO_AON_CLK */
-> >>>> +       qcom_branch_set_clk_en(regmap, 0x900c); /* GPU_CC_DEMET_CLK */
-> >>>
-> >>> Why? At least other drivers model these three clocks properly.
-> >>>
-> >> These clocks are POR on in SM4450 and required to be kept always enabled
-> >> for GPU functionality hence keep them enabled from probe only.
-> >
-> > Please, check how this is handled on the other platforms, please.
-> > Hint: `git grep GPU_CC_DEMET_CLK`
-> >
-> yeah these clocks are modeled and handled via always enabled clk ops
-> (clk_branch2_aon_ops) in few other platforms like SM8450, SM8650 which
-> also do same functionality and keep them in always enabled POR state,
-> while we kept them enabled from GPUCC probe in SM8550.
-> Since we need such clock to be always enabled irrespective of consumer
-> votes I guess modeling with aon_ops isn't really required and we can
-> simply keep them enabled in probe similar to other always on clocks.
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 7d40ec5e7d21..5b7f8741006f 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -62,6 +62,7 @@ dtb-$(CONFIG_ARCH_QCOM)       += msm8956-sony-xperia-loire-kugo.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += msm8956-sony-xperia-loire-suzu.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += msm8992-lg-bullhead-rev-10.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += msm8992-lg-bullhead-rev-101.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)        += msm8992-lg-h815.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += msm8992-msft-lumia-octagon-talkman.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += msm8992-xiaomi-libra.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += msm8994-huawei-angler-rev-101.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-h815.dts b/arch/arm64/boot/dts/qcom/msm8992-lg-h815.dts
+> new file mode 100644
+> index 000000000000..b7fa48337e25
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/msm8992-lg-h815.dts
+> @@ -0,0 +1,422 @@
+> +// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +/*
+> + * MSM8992 LG G4 (h815) device tree.
+> + *
+> + * Copyright (c) 2024, Alexander Reimelt <alexander.reimelt@posteo.de>
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "msm8992.dtsi"
+> +#include "pm8994.dtsi"
+> +#include "pmi8994.dtsi"
+> +#include <dt-bindings/leds/common.h>
+> +
+> +/* different mapping */
+> +/delete-node/ &cont_splash_mem;
+> +
+> +/* disabled downstream */
+> +/delete-node/ &dfps_data_mem;
+> +
+> +&CPU0 {
+> +       enable-method = "spin-table";
+> +};
+> +
+> +&CPU1 {
+> +       enable-method = "spin-table";
+> +};
+> +
+> +&CPU2 {
+> +       enable-method = "spin-table";
+> +};
+> +
+> +&CPU3 {
+> +       enable-method = "spin-table";
+> +};
+> +
+> +&CPU4 {
+> +       enable-method = "spin-table";
+> +};
+> +
+> +&CPU5 {
+> +       enable-method = "spin-table";
+> +};
+> +
+> +/ {
+> +       model = "LG G4 (International)";
+> +       compatible = "lg,h815", "qcom,msm8992";
+> +       chassis-type = "handset";
+> +
+> +       qcom,msm-id = <251 0>;
+> +       qcom,pmic-id = <0x10009 0x1000a 0x00 0x00>;
+> +       qcom,board-id = <0xb64 0>;
+> +
+> +       /* psci is broken */
+> +       /delete-node/ psci;
+> +
+> +       chosen {
+> +               bootargs = "earlycon=tty0 console=tty0";
 
-Why are they required to be kept on even if there is no consumer?
+Could you please drop this?
 
-> >>
-> >>>> +
-> >>>> +       return qcom_cc_really_probe(pdev, &gpu_cc_sm4450_desc, regmap);
-> >>>> +}
-> >>>> +
-> >>>> +static struct platform_driver gpu_cc_sm4450_driver = {
-> >>>> +       .probe = gpu_cc_sm4450_probe,
-> >>>> +       .driver = {
-> >>>> +               .name = "gpucc-sm4450",
-> >>>> +               .of_match_table = gpu_cc_sm4450_match_table,
-> >>>> +       },
-> >>>> +};
-> >>>> +
-> >>>> +module_platform_driver(gpu_cc_sm4450_driver);
-> >>>> +
-> >>>> +MODULE_DESCRIPTION("QTI GPUCC SM4450 Driver");
-> >>>> +MODULE_LICENSE("GPL");
-> >>>> --
-> >>>> 2.25.1
-> >>>>
-> >>>>
-> >>>
-> >>>
-> >>
-> >> --
-> >> Thanks, and Regards
-> >> Ajit
-> >
-> >
-> >
->
+> +       };
+> +
+> +       reserved-memory {
+> +               #address-cells = <2>;
+> +               #size-cells = <2>;
+> +               ranges;
+> +
+> +               spin-table@6000000 {
+> +                       reg = <0 0x6000000 0 0x1000>;
+> +                       no-map;
+> +               };
+> +
+> +               ramoops@ff00000 {
+> +                       compatible = "ramoops";
+> +                       reg = <0x0 0xff00000 0x0 0x100000>;
+> +                       console-size = <0x20000>;
+> +                       pmsg-size = <0x20000>;
+> +                       record-size = <0x10000>;
+> +                       ecc-size = <0x10>;
+> +               };
+> +
+> +               cont_splash_mem: fb@3400000 {
+> +                       compatible = "framebuffer";
+> +                       reg = <0 0x3400000 0 0xc00000>;
+> +                       no-map;
+> +               };
+> +
+> +               crash_fb_mem: crash_fb@4000000 {
+> +                       reg = <0 0x4000000 0 0xc00000>;
+> +                       no-map;
+> +               };
+> +       };
+> +
+> +       gpio-hall-sensor {
+> +               compatible = "gpio-keys";
+> +
+> +               pinctrl-0 = <&hall_sensor_default>;
+> +               pinctrl-names = "default";
+> +
+> +               label = "Hall Effect Sensor";
+> +
+> +               event-hall-sensor {
+> +                       gpios = <&tlmm 75 GPIO_ACTIVE_LOW>;
+> +                       label = "hall effect sensor";
+> +                       linux,input-type = <EV_SW>;
+> +                       linux,code = <SW_LID>;
+> +                       linux,can-disable;
+> +                       wakeup-source;
+> +               };
+> +       };
+> +
+> +       gpio-keys {
+> +               compatible = "gpio-keys";
+> +
+> +               key-vol-up {
+> +                       label = "volume up";
+> +                       gpios = <&pm8994_gpios 3 GPIO_ACTIVE_LOW>;
+> +                       linux,code = <KEY_VOLUMEUP>;
+> +                       wakeup-source;
+> +                       debounce-interval = <15>;
+> +               };
+> +       };
+> +};
+> +
+> +&pm8994_spmi_regulators {
+> +       vdd_s8-supply = <&vph_pwr>;
+> +       vdd_s11-supply = <&vph_pwr>;
+> +
+> +       pm8994_s8: s8 {
+> +               regulator-min-microvolt = <700000>;
+> +               regulator-max-microvolt = <1180000>;
+> +               regulator-always-on;
+> +               regulator-boot-on;
+> +       };
+> +
+> +       pm8994_s11: s11 {
+> +               regulator-min-microvolt = <700000>;
+> +               regulator-max-microvolt = <1225000>;
+> +               regulator-always-on;
+> +               regulator-boot-on;
+> +       };
+> +};
+> +
+> +&rpm_requests {
+> +       regulators-0 {
+> +               compatible = "qcom,rpm-pm8994-regulators";
+> +
+> +               vdd_s3-supply = <&vph_pwr>;
+> +               vdd_s4-supply = <&vph_pwr>;
+> +               vdd_s5-supply = <&vph_pwr>;
+> +               vdd_s7-supply = <&vph_pwr>;
+> +               vdd_l1-supply = <&pmi8994_s1>;
+> +               vdd_l2_26_28-supply = <&pm8994_s3>;
+> +               vdd_l3_11-supply = <&pm8994_s3>;
+> +               vdd_l4_27_31-supply = <&pm8994_s3>;
+> +               vdd_l5_7-supply = <&pm8994_s5>;
+> +               vdd_l6_12_32-supply = <&pm8994_s5>;
+> +               vdd_l8_16_30-supply = <&vph_pwr>;
+> +               vdd_l9_10_18_22-supply = <&pmi8994_bby>;
+> +               vdd_l13_19_23_24-supply = <&pmi8994_bby>;
+> +               vdd_l14_15-supply = <&pm8994_s5>;
+> +               vdd_l17_29-supply = <&pmi8994_bby>;
+> +               vdd_l20_21-supply = <&pmi8994_bby>;
+> +               vdd_l25-supply = <&pm8994_s5>;
+> +               vdd_lvs1_2-supply = <&pm8994_s4>;
+> +
+> +               pm8994_s3: s3 {
+> +                       regulator-min-microvolt = <1300000>;
+> +                       regulator-max-microvolt = <1300000>;
+> +               };
+> +
+> +               /* sdhc1 vqmmc and bcm */
+> +               pm8994_s4: s4 {
+> +                       regulator-min-microvolt = <1800000>;
+> +                       regulator-max-microvolt = <1800000>;
+> +                       regulator-system-load = <325000>;
+> +                       regulator-allow-set-load;
+> +               };
+> +
+> +               pm8994_s5: s5 {
+> +                       regulator-min-microvolt = <2150000>;
+> +                       regulator-max-microvolt = <2150000>;
+> +               };
+> +
+> +               pm8994_s7: s7 {
+> +                       regulator-min-microvolt = <1000000>;
+> +                       regulator-max-microvolt = <1000000>;
+> +               };
+> +
+> +               pm8994_l1: l1 {
+> +                       regulator-min-microvolt = <1000000>;
+> +                       regulator-max-microvolt = <1000000>;
+> +               };
+> +
+> +               pm8994_l2: l2 {
+> +                       regulator-min-microvolt = <1250000>;
+> +                       regulator-max-microvolt = <1250000>;
+> +                       regulator-system-load = <10000>;
+> +                       regulator-allow-set-load;
+> +               };
+> +
+> +               /* camera */
+> +               pm8994_l3: l3 {
+> +                       regulator-min-microvolt = <1050000>;
+> +                       regulator-max-microvolt = <1050000>;
+> +               };
+> +
+> +               pm8994_l4: l4 {
+> +                       regulator-min-microvolt = <1225000>;
+> +                       regulator-max-microvolt = <1225000>;
+> +               };
+> +
+> +               /* L5 is inaccessible from RPM */
+> +
+> +               pm8994_l6: l6 {
+> +                       regulator-min-microvolt = <1800000>;
+> +                       regulator-max-microvolt = <1800000>;
+> +               };
+> +
+> +               /* L7 is inaccessible from RPM */
+> +
+> +               pm8994_l8: l8 {
+> +                       regulator-min-microvolt = <1800000>;
+> +                       regulator-max-microvolt = <1800000>;
+> +               };
+> +
+> +               pm8994_l9: l9 {
+> +                       regulator-min-microvolt = <1800000>;
+> +                       regulator-max-microvolt = <1800000>;
+> +               };
+> +
+> +               /* touch  */
+> +               pm8994_l10: l10 {
+> +                       regulator-min-microvolt = <1800000>;
+> +                       regulator-max-microvolt = <1800000>;
+> +               };
+> +
+> +               pm8994_l11: l11 {
+> +                       regulator-min-microvolt = <1200000>;
+> +                       regulator-max-microvolt = <1200000>;
+> +               };
+> +
+> +               pm8994_l12: l12 {
+> +                       regulator-min-microvolt = <1800000>;
+> +                       regulator-max-microvolt = <1800000>;
+> +                       regulator-system-load = <10000>;
+> +                       regulator-allow-set-load;
+> +               };
+> +
+> +               /* sdhc2 vqmmc */
+> +               pm8994_l13: l13 {
+> +                       regulator-min-microvolt = <1800000>;
+> +                       regulator-max-microvolt = <2950000>;
+> +                       regulator-system-load = <22000>;
+> +                       regulator-allow-set-load;
+> +               };
+> +
+> +               /* camera */
+> +               pm8994_l14: l14 {
+> +                       regulator-min-microvolt = <1200000>;
+> +                       regulator-max-microvolt = <1200000>;
+> +                       regulator-system-load = <10000>;
+> +                       regulator-allow-set-load;
+> +               };
+> +
+> +               pm8994_l15: l15 {
+> +                       regulator-min-microvolt = <1800000>;
+> +                       regulator-max-microvolt = <1800000>;
+> +               };
+> +
+> +               pm8994_l16: l16 {
+> +                       regulator-min-microvolt = <2700000>;
+> +                       regulator-max-microvolt = <2700000>;
+> +               };
+> +
+> +               /* camera */
+> +               pm8994_l17: l17 {
+> +                       regulator-min-microvolt = <2800000>;
+> +                       regulator-max-microvolt = <2800000>;
+> +               };
+> +
+> +               pm8994_l18: l18 {
+> +                       regulator-min-microvolt = <2850000>;
+> +                       regulator-max-microvolt = <2850000>;
+> +               };
+> +
+> +               /* LCD */
+> +               pm8994_l19: l19 {
+> +                       regulator-min-microvolt = <3000000>;
+> +                       regulator-max-microvolt = <3000000>;
+> +               };
+> +
+> +               /* sdhc1 vmmc */
+> +               pm8994_l20: l20 {
+> +                       regulator-min-microvolt = <2950000>;
+> +                       regulator-max-microvolt = <2950000>;
+> +                       regulator-system-load = <570000>;
+> +                       regulator-allow-set-load;
+> +               };
+> +
+> +               /* sdhc2 vmmc */
+> +               pm8994_l21: l21 {
+> +                       regulator-min-microvolt = <2950000>;
+> +                       regulator-max-microvolt = <2950000>;
+> +                       regulator-system-load = <800000>;
+> +                       regulator-allow-set-load;
+> +               };
+> +
+> +               /* touch */
+> +               pm8994_l22: l22 {
+> +                       regulator-min-microvolt = <3000000>;
+> +                       regulator-max-microvolt = <3000000>;
+> +               };
+> +
+> +               /* camera */
+> +               pm8994_l23: l23 {
+> +                       regulator-min-microvolt = <2800000>;
+> +                       regulator-max-microvolt = <2800000>;
+> +               };
+> +
+> +               pm8994_l24: l24 {
+> +                       regulator-min-microvolt = <3075000>;
+> +                       regulator-max-microvolt = <3150000>;
+> +               };
+> +
+> +               /* IRRC */
+> +               pm8994_l25: l25 {
+> +                       regulator-min-microvolt = <1000000>;
+> +                       regulator-max-microvolt = <1000000>;
+> +               };
+> +
+> +               pm8994_l26: l26 {
+> +                       regulator-min-microvolt = <987500>;
+> +                       regulator-max-microvolt = <987500>;
+> +               };
+> +
+> +               /* hdmi */
+> +               pm8994_l27: l27 {
+> +                       regulator-min-microvolt = <1000000>;
+> +                       regulator-max-microvolt = <1000000>;
+> +               };
+> +
+> +               pm8994_l28: l28 {
+> +                       regulator-min-microvolt = <1000000>;
+> +                       regulator-max-microvolt = <1000000>;
+> +                       regulator-system-load = <10000>;
+> +                       regulator-allow-set-load;
+> +               };
+> +
+> +               /* camera */
+> +               pm8994_l29: l29 {
+> +                       regulator-min-microvolt = <2800000>;
+> +                       regulator-max-microvolt = <2800000>;
+> +               };
+> +
+> +               /* camera */
+> +               pm8994_l30: l30 {
+> +                       regulator-min-microvolt = <1800000>;
+> +                       regulator-max-microvolt = <1800000>;
+> +               };
+> +
+> +               pm8994_l31: l31 {
+> +                       regulator-min-microvolt = <1262500>;
+> +                       regulator-max-microvolt = <1262500>;
+> +               };
+> +
+> +               pm8994_l32: l32 {
+> +                       regulator-min-microvolt = <1800000>;
+> +                       regulator-max-microvolt = <1800000>;
+> +               };
+> +
+> +               pm8994_lvs1: lvs1 {};
+> +
+> +               pm8994_lvs2: lvs2 {};
+> +       };
+> +
+> +       regulators-1 {
+> +               compatible = "qcom,rpm-pmi8994-regulators";
+> +
+> +               vdd_s1-supply = <&vph_pwr>;
+> +               vdd_bst_byp-supply = <&vph_pwr>;
+> +
+> +               pmi8994_s1: s1 {
+> +                       regulator-min-microvolt = <1025000>;
+> +                       regulator-max-microvolt = <1025000>;
+> +               };
+> +
+> +               /* S2 & S3 - VDD_GFX */
+> +
+> +               pmi8994_bby: boost-bypass {
+> +                       regulator-min-microvolt = <3150000>;
+> +                       regulator-max-microvolt = <3600000>;
+> +               };
+> +       };
+> +};
+> +
+> +&pm8994_resin {
+> +       status = "okay";
+
+If I remember correctly, status should be the last property (and few
+other cases below).
+
+> +       linux,code = <KEY_VOLUMEDOWN>;
+> +};
+> +
+> +&sdhc1 {
+> +       status = "okay";
+> +       mmc-hs400-1_8v;
+> +       vmmc-supply = <&pm8994_l20>;
+> +       vqmmc-supply = <&pm8994_s4>;
+> +       non-removable;
+> +};
+> +
+> +&sdhc2 {
+> +       status = "okay";
+> +       vmmc-supply = <&pm8994_l21>;
+> +       vqmmc-supply = <&pm8994_l13>;
+> +       cd-gpios = <&pm8994_gpios 8 GPIO_ACTIVE_LOW>;
+> +};
+> +
+> +&tlmm {
+> +       hall_sensor_default: hall-sensor-default-state {
+> +               pins = "gpio75";
+> +               function = "gpio";
+> +               drive-strength = <2>;
+> +               bias-pull-up;
+> +       };
+> +};
 > --
-> Thanks, and Regards
-> Ajit
-
+> 2.44.0
+>
+>
 
 
 -- 
