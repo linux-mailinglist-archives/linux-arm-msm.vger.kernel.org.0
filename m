@@ -1,206 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-16263-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16264-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CDB11896DA6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 13:06:22 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 61458896DAF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 13:08:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 82C4C28FF7E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 11:06:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 83EA01C24F91
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Apr 2024 11:07:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BA451411F1;
-	Wed,  3 Apr 2024 11:06:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AB171411F0;
+	Wed,  3 Apr 2024 11:07:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iJ33qjLn"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mbGnKHMB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6587139581
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Apr 2024 11:06:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D9B71736;
+	Wed,  3 Apr 2024 11:07:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712142378; cv=none; b=rr29hCAk0vIsCjqOb2DiI55wxhl20OjdZlP3pTkrftN6/DTvuJP3Bsia2+aUyK4ZujxL7e02OJm52TNm4pReoFYsujY3ChuSeQU7z7mNY4Aa+9q2+b1G2/bb1THKpvNY/D6axo23osmnvMjSriHfu5HLUrtThUHhAAyDaWInkSE=
+	t=1712142477; cv=none; b=QlK6mznj8PVdNXlIF/BW8BZ9/GVE5Yz21e/QFgC+1YGciMcvNpZwJFWk5WzrKMJMkhrPdUqxbtJvECF6WpfEZpx33wPHRWmuVgQxQQMaxMTTNwaEgTfFwSePtKqU9vSTEhiyH7IZgNIHiwR5L10Cc7Jl0tIDZ14qJ6P7N5P4rH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712142378; c=relaxed/simple;
-	bh=EDO9/p9Hc/6bNyYzsBIcNxt4PlNh1RbuF76k0hVY3Z0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gD+9iT5jwZVj6VWVbIxKs8oHE/iU7hn529FzG9LYG+ykxpgp2pQHbtCZezAPcyPEIvK2dgXL2ChA98Lv/VRQC2gXrP5GFVKhif9ZHAtIzQICUsARn3M3+cBVqBGgHkidyP+O95s8xWc+cS/D7g4gBshBCmZWB0ITqy8OkBQstv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iJ33qjLn; arc=none smtp.client-ip=209.85.219.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-dde0b30ebe2so840457276.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 04:06:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712142375; x=1712747175; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=U/azMONlxGoseJ7B8jN3p15xzRfnJ6LHkSav7Pfj81I=;
-        b=iJ33qjLnov+E2PWyqsrKRZ1coeiWQR8Z3bNbIAk/azMBSCnUgBVPPh3GKHmjeJrlaR
-         b4FE7u2DVXmrX4/iUWWytymbawsLVne2ajUK779xIkoUrUiNBI27JQHqqS3BP4KaWbzU
-         fZFt15/4YMxTgw05xNg3daUg5X1WzkMV5qUGUwHJ7ysMZFlTW6y31Po/p4a9WTiHQo2N
-         jKZVOqPW1U8JmIPCDAShbQYpbyrxwRLWnXsPpbkf011IPvuduBWY6htgLyLoNtle8Nqb
-         HMDwjf6yywh9rnKz17M9bmDACN9RKkcaYSBVN69INGt2n2ADFz2BYQnF+hLlgacxxbBm
-         q0eA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712142375; x=1712747175;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=U/azMONlxGoseJ7B8jN3p15xzRfnJ6LHkSav7Pfj81I=;
-        b=oE7oBbM/NoOmolWGgeabTwsiY0SsWSRQ239J0u//036E+rhUyK1fnQE87xsz+6v2aE
-         4XwkIUIsdShb6knAFOnjD/GvjyL1UJP5zRJ8oskogqonxeCIU0livMooKkU7aoTTPzB2
-         g66gnXt3/r21wGXM1isPjGrDRvodo9YKoNJtYyYvVlzMEzdtZ8M5Gr6OYYFZPjlWRuFk
-         uDLRs4ZIE3Ecg1oKKcXajM/Xhag2Ena0I0X47647AH8jsXrmbF5BoklfZUZOCN6lgGGj
-         Pq5IUWm0e07Z7zsx/XLDpVZ4p3U7ULU6uP/TB0K+G27Tm7eAYkUb6qxD+uOTCTp/cwMH
-         gRKw==
-X-Forwarded-Encrypted: i=1; AJvYcCVuSk/FvBC6ZXZUt+6vAf39ZRMuay8tlhzBhe1ImtmL5al2qi8cjEAfor8eRDdP8z0mYxssfMKXl2GkMK7SQeio5MhIkUSCm1XLx5h3Ig==
-X-Gm-Message-State: AOJu0Yx8IsMwFfZoDZnQZUe+bBc1LJe5VKW3/IXzj0zgY+FImTVw2FL6
-	CpJrPb1Qw/kg5H7pNN40H8Ha/IfllP5NWv4oQmxkNuHzKmc7SBpHExghxyp0OWtFhuDxeUyJLFw
-	k6CtlI3T8seYtCz7Yh6oX9XxXSDb04NcJMRdlvA==
-X-Google-Smtp-Source: AGHT+IFCSkXnx/Zrz3QddgbZ9vWZRtgUE2bIP/+PQ7HyTrJIIxTAcWLMp11z1+aMjfQaqdWLVSjpI2571d8frW0zBDA=
-X-Received: by 2002:a25:1843:0:b0:dcc:1c6c:430d with SMTP id
- 64-20020a251843000000b00dcc1c6c430dmr11673123yby.12.1712142375513; Wed, 03
- Apr 2024 04:06:15 -0700 (PDT)
+	s=arc-20240116; t=1712142477; c=relaxed/simple;
+	bh=i84szZpHxYivPaf7yucT85uFEyY97k9I9t0K8390Qrw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=f1SY3dOVOuxfm5knc8Tvxq0gCoE+7ZtF2T48Z7sCYHqppkwGUGhU15PoJ2CtqloF2jChAptZAkDsBlPaHPhstfNFeVpv84p/3iI11uMeCk/JZxsdMHNJrCjFNAwZXaP5LSZeyorD1F/uSPokH9QSKhLp6ywuCVqJO7zE+0r1DVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mbGnKHMB; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4336BL1Q004804;
+	Wed, 3 Apr 2024 11:07:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=SWVS0En1pP+DXPeCTmcGz+sebPgJGOg8nGz1gdr4C4I=; b=mb
+	GnKHMBNuK+7foXBBzRSh7sBoTLQdoadEqDmYp3ldzKd59lERFGqgrQSsoEfNLwc3
+	uAFNssnZq2WfilT6iemAU0TvHfN3XZ+haJk+z4tuZkv3wmWes+YJdI9MmajO8+IO
+	Y2VLVmAfXlvigv+tWz55IJ3C6cQuSJ8B4OwIqOAbCl3De1ollBDLXA3g/qr70kEw
+	k9rQieY+bOVei0d9HfUf+epV78/Z6VD85PqrPxvB1/DtO8/MmDzk0rVTXy2sgwJ5
+	VAd1wPS7WVes0L2ZlsTlPLmLNfT3Dc+YU0JmsBAdGtAgXDRMaIK/MTqQuX60thcg
+	JFzUaLumxDqqzyfx5i/Q==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x9077grt5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 03 Apr 2024 11:07:50 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 433B7nMp023264
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 3 Apr 2024 11:07:49 GMT
+Received: from [10.218.10.146] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 3 Apr 2024
+ 04:07:44 -0700
+Message-ID: <af0dae12-c9aa-b0b0-67fd-f52d94566809@quicinc.com>
+Date: Wed, 3 Apr 2024 16:37:41 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240403104220.1092431-1-quic_varada@quicinc.com> <20240403104220.1092431-4-quic_varada@quicinc.com>
-In-Reply-To: <20240403104220.1092431-4-quic_varada@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 3 Apr 2024 14:06:04 +0300
-Message-ID: <CAA8EJpohAe-aW1QqVkE9NBRU0DpZR7UiwdUKk6rS_YFAhenZZA@mail.gmail.com>
-Subject: Re: [PATCH v7 3/5] clk: qcom: common: Add interconnect clocks support
-To: Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org, mturquette@baylibre.com, 
-	sboyd@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	djakov@kernel.org, quic_anusha@quicinc.com, linux-arm-msm@vger.kernel.org, 
-	linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-
-On Wed, 3 Apr 2024 at 13:42, Varadarajan Narayanan
-<quic_varada@quicinc.com> wrote:
->
-> Unlike MSM platforms that manage NoC related clocks and scaling
-> from RPM, IPQ SoCs dont involve RPM in managing NoC related
-> clocks and there is no NoC scaling.
->
-> However, there is a requirement to enable some NoC interface
-> clocks for accessing the peripheral controllers present on
-> these NoCs. Though exposing these as normal clocks would work,
-> having a minimalistic interconnect driver to handle these clocks
-> would make it consistent with other Qualcomm platforms resulting
-> in common code paths. This is similar to msm8996-cbf's usage of
-> icc-clk framework.
->
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> ---
-> v7: Restore clk_get
-> v6: first_id -> icc_first_node_id
->     Remove clock get so that the peripheral that uses the clock
->     can do the clock get
-> v5: Split changes in common.c to separate patch
->     Fix error handling
->     Use devm_icc_clk_register instead of icc_clk_register
-> v4: Use clk_hw instead of indices
->     Do icc register in qcom_cc_probe() call stream
->     Add icc clock info to qcom_cc_desc structure
-> v3: Use indexed identifiers here to avoid confusion
->     Fix error messages and move to common.c
-> v2: Move DTS to separate patch
->     Update commit log
->     Auto select CONFIG_INTERCONNECT & CONFIG_INTERCONNECT_CLK to fix build error
-> ---
->  drivers/clk/qcom/common.c | 31 ++++++++++++++++++++++++++++++-
->  drivers/clk/qcom/common.h |  3 +++
->  2 files changed, 33 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
-> index 8b6080eb43a7..fa4ec89c04c4 100644
-> --- a/drivers/clk/qcom/common.c
-> +++ b/drivers/clk/qcom/common.c
-> @@ -8,6 +8,7 @@
->  #include <linux/regmap.h>
->  #include <linux/platform_device.h>
->  #include <linux/clk-provider.h>
-> +#include <linux/interconnect-clk.h>
->  #include <linux/reset-controller.h>
->  #include <linux/of.h>
->
-> @@ -252,6 +253,34 @@ static struct clk_hw *qcom_cc_clk_hw_get(struct of_phandle_args *clkspec,
->         return cc->rclks[idx] ? &cc->rclks[idx]->hw : NULL;
->  }
->
-> +static int qcom_cc_icc_register(struct device *dev,
-> +                               const struct qcom_cc_desc *desc)
-> +{
-> +       struct icc_clk_data *icd;
-> +       int i;
-> +
-> +       if (!IS_ENABLED(CONFIG_INTERCONNECT_CLK))
-> +               return 0;
-> +
-> +       if (!desc->icc_hws)
-> +               return 0;
-> +
-> +       icd = devm_kcalloc(dev, desc->num_icc_hws, sizeof(*icd), GFP_KERNEL);
-> +       if (!icd)
-> +               return -ENOMEM;
-> +
-> +       for (i = 0; i < desc->num_icc_hws; i++) {
-> +               icd[i].clk = devm_clk_hw_get_clk(dev, desc->icc_hws[i], "icc");
-> +               if (!icd[i].clk)
-> +                       return dev_err_probe(dev, -ENOENT,
-> +                                            "(%d) clock entry is null\n", i);
-> +               icd[i].name = clk_hw_get_name(desc->icc_hws[i]);
-> +       }
-> +
-> +       return devm_icc_clk_register(dev, desc->icc_first_node_id,
-> +                                                    desc->num_icc_hws, icd);
-> +}
-> +
->  int qcom_cc_really_probe(struct platform_device *pdev,
->                          const struct qcom_cc_desc *desc, struct regmap *regmap)
->  {
-> @@ -327,7 +356,7 @@ int _qcom_cc_really_probe(struct device *dev,
->         if (ret)
->                 return ret;
->
-> -       return 0;
-> +       return qcom_cc_icc_register(dev, desc);
->  }
->  EXPORT_SYMBOL_GPL(_qcom_cc_really_probe);
->
-> diff --git a/drivers/clk/qcom/common.h b/drivers/clk/qcom/common.h
-> index 8657257d56d3..43073d2ef32a 100644
-> --- a/drivers/clk/qcom/common.h
-> +++ b/drivers/clk/qcom/common.h
-> @@ -29,6 +29,9 @@ struct qcom_cc_desc {
->         size_t num_gdscs;
->         struct clk_hw **clk_hws;
->         size_t num_clk_hws;
-> +       struct clk_hw **icc_hws;
-
-Still we are passing hws here. We already have all the hws in a
-different array. Can we just pass the indices?
-
-> +       size_t num_icc_hws;
-> +       unsigned int icc_first_node_id;
->  };
->
->  /**
-> --
-> 2.34.1
->
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH 1/7] clk: qcom: clk-alpha-pll: Fix CAL_L_VAL override for
+ LUCID EVO PLL
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>
+CC: Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd
+	<sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Vladimir Zapolskiy
+	<vladimir.zapolskiy@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Taniya Das
+	<quic_tdas@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Imran Shaik
+	<quic_imrashai@quicinc.com>,
+        Satya Priya Kakitapalli
+	<quic_skakitap@quicinc.com>
+References: <20240330182817.3272224-1-quic_ajipan@quicinc.com>
+ <20240330182817.3272224-2-quic_ajipan@quicinc.com>
+ <d8c0ca00-7e14-454e-8a65-5dcf14ed7796@linaro.org>
+ <e2f108d8-0b25-d799-fbe4-ab6256966982@quicinc.com>
+ <da93a8ed-4fbb-488f-a1af-e701f7191fbd@linaro.org>
+ <CAA8EJppB7dYvzeA0M6A_cN14FkC6K8WpLVoeE8NvytGcYDq5Pw@mail.gmail.com>
+ <990d74fa-6d1d-4d64-b6fb-c68f5763c9d3@linaro.org>
+From: Ajit Pandey <quic_ajipan@quicinc.com>
+In-Reply-To: <990d74fa-6d1d-4d64-b6fb-c68f5763c9d3@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 5wTflKlFKc3rvmrvBlQW-0Zs3zqSuWeG
+X-Proofpoint-ORIG-GUID: 5wTflKlFKc3rvmrvBlQW-0Zs3zqSuWeG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-03_10,2024-04-01_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=894
+ malwarescore=0 adultscore=0 suspectscore=0 clxscore=1015
+ priorityscore=1501 lowpriorityscore=0 spamscore=0 phishscore=0 bulkscore=0
+ impostorscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403210001 definitions=main-2404030077
 
 
--- 
-With best wishes
-Dmitry
+
+On 4/3/2024 2:20 PM, Krzysztof Kozlowski wrote:
+> On 03/04/2024 10:37, Dmitry Baryshkov wrote:
+>> On Wed, 3 Apr 2024 at 09:49, Krzysztof Kozlowski
+>> <krzysztof.kozlowski@linaro.org> wrote:
+>>>
+>>> On 02/04/2024 20:35, Ajit Pandey wrote:
+>>>>
+>>>>
+>>>> On 3/31/2024 12:49 AM, Krzysztof Kozlowski wrote:
+>>>>> On 30/03/2024 19:28, Ajit Pandey wrote:
+>>>>>> In LUCID EVO PLL CAL_L_VAL and L_VAL bitfields are part of single
+>>>>>> PLL_L_VAL register. Update for L_VAL bitfield values in PLL_L_VAL
+>>>>>> register using regmap_write() API in __alpha_pll_trion_set_rate
+>>>>>> callback will override LUCID EVO PLL initial configuration related
+>>>>>> to PLL_CAL_L_VAL bit fields in PLL_L_VAL register.
+>>>>>>
+>>>>>> Observed random PLL lock failures during PLL enable due to such
+>>>>>> override in PLL calibration value. Use regmap_update_bits() with
+>>>>>> L_VAL bitfield mask instead of regmap_write() API to update only
+>>>>>> PLL_L_VAL bitfields in __alpha_pll_trion_set_rate callback.
+>>>>>>
+>>>>>> Fixes: 260e36606a03 ("clk: qcom: clk-alpha-pll: add Lucid EVO PLL configuration interfaces")
+>>>>>>
+>>>>>
+>>>>> No blank lines between tags.
+>>>>>
+>>>>> Add Cc-stable tag.
+>>>>>
+>>>> Sure, will update in next series
+>>>>
+>>>>> Please do not combine fixes with new features.
+>>>>>   > Best regards,
+>>>>> Krzysztof
+>>>>>
+>>>>
+>>>> Actually this fix is required for correct scaling for few frequencies in
+>>>> this patch series, hence combined them together and pushed this fix as
+>>>> first patch in series so that they get mainlined together and feature
+>>>> functionality will not get impacted.
+>>>
+>>> OK, that's fine but usual way is that such need is expressed in the
+>>> cover letter, so maintainer will know what to do. What if this patch
+>>> should go to fixes and rest normally to for-next? How do you expect
+>>> maintainer to apply the patch? Entire thread and then manually move the
+>>> commits? Why making it so complicated for the maintainers?
+>>
+OK, for the ease and more clarity I'll update the cover letter with fix 
+details and required dependency on this feature in next series.
+
+>> Huh? I think it's pretty normal to have fixes in front of the patch
+>> series. Having it in the middle would be troublesome indeed. You are
+>> the first person to complain.
+> 
+> No, I am not the first. It differs between subsystems and I do not
+> recall all folks, but the one person coming to my mind is Mark Brown who
+> expressed it numerous times.
+> 
+> Best regards,
+> Krzysztof
+> 
+
 
