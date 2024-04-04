@@ -1,132 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-16443-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16444-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C91A8991BD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 01:02:38 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E8F8899248
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 01:43:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 075102855A8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 23:02:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DCF3B1F23FE1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 23:43:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A02AD6F099;
-	Thu,  4 Apr 2024 23:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3407F130E57;
+	Thu,  4 Apr 2024 23:43:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RQboHFS7"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="YDCPsRK8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF959286A6;
-	Thu,  4 Apr 2024 23:02:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7CFC13C672
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Apr 2024 23:43:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712271755; cv=none; b=fo+nu4584LMjOguPfRKWewEOTpQ4yJCtlRWa7yaE2dgp8IpbeSkbKPPYrqRFAg9bUDy+ChpJi+0a4ctPTncpSSiazY4MHmiLKRgK7LOMKzuY4K4IA/3fFHnUZGnL4ssAEwfukY+TVKY6BsYKyxqNUnHZB3vgE66xYMFChEZg5JI=
+	t=1712274231; cv=none; b=i7RRr1mFmUX1d7dNnwAJFNkQvYuSFRhaU1NcNpUAB4LYQuT5Q6BX/pzqetUMupM3TzDy1KBhNODeJPFjqmLjvD9vtPF/QjlfgDaBGOAnGKSCIs/fI+uquheuSsBJRZgsQJ8bcca2iHl0fRvRVLpYjgGAO+V00Ku7xDSsSHmGoGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712271755; c=relaxed/simple;
-	bh=zHgnA+az/AHN+9Bc+MNoJKbYM23a7xXZZrs4jZdhGP4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Foj+R0O+Dt0IWzl0q/rFn/wdK8Da6nxX8K+fbEBOwGIiyMgikn7sHE3HGq3GueZDeUgBKB+F7HgQ5ej96Rjiceujq2Gc2XWJxcguBAhPlOZB7HhoUyt18Val8tVmszwlG2AV7ss4YcjZfDgG9cCj/a6gx95t+zLMJDQxC4rRUoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RQboHFS7; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 434LNHow012929;
-	Thu, 4 Apr 2024 23:02:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=KiPpkxDkZcXdtwbyPMmI8BmVH2/5c7HbjeyOjw18SX4=; b=RQ
-	boHFS7AC4+tyeInS93Alj539CnL3v7mfP5WYbe7+Sm1qLMP0mTdrh0viKJaG2abn
-	W5nDfNayh/xVydzqm7un6Z3agTi49r0UbIhNTg559jTRBxeUO/fEKU6ZImmf+4jZ
-	ws6NEccS3zn2N6jDFPb7Loj4Dg9eOkPrbntHoDD573rHV1GR02ANrt+RqbIZO2Si
-	lIUcWwTJgtUYI7gQFTAaY6CBWy13wvR5/M4MoDex+XC+ZW4TOONkQ+n29Au3ewol
-	x7o+SWVN4jqcDlurI45qt+kKW9gC9VzNbn63+N07qTxpvFhs0ELHT0oWjzLLBLSj
-	90rHxkWp41LvlUckCVaA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xa2q389c9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 04 Apr 2024 23:02:20 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 434N2JuF028919
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 4 Apr 2024 23:02:19 GMT
-Received: from [10.110.52.194] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 4 Apr 2024
- 16:02:18 -0700
-Message-ID: <1d2d231a-ab2e-4552-9e72-2655d778f3b8@quicinc.com>
-Date: Thu, 4 Apr 2024 16:02:18 -0700
+	s=arc-20240116; t=1712274231; c=relaxed/simple;
+	bh=JJPz/P2CcR2ZufWiDJCZzZH/1OFiSj5m3Mdo8cC++Zw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=m8LYdILkIr3JX05PlNjayvyp/f221syOKKedEzF3kyH8rYk0DTYIVS8Zj40lhavrgx3RFgU6LdWaqA0nrUg+IqrSvNHhYw9pVILA9BWUi6yWgy36Qz8jTgPVn9HlTGeqKdRrAwc7fn138Vzof4EEis1xmkXF3k5XdiHfxvP6tWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=YDCPsRK8; arc=none smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-5e152c757a5so1143013a12.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Apr 2024 16:43:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1712274229; x=1712879029; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=RMI5yWOLAVIgIkbCc96VWxktkn/9P3095VY77NHNd1o=;
+        b=YDCPsRK8OhajbKvIhfTJub2L64/s9EM6WJdQPsXmJ7Sc/0oPsmAJrtX5Z1dTLr1yva
+         sKQIJy8w9rdGGLt9mVG9XiYKzf44O6N6O6gE/qZOJK7u/cjX/zFkZZ01dfxSBWWsTlp1
+         nym5Ay1AzbiYtrpInNNcN7GX/KeStG3Hs9TM0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712274229; x=1712879029;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RMI5yWOLAVIgIkbCc96VWxktkn/9P3095VY77NHNd1o=;
+        b=YfCvFIBX+0+ev527Ay0GgtCbWTHXeNllZy4+2YCSoVNYXoVJs32a1Rnl3ivBDIzoQC
+         91bNFzBZWAWYln1QvmP8F2DC1OOa0P4jBHEWVF+YFTOHZKzMj97Ny3UKOw91OSNYUtli
+         j8tCBF0liaJrCtJ0zdSGAClAl213JXzbhU4deJUoOmkoNHv05toUC7mrUo04HIdsCpje
+         I6O1kA8YJArt89rfSgU4qu8rSfh0DsIGReZZzw3blPHNdbHxztaPzc8Vu0W1I2AlgWBu
+         Px/uBHk9GbJedxq0F44T8LOHrxqqW6EPEty8rKqtPy55wyxwof49Pd77lUWpbknxL0nh
+         hz1Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVIkcfkIK5iHVNRCErrVOcIRT6jcnyqSEvZogqmBLfSX/fcOUisKjgzS91hJ8/BVxoACigMRBDLmzDHaL1MVDGCmtnxGe/8XMGmbZr6DQ==
+X-Gm-Message-State: AOJu0YwBh6Lag4JInqdBczlEKrNoKTu3nMieMQ7ttZLDaRo93CTa+BxQ
+	bbeGN8uvNI/2c/8Z8FQFhpax7v+kW0VpWdoyZpjuotnLW28BbJK/NPLt/ehTzw==
+X-Google-Smtp-Source: AGHT+IEXZdsBDxClfnWn4V8ckwcGELQZihfoKdxkgEQZf2dDcxavcBDgDIZ9TfrbOn0Q57NFbPr69Q==
+X-Received: by 2002:a05:6a20:1057:b0:1a3:6bb1:92fb with SMTP id gt23-20020a056a20105700b001a36bb192fbmr45166pzc.19.1712274228928;
+        Thu, 04 Apr 2024 16:43:48 -0700 (PDT)
+Received: from localhost (4.198.125.34.bc.googleusercontent.com. [34.125.198.4])
+        by smtp.gmail.com with UTF8SMTPSA id ga16-20020a17090b039000b002a2b06cbe46sm269450pjb.22.2024.04.04.16.43.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Apr 2024 16:43:47 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	linux-phy@lists.infradead.org,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	freedreno@lists.freedesktop.org,
+	Douglas Anderson <dianders@chromium.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH] phy: qcom: qmp-combo: Fix VCO div offset on v3
+Date: Thu,  4 Apr 2024 16:43:44 -0700
+Message-ID: <20240404234345.1446300-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.44.0.478.gd926399ef9-goog
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 0/2] Add Qualcomm PCIe ECAM root complex driver
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <linux-pci@vger.kernel.org>, <lpieralisi@kernel.org>, <kw@linux.com>,
-        <robh@kernel.org>, <bhelgaas@google.com>, <andersson@kernel.org>,
-        <manivannan.sadhasivam@linaro.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <devicetree@vger.kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <quic_ramkri@quicinc.com>,
-        <quic_nkela@quicinc.com>, <quic_shazhuss@quicinc.com>,
-        <quic_msarkar@quicinc.com>, <quic_nitegupt@quicinc.com>
-References: <1712257884-23841-1-git-send-email-quic_mrana@quicinc.com>
- <42d1281e-9546-4af1-a30b-8a0c3969be6b@linaro.org>
-Content-Language: en-US
-From: Mayank Rana <quic_mrana@quicinc.com>
-In-Reply-To: <42d1281e-9546-4af1-a30b-8a0c3969be6b@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: KXi3EU77--FG8qSn1aR12HQ5hm9oxjo9
-X-Proofpoint-GUID: KXi3EU77--FG8qSn1aR12HQ5hm9oxjo9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-04_19,2024-04-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
- priorityscore=1501 clxscore=1011 malwarescore=0 bulkscore=0
- mlxlogscore=999 adultscore=0 impostorscore=0 lowpriorityscore=0
- spamscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404040166
+Content-Transfer-Encoding: 8bit
 
-Hi Krzysztof
+Commit ec17373aebd0 ("phy: qcom: qmp-combo: extract common function to
+setup clocks") changed the offset that is used to write to
+DP_PHY_VCO_DIV from QSERDES_V3_DP_PHY_VCO_DIV to
+QSERDES_V4_DP_PHY_VCO_DIV. Unfortunately, this offset is different
+between v3 and v4 phys:
 
-On 4/4/2024 12:33 PM, Krzysztof Kozlowski wrote:
-> On 04/04/2024 21:11, Mayank Rana wrote:
->> On some of Qualcomm platform, firmware takes care of system resources
->> related to PCIe PHY and controller as well bringing up PCIe link and
->> having static iATU configuration for PCIe controller to work into
->> ECAM compliant mode. Hence add Qualcomm PCIe ECAM root complex driver.
->>
->> Tested:
->> - Validated NVME functionality with PCIe0 and PCIe1 on SA877p-ride platform
->>
-> 
-> RFC means code is not ready, right? Please get internal review done and
-> send it when it is ready. I am not sure if you expect any reviews. Some
-> people send RFC and do not expect reviews. Some expect. I have no clue
-> and I do not want to waste my time. Please clarify what you expect from
-> maintainers regarding this contribution.
-> 
-> Best regards,
-> Krzysztof
-> 
-Thanks for initial comments.
-yes, this is work in progress. There are still more functionalities 
-planned to be added as part of this driver. Although purpose of sending 
-initial change here to get feedback and review comments in terms of 
-usage of generic Qualcomm PCIe ECAM driver, and usage of MSI 
-functionality with it. I missed mentioning this as part of cover letter. 
-So please help to review and provide feedback.
+ #define QSERDES_V3_DP_PHY_VCO_DIV                 0x064
+ #define QSERDES_V4_DP_PHY_VCO_DIV                 0x070
 
-Regards,
-Mayank
+meaning that we write the wrong register on v3 phys now. Add another
+generic register to 'regs' and use it here instead of a version specific
+define to fix this.
+
+This was discovered after Abhinav looked over register dumps with me
+from sc7180 Trogdor devices that started failing to light up the
+external display with v6.6 based kernels. It turns out that some
+monitors are very specific about their link clk frequency and if the
+default power on reset value is still there the monitor will show a
+blank screen or a garbled display. Other monitors are perfectly happy to
+get a bad clock signal.
+
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: ec17373aebd0 ("phy: qcom: qmp-combo: extract common function to setup clocks")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+index 7d585a4bbbba..3b19d8ebf467 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -77,6 +77,7 @@ enum qphy_reg_layout {
+ 	QPHY_COM_BIAS_EN_CLKBUFLR_EN,
+ 
+ 	QPHY_DP_PHY_STATUS,
++	QPHY_DP_PHY_VCO_DIV,
+ 
+ 	QPHY_TX_TX_POL_INV,
+ 	QPHY_TX_TX_DRV_LVL,
+@@ -102,6 +103,7 @@ static const unsigned int qmp_v3_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+ 	[QPHY_COM_BIAS_EN_CLKBUFLR_EN]	= QSERDES_V3_COM_BIAS_EN_CLKBUFLR_EN,
+ 
+ 	[QPHY_DP_PHY_STATUS]		= QSERDES_V3_DP_PHY_STATUS,
++	[QPHY_DP_PHY_VCO_DIV]		= QSERDES_V3_DP_PHY_VCO_DIV,
+ 
+ 	[QPHY_TX_TX_POL_INV]		= QSERDES_V3_TX_TX_POL_INV,
+ 	[QPHY_TX_TX_DRV_LVL]		= QSERDES_V3_TX_TX_DRV_LVL,
+@@ -126,6 +128,7 @@ static const unsigned int qmp_v45_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+ 	[QPHY_COM_BIAS_EN_CLKBUFLR_EN]	= QSERDES_V4_COM_BIAS_EN_CLKBUFLR_EN,
+ 
+ 	[QPHY_DP_PHY_STATUS]		= QSERDES_V4_DP_PHY_STATUS,
++	[QPHY_DP_PHY_VCO_DIV]		= QSERDES_V4_DP_PHY_VCO_DIV,
+ 
+ 	[QPHY_TX_TX_POL_INV]		= QSERDES_V4_TX_TX_POL_INV,
+ 	[QPHY_TX_TX_DRV_LVL]		= QSERDES_V4_TX_TX_DRV_LVL,
+@@ -2162,6 +2165,7 @@ static int qmp_combo_configure_dp_clocks(struct qmp_combo *qmp)
+ 	const struct phy_configure_opts_dp *dp_opts = &qmp->dp_opts;
+ 	u32 phy_vco_div;
+ 	unsigned long pixel_freq;
++	const struct qmp_phy_cfg *cfg = qmp->cfg;
+ 
+ 	switch (dp_opts->link_rate) {
+ 	case 1620:
+@@ -2184,7 +2188,7 @@ static int qmp_combo_configure_dp_clocks(struct qmp_combo *qmp)
+ 		/* Other link rates aren't supported */
+ 		return -EINVAL;
+ 	}
+-	writel(phy_vco_div, qmp->dp_dp_phy + QSERDES_V4_DP_PHY_VCO_DIV);
++	writel(phy_vco_div, qmp->dp_dp_phy + cfg->regs[QPHY_DP_PHY_VCO_DIV]);
+ 
+ 	clk_set_rate(qmp->dp_link_hw.clk, dp_opts->link_rate * 100000);
+ 	clk_set_rate(qmp->dp_pixel_hw.clk, pixel_freq);
+
+base-commit: 4cece764965020c22cff7665b18a012006359095
+-- 
+https://chromeos.dev
+
 
