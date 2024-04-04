@@ -1,67 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-16394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2DBFA898661
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 13:48:37 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D7E7898696
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 13:58:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D6ADF28A51C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 11:48:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AF64F2888DB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 11:58:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AFD284D08;
-	Thu,  4 Apr 2024 11:48:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85E598627A;
+	Thu,  4 Apr 2024 11:57:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oZ3ysiRJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tinh7T1d"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2898D82876;
-	Thu,  4 Apr 2024 11:48:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A42084FDB;
+	Thu,  4 Apr 2024 11:57:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712231305; cv=none; b=D+8yb0+SgR1hRCQUP3i6eQTzSITk2hVlVfBVjiClxrTQgjFeZY59ILBoeRz64TkIlzM1G0OWNad4BiqH4+nhTAj8CO9L9vWya9K4ExG9oErrVPmDSNInRahkKNy1rfCY77gati9UxH8aCrCAZLFlxRBC9LB4mCYLuC1aqWu8WQw=
+	t=1712231871; cv=none; b=NjoQNAnp4BJEd/JMWijGm5QCPn485n6eKQ+Ja11PPltoiwIzkAWclVYCGZ89EmPi90dDuJdibmObk6MQwakklp9gOQ4Bwe0ird6iRvBDbiuIB7jl0zvODvWarWcgmF6rTNJJ5/BObxCGkB2Ne9SElQkdpkKmf0TrbreECIDdwTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712231305; c=relaxed/simple;
-	bh=dAhTmkzD/Nmh0C2TGZh+xAa7rrEqwqkaz/GvQ75Pxgk=;
+	s=arc-20240116; t=1712231871; c=relaxed/simple;
+	bh=oyPatv7PBt0holfVUYukJP8QPI1R/fKA+cCRZYJIaig=;
 	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=jB+TlZB0/JZIMdXxSgW3P7uD7QTXiUavDgHMaKOnsC3+eNL0o9+1z9UPDypv/IH0nUEZab2ej69OBSMSnF15tcwDNRXnvqXM9lORmcCy9fXDb/NwWsdKdHEwpL0QKxF4nZN7qfodZCGx/hOk023F863bpH96a3OCUAbe1KkSU1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oZ3ysiRJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A850C433C7;
-	Thu,  4 Apr 2024 11:48:20 +0000 (UTC)
+	 MIME-Version:Content-Type; b=q/kI0lYFHM2rEg+IlcnCUpQSvTMU8mekHhUkSiFPYDn04jZ9w5rUaY/5rP/2OTUUb8Xj9g7N+7loXYTUxDH3witr30XJkTOK56sD7jjh4feqrQz5vF1hVd6OnzJZ3A+017dL/ietnzgQ+EIEO8oAkgPA71QhSQVDS141etgQseo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tinh7T1d; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77253C43394;
+	Thu,  4 Apr 2024 11:57:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712231304;
-	bh=dAhTmkzD/Nmh0C2TGZh+xAa7rrEqwqkaz/GvQ75Pxgk=;
+	s=k20201202; t=1712231871;
+	bh=oyPatv7PBt0holfVUYukJP8QPI1R/fKA+cCRZYJIaig=;
 	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-	b=oZ3ysiRJDSYt/kN9hfKEvbX+lYFhMkuZPFEjeLM1IaNtVCP2RO4mgUpMVciE8KRga
-	 065MjFV57yg9nErRgKXpwZ9OvAYKvJEDWryQwve7yNEupWPEU3KY50zCX1Ec0Eib4u
-	 B4+w8CyWSMmI6ZEJ2hyQtb83sa2yjAsy7lNyHSTvydru95AwCfhz3xZ8eyjL6oV2Qj
-	 E9ts3COC0a+/R4KGw87uNxJzApcCR7tn6iifhs6gGz/olk6KiBoaYezIU4KvGd1W5D
-	 btUrI0dUPOKAmKuHIE3mRpMemLR/aI6wgJoUjUF6c1qhLMj9HqzAZpALXW9SFSN9vu
-	 5x/IM/wXbFCSQ==
+	b=Tinh7T1dpbBAZFIvgHQsGQjt/0I1nrX4iqfeXu6jrWUyo0+9kaF8XGmmZlRy6aOC5
+	 Zmwd/1oVr0T/Kg9Nn2oSMiHafCk4mhUXyd+luoCFjq467AEyDpYcK7iDtXUsPiNuNL
+	 8Xw+aNrCE0jUfDUCFdk9Khq/JW4SGqYWP57ZJNTi9Qr4RCiTJ+CzRlcDK20UGnTwSS
+	 ob3QmPFqAUTKh2ettqurQvj4LdISg/4YfTfbTQ5wR0iOc4KfVCYkZ4gU1yVcKBDI9G
+	 XXN/KsC5vZ7EEiMcW5YxK64qwoTJsXGt87SloFje7xCrntHwidNNeOyVbXW1njOb1D
+	 yMiaOE4OIyNbQ==
 From: Kalle Valo <kvalo@kernel.org>
-To: Jeff Johnson <quic_jjohnson@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,  "David S. Miller"
- <davem@davemloft.net>,  Eric Dumazet <edumazet@google.com>,  Jakub
- Kicinski <kuba@kernel.org>,  Paolo Abeni <pabeni@redhat.com>,  Rob Herring
- <robh+dt@kernel.org>,  Krzysztof Kozlowski
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Marc Gonzalez <mgonzalez@freebox.fr>,  Konrad Dybcio
+ <konrad.dybcio@linaro.org>,  Krzysztof Kozlowski
+ <krzysztof.kozlowski@linaro.org>,  Jeff Johnson
+ <quic_jjohnson@quicinc.com>,  ath10k <ath10k@lists.infradead.org>,
+  wireless <linux-wireless@vger.kernel.org>,  DT
+ <devicetree@vger.kernel.org>,  MSM <linux-arm-msm@vger.kernel.org>,  Rob
+ Herring <robh+dt@kernel.org>,  Krzysztof Kozlowski
  <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley <conor+dt@kernel.org>,
-  Bjorn Andersson <andersson@kernel.org>,  Konrad Dybcio
- <konrad.dybcio@linaro.org>,  <ath10k@lists.infradead.org>,
-  <linux-wireless@vger.kernel.org>,  <netdev@vger.kernel.org>,
-  <devicetree@vger.kernel.org>,  <linux-arm-msm@vger.kernel.org>,
-  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH RFC v2 0/4] wifi: ath10k: support board-specific
- firmware overrides
-References: <20240306-wcn3990-firmware-path-v2-0-f89e98e71a57@linaro.org>
-	<CAA8EJprpmC6+ePxw_G6y9YEszndq1VonS1HP=aP9OVHNm42LLw@mail.gmail.com>
-	<c2bd01d1-8ddf-44b8-b5bc-860cc9754b76@quicinc.com>
-Date: Thu, 04 Apr 2024 14:48:19 +0300
-In-Reply-To: <c2bd01d1-8ddf-44b8-b5bc-860cc9754b76@quicinc.com> (Jeff
-	Johnson's message of "Tue, 2 Apr 2024 16:40:57 -0700")
-Message-ID: <87y19t4ad8.fsf@kernel.org>
+  Pierre-Hugues Husson <phhusson@freebox.fr>,  Arnaud Vrac
+ <avrac@freebox.fr>,  Bjorn Andersson <andersson@kernel.org>,  Jami
+ Kettunen <jamipkettunen@gmail.com>,  Jeffrey Hugo
+ <jeffrey.l.hugo@gmail.com>
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: msm8998: set
+ qcom,no-msa-ready-indicator for wifi
+References: <fd26ce4a-a9f3-4ada-8d46-ed36fb2456ca@freebox.fr>
+	<5cdad89c-282a-4df5-a286-b8404bc4dd81@freebox.fr>
+	<252618e8-9e80-4774-a96c-caa7f838ef01@linaro.org>
+	<502322f1-4f66-4922-bc4e-46bacac23410@linaro.org>
+	<0ca1221b-b707-450f-877d-ca07a601624d@freebox.fr>
+	<CAA8EJppeREj-0g9oGCzzKx5ywhg1mgmJR1q8yvXKN7N45do1Xg@mail.gmail.com>
+Date: Thu, 04 Apr 2024 14:57:45 +0300
+In-Reply-To: <CAA8EJppeREj-0g9oGCzzKx5ywhg1mgmJR1q8yvXKN7N45do1Xg@mail.gmail.com>
+	(Dmitry Baryshkov's message of "Tue, 2 Apr 2024 18:55:56 +0300")
+Message-ID: <87ttkh49xi.fsf@kernel.org>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -71,48 +76,23 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff Johnson <quic_jjohnson@quicinc.com> writes:
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
 
-> On 3/29/2024 9:47 PM, Dmitry Baryshkov wrote:
+>> 3) ADD that compatible to the wifi node in msm8998.dtsi
+>>    compatible = "qcom,wcn3990-wifi", "qcom,msm8998-wifi";
+>> 4) In the driver, set qmi->fake_msa_ready_indicator to true if we
+>> detect "qcom,msm8998-wifi"
+>>
+>> And this approach would be acceptable to both ath10k & DT maintainers?
 >
->> On Wed, 6 Mar 2024 at 10:16, Dmitry Baryshkov
->> <dmitry.baryshkov@linaro.org> wrote:
->>>
->>> On WCN3990 platforms actual firmware, wlanmdsp.mbn, is sideloaded to the
->>> modem DSP via the TQFTPserv. These MBN files are signed by the device
->>> vendor, can only be used with the particular SoC or device.
->>>
->>> Unfortunately different firmware versions come with different features.
->>> For example firmware for SDM845 doesn't use single-chan-info-per-channel
->>> feature, while firmware for QRB2210 / QRB4210 requires that feature.
->>>
->>> Allow board DT files to override the subdir of the fw dir used to lookup
->>> the firmware-N.bin file decribing corresponding WiFi firmware.
->>> For example, adding firmware-name = "qrb4210" property will make the
->>> driver look for the firmware-N.bin first in ath10k/WCN3990/hw1.0/qrb4210
->>> directory and then fallback to the default ath10k/WCN3990/hw1.0 dir.
->>>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>> Changes in v2:
->>> - Fixed the comment about the default board name being NULL (Kalle)
->>> - Expanded commit message to provide examples for firmware paths (Kalle)
->>> - Added a note regarding board-2.bin to the commit message (Kalle)
->>> - Link to v1:
->>> https://lore.kernel.org/r/20240130-wcn3990-firmware-path-v1-0-826b93202964@linaro.org
->>>
->>> ---
->>> Dmitry Baryshkov (4):
->>>       dt-bindings: net: wireless: ath10k: describe firmware-name property
->>>       wifi: ath10k: support board-specific firmware overrides
->>>       arm64: dts: qcom: qrb2210-rb1: add firmware-name qualifier to WiFi node
->>>       arm64: dts: qcom: qrb4210-rb1: add firmware-name qualifier to WiFi node
->> 
->> Kalle, Jeff, is there anything pending on me on this series?
->> 
-> Nothing from me -- this is outside my area of expertise so I'm deferring to Kalle.
+> I'd say, we should take a step back and actually verify how this was
+> handled in the vendor kernel.
 
-I was on Easter vacation and now catching up, that's why the delay.
+One comment related to this: usually vendor driver and firmware branches
+go "hand in hand", meaning that a version of driver supports only one
+specific firmware branch. And there can be a lot of branches. So even if
+one branch might have a check for something specific, there are no
+guarantees what the other N+1 branches do :/
 
 -- 
 https://patchwork.kernel.org/project/linux-wireless/list/
