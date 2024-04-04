@@ -1,74 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-16408-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16409-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89C1A898E13
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 20:37:36 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 98FA1898E25
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 20:43:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 40BA628A9A4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 18:37:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CA44B1C290AD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 18:43:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8713130A57;
-	Thu,  4 Apr 2024 18:37:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E52421311A3;
+	Thu,  4 Apr 2024 18:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XD6J1VhH"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="eZKTRAti"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32AF12D775;
-	Thu,  4 Apr 2024 18:37:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0083F130E29;
+	Thu,  4 Apr 2024 18:42:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712255825; cv=none; b=LoCrS+INIu39y2r98Nf3OBisDQZT72cmtzpih4dyVuw7A6Bfj/lp2VxFpx9fpr6xZqH1g3C6zSUM7M2vyfmRs6JPiCAXzRDMcJA1uf4zQ+z7s47vFC1Y8E1zT0yd6RtJ3i6xsB+PJhAD9SjtH/6K11K5+PTHe7xT9I/KdFp110E=
+	t=1712256175; cv=none; b=nT9v8efRvr6/Me5+FdVXOH9GPACEc+Ma9+PBlswc5yA9JxHdwpiLUCPQqopCxB1Ny6MD9R3gArL3vKrluJYrkJXLIKLPndhMpt0zfAa35/E2JtOI+1wZQSKAcbFBgDmNPTyix/CkDcqVQ66ye+jkH+5aVt//5ltI267VQBlC2Zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712255825; c=relaxed/simple;
-	bh=10IvWx0P9NfRBMymY9YlYzDiOxmDJEngcPp/9nn/URw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iiSn6f7UOf4pwwmVWGmnNsPOvUa5M5QQHZ/f8LDQr/n0o9aw08SIzaP0fF1F9tiyiOaviKU+5hcBe+42pwhLv47kiobhMIJS0rNShYViKpfp7x7MXtfn9luWQU7XbUwopemQ2EjgqmI66nxI0+tMySpJUxpw2elLeudC7wpdbO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XD6J1VhH; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-41550858cabso9102925e9.2;
-        Thu, 04 Apr 2024 11:37:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712255822; x=1712860622; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RtbHY0YVM/I5JSJGozTwS/MzIsFQPhKj3IIsO/Nab0M=;
-        b=XD6J1VhHbnNFygHq2obHIUfna4SbCKVhUKAqo2K3gYGHqJIyeU5HWpwPxqjeq4C4kq
-         F4+DPP7ArHTyeSBHZeq63ruTx+mpeohwHBc2Wr+ZFsoYkj3ANNwEbOs8Rb7Gp7KnRPXw
-         Y6mOTU39h0m0+ryAkRnfX1dj4jNIYHgLGl8X6VIErRZ2aWzsHeozhKnh6JEPnaTtuDnd
-         H+YNNEwjkdrbMmDSgcFgdzNoqkDd8jWZ7Ig/oWYXFbDjQ76BGBTYkQu7i6qVBaAD2V96
-         xEqxtGINUGZFxQGHBo1Me4tinoZSkmZagKck+nftY0IrVQ50qIzhtvmETz2NypciRicV
-         amDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712255822; x=1712860622;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RtbHY0YVM/I5JSJGozTwS/MzIsFQPhKj3IIsO/Nab0M=;
-        b=ipzaVP1cELn4pSZdI3xVONOhoQF6itPoATbhaNBrT4CNTLwg/e5FOCI9pV+upz05Vl
-         aq5P3CEfzNDVAHfsNOJv5fFSMjwTp+f/Uyih0wbjQwKORVyZMyX0lQpoF1+pYzmKDhyC
-         cs2k140/KWSrb4zxPah1vm9eUyZx5dN1sPYNTKXe+YMdrO/5/11dOilqx7BfSXfnfNFg
-         Ee2KrT/GcKM4YQ+npLd0EuukB+3dQMMBB4CQS2/k7cfcgExoBEDw/jTMyt4Ib0byqOq5
-         TWSOhZDyjjp8Or/lacmAXbVaZPXjdud1lD2r8dLrrhJVqWwZpS+Ru6/x+8L+LhFV0gg/
-         ViJQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUHjeXEvZi8WOhZQaq/x0YOBfkZEOkVAg26ptbgqYdZButjfFqd4M9ddH93xyBZvhA8GX+wJwxchr+n58nZYCQRq/zmQderJ31CCxSHet289qDq07EwNhbrzxnF9MsjzcM8j5WdRcvglu+DDw==
-X-Gm-Message-State: AOJu0YyWrKlR0eEZLOm0SZMsrmHNm58RxH5fXGiGwPfI365n4X7+xMLw
-	9vDXFiCFJ5UXkCJtzxt1PPQRquFdsCYMNI7yVqilDsOpM60Cur+A
-X-Google-Smtp-Source: AGHT+IEWKHqT3JitYA6ObuZeBmVle4pZESaRLdfNnPL+LakBUe9F7gp7fUaWfsvnVnZrG8fX/quaMQ==
-X-Received: by 2002:a05:600c:3417:b0:414:6c72:8df with SMTP id y23-20020a05600c341700b004146c7208dfmr2436607wmp.38.1712255821894;
-        Thu, 04 Apr 2024 11:37:01 -0700 (PDT)
-Received: from ?IPV6:2a02:8071:b783:140:927c:82ba:d32d:99c1? ([2a02:8071:b783:140:927c:82ba:d32d:99c1])
-        by smtp.gmail.com with ESMTPSA id d6-20020a05600c34c600b0041547cdfbc7sm4685124wmq.0.2024.04.04.11.37.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Apr 2024 11:37:01 -0700 (PDT)
-Message-ID: <7b5928fe-d93b-4772-a46e-3a9e64f61c14@gmail.com>
-Date: Thu, 4 Apr 2024 20:37:00 +0200
+	s=arc-20240116; t=1712256175; c=relaxed/simple;
+	bh=4NQR6s8aErkFZR1aqYo3S/4BmQ1dbHV3gCI/EvoLQMk=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=ISwW/nUTvOWeKOy7EMTW8HOBTrvchLDEUdU2pFqs0TI2YIp9PR4GSUTodXhWacgG41mFZj3tRsELbJtIBEooPPY/gkbHQiPdEuWt2KWEz7E6ywfU/7u61BuNEufpmMEk8sD8VUzWpKNwNf2Vx7PEULps3TDwJA3JofpYFCp2Dvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=eZKTRAti; arc=none smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1712256174; x=1743792174;
+  h=message-id:date:mime-version:subject:from:to:cc:
+   references:in-reply-to:content-transfer-encoding;
+  bh=4NQR6s8aErkFZR1aqYo3S/4BmQ1dbHV3gCI/EvoLQMk=;
+  b=eZKTRAtiKEtqOPkraqky2lUoDnx6i3BSHExJ1+NWrN6ASdRtDhgeGhAB
+   WccDlSsCAMWVjrtTK5RL3UfMepY/6FubsbJXIPgEz7FCuxPFyV7Aq5UQr
+   730eQeon17jGRuQ/OhL68NzGnimXSszqrTuL4rJeW7iAjEQjhnqKHsJzc
+   4Zn1ylyvkYJz1byzo2aPcKUfGPrH4+ZdmaBLXEcEVN+dxAlwfs/RrEUB5
+   kF7qYuFKtYlsWVIaJSZFDAVyk8b/TeFn4fOG4qaMXUpWa62ai7otO9eqJ
+   03IfJqcmakSXZvu6J2Tmm2ILu9t45UgGllQXMLRDlZOWSSkZ/3lp8FCA/
+   w==;
+X-CSE-ConnectionGUID: Bn0+/+XtSmyCG/Y6u3tBtA==
+X-CSE-MsgGUID: iaxRHqvTRGWw4ZOIKkEjRw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11034"; a="8144129"
+X-IronPort-AV: E=Sophos;i="6.07,179,1708416000"; 
+   d="scan'208";a="8144129"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Apr 2024 11:42:53 -0700
+X-CSE-ConnectionGUID: L/rnFIAUR4a+alwgAUI4JQ==
+X-CSE-MsgGUID: Y9bcLz4VRtet7EZ2yn0QDg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,179,1708416000"; 
+   d="scan'208";a="18786003"
+Received: from ahunter6-mobl1.ger.corp.intel.com (HELO [10.0.2.15]) ([10.251.213.127])
+  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Apr 2024 11:42:49 -0700
+Message-ID: <77d76e3b-549e-4d26-834c-a59b91fbb2a0@intel.com>
+Date: Thu, 4 Apr 2024 21:42:43 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,130 +67,69 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 00/13] firmware: qcom: qseecom: convert to using the TZ
- allocator
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Elliot Berman <quic_eberman@quicinc.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Guru Das Srinagesh <quic_gurus@quicinc.com>,
- Andrew Halaney <ahalaney@redhat.com>, Alex Elder <elder@linaro.org>,
- Srini Kandagatla <srinivas.kandagatla@linaro.org>,
- Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- kernel@quicinc.com, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20240325100359.17001-1-brgl@bgdev.pl>
- <56e1c63a-4c09-4d92-9ef2-aad5390879cc@gmail.com>
- <CAMRc=Mf_pvrh2VMfTVE-ZTypyO010p=to-cd8Q745DzSDXLGFw@mail.gmail.com>
- <CAMRc=MfsVWcoMC-dB-fdxy332h-ucUPTfEUMAnCt5L-q3zJxWg@mail.gmail.com>
- <82f94b54-82d1-49b9-badf-63d948b347fc@gmail.com>
- <97e1f121-9e84-4e63-9c9c-57e2de0b29d7@gmail.com>
- <CAMRc=McLJFGcy-A6PZNmjgDXnvx8z0J4k-Dbak-txvWnycHG2A@mail.gmail.com>
- <2b1dc031-d645-494c-9103-a2bb422ea60b@gmail.com>
- <CAMRc=MdoSPuedbGhy4toDEkw0vSzESDz2bXGpyt_=R4hqXW+Uw@mail.gmail.com>
- <9b1e5ea0-bb32-4c42-b2e9-204bde31b905@gmail.com>
- <CACMJSesvM6_PhhR_2sP4JX6bR4ytVVg=MwWBEVrCHf5FNp2JXw@mail.gmail.com>
- <9db0fc7b-f24a-4d76-b8bd-ec577ecba0c6@gmail.com>
- <CAMRc=Me9x1OXKXXxyhzZ6mxffmaoq=4QhMXCL6L71_xso2epWA@mail.gmail.com>
- <CAMRc=Me0MamtJoPtQnucKyZx9pfkEPDAAZqWFWRU0CBcj+P50A@mail.gmail.com>
- <CAMRc=McZ9dpD7Ws0vq-eYCN3smA6dHOLu_i1BL=x+CAaYr9S2w@mail.gmail.com>
+Subject: Re: [PATCH] mmc: sdhci-msm: pervent access to suspended controller
+From: Adrian Hunter <adrian.hunter@intel.com>
+To: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: Mantas Pucka <mantas@8devices.com>, Bjorn Andersson
+ <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Georgi Djakov <djakov@kernel.org>, Pramod Gurav <pramod.gurav@linaro.org>,
+ Ritesh Harjani <ritesh.list@gmail.com>, linux-mmc@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ stable@vger.kernel.org, Thierry Reding <thierry.reding@gmail.com>,
+ Liming Sun <limings@nvidia.com>,
+ Victor Shih <victor.shih@genesyslogic.com.tw>
+References: <20240321-sdhci-mmc-suspend-v1-1-fbc555a64400@8devices.com>
+ <2e712cf6-7521-4c0b-b6fd-76bacc309496@intel.com>
+ <CAPDyKFoBgwWDXhcXsbCfBD_nJ=3w1e5eReqHgDQ1BiPf0zJRxw@mail.gmail.com>
+ <5bce008a-8354-4ccd-af1f-b7f2b2caf3bc@intel.com>
 Content-Language: en-US
-From: Maximilian Luz <luzmaximilian@gmail.com>
-In-Reply-To: <CAMRc=McZ9dpD7Ws0vq-eYCN3smA6dHOLu_i1BL=x+CAaYr9S2w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+In-Reply-To: <5bce008a-8354-4ccd-af1f-b7f2b2caf3bc@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 4/3/24 9:47 AM, Bartosz Golaszewski wrote:
-> On Tue, Apr 2, 2024 at 10:44 AM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+On 28/03/24 16:20, Adrian Hunter wrote:
+> On 27/03/24 17:17, Ulf Hansson wrote:
+>> On Tue, 26 Mar 2024 at 11:25, Adrian Hunter <adrian.hunter@intel.com> wrote:
+>>>
+>>> On 21/03/24 16:30, Mantas Pucka wrote:
+>>>> Generic sdhci code registers LED device and uses host->runtime_suspended
+>>>> flag to protect access to it. The sdhci-msm driver doesn't set this flag,
+>>>> which causes a crash when LED is accessed while controller is runtime
+>>>> suspended. Fix this by setting the flag correctly.
+>>>>
+>>>> Cc: stable@vger.kernel.org
+>>>> Fixes: 67e6db113c90 ("mmc: sdhci-msm: Add pm_runtime and system PM support")
+>>>> Signed-off-by: Mantas Pucka <mantas@8devices.com>
+>>>
+>>> Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 >>
->> On Sat, Mar 30, 2024 at 8:16 PM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
->>>
->>> On Fri, 29 Mar 2024 20:57:52 +0100, Maximilian Luz <luzmaximilian@gmail.com> said:
->>>> On 3/29/24 8:46 PM, Bartosz Golaszewski wrote:
->>>>> On Fri, 29 Mar 2024 at 20:39, Maximilian Luz <luzmaximilian@gmail.com> wrote:
->>>>>>
->>>>>> On 3/29/24 8:26 PM, Bartosz Golaszewski wrote:
->>>>>>> On Fri, 29 Mar 2024 at 20:22, Maximilian Luz <luzmaximilian@gmail.com> wrote:
->>>>>>>>
->>>>>>>> On 3/29/24 8:07 PM, Bartosz Golaszewski wrote:
->>>>>>>>>
->>>>>>>>> Both with and without SHM bridge?
->>>>>>>>
->>>>>>>> With CONFIG_QCOM_TZMEM_MODE_GENERIC=y (and the upcoming fix) everything
->>>>>>>> works. With CONFIG_QCOM_TZMEM_MODE_SHMBRIDGE=y things unfortunately
->>>>>>>> still get stuck at boot (regardless of the fix). I think that's
->>>>>>>> happening even before anything efivar related should come up.
->>>>>>>>
->>>>>>>
->>>>>>> This is on X13s? I will get one in 3 weeks. Can you get the bootlog
->>>>>>> somehow? Does the laptop have any serial console?
->>>>>>
->>>>>> Surface Pro X (sc8180x), but it should be similar enough to the X13s in
->>>>>> that regard. At least from what people with access to the X13s told me,
->>>>>> the qseecom stuff seems to behave the same.
->>>>>>
->>>>>> Unfortunately I don't have a direct serial console. Best I have is
->>>>>> USB-serial, but it's not even getting there. I'll have to try and see if
->>>>>> I can get some more info on the screen.
->>>>>>
->>>>>
->>>>> I have access to a sc8180x-primus board, does it make sense to test
->>>>> with this one? If so, could you give me instructions on how to do it?
->>>>
->>>> I guess it's worth a shot.
->>>>
->>>>   From what I can tell, there shouldn't be any patches in my tree that
->>>> would conflict with it. So I guess it should just be building it with
->>>> CONFIG_QCOM_TZMEM_MODE_SHMBRIDGE=y and booting.
->>>>
->>>> I am currently testing it on top of a patched v6.8 tree though (but that
->>>> should just contain patches to get the Pro X running). You can find the
->>>> full tree at
->>>>
->>>>       https://github.com/linux-surface/kernel/tree/spx/v6.8
->>>>
->>>> The last commit is the fix I mentioned, so you might want to revert
->>>> that, since the shmem issue triggers regardless of that and it prevents
->>>> your series from applying cleanly.
->>>>
->>>> Best regards,
->>>> Max
->>>>
->>>
->>> sc8180x-primus' support upstream is quite flaky. The board boots 50% of time.
->>> However it's true that with SHM bridge it gets to:
->>>
->>> mount: mounting efivarfs on /sys/firmware/efi/efivars failed: Operation not supported
->>>
->>> and stops 100% of the time. Without SHM bridge I cannot boot it either because
->>> I suppose I need the patch you sent yesterday. I haven't had the time to
->>> rebase it yet, it's quite intrusive to my series.
->>>
->>> I can confirm that with that patch the board still boots but still 50% of the
->>> time.
->>>
->>> Bart
+>> Looks like this problem may exist for other sdhci drivers too. In
+>> particular for those that enables runtime PM, don't set
+>> SDHCI_QUIRK_NO_LED and don't use sdhci_runtime|suspend_resume_host().
 >>
->> Hi!
->>
->> I was under the impression that until v8, the series worked on sc8180x
->> but I'm seeing that even v7 has the same issue with SHM Bridge on
->> sc8180x-primus. Could you confirm? Because I'm not sure if I should
->> track the differences or the whole thing was broken for this platform
->> from the beginning.
->>
->> Bart
+>> Don't know if there is a better way to address this, if not on a case
+>> by case basis. Do you have any thoughts about this?
 > 
-> Interestingly, it doesn't seem like a problem with qseecom - even if I
-> disable the driver, the board still freezes after the first SCM call
-> using SHM bridge. I suspect - and am trying to clarify that with qcom
-> - that this architecture doesn't support SHM bridge but doesn't report
-> it either unlike other older platforms. Or maybe there's some quirk
-> somewhere. Anyway, I'm on it.
+> Yes probably case by case, but I will look at it.
 
-Awesome, thanks!
+There seem to be 3 that use runtime pm but not
+sdhci_runtime_suspend_host():
 
-Best regards,
-Max
+1. dwcmshc_runtime_suspend() : only turns off the card clock
+via SDHCI_CLOCK_CONTROL register, so registers are presumably
+still accessible
+
+2. gl9763e_runtime_suspend() : ditto
+
+3. sdhci_tegra_runtime_suspend() : disables the functional
+clock via clk_disable_unprepare(), so registers are presumably
+still accessible
+
+sdhci_msm_runtime_suspend() is different because it also turns
+off the interface clock.
+
+But it looks like there are no similar cases.
+
 
