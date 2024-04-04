@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-16421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4DE8B899012
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 23:23:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43218899015
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 23:24:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7ED5D1C220E5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 21:23:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 73A881C20F65
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 21:24:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BF0113C663;
-	Thu,  4 Apr 2024 21:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E7DB13C67D;
+	Thu,  4 Apr 2024 21:23:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bxXkHXMU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L6mZ+SZS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006E313C3FB;
-	Thu,  4 Apr 2024 21:23:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2656713C678;
+	Thu,  4 Apr 2024 21:23:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712265801; cv=none; b=mZEROMWYFVsZwyfJTQYrTEE9KIutChP2HAlZa1RO+IS72ZvPqNq1svmbTNQQOLyeuQ5Y2H5xR99rrd5es0CTqvAgkPf4JWXn3lbihsiEPyaXF+k2PzTEd4mtBNYj0sJE1sn229bG/T3nFHzm/N3Gx3j7OfMPWSJBmdXcgNO8PRg=
+	t=1712265802; cv=none; b=QE1tbpW4N9/co7iWN3JIgZ5O9yEyPUEL2BCyhe94Ru96fODmNRo6P/wXgWmYT/mG57r5UqCWqCi+wExvERppc/oYvDLDXl/ZMu5K3KzTd1ZGjHVcIyys7gmcIJjAZ8coxjOoIyjgw2hdbA/H0ctPmo5h+G1VfpgCDmJLGhMejKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712265801; c=relaxed/simple;
-	bh=qK1WJ95y942nDqpYdpVd7M8hb2SED2//IBpTA+Bn1jk=;
+	s=arc-20240116; t=1712265802; c=relaxed/simple;
+	bh=0fFKa/EeutqrSgQbuT8Xm2t9GxKRLht1LIjDhCQyP5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tXCJMSBRpQqLtrdyZNMl9sxPTOgUihk+No1X9deUTYSlAyYtFUCJq3zG6K+Cp1SaOk+dmJ1U5YPr8I6rMmNCP6kDs0OJV/rSlP8rGi985Gn3mHXYnEn1hR7GAZGSHGxnYVDquD9ZaRrb35cEaW2gCc48ubjsF/MLFdAAZ4F5QYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bxXkHXMU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABBA8C433B2;
-	Thu,  4 Apr 2024 21:23:19 +0000 (UTC)
+	 MIME-Version:Content-Type; b=hRGBzHA4gcfyhkS5GPjqNnU+o9pEemfu+QH6ClyEUVtOKGDYo6ymNkcrqDzD2YFlUfwWnljfOgJYMxzkz7Uza65BwVOpxakUvZEMVkRP9ZQWnCy/dGVSUHzlToQYNseI2BQkvBvuvTjQeMOCO2nuVdM9lTT57C8Ue4eSPCyM2GY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L6mZ+SZS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE90AC433C7;
+	Thu,  4 Apr 2024 21:23:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712265800;
-	bh=qK1WJ95y942nDqpYdpVd7M8hb2SED2//IBpTA+Bn1jk=;
+	s=k20201202; t=1712265801;
+	bh=0fFKa/EeutqrSgQbuT8Xm2t9GxKRLht1LIjDhCQyP5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bxXkHXMUcDgf0qA/6DQ54jxDBHsNtUX+npjVi2MY81OYCdFL9w0n63mg8WPFWdfzg
-	 B6rv9bcAKBwRGzqZ0cwdEzAJqdQeAZyI4bk5DBp2wJ1NuriKQBmKJ3lPt2H5MvE2w5
-	 UBo+OtNqDOla4UYFYKYV+7iqNdDtK11TrJCqrkVPAOeyj+Z8iFpCdxcSPY78nqDJNd
-	 J+wUnPMiQr/egEIVprE4o17wyc+qRKjCpEijMA6Aa5uJAQnMVl1pB6D8saKlaIMu76
-	 S6fXC3gQ+VPpXXXNQIXxJFESad2msjSNQpyrSBOyb80n0uNOEjvLExVJ0D8O8R91jC
-	 AZu6UpS6dZlvQ==
+	b=L6mZ+SZSP+Ur9bWC4isDcgoy4LVeJ1nQjR+ztH1bVhZWY4Kt9TdtDCsGh2LCxPoLY
+	 AyZnwoHKgZhzHCQpznALhsQnH9E7ERbEKCunZ2fbfP5a0NrPRmnREDT2YV7tmX+4oI
+	 0NXe8ZCPP/xKILJCSyBJXN7zOiCWfFlsHC0ky3VLu3ybnHtQjdH4pY4iaBM6oNAtek
+	 0DAm+PLJRLIag2lFxR2ZsP0AAAnMjA3vxgDYtRJ2hnBDHTTEg6k4X8qPBzNcAGUlzI
+	 Gjx+B8+Tyu2SIJKOxyAYVMWW5hrFB8p4kE9N2qCMRy881v773/LtyJE8nDKXy4NV/x
+	 0xaZxx0N2C+Pw==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Rob Herring <robh@kernel.org>,
@@ -48,17 +48,13 @@ To: Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Conor Dooley <conor+dt@kernel.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Kalle Valo <kvalo@kernel.org>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	ath10k@lists.infradead.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm8150-hdk: enable WiFI support
-Date: Thu,  4 Apr 2024 16:22:49 -0500
-Message-ID: <171226578698.615813.10917637974157146735.b4-ty@kernel.org>
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sm8350: Add interconnects to UFS
+Date: Thu,  4 Apr 2024 16:22:50 -0500
+Message-ID: <171226578675.615813.59005528612625407.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240403-sm8150-hdk-wifi-v1-1-8da3063829c2@linaro.org>
-References: <20240403-sm8150-hdk-wifi-v1-1-8da3063829c2@linaro.org>
+In-Reply-To: <20240313-sm8350-ufs-icc-v1-1-73fa2da99779@linaro.org>
+References: <20240313-sm8350-ufs-icc-v1-1-73fa2da99779@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,27 +65,16 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 03 Apr 2024 20:10:12 +0300, Dmitry Baryshkov wrote:
-> Enable modem DSP and WiFI devices on the SM8150 HDK device. The HDK is
-> manufactured by Lantronix, but it attributed to Qualcomm, so the
-> calibration string uses Qualcomm as manufacturer.
+On Wed, 13 Mar 2024 03:32:09 +0200, Dmitry Baryshkov wrote:
+> To ensure that UFS doesn't get disconnected from NoC, add interconnect properties
+> to the UFS controller.
 > 
-> For reference:
 > 
-> ath10k_snoc 18800000.wifi: qmi chip_id 0x30224 chip_family 0x4001 board_id 0x55 soc_id 0x40060000
-> ath10k_snoc 18800000.wifi: qmi fw_version 0x32040163 fw_build_timestamp 2019-10-08 05:42 fw_build_id QC_IMAGE_VERSION_STRING=WLAN.HL.3.2.0-00355-QCAHLSWMTPLZ-1
-> ath10k_snoc 18800000.wifi: wcn3990 hw1.0 target 0x00000008 chip_id 0x00000000 sub 0000:0000
-> ath10k_snoc 18800000.wifi: kconfig debug 1 debugfs 0 tracing 0 dfs 0 testmode 0
-> ath10k_snoc 18800000.wifi: firmware ver  api 5 features wowlan,mgmt-tx-by-reference,non-bmi crc32 b3d4b790
-> ath10k_snoc 18800000.wifi: htt-ver 3.73 wmi-op 4 htt-op 3 cal file max-sta 32 raw 0 hwcrypto 1
-> ath10k_snoc 18800000.wifi: invalid MAC address; choosing random
-> 
-> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sm8150-hdk: enable WiFI support
-      commit: e5fd6512f6e842d8c5883b9fa4d72c8a5295efdc
+[1/1] arm64: dts: qcom: sm8350: Add interconnects to UFS
+      commit: cb06e2b406279f65890233af103c638d3752d328
 
 Best regards,
 -- 
