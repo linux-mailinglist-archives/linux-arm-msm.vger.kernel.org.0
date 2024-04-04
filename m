@@ -1,217 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-16375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2C01898100
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 07:30:24 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C55B5898119
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 07:51:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 221D31C2082E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 05:30:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2BD6828CE64
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 05:51:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10C96286A6;
-	Thu,  4 Apr 2024 05:30:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C15423FB1B;
+	Thu,  4 Apr 2024 05:51:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bSqC/7Wo"
+	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="sy+/1H0n"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4070A28F5
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Apr 2024 05:30:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C1222EE4;
+	Thu,  4 Apr 2024 05:51:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.87.146.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712208622; cv=none; b=ERJvbrxlOCHsHrfLA64hV+hZHEuKj+gkVEVCPwayXhkC6JXT507hmYausdfZEyvHXPyYK2MfnTYih4pc8tcfrQwbimfe+HpT5F/g/K3iv2rRs3sV3Kb1Hl7H3YmVa7FbhZfIBA8iwehV58qlFV9YKTtzmGYelJ621hqVhDD1qPA=
+	t=1712209883; cv=none; b=DRv1H71WAh+fi2uC7L+mKI7H7EO08Q+6F8gmi/fUN0y2fv4TPOKiD/doW/9LRJBrvzbat8t5Edt4xiEs1aL2jQ1cmFaUQgv8eFvPwTaR70SROX9KloSnlWMmpv8f87A8IlCkHrzGWVPHH0PPGBKQiFxFBXn18ChqlPzeMhUFG3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712208622; c=relaxed/simple;
-	bh=hrT6CSkkEiHpCL2254tYrBO7lscNQ5B7mlo/PBHS4j0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qLYyjJ81qldcjHMBY/TdeXzIQzDRVFPaP7Ymyxj4hLPnVa08wwCkKjM19w81SQD6iD+yQ1fK6Yrp7qBrwt1r56bRpodNy0paoKzBeOqCX8YMvepeu3bRk8zDD3oyryR+LMZkqOMMzRsYtMTLkOawsOzB2GrkQahZ97JcwuBEaLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bSqC/7Wo; arc=none smtp.client-ip=209.85.219.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-dd10ebcd702so716163276.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Apr 2024 22:30:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712208619; x=1712813419; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=dyCeaWOBhvl6G+/jJPj4WdMHHOTtXZ5RKep0At0rnzE=;
-        b=bSqC/7WoEKjeLBagHHQRVLrCAnZqnGOYuY3dE1kpze4f+wTIVMtf96YNg6Fkw9kjVt
-         lvw32mLtESFM+qvHkD9TO7Mup9cr3vyq38TlZ7brIrQdrmkz2e3cquAXSZHXHAJvpjxp
-         0E+8SG6mfhwYWUiRvzB26GguW8GRMVEy6ycgCI9DP6nCvO2T35UF/7Uele5Pn7aMhDJ8
-         f3Bud8+uC5IjpV1uns2GOt3U8SiuQ/8917g065Bb+xsQIlRJAsXkEuCAKmVmTZbwT55f
-         r94s4Eu5+AqmTaJmHZFEVuHYqlZODvif85p4U8mlIDBSDxVfgIqYlhdc6MLmcgC08h5M
-         evAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712208619; x=1712813419;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dyCeaWOBhvl6G+/jJPj4WdMHHOTtXZ5RKep0At0rnzE=;
-        b=CAIa4GiyBRC8eOgbh9vzCBojdIc2qwLRrgM0sTy8GIkGzhIBBf+5URqd+bDYyut8qS
-         TP9ztkObFS1eFdnUOK1u/gCZj6OISagjDfyH9+4SaOdI2LmRF+5hu2n47JPqJBjQm+kt
-         X0G1AUs2k7nsct8OexGwlrBroboR0EnDHdbQdSRdwIc2Iejssw6WYU3rVZK3kecTMpsm
-         pdjUiKJCVf6NUzZcE1G46ShaKtWBypcp+F9cbI95dFjm1RS1gDCmeUe8C/P5VgJlV0K6
-         soHW7zFM3cxxuuKJXhP0Lk9ZmKhRu6uG49wC3/ZYyL0ivSQ28zGZS8sEu6gJpByd8HiE
-         AZTg==
-X-Forwarded-Encrypted: i=1; AJvYcCWQkiXnFynMk6TyF6XQuxSa5uWWjkU9j1QaR/RhqT3ukou4I6TeEtMUnbDeid5jUfr6vN0/pgOLYjSIuwX7Fn4YqoI5KGq/kEhyl/jLzA==
-X-Gm-Message-State: AOJu0YxA73cFKyVv4MLEYVbdSZ54ms8NU1qMk4OEQPogPyM3a9/cPsIw
-	2R29i+1YsJeNr/CjaZ/FKpfdMnDkZsewaQoliOzEa4/UQF18+owePG0qpoKqL4jQlNGcKpz0q4z
-	OSNtI4XLt83z3iZqW8xfrbAUhIWlkj8fmrSHG/bbm6G+2vnHj
-X-Google-Smtp-Source: AGHT+IGKRxJEtdCBGlcL3OcZ4OT75D2VZtdOqbw13TdwBYkQp+Ruc2ZWNb86Z/W+QS4HrKFAfGGKYy4zaXWCiIsdQH4=
-X-Received: by 2002:a25:5f45:0:b0:ddd:696a:8656 with SMTP id
- h5-20020a255f45000000b00ddd696a8656mr1475611ybm.41.1712208619210; Wed, 03 Apr
- 2024 22:30:19 -0700 (PDT)
+	s=arc-20240116; t=1712209883; c=relaxed/simple;
+	bh=Sif9OYlf7o5rH6HJtXnuHMHBMudAuoAS3AZeNXTSQtw=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=NaQ1vxoa7ofSgVbSuSOJrXY+ytIrbjFYGr+HK8rOWAgC8XX+/gHv7PxpmkIzan0T8IPg32D9/hYjjSzVS5xnAmClrieiTwtF2gcIE2fJ/PK3YaILfdS7K7DsKIQVGhpwDSNoyw+EZy5mzjWnvFZZ3DAQbAFROQtZo6dRm01fjU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru; spf=pass smtp.mailfrom=trvn.ru; dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b=sy+/1H0n; arc=none smtp.client-ip=194.87.146.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trvn.ru
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+	(No client certificate requested)
+	by box.trvn.ru (Postfix) with ESMTPSA id 85509401B5;
+	Thu,  4 Apr 2024 10:51:11 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+	t=1712209872; bh=Sif9OYlf7o5rH6HJtXnuHMHBMudAuoAS3AZeNXTSQtw=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=sy+/1H0n879DQFwK5S1aRcnxXOy2DLSnh/tFK9jJBtWM24ThNfJ6PCWtPW1mkNfrX
+	 QXbDwL5A8nEbYD3zcH9daJozYZDxXHRuBWk5JTP32U5604DEQuIT/jzO60dYsSwNbl
+	 pzMu6zV1kaQxhV//UGl7+NbaZJ+URfAlFk8Ta+kxrdEOQMshI7qu7+qC/yqOCW0i1V
+	 s1MnD4gLsoCqROamEan3VLRXQiOAOMaexaQnqhqS+YFlToU9eiYzqqSpO7fD2uXtYU
+	 8PAFV7maE3tP/vCswjxE3NTQtLmCtgdDXANhCQsQydVPqfWD1qw68hQSs2bmub8s8D
+	 bBgnGS8Mk+LFw==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240321092529.13362-1-quic_jkona@quicinc.com>
- <20240321092529.13362-7-quic_jkona@quicinc.com> <CAA8EJppHGS+W-aiXvJ2cE=jCbua8Y0Q+zv_QTs+C9V5+Y1vuZg@mail.gmail.com>
- <008d574f-9c9e-48c6-b64e-89fb469cbde4@quicinc.com> <b3464321-0c52-4c41-9198-e9e7b16aa419@quicinc.com>
- <CAA8EJpqDwCVAjDphnC-HdfseMJ-xd8VVxb5+9UcGEcKLcn-heg@mail.gmail.com> <fba2474e-31a6-4fef-acf9-7069933584c8@quicinc.com>
-In-Reply-To: <fba2474e-31a6-4fef-acf9-7069933584c8@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 4 Apr 2024 08:30:07 +0300
-Message-ID: <CAA8EJprfaALkQe-wUrBow6B1A66ro0AoVpfnQJLXgqFmL8isNQ@mail.gmail.com>
-Subject: Re: [PATCH V2 RESEND 6/6] arm64: dts: qcom: sm8650: Add video and
- camera clock controllers
-To: Jagadeesh Kona <quic_jkona@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>, 
-	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, Ajit Pandey <quic_ajipan@quicinc.com>, 
-	Imran Shaik <quic_imrashai@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+Date: Thu, 04 Apr 2024 10:51:10 +0500
+From: Nikita Travkin <nikita@trvn.ru>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Raymond Hackley <raymondhackley@protonmail.com>,
+ linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, Rob
+ Herring <robh+dt@kernel.org>, Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>,
+ Stephan Gerhold <stephan@gerhold.net>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, Joe Mason
+ <buddyjojo06@outlook.com>
+Subject: Re: [PATCH v2] arm64: dts: qcom: msm8916-samsung-fortuna: Add
+ touchscreen
+In-Reply-To: <dyeqnhgvlzw44baihb257lhacei723iqoskthh2bjsfsgvxfrq@6hnk4f3ncsfl>
+References: <20240312074536.62964-1-raymondhackley@protonmail.com>
+ <dyeqnhgvlzw44baihb257lhacei723iqoskthh2bjsfsgvxfrq@6hnk4f3ncsfl>
+Message-ID: <13170c97e7b84001da966ec06b62b002@trvn.ru>
+X-Sender: nikita@trvn.ru
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, 4 Apr 2024 at 08:13, Jagadeesh Kona <quic_jkona@quicinc.com> wrote:
->
->
->
-> On 4/3/2024 9:24 PM, Dmitry Baryshkov wrote:
-> > On Wed, 3 Apr 2024 at 10:16, Jagadeesh Kona <quic_jkona@quicinc.com> wrote:
-> >>
-> >>
-> >>
-> >> On 3/25/2024 11:38 AM, Jagadeesh Kona wrote:
-> >>>
-> >>>
-> >>> On 3/21/2024 6:43 PM, Dmitry Baryshkov wrote:
-> >>>> On Thu, 21 Mar 2024 at 11:27, Jagadeesh Kona <quic_jkona@quicinc.com>
-> >>>> wrote:
-> >>>>>
-> >>>>> Add device nodes for video and camera clock controllers on Qualcomm
-> >>>>> SM8650 platform.
-> >>>>>
-> >>>>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
-> >>>>> ---
-> >>>>>    arch/arm64/boot/dts/qcom/sm8650.dtsi | 28 ++++++++++++++++++++++++++++
-> >>>>>    1 file changed, 28 insertions(+)
-> >>>>>
-> >>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> >>>>> b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> >>>>> index 32c0a7b9aded..d862aa6be824 100644
-> >>>>> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> >>>>> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> >>>>> @@ -4,6 +4,8 @@
-> >>>>>     */
-> >>>>>
-> >>>>>    #include <dt-bindings/clock/qcom,rpmh.h>
-> >>>>> +#include <dt-bindings/clock/qcom,sm8450-videocc.h>
-> >>>>> +#include <dt-bindings/clock/qcom,sm8650-camcc.h>
-> >>>>>    #include <dt-bindings/clock/qcom,sm8650-dispcc.h>
-> >>>>>    #include <dt-bindings/clock/qcom,sm8650-gcc.h>
-> >>>>>    #include <dt-bindings/clock/qcom,sm8650-gpucc.h>
-> >>>>> @@ -3110,6 +3112,32 @@ opp-202000000 {
-> >>>>>                           };
-> >>>>>                   };
-> >>>>>
-> >>>>> +               videocc: clock-controller@aaf0000 {
-> >>>>> +                       compatible = "qcom,sm8650-videocc";
-> >>>>> +                       reg = <0 0x0aaf0000 0 0x10000>;
-> >>>>> +                       clocks = <&bi_tcxo_div2>,
-> >>>>> +                                <&gcc GCC_VIDEO_AHB_CLK>;
-> >>>>> +                       power-domains = <&rpmhpd RPMHPD_MMCX>;
-> >>>>> +                       required-opps = <&rpmhpd_opp_low_svs>;
-> >>>>
-> >>>> The required-opps should no longer be necessary.
-> >>>>
-> >>>
-> >>> Sure, will check and remove this if not required.
-> >>
-> >>
-> >> I checked further on this and without required-opps, if there is no vote
-> >> on the power-domain & its peer from any other consumers, when runtime
-> >> get is called on device, it enables the power domain just at the minimum
-> >> non-zero level. But in some cases, the minimum non-zero level of
-> >> power-domain could be just retention and is not sufficient for clock
-> >> controller to operate, hence required-opps property is needed to specify
-> >> the minimum level required on power-domain for this clock controller.
-> >
-> > In which cases? If it ends up with the retention vote, it is a bug
-> > which must be fixed.
-> >
->
-> The minimum non-zero level(configured from bootloaders) of MMCX is
-> retention on few chipsets but it can vary across the chipsets. Hence to
-> be on safer side from our end, it is good to have required-opps in DT to
-> specify the minimum level required for this clock controller.
+Bjorn Andersson писал(а) 03.04.2024 23:49:
+> On Tue, Mar 12, 2024 at 07:45:42AM +0000, Raymond Hackley wrote:
+>> diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-fortuna-common.dtsi b/arch/arm64/boot/dts/qcom/msm8916-samsung-fortuna-common.dtsi
+> [..]
+>> +&blsp_i2c5 {
+>> +	status = "okay";
+>> +
+>> +	touchscreen: touchscreen@20 {
+>> +		compatible = "zinitix,bt541";
+>> +		reg = <0x20>;
+>> +
+>> +		interrupts-extended = <&tlmm 13 IRQ_TYPE_EDGE_FALLING>;
+>> +
+>> +		touchscreen-size-x = <540>;
+>> +		touchscreen-size-y = <960>;
+>> +
+>> +		vcca-supply = <&reg_vdd_tsp_a>;
+>> +		vdd-supply = <&pm8916_l6>;
+>> +
+>> +		pinctrl-0 = <&tsp_int_default>;
+>> +		pinctrl-names = "default";
+>> +
+>> +		linux,keycodes = <KEY_APPSELECT KEY_BACK>;
+> 
+> linux,keycodes is not a valid property of zinitix,bt541 according to the
+> DeviceTree binding. Is there a binding update for this somewhere?
+> 
 
-We are discussing sm8650, not some abstract chipset. Does it list
-retention or low_svs as a minimal level for MMCX?
+There is a series for this [1] that Dmitry seems to have no time to pick
+up for a long while now, which we carry downstream. Without correct
+touchkey definition the touch controller reassigns the tkey lanes to the
+screen surface and display calibration breaks a bit, but since we don't
+have the changes upstream for now, probably want to drop this line from
+the submission so we don't introduce more dtbs_check warnings.
 
->
-> Thanks,
-> Jagadeesh
->
-> >>
-> >> Thanks,
-> >> Jagadeesh
-> >>
-> >>>
-> >>>>> +                       #clock-cells = <1>;
-> >>>>> +                       #reset-cells = <1>;
-> >>>>> +                       #power-domain-cells = <1>;
-> >>>>> +               };
-> >>>>> +
-> >>>>> +               camcc: clock-controller@ade0000 {
-> >>>>> +                       compatible = "qcom,sm8650-camcc";
-> >>>>> +                       reg = <0 0x0ade0000 0 0x20000>;
-> >>>>> +                       clocks = <&gcc GCC_CAMERA_AHB_CLK>,
-> >>>>> +                                <&bi_tcxo_div2>,
-> >>>>> +                                <&bi_tcxo_ao_div2>,
-> >>>>> +                                <&sleep_clk>;
-> >>>>> +                       power-domains = <&rpmhpd RPMHPD_MMCX>;
-> >>>>> +                       required-opps = <&rpmhpd_opp_low_svs>;
-> >>>>> +                       #clock-cells = <1>;
-> >>>>> +                       #reset-cells = <1>;
-> >>>>> +                       #power-domain-cells = <1>;
-> >>>>> +               };
-> >>>>> +
-> >>>>>                   mdss: display-subsystem@ae00000 {
-> >>>>>                           compatible = "qcom,sm8650-mdss";
-> >>>>>                           reg = <0 0x0ae00000 0 0x1000>;
-> >>>>> --
-> >>>>> 2.43.0
-> >>>>>
-> >>>>>
-> >>>>
-> >>>>
-> >
-> >
-> >
+Nikita
 
+[1] https://lore.kernel.org/r/20230801-zinitix-tkey-v4-0-b85526c5a474@trvn.ru/
 
-
--- 
-With best wishes
-Dmitry
+> Regards,
+> Bjorn
 
