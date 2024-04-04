@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-16414-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16415-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E097898F0B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 21:30:49 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55701898F11
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 21:33:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E07AFB2244B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 19:30:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C241B1F23A05
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 19:33:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EEEB133419;
-	Thu,  4 Apr 2024 19:30:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62D21130AC3;
+	Thu,  4 Apr 2024 19:33:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Nj1OcjXG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XSocWpXC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F63133439
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Apr 2024 19:30:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9399F1332A5
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Apr 2024 19:33:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712259035; cv=none; b=aALupp6gi5XuA/aVuNPTHWEJnDzK5PDdlpAGpyVXPQ0O8QxHHs3FTguGvzj5hYmOgfEQbRTbgYqcCrFr7VN5ulGTAfgXTBu2VnnCWJ5Dq2Y+bgQFSfrJSLbGYWk8BdOq1X8YK3y3EAeuWUmoEOaksbJiGCulexHtYVg9iDw/Zc0=
+	t=1712259186; cv=none; b=HL6mQp2ugII3oCMtVuLE+hT5IWgK/3TW29we9TIo37399dz4kUQUcKWnA4ddgNo6D6XeM5x1E1iGePNnYHQkBFnoSrtJVdGBLOYKu2OEqrsWH8HDXv64fzLCGfEgMkyydqUu+0W8rjD+MGqHnd3MWmA4l5LMluRep9eOPAE4oSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712259035; c=relaxed/simple;
-	bh=w5sLbhKNiFT6ejKWbgQ77eClEuya0F+lt7zUWfg8hZY=;
+	s=arc-20240116; t=1712259186; c=relaxed/simple;
+	bh=ajZ90yRc5Tz6OPIYWAsJpZKvzBgybsZEr///3J1Hwyw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dOob+KXAMAgCNFQn8W/1/AQONCEvBdSB0r4u0n4/V2fAwuoVFy6rHNO0kZ0NQkSUToVnQJ0xwwI4+0a2xXOpM2mdaF3/QVf7SLEXWs6iyYE/sg5KnM6+pOYSJAGgTyO9G8lQ8K+PNdorv8Qhi7i32NCDJ50mkElckBo4MOjRPIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Nj1OcjXG; arc=none smtp.client-ip=209.85.167.42
+	 In-Reply-To:Content-Type; b=HIYYVTl4AoarXvRx0E/ZBL5bZM4NOYtwi4feY7k8lY7sTdXDCuf3tDr47FOygq7N2ipnjTnc5uCtge0WcM7JS2aQBBq14QaP0REOulxdBXCOmUlnpMUXhwz0d2PGV4QlPp7fzOP2+/FOoK/9DF6DQoT7QelsAdc4Tm2gBqxnhtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XSocWpXC; arc=none smtp.client-ip=209.85.208.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-516d2b9cd69so213936e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Apr 2024 12:30:32 -0700 (PDT)
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-56bf6591865so2097539a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Apr 2024 12:33:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712259031; x=1712863831; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1712259183; x=1712863983; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Yg07bkYSH6sLrzzElg+Rn2GgV4JOOW7i3DjKAoQu/3k=;
-        b=Nj1OcjXG4RlGoFrR1T0QlPntZ5c+KK/p9b6lCOemMW5+jQ3yKCOk6DweDvAF9NU5fM
-         5FH0RrYOL0kZqLwLVswuTxJbEia6zUT/ACOYKxW0SIX22pHtQJu9g8/oEwipj662+TtI
-         pja2mVZqQHkdRl9xw07cfPOkVN4RlWP9I6l0i+UEgsILwis9AyhwQ/KO0zKi9lWrMsw4
-         X6gSwWIJ41i2CYvVXnMrqp1EqTYI/4rHnSSIubxc82aoIWbJUYtuO5pE0QMi0lhhesDf
-         CMaWGVEB6J7P+nAci/MdKtNWEuw8M3qg9chXm2A7Ngq/LojZqvDD4IsVjDSHVz0ALNwq
-         FkXQ==
+        bh=1tiEAhwTkxloRxJIASXYXllw3I4vhuW1cShQ54JYZ2M=;
+        b=XSocWpXCX5Et00uzuca8EFe5jEhvZnLhimoNDDLWLrjE68udbDkU/TA9BqCnqvhIyq
+         ES/3r7sxF75xzuFLkYHu/5HFxuLCU6XHx2JOI09aGHA3ELE2ga+NsN1ztnQduNwkZbix
+         QBbTm79rpGMtE9642+mridV5D7i176TR/rWZU0jpKBPPufTiaW/bVm7U8Sa31zBaQbOL
+         DBbiVxkYFwcY+E+IId59iOTKF2gNeWvtmgOY6ieL2GmXaF3xBDbPTZ8LJ89HXtm4zVHX
+         GNuIvKKuk+61GpamVIvK5M7B3S69bL6J5AEJ1qbuP6WyYTpVd9qr38ZLNXV+zc/1YOiu
+         R9yQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712259031; x=1712863831;
+        d=1e100.net; s=20230601; t=1712259183; x=1712863983;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Yg07bkYSH6sLrzzElg+Rn2GgV4JOOW7i3DjKAoQu/3k=;
-        b=hv9k1LySulyLJ1fliT3B0qSLBOcnAH3jC/PlA0pT2tsgZJpJWxlcjweWz/fdjWIRDE
-         54CVgewptYNoYlwzlHcpebHdBMxZrYtGnHbPxCZ5g8ep+pQyP5vPeqkBtCTVB6yqxjNN
-         lYDS6L2eLpvxpoevo29cUKBWmLHT9ZDep52i1y/hzSrpnxMrIkGWCrvPY9ZkTYfgAraF
-         woZacAMdi/jukaQ5ERW7O5AmIclaYpe6t0TyrmMv9tZGvnk1WWuxfRLYYIHsHHvVkyt1
-         3vtOx5sH2IN0lnMujV/rDQd9evn3uYvw9qmZl0V3AZy9kygzhvIFROJWaboiWwp9Jcul
-         Tipw==
-X-Gm-Message-State: AOJu0YxUyEsTHOQOaZPsOFMmJG0Z0TDzHUY5LjDisO4tC79vP+PuViGQ
-	dlY8ZHAnbNLSvLpMhNfk6JGn2MIiAtrO6BgL6eu5TJxCUFhrmLLhpNmlcVj047A=
-X-Google-Smtp-Source: AGHT+IEvm1G5SQhUJuZ3P5dxlFI0YClZgQrdPKzn3m0pg7Qe3F9PkbTeOFDk4DtBnzuHzYqohzn5rQ==
-X-Received: by 2002:ac2:5150:0:b0:516:a908:1880 with SMTP id q16-20020ac25150000000b00516a9081880mr209765lfd.31.1712259030708;
-        Thu, 04 Apr 2024 12:30:30 -0700 (PDT)
+        bh=1tiEAhwTkxloRxJIASXYXllw3I4vhuW1cShQ54JYZ2M=;
+        b=ZHMsQEf5k4kr7cUqmy9avPFcY9g+gnaBIvkhQhpGPrxUSIvweJ95hIFJ8CTS/L3ImR
+         j+VlUK7DCjVTwwfEipTQaZ5NOyLfNJTCBYgx81tFWqgNzNNezyIrPAmg3Cw0IBxEShFF
+         UDo+qDM8BQgqne47jTETpTy7bykqgIVU/K0J6xw9L0B46t+dKEqRMx4oPMnmia7kPIK6
+         kO+GzCPx1SM70BHdEvyvGCZSWB5qFNoBsN+qhxO5biU0BMofVTBT9G0qdRMvGIw5h1Pt
+         KFvVyFbjqO6wYB7y6UeQF5JnVgVR0G+0sf1SO9z6Nq/wh2eV4Dt36x8fFfANpywc8jyt
+         HrWg==
+X-Gm-Message-State: AOJu0YyptovOl5XxfBzKftiOn59HmK7Ke37q9fbUPF7LHezUg56l0rrj
+	L0JORP9TfLAUIA4aDL7b3EfsC+7mn/V4lpY0hd7iGx5n2OJAuP7NIUUY0fsVCx8=
+X-Google-Smtp-Source: AGHT+IHvLAPed3PTazZZBeLD7z3mNzR8LTTOns6qY8p+UpFbuUg07LPVpScN8HcGbkdWhresxJ2NJA==
+X-Received: by 2002:a17:906:c14b:b0:a51:a20b:8f23 with SMTP id dp11-20020a170906c14b00b00a51a20b8f23mr24351ejc.18.1712259182925;
+        Thu, 04 Apr 2024 12:33:02 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.223.16])
-        by smtp.gmail.com with ESMTPSA id he18-20020a1709073d9200b00a4729f093ecsm9331068ejc.53.2024.04.04.12.30.29
+        by smtp.gmail.com with ESMTPSA id h8-20020a1709060f4800b00a46d049ff63sm9305623ejj.21.2024.04.04.12.33.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Apr 2024 12:30:30 -0700 (PDT)
-Message-ID: <51b02d02-0e20-49df-ad13-e3dbe3c3214f@linaro.org>
-Date: Thu, 4 Apr 2024 21:30:27 +0200
+        Thu, 04 Apr 2024 12:33:02 -0700 (PDT)
+Message-ID: <bf7b3b80-764f-4d80-95cd-e547bf767200@linaro.org>
+Date: Thu, 4 Apr 2024 21:33:00 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,8 +76,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/2] dt-bindings: pcie: Document QCOM PCIE ECAM
- compatible root complex
+Subject: Re: [RFC PATCH 2/2] PCI: Add Qualcomm PCIe ECAM root complex driver
 To: Mayank Rana <quic_mrana@quicinc.com>, linux-pci@vger.kernel.org,
  lpieralisi@kernel.org, kw@linux.com, robh@kernel.org, bhelgaas@google.com,
  andersson@kernel.org, manivannan.sadhasivam@linaro.org,
@@ -87,7 +86,7 @@ Cc: linux-arm-msm@vger.kernel.org, quic_ramkri@quicinc.com,
  quic_nkela@quicinc.com, quic_shazhuss@quicinc.com, quic_msarkar@quicinc.com,
  quic_nitegupt@quicinc.com
 References: <1712257884-23841-1-git-send-email-quic_mrana@quicinc.com>
- <1712257884-23841-2-git-send-email-quic_mrana@quicinc.com>
+ <1712257884-23841-3-git-send-email-quic_mrana@quicinc.com>
 Content-Language: en-US
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -134,141 +133,90 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <1712257884-23841-2-git-send-email-quic_mrana@quicinc.com>
+In-Reply-To: <1712257884-23841-3-git-send-email-quic_mrana@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 04/04/2024 21:11, Mayank Rana wrote:
-> On some of Qualcomm platform, firmware configures PCIe controller in RC
-
-On which?
-
-Your commit or binding must answer to all such questions.
-
-> mode with static iATU window mappings of configuration space for entire
-> supported bus range in ECAM compatible mode. Firmware also manages PCIe
-> PHY as well required system resources. Here document properties and
-> required configuration to power up QCOM PCIe ECAM compatible root complex
-> and PHY for PCIe functionality.
-> 
-> Signed-off-by: Mayank Rana <quic_mrana@quicinc.com>
-> ---
->  .../devicetree/bindings/pci/qcom,pcie-ecam.yaml    | 94 ++++++++++++++++++++++
->  1 file changed, 94 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie-ecam.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ecam.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-ecam.yaml
-> new file mode 100644
-> index 00000000..c209f12
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ecam.yaml
-> @@ -0,0 +1,94 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pci/qcom,pcie-ecam.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm ECAM compliant PCI express root complex
-> +
-> +description: |
-Do not need '|' unless you need to preserve formatting.
+> On some of Qualcomm platform, firmware configures PCIe controller into
+> ECAM mode allowing static memory allocation for configuration space of
+> supported bus range. Firmware also takes care of bringing up PCIe PHY
+> and performing required operation to bring PCIe link into D0. Firmware
+> also manages system resources (e.g. clocks/regulators/resets/ bus voting).
+> Hence add Qualcomm PCIe ECAM root complex driver which enumerates PCIe
+> root complex and connected PCIe devices. Firmware won't be enumerating
+> or powering up PCIe root complex until this driver invokes power domain
+> based notification to bring PCIe link into D0/D3cold mode.
 
 
-> +  Qualcomm SOC based ECAM compatible PCIe root complex supporting MSI controller.
-
-Which SoC?
-
-> +  Firmware configures PCIe controller in RC mode with static iATU window mappings
-> +  of configuration space for entire supported bus range in ECAM compatible mode.
-> +
-> +maintainers:
-> +  - Mayank Rana <quic_mrana@quicinc.com>
-> +
-> +allOf:
-> +  - $ref: /schemas/pci/pci-bus.yaml#
-> +  - $ref: /schemas/power-domain/power-domain-consumer.yaml
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,pcie-ecam-rc
-
-No, this must have SoC specific compatibles.
+...
 
 > +
-> +  reg:
-> +    minItems: 1
-
-maxItems instead
-
-> +    description: ECAM address space starting from root port till supported bus range
+> +static int qcom_pcie_ecam_suspend_noirq(struct device *dev)
+> +{
+> +	return pm_runtime_put_sync(dev);
+> +}
 > +
-> +  interrupts:
-> +    minItems: 1
-> +    maxItems: 8
-
-This is way too unspecific.
-
+> +static int qcom_pcie_ecam_resume_noirq(struct device *dev)
+> +{
+> +	return pm_runtime_get_sync(dev);
+> +}
 > +
-> +  ranges:
-> +    minItems: 2
-> +    maxItems: 3
-
-Why variable?
-
+> +static int qcom_pcie_ecam_probe(struct platform_device *pdev)
+> +{
+> +	struct device *dev = &pdev->dev;
+> +	struct qcom_msi *msi;
+> +	int ret;
 > +
-> +  iommu-map:
-> +    minItems: 1
-> +    maxItems: 16
-
-Why variable?
-
-Open existing bindings and look how it is done.
-
-
+> +	ret = devm_pm_runtime_enable(dev);
+> +	if (ret)
+> +		return ret;
 > +
-> +  power-domains:
-> +    maxItems: 1
-> +    description: A phandle to node which is able support way to communicate with firmware
-> +        for enabling PCIe controller and PHY as well managing all system resources needed to
-> +        make both controller and PHY operational for PCIe functionality.
-
-This description does not tell me much. Say something specific. And drop
-redundant parts like phandle.
-
-
+> +	ret = pm_runtime_resume_and_get(dev);
+> +	if (ret < 0) {
+> +		dev_err(dev, "fail to enable pcie controller: %d\n", ret);
+> +		return ret;
+> +	}
 > +
-> +  dma-coherent: true
+> +	msi = qcom_msi_init(dev);
+> +	if (IS_ERR(msi)) {
+> +		pm_runtime_put_sync(dev);
+> +		return PTR_ERR(msi);
+> +	}
 > +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +  - ranges
-> +  - power-domains
-> +  - device_type
-> +  - linux,pci-domain
-> +  - bus-range
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    soc {
-> +        #address-cells = <2>;
-> +        #size-cells = <2>;
-> +        pcie0: pci@1c00000 {
-> +            compatible = "qcom,pcie-ecam-rc";
-> +            reg = <0x4 0x00000000 0 0x10000000>;
-> +            device_type = "pci";
-> +            #address-cells = <3>;
-> +            #size-cells = <2>;
-> +            ranges = <0x01000000 0x0 0x40000000 0x0 0x40000000 0x0 0x100000>,
-> +                <0x02000000 0x0 0x40100000 0x0 0x40100000 0x0 0x1ff00000>,
-> +                <0x43000000 0x4 0x10100000 0x4 0x10100000 0x0 0x100000>;
+> +	ret = pci_host_common_probe(pdev);
+> +	if (ret) {
+> +		dev_err(dev, "pci_host_common_probe() failed:%d\n", ret);
 
-Follow DTS coding style about placement and alignment.
+Don't print function name, but instead say something useful. Above error
+message is so not useful that just drop it.
+
+> +		qcom_msi_deinit(msi);
+> +		pm_runtime_put_sync(dev);
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+> +static const struct dev_pm_ops qcom_pcie_ecam_pm_ops = {
+> +	NOIRQ_SYSTEM_SLEEP_PM_OPS(qcom_pcie_ecam_suspend_noirq,
+> +				qcom_pcie_ecam_resume_noirq)
+> +};
+> +
+> +static const struct pci_ecam_ops qcom_pcie_ecam_ops = {
+> +	.pci_ops	= {
+> +		.map_bus	= pci_ecam_map_bus,
+> +		.read		= pci_generic_config_read,
+> +		.write		= pci_generic_config_write,
+> +	}
+> +};
+> +
+> +static const struct of_device_id qcom_pcie_ecam_of_match[] = {
+> +	{
+> +		.compatible	= "qcom,pcie-ecam-rc",
+> +		.data		= &qcom_pcie_ecam_ops,
+
+Why do you have ops/match data for generic compatible?
 
 Best regards,
 Krzysztof
