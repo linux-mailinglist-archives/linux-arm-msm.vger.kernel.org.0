@@ -1,104 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-16410-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EFDEE898E40
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 20:50:31 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C41E898EB3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 21:11:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2C8051C218A6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 18:50:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 250991C2655E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 19:11:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7714131753;
-	Thu,  4 Apr 2024 18:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DC0E133422;
+	Thu,  4 Apr 2024 19:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tjuiwI8a"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DuqQlJQ9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB7512EBDC
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Apr 2024 18:50:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A5D131E24;
+	Thu,  4 Apr 2024 19:11:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712256626; cv=none; b=gWxACiwnMiU2PuaIM6oC5vw6lX4ySlEPKSrSU5ccUsW7zLVsAS7gRrw74qrGy9ebyljVyHfTI8EOcqVYhSzg+9hm3rYHAW7auq1C4ADd9g5bNFN0s5DejHpnhmablN5wMB8OgaGdqFrPWZ9reWPRVg2E5mHN8OCqoO5ujp3XpIY=
+	t=1712257907; cv=none; b=Jb7T/4aWQOHtql466pK1CKoQGaFFNxTg5FdlGudrl1EhLvkjR7VD+vl+g+ej+KsJeWsvikr6AcnBujpnSltL7nIfFSMi6cOdiiMnYnW9Rx9g2QfjJ3uE18KYcizHcJKQwKYloPKvxWj3Ajq9uu/cpGkhw6FZx7xy141Gnc0A1bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712256626; c=relaxed/simple;
-	bh=5cmsmRL01LTBUVCbLB8WWxi3wj11c03zAP00q6S2RBo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j1FfZXdxl4FqjFOK0Cu9Ev7CCVunHWCp8TcIl2AbH8dr9S9tRTEvaAbv+QioDLMrC1fZeQgKAq3X0mOkGLRrQ+q0dJfmjSTTsVLZneDxFmfNCyY5kahuLspugFZhviCG5C4SJTNQ5W4F/tNdHbPBknMLebGNhIWAke3cmCDeRNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tjuiwI8a; arc=none smtp.client-ip=209.85.167.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-516ab4b3251so1622154e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Apr 2024 11:50:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712256623; x=1712861423; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=svY/ur10Om8A4vKixrJGUkmbDeJnaZ18d0XmchhqHMg=;
-        b=tjuiwI8a2dnkSdut3BBo6fK/I5B8Ga1LE9dm1tO/LdJ7jgtKlXW9ynHXl4vkIlP0Tk
-         FxP2DnwwnHtId37nn91b7a2nmSqWEJ/eWjVxl70Ba+AHyfpeqRogqKOWf3eNOJIkU85e
-         pMZg1cbkKZumtyl8rh2QovZydyi/MZjPKXewJL8uS0Sc5Y13twxOgjIGY0HhNo7KXsns
-         yqe4Y0z8+03GNIRP2P0zyuwwWsSmaYlamuZAmuEQLMbdVBVIdvDlM0M5UJXHghILorOk
-         +iYCy3zY16Qq5iUej6YQZOfFDLXQhQy/8BYBWTmMQ+UEnc911jAfqPAAxnLusUgdzHok
-         6IJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712256623; x=1712861423;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=svY/ur10Om8A4vKixrJGUkmbDeJnaZ18d0XmchhqHMg=;
-        b=JkTmABhJLMGUOhyTMfkuGLmetSkMes7Gr41JCJ9S1M0pePOxfDy4BjiV3j3Pac6cx/
-         YIQqMFM7VkNRVPKDyLHJHIBN+1uplHtBacwtvrS9mfVt5a5omhUWru0vOnJUgNjYvcWC
-         FX8VrmD2ff0RsvoSGmeqc1nVR2xdDNb/Nj+Dv/FheBmRo22Ty3vpSxaafosYkAqzITHY
-         6tn59y062kZbavcoUl64/yEDQ0hkx45a++nWQ9vO7IWt6iKVViBErDj45G2W1vsEdzRu
-         VuNtUiKeEWMplmyHRx6MNDgI+lkzRf/5Cye7uOWAdAtnstL2E0M9pM8YTdyaf10PJdQY
-         2C+g==
-X-Gm-Message-State: AOJu0Yy6VRmuiF2YkFhmuWQqNnt0tyhjLWF78C1Y2BZf2jwElcDIPlJz
-	K145sgwDNFiz9WP+ubD4qv6kJTIeVqcs/trawDKCYP2opAhkZRSBTyCiJoB5xII=
-X-Google-Smtp-Source: AGHT+IG34qkZMKnGNuAqnox03mol06Zt0+bAZ8cMyAv5xgBeP5KdYLBMAqt1TO82O+vhyaB1qJlo/Q==
-X-Received: by 2002:a05:6512:469:b0:516:b07a:5b62 with SMTP id x9-20020a056512046900b00516b07a5b62mr216286lfd.54.1712256623061;
-        Thu, 04 Apr 2024 11:50:23 -0700 (PDT)
-Received: from [172.30.205.19] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id r10-20020a19ac4a000000b00516cdfb1b9bsm207192lfc.228.2024.04.04.11.50.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Apr 2024 11:50:22 -0700 (PDT)
-Message-ID: <3fddd0aa-313b-436e-bd2c-d239da6873db@linaro.org>
-Date: Thu, 4 Apr 2024 20:50:18 +0200
+	s=arc-20240116; t=1712257907; c=relaxed/simple;
+	bh=Tca4fO60cbZ1yH1gbmQjkZNUVbk9WcleKEQdrpBl/1k=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=NvOMZNs6xVSaRfKFBb1qrqE4JLFA3I5De436e2UlPzFrM50UxPp5ZjbOlxhl8gEqjJmq0J6FYV/cVeElrIqyYwSnalB+k+mf/Agi0cbnBKJ/qVtVDXw7CRbVb/k5Qn6/xxUkF+IBw7xkuSn76pc2bvFk23lk/Fc9Wk2Xboi8xM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DuqQlJQ9; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 434HeDqR004715;
+	Thu, 4 Apr 2024 19:11:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version:content-type; s=
+	qcppdkim1; bh=VlGHNR9rSJpOhaoG6BkRoTz51woq+R/nyE2bRVD5ZyI=; b=Du
+	qQlJQ9nIsfsWZqxD5meD8uq2LBLgmOM8oDnikbzr2ofDJATXr233UKAynf9v2qD7
+	0yBreamha6JdtW7fFF6s2AFwY5DSuhm2uOVz9uAV0hB86WHNpfHHxwa3D0L7tm96
+	Gvhw7X8WECrx4GH2lZVTHCmoj9bbHReHXqPQgfviMrZ8x2bu9uFYUJ5Qh4sxWDX+
+	b/1JOF/QnLorwoymREFipmtLI9nHlTwBNIVNE/ZTxpFaS7A2zXBlMbKNS35YvU93
+	ilhDpYQ5+JcbT3bQzxixpdqmU18bAWE3WrK36OqoDGaXAzo+xzEYLeYDNVGfcOgP
+	9PT6nSLI2LYrrOhmHJdQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x9v8jgx7y-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 04 Apr 2024 19:11:38 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 434JBcNt012013
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 4 Apr 2024 19:11:38 GMT
+Received: from hu-mrana-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.4; Thu, 4 Apr 2024 12:11:37 -0700
+From: Mayank Rana <quic_mrana@quicinc.com>
+To: <linux-pci@vger.kernel.org>, <lpieralisi@kernel.org>, <kw@linux.com>,
+        <robh@kernel.org>, <bhelgaas@google.com>, <andersson@kernel.org>,
+        <manivannan.sadhasivam@linaro.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <devicetree@vger.kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <quic_ramkri@quicinc.com>,
+        <quic_nkela@quicinc.com>, <quic_shazhuss@quicinc.com>,
+        <quic_msarkar@quicinc.com>, <quic_nitegupt@quicinc.com>,
+        Mayank Rana
+	<quic_mrana@quicinc.com>
+Subject: [RFC PATCH 0/2] Add Qualcomm PCIe ECAM root complex driver
+Date: Thu, 4 Apr 2024 12:11:22 -0700
+Message-ID: <1712257884-23841-1-git-send-email-quic_mrana@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: dts: qcom: qcs6490-rb3gen2: Enable UFS
-To: Bjorn Andersson <quic_bjorande@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240327-rb3gen2-ufs-v2-1-3de6b5dd78dd@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240327-rb3gen2-ufs-v2-1-3de6b5dd78dd@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 9S1iCTB7-sAuZdlGJYrrxMkFyMciDxxM
+X-Proofpoint-ORIG-GUID: 9S1iCTB7-sAuZdlGJYrrxMkFyMciDxxM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-04_15,2024-04-04_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ spamscore=0 malwarescore=0 phishscore=0 priorityscore=1501 adultscore=0
+ mlxscore=0 clxscore=1011 mlxlogscore=951 impostorscore=0 bulkscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404040136
 
+On some of Qualcomm platform, firmware takes care of system resources
+related to PCIe PHY and controller as well bringing up PCIe link and
+having static iATU configuration for PCIe controller to work into
+ECAM compliant mode. Hence add Qualcomm PCIe ECAM root complex driver.
 
+Tested:
+- Validated NVME functionality with PCIe0 and PCIe1 on SA877p-ride platform
 
-On 3/28/24 03:01, Bjorn Andersson wrote:
-> The rb3gen2 has UFS memory, adjust the necessary supply voltage and add
-> the controller and phy nodes to enable this.
-> 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
+Mayank Rana (2):
+  dt-bindings: pcie: Document QCOM PCIE ECAM compatible root complex
+  PCI: Add Qualcomm PCIe ECAM root complex driver
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+ .../devicetree/bindings/pci/qcom,pcie-ecam.yaml    |  94 ++++
+ drivers/pci/controller/Kconfig                     |  12 +
+ drivers/pci/controller/Makefile                    |   1 +
+ drivers/pci/controller/pcie-qcom-ecam.c            | 575 +++++++++++++++++++++
+ 4 files changed, 682 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie-ecam.yaml
+ create mode 100644 drivers/pci/controller/pcie-qcom-ecam.c
 
-Konrad
+-- 
+2.7.4
+
 
