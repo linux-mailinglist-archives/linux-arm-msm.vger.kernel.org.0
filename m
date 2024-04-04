@@ -1,101 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-16395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16398-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D7E7898696
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 13:58:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 29787898797
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 14:30:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AF64F2888DB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 11:58:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D2C231F212E6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 12:30:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85E598627A;
-	Thu,  4 Apr 2024 11:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25CB712E1DE;
+	Thu,  4 Apr 2024 12:26:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tinh7T1d"
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="as3ZGbsG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-41104.protonmail.ch (mail-41104.protonmail.ch [185.70.41.104])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A42084FDB;
-	Thu,  4 Apr 2024 11:57:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1012512DD8E
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Apr 2024 12:26:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.41.104
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712231871; cv=none; b=NjoQNAnp4BJEd/JMWijGm5QCPn485n6eKQ+Ja11PPltoiwIzkAWclVYCGZ89EmPi90dDuJdibmObk6MQwakklp9gOQ4Bwe0ird6iRvBDbiuIB7jl0zvODvWarWcgmF6rTNJJ5/BObxCGkB2Ne9SElQkdpkKmf0TrbreECIDdwTQ=
+	t=1712233611; cv=none; b=uFdjAI6qHejJkyhJYo0KgkJUlorJlCIZQxzrI+dzBIgduVRaFHco++MXE/oWoEhoJLn6UgfJXGhvQ5RHAVtS2WDjNMq3D0Skiwo+hH/t5XkOnHtgAplpckBVEk+FcOt7swP9OQRxVY7V4vFnzzsTwkQv20W1opA6IjEFKFPI6Ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712231871; c=relaxed/simple;
-	bh=oyPatv7PBt0holfVUYukJP8QPI1R/fKA+cCRZYJIaig=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=q/kI0lYFHM2rEg+IlcnCUpQSvTMU8mekHhUkSiFPYDn04jZ9w5rUaY/5rP/2OTUUb8Xj9g7N+7loXYTUxDH3witr30XJkTOK56sD7jjh4feqrQz5vF1hVd6OnzJZ3A+017dL/ietnzgQ+EIEO8oAkgPA71QhSQVDS141etgQseo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tinh7T1d; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77253C43394;
-	Thu,  4 Apr 2024 11:57:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712231871;
-	bh=oyPatv7PBt0holfVUYukJP8QPI1R/fKA+cCRZYJIaig=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-	b=Tinh7T1dpbBAZFIvgHQsGQjt/0I1nrX4iqfeXu6jrWUyo0+9kaF8XGmmZlRy6aOC5
-	 Zmwd/1oVr0T/Kg9Nn2oSMiHafCk4mhUXyd+luoCFjq467AEyDpYcK7iDtXUsPiNuNL
-	 8Xw+aNrCE0jUfDUCFdk9Khq/JW4SGqYWP57ZJNTi9Qr4RCiTJ+CzRlcDK20UGnTwSS
-	 ob3QmPFqAUTKh2ettqurQvj4LdISg/4YfTfbTQ5wR0iOc4KfVCYkZ4gU1yVcKBDI9G
-	 XXN/KsC5vZ7EEiMcW5YxK64qwoTJsXGt87SloFje7xCrntHwidNNeOyVbXW1njOb1D
-	 yMiaOE4OIyNbQ==
-From: Kalle Valo <kvalo@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Marc Gonzalez <mgonzalez@freebox.fr>,  Konrad Dybcio
- <konrad.dybcio@linaro.org>,  Krzysztof Kozlowski
- <krzysztof.kozlowski@linaro.org>,  Jeff Johnson
- <quic_jjohnson@quicinc.com>,  ath10k <ath10k@lists.infradead.org>,
-  wireless <linux-wireless@vger.kernel.org>,  DT
- <devicetree@vger.kernel.org>,  MSM <linux-arm-msm@vger.kernel.org>,  Rob
- Herring <robh+dt@kernel.org>,  Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley <conor+dt@kernel.org>,
-  Pierre-Hugues Husson <phhusson@freebox.fr>,  Arnaud Vrac
- <avrac@freebox.fr>,  Bjorn Andersson <andersson@kernel.org>,  Jami
- Kettunen <jamipkettunen@gmail.com>,  Jeffrey Hugo
- <jeffrey.l.hugo@gmail.com>
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: msm8998: set
- qcom,no-msa-ready-indicator for wifi
-References: <fd26ce4a-a9f3-4ada-8d46-ed36fb2456ca@freebox.fr>
-	<5cdad89c-282a-4df5-a286-b8404bc4dd81@freebox.fr>
-	<252618e8-9e80-4774-a96c-caa7f838ef01@linaro.org>
-	<502322f1-4f66-4922-bc4e-46bacac23410@linaro.org>
-	<0ca1221b-b707-450f-877d-ca07a601624d@freebox.fr>
-	<CAA8EJppeREj-0g9oGCzzKx5ywhg1mgmJR1q8yvXKN7N45do1Xg@mail.gmail.com>
-Date: Thu, 04 Apr 2024 14:57:45 +0300
-In-Reply-To: <CAA8EJppeREj-0g9oGCzzKx5ywhg1mgmJR1q8yvXKN7N45do1Xg@mail.gmail.com>
-	(Dmitry Baryshkov's message of "Tue, 2 Apr 2024 18:55:56 +0300")
-Message-ID: <87ttkh49xi.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	s=arc-20240116; t=1712233611; c=relaxed/simple;
+	bh=HgotfOiEj8Ilmv53HbS74QGnER0fEQ5zc9ClqLPVz2g=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=ejIhQ6Ai8PnsrO4Po6nj6EdPNkYA8tLt1yLq/AtykVjlm01w0p/XzpVxcV0R0UKvzgJ6yVHqikseaWkCgjQi51lijjguYDkNn/zI10faKsugHVYMetRhygufYnkgs5MoC0DRqCbFn6T+MLsyFTZvFQzCc2zy1cIQIKHbfiluBoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=as3ZGbsG; arc=none smtp.client-ip=185.70.41.104
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1712233055; x=1712492255;
+	bh=HgotfOiEj8Ilmv53HbS74QGnER0fEQ5zc9ClqLPVz2g=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=as3ZGbsG59hWrmL7A3hPbQ94OPPPEzxHPap/vWikUJAeEoVst9jo8mxySROZ6PGj7
+	 j9xIaKxK4C2MeTCMr0Gj+E2GMIE0g5ymID1vseRjo+QyiRKg7tVZuLe3BUIRmqTxof
+	 QfK3lkJ/Tk7xboa4EO8nQI585sO6JEuc46w15gt4F/I2m9zwEIuPYijmFJJl5ouLSa
+	 Hn/dzpz8+apSn3kVSvXazBRnyfcqJs9GCyTh1DxUTLrMUQyjPhMmEh9Z7xFcnwzstY
+	 L2Rzov1CUnz0Fd22p2mRjqPMvsdpFwSfkT/PRF1Od4KBKXvd+8dZDaEIigIWYfgd2o
+	 4wR4b+IQGchug==
+Date: Thu, 04 Apr 2024 12:17:28 +0000
+To: linux-kernel@vger.kernel.org
+From: Raymond Hackley <raymondhackley@protonmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>, Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: [PATCH v3 0/2] arm64: dts: qcom: msm8916-samsung-fortuna: Add touchscreen and PWM backlight
+Message-ID: <20240404121703.17086-1-raymondhackley@protonmail.com>
+Feedback-ID: 49437091:user:proton
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
+Like msm8916-samsung-a3u-eur, the Grand Prime uses a Zinitix BT541
+touchscreen. Add it together with the necessary fixed-regulator to the
+device tree.
 
->> 3) ADD that compatible to the wifi node in msm8998.dtsi
->>    compatible = "qcom,wcn3990-wifi", "qcom,msm8998-wifi";
->> 4) In the driver, set qmi->fake_msa_ready_indicator to true if we
->> detect "qcom,msm8998-wifi"
->>
->> And this approach would be acceptable to both ath10k & DT maintainers?
->
-> I'd say, we should take a step back and actually verify how this was
-> handled in the vendor kernel.
+Most of the Galaxy Grand Prime use backlight drivers controlled with PWM
+signal.
+To simplify the description, add the backlight with the necessary clk-pwm
+to the common dtsi.
 
-One comment related to this: usually vendor driver and firmware branches
-go "hand in hand", meaning that a version of driver supports only one
-specific firmware branch. And there can be a lot of branches. So even if
-one branch might have a check for something specific, there are no
-guarantees what the other N+1 branches do :/
+---
+v2: Add &touchscreen. Keep i2c5 enabled
+v3: Drop linux,keycodes. Add PWM backlight
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
