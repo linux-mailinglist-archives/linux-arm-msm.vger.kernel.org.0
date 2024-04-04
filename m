@@ -1,165 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-16378-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16379-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 775D9898182
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 08:33:17 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9AD2D8981D3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 09:04:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0056D1F25E1D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 06:33:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 516ED286AA6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 07:04:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 170801CFB9;
-	Thu,  4 Apr 2024 06:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CD22548FE;
+	Thu,  4 Apr 2024 07:04:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WMGB39oo"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="C0rvSDcj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3964502E;
-	Thu,  4 Apr 2024 06:33:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7BB5479F;
+	Thu,  4 Apr 2024 07:04:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712212386; cv=none; b=sVr83Agzvr+QR1TqWdnbKZLAyNPqwwvyj2RKELASXTHYdnFbWEZrUXQJPKlMyVGPo+nczFA6FK67XJtQlAGLCcNgXFWhJi9ZrcoJYAoA7lkL/GOvQ3qCS9J35FVjZOjW+owF70ti4oYDoPuCKG1J/DsrHdG8bZiT0teZXlP+bEA=
+	t=1712214286; cv=none; b=R1OwidE7c7I6qcVFpCJWXuFp6hQSJpi8Cp2Ha9uI8JAO15M0FnjbDPzCtP1VoHh6xluyrET3+ZAqm5ft8Z5Dli1xPXRX1KL/AOCBoF/fndoxvYauBWe1abSq+6WpJfv6coPsYpExHqv2V4397CZTxW3O8LAimFRxFRfyKp0NqVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712212386; c=relaxed/simple;
-	bh=zBp7l1pCCRQ/1DG9vSOLOoejkezKYho1bTLSm2YyHk4=;
+	s=arc-20240116; t=1712214286; c=relaxed/simple;
+	bh=Q8N83sEi5aysHaZb/xULFQFdwNCBz4B8WWpJwY6CoPU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=KcAS2gUcVO72CBkgK2+j1XzDLxQ6adhHDY70eaZdLeQD3/3qsJ6Do46ST4Ro9BIcOJ7m3yESMHGI8RKH9qP+N73tFMoXSrcsP1VLzfCsDp6RXpC3K+tAyLWiFSjcnNNFS05Qt7gq8SBcts56MwbVd9PrjkAqtZNlV9RyhFkd6tA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WMGB39oo; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=DKx/0BPtpZegmga/Hvqc1xwZH9xCDZzHU/4Nf7UG3PK7cP1c6RBSRuKlM9Zf5p71l4s/pQ987u6Qk8yFkDL+7UaKi3JVDXz53usNR+o09O1d+W3+ZiwxuZMHuwKAJREbQZJ3M77FzJIQXDmUP8kGBacMp6W5Ah7ggyxMr6KoqwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=C0rvSDcj; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4343n1P7009860;
-	Thu, 4 Apr 2024 06:32:48 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4345N8M5013269;
+	Thu, 4 Apr 2024 07:04:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=ASwo3eh/R38HNfjkLyInf8LNYmY2dpS0uKZyDDjM+zg=; b=WM
-	GB39oo4b94bFPdFYjzHjRjRan4lgCZck6DNgYyfmK2vLO6IkAaCqp8PSOD7ydU9k
-	2lfcwemX7vuIsv8FN2iFt9pHfvtBtqjBPA2yXDu6feG9qx0vjMB5WSS0R4hy2Gjh
-	gcd/wBzsAKHJ+5eWLjFq2ON2HokHtfqv2vEERPxIImGvH3ADHChLsoOXJn7zIQuD
-	XNrOhYiTlKXJvadXTR/okzX44n1MNrqnL3Gy47rMSr5Mm3xRxVnsVjSd9Ff69WYz
-	1LmUs+nUfoS+feg+5OmzqKID++aas0j4oiVLXtjAhjmOPDWcPxGmJ3Cxyc9rOR0M
-	/dR1zzBL8u9SMxb61QGw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x9ep0rr99-1
+	qcppdkim1; bh=euasKFBMpnBl+higS5rxjxIYAk6jU33mlu6mDelQBvE=; b=C0
+	rvSDcjyGfXF3NIoXzyP109TmuOXbmXz7yF7jYxXD8oGESnS8MC9BEFSq1vdATZJb
+	+OAsQolGRN3Mzp0s9fuwaBgPvY/2UNIDQI89VpsPJPcI7fO7GHInKUgJPCVktahq
+	UNPA7pK7NKON48PvbjzmWpuldV0INbp0WuN1OSDgXTbe+hbIX2kWTREJS8DZAfUZ
+	36/NUq5KlfqT46x1gFkLSmPAOIzCGzZokB9SwdKedxUBCFT49Gua7R3Sbtl+Xmng
+	bKQtUwa8Lrr9d2ICDRXNRq2YVpZPFn2B5fTuZAYGrWlzZNHFXLsZI714hPfoQezS
+	WDciGbu4fj+va2z7U+iQ==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x9eph8sj2-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 04 Apr 2024 06:32:47 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4346WkRX006233
+	Thu, 04 Apr 2024 07:04:41 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43474duD023310
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 4 Apr 2024 06:32:46 GMT
-Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 3 Apr 2024
- 23:32:41 -0700
-Message-ID: <a1623b86-6ab1-12cb-9bf8-37f7e09a0566@quicinc.com>
-Date: Thu, 4 Apr 2024 12:02:39 +0530
+	Thu, 4 Apr 2024 07:04:39 GMT
+Received: from [10.218.10.146] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 4 Apr 2024
+ 00:04:34 -0700
+Message-ID: <7fd8c4ab-22a2-2d0c-2257-14441ae79c29@quicinc.com>
+Date: Thu, 4 Apr 2024 12:34:31 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 5/5] arm64: dts: qcom: x1e80100: Enable cpufreq
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH 2/7] dt-bindings: clock: qcom: Add DISPCC clocks for
+ SM4450
 Content-Language: en-US
-To: Ulf Hansson <ulf.hansson@linaro.org>, Sudeep Holla <sudeep.holla@arm.com>
-CC: <cristian.marussi@arm.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <jassisinghbrar@gmail.com>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_rgottimu@quicinc.com>,
-        <quic_kshivnan@quicinc.com>, <conor+dt@kernel.org>,
-        <quic_gkohli@quicinc.com>, <quic_nkela@quicinc.com>,
-        <quic_psodagud@quicinc.com>
-References: <20240328095044.2926125-1-quic_sibis@quicinc.com>
- <20240328095044.2926125-6-quic_sibis@quicinc.com> <Zgvnh0J2a_fBH0bR@bogus>
- <CAPDyKFous+aoopf+=ZRugR78jyekobODqn7tqWRCyirPD+=eYw@mail.gmail.com>
-From: Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <CAPDyKFous+aoopf+=ZRugR78jyekobODqn7tqWRCyirPD+=eYw@mail.gmail.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
+        "Jagadeesh Kona" <quic_jkona@quicinc.com>,
+        Imran Shaik
+	<quic_imrashai@quicinc.com>,
+        "Satya Priya Kakitapalli"
+	<quic_skakitap@quicinc.com>
+References: <20240330182817.3272224-1-quic_ajipan@quicinc.com>
+ <20240330182817.3272224-3-quic_ajipan@quicinc.com>
+ <d020d14a-6f57-4283-ab71-293f1d9a9cc9@linaro.org>
+From: Ajit Pandey <quic_ajipan@quicinc.com>
+In-Reply-To: <d020d14a-6f57-4283-ab71-293f1d9a9cc9@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: MvyK8rVB4OKEYMa7xOgX9ekBbMm1As71
-X-Proofpoint-GUID: MvyK8rVB4OKEYMa7xOgX9ekBbMm1As71
+X-Proofpoint-GUID: oukr3H6ohs_ZSi4B6sbxB-AYzoBb_50o
+X-Proofpoint-ORIG-GUID: oukr3H6ohs_ZSi4B6sbxB-AYzoBb_50o
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-04_02,2024-04-03_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=958
- impostorscore=0 spamscore=0 adultscore=0 phishscore=0 bulkscore=0
- clxscore=1015 suspectscore=0 priorityscore=1501 malwarescore=0
- lowpriorityscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2404010003 definitions=main-2404040041
+ definitions=2024-04-04_02,2024-04-04_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
+ spamscore=0 priorityscore=1501 mlxlogscore=999 adultscore=0 clxscore=1015
+ lowpriorityscore=0 phishscore=0 malwarescore=0 mlxscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
+ definitions=main-2404040045
 
 
 
-On 4/3/24 16:50, Ulf Hansson wrote:
-> On Tue, 2 Apr 2024 at 13:10, Sudeep Holla <sudeep.holla@arm.com> wrote:
->>
->> On Thu, Mar 28, 2024 at 03:20:44PM +0530, Sibi Sankar wrote:
->>> Enable cpufreq on X1E80100 SoCs through the SCMI perf protocol node.
->>>
->>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->>> ---
->>>   arch/arm64/boot/dts/qcom/x1e80100.dtsi | 27 ++++++++++++++++++++++++++
->>>   1 file changed, 27 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->>> index 4e0ec859ed61..d1d232cd1f25 100644
->>> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->>> @@ -68,6 +68,7 @@ CPU0: cpu@0 {
->>>                        compatible = "qcom,oryon";
->>>                        reg = <0x0 0x0>;
->>>                        enable-method = "psci";
->>> +                     clocks = <&scmi_dvfs 0>;
->>>                        next-level-cache = <&L2_0>;
->>>                        power-domains = <&CPU_PD0>;
->>>                        power-domain-names = "psci";
->>
->>
->> Any reason why you wouldn't want to use the new genpd based perf controls.
->> IIRC it was added based on mainly Qcom platform requirements.
->>
->> -                     clocks = <&scmi_dvfs 0>;
->>                        next-level-cache = <&L2_0>;
->> -                     power-domains = <&CPU_PD0>;
->> -                     power-domain-names = "psci";
->> +                     power-domains = <&CPU_PD0>, <&scmi_dvfs 0>;
->> +                     power-domain-names = "psci", "perf";
->>
->>
->> And the associated changes in the scmi dvfs node for cells property.
->>
->> This change is OK but just wanted to check the reasoning for the choice.
+On 3/31/2024 1:47 PM, Krzysztof Kozlowski wrote:
+> On 30/03/2024 19:28, Ajit Pandey wrote:
+>> Add support for qcom display clock controller bindings
+>> for SM4450 platform.
 > 
-> To me, it seems reasonable to move to the new binding with
-> #power-domain-cells for protocol@13. This becomes more future proof,
-> as it can then easily be extended to be used beyond CPUs.
+> You cannot add support for a binding. Either you add a binding or not.
+> Please look at git history for inspiration.
 > 
-> That said, I just submitted a patch [1] to update the examples in the
-> scmi DT doc to use  #power-domain-cells in favor of #clock-cells. I
-> don't know if there is a better way to promote the new bindings?
-> Perhaps moving Juno to use this too?
+Thanks, will update commit msg in next series
+>>
+>> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
 > 
-> Kind regards
-> Uffe
-
-Sudeep/Ulfe,
-
-Thanks I'll move to the new recommendation.
-
--Sibi
-
 > 
-> [1]
-> https://lore.kernel.org/all/20240403111106.1110940-1-ulf.hansson@linaro.org/
+>> +
+>> +  clocks:
+>> +    items:
+>> +      - description: Board XO source
+>> +      - description: Board active XO source
+>> +      - description: Display AHB clock source from GCC
+>> +      - description: sleep clock source
+>> +      - description: Byte clock from DSI PHY0
+>> +      - description: Pixel clock from DSI PHY0
+>> +
+>> +  '#clock-cells':
+>> +    const: 1
+>> +
+>> +  '#reset-cells':
+>> +    const: 1
+>> +
+>> +  '#power-domain-cells':
+>> +    const: 1
+> 
+> No power-domain? This looks incomplete.
+> 
+> Best regards,
+> Krzysztof
+> 
+
+SM4450 doesn't support MMCX hence power-domain isn't required
+-- 
+Thanks, and Regards
+Ajit
 
