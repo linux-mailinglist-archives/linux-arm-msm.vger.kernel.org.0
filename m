@@ -1,225 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-16384-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16385-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70322898358
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 10:44:55 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D3DB7898365
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 10:47:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B9D1EB289EA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 08:44:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0BA331C26F36
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 08:47:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 397787174D;
-	Thu,  4 Apr 2024 08:44:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52BEF73173;
+	Thu,  4 Apr 2024 08:47:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NIYXHpaf"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Y4kT5zBv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D2359B61;
-	Thu,  4 Apr 2024 08:44:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90EFE71B40;
+	Thu,  4 Apr 2024 08:47:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712220288; cv=none; b=gF/5uG4qA4gB9Zm688AZfmug93JN4zJiXijm2rQo1cOWiyuv7iE4BWK68iMVy2LDXU+q9PFFvtUEB+Ql7u8WOwVVdS8z52/S1dVw4zT3Iz5RAt8mfvl/CUXcPE9LjPOLRvHL27AOwMamOU1rRtD4bgYWJWY5foHfSxQQlFLoYK4=
+	t=1712220463; cv=none; b=YbqAGKzQP+tVdbR3hhnn+cwuy+NCkoJk38vCmfF0EkAj4UQsVeop3P9sjBADLsfdrpTiSfe53F3wFM7lOrMj2xqHENSWnhiSqYV7gTRnaG7Kk3aruK8xY+XNk4cGqSO1VABrtqOFlWOkt2W4Pjhcmm8rK9SPP7htHSoHMkUINtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712220288; c=relaxed/simple;
-	bh=9D5gn2lk/QVStWbWFD9aEUrA60ETwIJ6u2rH2INzuts=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZndSoj0q8pGZ38UpYZWsIqwvfCNG+4klnGTnv+sO1ebWql+bfle7rWpsWGp6AFG1xB4VsmlJJTiFv8y+wgTR68x+Xn/KIg9fr5hsucCKl7g3gJexPaHSEAakBddJXRrOgZk3pEFkBA77lFvPqcic43UfgLqD1jsC2vTBvXTTKpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NIYXHpaf; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2A78C433C7;
-	Thu,  4 Apr 2024 08:44:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712220287;
-	bh=9D5gn2lk/QVStWbWFD9aEUrA60ETwIJ6u2rH2INzuts=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NIYXHpafLZH6KcJZnlAzlIjUXkgHbhS7H4WiQqA5B751qndGYod5lThl7gmT//Vq+
-	 4vZdzFQ7kKv0vxlO9ZojdCLzIHvYV6l1+gDhUBkpJdSYftYdbzts20ImMv01+BfP0n
-	 agzjEVIqRnOTjc1lC1XiCiMxswG+EyMraTNRS5Fk4JXKo7Us/BWCEL/dDvZjxsR3j6
-	 rGPmx1sjJQ8u4jT3DA/iMwiEswgdRMX+GBuZC45YA67RPTDzJIlSUVk9emFzK1eUdH
-	 n7YRyo6TLT8yiatAbG68BNo3fkorjladuvQDPjqUZVRqnGUyOpDgPeu8ZrnWc9TphF
-	 8wP1Suw4Pjxig==
-Date: Thu, 4 Apr 2024 10:44:40 +0200
-From: Niklas Cassel <cassel@kernel.org>
-To: Vinod Koul <vkoul@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
-	linux-tegra@vger.kernel.org, Damien Le Moal <dlemoal@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: Re: [PATCH 05/11] PCI: epf-{mhi/test}: Move DMA initialization to
- EPC init callback
-Message-ID: <Zg5oeDzq5u3jmKIu@ryzen>
-References: <20240314-pci-epf-rework-v1-0-6134e6c1d491@linaro.org>
- <20240314-pci-epf-rework-v1-5-6134e6c1d491@linaro.org>
- <Zf2tXgKo-gc3qy1D@ryzen>
- <20240326082636.GG9565@thinkpad>
- <ZgKsBoTvPWWhPO9e@ryzen>
- <20240327055457.GA2742@thinkpad>
- <ZgQFXsgqpeLbXMTb@ryzen>
- <ZgW6KB73Wh1X6911@matsya>
+	s=arc-20240116; t=1712220463; c=relaxed/simple;
+	bh=C0B534tETcSiSi2d2a5k3Mlzf8TIAyJoW2nw7gAaT4k=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=nhzEGmJLOz08v+DYMfOmsRaiQz48Zba6JsZk6JQfFyzpfteKJbP43rKkSopLUTBnpXdGkgJG4EwI5V9tf+qEUVrEix17UkkWldJTkiRpBh6pE9UwvYjGsvLuCm7oaV9/Im1F4ocfqd/m8p9kX3l4Ze5BaBXPA/RzWeQkmTuWmn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Y4kT5zBv; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4348T9K3031265;
+	Thu, 4 Apr 2024 08:47:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=ySSQu01
+	uxqxgU7lEYH4fWRZQEzBl+iPrmYmI64On0hY=; b=Y4kT5zBv661yKGkgyEKI4UD
+	sZ3f3OJIkqRA3x5NMigGS3kcfmFRU+SA2mzEI88R7ut91CxvOwY+v1Vvp6Zo2JJK
+	jd9Jjv/jn/e9IZYUpDVIDjo41zECnY4cVuSDe8MpbbfAAJBagyPLvux02DgDVIgD
+	/V+by6UYgIvgN3UAClS+srT905dAMZIAfDEtPXdtxhcmmgfaA70ehqHC/AL7Kmb2
+	CLbfZg4/ScC3LEeu0vDQBw+xYIVg+GOFi7NOGh0bVn8epRgcY+hvXbo80MEC46y2
+	s353P0HJKg6UYqV1TH5F47+7SCXSu26zdUykObZ2IVVIaBJiTQxAQi8T0F5VdmQ=
+	=
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x9ep3rymj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 04 Apr 2024 08:47:25 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4348lOU5003300
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 4 Apr 2024 08:47:24 GMT
+Received: from hu-mohs-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.4; Thu, 4 Apr 2024 01:47:19 -0700
+From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami
+	<bgoswami@quicinc.com>,
+        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown
+	<broonie@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela
+	<perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>
+CC: <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        <linux-sound@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_rohkumar@quicinc.com>,
+        "Mohammad Rafi
+ Shaik" <quic_mohs@quicinc.com>
+Subject: [PATCH v2 0/2] Add support for QCM6490 and QCS6490
+Date: Thu, 4 Apr 2024 14:16:29 +0530
+Message-ID: <20240404084631.417779-1-quic_mohs@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZgW6KB73Wh1X6911@matsya>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: qEExjceD8F6__3ATV3Ifli7EUgQDJGFS
+X-Proofpoint-GUID: qEExjceD8F6__3ATV3Ifli7EUgQDJGFS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-04_04,2024-04-04_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 bulkscore=0
+ mlxlogscore=662 spamscore=0 suspectscore=0 priorityscore=1501
+ lowpriorityscore=0 mlxscore=0 phishscore=0 impostorscore=0 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404040058
 
-On Fri, Mar 29, 2024 at 12:12:48AM +0530, Vinod Koul wrote:
-> On 27-03-24, 12:39, Niklas Cassel wrote:
-> > 
-> > So my question is:
-> > Is the "dummy memcpy" DMA channel always available?
-> 
-> That depends on the system, you may or maynot have such a system where
-> you have a generic memcpy dma controller which can provide you with
-> these channels
+This patchset adds support for sound card on Qualcomm QCM6490 IDP and
+QCS6490 RB3Gen2 boards.
 
-I misunderstood DMA_MEMCPY then, I assumed that it was a "software emulated"
-DMA channel, which allowed the a driver to always use dmaengine + DMA API.
+Changes since v1:
+	- Use existing sc8280xp machine driver instead of separate driver.
+	- Modify qcs6490 compatible name as qcs6490-rb3gen2.
 
-It actually uses a real DMA controller. I don't have any DMA controller in
-the PCIe EP device tree node, but perhaps it can use any DMA controller that
-has been registered with dmaengine?
+Mohammad Rafi Shaik (2):
+  ASoC: dt-bindings: qcom,sm8250: Add QCM6490 snd QCS6490 sound card
+  ASoC: qcom: sc8280xp: Add support for QCM6490 and QCS6490
 
+ Documentation/devicetree/bindings/sound/qcom,sm8250.yaml | 2 ++
+ sound/soc/qcom/sc8280xp.c                                | 2 ++
+ 2 files changed, 4 insertions(+)
 
-> Based on my reading you might have this mechanism:
-> - eDMA provides dmaengine_prep_slave_single() which transfers data from
->   mem to pci ep device, so fasted
-> - dmaengine_prep_dma_memcpy: This will copy the data but treat it as
->   memory. I dont pci internals to figure out how both can work... So
->   cant really make out why it is slowed
-> - memcpy_xxx that is IO mem functions, so ofc they will be slowest
-> 
-> I think the code is decent from fallback pov... chooses fastest path if
-> available on a system
+-- 
+2.25.1
 
-Indeed, it makes more sense to me now, thank you Vinod.
-
-
-> > I was wrong here, pci-epf-test always calls pci_epc_map_addr()
-> > regardless if FLAG_USE_DMA is set or not.
-> > 
-> > (Even though this should be unnecessary when using the eDMA.)
-> > 
-> > However, if we look at pci-epf-mhi.c we can see that it does
-> > NOT call pci_epc_map_addr() when using DMA API + dmaengine.
-> > 
-> > Is it really safe to avoid pci_epc_map_addr() in all EPC controllers?
-> > I assume that it should be safe for all "real" DMA channels.
-> > We can see that it is not safe when using DMA API + "dummy" memcpy
-> > dma-channel. (That is why I was asking if we need a NEEDS_MAP, or
-> > MAP_NOT_NEEDED flag.)
-
-
-> > pci-epf-test.c:
-> > -Always calls pci_epc_map_addr() when using DMA API.
-> > 
-> > pci-epf-mhi.c:
-> > -Never calls pci_epc_map_addr() when using DMA API.
-
-Mani, I still think that this part is inconsistent between PCI EPF drivers.
-
-Looking more at commit:
-8353813c88ef ("PCI: endpoint: Enable DMA tests for endpoints with DMA capabilities")
-
-Adding Frank on CC, since he is the author of that commit.
-
-When the commit added support for eDMA to pci-epf-test, it added an extra
-parameter to pci_epf_test_data_transfer(), to pass the PCI/DMA address of
-the remote buffer, in addition to the already provided local physical address
-that pci_epc_map_addr() has mapped the PCI/DMA address to.
-
-So in the case of eDMA transfer, the pci_epc_map_addr() operation is still
-being performed, even though pci-epf-test never uses the result of the
-the mapping operation... This is just confusing and a waste of CPU cycles.
-
-What I would like is more consistency between the EPF drivers.
-
-I guess an if-statement that skips the pci_epc_map_addr() in pci-epf-test
-if using eDMA would make pci-epf-mhi and pci-epf-test most consistent.
-
-
-However, when reading the DWC databook:
--The eDMA and HDMA always goes via the iATU table.
-If you do not want this, then you need to set the the appropriate bypass bit.
-
-
-For eDMA:
-""
-When you do not want the iATU to translate outbound requests that are generated by the
-internal DMA module, then you must implement one of the following approaches:
-- Ensure that the combination of DMA channel programming and iATU control register
-programming, causes no translation of DMA traffic to be done in the iATU.
-or
-- Activate the DMA bypass mode to allow request TLPs which are initiated by the DMA
-controller to pass through the iATU untranslated. You can activate DMA bypass mode by
-setting the DMA Bypass field of the iATU Control 2 Register (IATU_REGION_C-
-TRL_OFF_2_OUTBOUND_0).
-""
-
-For HDMA:
-""
-When you do not want the iATU to translate outbound requests that are generated by the
-internal HDMA module, then you must implement one of the following approaches:
-- Ensure that the combination of HDMA channel programming and iATU control register
-programming, causes no translation of DMA traffic to be done in the iATU.
-or
-- Activate the HDMA bypass mode to allow request TLPs which are initiated by the HDMA
-controller to pass through the iATU untranslated. You can activate HDMA bypass mode by
-setting the HDMA Bypass field of the iATU Control 2 Register (IATU_REGION_C-
-TRL_OFF_2_OUTBOUND_0).
-""
-
-We also know that, if there is no match in the iATU table:
-""
-The default behavior of the ATU when there is no address match in the outbound direction or no
-TLP attribute match in the inbound direction, is to pass the transaction through.
-""
-
-So even if we do not call pci_epc_map_addr(), the eDMA and HDMA will go via
-the iATU table, it will most likely not find a match, so it will go through
-untranslated.
-
-So I think we need to answer these questions:
-1) Do we want to rely on the fact that hopefully none of the iATUs in the DWC
-controller has configured a mapping that might mess things up for us?
-I don't see why the PCI/DMA address of the remote buffer, supplied to
-pci-epf-test via test_reg BAR, might not fall within the physical iATU window
-on the local EP system. (As long as the PCI EPF driver has mapped any address
-using pci_epc_map_addr().)
-
-This is a big argument that EPF drivers running on a DWC-based EPC should
-definitely NOT call pci_epc_map_addr() needlessly when using eDMA, as it
-can be catastrophic. (pci-epf-test needs to be patched.)
-
-
-2) Can we really assume that both pci-epf-test and pci-epf-mhi does not need
-to call pci_epc_map_addr() when using a DMA_SLAVE DMA controller?
-This seems to be designed only with DWC in mind. Other PCIe endpoint
-controllers might require this.
-(Yes, for DWC-based controllers, this definitely should be skipped, but EPF
-drivers are supposed to be independent from a specific EPC.)
-
-I'm fine with just avoiding the pci_epc_map_addr() call when using DMA_SLAVE
-DMA in pci-epf-test for now, as that is the only DMA controller that I'm
-familiar with. This second question was more a question for how EPF drivers
-are should be designed now and in the future.
-
-
-Kind regards,
-Niklas
 
