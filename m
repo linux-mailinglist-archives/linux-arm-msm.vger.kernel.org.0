@@ -1,148 +1,225 @@
-Return-Path: <linux-arm-msm+bounces-16383-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16384-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 72E9989832C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 10:32:32 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70322898358
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 10:44:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A28BE1C2700B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 08:32:31 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B9D1EB289EA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 08:44:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1553D7175B;
-	Thu,  4 Apr 2024 08:32:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 397787174D;
+	Thu,  4 Apr 2024 08:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SBsjuUzk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NIYXHpaf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478CE7173C;
-	Thu,  4 Apr 2024 08:32:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D2359B61;
+	Thu,  4 Apr 2024 08:44:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712219531; cv=none; b=uGbvTwEATzpzcdOe6+nei6Od8YboAH8pVr/njd3Wv0d6AnbAxH7E8FIOAu0EULme1CKto4Oyqm30bubgjPfrykIgVlzwxJqFHyY94XnZJ0Y6zBc9KaYXtGTgQmeCNVb9gugVOmfs/8T1XbMpvCed6cyC7sQptF0fdfqXorH/+qY=
+	t=1712220288; cv=none; b=gF/5uG4qA4gB9Zm688AZfmug93JN4zJiXijm2rQo1cOWiyuv7iE4BWK68iMVy2LDXU+q9PFFvtUEB+Ql7u8WOwVVdS8z52/S1dVw4zT3Iz5RAt8mfvl/CUXcPE9LjPOLRvHL27AOwMamOU1rRtD4bgYWJWY5foHfSxQQlFLoYK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712219531; c=relaxed/simple;
-	bh=CohMLq3cFButffA+6piuYF94WaoM5Mh+aDxSwhAKkFU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=T246bctvYyKrcA7l+y+sSA1fl9neZmN41Y0qmjE2CmxACNbO2PqAv1CW43HtJN4ZbSqbVoLRnLtGmkd3UW/CmqilhBuMtFNcYjhhhtCYhLSCGmRumV+vrokatR8VJZx8WiQX/j3/NAscQH1fd/uHd6hW43Sb9haS+W+9QiDfHis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SBsjuUzk; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-343cd236779so42883f8f.3;
-        Thu, 04 Apr 2024 01:32:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712219527; x=1712824327; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ooJENRerkoGv8RC2dqQyR7rICIVbxFIMSkiHPTOG8iI=;
-        b=SBsjuUzkruYTyTjy65947WdCEdB3nr6YwCZmLSxtxCfUZW2B/Wri1Vo5OOV/PQBJV/
-         9sYzzvmBm3JpyqrU+pJzsdVYL0Urx1lTZ2peofrk+fvNGntWasVFEoXRa2sDQYs2Heo6
-         4yTmMfJH8ZmE089LhCycTzFm82HTNAJ+YzMFuUxf9cGEcfhZF60Th7/9/13KDvf3OrJn
-         5UJhVI1smFo0U7h9Js82BaJPT2kyu9MgEv1oVHk09Jjzp6mgXzCVuMVallIs0vYDwwFL
-         EZ6BRNi2gj9W+ps7b3Cr57cK6lLarrFpZljrQyH7z0db2EhuZThVud7jsQFA4NM7PTVU
-         lX0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712219527; x=1712824327;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ooJENRerkoGv8RC2dqQyR7rICIVbxFIMSkiHPTOG8iI=;
-        b=waQXN/j//vkni4AXcvR10DRoTH+VLMRmf9F7JvC9vY4MCkaH5FTqI2++TOYPVajBfH
-         m/YhYhv8mPjcks0a3LH0XOh6f/o4UKgp8ZTSmfhjIw1wHpVkWgyn65ITHUzTArkZClwh
-         uW8EjzH522kPkyHgW6Olaj2NfRaHqF+lV/f6R53kugmIgQob+lK8rQCF2hlXbKD2EBQc
-         fqcX8+6ejhwViAVfSspNExCV5b7LjvxmdXhdMHbNxc7TkYYjNq2rLhVnlwBmuQ+zYbCU
-         91zOXtYqfyR82gcBiayGLpdFr4vs9vFqjiW5R1Na5mscLxjDcBWslBR+GPbEd/d0WX3a
-         6DCg==
-X-Forwarded-Encrypted: i=1; AJvYcCWU/wZah4e1z2lUDIbOI6KRBsxtyl4teZmLLW7i3mRv41JCZIlCiWG8MANwgXJV4r8TZrCvYGZXq8z7lg4Pf61vTQDK/bCi8zCJd4cUEbuVAPz0qyUUdiG6jkgmFYDt96GWxAPeOvzwcKTWPMBcmjkPHJP+bgbA/Z3TVE/MGlc6+e5oAA==
-X-Gm-Message-State: AOJu0Yy8mIRXPbJ5ikS2La3B1Zghl3p4daL0Nm9Rv6SmcxHCg3K09kDD
-	qNAOf6pr3ZpJ/dzHqHJl7X1EsJpULz8bd6mE5Zw3V+PpBdYgTrC9
-X-Google-Smtp-Source: AGHT+IHMYG3JmAlvLO/BWsvlKYgpaEbWbKyheePdqiabhMh4InIyJ6wQlfooDCFT3M3D6bhH2Wi1RA==
-X-Received: by 2002:a5d:568a:0:b0:33e:cf4d:c583 with SMTP id f10-20020a5d568a000000b0033ecf4dc583mr1575171wrv.16.1712219527113;
-        Thu, 04 Apr 2024 01:32:07 -0700 (PDT)
-Received: from localhost.localdomain (host-79-35-252-101.retail.telecomitalia.it. [79.35.252.101])
-        by smtp.googlemail.com with ESMTPSA id dj13-20020a0560000b0d00b0033e9fca1e49sm19279707wrb.60.2024.04.04.01.32.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Apr 2024 01:32:06 -0700 (PDT)
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Richard Weinberger <richard@nod.at>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Md Sadre Alam <quic_mdalam@quicinc.com>,
-	Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-	linux-mtd@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Christian Marangi <ansuelsmth@gmail.com>,
-	stable@vger.kernel.org
-Subject: [PATCH v4] mtd: rawnand: qcom: Fix broken OP_RESET_DEVICE command in qcom_misc_cmd_type_exec()
-Date: Thu,  4 Apr 2024 10:31:55 +0200
-Message-ID: <20240404083157.940-1-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1712220288; c=relaxed/simple;
+	bh=9D5gn2lk/QVStWbWFD9aEUrA60ETwIJ6u2rH2INzuts=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZndSoj0q8pGZ38UpYZWsIqwvfCNG+4klnGTnv+sO1ebWql+bfle7rWpsWGp6AFG1xB4VsmlJJTiFv8y+wgTR68x+Xn/KIg9fr5hsucCKl7g3gJexPaHSEAakBddJXRrOgZk3pEFkBA77lFvPqcic43UfgLqD1jsC2vTBvXTTKpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NIYXHpaf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2A78C433C7;
+	Thu,  4 Apr 2024 08:44:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712220287;
+	bh=9D5gn2lk/QVStWbWFD9aEUrA60ETwIJ6u2rH2INzuts=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=NIYXHpafLZH6KcJZnlAzlIjUXkgHbhS7H4WiQqA5B751qndGYod5lThl7gmT//Vq+
+	 4vZdzFQ7kKv0vxlO9ZojdCLzIHvYV6l1+gDhUBkpJdSYftYdbzts20ImMv01+BfP0n
+	 agzjEVIqRnOTjc1lC1XiCiMxswG+EyMraTNRS5Fk4JXKo7Us/BWCEL/dDvZjxsR3j6
+	 rGPmx1sjJQ8u4jT3DA/iMwiEswgdRMX+GBuZC45YA67RPTDzJIlSUVk9emFzK1eUdH
+	 n7YRyo6TLT8yiatAbG68BNo3fkorjladuvQDPjqUZVRqnGUyOpDgPeu8ZrnWc9TphF
+	 8wP1Suw4Pjxig==
+Date: Thu, 4 Apr 2024 10:44:40 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: Vinod Koul <vkoul@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
+	linux-tegra@vger.kernel.org, Damien Le Moal <dlemoal@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>
+Subject: Re: [PATCH 05/11] PCI: epf-{mhi/test}: Move DMA initialization to
+ EPC init callback
+Message-ID: <Zg5oeDzq5u3jmKIu@ryzen>
+References: <20240314-pci-epf-rework-v1-0-6134e6c1d491@linaro.org>
+ <20240314-pci-epf-rework-v1-5-6134e6c1d491@linaro.org>
+ <Zf2tXgKo-gc3qy1D@ryzen>
+ <20240326082636.GG9565@thinkpad>
+ <ZgKsBoTvPWWhPO9e@ryzen>
+ <20240327055457.GA2742@thinkpad>
+ <ZgQFXsgqpeLbXMTb@ryzen>
+ <ZgW6KB73Wh1X6911@matsya>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZgW6KB73Wh1X6911@matsya>
 
-While migrating to exec_ops in commit a82990c8a409 ("mtd: rawnand: qcom:
-Add read/read_start ops in exec_op path"), OP_RESET_DEVICE command handling
-got broken unintentionally. Right now for the OP_RESET_DEVICE command,
-qcom_misc_cmd_type_exec() will simply return 0 without handling it. Even,
-if that gets fixed, an unnecessary FLASH_STATUS read descriptor command is
-being added in the middle and that seems to be causing the command to fail
-on IPQ806x devices.
+On Fri, Mar 29, 2024 at 12:12:48AM +0530, Vinod Koul wrote:
+> On 27-03-24, 12:39, Niklas Cassel wrote:
+> > 
+> > So my question is:
+> > Is the "dummy memcpy" DMA channel always available?
+> 
+> That depends on the system, you may or maynot have such a system where
+> you have a generic memcpy dma controller which can provide you with
+> these channels
 
-So let's fix the above two issues to make OP_RESET_DEVICE command working
-again.
+I misunderstood DMA_MEMCPY then, I assumed that it was a "software emulated"
+DMA channel, which allowed the a driver to always use dmaengine + DMA API.
 
-Fixes: a82990c8a409 ("mtd: rawnand: qcom: Add read/read_start ops in exec_op path")
-Cc: stable@vger.kernel.org
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
----
-Changes v4:
-- Rework commit title and description as suggested.
-- Add Reviewed-by tag
-Changes v3:
-- Merge patches
-- Rework commit description
-Changes v2:
-- Split patches
+It actually uses a real DMA controller. I don't have any DMA controller in
+the PCIe EP device tree node, but perhaps it can use any DMA controller that
+has been registered with dmaengine?
 
- drivers/mtd/nand/raw/qcom_nandc.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-index b079605c84d3..b8cff9240b28 100644
---- a/drivers/mtd/nand/raw/qcom_nandc.c
-+++ b/drivers/mtd/nand/raw/qcom_nandc.c
-@@ -2815,7 +2815,7 @@ static int qcom_misc_cmd_type_exec(struct nand_chip *chip, const struct nand_sub
- 			      host->cfg0_raw & ~(7 << CW_PER_PAGE));
- 		nandc_set_reg(chip, NAND_DEV0_CFG1, host->cfg1_raw);
- 		instrs = 3;
--	} else {
-+	} else if (q_op.cmd_reg != OP_RESET_DEVICE) {
- 		return 0;
- 	}
- 
-@@ -2830,9 +2830,8 @@ static int qcom_misc_cmd_type_exec(struct nand_chip *chip, const struct nand_sub
- 	nandc_set_reg(chip, NAND_EXEC_CMD, 1);
- 
- 	write_reg_dma(nandc, NAND_FLASH_CMD, instrs, NAND_BAM_NEXT_SGL);
--	(q_op.cmd_reg == OP_BLOCK_ERASE) ? write_reg_dma(nandc, NAND_DEV0_CFG0,
--	2, NAND_BAM_NEXT_SGL) : read_reg_dma(nandc,
--	NAND_FLASH_STATUS, 1, NAND_BAM_NEXT_SGL);
-+	if (q_op.cmd_reg == OP_BLOCK_ERASE)
-+		write_reg_dma(nandc, NAND_DEV0_CFG0, 2, NAND_BAM_NEXT_SGL);
- 
- 	write_reg_dma(nandc, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
- 	read_reg_dma(nandc, NAND_FLASH_STATUS, 1, NAND_BAM_NEXT_SGL);
--- 
-2.43.0
+> Based on my reading you might have this mechanism:
+> - eDMA provides dmaengine_prep_slave_single() which transfers data from
+>   mem to pci ep device, so fasted
+> - dmaengine_prep_dma_memcpy: This will copy the data but treat it as
+>   memory. I dont pci internals to figure out how both can work... So
+>   cant really make out why it is slowed
+> - memcpy_xxx that is IO mem functions, so ofc they will be slowest
+> 
+> I think the code is decent from fallback pov... chooses fastest path if
+> available on a system
 
+Indeed, it makes more sense to me now, thank you Vinod.
+
+
+> > I was wrong here, pci-epf-test always calls pci_epc_map_addr()
+> > regardless if FLAG_USE_DMA is set or not.
+> > 
+> > (Even though this should be unnecessary when using the eDMA.)
+> > 
+> > However, if we look at pci-epf-mhi.c we can see that it does
+> > NOT call pci_epc_map_addr() when using DMA API + dmaengine.
+> > 
+> > Is it really safe to avoid pci_epc_map_addr() in all EPC controllers?
+> > I assume that it should be safe for all "real" DMA channels.
+> > We can see that it is not safe when using DMA API + "dummy" memcpy
+> > dma-channel. (That is why I was asking if we need a NEEDS_MAP, or
+> > MAP_NOT_NEEDED flag.)
+
+
+> > pci-epf-test.c:
+> > -Always calls pci_epc_map_addr() when using DMA API.
+> > 
+> > pci-epf-mhi.c:
+> > -Never calls pci_epc_map_addr() when using DMA API.
+
+Mani, I still think that this part is inconsistent between PCI EPF drivers.
+
+Looking more at commit:
+8353813c88ef ("PCI: endpoint: Enable DMA tests for endpoints with DMA capabilities")
+
+Adding Frank on CC, since he is the author of that commit.
+
+When the commit added support for eDMA to pci-epf-test, it added an extra
+parameter to pci_epf_test_data_transfer(), to pass the PCI/DMA address of
+the remote buffer, in addition to the already provided local physical address
+that pci_epc_map_addr() has mapped the PCI/DMA address to.
+
+So in the case of eDMA transfer, the pci_epc_map_addr() operation is still
+being performed, even though pci-epf-test never uses the result of the
+the mapping operation... This is just confusing and a waste of CPU cycles.
+
+What I would like is more consistency between the EPF drivers.
+
+I guess an if-statement that skips the pci_epc_map_addr() in pci-epf-test
+if using eDMA would make pci-epf-mhi and pci-epf-test most consistent.
+
+
+However, when reading the DWC databook:
+-The eDMA and HDMA always goes via the iATU table.
+If you do not want this, then you need to set the the appropriate bypass bit.
+
+
+For eDMA:
+""
+When you do not want the iATU to translate outbound requests that are generated by the
+internal DMA module, then you must implement one of the following approaches:
+- Ensure that the combination of DMA channel programming and iATU control register
+programming, causes no translation of DMA traffic to be done in the iATU.
+or
+- Activate the DMA bypass mode to allow request TLPs which are initiated by the DMA
+controller to pass through the iATU untranslated. You can activate DMA bypass mode by
+setting the DMA Bypass field of the iATU Control 2 Register (IATU_REGION_C-
+TRL_OFF_2_OUTBOUND_0).
+""
+
+For HDMA:
+""
+When you do not want the iATU to translate outbound requests that are generated by the
+internal HDMA module, then you must implement one of the following approaches:
+- Ensure that the combination of HDMA channel programming and iATU control register
+programming, causes no translation of DMA traffic to be done in the iATU.
+or
+- Activate the HDMA bypass mode to allow request TLPs which are initiated by the HDMA
+controller to pass through the iATU untranslated. You can activate HDMA bypass mode by
+setting the HDMA Bypass field of the iATU Control 2 Register (IATU_REGION_C-
+TRL_OFF_2_OUTBOUND_0).
+""
+
+We also know that, if there is no match in the iATU table:
+""
+The default behavior of the ATU when there is no address match in the outbound direction or no
+TLP attribute match in the inbound direction, is to pass the transaction through.
+""
+
+So even if we do not call pci_epc_map_addr(), the eDMA and HDMA will go via
+the iATU table, it will most likely not find a match, so it will go through
+untranslated.
+
+So I think we need to answer these questions:
+1) Do we want to rely on the fact that hopefully none of the iATUs in the DWC
+controller has configured a mapping that might mess things up for us?
+I don't see why the PCI/DMA address of the remote buffer, supplied to
+pci-epf-test via test_reg BAR, might not fall within the physical iATU window
+on the local EP system. (As long as the PCI EPF driver has mapped any address
+using pci_epc_map_addr().)
+
+This is a big argument that EPF drivers running on a DWC-based EPC should
+definitely NOT call pci_epc_map_addr() needlessly when using eDMA, as it
+can be catastrophic. (pci-epf-test needs to be patched.)
+
+
+2) Can we really assume that both pci-epf-test and pci-epf-mhi does not need
+to call pci_epc_map_addr() when using a DMA_SLAVE DMA controller?
+This seems to be designed only with DWC in mind. Other PCIe endpoint
+controllers might require this.
+(Yes, for DWC-based controllers, this definitely should be skipped, but EPF
+drivers are supposed to be independent from a specific EPC.)
+
+I'm fine with just avoiding the pci_epc_map_addr() call when using DMA_SLAVE
+DMA in pci-epf-test for now, as that is the only DMA controller that I'm
+familiar with. This second question was more a question for how EPF drivers
+are should be designed now and in the future.
+
+
+Kind regards,
+Niklas
 
