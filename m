@@ -1,139 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-16393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2DA28985BA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 13:07:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DBFA898661
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 13:48:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6D4A22835AA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 11:07:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D6ADF28A51C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 11:48:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2499C745C3;
-	Thu,  4 Apr 2024 11:07:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AFD284D08;
+	Thu,  4 Apr 2024 11:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HhNRhFOA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oZ3ysiRJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7FC745D6
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Apr 2024 11:07:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2898D82876;
+	Thu,  4 Apr 2024 11:48:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712228844; cv=none; b=hgZdO8zVXGFaBIBfYG+/F9jMqCZhc5vr1QZ5JW7o9Mz7ATVPQi+D+jdyy2n+9FVAABoWzFfd59lAcsKombo/vWnEw/JO0+6vOTcwT/bNA6Jpk4Fgmx6kfn49KCzDmSyCCvr7k5geJp0j9K7uOZAcI/aACdSV6oPIIRKOf4CmZhE=
+	t=1712231305; cv=none; b=D+8yb0+SgR1hRCQUP3i6eQTzSITk2hVlVfBVjiClxrTQgjFeZY59ILBoeRz64TkIlzM1G0OWNad4BiqH4+nhTAj8CO9L9vWya9K4ExG9oErrVPmDSNInRahkKNy1rfCY77gati9UxH8aCrCAZLFlxRBC9LB4mCYLuC1aqWu8WQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712228844; c=relaxed/simple;
-	bh=bKpNseyzs35xJjlrg2U75nMP+r4dPa4IHVFOyJk4SZs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lNah59DMILiS2mPcQWGMDyMSFATYIvnHc3pXdPfi4YaU4Y4zYgeG9fevLaaNrdmvxY8ON3SLrLoPmR7WWSjQfeCKUUIiohF+TlRycgUKz7xk1KWofqX7zQ9vqXRc0vIKc0KiESwVGieHEyXVX+ioCtFM8+6nTZuI1kLWnFWkzR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HhNRhFOA; arc=none smtp.client-ip=209.85.219.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-dc25e12cc63so1759083276.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Apr 2024 04:07:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712228841; x=1712833641; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=oHD9JV4m82nygiSTDAq5ON48xPlEJ5FvZuZE2N1ZJm0=;
-        b=HhNRhFOAIPRgNlY3AVaoLv3N7UvDbMyqabq9f2B+5c9pGH6wE7t8G8q5RMRxerEKha
-         Xqd4E+VS1bq4fCFE+2XNNkDOPlHKDgzvcp7gIuhZeUxg+3CUwNcZh1KMFKb3u+9o2AmA
-         8h+IDMlQVh9+6jwi56lX6wCkPSG8VUHglkF1+yyocx68JZ9xsYOBc0g34By8xvaXKQpW
-         p/3/V3dEapsda25/H1t57mkMi28yK6peVH/7GKkKfij3k984TPGqFv4f2oA4oxqFKMR5
-         ngtAdufOXzoyqd7TKK8aDb3fvCPUBArDiQHn7IFC0mc5Ie7Ukom7HmcJJYM95PD4Arff
-         1NCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712228841; x=1712833641;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oHD9JV4m82nygiSTDAq5ON48xPlEJ5FvZuZE2N1ZJm0=;
-        b=iVEo36QXiEfsRLrF21jHC0qYdybXsKF3NX1d/eqRLLbLrQ5dqnpR05j9nOFO3OzRy4
-         qbBiMtAvdVYl5JnwwUf9z3SQ8JwIID73M0b5XoG8pCcEG4JqgZJMWNN2DC98PfBDQVz7
-         8TRg3HZm3W9K9OR+hOxmypRZ3GOpjxojB20agKDoCw4qT63uv5fxdrfbtv4baVKunGwk
-         HDk0db4VNmPt8bvGo5xXwyFBzCncV6ku6sSC6YG3yKf8cCJYxXtjRfe38b9Zc9vrnVyG
-         YBxo89LN+OddgaYyjAI4VygC71c32eDbWcGqDD9y4Qxy5a9bMBiygxPGijHcu2j5GkLF
-         y0lA==
-X-Forwarded-Encrypted: i=1; AJvYcCV8R/hdRe0MskIPvVo6GWElW5vqshjzH3u5nZ47FclUL0VjERXgx+SOz8pVJ7ncv+Wgq2kpfD70eNpfnTpeGoXvDTeq9eJxSgkovUtfHA==
-X-Gm-Message-State: AOJu0YxdnkBZ4+wYUPurfexyPDCy43XkBFfEaCsqX9iidzSK8R1puYFh
-	Q2QPv49u5PGJSeaJ8maxbEdE1cl+DCRGlR4Jms/T61upbExgBeUgKAkZvA8FG2za9SAWCNZCRhr
-	nth/uoRAK7Ubh3UFy4TzQn57349aQ439UP96sfkUeg6g6a+0Z
-X-Google-Smtp-Source: AGHT+IEdb5eDdMR2pzlmAeWFysl5vbrnmwOuO47TeOKmLsOviJwwZdcwKy2kO2pvO93pIdJM5SmQx94UTo9d6J6akDM=
-X-Received: by 2002:a25:bcd1:0:b0:dcf:eb30:c580 with SMTP id
- l17-20020a25bcd1000000b00dcfeb30c580mr1729408ybm.3.1712228841409; Thu, 04 Apr
- 2024 04:07:21 -0700 (PDT)
+	s=arc-20240116; t=1712231305; c=relaxed/simple;
+	bh=dAhTmkzD/Nmh0C2TGZh+xAa7rrEqwqkaz/GvQ75Pxgk=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=jB+TlZB0/JZIMdXxSgW3P7uD7QTXiUavDgHMaKOnsC3+eNL0o9+1z9UPDypv/IH0nUEZab2ej69OBSMSnF15tcwDNRXnvqXM9lORmcCy9fXDb/NwWsdKdHEwpL0QKxF4nZN7qfodZCGx/hOk023F863bpH96a3OCUAbe1KkSU1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oZ3ysiRJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A850C433C7;
+	Thu,  4 Apr 2024 11:48:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712231304;
+	bh=dAhTmkzD/Nmh0C2TGZh+xAa7rrEqwqkaz/GvQ75Pxgk=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=oZ3ysiRJDSYt/kN9hfKEvbX+lYFhMkuZPFEjeLM1IaNtVCP2RO4mgUpMVciE8KRga
+	 065MjFV57yg9nErRgKXpwZ9OvAYKvJEDWryQwve7yNEupWPEU3KY50zCX1Ec0Eib4u
+	 B4+w8CyWSMmI6ZEJ2hyQtb83sa2yjAsy7lNyHSTvydru95AwCfhz3xZ8eyjL6oV2Qj
+	 E9ts3COC0a+/R4KGw87uNxJzApcCR7tn6iifhs6gGz/olk6KiBoaYezIU4KvGd1W5D
+	 btUrI0dUPOKAmKuHIE3mRpMemLR/aI6wgJoUjUF6c1qhLMj9HqzAZpALXW9SFSN9vu
+	 5x/IM/wXbFCSQ==
+From: Kalle Valo <kvalo@kernel.org>
+To: Jeff Johnson <quic_jjohnson@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,  "David S. Miller"
+ <davem@davemloft.net>,  Eric Dumazet <edumazet@google.com>,  Jakub
+ Kicinski <kuba@kernel.org>,  Paolo Abeni <pabeni@redhat.com>,  Rob Herring
+ <robh+dt@kernel.org>,  Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley <conor+dt@kernel.org>,
+  Bjorn Andersson <andersson@kernel.org>,  Konrad Dybcio
+ <konrad.dybcio@linaro.org>,  <ath10k@lists.infradead.org>,
+  <linux-wireless@vger.kernel.org>,  <netdev@vger.kernel.org>,
+  <devicetree@vger.kernel.org>,  <linux-arm-msm@vger.kernel.org>,
+  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH RFC v2 0/4] wifi: ath10k: support board-specific
+ firmware overrides
+References: <20240306-wcn3990-firmware-path-v2-0-f89e98e71a57@linaro.org>
+	<CAA8EJprpmC6+ePxw_G6y9YEszndq1VonS1HP=aP9OVHNm42LLw@mail.gmail.com>
+	<c2bd01d1-8ddf-44b8-b5bc-860cc9754b76@quicinc.com>
+Date: Thu, 04 Apr 2024 14:48:19 +0300
+In-Reply-To: <c2bd01d1-8ddf-44b8-b5bc-860cc9754b76@quicinc.com> (Jeff
+	Johnson's message of "Tue, 2 Apr 2024 16:40:57 -0700")
+Message-ID: <87y19t4ad8.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240217-init_level-v1-0-bde9e11f8317@quicinc.com> <20240217-init_level-v1-1-bde9e11f8317@quicinc.com>
-In-Reply-To: <20240217-init_level-v1-1-bde9e11f8317@quicinc.com>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Thu, 4 Apr 2024 13:06:45 +0200
-Message-ID: <CAPDyKFrWHTcW=gSL8qPSovf8C-KnKpp67N6fD-wAn55Okb3PLg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] soc: qcom: Update init level to core_initcall() for
- cmd-db and rpmh-rsc
-To: Maulik Shah <quic_mkshah@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, Daniel Lezcano <daniel.lezcano@linaro.org>, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	quic_lsrao@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-On Sat, 17 Feb 2024 at 14:57, Maulik Shah <quic_mkshah@quicinc.com> wrote:
->
-> cmd-db and rpmh-rsc are used by clients like regulators, interconnects and
-> clocks for resource voting. These clients are in core_initcall() while
-> cmd-db and rpmh-rsc are in arch_initcall(). Update init level for these
-> drivers also to core_initcall() to avoid unnecessary probe defer during
-> boot up.
->
-> Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
+Jeff Johnson <quic_jjohnson@quicinc.com> writes:
 
-I have picked up patch2, leaving this one for Bjorn/Konrad to manage.
+> On 3/29/2024 9:47 PM, Dmitry Baryshkov wrote:
+>
+>> On Wed, 6 Mar 2024 at 10:16, Dmitry Baryshkov
+>> <dmitry.baryshkov@linaro.org> wrote:
+>>>
+>>> On WCN3990 platforms actual firmware, wlanmdsp.mbn, is sideloaded to the
+>>> modem DSP via the TQFTPserv. These MBN files are signed by the device
+>>> vendor, can only be used with the particular SoC or device.
+>>>
+>>> Unfortunately different firmware versions come with different features.
+>>> For example firmware for SDM845 doesn't use single-chan-info-per-channel
+>>> feature, while firmware for QRB2210 / QRB4210 requires that feature.
+>>>
+>>> Allow board DT files to override the subdir of the fw dir used to lookup
+>>> the firmware-N.bin file decribing corresponding WiFi firmware.
+>>> For example, adding firmware-name = "qrb4210" property will make the
+>>> driver look for the firmware-N.bin first in ath10k/WCN3990/hw1.0/qrb4210
+>>> directory and then fallback to the default ath10k/WCN3990/hw1.0 dir.
+>>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>> Changes in v2:
+>>> - Fixed the comment about the default board name being NULL (Kalle)
+>>> - Expanded commit message to provide examples for firmware paths (Kalle)
+>>> - Added a note regarding board-2.bin to the commit message (Kalle)
+>>> - Link to v1:
+>>> https://lore.kernel.org/r/20240130-wcn3990-firmware-path-v1-0-826b93202964@linaro.org
+>>>
+>>> ---
+>>> Dmitry Baryshkov (4):
+>>>       dt-bindings: net: wireless: ath10k: describe firmware-name property
+>>>       wifi: ath10k: support board-specific firmware overrides
+>>>       arm64: dts: qcom: qrb2210-rb1: add firmware-name qualifier to WiFi node
+>>>       arm64: dts: qcom: qrb4210-rb1: add firmware-name qualifier to WiFi node
+>> 
+>> Kalle, Jeff, is there anything pending on me on this series?
+>> 
+> Nothing from me -- this is outside my area of expertise so I'm deferring to Kalle.
 
-Kind regards
-Uffe
+I was on Easter vacation and now catching up, that's why the delay.
 
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
 
-> ---
->  drivers/soc/qcom/cmd-db.c   | 2 +-
->  drivers/soc/qcom/rpmh-rsc.c | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
-> index a5fd68411bed..c344107bc36c 100644
-> --- a/drivers/soc/qcom/cmd-db.c
-> +++ b/drivers/soc/qcom/cmd-db.c
-> @@ -362,7 +362,7 @@ static int __init cmd_db_device_init(void)
->  {
->         return platform_driver_register(&cmd_db_dev_driver);
->  }
-> -arch_initcall(cmd_db_device_init);
-> +core_initcall(cmd_db_device_init);
->
->  MODULE_DESCRIPTION("Qualcomm Technologies, Inc. Command DB Driver");
->  MODULE_LICENSE("GPL v2");
-> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-> index a021dc71807b..c4c7aad957e6 100644
-> --- a/drivers/soc/qcom/rpmh-rsc.c
-> +++ b/drivers/soc/qcom/rpmh-rsc.c
-> @@ -1154,7 +1154,7 @@ static int __init rpmh_driver_init(void)
->  {
->         return platform_driver_register(&rpmh_driver);
->  }
-> -arch_initcall(rpmh_driver_init);
-> +core_initcall(rpmh_driver_init);
->
->  MODULE_DESCRIPTION("Qualcomm Technologies, Inc. RPMh Driver");
->  MODULE_LICENSE("GPL v2");
->
-> --
-> 2.22.0
->
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
