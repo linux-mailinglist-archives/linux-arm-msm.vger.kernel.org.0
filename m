@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-16559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16560-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A831F89A1C8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 17:50:17 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5CF7089A1D6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 17:51:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3ECA8B25989
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 15:50:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 18516282DD7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 15:51:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC6D916FF4B;
-	Fri,  5 Apr 2024 15:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86E5316FF4D;
+	Fri,  5 Apr 2024 15:50:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZZZT7v7+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TcbCvz8C"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D26916FF41;
-	Fri,  5 Apr 2024 15:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A3116F28B;
+	Fri,  5 Apr 2024 15:50:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712332208; cv=none; b=ba3efn/4gACebkKY4RKUulXNQvBNjSVzHFdUkwQtxGMPqLTAbH5zuLQg4uQvJkmP3rgH2cTswfPnVRD+cbrh8o3mC6fNnOjKcB5CvE+mUpjIPqUjNWToB+6jmQnSOEJ91jRc8NG2hOd6+V850rWaZqYB9+/SEVGxbvQyzPWAPCY=
+	t=1712332252; cv=none; b=at2T4tZqQkh1oHXmnNr7N5sFKv4gskIaY0gO0onhz0bjB4U2loMN3ZtGMSUO4zVW6bBywfM2cybTSntpQV3JLoGNA5Y/sZPl3WLG1BKmEsxH1rSDrQiPQPXQ73eWuRjzyBz6lqLzQpf8MksY0k+25fwhI/TLvXtiL7cqA9eovwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712332208; c=relaxed/simple;
-	bh=gLrhTgtMj9INqFnBVX/qAmHy7PjKq5tZfRw+4IEfGnQ=;
+	s=arc-20240116; t=1712332252; c=relaxed/simple;
+	bh=QV5OlGrTEtG4KKZLN6xXEFl9Ht0QMzJyxZGOnp5ktK8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AY2wgBl8XsF8HBUo55FQQd5E4xkFJOaTDIRzLJNGorW6KVTUNmQX4iyW9bZVN6yetLza4nxU0zqd+wlKGAhcN3ny8lQQSuwmFhzKVedLVemTC/Q0uc4CNWYCzFsD1q5V+9d96s5J98vefVIb3/VpvPHWLL8Gp4+sQxF1tQRbdcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZZZT7v7+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF668C433C7;
-	Fri,  5 Apr 2024 15:49:59 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=JKFqRhHJYaylTrQiS+0dJ42cX0XHFA+HHu5HmtBUCnX3vAkI7ARmBQd+3EyqaArobBLB23j6TZiJM7ZP9O08V/1B/NLlKOxz9FBwiNh9usFmCING9nxDb8F1JJ7brXQkAnOHhV6hKctQvxide/Gzx920KuPOAEQep6ULDRrT3tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TcbCvz8C; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21392C433C7;
+	Fri,  5 Apr 2024 15:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712332208;
-	bh=gLrhTgtMj9INqFnBVX/qAmHy7PjKq5tZfRw+4IEfGnQ=;
+	s=k20201202; t=1712332251;
+	bh=QV5OlGrTEtG4KKZLN6xXEFl9Ht0QMzJyxZGOnp5ktK8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ZZZT7v7+p8D4N9WPiOJQnq3XRDdGXEzy4mgghSHheQ9UU299F/WFfh5PkX0cb/b9b
-	 +8J+aC7VUO1DHQ+BTXmbSgtRq3qYk6W1cMhCGV6vQ9/9UoXzHd8KMk0Ud7j22xFx4J
-	 4+sIO7kcrDSigxgqhQINbd4EhzBtAKr4gL2TYU8eakhbLppu9okbaztV0iN+TlWizY
-	 G1qDcH553j6R3EuGett/LscIurjDIokE/rM8Wp37Ktxckcpx1r/hnc/Ha/opJfcVYb
-	 1NXez5J93aKPT1v9WGo580LcDaCO8QqOEtJIUPM5kMdI4n5b1S5v1UAcNlJhipGLMC
-	 gZatkbLMPZEZQ==
-Message-ID: <b66d23fa-ac69-4e93-bc1d-93d8dd90bc6b@kernel.org>
-Date: Fri, 5 Apr 2024 17:49:57 +0200
+	b=TcbCvz8CxFiSEYnJ+kZEdd8WeqBOQ7s5Bm4Skndh9eD8p8TmUEhthv0CvPHDkvsOQ
+	 yCvmr7XF/+8Fg8b9xx5NlasJ9uZS8YiwGqdo04JnJ0YMa+azf2vPT+24LUYtGZII+K
+	 WVB1UhLNB6ExBsgD7JbM9h0pPm6kYT4p/NDX3+9nCVkk6TCZPcFYIhrhM6tUDVzde4
+	 KvcYIcPtgIdWZQLCBaj+r7dt5Nk6NOBEh52XXPZthV2PwOOdcbNV3yYRtrxIydUchd
+	 A0knV8IEhUiHb9qUxO8Ys1hAszwxjq1Qya2CoybitsN1u61WoovsA0rQgdFOPGwZWY
+	 2DnScAq4ryBrA==
+Message-ID: <c599d2cd-2871-4f84-94bb-00656c1a9395@kernel.org>
+Date: Fri, 5 Apr 2024 17:50:41 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -127,10 +127,6 @@ On 05/04/2024 17:27, Flavio Suligoi wrote:
 > drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
 > 
 > by the commit:
-
-Keep syntax as asked by submitting patches, so "by the commit sha ("foo
-bar").
-
 > 
 > commit aed6864035b1 ("net: stmmac: platform: Delete a redundant condition
 > branch")
@@ -140,10 +136,9 @@ bar").
 >  .../devicetree/bindings/net/snps,dwmac.yaml        | 14 --------------
 >  1 file changed, 14 deletions(-)
 
-This means by default we have tx-sched-sp... I guess it is fine,
-assuming there are no other users (projects) of this binding property.
-
-Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
+One more thought though:
+1. Missing net-next patch annotation,
+2. Please split DTS from net. DTS goes via separate trees.
 
 Best regards,
 Krzysztof
