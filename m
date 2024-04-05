@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-16502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16504-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A2B289999A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 11:37:41 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 852068999C6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 11:41:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5BC9B1C20C7C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 09:37:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B89C2825B8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 09:41:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECF7C1DFED;
-	Fri,  5 Apr 2024 09:37:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AA5016130E;
+	Fri,  5 Apr 2024 09:41:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qnhjw9UC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gj59kXFi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3EF4142E73
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Apr 2024 09:37:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447BF1607BC
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Apr 2024 09:41:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712309850; cv=none; b=V9T2A72Kl4/am59q1XFuJBBiDBgMiPPDsqYkqBHgH+EZm4Iy5Jz0ibNmBlMaqbj0X9TpQWJEGZ5FjKQ5pQmke3fi3YkqQ+toJ4NUcWx+RPDiSIiaUDhvpApJHdFAoQDSm/1BTmvrMccBFIWq65O5voEXO/7k4exdIzDkubCr0GQ=
+	t=1712310080; cv=none; b=AEsB09Fr89Zd9KZRvZ6Yj2qCo4ckTxyFMSG/9qWzHZr2QH38XZOcgrDW/Fw6hBT1d0kcul0ZwYCuIoyaSlIs44cZsQJQgL82K1t9UAYu6+vza+/S8Nt/6+zTgtG48u/BBpUS6YVYhKs/NY/sdoDnoy5UC7k58vpK9xwZBzdNABs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712309850; c=relaxed/simple;
-	bh=KUNs+rel022u45kMG7rmghp5HlZz04g6K2Ph8/0mXcY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JuMvpjf/iR/prcazAkfsNIdFSgEX2C7OQXTsMK+qGPPReSqDMg8a5vCPyoUD6tdDQEg3AxlxZNmv56zKbZmLS6Teruq2/2AFnHSvJDpbHyGXbrGMp8ALpbuoBpWviM/x5DR5jIhA83JLruWo06uDpLrAA0aLLbqp30hf1KZX1+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qnhjw9UC; arc=none smtp.client-ip=209.85.208.42
+	s=arc-20240116; t=1712310080; c=relaxed/simple;
+	bh=UyVyV2JYszopSsJckWNwyJEeMsYFqNu/AzrIaxXoUyE=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=iufrHmHhRFeD5lNnF+ZXmienrVo6Q5EP4FTVHeuPdJKXJfN0oWI6qbio9/dnl39J9TykCGMJinVDy0pwuqNHpaWaZXTq7eFDEMGiSMNiRsbHtk+bc1KcoBbGYWVZS3O9b7CynoLqBqEaa7oSa1es9cKppnbv7UN6fbEMC36YmU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gj59kXFi; arc=none smtp.client-ip=209.85.167.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-56e2393b073so2025401a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Apr 2024 02:37:28 -0700 (PDT)
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-516ab4b3251so2292303e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Apr 2024 02:41:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712309847; x=1712914647; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=7iPTG8xgQOObJLs+r2gxxOJcQg6bmDCPKtHB9KQ7ZyM=;
-        b=qnhjw9UC3T5/RbWZJXhNn6Jw+7BxV4uIGTHDOWXl7gn5QRiaiiBSDc6S3dkATh2d03
-         PwdbRUzITi/Yor46EK1qgONTiCHkcKH+53Ux853iSj6mGSSv22D0zHP8DwlJ3t3a2V9j
-         Cmtshapxm5nP+ppXj0HMyCmgXwX9Q4yzTpUwyDd8EilSdDyGvytt7mwhGK67eTxTjf2+
-         pOcxsV7JHQicV/b1CHAq3LD4KSdP0SMRQYvN386GOPCxFIvh6glQi65gsRE480y+9dHu
-         2LsQPlAVe0JE4GK7QD+yWanQvyqUoMJUuPbtsvvDPZVX54z1TNVYajfe+Wgq+rC75Z6s
-         +goA==
+        d=linaro.org; s=google; t=1712310076; x=1712914876; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :references:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=nT1SV3hX5JvG9SEIJKw9S2FaHccnPXvv5uODCQgaeAY=;
+        b=gj59kXFi1MvIvh8GibGLCdwkGa/kJooVggxINM78/42vS8KFMjZCfNWiv65DTfReTw
+         XbhLJytZTCKrfhmErOJF/RG6v0LAk1qv2Z8mjDAXB4e+2UQjagsZeJiCPasBaiOl1QRV
+         shON5fWes3P8AyNbPp8AyCW+n+QWF7+WwsSiywl+JIgA97VINpkKC8p/HFYn+P0Ie1Kd
+         Ry8ZCDwTiLCmqLKzTH7uP83IoLjhXrOUIUbQE5mvWZheSssPJJby6nxV7ZoRk2JFgOda
+         VmYaxx3DMQFLVJ0ihp3kAFfjGMgQY7338Zs0zvH5czRz6Ba7OROygA0hyTZm6utzdRfj
+         +SBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712309847; x=1712914647;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7iPTG8xgQOObJLs+r2gxxOJcQg6bmDCPKtHB9KQ7ZyM=;
-        b=D2/qvuaIWpvWhiNZfQtdacWK1bBFNWgmZoHqhcj8dYeuoXcmk5nRq5+W41XhZRJoM3
-         q6WmK5YSGw2qYIWXhjN3rHVlorau8InNO6TyBz4u5nvAdm0FuqfLfjeHZEgABtrF0nNT
-         sDIAz+ITohg7wy8lkH7qZM/DPyQUQB+XKAPMjppu95hfT/416mlUSI1WwOe3xuYEIOAp
-         Gj0mLorAL0n5DcrtSHRwqLAgDPHpeJ4PinpfvOacM+Gtci+fcHX5CBJKcwDRUqTkXKEC
-         C4d4Q7cceNoz9cHwgMrZucpEJgS768ecADZ57zLL0LK3w8zq8DPY3lVx3AE3BKyrd53P
-         +tUg==
-X-Forwarded-Encrypted: i=1; AJvYcCVOtwiPD3it13iLaOeh4oOlmKs+XfFs+UkXhDOClJ5HLpp5d7Qrgg6QZpWrxK1cu5z5QgO/mUWMBarP3AT/C34yPMnzoqJfoOxcVBzTAg==
-X-Gm-Message-State: AOJu0Yyd8zwu98qE28Vn/FvQhDcppumq2N5/oeq6c6HIBfMA9dBTBiWh
-	TeS1F4ReKW14AMzhUAUPyo/ZvkfHkzpEuH/Q9aq5LxyV0rWxJ9D3ILMCsgl7egc=
-X-Google-Smtp-Source: AGHT+IHS3ACjVk/HxIQbZ9ESwJpkH6sFIMlevxvcTFeFPe/SjcgBgyAlqM6H/Q01jjxlxvxo2OM8Ug==
-X-Received: by 2002:a17:906:5a8b:b0:a51:a9d5:dca8 with SMTP id l11-20020a1709065a8b00b00a51a9d5dca8mr561653ejq.27.1712309847145;
-        Fri, 05 Apr 2024 02:37:27 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1712310076; x=1712914876;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :references:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nT1SV3hX5JvG9SEIJKw9S2FaHccnPXvv5uODCQgaeAY=;
+        b=QUOboSYP0jTWju0kzjy6WyMsbkdQvIgE7sEF5lW6sRxu+NF6/Dg6VeDb5LoqXXjJU+
+         VvoEG1RMj8ji36as75cT+VkGVsnvI9e8DtrRPvYW1CGdU+0VKWeEEK1/voUIs2tS0DcX
+         mRioko6nfY7Ds/OCZrt+aZcEHaSDvKV0rSC1WJwW4+Lfeptey2iA7qIieVRH9LhuTVgD
+         fzEYZBx1La60tL93qPV9/kNT9/WsBA/Ul6Bn5ArD4YOAW1A7c4UvM+r8f/CXWv27+RDB
+         ujQedAeD91nbvOxOM95fUu/TtxufuH1UpWA9yLVyQBxOJ7GsgWVHhpPilJeRV0WuFk43
+         y7hw==
+X-Forwarded-Encrypted: i=1; AJvYcCUVbRWopjFS7sCcaZDDDPm1SHHeOnYv+UqX7ylai23fY24YySM7mRZdRJD3ex1rptRzxjsghz6piq5OVYiVPuALj4F8IECnjo7z0XkCUA==
+X-Gm-Message-State: AOJu0YwtbO+WB0/Dx6EOyFChwkZHafF+O8D/SrNa2EJeFRaS9SZ0C5Eu
+	x8vDxIJddeTK98VHykke+e3uzEF/pB0WE82XGpAUaKLdZQ7TsE+pzmfzeVb1hr8=
+X-Google-Smtp-Source: AGHT+IGX/aGyAFYg1g4cxu3TvZXYBcFZq59NLojqzdtrtBQHMqRPOnHJQBjyRrkcwBsOLU07NXsu+g==
+X-Received: by 2002:ac2:5636:0:b0:516:d1f0:600f with SMTP id b22-20020ac25636000000b00516d1f0600fmr766011lff.16.1712310076280;
+        Fri, 05 Apr 2024 02:41:16 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.223.16])
-        by smtp.gmail.com with ESMTPSA id t1-20020a1709067c0100b00a46aac377e8sm633043ejo.54.2024.04.05.02.37.24
+        by smtp.gmail.com with ESMTPSA id m15-20020aa7c48f000000b0056b0af78d80sm613125edq.34.2024.04.05.02.41.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Apr 2024 02:37:26 -0700 (PDT)
-Message-ID: <83dccd7e-e690-4803-adb9-aaedcee7dc94@linaro.org>
-Date: Fri, 5 Apr 2024 11:37:23 +0200
+        Fri, 05 Apr 2024 02:41:15 -0700 (PDT)
+Message-ID: <b1fd85b2-8bee-4c99-a0bf-4ffcc243647b@linaro.org>
+Date: Fri, 5 Apr 2024 11:41:12 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,6 +79,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v6 05/16] dt-bindings: net: wireless: describe the ath12k
  PCI module
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To: Kalle Valo <kvalo@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>
 Cc: Marcel Holtmann <marcel@holtmann.org>,
  Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
@@ -108,9 +109,8 @@ Cc: Marcel Holtmann <marcel@holtmann.org>,
 References: <20240325131624.26023-1-brgl@bgdev.pl>
  <20240325131624.26023-6-brgl@bgdev.pl> <87msqm8l6q.fsf@kernel.org>
  <CAMRc=MeCjNn7QdDrcQMuj32JFYoemQ6A8WOYcwKJo1YhDTfY+Q@mail.gmail.com>
- <87cyr440hr.fsf@kernel.org>
+ <87cyr440hr.fsf@kernel.org> <83dccd7e-e690-4803-adb9-aaedcee7dc94@linaro.org>
 Content-Language: en-US
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -155,46 +155,52 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <87cyr440hr.fsf@kernel.org>
+In-Reply-To: <83dccd7e-e690-4803-adb9-aaedcee7dc94@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On 05/04/2024 11:33, Kalle Valo wrote:
-> Bartosz Golaszewski <brgl@bgdev.pl> writes:
-> 
->> On Mon, Mar 25, 2024 at 3:01 PM Kalle Valo <kvalo@kernel.org> wrote:
->>>
->>> Bartosz Golaszewski <brgl@bgdev.pl> writes:
->>>
->>>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>>>
->>>> +
->>>> +maintainers:
->>>> +  - Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>>
->>> IMHO it would be better to have just driver maintainers listed here.
->>>
+On 05/04/2024 11:37, Krzysztof Kozlowski wrote:
+> On 05/04/2024 11:33, Kalle Valo wrote:
+>> Bartosz Golaszewski <brgl@bgdev.pl> writes:
 >>
->> Why? What's wrong with having the author of the bindings in the Cc list?
+>>> On Mon, Mar 25, 2024 at 3:01 PM Kalle Valo <kvalo@kernel.org> wrote:
+>>>>
+>>>> Bartosz Golaszewski <brgl@bgdev.pl> writes:
+>>>>
+>>>>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>>>>>
+>>>>> +
+>>>>> +maintainers:
+>>>>> +  - Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>>>>
+>>>> IMHO it would be better to have just driver maintainers listed here.
+>>>>
+>>>
+>>> Why? What's wrong with having the author of the bindings in the Cc list?
+>>
+>> If you want follow the ath12k development and review patches then you
+>> can join the ath12k list. I'm not fond of having too many maintainers,
+>> it's not really helping anything and just extra work to periodically
+>> cleanup the silent maintainers.
+>>
+>> I would ask the opposite question: why add you as the maintainer?
+>> There's not even a single ath12k patch from you, nor I haven't seen you
+>> doing any patch review or otherwise helping others related to ath12k.
+>> Don't get me wrong, I value the work you do with this important powerseq
+>> feature and hopefully we get it into the tree soon. But I don't see
+>> adding you as a maintainer at this point.
 > 
-> If you want follow the ath12k development and review patches then you
-> can join the ath12k list. I'm not fond of having too many maintainers,
-> it's not really helping anything and just extra work to periodically
-> cleanup the silent maintainers.
+> This is not a maintainer of driver. This is maintainer of bindings, so
+> someone who has hardware, datasheets, knowledge and/or interest in
+> keeping the bindings accurate.
 > 
-> I would ask the opposite question: why add you as the maintainer?
-> There's not even a single ath12k patch from you, nor I haven't seen you
-> doing any patch review or otherwise helping others related to ath12k.
-> Don't get me wrong, I value the work you do with this important powerseq
-> feature and hopefully we get it into the tree soon. But I don't see
-> adding you as a maintainer at this point.
+> All your arguments above suggest you talk about the driver. This is not
+> the point here.
+> 
 
-This is not a maintainer of driver. This is maintainer of bindings, so
-someone who has hardware, datasheets, knowledge and/or interest in
-keeping the bindings accurate.
-
-All your arguments above suggest you talk about the driver. This is not
-the point here.
+And to clarify: I do not have opinion whether Bartosz is a suitable
+person here and whether driver maintainers should be instead or not. I
+only want to clarify the purpose of the binding maintainer.
 
 Best regards,
 Krzysztof
