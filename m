@@ -1,335 +1,221 @@
-Return-Path: <linux-arm-msm+bounces-16466-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C990F899502
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 08:11:10 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D363A89954D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 08:28:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0C79FB231A6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 06:11:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 87DF8286617
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 06:28:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CAD2F3A8D0;
-	Fri,  5 Apr 2024 06:08:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 455B822EF8;
+	Fri,  5 Apr 2024 06:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HZI6FW2A"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="b0eQ6Ojb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F00523763;
-	Fri,  5 Apr 2024 06:08:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FFF01803D;
+	Fri,  5 Apr 2024 06:28:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712297339; cv=none; b=Xk3T+7llwgUH/l4vVxpLUlflUmEf29C2X9Iq6259XoyF3MpyxLOR1FXJhwkFkzIeY91RofJcPBUjYMEl3H6flmF9twmL0YZVX0rvUee7O6q/qfSAOxoiWW+QjrJYxR+yVkVx8jjGjUJ3yTqvUqxTSHWNrsBPgPp2OH61RpriutE=
+	t=1712298495; cv=none; b=hNtK3cxAvwWy10MAmIIGZ0zB3zusT8YoPZoZo7XKCwD9kXEaNny30Iy7JCTDb26AAs3QB0eKzcaN17wGj4/VB29mGeyfkS/Rog9c5RUi3x58RYk3tLjT4YqfJfvjXAg2ZoCLCCj08RmAnlI6g1fT8dfus44WJ4yAysvLBM+Dg5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712297339; c=relaxed/simple;
-	bh=QLNqWoy3pX+584nLy4eOQPQmLYN+Qw4MFScVuiXPd70=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZXDVSeL+I5BVH8RFVzJT+Mc9m5nty59ryiOawfdRVfe3DmKj3F/F9co2Its74SDpn6BpgTmrPdNVkLpnI/bWUIRJ/26HlYrgDjCLxu06wdQYlwXuAf21EU8+pu6/MG52dG6BLMLjf5q7KUrX0zJLncfJrIf+r/km9NytbWLv7Ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HZI6FW2A; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 907E5C43399;
-	Fri,  5 Apr 2024 06:08:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712297339;
-	bh=QLNqWoy3pX+584nLy4eOQPQmLYN+Qw4MFScVuiXPd70=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HZI6FW2AfLLcFlOMlNHDdWQcIhyLEUZZOcAvKkKkBmcwuF+XWbmkyUCWl/CHimPy8
-	 tAtqYvUHIZweOvONS3FoxTj6ImecOtomkZA9SrQLmCKHCEUcSEAVoTfmj2pG7wagJj
-	 XGVegQwi8Xf+GHWLL6/Vk1LsInHNzA54GzCzHXdxQzQwV2qvr2x3UELb1o7ncS+lE3
-	 9DJNkYW6xsR+srRN5D5KpA4CxOlNhF+zYRuGCSP6q8GLT3FiS3PPwpF0aIT7lMZhxE
-	 DH0cLaSy3ZXnNlrbEN4ho1hYG3Al8dxYnLseGRdXY01f44w/+lLHlLVrENanFFgRLl
-	 6gItD13JGIdnw==
-From: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
-To: gregkh@linuxfoundation.org
-Cc: linux-serial@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH 11/15] tty: msm_serial: use dmaengine_prep_slave_sg()
-Date: Fri,  5 Apr 2024 08:08:22 +0200
-Message-ID: <20240405060826.2521-12-jirislaby@kernel.org>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240405060826.2521-1-jirislaby@kernel.org>
-References: <20240405060826.2521-1-jirislaby@kernel.org>
+	s=arc-20240116; t=1712298495; c=relaxed/simple;
+	bh=Fr/JWhHYQKZaaaMibAqgclMGXVbn5QmJWGY3JKy1Nuk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=uehTsl3FHkG21niA6aVYuwGGvdxAIG8qBG7kFKcogQ1mXxp1uKMt9NXQPbua/ACoajcW50VvUkFV/9KCjx577mTmhiejVDaxZULC38oc9xSnXiJmC4TBV9kEYJ2SDTV7rPITc0VFN89fXbxfkOin+SX/vazgy8ftGOaV8AUdVJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=b0eQ6Ojb; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4354k4wf015129;
+	Fri, 5 Apr 2024 06:27:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=GKQz0B9cR1IxdMzPCrLdK2mRo25+8IENz2R5YewGobc=; b=b0
+	eQ6OjbvQAjVI6Kr4bQHSzIYuWDf3suOZT6iwAMp1KF3VIlFsQXl+rZJ4WG0K28WH
+	75NPq1fWggLheHIoGxZaWkj0bJOosvPulp6sj3Sz8VMVdOadzCUoYrUlhdUcG8Q/
+	8FSEGwGQB1ggZ4F9TIOG5oml+sudbyDnuBAvA5r2rb70CIruTJvqZS21cXf6E99w
+	9nraNyqDGJc4Eg5QIEcoBxefHcKHbkzZmBTVfeDKGNwXZXBoVX4YP+zQUcgGG4K1
+	RkmcPXQtDJbJQ2hwQMb3r/N7nv1ujL5GLo/CPbsTwZbVbRryZQfY70sK2jCaeNVD
+	irhm7zwhtIVV9Ma8E+TA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xa7snrf6y-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 05 Apr 2024 06:27:41 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4356ReEW028251
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 5 Apr 2024 06:27:40 GMT
+Received: from [10.218.19.46] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 4 Apr 2024
+ 23:27:34 -0700
+Message-ID: <66968793-d0c9-9f31-6616-f67fdadcd6e5@quicinc.com>
+Date: Fri, 5 Apr 2024 11:57:29 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH 4/5] clk: qcom: Add camera clock controller driver for
+ SM8150
+Content-Language: en-US
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Michael
+ Turquette" <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Abhishek Sahu <absahu@codeaurora.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: Stephen Boyd <sboyd@codeaurora.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, Ajit Pandey <quic_ajipan@quicinc.com>,
+        "Imran
+ Shaik" <quic_imrashai@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>
+References: <20240229-camcc-support-sm8150-v1-0-8c28c6c87990@quicinc.com>
+ <20240229-camcc-support-sm8150-v1-4-8c28c6c87990@quicinc.com>
+ <18567989-fb60-49ae-92e6-94e1bc2fa1c7@linaro.org>
+From: "Satya Priya Kakitapalli (Temp)" <quic_skakitap@quicinc.com>
+In-Reply-To: <18567989-fb60-49ae-92e6-94e1bc2fa1c7@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: pNw5X1uem7L0OqITyo0zV53249yYrE1v
+X-Proofpoint-ORIG-GUID: pNw5X1uem7L0OqITyo0zV53249yYrE1v
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-05_05,2024-04-04_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 bulkscore=0 clxscore=1015 mlxscore=0 spamscore=0
+ suspectscore=0 priorityscore=1501 malwarescore=0 mlxlogscore=999
+ adultscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404050045
 
-This is a preparatory for the serial-to-kfifo switch. kfifo understands
-only scatter-gatter approach, so switch to that.
 
-No functional change intended, it's just dmaengine_prep_slave_single()
-inline expanded.
+On 3/2/2024 9:43 PM, Bryan O'Donoghue wrote:
+> On 29/02/2024 5:38 a.m., Satya Priya Kakitapalli wrote:
+>> Add support for the camera clock controller for camera clients
+>> to be able to request for camcc clocks on SM8150 platform.
+>>
+>> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+>> ---
+>
+>> +static int cam_cc_sm8150_probe(struct platform_device *pdev)
+>> +{
+>> +    struct regmap *regmap;
+>> +    int ret;
+>> +
+>> +    ret = devm_pm_runtime_enable(&pdev->dev);
+>> +    if (ret)
+>> +        return ret;
+>> +
+>> +    ret = pm_runtime_resume_and_get(&pdev->dev);
+>> +    if (ret)
+>> +        return ret;
+>> +
+>> +    regmap = qcom_cc_map(pdev, &cam_cc_sm8150_desc);
+>> +    if (IS_ERR(regmap)) {
+>> +        pm_runtime_put(&pdev->dev);
+>> +        return PTR_ERR(regmap);
+>> +    }
+>> +
+>> +    clk_trion_pll_configure(&cam_cc_pll0, regmap, &cam_cc_pll0_config);
+>> +    clk_trion_pll_configure(&cam_cc_pll1, regmap, &cam_cc_pll1_config);
+>> +    clk_regera_pll_configure(&cam_cc_pll2, regmap, 
+>> &cam_cc_pll2_config);
+>> +    clk_trion_pll_configure(&cam_cc_pll3, regmap, &cam_cc_pll3_config);
+>> +    clk_trion_pll_configure(&cam_cc_pll4, regmap, &cam_cc_pll4_config);
+>> +
+>> +    /* Keep the critical clock always-on */
+>> +    qcom_branch_set_clk_en(regmap, 0xc1e4); /* cam_cc_gdsc_clk */
+>
+> Does this clock need to be specified this way ?
+>
+> drivers/clk/qcom/camcc-sc8280xp.c::camcc_gdsc_clk specifies the gdsc 
+> clock as a shared op clock.
+>
+> Actually it looks to be register compatible, please try defining 
+> titan_top_gdsc as per the example in 8280xp.
+>
+>> +
+>> +    ret = qcom_cc_really_probe(pdev, &cam_cc_sm8150_desc, regmap);
+>> +
+>> +    pm_runtime_put(&pdev->dev);
+>> +
+>> +    return ret;
+>> +}
+>
+> So this is a pattern we keep repeating in the clock probe() functions 
+> which I am writing a series to address. There's no need to continue to 
+> replicate the bug in new code though.
+>
+> Only switch on always-on clocks if probe succeeds.
+>
+>     ret = qcom_cc_really_probe(pdev, &cam_cc_sm8150_desc, regmap);
+>     if (ret)
+>         goto probe_err;
+>
+>     qcom_branch_set_clk_en(regmap, 0xc1e4); /* cam_cc_gdsc_clk */
+>
+>     pm_runtime_put(&pdev->dev);
+>
+>     return 0;
+>
+> probe_err:
+>     pm_runtime_put_sync(&pdev->dev);
+>
+> Alternatively switch on the always-on clocks before the really_probe() 
+> but then roll back in a probe_err: goto
+>
+> probe_err:
+>     remap_bits_update(regmap, 0xc1e4, BIT(0), 0);
+>     pm_runtime_put_sync(&pdev->dev);
+>
+> There may be corner cases where always-on has to happen before 
+> really_probe() I suppose but as a general pattern the above should be 
+> how we go.
+>
 
-And in this case, switch from dma_map_single() to dma_map_sg() too. This
-needs struct msm_dma changes. I split the rx and tx parts into an union.
-TX is now struct scatterlist, RX remains the old good phys-virt-count
-triple.
+I have rechecked this and see that this clock is PoR ON (i.e BIT(0) is 
+set upon power ON) and it should be kept always ON as per HW 
+recommendation. So even if the probe fails we shouldn't be clearing it 
+against the hw recommendation. We are setting the bit here again to make 
+sure it is set when the driver probes.
 
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org
----
- drivers/tty/serial/msm_serial.c | 86 +++++++++++++++++++--------------
- 1 file changed, 49 insertions(+), 37 deletions(-)
 
-diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
-index d27c4c8c84e1..7bf30e632313 100644
---- a/drivers/tty/serial/msm_serial.c
-+++ b/drivers/tty/serial/msm_serial.c
-@@ -161,11 +161,16 @@ enum {
- struct msm_dma {
- 	struct dma_chan		*chan;
- 	enum dma_data_direction dir;
--	dma_addr_t		phys;
--	unsigned char		*virt;
-+	union {
-+		struct {
-+			dma_addr_t		phys;
-+			unsigned char		*virt;
-+			unsigned int		count;
-+		} rx;
-+		struct scatterlist tx_sg;
-+	};
- 	dma_cookie_t		cookie;
- 	u32			enable_bit;
--	unsigned int		count;
- 	struct dma_async_tx_descriptor	*desc;
- };
- 
-@@ -249,8 +254,12 @@ static void msm_stop_dma(struct uart_port *port, struct msm_dma *dma)
- 	unsigned int mapped;
- 	u32 val;
- 
--	mapped = dma->count;
--	dma->count = 0;
-+	if (dma->dir == DMA_TO_DEVICE) {
-+		mapped = sg_dma_len(&dma->tx_sg);
-+	} else {
-+		mapped = dma->rx.count;
-+		dma->rx.count = 0;
-+	}
- 
- 	dmaengine_terminate_all(dma->chan);
- 
-@@ -265,8 +274,13 @@ static void msm_stop_dma(struct uart_port *port, struct msm_dma *dma)
- 	val &= ~dma->enable_bit;
- 	msm_write(port, val, UARTDM_DMEN);
- 
--	if (mapped)
--		dma_unmap_single(dev, dma->phys, mapped, dma->dir);
-+	if (mapped) {
-+		if (dma->dir == DMA_TO_DEVICE) {
-+			dma_unmap_sg(dev, &dma->tx_sg, 1, dma->dir);
-+			sg_init_table(&dma->tx_sg, 1);
-+		} else
-+			dma_unmap_single(dev, dma->rx.phys, mapped, dma->dir);
-+	}
- }
- 
- static void msm_release_dma(struct msm_port *msm_port)
-@@ -285,7 +299,7 @@ static void msm_release_dma(struct msm_port *msm_port)
- 	if (dma->chan) {
- 		msm_stop_dma(&msm_port->uart, dma);
- 		dma_release_channel(dma->chan);
--		kfree(dma->virt);
-+		kfree(dma->rx.virt);
- 	}
- 
- 	memset(dma, 0, sizeof(*dma));
-@@ -357,8 +371,8 @@ static void msm_request_rx_dma(struct msm_port *msm_port, resource_size_t base)
- 
- 	of_property_read_u32(dev->of_node, "qcom,rx-crci", &crci);
- 
--	dma->virt = kzalloc(UARTDM_RX_SIZE, GFP_KERNEL);
--	if (!dma->virt)
-+	dma->rx.virt = kzalloc(UARTDM_RX_SIZE, GFP_KERNEL);
-+	if (!dma->rx.virt)
- 		goto rel_rx;
- 
- 	memset(&conf, 0, sizeof(conf));
-@@ -385,7 +399,7 @@ static void msm_request_rx_dma(struct msm_port *msm_port, resource_size_t base)
- 
- 	return;
- err:
--	kfree(dma->virt);
-+	kfree(dma->rx.virt);
- rel_rx:
- 	dma_release_channel(dma->chan);
- no_rx:
-@@ -420,7 +434,7 @@ static void msm_start_tx(struct uart_port *port)
- 	struct msm_dma *dma = &msm_port->tx_dma;
- 
- 	/* Already started in DMA mode */
--	if (dma->count)
-+	if (sg_dma_len(&dma->tx_sg))
- 		return;
- 
- 	msm_port->imr |= MSM_UART_IMR_TXLEV;
-@@ -448,12 +462,12 @@ static void msm_complete_tx_dma(void *args)
- 	uart_port_lock_irqsave(port, &flags);
- 
- 	/* Already stopped */
--	if (!dma->count)
-+	if (!sg_dma_len(&dma->tx_sg))
- 		goto done;
- 
- 	dmaengine_tx_status(dma->chan, dma->cookie, &state);
- 
--	dma_unmap_single(port->dev, dma->phys, dma->count, dma->dir);
-+	dma_unmap_sg(port->dev, &dma->tx_sg, 1, dma->dir);
- 
- 	val = msm_read(port, UARTDM_DMEN);
- 	val &= ~dma->enable_bit;
-@@ -464,9 +478,9 @@ static void msm_complete_tx_dma(void *args)
- 		msm_write(port, MSM_UART_CR_TX_ENABLE, MSM_UART_CR);
- 	}
- 
--	count = dma->count - state.residue;
-+	count = sg_dma_len(&dma->tx_sg) - state.residue;
- 	uart_xmit_advance(port, count);
--	dma->count = 0;
-+	sg_init_table(&dma->tx_sg, 1);
- 
- 	/* Restore "Tx FIFO below watermark" interrupt */
- 	msm_port->imr |= MSM_UART_IMR_TXLEV;
-@@ -485,19 +499,18 @@ static int msm_handle_tx_dma(struct msm_port *msm_port, unsigned int count)
- 	struct circ_buf *xmit = &msm_port->uart.state->xmit;
- 	struct uart_port *port = &msm_port->uart;
- 	struct msm_dma *dma = &msm_port->tx_dma;
--	void *cpu_addr;
- 	int ret;
- 	u32 val;
- 
--	cpu_addr = &xmit->buf[xmit->tail];
-+	sg_init_table(&dma->tx_sg, 1);
-+	sg_set_buf(&dma->tx_sg, &xmit->buf[xmit->tail], count);
- 
--	dma->phys = dma_map_single(port->dev, cpu_addr, count, dma->dir);
--	ret = dma_mapping_error(port->dev, dma->phys);
-+	ret = dma_map_sg(port->dev, &dma->tx_sg, 1, dma->dir);
- 	if (ret)
- 		return ret;
- 
--	dma->desc = dmaengine_prep_slave_single(dma->chan, dma->phys,
--						count, DMA_MEM_TO_DEV,
-+	dma->desc = dmaengine_prep_slave_sg(dma->chan, &dma->tx_sg, 1,
-+						DMA_MEM_TO_DEV,
- 						DMA_PREP_INTERRUPT |
- 						DMA_PREP_FENCE);
- 	if (!dma->desc) {
-@@ -520,8 +533,6 @@ static int msm_handle_tx_dma(struct msm_port *msm_port, unsigned int count)
- 	msm_port->imr &= ~MSM_UART_IMR_TXLEV;
- 	msm_write(port, msm_port->imr, MSM_UART_IMR);
- 
--	dma->count = count;
--
- 	val = msm_read(port, UARTDM_DMEN);
- 	val |= dma->enable_bit;
- 
-@@ -536,7 +547,8 @@ static int msm_handle_tx_dma(struct msm_port *msm_port, unsigned int count)
- 	dma_async_issue_pending(dma->chan);
- 	return 0;
- unmap:
--	dma_unmap_single(port->dev, dma->phys, count, dma->dir);
-+	dma_unmap_sg(port->dev, &dma->tx_sg, 1, dma->dir);
-+	sg_init_table(&dma->tx_sg, 1);
- 	return ret;
- }
- 
-@@ -553,7 +565,7 @@ static void msm_complete_rx_dma(void *args)
- 	uart_port_lock_irqsave(port, &flags);
- 
- 	/* Already stopped */
--	if (!dma->count)
-+	if (!dma->rx.count)
- 		goto done;
- 
- 	val = msm_read(port, UARTDM_DMEN);
-@@ -570,14 +582,14 @@ static void msm_complete_rx_dma(void *args)
- 
- 	port->icount.rx += count;
- 
--	dma->count = 0;
-+	dma->rx.count = 0;
- 
--	dma_unmap_single(port->dev, dma->phys, UARTDM_RX_SIZE, dma->dir);
-+	dma_unmap_single(port->dev, dma->rx.phys, UARTDM_RX_SIZE, dma->dir);
- 
- 	for (i = 0; i < count; i++) {
- 		char flag = TTY_NORMAL;
- 
--		if (msm_port->break_detected && dma->virt[i] == 0) {
-+		if (msm_port->break_detected && dma->rx.virt[i] == 0) {
- 			port->icount.brk++;
- 			flag = TTY_BREAK;
- 			msm_port->break_detected = false;
-@@ -588,9 +600,9 @@ static void msm_complete_rx_dma(void *args)
- 		if (!(port->read_status_mask & MSM_UART_SR_RX_BREAK))
- 			flag = TTY_NORMAL;
- 
--		sysrq = uart_prepare_sysrq_char(port, dma->virt[i]);
-+		sysrq = uart_prepare_sysrq_char(port, dma->rx.virt[i]);
- 		if (!sysrq)
--			tty_insert_flip_char(tport, dma->virt[i], flag);
-+			tty_insert_flip_char(tport, dma->rx.virt[i], flag);
- 	}
- 
- 	msm_start_rx_dma(msm_port);
-@@ -614,13 +626,13 @@ static void msm_start_rx_dma(struct msm_port *msm_port)
- 	if (!dma->chan)
- 		return;
- 
--	dma->phys = dma_map_single(uart->dev, dma->virt,
-+	dma->rx.phys = dma_map_single(uart->dev, dma->rx.virt,
- 				   UARTDM_RX_SIZE, dma->dir);
--	ret = dma_mapping_error(uart->dev, dma->phys);
-+	ret = dma_mapping_error(uart->dev, dma->rx.phys);
- 	if (ret)
- 		goto sw_mode;
- 
--	dma->desc = dmaengine_prep_slave_single(dma->chan, dma->phys,
-+	dma->desc = dmaengine_prep_slave_single(dma->chan, dma->rx.phys,
- 						UARTDM_RX_SIZE, DMA_DEV_TO_MEM,
- 						DMA_PREP_INTERRUPT);
- 	if (!dma->desc)
-@@ -648,7 +660,7 @@ static void msm_start_rx_dma(struct msm_port *msm_port)
- 
- 	msm_write(uart, msm_port->imr, MSM_UART_IMR);
- 
--	dma->count = UARTDM_RX_SIZE;
-+	dma->rx.count = UARTDM_RX_SIZE;
- 
- 	dma_async_issue_pending(dma->chan);
- 
-@@ -668,7 +680,7 @@ static void msm_start_rx_dma(struct msm_port *msm_port)
- 
- 	return;
- unmap:
--	dma_unmap_single(uart->dev, dma->phys, UARTDM_RX_SIZE, dma->dir);
-+	dma_unmap_single(uart->dev, dma->rx.phys, UARTDM_RX_SIZE, dma->dir);
- 
- sw_mode:
- 	/*
-@@ -955,7 +967,7 @@ static irqreturn_t msm_uart_irq(int irq, void *dev_id)
- 	}
- 
- 	if (misr & (MSM_UART_IMR_RXLEV | MSM_UART_IMR_RXSTALE)) {
--		if (dma->count) {
-+		if (dma->rx.count) {
- 			val = MSM_UART_CR_CMD_STALE_EVENT_DISABLE;
- 			msm_write(port, val, MSM_UART_CR);
- 			val = MSM_UART_CR_CMD_RESET_STALE_INT;
--- 
-2.44.0
-
+> Anyway I suspect the right thing to do is to define a 
+> titan_top_gdsc_clk with shared ops to "park" the GDSC clock to 19.2 
+> MHz instead of turning it off.
+>
+> You can get rid of the hard-coded always-on and indeed represent the 
+> clock in /sysfs - which is preferable IMO to just whacking registers 
+> to keep clocks always-on in probe anyway.
+>
+> Please try to define the titan_top_gdsc_clk as a shared_ops clock 
+> instead of hard coding to always on.
+>
+> If that doesn't work for some reason, then please fix your always-on 
+> logic in probe() to only make the clock fixed on, if really_probe() 
+> succeeds.
+>
+> ---
+> bod
 
