@@ -1,86 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-16516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16517-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 94455899C20
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 13:54:26 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E63E7899C29
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 13:57:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 29759284F73
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 11:54:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 23C421C221AB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 11:57:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A53D616190F;
-	Fri,  5 Apr 2024 11:54:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B2C716C69E;
+	Fri,  5 Apr 2024 11:57:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LCJdQ2M8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GSGnHcLJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4D36CDB7;
-	Fri,  5 Apr 2024 11:54:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B8C16190F;
+	Fri,  5 Apr 2024 11:57:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712318063; cv=none; b=fyTWhiPtcGnJVgO8gFh+RXllvCuYsYyCYPdiHg9QeF2CM1IcJzBAwMxjy3C7rtdUnKH++BUvwWXty46sGz+EKDDxaJCt5waGS2M4/FESm4Qu0deC3RKSz+U7QI6mA6slKKkuHgY+28iXX/EsvZ2uVZwZQuzv8zfS6LwqlRwX0Ug=
+	t=1712318226; cv=none; b=O37Pd8AVOhu3Iga6G9s9cd2tYY4nK6BBz2SbnP4YZmOX2XRPNzL4EkBqq2rvssaNux7P8rSumOS9PnMtbFwIkrlhcjyJBXmAvJEUR/j0aB+EMb4P6TkRF+1pCNi8SMVLuD1BiW+KOEs8QDsEnC8gRL/AKrg8S0M71Obd+I2xII8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712318063; c=relaxed/simple;
-	bh=xtWDTgQnqWwlGt4hSK509dlzyI5ov0XFlUekFt9Elt4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XyeLVNACqJ7nNsH1eZ7rUqu3emmQXhKNk2+EIujcCsdNLS3ZQEdrpmwGFAwHhxH4Vxf2nGOCkSnCJ2v3+obcLet8nNr/53t/+rtTDtCtGFmRRjwLUsN6BCEYd+4tSU68j8LFxtxkgvLrQU4AJDudCZmu9msWsHqizn8rmow/L7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LCJdQ2M8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E741C433F1;
-	Fri,  5 Apr 2024 11:54:21 +0000 (UTC)
+	s=arc-20240116; t=1712318226; c=relaxed/simple;
+	bh=EyPgOz5gZ3ITDc/ApJcrZJOJ71Fn77fOpA59i92QI5g=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=TSc1pGDcmeNbYs4qCOic9nYYXS7p6FBYvcQTSI07BiulbhoxNRM4Vusm92kt2BQJIoWId1n0yfsKKDBnsBjM7UR20/5Zh7uqzRWHzWuumUPx9NOHJw5+NyCzz2Xqpei9APkJpLZ91RawK08OgkZmyb5xYpjDViS2mWC3HCfV3uA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GSGnHcLJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64E76C433C7;
+	Fri,  5 Apr 2024 11:57:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712318063;
-	bh=xtWDTgQnqWwlGt4hSK509dlzyI5ov0XFlUekFt9Elt4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=LCJdQ2M8SudtctJXICiqEHb5IW5cnvqyV8c2DgU/C3Jb0sDEtWhdj2JCUPlhLgjCY
-	 HbfBMDYfXvCJTWsP3yzz6cKHc3uxyZyeflmjb2f/Ra0Mi6j4kh/J8q2XpzafXXlbYs
-	 lGHCzLlb51yurcbLyacoBP/nW05DysT8gpH1o3IJiTrB0tfxVTzcUJdWHlrTIGpL9d
-	 zCspJvFYsiq4ZSuBxF8m9I8Y5Kg2z1I8EFKaxzk5JxzkRAfwFsN7DlGeJVmaeAziy8
-	 tp+CnEtUtjF0gbTsGmVzQM42blDR4wehkLTGLoTy2glcFfSSNdsr2MEm//6hYPsZ7r
-	 +A2R5gx9VlNPA==
-Date: Fri, 5 Apr 2024 17:24:18 +0530
-From: Vinod Koul <vkoul@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Sanyog Kale <sanyog.r.kale@intel.com>,
-	linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-	linux-kernel@vger.kernel.org, Mark Brown <broonie@kernel.org>
-Subject: Re: [PATCH RESEND] soundwire: qcom: allow multi-link on newer devices
-Message-ID: <Zg_maukMaZXuJAWR@matsya>
-References: <20240403132716.325880-1-krzysztof.kozlowski@linaro.org>
- <Zg_fvU-SA9nwmzW8@matsya>
+	s=k20201202; t=1712318226;
+	bh=EyPgOz5gZ3ITDc/ApJcrZJOJ71Fn77fOpA59i92QI5g=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=GSGnHcLJbJVUx3kuCJ5JfvLlDybMhC76UtK6/GlxaFOm8YEPPW5Mi8tsnp8Z2xq3x
+	 4O1e2Vd3VIJyELnSlvY+A2Qzz63DBl5Lm1EKA5Ww1W2s+tVh4RQyNWPkjZvV+Ehiog
+	 KGLa0EY7EBlWlfzKMcwMqbYuecjXhStW60s5Kmwp2Az9XuhjnBuxnLQVgBO1Tk+uzO
+	 MxIprh9ePYROGXkidAbQQmG6GJ3mbaUYOlQ8nCwjNXht+2+BsjnKsua08zSaQVndAi
+	 +6hvF9TM5DGYBomCRX3NvD4IDqZOx1cfy5C3aMJmR6m3xLhBO3kW+VU3v+1mpP5WhH
+	 EYlY7EgfmQySg==
+From: Kalle Valo <kvalo@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Jeff Johnson <quic_jjohnson@quicinc.com>,  ath10k@lists.infradead.org,
+  linux-wireless@vger.kernel.org,  linux-arm-msm@vger.kernel.org,  Yongqin
+ Liu <yongqin.liu@linaro.org>
+Subject: Re: [PATCH 0/3] wifi: ath10k: fix board file loading for wcn3990
+ devices
+References: <20240130-wcn3990-board-fw-v1-0-738f7c19a8c8@linaro.org>
+	<CAA8EJprsjs8SWZmpTisyQcAZ9VC8g3_GEEc1hhp8bMZrm-hyaw@mail.gmail.com>
+Date: Fri, 05 Apr 2024 14:56:59 +0300
+In-Reply-To: <CAA8EJprsjs8SWZmpTisyQcAZ9VC8g3_GEEc1hhp8bMZrm-hyaw@mail.gmail.com>
+	(Dmitry Baryshkov's message of "Sat, 30 Mar 2024 06:48:35 +0200")
+Message-ID: <875xww3tv8.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Zg_fvU-SA9nwmzW8@matsya>
+Content-Type: text/plain
 
-On 05-04-24, 16:55, Vinod Koul wrote:
-> On 03-04-24, 15:27, Krzysztof Kozlowski wrote:
-> > Newer Qualcomm SoCs like X1E80100 might come with four speakers spread
-> > over two Soundwire controllers, thus they need a multi-link Soundwire
-> > stream runtime.
-> 
-> This does on apply on sdw/next.
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
 
-s/does/does not
+> On Tue, 30 Jan 2024 at 08:47, Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+>
+>>
+>> The ath10k driver fails to properly handle fallback from board-2.bin to
+>> board.bin for WCN3990 cards. This happens because the
+>> ath10k_hw_params_list doesn't include .fw.board* parameters for the
+>> WCN3990 platform.
+>>
+>> Add board data configuration for WCN3990. While we are at it, merge
+>> common pieces of BDF support: drop .board and .eboard names from struct
+>> ath10k_hw_params_fw and use the common name instead.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>> Dmitry Baryshkov (3):
+>>       wifi: ath10k: populate board data for WCN3990
+>>       wifi: ath10k: drop chip-specific board data file name
+>>       wifi: ath10k: drop fw.eboard file name
+>>
+>>  drivers/net/wireless/ath/ath10k/core.c      | 32 ++++-------------------------
+>>  drivers/net/wireless/ath/ath10k/hw.h        | 14 ++-----------
+>>  drivers/net/wireless/ath/ath10k/pci.c       | 10 ++++-----
+>>  drivers/net/wireless/ath/ath10k/targaddrs.h |  3 +++
+>>  4 files changed, 14 insertions(+), 45 deletions(-)
+>> ---
+>> base-commit: 596764183be8ebb13352b281a442a1f1151c9b06
+>> change-id: 20240129-wcn3990-board-fw-a2d97507a712
+>
+> Kalle, Jeff, is there anything pending on me on this series?
 
-> 
-> Pls rebase
-> 
-> -- 
-> ~Vinod
+This is in my queue (Deferred state):
+
+https://patchwork.kernel.org/project/linux-wireless/list/?series=821157&state=*&order=date
+
+Unfortunately there is not really much time for ath10k nowadays so there
+will be delays.
 
 -- 
-~Vinod
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
