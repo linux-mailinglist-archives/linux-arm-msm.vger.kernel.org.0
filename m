@@ -1,110 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-16564-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B413489A1FE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 17:59:05 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9739989A24D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 18:19:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6F4EC282538
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 15:59:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 36A0D1F21770
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 16:19:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A489616F917;
-	Fri,  5 Apr 2024 15:59:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 426F0171078;
+	Fri,  5 Apr 2024 16:19:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y3ZMNBmz"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="c5sxVIW5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EAF716F27B;
-	Fri,  5 Apr 2024 15:59:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5851146593;
+	Fri,  5 Apr 2024 16:19:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712332741; cv=none; b=HmKI7LIk9ZaEp+RMEQqc/PBYWVtOd7mblPcBU/kDudLBnEZQZ1Pdy4wVhoc+nSmEvCsfuQq5Tfs0HdP4BJEGo3TzeTiE2UdAaa9ducDKv+UoprqJ/rspxCl/VAvPMSXVYfXksL7JtvJ4mFYDYBwhm9c7af3U4yEOdiYFL/+9iaI=
+	t=1712333969; cv=none; b=hu0Igm1zWIkSB9LRghV0rAfTHlmOkRYk3XMb7bderWajJaR48xq9sqojqrsn2rkWY9A5bR927rNpn05nFm4LOU2jZB7SINb+7dGg/HVa8nRoEFmtzA3oJVrE71pFwNXgNd8n2xrC0y95m0k7w9Lc08Ia7zyLCJl8lSXsFll/J1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712332741; c=relaxed/simple;
-	bh=WPpqs+ByS572N6lsI54xqQu7Rf2BIKVicZBECmGPvak=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=CAKRZ8RKqSO+dqzIps7ZrSKq4G7uqEulH82JmwIl0+Y/pOouVMlZKlF8M/rdBHk2nNhVMY+aAaTe/gOf0kYCWlISzGYCmByhN7w9q7C87718ASGxthn57k5GIXJMkjbKisQMG2xq+genSeks6DX1IVUOrWWQHrW3m24zGuQ8gMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y3ZMNBmz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22394C433C7;
-	Fri,  5 Apr 2024 15:58:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712332741;
-	bh=WPpqs+ByS572N6lsI54xqQu7Rf2BIKVicZBECmGPvak=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Y3ZMNBmzeHVJJHI1+iwK2hE3R3lpt4x5GaXibepBvNo39F/hFCewUbtyRAsJC71IH
-	 JQFwfVmCI2egKtMeAQ48cdb+BxPVhjsvj8LBmuqUZF2QaXHio4LAYybXDgREOglifj
-	 8IZQHcmSdxogkivig662xG9IHSxZaX/NbrP+44qGbvP3gp2B9PdkE1Xs75LR5lQDEc
-	 +ob229m0F4mH8hC4hOhdDWWUQzm71ri3ZywuO2THfMXXDwI5sOPdTxQBGmYkOYoRhV
-	 D0xsEJLnk8h1i1ea29a2zt7g/1bK/J+jKZjR7MmxY0F8bAAX9E/80KBuiqzBYb+cgj
-	 qdpMvl7sK2YuQ==
-From: Arnd Bergmann <arnd@kernel.org>
-To: Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Arnd Bergmann <arnd@arndb.de>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Connor Abbott <cwabbott0@gmail.com>,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/msm: remove an unused-but-set variable
-Date: Fri,  5 Apr 2024 17:58:42 +0200
-Message-Id: <20240405155855.3672853-1-arnd@kernel.org>
-X-Mailer: git-send-email 2.39.2
+	s=arc-20240116; t=1712333969; c=relaxed/simple;
+	bh=TL72WFePHlEPGBmKx6y2Vwftq03HD1g8Xm9Z08m3Tow=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=N8U+GIntDZXwaoHp3A7YtHRYIkATS3RcpoEhLC62ZMUbBM9V5M3ypuC+tvDdi/neac6k/FXX01aYZg/Cfqsa757B+SltnVXQvcYWekTtmrwa6OOmxaM9BnYW2GFzySdQTTlNH6Cba4Z0Ra/cfaHPKYQxXu6FvKgiuA5qn8Ryp8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=c5sxVIW5; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 435CCNTw015228;
+	Fri, 5 Apr 2024 16:19:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=9ykimK+h1oJPJJ2Us+V+2GFSTbKBZtDOXlF3J8WiOk4=; b=c5
+	sxVIW5dyhE8lyU0fcJzi31msrYAkZAHfSQ11qV9LNhBjpe5nsw3fOfpxBcLbe2XQ
+	irHDmKHQc+cYhxsLeT8SKZ4Awbz6D9Y1Paod9U28LmY6jDmIikuoir0762GpmrYa
+	iEKU6IBANn9gBsOI3oV/NQEhvBy14TvygDx0wG4zorVvuJAF4XESU+0zDq6fHhgn
+	wD2WMQIeNikxw0ltNgQnQarlmzp7BIoYnrHX6dwhcEbo7OifLlHNOsyDCADibMS+
+	+HP4OTq2IS9u6x7pTWJf+DRpgiGL8G19vdnOJrrIPVdY7Yf/766Kb7QEKMGLxvEZ
+	uXm1MGIt20pf2z3Wdqdw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xaaj19fjv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 05 Apr 2024 16:19:23 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 435GJDDc017750
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 5 Apr 2024 16:19:13 GMT
+Received: from [10.216.11.24] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Fri, 5 Apr 2024
+ 09:19:10 -0700
+Message-ID: <b6785706-625d-0ecf-3ada-152fe06474ac@quicinc.com>
+Date: Fri, 5 Apr 2024 21:49:05 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH] media: venus: fix use after free in vdec_close
+Content-Language: en-US
+To: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia
+	<quic_vgarodia@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad
+ Dybcio" <konrad.dybcio@linaro.org>,
+        Mauro Carvalho Chehab
+	<mchehab@kernel.org>
+CC: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1712332319-11767-1-git-send-email-quic_dikshita@quicinc.com>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <1712332319-11767-1-git-send-email-quic_dikshita@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: x03A3mWb9iP_8FfQk04LeJ69ht-T1qVU
+X-Proofpoint-GUID: x03A3mWb9iP_8FfQk04LeJ69ht-T1qVU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-05_17,2024-04-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 impostorscore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0
+ mlxlogscore=999 suspectscore=0 malwarescore=0 spamscore=0 mlxscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404050116
 
-From: Arnd Bergmann <arnd@arndb.de>
+Hello All,
 
-The modification to a6xx_get_shader_block() had no effect other
-than causing a warning:
+Please ignore this patch, sent by mistake.
+Sorry for spamming.
 
-drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:843:6: error: variable 'out' set but not used [-Werror,-Wunused-but-set-variable]
-        u64 out = dumper->iova + A6XX_CD_DATA_OFFSET;
-
-Revert this part of the previous patch.
-
-Fixes: 64d6255650d4 ("drm/msm: More fully implement devcoredump for a7xx")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
----
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 3 ---
- 1 file changed, 3 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-index 1f5245fc2cdc..d4e1ebfcb021 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -840,7 +840,6 @@ static void a6xx_get_shader_block(struct msm_gpu *gpu,
- 		struct a6xx_crashdumper *dumper)
- {
- 	u64 *in = dumper->ptr;
--	u64 out = dumper->iova + A6XX_CD_DATA_OFFSET;
- 	size_t datasize = block->size * A6XX_NUM_SHADER_BANKS * sizeof(u32);
- 	int i;
- 
-@@ -853,8 +852,6 @@ static void a6xx_get_shader_block(struct msm_gpu *gpu,
- 
- 		in += CRASHDUMP_READ(in, REG_A6XX_HLSQ_DBG_AHB_READ_APERTURE,
- 			block->size, dumper->iova + A6XX_CD_DATA_OFFSET);
--
--		out += block->size * sizeof(u32);
- 	}
- 
- 	CRASHDUMP_FINI(in);
--- 
-2.39.2
-
+On 4/5/2024 9:21 PM, Dikshita Agarwal wrote:
+> There appears to be a possible use after free with vdec_close().
+> The firmware will add buffer release work to the work queue through
+> HFI callbacks as a normal part of decoding. Randomly closing the
+> decoder device from userspace during normal decoding can incur
+> a read after free for inst.
+> 
+> Fix it by cancelling the delayed work in vdec_close.
+> 
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> ---
+>  drivers/media/platform/qcom/venus/vdec.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+> index 29130a9..8dda46a 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -1747,6 +1747,7 @@ static int vdec_close(struct file *file)
+>  
+>  	vdec_pm_get(inst);
+>  
+> +	cancel_delayed_work_sync(&inst->delayed_process_work);
+>  	v4l2_m2m_ctx_release(inst->m2m_ctx);
+>  	v4l2_m2m_release(inst->m2m_dev);
+>  	vdec_ctrl_deinit(inst);
 
