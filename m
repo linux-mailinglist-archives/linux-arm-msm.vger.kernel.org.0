@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-16492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16493-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id BFA0989983B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 10:42:28 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E12A389983D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 10:42:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5FAD6B220DD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 08:42:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1E5111C223D2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 08:42:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE50F160795;
-	Fri,  5 Apr 2024 08:41:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 282EE1607B4;
+	Fri,  5 Apr 2024 08:41:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gE8OTgcN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MC3IN0Nz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5EF815FD0A
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Apr 2024 08:41:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DBD5160784
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Apr 2024 08:41:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712306502; cv=none; b=HfoEUPXY+OX2FDI7dJSDtegThGPZhgaPLJ3CSSy1lY3IpXx+UmkOBgAAkTWoEhmmquolmQx34zBrrZCuEt3YEj7YbqHpH5VHiKS1lINwkEbSd/Hh9nzXtr3UOHqUTD/m0OxE3cl3mvadgGjVx44Ps15l8//pAf2Bs2yffLX4gD0=
+	t=1712306504; cv=none; b=j0sM0QQLsBzn84XyvNWogfKHKxMKd1eVxFaDWVcAX5hzlcGUbXNbdgr+K8D58rHmCXXmx1LpqkIC0fAREYT4Y4wHZ820lGadS6xjafCni0LkJPNF3sH7wXpeTVrSZqi4g5iJx4cn8cHreSkDQeKBSnBF5QghcV0Rtgx1P69WzTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712306502; c=relaxed/simple;
-	bh=Ou8aZn8bQkVD/m5r7MVoDTV+g3hs5GCvF5tL5IVBhCQ=;
+	s=arc-20240116; t=1712306504; c=relaxed/simple;
+	bh=y9m5OXZo9fWQbl7jhCOhUIQGZ8nvXgwDyvDJJqVcd6w=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=uKXX+Z9nidBUXwtOX6Zhh2MWYbPgswPqnmm86hRZ8fQASE6F4knVRDXNAvx4ShylBW/CRj7NhNcheLl67pVC6NowgC2HEXA0zZeNaqebqR7y2D8d9+BptK4j3tNMJrjnU9nFnBC9Rw7aPYAIHQjkJc6QgrWahTAyyoNn8+qwLU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gE8OTgcN; arc=none smtp.client-ip=209.85.208.169
+	 In-Reply-To:To:Cc; b=aP79TtFIyd+/Q/ClX32Bsr1lf7RV4BRJDkMr/985CklRLisPSsZ59tJs1bIZAA5+bN7BBTd3tUSKnlvkiMVSm+MogAAaHv6omFF6qXLHzr+N9ThsLWQk5KrDBVo0qgX638UuOF7Ns/PI8aNEbJ/ZdD4Bc5n/mPASYv/O0MeQNbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MC3IN0Nz; arc=none smtp.client-ip=209.85.208.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2d4515ec3aaso16566231fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Apr 2024 01:41:40 -0700 (PDT)
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2d68c6a4630so22454911fa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Apr 2024 01:41:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712306499; x=1712911299; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1712306500; x=1712911300; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=yrIDGJdQyN3Qs3kdMSMKwxSvCzhRkNvUk3FQRrR3UEA=;
-        b=gE8OTgcNLErkuQ8y+kJbeTs94nxKrZ9pGlCQa93MwM+Syy+yX6RF6FneX4tmxSXzO5
-         SayAPZXLlMdr9+lJf1Mje9YA8+MZl9FIAX1Miz/wqRP+tN4fXTEDjFnaoZF7pmpCF6vS
-         wxgPqJFQuTqLqdpxBSaHU95EE/V57R8RmpN9HJEeAJpmM9T99myuxl2RFpMh5IdhMs2M
-         9ja2ctoWFCNTmc0CDOK+FZ2vt93ZViFq7o4Z+9TN1Ug3JoD4+IroWXsw2qT/YDLC7are
-         r9u/jVFB8FbEmGEWIm4a0iLi99PAQCLfWL6u1viFfgU2csMrNZJC+nal13zSQD/k+Rce
-         jkew==
+        bh=spb6697ES9tKN5pBQWfHJLIqG/6QeQNQA/25IsUNPBw=;
+        b=MC3IN0NznIPimP059GAoorxDufnMw6vHnShnHSGyiNEAbksPuz+PdxonUnJQw0u0Ue
+         U4caCZ4ZKff4mO7xHtZ8vxT8w0o1g+Ey4w/Cs5n4zSZErxAXcPo8yP0dNI7maHPNgi6H
+         Fq6KIz82Ak35yXChywblKg4f5FC3hQm0vF4LfAQXtwLOViUj5N4mv3UvdDzEjAflMUbk
+         siEm4ymLtIHsY/yr69H20XJ4AA4bdZTFKReNxRhrg0IM7wGT9X2Ki961F+ag4xcS0or1
+         20EQZPq6iOlnC0UbgPz5IhoQ7YhriW5xMETE8tCFI9vb3LRkG3lPWJCLUaFULrx+ST9J
+         leGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712306499; x=1712911299;
+        d=1e100.net; s=20230601; t=1712306500; x=1712911300;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yrIDGJdQyN3Qs3kdMSMKwxSvCzhRkNvUk3FQRrR3UEA=;
-        b=hXhInKi26kECai2Psj8pE1MQOsOvoTFU6jsbXV1XiGK87cPkJX6Z/PHaCvRpyaaf+A
-         IFIlvfVpaL5M64g0+CFM6jA1FzpzMp6vvJ6d6FHQSIL2ApGLM6ms/8y7E+EGtLaDOJSy
-         UIGxvzYsMdQLTOiy4xqfv5cadS6D8GdLVEHLnSVHKdDBMgYqV5oLh7tXQGHVrP1Coe5R
-         c+ySvoq/43+9wSg5/FBZzbqhATmVvcWrUGIfk+uT9zUx5JOYniRu6GFaPFE1/LlecOgn
-         E++TSTEiYzQMC5bERwBslfLFl66EiB+K4Ld1WkuANZS+p66mwqEczu1FaqX0vSh6yJHX
-         iECg==
-X-Gm-Message-State: AOJu0Yw8tPV0QrhEKQnA6FNITh+pdKOC8EpCHLw/lYxAloUf4FAvN7jm
-	1OxznNkmbcdbocSHjSQdwaGeg/Fwr3AJQlOi5+E7ov1CwWT5Ln8XBkefhSc6rEA=
-X-Google-Smtp-Source: AGHT+IFBziklUtc+FbW+7LRtWCnnN6zKDAY/PIgp9Ri894zGj6uc53DW8wEcUxIz/7mcsRZTdjd/7g==
-X-Received: by 2002:a05:651c:1047:b0:2d6:fc27:2e9b with SMTP id x7-20020a05651c104700b002d6fc272e9bmr485092ljm.25.1712306499038;
-        Fri, 05 Apr 2024 01:41:39 -0700 (PDT)
+        bh=spb6697ES9tKN5pBQWfHJLIqG/6QeQNQA/25IsUNPBw=;
+        b=c6QLUPkYH160J9QYVHqCzA2OSlLVmqYtU7RRBK6k3dVRCb1hube5TalEG/1Jmi4tYg
+         9ljBstm7oWs0hkXljxfUMK3icv1NC7tkN5exsUPzjda+dSj8vIHnmArhIvO+CmHr9B/x
+         Y6NHlXomP0YhKLy4ojdM87RwGym2LrhWInHlDTkP5/AUFCRW4hA/3NqBybg6tcZWHHw1
+         uUznClnVI22FDCrZcpdQ3DUdnLNzzBTYzWIrRl2+JDIygNtbQtissK6ah6vDP+NW+P8O
+         cb1MGMS3gNwZUMAb8cDmHQ8KU6Rb77Rz7Sgbe1kpnQeG5XKkV5T0MPraXI0/OAyf5ZeG
+         WMTQ==
+X-Gm-Message-State: AOJu0YwZ1XaVNnfurbcuq6zOoQytNkUToM+j9gNm3XW3WP5BZZ218lbX
+	yQJMVOnnYbd6oLJnaYNltkaJELGuOG0126wklPPNBt+4/Bg72OJwVGSngwOIRcs=
+X-Google-Smtp-Source: AGHT+IEthjZxoBWTyYrykDhAmO05yKCnP9Kxxsc14FPETpPEiRbZkTbG7cBkSGtbDOlRlysEyAg8fw==
+X-Received: by 2002:a2e:b282:0:b0:2d6:d7ff:5d40 with SMTP id 2-20020a2eb282000000b002d6d7ff5d40mr854824ljx.38.1712306500761;
+        Fri, 05 Apr 2024 01:41:40 -0700 (PDT)
 Received: from [127.0.1.1] (netpanel-87-246-222-101.pol.akademiki.lublin.pl. [87.246.222.101])
-        by smtp.gmail.com with ESMTPSA id y3-20020a05651c020300b002d429304a20sm116880ljn.8.2024.04.05.01.41.37
+        by smtp.gmail.com with ESMTPSA id y3-20020a05651c020300b002d429304a20sm116880ljn.8.2024.04.05.01.41.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Apr 2024 01:41:38 -0700 (PDT)
+        Fri, 05 Apr 2024 01:41:40 -0700 (PDT)
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Fri, 05 Apr 2024 10:41:32 +0200
-Subject: [PATCH 4/6] drm/msm/adreno: Implement SMEM-based speed bin
+Date: Fri, 05 Apr 2024 10:41:33 +0200
+Subject: [PATCH 5/6] drm/msm/adreno: Add speedbin data for SM8550 / A740
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,7 +77,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240405-topic-smem_speedbin-v1-4-ce2b864251b1@linaro.org>
+Message-Id: <20240405-topic-smem_speedbin-v1-5-ce2b864251b1@linaro.org>
 References: <20240405-topic-smem_speedbin-v1-0-ce2b864251b1@linaro.org>
 In-Reply-To: <20240405-topic-smem_speedbin-v1-0-ce2b864251b1@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, Rob Clark <robdclark@gmail.com>, 
@@ -93,168 +93,38 @@ Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
  Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.13-dev-0438c
 
-On recent (SM8550+) Snapdragon platforms, the GPU speed bin data is
-abstracted through SMEM, instead of being directly available in a fuse.
-
-Add support for SMEM-based speed binning, which includes getting
-"feature code" and "product code" from said source and parsing them
-to form something that lets us match OPPs against.
+Add speebin data for A740, as found on SM8550 and derivative SoCs.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c      |  8 +++---
- drivers/gpu/drm/msm/adreno/adreno_device.c |  2 ++
- drivers/gpu/drm/msm/adreno/adreno_gpu.c    | 39 +++++++++++++++++++++++++++---
- drivers/gpu/drm/msm/adreno/adreno_gpu.h    | 12 ++++++---
- 4 files changed, 51 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 4cbdfabbcee5..6776fd80f7a6 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -2890,13 +2890,15 @@ static u32 fuse_to_supp_hw(const struct adreno_info *info, u32 fuse)
- 	return UINT_MAX;
- }
- 
--static int a6xx_set_supported_hw(struct device *dev, const struct adreno_info *info)
-+static int a6xx_set_supported_hw(struct adreno_gpu *adreno_gpu,
-+				 struct device *dev,
-+				 const struct adreno_info *info)
- {
- 	u32 supp_hw;
- 	u32 speedbin;
- 	int ret;
- 
--	ret = adreno_read_speedbin(dev, &speedbin);
-+	ret = adreno_read_speedbin(adreno_gpu, dev, &speedbin);
- 	/*
- 	 * -ENOENT means that the platform doesn't support speedbin which is
- 	 * fine
-@@ -3056,7 +3058,7 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
- 
- 	a6xx_llc_slices_init(pdev, a6xx_gpu, is_a7xx);
- 
--	ret = a6xx_set_supported_hw(&pdev->dev, config->info);
-+	ret = a6xx_set_supported_hw(adreno_gpu, &pdev->dev, config->info);
- 	if (ret) {
- 		a6xx_destroy(&(a6xx_gpu->base.base));
- 		return ERR_PTR(ret);
 diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index c3703a51287b..901ef767e491 100644
+index 901ef767e491..c976a485aef2 100644
 --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
 +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -6,6 +6,8 @@
-  * Copyright (c) 2014,2017 The Linux Foundation. All rights reserved.
-  */
- 
-+#include <linux/soc/qcom/socinfo.h>
-+
- #include "adreno_gpu.h"
- 
- bool hang_debug = false;
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index 074fb498706f..0e4ff532ac3c 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -21,6 +21,9 @@
- #include "msm_gem.h"
- #include "msm_mmu.h"
- 
-+#include <linux/soc/qcom/smem.h>
-+#include <linux/soc/qcom/socinfo.h>
-+
- static u64 address_space_size = 0;
- MODULE_PARM_DESC(address_space_size, "Override for size of processes private GPU address space");
- module_param(address_space_size, ullong, 0600);
-@@ -1057,9 +1060,37 @@ void adreno_gpu_ocmem_cleanup(struct adreno_ocmem *adreno_ocmem)
- 			   adreno_ocmem->hdl);
- }
- 
--int adreno_read_speedbin(struct device *dev, u32 *speedbin)
-+int adreno_read_speedbin(struct adreno_gpu *adreno_gpu,
-+			 struct device *dev, u32 *speedbin)
- {
--	return nvmem_cell_read_variable_le_u32(dev, "speed_bin", speedbin);
-+	u32 fcode, pcode;
-+	int ret;
-+
-+	/* Try reading the speedbin via a nvmem cell first */
-+	ret = nvmem_cell_read_variable_le_u32(dev, "speed_bin", speedbin);
-+	if (!ret && ret != -EINVAL)
-+		return ret;
-+
-+	ret = qcom_smem_get_feature_code(&fcode);
-+	if (ret) {
-+		dev_err(dev, "Couldn't get feature code from SMEM!\n");
-+		return ret;
-+	}
-+
-+	ret = qcom_smem_get_product_code(&pcode);
-+	if (ret) {
-+		dev_err(dev, "Couldn't get product code from SMEM!\n");
-+		return ret;
-+	}
-+
-+	/* Don't consider fcode for external feature codes */
-+	if (fcode <= SOCINFO_FC_EXT_RESERVE)
-+		fcode = SOCINFO_FC_UNKNOWN;
-+
-+	*speedbin = FIELD_PREP(ADRENO_SKU_ID_PCODE, pcode) |
-+		    FIELD_PREP(ADRENO_SKU_ID_FCODE, fcode);
-+
-+	return ret;
- }
- 
- int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
-@@ -1098,9 +1129,9 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
- 			devm_pm_opp_set_clkname(dev, "core");
- 	}
- 
--	if (adreno_read_speedbin(dev, &speedbin) || !speedbin)
-+	if (adreno_read_speedbin(adreno_gpu, dev, &speedbin) || !speedbin)
- 		speedbin = 0xffff;
--	adreno_gpu->speedbin = (uint16_t) (0xffff & speedbin);
-+	adreno_gpu->speedbin = speedbin;
- 
- 	gpu_name = devm_kasprintf(dev, GFP_KERNEL, "%"ADRENO_CHIPID_FMT,
- 			ADRENO_CHIPID_ARGS(config->chip_id));
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index 460b399be37b..1770a9e20484 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -81,7 +81,12 @@ extern const struct adreno_reglist a612_hwcg[], a615_hwcg[], a630_hwcg[], a640_h
- extern const struct adreno_reglist a660_hwcg[], a690_hwcg[], a702_hwcg[], a730_hwcg[], a740_hwcg[];
- 
- struct adreno_speedbin {
--	uint16_t fuse;
-+	/* <= 16-bit for NVMEM fuses, 32b for SOCID values */
-+	uint32_t fuse;
-+#define ADRENO_SKU_ID_PCODE		GENMASK(31, 16)
-+#define ADRENO_SKU_ID_FCODE		GENMASK(15, 0)
-+#define ADRENO_SKU_ID(pcode, fcode)	(pcode << 16 | fcode)
-+
- 	uint16_t speedbin;
- };
- 
-@@ -137,7 +142,7 @@ struct adreno_gpu {
- 	struct msm_gpu base;
- 	const struct adreno_info *info;
- 	uint32_t chip_id;
--	uint16_t speedbin;
-+	uint32_t speedbin;
- 	const struct adreno_gpu_funcs *funcs;
- 
- 	/* interesting register offsets to dump: */
-@@ -520,7 +525,8 @@ int adreno_fault_handler(struct msm_gpu *gpu, unsigned long iova, int flags,
- 			 struct adreno_smmu_fault_info *info, const char *block,
- 			 u32 scratch[4]);
- 
--int adreno_read_speedbin(struct device *dev, u32 *speedbin);
-+int adreno_read_speedbin(struct adreno_gpu *adreno_gpu,
-+			 struct device *dev, u32 *speedbin);
- 
- /*
-  * For a5xx and a6xx targets load the zap shader that is used to pull the GPU
+@@ -570,6 +570,20 @@ static const struct adreno_info gpulist[] = {
+ 		.zapfw = "a740_zap.mdt",
+ 		.hwcg = a740_hwcg,
+ 		.address_space_size = SZ_16G,
++		.speedbins = ADRENO_SPEEDBINS(
++			{ ADRENO_SKU_ID(SOCINFO_PC_UNKNOWN, SOCINFO_FC_AC), 0 },
++			{ ADRENO_SKU_ID(SOCINFO_PC_UNKNOWN, SOCINFO_FC_AF), 0 },
++			{ ADRENO_SKU_ID(SOCINFO_PCn(1), SOCINFO_FC_UNKNOWN), 1 },
++			{ ADRENO_SKU_ID(SOCINFO_PCn(2), SOCINFO_FC_Yn(0x0)), 0 },
++			{ ADRENO_SKU_ID(SOCINFO_PCn(2), SOCINFO_FC_Yn(0x2)), 0 },
++			{ ADRENO_SKU_ID(SOCINFO_PCn(4), SOCINFO_FC_Yn(0x0)), 0 },
++			{ ADRENO_SKU_ID(SOCINFO_PCn(4), SOCINFO_FC_Yn(0x2)), 0 },
++			{ ADRENO_SKU_ID(SOCINFO_PCn(6), SOCINFO_FC_Yn(0x0)), 0 },
++			{ ADRENO_SKU_ID(SOCINFO_PCn(6), SOCINFO_FC_Yn(0x1)), 0 },
++			{ ADRENO_SKU_ID(SOCINFO_PCn(6), SOCINFO_FC_Yn(0xd)), 0 },
++			{ ADRENO_SKU_ID(SOCINFO_PCn(6), SOCINFO_FC_Yn(0xe)), 0 },
++		),
++		.default_speedbin = 1,
+ 	}, {
+ 		.chip_ids = ADRENO_CHIP_IDS(0x43051401), /* "C520v2" */
+ 		.family = ADRENO_7XX_GEN3,
 
 -- 
 2.40.1
