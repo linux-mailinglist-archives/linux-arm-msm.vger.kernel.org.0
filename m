@@ -1,82 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-16450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB0948992B6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 02:57:01 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 80AA08992CB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 03:26:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 13D8D289512
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 00:57:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1D7871F27220
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 01:26:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5893263A5;
-	Fri,  5 Apr 2024 00:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0658279E3;
+	Fri,  5 Apr 2024 01:26:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="om2fI64V"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aCIGYXMU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B9679C4;
-	Fri,  5 Apr 2024 00:56:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C23D7484;
+	Fri,  5 Apr 2024 01:25:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712278617; cv=none; b=DAcRCTZGhwi5M0wP6v5bf8Maq54oIebQiuZqeiIDQKN64Ehry8WjxNd0/X5SIHYiuWBK8dBRz/JH5dfE4K9qJ6O4NPnCZXhFb/r7kDwLCHBWa0crE83//22kbkskNE+FXM28z0lc75CQLzSpK/okL5wjcfyya350dX3pE7zxd04=
+	t=1712280359; cv=none; b=DcVF3FEqRhWcMfG4XtadDYIfUn0LHiV5DyTdKnJqQGgXSRV/RkFh2lGwxZKnw+C3vVfCHJCZjYrb6zP/MXDbzFwCeXv2MAfOJI19pE9zNDrhDtnlMy6Q0op7LVQidHteBOYlWWHImataZZSnZD8MZ5CHQTWJ3Ppr25suf3fngJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712278617; c=relaxed/simple;
-	bh=FZuii16XQKVemvccVBKbsheLVEBX2Q/o6uOv8SQjsgo=;
+	s=arc-20240116; t=1712280359; c=relaxed/simple;
+	bh=VxNzn9NzUzbYGOkFQsAjckg4Rrz38PKu14VlBGuKaPw=;
 	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LfZhO89t7d8jWtPsxVsvbA+cf7rbLE04zR7uMdOJliFFIZKbVTJ9T+wUos/xJ03a8Tux79534371+T7OVIAYOj6SpVOgiAa6qaPuTB028FKuhs+0dkEVlayhSM4MJKLDQch9TwiZGRyp/lqXXzXCp5ITsNr3sQ6KZB7fsbtFgW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=om2fI64V; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=Mp9nXFExocriKMULA37FGeVOkd/8wo+DZQ7CimgtLZZdiZJVEz6ErG7qTuNHq8pGjfHSPzBReaRpVxn9K/NnAVjtPzkVAe8iDBy04nugbLyAw6JwG+To1YpqRHIUfCg26wFK+/wcCcymAkmze28on8ArakqRM5L33KRdTKrXQTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aCIGYXMU; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4350J13j005756;
-	Fri, 5 Apr 2024 00:56:35 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4350oPk3007803;
+	Fri, 5 Apr 2024 01:25:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=yzd5coMWPCOrv90ZYnD/R
-	+hJ4RHF+K3JHTaV7pkE81I=; b=om2fI64V9ITgC7JRGtlO2MGJatVkOXh8lyvXp
-	rH37zAzd5PaYljPwBv+49VDWwT48ezX6YojpBnu5i8yb/MK6ptTqA+F1gvTo4jXD
-	+KwF1D/c0Wgb5m8HsvOq7vsZZibePLSpQiB4izKfQnkkUGXLavwdy5UzId0zrHCa
-	UK2MRlnTYbC/Oghx3Qc6egA3RgOsgSWgOU3kKnVteK5/DvXy1HEAOE9IHh1AlFMC
-	oj8kMbE04ZG6pMNLCh11IbCGMrYPAGmlDhVjB2jFcIrdmY4rRIcaAw1LjtQerYYU
-	36bVRua0uRcdYw/Zu5znQkQzFsBYTOAdrYtrWyeV9FTGYH8Kg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x9ep4tudq-1
+	:content-type:in-reply-to; s=qcppdkim1; bh=O5dtNG1z2cvTQQaBaWNF2
+	qI0ydnL32rMZCbAqJKz7O4=; b=aCIGYXMUtcLAYxyc7NGn1fX/Vnf5LDCK3yKMM
+	Qzc31yat8acZy0xBrqkSEQXfLuBiBaIAa34CCGlUQ/7mRxkDNCkHuATFrgAwArk8
+	2rkO7WWtvGfeRJ6wpHWjGrltmbCVPi8LZ/5V7qQx+cutnqkdmE9ZmFlzOISg0Vwh
+	0jTr7IGeCl5uh1Syjx6ZG/R9JylJU1ffuj+ChXg9KDjWRbrCgkCcEUce0+L+GDYr
+	HrTSYaBOk0FyRIavIOtpZr88MLV/UeVXyfpiPLkvzVkFCQZI+5276j5aWQeEUwfb
+	iFfeyjP9+mg7jENdaiuR+8BEQB9ie4oLkWuNXpT7kBm1kn4uw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x9en0jwdt-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 05 Apr 2024 00:56:35 +0000 (GMT)
+	Fri, 05 Apr 2024 01:25:50 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4350uYDH031715
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4351PnDl026050
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 5 Apr 2024 00:56:34 GMT
+	Fri, 5 Apr 2024 01:25:49 GMT
 Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
  nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Thu, 4 Apr 2024 17:56:33 -0700
-Date: Thu, 4 Apr 2024 17:56:32 -0700
+ 15.2.1544.4; Thu, 4 Apr 2024 18:25:49 -0700
+Date: Thu, 4 Apr 2024 18:25:48 -0700
 From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: Stephen Boyd <swboyd@chromium.org>
-CC: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
-        <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>,
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Johan Hovold
+	<johan@kernel.org>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring
+	<robh@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+        Wesley Cheng
+	<quic_wcheng@quicinc.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        <linux-phy@lists.infradead.org>, <freedreno@lists.freedesktop.org>,
-        "Douglas
- Anderson" <dianders@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Neil Armstrong
-	<neil.armstrong@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        "Steev
- Klimaszewski" <steev@kali.org>,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH] phy: qcom: qmp-combo: Fix register base for
- QSERDES_DP_PHY_MODE
-Message-ID: <Zg9MQOAZpsndSNtb@hu-bjorande-lv.qualcomm.com>
-References: <20240405000111.1450598-1-swboyd@chromium.org>
+        "Conor
+ Dooley" <conor+dt@kernel.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Felipe Balbi <balbi@kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_ppratap@quicinc.com>,
+        <quic_jackp@quicinc.com>, Johan Hovold <johan+linaro@kernel.org>
+Subject: Re: [PATCH v19 2/9] usb: dwc3: core: Access XHCI address space
+ temporarily to read port info
+Message-ID: <Zg9THGBRuppfw4y+@hu-bjorande-lv.qualcomm.com>
+References: <20240404051229.3082902-1-quic_kriskura@quicinc.com>
+ <20240404051229.3082902-3-quic_kriskura@quicinc.com>
+ <Zg5VDnbaaBXJyRjV@hovoldconsulting.com>
+ <f16e1280-8f7e-40a7-ab45-9acaeb3e90cb@linaro.org>
+ <2024040455-sitting-dictator-170c@gregkh>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,76 +92,75 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20240405000111.1450598-1-swboyd@chromium.org>
+In-Reply-To: <2024040455-sitting-dictator-170c@gregkh>
 X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: BRft6WYWzjarLGvoLWWgOBcAExcf0m0e
-X-Proofpoint-GUID: BRft6WYWzjarLGvoLWWgOBcAExcf0m0e
+X-Proofpoint-ORIG-GUID: vG80GPtb9uPykzBRJzi3geUKM6jy9qO7
+X-Proofpoint-GUID: vG80GPtb9uPykzBRJzi3geUKM6jy9qO7
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-04_21,2024-04-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
- bulkscore=0 impostorscore=0 clxscore=1011 spamscore=0 mlxscore=0
- priorityscore=1501 lowpriorityscore=0 suspectscore=0 adultscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404050004
+ definitions=2024-04-04_22,2024-04-04_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ clxscore=1011 impostorscore=0 adultscore=0 priorityscore=1501 phishscore=0
+ mlxscore=0 bulkscore=0 mlxlogscore=999 spamscore=0 malwarescore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404050009
 
-On Thu, Apr 04, 2024 at 05:01:03PM -0700, Stephen Boyd wrote:
-> The register base that was used to write to the QSERDES_DP_PHY_MODE
-> register was 'dp_dp_phy' before commit 815891eee668 ("phy:
-> qcom-qmp-combo: Introduce orientation variable"). There isn't any
-> explanation in the commit why this is changed, so I suspect it was an
-> oversight or happened while being extracted from some other series.
+On Thu, Apr 04, 2024 at 02:58:29PM +0200, Greg Kroah-Hartman wrote:
+> On Thu, Apr 04, 2024 at 10:07:27AM +0200, Krzysztof Kozlowski wrote:
+> > On 04/04/2024 09:21, Johan Hovold wrote:
+> > > On Thu, Apr 04, 2024 at 10:42:22AM +0530, Krishna Kurapati wrote:
+> > >  
+> > >> +static int dwc3_get_num_ports(struct dwc3 *dwc)
+> > >> +{
+> > >> +	void __iomem *base;
+> > >> +	u8 major_revision;
+> > >> +	u32 offset;
+> > >> +	u32 val;
+> > >> +
+> > >> +	/*
+> > >> +	 * Remap xHCI address space to access XHCI ext cap regs since it is
+> > >> +	 * needed to get information on number of ports present.
+> > >> +	 */
+> > >> +	base = ioremap(dwc->xhci_resources[0].start,
+> > >> +		       resource_size(&dwc->xhci_resources[0]));
+> > >> +	if (!base)
+> > >> +		return PTR_ERR(base);
+> > > 
+> > > This is obviously still broken. You need to update the return value as
+> > > well.
+> > > 
+> > > Fix in v20.
+> > 
+> > If one patchset reaches 20 versions, I think it is time to stop and
+> > really think from the beginning, why issues keep appearing and reviewers
+> > are still not happy.
+> > 
+> > Maybe you did not perform extensive internal review, which you are
+> > encouraged to by your own internal policies, AFAIR. Before posting next
+> > version, please really get some internal review first.
+> 
+> Also get those internal reviewers to sign-off on the commits and have
+> that show up when you post them next.  That way they are also
+> responsible for this patchset, it's not fair that they are making you do
+> all the work here :)
+> 
 
-Thanks for catching that, I wrote that patch long before Johan did the
-rename of "pcs" to "dp_dp_phy", and must have missed that while later
-rebasing the patch.
+I like this idea and I'm open to us changing our way of handling this.
 
-Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+But unless such internal review brings significant input to the
+development I'd say a s-o-b would take the credit from the actual
+author.
+
+We've discussed a few times about carrying Reviewed-by et al from the
+internal reviews, but as maintainer I dislike this because I'd have no
+way to know if a r-b on vN means the patch was reviewed, or if it was
+just "accidentally" carried from v(N-1).
+But it might be worth this risk, is this something you think would be
+appropriate?
 
 Regards,
 Bjorn
-
-> Oddly the value being 0x4c or 0x5c doesn't seem to matter for me, so I
-> suspect this is dead code, but that can be fixed in another patch. It's
-> not good to write to the wrong register space, and maybe some other
-> version of this phy relies on this.
-> 
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: Neil Armstrong <neil.armstrong@linaro.org>
-> Cc: Abel Vesa <abel.vesa@linaro.org>
-> Cc: Steev Klimaszewski <steev@kali.org>
-> Cc: Johan Hovold <johan+linaro@kernel.org>
-> Cc: Bjorn Andersson <quic_bjorande@quicinc.com>
-> Fixes: 815891eee668 ("phy: qcom-qmp-combo: Introduce orientation variable")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> index 7d585a4bbbba..746d009d702b 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> @@ -2150,9 +2150,9 @@ static bool qmp_combo_configure_dp_mode(struct qmp_combo *qmp)
->  	writel(val, qmp->dp_dp_phy + QSERDES_DP_PHY_PD_CTL);
->  
->  	if (reverse)
-> -		writel(0x4c, qmp->pcs + QSERDES_DP_PHY_MODE);
-> +		writel(0x4c, qmp->dp_dp_phy + QSERDES_DP_PHY_MODE);
->  	else
-> -		writel(0x5c, qmp->pcs + QSERDES_DP_PHY_MODE);
-> +		writel(0x5c, qmp->dp_dp_phy + QSERDES_DP_PHY_MODE);
->  
->  	return reverse;
->  }
-> 
-> base-commit: 4cece764965020c22cff7665b18a012006359095
-> -- 
-> https://chromeos.dev
-> 
 
