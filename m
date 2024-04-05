@@ -1,136 +1,208 @@
-Return-Path: <linux-arm-msm+bounces-16471-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A19D899699
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 09:34:31 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 705138996B5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 09:39:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B8A411F22C19
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 07:34:30 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DB3CEB22614
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 07:39:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62CFE481D8;
-	Fri,  5 Apr 2024 07:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B330C12EBE6;
+	Fri,  5 Apr 2024 07:39:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JxdH4r7g"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jBTG5G5W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D6847F7E;
-	Fri,  5 Apr 2024 07:34:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3586F12BF2D;
+	Fri,  5 Apr 2024 07:39:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712302466; cv=none; b=n6HWexNCumLhCFzpDh7AXt21OiXPTzUEP/Ac5sLKdoCag7HIk7mUY2+lTvHqoTl4ItfcY/qidT4hiEIcBHN1XWODj94Sq80Iv4SYlz0QmzURnAJinPvabjm0G1HdtSfq0+KK8dluXBPTsFkdMXujiDarjHKfoim/nzCP4pNvTBg=
+	t=1712302776; cv=none; b=WxOJfuxgwdpqgrCyqYGMb17VUZ3RDBYg4VyjeCEE/QCwHJZ9WeDsSSFJN+GW2CxNKk/M40c+PJQxJhaPD5qg6A+HrILE3FsaF3W/mqxfSKy+FgyPv69OyQIzpfSH9q72vzDtAwTD3h/FP0biglJYukG0p8KYux9Fi3z5W8A1i3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712302466; c=relaxed/simple;
-	bh=oaq9Chvq0Xt0yDSaB529RRq1eKJleLzX7w7NqMqrl24=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FeIce2uWxvlLx1AMQYQf7OHaOvslyxZsmrrRR8QQ2NF3WadeKatDXBjk615OO50teqbVK7s3ZtBqoVHwkeFLE2gBDF72P8WvkGpeXejf4/Jufhln3jDJ3cnO58LGoxjsGtTGfFypHTqymGkzB0vtjRNdSMBLlc6ulwhG2x/9ZfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JxdH4r7g; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90EA8C433F1;
-	Fri,  5 Apr 2024 07:34:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712302465;
-	bh=oaq9Chvq0Xt0yDSaB529RRq1eKJleLzX7w7NqMqrl24=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JxdH4r7gT+DnO3b8C6d9K6qOC8OKy698/iGb6CRqMtMtnyI4yH1atmnDXRWbgVy8C
-	 dHELKn+OiiNNbpkAck78a62oRO+Z5dNhnHD/e4EtarFk4DRIz0Ovl65AcAwi8b48yQ
-	 RYktGhaJWEeehCVL7D788Zx/rRiFvrf7+nSmP71t4MzrD7b9DMt0eWHGLlCEiqMERL
-	 dPJMUjDboxCy5KNlW3JsnEHHnsATZ73IOdHeft6RdkvPIdtRi9AgPBBHhUGMDP22po
-	 FlzrcRKnsRYvrRsrBva8j1TJENfLaXQzC9kfE3Ql9H1Akk8knq0BAqBgyRpyx0Zb9E
-	 Bh9W4Kef6EUqQ==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rse5j-00000000606-2pQx;
-	Fri, 05 Apr 2024 09:34:27 +0200
-Date: Fri, 5 Apr 2024 09:34:27 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: Stephen Boyd <swboyd@chromium.org>, Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-phy@lists.infradead.org, freedreno@lists.freedesktop.org,
-	Douglas Anderson <dianders@chromium.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Steev Klimaszewski <steev@kali.org>,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH] phy: qcom: qmp-combo: Fix register base for
- QSERDES_DP_PHY_MODE
-Message-ID: <Zg-pg-QAAfC9Pybr@hovoldconsulting.com>
-References: <20240405000111.1450598-1-swboyd@chromium.org>
- <Zg9MQOAZpsndSNtb@hu-bjorande-lv.qualcomm.com>
+	s=arc-20240116; t=1712302776; c=relaxed/simple;
+	bh=QORV4pD15vZ3OzypvqpxnQvSoqXSnK5DsqvoayCIrCU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=momG6MSmijrnjFHhTlBIh3/xKR+aHWbsIrqkExPMu/vhIcrAG8gxRuwxwU4x/pURi7W8KjsvdP08y8NHchFfKmlOHs6kunLYIryRccZ2cMu5YBNhF0+vlWL0rW5KlGMSiDbA+yBjRUv4IhMgfIntkZMYonpw26wG67254QLlJdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jBTG5G5W; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4355ATg1031822;
+	Fri, 5 Apr 2024 07:39:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=3Z1qhTERAHY9u7xtJ3fTK4uczfNK3XCfZWVKTFMT7DY=; b=jB
+	TG5G5WM3Dpx6ELoYVHtsiNaaHSgwLHIc/P00q8kyb8kRU8tMCdk+y73yhgiMFoFL
+	1XI16Tksf02Fuhvy5geA9meNS1U49qZccNWE3sHoFRW24BOhuBNHnAVXrFJUkuvR
+	FAuJgAlFuAcL2ycfmTjte9y50YQOmAoF8TuwR+omUMKoxvUSLGVJF4AlPOvZDmzt
+	KQkvxW6HDtSTfPiajfhEwdGGJIQr+3a3W5kdsSCFfiWnw7fiFO1GWv2rceL4cr90
+	9K2tUYq/ys9nAIUOprF6WNiFCkCJHqdklEQ45b4oFTrw7QbYnUF4nsK3hpG+hAsq
+	UOiYTotuL9QaJpSkCuzQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x9en0kjhb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 05 Apr 2024 07:39:24 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4357dD7f031799
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 5 Apr 2024 07:39:13 GMT
+Received: from [10.216.11.24] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Fri, 5 Apr 2024
+ 00:39:08 -0700
+Message-ID: <5c3f6747-86f6-3fe9-6dfa-edc44b53c0b1@quicinc.com>
+Date: Fri, 5 Apr 2024 13:09:04 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Zg9MQOAZpsndSNtb@hu-bjorande-lv.qualcomm.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v3 04/19] media: venus: core: Set OPP clkname in a common
+ code path
+Content-Language: en-US
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stanimir Varbanov
+	<stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Andy Gross
+	<agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Mauro Carvalho
+ Chehab" <mchehab@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+CC: Marijn Suijten <marijn.suijten@somainline.org>,
+        Stanimir Varbanov
+	<stanimir.varbanov@linaro.org>,
+        Mauro Carvalho Chehab
+	<mchehab+huawei@kernel.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20230911-topic-mars-v3-0-79f23b81c261@linaro.org>
+ <20230911-topic-mars-v3-4-79f23b81c261@linaro.org>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <20230911-topic-mars-v3-4-79f23b81c261@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 57Arb5L_f6dJ5K6qzLk9j6jW-c6fzNul
+X-Proofpoint-GUID: 57Arb5L_f6dJ5K6qzLk9j6jW-c6fzNul
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-05_06,2024-04-04_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ clxscore=1015 impostorscore=0 adultscore=0 priorityscore=1501 phishscore=0
+ mlxscore=0 bulkscore=0 mlxlogscore=999 spamscore=0 malwarescore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404050055
 
-On Thu, Apr 04, 2024 at 05:56:32PM -0700, Bjorn Andersson wrote:
-> On Thu, Apr 04, 2024 at 05:01:03PM -0700, Stephen Boyd wrote:
-> > The register base that was used to write to the QSERDES_DP_PHY_MODE
-> > register was 'dp_dp_phy' before commit 815891eee668 ("phy:
-> > qcom-qmp-combo: Introduce orientation variable"). There isn't any
-> > explanation in the commit why this is changed, so I suspect it was an
-> > oversight or happened while being extracted from some other series.
+
+
+On 3/27/2024 11:38 PM, Konrad Dybcio wrote:
+> Calling devm_pm_opp_set_clkname() is repeated for all HFI versions in
+> pm_ops->core_power.
 > 
-> Thanks for catching that, I wrote that patch long before Johan did the
-> rename of "pcs" to "dp_dp_phy", and must have missed that while later
-> rebasing the patch.
+> Move it to the common codepath.
 > 
-> Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> This also lets us get rid of core_get_v1.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  drivers/media/platform/qcom/venus/core.c       |  5 +++++
+>  drivers/media/platform/qcom/venus/pm_helpers.c | 23 ++---------------------
+>  2 files changed, 7 insertions(+), 21 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+> index ce206b709754..5ab3c414ec0f 100644
+> --- a/drivers/media/platform/qcom/venus/core.c
+> +++ b/drivers/media/platform/qcom/venus/core.c
+> @@ -14,6 +14,7 @@
+>  #include <linux/of.h>
+>  #include <linux/of_platform.h>
+>  #include <linux/platform_device.h>
+> +#include <linux/pm_opp.h>
+>  #include <linux/slab.h>
+>  #include <linux/types.h>
+>  #include <linux/pm_domain.h>
+> @@ -319,6 +320,10 @@ static int venus_probe(struct platform_device *pdev)
+>  	if (!core->pm_ops)
+>  		return -ENODEV;
+>  
+> +	ret = devm_pm_opp_set_clkname(dev, "core");
+> +	if (ret)
+> +		return ret;
+> +
+>  	if (core->pm_ops->core_get) {
+>  		ret = core->pm_ops->core_get(core);
+>  		if (ret)
+> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+> index cf91f50a33aa..ef4b0f0da36f 100644
+> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
+> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+> @@ -318,21 +318,6 @@ static int load_scale_v1(struct venus_inst *inst)
+>  	return ret;
+>  }
+>  
+> -static int core_get_v1(struct venus_core *core)
+> -{
+> -	int ret;
+> -
+> -	ret = venus_clks_get(core);
+> -	if (ret)
+> -		return ret;
+> -
+> -	ret = devm_pm_opp_set_clkname(core->dev, "core");
+> -	if (ret)
+> -		return ret;
+> -
+> -	return 0;
+> -}
+> -
+>  static void core_put_v1(struct venus_core *core)
+>  {
+>  }
+> @@ -350,7 +335,7 @@ static int core_power_v1(struct venus_core *core, int on)
+>  }
+>  
+>  static const struct venus_pm_ops pm_ops_v1 = {
+> -	.core_get = core_get_v1,
+> +	.core_get = venus_clks_get,
+>  	.core_put = core_put_v1,
+>  	.core_power = core_power_v1,
+>  	.load_scale = load_scale_v1,
+> @@ -423,7 +408,7 @@ static int venc_power_v3(struct device *dev, int on)
+>  }
+>  
+>  static const struct venus_pm_ops pm_ops_v3 = {
+> -	.core_get = core_get_v1,
+> +	.core_get = venus_clks_get,
+>  	.core_put = core_put_v1,
+>  	.core_power = core_power_v1,
+>  	.vdec_get = vdec_get_v3,
+> @@ -1013,10 +998,6 @@ static int core_get_v4(struct venus_core *core)
+>  	if (legacy_binding)
+>  		return 0;
+>  
+> -	ret = devm_pm_opp_set_clkname(dev, "core");
+> -	if (ret)
+> -		return ret;
+> -
+>  	ret = vcodec_domains_get(core);
+>  	if (ret)
+>  		return ret;
+> 
 >
-> > Oddly the value being 0x4c or 0x5c doesn't seem to matter for me, so I
-> > suspect this is dead code, but that can be fixed in another patch. It's
-> > not good to write to the wrong register space, and maybe some other
-> > version of this phy relies on this.
-
-This code is still reached on sc8280xp, but I guess only Qualcomm can
-tell us what these bits are for (and they should).
-
-The write to qmp->pcs + QSERDES_DP_PHY_MODE does not seem to have any
-effect on sc8280xp and that register still reads back as 0x2020202 after
-the incorrect write.
-
-qmp->dp_dp_phy + QSERDES_DP_PHY_MODE reads back as 0x4c4c4c4c before the
-fixed write and either 0x4c4c4c4c or 0x5c5c5c5c after depending on the
-orientation.
-
-Can someone please replace the magic constants in this driver, and at
-least explain what the impact of bit 0x10 not reflecting the orientation
-is?
-
-> > Fixes: 815891eee668 ("phy: qcom-qmp-combo: Introduce orientation variable")
-> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-
-Either way, good catch, this was clearly unintentional:
-
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-
-I think this should go to stable as well even if the impact is currently
-not fully understood:
-
-Cc: stable@vger.kernel.org	# 6.5
-
-> > @@ -2150,9 +2150,9 @@ static bool qmp_combo_configure_dp_mode(struct qmp_combo *qmp)
-> >  	writel(val, qmp->dp_dp_phy + QSERDES_DP_PHY_PD_CTL);
-> >  
-> >  	if (reverse)
-> > -		writel(0x4c, qmp->pcs + QSERDES_DP_PHY_MODE);
-> > +		writel(0x4c, qmp->dp_dp_phy + QSERDES_DP_PHY_MODE);
-> >  	else
-> > -		writel(0x5c, qmp->pcs + QSERDES_DP_PHY_MODE);
-> > +		writel(0x5c, qmp->dp_dp_phy + QSERDES_DP_PHY_MODE);
-
-Johan
+Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 
