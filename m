@@ -1,59 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-16573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16574-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DACF389A33D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 19:10:09 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DE2189A346
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 19:11:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 185811C2255D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 17:10:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 28547280FBE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 17:11:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14698171651;
-	Fri,  5 Apr 2024 17:09:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4409B171E56;
+	Fri,  5 Apr 2024 17:09:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R3rozz+a"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WYEEQr90"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E084E16C858;
-	Fri,  5 Apr 2024 17:09:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0B36AB6;
+	Fri,  5 Apr 2024 17:09:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712336947; cv=none; b=UbYjtP5L1SZSb82OOrJAEbZYPwC2KiLnOlmgQz8CuZmaw40NNrNMCSBP61RoOE/HlJk/a0DBkCGLdwQLOSUIerx71UcxfR9yOXi77anN3TWBsqHuO7a6edSwoWHK1CSacZwjb0XaVRwStDSNKKTEuH/hXbS9bR+/f2ac5R0vFCI=
+	t=1712336958; cv=none; b=pej7rIb+duprqoHWTyxMp0Yk2naYoPfICmuUvVxDoujlkeqMv65OuOvbL2/hkAwR5ck+rwfagC2c+rst5YeFENxhhTW5ItWHrl9m7vJWRMFbSPCmq5sGdQD75cnrl/H7DMXs6dWGDh201uB9dnrIMo5wZLGKHqYHDehgSMC/uAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712336947; c=relaxed/simple;
-	bh=H9vEkwAxYj5wWq9yqiD29L3VLUbFY7RZslsH1Qj/VMU=;
+	s=arc-20240116; t=1712336958; c=relaxed/simple;
+	bh=f1kvZGzRe2SXSRDmHY4ReUMQwtDg/dGy62MWDdLbfWk=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=EutXQ8VRhWVOYCsXCHpE8eRqbQPps0ep+C4jXoynV4ZhIkj9a5MAocTuxOTKRkGv7mK3BFnSdrh5fNTvqUH8z+LOpaD43bsI9GB46WdP6HWwge3kUWxDpNON0xELPCwRJt1mlR4ZjyGq0m4BC4THs9jtlB0mmIdNJrIy6lQLg8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R3rozz+a; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF43AC433F1;
-	Fri,  5 Apr 2024 17:09:03 +0000 (UTC)
+	 MIME-Version:Content-Type; b=PBOSu98iv1TkyZhFm2E5k7tCkxpuq72zMq2tGtlH/veOrCe72CuyjGWmeGe0LZt+2cAounLNdg0OD0TZE5Fl74Z5ZN7jr04M9Wc/mTDk5jm4P+lBPEgx9C5OIOaocsX4kbpeWuGs+3E0Sb4M08eVx1vXqkBtIQsf+FRRZyUA5EY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WYEEQr90; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CD8DC433C7;
+	Fri,  5 Apr 2024 17:09:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712336946;
-	bh=H9vEkwAxYj5wWq9yqiD29L3VLUbFY7RZslsH1Qj/VMU=;
+	s=k20201202; t=1712336957;
+	bh=f1kvZGzRe2SXSRDmHY4ReUMQwtDg/dGy62MWDdLbfWk=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=R3rozz+a0B1YpNvB4vfXKtdF7QEdy3dG1YafDVgmfBpbuzYPfTa91bgsIRwc8EgVI
-	 v4s7/oL7+AgdOqVl2KmgB1zqG6Qr+cBq2/dqbA/V6hHI+726GOASKO3CkQ5+GXXfZ6
-	 IA99s/DigM7iZXoftJjwNCrh7cvtblteI6hfk3MEEp4WH8D6dPReWf+iVd1SLGfVj+
-	 IAU2aywjYNc4Pn0xVhLpYu3upppPYYn/p97e2WlazkOtg6FOx7MckzIUXoUFCDZD1k
-	 GAXAnqvauMbResQ63Fk51YV7SswZJVLVoWxxRsa12bsn4478igh8zIb+ba9DSNV3gy
-	 3Rw/zKiu4l43A==
+	b=WYEEQr90KrTbu0rcJ2vk3kkx8nQl2+emnZrsljq8sA3FDapGTh+zx1Z2rrR49oiLV
+	 y7DwtCH4DIxhX6XGKABTF4LIyngi5fJWRd/01VPFpst8FRfRJiLoWMtUbrAJgqwa1j
+	 dVdFq8ieqGjTawNwtTgINJZCj3cGzWeLJFkjAelB/svo9PZekKomha8WAdIMP7z40A
+	 Y+MyuHI9N/mxJxye2hiYlKqxR9v8XYQDP+ZOV+Acs18iZ5HzlIQLKX+4LOSFV2bUi4
+	 sM7SbQ9Bb0BYzUfvz4DwUpJ6xIAWNuV2LfNNg6tqzguQ0QM5D3OhS1xC+QAHUKJPxz
+	 S7yT20yE2gl1Q==
 From: Vinod Koul <vkoul@kernel.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
  Neil Armstrong <neil.armstrong@linaro.org>
 Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
- linux-kernel@vger.kernel.org
-In-Reply-To: <20240226-topic-sm8650-upstream-combo-phy-swing-update-v1-1-08707ebca92a@linaro.org>
-References: <20240226-topic-sm8650-upstream-combo-phy-swing-update-v1-1-08707ebca92a@linaro.org>
-Subject: Re: [PATCH] phy: qcom: qmp-combo: fix sm8650 voltage swing table
-Message-Id: <171233694335.304553.13639721114299894293.b4-ty@kernel.org>
-Date: Fri, 05 Apr 2024 22:39:03 +0530
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20240322-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v2-0-3ec0a966d52f@linaro.org>
+References: <20240322-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v2-0-3ec0a966d52f@linaro.org>
+Subject: Re: (subset) [PATCH v2 0/7] arm64: qcom-sm8[456]50: properly
+ describe the PCIe Gen4x2 PHY AUX clock
+Message-Id: <171233695315.304553.592159497575428525.b4-ty@kernel.org>
+Date: Fri, 05 Apr 2024 22:39:13 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,20 +69,27 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.12.3
 
 
-On Mon, 26 Feb 2024 16:22:36 +0100, Neil Armstrong wrote:
-> The QMP USB3/DP PHY found in the SM8650 SoC requires a slighly
-> different Voltage Swing table for HBR/RBR link speeds.
+On Fri, 22 Mar 2024 10:42:37 +0100, Neil Armstrong wrote:
+> The PCIe Gen4x2 PHY found in the SM8[456]50 SoCs have a second clock named
+> "PHY_AUX_CLK" which is an input of the Global Clock Controller (GCC) which
+> is muxed & gated then returned to the PHY as an input.
 > 
-> Add a new hbr/rbr voltage switch table named "v6" used in a new
-> sm8650 qmp_phy_cfg struct replacing the sm8550 fallback used for
-> the sm8650 compatible.
+> Document the clock IDs to select the PIPE clock or the AUX clock,
+> also enforce a second clock-output-names and a #clock-cells value of 1
+> for the PCIe Gen4x2 PHY found in the SM8[456]50 SoCs.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] phy: qcom: qmp-combo: fix sm8650 voltage swing table
-      commit: f320268fcebcbab02631d2070fa19ad4856a5a5e
+[1/7] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: document PHY AUX clock on SM8[456]50 SoCs
+      commit: 72bea132f3680ee51e7ed2cee62892b6f5121909
+[2/7] phy: qcom: qmp-pcie: refactor clock register code
+      commit: 677b45114b4430a43d2602296617efc4d3f2ab7a
+[3/7] phy: qcom: qmp-pcie: register second optional PHY AUX clock
+      commit: 583ca9ccfa806605ae1391aafa3f78a8a2cc0b48
+[4/7] phy: qcom: qmp-pcie: register PHY AUX clock for SM8[456]50 4x2 PCIe PHY
+      commit: 5cee04a8369049b92d52995e320abff18dfeda44
 
 Best regards,
 -- 
