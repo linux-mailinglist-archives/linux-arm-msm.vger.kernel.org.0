@@ -1,121 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-16455-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 345CF89936D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 04:55:06 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 055AB89937C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 04:56:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BAE11285DCE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 02:55:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 97FCF1F21F55
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 02:56:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42FA7171BB;
-	Fri,  5 Apr 2024 02:55:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 878E918C3D;
+	Fri,  5 Apr 2024 02:56:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="btt669Pb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="azAwXyZu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B154168C7
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Apr 2024 02:55:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87514256D
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Apr 2024 02:56:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712285703; cv=none; b=JiEQgdhAItbZSjxr2tXds4iotC+GdGt5E5WQTc1H6TYYelNJg6XV5ehL9UBGCzXdCkrNfdRj5dutB4ysGwf1OJwkFgv8NW/mDNVpdd5/Tw5NM94eOm2djhkDKVsLD5ph5pbexCWzH+NMDm03yBl9z0K3DPFMbHkh3ZFqetj4W28=
+	t=1712285794; cv=none; b=fi58GRy4ttbwdaoQ+YEw4kOsYRFUpbchr6lX4DCBVqHr54b8NGdHlgwiBMrg5RMrVOf0L0Bb8qY4hcI/9DNPtszAFL2lNo3FDDZEQxNZJqZwMKzdjgz6nlpYSctWkkVkGbtka6gTk5ZJ/uSE6N0NIbCmMKSCekPnPHgKDJtCZBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712285703; c=relaxed/simple;
-	bh=YdWgYZZy6+ImQbZGCSH7do3YA/hmyop0f165eRYq+Cc=;
+	s=arc-20240116; t=1712285794; c=relaxed/simple;
+	bh=kM6XH+bKgyVxIo9DuSq7aqXJXv9/t19xjoc9OIcTDSY=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=L3qpETfUJ5+8zE4XLq3a4cJJk4y/u2k2xGEgQ+Fpi2YnJzw6uSzmq0rqLs9YXoI6CqpYSrjqU0TiT1WYBy6IKEKiI0hPjM+4b4E8gFE4BGTQRLO5w5AGX3Z9/Q1BTwzalYgRPZhB74m3kX8xGXlkFPjCqODG7gMNfpnnpRdefCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=btt669Pb; arc=none smtp.client-ip=209.85.219.182
+	 To:Cc:Content-Type; b=V74L597SdMYy2pwVXqMu8ZTsudKgcDCPeA7w6lmXBJ9cyyHjjRFSdp6yXSgf9bjqtceXqFbMjx/sz8gOKCw4q1WjJIPlo6QuUqjnfDpZRcV4t80+6ufLwYnkb5ZsnpDoOESDTopnVTfZcKv2jIZeR3tqP9BpkjruO6VssG0MNy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=azAwXyZu; arc=none smtp.client-ip=209.85.219.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-dcc6fc978ddso1432497276.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Apr 2024 19:55:01 -0700 (PDT)
+Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-dbed0710c74so1631843276.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Apr 2024 19:56:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712285700; x=1712890500; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1712285790; x=1712890590; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=EfDPM/jBlrvHW8pL/mwrjjQGf0cytLyBW2ZbeZaxa8w=;
-        b=btt669Pb8VLcPK1DnKNJJ/+DQD79ZSQs+HDS4IoNHnJMNCt8X5fT0SFJindBqQu71S
-         wzrSLhlYZP/Onm4G8PEmPzRGZ0XZIxgXho02IHI6t9IffnR/BsQVt/KHiSVCjpEMoW+Y
-         VQvOyiHWevAq4j5K5sOvBJWI7kGey/Yvfu6LAklMfF7z+8RXOoRlxDghi9RW8GQw4KLS
-         ZVlIoLOI9yYhho0Prb9+SDY9GuJbSTZ0V64B8fupMS/opHTSjgVjFhw4tVqrDkmaTPQZ
-         Tu+OblJrjgsxRQXuE1Ha7XysbFaUHhFUkeypqW79X0VhuwbTj0MK0262NB5uOfjLplO5
-         yjcA==
+        bh=dEsqNh0qk6wjxNfe1EBS/5T4PtCYN6iMohqr+1wRzko=;
+        b=azAwXyZuUXce94YC0Umv2/ExAqJ+7SymgHbihppuPlaZVOpvv+wU+2kQpPmuZu+DhD
+         Ns71h9e25/Qn/GtHj2x7JU0Eg5XCTcerMF9nwv632Vi3q4p/fQ9QecNJhYI2U+y6BNQr
+         1MUDkhw7DZDjJT8tW2JwBRCQJRaTsb1Vd8Kg82ex+Dbp0OqhLTPX5nv1bHCQNa7fMEyW
+         kRsjYNlNmKjcRtWYlN2ycLCWXuRTNTLdm7s/6SBvcBFV9+IOdIMGwuneEMkYvKFxs2yn
+         1XmyJHx6YKZlLowfb6UltGOsKDyAPUJoznIKTEy6g2BsLd+AcjGAVqAdcjLogZGhn3V8
+         Kirw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712285700; x=1712890500;
+        d=1e100.net; s=20230601; t=1712285790; x=1712890590;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=EfDPM/jBlrvHW8pL/mwrjjQGf0cytLyBW2ZbeZaxa8w=;
-        b=e9bKQFwvdIuE6aBLNqxtk9iRolrO3Rj8VU1aIQ0e7MIGBYLYZm5ZsXuv3I8fYQJXXw
-         WT1MPB/fVsVWhOJPprtH40swGLuEJ+6zOvSUI4k+9uSAiZIjK0sJ7ob3bIAFO258LslX
-         Ii6saf4Se05Jos0hkodF4Gn+lNe4J5s1ztxqUHjq6t6u9kveZMiSy7fxnH7LskMN4DV2
-         OAozp2fCC4UA6YGVWF8Z41n/0AljdTSgCLZNoMFDdC9tIHdl1oGTg4aCMwN9yhz5Odt6
-         0W/C28+IMSG6qmIX0osZDAjWvtj9rcTfeyM/3UhanG95vpcU9C0Hf783iy1FgGPCMKnC
-         HaWA==
-X-Forwarded-Encrypted: i=1; AJvYcCVFzXAqW/EBfaFzsa23KP4LCuuYXqXIYiPg34SQpmgXcldTq0pZih50w0Zanh1bow0zGL8X2utATpZNY0TThohBv9+rY8IO/J8/p/soJg==
-X-Gm-Message-State: AOJu0YxoFX0eFjIihrLGu06Y2ChaiVoHogXsomegr5bQQAiohnEC6+Lt
-	PKOYQgjOMa6E3zjcls8Zj1ZUGmHDEsl7Qi8LMUiS+SkZyuy5JTwE8vb/3zB7BKQ6gfiMqWaIK8i
-	xybYA8qh2Jc/uP3aUzfhzP/+notmwtvJy9XDTZg==
-X-Google-Smtp-Source: AGHT+IFivS2hB8z2W9hwonWTCxmRcOXhWI/RFcC0uZQ37FAI9e0SKdalGASHEiDclHq2P1ZBRA6kcdGTvgLJPN2UQoc=
-X-Received: by 2002:a25:dc92:0:b0:dcc:6894:4ac0 with SMTP id
- y140-20020a25dc92000000b00dcc68944ac0mr207083ybe.20.1712285700487; Thu, 04
- Apr 2024 19:55:00 -0700 (PDT)
+        bh=dEsqNh0qk6wjxNfe1EBS/5T4PtCYN6iMohqr+1wRzko=;
+        b=ZYDmX9Zax4AHdwvGeDFh7jgH8id+BBejan5lE+ZVDhSGc2Ju85sBSBIRuUTXKhKzDa
+         PCjyCuAY19qLgKMRbyUBOEgakvpsL8mvLeh5eczv3fEwhUJ/EWCjSt+nQtPLQ+91EeSI
+         Rt4lDUIwL7c2F+H8UfCwkb+HWm7wkPkV9lmbIiWNJm6oczK8q/mBrH20LX4vh05Z+o+y
+         Kcq0hUKQ+EAsHxAJE5mq5PG7CZ/aba9yzYcKCg8/HqbvrQ00tjWCUox1G67xN7T1rmUu
+         MRK1/8gXVCLGUpIbU1t5n2O3PgOHM2/vVTkHKWmCRrUXFddEygGQ4hQLHJsfWUaKCN2L
+         JyFw==
+X-Forwarded-Encrypted: i=1; AJvYcCWicrvsf6Ko6g6TV6AVgleYhaO/9ho/Dkq+bPYHCglz39fScEHltAq6tAec96KrdaKnmsBWxnX+RVLiSE/We6DzFtAGdCm41f6i5abY0g==
+X-Gm-Message-State: AOJu0YwpQ6FxZO4LYl0BRJS9uEQAO5yMTgAwIprhBaz4hAhWa0QlVpbr
+	zP+Zvx10VBeV03l0+vYzTx+SvnvLvHojVFv/Xr5+QkFlQLHfqeEvDDqrQmtxyjtN46vVH03Rlqn
+	L/aYBG/ahYL9vPHVEzFiVNw1xpc116G4bmYz7uQ==
+X-Google-Smtp-Source: AGHT+IG4u2Lg5AEQseN8XhnyCdvNikS9yjicoQQjhDBxxVZhO/lMnvhSuSj5pAzYdpOCxOv9gcRM1CyMxY7VDXAbmhM=
+X-Received: by 2002:a25:aace:0:b0:dcc:c279:d2fa with SMTP id
+ t72-20020a25aace000000b00dccc279d2famr88256ybi.30.1712285790527; Thu, 04 Apr
+ 2024 19:56:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240404234345.1446300-1-swboyd@chromium.org>
-In-Reply-To: <20240404234345.1446300-1-swboyd@chromium.org>
+References: <20240405000111.1450598-1-swboyd@chromium.org>
+In-Reply-To: <20240405000111.1450598-1-swboyd@chromium.org>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 5 Apr 2024 05:54:49 +0300
-Message-ID: <CAA8EJprZ8Ehx+M7vy1pH8OT6Of2v8-trecCJZhF5wxBRSGQoXw@mail.gmail.com>
-Subject: Re: [PATCH] phy: qcom: qmp-combo: Fix VCO div offset on v3
+Date: Fri, 5 Apr 2024 05:56:19 +0300
+Message-ID: <CAA8EJppHXkTNSNaCoYWZaRmKw=AfWL4N0WCqR6uFgNdbkw4VUw@mail.gmail.com>
+Subject: Re: [PATCH] phy: qcom: qmp-combo: Fix register base for QSERDES_DP_PHY_MODE
 To: Stephen Boyd <swboyd@chromium.org>
 Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, linux-kernel@vger.kernel.org, 
 	patches@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	linux-phy@lists.infradead.org, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-phy@lists.infradead.org, 
 	freedreno@lists.freedesktop.org, Douglas Anderson <dianders@chromium.org>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Abel Vesa <abel.vesa@linaro.org>, Steev Klimaszewski <steev@kali.org>, 
+	Johan Hovold <johan+linaro@kernel.org>, Bjorn Andersson <quic_bjorande@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 5 Apr 2024 at 02:43, Stephen Boyd <swboyd@chromium.org> wrote:
+On Fri, 5 Apr 2024 at 03:01, Stephen Boyd <swboyd@chromium.org> wrote:
 >
-> Commit ec17373aebd0 ("phy: qcom: qmp-combo: extract common function to
-> setup clocks") changed the offset that is used to write to
-> DP_PHY_VCO_DIV from QSERDES_V3_DP_PHY_VCO_DIV to
-> QSERDES_V4_DP_PHY_VCO_DIV. Unfortunately, this offset is different
-> between v3 and v4 phys:
->
->  #define QSERDES_V3_DP_PHY_VCO_DIV                 0x064
->  #define QSERDES_V4_DP_PHY_VCO_DIV                 0x070
->
-> meaning that we write the wrong register on v3 phys now. Add another
-> generic register to 'regs' and use it here instead of a version specific
-> define to fix this.
->
-> This was discovered after Abhinav looked over register dumps with me
-> from sc7180 Trogdor devices that started failing to light up the
-> external display with v6.6 based kernels. It turns out that some
-> monitors are very specific about their link clk frequency and if the
-> default power on reset value is still there the monitor will show a
-> blank screen or a garbled display. Other monitors are perfectly happy to
-> get a bad clock signal.
+> The register base that was used to write to the QSERDES_DP_PHY_MODE
+> register was 'dp_dp_phy' before commit 815891eee668 ("phy:
+> qcom-qmp-combo: Introduce orientation variable"). There isn't any
+> explanation in the commit why this is changed, so I suspect it was an
+> oversight or happened while being extracted from some other series.
+> Oddly the value being 0x4c or 0x5c doesn't seem to matter for me, so I
+> suspect this is dead code, but that can be fixed in another patch. It's
+> not good to write to the wrong register space, and maybe some other
+> version of this phy relies on this.
 >
 > Cc: Douglas Anderson <dianders@chromium.org>
 > Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Fixes: ec17373aebd0 ("phy: qcom: qmp-combo: extract common function to setup clocks")
+> Cc: Neil Armstrong <neil.armstrong@linaro.org>
+> Cc: Abel Vesa <abel.vesa@linaro.org>
+> Cc: Steev Klimaszewski <steev@kali.org>
+> Cc: Johan Hovold <johan+linaro@kernel.org>
+> Cc: Bjorn Andersson <quic_bjorande@quicinc.com>
+> Fixes: 815891eee668 ("phy: qcom-qmp-combo: Introduce orientation variable")
 > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 > ---
->  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
+>  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
