@@ -1,210 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-16525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16526-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9372F899CEB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 14:31:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 776C5899D16
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 14:34:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B50441C20E21
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 12:31:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 036101F2351B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 12:34:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DE271E868;
-	Fri,  5 Apr 2024 12:31:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E147C16D304;
+	Fri,  5 Apr 2024 12:34:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UEFrgDPj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BTSfYwsW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F89D1DDD1;
-	Fri,  5 Apr 2024 12:31:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7509313C686
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Apr 2024 12:34:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712320272; cv=none; b=YZkHIQ+gMFVZ7ALXCAiSfcdz4ayXHtz6NosAh26ZVAKVKkR5+JKSSjFby0K/oB+W4dNsVxvr/uwaapnS4rf7H7ov9sW1nZw1Rhm0t79na8HE64nLL4IVadPRntnyWiROtfUY3M2AD6+OmEB0cgYPGRbsj78DFIZ/fkbOSK1D458=
+	t=1712320483; cv=none; b=RMiMWGUi75JjU5sbyhEwsZetqwPI0r8bE0OzYBs7ewzfK4ZqpAj01L7PDGkoIFuogkqE4gKhP5/jXlcePIhECUdqba7hZARvd/xvlPJlyvDJpr0UvBK6Mh+FO2o6FNsrUwz5ILvpGW9ts4i69kpP5wz74rDlkSj5BJrsNKi5ang=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712320272; c=relaxed/simple;
-	bh=dj6A9j4F1ponuNhAjpfYgX+BKe/KCrhT9UuubkuWGKw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=cmzOlvs81e4qWodG93ncLa78Jua/nq01rpffetuTmPGKaUxL6LlsyGG9oMSCx3gFaUn52YhxEV/VikfRtSbT4VEtjT1N77tz0xuGz9WPZrQng0b9BVRTRI3DLv/eqltig8glfO12z4/D3yQ0TjFb88Ce8tp5JFKJo+fkfY3okP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UEFrgDPj; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 435CTF2q008709;
-	Fri, 5 Apr 2024 12:30:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=ulT9lRp050SFEj+EXxpPExDse9jrJZlssl47OyNS3JM=; b=UE
-	FrgDPjDBOdQsRXKCDbuBu4aujNCQKDOc3ELeEV8G3nsqVW899iCU/4LYEJhT/6oe
-	pdc1g8Rkj9XJqOkeWQUUPKv2DSg/5qenKBFS5sKf6Z+NPZUZxC0SIgDDvBtZUUJx
-	tm5WZQh/3ALvoPRX2Ztt/fmpoUrBLWgsYO97VcHDtn/+tL85sG6nWpJrCZPaOIzU
-	2P2yNeCAlXxejxcfSAROgpmkNdHxKQGG9VsDGkvxYOy+I8PFvQrSpwKkVvpnrqxo
-	qCwz6l0d3NPDr+HNDTzZ+e+9djlhQVqvv9nJA3+lDCM9ndX/Io4E/w+0gOp0SI7l
-	j/8EUuATEcD3OOgWNWaA==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xahb1005d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 05 Apr 2024 12:30:57 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 435CUuP9031840
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 5 Apr 2024 12:30:56 GMT
-Received: from [10.216.12.56] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Fri, 5 Apr 2024
- 05:30:52 -0700
-Message-ID: <4ee9e2b9-2de6-db73-9ff5-9f6d4d33bcef@quicinc.com>
-Date: Fri, 5 Apr 2024 18:00:48 +0530
+	s=arc-20240116; t=1712320483; c=relaxed/simple;
+	bh=BWbY/KZqhbCE40wnvC4PrO70/N6mw5Yg/TSOavfYMW4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BXtEHOz4bq+1iMeuMGlALDfViFNyrJBkPuLrAe2lu+wGFs5KoG9VyrEqWhQG7o/+Vn/5KyOgaQWu2t5lBVeTUSn5o7IdInGjR6vb1RmR2gz81X2lp0b73CoTP0T1a4sz+aod407N7vrOtOLuRRZ7d5DbJ8qozxP3h0I1fOt73OQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BTSfYwsW; arc=none smtp.client-ip=209.85.219.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-dc74e33fe1bso2060994276.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Apr 2024 05:34:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712320480; x=1712925280; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=2N0mn42V43jKjndtGzZY3LzMYKGKo3zYQTHJIkNMpNM=;
+        b=BTSfYwsWCoqZZH32oDYnrXtrdpOCurlcDMXRZE91dYNqKJ2/h86iTFn3+45swiUc1Z
+         Ymbduk/5zJCypoowvSasv2ji8qGvJCoM8YVpNu89B8Dgr0GtEsPqtbeEdBKpzd/znF4q
+         AAL5VQBFjpD6ihZn0PN3S27TreJeJCYfdwVi89vdgqMofSnq5H/aG+zf5E2opDKG9zVc
+         h9gybZkMkr9dRC3jzSVl8MwxubWxdlgnV008LdN+7uzMO4HMxVH3msmv38awTOzRM3LR
+         p+Q7Tx8cDtST79ze0KYAnrwKZUsX8UMOfKQUag2GyAuqKFhdlK5XIWYbYEYh2/3XX8Up
+         d6bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712320480; x=1712925280;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2N0mn42V43jKjndtGzZY3LzMYKGKo3zYQTHJIkNMpNM=;
+        b=h+TQItRcFJAzB/ArfbxfZuc3CtXz8rfc//fD0KTr+yUy1fXK50lHF+256AM2fSe4y8
+         CaC5I4XtLAvy3XhirKxaQ99AP6cV1BwRD+X4Jr2Z657T+i9kJ0cfSlJib2aX25/IygZf
+         jUNhoqJdPn6JE8DqO6ShQMTGNgBQD6Uyiq1dY/TSi473+HJiRMHzN7jIv/pd9Og/i+6b
+         UO+H2ZaXU6NKd0SwL3BUsnKIcJWwdI+61BU90D8wWVKLXSOgNn00e6iXZPa8bhcVykPx
+         CQOqqgaXqtd0wrl3+fikVMN97jzt8imbiEck344nPML50JJ8NxQQFWYy7ZnY39nZevTx
+         BvXQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW3w7tq1rmco63ADgv7kEZ1wa+11R2uEnxgfzNPzGfovmDi/mapX+jWjxbUAUKzPLOg1b46zf7zwM/+gkw6X5reCm1UOTv+N/pK+ryjCQ==
+X-Gm-Message-State: AOJu0YwPZaVTMoVkyb9g/l+xHnasssjZxWoCcz/C2pd58O0IbVvLebA+
+	UEn6Odlf6nUBrDwpLKvYmKVZS/rGI7uSKroaRJk5Hl1VGkfQJmjw+A9tBLaVyLMbONJ2MHrY+Fg
+	AdMBReJjuTpsRF1ymvnPnBaL2lI4eg3qjkbyEJg==
+X-Google-Smtp-Source: AGHT+IE9DTe1wMuQT2hdnEiCQgQhxlwsyKj6itvCyFDOKo18zC+YU88RGgr44hqjEdcdyfD3OgM/EC6WOGEFKxTjcZ0=
+X-Received: by 2002:a25:800c:0:b0:dc7:4367:2527 with SMTP id
+ m12-20020a25800c000000b00dc743672527mr1236431ybk.49.1712320480356; Fri, 05
+ Apr 2024 05:34:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v3 08/19] media: venus: core: Get rid of vcodec_num
-Content-Language: en-US
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        "Philipp
- Zabel" <p.zabel@pengutronix.de>
-CC: Marijn Suijten <marijn.suijten@somainline.org>,
-        Stanimir Varbanov
-	<stanimir.varbanov@linaro.org>,
-        Mauro Carvalho Chehab
-	<mchehab+huawei@kernel.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20230911-topic-mars-v3-0-79f23b81c261@linaro.org>
- <20230911-topic-mars-v3-8-79f23b81c261@linaro.org>
- <704e4a60-ae8b-e951-87c0-3b0aa4cf26d6@quicinc.com>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <704e4a60-ae8b-e951-87c0-3b0aa4cf26d6@quicinc.com>
+References: <20240306-wcn3990-firmware-path-v2-0-f89e98e71a57@linaro.org>
+ <87plw7hgt4.fsf@kernel.org> <CAA8EJpr6fRfY5pNz6cXVTaNashqffy5_qLv9c35nkgjaDuSgyQ@mail.gmail.com>
+ <87cys7hard.fsf@kernel.org> <CAA8EJpowyEEbXQ4YK-GQ63wZSkJDy04qJsC2uuYCXt+aJ1HSOQ@mail.gmail.com>
+ <87v85wg39y.fsf@kernel.org> <CAA8EJpq_XLUEMC67ck2tZRjqS0PazCkQWWMGmwydeWxTETHwcg@mail.gmail.com>
+ <871q7k3tnq.fsf@kernel.org>
+In-Reply-To: <871q7k3tnq.fsf@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 5 Apr 2024 15:34:29 +0300
+Message-ID: <CAA8EJppASEmj6-Jt7OCABAeqr8umSgXaDDha9nn2nRafuZ-Gvw@mail.gmail.com>
+Subject: Re: [PATCH RFC v2 0/4] wifi: ath10k: support board-specific firmware overrides
+To: Kalle Valo <kvalo@kernel.org>
+Cc: Jeff Johnson <quic_jjohnson@quicinc.com>, "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	ath10k@lists.infradead.org, linux-wireless@vger.kernel.org, 
+	netdev@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: G7z3xkkSjDHnCXrNECQnkS-vC0uPJ9Eb
-X-Proofpoint-GUID: G7z3xkkSjDHnCXrNECQnkS-vC0uPJ9Eb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-05_10,2024-04-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- phishscore=0 spamscore=0 malwarescore=0 impostorscore=0 mlxlogscore=999
- mlxscore=0 suspectscore=0 priorityscore=1501 clxscore=1015 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404050090
 
-Hi Konrad,
+On Fri, 5 Apr 2024 at 15:01, Kalle Valo <kvalo@kernel.org> wrote:
+>
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
+>
+> > On Fri, 8 Mar 2024 at 17:19, Kalle Valo <kvalo@kernel.org> wrote:
+> >>
+> >> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
+> >>
+> >> >> To be on the safe side using 'qcom-rb1' makes sense but on the other
+> >> >> hand that means we need to update linux-firmware (basically add a new
+> >> >> symlink) everytime a new product is added. But are there going to be
+> >> >> that many new ath10k based products?
+> >> >>
+> >> >> Using 'qcm2290' is easier because for a new product then there only
+> >> >> needs to be a change in DTS and no need to change anything
+> >> >> linux-firmware. But here the risk is that if there's actually two
+> >> >> different ath10k firmware branches for 'qcm2290'. If that ever happens
+> >> >> (I hope not) I guess we could solve that by adding new 'qcm2290-foo'
+> >> >> directory?
+> >> >>
+> >> >> But I don't really know, thoughts?
+> >> >
+> >> > After some thought, I'd suggest to follow approach taken by the rest
+> >> > of qcom firmware:
+> >>
+> >> Can you provide pointers to those cases?
+> >
+> > https://gitlab.com/kernel-firmware/linux-firmware/-/tree/main/qcom/sc8280xp/LENOVO/21BX
+> >
+> >>
+> >> > put a default (accepted by non-secured hardware) firmware to SoC dir
+> >> > and then put a vendor-specific firmware into subdir. If any of such
+> >> > vendors appear, we might even implement structural fallback: first
+> >> > look into sdm845/Google/blueline, then in sdm845/Google, sdm845/ and
+> >> > finally just under hw1.0.
+> >>
+> >> Honestly that looks quite compilicated compared to having just one
+> >> sub-directory. How will ath10k find the directory names (or I vendor and
+> >> model names) like 'Google' or 'blueline' in this example?
+> >
+> > I was thinking about the firmware-name = "sdm845/Google/blueline". But
+> > this can be really simpler, firmware-name = "blueline" or
+> > "sdm845/blueline" with no need for fallbacks.
+>
+> I have been also thinking about this and I would prefer not to have the
+> fallbacks. But good if you agree with that.
+>
+> IMHO just "sdm845-blueline" would be the most simple. I don't see the
+> point of having a directory structure when there are not that many
+> directories really. But this is just cosmetics.
 
-On 4/5/2024 2:48 PM, Dikshita Agarwal wrote:
-> 
-> 
-> On 3/27/2024 11:38 PM, Konrad Dybcio wrote:
->> That field was only introduced to differentiate between the legacy and
->> non-legacy SDM845 binding. Get rid of it.
->>
->> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  drivers/media/platform/qcom/venus/core.c       | 5 -----
->>  drivers/media/platform/qcom/venus/core.h       | 1 -
->>  drivers/media/platform/qcom/venus/pm_helpers.c | 2 +-
->>  3 files changed, 1 insertion(+), 7 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
->> index 5e7cb54e6088..26a0c264685a 100644
->> --- a/drivers/media/platform/qcom/venus/core.c
->> +++ b/drivers/media/platform/qcom/venus/core.c
->> @@ -651,7 +651,6 @@ static const struct venus_resources sdm660_res = {
->>  	.vcodec0_clks = { "vcodec0_core" },
->>  	.vcodec1_clks = { "vcodec0_core" },
->>  	.vcodec_clks_num = 1,
->> -	.vcodec_num = 1,
->>  	.max_load = 1036800,
->>  	.hfi_version = HFI_VERSION_3XX,
->>  	.vmem_id = VIDC_RESOURCE_NONE,
->> @@ -725,7 +724,6 @@ static const struct venus_resources sdm845_res_v2 = {
->>  	.vcodec_pmdomains = (const char *[]) { "venus", "vcodec0", "vcodec1" },
->>  	.vcodec_pmdomains_num = 3,
->>  	.opp_pmdomain = pd_names_cx,
->> -	.vcodec_num = 2,
->>  	.max_load = 3110400,	/* 4096x2160@90 */
->>  	.hfi_version = HFI_VERSION_4XX,
->>  	.vpu_version = VPU_VERSION_AR50,
->> @@ -774,7 +772,6 @@ static const struct venus_resources sc7180_res = {
->>  	.vcodec_pmdomains = (const char *[]) { "venus", "vcodec0" },
->>  	.vcodec_pmdomains_num = 2,
->>  	.opp_pmdomain = pd_names_cx,
->> -	.vcodec_num = 1,
->>  	.hfi_version = HFI_VERSION_4XX,
->>  	.vpu_version = VPU_VERSION_AR50,
->>  	.vmem_id = VIDC_RESOURCE_NONE,
->> @@ -831,7 +828,6 @@ static const struct venus_resources sm8250_res = {
->>  	.vcodec_pmdomains = (const char *[]) { "venus", "vcodec0" },
->>  	.vcodec_pmdomains_num = 2,
->>  	.opp_pmdomain = pd_names_mx,
->> -	.vcodec_num = 1,
->>  	.max_load = 7833600,
->>  	.hfi_version = HFI_VERSION_6XX,
->>  	.vpu_version = VPU_VERSION_IRIS2,
->> @@ -890,7 +886,6 @@ static const struct venus_resources sc7280_res = {
->>  	.vcodec_pmdomains = (const char *[]) { "venus", "vcodec0" },
->>  	.vcodec_pmdomains_num = 2,
->>  	.opp_pmdomain = pd_names_cx,
->> -	.vcodec_num = 1,
->>  	.hfi_version = HFI_VERSION_6XX,
->>  	.vpu_version = VPU_VERSION_IRIS2_1,
->>  	.num_vpp_pipes = 1,
->> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
->> index 6a77de374454..376de1161114 100644
->> --- a/drivers/media/platform/qcom/venus/core.h
->> +++ b/drivers/media/platform/qcom/venus/core.h
->> @@ -74,7 +74,6 @@ struct venus_resources {
->>  	const char **vcodec_pmdomains;
->>  	unsigned int vcodec_pmdomains_num;
->>  	const char **opp_pmdomain;
->> -	unsigned int vcodec_num;
->>  	const char * const resets[VIDC_RESETS_NUM_MAX];
->>  	unsigned int resets_num;
->>  	enum hfi_version hfi_version;
->> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
->> index 5b2a40a2f524..ba63e6427eb9 100644
->> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
->> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
->> @@ -622,7 +622,7 @@ min_loaded_core(struct venus_inst *inst, u32 *min_coreid, u32 *min_load, bool lo
->>  			VIDC_CORE_ID_1 : VIDC_CORE_ID_2;
->>  	*min_load = min(core1_load, core2_load);
->>  
->> -	if (cores_max < VIDC_CORE_ID_2 || core->res->vcodec_num < 2> +	if (cores_max < VIDC_CORE_ID_2 || legacy_binding) {
-> core->res->vcodec_num < 2 doesn't mean legacy binding.
-> 7180, 8250 and 7280 have vcodec num as 1 but they don't follow legacy
-> binding and they still have one core which is VIDC_CORE_ID_1.
-+1 to above comments. The change is misusing legacy bindings to decide the
-cores, while its more readable to keep it with number of vcodec cores.
+It is "not many directories" if we are thinking about the
+linux-firmware or open devices. But once embedded distros start
+picking this up for the supported devices, this can quickly become a
+nuisance. We have been there for Qualcomm DSP firmware and we ended up
+adopting the SoC/vendor/device structure, because otherwise it becomes
+a bedlam.
 
-Thanks,
-Vikash
->>  		*min_coreid = VIDC_CORE_ID_1;
->>  		*min_load = core1_load;
->>  	}
->>
-> 
-> Thanks,
-> Dikshita
+> > My point is that the firmware-name provides the possibility to handle
+> > that in different ways.
+>
+> Very good, thanks.
+
+Thanks for your suggestions and for picking the patches.
+
+Bjorn, could you please pick up the DT patches now?
+
+-- 
+With best wishes
+Dmitry
 
