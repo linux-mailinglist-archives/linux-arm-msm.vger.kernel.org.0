@@ -1,94 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-16523-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16524-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BC3A899C6A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 14:09:30 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43E9E899CE4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 14:30:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 217B51F21CD7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 12:09:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 754D01C21147
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 12:30:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3B3016C6B0;
-	Fri,  5 Apr 2024 12:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D326B16C6BE;
+	Fri,  5 Apr 2024 12:30:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="DC854iDn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="neksvo/R"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-40130.protonmail.ch (mail-40130.protonmail.ch [185.70.40.130])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7346A16C6B7
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Apr 2024 12:09:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A08E316C862;
+	Fri,  5 Apr 2024 12:30:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712318967; cv=none; b=Hbe9o8j+6HbCH1U1iFac4YdDG22j1E4VKMp2EAGFIFzeHjM57jEhkkKOWC8jFKTXWxjaDPTSw6ieb2Nxuc9mwMuYnonJG2Tq6Kre5uJUrkD4+IUqCf30cIMvfZhR71C/1s35tdpXZeIBr9sF9WoD+LfUelAeGwqLfaxhDwT5/00=
+	t=1712320208; cv=none; b=cbAjvKtE3HR/+KXNpmrIXlhLW7bEXxuKpQgbN1kDJAH7IQEg+0flQuI+8VgXD3QvQoDQ+ktQ5C/YsrftXOYr9V+AZtl47IRjjeIOv4iPh+LI6ITztU1KVLh/p2yP/y1jq3mlakWizmz17Bam6BXqCeSAhZxdKgRLKQouRpRTXKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712318967; c=relaxed/simple;
-	bh=Cz/8wfNWWTObsZ/skhto2RRyF2E/E7d1UqsZee0Hmw8=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n26IK/NWBxhbZWyPEqBDSHhgazzK9EyCVwEWd4zE4Gryau0Jyo77qF9ADbjZgCZW/Th5wa+hDfEtijx9700/N+dArHfuGNis4MwORZOtVoD41vkp8m/Wa6R/kk4mX0IB+V2hPUrLdKuZt0znduAagzZdcb+lfKNkLe42tXBxvEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=DC854iDn; arc=none smtp.client-ip=185.70.40.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1712318964; x=1712578164;
-	bh=jU5NtiO4Jmo6N6XEhJDq51V29uokcFWXuJa7qaP4spc=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=DC854iDnh1UXxMT0aTx7XFE+luousZF1j8Yexsb3qfOT4QH3aQcoSrhltPANVv6Ya
-	 fy9gCo+6uvmwRw9R7X9J5nfSE7j7HGWZZnERCvugvna1KKnFZUoKEVv18s6w+AlszO
-	 ziKN/p81sIv661MLyqGxJKRtwm1UcnmX5JubDgvNM+kgo0A+KJriWmNSwTPAeASTYf
-	 n6ORjSIiISZsWx4ZbGzzxQSDfJbA2vx0dtwqQHXz4OakD1fmOtZ2Od71NiVMTsbOz1
-	 zAg9/O+WOXa1LKfz00PVl/efMlFAgX1Lb6CQZ8XgnVdSl+BLXFbR7Uy51uXf9/Ci9a
-	 K0ocUM+cxvaQQ==
-Date: Fri, 05 Apr 2024 12:09:14 +0000
-To: linux-kernel@vger.kernel.org
-From: Raymond Hackley <raymondhackley@protonmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>, Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, Raymond Hackley <raymondhackley@protonmail.com>
-Subject: [PATCH 3/3] arm64: dts: qcom: msm8916-samsung-rossa: Add LIS2HH12 accelerometer
-Message-ID: <20240405120803.20754-4-raymondhackley@protonmail.com>
-In-Reply-To: <20240405120803.20754-1-raymondhackley@protonmail.com>
-References: <20240405120803.20754-1-raymondhackley@protonmail.com>
-Feedback-ID: 49437091:user:proton
+	s=arc-20240116; t=1712320208; c=relaxed/simple;
+	bh=JR8+Vwz3pz5roRhU/fTETXN5L9wi9qDehmzIoJCYsWY=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=hha2Oae1NiDH+why3jmc6RXXKnGW17P6VW51uALTT9+tbMedQm//aZJ/RVM1qt/q4NSk4nKpDsGd1xX9s4hPCbzEcRkJecNSxQLwd3nlkzymN+ShlFgQeQg01tNNpigyKbCNESLDogWWb/sBkTsQ/rZk5JH5pKAJWnEVQkKq7vE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=neksvo/R; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE0D6C433C7;
+	Fri,  5 Apr 2024 12:30:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712320208;
+	bh=JR8+Vwz3pz5roRhU/fTETXN5L9wi9qDehmzIoJCYsWY=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=neksvo/RefNVGv94kOSJeWzddtr2dwvzlWDzqeZrWWz8+WB8jbKpwpCH9a/67DZBo
+	 8ULRAuSKEi+8uStofOQEGjttycmW6+ChNAIbrJJDNQkl6Xc/9AtG5IZnb9GhV5Xedp
+	 rQ1j4moHJ//fvAAUq4K6FuQFqXHt/l8R/F4fIX3YwT3xlG7rR1eJbfztfPaY/lwBun
+	 vxZYGlLG2jfo9NwFtlo5oqXz9pz6GIxtJDvQv8R495F00cxg039mTKbLX6YIky3Mei
+	 3Z6WOhwbDanDuSfdFp3ts+80lH30SLHf4Pzw661+EyiE+953kAMaypkhvalYw+VVs9
+	 IJOg5/94oXSlQ==
+From: Kalle Valo <kvalo@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Baochen Qiang <quic_bqiang@quicinc.com>,  ath11k@lists.infradead.org,
+  linux-wireless@vger.kernel.org,  linux-arm-msm@vger.kernel.org,
+  mhi@lists.linux.dev,  davem@davemloft.net,  edumazet@google.com,
+  kuba@kernel.org,  pabeni@redhat.com,  netdev@vger.kernel.org
+Subject: Re: [PATCH v7 1/3] bus: mhi: host: add mhi_power_down_keep_dev()
+References: <20240305021320.3367-1-quic_bqiang@quicinc.com>
+	<20240305021320.3367-2-quic_bqiang@quicinc.com>
+	<20240401104908.GA234427@thinkpad>
+Date: Fri, 05 Apr 2024 15:30:03 +0300
+In-Reply-To: <20240401104908.GA234427@thinkpad> (Manivannan Sadhasivam's
+	message of "Mon, 1 Apr 2024 16:19:08 +0530")
+Message-ID: <87wmpc2dro.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Core Prime LTE uses ST LIS2HH12 accelerometer. Add support for it.
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
 
-[Stephen: Use common &st_accel definition from common dtsi]
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-Signed-off-by: Raymond Hackley <raymondhackley@protonmail.com>
----
- .../arm64/boot/dts/qcom/msm8916-samsung-rossa-common.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
+> On Tue, Mar 05, 2024 at 10:13:18AM +0800, Baochen Qiang wrote:
+>
+>> ath11k fails to resume:
+>> 
+>> ath11k_pci 0000:06:00.0: timeout while waiting for restart complete
+>> 
+>> This happens because when calling mhi_sync_power_up() the MHI subsystem
+>> eventually calls device_add() from mhi_create_devices() but the device
+>> creation is deferred:
+>> 
+>> mhi mhi0_IPCR: Driver qcom_mhi_qrtr force probe deferral
+>> 
+>> The reason for deferring device creation is explained in dpm_prepare():
+>> 
+>>         /*
+>>          * It is unsafe if probing of devices will happen during suspend or
+>>          * hibernation and system behavior will be unpredictable in this case.
+>>          * So, let's prohibit device's probing here and defer their probes
+>>          * instead. The normal behavior will be restored in dpm_complete().
+>>          */
+>> 
+>> Because the device probe is deferred, the qcom_mhi_qrtr_probe() is not
+>> called and thus MHI channels are not prepared:
+>> 
+>> So what this means that QRTR is not delivering messages and the QMI connection
+>> is not working between ath11k and the firmware, resulting a failure in firmware
+>> initialization.
+>> 
+>> To fix this add new function mhi_power_down_keep_dev() which doesn't destroy
+>> the devices for channels during power down. This way we avoid probe defer issue
+>> and finally can get ath11k hibernation working with the following patches.
+>> 
+>> Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
+>> 
+>> Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+>
+> Applied to mhi-next! Note that this patch is also available in mhi-immutable
+> branch for ath11k maintainers to pull into their tree.
+>
+> https://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git/log/?h=mhi-immutable
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-rossa-common.dtsi b/a=
-rch/arm64/boot/dts/qcom/msm8916-samsung-rossa-common.dtsi
-index b438fa81886c..db95bdbb9f32 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-rossa-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-rossa-common.dtsi
-@@ -26,3 +26,11 @@ &clk_pwm {
- &clk_pwm_backlight {
- =09status =3D "disabled";
- };
-+
-+&st_accel {
-+=09compatible =3D "st,lis2hh12";
-+=09mount-matrix =3D "1",  "0", "0",
-+=09=09       "0", "-1", "0",
-+=09=09       "0",  "0", "1";
-+=09status =3D "okay";
-+};
---=20
-2.39.2
+Thanks, I pulled this branch to ath-next:
 
+https://git.kernel.org/pub/scm/linux/kernel/git/kvalo/ath.git/commit/?h=ath-next&id=231a4c893c9bb2984a8c6b7450199f59eb816ed9
 
+This is just preparation for patches 2 and 3, those patches are not
+commited yet.
+
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
