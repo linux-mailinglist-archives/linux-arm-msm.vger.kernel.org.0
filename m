@@ -1,93 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-16519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 327F0899C4F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 14:04:28 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0F09899C61
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 14:08:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DCB861F2130C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 12:04:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F258E1C208FE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 12:08:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AF6516C69F;
-	Fri,  5 Apr 2024 12:04:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CAD416C849;
+	Fri,  5 Apr 2024 12:08:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZsXmEvwb"
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="vz3s3Gjl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-4318.protonmail.ch (mail-4318.protonmail.ch [185.70.43.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D1C16ABCE;
-	Fri,  5 Apr 2024 12:04:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74DF716C6B7
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Apr 2024 12:08:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712318664; cv=none; b=aRzGeCpZEtsS+nXjmJ5SkDf6C11UNJFz86RTE2dGs7v0juxGoKOACVUhWnTKz8RQ67/7v7kVYyUCPuPE+zZ4mud49ChOCWg+28T+vSdUN6CPIzoHkC0rgfSujYtSAMzx7RVU3SnQb7YHH0hYov0po9Fma/QcCQ8/uaBAJF+aAY4=
+	t=1712318909; cv=none; b=LHyGxcBN4In6t6gRrkLQtItm/S3vBT6g4lIOOXaO+q53+4Su9rrBaxtr+TVB/JSuqOWa09EmmR1Zri8V68GlAKY71s3fED78T+VHSm5STXTXxyTuh6/dVllbJmvp2dSM8XUlooxqQwF2EsIvx3iBE9iQiQBW+fjS/fRh1XMED5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712318664; c=relaxed/simple;
-	bh=AWVqdr9JP3qgtTgixeT9P1xElXTV4mYyJSYRInZNQCY=;
-	h=Content-Type:MIME-Version:Subject:From:In-Reply-To:References:To:
-	 Cc:Message-ID:Date; b=HUz2zcv8tayaV5UrE5uqnCQ5Ej9KJ56Sv9lxVGKvAsn64YbzYepsdq5fxtTCfET1czZHzKMB/UWw+E5uFZkREtUVvLiuz8XNm5laWY57TjnnITz6gePWFIRALirw/SVAL808sAaC4K1wbjjftMJxT6hSdslapvmkfR5wTsQWq+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZsXmEvwb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA8C5C433C7;
-	Fri,  5 Apr 2024 12:04:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712318664;
-	bh=AWVqdr9JP3qgtTgixeT9P1xElXTV4mYyJSYRInZNQCY=;
-	h=Subject:From:In-Reply-To:References:To:Cc:Date:From;
-	b=ZsXmEvwbfAkT+FRrggPYFIQ9O3Ecnjbo59bRGcIti7C/nghaRp/T7BLdkqzQMOyhR
-	 dMYqhyflDx1dFoM3CWhH2Z9E8ypQXkkEK6iEjRs52ReTqmkn5VAHXj+RVIkL5Ae6t8
-	 AlQDCO6wMsg+6TCzCfMTLARnphwwuUr+mbZ5lHqy+4921HojVqG1D763/Z4lHh2tJM
-	 iPdl5M0tKlCbf3Y3+PTFenMnYx2U+QSia7nmgO1Ime+IR0pP2basrURGIU6tPzMABF
-	 HqNZUpk66dKkxKYHsR7ztVdIM8hBFISeiys4dKCyce6wbZLCu6ZOh/lJozGwwuvIb8
-	 NVl5e33jMgViA==
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1712318909; c=relaxed/simple;
+	bh=2NWgb6rcnPGIUDm043jKPEbY0VbfO1iygjvicmP6pBQ=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=Y6M6qQE9zVpi8c1g/rcK3HPocygHauHobaUmzWfu+cr4fQgbgi0ip3z45S9eKDhjvd2BezbygdT4VVhFJXrz8oW9UxX4kJd6j/CDBnGeGyjiaJflh/4GWsgBkyEjd9FyO6reVuVOSECHdzRm7Zclin1oJm6mt2UiFIvKIs2rEKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=vz3s3Gjl; arc=none smtp.client-ip=185.70.43.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1712318904; x=1712578104;
+	bh=2NWgb6rcnPGIUDm043jKPEbY0VbfO1iygjvicmP6pBQ=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=vz3s3GjlOaaQldZ8FntuoHkVCX5NEFs4y8qUVV+qeqHuGI867mH2BxPzEXJAMI9TA
+	 3cre88N0Qu13re72MomHFzaffaRTOzEjCRz8e5+Mehnm/kuotIjD0L0/XxG5W8m8El
+	 X0jLwjpxFzr8Hxnu5CA7DUeOkw5chZ5GZ+/eyDNETfjr0eNl7ELkMiIdYUdh7iDIGd
+	 cqsvmUb4VGyaZPNyhfUA9kieHEz4xwLZVZVYU1IHRHEy4jXooJg1dNuZqL79j4T2j0
+	 db7DHclHD6QcAtLVbd+e9EeSKU1raYY15d7LGFaBlmkXwbqlUT1u8nYIc/zyP5dWV1
+	 Ci7Mfs4dx8baQ==
+Date: Fri, 05 Apr 2024 12:08:19 +0000
+To: linux-kernel@vger.kernel.org
+From: Raymond Hackley <raymondhackley@protonmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>, Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: [PATCH 0/3] arm64: dts: qcom: msm8916-samsung-fortuna: Add accelerometer/magnetometer
+Message-ID: <20240405120803.20754-1-raymondhackley@protonmail.com>
+Feedback-ID: 49437091:user:proton
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH RFC v2 1/4] dt-bindings: net: wireless: ath10k: describe
- firmware-name property
-From: Kalle Valo <kvalo@kernel.org>
-In-Reply-To: <20240306-wcn3990-firmware-path-v2-1-f89e98e71a57@linaro.org>
-References: <20240306-wcn3990-firmware-path-v2-1-f89e98e71a57@linaro.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Jeff Johnson <quic_jjohnson@quicinc.com>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, ath10k@lists.infradead.org,
- linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-User-Agent: pwcli/0.1.1-git (https://github.com/kvalo/pwcli/) Python/3.11.2
-Message-ID: <171231865932.2186783.159747685882106713.kvalo@kernel.org>
-Date: Fri,  5 Apr 2024 12:04:20 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+Some Grand Prime use a Bosch BMC150 accelerometer/magnetometer combo.
+The chip provides two separate I2C devices for the accelerometer
+and magnetometer that are already supported by the bmc150-accel
+and bmc150-magn driver.
+Some Grand Prime use a ST LSM303C accelerometer/magnetometer combo.
+Core Prime LTE uses ST LIS2HH12 accelerometer.
 
-> For WCN3990 platforms we need to look for the platform / board specific
-> firmware-N.mbn file which corresponds to the wlanmdsp.mbn loaded to the
-> modem DSP via the TQFTPserv. Add firmware-name property describing this
-> classifier.
-> 
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-
-2 patches applied to ath-next branch of ath.git, thanks.
-
-158fff51b4c3 dt-bindings: net: wireless: ath10k: describe firmware-name property
-5abf259772df wifi: ath10k: support board-specific firmware overrides
-
--- 
-https://patchwork.kernel.org/project/linux-wireless/patch/20240306-wcn3990-firmware-path-v2-1-f89e98e71a57@linaro.org/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+Add support for them.
 
 
