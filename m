@@ -1,162 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-16579-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16580-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F2F889A3E8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 20:11:40 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2BF0789A3F0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 20:15:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 721B51C21E7B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 18:11:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D40CA2866D1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 18:15:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F986171E66;
-	Fri,  5 Apr 2024 18:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B4C6171E60;
+	Fri,  5 Apr 2024 18:15:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hpPBNxoi"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tCAlWqEw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B65F171E41
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Apr 2024 18:11:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 881A6171E54
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Apr 2024 18:15:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712340695; cv=none; b=e+tfMo/7/p/N2HqDGjUZ1JZHq04+IIRwPRk7ctgg5goLO3EZn1xsNtkoHvNrVJ16xgMjoWdzOYNP/v7m9amQ0TfOWV8h6luSMD5BWoEXknMs74jihHPDbuU7ZDzJfLo7TSAjdAATC0eoA2B9pQujPLzcMKTDYaW8rCXooDV2p14=
+	t=1712340951; cv=none; b=K9ua0RvuHQ9OT1+d4pyTOlMVN24q3I03sbkjHItUiGzGiLzLZFO57c3YoCYBrH/7qBRv64Wd8W0aznYYXHArqkYB3K/nXBdiLFXyN5kiTB2fKXBKXPZc5jXg8/V1BBzsFUYEIIg6VSQLbjdZrHrjWZ9gwBpZtX8mlH5lqWC+ECc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712340695; c=relaxed/simple;
-	bh=Q67+S6V3QHztyCWOwIh90pzBvONFSy99V7/W4B38ll0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=sC6AH0HphlQ90bSHx93fo6RUvNat3hMRI0J+kPlsbNcZ+fNZB7VewJUS+NfJXLr4EsRu444EZQ5LkvQ7I6UceEnOks3n+O/7ciQomkn9Bm8yVVxXabC90wU+NtJGKSA0yJYJxpOkI+MAA3zee/Ce6bRuwbdnPPkbPQW3yaxHDVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hpPBNxoi; arc=none smtp.client-ip=209.85.208.174
+	s=arc-20240116; t=1712340951; c=relaxed/simple;
+	bh=S5b+AdiQvOIMzuTd9jzPScl58yKfNpTUdQmYxUuUACw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EXUEk+2I8lgy0iT9PzKLF1UNNd1FbC6syRHHRxhznmtNS3CkEGZMV1b4BMD3LVKgHDcs3udZDoszp1wusmlYEspu2m4UvXnqbTKRzBlkpfwQaa5W/9MhIeByBNHJntF0z+rYOkv8Dz+oVXQKLI07i3LUNwDf1WDQ5UPBmAgST0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tCAlWqEw; arc=none smtp.client-ip=209.85.219.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2d80baf621eso26701751fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Apr 2024 11:11:33 -0700 (PDT)
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-dcbd1d4904dso2581156276.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Apr 2024 11:15:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712340691; x=1712945491; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=H0UhNzRDaaLZJMtJI0V+d0B1HY2nx2ORlnj45fvhY3M=;
-        b=hpPBNxoizPoNxhr+o6Ol1XjAMwbXkZXBCQc5E/gzqUOMlRTg8fTIvsuY/zPSgKKRXk
-         pNY0m5Pv4o8igbR4U/XdvcqEwoa+OXAmmo/WLXQL3nCPNZNq7CfOOp4jBXlhL7SG3+7K
-         OqH7gFjW85Pjau+8YLw48ZKuCHl6mTOsNVdww+EiNrVL5OB9zz18T7Hmx6E53UF4WQYv
-         20P3TjqkyVomXHEN4dqJ2xeWXKBfulqdijCvvusVJXOdIOLYMJkphOhUnqtfxoY2ahtL
-         0os+3yFAQI+iljJfxv+8DTnwQgnDC3sKBOV7owjGFfOoeCqcOQwNwCY2yxgTOQwbqA9k
-         Nz5g==
+        d=linaro.org; s=google; t=1712340948; x=1712945748; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=jhJUaxFqXdP8RjNRyyUr2YeJgug8HchIqd4jcE8AeV4=;
+        b=tCAlWqEwmgTB8LT2lj57IY6r58qxEBcvZuoTGBucdSyYdObmEdYZIU9d6ZM9WyTmvz
+         Q1y3nvy0wFmkPSKAN560/6HCnzfQkY5+4XpU00Diqd7Fdpaquvr2Q4esGeLeVqVjVtD/
+         Mh18urf+aMMQP+D9aD6BM0A+38nCIa6FWsF/GjBJO4BsGz94eP6PNdnePi77rtD22VPx
+         X/p2L8RcyTuwKPHyr3ahM2oEsvLE2QqglIbbhC5qej/AGLDcloFZEGKdvhpH2gMV9eb+
+         VtAOKTVmzcrQWnDW8oD6VAa8uF0dqUaw6eS3N5Cb/YerIwBHK+papT9lf7YPgsQ1ygWF
+         ts4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712340691; x=1712945491;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1712340948; x=1712945748;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=H0UhNzRDaaLZJMtJI0V+d0B1HY2nx2ORlnj45fvhY3M=;
-        b=LZIFsVf5Ca2W3HF4Yueo9xXZKUTn1Y7t3DIxpDynisyBn+bNDDv5g7vzCba0WBC9wt
-         wwXe84Tb9W7U+Mo4tdApfV6BKtsCTaBi4jQJmiZC6jIN1scmXiQ1RHAbZyeRgUO6kIL4
-         2tVU3x8Rgl6RYoUzWabuFFyLchfIOv/qC/XsFW2uRfiV1qsvpulziSQO7aZucDcM9wRV
-         82imv1ZzyJBWdB3kRuIV5PccvOUgzwMW8HlVsBxMfdY9dF2lPO9VhvIEL9klNLWrsP2U
-         3+Tir11UgLiiK26VIK2dhEdYbvdw4M6EhnEeyEOjaet66CGMGUWfak7q6VklIZX7ndeV
-         Pnqg==
-X-Gm-Message-State: AOJu0Yz4nmlsBSn/SbvvO4wqAGA+MNhe039MVudNi864vSSf2NDfk6uH
-	pkUBRSMLY1VRnUb1Mg7V7JHttMBaM/M7s2ZC3gF5G/L1WLHzRYBInSRHfVoPDi5ue/BCx8csTw2
-	V
-X-Google-Smtp-Source: AGHT+IGzTSVhyURcwPUC+RUG2PdoKx93zSHkbv/W8wopB2ayFn1AT8brWggoRJM61C73cKtKDO/sdw==
-X-Received: by 2002:ac2:560a:0:b0:515:a8c9:6ec4 with SMTP id v10-20020ac2560a000000b00515a8c96ec4mr1579335lfd.42.1712340691309;
-        Fri, 05 Apr 2024 11:11:31 -0700 (PDT)
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id d19-20020ac25453000000b00516c580b640sm254387lfn.13.2024.04.05.11.11.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Apr 2024 11:11:30 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 05 Apr 2024 21:11:30 +0300
-Subject: [PATCH] usb: typec: qcom-pmic-typec: split HPD bridge alloc and
- registration
+        bh=jhJUaxFqXdP8RjNRyyUr2YeJgug8HchIqd4jcE8AeV4=;
+        b=iNDyJNgWPvpwogNKqFZmbxZ2BBcUhhrXvPKkjJolY/2HjSE5EwREdq6a+1I+1G20wv
+         tH/B3XIAlgpJH3P2gDS3c/npp969tL4C5N1k62Oy7TLKo816y9FOnMEfP96LZ0TQ8TLj
+         AmRO1oE9akplWygIqLCFO0UBrqlAMPhDEBRi5fA/ut1D6aFRxLqNboDTLHc+ngL5XFxU
+         TfhTBw8kuPIDluHPGKtcww90S0Oo1piQj6ZcjgQJWKzeHpygDPcDGy2FMQkK66NLS2l0
+         8hnZW6D29yk2jfytMUlWRfS25ou2uLSYnJoxAHBsPY6LRgzyLn8eu/EZMXZeeLnqjSS1
+         ptDw==
+X-Forwarded-Encrypted: i=1; AJvYcCWOvhAv4jwe8a0o9Zibz4YJBCM5JgL3QAfr9jDD0u0w0wxuO4Vn643lZR/ZCXUW3icZ9jZ+ul2l9NEbGvkrzkTYGs132iFjlCsPX45kqg==
+X-Gm-Message-State: AOJu0YwYGg8+jz7Pdaso8hg38gtZ7IdSIPlk6MeE4g4dI0wqr639YJrQ
+	fZmtRzXVT1YyHBt65ZD8n/rRDXeLjFfrOz19kjHXFSzl4SMXOMBYB2R/94Gt9LtlsouQMsGg9hS
+	m7qlsqzpyndN48ojFNzg0wJ2FiZNvl/9NcZ0iwg==
+X-Google-Smtp-Source: AGHT+IG8NStLBJ/v3TNzYtzpORNsJBegPKWoMw/JsWIwCn17FZbnI1E8BDTcn0eeeyQ5TnsPEj0tSy6OlV0Jtf0188I=
+X-Received: by 2002:a5b:b8b:0:b0:dcb:aa26:50fe with SMTP id
+ l11-20020a5b0b8b000000b00dcbaa2650femr2010398ybq.15.1712340948409; Fri, 05
+ Apr 2024 11:15:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240405-qc-pmic-typec-hpd-split-v1-1-363daafb3c36@linaro.org>
-X-B4-Tracking: v=1; b=H4sIANE+EGYC/x3MQQqDQAxA0atI1g3EMAXtVaSLNpPWgNo4M5SKe
- HeHLt/i/x2yJtMMt2aHpF/L9lkq2ksDMj6Wt6LFamDiQIGuuAr6bIJlcxUcPWL2yQoydxSY2p7
- 4CbX2pC/7/c/D/ThO7ki9UGkAAAA=
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Caleb Connolly <caleb.connolly@linaro.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1990;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=Q67+S6V3QHztyCWOwIh90pzBvONFSy99V7/W4B38ll0=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmED7SqcNNLHSudEvUbG6dnxGcnQs9/bVZtDJlL
- KiAi9anaTKJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZhA+0gAKCRCLPIo+Aiko
- 1fwjCACEkmWtqqAt2NCd4c1cEGh4vQpwrpTZuocaOfLHk3golMIxsiaoxIdwR8B76LcU2hrLDv/
- /gcKINvWRyVruDgMSB0EYzeA4wJZXoX5Tqc+Z4OFpVsS/74dVVSFZsMgVLkVNoKCvwRVNCG8ruL
- yPuDfFiOIOYMx2YCDa64uk6VMJUeKD2xuOLpNzOaoLGAdh2uvR4pKRMkshZJuFZ+jlEsMB7nCoh
- JPACJyiYfUKPq1QIODlWyk0JOSs1v3MKczcMkoBHPGBjxLj7jJjqzqS4i3yIy2e7JeOSYhO5Xs6
- Jx4ZGkN1xeYx4xDNSIuY2Us0Fg/6jStsGcaKo+Xp+RNHB5zI
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+References: <20240309-fd-dsi-cleanup-bridges-v1-0-962ebdba82ed@linaro.org>
+ <20240309-fd-dsi-cleanup-bridges-v1-2-962ebdba82ed@linaro.org> <7cecab40-2711-4735-1eb2-45f3942982b1@quicinc.com>
+In-Reply-To: <7cecab40-2711-4735-1eb2-45f3942982b1@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 5 Apr 2024 21:15:37 +0300
+Message-ID: <CAA8EJpodmW8+JDxLx8+1sYURsXGZfmV1q6wzyxF1cxAx2Jo5dg@mail.gmail.com>
+Subject: Re: [PATCH 2/3] drm/msm/dsi: move next bridge acquisition to dsi_bind
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 
-If a probe function returns -EPROBE_DEFER after creating another device
-there is a change of ening up in a probe deferral loop, (see commit
-fbc35b45f9f6 ("Add documentation on meaning of -EPROBE_DEFER").
+On Fri, 5 Apr 2024 at 20:35, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>
+>
+>
+> On 3/9/2024 7:09 AM, Dmitry Baryshkov wrote:
+> > Currently the MSM DSI driver looks for the next bridge during
+> > msm_dsi_modeset_init(). If the bridge is not registered at that point,
+> > this might result in -EPROBE_DEFER, which can be problematic that late
+> > during the device probe process. Move next bridge acquisition to the
+> > dsi_bind state so that probe deferral is returned as early as possible.
+> >
+>
+> But msm_dsi_modeset)init() is also called during msm_drm_bind() only.
+>
+> What issue are you suggesting will be fixed by moving this from
+> msm_drm_bind() to dsi_bind()?
 
-In order to prevent such probe-defer loops caused by qcom-pmic-typec
-driver, use the API added by Johan Hoval and move HPD bridge
-registeration to the end of the probe function.
+The goal is to return as early as possible as not not cause
+probe-deferral loops. See commit fbc35b45f9f6 ("Add documentation on
+meaning of -EPROBE_DEFER"). It discusses returning from probe() but
+the same logic applies to bind().
 
-Reported-by: Caleb Connolly <caleb.connolly@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >   drivers/gpu/drm/msm/dsi/dsi.c         | 16 ++++++++++++++++
+> >   drivers/gpu/drm/msm/dsi/dsi.h         |  2 ++
+> >   drivers/gpu/drm/msm/dsi/dsi_manager.c |  8 +-------
+> >   3 files changed, 19 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
+> > index 37c4c07005fe..38f10f7a10d3 100644
+> > --- a/drivers/gpu/drm/msm/dsi/dsi.c
+> > +++ b/drivers/gpu/drm/msm/dsi/dsi.c
+> > @@ -120,6 +120,22 @@ static int dsi_bind(struct device *dev, struct device *master, void *data)
+> >       struct msm_drm_private *priv = dev_get_drvdata(master);
+> >       struct msm_dsi *msm_dsi = dev_get_drvdata(dev);
+> >
+> > +     /*
+> > +      * Next bridge doesn't exist for the secondary DSI host in a bonded
+> > +      * pair.
+> > +      */
+> > +     if (!msm_dsi_is_bonded_dsi(msm_dsi) ||
+> > +         msm_dsi_is_master_dsi(msm_dsi)) {
+> > +             struct drm_bridge *ext_bridge;
+> > +
+> > +             ext_bridge = devm_drm_of_get_bridge(&msm_dsi->pdev->dev,
+> > +                                                 msm_dsi->pdev->dev.of_node, 1, 0);
+> > +             if (IS_ERR(ext_bridge))
+> > +                     return PTR_ERR(ext_bridge);
+> > +
+> > +             msm_dsi->next_bridge = ext_bridge;
+> > +     }
+> > +
+> >       priv->dsi[msm_dsi->id] = msm_dsi;
+> >
+> >       return 0;
+> > diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
+> > index 2ad9a842c678..0adef65be1de 100644
+> > --- a/drivers/gpu/drm/msm/dsi/dsi.h
+> > +++ b/drivers/gpu/drm/msm/dsi/dsi.h
+> > @@ -38,6 +38,8 @@ struct msm_dsi {
+> >       struct mipi_dsi_host *host;
+> >       struct msm_dsi_phy *phy;
+> >
+> > +     struct drm_bridge *next_bridge;
+> > +
+> >       struct device *phy_dev;
+> >       bool phy_enabled;
+> >
+> > diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> > index a7c7f85b73e4..b7c52b14c790 100644
+> > --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> > +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> > @@ -464,18 +464,12 @@ int msm_dsi_manager_ext_bridge_init(u8 id, struct drm_bridge *int_bridge)
+> >       struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
+> >       struct drm_device *dev = msm_dsi->dev;
+> >       struct drm_encoder *encoder;
+> > -     struct drm_bridge *ext_bridge;
+> >       struct drm_connector *connector;
+> >       int ret;
+> >
+> > -     ext_bridge = devm_drm_of_get_bridge(&msm_dsi->pdev->dev,
+> > -                                         msm_dsi->pdev->dev.of_node, 1, 0);
+> > -     if (IS_ERR(ext_bridge))
+> > -             return PTR_ERR(ext_bridge);
+> > -
+> >       encoder = int_bridge->encoder;
+> >
+> > -     ret = drm_bridge_attach(encoder, ext_bridge, int_bridge,
+> > +     ret = drm_bridge_attach(encoder, msm_dsi->next_bridge, int_bridge,
+> >                       DRM_BRIDGE_ATTACH_NO_CONNECTOR);
+> >       if (ret)
+> >               return ret;
+> >
 
-diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-index e48412cdcb0f..96b41efae318 100644
---- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-+++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-@@ -41,7 +41,7 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
- 	struct device_node *np = dev->of_node;
- 	const struct pmic_typec_resources *res;
- 	struct regmap *regmap;
--	struct device *bridge_dev;
-+	struct auxiliary_device *bridge_dev;
- 	u32 base;
- 	int ret;
- 
-@@ -92,7 +92,7 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
- 	if (!tcpm->tcpc.fwnode)
- 		return -EINVAL;
- 
--	bridge_dev = drm_dp_hpd_bridge_register(tcpm->dev, to_of_node(tcpm->tcpc.fwnode));
-+	bridge_dev = devm_drm_dp_hpd_bridge_alloc(tcpm->dev, to_of_node(tcpm->tcpc.fwnode));
- 	if (IS_ERR(bridge_dev))
- 		return PTR_ERR(bridge_dev);
- 
-@@ -110,6 +110,10 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto fwnode_remove;
- 
-+	ret = devm_drm_dp_hpd_bridge_add(tcpm->dev, bridge_dev);
-+	if (ret)
-+		goto fwnode_remove;
-+
- 	return 0;
- 
- fwnode_remove:
 
----
-base-commit: a6bd6c9333397f5a0e2667d4d82fef8c970108f2
-change-id: 20240405-qc-pmic-typec-hpd-split-22804201902b
 
-Best regards,
 -- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+With best wishes
+Dmitry
 
