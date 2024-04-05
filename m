@@ -1,60 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-16568-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16569-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A578389A299
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 18:35:56 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3934389A2CE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 18:44:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5BED11F24B27
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 16:35:56 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 979CEB25BF3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 16:44:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86187219E4;
-	Fri,  5 Apr 2024 16:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC073171668;
+	Fri,  5 Apr 2024 16:44:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TcqVZ8o6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="B1wf0mxK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECE0DF4D;
-	Fri,  5 Apr 2024 16:35:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0421757E
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Apr 2024 16:44:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712334952; cv=none; b=q+3kmNoQ9IhgmBUAfMCSOSBwD5VcoAihpFbVuQXe82jwD5sL5y37cfe7L1vpmiUAYy2JrYjWvhI5P7I82jpJK5M5hRhgXGTGiklHmHjOTQlXUvOYHHejfBtK9vXmBV9I+QrFTrRrKwFNmBPNg0iNlp7T4DgfYJFOBWfobjyxVA0=
+	t=1712335455; cv=none; b=RT3aY7w3nBb3jcihP3yri+3JguF16L4NmblxnnZyL4UwepCvDL8fKZ8KScpJdvq0lNnmHRiew5g5etDard2wMan+NGIVvkYKXTiEDVMGV1ohOmuUhl5kIHK2ZpAo/sjZgPZDUomMYc3MDXaXWf9cIjxWNS6k4P5wuvrwds7AW/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712334952; c=relaxed/simple;
-	bh=oDN6wQ8VzoG9OW2mJZ7hpzN5TSjN0YJC9IxQ2U0tMHc=;
+	s=arc-20240116; t=1712335455; c=relaxed/simple;
+	bh=aT2R1dZXSI6UwLhiaGq5Z/p/OQUs3v8GH1d9CvTZe80=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MGXdN8oovDOhEMFXe843zRspAJ0aT+bPs9QTZOcsoHG9jz7WdS/k60IwEzYtTqJ0uqUiUYKh+xj/HQzVXhSlDvs+IUGshdPeG9ulH7QCMzi02B6uWsm4g7lLG3s6AgdiS5euGxe8h6yrNcu4ZAMG0m5QII7iZtqwb9YbrzB2dNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TcqVZ8o6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE45C433C7;
-	Fri,  5 Apr 2024 16:35:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712334951;
-	bh=oDN6wQ8VzoG9OW2mJZ7hpzN5TSjN0YJC9IxQ2U0tMHc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TcqVZ8o6kG0k/k91Y+FZDa/l8c53J7dkG7KmrWFQPW1cRubI3wNvHGC6oLeSEnVJB
-	 fOhO5tOI7N4A+8Rs0Rt2sFEmuNplZb/qZquIVXPxi1y/u5VtS4SSDfwRulwCh9QRKx
-	 EaARAq1VBxGRAyfhoatVQMys/DGZE3fHvoTP9/s+96M+69ujkLPiAWF2xdhFrM1YT+
-	 1M1GkRzI8pBEBXMnyNww9WNuoXn0jVDv9dcl9/oHbwsoVfk89G2y+kWeW+j2fLmDCe
-	 Ih0g84+ofUw5kuFC6uaXI4llLzi54ooxZwurdAYWbVJgnPVdZudCYWTq1tc84q/LX/
-	 cusVl2ZEjKKPw==
-Date: Fri, 5 Apr 2024 22:05:47 +0530
-From: Vinod Koul <vkoul@kernel.org>
-To: Gabor Juhos <j4g8y7@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-	Varadarajan Narayanan <quic_varada@quicinc.com>,
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] phy: qcom: m31: match requested regulator name with dt
- schema
-Message-ID: <ZhAoY4snnfkGv77B@matsya>
-References: <20240220-phy-qcom-m31-regulator-fix-v1-1-7675b4a916b3@gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=TqwKp76sfHtGhWsuNtU9/OIpCS65CVyXHNqF0G3WZ2sZMlYe8DwX0sh3O7++CqZOES0nizkOJW5CGQhdQ5uutZUq6z6BEVomWkApoqIE3i6tqpYYmh6JwI67Ig9bTsKT4A/lLtM1BhRIhf+o+3ac3PzbyOH3teQdeuw8I1sDkbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=B1wf0mxK; arc=none smtp.client-ip=209.85.167.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-516d0c004b1so2312858e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Apr 2024 09:44:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712335452; x=1712940252; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=A8tZjaq3vsa5Ef5+rAl3Nt0a+YxPI811nD5LkgtpzOc=;
+        b=B1wf0mxKLxbA/yCbCdDpYe5pfTQX0S74tquDNL8H04DYmGuHYfgJCtIUIAGLtIuAvz
+         p/AlkQhToYP5qwsAtX+GcgODzI/xXrvaFZEAfb35hn5YmilhiYWXBB1xPBNMr4wfGADy
+         u/Zq6vHkg8ps21VvVY5jHy8H8xR7+C3SbMfrYV7W+KNPSESVW+Cb+99emFjCyCvHxZmU
+         NBEFxh6+X76pwA86Go/hj0rbQgLswZkle0ABnVV9uQEePWFAFYFRSpADJB/rFdjd5LuQ
+         vxeTA6u9/WLzvhw1OWM9KuOPTXQD72s44xMOHUR8OtukBewcJ5sCY14tyZHB3G0fc2Ll
+         cpCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712335452; x=1712940252;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=A8tZjaq3vsa5Ef5+rAl3Nt0a+YxPI811nD5LkgtpzOc=;
+        b=RVG29v3hvN6DLCaLV+dEjj/tXWSj9794JxkDdB3dngccd6x8wbi/FPhmD2vqo2H3gn
+         QG/Iwx9CSsTcRNsQw5gyEV8z5IUSdXGJZOp63wCbOOYJ+EtToajdS8pvnmTmr+L3idqy
+         xWhqgoX9POFM5L00mU0LTS+izKmUxloBfqsrNZ1XOM9AF/d80VlXyyMQbaxizqb96S6o
+         01S3+aBLWHdCpNwflPu6114WodRhAi7l46z4BrBRhmvQ84gcxxl/v4HEXrFYZLBCY8iu
+         +/g17MyruU7s/SIjT0EdbRLKxdq+jNpprSXH18Wt4tpwSALMX3oGaDgOeHt4Ry92MiOI
+         oATA==
+X-Forwarded-Encrypted: i=1; AJvYcCWIkKQjvZEk/QtIgn7m+mxPst0+qBF2x24QHlwKna6W+HV3SWu2pS2yCZc4mNqdVOEqJ5tW7hZfFxhzgUgSz9XZrUraYVGMPCG0UcW3yw==
+X-Gm-Message-State: AOJu0YxfiMXak39IPIjA8Bdrfwiqag+OPs8cXqTw25M/1eAKKtVj0QmZ
+	CMzoN4M3uGvlhkDDq6WzMjIe7V1FAuHbLf8nc1KWFLpStL+9ALXGYUgo6+pVUDY=
+X-Google-Smtp-Source: AGHT+IF8OL4JCr1Af7MxIbU7nV2WDQTCwzIesM0Hw7oetMCXwX7NKBeUDfbrw0/tz/kEhN40UAsDEQ==
+X-Received: by 2002:ac2:4895:0:b0:515:c7c9:b150 with SMTP id x21-20020ac24895000000b00515c7c9b150mr1690611lfc.0.1712335451773;
+        Fri, 05 Apr 2024 09:44:11 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzyjmhyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a00e:a300::227])
+        by smtp.gmail.com with ESMTPSA id e10-20020a19690a000000b00516d0933256sm239452lfc.131.2024.04.05.09.44.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Apr 2024 09:44:11 -0700 (PDT)
+Date: Fri, 5 Apr 2024 19:44:09 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Jani Nikula <jani.nikula@intel.com>
+Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Aishwarya TCV <aishwarya.tcv@arm.com>
+Subject: Re: [PATCH] drm/msm: convert all pixel format logging to use %p4cc
+Message-ID: <eondf5x3wz3nccxpnqxtb7gtvf3k5u3bz4qwhn3gbcy5pj73ku@fue4tej3xgnq>
+References: <20240405092907.2334007-1-jani.nikula@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,29 +84,36 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240220-phy-qcom-m31-regulator-fix-v1-1-7675b4a916b3@gmail.com>
+In-Reply-To: <20240405092907.2334007-1-jani.nikula@intel.com>
 
-On 20-02-24, 20:13, Gabor Juhos wrote:
-> According to the 'qcom,ipq5332-usb-hsphy.yaml' schema, the 5V
-> supply regulator must be defined via the 'vdd-supply' property.
-> The driver however requests for the 'vdda-phy' regulator which
-> results in the following message when the driver is probed on
-> a IPQ5018 based board with a device tree matching to the schema:
+On Fri, Apr 05, 2024 at 12:29:07PM +0300, Jani Nikula wrote:
+> Logging u32 pixel formats using %4.4s format string with a pointer to
+> the u32 is somewhat questionable, as well as dependent on byte
+> order. There's a kernel extension format specifier %p4cc to format 4cc
+> codes. Use it across the board in msm for pixel format logging.
 > 
->   qcom-m31usb-phy 5b000.phy: supply vdda-phy not found, using dummy regulator
->   qcom-m31usb-phy 5b000.phy: Registered M31 USB phy
+> This should also fix the reported build warning:
 > 
-> This means that the regulator specified in the device tree never
-> gets enabled.
+>   include/drm/drm_print.h:536:35: warning: '%4.4s' directive argument is
+>   null [-Wformat-overflow=]
 > 
-> Change the driver to use the 'vdd' name for the regulator as per
-> defined in the schema in order to ensure that the corresponding
-> regulator gets enabled.
+> Reported-by: Aishwarya TCV <aishwarya.tcv@arm.com>
+> Closes: https://lore.kernel.org/r/2ac758ce-a196-4e89-a397-488ba31014c4@arm.com
+> Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+> 
+> ---
+> 
+> Tip: 'git show --color-words -w' might be the easiest way to review.
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   |  8 +++----
+>  .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   |  2 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c   |  4 ++--
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     | 24 +++++++++----------
+>  drivers/gpu/drm/msm/msm_fb.c                  | 10 ++++----
+>  5 files changed, 24 insertions(+), 24 deletions(-)
 
-This lgtm, but it doesnt apply on phy/fixes
-
-Can you please rebase
-
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 -- 
-~Vinod
+With best wishes
+Dmitry
 
