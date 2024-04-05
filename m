@@ -1,137 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-16584-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16585-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5331389A416
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 20:20:28 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D91CF89A41C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 20:21:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0E61528C489
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 18:20:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8EEBC1F22B34
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 18:21:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DDB5172761;
-	Fri,  5 Apr 2024 18:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68AFD171E5B;
+	Fri,  5 Apr 2024 18:21:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="m5/hRK3w"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RqzsBt6s"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C42172767
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Apr 2024 18:20:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5F0A171085
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Apr 2024 18:21:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712341207; cv=none; b=NfBY+Fy3LPbp2C1INC8SUVmlj7dLSxBiYoJ3ErnR9zNIdQZF4ft6i9r+RaZSOkHPVjgdKfBNNmJrWI9m1taW+fwTJJWKJ8vcr4vCXGjn5dTEZqE3fzEvv+EWUdLaRmoUfjdYTu04yy71abgoPdFjeS4acBpL4HJkG6bD4Z5EsfA=
+	t=1712341264; cv=none; b=MmhXTaub5nlzySlMnOV8ZhozUiwzA1bTlGjCIFnqqLc1eB/fVr/CvrX5LHwdErow602Su2L/LEWGQxhAPIsITlABDi0KYnLQTQPGrn692QGui8YialvsihuqvfBlqIyxUYkEMCQDbKpNybacBV+drYTYyA7uGcHOK8qXkOChV0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712341207; c=relaxed/simple;
-	bh=h7mzRR2BcU+NZthRy3maM+pbscEw0W7grx4tbHyDYwo=;
+	s=arc-20240116; t=1712341264; c=relaxed/simple;
+	bh=gE75rtpTvZRnUSJ6xctoCFOXk2fH+DWGzh0IgmMEylg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HY4i7W7po25O7vU+/tLcRppzxSRabLqu21z1jZLtzdpCC1kkHFvaEIVEzFUirsoIcjCw2LoSmHKv2MfmJ6vzKYpe4K3PCL2uuXpDDr736wMAg3kruZC1tIH20WBvSEtrU5qtaURjoivSrrzA715aptuz2F/6N5V1MBO70hzf6lM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=m5/hRK3w; arc=none smtp.client-ip=209.85.219.172
+	 To:Cc:Content-Type; b=Wmhim0qQpSXUJjXnk8MbEasRUR6o+aLeenJd3fEvMKpw2MO3Z5tsC2L51LwHPF3gBi+wauteRo5b2MXXoF9YVtJ76QdwIHCcOgY73wdFbXry96E1kEqwz63fmkgVQC2O1GiSmsgJoEPp6MZt7A9euqm0sCisiokllZ2QP5wuRBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RqzsBt6s; arc=none smtp.client-ip=209.85.128.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-d9b9adaf291so2620874276.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Apr 2024 11:20:05 -0700 (PDT)
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-6154a1812ffso25743547b3.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Apr 2024 11:21:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712341205; x=1712946005; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1712341262; x=1712946062; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=kpDzGRrClkUxxd0wNBawM8cLr5mKpKI36/KDGXm6I7I=;
-        b=m5/hRK3w7G7MfQPIM3pgaqwL7sDLnvKb7sSOzaEw86jh2+0/t9cuUaLGZDAMHGd8qZ
-         aAiTgPyVFYpkFbsXRjPmgqzj4bAJFiroSC0LeTuQJPzGxpSGKyO+HJIXBzf9O71ISJi2
-         pLk/LpnTJFYptrdL8BeuoVkpJVwJFm/9Pw8XxETcrr3K/t1nBCcaMmzfyT0bI0GfVSX4
-         Wyg0glZCdmrupaQTTFBKa2mZHorLncDQUh4b+2HYfIWpeV1vjy+/G6vJJJwFLz7tIVCS
-         26OEjVcJyvCL2kF02cQx6wCfsWQVh4BSLTe6P0LfyvfJqA4UQeFCovhOHFQOBad5B/E8
-         W5Uw==
+        bh=6FshVhZKcqJky0lBiOIixXGsQBzKhd/9O9LkN4VAwkM=;
+        b=RqzsBt6sMz01dLchQoBSwVLYg469vbMyHHKIvqr9PiO0Nw0vz8uUpS3JADeiHD5Oie
+         WN6n3ry5TLqkddcZJhmwbFfekym63ABhTT3vCYVkkqqLPIDLjwGUDm3GA6XJ+5h7TCYQ
+         8b3KxGYM3C0vUduCZWAe90/dnbT5JHQU/x9ZMm4n0cjtQazOVZhp+0jzfnB1dimHBJqM
+         lPnLfbNPBixJk2xH0i+AheQnSyC4T17Z2PR0EhDpCkshBQThaP86bzvL/579DoOJ2yvC
+         lua+gYKWXbfyO7zs0udZAi2qqFHxebn6DWcc1tLxUJjpu6nTA7n9TOuPtwf/3HT+zKZE
+         cB/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712341205; x=1712946005;
+        d=1e100.net; s=20230601; t=1712341262; x=1712946062;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=kpDzGRrClkUxxd0wNBawM8cLr5mKpKI36/KDGXm6I7I=;
-        b=aZWQ0qjTtpTIjxVRdm9w1h8M2p637rGCN++5GSQM4W63kiD5XAyzt4Ab/A22OyL4eL
-         YZjtGcOxE04WAN5ks6iPAjYopHdtgcmDA/kuVu+0nBU9uT81u+0/VD0AjfK+xhQUVgPF
-         3K7VTjv7SUu6JbohNpeLEksHvinXa41Pe47xC3+3WaSm5ZUethM3NYWeBfOmPxaLlMSN
-         JXPmTZudGhQgt7pRjSzIyCwscfknsXuLC00Khb9lr80i3fDd4xAHkYUgKxBVrXg7Fnu1
-         N0sx99v6PUamMNOYvlk/64jMpP8VbaDyzDaiRuG9fSR4N9tQhoxMwnREcMJS6/D7HEEK
-         4u4g==
-X-Forwarded-Encrypted: i=1; AJvYcCUg+BhPL6grtXrqz4/7ku3iwBSEn4OKj3vjooiMnWOGAePTcFGXOmZjPXmop+z6BcbuNdjPVJXTfKcv3EnkmOlPQMSwGPjoiG3AKn5obA==
-X-Gm-Message-State: AOJu0Yxr/OV2kuTVyQAcTKCpNZmya/QMwXmHyDNn8M7yGOLwCSxRBs1Q
-	PDBwZhqntWCEAzCn0JZ+d7w1eSqJitPvLU5jyyqIIhFMdpseDqJb54ZlbJBuaGEfwPO+hSIfEej
-	eioSupDfJGGJZNQkQpmQx0YCX1zuWDf3FY7OMjA==
-X-Google-Smtp-Source: AGHT+IEmS3F4yd2lSXcfoF8T5aDOGQm50r0FnJ0IB21W480Br+HatBoZliUU6wHsBQ2BYSCNyXyrl0Pj9i762weS68s=
-X-Received: by 2002:a25:69c2:0:b0:dcb:e82c:f7d with SMTP id
- e185-20020a2569c2000000b00dcbe82c0f7dmr2213889ybc.41.1712341204840; Fri, 05
- Apr 2024 11:20:04 -0700 (PDT)
+        bh=6FshVhZKcqJky0lBiOIixXGsQBzKhd/9O9LkN4VAwkM=;
+        b=Mp7WPaq+wq2kp6JxmSwrwSeIeBs0mIH8A6BfgFsjBfd6V2+uUHlBcHBUUip2+3lXga
+         OQvlSZsKpvofsmVttRrK9PfxQ7dfuqde0TAfoBMvfjVFyEO3B9eY5tKa7z1vGznvd9D/
+         01k5pBCpBHGuUW/db6FrD+a3v4xtfmZ3y+ao63zV/BUNeEeDDncsQR/Og2UibdbpOQPB
+         BOfyD6J4Mz73UaPXOT9Qjka3udRTWWjpnSSK+YPxFPcLJ9oIS+xXNjYPoGR2tRsV2gHV
+         SgrubPGhbY4TgjemJNGr2v911m+qxGu3IAMidmq5+8GQ04AAgpcpnqTi5HsXP+1Q+R6v
+         nEVA==
+X-Forwarded-Encrypted: i=1; AJvYcCWgz6mvJFXUGX51+clR0GmU3NjD1+MAqGsgIJodkSCQX7pAil5Xzj367JTeYwTWVmsELGhvn1BHwOaaVS7HRR+CrF0nyncWJUo5h9P+Sg==
+X-Gm-Message-State: AOJu0YygVRVCqUQoWltNnrenF0B3ZPLZwV89XlmhZyMBgetpshdaKzc6
+	2uqudKW30A0n0vuGFLcuykfjl/BMWcKrAnrT621Wbak4Db157E+sOUPcX+8rcmKECzLOY4AEWY5
+	5AnyKPtiRKiMexI+POhaY18IjvKH7usZI3178Ag==
+X-Google-Smtp-Source: AGHT+IHUuUqv9XGZ9bYt/6FB0DSxASTzs7ENjMecr4yFUOen3MARyohRguewr1dgCgDY1mFhRU/AKlGWEip8NUHr6ww=
+X-Received: by 2002:a25:8250:0:b0:dcd:5bfa:8184 with SMTP id
+ d16-20020a258250000000b00dcd5bfa8184mr2366149ybn.39.1712341261719; Fri, 05
+ Apr 2024 11:21:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240309-fd-dsi-cleanup-bridges-v1-0-962ebdba82ed@linaro.org>
- <20240309-fd-dsi-cleanup-bridges-v1-1-962ebdba82ed@linaro.org>
- <88b3722e-aa46-1ffe-9f0f-1939d43e0100@quicinc.com> <CAA8EJppbETLONx8pEdT1kT1Hp1i405m-4PfgumvvOa9N2mh6CA@mail.gmail.com>
- <363efce2-5540-b81a-31be-b5919635b586@quicinc.com>
-In-Reply-To: <363efce2-5540-b81a-31be-b5919635b586@quicinc.com>
+References: <20240405155855.3672853-1-arnd@kernel.org>
+In-Reply-To: <20240405155855.3672853-1-arnd@kernel.org>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 5 Apr 2024 21:19:54 +0300
-Message-ID: <CAA8EJpoPbK6rEKG9mh2pfo1tp8Rrn7oqXt50j0q2O5v50A8Zjg@mail.gmail.com>
-Subject: Re: [PATCH 1/3] drm/msm/dsi: remove the drm_bridge_attach fallback
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+Date: Fri, 5 Apr 2024 21:20:50 +0300
+Message-ID: <CAA8EJpoVmyJhyrRz0p-8Ue0sa-XG+rSFwCajuR8b6GQVxBDM0Q@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: remove an unused-but-set variable
+To: Arnd Bergmann <arnd@kernel.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Arnd Bergmann <arnd@arndb.de>, Sean Paul <sean@poorly.run>, 
 	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+	Daniel Vetter <daniel@ffwll.ch>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Connor Abbott <cwabbott0@gmail.com>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 5 Apr 2024 at 21:17, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+On Fri, 5 Apr 2024 at 18:59, Arnd Bergmann <arnd@kernel.org> wrote:
 >
+> From: Arnd Bergmann <arnd@arndb.de>
 >
+> The modification to a6xx_get_shader_block() had no effect other
+> than causing a warning:
 >
-> On 4/5/2024 11:16 AM, Dmitry Baryshkov wrote:
-> > On Fri, 5 Apr 2024 at 20:20, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
-> >>
-> >>
-> >>
-> >> On 3/9/2024 7:09 AM, Dmitry Baryshkov wrote:
-> >>> All the bridges that are being used with the MSM DSI hosts have been
-> >>> converted to support DRM_BRIDGE_ATTACH_NO_CONNECTOR. Drop the fallback
-> >>> code and require DRM_BRIDGE_ATTACH_NO_CONNECTOR to be supported by the
-> >>> downstream bridges.
-> >>>
-> >>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >>> ---
-> >>>    drivers/gpu/drm/msm/dsi/dsi_manager.c | 36 +++++++++++------------------------
-> >>>    1 file changed, 11 insertions(+), 25 deletions(-)
-> >>>
-> >>
-> >> There are the bridges I checked by looking at the dts:
-> >>
-> >> 1) lontium,lt9611
-> >> 2) lontium,lt9611uxc
-> >> 3) adi,adv7533
-> >> 4) ti,sn65dsi86
-> >>
-> >> Are there any more?
-> >>
-> >> If not, this LGTM
-> >>
-> >> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> >
-> >  From your message it looks more like Tested-by rather than just Reviewed-by
-> >
+> drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:843:6: error: variable 'out' set but not used [-Werror,-Wunused-but-set-variable]
+>         u64 out = dumper->iova + A6XX_CD_DATA_OFFSET;
 >
-> No, I only cross-checked the dts.
+> Revert this part of the previous patch.
 >
-> So, its only Reviewed-by :)
->
-> But I wanted to list down all the bridges
+> Fixes: 64d6255650d4 ("drm/msm: More fully implement devcoredump for a7xx")
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 
-Then I'd also nominate the panel bridge to the list of bridges for
-cross-checking. It is created automatically when we request a bridge,
-but DT has only a panel.
+Unfortunately this fix is not correct. The proper patch is present at
+https://patchwork.freedesktop.org/patch/584955/?series=131663&rev=1
+
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 3 ---
+>  1 file changed, 3 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+> index 1f5245fc2cdc..d4e1ebfcb021 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+> @@ -840,7 +840,6 @@ static void a6xx_get_shader_block(struct msm_gpu *gpu,
+>                 struct a6xx_crashdumper *dumper)
+>  {
+>         u64 *in = dumper->ptr;
+> -       u64 out = dumper->iova + A6XX_CD_DATA_OFFSET;
+>         size_t datasize = block->size * A6XX_NUM_SHADER_BANKS * sizeof(u32);
+>         int i;
+>
+> @@ -853,8 +852,6 @@ static void a6xx_get_shader_block(struct msm_gpu *gpu,
+>
+>                 in += CRASHDUMP_READ(in, REG_A6XX_HLSQ_DBG_AHB_READ_APERTURE,
+>                         block->size, dumper->iova + A6XX_CD_DATA_OFFSET);
+> -
+> -               out += block->size * sizeof(u32);
+>         }
+>
+>         CRASHDUMP_FINI(in);
+> --
+> 2.39.2
+>
+
 
 -- 
 With best wishes
