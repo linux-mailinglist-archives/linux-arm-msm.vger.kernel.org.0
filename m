@@ -1,138 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-16555-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16556-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E15389A18B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 17:41:22 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7673A89A199
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 17:43:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 21EA4286128
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 15:41:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 154E31F2159B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 15:43:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31D6B16FF2B;
-	Fri,  5 Apr 2024 15:41:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B9B816F91A;
+	Fri,  5 Apr 2024 15:43:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zrbi3bY6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KAMfk9XH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A501DFE4;
-	Fri,  5 Apr 2024 15:41:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D1716EC0B;
+	Fri,  5 Apr 2024 15:43:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712331677; cv=none; b=JHP+3zWJ2nzeQZAXmGpuQvNT32eebRUrCMySdeEQwx/EEDDAwiUdJvd6olUzxlsSNpD30G3JV4ndcMTZFLNOmrNKQLsGECCQVWbc2Jy0EngSqS+NTgQ6/UTMIxHUXdfM9MyH8lKL2/PY55GUi97nOAbywtlboyuAQNRACaXKcG4=
+	t=1712331809; cv=none; b=CxBbzG/mdbsr3OjtttC3Hw9wiyOPppikHsb8T3gmfRRJslLvbXBuUhzoHQk42ZQ0por6i5Pjv+Pn+j04G5bdJn5dOr9KpGWw7J+kcOu3iB9q9QnBmcyl+ybRKWOpW1nGdycGghi+cXmdIzztQ5PcLWqKxwrfPiDVYCVOEWBxqK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712331677; c=relaxed/simple;
-	bh=rZJGyKNtzoutcmvD9yBAQBRLOt5WkG7MywHLVvMRWZ4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=N1U25hQPW7/iEgBTPtKJl0Pwx6+vJJfyPr2l0HHxlDOKrJ/irLWSyiljqZNkXgO3SvlMRwu1txNMHVt8MnxAZLK1/Vdi33g/IKno/zyPeNa9SbGeRzVfsLOGF6llGqDk9Z9vENwGMTzHYt7qRfBoQC9S3/hELWFtaZIhujcLT98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zrbi3bY6; arc=none smtp.client-ip=209.85.128.41
+	s=arc-20240116; t=1712331809; c=relaxed/simple;
+	bh=3tjUb3aIhcJ6VyI06t2jNh/PHQu+242vcNQbZWuXUe0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=p6eS0fX8xXCVCJ5FXZ0hw/vbeCCRChWna9YiL9I7g1a4gnCMH3Wif5kZXkFjOiErAnkdcx/c0SbCpyoB4Bf7Xb6L/gzarujGnWSIeqqkwVLmzsKUU9rWzn4PoX0koiJAjeI/jzI0fpzV3GkcSHbs6Zc5zCusp/VQ570CjRU30+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KAMfk9XH; arc=none smtp.client-ip=209.85.166.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4163181a7ceso4796085e9.0;
-        Fri, 05 Apr 2024 08:41:15 -0700 (PDT)
+Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-36a06a409caso7062995ab.3;
+        Fri, 05 Apr 2024 08:43:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712331674; x=1712936474; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vWae/TQVR4lDMRxTHKpFB8Vkf/PIFo/hlHy1KJVttno=;
-        b=Zrbi3bY6TWu8nzzhcBUiUS9i51HQAy+PP8m+ions/eaLgCT2afnymTyF6ZPX2L5jj0
-         O2QUpcQZOZhGVF33VidqinJidL9dDTLqFjp49lcpGxmx5OcoEqDhkSY+0IjFB1SuAZbn
-         vbuwk/TXT/DXX0SkoqZhQQFJC1l58Y1LpCxn9bh1ofqHrp47m4toz847at/FEXioKin9
-         mGHqBf7upSb3L5vCOPZHVXtjooiQe5+C2TsZgmVzUIPuHdu1SYdbo5JG9mDLDzu8m60v
-         DFDoYqFODUUXR4MWq/T2ZklzdBF4qVWsWUdJJUxs7j2eMPBCOtx7olJcQpfWG+aTXpbC
-         Y9BA==
+        d=gmail.com; s=20230601; t=1712331807; x=1712936607; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=o5G4YX3A6SwCOkm+ekTzFYShVJvSdNT/a9NFK7+1Luc=;
+        b=KAMfk9XHKpOFEe5fiYRM38ZZFjCYFEnlI9zL30x6Kks1THopggeyTiFDHR8K8uc7Wt
+         D6SQQPKDF4a9++rqjLxxCbR7moQvoxlQDCM9wfrcajWp/D/owbELEQgwyY+7HccDuf3f
+         TrXLqfMG+poXhg21l+qE9YDHCAV+3U9Ouo9tSK+rt78zYz6axPRtf1yFkLsrkHUOKfYV
+         j00Rw1zekYsOgyb1PYqiHetHc71NMEZFYahzbqS/IEaiANIVFFWhogVqu7WTWjTdHkUi
+         w0rBxfl+pg+V2b1ur3bi7QA5vDLX8cMAUvgHieCA5tmmbUKc8UcOs0CdFTZE0xQFrJmu
+         2jng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712331674; x=1712936474;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vWae/TQVR4lDMRxTHKpFB8Vkf/PIFo/hlHy1KJVttno=;
-        b=V75OqEkMGHuO5XVOOCwDm+4cIjcenJ1nPTCI9ZnLXWPZrXneHknzLZTYWlyi8dNPGD
-         nKRepRjtonTaLSfrbp4eALSXjg4n07U8Z4Aem9LY7fcZAFO54Gq80i4zpDM56jDjSZOV
-         mcLy+0G6sUnkfPSVvKXoS0/4KobrsRT4V6nevsufh3/rZRGeZmr9pUzK1Xf++w1LuyZO
-         pHT88Znvf8xOeVB/SPhpt5AsN8JdOBAqu3/cV74g9JBU2KYEUsQuDQPoGi27Qz4GTAQ5
-         Rs7CLY14RzHQDRCf6fxsO+PqvJnAdWkXT6kDVMUP87t93Pj3Gjk8lD76ddv4hIEZ8jED
-         +Rxw==
-X-Forwarded-Encrypted: i=1; AJvYcCX87hIdpjqcDNB/8KoGLWp571LT54RgXumry5CJI9sfUglLdNSHYiJqA3qAfYpyySN6pIHbchSvu8zwqD+LXCyfuaBlik6TyoJRRgwz/fGrmN8d9704Q8PlfTpmJxcHBVI5Utox8cJFy69vcCLVQPFbHoKMYFD30w+op1m0Jg9izaX+umoxh09+qycKTKXZZy5JNTuOdy/+ikyGrzfGZWlfzbQ11eVtXlhPp/qmuiXp7z/A5TQfzNUgyb1YxyMYNdt3WpPRPl494mhZCvTWF6UfjBBH8d3nCKbj45LhlxOkJe6S6QwsogXegaHvwJaRkr9QuIc=
-X-Gm-Message-State: AOJu0YzGFCrTxq/voXaZURL2XeOsNKwiwup2aFnrQvotGneJ5wkuJfQ7
-	vH16VVKnVivchoc0yFchZtCMZoSu+8KNeDLkxLpU0RlVoJNCkAuns24H+e5XnzyO+futuy3jq1X
-	qs2BHpd7Vj7VhoPLQ6hR2GMklOEfjpfcMYYc=
-X-Google-Smtp-Source: AGHT+IEH9WiGdwQmFDR3UUpRkcaEXiGYsc+rbm05qeGkTnAd0VuAIEH5g2EodOENEkeRm+TdhthkOlf3f027HucPkCY=
-X-Received: by 2002:a05:600c:19cd:b0:416:2bef:ce81 with SMTP id
- u13-20020a05600c19cd00b004162befce81mr1484706wmq.1.1712331657141; Fri, 05 Apr
- 2024 08:40:57 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1712331807; x=1712936607;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=o5G4YX3A6SwCOkm+ekTzFYShVJvSdNT/a9NFK7+1Luc=;
+        b=Jdk4csJ0fAZxPOzfBsNPGnHmz38tyVRao4apSP1q8kQvAYqF1L+AZRyNBSAcjjMReu
+         W5H3kn7oJbPmNuNNrmNt+KmSv4mLgMHWAvs0NmSBjVfrr9jn2Fr/Swz04XCiERXbsEc5
+         Uicpt7GxysGCbBjCvUsClCdlc6O2shkNAbDCHtQIo6JRiZCWYlmmkVVBOBs55/m/vuma
+         mMqflszSnhU69FjOEM4twEoIcLQi6/0cQebKfWKwO+8kfoijknxUOuYUcWGdWo6LpkGb
+         YV7hT32aNcF7dXNuT6HMuqHruunVnmSxmWQtQhmfZ0lXHmBuBgmnyqrSQmW17ni9Xxyq
+         nDaQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXPL0bZGyXH5EB7ERJVqcJIbOyePZiuinlVCMGjNHuwEZGvR1Fl03xmFxESDb/NNuHUbN8TB98jNYl/OoLR9uoM1st5Ia5LagU1qWVS
+X-Gm-Message-State: AOJu0YwOD6C6Jc7rGM8w4U4uZPyVdr2WaR3gmLmBEUD2PxPNajSX6vsA
+	qT9feqHITADDnNZjOWqmAI+JtDYIhyFgD2x8Juq7Ta1TKTE7agT5fHkoR11f
+X-Google-Smtp-Source: AGHT+IHnDWUKPgOIjBHX4/x1yAWbk+lxozZtWN8xafzN7p6tvmMwF2w0T76sJXYXwebbp63cnKNJ7w==
+X-Received: by 2002:a05:6e02:1fe5:b0:36a:bba:8d95 with SMTP id dt5-20020a056e021fe500b0036a0bba8d95mr1758790ilb.31.1712331807486;
+        Fri, 05 Apr 2024 08:43:27 -0700 (PDT)
+Received: from [192.168.0.171] ([223.166.28.146])
+        by smtp.gmail.com with ESMTPSA id j19-20020a63fc13000000b005e49bf50ff9sm1615582pgi.0.2024.04.05.08.43.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 05 Apr 2024 08:43:27 -0700 (PDT)
+Message-ID: <4ac84262-d5b2-4f63-8d0a-23bb45f4ed2d@gmail.com>
+Date: Fri, 5 Apr 2024 23:43:21 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <202404052349.lQch9J7G-lkp@intel.com>
-In-Reply-To: <202404052349.lQch9J7G-lkp@intel.com>
-From: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Date: Fri, 5 Apr 2024 08:40:45 -0700
-Message-ID: <CAADnVQJXq1bSe20FgBN=BL1E5d8qOfLv_Ettq+724h5QfRuuKg@mail.gmail.com>
-Subject: Re: [linux-next:master] BUILD REGRESSION 8568bb2ccc278f344e6ac44af6ed010a90aa88dc
-To: kernel test robot <lkp@intel.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>, 
-	Linux Memory Management List <linux-mm@kvack.org>, amd-gfx list <amd-gfx@lists.freedesktop.org>, 
-	bpf <bpf@vger.kernel.org>, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, intel-gfx@lists.freedesktop.org, 
-	intel-xe@lists.freedesktop.org, lima@lists.freedesktop.org, 
-	linux-arch <linux-arch@vger.kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, linux-i2c@vger.kernel.org, 
-	linux-pwm@vger.kernel.org, Linux-Renesas <linux-renesas-soc@vger.kernel.org>, 
-	nouveau@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/2] soc: qcom: pmic_glink: fix client handling
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Andrew Halaney <ahalaney@redhat.com>
+References: <20240403-pmic-glink-fix-clients-v2-0-aed4e02baacc@linaro.org>
+Content-Language: en-US
+From: Xilin Wu <wuxilin123@gmail.com>
+In-Reply-To: <20240403-pmic-glink-fix-clients-v2-0-aed4e02baacc@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Apr 5, 2024 at 8:37=E2=80=AFAM kernel test robot <lkp@intel.com> wr=
-ote:
->
-> tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-n=
-ext.git master
-> branch HEAD: 8568bb2ccc278f344e6ac44af6ed010a90aa88dc  Add linux-next spe=
-cific files for 20240405
->
-> Error/Warning reports:
->
-> https://lore.kernel.org/oe-kbuild-all/202404051333.7und7PPW-lkp@intel.com
-> https://lore.kernel.org/oe-kbuild-all/202404051423.eiaXLwhX-lkp@intel.com
-> https://lore.kernel.org/oe-kbuild-all/202404051659.aawUkGUQ-lkp@intel.com
-> https://lore.kernel.org/oe-kbuild-all/202404052022.Cwf2ilBp-lkp@intel.com
->
-> Error/Warning: (recently discovered and may have been fixed)
->
-> aarch64-linux-ld: kernel/bpf/verifier.c:20223:(.text+0xdbb4): undefined r=
-eference to `__SCK__perf_snapshot_branch_stack'
-> aarch64-linux-ld: verifier.c:(.text+0x17c3c): undefined reference to `__S=
-CK__perf_snapshot_branch_stack'
-> drivers/i2c/busses/i2c-i801.c:1407:(.text+0x1d2ef4a): undefined reference=
- to `i2c_root_adapter'
-> kernel/bpf/verifier.c:20223:(.text+0xdba4): dangerous relocation: unsuppo=
-rted relocation
-> loongarch64-linux-ld: kernel/bpf/verifier.c:20223:(.text+0xa818): undefin=
-ed reference to `__SCK__perf_snapshot_branch_stack'
-> loongarch64-linux-ld: verifier.c:(.text+0xa964): undefined reference to `=
-__SCK__perf_snapshot_branch_stack'
-> mips64el-linux-ld: verifier.c:(.text.do_misc_fixups+0xd9c): undefined ref=
-erence to `__SCK__perf_snapshot_branch_stack'
-> riscv32-linux-ld: section .data LMA [00369000,00907967] overlaps section =
-.text LMA [0007899c,01a6a6af]
-> s390-linux-ld: verifier.c:(.text+0x13038): undefined reference to `__SCK_=
-_perf_snapshot_branch_stack'
-> verifier.c:(.text+0x17c14): relocation truncated to fit: R_AARCH64_ADR_PR=
-EL_PG_HI21 against undefined symbol `__SCK__perf_snapshot_branch_stack'
-> verifier.c:(.text+0xa960): undefined reference to `__SCK__perf_snapshot_b=
-ranch_stack'
-> verifier.c:(.text+0xadd0): dangerous relocation: unsupported relocation
-> verifier.c:(.text.do_misc_fixups+0xd98): undefined reference to `__SCK__p=
-erf_snapshot_branch_stack'
 
-Fixed in bpf-next with commit:
-https://lore.kernel.org/all/20240405142637.577046-1-arnd@kernel.org/
+On 2024/4/3 11:10, Dmitry Baryshkov wrote:
+> Fix two issues with the way the pmic_glink driver handles its clients.
+> First issue is mostly theoretical, while the second issue can easily be
+> reproduced if the drivers are built as modules.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+> Changes in v2:
+> - Also take a lock at pmic_glink_rpmsg_callback() (Andrew Halaney)
+> - Link to v1: https://lore.kernel.org/r/20240402-pmic-glink-fix-clients-v1-0-885440b81c65@linaro.org
+>
+> ---
+> Dmitry Baryshkov (2):
+>        soc: qcom: pmic_glink: don't traverse clients list without a lock
+>        soc: qcom: pmic_glink: notify clients about the current state
+>
+>   drivers/soc/qcom/pmic_glink.c | 9 +++++++++
+>   1 file changed, 9 insertions(+)
+> ---
+> base-commit: a6bd6c9333397f5a0e2667d4d82fef8c970108f2
+> change-id: 20240402-pmic-glink-fix-clients-5df0bab3e871
+>
+> Best regards,
+
+Tested-by: Xilin Wu <wuxilin123@gmail.com> # on QCS8550 AYN Odin 2
+Fixes: 
+https://lore.kernel.org/all/20240311-qcom-pd-mapper-v4-0-24679cca5c24@linaro.org/
+
+
+Thanks,
+Xilin
 
