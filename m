@@ -1,104 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-16532-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BF89899E48
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 15:27:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED73C899EF1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 16:04:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C934E28834A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 13:27:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9769C284150
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 14:04:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9667C16D4CD;
-	Fri,  5 Apr 2024 13:27:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A822016E88E;
+	Fri,  5 Apr 2024 14:04:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lttrIDkP"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="B70BVjZB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625D116C877;
-	Fri,  5 Apr 2024 13:27:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD6316DED4
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Apr 2024 14:04:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712323660; cv=none; b=tZSI/4CPIjyKWhYfJcGFXdGrbYF6acM07JtMYc6ZEhH3nDLIrlSH6HFJATi40CiMklKj5BfpYV9Ce0vcT9kAx6fuUDa9N3bcDHr649NHmQGKVlvMhXx3tmYuXg343EQjzYpupuPB4PzrgTNyg9NJpJMVxdaY2oMUyhrSI7R2vf4=
+	t=1712325892; cv=none; b=iOqWLEnOJ6uQ3NmrDDkvenJj7qAO4RBX0zlZ/FQnj/AVz1MDdPFiyXeLGXXTRjpMtvetTLCWubrQXvYs6F6Ff+rbFVWqxKWt2ktBbK4ovJvyuWy2Fs/J0LNt4Rw6u+4TWwF7Flfy1ZbPoRuv9FubRD5lDiZXqnLysGN0OTGUYrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712323660; c=relaxed/simple;
-	bh=iitSfI2Y8LrBa++ncwel3h3WEbl4CDisdRxqGPA4c5k=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=BNFdwAH1jhN8JGivG3ltKJ8qdfaREFosQH237bJhm0Yprpaw7klsj5GWMVW0bjCI5ugR2BnYUdbxkIJkPsHjy7iRBZE+0JMIuA4PUWzlOB/Ba/hPAvZY5DHHO6VgaJGBpCJhG6Afc6gMV6P1PMp91Yx6BlIzZyOWtgTHAlsil6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lttrIDkP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B728C433C7;
-	Fri,  5 Apr 2024 13:27:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712323660;
-	bh=iitSfI2Y8LrBa++ncwel3h3WEbl4CDisdRxqGPA4c5k=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-	b=lttrIDkP/Dhv4IN6Lxk++khK7XWYBENBQs6ggUCGtf4DyBhxkdh6xc5im0USff+Gm
-	 CGtvdPhqBQXrMkVdiAK9fOCDiwUt4DBYoGSQMrfBcLx0RZuJBS61BL6I5sC+vn4znX
-	 YIcIUcw19KqTIYxqWzBstbqn046g4X7EHfEJZpXflYZLLGDYFsnJWu4jewvExLRNCJ
-	 ONIAaJAuozMJ0yVdPHQIKJmPUQHyHzlkuSggeVvYchurL5QnIVKtJn0ZNCpp/Fr0C5
-	 CAWNm+FbmdZoeV9fPnY1PH5ZjXyWz/tmhUfd/lezExNCXmYevrmZebYkyySrghUINF
-	 08r5k2y+i6y3w==
-From: Kalle Valo <kvalo@kernel.org>
-To: <davem@davemloft.net>,  <edumazet@google.com>,  <kuba@kernel.org>,
-  <pabeni@redhat.com>
-Cc: Baochen Qiang <quic_bqiang@quicinc.com>, <ath11k@lists.infradead.org>,
-  <manivannan.sadhasivam@linaro.org>,  <linux-wireless@vger.kernel.org>,
-  <linux-arm-msm@vger.kernel.org>,  <mhi@lists.linux.dev>,
-  <netdev@vger.kernel.org>
-Subject: Re: [PATCH v7 2/3] net: qrtr: support suspend/hibernation
-References: <20240305021320.3367-1-quic_bqiang@quicinc.com>
-	<20240305021320.3367-3-quic_bqiang@quicinc.com>
-Date: Fri, 05 Apr 2024 16:27:35 +0300
-In-Reply-To: <20240305021320.3367-3-quic_bqiang@quicinc.com> (Baochen Qiang's
-	message of "Tue, 5 Mar 2024 10:13:19 +0800")
-Message-ID: <8734s02b3s.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	s=arc-20240116; t=1712325892; c=relaxed/simple;
+	bh=YLppziVi18FS86lsRUFYbik4pdpKw9o5av3kYjqyrXM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z+qeJg8cuQzg7jBgDN5od7pqxAUi5OOBtphdRRfY6ddOp/mDd4IZictK6GfqJOjdZECXbAgz7nT6n5YTOrpe2OAgi2nwS0hajpWgvbgMqpAc1yDCwFIFtzn7uiE6FfNo7X+Oc03P/uuADG/repq0xFHgRtAWbJYweEmyg4FC45s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=B70BVjZB; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1712325889;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=SJZjF5huZ/IS92CnJZN2AYaHFZSXzZinDMU0oFLcit0=;
+	b=B70BVjZB2JEXjgcyYGaXixHEqyGt7P8yZ3wmDrE7Mf1MMq3QJG/z9hyeorlqyfuUv7nI7t
+	dnQRM2Z3uj1gPHgFNNplQsdz5OjaECnI6bVuzJPnj/2mk+Qn34l6X89V0puVjwzj0SQmmz
+	vONMyMLci3vJQyRhJRsCTpZmLz4MzoU=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-581-07H9j7vCMPKYvPEd1tm3nA-1; Fri, 05 Apr 2024 10:04:48 -0400
+X-MC-Unique: 07H9j7vCMPKYvPEd1tm3nA-1
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-78a687cc579so255256285a.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Apr 2024 07:04:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712325887; x=1712930687;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SJZjF5huZ/IS92CnJZN2AYaHFZSXzZinDMU0oFLcit0=;
+        b=Zvc1rqoNzqKv0fzTVs5Bb9xiadJQGxoEnrtDQiY3ZPbcII8STEhnrJhyGyLsnlOvZe
+         tkDKeXscB2SIvNzTZtiWUtwD2m4ahTf+70lOG6WECidgR92ye7C0RdNSbpIb0v0Co6IE
+         z36UdiiMIp9NGg1ssA0ghhKXIPYSp8Pme4ZHnlOTpRtX7y0MdYMhdkA4yhCfMYye5N+c
+         Y2GDP4leExUKEe37WFIysdF/NARG6X6pN+xhizodspcQ7yWz1RIV7VqcG3GTLLoEG3Ju
+         tIdHeWnmhu7eHDsWNuEOQzhySWJUL/CUDvAimxlOZi7RPk2C805u8I/ENr390lM7EKWj
+         Tw/Q==
+X-Gm-Message-State: AOJu0YxiDUN6JHxV+ggF29o5IpCYJObPPG8F1x0VCt/7UwTfW7gxPrP3
+	Nx8kMwKeK+7e7OsnD8J2BzAQHwt+iNYDOps0yLQm6tafFLTbwWVSQaa1+Izi6iUewvNOkZOLCQj
+	7vLGC2RkHFEL03+J78dmQNNr1Lr7Ttxw3gEcWRmqKr/JhDPaTSf+Y9pJg5dcWpIY=
+X-Received: by 2002:a05:620a:2b84:b0:78a:72b3:b629 with SMTP id dz4-20020a05620a2b8400b0078a72b3b629mr1708179qkb.44.1712325887098;
+        Fri, 05 Apr 2024 07:04:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHeHEjy/9A/4fTjZi0cCVsMnWNGemn3Slh0adyB59fLgBdpF4HyFXzqH7mBOCLvsV91+RB47w==
+X-Received: by 2002:a05:620a:2b84:b0:78a:72b3:b629 with SMTP id dz4-20020a05620a2b8400b0078a72b3b629mr1708136qkb.44.1712325886596;
+        Fri, 05 Apr 2024 07:04:46 -0700 (PDT)
+Received: from x1gen2nano ([2600:1700:1ff0:d0e0::33])
+        by smtp.gmail.com with ESMTPSA id s9-20020a05620a030900b00789fb5397d4sm654993qkm.100.2024.04.05.07.04.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Apr 2024 07:04:46 -0700 (PDT)
+Date: Fri, 5 Apr 2024 09:04:43 -0500
+From: Andrew Halaney <ahalaney@redhat.com>
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, robdclark@gmail.com, will@kernel.org, 
+	iommu@lists.linux.dev, joro@8bytes.org, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, quic_c_gdjako@quicinc.com, quic_cgoldswo@quicinc.com, 
+	quic_sukadev@quicinc.com, quic_pdaly@quicinc.com, quic_sudaraja@quicinc.com
+Subject: Re: sa8775p-ride: What's a normal SMMU TLB sync time?
+Message-ID: <lqdosfpb7gdjooqswgjnabzxapocndzam3ws7dq7god5bn55an@igvaowz6h7ye>
+References: <kord5qq6mywc7rbkzeoliz2cklrlljxm74qmrfwwjf6irx4fp7@6f5wsonafstt>
+ <Zg9vEJV5JyGoM8KY@hu-bjorande-lv.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Zg9vEJV5JyGoM8KY@hu-bjorande-lv.qualcomm.com>
 
-Hi netdev maintainers,
+On Thu, Apr 04, 2024 at 08:25:04PM -0700, Bjorn Andersson wrote:
+> On Tue, Apr 02, 2024 at 04:22:31PM -0500, Andrew Halaney wrote:
+> > Hey,
+> > 
+> > Sorry for the wide email, but I figured someone recently contributing
+> > to / maintaining the Qualcomm SMMU driver may have some proper insights
+> > into this.
+> > 
+> > Recently I remembered that performance on some Qualcomm platforms
+> > takes a major hit when you use iommu.strict=1/CONFIG_IOMMU_DEFAULT_DMA_STRICT.
+> > 
+> > On the sa8775p-ride, I see most TLB sync calls to be about 150 us long,
+> > with some spiking to 500 us, etc:
+> > 
+> >     [root@qti-snapdragon-ride4-sa8775p-09 ~]# trace-cmd start -p function_graph -g qcom_smmu_tlb_sync --max-graph-depth 1
+> >       plugin 'function_graph'
+> >     [root@qti-snapdragon-ride4-sa8775p-09 ~]# trace-cmd show
+> >     # tracer: function_graph
+> >     #
+> >     # CPU  DURATION                  FUNCTION CALLS
+> >     # |     |   |                     |   |   |   |
+> >      0) ! 144.062 us  |  qcom_smmu_tlb_sync();
+> > 
+> > On my sc8280xp-lenovo-thinkpad-x13s (only other Qualcomm platform I can compare
+> > with) I see around 2-15 us with spikes up to 20-30 us. That's thanks to this
+> > patch[0], which I guess improved the platform from 1-2 ms to the ~10 us number.
+> > 
+> > It's not entirely clear to me how a DPU specific programming affects system
+> > wide SMMU performance, but I'm curious if this is the only way to achieve this?
+> > sa8775p doesn't have the DPU described even right now, so that's a bummer
+> > as there's no way to make a similar immediate optimization, but I'm still struggling
+> > to understand what that patch really did to improve things so maybe I'm missing
+> > something.
+> > 
+> 
+> The cause was that the TLB sync is synchronized with the display updates,
+> but without appropriate safe_lut_tlb values the display side wouldn't
+> play nice.
 
-Baochen Qiang <quic_bqiang@quicinc.com> writes:
+In my case we don't have display being driven at all. I'm not sure if
+that changes the situation, or just complicates it. i.e. I'm unsure if
+that means we're not hitting the display situation at all but something
+else entirely (assuming this time is longer than ideal), or if the
+safe_lut_tlb values still effect things despite Linux knowing nothing
+about the display, which as far as I know is not configured by anyone
+at the moment.
 
-> MHI devices may not be destroyed during suspend/hibernation, so need
-> to unprepare/prepare MHI channels throughout the transition, this is
-> done by adding suspend/resume callbacks.
->
-> The suspend callback is called in the late suspend stage, this means
-> MHI channels are still alive at suspend stage, and that makes it
-> possible for an MHI controller driver to communicate with others over
-> those channels at suspend stage. While the resume callback is called
-> in the early resume stage, for a similar reason.
->
-> Also note that we won't do unprepare/prepare when MHI device is in
-> suspend state because it's pointless if MHI is only meant to go through
-> a suspend/resume transition, instead of a complete power cycle.
->
-> Tested-on: WCN6855 hw2.0 PCI
-> WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
->
-> Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Reviewed-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Any thoughts on that?
 
-Could I take this patch via ath.git tree? Full patch here (same patch
-but links to both patchwork projects):
+> 
+> Regards,
+> Bjorn
+> 
+> > I'm honestly not even sure what a "typical" range for TLB sync time would be,
+> > but on sa8775p-ride its bad enough that some IRQs like UFS can cause RCU stalls
+> > (pretty easy to reproduce with fio basic-verify.fio for example on the platform).
+> > It also makes running with iommu.strict=1 impractical as performance for UFS,
+> > ethernet, etc drops 75-80%.
+> > 
+> > Does anyone have any bright ideas on how to improve this, or if I'm even in
+> > the right for assuming that time is suspiciously long?
+> > 
+> > Thanks,
+> > Andrew
+> > 
+> > [0] https://lore.kernel.org/linux-arm-msm/CAF6AEGs9PLiCZdJ-g42-bE6f9yMR6cMyKRdWOY5m799vF9o4SQ@mail.gmail.com/
+> > 
+> 
 
-https://patchwork.kernel.org/project/linux-wireless/patch/20240305021320.3367-3-quic_bqiang@quicinc.com/
-
-https://patchwork.kernel.org/project/netdevbpf/patch/20240305021320.3367-3-quic_bqiang@quicinc.com/
-
-I ask because we need it to get hibernation working on ath11k (and ath12k):
-
-https://patchwork.kernel.org/project/linux-wireless/patch/20240305021320.3367-4-quic_bqiang@quicinc.com/
-
-Kalle
 
