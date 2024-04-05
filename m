@@ -1,116 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-16599-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16600-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0746989A61C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 23:37:30 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 66D8C89A74E
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Apr 2024 00:32:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AA6271F22418
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 21:37:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1CEBB287E32
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 22:32:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AA5C174EF3;
-	Fri,  5 Apr 2024 21:37:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C85071F16B;
+	Fri,  5 Apr 2024 22:32:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fVcbNjTn"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="PuX9Pyki"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD791E87C;
-	Fri,  5 Apr 2024 21:37:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3301F60A;
+	Fri,  5 Apr 2024 22:32:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712353045; cv=none; b=Ge5iyQEAYXNAu/dsXRDSdg42eVeKZrhEnVJjJfvqfXgwm25FkvD0qlXmrKPdaCT6uTKnd9mt3uIx2XL0xHPtmCBNnDbZaMwvTlN4u/gl1y3Q5wwgt7cJ9f0SrhiQKifONtCKVAywxZWIAocwz8Ni20MGapHphe0YK25fFXh9/+c=
+	t=1712356332; cv=none; b=SIQg7wDHr3dz6zNfkN8RPcUvLexX03Chgw+x1gBR1sf+Ly+Zaa4ec1eMU5i6ksmeRGY4+0u4RXcFr9VbQveAH0BSvS3zApAu0QKPBbm3zNXnJDUWkRcYNRNO+G1k2MULZfRToVfKp04Kar/j8gf7PsJqTEIqTFSWPFbEQHboViI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712353045; c=relaxed/simple;
-	bh=HRY5hhaW64V8NU8mf6JssyKiFddMjgw/28ouTE9i8oQ=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=BO4TZ4LD6FHqEu4pGJDtMw/LF5KS+z4IEXblz4M+Qk1ys9WoN6ylD70fsuyn/fNDNEFl3+ynYRC4BeL4MhKAfaNM7Ta8cPbH2wEt80vTOusn8l4xbLSFkl5Y7Thb3MSr9RWQV82VSC8SRZAfEmAcJlRRshD/zedmm841PtYpXAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fVcbNjTn; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C0BC433F1;
-	Fri,  5 Apr 2024 21:37:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712353044;
-	bh=HRY5hhaW64V8NU8mf6JssyKiFddMjgw/28ouTE9i8oQ=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=fVcbNjTngZrTTYeW0UvQ09QyyH1QIXo+3JsshjvnlSpw4x5qjkHXS1E9mFu2jal5p
-	 3lsWFfAOeSqT8cQiqrD1Ko3zg5zXoioz/UfFHaiXZgxkIEVgD6RKL5Xh/U8BCJ7DfE
-	 pTyVDK3QHEVFsjTyyzswPnPpndZzgQGGXJp9GorLmrzy/u3i5NHsjE5Qdpb1t/Y0gM
-	 OYyCroRQZN0Wp2Jtb4rtog2FVULbOrWLu/3mQUJyxDTrl6H2UBRgBqDLUisEVjZjFM
-	 wfPWR0jvWnJcraIqYAcYK2VjYEPPvR6VNUO8ZNEYf54YtKUUazCP4PPMPNuxNNKPBb
-	 ERD1XjKS4h9Mg==
-Message-ID: <b39e9d5ecfddef7b0564c2224685d9d0.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1712356332; c=relaxed/simple;
+	bh=iacJbwqVzLZ+QPu0PsxC62e+0CS6vwkuBBz/tOH/PtA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Hv+z/LCVMXr4BneAKbBfuopJmpClOphIN4QPy1N3USkFtTOc6AdWeq3EQN2rX8iOEjm80k67Jbr0MzaTYkWIh/DV0bmSALL0/S5S2BtdJ7+x1VCwLZXs2Dw1mwAQDOc1HcppZwmV/ZXpGKBL+TDtdGFN+96ZUgZGqwjzVtCPnhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=PuX9Pyki; arc=none smtp.client-ip=192.198.163.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1712356331; x=1743892331;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=iacJbwqVzLZ+QPu0PsxC62e+0CS6vwkuBBz/tOH/PtA=;
+  b=PuX9Pykiem0nWHWHDcw00oYe3CRcSWZLuUnb4hUkT0VXTtkRabc+7wqx
+   lE0I989jvN2aBS5PdSwA/Z+dAmDgajJO9f8SC6BnLlK3e777Gz+TSUcag
+   Zw7yzxgXT/lt9zGEmcHqlCkXbvshEf1rw46ZOERZNbQKtVASC80tgECWa
+   fuZ0Jc/G2gPpPGoU9Gi2Z9sfZ5y+cYcAF+qbqZp4Yl3Bo5yaPbsD354Th
+   hJUBHi9rlZyjKJJYwkXCjSdPTYso74wJPY15NITNVMWh1zmS8Wf0XzXVj
+   N/khTa80EIazPRVv1mWLiMe3W5o0PQaSIns1eTSaXtPKwN3ZORflrYhNc
+   g==;
+X-CSE-ConnectionGUID: BAoXTa8sTaies97WQL68fA==
+X-CSE-MsgGUID: o+y3ZLyhQ2aj4py/DK2dNQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11035"; a="18437354"
+X-IronPort-AV: E=Sophos;i="6.07,182,1708416000"; 
+   d="scan'208";a="18437354"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Apr 2024 15:32:10 -0700
+X-CSE-ConnectionGUID: HJwq05CxRKyOrruQhDcgjQ==
+X-CSE-MsgGUID: qJXN4bJnRcOu1ZawYBRsfQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,182,1708416000"; 
+   d="scan'208";a="19739547"
+Received: from lkp-server01.sh.intel.com (HELO e61807b1d151) ([10.239.97.150])
+  by orviesa006.jf.intel.com with ESMTP; 05 Apr 2024 15:32:05 -0700
+Received: from kbuild by e61807b1d151 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1rss6M-0002mu-2A;
+	Fri, 05 Apr 2024 22:32:02 +0000
+Date: Sat, 6 Apr 2024 06:31:21 +0800
+From: kernel test robot <lkp@intel.com>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	devicetree@vger.kernel.org,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: [PATCH 2/6] soc: qcom: smem: Add pcode/fcode getters
+Message-ID: <202404060648.DOjOYUSf-lkp@intel.com>
+References: <20240405-topic-smem_speedbin-v1-2-ce2b864251b1@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20240219-topic-rb1_gpu-v3-2-86f67786539a@linaro.org>
-References: <20240219-topic-rb1_gpu-v3-0-86f67786539a@linaro.org> <20240219-topic-rb1_gpu-v3-2-86f67786539a@linaro.org>
-Subject: Re: [PATCH v3 2/5] clk: qcom: clk-alpha-pll: Add HUAYRA_2290 support
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Michael Turquette <mturquette@baylibre.com>, Rob Herring <robh@kernel.org>
-Date: Fri, 05 Apr 2024 14:37:22 -0700
-User-Agent: alot/0.10
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240405-topic-smem_speedbin-v1-2-ce2b864251b1@linaro.org>
 
-Quoting Konrad Dybcio (2024-03-26 14:08:24)
-> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alph=
-a-pll.c
-> index 8a412ef47e16..27ba8aa3e577 100644
-> --- a/drivers/clk/qcom/clk-alpha-pll.c
-> +++ b/drivers/clk/qcom/clk-alpha-pll.c
-> @@ -779,6 +792,40 @@ static long clk_alpha_pll_round_rate(struct clk_hw *=
-hw, unsigned long rate,
->         return clamp(rate, min_freq, max_freq);
->  }
-> =20
-> +void clk_huayra_2290_pll_configure(struct clk_alpha_pll *pll, struct reg=
-map *regmap,
-> +                                  const struct alpha_pll_config *config)
-> +{
-> +       u32 val;
-> +
-> +       clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL(pll), config->c=
-onfig_ctl_val);
-> +       clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL_U(pll), config-=
->config_ctl_hi_val);
-> +       clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL_U1(pll), config=
-->config_ctl_hi1_val);
-> +       clk_alpha_pll_write_config(regmap, PLL_TEST_CTL(pll), config->tes=
-t_ctl_val);
-> +       clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U(pll), config->t=
-est_ctl_hi_val);
-> +       clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U1(pll), config->=
-test_ctl_hi1_val);
-> +       clk_alpha_pll_write_config(regmap, PLL_L_VAL(pll), config->l);
-> +       clk_alpha_pll_write_config(regmap, PLL_ALPHA_VAL(pll), config->al=
-pha);
-> +       clk_alpha_pll_write_config(regmap, PLL_USER_CTL(pll), config->use=
-r_ctl_val);
-> +
-> +       /* Set PLL_BYPASSNL */
-> +       regmap_update_bits(regmap, PLL_MODE(pll), PLL_BYPASSNL, PLL_BYPAS=
-SNL);
-> +       regmap_read(regmap, PLL_MODE(pll), &val);
-> +
-> +       /* Wait 5 us between setting BYPASS and deasserting reset */
-> +       udelay(5);
-> +
-> +       /* Take PLL out from reset state */
-> +       regmap_update_bits(regmap, PLL_MODE(pll), PLL_RESET_N, PLL_RESET_=
-N);
-> +       regmap_read(regmap, PLL_MODE(pll), &val);
-> +
-> +       /* Wait 50us for PLL_LOCK_DET bit to go high */
+Hi Konrad,
 
-Is the bit not reliable or something? I'd expect to see a polling loop
-here but it's a sleep.
+kernel test robot noticed the following build warnings:
 
-> +       usleep_range(50, 55);
+[auto build test WARNING on 2b3d5988ae2cb5cd945ddbc653f0a71706231fdd]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Konrad-Dybcio/soc-qcom-Move-some-socinfo-defines-to-the-header-expand-them/20240405-164231
+base:   2b3d5988ae2cb5cd945ddbc653f0a71706231fdd
+patch link:    https://lore.kernel.org/r/20240405-topic-smem_speedbin-v1-2-ce2b864251b1%40linaro.org
+patch subject: [PATCH 2/6] soc: qcom: smem: Add pcode/fcode getters
+config: arm-defconfig (https://download.01.org/0day-ci/archive/20240406/202404060648.DOjOYUSf-lkp@intel.com/config)
+compiler: clang version 14.0.6 (https://github.com/llvm/llvm-project.git f28c006a5895fc0e329fe15fead81e37457cb1d1)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240406/202404060648.DOjOYUSf-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202404060648.DOjOYUSf-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/soc/qcom/smem.c:807: warning: Function parameter or struct member 'code' not described in 'qcom_smem_get_feature_code'
+>> drivers/soc/qcom/smem.c:807: warning: Excess function parameter 'id' description in 'qcom_smem_get_feature_code'
+>> drivers/soc/qcom/smem.c:840: warning: Function parameter or struct member 'code' not described in 'qcom_smem_get_product_code'
+>> drivers/soc/qcom/smem.c:840: warning: Excess function parameter 'id' description in 'qcom_smem_get_product_code'
+
+
+vim +807 drivers/soc/qcom/smem.c
+
+   797	
+   798	/**
+   799	 * qcom_smem_get_feature_code() - return the feature code
+   800	 * @id:	On success, we return the feature code here.
+   801	 *
+   802	 * Look up the feature code identifier from SMEM and return it.
+   803	 *
+   804	 * Return: 0 on success, negative errno on failure.
+   805	 */
+   806	int qcom_smem_get_feature_code(u32 *code)
+ > 807	{
+   808		struct socinfo *info;
+   809		u32 raw_code;
+   810	
+   811		info = qcom_smem_get(QCOM_SMEM_HOST_ANY, SMEM_HW_SW_BUILD_ID, NULL);
+   812		if (IS_ERR(info))
+   813			return PTR_ERR(info);
+   814	
+   815		/* This only makes sense for socinfo >= 16 */
+   816		if (__le32_to_cpu(info->fmt) < SOCINFO_VERSION(0, 16))
+   817			return -EINVAL;
+   818	
+   819		raw_code = __le32_to_cpu(info->feature_code);
+   820	
+   821		/* Ensure the value makes sense */
+   822		if (raw_code >= SOCINFO_FC_INT_RESERVE)
+   823			raw_code = SOCINFO_FC_UNKNOWN;
+   824	
+   825		*code = raw_code;
+   826	
+   827		return 0;
+   828	}
+   829	EXPORT_SYMBOL_GPL(qcom_smem_get_feature_code);
+   830	
+   831	/**
+   832	 * qcom_smem_get_product_code() - return the product code
+   833	 * @id:	On success, we return the product code here.
+   834	 *
+   835	 * Look up feature code identifier from SMEM and return it.
+   836	 *
+   837	 * Return: 0 on success, negative errno on failure.
+   838	 */
+   839	int qcom_smem_get_product_code(u32 *code)
+ > 840	{
+   841		struct socinfo *info;
+   842		u32 raw_code;
+   843	
+   844		info = qcom_smem_get(QCOM_SMEM_HOST_ANY, SMEM_HW_SW_BUILD_ID, NULL);
+   845		if (IS_ERR(info))
+   846			return PTR_ERR(info);
+   847	
+   848		/* This only makes sense for socinfo >= 16 */
+   849		if (__le32_to_cpu(info->fmt) < SOCINFO_VERSION(0, 16))
+   850			return -EINVAL;
+   851	
+   852		raw_code = __le32_to_cpu(info->pcode);
+   853	
+   854		/* Ensure the value makes sense */
+   855		if (raw_code >= SOCINFO_FC_INT_RESERVE)
+   856			raw_code = SOCINFO_FC_UNKNOWN;
+   857	
+   858		*code = raw_code;
+   859	
+   860		return 0;
+   861	}
+   862	EXPORT_SYMBOL_GPL(qcom_smem_get_product_code);
+   863	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
