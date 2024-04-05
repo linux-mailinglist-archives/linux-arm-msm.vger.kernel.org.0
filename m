@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-16515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E13A0899BD7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 13:25:59 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 94455899C20
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 13:54:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1F0B11C21A3B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 11:25:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 29759284F73
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 11:54:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D29C16C451;
-	Fri,  5 Apr 2024 11:25:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A53D616190F;
+	Fri,  5 Apr 2024 11:54:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B4gQ3IoO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LCJdQ2M8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2611F16C434;
-	Fri,  5 Apr 2024 11:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4D36CDB7;
+	Fri,  5 Apr 2024 11:54:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712316355; cv=none; b=YXwVS5pJO30f9aHQ6qZrIc84NP8FlQOhb/2ZkmOS62kOtWO3ilg0wH4BdYWTl+PiNZkMQGg+401zDRr+xBLIELbwSFxvEV8jDV3hK9riXSAT8uxIZIdSFXgNUSx5vvvKWlmYOPYCcUYY46mMNWEfEhP+Jn1ZXFflA9fDbwNHpz4=
+	t=1712318063; cv=none; b=fyTWhiPtcGnJVgO8gFh+RXllvCuYsYyCYPdiHg9QeF2CM1IcJzBAwMxjy3C7rtdUnKH++BUvwWXty46sGz+EKDDxaJCt5waGS2M4/FESm4Qu0deC3RKSz+U7QI6mA6slKKkuHgY+28iXX/EsvZ2uVZwZQuzv8zfS6LwqlRwX0Ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712316355; c=relaxed/simple;
-	bh=lGhLQBeP+Wco5+eAYUzJL/YnZD/zNP4Ecc8OgvFdTFk=;
+	s=arc-20240116; t=1712318063; c=relaxed/simple;
+	bh=xtWDTgQnqWwlGt4hSK509dlzyI5ov0XFlUekFt9Elt4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i0tWTnN1bgW3mIGKgs0InOBLziOGXXqIzl42sWI0OIY2jK/waR9tH8k80z9uZg4vkLxQLYoJPauR3JbZbXrr/mdG0NTxJhew7bP2RJi3rJciCD7SNWObIyKwZy8D+hv/aVkd3f5umyF8N9jvyPlyVseFllvY5RAIBmAe16M46kU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B4gQ3IoO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB9BEC433C7;
-	Fri,  5 Apr 2024 11:25:53 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=XyeLVNACqJ7nNsH1eZ7rUqu3emmQXhKNk2+EIujcCsdNLS3ZQEdrpmwGFAwHhxH4Vxf2nGOCkSnCJ2v3+obcLet8nNr/53t/+rtTDtCtGFmRRjwLUsN6BCEYd+4tSU68j8LFxtxkgvLrQU4AJDudCZmu9msWsHqizn8rmow/L7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LCJdQ2M8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E741C433F1;
+	Fri,  5 Apr 2024 11:54:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712316354;
-	bh=lGhLQBeP+Wco5+eAYUzJL/YnZD/zNP4Ecc8OgvFdTFk=;
+	s=k20201202; t=1712318063;
+	bh=xtWDTgQnqWwlGt4hSK509dlzyI5ov0XFlUekFt9Elt4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=B4gQ3IoOEyFtTOHr3ToOiSQ1Ctokd5Xa+W3mvJWNiSqgyosrflmeqcoIa4zaLFXYR
-	 EUr0PUiJUDt7x8fZWMgR8Q8SGDca1D/v2/6KsAb3j6ES1H8W6Lgs7j7hi6P1/q7e9q
-	 7PoG/TOCHQ2d4j5/9o8c3lddJPSBw9XC6TRN+/sUnGS9MkN1SqowdYSQnnmJ/aPfEG
-	 JQSBQnZxCxtZutxgKgyDwyEsPqErkFzyc1LoM8IdjdWCaGlUlIViu+C1xabYCEZ/Mv
-	 F1RKAgp8BKzhrgkmlqbu72T9H+/jY2InJ0jbKz3yhBNYNjya4um4NHdykhBZbFBO8W
-	 EVeaFX6EiNqTA==
-Date: Fri, 5 Apr 2024 16:55:49 +0530
+	b=LCJdQ2M8SudtctJXICiqEHb5IW5cnvqyV8c2DgU/C3Jb0sDEtWhdj2JCUPlhLgjCY
+	 HbfBMDYfXvCJTWsP3yzz6cKHc3uxyZyeflmjb2f/Ra0Mi6j4kh/J8q2XpzafXXlbYs
+	 lGHCzLlb51yurcbLyacoBP/nW05DysT8gpH1o3IJiTrB0tfxVTzcUJdWHlrTIGpL9d
+	 zCspJvFYsiq4ZSuBxF8m9I8Y5Kg2z1I8EFKaxzk5JxzkRAfwFsN7DlGeJVmaeAziy8
+	 tp+CnEtUtjF0gbTsGmVzQM42blDR4wehkLTGLoTy2glcFfSSNdsr2MEm//6hYPsZ7r
+	 +A2R5gx9VlNPA==
+Date: Fri, 5 Apr 2024 17:24:18 +0530
 From: Vinod Koul <vkoul@kernel.org>
 To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc: Bjorn Andersson <andersson@kernel.org>,
@@ -52,8 +52,9 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
 	linux-kernel@vger.kernel.org, Mark Brown <broonie@kernel.org>
 Subject: Re: [PATCH RESEND] soundwire: qcom: allow multi-link on newer devices
-Message-ID: <Zg_fvU-SA9nwmzW8@matsya>
+Message-ID: <Zg_maukMaZXuJAWR@matsya>
 References: <20240403132716.325880-1-krzysztof.kozlowski@linaro.org>
+ <Zg_fvU-SA9nwmzW8@matsya>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,16 +63,23 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240403132716.325880-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <Zg_fvU-SA9nwmzW8@matsya>
 
-On 03-04-24, 15:27, Krzysztof Kozlowski wrote:
-> Newer Qualcomm SoCs like X1E80100 might come with four speakers spread
-> over two Soundwire controllers, thus they need a multi-link Soundwire
-> stream runtime.
+On 05-04-24, 16:55, Vinod Koul wrote:
+> On 03-04-24, 15:27, Krzysztof Kozlowski wrote:
+> > Newer Qualcomm SoCs like X1E80100 might come with four speakers spread
+> > over two Soundwire controllers, thus they need a multi-link Soundwire
+> > stream runtime.
+> 
+> This does on apply on sdw/next.
 
-This does on apply on sdw/next.
+s/does/does not
 
-Pls rebase
+> 
+> Pls rebase
+> 
+> -- 
+> ~Vinod
 
 -- 
 ~Vinod
