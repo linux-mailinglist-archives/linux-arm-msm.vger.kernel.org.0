@@ -1,167 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-16485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E9F48997BD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 10:26:37 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1CFD8997C9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 10:30:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C85DD2839BE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 08:26:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D30B11C20A29
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 08:30:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B09F1146003;
-	Fri,  5 Apr 2024 08:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09C52146A66;
+	Fri,  5 Apr 2024 08:29:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Zuyj1HTx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XtdK2RmT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E64C14535C;
-	Fri,  5 Apr 2024 08:26:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A81145B3A;
+	Fri,  5 Apr 2024 08:29:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712305594; cv=none; b=ftbfQN2p6m5CYWmvrb9WZQXNf0AHJ6VdB5G937I7XSzo0LbLM2YFSwVTZJm65UfUKb3wOLjzX5WFtmIyIA3ozLMb75As1g6drbLILWddQnvu3LWRRJ6CTxPpWpjKvjoAGQsrDNjM6G2pcSZVq9nlrAq7Ht13fmqxoTyF5fBjS8o=
+	t=1712305798; cv=none; b=NXdiDWFpXKvt98qjeUVoZht/VZWDrnBmJXC1J5dCeTU2GtumbtkC2Cb1fmWoeMiyJHDdRJLaNQsUHBwO3LoruUOdbo/60X4VFN0yo7+MjKky1y175SnC5qAf9k20kO4RrYx7JK1nQYzPOqKPuxuCMyN1fTNRPaIbSD7V1yiBDsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712305594; c=relaxed/simple;
-	bh=j9RoPLZmCC7wWzTStv2sVugCxNGztVnkFeyD2s4KlwM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=u2I+4YxTTE04+yBo3OcbxTnxeXhiFRMFcpNCtt96F9UUH78Z5j2Q86osb7UzkEbygCo1V29TUgrLz2FDaxs3HOlGqzCjti9+ElveuTYS/am1DbTjdnzmmq6EQG6glS47d4W2wHkTAYYTAXLL7xQfz2xjKrUSSs/IYUvrPGdHcbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Zuyj1HTx; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43556DRS003669;
-	Fri, 5 Apr 2024 08:26:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=MXiuHfSkLYp7Elwz53wcV8mv8XCf2+1rKM2cnUVWS7A=; b=Zu
-	yj1HTxHxFVsRVMcbVV7dX+9MKG1UsDCvYC3tiNVrG9RcKd98f+lr7EEjdJnh5RCZ
-	hUGy9lWV0frkj8KlJRmbJ+2lh2YBiBLp30Aufz48/wU3Y7I6olDCfZatl1HNbDUO
-	37GvZ3VlIB4PkfvSnuYBhS+CI97BAyzLQ24Gs/rJWFpkKKZUgNJRlhOW8XGDEM3r
-	quPHFpgKRNH58ZiI4GcJndrrQif4rfNcjAGs73EE7fvpC31GqMs3jpLSDqAm++Pc
-	6PqecxiHMYlt4lqQrM3a3O9Bs/KO0AxLQnxCoklVbku1eHb0kpwmxpL0NpRCMweo
-	Lvq3QIvRrtcgQVJXZuLw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xa7m5gqds-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 05 Apr 2024 08:26:23 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4358QMOe024730
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 5 Apr 2024 08:26:22 GMT
-Received: from [10.216.11.24] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Fri, 5 Apr 2024
- 01:26:17 -0700
-Message-ID: <80c0ecb3-1157-1d7a-0829-c3b68b65f17f@quicinc.com>
-Date: Fri, 5 Apr 2024 13:56:13 +0530
+	s=arc-20240116; t=1712305798; c=relaxed/simple;
+	bh=FoeVOgMwFaoVJU8txrUpqriYLH8fDMf3kDQnY5ZpSRo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MEZfMBEM58+wuyrfOJoa/T6BCGEhHHjoN1nCY0RSLhvDLutKeghieoGPT4b+l2pNWYY3e/otuwX/fevxdWqAFvPjdl+hwekmIrqSqqMtULj4XdqYeREXVD5YMZomC3DYNg+i0aeTSCj7f3Rofw+oGDmWxMQERACs74dB/gBlim8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XtdK2RmT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012A8C433F1;
+	Fri,  5 Apr 2024 08:29:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712305798;
+	bh=FoeVOgMwFaoVJU8txrUpqriYLH8fDMf3kDQnY5ZpSRo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=XtdK2RmTKX9NwDlPKJRn6RvGiZ1ugZMbMyFsjacOnfc1xkvxIM+IDh3VN2V+lU9vp
+	 63FowDkfBUJPv4VU5bdLRNzExflstBbhGVnXcen+/8WQYB31Xb0Kn7TndT68usQnQT
+	 Dz0MIDpkA5N0SOibLFuMW20u6KM11yjzmZbAAEmj6zXYcFJvFf6A76hByKQ1UCTs9l
+	 pMfJmUqSpK4R4AhkTp5o6YtVyO2a/qEpSyqHXa7tUltEjufO0bJFtDUciLmvmxLNW2
+	 EhsBUUvyfdtpVfWNfW7ZmYHrrtMFNgcwp6bEymLOVAw2/YtHRF9m5NKNfD2S2JsoW7
+	 qlxw4qRKDaZ8g==
+Date: Fri, 5 Apr 2024 13:59:44 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Brian Masney <bmasney@redhat.com>,
+	Georgi Djakov <djakov@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, vireshk@kernel.org,
+	quic_vbadigan@quicinc.com, quic_skananth@quicinc.com,
+	quic_nitegupt@quicinc.com, quic_parass@quicinc.com,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH v8 3/7] PCI: qcom: Add ICC bandwidth vote for CPU to PCIe
+ path
+Message-ID: <20240405082944.GE2953@thinkpad>
+References: <20240302-opp_support-v8-0-158285b86b10@quicinc.com>
+ <20240302-opp_support-v8-3-158285b86b10@quicinc.com>
+ <20240304174111.GB31079@thinkpad>
+ <9d878f69-c9d1-1ee4-f80e-1d8f16c6920e@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v3 03/19] media: venus: pm_helpers: Add kerneldoc to
- venus_clks_get()
-Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross
-	<agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Mauro Carvalho
- Chehab" <mchehab@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-CC: Marijn Suijten <marijn.suijten@somainline.org>,
-        Stanimir Varbanov
-	<stanimir.varbanov@linaro.org>,
-        Mauro Carvalho Chehab
-	<mchehab+huawei@kernel.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20230911-topic-mars-v3-0-79f23b81c261@linaro.org>
- <20230911-topic-mars-v3-3-79f23b81c261@linaro.org>
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <20230911-topic-mars-v3-3-79f23b81c261@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: DdnvdMB5zzqwN8pobNHKJNEHEaOs26ic
-X-Proofpoint-GUID: DdnvdMB5zzqwN8pobNHKJNEHEaOs26ic
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-05_07,2024-04-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- spamscore=0 mlxscore=0 bulkscore=0 phishscore=0 adultscore=0
- suspectscore=0 malwarescore=0 impostorscore=0 clxscore=1015
- mlxlogscore=999 priorityscore=1501 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2404010003 definitions=main-2404050061
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9d878f69-c9d1-1ee4-f80e-1d8f16c6920e@quicinc.com>
 
-
-
-On 3/27/2024 11:38 PM, Konrad Dybcio wrote:
-> To make it easier to understand the various clock requirements within
-> this driver, add kerneldoc to venus_clk_get() explaining the fluff.
+On Tue, Mar 05, 2024 at 04:23:21PM +0530, Krishna Chaitanya Chundru wrote:
 > 
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  drivers/media/platform/qcom/venus/pm_helpers.c | 28 ++++++++++++++++++++++++++
->  1 file changed, 28 insertions(+)
 > 
-> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-> index ac7c83404c6e..cf91f50a33aa 100644
-> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
-> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-> @@ -23,6 +23,34 @@
->  
->  static bool legacy_binding;
->  
-> +/**
-> + * venus_clks_get() - Get Venus clocks that are not bound to a vcodec
-> + * @core: A pointer to the venus core resource
-> + *
-> + * The Venus block (depending on the generation) can be split into a couple
-> + * of clock domains: one for main logic and one for each video core (0-2 instances).
-> + *
-> + * MSM8916 (and possibly other HFIv1 users) only feature the "main logic"
-> + * domain, so this function is the only kind if clk_get necessary there.
-> + *
-> + * MSM8996 (and other HFIv3 users) feature two video cores, with core0 being
-> + * statically defined a decoder and core1 an encoder, with both having
-> + * their own clock domains.
-> + *
-> + * SDM845 features two video cores, each one of which may or may not be
-> + * subdivided into two encoder/decoder threads.
-> + *
-> + * Other SoCs either feature a single video core (with its own clock domain)
-> + * or one video core and one CVP (Computer Vision Processor) core. In both cases
-> + * we treat it the same way (CVP only happens to live near-by Venus on the SoC).
-> + *
-> + * Due to unfortunate developments in the past, we need to support legacy
-why unfortunate? please re-phrase this.
-> + * bindings (MSM8996, SDM660, SDM845) that require specifying the clocks and
-> + * power-domains associated with a video core domain in a bogus sub-node,
-> + * which means that additional fluff is necessary..
-> + *
-> + * Return: 0 on success, negative errno on failure.
-> + */
->  static int venus_clks_get(struct venus_core *core)
->  {
->  	const struct venus_resources *res = core->res;
-> 
+> On 3/4/2024 11:11 PM, Manivannan Sadhasivam wrote:
+> > On Sat, Mar 02, 2024 at 09:29:57AM +0530, Krishna chaitanya chundru wrote:
+> > > To access PCIe registers, PCIe BAR space, config space the CPU-PCIe
+> > > ICC (interconnect consumers) path should be voted otherwise it may
+> > > lead to NoC (Network on chip) timeout. We are surviving because of
+> > > other driver vote for this path.
+> > > 
+> > > As there is less access on this path compared to PCIe to mem path
+> > > add minimum vote i.e 1KBps bandwidth always.
+> > 
+> > Please add the info that 1KBps is what shared by the HW team.
+> > 
+> Ack to all the comments
+> > > 
+> > > When suspending, disable this path after register space access
+> > > is done.
+> > > 
+> > > Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> > > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> > > ---
+> > >   drivers/pci/controller/dwc/pcie-qcom.c | 38 ++++++++++++++++++++++++++++++++--
+> > >   1 file changed, 36 insertions(+), 2 deletions(-)
+> > > 
+> > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > index 10f2d0bb86be..a0266bfe71f1 100644
+> > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
 
-Thanks,
-Dikshita
+[...]
+
+> > > +	ret = icc_disable(pcie->icc_cpu);
+> > > +	if (ret) {
+> > > +		dev_err(dev, "failed to disable icc path of cpu-pcie: %d\n", ret);
+> > 
+> > "CPU-PCIe"
+> > 
+> > > +		if (pcie->suspended) {
+> > > +			qcom_pcie_host_init(&pcie->pci->pp);
+> > 
+> > Interesting. So if icc_disable() fails, can the IP continue to function?
+> > 
+> As the ICC already enable before icc_disable() fails, the IP should work.
+
+If icc_disable() fails, then most likely something is wrong with RPMh. How can
+the IP continue to work in that case?
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
