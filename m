@@ -1,115 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-16572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7EBD089A2F8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 18:58:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DACF389A33D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 19:10:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AFE541C2211A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 16:58:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 185811C2255D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 17:10:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69582171649;
-	Fri,  5 Apr 2024 16:58:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14698171651;
+	Fri,  5 Apr 2024 17:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fLn0QGhZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R3rozz+a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F07DE1D530;
-	Fri,  5 Apr 2024 16:58:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E084E16C858;
+	Fri,  5 Apr 2024 17:09:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712336303; cv=none; b=KRiKczmGUkuN2EQ5V0jxnK1XXuLT7gwtGWRGUkRV/goE5Lb/+M320Avrnma/cXLWNCVUKXSGMh2tq6pzwQbGyK407ZAdwK17hfxwoE15l62SWUj/lWyIWQnbNd5RMR2x2BKUfS5rxSm/WE8Jatloux/lt3SJN12oAcbcqS8EhHA=
+	t=1712336947; cv=none; b=UbYjtP5L1SZSb82OOrJAEbZYPwC2KiLnOlmgQz8CuZmaw40NNrNMCSBP61RoOE/HlJk/a0DBkCGLdwQLOSUIerx71UcxfR9yOXi77anN3TWBsqHuO7a6edSwoWHK1CSacZwjb0XaVRwStDSNKKTEuH/hXbS9bR+/f2ac5R0vFCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712336303; c=relaxed/simple;
-	bh=9FApvoxcrmF0KAwjGuStONiAqHxiDKFUt4yrEwT5Ht8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=TxRO6M26Be3NSK9HOHq+lrY0XVcqVBucmy5QcjAihl5HK1qEkjY1ZYtPZ7qdMU7p3JYK0QMtX0zGfFeaRSqF58YFfIGHleVgbfZJK7+44cB7NOP2N5VQZ2KhVvZkYsC8zecwHh+CytkISBjG0+cIPLfyb31Jrn7jO+YRa6UPZNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fLn0QGhZ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 435BQeFP011666;
-	Fri, 5 Apr 2024 16:58:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=jlSvlwx1DIYu2a8LtFCH2ITQ5R5r9ksV7tC/6/xSt4A=; b=fL
-	n0QGhZ9FIYitlhxcECLJXl8w0CzvuSmRuaRoPVf+yvbnyOuJNGuim+Zr9LekPsvd
-	UrKOOJUOrFp8/P4mNFW85HKTM7LZjwYmH/wQ6UVtmo9b4f3LDxKluIlX1MJ4ouw5
-	31vgFT4Y/AHHs91EKIgP00aisQ/qFMsYeQ0HSEmaOzRIpwtD/+le34AQnT7s9IKp
-	RUFPSpCy9IwX1M6bUq5dUPJuaWKkqtKYjJ8uBqLJ7jTw9K4WIIMmDBZY8bE0IEAQ
-	aV8tw8GJ079ygVInxxb6Nw+ifEOEYT4qNttNf3bXJZ3gIJcc7wljDX1mFj4YdbC8
-	r2Q4oMVN+1etLgqGS77g==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xafe3rx6y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 05 Apr 2024 16:58:17 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 435GwGOm005043
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 5 Apr 2024 16:58:16 GMT
-Received: from [10.216.23.38] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Fri, 5 Apr 2024
- 09:57:34 -0700
-Message-ID: <6277fb20-d579-1171-3e34-432e37727ac1@quicinc.com>
-Date: Fri, 5 Apr 2024 22:26:53 +0530
+	s=arc-20240116; t=1712336947; c=relaxed/simple;
+	bh=H9vEkwAxYj5wWq9yqiD29L3VLUbFY7RZslsH1Qj/VMU=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=EutXQ8VRhWVOYCsXCHpE8eRqbQPps0ep+C4jXoynV4ZhIkj9a5MAocTuxOTKRkGv7mK3BFnSdrh5fNTvqUH8z+LOpaD43bsI9GB46WdP6HWwge3kUWxDpNON0xELPCwRJt1mlR4ZjyGq0m4BC4THs9jtlB0mmIdNJrIy6lQLg8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R3rozz+a; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF43AC433F1;
+	Fri,  5 Apr 2024 17:09:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712336946;
+	bh=H9vEkwAxYj5wWq9yqiD29L3VLUbFY7RZslsH1Qj/VMU=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=R3rozz+a0B1YpNvB4vfXKtdF7QEdy3dG1YafDVgmfBpbuzYPfTa91bgsIRwc8EgVI
+	 v4s7/oL7+AgdOqVl2KmgB1zqG6Qr+cBq2/dqbA/V6hHI+726GOASKO3CkQ5+GXXfZ6
+	 IA99s/DigM7iZXoftJjwNCrh7cvtblteI6hfk3MEEp4WH8D6dPReWf+iVd1SLGfVj+
+	 IAU2aywjYNc4Pn0xVhLpYu3upppPYYn/p97e2WlazkOtg6FOx7MckzIUXoUFCDZD1k
+	 GAXAnqvauMbResQ63Fk51YV7SswZJVLVoWxxRsa12bsn4478igh8zIb+ba9DSNV3gy
+	 3Rw/zKiu4l43A==
+From: Vinod Koul <vkoul@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ linux-kernel@vger.kernel.org
+In-Reply-To: <20240226-topic-sm8650-upstream-combo-phy-swing-update-v1-1-08707ebca92a@linaro.org>
+References: <20240226-topic-sm8650-upstream-combo-phy-swing-update-v1-1-08707ebca92a@linaro.org>
+Subject: Re: [PATCH] phy: qcom: qmp-combo: fix sm8650 voltage swing table
+Message-Id: <171233694335.304553.13639721114299894293.b4-ty@kernel.org>
+Date: Fri, 05 Apr 2024 22:39:03 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 1/2] soc: qcom: pmic_glink: don't traverse clients list
- without a lock
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Neil
- Armstrong <neil.armstrong@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20240403-pmic-glink-fix-clients-v2-0-aed4e02baacc@linaro.org>
- <20240403-pmic-glink-fix-clients-v2-1-aed4e02baacc@linaro.org>
-From: Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <20240403-pmic-glink-fix-clients-v2-1-aed4e02baacc@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -QkxH5zR_S5qHJZlOIKJVFqb2MXQGHhi
-X-Proofpoint-ORIG-GUID: -QkxH5zR_S5qHJZlOIKJVFqb2MXQGHhi
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-05_19,2024-04-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- spamscore=0 clxscore=1015 suspectscore=0 phishscore=0 adultscore=0
- mlxscore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0 malwarescore=0
- mlxlogscore=713 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404050118
+X-Mailer: b4 0.12.3
 
 
-
-On 4/3/2024 8:40 AM, Dmitry Baryshkov wrote:
-> Take the client_lock before traversing the clients list at the
-> pmic_glink_state_notify_clients() function. This is required to keep the
-> list traversal safe from concurrent modification.
+On Mon, 26 Feb 2024 16:22:36 +0100, Neil Armstrong wrote:
+> The QMP USB3/DP PHY found in the SM8650 SoC requires a slighly
+> different Voltage Swing table for HBR/RBR link speeds.
 > 
-> Fixes: 58ef4ece1e41 ("soc: qcom: pmic_glink: Introduce base PMIC GLINK driver")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Add a new hbr/rbr voltage switch table named "v6" used in a new
+> sm8650 qmp_phy_cfg struct replacing the sm8550 fallback used for
+> the sm8650 compatible.
+> 
+> [...]
 
-Nice catch.
+Applied, thanks!
 
-Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+[1/1] phy: qcom: qmp-combo: fix sm8650 voltage swing table
+      commit: f320268fcebcbab02631d2070fa19ad4856a5a5e
 
--Mukesh
+Best regards,
+-- 
+~Vinod
+
+
 
