@@ -1,67 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-16444-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16445-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E8F8899248
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 01:43:54 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B5D2C89925D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 02:01:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DCF3B1F23FE1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Apr 2024 23:43:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 78ECF281CD6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 00:01:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3407F130E57;
-	Thu,  4 Apr 2024 23:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E8312F5E;
+	Fri,  5 Apr 2024 00:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="YDCPsRK8"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="jBFVySCV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7CFC13C672
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Apr 2024 23:43:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0FF17F8
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Apr 2024 00:01:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712274231; cv=none; b=i7RRr1mFmUX1d7dNnwAJFNkQvYuSFRhaU1NcNpUAB4LYQuT5Q6BX/pzqetUMupM3TzDy1KBhNODeJPFjqmLjvD9vtPF/QjlfgDaBGOAnGKSCIs/fI+uquheuSsBJRZgsQJ8bcca2iHl0fRvRVLpYjgGAO+V00Ku7xDSsSHmGoGg=
+	t=1712275276; cv=none; b=JxuC4cH+hldeS/Vc2FBAlk69cqkzcmAwQMCPGZ/9vGQw1xDjfryIA6Y9nwQwYBq3cAbqkGKYih86K4dAnP0jmGSDamoAhiCqLb+88wCGhZS62thZOUFu2XHky4JvgY9cYjJ2wTRJwAL47CmYOJKsv6Cjs2K/4YD9AwBotKQodXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712274231; c=relaxed/simple;
-	bh=JJPz/P2CcR2ZufWiDJCZzZH/1OFiSj5m3Mdo8cC++Zw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=m8LYdILkIr3JX05PlNjayvyp/f221syOKKedEzF3kyH8rYk0DTYIVS8Zj40lhavrgx3RFgU6LdWaqA0nrUg+IqrSvNHhYw9pVILA9BWUi6yWgy36Qz8jTgPVn9HlTGeqKdRrAwc7fn138Vzof4EEis1xmkXF3k5XdiHfxvP6tWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=YDCPsRK8; arc=none smtp.client-ip=209.85.215.172
+	s=arc-20240116; t=1712275276; c=relaxed/simple;
+	bh=2hEg4h0cVL/sUuyeZmcQ7gN4Akq8EJcgFWl7SsXVeeM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=cm2ajB6dypwaz+XM5lIWYj8DUIIc5mKrYzWz2zmPyWM9H8hmUeYe0PSRZ/G5YrLy6SSvHSoex0yNSwvNb8kQduA1GnY029PqydGQJ3S28eAXaNVlZp7bCRMbIncm3A63/DN2aoh4d9lb3QCCEnDnMNdJI9ijHcPcui15A9Alpwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=jBFVySCV; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-5e152c757a5so1143013a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Apr 2024 16:43:49 -0700 (PDT)
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-1e2987e9d67so9557885ad.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Apr 2024 17:01:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1712274229; x=1712879029; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1712275275; x=1712880075; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=RMI5yWOLAVIgIkbCc96VWxktkn/9P3095VY77NHNd1o=;
-        b=YDCPsRK8OhajbKvIhfTJub2L64/s9EM6WJdQPsXmJ7Sc/0oPsmAJrtX5Z1dTLr1yva
-         sKQIJy8w9rdGGLt9mVG9XiYKzf44O6N6O6gE/qZOJK7u/cjX/zFkZZ01dfxSBWWsTlp1
-         nym5Ay1AzbiYtrpInNNcN7GX/KeStG3Hs9TM0=
+        bh=BubB/ZTZXGyOlYIo5JvJ2GYL9k/6VJ0RRIgGr3QHUG4=;
+        b=jBFVySCVWeE1PBBUpcGZVKJkrlhAy76KtpQg0oCZ5xPUIJc/caiorDWWB42/CwQbWO
+         9vOSKi/TmAnl/BnsTkrzURL6gHVwQxf19K2DWkg8VLJvd6nJVDT+6nPN4jydm+f/iecD
+         +96dvq1iLRcABcVXVGPnRRRF8AKtgZ6sh5OYE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712274229; x=1712879029;
+        d=1e100.net; s=20230601; t=1712275275; x=1712880075;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=RMI5yWOLAVIgIkbCc96VWxktkn/9P3095VY77NHNd1o=;
-        b=YfCvFIBX+0+ev527Ay0GgtCbWTHXeNllZy4+2YCSoVNYXoVJs32a1Rnl3ivBDIzoQC
-         91bNFzBZWAWYln1QvmP8F2DC1OOa0P4jBHEWVF+YFTOHZKzMj97Ny3UKOw91OSNYUtli
-         j8tCBF0liaJrCtJ0zdSGAClAl213JXzbhU4deJUoOmkoNHv05toUC7mrUo04HIdsCpje
-         I6O1kA8YJArt89rfSgU4qu8rSfh0DsIGReZZzw3blPHNdbHxztaPzc8Vu0W1I2AlgWBu
-         Px/uBHk9GbJedxq0F44T8LOHrxqqW6EPEty8rKqtPy55wyxwof49Pd77lUWpbknxL0nh
-         hz1Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVIkcfkIK5iHVNRCErrVOcIRT6jcnyqSEvZogqmBLfSX/fcOUisKjgzS91hJ8/BVxoACigMRBDLmzDHaL1MVDGCmtnxGe/8XMGmbZr6DQ==
-X-Gm-Message-State: AOJu0YwBh6Lag4JInqdBczlEKrNoKTu3nMieMQ7ttZLDaRo93CTa+BxQ
-	bbeGN8uvNI/2c/8Z8FQFhpax7v+kW0VpWdoyZpjuotnLW28BbJK/NPLt/ehTzw==
-X-Google-Smtp-Source: AGHT+IEXZdsBDxClfnWn4V8ckwcGELQZihfoKdxkgEQZf2dDcxavcBDgDIZ9TfrbOn0Q57NFbPr69Q==
-X-Received: by 2002:a05:6a20:1057:b0:1a3:6bb1:92fb with SMTP id gt23-20020a056a20105700b001a36bb192fbmr45166pzc.19.1712274228928;
-        Thu, 04 Apr 2024 16:43:48 -0700 (PDT)
+        bh=BubB/ZTZXGyOlYIo5JvJ2GYL9k/6VJ0RRIgGr3QHUG4=;
+        b=T0PBk4xV93TVhbIRmiNyee6vI3Ix/tMG41MldlPbp0z8CEB33/7d4PoFxpjpGxD/Z0
+         51NJtDXs7TFVRg6th7Qzm6ZLm8xUBuWHLO9uet+bxaZKihi+8eYajMaeaSSBZoDMvzFm
+         o+2Vwz7pGA1E1T4xMe3q8tqrm5lNw9OECtnvAobvYr80cU7dVfxA/wh8YaG2eTqLDdRP
+         QLnXKzJ4g9QWk9GQ/7M3G2zAlQAffdJJtAb/U/cwmBMU+xKTWyVIL68qMzbUAwsxg/fO
+         RToxOeevx0+LaUiaJTpKnKiupMNi//M1MQmUI8foeMQy7yhRUjNSujCwXvwXLSIfbIrZ
+         Atzw==
+X-Forwarded-Encrypted: i=1; AJvYcCXxEFTSooOgyuq3ngU7UflGTzMnhEaQRax2+yWDueARxhe+CMOT0GVpnSaoPt8Czv5+50eUSm+cELa8aYgcX2rZF5CfHYMEHuYLEBOAlQ==
+X-Gm-Message-State: AOJu0YyJMroZdt9WlSMBP8Eyz3k4qXZQWViCczKYbX/WuyJXdTc6qiRW
+	KaKVeq3wCKu9SX7EsanIfMdI6/d2FqNqRrc7CVKAhg6o7W/sSX2telzMgouNuA==
+X-Google-Smtp-Source: AGHT+IHHeoBPsIh9g3n+aMvqQ0ly90tm+3kUGSMVbGHLtLA2CIsxae6F593S7l6qGq8fl7xOPFRfEw==
+X-Received: by 2002:a17:902:e747:b0:1e0:30ca:62c with SMTP id p7-20020a170902e74700b001e030ca062cmr1469256plf.1.1712275274803;
+        Thu, 04 Apr 2024 17:01:14 -0700 (PDT)
 Received: from localhost (4.198.125.34.bc.googleusercontent.com. [34.125.198.4])
-        by smtp.gmail.com with UTF8SMTPSA id ga16-20020a17090b039000b002a2b06cbe46sm269450pjb.22.2024.04.04.16.43.46
+        by smtp.gmail.com with UTF8SMTPSA id f7-20020a170902ce8700b001e26e1e62f9sm213048plg.176.2024.04.04.17.01.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Apr 2024 16:43:47 -0700 (PDT)
+        Thu, 04 Apr 2024 17:01:13 -0700 (PDT)
 From: Stephen Boyd <swboyd@chromium.org>
 To: Vinod Koul <vkoul@kernel.org>,
 	Kishon Vijay Abraham I <kishon@kernel.org>
@@ -69,16 +69,19 @@ Cc: linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	linux-arm-msm@vger.kernel.org,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
 	linux-phy@lists.infradead.org,
-	Neil Armstrong <neil.armstrong@linaro.org>,
 	freedreno@lists.freedesktop.org,
 	Douglas Anderson <dianders@chromium.org>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH] phy: qcom: qmp-combo: Fix VCO div offset on v3
-Date: Thu,  4 Apr 2024 16:43:44 -0700
-Message-ID: <20240404234345.1446300-1-swboyd@chromium.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Steev Klimaszewski <steev@kali.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>
+Subject: [PATCH] phy: qcom: qmp-combo: Fix register base for QSERDES_DP_PHY_MODE
+Date: Thu,  4 Apr 2024 17:01:03 -0700
+Message-ID: <20240405000111.1450598-1-swboyd@chromium.org>
 X-Mailer: git-send-email 2.44.0.478.gd926399ef9-goog
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -88,81 +91,46 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Commit ec17373aebd0 ("phy: qcom: qmp-combo: extract common function to
-setup clocks") changed the offset that is used to write to
-DP_PHY_VCO_DIV from QSERDES_V3_DP_PHY_VCO_DIV to
-QSERDES_V4_DP_PHY_VCO_DIV. Unfortunately, this offset is different
-between v3 and v4 phys:
-
- #define QSERDES_V3_DP_PHY_VCO_DIV                 0x064
- #define QSERDES_V4_DP_PHY_VCO_DIV                 0x070
-
-meaning that we write the wrong register on v3 phys now. Add another
-generic register to 'regs' and use it here instead of a version specific
-define to fix this.
-
-This was discovered after Abhinav looked over register dumps with me
-from sc7180 Trogdor devices that started failing to light up the
-external display with v6.6 based kernels. It turns out that some
-monitors are very specific about their link clk frequency and if the
-default power on reset value is still there the monitor will show a
-blank screen or a garbled display. Other monitors are perfectly happy to
-get a bad clock signal.
+The register base that was used to write to the QSERDES_DP_PHY_MODE
+register was 'dp_dp_phy' before commit 815891eee668 ("phy:
+qcom-qmp-combo: Introduce orientation variable"). There isn't any
+explanation in the commit why this is changed, so I suspect it was an
+oversight or happened while being extracted from some other series.
+Oddly the value being 0x4c or 0x5c doesn't seem to matter for me, so I
+suspect this is dead code, but that can be fixed in another patch. It's
+not good to write to the wrong register space, and maybe some other
+version of this phy relies on this.
 
 Cc: Douglas Anderson <dianders@chromium.org>
 Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Fixes: ec17373aebd0 ("phy: qcom: qmp-combo: extract common function to setup clocks")
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Abel Vesa <abel.vesa@linaro.org>
+Cc: Steev Klimaszewski <steev@kali.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>
+Cc: Bjorn Andersson <quic_bjorande@quicinc.com>
+Fixes: 815891eee668 ("phy: qcom-qmp-combo: Introduce orientation variable")
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index 7d585a4bbbba..3b19d8ebf467 100644
+index 7d585a4bbbba..746d009d702b 100644
 --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
 +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -77,6 +77,7 @@ enum qphy_reg_layout {
- 	QPHY_COM_BIAS_EN_CLKBUFLR_EN,
+@@ -2150,9 +2150,9 @@ static bool qmp_combo_configure_dp_mode(struct qmp_combo *qmp)
+ 	writel(val, qmp->dp_dp_phy + QSERDES_DP_PHY_PD_CTL);
  
- 	QPHY_DP_PHY_STATUS,
-+	QPHY_DP_PHY_VCO_DIV,
+ 	if (reverse)
+-		writel(0x4c, qmp->pcs + QSERDES_DP_PHY_MODE);
++		writel(0x4c, qmp->dp_dp_phy + QSERDES_DP_PHY_MODE);
+ 	else
+-		writel(0x5c, qmp->pcs + QSERDES_DP_PHY_MODE);
++		writel(0x5c, qmp->dp_dp_phy + QSERDES_DP_PHY_MODE);
  
- 	QPHY_TX_TX_POL_INV,
- 	QPHY_TX_TX_DRV_LVL,
-@@ -102,6 +103,7 @@ static const unsigned int qmp_v3_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
- 	[QPHY_COM_BIAS_EN_CLKBUFLR_EN]	= QSERDES_V3_COM_BIAS_EN_CLKBUFLR_EN,
- 
- 	[QPHY_DP_PHY_STATUS]		= QSERDES_V3_DP_PHY_STATUS,
-+	[QPHY_DP_PHY_VCO_DIV]		= QSERDES_V3_DP_PHY_VCO_DIV,
- 
- 	[QPHY_TX_TX_POL_INV]		= QSERDES_V3_TX_TX_POL_INV,
- 	[QPHY_TX_TX_DRV_LVL]		= QSERDES_V3_TX_TX_DRV_LVL,
-@@ -126,6 +128,7 @@ static const unsigned int qmp_v45_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
- 	[QPHY_COM_BIAS_EN_CLKBUFLR_EN]	= QSERDES_V4_COM_BIAS_EN_CLKBUFLR_EN,
- 
- 	[QPHY_DP_PHY_STATUS]		= QSERDES_V4_DP_PHY_STATUS,
-+	[QPHY_DP_PHY_VCO_DIV]		= QSERDES_V4_DP_PHY_VCO_DIV,
- 
- 	[QPHY_TX_TX_POL_INV]		= QSERDES_V4_TX_TX_POL_INV,
- 	[QPHY_TX_TX_DRV_LVL]		= QSERDES_V4_TX_TX_DRV_LVL,
-@@ -2162,6 +2165,7 @@ static int qmp_combo_configure_dp_clocks(struct qmp_combo *qmp)
- 	const struct phy_configure_opts_dp *dp_opts = &qmp->dp_opts;
- 	u32 phy_vco_div;
- 	unsigned long pixel_freq;
-+	const struct qmp_phy_cfg *cfg = qmp->cfg;
- 
- 	switch (dp_opts->link_rate) {
- 	case 1620:
-@@ -2184,7 +2188,7 @@ static int qmp_combo_configure_dp_clocks(struct qmp_combo *qmp)
- 		/* Other link rates aren't supported */
- 		return -EINVAL;
- 	}
--	writel(phy_vco_div, qmp->dp_dp_phy + QSERDES_V4_DP_PHY_VCO_DIV);
-+	writel(phy_vco_div, qmp->dp_dp_phy + cfg->regs[QPHY_DP_PHY_VCO_DIV]);
- 
- 	clk_set_rate(qmp->dp_link_hw.clk, dp_opts->link_rate * 100000);
- 	clk_set_rate(qmp->dp_pixel_hw.clk, pixel_freq);
+ 	return reverse;
+ }
 
 base-commit: 4cece764965020c22cff7665b18a012006359095
 -- 
