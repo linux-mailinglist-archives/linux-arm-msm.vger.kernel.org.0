@@ -1,230 +1,269 @@
-Return-Path: <linux-arm-msm+bounces-16464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16465-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7BB8A8994DF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 08:01:19 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F129F8994EB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 08:08:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 83E171C20D81
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 06:01:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AFF0428551D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 06:08:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AA48224F6;
-	Fri,  5 Apr 2024 06:01:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79AD0225AE;
+	Fri,  5 Apr 2024 06:08:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WltaWoPf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gpGfKh6n"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F67CC138;
-	Fri,  5 Apr 2024 06:01:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499271EB2B;
+	Fri,  5 Apr 2024 06:08:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712296875; cv=none; b=alehaMQdtF5YH+3ymIPAIjGLyMoKFtBiOajM0PCDMeeG9wA4yEVMdbE1A42V+k4ka33i5mc5PtQrI3l7Z26S4jnPFJlTvn1IbIzde8HUEmOjfVpec0IZ4sLiKTZz7MOj7QzzsDhhLmgiX5zvn/EawyyomHS/GxZ8VMZZwaEZq6Y=
+	t=1712297319; cv=none; b=PeSTkjlIbXAb9P3gup/1+F9WfW+n5FsTtKhjOo3IAYc9RAiRlgK/N9gG+OxXBzRgOtrfOADp7cHN6BJ+fPAeIJ2ZxjMVy4EB95upu9brdn0Y1Y59rk8DaJRGFsloaUGvjMPaSfC5lnSZsAecZYGzNNWO97+njFu0UOE5GIy2ANI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712296875; c=relaxed/simple;
-	bh=FF8ujqDvKIVKW0WdhbhddUyBexJAjeOcU3bpTfy2cGo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=mfoW8fBBnO8vlFsU1GaS9sEVqFBRQm+zb87Fya1DuRZkJxb874nFj3rtNwoeiA7cjH84qPz22jA50imG7MERBBjRk+Nlvd+HNi73OjYwMbp0jZuvv30JZ8pu4mRZJB7Bqx6C5A+wOppRD3RZ3aAQRLgyozhvSPAC+8wPq06sfPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WltaWoPf; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4352uoMZ029789;
-	Fri, 5 Apr 2024 06:01:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=h+6iGhowO/ibh6f8VBak99kpwtJW3mVkQSpIcSkFvhE=; b=Wl
-	taWoPf3C8GH/m7EB8o7XNYDEyzsRMzQ8yFjw8/nY1+OQWtPgqYtoCmItgnxOP/OD
-	G4bBv7X1D6PS58Bmkae4M/dSw9e1QlsmxHQGcEYRKCak7hZMtyJUcm4QhuLBRk2l
-	0EKc/aEHVIHR6pvTbZVYu2NdF42EzMzxPX4Ya/6vuz66LWfQIdTY9Qp1IefVCUn2
-	pDMEaFFRQ36wGcN0JZYkYqkiTuDJ0zcVpa7iaVyxDNh+1dcfc14I9e9P+W6dcIlA
-	1xGEcNROcDTaMSY84TaltSVTWxnMo3JNF+d9I+mfZWBUUrbXbofTUELLRND+NeBm
-	7DKNGKg4C69L5d5+bfcA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xa1xa90w5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 05 Apr 2024 06:01:09 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4356180c011177
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 5 Apr 2024 06:01:08 GMT
-Received: from [10.218.5.19] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 4 Apr 2024
- 23:01:02 -0700
-Message-ID: <03f8d2ee-2467-48aa-9b76-06eb13202b8c@quicinc.com>
-Date: Fri, 5 Apr 2024 11:30:59 +0530
+	s=arc-20240116; t=1712297319; c=relaxed/simple;
+	bh=3a2D8FLQ+zRKWr+dT+h2iE0Z2sanm7uNODeFnm2l0+Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=BZqJI5J8BfqGhXCWnjpQbma41TgAAp+qYteLANOYl3MPvvqVp5R2wo0G8IaRK86Wph9ucVJSlMVp6t2BJ7uzwiqZENiCNvS8wkYyLzLkD0tia+i5zbtJNwcizpcny9tm1DTCk/SBgbzNKv/bIYAlg0e0a2gurBqRPOLIFSIC/3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gpGfKh6n; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AEF8C433F1;
+	Fri,  5 Apr 2024 06:08:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712297319;
+	bh=3a2D8FLQ+zRKWr+dT+h2iE0Z2sanm7uNODeFnm2l0+Y=;
+	h=From:To:Cc:Subject:Date:From;
+	b=gpGfKh6nDc7tcL07n3W/XO8V28YegkSc6XbhqFudjoYAoEcSCW65UXjShFQohkTxJ
+	 NkiOqw/nDvbB/7Wp8V++4rR754zLEnQCcGMJRDCQZkS6sXlochANSJ2qkSpvu3MJ8f
+	 y4pEho6HNQUYBnegAqqNlAWtWmwqqthP7t4QvOrj9dvOwHufEauqpiADXvX44F5c0y
+	 ++d/E1f7AGfsF1/fvL7o4l72BK0/4NRsWrn9Ypb09dKMMkBEfhBmAElQHZArl2523F
+	 A9gXXuQqCULLb5f/umebextqlEBfVsOgazcNMvjXfsBfITmLHpDWCKZMxCYz9u2VDC
+	 py2I1SMgou3Pw==
+From: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+To: gregkh@linuxfoundation.org
+Cc: linux-serial@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Al Cooper <alcooperx@gmail.com>,
+	Alexander Shiyan <shc_work@mail.ru>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Baruch Siach <baruch@tkos.co.il>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	"David S. Miller" <davem@davemloft.net>,
+	Fabio Estevam <festevam@gmail.com>,
+	Hammer Hsieh <hammerh0314@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Kumaravel Thiagarajan <kumaravel.thiagarajan@microchip.com>,
+	Laxman Dewangan <ldewangan@nvidia.com>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Michal Simek <michal.simek@amd.com>,
+	"Naveen N. Rao" <naveen.n.rao@linux.ibm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Orson Zhai <orsonzhai@gmail.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Peter Korsgaard <jacmet@sunsite.dk>,
+	Richard Genoud <richard.genoud@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Stefani Seibold <stefani@seibold.net>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Taichi Sugaya <sugaya.taichi@socionext.com>,
+	Takao Orito <orito.takao@socionext.com>,
+	Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Timur Tabi <timur@kernel.org>,
+	Vineet Gupta <vgupta@kernel.org>
+Subject: [PATCH 00/15] tty: serial: switch from circ_buf to kfifo
+Date: Fri,  5 Apr 2024 08:08:11 +0200
+Message-ID: <20240405060826.2521-1-jirislaby@kernel.org>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 RESEND 6/6] arm64: dts: qcom: sm8650: Add video and
- camera clock controllers
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Taniya Das
-	<quic_tdas@quicinc.com>,
-        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik
-	<quic_imrashai@quicinc.com>
-References: <20240321092529.13362-1-quic_jkona@quicinc.com>
- <20240321092529.13362-7-quic_jkona@quicinc.com>
- <CAA8EJppHGS+W-aiXvJ2cE=jCbua8Y0Q+zv_QTs+C9V5+Y1vuZg@mail.gmail.com>
- <008d574f-9c9e-48c6-b64e-89fb469cbde4@quicinc.com>
- <b3464321-0c52-4c41-9198-e9e7b16aa419@quicinc.com>
- <CAA8EJpqDwCVAjDphnC-HdfseMJ-xd8VVxb5+9UcGEcKLcn-heg@mail.gmail.com>
- <fba2474e-31a6-4fef-acf9-7069933584c8@quicinc.com>
- <CAA8EJprfaALkQe-wUrBow6B1A66ro0AoVpfnQJLXgqFmL8isNQ@mail.gmail.com>
- <8a5a3cf8-5b4f-487f-ad91-00499509f8ec@quicinc.com>
- <CAA8EJpoW8MQQ3OPfOVYRJtgsn1JgKd5Ew7vqgWx3xWE-xJ=R-g@mail.gmail.com>
-Content-Language: en-US
-From: Jagadeesh Kona <quic_jkona@quicinc.com>
-In-Reply-To: <CAA8EJpoW8MQQ3OPfOVYRJtgsn1JgKd5Ew7vqgWx3xWE-xJ=R-g@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: HmuYKecfWjlKZSgXwRfjOxxcbIuBOWnQ
-X-Proofpoint-ORIG-GUID: HmuYKecfWjlKZSgXwRfjOxxcbIuBOWnQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-05_05,2024-04-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
- spamscore=0 lowpriorityscore=0 adultscore=0 bulkscore=0 mlxlogscore=999
- mlxscore=0 suspectscore=0 priorityscore=1501 phishscore=0 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
- definitions=main-2404050042
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+This series switches tty serial layer to use kfifo instead of circ_buf.
 
+The reasoning can be found in the switching patch in this series:
+"""
+Switch from struct circ_buf to proper kfifo. kfifo provides much better
+API, esp. when wrap-around of the buffer needs to be taken into account.
+Look at pl011_dma_tx_refill() or cpm_uart_tx_pump() changes for example.
 
-On 4/4/2024 9:35 PM, Dmitry Baryshkov wrote:
-> On Thu, 4 Apr 2024 at 13:06, Jagadeesh Kona <quic_jkona@quicinc.com> wrote:
->>
->>
->>
->> On 4/4/2024 11:00 AM, Dmitry Baryshkov wrote:
->>> On Thu, 4 Apr 2024 at 08:13, Jagadeesh Kona <quic_jkona@quicinc.com> wrote:
->>>>
->>>>
->>>>
->>>> On 4/3/2024 9:24 PM, Dmitry Baryshkov wrote:
->>>>> On Wed, 3 Apr 2024 at 10:16, Jagadeesh Kona <quic_jkona@quicinc.com> wrote:
->>>>>>
->>>>>>
->>>>>>
->>>>>> On 3/25/2024 11:38 AM, Jagadeesh Kona wrote:
->>>>>>>
->>>>>>>
->>>>>>> On 3/21/2024 6:43 PM, Dmitry Baryshkov wrote:
->>>>>>>> On Thu, 21 Mar 2024 at 11:27, Jagadeesh Kona <quic_jkona@quicinc.com>
->>>>>>>> wrote:
->>>>>>>>>
->>>>>>>>> Add device nodes for video and camera clock controllers on Qualcomm
->>>>>>>>> SM8650 platform.
->>>>>>>>>
->>>>>>>>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
->>>>>>>>> ---
->>>>>>>>>      arch/arm64/boot/dts/qcom/sm8650.dtsi | 28 ++++++++++++++++++++++++++++
->>>>>>>>>      1 file changed, 28 insertions(+)
->>>>>>>>>
->>>>>>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi
->>>>>>>>> b/arch/arm64/boot/dts/qcom/sm8650.dtsi
->>>>>>>>> index 32c0a7b9aded..d862aa6be824 100644
->>>>>>>>> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
->>>>>>>>> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
->>>>>>>>> @@ -4,6 +4,8 @@
->>>>>>>>>       */
->>>>>>>>>
->>>>>>>>>      #include <dt-bindings/clock/qcom,rpmh.h>
->>>>>>>>> +#include <dt-bindings/clock/qcom,sm8450-videocc.h>
->>>>>>>>> +#include <dt-bindings/clock/qcom,sm8650-camcc.h>
->>>>>>>>>      #include <dt-bindings/clock/qcom,sm8650-dispcc.h>
->>>>>>>>>      #include <dt-bindings/clock/qcom,sm8650-gcc.h>
->>>>>>>>>      #include <dt-bindings/clock/qcom,sm8650-gpucc.h>
->>>>>>>>> @@ -3110,6 +3112,32 @@ opp-202000000 {
->>>>>>>>>                             };
->>>>>>>>>                     };
->>>>>>>>>
->>>>>>>>> +               videocc: clock-controller@aaf0000 {
->>>>>>>>> +                       compatible = "qcom,sm8650-videocc";
->>>>>>>>> +                       reg = <0 0x0aaf0000 0 0x10000>;
->>>>>>>>> +                       clocks = <&bi_tcxo_div2>,
->>>>>>>>> +                                <&gcc GCC_VIDEO_AHB_CLK>;
->>>>>>>>> +                       power-domains = <&rpmhpd RPMHPD_MMCX>;
->>>>>>>>> +                       required-opps = <&rpmhpd_opp_low_svs>;
->>>>>>>>
->>>>>>>> The required-opps should no longer be necessary.
->>>>>>>>
->>>>>>>
->>>>>>> Sure, will check and remove this if not required.
->>>>>>
->>>>>>
->>>>>> I checked further on this and without required-opps, if there is no vote
->>>>>> on the power-domain & its peer from any other consumers, when runtime
->>>>>> get is called on device, it enables the power domain just at the minimum
->>>>>> non-zero level. But in some cases, the minimum non-zero level of
->>>>>> power-domain could be just retention and is not sufficient for clock
->>>>>> controller to operate, hence required-opps property is needed to specify
->>>>>> the minimum level required on power-domain for this clock controller.
->>>>>
->>>>> In which cases? If it ends up with the retention vote, it is a bug
->>>>> which must be fixed.
->>>>>
->>>>
->>>> The minimum non-zero level(configured from bootloaders) of MMCX is
->>>> retention on few chipsets but it can vary across the chipsets. Hence to
->>>> be on safer side from our end, it is good to have required-opps in DT to
->>>> specify the minimum level required for this clock controller.
->>>
->>> We are discussing sm8650, not some abstract chipset. Does it list
->>> retention or low_svs as a minimal level for MMCX?
->>>
->>
->> Actually, the minimum level for MMCX is external to the clock
->> controllers.
-> 
-> Yes, it comes from cmd-db
-> 
->>   But the clock controller requires MMCX to be atleast at
->> lowsvs for it to be functional.
-> 
-> Correct
-> 
->> Hence we need to keep required-opps to
->> ensure the same without relying on the actual minimum level for MMCX.
-> 
-> And this is not correct. There is no need for the DT to be redundant.
-> I plan to send patches removing the existing required-opps when they
-> are not required.
->
-I agree this is not required if cmd-db minimum level is already at 
-lowsvs. But since MMCX running at lowsvs is a mandatory requirement for 
-clock controller to operate, I believe it is good to have required-opps 
-to ensure we meet this requirement in all cases, rather than relying on 
-the cmd-db minimum level which we have no control over.
+Kfifo API can also fill in scatter-gather DMA structures, so it easier
+for that use case too. Look at lpuart_dma_tx() for example. Note that
+not all drivers can be converted to that (like atmel_serial), they
+handle DMA specially.
 
-Thanks,
-Jagadeesh
+Note that usb-serial uses kfifo for TX for ages.
+"""
+
+Cc: Al Cooper <alcooperx@gmail.com>
+Cc: Alexander Shiyan <shc_work@mail.ru>
+Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Cc: Alim Akhtar <alim.akhtar@samsung.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Baruch Siach <baruch@tkos.co.il>
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Fabio Estevam <festevam@gmail.com>
+Cc: Hammer Hsieh <hammerh0314@gmail.com>
+Cc: "Christian König" <christian.koenig@amd.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Chunyan Zhang <zhang.lyra@gmail.com>
+Cc: Jerome Brunet <jbrunet@baylibre.com>
+Cc: Jonathan Hunter <jonathanh@nvidia.com>
+Cc: Kevin Hilman <khilman@baylibre.com>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Kumaravel Thiagarajan <kumaravel.thiagarajan@microchip.com>
+Cc: Laxman Dewangan <ldewangan@nvidia.com>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-arm-msm@vger.kernel.org
+Cc: "Maciej W. Rozycki" <macro@orcam.me.uk>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Cc: Matthias Brugger <matthias.bgg@gmail.com>
+Cc: Maxime Coquelin <mcoquelin.stm32@gmail.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Michal Simek <michal.simek@amd.com>
+Cc: "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Nicolas Ferre <nicolas.ferre@microchip.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Orson Zhai <orsonzhai@gmail.com>
+Cc: "Pali Rohár" <pali@kernel.org>
+Cc: Patrice Chotard <patrice.chotard@foss.st.com>
+Cc: Peter Korsgaard <jacmet@sunsite.dk>
+Cc: Richard Genoud <richard.genoud@gmail.com>
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: Sascha Hauer <s.hauer@pengutronix.de>
+Cc: Shawn Guo <shawnguo@kernel.org>
+Cc: Stefani Seibold <stefani@seibold.net>
+Cc: Sumit Semwal <sumit.semwal@linaro.org>
+Cc: Taichi Sugaya <sugaya.taichi@socionext.com>
+Cc: Takao Orito <orito.takao@socionext.com>
+Cc: Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>
+Cc: Thierry Reding <thierry.reding@gmail.com>
+Cc: Timur Tabi <timur@kernel.org>
+Cc: Vineet Gupta <vgupta@kernel.org>
+
+Jiri Slaby (SUSE) (15):
+  kfifo: drop __kfifo_dma_out_finish_r()
+  kfifo: introduce and use kfifo_skip_count()
+  kfifo: add kfifo_out_linear{,_ptr}()
+  kfifo: remove support for physically non-contiguous memory
+  kfifo: rename l to len_to_end in setup_sgl()
+  kfifo: pass offset to setup_sgl_buf() instead of a pointer
+  kfifo: add kfifo_dma_out_prepare_mapped()
+  kfifo: fix typos in kernel-doc
+  tty: 8250_dma: use dmaengine_prep_slave_sg()
+  tty: 8250_omap: use dmaengine_prep_slave_sg()
+  tty: msm_serial: use dmaengine_prep_slave_sg()
+  tty: serial: switch from circ_buf to kfifo
+  tty: atmel_serial: use single DMA mapping for TX
+  tty: atmel_serial: define macro for RX size
+  tty: atmel_serial: use single DMA mapping for RX
+
+ drivers/tty/serial/8250/8250_bcm7271.c  |  14 +--
+ drivers/tty/serial/8250/8250_core.c     |   3 +-
+ drivers/tty/serial/8250/8250_dma.c      |  31 +++--
+ drivers/tty/serial/8250/8250_exar.c     |   5 +-
+ drivers/tty/serial/8250/8250_mtk.c      |   2 +-
+ drivers/tty/serial/8250/8250_omap.c     |  48 +++++---
+ drivers/tty/serial/8250/8250_pci1xxxx.c |  50 ++++----
+ drivers/tty/serial/8250/8250_port.c     |  22 ++--
+ drivers/tty/serial/amba-pl011.c         |  46 +++-----
+ drivers/tty/serial/ar933x_uart.c        |  15 ++-
+ drivers/tty/serial/arc_uart.c           |   8 +-
+ drivers/tty/serial/atmel_serial.c       | 150 +++++++++++-------------
+ drivers/tty/serial/clps711x.c           |  12 +-
+ drivers/tty/serial/cpm_uart.c           |  20 ++--
+ drivers/tty/serial/digicolor-usart.c    |  12 +-
+ drivers/tty/serial/dz.c                 |  13 +-
+ drivers/tty/serial/fsl_linflexuart.c    |  17 +--
+ drivers/tty/serial/fsl_lpuart.c         |  39 +++---
+ drivers/tty/serial/icom.c               |  25 +---
+ drivers/tty/serial/imx.c                |  54 ++++-----
+ drivers/tty/serial/ip22zilog.c          |  26 ++--
+ drivers/tty/serial/jsm/jsm_cls.c        |  29 ++---
+ drivers/tty/serial/jsm/jsm_neo.c        |  38 ++----
+ drivers/tty/serial/max3100.c            |  14 +--
+ drivers/tty/serial/max310x.c            |  35 +++---
+ drivers/tty/serial/men_z135_uart.c      |  26 ++--
+ drivers/tty/serial/meson_uart.c         |  11 +-
+ drivers/tty/serial/milbeaut_usio.c      |  15 +--
+ drivers/tty/serial/msm_serial.c         | 114 +++++++++---------
+ drivers/tty/serial/mvebu-uart.c         |   8 +-
+ drivers/tty/serial/mxs-auart.c          |  23 +---
+ drivers/tty/serial/pch_uart.c           |  21 ++--
+ drivers/tty/serial/pic32_uart.c         |  15 ++-
+ drivers/tty/serial/pmac_zilog.c         |  24 ++--
+ drivers/tty/serial/qcom_geni_serial.c   |  36 +++---
+ drivers/tty/serial/rda-uart.c           |  17 +--
+ drivers/tty/serial/samsung_tty.c        |  54 +++++----
+ drivers/tty/serial/sb1250-duart.c       |  13 +-
+ drivers/tty/serial/sc16is7xx.c          |  40 +++----
+ drivers/tty/serial/sccnxp.c             |  16 ++-
+ drivers/tty/serial/serial-tegra.c       |  43 ++++---
+ drivers/tty/serial/serial_core.c        |  56 ++++-----
+ drivers/tty/serial/serial_port.c        |   2 +-
+ drivers/tty/serial/sh-sci.c             |  51 ++++----
+ drivers/tty/serial/sprd_serial.c        |  20 ++--
+ drivers/tty/serial/st-asc.c             |   4 +-
+ drivers/tty/serial/stm32-usart.c        |  52 ++++----
+ drivers/tty/serial/sunhv.c              |  35 +++---
+ drivers/tty/serial/sunplus-uart.c       |  16 +--
+ drivers/tty/serial/sunsab.c             |  30 ++---
+ drivers/tty/serial/sunsu.c              |  15 +--
+ drivers/tty/serial/sunzilog.c           |  27 ++---
+ drivers/tty/serial/tegra-tcu.c          |  10 +-
+ drivers/tty/serial/timbuart.c           |  17 ++-
+ drivers/tty/serial/uartlite.c           |  13 +-
+ drivers/tty/serial/ucc_uart.c           |  20 ++--
+ drivers/tty/serial/xilinx_uartps.c      |  20 ++--
+ drivers/tty/serial/zs.c                 |  13 +-
+ include/linux/kfifo.h                   | 143 ++++++++++++++++------
+ include/linux/serial_core.h             |  49 +++++---
+ lib/kfifo.c                             | 107 +++++++++--------
+ 61 files changed, 944 insertions(+), 960 deletions(-)
+
+-- 
+2.44.0
 
 
