@@ -1,268 +1,334 @@
-Return-Path: <linux-arm-msm+bounces-16465-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16466-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F129F8994EB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 08:08:42 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C990F899502
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 08:11:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AFF0428551D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 06:08:41 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0C79FB231A6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 06:11:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79AD0225AE;
-	Fri,  5 Apr 2024 06:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CAD2F3A8D0;
+	Fri,  5 Apr 2024 06:08:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gpGfKh6n"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HZI6FW2A"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499271EB2B;
-	Fri,  5 Apr 2024 06:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F00523763;
+	Fri,  5 Apr 2024 06:08:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712297319; cv=none; b=PeSTkjlIbXAb9P3gup/1+F9WfW+n5FsTtKhjOo3IAYc9RAiRlgK/N9gG+OxXBzRgOtrfOADp7cHN6BJ+fPAeIJ2ZxjMVy4EB95upu9brdn0Y1Y59rk8DaJRGFsloaUGvjMPaSfC5lnSZsAecZYGzNNWO97+njFu0UOE5GIy2ANI=
+	t=1712297339; cv=none; b=Xk3T+7llwgUH/l4vVxpLUlflUmEf29C2X9Iq6259XoyF3MpyxLOR1FXJhwkFkzIeY91RofJcPBUjYMEl3H6flmF9twmL0YZVX0rvUee7O6q/qfSAOxoiWW+QjrJYxR+yVkVx8jjGjUJ3yTqvUqxTSHWNrsBPgPp2OH61RpriutE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712297319; c=relaxed/simple;
-	bh=3a2D8FLQ+zRKWr+dT+h2iE0Z2sanm7uNODeFnm2l0+Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=BZqJI5J8BfqGhXCWnjpQbma41TgAAp+qYteLANOYl3MPvvqVp5R2wo0G8IaRK86Wph9ucVJSlMVp6t2BJ7uzwiqZENiCNvS8wkYyLzLkD0tia+i5zbtJNwcizpcny9tm1DTCk/SBgbzNKv/bIYAlg0e0a2gurBqRPOLIFSIC/3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gpGfKh6n; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AEF8C433F1;
-	Fri,  5 Apr 2024 06:08:27 +0000 (UTC)
+	s=arc-20240116; t=1712297339; c=relaxed/simple;
+	bh=QLNqWoy3pX+584nLy4eOQPQmLYN+Qw4MFScVuiXPd70=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ZXDVSeL+I5BVH8RFVzJT+Mc9m5nty59ryiOawfdRVfe3DmKj3F/F9co2Its74SDpn6BpgTmrPdNVkLpnI/bWUIRJ/26HlYrgDjCLxu06wdQYlwXuAf21EU8+pu6/MG52dG6BLMLjf5q7KUrX0zJLncfJrIf+r/km9NytbWLv7Ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HZI6FW2A; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 907E5C43399;
+	Fri,  5 Apr 2024 06:08:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712297319;
-	bh=3a2D8FLQ+zRKWr+dT+h2iE0Z2sanm7uNODeFnm2l0+Y=;
-	h=From:To:Cc:Subject:Date:From;
-	b=gpGfKh6nDc7tcL07n3W/XO8V28YegkSc6XbhqFudjoYAoEcSCW65UXjShFQohkTxJ
-	 NkiOqw/nDvbB/7Wp8V++4rR754zLEnQCcGMJRDCQZkS6sXlochANSJ2qkSpvu3MJ8f
-	 y4pEho6HNQUYBnegAqqNlAWtWmwqqthP7t4QvOrj9dvOwHufEauqpiADXvX44F5c0y
-	 ++d/E1f7AGfsF1/fvL7o4l72BK0/4NRsWrn9Ypb09dKMMkBEfhBmAElQHZArl2523F
-	 A9gXXuQqCULLb5f/umebextqlEBfVsOgazcNMvjXfsBfITmLHpDWCKZMxCYz9u2VDC
-	 py2I1SMgou3Pw==
+	s=k20201202; t=1712297339;
+	bh=QLNqWoy3pX+584nLy4eOQPQmLYN+Qw4MFScVuiXPd70=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=HZI6FW2AfLLcFlOMlNHDdWQcIhyLEUZZOcAvKkKkBmcwuF+XWbmkyUCWl/CHimPy8
+	 tAtqYvUHIZweOvONS3FoxTj6ImecOtomkZA9SrQLmCKHCEUcSEAVoTfmj2pG7wagJj
+	 XGVegQwi8Xf+GHWLL6/Vk1LsInHNzA54GzCzHXdxQzQwV2qvr2x3UELb1o7ncS+lE3
+	 9DJNkYW6xsR+srRN5D5KpA4CxOlNhF+zYRuGCSP6q8GLT3FiS3PPwpF0aIT7lMZhxE
+	 DH0cLaSy3ZXnNlrbEN4ho1hYG3Al8dxYnLseGRdXY01f44w/+lLHlLVrENanFFgRLl
+	 6gItD13JGIdnw==
 From: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
 To: gregkh@linuxfoundation.org
 Cc: linux-serial@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	Al Cooper <alcooperx@gmail.com>,
-	Alexander Shiyan <shc_work@mail.ru>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Baruch Siach <baruch@tkos.co.il>,
 	Bjorn Andersson <andersson@kernel.org>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	"David S. Miller" <davem@davemloft.net>,
-	Fabio Estevam <festevam@gmail.com>,
-	Hammer Hsieh <hammerh0314@gmail.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Kevin Hilman <khilman@baylibre.com>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Kumaravel Thiagarajan <kumaravel.thiagarajan@microchip.com>,
-	Laxman Dewangan <ldewangan@nvidia.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Michal Simek <michal.simek@amd.com>,
-	"Naveen N. Rao" <naveen.n.rao@linux.ibm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Orson Zhai <orsonzhai@gmail.com>,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Peter Korsgaard <jacmet@sunsite.dk>,
-	Richard Genoud <richard.genoud@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Stefani Seibold <stefani@seibold.net>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	Taichi Sugaya <sugaya.taichi@socionext.com>,
-	Takao Orito <orito.takao@socionext.com>,
-	Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Timur Tabi <timur@kernel.org>,
-	Vineet Gupta <vgupta@kernel.org>
-Subject: [PATCH 00/15] tty: serial: switch from circ_buf to kfifo
-Date: Fri,  5 Apr 2024 08:08:11 +0200
-Message-ID: <20240405060826.2521-1-jirislaby@kernel.org>
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH 11/15] tty: msm_serial: use dmaengine_prep_slave_sg()
+Date: Fri,  5 Apr 2024 08:08:22 +0200
+Message-ID: <20240405060826.2521-12-jirislaby@kernel.org>
 X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240405060826.2521-1-jirislaby@kernel.org>
+References: <20240405060826.2521-1-jirislaby@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This series switches tty serial layer to use kfifo instead of circ_buf.
+This is a preparatory for the serial-to-kfifo switch. kfifo understands
+only scatter-gatter approach, so switch to that.
 
-The reasoning can be found in the switching patch in this series:
-"""
-Switch from struct circ_buf to proper kfifo. kfifo provides much better
-API, esp. when wrap-around of the buffer needs to be taken into account.
-Look at pl011_dma_tx_refill() or cpm_uart_tx_pump() changes for example.
+No functional change intended, it's just dmaengine_prep_slave_single()
+inline expanded.
 
-Kfifo API can also fill in scatter-gather DMA structures, so it easier
-for that use case too. Look at lpuart_dma_tx() for example. Note that
-not all drivers can be converted to that (like atmel_serial), they
-handle DMA specially.
+And in this case, switch from dma_map_single() to dma_map_sg() too. This
+needs struct msm_dma changes. I split the rx and tx parts into an union.
+TX is now struct scatterlist, RX remains the old good phys-virt-count
+triple.
 
-Note that usb-serial uses kfifo for TX for ages.
-"""
-
-Cc: Al Cooper <alcooperx@gmail.com>
-Cc: Alexander Shiyan <shc_work@mail.ru>
-Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>
-Cc: Alim Akhtar <alim.akhtar@samsung.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>
-Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Baruch Siach <baruch@tkos.co.il>
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Claudiu Beznea <claudiu.beznea@tuxon.dev>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Fabio Estevam <festevam@gmail.com>
-Cc: Hammer Hsieh <hammerh0314@gmail.com>
-Cc: "Christian König" <christian.koenig@amd.com>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Chunyan Zhang <zhang.lyra@gmail.com>
-Cc: Jerome Brunet <jbrunet@baylibre.com>
-Cc: Jonathan Hunter <jonathanh@nvidia.com>
-Cc: Kevin Hilman <khilman@baylibre.com>
 Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Kumaravel Thiagarajan <kumaravel.thiagarajan@microchip.com>
-Cc: Laxman Dewangan <ldewangan@nvidia.com>
-Cc: linux-arm-kernel@lists.infradead.org
 Cc: linux-arm-msm@vger.kernel.org
-Cc: "Maciej W. Rozycki" <macro@orcam.me.uk>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Cc: Matthias Brugger <matthias.bgg@gmail.com>
-Cc: Maxime Coquelin <mcoquelin.stm32@gmail.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Michal Simek <michal.simek@amd.com>
-Cc: "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Nicolas Ferre <nicolas.ferre@microchip.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Orson Zhai <orsonzhai@gmail.com>
-Cc: "Pali Rohár" <pali@kernel.org>
-Cc: Patrice Chotard <patrice.chotard@foss.st.com>
-Cc: Peter Korsgaard <jacmet@sunsite.dk>
-Cc: Richard Genoud <richard.genoud@gmail.com>
-Cc: Russell King <linux@armlinux.org.uk>
-Cc: Sascha Hauer <s.hauer@pengutronix.de>
-Cc: Shawn Guo <shawnguo@kernel.org>
-Cc: Stefani Seibold <stefani@seibold.net>
-Cc: Sumit Semwal <sumit.semwal@linaro.org>
-Cc: Taichi Sugaya <sugaya.taichi@socionext.com>
-Cc: Takao Orito <orito.takao@socionext.com>
-Cc: Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>
-Cc: Thierry Reding <thierry.reding@gmail.com>
-Cc: Timur Tabi <timur@kernel.org>
-Cc: Vineet Gupta <vgupta@kernel.org>
+---
+ drivers/tty/serial/msm_serial.c | 86 +++++++++++++++++++--------------
+ 1 file changed, 49 insertions(+), 37 deletions(-)
 
-Jiri Slaby (SUSE) (15):
-  kfifo: drop __kfifo_dma_out_finish_r()
-  kfifo: introduce and use kfifo_skip_count()
-  kfifo: add kfifo_out_linear{,_ptr}()
-  kfifo: remove support for physically non-contiguous memory
-  kfifo: rename l to len_to_end in setup_sgl()
-  kfifo: pass offset to setup_sgl_buf() instead of a pointer
-  kfifo: add kfifo_dma_out_prepare_mapped()
-  kfifo: fix typos in kernel-doc
-  tty: 8250_dma: use dmaengine_prep_slave_sg()
-  tty: 8250_omap: use dmaengine_prep_slave_sg()
-  tty: msm_serial: use dmaengine_prep_slave_sg()
-  tty: serial: switch from circ_buf to kfifo
-  tty: atmel_serial: use single DMA mapping for TX
-  tty: atmel_serial: define macro for RX size
-  tty: atmel_serial: use single DMA mapping for RX
-
- drivers/tty/serial/8250/8250_bcm7271.c  |  14 +--
- drivers/tty/serial/8250/8250_core.c     |   3 +-
- drivers/tty/serial/8250/8250_dma.c      |  31 +++--
- drivers/tty/serial/8250/8250_exar.c     |   5 +-
- drivers/tty/serial/8250/8250_mtk.c      |   2 +-
- drivers/tty/serial/8250/8250_omap.c     |  48 +++++---
- drivers/tty/serial/8250/8250_pci1xxxx.c |  50 ++++----
- drivers/tty/serial/8250/8250_port.c     |  22 ++--
- drivers/tty/serial/amba-pl011.c         |  46 +++-----
- drivers/tty/serial/ar933x_uart.c        |  15 ++-
- drivers/tty/serial/arc_uart.c           |   8 +-
- drivers/tty/serial/atmel_serial.c       | 150 +++++++++++-------------
- drivers/tty/serial/clps711x.c           |  12 +-
- drivers/tty/serial/cpm_uart.c           |  20 ++--
- drivers/tty/serial/digicolor-usart.c    |  12 +-
- drivers/tty/serial/dz.c                 |  13 +-
- drivers/tty/serial/fsl_linflexuart.c    |  17 +--
- drivers/tty/serial/fsl_lpuart.c         |  39 +++---
- drivers/tty/serial/icom.c               |  25 +---
- drivers/tty/serial/imx.c                |  54 ++++-----
- drivers/tty/serial/ip22zilog.c          |  26 ++--
- drivers/tty/serial/jsm/jsm_cls.c        |  29 ++---
- drivers/tty/serial/jsm/jsm_neo.c        |  38 ++----
- drivers/tty/serial/max3100.c            |  14 +--
- drivers/tty/serial/max310x.c            |  35 +++---
- drivers/tty/serial/men_z135_uart.c      |  26 ++--
- drivers/tty/serial/meson_uart.c         |  11 +-
- drivers/tty/serial/milbeaut_usio.c      |  15 +--
- drivers/tty/serial/msm_serial.c         | 114 +++++++++---------
- drivers/tty/serial/mvebu-uart.c         |   8 +-
- drivers/tty/serial/mxs-auart.c          |  23 +---
- drivers/tty/serial/pch_uart.c           |  21 ++--
- drivers/tty/serial/pic32_uart.c         |  15 ++-
- drivers/tty/serial/pmac_zilog.c         |  24 ++--
- drivers/tty/serial/qcom_geni_serial.c   |  36 +++---
- drivers/tty/serial/rda-uart.c           |  17 +--
- drivers/tty/serial/samsung_tty.c        |  54 +++++----
- drivers/tty/serial/sb1250-duart.c       |  13 +-
- drivers/tty/serial/sc16is7xx.c          |  40 +++----
- drivers/tty/serial/sccnxp.c             |  16 ++-
- drivers/tty/serial/serial-tegra.c       |  43 ++++---
- drivers/tty/serial/serial_core.c        |  56 ++++-----
- drivers/tty/serial/serial_port.c        |   2 +-
- drivers/tty/serial/sh-sci.c             |  51 ++++----
- drivers/tty/serial/sprd_serial.c        |  20 ++--
- drivers/tty/serial/st-asc.c             |   4 +-
- drivers/tty/serial/stm32-usart.c        |  52 ++++----
- drivers/tty/serial/sunhv.c              |  35 +++---
- drivers/tty/serial/sunplus-uart.c       |  16 +--
- drivers/tty/serial/sunsab.c             |  30 ++---
- drivers/tty/serial/sunsu.c              |  15 +--
- drivers/tty/serial/sunzilog.c           |  27 ++---
- drivers/tty/serial/tegra-tcu.c          |  10 +-
- drivers/tty/serial/timbuart.c           |  17 ++-
- drivers/tty/serial/uartlite.c           |  13 +-
- drivers/tty/serial/ucc_uart.c           |  20 ++--
- drivers/tty/serial/xilinx_uartps.c      |  20 ++--
- drivers/tty/serial/zs.c                 |  13 +-
- include/linux/kfifo.h                   | 143 ++++++++++++++++------
- include/linux/serial_core.h             |  49 +++++---
- lib/kfifo.c                             | 107 +++++++++--------
- 61 files changed, 944 insertions(+), 960 deletions(-)
-
+diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
+index d27c4c8c84e1..7bf30e632313 100644
+--- a/drivers/tty/serial/msm_serial.c
++++ b/drivers/tty/serial/msm_serial.c
+@@ -161,11 +161,16 @@ enum {
+ struct msm_dma {
+ 	struct dma_chan		*chan;
+ 	enum dma_data_direction dir;
+-	dma_addr_t		phys;
+-	unsigned char		*virt;
++	union {
++		struct {
++			dma_addr_t		phys;
++			unsigned char		*virt;
++			unsigned int		count;
++		} rx;
++		struct scatterlist tx_sg;
++	};
+ 	dma_cookie_t		cookie;
+ 	u32			enable_bit;
+-	unsigned int		count;
+ 	struct dma_async_tx_descriptor	*desc;
+ };
+ 
+@@ -249,8 +254,12 @@ static void msm_stop_dma(struct uart_port *port, struct msm_dma *dma)
+ 	unsigned int mapped;
+ 	u32 val;
+ 
+-	mapped = dma->count;
+-	dma->count = 0;
++	if (dma->dir == DMA_TO_DEVICE) {
++		mapped = sg_dma_len(&dma->tx_sg);
++	} else {
++		mapped = dma->rx.count;
++		dma->rx.count = 0;
++	}
+ 
+ 	dmaengine_terminate_all(dma->chan);
+ 
+@@ -265,8 +274,13 @@ static void msm_stop_dma(struct uart_port *port, struct msm_dma *dma)
+ 	val &= ~dma->enable_bit;
+ 	msm_write(port, val, UARTDM_DMEN);
+ 
+-	if (mapped)
+-		dma_unmap_single(dev, dma->phys, mapped, dma->dir);
++	if (mapped) {
++		if (dma->dir == DMA_TO_DEVICE) {
++			dma_unmap_sg(dev, &dma->tx_sg, 1, dma->dir);
++			sg_init_table(&dma->tx_sg, 1);
++		} else
++			dma_unmap_single(dev, dma->rx.phys, mapped, dma->dir);
++	}
+ }
+ 
+ static void msm_release_dma(struct msm_port *msm_port)
+@@ -285,7 +299,7 @@ static void msm_release_dma(struct msm_port *msm_port)
+ 	if (dma->chan) {
+ 		msm_stop_dma(&msm_port->uart, dma);
+ 		dma_release_channel(dma->chan);
+-		kfree(dma->virt);
++		kfree(dma->rx.virt);
+ 	}
+ 
+ 	memset(dma, 0, sizeof(*dma));
+@@ -357,8 +371,8 @@ static void msm_request_rx_dma(struct msm_port *msm_port, resource_size_t base)
+ 
+ 	of_property_read_u32(dev->of_node, "qcom,rx-crci", &crci);
+ 
+-	dma->virt = kzalloc(UARTDM_RX_SIZE, GFP_KERNEL);
+-	if (!dma->virt)
++	dma->rx.virt = kzalloc(UARTDM_RX_SIZE, GFP_KERNEL);
++	if (!dma->rx.virt)
+ 		goto rel_rx;
+ 
+ 	memset(&conf, 0, sizeof(conf));
+@@ -385,7 +399,7 @@ static void msm_request_rx_dma(struct msm_port *msm_port, resource_size_t base)
+ 
+ 	return;
+ err:
+-	kfree(dma->virt);
++	kfree(dma->rx.virt);
+ rel_rx:
+ 	dma_release_channel(dma->chan);
+ no_rx:
+@@ -420,7 +434,7 @@ static void msm_start_tx(struct uart_port *port)
+ 	struct msm_dma *dma = &msm_port->tx_dma;
+ 
+ 	/* Already started in DMA mode */
+-	if (dma->count)
++	if (sg_dma_len(&dma->tx_sg))
+ 		return;
+ 
+ 	msm_port->imr |= MSM_UART_IMR_TXLEV;
+@@ -448,12 +462,12 @@ static void msm_complete_tx_dma(void *args)
+ 	uart_port_lock_irqsave(port, &flags);
+ 
+ 	/* Already stopped */
+-	if (!dma->count)
++	if (!sg_dma_len(&dma->tx_sg))
+ 		goto done;
+ 
+ 	dmaengine_tx_status(dma->chan, dma->cookie, &state);
+ 
+-	dma_unmap_single(port->dev, dma->phys, dma->count, dma->dir);
++	dma_unmap_sg(port->dev, &dma->tx_sg, 1, dma->dir);
+ 
+ 	val = msm_read(port, UARTDM_DMEN);
+ 	val &= ~dma->enable_bit;
+@@ -464,9 +478,9 @@ static void msm_complete_tx_dma(void *args)
+ 		msm_write(port, MSM_UART_CR_TX_ENABLE, MSM_UART_CR);
+ 	}
+ 
+-	count = dma->count - state.residue;
++	count = sg_dma_len(&dma->tx_sg) - state.residue;
+ 	uart_xmit_advance(port, count);
+-	dma->count = 0;
++	sg_init_table(&dma->tx_sg, 1);
+ 
+ 	/* Restore "Tx FIFO below watermark" interrupt */
+ 	msm_port->imr |= MSM_UART_IMR_TXLEV;
+@@ -485,19 +499,18 @@ static int msm_handle_tx_dma(struct msm_port *msm_port, unsigned int count)
+ 	struct circ_buf *xmit = &msm_port->uart.state->xmit;
+ 	struct uart_port *port = &msm_port->uart;
+ 	struct msm_dma *dma = &msm_port->tx_dma;
+-	void *cpu_addr;
+ 	int ret;
+ 	u32 val;
+ 
+-	cpu_addr = &xmit->buf[xmit->tail];
++	sg_init_table(&dma->tx_sg, 1);
++	sg_set_buf(&dma->tx_sg, &xmit->buf[xmit->tail], count);
+ 
+-	dma->phys = dma_map_single(port->dev, cpu_addr, count, dma->dir);
+-	ret = dma_mapping_error(port->dev, dma->phys);
++	ret = dma_map_sg(port->dev, &dma->tx_sg, 1, dma->dir);
+ 	if (ret)
+ 		return ret;
+ 
+-	dma->desc = dmaengine_prep_slave_single(dma->chan, dma->phys,
+-						count, DMA_MEM_TO_DEV,
++	dma->desc = dmaengine_prep_slave_sg(dma->chan, &dma->tx_sg, 1,
++						DMA_MEM_TO_DEV,
+ 						DMA_PREP_INTERRUPT |
+ 						DMA_PREP_FENCE);
+ 	if (!dma->desc) {
+@@ -520,8 +533,6 @@ static int msm_handle_tx_dma(struct msm_port *msm_port, unsigned int count)
+ 	msm_port->imr &= ~MSM_UART_IMR_TXLEV;
+ 	msm_write(port, msm_port->imr, MSM_UART_IMR);
+ 
+-	dma->count = count;
+-
+ 	val = msm_read(port, UARTDM_DMEN);
+ 	val |= dma->enable_bit;
+ 
+@@ -536,7 +547,8 @@ static int msm_handle_tx_dma(struct msm_port *msm_port, unsigned int count)
+ 	dma_async_issue_pending(dma->chan);
+ 	return 0;
+ unmap:
+-	dma_unmap_single(port->dev, dma->phys, count, dma->dir);
++	dma_unmap_sg(port->dev, &dma->tx_sg, 1, dma->dir);
++	sg_init_table(&dma->tx_sg, 1);
+ 	return ret;
+ }
+ 
+@@ -553,7 +565,7 @@ static void msm_complete_rx_dma(void *args)
+ 	uart_port_lock_irqsave(port, &flags);
+ 
+ 	/* Already stopped */
+-	if (!dma->count)
++	if (!dma->rx.count)
+ 		goto done;
+ 
+ 	val = msm_read(port, UARTDM_DMEN);
+@@ -570,14 +582,14 @@ static void msm_complete_rx_dma(void *args)
+ 
+ 	port->icount.rx += count;
+ 
+-	dma->count = 0;
++	dma->rx.count = 0;
+ 
+-	dma_unmap_single(port->dev, dma->phys, UARTDM_RX_SIZE, dma->dir);
++	dma_unmap_single(port->dev, dma->rx.phys, UARTDM_RX_SIZE, dma->dir);
+ 
+ 	for (i = 0; i < count; i++) {
+ 		char flag = TTY_NORMAL;
+ 
+-		if (msm_port->break_detected && dma->virt[i] == 0) {
++		if (msm_port->break_detected && dma->rx.virt[i] == 0) {
+ 			port->icount.brk++;
+ 			flag = TTY_BREAK;
+ 			msm_port->break_detected = false;
+@@ -588,9 +600,9 @@ static void msm_complete_rx_dma(void *args)
+ 		if (!(port->read_status_mask & MSM_UART_SR_RX_BREAK))
+ 			flag = TTY_NORMAL;
+ 
+-		sysrq = uart_prepare_sysrq_char(port, dma->virt[i]);
++		sysrq = uart_prepare_sysrq_char(port, dma->rx.virt[i]);
+ 		if (!sysrq)
+-			tty_insert_flip_char(tport, dma->virt[i], flag);
++			tty_insert_flip_char(tport, dma->rx.virt[i], flag);
+ 	}
+ 
+ 	msm_start_rx_dma(msm_port);
+@@ -614,13 +626,13 @@ static void msm_start_rx_dma(struct msm_port *msm_port)
+ 	if (!dma->chan)
+ 		return;
+ 
+-	dma->phys = dma_map_single(uart->dev, dma->virt,
++	dma->rx.phys = dma_map_single(uart->dev, dma->rx.virt,
+ 				   UARTDM_RX_SIZE, dma->dir);
+-	ret = dma_mapping_error(uart->dev, dma->phys);
++	ret = dma_mapping_error(uart->dev, dma->rx.phys);
+ 	if (ret)
+ 		goto sw_mode;
+ 
+-	dma->desc = dmaengine_prep_slave_single(dma->chan, dma->phys,
++	dma->desc = dmaengine_prep_slave_single(dma->chan, dma->rx.phys,
+ 						UARTDM_RX_SIZE, DMA_DEV_TO_MEM,
+ 						DMA_PREP_INTERRUPT);
+ 	if (!dma->desc)
+@@ -648,7 +660,7 @@ static void msm_start_rx_dma(struct msm_port *msm_port)
+ 
+ 	msm_write(uart, msm_port->imr, MSM_UART_IMR);
+ 
+-	dma->count = UARTDM_RX_SIZE;
++	dma->rx.count = UARTDM_RX_SIZE;
+ 
+ 	dma_async_issue_pending(dma->chan);
+ 
+@@ -668,7 +680,7 @@ static void msm_start_rx_dma(struct msm_port *msm_port)
+ 
+ 	return;
+ unmap:
+-	dma_unmap_single(uart->dev, dma->phys, UARTDM_RX_SIZE, dma->dir);
++	dma_unmap_single(uart->dev, dma->rx.phys, UARTDM_RX_SIZE, dma->dir);
+ 
+ sw_mode:
+ 	/*
+@@ -955,7 +967,7 @@ static irqreturn_t msm_uart_irq(int irq, void *dev_id)
+ 	}
+ 
+ 	if (misr & (MSM_UART_IMR_RXLEV | MSM_UART_IMR_RXSTALE)) {
+-		if (dma->count) {
++		if (dma->rx.count) {
+ 			val = MSM_UART_CR_CMD_STALE_EVENT_DISABLE;
+ 			msm_write(port, val, MSM_UART_CR);
+ 			val = MSM_UART_CR_CMD_RESET_STALE_INT;
 -- 
 2.44.0
 
