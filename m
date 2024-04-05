@@ -1,89 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-16451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16452-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80AA08992CB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 03:26:05 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DFDC899353
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 04:46:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1D7871F27220
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 01:26:05 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7D455B222B7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 02:46:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0658279E3;
-	Fri,  5 Apr 2024 01:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C73EB17565;
+	Fri,  5 Apr 2024 02:45:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aCIGYXMU"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NyNLyw/v"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C23D7484;
-	Fri,  5 Apr 2024 01:25:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBFF9200C7;
+	Fri,  5 Apr 2024 02:45:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712280359; cv=none; b=DcVF3FEqRhWcMfG4XtadDYIfUn0LHiV5DyTdKnJqQGgXSRV/RkFh2lGwxZKnw+C3vVfCHJCZjYrb6zP/MXDbzFwCeXv2MAfOJI19pE9zNDrhDtnlMy6Q0op7LVQidHteBOYlWWHImataZZSnZD8MZ5CHQTWJ3Ppr25suf3fngJ0=
+	t=1712285147; cv=none; b=B0NhvgbJI/RF4Y0zrHwGa+/zcqXcqfLFBJUv+KmMdJAoecOeZ5aOLXeKREzfElngzOPgkGUgxPfdyGJE3BbhNOLR5wazPG7bf5DowH9Tkmw+yUNaM4/3kfnGkjy1A+xcGoy5vcvxx8FXLqEX0ZJOiwIqi15MjRoRjF704TDoRlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712280359; c=relaxed/simple;
-	bh=VxNzn9NzUzbYGOkFQsAjckg4Rrz38PKu14VlBGuKaPw=;
+	s=arc-20240116; t=1712285147; c=relaxed/simple;
+	bh=qqV0FguGCTgmP3Zlqv/SIQDUZMAcngfLSumSuiNyRAw=;
 	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Mp9nXFExocriKMULA37FGeVOkd/8wo+DZQ7CimgtLZZdiZJVEz6ErG7qTuNHq8pGjfHSPzBReaRpVxn9K/NnAVjtPzkVAe8iDBy04nugbLyAw6JwG+To1YpqRHIUfCg26wFK+/wcCcymAkmze28on8ArakqRM5L33KRdTKrXQTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aCIGYXMU; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=oLYW60sQrNpk0fnWYmrZ7RwtzH/m9kvshCjKFMK4pqEjwVlMsNu63PHIGBWNyjXDjy1ZvA4TRqrQWmdxbUc83Pj1q6A9kiJWvCux1CKZiI9oUO+tRU8+c1Wf38eQTj8D5kcGCDlLClVKkY/OSu9+kpDqxSi851rgZu1FcvHaRZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NyNLyw/v; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4350oPk3007803;
-	Fri, 5 Apr 2024 01:25:51 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4352f5Qh019527;
+	Fri, 5 Apr 2024 02:45:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=O5dtNG1z2cvTQQaBaWNF2
-	qI0ydnL32rMZCbAqJKz7O4=; b=aCIGYXMUtcLAYxyc7NGn1fX/Vnf5LDCK3yKMM
-	Qzc31yat8acZy0xBrqkSEQXfLuBiBaIAa34CCGlUQ/7mRxkDNCkHuATFrgAwArk8
-	2rkO7WWtvGfeRJ6wpHWjGrltmbCVPi8LZ/5V7qQx+cutnqkdmE9ZmFlzOISg0Vwh
-	0jTr7IGeCl5uh1Syjx6ZG/R9JylJU1ffuj+ChXg9KDjWRbrCgkCcEUce0+L+GDYr
-	HrTSYaBOk0FyRIavIOtpZr88MLV/UeVXyfpiPLkvzVkFCQZI+5276j5aWQeEUwfb
-	iFfeyjP9+mg7jENdaiuR+8BEQB9ie4oLkWuNXpT7kBm1kn4uw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3x9en0jwdt-1
+	:content-type:in-reply-to; s=qcppdkim1; bh=bKdudp4O3Z4sw6Qonpwqy
+	Pii2xiamxAolShtYA4Nnmo=; b=NyNLyw/v2Wg8hb/VrTOgpBobmInm/dJyptHzX
+	c1jYEEbMl1V2pDBClQZic+ZyhqX8Ylwh7QR6CqycSAN1Dz00Jti/bxOehwXg4d7j
+	ka7pSSxpkc4LbvNwBDJfjzPnzb1MdsGG17sXaUVjnz8cKHBpNh5zYa6uPvIgIqsV
+	Jl9C5w8DfSq9L9WQC6ad492s0V8f/ZUU/izx6BaZzv0hg5hpSnZ6Prfw6GV0u2fm
+	/J79gI3sAdGaGzRrzJba8kjRP4ZndyGuikRLoHBnP1XJECOfnh7GZSu4DUvGsu6O
+	rJw6zvxpxFbpuxFVStNoOBE1NPA0h14UeAGBovo1IFFJcZblA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xa8fc00vt-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 05 Apr 2024 01:25:50 +0000 (GMT)
+	Fri, 05 Apr 2024 02:45:39 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4351PnDl026050
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4352jcJG025484
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 5 Apr 2024 01:25:49 GMT
+	Fri, 5 Apr 2024 02:45:38 GMT
 Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
  nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Thu, 4 Apr 2024 18:25:49 -0700
-Date: Thu, 4 Apr 2024 18:25:48 -0700
+ 15.2.1544.4; Thu, 4 Apr 2024 19:45:38 -0700
+Date: Thu, 4 Apr 2024 19:45:37 -0700
 From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Johan Hovold
-	<johan@kernel.org>,
-        Krishna Kurapati <quic_kriskura@quicinc.com>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring
-	<robh@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        Wesley Cheng
-	<quic_wcheng@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Felipe Balbi <balbi@kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>, Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH v19 2/9] usb: dwc3: core: Access XHCI address space
- temporarily to read port info
-Message-ID: <Zg9THGBRuppfw4y+@hu-bjorande-lv.qualcomm.com>
-References: <20240404051229.3082902-1-quic_kriskura@quicinc.com>
- <20240404051229.3082902-3-quic_kriskura@quicinc.com>
- <Zg5VDnbaaBXJyRjV@hovoldconsulting.com>
- <f16e1280-8f7e-40a7-ab45-9acaeb3e90cb@linaro.org>
- <2024040455-sitting-dictator-170c@gregkh>
+To: jianbin zhang <quic_jianbinz@quicinc.com>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Alexandre Belloni
+	<alexandre.belloni@bootlin.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-rtc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH V4 1/2] rtc-pm8xxx: clear the triggered alarm interrupt
+ during driver probe
+Message-ID: <Zg9l0cTBgoibIaDQ@hu-bjorande-lv.qualcomm.com>
+References: <20240401-fix-rtc-alarm-which-fired-before-driver-probe-not-be-cleard-v1-0-aab2cd6ddab8@quicinc.com>
+ <20240401-fix-rtc-alarm-which-fired-before-driver-probe-not-be-cleard-v1-1-aab2cd6ddab8@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,75 +78,92 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <2024040455-sitting-dictator-170c@gregkh>
+In-Reply-To: <20240401-fix-rtc-alarm-which-fired-before-driver-probe-not-be-cleard-v1-1-aab2cd6ddab8@quicinc.com>
 X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: vG80GPtb9uPykzBRJzi3geUKM6jy9qO7
-X-Proofpoint-GUID: vG80GPtb9uPykzBRJzi3geUKM6jy9qO7
+X-Proofpoint-GUID: Zr8u3Q0b5AUQp6yt-TjDjfG8Py73mOpe
+X-Proofpoint-ORIG-GUID: Zr8u3Q0b5AUQp6yt-TjDjfG8Py73mOpe
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-04_22,2024-04-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- clxscore=1011 impostorscore=0 adultscore=0 priorityscore=1501 phishscore=0
- mlxscore=0 bulkscore=0 mlxlogscore=999 spamscore=0 malwarescore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404050009
+ definitions=2024-04-05_01,2024-04-04_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
+ malwarescore=0 mlxlogscore=999 bulkscore=0 suspectscore=0 clxscore=1015
+ priorityscore=1501 adultscore=0 phishscore=0 impostorscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
+ definitions=main-2404050019
 
-On Thu, Apr 04, 2024 at 02:58:29PM +0200, Greg Kroah-Hartman wrote:
-> On Thu, Apr 04, 2024 at 10:07:27AM +0200, Krzysztof Kozlowski wrote:
-> > On 04/04/2024 09:21, Johan Hovold wrote:
-> > > On Thu, Apr 04, 2024 at 10:42:22AM +0530, Krishna Kurapati wrote:
-> > >  
-> > >> +static int dwc3_get_num_ports(struct dwc3 *dwc)
-> > >> +{
-> > >> +	void __iomem *base;
-> > >> +	u8 major_revision;
-> > >> +	u32 offset;
-> > >> +	u32 val;
-> > >> +
-> > >> +	/*
-> > >> +	 * Remap xHCI address space to access XHCI ext cap regs since it is
-> > >> +	 * needed to get information on number of ports present.
-> > >> +	 */
-> > >> +	base = ioremap(dwc->xhci_resources[0].start,
-> > >> +		       resource_size(&dwc->xhci_resources[0]));
-> > >> +	if (!base)
-> > >> +		return PTR_ERR(base);
-> > > 
-> > > This is obviously still broken. You need to update the return value as
-> > > well.
-> > > 
-> > > Fix in v20.
-> > 
-> > If one patchset reaches 20 versions, I think it is time to stop and
-> > really think from the beginning, why issues keep appearing and reviewers
-> > are still not happy.
-> > 
-> > Maybe you did not perform extensive internal review, which you are
-> > encouraged to by your own internal policies, AFAIR. Before posting next
-> > version, please really get some internal review first.
+On Mon, Apr 01, 2024 at 09:56:29AM +0800, jianbin zhang wrote:
+
+Sorry, I think the patch looks good now, but the subject prefix
+(rtc-pm8xxx) does not match other changes to this file.
+
+> If the alarm is triggered before the driver gets probed, the alarm interrupt
+> will be missed and it won't be detected, and the stale alarm settings will
+> be still retained because of not being cleared.
 > 
-> Also get those internal reviewers to sign-off on the commits and have
-> that show up when you post them next.  That way they are also
-> responsible for this patchset, it's not fair that they are making you do
-> all the work here :)
+> Issue reproduce step:
+> (1) set the alarm and poweroff the device
+> (2) alarm happens and the device boots
+> (3) poweroff the device again
+> (4) alarm irq not be cleard, device boots again
 > 
+> the fixing here is clear the interrupt during the step(3) unconditionally.
+> 
+> Signed-off-by: jianbin zhang <quic_jianbinz@quicinc.com>
+> ---
+> Changes in v4:
+> - add the cover letter
+> - modify the patch to conform to the specification
+> 
+> Changes in v3:
+> - clear the interrupt in driver probe unconditionally
+> - link: https://lore.kernel.org/linux-rtc/20240319191037.GA3796206@hu-bjorande-lv.qualcomm.com/T/#t
 
-I like this idea and I'm open to us changing our way of handling this.
+These are expected to be links to the previous revisions of your patch,
+not people's answers.
 
-But unless such internal review brings significant input to the
-development I'd say a s-o-b would take the credit from the actual
-author.
-
-We've discussed a few times about carrying Reviewed-by et al from the
-internal reviews, but as maintainer I dislike this because I'd have no
-way to know if a r-b on vN means the patch was reviewed, or if it was
-just "accidentally" carried from v(N-1).
-But it might be worth this risk, is this something you think would be
-appropriate?
+Please consult go/upstream and switch to b4 for the future, which does
+this automatically for you. Please also use the internal review list!
 
 Regards,
 Bjorn
+
+> 
+> Changes in v2:
+> - Adapt the V1 patch according to the newest rtc-pm8xxx
+> - link: https://lore.kernel.org/linux-rtc/20240124024023df15ef6e@mail.local/
+> 
+> Changes in v1:
+> - fixing is as below logic, During driver probe: read ALARM_EN, read ALARM_DATA, read RTC_RDATA,
+>   if (ALARM_DATA < RTC_DATA), Trigger the alarm event and clear the alarm settins
+> - link: https://lore.kernel.org/linux-rtc/20220321090514.4523-1-quic_jianbinz@quicinc.com/
+> 
+> Changes in original:
+> - link to original: https://lore.kernel.org/linux-rtc/YTusgJlMUdXOKQaL@piout.net/
+> ---
+>  drivers/rtc/rtc-pm8xxx.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/drivers/rtc/rtc-pm8xxx.c b/drivers/rtc/rtc-pm8xxx.c
+> index f6b779c12ca7..e4e2307445cf 100644
+> --- a/drivers/rtc/rtc-pm8xxx.c
+> +++ b/drivers/rtc/rtc-pm8xxx.c
+> @@ -527,6 +527,11 @@ static int pm8xxx_rtc_probe(struct platform_device *pdev)
+>  	if (rc)
+>  		return rc;
+>  
+> +	rc = regmap_update_bits(rtc_dd->regmap, rtc_dd->regs->alarm_ctrl2,
+> +					  PM8xxx_RTC_ALARM_CLEAR, 1);
+> +	if (rc)
+> +		return rc;
+> +
+>  	return 0;
+>  }
+>  
+> 
+> -- 
+> 2.43.2
+> 
 
