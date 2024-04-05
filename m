@@ -1,164 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-16533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16536-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED73C899EF1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 16:04:58 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B912899F01
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 16:07:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9769C284150
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 14:04:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D966128514B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 14:07:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A822016E88E;
-	Fri,  5 Apr 2024 14:04:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EE9116EBFA;
+	Fri,  5 Apr 2024 14:06:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="B70BVjZB"
+	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="B+hOcwM2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD6316DED4
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Apr 2024 14:04:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05C416D9CB;
+	Fri,  5 Apr 2024 14:06:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.87.146.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712325892; cv=none; b=iOqWLEnOJ6uQ3NmrDDkvenJj7qAO4RBX0zlZ/FQnj/AVz1MDdPFiyXeLGXXTRjpMtvetTLCWubrQXvYs6F6Ff+rbFVWqxKWt2ktBbK4ovJvyuWy2Fs/J0LNt4Rw6u+4TWwF7Flfy1ZbPoRuv9FubRD5lDiZXqnLysGN0OTGUYrc=
+	t=1712326019; cv=none; b=Y/mb0vvlD8MiiUqMk3TpF+unnbrRvR9Gc4dS8pNBrDoLH/EP/HuzZVizhUAL/l4DzIfHvNWrBgOLwD1mb5NKhNniiYwgbRiHOTc/ulP0asOA1+w+79++3tV8a4KY8njc62OD2KPVhkOV2v64SI0zfQkQUem7Sd8pMS8GvD2blB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712325892; c=relaxed/simple;
-	bh=YLppziVi18FS86lsRUFYbik4pdpKw9o5av3kYjqyrXM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z+qeJg8cuQzg7jBgDN5od7pqxAUi5OOBtphdRRfY6ddOp/mDd4IZictK6GfqJOjdZECXbAgz7nT6n5YTOrpe2OAgi2nwS0hajpWgvbgMqpAc1yDCwFIFtzn7uiE6FfNo7X+Oc03P/uuADG/repq0xFHgRtAWbJYweEmyg4FC45s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=B70BVjZB; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1712325889;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=SJZjF5huZ/IS92CnJZN2AYaHFZSXzZinDMU0oFLcit0=;
-	b=B70BVjZB2JEXjgcyYGaXixHEqyGt7P8yZ3wmDrE7Mf1MMq3QJG/z9hyeorlqyfuUv7nI7t
-	dnQRM2Z3uj1gPHgFNNplQsdz5OjaECnI6bVuzJPnj/2mk+Qn34l6X89V0puVjwzj0SQmmz
-	vONMyMLci3vJQyRhJRsCTpZmLz4MzoU=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-581-07H9j7vCMPKYvPEd1tm3nA-1; Fri, 05 Apr 2024 10:04:48 -0400
-X-MC-Unique: 07H9j7vCMPKYvPEd1tm3nA-1
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-78a687cc579so255256285a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Apr 2024 07:04:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712325887; x=1712930687;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SJZjF5huZ/IS92CnJZN2AYaHFZSXzZinDMU0oFLcit0=;
-        b=Zvc1rqoNzqKv0fzTVs5Bb9xiadJQGxoEnrtDQiY3ZPbcII8STEhnrJhyGyLsnlOvZe
-         tkDKeXscB2SIvNzTZtiWUtwD2m4ahTf+70lOG6WECidgR92ye7C0RdNSbpIb0v0Co6IE
-         z36UdiiMIp9NGg1ssA0ghhKXIPYSp8Pme4ZHnlOTpRtX7y0MdYMhdkA4yhCfMYye5N+c
-         Y2GDP4leExUKEe37WFIysdF/NARG6X6pN+xhizodspcQ7yWz1RIV7VqcG3GTLLoEG3Ju
-         tIdHeWnmhu7eHDsWNuEOQzhySWJUL/CUDvAimxlOZi7RPk2C805u8I/ENr390lM7EKWj
-         Tw/Q==
-X-Gm-Message-State: AOJu0YxiDUN6JHxV+ggF29o5IpCYJObPPG8F1x0VCt/7UwTfW7gxPrP3
-	Nx8kMwKeK+7e7OsnD8J2BzAQHwt+iNYDOps0yLQm6tafFLTbwWVSQaa1+Izi6iUewvNOkZOLCQj
-	7vLGC2RkHFEL03+J78dmQNNr1Lr7Ttxw3gEcWRmqKr/JhDPaTSf+Y9pJg5dcWpIY=
-X-Received: by 2002:a05:620a:2b84:b0:78a:72b3:b629 with SMTP id dz4-20020a05620a2b8400b0078a72b3b629mr1708179qkb.44.1712325887098;
-        Fri, 05 Apr 2024 07:04:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHeHEjy/9A/4fTjZi0cCVsMnWNGemn3Slh0adyB59fLgBdpF4HyFXzqH7mBOCLvsV91+RB47w==
-X-Received: by 2002:a05:620a:2b84:b0:78a:72b3:b629 with SMTP id dz4-20020a05620a2b8400b0078a72b3b629mr1708136qkb.44.1712325886596;
-        Fri, 05 Apr 2024 07:04:46 -0700 (PDT)
-Received: from x1gen2nano ([2600:1700:1ff0:d0e0::33])
-        by smtp.gmail.com with ESMTPSA id s9-20020a05620a030900b00789fb5397d4sm654993qkm.100.2024.04.05.07.04.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Apr 2024 07:04:46 -0700 (PDT)
-Date: Fri, 5 Apr 2024 09:04:43 -0500
-From: Andrew Halaney <ahalaney@redhat.com>
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, robdclark@gmail.com, will@kernel.org, 
-	iommu@lists.linux.dev, joro@8bytes.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, quic_c_gdjako@quicinc.com, quic_cgoldswo@quicinc.com, 
-	quic_sukadev@quicinc.com, quic_pdaly@quicinc.com, quic_sudaraja@quicinc.com
-Subject: Re: sa8775p-ride: What's a normal SMMU TLB sync time?
-Message-ID: <lqdosfpb7gdjooqswgjnabzxapocndzam3ws7dq7god5bn55an@igvaowz6h7ye>
-References: <kord5qq6mywc7rbkzeoliz2cklrlljxm74qmrfwwjf6irx4fp7@6f5wsonafstt>
- <Zg9vEJV5JyGoM8KY@hu-bjorande-lv.qualcomm.com>
+	s=arc-20240116; t=1712326019; c=relaxed/simple;
+	bh=ljFXSCtasOGq1//X99BIfPejSn+STQIt0CQ4uzp4o/I=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=SMKplPMsdiDGLblHHsryCEViKKTJllGeF2CLeg06g9OJPPoXkcu2qGsX5vwRBUXA855aE2evU3FcQG7QYEEjZFzRNNzWfp0xNQ06DnBWdSLPst8bHXIyH3DMt9qjJwla7YXe4DVvOOVv7oE00J7mGSeTexL0pfnl4WyNCMe3bkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru; spf=pass smtp.mailfrom=trvn.ru; dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b=B+hOcwM2; arc=none smtp.client-ip=194.87.146.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trvn.ru
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+	(No client certificate requested)
+	by box.trvn.ru (Postfix) with ESMTPSA id D8D0F4192D;
+	Fri,  5 Apr 2024 19:06:44 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+	t=1712326005; bh=ljFXSCtasOGq1//X99BIfPejSn+STQIt0CQ4uzp4o/I=;
+	h=From:Subject:Date:To:Cc:From;
+	b=B+hOcwM2xz2aWwm/SyUJSgg1eonDjodoAaLih63ypRhrfLsT9paRLv5jo7+T7RDXU
+	 +glOKYN0UB/ACwZI6JW0cCXoqbejeROvkJtn6T4mhgo6d1RR6DSPPSshTnVc1NGmj5
+	 ftNnbhdIDAJVP37GktE5W2tJKOzJ74YNV4UZ6r+ylWERfTg606VpYJcCBf6ncxrUqw
+	 /1uhgmUFFaw2QF81B8CFGWHmCkeV2Y/tMi1XyWpR0weqkJT+gCveorkSLeNj5+axnE
+	 3CFQmNuenyjX3IlTGY1SbJn6mQrPIQH2AfUCKYiL9aJvf7lYOS5XWh74HmBXjZkU1I
+	 H6TACM4bWpPBg==
+From: Nikita Travkin <nikita@trvn.ru>
+Subject: [PATCH 0/4] Introduce msm8916 based Motorola devices
+Date: Fri, 05 Apr 2024 19:06:09 +0500
+Message-Id: <20240405-msm8916-moto-init-v1-0-502b58176d34@trvn.ru>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Zg9vEJV5JyGoM8KY@hu-bjorande-lv.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAFIFEGYC/x3MTQqAIBBA4avErBswMbOuEi36GWsWamhEIN09a
+ fkt3suQKDIlGKoMkW5OHHxBU1ewHrPfCXkrBimkEkq06JIzfaPRhSsge75QK2G0XIxtuxVKd0a
+ y/PzPcXrfD89dwTNjAAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Nikita Travkin <nikita@trvn.ru>, 
+ Ruby Iris Juric <ruby@srxl.me>, Stephan Gerhold <stephan@gerhold.net>, 
+ =?utf-8?q?Wiktor_Strz=C4=99ba=C5=82a?= <wiktorek140@gmail.com>, 
+ =?utf-8?q?Val=C3=A9rie_Roux?= <undev@unixgirl.xyz>, 
+ Martijn Braam <martijn@brixit.nl>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1506; i=nikita@trvn.ru;
+ h=from:subject:message-id; bh=ljFXSCtasOGq1//X99BIfPejSn+STQIt0CQ4uzp4o/I=;
+ b=owEBbQKS/ZANAwAIAUMc7O4oGb91AcsmYgBmEAVwvrr8qJnHXp6ir6v+TDAidrYgzN0N8goOq
+ Sjq2BHHIICJAjMEAAEIAB0WIQTAhK9UUj+qg34uxUdDHOzuKBm/dQUCZhAFcAAKCRBDHOzuKBm/
+ dfq0D/9z7P0ftGQmrHuMXtIhXOAf0Gu0GFeMYfmXFREKXY5aMv6bM7lzFGpD3EXJ8Szg9LPIwyX
+ rgzlfgMDi3Tl9CXtgGiqk17h4tH8wljsEsQBPmf2itAML3zyzODuUScfDdfFQGMLHje+sjFe1Kc
+ /xhQuRFcA2h8dGrQ5+/RWFtPpm7lRVfiaYH/7lsChXv19GADUtSe53LGuBvqaYAc6rJRqsvE4qe
+ V2MGcWowLvB0NMGNYvZNBDvQL9wA0O/GUJNWAsI56tcNWukPjcSL+9SIhu8/wE8CHxh7lWsWbad
+ 478fNVWSGdgXEI86BsmDRzH3eRtt21xJIFxehNprobqitiXFAqcLC+vCboms1ARC4ehVO53Fs6B
+ Tcem8Aja9NUiIzEgRJuM8ov41+dbjpjOVtqK9TgdiFiejZKfLqBkeFwnTbToOGuVSF2PxIur3RR
+ i4nVG8Rk6ltJmy6NHGuP3pKYCq3BRf/H5topTpz9PH0DhzsECVJrleauoPxsNk74qdgC01ylSNx
+ pbdsdLhE6QR/ELZQNyyvLD5L2K2LBpG7q/4orc9Cb6i0/iQfh/m2C1cKJzP38bVCp0p5V95im81
+ zbmy56JPEVkKIwKv64dxtwF4LxwfStc3bmhfUfNKFXe629L4fEHvYcXJ/BMt92j0F5SrEsSPyjh
+ xfX4g2u44A3BAWg==
+X-Developer-Key: i=nikita@trvn.ru; a=openpgp;
+ fpr=C084AF54523FAA837E2EC547431CECEE2819BF75
 
-On Thu, Apr 04, 2024 at 08:25:04PM -0700, Bjorn Andersson wrote:
-> On Tue, Apr 02, 2024 at 04:22:31PM -0500, Andrew Halaney wrote:
-> > Hey,
-> > 
-> > Sorry for the wide email, but I figured someone recently contributing
-> > to / maintaining the Qualcomm SMMU driver may have some proper insights
-> > into this.
-> > 
-> > Recently I remembered that performance on some Qualcomm platforms
-> > takes a major hit when you use iommu.strict=1/CONFIG_IOMMU_DEFAULT_DMA_STRICT.
-> > 
-> > On the sa8775p-ride, I see most TLB sync calls to be about 150 us long,
-> > with some spiking to 500 us, etc:
-> > 
-> >     [root@qti-snapdragon-ride4-sa8775p-09 ~]# trace-cmd start -p function_graph -g qcom_smmu_tlb_sync --max-graph-depth 1
-> >       plugin 'function_graph'
-> >     [root@qti-snapdragon-ride4-sa8775p-09 ~]# trace-cmd show
-> >     # tracer: function_graph
-> >     #
-> >     # CPU  DURATION                  FUNCTION CALLS
-> >     # |     |   |                     |   |   |   |
-> >      0) ! 144.062 us  |  qcom_smmu_tlb_sync();
-> > 
-> > On my sc8280xp-lenovo-thinkpad-x13s (only other Qualcomm platform I can compare
-> > with) I see around 2-15 us with spikes up to 20-30 us. That's thanks to this
-> > patch[0], which I guess improved the platform from 1-2 ms to the ~10 us number.
-> > 
-> > It's not entirely clear to me how a DPU specific programming affects system
-> > wide SMMU performance, but I'm curious if this is the only way to achieve this?
-> > sa8775p doesn't have the DPU described even right now, so that's a bummer
-> > as there's no way to make a similar immediate optimization, but I'm still struggling
-> > to understand what that patch really did to improve things so maybe I'm missing
-> > something.
-> > 
-> 
-> The cause was that the TLB sync is synchronized with the display updates,
-> but without appropriate safe_lut_tlb values the display side wouldn't
-> play nice.
+This series introduces a set of msm8916 bsed Motorola devices:
 
-In my case we don't have display being driven at all. I'm not sure if
-that changes the situation, or just complicates it. i.e. I'm unsure if
-that means we're not hitting the display situation at all but something
-else entirely (assuming this time is longer than ideal), or if the
-safe_lut_tlb values still effect things despite Linux knowing nothing
-about the display, which as far as I know is not configured by anyone
-at the moment.
+- Moto G4 Play (harpia)
+- Moto G 2015 (osprey)
+- Moto E 2015 LTE (surnia)
 
-Any thoughts on that?
+The submission brings up the following features:
 
-> 
-> Regards,
-> Bjorn
-> 
-> > I'm honestly not even sure what a "typical" range for TLB sync time would be,
-> > but on sa8775p-ride its bad enough that some IRQs like UFS can cause RCU stalls
-> > (pretty easy to reproduce with fio basic-verify.fio for example on the platform).
-> > It also makes running with iommu.strict=1 impractical as performance for UFS,
-> > ethernet, etc drops 75-80%.
-> > 
-> > Does anyone have any bright ideas on how to improve this, or if I'm even in
-> > the right for assuming that time is suspiciously long?
-> > 
-> > Thanks,
-> > Andrew
-> > 
-> > [0] https://lore.kernel.org/linux-arm-msm/CAF6AEGs9PLiCZdJ-g42-bE6f9yMR6cMyKRdWOY5m799vF9o4SQ@mail.gmail.com/
-> > 
-> 
+- eMMC and SD;
+- Buttons;
+- Touchscreen;
+- USB;
+- Fuel Gauge;
+- Sound;
+- Accelerometer (harpia only).
+
+Since the devices share a lot of similarities, the common parts of the
+DT are separated out into a dedicated dtsi, introduced with the first
+device.
+
+Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+---
+Martijn Braam (1):
+      arm64: dts: qcom: Add Motorola Moto G 2015 (osprey)
+
+Nikita Travkin (1):
+      dt-bindings: arm: qcom: Add msm8916 based Motorola devices
+
+Ruby Iris Juric (1):
+      arm64: dts: qcom: Add device tree for Motorola Moto G4 Play (harpia)
+
+Wiktor Strzębała (1):
+      arm64: dts: qcom: Add Motorola Moto E 2015 LTE (surnia)
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   3 +
+ arch/arm64/boot/dts/qcom/Makefile                  |   3 +
+ .../boot/dts/qcom/msm8916-motorola-common.dtsi     | 161 +++++++++++++++++++++
+ .../boot/dts/qcom/msm8916-motorola-harpia.dts      | 147 +++++++++++++++++++
+ .../boot/dts/qcom/msm8916-motorola-osprey.dts      | 105 ++++++++++++++
+ .../boot/dts/qcom/msm8916-motorola-surnia.dts      |  83 +++++++++++
+ 6 files changed, 502 insertions(+)
+---
+base-commit: 29493ca7d6b1d3fdc224467c422ac9bdf6d7a252
+change-id: 20240405-msm8916-moto-init-640862b8f57c
+
+Best regards,
+-- 
+Nikita Travkin <nikita@trvn.ru>
 
 
