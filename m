@@ -1,45 +1,45 @@
-Return-Path: <linux-arm-msm+bounces-16506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 876288999FA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 11:55:52 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id EACEA8999FC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 11:56:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B8DFA1C22067
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 09:55:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9F7371F2341B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Apr 2024 09:56:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9338C16D30D;
-	Fri,  5 Apr 2024 09:52:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46CAB161316;
+	Fri,  5 Apr 2024 09:53:32 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 853E016C87F;
-	Fri,  5 Apr 2024 09:52:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433BE160881;
+	Fri,  5 Apr 2024 09:53:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712310772; cv=none; b=Hgd5+xOHPTlK66IGF4TEiltDljKX5mUXN9FugZnzbGd92TQGKLlN8pXddD+MjPqiyfHNx37U9RQURAc4TYL2UGjyULNDShLWimR9ure06WvnB9PVlm3tg/ln4BNbgtD7lia5AMAiGQeam79ZTiFLsAPaneYOHcGYmSPzFImcqHw=
+	t=1712310812; cv=none; b=ewChJ+jkml61w61W2JJLnTK4L98YZdgZdxIv1ncUdB8ANEyIaQawHH/qCEK1HUY4RKnbZ/rt0ZXQErToOXP8AW8ESOS7PRkb7Jl2N2fxj3yKtLssn4nDLlmxn2sph7evvWrEeet94gUmrWVoL2NAY6v1+UAcFEJlIjpaNlBuzyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712310772; c=relaxed/simple;
-	bh=Cd32nAS4wjxMldROP8jmFEdqvn59+sAVNup8vx4Txdw=;
+	s=arc-20240116; t=1712310812; c=relaxed/simple;
+	bh=ZoMTR/2rQ3ZrsE0cvluxJAts9LL6fCAjxYu8JLJ+bjU=;
 	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lzMnXPEiCJRnoibN5KkFXtyiJ0SnQyYYsTFGBNwMSgFgBmjTjnUca8sgjZA08NuGrl9RIGOEAeutyh5L2/xeuHQAe+NbyRO+SGsWjz/IUsos25XygxnFn2ge7imZ2h8gfNb5e/UXenAkKvoFF4qiFmekWUIksh3piaw2tQ4ieJo=
+	 MIME-Version:Content-Type; b=mWvg60tRFb1v2u+Q63eMaFJtKSPjcWldjr/yQgJsRMV6e21WCyxam/JbVJ6C8I4xwkCxmjyAsNNVZ7sRErha6nvhd0yRQuYylb4quvvfeGC1x4g10Zvt4o1EVHZRmLwHkKgmzPdcIuBsjFz6qglXXpL2Oka03pSudZ+xfbKPHaE=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=185.176.79.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Received: from mail.maildlp.com (unknown [172.18.186.31])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4V9tvp1hqnz6J7pk;
-	Fri,  5 Apr 2024 17:48:06 +0800 (CST)
+	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4V9v0P2GBxz6J6c8;
+	Fri,  5 Apr 2024 17:52:05 +0800 (CST)
 Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
-	by mail.maildlp.com (Postfix) with ESMTPS id A3E05140A36;
-	Fri,  5 Apr 2024 17:52:46 +0800 (CST)
+	by mail.maildlp.com (Postfix) with ESMTPS id 963691400D1;
+	Fri,  5 Apr 2024 17:53:27 +0800 (CST)
 Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
  (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Fri, 5 Apr
- 2024 10:52:46 +0100
-Date: Fri, 5 Apr 2024 10:52:44 +0100
+ 2024 10:53:27 +0100
+Date: Fri, 5 Apr 2024 10:53:26 +0100
 From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
 To: Mark Rutland <mark.rutland@arm.com>
 CC: Dawei Li <dawei.li@shingroup.cn>, <will@kernel.org>,
@@ -48,13 +48,13 @@ CC: Dawei Li <dawei.li@shingroup.cn>, <will@kernel.org>,
 	<yangyicong@hisilicon.com>, <andersson@kernel.org>,
 	<konrad.dybcio@linaro.org>, <linux-arm-kernel@lists.infradead.org>,
 	<linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v2 07/10] perf/hisi_pcie: Avoid placing cpumask var on
+Subject: Re: [PATCH v2 08/10] perf/hisi_uncore: Avoid placing cpumask var on
  stack
-Message-ID: <20240405105244.00003eb8@Huawei.com>
-In-Reply-To: <Zg1pHsWnzczoXBb4@FVFF77S0Q05N>
+Message-ID: <20240405105326.000039e2@Huawei.com>
+In-Reply-To: <Zg1pQ_rnYyZe40_n@FVFF77S0Q05N>
 References: <20240403125109.2054881-1-dawei.li@shingroup.cn>
-	<20240403125109.2054881-8-dawei.li@shingroup.cn>
-	<Zg1pHsWnzczoXBb4@FVFF77S0Q05N>
+	<20240403125109.2054881-9-dawei.li@shingroup.cn>
+	<Zg1pQ_rnYyZe40_n@FVFF77S0Q05N>
 Organization: Huawei Technologies Research and Development (UK) Ltd.
 X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 Precedence: bulk
@@ -68,10 +68,10 @@ Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
  lhrpeml500005.china.huawei.com (7.191.163.240)
 
-On Wed, 3 Apr 2024 15:35:10 +0100
+On Wed, 3 Apr 2024 15:35:47 +0100
 Mark Rutland <mark.rutland@arm.com> wrote:
 
-> On Wed, Apr 03, 2024 at 08:51:06PM +0800, Dawei Li wrote:
+> On Wed, Apr 03, 2024 at 08:51:07PM +0800, Dawei Li wrote:
 > > For CONFIG_CPUMASK_OFFSTACK=y kernel, explicit allocation of cpumask
 > > variable on stack is not recommended since it can cause potential stack
 > > overflow.
@@ -102,43 +102,5 @@ Mark Rutland <mark.rutland@arm.com> wrote:
 > Reviewed-by: Mark Rutland <mark.rutland@arm.com>
 
 Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-
-> 
-> Mark.
-> 
-> > ---
-> >  drivers/perf/hisilicon/hisi_pcie_pmu.c | 9 ++++-----
-> >  1 file changed, 4 insertions(+), 5 deletions(-)
-> > 
-> > diff --git a/drivers/perf/hisilicon/hisi_pcie_pmu.c b/drivers/perf/hisilicon/hisi_pcie_pmu.c
-> > index 5d1f0e9fdb08..06b192cc31d5 100644
-> > --- a/drivers/perf/hisilicon/hisi_pcie_pmu.c
-> > +++ b/drivers/perf/hisilicon/hisi_pcie_pmu.c
-> > @@ -673,7 +673,6 @@ static int hisi_pcie_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
-> >  {
-> >  	struct hisi_pcie_pmu *pcie_pmu = hlist_entry_safe(node, struct hisi_pcie_pmu, node);
-> >  	unsigned int target;
-> > -	cpumask_t mask;
-> >  	int numa_node;
-> >  
-> >  	/* Nothing to do if this CPU doesn't own the PMU */
-> > @@ -684,10 +683,10 @@ static int hisi_pcie_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
-> >  
-> >  	/* Choose a local CPU from all online cpus. */
-> >  	numa_node = dev_to_node(&pcie_pmu->pdev->dev);
-> > -	if (cpumask_and(&mask, cpumask_of_node(numa_node), cpu_online_mask) &&
-> > -	    cpumask_andnot(&mask, &mask, cpumask_of(cpu)))
-> > -		target = cpumask_any(&mask);
-> > -	else
-> > +
-> > +	target = cpumask_any_and_but(cpumask_of_node(numa_node),
-> > +				     cpu_online_mask, cpu);
-> > +	if (target >= nr_cpu_ids)
-> >  		target = cpumask_any_but(cpu_online_mask, cpu);
-> >  
-> >  	if (target >= nr_cpu_ids) {
-> > -- 
-> > 2.27.0
-> >   
 
 
