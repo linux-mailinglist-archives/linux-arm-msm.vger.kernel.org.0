@@ -1,163 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-16643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4FAEE89AC69
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Apr 2024 19:19:05 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 95FBA89AD87
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Apr 2024 00:03:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CADC31F21726
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Apr 2024 17:19:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3E3FCB20DDD
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Apr 2024 22:03:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AC913FBB0;
-	Sat,  6 Apr 2024 17:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B69A537E2;
+	Sat,  6 Apr 2024 22:03:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hZV0VKF/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="s2fmgIr1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45B0381C2;
-	Sat,  6 Apr 2024 17:18:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F715338C
+	for <linux-arm-msm@vger.kernel.org>; Sat,  6 Apr 2024 22:03:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712423941; cv=none; b=UZwEA9wS5xo392hGgnx3GWmVEOIJqUV9xeJ8IWfukH5V3sY0PHxzuO0WgRd8Q0bBjibvrLgjVebGrOCTZOzBom/vnz/ygUvXxOtpBUV+pM3l0RF0y6ygxBFUrfimQOy4Rtyt91Z8W/9YNMM4DakjjhWExCFdw19ypTpSPUVOdbE=
+	t=1712441003; cv=none; b=JzgFsjlECUBowHfYPT9eqjexFaoJoc7LOpzZg5byWj+OnlGdCQ05/J71BcNa9NvhYfXHgq1Ra/FGy1bFZ/qmTFEQF0hI4NiRkbcmR/lHPIhZBIMDEY8d3lu0PKI4/dyhdn4A4bECD8HAtneuGe2X9jsNR5G/IWj7WtBY8LYdNp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712423941; c=relaxed/simple;
-	bh=FTrOH0OlOjWrK3A0l8wznAoEtxiq1cIfTifGsp+jt+8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ewa0ZSNRaXn6Beaes6FlCvup3C/145oEoNLnIyCV1A7/O+Idmh7WPac53uSwxroyvgQ3+bd3dPljwP/cLlqs92xrroRImfo5RRg7aBC2SRe4Etw/1fcmS8IMTh34LuUBPPWOIAOeayFT/0eprJBiGiq7xpk4dH5tNiMorB3vwrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hZV0VKF/; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 436HACiE017060;
-	Sat, 6 Apr 2024 17:18:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=nAEQxXw+XRp9uZGd5HCvDnmTyd3ZDuxqbC75fH5/7VA=; b=hZ
-	V0VKF/XyDc2l6bqY8V4L8Hds+OAqM21wtlU4JMPzzkr3xWmaTP9//vSbhvVB3YF7
-	yN0XQ7jALOZ4vkoVzeXq/YzfRCuowRnkhaARto6YTz2ZPty0YJ4CNaeYuwK9uZHN
-	JzyBzxUcL/iqeN0KhMXjOy+m30OkgNLRjms6HB48iuQJNehBdB3QYHFsIzxHnhNq
-	vugnJ5PcpZol8WnSsHjelG2p4q7bEm3B8SokiJDnED6xW2rtszEhFo7QW3TgZ9pT
-	H5gmoueXYJLU8rcuAmNUk9DkSxWluLTVGCKkk6G2Yh1UsN9hxc21KlGKZsPFNZp+
-	gZxfzEoeHtB/Jv3otrNg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xax04gsrn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 06 Apr 2024 17:18:43 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 436HIg73016124
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 6 Apr 2024 17:18:42 GMT
-Received: from [10.216.54.180] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Sat, 6 Apr 2024
- 10:18:34 -0700
-Message-ID: <b9b3c698-fbf3-a2d0-3420-4b33016a5560@quicinc.com>
-Date: Sat, 6 Apr 2024 22:48:29 +0530
+	s=arc-20240116; t=1712441003; c=relaxed/simple;
+	bh=IMO6CD89TVo8qWq0/qdkA+3x41O1FzftCZquzI8qcsY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=N5la23bjukP0AqSTawUuBMHEPdk6ivnEdSeRpU4tKtoTNOi7s74k8b1hCHfDVqMy78ssgDWvPOiGD1slAqFY+uAJVQLHjG6CJDD/bh7n7Dmo6PBcnLxfFLZ61S6MH6vySrXvMyBP1B/h/ug72oSR16KAe/zeNszMu6f9PyZuSqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=s2fmgIr1; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4162b8cb3e9so27771565e9.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Apr 2024 15:03:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712440999; x=1713045799; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cOT28vLXeenuTF9raPMx7mM8udpRFqntILqCAo6YXaA=;
+        b=s2fmgIr1S6iIq++ZePr93wquCULNfp/hMSPjPHVso9WpuRJJmYKzXccCKA1R/7t7jr
+         5I1gmNhKhmoos6aImsP1VUt4zQxCkuwj1gaD0N1Tx/T8wTM6FAcctaIf0NjUsKO52Eav
+         UIiRb0yGJhPqeTftN8WSqc88belSSVziD+E30NDFfhWLAn4frT4bZLsAOIZYgxI/0DCA
+         Y6AZhYkUrC8StaYTdjpTUHgUpoJtZJQUkXa1wM9cqvO4f/hlPzjuc52OwgELk6XOwfFK
+         XM5fWie9P2fnUmW+5rhL6UInlHKj/xRplhoYggkwlOTUDpFDLzUUjD5XtjqDqGeqm7hM
+         y0Pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712440999; x=1713045799;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cOT28vLXeenuTF9raPMx7mM8udpRFqntILqCAo6YXaA=;
+        b=jlN9bg/Kod2l+PrK2gqHg/aAaZlGUFapob4hCBtBamno8YNnzRwusWt5CMbkqySH/4
+         FHi8uPvUBWP5sdJ2Ij5eSceI9nNVl6GZSAC4ICPLSdzfJgrKrllM/G7HW5Ot8mqrjUzA
+         08qLvllGT7MgAC/bfmH3JVKP49FAH4QVo7ZvA2rlOKBa/veI2c1uDciQtlxU7F5MC+62
+         u97kXI3q6DP8tcJRQREWxaklAf28AmG8F1T6WnFf5f0bYBB3vuVTfDbofjrX8ImFW/Iu
+         WYvs/zUfO+bcNRzmrj70GsLS30/prG6Mqf0dKnLUaImOacTMHj8cXXa9QSHAMFi1zfoN
+         T5tw==
+X-Gm-Message-State: AOJu0Yz6qqH3SqQry1VWLzJjZdN7351tk8SSmo20t/7dlKMnxzm5v/7g
+	fWJNdrv+DVu4hHlDW/iQF8SsxH/+mdpWdDQEMSQZ0Hulda/xNxRNQLKFp8UzIWk=
+X-Google-Smtp-Source: AGHT+IEZN1L85x79gQ4xMojuOPnIGHgKi2wu24OvxCazvAYLzctdWT//NwoyqeeAEJaSlVvVP++iBQ==
+X-Received: by 2002:adf:fdc9:0:b0:33e:c91a:127e with SMTP id i9-20020adffdc9000000b0033ec91a127emr4313074wrs.63.1712440999316;
+        Sat, 06 Apr 2024 15:03:19 -0700 (PDT)
+Received: from [192.168.0.102] ([176.61.106.68])
+        by smtp.gmail.com with ESMTPSA id r24-20020adfb1d8000000b00341b451a31asm5380465wra.36.2024.04.06.15.03.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 06 Apr 2024 15:03:18 -0700 (PDT)
+Message-ID: <c1899fae-8669-485a-95bd-0e76738a1187@linaro.org>
+Date: Sat, 6 Apr 2024 23:03:17 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH v8 2/7] arm64: dts: qcom: sm8450: Add interconnect path to
- PCIe node
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] usb: typec: qcom-pmic-typec: split HPD bridge alloc and
+ registration
 Content-Language: en-US
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Lorenzo Pieralisi
-	<lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?=
-	<kw@linux.com>,
-        Rob Herring <robh@kernel.org>, Bjorn Helgaas
-	<bhelgaas@google.com>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Rob
- Herring" <robh+dt@kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        "Brian
- Masney" <bmasney@redhat.com>,
-        Georgi Djakov <djakov@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <vireshk@kernel.org>,
-        <quic_vbadigan@quicinc.com>, <quic_skananth@quicinc.com>,
-        <quic_nitegupt@quicinc.com>, <quic_parass@quicinc.com>
-References: <20240302-opp_support-v8-0-158285b86b10@quicinc.com>
- <20240302-opp_support-v8-2-158285b86b10@quicinc.com>
- <4bd2e661-8e1e-41ff-9b7f-917bb92a196d@linaro.org>
- <20240405074044.GC2953@thinkpad>
-From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20240405074044.GC2953@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Caleb Connolly <caleb.connolly@linaro.org>,
+ Johan Hovold <johan+linaro@kernel.org>
+References: <20240405-qc-pmic-typec-hpd-split-v1-1-363daafb3c36@linaro.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20240405-qc-pmic-typec-hpd-split-v1-1-363daafb3c36@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: szxG_ZrRKvw6_b92RnkY6ajW2_sFXmSw
-X-Proofpoint-ORIG-GUID: szxG_ZrRKvw6_b92RnkY6ajW2_sFXmSw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-06_13,2024-04-05_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- spamscore=0 phishscore=0 suspectscore=0 malwarescore=0 mlxlogscore=999
- mlxscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0 adultscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404060136
 
+On 05/04/2024 19:11, Dmitry Baryshkov wrote:
+> If a probe function returns -EPROBE_DEFER after creating another device
+> there is a change of ening up in a probe deferral loop, (see commit
 
+*ending
 
-On 4/5/2024 1:10 PM, Manivannan Sadhasivam wrote:
-> On Wed, Mar 06, 2024 at 05:04:54PM +0100, Konrad Dybcio wrote:
->>
->>
->> On 3/2/24 04:59, Krishna chaitanya chundru wrote:
->>> Add pcie-mem & cpu-pcie interconnect path to the PCIe nodes.
->>>
->>> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
->>> ---
->>>    arch/arm64/boot/dts/qcom/sm8450.dtsi | 8 ++++++++
->>>    1 file changed, 8 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->>> index 01e4dfc4babd..6b1d2e0d9d14 100644
->>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->>> @@ -1781,6 +1781,10 @@ pcie0: pcie@1c00000 {
->>>    					<0 0 0 3 &intc 0 0 0 151 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
->>>    					<0 0 0 4 &intc 0 0 0 152 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
->>> +			interconnects = <&pcie_noc MASTER_PCIE_0 0 &mc_virt SLAVE_EBI1 0>,
->>
->> Please use QCOM_ICC_TAG_ALWAYS.
->>
->>> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_0 0>;
->>
->> And this path could presumably be demoted to QCOM_ICC_TAG_ACTIVE_ONLY?
->>
+> fbc35b45f9f6 ("Add documentation on meaning of -EPROBE_DEFER").
 > 
-> I think it should be fine since there would be no register access done while the
-> RPMh is put into sleep state. Krishna, can you confirm that by executing the CX
-> shutdown with QCOM_ICC_TAG_ACTIVE_ONLY vote for cpu-pcie path on any supported
-> platform?
-> 
-> But if we do such change, then it should also be applied to other SoCs.
-> 
-> - Mani
->
-we don't a have platform to test this now, we will keep
-QCOM_ICC_TAG_ALWAYS for now.
+> In order to prevent such probe-defer loops caused by qcom-pmic-typec
+> driver, use the API added by Johan Hoval and move HPD bridge
 
-- Krishna Chaitanya.
+*Hovold
 
+> registeration to the end of the probe function.
+
+registration
+
+> 
+> Reported-by: Caleb Connolly <caleb.connolly@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c | 8 ++++++--
+>   1 file changed, 6 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+> index e48412cdcb0f..96b41efae318 100644
+> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+> @@ -41,7 +41,7 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
+>   	struct device_node *np = dev->of_node;
+>   	const struct pmic_typec_resources *res;
+>   	struct regmap *regmap;
+> -	struct device *bridge_dev;
+> +	struct auxiliary_device *bridge_dev;
+>   	u32 base;
+>   	int ret;
+>   
+> @@ -92,7 +92,7 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
+>   	if (!tcpm->tcpc.fwnode)
+>   		return -EINVAL;
+>   
+> -	bridge_dev = drm_dp_hpd_bridge_register(tcpm->dev, to_of_node(tcpm->tcpc.fwnode));
+> +	bridge_dev = devm_drm_dp_hpd_bridge_alloc(tcpm->dev, to_of_node(tcpm->tcpc.fwnode));
+>   	if (IS_ERR(bridge_dev))
+>   		return PTR_ERR(bridge_dev);
+>   
+> @@ -110,6 +110,10 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
+>   	if (ret)
+>   		goto fwnode_remove;
+>   
+> +	ret = devm_drm_dp_hpd_bridge_add(tcpm->dev, bridge_dev);
+> +	if (ret)
+> +		goto fwnode_remove;
+> +
+
+Is there any reason this call comes after port_start/pdphy_start ?
+
+I think the bridge add should go before starting the typec port and 
+pdphy since after the start calls IRQs are enabled.
+
+With those minor points addressed
+
+Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
+---
+bod
 
