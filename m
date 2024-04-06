@@ -1,158 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-16642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25A8289AC4C
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Apr 2024 18:51:48 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4FAEE89AC69
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Apr 2024 19:19:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CEF7A281F08
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Apr 2024 16:51:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CADC31F21726
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Apr 2024 17:19:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68DCE56B60;
-	Sat,  6 Apr 2024 16:48:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AC913FBB0;
+	Sat,  6 Apr 2024 17:19:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nkwjDuVN"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hZV0VKF/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D594CE17;
-	Sat,  6 Apr 2024 16:48:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45B0381C2;
+	Sat,  6 Apr 2024 17:18:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712422131; cv=none; b=twNNrXm1zFcpdy0HO6fYvWudUx3suY2DXilyZoqIPSEB5i6MycLTK89JuB0t/qCibH/CGFYFERrKtoc81dw4mQu58Uui22QGRsrZf0dpb0I4R86S43Tv60LG2kG8uNFxn0Bp9d/fEPGqTXZtYftRAuzuIKTlY44rL3r/YQi1rXQ=
+	t=1712423941; cv=none; b=UZwEA9wS5xo392hGgnx3GWmVEOIJqUV9xeJ8IWfukH5V3sY0PHxzuO0WgRd8Q0bBjibvrLgjVebGrOCTZOzBom/vnz/ygUvXxOtpBUV+pM3l0RF0y6ygxBFUrfimQOy4Rtyt91Z8W/9YNMM4DakjjhWExCFdw19ypTpSPUVOdbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712422131; c=relaxed/simple;
-	bh=l0HOUvCH5NyJ7m1SR7z+oF/8ktmm109ZvDWMpVVXq88=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=N7ChMlJi9kjK+ysMFgqyHcNsK8wRqKr/8fUz5w7+FbMe3bO/f3UZp0V7xfv/cAEvUAFxrDOcS0zy3t8whVycKkajzi3btvdv/WuMRiwXvTQER5nU8Obr8h0AmkKCoD91PkemCy1guE6rBrOGJspb1SOZqghQ/LzAjXedCfFysMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nkwjDuVN; arc=none smtp.client-ip=209.85.210.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-6e6a00de24aso1813728a34.3;
-        Sat, 06 Apr 2024 09:48:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712422129; x=1713026929; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DKheQqCooEORfEAc4BfVHAN7JSAJma1nB9maY1cQRV4=;
-        b=nkwjDuVN41tyYOOa/+a+Yw5xNlSffz7DilVPwDiL43lvNT/GK5jiFVDn6dg5SD0wmg
-         gF4jWTeJVD1I4DhTpoRgFtXSFXXOFoEi+1O0RHZSyz8WvYGeHa7aTTNySYb0rK9zB5y4
-         zRyMYaQsD/bTPFLktzjp11X6jIxWocXGuJx4iSMoMclHUZhI0kR1l5YAhGi36ipl7Mox
-         QMH7pbywVBbwbP52sLJls1hX+nPjImZV4GryTI83r7GKWRVcvGUsBrmIPu+Z6gl1W0uW
-         XA5RS0uc6b8sLAE0kIp9wg6aVhDE6EfqLIK59T2oMQvjJDCObBdWvbxregF4mWroIRYb
-         nwtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712422129; x=1713026929;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DKheQqCooEORfEAc4BfVHAN7JSAJma1nB9maY1cQRV4=;
-        b=N0mKFSOy35s0MFbmTObHjVhBsggUIQ2X5deGwrX3sWpXOnVOQZKKOfKilOw2S+Ra2Z
-         geDRZokDh1Iu5l1olXxIxvBHfyKPjhx7PKmgLAoTqP6qvHDNXgyl2EUNFXTnE9Lq2xix
-         ErilFSQ7AZtMrV6UbN8hr7nJiEJPecIDlIWNf/emwE/Jh01E8KJq10Yst4JCkA/xEv4n
-         wgvty9xAGNQfVKk8XpRH4gC/MB9ZGWTJ/p/ywbAEscm+LdnCElCMhEBe7lb7nkje4Hrg
-         8qLxCG3BMuUH4lSYdvsozvlyRjMpKPLVXMsK9iWqbfBFU10mXBUKFyRWw83bUbo4kJil
-         6iLQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVRd6g2ROl/Q3qzmDfsMmu+2gTWjXBqxjhJL1o0Htd96KXul/juIfHUEI7ktTteidllr+p1wYmWNrjjlwJMosNI8eBePUcmtTLAiZzRj1qLBqXx9138g4cM/A6bNEwbWH+q6Rt2grXlgg3WLg==
-X-Gm-Message-State: AOJu0YxFlSY6RDi6SSZvPTPkJq0oX+HspZK86cPSCgiYEwZy/Y10XbYd
-	Lq19W3ZdPFHs+YrLOyGozQydSP2C2QLjeNKqvqnmpxsgdrmndN0t
-X-Google-Smtp-Source: AGHT+IHQhCgoz1D7z2Bflhbg39hCU1gZZwVTvOMMq3IkNcQxp3kf0snzpBO3qyliIQ0NwjSLyvPMJw==
-X-Received: by 2002:a05:6830:11c5:b0:6ea:f00:5c2c with SMTP id v5-20020a05683011c500b006ea0f005c2cmr701920otq.35.1712422128821;
-        Sat, 06 Apr 2024 09:48:48 -0700 (PDT)
-Received: from [192.168.7.110] (c-98-197-58-203.hsd1.tx.comcast.net. [98.197.58.203])
-        by smtp.gmail.com with ESMTPSA id i4-20020a4aab04000000b005a48e64c699sm821908oon.40.2024.04.06.09.48.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 06 Apr 2024 09:48:48 -0700 (PDT)
-Message-ID: <45e1a982-fd59-48de-ace4-d6b6e821189d@gmail.com>
-Date: Sat, 6 Apr 2024 11:48:45 -0500
+	s=arc-20240116; t=1712423941; c=relaxed/simple;
+	bh=FTrOH0OlOjWrK3A0l8wznAoEtxiq1cIfTifGsp+jt+8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ewa0ZSNRaXn6Beaes6FlCvup3C/145oEoNLnIyCV1A7/O+Idmh7WPac53uSwxroyvgQ3+bd3dPljwP/cLlqs92xrroRImfo5RRg7aBC2SRe4Etw/1fcmS8IMTh34LuUBPPWOIAOeayFT/0eprJBiGiq7xpk4dH5tNiMorB3vwrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hZV0VKF/; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 436HACiE017060;
+	Sat, 6 Apr 2024 17:18:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=nAEQxXw+XRp9uZGd5HCvDnmTyd3ZDuxqbC75fH5/7VA=; b=hZ
+	V0VKF/XyDc2l6bqY8V4L8Hds+OAqM21wtlU4JMPzzkr3xWmaTP9//vSbhvVB3YF7
+	yN0XQ7jALOZ4vkoVzeXq/YzfRCuowRnkhaARto6YTz2ZPty0YJ4CNaeYuwK9uZHN
+	JzyBzxUcL/iqeN0KhMXjOy+m30OkgNLRjms6HB48iuQJNehBdB3QYHFsIzxHnhNq
+	vugnJ5PcpZol8WnSsHjelG2p4q7bEm3B8SokiJDnED6xW2rtszEhFo7QW3TgZ9pT
+	H5gmoueXYJLU8rcuAmNUk9DkSxWluLTVGCKkk6G2Yh1UsN9hxc21KlGKZsPFNZp+
+	gZxfzEoeHtB/Jv3otrNg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xax04gsrn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 06 Apr 2024 17:18:43 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 436HIg73016124
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 6 Apr 2024 17:18:42 GMT
+Received: from [10.216.54.180] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Sat, 6 Apr 2024
+ 10:18:34 -0700
+Message-ID: <b9b3c698-fbf3-a2d0-3420-4b33016a5560@quicinc.com>
+Date: Sat, 6 Apr 2024 22:48:29 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/7] phy: qcom-qmp-pcie: add support for ipq9574 gen3x2
- PHY
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Vinod Koul <vkoul@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>, ansuelsmth@gmail.com,
- robimarko@gmail.com, linux-arm-msm@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20240402192555.1955204-1-mr.nuke.me@gmail.com>
- <20240402192555.1955204-6-mr.nuke.me@gmail.com> <ZhEMB0HP0g1YwPvE@matsya>
- <CAA8EJpqYV537aCbkwTRUeZJzcn4wMXFqGxQHSdDFraGV_2zbQQ@mail.gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH v8 2/7] arm64: dts: qcom: sm8450: Add interconnect path to
+ PCIe node
 Content-Language: en-US
-From: "Alex G." <mr.nuke.me@gmail.com>
-In-Reply-To: <CAA8EJpqYV537aCbkwTRUeZJzcn4wMXFqGxQHSdDFraGV_2zbQQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Lorenzo Pieralisi
+	<lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?=
+	<kw@linux.com>,
+        Rob Herring <robh@kernel.org>, Bjorn Helgaas
+	<bhelgaas@google.com>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Rob
+ Herring" <robh+dt@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        "Brian
+ Masney" <bmasney@redhat.com>,
+        Georgi Djakov <djakov@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <vireshk@kernel.org>,
+        <quic_vbadigan@quicinc.com>, <quic_skananth@quicinc.com>,
+        <quic_nitegupt@quicinc.com>, <quic_parass@quicinc.com>
+References: <20240302-opp_support-v8-0-158285b86b10@quicinc.com>
+ <20240302-opp_support-v8-2-158285b86b10@quicinc.com>
+ <4bd2e661-8e1e-41ff-9b7f-917bb92a196d@linaro.org>
+ <20240405074044.GC2953@thinkpad>
+From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <20240405074044.GC2953@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: szxG_ZrRKvw6_b92RnkY6ajW2_sFXmSw
+X-Proofpoint-ORIG-GUID: szxG_ZrRKvw6_b92RnkY6ajW2_sFXmSw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-06_13,2024-04-05_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ spamscore=0 phishscore=0 suspectscore=0 malwarescore=0 mlxlogscore=999
+ mlxscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0 adultscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404060136
 
-On 4/6/24 09:37, Dmitry Baryshkov wrote:
-> On Sat, 6 Apr 2024 at 11:47, Vinod Koul <vkoul@kernel.org> wrote:
+
+
+On 4/5/2024 1:10 PM, Manivannan Sadhasivam wrote:
+> On Wed, Mar 06, 2024 at 05:04:54PM +0100, Konrad Dybcio wrote:
 >>
->> On 02-04-24, 14:25, Alexandru Gagniuc wrote:
->>> Add support for the gen3x2 PCIe PHY on IPQ9574, ported form downstream
->>> 5.4 kernel. Only the serdes and pcs_misc tables are new, the others
->>> being reused from IPQ8074 and IPQ6018 PHYs.
+>>
+>> On 3/2/24 04:59, Krishna chaitanya chundru wrote:
+>>> Add pcie-mem & cpu-pcie interconnect path to the PCIe nodes.
 >>>
->>> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+>>> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
 >>> ---
->>>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 136 +++++++++++++++++-
->>>   .../phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5.h   |  14 ++
->>>   2 files changed, 149 insertions(+), 1 deletion(-)
+>>>    arch/arm64/boot/dts/qcom/sm8450.dtsi | 8 ++++++++
+>>>    1 file changed, 8 insertions(+)
 >>>
->>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->>> index 8836bb1ff0cc..f07bd27e3b7a 100644
->>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->>> @@ -487,6 +487,100 @@ static const struct qmp_phy_init_tbl ipq8074_pcie_gen3_pcs_misc_tbl[] = {
->>>        QMP_PHY_INIT_CFG(QPHY_V4_PCS_PCIE_ENDPOINT_REFCLK_DRIVE, 0xc1),
->>>   };
->>>
->>> +static const struct qmp_phy_init_tbl ipq9574_gen3x2_pcie_serdes_tbl[] = {
->>> +     QMP_PHY_INIT_CFG(QSERDES_PLL_BIAS_EN_CLKBUFLR_EN, 0x18),
->>> +     QMP_PHY_INIT_CFG(QSERDES_PLL_BIAS_EN_CTRL_BY_PSM, 0x01),
->>> +     QMP_PHY_INIT_CFG(QSERDES_PLL_CLK_SELECT, 0x31),
->>> +     QMP_PHY_INIT_CFG(QSERDES_PLL_PLL_IVCO, 0x0F),
->>> +     QMP_PHY_INIT_CFG(QSERDES_PLL_BG_TRIM, 0x0F),
+>>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>> index 01e4dfc4babd..6b1d2e0d9d14 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>> @@ -1781,6 +1781,10 @@ pcie0: pcie@1c00000 {
+>>>    					<0 0 0 3 &intc 0 0 0 151 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+>>>    					<0 0 0 4 &intc 0 0 0 152 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
+>>> +			interconnects = <&pcie_noc MASTER_PCIE_0 0 &mc_virt SLAVE_EBI1 0>,
 >>
->> Lower case here and everywhere please
-> 
-> For hex values
-
-I will these updated in V2. Thanks!
-
->>>   static const struct qmp_phy_init_tbl sdm845_qmp_pcie_serdes_tbl[] = {
->>>        QMP_PHY_INIT_CFG(QSERDES_V3_COM_BIAS_EN_CLKBUFLR_EN, 0x14),
->>>        QMP_PHY_INIT_CFG(QSERDES_V3_COM_CLK_SELECT, 0x30),
->>> @@ -2448,7 +2542,7 @@ static inline void qphy_clrbits(void __iomem *base, u32 offset, u32 val)
->>>
->>>   /* list of clocks required by phy */
->>>   static const char * const qmp_pciephy_clk_l[] = {
->>> -     "aux", "cfg_ahb", "ref", "refgen", "rchng", "phy_aux",
->>> +     "aux", "cfg_ahb", "ref", "refgen", "rchng", "phy_aux", "anoc", "snoc"
+>> Please use QCOM_ICC_TAG_ALWAYS.
 >>
->> How about older platforms which dont have these clocks
+>>> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_0 0>;
+>>
+>> And this path could presumably be demoted to QCOM_ICC_TAG_ACTIVE_ONLY?
+>>
 > 
-> The driver uses devm_clk_bulk_get_optional(), so it should be fine.
-> But the more important question should be why the platform needs
-> anoc/snoc clocks here.
+> I think it should be fine since there would be no register access done while the
+> RPMh is put into sleep state. Krishna, can you confirm that by executing the CX
+> shutdown with QCOM_ICC_TAG_ACTIVE_ONLY vote for cpu-pcie path on any supported
+> platform?
 > 
+> But if we do such change, then it should also be applied to other SoCs.
+> 
+> - Mani
+>
+we don't a have platform to test this now, we will keep
+QCOM_ICC_TAG_ALWAYS for now.
 
-I got the info from the downstream 5.4 kernel. While I don't know why 
-these new clocks are required, they are needed. Omitting them will cause 
-the boot to hang.
+- Krishna Chaitanya.
 
-I could rename them to "snoc_lane" and "anoc_lane", if you think that 
-makes more sense.
-
-
-Alex
 
