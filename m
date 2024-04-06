@@ -1,85 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-16618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16619-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 226B289A8AD
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Apr 2024 05:28:25 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3F6589A8B6
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Apr 2024 05:47:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B5FA31F21F46
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Apr 2024 03:28:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F361E1C2111E
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Apr 2024 03:47:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B67DB171C4;
-	Sat,  6 Apr 2024 03:28:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61D4818E02;
+	Sat,  6 Apr 2024 03:47:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uUtJQrSK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qKax27RF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5481401F
-	for <linux-arm-msm@vger.kernel.org>; Sat,  6 Apr 2024 03:28:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F45CEEB3
+	for <linux-arm-msm@vger.kernel.org>; Sat,  6 Apr 2024 03:47:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712374100; cv=none; b=gv4xE88nvJzg+6BYzbyn47HFYLFwdVbQLjwst+0SSdt0qmEtivS6pNc7KmwoknzqXkR3AV5xHiM3gkdzwfpSgH5S40P48qcXl+c9ZWFppq/mC+IlljXJc+k9PnrQmQnPGpMb2oIFrFlI9+4ZPbEBOeKgqPVRYLE6UMOs2wZrbJM=
+	t=1712375260; cv=none; b=QugAeFY+qBTfDPP8XrVlFBm/w1U55HfNEcocZHwJDMx5MZ5NXIhVraYPuwqIgH0vVaSXbRM5Tyn+SDD3yvqERvljxCLeiEvcEH+dLle6Hb4BCJXiF+PDHEr8UXvSulNyYmKVlZOCtMYBnewBnZns5JVX5nuTHHvf/AEa8iTXJlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712374100; c=relaxed/simple;
-	bh=fAFJor+9nJNmD/ci6us7lxxXXzZRDsJIO9AJ6zvVSk4=;
+	s=arc-20240116; t=1712375260; c=relaxed/simple;
+	bh=CrGv366HSVIKG9MIOnxGH0O2/DP73f4DeOovXb91ea8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iNTuxFWq+qAdRWw5/j6D6PgIefK60EwWZsd1X1qX7rWGk6UfjFqXxskgbTPlBviNF/5wB4Rm7/P6owOcnqlCYFin/o+fjU2Xd/no6aAt44E+fmS4USal7xlWCSZT88nnNeB+bsbeIbv/0gbM1Ul6ibqVMSe06c6VHTdSpHkZcpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uUtJQrSK; arc=none smtp.client-ip=209.85.208.173
+	 Content-Type:Content-Disposition:In-Reply-To; b=Bnct4dvEzEsr7T/3ylzfdFcpBLwa4bRv+51XFdbNYfAzg4DgG1cOOZ0lw3azleF5WLeXPxI5j3rBlphln9CVZgBw49ODoG7IgwOKHzgqsiu94oJOErZOzSSi4tOiNFmc1HG/LOsaaCNfSuWjJm9WiGVmDcCLXXrMma3ugKRXoo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qKax27RF; arc=none smtp.client-ip=209.85.167.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2d094bc2244so29043631fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Apr 2024 20:28:18 -0700 (PDT)
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-516cbf3fe68so3164898e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Apr 2024 20:47:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712374097; x=1712978897; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1712375256; x=1712980056; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=jfuelYCmVaPnXJqTFgO1Iq+D/XgR90NTWOrZt+9baK0=;
-        b=uUtJQrSKjh78/k+ml6qiSoZU+5hzkIuaUYcZkip5yLwQOSc2zBQxslOKOxFTK2ud90
-         BEZzcHC24R/HAnr2t2KJfFMtctNhVtCgzwahjFZYyOEMaHeI4hbC+3pJLcUv/SONQFfA
-         5UiFIlF88jMTZgPYH5FSu0yMyeypODjdBL+yLWpfxc2GZpx9WocufBa9u09oRS22RYeY
-         GVOXqTEDYMCwxJCiG4TTIWU/tucM9YEWTHNelSu83Fj1THGEgtFRZ1dgvlJCbUEhja7b
-         7odYC0cbVegykaDVbpztmrjZuBI/p9ty+WkMfjAsUg00dEy6SCsYxD0ZOTDWfdkWvq9H
-         Pyug==
+        bh=F/uU7IKHxTMAAbrC11KIil89Yya/JAHmkuNwgB4NZyE=;
+        b=qKax27RF2napdAG4dPdG53I7ZIna1DmE9tlwUhQ+iZY7aZR8H5TjoxuQKhCTHYMHj0
+         RG3i6gka+sWaLKKPLfp/V+jjyb7+0tQpB+2/0RG6wKelyLIynNEmHctlI/re5dTAflhi
+         IxLcQTuiF6OLD54m3VIUE75iatXjJgTqUrhFf93xPX1lhL2M50gM1hoA/mdgeXzZXpuk
+         JwsK8kqGtJ6qM3E8tyLYXt41SZ5++cjZXAQ7WHiW0N1xh8HPGOm/AXwOiEx/h9ZyGiz0
+         6s0jRWZlVchE3iMJ5pXRU1qcYoq76ftyEN5NiXVfaB7BJazMqQE30ZvHMeZet18hkJ2a
+         NtBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712374097; x=1712978897;
+        d=1e100.net; s=20230601; t=1712375256; x=1712980056;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jfuelYCmVaPnXJqTFgO1Iq+D/XgR90NTWOrZt+9baK0=;
-        b=dG2wSdrI24sI5uSNXT0dXQV1RffQoTkLfzRXSUo4K5yvyrv4znKS29G3Kj8uH9ZBcv
-         nXfsqjkLjwkCA8puKMOE3Up1Hc4UcyBkHi/IR3+UE9U21qApe1S5bCiJuGGK7oBixzyt
-         R6x7tmBc9Y3BVrHRCVLen3Pjza4YrYTu8XNBlTfKfPdhPs8k45V4VNddZfoCmikcstRW
-         VzRrN6eT16kQ2BsUyVO/PetyeCppERfMur/bhXHYYjalLD22LxmN1zDiNkPEfpLu0aEx
-         klxkDM2lbmKW4upQd0J2w9iYlndcdfBx1JukyplrqNvp4p/hxrpCbR3XojeyihJrKWjG
-         /ilQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXrSjJbGdJZLl8rOVDSRrgbONFKNR5bthiqFCds9zMrDPU1+Qui410hA44/NVGs8u5czazcjSYmKVnVbAxmlfUeNcxlmG4nEXrZvxLgxQ==
-X-Gm-Message-State: AOJu0YzpsUMp4IcbQnFurkdiOsM+8ZXGzSpDEN6bxqAr5Hlrr54i3iOw
-	SNR1BlLpJkEth0or8R/5xcmP6V3n0EYO5N+usMUgxis5svVR+pGSsLFeQ9BZwTk=
-X-Google-Smtp-Source: AGHT+IF3i8+vhLbIjnsL8VphQV1PmaT5a3qc5xWE3KaLEQtmXPGg+H4Zi7mDhaos0rILE6f8KYcCbg==
-X-Received: by 2002:a2e:8704:0:b0:2d4:1fa4:9eb8 with SMTP id m4-20020a2e8704000000b002d41fa49eb8mr1830431lji.40.1712374097096;
-        Fri, 05 Apr 2024 20:28:17 -0700 (PDT)
+        bh=F/uU7IKHxTMAAbrC11KIil89Yya/JAHmkuNwgB4NZyE=;
+        b=c4vDPkw+6+XuU+5NhbDpSK88VyN/hnUBU0uND4a7R03IFhq5WHl1e67tPsynJah+Nb
+         wyi56vzW97cY+SV8X3vMJxjqDv8LsDdGEvpgkVxcm3IdQq3KbRdpl/XygHTRzisdt+9v
+         QpAKCa+KXR5ALkXVklapXYYGpy+JoCI65vMZ68CZajArb+cVToUUSjRjxcOgFdPhG95y
+         oAMcrbhHcWHjUpHbgvP7BRWMSQZLCgih/XET16WZXR0623tDTet8xZfG6UVgLOOhNaeM
+         J6gmcgg1nJJuUzD1FJzOKG7JV9PChn1iuQJiqqKYUQi4e51MEo92uF1bsOcVVv7qV/18
+         mtJA==
+X-Forwarded-Encrypted: i=1; AJvYcCUIgBYI5kBaoRefvzAmnQpytm+NGZlBjTuShmgYfy9ONjooGtGqU8NEBgAWBC54Lf6r1RNKLR+zyPPXXYaKWwZ2QdcNmBWJnMcakr3/4Q==
+X-Gm-Message-State: AOJu0YwlJ832IM2lirXy6+V/yzmxYcj+CHld17ZxkvmTfh5Jdd8OJOgs
+	Eld+3ia5W0uRocvG9P6EtVdJcr9MSWCRkuSZg/Cd/rOQ1owunE3DnuYvLpTxEHg=
+X-Google-Smtp-Source: AGHT+IGnVgGJgW4W+EbWQbKLF8gQTo8Hs7EZYSTgxIwK/hl1vXLroiMKUu/oLwz+20+QBTD/hTSGKQ==
+X-Received: by 2002:ac2:42c9:0:b0:516:82c1:7d65 with SMTP id n9-20020ac242c9000000b0051682c17d65mr2054746lfl.23.1712375255742;
+        Fri, 05 Apr 2024 20:47:35 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (dzyjmhyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a00e:a300::227])
-        by smtp.gmail.com with ESMTPSA id n6-20020a2eb786000000b002d0acb57c89sm333260ljo.64.2024.04.05.20.28.16
+        by smtp.gmail.com with ESMTPSA id m17-20020a195211000000b00516a234ca0dsm357975lfb.192.2024.04.05.20.47.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Apr 2024 20:28:16 -0700 (PDT)
-Date: Sat, 6 Apr 2024 06:28:15 +0300
+        Fri, 05 Apr 2024 20:47:35 -0700 (PDT)
+Date: Sat, 6 Apr 2024 06:47:33 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 0/6] Add SMEM-based speedbin matching
-Message-ID: <wrvndv7ybn5dcnd6n7d62luwbogmjjsvqh6i3ow5exc3emqexk@n6b4bkydy5n7>
-References: <20240405-topic-smem_speedbin-v1-0-ce2b864251b1@linaro.org>
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] drm/msm/dp: Remove now unused connector_type from desc
+Message-ID: <iwsvkn6u3aindxqhkbyygoyy36chwuastxvmkoknb2vpgdq6mr@bnuuxveszbk3>
+References: <20240405-dp-connector-type-cleanup-v2-1-0f47d5462ab9@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,37 +85,28 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240405-topic-smem_speedbin-v1-0-ce2b864251b1@linaro.org>
+In-Reply-To: <20240405-dp-connector-type-cleanup-v2-1-0f47d5462ab9@quicinc.com>
 
-On Fri, Apr 05, 2024 at 10:41:28AM +0200, Konrad Dybcio wrote:
-> Newer (SM8550+) SoCs don't seem to have a nice speedbin fuse anymore,
-> but instead rely on a set of combinations of "feature code" (FC) and
-> "product code" (PC) identifiers to match the bins. This series adds
-> support for that.
+On Fri, Apr 05, 2024 at 08:14:11PM -0700, Bjorn Andersson wrote:
+> Now that the connector_type is dynamically determined, the
+> connector_type of the struct msm_dp_desc is unused. Clean it up.
 > 
-> I suppose a qcom/for-soc immutable branch would be in order if we want
-> to land this in the upcoming cycle.
+> Remaining duplicate entries are squashed.
 > 
-> FWIW I preferred the fuses myself..
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
-> Konrad Dybcio (5):
->       soc: qcom: Move some socinfo defines to the header, expand them
->       soc: qcom: smem: Add pcode/fcode getters
->       drm/msm/adreno: Implement SMEM-based speed bin
->       drm/msm/adreno: Add speedbin data for SM8550 / A740
->       arm64: dts: qcom: sm8550: Wire up GPU speed bin & more OPPs
+> This cleans up after, and hence depends on,
+> https://lore.kernel.org/all/20240324-x1e80100-display-refactor-connector-v4-1-e0ebaea66a78@linaro.org/
+> ---
+> Changes in v2:
+> - Squashed now duplicate entries
+> - Link to v1: https://lore.kernel.org/r/20240328-dp-connector-type-cleanup-v1-1-9bf84c5a6082@quicinc.com
+> ---
+>  drivers/gpu/drm/msm/dp/dp_display.c | 48 +++++++++++++------------------------
+>  1 file changed, 17 insertions(+), 31 deletions(-)
 > 
-> Neil Armstrong (1):
->       drm/msm/adreno: Allow specifying default speedbin value
 
-Generic comment: as you are reworking speed bins implementaiton, could
-you please take a broader look. A5xx just reads nvmem manually. A6xx
-uses adreno_read_speedbin(). And then we call adreno_read_speedbin
-second time from from adreno_gpu_init(). Can we get to the point where
-the function is called only once for all the platforms which implements
-speed binning?
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
 With best wishes
