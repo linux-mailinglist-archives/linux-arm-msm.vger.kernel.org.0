@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-16611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7CB7A89A872
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Apr 2024 04:22:37 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7943D89A880
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Apr 2024 04:56:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9FB941C20C7A
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Apr 2024 02:22:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 032B92821F0
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Apr 2024 02:56:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCC594C9F;
-	Sat,  6 Apr 2024 02:22:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92682748A;
+	Sat,  6 Apr 2024 02:56:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="z5MLG2OT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Kd0FoFQ6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFCF1401F
-	for <linux-arm-msm@vger.kernel.org>; Sat,  6 Apr 2024 02:22:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30DE1171C
+	for <linux-arm-msm@vger.kernel.org>; Sat,  6 Apr 2024 02:56:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712370154; cv=none; b=B6V7OtBwHs+lVIEG8nuy/ZYiyRCVI1MtWd35V6336hySXjvN1laWlM6c+Gsas20gPvqh6fgAuod/oSS5Jd97di6pxb5DeDFjekQ0bp28f5kQRYrUOg+idKNQJnmpf/WqAMbsGTMIzzopjcm7te1iMVp3r65DId9td/fhrTcy0vU=
+	t=1712372202; cv=none; b=bC/x0eS34f/Tx++sVA5gdgw438G/p82/isa+DczLOzwG9hvKPcgAWnAIC2MBBhVexyRO2P7PlfKWraAmsGzIXEk9o7kIbeKSjoGfjWXxEIVeK19SZUSMWr8QkH2a2o/VapHwRxcvVSwGp+VOhs7hM9Ot/cqGVg2fKBbK9Qf+FlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712370154; c=relaxed/simple;
-	bh=9sRTLUv7iI+opmqHequT8O/rcFP2Dt1+EuziegpIbuU=;
+	s=arc-20240116; t=1712372202; c=relaxed/simple;
+	bh=/4vGjLhy5asNRBnYWaJSshGgBORPxL+tYufLDjKhMpc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EK5r5W1UIEzbMoSaMzpKqw34PP4InNFhyd256NGQcnQfPNH7ofvRFtSdvdSHEGHgP5bev8lFWphLD/hSNcGeirUGi+tCA23mxksXT4bSY+eU27mrGOAJKtx2isKfSo6ourwBHsrb45tw0p1syzd7x3YLbXaDAZAGdonNnSn7fg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=z5MLG2OT; arc=none smtp.client-ip=209.85.208.173
+	 Content-Type:Content-Disposition:In-Reply-To; b=TGMVk6Sb3M4FxTQb6NS8iS/lLalqfgb8IbptZYF35krAHUFl1xCePiBj2oVrF8S6vrldroHuFaKUm0k7ePD/cl3aPwluzK9cWy4BKB1fYoSUR2XtfO2P4mBwFAXzCstCJfoEbTvku7oig1x+7IswW4iXd/zEf2QAn3kZtjubwPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Kd0FoFQ6; arc=none smtp.client-ip=209.85.167.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2d4886a1cb4so35798501fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Apr 2024 19:22:32 -0700 (PDT)
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-516d3776334so1985839e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Apr 2024 19:56:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712370151; x=1712974951; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1712372198; x=1712976998; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0ZyKLzJVktAzILDZDjIRmvAZaNHxUI4+ew0iZ8nIBhA=;
-        b=z5MLG2OTMrESeWWP9GUXppXq/8DuUH6C2Ic2qYiEZLSjPf/+PpTtYYxLEkCeIU0XJl
-         fXwxR3EUkJqclKrU4BCQETVGOC7S8gSqAWp7O4zrNujcVLBTYi6qR7L3f0wJ24PsaJgo
-         UaiPgq0UkSk9obLgphJ2g/8Zoh0TkMkLY5iWrpSak/ruALyf1je3xNwybN84GC/nHI7S
-         gGxuCG2Qax9yFQA9GN1oSy0fIrEN5q+SV6ad5/u1EYNYmbnD9XCTLaY2+IQgpZrm12J0
-         CZ/gsb2xzf1h26s2rOprhfjOHp6VmlUmGzlZmthklFYoQyMgbwPQJ7PRQkgT5MMjEjgm
-         u6Pg==
+        bh=XkuhIBlU9RYiWnHnizddy2d21zdQrAfJBlCZtmWWd30=;
+        b=Kd0FoFQ6mOIaMoRgpofg4btZMFC7cLHOJtRa9xF7Y/SCgZKx2bZN2HuA5lW317ArAQ
+         QdGey3EupJbBBjGUQ3WIyFqV02HPtYcNvk593DrR1pWTu9D39gJ/stV1AyB57ZHpgvv+
+         wWg/ZLAtvUsOw+a6G5fZ1pFnZo3oC6PR1MnFfVgQo6FAMNqJg4iAELSjAHouaFKf/oFn
+         bdK8zrfPf7dYwD/kwSD4SAX4JTJZNoayTGUFVNnbzSyCGV9hooZ+YE+OVd/bDCi7sqzP
+         n8H/m+ui2v0X3Vrd4TVo9jerl9dyOLu64Cwn+5Zg7huU0f1wUT+rwTwQm7LsLsJzZB7M
+         B33A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712370151; x=1712974951;
+        d=1e100.net; s=20230601; t=1712372198; x=1712976998;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0ZyKLzJVktAzILDZDjIRmvAZaNHxUI4+ew0iZ8nIBhA=;
-        b=BAhC5BNzxXvaNfs4HAORqIy0eyErTteM7oKBD7CjZvN4TPNsiDyUPfDA8rZab3+m2I
-         /+mznZWZwPXE1190XCJq4lRtju8kTPsmKa1qia8jnlLNeibSqzWvdQm9AZgyNc2jI5La
-         43JuB1CLxw/azsAxiGPg0tJslcn+L8uc6uM9HnhodfZ0sAyajbkbol07WC6jujZnFf2k
-         ZM+RCv0BZyWaTASNXsqzmlXUYKRc7r6aFKlKw99C/SSm4Vn94RI0FSolgyibuhCCxPPt
-         fDiPpNYPlW6kQWHO+9OZ1/2MsA83C+vJM4KJYPlk6pkA5YKZcxsdbTjCbOXLNo8LGq/H
-         yg/A==
-X-Forwarded-Encrypted: i=1; AJvYcCUMKSqwQ8cPXV5+rTF0vLUlPPHT56sKR6Nr+0V394iMIAcpj17kmttjGrh7oMNHR27uAiOg2QLOnfaUKPp+yAzLftw6/jwFNZrCLwqkJA==
-X-Gm-Message-State: AOJu0YzjdT/QpjT82wn3Sv8oHIwBIFQMNlpDMNllog9R7FGvgRsVbKNj
-	30cNfLakz1fYIfriAkUizwMMnKSU78WX1cLJOqHMDHhUOcqDq1rmoain6+OameM=
-X-Google-Smtp-Source: AGHT+IGvb4XRGR6EdNfCX6p/VaXQdYVMCyH8vn9vZL77k7LU0xmSF1owwRXRLY7RdG5Y7Nb4kOAN8g==
-X-Received: by 2002:a2e:9805:0:b0:2d8:68ad:1e8b with SMTP id a5-20020a2e9805000000b002d868ad1e8bmr1928276ljj.52.1712370150743;
-        Fri, 05 Apr 2024 19:22:30 -0700 (PDT)
+        bh=XkuhIBlU9RYiWnHnizddy2d21zdQrAfJBlCZtmWWd30=;
+        b=A5ScBqlVlY8sXjuawfC/uM8m6803VilwquOS4dfhcQAr1u6Kh1Ufxr8pYij2A37FjX
+         7jJ2YEEj1jgPU+uZvjzLWDIWGpmkwXgp4z5ljsqGlcgYzMAGGyyFkw5dfVdgAj0iHitd
+         T4NiIMgQ0aUjksYSBOw9Y9ntiGW5ecwqfmxROii1mgPzqYAdleD3b5uBigTofC+ShXrS
+         Gp2c8XrcFEokFuhM0WpttXKFh1UOhojXIWw8mtDi15BpaV2r/Jt/mMdIHN73KXvxdexi
+         z2COfNAVY4/mSkBar6m3OO0VAfbMI9mJcURcvGMPhRlOJTA4O01o3e6NlstM8LcRkt7m
+         bWuw==
+X-Forwarded-Encrypted: i=1; AJvYcCU7YsuBQMV4658N/mIg1e5R5UFXZ9zeCM+KDtzhDJnImrdrYbFwE1BMEok/WV5l2hal08/Kad7BLbCrn9DETJpYYy6qJzNswZRnapghKQ==
+X-Gm-Message-State: AOJu0YySQHL8M4kfphTGeiy9AO8dBkQKLURWKWXTbpww1ZvKWAhSPKur
+	ZUDvS9P6B6jlkljEqIL6uW0waErRng89asheedCrWxYjWIEQMa1DBpUFP55gM6s=
+X-Google-Smtp-Source: AGHT+IEFyrUrT2ZntAekgJgSNMszFLZJgTqy/cn0YWgronRwNk9wRp1wJ9lXCAf/pLYAAOSg/cRiUg==
+X-Received: by 2002:a05:6512:3d09:b0:513:c6ec:fa6c with SMTP id d9-20020a0565123d0900b00513c6ecfa6cmr3037333lfv.48.1712372197844;
+        Fri, 05 Apr 2024 19:56:37 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (dzyjmhyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a00e:a300::227])
-        by smtp.gmail.com with ESMTPSA id f1-20020a05651c02c100b002d86145ecaesm338732ljo.86.2024.04.05.19.22.30
+        by smtp.gmail.com with ESMTPSA id be37-20020a056512252500b00515af4b4878sm356263lfb.183.2024.04.05.19.56.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Apr 2024 19:22:30 -0700 (PDT)
-Date: Sat, 6 Apr 2024 05:22:28 +0300
+        Fri, 05 Apr 2024 19:56:37 -0700 (PDT)
+Date: Sat, 6 Apr 2024 05:56:35 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
@@ -77,11 +77,11 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
 	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
 	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 1/6] soc: qcom: Move some socinfo defines to the header,
- expand them
-Message-ID: <zua77x2vpfgahghxe33hrhimwh4wl4vu3ttvtao2xnwbvxfesm@rks7ue7cgwhu>
+Subject: Re: [PATCH 3/6] drm/msm/adreno: Allow specifying default speedbin
+ value
+Message-ID: <pncr7ecf4eir36skul3iwt2nf5bpuwd5zjfzzfwwnxjwe4hoes@6z2xe54crijp>
 References: <20240405-topic-smem_speedbin-v1-0-ce2b864251b1@linaro.org>
- <20240405-topic-smem_speedbin-v1-1-ce2b864251b1@linaro.org>
+ <20240405-topic-smem_speedbin-v1-3-ce2b864251b1@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,102 +90,60 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240405-topic-smem_speedbin-v1-1-ce2b864251b1@linaro.org>
+In-Reply-To: <20240405-topic-smem_speedbin-v1-3-ce2b864251b1@linaro.org>
 
-On Fri, Apr 05, 2024 at 10:41:29AM +0200, Konrad Dybcio wrote:
-> In preparation for parsing the chip "feature code" (FC) and "product
-> code" (PC) (essentially the parameters that let us conclusively
-> characterize the sillicon we're running on, including various speed
-> bins), move the socinfo version defines to the public header and
-> include some more FC/PC defines.
+On Fri, Apr 05, 2024 at 10:41:31AM +0200, Konrad Dybcio wrote:
+> From: Neil Armstrong <neil.armstrong@linaro.org>
 > 
+> Usually, speedbin 0 is the "super SKU", a.k.a the one which can clock
+> the highest. Falling back to it when things go wrong is largely
+> suboptimal, as more often than not, the top frequencies are not
+> supposed to work on other bins.
+
+Isn't it better to just return an error here instead of trying to guess
+which speedbin to use?
+
+If that's not the case, I think the commit should be expanded with
+actually setting default_speedbin for the existing GPUs.
+
+> 
+> Let the developer specify the intended "lowest common denominator" bin
+> in struct adreno_info. If not specified, partial struct initialization
+> will ensure it's set to zero, retaining previous behavior.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> [Konrad: clean up, add commit message]
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  drivers/soc/qcom/socinfo.c       |  8 --------
->  include/linux/soc/qcom/socinfo.h | 36 ++++++++++++++++++++++++++++++++++++
->  2 files changed, 36 insertions(+), 8 deletions(-)
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 2 +-
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h | 1 +
+>  2 files changed, 2 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-> index 277c07a6603d..cf4616a468f2 100644
-> --- a/drivers/soc/qcom/socinfo.c
-> +++ b/drivers/soc/qcom/socinfo.c
-> @@ -21,14 +21,6 @@
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 0674aca0f8a3..4cbdfabbcee5 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -2915,7 +2915,7 @@ static int a6xx_set_supported_hw(struct device *dev, const struct adreno_info *i
+>  		DRM_DEV_ERROR(dev,
+>  			"missing support for speed-bin: %u. Some OPPs may not be supported by hardware\n",
+>  			speedbin);
+> -		supp_hw = BIT(0); /* Default */
+> +		supp_hw = BIT(info->default_speedbin); /* Default */
+>  	}
 >  
->  #include <dt-bindings/arm/qcom,ids.h>
->  
-> -/*
-> - * SoC version type with major number in the upper 16 bits and minor
-> - * number in the lower 16 bits.
-> - */
-> -#define SOCINFO_MAJOR(ver) (((ver) >> 16) & 0xffff)
-> -#define SOCINFO_MINOR(ver) ((ver) & 0xffff)
-> -#define SOCINFO_VERSION(maj, min)  ((((maj) & 0xffff) << 16)|((min) & 0xffff))
-> -
->  /* Helper macros to create soc_id table */
->  #define qcom_board_id(id) QCOM_ID_ ## id, __stringify(id)
->  #define qcom_board_id_named(id, name) QCOM_ID_ ## id, (name)
-> diff --git a/include/linux/soc/qcom/socinfo.h b/include/linux/soc/qcom/socinfo.h
-> index e78777bb0f4a..ba7f683bd32c 100644
-> --- a/include/linux/soc/qcom/socinfo.h
-> +++ b/include/linux/soc/qcom/socinfo.h
-> @@ -3,6 +3,8 @@
->  #ifndef __QCOM_SOCINFO_H__
->  #define __QCOM_SOCINFO_H__
->  
-> +#include <linux/types.h>
-> +
->  /*
->   * SMEM item id, used to acquire handles to respective
->   * SMEM region.
-> @@ -12,6 +14,14 @@
->  #define SMEM_SOCINFO_BUILD_ID_LENGTH	32
->  #define SMEM_SOCINFO_CHIP_ID_LENGTH	32
->  
-> +/*
-> + * SoC version type with major number in the upper 16 bits and minor
-> + * number in the lower 16 bits.
-> + */
-> +#define SOCINFO_MAJOR(ver) (((ver) >> 16) & 0xffff)
-> +#define SOCINFO_MINOR(ver) ((ver) & 0xffff)
-> +#define SOCINFO_VERSION(maj, min)  ((((maj) & 0xffff) << 16)|((min) & 0xffff))
-> +
->  /* Socinfo SMEM item structure */
->  struct socinfo {
->  	__le32 fmt;
-> @@ -74,4 +84,30 @@ struct socinfo {
->  	__le32 boot_core;
+>  	ret = devm_pm_opp_set_supported_hw(dev, &supp_hw, 1);
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> index 77526892eb8c..460b399be37b 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> @@ -110,6 +110,7 @@ struct adreno_info {
+>  	 * {SHRT_MAX, 0} sentinal.
+>  	 */
+>  	struct adreno_speedbin *speedbins;
+> +	unsigned int default_speedbin;
 >  };
 >  
-> +/* Internal feature codes */
-> +enum feature_code {
-> +	/* External feature codes */
-> +	SOCINFO_FC_UNKNOWN = 0x0,
-> +	SOCINFO_FC_AA,
-> +	SOCINFO_FC_AB,
-> +	SOCINFO_FC_AC,
-> +	SOCINFO_FC_AD,
-> +	SOCINFO_FC_AE,
-> +	SOCINFO_FC_AF,
-> +	SOCINFO_FC_AG,
-> +	SOCINFO_FC_AH,
-> +	SOCINFO_FC_EXT_RESERVE,
-> +};
-> +
-> +/* Internal feature codes */
-> +/* Valid values: 0 <= n <= 0xf */
-> +#define SOCINFO_FC_Yn(n)		(0xf1 + n)
-> +#define SOCINFO_FC_INT_RESERVE		SOCINFO_FC_Yn(0x10)
-> +
-> +/* Product codes */
-> +#define SOCINFO_PC_UNKNOWN		0
-> +/* Valid values: 0 <= n <= 8, the rest is reserved */
-> +#define SOCINFO_PCn(n)			(n + 1)
-> +#define SOCINFO_PC_RESERVE		(BIT(31) - 1)
-
-Please move these defines into the next patch.
-
-> +
->  #endif
+>  #define ADRENO_CHIP_IDS(tbl...) (uint32_t[]) { tbl, 0 }
 > 
 > -- 
 > 2.40.1
