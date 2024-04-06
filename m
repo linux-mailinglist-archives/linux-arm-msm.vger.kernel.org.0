@@ -1,65 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-16625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF20689AA17
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Apr 2024 11:22:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 12EE489AA1B
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Apr 2024 11:22:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8F9171F21E57
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Apr 2024 09:22:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BB6A61F2188C
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Apr 2024 09:22:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D8B7446DE;
-	Sat,  6 Apr 2024 09:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3EF0376EC;
+	Sat,  6 Apr 2024 09:19:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ag1LVMaD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UjSDeR6b"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32970446AD;
-	Sat,  6 Apr 2024 09:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8268376F5;
+	Sat,  6 Apr 2024 09:19:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712395144; cv=none; b=YN3LjRL/EMCQYSSLJfZn35f3tGb64p8OXHW9WQOQfU8ITLQrfMdnQoMvhQmk01/KhlVKNiefsd3ZFmzK7nqhKW/nvCEcxYcJ0KjC2QXcNLB2l+u04l/mmNCJHTdzHBbWd+iuD/bwiGvnOY82RfSJ55oZHIAkHHUfzP4PIzZjT5E=
+	t=1712395178; cv=none; b=pPmjXsiKObXS7eWOcgXFeS4cKZjBKsrUnwW+lhUmgdmiS3zSx/WU307a28vNvzHqjr1JAYJNcSVg0G31VAL2riBEfHhqo8W2WVlFySXYwZu9yal7SpfzMyc7Ltpm4jhD13ive/1vAv1weUMZC4Y/v4L++hEsddMIC4D/vNHdMDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712395144; c=relaxed/simple;
-	bh=1iz5fj0staSEBeBD4iubGSRLqhDhiBIKfBjemrptmJE=;
+	s=arc-20240116; t=1712395178; c=relaxed/simple;
+	bh=R2YpeVd3fp6cSDv7naiL1ODEdKUfOG1zEJc13M0NeYI=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=eHA702xU/J3OCj9p9JEsfxLy4Z0DFbKjWZ4Zgm4bUVY7k41jOV7YKIBEpSYapYlL9o6gkIVl+/n9bv88qBSQEX9z5TJ5bfs1X3kPjkJVphHiUWPRG3Jjj4TECvjQ5/4Ij4cZuut/Xc1mJbdA1ifkDruxLIU/VmfTAayAsHotSqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ag1LVMaD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E35DC43394;
-	Sat,  6 Apr 2024 09:18:59 +0000 (UTC)
+	 MIME-Version:Content-Type; b=tMZi4zAhU93qRTWKGJEfDqvbI/d98uGXTbQzRKy+S1SvcLSgNSr1r0G/6affbOWrXLX7evop4QtbNOPI2H5fGZ0IV9z/syW7GnFhP7uxd0IpCKADIiTtj9biajzunAvSVA39VF2qmaUTGG6APrO6NAw2Y6MOv507Lelqh37B6IY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UjSDeR6b; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAF7BC433C7;
+	Sat,  6 Apr 2024 09:19:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712395144;
-	bh=1iz5fj0staSEBeBD4iubGSRLqhDhiBIKfBjemrptmJE=;
+	s=k20201202; t=1712395178;
+	bh=R2YpeVd3fp6cSDv7naiL1ODEdKUfOG1zEJc13M0NeYI=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=ag1LVMaDwFBCTCC8hW1EdfxpTKqKuWopYK1dHwSVtSR/m3ufyCM+/Z3lJh7EEqYUf
-	 e7jhCey2MXWcUUfwrdL4uynOmNDwHTY3ZxHFtLPIiRYjWeV5n5V5+Y6+QTlQHMfKsm
-	 O7YjYL0RGSRrtD9eWDMy/R0Sr7NP2EH/hkZrwqtzXCIMzU1CQcQMcPjqiijTs8vZp5
-	 sxp4txYdi7whwSjcTgg/J9iZJEabVirHvAshc3/Lim7i7YSeZnPqxLpr62nsY7RvE/
-	 DcEm+q1gHrMVa48qfo0WQHhdqpR8E3kYXzSZ5lJS6Isp40I4Tqzo5+fBXivY8uilDi
-	 jnwJxow/JBuIw==
+	b=UjSDeR6bvGAw4Vd/Tp5OWTGDiDQB1RNTQxxSXSljaNYwjyo9dY/SRTA+6WhXrfx2l
+	 HQzbNAgMj1sRNTgqj4wGsctaELnLAuPLA/O7eVncW7+KbvILgFWQVYN/mbG/mTNN7p
+	 b1s7KgUEaNWSf0x3by4mH01KvKAFtruy84JYWPg1QoCSvfNe9rEe1wG0VQC2UFLTzD
+	 7/mwyDJTH7REZK8qJiyP49L8uBIFhwAiP35m9JyDLZk5fm2Jg5zBc59fOe8KxBfTM1
+	 e1kaE79w1qaXD1XO4I8W/UOpm4No+tAqjhs8BCO75TXFG64k8IOiYxcyCscKA1KeA/
+	 8ES2RaHtZfxVw==
 From: Vinod Koul <vkoul@kernel.org>
-To: Kishon Vijay Abraham I <kishon@kernel.org>, 
- Stephen Boyd <swboyd@chromium.org>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
- linux-arm-msm@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
- linux-phy@lists.infradead.org, freedreno@lists.freedesktop.org, 
- Douglas Anderson <dianders@chromium.org>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Abel Vesa <abel.vesa@linaro.org>, Steev Klimaszewski <steev@kali.org>, 
- Johan Hovold <johan+linaro@kernel.org>, 
- Bjorn Andersson <quic_bjorande@quicinc.com>
-In-Reply-To: <20240405000111.1450598-1-swboyd@chromium.org>
-References: <20240405000111.1450598-1-swboyd@chromium.org>
-Subject: Re: [PATCH] phy: qcom: qmp-combo: Fix register base for
- QSERDES_DP_PHY_MODE
-Message-Id: <171239513898.352254.11562819537572881543.b4-ty@kernel.org>
-Date: Sat, 06 Apr 2024 14:48:58 +0530
+To: andersson@kernel.org, konrad.dybcio@linaro.org, kishon@kernel.org, 
+ robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+ cros-qcom-dts-watchers@chromium.org, manivannan.sadhasivam@linaro.org, 
+ davidwronek@gmail.com, Danila Tikhonov <danila@jiaxyga.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20240401182240.55282-1-danila@jiaxyga.com>
+References: <20240401182240.55282-1-danila@jiaxyga.com>
+Subject: Re: (subset) [PATCH 0/2] phy: qcom-qmp-ufs: Fix PHY QMP clocks for
+ SC7180
+Message-Id: <171239517351.352396.6743656953443079463.b4-ty@kernel.org>
+Date: Sat, 06 Apr 2024 14:49:33 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,23 +65,23 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.12.3
 
 
-On Thu, 04 Apr 2024 17:01:03 -0700, Stephen Boyd wrote:
-> The register base that was used to write to the QSERDES_DP_PHY_MODE
-> register was 'dp_dp_phy' before commit 815891eee668 ("phy:
-> qcom-qmp-combo: Introduce orientation variable"). There isn't any
-> explanation in the commit why this is changed, so I suspect it was an
-> oversight or happened while being extracted from some other series.
-> Oddly the value being 0x4c or 0x5c doesn't seem to matter for me, so I
-> suspect this is dead code, but that can be fixed in another patch. It's
-> not good to write to the wrong register space, and maybe some other
-> version of this phy relies on this.
+On Mon, 01 Apr 2024 21:22:38 +0300, Danila Tikhonov wrote:
+> This series of patches is based on the series from Manivannan:
+> https://lore.kernel.org/all/20240131-ufs-phy-clock-v3-0-58a49d2f4605@linaro.org/
+> 
+> Patch from David adding a UFS nodes for SC7180(SM7125):
+> https://lore.kernel.org/all/20240121-sm7125-upstream-v4-6-f7d1212c8ebb@gmail.com/
+> 
+> The patch submitted by David and a series of patches submitted by Manivannan
+> were both applied at approximately the same time. As a result, David's patch
+> did not include this change.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] phy: qcom: qmp-combo: Fix register base for QSERDES_DP_PHY_MODE
-      commit: ee13e1f3c72b9464a4d73017c060ab503eed653a
+[1/2] dt-bindings: phy: qmp-ufs: Fix PHY clocks for SC7180
+      commit: 7c1f42967b75bdcd0640c52d37d58d8dd122989b
 
 Best regards,
 -- 
