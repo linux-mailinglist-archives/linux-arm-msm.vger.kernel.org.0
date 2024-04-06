@@ -1,103 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-16641-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19A9889ABED
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Apr 2024 18:08:22 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25A8289AC4C
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Apr 2024 18:51:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9B14BB218F0
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Apr 2024 16:08:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CEF7A281F08
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Apr 2024 16:51:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDE5B3BBF5;
-	Sat,  6 Apr 2024 16:08:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68DCE56B60;
+	Sat,  6 Apr 2024 16:48:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pVaYGjZN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nkwjDuVN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42E7B3FB9B
-	for <linux-arm-msm@vger.kernel.org>; Sat,  6 Apr 2024 16:07:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D594CE17;
+	Sat,  6 Apr 2024 16:48:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712419681; cv=none; b=Z4Ok7qq4HUt2LUPGGCWEYW/zKXJHAcubz0WhqMDLEb6I2UxCUIi5aPB50chJQF/VVmhhTHNGIIC+E6ercDUn2OiKIFi1NwHZm1+Bki0WyoJg7zhHInpYBeVqOb7tCg1RJ+VIpO7FKyzm2LbuA3i7oL/cafkbznyrA+FXbG6EKRg=
+	t=1712422131; cv=none; b=twNNrXm1zFcpdy0HO6fYvWudUx3suY2DXilyZoqIPSEB5i6MycLTK89JuB0t/qCibH/CGFYFERrKtoc81dw4mQu58Uui22QGRsrZf0dpb0I4R86S43Tv60LG2kG8uNFxn0Bp9d/fEPGqTXZtYftRAuzuIKTlY44rL3r/YQi1rXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712419681; c=relaxed/simple;
-	bh=Re9aog4YI0eZKksmQyEgqtuyaTCf0OysxZQoXoVWlyI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rxWTXYvBevR3D+7n2ow4MiKYaWP8ArXUwdolhCut3P/l+Q2FsfoFknzhcfudZI2sbNFqAv1LHeoILeusKxdxklJCUYIELfs7pSbCCarRq+YSb73wpLfoQbc2Rsx8eFFfwwCtNQX0WZUsTf12uX0Ga8EgkDeE88hemS5031Ngk3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pVaYGjZN; arc=none smtp.client-ip=209.85.219.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-dd161eb03afso2926447276.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Apr 2024 09:07:59 -0700 (PDT)
+	s=arc-20240116; t=1712422131; c=relaxed/simple;
+	bh=l0HOUvCH5NyJ7m1SR7z+oF/8ktmm109ZvDWMpVVXq88=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=N7ChMlJi9kjK+ysMFgqyHcNsK8wRqKr/8fUz5w7+FbMe3bO/f3UZp0V7xfv/cAEvUAFxrDOcS0zy3t8whVycKkajzi3btvdv/WuMRiwXvTQER5nU8Obr8h0AmkKCoD91PkemCy1guE6rBrOGJspb1SOZqghQ/LzAjXedCfFysMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nkwjDuVN; arc=none smtp.client-ip=209.85.210.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-6e6a00de24aso1813728a34.3;
+        Sat, 06 Apr 2024 09:48:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712419678; x=1713024478; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=xxhiT4mz7EkwRe7mA3Y1GYf1RmoX1+AQ0pJ6CUbqHqM=;
-        b=pVaYGjZNljmYK5haX5Hk9nYOp6BhsAH3mdQgdq+OqJyWFba0DR+R9VqzxnFXSdNclr
-         d4P5/y466v75glXTyZK7fS69xlZyWkVb+Tl525LxKAJ8w7dwXijXva/CWI41ndNHwj+U
-         qkj2yhQbRvZdxWFhO2Wgta9gaoWqkX31cdxhBA77XboKgU0xzLd8OqVYgTXEJN1M0Hn7
-         KObLOcVso2E9XEcJUsdTazCSdr3EzTKdjWgK/D3mPuJsu8e4KMe/VemUM28yChFKQ8Hv
-         5ApA/eeqDanfOr0JAroOuWl0/QxP4eCJHfdFH+ppepNL21sUscTrU9R3ZV/eomiLkuOh
-         uD/Q==
+        d=gmail.com; s=20230601; t=1712422129; x=1713026929; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DKheQqCooEORfEAc4BfVHAN7JSAJma1nB9maY1cQRV4=;
+        b=nkwjDuVN41tyYOOa/+a+Yw5xNlSffz7DilVPwDiL43lvNT/GK5jiFVDn6dg5SD0wmg
+         gF4jWTeJVD1I4DhTpoRgFtXSFXXOFoEi+1O0RHZSyz8WvYGeHa7aTTNySYb0rK9zB5y4
+         zRyMYaQsD/bTPFLktzjp11X6jIxWocXGuJx4iSMoMclHUZhI0kR1l5YAhGi36ipl7Mox
+         QMH7pbywVBbwbP52sLJls1hX+nPjImZV4GryTI83r7GKWRVcvGUsBrmIPu+Z6gl1W0uW
+         XA5RS0uc6b8sLAE0kIp9wg6aVhDE6EfqLIK59T2oMQvjJDCObBdWvbxregF4mWroIRYb
+         nwtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712419678; x=1713024478;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xxhiT4mz7EkwRe7mA3Y1GYf1RmoX1+AQ0pJ6CUbqHqM=;
-        b=l0osd+vJEGq0BhWALtrXcOaldqetEgDmMLgUKCbXOe+V2lMlM3m3yAA9z/u7wdv2Pg
-         xxfb05xa5tb8sSWkw7iJyfmKz5HEKu4i+YLvP0xQvGGYzbXPcYbywslxOWqXygcaRY/y
-         MpjKdHdW9iQe+TM80wZ63jfHmFZuDbN5PrQnISyFUdw66Z39SL8yd4FpxB5VgHfivpes
-         ty+dlTwR7IFyaXg85yM9MTjd8GymVV1me8EsfLjRFPWCmtL8MxZj6eYtXxmDnkxtGvN8
-         TAbL+D1ECAHcddr1wxtd/6X7FT7Qka5h7Yx9yQCwyikawHrJn4ZX3kEj5EDI+iAoCJZR
-         tqDg==
-X-Forwarded-Encrypted: i=1; AJvYcCXZtjO2loWv8/jYBzBowzdlzqFgxmUX6NEvVYvWatLeOb0EgH++rKf8VeZS2hHs69wOjQjRXjtYzpqgV7dAVjjSy8Mu+8uuUz5jGfz6Hw==
-X-Gm-Message-State: AOJu0YzNa/4nGG0lCNabl3rYuLxwsb3PvwlNaX7GL4N+m8lQyV5tcHTi
-	jYAXSk77L3Bd4wQNlxPRpiOTMfz8shfX38vp5kYUqU2IoqpN5OZDsDoDyIEu3Q3uNAh3qqs2AbG
-	7E2X0zSmxjLhg46pc2+VN+Z6z56NyhEexQN0+2g==
-X-Google-Smtp-Source: AGHT+IHggO+6U20SEYFId9dF+T2+hCDTSyO2Vax1gDweglAaFNbjoPCJbiYC8M6TObeewBzJ5GyPc4eC7fPDozv2hHQ=
-X-Received: by 2002:a25:6a46:0:b0:dc6:2e29:4262 with SMTP id
- f67-20020a256a46000000b00dc62e294262mr3611046ybc.58.1712419678311; Sat, 06
- Apr 2024 09:07:58 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1712422129; x=1713026929;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DKheQqCooEORfEAc4BfVHAN7JSAJma1nB9maY1cQRV4=;
+        b=N0mKFSOy35s0MFbmTObHjVhBsggUIQ2X5deGwrX3sWpXOnVOQZKKOfKilOw2S+Ra2Z
+         geDRZokDh1Iu5l1olXxIxvBHfyKPjhx7PKmgLAoTqP6qvHDNXgyl2EUNFXTnE9Lq2xix
+         ErilFSQ7AZtMrV6UbN8hr7nJiEJPecIDlIWNf/emwE/Jh01E8KJq10Yst4JCkA/xEv4n
+         wgvty9xAGNQfVKk8XpRH4gC/MB9ZGWTJ/p/ywbAEscm+LdnCElCMhEBe7lb7nkje4Hrg
+         8qLxCG3BMuUH4lSYdvsozvlyRjMpKPLVXMsK9iWqbfBFU10mXBUKFyRWw83bUbo4kJil
+         6iLQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVRd6g2ROl/Q3qzmDfsMmu+2gTWjXBqxjhJL1o0Htd96KXul/juIfHUEI7ktTteidllr+p1wYmWNrjjlwJMosNI8eBePUcmtTLAiZzRj1qLBqXx9138g4cM/A6bNEwbWH+q6Rt2grXlgg3WLg==
+X-Gm-Message-State: AOJu0YxFlSY6RDi6SSZvPTPkJq0oX+HspZK86cPSCgiYEwZy/Y10XbYd
+	Lq19W3ZdPFHs+YrLOyGozQydSP2C2QLjeNKqvqnmpxsgdrmndN0t
+X-Google-Smtp-Source: AGHT+IHQhCgoz1D7z2Bflhbg39hCU1gZZwVTvOMMq3IkNcQxp3kf0snzpBO3qyliIQ0NwjSLyvPMJw==
+X-Received: by 2002:a05:6830:11c5:b0:6ea:f00:5c2c with SMTP id v5-20020a05683011c500b006ea0f005c2cmr701920otq.35.1712422128821;
+        Sat, 06 Apr 2024 09:48:48 -0700 (PDT)
+Received: from [192.168.7.110] (c-98-197-58-203.hsd1.tx.comcast.net. [98.197.58.203])
+        by smtp.gmail.com with ESMTPSA id i4-20020a4aab04000000b005a48e64c699sm821908oon.40.2024.04.06.09.48.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 06 Apr 2024 09:48:48 -0700 (PDT)
+Message-ID: <45e1a982-fd59-48de-ace4-d6b6e821189d@gmail.com>
+Date: Sat, 6 Apr 2024 11:48:45 -0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240406-shinano-vib-v1-1-fdd02af39d56@z3ntu.xyz>
-In-Reply-To: <20240406-shinano-vib-v1-1-fdd02af39d56@z3ntu.xyz>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 6 Apr 2024 19:07:47 +0300
-Message-ID: <CAA8EJprxuhE5BNw4LMUkjF8WPi-oBzY5t6LrnN8yvjfguFPoig@mail.gmail.com>
-Subject: Re: [PATCH] ARM: dts: qcom: msm8974-sony-shinano: Enable vibrator
-To: Luca Weiss <luca@z3ntu.xyz>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6/7] phy: qcom-qmp-pcie: add support for ipq9574 gen3x2
+ PHY
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Vinod Koul <vkoul@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>, ansuelsmth@gmail.com,
+ robimarko@gmail.com, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20240402192555.1955204-1-mr.nuke.me@gmail.com>
+ <20240402192555.1955204-6-mr.nuke.me@gmail.com> <ZhEMB0HP0g1YwPvE@matsya>
+ <CAA8EJpqYV537aCbkwTRUeZJzcn4wMXFqGxQHSdDFraGV_2zbQQ@mail.gmail.com>
+Content-Language: en-US
+From: "Alex G." <mr.nuke.me@gmail.com>
+In-Reply-To: <CAA8EJpqYV537aCbkwTRUeZJzcn4wMXFqGxQHSdDFraGV_2zbQQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, 6 Apr 2024 at 18:36, Luca Weiss <luca@z3ntu.xyz> wrote:
->
-> Enable the vibrator connected to PM8941 found on the Sony shinano
-> platform.
->
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
->  .../arm/boot/dts/qcom/qcom-msm8974pro-sony-xperia-shinano-common.dtsi | 4 ++++
->  1 file changed, 4 insertions(+)
+On 4/6/24 09:37, Dmitry Baryshkov wrote:
+> On Sat, 6 Apr 2024 at 11:47, Vinod Koul <vkoul@kernel.org> wrote:
+>>
+>> On 02-04-24, 14:25, Alexandru Gagniuc wrote:
+>>> Add support for the gen3x2 PCIe PHY on IPQ9574, ported form downstream
+>>> 5.4 kernel. Only the serdes and pcs_misc tables are new, the others
+>>> being reused from IPQ8074 and IPQ6018 PHYs.
+>>>
+>>> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+>>> ---
+>>>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 136 +++++++++++++++++-
+>>>   .../phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5.h   |  14 ++
+>>>   2 files changed, 149 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>>> index 8836bb1ff0cc..f07bd27e3b7a 100644
+>>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>>> @@ -487,6 +487,100 @@ static const struct qmp_phy_init_tbl ipq8074_pcie_gen3_pcs_misc_tbl[] = {
+>>>        QMP_PHY_INIT_CFG(QPHY_V4_PCS_PCIE_ENDPOINT_REFCLK_DRIVE, 0xc1),
+>>>   };
+>>>
+>>> +static const struct qmp_phy_init_tbl ipq9574_gen3x2_pcie_serdes_tbl[] = {
+>>> +     QMP_PHY_INIT_CFG(QSERDES_PLL_BIAS_EN_CLKBUFLR_EN, 0x18),
+>>> +     QMP_PHY_INIT_CFG(QSERDES_PLL_BIAS_EN_CTRL_BY_PSM, 0x01),
+>>> +     QMP_PHY_INIT_CFG(QSERDES_PLL_CLK_SELECT, 0x31),
+>>> +     QMP_PHY_INIT_CFG(QSERDES_PLL_PLL_IVCO, 0x0F),
+>>> +     QMP_PHY_INIT_CFG(QSERDES_PLL_BG_TRIM, 0x0F),
+>>
+>> Lower case here and everywhere please
+> 
+> For hex values
+
+I will these updated in V2. Thanks!
+
+>>>   static const struct qmp_phy_init_tbl sdm845_qmp_pcie_serdes_tbl[] = {
+>>>        QMP_PHY_INIT_CFG(QSERDES_V3_COM_BIAS_EN_CLKBUFLR_EN, 0x14),
+>>>        QMP_PHY_INIT_CFG(QSERDES_V3_COM_CLK_SELECT, 0x30),
+>>> @@ -2448,7 +2542,7 @@ static inline void qphy_clrbits(void __iomem *base, u32 offset, u32 val)
+>>>
+>>>   /* list of clocks required by phy */
+>>>   static const char * const qmp_pciephy_clk_l[] = {
+>>> -     "aux", "cfg_ahb", "ref", "refgen", "rchng", "phy_aux",
+>>> +     "aux", "cfg_ahb", "ref", "refgen", "rchng", "phy_aux", "anoc", "snoc"
+>>
+>> How about older platforms which dont have these clocks
+> 
+> The driver uses devm_clk_bulk_get_optional(), so it should be fine.
+> But the more important question should be why the platform needs
+> anoc/snoc clocks here.
+> 
+
+I got the info from the downstream 5.4 kernel. While I don't know why 
+these new clocks are required, they are needed. Omitting them will cause 
+the boot to hang.
+
+I could rename them to "snoc_lane" and "anoc_lane", if you think that 
+makes more sense.
 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
--- 
-With best wishes
-Dmitry
+Alex
 
