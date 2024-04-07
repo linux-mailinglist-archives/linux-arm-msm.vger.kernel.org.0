@@ -1,430 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-16692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16694-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E00889B2E6
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Apr 2024 18:25:17 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E209A89B360
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Apr 2024 19:48:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EC369B21676
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Apr 2024 16:25:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6E130B21EA4
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Apr 2024 17:48:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4880E3FB90;
-	Sun,  7 Apr 2024 16:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 663433BB48;
+	Sun,  7 Apr 2024 17:48:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="g5S3bNEO"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K69cf+Bx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473363F9EA
-	for <linux-arm-msm@vger.kernel.org>; Sun,  7 Apr 2024 16:23:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB603A1B5;
+	Sun,  7 Apr 2024 17:48:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712507035; cv=none; b=gf8HiJ34IWqASl1Oha7pU8bJz4K9VfIO722Gbnxosin1Cg4eO9ORmSvErKyvEgZ6FynYO7kw1UFWES79qrc8GP4tziPg2Yt9X11+nDWVR7q/GQbE6nXkm76kSYyIffZdIeUe0RJY0eAg9vNQRh4QDoSLte+zaf3yUagGGtM8YxE=
+	t=1712512117; cv=none; b=nflEPElHaLAMfMXZgKg/yJt4vMqTLg4r7A+z6w5NW2SIVzXgakQwqUYRpY7YweY7IXJNZoJYxv6K8KTpBg+mWSHzAF1BpolvWrYr5zkHhfMhBggPTysZ165mhK+fjx55zrOey8Sv6C7Zhnyf0NSJn0j6uFQRfrApUkZGinXyCqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712507035; c=relaxed/simple;
-	bh=OwopASy2ep6ZJbpGz0J2byN74JuY3NnqdRzQJbZ3tiM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=KJ1TtgMBj9iPATe269nlZR9owTV2bY7l66aNzCTwi+6K7W6YnkY7V/+xcl73ImHSo1QqG10o3wmo/cNnThkeajWLcJujVQWftxVM5FRM6Dq9r/WDkhc6vdbRpOOKzddFsNJZ2BxdB81R6ev6La7ybUKy0es3R12dRw8spfuLbmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=g5S3bNEO; arc=none smtp.client-ip=209.85.167.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-516d47ce662so3560728e87.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 07 Apr 2024 09:23:53 -0700 (PDT)
+	s=arc-20240116; t=1712512117; c=relaxed/simple;
+	bh=rYYsdMtLNJhfKR+qWZmjeR6swj48dWfG4F6Xfwy5SqI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pDzl9nE32H/M2uBfkp8r6BV2CaKnQGqNzcEIMAHeDufbj2pGBtejE7ZCsbZWhMVi5Uu6FvRIxXSg+6+xuaKsqufmjXHC86SuSPlwbc7Qh0Foc9Qm/VM8iXra+3/iTBYi2J8tB4d+g92N2W8ISGulPTxvXSNRPGeESXggwabJwRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K69cf+Bx; arc=none smtp.client-ip=209.85.210.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-6ea1189de94so551965a34.0;
+        Sun, 07 Apr 2024 10:48:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712507031; x=1713111831; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TAkOVNyT/5Ra+pwmZNT4qvTP2RlUxHwJBHeF7p1Ce+Q=;
-        b=g5S3bNEO8RTPgal2s7dhn0IyI1GNH6IE1+Iq9jEy5IVpu0MDbntXvpfnCV863V8Wmh
-         QkdpvvzvCna6TbdxgsOL7Dz1ahkek323iRBZWUwIptuugPNreIViMUAWFenMcmLiJ04V
-         SygXOkkknlQm30P025W8Jt+7fofdS26AFWthRlkm3BAqAUZuKfLRqyK8nniH+AxBQ8Ff
-         jjIsTpXUDlkDapHigYo2fhN14kzX3KERMkO14/lDxk7XldDSOY4RM0PpfX8hKlGGXg7g
-         6LmmxP6AhkU60nxvLIlnadNtnA/kYPkI6EZ4lUaMJPKSSl22otqG05s7mFPT2OTHFzV7
-         ArXw==
+        d=gmail.com; s=20230601; t=1712512115; x=1713116915; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5sXdKQMfOKyJsj4qQ0BFKCNMJKW5FrQPDHTE6QFVUwU=;
+        b=K69cf+BxvxR9wFmPbZCVC0qR6OqtzjEahOcDYlpwjluMHFUOOoAQb07gEh5QTNQfwf
+         E94T3Nsnep9entfAvSjNeDyXKldFL/Mj6hTJPI+N1vqdPmVK7XylsgeZoRdDtQD5ldlz
+         1J6k8Qd2QJqejLMaySGvd17Dth16pmwSrq5R9IbfoGdwTXuN+rXQ/LmGPAvw41RIJrkO
+         6+E4+eIYd0ACWOMgoVLyEpsn957ndZP/eknoFkJyJ+LqyS4OSOHcoQFvo+m9qfct5rFi
+         XqEjJ0MsMlt752bl9asxTYF93NSMswJOMjg391ZrWHA2pV/hIfmSiI7WkbZWLKJpnfbR
+         +sVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712507031; x=1713111831;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TAkOVNyT/5Ra+pwmZNT4qvTP2RlUxHwJBHeF7p1Ce+Q=;
-        b=lrK3SxU8AsIl1a5N8UqUbdRQxa/3cUuvginjTpdLTBefQ/nrfKErOgpRVFh6rDMns9
-         cOoq2739XCmNyucMp/p+bvKbuZLZcjt0ZqXeTfx4Bl333YzTqobX1UKSwJ3vJyA3SvPM
-         LyHXPhMAZoLpudgy7oq3JoIk/C25f1cLb/Gpf9Np9LcYVtM4pYcAp7GjU6/Y34Ws9ZCx
-         10INUgaL8Ch5E/oJaWNU+rzej4b72dhtPbQ1kWRCoTdEc3e+j0PfdK0uPMCT/gYn9EB9
-         Wk2bujrGgAljj738VJxxc06p0egEwx4ebOwM4ru/qNHEjeOmmNBi6yutBb1idw+Flz/6
-         SLsw==
-X-Forwarded-Encrypted: i=1; AJvYcCVrUBzeNugky778fVKN7BrdG7jTdlATgLBbP1SLc+VEsqp5EpDw5Y/iTpNh5YHmi2au14wgPas1crBlmgmBqFmoK5D18Kg3HCkqV3w3GQ==
-X-Gm-Message-State: AOJu0YxBMBmKXX5wH2YgJNrOLzHJb00FeKRsVhoyCUUM9WPX61LhJCkI
-	4WPqvp8TxZUQ1lXvvf+iMLjCwpQOXj7kkT3lQHAYi/C652lCTp2wFxrGy9Qegao=
-X-Google-Smtp-Source: AGHT+IH1HsGV1ldOAKDQoqhT13xpNckBzeKGKJPta87ZCijRA5qKH1kHRssbvltw7UyD8xrUB9swTA==
-X-Received: by 2002:a19:f70a:0:b0:513:e14d:15e1 with SMTP id z10-20020a19f70a000000b00513e14d15e1mr4752107lfe.57.1712507031492;
-        Sun, 07 Apr 2024 09:23:51 -0700 (PDT)
-Received: from [127.0.1.1] ([79.114.172.194])
-        by smtp.gmail.com with ESMTPSA id qs28-20020a170906459c00b00a51bed388a4sm1811626ejc.139.2024.04.07.09.23.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 Apr 2024 09:23:51 -0700 (PDT)
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Sun, 07 Apr 2024 19:23:27 +0300
-Subject: [PATCH v9 7/7] spmi: pmic-arb: Add multi bus support
+        d=1e100.net; s=20230601; t=1712512115; x=1713116915;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5sXdKQMfOKyJsj4qQ0BFKCNMJKW5FrQPDHTE6QFVUwU=;
+        b=GulK0RfcZ4Zn5R4EzBkYR0TI2vJcOQlnKqj6pm21wEq4grA5Tvsz+fbZN+rRewhomo
+         pIzQXIiCVPL6KdL/Kj5Bcd7c+jfuF9CMOThx3FyQJLyA0mY62QwWV6XckCRm7PHeVANn
+         vl98vbbzXCyVK+Qc9aJ5phMd0NVR2m5n9DTNhv/TjD71sc77mS2edU6pk/tb5lWi+LQN
+         09hpspVSH3wSRmydoPtj+2cWZlh5xZ9E5wH7iLKSSF8CMyArygAEABlrRb5yAQHwAP0K
+         55DgJoimfjcCdjVLIUakc5E3n+ZaFwgJmKyeTyDiR+OPxTyhznEHrV/wV8Yr4UcLVS36
+         WvXg==
+X-Forwarded-Encrypted: i=1; AJvYcCWCTOyxT2M6kfUE9cuwqTRY654yaujY1IejCCkySzDmrn6ps8K8GgrAAWxs8ZajTo16VyQR4Z65n9IRZlLYv4tFDo1o91JziNlC9b3tfNKr7MAv9KxDkLnQbKzCTc7gIrIy9wyMOC1GMrRR/+1qXjjLzxlx5XpIYPjXey1avrcFPg2qmtf7sa1ke9doQ+vpSbie4xsffyODBcnwpq0D7GKuE6A=
+X-Gm-Message-State: AOJu0YzTXjAXYW7TscxqmYBw+IExMI6M8pOtiCaiCqpCQUsmc58qUIIh
+	uGUFG2nGjbg4qgbEyU8FKBbdNI1Ws76PMFhoVW0BJZEJox+V6irk
+X-Google-Smtp-Source: AGHT+IEmJUaWcK/hJUC5cAwg09zB7vyfipJlWU9lLlEVltY3uzjfm97qWwibUja23CycpiqAQa5onQ==
+X-Received: by 2002:a9d:6a5a:0:b0:6ea:f34:8ab4 with SMTP id h26-20020a9d6a5a000000b006ea0f348ab4mr3238793otn.28.1712512114955;
+        Sun, 07 Apr 2024 10:48:34 -0700 (PDT)
+Received: from [192.168.7.110] (c-98-197-58-203.hsd1.tx.comcast.net. [98.197.58.203])
+        by smtp.gmail.com with ESMTPSA id a25-20020a9d74d9000000b006ea178dadd3sm132893otl.21.2024.04.07.10.48.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 07 Apr 2024 10:48:34 -0700 (PDT)
+Message-ID: <1c803d8c-80b2-47a9-bc8c-8b13cbfc6841@gmail.com>
+Date: Sun, 7 Apr 2024 12:48:32 -0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/5] spi: spi-qpic: Add qpic spi nand driver support
+To: Md Sadre Alam <quic_mdalam@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, broonie@kernel.org, robh@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+ miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
+ manivannan.sadhasivam@linaro.org, neil.armstrong@linaro.org,
+ daniel@makrotopia.org, arnd@arndb.de, chris.packham@alliedtelesis.co.nz,
+ christophe.kerello@foss.st.com, linux-arm-msm@vger.kernel.org,
+ linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-mtd@lists.infradead.org
+Cc: quic_srichara@quicinc.com, quic_varada@quicinc.com
+References: <20240308091752.16136-1-quic_mdalam@quicinc.com>
+ <20240308091752.16136-4-quic_mdalam@quicinc.com>
+Content-Language: en-US
+From: "Alex G." <mr.nuke.me@gmail.com>
+In-Reply-To: <20240308091752.16136-4-quic_mdalam@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240407-spmi-multi-master-support-v9-7-fa151c1391f3@linaro.org>
-References: <20240407-spmi-multi-master-support-v9-0-fa151c1391f3@linaro.org>
-In-Reply-To: <20240407-spmi-multi-master-support-v9-0-fa151c1391f3@linaro.org>
-To: Stephen Boyd <sboyd@kernel.org>, 
- Matthias Brugger <matthias.bgg@gmail.com>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
- Johan Hovold <johan@kernel.org>, David Collins <quic_collinsd@quicinc.com>, 
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org, 
- devicetree@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=9935; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=OwopASy2ep6ZJbpGz0J2byN74JuY3NnqdRzQJbZ3tiM=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBmEsiJ1Ak8LJuvVIKzYNyokqaiGiZPIqyXZTIta
- t3/AdmDABmJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZhLIiQAKCRAbX0TJAJUV
- VtuvEACHl01n9Aezub7b02hLPqlu93+YNOpAGNKbLLPe+qeEReS8jTtzJ17yQE3TfTDmSco+8Vj
- dWv4Rem+75b3eSB8bPpIH+tSm8r8Z+ejPMfrEYvDDp3o/GFfhwNK0tC51Rd4Xe7YUzvLL3cBFgC
- ioKhy1W1KagpJw6lsYsD9+rV1LTEcgF1kWNb8+1VztQUeaVQzVNNrAUJRfAKAjXIV82bDA/0Twz
- Hegq575hfzG9nC4sIzZgFq+WTzYxwuz13f9gHzNMfQRY+yrEFbs6gnGHiokM1Ov3FQ3Ns4dZxp9
- FpXcVRHBS8G1++5elE8Tc7RPje41xqGHeeSxAXORDnAe9wYy++672ZE5TcWXAH6wF1Gx65MKpE/
- t19K26gdlu4WWyllbJH52H5cpfNNv+QcrZpKmBLSqZGEbrrv71IzcHl28UYRaeUWO7+3xSUZOaQ
- BP9eZ8U8zalS5fEk/N2DdRsSdy/GLdEHR046cBEln7AjIZBtODK72I6Rq7QcO1lZEynn4uiasO7
- p0RgyDjrHqWFYAILIeWaGyqH5Qe41CdhJzms8YERcQs7eFdZcbCS6GhZTT+UTNXB9FmHvckpebZ
- jhs/wtYjXi/MZcznkY705O3yD1VBgSwiZAe3Jm1zsn77QfT8ONcqgiibbnIHJkEfLtJYl/Q1yej
- lTM6cES61MkTarA==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-Starting with HW version 7, there are actually two separate buses
-(with two separate sets of wires). So add support for the second bus.
-The first platform that needs this support for the second bus is the
-Qualcomm X1 Elite, so add the compatible for it as well.
+On 3/8/24 03:17, Md Sadre Alam wrote:
+> Add qpic spi nand driver support. The spi nand
+> driver currently supported the below commands.
+> 
+> -- RESET
+> -- READ ID
+> -- SET FEATURE
+> -- GET FEATURE
+> -- READ PAGE
+> -- WRITE PAGE
+> -- ERASE PAGE
+> 
+> Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> Co-developed-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> ---
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/spmi/spmi-pmic-arb.c | 138 +++++++++++++++++++++++++++++++++++++------
- 1 file changed, 120 insertions(+), 18 deletions(-)
+For the entire series:
 
-diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
-index 65d8f45da24b..cfa8ec21cd56 100644
---- a/drivers/spmi/spmi-pmic-arb.c
-+++ b/drivers/spmi/spmi-pmic-arb.c
-@@ -13,6 +13,7 @@
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/of.h>
-+#include <linux/of_address.h>
- #include <linux/of_irq.h>
- #include <linux/platform_device.h>
- #include <linux/slab.h>
-@@ -95,6 +96,8 @@ enum pmic_arb_channel {
- 	PMIC_ARB_CHANNEL_OBS,
- };
- 
-+#define PMIC_ARB_MAX_BUSES		2
-+
- /* Maximum number of support PMIC peripherals */
- #define PMIC_ARB_MAX_PERIPHS		512
- #define PMIC_ARB_MAX_PERIPHS_V7		1024
-@@ -149,6 +152,7 @@ struct spmi_pmic_arb;
-  * @min_apid:		minimum APID (used for bounding IRQ search)
-  * @max_apid:		maximum APID
-  * @irq:		PMIC ARB interrupt.
-+ * @id:			unique ID of the bus
-  */
- struct spmi_pmic_arb_bus {
- 	struct spmi_pmic_arb	*pmic_arb;
-@@ -167,6 +171,7 @@ struct spmi_pmic_arb_bus {
- 	u16			min_apid;
- 	u16			max_apid;
- 	int			irq;
-+	u8			id;
- };
- 
- /**
-@@ -180,7 +185,8 @@ struct spmi_pmic_arb_bus {
-  * @ee:			the current Execution Environment
-  * @ver_ops:		version dependent operations.
-  * @max_periphs:	Number of elements in apid_data[]
-- * @bus:		per arbiter bus instance
-+ * @buses:		per arbiter buses instances
-+ * @buses_available:	number of buses registered
-  */
- struct spmi_pmic_arb {
- 	void __iomem		*rd_base;
-@@ -191,7 +197,8 @@ struct spmi_pmic_arb {
- 	u8			ee;
- 	const struct pmic_arb_ver_ops *ver_ops;
- 	int			max_periphs;
--	struct spmi_pmic_arb_bus *bus;
-+	struct spmi_pmic_arb_bus *buses[PMIC_ARB_MAX_BUSES];
-+	int			buses_available;
- };
- 
- /**
-@@ -220,7 +227,7 @@ struct spmi_pmic_arb {
- struct pmic_arb_ver_ops {
- 	const char *ver_str;
- 	int (*get_core_resources)(struct platform_device *pdev, void __iomem *core);
--	int (*init_apid)(struct spmi_pmic_arb_bus *bus);
-+	int (*init_apid)(struct spmi_pmic_arb_bus *bus, int index);
- 	int (*ppid_to_apid)(struct spmi_pmic_arb_bus *bus, u16 ppid);
- 	/* spmi commands (read_cmd, write_cmd, cmd) functionality */
- 	int (*offset)(struct spmi_pmic_arb_bus *bus, u8 sid, u16 addr,
-@@ -309,8 +316,8 @@ static int pmic_arb_wait_for_done(struct spmi_controller *ctrl,
- 			}
- 
- 			if (status & PMIC_ARB_STATUS_FAILURE) {
--				dev_err(&ctrl->dev, "%s: %#x %#x: transaction failed (%#x)\n",
--					__func__, sid, addr, status);
-+				dev_err(&ctrl->dev, "%s: %#x %#x: transaction failed (%#x) reg: 0x%x\n",
-+					__func__, sid, addr, status, offset);
- 				WARN_ON(1);
- 				return -EIO;
- 			}
-@@ -326,8 +333,8 @@ static int pmic_arb_wait_for_done(struct spmi_controller *ctrl,
- 		udelay(1);
- 	}
- 
--	dev_err(&ctrl->dev, "%s: %#x %#x: timeout, status %#x\n",
--		__func__, sid, addr, status);
-+	dev_err(&ctrl->dev, "%s: %#x %#x %#x: timeout, status %#x\n",
-+		__func__, bus->id, sid, addr, status);
- 	return -ETIMEDOUT;
- }
- 
-@@ -1003,11 +1010,17 @@ static int pmic_arb_get_core_resources_v1(struct platform_device *pdev,
- 	return 0;
- }
- 
--static int pmic_arb_init_apid_v1(struct spmi_pmic_arb_bus *bus)
-+static int pmic_arb_init_apid_v1(struct spmi_pmic_arb_bus *bus, int index)
- {
- 	struct spmi_pmic_arb *pmic_arb = bus->pmic_arb;
- 	u32 *mapping_table;
- 
-+	if (index) {
-+		dev_err(&bus->spmic->dev, "Unsupported buses count %d detected\n",
-+			index);
-+		return -EINVAL;
-+	}
-+
- 	mapping_table = devm_kcalloc(&bus->spmic->dev, pmic_arb->max_periphs,
- 				     sizeof(*mapping_table), GFP_KERNEL);
- 	if (!mapping_table)
-@@ -1250,11 +1263,17 @@ static int pmic_arb_offset_v2(struct spmi_pmic_arb_bus *bus, u8 sid, u16 addr,
- 	return 0x1000 * pmic_arb->ee + 0x8000 * apid;
- }
- 
--static int pmic_arb_init_apid_v5(struct spmi_pmic_arb_bus *bus)
-+static int pmic_arb_init_apid_v5(struct spmi_pmic_arb_bus *bus, int index)
- {
- 	struct spmi_pmic_arb *pmic_arb = bus->pmic_arb;
- 	int ret;
- 
-+	if (index) {
-+		dev_err(&bus->spmic->dev, "Unsupported buses count %d detected\n",
-+			index);
-+		return -EINVAL;
-+	}
-+
- 	bus->base_apid = 0;
- 	bus->apid_count = readl_relaxed(pmic_arb->core + PMIC_ARB_FEATURES) &
- 					PMIC_ARB_FEATURES_PERIPH_MASK;
-@@ -1326,6 +1345,50 @@ static int pmic_arb_get_core_resources_v7(struct platform_device *pdev,
- 	return pmic_arb_get_obsrvr_chnls_v2(pdev);
- }
- 
-+/*
-+ * Only v7 supports 2 buses. Each bus will get a different apid count, read
-+ * from different registers.
-+ */
-+static int pmic_arb_init_apid_v7(struct spmi_pmic_arb_bus *bus, int index)
-+{
-+	struct spmi_pmic_arb *pmic_arb = bus->pmic_arb;
-+	int ret;
-+
-+	if (index == 0) {
-+		bus->base_apid = 0;
-+		bus->apid_count = readl_relaxed(pmic_arb->core + PMIC_ARB_FEATURES) &
-+						   PMIC_ARB_FEATURES_PERIPH_MASK;
-+	} else if (index == 1) {
-+		bus->base_apid = readl_relaxed(pmic_arb->core + PMIC_ARB_FEATURES) &
-+						  PMIC_ARB_FEATURES_PERIPH_MASK;
-+		bus->apid_count = readl_relaxed(pmic_arb->core + PMIC_ARB_FEATURES1) &
-+						   PMIC_ARB_FEATURES_PERIPH_MASK;
-+	} else {
-+		dev_err(&bus->spmic->dev, "Unsupported buses count %d detected\n",
-+			bus->id);
-+		return -EINVAL;
-+	}
-+
-+	if (bus->base_apid + bus->apid_count > pmic_arb->max_periphs) {
-+		dev_err(&bus->spmic->dev, "Unsupported APID count %d detected\n",
-+			bus->base_apid + bus->apid_count);
-+		return -EINVAL;
-+	}
-+
-+	ret = pmic_arb_init_apid_min_max(bus);
-+	if (ret)
-+		return ret;
-+
-+	ret = pmic_arb_read_apid_map_v5(bus);
-+	if (ret) {
-+		dev_err(&bus->spmic->dev, "could not read APID->PPID mapping table, rc= %d\n",
-+			ret);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
- /*
-  * v7 offset per ee and per apid for observer channels and per apid for
-  * read/write channels.
-@@ -1578,7 +1641,7 @@ static const struct pmic_arb_ver_ops pmic_arb_v5 = {
- static const struct pmic_arb_ver_ops pmic_arb_v7 = {
- 	.ver_str		= "v7",
- 	.get_core_resources	= pmic_arb_get_core_resources_v7,
--	.init_apid		= pmic_arb_init_apid_v5,
-+	.init_apid		= pmic_arb_init_apid_v7,
- 	.ppid_to_apid		= pmic_arb_ppid_to_apid_v5,
- 	.non_data_cmd		= pmic_arb_non_data_cmd_v2,
- 	.offset			= pmic_arb_offset_v7,
-@@ -1602,6 +1665,7 @@ static int spmi_pmic_arb_bus_init(struct platform_device *pdev,
- 				  struct device_node *node,
- 				  struct spmi_pmic_arb *pmic_arb)
- {
-+	int bus_index = pmic_arb->buses_available;
- 	struct spmi_pmic_arb_bus *bus;
- 	struct device *dev = &pdev->dev;
- 	struct spmi_controller *ctrl;
-@@ -1620,7 +1684,7 @@ static int spmi_pmic_arb_bus_init(struct platform_device *pdev,
- 
- 	bus = spmi_controller_get_drvdata(ctrl);
- 
--	pmic_arb->bus = bus;
-+	pmic_arb->buses[bus_index] = bus;
- 
- 	raw_spin_lock_init(&bus->lock);
- 
-@@ -1665,12 +1729,13 @@ static int spmi_pmic_arb_bus_init(struct platform_device *pdev,
- 	bus->cnfg = cnfg;
- 	bus->irq = irq;
- 	bus->spmic = ctrl;
-+	bus->id = bus_index;
- 
--	ret = pmic_arb->ver_ops->init_apid(bus);
-+	ret = pmic_arb->ver_ops->init_apid(bus, bus_index);
- 	if (ret)
- 		return ret;
- 
--	dev_dbg(&pdev->dev, "adding irq domain\n");
-+	dev_dbg(&pdev->dev, "adding irq domain for bus %d\n", bus_index);
- 
- 	bus->domain = irq_domain_add_tree(dev->of_node,
- 					  &pmic_arb_irq_domain_ops, bus);
-@@ -1683,14 +1748,53 @@ static int spmi_pmic_arb_bus_init(struct platform_device *pdev,
- 					 pmic_arb_chained_irq, bus);
- 
- 	ctrl->dev.of_node = node;
-+	dev_set_name(&ctrl->dev, "spmi-%d", bus_index);
- 
- 	ret = devm_spmi_controller_add(dev, ctrl);
- 	if (ret)
- 		return ret;
- 
-+	pmic_arb->buses_available++;
-+
- 	return 0;
- }
- 
-+static int spmi_pmic_arb_register_buses(struct spmi_pmic_arb *pmic_arb,
-+					struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	struct device_node *node = dev->of_node;
-+	struct device_node *child;
-+	int ret;
-+
-+	/* legacy mode doesn't provide child node for the bus */
-+	if (of_device_is_compatible(node, "qcom,spmi-pmic-arb"))
-+		return spmi_pmic_arb_bus_init(pdev, node, pmic_arb);
-+
-+	for_each_available_child_of_node(node, child) {
-+		if (of_node_name_eq(child, "spmi")) {
-+			ret = spmi_pmic_arb_bus_init(pdev, child, pmic_arb);
-+			if (ret)
-+				return ret;
-+		}
-+	}
-+
-+	return ret;
-+}
-+
-+static void spmi_pmic_arb_deregister_buses(struct spmi_pmic_arb *pmic_arb)
-+{
-+	int i;
-+
-+	for (i = 0; i < pmic_arb->buses_available; i++) {
-+		struct spmi_pmic_arb_bus *bus = pmic_arb->buses[i];
-+
-+		irq_set_chained_handler_and_data(bus->irq,
-+						 NULL, NULL);
-+		irq_domain_remove(bus->domain);
-+	}
-+}
-+
- static int spmi_pmic_arb_probe(struct platform_device *pdev)
- {
- 	struct spmi_pmic_arb *pmic_arb;
-@@ -1760,21 +1864,19 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
- 
- 	pmic_arb->ee = ee;
- 
--	return spmi_pmic_arb_bus_init(pdev, dev->of_node, pmic_arb);
-+	return spmi_pmic_arb_register_buses(pmic_arb, pdev);
- }
- 
- static void spmi_pmic_arb_remove(struct platform_device *pdev)
- {
- 	struct spmi_pmic_arb *pmic_arb = platform_get_drvdata(pdev);
--	struct spmi_pmic_arb_bus *bus = pmic_arb->bus;
- 
--	irq_set_chained_handler_and_data(bus->irq,
--					 NULL, NULL);
--	irq_domain_remove(bus->domain);
-+	spmi_pmic_arb_deregister_buses(pmic_arb);
- }
- 
- static const struct of_device_id spmi_pmic_arb_match_table[] = {
- 	{ .compatible = "qcom,spmi-pmic-arb", },
-+	{ .compatible = "qcom,x1e80100-spmi-pmic-arb", },
- 	{},
- };
- MODULE_DEVICE_TABLE(of, spmi_pmic_arb_match_table);
+Tested-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
 
--- 
-2.34.1
+> diff --git a/drivers/spi/Kconfig b/drivers/spi/Kconfig
+> index bc7021da2fe9..63764e943d82 100644
+> --- a/drivers/spi/Kconfig
+> +++ b/drivers/spi/Kconfig
+> @@ -882,6 +882,14 @@ config SPI_QCOM_QSPI
+>   	help
+>   	  QSPI(Quad SPI) driver for Qualcomm QSPI controller.
+>   
+> +config SPI_QPIC_SNAND
+> +	tristate "QPIC SNAND controller"
+> +	depends on ARCH_QCOM || COMPILE_TEST
 
+Here, it needs to 'select QPIC_COMMON`. Otherwise it can run into 
+unresolved symbols:
+
+: drivers/spi/spi-qpic-snand.o: in function `snandc_set_reg':
+  drivers/spi/spi-qpic-snand.c:56:(.text+0x484): undefined reference to 
+`qcom_offset_to_nandc_reg'
+...
+
+> +	help
+> +	  QPIC_SNAND (QPIC SPI NAND) driver for Qualcomm QPIC controller.
+> +	  QPIC controller supports both parallel nand and serial nand.
+> +	  This config will enable serial nand driver for QPIC controller.
+> +
+>   config SPI_QUP
+>   	tristate "Qualcomm SPI controller with QUP interface"
+>   	depends on ARCH_QCOM || COMPILE_TEST
+
+Alex
 
