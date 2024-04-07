@@ -1,164 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-16664-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 961E689AFE7
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Apr 2024 11:05:21 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B00789AFF4
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Apr 2024 11:07:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 08DADB225E0
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Apr 2024 09:05:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 409E81C2042B
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Apr 2024 09:07:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F802125A9;
-	Sun,  7 Apr 2024 09:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A041210EC;
+	Sun,  7 Apr 2024 09:05:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="de+uYFVq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FGyLIzZX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D958E2BD01
-	for <linux-arm-msm@vger.kernel.org>; Sun,  7 Apr 2024 09:03:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3DA25605;
+	Sun,  7 Apr 2024 09:05:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712480632; cv=none; b=KrulrzrL3QtniEnbYjqHpjG+gqYiFWPGxAVpIleutOqS+Gd0ZEoOlZ8czPaqUVXQe8W7LePSAttfV1rIWg8sxSYwi9qRkjwZQU065ZQlrhAUefmQxl3yZlVoufR6TxN0er+OawSeGX1vG4PSnBW36YmowPB7Q3HhwJsGCaFSS0E=
+	t=1712480716; cv=none; b=ML8/AqvmZlmCNKUBQ6+lRcbEbjhMPuMCJr8E3SByrXxYuCm08qeP4WDE/tOyvBV1V3BsmigtVj0Y5R8vNsBhDWYSpeuNeutMZly0BkIV4laUOPv3NAaTms3iHbyvgQuLIoxnXNZE9Kn/kJQfzigNRagIu8vjrQHDCy7JygWdfqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712480632; c=relaxed/simple;
-	bh=Zraf+IF8jjkme58EOXXWX37lUIAIsTXRXwE0Yo0XLt0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XZ+vcu8B24hY3L+cP/s4beOGJXIGX2yDW7xYkdhRezii7qdgkBIYm5tj4nez/hdGBn8WDnirYrdJeUAhxvPx/Rxt2TiZwZtZhZGzDL+ztnBe7O3P7IpotfzK5e0KZaW/WnPCOVmt27TkyrrQ1cR6k1LAvo58u0MH85ALMtpDL6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=de+uYFVq; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-343e46ec237so1672072f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 07 Apr 2024 02:03:50 -0700 (PDT)
+	s=arc-20240116; t=1712480716; c=relaxed/simple;
+	bh=T/t51JGXpD0fuvl8+chSNW3C31fIsTrLP6DTVv85bPY=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=SHqZ5oVZmQQw5AkVPvWf7sufpp2lls/7B3SQ2sPjxa8whwcmzSMmx+XYfpm8HVqzrmmLk5QwgEN2b0k19uDzKOaf5wSMieU1FvZ2kgVke/lU0+E4Hbw/ApdA92nipZYNMr5J57DId7ASeNyLj17jxrya0TYM+hxYNrK63BqCxP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FGyLIzZX; arc=none smtp.client-ip=209.85.208.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2d82713f473so59857981fa.3;
+        Sun, 07 Apr 2024 02:05:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712480629; x=1713085429; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=lhJcyPhgX3F0B/BWk2i159pv3qTElO9d0HVqBUfqNmg=;
-        b=de+uYFVqjaYt9/aQ0+G0lfgECLBV3i/dX4o7RGqP1hvBA2TaIQY+s59Riab7nHIxjV
-         DqTtgD17XtI20GG6n+8O7/vKhE4qAQPaxbDxNtqVo7Ok0nc3bFqTG69su8/q2S/OcEbv
-         +FbkFYvBpvu/j9bMnCpHF6st6nB8tzslLOc+rnBuBoyPYy+aXLykfCIRe8EvpvxSAhcN
-         NIromxR0gGYJLAW2pr3+ff0r/2C97Yr/4OUxUt8RAQXKVMVAj/VltQ0SEXwEftG9uY1L
-         rdqWSKxhHAwSLdoIF0vYRnPSpEfQus6qobIQVtgsTda5dk36PjNuKsndC38jvvXqJTIU
-         7u2Q==
+        d=gmail.com; s=20230601; t=1712480712; x=1713085512; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=T8G+rV0x749m2N6zouKipiE4KRePdWsDRuNApiIyhjU=;
+        b=FGyLIzZXSCgN3Crmxnu+DNLZv4EeaJo+ZUNzCMD6petUiijbfLbXgyMH+9RV7g2CYW
+         r4U2xFlg17qK25bOlzte9ONo4Tuhm4/sTPrCuVIG5A0w4TidhQH+FdaOmfQOgGuusv6i
+         0r5H0P4mwqtVPIv3F6X7dOSYnAvqqsIbQBSjTOPXhmqaN0RMWW6AJ8SdmxJwgp7uc9of
+         IxNp8JSVTJRYMof2bKl8Q2UKVSCnonVNKPEsM39eUyWZhEaMUnS5v2WqqQc406AFvdIB
+         dR+mDYOX6QSbEIdP7ZQcJrQ+Xsq4AVhyEcwc2cy18OEDpHs75VjsGLFBUoeuYJBEbhEG
+         qPcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712480629; x=1713085429;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lhJcyPhgX3F0B/BWk2i159pv3qTElO9d0HVqBUfqNmg=;
-        b=Or/WZjLUiwKJ2PECcqSB62sBLLgos57FA4+LMFrNIynAwAsqhDZwmZt0DCr4CGUXqN
-         Pdm1jkeOVPhKEWky1KB+GoQpbL4VSwrtWwU6tn0+TlUQg578j4ZOcoUxAwpfMnUozjeN
-         vdScFlEoSr9nPD0jKdatfrEZL74DzE8fA+BPN1rJ4hBYMnXRt9gN67KWAUIS1V0bCW4U
-         9zQQ9yR76sVGe0Kv7gLjnFNKxbOiDd+PcwTcUfQRHvcd2Cku2YgAcDvj/KZNMQ/FdYIx
-         L33FRgpfEhXKUQfDXWaNB0/PIm/Vy62Y315vBzCPod2lVukdOjzBPt+yJXpFpv21VynI
-         YHJw==
-X-Gm-Message-State: AOJu0YwXtM8qPlAbPIN8zlw/VAH/+cVTkib3sImj3nt2kfvTZCmiFM/3
-	b/lrBbBNg+MqjUIuK4fFNV/Es1ujtQCzWTGYo3WG2kd98vg2qC1PMYqauwlyGR0=
-X-Google-Smtp-Source: AGHT+IHy9eHKYMxaf9vkWbmen7WIUbOBEXV1kBr5+IVFEdpHNIy8u+qMnpLBM1geid95shOzQ7Z9MA==
-X-Received: by 2002:adf:f74e:0:b0:343:9189:e698 with SMTP id z14-20020adff74e000000b003439189e698mr4119708wrp.43.1712480629179;
-        Sun, 07 Apr 2024 02:03:49 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.16])
-        by smtp.gmail.com with ESMTPSA id i11-20020adfe48b000000b0034330c9eccasm6269503wrm.79.2024.04.07.02.03.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 07 Apr 2024 02:03:48 -0700 (PDT)
-Message-ID: <d24628cf-a628-4eb1-ae2f-bf414b62534a@linaro.org>
-Date: Sun, 7 Apr 2024 11:03:47 +0200
+        d=1e100.net; s=20230601; t=1712480712; x=1713085512;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=T8G+rV0x749m2N6zouKipiE4KRePdWsDRuNApiIyhjU=;
+        b=RhFyW/Ka8ypQ9ZHPAPy3TgSPaYjePR7+NfYM/gnPWs8QXeG3qqk74uW3Wc1LeHG+BT
+         7QW71cmyucpF8oxwDEyjUIoAO3aD0tSEcpb7rNRYwFchoS56vAPBsL+z//WVYv4SzkdP
+         YvZBRQV7YLerDNSkU0iJlXJFdHo3HM92bpTph7H8jqoyjL2pPvJ5/JbzluRSvII3q8lp
+         udIw/pXpFWRX/ztboE/eLbpwp3iZ0NccJ+RM9EaReKw53BxWj75huca5Lk+W55LAZysz
+         pXYaMxf4QDEuXZzELZxT26bWYYMezwg7DjHdiJ/pxtIEtigeGdOciVlh3jdHRB59HT/1
+         nxow==
+X-Forwarded-Encrypted: i=1; AJvYcCW07HqqLqVUI/EVuQTUmIULUpMfcpjhJCJHxzshDX2nVmx5Otr4FG1IOVFhyEnMPVBxc7gNamMt7PemzRAXaAYBE6Q8uk87i/JqnZ7lW2YXhj/WDz/0cUXuiDd36FIG9GbDIwYBDdnrgZ7ALD+05DoKtn2Z18v7X8Hw+jlgohFQJEvmRy7a
+X-Gm-Message-State: AOJu0YwRfWqMsjveqUjfMfKSSEZXbAFuBoRNFJDRhXKdvnHFaRbK4/xw
+	uob+adwynAN8rHGUSou891IOqi9NdRMu2nA0q9Wz10OQPG3ABbjkXB/Ddfo/
+X-Google-Smtp-Source: AGHT+IEfkrFmkI3a8ZU8PI/MDIccfCLffQW0RgcK9+kZmYle7tpvm+I9PWStlGfZwx3/2SojeD9itQ==
+X-Received: by 2002:a2e:b0ca:0:b0:2d8:6fc4:d0b5 with SMTP id g10-20020a2eb0ca000000b002d86fc4d0b5mr4311433ljl.8.1712480712262;
+        Sun, 07 Apr 2024 02:05:12 -0700 (PDT)
+Received: from standask-GA-A55M-S2HP (lu-nat-113-247.ehs.sk. [188.123.113.247])
+        by smtp.gmail.com with ESMTPSA id el4-20020a170907284400b00a51b3410e46sm1924565ejc.7.2024.04.07.02.05.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 07 Apr 2024 02:05:12 -0700 (PDT)
+Date: Sun, 7 Apr 2024 11:05:10 +0200
+From: Stanislav Jakubek <stano.jakubek@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, phone-devel@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v3 1/2] dt-bindings: arm: qcom: Add Motorola Moto G (2013)
+Message-ID: <32c507337ab80c550fb1df08f7014d1e31eb4c32.1712480582.git.stano.jakubek@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/2] arm64: dts: qcom: sm8550: Add support for Samsung
- Galaxy Z Fold5
-To: serdeliuk@yahoo.com, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240407-samsung-galaxy-zfold5-q5q-v4-0-8b67b1813653@yahoo.com>
- <20240407-samsung-galaxy-zfold5-q5q-v4-2-8b67b1813653@yahoo.com>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240407-samsung-galaxy-zfold5-q5q-v4-2-8b67b1813653@yahoo.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On 07/04/2024 07:38, Alexandru Marc Serdeliuc via B4 Relay wrote:
-> From: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
-> 
-> Add support for Samsung Galaxy Z Fold5 (q5q) foldable phone based on sm8550
-> 
-> Currently working features:
-> - Framebuffer
-> - UFS
-> - i2c
-> - Buttons
-> 
-> Signed-off-by: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile               |   1 +
+Document the Motorola Moto G (2013), which is a smartphone based
+on the Qualcomm MSM8226 SoC.
 
-Where is the changelog? This is v4 and nothing (neither here nor in
-cover letter) explained what was happening with this patchset.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Stanislav Jakubek <stano.jakubek@gmail.com>
+---
+Changes in V3:
+  - no changes
 
-Tags were ignored, so maybe comments as well?
+Changes in V2:
+  - collect Krzysztof's A-b
 
-Please provide *full* and detailed changelog.
+ Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-Best regards,
-Krzysztof
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 66beaac60e1d..d2910982ae86 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -137,6 +137,7 @@ properties:
+               - microsoft,dempsey
+               - microsoft,makepeace
+               - microsoft,moneypenny
++              - motorola,falcon
+               - samsung,s3ve3g
+           - const: qcom,msm8226
+ 
+-- 
+2.34.1
 
 
