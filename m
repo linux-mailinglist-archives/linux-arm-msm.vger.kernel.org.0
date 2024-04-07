@@ -1,112 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-16661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16662-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C678D89AF77
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Apr 2024 10:12:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5473089AFD7
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Apr 2024 11:01:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 81946282483
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Apr 2024 08:12:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 09CFF1F214C5
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Apr 2024 09:01:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1775A10A0E;
-	Sun,  7 Apr 2024 08:12:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F4D511720;
+	Sun,  7 Apr 2024 09:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HM0U4Bsc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iMnntbS4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4F610A14;
-	Sun,  7 Apr 2024 08:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23608825;
+	Sun,  7 Apr 2024 09:00:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712477573; cv=none; b=ueiBleiUm8Z0jDy0S/EyGF8bfke33qbELEQZORjji7Qku8vyep/AigtJTYI8RIv+8MYxzjnathjolTqrGfZFUMkKs5wmvAXuzHnJxKKo4w1eOZBjFQpk58csZwKKSuN+HmVhIhauauv+QzxGV1+He0wuXGI7gM7ndaJDoqav2VA=
+	t=1712480455; cv=none; b=MIqfOvg8nYOZSBBaAmHpt0N7SI9g4pltP9ruJXJNqadMWtqPOYezc2W+T1RMwRM6o+AT4WjUZp2gSROopzUy7a1BXLy5HCqzWjvIsoTTevgtg9bClDTPUyjPberM6ppQq+pJe9LtO5MoPtpqdCbBAqMtMTxgE0zsf7gAe0kie+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712477573; c=relaxed/simple;
-	bh=ECyWhuab0F0ilbkmVh7dcV7STv/BUyc/J9I3cEzrWD4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PV0sDY9kQuhhYvcRHYgHvrQB+lBCMSOU/wATRicc9mFZ6wfRiE4iz0rfeB3kBitNQWvMnIxbjexPo7O26bDBn9t8OupPrtmOXfaBU0hyj03Cku+71knCvysfOeIicYOdqElaiJHQze2wDZo8WNOy0CzNL3+TXBzQ0+O+hYMHJfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HM0U4Bsc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB2D9C433C7;
-	Sun,  7 Apr 2024 08:12:51 +0000 (UTC)
+	s=arc-20240116; t=1712480455; c=relaxed/simple;
+	bh=mp5RMx7GdHZ1pDgVuxn3xNjzaXBk0v89T1gqpQPvtWE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QUk3qzz+SqFcCaJJD5lLUOCsrAQDxbpDZjyFI6QQFQQTlrZP1oCPOs0jPuxlU6tZy5Ft+EBJewcewqACannZ5/FYVOh9wsKlwsXbet8lAWproum6y4oLLIy+e/gGfiPsG3cK67rlfwgsBsZBB4Pk0gvlj0WeVDarQcylRAgroi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iMnntbS4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1BA8C433F1;
+	Sun,  7 Apr 2024 09:00:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712477572;
-	bh=ECyWhuab0F0ilbkmVh7dcV7STv/BUyc/J9I3cEzrWD4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HM0U4BscY1gq7quxz7G+hZWdtifPXZg2i2ka1SoGG62usQB3jVSRer57VvreqoU3Q
-	 bucakV508aRHUvXLh1OlrfzuFKMuNinqYh95f1ImNC+oaRWvr5aT3JiQ0NJT3t3trJ
-	 YzgFZfn85bL+RVrP7/iTLvrpAE3atC/NNGblBeuwp1NDes1pUFJkZVWIHM/D1shicw
-	 Wjp4kMFp9FbSgox2UqVmetouYEwj5tyMmbIkXwQtzKsy7uDsO4HPDn0333xAca1PGZ
-	 3tf0kSK4eoAkyfTjUc56NeAhjaM8YDlegfHXO79Fi8V9GW+Swou/tajAqAjYrP4dz1
-	 F4lewmeXCYmRA==
-Date: Sun, 7 Apr 2024 13:42:48 +0530
-From: Vinod Koul <vkoul@kernel.org>
-To: Andi Shyti <andi.shyti@kernel.org>
-Cc: konrad.dybcio@linaro.org, andersson@kernel.org, wsa@kernel.org,
-	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
-	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
-	quic_vdadhani@quicinc.com,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v4] i2c: i2c-qcom-geni: Parse Error correctly in i2c GSI
- mode
-Message-ID: <ZhJVgDVthhr4hISg@matsya>
-References: <20240313052639.1747078-1-quic_msavaliy@quicinc.com>
- <171161140136.2698925.4294566764047886777.b4-ty@kernel.org>
- <ZgbwJAb7Ffktf554@matsya>
- <a76mmz5xrfipqpmq2ltsyobwc54dyw2d55gb4vta5d746dwb3i@5mm2ew5uudi3>
+	s=k20201202; t=1712480454;
+	bh=mp5RMx7GdHZ1pDgVuxn3xNjzaXBk0v89T1gqpQPvtWE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=iMnntbS4rEVVGyTRdPMUVZTiCbrEaJKy0vytB3ZBe609xFtS2s3sRW+q3mfqOkQIl
+	 uw19NKvjN8nFMxT++0kptk0/crCjjsFRaOyxUdEABPeCpBOG0dDxqYd369AUgYJjKf
+	 u3itq9HTsCyWC5LajuMf5sbJBoPuJV0PsOXShA5C/TrI8NA1MRWveJA41QTh+FzMR0
+	 NaNt9SskcNl6wvoIHDVgT4oeyywqnePlynSxiGuouFqmtdoQoqv/gHeblMvUb9VFgh
+	 2gt/sNbH+DyYTFftKzsF1RiOd1lPa74J6hobRJJoTAsdteA8zixDBbZ1e8iuFiXJ9k
+	 ejoDFQQX/r03w==
+Message-ID: <2c9e0bf7-4be9-42b2-bf7a-5f64077efe49@kernel.org>
+Date: Sun, 7 Apr 2024 11:00:45 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a76mmz5xrfipqpmq2ltsyobwc54dyw2d55gb4vta5d746dwb3i@5mm2ew5uudi3>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 3/6] dt-bindings: pci: qcom: Add opp table
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Bjorn Helgaas <bhelgaas@google.com>, johan+linaro@kernel.org,
+ bmasney@redhat.com, djakov@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, vireshk@kernel.org,
+ quic_vbadigan@quicinc.com, quic_skananth@quicinc.com,
+ quic_nitegupt@quicinc.com, quic_parass@quicinc.com
+References: <20240407-opp_support-v9-0-496184dc45d7@quicinc.com>
+ <20240407-opp_support-v9-3-496184dc45d7@quicinc.com>
+Content-Language: en-US
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240407-opp_support-v9-3-496184dc45d7@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 02-04-24, 18:44, Andi Shyti wrote:
-> Hi Vinod,
+On 07/04/2024 06:37, Krishna chaitanya chundru wrote:
+> PCIe needs to choose the appropriate performance state of RPMH power
+> domain based upon the PCIe gen speed.
 > 
-> On Fri, Mar 29, 2024 at 10:15:24PM +0530, Vinod Koul wrote:
-> > On 28-03-24, 08:36, Andi Shyti wrote:
-> > > Hi
-> > > 
-> > > On Wed, 13 Mar 2024 10:56:39 +0530, Mukesh Kumar Savaliya wrote:
-> > > > I2C driver currently reports "DMA txn failed" error even though it's
-> > > > NACK OR BUS_PROTO OR ARB_LOST. Detect NACK error when no device ACKs
-> > > > on the bus instead of generic transfer failure which doesn't give any
-> > > > specific clue.
-> > > > 
-> > > > Make Changes inside i2c driver callback handler function
-> > > > i2c_gpi_cb_result() to parse these errors and make sure GSI driver
-> > > > stores the error status during error interrupt.
-> > > > 
-> > > > [...]
-> > > 
-> > > Applied to i2c/i2c-host-next on
-> > > 
-> > > git://git.kernel.org/pub/scm/linux/kernel/git/local tree
-> > 
-> > You applied changes to dmaengine driver without my ack! I dont agree to
-> > the approach here, we could do better
+> Adding the Operating Performance Points table allows to adjust power
+> domain performance state and icc peak bw, depending on the PCIe gen
+> speed and width.
 > 
-> this must be an error from b4 ty. The changes have been added to
-> 
-> pub/scm/linux/kernel/git/andi.shyti/linux.git
-> 
-> branch i2c/i2c-host, As it has been agreed from very long.
-> 
-> Anyway, the changes are in -next. What do we do now? Do I revert
-> it? Mukesh, can you please agree with Vinod?
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
 
-I dont apply patches to other subsystem without the ack. Either way you
-can ask always! 
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-I will leave it upto you...
+Best regards,
+Krzysztof
 
--- 
-~Vinod
 
