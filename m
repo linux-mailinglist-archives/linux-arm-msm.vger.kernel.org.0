@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-16657-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16658-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BF4889AF17
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Apr 2024 09:21:30 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C6CFA89AF1A
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Apr 2024 09:21:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 95AFF1C2184B
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Apr 2024 07:21:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7CB451F238F4
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Apr 2024 07:21:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18854107A8;
-	Sun,  7 Apr 2024 07:21:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BCB211CA1;
+	Sun,  7 Apr 2024 07:21:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FjvdKdRp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m1IQ398S"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E31E610795;
-	Sun,  7 Apr 2024 07:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435F311C92;
+	Sun,  7 Apr 2024 07:21:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712474485; cv=none; b=X8pDz4tdRwenruakVsAi7GLKFLOK41vKO9Noz93Etxu23ANdwnzHeLvr4epRR9cJrmYNG9KrCGNngGz+FOGPe5KvwiwWUOU+YOkqT+Ue92N7VTc2Kw3xzM/Yxjjrn0Dc9Y8Qjb9q+9ImKl+JtLB2nCsoGEZnW724QTF3rgm4lp8=
+	t=1712474488; cv=none; b=WueGSM6kGvT5lO6XYHh8G/30pKMfqHOcVC+S8M1VuEOuPY3bWMqy6wnzYzoQRO5Jf4jftEkPaARrKsJsILftYrAtAYrVJYu61qjGypfO34pSuJ0CEiAI2VoS5K0Kea2CjvDB0dT26bb4qLY1YbXE42dkXRdFgRVgLmfT7cNY49I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712474485; c=relaxed/simple;
-	bh=tph3+lKvTIUbkttbE7aDjD1u5DS+286zExnPJ//j268=;
+	s=arc-20240116; t=1712474488; c=relaxed/simple;
+	bh=N68XWJ5tqs+R4Sb4kX5+JuesEzf3EgGkVGBZSU+ql8I=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=OBgfRoOj+Sn/nKa+vo+pKRsVwtq2Q9mcwnJlHGSJonnkCb5kWwbABDvKSIqa/O5gRCqPMKXOmcTpOJDwavs2hdivsxeY2aBbyZ0G9pAhZV9/OMW7lPdKuetJXj/ufm622VuJ9FDZz5aLbRbbhPBjH3dpOvj06Gh7bb9K8iyrexk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FjvdKdRp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9F4C433F1;
-	Sun,  7 Apr 2024 07:21:21 +0000 (UTC)
+	 MIME-Version:Content-Type; b=juRoYPw1Y3KTViynqbQtlO5NlpE3uhDLuxQZFzYQlTWnvV3UlpIBHo+Pq6wgP/Kb+q+WECzM7GASpmBENW5r6HZcNm/wvChNC8q3BBwqqJsDsLfTAo2IVwVMQ/MzXrcRJl3Dtwbbxo3rDF5LMtWFVCqJ76zZjTmM7R5LY0BQ75A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m1IQ398S; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23DABC43399;
+	Sun,  7 Apr 2024 07:21:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712474484;
-	bh=tph3+lKvTIUbkttbE7aDjD1u5DS+286zExnPJ//j268=;
+	s=k20201202; t=1712474487;
+	bh=N68XWJ5tqs+R4Sb4kX5+JuesEzf3EgGkVGBZSU+ql8I=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=FjvdKdRp9o11+I1IP+QEuRz/CEJ/x85LYg3c6XcRkkOo3ajs2FqLtpe3+lf8ife2L
-	 Vuau5xPvgQGAwxikfPKfYXam4KoZMdPxGrO7cljirliaEuzu4IDkeShcTvpc8A/+MQ
-	 q2YOdClUBeEu02fCSP479qwrJc/IVK3yyvdGgQ09tTyYMBDJMF+KUs3L622TFz3p0w
-	 FOS2nHG79FrRiAnPX/Sg5ff8ICjOumEfHCZVaiBTxfik9JeYuBCertspTRWRARvaj7
-	 2tLHYHu+3HYKgoyL6vBHE3sqb/7jvtfw2BQ+W2C1sjDDvUeqaxdTWgn9elzxQ0lJeF
-	 1I5UZ0333rnSg==
+	b=m1IQ398SDjpO7GlcginkHlwEEKzAU6UkjNe+d9WDjSpIgyfZJU3NSyrSjOOLtHnOR
+	 Ou2BKKHyMTcfcLwJeJyulf+IvIlBAAx3qllJ09FGyEUL96vuW9u/s8q8dY8Ba3HMaY
+	 22YGstPkEBoLIUeahMv+/eCwT1qsNjXoiTxl2aJmc3ndb/yRP8wXpDD4plEIv+V2Bk
+	 fH6blNNZgeyzLiVbziNsoMvqi/RFo3u/yUxOH4N3HS6PlHCP9gaQITUfffCuz6AKlQ
+	 3/A4NJ3DsfZIOG8KdaUfyVFYwRZO+peaMWlHKYnBFyKQAWKWvjBRpA95UIiDcHE4XD
+	 ZYNjQbq/8s8Ug==
 From: Vinod Koul <vkoul@kernel.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konrad.dybcio@linaro.org>, 
@@ -50,12 +50,12 @@ To: Bjorn Andersson <andersson@kernel.org>,
  Gabor Juhos <j4g8y7@gmail.com>
 Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
  linux-kernel@vger.kernel.org
-In-Reply-To: <20240220-phy-qcom-m31-regulator-fix-v1-1-7675b4a916b3@gmail.com>
-References: <20240220-phy-qcom-m31-regulator-fix-v1-1-7675b4a916b3@gmail.com>
-Subject: Re: [PATCH] phy: qcom: m31: match requested regulator name with dt
- schema
-Message-Id: <171247448113.375090.4211885215588548227.b4-ty@kernel.org>
-Date: Sun, 07 Apr 2024 12:51:21 +0530
+In-Reply-To: <20240406-phy-qcom-m31-regulator-fix-v2-1-c8e9795bc071@gmail.com>
+References: <20240406-phy-qcom-m31-regulator-fix-v2-1-c8e9795bc071@gmail.com>
+Subject: Re: [PATCH v2] phy: qcom: m31: match requested regulator name with
+ dt schema
+Message-Id: <171247448471.375090.8975261455779796119.b4-ty@kernel.org>
+Date: Sun, 07 Apr 2024 12:51:24 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,7 +67,7 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.12.3
 
 
-On Tue, 20 Feb 2024 20:13:47 +0100, Gabor Juhos wrote:
+On Sat, 06 Apr 2024 15:37:09 +0200, Gabor Juhos wrote:
 > According to the 'qcom,ipq5332-usb-hsphy.yaml' schema, the 5V
 > supply regulator must be defined via the 'vdd-supply' property.
 > The driver however requests for the 'vdda-phy' regulator which
