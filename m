@@ -1,106 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-16825-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16826-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B1BF89C9DD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 18:40:10 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DC6A89C9EB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 18:41:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BFE901F21EEC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 16:40:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8DC2628B977
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 16:41:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA62F142E70;
-	Mon,  8 Apr 2024 16:39:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1F0C1428EE;
+	Mon,  8 Apr 2024 16:41:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="XLdFAVh5"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cifxUkDf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F419142652;
-	Mon,  8 Apr 2024 16:39:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D9F14264D;
+	Mon,  8 Apr 2024 16:41:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712594397; cv=none; b=Qpz6++7l1k4gurilPUoITr3654ue/b9qRrbAdGTl2JQgwB+06LE5axSWiKb48n+uE5VU0163xA6TjmDlHljsZhY5WqZjsdQGH6lfrEGr6HDuPPI4xbe2Q9r+JdoBcTVqzwrlNkYP9/N+ehqjU/SFM4QN53hqyWk5ggfeEo1EgZQ=
+	t=1712594488; cv=none; b=KMtWSvraPs/adEmdXFV8f1kRlCAyUQuZaNgZtSy1OUWpZCX9QNegMRqmX3CpGeBWb6zKNOUD6HiX9A0wyAstOIByAF7xDHQ3ulPAOrrFmNTrfrs1EeMuHlKE14wHmx+sdxKI/e1OhEA2lcrMGu2V0OMWXIEFk4LT9C/zUMsboZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712594397; c=relaxed/simple;
-	bh=+ayaTanXY1BoZODK0R5VCBAqY8Ylbg2XOaM+3Rh7RfI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=BDi2OfDPwO/GUwWX6+S31cCZBTKR7cGXq/Y18C/2/O0aaucMXL/NwiO25yGRyGU3Uq5nXfUY9AgcA9V0vK4CwUsjUdDtTg7cNZWHtuUMXLEf56bV5nFAw6MxIokWSXsz7aIEscIWkn7d+/EHdpfRz3/LXx8IDlBb2y85bZFRuMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz; spf=pass smtp.mailfrom=z3ntu.xyz; dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b=XLdFAVh5; arc=none smtp.client-ip=128.199.32.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=z3ntu.xyz
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=s1;
-	t=1712594394; bh=+ayaTanXY1BoZODK0R5VCBAqY8Ylbg2XOaM+3Rh7RfI=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=XLdFAVh5OS/br+w8wFVvIf/EPbaKrrAxTr7Hob+QYz3fPiVHyZgMPAbyY1en2zLrY
-	 nhQJ6HeQ1cQFO28ERHudylZlqp9HhThmpICAeHipUOclkSArJODdMaDDUrY9HZzuOM
-	 OQRJR6ZbzFrgxWpKIbpNLtRb8p+mRKf8CkJRmOxI=
-From: Luca Weiss <luca@z3ntu.xyz>
-Date: Mon, 08 Apr 2024 18:39:48 +0200
-Subject: [PATCH 2/2] ARM: dts: qcom: msm8974-hammerhead: Update gpio hog
- node name
+	s=arc-20240116; t=1712594488; c=relaxed/simple;
+	bh=TjLTzA6JDfXXdlz0RREi2DNgQIkZGNpTQemJBXI3JFM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=XuzVwHMMV3ri5hyERW5EtheizRUwii/NFf6SVlH02xIMB7qrx/SmAh9UaG9VaUvgosv9u35uJbOxtObMokvg3TmLqzFcuin/9YczGK2w1H7I7pc+qFGAEylQbmeSEZSXR15w6571CCAtcnqI2oiJzIUMsoU+lq6EuiD55b1hdsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cifxUkDf; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 438AfWuH019862;
+	Mon, 8 Apr 2024 16:41:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=TdhNvuTHq7dEziJFTqEsp6X+46JLjpqwWk7ezu+cHOc=; b=ci
+	fxUkDfBmVemqO42SbMBEl7jyYeYtFtcPSOqwPnwdY5T5xmeuRDijxXlzsBSC3lyu
+	tBmw4rl7p8aY6qz8WpDamKx7IrEK4N2mRtUFHMDxJoIlMbCLOa3HlfxsFnBjrsay
+	IR7lXr+cjAaXOPhS0VtpdlcnZYAvsti2o/WywnsM1oip/o9KumoF+6Z5smx7dOry
+	gVXym0kD+ag62WBbOZ9igxCho9k0ftsT/jpSHoGvib2mKesmOGZs8vt2y48q4ffR
+	FZJVxgiYxpayRnZLHs0btK+d/886vWNML4hPZAr/wJI87Aiu+1G4cAIyRF51jxwb
+	5pHDLWedHH89Fpks6oGQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xcbg39d0h-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 08 Apr 2024 16:41:17 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 438GfHSJ025275
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 8 Apr 2024 16:41:17 GMT
+Received: from [10.71.109.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 8 Apr 2024
+ 09:41:16 -0700
+Message-ID: <23986455-9e35-0106-8835-6bd67bd90b7c@quicinc.com>
+Date: Mon, 8 Apr 2024 09:41:15 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH] phy: qcom: qmp-combo: fix VCO div offset on v5_5nm and v6
+Content-Language: en-US
+To: Johan Hovold <johan+linaro@kernel.org>, Vinod Koul <vkoul@kernel.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Neil
+ Armstrong <neil.armstrong@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Dmitry
+ Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20240408093023.506-1-johan+linaro@kernel.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240408093023.506-1-johan+linaro@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240408-qcom-pmic-gpio-hog-v1-2-f61fc5323110@z3ntu.xyz>
-References: <20240408-qcom-pmic-gpio-hog-v1-0-f61fc5323110@z3ntu.xyz>
-In-Reply-To: <20240408-qcom-pmic-gpio-hog-v1-0-f61fc5323110@z3ntu.xyz>
-To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- Bjorn Andersson <andersson@kernel.org>, 
- Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Luca Weiss <luca@z3ntu.xyz>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=763; i=luca@z3ntu.xyz;
- h=from:subject:message-id; bh=+ayaTanXY1BoZODK0R5VCBAqY8Ylbg2XOaM+3Rh7RfI=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBmFB3YDxLvRVsxb9nTkZozxM4XvfH1dYr3FRlbY
- BIc+CeW3N6JAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZhQd2AAKCRBy2EO4nU3X
- Vut5D/9DMtNCNuU4Y0MpLDm8ZJWPCbS3mIXaweMlva5I6z1BRBzXEkVc1Sgs9fyS/MOMwyLfTQ9
- slKaGakE7hMNZluPw8D+xzKjbDTVNx04TJYiKJL+GoJlFPk1ZTGCUeFuDFSl1HISTFWopKJ5cF6
- GmGNv9lpnGgqt6pZTXLap93GU/DAUXfn6moJbHGeEpSug2qUmDzWI4CZ1IRj9FnwmmxSo0c13qz
- bo3vrohf5KKuulIRRB54QeXGFvGkzN9paeRN3kWfDhKRm0nec5TG7Wd79ViQ3YGJ28zsRihErEW
- 4+r8FQ84TK1+r0a/M4A4VjyLCkdRrOFUSnZWQ+fbx2bKibHnH/V7tgYmflZBPHWnk6Yz0xsG5o2
- E4/GQZ3gMRDStjjmHgTt3JlUndtwSkRKVd5/LRoQQp39zDX3kraB9AhpJXqxrzcMQV3rTFrCmHr
- TICNoIYMe3Jcz5UQXcY3z1scFMQW/IV02ziCBe3bIGlsQWGZ71qRiPxVtj6Jy3cGEvFye/LWOGB
- vX0ieic56wcUw4E/UCVx13Q0MR0BWr38WbEf8+JBwPTeN846U2YzrQfAPZTuVDZAAzE3jwlcUat
- cAq92CVAzFPTTmbSqEC5Ua2I/wA6M3uww98VhZBjo0qI77XqFr+4wY5mgTK0sjkAGT4Z8zGrTVb
- ML1Kht28nwaDZOA==
-X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
- fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 16U9_4TI00xjALNLzjMCNoRm_alnWFxu
+X-Proofpoint-ORIG-GUID: 16U9_4TI00xjALNLzjMCNoRm_alnWFxu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-08_15,2024-04-05_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=999 mlxscore=0 suspectscore=0 impostorscore=0 bulkscore=0
+ clxscore=1011 malwarescore=0 spamscore=0 phishscore=0 adultscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404080129
 
-Follow the gpio-hog bindings and use otg-hog as node name.
 
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
----
- arch/arm/boot/dts/qcom/qcom-msm8974-lge-nexus5-hammerhead.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974-lge-nexus5-hammerhead.dts b/arch/arm/boot/dts/qcom/qcom-msm8974-lge-nexus5-hammerhead.dts
-index 4aaae8537a3f..06549051be50 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8974-lge-nexus5-hammerhead.dts
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8974-lge-nexus5-hammerhead.dts
-@@ -328,7 +328,7 @@ wlan_regulator_pin: wl-reg-active-state {
- 		power-source = <PM8941_GPIO_S3>;
- 	};
- 
--	otg {
-+	otg-hog {
- 		gpio-hog;
- 		gpios = <35 GPIO_ACTIVE_HIGH>;
- 		output-high;
+On 4/8/2024 2:30 AM, Johan Hovold wrote:
+> Commit 5abed58a8bde ("phy: qcom: qmp-combo: Fix VCO div offset on v3")
+> fixed a regression introduced in 6.5 by making sure that the correct
+> offset is used for the DP_PHY_VCO_DIV register on v3 hardware.
+> 
+> Unfortunately, that fix instead broke DisplayPort on v5_5nm and v6
+> hardware as it failed to add the corresponding offsets also to those
+> register tables.
+> 
+> Fixes: 815891eee668 ("phy: qcom-qmp-combo: Introduce orientation variable")
+> Fixes: 5abed58a8bde ("phy: qcom: qmp-combo: Fix VCO div offset on v3")
+> Cc: stable@vger.kernel.org	# 6.5: 5abed58a8bde
+> Cc: Stephen Boyd <swboyd@chromium.org>
+> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>   drivers/phy/qualcomm/phy-qcom-qmp-combo.c     | 2 ++
+>   drivers/phy/qualcomm/phy-qcom-qmp-dp-phy-v5.h | 1 +
+>   drivers/phy/qualcomm/phy-qcom-qmp-dp-phy-v6.h | 1 +
+>   3 files changed, 4 insertions(+)
+> 
 
--- 
-2.44.0
-
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
