@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-16753-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16754-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A20CE89B754
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 07:56:55 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CE3589B75B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 07:58:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D62E81C20F66
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 05:56:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BBF8D281A2C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 05:58:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EE0679FE;
-	Mon,  8 Apr 2024 05:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EE6E79FE;
+	Mon,  8 Apr 2024 05:58:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KMbvupMp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KSTXvrkh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DBF314294;
-	Mon,  8 Apr 2024 05:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF418473;
+	Mon,  8 Apr 2024 05:58:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712555806; cv=none; b=XVaH913R94LpPAKiAJaIOcd4pKEVmYTjf1dKTK0NSTe8nwVWLoFw/re4Wq+rqHFMtO8IZBrJuhS+49rddLPe4Zb9IvGqqGep9/9Ar+g+1EwRF+M850pJX2klQQbABLVcoNdOJteB2odstL1NufUiQ7gpZybDk4fHfBTVeNig9Vc=
+	t=1712555932; cv=none; b=V8URiILeHhtLFPI3UDHzJZSM1bUtp7565f4mW4mM1xeEf/4dtqLmJ8Ns8FnUAuwZ+g7qCP6PO6yjBLwKvImyqD6FeY0BWfK3XMvY1KWPVIjqn04bDXjv9L6yLHaWfzFhNIzGfjvt48v8ueHy2glGnM56jHz5WWgfFzjC6+tX5xE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712555806; c=relaxed/simple;
-	bh=ELERn9z7UVJVqAQqBnZjr6HtxOQ+/5+MEqddAZiFo4s=;
+	s=arc-20240116; t=1712555932; c=relaxed/simple;
+	bh=umuB0PVea3TNBq8fJ+4g5SmhV5V4LR2m6gdRGgc8TKc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tLep/hgR/lJtzlDnDwFdaSK4c/LspNfPGDgaACJnGOY55gWQsuWN9pgdjZ9PtcOX/8GoW83AX5942s1F4TwfdxJs4TG4w2ZrI3SSvO0R69vN9Y3wei0vAAl4dNDpee54lJlsYm9gEUY3WrxmpqmasGnEYX7lGurauGTkv8GTOS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KMbvupMp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52B83C43390;
-	Mon,  8 Apr 2024 05:56:40 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=cKHg7nX/6bVUXWmsPTNpfoL4N21GCH8PZHRE9/5W+0gL5lMSi3I1lCtriM3q6oHkYG1cbsafEHV8D5mjA6h5ZbU/lLENCkdR2cxtlZPeSUwMSgy0XkTibfpm9+iegumfA8Dgiv+CpU6QiOVhR5N1eToPptbuvW85031SEnpSvlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KSTXvrkh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1634C433F1;
+	Mon,  8 Apr 2024 05:58:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712555806;
-	bh=ELERn9z7UVJVqAQqBnZjr6HtxOQ+/5+MEqddAZiFo4s=;
+	s=k20201202; t=1712555931;
+	bh=umuB0PVea3TNBq8fJ+4g5SmhV5V4LR2m6gdRGgc8TKc=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=KMbvupMpi0c75dd5qW5fkIraRqi2SUOOC80O5q2D9HXTifSn3Y7n25y29QMyC6enZ
-	 p0cXbUgyr2tdNLx/6k/ZepEYjwtING688cMGvV1IiVS0OWdR9WlBtGaQHywaFui0U4
-	 GM0mMWzOOiZYlBhiKKR7eIy8nNM0vsYKjWdZ/JNIuSGl2PP9FqmJegoEH/yYkdkYHz
-	 hlzNS5jAGrIHtCx2vow4u4sDEqCA4A9ojWDEnKYODZwgsgKDu8eVDxEIxOenS4yhtS
-	 ihIWXQF1kt+sAhzoF69DKPc/apanitXtxrPSjxS2z977j1jniiSI/GhOdLU/Qtl3PV
-	 rDwmyvhGNn3CA==
-Message-ID: <ff5fc4c2-de74-4a6b-a70c-a5f1bd0b5343@kernel.org>
-Date: Mon, 8 Apr 2024 07:56:40 +0200
+	b=KSTXvrkhpl9RM+R6NVUQUKymDAo0gYeDldOqgV+BfAKslJ6ewmrYheT1R0hxWfWlZ
+	 CZ+OnedRxeLPgLemA20zWdUWpTHDuYvJ/VHbbv4C/ZnPnnSgXijPu4Q8W9f9I6dWUd
+	 S8FOQLNo2xRWnAgCJcfFpG2PXDBLN4uqePZ9t5Isruqu1E04CWne15CRDjwWD9Swip
+	 g9GlO7axR7HMbvUldk2oVzUW6YA0PSYOon3/5jR+kj4kWF57WQFdkaSKNJd7EeHxlR
+	 YJMDeqxtbUphvNaJG+PQ5Ug/WBg0wq3ugPFESV2KFPLM8UjBPqmTYu5gWkPFCDJHPj
+	 b5gOqoLJ78JKA==
+Message-ID: <cf06b75d-2f79-4d3b-8d64-459c9f5cb4ea@kernel.org>
+Date: Mon, 8 Apr 2024 07:58:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,20 +50,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RESEND v3 1/2] ASoC: dt-bindings: qcom,sm8250: Add QCM6490 snd
- QCS6490 sound card
-To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>
-Cc: linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
- linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com
-References: <20240408042331.403103-1-quic_mohs@quicinc.com>
- <20240408042331.403103-2-quic_mohs@quicinc.com>
+Subject: Re: [PATCH 1/3] dt-bindings: remoteproc: qcom,qcs404-cdsp-pil: Fix
+ qcom,halt-regs definition
+To: Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
+ phone-devel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240407-qcom-halt-regs-fixup-v1-0-a0ea4e2c178e@z3ntu.xyz>
+ <20240407-qcom-halt-regs-fixup-v1-1-a0ea4e2c178e@z3ntu.xyz>
 Content-Language: en-US
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,23 +105,21 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240408042331.403103-2-quic_mohs@quicinc.com>
+In-Reply-To: <20240407-qcom-halt-regs-fixup-v1-1-a0ea4e2c178e@z3ntu.xyz>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 08/04/2024 06:23, Mohammad Rafi Shaik wrote:
-> Document the bindings for the Qualcomm QCM6490 IDP and QCS6490 RB3Gen2
-> board specific sound card.
+On 07/04/2024 11:58, Luca Weiss wrote:
+> Set the 'items' correctly for the qcom,halt-regs property and update the
+> description to match what it should be.
 > 
-> The bindings are the same as for other newer Qualcomm ADSP sound cards,
-> thus keep them in existing qcom,sm8250.yaml file, even though Linux driver
-> is separate.
-> 
-> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 > ---
+>  .../devicetree/bindings/remoteproc/qcom,qcs404-cdsp-pil.yaml        | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
+> 
 
-
-Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 
 Best regards,
 Krzysztof
