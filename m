@@ -1,69 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-16802-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49E2789BEB2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 14:14:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id EEAFC89BF52
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 14:46:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B32C7B21E30
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 12:14:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 889A01F21B80
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 12:46:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1233D6A340;
-	Mon,  8 Apr 2024 12:14:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F33079B77;
+	Mon,  8 Apr 2024 12:45:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="stfBO71f"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aQM+9khF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9CC76A33B;
-	Mon,  8 Apr 2024 12:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D306F065;
+	Mon,  8 Apr 2024 12:45:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712578476; cv=none; b=Zow68kSzT+c/OYyaS4bvFbkEL4AEgtrku76OH4xMjJsrBxPLK89tx5d5fOYOVv3Z+VzCv+WSI5Zlk8fLUlcpsBzWPon4/geVi1oB0iCQJ8/jJLAYAAr0OWaUUhE/akiS4L1qMnUvBWmZAOACQYFZbyOU2RMh7NsTAhNBqaYELzs=
+	t=1712580304; cv=none; b=hQvjJFP0Ne8MI9hIzzDDXS7qOlC3Fn0pS428BLIfP4LhYvxUYmgcJxwwfiZatWfMN0FSyN33aVv5JNBelakrS6j6BxcZbm2VI5dKym3rpYD9AijPxu3aedABLb90u6dwRdk08TqaQPVz2sZwxJRai5+puddyatNOsjHqeZd5QgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712578476; c=relaxed/simple;
-	bh=x+FsxZWRAjPjLs6UXRrQ4jbrSYbaGPFtemQodRNwj0Q=;
+	s=arc-20240116; t=1712580304; c=relaxed/simple;
+	bh=tfA9OCUUYmRBc/HfduGlcOEWNno6qBswTFUJs11/8Xo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QomQLE1AM9x+TbfurQJuR2Kr/ZvQY/H22PmAAhjvpQ+okUMW+FQEN9g7+hPQ5wkRCSBTvDEXWk44iu+8sQqsxn+bW9+VJWTAcW1FXBWxRe53RknSs18V1mGuLxEjAQoVy4yXIK3FCVv5gzxf61oKK8aIPL8mwqQ4GErYFkVfI1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=stfBO71f; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CE6FC433C7;
-	Mon,  8 Apr 2024 12:14:35 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=JwVkRI22gHFjReRx5TI/C9z1XZ9d6jhW4jnYRRk0DjWQ1ogCvYyabdvtcGclDwmn8TMN/1XJDuK/K0AUS+X+ecMZhukaYyFd98a+7B3K/2PZc6p61JbZOwW6YhGeL6mWmkUYqjEbKO0kk6Krr/I3XFviN3NQv4FBM0nvcOBwzQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aQM+9khF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F782C433C7;
+	Mon,  8 Apr 2024 12:45:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712578475;
-	bh=x+FsxZWRAjPjLs6UXRrQ4jbrSYbaGPFtemQodRNwj0Q=;
+	s=k20201202; t=1712580303;
+	bh=tfA9OCUUYmRBc/HfduGlcOEWNno6qBswTFUJs11/8Xo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=stfBO71fztxYkHI6vQb0jBV0kkAT+9xNUYlPLhYKidsvrIigy4SLLrRQrckt/8Ovw
-	 /xMaqUilw8ZVL/gTLnwzb+gETQokd2aLRtEJa57lwprg50osIy3lj1OGAeewn24yM3
-	 kom4j8UtMNnJmq2jM1IbJMp4AGA6hx2yDi2WJYp2hHyEBagjcLYSniK1GRc6Uqq67f
-	 1ghx88gA6ywGh94lZdWi03fvYNNtBQKZJiWYIV+tDQFI28zLcnzYDl4yabYGJ8CQWk
-	 iDcJvIv2DlSNv63+RcelicnrMEBP7Y3AfiZFY4czY3UdHyoJRlcJS6/7/mHlcGCjlv
-	 9dAXU6vYEo5hA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rtntN-000000002B9-0kG0;
-	Mon, 08 Apr 2024 14:14:29 +0200
-Date: Mon, 8 Apr 2024 14:14:29 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Caleb Connolly <caleb.connolly@linaro.org>
-Subject: Re: [PATCH v2] usb: typec: qcom-pmic-typec: split HPD bridge alloc
- and registration
-Message-ID: <ZhPfpaEx9fV61Y_3@hovoldconsulting.com>
-References: <20240408-qc-pmic-typec-hpd-split-v2-1-1704f5321b73@linaro.org>
- <ZhOYpHXz6t0fkzZ2@hovoldconsulting.com>
- <2ejpom6ykci6o7d7luwa2ao4stpm24aoyi66aoncxcqcwgidxz@gcsqvpb3s7nr>
- <ZhPYjXjX3LcCMhyh@hovoldconsulting.com>
- <CAA8EJprJn-sq1Xb9E0bJD814CepKPzsD=xCFAKFeCGjj2Tv9Dg@mail.gmail.com>
+	b=aQM+9khFVzUOxlN8kWH6/Ua0hK+6TWyjo1t158gVxNaLnzWSbD+CfOLvDMaSVOk1S
+	 p4yrEToGN4+sy2F9Js4CY63FE/qYbPlpEPkAAqKFDc6lVmM8VbDLurDOH/FQhKA27X
+	 9EomU7+rrKF3MTc242A3SPlvFSFz1+ryQ8IEVea1MGYnWzCYaerP80Pt+JRbZrsct0
+	 A9eNlJvr4IdSrjXtEafomf6NH64Du3w9oWDfTt6NlaN8sfVaS7WdgSC4LImuFaMc6r
+	 wbsLGNYtw2H3Zhg6UYCqI2cd4Tyq1JxhN1IR6rU8a6hQCFpcacnY+KYHRoZ9T4qoQF
+	 JMOE4QShg0amA==
+Date: Mon, 8 Apr 2024 07:45:00 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+	Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>, 
+	Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org, 
+	alsa-devel@alsa-project.org, linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com
+Subject: Re: [RESEND v3 2/2] ASoC: qcom: sc8280xp: Add support for QCM6490
+ and QCS6490
+Message-ID: <45yy3cvepk4uwi2jdmh4w6l5ac3dffqhbot6xzv2bwjvo637ss@pryzth2hghyu>
+References: <20240408042331.403103-1-quic_mohs@quicinc.com>
+ <20240408042331.403103-3-quic_mohs@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,65 +64,42 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAA8EJprJn-sq1Xb9E0bJD814CepKPzsD=xCFAKFeCGjj2Tv9Dg@mail.gmail.com>
+In-Reply-To: <20240408042331.403103-3-quic_mohs@quicinc.com>
 
-On Mon, Apr 08, 2024 at 02:48:44PM +0300, Dmitry Baryshkov wrote:
-> On Mon, 8 Apr 2024 at 14:44, Johan Hovold <johan@kernel.org> wrote:
-> >
-> > On Mon, Apr 08, 2024 at 01:49:48PM +0300, Dmitry Baryshkov wrote:
-> > > On Mon, Apr 08, 2024 at 09:11:32AM +0200, Johan Hovold wrote:
-> > > > On Mon, Apr 08, 2024 at 04:06:40AM +0300, Dmitry Baryshkov wrote:
-> > > > > If a probe function returns -EPROBE_DEFER after creating another device
-> > > > > there is a change of ending up in a probe deferral loop, (see commit
-> > > > > fbc35b45f9f6 ("Add documentation on meaning of -EPROBE_DEFER").
-> > > > >
-> > > > > In order to prevent such probe-defer loops caused by qcom-pmic-typec
-> > > > > driver, use the API added by Johan Hovold and move HPD bridge
-> > > > > registration to the end of the probe function.
-> > > >
-> > > > You should be more specific here: which function called after
-> > > > qcom_pmic_typec_probe() can trigger a probe deferral?
-> > > >
-> > > > I doubt that applies to tcpm->port_start() and tcpm->pdphy_start() in
-> > > > which case the bridge should be added before those calls unless there
-> > > > are other reasons for not doing so, which then also should be mentioned.
-> > > >
-> > > > I suspect the trouble is with tcpm_register_port(), but please spell
-> > > > that out and mention in which scenarios that function may return
-> > > > -EPROBE_DEFER.
-> > >
-> > > The probe loop comes from from tcpm_register_port(), you are right.
-> > > However then putting bridge registration before the _start() functions
-> > > is also incorrect as this will be prone to use-after-free errors that
-> > > you have fixed in pmic-glink.
-> >
-> > You obviously have to mention that in the commit message as that is a
-> > separate change and also one that looks broken as you're now registering
-> > resources after the device has gone "live".
+On Mon, Apr 08, 2024 at 09:53:31AM +0530, Mohammad Rafi Shaik wrote:
+> Add compatibles for sound card on Qualcomm QCM6490 IDP and
+> QCS6490 RB3Gen2 boards.
 > 
-> No. I'm registering a child device rather than a resource.
-
-There's no difference. You're registering a resource for someone else to
-consume.
-
-And it's not obvious that this does not lead to missed events, etc. in
-this case.
-
-> > So you also need to explain why you think that is safe, if it should be
-> > done at all. You're essentially just papering over a DRM bug in the
-> > unlikely event that probe fails.
+> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+> ---
+>  sound/soc/qcom/sc8280xp.c | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
-> Unfortunately, as pointed out by Reported-by, Caleb has actually hit
-> the probe failure loop.
+> diff --git a/sound/soc/qcom/sc8280xp.c b/sound/soc/qcom/sc8280xp.c
+> index b7fd503a1666..878bd50ad4a7 100644
+> --- a/sound/soc/qcom/sc8280xp.c
+> +++ b/sound/soc/qcom/sc8280xp.c
+> @@ -169,6 +169,8 @@ static int sc8280xp_platform_probe(struct platform_device *pdev)
+>  }
+>  
+>  static const struct of_device_id snd_sc8280xp_dt_match[] = {
+> +	{.compatible = "qcom,qcm6490-idp-sndcard", "qcm6490"},
+> +	{.compatible = "qcom,qcs6490-rb3gen2-sndcard", "qcs6490"},
 
-The probe loop is probably real, I don't don't doubt that, but you
-still need to explain when tcpm_register_port() can return
--EPROBE_DEFER.
+We now have 4 <platform>-sndcard and two <board>-sndcard compatibles
+here.
 
-But the point is, you don't have to register the bridge after *starting*
-the port to fix the probe loop. You're doing that for other,
-questionable reasons and you don't explain why in the commit message so
-that others can evaluate your reasoning.
+Not saying that your patch is wrong, but is this driver board-specific
+or soc-specific? Srinivas, Krzysztof?
 
-Johan
+Regards,
+Bjorn
+
+>  	{.compatible = "qcom,sc8280xp-sndcard", "sc8280xp"},
+>  	{.compatible = "qcom,sm8450-sndcard", "sm8450"},
+>  	{.compatible = "qcom,sm8550-sndcard", "sm8550"},
+> -- 
+> 2.25.1
+> 
+> 
 
