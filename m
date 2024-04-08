@@ -1,122 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-16778-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16779-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EBEFE89BB72
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 11:17:46 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8065589BB7E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 11:19:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 57D20B23796
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 09:17:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A52CF1C214CA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 09:19:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EB084597B;
-	Mon,  8 Apr 2024 09:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F633446B7;
+	Mon,  8 Apr 2024 09:19:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="p+HA3Y1u"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="T1DeOK/Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A5C46549
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Apr 2024 09:16:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D805B3F9FA;
+	Mon,  8 Apr 2024 09:19:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712567822; cv=none; b=J4PZsDP9MHNWz6UD32RZiTrSNJBUEV00VeaEZ1d6w3MioPtfFg+QYBjLbSJ5UCmzKVfIfqRUwdqu098QnZj+2MENiTOWAu/5cNUSC8Pkj91uAdX/XkzrhzigZO1fybxfrguIgGhi3thm5lPlVymWnhEAdGTXV6xd7V4+npteLhs=
+	t=1712567989; cv=none; b=QJVBp7mpKwp4nq6wA5Ja8wDMQm2C6mBr5sRWgSuuhPTx2xpiruAVjfXPY8MyYQugMbBf8JBBgk6dCYgpDWj4i9zpqvDmIMDqgg3r3YfT97aoQI0DwsJaHiQ0NnYYmu/8Zb+c5rhOkKQdIb7REB4/yQpd/N5TWzF/TM377sY/VLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712567822; c=relaxed/simple;
-	bh=ydZJw7d35Ff9MPe3LKMKV9TaBpQgVGBrz9NBba+U30U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cwzy/rJzPxbu4vfU9x661SUsHPO76qUeKzeBi8irvFcseE5RZp/jmEB2mtSfn/bHV5o96CuRAMTVKYsN30TmJEeTj8Z9NfSStiddRcWtLbv78gExKLF+ttq6hwTXt0r27rV1z6Bo2lxSUHHPksrzScnnwk64kbqbEFo6wMc1Ccw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=p+HA3Y1u; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-343f62d8124so1897248f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Apr 2024 02:16:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712567818; x=1713172618; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Kyn/nAbJTaoSC8qDBWXGUmDfOwA1IOLpAo8aFHObHYE=;
-        b=p+HA3Y1uGsNot0aTz+OdufmZB4YkQPySa3c4TJFx0rmI4E2PAgDSotgYw5J6nv8Ka5
-         pBC5b71Kpdu+DBeBhta0Akk3N4lmR296RQViEfKenMNtNEnCefGlX7Zm2jrL1/eG9X25
-         UMQubMkIoTEFnuxrNUMDjw6sBE7DvZyHRM+8zqMM8Mgdkuiktf+7+FFHiXVWgY1LmlBh
-         BsHJQKV1P0v5ma4qeKi9cmdcCTRUMMbIo1GNOsR7I8bAN9PbHOE/GdaUHRu1UE7URovu
-         CV2TQeyg3iQn14kN9A3T1sSwPHENxKnjxiCFR5aqXpmagGmxzqdNOAqKZG5pvIQTLOFV
-         g8XQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712567818; x=1713172618;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Kyn/nAbJTaoSC8qDBWXGUmDfOwA1IOLpAo8aFHObHYE=;
-        b=KwcL/GVMKiEm4fg7XA6lS49LvFbxuyH6OXzsaBurts7zsy0bKwgEKTCZOazJsmGK0h
-         xl3iPQ6+U7BPC1ERi42AQ4QxenZiG4ng7zce7xkgvXxhjPDK0CRJNp0LlhxCClCXBBUR
-         AJNmt3nObiRKanf0bICqT8Y0bgBmkLWZYzxtI8Hrv0x6fqH+Mz0msYFYHMwFZd8ISsmS
-         mWuIg7K1pVLQDcITj3goZ5tYVZxhzUoj999c6c+PkTcaUe/L9JxCze6AkGr2wuCPY/aX
-         qZxEVfEc3k6x8ahYc4AkEJRTKgyTUIlRojfZ0cFnbIGgIgoyNx1lpPFdB/gJb8oEOf5h
-         LRFQ==
-X-Gm-Message-State: AOJu0YzuyGntVXqAh6XgU6pPpxZDjnKVm4aKhJrtdz90Zi+gI1+Tyonl
-	6GlsRmcRnNeL/6oJKrZ3updeq2Wif2oyze/e7jlelZIvpEEH/O+trJ/Us0QuYCo=
-X-Google-Smtp-Source: AGHT+IFbW+GZvWtDNwC+hUfv0CeQti5p0/4Lt39sOJliVc7683eESlFh87O+IacxG6iRBQDyz+nk9A==
-X-Received: by 2002:adf:f28e:0:b0:33e:3bf3:a097 with SMTP id k14-20020adff28e000000b0033e3bf3a097mr5598241wro.26.1712567818504;
-        Mon, 08 Apr 2024 02:16:58 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id q8-20020adfea08000000b00341c6440c36sm8586391wrm.74.2024.04.08.02.16.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Apr 2024 02:16:58 -0700 (PDT)
-Message-ID: <499dc405-a292-44c2-860f-db78ad7becc8@linaro.org>
-Date: Mon, 8 Apr 2024 10:16:51 +0100
+	s=arc-20240116; t=1712567989; c=relaxed/simple;
+	bh=ofbbhjOcn3gokpPZJXWug0E1Se7nblKWJlzQsqVrdiw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=NnXGmOYq3mKArgG/egXW+mNXBs8xnKUXYUlo7yJ+Jj6+P+/y5vcVpTnvcoaoJtPL1WEKU6hl36sBb0gk7iY4qGvCgy+SmCcPZgK3z3QkUdIsSXIk9zzCXBS90iE5XzWwIySumEDy7ECf5j5ajsNV90BxwdoeN3zjK1VTEgPz8nA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=T1DeOK/Z; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4386c1Tu030644;
+	Mon, 8 Apr 2024 09:19:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=bxHJFz7JARPgNmGRmpA2i8VMFIvKy301v4ZlZfnTBK0=; b=T1
+	DeOK/ZUTBxQfvCbOOeQQIayXgxxP1mI5Ly29rR/KfcvPSkh7Gon8QugU3JOj7joM
+	LPbBsfUqhu/fvzCyRVekc/o06yvSARfiWESBWFdAHf27MZjn2boZVTswB+iv7nAL
+	Ofpl2UbyvmbUB0kF6OeBh7yklev3CRQJaGtEyUUA4vzHhvYvXy0Ui/57iZ5RA7Kw
+	AC2tAefUBShpj9JSATUHBwpwOmrHK+wVr+HKnMqOMMsju2LRO/pSB+COqrb8uonp
+	WY3mcRrO2sPHXJ2PnETGnjg1oTRZFCz8lXbwOKhZxhlOC9NtuvZa/jaRvWGCuD/r
+	yGKlRKhlGIGpFVBNpl3w==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xcbg1ga73-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 08 Apr 2024 09:19:42 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4389JfQL006266
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 8 Apr 2024 09:19:41 GMT
+Received: from [10.238.176.241] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 8 Apr 2024
+ 02:19:39 -0700
+Message-ID: <7c13cb26-0a0d-b73e-443a-b83264cf482b@quicinc.com>
+Date: Mon, 8 Apr 2024 17:19:36 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RESEND v3 0/2] Add support for QCM6490 and QCS6490
-To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
- Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>
-Cc: linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
- linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com
-References: <20240408042331.403103-1-quic_mohs@quicinc.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH V4 2/2] rtc-pm8xxx: Correct the value written into the
+ PM8xxx_RTC_ALARM_CLEAR
 Content-Language: en-US
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20240408042331.403103-1-quic_mohs@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Alexandre Belloni
+	<alexandre.belloni@bootlin.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-rtc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20240401-fix-rtc-alarm-which-fired-before-driver-probe-not-be-cleard-v1-0-aab2cd6ddab8@quicinc.com>
+ <20240401-fix-rtc-alarm-which-fired-before-driver-probe-not-be-cleard-v1-2-aab2cd6ddab8@quicinc.com>
+ <Zg9mKnPrhTTNafdb@hu-bjorande-lv.qualcomm.com>
+From: jianbin zhang <quic_jianbinz@quicinc.com>
+In-Reply-To: <Zg9mKnPrhTTNafdb@hu-bjorande-lv.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: BjYveIFvFL8tZJy-Em57oF0k8eeVD6Gy
+X-Proofpoint-GUID: BjYveIFvFL8tZJy-Em57oF0k8eeVD6Gy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-08_07,2024-04-05_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
+ impostorscore=0 adultscore=0 priorityscore=1501 malwarescore=0 spamscore=0
+ mlxlogscore=999 suspectscore=0 lowpriorityscore=0 clxscore=1015 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
+ definitions=main-2404080072
 
 
+On 4/5/24 10:47, Bjorn Andersson wrote:
+> On Mon, Apr 01, 2024 at 09:56:30AM +0800, jianbin zhang wrote:
+>> Writing 1 to the PM8xxx_RTC_ALARM_CLEAR register is expected to clear
+>> the triggered alarm status. In patch v2, the value written to the
+> I'm not sure what "in patch v2" refers to here.
 
-On 08/04/2024 05:23, Mohammad Rafi Shaik wrote:
-> This patchset adds support for sound card on Qualcomm QCM6490 IDP and
-> QCS6490 RB3Gen2 boards.
-> 
-> Changes since v2:
-> 	- Modify qcm6490 compatible name as qcm6490-idp. Suggested by Dmitry
-> 
-> Changes since v1:
-> 	- Use existing sc8280xp machine driver instead of separate driver.
-> 	- Modify qcs6490 compatible name as qcs6490-rb3gen2.
-> 
-> Mohammad Rafi Shaik (2):
->    ASoC: dt-bindings: qcom,sm8250: Add QCM6490 snd QCS6490 sound card
->    ASoC: qcom: sc8280xp: Add support for QCM6490 and QCS6490
-> 
+Thanks for reviewing, "In patch v2" refers to https://lore.kernel.org/lkml/20230202155448.6715-4-johan+linaro@kernel.org/ which siwtch to use regmap_update_bits.
 
-LGTM,
-
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
---srini
->   Documentation/devicetree/bindings/sound/qcom,sm8250.yaml | 2 ++
->   sound/soc/qcom/sc8280xp.c                                | 2 ++
->   2 files changed, 4 insertions(+)
-> 
+> Also, as with patch 1, please fix your subject line and use internal
+> review list.
+>
+> Regards,
+> Bjorn
+Sure, Will fix the subject line and use internal review list in next 
+patch version.
+>> PM8xxx_RTC_ALARM_CLEAR register in the trigger function is incorrectly
+>> written as 0. So correct the value written to PM8xxx_RTC_ALARM_CLEAR
+>> register into 1.
+>>
+>> Signed-off-by: jianbin zhang <quic_jianbinz@quicinc.com>
+>> ---
+>> Changess in v4:
+>> - add the cover letter
+>> - modify the patch to conform to the specification
+>>
+>> Changes in v3:
+>> - Correct the value written into the PM8xxx_RTC_ALARM_CLEAR to 1.
+>> - link: https://lore.kernel.org/linux-rtc/20240319191216.GB3796206@hu-bjorande-lv.qualcomm.com/T/#t
+>>
+>> Changes in v2:
+>> - Switch to using regmap_update_bits() instead of open coding
+>>    read-modify-write accesses.
+>> - link: https://lore.kernel.org/lkml/20230202155448.6715-4-johan+linaro@kernel.org/
+>>
+>> Changes in v1:
+>> -link: https://lore.kernel.org/linux-rtc/20230126142057.25715-4-johan+linaro@kernel.org/
+>> ---
+>>   drivers/rtc/rtc-pm8xxx.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/rtc/rtc-pm8xxx.c b/drivers/rtc/rtc-pm8xxx.c
+>> index e4e2307445cf..806c99cdac9a 100644
+>> --- a/drivers/rtc/rtc-pm8xxx.c
+>> +++ b/drivers/rtc/rtc-pm8xxx.c
+>> @@ -391,7 +391,7 @@ static irqreturn_t pm8xxx_alarm_trigger(int irq, void *dev_id)
+>>   
+>>   	/* Clear alarm status */
+>>   	rc = regmap_update_bits(rtc_dd->regmap, regs->alarm_ctrl2,
+>> -				PM8xxx_RTC_ALARM_CLEAR, 0);
+>> +				PM8xxx_RTC_ALARM_CLEAR, 1);
+>>   	if (rc)
+>>   		return IRQ_NONE;
+>>   
+>>
+>> -- 
+>> 2.43.2
+>>
 
