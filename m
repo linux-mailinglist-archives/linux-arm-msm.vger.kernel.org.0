@@ -1,68 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-16786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16787-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1FE089BC33
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 11:46:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1518789BC4F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 11:49:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2F7251C21718
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 09:46:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 45B701C219F8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 09:49:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC5E548CFC;
-	Mon,  8 Apr 2024 09:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 842E84D10A;
+	Mon,  8 Apr 2024 09:49:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Td341aOb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yf2meAYW"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC28481DF;
-	Mon,  8 Apr 2024 09:46:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D814C634;
+	Mon,  8 Apr 2024 09:49:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712569585; cv=none; b=dPawekrrmr4glBYNQHlPToRUJDjVzIVPG/O2+1VCMdQKfxF6UK7OqUprp7ni7AFjHxMUKnBGuuF5ItzU6DAa9Dam12jSOoI3K6i8sAFTlxZohQ7I5owE2AttK6iWNRje2eWNv3jxdjZ/r4gV7zOSVkAp0bCGewtevpHTa/LjzNU=
+	t=1712569792; cv=none; b=oadqY/kZqvnvD+Lh42aQ0O3AV/+ZM01rR8SIkQ7UnAVYfMOuAdzecRBC9K5/aBUSLo/lft8irEiaBsbLI64RUo2aIOLE5C+xkxrQDPnTThEWY++1Bq6f6vNT13/VWG4w1mBJEIg6LZGBoqYSG+ii6fJ0bYig/0XoMDkm1dl+/PQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712569585; c=relaxed/simple;
-	bh=w96AR1Wv4GGEMME0DTaOez2gviiLAqcq3igwhCwqMEk=;
+	s=arc-20240116; t=1712569792; c=relaxed/simple;
+	bh=xL1SCPj347yWFVgdwNXote2UupJzfKZAH1a3FbrLt0Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ie5dCDFOL3hF4IOgzKuFfH/tWxs1fw4vvjEUHQ353j7YmRV/47ObJzysOQ+g2wJLgPasuzwDn3EwyyGEMUSNqABwc34RDBvb7NZzmI9oYTvCi/CzC+kdAAogp20RgjwMSe8fUY3alOtjzWKeCHMCFJh6nfszyfqdpfpU37NAwqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Td341aOb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06309C433F1;
-	Mon,  8 Apr 2024 09:46:24 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=cZBduevjYj6piioilkGyCPyTQ/dB0W1b4vHQLgWjPWPkyjjcsp+egua8S96nvqEMVsDDbmcgKm/ySDs0SwPB5eWu5AfRWCATOgimFB4A56RyVmkCgtLX946Hy5zLaJXzL52zx/uj40NnBvxo54jI7SA2aIfuynteV4ldvIHWkeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yf2meAYW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9D28C433C7;
+	Mon,  8 Apr 2024 09:49:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712569584;
-	bh=w96AR1Wv4GGEMME0DTaOez2gviiLAqcq3igwhCwqMEk=;
+	s=k20201202; t=1712569791;
+	bh=xL1SCPj347yWFVgdwNXote2UupJzfKZAH1a3FbrLt0Q=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Td341aObAzkaNYyl+vraZVNR5iMk4iIyJPIufLM2K7/sakH38bZ2NUcHm9FUeTCR5
-	 cCDVCFDtsNGv4B5WQ4oGk6DjTxaZfB5Eb5zh5ldKIx4XFUWncCmr8WEaNLpN1Wm7pw
-	 oFP61mtQoCUYUEUqHl3TgKB0JDzxY03ydK+8djGEYe2F+DTCtyFK6KzDCP3LwQRKo8
-	 F6MfBVTTRB6YF6FrUI/S7e58qjrbEhhm4iTCRGk7mXhYUH2A86gv5AXwWec8esyIF0
-	 V2M+8zV/tMR7s7TLu8kFHW/kxznUECsUyeDnY1bpxbmCjgA8koTp4DCghRT3UNr4mb
-	 y87JWeH2mex8A==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rtlZx-000000000Mc-2Pb1;
-	Mon, 08 Apr 2024 11:46:18 +0200
-Date: Mon, 8 Apr 2024 11:46:17 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Vinod Koul <vkoul@kernel.org>,
+	b=Yf2meAYWAM11DwJ0kDIFvs6Trkrm1Nh9eLBdYZjK4edSqgu1ZWAZumhJTxAhGqBkG
+	 WtQ0TD0UUTWp3eVJp+pIWbqE5TBxTBoT3UKuCF/buV8yQ6UVwBhOXjiR6uWvyRxCeb
+	 j+lc+Qq83O2Lae+A8hHGNozFermlDwy+d4PRcCaugp4+dGnuYMG7Lv1BA0KySWd0Uq
+	 tsKH/cOXghoKB825UVQCIYGcsPlJVbFM56FkmGIuLHHTtqDyubDAy35dE6f88I3mn1
+	 xk5wq81NQLpEEAKtM5dGqQTD2HEPxz8+c1T3IPeIJ6SDrqpQ7iyPt/WnFstUzuCTfk
+	 hlGJLGyb21I5Q==
+Date: Mon, 8 Apr 2024 11:49:45 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
 	Kishon Vijay Abraham I <kishon@kernel.org>,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	linux-phy@lists.infradead.org,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	freedreno@lists.freedesktop.org,
-	Douglas Anderson <dianders@chromium.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH] phy: qcom: qmp-combo: Fix VCO div offset on v3
-Message-ID: <ZhO86VWkrOSIGBHV@hovoldconsulting.com>
-References: <20240404234345.1446300-1-swboyd@chromium.org>
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	mhi@lists.linux.dev, linux-tegra@vger.kernel.org,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: Re: [PATCH v2 00/10] PCI: endpoint: Make host reboot handling more
+ robust
+Message-ID: <ZhO9udfcdUrNDqQj@ryzen>
+References: <20240401-pci-epf-rework-v2-0-970dbe90b99d@linaro.org>
+ <ZgvSrLpvChG4jqQl@ryzen>
+ <20240403134825.GM25309@thinkpad>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,75 +68,75 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240404234345.1446300-1-swboyd@chromium.org>
+In-Reply-To: <20240403134825.GM25309@thinkpad>
 
-On Thu, Apr 04, 2024 at 04:43:44PM -0700, Stephen Boyd wrote:
-> Commit ec17373aebd0 ("phy: qcom: qmp-combo: extract common function to
-> setup clocks") changed the offset that is used to write to
-> DP_PHY_VCO_DIV from QSERDES_V3_DP_PHY_VCO_DIV to
-> QSERDES_V4_DP_PHY_VCO_DIV. Unfortunately, this offset is different
-> between v3 and v4 phys:
+On Wed, Apr 03, 2024 at 07:18:25PM +0530, Manivannan Sadhasivam wrote:
+> On Tue, Apr 02, 2024 at 11:41:00AM +0200, Niklas Cassel wrote:
+> > On Mon, Apr 01, 2024 at 09:20:26PM +0530, Manivannan Sadhasivam wrote:
+> > > Hello,
+> > > 
+> > > This is the follow up series of [1], to improve the handling of host reboot in
+> > > the endpoint subsystem. This involves refining the PERST# and Link Down event
+> > > handling in both the controller and function drivers.
+> > > 
+> > > Testing
+> > > =======
+> > > 
+> > > This series is tested on Qcom SM8450 based development board with both MHI_EPF
+> > > and EPF_TEST function drivers.
+> > > 
+> > > Dependency
+> > > ==========
+> > > 
+> > > This series depends on [1] and [2].
+> > > 
+> > > - Mani
+> > 
+> > Hello Mani,
+> > 
+> > > [1] https://lore.kernel.org/linux-pci/20240314-pci-dbi-rework-v10-0-14a45c5a938e@linaro.org/
+> > > [2] https://lore.kernel.org/linux-pci/20240320113157.322695-1-cassel@kernel.org/
+> > 
+> > AFAICT both these series [1] (DBI rework v12, not v10) and [2] are fully
+> > reviewed and seem to be ready to go.
+> > 
+> > Considering that we have patches depending on [1] and [2],
+> > namely the series in $subject, but also:
+> > https://lore.kernel.org/linux-pci/20240330041928.1555578-1-dlemoal@kernel.org/T/#t
+> > 
+> > I think it would be a good idea if you could apply [1] and [2] to the
+> > pci/endpoint branch.
+> > 
 > 
->  #define QSERDES_V3_DP_PHY_VCO_DIV                 0x064
->  #define QSERDES_V4_DP_PHY_VCO_DIV                 0x070
-> 
-> meaning that we write the wrong register on v3 phys now. Add another
-> generic register to 'regs' and use it here instead of a version specific
-> define to fix this.
-> 
-> This was discovered after Abhinav looked over register dumps with me
-> from sc7180 Trogdor devices that started failing to light up the
-> external display with v6.6 based kernels. It turns out that some
-> monitors are very specific about their link clk frequency and if the
-> default power on reset value is still there the monitor will show a
-> blank screen or a garbled display. Other monitors are perfectly happy to
-> get a bad clock signal.
+> Unfortunately, I cannot merge the patches outside 'pci/endpoint' even though
+> these are related to the PCI Endpoint subsystem. But I have delegated these 2
+> series to Krzysztof, so hopefully he'll apply it soon.
 
-> Fixes: ec17373aebd0 ("phy: qcom: qmp-combo: extract common function to setup clocks")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> index 7d585a4bbbba..3b19d8ebf467 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> @@ -77,6 +77,7 @@ enum qphy_reg_layout {
->  	QPHY_COM_BIAS_EN_CLKBUFLR_EN,
->  
->  	QPHY_DP_PHY_STATUS,
-> +	QPHY_DP_PHY_VCO_DIV,
->  
->  	QPHY_TX_TX_POL_INV,
->  	QPHY_TX_TX_DRV_LVL,
-> @@ -102,6 +103,7 @@ static const unsigned int qmp_v3_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
-> +	[QPHY_DP_PHY_VCO_DIV]		= QSERDES_V3_DP_PHY_VCO_DIV,
+Hello Mani, Krzysztof,
 
-> @@ -126,6 +128,7 @@ static const unsigned int qmp_v45_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
-> +	[QPHY_DP_PHY_VCO_DIV]		= QSERDES_V4_DP_PHY_VCO_DIV,
+These three series:
+https://patchwork.kernel.org/project/linux-pci/list/?series=836730&state=*
+https://patchwork.kernel.org/project/linux-pci/list/?series=838789&state=*
 
-I happened to skim this patch on the list and noticed that you added a
-new register abstraction but only updated two tables.
+Still haven't been merged.
 
-A quick look at the driver reveals that there are currently four such
-tables, which means that the v5_5nm (e.g. the Lenovo ThinkPad X13s) and
-v6 hardware would now be broken instead as they would write to offset 0.
+Considering that the PCI endpoint memory mapping series:
+https://patchwork.kernel.org/project/linux-pci/list/?series=839970
+conflicts with both of these series, I think that it would be nice if the
+two fully reviewed series above could get picked up.
 
-Clearly the hardware abstraction in this driver leaves a lot to wish
-for when it's this fragile, but how can three people including the
-maintainer review this change without this being noticed?
+Right now, I think we still have time to get the PCI endpoint memory mapping
+series fully reviewed to live in linux-next for 2 weeks before the next merge
+window opens, but time is running out (because of delays for what appears to
+be no apparent reason).
 
-I just sent a follow-up fix here:
 
-	https://lore.kernel.org/lkml/20240408093023.506-1-johan+linaro@kernel.org/
+Kind regards,
+Niklas
 
-> @@ -2184,7 +2188,7 @@ static int qmp_combo_configure_dp_clocks(struct qmp_combo *qmp)
->  		/* Other link rates aren't supported */
->  		return -EINVAL;
->  	}
-> -	writel(phy_vco_div, qmp->dp_dp_phy + QSERDES_V4_DP_PHY_VCO_DIV);
-> +	writel(phy_vco_div, qmp->dp_dp_phy + cfg->regs[QPHY_DP_PHY_VCO_DIV]);
 
-Johan
+P.S.
+It would also be nice to see:
+https://patchwork.kernel.org/project/linux-pci/list/?series=838545&state=*
+getting picked up.
 
