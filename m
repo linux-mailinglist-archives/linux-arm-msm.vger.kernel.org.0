@@ -1,122 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-16841-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 438BB89CC77
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 21:32:36 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6107589CC98
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 21:44:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EEF5728619D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 19:32:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 038881F21A06
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 19:44:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85993146592;
-	Mon,  8 Apr 2024 19:32:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C23EF1465AB;
+	Mon,  8 Apr 2024 19:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="zQSi9jes"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BWYznZ/w"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B78A145B2A;
-	Mon,  8 Apr 2024 19:32:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33ABD14659D;
+	Mon,  8 Apr 2024 19:43:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712604744; cv=none; b=gx36M1zr1T3E5xBXN1QlYrAEAWKNdiZ/MWslZF0q9cXxFticHeFWvifPQVXSwqLdUnInrf/mUhzpCN4Jcjo6Omwl4As3yCKWJQmzJaheywk4TP0oV2Q2xIFyKgw3AfHzbkgSFCyFWEbOGW2WlzHXeoHZQI6tbhqfpK6xiIaZtWI=
+	t=1712605429; cv=none; b=nDNm+n9/di4kaTiFT82ZWe52DjqpbYV5gi88Hy8PHOrnC7qR8haioa8t7z7v2lE8oxcMZ5ZBGrK5fnpQO4e2whEM3TpngoUFt7Umqe2vyOgKK8orZ9djcPnJipdJ+fnYi5qxgAdyVS0ZVnYm/+xp9fV31rj9JPMYuqwRhsZGU24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712604744; c=relaxed/simple;
-	bh=IOMmkbWMxcMX2AjLUP0WpImKqMTnsznLQRmPhb+5vkM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=k62dd5Az3ajdtcPsrA1yoRSeLlhbu4021ulzacZgA/v3AWuBDs6H+xHLLhXWYsdK4hZ6iATmAinVKhi71M8Lw+kcLysxUnYYZ5xb4iIk5iVLRTQgPOvoFMDLYBVlg9W4tlhXeFT2R2JjoKVbw6WIi0BDKKFzkzMkzp8VkalTOD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz; spf=pass smtp.mailfrom=z3ntu.xyz; dkim=fail (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b=zQSi9jes reason="signature verification failed"; arc=none smtp.client-ip=128.199.32.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=z3ntu.xyz
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=s1;
-	t=1712604740; bh=c5gbAFJceJEwIGU1MS4s0Erl9/DQFapiSGt6t0dOuL0=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=zQSi9jes9Y9lHDbrkmXQS9eN7i8V0B06Ubwo+7LQRZbTpGhf9iYB8FNDr7gPWB/F2
-	 Ew4w62U2JzlnILfdoVGcJszqdzYcDlV1orDlwXoSdxf94zb0WF96xJXdlj3L0+qykv
-	 p4Dj6Wxz0yq6Z6QkVpNy37NPNkEVvgVqVJpEdLho=
-From: Luca Weiss <luca@z3ntu.xyz>
-Date: Mon, 08 Apr 2024 21:32:04 +0200
-Subject: [PATCH 2/2] ARM: dts: qcom: msm8974: Use proper compatible for
- APCS syscon
+	s=arc-20240116; t=1712605429; c=relaxed/simple;
+	bh=CRSgpNl6sngftfEkA5PAToKXVH9AT/O6Dr3GQ7kq750=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=HSVatfwNbQKWSTUGcM+r6G9MYE/uYspwapFUCuLGIYIoQHwoZ5U+7h79CXjx12qNRzKwyB7fQmnk7Ke7PxAGyF+M89KhG+LKRN96KCxeLcemXS1clD63o8J7nxE2ynhYqUj9Z0+u6hPmbxh+tlPYB0ZwjRM4JABF7MYcFO04MoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BWYznZ/w; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 438JfQOW007984;
+	Mon, 8 Apr 2024 19:43:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=NnZPJcKl9SdjfnzULqOfrYiXk7aiKOqGcOxrbkMLOak=; b=BW
+	YznZ/wWE7AJD8mDXDEv2nQqf4XFYheL6hGLjLmi838SA0jnieRepKBrBZ06xOtkj
+	JxgYXO9k4v+JaXR15DOVTHCoO68/aesrXZc75G8xbPwx8ELScaeSLqMec3vUQwMz
+	hYwVYVN1u1835J0hJ+3WwEwo34skOMo0ZzZe3pTusR8x1fHy0ggYSb0or25Accaa
+	g73rLOzFiL4jM6d99vNzEzZMUj6bT0Qb0nFd+dOIs1bSpvnJWQ3CSgrq3aSE+TfP
+	B5/4jGiNvoCHPF5OEPmsAwdyhz9SEY5d+QDzNa8z+Kej0BWF17m1patCIJCHT3At
+	r5aEI66gGwtYiLLMR5hQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xcbg1hqwb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 08 Apr 2024 19:43:36 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 438JhZAP023202
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 8 Apr 2024 19:43:36 GMT
+Received: from [10.71.109.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 8 Apr 2024
+ 12:43:34 -0700
+Message-ID: <01cb1c0d-a801-37f9-2f55-2bbd8d3a68b9@quicinc.com>
+Date: Mon, 8 Apr 2024 12:43:34 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v3] drm/msm/dp: call dp_hpd_plug_handle()/unplug_handle()
+ directly for external HPD
+Content-Language: en-US
+To: Bjorn Andersson <andersson@kernel.org>
+CC: <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
+        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
+        Sean Paul
+	<sean@poorly.run>,
+        "Marijn Suijten" <marijn.suijten@somainline.org>,
+        David
+ Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Kuogee Hsieh
+	<quic_khsieh@quicinc.com>,
+        <dri-devel@lists.freedesktop.org>, <seanpaul@chromium.org>,
+        <swboyd@chromium.org>, <quic_jesszhan@quicinc.com>,
+        <quic_bjorande@quicinc.com>, <johan@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20240406031548.25829-1-quic_abhinavk@quicinc.com>
+ <ale6wbwzkfagcg2q6glb4vsxu3pthhkk3tquv2ixlatbdryqvh@xscsq2h6emho>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <ale6wbwzkfagcg2q6glb4vsxu3pthhkk3tquv2ixlatbdryqvh@xscsq2h6emho>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240408-msm8974-apcs-v1-2-90cb7368836e@z3ntu.xyz>
-References: <20240408-msm8974-apcs-v1-0-90cb7368836e@z3ntu.xyz>
-In-Reply-To: <20240408-msm8974-apcs-v1-0-90cb7368836e@z3ntu.xyz>
-To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- Jassi Brar <jassisinghbrar@gmail.com>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Matthias Brugger <matthias.bgg@gmail.com>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Jacky Huang <ychuang3@nuvoton.com>, Shan-Chun Hung <schung@nuvoton.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-mediatek@lists.infradead.org, Luca Weiss <luca@z3ntu.xyz>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2374; i=luca@z3ntu.xyz;
- h=from:subject:message-id; bh=c5gbAFJceJEwIGU1MS4s0Erl9/DQFapiSGt6t0dOuL0=;
- b=kA0DAAgBcthDuJ1N11YByyZiAGYURkKjMsa1FNCprHDmKfkt3ev2Ue5X4YgO4Oxqq81emLJXX
- okCMwQAAQgAHRYhBDm60i8ILNqRuhWP+nLYQ7idTddWBQJmFEZCAAoJEHLYQ7idTddWPegQAKAn
- R2QVQhHzSEjZg5LK3C7vZybZaDR+tU/DAr9GdiHo70hLICBlBEBHj9e1JYNE5rL2un8RifS5JeJ
- 4EL+YJitzxTLkt/K4a2RJwtF1qMLIJH8v1HE1+zr2kUisGnG4v+gCVbvhV3R0y16aOVwCAiBPn6
- T8t4Hg6urzCalNON3xp35HcLd5n3en4TJUe8/Q4RIS869oZCGfDCUS/DdTyt195JHrpV0RlR6Uk
- W1Bf44/qdgXWpjOUX9tmNkcPK+MKZ45ti4r7JucWN6GFJYB/esEycyD7qNfDCwjnVbAJn8q6f46
- eotFp7movymAe4FxIO8Jy/8TtdGSz/V1ZY3Odv5RI1uI1P/MWmItO1XaiVlGBkLYIRuyCcV2haw
- Q6gYTfHoFUJpILNs/dNBd5+7XEWqwRzTmLv16sMKZfbX+CStlm6+aXrO0zvO3wyst+EwXnKKnw3
- Foc5GUvY3YsSIsmlzWP6YlCb9oDDKnZO5mmTeouTMjGRXbWXyY2ndw1IpT0vaYtncT/Sp2FzdF2
- DNgAEhjoWmP20meemH2DhXxquO57dAbvH2Me4OC4vx/muKrsY59LFs4pB5Bfx57gaHHpt5GgDfz
- 1Oe4v1KeAoLYQsahuLb1z2uruaNNb2JxER2qZnNFvkV+fpDuMGk6mYBnzDzIga9BdPaUNa629TB
- nom5U
-X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
- fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: JX3nzlGBV-y0cklqZx_cWNhNUOBvcnab
+X-Proofpoint-GUID: JX3nzlGBV-y0cklqZx_cWNhNUOBvcnab
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-08_17,2024-04-05_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
+ impostorscore=0 adultscore=0 priorityscore=1501 malwarescore=0 spamscore=0
+ mlxlogscore=999 suspectscore=0 lowpriorityscore=0 clxscore=1015 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
+ definitions=main-2404080152
 
-Use the apcs-kpss-global compatible for the APCS global mailbox block
-found on this SoC.
 
-This also resolves a dt-binding checker warning:
 
-  arch/arm/boot/dts/qcom/qcom-msm8974pro-fairphone-fp2.dtb: syscon@f9011000: compatible: 'anyOf' conditional failed, one must be fixed:
-          ['syscon'] is too short
-          'syscon' is not one of ['allwinner,sun8i-a83t-system-controller', 'allwinner,sun8i-h3-system-controller', 'allwinner,sun8i-v3s-system-controller', 'allwinner,sun50i-a64-system-controller', 'amd,pensando-elba-syscon', 'brcm,cru-clkset', 'freecom,fsg-cs2-system-controller', 'fsl,imx93-aonmix-ns-syscfg', 'fsl,imx93-wakeupmix-syscfg', 'hisilicon,dsa-subctrl', 'hisilicon,hi6220-sramctrl', 'hisilicon,pcie-sas-subctrl', 'hisilicon,peri-subctrl', 'hpe,gxp-sysreg', 'intel,lgm-syscon', 'loongson,ls1b-syscon', 'loongson,ls1c-syscon', 'marvell,armada-3700-usb2-host-misc', 'mediatek,mt8135-pctl-a-syscfg', 'mediatek,mt8135-pctl-b-syscfg', 'mediatek,mt8365-syscfg', 'microchip,lan966x-cpu-syscon', 'microchip,sparx5-cpu-syscon', 'mstar,msc313-pmsleep', 'nuvoton,ma35d1-sys', 'nuvoton,wpcm450-shm', 'rockchip,px30-qos', 'rockchip,rk3036-qos', 'rockchip,rk3066-qos', 'rockchip,rk3128-qos', 'rockchip,rk3228-qos', 'rockchip,rk3288-qos', 'rockchip,rk3368-qos', 'rockchip,rk3399-qos', 'rockchip,rk356
- 8-qos', 'rockchip,rk3588-qos', 'rockchip,rv1126-qos', 'starfive,jh7100-sysmain', 'ti,am62-usb-phy-ctrl', 'ti,am654-dss-oldi-io-ctrl', 'ti,am654-serdes-ctrl', 'ti,j784s4-pcie-ctrl']
-          from schema $id: http://devicetree.org/schemas/mfd/syscon.yaml#
+On 4/7/2024 11:48 AM, Bjorn Andersson wrote:
+> On Fri, Apr 05, 2024 at 08:15:47PM -0700, Abhinav Kumar wrote:
+>> From: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> [..]
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+>> index d80f89581760..bfb6dfff27e8 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>> @@ -1665,7 +1665,7 @@ void dp_bridge_hpd_notify(struct drm_bridge *bridge,
+>>   		return;
+>>   
+>>   	if (!dp_display->link_ready && status == connector_status_connected)
+>> -		dp_add_event(dp, EV_HPD_PLUG_INT, 0, 0);
+>> +		dp_hpd_plug_handle(dp, 0);
+> 
+> If I read the code correctly, and we get an external connect event
+> inbetween a previous disconnect and the related disable call, this
+> should result in a PLUG_INT being injected into the queue still.
+> 
+> Will that not cause the same problem?
+> 
+> Regards,
+> Bjorn
+>
 
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
----
- arch/arm/boot/dts/qcom/qcom-msm8974.dtsi | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+Yes, your observation is correct and I had asked the same question to 
+kuogee before taking over this change and posting.
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
-index 233d9bf42298..7e0224006b1f 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
-@@ -341,9 +341,11 @@ intc: interrupt-controller@f9000000 {
- 			      <0xf9002000 0x1000>;
- 		};
- 
--		apcs: syscon@f9011000 {
--			compatible = "syscon";
-+		apcs: mailbox@f9011000 {
-+			compatible = "qcom,msm8974-apcs-kpss-global",
-+				     "qcom,msm8994-apcs-kpss-global", "syscon";
- 			reg = <0xf9011000 0x1000>;
-+			#mbox-cells = <1>;
- 		};
- 
- 		saw_l2: power-manager@f9012000 {
+We will have to handle that case separately. I don't have a good 
+solution yet for it without requiring further rework or we drop the 
+below snippet.
 
--- 
-2.44.0
+         if (state == ST_DISCONNECT_PENDING) {
+                 /* wait until ST_DISCONNECTED */
+                 dp_add_event(dp, EV_HPD_PLUG_INT, 0, 1); /* delay = 1 */
+                 mutex_unlock(&dp->event_mutex);
+                 return 0;
+         }
 
+I will need sometime to address that use-case as I need to see if we can 
+handle that better and then drop the the DISCONNECT_PENDING state to 
+address this fully. But it needs more testing.
+
+But, we will need this patch anyway because without this we will not be 
+able to fix even the most regular and commonly seen case of basic 
+connect/disconnect receiving complementary events.
+
+
+>>   	else if (dp_display->link_ready && status == connector_status_disconnected)
+>> -		dp_add_event(dp, EV_HPD_UNPLUG_INT, 0, 0);
+>> +		dp_hpd_unplug_handle(dp, 0);
+>>   }
+>> -- 
+>> 2.43.2
+>>
 
