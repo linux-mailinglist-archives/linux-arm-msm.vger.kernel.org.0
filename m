@@ -1,124 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-16774-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16775-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A19189BB0B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 10:57:50 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7A8689BB1A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 11:02:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EE8411F22BC5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 08:57:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EC2161C2134E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 09:02:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09C983AC01;
-	Mon,  8 Apr 2024 08:57:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F19083AC01;
+	Mon,  8 Apr 2024 09:02:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=t-argos.ru header.i=@t-argos.ru header.b="EWR6+B0/"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DylO+5hu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx1.t-argos.ru (mx1.t-argos.ru [109.73.34.58])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0113C6AC;
-	Mon,  8 Apr 2024 08:57:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.73.34.58
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9B5446A9;
+	Mon,  8 Apr 2024 09:02:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712566662; cv=none; b=ZZv9SvqbZ2Ve6QBGNlMECeR7U+tGqfBKqa76gmJ2zG9ixgkNbNYPpCf9ZdyfOzlrz2InKbXSFbpn5FA8q6sRsHAzypNpiMGN7ju1KMqBXa86RS+4Y+xs5qr/BvrxSVDPzxE8CJ+ymdvzftb7jacwjc9l2AOdjx9rjJ8f62XBqDc=
+	t=1712566957; cv=none; b=fpAoEHtt+RHM085UJ4uU6NL2d3dm+tK8Hxo546ocsi45ZE34qEn5yvcj2/m6tmTbSsgAaqUI++3CXexduvEjmDkHXJ8dWdbX73bJsbBP1SVoQ8f2t/nvubeynWtTJiFsH8f6cnAXxi4OpC1IpeAcLnPxNZ8eSXhUym0u6icSYww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712566662; c=relaxed/simple;
-	bh=71cgcbD3LCizJbaId/qtf0bxqGyZFhg/a+lnSwLkGbw=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ddRGAlHgExwKy+6nES71wZSrVHHodKl6pXVVv9r6SP1xZJaaXYkA+Y35i29vkudpKHvW0DqUf5DQ/1uHI/k06eQIP5G7qO0JXsrCR3Zi/dfIeAUjAqX6wpkbTLHDfjHsVVDV53IDdlneTk+buUn39Lf03xYTQpgnd86mF7rSlVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=t-argos.ru; spf=pass smtp.mailfrom=t-argos.ru; dkim=pass (2048-bit key) header.d=t-argos.ru header.i=@t-argos.ru header.b=EWR6+B0/; arc=none smtp.client-ip=109.73.34.58
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=t-argos.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=t-argos.ru
-Received: from mx1.t-argos.ru (localhost [127.0.0.1])
-	by mx1.t-argos.ru (Postfix) with ESMTP id 0270A100003;
-	Mon,  8 Apr 2024 11:57:14 +0300 (MSK)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=t-argos.ru; s=mail;
-	t=1712566634; bh=tVaZQ82kV0U3VdjNP3qButkhjLghxD+YcZT09STBU0k=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
-	b=EWR6+B0/gNf41mL3w6lZmTV9X69uZetXhu7XTDGpVjECqaMntRrs8I03xbrIeGDvb
-	 xSR6EPy6HI9obNTSe2zvlXDKzikO5zq+Rm+3ek64f257mnNv4jh+1g9xIvnChEhU+Q
-	 fqUyVpBBwyk3NS+flimzDNcWZ0SrLr72HsxJ1n/2zS73uAbed1AzwMnLYY4Wa5Sc6H
-	 mkk7MaBQGoZxXYQMDam/uSM1zDLFJdbBAgAtD/eLCQB5Agiv4bgIsWHfclheA+BBO/
-	 /y4lKFaOd7T03nohLLQB4f5CCb0vOX7lsbnvIY5Glh3rApTXFplEwFa+ylZy+QSGyV
-	 Uxy26W+/Hm4jA==
-Received: from mx1.t-argos.ru.ru (ta-mail-02.ta.t-argos.ru [172.17.13.212])
-	by mx1.t-argos.ru (Postfix) with ESMTP;
-	Mon,  8 Apr 2024 11:55:52 +0300 (MSK)
-Received: from localhost.localdomain (172.17.215.6) by ta-mail-02
- (172.17.13.212) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 8 Apr 2024
- 11:55:32 +0300
-From: Aleksandr Mishin <amishin@t-argos.ru>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Aleksandr Mishin <amishin@t-argos.ru>, Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie
-	<airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, Neil Armstrong
-	<neil.armstrong@linaro.org>, Stephen Boyd <swboyd@chromium.org>,
-	<linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-	<freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-	<lvc-project@linuxtesting.org>
-Subject: [PATCH] drm/msm/dpu: Add callback function pointer check before its call
-Date: Mon, 8 Apr 2024 11:55:23 +0300
-Message-ID: <20240408085523.12231-1-amishin@t-argos.ru>
-X-Mailer: git-send-email 2.30.2
+	s=arc-20240116; t=1712566957; c=relaxed/simple;
+	bh=TDGauOcLG2BfMc6m3cUVshzIqhFm4EOci2WhmMVSP5I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=aqz82Wft1KC5bfcCZ22gKvH7tFqksR98J2UKaBYbAD3a7p08LKfelo20NidHtIwH+pook6ln0R4zs6JvwtaXqWKb76HBXS2XxB9cQ8CTttP9ZeBWPHLeBylUNAlvAG51N5naP++hwtVzbjDFdwvrc08SHtTB34yx+ahn42FRNjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DylO+5hu; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4386cNop003343;
+	Mon, 8 Apr 2024 09:02:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=nvdyCAqfLU/2Ca51uzFJ00kFxRtGfYw+A+Q3K6kXutk=; b=Dy
+	lO+5hun45wjmWmbeUJsIui1AoDKgFXW1f/dX/4+1dGinLnGzWJDls2G2J4xhRUHE
+	aeORdIyZbkUidNgU3wvGRnbxegqGSZDHWGGKgjdd2uYkm44LxB/ywdKtLjgAxhVR
+	3BuyOrnUaPVln8FV6WTQPlxiCuhvdHnbdFuDZ5BLA2JRcl0zE6dS/JckYuM0umrv
+	NvEQYs6k7kgDY5hVAc5fUskLL3aS0p3px56DQhx7jRIHrfCbIbNcP10IbLOT+XD5
+	yGC7Q2midjrGwicp6T6nV7AUoSetCkZb9lz6wmKL8co9r1B1C/Kp/AXJOdCtKw3s
+	fEflLi2I1L+JgN16HLyg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xcbg3g8dn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 08 Apr 2024 09:02:30 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43892SUt030143
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 8 Apr 2024 09:02:28 GMT
+Received: from [10.238.176.241] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 8 Apr 2024
+ 02:02:26 -0700
+Message-ID: <9ef5318a-e198-9a91-6538-2afa8196d66a@quicinc.com>
+Date: Mon, 8 Apr 2024 17:01:57 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: ta-mail-02.ta.t-argos.ru (172.17.13.212) To ta-mail-02
- (172.17.13.212)
-X-KSMG-Rule-ID: 1
-X-KSMG-Message-Action: clean
-X-KSMG-AntiSpam-Lua-Profiles: 184614 [Apr 08 2024]
-X-KSMG-AntiSpam-Version: 6.1.0.4
-X-KSMG-AntiSpam-Envelope-From: amishin@t-argos.ru
-X-KSMG-AntiSpam-Rate: 0
-X-KSMG-AntiSpam-Status: not_detected
-X-KSMG-AntiSpam-Method: none
-X-KSMG-AntiSpam-Auth: dkim=none
-X-KSMG-AntiSpam-Info: LuaCore: 15 0.3.15 adb41f89e2951eb37b279104a7abb8e79494a5e7, {Tracking_from_domain_doesnt_match_to}, d41d8cd98f00b204e9800998ecf8427e.com:7.1.1;mx1.t-argos.ru.ru:7.1.1;127.0.0.199:7.1.2;t-argos.ru:7.1.1, FromAlignment: s
-X-MS-Exchange-Organization-SCL: -1
-X-KSMG-AntiSpam-Interceptor-Info: scan successful
-X-KSMG-AntiPhishing: Clean, bases: 2024/04/08 07:15:00
-X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 1.1.2.30, bases: 2024/04/08 06:53:00 #24704467
-X-KSMG-AntiVirus-Status: Clean, skipped
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH V4 1/2] rtc-pm8xxx: clear the triggered alarm interrupt
+ during driver probe
+Content-Language: en-US
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Alexandre Belloni
+	<alexandre.belloni@bootlin.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-rtc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20240401-fix-rtc-alarm-which-fired-before-driver-probe-not-be-cleard-v1-0-aab2cd6ddab8@quicinc.com>
+ <20240401-fix-rtc-alarm-which-fired-before-driver-probe-not-be-cleard-v1-1-aab2cd6ddab8@quicinc.com>
+ <Zg9l0cTBgoibIaDQ@hu-bjorande-lv.qualcomm.com>
+From: jianbin zhang <quic_jianbinz@quicinc.com>
+In-Reply-To: <Zg9l0cTBgoibIaDQ@hu-bjorande-lv.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 30um-g3cfX74Awa8Jre72435khMk0rTi
+X-Proofpoint-ORIG-GUID: 30um-g3cfX74Awa8Jre72435khMk0rTi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-08_07,2024-04-05_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
+ clxscore=1015 priorityscore=1501 suspectscore=0 impostorscore=0
+ adultscore=0 spamscore=0 mlxlogscore=999 malwarescore=0 mlxscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404080068
 
-In dpu_core_irq_callback_handler() callback function pointer is compared to NULL,
-but then callback function is unconditionally called by this pointer.
-Fix this bug by adding conditional return.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: c929ac60b3ed ("drm/msm/dpu: allow just single IRQ callback")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-index 946dd0135dff..03a16fbd4c99 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-@@ -223,9 +223,11 @@ static void dpu_core_irq_callback_handler(struct dpu_kms *dpu_kms, unsigned int
- 
- 	VERB("IRQ=[%d, %d]\n", DPU_IRQ_REG(irq_idx), DPU_IRQ_BIT(irq_idx));
- 
--	if (!irq_entry->cb)
-+	if (!irq_entry->cb) {
- 		DRM_ERROR("no registered cb, IRQ=[%d, %d]\n",
- 			  DPU_IRQ_REG(irq_idx), DPU_IRQ_BIT(irq_idx));
-+		return;
-+	}
- 
- 	atomic_inc(&irq_entry->count);
- 
--- 
-2.30.2
-
+On 4/5/24 10:45, Bjorn Andersson wrote:
+> On Mon, Apr 01, 2024 at 09:56:29AM +0800, jianbin zhang wrote:
+>
+> Sorry, I think the patch looks good now, but the subject prefix
+> (rtc-pm8xxx) does not match other changes to this file.
+>
+Sure, thanks for reviewing, I will update the subject prefix to "rtc: 
+pm8xxx:" as other changes to this file.
+>> If the alarm is triggered before the driver gets probed, the alarm interrupt
+>> will be missed and it won't be detected, and the stale alarm settings will
+>> be still retained because of not being cleared.
+>>
+>> Issue reproduce step:
+>> (1) set the alarm and poweroff the device
+>> (2) alarm happens and the device boots
+>> (3) poweroff the device again
+>> (4) alarm irq not be cleard, device boots again
+>>
+>> the fixing here is clear the interrupt during the step(3) unconditionally.
+>>
+>> Signed-off-by: jianbin zhang <quic_jianbinz@quicinc.com>
+>> ---
+>> Changes in v4:
+>> - add the cover letter
+>> - modify the patch to conform to the specification
+>>
+>> Changes in v3:
+>> - clear the interrupt in driver probe unconditionally
+>> - link: https://lore.kernel.org/linux-rtc/20240319191037.GA3796206@hu-bjorande-lv.qualcomm.com/T/#t
+> These are expected to be links to the previous revisions of your patch,
+> not people's answers.
+>
+> Please consult go/upstream and switch to b4 for the future, which does
+> this automatically for you. Please also use the internal review list!
+>
+> Regards,
+> Bjorn
+Yeah, will use the internal review list in next patch version and will 
+switch to b4 in the future.
+>> Changes in v2:
+>> - Adapt the V1 patch according to the newest rtc-pm8xxx
+>> - link: https://lore.kernel.org/linux-rtc/20240124024023df15ef6e@mail.local/
+>>
+>> Changes in v1:
+>> - fixing is as below logic, During driver probe: read ALARM_EN, read ALARM_DATA, read RTC_RDATA,
+>>    if (ALARM_DATA < RTC_DATA), Trigger the alarm event and clear the alarm settins
+>> - link: https://lore.kernel.org/linux-rtc/20220321090514.4523-1-quic_jianbinz@quicinc.com/
+>>
+>> Changes in original:
+>> - link to original: https://lore.kernel.org/linux-rtc/YTusgJlMUdXOKQaL@piout.net/
+>> ---
+>>   drivers/rtc/rtc-pm8xxx.c | 5 +++++
+>>   1 file changed, 5 insertions(+)
+>>
+>> diff --git a/drivers/rtc/rtc-pm8xxx.c b/drivers/rtc/rtc-pm8xxx.c
+>> index f6b779c12ca7..e4e2307445cf 100644
+>> --- a/drivers/rtc/rtc-pm8xxx.c
+>> +++ b/drivers/rtc/rtc-pm8xxx.c
+>> @@ -527,6 +527,11 @@ static int pm8xxx_rtc_probe(struct platform_device *pdev)
+>>   	if (rc)
+>>   		return rc;
+>>   
+>> +	rc = regmap_update_bits(rtc_dd->regmap, rtc_dd->regs->alarm_ctrl2,
+>> +					  PM8xxx_RTC_ALARM_CLEAR, 1);
+>> +	if (rc)
+>> +		return rc;
+>> +
+>>   	return 0;
+>>   }
+>>   
+>>
+>> -- 
+>> 2.43.2
+>>
 
