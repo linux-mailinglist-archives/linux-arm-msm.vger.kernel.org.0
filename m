@@ -1,132 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-16769-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1235F89BAC9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 10:49:08 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 602AF89BAD8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 10:50:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3F35D1C21316
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 08:49:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ADBC828267E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 08:50:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 748D7537ED;
-	Mon,  8 Apr 2024 08:45:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 023E62E64C;
+	Mon,  8 Apr 2024 08:48:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UAVjRcBe"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AQ7B1SQF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2B44535B4;
-	Mon,  8 Apr 2024 08:45:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9F73BB55
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Apr 2024 08:48:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712565923; cv=none; b=X+c3srxOT0idB5EQpJZMCWrSU9s2MIjIMnQXRtGrvsLkB3KNCUSWjq1L/CNLtNCT6fDn63x/MAsKTKe9BGiO2z2BggeYqjnyxjMKZvcl2W0smAHSf8zB3Ch2hbAL4thZ7QhhuZZrFKfloBVWmuyS9RpaeJC+PoFmnC+uweH4Dnc=
+	t=1712566135; cv=none; b=m52usB/KaQUQE1vGImJHUaDMusKlKsOGNzD9RP9mSKNVyOfXS0XOsCRiLhAYW9SXnTgXgmb0Yww8PI9apF59rAjgjASquIWk7B+LJkKzvnztv7CsJvUqvmssjGsxE8vuAW9Fj1yfsccYrsNHmRNqS/xGro2CLbOE2UrzM9NC89k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712565923; c=relaxed/simple;
-	bh=nIn/zPewsG9q+wrG7O743ZFUtC6bgOwv5+buBPM+YFQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=EspLQ1jwGVI0ehFb9IIKIvBYZRhUUb44/D9S9cbwBURx4B85YzSVjzH2afYrfmfpOY3CRrrBEW28X5iMW5dxIXhPu5tY0SUDvw53Q8IaoC97mut0qtg5rhu5rsFGSIDPZCVtGVFwBRgtu/gRKqJ3C5AAfGD8u/NlL74oz9p/9IU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UAVjRcBe; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4386dMxB009177;
-	Mon, 8 Apr 2024 08:45:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=wkPa/yuRBAbkzPtrxt9b+AV06OSilI8lIKaafg+mXV0=; b=UA
-	VjRcBeGe437/rmaw+JYZDjRpTQO7nPJVgLvp+NP1YzoZ5OVLk1UiFl25iTbAOKsc
-	fSY+kCxaBQ0iaNug+r+R2xrbzHTGfmBun4B6TKYnWk6SvFohYiSf/3TS8grLQDgo
-	941tT7rgXjCGFPtpe9dgtkfskgEZSlY0eKmsWnjsTisxGsgLKusNkznxdzRzTpry
-	J7LH4UF54xRxlpKGnx7h5mhuEfahR+xtF0QacxU+I2BUVjKOB7m16mnbITPbeOw8
-	pU/8uqyD2LXj8Z3/dQ7ShwY///bJ1UimqIF0xwWI/Yvb93o6CFZR+2a/OhiZDRHM
-	SO3VQofAdYgP54lEey1w==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xcbg307e0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 08 Apr 2024 08:45:06 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4388j4fo010728
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 8 Apr 2024 08:45:04 GMT
-Received: from [10.216.2.95] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 8 Apr 2024
- 01:44:58 -0700
-Message-ID: <c2708201-64ae-0e5a-edcc-08b8ad0e999d@quicinc.com>
-Date: Mon, 8 Apr 2024 14:14:52 +0530
+	s=arc-20240116; t=1712566135; c=relaxed/simple;
+	bh=unaSmNZPgCC0980ZqjQqMm0sE/ZlSmkie+b224+BZCA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hjuBSyk7IMLQ/6Ek3ja0Wpq//aKWOAcl+EUlttlUrdBjxiX1wZ9T5YhmJQM0qBUXJ8NVrzVGiKxIbAowkIpUULyHlcHPjiGRG3T1YCAgjD6cXQ9KS0Ym+qlAEUgCSQqF2BP66qyrBk7WnxGoxkCd/zXOf//iPWk/3pu1VM3cvKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AQ7B1SQF; arc=none smtp.client-ip=209.85.219.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-dd045349d42so3790589276.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Apr 2024 01:48:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712566132; x=1713170932; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=F7NI1a3KJOYbUdllvSAieuMW0BytOpwEyZTxcjSweC0=;
+        b=AQ7B1SQFfXxIDMeTEo2rY3sUPVvsh43A7DoUMcxlISSDMClWPBMsFMERO2Kgb90zG8
+         TX8V/VETKb+u2N2vHpjwIWUDe6Ek8hHOmD6FvBESBv6xRdvHTMS9q21XirKn/RVfR7Cd
+         Kl5VJrFwmL2m25uHUZFkxx9xO+BOXfCWw7mq7GTQhHcRQRhmDbpOnR9aoNjEtJ682TRV
+         iTVt3u7xBlBp9V9td4x4FlWYPcQc5H9cnobKWrs8k/evrsd1zt8xhnhz7urN2AfXJq9U
+         86Ul0Npn0gEoGeHptO9xopoiKEgAQBcKZXY1f7Yyqmi4OAFL4AFH7O9CCbUwE6ofau+e
+         eFdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712566132; x=1713170932;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=F7NI1a3KJOYbUdllvSAieuMW0BytOpwEyZTxcjSweC0=;
+        b=lXKVQmFu6j9zPaDpjRhLVNgls/8zx3nzIkR/lJjWewnKzF83ig1rkLm0WqxwH1A9vj
+         dEO83dou88ntBEfeWZLrqiLO7Zm2COXRYw0oIlFHrNjV/HU3z/fRqWVbrC25r52RfQm0
+         ppQRwfncOjVVHu+Q/hlbNjKOO37fufD7wN/RDEANuOVagvIykQDC5r+RkovTaHjihDPa
+         bC+D8iPNc5oah+MMc5H930SWFHQ9mMYIXmQhRsZQB+oyONIWk/ATcniBKasMIixWllf7
+         f2fVSUMNZ7d2nAQ/CJkcMEWIHqKsqpU5cN1c7P1hSQPefTeOdKNG0O2QR2ojHg0ZYZXP
+         rlFA==
+X-Forwarded-Encrypted: i=1; AJvYcCXi0jqyMl6/g8OcRZG5gDGx3tbIRUVuknwg7zhiGegLlwgN4PMGNxAV9uOi2ufHZVX7Tq7YVJXi2t0uMZclq9Xh0m8kq5qHZL92J4SePA==
+X-Gm-Message-State: AOJu0YygIS6RYmq1qrYemEChdg1NR4GhdxSeC8OXMgKAgNuLu+DN3H2+
+	p43asQ/2vhG12k3pn7iAYOtMlNNki1Vp/mjeidHs4004m7EbHkIK0pjp2nyT5Eng6x00kD0Z358
+	FwxYE0VKETOzMhGR4GhNM2NoKQwj8JIVF/kXHfWBKpAU1iDWJ
+X-Google-Smtp-Source: AGHT+IEQeHmk38rLUm1S6f8awpQg2EktVcFZ4Lukaa8kZida8w/IUtZcOLqQzNPzXn2oIiDTfj5wNOxJrG7cDph37d8=
+X-Received: by 2002:a05:6902:2b04:b0:dca:c369:fac2 with SMTP id
+ fi4-20020a0569022b0400b00dcac369fac2mr6609762ybb.3.1712566132588; Mon, 08 Apr
+ 2024 01:48:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [RESEND v3 0/2] Add support for QCM6490 and QCS6490
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Srinivas Kandagatla
-	<srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        "Rob
- Herring" <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai
-	<tiwai@suse.com>
-CC: <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        <linux-sound@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_rohkumar@quicinc.com>
-References: <20240408042331.403103-1-quic_mohs@quicinc.com>
- <67ca18b4-0904-41e4-8218-ecb2016d532d@kernel.org>
-From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-In-Reply-To: <67ca18b4-0904-41e4-8218-ecb2016d532d@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 4T7kCvwu9m1rGFpH5T2dTAgYnEKoJnZb
-X-Proofpoint-GUID: 4T7kCvwu9m1rGFpH5T2dTAgYnEKoJnZb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-08_07,2024-04-05_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
- priorityscore=1501 malwarescore=0 phishscore=0 spamscore=0 adultscore=0
- mlxlogscore=772 impostorscore=0 lowpriorityscore=0 suspectscore=0
- bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404080067
+References: <20240405092907.2334007-1-jani.nikula@intel.com>
+ <eondf5x3wz3nccxpnqxtb7gtvf3k5u3bz4qwhn3gbcy5pj73ku@fue4tej3xgnq> <87frvwb7i5.fsf@intel.com>
+In-Reply-To: <87frvwb7i5.fsf@intel.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 8 Apr 2024 11:48:41 +0300
+Message-ID: <CAA8EJpr9cEv6Yi1q+8u-+mU2V3yp=C9rtpnCu+pyouozukYQ=g@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: convert all pixel format logging to use %p4cc
+To: Jani Nikula <jani.nikula@intel.com>
+Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Aishwarya TCV <aishwarya.tcv@arm.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On 4/8/2024 11:26 AM, Krzysztof Kozlowski wrote:
-> On 08/04/2024 06:23, Mohammad Rafi Shaik wrote:
->> This patchset adds support for sound card on Qualcomm QCM6490 IDP and
->> QCS6490 RB3Gen2 boards.
->>
->> Changes since v2:
->> 	- Modify qcm6490 compatible name as qcm6490-idp. Suggested by Dmitry
->>
->> Changes since v1:
->> 	- Use existing sc8280xp machine driver instead of separate driver.
->> 	- Modify qcs6490 compatible name as qcs6490-rb3gen2.
->>
-> 
-> Why are you resending 15 minutes after previous round?
-> 
-> Best regards,
-> Krzysztof
-> 
-Found one mistake in cover-letter.
-Instead of qcm6490-idp given qcs6490-idp.
+On Mon, 8 Apr 2024 at 11:09, Jani Nikula <jani.nikula@intel.com> wrote:
+>
+> On Fri, 05 Apr 2024, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+> > On Fri, Apr 05, 2024 at 12:29:07PM +0300, Jani Nikula wrote:
+> >> Logging u32 pixel formats using %4.4s format string with a pointer to
+> >> the u32 is somewhat questionable, as well as dependent on byte
+> >> order. There's a kernel extension format specifier %p4cc to format 4cc
+> >> codes. Use it across the board in msm for pixel format logging.
+> >>
+> >> This should also fix the reported build warning:
+> >>
+> >>   include/drm/drm_print.h:536:35: warning: '%4.4s' directive argument is
+> >>   null [-Wformat-overflow=]
+> >>
+> >> Reported-by: Aishwarya TCV <aishwarya.tcv@arm.com>
+> >> Closes: https://lore.kernel.org/r/2ac758ce-a196-4e89-a397-488ba31014c4@arm.com
+> >> Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+> >>
+> >> ---
+> >>
+> >> Tip: 'git show --color-words -w' might be the easiest way to review.
+> >> ---
+> >>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   |  8 +++----
+> >>  .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   |  2 +-
+> >>  drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c   |  4 ++--
+> >>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     | 24 +++++++++----------
+> >>  drivers/gpu/drm/msm/msm_fb.c                  | 10 ++++----
+> >>  5 files changed, 24 insertions(+), 24 deletions(-)
+> >
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
+> Thanks! Do you take this via the msm tree?
 
-Modified the cover-letter and reposted.
+Yes, I will
 
-Thanks & Regards,
-Rafi.
+
+-- 
+With best wishes
+Dmitry
 
