@@ -1,94 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-16762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16763-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 809B789B827
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 09:11:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C6E989B85E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 09:25:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E4F95B215AB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 07:11:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 44D9C283BD4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 07:25:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7E8121373;
-	Mon,  8 Apr 2024 07:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FBD724B4A;
+	Mon,  8 Apr 2024 07:25:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pzXbdAqK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rxzfYrcW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA172232A;
-	Mon,  8 Apr 2024 07:11:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE2D2375F
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Apr 2024 07:25:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712560299; cv=none; b=PFjhTnEWwEg6wzp7l6KOosYJ+//Ba9104LpMg22DICJdwtXBpbBG6K+z2gglI5o1TysDduMmibrPKgtG8dCF7LD1/aoxT4HkbuxQiJXDxucIszdvVoxzH1/Y7WevMeL7JlfYZPrh8t4Ujh6GN63elI1HRxHiiiKMeWTDjORNTN4=
+	t=1712561149; cv=none; b=E2hK1UIIutAhBu3idGf2THfrCV+pvfkSRK0YiznB2/nWWolWl5P86zp4ZZkNhFBUScYrUr14dkFxxeKD5Wz69R47Cse93wLSqPVjGvBwZ/8S4Ktx1LTHHRons6nwi1h8CEirgF7PZrMIXXF/JSXJ77TTqS1i+CystVQgZopVoKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712560299; c=relaxed/simple;
-	bh=pGHQpCZ+Yr6iZMOAV2LPzkSk5nqBaiHVUORfWaGQ52Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ErVBf8/FUACD1gMkSZ4MErNn10mMmIxno9lGLOHU86c5YDDJ+k3rxgxXw4WW1cJHQa/cKEOe50WWF6ey1RWUR5HJv1V4UYssGgAYjlob3kIGxeb9u8RD2CotpqpT+duvTn91OH7yXwaaskzLORXif3HFRgPLQsNNTIolSs5jZfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pzXbdAqK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB57C433F1;
-	Mon,  8 Apr 2024 07:11:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712560299;
-	bh=pGHQpCZ+Yr6iZMOAV2LPzkSk5nqBaiHVUORfWaGQ52Y=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=pzXbdAqKEF1/uMn9bULpyVGDj8Rgx3G7S12NMzUWSTRD4haErpwkYgM3bgRdXWOIT
-	 nCrjmoSHpxQTY6D7aHRH3CWsI5NiEvr7qoj9KcVnfKkOqFccEayt/CP02Lyze6iOLE
-	 E7I6P64lDNirO4NpIGJHwHaVjpGJ3U4OZfmkiG9UN+7q7Tt/psytCn9EB7N4FDaMtc
-	 rUjD0R8LxGR1exRl8DIxtEcf4GRzzdp0MEpdSjv65WgPjbh4t7JPpl55zjPU4bCRwB
-	 YJuP357YaJAbDuKklkmwKI8qPAa07U9PiSpkwwyA2GI2DlwGaqvJpkm584HGmIVrky
-	 M6XAXRmDXofzw==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rtjAC-000000007Ws-1Svi;
-	Mon, 08 Apr 2024 09:11:33 +0200
-Date: Mon, 8 Apr 2024 09:11:32 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Caleb Connolly <caleb.connolly@linaro.org>
-Subject: Re: [PATCH v2] usb: typec: qcom-pmic-typec: split HPD bridge alloc
- and registration
-Message-ID: <ZhOYpHXz6t0fkzZ2@hovoldconsulting.com>
-References: <20240408-qc-pmic-typec-hpd-split-v2-1-1704f5321b73@linaro.org>
+	s=arc-20240116; t=1712561149; c=relaxed/simple;
+	bh=VbT/A40Ubo7g7MabIvxJKDydnfh8Vdxmhzgse+IHSR8=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=k5eIi9/5T+utMmwITKP/h9xygmjTh50vOXdprEx5M/w1PDnLfmD8/AdO6IU2Vxq/Bi3LEvien0b0IbCfOf1VNOMMaIsf2bWXo1N0975557RvJG+oa7Xo5swGB0Z9B5G9rb3WQMrHjX45gc0HHl9GZ6aC6H4bTQXHPCzMW8wOcRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rxzfYrcW; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2d886dd4f18so10140641fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Apr 2024 00:25:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712561146; x=1713165946; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dXMkQ2zcoMNxNvEVqKP1HSxUwToLynCHZCFHwNRa77M=;
+        b=rxzfYrcWk8ybmdTGSyydUVSRNRdlSI4HSLFF8u4fYOPfkUUxgBbI0CCiwH88Iwe04T
+         WyqhRRKCB0DHqg79fyxrrXsypX5vmv6rp+Zlp9lniNOJpjU3vZtmCzIb6Z9CGX2cvPBh
+         xQ5bKQCibHP6riXzx1QJ1/nXEUb/qcz3YWSnELKIkK9xEKJREDXQhAoqFweyGO4rNsqY
+         JXcgaXWty2z8JTaDpv1MYyTLw+N3amyKgrp59wCpswtZOjB1RBGK6gJTa7Tp6qrC7lgd
+         /WLgjfCNiapCRNQigFZdoIfuU5++efOmCdWl9s1yGii+xs1NQFAzYbtneNcZEflvS1Vz
+         KwHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712561146; x=1713165946;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=dXMkQ2zcoMNxNvEVqKP1HSxUwToLynCHZCFHwNRa77M=;
+        b=f9D12w21kdCgUzFe0T0wmMfaTpirEKGLbMmxW88STJCGrnhR0QW69gxhL1A60cdPcf
+         qHRzCd9d/NMKMknw3TDwI9Jpe9Xd/7Iv/cNkxCVL2KrM+Drhl+5/TTFbl8645TBCAEuS
+         cWFqiA67io9mk9NTLDwvch6qpperZCVWbU+JLKk8+7NGgjJuFHaciHfwPZSUdgKhUyPn
+         Hc7X8rPLRJOU+RCA/z5sESjUjGNr+/RiKaTwJTxurnmPQH/PvpiJinwXLtmI32yVzfiL
+         p/elRfmCImSaKQfZD7FhOSFEo5FsHZ+699a/VB5V1pBdZXlhk6SMU/xofSxzKRcwEiP3
+         M2kg==
+X-Gm-Message-State: AOJu0YwNRY5iMc0w1slQTOdG4e/wejtWLoYsmesXRbs+DhebZAdiigVY
+	QIz/Bs+UC9hnPKT5dLR3+spCkdP7jcZL2LdkKanziYVjXdW/poQ3SP3CXpH0e0vo96cJsFjNSu+
+	AgZjtVA==
+X-Google-Smtp-Source: AGHT+IEH9OEtqRgXnnlh5lI3WDQNzMdno2gWXaVziNOe/zFGBAa7BDTURbCXKMKSChrhts+2vpt4Sg==
+X-Received: by 2002:a2e:be91:0:b0:2d8:f3b:d026 with SMTP id a17-20020a2ebe91000000b002d80f3bd026mr6482907ljr.14.1712561145408;
+        Mon, 08 Apr 2024 00:25:45 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:b0c8:7091:4315:491e? ([2a01:e0a:982:cbb0:b0c8:7091:4315:491e])
+        by smtp.gmail.com with ESMTPSA id f10-20020adff58a000000b0034349225fbcsm8188638wro.114.2024.04.08.00.25.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Apr 2024 00:25:45 -0700 (PDT)
+Message-ID: <ed8ab2f0-92d7-4ff1-a020-bf3696b32c58@linaro.org>
+Date: Mon, 8 Apr 2024 09:25:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240408-qc-pmic-typec-hpd-split-v2-1-1704f5321b73@linaro.org>
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 0/4] arm64: dts: qcom: add USB-C orientation GPIOs
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240408-hdk-orientation-gpios-v1-0-8064ba43e52a@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20240408-hdk-orientation-gpios-v1-0-8064ba43e52a@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Apr 08, 2024 at 04:06:40AM +0300, Dmitry Baryshkov wrote:
-> If a probe function returns -EPROBE_DEFER after creating another device
-> there is a change of ending up in a probe deferral loop, (see commit
-> fbc35b45f9f6 ("Add documentation on meaning of -EPROBE_DEFER").
+On 08/04/2024 04:33, Dmitry Baryshkov wrote:
+> Populate orientation GPIOs for some of the PMIC-GLINK-based devices.
+> This leaves only FairPhone5, RB3Gen2, SC8180X Primus and SC8280XP CRD
+> without the orientation GPIOs declared.
 > 
-> In order to prevent such probe-defer loops caused by qcom-pmic-typec
-> driver, use the API added by Johan Hovold and move HPD bridge
-> registration to the end of the probe function.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+> Dmitry Baryshkov (4):
+>        arm64: dts: qcom: sm8350-hdk: add USB-C orientation GPIO
+>        arm64: dts: qcom: sm8450-hdk: add USB-C orientation GPIO
+>        arm64: dts: qcom: sc8280xp-lenovo-thinkpad-x13s: add USB-C orientation GPIOs
+>        arm64: dts: qcom: sc8180x-lenovo-flex-5g: add USB-C orientation GPIOs
+> 
+>   arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts        | 2 ++
+>   arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 2 ++
+>   arch/arm64/boot/dts/qcom/sm8350-hdk.dts                    | 1 +
+>   arch/arm64/boot/dts/qcom/sm8450-hdk.dts                    | 1 +
+>   4 files changed, 6 insertions(+)
+> ---
+> base-commit: 8568bb2ccc278f344e6ac44af6ed010a90aa88dc
+> change-id: 20240408-hdk-orientation-gpios-141bc7fd247d
+> 
+> Best regards,
 
-You should be more specific here: which function called after
-qcom_pmic_typec_probe() can trigger a probe deferral?
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-I doubt that applies to tcpm->port_start() and tcpm->pdphy_start() in
-which case the bridge should be added before those calls unless there
-are other reasons for not doing so, which then also should be mentioned.
+Thanks !
 
-I suspect the trouble is with tcpm_register_port(), but please spell
-that out and mention in which scenarios that function may return
--EPROBE_DEFER.
-
-Johan
+Neil
 
