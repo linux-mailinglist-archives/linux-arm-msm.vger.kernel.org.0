@@ -1,173 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-16816-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16817-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4508889C2EF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 15:37:58 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A9B3B89C48A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 15:49:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 76ED21C214CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 13:37:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CE7181C20C68
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 13:48:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49DA5130A7D;
-	Mon,  8 Apr 2024 13:30:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33D837F7D0;
+	Mon,  8 Apr 2024 13:47:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ti4YtRDl"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZVweTJVT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD7012FB0F;
-	Mon,  8 Apr 2024 13:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774287EEF2;
+	Mon,  8 Apr 2024 13:47:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583048; cv=none; b=b1trBf2goJArpoyXB3SA4JLbixA1siwJ4zGLe1sSKn3Y1R8JaWz0fz7ZUut6LbRXpaMEV0BHRctBC5hUA8FKYxVaJFHtcUSQeToxWvHe2auG4deXQv3Vp+KOS285RpkIEpU46jH5ZsMWHrm9wesC8o0jBucE5tNWF4c7DO1ZyaM=
+	t=1712584023; cv=none; b=F/qc/G2w5fh5mbws5GODJR931X+O74+1W1cK1rdqGRvMEtLedv8IN5KQogowVubcA5vOWtQsv1pmxmSmJEpkXCaPbjdata2ETz+VL3rz+7Rwy835UUKiq42rT6HygtuOiMM5REwcbJHXctrapueHWP/oSPNJ3xqiD2FN2k+f530=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583048; c=relaxed/simple;
-	bh=NNdTGMeI3BKJSbRWKcY6O6EwK/hyTYU9C4WsrkgvkGY=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fqoH6UGZGE+EVcKvW5JjR/NF+eRedo4l6gy0w/u6sY0KqApfAdiDmgogntDJC/jZK+moq5ItEImIy/tyticxXMV3pKzNSaVce1fhU6Cp0aI+l9qSZO0rsB1t06g+ZghlGVstjxiDSzoCWAWJRQ2r0RZlZEpGZBS3Cl+8c1cZiF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ti4YtRDl; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1712584023; c=relaxed/simple;
+	bh=L2xd1aiwTb639zOKYegthEwPMP+na8MbpMyULkrDrpo=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
+	 In-Reply-To:Content-Type; b=W/o71twOy/E9MDep5V4curhgg8OoM3WEgxuZpooz7/QfXJMIbQxi+ypAhWAToFxW1l6y0AAF3LzRuvkD9Fe6yU6uutSE6fW2mj9jPLcv2SWqP6k4BKqOXKp7oQZBSUl6bzUUPHHwlLSHIDszTq9S5d0oKNCo/1zK1z9NbwutZXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZVweTJVT; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4386cEKx022412;
-	Mon, 8 Apr 2024 13:30:41 GMT
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 438CuJQn002013;
+	Mon, 8 Apr 2024 13:46:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=PTV5+DQ7ryKEZGv3mJS+ywNkymvYkqTD/TtVct3tAaE=; b=Ti
-	4YtRDlkF8J+8EnNeeN26QBselNe81iSqnUXwOA7Wt9EzvJD39Vk1W762toY1zL+/
-	diDanINEFyc6rxnfwIS4mWFR1mDpR9JQAoeXY5dJF/EWh0oI/6Vbq7QoG7i/ilz4
-	uEG+MncMs1r/EToGCZhH4+/HmyJiehgphmhGdK4d451zwNwSRBumrqejZZgVwgn7
-	H2aer37S0uHeQj1BH/ruADsfo1Xd6NHGhjTFfSI9COppQ2qvhzTCt0I9KgEBcx6m
-	adWVfm3vBVf0+iMjjtWibrY+xEQXrRo37aBujzw+M7ZoPaorOoTcTFMEWSQFjt9P
-	pF3QZbHAO2MneazT+uRg==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xcbg2rvnj-1
+	message-id:date:mime-version:from:subject:to:cc:references
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=welPpz4fuPVMQkgSviG18/N0pNIiqnjcj2TKyy5xmkk=; b=ZV
+	weTJVTBQgWzShTFd0czdsiNEXh1Rm/iiK8KUGDfv4VgR1uRsnL+HqW6t7bdD24hN
+	OnV2gELutDQCurZF7Rln1ZBlWKT/TABs22NHvvepU1ILgCatOhpKPi2CYpfYU2T2
+	NFzWIpYPkVkgABfqJLvlZ/H/692/HPpNbqjlHOXDe9ylRD5JZmKK3rl3QA9fC3dn
+	23Nhc8ur29eUhWcGdEGZIxr5AXb5PPRORbZx6ZTDdN4HQCshKgGDogLplagntlpf
+	Kwh4TvhRXjk9fVpDtUlzVnpOSghxQrhzH1+MelheB9YTnfhteqiMQqM2IozmvDxa
+	XzSvZr5bJxYhAuKKOkFw==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xcbg2rwsu-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 08 Apr 2024 13:30:41 +0000 (GMT)
+	Mon, 08 Apr 2024 13:46:57 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 438DUexl027062
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 438Dkuws030322
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 8 Apr 2024 13:30:40 GMT
-Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Mon, 8 Apr 2024 06:30:34 -0700
-From: Krishna Kurapati <quic_kriskura@quicinc.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring
-	<robh@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        Wesley Cheng
-	<quic_wcheng@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Felipe Balbi
-	<balbi@kernel.org>, Johan Hovold <johan@kernel.org>
-CC: <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>,
-        Krishna Kurapati
-	<quic_kriskura@quicinc.com>,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v20 9/9] usb: dwc3: qcom: Add multiport suspend/resume support for wrapper
-Date: Mon, 8 Apr 2024 18:59:25 +0530
-Message-ID: <20240408132925.1880571-10-quic_kriskura@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240408132925.1880571-1-quic_kriskura@quicinc.com>
-References: <20240408132925.1880571-1-quic_kriskura@quicinc.com>
+	Mon, 8 Apr 2024 13:46:56 GMT
+Received: from [10.216.32.99] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 8 Apr 2024
+ 06:46:53 -0700
+Message-ID: <22d7abd1-139d-405b-984e-e4b57cc989cc@quicinc.com>
+Date: Mon, 8 Apr 2024 19:16:46 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Subject: Re: [PATCH 2/5] usb: typec: ucsi: glink: move GPIO reading into
+ connector_status callback
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Heikki Krogerus
+	<heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>
+CC: Neil Armstrong <neil.armstrong@linaro.org>, <linux-usb@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20240408-ucsi-orient-aware-v1-0-95a74a163a10@linaro.org>
+ <20240408-ucsi-orient-aware-v1-2-95a74a163a10@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20240408-ucsi-orient-aware-v1-2-95a74a163a10@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: CWw8j9w_-d6Ts9q8FHgy7NvY2rBs_wUn
-X-Proofpoint-GUID: CWw8j9w_-d6Ts9q8FHgy7NvY2rBs_wUn
+X-Proofpoint-ORIG-GUID: z6eXXlk_uhdoX2ZPcij72Do59dtFt2Jl
+X-Proofpoint-GUID: z6eXXlk_uhdoX2ZPcij72Do59dtFt2Jl
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-08_11,2024-04-05_02,2023-05-22_02
+ definitions=2024-04-08_12,2024-04-05_02,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
  adultscore=0 spamscore=0 clxscore=1015 lowpriorityscore=0 mlxlogscore=999
  bulkscore=0 impostorscore=0 suspectscore=0 phishscore=0 malwarescore=0
  mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2404010003 definitions=main-2404080104
 
-Power event IRQ is used for wakeup in cases:
-a) where the controller is super speed capable and missing an
-ss_phy interrupt.
-b) where the GIC is not capable of detecting DP/DM hs phy irq's.
 
-Power event IRQ stat register indicates whether high speed phy
-entered and exited L2 successfully during suspend and resume.
-Indicate the same for all ports of multiport.
 
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
----
- drivers/usb/dwc3/dwc3-qcom.c | 22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+On 4/8/2024 10:00 AM, Dmitry Baryshkov wrote:
+> To simplify the platform code move Type-C orientation handling into the
+> connector_status callback. As it is called both during connector
+> registration and on connector change events, duplicated code from
+> pmic_glink_ucsi_register() can be dropped.
+> 
+> Also this moves operations that can sleep into a worker thread,
+> removing the only sleeping operation from pmic_glink_ucsi_notify().
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index 12182e0f8f45..d3e6d5d5e8bf 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -52,6 +52,13 @@
- #define APPS_USB_AVG_BW 0
- #define APPS_USB_PEAK_BW MBps_to_icc(40)
- 
-+static const u32 pwr_evnt_irq_stat_reg[DWC3_MAX_PORTS] = {
-+	0x58,
-+	0x1dc,
-+	0x228,
-+	0x238,
-+};
-+
- struct dwc3_qcom_port {
- 	int			qusb2_phy_irq;
- 	int			dp_hs_phy_irq;
-@@ -421,9 +428,11 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
- 	if (qcom->is_suspended)
- 		return 0;
- 
--	val = readl(qcom->qscratch_base + PWR_EVNT_IRQ_STAT_REG);
--	if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
--		dev_err(qcom->dev, "HS-PHY not in L2\n");
-+	for (i = 0; i < qcom->num_ports; i++) {
-+		val = readl(qcom->qscratch_base + pwr_evnt_irq_stat_reg[i]);
-+		if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
-+			dev_err(qcom->dev, "port-%d HS-PHY not in L2\n", i + 1);
-+	}
- 
- 	for (i = qcom->num_clocks - 1; i >= 0; i--)
- 		clk_disable_unprepare(qcom->clks[i]);
-@@ -472,8 +481,11 @@ static int dwc3_qcom_resume(struct dwc3_qcom *qcom, bool wakeup)
- 		dev_warn(qcom->dev, "failed to enable interconnect: %d\n", ret);
- 
- 	/* Clear existing events from PHY related to L2 in/out */
--	dwc3_qcom_setbits(qcom->qscratch_base, PWR_EVNT_IRQ_STAT_REG,
--			  PWR_EVNT_LPM_IN_L2_MASK | PWR_EVNT_LPM_OUT_L2_MASK);
-+	for (i = 0; i < qcom->num_ports; i++) {
-+		dwc3_qcom_setbits(qcom->qscratch_base,
-+				  pwr_evnt_irq_stat_reg[i],
-+				  PWR_EVNT_LPM_IN_L2_MASK | PWR_EVNT_LPM_OUT_L2_MASK);
-+	}
- 
- 	qcom->is_suspended = false;
- 
--- 
-2.34.1
+Verified working of device mode (ADB) in SS in both orientations on 
+QCS6490 RB3Gen2.
 
+As an experiment, removed the connector status call being done in 
+ucsi_register_port to see if the issue fixed by [1] would be 
+reproducible or not and it is. So this patch is taking care of proper 
+enumeration in bootup in host mode in reverse orientation as well.
+
+Tested-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+
+[1]: 
+https://lore.kernel.org/all/20240301040914.458492-1-quic_kriskura@quicinc.com/
+
+> ---
+>   drivers/usb/typec/ucsi/ucsi_glink.c | 48 ++++++++++++++++---------------------
+>   1 file changed, 20 insertions(+), 28 deletions(-)
+> 
+> diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
+> index b91d2d15d7d9..d21f8cd2fe35 100644
+> --- a/drivers/usb/typec/ucsi/ucsi_glink.c
+> +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
+> @@ -187,10 +187,28 @@ static int pmic_glink_ucsi_sync_write(struct ucsi *__ucsi, unsigned int offset,
+>   	return ret;
+>   }
+>   
+> +static void pmic_glink_ucsi_connector_status(struct ucsi_connector *con)
+> +{
+> +	struct pmic_glink_ucsi *ucsi = ucsi_get_drvdata(con->ucsi);
+> +	int orientation;
+> +
+> +	if (con->num >= PMIC_GLINK_MAX_PORTS ||
+> +	    !ucsi->port_orientation[con->num - 1])
+> +		return;
+> +
+> +	orientation = gpiod_get_value(ucsi->port_orientation[con->num - 1]);
+> +	if (orientation >= 0) {
+> +		typec_switch_set(ucsi->port_switch[con->num - 1],
+> +				 orientation ? TYPEC_ORIENTATION_REVERSE
+> +				 : TYPEC_ORIENTATION_NORMAL);
+> +	}
+> +}
+> +
+>   static const struct ucsi_operations pmic_glink_ucsi_ops = {
+>   	.read = pmic_glink_ucsi_read,
+>   	.sync_write = pmic_glink_ucsi_sync_write,
+> -	.async_write = pmic_glink_ucsi_async_write
+> +	.async_write = pmic_glink_ucsi_async_write,
+> +	.connector_status = pmic_glink_ucsi_connector_status,
+>   };
+>   
+>   static void pmic_glink_ucsi_read_ack(struct pmic_glink_ucsi *ucsi, const void *data, int len)
+> @@ -229,20 +247,8 @@ static void pmic_glink_ucsi_notify(struct work_struct *work)
+>   	}
+>   
+>   	con_num = UCSI_CCI_CONNECTOR(cci);
+> -	if (con_num) {
+> -		if (con_num <= PMIC_GLINK_MAX_PORTS &&
+> -		    ucsi->port_orientation[con_num - 1]) {
+> -			int orientation = gpiod_get_value(ucsi->port_orientation[con_num - 1]);
+> -
+> -			if (orientation >= 0) {
+> -				typec_switch_set(ucsi->port_switch[con_num - 1],
+> -						 orientation ? TYPEC_ORIENTATION_REVERSE
+> -							     : TYPEC_ORIENTATION_NORMAL);
+> -			}
+> -		}
+> -
+> +	if (con_num)
+>   		ucsi_connector_change(ucsi->ucsi, con_num);
+> -	}
+>   
+>   	if (ucsi->sync_pending &&
+>   		   (cci & (UCSI_CCI_ACK_COMPLETE | UCSI_CCI_COMMAND_COMPLETE))) {
+> @@ -253,20 +259,6 @@ static void pmic_glink_ucsi_notify(struct work_struct *work)
+>   static void pmic_glink_ucsi_register(struct work_struct *work)
+>   {
+>   	struct pmic_glink_ucsi *ucsi = container_of(work, struct pmic_glink_ucsi, register_work);
+> -	int orientation;
+> -	int i;
+> -
+> -	for (i = 0; i < PMIC_GLINK_MAX_PORTS; i++) {
+> -		if (!ucsi->port_orientation[i])
+> -			continue;
+> -		orientation = gpiod_get_value(ucsi->port_orientation[i]);
+> -
+> -		if (orientation >= 0) {
+> -			typec_switch_set(ucsi->port_switch[i],
+> -					 orientation ? TYPEC_ORIENTATION_REVERSE
+> -					     : TYPEC_ORIENTATION_NORMAL);
+> -		}
+> -	}
+>   
+>   	ucsi_register(ucsi->ucsi);
+>   }
+> 
 
