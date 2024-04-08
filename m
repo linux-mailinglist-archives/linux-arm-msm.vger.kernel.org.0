@@ -1,63 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-16817-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16818-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9B3B89C48A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 15:49:00 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36DCD89C70A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 16:27:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CE7181C20C68
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 13:48:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E69CD285221
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 14:27:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33D837F7D0;
-	Mon,  8 Apr 2024 13:47:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DF91129A75;
+	Mon,  8 Apr 2024 14:27:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZVweTJVT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ulyj00fY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774287EEF2;
-	Mon,  8 Apr 2024 13:47:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D2F127B67
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Apr 2024 14:27:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584023; cv=none; b=F/qc/G2w5fh5mbws5GODJR931X+O74+1W1cK1rdqGRvMEtLedv8IN5KQogowVubcA5vOWtQsv1pmxmSmJEpkXCaPbjdata2ETz+VL3rz+7Rwy835UUKiq42rT6HygtuOiMM5REwcbJHXctrapueHWP/oSPNJ3xqiD2FN2k+f530=
+	t=1712586425; cv=none; b=pmR7aMRa1TYGsx3JglSZjwtQo09sdwl/dffjj1SvH7DpPX0dH/hQWyAiv1SW73vN6EFY1fs3UZLeXs4pZ+BW21QjRQK1ipTnPTqcn3el3PCRjFP9TphxqqIN63Yii/TPvk+pYq0dxzs51Qd8fjNvHcmJQbSye9sjyl+2XKmNpdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584023; c=relaxed/simple;
-	bh=L2xd1aiwTb639zOKYegthEwPMP+na8MbpMyULkrDrpo=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
-	 In-Reply-To:Content-Type; b=W/o71twOy/E9MDep5V4curhgg8OoM3WEgxuZpooz7/QfXJMIbQxi+ypAhWAToFxW1l6y0AAF3LzRuvkD9Fe6yU6uutSE6fW2mj9jPLcv2SWqP6k4BKqOXKp7oQZBSUl6bzUUPHHwlLSHIDszTq9S5d0oKNCo/1zK1z9NbwutZXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZVweTJVT; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 438CuJQn002013;
-	Mon, 8 Apr 2024 13:46:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:from:subject:to:cc:references
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=welPpz4fuPVMQkgSviG18/N0pNIiqnjcj2TKyy5xmkk=; b=ZV
-	weTJVTBQgWzShTFd0czdsiNEXh1Rm/iiK8KUGDfv4VgR1uRsnL+HqW6t7bdD24hN
-	OnV2gELutDQCurZF7Rln1ZBlWKT/TABs22NHvvepU1ILgCatOhpKPi2CYpfYU2T2
-	NFzWIpYPkVkgABfqJLvlZ/H/692/HPpNbqjlHOXDe9ylRD5JZmKK3rl3QA9fC3dn
-	23Nhc8ur29eUhWcGdEGZIxr5AXb5PPRORbZx6ZTDdN4HQCshKgGDogLplagntlpf
-	Kwh4TvhRXjk9fVpDtUlzVnpOSghxQrhzH1+MelheB9YTnfhteqiMQqM2IozmvDxa
-	XzSvZr5bJxYhAuKKOkFw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xcbg2rwsu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 08 Apr 2024 13:46:57 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 438Dkuws030322
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 8 Apr 2024 13:46:56 GMT
-Received: from [10.216.32.99] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 8 Apr 2024
- 06:46:53 -0700
-Message-ID: <22d7abd1-139d-405b-984e-e4b57cc989cc@quicinc.com>
-Date: Mon, 8 Apr 2024 19:16:46 +0530
+	s=arc-20240116; t=1712586425; c=relaxed/simple;
+	bh=0938tF4StQFvIWTG9bPkLp2MbQCbcJ2/Krhj02r7yT8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gVqThrBlQmNiACZFS9WaWF9xux+jkRn9JoU/jobYTcNqLHAzUgegYQfh9XIdVPn9kpUQTuVTWKmS6Z0HcOe2UwBipf6bK6hLlCOZ1CZcEsQY9Lw3YNJEI0wjik7JvU7b5NqeJYyIc12sG6HHMl1xlhx5We61oW6GCJHjxYDURYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ulyj00fY; arc=none smtp.client-ip=209.85.208.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2d858501412so56822811fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Apr 2024 07:27:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712586421; x=1713191221; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CWAslIQYTs63TSHbt7hms1FMD6CETwGUDcTfK9QElEo=;
+        b=ulyj00fY1eu0ZktkUK10FzXPWRcYfuuSc0MLAePOokTZueP/mGXbU7qg7Ee0UnpO8O
+         ud3/0nl7T4SJtSw+OfnUAFf/jDEPBYs1SyZqscgy4ZKhwnliHkOVzieF/kNIy18wE08+
+         oUrkc1rnWOoygjqyUAiFZbd9PAbjDkGu+14b8tFBYlqemHg6VQDsBKBN15rX7zQHSqY6
+         wxOkakoJUJw0cWYmzWw+QUf/6qwIOkZDoQJdrsvsFv61fJGtIHt68LkNOsmOEI730MrU
+         Lxcp413Cr8nx0q2H/nf6rFPsRG3c5f3bulMK+zJlaUbGE7t//nUI185GRtZFUDueo4qu
+         FNnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712586421; x=1713191221;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CWAslIQYTs63TSHbt7hms1FMD6CETwGUDcTfK9QElEo=;
+        b=F79A+eLb9APTMo57M390+kfMF7Asm6mxCd6S3K7C7wx8NdR7J7e1SSjtKhmWQOHEZk
+         95wj7VTiOGpZsck1DhfyXCG7KQNYwBIcWBOCDlmZ/bkiuLFZ4ds2hnq1wNLrGuHV5Ygy
+         CDfyObeCwDQZ2S0a1rkndWgeckkusX+jo8oTMegf6SG+wo92INWdENoLS9BokprXEx9H
+         iIhNqfMHcyWi7zb3wBo6HUAmLceR8fsQFCJO4Y1wuSccjye4lq7OwhnCt+3taQoNifsh
+         zTKT87/+26O/OM4iRGXXnB5KKFCHx1pPz2rfrxvI5OvkCjl+VCePnl0h42XOaYmukctb
+         kFzw==
+X-Gm-Message-State: AOJu0YxZs3AFOvfAiDFNaB4WKW6A1ygl/BAq6Vp46AUPJfQ1gU9jOt4r
+	wRztVLka7oA7G3vKK5KLR20epR2g+6H/1o2HUD5iNXGMvSwuvUqXwCV9opfaRac=
+X-Google-Smtp-Source: AGHT+IFc2yX/IP6+1XOFt+KHVDB0UCCeJ1o6Xnr903HurFmDv9cs43zL09wmpKrhusn6mnXC64CP/Q==
+X-Received: by 2002:a2e:b811:0:b0:2d8:620b:9838 with SMTP id u17-20020a2eb811000000b002d8620b9838mr5092379ljo.46.1712586421229;
+        Mon, 08 Apr 2024 07:27:01 -0700 (PDT)
+Received: from [172.30.204.201] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id q5-20020a2ea685000000b002d85e57fa3dsm1162957lje.104.2024.04.08.07.26.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Apr 2024 07:27:00 -0700 (PDT)
+Message-ID: <606c5121-48c8-4640-9e19-692af4281fa4@linaro.org>
+Date: Mon, 8 Apr 2024 16:26:58 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,143 +75,46 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Subject: Re: [PATCH 2/5] usb: typec: ucsi: glink: move GPIO reading into
- connector_status callback
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: sc8280xp-lenovo-thinkpad-x13s: add
+ USB-C orientation GPIOs
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Heikki Krogerus
-	<heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>
-CC: Neil Armstrong <neil.armstrong@linaro.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20240408-ucsi-orient-aware-v1-0-95a74a163a10@linaro.org>
- <20240408-ucsi-orient-aware-v1-2-95a74a163a10@linaro.org>
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240408-hdk-orientation-gpios-v1-0-8064ba43e52a@linaro.org>
+ <20240408-hdk-orientation-gpios-v1-3-8064ba43e52a@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20240408-ucsi-orient-aware-v1-2-95a74a163a10@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20240408-hdk-orientation-gpios-v1-3-8064ba43e52a@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: z6eXXlk_uhdoX2ZPcij72Do59dtFt2Jl
-X-Proofpoint-GUID: z6eXXlk_uhdoX2ZPcij72Do59dtFt2Jl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-08_12,2024-04-05_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 spamscore=0 clxscore=1015 lowpriorityscore=0 mlxlogscore=999
- bulkscore=0 impostorscore=0 suspectscore=0 phishscore=0 malwarescore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404080104
 
 
 
-On 4/8/2024 10:00 AM, Dmitry Baryshkov wrote:
-> To simplify the platform code move Type-C orientation handling into the
-> connector_status callback. As it is called both during connector
-> registration and on connector change events, duplicated code from
-> pmic_glink_ucsi_register() can be dropped.
-> 
-> Also this moves operations that can sleep into a worker thread,
-> removing the only sleeping operation from pmic_glink_ucsi_notify().
+On 4/8/24 04:34, Dmitry Baryshkov wrote:
+> Define the USB-C orientation GPIOs so that the USB-C ports orientation
+> is known without having to resort to the altmode notifications.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-Verified working of device mode (ADB) in SS in both orientations on 
-QCS6490 RB3Gen2.
-
-As an experiment, removed the connector status call being done in 
-ucsi_register_port to see if the issue fixed by [1] would be 
-reproducible or not and it is. So this patch is taking care of proper 
-enumeration in bootup in host mode in reverse orientation as well.
-
-Tested-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-
-[1]: 
-https://lore.kernel.org/all/20240301040914.458492-1-quic_kriskura@quicinc.com/
-
 > ---
->   drivers/usb/typec/ucsi/ucsi_glink.c | 48 ++++++++++++++++---------------------
->   1 file changed, 20 insertions(+), 28 deletions(-)
+>   arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 2 ++
+>   1 file changed, 2 insertions(+)
 > 
-> diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-> index b91d2d15d7d9..d21f8cd2fe35 100644
-> --- a/drivers/usb/typec/ucsi/ucsi_glink.c
-> +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-> @@ -187,10 +187,28 @@ static int pmic_glink_ucsi_sync_write(struct ucsi *__ucsi, unsigned int offset,
->   	return ret;
->   }
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> index 15ae94c1602d..2806aa8ec497 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> @@ -100,6 +100,8 @@ pmic-glink {
 >   
-> +static void pmic_glink_ucsi_connector_status(struct ucsi_connector *con)
-> +{
-> +	struct pmic_glink_ucsi *ucsi = ucsi_get_drvdata(con->ucsi);
-> +	int orientation;
-> +
-> +	if (con->num >= PMIC_GLINK_MAX_PORTS ||
-> +	    !ucsi->port_orientation[con->num - 1])
-> +		return;
-> +
-> +	orientation = gpiod_get_value(ucsi->port_orientation[con->num - 1]);
-> +	if (orientation >= 0) {
-> +		typec_switch_set(ucsi->port_switch[con->num - 1],
-> +				 orientation ? TYPEC_ORIENTATION_REVERSE
-> +				 : TYPEC_ORIENTATION_NORMAL);
-> +	}
-> +}
-> +
->   static const struct ucsi_operations pmic_glink_ucsi_ops = {
->   	.read = pmic_glink_ucsi_read,
->   	.sync_write = pmic_glink_ucsi_sync_write,
-> -	.async_write = pmic_glink_ucsi_async_write
-> +	.async_write = pmic_glink_ucsi_async_write,
-> +	.connector_status = pmic_glink_ucsi_connector_status,
->   };
->   
->   static void pmic_glink_ucsi_read_ack(struct pmic_glink_ucsi *ucsi, const void *data, int len)
-> @@ -229,20 +247,8 @@ static void pmic_glink_ucsi_notify(struct work_struct *work)
->   	}
->   
->   	con_num = UCSI_CCI_CONNECTOR(cci);
-> -	if (con_num) {
-> -		if (con_num <= PMIC_GLINK_MAX_PORTS &&
-> -		    ucsi->port_orientation[con_num - 1]) {
-> -			int orientation = gpiod_get_value(ucsi->port_orientation[con_num - 1]);
-> -
-> -			if (orientation >= 0) {
-> -				typec_switch_set(ucsi->port_switch[con_num - 1],
-> -						 orientation ? TYPEC_ORIENTATION_REVERSE
-> -							     : TYPEC_ORIENTATION_NORMAL);
-> -			}
-> -		}
-> -
-> +	if (con_num)
->   		ucsi_connector_change(ucsi->ucsi, con_num);
-> -	}
->   
->   	if (ucsi->sync_pending &&
->   		   (cci & (UCSI_CCI_ACK_COMPLETE | UCSI_CCI_COMMAND_COMPLETE))) {
-> @@ -253,20 +259,6 @@ static void pmic_glink_ucsi_notify(struct work_struct *work)
->   static void pmic_glink_ucsi_register(struct work_struct *work)
->   {
->   	struct pmic_glink_ucsi *ucsi = container_of(work, struct pmic_glink_ucsi, register_work);
-> -	int orientation;
-> -	int i;
-> -
-> -	for (i = 0; i < PMIC_GLINK_MAX_PORTS; i++) {
-> -		if (!ucsi->port_orientation[i])
-> -			continue;
-> -		orientation = gpiod_get_value(ucsi->port_orientation[i]);
-> -
-> -		if (orientation >= 0) {
-> -			typec_switch_set(ucsi->port_switch[i],
-> -					 orientation ? TYPEC_ORIENTATION_REVERSE
-> -					     : TYPEC_ORIENTATION_NORMAL);
-> -		}
-> -	}
->   
->   	ucsi_register(ucsi->ucsi);
->   }
-> 
+>   		#address-cells = <1>;
+>   		#size-cells = <0>;
+> +		orientation-gpios = <&tlmm 166 GPIO_ACTIVE_HIGH>,
+> +				    <&tlmm 49 GPIO_ACTIVE_HIGH>;
+
+These numbers do check out
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
 
