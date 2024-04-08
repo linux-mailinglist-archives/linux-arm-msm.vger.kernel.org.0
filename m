@@ -1,76 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-16749-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16750-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE46E89B6EA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 06:31:20 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1D1F89B6EF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 06:31:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 45E2D1F2191F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 04:31:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D274E1C209C6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 04:31:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B13C1101EC;
-	Mon,  8 Apr 2024 04:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2B6618C22;
+	Mon,  8 Apr 2024 04:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Qz5uGkLP"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oprSFMRv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C31996FB9
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Apr 2024 04:30:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643BE7482
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Apr 2024 04:30:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712550658; cv=none; b=ZrxQp+RKu/yfkIIN/diyD2PBlcskKgR6ZAWTAPwLAmZ5OdkxikoMVp941rCvRBbGfyZjfU9T3Gq9b3x59YV0xYv1MC4SYPfz077Q2bL31HaZyOs478pLZ38tVcb5dzCB0GLypytB5V0k81LvCSYoKDFaXVTqm6y3xjF88fgvnH4=
+	t=1712550659; cv=none; b=Y1WlhRZM6i1iRpy3oXpeas3NPk1y55R8lnh3+5Nfu7hZCQy9swow6p6YCCW5DgusY6WHyzLJYeF7Sdiy63+ED+8UxgxqmJx27VlSuW+a7oOUFUVtR8sWWcovH0/mc98k9AUwbVOVADE+p5Ux0sNVXXZ/NaDDI//B/ZNAzU7cYAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712550658; c=relaxed/simple;
-	bh=6Pp8ISuDZAtUkxCFA5Mzr7Pj0egqS4eDsl4x+9fdzEg=;
+	s=arc-20240116; t=1712550659; c=relaxed/simple;
+	bh=AiMHop6LtWh5la59tUhjUjvEK/UQiD8uM+1Bb2RGdcc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Z0wGUMZY950lB6RA2ZjLFO2iOV8Yjd36BCiz50XC04IuJmZ3asBS3RmyliKZ9VH9NGZwNr6cYToZRErhtxwI617b2fPdAPJ9ZE/qujyXpBoMGngZhD6/kGgZ9t0cb7z3zKmZbtKEo1oUC9aCIZye/JuLQDRNOrHNhsviXL+VJ6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Qz5uGkLP; arc=none smtp.client-ip=209.85.208.180
+	 In-Reply-To:To:Cc; b=GLT6/Hl92gu7UzrY5f2u7GFDMDzy2czdYBPRkwzWa1hMOMifw357cB9w1MJF0X4pyeQzZomxiF8065H0neZwiu084nswVjyoMBumL0p4rMpG+eNDN8JB/3KeSD7/9Azy4g6UvuiPOaGkCdnQidkw483IFqLE3HJsjC9rk9iUzKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oprSFMRv; arc=none smtp.client-ip=209.85.208.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2d895e2c6efso2462801fa.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 07 Apr 2024 21:30:56 -0700 (PDT)
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2d8863d8a6eso13253781fa.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 07 Apr 2024 21:30:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1712550655; x=1713155455; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ENukurxkpnH6btr43WV4x/+l5y/bB4zzdKjrs7ksqE0=;
-        b=Qz5uGkLPm7X1ffIvwhdN7kZdNkRJz5c9tU2AU5YzS92xA0Y3PMMbRcCJo1ztnpYOot
-         ki5kORBS3g4z2H60jLqTjwwYAl8+TyX4XtECgpDhqb8YOumywlRFmzduS1m4ORorTfdj
-         7/E3PbxOYpDxAjceibZYXVL9/6JI/k/bRCrX/zzN020aiKAz8jf5tRG5NoXosMnk4sMY
-         btNHUxrwKujJEeGuk3JlDEogCONyjEINqexShjW8IhCgh36ZMm2YewsA6kq1tXmEQUIo
-         k1sww6Dr4WXjt4QtcjkZns6heVgIyw8cMtQflSIwMDpilBWPmPKWv230oynjmEcgV4c4
-         0uwg==
+        bh=aWjHFP4FIwQxUWAPVoONDZq/MeuxzTLfwG/YafjPU/Y=;
+        b=oprSFMRvTiJHEr15KFMeVH6QzEY8VIK5o6rXJOV9drS8/jr/Gcat7RmxgnQUw0r8f9
+         /ZAMr3XUYmuMQT9hkqRvrG0XaLmDchMZq6+d1DwLGF/073mgvM36Fl9lChwudvr7D+yI
+         ScKMSgyXvEemCk53MIdRWoAPAobSemwSEW5QMbpxKAV66wIxmxu5wz6fbHzQ1/1KSGtj
+         onoBRaExBfQN8PBMRF0oQadN7tmFpvT/ty3cxSxhWMbIqTT/DMGw8lUfiGJKTI5hUB2I
+         KgBZVjOuApNDR0nm5GLtNmFKAbI10fakqP/SktnJ7Qzac95mz+2oXsjfQhAz88DUeeIt
+         VxVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1712550655; x=1713155455;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ENukurxkpnH6btr43WV4x/+l5y/bB4zzdKjrs7ksqE0=;
-        b=jx3DJMpvofIL3IzOiNMkT8uHQiigAeZODbudjroW485l19GMpcVH/GYOF9V0d625vU
-         arQ2iMhiEs+es5P48QvoQY+CdvHTL/AxTxiCjoiCsmHL4SGMZNDRL70jsRhsEiE6tbFW
-         Bo60pEnhkUgQlnqzyXvquynWAQz3mVYD4DuJCvzx/1s45ad0zrDbZIRP2g05MKL+hd/W
-         u9GFCsEjGIMPT7t+AKL3g3nxVxjRgXsc1KOX8gJ7W4WCsMld93sP6T2yYOoxbgaBSSFL
-         Euav+OsVcM9eA4qRhOi2oP05TVZK5LopG8KfyoDXHH7dMhQKkZX9slHtgbyDjRh9u/xT
-         ncMQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVoyngxYC++/x2UokdhLFutUBjOW6B1dyL3QxqnNczV7sfA5n14tsGW5JF0uBWY4E1VxMGTdcp1+zW+LJbAwts08nehOGr70d3ANlNHzw==
-X-Gm-Message-State: AOJu0YzdIxOAcvdu/+0lckRrkdUT3ie1+p0MgBq6AZDQgvgFjhR/Dikt
-	iBBb3Ypqv4q6lpBH14iRPK9ebdCvIcCYV6RH5ygsoseZ5offjgmzJ19KSepDPcTtbHGBb0Q59QL
-	V
-X-Google-Smtp-Source: AGHT+IEjiBzAFkgSlnDA5c4dvuKfeCyu6QTyl5XSf+HAw91rTnk+Y0NsxdtJ8Wa70bGWdxCBEcih7Q==
-X-Received: by 2002:a19:6457:0:b0:516:d17f:3c30 with SMTP id b23-20020a196457000000b00516d17f3c30mr5266580lfj.3.1712550655081;
+        bh=aWjHFP4FIwQxUWAPVoONDZq/MeuxzTLfwG/YafjPU/Y=;
+        b=Rq7z7cHdDs4tZBf0xEYHg3ZnUfpn8d3ERid07wRtrnKS0TmoHM0qXZe3ICJDf9Fz9O
+         kA6f6NmnuJkmPeUtpk9VpW1BYk9BTONo1iqyLGszqUfahIzTneNn3fKnYL6L7JLbUD3Z
+         CZqGKZKEoJZ+ZgBdLAaa4wK3uN0igVeAeYpP4QWgRMa21hm0DpXHEA9TGacc3lVwhsmg
+         9q6dYLQu9J5CzttQKu8yLhOA+4u+IlhQkFqukHLhflEjMv8lJFeSPhbiGFHL6YQcmdY8
+         Md1WNlvHN7wRD7pBlgaPNtnKVHF4hK2yQ38B+1r6BPCHrIMM0V2Dqv0xRNzBtWJGworw
+         ucGw==
+X-Forwarded-Encrypted: i=1; AJvYcCW1VDVjldLimvM5kAq0q+vLTiRvtca1bBZsPn+RUxqK0TVmmUDP12Ln589h3Ns1GN+khr3EWzW2r31PDIuSLknOzTZNfWtTXZoeUvGe9w==
+X-Gm-Message-State: AOJu0YwIH1fyJ8fnZFoXtE7idO0OtDTBjdUAUIt/cyc1zNRFLR9Jg1Bm
+	RLXhv36Kg4x4+XZcS0VxRS1jSsWfxnPOCJ45LJMguGu4bGgT5RA8NFwd1+d3Dfg=
+X-Google-Smtp-Source: AGHT+IFIO6xNYoZfEPFKmXNYH/a6iz/UGLcCNim2Ck9xD7LkNwZBRVFMJ1PDf5p1BbUMWec2ZXfO4A==
+X-Received: by 2002:a19:644e:0:b0:513:aef9:7159 with SMTP id b14-20020a19644e000000b00513aef97159mr5407151lfj.39.1712550655691;
         Sun, 07 Apr 2024 21:30:55 -0700 (PDT)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id g13-20020ac2538d000000b005132f12ee7asm1033207lfh.174.2024.04.07.21.30.54
+        by smtp.gmail.com with ESMTPSA id g13-20020ac2538d000000b005132f12ee7asm1033207lfh.174.2024.04.07.21.30.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 Apr 2024 21:30:54 -0700 (PDT)
+        Sun, 07 Apr 2024 21:30:55 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 08 Apr 2024 07:30:51 +0300
-Subject: [PATCH 3/5] usb: typec: ucsi: glink: use typec_set_orientation
+Date: Mon, 08 Apr 2024 07:30:52 +0300
+Subject: [PATCH 4/5] usb: typec: ucsi: make it orientation-aware
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240408-ucsi-orient-aware-v1-3-95a74a163a10@linaro.org>
+Message-Id: <20240408-ucsi-orient-aware-v1-4-95a74a163a10@linaro.org>
 References: <20240408-ucsi-orient-aware-v1-0-95a74a163a10@linaro.org>
 In-Reply-To: <20240408-ucsi-orient-aware-v1-0-95a74a163a10@linaro.org>
 To: Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
@@ -88,66 +87,56 @@ Cc: Neil Armstrong <neil.armstrong@linaro.org>, linux-usb@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1822;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1643;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=6Pp8ISuDZAtUkxCFA5Mzr7Pj0egqS4eDsl4x+9fdzEg=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmE3L7gAxLAJjmRw2Ft1WpQQJcHwpO52VWP8lAH
- 1Anz7mkGzWJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZhNy+wAKCRCLPIo+Aiko
- 1aIAB/47+POeBCZy8cZ2CnEAbZYdtAhvloPtBOZ2ao7zEDTzYMD8yRKcF2Iacq7wo3MbDVfS+4+
- sqUpRs2ENNWrinfQxmju5WLt/I/i3ReB9u3GVXxbkntyVQUGVuxRQ4znK7Ekskc01gSU1mJ2XZW
- x/W9gQfwMSkvgpzCDK5WRZTcbh8yGb5dVt8VU1pxIWhE6h2PhsXZLTFiwfSE8WFS10oqmb2apPV
- DrUHjXYCoEK8j+LmH5IU3hy+tbyDGs5KKDDkpsgkZFGA+xOJSnazYJRT43Brg/ZBqdw3YpGvgPv
- Pf+36qEskA3818lMpuofRHUNRTvhDmhXIBSvZyc8l4/BvBZV
+ bh=AiMHop6LtWh5la59tUhjUjvEK/UQiD8uM+1Bb2RGdcc=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmE3L7IPs4Dy2cixnuxh6PbWMygAc34bJSsBTiS
+ g87Qu8asz6JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZhNy+wAKCRCLPIo+Aiko
+ 1Wx+B/wL9D5rVVtyDGr8tJVBflDFYn+l/8QkHU+8lO8IayWT9KG+uOtsC1LnOmRspt6imRaDueZ
+ JhbpbaOf6eL12HEDTo1MdSVR17h7wlk2hOaR4eBhVmbHocM50U7svsxLYiQ3GQFIQc7z+fBZJLk
+ R7rf5B/Jt3TmYSG/ccUI4k6N8fK3QBLZJNPypICKqxXJmSjiol0fTJV+fH01FioNAA/f+YtFUnW
+ mbzFsQid+kMnK7VL3ETL8JrCDzX8BciHnn4feM+b+h+d4bY1RurXYkwXX8lKLz6WV7eyEiydsJg
+ Hp6tpehb5SQJcETvzry2zv3gtbe5SA3MGnxwc7QNWKIOQbFr
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Use typec_set_orientation() instead of calling typec_switch_set()
-manually. This way the rest of the typec framework and the userspace are
-notified about the orientation change.
+The UCSI 1.0 is not orientation aware. Only UCSI 2.0 has added
+orientation status to GET_CONNECTOR_STATUS data. However the glue code
+can be able to detect cable orientation on its own (and report it via
+corresponding typec API). Add a flag to let UCSI mark registered ports
+as orientation aware.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/usb/typec/ucsi/ucsi_glink.c | 13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c | 2 ++
+ drivers/usb/typec/ucsi/ucsi.h | 1 +
+ 2 files changed, 3 insertions(+)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-index d21f8cd2fe35..d279e2cf9bba 100644
---- a/drivers/usb/typec/ucsi/ucsi_glink.c
-+++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-@@ -58,7 +58,6 @@ struct pmic_glink_ucsi {
- 	struct device *dev;
+diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
+index 7ad544c968e4..6f5adc335980 100644
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1551,6 +1551,8 @@ static int ucsi_register_port(struct ucsi *ucsi, struct ucsi_connector *con)
+ 	cap->svdm_version = SVDM_VER_2_0;
+ 	cap->prefer_role = TYPEC_NO_PREFERRED_ROLE;
  
- 	struct gpio_desc *port_orientation[PMIC_GLINK_MAX_PORTS];
--	struct typec_switch *port_switch[PMIC_GLINK_MAX_PORTS];
++	cap->orientation_aware = !!(ucsi->quirks & UCSI_ORIENTATION_AWARE);
++
+ 	if (con->cap.op_mode & UCSI_CONCAP_OPMODE_AUDIO_ACCESSORY)
+ 		*accessory++ = TYPEC_ACCESSORY_AUDIO;
+ 	if (con->cap.op_mode & UCSI_CONCAP_OPMODE_DEBUG_ACCESSORY)
+diff --git a/drivers/usb/typec/ucsi/ucsi.h b/drivers/usb/typec/ucsi/ucsi.h
+index 6599fbd09bee..e92be45e4c1c 100644
+--- a/drivers/usb/typec/ucsi/ucsi.h
++++ b/drivers/usb/typec/ucsi/ucsi.h
+@@ -410,6 +410,7 @@ struct ucsi {
+ 	unsigned long quirks;
+ #define UCSI_NO_PARTNER_PDOS	BIT(0)	/* Don't read partner's PDOs */
+ #define UCSI_DELAY_DEVICE_PDOS	BIT(1)	/* Reading PDOs fails until the parter is in PD mode */
++#define UCSI_ORIENTATION_AWARE	BIT(2)	/* UCSI is orientation aware */
+ };
  
- 	struct pmic_glink_client *client;
- 
-@@ -198,9 +197,10 @@ static void pmic_glink_ucsi_connector_status(struct ucsi_connector *con)
- 
- 	orientation = gpiod_get_value(ucsi->port_orientation[con->num - 1]);
- 	if (orientation >= 0) {
--		typec_switch_set(ucsi->port_switch[con->num - 1],
--				 orientation ? TYPEC_ORIENTATION_REVERSE
--				 : TYPEC_ORIENTATION_NORMAL);
-+		typec_set_orientation(con->port,
-+				      orientation ?
-+				      TYPEC_ORIENTATION_REVERSE :
-+				      TYPEC_ORIENTATION_NORMAL);
- 	}
- }
- 
-@@ -378,11 +378,6 @@ static int pmic_glink_ucsi_probe(struct auxiliary_device *adev,
- 			return dev_err_probe(dev, PTR_ERR(desc),
- 					     "unable to acquire orientation gpio\n");
- 		ucsi->port_orientation[port] = desc;
--
--		ucsi->port_switch[port] = fwnode_typec_switch_get(fwnode);
--		if (IS_ERR(ucsi->port_switch[port]))
--			return dev_err_probe(dev, PTR_ERR(ucsi->port_switch[port]),
--					"failed to acquire orientation-switch\n");
- 	}
- 
- 	ucsi->client = devm_pmic_glink_register_client(dev,
+ #define UCSI_MAX_SVID		5
 
 -- 
 2.39.2
