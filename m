@@ -1,160 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-16779-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16780-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8065589BB7E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 11:19:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A5BE89BBB6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 11:31:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A52CF1C214CA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 09:19:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BEF901F21A38
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 09:31:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F633446B7;
-	Mon,  8 Apr 2024 09:19:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D7DF48CC6;
+	Mon,  8 Apr 2024 09:30:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="T1DeOK/Z"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d70hueG3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D805B3F9FA;
-	Mon,  8 Apr 2024 09:19:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2CD4AEC2;
+	Mon,  8 Apr 2024 09:30:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712567989; cv=none; b=QJVBp7mpKwp4nq6wA5Ja8wDMQm2C6mBr5sRWgSuuhPTx2xpiruAVjfXPY8MyYQugMbBf8JBBgk6dCYgpDWj4i9zpqvDmIMDqgg3r3YfT97aoQI0DwsJaHiQ0NnYYmu/8Zb+c5rhOkKQdIb7REB4/yQpd/N5TWzF/TM377sY/VLM=
+	t=1712568657; cv=none; b=FbpQdtNTGZ2VRVroqNKM6G50BTopQlTK/BHNdZDhkRQTvymh7k6XQHELW5aPieO88Za1XsoK08QfrCQ1ntjof8/LBDW1pDGG/7/L+JfN6ZGE1yF2mGS0ZxvthuE1NsKmfzseX60iBLlFRq3imKyz4HYs5JogTfxsakFF6Zye8ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712567989; c=relaxed/simple;
-	bh=ofbbhjOcn3gokpPZJXWug0E1Se7nblKWJlzQsqVrdiw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=NnXGmOYq3mKArgG/egXW+mNXBs8xnKUXYUlo7yJ+Jj6+P+/y5vcVpTnvcoaoJtPL1WEKU6hl36sBb0gk7iY4qGvCgy+SmCcPZgK3z3QkUdIsSXIk9zzCXBS90iE5XzWwIySumEDy7ECf5j5ajsNV90BxwdoeN3zjK1VTEgPz8nA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=T1DeOK/Z; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4386c1Tu030644;
-	Mon, 8 Apr 2024 09:19:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=bxHJFz7JARPgNmGRmpA2i8VMFIvKy301v4ZlZfnTBK0=; b=T1
-	DeOK/ZUTBxQfvCbOOeQQIayXgxxP1mI5Ly29rR/KfcvPSkh7Gon8QugU3JOj7joM
-	LPbBsfUqhu/fvzCyRVekc/o06yvSARfiWESBWFdAHf27MZjn2boZVTswB+iv7nAL
-	Ofpl2UbyvmbUB0kF6OeBh7yklev3CRQJaGtEyUUA4vzHhvYvXy0Ui/57iZ5RA7Kw
-	AC2tAefUBShpj9JSATUHBwpwOmrHK+wVr+HKnMqOMMsju2LRO/pSB+COqrb8uonp
-	WY3mcRrO2sPHXJ2PnETGnjg1oTRZFCz8lXbwOKhZxhlOC9NtuvZa/jaRvWGCuD/r
-	yGKlRKhlGIGpFVBNpl3w==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xcbg1ga73-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 08 Apr 2024 09:19:42 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4389JfQL006266
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 8 Apr 2024 09:19:41 GMT
-Received: from [10.238.176.241] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 8 Apr 2024
- 02:19:39 -0700
-Message-ID: <7c13cb26-0a0d-b73e-443a-b83264cf482b@quicinc.com>
-Date: Mon, 8 Apr 2024 17:19:36 +0800
+	s=arc-20240116; t=1712568657; c=relaxed/simple;
+	bh=YTvBQpF8N5UpnJKoybhSeGafUbBY3tM0aAczZzHt0T0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=dGo549vzb0m/7Fo3IdDg1v7ydBg0L5sXYtX8egasX8j+ug47haoot5auv0Fw+20voZggqib2gUn4a/B2JGrAEaIUmOLVhDhmldFKZTOWV4SD9r02Qgzi4TnqUh03N9iDSCPiVf+Yko/1KtmeErEdzfsHVGAC2+kJjam9rycAtO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d70hueG3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 456C5C433C7;
+	Mon,  8 Apr 2024 09:30:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712568657;
+	bh=YTvBQpF8N5UpnJKoybhSeGafUbBY3tM0aAczZzHt0T0=;
+	h=From:To:Cc:Subject:Date:From;
+	b=d70hueG3GTfMf47ltZrYYL8BlExMVT7ZwmEdVzCx2FYmieUEinUJX5DntW1FnKIcK
+	 NcoJNi6V1dJiKcVSvAkyQs7+JinfUlV7TOF0Llaj0wdUhgc2qNjKXXaIK5rYkwM/B2
+	 KTbMtGh3TvOUdU/w49EuE6JkqVvYuM3u3Pcg/yKJdYoGrlmThuJbTleWhE82zXoicg
+	 A/aSWfjpfkcPV3oLNGzvBZRMdYDYHuI4FmzorXirnniUga/BvkkgHcTU0Oilyz/9lE
+	 yPbEkdG8ECae4j5CMMwVaD6vJmq4CyPR6kkswHuRrLbH7edwGlaliZUUIhwLrhnx0v
+	 Vf0tD1LkWmLmg==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan+linaro@kernel.org>)
+	id 1rtlL0-0000000008u-2g79;
+	Mon, 08 Apr 2024 11:30:51 +0200
+From: Johan Hovold <johan+linaro@kernel.org>
+To: Vinod Koul <vkoul@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	Johan Hovold <johan+linaro@kernel.org>,
+	stable@vger.kernel.org,
+	Stephen Boyd <swboyd@chromium.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH] phy: qcom: qmp-combo: fix VCO div offset on v5_5nm and v6
+Date: Mon,  8 Apr 2024 11:30:23 +0200
+Message-ID: <20240408093023.506-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.43.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH V4 2/2] rtc-pm8xxx: Correct the value written into the
- PM8xxx_RTC_ALARM_CLEAR
-Content-Language: en-US
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Alexandre Belloni
-	<alexandre.belloni@bootlin.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-rtc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20240401-fix-rtc-alarm-which-fired-before-driver-probe-not-be-cleard-v1-0-aab2cd6ddab8@quicinc.com>
- <20240401-fix-rtc-alarm-which-fired-before-driver-probe-not-be-cleard-v1-2-aab2cd6ddab8@quicinc.com>
- <Zg9mKnPrhTTNafdb@hu-bjorande-lv.qualcomm.com>
-From: jianbin zhang <quic_jianbinz@quicinc.com>
-In-Reply-To: <Zg9mKnPrhTTNafdb@hu-bjorande-lv.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: BjYveIFvFL8tZJy-Em57oF0k8eeVD6Gy
-X-Proofpoint-GUID: BjYveIFvFL8tZJy-Em57oF0k8eeVD6Gy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-08_07,2024-04-05_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
- impostorscore=0 adultscore=0 priorityscore=1501 malwarescore=0 spamscore=0
- mlxlogscore=999 suspectscore=0 lowpriorityscore=0 clxscore=1015 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
- definitions=main-2404080072
+Content-Transfer-Encoding: 8bit
 
+Commit 5abed58a8bde ("phy: qcom: qmp-combo: Fix VCO div offset on v3")
+fixed a regression introduced in 6.5 by making sure that the correct
+offset is used for the DP_PHY_VCO_DIV register on v3 hardware.
 
-On 4/5/24 10:47, Bjorn Andersson wrote:
-> On Mon, Apr 01, 2024 at 09:56:30AM +0800, jianbin zhang wrote:
->> Writing 1 to the PM8xxx_RTC_ALARM_CLEAR register is expected to clear
->> the triggered alarm status. In patch v2, the value written to the
-> I'm not sure what "in patch v2" refers to here.
+Unfortunately, that fix instead broke DisplayPort on v5_5nm and v6
+hardware as it failed to add the corresponding offsets also to those
+register tables.
 
-Thanks for reviewing, "In patch v2" refers to https://lore.kernel.org/lkml/20230202155448.6715-4-johan+linaro@kernel.org/ which siwtch to use regmap_update_bits.
+Fixes: 815891eee668 ("phy: qcom-qmp-combo: Introduce orientation variable")
+Fixes: 5abed58a8bde ("phy: qcom: qmp-combo: Fix VCO div offset on v3")
+Cc: stable@vger.kernel.org	# 6.5: 5abed58a8bde
+Cc: Stephen Boyd <swboyd@chromium.org>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+---
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c     | 2 ++
+ drivers/phy/qualcomm/phy-qcom-qmp-dp-phy-v5.h | 1 +
+ drivers/phy/qualcomm/phy-qcom-qmp-dp-phy-v6.h | 1 +
+ 3 files changed, 4 insertions(+)
 
-> Also, as with patch 1, please fix your subject line and use internal
-> review list.
->
-> Regards,
-> Bjorn
-Sure, Will fix the subject line and use internal review list in next 
-patch version.
->> PM8xxx_RTC_ALARM_CLEAR register in the trigger function is incorrectly
->> written as 0. So correct the value written to PM8xxx_RTC_ALARM_CLEAR
->> register into 1.
->>
->> Signed-off-by: jianbin zhang <quic_jianbinz@quicinc.com>
->> ---
->> Changess in v4:
->> - add the cover letter
->> - modify the patch to conform to the specification
->>
->> Changes in v3:
->> - Correct the value written into the PM8xxx_RTC_ALARM_CLEAR to 1.
->> - link: https://lore.kernel.org/linux-rtc/20240319191216.GB3796206@hu-bjorande-lv.qualcomm.com/T/#t
->>
->> Changes in v2:
->> - Switch to using regmap_update_bits() instead of open coding
->>    read-modify-write accesses.
->> - link: https://lore.kernel.org/lkml/20230202155448.6715-4-johan+linaro@kernel.org/
->>
->> Changes in v1:
->> -link: https://lore.kernel.org/linux-rtc/20230126142057.25715-4-johan+linaro@kernel.org/
->> ---
->>   drivers/rtc/rtc-pm8xxx.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/rtc/rtc-pm8xxx.c b/drivers/rtc/rtc-pm8xxx.c
->> index e4e2307445cf..806c99cdac9a 100644
->> --- a/drivers/rtc/rtc-pm8xxx.c
->> +++ b/drivers/rtc/rtc-pm8xxx.c
->> @@ -391,7 +391,7 @@ static irqreturn_t pm8xxx_alarm_trigger(int irq, void *dev_id)
->>   
->>   	/* Clear alarm status */
->>   	rc = regmap_update_bits(rtc_dd->regmap, regs->alarm_ctrl2,
->> -				PM8xxx_RTC_ALARM_CLEAR, 0);
->> +				PM8xxx_RTC_ALARM_CLEAR, 1);
->>   	if (rc)
->>   		return IRQ_NONE;
->>   
->>
->> -- 
->> 2.43.2
->>
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+index a03b6f6881df..e48e87c3cb05 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -153,6 +153,7 @@ static const unsigned int qmp_v5_5nm_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+ 	[QPHY_COM_BIAS_EN_CLKBUFLR_EN]	= QSERDES_V5_COM_BIAS_EN_CLKBUFLR_EN,
+ 
+ 	[QPHY_DP_PHY_STATUS]		= QSERDES_V5_DP_PHY_STATUS,
++	[QPHY_DP_PHY_VCO_DIV]		= QSERDES_V5_DP_PHY_VCO_DIV,
+ 
+ 	[QPHY_TX_TX_POL_INV]		= QSERDES_V5_5NM_TX_TX_POL_INV,
+ 	[QPHY_TX_TX_DRV_LVL]		= QSERDES_V5_5NM_TX_TX_DRV_LVL,
+@@ -177,6 +178,7 @@ static const unsigned int qmp_v6_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+ 	[QPHY_COM_BIAS_EN_CLKBUFLR_EN]	= QSERDES_V6_COM_PLL_BIAS_EN_CLK_BUFLR_EN,
+ 
+ 	[QPHY_DP_PHY_STATUS]		= QSERDES_V6_DP_PHY_STATUS,
++	[QPHY_DP_PHY_VCO_DIV]		= QSERDES_V6_DP_PHY_VCO_DIV,
+ 
+ 	[QPHY_TX_TX_POL_INV]		= QSERDES_V6_TX_TX_POL_INV,
+ 	[QPHY_TX_TX_DRV_LVL]		= QSERDES_V6_TX_TX_DRV_LVL,
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-dp-phy-v5.h b/drivers/phy/qualcomm/phy-qcom-qmp-dp-phy-v5.h
+index f5cfacf9be96..181057421c11 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-dp-phy-v5.h
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-dp-phy-v5.h
+@@ -7,6 +7,7 @@
+ #define QCOM_PHY_QMP_DP_PHY_V5_H_
+ 
+ /* Only for QMP V5 PHY - DP PHY registers */
++#define QSERDES_V5_DP_PHY_VCO_DIV			0x070
+ #define QSERDES_V5_DP_PHY_AUX_INTERRUPT_STATUS		0x0d8
+ #define QSERDES_V5_DP_PHY_STATUS			0x0dc
+ 
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-dp-phy-v6.h b/drivers/phy/qualcomm/phy-qcom-qmp-dp-phy-v6.h
+index 01a20d3be4b8..fa967a1af058 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-dp-phy-v6.h
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-dp-phy-v6.h
+@@ -7,6 +7,7 @@
+ #define QCOM_PHY_QMP_DP_PHY_V6_H_
+ 
+ /* Only for QMP V6 PHY - DP PHY registers */
++#define QSERDES_V6_DP_PHY_VCO_DIV			0x070
+ #define QSERDES_V6_DP_PHY_AUX_INTERRUPT_STATUS		0x0e0
+ #define QSERDES_V6_DP_PHY_STATUS			0x0e4
+ 
+-- 
+2.43.2
+
 
