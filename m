@@ -1,258 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-16767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 549EE89B9EF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 10:14:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E7E489BA33
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 10:27:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7890F1C2180C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 08:14:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0CB421C225CC
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 08:27:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 896672DF73;
-	Mon,  8 Apr 2024 08:10:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mvewsveo"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A9F02D05D;
+	Mon,  8 Apr 2024 08:27:41 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C43C53E05;
-	Mon,  8 Apr 2024 08:10:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BFC03BBDB;
+	Mon,  8 Apr 2024 08:27:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712563851; cv=none; b=tilVVHSUSzUjdtobF5mvClmj/k1vckQJxuZWVe9D00aR+zQUrImAOTKyqepTikTeeGVfy9H39fxYzayMcyk0HbOj8/hbfEUEybiqLP16Wgie0uFisFJIta+saYvLUc473czrhorYkwqFqVuUcNvSC7E7rgoggrZAMhOYTuT7a/k=
+	t=1712564861; cv=none; b=ADbKMm3qJgmSxS+QWmffU5aVDd0rXUslpToVsiqCVYqp9aEJ5/86/QcrXN9D0MjNZUtRmuqBEbHRAM0vJM4IksoYNHCARmuKzILWy/o1hi+R/vk6eFBP9ZXK6LRSCdw0qdaRynOIulbqEaqJK4K3E00eOQk8telcbmJzgpYIVf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712563851; c=relaxed/simple;
-	bh=YwZ+RdPeLb6BJu1WWIL48/WduA8RD2LKbtEOSBGLzBc=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=bXvq0zzjD/h3PIjql81owSh5g9oso/LRuqotTpz4OKvezM3KsNQGYH0f67uTMAD6zNY2a0oiFZZapZQKXGukjoj+pFDaBeVZMQbPsrV8V4txUPTnLzzYxri2iiAu0u5sdy1u0yMJejjDIAGO5EcMej1F/O9Dfq34E0C6H556svo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mvewsveo; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4386d4k7004800;
-	Mon, 8 Apr 2024 08:10:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:from:to:cc:references
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=jstRL5M3ySIkoBSAJ9ZB0XvnyMg1kN1zB0zdg/KWOrQ=; b=mv
-	ewsveoGvKjzpmt/GKeSdv+++mRdccJLuMIvCyB7My+ygw1ZL77KqwXd0+A9zLu3c
-	cax7mLJAOJeU6Nx3wR9XnnDNSyTSsKS3fabZTiyoOfbZb2zIulrRfUs50yTND2OO
-	hvrr0+qbTTJy9yBUDuMWIRXZx4BubiaYoAaS92DFiJIKYWfxoalv/dAuIL0aNg41
-	AlbOupvs+PAEv0fhx+MEPnS4r7ubNg+VzZ8beiMagFFCvPZ7Nt4ChdgokPepXaH8
-	/tRbxcqsMfAV4x/MkiehTFFWQmmlQTKfWoA9VoUX/AM2IvJ5dBqDFwlKQ28vDP94
-	E+iejYw0en0Y8jUmezrg==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xcbg3g5d9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 08 Apr 2024 08:10:45 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4388AiJA004338
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 8 Apr 2024 08:10:44 GMT
-Received: from [10.239.29.179] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 8 Apr 2024
- 01:10:42 -0700
-Message-ID: <572f5453-5719-4170-873d-cd3a85287891@quicinc.com>
-Date: Mon, 8 Apr 2024 16:10:40 +0800
+	s=arc-20240116; t=1712564861; c=relaxed/simple;
+	bh=u9L7qVa0ZjLHzku/GRWHHqefATdqWRrHJlXyyocla8c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eOoV4iXCFAbJlOwaS2Tjdpg1OjsKRnKmOVzzuVz6AwKUWzYmUJmLoY7QKbiaXfOMLHReLSBpNIlUp88rNpVYDouB39Qm0euw8QR7phXLcM865RMmZqlgG6xAjH7RJb0srkR5UZ4xzzMJRPtHOHtH0tRB2RzTW03MZb5infotxRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.215.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-5dbd519bde6so3110882a12.1;
+        Mon, 08 Apr 2024 01:27:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712564859; x=1713169659;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mduMjCqjA7drDw2lEIoqwW5oGXEwTzrsNz9VmuPIKQw=;
+        b=G4oD/tN7k00pbY/aLU1vmj7HekENQo8QrzOHUVfqTTkSm+GK5ldTIInhkv7+5Kg/h+
+         JFsgxPPQ0JNSwvq8hEaXAMrEWNCJZKeVYbe7g00FUnAQ9ZN4nQt5cIqb2zpVX8ESh3Zx
+         7gPvQhS2aE2s+FEVyqfYYUjR4aWSN+r/PTY1fhp+HKQyPlylKXA8k5JmgH8KponFxdjY
+         29vg3OptFkNk9g9txkR+1JUNNqvaHHr3GxILXOZgGiBxOdL+lnzlQ0kiCNN1CoAjpm3x
+         sNswmTlKPfHTc2fWPDucGdA1sJX3kM69oQrmPrLv9lbE6YttJD/GkY/R4XCO+kkomBpn
+         WjdQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW6NJYwtnB03uxgJuzEOS4pgknqwRKaCHlEqsgJTx4qSvIM6e4Yao2e1Y0L3PQ4HWLwfb6opGTQbb1w9wDUoZ/GSZxaC55l9GTd2uNDklgI1qNq7aWR4Z2iwRxHixVq89F77Hl2SXXSxfMxemXyhCCLk4vDhhPIkr7i+jUrqO+0QMUXa/HZI6qZ+jlhL589auBdPJkxZ/RiI5fA200uutolqCK17sh+JLRQL7v0ZBVuDVGEUkbWFDJlyy9JrexBdXrBF/wKdQ==
+X-Gm-Message-State: AOJu0YzqrVUtIuNCbvcvGbGcT+qrBrHW/Rx72RJv0nBWREg+d1sTFCWA
+	JqQQcjgykj0NILhb2GnbMdofTrSoJdr2Yv3dPKwmyPlEhZyPVht3Di/ZrEpc7es=
+X-Google-Smtp-Source: AGHT+IGJ7rgElWb5tKJ3j015626NGsXJVnXE5arFslRsaZzIOOWwKBgE3ge5TOwfbMt/xI4zlwZA+w==
+X-Received: by 2002:a17:90b:4b4b:b0:2a2:cd61:c3f5 with SMTP id mi11-20020a17090b4b4b00b002a2cd61c3f5mr6874061pjb.37.1712564858823;
+        Mon, 08 Apr 2024 01:27:38 -0700 (PDT)
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com. [209.85.210.182])
+        by smtp.gmail.com with ESMTPSA id ft4-20020a17090b0f8400b002a54c4dd0f2sm226774pjb.43.2024.04.08.01.27.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Apr 2024 01:27:38 -0700 (PDT)
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-6ecf3943040so2596615b3a.0;
+        Mon, 08 Apr 2024 01:27:38 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCX+dQMpX+7YAU7PBBS5ccV34mj6qNRn0ffOJOpVXs6NW7aBqj9UYYwmhkEJEUJ7M4vpY0eMoIDMP0/AGpGnrU+rda3VFGUtFU2zeTkNkMUKl6taW42f5aXOEYTZkXrDyk7v1aSgWjGlcJvK0glDBvgWWSky+/pr1IYeSqp97IgNi0rKhs1TBuEPcvgj6hxn8D8GEPNtH6XJlpSU+3OwXCTOl/PvhVl8MYd4DWktiPihO2dXMOrk/CUBGpelyiSP8IAxTKrEgA==
+X-Received: by 2002:a25:7406:0:b0:de0:e7f2:a03d with SMTP id
+ p6-20020a257406000000b00de0e7f2a03dmr2539436ybc.3.1712564836998; Mon, 08 Apr
+ 2024 01:27:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] bus: mhi: host: Add sysfs entry to force device to enter
- EDL
-Content-Language: en-US
-From: Qiang Yu <quic_qianyu@quicinc.com>
-To: Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Manivannan Sadhasivam
-	<mani@kernel.org>
-CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
-        <quic_mrana@quicinc.com>
-References: <1703490474-84730-1-git-send-email-quic_qianyu@quicinc.com>
- <cff4b828-9566-a2bd-287a-138d74a76a59@quicinc.com>
- <20240102165229.GC4917@thinkpad>
- <90c0a654-a02f-46e2-96a9-34f6a30c95a0@quicinc.com>
- <a10439f1-0fcd-834c-12a3-677976529cf1@quicinc.com>
- <e78382b5-428e-4de8-be0d-b319534238f1@quicinc.com>
- <0cfac65c-8b71-4900-88a3-631c93aebc17@quicinc.com>
- <024549ba-4522-d8d0-08ea-c42966f850af@quicinc.com>
- <fca73905-c6c7-4db1-88bd-fd8bc2d3b3b0@quicinc.com>
-In-Reply-To: <fca73905-c6c7-4db1-88bd-fd8bc2d3b3b0@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: rs25sAoY4sQQOmInryMd1lsbGBCKuekJ
-X-Proofpoint-ORIG-GUID: rs25sAoY4sQQOmInryMd1lsbGBCKuekJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-08_06,2024-04-05_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
- clxscore=1015 priorityscore=1501 suspectscore=0 impostorscore=0
- adultscore=0 spamscore=0 mlxlogscore=999 malwarescore=0 mlxscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404080062
+References: <20240407102000.37213-1-krzysztof.kozlowski@linaro.org> <20240407102000.37213-3-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20240407102000.37213-3-krzysztof.kozlowski@linaro.org>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Mon, 8 Apr 2024 10:27:05 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdWjWLdu9c7=OhFLsY+jSZXspb6jPHxVai2GcbJoS7MDLg@mail.gmail.com>
+Message-ID: <CAMuHMdWjWLdu9c7=OhFLsY+jSZXspb6jPHxVai2GcbJoS7MDLg@mail.gmail.com>
+Subject: Re: [PATCH 3/3] dt-bindings: PCI: host-bridges: switch from
+ deprecated pci-bus.yaml
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Bjorn Helgaas <bhelgaas@google.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	=?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>, 
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>, Ray Jui <rjui@broadcom.com>, 
+	Scott Branden <sbranden@broadcom.com>, 
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Jim Quinlan <jim2101024@gmail.com>, 
+	Nicolas Saenz Julienne <nsaenz@kernel.org>, Florian Fainelli <florian.fainelli@broadcom.com>, 
+	Will Deacon <will@kernel.org>, Linus Walleij <linus.walleij@linaro.org>, 
+	Srikanth Thokala <srikanth.thokala@intel.com>, Ryder Lee <ryder.lee@mediatek.com>, 
+	Jianjun Wang <jianjun.wang@mediatek.com>, 
+	Sergio Paracuellos <sergio.paracuellos@gmail.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Daire McNamara <daire.mcnamara@microchip.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Marek Vasut <marek.vasut+renesas@gmail.com>, 
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, Shawn Lin <shawn.lin@rock-chips.com>, 
+	Heiko Stuebner <heiko@sntech.de>, Jingoo Han <jingoohan1@gmail.com>, 
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>, 
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+	Bharat Kumar Gogada <bharat.kumar.gogada@amd.com>, Michal Simek <michal.simek@amd.com>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Mark Kettenis <kettenis@openbsd.org>, 
+	Tom Joseph <tjoseph@cadence.com>, Ahmad Zainie <wan.ahmad.zainie.wan.mohamad@intel.com>, 
+	Jiaxun Yang <jiaxun.yang@flygoat.com>, Kishon Vijay Abraham I <kishon@kernel.org>, 
+	Thippeswamy Havalige <thippeswamy.havalige@amd.com>, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+	linux-rpi-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	linux-rockchip@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-On 4/3/2024 1:44 PM, Qiang Yu wrote:
+On Sun, Apr 7, 2024 at 12:20=E2=80=AFPM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+> dtschema package with core schemas deprecated pci-bus.yaml schema in
+> favor of pci-host-bridge.yaml.  Update all bindings to use the latter
+> one.
 >
-> On 4/2/2024 11:33 PM, Jeffrey Hugo wrote:
->> On 4/2/2024 7:52 AM, Qiang Yu wrote:
->>>
->>> On 4/2/2024 12:34 PM, Qiang Yu wrote:
->>>>
->>>> On 1/12/2024 3:08 AM, Jeffrey Hugo wrote:
->>>>> On 1/9/2024 2:20 AM, Qiang Yu wrote:
->>>>>>
->>>>>> On 1/3/2024 12:52 AM, Manivannan Sadhasivam wrote:
->>>>>>> On Tue, Jan 02, 2024 at 08:31:15AM -0700, Jeffrey Hugo wrote:
->>>>>>>> On 12/25/2023 12:47 AM, Qiang Yu wrote:
->>>>>>>>> From: Bhaumik Bhatt <quic_bbhatt@quicinc.com>
->>>>>>>>>
->>>>>>>>> Forcing the device (eg. SDX75) to enter Emergency Download 
->>>>>>>>> Mode involves
->>>>>>>>> writing the 0xEDEDEDED cookie to the channel 91 doorbell 
->>>>>>>>> register and
->>>>>>>>> forcing an SOC reset afterwards. Allow users of the MHI bus to 
->>>>>>>>> exercise the
->>>>>>>>> sequence using a sysfs entry.
->>>>>>>> I don't see this documented in the spec anywhere. Is this 
->>>>>>>> standard behavior
->>>>>>>> for all MHI devices?
->>>>>>>>
->>>>>>>> What about devices that don't support EDL mode?
->>>>>>>>
->>>>>>>> How should the host avoid using this special cookie when EDL 
->>>>>>>> mode is not
->>>>>>>> desired?
->>>>>>>>
->>>>>>> All points raised by Jeff are valid. I had discussions with 
->>>>>>> Hemant and Bhaumik
->>>>>>> previously on allowing the devices to enter EDL mode in a 
->>>>>>> generic manner and we
->>>>>>> didn't conclude on one final approach.
->>>>>>>
->>>>>>> Whatever way we come up with, it should be properly described in 
->>>>>>> the MHI spec
->>>>>>> and _should_ be backwards compatible.
->>>>>>
->>>>>> Hi Mani, Jeff. The method of entering EDL mode is documented in 
->>>>>> MHI spec v1.2, Chapter 13.2.
->>>>>>
->>>>>> Could you please check once?
->>>>>
->>>>> I do see it listed there.  However that was a FR for SDX55, so 
->>>>> devices prior to that would not support this. AIC100 predates this 
->>>>> change and would not support the functionality.  I verified the 
->>>>> AIC100 implementation is not aware of this cookie.
->>>>>
->>>>> Also, that functionality depends on channel 91 being reserved per 
->>>>> the table 9-2, however that table only applies to modem class 
->>>>> devices as it is under chapter 9 "Modem protocols over PCIe". 
->>>>> Looking at the ath11k and ath12k implementations in upstream, it 
->>>>> looks like they partially comply.  Other devices have different 
->>>>> MHI channel definitions.
->>>>>
->>>>> Chapter 9 doesn't appear to be in older versions of the spec that 
->>>>> I have, so it is unclear if this functionality is backwards 
->>>>> compatible (was channel 91 used for another purpose in pre-SDX55 
->>>>> modems).
->>>>>
->>>>> I'm not convinced this belongs in the MHI core.  At a minimum, the 
->>>>> MHI controller(s) for the applicable devices needs to opt-in to this.
->>>>>
->>>>> -Jeff
->>>> Hi Jeff
->>>>
->>>> Sorry for reply so late. In older versions of the spec, there is no 
->>>> description about EDL doorbell. However, in MHI spec v1.2, section 
->>>> 13.2,
->>>> It explicitly says "To set the EDL cookie, the host writes 
->>>> 0xEDEDEDED to channel doorbell 91." So I think every device based 
->>>> on MHI spec v1.2
->>>> should reserve channel doorbell 91 for EDL mode.
->>>>
->>>> So can we add another flag called mhi_ver in mhi controller to 
->>>> indicate its mhi version and then we can add mhi_ver checking to 
->>>> determine if this
->>>> device supports EDL sysfs operation?
->>>>
->>>> Thanks,
->>>> Qiang
->>>
->>> I discussed with internal team, look like devices that reserve 
->>> channel doorbell 91 for EDL, thier MHIVER register value can still 
->>> be 1.0 instead
->>> of 1.2. So even if we add a flag called mhi_ver to store the value 
->>> read from the MHIVER register. We still can not do EDL support check 
->>> depend on it.
->>>
->>> But I still think enter EDL mode by writing EDL cookie to channel 
->>> doorbell is a standard way. At least it's a standard way from MHI 
->>> spec V1.2.
->>>
->>> In mhi_controller, we have a variable edl_image representing the 
->>> name and path of firmware. But We still can not determine if the 
->>> device reserve
->>> channel doorbell 91 by checking this because some devices may enter 
->>> EDL mode in different way. Mayebe we have to add a flag in 
->>> mhi_controller
->>> called edl_support to do the check.
->>
->> So, not all devices support EDL mode (even v1.2 devices, which I know 
->> of one in development).  Of the devices that support EDL mode, not 
->> all of them use the same mechanism to enter EDL mode.
->>
->> It appears all of this needs to be shoved to the controller.
->>
->> At best, I think the controller can provide an optional EDL callback. 
->> If the callback is provided, then MHI creates a sysfs entry (similar 
->> to soc_reset) for the purpose of entering EDL mode.  If the sysfs 
->> entry is called, all MHI does is call the controller's callback.
->>
->> -Jeff
+> The difference between pci-bus.yaml and pci-host-bridge.yaml is only in
+> lack of "reg" property defined by the latter, which should not have any
+> effect here, because all these bindings define the "reg".
 >
+> The change is therefore quite trivial, except mediatek,mt7621-pcie.yaml
+> binding which have children nodes being also host bridges, apparently.
 >
-> Hi Jeff
->
-> This idea looks good. We can add edl call back in mhi_pci_dev_info and 
-> assgin it to mhi controller during probe.
-> Meanwhile, we can get edl doorbell address in this callback instead of 
-> mhi_init_mmio.
->
-> Mani, what do you think about it? Can I implement the EDL sysfs entry 
-> like this?
->
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Hi Mani, Jeff
+>  Documentation/devicetree/bindings/pci/rcar-pci-host.yaml      | 2 +-
+>  .../devicetree/bindings/pci/renesas,pci-rcar-gen2.yaml        | 2 +-
 
-I plan to implement EDL sysfs entry as Jeff suggested.
+LGTM, so
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
 
-1. Add an optional EDL callback in mhi_pci_dev_info and assign it to mhi 
-controller during probe. All logic
-    to enter EDL mode will be moved in this EDL callback.
+Gr{oetje,eeting}s,
 
-2. Create EDL sysfs entry anyway, and check if EDL callback exists, run 
-EDL callback, otherwise print log
-    and return.
+                        Geert
 
-3. Get EDL doorbell (channel doorbell 91) address is also moved to EDL 
-callback instead of mhi_init_mmio,
-    so that we don't have to add another flag to tell if the device 
-reserves channel 91 for purpose to enter EDL.
+--=20
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
+.org
 
-May I have your further comments?
-
-Thanks,
-Qiang
-
+In personal conversations with technical people, I call myself a hacker. Bu=
+t
+when I'm talking to journalists I just say "programmer" or something like t=
+hat.
+                                -- Linus Torvalds
 
