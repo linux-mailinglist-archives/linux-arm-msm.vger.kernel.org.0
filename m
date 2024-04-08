@@ -1,301 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-16820-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16821-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 45E7A89C887
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 17:39:42 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7EBC789C8D2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 17:52:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6AE371C23F68
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 15:39:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1E1841F21CFA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Apr 2024 15:52:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E74B1411F3;
-	Mon,  8 Apr 2024 15:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 881861422A1;
+	Mon,  8 Apr 2024 15:52:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="QDti/lbw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rMq3Kl+p"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502B72561F
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Apr 2024 15:39:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4002C140E4F
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Apr 2024 15:52:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712590776; cv=none; b=Dkpc92TnlOXbJIvXTrmxgFITzdRqSnSKtlsYTjZuN+Q2ISUrBVtFC11V6vvQssUJLiMH0VEvuehN+ML4CoPkxTN8XCKNoNd7vIrWhR4AefOQ2RDvVgn88MrqD9lXdSi89e/zfj5GZyS/qbRKT7Xd9iXzMlzTKNdvwMc4+rBZGlE=
+	t=1712591569; cv=none; b=KLjZa/4ZBEtzJbpHcBhhQbe5w7R6kKowZgKm//D0tQalNsP0+3gGojvtDX6mV4ya0TsX1uvgLDaeX+Yfb2SwjLslkyQ9GHYvQHfZkL20EKEdogUbjg+AQrxN6dpngiVcVuIfI8/+6Z3Lbyntlf7nxsbQETREm43XLqxkS5dpeYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712590776; c=relaxed/simple;
-	bh=0Ed8/KW0SAdZLokHwWwQHiGFN5/pTaCc0CVIQeL4gak=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=In0BmbyTzRszjoyBbX25ioRNoGuPDqqcOouQtcEtc2JW2WMS84NtUCAYyDaX8W4b6aaYffTsqjSec5tndYD2qmbwpLrcOweZkj5qVGeMcNTgBjiQ9HZ/pqEMKmm5AgXOwvcM4Jx+o6FcengPFMT3WwW9SrymKjZgSPVU/LvR5gU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=QDti/lbw; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4155819f710so35401665e9.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Apr 2024 08:39:30 -0700 (PDT)
+	s=arc-20240116; t=1712591569; c=relaxed/simple;
+	bh=/Xx7sV+8iGsyhALy9s1bcJuSJKc9niXK3R6ezT61ZCQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=H3hYhc84tU7WVtDeuxjxyFXopfm0z16IweuAsu1oaLpEpoQMAXhOdbD/QYQTe4Cj0zG2kwWNyMEWT+lxSn3WzhNAHOiIm2aY0POCYg634wpFf0uJgGav+6iayzkHh4SJeuxBlZFXiMgbD26Ki5+jzn9r7cy3IYF0ZShSzX/RKc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rMq3Kl+p; arc=none smtp.client-ip=209.85.128.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-617dfcf80aeso28821687b3.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Apr 2024 08:52:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1712590769; x=1713195569; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cEmMjjUUrVN5205BkJ//gZ0F1k2hKS9l/jxRWb6Xdew=;
-        b=QDti/lbwgQBpTYkx+MTdcwSKVa+7TzibYmKvwSfiQ6PlZqO5LBqrY2mFhn92cudD2e
-         N5mK8TafLdeXolPZ45FvJYS60T93ldGUTr8fyb0Z1+XqmPo+4M0z9zSzmD6c9Pthalf8
-         CqKoOzix4KGAgOPmQ+nUZz4so3bzdhA5d2ze54KVacilTt/d0KMOxe4ck6J0VZwJUUoP
-         3gjLgt5Cd+Z4J0I0h1demnoO9c6J2C3inb3UDiBLZQcteIYxLIgY7BEnhOh50Se/cJ2U
-         rcCna5OZN/ic6sSKeBDBmC5iARlcAobVtZtOQ+EZlcF0WtkWTGKXLoa6F6njcAsaP03B
-         wWtQ==
+        d=linaro.org; s=google; t=1712591565; x=1713196365; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=SxkgeoQeNIUqrwLW13ZD9YQozaM7Suz5SGdkew/WCbg=;
+        b=rMq3Kl+pNqCenxgO3V4SC4OVX2isbu0ipfR/58aXRAGG2PXnOaFilOC+vdQEvw3igo
+         Hll1ZPfFKSsP42W4rk5QyPUHjNZVk17V7V/R2Ywq7oZOcvGK7CcQ8+hsorfrX1aofUES
+         6VhlcUJ7Z+3JidIsCpadEashASMpqROjGiu+QWja9IEW/An7WvsBMchJwTnSQXHWbJWV
+         Om79NxSjyftGgLQ89d/tFSXtcdncJz6bUJDZqDKLSba9D8RfDns5PIfjlNKAdzznXP2l
+         +kl+2/s4amuMNq/00w9BoGnKBHNqBjcOBXqmQQMkYrzmf2k6G4AMec/LCvjCWi3jbP4e
+         km2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712590769; x=1713195569;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cEmMjjUUrVN5205BkJ//gZ0F1k2hKS9l/jxRWb6Xdew=;
-        b=aUz/fVpYCorfmjS5GD1/3bQGoJtKJoXWDZntulmXLdv6tt7Z84vXyFPbUkXQn0ZwHq
-         UZAgHaLtOMquqnnbbRPXIb+yuHtYI/Ly+o9SGMcO4o46w7HXoaclWm/LN41hJ4g8yNQc
-         aqxBPUxLSWUYl0VD+2nKO6eMg08zaoQwqyGwpEfFzHTdAXBFXiMoCl82DNqAYFhhgAD5
-         qxvcSFF+clVbRgTpCzsXjsMsxU8S3yN27Q024gtiAvyeSMjJ0UjqpTKBK82KJU7m6F0V
-         AfloDGllDs4mZnUU9WaCve+fKaIC4dG6XwGHQ96ID1jfKqspdG1Jt5LT6IQoqylBID/k
-         P95g==
-X-Forwarded-Encrypted: i=1; AJvYcCWjAekjisuJ4bLLa8aKo+wm4utD8Z0Kl3T61avCq9I6qKps7DluQJW+LCSMB/KYEBGApVAZvAOAZJvHsfPHNEKPjmU/mpWKyXPONxpHOg==
-X-Gm-Message-State: AOJu0Yw9EtK70J/tz88ObkD385QHT+1/omtINJNYe42eAajMLuPeCRSh
-	iT55X6TrNPMzGFwS5yRLMge5+d4ZYdlJPhvyQXKadtEl2o9JcB8/uDc9RQrS4f0=
-X-Google-Smtp-Source: AGHT+IFeSbIjV9dExJAMFeMXzE6bBWlMEeZVolUylUYtV/UsVBf/yoc8jw3+WYD5jlnSVQxRu7vdPQ==
-X-Received: by 2002:a05:600c:1f16:b0:416:539c:ace with SMTP id bd22-20020a05600c1f1600b00416539c0acemr4061472wmb.37.1712590769446;
-        Mon, 08 Apr 2024 08:39:29 -0700 (PDT)
-Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
-        by smtp.gmail.com with ESMTPSA id f14-20020a05600c154e00b0041552dbc539sm13832305wmg.11.2024.04.08.08.39.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Apr 2024 08:39:29 -0700 (PDT)
-Message-ID: <c2ce34ce-d532-4039-bb9f-d4d1b2fb23b0@freebox.fr>
-Date: Mon, 8 Apr 2024 17:39:28 +0200
+        d=1e100.net; s=20230601; t=1712591565; x=1713196365;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SxkgeoQeNIUqrwLW13ZD9YQozaM7Suz5SGdkew/WCbg=;
+        b=WYw4zufB0TsuIdgg78+lvYRBHhEbU5ufMwp4rRBgl6uzjjmIVAvVNqGWEijGrX7emZ
+         evVipLFX3A6G3Ov3MjlffASXN+ulbtgF6ReP/jeNM6H/5WsiZVvcHZ74AoUbLZN7LIox
+         vdChtIbPAeKzaxOSpgj045xt45VSKNBb8sOU/gsfP46AZRx0bq51f0l9FCgnrg19quG/
+         acKs4QjA7ZOl/DrbrKL5yEIb0hSIfmT6+OtMENnkHg0zzIiGU3/NcepIkenTRExjgUfJ
+         5mvHocWloYvvIa+32EqPvpMY7ome/yL10q/Ir5+QYHC7Ls5Jrohy07O1Zx/c9Jz+waKB
+         XmmQ==
+X-Gm-Message-State: AOJu0YwK2iSBWBmkAG9nUN2ExcpM4HD4CbdukpEVRHE6N4pycmj1zG57
+	Vg6T3AumRcWaOND6VShf2BrzXBwqUHQwVNVVRePL7rHR5Ua7mXKc16tBwJ0Y3m+NZ997KcchtIR
+	eteU5zZ2jPomZO3iekHqlsE3mJgdjFSBY+10xRQ==
+X-Google-Smtp-Source: AGHT+IGLnzhF0iW1cRj3Lg7cS9tUEIYYBj/O1ZdALYq3I/dJY/JXan3cwHXlFh2yn260/WHV8LwCOmumQG1gMmtuhu0=
+X-Received: by 2002:a25:360a:0:b0:de0:e368:fa59 with SMTP id
+ d10-20020a25360a000000b00de0e368fa59mr3976700yba.31.1712591565113; Mon, 08
+ Apr 2024 08:52:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC WIP PATCH] venus: add qcom,no-low-power property
-To: Vikash Garodia <quic_vgarodia@quicinc.com>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-media <linux-media@vger.kernel.org>,
- MSM <linux-arm-msm@vger.kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Jeffrey Hugo <quic_jhugo@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Pierre-Hugues Husson
- <phh@phh.me>, Marijn Suijten <marijn.suijten@somainline.org>
-References: <0843621b-386b-4173-9e3c-9538cdb4641d@freebox.fr>
- <f6e68756-72a1-4c32-968d-3d6adaa153c9@linaro.org>
- <CAA8EJpq=G21h87W69_4U-BZ=Sa5VEs15Y-zE-G5x9VxVx4qjsA@mail.gmail.com>
- <81dc6452-4039-4eb4-92ba-df248215fca2@linaro.org>
- <b8325dbf-67c5-4898-bc23-ff093ae6e14a@freebox.fr>
- <87db77f7-fda4-4cf7-adfd-8545c40c3365@linaro.org>
- <10fe67af-0572-4faa-91c6-fce9c8f9dc92@linaro.org>
- <6342e92d-eed0-45c2-8f04-3779aa2e521d@freebox.fr>
- <4ab95e87-c912-469b-b8d4-be0cf0e4710b@linaro.org>
- <a8c5b27c-47a9-044a-78e8-51c67acf19a6@quicinc.com>
- <c6a9c20e-02d3-4334-badd-2efe5be9ce7e@freebox.fr>
- <d5abf142-3a2b-454c-660a-249c0fb25208@quicinc.com>
- <33382ecb-8a73-4d2f-96b1-8048df7a6414@freebox.fr>
- <3914555d-3c89-a5c5-2906-0bd24d0bf735@quicinc.com>
- <72741d2e-5165-4505-b079-d7b5d1491888@freebox.fr>
- <edb29faa-01b3-3b96-7c05-3378eb3af073@quicinc.com>
- <21b833cf-61c3-4fb5-8c55-492aac0fd3b6@freebox.fr>
- <8170522f-b813-19a4-3f85-f2880809d9a5@quicinc.com>
-Content-Language: en-US
-From: Marc Gonzalez <mgonzalez@freebox.fr>
-In-Reply-To: <8170522f-b813-19a4-3f85-f2880809d9a5@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20240304175152.1199270-1-andriy.shevchenko@linux.intel.com>
+In-Reply-To: <20240304175152.1199270-1-andriy.shevchenko@linux.intel.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 8 Apr 2024 18:52:34 +0300
+Message-ID: <CAA8EJprDxKSkL=OgmAqR_4cFBYGo4tnDCE8nesgTAaYg7rYL8w@mail.gmail.com>
+Subject: Re: [PATCH v1 1/1] drm/msm/hdmi: Replace of_gpio.h by proper one
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Content-Type: text/plain; charset="UTF-8"
 
-On 29/02/2024 16:32, Vikash Garodia wrote:
+On Mon, 4 Mar 2024 at 19:51, Andy Shevchenko
+<andriy.shevchenko@linux.intel.com> wrote:
+>
+> of_gpio.h is deprecated and subject to remove.
+> The driver doesn't use it directly, replace it
+> with what is really being used.
+>
+> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> ---
+>  drivers/gpu/drm/msm/hdmi/hdmi.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> index c8ebd75176bb..24abcb7254cc 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> @@ -5,8 +5,8 @@
+>   * Author: Rob Clark <robdclark@gmail.com>
+>   */
+>
+> +#include <linux/gpio/consumer.h>
+>  #include <linux/of_irq.h>
+> -#include <linux/of_gpio.h>
+>  #include <linux/of_platform.h>
+>  #include <linux/platform_device.h>
+>
+> --
+> 2.43.0.rc1.1.gbec44491f096
+>
 
-> Not completely sure on these configurations, but certainly both the
-> video_subcore0_gdsc and video_subcore1_gdsc should be configured in hardware
-> control mode in the gdsc configuration.
+First one didn't reach the PW, let's try again:
 
-Hello,
-
-Still trying to land support for venus decoder on msm8998 in mainline.
-
-This is the patch I have at the moment:
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index 4dfe2d09ac285..67b8374ddf02f 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -3010,6 +3010,55 @@ mdss_dsi1_phy: phy@c996400 {
- 			};
- 		};
- 
-+		venus: video-codec@cc00000 {
-+			compatible = "qcom,msm8998-venus";
-+			reg = <0x0cc00000 0xff000>;
-+			interrupts = <GIC_SPI 287 IRQ_TYPE_LEVEL_HIGH>;
-+			power-domains = <&mmcc VIDEO_TOP_GDSC>;
-+			clocks = <&mmcc VIDEO_CORE_CLK>,
-+				 <&mmcc VIDEO_AHB_CLK>,
-+				 <&mmcc VIDEO_AXI_CLK>,
-+				 <&mmcc VIDEO_MAXI_CLK>;
-+			clock-names = "core", "iface", "bus", "mbus";
-+			iommus = <&mmss_smmu 0x400>,
-+				 <&mmss_smmu 0x401>,
-+				 <&mmss_smmu 0x40a>,
-+				 <&mmss_smmu 0x407>,
-+				 <&mmss_smmu 0x40e>,
-+				 <&mmss_smmu 0x40f>,
-+				 <&mmss_smmu 0x408>,
-+				 <&mmss_smmu 0x409>,
-+				 <&mmss_smmu 0x40b>,
-+				 <&mmss_smmu 0x40c>,
-+				 <&mmss_smmu 0x40d>,
-+				 <&mmss_smmu 0x410>,
-+				 <&mmss_smmu 0x411>,
-+				 <&mmss_smmu 0x421>,
-+				 <&mmss_smmu 0x428>,
-+				 <&mmss_smmu 0x429>,
-+				 <&mmss_smmu 0x42b>,
-+				 <&mmss_smmu 0x42c>,
-+				 <&mmss_smmu 0x42d>,
-+				 <&mmss_smmu 0x411>,
-+				 <&mmss_smmu 0x431>;
-+			memory-region = <&venus_mem>;
-+			status = "disabled";
-+
-+			video-decoder {
-+				compatible = "venus-decoder";
-+				clocks = <&mmcc VIDEO_SUBCORE0_CLK>;
-+				clock-names = "core";
-+				power-domains = <&mmcc VIDEO_SUBCORE0_GDSC>;
-+			};
-+
-+			video-encoder {
-+				compatible = "venus-encoder";
-+				clocks = <&mmcc VIDEO_SUBCORE1_CLK>;
-+				clock-names = "core";
-+				power-domains = <&mmcc VIDEO_SUBCORE1_GDSC>;
-+			};
-+		};
-+
- 		mmss_smmu: iommu@cd00000 {
- 			compatible = "qcom,msm8998-smmu-v2", "qcom,smmu-v2";
- 			reg = <0x0cd00000 0x40000>;
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index ce206b7097541..42e0c580e093d 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -587,6 +587,47 @@ static const struct venus_resources msm8996_res = {
- 	.fwname = "qcom/venus-4.2/venus.mbn",
- };
- 
-+static const struct freq_tbl msm8998_freq_table[] = {
-+	{ 1944000, 520000000 },	/* 4k UHD @ 60 (decode only) */
-+	{  972000, 520000000 },	/* 4k UHD @ 30 */
-+	{  489600, 346666667 },	/* 1080p @ 60 */
-+	{  244800, 150000000 },	/* 1080p @ 30 */
-+	{  108000,  75000000 },	/* 720p @ 30 */
-+};
-+
-+/*
-+ * https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/arch/arm/boot/dts/qcom/msm8998-vidc.dtsi
-+ */
-+static const struct reg_val msm8998_reg_preset[] = {
-+	{ 0x80124, 0x00000003 },
-+	{ 0x80550, 0x01111111 },
-+	{ 0x80560, 0x01111111 },
-+	{ 0x80568, 0x01111111 },
-+	{ 0x80570, 0x01111111 },
-+	{ 0x80580, 0x01111111 },
-+	{ 0x80588, 0x01111111 },
-+	{ 0xe2010, 0x00000000 },
-+};
-+
-+static const struct venus_resources msm8998_res = {
-+	.freq_tbl = msm8998_freq_table,
-+	.freq_tbl_size = ARRAY_SIZE(msm8998_freq_table),
-+	.reg_tbl = msm8998_reg_preset,
-+	.reg_tbl_size = ARRAY_SIZE(msm8998_reg_preset),
-+	.clks = { "core", "iface", "bus", "mbus" },
-+	.clks_num = 4,
-+	.vcodec0_clks = { "core" },
-+	.vcodec1_clks = { "core" },
-+	.vcodec_clks_num = 1,
-+	.max_load = 2563200,
-+	.hfi_version = HFI_VERSION_3XX,
-+	.vmem_id = VIDC_RESOURCE_NONE,
-+	.vmem_size = 0,
-+	.vmem_addr = 0,
-+	.dma_mask = 0xddc00000 - 1,
-+	.fwname = "qcom/venus-4.4/venus.mbn",
-+};
-+
- static const struct freq_tbl sdm660_freq_table[] = {
- 	{ 979200, 518400000 },
- 	{ 489600, 441600000 },
-@@ -893,6 +934,7 @@ static const struct venus_resources sc7280_res = {
- static const struct of_device_id venus_dt_match[] = {
- 	{ .compatible = "qcom,msm8916-venus", .data = &msm8916_res, },
- 	{ .compatible = "qcom,msm8996-venus", .data = &msm8996_res, },
-+	{ .compatible = "qcom,msm8998-venus", .data = &msm8998_res, },
- 	{ .compatible = "qcom,sdm660-venus", .data = &sdm660_res, },
- 	{ .compatible = "qcom,sdm845-venus", .data = &sdm845_res, },
- 	{ .compatible = "qcom,sdm845-venus-v2", .data = &sdm845_res_v2, },
-diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
-index f9437b6412b91..abdc578ce988e 100644
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -945,6 +945,7 @@ static int venus_sys_set_default_properties(struct venus_hfi_device *hdev)
- 			dev_warn(dev, "setting idle response ON failed (%d)\n", ret);
- 	}
- 
-+	venus_fw_low_power_mode = false;
- 	ret = venus_sys_set_power_control(hdev, venus_fw_low_power_mode);
- 	if (ret)
- 		dev_warn(dev, "setting hw power collapse ON failed (%d)\n",
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 
-
-With the quick and dirty hack in hfi_venus.c
-I am able to correctly decode using venus with:
-
-# mpv --hwdec=v4l2m2m-copy --vo=tct --quiet demo-480.webm
- (+) Video --vid=1 (*) (vp9 854x480 29.970fps)
- (+) Audio --aid=1 --alang=eng (*) (opus 2ch 48000Hz)
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-
-
-
-Without the hack, HW decoding fails (and falls back to SW decode)
-
-# cd /home && mpv --hwdec=v4l2m2m-copy --vo=tct --quiet demo-480.webm
- (+) Video --vid=1 (*) (vp9 854x480 29.970fps)
- (+) Audio --aid=1 --alang=eng (*) (opus 2ch 48000Hz)
-[ffmpeg/video] vp9_v4l2m2m: output VIDIOC_REQBUFS failed: Connection timed out
-[ffmpeg/video] vp9_v4l2m2m: no v4l2 output context's buffers
-[ffmpeg/video] vp9_v4l2m2m: can't configure decoder
-Could not open codec.
-
-
-Not sure where to go from here.
-Vikash, do you have any guidance?
-(I think you were not a fan of the DT-based work-around?)
-
-
-Regards
-
+-- 
+With best wishes
+Dmitry
 
