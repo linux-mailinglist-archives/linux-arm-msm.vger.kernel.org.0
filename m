@@ -1,46 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-16896-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16897-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D96089D855
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 13:43:59 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC8E189D895
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 13:55:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 52A0A1F219A4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 11:43:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 85CEC284DC2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 11:55:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FAEC86AC2;
-	Tue,  9 Apr 2024 11:43:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AFA3129A9A;
+	Tue,  9 Apr 2024 11:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d46EgBGB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jJUuUUiH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B46B42053;
-	Tue,  9 Apr 2024 11:43:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D16128826;
+	Tue,  9 Apr 2024 11:55:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712663034; cv=none; b=MbiNnLYYSMF1KTcUlop/hulVv/DG84zJphKCLOcLkR3bQsqE0x7jjNVlJA4DWyx9OX6w07KXzamtBSEhBFQoRwEi2iyLL7dTqm4ctxnRkM68trH9Qp6Ri4MIVx7eRafrBS1jRd6/bJ6X8oR6Zf+titRTgEi+/6VOUj+uRc9x774=
+	t=1712663719; cv=none; b=qkpLWU9XaZ1gOrL6fnJycEWdEC1IYclnQFIgfugAWoR3s4AcqQuniwfXvGN6oC8/tZywvoGZxoQNndNgjUXzeeEGHfDZgJUK2pmtENQMwmVEYyuzvkTRMGYwPjHoPZjgPuLfCXL0yLDNjruDLcney7YLvdUQLUqX3vxqOKCuJus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712663034; c=relaxed/simple;
-	bh=nbeeO/HdiPZM8HHVLpt1fCwCNBVTR0HOgVLESsZWhOI=;
-	h=Content-Type:MIME-Version:Subject:From:In-Reply-To:References:To:
-	 Cc:Message-ID:Date; b=MYvmVbl0o0W672vnkOrw+BfPjRyRGGdHo5rHW7mnMBJytKUVKvUIqwsLc0k9noQVKz+Wulo8cksNvVssKYpPsrM+hWGI5/A9Y4BiPwovlo+C4O1CO29fQn9rlFKevbkXiJ5dEhuAforHNT1GkBXBa9+95U0rx+mP+8OsoAgbVs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d46EgBGB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D44DC433F1;
-	Tue,  9 Apr 2024 11:43:51 +0000 (UTC)
+	s=arc-20240116; t=1712663719; c=relaxed/simple;
+	bh=scdbxbgPLUxnACHLCarB1DGbiD0xhDlyeS1PSLZ+6/g=;
+	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
+	 Subject:From:Cc:To:Date; b=KooaOQ/GDSUg4LCYuPF58EBdfK1l12EqzGdrnMyA7Tboe8XUX6QjvHXH37T1ne9g8O4eoairo3BTCNfmrZZV8B/eEXVgiX8oBD+piHnJY4pZZZTHfBAe9AGh79FLqpN+W5GLDA40RMqpDU6gHSAp5q0jqj+n0sQoDcYzeIo7UKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jJUuUUiH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 556A4C433C7;
+	Tue,  9 Apr 2024 11:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712663033;
-	bh=nbeeO/HdiPZM8HHVLpt1fCwCNBVTR0HOgVLESsZWhOI=;
-	h=Subject:From:In-Reply-To:References:To:Cc:Date:From;
-	b=d46EgBGBB+dImlGf5ySrLOyH8Ij3UrZQPzy4rRGGekUc48s6LOWgQaPOdY3zEgMrb
-	 DO+ftabH7b6ZH6g39eV2l9yV0LxEDg9HCUZxy3wN+9z9gffSuupiELVlZgLW9Akbya
-	 M3RLvjkJZ8ObgnMZwfjMMpd0zsNZUO92xmeIOKNA1e36B/vBLCWYDPtJObdYvr6VaS
-	 Q3jTycG3C8+o8NDe3wVxTpZglXPlZNeb9zp2ceyNA9qlJ3Ci43tHFQeuZWi93DQc8q
-	 pew28ArfhUw0IXj+aeUC7J4vyQ8YCqrXjhpTQex3N6zSlEl40rMQdQD50sxIuRR8rU
-	 tK+FeYLqyrmUw==
+	s=k20201202; t=1712663718;
+	bh=scdbxbgPLUxnACHLCarB1DGbiD0xhDlyeS1PSLZ+6/g=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=jJUuUUiHOEu9bts8I6ePvqW7e9BYs/4iyEclGOFfg661+yiwsyUiWSYxnTBJWK/Ml
+	 HmGrjB5nAnJsMlsL/Hshp/R5qAhpi9IVUIHh0T4fie2MjKZG2nHz+9k0TDLJbw3/hX
+	 tW+qboleyWZPwJEkIwEWUthoL0SEanLBKEUpg0MeWIZVa6FQ8dmXc9+9bVKyBkNLEI
+	 5BqNWUQDWPA8DwXz5Pa2o6dFy4bv5+3SFUS6Mskuw7olJRmnvYPdBa32Mwk5sdQDy8
+	 1YjYt650Q4wcvXixeF/oOo+DLrnsjBX7TYKqlpIRQMeSJQFBXSp+8YjJ0HB2i/WeBt
+	 TlYAlQN6d+xQA==
+Message-ID: <306af49fd69707feccb640d02dc4fbc5.sboyd@kernel.org>
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -48,52 +49,72 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH v7 2/3] net: qrtr: support suspend/hibernation
-From: Kalle Valo <kvalo@kernel.org>
-In-Reply-To: <20240305021320.3367-3-quic_bqiang@quicinc.com>
-References: <20240305021320.3367-3-quic_bqiang@quicinc.com>
-To: Baochen Qiang <quic_bqiang@quicinc.com>
-Cc: <ath11k@lists.infradead.org>, <manivannan.sadhasivam@linaro.org>,
- <linux-wireless@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <mhi@lists.linux.dev>, <quic_bqiang@quicinc.com>, <davem@davemloft.net>,
- <edumazet@google.com>, <kuba@kernel.org>, <pabeni@redhat.com>,
- <netdev@vger.kernel.org>
-User-Agent: pwcli/0.1.1-git (https://github.com/kvalo/pwcli/) Python/3.11.2
-Message-ID: <171266302937.3197288.10067259080549350573.kvalo@kernel.org>
-Date: Tue,  9 Apr 2024 11:43:51 +0000 (UTC)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAPDyKFoGxxSzykQ-=o08LD_P_=8m=KRm4SHK_grBFgXNNv4OVw@mail.gmail.com>
+References: <20240325184204.745706-1-sboyd@kernel.org> <20240325184204.745706-5-sboyd@kernel.org> <c1dc0e4c1d4c9ba2b5e9c0fc207db267.sboyd@kernel.org> <CAPDyKFoGxxSzykQ-=o08LD_P_=8m=KRm4SHK_grBFgXNNv4OVw@mail.gmail.com>
+Subject: Re: [PATCH v2 4/5] clk: Get runtime PM before walking tree during disable_unused
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, linux-arm-msm@vger.kernel.org, Douglas Anderson <dianders@chromium.org>, Marek Szyprowski <m.szyprowski@samsung.com>, Krzysztof Kozlowski <krzk@kernel.org>
+To: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Tue, 09 Apr 2024 04:55:16 -0700
+User-Agent: alot/0.10
 
-Baochen Qiang <quic_bqiang@quicinc.com> wrote:
+Quoting Ulf Hansson (2024-04-09 03:32:04)
+>=20
+> Apologies for not being able to review this, it got lost in my email
+> filters. Looks like you manage to solve the locking order for the clk
+> disable unused thing - great!
+>=20
+> However I think the main problem we are seeing with these kind of
+> locking issues is that we are holding a global lock while calling into
+> pm_runtime_get|put*(). Similar problems have also been reported in the
+> past. It's been on my todo list for quite some time to have a closer
+> look, but I haven't reached it yet.
+>=20
+> Without going into too much detail, let me just ask a related
+> question. Would it not be possible to call pm_runtime_get/put() within
+> the clock framework, without *always* keeping the clock prepare lock
+> acquired? I assume a clock can't be unregistered, as long as there is
+> reference taken for it, right? Wouldn't that be a sufficient guarantee
+> that it's okay to runtime_resume|suspend its corresponding device?
 
-> MHI devices may not be destroyed during suspend/hibernation, so need
-> to unprepare/prepare MHI channels throughout the transition, this is
-> done by adding suspend/resume callbacks.
-> 
-> The suspend callback is called in the late suspend stage, this means
-> MHI channels are still alive at suspend stage, and that makes it
-> possible for an MHI controller driver to communicate with others over
-> those channels at suspend stage. While the resume callback is called
-> in the early resume stage, for a similar reason.
-> 
-> Also note that we won't do unprepare/prepare when MHI device is in
-> suspend state because it's pointless if MHI is only meant to go through
-> a suspend/resume transition, instead of a complete power cycle.
-> 
-> Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
-> 
-> Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Reviewed-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-> Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+The problem is that the clk tree is being walked with the prepare_lock
+held and during that walk pm_runtime_get() is called on different
+devices. We hold the prepare_lock while walking the tree because we
+don't want the tree topology to change while walking. The prepare_lock
+is also a topology lock.
 
-2 patches applied to ath-next branch of ath.git, thanks.
+If we could walk the tree, figure out what all clks will change, drop
+the prepare_lock, pm_runtime_get() all of those devices, regrab the
+prepare_lock, check the topology to make sure topology hasn't changed,
+and then make all the clk_ops calls, it would work because we have
+extracted the runtime PM calls out of the prepare_lock. Dropping and
+regrabbing the lock is probably a bad idea though, because we may never
+make progress because we're preempted by another task that changes the
+topology.
 
-e0cd1185900e net: qrtr: support suspend/hibernation
-166a490f59ac wifi: ath11k: support hibernation
+I was also wondering if we get stuck again if the clk driver
+implementing the clk_ops is on some bus like i2c or spi, that runtime PM
+resumes the bus controller for register writes from the clk_ops, and
+that resume function calls clk operations, and that happens in another
+thread. Maybe that isn't a problem though because the runtime resume of
+the device will also runtime resume the parent which is spi or i2c?=20
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/patch/20240305021320.3367-3-quic_bqiang@quicinc.com/
+Either way, it really seems like we need a per-clk prepare_lock. That
+would let us know for sure the topology isn't changing while we walk the
+tree and figure out what we're going to do. Anything that calls into the
+clk framework again hopefully gets a different prepare lock for a
+different clk.
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+BTW, I don't think lockdep is aware that runtime PM is waiting like
+this for a parallel resume in another thread. Probably we need to add
+annotations so that any locks held while waiting for the resume or
+suspend to finish are chained to a pseudo read lock and the actual
+resume/suspend operation is a pseudo write lock.
 
+>=20
+> Or maybe I should just send a patch. :-)
+>=20
+
+Sure! ;-)
 
