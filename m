@@ -1,104 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-16968-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16969-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C0D989E2AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 20:39:31 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03BEA89E2EE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 21:08:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BAC2F282F58
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 18:39:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 666F3284394
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 19:08:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEF83156F2A;
-	Tue,  9 Apr 2024 18:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4751D156F4F;
+	Tue,  9 Apr 2024 19:08:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="O+7syKAS"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jzFWE3te"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F054156C76
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Apr 2024 18:39:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4EAB15623E;
+	Tue,  9 Apr 2024 19:08:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712687967; cv=none; b=Ci1qSRQ5ZIQzesy0D/I0hM+QrFSi3EK+S3g+sRA6RDNHj2wuQg1gHXhrUNSKGTU4n0hFFipsGSvwsnAjHDe8JqgFaHOOcdN1XOddkTsMziqXxnbqlD7+1k93FUCYiflCaSDrVaB81lRMlUS46nFI9CYIE0H4/DFxNmHqJD8JUS4=
+	t=1712689722; cv=none; b=fV1Z9qr0wf1as18hJJ1d6y3p2779EQLkOdeSFgKoQkcSoDZyI5z/ewBrp4sBZz/1ADdILd0ZZFr20KVpPQLEswM53bOFfwuaD4SRwrvPYzwBhY7K+EAcis3HNFCv0PX5ADh7QHZgvUnxh27QmnKPE9en3hEmfrg5h9+hpbTk37A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712687967; c=relaxed/simple;
-	bh=BwPr7SrsQf4b7g+pojJ443HjHLELotWIZE/wilGloq0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fsAqkH/8iwF6HHTC8K32wj/xMOU1Y19QLHiAbqRgQU5L+lE5OetK6rCYcQRlv1fC7p2qfa2dEPIfdIYXLdIpP0n8cF6G5Y8iU85xvyv9x846K4e/PgMV2AD0Ebpu9PG/h/tjGybp3nd6iYR/Ml0bls/1IX3ai4u0G2Q7UhjL2AQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=O+7syKAS; arc=none smtp.client-ip=209.85.128.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-6181237230dso24484037b3.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Apr 2024 11:39:25 -0700 (PDT)
+	s=arc-20240116; t=1712689722; c=relaxed/simple;
+	bh=/LW5UP24d3M9gnDJHKsZY3AjzrEnrgPIA21IZxGWV+o=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=aMLNv3WVgqa4wVvq7RRdLbZSsUz2DVBNQABxsWeIXjRxZvOh7ooFKlsMnMFOKQcO1D7MTq74W2GDzhaBXnV9fSGQzTKpXByMCgh6xKqel1z1qSLpJJ+BMCKL4KUiuS0+vY1gugSWfamtM41A4Ey02xvIZKuBdGfF9/+NgFEGq1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jzFWE3te; arc=none smtp.client-ip=209.85.210.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-6ea1f98f3b9so901707a34.1;
+        Tue, 09 Apr 2024 12:08:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712687965; x=1713292765; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=hAdR0lfI/Ap3S0wzwjpUHjQuKqdM6aVtl85wb7tRnRA=;
-        b=O+7syKASBx2JiFlsf6BUFWTgvb8hzJc1kYl/sTbv+8cPiBaRynz8Gbcm8FlAELTX+m
-         /l0SKde+GrmSENTVJydNz3kLE420nx0i+Ang2TYm9BI0i4Yvbyj/6XrOEBaabpfK7TLp
-         nR1+C0huxdZbrnNUdWg8Zdsq+I9VsFm/B8NYahsJpdIQ1cGqzlWHw/dUtwt5LaKoIVJM
-         FZF7LiqqdVlwwV4gqB56ml1T7x8Utc60xBYQcFlNn7wj+z2UdvDO6UmdkqWHMeyGmBf9
-         5unKzwqIU0O5N5Azvb8EvL7u151ziPbwU1i4UJJvP8NhcMY1OL78frGZyAGXGT38yvOe
-         moGw==
+        d=gmail.com; s=20230601; t=1712689720; x=1713294520; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eQII4bd5vU3iEBUOJRNxIf3Y2tkmIxs3qzEGZCMfEv8=;
+        b=jzFWE3teKpUJ5wl862mddPBr8HyYqumW7+TUQUfqgfnxAk0FERYfRgUpEAWQHmvX/Z
+         b7hpQ/I8JQXrv15s7jgABYJRxwc2Sd+WEt/j2LYf3AJcywE/27N7Ny15ZdMHRN7ZS+TP
+         HWquuz1a71ZoYYr5ZOvUrB0dT64q8mcypTeOEIU/eBE+SSr5o1qU5AmnSgT2r1mSFUqU
+         zXVhtnEPoNCyDamZUWsf4Lt3IsHXmLYPMhlPk+vM3E4gMNaUM+3YOyCkypC3HY2jv/QW
+         3/tqQbea23nROABQX92mWZxcf8B5YZUgupXE6dG/B/NK1eONJB8GMq6jMBqNbA9w8jPp
+         3PZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712687965; x=1713292765;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hAdR0lfI/Ap3S0wzwjpUHjQuKqdM6aVtl85wb7tRnRA=;
-        b=LAuquoqCRYO/7SvZxOo03dQ5lyAUTZYW/f42WJU/Usi9AyOzbvS/6EFMMyFx96HDfI
-         Frnk4QBQkXHgZdZ/bvbdJchZatC1UuJ53NzEDVr/r0ddqVS7DVGDTTlmju7KYOAb8uQe
-         koSN7OXhIR51xzfuvis6KuJaO0VFOB6ixGlOb2m2FwxIDna8yQSledc0bAw40v0Ennh0
-         TLpE0H/P5XkhcwKpcpq7ETB/uigqLtZroRaCPaRC1vG8STNb/uhWSOGr3o5IUWcPF6NY
-         G0ZMPDj1Z718JepCq4xIcyj6woQYw8wA7cmKQpUAtDBRDOfNFALchSxspi9eDSSbH6Kb
-         cEUA==
-X-Forwarded-Encrypted: i=1; AJvYcCVEHEVDpgzBS4Q/Li3hTN7p2OYqQtq7BXAEwbzbMNdacbW52ssp/ffNv4RzyTHQthBbVGjBWN3wzCXY5eJD5qTtqi5BgDLiFzmqz01JGA==
-X-Gm-Message-State: AOJu0Yz7SlOnJC6vRjbl18a8SMKTT+4RkVyM9Bl1l3JlfVL96YFAS2UU
-	xfTg2kPV+C/1NltH5IohHjtgWlXOwvJyMAIQKoUbbAy2BTaXM4vGH2DabUUB0svSEQcxoie4GbX
-	bpnxcojW/QwgExlCsspxg0wxroqZrGXqQ4zfilw==
-X-Google-Smtp-Source: AGHT+IHq5NVO+WfWmq3XyvBYt0xQLngoIVqzHjLiDg5l97bez8m7/Sp8OhTA5vGPOslEtZDyb+Woew1HHexx4xjD/3U=
-X-Received: by 2002:a05:6902:c0b:b0:dc2:1f53:3a4f with SMTP id
- fs11-20020a0569020c0b00b00dc21f533a4fmr750553ybb.5.1712687965237; Tue, 09 Apr
- 2024 11:39:25 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1712689720; x=1713294520;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=eQII4bd5vU3iEBUOJRNxIf3Y2tkmIxs3qzEGZCMfEv8=;
+        b=HVbsvJ2B6kp75tPCHe/4wbT3Vep3RgZBjb7w7lrXhpNG9OHEFUIdCGsSoOifbrxhsp
+         H9KQm/y2yiWF4Xpi0G82a/gTjFIfY5lzh1j7ui44AUwWh+vk7aVFzkCqeds07fFwPtdK
+         M+MymysjHrW2q2qk8UrUnncWtlpcmm6DCBnbmui20PeMx6HtCTsjJRi4UZWVU7QtqHTK
+         Pgc3T/tRwjO48TRG5coYiN+nzzLXKwobBqRclElAZhqhPUD2lgvEvSkxrdHFL/0CfeyI
+         5760zsPTse+I85xjT666DrAndRyJlTIBDWTOKGYcu9ug30eeLFqnAQ7HLBDzK1o2FSFX
+         Eo4w==
+X-Forwarded-Encrypted: i=1; AJvYcCXA6GcEZgJRq+8kri3Q7enlv3Vf6XBm30u2g5vibfywuGHzxN77XjBldnz6wUjwjPCIC2SURhHr2MpZM1CZK7/XgQWlhYePz4R+01mz05ATviKKej9mBSktlrXUGmUphuBm9SEkCXo3v/rQYtTU2reDTLw4C2m0jfkuEXgtJEdHNw4mZFjukeAcz77MOFJtxaQ5ssn4/g9Ob4GC6/PsahlsuTo=
+X-Gm-Message-State: AOJu0YzIppBYf8lImc4XE3JA78uNYmgIJu9YAeBAp5DzFbWNOMFA4Fhq
+	mFwo32o+HGILauMCjsbAzQ/pRvjEfMayQzYVvWct72zGJxcP42vI
+X-Google-Smtp-Source: AGHT+IHnHq4Yzw2dp8mXx3ucVbabpjqSL5KTYckari/WPAcfuM42DCdJWg9oNA/1AS81eRtwKhtJBQ==
+X-Received: by 2002:a9d:748f:0:b0:6ea:109f:ea50 with SMTP id t15-20020a9d748f000000b006ea109fea50mr601491otk.15.1712689719902;
+        Tue, 09 Apr 2024 12:08:39 -0700 (PDT)
+Received: from nukework.lan (c-98-197-58-203.hsd1.tx.comcast.net. [98.197.58.203])
+        by smtp.gmail.com with ESMTPSA id f11-20020a9d7b4b000000b006ea1cf91a8dsm674920oto.40.2024.04.09.12.08.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Apr 2024 12:08:39 -0700 (PDT)
+From: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: Alexandru Gagniuc <mr.nuke.me@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v2 1/7] dt-bindings: clock: Add PCIe pipe related clocks for IPQ9574
+Date: Tue,  9 Apr 2024 14:08:27 -0500
+Message-Id: <20240409190833.3485824-2-mr.nuke.me@gmail.com>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20240409190833.3485824-1-mr.nuke.me@gmail.com>
+References: <20240409190833.3485824-1-mr.nuke.me@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240409-qcom-pmic-gpio-hog-v2-0-5ff812d2baed@z3ntu.xyz> <20240409-qcom-pmic-gpio-hog-v2-2-5ff812d2baed@z3ntu.xyz>
-In-Reply-To: <20240409-qcom-pmic-gpio-hog-v2-2-5ff812d2baed@z3ntu.xyz>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 9 Apr 2024 21:39:14 +0300
-Message-ID: <CAA8EJppzfBbTi7htJDmMowtXXTi3ASfzQpEpkCjPngBFH=TE-A@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] ARM: dts: qcom: msm8974-hammerhead: Update gpio
- hog node name
-To: Luca Weiss <luca@z3ntu.xyz>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
-	Bjorn Andersson <andersson@kernel.org>, Linus Walleij <linus.walleij@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Tue, 9 Apr 2024 at 21:37, Luca Weiss <luca@z3ntu.xyz> wrote:
->
-> Follow the gpio-hog bindings and use otg-hog as node name.
->
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
->  arch/arm/boot/dts/qcom/qcom-msm8974-lge-nexus5-hammerhead.dts | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
+Add defines for the missing PCIe PIPE clocks.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ include/dt-bindings/clock/qcom,ipq9574-gcc.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
+diff --git a/include/dt-bindings/clock/qcom,ipq9574-gcc.h b/include/dt-bindings/clock/qcom,ipq9574-gcc.h
+index 08fd3a37acaa..52123c5a09fa 100644
+--- a/include/dt-bindings/clock/qcom,ipq9574-gcc.h
++++ b/include/dt-bindings/clock/qcom,ipq9574-gcc.h
+@@ -216,4 +216,8 @@
+ #define GCC_CRYPTO_AHB_CLK				207
+ #define GCC_USB0_PIPE_CLK				208
+ #define GCC_USB0_SLEEP_CLK				209
++#define GCC_PCIE0_PIPE_CLK				210
++#define GCC_PCIE1_PIPE_CLK				211
++#define GCC_PCIE2_PIPE_CLK				212
++#define GCC_PCIE3_PIPE_CLK				213
+ #endif
 -- 
-With best wishes
-Dmitry
+2.40.1
+
 
