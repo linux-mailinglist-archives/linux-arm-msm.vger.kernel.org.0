@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-16951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16953-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05AA789E16D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 19:20:16 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0409C89E219
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 20:06:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B0E632838C6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 17:20:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AE923284D52
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 18:06:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81689156648;
-	Tue,  9 Apr 2024 17:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C406156868;
+	Tue,  9 Apr 2024 18:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Hw+oHEGK"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bem9nJen"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBA115624E;
-	Tue,  9 Apr 2024 17:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5414E7F499;
+	Tue,  9 Apr 2024 18:06:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712683200; cv=none; b=OnfLfnC8vYllmS2xNQSOACIO28wDy1GkA0HZzIjgd6GviSrgoxRSu9SmaerhSZ+G9coOwCahxJpyaLOTdUw1r3/Y/1uLMXPb1WlN6NSeBhhFT+t7Gx6DojorbigC+vQaMCFwF3cuy/fbhcKB7R1zQ/Ll8jBnTXmb8q+sBMUlfFI=
+	t=1712685985; cv=none; b=BjBdu9GTly3w1t2sdh4aoWJQSe3wa986qnoiVMYrKqfsTS42MBbrF9tE7ODZUrFPECpy2+jEjCUiBBfX6G42/YuULrPpMiCS0qrJe4qK4wFwU+UxnqvuZCZUdU4f35CGt3ug+99K3VZwO1wo8SQl8nA9lSXw+VSJyJLnlcIIzGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712683200; c=relaxed/simple;
-	bh=MX/jaT995o39SVb4w3KWka52pzriagvfVrr3JcFpSs8=;
+	s=arc-20240116; t=1712685985; c=relaxed/simple;
+	bh=lKbdrlQEuosracHTbXqyG8nrGq4aKB8F7ccRPnmbiqg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=dsGR/SNtly86ryZnIrnrTIFdrZ0I9/OrGDTnzcykxckt24YwyHXKfFgqDr68t+FRpvK2wFRlWzutDVQxgH6adjdYlNW/sa6TIQdZ68hN4rsdyooouyXmRk+JDuzX/gp/2Nqk5/nBGq0Dc8MNT4HmscpRlyRsMhZc2nFvgvt9CeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Hw+oHEGK; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=hz7ccihp6BGvcsIfdptSoAab2lG4HyXz3RZgfvGLyuq5FdmSkHlg2mDGAuEjXYdAWmEjTgqRedoc0TILeoo/qW52O6bMKz7b5KrTmrZZjWnPh5/DEcCsplVKRpu5dBj/wJhJiUF70gMqLdzBcWf6ioy4sDMskQ9uZm5NYUog5NI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bem9nJen; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 439AmgRi015186;
-	Tue, 9 Apr 2024 17:19:41 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 439CQYJC028241;
+	Tue, 9 Apr 2024 17:43:06 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=QpJxkETK9XY7FK/LiJttaU6PuwaB78Eu6bRDXhDiPMM=; b=Hw
-	+oHEGK5YUlXztdarDsrgD0ajdN2AhZZGZstZxuJLScw76F4CzSL+EtXp66vCmUxS
-	KbNeQ3aND0H6H0Lx+LSw1xwTmSq50Vj6Bzgc3SyzehT6ihQ8Hb/F8g8yv2Y11mfH
-	vwhzkd5Xq4ZYmshltqx9H/9ZyWXVsvR1rq5XNzuywL9cACVPRp7Ad+GmIFhEwbq9
-	LB1TL3eJs4tHqymGAVPM4Nc3ZfrQB+n/6o4usCKWL+0JJDLCjQ4vdW905l8omjm8
-	ooQBmybUaSx5WL6UNPj8tXca9MJ9FJLkaZcuEZrwR2xV4xUAZm5WOWnqRIcQ6vKQ
-	Shn5wgR031FRhIEqeTdQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xd0hjsbq3-1
+	qcppdkim1; bh=XJsZh8rurWgQGYHWAum585/lnINVNpaEUluO+e+7ONY=; b=be
+	m9nJenTC4dpWBKe1hFZCXtd+AXYzNpN5ASZOa/1A0rW1LC0jbQ9n5RfRtBiR7NVR
+	znXBsnCjkPzuKrRbj57eFSMH6RpYooO6/0ntzKdgLkUa41vNf5uZGnkCU9Zl/Ipv
+	nUw2EazapN9n2igk4IouRgwuQbUvlzySvZVfbsRTNbEnd/qzw8Pv05SheIzERvtT
+	237Gw1WUC2M5FAt6PIn0RSJrcgrajnm9NKYM6YjnThZN8QqzreysKHVGKDee27dZ
+	yLPLGLRmka0+DZfIwzJQToqUt5b5JK74fv6Tt3caStSEUGDdS5R9F1o8SO/IjrJe
+	Vdk+SykLkICIZvYOPMBw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xcv3khu64-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 09 Apr 2024 17:19:40 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 439HJdo5015383
+	Tue, 09 Apr 2024 17:43:06 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 439Hh5SM025586
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 9 Apr 2024 17:19:39 GMT
-Received: from [10.71.108.229] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+	Tue, 9 Apr 2024 17:43:05 GMT
+Received: from [10.216.62.42] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 9 Apr 2024
- 10:19:38 -0700
-Message-ID: <bad7f3e8-38ce-4901-8f00-de32a659f0ba@quicinc.com>
-Date: Tue, 9 Apr 2024 10:19:37 -0700
+ 10:42:59 -0700
+Message-ID: <3ab9badd-2cf6-4fe0-aaf0-d08614418968@quicinc.com>
+Date: Tue, 9 Apr 2024 23:12:54 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,120 +65,153 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/4] drm/mipi-dsi: use correct return type for the DSC
- functions
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sumit Semwal
-	<sumit.semwal@linaro.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        Neil
- Armstrong <neil.armstrong@linaro.org>,
-        Sam Ravnborg <sam@ravnborg.org>, David
- Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Maarten
- Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard
-	<mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
+Subject: Re: [PATCH v20 4/9] usb: dwc3: core: Refactor PHY logic to support
+ Multiport Controller
+To: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+CC: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: <dri-devel@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Marijn
- Suijten <marijn.suijten@somainline.org>
-References: <20240408-lg-sw43408-panel-v5-0-4e092da22991@linaro.org>
- <20240408-lg-sw43408-panel-v5-2-4e092da22991@linaro.org>
-From: Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <20240408-lg-sw43408-panel-v5-2-4e092da22991@linaro.org>
+	<robh@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+        Wesley Cheng
+	<quic_wcheng@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Greg
+ Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, Felipe Balbi <balbi@kernel.org>,
+        Johan Hovold
+	<johan@kernel.org>,
+        "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org"
+	<linux-arm-msm@vger.kernel.org>,
+        "linux-usb@vger.kernel.org"
+	<linux-usb@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>,
+        "quic_ppratap@quicinc.com"
+	<quic_ppratap@quicinc.com>,
+        "quic_jackp@quicinc.com"
+	<quic_jackp@quicinc.com>,
+        Johan Hovold <johan+linaro@kernel.org>
+References: <20240408132925.1880571-1-quic_kriskura@quicinc.com>
+ <20240408132925.1880571-5-quic_kriskura@quicinc.com>
+ <20240409011046.zgjqvhewldch3snu@synopsys.com>
+Content-Language: en-US
+From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <20240409011046.zgjqvhewldch3snu@synopsys.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: dWVaDgAEYxUcywapg5fLLapUEMvR2SY1
-X-Proofpoint-GUID: dWVaDgAEYxUcywapg5fLLapUEMvR2SY1
+X-Proofpoint-ORIG-GUID: 2kjLBKEa1gL6vBwM6ThsQydqycEfkkho
+X-Proofpoint-GUID: 2kjLBKEa1gL6vBwM6ThsQydqycEfkkho
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-04-09_12,2024-04-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- lowpriorityscore=0 adultscore=0 clxscore=1011 spamscore=0 mlxscore=0
- phishscore=0 suspectscore=0 malwarescore=0 bulkscore=0 impostorscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404090113
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
+ clxscore=1015 priorityscore=1501 impostorscore=0 mlxscore=0
+ mlxlogscore=999 adultscore=0 lowpriorityscore=0 spamscore=0 suspectscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404090116
 
 
 
-On 4/7/2024 4:53 PM, Dmitry Baryshkov wrote:
-> The functions mipi_dsi_compression_mode() and
-> mipi_dsi_picture_parameter_set() return 0-or-error rather than a buffer
-> size. Follow example of other similar MIPI DSI functions and use int
-> return type instead of size_t.
-
-Hi Dmitry,
-
-Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-
-Thanks,
-
-Jessica Zhang
-
+On 4/9/2024 6:41 AM, Thinh Nguyen wrote:
+> On Mon, Apr 08, 2024, Krishna Kurapati wrote:
+>> Currently the DWC3 driver supports only single port controller
+>> which requires at least one HS PHY and at most one SS PHY.
+>>
+>> But the DWC3 USB controller can be connected to multiple ports and
+>> each port can have their own PHYs. Each port of the multiport
+>> controller can either be HS+SS capable or HS only capable
+>> Proper quantification of them is required to modify GUSB2PHYCFG
+>> and GUSB3PIPECTL registers appropriately.
+>>
+>> Add support for detecting, obtaining and configuring PHYs supported
+>> by a multiport controller. Limit support to multiport controllers
+>> with up to four ports for now (e.g. as needed for SC8280XP).
+>>
+>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+>> ---
+>>   drivers/usb/dwc3/core.c | 251 ++++++++++++++++++++++++++++------------
+>>   drivers/usb/dwc3/core.h |  14 ++-
+>>   drivers/usb/dwc3/drd.c  |  15 ++-
+>>   3 files changed, 193 insertions(+), 87 deletions(-)
+>>
 > 
-> Fixes: f4dea1aaa9a1 ("drm/dsi: add helpers for DSI compression mode and PPS packets")
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/drm_mipi_dsi.c | 6 +++---
->   include/drm/drm_mipi_dsi.h     | 6 +++---
->   2 files changed, 6 insertions(+), 6 deletions(-)
+> <snip>
 > 
-> diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
-> index ef6e416522f8..9874ff6d4718 100644
-> --- a/drivers/gpu/drm/drm_mipi_dsi.c
-> +++ b/drivers/gpu/drm/drm_mipi_dsi.c
-> @@ -654,7 +654,7 @@ EXPORT_SYMBOL(mipi_dsi_set_maximum_return_packet_size);
->    *
->    * Return: 0 on success or a negative error code on failure.
->    */
-> -ssize_t mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
-> +int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
->   {
->   	/* Note: Needs updating for non-default PPS or algorithm */
->   	u8 tx[2] = { enable << 0, 0 };
-> @@ -679,8 +679,8 @@ EXPORT_SYMBOL(mipi_dsi_compression_mode);
->    *
->    * Return: 0 on success or a negative error code on failure.
->    */
-> -ssize_t mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
-> -				       const struct drm_dsc_picture_parameter_set *pps)
-> +int mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
-> +				   const struct drm_dsc_picture_parameter_set *pps)
->   {
->   	struct mipi_dsi_msg msg = {
->   		.channel = dsi->channel,
-> diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
-> index c0aec0d4d664..3011d33eccbd 100644
-> --- a/include/drm/drm_mipi_dsi.h
-> +++ b/include/drm/drm_mipi_dsi.h
-> @@ -241,9 +241,9 @@ int mipi_dsi_shutdown_peripheral(struct mipi_dsi_device *dsi);
->   int mipi_dsi_turn_on_peripheral(struct mipi_dsi_device *dsi);
->   int mipi_dsi_set_maximum_return_packet_size(struct mipi_dsi_device *dsi,
->   					    u16 value);
-> -ssize_t mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable);
-> -ssize_t mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
-> -				       const struct drm_dsc_picture_parameter_set *pps);
-> +int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable);
-> +int mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
-> +				   const struct drm_dsc_picture_parameter_set *pps);
->   
->   ssize_t mipi_dsi_generic_write(struct mipi_dsi_device *dsi, const void *payload,
->   			       size_t size);
+>> @@ -1937,6 +2020,10 @@ static int dwc3_get_num_ports(struct dwc3 *dwc)
+>>   
+>>   	iounmap(base);
+>>   
+>> +	if (dwc->num_usb2_ports > DWC3_MAX_PORTS ||
+>> +	    dwc->num_usb3_ports > DWC3_MAX_PORTS)
+>> +		return -ENOMEM;
 > 
-> -- 
-> 2.39.2
+> This should be -EINVAL.
 > 
+>> +
+>>   	return 0;
+>>   }
+> 
+> <snip>
+> 
+>> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
+>> index 341e4c73cb2e..df2e111aa848 100644
+>> --- a/drivers/usb/dwc3/core.h
+>> +++ b/drivers/usb/dwc3/core.h
+>> @@ -33,6 +33,12 @@
+>>   
+>>   #include <linux/power_supply.h>
+>>   
+>> +/*
+>> + * Maximum number of ports currently supported for multiport
+>> + * controllers.
+> 
+> This macro here is being used per USB2 vs USB3 ports rather than USB2 +
+> USB3, unlike the xHCI MAXPORTS. You can clarify in the comment and
+> rename the macro to avoid any confusion. You can also create 2 separate
+> macros for number of USB2 and USB3 ports even if they share the same
+> value.
+> 
+> As noted[*], we support have different max number of usb2 ports vs usb3
+> ports. I would suggest splitting the macros.
+> 
+
+Hi Thinh,
+
+  This macro was intended only to identify how many USB2 (or USB3) Phy's 
+were serviced/operated by this driver, not how many logical ports 
+present (like in xHCI). I don't think it would be confusing currently 
+given that it is only used to identify number of generic phy instances 
+to allocate and not used for any other purpose. Once the num_usb2_ports 
+and num_usb3_ports are read by get_num_ports(...) call, they directly 
+indicate how many ports are HS and SS respectively. Keeping the same in 
+mind, I returned ENOMEM above (as you mentioned) because we don't 
+allocate more than DWC3_MAX_PORTS and if the number of hs or ss ports is 
+more than that, we simply return ENOMEM saying the driver doesn't 
+support operating those many phy's.
+
+> [*] https://lore.kernel.org/linux-usb/20230801013031.ft3zpoatiyfegmh6@synopsys.com/
+> 
+>> + */
+>> +#define DWC3_MAX_PORTS 4
+>> +
+>>
+> 
+> But it's not a big issue whether you decided to push a new version or a
+> create a separate patch for the comments above. Here's my Ack:
+> 
+
+Since this is not a bug, I would prefer to make a separate patch to 
+rename the macros. (If that is fine).
+
+> Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+> 
+> Thanks,
+> Thinh
 
