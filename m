@@ -1,234 +1,278 @@
-Return-Path: <linux-arm-msm+bounces-16893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0AC689D708
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 12:32:48 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F65289D790
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 13:03:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9755E281E56
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 10:32:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 536771C21853
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 11:03:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 230197C0B0;
-	Tue,  9 Apr 2024 10:32:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50CFB85641;
+	Tue,  9 Apr 2024 11:03:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GQdOYDkg"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RGD6dQSK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD096FE35
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Apr 2024 10:32:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF207C0B0;
+	Tue,  9 Apr 2024 11:03:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712658764; cv=none; b=kjpix7u+4FlfvUAKvfN9CNrPa69t4UVXx9mxBo2qSVd4td93we85FTouea38P+lRh/oO/Bv0JShWk1OsasT/j0moQvllxdxSywVZLU9BwaTE5MFyeKu/JIvridmPIRL/G3Qbsx9WROKG2eXkATDVMkoakSneNK50T7bp3EhO0Ck=
+	t=1712660629; cv=none; b=IZHszvTz8gIjRJOCrWDoRkurJf41h32MVBe5CqxMSTasT4BoQ+YzgHcEUjfnU6KkgkSdSfHypvV6Tx2aMcaEaTe1Vu2x+JP0vLez2RmawHvk707Eikl0IMT7yOZCVA7Eb597TYBnJPjHwhLtWgLv60MnovgnkLq8PZoHwg1hLCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712658764; c=relaxed/simple;
-	bh=5czf5Adh9rovAzlSJfAJI8FiDCtAO2TmwPWLd9haL8c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cGrgOwWcpuL/gNSsUu3ZEAc5BtxgUfovlE8Xt/E+ooKQtvUwSspWNP8tjSdHvM7D3JJnxyN9zJRsrYN250RfLkWwMjrPdmT0DCAZZlrayWF2udUPUMcc4HVnPOPRCx6RheFcGHtxxwemq1XV13bDKQEaqjmJ6DGIg0aFr4FEG2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GQdOYDkg; arc=none smtp.client-ip=209.85.128.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-617e6c873f3so30947447b3.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Apr 2024 03:32:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712658761; x=1713263561; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ywMqPmvjfuSg7K+puQLhP8JMKU69QDDCjZnvVUw25RU=;
-        b=GQdOYDkgrep7F5hLpbDGjIbhlfq1Kh2Ql3iVjtZhxuj7Sxo9Sx+Z6Mg/nQ+kgb/mo+
-         EEBKlO3HzrpgW53IohoK6WPS0abrSTjrHnY4nNcY/5A7+qseFHZmPHy/97f0pb6yDEKm
-         RG/e99UNRWi8YrgKheaE60fxWP/YdQZ/d+qKQFMW9SsA9xw7CWf5sTn+ySonyN6TCMEd
-         6YYqB9Qm1qKK9U18x6CHmovcYcEq/tMf2NzB1vAXclbtCuy5WG6ns6xSugrVqYzI8P+J
-         ZPJeIdF+b4UZipHoNQIcpXawZ+f2tSlft4qKzXhghCFTySolAcAGu6UYVk8YDtXGxcHT
-         JX3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712658761; x=1713263561;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ywMqPmvjfuSg7K+puQLhP8JMKU69QDDCjZnvVUw25RU=;
-        b=C6UONLlMcFIOstZtIrRQzBRXYIld9cSFaN7yPt8dDKF0OaBogCQyT66XZQgMF5XLyX
-         ClpTZL1w+ukHvlZ9JvjuE5Gqxz+h8UqiK6l2rnmyUjXf4itK3zoDgUxiEh+9GKX0axhn
-         /Ek++drTlUvEdN8mRjg1NHnCdAt/riKLCWfFBBDJ5Y7RJ55arP/b/hwZOb991E/iTEGi
-         njv64WycLw+jJt5Iw0xtvRnHYSkuMmwIaqNEYpR4uiMDssfi56d+fe7V7KNsg8t4UC2O
-         /lECkNIvtrZ0THIUxrqXSq6GKPEA+O7i8WXPTXWE0Z1jBb7w93Ly27sKJTEKAKEWCnIu
-         BKuA==
-X-Forwarded-Encrypted: i=1; AJvYcCXADpeaOo4MpVyu1RPzpJWz2nT+6fiARUFc4DC+xoGn/GLlSphSxGEDkJiqN/e/E1D69CsOtkQMEY18FKodbl6PZWza3MRzDbc/qez1Lg==
-X-Gm-Message-State: AOJu0Yzozpk6e61OmLkw6T0X5IujcFkxEGCoPedGRurfHRLkGr21VfJT
-	RkXEn7ZXChXE5hlQD9OaINcYcfQlwewdjNDfRtbZZeons3xEF+aMzomGbf6tmEDeMRONnfImgnK
-	z50hUrkGWXx539y9OSxGW72hKHT50uTxV0dInlg==
-X-Google-Smtp-Source: AGHT+IE6ld1LxqfQn0k5e9/PewJ6aOPe+V7Ds69yIjXtT1hudq7zrLPCAyY5v5qOBVfHKUCnvM/mlhNjl+kN+3CdkGA=
-X-Received: by 2002:a25:e20b:0:b0:dcd:6c0:da64 with SMTP id
- h11-20020a25e20b000000b00dcd06c0da64mr9426728ybe.58.1712658761139; Tue, 09
- Apr 2024 03:32:41 -0700 (PDT)
+	s=arc-20240116; t=1712660629; c=relaxed/simple;
+	bh=BKL2aI470n0H/gucOxUDsX3tYrfnCJ+YtT/c8wWVhec=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QrIiLoIKPKJn5ot+vUMiXqUyspcysguBlDl7VXqMCW5CykJ19kVEpaC9pMwls4pUET3tkuMRVWTMwTZx6oXq+rKxNfZcThsfi99pYY4bvb8kBLioHVKtck7jXyjGZYXqM9Ym218W4faNf0X8OKxdZAHfbCKoq9FS03MR3njHedw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RGD6dQSK; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4397m36D020972;
+	Tue, 9 Apr 2024 11:03:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=6BRVh/GiB7fDH1Ya2R3Cq
+	R2SPX5lMgLeOW15Ssmy+TM=; b=RGD6dQSKR1dwEVoE8wtqsPzE5sxIWSyxA85KR
+	QH8aku8W9OEdjcUTruzaWq3hD/T+dyeH8qAv530RiqUg+uydVQ4eaDSukNjrSxWu
+	HU0MNXGj25GVQxAXqMl9ZIRmDLfSZztVREFeTczeYl5VPBBkmsBJM/859mLiFP4H
+	Vjbdxk9NOTBM0mkn9NndU6l+fj+XJyxWb10HCuVS5oPA/pLOsIk8eIWbtjvMa9Bt
+	lk6AJw6kHv9pwb7ss+Sq8wz2yiZt2Jl0pmkEEGto/YLV24WD4fJgkwAAL2sAr9hs
+	/C+RlU1bwTExdRZIesqGmLeHBnIyhuwlJ++1nA3PO9G+6548A==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xcvtk0tur-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 09 Apr 2024 11:03:42 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 439B3glf008175
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 9 Apr 2024 11:03:42 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.4; Tue, 9 Apr 2024 04:03:37 -0700
+Date: Tue, 9 Apr 2024 16:33:34 +0530
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <djakov@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <quic_anusha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH v7 1/5] dt-bindings: interconnect: Add Qualcomm IPQ9574
+ support
+Message-ID: <ZhUghsa5Do5m7wrX@hu-varada-blr.qualcomm.com>
+References: <20240403104220.1092431-1-quic_varada@quicinc.com>
+ <20240403104220.1092431-2-quic_varada@quicinc.com>
+ <58c9b754-b9a7-444d-9545-9e6648010630@kernel.org>
+ <Zg5q6mnWtK6hmPBT@hu-varada-blr.qualcomm.com>
+ <ZhTxFVDH0xTSkw7r@hu-varada-blr.qualcomm.com>
+ <1ec401be-11cb-416a-9eae-d72ea8acf06f@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240325184204.745706-1-sboyd@kernel.org> <20240325184204.745706-5-sboyd@kernel.org>
- <c1dc0e4c1d4c9ba2b5e9c0fc207db267.sboyd@kernel.org>
-In-Reply-To: <c1dc0e4c1d4c9ba2b5e9c0fc207db267.sboyd@kernel.org>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Tue, 9 Apr 2024 12:32:04 +0200
-Message-ID: <CAPDyKFoGxxSzykQ-=o08LD_P_=8m=KRm4SHK_grBFgXNNv4OVw@mail.gmail.com>
-Subject: Re: [PATCH v2 4/5] clk: Get runtime PM before walking tree during disable_unused
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, 
-	linux-clk@vger.kernel.org, patches@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, Douglas Anderson <dianders@chromium.org>, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Krzysztof Kozlowski <krzk@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <1ec401be-11cb-416a-9eae-d72ea8acf06f@kernel.org>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: dwonnYnHQ4i9LRfht3nMrlyW9rUsxKkC
+X-Proofpoint-ORIG-GUID: dwonnYnHQ4i9LRfht3nMrlyW9rUsxKkC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-09_08,2024-04-05_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
+ lowpriorityscore=0 priorityscore=1501 phishscore=0 suspectscore=0
+ mlxscore=0 malwarescore=0 mlxlogscore=999 bulkscore=0 clxscore=1015
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404090070
 
-On Mon, 8 Apr 2024 at 04:36, Stephen Boyd <sboyd@kernel.org> wrote:
+On Tue, Apr 09, 2024 at 11:45:51AM +0200, Krzysztof Kozlowski wrote:
+> On 09/04/2024 09:41, Varadarajan Narayanan wrote:
+> > On Thu, Apr 04, 2024 at 02:25:06PM +0530, Varadarajan Narayanan wrote:
+> >> On Wed, Apr 03, 2024 at 04:59:40PM +0200, Krzysztof Kozlowski wrote:
+> >>> On 03/04/2024 12:42, Varadarajan Narayanan wrote:
+> >>>> Add interconnect-cells to clock provider so that it can be
+> >>>> used as icc provider.
+> >>>>
+> >>>> Add master/slave ids for Qualcomm IPQ9574 Network-On-Chip
+> >>>> interfaces. This will be used by the gcc-ipq9574 driver
+> >>>> that will for providing interconnect services using the
+> >>>> icc-clk framework.
+> >>>>
+> >>>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> >>>> ---
+> >>>> v7:
+> >>>> Fix macro names to be consistent with other bindings
+> >>>> v6:
+> >>>> Removed Reviewed-by: Krzysztof Kozlowski
+> >>>> Redefine the bindings such that driver and DT can share them
+> >>>>
+> >>>> v3:
+> >>>> Squash Documentation/ and include/ changes into same patch
+> >>>>
+> >>>> qcom,ipq9574.h
+> >>>> 	Move 'first id' to clock driver
+> >>>>
+> >>>> ---
+> >>>>  .../bindings/clock/qcom,ipq9574-gcc.yaml      |  3 +
+> >>>>  .../dt-bindings/interconnect/qcom,ipq9574.h   | 87 +++++++++++++++++++
+> >>>>  2 files changed, 90 insertions(+)
+> >>>>  create mode 100644 include/dt-bindings/interconnect/qcom,ipq9574.h
+> >>>>
+> >>>> diff --git a/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml
+> >>>> index 944a0ea79cd6..824781cbdf34 100644
+> >>>> --- a/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml
+> >>>> +++ b/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml
+> >>>> @@ -33,6 +33,9 @@ properties:
+> >>>>        - description: PCIE30 PHY3 pipe clock source
+> >>>>        - description: USB3 PHY pipe clock source
+> >>>>
+> >>>> +  '#interconnect-cells':
+> >>>> +    const: 1
+> >>>> +
+> >>>>  required:
+> >>>>    - compatible
+> >>>>    - clocks
+> >>>> diff --git a/include/dt-bindings/interconnect/qcom,ipq9574.h b/include/dt-bindings/interconnect/qcom,ipq9574.h
+> >>>> new file mode 100644
+> >>>> index 000000000000..0b076b0cf880
+> >>>> --- /dev/null
+> >>>> +++ b/include/dt-bindings/interconnect/qcom,ipq9574.h
+> >>>> @@ -0,0 +1,87 @@
+> >>>> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
+> >>>> +#ifndef INTERCONNECT_QCOM_IPQ9574_H
+> >>>> +#define INTERCONNECT_QCOM_IPQ9574_H
+> >>>> +
+> >>>> +#define ICC_ANOC_PCIE0		0
+> >>>> +#define ICC_SNOC_PCIE0		1
+> >>>> +#define ICC_ANOC_PCIE1		2
+> >>>> +#define ICC_SNOC_PCIE1		3
+> >>>> +#define ICC_ANOC_PCIE2		4
+> >>>> +#define ICC_SNOC_PCIE2		5
+> >>>> +#define ICC_ANOC_PCIE3		6
+> >>>> +#define ICC_SNOC_PCIE3		7
+> >>>> +#define ICC_SNOC_USB		8
+> >>>> +#define ICC_ANOC_USB_AXI	9
+> >>>> +#define ICC_NSSNOC_NSSCC	10
+> >>>> +#define ICC_NSSNOC_SNOC_0	11
+> >>>> +#define ICC_NSSNOC_SNOC_1	12
+> >>>> +#define ICC_NSSNOC_PCNOC_1	13
+> >>>> +#define ICC_NSSNOC_QOSGEN_REF	14
+> >>>> +#define ICC_NSSNOC_TIMEOUT_REF	15
+> >>>> +#define ICC_NSSNOC_XO_DCD	16
+> >>>> +#define ICC_NSSNOC_ATB		17
+> >>>> +#define ICC_MEM_NOC_NSSNOC	18
+> >>>> +#define ICC_NSSNOC_MEMNOC	19
+> >>>> +#define ICC_NSSNOC_MEM_NOC_1	20
+> >>>> +
+> >>>> +#define ICC_NSSNOC_PPE		0
+> >>>> +#define ICC_NSSNOC_PPE_CFG	1
+> >>>> +#define ICC_NSSNOC_NSS_CSR	2
+> >>>> +#define ICC_NSSNOC_IMEM_QSB	3
+> >>>> +#define ICC_NSSNOC_IMEM_AHB	4
+> >>>> +
+> >>>> +#define MASTER_ANOC_PCIE0		(ICC_ANOC_PCIE0 * 2)
+> >>>> +#define SLAVE_ANOC_PCIE0		((ICC_ANOC_PCIE0 * 2) + 1)
+> >>>
+> >>> Which existing Qualcomm platform has such code?
+> >>
+> >> Existing Qualcomm platforms don't use icc-clk. They use icc-rpm
+> >> or icc-rpmh. clk-cbf-msm8996.c is the only driver that uses icc-clk.
+> >>
+> >> The icc_clk_register automatically creates master & slave nodes
+> >> for each clk entry provided as input with the node-ids 'n' and
+> >> 'n+1'. Since clk-cbf-msm8996.c has only one entry, it could just
+> >> define MASTER_CBF_M4M and SLAVE_CBF_M4M with 0 and 1 and avoid these
+> >> calculations.
+> >>
+> >> However, ipq9574 gives an array of clock entries as input to
+> >> icc_clk_register. To tie the order/sequence of these clock
+> >> entries correctly with the node-ids, this calculation is needed.
+> >>
+> >>> This is the third time I am asking for consistent headers. Open
+> >>> existing, recently added headers and look how it is done there. Why?
+> >>> Because I am against such calculations and see no reason for them.
+> >>
+> >> Apologies. Regret that I have to trouble you.
+> >>
+> >> In this ipq9574 case, have to reconcile between the following
+> >> feedbacks.
+> >>
+> >> 1. https://lore.kernel.org/linux-arm-msm/fe40b307-26d0-4b2a-869b-5d093415b9d1@linaro.org/
+> >>    We could probably use indexed identifiers here to avoid confusion:
+> >>    [ICC_BINDING_NAME] = CLK_BINDING_NAME
+> >>
+> >> 2. https://lore.kernel.org/linux-arm-msm/95f4e99a60cc97770fc3cee850b62faf.sboyd@kernel.org/
+> >>    Are these supposed to be in a dt-binding header?
+> >>
+> >> 3. https://lore.kernel.org/linux-arm-msm/031d0a35-b192-4161-beef-97b89d5d1da6@linaro.org/
+> >>    Do you use them as well in the DTS?
+> >>
+> >> Having the defines (with the calculations) seemed to to comply
+> >> with the above three feedbacks.
+> >>
+> >> Please let me know if this can be handled in a different way that
+> >> would be consistent with other Qualcomm platforms.
+> >
+> > Krzysztof,
+> >
+> > Is this ok? Can I post a new version addressing other review comments?
 >
-> Quoting Stephen Boyd (2024-03-25 11:41:58)
-> > Doug reported [1] the following hung task:
-> >
-> >  INFO: task swapper/0:1 blocked for more than 122 seconds.
-> >        Not tainted 5.15.149-21875-gf795ebc40eb8 #1
-> >  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-> >  task:swapper/0       state:D stack:    0 pid:    1 ppid:     0 flags:0x00000008
-> >  Call trace:
-> >   __switch_to+0xf4/0x1f4
-> >   __schedule+0x418/0xb80
-> >   schedule+0x5c/0x10c
-> >   rpm_resume+0xe0/0x52c
-> >   rpm_resume+0x178/0x52c
-> >   __pm_runtime_resume+0x58/0x98
-> >   clk_pm_runtime_get+0x30/0xb0
-> >   clk_disable_unused_subtree+0x58/0x208
-> >   clk_disable_unused_subtree+0x38/0x208
-> >   clk_disable_unused_subtree+0x38/0x208
-> >   clk_disable_unused_subtree+0x38/0x208
-> >   clk_disable_unused_subtree+0x38/0x208
-> >   clk_disable_unused+0x4c/0xe4
-> >   do_one_initcall+0xcc/0x2d8
-> >   do_initcall_level+0xa4/0x148
-> >   do_initcalls+0x5c/0x9c
-> >   do_basic_setup+0x24/0x30
-> >   kernel_init_freeable+0xec/0x164
-> >   kernel_init+0x28/0x120
-> >   ret_from_fork+0x10/0x20
-> >  INFO: task kworker/u16:0:9 blocked for more than 122 seconds.
-> >        Not tainted 5.15.149-21875-gf795ebc40eb8 #1
-> >  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-> >  task:kworker/u16:0   state:D stack:    0 pid:    9 ppid:     2 flags:0x00000008
-> >  Workqueue: events_unbound deferred_probe_work_func
-> >  Call trace:
-> >   __switch_to+0xf4/0x1f4
-> >   __schedule+0x418/0xb80
-> >   schedule+0x5c/0x10c
-> >   schedule_preempt_disabled+0x2c/0x48
-> >   __mutex_lock+0x238/0x488
-> >   __mutex_lock_slowpath+0x1c/0x28
-> >   mutex_lock+0x50/0x74
-> >   clk_prepare_lock+0x7c/0x9c
-> >   clk_core_prepare_lock+0x20/0x44
-> >   clk_prepare+0x24/0x30
-> >   clk_bulk_prepare+0x40/0xb0
-> >   mdss_runtime_resume+0x54/0x1c8
-> >   pm_generic_runtime_resume+0x30/0x44
-> >   __genpd_runtime_resume+0x68/0x7c
-> >   genpd_runtime_resume+0x108/0x1f4
-> >   __rpm_callback+0x84/0x144
-> >   rpm_callback+0x30/0x88
-> >   rpm_resume+0x1f4/0x52c
-> >   rpm_resume+0x178/0x52c
-> >   __pm_runtime_resume+0x58/0x98
-> >   __device_attach+0xe0/0x170
-> >   device_initial_probe+0x1c/0x28
-> >   bus_probe_device+0x3c/0x9c
-> >   device_add+0x644/0x814
-> >   mipi_dsi_device_register_full+0xe4/0x170
-> >   devm_mipi_dsi_device_register_full+0x28/0x70
-> >   ti_sn_bridge_probe+0x1dc/0x2c0
-> >   auxiliary_bus_probe+0x4c/0x94
-> >   really_probe+0xcc/0x2c8
-> >   __driver_probe_device+0xa8/0x130
-> >   driver_probe_device+0x48/0x110
-> >   __device_attach_driver+0xa4/0xcc
-> >   bus_for_each_drv+0x8c/0xd8
-> >   __device_attach+0xf8/0x170
-> >   device_initial_probe+0x1c/0x28
-> >   bus_probe_device+0x3c/0x9c
-> >   deferred_probe_work_func+0x9c/0xd8
-> >   process_one_work+0x148/0x518
-> >   worker_thread+0x138/0x350
-> >   kthread+0x138/0x1e0
-> >   ret_from_fork+0x10/0x20
-> >
-> > The first thread is walking the clk tree and calling
-> > clk_pm_runtime_get() to power on devices required to read the clk
-> > hardware via struct clk_ops::is_enabled(). This thread holds the clk
-> > prepare_lock, and is trying to runtime PM resume a device, when it finds
-> > that the device is in the process of resuming so the thread schedule()s
-> > away waiting for the device to finish resuming before continuing. The
-> > second thread is runtime PM resuming the same device, but the runtime
-> > resume callback is calling clk_prepare(), trying to grab the
-> > prepare_lock waiting on the first thread.
-> >
-> > This is a classic ABBA deadlock. To properly fix the deadlock, we must
-> > never runtime PM resume or suspend a device with the clk prepare_lock
-> > held. Actually doing that is near impossible today because the global
-> > prepare_lock would have to be dropped in the middle of the tree, the
-> > device runtime PM resumed/suspended, and then the prepare_lock grabbed
-> > again to ensure consistency of the clk tree topology. If anything
-> > changes with the clk tree in the meantime, we've lost and will need to
-> > start the operation all over again.
-> >
-> > Luckily, most of the time we're simply incrementing or decrementing the
-> > runtime PM count on an active device, so we don't have the chance to
-> > schedule away with the prepare_lock held. Let's fix this immediate
-> > problem that can be triggered more easily by simply booting on Qualcomm
-> > sc7180.
-> >
-> > Introduce a list of clk_core structures that have been registered, or
-> > are in the process of being registered, that require runtime PM to
-> > operate. Iterate this list and call clk_pm_runtime_get() on each of them
-> > without holding the prepare_lock during clk_disable_unused(). This way
-> > we can be certain that the runtime PM state of the devices will be
-> > active and resumed so we can't schedule away while walking the clk tree
-> > with the prepare_lock held. Similarly, call clk_pm_runtime_put() without
-> > the prepare_lock held to properly drop the runtime PM reference. We
-> > remove the calls to clk_pm_runtime_{get,put}() in this path because
-> > they're superfluous now that we know the devices are runtime resumed.
-> >
-> > Reported-by: Douglas Anderson <dianders@chromium.org>
-> > Closes: https://lore.kernel.org/all/20220922084322.RFC.2.I375b6b9e0a0a5348962f004beb3dafee6a12dfbb@changeid/ [1]
-> > Closes: https://issuetracker.google.com/328070191
-> > Cc: Marek Szyprowski <m.szyprowski@samsung.com>
-> > Cc: Ulf Hansson <ulf.hansson@linaro.org>
-> > Cc: Krzysztof Kozlowski <krzk@kernel.org>
-> > Fixes: 9a34b45397e5 ("clk: Add support for runtime PM")
-> > Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-> > ---
->
-> Applied to clk-fixes
+> I don't understand and you did not answered before, why you have to do
+> it differently than all other Qualcomm interconnect providers. Maybe the
+> code here needs it, maybe not, but I don't see any argument proving this.
 
-Apologies for not being able to review this, it got lost in my email
-filters. Looks like you manage to solve the locking order for the clk
-disable unused thing - great!
+Other Qualcomm interconnect providers use the icc-rpm.
 
-However I think the main problem we are seeing with these kind of
-locking issues is that we are holding a global lock while calling into
-pm_runtime_get|put*(). Similar problems have also been reported in the
-past. It's been on my todo list for quite some time to have a closer
-look, but I haven't reached it yet.
+	1. The SoC specific interconnect providers have control
+	   over the master/slave id-numbers and is hard coded.
 
-Without going into too much detail, let me just ask a related
-question. Would it not be possible to call pm_runtime_get/put() within
-the clock framework, without *always* keeping the clock prepare lock
-acquired? I assume a clock can't be unregistered, as long as there is
-reference taken for it, right? Wouldn't that be a sufficient guarantee
-that it's okay to runtime_resume|suspend its corresponding device?
+	2. These id-numbers are used by the RPM firmware.
 
-Or maybe I should just send a patch. :-)
+IPQ9574 uses icc-clk.
 
-Kind regards
-Uffe
+	1. The ipq9574 specific interconnect provider doesn't
+	   have control over the master/slave id-numbers. The
+	   icc-clk framework auto generates it in the order of
+	   the clock entries given as input.
+
+	2. These auto-generated id-numbers have to be correctly
+	   tied to the DT nodes. Else, the relevant clocks may
+	   not get enabled.
+
+Since ICC-CLK creates two ids per clock entry (one MASTER_xxx and
+one SLAVE_xxx), using those MASTER/SLAVE_xxx macros as indices in
+the below array would create holes.
+
+	static int icc_ipq9574_hws[] = {
+		[MASTER_ANOC_PCIE0] = GCC_ANOC_PCIE0_1LANE_M_CLK,
+		[MASTER_SNOC_PCIE0] = GCC_SNOC_PCIE0_1LANE_S_CLK,
+		[MASTER_ANOC_PCIE1] = GCC_ANOC_PCIE1_1LANE_M_CLK,
+		[MASTER_SNOC_PCIE1] = GCC_SNOC_PCIE1_1LANE_S_CLK,
+		. . .
+	};
+
+Other Qualcomm drivers don't have this issue and they can
+directly use the MASTER/SLAVE_xxx macros.
+
+As the MASTER_xxx macros cannot be used, have to define a new set
+of macros that can be used for indices in the above array. This
+is the reason for the ICC_BINDING_NAME macros.
+
+Does this answer your concern? Please let me know.
+
+Thanks
+Varada
 
