@@ -1,102 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-16944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16945-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6B1C89DF62
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 17:39:10 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8CD7289DFA7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 17:50:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 723EA281FCE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 15:39:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2C73E1F212A0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 15:50:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0D2413D63E;
-	Tue,  9 Apr 2024 15:35:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6693D13D615;
+	Tue,  9 Apr 2024 15:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uHsfcDCm"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XEoWtRGR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C5013D628
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Apr 2024 15:35:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD35013698F
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Apr 2024 15:49:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712676956; cv=none; b=CEij24QUeYe4/J6IF5gtphd+UTauh74cW1De3XL7NawkqQEneYLmM9wHsqw7jC5/f1/Cqh2HEAp8le2HV0/7GFwJ+UuisLP4n0m/2YMprVt1sjGKoN/KPes8YEesHME/OkHBSGkIfgZ+35kbZzOtJc4avSTvcOVn7K80buS8ZO4=
+	t=1712677763; cv=none; b=VyN8QX0It8gQJuJSIvdRv0jAR9olvnqPUpG7dSJrmse2K5np14QqlqqW4PPtNwxSujKD7EhSIl+SsRvMYS6Ak7PYl51m3wmp1zYzeoMwRreN/anfuTUfUtzDLIqflI5kseYn9AemHwPk7YsH0tsXmdGorMG/FnXAYFA/kUIOyDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712676956; c=relaxed/simple;
-	bh=z5AF5xY1j5K4ShCi88r9SGOibb/8QoN3dzNf4V00bdo=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=sl1ip7/8+mbRSTTzaNEhemvAdhsNq5avHGjVFzP9/YFsoGBASSpYKbTcJ5bFNKTowZ5DOGmee9cXpjufL8OHEDAAAATgh93CsW4jHPIpMUT1CyEC6e44VUf900qjn5+U+48usjGrKf9skcXQzetyGDEsNv4q4zTdTKyK+6fcVf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uHsfcDCm; arc=none smtp.client-ip=209.85.221.43
+	s=arc-20240116; t=1712677763; c=relaxed/simple;
+	bh=xEPOMa3UUwi6CuJPtWx1BPTo8A6Ak+U5QsgkngA70eo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qncskk7Yte4StlPiA7noSKKg46YeMrNn58Pj8O1OP+DukruFoChJfUgco0eLrdsQNvjrRTvXeZX/G0r5pEuFJWD5hCaSsngPCS2EROBUIiZUPSMepZmn6asa+nJWkSinoZKWwjzaU/waTEwJDO1cIBxKYAW3K6Yx/mkQpWE8v/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XEoWtRGR; arc=none smtp.client-ip=209.85.219.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-34339f01cd2so4331851f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Apr 2024 08:35:54 -0700 (PDT)
+Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-dc6d9a8815fso5891418276.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Apr 2024 08:49:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712676953; x=1713281753; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=RO/ZWp4a+TbCWiJJVnk1jNMrTa4t5wCjsm2zT6QGFvI=;
-        b=uHsfcDCmErwWXuaCw+jBvo8ARW1yf0HFm4QkOMqc5tHfP+g72fazGhJfIsUnCt8xpe
-         mp/xRZsIg0mgOZqJhTG8cT7McPXGJ1ukft0WWdaIUS+eWaDA2zXp8vzYYaWFVJ1n4c3f
-         SCKvonjGJfPXnUNxwdImPJFX79k8bQBPCc+4An4JmfWG/NfhIaNniA8hj56CNjbaFfps
-         zd1uD1WICyi/4n/5GXUDYbTz3/piVvk+Bvrj9mW0yKGLaG3FVKLIUKSdcta23cxqKwRN
-         dydlEQziVshhvzTl9Kd5bJ8PPzPHlRyIBKwjcFbpdJ+No1jeRPUwmtUSN+f7b0r6q86a
-         xMIg==
+        d=linaro.org; s=google; t=1712677760; x=1713282560; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=OkNdlbndNp8toNAiOgiu6/Unce3sg3CUz/W3fWtHCzc=;
+        b=XEoWtRGR9YJT9bjncQLLvPXnXo1IB3VJWowGnu2TLBLafDrA4ksBdOo9YIi7ubs7pP
+         ZYudbMrsk+qUzh52TNTuxEp9fgyMObAnUgGDLCZ5bm5/NX7ffFOdl1bjjNEQxFT/6Ogt
+         sqkx6RbaSqXQaRNsPlkVnuBFqR7ym97o0mxGaMB/nMK5HDkFoSx8yCOYq1ETPEjTN93V
+         VHfaGcCp9YDMhh4DDkZzlGWNfz1x3z9BIX1ZHcZw45iEXpQr70kanUjUtsGdR1LqmDal
+         /LgdLF/Q93p6vy5imR7s9oCLenSPTO4p0ShMDa1j7ftjPLaM6WEGeaYe0mwWlqlp5gFg
+         y2Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712676953; x=1713281753;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RO/ZWp4a+TbCWiJJVnk1jNMrTa4t5wCjsm2zT6QGFvI=;
-        b=HUJxImteynoPWtbFZXX7pu4DkWLhXTtUPcXTh+LkzW6u7MmBRYpg94/mLcYk9v+Vmp
-         O3XYrUGtgVKVmw3aa2j0Y6fvAzLexe91MqEr4FcgCduc20x9pXdPxXHbb/qZudClkAC7
-         bxtzgdv2NQ9zUKxQw5K7aYjfUQ57A7T4uz0oAc5Ng5K6tG426fjOrq10oUBAjwI2glka
-         hQ2jZ5p3Mv1goW/eIcDE1F9DjAu4Ywa8E3i7Jl0TWgIhgVfdZJNMVu3kdXfaX8UltCLK
-         CjULB1IzIuwtAe6IxEBMaItNSK/NxqJ1CuOF//0iukRCwaXLEgOqh/kCrPJUVNC9tqPr
-         SX9w==
-X-Forwarded-Encrypted: i=1; AJvYcCUByxZwNG2Q5rq6rbBr5aiDti/i9gHbnxAHXlRPx5taH8Xc1Pfda3wYM/GqJ5RMqtWh/0S1Pdj/P8pycLoy1cADZByO/lqN1PB1RrvkPQ==
-X-Gm-Message-State: AOJu0Yxhky0tdMQ2ysML0ykVuofTQe8Sy0bdxMI4AWwM7jabpySH/Yfe
-	ZlZgaGkkG9MJtM8gSQ6ssTuvyw/1+GWiDChmTtsei780qqjITJBIZB30oD4KiIA=
-X-Google-Smtp-Source: AGHT+IH1MlVadqwVn3deyEvCrPmhxyitZBrEegAplbcQczNk+NJd5X1pH7M68uHU5nX6fsvXs4PUJg==
-X-Received: by 2002:a5d:4088:0:b0:343:7a53:16cf with SMTP id o8-20020a5d4088000000b003437a5316cfmr65352wrp.41.1712676952870;
-        Tue, 09 Apr 2024 08:35:52 -0700 (PDT)
-Received: from [192.168.0.102] ([176.61.106.68])
-        by smtp.gmail.com with ESMTPSA id s7-20020a5d4ec7000000b0033dd2a7167fsm11760977wrv.29.2024.04.09.08.35.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Apr 2024 08:35:52 -0700 (PDT)
-Message-ID: <d9453d32-c83e-42e2-b269-29f1d649c0df@linaro.org>
-Date: Tue, 9 Apr 2024 16:35:51 +0100
+        d=1e100.net; s=20230601; t=1712677760; x=1713282560;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OkNdlbndNp8toNAiOgiu6/Unce3sg3CUz/W3fWtHCzc=;
+        b=ugMgB0Pfib9NRlEa9zPXeBQdfBuD6vv3VG3E3vNDjCP7+lB+XwZMP08I2AS7Nj/AoX
+         N6e3DBQrjkQgp9ZxVLAeqWFS6N5vyQQy+rUX2ntwjde6s7fVdbRzqNr14dZumogqhD7V
+         WaGEq2j38tjU3vs4XDgvhaQBcFYo7e2SOTX3SnA0Gy3pkK2WkdIIrqKM+xN4JJQaADey
+         r7spibhLVyJPozmmeIOXIQZGZKeqXYdytdifOCr0oIdZ1KRcMJ43N0ZXVFw6KWQkSlq/
+         XBoJnXAWriX3PMKW7UTMImMMFKMZIjKeiyXHwZOK80pyRWBtuAc4PKFMQJUDGhzsNN96
+         JF4Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVpV9aZO5XxvhLwWlO21blAFrBdU4s+zoammMnP883OpvlcVTsdx4IFvqZjDPX1APAVHdCKdR6tFYBKERGEoE3Dtx7SvZ3v+muvClDEgA==
+X-Gm-Message-State: AOJu0YzKkaEpqaMrx/gaEOI76xP971PtRKghipPHEwo/+vBsYP4hdHlW
+	/PMlSxW1as2wJHXGUN8HdzxMZCVze3hk+Z2GNxfu/IkkFZVjJflMmISFyuTeacP2aLWzO2LTK5O
+	zvlwgH5qHmwGNCv7ppw9KVALGVcTQhItnY1UKEA==
+X-Google-Smtp-Source: AGHT+IFeh65C1hwVrDbeDlM5B8VF02m23KjP2P6B/Tn9ctw/X6XN3vvtAf3zkCKw6Th02bnJpA3n/2Fe18UxYwd3G5Q=
+X-Received: by 2002:a25:7b83:0:b0:dcd:4d:d342 with SMTP id w125-20020a257b83000000b00dcd004dd342mr120504ybc.50.1712677759847;
+ Tue, 09 Apr 2024 08:49:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/8] media: qcom: camss: Add new VFE driver for SM8550
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To: Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, andersson@kernel.org, konrad.dybcio@linaro.org,
- mchehab@kernel.org, quic_yon@quicinc.com
-Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20240320141136.26827-1-quic_depengs@quicinc.com>
- <20240320141136.26827-7-quic_depengs@quicinc.com>
- <18837b02-27af-4d0c-a772-bb7ce787a4c0@linaro.org>
-Content-Language: en-US
-In-Reply-To: <18837b02-27af-4d0c-a772-bb7ce787a4c0@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20240409-qcom-ucsi-fixes-bis-v2-0-6d3a09faec90@linaro.org>
+In-Reply-To: <20240409-qcom-ucsi-fixes-bis-v2-0-6d3a09faec90@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 9 Apr 2024 18:49:09 +0300
+Message-ID: <CAA8EJpqV+jfE4p943pjVPWS_VOUth5r9JSg=mSyH0x33iaahtw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] usb: typec: ucsi: additional fixes for Qualcomm platforms
+To: Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>, linux-usb@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 09/04/2024 14:39, Bryan O'Donoghue wrote:
-> 1. Please use 'rdi' not 'n' as the parameter here and
+On Tue, 9 Apr 2024 at 18:29, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> Fix small issues in the Qualcomm PMIC-GLINK UCSI implementation.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+> Changes in v2:
+> - Fixed indentation in pmic_glink_ucsi_notify() (Heikki)
 
-Ignore this comment 'n' is the right value here - you've already used 
-'rdi' in CSID which is the appropriate place 'n' is correct here.
+I have sent this version just few minutes before getting notification
+from Greg that v1 was added to usb-testing.
+Greg, you can ignore this version, the indentation change is the only
+difference between two versions.
 
----
-bod
+
+
+> - Link to v1: https://lore.kernel.org/r/20240408-qcom-ucsi-fixes-bis-v1-0-716c145ca4b1@linaro.org
+>
+> ---
+> Dmitry Baryshkov (3):
+>       usb: typec: ucsi_glink: enable the UCSI_DELAY_DEVICE_PDOS quirk on qcm6490
+>       usb: typec: ucsi_glink: drop NO_PARTNER_PDOS quirk for sm8550 / sm8650
+>       usb: typec: ucsi_glink: drop special handling for CCI_BUSY
+>
+>  drivers/usb/typec/ucsi/ucsi_glink.c | 14 ++++++--------
+>  1 file changed, 6 insertions(+), 8 deletions(-)
+> ---
+> base-commit: 25e918cf1bb906bd9aca19ae0270feb7f6d68783
+> change-id: 20240408-qcom-ucsi-fixes-bis-6b314764c5be
+>
+> Best regards,
+> --
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
+
+
+--
+With best wishes
+Dmitry
 
