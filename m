@@ -1,116 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-16949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B867789E0E5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 19:00:30 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3A4F89E134
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 19:13:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4839EB22A9A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 17:00:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ADB5B28633A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 17:12:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 713F6155313;
-	Tue,  9 Apr 2024 16:59:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDA4D1553AD;
+	Tue,  9 Apr 2024 17:12:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qbmep2Qo"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RgpnfeFN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45CD3153BDD;
-	Tue,  9 Apr 2024 16:59:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E6312E1D5;
+	Tue,  9 Apr 2024 17:12:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712681988; cv=none; b=lvLl4A4BYvQm4hkD5p+tPgFmtW+OSNOmrysjSIaI7ZsyXQmXgze4jdfo1S8siHEChlxMnRRSnGUukp4+IbGZgbQWZB09cU3ccCrwy2i8hq0O6RBsMlvr7bnGrJix3B/ax+9C/8S3laCjanybwHBaOnFQ0JKZmWXzqc5+zYJQwzA=
+	t=1712682735; cv=none; b=VYBjRbEqMPSIU8AzBaGXC6CBNXQrBm0QZMxkyaJknn3JfClAZD93wcmtKT/uF6f0QHw6eQFlgxL/LKE2ScefDP4XLUPrQWCoqPZjhl17lv22I3QswAJtFZKTlmkRatl9lUgEfNWBr38GsHKeTdA8DMG+kii0lb17NUbowIeM2DI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712681988; c=relaxed/simple;
-	bh=OfB6tGykzMHeswgiZrzSekncrZkg0/ET1ay/s698coQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=p/8bjJsIfQlPuPQnOqI+Uzy9Mob8Y1YYm9AuIJf9VNzQanMFg1JdPcpDw+940U/FBR1ZnSHMoYYVrcbEMCnnuKNBT427Ggwm8b5LX4ImuWRtrvj6WA9ztIJ8h3meZJFab9XvUQL2+zZXMrnQUP2PEcQlI39En+abhn3BuomN2nw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qbmep2Qo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3CD5C433F1;
-	Tue,  9 Apr 2024 16:59:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712681987;
-	bh=OfB6tGykzMHeswgiZrzSekncrZkg0/ET1ay/s698coQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qbmep2QoaZf+3Rc+hKtmmzPMIgxVrlF6W/j+caIWfAISByNO/fOeFv/S64d/RDBth
-	 pkJs1FiiHiQkpQGVBOAMNwPkiMWmpsdhkDz+jLUIQQ6KG75GY6IwlTvYlC0NLpvnXe
-	 LxswgBmF8qoOsz1BfEoQ5+PLf7/HfLMTyeegKQ0S+HO+36QlqcZ+bGGA/Jb5u0Sbyk
-	 uYR0V1y/dwB9hF59lcUbwHtENFRTl+czimRGz4InAU6wGO8+Bu2RUs8s9Jhhbam30X
-	 3phVPBhix7IjsX0mSOgY4ijUt62CumGNS0CX0LyGh5od92UtxOyOSCd31NfkJOLU7w
-	 9bNM+/oKDaADA==
-From: Will Deacon <will@kernel.org>
-To: mark.rutland@arm.com,
-	yury.norov@gmail.com,
-	linux@rasmusvillemoes.dk,
-	Dawei Li <dawei.li@shingroup.cn>
-Cc: catalin.marinas@arm.com,
-	kernel-team@android.com,
-	Will Deacon <will@kernel.org>,
-	xueshuai@linux.alibaba.com,
-	renyu.zj@linux.alibaba.com,
-	yangyicong@hisilicon.com,
-	jonathan.cameron@huawei.com,
-	andersson@kernel.org,
-	konrad.dybcio@linaro.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 00/10] perf: Avoid placing cpumask on the stack
-Date: Tue,  9 Apr 2024 17:59:34 +0100
-Message-Id: <171267763689.3170646.3275447262486662731.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20240403155950.2068109-1-dawei.li@shingroup.cn>
-References: <20240403155950.2068109-1-dawei.li@shingroup.cn>
+	s=arc-20240116; t=1712682735; c=relaxed/simple;
+	bh=avtQoYEPbu2+Jr0W5m1ghEuAGynrnjvGqeyVENfv9tU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fA5DTzNjVWzDlA+CySAg8GT2+JWRYfFXJXALXrkoBHHcD8inBsDSU005AGQHqL0Nwvxil90MwNgH2t3LjtZFniPQcrbEFysNSav/WZxsHuIUd8IBYK9I1ovLB9h4IQ2pFYjBwqBMdHuuzplfNBIqHnTsmgxUr3c2QJ5HHkqZwcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RgpnfeFN; arc=none smtp.client-ip=209.85.208.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-56845954ffeso7900714a12.2;
+        Tue, 09 Apr 2024 10:12:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712682732; x=1713287532; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=avtQoYEPbu2+Jr0W5m1ghEuAGynrnjvGqeyVENfv9tU=;
+        b=RgpnfeFN5RTt9XLtfwViH4g2S0SpXVv5rBHVXvdfPEP44G0gSYJrkp2+2pDyn3CjBK
+         GSy7G6JE1PzB4haSCZ9VqMIKOh1kRNASZrZ5rp7jDWIEEqaDwqwYDgnA//5XS12/iCYE
+         LwB9cDmz0V3CBq7w3sHHcaLtF2m8nFQtbc5+IgJkEGP8rGX5e8+Bcwg+0DrS8ZkWdVEX
+         AgrJR3B27DHM+VWIugiV1URbz+O9Ug8SS2CNwJXYd8wtwwhIFr1GS85tCPuTerMQ4V12
+         gdx/sX3yadrDm4nsjsP7Tk8xNVmb6h4G7MVftJbEGbci27cOX+eZlAZaEW9y6DWbzDlL
+         NayA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712682732; x=1713287532;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=avtQoYEPbu2+Jr0W5m1ghEuAGynrnjvGqeyVENfv9tU=;
+        b=k/YQ3z4n9xQd+huRLLWpp9G7k7zaHxIvH4vklN1UZNMrwcVP2bZ8fufJmP9AeNXIqD
+         R7q474k+ybnLqtBAs4ckFGxDGshJxOIXGCdWRt+ZNpvQtMB/36dJNcukkw00dJfNUBRR
+         pAgBOJdUusQO+beHVm61uetnjs7o2NauVleUyqG9xTclayMxo2p7F0SjztDP5YYbaXP7
+         2s66TN5Q9B84/zQa2Y9ERoulIz7Azk695DwaZA4oATW65F0AnN8KCyY497DfuPxQf7A9
+         gIvqpVxpHkgN/+uNJxQiB30E0DaEV3gWIc3OJu2eyOcCK6gEmQsT6qc1TSHjryLETvQw
+         YNEw==
+X-Forwarded-Encrypted: i=1; AJvYcCU8l1o7VpMMEyLxFnDr/zdUZN3pvYzF4HimJwwdgmsUpllBS7KGLt/xmUgok76kFLE0agXaoLnSsSqn50kjIWx6S46/R65sdPV5hlFniS/q7DwMFXV1B5KX3aEXkEeb4kBbXPNz8FxgQKlpKl71aI3/pXmg1UBFH+SO6gz/w4PfyRgxJboIh4o=
+X-Gm-Message-State: AOJu0YybLNUc++3WQ6kjbMugMrtOssRSU/e+SQHdNqEqldc420PVsLQ3
+	sTW/mmnqs6S8TW8JMUpnEsWg62c1s0Nj4OBkPq3eqzcozE84vuSQtOrOAsSRRzfdiVUJ7aBoxk+
+	872PVo/jL6Jsh5wRrfNKPphoWOag=
+X-Google-Smtp-Source: AGHT+IHDsDzpN80Q+dT8Z1O9ekHUAbkM8i2z9y0uAzBM2Co9XDpeUNjqG0qPrG/s7Ymg03pkuU0oARufzvBH2JCkaX0=
+X-Received: by 2002:a50:c305:0:b0:568:b622:f225 with SMTP id
+ a5-20020a50c305000000b00568b622f225mr85452edb.30.1712682732145; Tue, 09 Apr
+ 2024 10:12:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+References: <20240405-topic-smem_speedbin-v1-0-ce2b864251b1@linaro.org>
+ <20240405-topic-smem_speedbin-v1-3-ce2b864251b1@linaro.org>
+ <pncr7ecf4eir36skul3iwt2nf5bpuwd5zjfzzfwwnxjwe4hoes@6z2xe54crijp>
+ <d8a2ef87-f29e-4bdb-a9b8-591b8bd5d2b2@linaro.org> <tkcbl2iwcy3feoggbk737gx32qsxe5p4ad6lfrujy2pazccrhm@kif3guuzay6h>
+In-Reply-To: <tkcbl2iwcy3feoggbk737gx32qsxe5p4ad6lfrujy2pazccrhm@kif3guuzay6h>
+From: Rob Clark <robdclark@gmail.com>
+Date: Tue, 9 Apr 2024 10:12:00 -0700
+Message-ID: <CAF6AEGsg2xCCC27t_Gqu=MMQ6tckVw=Zj90p4x7EuOm+VKA=ig@mail.gmail.com>
+Subject: Re: [PATCH 3/6] drm/msm/adreno: Allow specifying default speedbin value
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
+	Neil Armstrong <neil.armstrong@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 03 Apr 2024 23:59:40 +0800, Dawei Li wrote:
-> This is v3 of previous series on elimination of placing cpumask var on
-> stack.
-> 
-> Change since v2:
-> - Update commit message for patch[2-10]. [Mark]
-> - Add Reviewed-by from Mark for patch[2-10].
-> 
-> [...]
+On Tue, Apr 9, 2024 at 8:23=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Tue, Apr 09, 2024 at 05:12:46PM +0200, Konrad Dybcio wrote:
+> >
+> >
+> > On 4/6/24 04:56, Dmitry Baryshkov wrote:
+> > > On Fri, Apr 05, 2024 at 10:41:31AM +0200, Konrad Dybcio wrote:
+> > > > From: Neil Armstrong <neil.armstrong@linaro.org>
+> > > >
+> > > > Usually, speedbin 0 is the "super SKU", a.k.a the one which can clo=
+ck
+> > > > the highest. Falling back to it when things go wrong is largely
+> > > > suboptimal, as more often than not, the top frequencies are not
+> > > > supposed to work on other bins.
+> > >
+> > > Isn't it better to just return an error here instead of trying to gue=
+ss
+> > > which speedbin to use?
+> >
+> > Not sure. I'd rather better compatibility for e.g. booting up a new
+> > laptop with just dt.
+>
+> New speedbin can have lower max speed, so by attempting to run it at
+> higher freq you might be breaking it.
 
-Applied to will (for-next/perf), thanks!
+Usually there are some OPPs in common to all speedbins, so picking a
+freq from that set would seem like the safe thing to do
 
-[01/10] cpumask: add cpumask_any_and_but()
-        https://git.kernel.org/will/c/897fa2c38c07
-[02/10] perf/alibaba_uncore_drw: Avoid placing cpumask on the stack
-        https://git.kernel.org/will/c/2f6589df124e
-[03/10] perf/arm-cmn: Avoid placing cpumask on the stack
-        https://git.kernel.org/will/c/60c73240f304
-[04/10] perf/arm_cspmu: Avoid placing cpumask on the stack
-        https://git.kernel.org/will/c/b5310fa1fe8e
-[05/10] perf/arm_dsu: Avoid placing cpumask on the stack
-        https://git.kernel.org/will/c/bea2a13b207e
-[06/10] perf/dwc_pcie: Avoid placing cpumask on the stack
-        https://git.kernel.org/will/c/cf276ee46bc4
-[07/10] perf/hisi_pcie: Avoid placing cpumask on the stack
-        https://git.kernel.org/will/c/d7df79e6af29
-[08/10] perf/hisi_uncore: Avoid placing cpumask on the stack
-        https://git.kernel.org/will/c/b78d0fa25462
-[09/10] perf/qcom_l2: Avoid placing cpumask on the stack
-        https://git.kernel.org/will/c/fc85cee97029
-[10/10] perf/thunderx2: Avoid placing cpumask on the stack
-        https://git.kernel.org/will/c/595275ca4984
+BR,
+-R
 
-Cheers,
--- 
-Will
-
-https://fixes.arm64.dev
-https://next.arm64.dev
-https://will.arm64.dev
+>
+> >
+> > >
+> > > If that's not the case, I think the commit should be expanded with
+> > > actually setting default_speedbin for the existing GPUs.
+> >
+> > I think that should be addressed, although separately.
+>
+> I'd prefer to have it as a part of this patch, but I'd not NAK it just
+> for this reason.
+>
+> --
+> With best wishes
+> Dmitry
 
