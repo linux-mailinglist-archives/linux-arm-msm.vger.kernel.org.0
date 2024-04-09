@@ -1,105 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-16983-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16984-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 024D289E4AA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 22:49:21 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 057F389E505
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 23:36:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 619C3B21A04
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 20:49:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B33D528210D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 21:36:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3139015885B;
-	Tue,  9 Apr 2024 20:49:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D0F6158A14;
+	Tue,  9 Apr 2024 21:36:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YCQobwuH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qV7AVBUH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D19153BDD;
-	Tue,  9 Apr 2024 20:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D1A158A0E;
+	Tue,  9 Apr 2024 21:36:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712695753; cv=none; b=UsNRsZssfCAnrc3xE3mCDiL+dAluK7hGypWETrJp1eSKRI5UxtjyEJQNmNpxPm6QTuz/um3ZzPp05M8o9D1k8TPA0KCcyet87d36ReZOFc6hHYUlv5iF+oT9zxLEMNgFyq1g0LcF9vTe00hpPdvSUvHvfBZtweN5yaINS47QaR4=
+	t=1712698614; cv=none; b=Kw1RZ8uFe4vlqCGVVASKe7krAidBu5pEyHfYAjZWDAU5xp7LnrneTBVpaiLnVSuo9dgduh3v25Mf3JJj0nvC/Gxt0vfvEO7uSiF+9RfujIuu8Qhow8do3IT397BjDfsleVF0QRJsw7IUbuJcorKc9hMoxm/0yCpP9g7CpuotePI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712695753; c=relaxed/simple;
-	bh=pCdcsQUmCnc6COisoFP/0WhirgGUlE6yNK7he9qeYd8=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=SrqUD8LgHOacDBOhnNVNZQ65nJ39gE4atfZ9gjJfHTjeGgUSODSfqE/FXMWJZOxKvRiHKYXS5V3LYpuPgUjtPcOOTvrE9yEDxKlkSRqaUNfL3Bz3dBygffUT0Cvn+Q1qutkmuHNQPCrfk8rpAfWShw50tfaALBxHHVI9ez8YsNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YCQobwuH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FABCC433F1;
-	Tue,  9 Apr 2024 20:49:12 +0000 (UTC)
+	s=arc-20240116; t=1712698614; c=relaxed/simple;
+	bh=DnLOeLETMfr9szDDiTAWX9eoEbMZT8svSFqOh4k7jb4=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=KZEfeSemvmxKnoVmtVVhnu9/XRpRvfUbEUhorJNuyt4bUqYLJV6upGNaBKXLJZCPgYvBpyL6wMuxULlVMX62oyyXpcAc1YHkOF2q2dxBZPeYCzeg31pdbOogy6lxDKd+P7jGyyEfrPWrd5aGOgj9PuMZtrbRkZth7d5CEWlJPRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qV7AVBUH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04FE7C433C7;
+	Tue,  9 Apr 2024 21:36:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712695752;
-	bh=pCdcsQUmCnc6COisoFP/0WhirgGUlE6yNK7he9qeYd8=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=YCQobwuHqqXxEosscmDYkKbigWayEoJkp3jcBbVGjj7vC7+mfI7VPVXNj/nQoI/Q+
-	 GKA5HxgVLlLWmpQzWguWxbakVwzyJ3ZwqB2fqXo1xWcOcvmrtYfRehWAqS3fwqU/32
-	 aiCl4nsBBSkp769fBxlucQlze2lN4georAHEL20O1P/bhlpYS39Yhh9I0uJyLVeBwa
-	 355jDfoTGZvVdAHzXRRbG96qLFRGGaQpK5/fybciti1mkKfVekmWpRxKGlyLmVkcfN
-	 KqGDyuQnZ7C75SRK9VZ6A66jIjCQInNt5YIDpFZ7nArT7sPv0vggXeiHNyXoYdKS23
-	 gYf/CN5wT3tZg==
-Date: Tue, 09 Apr 2024 15:49:11 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=k20201202; t=1712698613;
+	bh=DnLOeLETMfr9szDDiTAWX9eoEbMZT8svSFqOh4k7jb4=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=qV7AVBUHnH0DfbZGWscQ85F51SrwD666zZzJpmq24viHXRQ28ze1azompCotzHETq
+	 3skThZ+CrSTuKlGAg8KjDgMhwS5d97WPMTXLzaUoxZzbL+PilEscDpG9dFjDFtQUJ/
+	 0I0csVV7eyjvr2jqI9egjh9TmRgMMOUyOKyiv8NNBZi/eRWm/TZRfNkkCwp1ccMFqM
+	 frgrF9NSGFVCXbhn5vK7L3rqNbEXnOAwDEBWawZV5iTFPZ557s/lAcdh4XdbS58mrc
+	 fNEqBe9iJwtX3tVsrjzRlNGkACJOxA3ObuoBrbHk0BdIKvUlFH38ly+AZP2PeqmzeY
+	 TimcWEvz5NKIA==
+Date: Tue, 9 Apr 2024 14:36:52 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: Kalle Valo <kvalo@kernel.org>
+Cc: <davem@davemloft.net>, <edumazet@google.com>, <pabeni@redhat.com>,
+ Baochen Qiang <quic_bqiang@quicinc.com>, <ath11k@lists.infradead.org>,
+ <manivannan.sadhasivam@linaro.org>, <linux-wireless@vger.kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <mhi@lists.linux.dev>,
+ <netdev@vger.kernel.org>
+Subject: Re: [PATCH v7 2/3] net: qrtr: support suspend/hibernation
+Message-ID: <20240409143652.57bc8cc3@kernel.org>
+In-Reply-To: <87il0q28a5.fsf@kernel.org>
+References: <20240305021320.3367-1-quic_bqiang@quicinc.com>
+	<20240305021320.3367-3-quic_bqiang@quicinc.com>
+	<8734s02b3s.fsf@kernel.org>
+	<87il0q28a5.fsf@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Alexandru Gagniuc <mr.nuke.me@gmail.com>
-Cc: Kishon Vijay Abraham I <kishon@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- linux-phy@lists.infradead.org, Conor Dooley <conor+dt@kernel.org>, 
- linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
- linux-arm-msm@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, 
- Vinod Koul <vkoul@kernel.org>, devicetree@vger.kernel.org
-In-Reply-To: <20240409190833.3485824-6-mr.nuke.me@gmail.com>
-References: <20240409190833.3485824-1-mr.nuke.me@gmail.com>
- <20240409190833.3485824-6-mr.nuke.me@gmail.com>
-Message-Id: <171269575025.2154927.5085638397784185466.robh@kernel.org>
-Subject: Re: [PATCH v2 5/7] dt-bindings: phy: qcom,ipq8074-qmp-pcie: add
- ipq9574 gen3x2 PHY
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
+On Tue, 09 Apr 2024 12:29:54 +0300 Kalle Valo wrote:
+> No reply from netdev maintainers but as the patch is marked as 'Not
+> Applicable' in netdev patchwork I guess they would not have major
+> objection to take this to ath.git. It should go to net-next in the next
+> wireless-next pull request anyway.
 
-On Tue, 09 Apr 2024 14:08:31 -0500, Alexandru Gagniuc wrote:
-> The IPQ9574 gen3x2 PHY is very similar to IPQ6018. It requires two
-> extra clocks named "anoc" and "snoc". Document this, and add a
-> new compatible string for this PHY.
-> 
-> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
-> ---
->  .../phy/qcom,ipq8074-qmp-pcie-phy.yaml        | 31 ++++++++++++++++++-
->  1 file changed, 30 insertions(+), 1 deletion(-)
-> 
-
-My bot found errors running 'make dt_binding_check' on your patch:
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,ipq8074-qmp-pcie-phy.example.dtb: phy@84000: clock-names: ['aux', 'cfg_ahb', 'pipe'] is too short
-	from schema $id: http://devicetree.org/schemas/phy/qcom,ipq8074-qmp-pcie-phy.yaml#
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240409190833.3485824-6-mr.nuke.me@gmail.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+Sorry for the silence, FWIW no objection/opinion here.
 
