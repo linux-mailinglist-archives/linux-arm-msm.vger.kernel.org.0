@@ -1,375 +1,222 @@
-Return-Path: <linux-arm-msm+bounces-16912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D15B89DBC7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 16:09:31 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D08289DC1F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 16:23:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0744AB21588
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 14:09:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D8177283320
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 14:23:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76B1C12A144;
-	Tue,  9 Apr 2024 14:09:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEAF712FB3E;
+	Tue,  9 Apr 2024 14:22:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="uxM6x85y"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="f8qTELx1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B6712F59E
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Apr 2024 14:09:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947DD12FF63
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Apr 2024 14:22:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712671761; cv=none; b=LfRnPToP3ZM/FTsHp4nRPfbgL82FtaoLPuACSFxed2SZsblzLGkS99pmFm2XIC/AW+TkwLPsQP8BxaQi1Cxlujl76LOmNPDkbFjrCra7ZsrNiLvgszhqO6PSkuexWALQ4Fd74yksvXk5bPixhANWxJl5FRx1YLRU7tRuypVUie4=
+	t=1712672579; cv=none; b=H4SUU2uhVMjyLVYSR6PzIVhx0LKnl2siZNIodfF7rIIcqcDt1H/c2QzZyExnnkSqxl27FzDXY2PS3WsDzUnyijhVBLRTaIIwLsLLKF4g1K3zhQge2IwQH/27OkQm/nTgfzf8uyDLw2vbNmy+IYupDzgyqz+1ujJYfxN8NL5Vim4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712671761; c=relaxed/simple;
-	bh=wXSIz1XNSQBWcVEoaQe0KIgcoobtNfoVS+vSjhY3Dwk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=amQ/OfwTAdsY8/wjC9+eIymJiKl2l4PokDivUpedgsxcUA7wS6PBKegOL8yklN1H+yI5Zxw1Z3abo2EjRZtloRWucSyBeJfPgsib29OcOXvctZTfp7p0Bd7VLxBcuy8N4+JUeWi/f8Csu4Y8JEzQZmwgJyZtb5yRwRmTpLfQcto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=uxM6x85y; arc=none smtp.client-ip=209.85.218.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a519eae91d1so539751166b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Apr 2024 07:09:18 -0700 (PDT)
+	s=arc-20240116; t=1712672579; c=relaxed/simple;
+	bh=hIUzrBVsS/dxIln26cfNIzfBzOzmPDPyttogBq3LOxo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=MsBx8jWdlPrUGJEM4N8JhIiyDDnB+lwImpUo/EPqK40ugseqKhn3T8munn2gGnyKufavn/gcbeffvP1iJVhlv5E2VU7cNYOwdJIrM9W8tWhWy8GR7kkhmdozCPg51eMXz6DuX56nQbI0x/xtnEatUWe0UnEmBYgd+FLQgqgWTmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=f8qTELx1; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-516ab4b3251so6362845e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Apr 2024 07:22:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1712671757; x=1713276557; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gNoEcozys9YPJuzXOf6R2daB2g3fI19srJ6Eb/hPc7Y=;
-        b=uxM6x85y30Gkvw5BG/U+IUSdjNqv6YW7GWUADKwBG5wXGYHZehOXoVg1QOIi8sAvzV
-         m/x/xGBxoa35w3qsWy2JaTbx8ptIkBfArvkG524R2vSTI9JT93r4L2CpYKczXQSK9uVp
-         Vmd+TUkUvFYUUbsT1F6p64LvZeSKN44f50qT0pJ+r5RFkJv7SfxTVCcx3OYc5PGY0xyK
-         vNpKSd9lsR7n0Geq/sbiBnWAMyGG0OQo+zzIkL9rqm1KrVT0dTm5Jd5VrPOQTPWSg5y4
-         MueottUz4G+zl0n8Gq8NExGcAO2zrpc9uiMbf8NCsMefhTXg1byUtVyvN7aiUNJ9tfN7
-         7uCQ==
+        d=linaro.org; s=google; t=1712672576; x=1713277376; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CGvZnm0yehCs3OtUKInch3AqosyI0xgf+74PLDfaunY=;
+        b=f8qTELx1liKE3aIKitM5S9UNyJv5YrFqVU3kcFthFPOVLQDIMtQFAZ8Zz7j3N/27ZB
+         xIffDdbjAm0JVNBaoakF76DOnhnHKTTRU9RKbwXWuJozzh4QfMHSghwZ13lwbG7N+4ry
+         8jJ2g6V5Aubj9z275eQQmC9OGBV7B7uxc3eijz2K3mV27K7836AQ66Zs77TOBIR1qKWX
+         L7FV54icLdEchjY93RNp+NRcChvjb8CHw3Mr/DZ8aBNx8Iuz//Go+9cHs+zFDoPQ4eKG
+         3HMSbF2d0I1YCh6KrHRYVMc1vs4XuZldKVCsksxa+/RCVjbuVa+7Vs1Yrx0PT2GvlivN
+         8MgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712671757; x=1713276557;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gNoEcozys9YPJuzXOf6R2daB2g3fI19srJ6Eb/hPc7Y=;
-        b=NZ71Jf27UKZxBFSebP1ZQkf9BZlsjVY1h567pkWO9Ye9MZt6zFSCs9PCa4wfKi3ief
-         GD709q1SElWx/te/97pu2TtPodE1YmmBU2wEvrQYHs9OPBhnZp49pOxVUOAgUN5Ff32g
-         o7qR2yi0mtOFfWaxdy6GuElNt8rQqKt8kjv6HGU2dNUcpKFldqqK4IPHCnQ7SompNFoa
-         ofWdy0tpcLfzL5DWYQ7VWc/olsMIJ5Y1m9KDoVJESBrq2oUPYeFu2rfZK1LV7WzLHk9Q
-         YyMs3L4ktJ/GfybvL+pDFdAH+QMsEwzZv2ByJy4HAF/K25SK3UD4tnIWt0gX0d1ptQaQ
-         L1DA==
-X-Forwarded-Encrypted: i=1; AJvYcCXpXeojCAQU/WnncfOiJ4M1jZU+G44BZbkfBu1AeU9tZlyvxjnthZ/mnJveU3vNkaNj5n/zkxUYh+7TW492e5klG1Knodk2y8K2Sf/AKg==
-X-Gm-Message-State: AOJu0YzGyBgUbjDecyJyK6CNxUEqT+S/prICOB5N8HvJ7NIIVYCcE9nF
-	QuSSeIcEY+6I4H+kDhR0FrkwcEwUAbEnPO4K9evSFAgDb2dbw1nDFQHVc/P1Nk8=
-X-Google-Smtp-Source: AGHT+IHCWiBUPw3K/FLoYZSs54At5NokuRELhZWJFBbJu9HO/oQa0VK5lXbQ0XuBrwoa0fLh6bkl+A==
-X-Received: by 2002:a17:906:11da:b0:a51:a288:5af9 with SMTP id o26-20020a17090611da00b00a51a2885af9mr7469851eja.51.1712671756615;
-        Tue, 09 Apr 2024 07:09:16 -0700 (PDT)
-Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
-        by smtp.gmail.com with ESMTPSA id hx2-20020a170906846200b00a46dd1f7dc1sm5778147ejc.92.2024.04.09.07.09.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Apr 2024 07:09:16 -0700 (PDT)
-Message-ID: <bd42242a-c7da-4ffe-abae-9d0fa52b75de@freebox.fr>
-Date: Tue, 9 Apr 2024 16:09:15 +0200
+        d=1e100.net; s=20230601; t=1712672576; x=1713277376;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CGvZnm0yehCs3OtUKInch3AqosyI0xgf+74PLDfaunY=;
+        b=vzbqx1mEpBcVeFXpAv6cUuqdqYElwC3ixa72CBUuLZh4vojEKEFjm8avTc8mMdtQBK
+         e7ezTxo63Mm5YiL3p2ycHXYyHiCDO6GqQhcZ743oLQvDTNQygiKpE1qBFLZ872hkGorS
+         0Ywf4FMTNtWdvK4C3ENV9JhtFS/sfVCR+z/fXW2rVYsDat6jsKBlcHaFRYmt5J4+Mh2N
+         QFUAz8vHaqIzNp22KlYRAsG60v5Kf9rfv/morCL4VKzV9cMK3XQwMxmlaRKk2d/d9lSu
+         4dfP6TXO3PRQ+2QqpS0mN/BQE4Zz4+C8B0GTeexT+fehZreeavy42cxQ5ayuuqsRPgkd
+         gnaw==
+X-Gm-Message-State: AOJu0Ywd/9iTkQE7Ck9vkieonEQY6vbbVWWMxJjiuk+XkX03d8r+q+AX
+	h3RqIjtvYgGe2NkDlH8wtzAgZTaew0SdyjgDXfdYjF7UUozByEUpvXv061e5rIgNDlnrdJzbQDN
+	l
+X-Google-Smtp-Source: AGHT+IEYMV2d+W/LgC9LK9e7WSDupcFG+kxxW5Z93WmgAX/1oR83muZqP+jxNE+cXxyA7sTTt7+f2A==
+X-Received: by 2002:a05:6512:128b:b0:516:c5a9:eded with SMTP id u11-20020a056512128b00b00516c5a9ededmr10297697lfs.42.1712672575593;
+        Tue, 09 Apr 2024 07:22:55 -0700 (PDT)
+Received: from umbar.lan ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id o6-20020ac24e86000000b00516cbd3e982sm1563744lfr.178.2024.04.09.07.22.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Apr 2024 07:22:55 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 09 Apr 2024 17:22:54 +0300
+Subject: [PATCH] drm/msm/gen_header: allow skipping the validation
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC WIP PATCH] venus: add qcom,no-low-power property
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-media <linux-media@vger.kernel.org>,
- MSM <linux-arm-msm@vger.kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Jeffrey Hugo <quic_jhugo@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Pierre-Hugues Husson
- <phh@phh.me>, Marijn Suijten <marijn.suijten@somainline.org>
-References: <0843621b-386b-4173-9e3c-9538cdb4641d@freebox.fr>
- <CAA8EJpq=G21h87W69_4U-BZ=Sa5VEs15Y-zE-G5x9VxVx4qjsA@mail.gmail.com>
- <81dc6452-4039-4eb4-92ba-df248215fca2@linaro.org>
- <b8325dbf-67c5-4898-bc23-ff093ae6e14a@freebox.fr>
- <87db77f7-fda4-4cf7-adfd-8545c40c3365@linaro.org>
- <10fe67af-0572-4faa-91c6-fce9c8f9dc92@linaro.org>
- <6342e92d-eed0-45c2-8f04-3779aa2e521d@freebox.fr>
- <4ab95e87-c912-469b-b8d4-be0cf0e4710b@linaro.org>
- <a8c5b27c-47a9-044a-78e8-51c67acf19a6@quicinc.com>
- <c6a9c20e-02d3-4334-badd-2efe5be9ce7e@freebox.fr>
- <d5abf142-3a2b-454c-660a-249c0fb25208@quicinc.com>
- <33382ecb-8a73-4d2f-96b1-8048df7a6414@freebox.fr>
- <3914555d-3c89-a5c5-2906-0bd24d0bf735@quicinc.com>
- <72741d2e-5165-4505-b079-d7b5d1491888@freebox.fr>
- <edb29faa-01b3-3b96-7c05-3378eb3af073@quicinc.com>
- <21b833cf-61c3-4fb5-8c55-492aac0fd3b6@freebox.fr>
- <8170522f-b813-19a4-3f85-f2880809d9a5@quicinc.com>
- <c2ce34ce-d532-4039-bb9f-d4d1b2fb23b0@freebox.fr>
- <09bc9231-0e59-4cb2-a05f-02e2fcaf3d15@linaro.org>
-Content-Language: en-US
-From: Marc Gonzalez <mgonzalez@freebox.fr>
-In-Reply-To: <09bc9231-0e59-4cb2-a05f-02e2fcaf3d15@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20240409-fd-fix-lxml-v1-1-e5c300d6c1c8@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAD1PFWYC/x2MQQqAIBAAvyJ7bsFEBPtKdAhda8EsFEIQ/550H
+ IaZBoUyU4FFNMj0cuE7DZgnAe7c00HIfjAoqbTU0mLwGLhirFdEIueM1TYYTTCKJ9Nw/23dev8
+ AuTeBe10AAAA=
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ Stephen Rothwell <sfr@canb.auug.org.au>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4269;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=hIUzrBVsS/dxIln26cfNIzfBzOzmPDPyttogBq3LOxo=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmFU8+GBbXPlk+8WqR1aY9qFNl+S6iJzsUN/i6R
+ HKxXKumK5aJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZhVPPgAKCRCLPIo+Aiko
+ 1QXjB/wMZyXobBJWAPjTfa7TE6QNsiK2htoOmf3k+BCtFuiZexby2TCyzl703fuNrK06oNmBLio
+ CdoKmX86ffHVbMb+G0s8CJxMQSwk1JwKgWWPNg32cYyYinqLrCEnf1R7ohdnGM5LytyOYCgt2e+
+ uUG5z4vfP4bLlJIrejllXufSUHq+NTz0Dn9Qyb0sGRsSYzss/qIiJdLhP9ZQI9i+LJN/1pdobVt
+ 2UtYYNi0z/VwsP2iTajkF75kfZ92zJGvaVS0qcVwAtXG4ZKJUeI3H7/4Z8Hm5s4zeH8Z9hg7Kz8
+ Ey6V7ot6RPwiOYxLXr5hyurtxinGSUum0yu2+t3BarfbTSEr
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-On 09/04/2024 13:27, Bryan O'Donoghue wrote:
+We don't need to run the validation of the XML files if we are just
+compiling the kernel. Skip the validation unless the user enables
+corresponding Kconfig option. This removes a warning from gen_header.py
+about lxml being not installed.
 
-> On 08/04/2024 16:39, Marc Gonzalez wrote:
-> 
->> On 29/02/2024 16:32, Vikash Garodia wrote:
->> 
->>> Not completely sure on these configurations, but certainly both the
->>> video_subcore0_gdsc and video_subcore1_gdsc should be configured in
->>> hardware control mode in the gdsc configuration.
->>
->> Still trying to land support for venus decoder on msm8998 in mainline.
->>
->> This is the patch I have at the moment:
->>
->> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
->> index 4dfe2d09ac285..67b8374ddf02f 100644
->> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
->> @@ -3010,6 +3010,55 @@ mdss_dsi1_phy: phy@c996400 {
->>   			};
->>   		};
->>   
->> +		venus: video-codec@cc00000 {
->> +			compatible = "qcom,msm8998-venus";
->> +			reg = <0x0cc00000 0xff000>;
->> +			interrupts = <GIC_SPI 287 IRQ_TYPE_LEVEL_HIGH>;
->> +			power-domains = <&mmcc VIDEO_TOP_GDSC>;
->> +			clocks = <&mmcc VIDEO_CORE_CLK>,
->> +				 <&mmcc VIDEO_AHB_CLK>,
->> +				 <&mmcc VIDEO_AXI_CLK>,
->> +				 <&mmcc VIDEO_MAXI_CLK>;
->> +			clock-names = "core", "iface", "bus", "mbus";
->> +			iommus = <&mmss_smmu 0x400>,
->> +				 <&mmss_smmu 0x401>,
->> +				 <&mmss_smmu 0x40a>,
->> +				 <&mmss_smmu 0x407>,
->> +				 <&mmss_smmu 0x40e>,
->> +				 <&mmss_smmu 0x40f>,
->> +				 <&mmss_smmu 0x408>,
->> +				 <&mmss_smmu 0x409>,
->> +				 <&mmss_smmu 0x40b>,
->> +				 <&mmss_smmu 0x40c>,
->> +				 <&mmss_smmu 0x40d>,
->> +				 <&mmss_smmu 0x410>,
->> +				 <&mmss_smmu 0x411>,
->> +				 <&mmss_smmu 0x421>,
->> +				 <&mmss_smmu 0x428>,
->> +				 <&mmss_smmu 0x429>,
->> +				 <&mmss_smmu 0x42b>,
->> +				 <&mmss_smmu 0x42c>,
->> +				 <&mmss_smmu 0x42d>,
->> +				 <&mmss_smmu 0x411>,
->> +				 <&mmss_smmu 0x431>;
->> +			memory-region = <&venus_mem>;
->> +			status = "disabled";
->> +
->> +			video-decoder {
->> +				compatible = "venus-decoder";
->> +				clocks = <&mmcc VIDEO_SUBCORE0_CLK>;
->> +				clock-names = "core";
->> +				power-domains = <&mmcc VIDEO_SUBCORE0_GDSC>;
->> +			};
->> +
->> +			video-encoder {
->> +				compatible = "venus-encoder";
->> +				clocks = <&mmcc VIDEO_SUBCORE1_CLK>;
->> +				clock-names = "core";
->> +				power-domains = <&mmcc VIDEO_SUBCORE1_GDSC>;
->> +			};
->> +		};
->> +
->>   		mmss_smmu: iommu@cd00000 {
->>   			compatible = "qcom,msm8998-smmu-v2", "qcom,smmu-v2";
->>   			reg = <0x0cd00000 0x40000>;
->> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
->> index ce206b7097541..42e0c580e093d 100644
->> --- a/drivers/media/platform/qcom/venus/core.c
->> +++ b/drivers/media/platform/qcom/venus/core.c
->> @@ -587,6 +587,47 @@ static const struct venus_resources msm8996_res = {
->>   	.fwname = "qcom/venus-4.2/venus.mbn",
->>   };
->>   
->> +static const struct freq_tbl msm8998_freq_table[] = {
->> +	{ 1944000, 520000000 },	/* 4k UHD @ 60 (decode only) */
->> +	{  972000, 520000000 },	/* 4k UHD @ 30 */
->> +	{  489600, 346666667 },	/* 1080p @ 60 */
->> +	{  244800, 150000000 },	/* 1080p @ 30 */
->> +	{  108000,  75000000 },	/* 720p @ 30 */
->> +};
->> +
->> +/*
->> + * https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/arch/arm/boot/dts/qcom/msm8998-vidc.dtsi
->> + */
->> +static const struct reg_val msm8998_reg_preset[] = {
->> +	{ 0x80124, 0x00000003 },
->> +	{ 0x80550, 0x01111111 },
->> +	{ 0x80560, 0x01111111 },
->> +	{ 0x80568, 0x01111111 },
->> +	{ 0x80570, 0x01111111 },
->> +	{ 0x80580, 0x01111111 },
->> +	{ 0x80588, 0x01111111 },
->> +	{ 0xe2010, 0x00000000 },
->> +};
->> +
->> +static const struct venus_resources msm8998_res = {
->> +	.freq_tbl = msm8998_freq_table,
->> +	.freq_tbl_size = ARRAY_SIZE(msm8998_freq_table),
->> +	.reg_tbl = msm8998_reg_preset,
->> +	.reg_tbl_size = ARRAY_SIZE(msm8998_reg_preset),
->> +	.clks = { "core", "iface", "bus", "mbus" },
->> +	.clks_num = 4,
->> +	.vcodec0_clks = { "core" },
->> +	.vcodec1_clks = { "core" },
->> +	.vcodec_clks_num = 1,
->> +	.max_load = 2563200,
->> +	.hfi_version = HFI_VERSION_3XX,
->> +	.vmem_id = VIDC_RESOURCE_NONE,
->> +	.vmem_size = 0,
->> +	.vmem_addr = 0,
->> +	.dma_mask = 0xddc00000 - 1,
->> +	.fwname = "qcom/venus-4.4/venus.mbn",
->> +};
->> +
->>   static const struct freq_tbl sdm660_freq_table[] = {
->>   	{ 979200, 518400000 },
->>   	{ 489600, 441600000 },
->> @@ -893,6 +934,7 @@ static const struct venus_resources sc7280_res = {
->>   static const struct of_device_id venus_dt_match[] = {
->>   	{ .compatible = "qcom,msm8916-venus", .data = &msm8916_res, },
->>   	{ .compatible = "qcom,msm8996-venus", .data = &msm8996_res, },
->> +	{ .compatible = "qcom,msm8998-venus", .data = &msm8998_res, },
->>   	{ .compatible = "qcom,sdm660-venus", .data = &sdm660_res, },
->>   	{ .compatible = "qcom,sdm845-venus", .data = &sdm845_res, },
->>   	{ .compatible = "qcom,sdm845-venus-v2", .data = &sdm845_res_v2, },
->> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
->> index f9437b6412b91..abdc578ce988e 100644
->> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
->> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
->> @@ -945,6 +945,7 @@ static int venus_sys_set_default_properties(struct venus_hfi_device *hdev)
->>   			dev_warn(dev, "setting idle response ON failed (%d)\n", ret);
->>   	}
->>   
->> +	venus_fw_low_power_mode = false;
-> 
-> So instead of this workaround, @Vikash is asking for HW_CTRL similar to 
-> what we have in 8996
-> 
-> 8996 has a top-level "magic" GDSC which 8998 doesn't appear to have.
-> 
-> I think the CXC stuff would still be valid.
-> 
-> diff --git a/drivers/clk/qcom/mmcc-msm8998.c 
-> b/drivers/clk/qcom/mmcc-msm8998.c
-> index 1180e48c687ac..275fb3b71ede4 100644
-> --- a/drivers/clk/qcom/mmcc-msm8998.c
-> +++ b/drivers/clk/qcom/mmcc-msm8998.c
-> @@ -2535,6 +2535,8 @@ static struct clk_branch vmem_ahb_clk = {
-> 
->   static struct gdsc video_top_gdsc = {
->          .gdscr = 0x1024,
-> +       .cxcs = (unsigned int []){ 0x1028, 0x1034, 0x1038 },
-> +       .cxc_count = 3,
->          .pd = {
->                  .name = "video_top",
->          },
-> @@ -2543,20 +2545,26 @@ static struct gdsc video_top_gdsc = {
-> 
->   static struct gdsc video_subcore0_gdsc = {
->          .gdscr = 0x1040,
-> +       .cxcs = (unsigned int []){ 0x1048 },
-> +       .cxc_count = 1,
->          .pd = {
->                  .name = "video_subcore0",
->          },
->          .parent = &video_top_gdsc.pd,
->          .pwrsts = PWRSTS_OFF_ON,
-> +       .flags = HW_CTRL,
->   };
-> 
->   static struct gdsc video_subcore1_gdsc = {
->          .gdscr = 0x1044,
-> +       .cxcs = (unsigned int []){ 0x104c },
-> +       .cxc_count = 1,
->          .pd = {
->                  .name = "video_subcore1",
->          },
->          .parent = &video_top_gdsc.pd,
->          .pwrsts = PWRSTS_OFF_ON,
-> +       .flags = HW_CTRL,
->   };
-> 
-> Can you give it a try ?
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Closes: https://lore.kernel.org/all/20240409120108.2303d0bd@canb.auug.org.au/
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/Kconfig                 |  8 ++++++++
+ drivers/gpu/drm/msm/Makefile                |  9 ++++++++-
+ drivers/gpu/drm/msm/registers/gen_header.py | 14 +++++++++++---
+ 3 files changed, 27 insertions(+), 4 deletions(-)
 
+diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
+index f202f26adab2..4c9bf237d4a2 100644
+--- a/drivers/gpu/drm/msm/Kconfig
++++ b/drivers/gpu/drm/msm/Kconfig
+@@ -54,6 +54,14 @@ config DRM_MSM_GPU_SUDO
+ 	  Only use this if you are a driver developer.  This should *not*
+ 	  be enabled for production kernels.  If unsure, say N.
+ 
++config DRM_MSM_VALIDATE_XML
++	bool "Validate XML register files against schema"
++	depends on DRM_MSM && EXPERT
++	depends on $(success,$(PYTHON3) -c "import lxml")
++	help
++	  Validate XML files with register definitions against rules-fd schema.
++	  This option is mostly targeting DRM MSM developers. If unsure, say N.
++
+ config DRM_MSM_MDSS
+ 	bool
+ 	depends on DRM_MSM
+diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
+index c861de58286c..718968717ad5 100644
+--- a/drivers/gpu/drm/msm/Makefile
++++ b/drivers/gpu/drm/msm/Makefile
+@@ -156,8 +156,15 @@ msm-y += $(adreno-y) $(msm-display-y)
+ 
+ obj-$(CONFIG_DRM_MSM)	+= msm.o
+ 
++ifeq (y,$(CONFIG_DRM_MSM_VALIDATE_XML))
++	headergen-opts += --validate
++else
++	headergen-opts += --no-validate
++endif
++
+ quiet_cmd_headergen = GENHDR  $@
+-      cmd_headergen = mkdir -p $(obj)/generated && $(PYTHON3) $(srctree)/$(src)/registers/gen_header.py --rnn $(srctree)/$(src)/registers --xml $< c-defines > $@
++      cmd_headergen = mkdir -p $(obj)/generated && $(PYTHON3) $(srctree)/$(src)/registers/gen_header.py \
++		      $(headergen-opts) --rnn $(srctree)/$(src)/registers --xml $< c-defines > $@
+ 
+ $(obj)/generated/%.xml.h: $(src)/registers/adreno/%.xml \
+ 		$(src)/registers/adreno/adreno_common.xml \
+diff --git a/drivers/gpu/drm/msm/registers/gen_header.py b/drivers/gpu/drm/msm/registers/gen_header.py
+index 9b2842d4a354..192123cf7976 100644
+--- a/drivers/gpu/drm/msm/registers/gen_header.py
++++ b/drivers/gpu/drm/msm/registers/gen_header.py
+@@ -538,6 +538,9 @@ class Parser(object):
+ 		self.variants.add(reg.domain)
+ 
+ 	def do_validate(self, schemafile):
++		if self.validate == False:
++			return
++
+ 		try:
+ 			from lxml import etree
+ 
+@@ -567,7 +570,10 @@ class Parser(object):
+ 			if not xmlschema.validate(xml_doc):
+ 				error_str = str(xmlschema.error_log.filter_from_errors()[0])
+ 				raise self.error("Schema validation failed for: " + filename + "\n" + error_str)
+-		except ImportError:
++		except ImportError as e:
++			if self.validate:
++				raise e
++
+ 			print("lxml not found, skipping validation", file=sys.stderr)
+ 
+ 	def do_parse(self, filename):
+@@ -586,9 +592,10 @@ class Parser(object):
+ 		self.stack.pop()
+ 		file.close()
+ 
+-	def parse(self, rnn_path, filename):
++	def parse(self, rnn_path, filename, validate):
+ 		self.path = rnn_path
+ 		self.stack = []
++		self.validate = validate
+ 		self.do_parse(filename)
+ 
+ 	def parse_reg(self, attrs, bit_size):
+@@ -853,7 +860,7 @@ def dump_c(args, guard, func):
+ 	p = Parser()
+ 
+ 	try:
+-		p.parse(args.rnn, args.xml)
++		p.parse(args.rnn, args.xml, args.validate)
+ 	except Error as e:
+ 		print(e, file=sys.stderr)
+ 		exit(1)
+@@ -941,6 +948,7 @@ def main():
+ 	parser = argparse.ArgumentParser()
+ 	parser.add_argument('--rnn', type=str, required=True)
+ 	parser.add_argument('--xml', type=str, required=True)
++	parser.add_argument('--validate', action=argparse.BooleanOptionalAction)
+ 
+ 	subparsers = parser.add_subparsers(required=True)
+ 
 
-Looks like your patch DOES fix the issue!
+---
+base-commit: ab556156cafa24ec7de9e89bc18fa15637c21a59
+change-id: 20240409-fd-fix-lxml-eecc6949f64e
 
-
-References (mostly) for myself
-
-
-static struct gdsc video_top_gdsc = {
-	.gdscr = 0x1024,
-	.cxcs = (unsigned int []){ 0x1028, 0x1034, 0x1038 },
-
-static struct gdsc video_subcore0_gdsc = {
-	.gdscr = 0x1040,
-	.cxcs = (unsigned int []){ 0x1048 },
-
-static struct gdsc video_subcore1_gdsc = {
-	.gdscr = 0x1044,
-	.cxcs = (unsigned int []){ 0x104c },
-
-
-GDSCR = Globally Distributed Switch Controller Register
-
-https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/include/dt-bindings/clock/msm-clocks-hwio-8998.h
-
-0x1024 = undocumented = MMSS_VIDEO GDSCR
-0x1028 = MMSS_VIDEO_CORE_CBCR
-0x1030 = MMSS_VIDEO_AHB_CBCR
-0x1034 = MMSS_VIDEO_AXI_CBCR
-0x1038 = MMSS_VIDEO_MAXI_CBCR
-0x1040 = undocumented = MMSS_VIDEO_SUBCORE0 GDSCR
-0x1044 = undocumented = MMSS_VIDEO_SUBCORE1 GDSCR
-0x1048 = MMSS_VIDEO_SUBCORE0_CBCR
-0x104c = MMSS_VIDEO_SUBCORE1_CBCR
-
-
-
-On msm8996
-
-static struct gdsc venus_gdsc = {
-	.gdscr = 0x1024,
-	.cxcs = (unsigned int []){ 0x1028, 0x1034, 0x1038 },
-
-static struct gdsc venus_core0_gdsc = {
-	.gdscr = 0x1040,
-	.cxcs = (unsigned int []){ 0x1048 },
-
-static struct gdsc venus_core1_gdsc = {
-	.gdscr = 0x1044,
-	.cxcs = (unsigned int []){ 0x104c },
-
-
-https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/include/dt-bindings/clock/msm-clocks-hwio-8996.h
-
-0x1028 = MMSS_VIDEO_CORE_CBCR = MMSS_VIDEO_CXO_CBCR
-0x1030 = MMSS_VIDEO_AHB_CBCR
-0x1034 = MMSS_VIDEO_AXI_CBCR
-0x1038 = MMSS_VIDEO_MAXI_CBCR
-0x1048 = MMSS_VIDEO_SUBCORE0_CBCR
-0x104c = MMSS_VIDEO_SUBCORE1_CBCR
-
-
-Registers of interest are mapped identically in msm8996 & msm8998.
-Therefore, it makes sense for the code to be identical.
-
-
-Regards
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 
