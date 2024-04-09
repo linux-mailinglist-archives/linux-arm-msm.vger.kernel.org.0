@@ -1,124 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-16945-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16946-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8CD7289DFA7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 17:50:13 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 61A1489DFCA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 17:56:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2C73E1F212A0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 15:50:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 179011F237F1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 15:56:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6693D13D615;
-	Tue,  9 Apr 2024 15:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D7C6137C38;
+	Tue,  9 Apr 2024 15:56:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XEoWtRGR"
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="g4WKyRLm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD35013698F
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Apr 2024 15:49:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C24613AD3F
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Apr 2024 15:56:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712677763; cv=none; b=VyN8QX0It8gQJuJSIvdRv0jAR9olvnqPUpG7dSJrmse2K5np14QqlqqW4PPtNwxSujKD7EhSIl+SsRvMYS6Ak7PYl51m3wmp1zYzeoMwRreN/anfuTUfUtzDLIqflI5kseYn9AemHwPk7YsH0tsXmdGorMG/FnXAYFA/kUIOyDw=
+	t=1712678191; cv=none; b=e91ijHG9ETCsfe0944dkkdswO6FMK6d1U53L+RzOS568wuY7oTz1LSxoHciih7RcifxBcdL3kbEAxPMVyijer1DMM0zFNEwv2AsXayBR2nw/HE5/rHyVDqtY3yHhTIShbVNak3z817DtT0AFSG2nZbHl6DfktrAmr3PEdE5eU24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712677763; c=relaxed/simple;
-	bh=xEPOMa3UUwi6CuJPtWx1BPTo8A6Ak+U5QsgkngA70eo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qncskk7Yte4StlPiA7noSKKg46YeMrNn58Pj8O1OP+DukruFoChJfUgco0eLrdsQNvjrRTvXeZX/G0r5pEuFJWD5hCaSsngPCS2EROBUIiZUPSMepZmn6asa+nJWkSinoZKWwjzaU/waTEwJDO1cIBxKYAW3K6Yx/mkQpWE8v/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XEoWtRGR; arc=none smtp.client-ip=209.85.219.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-dc6d9a8815fso5891418276.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Apr 2024 08:49:20 -0700 (PDT)
+	s=arc-20240116; t=1712678191; c=relaxed/simple;
+	bh=0EL7q48SD7Pfo4SF/I+36RQ47z0oPGDnuZvI7MsfOuw=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=E4lv8NmyVxPJoDwNSWoYcH+61fMKIFKcdM8awSXiwZY/bJNN0wXpGeHOr3oBJqSRGcuB8qEE5CFaic5LoXhayhxa2OtvlczvmLgVytr6j8n8Wdf6p7x2RxdYnxVRWH4gMnRCgUGXJKL2bEwhMkbkyiL4a6sxSI0HBgJbWeT/hWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=g4WKyRLm; arc=none smtp.client-ip=209.85.208.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2d29aad15a5so53927981fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Apr 2024 08:56:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712677760; x=1713282560; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=OkNdlbndNp8toNAiOgiu6/Unce3sg3CUz/W3fWtHCzc=;
-        b=XEoWtRGR9YJT9bjncQLLvPXnXo1IB3VJWowGnu2TLBLafDrA4ksBdOo9YIi7ubs7pP
-         ZYudbMrsk+qUzh52TNTuxEp9fgyMObAnUgGDLCZ5bm5/NX7ffFOdl1bjjNEQxFT/6Ogt
-         sqkx6RbaSqXQaRNsPlkVnuBFqR7ym97o0mxGaMB/nMK5HDkFoSx8yCOYq1ETPEjTN93V
-         VHfaGcCp9YDMhh4DDkZzlGWNfz1x3z9BIX1ZHcZw45iEXpQr70kanUjUtsGdR1LqmDal
-         /LgdLF/Q93p6vy5imR7s9oCLenSPTO4p0ShMDa1j7ftjPLaM6WEGeaYe0mwWlqlp5gFg
-         y2Fw==
+        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1712678186; x=1713282986; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=L0L8Mm55Y48K0HRs+yI+LOWXO//blhz34iBiLgs48e8=;
+        b=g4WKyRLmOYUZW92kG4mX72Lr6Aqm2slSYsLQcJbwxJJLUOmb6sg9Fvuz4OHPjqPxJP
+         I8+W0HR7yq8C5hacS4/tO3ACvt+YgAG9ZvddV8lwqZW803IfUUzDmMlXaCy4xVD6TQfm
+         DTajlND5Eu6u5g55Ny43Zo8XEQ4/hWOasXgkZCPX0Kq4yNGZBYOUQHT68VVjjUIE9Lwy
+         AtNPQoNDtgWu6OUVWpMEzZzu33eThkWY1WkpN69lSiLWAYANK23X9fYAVS6VnaQnV+us
+         geXytHu7B8Sd1iMBCWJa/Jvxp8UB3ecanDYKeEQUMPC5GlluYDcDwDKmouYgkXlu3g2X
+         dKOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712677760; x=1713282560;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OkNdlbndNp8toNAiOgiu6/Unce3sg3CUz/W3fWtHCzc=;
-        b=ugMgB0Pfib9NRlEa9zPXeBQdfBuD6vv3VG3E3vNDjCP7+lB+XwZMP08I2AS7Nj/AoX
-         N6e3DBQrjkQgp9ZxVLAeqWFS6N5vyQQy+rUX2ntwjde6s7fVdbRzqNr14dZumogqhD7V
-         WaGEq2j38tjU3vs4XDgvhaQBcFYo7e2SOTX3SnA0Gy3pkK2WkdIIrqKM+xN4JJQaADey
-         r7spibhLVyJPozmmeIOXIQZGZKeqXYdytdifOCr0oIdZ1KRcMJ43N0ZXVFw6KWQkSlq/
-         XBoJnXAWriX3PMKW7UTMImMMFKMZIjKeiyXHwZOK80pyRWBtuAc4PKFMQJUDGhzsNN96
-         JF4Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVpV9aZO5XxvhLwWlO21blAFrBdU4s+zoammMnP883OpvlcVTsdx4IFvqZjDPX1APAVHdCKdR6tFYBKERGEoE3Dtx7SvZ3v+muvClDEgA==
-X-Gm-Message-State: AOJu0YzKkaEpqaMrx/gaEOI76xP971PtRKghipPHEwo/+vBsYP4hdHlW
-	/PMlSxW1as2wJHXGUN8HdzxMZCVze3hk+Z2GNxfu/IkkFZVjJflMmISFyuTeacP2aLWzO2LTK5O
-	zvlwgH5qHmwGNCv7ppw9KVALGVcTQhItnY1UKEA==
-X-Google-Smtp-Source: AGHT+IFeh65C1hwVrDbeDlM5B8VF02m23KjP2P6B/Tn9ctw/X6XN3vvtAf3zkCKw6Th02bnJpA3n/2Fe18UxYwd3G5Q=
-X-Received: by 2002:a25:7b83:0:b0:dcd:4d:d342 with SMTP id w125-20020a257b83000000b00dcd004dd342mr120504ybc.50.1712677759847;
- Tue, 09 Apr 2024 08:49:19 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1712678186; x=1713282986;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=L0L8Mm55Y48K0HRs+yI+LOWXO//blhz34iBiLgs48e8=;
+        b=ief6ZPvATb49No7sTy7RwjB+QxP3MlIx6QhHBD2/ziU8s8LZZ72fDdjWPL+YcDGHUh
+         w7CfVilltIyi1b6KXzkr6QmWn2tHGAYERC1r2C8najIk9Om79t/RFAa1J8mRXEEjblUJ
+         ywhDP27/7zemkWdlWojdqlUAXMdibS6Kb80mTOaXDSGnfUm5uIR+gPgDaTyYVhuOV4Ay
+         VhjoFTbehivOs5cNVVk9wHzc0sAVcjofq+IKRi8GensyFX8b+hMEAlD/m3BYtc34TWvt
+         Gw1dhOxQUBxByBIPAmvieK/7LYYnzEwPKp4BytSOrO0naOxFv7I5ju4oXInE314qv+Zx
+         1dzA==
+X-Gm-Message-State: AOJu0YwrLzrIDLW4rBcQNC3WVl1j4tVxhXyuEjlffOHYit7sKO6U6ElM
+	Lbw5PjgwkfHVG1oPny7gvolSlPI3nC6FnbmEy932oIZkszL7NSM8/EwRPHh+m2Y=
+X-Google-Smtp-Source: AGHT+IHv8WEAEFEW94VIUaX6ZXRBqEu0iL+Y5GIpF6W6uJOgCCs1uDXUoyf4bInd/WGDkbVNPs4YDw==
+X-Received: by 2002:a2e:9994:0:b0:2d8:a889:172 with SMTP id w20-20020a2e9994000000b002d8a8890172mr157295lji.8.1712678186502;
+        Tue, 09 Apr 2024 08:56:26 -0700 (PDT)
+Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
+        by smtp.gmail.com with ESMTPSA id z8-20020adfe548000000b0034335e47102sm11735519wrm.113.2024.04.09.08.56.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 Apr 2024 08:56:26 -0700 (PDT)
+Message-ID: <c427e89e-7ec6-472e-8ba8-65d5721df62b@freebox.fr>
+Date: Tue, 9 Apr 2024 17:56:25 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240409-qcom-ucsi-fixes-bis-v2-0-6d3a09faec90@linaro.org>
-In-Reply-To: <20240409-qcom-ucsi-fixes-bis-v2-0-6d3a09faec90@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 9 Apr 2024 18:49:09 +0300
-Message-ID: <CAA8EJpqV+jfE4p943pjVPWS_VOUth5r9JSg=mSyH0x33iaahtw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] usb: typec: ucsi: additional fixes for Qualcomm platforms
-To: Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>, linux-usb@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: Bjorn Andersson <bjorn.andersson@linaro.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
+Cc: MSM <linux-arm-msm@vger.kernel.org>, linux-clk
+ <linux-clk@vger.kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Bryan O Donoghue <bryan.odonoghue@linaro.org>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Jeffrey Hugo <quic_jhugo@quicinc.com>,
+ Douglas Anderson <dianders@chromium.org>,
+ Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>
+From: Marc Gonzalez <mgonzalez@freebox.fr>
+Subject: [PATCH] clk: qcom: mmcc-msm8998: fix vdec low-power mode
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, 9 Apr 2024 at 18:29, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> Fix small issues in the Qualcomm PMIC-GLINK UCSI implementation.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-> Changes in v2:
-> - Fixed indentation in pmic_glink_ucsi_notify() (Heikki)
+Use same code as mmcc-msm8996 with:
+s/venus_gdsc/video_top_gdsc/
+s/venus_core0_gdsc/video_subcore0_gdsc/
 
-I have sent this version just few minutes before getting notification
-from Greg that v1 was added to usb-testing.
-Greg, you can ignore this version, the indentation change is the only
-difference between two versions.
+https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/include/dt-bindings/clock/msm-clocks-hwio-8996.h
+https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/include/dt-bindings/clock/msm-clocks-hwio-8998.h
 
+0x1024 = MMSS_VIDEO GDSCR (undocumented)
+0x1028 = MMSS_VIDEO_CORE_CBCR
+0x1030 = MMSS_VIDEO_AHB_CBCR
+0x1034 = MMSS_VIDEO_AXI_CBCR
+0x1038 = MMSS_VIDEO_MAXI_CBCR
+0x1040 = MMSS_VIDEO_SUBCORE0 GDSCR (undocumented)
+0x1044 = MMSS_VIDEO_SUBCORE1 GDSCR (undocumented)
+0x1048 = MMSS_VIDEO_SUBCORE0_CBCR
+0x104c = MMSS_VIDEO_SUBCORE1_CBCR
 
+Suggested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+---
+ drivers/clk/qcom/mmcc-msm8998.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-> - Link to v1: https://lore.kernel.org/r/20240408-qcom-ucsi-fixes-bis-v1-0-716c145ca4b1@linaro.org
->
-> ---
-> Dmitry Baryshkov (3):
->       usb: typec: ucsi_glink: enable the UCSI_DELAY_DEVICE_PDOS quirk on qcm6490
->       usb: typec: ucsi_glink: drop NO_PARTNER_PDOS quirk for sm8550 / sm8650
->       usb: typec: ucsi_glink: drop special handling for CCI_BUSY
->
->  drivers/usb/typec/ucsi/ucsi_glink.c | 14 ++++++--------
->  1 file changed, 6 insertions(+), 8 deletions(-)
-> ---
-> base-commit: 25e918cf1bb906bd9aca19ae0270feb7f6d68783
-> change-id: 20240408-qcom-ucsi-fixes-bis-6b314764c5be
->
-> Best regards,
-> --
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
-
-
---
-With best wishes
-Dmitry
+diff --git a/drivers/clk/qcom/mmcc-msm8998.c b/drivers/clk/qcom/mmcc-msm8998.c
+index 1180e48c687ac..275fb3b71ede4 100644
+--- a/drivers/clk/qcom/mmcc-msm8998.c
++++ b/drivers/clk/qcom/mmcc-msm8998.c
+@@ -2535,6 +2535,8 @@ static struct clk_branch vmem_ahb_clk = {
+ 
+ static struct gdsc video_top_gdsc = {
+ 	.gdscr = 0x1024,
++	.cxcs = (unsigned int []){ 0x1028, 0x1034, 0x1038 },
++	.cxc_count = 3,
+ 	.pd = {
+ 		.name = "video_top",
+ 	},
+@@ -2543,20 +2545,26 @@ static struct gdsc video_top_gdsc = {
+ 
+ static struct gdsc video_subcore0_gdsc = {
+ 	.gdscr = 0x1040,
++	.cxcs = (unsigned int []){ 0x1048 },
++	.cxc_count = 1,
+ 	.pd = {
+ 		.name = "video_subcore0",
+ 	},
+ 	.parent = &video_top_gdsc.pd,
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.flags = HW_CTRL,
+ };
+ 
+ static struct gdsc video_subcore1_gdsc = {
+ 	.gdscr = 0x1044,
++	.cxcs = (unsigned int []){ 0x104c },
++	.cxc_count = 1,
+ 	.pd = {
+ 		.name = "video_subcore1",
+ 	},
+ 	.parent = &video_top_gdsc.pd,
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.flags = HW_CTRL,
+ };
+ 
+ static struct gdsc mdss_gdsc = {
+-- 
+2.34.1
 
