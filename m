@@ -1,131 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-16919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2AA4489DC44
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 16:29:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 60B5489DD0B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 16:43:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 89728B27ED4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 14:29:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A6576B280D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 14:43:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 195771311B6;
-	Tue,  9 Apr 2024 14:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75191131734;
+	Tue,  9 Apr 2024 14:39:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="N8+vHTSr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CvrAYalZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446AB130A61
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Apr 2024 14:28:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E03130AE5
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Apr 2024 14:39:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712672901; cv=none; b=WlpliA7BPfYKtxIFLlh2JrH8qTbqhetL+bgt98BQSYAK01gkIHZ9/UyVaKD28Rh27I321CJErBTgkfUiffy/T+LcwTKHD/VDm0B2gva7OOoqfm+0bSqjy2yU0V1lIcPIvfp0FAnmFNurUxjciG5+btfhtA9uZZ6QxOHFJ6aLw3k=
+	t=1712673583; cv=none; b=pQiT0zBPtzjHcVw05hGy6Z+ujg0htxWDQYQpnIyjGM0WloL5Wc35+SAaYhuzEH66cp+VyrLAGMaH2qq0T/YSNUFMGnv8OySLE3qQ7inWeRTv2BAAylK1yNIC9X4FzZDo5NeGLMd7Zte8RECTw7OUwMQ58pk8pc0UG/4uiv634Q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712672901; c=relaxed/simple;
-	bh=Ert28OT3aAf58lII8YJfBxuxx9CsXW8kB9StD1Pp5Qs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Q5Jl5+DwWCiFIkc+niDM3ZPG9+RhetpEmbZmqE7UA/0HS6f6V2aDKsfLyqfmGYp1dTq1rY9K5lXB2KDRy5h664geBVKhdy7k+SbeNdzXA/yEWwN2hc5Ek2TEwUIhABPGpnvZB9M8dPfaHQsA7m92vQU5vmAcj5lX0rRXFtie0ZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=N8+vHTSr; arc=none smtp.client-ip=209.85.208.179
+	s=arc-20240116; t=1712673583; c=relaxed/simple;
+	bh=rYRdF5eSZvDHg6P/v4LaA4shStXXiArZZpKdGUCyTq8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=D9n4LeJshxLPs6/pqdJmuHyhFx2ZvBWclBV0N28unSN/9iWWqXKzoe1FiwWJog1Qxc9dW6J6U8XQXPUqZxDSfT5x8ITwJjtGQ1wxEH/CXwOtZKr2gFfp4fW2rOcxUMJY6DI16MEEU4fWS4haE2Fsz5WaN8Sbj1KB8yJ7vkJyESM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CvrAYalZ; arc=none smtp.client-ip=209.85.167.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2d87660d5dbso35199321fa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Apr 2024 07:28:18 -0700 (PDT)
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-516d1ecaf25so5951077e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Apr 2024 07:39:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712672897; x=1713277697; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=XwnaaipznVoDEcKs4Me335T76hxHxjEZxfF+WyLdSeU=;
-        b=N8+vHTSr63yDYo+jvBDaX6RVzetgd+Pzdwnwf6vo5GSHUbMBAjcZaxyAYOkKbzUt7k
-         g5sc2PpTE65/Wtkx2Vh9VHs81SY3XqAEafteC6C7aRr63IfIyZCWm+s0u2lUjS9mC/ZD
-         0p+G4kJ4E5yhSsslwMABB7RsaxxsPyDBIyxWuFRUVyUp+NiGvnZ89hAjbKtxLCnTTMS4
-         Uw6tZzFqJlL2JlHNeTSXpj5qmcvplQ45GEHTVAu7kr6WtaF1DC9n60B5ZOdfnTk72Qnm
-         6UHbm49HlG26I5cZTrRLSYpgGjFZ7rh3/Nl+mF2b7KtgFfxC6J+8jqU9h/UPsDKvFm6J
-         KSLg==
+        d=linaro.org; s=google; t=1712673580; x=1713278380; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Sr9qt0BbADGa89YCYwT+Bbk+dGM/AHSN1tyvYdeWW7E=;
+        b=CvrAYalZ7tKWU+Xa7Lmfm7mkZmwJpyAkx1B/SBNTWIm/8HqvppMWwhg37j3mZ8DenL
+         KfFnyMpw/gDbHkc9K4aY9snbI+30RqNdM5C9sN/Y9G06DTAW6sWHIJ1oQU2TVbIVc1AU
+         MoPNFStgk3GF/rG6k97JR0bSBxI6C56EYjMft8vO1THw/h+6HAAdfh85Z1zywVmU4mZq
+         icz8VA8P46qYN2xI+jmKRvbWUDrJCHTvexQv3d33Zq3P4m9R/TOsrSajdSGWOLFES5a6
+         t4KMVHBPMg08qsbCf3LdiH68z/vWSUJrYQ+7i9XkH2oZrj1JG6KsAcsKUqLjLHPGsxn7
+         qVOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712672897; x=1713277697;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XwnaaipznVoDEcKs4Me335T76hxHxjEZxfF+WyLdSeU=;
-        b=CnN2D0+3zWMH29RQjqG079g/sMT49K4A+RQbfSotIzWEYciZ/TU4OwGdufEheOyxw5
-         kwgx1Bn85Lt30HO47g9vic36pHd6sAHRcd17IE3BEFoyItdWnZ5VsGRSG0rrnGtDUYQx
-         /En3iMdYBdij+V/oyrUUSsJfBIvnqdsdr62bBDPAK0vImuRwrgurTtc9B6QwZr90Qjus
-         NVYc91uv9cGJuqKbUuD3MjPZLaYy8BGaGQw2g6lMHmJNSZYLseeReI3+cAgY0etRGhin
-         vXQQRTY8GgqgGI5mmGjrlbvOgxogc3VrxTy84v3uTKhsKOXrUayHkpM2pDotraQdSV2U
-         i90A==
-X-Gm-Message-State: AOJu0YxTipo0RR2bssz5AJkBmbLDV4o16WpCZcmZXn44/MINVhxsiCHu
-	SywR5j+89IFn8g6aj9FG8lm1ucpmz7GInPPSWyVW+j/r6gWOVTd2/YQcmtNMdtRHC8StvSKNPCa
-	B
-X-Google-Smtp-Source: AGHT+IGa7M3AfjQb5yabZc3MePcuVx+j8sF0rJqQuNPmrT/zl4jukqtLzKF2SK1xHwgXaDBWO2dHuA==
-X-Received: by 2002:a19:750b:0:b0:516:d471:18a0 with SMTP id y11-20020a19750b000000b00516d47118a0mr7132030lfe.67.1712672897123;
-        Tue, 09 Apr 2024 07:28:17 -0700 (PDT)
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id d9-20020ac25ec9000000b00515d2ee5b38sm1556445lfq.48.2024.04.09.07.28.16
+        d=1e100.net; s=20230601; t=1712673580; x=1713278380;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Sr9qt0BbADGa89YCYwT+Bbk+dGM/AHSN1tyvYdeWW7E=;
+        b=c+klJX3XNQ4akQOi5zI0ZqwmEE9HM40YbubpcmdJJuW4Rs8KD3L6cQ5LqBCUMccZln
+         szA3FlUd7IlVENQ6kU1CwM8nBomCxZkDSxUg/zSZe1CDDVQkXXUum0FLXOSL2JoBBEFx
+         HRzMp3kEzQ3G8N7CXoDWQ0HfxndXB6ONdt5knE1vxH9eAEEFMlivU937yFByuEKA07Zr
+         vpIN1fXALvUzkzo/Z+kBLSiKXXPxnXkv+9GGnPHNi1w4kxOa5Y1TN2tpNHHksi6D1Xx1
+         Rg6KfCMFVpb/InL86/72gk3a43ymJP11jkVMZbbw4zq073O2/hLIs6HybVGpf9wN6nZf
+         Tj/g==
+X-Forwarded-Encrypted: i=1; AJvYcCW9L5ZxXSgtw/vLEPhevW/ZeJhCTUnI6Qx2sv8jMpL3DLBK6gM7sMpdghPT4YJB3IFvs0wKSDFEG7WitX/BCTq8l49XrRSFIUap/zIylQ==
+X-Gm-Message-State: AOJu0YxrdceWfLJpz69abdHs7TmVu2p/GvyTP8uGFHgB2byQqHjcSlK+
+	iiVVA2xT3w+OFosFTYnffz9PKcCXKrYCcAeqK+PtisMMIl0PUhCzTAMJprdpdvM=
+X-Google-Smtp-Source: AGHT+IFhmq1jH49fs/wNDP2DWefgXDYDOHbmwLUoOSnTyawe10DQy5StJWx9djPeA8rjMN8setjnjA==
+X-Received: by 2002:ac2:59d0:0:b0:516:cd83:71ce with SMTP id x16-20020ac259d0000000b00516cd8371cemr7651841lfn.31.1712673579685;
+        Tue, 09 Apr 2024 07:39:39 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzyjmhyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a00e:a300::227])
+        by smtp.gmail.com with ESMTPSA id i16-20020ac25230000000b00513d13ede82sm1561676lfl.147.2024.04.09.07.39.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Apr 2024 07:28:16 -0700 (PDT)
+        Tue, 09 Apr 2024 07:39:39 -0700 (PDT)
+Date: Tue, 9 Apr 2024 17:39:37 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 09 Apr 2024 17:28:15 +0300
-Subject: [PATCH v2 5/5] arm64: dts: qcom: sc8180x-lenovo-flex-5g: add USB-C
- orientation GPIOs
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
+	dri-devel@lists.freedesktop.org, seanpaul@chromium.org, swboyd@chromium.org, 
+	quic_jesszhan@quicinc.com, quic_bjorande@quicinc.com, johan@kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3] drm/msm/dp: call dp_hpd_plug_handle()/unplug_handle()
+ directly for external HPD
+Message-ID: <d4gcj4dg5vv5wd72kj7lpzs5cy7b2a4gh4t4lixuigwfkpwt3s@4toc3fpqycwi>
+References: <20240406031548.25829-1-quic_abhinavk@quicinc.com>
+ <ale6wbwzkfagcg2q6glb4vsxu3pthhkk3tquv2ixlatbdryqvh@xscsq2h6emho>
+ <01cb1c0d-a801-37f9-2f55-2bbd8d3a68b9@quicinc.com>
+ <CAA8EJprzH0LiWNx9Udt6og3G063odY6ccvaAgsNS1r3zG8TmdA@mail.gmail.com>
+ <905222ad-612a-3eaf-d966-23c89c99e1f0@quicinc.com>
+ <CAA8EJpp6Lc7sc5fnKp+O8TYdaywiE+dZ=YJin351s=r5rxi+Kw@mail.gmail.com>
+ <covjipaso7bhgiifb62vdh24dpadr7kdypl2dleg7a2vc4jwjd@s4ci5xc6qpa3>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240409-hdk-orientation-gpios-v2-5-658efd993987@linaro.org>
-References: <20240409-hdk-orientation-gpios-v2-0-658efd993987@linaro.org>
-In-Reply-To: <20240409-hdk-orientation-gpios-v2-0-658efd993987@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=832;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=Ert28OT3aAf58lII8YJfBxuxx9CsXW8kB9StD1Pp5Qs=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmFVB8HxL0CEq+ZBrZZ9yNuRSbPD/diMWSYCHdF
- DMI5Bz1LxSJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZhVQfAAKCRCLPIo+Aiko
- 1egBB/9cfBf+sbB5WA1+SEGcnfUuRfGkbcCVokMfMMvS4FgW5yXoqja8JxOgNTn+9xUhTMxD/wj
- 8b+YY386hhh0tN8JQRvqbOH2KqcTCiW9QMrZjEeDXsrLJlQ0H6ueitAI+xZe0HziTQBpjS8VxfQ
- kXXJKrg6FEYJS4YiaqDEUAFXKihzYbMAuf3Y2s443l2mM0vXQwA2NnilYLG76Hf88wCLzV7O1UB
- jEK6zJtC/teY53b15cNQcbHRtqiESLEiImKjOtPV5jDEK8zYNQaLiTdoQSVuyPM+jVjru0TZytJ
- ZxAgAWBfHT0M70vfWKJC7FSIbOo6T1Jk0orrd+4qV5W7x3E3
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <covjipaso7bhgiifb62vdh24dpadr7kdypl2dleg7a2vc4jwjd@s4ci5xc6qpa3>
 
-Define the USB-C orientation GPIOs so that the USB-C ports orientation
-is known without having to resort to the altmode notifications.
+On Mon, Apr 08, 2024 at 09:33:01PM -0500, Bjorn Andersson wrote:
+> On Tue, Apr 09, 2024 at 01:07:57AM +0300, Dmitry Baryshkov wrote:
+> > On Tue, 9 Apr 2024 at 00:23, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+> > > On 4/8/2024 2:12 PM, Dmitry Baryshkov wrote:
+> > > > On Mon, 8 Apr 2024 at 22:43, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+> > > >> On 4/7/2024 11:48 AM, Bjorn Andersson wrote:
+> > > >>> On Fri, Apr 05, 2024 at 08:15:47PM -0700, Abhinav Kumar wrote:
+> > > >>>> From: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> > > >>> [..]
+> > > >>>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> [..]
+> > > >>
+> > > >> I will need sometime to address that use-case as I need to see if we can
+> > > >> handle that better and then drop the the DISCONNECT_PENDING state to
+> > > >> address this fully. But it needs more testing.
+> > > >>
+> > > >> But, we will need this patch anyway because without this we will not be
+> > > >> able to fix even the most regular and commonly seen case of basic
+> > > >> connect/disconnect receiving complementary events.
+> > > >
+> > > > Hmm, no. We need to drop the HPD state machine, not to patch it. Once
+> > > > the driver has proper detect() callback, there will be no
+> > > > complementary events. That is a proper way to fix the code, not these
+> > > > kinds of band-aids patches.
+> > > >
+> > >
+> > > I had discussed this part too :)
+> > >
+> > > I totally agree we should fix .detect()'s behavior to just match cable
+> > > connect/disconnect and not link_ready status.
+> > >
+> > > But that alone would not have fixed this issue. If HPD thread does not
+> > > get scheduled and plug_handle() was not executed, .detect() would have
+> > > still returned old status as we will update the cable status only in
+> > > plug_handle() / unplug_handle() to have a common API between internal
+> > > and external hpd execution.
+> > 
+> > I think there should be just hpd_notify, which if the HPD is up,
+> > attempts to read the DPCD. No need for separate plug/unplug_handle.
+> > The detect() can be as simple as !drm_dp_is_branch() || sink_count != 0.
+> > 
+> 
+> What is detect() supposed to return in the event that we have external
+> HPD handler? The link state? While the external HPD bridge would return
+> the HPD state?
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts | 2 ++
- 1 file changed, 2 insertions(+)
+It should return the same: there is a sensible display attached. Other
+drivers (and drm/msm/dp internally) use !branch || (sink_count > 0).
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts b/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts
-index 6f2e1c732ed3..6af99116c715 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts
-@@ -51,6 +51,8 @@ pmic-glink {
- 
- 		#address-cells = <1>;
- 		#size-cells = <0>;
-+		orientation-gpios = <&tlmm 38 GPIO_ACTIVE_HIGH>,
-+				    <&tlmm 58 GPIO_ACTIVE_HIGH>;
- 
- 		connector@0 {
- 			compatible = "usb-c-connector";
+> If a driver only drives the link inbetween atomic_enable() and
+> atomic_disable() will the "connected state" then ever be reported as
+> "connected"? (I'm sure I'm still missing pieces of this puzzle).
+
+I don't probably get the question. Nothing stops the driver from
+accessing the AUX bus outside of the atomic_enable/disable() brackets.
+
+> 
+> Regards,
+> Bjorn
 
 -- 
-2.39.2
-
+With best wishes
+Dmitry
 
