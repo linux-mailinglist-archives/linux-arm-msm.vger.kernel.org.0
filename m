@@ -1,184 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-16948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BFA7889E0D4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 18:53:23 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B867789E0E5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 19:00:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 369901F21290
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 16:53:23 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4839EB22A9A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 17:00:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 744E315359E;
-	Tue,  9 Apr 2024 16:53:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 713F6155313;
+	Tue,  9 Apr 2024 16:59:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="HQMi2ym3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qbmep2Qo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319EA6FCB
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Apr 2024 16:53:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45CD3153BDD;
+	Tue,  9 Apr 2024 16:59:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712681600; cv=none; b=m7RVjB4qaHtaRycxiyS8dipq0t3Fk7LSLtm9bCT5dwW1XokABEvtFnc9WAuqI/+upM4SdaZZijo0ukoIK0XXcO3RZCDCAMX+qb7oXKyoxcHEJqju/9KGdcrz9aFJb3GBNHCG5lBjOD5W2G6GTGosVA8tfMss3dZbiWY1cbvPr3E=
+	t=1712681988; cv=none; b=lvLl4A4BYvQm4hkD5p+tPgFmtW+OSNOmrysjSIaI7ZsyXQmXgze4jdfo1S8siHEChlxMnRRSnGUukp4+IbGZgbQWZB09cU3ccCrwy2i8hq0O6RBsMlvr7bnGrJix3B/ax+9C/8S3laCjanybwHBaOnFQ0JKZmWXzqc5+zYJQwzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712681600; c=relaxed/simple;
-	bh=XW/cKXS47dSToNjHivxJI+dmAvfRUIEI3+x1pyJyZNE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CpUbn4i8DiUs+wnmN6H8dqIHdQc/T3TipJyj6RRC7sY/pHFsRemCfDfwwt9pQAFv9dgcL7aK5V4vdD/NCM5ce2PMaapCSezAlyd1o2PFGG99G02P2xsnqhoQYyozewumZ2LFZ8BOVKdeHWALUVU5SkpjNayRO5z1tL318QGAYFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=HQMi2ym3; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-416c1d6504cso733505e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Apr 2024 09:53:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1712681596; x=1713286396; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ks8W5HAhxntR4JTIe7uMyj8tS0eQUNu82PBBacvu4NI=;
-        b=HQMi2ym3L3WU3GsAv2+ZhxiYD3HlLYqkSEWfCN1nCxd5DC1pIzUZdgIN07XO1/VuPd
-         TFXaw9acKIz8ZG1NC7cgrIutkyVMUVcUnsJD6IwcvZoHeUgMbHYNbLbBfl4CV82R+3LM
-         M7HX2isaM9IGeRbAdWa07NM0+DCoBVEnq0LXwnreRRl8WjWnBqkj/PKbenDBKUcIZ97B
-         Ddg3ZPO4SdqZFwzkAriaeaq5LokVO9VJjH0QYptQxKOJPd6/spYbo58K5V62L0ShMj4o
-         Ifln059FWcPw8N1GQRzZRAEUkMQvHrWAfikDtJOzQdrAxoQZKmh0b8nzbK/Si0/5XQCe
-         e+eA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712681596; x=1713286396;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ks8W5HAhxntR4JTIe7uMyj8tS0eQUNu82PBBacvu4NI=;
-        b=LJG5rmyWzHcVzR1p52Hj1LFBGrgK7c9A77fPDI6wM2ZBZsV8k5zpVRlxcdP12t9MZe
-         BjCsXvtbbRaGOnW8A5f2AEeHNIGMVsYxtmnZXFzVJEIVi4ebGk0pTzU3bvV7NngcsvtE
-         7Rd+XP0S1yjyFOIBEO0dr+3KElDVUSk7IqN+Pv9A2i28JmxgrEIZsCVE2sRI9eDj2UnP
-         UIafcgWhtZ1gdyiKBYgJeJZ0LXDfLG5BXQx/Z9SqjHPc1Lziq5kZwbKvIzNyb2/M6AmB
-         JLsefcJwx/2OUvmCOA0dOPMGfGQSCL1mJiwqkQu1A0CaiJZO5wi56KMoTMuN3H0bmgmD
-         ZqtA==
-X-Forwarded-Encrypted: i=1; AJvYcCVSjDwHxjEP9lvachKsGPK9xpI8fyQipTNU/ebUVgsM+PvSMYYIV67hGWn7MQep9BPKwjH6BlcwP2C8bCUJyNQ84R8TpsHfAG3RqUkg0A==
-X-Gm-Message-State: AOJu0Yz4eUlRCENL6zIU1QJkTkVqwDvLdF6L2WGmVSP0tfK8hcp+gNVZ
-	CDescIzNWHlSlrIkrfR6qqb7UZ0Y5rJf28krnAoj18rDACNM/HVG24KvH2EkFYY=
-X-Google-Smtp-Source: AGHT+IGZENGxoK8eqL3tiI2lcbMjU0HQSyrZoGRxi/80A/BsKuBtiBhdmcvCTEfsoMk+RzF8lx1y8g==
-X-Received: by 2002:a05:600c:19cf:b0:415:691c:f83d with SMTP id u15-20020a05600c19cf00b00415691cf83dmr177952wmq.33.1712681596567;
-        Tue, 09 Apr 2024 09:53:16 -0700 (PDT)
-Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
-        by smtp.gmail.com with ESMTPSA id l15-20020a05600c4f0f00b004166b960469sm8691750wmq.38.2024.04.09.09.53.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Apr 2024 09:53:15 -0700 (PDT)
-Message-ID: <02a32387-1a30-44cd-b552-6e47023b997d@freebox.fr>
-Date: Tue, 9 Apr 2024 18:53:15 +0200
+	s=arc-20240116; t=1712681988; c=relaxed/simple;
+	bh=OfB6tGykzMHeswgiZrzSekncrZkg0/ET1ay/s698coQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=p/8bjJsIfQlPuPQnOqI+Uzy9Mob8Y1YYm9AuIJf9VNzQanMFg1JdPcpDw+940U/FBR1ZnSHMoYYVrcbEMCnnuKNBT427Ggwm8b5LX4ImuWRtrvj6WA9ztIJ8h3meZJFab9XvUQL2+zZXMrnQUP2PEcQlI39En+abhn3BuomN2nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qbmep2Qo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3CD5C433F1;
+	Tue,  9 Apr 2024 16:59:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712681987;
+	bh=OfB6tGykzMHeswgiZrzSekncrZkg0/ET1ay/s698coQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=qbmep2QoaZf+3Rc+hKtmmzPMIgxVrlF6W/j+caIWfAISByNO/fOeFv/S64d/RDBth
+	 pkJs1FiiHiQkpQGVBOAMNwPkiMWmpsdhkDz+jLUIQQ6KG75GY6IwlTvYlC0NLpvnXe
+	 LxswgBmF8qoOsz1BfEoQ5+PLf7/HfLMTyeegKQ0S+HO+36QlqcZ+bGGA/Jb5u0Sbyk
+	 uYR0V1y/dwB9hF59lcUbwHtENFRTl+czimRGz4InAU6wGO8+Bu2RUs8s9Jhhbam30X
+	 3phVPBhix7IjsX0mSOgY4ijUt62CumGNS0CX0LyGh5od92UtxOyOSCd31NfkJOLU7w
+	 9bNM+/oKDaADA==
+From: Will Deacon <will@kernel.org>
+To: mark.rutland@arm.com,
+	yury.norov@gmail.com,
+	linux@rasmusvillemoes.dk,
+	Dawei Li <dawei.li@shingroup.cn>
+Cc: catalin.marinas@arm.com,
+	kernel-team@android.com,
+	Will Deacon <will@kernel.org>,
+	xueshuai@linux.alibaba.com,
+	renyu.zj@linux.alibaba.com,
+	yangyicong@hisilicon.com,
+	jonathan.cameron@huawei.com,
+	andersson@kernel.org,
+	konrad.dybcio@linaro.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 00/10] perf: Avoid placing cpumask on the stack
+Date: Tue,  9 Apr 2024 17:59:34 +0100
+Message-Id: <171267763689.3170646.3275447262486662731.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20240403155950.2068109-1-dawei.li@shingroup.cn>
+References: <20240403155950.2068109-1-dawei.li@shingroup.cn>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC WIP PATCH] venus: add qcom,no-low-power property
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-media <linux-media@vger.kernel.org>,
- MSM <linux-arm-msm@vger.kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Jeffrey Hugo <quic_jhugo@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Pierre-Hugues Husson
- <phh@phh.me>, Marijn Suijten <marijn.suijten@somainline.org>
-References: <0843621b-386b-4173-9e3c-9538cdb4641d@freebox.fr>
- <CAA8EJpq=G21h87W69_4U-BZ=Sa5VEs15Y-zE-G5x9VxVx4qjsA@mail.gmail.com>
- <81dc6452-4039-4eb4-92ba-df248215fca2@linaro.org>
- <b8325dbf-67c5-4898-bc23-ff093ae6e14a@freebox.fr>
- <87db77f7-fda4-4cf7-adfd-8545c40c3365@linaro.org>
- <10fe67af-0572-4faa-91c6-fce9c8f9dc92@linaro.org>
- <6342e92d-eed0-45c2-8f04-3779aa2e521d@freebox.fr>
- <4ab95e87-c912-469b-b8d4-be0cf0e4710b@linaro.org>
- <a8c5b27c-47a9-044a-78e8-51c67acf19a6@quicinc.com>
- <c6a9c20e-02d3-4334-badd-2efe5be9ce7e@freebox.fr>
- <d5abf142-3a2b-454c-660a-249c0fb25208@quicinc.com>
- <33382ecb-8a73-4d2f-96b1-8048df7a6414@freebox.fr>
- <3914555d-3c89-a5c5-2906-0bd24d0bf735@quicinc.com>
- <72741d2e-5165-4505-b079-d7b5d1491888@freebox.fr>
- <edb29faa-01b3-3b96-7c05-3378eb3af073@quicinc.com>
- <21b833cf-61c3-4fb5-8c55-492aac0fd3b6@freebox.fr>
- <8170522f-b813-19a4-3f85-f2880809d9a5@quicinc.com>
- <c2ce34ce-d532-4039-bb9f-d4d1b2fb23b0@freebox.fr>
- <09bc9231-0e59-4cb2-a05f-02e2fcaf3d15@linaro.org>
-Content-Language: en-US
-From: Marc Gonzalez <mgonzalez@freebox.fr>
-In-Reply-To: <09bc9231-0e59-4cb2-a05f-02e2fcaf3d15@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On 09/04/2024 13:27, Bryan O'Donoghue wrote:
+On Wed, 03 Apr 2024 23:59:40 +0800, Dawei Li wrote:
+> This is v3 of previous series on elimination of placing cpumask var on
+> stack.
+> 
+> Change since v2:
+> - Update commit message for patch[2-10]. [Mark]
+> - Add Reviewed-by from Mark for patch[2-10].
+> 
+> [...]
 
-> Can you give it a try ?
+Applied to will (for-next/perf), thanks!
 
-Random notes
+[01/10] cpumask: add cpumask_any_and_but()
+        https://git.kernel.org/will/c/897fa2c38c07
+[02/10] perf/alibaba_uncore_drw: Avoid placing cpumask on the stack
+        https://git.kernel.org/will/c/2f6589df124e
+[03/10] perf/arm-cmn: Avoid placing cpumask on the stack
+        https://git.kernel.org/will/c/60c73240f304
+[04/10] perf/arm_cspmu: Avoid placing cpumask on the stack
+        https://git.kernel.org/will/c/b5310fa1fe8e
+[05/10] perf/arm_dsu: Avoid placing cpumask on the stack
+        https://git.kernel.org/will/c/bea2a13b207e
+[06/10] perf/dwc_pcie: Avoid placing cpumask on the stack
+        https://git.kernel.org/will/c/cf276ee46bc4
+[07/10] perf/hisi_pcie: Avoid placing cpumask on the stack
+        https://git.kernel.org/will/c/d7df79e6af29
+[08/10] perf/hisi_uncore: Avoid placing cpumask on the stack
+        https://git.kernel.org/will/c/b78d0fa25462
+[09/10] perf/qcom_l2: Avoid placing cpumask on the stack
+        https://git.kernel.org/will/c/fc85cee97029
+[10/10] perf/thunderx2: Avoid placing cpumask on the stack
+        https://git.kernel.org/will/c/595275ca4984
 
-For easy reference, I've used this command to test:
+Cheers,
+-- 
+Will
 
-$ mpv --hwdec=v4l2m2m-copy --vo=tct --quiet --no-audio demo-480.webm
-
-And it displays the video directly in the terminal :)
-(Rendering speed depends on terminal size)
-
-I'd never played the video to the end.
-I notice I get:
-
-[  397.410006] qcom-venus cc00000.video-codec: session error: event id:1001 (deadb000), session id:79d7c000
-[  397.410114] qcom-venus-decoder cc00000.video-codec:video-decoder: dec: event session error 1001
-
-How bad is that?
-
-
-Sometimes, decoding simply fails immediately.
-Must quit & restart.
-Will have to script a 100 starts and check frequency of failures.
-
-
-Will test with higher-resolution video.
-
-# time mpv --hwdec=v4l2m2m-copy --vo=null --quiet --no-audio --untimed demo-480.webm
- (+) Video --vid=1 (*) (vp9 854x480 29.970fps)
-     Audio --aid=1 --alang=eng (*) (opus 2ch 48000Hz)
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-Using hardware decoding (v4l2m2m-copy).
-VO: [null] 854x480 nv12
-[ffmpeg/video] vp9_v4l2m2m: capture POLLERR
-Exiting... (Quit)
-/*** HANGS UNTIL CTRL-C ***/
-
-real	0m21.467s
-user	0m3.795s
-sys	0m1.914s
-
-
-# time mpv --hwdec=v4l2m2m-copy --vo=null --quiet --no-audio --untimed --length=30 demo-1440.webm 
- (+) Video --vid=1 (*) (vp9 2560x1440 59.940fps)
-     Audio --aid=1 --alang=eng (*) (opus 2ch 48000Hz)
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-Using hardware decoding (v4l2m2m-copy).
-VO: [null] 2560x1440 nv12
-Exiting... (End of file)
-
-real	0m16.433s
-user	0m1.764s
-sys	0m1.118s
-
-
-Regards
-
+https://fixes.arm64.dev
+https://next.arm64.dev
+https://will.arm64.dev
 
