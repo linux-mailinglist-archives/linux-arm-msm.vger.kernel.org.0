@@ -1,121 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-16947-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD68D89E047
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 18:23:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFA7889E0D4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 18:53:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DEF041C2188A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 16:23:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 369901F21290
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 16:53:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCD0D13D8BE;
-	Tue,  9 Apr 2024 16:22:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 744E315359E;
+	Tue,  9 Apr 2024 16:53:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="HQMi2ym3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B3B137C38
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Apr 2024 16:22:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319EA6FCB
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Apr 2024 16:53:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712679776; cv=none; b=GmQKpQ+KFFmScycO3VQ8DDcds4s/w7nLpTlGOJh0ylSs17uzwfhoZtGhH8KE1VytgdvGV1HAtfoOmQ9gHTo8ee9K2x0e9gHYg7PqnJGkgpvn58P9VLpLLrNBboe/JhBNuarHQn2HDkjXvYTKqTXwpFh/KCiVQxAXd25LcNeqOSI=
+	t=1712681600; cv=none; b=m7RVjB4qaHtaRycxiyS8dipq0t3Fk7LSLtm9bCT5dwW1XokABEvtFnc9WAuqI/+upM4SdaZZijo0ukoIK0XXcO3RZCDCAMX+qb7oXKyoxcHEJqju/9KGdcrz9aFJb3GBNHCG5lBjOD5W2G6GTGosVA8tfMss3dZbiWY1cbvPr3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712679776; c=relaxed/simple;
-	bh=FDlhhqXXUUqRdmMllo+GQgjl5AGe5DPOH7xrc8MnbNo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b83b0cFa7S2z35X5KxBsR9tKGTVw3zZeGZcGbxwwj99tey+NMn6I3B+ePn+0uu0i4ofm2X67bSR0rNp/5jyv9kMdDHUr1Ev3zllKfJRVmLv3nfPBO7gmOIJkb1FBFJuLbGn5XyWd9PebyPQbBTBe62jvkxxu/ECMn/ziteLNiUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1ruEFH-00088H-7A; Tue, 09 Apr 2024 18:22:51 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1ruEFG-00BKt2-Jf; Tue, 09 Apr 2024 18:22:50 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.96)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1ruEFG-00H3s3-1e;
-	Tue, 09 Apr 2024 18:22:50 +0200
-Date: Tue, 9 Apr 2024 18:22:50 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org, 
-	kernel@pengutronix.de
-Subject: Re: [PATCH] slimbus: Convert to platform remove callback returning
- void
-Message-ID: <z2s24xyecxdbjmqbpysj2m4ebjad2yeuma33pvzduiyv5ap4t7@psz4d4wyrjwa>
-References: <20240225001911.46196-2-u.kleine-koenig@pengutronix.de>
+	s=arc-20240116; t=1712681600; c=relaxed/simple;
+	bh=XW/cKXS47dSToNjHivxJI+dmAvfRUIEI3+x1pyJyZNE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CpUbn4i8DiUs+wnmN6H8dqIHdQc/T3TipJyj6RRC7sY/pHFsRemCfDfwwt9pQAFv9dgcL7aK5V4vdD/NCM5ce2PMaapCSezAlyd1o2PFGG99G02P2xsnqhoQYyozewumZ2LFZ8BOVKdeHWALUVU5SkpjNayRO5z1tL318QGAYFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=HQMi2ym3; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-416c1d6504cso733505e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Apr 2024 09:53:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1712681596; x=1713286396; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ks8W5HAhxntR4JTIe7uMyj8tS0eQUNu82PBBacvu4NI=;
+        b=HQMi2ym3L3WU3GsAv2+ZhxiYD3HlLYqkSEWfCN1nCxd5DC1pIzUZdgIN07XO1/VuPd
+         TFXaw9acKIz8ZG1NC7cgrIutkyVMUVcUnsJD6IwcvZoHeUgMbHYNbLbBfl4CV82R+3LM
+         M7HX2isaM9IGeRbAdWa07NM0+DCoBVEnq0LXwnreRRl8WjWnBqkj/PKbenDBKUcIZ97B
+         Ddg3ZPO4SdqZFwzkAriaeaq5LokVO9VJjH0QYptQxKOJPd6/spYbo58K5V62L0ShMj4o
+         Ifln059FWcPw8N1GQRzZRAEUkMQvHrWAfikDtJOzQdrAxoQZKmh0b8nzbK/Si0/5XQCe
+         e+eA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712681596; x=1713286396;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ks8W5HAhxntR4JTIe7uMyj8tS0eQUNu82PBBacvu4NI=;
+        b=LJG5rmyWzHcVzR1p52Hj1LFBGrgK7c9A77fPDI6wM2ZBZsV8k5zpVRlxcdP12t9MZe
+         BjCsXvtbbRaGOnW8A5f2AEeHNIGMVsYxtmnZXFzVJEIVi4ebGk0pTzU3bvV7NngcsvtE
+         7Rd+XP0S1yjyFOIBEO0dr+3KElDVUSk7IqN+Pv9A2i28JmxgrEIZsCVE2sRI9eDj2UnP
+         UIafcgWhtZ1gdyiKBYgJeJZ0LXDfLG5BXQx/Z9SqjHPc1Lziq5kZwbKvIzNyb2/M6AmB
+         JLsefcJwx/2OUvmCOA0dOPMGfGQSCL1mJiwqkQu1A0CaiJZO5wi56KMoTMuN3H0bmgmD
+         ZqtA==
+X-Forwarded-Encrypted: i=1; AJvYcCVSjDwHxjEP9lvachKsGPK9xpI8fyQipTNU/ebUVgsM+PvSMYYIV67hGWn7MQep9BPKwjH6BlcwP2C8bCUJyNQ84R8TpsHfAG3RqUkg0A==
+X-Gm-Message-State: AOJu0Yz4eUlRCENL6zIU1QJkTkVqwDvLdF6L2WGmVSP0tfK8hcp+gNVZ
+	CDescIzNWHlSlrIkrfR6qqb7UZ0Y5rJf28krnAoj18rDACNM/HVG24KvH2EkFYY=
+X-Google-Smtp-Source: AGHT+IGZENGxoK8eqL3tiI2lcbMjU0HQSyrZoGRxi/80A/BsKuBtiBhdmcvCTEfsoMk+RzF8lx1y8g==
+X-Received: by 2002:a05:600c:19cf:b0:415:691c:f83d with SMTP id u15-20020a05600c19cf00b00415691cf83dmr177952wmq.33.1712681596567;
+        Tue, 09 Apr 2024 09:53:16 -0700 (PDT)
+Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
+        by smtp.gmail.com with ESMTPSA id l15-20020a05600c4f0f00b004166b960469sm8691750wmq.38.2024.04.09.09.53.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 Apr 2024 09:53:15 -0700 (PDT)
+Message-ID: <02a32387-1a30-44cd-b552-6e47023b997d@freebox.fr>
+Date: Tue, 9 Apr 2024 18:53:15 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ex24qbuczfox3i6r"
-Content-Disposition: inline
-In-Reply-To: <20240225001911.46196-2-u.kleine-koenig@pengutronix.de>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC WIP PATCH] venus: add qcom,no-low-power property
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-media <linux-media@vger.kernel.org>,
+ MSM <linux-arm-msm@vger.kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Jeffrey Hugo <quic_jhugo@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Pierre-Hugues Husson
+ <phh@phh.me>, Marijn Suijten <marijn.suijten@somainline.org>
+References: <0843621b-386b-4173-9e3c-9538cdb4641d@freebox.fr>
+ <CAA8EJpq=G21h87W69_4U-BZ=Sa5VEs15Y-zE-G5x9VxVx4qjsA@mail.gmail.com>
+ <81dc6452-4039-4eb4-92ba-df248215fca2@linaro.org>
+ <b8325dbf-67c5-4898-bc23-ff093ae6e14a@freebox.fr>
+ <87db77f7-fda4-4cf7-adfd-8545c40c3365@linaro.org>
+ <10fe67af-0572-4faa-91c6-fce9c8f9dc92@linaro.org>
+ <6342e92d-eed0-45c2-8f04-3779aa2e521d@freebox.fr>
+ <4ab95e87-c912-469b-b8d4-be0cf0e4710b@linaro.org>
+ <a8c5b27c-47a9-044a-78e8-51c67acf19a6@quicinc.com>
+ <c6a9c20e-02d3-4334-badd-2efe5be9ce7e@freebox.fr>
+ <d5abf142-3a2b-454c-660a-249c0fb25208@quicinc.com>
+ <33382ecb-8a73-4d2f-96b1-8048df7a6414@freebox.fr>
+ <3914555d-3c89-a5c5-2906-0bd24d0bf735@quicinc.com>
+ <72741d2e-5165-4505-b079-d7b5d1491888@freebox.fr>
+ <edb29faa-01b3-3b96-7c05-3378eb3af073@quicinc.com>
+ <21b833cf-61c3-4fb5-8c55-492aac0fd3b6@freebox.fr>
+ <8170522f-b813-19a4-3f85-f2880809d9a5@quicinc.com>
+ <c2ce34ce-d532-4039-bb9f-d4d1b2fb23b0@freebox.fr>
+ <09bc9231-0e59-4cb2-a05f-02e2fcaf3d15@linaro.org>
+Content-Language: en-US
+From: Marc Gonzalez <mgonzalez@freebox.fr>
+In-Reply-To: <09bc9231-0e59-4cb2-a05f-02e2fcaf3d15@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+On 09/04/2024 13:27, Bryan O'Donoghue wrote:
+
+> Can you give it a try ?
+
+Random notes
+
+For easy reference, I've used this command to test:
+
+$ mpv --hwdec=v4l2m2m-copy --vo=tct --quiet --no-audio demo-480.webm
+
+And it displays the video directly in the terminal :)
+(Rendering speed depends on terminal size)
+
+I'd never played the video to the end.
+I notice I get:
+
+[  397.410006] qcom-venus cc00000.video-codec: session error: event id:1001 (deadb000), session id:79d7c000
+[  397.410114] qcom-venus-decoder cc00000.video-codec:video-decoder: dec: event session error 1001
+
+How bad is that?
 
 
---ex24qbuczfox3i6r
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Sometimes, decoding simply fails immediately.
+Must quit & restart.
+Will have to script a 100 starts and check frequency of failures.
 
-Hello,
 
-On Sun, Feb 25, 2024 at 01:19:12AM +0100, Uwe Kleine-K=F6nig wrote:
-> The .remove() callback for a platform driver returns an int which makes
-> many driver authors wrongly assume it's possible to do error handling by
-> returning an error code. However the value returned is ignored (apart
-> from emitting a warning) and this typically results in resource leaks.
->=20
-> To improve here there is a quest to make the remove callback return
-> void. In the first step of this quest all drivers are converted to
-> .remove_new(), which already returns void. Eventually after all drivers
-> are converted, .remove_new() will be renamed to .remove().
->=20
-> Trivially convert the slimbus drivers from always returning zero in the
-> remove callback to the void returning variant.
->=20
-> Signed-off-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
+Will test with higher-resolution video.
 
-gentle ping. Who feels responsible to apply (or give feedback to) this
-patch?
+# time mpv --hwdec=v4l2m2m-copy --vo=null --quiet --no-audio --untimed demo-480.webm
+ (+) Video --vid=1 (*) (vp9 854x480 29.970fps)
+     Audio --aid=1 --alang=eng (*) (opus 2ch 48000Hz)
+[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
+[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
+[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
+[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
+[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
+[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
+[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
+[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
+[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
+[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
+[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
+Using hardware decoding (v4l2m2m-copy).
+VO: [null] 854x480 nv12
+[ffmpeg/video] vp9_v4l2m2m: capture POLLERR
+Exiting... (Quit)
+/*** HANGS UNTIL CTRL-C ***/
 
-Best regards
-Uwe
+real	0m21.467s
+user	0m3.795s
+sys	0m1.914s
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
 
---ex24qbuczfox3i6r
-Content-Type: application/pgp-signature; name="signature.asc"
+# time mpv --hwdec=v4l2m2m-copy --vo=null --quiet --no-audio --untimed --length=30 demo-1440.webm 
+ (+) Video --vid=1 (*) (vp9 2560x1440 59.940fps)
+     Audio --aid=1 --alang=eng (*) (opus 2ch 48000Hz)
+[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
+Using hardware decoding (v4l2m2m-copy).
+VO: [null] 2560x1440 nv12
+Exiting... (End of file)
 
------BEGIN PGP SIGNATURE-----
+real	0m16.433s
+user	0m1.764s
+sys	0m1.118s
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmYVa1kACgkQj4D7WH0S
-/k6nigf/eVi4R2FNm3XqCNfxM9brE7q7OzW+rZU4vQRkRIhPlz5q47EvNR0XXOAa
-Cb652PeaaCpdgN16UEfwu+glm9tZpJgiYsdDlDyvDUPmjTnFJMMUm/EbEEmfGAi0
-58ITc92RazK9LauLiahI9+fIy5X8B4lku7WE9VakDvJFe4f80XEtN81ExsZUk5nT
-GrycHvWgxwAP0Dn+Nd/Bp7QbbucAYYbgOEiYOSxXo4+l4UEjmV5eCBL9JIDt2X7W
-7wm/XgefnDgACffRsNbCc45h2eTK1GCGX28Wf57G5FdxqFMhIWHKxvK3rICsnP1l
-J3/YEhJUPZKuJMDzQQqhrb7ML87KeQ==
-=LxR+
------END PGP SIGNATURE-----
 
---ex24qbuczfox3i6r--
+Regards
+
 
