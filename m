@@ -1,97 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-16872-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9DA9D89D291
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 08:42:02 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9EDAD89D2C2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 08:58:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 05E65B23AAD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 06:42:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2B4CFB21C73
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 06:58:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC17C74431;
-	Tue,  9 Apr 2024 06:41:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70C8174BE8;
+	Tue,  9 Apr 2024 06:58:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Lxe0W+ue"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MDyIUb7f"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay7-d.mail.gandi.net (relay7-d.mail.gandi.net [217.70.183.200])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A5C74435;
-	Tue,  9 Apr 2024 06:41:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DDD542046;
+	Tue,  9 Apr 2024 06:58:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712644898; cv=none; b=MJ2AJ6nXjNhNhLybmzq9OdYz+GPVlACpwG6X2PG+8LoTdx6ZQkT8dZAhD2bCdw1sWUc93FEG78QqongPT0NC5E12T1QeKZ3FAj7z8QZNMcKhI5dAXDPy3ZFv6NMFf9wridk9cVIGyucctZ3kzFh1Ajbajwo37p3oUQRT1bZ0n80=
+	t=1712645916; cv=none; b=ed9QeQHfuNDqEaZ46fIgic9Ku2bXiDvOkErUK+bAnGjasGh7XzVo/LpcATJp1opFEfcxW5vyMMGwuZ5dLLgZmgRK6HRWluGjqgPjf1MjLbrUKmC2EqqbvEu/r44JfUqt0+8mrY0+sBIrSoNtqEobotqkCIZwCmN/RpKBbWnW+nk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712644898; c=relaxed/simple;
-	bh=Ypa096u1rxKyRP+T+Cgia169tt3nEpsKn06F40LBBzM=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=oZutkxGTq0Ta0rELRRQvoftejTMMBBW2MJTV7To69VR+/T/lZ/DI9oPPOa2Xn5YmSygQY/cyQjUvV/VPyDqqUlIOdr8105YdixDCLIkOGraP/5V/S592uo5Y9Q2obqS6BJOUXsRKnxnJaY8Ln7ki6ACctcHzW59h9Q4Fgtv1WJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=Lxe0W+ue; arc=none smtp.client-ip=217.70.183.200
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id D81EE20008;
-	Tue,  9 Apr 2024 06:41:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1712644894;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Krd0BAesKO2iMVNygzUAooa8aMl2YxIa+szFLm86h3M=;
-	b=Lxe0W+ueNHMvhA4jruFrl5RfQzBTaAwiNuT2BRmIhCvleayAKis6628tUeRLpLuLs3r7Rx
-	ZlMwOSDISL8uK9+eochy5Ix8u78E+Q6SYOzhaGpT6SQ3Wmpmdifyf/9r4Vkmi+SVECGX0M
-	lhTVStGd4M9m2T+v+6zziB6kRayBkJa419CfYNXVKcdtSTasmAzVR/qwcw1tXRje+xmDVO
-	OskZtnTc+AEaLPCTUej8AbTQOR6BJHiKhAvEo0NjcoIMsqeRdUEieqCp6GqFj551UTORz3
-	QGLEJJcoc5nXrlkFDb3FznjhmWttxwaVsx3HGg5YEA9RstzZJm/HDgCpAXePlw==
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: Christian Marangi <ansuelsmth@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Richard Weinberger <richard@nod.at>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Md Sadre Alam <quic_mdalam@quicinc.com>,
-	Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-	linux-mtd@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
+	s=arc-20240116; t=1712645916; c=relaxed/simple;
+	bh=RNDQ/WAShIYxQ56ytQsVbdot0whnV2CuqsOaiBNW8ws=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sgVnRRzdAIORv0a1YjwHu2h5R2/Pn8PnZ6/lmuAs4r6ZHPkcZVEYGhKht+fr1wW70S/42eC+eBIfoO8sfmxKAKO+imsXfkmEzwVFVONIZYJqTWhTSadXSPERzUBr6yaELf1n9eZz6EJe9kJDwb4VeIqUaUmbohgp37AmexJ49zI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MDyIUb7f; arc=none smtp.client-ip=198.175.65.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1712645915; x=1744181915;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=RNDQ/WAShIYxQ56ytQsVbdot0whnV2CuqsOaiBNW8ws=;
+  b=MDyIUb7foURLaC/W5B/KUhZkIKmm6JZzqY+a+cfTx4nda32Qkd8QZyZx
+   XP4t4SmTZcRH2p1P776ODn1LOWQUx1z6yQMyH4flzmI5DGkXvcVuZA4fr
+   QiDAI3NRiajRGZ3BurQOEqzXCn59FLVZAGPMjYAesBHaw9VpgoPJWgQXc
+   +RdZAXDWXk39MiKOMjmxNOg5P9ccsiW1v+ztoUPRIQaIaoxTF/7RPvU5+
+   K1mrvKm9RY5D4djM7PxI1pqWOoh5MS1Tu+Nk1wEUbskh9ZB/z19czod+n
+   CVA0NMgtnmO4NCFufIO2XCm+f/nSLNFPz9sapqtb+V1Hg5TciYf5Efma1
+   g==;
+X-CSE-ConnectionGUID: Yz0MeUhDTVqWFykSLjh5vA==
+X-CSE-MsgGUID: IDYoI1rdSHCHaN/E2mChrQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11038"; a="8071295"
+X-IronPort-AV: E=Sophos;i="6.07,188,1708416000"; 
+   d="scan'208";a="8071295"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Apr 2024 23:58:34 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,11038"; a="937093086"
+X-IronPort-AV: E=Sophos;i="6.07,188,1708416000"; 
+   d="scan'208";a="937093086"
+Received: from kuha.fi.intel.com ([10.237.72.185])
+  by fmsmga001.fm.intel.com with SMTP; 08 Apr 2024 23:58:31 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Tue, 09 Apr 2024 09:58:30 +0300
+Date: Tue, 9 Apr 2024 09:58:30 +0300
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Cc: stable@vger.kernel.org
-Subject: Re: [PATCH v4] mtd: rawnand: qcom: Fix broken OP_RESET_DEVICE command in qcom_misc_cmd_type_exec()
-Date: Tue,  9 Apr 2024 08:41:33 +0200
-Message-Id: <20240409064133.91927-1-miquel.raynal@bootlin.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20240404083157.940-1-ansuelsmth@gmail.com>
-References: 
+Subject: Re: [PATCH 1/5] usb: typec: ucsi: add callback for connector status
+ updates
+Message-ID: <ZhTnFq4yuUHK83eM@kuha.fi.intel.com>
+References: <20240408-ucsi-orient-aware-v1-0-95a74a163a10@linaro.org>
+ <20240408-ucsi-orient-aware-v1-1-95a74a163a10@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-linux-mtd-patch-notification: thanks
-X-linux-mtd-patch-commit: b'b61bb5bc2c1cd00bb53db42f705735db6e8700f0'
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: miquel.raynal@bootlin.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240408-ucsi-orient-aware-v1-1-95a74a163a10@linaro.org>
 
-On Thu, 2024-04-04 at 08:31:55 UTC, Christian Marangi wrote:
-> While migrating to exec_ops in commit a82990c8a409 ("mtd: rawnand: qcom:
-> Add read/read_start ops in exec_op path"), OP_RESET_DEVICE command handling
-> got broken unintentionally. Right now for the OP_RESET_DEVICE command,
-> qcom_misc_cmd_type_exec() will simply return 0 without handling it. Even,
-> if that gets fixed, an unnecessary FLASH_STATUS read descriptor command is
-> being added in the middle and that seems to be causing the command to fail
-> on IPQ806x devices.
+On Mon, Apr 08, 2024 at 07:30:49AM +0300, Dmitry Baryshkov wrote:
+> Allow UCSI glue driver to perform addtional work to update connector
+> status. For example, it might check the cable orientation.  This call is
+> performed after reading new connector statatus, so the platform driver
+> can peek at new connection status bits.
 > 
-> So let's fix the above two issues to make OP_RESET_DEVICE command working
-> again.
+> The callback is called both when registering the port and when the
+> connector change event is being handled.
 > 
-> Fixes: a82990c8a409 ("mtd: rawnand: qcom: Add read/read_start ops in exec_op path")
-> Cc: stable@vger.kernel.org
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/usb/typec/ucsi/ucsi.c | 6 ++++++
+>  drivers/usb/typec/ucsi/ucsi.h | 3 +++
+>  2 files changed, 9 insertions(+)
+> 
+> diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
+> index 3106e69050cd..7ad544c968e4 100644
+> --- a/drivers/usb/typec/ucsi/ucsi.c
+> +++ b/drivers/usb/typec/ucsi/ucsi.c
+> @@ -1199,6 +1199,9 @@ static void ucsi_handle_connector_change(struct work_struct *work)
+>  
+>  	trace_ucsi_connector_change(con->num, &con->status);
+>  
+> +	if (ucsi->ops->connector_status)
+> +		ucsi->ops->connector_status(con);
+> +
+>  	role = !!(con->status.flags & UCSI_CONSTAT_PWR_DIR);
+>  
+>  	if (con->status.change & UCSI_CONSTAT_POWER_DIR_CHANGE) {
+> @@ -1588,6 +1591,9 @@ static int ucsi_register_port(struct ucsi *ucsi, struct ucsi_connector *con)
+>  	}
+>  	ret = 0; /* ucsi_send_command() returns length on success */
+>  
+> +	if (ucsi->ops->connector_status)
+> +		ucsi->ops->connector_status(con);
+> +
+>  	switch (UCSI_CONSTAT_PARTNER_TYPE(con->status.flags)) {
+>  	case UCSI_CONSTAT_PARTNER_TYPE_UFP:
+>  	case UCSI_CONSTAT_PARTNER_TYPE_CABLE_AND_UFP:
+> diff --git a/drivers/usb/typec/ucsi/ucsi.h b/drivers/usb/typec/ucsi/ucsi.h
+> index 2caf2969668c..6599fbd09bee 100644
+> --- a/drivers/usb/typec/ucsi/ucsi.h
+> +++ b/drivers/usb/typec/ucsi/ucsi.h
+> @@ -53,12 +53,14 @@ struct dentry;
+>  #define UCSI_CCI_ERROR			BIT(30)
+>  #define UCSI_CCI_COMMAND_COMPLETE	BIT(31)
+>  
+> +struct ucsi_connector;
 
-Applied to https://git.kernel.org/pub/scm/linux/kernel/git/mtd/linux.git mtd/fixes, thanks.
+Let's keep the forward declarations in one place. Please move that to
+the beginning of the file where the other forward declarations are.
 
-Miquel
+thanks,
+
+>  /**
+>   * struct ucsi_operations - UCSI I/O operations
+>   * @read: Read operation
+>   * @sync_write: Blocking write operation
+>   * @async_write: Non-blocking write operation
+>   * @update_altmodes: Squashes duplicate DP altmodes
+> + * @connector_status: Updates connector status, called holding connector lock
+>   *
+>   * Read and write routines for UCSI interface. @sync_write must wait for the
+>   * Command Completion Event from the PPM before returning, and @async_write must
+> @@ -73,6 +75,7 @@ struct ucsi_operations {
+>  			   const void *val, size_t val_len);
+>  	bool (*update_altmodes)(struct ucsi *ucsi, struct ucsi_altmode *orig,
+>  				struct ucsi_altmode *updated);
+> +	void (*connector_status)(struct ucsi_connector *con);
+>  };
+>  
+>  struct ucsi *ucsi_create(struct device *dev, const struct ucsi_operations *ops);
+
+-- 
+heikki
 
