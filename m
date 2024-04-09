@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-16868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16869-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D171D89D245
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 08:22:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3919389D273
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 08:30:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8A968283B50
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 06:22:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E68CC286492
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 06:30:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A48D6EB72;
-	Tue,  9 Apr 2024 06:22:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 983431DFD8;
+	Tue,  9 Apr 2024 06:30:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="M1zECHv1"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EzVT0OsL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B506B6FE06;
-	Tue,  9 Apr 2024 06:22:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB1A1DFC4;
+	Tue,  9 Apr 2024 06:30:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712643739; cv=none; b=psXJIEyyeUC3uiOzQ2MuDhi3SOsOBrQg7dMGusJwG30lIMRbP9ehXmb41v7pRMs3Z0dmk8OvxqF7Zv9GWf7afRSGPfBciPckr8n9pBiD3AJkJdxw6aLAQwvXkP3fn9Tl8G3yq3fVNVV4vB4ZpmX4t6IHvv/jmS53buehLfQxGyw=
+	t=1712644210; cv=none; b=UTWsQYTyuxneIJ8o7pY9LQqqE60fAaue44k72NkIUkYyGBw3Z68K2Fe79Pgq3I3jnhYz7mSVYMUY+KAKq96HokmsBMZLf1mB6wFfo8sHSFuZ3RQSWkiZB+ghrFXjD/4FHBCpOIQ2ytVHVWTIAkf1+vjyCGudDyv1KMYQACrZvRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712643739; c=relaxed/simple;
-	bh=Nh8lnA3q14jQOsBsRSAuQstUEjJVkvUUo3UxrFXpQPo=;
+	s=arc-20240116; t=1712644210; c=relaxed/simple;
+	bh=y4XqJdFt7y1AyYebuwpEgYd69/uTnJh6qyQOlVWNtTY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YUGZrzCKhukFL+JRGV5aIUGyZ/2FkwIJ6+3npyk8I4LUdTj7XJicPQKk0fpgrjAX9Ikmyzcd1mC58y6tMQ7uTDrDybXUzLYmX9DdnKN2hRBpr823F0CyQAkowv6MaY9G8gGMcwosGeoTYQSbBq2k7oqyBmBwES+r1MTVSGvLuAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=M1zECHv1; arc=none smtp.client-ip=198.175.65.11
+	 Content-Type:Content-Disposition:In-Reply-To; b=YTdoaqESPKRgBviIfti2nl/SJvK6FSUYAT/YS1fMB8OaDDKOGHHkQg20f1tPDY1GD2+wsQRcgmEbSdJE8qWpN/sq2ZkBPh2J7N6ZbJV3njxPgwAwkfqfrqw60GCHrVnKHwWlZUjjV9ZE+iMCJQPvBv3pIa3nzhppPTf6zW8ZXks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=EzVT0OsL; arc=none smtp.client-ip=198.175.65.16
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1712643738; x=1744179738;
+  t=1712644209; x=1744180209;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=Nh8lnA3q14jQOsBsRSAuQstUEjJVkvUUo3UxrFXpQPo=;
-  b=M1zECHv1T1pF+wFA8rdb1/4htbCYVH9AY4I0XkjduzMGTVt7K141tym8
-   2KftaYSkP5yxDbJKyByAef0/huR5Hc7EnNyvDMDCVCvfrUX4g7/taO+1S
-   pirOUscmJUz1m48iEKK8UKNJefFhPjM1UmY+bMRFniBXY3cQR51RCDzHQ
-   Sb2U1G5NvQGUofDVpOxdmd5yXmjtyR6xIo4KfCqudch4Ske8+XQqHRomk
-   nQ3rCcs9GuQi3pQMMg8hxf2wpEcPfswRPGVnoXwTte1BZoIxTkcCm6wWD
-   NAE4EL3Inx//4UkGNg/n3qvCGLlHLvGBvznOjs1NgpchKBKTUQLMmkcyd
-   Q==;
-X-CSE-ConnectionGUID: o/Nhe3o5Rweq0fIidCc+0Q==
-X-CSE-MsgGUID: jwJ9sZjIQYed/uuNs+KJxg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11038"; a="18511266"
+  bh=y4XqJdFt7y1AyYebuwpEgYd69/uTnJh6qyQOlVWNtTY=;
+  b=EzVT0OsLyZFoSIWBchJIEGLiOyL4EXuL48HngcRTRmKBkH0O89+zTt7n
+   R7YGScrX9XICUsZMBQ+eRZUK5vL1d5RET19WUpIJBOdulMnjpQm6+u62Z
+   oNuez6IkFi4NYtue/o12bvb0IHpukWeMhkN+OPXG+rHGCDA4jHvK4IG87
+   Ya+oJflQwkx+RIvDpDz4XAGrdw8wG3uqyC9XrB0Z2koQVWHXcyAiE1r1s
+   t95GwQwqAWwTWGwfKYHRKMlrsn9MlF7FgVEPeInONAKPSM4fFmwbvo2D1
+   vi5XiETrj132w3y4H8MN8gWkODTRfYMe74ccVNM7u21bdqtn2+BJxPCi9
+   A==;
+X-CSE-ConnectionGUID: OK8KBrloRNGZVn8wKb/FhA==
+X-CSE-MsgGUID: qUR03+ISSWujYc3IP6hkYw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11038"; a="8069501"
 X-IronPort-AV: E=Sophos;i="6.07,188,1708416000"; 
-   d="scan'208";a="18511266"
+   d="scan'208";a="8069501"
 Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Apr 2024 23:22:18 -0700
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Apr 2024 23:30:08 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,11038"; a="937093064"
+X-IronPort-AV: E=McAfee;i="6600,9927,11038"; a="937093067"
 X-IronPort-AV: E=Sophos;i="6.07,188,1708416000"; 
-   d="scan'208";a="937093064"
+   d="scan'208";a="937093067"
 Received: from kuha.fi.intel.com ([10.237.72.185])
-  by fmsmga001.fm.intel.com with SMTP; 08 Apr 2024 23:22:14 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Tue, 09 Apr 2024 09:22:13 +0300
-Date: Tue, 9 Apr 2024 09:22:13 +0300
+  by fmsmga001.fm.intel.com with SMTP; 08 Apr 2024 23:30:05 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Tue, 09 Apr 2024 09:30:04 +0300
+Date: Tue, 9 Apr 2024 09:30:04 +0300
 From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/3] usb: typec: ucsi_glink: drop NO_PARTNER_PDOS quirk
- for sm8550 / sm8650
-Message-ID: <ZhTelXC4GGj5mzM/@kuha.fi.intel.com>
+Subject: Re: [PATCH 3/3] usb: typec: ucsi_glink: drop special handling for
+ CCI_BUSY
+Message-ID: <ZhTgbOYigUBucwNY@kuha.fi.intel.com>
 References: <20240408-qcom-ucsi-fixes-bis-v1-0-716c145ca4b1@linaro.org>
- <20240408-qcom-ucsi-fixes-bis-v1-2-716c145ca4b1@linaro.org>
+ <20240408-qcom-ucsi-fixes-bis-v1-3-716c145ca4b1@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,35 +78,57 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240408-qcom-ucsi-fixes-bis-v1-2-716c145ca4b1@linaro.org>
+In-Reply-To: <20240408-qcom-ucsi-fixes-bis-v1-3-716c145ca4b1@linaro.org>
 
-On Mon, Apr 08, 2024 at 04:04:16AM +0300, Dmitry Baryshkov wrote:
-> The Qualcomm SM8550 (and via a fallback compat SM8650) firmware properly
-> handles the GET_PDOS command, it sends the CCI_BUSY notification,
-> and then follows with the CCI_COMMAND_COMPLETE event. Stop using the quirk
-> for those two platforms.
+On Mon, Apr 08, 2024 at 04:04:17AM +0300, Dmitry Baryshkov wrote:
+> Newer Qualcomm platforms (sm8450+) successfully handle busy state and
+> send the Command Completion after sending the Busy state. Older devices
+> have firmware bug and can not continue after sending the CCI_BUSY state,
+> but the command that leads to CCI_BUSY is already forbidden by the
+> NO_PARTNER_PDOS quirk.
+> 
+> Follow other UCSI glue drivers and drop special handling for CCI_BUSY
+> event. Let the UCSI core properly handle this state.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+One minor nitpick below, but feel free to ignore that one.
 
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
 > ---
->  drivers/usb/typec/ucsi/ucsi_glink.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  drivers/usb/typec/ucsi/ucsi_glink.c | 8 +++-----
+>  1 file changed, 3 insertions(+), 5 deletions(-)
 > 
 > diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-> index 9bd80a2218e4..9ffea20020e7 100644
+> index 9ffea20020e7..b91d2d15d7d9 100644
 > --- a/drivers/usb/typec/ucsi/ucsi_glink.c
 > +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-> @@ -321,7 +321,7 @@ static const struct of_device_id pmic_glink_ucsi_of_quirks[] = {
->  	{ .compatible = "qcom,sc8280xp-pmic-glink", .data = &quirk_sc8280xp, },
->  	{ .compatible = "qcom,sm8350-pmic-glink", .data = &quirk_sc8180x, },
->  	{ .compatible = "qcom,sm8450-pmic-glink", .data = &quirk_sm8450, },
-> -	{ .compatible = "qcom,sm8550-pmic-glink", .data = &quirk_sc8280xp, },
-> +	{ .compatible = "qcom,sm8550-pmic-glink", .data = &quirk_sm8450, },
->  	{}
->  };
+> @@ -176,7 +176,8 @@ static int pmic_glink_ucsi_sync_write(struct ucsi *__ucsi, unsigned int offset,
+>  	left = wait_for_completion_timeout(&ucsi->sync_ack, 5 * HZ);
+>  	if (!left) {
+>  		dev_err(ucsi->dev, "timeout waiting for UCSI sync write response\n");
+> -		ret = -ETIMEDOUT;
+> +		/* return 0 here and let core UCSI code handle the CCI_BUSY */
+> +		ret = 0;
+>  	} else if (ucsi->sync_val) {
+>  		dev_err(ucsi->dev, "sync write returned: %d\n", ucsi->sync_val);
+>  	}
+> @@ -243,10 +244,7 @@ static void pmic_glink_ucsi_notify(struct work_struct *work)
+>  		ucsi_connector_change(ucsi->ucsi, con_num);
+>  	}
 >  
+> -	if (ucsi->sync_pending && cci & UCSI_CCI_BUSY) {
+> -		ucsi->sync_val = -EBUSY;
+> -		complete(&ucsi->sync_ack);
+> -	} else if (ucsi->sync_pending &&
+> +	if (ucsi->sync_pending &&
+>  		   (cci & (UCSI_CCI_ACK_COMPLETE | UCSI_CCI_COMMAND_COMPLETE))) {
+
+Looks like you forgot to fix the alignment.
+
+>  		complete(&ucsi->sync_ack);
+>  	}
 > 
 > -- 
 > 2.39.2
