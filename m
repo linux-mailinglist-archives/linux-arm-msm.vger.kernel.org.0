@@ -1,118 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-16976-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8BDF89E387
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 21:29:26 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B476389E3F7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 21:56:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9E5B41F21910
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 19:29:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E60211C2359E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 19:56:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5636B157466;
-	Tue,  9 Apr 2024 19:26:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E4A91581E0;
+	Tue,  9 Apr 2024 19:56:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="qdqurBoH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from cae.in-ulm.de (cae.in-ulm.de [217.10.14.231])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EE94157E9C;
-	Tue,  9 Apr 2024 19:26:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.14.231
+Received: from smtp.smtpout.orange.fr (smtp-25.smtpout.orange.fr [80.12.242.25])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285C815749F;
+	Tue,  9 Apr 2024 19:56:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712690797; cv=none; b=akoxJrUKGb7s3AuPiCgL0lghTWGjA06TZGi3O4hZuQBrDS3/srBr2xYYR0+xTIQg6KjjMvAZjNMKaPOvXrfLpBFYRERQntdLnNqQXx2nAPrpfVfzBLVhWQ3Eits5BiD4TuJA4DsReiWOjjVsB+1QvqOOv6Nfft+G6k9EfbiJiZg=
+	t=1712692604; cv=none; b=bsMKoifmnsi/3I5VMhYwwbBc+50B625u2pbV8aqAKBd7RSA8gnBM/AMq/E5N9YU3WbctIe1gj84jeuM4HuvN9EFZ3+SaUqvjaEaYIx0NosESpqjN77fENK6AZKc9slT+4ZNB8bXZ2Yu+gmfaOUXOmamlgZgDnLba6zCmPWo/dBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712690797; c=relaxed/simple;
-	bh=LSz9VcksS3I44HIeB0srZE2FQPGtzmVVAAOs5a4k/3o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KPEPI9WID78nqrgl4NXuA+FG1/Y2s+9wtDbir90pXqyWAHsS44X3m/FY4zP4LMwV1aBGjAst5UG00iEl/J75IfmTk+ypAbCfaIS62HpIZign637d2L/EPJAX8xCHXUGa7y+8YqCNW8CeOFwsmUQiqlBzw8Er7QkfBMWuq0ZM6Ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=c--e.de; spf=pass smtp.mailfrom=c--e.de; arc=none smtp.client-ip=217.10.14.231
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=c--e.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=c--e.de
-Received: by cae.in-ulm.de (Postfix, from userid 1000)
-	id E3CE4140562; Tue,  9 Apr 2024 21:26:25 +0200 (CEST)
-Date: Tue, 9 Apr 2024 21:26:25 +0200
-From: "Christian A. Ehrhardt" <lk@c--e.de>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+	s=arc-20240116; t=1712692604; c=relaxed/simple;
+	bh=z7BAwHdlIOFlrDrp4E1/+ZBYeK6Y4f5EcDVqiHKagr4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bnKHmkWx322XRaDtAYECoVmnxv0wwA3mDaGMdgBGBBHOxD+0jR0dIDk7NKaLbNK2zYaVHyDe+aP1CYcHfQdr9iQChpmcSIYuTdierxDo+VKPxHry1/aK3uHg2+WW7OKWvpUjBTfRw2o+PmlS60MRZzFnjqbGyPvy38L6xOFWFLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=qdqurBoH; arc=none smtp.client-ip=80.12.242.25
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
+Received: from fedora.home ([86.243.17.157])
+	by smtp.orange.fr with ESMTPA
+	id uHa9rwxIo83vquHa9rIXzq; Tue, 09 Apr 2024 21:56:39 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
+	s=t20230301; t=1712692599;
+	bh=fu5z4vCgv5ADaSG0dkgCAD7sDLo0K4zyVyA83A0IAdI=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version;
+	b=qdqurBoHVqAzZ2c9o312nL4dTD+sj2NhJYfzHw4TlE6jYLXojmdXtoINymkHisIGS
+	 jbdRjM70I8RxAUyScubaNP8GsQQXSQ2avXCkjjldcwgh/P2N6vTnlqiwiB+Lhin8ul
+	 7yk1oNCV2NUNrzNBq5cS+tTYBn5f8bkykJB+sdemHwUdB1kKPHwhFoVlMaExnvCZrS
+	 mHcPmDIufMkWU8tpDGT05lPoRObO17Bb92OeQrecYkE6KZ8uhcXnHqbYHOziH83U2B
+	 1uiq0AmruaUWFypV6AstfIjmNx0NBMEabaxze0bRlkW8H6ERglTjbrGfiaV0EsTEsM
+	 +IXCUX1ombSyg==
+X-ME-Helo: fedora.home
+X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
+X-ME-Date: Tue, 09 Apr 2024 21:56:39 +0200
+X-ME-IP: 86.243.17.157
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+To: Amit Kucheria <amitk@kernel.org>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Lukasz Luba <lukasz.luba@arm.com>
+Cc: linux-kernel@vger.kernel.org,
+	kernel-janitors@vger.kernel.org,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	linux-pm@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] usb: typec: ucsi_glink: drop special handling for
- CCI_BUSY
-Message-ID: <ZhWWYQMluJCvYFKF@cae.in-ulm.de>
-References: <20240409-qcom-ucsi-fixes-bis-v2-0-6d3a09faec90@linaro.org>
- <20240409-qcom-ucsi-fixes-bis-v2-3-6d3a09faec90@linaro.org>
+Subject: [PATCH] thermal/drivers/qcom: Remove some unused fields in struct qpnp_tm_chip
+Date: Tue,  9 Apr 2024 21:56:34 +0200
+Message-ID: <d1c3a3c455f485dae46290e3488daf1dcc1d355a.1712687589.git.christophe.jaillet@wanadoo.fr>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240409-qcom-ucsi-fixes-bis-v2-3-6d3a09faec90@linaro.org>
+Content-Transfer-Encoding: 8bit
 
+In "struct qpnp_tm_chip", the 'prev_stage' field is unused.
+Remove it.
 
-Hi Dmitry,
+Found with cppcheck, unusedStructMember.
 
-On Tue, Apr 09, 2024 at 06:29:18PM +0300, Dmitry Baryshkov wrote:
-> Newer Qualcomm platforms (sm8450+) successfully handle busy state and
-> send the Command Completion after sending the Busy state. Older devices
-> have firmware bug and can not continue after sending the CCI_BUSY state,
-> but the command that leads to CCI_BUSY is already forbidden by the
-> NO_PARTNER_PDOS quirk.
-> 
-> Follow other UCSI glue drivers and drop special handling for CCI_BUSY
-> event. Let the UCSI core properly handle this state.
-> 
-> Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/usb/typec/ucsi/ucsi_glink.c | 10 ++++------
->  1 file changed, 4 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-> index 9ffea20020e7..fe9b951f5228 100644
-> --- a/drivers/usb/typec/ucsi/ucsi_glink.c
-> +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-> @@ -176,7 +176,8 @@ static int pmic_glink_ucsi_sync_write(struct ucsi *__ucsi, unsigned int offset,
->  	left = wait_for_completion_timeout(&ucsi->sync_ack, 5 * HZ);
->  	if (!left) {
->  		dev_err(ucsi->dev, "timeout waiting for UCSI sync write response\n");
-> -		ret = -ETIMEDOUT;
-> +		/* return 0 here and let core UCSI code handle the CCI_BUSY */
-> +		ret = 0;
->  	} else if (ucsi->sync_val) {
->  		dev_err(ucsi->dev, "sync write returned: %d\n", ucsi->sync_val);
->  	}
-> @@ -243,11 +244,8 @@ static void pmic_glink_ucsi_notify(struct work_struct *work)
->  		ucsi_connector_change(ucsi->ucsi, con_num);
->  	}
->  
-> -	if (ucsi->sync_pending && cci & UCSI_CCI_BUSY) {
-> -		ucsi->sync_val = -EBUSY;
-> -		complete(&ucsi->sync_ack);
-> -	} else if (ucsi->sync_pending &&
-> -		   (cci & (UCSI_CCI_ACK_COMPLETE | UCSI_CCI_COMMAND_COMPLETE))) {
-> +	if (ucsi->sync_pending &&
-> +	    (cci & (UCSI_CCI_ACK_COMPLETE | UCSI_CCI_COMMAND_COMPLETE))) {
->  		complete(&ucsi->sync_ack);
->  	}
->  }
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+---
+Compile tested only.
 
-This handling of the command completion turned out to be racy in
-the ACPI case: If a normal command was sent one should wait for
-UCSI_CCI_COMMAND_COMPLETE only. In case of an UCSI_ACK_CC_CI
-command the completion is indicated by UCSI_CCI_ACK_COMPLETE.
+Apparently, it has never been used. It is not a left-over from a
+refactoring.
+---
+ drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-While not directly related, a port of this 
-    https://lore.kernel.org/all/20240121204123.275441-3-lk@c--e.de/
-would nicely fit into this series.
-
-I don't have the hardware to do this myself.
-
-
-Best regards,
-Christian
+diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
+index 78c5cfe6a0c0..3cd74f6cac8f 100644
+--- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
++++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
+@@ -74,7 +74,6 @@ struct qpnp_tm_chip {
+ 	long				temp;
+ 	unsigned int			thresh;
+ 	unsigned int			stage;
+-	unsigned int			prev_stage;
+ 	unsigned int			base;
+ 	/* protects .thresh, .stage and chip registers */
+ 	struct mutex			lock;
+-- 
+2.44.0
 
 
