@@ -1,278 +1,309 @@
-Return-Path: <linux-arm-msm+bounces-16894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16895-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F65289D790
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 13:03:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D8E489D7CF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 13:27:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 536771C21853
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 11:03:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DE44A1F269EE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 11:27:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50CFB85641;
-	Tue,  9 Apr 2024 11:03:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C040B8614D;
+	Tue,  9 Apr 2024 11:27:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RGD6dQSK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eT1chbw7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF207C0B0;
-	Tue,  9 Apr 2024 11:03:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60A085C73
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Apr 2024 11:27:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712660629; cv=none; b=IZHszvTz8gIjRJOCrWDoRkurJf41h32MVBe5CqxMSTasT4BoQ+YzgHcEUjfnU6KkgkSdSfHypvV6Tx2aMcaEaTe1Vu2x+JP0vLez2RmawHvk707Eikl0IMT7yOZCVA7Eb597TYBnJPjHwhLtWgLv60MnovgnkLq8PZoHwg1hLCQ=
+	t=1712662066; cv=none; b=DHtIWCQn5UTS7h6Yvpp1i16ROAVeMnjwHcLjeS13x7Aenq8HdF+GFsLVA3M3Zvfv4Gt7VMfcfWbr5w7EH2Q+HR2RNBXAQu8ubM8jG9bdeecNgzCb6TLwR0cTPzwBP2JFSw5a63XwiBLEzn1WZUKg3Scb6qK+GkkbY1tXLJSaEag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712660629; c=relaxed/simple;
-	bh=BKL2aI470n0H/gucOxUDsX3tYrfnCJ+YtT/c8wWVhec=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QrIiLoIKPKJn5ot+vUMiXqUyspcysguBlDl7VXqMCW5CykJ19kVEpaC9pMwls4pUET3tkuMRVWTMwTZx6oXq+rKxNfZcThsfi99pYY4bvb8kBLioHVKtck7jXyjGZYXqM9Ym218W4faNf0X8OKxdZAHfbCKoq9FS03MR3njHedw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RGD6dQSK; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4397m36D020972;
-	Tue, 9 Apr 2024 11:03:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=6BRVh/GiB7fDH1Ya2R3Cq
-	R2SPX5lMgLeOW15Ssmy+TM=; b=RGD6dQSKR1dwEVoE8wtqsPzE5sxIWSyxA85KR
-	QH8aku8W9OEdjcUTruzaWq3hD/T+dyeH8qAv530RiqUg+uydVQ4eaDSukNjrSxWu
-	HU0MNXGj25GVQxAXqMl9ZIRmDLfSZztVREFeTczeYl5VPBBkmsBJM/859mLiFP4H
-	Vjbdxk9NOTBM0mkn9NndU6l+fj+XJyxWb10HCuVS5oPA/pLOsIk8eIWbtjvMa9Bt
-	lk6AJw6kHv9pwb7ss+Sq8wz2yiZt2Jl0pmkEEGto/YLV24WD4fJgkwAAL2sAr9hs
-	/C+RlU1bwTExdRZIesqGmLeHBnIyhuwlJ++1nA3PO9G+6548A==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xcvtk0tur-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 09 Apr 2024 11:03:42 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 439B3glf008175
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 9 Apr 2024 11:03:42 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Tue, 9 Apr 2024 04:03:37 -0700
-Date: Tue, 9 Apr 2024 16:33:34 +0530
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <djakov@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <quic_anusha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH v7 1/5] dt-bindings: interconnect: Add Qualcomm IPQ9574
- support
-Message-ID: <ZhUghsa5Do5m7wrX@hu-varada-blr.qualcomm.com>
-References: <20240403104220.1092431-1-quic_varada@quicinc.com>
- <20240403104220.1092431-2-quic_varada@quicinc.com>
- <58c9b754-b9a7-444d-9545-9e6648010630@kernel.org>
- <Zg5q6mnWtK6hmPBT@hu-varada-blr.qualcomm.com>
- <ZhTxFVDH0xTSkw7r@hu-varada-blr.qualcomm.com>
- <1ec401be-11cb-416a-9eae-d72ea8acf06f@kernel.org>
+	s=arc-20240116; t=1712662066; c=relaxed/simple;
+	bh=NwfrGcY93qjkTjFtbURfuzBNVuSNrsz2BL96d/crmpw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RH1d88rMm2MM1PAeluzZS4YAZhhMfqepwFXzyKVxD2i8pTaFc13A556qodNqFrPtpiF1BhoiIceusuXv1exgoQiTdFuzJoKnJzrMVPzR9dGV29NTYgZwvOOSki2pEV+wBpett7MPlgu0XUd/yQ5zw3Tsla/69Pd9TToRQ5vk7Ac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eT1chbw7; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3455ff1339dso1863706f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Apr 2024 04:27:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712662063; x=1713266863; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=t7rSBxf+r+Gu/NRlDCb2V6v8NWBTd2ZyB6ufbMqjXbc=;
+        b=eT1chbw7cq48/MUg/aQbpEBeJP3twUbN4Ctz4gyzHmXcR05Njb10pjtj1xeHr7mZ5E
+         vFU4AvVGlTI4coM+IzRDT/StzSQLFi49ANlH3Ix8AZEa8x1PwjTA5VZMJ1jI5KNM51fR
+         gmDS2mJdtSmOHfchiTbTP7ahruVKKrMPB/qOt95OiUeHqpRl2zsGr7/A59yA93SddTNL
+         +9KFuIw4CrUdkmCCE+65nzujThmdEISTx3pewq3gWrv6JMelZu0QCZ3CXg0ysbj7MeoV
+         1XFWXjTETd8R2iVT8Rdb5XKkTWHvtMcLvPelI4TE/IEolaB0UQPEXuwEjBSm41BcoxCH
+         1VVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712662063; x=1713266863;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=t7rSBxf+r+Gu/NRlDCb2V6v8NWBTd2ZyB6ufbMqjXbc=;
+        b=euSjCUmdsLkXNkQIIQBUUe2Tc/oSPm7W7CRc8DelF9IycapUHgKaGhvBL15R1gmloh
+         Xb5yB5llCssPVRE98TGUsT/VkTBYzw9fv3KedpaEh8Iu6hvb/k0ggLSLVo632r60JjTL
+         YO0b1341xJ62LOWgav0Bf20z5Oe6DOL8gpKgfHcUe0McKchO1Xswc6BrufavSJU/fSrM
+         Fo/SoTcTTQ2khPZm/jQ/4GK9uxApveqUroQDdspYdEDmSkUvkJENZyRv6beNNBH2R/2G
+         MaUf8OMZ2LBvrRou14DyHcQvBYdMCLwUcCWP3yMH3zWPpTSVChxYS38u1SobF3D2UBuG
+         TKww==
+X-Forwarded-Encrypted: i=1; AJvYcCVkT3/BRak3OjX5+AXS26yadsm/221tVBDdl3QgHR1dtVLrIe35MJL4EcrLXRPVUxqHZHm8VPbo/sJ7Unyc9RT4tXJnZIoVOS31fjZw4Q==
+X-Gm-Message-State: AOJu0Yz3/jZqDmxncVc+tr3kUqO6p/NmreogYsxbp2L57Q8m91yIkgDn
+	0E6qBfmjMW4nsJu0xf5wCKdwFMdqa3pP8vnZFSMTjl+YXsagkEGkhb33+MfTCRg=
+X-Google-Smtp-Source: AGHT+IFc3CHe4SvVPDno2EzgH/cO657z8BNxuarw3RMRafSBmQilr3QFX3lm1ocDMwECacVr96rtCA==
+X-Received: by 2002:a05:6000:1864:b0:343:7654:3e98 with SMTP id d4-20020a056000186400b0034376543e98mr12022149wri.43.1712662063007;
+        Tue, 09 Apr 2024 04:27:43 -0700 (PDT)
+Received: from [192.168.0.102] ([176.61.106.68])
+        by smtp.gmail.com with ESMTPSA id y16-20020adff6d0000000b0034335f13570sm11224468wrp.116.2024.04.09.04.27.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 Apr 2024 04:27:42 -0700 (PDT)
+Message-ID: <09bc9231-0e59-4cb2-a05f-02e2fcaf3d15@linaro.org>
+Date: Tue, 9 Apr 2024 12:27:40 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <1ec401be-11cb-416a-9eae-d72ea8acf06f@kernel.org>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: dwonnYnHQ4i9LRfht3nMrlyW9rUsxKkC
-X-Proofpoint-ORIG-GUID: dwonnYnHQ4i9LRfht3nMrlyW9rUsxKkC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-09_08,2024-04-05_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
- lowpriorityscore=0 priorityscore=1501 phishscore=0 suspectscore=0
- mlxscore=0 malwarescore=0 mlxlogscore=999 bulkscore=0 clxscore=1015
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404090070
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC WIP PATCH] venus: add qcom,no-low-power property
+To: Marc Gonzalez <mgonzalez@freebox.fr>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-media <linux-media@vger.kernel.org>,
+ MSM <linux-arm-msm@vger.kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Jeffrey Hugo <quic_jhugo@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Pierre-Hugues Husson
+ <phh@phh.me>, Marijn Suijten <marijn.suijten@somainline.org>
+References: <0843621b-386b-4173-9e3c-9538cdb4641d@freebox.fr>
+ <f6e68756-72a1-4c32-968d-3d6adaa153c9@linaro.org>
+ <CAA8EJpq=G21h87W69_4U-BZ=Sa5VEs15Y-zE-G5x9VxVx4qjsA@mail.gmail.com>
+ <81dc6452-4039-4eb4-92ba-df248215fca2@linaro.org>
+ <b8325dbf-67c5-4898-bc23-ff093ae6e14a@freebox.fr>
+ <87db77f7-fda4-4cf7-adfd-8545c40c3365@linaro.org>
+ <10fe67af-0572-4faa-91c6-fce9c8f9dc92@linaro.org>
+ <6342e92d-eed0-45c2-8f04-3779aa2e521d@freebox.fr>
+ <4ab95e87-c912-469b-b8d4-be0cf0e4710b@linaro.org>
+ <a8c5b27c-47a9-044a-78e8-51c67acf19a6@quicinc.com>
+ <c6a9c20e-02d3-4334-badd-2efe5be9ce7e@freebox.fr>
+ <d5abf142-3a2b-454c-660a-249c0fb25208@quicinc.com>
+ <33382ecb-8a73-4d2f-96b1-8048df7a6414@freebox.fr>
+ <3914555d-3c89-a5c5-2906-0bd24d0bf735@quicinc.com>
+ <72741d2e-5165-4505-b079-d7b5d1491888@freebox.fr>
+ <edb29faa-01b3-3b96-7c05-3378eb3af073@quicinc.com>
+ <21b833cf-61c3-4fb5-8c55-492aac0fd3b6@freebox.fr>
+ <8170522f-b813-19a4-3f85-f2880809d9a5@quicinc.com>
+ <c2ce34ce-d532-4039-bb9f-d4d1b2fb23b0@freebox.fr>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <c2ce34ce-d532-4039-bb9f-d4d1b2fb23b0@freebox.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Apr 09, 2024 at 11:45:51AM +0200, Krzysztof Kozlowski wrote:
-> On 09/04/2024 09:41, Varadarajan Narayanan wrote:
-> > On Thu, Apr 04, 2024 at 02:25:06PM +0530, Varadarajan Narayanan wrote:
-> >> On Wed, Apr 03, 2024 at 04:59:40PM +0200, Krzysztof Kozlowski wrote:
-> >>> On 03/04/2024 12:42, Varadarajan Narayanan wrote:
-> >>>> Add interconnect-cells to clock provider so that it can be
-> >>>> used as icc provider.
-> >>>>
-> >>>> Add master/slave ids for Qualcomm IPQ9574 Network-On-Chip
-> >>>> interfaces. This will be used by the gcc-ipq9574 driver
-> >>>> that will for providing interconnect services using the
-> >>>> icc-clk framework.
-> >>>>
-> >>>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> >>>> ---
-> >>>> v7:
-> >>>> Fix macro names to be consistent with other bindings
-> >>>> v6:
-> >>>> Removed Reviewed-by: Krzysztof Kozlowski
-> >>>> Redefine the bindings such that driver and DT can share them
-> >>>>
-> >>>> v3:
-> >>>> Squash Documentation/ and include/ changes into same patch
-> >>>>
-> >>>> qcom,ipq9574.h
-> >>>> 	Move 'first id' to clock driver
-> >>>>
-> >>>> ---
-> >>>>  .../bindings/clock/qcom,ipq9574-gcc.yaml      |  3 +
-> >>>>  .../dt-bindings/interconnect/qcom,ipq9574.h   | 87 +++++++++++++++++++
-> >>>>  2 files changed, 90 insertions(+)
-> >>>>  create mode 100644 include/dt-bindings/interconnect/qcom,ipq9574.h
-> >>>>
-> >>>> diff --git a/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml
-> >>>> index 944a0ea79cd6..824781cbdf34 100644
-> >>>> --- a/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml
-> >>>> +++ b/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml
-> >>>> @@ -33,6 +33,9 @@ properties:
-> >>>>        - description: PCIE30 PHY3 pipe clock source
-> >>>>        - description: USB3 PHY pipe clock source
-> >>>>
-> >>>> +  '#interconnect-cells':
-> >>>> +    const: 1
-> >>>> +
-> >>>>  required:
-> >>>>    - compatible
-> >>>>    - clocks
-> >>>> diff --git a/include/dt-bindings/interconnect/qcom,ipq9574.h b/include/dt-bindings/interconnect/qcom,ipq9574.h
-> >>>> new file mode 100644
-> >>>> index 000000000000..0b076b0cf880
-> >>>> --- /dev/null
-> >>>> +++ b/include/dt-bindings/interconnect/qcom,ipq9574.h
-> >>>> @@ -0,0 +1,87 @@
-> >>>> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-> >>>> +#ifndef INTERCONNECT_QCOM_IPQ9574_H
-> >>>> +#define INTERCONNECT_QCOM_IPQ9574_H
-> >>>> +
-> >>>> +#define ICC_ANOC_PCIE0		0
-> >>>> +#define ICC_SNOC_PCIE0		1
-> >>>> +#define ICC_ANOC_PCIE1		2
-> >>>> +#define ICC_SNOC_PCIE1		3
-> >>>> +#define ICC_ANOC_PCIE2		4
-> >>>> +#define ICC_SNOC_PCIE2		5
-> >>>> +#define ICC_ANOC_PCIE3		6
-> >>>> +#define ICC_SNOC_PCIE3		7
-> >>>> +#define ICC_SNOC_USB		8
-> >>>> +#define ICC_ANOC_USB_AXI	9
-> >>>> +#define ICC_NSSNOC_NSSCC	10
-> >>>> +#define ICC_NSSNOC_SNOC_0	11
-> >>>> +#define ICC_NSSNOC_SNOC_1	12
-> >>>> +#define ICC_NSSNOC_PCNOC_1	13
-> >>>> +#define ICC_NSSNOC_QOSGEN_REF	14
-> >>>> +#define ICC_NSSNOC_TIMEOUT_REF	15
-> >>>> +#define ICC_NSSNOC_XO_DCD	16
-> >>>> +#define ICC_NSSNOC_ATB		17
-> >>>> +#define ICC_MEM_NOC_NSSNOC	18
-> >>>> +#define ICC_NSSNOC_MEMNOC	19
-> >>>> +#define ICC_NSSNOC_MEM_NOC_1	20
-> >>>> +
-> >>>> +#define ICC_NSSNOC_PPE		0
-> >>>> +#define ICC_NSSNOC_PPE_CFG	1
-> >>>> +#define ICC_NSSNOC_NSS_CSR	2
-> >>>> +#define ICC_NSSNOC_IMEM_QSB	3
-> >>>> +#define ICC_NSSNOC_IMEM_AHB	4
-> >>>> +
-> >>>> +#define MASTER_ANOC_PCIE0		(ICC_ANOC_PCIE0 * 2)
-> >>>> +#define SLAVE_ANOC_PCIE0		((ICC_ANOC_PCIE0 * 2) + 1)
-> >>>
-> >>> Which existing Qualcomm platform has such code?
-> >>
-> >> Existing Qualcomm platforms don't use icc-clk. They use icc-rpm
-> >> or icc-rpmh. clk-cbf-msm8996.c is the only driver that uses icc-clk.
-> >>
-> >> The icc_clk_register automatically creates master & slave nodes
-> >> for each clk entry provided as input with the node-ids 'n' and
-> >> 'n+1'. Since clk-cbf-msm8996.c has only one entry, it could just
-> >> define MASTER_CBF_M4M and SLAVE_CBF_M4M with 0 and 1 and avoid these
-> >> calculations.
-> >>
-> >> However, ipq9574 gives an array of clock entries as input to
-> >> icc_clk_register. To tie the order/sequence of these clock
-> >> entries correctly with the node-ids, this calculation is needed.
-> >>
-> >>> This is the third time I am asking for consistent headers. Open
-> >>> existing, recently added headers and look how it is done there. Why?
-> >>> Because I am against such calculations and see no reason for them.
-> >>
-> >> Apologies. Regret that I have to trouble you.
-> >>
-> >> In this ipq9574 case, have to reconcile between the following
-> >> feedbacks.
-> >>
-> >> 1. https://lore.kernel.org/linux-arm-msm/fe40b307-26d0-4b2a-869b-5d093415b9d1@linaro.org/
-> >>    We could probably use indexed identifiers here to avoid confusion:
-> >>    [ICC_BINDING_NAME] = CLK_BINDING_NAME
-> >>
-> >> 2. https://lore.kernel.org/linux-arm-msm/95f4e99a60cc97770fc3cee850b62faf.sboyd@kernel.org/
-> >>    Are these supposed to be in a dt-binding header?
-> >>
-> >> 3. https://lore.kernel.org/linux-arm-msm/031d0a35-b192-4161-beef-97b89d5d1da6@linaro.org/
-> >>    Do you use them as well in the DTS?
-> >>
-> >> Having the defines (with the calculations) seemed to to comply
-> >> with the above three feedbacks.
-> >>
-> >> Please let me know if this can be handled in a different way that
-> >> would be consistent with other Qualcomm platforms.
-> >
-> > Krzysztof,
-> >
-> > Is this ok? Can I post a new version addressing other review comments?
->
-> I don't understand and you did not answered before, why you have to do
-> it differently than all other Qualcomm interconnect providers. Maybe the
-> code here needs it, maybe not, but I don't see any argument proving this.
+On 08/04/2024 16:39, Marc Gonzalez wrote:
+> On 29/02/2024 16:32, Vikash Garodia wrote:
+> 
+>> Not completely sure on these configurations, but certainly both the
+>> video_subcore0_gdsc and video_subcore1_gdsc should be configured in hardware
+>> control mode in the gdsc configuration.
+> 
+> Hello,
+> 
+> Still trying to land support for venus decoder on msm8998 in mainline.
+> 
+> This is the patch I have at the moment:
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> index 4dfe2d09ac285..67b8374ddf02f 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> @@ -3010,6 +3010,55 @@ mdss_dsi1_phy: phy@c996400 {
+>   			};
+>   		};
+>   
+> +		venus: video-codec@cc00000 {
+> +			compatible = "qcom,msm8998-venus";
+> +			reg = <0x0cc00000 0xff000>;
+> +			interrupts = <GIC_SPI 287 IRQ_TYPE_LEVEL_HIGH>;
+> +			power-domains = <&mmcc VIDEO_TOP_GDSC>;
+> +			clocks = <&mmcc VIDEO_CORE_CLK>,
+> +				 <&mmcc VIDEO_AHB_CLK>,
+> +				 <&mmcc VIDEO_AXI_CLK>,
+> +				 <&mmcc VIDEO_MAXI_CLK>;
+> +			clock-names = "core", "iface", "bus", "mbus";
+> +			iommus = <&mmss_smmu 0x400>,
+> +				 <&mmss_smmu 0x401>,
+> +				 <&mmss_smmu 0x40a>,
+> +				 <&mmss_smmu 0x407>,
+> +				 <&mmss_smmu 0x40e>,
+> +				 <&mmss_smmu 0x40f>,
+> +				 <&mmss_smmu 0x408>,
+> +				 <&mmss_smmu 0x409>,
+> +				 <&mmss_smmu 0x40b>,
+> +				 <&mmss_smmu 0x40c>,
+> +				 <&mmss_smmu 0x40d>,
+> +				 <&mmss_smmu 0x410>,
+> +				 <&mmss_smmu 0x411>,
+> +				 <&mmss_smmu 0x421>,
+> +				 <&mmss_smmu 0x428>,
+> +				 <&mmss_smmu 0x429>,
+> +				 <&mmss_smmu 0x42b>,
+> +				 <&mmss_smmu 0x42c>,
+> +				 <&mmss_smmu 0x42d>,
+> +				 <&mmss_smmu 0x411>,
+> +				 <&mmss_smmu 0x431>;
+> +			memory-region = <&venus_mem>;
+> +			status = "disabled";
+> +
+> +			video-decoder {
+> +				compatible = "venus-decoder";
+> +				clocks = <&mmcc VIDEO_SUBCORE0_CLK>;
+> +				clock-names = "core";
+> +				power-domains = <&mmcc VIDEO_SUBCORE0_GDSC>;
+> +			};
+> +
+> +			video-encoder {
+> +				compatible = "venus-encoder";
+> +				clocks = <&mmcc VIDEO_SUBCORE1_CLK>;
+> +				clock-names = "core";
+> +				power-domains = <&mmcc VIDEO_SUBCORE1_GDSC>;
+> +			};
+> +		};
+> +
+>   		mmss_smmu: iommu@cd00000 {
+>   			compatible = "qcom,msm8998-smmu-v2", "qcom,smmu-v2";
+>   			reg = <0x0cd00000 0x40000>;
+> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+> index ce206b7097541..42e0c580e093d 100644
+> --- a/drivers/media/platform/qcom/venus/core.c
+> +++ b/drivers/media/platform/qcom/venus/core.c
+> @@ -587,6 +587,47 @@ static const struct venus_resources msm8996_res = {
+>   	.fwname = "qcom/venus-4.2/venus.mbn",
+>   };
+>   
+> +static const struct freq_tbl msm8998_freq_table[] = {
+> +	{ 1944000, 520000000 },	/* 4k UHD @ 60 (decode only) */
+> +	{  972000, 520000000 },	/* 4k UHD @ 30 */
+> +	{  489600, 346666667 },	/* 1080p @ 60 */
+> +	{  244800, 150000000 },	/* 1080p @ 30 */
+> +	{  108000,  75000000 },	/* 720p @ 30 */
+> +};
+> +
+> +/*
+> + * https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/arch/arm/boot/dts/qcom/msm8998-vidc.dtsi
+> + */
+> +static const struct reg_val msm8998_reg_preset[] = {
+> +	{ 0x80124, 0x00000003 },
+> +	{ 0x80550, 0x01111111 },
+> +	{ 0x80560, 0x01111111 },
+> +	{ 0x80568, 0x01111111 },
+> +	{ 0x80570, 0x01111111 },
+> +	{ 0x80580, 0x01111111 },
+> +	{ 0x80588, 0x01111111 },
+> +	{ 0xe2010, 0x00000000 },
+> +};
+> +
+> +static const struct venus_resources msm8998_res = {
+> +	.freq_tbl = msm8998_freq_table,
+> +	.freq_tbl_size = ARRAY_SIZE(msm8998_freq_table),
+> +	.reg_tbl = msm8998_reg_preset,
+> +	.reg_tbl_size = ARRAY_SIZE(msm8998_reg_preset),
+> +	.clks = { "core", "iface", "bus", "mbus" },
+> +	.clks_num = 4,
+> +	.vcodec0_clks = { "core" },
+> +	.vcodec1_clks = { "core" },
+> +	.vcodec_clks_num = 1,
+> +	.max_load = 2563200,
+> +	.hfi_version = HFI_VERSION_3XX,
+> +	.vmem_id = VIDC_RESOURCE_NONE,
+> +	.vmem_size = 0,
+> +	.vmem_addr = 0,
+> +	.dma_mask = 0xddc00000 - 1,
+> +	.fwname = "qcom/venus-4.4/venus.mbn",
+> +};
+> +
+>   static const struct freq_tbl sdm660_freq_table[] = {
+>   	{ 979200, 518400000 },
+>   	{ 489600, 441600000 },
+> @@ -893,6 +934,7 @@ static const struct venus_resources sc7280_res = {
+>   static const struct of_device_id venus_dt_match[] = {
+>   	{ .compatible = "qcom,msm8916-venus", .data = &msm8916_res, },
+>   	{ .compatible = "qcom,msm8996-venus", .data = &msm8996_res, },
+> +	{ .compatible = "qcom,msm8998-venus", .data = &msm8998_res, },
+>   	{ .compatible = "qcom,sdm660-venus", .data = &sdm660_res, },
+>   	{ .compatible = "qcom,sdm845-venus", .data = &sdm845_res, },
+>   	{ .compatible = "qcom,sdm845-venus-v2", .data = &sdm845_res_v2, },
+> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
+> index f9437b6412b91..abdc578ce988e 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+> @@ -945,6 +945,7 @@ static int venus_sys_set_default_properties(struct venus_hfi_device *hdev)
+>   			dev_warn(dev, "setting idle response ON failed (%d)\n", ret);
+>   	}
+>   
+> +	venus_fw_low_power_mode = false;
 
-Other Qualcomm interconnect providers use the icc-rpm.
+So instead of this workaround, @Vikash is asking for HW_CTRL similar to 
+what we have in 8996
 
-	1. The SoC specific interconnect providers have control
-	   over the master/slave id-numbers and is hard coded.
+8996 has a top-level "magic" GDSC which 8998 doesn't appear to have.
 
-	2. These id-numbers are used by the RPM firmware.
+I think the CXC stuff would still be valid.
 
-IPQ9574 uses icc-clk.
+diff --git a/drivers/clk/qcom/mmcc-msm8998.c 
+b/drivers/clk/qcom/mmcc-msm8998.c
+index 1180e48c687ac..275fb3b71ede4 100644
+--- a/drivers/clk/qcom/mmcc-msm8998.c
++++ b/drivers/clk/qcom/mmcc-msm8998.c
+@@ -2535,6 +2535,8 @@ static struct clk_branch vmem_ahb_clk = {
 
-	1. The ipq9574 specific interconnect provider doesn't
-	   have control over the master/slave id-numbers. The
-	   icc-clk framework auto generates it in the order of
-	   the clock entries given as input.
+  static struct gdsc video_top_gdsc = {
+         .gdscr = 0x1024,
++       .cxcs = (unsigned int []){ 0x1028, 0x1034, 0x1038 },
++       .cxc_count = 3,
+         .pd = {
+                 .name = "video_top",
+         },
+@@ -2543,20 +2545,26 @@ static struct gdsc video_top_gdsc = {
 
-	2. These auto-generated id-numbers have to be correctly
-	   tied to the DT nodes. Else, the relevant clocks may
-	   not get enabled.
+  static struct gdsc video_subcore0_gdsc = {
+         .gdscr = 0x1040,
++       .cxcs = (unsigned int []){ 0x1048 },
++       .cxc_count = 1,
+         .pd = {
+                 .name = "video_subcore0",
+         },
+         .parent = &video_top_gdsc.pd,
+         .pwrsts = PWRSTS_OFF_ON,
++       .flags = HW_CTRL,
+  };
 
-Since ICC-CLK creates two ids per clock entry (one MASTER_xxx and
-one SLAVE_xxx), using those MASTER/SLAVE_xxx macros as indices in
-the below array would create holes.
+  static struct gdsc video_subcore1_gdsc = {
+         .gdscr = 0x1044,
++       .cxcs = (unsigned int []){ 0x104c },
++       .cxc_count = 1,
+         .pd = {
+                 .name = "video_subcore1",
+         },
+         .parent = &video_top_gdsc.pd,
+         .pwrsts = PWRSTS_OFF_ON,
++       .flags = HW_CTRL,
+  };
 
-	static int icc_ipq9574_hws[] = {
-		[MASTER_ANOC_PCIE0] = GCC_ANOC_PCIE0_1LANE_M_CLK,
-		[MASTER_SNOC_PCIE0] = GCC_SNOC_PCIE0_1LANE_S_CLK,
-		[MASTER_ANOC_PCIE1] = GCC_ANOC_PCIE1_1LANE_M_CLK,
-		[MASTER_SNOC_PCIE1] = GCC_SNOC_PCIE1_1LANE_S_CLK,
-		. . .
-	};
+Can you give it a try ?
 
-Other Qualcomm drivers don't have this issue and they can
-directly use the MASTER/SLAVE_xxx macros.
-
-As the MASTER_xxx macros cannot be used, have to define a new set
-of macros that can be used for indices in the above array. This
-is the reason for the ICC_BINDING_NAME macros.
-
-Does this answer your concern? Please let me know.
-
-Thanks
-Varada
+---
+bod
 
