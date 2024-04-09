@@ -1,120 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-16897-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16898-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC8E189D895
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 13:55:23 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E48D89D8F4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 14:12:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 85CEC284DC2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 11:55:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 81E731C214D5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 12:12:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AFA3129A9A;
-	Tue,  9 Apr 2024 11:55:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 684E212B14F;
+	Tue,  9 Apr 2024 12:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jJUuUUiH"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="ooLazIGZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D16128826;
-	Tue,  9 Apr 2024 11:55:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B212A86651;
+	Tue,  9 Apr 2024 12:11:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712663719; cv=none; b=qkpLWU9XaZ1gOrL6fnJycEWdEC1IYclnQFIgfugAWoR3s4AcqQuniwfXvGN6oC8/tZywvoGZxoQNndNgjUXzeeEGHfDZgJUK2pmtENQMwmVEYyuzvkTRMGYwPjHoPZjgPuLfCXL0yLDNjruDLcney7YLvdUQLUqX3vxqOKCuJus=
+	t=1712664720; cv=none; b=pIjCFFwxuHt8XFqonv2mnV6TuPXgTFmOo6fmh2y9l4g5adQGdm+2ptERCCzchHGjDBRKXi0vOKFl/aR7xC1nLnkb20PgJs8kin+zWqnuQNBbR0UtYdvf3nUB/qDVRXcys9OQvpJ0quEYNc0O0El5WJzpa4hEowvRBgSwMdBJEco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712663719; c=relaxed/simple;
-	bh=scdbxbgPLUxnACHLCarB1DGbiD0xhDlyeS1PSLZ+6/g=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=KooaOQ/GDSUg4LCYuPF58EBdfK1l12EqzGdrnMyA7Tboe8XUX6QjvHXH37T1ne9g8O4eoairo3BTCNfmrZZV8B/eEXVgiX8oBD+piHnJY4pZZZTHfBAe9AGh79FLqpN+W5GLDA40RMqpDU6gHSAp5q0jqj+n0sQoDcYzeIo7UKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jJUuUUiH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 556A4C433C7;
-	Tue,  9 Apr 2024 11:55:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712663718;
-	bh=scdbxbgPLUxnACHLCarB1DGbiD0xhDlyeS1PSLZ+6/g=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=jJUuUUiHOEu9bts8I6ePvqW7e9BYs/4iyEclGOFfg661+yiwsyUiWSYxnTBJWK/Ml
-	 HmGrjB5nAnJsMlsL/Hshp/R5qAhpi9IVUIHh0T4fie2MjKZG2nHz+9k0TDLJbw3/hX
-	 tW+qboleyWZPwJEkIwEWUthoL0SEanLBKEUpg0MeWIZVa6FQ8dmXc9+9bVKyBkNLEI
-	 5BqNWUQDWPA8DwXz5Pa2o6dFy4bv5+3SFUS6Mskuw7olJRmnvYPdBa32Mwk5sdQDy8
-	 1YjYt650Q4wcvXixeF/oOo+DLrnsjBX7TYKqlpIRQMeSJQFBXSp+8YjJ0HB2i/WeBt
-	 TlYAlQN6d+xQA==
-Message-ID: <306af49fd69707feccb640d02dc4fbc5.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1712664720; c=relaxed/simple;
+	bh=BVrLcFdYPUDEWEn5KDV423hxP0oT8V4yLUiWZ5gAH/s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fEV8HXpe5jZ6E+w1gPSZ/WVzsEjHmIwWTRoCGuy82gk7gCMmkDxys90niedzSg43wIx4QqGZbzBXsrAP2hvqvmOtYebXxpK8+0LWh6CiTukfHEZf6UOoIO5nw0hi1TOM7uPokkOKV8K7ypxmyDB+K5AOWeRbKUvGqTNSiP/nM0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=ooLazIGZ; arc=none smtp.client-ip=46.235.227.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1712664716;
+	bh=BVrLcFdYPUDEWEn5KDV423hxP0oT8V4yLUiWZ5gAH/s=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=ooLazIGZqE3OaFF6d+Ilz7NVeVx8eJIxOh2mbgysLKU5kS1Xy1WZHP+Upx+0xJlc+
+	 m6jB+h/LEox8y7O2NEqE2sWa1uZEHjur17z/65/ePxGRvPgjqkqRjTaU9aIFIY/sC/
+	 o1XEc0KavHkF+mfQfskvEcsNoUQe0RwCwA1lWOgWNpC8cjvjbJsT6INFZhfJtYI7u6
+	 kbU558Fo2sTzdjwQIfMLTsvo0eFUMbpNPW15H6mzzj0Q5yus3XsIPzWGLhoiJuTE33
+	 F7SWQd1CxPabfYNAqhuynrP4N6vXO9j/gDePIeJkKcI2oKNv4Je0GTZwjpa93U29xi
+	 sLS1RPRloeXuQ==
+Received: from [100.113.186.2] (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: kholk11)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id C820137820F5;
+	Tue,  9 Apr 2024 12:11:55 +0000 (UTC)
+Message-ID: <66237505-d84f-483e-b088-b8fd7c34ab9f@collabora.com>
+Date: Tue, 9 Apr 2024 14:11:54 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAPDyKFoGxxSzykQ-=o08LD_P_=8m=KRm4SHK_grBFgXNNv4OVw@mail.gmail.com>
-References: <20240325184204.745706-1-sboyd@kernel.org> <20240325184204.745706-5-sboyd@kernel.org> <c1dc0e4c1d4c9ba2b5e9c0fc207db267.sboyd@kernel.org> <CAPDyKFoGxxSzykQ-=o08LD_P_=8m=KRm4SHK_grBFgXNNv4OVw@mail.gmail.com>
-Subject: Re: [PATCH v2 4/5] clk: Get runtime PM before walking tree during disable_unused
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, linux-arm-msm@vger.kernel.org, Douglas Anderson <dianders@chromium.org>, Marek Szyprowski <m.szyprowski@samsung.com>, Krzysztof Kozlowski <krzk@kernel.org>
-To: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Tue, 09 Apr 2024 04:55:16 -0700
-User-Agent: alot/0.10
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] ARM: dts: qcom: msm8974: Use proper compatible for
+ APCS syscon
+To: Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
+ phone-devel@vger.kernel.org, Jassi Brar <jassisinghbrar@gmail.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Matthias Brugger <matthias.bgg@gmail.com>, Jacky Huang
+ <ychuang3@nuvoton.com>, Shan-Chun Hung <schung@nuvoton.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-mediatek@lists.infradead.org
+References: <20240408-msm8974-apcs-v1-0-90cb7368836e@z3ntu.xyz>
+ <20240408-msm8974-apcs-v1-2-90cb7368836e@z3ntu.xyz>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Content-Language: en-US
+In-Reply-To: <20240408-msm8974-apcs-v1-2-90cb7368836e@z3ntu.xyz>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-Quoting Ulf Hansson (2024-04-09 03:32:04)
->=20
-> Apologies for not being able to review this, it got lost in my email
-> filters. Looks like you manage to solve the locking order for the clk
-> disable unused thing - great!
->=20
-> However I think the main problem we are seeing with these kind of
-> locking issues is that we are holding a global lock while calling into
-> pm_runtime_get|put*(). Similar problems have also been reported in the
-> past. It's been on my todo list for quite some time to have a closer
-> look, but I haven't reached it yet.
->=20
-> Without going into too much detail, let me just ask a related
-> question. Would it not be possible to call pm_runtime_get/put() within
-> the clock framework, without *always* keeping the clock prepare lock
-> acquired? I assume a clock can't be unregistered, as long as there is
-> reference taken for it, right? Wouldn't that be a sufficient guarantee
-> that it's okay to runtime_resume|suspend its corresponding device?
+SWwgMDgvMDQvMjQgMjE6MzIsIEx1Y2EgV2Vpc3MgaGEgc2NyaXR0bzoNCj4gVXNlIHRoZSBh
+cGNzLWtwc3MtZ2xvYmFsIGNvbXBhdGlibGUgZm9yIHRoZSBBUENTIGdsb2JhbCBtYWlsYm94
+IGJsb2NrDQo+IGZvdW5kIG9uIHRoaXMgU29DLg0KPiANCj4gVGhpcyBhbHNvIHJlc29sdmVz
+IGEgZHQtYmluZGluZyBjaGVja2VyIHdhcm5pbmc6DQo+IA0KPiAgICBhcmNoL2FybS9ib290
+L2R0cy9xY29tL3Fjb20tbXNtODk3NHByby1mYWlycGhvbmUtZnAyLmR0Yjogc3lzY29uQGY5
+MDExMDAwOiBjb21wYXRpYmxlOiAnYW55T2YnIGNvbmRpdGlvbmFsIGZhaWxlZCwgb25lIG11
+c3QgYmUgZml4ZWQ6DQo+ICAgICAgICAgICAgWydzeXNjb24nXSBpcyB0b28gc2hvcnQNCj4g
+ICAgICAgICAgICAnc3lzY29uJyBpcyBub3Qgb25lIG9mIFsnYWxsd2lubmVyLHN1bjhpLWE4
+M3Qtc3lzdGVtLWNvbnRyb2xsZXInLCAnYWxsd2lubmVyLHN1bjhpLWgzLXN5c3RlbS1jb250
+cm9sbGVyJywgJ2FsbHdpbm5lcixzdW44aS12M3Mtc3lzdGVtLWNvbnRyb2xsZXInLCAnYWxs
+d2lubmVyLHN1bjUwaS1hNjQtc3lzdGVtLWNvbnRyb2xsZXInLCAnYW1kLHBlbnNhbmRvLWVs
+YmEtc3lzY29uJywgJ2JyY20sY3J1LWNsa3NldCcsICdmcmVlY29tLGZzZy1jczItc3lzdGVt
+LWNvbnRyb2xsZXInLCAnZnNsLGlteDkzLWFvbm1peC1ucy1zeXNjZmcnLCAnZnNsLGlteDkz
+LXdha2V1cG1peC1zeXNjZmcnLCAnaGlzaWxpY29uLGRzYS1zdWJjdHJsJywgJ2hpc2lsaWNv
+bixoaTYyMjAtc3JhbWN0cmwnLCAnaGlzaWxpY29uLHBjaWUtc2FzLXN1YmN0cmwnLCAnaGlz
+aWxpY29uLHBlcmktc3ViY3RybCcsICdocGUsZ3hwLXN5c3JlZycsICdpbnRlbCxsZ20tc3lz
+Y29uJywgJ2xvb25nc29uLGxzMWItc3lzY29uJywgJ2xvb25nc29uLGxzMWMtc3lzY29uJywg
+J21hcnZlbGwsYXJtYWRhLTM3MDAtdXNiMi1ob3N0LW1pc2MnLCAnbWVkaWF0ZWssbXQ4MTM1
+LXBjdGwtYS1zeXNjZmcnLCAnbWVkaWF0ZWssbXQ4MTM1LXBjdGwtYi1zeXNjZmcnLCAnbWVk
+aWF0ZWssbXQ4MzY1LXN5c2NmZycsICdtaWNyb2NoaXAsbGFuOTY2eC1jcHUtc3lzY29uJywg
+J21pY3JvY2hpcCxzcGFyeDUtY3B1LXN5c2NvbicsICdtc3Rhcixtc2MzMTMtcG1zbGVlcCcs
+ICdudXZvdG9uLG1hMzVkMS1zeXMnLCAnbnV2b3Rvbix3cGNtNDUwLXNobScsICdyb2NrY2hp
+cCxweDMwLXFvcycsICdyb2NrY2hpcCxyazMwMzYtcW9zJywgJ3JvY2tjaGlwLHJrMzA2Ni1x
+b3MnLCAncm9ja2NoaXAscmszMTI4LXFvcycsICdyb2NrY2hpcCxyazMyMjgtcW9zJywgJ3Jv
+Y2tjaGlwLHJrMzI4OC1xb3MnLCAncm9ja2NoaXAscmszMzY4LXFvcycsICdyb2NrY2hpcCxy
+azMzOTktcW9zJywgJ3JvY2tjaGlwLHJrMzU2DQo+ICAgOC1xb3MnLCAncm9ja2NoaXAscmsz
+NTg4LXFvcycsICdyb2NrY2hpcCxydjExMjYtcW9zJywgJ3N0YXJmaXZlLGpoNzEwMC1zeXNt
+YWluJywgJ3RpLGFtNjItdXNiLXBoeS1jdHJsJywgJ3RpLGFtNjU0LWRzcy1vbGRpLWlvLWN0
+cmwnLCAndGksYW02NTQtc2VyZGVzLWN0cmwnLCAndGksajc4NHM0LXBjaWUtY3RybCddDQo+
+ICAgICAgICAgICAgZnJvbSBzY2hlbWEgJGlkOiBodHRwOi8vZGV2aWNldHJlZS5vcmcvc2No
+ZW1hcy9tZmQvc3lzY29uLnlhbWwjDQo+IA0KPiBTaWduZWQtb2ZmLWJ5OiBMdWNhIFdlaXNz
+IDxsdWNhQHozbnR1Lnh5ej4NCg0KUmV2aWV3ZWQtYnk6IEFuZ2Vsb0dpb2FjY2hpbm8gRGVs
+IFJlZ25vIDxhbmdlbG9naW9hY2NoaW5vLmRlbHJlZ25vQGNvbGxhYm9yYS5jb20+DQoNCg0K
 
-The problem is that the clk tree is being walked with the prepare_lock
-held and during that walk pm_runtime_get() is called on different
-devices. We hold the prepare_lock while walking the tree because we
-don't want the tree topology to change while walking. The prepare_lock
-is also a topology lock.
-
-If we could walk the tree, figure out what all clks will change, drop
-the prepare_lock, pm_runtime_get() all of those devices, regrab the
-prepare_lock, check the topology to make sure topology hasn't changed,
-and then make all the clk_ops calls, it would work because we have
-extracted the runtime PM calls out of the prepare_lock. Dropping and
-regrabbing the lock is probably a bad idea though, because we may never
-make progress because we're preempted by another task that changes the
-topology.
-
-I was also wondering if we get stuck again if the clk driver
-implementing the clk_ops is on some bus like i2c or spi, that runtime PM
-resumes the bus controller for register writes from the clk_ops, and
-that resume function calls clk operations, and that happens in another
-thread. Maybe that isn't a problem though because the runtime resume of
-the device will also runtime resume the parent which is spi or i2c?=20
-
-Either way, it really seems like we need a per-clk prepare_lock. That
-would let us know for sure the topology isn't changing while we walk the
-tree and figure out what we're going to do. Anything that calls into the
-clk framework again hopefully gets a different prepare lock for a
-different clk.
-
-BTW, I don't think lockdep is aware that runtime PM is waiting like
-this for a parallel resume in another thread. Probably we need to add
-annotations so that any locks held while waiting for the resume or
-suspend to finish are chained to a pseudo read lock and the actual
-resume/suspend operation is a pseudo write lock.
-
->=20
-> Or maybe I should just send a patch. :-)
->=20
-
-Sure! ;-)
 
