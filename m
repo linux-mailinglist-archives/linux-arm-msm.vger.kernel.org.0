@@ -1,67 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-16928-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16929-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0E2789DE3E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 17:13:02 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E85DE89DEB7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 17:20:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 763D71F260AD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 15:13:02 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F1B9DB2D59A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 15:15:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B96813C80D;
-	Tue,  9 Apr 2024 15:07:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71DB0130E33;
+	Tue,  9 Apr 2024 15:10:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KgWguIoP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NTTAoRT8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8EE13C800;
-	Tue,  9 Apr 2024 15:07:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297BE130E2A;
+	Tue,  9 Apr 2024 15:10:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712675232; cv=none; b=o56TlAcubow9b0cWHWvpf6O2f540awmFz5v3Oy3wsKuzNcMm6RGdOnl3W5Vwro0QE1iVjR1+2xljGLrTws7bJRNeM8A92uttGCkxBwDC9dm/99hiUQFVa1HylyYZ9j+ox6Kd4XyPYzJuMyQCF8xoeooohEUAQ9g4piFaWtNXYB4=
+	t=1712675444; cv=none; b=JoB+cI70xlD1Unilhr1fPBiXt9Zxj7/Xy1Vkt5W1fYKqKSaGXj4dWVmKsXGYAFYdp0/DuFKcLj+vYMrgh+SvRGjVRXmf66xBqc/+FqSrlF/VFP7cYraatz85o81Gp5Ha6/8rUrisH+Rh7x79pNBbwsO+sGdCZOstkT0K9IHbCpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712675232; c=relaxed/simple;
-	bh=UI4DdX3zkv0IR14xJ19mTtofNIARX96E6JHAMnPik3k=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=gbRH+TZuF4lThttqGqReHgVb3ybVs14qf38Mew8Fp7u0GCyWfzHK1xi8ks+itKasCVi65jx0rDBn9Ru1RPEaZLKMwYLj/sWyLRK3LCBMoHNfzVBdHqSl8QRkPjtZTfIW1IuXdh1Rvn+3YADolPy3CZZBFkyC8LcS4TAGm0zmXRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KgWguIoP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4E27C433C7;
-	Tue,  9 Apr 2024 15:07:11 +0000 (UTC)
+	s=arc-20240116; t=1712675444; c=relaxed/simple;
+	bh=ekT0sGSo3AMhRcIQz//3SzF8DW+WDol7YcBnxFf/pyw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GZixKs45pttdz8MR/gONRleyFNbJ94NjQxndxLnZeKKrTW2LrKfn4ejMdZlmhMhJtKGGbWZp9eRrMpc6FbKMieFrAp3JO8eofEtzWEhtsxywbw1lFIxgUFykP7h5jc1lMJtxNEd7+/YYSY+ZQCvIjX5mlRuD+SJm82eq/1obrsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NTTAoRT8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF39C433F1;
+	Tue,  9 Apr 2024 15:10:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712675232;
-	bh=UI4DdX3zkv0IR14xJ19mTtofNIARX96E6JHAMnPik3k=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=KgWguIoPQ/tksjX/+qv2DmE54YmB689iMFlJROavHIpDMgNQU/MpjnTI1ftpfCIZW
-	 bRC4lN6q6nZEQVyeNWFqtRUZ18kZPPOKdTchIFEBgVq+cyHHzWPNPXpxBvlbSEpE/S
-	 qTpK5EF/f9l4l+mRShmJCCFahgIFPfENT8me09wfqDu9ayw8A2iQg7zqVlAN6/3HVj
-	 HHhKjBJk/EhZj5LPVwecQBjRfgzzMjC3XMaCT9cw+omBLxVfSH4G8KzZuFoi/EVSlb
-	 mrpFuFj+lTqUKvp+7l+Hte00bBuYv1oUvWHWFNknvqCYIeFHITXEYpxMVnkyYYOtPn
-	 OXNr54vx9UX0Q==
-Date: Tue, 9 Apr 2024 10:07:09 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Bjorn Helgaas <bhelgaas@google.com>, johan+linaro@kernel.org,
-	bmasney@redhat.com, djakov@kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-	vireshk@kernel.org, quic_vbadigan@quicinc.com,
-	quic_skananth@quicinc.com, quic_nitegupt@quicinc.com,
-	quic_parass@quicinc.com, krzysztof.kozlowski@linaro.org
-Subject: Re: [PATCH v10 5/6] PCI: Bring the PCIe speed to MBps logic to new
- pcie_link_speed_to_mbps()
-Message-ID: <20240409150709.GA2076210@bhelgaas>
+	s=k20201202; t=1712675443;
+	bh=ekT0sGSo3AMhRcIQz//3SzF8DW+WDol7YcBnxFf/pyw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=NTTAoRT8ckbyRuB/D0RFBxU90uJcw1DMXxt/9IhiBNPPMktexx0h677k+lTha1VrB
+	 I6rDY7fDKpiZ5tyu2jX9HWONXvOXfRPyWc87nxGrBjBR/XyavKJlEZrIB/23c9PZWL
+	 NmGoJ8I8GpyN5oteLMBIFvz7LjV1v01NVeDYBYbJz/3+Mhpu2qwOuJx1mlaLRyH5ZN
+	 1XaWKHlXCx8g9CMZ6H84ZPTc1/YQVpqKXtoYhzfyipDyCaPiOwAYiqy+fqzRz1GOFz
+	 HlqiJ23+wJm61+Yb/oXZmIUZwvefPoxv4zUGr8FK4GB92yC7+Cxd1aDnhQL72u5Yqr
+	 pK0GAkPtqfN9A==
+Date: Tue, 9 Apr 2024 10:10:41 -0500
+From: Rob Herring <robh@kernel.org>
+To: Luca Weiss <luca@z3ntu.xyz>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/3] Fix up qcom,halt-regs definition in various schemas
+Message-ID: <20240409151041.GA1141635-robh@kernel.org>
+References: <20240407-qcom-halt-regs-fixup-v1-0-a0ea4e2c178e@z3ntu.xyz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,93 +62,27 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240409-opp_support-v10-5-1956e6be343f@quicinc.com>
+In-Reply-To: <20240407-qcom-halt-regs-fixup-v1-0-a0ea4e2c178e@z3ntu.xyz>
 
-On Tue, Apr 09, 2024 at 03:43:23PM +0530, Krishna chaitanya chundru wrote:
-> Bring the switch case in pcie_link_speed_mbps() to new function to
-> the header file so that it can be used in other places like
-> in controller driver.
+On Sun, Apr 07, 2024 at 11:58:29AM +0200, Luca Weiss wrote:
+> The original motivation is that a bunch of other schemas fail to
+> validate qcom,halt-regs, for example like in the following examples:
 > 
-> Suggested-by: Bjorn Helgaas <bhelgaas@google.com>
-
-Unnecessary.  Not every code review comment needs to be acknowledged
-in the commit log :)
-
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-
-> ---
->  drivers/pci/pci.c | 19 +------------------
->  drivers/pci/pci.h | 22 ++++++++++++++++++++++
->  2 files changed, 23 insertions(+), 18 deletions(-)
+> arch/arm64/boot/dts/qcom/apq8016-sbc.dtb: remoteproc@4080000: qcom,halt-regs:0: [20] is too short
+>         from schema $id: http://devicetree.org/schemas/remoteproc/qcom,msm8916-mss-pil.yaml#
+> arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb: remoteproc@2080000: qcom,halt-regs:0: [82] is too short
+>         from schema $id: http://devicetree.org/schemas/remoteproc/qcom,msm8996-mss-pil.yaml#
+> arch/arm64/boot/dts/qcom/apq8039-t2.dtb: remoteproc@4080000: qcom,halt-regs:0: [32] is too short
+>         from schema $id: http://devicetree.org/schemas/remoteproc/qcom,msm8916-mss-pil.yaml#
 > 
-> diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-> index e5f243dd4288..40487b86a75e 100644
-> --- a/drivers/pci/pci.c
-> +++ b/drivers/pci/pci.c
-> @@ -5922,24 +5922,7 @@ int pcie_link_speed_mbps(struct pci_dev *pdev)
->  	if (err)
->  		return err;
->  
-> -	switch (to_pcie_link_speed(lnksta)) {
-> -	case PCIE_SPEED_2_5GT:
-> -		return 2500;
-> -	case PCIE_SPEED_5_0GT:
-> -		return 5000;
-> -	case PCIE_SPEED_8_0GT:
-> -		return 8000;
-> -	case PCIE_SPEED_16_0GT:
-> -		return 16000;
-> -	case PCIE_SPEED_32_0GT:
-> -		return 32000;
-> -	case PCIE_SPEED_64_0GT:
-> -		return 64000;
-> -	default:
-> -		break;
-> -	}
-> -
-> -	return -EINVAL;
-> +	return pcie_link_speed_to_mbps(to_pcie_link_speed(lnksta));
->  }
->  EXPORT_SYMBOL(pcie_link_speed_mbps);
->  
-> diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
-> index 17fed1846847..4de10087523e 100644
-> --- a/drivers/pci/pci.h
-> +++ b/drivers/pci/pci.h
-> @@ -290,6 +290,28 @@ void pci_bus_put(struct pci_bus *bus);
->  	 (speed) == PCIE_SPEED_2_5GT  ?  2500*8/10 : \
->  	 0)
->  
-> +static inline int pcie_link_speed_to_mbps(enum pci_bus_speed speed)
-> +{
-> +	switch (speed) {
-> +	case PCIE_SPEED_2_5GT:
-> +		return 2500;
-> +	case PCIE_SPEED_5_0GT:
-> +		return 5000;
-> +	case PCIE_SPEED_8_0GT:
-> +		return 8000;
-> +	case PCIE_SPEED_16_0GT:
-> +		return 16000;
-> +	case PCIE_SPEED_32_0GT:
-> +		return 32000;
-> +	case PCIE_SPEED_64_0GT:
-> +		return 64000;
-> +	default:
-> +		break;
-> +	}
-> +
-> +	return -EINVAL;
-> +}
-> +
->  const char *pci_speed_string(enum pci_bus_speed speed);
->  enum pci_bus_speed pcie_get_speed_cap(struct pci_dev *dev);
->  enum pcie_link_width pcie_get_width_cap(struct pci_dev *dev);
-> 
-> -- 
-> 2.42.0
-> 
+> While I'm actually not quite sure why these patches fix this in
+> the other schemas - feels like a bug/limitation in dt-schema maybe? -
+
+Was this with v2024.02? It should be a bit better there. Though it 
+may just have different errors. The limitation is that property 
+types and in the case of matrix's (which phandle-array actually is) 
+range for dimensions are global. So if there's not correct dimensions 
+for a property, the tools aren't going to decode it properly.
+
+Rob
 
