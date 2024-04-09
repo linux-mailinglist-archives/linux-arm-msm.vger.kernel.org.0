@@ -1,161 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-16986-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16987-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 217B489E5D6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 00:59:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3304B89E606
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 01:19:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8BF431F22A3A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 22:59:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E21F72824F2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 23:19:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53764158DB7;
-	Tue,  9 Apr 2024 22:59:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDD12158DAF;
+	Tue,  9 Apr 2024 23:19:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qPC+7SyD"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LnccMz9O"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E35D158D9D
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Apr 2024 22:59:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5928B158DAA;
+	Tue,  9 Apr 2024 23:19:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712703553; cv=none; b=tc8sJ5FAGoL7ieOsCee/sUJPXL9csxD2Y0knbk1HOOht6XtbFF5WZHS8xSV+vEwk/l+FsoAg9qDn7dDw8Yy2ov2wCzmAEc7yTMbw89uj91rgw775b8y7txRM4Y44QpWqggzE1ZWTjRvPZUWlHyd3XSHQLNrPwzT5sx1Qui+Yt1Q=
+	t=1712704756; cv=none; b=ggWOnKetlKkHnkl2VM1C6Tga97td3UksYOFi1121Evy+TNAu86S2R2tE+Wj4g/QiZItk/pBhthLlZCICozrfRT8YttSBue2KClGqIVrjgh0clZrmjryOxTI9n+iWxz3G96RoefS+Xa6yMTBDTBIa4TYclSW/74cPFobprp9j9OA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712703553; c=relaxed/simple;
-	bh=e0zIWUsBbSEOJRt2epgfxhO/Cl9I2MeTGBbdCQ/7NQ4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aPxSNDwsVmMvqOs383sdJdDgApWmFdeEYs5a+4/aDX4lB25UD63tHRVq6cfz2dyvJpqW/DfqGWph4+tJ9XlRsBwaMMg3CnlHUBYSFaEThvljrl1I98b9Mnm4iiR68jSEetel9RzKv/66XVz6ZPAaSdIRhYUagoGE7Y1x2yW5C4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qPC+7SyD; arc=none smtp.client-ip=209.85.128.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-614b02f8ed6so62895307b3.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Apr 2024 15:59:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712703550; x=1713308350; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=sC+pw9fmCQav50NJARlh9eDkZXXoEqn+0VXDw4DrBkg=;
-        b=qPC+7SyDcybdMQSzyoCd6rpH41zlLBWv85ukgTqETto8CzvAdh5YAmKT4AD2PBlPRP
-         1Phu3p/gXS/8dWhH11jcontD2r2NwpkI3PdEx8a3cCo+H389wjPP1RBJombbsnmhgrqt
-         YHP0C2Neh+0OLJ7ILPLKkdw6LwOHi8w5WZ83RpEPB+XfTa24x2m46bVfRK/uUSvwb0sb
-         fKSdqJuZUXqgoChhOMdx438lQDcUbNj/gPMdRid6k2U3q8I2x61dph8bJn03jNkxoyBf
-         lXIMIW6sSEp5wk3BMvQUMzXsM/Vx7HYESCoF56c6wzewEcUYyzJ8GPse/pbfTbBC69Mk
-         ggMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712703550; x=1713308350;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sC+pw9fmCQav50NJARlh9eDkZXXoEqn+0VXDw4DrBkg=;
-        b=ZCC5M+hhS0C7A+yiLIMNw8NYg8EdixkKhntHMPMDneZBaETFNOlMQVZSwpN8M8SpLm
-         kiDiVteF0p2pPXtMKDQcTmNx3YOYHpEc3KrwQO+JN8Jjx0fTd0RuwHpXm+CS4ukXL7zq
-         a3GW0PfSQ0dqVJogwVk+owLy+RaKbjN+hed0lwzRojY0znZhgWImXlPf2n+V3C0L2OpJ
-         H/9kk9vjUqLXDiSwVBIYIdQxvt2mGlOY5iVK7UmGqlO+PkeOWzxomv/mAN3AHpwO+T0i
-         9X+zlYwsyaFwead9tbmn80DgraRilE+upwcbjJER0ZeE1zb0FNkcZwGChaotX6dGnzyu
-         xhzg==
-X-Forwarded-Encrypted: i=1; AJvYcCVjbe3CUOSvDU+70nPsOQYfABzOeFLcNam3XMsO6NvLLHo6QtvF9Tw4SRIEBYRAfCJeZm7imGTlazGz0eQrSTGESxMWrWRJrUYZyrO/6w==
-X-Gm-Message-State: AOJu0YwWP1PlHX44Lr6nRRsxNW6ogkgJSZUWuG7f6skKqU4aapGEa6mH
-	bkR90/lAOz5Z9p5RoRxgN3t6akq3S5Er4DakBvExQpCkh68VhGuzcHNFUOUGCxoKQSGnR7TV7II
-	4BlVOCjsKtTEUlB9Gt8XN5uk/b3K1M21sawJg3g==
-X-Google-Smtp-Source: AGHT+IGWHmRjiSPWPTmBBPPhWmbaU5b9zrgiWqYnoWcapI2UgzJrqqSc+dHdTyVPpf9/cmgZoUMLuHl32du5IUj09q4=
-X-Received: by 2002:a25:9c41:0:b0:dda:c380:689e with SMTP id
- x1-20020a259c41000000b00ddac380689emr3116559ybo.4.1712703549658; Tue, 09 Apr
- 2024 15:59:09 -0700 (PDT)
+	s=arc-20240116; t=1712704756; c=relaxed/simple;
+	bh=gsro14HSF+eG7gyjutrPG/+a7zpFxjtt1NQDwQItges=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=B9VUfRni83Ig++pe2Ijoij7bJ9+DEJt3SwszaoCuQiDDdRvl/K+PWiugm/CS2h6fxjd1IYxHFHqLhWbbGpV00u4S4Im652OfEz+K+sIc8GpNYPHwQ82VLBNjNawrwSwsD/yYoNu6O4U573SuEOfTZvrm3wvaVIaZbc2pF0s0aKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LnccMz9O; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 439MwNQo007240;
+	Tue, 9 Apr 2024 23:18:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=N+J/7ZTkrzTpb+40/f8nU
+	YISV6T5vuTq1CdcjZQHAW4=; b=LnccMz9OsUhMbx+t0EvHpAIHfPxiawqv5aS7k
+	YSpFVssGqam50WkQ34tUWp08kniwoa6VjkKJf0tU9eVqqHEtQmnciRg8ijtEpV0u
+	Avr2vqbvv1lVFmfE7HOc65mjSVXlMcmix8Q2MdPpGFwHYOL8luxLHU/pU9alTVHI
+	9duTEa6DVaETFoARmTokQDZhh6sHWaF7AWNkwr0WXH6wdG93XhJnGwA5pqE3UZOG
+	0apYtI932R17ie5+f3lwe4SAb93z/AbW2PtAe277dpryJ7/ST349j4yxQk4yza3+
+	8SLmVjJYp4RX2oJcJO3WAQVp6ioB+eR0sXWMpvdZ1NX7GNt6g==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xd4uesqjv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 09 Apr 2024 23:18:57 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 439NIudR015984
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 9 Apr 2024 23:18:56 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.4; Tue, 9 Apr 2024 16:18:55 -0700
+Date: Tue, 9 Apr 2024 16:18:54 -0700
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+CC: Bjorn Andersson <andersson@kernel.org>, Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie
+	<airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 6/6] drm/msm/dp: Use function arguments for audio
+ operations
+Message-ID: <ZhXM3ldkY7FBlFjF@hu-bjorande-lv.qualcomm.com>
+References: <20240328-msm-dp-cleanup-v2-0-a5aed9798d32@quicinc.com>
+ <20240328-msm-dp-cleanup-v2-6-a5aed9798d32@quicinc.com>
+ <711e8a6a-a849-3cd3-fde3-d60f756abfa5@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240409-qcom-ucsi-fixes-bis-v2-0-6d3a09faec90@linaro.org>
- <20240409-qcom-ucsi-fixes-bis-v2-3-6d3a09faec90@linaro.org> <ZhWWYQMluJCvYFKF@cae.in-ulm.de>
-In-Reply-To: <ZhWWYQMluJCvYFKF@cae.in-ulm.de>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 10 Apr 2024 01:58:58 +0300
-Message-ID: <CAA8EJprTbtTSkZ18dejEgvhJOEQKQiwpE+6JkbHiO4H-yeKuhg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] usb: typec: ucsi_glink: drop special handling for CCI_BUSY
-To: "Christian A. Ehrhardt" <lk@c--e.de>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <711e8a6a-a849-3cd3-fde3-d60f756abfa5@quicinc.com>
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: rJwRBaALpi4XBpdebfX132nxJz8Au_YR
+X-Proofpoint-ORIG-GUID: rJwRBaALpi4XBpdebfX132nxJz8Au_YR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-09_12,2024-04-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 spamscore=0 mlxscore=0 malwarescore=0 phishscore=0
+ bulkscore=0 adultscore=0 clxscore=1015 mlxlogscore=965 suspectscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404090160
 
-On Tue, 9 Apr 2024 at 22:26, Christian A. Ehrhardt <lk@c--e.de> wrote:
->
->
-> Hi Dmitry,
->
-> On Tue, Apr 09, 2024 at 06:29:18PM +0300, Dmitry Baryshkov wrote:
-> > Newer Qualcomm platforms (sm8450+) successfully handle busy state and
-> > send the Command Completion after sending the Busy state. Older devices
-> > have firmware bug and can not continue after sending the CCI_BUSY state,
-> > but the command that leads to CCI_BUSY is already forbidden by the
-> > NO_PARTNER_PDOS quirk.
-> >
-> > Follow other UCSI glue drivers and drop special handling for CCI_BUSY
-> > event. Let the UCSI core properly handle this state.
-> >
-> > Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On Mon, Apr 08, 2024 at 02:31:45PM -0700, Abhinav Kumar wrote:
+> On 3/28/2024 7:40 AM, Bjorn Andersson wrote:
+> > From: Bjorn Andersson <quic_bjorande@quicinc.com>
+> > 
+> > The dp_audio read and write operations uses members in struct dp_catalog
+> > for passing arguments and return values. This adds unnecessary
+> > complexity to the implementation, as it turns out after detangling the
+> > logic that no state is actually held in these variables.
+> > 
+> > Clean this up by using function arguments and return values for passing
+> > the data.
+> > 
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > > ---
-> >  drivers/usb/typec/ucsi/ucsi_glink.c | 10 ++++------
-> >  1 file changed, 4 insertions(+), 6 deletions(-)
-> >
-> > diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-> > index 9ffea20020e7..fe9b951f5228 100644
-> > --- a/drivers/usb/typec/ucsi/ucsi_glink.c
-> > +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-> > @@ -176,7 +176,8 @@ static int pmic_glink_ucsi_sync_write(struct ucsi *__ucsi, unsigned int offset,
-> >       left = wait_for_completion_timeout(&ucsi->sync_ack, 5 * HZ);
-> >       if (!left) {
-> >               dev_err(ucsi->dev, "timeout waiting for UCSI sync write response\n");
-> > -             ret = -ETIMEDOUT;
-> > +             /* return 0 here and let core UCSI code handle the CCI_BUSY */
-> > +             ret = 0;
-> >       } else if (ucsi->sync_val) {
-> >               dev_err(ucsi->dev, "sync write returned: %d\n", ucsi->sync_val);
-> >       }
-> > @@ -243,11 +244,8 @@ static void pmic_glink_ucsi_notify(struct work_struct *work)
-> >               ucsi_connector_change(ucsi->ucsi, con_num);
-> >       }
-> >
-> > -     if (ucsi->sync_pending && cci & UCSI_CCI_BUSY) {
-> > -             ucsi->sync_val = -EBUSY;
-> > -             complete(&ucsi->sync_ack);
-> > -     } else if (ucsi->sync_pending &&
-> > -                (cci & (UCSI_CCI_ACK_COMPLETE | UCSI_CCI_COMMAND_COMPLETE))) {
-> > +     if (ucsi->sync_pending &&
-> > +         (cci & (UCSI_CCI_ACK_COMPLETE | UCSI_CCI_COMMAND_COMPLETE))) {
-> >               complete(&ucsi->sync_ack);
-> >       }
-> >  }
->
-> This handling of the command completion turned out to be racy in
-> the ACPI case: If a normal command was sent one should wait for
-> UCSI_CCI_COMMAND_COMPLETE only. In case of an UCSI_ACK_CC_CI
-> command the completion is indicated by UCSI_CCI_ACK_COMPLETE.
->
-> While not directly related, a port of this
->     https://lore.kernel.org/all/20240121204123.275441-3-lk@c--e.de/
-> would nicely fit into this series.
+> >   drivers/gpu/drm/msm/dp/dp_audio.c   | 20 +++++--------------
+> >   drivers/gpu/drm/msm/dp/dp_catalog.c | 39 +++++++++++++------------------------
+> >   drivers/gpu/drm/msm/dp/dp_catalog.h | 18 +++++++++--------
+> >   3 files changed, 28 insertions(+), 49 deletions(-)
+> > 
+> 
+> One quick question, was DP audio re-tested after this patch?
 
-Ack, I'll take a look.
+No, sorry for not being explicit about that. I don't have any target
+with working DP audio...
 
-However... I can not stop but notice that CCG and STM32 glue drivers
-use the same old approach as we do. Which probably means that they
-might have the same issue. Could you please consider pulling up that
-code into the UCSI driver? Maybe the low-level code really should just
-read/write the messages, leaving all completions and CCI parsing to
-the core layer?
-
->
-> I don't have the hardware to do this myself.
-
--- 
-With best wishes
-Dmitry
+Regards,
+Bjorn
 
