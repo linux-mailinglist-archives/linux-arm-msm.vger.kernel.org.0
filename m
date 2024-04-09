@@ -1,201 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-16866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4895689D23F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 08:21:40 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 362A689D241
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 08:21:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B5B5F1F22A67
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 06:21:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 67E741C21337
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 06:21:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E9806FE35;
-	Tue,  9 Apr 2024 06:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 252E36FE06;
+	Tue,  9 Apr 2024 06:21:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rSXbEWYr"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cc1Iu3lk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650126EB5D
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Apr 2024 06:21:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B24524AF;
+	Tue,  9 Apr 2024 06:21:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712643694; cv=none; b=QS/gMQ/Ljbk0ZY6CdBsO7Xe+DCM1eOIzPM922DRyeUWQShzTZrFXm5FWp5SGoaFjG/Ht/maM/r6s6VJgUtc5xQNIEFNu6P7Ua7XVYLqkTtXOIDx3zWcg77szuI0A5dGZLCke9Xn00lYQX/JgHGu7pTAG8BLzdvZirvk3dK5sN1A=
+	t=1712643709; cv=none; b=cNVIf7lz4A1gIhQJoB26QLawDH69n33lQl2g1SefVWgLVINHmJsWPc4B/MdXaiiOzSdNa7tfVf2555oUi0gdsQbdw2BIDhJ979cC+2/p5rsnu3vixGZiOkrx7jKb72eV889z/fYjot5gR12eaLTYDdxtdxE7ydJrueKufxFYuU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712643694; c=relaxed/simple;
-	bh=v9h+JP1Ozokz8XPYOl0mt/0NsHPHIP7jqB4A5A1C9zY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nmZxGZpV8OXxDNeEW/wYBCazTsSWUORsJpfWwocZhbULrbfLAoy4GmCFkIgp40RAtGaTKlF4+pMiTlcFDNISFQpJtmMKlf1JkXVBgtSIGrztX2Xi0LhfNBJy96a6OOAjctMUeHQkkJ0tyEUk1q/B2/G8eNZ+9ag/28g+KAf54O0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rSXbEWYr; arc=none smtp.client-ip=209.85.218.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a51a7dc45easo454881066b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Apr 2024 23:21:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712643691; x=1713248491; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=lWIkOPg5L5xz5mlCTwXEDmQlLjcIkDaN5r93XlgAMzg=;
-        b=rSXbEWYr2OUT+tYefJvPPiHWVkL+6/XAJ6w//81YpPJbev/rpwlh7qeqlsc2297FDC
-         SusKtBtV+R/rRWy7078bKvgvn5FRCON1MsQ85u9+MU/tqF4Iom8C+3T51QY0Nxg3UivQ
-         HPzzBgiGm0+GN3hI6psM7CvO+UTq7rbRkjfEtbNTyzwUMwNoWUj4VLmxNMoR4FQmp9iA
-         8c4ySO3Znnq7pd60/gQO8bDf7+vK1KsVK8whFMWuE4CW8WWvjuaJEsdeGL+W1AYeF78I
-         bbI/5FrKWjHl4VROUkyZKbm1QJYGTwkMIAsVxDc9goImcgMzdzOjO11JjCxGHOrRcph/
-         FoJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712643691; x=1713248491;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lWIkOPg5L5xz5mlCTwXEDmQlLjcIkDaN5r93XlgAMzg=;
-        b=gq3K6OdWQuRkchPDityUDnufu1AW515YD78yIvWoS3mQwcvcSBEWctT58nvpjKkRfh
-         oZl0xsA2Jsg3Coko/jpMa9Z7BCSVOF+5dgs3paWlYFuITP5KrYa9MIFO+fyXX33aQnR/
-         sWnZ+45UCjvEybFgX8s+c/BmU9k6AuhGkOVZH0ObKkUTEOW+GdlCK/bZFANXc9EcK/YJ
-         XgBpfIwbzbb4+2RTVJZyFz6lidf82kq7vTLYbIR7slD34j3A0k0Ufy6NcyFTz9meSOSl
-         RvDfH4sqwvFbzmA00O0GC1v3+9obu6+xIKdGVOzAv0z6nKoN5kL4fNk5gxd7dUMcOsDe
-         bRiQ==
-X-Gm-Message-State: AOJu0YyAas5B06wJFvXG493HZFIW4tvt9iZjGGcR5xBABPAC6w0u568/
-	CCOUDH91s0aKiMgW5ZW64gpm1NcuuisqQx8spb57MALcRw9afAi3csNyCbQPLM0=
-X-Google-Smtp-Source: AGHT+IGpUblUe93xBBOxtCJ75jLMiz7UMH7MBTTDilSV4N7xThGFaUK51PfxCOlL++NMt09sjfHW3g==
-X-Received: by 2002:a17:906:528c:b0:a4d:fcc9:905c with SMTP id c12-20020a170906528c00b00a4dfcc9905cmr8096858ejm.20.1712643690564;
-        Mon, 08 Apr 2024 23:21:30 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.16])
-        by smtp.gmail.com with ESMTPSA id h12-20020a17090634cc00b00a46f95f5849sm5229179ejb.106.2024.04.08.23.21.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Apr 2024 23:21:29 -0700 (PDT)
-Message-ID: <ce17f2dc-decf-4509-969e-e23bdef42eb9@linaro.org>
-Date: Tue, 9 Apr 2024 08:21:28 +0200
+	s=arc-20240116; t=1712643709; c=relaxed/simple;
+	bh=Ms85OtBRY5/th1IVEna3gfWVATxCC+stAFK8L5Q3J0U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UhRYya+FGFq++WAXiD9vm/lCgH57UrXHA/J4gAhxAre49epGcb+I9AxmrYx9v1G595+wPP7LZ4n9WMiaPoEccX4RK54/zYcr3x1uSf4y/6rCEfYCk4xjSHhMm+zRTZjtjj95ECctYbs7OtZrddCW5+vb373rUQhJfu6ENcLUU9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cc1Iu3lk; arc=none smtp.client-ip=198.175.65.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1712643708; x=1744179708;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Ms85OtBRY5/th1IVEna3gfWVATxCC+stAFK8L5Q3J0U=;
+  b=cc1Iu3lk0+8GeFLW7mt5UXkFm7x8LLJOGytMYzvCyor7pE0JOe+66b9x
+   O/IGJ3jtch4jt3H+OqCzpmnDVFo7Sh5nsRjU7spOn4X2ew/CvnPkKbMFz
+   EIzYMLVG6WerAh5kjEFBtWvvWlxMQLC5DGhHwamJJcH7+J2IgoQ0jd+a1
+   szWyiP//YyRAcCCt7lPKyJenbrYpg9cHfionb1s/ci4B5Rr4O1HPdOigi
+   UaYEug3WU2vivAz3W/xKAVZnCf1RkbjDLkKdHac92tXrzdG+ddTC19ikB
+   wp4FJAbVCLCiBNlNiZWIO+cWTiv1ukh09hOjd1z+QPYzRH0nm7ccjxNbt
+   w==;
+X-CSE-ConnectionGUID: 4mWKPn8zQPe1iDtgmQmPUw==
+X-CSE-MsgGUID: DXk42UIISY+4etfSbKyo0Q==
+X-IronPort-AV: E=McAfee;i="6600,9927,11038"; a="18511227"
+X-IronPort-AV: E=Sophos;i="6.07,188,1708416000"; 
+   d="scan'208";a="18511227"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Apr 2024 23:21:47 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,11038"; a="937093063"
+X-IronPort-AV: E=Sophos;i="6.07,188,1708416000"; 
+   d="scan'208";a="937093063"
+Received: from kuha.fi.intel.com ([10.237.72.185])
+  by fmsmga001.fm.intel.com with SMTP; 08 Apr 2024 23:21:43 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Tue, 09 Apr 2024 09:21:43 +0300
+Date: Tue, 9 Apr 2024 09:21:43 +0300
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/3] usb: typec: ucsi_glink: enable the
+ UCSI_DELAY_DEVICE_PDOS quirk on qcm6490
+Message-ID: <ZhTed0fsJbYhMGrN@kuha.fi.intel.com>
+References: <20240408-qcom-ucsi-fixes-bis-v1-0-716c145ca4b1@linaro.org>
+ <20240408-qcom-ucsi-fixes-bis-v1-1-716c145ca4b1@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/2] dt-bindings: pcie: Document QCOM PCIE ECAM
- compatible root complex
-To: Mayank Rana <quic_mrana@quicinc.com>, linux-pci@vger.kernel.org,
- lpieralisi@kernel.org, kw@linux.com, robh@kernel.org, bhelgaas@google.com,
- andersson@kernel.org, manivannan.sadhasivam@linaro.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
- devicetree@vger.kernel.org
-Cc: linux-arm-msm@vger.kernel.org, quic_ramkri@quicinc.com,
- quic_nkela@quicinc.com, quic_shazhuss@quicinc.com, quic_msarkar@quicinc.com,
- quic_nitegupt@quicinc.com
-References: <1712257884-23841-1-git-send-email-quic_mrana@quicinc.com>
- <1712257884-23841-2-git-send-email-quic_mrana@quicinc.com>
- <51b02d02-0e20-49df-ad13-e3dbe3c3214f@linaro.org>
- <1d6911e2-d0ec-4cb0-b417-af5001a4f8a3@quicinc.com>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <1d6911e2-d0ec-4cb0-b417-af5001a4f8a3@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240408-qcom-ucsi-fixes-bis-v1-1-716c145ca4b1@linaro.org>
 
-On 08/04/2024 21:09, Mayank Rana wrote:
->>> +  Firmware configures PCIe controller in RC mode with static iATU window mappings
->>> +  of configuration space for entire supported bus range in ECAM compatible mode.
->>> +
->>> +maintainers:
->>> +  - Mayank Rana <quic_mrana@quicinc.com>
->>> +
->>> +allOf:
->>> +  - $ref: /schemas/pci/pci-bus.yaml#
->>> +  - $ref: /schemas/power-domain/power-domain-consumer.yaml
->>> +
->>> +properties:
->>> +  compatible:
->>> +    const: qcom,pcie-ecam-rc
->>
->> No, this must have SoC specific compatibles.
-> This driver is proposed to work with any PCIe controller supported ECAM 
-> functionality on Qualcomm platform
-> where firmware running on other VM/processor is controlling PCIe PHY and 
-> controller for PCIe link up functionality.
-> Do you still suggest to have SoC specific compatibles here ?
+On Mon, Apr 08, 2024 at 04:04:15AM +0300, Dmitry Baryshkov wrote:
+> Enable the UCSI_DELAY_DEVICE_PDOS quirk on Qualcomm QCM6490. This
+> platform also doesn't correctly handle reading PD capabilities until PD
+> partner is connected.
+> 
+> Fixes: 5da727f75823 ("usb: typec: ucsi_glink: enable the UCSI_DELAY_DEVICE_PDOS quirk")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-What does the writing-bindings document say? Why this is different than
-all other bindings?
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
->>> +
->>> +  reg:
->>> +    minItems: 1
->>
->> maxItems instead
->>
->>> +    description: ECAM address space starting from root port till supported bus range
->>> +
->>> +  interrupts:
->>> +    minItems: 1
->>> +    maxItems: 8
->>
->> This is way too unspecific.
-> will review and update.
->>> +
->>> +  ranges:
->>> +    minItems: 2
->>> +    maxItems: 3
->>
->> Why variable?
-> It depends on how ECAM configured to support 32-bit and 64-bit based 
-> prefetch address space.
-> So there are different combination of prefetch (32-bit or 64-bit or 
-> both) and non-prefetch (32-bit), and IO address space available. hence 
-> kept it as variable with based on required use case and address space 
-> availability.
+> ---
+>  drivers/usb/typec/ucsi/ucsi_glink.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
+> index ef00a6563c88..9bd80a2218e4 100644
+> --- a/drivers/usb/typec/ucsi/ucsi_glink.c
+> +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
+> @@ -316,7 +316,7 @@ static unsigned long quirk_sc8280xp = UCSI_NO_PARTNER_PDOS | UCSI_DELAY_DEVICE_P
+>  static unsigned long quirk_sm8450 = UCSI_DELAY_DEVICE_PDOS;
+>  
+>  static const struct of_device_id pmic_glink_ucsi_of_quirks[] = {
+> -	{ .compatible = "qcom,qcm6490-pmic-glink", .data = &quirk_sc8180x, },
+> +	{ .compatible = "qcom,qcm6490-pmic-glink", .data = &quirk_sc8280xp, },
+>  	{ .compatible = "qcom,sc8180x-pmic-glink", .data = &quirk_sc8180x, },
+>  	{ .compatible = "qcom,sc8280xp-pmic-glink", .data = &quirk_sc8280xp, },
+>  	{ .compatible = "qcom,sm8350-pmic-glink", .data = &quirk_sc8180x, },
+> 
+> -- 
+> 2.39.2
 
-Really? So same device has it configured once for 32 once for 64-bit
-address space? Randomly?
-
-Best regards,
-Krzysztof
-
+-- 
+heikki
 
