@@ -1,73 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-17114-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17115-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F33889FFAE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 20:25:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 638DF89FFD3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 20:30:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BFE951C216AC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 18:25:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1F1F528CCCD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 18:30:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D764A1802BF;
-	Wed, 10 Apr 2024 18:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 626F21802C1;
+	Wed, 10 Apr 2024 18:28:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DDSA4vJO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eAk82lcO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD05F1802A1
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 18:25:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3872E1802BF;
+	Wed, 10 Apr 2024 18:28:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712773503; cv=none; b=pwoXlkqBcUeVH3nfpHgKmvsQqYxEv6uY5p/XLszcYpurcqRH/qDvK4aKwMq68dPLNjbaNmmwxniPH2pGTbQGHEJOe+d3aNRIlupR6jZl20YSifDyMwEGCTGfWfX2lIhKnjU5RwNOpO9t2gXUCQH7IIesyxc4UKkmNXpn1GpfDiU=
+	t=1712773727; cv=none; b=Uc1t6bbAlsMzwE+NJUVRFmAHyPJvu5u5py7iaGm+r5Ej0xUEKkpHfam1IuRdPN1mjy98q5NtvQU1o6MUy6fznjU8u5FuX0cR2Zmd1v6YsQfkqSEUDKeSUcXANjIkzYR1yhw5aKses++pbI9xvrg85fkawFhlqI/ZAdEX2umEMUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712773503; c=relaxed/simple;
-	bh=+Ct4X0tI1ng1fVCdDgz1bpL8NF6sg+gCDiBH35XT1aQ=;
+	s=arc-20240116; t=1712773727; c=relaxed/simple;
+	bh=aIvegxIwbMj6/MAqgtGgSgJk65LlTqgxYpHoBrkDAdc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OqG5FBf9R5kMd5Xm5LnkLFgFeMFRUhA1n5GA2XEO1sj+VsWtNZ5F/SFFUgDrNCSY4AItIr8t1LFZnbrQlSdQN6OdIGieA2xXRUOI1ZAPBoEB0EPaCWSHHkUGUKZmNrcPMpf0QDeuiREO9Fhmh9vMolvsKRHDBENP1cbcXDS8oP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DDSA4vJO; arc=none smtp.client-ip=209.85.167.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-516d04fc04bso10917985e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 11:25:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712773499; x=1713378299; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=x7cDQX1E7JHBxDHMRv3T+Nrz0RpKwP8cLHQVWQ/O5c8=;
-        b=DDSA4vJOCwc9rd9+azVwGTE8xAtbDT6x6lWX+dkj/URSmThMg8nEV3l7ULj/SCxR5S
-         qFyuhiIZwjRxaO02doNWPM7yQcnbJZ0nSZ6kvjSxL1rdGa92lmJMB0dKJ61lhTDbq/1W
-         vjB39DjbPfmotuyMvdn92zxfEXBR14g806Dbw6oQRT1JzsWcaDisAZugAl6ZCulP53ss
-         F48QGd9eM23d5pVRKe+/H20P/O1oFcDSJhD6fcLNuHN9925w6ZXGpIj/EdrkYIpWehXE
-         fCznn/aZoOy9M+X0tzz/Yn6nxMg9FUAzgctDXCMDIM5wXx7pTpVSo6xB7OhRWh+TCktb
-         tsmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712773499; x=1713378299;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=x7cDQX1E7JHBxDHMRv3T+Nrz0RpKwP8cLHQVWQ/O5c8=;
-        b=oRMQjp8IYfZKooMHtk+9ALnqxuGck6MtGaw4HWt7TSIGcKI8uAPA4C8Jo3aTRfkFbY
-         HmJNh8AGNEGpW6ghxyGf3c7T+T3f+Jkh8FVzMnT1O6Td5IirTSqqZqSa6VjzXjcOLRcQ
-         znObIyFgqxPDgRcft65BlvK2QW0IaGZcb+s5o6+hsyhd+UhxoA6Umfl1cW25WtBF0x6J
-         wVNjG4aPBRF3KpGolgtSuq/lPciiDIKsUuYj9aVtRwOv+ha/55xKn1b+J1OhSWmaewgk
-         8hpFqs6DVCYG7vXQh/eW36HR/PZhZKobqW0OqIjIe1vKLlUU2RrgUrVI94zEt8szfcZD
-         /qSw==
-X-Gm-Message-State: AOJu0YwgZaPP/SxxXoV0Bjcp72lloLKhaVrDFWg5tlcnRzLXFD19+A+Y
-	HXqt7fg+szqB0V0y9n00684GaQ+MYtjVQFDk7HxbvezXt9BPvuonG+lXIBT+39c=
-X-Google-Smtp-Source: AGHT+IHHsorZM374DGhCZj27rHHW+mrIzUul6dvnT3mn8jRujeEik7hYsj3u28RfHUS3/Q/NeasJhQ==
-X-Received: by 2002:a05:6512:3c81:b0:515:a9d5:aab6 with SMTP id h1-20020a0565123c8100b00515a9d5aab6mr3666969lfv.18.1712773498951;
-        Wed, 10 Apr 2024 11:24:58 -0700 (PDT)
-Received: from [172.30.205.26] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id y5-20020ac24465000000b00516d4d27c9bsm1862973lfl.102.2024.04.10.11.24.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Apr 2024 11:24:58 -0700 (PDT)
-Message-ID: <3365d84a-1b1d-4b1d-8be5-6d8d1039e6b9@linaro.org>
-Date: Wed, 10 Apr 2024 20:24:55 +0200
+	 In-Reply-To:Content-Type; b=VVRC89w2PVA0ytwJlI0sTLcvunu4Una9pDJ282jsERus+N//yL68HIBZMF/6shuELHrRRTVWHhyn6uGp2bX0FtdcCqKvLal5t7o/0j1pFb+PsYAU5bPmqG79ZeLRY6hnDFvdNx4CbXLTFIDYwqpHwbUMbD06u8U8dzFvg+YTg2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eAk82lcO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD387C433C7;
+	Wed, 10 Apr 2024 18:28:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712773725;
+	bh=aIvegxIwbMj6/MAqgtGgSgJk65LlTqgxYpHoBrkDAdc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=eAk82lcOEg9ZbneOAZHkRYOPj9yUVokbKNeshaLGSmhmrdNoHSR9QgtkVFd0QeUgM
+	 8p5t1z3MV6KpBkqwnF/UNrGs447f1FBfJVjeiN0sofHP9TmYdPBPV7kUqdph3jSFgV
+	 g1yBzcFM7/qzGmqQgz4ViRrJbckEw1ShR7blHXZYfCzYAot8j23aFFolOpw69Zyfmq
+	 4R5A7ZZMveun7zBhn4iCzMDo8F5KpVLQDVQXWWjEZnLwQf4eup42gSrTz6sJOejDBL
+	 DDZTI1ZLkGa4syzQRoKgo2fuqS7h/kc5HTuIYkBmoykHvKSVsV+TSqiGu6wmtRkBkn
+	 pm27PNykA4D7g==
+Message-ID: <689f6a74-185d-4f2f-8c31-e6502b7e6060@kernel.org>
+Date: Wed, 10 Apr 2024 20:28:41 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,78 +50,90 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/5] soc: qcom: llcc: Add regmap for Broadcast_AND
- region
-To: Unnathi Chalicheemala <quic_uchalich@quicinc.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Johan Hovold <johan+linaro@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20240329-llcc-broadcast-and-v4-0-107c76fd8ceb@quicinc.com>
- <20240329-llcc-broadcast-and-v4-2-107c76fd8ceb@quicinc.com>
- <d6b0f9d2-a489-4c0e-9c77-0e3eab49d3cb@linaro.org>
- <13ccc36a-c3cc-469a-ae0b-71fd0d24bf63@quicinc.com>
+Subject: Re: [PATCH] soc: qcom: fix module autoloading
+To: Bjorn Andersson <quic_bjorande@quicinc.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240410164045.233198-1-krzk@kernel.org>
+ <22f5eb76-8f81-46ea-b0a7-5f1d231e7833@linaro.org>
+ <ZhbWU0lk4mNBv1OE@hu-bjorande-lv.qualcomm.com>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <13ccc36a-c3cc-469a-ae0b-71fd0d24bf63@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <ZhbWU0lk4mNBv1OE@hu-bjorande-lv.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-
-
-On 4/2/24 21:34, Unnathi Chalicheemala wrote:
-> On 3/30/2024 4:46 AM, Krzysztof Kozlowski wrote:
->> On 29/03/2024 22:53, Unnathi Chalicheemala wrote:
->>> Define new regmap structure for Broadcast_AND region and initialize
->>> this regmap when HW block version is greater than 4.1, otherwise
->>> initialize as a NULL pointer for backwards compatibility.
+On 10/04/2024 20:11, Bjorn Andersson wrote:
+> On Wed, Apr 10, 2024 at 07:53:32PM +0200, Konrad Dybcio wrote:
+>>
+>>
+>> On 4/10/24 18:40, Krzysztof Kozlowski wrote:
+>>> Add MODULE_DEVICE_TABLE(), so the module could be properly autoloaded
+>>> based on the alias from of_device_id table.
 >>>
+>>> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+>>> ---
 >>
->>> +	struct regmap *regmap;
->>>   	u32 act_ctrl_reg;
->>>   	u32 act_clear_reg;
->>>   	u32 status_reg;
->>> @@ -849,7 +850,8 @@ static int llcc_update_act_ctrl(u32 sid,
->>>   		return ret;
->>>   
->>>   	if (drv_data->version >= LLCC_VERSION_4_1_0_0) {
->>> -		ret = regmap_read_poll_timeout(drv_data->bcast_regmap, status_reg,
->>> +		regmap = drv_data->bcast_and_regmap ?: drv_data->bcast_regmap;
->>> +		ret = regmap_read_poll_timeout(regmap, status_reg,
->>>   				      slice_status, (slice_status & ACT_COMPLETE),
->>>   				      0, LLCC_STATUS_READ_DELAY);
->>>   		if (ret)
->>> @@ -1284,6 +1286,16 @@ static int qcom_llcc_probe(struct platform_device *pdev)
->>>   
->>>   	drv_data->version = version;
->>>   
->>> +	/* Applicable only when drv_data->version >= 4.1 */
->>> +	drv_data->bcast_and_regmap = qcom_llcc_init_mmio(pdev, i + 1, "llcc_broadcast_and_base");
->>> +	if (IS_ERR(drv_data->bcast_and_regmap)) {
+>> These were omitted intentionally, as these are both debug drivers.
 >>
->> I am pretty sure this breaks all users. Can you please explain how do
->> you maintain ABI and that IS_ERR() is applied only for version >= 4.1?
+> 
+> Makes sense to me, could we have a comment added that clarifies this
+> intention?
+> 
+>> Perhaps we could mkdir drivers/soc/qcom/debug to make this clearer
 >>
->> Best regards,
->> Krzysztof
->>
-> IS_ERR() check is done for all versions.
-> If new register isn't defined in DT(for version < 4.1) it simply sets bcast_and_regmap to NULL.
-> Otherwise, for version >= 4.1, it goes to err(in the case bcast_and_regmap isn't set properly).
+> 
+> Not sure if that is necessary, and IMO it wouldn't convey that
+> MODULE_DEVICE_TABLE() was omitted intentionally.
 
-b4 shazam <this series>
+I think this deserves a comment, so no one will be doing my same again
+(it's part of bigger effort).
 
-booting on 8250, I get:
+Best regards,
+Krzysztof
 
-[    2.794850] qcom-llcc 9200000.system-cache-controller: invalid resource (null)
-
-which comes from lib/devres.c : __devm_ioremap_resource()
-
-Now, this is gonna get you an angry Johan(+CC) response when he sees this land in
-the next release. Perhaps, this warning could either be removed from libdevres,
-or some sort of an _optional variant that doesn't print it could be introduced.
-
-Konrad
 
