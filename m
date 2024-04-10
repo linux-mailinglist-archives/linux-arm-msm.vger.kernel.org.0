@@ -1,54 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-17078-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17079-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F147489FD3C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 18:40:54 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7976289FD40
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 18:41:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AD053284C3E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 16:40:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2EE711F22780
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 16:41:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07FA317B4F9;
-	Wed, 10 Apr 2024 16:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71D3E17BB02;
+	Wed, 10 Apr 2024 16:41:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gjmHgrer"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MzAfAzO8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26A517B4F6;
-	Wed, 10 Apr 2024 16:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459A617B506;
+	Wed, 10 Apr 2024 16:41:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712767252; cv=none; b=SfQShE0L4yQL9k96Yh1UFEekTGD6yJgeOo7mcCa2t0kvZAuZlRfjBz6WSccRh/d4FV3cnxKdgi5bu4t2u7DRaIfcSF6fMW0DzDxh8ZNEn4bGW3OtGEG1+lW0oRQ4YaQEKnxsItMvaPI7SCC9zsJQgcG7wKYOp7sHuTZuQn2XX5U=
+	t=1712767265; cv=none; b=Mno7W/N+ukyxhHyAPawJKXkPrm2RwcKRtGQS0HF9HJ5XqMX9cRHlVUyTkcEY2XehZL7FWm4QmHyWMO2H2kwoj7MkbcckxYasC8PfRvtC+3dYP1u1E4spm0Cxkcx/BCyX49ocYHGdS3xEpmof6noH2jbUmYWmFRyGCsEkQ1ubw64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712767252; c=relaxed/simple;
-	bh=KOU/+cRYyRbG+aq9HbB97jsGWFQhqt9Ty44V8bZlbPk=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=jphrGvmKo9HuF7bUJhjpkDG9tskUcytgkONhOPeMrI+5G2y4abNpFm511poozGhhuabdkF785JSlDbSoIGGNthEwixg+QQgKQC5YwkRnNKQUgO3CRse2nPLf8s2QDN8BRIhEiqQD/EplCJFUBBMIs9IqSzdyeVVkfUvkoVOiRz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gjmHgrer; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9213C433F1;
-	Wed, 10 Apr 2024 16:40:49 +0000 (UTC)
+	s=arc-20240116; t=1712767265; c=relaxed/simple;
+	bh=Et8ut1PTjoIL/+lEyWrUuWm3v2h4kx49J+w1J7ps3lQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=SarkFvB2p/MiLYk0M1HvoSSNhUMm4Ih7AjahkCXn/Rc1UkJn5rwHfRq8W3bUs5Eg/5trJkSoGAWjT5a/YsVoBr1OPfnYNfki8AMcStvV8bgWRhlkPW5i/KBhiJpTM1ZKwJjHBv8pgsK8TSl+2Mh21pXtvC5f330SnVqAEttiygk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MzAfAzO8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28046C433F1;
+	Wed, 10 Apr 2024 16:41:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712767252;
-	bh=KOU/+cRYyRbG+aq9HbB97jsGWFQhqt9Ty44V8bZlbPk=;
+	s=k20201202; t=1712767264;
+	bh=Et8ut1PTjoIL/+lEyWrUuWm3v2h4kx49J+w1J7ps3lQ=;
 	h=From:To:Cc:Subject:Date:From;
-	b=gjmHgreryTVBZftysC0TzayF78ocY0NGgufMFF2gDd9lD0cRA6k+mWSXps4irGXIF
-	 uHde2xc2CY6u2Iz2QPOLQbcntNDgOcmTf4RC+ajxXrhxHY8e/S08Anh/oaWqFeHRl0
-	 WK5qmOkb6yWd7tlt6F0E3ngxh2Swe0OsWfk+hOvfjcR8RJq2y6v6haUA/Tbw4iHRqr
-	 TBolvUC+o5HbR+Sw7sg6tVmvqUGNRiui/mMpmU/+jUAT6FgyNvivCmJH4w6oUAU2UW
-	 5KOsZL6E1AqIcFHyu2bNlXMkUvsEedPiu1L1enLmYWj/PgINIDbtgLR/OKCFin/YVI
-	 rLp4xG+rEEWfw==
+	b=MzAfAzO8Cyu614oJieb5qeLwnBKUGWBTDtU+/G1DRguNnY03nqqRsMk5e5kYMqRWo
+	 qnLvKRF721tQzmj1pPZiLULczjFP0oC3bE51AuZkKqmKRUf3SaLiTsZoKimxVT6kih
+	 kPc+X5XPSNZzd9e6GuLmMGmIuk5naBA5VPGrzTM4TSbSPAJ3NxbWsLJyKtRPunvS6z
+	 KyU6GM3Cuy73K7ZUz4WJ85tz/1K0lpwDqb6rM/6londMQJE9MYwCWYQS6yMXi3jHLJ
+	 pn/s47bpUlt0sGYNU7CyqurlqScZHHh3D4Stx6Cg0r48T80336gtcUYVDEzbwDi1Ia
+	 iAmVk/jwqPNsg==
 From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	linux-arm-msm@vger.kernel.org,
+	linux-remoteproc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
 Cc: Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [PATCH] soc: qcom: fix module autoloading
-Date: Wed, 10 Apr 2024 18:40:45 +0200
-Message-Id: <20240410164045.233198-1-krzk@kernel.org>
+Subject: [PATCH] rpmsg: qcom_glink_ssr: fix module autoloading
+Date: Wed, 10 Apr 2024 18:40:58 +0200
+Message-Id: <20240410164058.233280-1-krzk@kernel.org>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -63,34 +65,21 @@ based on the alias from of_device_id table.
 
 Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 ---
- drivers/soc/qcom/pmic_pdcharger_ulog.c | 1 +
- drivers/soc/qcom/rpm_master_stats.c    | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/rpmsg/qcom_glink_ssr.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/soc/qcom/pmic_pdcharger_ulog.c b/drivers/soc/qcom/pmic_pdcharger_ulog.c
-index 238cd38589dc..5f9ea3fe6d6d 100644
---- a/drivers/soc/qcom/pmic_pdcharger_ulog.c
-+++ b/drivers/soc/qcom/pmic_pdcharger_ulog.c
-@@ -150,6 +150,7 @@ static const struct rpmsg_device_id pmic_pdcharger_ulog_rpmsg_id_match[] = {
- 	{ "PMIC_LOGS_ADSP_APPS" },
+diff --git a/drivers/rpmsg/qcom_glink_ssr.c b/drivers/rpmsg/qcom_glink_ssr.c
+index 39ffa384c9b1..e71d3716c55c 100644
+--- a/drivers/rpmsg/qcom_glink_ssr.c
++++ b/drivers/rpmsg/qcom_glink_ssr.c
+@@ -154,6 +154,7 @@ static const struct rpmsg_device_id qcom_glink_ssr_match[] = {
+ 	{ "glink_ssr" },
  	{}
  };
-+MODULE_DEVICE_TABLE(rpmsg, pmic_pdcharger_ulog_rpmsg_id_match);
++MODULE_DEVICE_TABLE(rpmsg, qcom_glink_ssr_match);
  
- static struct rpmsg_driver pmic_pdcharger_ulog_rpmsg_driver = {
- 	.probe = pmic_pdcharger_ulog_rpmsg_probe,
-diff --git a/drivers/soc/qcom/rpm_master_stats.c b/drivers/soc/qcom/rpm_master_stats.c
-index 9ca13bcf67d3..c5745e20e736 100644
---- a/drivers/soc/qcom/rpm_master_stats.c
-+++ b/drivers/soc/qcom/rpm_master_stats.c
-@@ -148,6 +148,7 @@ static const struct of_device_id rpm_master_table[] = {
- 	{ .compatible = "qcom,rpm-master-stats" },
- 	{ },
- };
-+MODULE_DEVICE_TABLE(of, rpm_master_table);
- 
- static struct platform_driver master_stats_driver = {
- 	.probe = master_stats_probe,
+ static struct rpmsg_driver qcom_glink_ssr_driver = {
+ 	.probe = qcom_glink_ssr_probe,
 -- 
 2.34.1
 
