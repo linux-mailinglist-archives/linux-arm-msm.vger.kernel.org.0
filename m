@@ -1,74 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-17017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9EED89F121
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 13:47:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5448E89F178
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 13:54:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 517CD1F24C61
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 11:47:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E97121F24E8E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 11:54:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 774CB15AAAB;
-	Wed, 10 Apr 2024 11:47:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A6D015B0E1;
+	Wed, 10 Apr 2024 11:53:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FArxwAfY"
+	dkim=pass (2048-bit key) header.d=t-argos.ru header.i=@t-argos.ru header.b="RQliOMsu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx1.t-argos.ru (mx1.t-argos.ru [109.73.34.58])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A477156865
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 11:47:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8790C159909;
+	Wed, 10 Apr 2024 11:53:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.73.34.58
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712749623; cv=none; b=LaFu6uqZJqEWRbRfxCRWOTMmB6yjJAdGcyt6gdtyLBHA9be4kxF1S6E4tJVqeYb0VovmPK2zF7OVCtvMQ7G/u9kDvABV8lYETf3bu3sjkiNwR4l9q9t4VNXDIbr3OkdNB5pbDwTRNUEM6RCGzlwmiERlEidvymEWqcuNbotD6gc=
+	t=1712749989; cv=none; b=tMxe1UZtoRCPsvm8lJX8aO/E7IGBxOOa0LVeWHQtUlRrkhJvNk8PcS/6GrGFITaNRcwZTwMCSbH1/nUEVNotxExYDsqVOZbmmNoI+5EI+IF+wWhmbndderTmnj4V1x8qMqnSb7c3udeKUUWA4IjwZNKAEsPLaRz85cwDbFwSN8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712749623; c=relaxed/simple;
-	bh=CW+mD6GTRkoQYXsN50pvVgrsZ6ghzRF4hd23UYqT+zA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WSxJ2NGslxoRsVbY9zrngNkcEWZ2tZFDJ0H08jtgbUWRRs7PC+i7P21kihXI55r07MLSq7J0k35KuuwZezfhGnivfj25DF9de+zwiNZJTRucmrStKSV+/IgVo98fCo08vI7ZZeH9p65y42whEbuxAP2OmzTwYIo1gS1jr5EfE8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FArxwAfY; arc=none smtp.client-ip=209.85.208.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2d6fd3cfaa6so82337131fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 04:47:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712749620; x=1713354420; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=oZ6YNeiNukRuh6MMTnZ6ixiPqjgd5+C31ndu168QCzk=;
-        b=FArxwAfYjCFQ28ezbMSLkd607mC+nlzfb0xDEqr2g5o+PposDK5DmRoKGsAb6kFkFX
-         PLusD0ko4w9VyshZg19zQYmB3V3olgcMNjkC0sXwE/sbGWtFYDPr/5BqRHgWGPdGwgzF
-         rlkDXFMaPpLi9jTgHnieV8MIbkDqW0ma2JM2d2RgNp1zFanCe83tNZccBV5l5z/quXL7
-         gfFkb84YheHQLOxRiDF57AeQUXxB7BSc71jc1yhJRhCjugO30SguIuq1OTdoNn9CURlb
-         uF3CTkZ1W2oRZIZW+eDAJ5m519c+Epo74JI0ymimfWlBC2OJQB8cA9TgBnfPGhsE/LRR
-         OG7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712749620; x=1713354420;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oZ6YNeiNukRuh6MMTnZ6ixiPqjgd5+C31ndu168QCzk=;
-        b=fEf2AjXG0PZYdpOOvMAPqUBK+zEGHwW5EunBoxaCVYNOeJyOXY5gXmIiL1XAVT5ZRd
-         5s84W+1JHNdIrkycr0EqUPmrTs4orrOBld3MSClIiho+Jt0pccoD9D3Zsf7UswJITRJL
-         vWEMiRaxWJLgv00yE0sQXnxlJ17E5jllbhj51CUi12yo40a7vbjAzi+syWPMvzc3rHzr
-         +VEwix8rpRhHlyK/5xWkRJfwaWNmHLmzQoVVt2TYphQ2+PkidphnTbmnahdPIN1m+B7e
-         ThS6u+4H1sNTOA7Hxx7a8HDpCc980NrTSAVhYyNRTLNTJm/GuCl7bdUE+WBUIXZNKWLQ
-         5TzA==
-X-Forwarded-Encrypted: i=1; AJvYcCXAdsSmct6DdJ6lr//AedqMTNuCsbII7kR/8tL6z6I42QalzUmCgclTqUMBQjNA7MRUVRv/HFeLZCNu0fZdNMchW5QVwBLuVr23a8PglA==
-X-Gm-Message-State: AOJu0YxT4Kez/M1QgQMZjvjak8I/NOwTk5WrpJ8gjl0hJMAxlJhxzYwZ
-	5qw8Xz2DYx688YrUw+tgUJfG/FxY5Bep/gfjzVuZ4TAmgVEJlvYOsAr+8VZr8gU=
-X-Google-Smtp-Source: AGHT+IGnm7b8Cinq20QKqQAozywBKC44Y66uug2JGp4mxZff/pCzj2zNm4gy03Ua488m3Kggfu/ZvQ==
-X-Received: by 2002:a05:651c:1037:b0:2d8:71d4:4c62 with SMTP id w23-20020a05651c103700b002d871d44c62mr1461674ljm.49.1712749619821;
-        Wed, 10 Apr 2024 04:46:59 -0700 (PDT)
-Received: from [172.30.204.89] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id r21-20020a2e9955000000b002d85452f55csm1781619ljj.47.2024.04.10.04.46.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Apr 2024 04:46:59 -0700 (PDT)
-Message-ID: <c547e19c-158a-4512-b2d9-01668b7ac2f0@linaro.org>
-Date: Wed, 10 Apr 2024 13:47:00 +0200
+	s=arc-20240116; t=1712749989; c=relaxed/simple;
+	bh=N84XgSg1KHPNSkXpmcgoVPYP9AWL9ZJCU/gwTzWn3Bo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=lOB6iQQdicq6FnHF8kRyH4tVrIp/aUpV7VJoXc3hlFHBEzZDBj5XvEtq3XSbVxgc1NnJGwzXpOHz7gktqYMJnvimkt3oghoudJXE84U+dvsA4QO2klH1x0AxIQ/wvb9ggRj4i0F7qpelBWAFYiginfxEuf9m8vYCxciHWxUTjYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=t-argos.ru; spf=pass smtp.mailfrom=t-argos.ru; dkim=pass (2048-bit key) header.d=t-argos.ru header.i=@t-argos.ru header.b=RQliOMsu; arc=none smtp.client-ip=109.73.34.58
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=t-argos.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=t-argos.ru
+Received: from mx1.t-argos.ru (localhost [127.0.0.1])
+	by mx1.t-argos.ru (Postfix) with ESMTP id EE41D100002;
+	Wed, 10 Apr 2024 14:52:47 +0300 (MSK)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=t-argos.ru; s=mail;
+	t=1712749968; bh=WJUH5RzBi6ThGn7KLoC7JkfiYKeYqyZ7xZhKdtRWAfI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+	b=RQliOMsu1CsL31rk+zQjPobaWvn+7OwssPGXLDAJ+1nrXH73GfJMiDa40pyBFnRgX
+	 VxOKnIToEshOUVnEKsNPRAp0Mn3NshZS8btJeySsDzHwq/aB/9qbr7GnBmnxg0BE8x
+	 kFiKKS5PAoSbjPpqGWmO0wU1NPII/F6aIJK1glUeZXWXb/9OeBjYjD8RgcjUlk5bJA
+	 poHWEuPxI90WUuhK1z7Sk987Qw5HhcY84iVNmX1gpBQimVp6jV+OUlAB34cQ8mNCyV
+	 1KFcLby75BVoh6OUZQjHDgTMwrkLcMW+xdSf3dOTjKLpuaX5tw3C9VCtZVRUixszSN
+	 yjJxeVhcGyngQ==
+Received: from mx1.t-argos.ru.ru (mail.t-argos.ru [172.17.13.212])
+	by mx1.t-argos.ru (Postfix) with ESMTP;
+	Wed, 10 Apr 2024 14:51:29 +0300 (MSK)
+Received: from [172.17.214.6] (172.17.214.6) by ta-mail-02 (172.17.13.212)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 10 Apr
+ 2024 14:51:09 +0300
+Message-ID: <2b06e6b2-6fa0-48fa-800b-7aad6735daa6@t-argos.ru>
+Date: Wed, 10 Apr 2024 14:48:41 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,107 +59,91 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/6] drm/msm/adreno: Allow specifying default speedbin
- value
+Subject: Re: [PATCH] drm/msm/dpu: Add callback function pointer check before
+ its call
+Content-Language: ru
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, Bjorn Andersson <andersson@kernel.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
- Neil Armstrong <neil.armstrong@linaro.org>
-References: <20240405-topic-smem_speedbin-v1-0-ce2b864251b1@linaro.org>
- <20240405-topic-smem_speedbin-v1-3-ce2b864251b1@linaro.org>
- <pncr7ecf4eir36skul3iwt2nf5bpuwd5zjfzzfwwnxjwe4hoes@6z2xe54crijp>
- <d8a2ef87-f29e-4bdb-a9b8-591b8bd5d2b2@linaro.org>
- <tkcbl2iwcy3feoggbk737gx32qsxe5p4ad6lfrujy2pazccrhm@kif3guuzay6h>
- <CAF6AEGsg2xCCC27t_Gqu=MMQ6tckVw=Zj90p4x7EuOm+VKA=ig@mail.gmail.com>
- <quil2y6tbilihgont2xekay4joxgnsanu3khgo77omtwkolslp@ozuaajpv5uon>
- <b77a3161-9a18-4523-8528-31c2f2f4f476@linaro.org>
- <x4sgmdodoacsu6culbjjsw52ucaylpqj2ll6tkeppllzhfqiqn@lysclxogvcfq>
- <74ebd488-15c1-47a5-86f4-14263e3a914e@linaro.org>
- <CAA8EJprAcBDEwYeGJZ=JX2qkS4wQEraXsgCiCyZU3z1ksuxivw@mail.gmail.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAA8EJprAcBDEwYeGJZ=JX2qkS4wQEraXsgCiCyZU3z1ksuxivw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+CC: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
+	<quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, Marijn Suijten
+	<marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, Daniel
+ Vetter <daniel@ffwll.ch>, Neil Armstrong <neil.armstrong@linaro.org>, Stephen
+ Boyd <swboyd@chromium.org>, <linux-arm-msm@vger.kernel.org>,
+	<dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+	<linux-kernel@vger.kernel.org>, <lvc-project@linuxtesting.org>
+References: <20240408085523.12231-1-amishin@t-argos.ru>
+ <CAA8EJppTM4tpsFaZKupPe=0Oc9qDp7dBqHyHGP4E5bTHKT=hSw@mail.gmail.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
+In-Reply-To: <CAA8EJppTM4tpsFaZKupPe=0Oc9qDp7dBqHyHGP4E5bTHKT=hSw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: ta-mail-02.ta.t-argos.ru (172.17.13.212) To ta-mail-02
+ (172.17.13.212)
+X-KSMG-Rule-ID: 1
+X-KSMG-Message-Action: clean
+X-KSMG-AntiSpam-Lua-Profiles: 184651 [Apr 10 2024]
+X-KSMG-AntiSpam-Version: 6.1.0.4
+X-KSMG-AntiSpam-Envelope-From: amishin@t-argos.ru
+X-KSMG-AntiSpam-Rate: 0
+X-KSMG-AntiSpam-Status: not_detected
+X-KSMG-AntiSpam-Method: none
+X-KSMG-AntiSpam-Auth: dkim=none
+X-KSMG-AntiSpam-Info: LuaCore: 16 0.3.16 6e64c33514fcbd07e515710c86ba61de7f56194e, {Tracking_uf_ne_domains}, {Tracking_from_domain_doesnt_match_to}, t-argos.ru:7.1.1;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1;127.0.0.199:7.1.2;mx1.t-argos.ru.ru:7.1.1;git.kernel.org:7.1.1, FromAlignment: s
+X-MS-Exchange-Organization-SCL: -1
+X-KSMG-AntiSpam-Interceptor-Info: scan successful
+X-KSMG-AntiPhishing: Clean, bases: 2024/04/10 07:25:00
+X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 1.1.2.30, bases: 2024/04/10 08:25:00 #24735279
+X-KSMG-AntiVirus-Status: Clean, skipped
 
 
 
-On 4/9/24 20:31, Dmitry Baryshkov wrote:
-> On Tue, 9 Apr 2024 at 21:27, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+On 08.04.2024 12:03, Dmitry Baryshkov wrote:
+> On Mon, 8 Apr 2024 at 11:57, Aleksandr Mishin <amishin@t-argos.ru> wrote:
 >>
+>> In dpu_core_irq_callback_handler() callback function pointer is compared to NULL,
+>> but then callback function is unconditionally called by this pointer.
+>> Fix this bug by adding conditional return.
 >>
->>
->> On 4/9/24 20:15, Dmitry Baryshkov wrote:
->>> On Tue, Apr 09, 2024 at 08:07:56PM +0200, Konrad Dybcio wrote:
->>>>
->>>>
->>>> On 4/9/24 20:04, Dmitry Baryshkov wrote:
->>>>> On Tue, Apr 09, 2024 at 10:12:00AM -0700, Rob Clark wrote:
->>>>>> On Tue, Apr 9, 2024 at 8:23 AM Dmitry Baryshkov
->>>>>> <dmitry.baryshkov@linaro.org> wrote:
->>>>>>>
->>>>>>> On Tue, Apr 09, 2024 at 05:12:46PM +0200, Konrad Dybcio wrote:
->>>>>>>>
->>>>>>>>
->>>>>>>> On 4/6/24 04:56, Dmitry Baryshkov wrote:
->>>>>>>>> On Fri, Apr 05, 2024 at 10:41:31AM +0200, Konrad Dybcio wrote:
->>>>>>>>>> From: Neil Armstrong <neil.armstrong@linaro.org>
->>>>>>>>>>
->>>>>>>>>> Usually, speedbin 0 is the "super SKU", a.k.a the one which can clock
->>>>>>>>>> the highest. Falling back to it when things go wrong is largely
->>>>>>>>>> suboptimal, as more often than not, the top frequencies are not
->>>>>>>>>> supposed to work on other bins.
->>>>>>>>>
->>>>>>>>> Isn't it better to just return an error here instead of trying to guess
->>>>>>>>> which speedbin to use?
->>>>>>>>
->>>>>>>> Not sure. I'd rather better compatibility for e.g. booting up a new
->>>>>>>> laptop with just dt.
->>>>>>>
->>>>>>> New speedbin can have lower max speed, so by attempting to run it at
->>>>>>> higher freq you might be breaking it.
->>>>>>
->>>>>> Usually there are some OPPs in common to all speedbins, so picking a
->>>>>> freq from that set would seem like the safe thing to do
->>>>>
->>>>> Well, the issue is about an uknown speed bin. So in theory we know
->>>>> nothing about the set of speeds itsupports. My point is that we should
->>>>> simplfy fail in such case.
->>>>
->>>> Or we could allow e.g. the lowest frequency (or 2) which if often shared
->>>> across the board to work, giving a compromise between OOBE and sanity
->>>
->>> That's also an option. But we should not be using existing speed table for
->>> the unknown bin.
->>
->> I derived this logic from msm-5.15 where it's "intended behavior".. I
->> suppose we can do better as you said though
->>
->> There have been cases in the past where the default speed bin ended up
->> having a higher max freq than subsequent ones, and I don't think I can
->> trust this product/feature code approach to guarantee this never
->> happening again.
->>
->> So. I think sticking to a single lowest freq and printing a big red line
->> in dmesg makes sense here
+>> Found by Linux Verification Center (linuxtesting.org) with SVACE.
 > 
-> Make 0x80 the default supported-hw, make sure that the lowest freq has
-> 0xff. Plus big-red-line.
-> And hope that we'll never see 16 speed bins for the hardware.
+> This should be converted to a proper Reported-by: trailer.
+> 
 
-opp-supported-hw is a u32 bitmask fwiw
+It is an established practice for our project, you can find 700+ applied
+patches with similar line:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/?qt=grep&q=linuxtesting.org
 
-I was thinking, either 0xffffffff or some driver-side hackery
-(dev_pm_opp_enable).
+>>
+>> Fixes: c929ac60b3ed ("drm/msm/dpu: allow just single IRQ callback")
+>> Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 4 +++-
+>>   1 file changed, 3 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+>> index 946dd0135dff..03a16fbd4c99 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+>> @@ -223,9 +223,11 @@ static void dpu_core_irq_callback_handler(struct dpu_kms *dpu_kms, unsigned int
+>>
+>>          VERB("IRQ=[%d, %d]\n", DPU_IRQ_REG(irq_idx), DPU_IRQ_BIT(irq_idx));
+>>
+>> -       if (!irq_entry->cb)
+>> +       if (!irq_entry->cb) {
+>>                  DRM_ERROR("no registered cb, IRQ=[%d, %d]\n",
+>>                            DPU_IRQ_REG(irq_idx), DPU_IRQ_BIT(irq_idx));
+>> +               return;
+>> +       }
+>>
+>>          atomic_inc(&irq_entry->count);
+>>
+>> --
+>> 2.30.2
+>>
+>>
+> 
+> 
 
-Perhaps I'd be more in favor of the latter, as putting meaningless gobblygoo
-in dt is not good
-
-Konrad
+-- 
+Kind regards
+Aleksandr
 
