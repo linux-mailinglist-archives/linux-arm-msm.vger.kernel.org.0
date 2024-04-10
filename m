@@ -1,100 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-17129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 533A48A0172
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 22:49:27 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D0F18A01B7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 23:09:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F32F228336B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 20:49:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 14BD01F2399D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 21:09:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0178181CE8;
-	Wed, 10 Apr 2024 20:49:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D17EA1836CB;
+	Wed, 10 Apr 2024 21:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="YO9MziK5";
-	dkim=permerror (0-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="wwvRbXhR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yadLgMaq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.167])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD546110;
-	Wed, 10 Apr 2024 20:49:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.167
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712782162; cv=pass; b=uKJEdva/in5iTz2b5rMkoupJDIegAgPeDWlEeNCB/5KCIaxcke6zxhi4sut2+hW1580R3VmyxIJfdAlIEGIgZViXelOERJrZAwtrL0wTABg53kv+HFpIMNn8GCDwg107YUZhA3tzxEZ57MWqBoPrrSkd8B1pS5H73DFhlv4jNpY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712782162; c=relaxed/simple;
-	bh=JXzrQDFJA0Gu3q5+SC+IUPYAr8WcoxjCQZzQ+7wZQBE=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D391836C5
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 21:09:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1712783377; cv=none; b=Rq8snYMRvRmxTol4UNAauPlnqrlpQ0Hdwx4wyRYc+ZQzzY61qB8isNvlcBk6FAI7moj7RWQfMU3YlCu1OiPVk8FkP3I7cTvn392Ec330h/YeGlQi3SmSTJMN+RxUm0aIjwXpPJsN398WzE71/A/gf9ops6ex+jRvw848q7vsfEQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1712783377; c=relaxed/simple;
+	bh=WAW9t2DThjMy2xKQv7rDe/rTV+u/8A0589ytEQxdCh0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mcIeDtxzUz0SOAmX3TFK32xNQ6tec4RbYnHI9F8Mgksxlv/6c/xp4E2i5RR347s+X6in9yB+YL2CuAzpqSLJQaEd4nkq667Pd9ngJtGJImmW21GZ1QAGM8lC6NpvpMB9zpg39j7VESBbX+vE81JsHAMl/VF6E4gPRp3d5MEPmwE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gerhold.net; spf=none smtp.mailfrom=gerhold.net; dkim=pass (2048-bit key) header.d=gerhold.net header.i=@gerhold.net header.b=YO9MziK5; dkim=permerror (0-bit key) header.d=gerhold.net header.i=@gerhold.net header.b=wwvRbXhR; arc=pass smtp.client-ip=81.169.146.167
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gerhold.net
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=gerhold.net
-ARC-Seal: i=1; a=rsa-sha256; t=1712781796; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=VRrGJxDdjSj0eYQRxuN/VAe1NsDhyTIqNYIPVb/8hkcWZnYnwGxexZ0epk2mcy780f
-    3SSJIC1UZjL3PqC3Nxr3kWSbHVtUk63Fr6r8g/6nk+5hKVoSm4pPkFl9AAPLPFc3K/r7
-    HycRXYASZz12w0EZyed51RmjataQ/jdEUkOsDFG7DxmEZzLUjx3AA5jVjNpdLvZCokCm
-    BX+yGmNRzqt2f68O8HhTCvYxXtDq1sATFkrLf8rERH5f+860VZRfrAhv7pqqs6wbtgLH
-    6nTf65fCAJJRkwPq8t55nppe9d7umkx+OD4i+ftXUvDOcyKvUozwakZMzBa+ru7SZE5o
-    3o1g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1712781796;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=Vpm3WBEjx8xKzxZVlVGQ1gTHDj3B3Wv4u8I0wkcfzI0=;
-    b=gkZyG4G9JWypkieMj5V/t4+eo+llXYW4tvAiN7h7IPfgATixUO1RCxZVE+sYVt77Rn
-    P6emEef6SGNpQ+EpdU6pFpvMN46B4el9N7kyqhPsNwBlWqfPhJXEAczpaf9+30tNdElB
-    H1I4AiSrFSDVw0m8eHRBk9TTeCYRZqnROqi1SlqmndIF475ORk57b6oKD5bQVHWcbJts
-    P3/8vD9xZFxg1Z7hnWFtFs/BwUnGin2DzAELJEoLFZuCQHgZ0h3Wylr4J7KlcV10dTVr
-    OyOd0x9Y7RdgQ8qJEhQ1XFCrmrIbaYAX27BMPvn4riZmJn6SPhi4Ed7BjgcYYliYGKi+
-    qVpw==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1712781796;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=Vpm3WBEjx8xKzxZVlVGQ1gTHDj3B3Wv4u8I0wkcfzI0=;
-    b=YO9MziK5sx06hRa5+VPky8b3qszJAGOvCRTCL5ckPLXoNzGda8jhI6mKbu6z37AkLi
-    ZflMD+vD53oKx/eWWu0fo+1Wi0wgWoqwico9mT+CLw9+pNbZdd3QFLHtYSMqYgt8V85f
-    1ISsBPxzrlcvvbFdWTxGhrQJHTgFidVcAwxd4Gu/y5+l5jQqOak1R0t9/b4u8Fg2uohh
-    92TWRiUJNApWb5QD/diCoKjxPcsBCBgsBWzrjkAqW6gkQZKzGmGSj6RGlFKrCZoYGlVq
-    kuji2HyeOuA3RxmWyGm49H5LsZyNaO0KXeUn6dFCrJLoXqepooHRHJ3k+jQsgNkw3xWz
-    xnFg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1712781796;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=Vpm3WBEjx8xKzxZVlVGQ1gTHDj3B3Wv4u8I0wkcfzI0=;
-    b=wwvRbXhRIDqEqW6toXziGAqzIQ4rCOEOHiAbzLbwttV82qUpiQZxaYJYlrCck2s9dx
-    sDgfOmoTcDnjSPSTF+AQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA8pqN1A=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 50.3.2 DYNA|AUTH)
-    with ESMTPSA id Raf12503AKhFYPX
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Wed, 10 Apr 2024 22:43:15 +0200 (CEST)
-Date: Wed, 10 Apr 2024 22:43:10 +0200
-From: Stephan Gerhold <stephan@gerhold.net>
-To: Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: sa8155p-adp: use correct gpio for
- SDHC2 CD
-Message-ID: <Zhb53i8-pJhDMVZM@gerhold.net>
-References: <20240410134022.732767-1-volodymyr_babchuk@epam.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=UgtW4pHSKHg1sE54jyA2f1+ZH9d1LjKS5ULrdiplh9SNa62uiRFzePiHsZgaJGbHNaygKZHHIx/C0sY5SJ2QmqhfTUNgcsQ6FsoPLsZxk1joPRzRD/bdpyszGDB4FZ6bzH8IXnafCuFReraI5pfw6rDH1xiSZcYd9w4OsEbTbss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yadLgMaq; arc=none smtp.client-ip=209.85.167.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-516a01c8490so192080e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 14:09:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712783374; x=1713388174; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3sq6cL+yZCWXGwoBU9BEGIVYWjjNj7BcR817H9ZPTm4=;
+        b=yadLgMaqD5Y+LhN4ER0Yq/z64krORJjXS3JhVmz8/mneaN10jSbQtit4Kjo6e5gaPp
+         DUeaM7mMyq5yJakto0gG9rtUfzg+/DyQQlsalSPYS4InA36xZhe/mSD96BWOcXZ8yz9K
+         wAOj9JI3xtOUPufllaLucdsWDKtyamEI4+A3oJWzh48YCElLJVQ4r7/Tjh6z0jhA9diy
+         AJyEyj8YA45EdInT/NnjnzFJAKj82xzYD6smu7Tv4jTuMO838tdb1D2Bpe42ySP2yWQ/
+         GpoRnPQgmXVHU/aWMH8PdcP+Lf5TpleJqWkiD2me/N/G0ZXDayDM5KZwas5QCVgMgL+4
+         MFIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712783374; x=1713388174;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3sq6cL+yZCWXGwoBU9BEGIVYWjjNj7BcR817H9ZPTm4=;
+        b=BwUsdgecankc5AXy0pjG4Fro2363s30J5mBHyIogFvh04ROq/5VLO466KE6L0BCF9+
+         5TuxDzXoSrWsKPNz86BXiEOiR9iCqcMjvorXeUH7TkFEWiqkeNHkXaW8LADDxBmsZdo8
+         zOopgVyN69U1doZpeDvlY1ZEgHIY3UYqRnFx0G1yK7ygRz4FRTKqx6bb1D1lCGA1mmPS
+         SVCVW0EUASe9+QWrl/3AdVgEhQ+ny3tLZQSJk6BklI/8pmjaAVgmnMrv81YHRJhQHeNV
+         JjiKoLcVJcIpBrJp3+Hi0uWNWFerYFZRiF235SBoEJixfsObE3n8atXTJbCLUe8h7oMg
+         M1Vg==
+X-Forwarded-Encrypted: i=1; AJvYcCWzY6n0QrgVaBkZtrhQRzbmfRN1jGogN3ZZRCu5qTqxOnW1NDOcrZ/lO4qUWW//otqj+GC9h3+mt8nWPWIdtZbqKlluavJHsQ/2AaDp5Q==
+X-Gm-Message-State: AOJu0YwzqPZ8sn+PTdCJ3+88ja+7uuYs16X/F84bL6iSuwR8nNEDwe7t
+	aIR+SOTCJHFxqQqvkPbEJJqfdpekIdjikxKth9PJlPgoOhSHsFYlRyQYL/BdZGQ=
+X-Google-Smtp-Source: AGHT+IEqfZtA5IXLhzSXHUGyAGjypXAWIlAlr+3Je8YOnecyrhDB0Jb266QBNeEz0oVkfnh/ZR74OQ==
+X-Received: by 2002:a05:6512:11ed:b0:513:c47e:d811 with SMTP id p13-20020a05651211ed00b00513c47ed811mr177254lfs.33.1712783373633;
+        Wed, 10 Apr 2024 14:09:33 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
+        by smtp.gmail.com with ESMTPSA id d10-20020ac24c8a000000b00516d2489f16sm14619lfl.260.2024.04.10.14.09.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Apr 2024 14:09:32 -0700 (PDT)
+Date: Thu, 11 Apr 2024 00:09:31 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: "Christian A. Ehrhardt" <lk@c--e.de>
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] usb: typec: ucsi_glink: drop special handling for
+ CCI_BUSY
+Message-ID: <s2w7qfrbm3lq46hp4r4grmljg7cs24d6lmpiqr2mllxszte6wc@w7rh47o3z6rc>
+References: <20240409-qcom-ucsi-fixes-bis-v2-0-6d3a09faec90@linaro.org>
+ <20240409-qcom-ucsi-fixes-bis-v2-3-6d3a09faec90@linaro.org>
+ <ZhWWYQMluJCvYFKF@cae.in-ulm.de>
+ <CAA8EJprTbtTSkZ18dejEgvhJOEQKQiwpE+6JkbHiO4H-yeKuhg@mail.gmail.com>
+ <ZhZCsyeXa093OZnR@cae.in-ulm.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -103,60 +88,140 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240410134022.732767-1-volodymyr_babchuk@epam.com>
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <ZhZCsyeXa093OZnR@cae.in-ulm.de>
 
-On Wed, Apr 10, 2024 at 01:41:30PM +0000, Volodymyr Babchuk wrote:
-> Card Detect pin for SHDC2 on SA8155P-ADP is connected to GPIO4 of
-> PMM8155AU_1, not to internal TLMM. This change fixes two issues at
-> once: not working ethernet (because GPIO4 is used for MAC TX) and SD
-> detection.
+On Wed, Apr 10, 2024 at 09:41:39AM +0200, Christian A. Ehrhardt wrote:
 > 
-> Signed-off-by: Volodymyr Babchuk <volodymyr_babchuk@epam.com>
-> ---
->  arch/arm64/boot/dts/qcom/sa8155p-adp.dts | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> Hi Dmitry,
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-> index 5e4287f8c8cd1..6b08ce246b78c 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-> @@ -384,7 +384,7 @@ &remoteproc_cdsp {
->  &sdhc_2 {
->  	status = "okay";
->  
-> -	cd-gpios = <&tlmm 4 GPIO_ACTIVE_LOW>;
-> +	cd-gpios = <&pmm8155au_1_gpios 4 GPIO_ACTIVE_LOW>;
+> On Wed, Apr 10, 2024 at 01:58:58AM +0300, Dmitry Baryshkov wrote:
+> > On Tue, 9 Apr 2024 at 22:26, Christian A. Ehrhardt <lk@c--e.de> wrote:
+> > >
+> > >
+> > > Hi Dmitry,
+> > >
+> > > On Tue, Apr 09, 2024 at 06:29:18PM +0300, Dmitry Baryshkov wrote:
+> > > > Newer Qualcomm platforms (sm8450+) successfully handle busy state and
+> > > > send the Command Completion after sending the Busy state. Older devices
+> > > > have firmware bug and can not continue after sending the CCI_BUSY state,
+> > > > but the command that leads to CCI_BUSY is already forbidden by the
+> > > > NO_PARTNER_PDOS quirk.
+> > > >
+> > > > Follow other UCSI glue drivers and drop special handling for CCI_BUSY
+> > > > event. Let the UCSI core properly handle this state.
+> > > >
+> > > > Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > ---
+> > > >  drivers/usb/typec/ucsi/ucsi_glink.c | 10 ++++------
+> > > >  1 file changed, 4 insertions(+), 6 deletions(-)
+> > > >
+> > > > diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
+> > > > index 9ffea20020e7..fe9b951f5228 100644
+> > > > --- a/drivers/usb/typec/ucsi/ucsi_glink.c
+> > > > +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
+> > > > @@ -176,7 +176,8 @@ static int pmic_glink_ucsi_sync_write(struct ucsi *__ucsi, unsigned int offset,
+> > > >       left = wait_for_completion_timeout(&ucsi->sync_ack, 5 * HZ);
+> > > >       if (!left) {
+> > > >               dev_err(ucsi->dev, "timeout waiting for UCSI sync write response\n");
+> > > > -             ret = -ETIMEDOUT;
+> > > > +             /* return 0 here and let core UCSI code handle the CCI_BUSY */
+> > > > +             ret = 0;
+> > > >       } else if (ucsi->sync_val) {
+> > > >               dev_err(ucsi->dev, "sync write returned: %d\n", ucsi->sync_val);
+> > > >       }
+> > > > @@ -243,11 +244,8 @@ static void pmic_glink_ucsi_notify(struct work_struct *work)
+> > > >               ucsi_connector_change(ucsi->ucsi, con_num);
+> > > >       }
+> > > >
+> > > > -     if (ucsi->sync_pending && cci & UCSI_CCI_BUSY) {
+> > > > -             ucsi->sync_val = -EBUSY;
+> > > > -             complete(&ucsi->sync_ack);
+> > > > -     } else if (ucsi->sync_pending &&
+> > > > -                (cci & (UCSI_CCI_ACK_COMPLETE | UCSI_CCI_COMMAND_COMPLETE))) {
+> > > > +     if (ucsi->sync_pending &&
+> > > > +         (cci & (UCSI_CCI_ACK_COMPLETE | UCSI_CCI_COMMAND_COMPLETE))) {
+> > > >               complete(&ucsi->sync_ack);
+> > > >       }
+> > > >  }
+> > >
+> > > This handling of the command completion turned out to be racy in
+> > > the ACPI case: If a normal command was sent one should wait for
+> > > UCSI_CCI_COMMAND_COMPLETE only. In case of an UCSI_ACK_CC_CI
+> > > command the completion is indicated by UCSI_CCI_ACK_COMPLETE.
+> > >
+> > > While not directly related, a port of this
+> > >     https://lore.kernel.org/all/20240121204123.275441-3-lk@c--e.de/
+> > > would nicely fit into this series.
+> > 
+> > Ack, I'll take a look.
+> 
+> Thanks.
+> 
+> > However... I can not stop but notice that CCG and STM32 glue drivers
+> > use the same old approach as we do. Which probably means that they
+> > might have the same issue.
+> 
+> I did ping the ccg people wrt. this but they have a different
+> workaround that saves them at least most of the time, so I let
+> this drop.
+> 
+> > Could you please consider pulling up that
+> > code into the UCSI driver? Maybe the low-level code really should just
+> > read/write the messages, leaving all completions and CCI parsing to
+> > the core layer?
+> 
+> I did consider that but one of the ideas behind the new API for
+> UCSI backends was that backends can send commands (e.g. as part of
+> a quirk) even in the middle of a ->sync_write() call. Currently,
+> I don't really see how to combine this with completion handling
+> in the UCSI core.
+> 
+> > > I don't have the hardware to do this myself.
+> 
+> I did propose other changes to the API with little respone here:
+>     https://lore.kernel.org/all/20240218222039.822040-1-lk@c--e.de/
+> That could possibly be extended to achieve this. But again, that
+> would require testers for all the backends.
 
-Good catch!
+Well, I think that the patchset is too intrusive and (from the
+pmic-glink perspective) is too low-level.
 
->  	pinctrl-names = "default", "sleep";
->  	pinctrl-0 = <&sdc2_on>;
->  	pinctrl-1 = <&sdc2_off>;
+I'd start by pulling the sync_write() into the core layer, leaving just
+async_write in the glue layer. The async_write() then can be renamed to
+something like send_cmd(). Once required we can add the data pointer to
+this callback.
 
-These two pinctrl configure "gpio96" for "sd-cd-pins". Yet another wrong
-GPIO? Should probably drop that and add proper pinctrl for the actual
-GPIO in the PMIC. Seems like Qualcomm configured the PMIC GPIO with
-pull-up downstream [1] (not sure if this is the right file). It might be
-redundant if there is an external pull-up on the board, but only the
-schematic could tell that for sure.
+I liked the idea of getting the CCI from the notification (in case of
+pmic-glink it works this way on all platforms except sc8180x).
 
-FWIW: Looking closer at the broken commit, the regulator voltage setup
-of &sdhc_2 looks suspicious too. Typically one would want a 1.8V capable
-regulator for the vqmmc-supply to properly use ultra high-speed modes,
-but &vreg_l13c_2p96 seems to be configured with 2.504V-2.960V at the
-moment. On downstream it seems to be 1.8V-2.96V [2] (again, not sure if
-this is the right file). I would recommend re-checking this too and
-testing if UHS cards are detected correctly (if you have the board).
+So what about having a really simple interface:
 
-&vreg_l17a_2p96 has the same 2.504V-2.960V, but has 2.704V-2.960V
-downstream [3]. This is close at least, might be fine as-is (but I'm not
-convinced there is a good reason to differ there).
+sruct ucsi_operations {
+	/*
+	 * send the command without waiting for the result
+	 * can be extended with u8 *data, size_t data_len once
+	 * necessary.
+	 * maybe use u8 control[8] instead of u64 control.
+	 */
+	int send_command(struct ucsi *, u64 control);
 
-Thanks,
-Stephan
+	int read_data(struct ucsi *, void *buf, size_t len);
+	int read_version(struct ucsi *, u16 *version);
+	/* to be used only for reset handling */
+	int read_cci(struct ucsi *, u32 cci);
 
-[1]: https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/blob/484af352989c912db8f3b6393fc090006029066f/arch/arm64/boot/dts/qcom/sa8155-pmic-overlay.dtsi#L206-214
-[2]: https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/blob/484af352989c912db8f3b6393fc090006029066f/arch/arm64/boot/dts/qcom/sa8155-regulator.dtsi#L635-642
-[3]: https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/blob/484af352989c912db8f3b6393fc090006029066f/arch/arm64/boot/dts/qcom/sa8155-regulator.dtsi#L363-370
+	// other ops like update_altmode, as is
+};
+
+/* to be called by the glue driver once it gets the notification from
+ * PPM */
+void ucsi_notify(struct ucsi *ucsi, u32 cci);
+
+This way we can pull all the common ACK/connection_changed/completion
+code into the core, while keeping glue layers flexible enough.
+
+-- 
+With best wishes
+Dmitry
 
