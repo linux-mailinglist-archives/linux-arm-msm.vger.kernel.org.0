@@ -1,154 +1,448 @@
-Return-Path: <linux-arm-msm+bounces-16999-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17000-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0BA8889EC62
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 09:41:49 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E2B2689ECA7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 09:50:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BBED628468B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 07:41:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 70EC3284A79
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 07:50:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 810B513D26D;
-	Wed, 10 Apr 2024 07:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B1E713D28B;
+	Wed, 10 Apr 2024 07:50:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qyaf5Rl9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from cae.in-ulm.de (cae.in-ulm.de [217.10.14.231])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16B2E53E00;
-	Wed, 10 Apr 2024 07:41:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.14.231
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0292413D271
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 07:49:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712734905; cv=none; b=quOLI4Pxdyp6IpSzpqWTlLKWoZYiAFjoBgA+kGh5LfcdA1PDu6MX/wI80wxA9/WpAHWKOQayap4eTS2iQb6DU6QlIV/peAmgvPm28s0uuJD2RWkigoH3a8BIu+2Jqr5psUElEv+Bn1oXXqjyoaBBvzTj0m8wKC5wbPWgFPPv7cI=
+	t=1712735400; cv=none; b=oOXhyhrZiYcWKXKinUOxkJBDPkmoSOPRWKYHnHUb08JF2zkn4GNATSeIzr14kxxZZ6vSfyFf4FLC21MOAPhKmw8Fqo/Kw14YCr85WT5hnAjsyPM431Crl1icbZFbMdclXTbtML6CrNW9rUKgWdZBs+pydTrlFT9Wos0PwOVq7jc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712734905; c=relaxed/simple;
-	bh=kWiFrLwu4of9a6CZEkiRvrLXBxbvVCraLpNjKjlu+kA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fECDYBk3IMdv2KX/yRHWpyLSigkGD+wiZhwPLrieQ0Hz6v9vLPkCCpv3McIMd4rTOuC9XK8LMHSeUvOegREAULwu/CyBZdzvAoyi8oVqWXrkG0iQNtyB8AHGtGVcgniemSddNkYtBsADFOsuT75rQuZ6PYVWoqb5f1t5R0zTTAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=c--e.de; spf=pass smtp.mailfrom=c--e.de; arc=none smtp.client-ip=217.10.14.231
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=c--e.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=c--e.de
-Received: by cae.in-ulm.de (Postfix, from userid 1000)
-	id 28A9C140562; Wed, 10 Apr 2024 09:41:39 +0200 (CEST)
-Date: Wed, 10 Apr 2024 09:41:39 +0200
-From: "Christian A. Ehrhardt" <lk@c--e.de>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	s=arc-20240116; t=1712735400; c=relaxed/simple;
+	bh=v2oa07ECR0gbmUU2Nl2uaqi5z8vnyMAbdUZPaOvorZg=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=CgWr/gGlkIRyedfw5GI8orm13Vs+FvDh/2Ac5uLymC9huaKFzou+QtniXilu+G+8NYb/IgkbwV53OFyjrgApVvrAL8ADDTgVv/7BVy+eNZG+CoTmSB4RpI8gBgC3pMY4VoFpJYhnir2ek+wOTXqxHFYk8jrpcQrzlQtuWkyjPis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qyaf5Rl9; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2d71f9e07a9so10900231fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 00:49:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712735396; x=1713340196; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=TFSfVq5/F5pBMLFljeWWoXZXk84ibShEp/y6zW9ytzM=;
+        b=qyaf5Rl9oNk0M02Z1jQZ4elef6n4znXOMlj03JVdkvc6Ag4eXvhOIfC5MHgsXpI6qX
+         9f0jzV4B4tmCRpge9qWBA0vmf/o24TVweYpHOTgA5q6JmgUJHfiWIxe0zdmUBpugi8NL
+         YdqrlE2Q2ptpTaDYZuQHaApv/VsM81r7WgtQjTGNlG0pJ/nEVTv9ZVge5AJuctvUy4jd
+         5a/2oRfGWsMJpyDWdCWVxYVqdgePkFhUp6TzlsEaG8Jv/CsLUV9FTrmNV8RICtBe7GD3
+         +Z3lHHpMgd2AThxhlZmAxkcTc87ntvPbxRro38GgMzLRKOq1VXC8fJ8hTxTLS9twgnD5
+         Os5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712735396; x=1713340196;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TFSfVq5/F5pBMLFljeWWoXZXk84ibShEp/y6zW9ytzM=;
+        b=k+GK5UcuTR9jtDlth0/WhkRGtrvgDUxWbk0GQI66nOAyrk/gp0oU3SyV40NhCOnTS5
+         20MZqbOxrKhnS8ULWyd50CKqx0ghlZ3whnzhXXq0zx/VPu8k32rhYdU4H0TNZP/3k6QD
+         DC+wN5Esz2XENFY86qCti8dmLb1zfH3Xkam6TiO7++oji34PoWrGxs3/u/CwpCST+acr
+         AFW/v6it1DKMxfF/7epYC9yHkoPXsAo8ZVQI8a0H+MppdIC5X9aBJN2bNU9ojb1n7z/T
+         9swA693+Vb3HyZFfsymvqCC33ior2mM/IfrOcvMzX9YPUHjPBwF0vF0Ordy6mgY3zGY2
+         sPbQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWkM1rwQukZb42tnJCBWowDnMQJkJJr2gxFPAdbi4TWfcE/0rwH4sZhuo2Qwg2ze7xd6bH63NnDFU3jYDg5n/aiBzarJtmCtjy0M3IQyQ==
+X-Gm-Message-State: AOJu0Yw0gtInPSJb1RsYJaIn/h425JGZBfdDTl9lZH6PvdY1esAHgz7j
+	2r/a2kjBqNCntkvijJcngShgguOy+VRnX98/RaAokvGdB67baAgMSOo/sg8tHY0K15yS95KBjyd
+	6s/Wt2A==
+X-Google-Smtp-Source: AGHT+IEwqUiUdfy1QPEJt7W0KTn176RoZQZye4jRXSHM/CVl9epPKCJLOdLSDzOelnyfUp5XBFr6Ag==
+X-Received: by 2002:a2e:8750:0:b0:2d7:136e:2564 with SMTP id q16-20020a2e8750000000b002d7136e2564mr1127402ljj.5.1712735396082;
+        Wed, 10 Apr 2024 00:49:56 -0700 (PDT)
+Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id l24-20020a2ea318000000b002d87b220facsm1412025lje.14.2024.04.10.00.49.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Apr 2024 00:49:55 -0700 (PDT)
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Jagadeesh Kona <quic_jkona@quicinc.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
-	linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] usb: typec: ucsi_glink: drop special handling for
- CCI_BUSY
-Message-ID: <ZhZCsyeXa093OZnR@cae.in-ulm.de>
-References: <20240409-qcom-ucsi-fixes-bis-v2-0-6d3a09faec90@linaro.org>
- <20240409-qcom-ucsi-fixes-bis-v2-3-6d3a09faec90@linaro.org>
- <ZhWWYQMluJCvYFKF@cae.in-ulm.de>
- <CAA8EJprTbtTSkZ18dejEgvhJOEQKQiwpE+6JkbHiO4H-yeKuhg@mail.gmail.com>
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sm8650: add description of CCI controllers
+Date: Wed, 10 Apr 2024 10:49:51 +0300
+Message-Id: <20240410074951.447898-1-vladimir.zapolskiy@linaro.org>
+X-Mailer: git-send-email 2.33.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJprTbtTSkZ18dejEgvhJOEQKQiwpE+6JkbHiO4H-yeKuhg@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 
+Qualcomm SM8650 SoC has three CCI controllers with two I2C busses
+connected to each of them.
 
-Hi Dmitry,
+The CCI controllers on SM8650 are compatible with the ones found on
+many other older generations of Qualcomm SoCs.
 
-On Wed, Apr 10, 2024 at 01:58:58AM +0300, Dmitry Baryshkov wrote:
-> On Tue, 9 Apr 2024 at 22:26, Christian A. Ehrhardt <lk@c--e.de> wrote:
-> >
-> >
-> > Hi Dmitry,
-> >
-> > On Tue, Apr 09, 2024 at 06:29:18PM +0300, Dmitry Baryshkov wrote:
-> > > Newer Qualcomm platforms (sm8450+) successfully handle busy state and
-> > > send the Command Completion after sending the Busy state. Older devices
-> > > have firmware bug and can not continue after sending the CCI_BUSY state,
-> > > but the command that leads to CCI_BUSY is already forbidden by the
-> > > NO_PARTNER_PDOS quirk.
-> > >
-> > > Follow other UCSI glue drivers and drop special handling for CCI_BUSY
-> > > event. Let the UCSI core properly handle this state.
-> > >
-> > > Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > ---
-> > >  drivers/usb/typec/ucsi/ucsi_glink.c | 10 ++++------
-> > >  1 file changed, 4 insertions(+), 6 deletions(-)
-> > >
-> > > diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-> > > index 9ffea20020e7..fe9b951f5228 100644
-> > > --- a/drivers/usb/typec/ucsi/ucsi_glink.c
-> > > +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-> > > @@ -176,7 +176,8 @@ static int pmic_glink_ucsi_sync_write(struct ucsi *__ucsi, unsigned int offset,
-> > >       left = wait_for_completion_timeout(&ucsi->sync_ack, 5 * HZ);
-> > >       if (!left) {
-> > >               dev_err(ucsi->dev, "timeout waiting for UCSI sync write response\n");
-> > > -             ret = -ETIMEDOUT;
-> > > +             /* return 0 here and let core UCSI code handle the CCI_BUSY */
-> > > +             ret = 0;
-> > >       } else if (ucsi->sync_val) {
-> > >               dev_err(ucsi->dev, "sync write returned: %d\n", ucsi->sync_val);
-> > >       }
-> > > @@ -243,11 +244,8 @@ static void pmic_glink_ucsi_notify(struct work_struct *work)
-> > >               ucsi_connector_change(ucsi->ucsi, con_num);
-> > >       }
-> > >
-> > > -     if (ucsi->sync_pending && cci & UCSI_CCI_BUSY) {
-> > > -             ucsi->sync_val = -EBUSY;
-> > > -             complete(&ucsi->sync_ack);
-> > > -     } else if (ucsi->sync_pending &&
-> > > -                (cci & (UCSI_CCI_ACK_COMPLETE | UCSI_CCI_COMMAND_COMPLETE))) {
-> > > +     if (ucsi->sync_pending &&
-> > > +         (cci & (UCSI_CCI_ACK_COMPLETE | UCSI_CCI_COMMAND_COMPLETE))) {
-> > >               complete(&ucsi->sync_ack);
-> > >       }
-> > >  }
-> >
-> > This handling of the command completion turned out to be racy in
-> > the ACPI case: If a normal command was sent one should wait for
-> > UCSI_CCI_COMMAND_COMPLETE only. In case of an UCSI_ACK_CC_CI
-> > command the completion is indicated by UCSI_CCI_ACK_COMPLETE.
-> >
-> > While not directly related, a port of this
-> >     https://lore.kernel.org/all/20240121204123.275441-3-lk@c--e.de/
-> > would nicely fit into this series.
-> 
-> Ack, I'll take a look.
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+---
+The change is based and depends on a patch series from Jagadeesh Kona:
 
-Thanks.
+  https://lore.kernel.org/linux-arm-msm/20240321092529.13362-1-quic_jkona@quicinc.com/
 
-> However... I can not stop but notice that CCG and STM32 glue drivers
-> use the same old approach as we do. Which probably means that they
-> might have the same issue.
+It might be an option to add this change right to the series,
+since it anyway requires a respin.
 
-I did ping the ccg people wrt. this but they have a different
-workaround that saves them at least most of the time, so I let
-this drop.
+A new compatible value "qcom,sm8650-cci" is NOT added to
+Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml , because
+the controller IP description and selection is covered by a generic
+compatible value "qcom,msm8996-cci".
 
-> Could you please consider pulling up that
-> code into the UCSI driver? Maybe the low-level code really should just
-> read/write the messages, leaving all completions and CCI parsing to
-> the core layer?
+ arch/arm64/boot/dts/qcom/sm8650.dtsi | 315 +++++++++++++++++++++++++++
+ 1 file changed, 315 insertions(+)
 
-I did consider that but one of the ideas behind the new API for
-UCSI backends was that backends can send commands (e.g. as part of
-a quirk) even in the middle of a ->sync_write() call. Currently,
-I don't really see how to combine this with completion handling
-in the UCSI core.
-
-> > I don't have the hardware to do this myself.
-
-I did propose other changes to the API with little respone here:
-    https://lore.kernel.org/all/20240218222039.822040-1-lk@c--e.de/
-That could possibly be extended to achieve this. But again, that
-would require testers for all the backends.
-
-
-Best regards,
-Christian
+diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+index b406835b2e71..160b618dff9c 100644
+--- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+@@ -3122,6 +3122,114 @@ videocc: clock-controller@aaf0000 {
+ 			#power-domain-cells = <1>;
+ 		};
+ 
++		cci0: cci@ac15000 {
++			compatible = "qcom,sm8650-cci", "qcom,msm8996-cci";
++			reg = <0 0x0ac15000 0 0x1000>;
++			interrupts = <GIC_SPI 426 IRQ_TYPE_EDGE_RISING>;
++			power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
++			clocks = <&camcc CAM_CC_CAMNOC_AXI_NRT_CLK>,
++				 <&camcc CAM_CC_SLOW_AHB_CLK_SRC>,
++				 <&camcc CAM_CC_CPAS_AHB_CLK>,
++				 <&camcc CAM_CC_CCI_0_CLK>;
++			clock-names = "camnoc_axi",
++				      "slow_ahb_src",
++				      "cpas_ahb",
++				      "cci";
++			pinctrl-0 = <&cci0_default &cci1_default>;
++			pinctrl-1 = <&cci0_sleep &cci1_sleep>;
++			pinctrl-names = "default", "sleep";
++			status = "disabled";
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			assigned-clocks = <&camcc CAM_CC_CCI_0_CLK_SRC>;
++			assigned-clock-rates = <37500000>;
++
++			cci0_i2c0: i2c-bus@0 {
++				reg = <0>;
++				clock-frequency = <400000>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++			};
++
++			cci0_i2c1: i2c-bus@1 {
++				reg = <1>;
++				clock-frequency = <400000>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++			};
++		};
++
++		cci1: cci@ac16000 {
++			compatible = "qcom,sm8650-cci", "qcom,msm8996-cci";
++			reg = <0 0x0ac16000 0 0x1000>;
++			interrupts = <GIC_SPI 427 IRQ_TYPE_EDGE_RISING>;
++			power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
++			clocks = <&camcc CAM_CC_CAMNOC_AXI_NRT_CLK>,
++				 <&camcc CAM_CC_SLOW_AHB_CLK_SRC>,
++				 <&camcc CAM_CC_CPAS_AHB_CLK>,
++				 <&camcc CAM_CC_CCI_1_CLK>;
++			clock-names = "camnoc_axi",
++				      "slow_ahb_src",
++				      "cpas_ahb",
++				      "cci";
++			pinctrl-0 = <&cci2_default &cci3_default>;
++			pinctrl-1 = <&cci2_sleep &cci3_sleep>;
++			pinctrl-names = "default", "sleep";
++			status = "disabled";
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			cci1_i2c0: i2c-bus@0 {
++				reg = <0>;
++				clock-frequency = <1000000>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++			};
++
++			cci1_i2c1: i2c-bus@1 {
++				reg = <1>;
++				clock-frequency = <1000000>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++			};
++		};
++
++		cci2: cci@ac17000 {
++			compatible = "qcom,sm8650-cci", "qcom,msm8996-cci";
++			reg = <0 0x0ac17000 0 0x1000>;
++			interrupts = <GIC_SPI 428 IRQ_TYPE_EDGE_RISING>;
++			power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
++			clocks = <&camcc CAM_CC_CAMNOC_AXI_NRT_CLK>,
++				 <&camcc CAM_CC_SLOW_AHB_CLK_SRC>,
++				 <&camcc CAM_CC_CPAS_AHB_CLK>,
++				 <&camcc CAM_CC_CCI_2_CLK>;
++			clock-names = "camnoc_axi",
++				      "slow_ahb_src",
++				      "cpas_ahb",
++				      "cci";
++			pinctrl-0 = <&cci4_default &cci5_default>;
++			pinctrl-1 = <&cci4_sleep &cci5_sleep>;
++			pinctrl-names = "default", "sleep";
++			status = "disabled";
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			cci2_i2c0: i2c-bus@0 {
++				reg = <0>;
++				clock-frequency = <1000000>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++			};
++
++			cci2_i2c1: i2c-bus@1 {
++				reg = <1>;
++				clock-frequency = <1000000>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++			};
++		};
++
+ 		camcc: clock-controller@ade0000 {
+ 			compatible = "qcom,sm8650-camcc";
+ 			reg = <0 0x0ade0000 0 0x20000>;
+@@ -3815,6 +3923,213 @@ tlmm: pinctrl@f100000 {
+ 
+ 			wakeup-parent = <&pdc>;
+ 
++			cci0_default: cci0-default-state {
++				sda-pins {
++					pins = "gpio113";
++					function = "cci_i2c_sda";
++					drive-strength = <2>;
++					bias-pull-up = <2200>;
++				};
++
++				scl-pins {
++					pins = "gpio114";
++					function = "cci_i2c_scl";
++					drive-strength = <2>;
++					bias-pull-up = <2200>;
++				};
++			};
++
++			cci0_sleep: cci0-sleep-state {
++				sda-pins {
++					pins = "gpio113";
++					function = "cci_i2c_sda";
++					drive-strength = <2>;
++					bias-pull-down;
++				};
++
++				scl-pins {
++					pins = "gpio114";
++					function = "cci_i2c_scl";
++					drive-strength = <2>;
++					bias-pull-down;
++				};
++			};
++
++			cci1_default: cci1-default-state {
++				sda-pins {
++					pins = "gpio115";
++					function = "cci_i2c_sda";
++					drive-strength = <2>;
++					bias-pull-up = <2200>;
++				};
++
++				scl-pins {
++					pins = "gpio116";
++					function = "cci_i2c_scl";
++					drive-strength = <2>;
++					bias-pull-up = <2200>;
++				};
++
++				mclk-pins {
++					pins = "gpio101";
++					function = "cam_mclk";
++					drive-strength = <2>;
++					bias-disable;
++				};
++
++				rst-pins {
++					pins = "gpio15";
++					function = "gpio";
++					drive-strength = <2>;
++					bias-disable;
++					output-low;
++				};
++			};
++
++			cci1_sleep: cci1-sleep-state {
++				sda-pins {
++					pins = "gpio115";
++					function = "cci_i2c_sda";
++					drive-strength = <2>;
++					bias-pull-down;
++				};
++
++				scl-pins {
++					pins = "gpio116";
++					function = "cci_i2c_scl";
++					drive-strength = <2>;
++					bias-pull-down;
++				};
++			};
++
++			cci2_default: cci2-default-state {
++				sda-pins {
++					pins = "gpio117";
++					function = "cci_i2c_sda";
++					drive-strength = <2>;
++					bias-pull-up = <2200>;
++				};
++
++				scl-pins {
++					pins = "gpio118";
++					function = "cci_i2c_scl";
++					drive-strength = <2>;
++					bias-pull-up = <2200>;
++				};
++			};
++
++			cci2_sleep: cci2-sleep-state {
++				sda-pins {
++					pins = "gpio117";
++					function = "cci_i2c_sda";
++					drive-strength = <2>;
++					bias-pull-down;
++				};
++
++				scl-pins {
++					pins = "gpio118";
++					function = "cci_i2c_scl";
++					drive-strength = <2>;
++					bias-pull-down;
++				};
++			};
++
++			cci3_default: cci3-default-state {
++				sda-pins {
++					pins = "gpio12";
++					function = "cci_i2c_sda";
++					drive-strength = <2>;
++					bias-pull-up = <2200>;
++				};
++
++				scl-pins {
++					pins = "gpio13";
++					function = "cci_i2c_scl";
++					drive-strength = <2>;
++					bias-pull-up = <2200>;
++				};
++			};
++
++			cci3_sleep: cci3-sleep-state {
++				sda-pins {
++					pins = "gpio12";
++					function = "cci_i2c_sda";
++					drive-strength = <2>;
++					bias-pull-down;
++				};
++
++				scl-pins {
++					pins = "gpio13";
++					function = "cci_i2c_scl";
++					drive-strength = <2>;
++					bias-pull-down;
++				};
++			};
++
++			cci4_default: cci4-default-state {
++				sda-pins {
++					pins = "gpio112";
++					function = "cci_i2c_sda";
++					drive-strength = <2>;
++					bias-pull-up = <2200>;
++				};
++
++				scl-pins {
++					pins = "gpio153";
++					function = "cci_i2c_scl";
++					drive-strength = <2>;
++					bias-pull-up = <2200>;
++				};
++			};
++
++			cci4_sleep: cci4-sleep-state {
++				sda-pins {
++					pins = "gpio112";
++					function = "cci_i2c_sda";
++					drive-strength = <2>;
++					bias-pull-down;
++				};
++
++				scl-pins {
++					pins = "gpio153";
++					function = "cci_i2c_scl";
++					drive-strength = <2>;
++					bias-pull-down;
++				};
++			};
++
++			cci5_default: cci5-default-state {
++				sda-pins {
++					pins = "gpio119";
++					function = "cci_i2c_sda";
++					drive-strength = <2>;
++					bias-pull-up = <2200>;
++				};
++
++				scl-pins {
++					pins = "gpio120";
++					function = "cci_i2c_scl";
++					drive-strength = <2>;
++					bias-pull-up = <2200>;
++				};
++			};
++
++			cci5_sleep: cci5-sleep-state {
++				sda-pins {
++					pins = "gpio119";
++					function = "cci_i2c_sda";
++					drive-strength = <2>;
++					bias-pull-down;
++				};
++
++				scl-pins {
++					pins = "gpio120";
++					function = "cci_i2c_scl";
++					drive-strength = <2>;
++					bias-pull-down;
++				};
++			};
++
+ 			hub_i2c0_data_clk: hub-i2c0-data-clk-state {
+ 				/* SDA, SCL */
+ 				pins = "gpio64", "gpio65";
+-- 
+2.33.0
 
 
