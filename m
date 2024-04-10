@@ -1,48 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-17011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C7CE89F077
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 13:15:38 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48CA489F088
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 13:18:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5E9D51C215DC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 11:15:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F1D3F1F202CE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 11:18:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CFFE159599;
-	Wed, 10 Apr 2024 11:15:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFE81159599;
+	Wed, 10 Apr 2024 11:18:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hxb/caaL"
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="lOVPpHFR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5ED2837B;
-	Wed, 10 Apr 2024 11:15:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16C547A5C
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 11:18:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712747734; cv=none; b=BVMYeHYdyrbTCHSFOPKse7iqJ1U2f7YPwJ34zYxF7Rzxxl0VhJl80cEN4xDFt7IFwf9rZ41L+KwRkfa+0w5BnIXqe52Uzph5+cilq0JOS/Gkvg4ZtkGRCoYnVKPZNJ8RKTxuItfpEAwnt5Azu4xuKwNHi1r+u5byfVgWwWhEork=
+	t=1712747921; cv=none; b=dRdadfNmB8s4qlq4VeYLVL5ysc8lpJcGGMpKWut5iqkSFdrhZ1t6z27QlF7R6MQNvnTGpj3JdCE2gO/UqCOVoBiYXLYNNcgPKVFjjytbOrKzNeDcz2dJcUhkp0gpjlDPUWIGZ5QJ5/fq8Bix3wqVOAmuVdkSPzmJDzwmytVZKh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712747734; c=relaxed/simple;
-	bh=PfX4TWI+G1qb9N5EwVvxA5wr+hsBVwznICnpgEc0G5g=;
+	s=arc-20240116; t=1712747921; c=relaxed/simple;
+	bh=YxEnTnHB1aa7lrwu5qSTZQyyCrPlpqr9h0tNQAOgFSw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HTnmojQXlnLAGLbvcvSwhO+cyNcBREPOEyiV8JVlgEAEulllOc3b0Bm1hi21tuo33UyCdM9jNUrpad2JPxHiZajuz4RWnFpEpVpDRzp8KrVT/UD7kOpuuaYPfjHPzA0iC3vEXUH0XlaQNuCGYVDYzUGPdQ4lFDWkgzOea/XaknI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hxb/caaL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0BDCC433C7;
-	Wed, 10 Apr 2024 11:15:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712747733;
-	bh=PfX4TWI+G1qb9N5EwVvxA5wr+hsBVwznICnpgEc0G5g=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=hxb/caaLocQ1fxwcIc+dYWDGIC55aCRyLg2sshMGfLGF2pS5wzGvBWhrwRc3kx+6R
-	 vjDzClurl4TlhVHj3E7FGTvXI7f81SqNAKFWZNx69GKLi1GGOhYUffJdDpkpWiD6d2
-	 rh6UsgDfcdtmdpvod79elMfjdydWlfVsL7OqMc8mMrjRryPrPlUxWVVbQ4nw0n0SJU
-	 Z5e0apz3E7U1buHm0mwBCUd3L9JsRS7mfgkvoGEZEj0pQAO/yDT3aoLZK73FkXO4iB
-	 2qtQG2D4VU2wMDu5+USIdGxkp+fmr63nVCmCl3DgfYYBRWe3Ic/txSRayOOHChy8ny
-	 +HpPRq3v61kRw==
-Message-ID: <70d0afa7-4990-4180-8dfa-cdf267e4c7a2@kernel.org>
-Date: Wed, 10 Apr 2024 13:15:27 +0200
+	 In-Reply-To:Content-Type; b=ACsgYww2/ZW/n895OjQ7OJJirBvqvQKYFoVp0WzzcnzT8xW9pyqI93M32WfNUDWHw5+tSFevpvyJgPgxWXbtavOAmFL8PiUlPQRPLpDpoNz/gWmumIY1kzUpt7zbhQnMi7VGroIbiQXf8bHg6WFbr5QALSHd+l/7U3fs+Lsy7VQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=lOVPpHFR; arc=none smtp.client-ip=209.85.208.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2d87660d5dbso45608521fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 04:18:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1712747918; x=1713352718; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mlUh/9HYxr9WDC+IOtMkVrTM8E5o44WwLHkm//03KdU=;
+        b=lOVPpHFRXNicaenPhNiTUJNxRJEImUOAe4x/vBMHQ/WCHGC/OfjjyFNKHGJZAVdHjY
+         n27rEU0g3GktWObLt0Udsbw0NZcTEBzrkxGh/WVKIKPQ2DEMDjjKEyAqCN0Blj3QMCGF
+         JqKVizUN8Eh47R43u4vz12GWIF1KAH478uJTk0UXjwuRGBaNL45nLi533iurwxMU93fA
+         r02/z6JN0jUasWIKjGfGRB3vKIA7vvh4F73RLV3RFTzmvTW4Xwm7PVu7N/6d7rU9iaEK
+         hLnHQ9kXseybFmAFWwxUcw6S4ykDsqSKcAl6lh/XLbqKAZPeT3diXlMww9mkmgQ6INOl
+         CJVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712747918; x=1713352718;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mlUh/9HYxr9WDC+IOtMkVrTM8E5o44WwLHkm//03KdU=;
+        b=Lq7PjNt08kFKMbwtEUVI57ForVwCAkaBJRAp6C18WETOwC5p1uN2dDWjaRWIKHj3Py
+         Nif1umLD2svuDXNjJ1VNYzQAVHYkdI22qWWgkjjUOuJyFf0CqvFl8ydwSnKMzQ5SzT/G
+         EimlWrsuttCN7MUuLP6u4ophwq9oLdA5rT28im7QNq4FliXAo6TpPVlZRS22S/0wFvLc
+         CW67/b+DUclMsX41Ccmkpk9adOtpRJVsjUGqjQ/54Jbf4aLuwz4RSUVTc3ccYW97jI4V
+         Ug+9bqOqufpREjoA3y/RatAtbaD/b0ER+1t0KfgbfQboI+9BA4MO/upy4GrcC3MWXI+s
+         GRRg==
+X-Gm-Message-State: AOJu0Ywi0hJvllGYzv4RFVCND7Mp2YgGJEeCxHfFRfCt37ue9kHUCWA2
+	DtK0LxNM/zg38e3tT413qm9qvmVxbr+OzSOpuPryVW/6uILp09+RiKAdP5RKWM/r4RYLaTn7VD0
+	D
+X-Google-Smtp-Source: AGHT+IEW/efrx9l5JQWtRkubDDKZETYoQdnwMrixNvz2olfPJ//CbY7PXwT7EBJZFOar56TUeJE8pw==
+X-Received: by 2002:a2e:990d:0:b0:2d7:1152:d40c with SMTP id v13-20020a2e990d000000b002d71152d40cmr1678697lji.5.1712747918051;
+        Wed, 10 Apr 2024 04:18:38 -0700 (PDT)
+Received: from ?IPV6:2a01:e34:ec24:52e0:bfb2:9137:62d7:74db? ([2a01:e34:ec24:52e0:bfb2:9137:62d7:74db])
+        by smtp.gmail.com with ESMTPSA id j7-20020a05600c190700b00416b035c2d8sm1993794wmq.3.2024.04.10.04.18.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Apr 2024 04:18:37 -0700 (PDT)
+Message-ID: <dac9a62f-f1b8-4456-985d-a5dac9e80de8@freebox.fr>
+Date: Wed, 10 Apr 2024 13:18:37 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,130 +76,47 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 1/5] dt-bindings: interconnect: Add Qualcomm IPQ9574
- support
-To: Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org, mturquette@baylibre.com,
- sboyd@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- djakov@kernel.org, dmitry.baryshkov@linaro.org, quic_anusha@quicinc.com,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org
-References: <20240403104220.1092431-1-quic_varada@quicinc.com>
- <20240403104220.1092431-2-quic_varada@quicinc.com>
- <58c9b754-b9a7-444d-9545-9e6648010630@kernel.org>
- <Zg5q6mnWtK6hmPBT@hu-varada-blr.qualcomm.com>
- <ZhTxFVDH0xTSkw7r@hu-varada-blr.qualcomm.com>
- <1ec401be-11cb-416a-9eae-d72ea8acf06f@kernel.org>
- <ZhUghsa5Do5m7wrX@hu-varada-blr.qualcomm.com>
- <a0173a13-5f20-4e24-8417-afce5fdbda0e@kernel.org>
- <ZhZjuCkJrtPbwtS/@hu-varada-blr.qualcomm.com>
+Subject: Re: [PATCH] clk: qcom: mmcc-msm8998: fix vdec low-power mode
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
+Cc: MSM <linux-arm-msm@vger.kernel.org>, linux-clk
+ <linux-clk@vger.kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Jeffrey Hugo <quic_jhugo@quicinc.com>,
+ Douglas Anderson <dianders@chromium.org>,
+ Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>
+References: <c427e89e-7ec6-472e-8ba8-65d5721df62b@freebox.fr>
+ <bf1d7f35-e109-48a3-8e95-e35a5b09b809@linaro.org>
 Content-Language: en-US
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <ZhZjuCkJrtPbwtS/@hu-varada-blr.qualcomm.com>
+From: Marc Gonzalez <mgonzalez@freebox.fr>
+In-Reply-To: <bf1d7f35-e109-48a3-8e95-e35a5b09b809@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 10/04/2024 12:02, Varadarajan Narayanan wrote:
->> Okay, so what happens if icc-clk way of generating them changes a bit?
->> It can change, why not, driver implementation is not an ABI.
->>
->>>
->>> 	2. These auto-generated id-numbers have to be correctly
->>> 	   tied to the DT nodes. Else, the relevant clocks may
->>> 	   not get enabled.
->>
->> Sorry, I don't get, how auto generated ID number is tied to DT node.
->> What DT node?
-> 
-> I meant the following usage for the 'interconnects' entry of the
-> consumer peripheral's node.
-> 
-> 	interconnects = <&gcc MASTER_ANOC_PCIE0 &gcc SLAVE_ANOC_PCIE0>,
-> 			      ^^^^^^^^^^^^^^^^^      ^^^^^^^^^^^^^^^^
-> 			<&gcc MASTER_SNOC_PCIE0 &gcc SLAVE_SNOC_PCIE0>;
-> 			      ^^^^^^^^^^^^^^^^^      ^^^^^^^^^^^^^^^^
-> 
->>> Since ICC-CLK creates two ids per clock entry (one MASTER_xxx and
->>> one SLAVE_xxx), using those MASTER/SLAVE_xxx macros as indices in
->>> the below array would create holes.
->>>
->>> 	static int icc_ipq9574_hws[] = {
->>> 		[MASTER_ANOC_PCIE0] = GCC_ANOC_PCIE0_1LANE_M_CLK,
->>> 		[MASTER_SNOC_PCIE0] = GCC_SNOC_PCIE0_1LANE_S_CLK,
->>> 		[MASTER_ANOC_PCIE1] = GCC_ANOC_PCIE1_1LANE_M_CLK,
->>> 		[MASTER_SNOC_PCIE1] = GCC_SNOC_PCIE1_1LANE_S_CLK,
->>> 		. . .
->>> 	};
->>>
->>> Other Qualcomm drivers don't have this issue and they can
->>> directly use the MASTER/SLAVE_xxx macros.
->>
->> I understand, thanks, yet your last patch keeps adding fake IDs, means
->> IDs which are not part of ABI.
->>
->>>
->>> As the MASTER_xxx macros cannot be used, have to define a new set
->>> of macros that can be used for indices in the above array. This
->>> is the reason for the ICC_BINDING_NAME macros.
->>
->> Then maybe fix the driver, instead of adding something which is not an
->> ABI to bindings and completely skipping the actual ABI.
-> 
-> Will remove the ICC_xxx defines from the header. And in the
-> driver will change the declaration as follows. Will that be
-> acceptable?
-> 
-> 	static int icc_ipq9574_hws[] = {
-> 		[MASTER_ANOC_PCIE0 / 2] = GCC_ANOC_PCIE0_1LANE_M_CLK,
+On 10/04/2024 01:36, Bryan O'Donoghue wrote:
 
-What is the binding in such case? What exactly do you bind between
-driver and DTS?
+> On 09/04/2024 16:56, Marc Gonzalez wrote:
+>
+>> Use same code as mmcc-msm8996 with:
+>> s/venus_gdsc/video_top_gdsc/
+>> s/venus_core0_gdsc/video_subcore0_gdsc/
+> 
+> I think you should explain what this commit is for and why its needed.
+> 
+> Switching on additional GDSC registers that the top/subcore0 and 
+> subcore1 depend on, instead of just saying "copy the code from 8996".
+> 
+> With that fixed.
+> 
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-Best regards,
-Krzysztof
+
+Superseded by [PATCH v2] clk: qcom: mmcc-msm8998: fix venus clock issue
+Message-ID: <c325691e-1cbe-4589-87fc-b67a41e93294@freebox.fr>
+(Changelog: updated commit log)
+
+Regards
 
 
