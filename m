@@ -1,73 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-16989-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-16990-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 961F089E62A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 01:37:17 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 364AA89E91F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 06:41:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1E36A1F22B4A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Apr 2024 23:37:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 59D2C1C22AAB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 04:41:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADD79156F4E;
-	Tue,  9 Apr 2024 23:37:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2634A10958;
+	Wed, 10 Apr 2024 04:41:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MFfzX6Cr"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hIHHOS9H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C7B158DC4
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Apr 2024 23:37:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD5BC8E0;
+	Wed, 10 Apr 2024 04:41:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712705825; cv=none; b=LyNvcAeNqbCEgRTc2nAs/72x+e4V3PBBjcJ5hRwkMdp42+EWjmE0zP8R+OlfWo8q5YTNPptdf6lvpj0dpWN3zb1+mVLQeXGpg2EKzx+tcUhb8bmr5WXiz7tR9gmgtH/uQIlMv52BKzSm06SI4XnBZtxVXg8TTUQRck+Fhaa1jIQ=
+	t=1712724079; cv=none; b=Wsyk5qWG8Vk4+k3+J8/pM5R5NS6kIc9OWZmL6Ry9TpHoYP/Ud+0akN3h/50N3YJ+ZRMYUD0Fs1MYjX+homH9zr8XTWcYhB/5pL7AdmmTUhlIp62TEtKr9cb92AFexcUZJMOcXV7pMEnAyr6NxS+lFzG5p8SwdgDL1kcGO58cZRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712705825; c=relaxed/simple;
-	bh=h+e5fvJt2EaWgcw8KS2F0yKCq8DnQLW0iSRB9NusBAM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QxJKSeUmvLfBHomKL0liD2Mc467anBAczyCZTM2H0S0xTFXSpIVI3Uua+9pT5lM83mfpfGH+FiE4pBIgD979F6tqkRLR2WmWBQMapeHD7EbPErWJKyrT07Z6srD2lbYE0WPHp0Zcer32Bf4+UwGTHZ0YbbmtCjjPpdr8Sbf+Dhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MFfzX6Cr; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-416c4767ae6so2022215e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Apr 2024 16:37:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712705821; x=1713310621; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gYrn0x7gSGG0Zq/O+j6l0dU8abj1nITQX9daWRuGgbM=;
-        b=MFfzX6Crm71ZcyljN9aTsIvV1fapFSPqXXgWu8VDtavThklmct7wQ2nEiGIMNtRXFM
-         mLqUt8O9o3YjHqP9DD+B03qltNCfeXOohWKhTbNAF96vBKCsyWny45Fw0YrOZeB/B1ta
-         CngUGYgfdIGjCwDLc3c6ZKuRshNlw1VgGpC6ppf3glmwmEloIY7tSPMVVe/7XzWfpo17
-         zfR2DfataLEz6Gk4nMKwlhR6g/r3l3v1GiwJBSKkQYF0i4hwF9JD0D0uBc36Ai5w6CJ0
-         bkwUjNKN/1qgclXxGsJqng92/zSiWRk3UQff/mounyg9w3A927vlcGQ2kkaTuMtqFevi
-         XonA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712705821; x=1713310621;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gYrn0x7gSGG0Zq/O+j6l0dU8abj1nITQX9daWRuGgbM=;
-        b=AxfJhyvcoj/ZdqZM5TPB5MspO36+BnJqxOE4zdnEfMRAFvqk6K9yMuGtE3pMsurx3L
-         qmpcND9LkEgPeoag06dZNhmSskJgBjeT2WHMjx2j1/pGe7R3TDd4NpElc17RfrM/idJ7
-         bakzYAzPdUfc4yUtZrVvzfQlLcDTc6nIggRzA63k1GMStq7/OPrWIes+BlAgEVshPHrs
-         3imL3ogrwUJjWqmbUQ7aEoO8iFLMlwNICE4he0Q0TkXHUozL2W0mLrdaOqbK/zCseUG6
-         3+uBqf96S2aOkdgwVY45Sb5qTM/jS3JAL9HtKdx+WgEV1s5NWity8j4m9vs/hVvlDsZ1
-         9+sQ==
-X-Gm-Message-State: AOJu0Yy8PYp19jKgOCR9aGQBQWoMbal+yymhVPcK02gZdKrsxkPOOEde
-	j0+ycgkxh87ucb7AKzTpge/9/fHccUCqa2eC/WrtEEsnzYh1iUF2A78uSx083CM=
-X-Google-Smtp-Source: AGHT+IGJQnrTHEaPrdEriH4SBasEFssxXyLPx4aNYphkDFzcVtK9Su2Gu0LZkdSMraUYM05UT95/IQ==
-X-Received: by 2002:a05:600c:1d21:b0:415:5fd6:44c7 with SMTP id l33-20020a05600c1d2100b004155fd644c7mr722669wms.27.1712705821349;
-        Tue, 09 Apr 2024 16:37:01 -0700 (PDT)
-Received: from [192.168.0.102] ([176.61.106.68])
-        by smtp.gmail.com with ESMTPSA id o9-20020a05600c4fc900b00414807ef8dfsm450584wmq.5.2024.04.09.16.37.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Apr 2024 16:37:00 -0700 (PDT)
-Message-ID: <bf1d7f35-e109-48a3-8e95-e35a5b09b809@linaro.org>
-Date: Wed, 10 Apr 2024 00:36:59 +0100
+	s=arc-20240116; t=1712724079; c=relaxed/simple;
+	bh=CvANhkT3bjU8SGaWUSOMNC3pInbPa0QZUBUNA+Qsi5I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=reK4I6KMmmh66XZM6MaxZoozsi3LBf9QbHwQoJAyho0yv20LdaJGIShaR5BzEY4XaISD1iMESJDTKW0MX1czhwVicPn5Dz2dZGV3N2kyoj3fU67d8fOv14mJ6MmGK6euePxmYi0fXr483L1VEX96SeGl+NxVF+O4KNauX1iEK98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hIHHOS9H; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43A3VNlw031961;
+	Wed, 10 Apr 2024 04:41:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=vJX8hXgmI1cP9JeYXDNUwqcy/x7F81wYrlGr7moQXUA=; b=hI
+	HHOS9HM6rxBD1rl75le+W0C4UZfPIzHVPfwv2q9aqatEFsOU60I7ybphe+cjJcGw
+	8PKJMfzLuokD5b+HmFxoLj1GKVUQdFXns2Z+w5rXazHrfJJYJTKZ3CXWQZbCTlfi
+	/pyYC/0Kj4GIGLIjCxRrV/Xs842wCWsAvZ05e6W16tH827CTfnIOsfHjBeIg8oqG
+	1nGwtWvhHJby8dwu65d/CdDFjGch6hkTMEH7ZSxq04Kh5XkE3xUT0DuX9rQzfl/U
+	sguyVWSLpMuUgWXh/15PQT6Yivb/dAg9IsxPxlC1ZllI3zQX1JYGmw+buq0UUR2D
+	DNlN6eCocMueQqE3Clug==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xdjxh8axt-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Apr 2024 04:41:04 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43A4f3hH008190
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Apr 2024 04:41:03 GMT
+Received: from [10.216.60.187] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 9 Apr 2024
+ 21:40:57 -0700
+Message-ID: <60e569d7-0d63-4b62-b666-1dd7919c8af2@quicinc.com>
+Date: Wed, 10 Apr 2024 10:10:54 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,52 +65,172 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: qcom: mmcc-msm8998: fix vdec low-power mode
-To: Marc Gonzalez <mgonzalez@freebox.fr>,
- Bjorn Andersson <bjorn.andersson@linaro.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
-Cc: MSM <linux-arm-msm@vger.kernel.org>, linux-clk
- <linux-clk@vger.kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Jeffrey Hugo <quic_jhugo@quicinc.com>,
- Douglas Anderson <dianders@chromium.org>,
- Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>
-References: <c427e89e-7ec6-472e-8ba8-65d5721df62b@freebox.fr>
+Subject: Re: [PATCH v20 4/9] usb: dwc3: core: Refactor PHY logic to support
+ Multiport Controller
+To: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+CC: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring
+	<robh@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+        Wesley Cheng
+	<quic_wcheng@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Greg
+ Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, Felipe Balbi <balbi@kernel.org>,
+        Johan Hovold
+	<johan@kernel.org>,
+        "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org"
+	<linux-arm-msm@vger.kernel.org>,
+        "linux-usb@vger.kernel.org"
+	<linux-usb@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>,
+        "quic_ppratap@quicinc.com"
+	<quic_ppratap@quicinc.com>,
+        "quic_jackp@quicinc.com"
+	<quic_jackp@quicinc.com>,
+        Johan Hovold <johan+linaro@kernel.org>
+References: <20240408132925.1880571-1-quic_kriskura@quicinc.com>
+ <20240408132925.1880571-5-quic_kriskura@quicinc.com>
+ <20240409011046.zgjqvhewldch3snu@synopsys.com>
+ <3ab9badd-2cf6-4fe0-aaf0-d08614418968@quicinc.com>
+ <20240409181342.wmjvi6rwtxphnv3z@synopsys.com>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <c427e89e-7ec6-472e-8ba8-65d5721df62b@freebox.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <20240409181342.wmjvi6rwtxphnv3z@synopsys.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: d1lbR0JK5Ly33FsAvkn7ErNTNFCqjUpY
+X-Proofpoint-GUID: d1lbR0JK5Ly33FsAvkn7ErNTNFCqjUpY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-09_12,2024-04-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1015
+ suspectscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ spamscore=0 mlxscore=0 bulkscore=0 mlxlogscore=999 lowpriorityscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404100032
 
-On 09/04/2024 16:56, Marc Gonzalez wrote:
-> Use same code as mmcc-msm8996 with:
-> s/venus_gdsc/video_top_gdsc/
-> s/venus_core0_gdsc/video_subcore0_gdsc/
+
+
+On 4/9/2024 11:43 PM, Thinh Nguyen wrote:
+> On Tue, Apr 09, 2024, Krishna Kurapati PSSNV wrote:
+>>
+>>
+>> On 4/9/2024 6:41 AM, Thinh Nguyen wrote:
+>>> On Mon, Apr 08, 2024, Krishna Kurapati wrote:
+>>>> Currently the DWC3 driver supports only single port controller
+>>>> which requires at least one HS PHY and at most one SS PHY.
+>>>>
+>>>> But the DWC3 USB controller can be connected to multiple ports and
+>>>> each port can have their own PHYs. Each port of the multiport
+>>>> controller can either be HS+SS capable or HS only capable
+>>>> Proper quantification of them is required to modify GUSB2PHYCFG
+>>>> and GUSB3PIPECTL registers appropriately.
+>>>>
+>>>> Add support for detecting, obtaining and configuring PHYs supported
+>>>> by a multiport controller. Limit support to multiport controllers
+>>>> with up to four ports for now (e.g. as needed for SC8280XP).
+>>>>
+>>>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>>>> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+>>>> ---
+>>>>    drivers/usb/dwc3/core.c | 251 ++++++++++++++++++++++++++++------------
+>>>>    drivers/usb/dwc3/core.h |  14 ++-
+>>>>    drivers/usb/dwc3/drd.c  |  15 ++-
+>>>>    3 files changed, 193 insertions(+), 87 deletions(-)
+>>>>
+>>>
+>>> <snip>
+>>>
+>>>> @@ -1937,6 +2020,10 @@ static int dwc3_get_num_ports(struct dwc3 *dwc)
+>>>>    	iounmap(base);
+>>>> +	if (dwc->num_usb2_ports > DWC3_MAX_PORTS ||
+>>>> +	    dwc->num_usb3_ports > DWC3_MAX_PORTS)
+>>>> +		return -ENOMEM;
+>>>
+>>> This should be -EINVAL.
+>>>
+>>>> +
+>>>>    	return 0;
+>>>>    }
+>>>
+>>> <snip>
+>>>
+>>>> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
+>>>> index 341e4c73cb2e..df2e111aa848 100644
+>>>> --- a/drivers/usb/dwc3/core.h
+>>>> +++ b/drivers/usb/dwc3/core.h
+>>>> @@ -33,6 +33,12 @@
+>>>>    #include <linux/power_supply.h>
+>>>> +/*
+>>>> + * Maximum number of ports currently supported for multiport
+>>>> + * controllers.
+>>>
+>>> This macro here is being used per USB2 vs USB3 ports rather than USB2 +
+>>> USB3, unlike the xHCI MAXPORTS. You can clarify in the comment and
+>>> rename the macro to avoid any confusion. You can also create 2 separate
+>>> macros for number of USB2 and USB3 ports even if they share the same
+>>> value.
+>>>
+>>> As noted[*], we support have different max number of usb2 ports vs usb3
+>>> ports. I would suggest splitting the macros.
+>>>
+>>
+>> Hi Thinh,
+>>
+>>   This macro was intended only to identify how many USB2 (or USB3) Phy's were
+>> serviced/operated by this driver, not how many logical ports present (like
 > 
-> https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/include/dt-bindings/clock/msm-clocks-hwio-8996.h
-> https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/include/dt-bindings/clock/msm-clocks-hwio-8998.h
+> That's not what you described in the comment right above the macro...
 > 
-> 0x1024 = MMSS_VIDEO GDSCR (undocumented)
-> 0x1028 = MMSS_VIDEO_CORE_CBCR
-> 0x1030 = MMSS_VIDEO_AHB_CBCR
-> 0x1034 = MMSS_VIDEO_AXI_CBCR
-> 0x1038 = MMSS_VIDEO_MAXI_CBCR
-> 0x1040 = MMSS_VIDEO_SUBCORE0 GDSCR (undocumented)
-> 0x1044 = MMSS_VIDEO_SUBCORE1 GDSCR (undocumented)
-> 0x1048 = MMSS_VIDEO_SUBCORE0_CBCR
-> 0x104c = MMSS_VIDEO_SUBCORE1_CBCR
+>> in xHCI). I don't think it would be confusing currently given that it is
+>> only used to identify number of generic phy instances to allocate and not
+>> used for any other purpose. Once the num_usb2_ports and num_usb3_ports are
+>> read by get_num_ports(...) call, they directly indicate how many ports are
 > 
-> Suggested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+> Those fields are clear. But for DWC3_MAX_PORTS, based on the name and
+> comment of the macro, it's not clear.
+> 
+>> HS and SS respectively. Keeping the same in mind, I returned ENOMEM above
+>> (as you mentioned) because we don't allocate more than DWC3_MAX_PORTS and if
+>> the number of hs or ss ports is more than that, we simply return ENOMEM
+>> saying the driver doesn't support operating those many phy's.
+> 
+> The error code -ENOMEM indicates out of memory failure. The check
+> condition dwc->num_usb2_ports > DWC3_MAX_PORTS indicates invalid config.
+> There's no allocation in that check.
+> 
+>>
+>>> [*] https://urldefense.com/v3/__https://lore.kernel.org/linux-usb/20230801013031.ft3zpoatiyfegmh6@synopsys.com/__;!!A4F2R9G_pg!azHqgm92ENkFQrpv6Fhs6PCe210VGOAIrsuGFhrgmfaor8N_kWLu6rxkPpbeCBTLL4NbUpOWlQ0ufmP9DFwO9iFc0XdSEg$
+>>>
+>>>> + */
+>>>> +#define DWC3_MAX_PORTS 4
+>>>> +
+>>>>
+>>>
+>>> But it's not a big issue whether you decided to push a new version or a
+>>> create a separate patch for the comments above. Here's my Ack:
+>>>
+>>
+>> Since this is not a bug, I would prefer to make a separate patch to rename
+>> the macros. (If that is fine).
+>>
+> 
+> That is fine with me. Thanks for your effort pursuing and continue
+> working on this series.
+> 
 
-I think you should explain what this commit is for and why its needed.
+Thanks Thinh. If there are no other issues, I will wait till Greg picks 
+the series up. Thanks for the reviews throughout the series.
 
-Switching on additional GDSC registers that the top/subcore0 and 
-subcore1 depend on, instead of just saying "copy the code from 8996".
-
-With that fixed.
-
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-
+Regards,
+Krishna,
 
