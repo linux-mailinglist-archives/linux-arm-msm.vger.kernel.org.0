@@ -1,155 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-17133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7971A8A01EF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 23:26:45 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21C648A020E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 23:28:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AAAF41C21D48
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 21:26:44 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 80E4AB255C6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 21:28:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39C6D1836E2;
-	Wed, 10 Apr 2024 21:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F80D1836EE;
+	Wed, 10 Apr 2024 21:28:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X7uw442U"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nb2jYbCE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32AE1836CE;
-	Wed, 10 Apr 2024 21:26:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053BC181BA1;
+	Wed, 10 Apr 2024 21:28:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712784401; cv=none; b=AdoObEr7Di2ZtUF4ipPNja3TUCdUKDfndtH1GaRgAYCVQEQ2QflGuB6L3fN3YeK2LJVNJPekEneyncpLsRNEmblHp7LKdMS19gaB+3DyUlNznBhgmOSGapaWr2w6q7UDf5Rw2qlcZpywRlOByfAMkOAkqTeM2WyQDqYSKDOSuDk=
+	t=1712784516; cv=none; b=ppghSqfR/wjMhKMfQfneUPcjJlyXOvuNyPGRA0iEc48Xov2rM6GiGOkaZPk0dImQUpOkgUQPSuJmgoBFsXxcA99ge+QouqmRg9QzgZDZM28djwKtJKpaOetXlCWJygl5eC/IVaT+emhzNIoId4/Z/j0EAZ+rtf5i4PP1zp6hhuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712784401; c=relaxed/simple;
-	bh=ZHY0Qb2p6hZj2F9UUpHFyF1+cCJBE7U8HaVGMIWgfJQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=gSC5sLKRCxDYWJbmzE9UalWM1Zp8qkjhwaoUoMR0dVba0Axb001SaEuyt0SZGt7AywHsJsMyJjmbA8YXGjiZeBIxHzwZubESgLCcMVGSnQDZtBhwNzEIbMwFM3zZXEG1zdM4qHtjp1Q5iplJRPLCbg0o1lJVrDCvnpahd+OPvc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X7uw442U; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5B8C433F1;
-	Wed, 10 Apr 2024 21:26:40 +0000 (UTC)
+	s=arc-20240116; t=1712784516; c=relaxed/simple;
+	bh=TUqiqernw9WGEO3cMf2cvZV3VHIcszDG5hcc58McQQw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=V90iC5cFONGBginBcskKOs5kPzhugS72jpeFzMrn/+ELVx8yFD3BPIiGlIguCldTeYA1F9jJVCNXQi0eVqWGr8i7OpPnkym5H+xa3ZkCUHkRHr4G2EOVZ/9PO5QHYwb7Wi//DFIOypsTdXnYIunt/tfZoLUdgAGLlrS/IdyWPvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nb2jYbCE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 8C260C433F1;
+	Wed, 10 Apr 2024 21:28:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712784400;
-	bh=ZHY0Qb2p6hZj2F9UUpHFyF1+cCJBE7U8HaVGMIWgfJQ=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=X7uw442UbgIpqeMvt0lGFcXg86xEWI2esbZmYrlcuSZ0IHUAEfYztCnABCY3OWfcN
-	 qha3LHFaAPenRfxa13l39CP+7GGIX0nvuojS+bJEjDEo/05E+SEw4/981rCoRB7mZ8
-	 AiCC0TmbExTNmCkcQyOEEymnER7zgHtneM1Ex3ay5q4H0OOK9cRxPP9m9yKRxq/6Zo
-	 Kd9xqDj2EzKSRE0wcXWJAeACN6Slg9b5ZPc42hYpHHJ/9g/3XlaGWpH6fKTo1jFdGv
-	 wtWzLc4tD0iN1BOu/0zmhzyFLK8qGFJjMIMUEWb18MkFUt8L+lqhYbq+ugp0UKiIGb
-	 RxRImDtJqxM1w==
-Date: Wed, 10 Apr 2024 16:26:38 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>,
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jim Quinlan <jim2101024@gmail.com>,
-	Nicolas Saenz Julienne <nsaenz@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Srikanth Thokala <srikanth.thokala@intel.com>,
-	Ryder Lee <ryder.lee@mediatek.com>,
-	Jianjun Wang <jianjun.wang@mediatek.com>,
-	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Daire McNamara <daire.mcnamara@microchip.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Marek Vasut <marek.vasut+renesas@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Heiko Stuebner <heiko@sntech.de>, Jingoo Han <jingoohan1@gmail.com>,
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bharat Kumar Gogada <bharat.kumar.gogada@amd.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Mark Kettenis <kettenis@openbsd.org>,
-	Tom Joseph <tjoseph@cadence.com>,
-	Ahmad Zainie <wan.ahmad.zainie.wan.mohamad@intel.com>,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Thippeswamy Havalige <thippeswamy.havalige@amd.com>,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, asahi@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
-	linux-rpi-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-rockchip@lists.infradead.org
-Subject: Re: [PATCH v2 2/4] dt-bindings: PCI: mediatek,mt7621: add missing
- child node reg
-Message-ID: <20240410212638.GA2159326@bhelgaas>
+	s=k20201202; t=1712784515;
+	bh=TUqiqernw9WGEO3cMf2cvZV3VHIcszDG5hcc58McQQw=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=nb2jYbCEdrXv0NZRgQ6BNK+5Ix9HgKC0PqslETraJ39utYsxuADf0l2guLTocno+W
+	 yhptP3hkGRU2R5WtAlU6pgza90maRy2oGZwbN9DPn5t6ezl7ZTO7x5HZ+wIKOTY4vi
+	 XZ8FSRVuodcksNM9PuvxAugQGCG2Pyx7KlNl6J3L2Up2cRr7CV/Q7hiZO9yk3fDH91
+	 AjpRtI2zAfVgbwJgZcHyPL69LAxgTNv/71W+QP5RMoeCd8hsxynUq4CoTXkumfJ3bD
+	 ybJIOZS9/uakT+3jZEHnzb+N1HF3IAczYkX+MNF4gsIXUzAWQd75+vK3g4vamHqMzT
+	 P2qDv4wPWuxQA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C338CD1284;
+	Wed, 10 Apr 2024 21:28:35 +0000 (UTC)
+From: Alexandru Marc Serdeliuc via B4 Relay <devnull+serdeliuk.yahoo.com@kernel.org>
+Subject: [PATCH v5 0/2] Samsung Galaxy Z Fold5 initial support
+Date: Wed, 10 Apr 2024 23:28:32 +0200
+Message-Id: <20240410-samsung-galaxy-zfold5-q5q-v5-0-9311ee9a55f7@yahoo.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240410181521.269431-2-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIAEF2YC/x3MMQ6DMAxA0asgz7UUKBngKlUHK3FSSxAgVlEAc
+ fdGHd/w/wXKWVhhbC7IvIvKkirsowH3oRQZxVdDZ7re9K1BpVm/KWKkicqBZ1gmb3GzG/pn6zw
+ zOTMEqP2aOUj5v1/v+/4BA4Vix2sAAAA=
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1712784514; l=2250;
+ i=serdeliuk@yahoo.com; s=20240326; h=from:subject:message-id;
+ bh=TUqiqernw9WGEO3cMf2cvZV3VHIcszDG5hcc58McQQw=;
+ b=QRhN4tQuLBYQVROA6KpSYR/5M2GxLW8ZFmZnPrskPmJ+rvTiuQADpNPAqKZqRwSPxJfMDQevK
+ tM13mVl2blWA0ptFDwMLFzV21OVvH3MZ5Iz7wLn7ZUcEaqG6ZifVvKR
+X-Developer-Key: i=serdeliuk@yahoo.com; a=ed25519;
+ pk=aWyveUE11qfDOOlRIFayXukrNn39BvZ9k9uq94dAsgY=
+X-Endpoint-Received: by B4 Relay for serdeliuk@yahoo.com/20240326 with
+ auth_id=147
+X-Original-From: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
+Reply-To: serdeliuk@yahoo.com
 
-On Wed, Apr 10, 2024 at 08:15:19PM +0200, Krzysztof Kozlowski wrote:
-> MT7621 PCI host bridge has children which apparently are also PCI host
-> bridges, at least that's what the binding suggest.
+This documents and add intial dts support for Samsung Galaxy Z Fold5 (samsung,q5q)
+which is a foldable phone by Samsung based on the sm8550 SoC.
 
-What does it even mean for a PCI host bridge to have a child that is
-also a PCI host bridge?
+ChangeLog
+	
+- v5
+  . Added ChangeLog
+  . Added missing Acked-by tags in their respective section in ChangeLog
 
-Does this mean a driver binds to the "parent" host bridge, enumerates
-the PCI devices below it, and finds a "child" host bridge?
+- v4
+  . removed a spurious new line
+  . removed pcie_1_phy_aux_clk as requested
+  . removed secondary pcie1 which does not exists on the device
+  . changed firmware extension from .mbn to .mdt
+  . added missing reserved memory regions required by firmware to properly load
 
-> The children have
-> "reg" property, but do not explicitly define it.  Instead they rely on
-> pci-bus.yaml schema, but that one has "reg" without any constraints.
-> 
-> Define the "reg" for the children, so the binding will be more specific
-> and later will allow dropping reference to deprecated pci-bus.yaml
-> schema.
-> 
-> Acked-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
-> Acked-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Changes in v2:
-> 1. Add tags.
-> ---
->  .../devicetree/bindings/pci/mediatek,mt7621-pcie.yaml          | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/pci/mediatek,mt7621-pcie.yaml b/Documentation/devicetree/bindings/pci/mediatek,mt7621-pcie.yaml
-> index e63e6458cea8..61d027239910 100644
-> --- a/Documentation/devicetree/bindings/pci/mediatek,mt7621-pcie.yaml
-> +++ b/Documentation/devicetree/bindings/pci/mediatek,mt7621-pcie.yaml
-> @@ -36,6 +36,9 @@ patternProperties:
->      $ref: /schemas/pci/pci-bus.yaml#
->  
->      properties:
-> +      reg:
-> +        maxItems: 1
-> +
->        resets:
->          maxItems: 1
->  
-> -- 
-> 2.34.1
-> 
+- v3
+  . added b4 version 3
+  . removed address and size cells in device description
+  Acked-by: Rob Herring <robh@kernel.org>
+
+- v2 
+  . added both but added an extra v2 in the subject line instead to b4 subject header, was requested to send the patch again, along with following mods:
+  . removed whole bootargs line
+  . fixed underscores in reserved memory by removing all reserved memory regions
+  . added missing idetation to  spash_screen remark
+  . validated the dts with "dtbs_check"
+  . removed all comments at the end of nodes
+  . moved status of the node at the end of the node
+  . reversed pin control name with control numbers
+  . ordered the  nodes alphabetically
+
+- v1
+  . The initial request was split in two patches sent due to the following checkpatch warning, was requested to re send them together:
+    WARNING: DT binding docs and includes should be a separate patch. See: Documentation/devicetree/bindings/submitting-patches.rst
+  Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Signed-off-by: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
+---
+Alexandru Marc Serdeliuc (2):
+      dt-bindings: arm: qcom: Document the Samsung Galaxy Z Fold5
+      arm64: dts: qcom: sm8550: Add support for Samsung Galaxy Z Fold5
+
+ Documentation/devicetree/bindings/arm/qcom.yaml |   1 +
+ arch/arm64/boot/dts/qcom/Makefile               |   1 +
+ arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts | 593 ++++++++++++++++++++++++
+ 3 files changed, 595 insertions(+)
+---
+base-commit: 2c71fdf02a95b3dd425b42f28fd47fb2b1d22702
+change-id: 20240410-samsung-galaxy-zfold5-q5q-d31cdeeac09f
+
+Best regards,
+-- 
+Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
+
+
 
