@@ -1,330 +1,392 @@
-Return-Path: <linux-arm-msm+bounces-17006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D097C89EF60
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 12:03:07 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D276D89EFC7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 12:24:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0E983B216F9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 10:03:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 86CF6285671
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 10:24:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B894156C77;
-	Wed, 10 Apr 2024 10:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3E61158D95;
+	Wed, 10 Apr 2024 10:24:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kz3TN6Vn"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CxZKy90e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1BC8F4E;
-	Wed, 10 Apr 2024 10:02:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25DC158D6E;
+	Wed, 10 Apr 2024 10:24:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712743379; cv=none; b=lXnmlGZ7PfFW9vvXDG4Jc4jqDK3coS5UwC972sU6IwcZXOK7lhEqH9Re/RiwsFs3magnx0dnlOq5YceIGAs25nXkL+icGZCu4XZsvmqOdmDjy4V7/AQtNqfkmVAW5GVvhkBXHyS+vS4l5W4tmoueu/s+a6oVExQzPhHxo1N7zxI=
+	t=1712744690; cv=none; b=YVr2Lp/PW/8ao9I1I4At/EIxUtoEuys8rh+aBNoj4e4KL+hhARUZwGXCxEt8rc2FYyN+EWok1V2dVxHLQYqhOaFqGfbrLhWVbt7DRlLLm/nhgLQe+lGqFv4qgm9fbLrcS4NCoNTsiWcyyLAYnKBG480V5ccBppsRNxkA8fLFhTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712743379; c=relaxed/simple;
-	bh=I//1R7EBrIo1jeneN/N16Nl+/LKo1Zfm1h1eEhx61W4=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DliBER2oGnVTz3IsMQVp+ttpk6kMlop9BgMMC+27p/18YNxqtr4VBg4SZbeDwbwlW12WLwqjpGvfP1wmJyhX6KVe2kfsOCVi6IH8l7rW88U1VAag5lW5vmQ9KcAsLRS5vMtC1Gp8W3cdCtfdHE0p5h0ngQzCzbGl6HOyCljXqDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kz3TN6Vn; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1712744690; c=relaxed/simple;
+	bh=wfqNQ+g+ST/UgTNv+QEdnraYIQxn6djwKPFoSXGmWNE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=dfdHu0Vs3meNFyhRoINDuAbFnIh+3FbE7ZW7/AeAcO8GVTqFhqRtFBjXExYSbRYdJkp0Tg0eni5bXCy/fbtRPOAHWVaGBCapkhLTL9ypXMPB4ZPenslSs1FI1YmGbrl8FQdzb8iHwGkPj153D/F1YxF3SSiDe9KGtgEX+ReuRps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CxZKy90e; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43A3dB9g030919;
-	Wed, 10 Apr 2024 10:02:42 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43A4YhAG032453;
+	Wed, 10 Apr 2024 10:24:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=7n1nNdXnhWgfzt2lbMu/j
-	n10wjb7ejFR65QwI3cMGSg=; b=kz3TN6VnvsjAa0DoIGXIfmFTiPJmYkLzxqawN
-	nAhwGDujzP3RpQUQ9NDUe+380wjuH9sG3niP2RsiHN4jVnZsA2GM1bp73oHqWskD
-	ms8cwbNzy2U6AKDfMmtCZJF3Ou2hKt9S9p+TyYeIRlRYzvIo7dEvOzHoPBFeMoNM
-	XPXTRmBHkR9sUwQC61LXOJn54HYQOa7Sy/ohaiov1P52c30MCU/6dOdsY6lmwoNW
-	C2XTZVmHqahRNgLlE2/kJV2sUjjrT9QpMwebIwfr6IC17WX1wPGY0vfcHpv5HWzY
-	//gNQ1ds+aqchg5IxhrfjEakVfnIfPmah/qtiqeiPfjfv5D6Q==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xddqvknn4-1
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=CUMnbE0cylQ+Wy4oOc/mq3wwF0YIbKtmsJ2Z5y6jtxo=; b=Cx
+	ZKy90e2HASV/Wvc7KzOA/Jq0D5Mbx2kzyzZHfI/b0kTetVlr40WPVtm5xmBTSOZL
+	s44KOvCSkp23Tvyy/8LB5pz0GppbEpLPpcrLewGkB58QJwmskDW+nAujDgAUlqgj
+	XDMMMLmMyVVWuH0oYy2qlaN06iUD3d02+ZxE0TPqQc6M52l2k223FkmJuoYDkhrB
+	0suvUN8NJKeqQmF1QZ/XV+dRyN4HANsiEOohE9PR1rjfyZauVXzMCL2WUwi55z3w
+	FI6hyes/uLb2KRJ3upM8+U8kyi+Xg1t0qQ7M1XEfy1KYex5twAsQdcQuJVfK4Z8+
+	LkU2ZGZIaKlWbC48lzIA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xdkv8j51f-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Apr 2024 10:02:41 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43AA2fwp025330
+	Wed, 10 Apr 2024 10:24:12 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43AAOAoj009874
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Apr 2024 10:02:41 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Wed, 10 Apr 2024 03:02:36 -0700
-Date: Wed, 10 Apr 2024 15:32:32 +0530
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <djakov@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <quic_anusha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH v7 1/5] dt-bindings: interconnect: Add Qualcomm IPQ9574
- support
-Message-ID: <ZhZjuCkJrtPbwtS/@hu-varada-blr.qualcomm.com>
-References: <20240403104220.1092431-1-quic_varada@quicinc.com>
- <20240403104220.1092431-2-quic_varada@quicinc.com>
- <58c9b754-b9a7-444d-9545-9e6648010630@kernel.org>
- <Zg5q6mnWtK6hmPBT@hu-varada-blr.qualcomm.com>
- <ZhTxFVDH0xTSkw7r@hu-varada-blr.qualcomm.com>
- <1ec401be-11cb-416a-9eae-d72ea8acf06f@kernel.org>
- <ZhUghsa5Do5m7wrX@hu-varada-blr.qualcomm.com>
- <a0173a13-5f20-4e24-8417-afce5fdbda0e@kernel.org>
+	Wed, 10 Apr 2024 10:24:10 GMT
+Received: from [10.206.101.41] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 10 Apr
+ 2024 03:24:06 -0700
+Message-ID: <cf103dcb-c1c2-e823-3399-1ce05706f3fb@quicinc.com>
+Date: Wed, 10 Apr 2024 15:54:03 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <a0173a13-5f20-4e24-8417-afce5fdbda0e@kernel.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [RFC WIP PATCH] venus: add qcom,no-low-power property
+Content-Language: en-US
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Marc Gonzalez
+	<mgonzalez@freebox.fr>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Sricharan Ramabadhran
+	<quic_srichara@quicinc.com>,
+        AngeloGioacchino Del Regno
+	<angelogioacchino.delregno@collabora.com>
+CC: linux-media <linux-media@vger.kernel.org>,
+        MSM
+	<linux-arm-msm@vger.kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Pierre-Hugues Husson <phh@phh.me>,
+        Bryan O'Donoghue
+	<bryan.odonoghue@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <0843621b-386b-4173-9e3c-9538cdb4641d@freebox.fr>
+ <CAA8EJpq=G21h87W69_4U-BZ=Sa5VEs15Y-zE-G5x9VxVx4qjsA@mail.gmail.com>
+ <81dc6452-4039-4eb4-92ba-df248215fca2@linaro.org>
+ <b8325dbf-67c5-4898-bc23-ff093ae6e14a@freebox.fr>
+ <87db77f7-fda4-4cf7-adfd-8545c40c3365@linaro.org>
+ <10fe67af-0572-4faa-91c6-fce9c8f9dc92@linaro.org>
+ <6342e92d-eed0-45c2-8f04-3779aa2e521d@freebox.fr>
+ <4ab95e87-c912-469b-b8d4-be0cf0e4710b@linaro.org>
+ <a8c5b27c-47a9-044a-78e8-51c67acf19a6@quicinc.com>
+ <c6a9c20e-02d3-4334-badd-2efe5be9ce7e@freebox.fr>
+ <d5abf142-3a2b-454c-660a-249c0fb25208@quicinc.com>
+ <33382ecb-8a73-4d2f-96b1-8048df7a6414@freebox.fr>
+ <3914555d-3c89-a5c5-2906-0bd24d0bf735@quicinc.com>
+ <72741d2e-5165-4505-b079-d7b5d1491888@freebox.fr>
+ <edb29faa-01b3-3b96-7c05-3378eb3af073@quicinc.com>
+ <21b833cf-61c3-4fb5-8c55-492aac0fd3b6@freebox.fr>
+ <8170522f-b813-19a4-3f85-f2880809d9a5@quicinc.com>
+ <05285de6-ac5b-4f3b-953a-954c38b0dd2d@freebox.fr>
+ <bab5bea3-d99e-4389-b27d-1216446b93da@linaro.org>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <bab5bea3-d99e-4389-b27d-1216446b93da@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: eK1ahQbNGaEkxgXfumr3wmISdLuR_s7S
-X-Proofpoint-GUID: eK1ahQbNGaEkxgXfumr3wmISdLuR_s7S
+X-Proofpoint-ORIG-GUID: vp3IprhUuRPB9PfXSRxck_n0ACz6ApT0
+X-Proofpoint-GUID: vp3IprhUuRPB9PfXSRxck_n0ACz6ApT0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-04-10_04,2024-04-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
- bulkscore=0 spamscore=0 priorityscore=1501 malwarescore=0 mlxlogscore=999
- clxscore=1015 impostorscore=0 suspectscore=0 adultscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404100072
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
+ clxscore=1011 suspectscore=0 priorityscore=1501 spamscore=0 phishscore=0
+ malwarescore=0 lowpriorityscore=0 mlxlogscore=999 impostorscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404100075
 
-On Tue, Apr 09, 2024 at 02:20:12PM +0200, Krzysztof Kozlowski wrote:
-> On 09/04/2024 13:03, Varadarajan Narayanan wrote:
-> > On Tue, Apr 09, 2024 at 11:45:51AM +0200, Krzysztof Kozlowski wrote:
-> >> On 09/04/2024 09:41, Varadarajan Narayanan wrote:
-> >>> On Thu, Apr 04, 2024 at 02:25:06PM +0530, Varadarajan Narayanan wrote:
-> >>>> On Wed, Apr 03, 2024 at 04:59:40PM +0200, Krzysztof Kozlowski wrote:
-> >>>>> On 03/04/2024 12:42, Varadarajan Narayanan wrote:
-> >>>>>> Add interconnect-cells to clock provider so that it can be
-> >>>>>> used as icc provider.
-> >>>>>>
-> >>>>>> Add master/slave ids for Qualcomm IPQ9574 Network-On-Chip
-> >>>>>> interfaces. This will be used by the gcc-ipq9574 driver
-> >>>>>> that will for providing interconnect services using the
-> >>>>>> icc-clk framework.
-> >>>>>>
-> >>>>>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> >>>>>> ---
-> >>>>>> v7:
-> >>>>>> Fix macro names to be consistent with other bindings
-> >>>>>> v6:
-> >>>>>> Removed Reviewed-by: Krzysztof Kozlowski
-> >>>>>> Redefine the bindings such that driver and DT can share them
-> >>>>>>
-> >>>>>> v3:
-> >>>>>> Squash Documentation/ and include/ changes into same patch
-> >>>>>>
-> >>>>>> qcom,ipq9574.h
-> >>>>>> 	Move 'first id' to clock driver
-> >>>>>>
-> >>>>>> ---
-> >>>>>>  .../bindings/clock/qcom,ipq9574-gcc.yaml      |  3 +
-> >>>>>>  .../dt-bindings/interconnect/qcom,ipq9574.h   | 87 +++++++++++++++++++
-> >>>>>>  2 files changed, 90 insertions(+)
-> >>>>>>  create mode 100644 include/dt-bindings/interconnect/qcom,ipq9574.h
-> >>>>>>
-> >>>>>> diff --git a/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml
-> >>>>>> index 944a0ea79cd6..824781cbdf34 100644
-> >>>>>> --- a/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml
-> >>>>>> +++ b/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml
-> >>>>>> @@ -33,6 +33,9 @@ properties:
-> >>>>>>        - description: PCIE30 PHY3 pipe clock source
-> >>>>>>        - description: USB3 PHY pipe clock source
-> >>>>>>
-> >>>>>> +  '#interconnect-cells':
-> >>>>>> +    const: 1
-> >>>>>> +
-> >>>>>>  required:
-> >>>>>>    - compatible
-> >>>>>>    - clocks
-> >>>>>> diff --git a/include/dt-bindings/interconnect/qcom,ipq9574.h b/include/dt-bindings/interconnect/qcom,ipq9574.h
-> >>>>>> new file mode 100644
-> >>>>>> index 000000000000..0b076b0cf880
-> >>>>>> --- /dev/null
-> >>>>>> +++ b/include/dt-bindings/interconnect/qcom,ipq9574.h
-> >>>>>> @@ -0,0 +1,87 @@
-> >>>>>> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-> >>>>>> +#ifndef INTERCONNECT_QCOM_IPQ9574_H
-> >>>>>> +#define INTERCONNECT_QCOM_IPQ9574_H
-> >>>>>> +
-> >>>>>> +#define ICC_ANOC_PCIE0		0
-> >>>>>> +#define ICC_SNOC_PCIE0		1
-> >>>>>> +#define ICC_ANOC_PCIE1		2
-> >>>>>> +#define ICC_SNOC_PCIE1		3
-> >>>>>> +#define ICC_ANOC_PCIE2		4
-> >>>>>> +#define ICC_SNOC_PCIE2		5
-> >>>>>> +#define ICC_ANOC_PCIE3		6
-> >>>>>> +#define ICC_SNOC_PCIE3		7
-> >>>>>> +#define ICC_SNOC_USB		8
-> >>>>>> +#define ICC_ANOC_USB_AXI	9
-> >>>>>> +#define ICC_NSSNOC_NSSCC	10
-> >>>>>> +#define ICC_NSSNOC_SNOC_0	11
-> >>>>>> +#define ICC_NSSNOC_SNOC_1	12
-> >>>>>> +#define ICC_NSSNOC_PCNOC_1	13
-> >>>>>> +#define ICC_NSSNOC_QOSGEN_REF	14
-> >>>>>> +#define ICC_NSSNOC_TIMEOUT_REF	15
-> >>>>>> +#define ICC_NSSNOC_XO_DCD	16
-> >>>>>> +#define ICC_NSSNOC_ATB		17
-> >>>>>> +#define ICC_MEM_NOC_NSSNOC	18
-> >>>>>> +#define ICC_NSSNOC_MEMNOC	19
-> >>>>>> +#define ICC_NSSNOC_MEM_NOC_1	20
-> >>>>>> +
-> >>>>>> +#define ICC_NSSNOC_PPE		0
-> >>>>>> +#define ICC_NSSNOC_PPE_CFG	1
-> >>>>>> +#define ICC_NSSNOC_NSS_CSR	2
-> >>>>>> +#define ICC_NSSNOC_IMEM_QSB	3
-> >>>>>> +#define ICC_NSSNOC_IMEM_AHB	4
-> >>>>>> +
-> >>>>>> +#define MASTER_ANOC_PCIE0		(ICC_ANOC_PCIE0 * 2)
-> >>>>>> +#define SLAVE_ANOC_PCIE0		((ICC_ANOC_PCIE0 * 2) + 1)
-> >>>>>
-> >>>>> Which existing Qualcomm platform has such code?
-> >>>>
-> >>>> Existing Qualcomm platforms don't use icc-clk. They use icc-rpm
-> >>>> or icc-rpmh. clk-cbf-msm8996.c is the only driver that uses icc-clk.
-> >>>>
-> >>>> The icc_clk_register automatically creates master & slave nodes
-> >>>> for each clk entry provided as input with the node-ids 'n' and
-> >>>> 'n+1'. Since clk-cbf-msm8996.c has only one entry, it could just
-> >>>> define MASTER_CBF_M4M and SLAVE_CBF_M4M with 0 and 1 and avoid these
-> >>>> calculations.
-> >>>>
-> >>>> However, ipq9574 gives an array of clock entries as input to
-> >>>> icc_clk_register. To tie the order/sequence of these clock
-> >>>> entries correctly with the node-ids, this calculation is needed.
-> >>>>
-> >>>>> This is the third time I am asking for consistent headers. Open
-> >>>>> existing, recently added headers and look how it is done there. Why?
-> >>>>> Because I am against such calculations and see no reason for them.
-> >>>>
-> >>>> Apologies. Regret that I have to trouble you.
-> >>>>
-> >>>> In this ipq9574 case, have to reconcile between the following
-> >>>> feedbacks.
-> >>>>
-> >>>> 1. https://lore.kernel.org/linux-arm-msm/fe40b307-26d0-4b2a-869b-5d093415b9d1@linaro.org/
-> >>>>    We could probably use indexed identifiers here to avoid confusion:
-> >>>>    [ICC_BINDING_NAME] = CLK_BINDING_NAME
-> >>>>
-> >>>> 2. https://lore.kernel.org/linux-arm-msm/95f4e99a60cc97770fc3cee850b62faf.sboyd@kernel.org/
-> >>>>    Are these supposed to be in a dt-binding header?
-> >>>>
-> >>>> 3. https://lore.kernel.org/linux-arm-msm/031d0a35-b192-4161-beef-97b89d5d1da6@linaro.org/
-> >>>>    Do you use them as well in the DTS?
-> >>>>
-> >>>> Having the defines (with the calculations) seemed to to comply
-> >>>> with the above three feedbacks.
-> >>>>
-> >>>> Please let me know if this can be handled in a different way that
-> >>>> would be consistent with other Qualcomm platforms.
-> >>>
-> >>> Krzysztof,
-> >>>
-> >>> Is this ok? Can I post a new version addressing other review comments?
-> >>
-> >> I don't understand and you did not answered before, why you have to do
-> >> it differently than all other Qualcomm interconnect providers. Maybe the
-> >> code here needs it, maybe not, but I don't see any argument proving this.
-> >
-> > Other Qualcomm interconnect providers use the icc-rpm.
-> >
-> > 	1. The SoC specific interconnect providers have control
-> > 	   over the master/slave id-numbers and is hard coded.
-> >
-> > 	2. These id-numbers are used by the RPM firmware.
-> >
-> > IPQ9574 uses icc-clk.
-> >
-> > 	1. The ipq9574 specific interconnect provider doesn't
-> > 	   have control over the master/slave id-numbers. The
-> > 	   icc-clk framework auto generates it in the order of
-> > 	   the clock entries given as input.
->
-> Okay, so what happens if icc-clk way of generating them changes a bit?
-> It can change, why not, driver implementation is not an ABI.
->
-> >
-> > 	2. These auto-generated id-numbers have to be correctly
-> > 	   tied to the DT nodes. Else, the relevant clocks may
-> > 	   not get enabled.
->
-> Sorry, I don't get, how auto generated ID number is tied to DT node.
-> What DT node?
 
-I meant the following usage for the 'interconnects' entry of the
-consumer peripheral's node.
+On 3/13/2024 12:09 AM, Konrad Dybcio wrote:
+> 
+> 
+> On 2/29/24 17:24, Marc Gonzalez wrote:
+>> On 29/02/2024 16:32, Vikash Garodia wrote:
+>>
+>>> On 2/27/2024 9:41 PM, Marc Gonzalez wrote:
+>>>
+>>>> On 27/02/2024 07:55, Vikash Garodia wrote:
+>>>>
+>>>>> On 2/26/2024 9:25 PM, Marc Gonzalez wrote:
+>>>>>
+>>>>>> Errr, there is currently no existing node for msm8998-venus?
+>>>>>
+>>>>> My bad, i meant your initial node msm8998-venus, without migrating to v2.
+>>>>>
+>>>>>> With the proposed node above (based on msm8996-venus)
+>>>>>> AND the proposed work-around disabling low-power mode,
+>>>>>> decoding works correctly.
+>>>>>
+>>>>> Nice, lets fix the work-around part before migrating to v2. Could you share
+>>>>> the
+>>>>> configurations for VIDEO_SUBCORE0_GDSC and VIDEO_SUBCORE1_GDSC ?
+>>>>>
+>>>>> If we see vendor code[1], sys power plane control is very much supported, so
+>>>>> ideally we should get it working without the workaround
+>>>>> [1]
+>>>>> https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/drivers/media/platform/msm/vidc/venus_hfi.c#L2223
+>>>>
+>>>> OK, for easy reference, here are the proposed changes again:
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi
+>>>> b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+>>>> index 2793cc22d381a..5084191be1446 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+>>>> @@ -3000,6 +3000,56 @@ mdss_dsi1_phy: phy@c996400 {
+>>>>               };
+>>>>           };
+>>>>   +        venus: video-codec@cc00000 {
+>>>> +            compatible = "qcom,msm8998-venus";
+>>>> +            reg = <0x0cc00000 0xff000>;
+>>>> +            interrupts = <GIC_SPI 287 IRQ_TYPE_LEVEL_HIGH>;
+>>>> +            power-domains = <&mmcc VIDEO_TOP_GDSC>;
+>>>> +            clocks = <&mmcc VIDEO_CORE_CLK>,
+>>>> +                 <&mmcc VIDEO_AHB_CLK>,
+>>>> +                 <&mmcc VIDEO_AXI_CLK>,
+>>>> +                 <&mmcc VIDEO_MAXI_CLK>;
+>>>> +            clock-names = "core", "iface", "bus", "mbus";
+>>>> +            iommus = <&mmss_smmu 0x400>,
+>>>> +                 <&mmss_smmu 0x401>,
+>>>> +                 <&mmss_smmu 0x40a>,
+>>>> +                 <&mmss_smmu 0x407>,
+>>>> +                 <&mmss_smmu 0x40e>,
+>>>> +                 <&mmss_smmu 0x40f>,
+>>>> +                 <&mmss_smmu 0x408>,
+>>>> +                 <&mmss_smmu 0x409>,
+>>>> +                 <&mmss_smmu 0x40b>,
+>>>> +                 <&mmss_smmu 0x40c>,
+>>>> +                 <&mmss_smmu 0x40d>,
+>>>> +                 <&mmss_smmu 0x410>,
+>>>> +                 <&mmss_smmu 0x411>,
+>>>> +                 <&mmss_smmu 0x421>,
+>>>> +                 <&mmss_smmu 0x428>,
+>>>> +                 <&mmss_smmu 0x429>,
+>>>> +                 <&mmss_smmu 0x42b>,
+>>>> +                 <&mmss_smmu 0x42c>,
+>>>> +                 <&mmss_smmu 0x42d>,
+>>>> +                 <&mmss_smmu 0x411>,
+>>>> +                 <&mmss_smmu 0x431>;
+>>>> +            memory-region = <&venus_mem>;
+>>>> +            status = "disabled";
+>>>> +            qcom,venus-broken-low-power-mode;
+>>>> +
+>>>> +            video-decoder {
+>>>> +                compatible = "venus-decoder";
+>>>> +                clocks = <&mmcc VIDEO_SUBCORE0_CLK>;
+>>>> +                clock-names = "core";
+>>>> +                power-domains = <&mmcc VIDEO_SUBCORE0_GDSC>;
+>>>> +            };
+>>>> +
+>>>> +            video-encoder {
+>>>> +                compatible = "venus-encoder";
+>>>> +                clocks = <&mmcc VIDEO_SUBCORE1_CLK>;
+>>>> +                clock-names = "core";
+>>>> +                power-domains = <&mmcc VIDEO_SUBCORE1_GDSC>;
+>>>> +            };
+>>>> +        };
+>>>> +
+>>>>           mmss_smmu: iommu@cd00000 {
+>>>>               compatible = "qcom,msm8998-smmu-v2", "qcom,smmu-v2";
+>>>>               reg = <0x0cd00000 0x40000>;
+>>>> diff --git a/drivers/media/platform/qcom/venus/core.c
+>>>> b/drivers/media/platform/qcom/venus/core.c
+>>>> index a712dd4f02a5b..ad1705e510312 100644
+>>>> --- a/drivers/media/platform/qcom/venus/core.c
+>>>> +++ b/drivers/media/platform/qcom/venus/core.c
+>>>> @@ -585,6 +585,43 @@ static const struct venus_resources msm8996_res = {
+>>>>       .fwname = "qcom/venus-4.2/venus.mbn",
+>>>>   };
+>>>>   +static const struct freq_tbl msm8998_freq_table[] = {
+>>>> +    { 1944000, 520000000 },    /* 4k UHD @ 60 (decode only) */
+>>>> +    {  972000, 520000000 },    /* 4k UHD @ 30 */
+>>>> +    {  489600, 346666667 },    /* 1080p @ 60 */
+>>>> +    {  244800, 150000000 },    /* 1080p @ 30 */
+>>>> +    {  108000,  75000000 },    /* 720p @ 30 */
+>>>> +};
+>>>> +
+>>>> +static const struct reg_val msm8998_reg_preset[] = {
+>>>> +    { 0x80124, 0x00000003 },
+>>>> +    { 0x80550, 0x01111111 },
+>>>> +    { 0x80560, 0x01111111 },
+>>>> +    { 0x80568, 0x01111111 },
+>>>> +    { 0x80570, 0x01111111 },
+>>>> +    { 0x80580, 0x01111111 },
+>>>> +    { 0xe2010, 0x00000000 },
+>>>> +};
+>>>> +
+>>>> +static const struct venus_resources msm8998_res = {
+>>>> +    .freq_tbl = msm8998_freq_table,
+>>>> +    .freq_tbl_size = ARRAY_SIZE(msm8998_freq_table),
+>>>> +    .reg_tbl = msm8998_reg_preset,
+>>>> +    .reg_tbl_size = ARRAY_SIZE(msm8998_reg_preset),
+>>>> +    .clks = {"core", "iface", "bus", "mbus"},
+>>>> +    .clks_num = 4,
+>>>> +    .vcodec0_clks = { "core" },
+>>>> +    .vcodec1_clks = { "core" },
+>>>> +    .vcodec_clks_num = 1,
+>>>> +    .max_load = 2563200,
+>>>> +    .hfi_version = HFI_VERSION_3XX,
+>>>> +    .vmem_id = VIDC_RESOURCE_NONE,
+>>>> +    .vmem_size = 0,
+>>>> +    .vmem_addr = 0,
+>>>> +    .dma_mask = 0xddc00000 - 1,
+>>>> +    .fwname = "qcom/venus-4.4/venus.mbn",
+>>>> +};
+>>>> +
+>>>>   static const struct freq_tbl sdm660_freq_table[] = {
+>>>>       { 979200, 518400000 },
+>>>>       { 489600, 441600000 },
+>>>> @@ -891,6 +928,7 @@ static const struct venus_resources sc7280_res = {
+>>>>   static const struct of_device_id venus_dt_match[] = {
+>>>>       { .compatible = "qcom,msm8916-venus", .data = &msm8916_res, },
+>>>>       { .compatible = "qcom,msm8996-venus", .data = &msm8996_res, },
+>>>> +    { .compatible = "qcom,msm8998-venus", .data = &msm8998_res, },
+>>>>       { .compatible = "qcom,sdm660-venus", .data = &sdm660_res, },
+>>>>       { .compatible = "qcom,sdm845-venus", .data = &sdm845_res, },
+>>>>       { .compatible = "qcom,sdm845-venus-v2", .data = &sdm845_res_v2, },
+>>>>
+>>>>
+>>>>
+>>>> This patch is on top of v6.8-rc1
+>>>> so the configurations for VIDEO_SUBCOREx_GDSC
+>>>> are as defined in mainline.
+>>>>
+>>>> #define VIDEO_SUBCORE0_CLK_SRC    51
+>>>> #define VIDEO_SUBCORE1_CLK_SRC    52
+>>>>
+>>>> #define VIDEO_TOP_GDSC        1
+>>>> #define VIDEO_SUBCORE0_GDSC    2
+>>>> #define VIDEO_SUBCORE1_GDSC    3
+>>>>
+>>>> https://github.com/torvalds/linux/blob/master/drivers/clk/qcom/mmcc-msm8998.c#L2536-L2561
+>>>>
+>>>> static struct gdsc video_top_gdsc = {
+>>>>     .gdscr = 0x1024,
+>>>>     .pd = {
+>>>>         .name = "video_top",
+>>>>     },
+>>>>     .pwrsts = PWRSTS_OFF_ON,
+>>>> };
+>>>>
+>>>> static struct gdsc video_subcore0_gdsc = {
+>>>>     .gdscr = 0x1040,
+>>>>     .pd = {
+>>>>         .name = "video_subcore0",
+>>>>     },
+>>>>     .parent = &video_top_gdsc.pd,
+>>>>     .pwrsts = PWRSTS_OFF_ON,
+>>>> };
+>>>>
+>>>> static struct gdsc video_subcore1_gdsc = {
+>>>>     .gdscr = 0x1044,
+>>>>     .pd = {
+>>>>         .name = "video_subcore1",
+>>>>     },
+>>>>     .parent = &video_top_gdsc.pd,
+>>>>     .pwrsts = PWRSTS_OFF_ON,
+>>>> };
+>>>>
+>>>>
+>>>>     const u8            pwrsts;
+>>>> /* Powerdomain allowable state bitfields */
+>>>> #define PWRSTS_OFF        BIT(0)
+>>>> /*
+>>>>   * There is no SW control to transition a GDSC into
+>>>>   * PWRSTS_RET. This happens in HW when the parent
+>>>>   * domain goes down to a low power state
+>>>>   */
+>>>> #define PWRSTS_RET        BIT(1)
+>>>> #define PWRSTS_ON        BIT(2)
+>>>> #define PWRSTS_OFF_ON        (PWRSTS_OFF | PWRSTS_ON)
+>>>> #define PWRSTS_RET_ON        (PWRSTS_RET | PWRSTS_ON)
+>>>>     const u16            flags;
+>>>> #define VOTABLE        BIT(0)
+>>>> #define CLAMP_IO    BIT(1)
+>>>> #define HW_CTRL        BIT(2)
+>>>> #define SW_RESET    BIT(3)
+>>>> #define AON_RESET    BIT(4)
+>>>> #define POLL_CFG_GDSCR    BIT(5)
+>>>> #define ALWAYS_ON    BIT(6)
+>>>> #define RETAIN_FF_ENABLE    BIT(7)
+>>>> #define NO_RET_PERIPH    BIT(8)
+>>>>
+>>>>
+>>>> Should .pwrsts be PWRSTS_RET_ON instead of PWRSTS_OFF_ON?
+>>>>
+>>>> Should .flags be HW_CTRL instead of 0?
+>>>
+>>> Not completely sure on these configurations, but certainly both the
+>>> video_subcore0_gdsc and video_subcore1_gdsc should be configured in hardware
+>>> control mode in the gdsc configuration.
+>>
+>> Jeffrey, Bjorn,
+>>
+>> I'm trying to get mainline support for the msm8998 video decoder (venus).
+>> Apparently, there appears to be an issue with the multimedia clocks.
+>>
+>> Do you remember why you chose PWRSTS_OFF_ON instead of PWRSTS_RET_ON?
+> 
+> Doing a quick reconnaissance against msm-4.4, PWRSTS_OFF_ON looks
+> very sane.
+> 
+> Moreover, PWRSTS_RET_ON very much only looks useful as a hack for
+> non-fully-implemented drivers (and that would indeed match the state
+> of our usb and pcie driver today) - it prevents GDSC shutdown, but
+> tells the PM framework that the registered power domain has collapsed
+> 
+>>
+>> And why the HW_CTRL bit is not set?
+> 
+> HW_CTRL means "totally hand over the control of this GDSC to the
+> hardware" where "hardware" is very loosely defined..
+> 
+> Reading msm-4.4 again, it seems like we want HW_CTRL mode to be
+> enabled if and only if the low power property has been set through
+> the venus firmware interface.
+For video hardware, there are 2 steps for this:
+1. Inform video firmware that the GDSC is in HW control. This is done via HFI
+2. Switch GDSC mode runtime during the usecase as SW or HW mode. This is
+currently done via programming few power control video hardware registers directly.
+AFAIU, if the GDSC flag configuration has HW_CTRL (in file mmcc-msm8998.c) and
+the HFI in #1 above indicates the same, then all should be good.
 
-	interconnects = <&gcc MASTER_ANOC_PCIE0 &gcc SLAVE_ANOC_PCIE0>,
-			      ^^^^^^^^^^^^^^^^^      ^^^^^^^^^^^^^^^^
-			<&gcc MASTER_SNOC_PCIE0 &gcc SLAVE_SNOC_PCIE0>;
-			      ^^^^^^^^^^^^^^^^^      ^^^^^^^^^^^^^^^^
-
-> > Since ICC-CLK creates two ids per clock entry (one MASTER_xxx and
-> > one SLAVE_xxx), using those MASTER/SLAVE_xxx macros as indices in
-> > the below array would create holes.
-> >
-> > 	static int icc_ipq9574_hws[] = {
-> > 		[MASTER_ANOC_PCIE0] = GCC_ANOC_PCIE0_1LANE_M_CLK,
-> > 		[MASTER_SNOC_PCIE0] = GCC_SNOC_PCIE0_1LANE_S_CLK,
-> > 		[MASTER_ANOC_PCIE1] = GCC_ANOC_PCIE1_1LANE_M_CLK,
-> > 		[MASTER_SNOC_PCIE1] = GCC_SNOC_PCIE1_1LANE_S_CLK,
-> > 		. . .
-> > 	};
-> >
-> > Other Qualcomm drivers don't have this issue and they can
-> > directly use the MASTER/SLAVE_xxx macros.
->
-> I understand, thanks, yet your last patch keeps adding fake IDs, means
-> IDs which are not part of ABI.
->
-> >
-> > As the MASTER_xxx macros cannot be used, have to define a new set
-> > of macros that can be used for indices in the above array. This
-> > is the reason for the ICC_BINDING_NAME macros.
->
-> Then maybe fix the driver, instead of adding something which is not an
-> ABI to bindings and completely skipping the actual ABI.
-
-Will remove the ICC_xxx defines from the header. And in the
-driver will change the declaration as follows. Will that be
-acceptable?
-
-	static int icc_ipq9574_hws[] = {
-		[MASTER_ANOC_PCIE0 / 2] = GCC_ANOC_PCIE0_1LANE_M_CLK,
-		[MASTER_SNOC_PCIE0 / 2] = GCC_SNOC_PCIE0_1LANE_S_CLK,
-		[MASTER_ANOC_PCIE1 / 2] = GCC_ANOC_PCIE1_1LANE_M_CLK,
-		[MASTER_SNOC_PCIE1 / 2] = GCC_SNOC_PCIE1_1LANE_S_CLK,
-		[MASTER_ANOC_PCIE2 / 2] = GCC_ANOC_PCIE2_2LANE_M_CLK,
-		[MASTER_SNOC_PCIE2 / 2] = GCC_SNOC_PCIE2_2LANE_S_CLK,
-		[MASTER_ANOC_PCIE3 / 2] = GCC_ANOC_PCIE3_2LANE_M_CLK,
-		[MASTER_SNOC_PCIE3 / 2] = GCC_SNOC_PCIE3_2LANE_S_CLK,
-		[MASTER_SNOC_USB / 2] = GCC_SNOC_USB_CLK,
-		[MASTER_ANOC_USB_AXI / 2] = GCC_ANOC_USB_AXI_CLK,
-		[MASTER_NSSNOC_NSSCC / 2] = GCC_NSSNOC_NSSCC_CLK,
-		[MASTER_NSSNOC_SNOC_0 / 2] = GCC_NSSNOC_SNOC_CLK,
-		[MASTER_NSSNOC_SNOC_1 / 2] = GCC_NSSNOC_SNOC_1_CLK,
-		[MASTER_NSSNOC_PCNOC_1 / 2] = GCC_NSSNOC_PCNOC_1_CLK,
-		[MASTER_NSSNOC_QOSGEN_REF / 2] = GCC_NSSNOC_QOSGEN_REF_CLK,
-		[MASTER_NSSNOC_TIMEOUT_REF / 2] = GCC_NSSNOC_TIMEOUT_REF_CLK,
-		[MASTER_NSSNOC_XO_DCD / 2] = GCC_NSSNOC_XO_DCD_CLK,
-		[MASTER_NSSNOC_ATB / 2] = GCC_NSSNOC_ATB_CLK,
-		[MASTER_MEM_NOC_NSSNOC / 2] = GCC_MEM_NOC_NSSNOC_CLK,
-		[MASTER_NSSNOC_MEMNOC / 2] = GCC_NSSNOC_MEMNOC_CLK,
-		[MASTER_NSSNOC_MEM_NOC_1 / 2] = GCC_NSSNOC_MEM_NOC_1_CLK,
-	};
-
-Thanks
-Varada
+Regards,
+Vikash
+> 
+> More particularly, we don't want it to be there once we wanna shut
+> down Venus for good. This is being worked on by folks over at [1].
+> 
+> https://lore.kernel.org/linux-arm-msm/20240122-gdsc-hwctrl-v4-0-9061e8a7aa07@linaro.org/
+> 
+> Konrad
 
