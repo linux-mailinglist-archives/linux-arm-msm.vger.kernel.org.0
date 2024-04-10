@@ -1,326 +1,478 @@
-Return-Path: <linux-arm-msm+bounces-17142-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17138-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7032E8A0449
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 01:58:04 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 86F928A02F5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 00:12:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 27122288F49
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 23:58:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EAF071F22045
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 22:12:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5DF73FB1C;
-	Wed, 10 Apr 2024 23:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C20D9190697;
+	Wed, 10 Apr 2024 22:11:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=epam.com header.i=@epam.com header.b="J+mah+lG"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="PqolnPgC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0039f301.pphosted.com (mx0a-0039f301.pphosted.com [148.163.133.242])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97BD3F9D8;
-	Wed, 10 Apr 2024 23:57:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.133.242
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712793479; cv=fail; b=fn/bC8/igqlfx3GdIHTWDh/VBxsBBfxu1ALIG5qTAz/bjXHwkDTEiZ6kZCunXzPdVIVXshMPEy95lTZ03lehiWmccXqKQwjZZMt/fdiSloahW+grfWrZWOFxTAlVF63FlhiaCC6nJSkTH0+8QqrdM4aEVrkza5VotArihydGdPs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712793479; c=relaxed/simple;
-	bh=5dFFCYXui8l7J9ylG70OnL/JNGrGSY30KSwi/TuMUHw=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=UtdM6CXiOpQN+bPyjc72Yq3z/qePe48eldBQRXTfx11vovgyGeN7YHYbUiQZmuXq4zDITU0dTMUa1qhhVIQQw/wvuQdaSslfxhW+Xa1QArPkPkfs2Z0P63qEe6zlRzNqf6948s3jcBXT5ppQQXh+51Jflek9bewzrg3/eIY35mI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=epam.com; spf=pass smtp.mailfrom=epam.com; dkim=pass (2048-bit key) header.d=epam.com header.i=@epam.com header.b=J+mah+lG; arc=fail smtp.client-ip=148.163.133.242
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=epam.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=epam.com
-Received: from pps.filterd (m0174677.ppops.net [127.0.0.1])
-	by mx0a-0039f301.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43AESZeh009881;
-	Wed, 10 Apr 2024 21:57:06 GMT
-Received: from eur03-am7-obe.outbound.protection.outlook.com (mail-am7eur03lp2233.outbound.protection.outlook.com [104.47.51.233])
-	by mx0a-0039f301.pphosted.com (PPS) with ESMTPS id 3xdtpu9jbw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Apr 2024 21:57:06 +0000 (GMT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Hw6AhVKM6/6E4q60Ng2eHSmLmdgXOkh+pfpXaDTgr5Z/D+WjdyQtXp5fA7zQ8AA+lOZLlRCex8HWYIxzserBGsd2rb9q05sYWstmUdU7qy4XuzvHsPvezWpoQUk35dGXXHEu4H/9gohj1pAYWttOIzuZmIWjrKPjHC1cG0OzLcCm79eqZripQzp5jUiAuS2TF5HwXtv+A4Elmc7qcMNdBGjBA0wIkwjp+0+NX1jar4ZqdfYY3r2L0Pxv5MCr2JR+UDo9HHiphUy9D57Zzg+Rxi6og4l0YWxcfTLbPR4frr4oVDRI8omWklhSwWDUGY2BPEm5koXwxx2e8XkMjMIL1w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pURTru28IxydbfOo1jyVMKuczgUp4OIKkmr/zc0KUhc=;
- b=kNjVnezeuGAsVNMWJ+6g0nd7nnrNUAjvMoohtEUK+62F8jrzsP01foNrY9TMDVozTk0lBZhw7E+T33NCnTyUC+6nkkWtudjPcx9Kl4RYgBuUuqcWnYCJbkOQBuFI9kLU9rk+GheY//uKDYFXDiI3Y0/Opwp+x5ePnUO766R2RW75yovbvI8fPpTXRo2MMh1WUzQ1Bot5ByotUX/ujE0zf1t6VgBl6FeHw5LuNwicrltjnGbdMnz5th6F46L0Sz9qn3ibyMYCzq4e8zYdRMGbaPpQQ7zUQALX0VmcMS8qrNup1eD0kLvIWUy9wf3kCcVVi1cvhWJsHQz9WeZB0P1QSw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=epam.com; dmarc=pass action=none header.from=epam.com;
- dkim=pass header.d=epam.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epam.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pURTru28IxydbfOo1jyVMKuczgUp4OIKkmr/zc0KUhc=;
- b=J+mah+lGJ9xvWdTp5KIr0n26WG3AX7uszbnq17yn3keZWT2CXeDo+ibTDnTNC5RIYcaG412NIVlLjNpjhLqA7NrSWq7NX64Z+Zvfv3/VRVh+7bP5do4QWBcMje+DgGqENcgtnj7cM+Y/uWGugx+5dDjpW3O8dAEuCd/ezMy7XQy8T/9/zW/KVLx/GapjvdvnE5LOJnB7M3W1kJWvrnrgpahkKL1MjLSNHsUe9eyjL5MhuB631rFfO5pwLW+AgpzJrYWoNu+RRFHLZc+TqjdQBY1njGDxyBQrcSz+x0OQ9erTlf99HgKtGI0sUDSGLzvlZpOhEzljbGOG/JUZup//tg==
-Received: from GV1PR03MB10456.eurprd03.prod.outlook.com
- (2603:10a6:150:16a::21) by AM7PR03MB6133.eurprd03.prod.outlook.com
- (2603:10a6:20b:142::10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.38; Wed, 10 Apr
- 2024 21:57:02 +0000
-Received: from GV1PR03MB10456.eurprd03.prod.outlook.com
- ([fe80::74c9:2488:1dd7:b976]) by GV1PR03MB10456.eurprd03.prod.outlook.com
- ([fe80::74c9:2488:1dd7:b976%3]) with mapi id 15.20.7409.053; Wed, 10 Apr 2024
- 21:57:02 +0000
-From: Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>
-To: Stephan Gerhold <stephan@gerhold.net>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof
- Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        "linux-arm-msm@vger.kernel.org"
-	<linux-arm-msm@vger.kernel.org>,
-        "devicetree@vger.kernel.org"
-	<devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: sa8155p-adp: use correct gpio for SDHC2
- CD
-Thread-Topic: [PATCH] arm64: dts: qcom: sa8155p-adp: use correct gpio for
- SDHC2 CD
-Thread-Index: AQHai0zLM9/mnLFG7UOC+X9g3MAg9rFh+MwAgAAK5IA=
-Date: Wed, 10 Apr 2024 21:57:02 +0000
-Message-ID: <87cyqw6fvh.fsf@epam.com>
-References: <20240410134022.732767-1-volodymyr_babchuk@epam.com>
- <Zhb53i8-pJhDMVZM@gerhold.net>
-In-Reply-To: <Zhb53i8-pJhDMVZM@gerhold.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: mu4e 1.10.7; emacs 29.3
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: GV1PR03MB10456:EE_|AM7PR03MB6133:EE_
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 
- wrWaOKbyKZ5zGGQFanDdCS3UqALe4EtEod5GhyafoSOZfwu5tiNibGthNaxjf+ObXJZtk/0ke9xpINKeevVhQWqIrT9l1QOU9N196Fne4rNM8jiw2ZY7kmr63Sei9nBAHnfE+DzFQruaDMGEGkRgVjLEl22AXNtdq2YpKxbSrS1bNHVsc9YXUBl4gU+k0GyAOux80mTNYYp2uzZpXDSvQLGYObX+ewi69O5ygcjmFXeN/yhlRt9bUZeOFkW4Z0nAthQolpFslnR9eTz6RDWzIlpFi//hu5TlCZvzMu8PgoWqTJlC4qaqQQV0pcP4nBDzUNkJPvui3wOnUkrkhUBj2ZOCbl0gQCu51yxrLSxdR1qgGpiUF2czAuwcIBrA1sTaCspTo+J6Pv/+B7CughpQF8gaeFMMYZxW5srX4tZhVF3aEBUgDaem5jm2SKmG+92tXQiEbCbGoU9Opgm78ONXW5Y7B4+89fWDzCtCogyFl69mymfCs0hgvuYGQ2Hb7srPTcbZxvboZEQhRbY6uT2u45dgcZ89XqQ+eRHThX/3hb2nx6Bm2l3lnc5WcHyvr8vX/k1fCucKjDfsY4egmyv0kwcJZtcHHWOqEJR6iaLav7HyqmTuywCA7uImWO/4J1VzJSTRfxLqcpxvPL+txH4zNG/LWsvII3hypHjHl+5Gq8Y=
-x-forefront-antispam-report: 
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV1PR03MB10456.eurprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366007)(1800799015)(376005);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: 
- =?iso-8859-1?Q?I1ukcloWMCWLQBXJVGNS/DhMwGSkgvfo0D8r/kSKhV+IGXF4JZ2Xzm9iTy?=
- =?iso-8859-1?Q?1Luu2w9pcc0zCi1buV/SGWeTlcn79BKxXLynfxxqKotZGUecUyjTqQqLXe?=
- =?iso-8859-1?Q?P+eiDkmGiTrkngLBxtsOodws1L/vBQAcOncE23wMXSgcJMy8pM4PRjJVqk?=
- =?iso-8859-1?Q?d3CsQscrRUDy/+6zrk+0w64C652EBMw/vlHw6XBp90XfmTuP9MTdPEovvO?=
- =?iso-8859-1?Q?+zT8BOlf2J52rrIN8fmTfJ+Zez7bOqgMaR43aFSSW1ZD1x5eOUNW2HCBCR?=
- =?iso-8859-1?Q?4HbFNtTzstPNwMN1aRzVtMR3kgDh+Zv0mD3o0tLZw2bkz50P1SuLrEUFVJ?=
- =?iso-8859-1?Q?rqP8VaInYBc3/BpzhE+fU+Ovy7KCN7yVyAm5y44QaCFvSDVQQ7xeaomCtd?=
- =?iso-8859-1?Q?nf5VnsX/RSBlXinz7ZRyeZVKm1fP/Jv5tIrz0YxZZsDEhgYDU9vdorRxKp?=
- =?iso-8859-1?Q?zs7U2fTOmVGYfNriA4EE3/pDvn4gJgjVmz3lqArtIdH3hJOmnWY6lO4Pge?=
- =?iso-8859-1?Q?jAa1UAKl2RcK8hXuxcdNd8cdyRZAjLvnvUOEU9NUTD6OB5Muzqe2/d0Qdl?=
- =?iso-8859-1?Q?LfMxM9lGs3lm+l08d+UtWjog7xgV23MgGWKXaenRHFXDVaKkEzxJLIprwS?=
- =?iso-8859-1?Q?WbrwXTm6s4BM6BqI/mPFBVWvt2XqPAkJQWUyDIr5OC1Woi0Rw9KuyaD/xT?=
- =?iso-8859-1?Q?AkWc1kzctrQkMO9ox4rPdIp6xqZmtpWqTPpisSHR7CjTuNNqurY2nxaPN5?=
- =?iso-8859-1?Q?OigF7GmztdW/BGnhL/9UmPyZqGN52vGzRgZoinMOX3sJF+3WSi/WQFwiP6?=
- =?iso-8859-1?Q?WuVp9acwDKcC7gCiHtq5Pkgm4UoLXQWdlPnK0k01a0BVdQh61Xylh8vHh/?=
- =?iso-8859-1?Q?L9CgfJxwJqqscnzmEqTsRguPGz0Z21Anlu1yCW0Uv9/malV3Pm0osZ2UP8?=
- =?iso-8859-1?Q?LD5OhfiWzeiEpDXnB9bNtDTrBzrW8TvFpxKrEeEq2/DwtPesFGJ630djaB?=
- =?iso-8859-1?Q?V5uK5o1RI76+gGTLzUPHI9HZmWc4nfCLbnnQ5bRPN2Cizvl7imbcJ824TZ?=
- =?iso-8859-1?Q?s2RuDRnUKjzX1XOFb+Z1+VAEPoBjc5xkHOJr80Oigmj6I0TpoToDpTCqCs?=
- =?iso-8859-1?Q?l5NLeOa7aNWqUF5ApZqE/C205KMb96noB4gZAdGY2vEZfZL8LuMhVdhroH?=
- =?iso-8859-1?Q?Dv8NqFYKZ1F2dwryDU9MpXllw/VIlgd7gG9feAe2Qlr3DHNm+GzcZIxIAx?=
- =?iso-8859-1?Q?hPASuQJgQwOPJLtLSTgy1E6vH4oDtG5yrNydWaDC4F5lzivor21Blc/blG?=
- =?iso-8859-1?Q?vAmGS+5JkVmJt/3ozF2KLsgOgmvZHHrOKV368COHyd0DbJTfj+tRKjsC+2?=
- =?iso-8859-1?Q?Mhtr3/MkQMcWmfhTpX4AgTlpqxCSp+sLgKmmkHuKme+nQvzQbZZYvl3OaU?=
- =?iso-8859-1?Q?CJNJpc4wu9a2AjlF/Tc0qDfgMiDBIvqycqXgaikS+QM0bjbNTZVbGuzM9p?=
- =?iso-8859-1?Q?pzC7K/sz89bingjFl2a4e24lwbKf3eG9he9VXytS9CdKMCBOI1I+2BZOtY?=
- =?iso-8859-1?Q?KVliHw7B8bSFpXH8aJ8DKNxeUTj8PbqaZcp5WEap/p05rgrFVpslsVcInz?=
- =?iso-8859-1?Q?WW/HWtpIQCoZ5vQrlbEMAlJiJxDJMmIt28ed6oj6ma6ehkWkhmsn3UcA?=
- =?iso-8859-1?Q?=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C693190693
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 22:11:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1712787090; cv=none; b=UC72NNiQ3eHrnO3Ptoq+DV4gcZWs8sZLzDatik8sjVbPIwfKG0kuOHerinHY4/iyuGhOd34gYzMnjv6wNUSrYyZRWZsXOmTvxg9ANFr/xbFk/XqUu8jmEIfUzqKaLm3Yujvn1fGs6JXTdsFyu5aKRBGwvbwDBZKa0CQi8uTMto0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1712787090; c=relaxed/simple;
+	bh=rk3Y/hV4O3MGFGXpBEK2ctrlDUHH3NOCfzel06outQk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cwGTMByU08Ly/xQfGe9IVS8PNVm5h6iLAf/vOkpepxFLzte/NaCr7ZriHLVoO32QWM90xVeEXU9CTmNDZqkopy1kxByPaku+UtEtJtY4ADsdlnpM1jq9nN+qqOEuJMNWCfbypNtRCjgcKpsnhRBHaMfKlOz2QlZLgb0xlrVQ1kU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=PqolnPgC; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1712787086;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/9ZaDdsvv6WC5wTEQulDSBBsBWUVx4JFTYwinWsVjD0=;
+	b=PqolnPgC4D+X5xrQibxf9IDcppdeOc7YOLhdX6F5Q93RS1NdIs58BjhlKQyiNzuRzCkOnp
+	XHDV2C7NORvgp+DtHKlD1zyztpYgrLnpNOFpzi8ZD2EAuSOei7TxwyQCim1q/+Um2B0lBj
+	EXz7jSUevaCWI6dAPigGCMjG/kmEups=
+Received: from mail-il1-f197.google.com (mail-il1-f197.google.com
+ [209.85.166.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-378-vFGaO45YOYqlYkmoB8duJA-1; Wed, 10 Apr 2024 18:11:25 -0400
+X-MC-Unique: vFGaO45YOYqlYkmoB8duJA-1
+Received: by mail-il1-f197.google.com with SMTP id e9e14a558f8ab-369f714fedcso71330075ab.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 15:11:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712787084; x=1713391884;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/9ZaDdsvv6WC5wTEQulDSBBsBWUVx4JFTYwinWsVjD0=;
+        b=P4R1piqVHHXawABpFx8t1LsXwCr6mqrclX7ptAZPetzsnlfpSfSLAPV/GLCSg/589z
+         NSwNkDlkzSfWvQr6YwCzkd77ZMsyXlKDaBwy4mdmRsxyoZypLuhxKdlI3dvslFjZBJax
+         ztIjAxLCIQd7iFHAX8D6byCusYGadVftevxlICw9BIlzAS2PbqGxVqs6OO9lQf2hR8WD
+         Pj+t2QVh+J/0LPKFSrb5bC8rnDEhiHc6oBL+x7ZrLNZybbu+nuBHdmD+axXN2EXRB/b/
+         O5RGIwGhUXUqx3sYY9vKktgc7pVWkYDyf3hiAVFCW2uqtNK/psGbusuCnLgkHZZ9h3rh
+         jyzQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVChxusbFsNZkLybUonr7xLnBtbGN1yQzacjqtgRmOeQl7qKqfDqnc1JEZd79zZi52p2zGopg92y85G6Fzn9s7LEXLu/Zrp63M3w9zy5Q==
+X-Gm-Message-State: AOJu0YyxQaOZI97Z66p2Q2I9P1vLL2T2RDo0bvGezWNsppvPG977KfuJ
+	YtAKJEo9d+e3xEW3QKs3pvYIOEkkxfSC3psx2WSCENKTF4/vbn++yB8AduWJpcDIwG4L7wdgtDm
+	qwRu1WA4CneBHuQyKyBDTN+f4Bq/njD2IGtqC616+ckGYljoJjWU8sonE+fNbvJcp6RLX/uw=
+X-Received: by 2002:a05:6e02:2184:b0:369:f74f:bbe8 with SMTP id j4-20020a056e02218400b00369f74fbbe8mr4414895ila.14.1712787083837;
+        Wed, 10 Apr 2024 15:11:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH5CdIhx3hEVeM8v+W7ezlD4mg6TH6+8ByQq5pRvr8stk4BYb74HRPa8nDJXZLAMSTxH4SmhA==
+X-Received: by 2002:a05:6e02:2184:b0:369:f74f:bbe8 with SMTP id j4-20020a056e02218400b00369f74fbbe8mr4414872ila.14.1712787083369;
+        Wed, 10 Apr 2024 15:11:23 -0700 (PDT)
+Received: from x1gen2nano ([2600:1700:1ff0:d0e0::33])
+        by smtp.gmail.com with ESMTPSA id t184-20020a632dc1000000b005f410b67e60sm37103pgt.22.2024.04.10.15.11.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Apr 2024 15:11:22 -0700 (PDT)
+Date: Wed, 10 Apr 2024 17:11:19 -0500
+From: Andrew Halaney <ahalaney@redhat.com>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm: Drop msm_read/writel
+Message-ID: <s5i4sgt7xbtjkfa6d7whjmuwdpe643uvgdefq7lhsu2wrchfin@eb6csf2mh4g6>
+References: <20240410-topic-msm_rw-v1-1-e1fede9ffaba@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: epam.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: GV1PR03MB10456.eurprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 54b39c72-77d2-4cc4-0364-08dc59a92742
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Apr 2024 21:57:02.2688
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: b41b72d0-4e9f-4c26-8a69-f949f367c91d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Dw+g23g8Cpb7T5gorBbRzLbhWfomT4JX6KIJoMLB8LhtBjBJ1kBeZmXUQOEJ7Ra+FT3E+eEfYh8Zkej2FMwkvKsM8XoALGy19HqI615eF/I=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM7PR03MB6133
-X-Proofpoint-GUID: 7FJrc-4gpmXggYIcIKk-X3iN1UugC4p_
-X-Proofpoint-ORIG-GUID: 7FJrc-4gpmXggYIcIKk-X3iN1UugC4p_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-10_06,2024-04-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- priorityscore=1501 bulkscore=0 malwarescore=0 adultscore=0 impostorscore=0
- mlxscore=0 mlxlogscore=999 clxscore=1011 phishscore=0 suspectscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404100160
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240410-topic-msm_rw-v1-1-e1fede9ffaba@linaro.org>
 
+On Wed, Apr 10, 2024 at 11:52:52PM +0200, Konrad Dybcio wrote:
+> Totally useless.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Hi Stephan,
+A few more words in the description mentioning this just wraps readl/writel
+with no, but that's a minor nit and is easy to find when you finally see
+the removal in the end of the diff.
 
-Stephan Gerhold <stephan@gerhold.net> writes:
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
 
-> On Wed, Apr 10, 2024 at 01:41:30PM +0000, Volodymyr Babchuk wrote:
->> Card Detect pin for SHDC2 on SA8155P-ADP is connected to GPIO4 of
->> PMM8155AU_1, not to internal TLMM. This change fixes two issues at
->> once: not working ethernet (because GPIO4 is used for MAC TX) and SD
->> detection.
->>=20
->> Signed-off-by: Volodymyr Babchuk <volodymyr_babchuk@epam.com>
->> ---
->>  arch/arm64/boot/dts/qcom/sa8155p-adp.dts | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>=20
->> diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/=
-dts/qcom/sa8155p-adp.dts
->> index 5e4287f8c8cd1..6b08ce246b78c 100644
->> --- a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
->> +++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
->> @@ -384,7 +384,7 @@ &remoteproc_cdsp {
->>  &sdhc_2 {
->>  	status =3D "okay";
->> =20
->> -	cd-gpios =3D <&tlmm 4 GPIO_ACTIVE_LOW>;
->> +	cd-gpios =3D <&pmm8155au_1_gpios 4 GPIO_ACTIVE_LOW>;
->
-> Good catch!
+> ---
+> only compile-tested
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c       |  2 +-
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.h       | 12 ++++++------
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.h       |  4 ++--
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c |  4 ++--
+>  drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h    |  4 ++--
+>  drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h    |  4 ++--
+>  drivers/gpu/drm/msm/dsi/dsi_host.c          | 10 +++++-----
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy.h       |  8 ++++----
+>  drivers/gpu/drm/msm/hdmi/hdmi.h             | 10 +++++-----
+>  drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c    |  6 +++---
+>  drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c    |  4 ++--
+>  drivers/gpu/drm/msm/msm_drv.h               |  7 ++-----
+>  drivers/gpu/drm/msm/msm_gpu.h               | 12 ++++++------
+>  13 files changed, 42 insertions(+), 45 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> index 8bea8ef26f77..0e3dfd4c2bc8 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> @@ -507,7 +507,7 @@ static void a6xx_rpmh_stop(struct a6xx_gmu *gmu)
+>  
+>  static inline void pdc_write(void __iomem *ptr, u32 offset, u32 value)
+>  {
+> -	msm_writel(value, ptr + (offset << 2));
+> +	writel(value, ptr + (offset << 2));
+>  }
+>  
+>  static void __iomem *a6xx_gmu_get_mmio(struct platform_device *pdev,
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> index 592b296aab22..94b6c5cab6f4 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> @@ -103,12 +103,12 @@ struct a6xx_gmu {
+>  
+>  static inline u32 gmu_read(struct a6xx_gmu *gmu, u32 offset)
+>  {
+> -	return msm_readl(gmu->mmio + (offset << 2));
+> +	return readl(gmu->mmio + (offset << 2));
+>  }
+>  
+>  static inline void gmu_write(struct a6xx_gmu *gmu, u32 offset, u32 value)
+>  {
+> -	msm_writel(value, gmu->mmio + (offset << 2));
+> +	writel(value, gmu->mmio + (offset << 2));
+>  }
+>  
+>  static inline void
+> @@ -131,8 +131,8 @@ static inline u64 gmu_read64(struct a6xx_gmu *gmu, u32 lo, u32 hi)
+>  {
+>  	u64 val;
+>  
+> -	val = (u64) msm_readl(gmu->mmio + (lo << 2));
+> -	val |= ((u64) msm_readl(gmu->mmio + (hi << 2)) << 32);
+> +	val = (u64) readl(gmu->mmio + (lo << 2));
+> +	val |= ((u64) readl(gmu->mmio + (hi << 2)) << 32);
+>  
+>  	return val;
+>  }
+> @@ -143,12 +143,12 @@ static inline u64 gmu_read64(struct a6xx_gmu *gmu, u32 lo, u32 hi)
+>  
+>  static inline u32 gmu_read_rscc(struct a6xx_gmu *gmu, u32 offset)
+>  {
+> -	return msm_readl(gmu->rscc + (offset << 2));
+> +	return readl(gmu->rscc + (offset << 2));
+>  }
+>  
+>  static inline void gmu_write_rscc(struct a6xx_gmu *gmu, u32 offset, u32 value)
+>  {
+> -	msm_writel(value, gmu->rscc + (offset << 2));
+> +	writel(value, gmu->rscc + (offset << 2));
+>  }
+>  
+>  #define gmu_poll_timeout_rscc(gmu, addr, val, cond, interval, timeout) \
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> index 34822b080759..8917032b7515 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> @@ -69,12 +69,12 @@ static inline void a6xx_llc_rmw(struct a6xx_gpu *a6xx_gpu, u32 reg, u32 mask, u3
+>  
+>  static inline u32 a6xx_llc_read(struct a6xx_gpu *a6xx_gpu, u32 reg)
+>  {
+> -	return msm_readl(a6xx_gpu->llc_mmio + (reg << 2));
+> +	return readl(a6xx_gpu->llc_mmio + (reg << 2));
+>  }
+>  
+>  static inline void a6xx_llc_write(struct a6xx_gpu *a6xx_gpu, u32 reg, u32 value)
+>  {
+> -	msm_writel(value, a6xx_gpu->llc_mmio + (reg << 2));
+> +	writel(value, a6xx_gpu->llc_mmio + (reg << 2));
+>  }
+>  
+>  #define shadowptr(_a6xx_gpu, _ring) ((_a6xx_gpu)->shadow_iova + \
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+> index a847a0f7a73c..83d7ee01c944 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+> @@ -192,10 +192,10 @@ static int debugbus_read(struct msm_gpu *gpu, u32 block, u32 offset,
+>  }
+>  
+>  #define cxdbg_write(ptr, offset, val) \
+> -	msm_writel((val), (ptr) + ((offset) << 2))
+> +	writel((val), (ptr) + ((offset) << 2))
+>  
+>  #define cxdbg_read(ptr, offset) \
+> -	msm_readl((ptr) + ((offset) << 2))
+> +	readl((ptr) + ((offset) << 2))
+>  
+>  /* read a value from the CX debug bus */
+>  static int cx_debugbus_read(void __iomem *cxdbg, u32 block, u32 offset,
+> diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h
+> index 01179e764a29..94b1ba92785f 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h
+> +++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h
+> @@ -44,12 +44,12 @@ struct mdp4_kms {
+>  
+>  static inline void mdp4_write(struct mdp4_kms *mdp4_kms, u32 reg, u32 data)
+>  {
+> -	msm_writel(data, mdp4_kms->mmio + reg);
+> +	writel(data, mdp4_kms->mmio + reg);
+>  }
+>  
+>  static inline u32 mdp4_read(struct mdp4_kms *mdp4_kms, u32 reg)
+>  {
+> -	return msm_readl(mdp4_kms->mmio + reg);
+> +	return readl(mdp4_kms->mmio + reg);
+>  }
+>  
+>  static inline uint32_t pipe2flush(enum mdp4_pipe pipe)
+> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h
+> index fac9f05aa639..36b6842dfc9c 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h
+> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h
+> @@ -171,13 +171,13 @@ struct mdp5_encoder {
+>  static inline void mdp5_write(struct mdp5_kms *mdp5_kms, u32 reg, u32 data)
+>  {
+>  	WARN_ON(mdp5_kms->enable_count <= 0);
+> -	msm_writel(data, mdp5_kms->mmio + reg);
+> +	writel(data, mdp5_kms->mmio + reg);
+>  }
+>  
+>  static inline u32 mdp5_read(struct mdp5_kms *mdp5_kms, u32 reg)
+>  {
+>  	WARN_ON(mdp5_kms->enable_count <= 0);
+> -	return msm_readl(mdp5_kms->mmio + reg);
+> +	return readl(mdp5_kms->mmio + reg);
+>  }
+>  
+>  static inline const char *stage2name(enum mdp_mixer_stage_id stage)
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 9d86a6aca6f2..77bd5ff330d7 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -55,7 +55,7 @@ static int dsi_get_version(const void __iomem *base, u32 *major, u32 *minor)
+>  	 * scratch register which we never touch)
+>  	 */
+>  
+> -	ver = msm_readl(base + REG_DSI_VERSION);
+> +	ver = readl(base + REG_DSI_VERSION);
+>  	if (ver) {
+>  		/* older dsi host, there is no register shift */
+>  		ver = FIELD(ver, DSI_VERSION_MAJOR);
+> @@ -73,12 +73,12 @@ static int dsi_get_version(const void __iomem *base, u32 *major, u32 *minor)
+>  		 * registers are shifted down, read DSI_VERSION again with
+>  		 * the shifted offset
+>  		 */
+> -		ver = msm_readl(base + DSI_6G_REG_SHIFT + REG_DSI_VERSION);
+> +		ver = readl(base + DSI_6G_REG_SHIFT + REG_DSI_VERSION);
+>  		ver = FIELD(ver, DSI_VERSION_MAJOR);
+>  		if (ver == MSM_DSI_VER_MAJOR_6G) {
+>  			/* 6G version */
+>  			*major = ver;
+> -			*minor = msm_readl(base + REG_DSI_6G_HW_VERSION);
+> +			*minor = readl(base + REG_DSI_6G_HW_VERSION);
+>  			return 0;
+>  		} else {
+>  			return -EINVAL;
+> @@ -186,11 +186,11 @@ struct msm_dsi_host {
+>  
+>  static inline u32 dsi_read(struct msm_dsi_host *msm_host, u32 reg)
+>  {
+> -	return msm_readl(msm_host->ctrl_base + reg);
+> +	return readl(msm_host->ctrl_base + reg);
+>  }
+>  static inline void dsi_write(struct msm_dsi_host *msm_host, u32 reg, u32 data)
+>  {
+> -	msm_writel(data, msm_host->ctrl_base + reg);
+> +	writel(data, msm_host->ctrl_base + reg);
+>  }
+>  
+>  static const struct msm_dsi_cfg_handler *dsi_get_config(
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> index e4275d3ad581..5a5dc3faa971 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> @@ -12,10 +12,10 @@
+>  
+>  #include "dsi.h"
+>  
+> -#define dsi_phy_read(offset) msm_readl((offset))
+> -#define dsi_phy_write(offset, data) msm_writel((data), (offset))
+> -#define dsi_phy_write_udelay(offset, data, delay_us) { msm_writel((data), (offset)); udelay(delay_us); }
+> -#define dsi_phy_write_ndelay(offset, data, delay_ns) { msm_writel((data), (offset)); ndelay(delay_ns); }
+> +#define dsi_phy_read(offset) readl((offset))
+> +#define dsi_phy_write(offset, data) writel((data), (offset))
+> +#define dsi_phy_write_udelay(offset, data, delay_us) { writel((data), (offset)); udelay(delay_us); }
+> +#define dsi_phy_write_ndelay(offset, data, delay_ns) { writel((data), (offset)); ndelay(delay_ns); }
+>  
+>  struct msm_dsi_phy_ops {
+>  	int (*pll_init)(struct msm_dsi_phy *phy);
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.h b/drivers/gpu/drm/msm/hdmi/hdmi.h
+> index ec5786440391..4586baf36415 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi.h
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.h
+> @@ -115,17 +115,17 @@ void msm_hdmi_set_mode(struct hdmi *hdmi, bool power_on);
+>  
+>  static inline void hdmi_write(struct hdmi *hdmi, u32 reg, u32 data)
+>  {
+> -	msm_writel(data, hdmi->mmio + reg);
+> +	writel(data, hdmi->mmio + reg);
+>  }
+>  
+>  static inline u32 hdmi_read(struct hdmi *hdmi, u32 reg)
+>  {
+> -	return msm_readl(hdmi->mmio + reg);
+> +	return readl(hdmi->mmio + reg);
+>  }
+>  
+>  static inline u32 hdmi_qfprom_read(struct hdmi *hdmi, u32 reg)
+>  {
+> -	return msm_readl(hdmi->qfprom_mmio + reg);
+> +	return readl(hdmi->qfprom_mmio + reg);
+>  }
+>  
+>  /*
+> @@ -166,12 +166,12 @@ struct hdmi_phy {
+>  
+>  static inline void hdmi_phy_write(struct hdmi_phy *phy, u32 reg, u32 data)
+>  {
+> -	msm_writel(data, phy->mmio + reg);
+> +	writel(data, phy->mmio + reg);
+>  }
+>  
+>  static inline u32 hdmi_phy_read(struct hdmi_phy *phy, u32 reg)
+>  {
+> -	return msm_readl(phy->mmio + reg);
+> +	return readl(phy->mmio + reg);
+>  }
+>  
+>  int msm_hdmi_phy_resource_enable(struct hdmi_phy *phy);
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c
+> index 4dd055416620..8c8d80b59573 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c
+> @@ -86,18 +86,18 @@ static inline struct hdmi_phy *pll_get_phy(struct hdmi_pll_8996 *pll)
+>  static inline void hdmi_pll_write(struct hdmi_pll_8996 *pll, int offset,
+>  				  u32 data)
+>  {
+> -	msm_writel(data, pll->mmio_qserdes_com + offset);
+> +	writel(data, pll->mmio_qserdes_com + offset);
+>  }
+>  
+>  static inline u32 hdmi_pll_read(struct hdmi_pll_8996 *pll, int offset)
+>  {
+> -	return msm_readl(pll->mmio_qserdes_com + offset);
+> +	return readl(pll->mmio_qserdes_com + offset);
+>  }
+>  
+>  static inline void hdmi_tx_chan_write(struct hdmi_pll_8996 *pll, int channel,
+>  				      int offset, int data)
+>  {
+> -	 msm_writel(data, pll->mmio_qserdes_tx[channel] + offset);
+> +	 writel(data, pll->mmio_qserdes_tx[channel] + offset);
+>  }
+>  
+>  static inline u32 pll_get_cpctrl(u64 frac_start, unsigned long ref_clk,
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c b/drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c
+> index cb35a297afbd..83c8781fcc3f 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c
+> @@ -236,12 +236,12 @@ static const struct pll_rate freqtbl[] = {
+>  
+>  static inline void pll_write(struct hdmi_pll_8960 *pll, u32 reg, u32 data)
+>  {
+> -	msm_writel(data, pll->mmio + reg);
+> +	writel(data, pll->mmio + reg);
+>  }
+>  
+>  static inline u32 pll_read(struct hdmi_pll_8960 *pll, u32 reg)
+>  {
+> -	return msm_readl(pll->mmio + reg);
+> +	return readl(pll->mmio + reg);
+>  }
+>  
+>  static inline struct hdmi_phy *pll_get_phy(struct hdmi_pll_8960 *pll)
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index 65f213660452..0659459c0b15 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -488,15 +488,12 @@ void __iomem *msm_ioremap_mdss(struct platform_device *mdss_pdev,
+>  
+>  struct icc_path *msm_icc_get(struct device *dev, const char *name);
+>  
+> -#define msm_writel(data, addr) writel((data), (addr))
+> -#define msm_readl(addr) readl((addr))
+> -
+>  static inline void msm_rmw(void __iomem *addr, u32 mask, u32 or)
+>  {
+> -	u32 val = msm_readl(addr);
+> +	u32 val = readl(addr);
+>  
+>  	val &= ~mask;
+> -	msm_writel(val | or, addr);
+> +	writel(val | or, addr);
+>  }
+>  
+>  /**
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+> index 2bfcb222e353..a0c1bd6d1d5b 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.h
+> +++ b/drivers/gpu/drm/msm/msm_gpu.h
+> @@ -555,12 +555,12 @@ struct msm_gpu_state {
+>  
+>  static inline void gpu_write(struct msm_gpu *gpu, u32 reg, u32 data)
+>  {
+> -	msm_writel(data, gpu->mmio + (reg << 2));
+> +	writel(data, gpu->mmio + (reg << 2));
+>  }
+>  
+>  static inline u32 gpu_read(struct msm_gpu *gpu, u32 reg)
+>  {
+> -	return msm_readl(gpu->mmio + (reg << 2));
+> +	return readl(gpu->mmio + (reg << 2));
+>  }
+>  
+>  static inline void gpu_rmw(struct msm_gpu *gpu, u32 reg, u32 mask, u32 or)
+> @@ -586,8 +586,8 @@ static inline u64 gpu_read64(struct msm_gpu *gpu, u32 reg)
+>  	 * when the lo is read, so make sure to read the lo first to trigger
+>  	 * that
+>  	 */
+> -	val = (u64) msm_readl(gpu->mmio + (reg << 2));
+> -	val |= ((u64) msm_readl(gpu->mmio + ((reg + 1) << 2)) << 32);
+> +	val = (u64) readl(gpu->mmio + (reg << 2));
+> +	val |= ((u64) readl(gpu->mmio + ((reg + 1) << 2)) << 32);
+>  
+>  	return val;
+>  }
+> @@ -595,8 +595,8 @@ static inline u64 gpu_read64(struct msm_gpu *gpu, u32 reg)
+>  static inline void gpu_write64(struct msm_gpu *gpu, u32 reg, u64 val)
+>  {
+>  	/* Why not a writeq here? Read the screed above */
+> -	msm_writel(lower_32_bits(val), gpu->mmio + (reg << 2));
+> -	msm_writel(upper_32_bits(val), gpu->mmio + ((reg + 1) << 2));
+> +	writel(lower_32_bits(val), gpu->mmio + (reg << 2));
+> +	writel(upper_32_bits(val), gpu->mmio + ((reg + 1) << 2));
+>  }
+>  
+>  int msm_gpu_pm_suspend(struct msm_gpu *gpu);
+> 
+> ---
+> base-commit: 6ebf211bb11dfc004a2ff73a9de5386fa309c430
+> change-id: 20240410-topic-msm_rw-cdc1d85b2ece
+> 
+> Best regards,
+> -- 
+> Konrad Dybcio <konrad.dybcio@linaro.org>
+> 
+> 
 
-Yeah... It took time to understand why ethernet is not working
-sometimes. It appeared that there were race between SDHC and MAC
-initialization.
-
->
->>  	pinctrl-names =3D "default", "sleep";
->>  	pinctrl-0 =3D <&sdc2_on>;
->>  	pinctrl-1 =3D <&sdc2_off>;
->
-> These two pinctrl configure "gpio96" for "sd-cd-pins". Yet another wrong
-> GPIO? Should probably drop that and add proper pinctrl for the actual
-> GPIO in the PMIC. Seems like Qualcomm configured the PMIC GPIO with
-> pull-up downstream [1] (not sure if this is the right file). It might be
-> redundant if there is an external pull-up on the board, but only the
-> schematic could tell that for sure.
-
-If I only had schematic for this board... gpio96 puzzles me as well. I
-can understand where wrong GPIO4 come from. But gpio96 origin is
-completely unclear. I have user manual for the board, it mention
-functions of some GPIOs, but there is nothing about gpio96. Anyways, I
-removed it from the DTS (see diff below) and I see no issues with SD card.
-
-> FWIW: Looking closer at the broken commit, the regulator voltage setup
-> of &sdhc_2 looks suspicious too. Typically one would want a 1.8V capable
-> regulator for the vqmmc-supply to properly use ultra high-speed modes,
-> but &vreg_l13c_2p96 seems to be configured with 2.504V-2.960V at the
-> moment. On downstream it seems to be 1.8V-2.96V [2] (again, not sure if
-> this is the right file). I would recommend re-checking this too and
-> testing if UHS cards are detected correctly (if you have the board).
-
-This is actually a good catch. I changed the voltage range to 1.8V-2.96V an=
-d
-now my card detects in UHS/SDR104 mode. Prior to this change it worked only
-in HS mode.
-
-> &vreg_l17a_2p96 has the same 2.504V-2.960V, but has 2.704V-2.960V
-> downstream [3]. This is close at least, might be fine as-is (but I'm not
-> convinced there is a good reason to differ there).
->
-
-Well, I believe that downstream configuration is more correct, but I
-can't prove it, so I'll leave it as is.
-
-Diff for additional changes looks like this:
-
-diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/dts=
-/qcom/sa8155p-adp.dts
-index 6b08ce246b78c..b2a3496ff68ad 100644
---- a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-@@ -283,7 +283,7 @@ vreg_l12c_1p808: ldo12 {
-=20
-                vreg_l13c_2p96: ldo13 {
-                        regulator-name =3D "vreg_l13c_2p96";
--                       regulator-min-microvolt =3D <2504000>;
-+                       regulator-min-microvolt =3D <1800000>;
-                        regulator-max-microvolt =3D <2960000>;
-                        regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM=
->;
-                };
-@@ -386,8 +386,8 @@ &sdhc_2 {
-=20
-        cd-gpios =3D <&pmm8155au_1_gpios 4 GPIO_ACTIVE_LOW>;
-        pinctrl-names =3D "default", "sleep";
--       pinctrl-0 =3D <&sdc2_on>;
--       pinctrl-1 =3D <&sdc2_off>;
-+       pinctrl-0 =3D <&sdc2_on &pmm8155au_1_sdc2_on>;
-+       pinctrl-1 =3D <&sdc2_off &pmm8155au_1_sdc2_off>;
-        vqmmc-supply =3D <&vreg_l13c_2p96>; /* IO line power */
-        vmmc-supply =3D <&vreg_l17a_2p96>;  /* Card power line */
-        bus-width =3D <4>;
-@@ -505,13 +505,6 @@ data-pins {
-                        bias-pull-up;           /* pull up */
-                        drive-strength =3D <16>;  /* 16 MA */
-                };
--
--               sd-cd-pins {
--                       pins =3D "gpio96";
--                       function =3D "gpio";
--                       bias-pull-up;           /* pull up */
--                       drive-strength =3D <2>;   /* 2 MA */
--               };
-        };
-=20
-        sdc2_off: sdc2-off-state {
-        @@ -532,13 +525,6 @@ data-pins {
-                        bias-pull-up;           /* pull up */
-                        drive-strength =3D <2>;   /* 2 MA */
-                };
--
--               sd-cd-pins {
--                       pins =3D "gpio96";
--                       function =3D "gpio";
--                       bias-pull-up;           /* pull up */
--                       drive-strength =3D <2>;   /* 2 MA */
--               };
-        };
-=20
-        usb2phy_ac_en1_default: usb2phy-ac-en1-default-state {
-@@ -604,3 +590,25 @@ phy-reset-pins {
-                };
-        };
- };
-+
-+&pmm8155au_1_gpios {
-+       pmm8155au_1_sdc2_on: pmm8155au_1-sdc2-on-state {
-+               sd-cd-pin {
-+                       pins =3D "gpio4";
-+                       function =3D "normal";
-+                       input-enable;
-+                       bias-pull-up;
-+                       power-source =3D <0>;
-+               };
-+       };
-+
-+       pmm8155au_1_sdc2_off: pmm8155au_1-sdc2-off-state {
-+               sd-cd-pin {
-+                       pins =3D "gpio4";
-+                       function =3D "normal";
-+                       input-enable;
-+                       bias-pull-up;
-+                       power-source =3D <0>;
-+               };
-+       };
-+};
-
-
-I am planning to send v2 tomorrow.
-
---=20
-WBR, Volodymyr=
 
