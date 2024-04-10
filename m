@@ -1,62 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-17013-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6C5089F097
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 13:25:17 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB77B89F0B1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 13:27:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 866251F22AB0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 11:25:17 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 25D6FB2368C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 11:27:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1258315991D;
-	Wed, 10 Apr 2024 11:25:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 133E815ECD9;
+	Wed, 10 Apr 2024 11:25:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="jT0Gk8bA"
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="O35o9sA/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail.zeus03.de (www.zeus03.de [194.117.254.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F151598EE
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 11:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16D7315E1E7
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 11:25:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712748311; cv=none; b=rxacTyb/W3kAFZJwRm+pmFdJFeB1yrqnxO8CyqGi866b8W7M9ASX+G+pFDeksY9XB/YPnVrFxDH8Bo9hc4d53nTA2u2c/YKlKas5IRqru2omviJCR2Of9tvKjJwUMxWxB37ZUF9zwucNQQJFfCNImgLc98+njAXOVLXJovQKQHU=
+	t=1712748320; cv=none; b=KpKnbuYU/yxDm3T3xGBLYawYCUoYLJIvxNwBgyokqxXUTJUOU/BMfgffJpFU7JP+YsvYskegwy3HlzDrvDixyWg4jZJY9nvUykTORTCVCGfr6u/Zdth2VrJZm9L1C6yq0SuzATQsNCtoBvFOXEPeK4x3pSwmQhKu0q77Pz7CA8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712748311; c=relaxed/simple;
-	bh=/oCMXaEKV0wQv6hyJYOzYspxu2mEEpt92nD4lJq5TVo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=lH4kG/ZtRj0UpV/Pa+ausKWxSvb8YHoeLmH7ZjCzED0F7qLRwZJ37kOcw2n3wyt9k+vmFdNrhvyFz4P3O1kREHI4WcOKiEJJvRuOUpMpuO9yDBMMOsK4CfDC40czs7gEfPdM0/JlgcaL/O89qbyXxQHP9PIYgCZQTOQBnQc/B9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=jT0Gk8bA; arc=none smtp.client-ip=194.117.254.33
+	s=arc-20240116; t=1712748320; c=relaxed/simple;
+	bh=+pdjM1s6Ki6mrvtt2IV5vM61l9m948tojzNqs2Jkx7I=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=sfcXxeO+TZRFIXSjBaShoVn3PpNcZ61GWYNmu2djzmdpSUkLjXh+/+spK61GlqYloZkGBnHOVqekDv+4oRFhnlE2292NKR8pvjGnqZQcG3o0Y0OVceH5b8tGdbIQjGoljRLPSGHqUDUnqODxWMOMJDdw2PhAXUV5g+ZFZQRvf1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=O35o9sA/; arc=none smtp.client-ip=194.117.254.33
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	sang-engineering.com; h=from:to:cc:subject:date:message-id
-	:mime-version:content-transfer-encoding; s=k1; bh=RNanGQGWfzY8Ld
-	dZN9BtmYbNVKTZHZwObn8fItBAqK8=; b=jT0Gk8bAMORCC3fi5dKtBczdT+SWtS
-	Ur90S3Q1uouDlicdfEpBcNSLJfpzszbswwlEqlBkKEo/gJqZgyTYwNnT/l42kg1u
-	jCKNParrdoy5IN5KtrND/ODxJjODWMBThyQKunrC8uL76dtK8cijYPbbgs6iM+X9
-	oFSOW30Rsp/9ZLXlttGMTaO3E08kWFL0hNIfEIBjQBW2sZJeRUSQge0X2s3omTnq
-	n5piJX/YYxgLyxigGcxQANsKl+wdagoI2ckzGc5M+DvPUuA1l9Tehh4xQfo48iZJ
-	eKCIINO7NvQHjCrr8EVgyW1i2doKHn0NqksAVd/TzyZNURLygSmZfMGA==
-Received: (qmail 521287 invoked from network); 10 Apr 2024 13:24:57 +0200
-Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 10 Apr 2024 13:24:57 +0200
-X-UD-Smtp-Session: l3s3148p1@pzTdSbwVgwhtKPEL
+	:in-reply-to:references:mime-version:content-transfer-encoding;
+	 s=k1; bh=MIh2Te8HRB16dLWCZQy/u503SxPLZR4I/XrMPIptOnE=; b=O35o9s
+	A/QrxQdnKtCJc5CK2Acr3z8X5R8hpnyPciX8LmYASeqN1ZEpbMmFbgFXvLwgE7YN
+	kH6BRRwlzqFFXmQwHItosHjSMm/ZqdZXrBq/lG1SckthpkilUm2XBK1MJtP+q/2x
+	qXfy62rIR+sHfUj65K7+0R83adECJYhroq9Llm1isGbk3b+0gaM1dKkOORdPbN5a
+	05o2Zb78BVnIfGCC/gZIa84AhHuTdo23+0FgxYAsqigAklFoWVFR9IWAn9Hb/tQE
+	YUx8UctlUXT1kj5xY5Dcyw0WU8bxD4vZ8yEE41Tg2cbQhrhWGbZg/QZcq7toT0uW
+	aVcRr7QRkCZdT/1g==
+Received: (qmail 521651 invoked from network); 10 Apr 2024 13:25:10 +0200
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 10 Apr 2024 13:25:10 +0200
+X-UD-Smtp-Session: l3s3148p1@A06eSrwVZz1tKPEL
 From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 To: linux-i2c@vger.kernel.org
 Cc: Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	linux-arm-kernel@lists.infradead.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-omap@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-rockchip@lists.infradead.org,
-	linux-rpi-kernel@lists.infradead.org,
-	linux-tegra@vger.kernel.org
-Subject: [PATCH 00/18] i2c: remove printout on handled timeouts
-Date: Wed, 10 Apr 2024 13:24:14 +0200
-Message-ID: <20240410112418.6400-20-wsa+renesas@sang-engineering.com>
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 11/18] i2c: qcom-geni: remove printout on handled timeouts
+Date: Wed, 10 Apr 2024 13:24:25 +0200
+Message-ID: <20240410112418.6400-31-wsa+renesas@sang-engineering.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240410112418.6400-20-wsa+renesas@sang-engineering.com>
+References: <20240410112418.6400-20-wsa+renesas@sang-engineering.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,57 +66,33 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-While working on another cleanup series, I stumbled over the fact that
-some drivers print an error on I2C or SMBus related timeouts. This is
-wrong because it may be an expected state. The client driver on top
-knows this, so let's keep error handling on this level and remove the
-prinouts from controller drivers.
+I2C and SMBus timeouts are not something the user needs to be informed
+about on controller level. The client driver may know if that really is
+a problem and give more detailed information to the user. The controller
+should just pass this information upwards. Remove the printout.
 
-Looking forward to comments,
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+---
+ drivers/i2c/busses/i2c-qcom-geni.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-   Wolfram
-
-
-Wolfram Sang (18):
-  i2c: at91-master: remove printout on handled timeouts
-  i2c: bcm-iproc: remove printout on handled timeouts
-  i2c: bcm2835: remove printout on handled timeouts
-  i2c: cadence: remove printout on handled timeouts
-  i2c: davinci: remove printout on handled timeouts
-  i2c: i801: remove printout on handled timeouts
-  i2c: img-scb: remove printout on handled timeouts
-  i2c: ismt: remove printout on handled timeouts
-  i2c: nomadik: remove printout on handled timeouts
-  i2c: omap: remove printout on handled timeouts
-  i2c: qcom-geni: remove printout on handled timeouts
-  i2c: qup: remove printout on handled timeouts
-  i2c: rk3x: remove printout on handled timeouts
-  i2c: sh_mobile: remove printout on handled timeouts
-  i2c: st: remove printout on handled timeouts
-  i2c: tegra: remove printout on handled timeouts
-  i2c: uniphier-f: remove printout on handled timeouts
-  i2c: uniphier: remove printout on handled timeouts
-
- drivers/i2c/busses/i2c-at91-master.c | 1 -
- drivers/i2c/busses/i2c-bcm-iproc.c   | 2 --
- drivers/i2c/busses/i2c-bcm2835.c     | 1 -
- drivers/i2c/busses/i2c-cadence.c     | 2 --
- drivers/i2c/busses/i2c-davinci.c     | 1 -
- drivers/i2c/busses/i2c-i801.c        | 4 ++--
- drivers/i2c/busses/i2c-img-scb.c     | 5 +----
- drivers/i2c/busses/i2c-ismt.c        | 1 -
- drivers/i2c/busses/i2c-nomadik.c     | 7 ++-----
- drivers/i2c/busses/i2c-omap.c        | 1 -
- drivers/i2c/busses/i2c-qcom-geni.c   | 5 +----
- drivers/i2c/busses/i2c-qup.c         | 4 +---
- drivers/i2c/busses/i2c-rk3x.c        | 3 ---
- drivers/i2c/busses/i2c-sh_mobile.c   | 1 -
- drivers/i2c/busses/i2c-st.c          | 5 +----
- drivers/i2c/busses/i2c-tegra.c       | 2 --
- drivers/i2c/busses/i2c-uniphier-f.c  | 1 -
- drivers/i2c/busses/i2c-uniphier.c    | 4 +---
- 18 files changed, 9 insertions(+), 41 deletions(-)
-
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index 11dcfcf13d8b..6054c62cd2ff 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -642,11 +642,8 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
+ 		dma_async_issue_pending(gi2c->tx_c);
+ 
+ 		timeout = wait_for_completion_timeout(&gi2c->done, XFER_TIMEOUT);
+-		if (!timeout) {
+-			dev_err(gi2c->se.dev, "I2C timeout gpi flags:%d addr:0x%x\n",
+-				gi2c->cur->flags, gi2c->cur->addr);
++		if (!timeout)
+ 			gi2c->err = -ETIMEDOUT;
+-		}
+ 
+ 		if (gi2c->err) {
+ 			ret = gi2c->err;
 -- 
 2.43.0
 
