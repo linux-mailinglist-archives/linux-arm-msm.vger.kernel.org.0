@@ -1,216 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-17024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 342E089F1A4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 14:04:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B82A89F1B3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 14:08:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B53041F22CFB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 12:04:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DF0901F23845
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 12:08:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8794D15B0EC;
-	Wed, 10 Apr 2024 12:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70C4E15B102;
+	Wed, 10 Apr 2024 12:08:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oSs/2HU8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DPiVYF9a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E2B1598F2;
-	Wed, 10 Apr 2024 12:04:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CAD615B0F4
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 12:08:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712750646; cv=none; b=jG0BK+C3rXv925IOWhNH7XM8ET++2RJOuikuL9ax/dVfIXzUtxXxFK1V4CAzxhEklyHPgN5TN0Ud5IeJAAjhQsH3Fn5S9m9qBaseelnUGiVu6yuYD9T21YgwJaBfIlN7uwpo7hrWAEDYVigdQcCktpQXDh3jy3x4fNfRvBI1RXw=
+	t=1712750923; cv=none; b=F3tW7oLkTZBtXhcWiq2JYguuTb3MOiqNB0uaa1fvg4sHs5Y+koJVSfucXvfeKLVO10jhk3kIkcbe5XojcBi6/KYUNqa6ciuXlkbQuK8ZiSJx/lDSkprqREBBrC5lPcEHatVavoX//EHvXSrUHfj9/cCxMqMwROAqf2hBZvhLF2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712750646; c=relaxed/simple;
-	bh=tdppY4tgi+O68xVH71ZZoSDz/OuC4sRNlpnC4mWN5pg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=o5rWY8T2xXC15LBEfNkyf8tPazKk08O6QnXosyqVaMc5JdePxM57jgVR/+EzdRkcz2VW8Fa7zgTGAvCXGc62hIS9A0ehWo5YLFVUQ2vCoEEdnLl+CnhBIvjCzlcy1ngoqzlQFTlV9mE6s49ofrwAOfZejcaX1EvBybOpPNTU3k4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oSs/2HU8; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43ABZIp6001155;
-	Wed, 10 Apr 2024 12:03:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=uTWaQyaAK8NhCoIO96+/pn6A5LF/VnM/wHGGjKcjQ8w=; b=oS
-	s/2HU8bU+Rie6SvJigbM3kjYdhNwbUZmiFZ2uJ+88mWVu3ypGNkgFrzghrPWOjOv
-	59sa8sJg92314XGtFQ5kzZK701V3I0zS54MvMi/5mHUJNCSmK9dr0OU7gSdViTyM
-	T2Oz6+AIzbDXXJmV2BTF6+zMdPoBcAVnRFMh4XEIm/J5szsSNTp6alf32+z7pYBz
-	sO1keyMFuP8Twc6C6g0rmO9xhSfLnjnV+62nDvdN11aSq1GlvmvPPdtfYx5CjKYd
-	Z9uMIK8xyunFvwfi/49L666BpgJCAH3CJcWHdOxm0xFLMXC8AEIi5epx5ddmjVs3
-	EfbQXrIxc5Ea0G8HL2oQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xdpnfsaex-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Apr 2024 12:03:48 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43AC3l7W022559
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Apr 2024 12:03:47 GMT
-Received: from [10.206.101.41] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 10 Apr
- 2024 05:03:42 -0700
-Message-ID: <335d1eee-a6f1-6502-7f27-c7362a53b4ba@quicinc.com>
-Date: Wed, 10 Apr 2024 17:33:39 +0530
+	s=arc-20240116; t=1712750923; c=relaxed/simple;
+	bh=jenHaOnHcbxtWDU/sjx/JJIEbosXdTyAf0Nq51UQ+ig=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=id1Xym/rCfW0uUwoHPJZtMiyslvenUB9e0lLUmGTpzS9gykRHh1Fbdkgoh63egLuNCr6uWlHQM6VeynjUGcmHawWvz+nA6ZAW/fvpnOA5sxwRJGpVTFdzVZEJ6LFPhpQRZN8J+9ju7Yq/ZKbodzfzcqg+nWulTuVSpF95iXoWhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DPiVYF9a; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2d886dd4f18so39513951fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 05:08:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712750920; x=1713355720; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=i/eIBodkkKg9gHiISFmQzqjV9vYTJz8x5fg7OEsG2PY=;
+        b=DPiVYF9aQ0Rp0shN0jc7a7gZB3ChAgjpGMGFblqHQiPmmI7UFWvkDaWILtEcSMc+v3
+         w3u03LfixU0LamxAPxJKwJaQFQvBJGAQdfWt1duCKk/cEUugt5EkgeknC/lsuOtBWeUD
+         bBL5odqyAy+gzNYeQQLEAN/3qlPt+H1t5UGOWVrjofs5eaZoVd9XdAiTXa5ZZExXDwXh
+         ba4mTRiCF48BrUkfAUncEPs3xhyqiLuAEL/6bITYwsRBOUHEEOsFtbiN3CIPlblmk+Lv
+         HXwxYo1rW9c0fEmkfqiWFeuH4IL23Di6taXJ4h2kIRzHMDoNFUGBMEVrLrqqjIQjm7lF
+         +U0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712750920; x=1713355720;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=i/eIBodkkKg9gHiISFmQzqjV9vYTJz8x5fg7OEsG2PY=;
+        b=SAN3R4qoznX2Mn1+bnAFueJQSvUTrLmnIIe2mTLh8XXvhrLP6vgtbErIUI8MqWIWzy
+         V2iAP145JzCVOxYg5HWG4dZd2aKOGfG41fvUSi1yO7WKnawIbgH911b/83lyQ/T+ZpIp
+         4c3Gc3IHxjLKIvMsKcWngiR7V/QTxy1Iyq26pYAkcy85Pa8djabws4E2b20SonJrZS0v
+         iq/GKJhDBNxi9kSr1bktFIp8qCfGY5IMGTueWMT4m3lsYdyLXNpLvmDY7yN9LfkbpHdf
+         Wjx3rWn0m9U1sRX5h27uclw5DFbnvQw/bjvw82MdDv5OuEq0ctqYSA0ygNvjnGUBBvYX
+         qEhw==
+X-Forwarded-Encrypted: i=1; AJvYcCUO1pYwkov6LFHZ6z9Ce/YXc3LBhaJ60uhYvnDOKcYS6R6mWoDIeDxOrq9Pwpp079YNlhcMHetJ2pNKV24SZNrcs1HVNlhjXYy/TUJ4BA==
+X-Gm-Message-State: AOJu0YwJ8Z/JbVj3QpBiOGqRYJu3XmUnHztZf/DBv0zEZT4VKzUkRUqD
+	cKGyX3fn+wlNudQu2hDT2QMhTM61CiweD5pGIlgrhPufngDYF5BFuaMWc3+5neI=
+X-Google-Smtp-Source: AGHT+IHWhWVUT+mJBbmOEO2cd0a3sYytqZtHgO7IW9217h6HPe6S+6voseWdDbeYpLJ8PbQDvZI58w==
+X-Received: by 2002:a2e:81d2:0:b0:2d8:5fb1:4b80 with SMTP id s18-20020a2e81d2000000b002d85fb14b80mr2016525ljg.24.1712750919723;
+        Wed, 10 Apr 2024 05:08:39 -0700 (PDT)
+Received: from [172.30.204.89] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id r10-20020a2eb60a000000b002d2dfe8a36csm1795293ljn.96.2024.04.10.05.08.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Apr 2024 05:08:39 -0700 (PDT)
+Message-ID: <d21b1b9b-6f1d-4ffe-b5e3-41d0a43fb17d@linaro.org>
+Date: Wed, 10 Apr 2024 14:08:37 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v3 03/19] media: venus: pm_helpers: Add kerneldoc to
- venus_clks_get()
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 5/7] arm64: dts: qcom: sdm845: Add DT nodes for the
+ TBUs
+To: Georgi Djakov <quic_c_gdjako@quicinc.com>, will@kernel.org,
+ robin.murphy@arm.com, joro@8bytes.org, iommu@lists.linux.dev
+Cc: robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+ conor+dt@kernel.org, devicetree@vger.kernel.org, andersson@kernel.org,
+ robdclark@gmail.com, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ quic_cgoldswo@quicinc.com, quic_sukadev@quicinc.com, quic_pdaly@quicinc.com,
+ quic_sudaraja@quicinc.com, djakov@kernel.org
+References: <20240329210638.3647523-1-quic_c_gdjako@quicinc.com>
+ <20240329210638.3647523-6-quic_c_gdjako@quicinc.com>
 Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Dikshita Agarwal
-	<quic_dikshita@quicinc.com>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        "Philipp
- Zabel" <p.zabel@pengutronix.de>
-CC: Marijn Suijten <marijn.suijten@somainline.org>,
-        Stanimir Varbanov
-	<stanimir.varbanov@linaro.org>,
-        Mauro Carvalho Chehab
-	<mchehab+huawei@kernel.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20230911-topic-mars-v3-0-79f23b81c261@linaro.org>
- <20230911-topic-mars-v3-3-79f23b81c261@linaro.org>
- <80c0ecb3-1157-1d7a-0829-c3b68b65f17f@quicinc.com>
- <66492657-3649-3bdb-b7df-0f5196418e06@quicinc.com>
- <b4c56cad-0a3c-4b74-b9fa-0931204d1514@linaro.org>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <b4c56cad-0a3c-4b74-b9fa-0931204d1514@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 92yuKVaf3duzItn5r642t-qWimk1U03P
-X-Proofpoint-ORIG-GUID: 92yuKVaf3duzItn5r642t-qWimk1U03P
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-10_04,2024-04-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
- mlxlogscore=999 malwarescore=0 clxscore=1015 spamscore=0 adultscore=0
- lowpriorityscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404100087
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20240329210638.3647523-6-quic_c_gdjako@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
-On 4/9/2024 11:52 PM, Konrad Dybcio wrote:
-> 
-> 
-> On 4/5/24 14:44, Vikash Garodia wrote:
->> Hi Konrad,
->>
->> On 4/5/2024 1:56 PM, Dikshita Agarwal wrote:
->>>
->>>
->>> On 3/27/2024 11:38 PM, Konrad Dybcio wrote:
->>>> To make it easier to understand the various clock requirements within
->>>> this driver, add kerneldoc to venus_clk_get() explaining the fluff.
->>>>
->>>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>> ---
->>>>   drivers/media/platform/qcom/venus/pm_helpers.c | 28
->>>> ++++++++++++++++++++++++++
->>>>   1 file changed, 28 insertions(+)
->>>>
->>>> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c
->>>> b/drivers/media/platform/qcom/venus/pm_helpers.c
->>>> index ac7c83404c6e..cf91f50a33aa 100644
->>>> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
->>>> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
->>>> @@ -23,6 +23,34 @@
->>>>     static bool legacy_binding;
->>>>   +/**
->>>> + * venus_clks_get() - Get Venus clocks that are not bound to a vcodec
->>>> + * @core: A pointer to the venus core resource
->>>> + *
->>>> + * The Venus block (depending on the generation) can be split into a couple
->>>> + * of clock domains: one for main logic and one for each video core (0-2
->>>> instances).
->> s/main logic/controller. Applies to below places as well.
-> 
-> Ok - so "controller" is the cortex-m3 (m5?) that power-sequences
-> the DSP etc.?
-Thats correct. The firmware runs on the controller and takes care of many
-aspects of hardware (dsp or core) programming.
 
->>
->>>> + *
->>>> + * MSM8916 (and possibly other HFIv1 users) only feature the "main logic"
->>>> + * domain, so this function is the only kind if clk_get necessary there.
->> To be checked, unable to get the clock document to see why only core clocks
->> (VENUS0_VCODEC0_CLK). Will update.
+On 3/29/24 22:06, Georgi Djakov wrote:
+> Add the device-tree nodes for the TBUs (translation buffer units) that
+> are present on the sdm845 platforms. The TBUs can be used debug the
+> kernel and provide additional information when a context faults occur.
 > 
-> FWIW 8916 only has GCC_VENUS0_VCODEC0_CLK (and _SRC) and AHB/AXI/TBU clocks,
-> no (currently registered) clock for the entire block.
+> Describe the all registers, clocks, interconnects and power-domain
+> resources that are needed for each of the TBUs.
 > 
->>
->>>> + *
->>>> + * MSM8996 (and other HFIv3 users) feature two video cores, with core0 being
->>>> + * statically defined a decoder and core1 an encoder, with both having
->>>> + * their own clock domains.
->>>> + *
->>>> + * SDM845 features two video cores, each one of which may or may not be
->> s/two video cores/two identical video cores
->>>> + * subdivided into two encoder/decoder threads.
->> decoder cannot be split into core threads. you can keep it like "each of which
->> is capable to do any encode or decode"
-> 
-> So it's not about any splitting, but rather the ability to do both encode
-> and decode, sort of like how the displayport controller can nowadays do both
-> eDP and DP, depending on what init data you send to it?
-It is precisely that way, just that there are cases of cores with dedicated
-codec support, hence identical implies that each of them can do same processing.
+> Signed-off-by: Georgi Djakov <quic_c_gdjako@quicinc.com>
+> ---
 
->>
->>>> + *
->>>> + * Other SoCs either feature a single video core (with its own clock domain)
->>>> + * or one video core and one CVP (Computer Vision Processor) core. In both
->>>> cases
->>>> + * we treat it the same way (CVP only happens to live near-by Venus on the
->>>> SoC).
->>>> + *
->>>> + * Due to unfortunate developments in the past, we need to support legacy
->>> why unfortunate? please re-phrase this.
->>>> + * bindings (MSM8996, SDM660, SDM845) that require specifying the clocks and
->>>> + * power-domains associated with a video core domain in a bogus sub-node,
->>>> + * which means that additional fluff is necessary.
->> Some background:
->> It was done that way to support decoder core with specific clocks and similarly
->> for encoder. Earlier architectures use to have different clock source for these
->> specific decoder/encoder core clocks, now there is a common clock source for
->> both the cores. Hence if any one is enabled, others gets enabled as it is
->> derived from same source.
->> So if we see the later bindings, the clocks were moved out of sub node to main
->> venus node.
-> 
-> Yeah and I don't really see the reason why the binding needed to be changed
-> for this, you can simply get the clocks by name and poke at the specific clk*
-> (or an array of them), no matter where they were _get()-ed from.
-I think the reason for not doing a name based clock as it might be possible that
-the clock is not available or applicable to subsequent SOC.
+[...]
 
-Regards,
-Vikash
+> +		mnoc_hf_0_tbu: tbu@150cd000 {
+> +			compatible = "qcom,sdm845-tbu";
+> +			reg = <0x0 0x150cd000 0x0 0x1000>;
+> +			interconnects = <&mmss_noc MASTER_MDP0 QCOM_ICC_TAG_ACTIVE_ONLY
+> +					 &mmss_noc SLAVE_MNOC_HF_MEM_NOC QCOM_ICC_TAG_ACTIVE_ONLY>;
+> +			qcom,stream-id-range = <&apps_smmu 0x800 0x400>;
+> +		};
+> +
+> +		mnoc_hf_1_tbu: tbu@150d1000 {
+> +			compatible = "qcom,sdm845-tbu";
+> +			reg = <0x0 0x150d1000 0x0 0x1000>;
+> +			interconnects = <&mmss_noc MASTER_MDP0 QCOM_ICC_TAG_ACTIVE_ONLY
+> +					 &mmss_noc SLAVE_MNOC_HF_MEM_NOC QCOM_ICC_TAG_ACTIVE_ONLY>;
+> +			qcom,stream-id-range = <&apps_smmu 0xc00 0x400>;
+> +		};
+> +
+> +		mnoc_sf_0_tbu: tbu@150d5000 {
+> +			compatible = "qcom,sdm845-tbu";
+> +			reg = <0x0 0x150d5000 0x0 0x1000>;
+> +			interconnects = <&mmss_noc MASTER_CAMNOC_SF QCOM_ICC_TAG_ACTIVE_ONLY
+> +					 &mmss_noc SLAVE_MNOC_SF_MEM_NOC QCOM_ICC_TAG_ACTIVE_ONLY>;
+> +			qcom,stream-id-range = <&apps_smmu 0x1000 0x400>;
+> +		};
+
+These three are missing their GDSCs, the rest looks in line with msm-4.4
+
+Konrad
 
