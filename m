@@ -1,70 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-17110-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17111-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34C3589FF8A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 20:15:42 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1143B89FF8C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 20:15:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E3EF228400C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 18:15:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 349DA1C22EC3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 18:15:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB37B17F365;
-	Wed, 10 Apr 2024 18:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD2761802DB;
+	Wed, 10 Apr 2024 18:15:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vqu/Zhcm"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vY3A+gbP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E7817F38F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 18:15:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC891802C6
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 18:15:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712772933; cv=none; b=Fmcq7UP6uIYyxWrA/5N/XGBeMOXlUDpjM8UPUXA3oL/+ixbs35m2x4F2pCwX7uNqUD1qK3W28pgLvz/RpNSrKBj/L1lQfcstqcY8MrVf8Sf1qYtjsN/MAGv/jEVBMj3NPYd3+UK+/IYOYADG1EC6fNjup919micRDZl89cUPa+Q=
+	t=1712772936; cv=none; b=bY7z4Imv8Fho7F67gax/QUfEG4gI34rZIS3NqTbrKusxNiCboRiWOBKxU9VyAmaGAV0M3mKBJbMmigYItA44uwqp0ni8WTaaNG5Fw27enPqeH65VSe12Vx7nQp+hHt7Vpvck5G8hlwHOLm1XfD2obukYBI3uaOh2y9doMGC6ELo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712772933; c=relaxed/simple;
-	bh=tWhKR1dsQM1YC79zbmlvLikHvew+c5F6LJQDwMAE2cg=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Ubh53TJ/66lHVHsJLsUmrqCwLXIwcWwGeWpfawTMy72h5V9MQ8Bq9OCOLbxNvm6nhcI/Jcdc+LLKdw+rcJfythGGdviMiJ7EmwJdoa10Qi5p1lD5X5NZrazKEq1TIZZLvRqath7ezmAdBkEbEPY+2/OzHUt04QBp9x8dOeS4Lug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vqu/Zhcm; arc=none smtp.client-ip=209.85.128.43
+	s=arc-20240116; t=1712772936; c=relaxed/simple;
+	bh=GUA2gQVyzUq4mqgqFOz7Ggun/F/2pZtr6iY/78kj6eE=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=RejqIuYBU6ONnLrG/lcLiAu9BGQ5Kv+RXvctHW2ji1nozUD8uAeTH2D4sF7bfNTTX1zum/jIS3K118dWiCmGD64FMn+Qu6OaE6jMqsbc4Xy/YeNa+/WEoxFCBUXwP/EWbVyyzwNb6OC28erWTrPrfq22Ff4t4ermGVOKVFDx64Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vY3A+gbP; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-416a8ec0239so696425e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 11:15:31 -0700 (PDT)
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-417d092f2ffso241075e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 11:15:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712772930; x=1713377730; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=wIIgCwWsXgtg5bruLAQKszp23oXas8PwjnbukW1ABVE=;
-        b=vqu/ZhcmTXTWyuku74l9jzNxCpxDm75JMuSmwPS+4RJB/KrYmQqOqyKc9DRrOHKFk6
-         I/MXgLeygoFTj5VCaWnnmcQidIYsy5bdAPsrbqESJ2efpAgjwd/WLTODuQ7DIYCcf/XY
-         EKQet6XVdC+UXJt1SyrLnQp2cgU0E5HEbgo9r0/o7cIR57Qc+LAhKmm3lR6f/stSGDvY
-         rmLu8H18zz9q8qwqbEHRfBA6lMnK3hXt7FuEnyMQTaR3ib17aXawJpAeAupCWfvM8ipY
-         TOmSJSJCi9bTv5dZBrBezDXEyrYEsuCikdQHyD16bHqZ5+A7iUtAJM0vhR8/Sm8f1H9v
-         0L/A==
+        d=linaro.org; s=google; t=1712772933; x=1713377733; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tXX8VKX+rv9zqtz4L9Nra2C1jH70KvWHrUbepIAmkrw=;
+        b=vY3A+gbPWJ3Q+qcXK7tv4rL4zkXRfzjxoLjPchy+nDwIYYWbmFiLYyyv85jeUJWbCP
+         9ar9eZ3is3FXO0lal+8Gf7mdFB4ZsSXamzzFgIaN1YMKQfqU72LIJi/PX/l8pC0G5stN
+         yuFvRQXjstbG91mYpMV0m72dMZu26xNY+faimRfBN2TXyfcRjiIsKk9/mKzwGnYA2XF4
+         EsasEivyAjvK6/BCuLwFoWyTnQgC2r3zZeXUQj+U9yfsZ3HfqmmFCvzymgmCADWbXOcT
+         lAjSJzEu4IAVgFNuJNLPp4RdCFpVMwt/fp613qVnyGW4e9IfeWQFRRTK80Wjlxoa1+NX
+         Hy3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712772930; x=1713377730;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wIIgCwWsXgtg5bruLAQKszp23oXas8PwjnbukW1ABVE=;
-        b=wc/7kEcwBCNgYVUWm7OGk/IK6X+tk3jR+AkAUDkori86Yh6XYMKpLqMeBR5vBw/z9h
-         GwknaWgBsgp/eIs3r9GYpBn83Ao+UZoOZyAi8X9cRwlM+DoNNa34mNSXRRv8Z6oKeLaE
-         35o/D1vTMDVOoAY3O/m0GTtmipDQylNPEtAu5NYZG+Qb2YOzSaM7pBYAd0EiDnmtD8Eq
-         xUkpTdzhFwViovoWA6pcaOES4ewYm6RkwM7LrIqfwCA6CFppZ6TkEtecUdUfIb25Va+7
-         Dhj7PXPPVPm0yJVOsELakACMNpX/3Zm/H9NJgYwydqdrO8qGyeI8HmHcWATsqvVnHLXz
-         nO3A==
-X-Forwarded-Encrypted: i=1; AJvYcCWtQqiPNX8TWxsnK1QiUblZELzo0TaN8O+BIfSCqHwyxg9Z90CaP5t4Yhfg/Q4bz75D1aVcuWEyMFBlejZL/ULuEpvuNdr523JKcqsNDQ==
-X-Gm-Message-State: AOJu0Yx/VS1lwldx68s4npc84MlBjdBjThUt25q058YpQ3zNwAmTScxl
-	jYRpI8YW3BX/7HH6ctJaX9cFmuKsrOvsrBitKYHEtbLukGbDX6aKUkTcbstfLGk=
-X-Google-Smtp-Source: AGHT+IHa3VzJvP4OihmkofwN3t83NfQ7iiOhP0nYKsaImp6PQcjJKVMYMSyyVk8er1agY3VX8l3E6g==
-X-Received: by 2002:a05:600c:4e93:b0:415:431d:7747 with SMTP id f19-20020a05600c4e9300b00415431d7747mr358784wmq.7.1712772929771;
-        Wed, 10 Apr 2024 11:15:29 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1712772933; x=1713377733;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tXX8VKX+rv9zqtz4L9Nra2C1jH70KvWHrUbepIAmkrw=;
+        b=EL6Q+vcSej4rGsFXn5U4mxu8bmis4G2u/Ca/ZJB/Maea1LzfiXgssE37gUuhl9plpa
+         3uVkzyTsAjRhZxsCB2uVO//35/c8FMmz1Y08hsriAWZB0MpM5f0eyVV4CpM3ulj70hyk
+         CwLjETiE7VWT8eJih90qzFX2JNDz45BNnHwEgSLY+1IcSKsU1GrsqxW3KLrDCFPs9G38
+         xdzWLunpEmCF+Z4x5fams0M+OljUw8ge5K3bRXVMtQxbmstrVBhQ6nx2kHI2k33c2dah
+         nf5YbbIEIJ3v+AvsDAyy1QOOo6GxBR9nza0W2IraWH+ig6V1S4gLMOZ5VBEIybwFAVwg
+         HFxA==
+X-Forwarded-Encrypted: i=1; AJvYcCXGEwvrXK/pl86m68143ATymivHqI4xSVC3ogkVhzAkA0D7hyHGTm1j6FIQeAm1AROczfDM1wp56mOhyOF3pkRPIk1pyMqvYHR8TiKxog==
+X-Gm-Message-State: AOJu0Yw9oD7eITT9ZDJuIcMmxPgvIJYdarIf++I9wnsPOwN2hWYqngEU
+	morD80qxXsfyyxYwstmOVM3uA0qXRSERgHu73RM5ij2hn0zR4GdbMIDX/8sF3bI=
+X-Google-Smtp-Source: AGHT+IGazA6MZys4bTNDrbcrinuoI8bDaxyaA6yDxg8sZ5OMVeOpTl1JLqQsJ93ZXnFnHSgh7rOPfw==
+X-Received: by 2002:a05:600c:4f0c:b0:416:a71e:f2c6 with SMTP id l12-20020a05600c4f0c00b00416a71ef2c6mr2275871wmq.4.1712772933184;
+        Wed, 10 Apr 2024 11:15:33 -0700 (PDT)
 Received: from krzk-bin.. ([178.197.223.16])
-        by smtp.gmail.com with ESMTPSA id d13-20020a05600c3acd00b004161bffa48csm3026487wms.40.2024.04.10.11.15.26
+        by smtp.gmail.com with ESMTPSA id d13-20020a05600c3acd00b004161bffa48csm3026487wms.40.2024.04.10.11.15.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Apr 2024 11:15:29 -0700 (PDT)
+        Wed, 10 Apr 2024 11:15:32 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To: Bjorn Helgaas <bhelgaas@google.com>,
 	Lorenzo Pieralisi <lpieralisi@kernel.org>,
@@ -121,10 +123,12 @@ To: Bjorn Helgaas <bhelgaas@google.com>,
 	linux-renesas-soc@vger.kernel.org,
 	linux-rockchip@lists.infradead.org
 Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2 1/4] dt-bindings: PCI: cdns,cdns-pcie-host: drop redundant msi-parent and pci-bus.yaml
-Date: Wed, 10 Apr 2024 20:15:18 +0200
-Message-Id: <20240410181521.269431-1-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 2/4] dt-bindings: PCI: mediatek,mt7621: add missing child node reg
+Date: Wed, 10 Apr 2024 20:15:19 +0200
+Message-Id: <20240410181521.269431-2-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240410181521.269431-1-krzysztof.kozlowski@linaro.org>
+References: <20240410181521.269431-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -133,10 +137,16 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The binding reference common cdns-pcie-host.yaml, which already defines
-msi-parent and has a reference to pci-bus.yaml schema.  Drop redundant
-pieces here to make it a bit smaller.
+MT7621 PCI host bridge has children which apparently are also PCI host
+bridges, at least that's what the binding suggest.  The children have
+"reg" property, but do not explicitly define it.  Instead they rely on
+pci-bus.yaml schema, but that one has "reg" without any constraints.
 
+Define the "reg" for the children, so the binding will be more specific
+and later will allow dropping reference to deprecated pci-bus.yaml
+schema.
+
+Acked-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
 Acked-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
@@ -145,30 +155,23 @@ Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Changes in v2:
 1. Add tags.
 ---
- Documentation/devicetree/bindings/pci/cdns,cdns-pcie-host.yaml | 3 ---
- 1 file changed, 3 deletions(-)
+ .../devicetree/bindings/pci/mediatek,mt7621-pcie.yaml          | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/pci/cdns,cdns-pcie-host.yaml b/Documentation/devicetree/bindings/pci/cdns,cdns-pcie-host.yaml
-index bc3c48f60fff..a8190d9b100f 100644
---- a/Documentation/devicetree/bindings/pci/cdns,cdns-pcie-host.yaml
-+++ b/Documentation/devicetree/bindings/pci/cdns,cdns-pcie-host.yaml
-@@ -10,7 +10,6 @@ maintainers:
-   - Tom Joseph <tjoseph@cadence.com>
+diff --git a/Documentation/devicetree/bindings/pci/mediatek,mt7621-pcie.yaml b/Documentation/devicetree/bindings/pci/mediatek,mt7621-pcie.yaml
+index e63e6458cea8..61d027239910 100644
+--- a/Documentation/devicetree/bindings/pci/mediatek,mt7621-pcie.yaml
++++ b/Documentation/devicetree/bindings/pci/mediatek,mt7621-pcie.yaml
+@@ -36,6 +36,9 @@ patternProperties:
+     $ref: /schemas/pci/pci-bus.yaml#
  
- allOf:
--  - $ref: /schemas/pci/pci-bus.yaml#
-   - $ref: cdns-pcie-host.yaml#
+     properties:
++      reg:
++        maxItems: 1
++
+       resets:
+         maxItems: 1
  
- properties:
-@@ -25,8 +24,6 @@ properties:
-       - const: reg
-       - const: cfg
- 
--  msi-parent: true
--
- required:
-   - reg
-   - reg-names
 -- 
 2.34.1
 
