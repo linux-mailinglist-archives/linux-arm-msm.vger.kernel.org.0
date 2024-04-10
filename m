@@ -1,176 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-17061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E80089FB54
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 17:17:40 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6569889FAAE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 16:56:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 36862B32261
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 14:53:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E42911F311BC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 14:56:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC7A517557F;
-	Wed, 10 Apr 2024 14:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF39016DECA;
+	Wed, 10 Apr 2024 14:52:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=asem.it header.i=@asem.it header.b="Aq7ta9wm"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KG4YXjQ+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2117.outbound.protection.outlook.com [40.107.93.117])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A92176FA4;
-	Wed, 10 Apr 2024 14:46:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.93.117
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712760405; cv=fail; b=pixxfUtk84LS1v37XkmH0nekHC0S4PsSCK3EJtpH88RryjdYRiQdF6qBkjniM6+GrgDTNVkBUDTx5pnGjV6zFPzi5GOKLU5LrXBGSvFp6YIIZeHoXSHR0SQXP6cQ9Ihy+ssrd0ICgSBw5Uh/8axm5lzDzO4lmvySm5BFWKr5Ffg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712760405; c=relaxed/simple;
-	bh=5RfVlzdFzN8i+18FIBKX07+NCWk7tgSt1gUevMNGWhE=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=YeeqLVLfIE69wi4SMfqNAnc7HvDnc2C3NXpw2xJVZm5Dg2lQbYlLuCfxiS3D8u9hvZ/PPzTENX/Ym8Lv3jcWTsRj7+YAsxsde0rBUMiZt+MaW/bbIBa6JILH75mil9oppk0LaVavMutpccpDCITmj6D5OCcSj9U2LpLXuftzhIs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=asem.it; spf=pass smtp.mailfrom=asem.it; dkim=pass (2048-bit key) header.d=asem.it header.i=@asem.it header.b=Aq7ta9wm; arc=fail smtp.client-ip=40.107.93.117
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=asem.it
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=asem.it
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=CdSaHXjmNdk4JyTGf6c2j7OCl7zxjP7wjM7/5uTu+IsdjAz8Il9ia2lhXT9BVJoBIlDGg5eebqmoYDak8w7U3+zpVO5tate0QupuO4BSX8qc5e3H4CMf5I37RNFN9zDLgNW8+71AFkIc6CeckI5BObOsD3Vwf3n7McKCxsNSBHbScdSVibV+1UueXB3ytBF4XjK5mZ68pG6T38s73ro8E/tfVqnJBkxUmNy1GshuBzotuUpxMzcc2Xt2xmhS+fRiafj5o/TQwtcgvJUTcdmYUhc0cM0J9z/Kd3t/wtBhkIq0umkKphnpGDbOY1ToDMG8JtIsrZFB/A4ITcT+Ox5UqQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5RfVlzdFzN8i+18FIBKX07+NCWk7tgSt1gUevMNGWhE=;
- b=iscAebQwZLwq8RQRYHM1yIVacZqPbH6rWiRI1cyTy7eJSPDmKUlDyjh9TV7+KBIW+HRQ0dwoQarNekZpAwRhj4npJ3cKhpIq+Z/Uzc0ZhCe/dr2mbXw3BAO12c4bmjWvF7ROc9t1IuaNLdqiNEh1RY6N7iJDIEjpYm+9UjNHcCPGiksRAAG8mhobCRjYy9p6eqsiv8y8jO64igRCip3rXF8dd4aR1PdG+6ibN7JGelQ/ZuRPYvgR9HNn5te63XzXFdAIYRT2bvlgcRz8Jc792tcYR8u//hjOqQSbt5U0CcZimwNRPIeaw42KPc3as7ETxJsewc+v7YPAaK+tDQ73ig==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=asem.it; dmarc=pass action=none header.from=asem.it; dkim=pass
- header.d=asem.it; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=asem.it; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5RfVlzdFzN8i+18FIBKX07+NCWk7tgSt1gUevMNGWhE=;
- b=Aq7ta9wmu6O/0u3DLcLp0ImPH7DX6m35t18aUdIPIvVkrrgdIDK8kTYrTC5Ya6+V5V8mnKlQun9205rmYphLMYNfyUMDn4iia1yJJyKgg2nY2yDpBOphhhe5bigko/TFKS7MkYS86NrVG1a9YfdoOmJFE7/CsGgY+rsVVGMXbkEzfdUME4Oqk/Mtkm6ic2Y0zwM3QOlN+atcL2MslDSge1kKVXzwlUkvEe8vYhV8qSubjKkE2yQeRxbZic60Mbr2jOamZnD6rHI1BDd21cmHr/LvevT6At8P3SIZwBwAkn43YGFnRzu5t+qDDAIGs2pTf+WJZ6MyrLckArDcGXFEkw==
-Received: from PH0PR22MB3789.namprd22.prod.outlook.com (2603:10b6:510:29c::11)
- by SA1PR22MB5468.namprd22.prod.outlook.com (2603:10b6:806:3e7::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.46; Wed, 10 Apr
- 2024 14:46:39 +0000
-Received: from PH0PR22MB3789.namprd22.prod.outlook.com
- ([fe80::35ce:ff48:fa8b:d4a7]) by PH0PR22MB3789.namprd22.prod.outlook.com
- ([fe80::35ce:ff48:fa8b:d4a7%7]) with mapi id 15.20.7409.042; Wed, 10 Apr 2024
- 14:46:39 +0000
-From: FLAVIO SULIGOI <f.suligoi@asem.it>
-To: 'Krzysztof Kozlowski' <krzk@kernel.org>, Alexandre Torgue
-	<alexandre.torgue@foss.st.com>, Jose Abreu <joabreu@synopsys.com>, "David S .
- Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub
- Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Maxime Coquelin
-	<mcoquelin.stm32@gmail.com>, Rob Herring <robh@kernel.org>, Krzysztof
- Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Shawn Guo
-	<shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix
- Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio
-	<konrad.dybcio@linaro.org>, Giuseppe Cavallaro <peppe.cavallaro@st.com>
-CC: "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
-	"linux-stm32@st-md-mailman.stormreply.com"
-	<linux-stm32@st-md-mailman.stormreply.com>,
-	"linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, "devicetree@vger.kernel.org"
-	<devicetree@vger.kernel.org>, "imx@lists.linux.dev" <imx@lists.linux.dev>,
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: RE: EXTERNAL: Re: [PATCH 1/6] dt-bindings: net: snps,dwmac: remove
- tx-sched-sp property
-Thread-Topic: EXTERNAL: Re: [PATCH 1/6] dt-bindings: net: snps,dwmac: remove
- tx-sched-sp property
-Thread-Index: AQHah3ELhJkq/tiJlEK+M1aiHLun07FgAKbA
-Date: Wed, 10 Apr 2024 14:46:39 +0000
-Message-ID:
- <PH0PR22MB3789D5548A3D53311BB67F44F9062@PH0PR22MB3789.namprd22.prod.outlook.com>
-References: <20240405152800.638461-1-f.suligoi@asem.it>
- <20240405152800.638461-2-f.suligoi@asem.it>
- <c599d2cd-2871-4f84-94bb-00656c1a9395@kernel.org>
-In-Reply-To: <c599d2cd-2871-4f84-94bb-00656c1a9395@kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PH0PR22MB3789:EE_|SA1PR22MB5468:EE_
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:
- qYDAAZMCCvq/rJnQODzYji7biL4HAIEuLFx0PGV/EyQyLDtAI13fgN4fWaG+dAL4DfJBO9GcfZHvc4oulAPhvSlBmIHPHjjloQW3h/PxdaVh8oSZVUElBge7HkizXnlJOxXF83tSLFHotTJdtzpEI/PjwQMF/rbb9VEmVPSk3gbNRI0WoEzZEzhaPjxSuf17DiMBPs3mXnjYcjbNO08v4Pdypbr662SRd+KI9zX8EuYO/FDpw53akPwZakeojsBt8F7ERmErNY1gsAtE4pKx9dvXxsuFqd1YXyLLTBpptiQFPit+OkJvUsRs9PbSjl/oF/7RlXX/84genqulkw15cw3gZ3VqqHVlywaeonCM3FWu5egr7YqLmtr+2cRB1z4exQ01Pk/HoWJ/XiDVumDxz7ApOpVzwZ/e/4ypEAfPr64EWNE/KbbAjkadZ10OTfY/9BhuMMn2g9feG7l1ReBXIrF7YFvMufV0kkXS7vAdqHkgoucrXxpPge+Wj19FKbEVf34CT3ue99qULQsIaf/7JwPWG7+T9ieToI0SboDlrIeAsA5dWw0Nww+XFEMHBM30smMAgkrTERI3cfMPjQX7IL3lbEdUuj1rlITb9OsS9XPpGVS3Z4P82dDkLQW8JJVIg+Kgblx27jtfHwvZSKYIBCX+SgXm1zzIbHjahsKdrFlPrMZflMCafjLNk5szhKfMV3K+Svl9CXYbpqQDqfnb9Q==
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR22MB3789.namprd22.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376005)(1800799015)(7416005)(366007)(921011);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?RUFqVm1POHhDbk8ySy9lc3FmcWEzTFQyU2dyZlhIL1dhSWtjcDhDd2QxWjBJ?=
- =?utf-8?B?WVJQVk55YUZ6bTdLNUZhYkVka3VnLzIzU2YvVkUwM3IwZk5IajdSQUs3UW1n?=
- =?utf-8?B?U1FMaHNuNTRJMG9PZjdyUUs0dkVNVTBTUSsxZGpuMWd1RUNLaFdZSCtuK0hn?=
- =?utf-8?B?WlJTSkxrRU9MeVp2VEk2QzRTYWxIOStpWXNOV0N5UWlwbEp5Vk1MeWJPanJk?=
- =?utf-8?B?RDR3T0tVTi95OGdYM0RSWjllbWxWSERINHFTelY1eEliR2dMd2tkb0h2N0Ew?=
- =?utf-8?B?cnd0VC9QcWJGRWRwUXpUNCtMdVVRVWxzY05HZmpXQUhCSmU1dkRzSmxQdzhX?=
- =?utf-8?B?YlpVMjZDUHdDWXMrTjdmelZER00vZW1VZGdFYXg4dXYrRWZVV3kwaVQzZ0c3?=
- =?utf-8?B?V1ZSOTlrSmkwOGRRYUtjcHpFaHg3U0lXY3hDUXFLNEZpNUNoeHJyRmN1MkQ3?=
- =?utf-8?B?SmJUdkw4bFBFTkFmd1ZiL3BkQ1dXRERhT1ZMeVVxMGcrUkpGODlhbjlxd29S?=
- =?utf-8?B?ZURITi9KWEM0allnWXJmWm1GamZJMUZKZExwbzhiK28yMTMvRzc1M2Y3WEZZ?=
- =?utf-8?B?a1Z5eGl3TVh2NWtqWTBSREY0Tk54eGFFeXpCSFFuWUJUdkt6aEppMWJSTk5l?=
- =?utf-8?B?bjM2ZDFGbnVaZWNsUFBTVDk4bUpRQ1dZQzZnTVM0Sk5FdGFOY1hZaHc1bXpv?=
- =?utf-8?B?S3k0ZXpML01LY2RtRUx2R0FRSDl6QklQZFhEc0tzaEY5czdBTE1USFQrb1Bo?=
- =?utf-8?B?c2NyYU5YWjRKUDdLdXR2OWhpRW1zSnBGVG53VWlvZWVUSEFIM3F2UlJQK2Vx?=
- =?utf-8?B?THhVRFZDbmVzK3d5RG9ZZVlJb3c5RTB1NVZsbGJCM1MzUHRmc0lqSFBzRldX?=
- =?utf-8?B?UUpwK05YR0gvQVM2dVZtQTVoTURqR0pZYlB6MVd2bkNjU3F1eDdnOVNPSjZ1?=
- =?utf-8?B?ckQzd3REV2ZhenpXeTRGNWd1dGpjMEVGOHpaSk1nUkZSM1F6VXBoSXFIRDRC?=
- =?utf-8?B?MTJCc3REREl3ZEJoaDArZGNPOXFxUExvUE1UYlR3ZVVyaEt0MjVTeXZGREQ1?=
- =?utf-8?B?NGNqeEVsN09tNFJLSFRKbmZScXh2ZUxJUFExV1cwWWcwUmZJa2RWZnZjMmh3?=
- =?utf-8?B?TFdWdjBscU05d1lEMGNyVWxod1M4L1J3ZjVMSXZMdTI3L25UeitoaHhEc3VG?=
- =?utf-8?B?MjdaOExNMWFSZFNFN2lKdkNYK1RpNmF6ME1pY3JpYVlONVYzUmlRMUN3S1lD?=
- =?utf-8?B?TE8wK3hyVlRNaVQwMFp4RUtZTnZDT2g1SkVKbk53bllhazNaT2x0TzVDZmdz?=
- =?utf-8?B?cnladjFFMmVsVG1tUXFHVlp3dXF6LzZrSUkwcVVYbUdGNE1mT1pEcTAwQTB0?=
- =?utf-8?B?cUpqdDc0a1gxeXovbmpUeWFjc01heHczdkVnVEVhRXJqT2ExaDYyOXpoS2pr?=
- =?utf-8?B?YzhNZi9odEMyTk5WWFFXa05ITlFJQ2NWd0J1YUJmYVNnSHBpMGxyVUx3SUVK?=
- =?utf-8?B?eTM5cWxLbTMyTHVBRmhmUmludVAxVi9SbTE3YkJNRUFycmF1dEhLR0h4bWYr?=
- =?utf-8?B?ZytwUitIWEFpdEJPOENEUWtXV0FCYy9PeXZDTTBwcURGQ2RLN3NkMHlTcGRk?=
- =?utf-8?B?Q0tWUk9ycTJ0M0tjWVNsT2pPS3JKSWdmSzBWMlFDeGtrMmVyMitUdDJ1OFhk?=
- =?utf-8?B?cEVxOVFmMVhnTWZPM3RUQzg1cmxpdjg3VEVWOXZET2xLUHFXRkcwZ3NrQXNr?=
- =?utf-8?B?eGhhelZ4d2U0ZEZJUmpiYjJJL1ptTUJGamtobXJFWlJ0L1piWE9BaWVCN1lJ?=
- =?utf-8?B?YjlyQ0ttb2ZxWXByM2gvb3ZUejZyU29TYTRpS3puYm5XdmJVNkNYWVJwb1F3?=
- =?utf-8?B?M2paWU9jWG45TUZ3QmM1cUViTEVnU1k0RzJTU1p5ckxOZTlKaFp4b2VSaEhM?=
- =?utf-8?B?YXFtSnlKc0pTTXhpc1FWUkdtMW5xZ25Hd1JOcDE4STFVNWt5VmdDNTcvQ0x2?=
- =?utf-8?B?WExRd09KWmZ5MjNoTC9nakJSSEI1bG44eHZjVC92NmxQNm9vTHBJMDkxNnc2?=
- =?utf-8?B?dTRudExucHl6TjBVcmxNQTl3MmZReUNHOXF6cDkySXV0Z1A5N1VJckcwVkFi?=
- =?utf-8?B?dXdxMENsc29uaE1SdVpGV3FtcDhrdTF0cDBuOVZoNHQ2TlUzdlVWMUlBcWFh?=
- =?utf-8?Q?mqFurKac9s/PiRGnSLkS9PQ=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B939B1591E1;
+	Wed, 10 Apr 2024 14:52:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1712760744; cv=none; b=movAJwJrP82ouT0yfuJ2ysOT21JucN8idnnJKGujkAghSY26SCS3V4VjMO0wWzfcf5aHnnKtmAWRL9EpjI5/CZatefMXvzOzyMb0STdH7ZLgbKJ0NeEoknIAEQ2xliltHUvey0OLBEcEjbQnhV7ZA/J65zXe9ArgDoR9Z7FGm3M=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1712760744; c=relaxed/simple;
+	bh=pHb6JorI0DA1E9/KxEhk+TcTp1ctv1kMIlPonkHp88A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=s9aN4SoqTSo+VRLyiHZGeaya1/DAFCg8Rgksn6ZNfW1ppGXFWi3ocF1ct4RJPuFBh9HPtZ43S5URawg8HpYsYX0seX0fvqOakeeTNdzohigvmbnTgLfgoeP/b3jum4VcA1J286nsZlu1mTcyRY92u8w0Wl1gkzzkL3pNDkeojbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KG4YXjQ+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE85C433B1;
+	Wed, 10 Apr 2024 14:52:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712760744;
+	bh=pHb6JorI0DA1E9/KxEhk+TcTp1ctv1kMIlPonkHp88A=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=KG4YXjQ+NS5vFj41o9mKwCum3LunWyYZBmYGkhyjynAgWYI4/rsBAtUik8xXtUBaf
+	 /ZM4pZSRsn4aFsS6KYZj8zHmjpCNJHPh1O/Rvv/Ii8jeRh4G45vZGvYYYenvSPnb7z
+	 0j4DiTE9tp/n5psLqSBe0W+ZyH72HpnCPJWRpTgJrxCQYZF7AIE3aV4cFkfQ580lOO
+	 AcSjFh2Q0thU0PZsDzyQp00RBVlkjavi7dfHRRL0KojvUJHfIcaZ+sh5M8LYIj3kJT
+	 j9zF4LJjGu3t4UIvbfUOCbka6vKWWj08J4UPWUBH5BYDDDUGbBZwYl3rOD+gQQ26ug
+	 3jd6iL8j7RiqA==
+Date: Wed, 10 Apr 2024 16:52:18 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	mhi@lists.linux.dev, linux-tegra@vger.kernel.org
+Subject: Re: [PATCH v2 10/10] PCI: qcom: Implement shutdown() callback to
+ properly reset the endpoint devices
+Message-ID: <Zhanol2xi_E2Ypv3@ryzen>
+References: <20240401-pci-epf-rework-v2-0-970dbe90b99d@linaro.org>
+ <20240401-pci-epf-rework-v2-10-970dbe90b99d@linaro.org>
+ <ZgvpnqdjQ39JMRiV@ryzen>
+ <20240403133217.GK25309@thinkpad>
+ <Zg22Dhi2c7U5oqoz@ryzen>
+ <20240410105410.GC2903@thinkpad>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: asem.it
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR22MB3789.namprd22.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d62dbf1f-da0d-4ef7-f5db-08dc596d0791
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Apr 2024 14:46:39.2560
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 855b093e-7340-45c7-9f0c-96150415893e
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: So4KTPyqw5gPIQk6biCoIXGNjOlA7ulIy7AtkGrVD12Sl5l+W8lkfggC9TslzxzTSjshTDx2rOvsdHdZgMfqM3YO/hw1r+g4+fO8dVpo1dH+wfKHJ99WHds7AvN7aQW6
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR22MB5468
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240410105410.GC2903@thinkpad>
 
-SGkgS3J6eXN6dG9mLA0KDQouLi4NCg0KPiBPbiAwNS8wNC8yMDI0IDE3OjI3LCBGbGF2aW8gU3Vs
-aWdvaSB3cm90ZToNCj4gPiBUaGUgcHJvcGVydHkgInR4LXNjaGVkLXNwIiBubyBsb25nZXIgZXhp
-c3RzLCBhcyBpdCB3YXMgcmVtb3ZlZCBmcm9tDQo+IHRoZQ0KPiA+IGZpbGU6DQo+ID4NCj4gPiBk
-cml2ZXJzL25ldC9ldGhlcm5ldC9zdG1pY3JvL3N0bW1hYy9zdG1tYWNfcGxhdGZvcm0uYw0KPiA+
-DQo+ID4gYnkgdGhlIGNvbW1pdDoNCj4gPg0KPiA+IGNvbW1pdCBhZWQ2ODY0MDM1YjEgKCJuZXQ6
-IHN0bW1hYzogcGxhdGZvcm06IERlbGV0ZSBhIHJlZHVuZGFudA0KPiBjb25kaXRpb24NCj4gPiBi
-cmFuY2giKQ0KPiA+DQo+ID4gU2lnbmVkLW9mZi1ieTogRmxhdmlvIFN1bGlnb2kgPGYuc3VsaWdv
-aUBhc2VtLml0Pg0KPiA+IC0tLQ0KPiA+ICAuLi4vZGV2aWNldHJlZS9iaW5kaW5ncy9uZXQvc25w
-cyxkd21hYy55YW1sICAgICAgICB8IDE0IC0tLS0tLS0tLS0tLS0NCj4gLQ0KPiA+ICAxIGZpbGUg
-Y2hhbmdlZCwgMTQgZGVsZXRpb25zKC0pDQo+IA0KPiBPbmUgbW9yZSB0aG91Z2h0IHRob3VnaDoN
-Cj4gMS4gTWlzc2luZyBuZXQtbmV4dCBwYXRjaCBhbm5vdGF0aW9uLA0KPiAyLiBQbGVhc2Ugc3Bs
-aXQgRFRTIGZyb20gbmV0LiBEVFMgZ29lcyB2aWEgc2VwYXJhdGUgdHJlZXMuDQoNClRoYW5rcyBm
-b3IgYWxsIHlvdXIgc3VnZ2VzdGlvbnMuDQpJJ2xsIHJlc2VuZCB0aGUgcGF0Y2hlcywgd2l0aCB5
-b3VyIHN1Z2dlc3RlZCBjaGFuZ2VzIGFuZA0Kc3BsaXR0aW5nIHRoZSBEVFMtcmVsYXRlZCBwYXRj
-aGVzIGluIGEgc2VwYXJhdGUgc2VyaWVzLg0KDQo+IA0KPiBCZXN0IHJlZ2FyZHMsDQo+IEtyenlz
-enRvZg0KDQpCZXN0IHJlZ2FyZHMsDQpGbGF2aW8NCg0K
+On Wed, Apr 10, 2024 at 04:24:10PM +0530, Manivannan Sadhasivam wrote:
+> On Wed, Apr 03, 2024 at 10:03:26PM +0200, Niklas Cassel wrote:
+> > On Wed, Apr 03, 2024 at 07:02:17PM +0530, Manivannan Sadhasivam wrote:
+> > > On Tue, Apr 02, 2024 at 01:18:54PM +0200, Niklas Cassel wrote:
+> > > > On Mon, Apr 01, 2024 at 09:20:36PM +0530, Manivannan Sadhasivam wrote:
+> > > > > PCIe host controller drivers are supposed to properly reset the endpoint
+> > > > > devices during host shutdown/reboot. Currently, Qcom driver doesn't do
+> > > > > anything during host shutdown/reboot, resulting in both PERST# and refclk
+> > > > > getting disabled at the same time. This prevents the endpoint device
+> > > > > firmware to properly reset the state machine. Because, if the refclk is
+> > > > > cutoff immediately along with PERST#, access to device specific registers
+> > > > > within the endpoint will result in a firmware crash.
+> > > > > 
+> > > > > To address this issue, let's call qcom_pcie_host_deinit() inside the
+> > > > > shutdown callback, that asserts PERST# and then cuts off the refclk with a
+> > > > > delay of 1ms, thus allowing the endpoint device firmware to properly
+> > > > > cleanup the state machine.
+> > > > 
+> > > > Hm... a QCOM EP device could be attached to any of the PCIe RC drivers that
+> > > > we have in the kernel, so it seems a bit weird to fix this problem by
+> > > > patching the QCOM RC driver only.
+> > > > 
+> > > > Which DBI call is it that causes this problem during perst assert on EP side?
+> > > > 
+> > > > I assume that it is pci-epf-test:deinit() callback that calls
+> > > > pci_epc_clear_bar(), which calls dw_pcie_ep_clear_bar(), which will both:
+> > > > -clear local data structures, e.g.
+> > > > ep->epf_bar[bar] = NULL;
+> > > > ep->bar_to_atu[bar] = 0;
+> > > > 
+> > > > but also call:
+> > > > __dw_pcie_ep_reset_bar()
+> > > > dw_pcie_disable_atu()
+> > > > 
+> > > > 
+> > > > Do we perhaps need to redesign the .deinit EPF callback?
+> > > > 
+> > > > Considering that we know that .deinit() will only be called on platforms
+> > > > where there will be a fundamental core reset, I guess we could do something
+> > > > like introduce a __dw_pcie_ep_clear_bar() which will only clear the local
+> > > > data structures. (It might not need to do any DBI writes, since the
+> > > > fundamental core reset should have reset all values.)
+> > > > 
+> > > > Or perhaps instead of letting pci_epf_test_epc_deinit() call
+> > > > pci_epf_test_clear_bar()/__pci_epf_test_clear_bar() directly, perhaps let
+> > > > pci_epf_test_epc_deinit() call add a .deinit()/.cleanup() defined in the
+> > > > EPC driver.
+> > > > 
+> > > > This EPC .deinit()/.cleanup() callback would then only clear the
+> > > > local data structures (no DBI writes...).
+> > > > 
+> > > > Something like that?
+> > > > 
+> > > 
+> > > It is not just about the EPF test driver. A function driver may need to do many
+> > > things to properly reset the state machine. Like in the case of MHI driver, it
+> > > needs to reset channel state, mask interrupts etc... and all requires writing to
+> > > some registers. So certainly there should be some time before cutting off the
+> > > refclk.
+> > 
+> > I was more thinking that perhaps we should think of .deinit() as in how
+> > dw_pcie_ep_init() used to be. It was not allowed to have any DBI writes.
+> > (The DBI writes were all in dw_pcie_ep_init_complete()).
+> > So perhaps we could define that a EPF .deinit() callback is not allowed
+> > to have any DBI writes.
+> > 
+> > If we take qcom-ep as an example, as soon as you get a PERST assertion
+> > the qcom-ep driver calls notify_deinit(), then asserts the reset control,
+> > disables clocks and regulators.
+> > 
+> > Since the PCIe core is held in reset, the hardware is in a well defined
+> > state, no? Sure, the data structures e.g. bar_to_iatu[], etc., might be
+> > out of sync, but these could be memset():ed no? Since this is a fundamental
+> > reset, all registers should be reset to their default state (once reset
+> > is deasserted).
+> > 
+> 
+> Well, we could prevent the register access during PERST# assert time in the
+> endpoint, but my worry is that we will end up with 2 version of the cleanup
+> APIs. Lets take an example of dw_pcie_edma_remove() API which gets called
+> during deinit and it touches some eDMA registers.
+> 
+> So should we introduce another API which just clears the sw data structure and
+> not touching the registers? And this may be needed for other generic APIs as
+> well.
+
+I agree that it will be hard to come up with an elegant solution to this
+problem.
+
+These endpoint controllers that cannot do register accesses to their own
+controllers' DBI/register space without the RC providing a refclock are
+really becoming a pain... and the design and complexity of the PCI endpoint
+APIs is what suffers as a result.
+
+PERST could be asserted at any time.
+So for your system to not crash/hang by accessing registers in the controller,
+an EPF driver must be designed with great care to never do any register access
+when it is not safe...
+
+Perhaps the the EPF core should set the state (i.e. init_complete = false,
+even before calling the deinit callback in EPF driver, and perhaps even add
+safe-guards against init_complete in some APIs, so that e.g. a set_bar() call
+cannot trigger a crash because PERST# is asserted.. but even then, it could
+still be asserted in the middle of set_bar()'s execution.)
+
+
+Looking at the databook, it looks like core_clk is derived from pipe_clk
+output of the PHY. The PHY will either use external clock or internal clock.
+
+4.6.2 DBI Protocol Transactions
+it looks like core_clk must be active to read/write the DBI.
+
+I really wish those controllers could e.g. change the clock temporarily
+using a mux, so that it could still perform DBI read/writes when there is
+not external refclk... Something like pm_sel_aux_clk selecting to use the
+aux clk instead of core_clk when in low power states.
+But I don't know the hardware well enough to know if that is possible for
+the DBI, so that might just be wishful thinking...
+
+
+Kind regards,
+Niklas
 
