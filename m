@@ -1,122 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-17012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17013-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 48CA489F088
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 13:18:45 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6C5089F097
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 13:25:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F1D3F1F202CE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 11:18:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 866251F22AB0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 11:25:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFE81159599;
-	Wed, 10 Apr 2024 11:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1258315991D;
+	Wed, 10 Apr 2024 11:25:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="lOVPpHFR"
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="jT0Gk8bA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.zeus03.de (www.zeus03.de [194.117.254.33])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16C547A5C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 11:18:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F151598EE
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 11:25:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712747921; cv=none; b=dRdadfNmB8s4qlq4VeYLVL5ysc8lpJcGGMpKWut5iqkSFdrhZ1t6z27QlF7R6MQNvnTGpj3JdCE2gO/UqCOVoBiYXLYNNcgPKVFjjytbOrKzNeDcz2dJcUhkp0gpjlDPUWIGZ5QJ5/fq8Bix3wqVOAmuVdkSPzmJDzwmytVZKh4=
+	t=1712748311; cv=none; b=rxacTyb/W3kAFZJwRm+pmFdJFeB1yrqnxO8CyqGi866b8W7M9ASX+G+pFDeksY9XB/YPnVrFxDH8Bo9hc4d53nTA2u2c/YKlKas5IRqru2omviJCR2Of9tvKjJwUMxWxB37ZUF9zwucNQQJFfCNImgLc98+njAXOVLXJovQKQHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712747921; c=relaxed/simple;
-	bh=YxEnTnHB1aa7lrwu5qSTZQyyCrPlpqr9h0tNQAOgFSw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ACsgYww2/ZW/n895OjQ7OJJirBvqvQKYFoVp0WzzcnzT8xW9pyqI93M32WfNUDWHw5+tSFevpvyJgPgxWXbtavOAmFL8PiUlPQRPLpDpoNz/gWmumIY1kzUpt7zbhQnMi7VGroIbiQXf8bHg6WFbr5QALSHd+l/7U3fs+Lsy7VQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=lOVPpHFR; arc=none smtp.client-ip=209.85.208.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2d87660d5dbso45608521fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 04:18:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1712747918; x=1713352718; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mlUh/9HYxr9WDC+IOtMkVrTM8E5o44WwLHkm//03KdU=;
-        b=lOVPpHFRXNicaenPhNiTUJNxRJEImUOAe4x/vBMHQ/WCHGC/OfjjyFNKHGJZAVdHjY
-         n27rEU0g3GktWObLt0Udsbw0NZcTEBzrkxGh/WVKIKPQ2DEMDjjKEyAqCN0Blj3QMCGF
-         JqKVizUN8Eh47R43u4vz12GWIF1KAH478uJTk0UXjwuRGBaNL45nLi533iurwxMU93fA
-         r02/z6JN0jUasWIKjGfGRB3vKIA7vvh4F73RLV3RFTzmvTW4Xwm7PVu7N/6d7rU9iaEK
-         hLnHQ9kXseybFmAFWwxUcw6S4ykDsqSKcAl6lh/XLbqKAZPeT3diXlMww9mkmgQ6INOl
-         CJVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712747918; x=1713352718;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mlUh/9HYxr9WDC+IOtMkVrTM8E5o44WwLHkm//03KdU=;
-        b=Lq7PjNt08kFKMbwtEUVI57ForVwCAkaBJRAp6C18WETOwC5p1uN2dDWjaRWIKHj3Py
-         Nif1umLD2svuDXNjJ1VNYzQAVHYkdI22qWWgkjjUOuJyFf0CqvFl8ydwSnKMzQ5SzT/G
-         EimlWrsuttCN7MUuLP6u4ophwq9oLdA5rT28im7QNq4FliXAo6TpPVlZRS22S/0wFvLc
-         CW67/b+DUclMsX41Ccmkpk9adOtpRJVsjUGqjQ/54Jbf4aLuwz4RSUVTc3ccYW97jI4V
-         Ug+9bqOqufpREjoA3y/RatAtbaD/b0ER+1t0KfgbfQboI+9BA4MO/upy4GrcC3MWXI+s
-         GRRg==
-X-Gm-Message-State: AOJu0Ywi0hJvllGYzv4RFVCND7Mp2YgGJEeCxHfFRfCt37ue9kHUCWA2
-	DtK0LxNM/zg38e3tT413qm9qvmVxbr+OzSOpuPryVW/6uILp09+RiKAdP5RKWM/r4RYLaTn7VD0
-	D
-X-Google-Smtp-Source: AGHT+IEW/efrx9l5JQWtRkubDDKZETYoQdnwMrixNvz2olfPJ//CbY7PXwT7EBJZFOar56TUeJE8pw==
-X-Received: by 2002:a2e:990d:0:b0:2d7:1152:d40c with SMTP id v13-20020a2e990d000000b002d71152d40cmr1678697lji.5.1712747918051;
-        Wed, 10 Apr 2024 04:18:38 -0700 (PDT)
-Received: from ?IPV6:2a01:e34:ec24:52e0:bfb2:9137:62d7:74db? ([2a01:e34:ec24:52e0:bfb2:9137:62d7:74db])
-        by smtp.gmail.com with ESMTPSA id j7-20020a05600c190700b00416b035c2d8sm1993794wmq.3.2024.04.10.04.18.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Apr 2024 04:18:37 -0700 (PDT)
-Message-ID: <dac9a62f-f1b8-4456-985d-a5dac9e80de8@freebox.fr>
-Date: Wed, 10 Apr 2024 13:18:37 +0200
+	s=arc-20240116; t=1712748311; c=relaxed/simple;
+	bh=/oCMXaEKV0wQv6hyJYOzYspxu2mEEpt92nD4lJq5TVo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=lH4kG/ZtRj0UpV/Pa+ausKWxSvb8YHoeLmH7ZjCzED0F7qLRwZJ37kOcw2n3wyt9k+vmFdNrhvyFz4P3O1kREHI4WcOKiEJJvRuOUpMpuO9yDBMMOsK4CfDC40czs7gEfPdM0/JlgcaL/O89qbyXxQHP9PIYgCZQTOQBnQc/B9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=jT0Gk8bA; arc=none smtp.client-ip=194.117.254.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	sang-engineering.com; h=from:to:cc:subject:date:message-id
+	:mime-version:content-transfer-encoding; s=k1; bh=RNanGQGWfzY8Ld
+	dZN9BtmYbNVKTZHZwObn8fItBAqK8=; b=jT0Gk8bAMORCC3fi5dKtBczdT+SWtS
+	Ur90S3Q1uouDlicdfEpBcNSLJfpzszbswwlEqlBkKEo/gJqZgyTYwNnT/l42kg1u
+	jCKNParrdoy5IN5KtrND/ODxJjODWMBThyQKunrC8uL76dtK8cijYPbbgs6iM+X9
+	oFSOW30Rsp/9ZLXlttGMTaO3E08kWFL0hNIfEIBjQBW2sZJeRUSQge0X2s3omTnq
+	n5piJX/YYxgLyxigGcxQANsKl+wdagoI2ckzGc5M+DvPUuA1l9Tehh4xQfo48iZJ
+	eKCIINO7NvQHjCrr8EVgyW1i2doKHn0NqksAVd/TzyZNURLygSmZfMGA==
+Received: (qmail 521287 invoked from network); 10 Apr 2024 13:24:57 +0200
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 10 Apr 2024 13:24:57 +0200
+X-UD-Smtp-Session: l3s3148p1@pzTdSbwVgwhtKPEL
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+To: linux-i2c@vger.kernel.org
+Cc: Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-omap@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	linux-rpi-kernel@lists.infradead.org,
+	linux-tegra@vger.kernel.org
+Subject: [PATCH 00/18] i2c: remove printout on handled timeouts
+Date: Wed, 10 Apr 2024 13:24:14 +0200
+Message-ID: <20240410112418.6400-20-wsa+renesas@sang-engineering.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: qcom: mmcc-msm8998: fix vdec low-power mode
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
-Cc: MSM <linux-arm-msm@vger.kernel.org>, linux-clk
- <linux-clk@vger.kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Jeffrey Hugo <quic_jhugo@quicinc.com>,
- Douglas Anderson <dianders@chromium.org>,
- Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>
-References: <c427e89e-7ec6-472e-8ba8-65d5721df62b@freebox.fr>
- <bf1d7f35-e109-48a3-8e95-e35a5b09b809@linaro.org>
-Content-Language: en-US
-From: Marc Gonzalez <mgonzalez@freebox.fr>
-In-Reply-To: <bf1d7f35-e109-48a3-8e95-e35a5b09b809@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 10/04/2024 01:36, Bryan O'Donoghue wrote:
+While working on another cleanup series, I stumbled over the fact that
+some drivers print an error on I2C or SMBus related timeouts. This is
+wrong because it may be an expected state. The client driver on top
+knows this, so let's keep error handling on this level and remove the
+prinouts from controller drivers.
 
-> On 09/04/2024 16:56, Marc Gonzalez wrote:
->
->> Use same code as mmcc-msm8996 with:
->> s/venus_gdsc/video_top_gdsc/
->> s/venus_core0_gdsc/video_subcore0_gdsc/
-> 
-> I think you should explain what this commit is for and why its needed.
-> 
-> Switching on additional GDSC registers that the top/subcore0 and 
-> subcore1 depend on, instead of just saying "copy the code from 8996".
-> 
-> With that fixed.
-> 
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Looking forward to comments,
+
+   Wolfram
 
 
-Superseded by [PATCH v2] clk: qcom: mmcc-msm8998: fix venus clock issue
-Message-ID: <c325691e-1cbe-4589-87fc-b67a41e93294@freebox.fr>
-(Changelog: updated commit log)
+Wolfram Sang (18):
+  i2c: at91-master: remove printout on handled timeouts
+  i2c: bcm-iproc: remove printout on handled timeouts
+  i2c: bcm2835: remove printout on handled timeouts
+  i2c: cadence: remove printout on handled timeouts
+  i2c: davinci: remove printout on handled timeouts
+  i2c: i801: remove printout on handled timeouts
+  i2c: img-scb: remove printout on handled timeouts
+  i2c: ismt: remove printout on handled timeouts
+  i2c: nomadik: remove printout on handled timeouts
+  i2c: omap: remove printout on handled timeouts
+  i2c: qcom-geni: remove printout on handled timeouts
+  i2c: qup: remove printout on handled timeouts
+  i2c: rk3x: remove printout on handled timeouts
+  i2c: sh_mobile: remove printout on handled timeouts
+  i2c: st: remove printout on handled timeouts
+  i2c: tegra: remove printout on handled timeouts
+  i2c: uniphier-f: remove printout on handled timeouts
+  i2c: uniphier: remove printout on handled timeouts
 
-Regards
+ drivers/i2c/busses/i2c-at91-master.c | 1 -
+ drivers/i2c/busses/i2c-bcm-iproc.c   | 2 --
+ drivers/i2c/busses/i2c-bcm2835.c     | 1 -
+ drivers/i2c/busses/i2c-cadence.c     | 2 --
+ drivers/i2c/busses/i2c-davinci.c     | 1 -
+ drivers/i2c/busses/i2c-i801.c        | 4 ++--
+ drivers/i2c/busses/i2c-img-scb.c     | 5 +----
+ drivers/i2c/busses/i2c-ismt.c        | 1 -
+ drivers/i2c/busses/i2c-nomadik.c     | 7 ++-----
+ drivers/i2c/busses/i2c-omap.c        | 1 -
+ drivers/i2c/busses/i2c-qcom-geni.c   | 5 +----
+ drivers/i2c/busses/i2c-qup.c         | 4 +---
+ drivers/i2c/busses/i2c-rk3x.c        | 3 ---
+ drivers/i2c/busses/i2c-sh_mobile.c   | 1 -
+ drivers/i2c/busses/i2c-st.c          | 5 +----
+ drivers/i2c/busses/i2c-tegra.c       | 2 --
+ drivers/i2c/busses/i2c-uniphier-f.c  | 1 -
+ drivers/i2c/busses/i2c-uniphier.c    | 4 +---
+ 18 files changed, 9 insertions(+), 41 deletions(-)
+
+-- 
+2.43.0
 
 
