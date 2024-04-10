@@ -1,87 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-17132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0F778A01C9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 23:12:31 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7971A8A01EF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 23:26:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 524161F241B2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 21:12:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AAAF41C21D48
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Apr 2024 21:26:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D73BA15AAD6;
-	Wed, 10 Apr 2024 21:12:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39C6D1836E2;
+	Wed, 10 Apr 2024 21:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xE0Xkfhp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X7uw442U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04AE7184103
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 21:12:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32AE1836CE;
+	Wed, 10 Apr 2024 21:26:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712783533; cv=none; b=aA+AKKfBzjd/2o6XbsvhOrJFJXY9W5ZfIGCnqIjZxnxF1ZtcRN0oNbqKpFIBNpoQjdB3RybxiOhB0SCfQmHIUEC5EHuHUUVRc3V/mkqSC0xMzlQves8QTsAy+e/nG395+pRnP2a8Z6NkrBWkKWCSHheSm9EF9kVg7Lj0rQZbnpk=
+	t=1712784401; cv=none; b=AdoObEr7Di2ZtUF4ipPNja3TUCdUKDfndtH1GaRgAYCVQEQ2QflGuB6L3fN3YeK2LJVNJPekEneyncpLsRNEmblHp7LKdMS19gaB+3DyUlNznBhgmOSGapaWr2w6q7UDf5Rw2qlcZpywRlOByfAMkOAkqTeM2WyQDqYSKDOSuDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712783533; c=relaxed/simple;
-	bh=g2/A3JDLbLyuZSDEU/o5J/+m0G5LhuRgWZq/iq2coVo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gJFNOVjvKd2A1d57MX66jlFR9QrRWCN5x/3aGOw9YeuxrZtUZc21rN/K4/rYT4mhz8eFtf28URfADmAYNHjwVPqT+TZGmV1Tli34ZVMxwfOL0rbI2lcgVxtt93TJ2OOfrDZkYOu/KTr/BaKxy060bzszUy4Xi0VGxSkwHmYsVeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xE0Xkfhp; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-516b6e75dc3so9201631e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 14:12:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712783530; x=1713388330; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=OZwBCycYY1wJMLbUlMdwvYrZmhATN/7bkb8wxUzPusE=;
-        b=xE0XkfhpLkgpB+V02JGq8p9q5aw28KqnwVEx3mQNUTr/MpfmpZcDYAdxMn1yxHNvjI
-         KFUBWed2SuV1nAPP2sKPcTK2aU0+coc6S0dc9+FaQUxfBYgyyMpuDf2aErSqTk10Eeuy
-         fyASvwQrmh9yGxQpRN4rLPrUF4fom5dkdNUVgppHdIycu8mXGDpr450cUUrIsRtomI1W
-         p6qP0LofvrMECdb1xBAgdqm0Q2Fs9a5fX5EIi6s5Az2ylPrV8uRxQfvxytI/Yz3A55xW
-         u1SilXBSILWNEG2l1WccRNPNDeg2vmvJih1GiwjFFPFdVlgNREAMmx4N1vXVxgZNMCDb
-         0ppQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712783530; x=1713388330;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OZwBCycYY1wJMLbUlMdwvYrZmhATN/7bkb8wxUzPusE=;
-        b=BZAuX43dIxMMIU/GcJIcPJrPHu8fDEpXT6v6ltxcjqoFqSxYA3t0+iH1W2C4yqoKZ5
-         hGTMtnrC9GgNgZfP58XnqU4e2QKn7oRbi3HsiYnHvUt8TqTJFRQIHM88pg3HEOaRaVi0
-         LlJODyg7NHmfxDCRbhNJ24PM0Cat08Y50eMwV9WcvbejLM1n1s230rj+q3vyZ8a0zlvZ
-         VkyHiHippX/BYGAhNbsZwneXcZMhkj/u3fTuZiZAIZtJGP7ACnr0mAipzMLPKOAWuyG1
-         PivlwmN75DWiN8yW96yirx9X4OEud3fBLmFudQdI6cqxeWOPYrhzRkFF8/x6c/Muk1Qr
-         rdPg==
-X-Forwarded-Encrypted: i=1; AJvYcCVvIbIPsQgqn49FSjd66k3JkK2uc3vqgkec7zIyJ4mXCul3uSJYjJYqF+UoZ4Z0W2OnfzPfjG2zFhp++IuBSMryut6Hox3w5LPgyx2exw==
-X-Gm-Message-State: AOJu0Yy27G98pN3nLlS2DBK70kcG3zjBXCwi59VoVwtuNJC3vExLDuoe
-	Ul/lNU3b4SUwxXiWVypDWMaFN2OGDd5QjaNXMrx01Xtoe0+TBve5psUa/SqSk0o=
-X-Google-Smtp-Source: AGHT+IEv0hIWdS315GVXqNlHspgdO9aknWPbaAxmVCl0KLCNKAOV5VVBeSrBTsG/U7qRHbDAMlS2DQ==
-X-Received: by 2002:a05:6512:481d:b0:515:d326:9e0c with SMTP id eo29-20020a056512481d00b00515d3269e0cmr2098229lfb.3.1712783529985;
-        Wed, 10 Apr 2024 14:12:09 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
-        by smtp.gmail.com with ESMTPSA id i26-20020ac25b5a000000b00516d05bb083sm15550lfp.206.2024.04.10.14.12.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Apr 2024 14:12:09 -0700 (PDT)
-Date: Thu, 11 Apr 2024 00:12:08 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Stephen Boyd <swboyd@chromium.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 03/12] drm/msm/dpu: use format-related definitions from
- mdp_common.xml.h
-Message-ID: <uhyqwsevbgvayqf7ky2tasvutpqgvuaa5o7y7scqete3jueuhk@zgji4hgmh4lu>
-References: <20231202214016.1257621-1-dmitry.baryshkov@linaro.org>
- <20231202214016.1257621-4-dmitry.baryshkov@linaro.org>
- <bb448864-b974-55ac-4709-ea89bbd2694f@quicinc.com>
- <CAA8EJpqnjY35RF52yJ8gFRKHoh1ArnnviacDtfntSYZdALD3bQ@mail.gmail.com>
- <83b45b20-fb7e-564b-4e32-2b6a12c4dc6d@quicinc.com>
+	s=arc-20240116; t=1712784401; c=relaxed/simple;
+	bh=ZHY0Qb2p6hZj2F9UUpHFyF1+cCJBE7U8HaVGMIWgfJQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=gSC5sLKRCxDYWJbmzE9UalWM1Zp8qkjhwaoUoMR0dVba0Axb001SaEuyt0SZGt7AywHsJsMyJjmbA8YXGjiZeBIxHzwZubESgLCcMVGSnQDZtBhwNzEIbMwFM3zZXEG1zdM4qHtjp1Q5iplJRPLCbg0o1lJVrDCvnpahd+OPvc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X7uw442U; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5B8C433F1;
+	Wed, 10 Apr 2024 21:26:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712784400;
+	bh=ZHY0Qb2p6hZj2F9UUpHFyF1+cCJBE7U8HaVGMIWgfJQ=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=X7uw442UbgIpqeMvt0lGFcXg86xEWI2esbZmYrlcuSZ0IHUAEfYztCnABCY3OWfcN
+	 qha3LHFaAPenRfxa13l39CP+7GGIX0nvuojS+bJEjDEo/05E+SEw4/981rCoRB7mZ8
+	 AiCC0TmbExTNmCkcQyOEEymnER7zgHtneM1Ex3ay5q4H0OOK9cRxPP9m9yKRxq/6Zo
+	 Kd9xqDj2EzKSRE0wcXWJAeACN6Slg9b5ZPc42hYpHHJ/9g/3XlaGWpH6fKTo1jFdGv
+	 wtWzLc4tD0iN1BOu/0zmhzyFLK8qGFJjMIMUEWb18MkFUt8L+lqhYbq+ugp0UKiIGb
+	 RxRImDtJqxM1w==
+Date: Wed, 10 Apr 2024 16:26:38 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jim Quinlan <jim2101024@gmail.com>,
+	Nicolas Saenz Julienne <nsaenz@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Srikanth Thokala <srikanth.thokala@intel.com>,
+	Ryder Lee <ryder.lee@mediatek.com>,
+	Jianjun Wang <jianjun.wang@mediatek.com>,
+	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Daire McNamara <daire.mcnamara@microchip.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Marek Vasut <marek.vasut+renesas@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Heiko Stuebner <heiko@sntech.de>, Jingoo Han <jingoohan1@gmail.com>,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bharat Kumar Gogada <bharat.kumar.gogada@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Magnus Damm <magnus.damm@gmail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Mark Kettenis <kettenis@openbsd.org>,
+	Tom Joseph <tjoseph@cadence.com>,
+	Ahmad Zainie <wan.ahmad.zainie.wan.mohamad@intel.com>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Thippeswamy Havalige <thippeswamy.havalige@amd.com>,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, asahi@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
+	linux-rpi-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org,
+	linux-rockchip@lists.infradead.org
+Subject: Re: [PATCH v2 2/4] dt-bindings: PCI: mediatek,mt7621: add missing
+ child node reg
+Message-ID: <20240410212638.GA2159326@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,41 +103,53 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <83b45b20-fb7e-564b-4e32-2b6a12c4dc6d@quicinc.com>
+In-Reply-To: <20240410181521.269431-2-krzysztof.kozlowski@linaro.org>
 
-On Wed, Apr 10, 2024 at 01:18:42PM -0700, Abhinav Kumar wrote:
-> 
-> 
-> On 4/10/2024 1:16 PM, Dmitry Baryshkov wrote:
-> > On Wed, 10 Apr 2024 at 23:00, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
-> > > 
-> > > 
-> > > 
-> > > On 12/2/2023 1:40 PM, Dmitry Baryshkov wrote:
-> > > > Instead of having DPU-specific defines, switch to the definitions from
-> > > > the mdp_common.xml.h file. This is the preparation for merged of DPU and
-> > > > MDP format tables.
-> > > > 
-> > > 
-> > > Adding MDP_***__ usages in DPU driver is quite confusing.
-> > > 
-> > > Can we align to a common naming scheme such as DISP_***?
-> > 
-> > No, it's not something display-generic. It is specific to MDP
-> > platforms. In the end DPU is a continuation of the MDP lineup, isn't
-> > it?
-> > 
-> 
-> No some aspects of the hw are completely different as you already know
-> between MDP4/MDP5 and DPU. Bringing back MDP usages into DPU does not seem
-> right.
+On Wed, Apr 10, 2024 at 08:15:19PM +0200, Krzysztof Kozlowski wrote:
+> MT7621 PCI host bridge has children which apparently are also PCI host
+> bridges, at least that's what the binding suggest.
 
-MDP4 is different, it's true. But there is a lot of common between MDP5
-and DPU. Frakly speaking, I don't see an issue with using the constant
-that was defined for MDP5 for DPU layer. Especially since we are also
-going to use mdp_ functions for format handling.
+What does it even mean for a PCI host bridge to have a child that is
+also a PCI host bridge?
 
--- 
-With best wishes
-Dmitry
+Does this mean a driver binds to the "parent" host bridge, enumerates
+the PCI devices below it, and finds a "child" host bridge?
+
+> The children have
+> "reg" property, but do not explicitly define it.  Instead they rely on
+> pci-bus.yaml schema, but that one has "reg" without any constraints.
+> 
+> Define the "reg" for the children, so the binding will be more specific
+> and later will allow dropping reference to deprecated pci-bus.yaml
+> schema.
+> 
+> Acked-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+> Acked-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> ---
+> 
+> Changes in v2:
+> 1. Add tags.
+> ---
+>  .../devicetree/bindings/pci/mediatek,mt7621-pcie.yaml          | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/pci/mediatek,mt7621-pcie.yaml b/Documentation/devicetree/bindings/pci/mediatek,mt7621-pcie.yaml
+> index e63e6458cea8..61d027239910 100644
+> --- a/Documentation/devicetree/bindings/pci/mediatek,mt7621-pcie.yaml
+> +++ b/Documentation/devicetree/bindings/pci/mediatek,mt7621-pcie.yaml
+> @@ -36,6 +36,9 @@ patternProperties:
+>      $ref: /schemas/pci/pci-bus.yaml#
+>  
+>      properties:
+> +      reg:
+> +        maxItems: 1
+> +
+>        resets:
+>          maxItems: 1
+>  
+> -- 
+> 2.34.1
+> 
 
