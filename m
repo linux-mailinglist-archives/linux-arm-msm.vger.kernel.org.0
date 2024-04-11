@@ -1,192 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-17283-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17284-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 872408A1F36
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 21:11:17 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7498A8A1F4C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 21:15:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3CA922886E8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 19:11:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2A1D7289830
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 19:15:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54715205E39;
-	Thu, 11 Apr 2024 19:09:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1C7A12E5D;
+	Thu, 11 Apr 2024 19:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ql4Lf75Z"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="h8EVJYsH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A25053E47F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 19:09:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426E912E7F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 19:15:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712862588; cv=none; b=ZRxy/MP4PlAjv0P6fr6nwVN3TzHlI8nqGYTJTlWZv7A9SGSlwXxU0zDdzAVZT3IZMI32YykhZQq3Kal4PaSeLwfVnq1rx/S+aLXNHFVTYYLxgETgixGfDsDIDSDy1BFbzk1MPtbxtGEVB83IwGHPGyJy5hptkLlufAzVfboU7p8=
+	t=1712862938; cv=none; b=tulvBrrCr3yQTsesnJXqvSReIm7yR9L1W8Z3l34h6Uz6kbrDqbEMoNP9aFlgjWqhq3mRfOBiMirfCxxDmAkNVopEj5Kehk1LeQvuT+QONgAVVhnfx6NCynB3M0/LLin8HNp691n571muNNp7GAzZACCdI9dbKeLd72HEhxhchGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712862588; c=relaxed/simple;
-	bh=cavp+LCNLjYxo6Suwi+ERHyAc4fJGNXh1VhWah1icVk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tQuUM5UwqMOHF6syCnBZT5ObIoysQPk7bk2qPrYn4td2oAkvEFYJ5GrCdb/sawvJv63Z/3HsJzDhClKuU96kd3scPJujtXwQECD8AkxGu+jXG5mCGxjXPmxBXQ9v70l4D6AyuOC59vohFaF0CnT6UgmcPcmpwUqb77hlwS2hBLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ql4Lf75Z; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-343e46ec237so63000f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 12:09:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712862585; x=1713467385; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Bot4p4qlJzYz0f8yI25gEfAhoAL7UL+ZFzOhOHx9Urw=;
-        b=Ql4Lf75ZAGEvXrVG8OXV+eJ2Cx/NY9M9TMOPrMMYp/b7hqc4BQGKFvVi7+Bn7H4jVz
-         JWi9AGIhKpBf3DTgcrMQiIfJq6/aPEAW3S/ho50PLW2IEGPykzyoNBzHTaPiqRsOgFZi
-         p9RNPcxqIdZOOPJAf8VRLYyAkYAyt3c34p47LeOeU1YaCE4PJYZn8oJTrEtRxqvbBNBx
-         b1+w2OUxJH5H2Mp3pytz8QwIR47fw9b6cBeV+/Yf+u4sG0pfg7IrPuWLE6PAu6RipqJv
-         q/Cx3Q8y36ePVSwY9NS41pgnTUY10qcWxAPCrk++j2gOfSudMVHFPq60kN2UXbJX0jHR
-         +kQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712862585; x=1713467385;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Bot4p4qlJzYz0f8yI25gEfAhoAL7UL+ZFzOhOHx9Urw=;
-        b=PUs+fyh/qa+uF50d7nvNsAO8EIwEoZcMxOqtbUdvi0ABJwds+BCO8mGJKHC2dSyxFF
-         iXqe2GwyNuZDHbYF6rLzMrsN/aqcj0/F6cmzgcNcHzPnI28jcxiKuF8p8WwzLExbzuja
-         F87SXnWgSya2yXlN+qk3R5fJTc+pkTJA/RiKOaYa9DkEQa0sTZlqGlhJGQt2pdJnVfQB
-         6UDFVdzioMG+95fATZKCCTzBDwQThoZElYwJYXiv1FfoUJ56EW/Almus9TSeYocb3UDG
-         fP6FSMxF5sularWmD5Yczi8Mh1uvdp9zXy/N5I7AglNnTO4Yy7mKl7JE4OJM+srqqvK4
-         vQjQ==
-X-Gm-Message-State: AOJu0YyT2ATKrG0GKrBdkvOaS6TTBrZKO14EEJD0rFfgr7mrBAoi6oxN
-	A0VpSRWcKg9pYOMu6R9KwO9kWC0zusJeyUk1G3reui+k5tA5hflJHMQ2PWATG0Y=
-X-Google-Smtp-Source: AGHT+IHZUOS5brHa+g2Cz4HV010NylLE8FMAZeToMRc2tDxi39AIESJYbq0cm/SDQ8sFrPU3mNk+qg==
-X-Received: by 2002:a05:6000:11c2:b0:343:878d:d691 with SMTP id i2-20020a05600011c200b00343878dd691mr284875wrx.47.1712862584830;
-        Thu, 11 Apr 2024 12:09:44 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.16])
-        by smtp.gmail.com with ESMTPSA id d16-20020adff2d0000000b003418364032asm2405193wrp.112.2024.04.11.12.09.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Apr 2024 12:09:44 -0700 (PDT)
-Message-ID: <dcf612e6-cfe6-4a4d-8001-2e9912534807@linaro.org>
-Date: Thu, 11 Apr 2024 21:09:42 +0200
+	s=arc-20240116; t=1712862938; c=relaxed/simple;
+	bh=//gbCcqdyQa2JDiDdLBR2VARKZHsMKRjvUy/djMfi2I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=tam76BUQBUA6SzuPsUWelAyN6TOD3GRTaxkQNVRwc92paekgtOu+QkqoRun27XPVeR3lrdEFrt6gb0wWW/wM1NFXHuMRGe2jHaZ2HV+rsaoBCD8EVxnGcP2sZUAZHCGyB6bKrLfhkGiHcprwizs85hANvL0INwoy8Ab16IJ12KQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=h8EVJYsH; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43BCQM8V021068;
+	Thu, 11 Apr 2024 19:15:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=9eshpJjk3UKmFunENSmec0N439eYk7Xaf/C8tL4hnAM=; b=h8
+	EVJYsH3ksUDFyhyzrzT44DDJmi+qysuiU5c51NeU5Vt72Q8WV/X7G75yQ+lq/Aer
+	GQRQNwlbi91fAzM1egzGSkpSVgsNs4GVvEZPCo0F5dj0EoVk0mpDxGLwEIDi3Ljc
+	0bzGuyw/e6vVBKmG/M45gMNvzxIMHsUzgR6yUTFj08AUqF7p1aoQF8DytgylXHSL
+	2PqpsdWHUOR88++cpBvvRUzJcHWIHdfSanfs7BSpChdWA6twqN71yb0b3EBX539B
+	MTNqy8qlVN4WqVc1MAdSf6KPTxLZzg46kxxeNAz5Ct4FleW+zryTSbwlN0jpX5SW
+	E4ZvfnYi68p4Q3EPz45Q==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xe5ehuqd1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 11 Apr 2024 19:15:27 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43BJFQ4m007776
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 11 Apr 2024 19:15:26 GMT
+Received: from [10.71.109.81] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 11 Apr
+ 2024 12:15:25 -0700
+Message-ID: <1e7706ab-d2f4-baf9-90c7-f5a81959920f@quicinc.com>
+Date: Thu, 11 Apr 2024 12:15:25 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/7] dt-bindings: PCI: qcom: Add IPQ9574 PCIe
- controller
-To: mr.nuke.me@gmail.com, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240409190833.3485824-1-mr.nuke.me@gmail.com>
- <20240409190833.3485824-4-mr.nuke.me@gmail.com>
- <dbee301e-2e31-4db0-877a-96c972ea4bca@linaro.org>
- <bcb03c7d-f566-11cc-21e2-47e5c5a0776a@gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 07/12] drm/msm: merge dpu_format and mdp_format in struct
+ msm_format
 Content-Language: en-US
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <bcb03c7d-f566-11cc-21e2-47e5c5a0776a@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>
+CC: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20231202214016.1257621-1-dmitry.baryshkov@linaro.org>
+ <20231202214016.1257621-8-dmitry.baryshkov@linaro.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20231202214016.1257621-8-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Bgbiv4zxWVLT05nkfG2HAsiSuvaHbHxi
+X-Proofpoint-ORIG-GUID: Bgbiv4zxWVLT05nkfG2HAsiSuvaHbHxi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-11_10,2024-04-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
+ priorityscore=1501 adultscore=0 bulkscore=0 lowpriorityscore=0
+ impostorscore=0 phishscore=0 mlxlogscore=999 spamscore=0 suspectscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404110141
 
-On 11/04/2024 20:00, mr.nuke.me@gmail.com wrote:
-> 
-> 
-> On 4/9/24 15:08, Krzysztof Kozlowski wrote:
->> On 09/04/2024 21:08, Alexandru Gagniuc wrote:
->>> IPQ9574 has PCIe controllers which are almost identical to IPQ6018.
->>> The only difference is that the "iface" clock is not required.
->>> Document this difference along with the compatible string.
->>>
->>> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
->>> ---
->>>   .../devicetree/bindings/pci/qcom,pcie.yaml    | 34 +++++++++++++++++++
->>>   1 file changed, 34 insertions(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->>> index cf9a6910b542..1915bea580d3 100644
->>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->>> @@ -26,6 +26,7 @@ properties:
->>>             - qcom,pcie-ipq8064-v2
->>>             - qcom,pcie-ipq8074
->>>             - qcom,pcie-ipq8074-gen3
->>> +          - qcom,pcie-ipq9574
->>>             - qcom,pcie-msm8996
->>>             - qcom,pcie-qcs404
->>>             - qcom,pcie-sdm845
->>> @@ -397,6 +398,37 @@ allOf:
->>>               - const: axi_m_sticky # AXI Master Sticky reset
->>>               - const: axi_s_sticky # AXI Slave Sticky reset
->>>   
->>
->> Where do you constrain the reg?
-> 
-> I didn't realize that was also required -- the make checks should have 
-> picked this up too? I might be invoking the tests incorrectly.
-> 
-> I should add the ipq9574 in the same list as ipq8074-gen3 and ipq6018, 
-> correct?
 
-If you add new variant, look at existing compatibles where they appear.
-If there is a if: constraining compatibles, then it's a hint you should
-do the same for your device. So yes, you must constrain all properties
-which are made flexible in top-level properties.
 
-Best regards,
-Krzysztof
+On 12/2/2023 1:40 PM, Dmitry Baryshkov wrote:
+> Structures dpu_format and mdp_format are largely the same structures.
+> In order to remove duplication between format databases, merge these two
+> stucture definitions into the global struct msm_format.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      |  12 +-
+>   .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  |   2 +-
+>   .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   |   2 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c   | 184 ++++++++++--------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h   |   2 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c   |  10 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h   |   2 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h   |  41 +---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c   |  30 +--
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h   |   6 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c   |  14 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h   |   4 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c     |  16 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h     |   2 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     |  74 +++----
+>   drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c     |   4 +-
+>   drivers/gpu/drm/msm/disp/mdp4/mdp4_plane.c    |  26 +--
+>   drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c     |   7 +-
+>   drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c    |  54 ++---
+>   drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c      |   4 +-
+>   drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.h      |   2 +-
+>   drivers/gpu/drm/msm/disp/mdp_format.c         |  28 ++-
+>   drivers/gpu/drm/msm/disp/mdp_kms.h            |  13 --
+>   drivers/gpu/drm/msm/msm_drv.h                 |  28 +++
+>   24 files changed, 279 insertions(+), 288 deletions(-)
+> 
 
+<snip>
+
+>   int mdp5_smp_assign(struct mdp5_smp *smp, struct mdp5_smp_state *state,
+> diff --git a/drivers/gpu/drm/msm/disp/mdp_format.c b/drivers/gpu/drm/msm/disp/mdp_format.c
+> index 30919641c813..5fc55f41e74f 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp_format.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp_format.c
+> @@ -63,26 +63,24 @@ static struct csc_cfg csc_convert[CSC_MAX] = {
+>   };
+>   
+>   #define FMT(name, a, r, g, b, e0, e1, e2, e3, alpha, tight, c, cnt, fp, cs, yuv) { \
+> -		.base = {                                        \
+> -			.pixel_format = DRM_FORMAT_ ## name,     \
+> -			.flags = yuv ? MSM_FORMAT_FLAG_YUV : 0,  \
+> -		},                                               \
+> +		.pixel_format = DRM_FORMAT_ ## name,             \
+>   		.bpc_a = BPC ## a ## A,                          \
+> -		.bpc_r = BPC ## r,                               \
+> -		.bpc_g = BPC ## g,                               \
+> -		.bpc_b = BPC ## b,                               \
+> -		.unpack = { e0, e1, e2, e3 },                    \
+> +		.bpc_r_cr = BPC ## r,                            \
+> +		.bpc_g_y = BPC ## g,                             \
+> +		.bpc_b_cb = BPC ## b,                            \
+> +		.element = { e0, e1, e2, e3 },                   \
+> +		.fetch_type = fp,                                \
+> +		.chroma_sample = cs,                             \
+>   		.alpha_enable = alpha,                           \
+>   		.unpack_tight = tight,                           \
+> -		.cpp = c,                                        \
+>   		.unpack_count = cnt,                             \
+> -		.fetch_type = fp,                                \
+> -		.chroma_sample = cs,                             \
+
+Minor nit:
+
+These two lines are only moving the locations of assignment so 
+unnecessary change?
+
+Rest LGTM,
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+For validation, are you relying mostly on the CI here OR also other 
+internal farms? Even though mostly its just making code common, basic 
+display coming up on one target each of MDP4/MDP5/DPU will be great to 
+be safe.
 
