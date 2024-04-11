@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-17229-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17230-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8BE0E8A13DA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 14:02:44 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 569438A13E9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 14:04:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 055661F21280
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 12:02:44 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 82CE0B254D5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 12:04:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEC53145FEE;
-	Thu, 11 Apr 2024 12:02:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5353814A4E7;
+	Thu, 11 Apr 2024 12:03:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GmHqhhpM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yXDtg14+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDDA014AD2E
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 12:02:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6B014B071
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 12:03:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712836948; cv=none; b=tETWDZfJXnGIoJqWMfef1rqT2lDlF4OIDTX1mc4ZP9lSrtKcmQ2arUj6y0eMNcQZYK327puZl4giWVAoQ67CFATrQMqaJV5k3YBiboFKYCF5YXWypnVB440La3fEbXKYpU62Z5IQt5P+DCg/iY7q2S2944fZAMliNtVhBGMuyFY=
+	t=1712837030; cv=none; b=PcxLU8K1Ir8NrlwhQEWa37V/VlbbZMHZpozCM8ciLd9TGXNK4VUKhxRQgntWczqMPa+2XS2g718dIyorpE2BjX/X7mFXU3XMGg3q8Kt5+G9Uk3x7mjZeEl5Ypsu/9N7VAYOnsVu+N9RNcT4HopbwTey7VqDfrcpuGJRDQvoeH0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712836948; c=relaxed/simple;
-	bh=9ls8PLlmdnopOcrtnkQHx8TIJ9694JVXbjxhNM7DEtg=;
+	s=arc-20240116; t=1712837030; c=relaxed/simple;
+	bh=YsvOlpZLPoUHIkr3UaqpI48VTI/10LmLMkVaA+4714w=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LRWuIjNvlkTBwvuxnGV4zHnAW8IUEZlRPeOzN/5MVm6uobjywUAopOvYsDlJir7D8gjUXf0e4mPx/z5xl1UNbBLwfVYK4byNZH4C4O6Cx2Xi5nQ6wRADlxPRySnpDthFfSjDSMwI2gx9kt7WIWEJ4oA2tTtVAn1u8GnHQFWlj+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GmHqhhpM; arc=none smtp.client-ip=209.85.208.182
+	 In-Reply-To:Content-Type; b=S12FBAhrr2qhrRUfWCkdZtSKdfj7qAkWog9wBsWyVWcImCtuDDzwMVQZhrc4RBj6iHOdfsdeAZpJivUmUa96FCv3gWkLvfmKWrmq7GwZHq3qpWFxj4Jevi454NnzX3MS6d+xIdwTUXIzsf8zGfUhRdMctMEsp9j8IaInOJxeWOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yXDtg14+; arc=none smtp.client-ip=209.85.167.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2d88a869ce6so54944601fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 05:02:26 -0700 (PDT)
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-516d6c1e238so6865280e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 05:03:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712836945; x=1713441745; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1712837026; x=1713441826; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=V9ZPnaHFEWBZiCEODVKVvmrTMBwzRAOjL7TRk9ZMvQM=;
-        b=GmHqhhpMk1AVM1taKy0n0Ii2pcTLCQNQvCx6h6ikAwANz1O1n4JIZ3QwxXU0VZ0yRI
-         c/n0ME3w69fcfcOQO/o/F4YXxxTkcXwqKNUFIUTfN/ecmqmESEKcRQpZQMojg4lyZAhv
-         r5/RdMm7lzQg0R5Dgl4c63JPjE7W51v31iRjdhV2QB+Dfihw3Cd8fP2uwbhl0fNK6VnP
-         B03VP24DEE0C2AlbTNts2vyELGE4e9aaNql+zm6IZ1U+dBbzoDCTPP3xIhMsXo0VCryb
-         ukSD/Vzs8dXr6og49Smp94KyxwOgfVZAbqBEOkbHtditCcIY4YvF9wswJpKDgvw0RFwh
-         nkEA==
+        bh=IexOE42EXTCOMSvPu8H/Y3qybAXhflAFb2Zkj0hmMMo=;
+        b=yXDtg14+lwrwAa0hN+p6zE4ww6KIx6SwWzr79JOMnQeMf2AOqELroEAxKbNDMRa2Wt
+         Pig46UAMaJZQ9i0HKcEpieWxUDt7j1vkDNq+6sTsO+L6DfT9SBmj1ekw2wQiyb1SnJ0J
+         Fb0xZcUdcZH6tE7Yd60CvgVdw1v1f9c7/K8VBp2BiTkMyNWk45msU21pQOMbxQDWeNmJ
+         3xjsgA7x4aAkgdypTultVyXs4YghkLCoM7I3rAU3jW5KlahuNsmbpQfdroINEzQaBIiK
+         d3+Y3gswsCEbrCAr25rtTpeEAjg76zgDSodmv6V/A9t1uU0lg3XzAnYArOZQ7H48Zfof
+         R2Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712836945; x=1713441745;
+        d=1e100.net; s=20230601; t=1712837026; x=1713441826;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=V9ZPnaHFEWBZiCEODVKVvmrTMBwzRAOjL7TRk9ZMvQM=;
-        b=qd+UI+LbegW0gME/HSDeJjAqIfKmYbyruj/JY/QpLnk3fXQQ3P0GBk2NKNDcK/j2Y9
-         322zHq+hyJ/9/ygRbe573oGttWr45FkLk1rbIcgo3GoL4oNSX6ed/C+e2Qyon8QWgHAi
-         n65MNzvymiRT2LfMNQRn1P/beFPt10PB6meXX86NZZAazHqO9rnd1vjvS9z6os90Jv/Z
-         /ijU5mqpHn43TpTYcqA8H7FP0aIvxZGE7QesgwqNzdGAx/uszm22QGoc6jFxgrQEGFAi
-         H+NB1YuMQkOzoLReMLv6Plkdld50M1anyhF6YhkBMizMAcGJBfKYNAU+K86YQ3dVhPIK
-         XQfQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXjBOnaT9I+ohO+EUcyzUrtd1HhSoaNgJK+SobKAOXClxuXRVnb5hByX59JrMl6JAHNJJwihpucP9xiylyUZ7UF9qMwPtbug1blv2rf7A==
-X-Gm-Message-State: AOJu0YwVgJcuoUPIlW4g0gxz19TeLRlz+QHxkTxE8Vauvf1uYv9PSmOS
-	4Wv1Q1QOf4o/BHixO/tNrd+qbV12vpbKowbAPdnFypUjaplGkJCh6G6RroZ0dbg=
-X-Google-Smtp-Source: AGHT+IGncO5GPoknGCPd3eZvPMr23QNEZLCQHNuYIqMmvx/y4L4nEaQRbyGRds5AdTQUhwMNlUfmTQ==
-X-Received: by 2002:a2e:8907:0:b0:2d8:5af3:bb43 with SMTP id d7-20020a2e8907000000b002d85af3bb43mr3811766lji.41.1712836944978;
-        Thu, 11 Apr 2024 05:02:24 -0700 (PDT)
+        bh=IexOE42EXTCOMSvPu8H/Y3qybAXhflAFb2Zkj0hmMMo=;
+        b=SCwMFIDQbTGxRP6AngDl70lEuGkwN7FAFPvqfXXJbvkPwriLIBWyW1o236XhXpZWsQ
+         +pzUKKC+f3wakNISQmiqn2hZoi20v6VJbZ3+ybP9ddOxeBD0RG9FDkKkHTtzthDKxZVV
+         yWr0rZE/xHlIIiBUdvEm6U6m434NBgF02DYg/0lzZZcr+JhOcFKcQk83DzVlzfrevzPz
+         YLdCbiasHSLkixRanmYmiQwxprZKWYoWHFkJ7QJXjWAQ+usp2f4RA7vbP7crUJL2QK20
+         33FjlYCgNtbeuqDnnAp7lucU/Sv2bimMcPLAEqP8/hh5bkAo1Q0xV9vJ7xEJoHe4q8qm
+         3/hQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW+2LjxsPaXzSprkwpiO0E4YhRan8/LdHOjKV1q9BfbSe1BLqqMAYpuCfz5nHTLmhkneSrAZ2zhYQKADzj0ZFl9hFYa6sY6b9JAhzCdvg==
+X-Gm-Message-State: AOJu0YzJmrsxIye1vuXZbNZeezsBxsVNaKWNXYJNos6WFXFocizuqkrI
+	NvdxEoNCmqvMl4rOacpApbrk1jU6u1iwZehnN/1eIyNlPqyRUJPPgU8lDdgAuek=
+X-Google-Smtp-Source: AGHT+IF1KtcyUIBtnfg9KDZ5b4T9mpjn2O9ESuRogKrYvOyQsokLU/sC0dQ19l+xWvmO15eVlw7Akw==
+X-Received: by 2002:a19:380f:0:b0:516:d259:ee5f with SMTP id f15-20020a19380f000000b00516d259ee5fmr3149347lfa.7.1712837026285;
+        Thu, 11 Apr 2024 05:03:46 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.223.16])
-        by smtp.gmail.com with ESMTPSA id r10-20020a05600c35ca00b00415dfa709dasm2128717wmq.15.2024.04.11.05.02.23
+        by smtp.gmail.com with ESMTPSA id g16-20020a05600c311000b00417e31724c3sm898855wmo.13.2024.04.11.05.03.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Apr 2024 05:02:24 -0700 (PDT)
-Message-ID: <073d7867-844c-4636-b8af-f39e9cb44f3f@linaro.org>
-Date: Thu, 11 Apr 2024 14:02:22 +0200
+        Thu, 11 Apr 2024 05:03:45 -0700 (PDT)
+Message-ID: <0b810e39-b82f-4cca-87b0-6e586690b242@linaro.org>
+Date: Thu, 11 Apr 2024 14:03:43 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,8 +79,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] Revert "Revert "dt-bindings: i2c: qcom-cci: Document
  sc8280xp compatible""
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>, Robert Foss <rfoss@kernel.org>,
  Loic Poulain <loic.poulain@linaro.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -88,13 +87,6 @@ To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
 Cc: Neil Armstrong <neil.armstrong@linaro.org>, linux-i2c@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
 References: <20240411085218.450237-1-vladimir.zapolskiy@linaro.org>
- <94779d2c-d159-4429-b0b2-6baa83461bbd@linaro.org>
- <1b4f745b-67d3-4044-9b89-de6c2c496af5@linaro.org>
- <b6d9702d-4736-44cf-9a52-b476af4bf94c@linaro.org>
- <7ef1c0e0-bd28-43f1-a46e-4fa551714e82@linaro.org>
- <d6a92b15-f68e-4e01-aad1-6483d53b9ad9@nexus-software.ie>
- <dee67a35-62bc-4ef0-b57a-d163c6679c6b@linaro.org>
- <acca5b79-6c53-4339-b5eb-5a81b7048139@linaro.org>
 Content-Language: en-US
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -141,73 +133,23 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <acca5b79-6c53-4339-b5eb-5a81b7048139@linaro.org>
+In-Reply-To: <20240411085218.450237-1-vladimir.zapolskiy@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11/04/2024 13:57, Bryan O'Donoghue wrote:
-> On 11/04/2024 11:28, Krzysztof Kozlowski wrote:
->> On 11/04/2024 12:24, Bryan O'Donoghue wrote:
->>> On 11/04/2024 11:18, Krzysztof Kozlowski wrote:
->>>> On 11/04/2024 12:16, Krzysztof Kozlowski wrote:
->>>>> On 11/04/2024 12:12, Bryan O'Donoghue wrote:
->>>>>> On 11/04/2024 10:36, Krzysztof Kozlowski wrote:
->>>>>>> On 11/04/2024 10:52, Vladimir Zapolskiy wrote:
->>>>>>>> This reverts commit 3e383dce513f426b7d79c0e6f8afe5d22a581f58.
->>>>>>>>
->>>>>>>> The commit ae2a1f0f2cb5 ("dt-bindings: i2c: qcom-cci: Document sc8280xp compatible")
->>>>>>>> was correct apparently, it is required to describe the sc8280xp-cci
->>>>>>>> controller properly, as well it eliminates dtbs_check warnings.
->>>>>>>>
->>>>>>>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
->>>>>>>
->>>>>>> I am lost. Not on your patch, because it looks reasonable, but on entire
->>>>>>> history.
->>>>>>>
->>>>>>> Can anyone explain me why original commit was reverted?
->>>>>>>
->>>>>>> https://lore.kernel.org/all/767bc246-a0a0-4dad-badc-81ed50573832@linaro.org/
->>>>>>>
->>>>>>> Best regards,
->>>>>>> Krzysztof
->>>>>>>
->>>>>>
->>>>>> https://patchwork.ozlabs.org/project/devicetree-bindings/cover/20231006120159.3413789-1-bryan.odonoghue@linaro.org/#3195094
->>>>>>
->>>>>> We can you sm8250-cci instead, so dropped the additional compat.
->>>>>
->>>>> I am sorry, but that links point to cover letter and actually the same
->>>>> thread as I linked. What does it prove?
->>>>>
->>>>
->>>> And just to remind because you bring some discussions from driver: we
->>>> talk here *only* about bindings patch. Not driver.
->>>
->>> https://patchwork.ozlabs.org/project/devicetree-bindings/cover/20231006120159.3413789-1-bryan.odonoghue@linaro.org/#3195327
->>>
->>> Konrad pointed out we don't need a new compat because the sm8250 compat
->>> string could be reused.
->>
->> Where did he point that? I see only comment about driver, not bindings.
->> Please point me to his comment (and again, not patchwork which gives you
->> entire discussion and no one knows to which comment you refer, but lore
->> link which leads to specific one email where Konrad said it).
+On 11/04/2024 10:52, Vladimir Zapolskiy wrote:
+> This reverts commit 3e383dce513f426b7d79c0e6f8afe5d22a581f58.
 > 
-> Konrad made a comment about the compat string in the driver, I looked at 
-> the yaml and realised I could reuse the compat string.
-
-For the driver. The YAML was correct, wasn't it? It got reviewed and it
-was about entirely different SoC, not sm8250. You cannot use sm8250 as
-sc8280xp in the binding. These SoCs do not share anything.
-
+> The commit ae2a1f0f2cb5 ("dt-bindings: i2c: qcom-cci: Document sc8280xp compatible")
+> was correct apparently, it is required to describe the sc8280xp-cci
+> controller properly, as well it eliminates dtbs_check warnings.
 > 
-> Then asked for a reversion of the add.
-> 
-> I still think this is the right thing to do, no ?
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-So if IIUC, the misunderstanding was about the driver/binding.
+Subject:
+dt-bindings: i2c: Revert ....
 
-Then no, binding should have been dropped.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
