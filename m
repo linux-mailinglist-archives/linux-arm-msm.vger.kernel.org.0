@@ -1,220 +1,216 @@
-Return-Path: <linux-arm-msm+bounces-17186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F0C68A0A06
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 09:38:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 79D838A0AD1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 10:05:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A09751C22CD6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 07:38:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 984F31C2157B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 08:05:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8F6113E039;
-	Thu, 11 Apr 2024 07:35:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06E7B13F435;
+	Thu, 11 Apr 2024 08:05:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="NyK6FcWt"
+	dkim=pass (2048-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="K32ceWbo";
+	dkim=permerror (0-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="hbAjU+1d"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA29313EFE9
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 07:35:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712820936; cv=none; b=T7s2kjdFzk/QmIBWDZa1XFtB/vTLaxWFd0U3mkH/pmKAFqkXkbUtyaK2GxPSul0pveZfskBMrLKWB8m0MC+Sca4cVi8/PhZAkWRQqAwdd8Hg1/3sWSHsXqu0S7pQOgajT9df5+TgxKQLycqoNq0NwTOXJo9tHhzeJEZY2WHGPYc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712820936; c=relaxed/simple;
-	bh=DY/4DerGRBb0QqlGFg3p8xcWt1msP7cUgXqVJUnYvXc=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
-	 References:In-Reply-To; b=nr4fByAxYXLzDSwiIBLNeYaSa8IXWxLGsSPD8/si4CsTqXxNmxeTYn23f62D6es06bvLFusLsOIfTMg7+ZOurvAu/rg6ZGgGg6zym0yRU0knjQ1OoJG1ukxFJr80Qqcz4fXj0C7nCaG2AnyAp4YvKJgn073Lx/QL5EEguXfR8eQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=NyK6FcWt; arc=none smtp.client-ip=209.85.218.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a520410b7c0so235135666b.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 00:35:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1712820933; x=1713425733; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=T6le4foaS4XgBxBuhSj2wdSogbCI/OVt2IshAL3V9iQ=;
-        b=NyK6FcWt0EzWRAequ4sa63Pg2xVrqW4O0obtT4qkxjrr6fvyfEiYYFA2+4EwMFym6E
-         xTufs3pUbiLhYgf6FySExnRoqTu62tcZBwsnnHl2hcYz8tsEQ6N1ja8CrsUpskASrmpb
-         wWrLpvSfPoIC8T6EK6EmZuQr13VKsVcO+88NlSyozf0mVDSTgIi6fNAFMUtqkn50mVAU
-         isHAaYeWcSJZbClWOMGGOZFMP0WHJL5u1cnOW3QhsF089T3voDd5Q1fkvwv+HUJWnsoZ
-         r5aDM6oH6U9NbH+slc8EizWZdfTW0xLCP27JdrjA61/JtJ4Qd2pELQIf65gU2sY6KI9Q
-         5gbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712820933; x=1713425733;
-        h=in-reply-to:references:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=T6le4foaS4XgBxBuhSj2wdSogbCI/OVt2IshAL3V9iQ=;
-        b=mwyoWe4Ykv3ENX3SKACR1v8FE2Gu2PqraRULe1EYtsutxIEOHSbtfVKKqJS3ZSJDmK
-         mqnPe4mwui+Zd1H3L/NiaSkmubI4hLqYmCjeY53Qg7elk7mfnkCcClbhfb0DVDYOczHG
-         KuGhvUCtZ1OZNTmgXbg9IheXBg3q+OJ0ZkctbeMgPKKbtA2gn9T4dXsysIwoJzqMMYQW
-         c3vkEyTvQbvE9xFzNQNULU/qChj4QBgO+2sALaIXJDRLU2LFJvJCvTX/hK3L678aFjBh
-         T6/M6ruco91eyy+LpdgA0uWDmty8oQ+RR14eDhUt781gXseRZR0kZhSnrEfz1gYkyog0
-         hg+g==
-X-Forwarded-Encrypted: i=1; AJvYcCW0rUDMLLtjeVvIUpuP+8AdsIs1cOSBn/RWKykOlNfShdX/hDFI91D5Pb2kswTVMxqvnRlOXbj0FvwCgd/cRWGNs4HF6wWpWtUDOG3CTw==
-X-Gm-Message-State: AOJu0YzqEuGvQUldDF5fkKEXEjsBpLmQAT1LcBrToN/DXOGzsbnlC2pM
-	ZxycVQqAhBw38Kp7E5ByxA4ff0gO9AlMJLme21hRSwZ4Ve2wmozvQx2qqDm37ko=
-X-Google-Smtp-Source: AGHT+IEVtEqpCy5E3AYRD1SF9Km0TxRNvi4IhzO3AHxvY8mwuLDPLS8kdDC3zgHw+qXSvVoFbdptWw==
-X-Received: by 2002:a17:906:b1d7:b0:a4e:5c23:f776 with SMTP id bv23-20020a170906b1d700b00a4e5c23f776mr3208301ejb.37.1712820932974;
-        Thu, 11 Apr 2024 00:35:32 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id bm15-20020a170906c04f00b00a46d9966ff8sm488113ejb.147.2024.04.11.00.35.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Apr 2024 00:35:32 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA2613DDC7;
+	Thu, 11 Apr 2024 08:05:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=85.215.255.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1712822719; cv=pass; b=bdOcYP3nisW1GdUt8adaEE9DN30mrWs74zGEatVWsUgTH2eL1zorbApAFTJxuI6uANL4KjxXk+8xow5FrQsbCDqiuCX0Pj2INL/iYGRfh38XrcVG3ZUd9TKbWI9US6kMbYMS71dE0lftsD4oI1FF2tbZq1PLi4oQE8NkewOBsSA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1712822719; c=relaxed/simple;
+	bh=k0x/r8Jn3g2BWe8zJBk6R2s9O4m7icoE49i7gn3SsAM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hnltR4lQq6Eb3n2PwBBkGjZIhqLs+Rq/JY9xBEyf/yVtLlCgtY4thm41VW/aMDa/jM49a7AdKNK7QQ7J/Z+TyLk01stpFVK8wXJb8PCP31Or6anrQ2WTdfkk+e1Ifb/9NCxVC1Vn+1ktm+7xHrd2ndfwwI1I1ypUB7/7aP71Phk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gerhold.net; spf=none smtp.mailfrom=gerhold.net; dkim=pass (2048-bit key) header.d=gerhold.net header.i=@gerhold.net header.b=K32ceWbo; dkim=permerror (0-bit key) header.d=gerhold.net header.i=@gerhold.net header.b=hbAjU+1d; arc=pass smtp.client-ip=85.215.255.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gerhold.net
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=gerhold.net
+ARC-Seal: i=1; a=rsa-sha256; t=1712822529; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=P/kcwuIeoUbeZUYYUbIfF7pkrc/zL9KXLbblkcQMlKTuEg054A5KjJcKXMqyevkWiu
+    /q16ASNZAxnxEXn4hAD2/mVfSmsz/VNFbhPjJDFO9oBIiZNo8NivMEsIoSEIgDB5wdgm
+    7chzm/VM65Vpl5UUhSgJSvZMCUCfjCvjqrQzZ9LJu61Zmuk8TyXaMjpFyFUv66AL4MqA
+    z3SketrLhdmtXzTz/mD2G/b+qHbPj5VJIMgaytqBniNi4YUAn69yh52Fs0LtCoeU5jOC
+    S8Tefwceun5HVFo44Ysel2fnODs4ENmvFq5D2mKpATB+eJA5TcNX4qzpocuysr7zOcNi
+    NOiQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1712822529;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=ppwbDmup2wMDKDBXkN+XHpscPYZpnGSiu/96bn4RuWI=;
+    b=n+Hv92WnPunROayR9CAVpMFCGyNIh+8Ouqt6Q/13ZJ6pCPEOHwS8gjlTOVNjpiRCqY
+    pPpzCv6l70F4xqJv7n+ngpcLBBGMDOAdXJhQDswKqriDzpFseeUVXjVLNF2J6xlUYpUn
+    7i1anutXfGedvk2Q0Ig84J7hbq6pbv02vmwHifQSkhmmVQ4Jkq2CYYswlmbpJYgLdAmP
+    QCmUHsmmMo1n7yzmgj6CQyaUMgjuPVnm9jT7P+upVQxxacbjDOpHSlbhT856wOcawHCi
+    Nk+BmH9lBq8rwNoBDFhJrr2+fR6kuaRNyqVJ/AtAperWqMSxvo5/e8Cr0hbuLrk0VU5y
+    DPbQ==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1712822529;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=ppwbDmup2wMDKDBXkN+XHpscPYZpnGSiu/96bn4RuWI=;
+    b=K32ceWbo3Nrd2/oo7IB36ugdBJCa0xqS7kbgWFQRei+WOzcEjR5dVDM2B9KDUyoKzt
+    mm6BMvQMfeGkJACmcf4W0QimxLBnCPzD+MKLpY8TKO9vDvkLrJgXpO+i8Ps1bHMooYLi
+    RTa/+56U9/M147rYnjQSMA+W8uvGsX4ymV2HOJ0D1QDIr3h+FTm0X+IUx5gYy/AdodKm
+    3RxSb3dOHtygWfjIMdX716LZrw9WWDBjA+VSpJD/CCDoRQUwqwAkW2ym1/ZUAbjUvXKP
+    cLsrtex/+8WHfPqeWPyZLAIUIg1wj8EtaYszd+4Y/MPWPRevrmdN3tmEBwWqDUs64vnK
+    IvnA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1712822529;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=ppwbDmup2wMDKDBXkN+XHpscPYZpnGSiu/96bn4RuWI=;
+    b=hbAjU+1dVcVP51hOdENK5yo8tg2sqP+aopngPKHQVPiR9CFmZR129TP8ngMhC2aXBh
+    vVoFC7Rb21FpEf2kZJDw==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA+p3h"
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 50.3.2 DYNA|AUTH)
+    with ESMTPSA id Raf12503B828aP2
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Thu, 11 Apr 2024 10:02:08 +0200 (CEST)
+Date: Thu, 11 Apr 2024 10:02:01 +0200
+From: Stephan Gerhold <stephan@gerhold.net>
+To: Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>
+Cc: Caleb Connolly <caleb.connolly@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Rob Clark <robdclark@gmail.com>, Stephen Boyd <swboyd@chromium.org>,
+	Nikita Travkin <nikita@trvn.ru>
+Subject: Re: [PATCH] soc: qcom: cmd-db: map shared memory as WT, not WB
+Message-ID: <ZheY-S5VY2AZD7V-@gerhold.net>
+References: <20240327200917.2576034-1-volodymyr_babchuk@epam.com>
+ <e0586d43-284c-4bef-a8be-4ffbc12bf787@linaro.org>
+ <87a5mjz8s3.fsf@epam.com>
+ <f4ebe819-9718-42c3-9874-037151587d0c@linaro.org>
+ <cd549ee8-22dc-4bc4-af09-9c5c925ee03a@linaro.org>
+ <ZgU_YDUhBeyS5wuh@gerhold.net>
+ <875xwo6f57.fsf@epam.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 11 Apr 2024 09:35:32 +0200
-Message-Id: <D0H4CHG4KSRF.10Z6DOI8PORI8@fairphone.com>
-Subject: Re: [PATCH v2] dt-bindings: usb: add common Type-C USB Switch
- schema
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>, "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>, "Rob Herring"
- <robh+dt@kernel.org>, "Krzysztof Kozlowski"
- <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "Bjorn Andersson" <andersson@kernel.org>, "Konrad Dybcio"
- <konrad.dybcio@linaro.org>, "Neil Armstrong" <neil.armstrong@linaro.org>,
- <linux-usb@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-X-Mailer: aerc 0.17.0
-References: <20240122094406.32198-1-krzysztof.kozlowski@linaro.org>
- <D0H3VE6RLM2I.MK2NT1P9N02O@fairphone.com>
- <051c6e44-4844-48b9-846d-cf9b81611415@linaro.org>
-In-Reply-To: <051c6e44-4844-48b9-846d-cf9b81611415@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <875xwo6f57.fsf@epam.com>
+Content-Transfer-Encoding: 7bit
 
-On Thu Apr 11, 2024 at 9:25 AM CEST, Krzysztof Kozlowski wrote:
-> On 11/04/2024 09:13, Luca Weiss wrote:
-> > On Mon Jan 22, 2024 at 10:44 AM CET, Krzysztof Kozlowski wrote:
-> >> Several bindings implement parts of Type-C USB orientation and mode
-> >> switching, and retiming.  Keep definition of such properties in one
-> >> place, new usb-switch schema, to avoid duplicate defines.
-> >>
-> >> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> >>
-> >> ---
-> >>
-> >> Changes in v2:
-> >> 1. Fix language typos handle->handler (Luca)
-> >> 2. Drop debugging left-over (Luca)
-> >> ---
-> >>  .../devicetree/bindings/usb/fcs,fsa4480.yaml  | 12 ++--
-> >>  .../devicetree/bindings/usb/gpio-sbu-mux.yaml | 12 ++--
-> >>  .../devicetree/bindings/usb/nxp,ptn36502.yaml | 12 ++--
-> >>  .../bindings/usb/onnn,nb7vpq904m.yaml         | 13 ++--
-> >>  .../bindings/usb/qcom,wcd939x-usbss.yaml      | 12 ++--
-> >>  .../devicetree/bindings/usb/usb-switch.yaml   | 67 ++++++++++++++++++=
-+
-> >>  6 files changed, 92 insertions(+), 36 deletions(-)
-> >>  create mode 100644 Documentation/devicetree/bindings/usb/usb-switch.y=
-aml
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml b/=
-Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml
-> >> index f9410eb76a62..8b25b9a01ced 100644
-> >> --- a/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml
-> >> +++ b/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml
-> >> @@ -27,13 +27,8 @@ properties:
-> >>    vcc-supply:
-> >>      description: power supply (2.7V-5.5V)
-> >> =20
-> >> -  mode-switch:
-> >> -    description: Flag the port as possible handle of altmode switchin=
-g
-> >> -    type: boolean
-> >> -
-> >> -  orientation-switch:
-> >> -    description: Flag the port as possible handler of orientation swi=
-tching
-> >> -    type: boolean
-> >> +  mode-switch: true
-> >> +  orientation-switch: true
-> >> =20
-> >>    port:
-> >>      $ref: /schemas/graph.yaml#/$defs/port-base
-> >> @@ -79,6 +74,9 @@ required:
-> >>    - reg
-> >>    - port
-> >> =20
-> >> +allOf:
-> >> +  - $ref: usb-switch.yaml#
-> >> +
-> >>  additionalProperties: false
-> >> =20
-> >>  examples:
-> >=20
-> > Hi Krzysztof,
-> >=20
-> > This patch seems to break validation for fsa4480 if data-lanes is set i=
-n
-> > the endpoint like the following
-> >=20
-> > diff --git a/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml b/D=
-ocumentation/devicetree/bindings/usb/fcs,fsa4480.yaml
-> > index f9410eb76a62..3aa03fd65556 100644
-> > --- a/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml
-> > +++ b/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml
-> > @@ -102,6 +102,7 @@ examples:
-> >            port {
-> >              fsa4480_ept: endpoint {
-> >                remote-endpoint =3D <&typec_controller>;
-> > +              data-lanes =3D <0 1>;
-> >              };
-> >            };
-> >          };
-> >=20
-> > Similar to how it's already used on qcom/qcm6490-fairphone-fp5.dts
-> >=20
-> > I'm guessing the 'port' definition in the common schema somehow
-> > disallows the fsa4480 schema from describing it further?
->
-> There is no such code in qcm6490-fairphone-fp5.dts. There was no such
-> code in the example of fsa4480 when I was testing my changes (and
-> examples should be complete), so this did not pop up.
+On Wed, Apr 10, 2024 at 10:12:37PM +0000, Volodymyr Babchuk wrote:
+> Stephan Gerhold <stephan@gerhold.net> writes:
+> > On Wed, Mar 27, 2024 at 11:29:09PM +0000, Caleb Connolly wrote:
+> >> On 27/03/2024 21:06, Konrad Dybcio wrote:
+> >> > On 27.03.2024 10:04 PM, Volodymyr Babchuk wrote:
+> >> >> Konrad Dybcio <konrad.dybcio@linaro.org> writes:
+> >> >>> On 27.03.2024 9:09 PM, Volodymyr Babchuk wrote:
+> >> >>>> It appears that hardware does not like cacheable accesses to this
+> >> >>>> region. Trying to access this shared memory region as Normal Memory
+> >> >>>> leads to secure interrupt which causes an endless loop somewhere in
+> >> >>>> Trust Zone.
+> >> >>>>
+> >> >>>> The only reason it is working right now is because Qualcomm Hypervisor
+> >> >>>> maps the same region as Non-Cacheable memory in Stage 2 translation
+> >> >>>> tables. The issue manifests if we want to use another hypervisor (like
+> >> >>>> Xen or KVM), which does not know anything about those specific
+> >> >>>> mappings. This patch fixes the issue by mapping the shared memory as
+> >> >>>> Write-Through. This removes dependency on correct mappings in Stage 2
+> >> >>>> tables.
+> >> >>>>
+> >> >>>> I tested this on SA8155P with Xen.
+> >> >>>>
+> >> >>>> Signed-off-by: Volodymyr Babchuk <volodymyr_babchuk@epam.com>
+> >> >>>> ---
+> >> >>>
+> >> >>> Interesting..
+> >> >>>
+> >> >>> +Doug, Rob have you ever seen this on Chrome? (FYI, Volodymyr, chromebooks
+> >> >>> ship with no qcom hypervisor)
+> >> >>
+> >> >> Well, maybe I was wrong when called this thing "hypervisor". All I know
+> >> >> that it sits in hyp.mbn partition and all what it does is setup EL2
+> >> >> before switching to EL1 and running UEFI.
+> >> >>
+> >> >> In my experiments I replaced contents of hyp.mbn with U-Boot, which gave
+> >> >> me access to EL2 and I was able to boot Xen and then Linux as Dom0.
+> >> > 
+> >> > Yeah we're talking about the same thing. I was just curious whether
+> >> > the Chrome folks have heard of it, or whether they have any changes/
+> >> > workarounds for it.
+> >> 
+> >> Does Linux ever write to this region? Given that the Chromebooks don't
+> >> seem to have issues with this (we have a bunch of them in pmOS and I'd
+> >> be very very surprised if this was an issue there which nobody had tried
+> >> upstreaming before) I'd guess the significant difference here is between
+> >> booting Linux in EL2 (as Chromebooks do?) vs with Xen.
+> >> 
+> >
+> > FWIW: This old patch series from Stephen Boyd is closely related:
+> > https://urldefense.com/v3/__https://lore.kernel.org/linux-arm-msm/20190910160903.65694-1-swboyd@chromium.org/__;!!GF_29dbcQIUBPA!yGecMHGezwkDU9t7XATVTI80PNGjZdQV2xsYFTl6EhpMMsRf_7xryKx8mEVpmTwTcKMGaaWomtyvr05zFcmsf2Kk$
+> > [lore[.]kernel[.]org]
+> >
+> >> The main use case I have is to map the command-db memory region on
+> >> Qualcomm devices with a read-only mapping. It's already a const marked
+> >> pointer and the API returns const pointers as well, so this series
+> >> makes sure that even stray writes can't modify the memory.
+> >
+> > Stephen, what was the end result of that patch series? Mapping the
+> > cmd-db read-only sounds cleaner than trying to be lucky with the right
+> > set of cache flags.
+> >
+> 
+> I checked the series, but I am afraid that I have no capacity to finish
+> this. Will it be okay to move forward with my patch? I understand that
+> this is not the best solution, but it is simple and it works. If this is
+> fine, I'll send v2 with all comments addressed.
+> 
 
-Right, I'm sorry this is just out-of-tree for now, I've forgotten this.
-There's some dependency chain with some unsupported DSC configuration in
-DPU for now that blocks upstreaming this.
+My current understanding is that the important property here is to have
+a non-cacheable mapping, which is the case for both MEMREMAP_WT and
+MEMREMAP_WC, but not MEMREMAP_WB. Unfortunately, the MEMREMAP_RO option
+Stephen introduced is also a cacheable mapping, which still seems to
+trigger the issue in some cases. I'm not sure why a cache writeback
+still happens when the mapping is read-only and nobody writes anything.
 
-My tree with these patches is here if you want to take a look:
-https://github.com/sc7280-mainline/linux/blob/sc7280-6.8.y/arch/arm64/boot/=
-dts/qcom/qcm6490-fairphone-fp5.dts#L628
+You can also test it if you want. For a quick test,
 
->
-> You right, new schema does not allow extending the port. However the
-> true question is, why muxing happens on the port to the SoC controller?
-> The graph in commit msg fad89aa14 shows it happens on the side of the
-> connector.
->
-> Looks like fsa4480 mixes connector with the controller.
+-	cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WB);
++	cmd_db_header = ioremap_prot(rmem->base, rmem->size, _PAGE_KERNEL_RO);
 
-Could be honestly.. I trust you with knowing better how the ports are
-supposed to work.
+should be (largely) equivalent to MEMREMAP_RO with Stephen's patch
+series. I asked Nikita to test this on SC7180 and it still seems to
+cause the crash.
 
-The property is for telling the fsa4480 driver that essentially the
-hardware is wired up the reverse way. So with this info the driver can
-handle the orientation switching correctly.
+It seems to work only with a read-only non-cacheable mapping, e.g. with
 
-There's another layer to this as explained in the patches there that the
-OCP96011 essentially works reversed compared to FSA4480, that's why it's
-all a bit of a mess.
++	cmd_db_header = ioremap_prot(rmem->base, rmem->size,
+				     ((PROT_NORMAL_NC & ~PTE_WRITE) | PTE_RDONLY));
 
-Regards
-Luca
+The lines I just suggested for testing are highly architecture-specific
+though so not usable for a proper patch. If MEMREMAP_RO does not solve
+the real problem here then the work to make an usable read-only mapping
+would go beyond just finishing Stephen's patch series, since one would
+need to introduce some kind of MEMREMAP_RO_NC flag that creates a
+read-only non-cacheable mapping.
 
->
-> Best regards,
-> Krzysztof
+It is definitely easier to just change the driver to use the existing
+MEMREMAP_WC. Given the crash you found, the hardware/firmware seems to
+have a built-in write protection on most platforms anyway. :D
 
+Thanks,
+Stephan
 
