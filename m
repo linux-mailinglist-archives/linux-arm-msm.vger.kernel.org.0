@@ -1,129 +1,386 @@
-Return-Path: <linux-arm-msm+bounces-17182-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7FCC68A091E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 09:06:42 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F00D8A0969
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 09:13:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B1D931C21079
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 07:06:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 626E81C21E1B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 07:13:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0910E13E03B;
-	Thu, 11 Apr 2024 07:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3703513DDB8;
+	Thu, 11 Apr 2024 07:13:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="vfw7bfqh"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="Rq+9B/eE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5BD213DDD6
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 07:06:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375D013CAB3
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 07:13:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712819178; cv=none; b=WlhXOqd1sEGUpr1sMxC/4BNF4CDbUpGlnRwrPb/kK/C59iE6Tt/ZxpnKYC90tA9IKnTqLKoN1u3iKLEmy7c+0Q+fliHtrV5EPsvba2UeXatld6Z6GBbHVuRcxl+mIaE5zaasKEoNvqMe8qNQ//Qv3kUnlUb83WHG9yOXbh6nD4w=
+	t=1712819597; cv=none; b=a+i1Sk2UXN+LBwtjEIDLoOq/JcA+F4tKwd359ucsUOYqN135AoxMB7SFJdRsl4wSPIz+6wdEfXEYYYO6tK34L/oo1UeISJoWQyHB9v3GcneWEAjiqRZcfvymsJ9q9Xe6IVD05dPfNhc7hDoUtSWM/FlGZJxMUjfy4TTUK/6rfw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712819178; c=relaxed/simple;
-	bh=+o7I+daoENcP8Ct9wXBNksspsxmRSv7JiVNJMZWs3cQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=nGaqTeSr/g1i7YP+67RlDcEzHirikXpA/b9/zVrxAmf6ITd1qJYxLW7UjkVc3kH+5d5jluYVlPfZNeyR5Xnz84GG64ua5kZWBYRm1nFRvWOZoodpCYwxW5+CRYsppK4JX4JGBOf/zHIrhPSK4yKgaxgOcavDhoZ5TZmXcEALRp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=vfw7bfqh; arc=none smtp.client-ip=209.85.208.48
+	s=arc-20240116; t=1712819597; c=relaxed/simple;
+	bh=0ezShjubPfyqqfET0cKMfGNJ1KOyAHFPa4/ZQHuNViI=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
+	 References:In-Reply-To; b=knou4hrRchUzV3wftm7Esy0CguqH8As2tI7qPMzT+IPF7RJ0OJ6XIaFfPqqi5SLxopWH7KEC6azQFYNeir8TXjH26Af20RphticHhGp+ZcGD/M1/vSHF/lC75ajZye4UAkMac7sBGIBvPBQPghoqRQJiImC8tGkFVD+v7QhsYcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=Rq+9B/eE; arc=none smtp.client-ip=209.85.218.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-56e1baf0380so8597829a12.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 00:06:15 -0700 (PDT)
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a519ef3054bso720265966b.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 00:13:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1712819174; x=1713423974; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=IPHgQp5i5ObZBE7aupcoMPs0PyMl+eJyHyekbE5zlXs=;
-        b=vfw7bfqhq2me01f9pYWrujssM0ZpdqY2OyNMTHWnZ0602bCm7OXPJKfa+i9quNpHx+
-         ndSMFzW9qXDgd9oBU7FO+WWBsRfv8uVr8Pdrq9/R61rPf7sa61iH3hon1qeKA93U6i8W
-         UstI8UQvbLAQUu34OrBWYDi8Djs2CU06MHVTfODGEPa6YsjZ9W6c5ydDX3n2SxHqH29E
-         Pz1SO2Uurev7cyiNbtqGeGXWGCBS83l53y0WDfLZfU+9CkcETX1W8nBll8pz+WqbRh4i
-         NAeidYSVWmgXy3kx6EHugal5bU7TXZO47mbZDsjv/RNVAA0G383+vabVEdrGFfpPZmFM
-         VAMw==
+        d=fairphone.com; s=fair; t=1712819593; x=1713424393; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LrbBAtH1jVxXi0Y7F3AAKpCddxZL6g6UJ6sMsXaG4hc=;
+        b=Rq+9B/eEE7oKPYdYrPdDdBA9cX7j/4jW1EJjtb0LWLpOLBxVVip3b2RU894qTfV5Lc
+         jnxkpqJ6QgaHoW/hTCnS3WQvo6q1lC/KilNCrOkZ61ID53WwBb8ggBk5rpsjpf2yBER4
+         cSUJ838za6a2fPgPfLqTrs6fXLzu8t+DjoG8ibUyDgag6XbbrBarKLPiS1IayGyRCoEe
+         LT8RIlJM89Ay+EvF6DvYMcHlsURSZ2uBWKakQP8TD/Ay5Xlu1u1ehuSN0q0CkztGstn5
+         pVkPn033PGMlBjELMKz3AwMLS/yelDXz0e5WBauqpeqbOpsf09Y5Y9agVQMFS6S4D7Z+
+         PR6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712819174; x=1713423974;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=IPHgQp5i5ObZBE7aupcoMPs0PyMl+eJyHyekbE5zlXs=;
-        b=NPE7EMh8EfdPI7JuIEPi5gJJt1VamBMVGjtaYHQJYGnu0QSLN4pQVJWM7TY9SjvypN
-         dtkjgTLNq8i1EluSy9vz3Kkr10dbSPION49/MvbbtwjfKYim29HUe14NHrCOPo5oANrN
-         xo/ZWVrcEkupRuiYQY2OAIzUEEaZpoB6BgNoQmX2c4EhX1QzZcmSjU73IQVRN7rqOIve
-         3p53ve110dds10nM4ydLZ4dk2otbwa7g2NgsVfLsyx+YRNuMIXc6Lo7i4s6gBR+LhvRy
-         NFeQP2VB2TQSMW9Y6Gme0WhCsrn3iv4PZtE5vshUAqDGSZimV2jdxP2bnTxD604geVDy
-         xFvQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXSmHir3Y1TSuwUsO80Axe84qShkjq0E7isQyyPzsre4foge5x5Pp03cbnecomN9fYP3ZFV6544I+b2F6psEHzpyK72nEv9VIaTozQl7g==
-X-Gm-Message-State: AOJu0Yy4B/gTH6/VnOQVtstSO0j+6DsjQrIXKkjEvfADLUIGu7pdmpLj
-	3u9rnaqPvhO8fwhLlSyP3QPbJRnVZ8+F7eP/WkT1w8p3J1dPtqcXVYRqvAVTKLw=
-X-Google-Smtp-Source: AGHT+IFwO1V0PB5oOIQfGSzjLElMTnZJSoZTIjXmfOa0FvKysbniFvJxcp6z+3c0bN4piGw2hz2Bbw==
-X-Received: by 2002:a17:906:ee87:b0:a51:962d:cf0d with SMTP id wt7-20020a170906ee8700b00a51962dcf0dmr3622218ejb.12.1712819174137;
-        Thu, 11 Apr 2024 00:06:14 -0700 (PDT)
-Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id dk5-20020a170907940500b00a518b14d6cesm461397ejc.172.2024.04.11.00.06.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Apr 2024 00:06:13 -0700 (PDT)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Thu, 11 Apr 2024 09:06:11 +0200
-Subject: [PATCH] arm64: dts: qcom: qcm6490-fairphone-fp5: Add USB-C
- orientation GPIO
+        d=1e100.net; s=20230601; t=1712819593; x=1713424393;
+        h=in-reply-to:references:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=LrbBAtH1jVxXi0Y7F3AAKpCddxZL6g6UJ6sMsXaG4hc=;
+        b=BAdYRePs1JFCbum6B/N1qbEp30qEGLQswfIioEKdUdBGkFXlaans1bq+yD3m0JgLDg
+         DyZQ0bnbmVfNMfYwzze37t9hJA6wzqK4+i6gRXP22RVO2z6NWON+37917CkTWE5zDATC
+         GWSitjrxFpJ51/da64pRqJDl0P2DhG7KDEBXV6lxtf+eZsqIbryI/Ap5goO99QwAJYVE
+         IilgnkboiQxABBv4oIfYCKfi8dCGw2rw7lqeAStcycjWouRuHQqSrW/PLjtXlTSC2r1a
+         rWEFNTBktIEhFd6kEi6y4/6v0CQLQPbKKrR9JPB0aNvwM4mJwpoAaZTifcDYY7/fcXfM
+         OGpg==
+X-Forwarded-Encrypted: i=1; AJvYcCXhfMStvv1rCK7KK64T8I4lfeJk3LaTkR8kK8Fw7h8KScQeehIp5vxnr3Z5PrETzyFh0b31VEXkjjkATx6qknEw7Lv9KaMZ6f8V//1lCQ==
+X-Gm-Message-State: AOJu0Yw/eMzDzjyjg+Z9WSFeZeLiHxYXyyJEAw8qaKgc933xfk8TswW/
+	NE5KMr3NvpOepPGjMMPdu2mLzITPFBJN+OAcdE/QMugbGPs8ihmQPAUVJCYa/+c=
+X-Google-Smtp-Source: AGHT+IFqYhtJ2dBQM8qdyDDimGAJt9zOkhn/4khwtuivcKq/3IG/EsJL5J1H0EcrxhlxUadOzCQBDg==
+X-Received: by 2002:a17:906:11cf:b0:a52:143c:1901 with SMTP id o15-20020a17090611cf00b00a52143c1901mr2424383eja.22.1712819593496;
+        Thu, 11 Apr 2024 00:13:13 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id r18-20020a170906549200b00a4e98679e7dsm469635ejo.87.2024.04.11.00.13.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 11 Apr 2024 00:13:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240411-fp5-usb-c-gpio-v1-1-78f11deb940a@fairphone.com>
-X-B4-Tracking: v=1; b=H4sIAOKLF2YC/x3MQQqAIBBA0avErBtQMYKuEi1MR5uNilIE4t2Tl
- m/xf4NKhanCNjUo9HDlFAfkPIG9TAyE7IZBCaWFlhJ9XvCuJ1oMmRMa75RatTTOOhhRLuT5/Yf
- 70fsHiFICB2AAAAA=
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.13.0
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 11 Apr 2024 09:13:12 +0200
+Message-Id: <D0H3VE6RLM2I.MK2NT1P9N02O@fairphone.com>
+Subject: Re: [PATCH v2] dt-bindings: usb: add common Type-C USB Switch
+ schema
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>, "Greg
+ Kroah-Hartman" <gregkh@linuxfoundation.org>, "Rob Herring"
+ <robh+dt@kernel.org>, "Krzysztof Kozlowski"
+ <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ "Bjorn Andersson" <andersson@kernel.org>, "Konrad Dybcio"
+ <konrad.dybcio@linaro.org>, "Neil Armstrong" <neil.armstrong@linaro.org>,
+ <linux-usb@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+X-Mailer: aerc 0.17.0
+References: <20240122094406.32198-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20240122094406.32198-1-krzysztof.kozlowski@linaro.org>
 
-Define the USB-C orientation GPIOs so that the USB-C ports orientation
-is known without having to resort to the altmode notifications.
+On Mon Jan 22, 2024 at 10:44 AM CET, Krzysztof Kozlowski wrote:
+> Several bindings implement parts of Type-C USB orientation and mode
+> switching, and retiming.  Keep definition of such properties in one
+> place, new usb-switch schema, to avoid duplicate defines.
+>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>
+> ---
+>
+> Changes in v2:
+> 1. Fix language typos handle->handler (Luca)
+> 2. Drop debugging left-over (Luca)
+> ---
+>  .../devicetree/bindings/usb/fcs,fsa4480.yaml  | 12 ++--
+>  .../devicetree/bindings/usb/gpio-sbu-mux.yaml | 12 ++--
+>  .../devicetree/bindings/usb/nxp,ptn36502.yaml | 12 ++--
+>  .../bindings/usb/onnn,nb7vpq904m.yaml         | 13 ++--
+>  .../bindings/usb/qcom,wcd939x-usbss.yaml      | 12 ++--
+>  .../devicetree/bindings/usb/usb-switch.yaml   | 67 +++++++++++++++++++
+>  6 files changed, 92 insertions(+), 36 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/usb/usb-switch.yaml
+>
+> diff --git a/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml b/Doc=
+umentation/devicetree/bindings/usb/fcs,fsa4480.yaml
+> index f9410eb76a62..8b25b9a01ced 100644
+> --- a/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml
+> +++ b/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml
+> @@ -27,13 +27,8 @@ properties:
+>    vcc-supply:
+>      description: power supply (2.7V-5.5V)
+> =20
+> -  mode-switch:
+> -    description: Flag the port as possible handle of altmode switching
+> -    type: boolean
+> -
+> -  orientation-switch:
+> -    description: Flag the port as possible handler of orientation switch=
+ing
+> -    type: boolean
+> +  mode-switch: true
+> +  orientation-switch: true
+> =20
+>    port:
+>      $ref: /schemas/graph.yaml#/$defs/port-base
+> @@ -79,6 +74,9 @@ required:
+>    - reg
+>    - port
+> =20
+> +allOf:
+> +  - $ref: usb-switch.yaml#
+> +
+>  additionalProperties: false
+> =20
+>  examples:
 
-On PCB level this is the signal from PM7250B (pin CC_OUT) which is
-called USB_PHY_PS.
+Hi Krzysztof,
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
-Depends on (for bindings): https://lore.kernel.org/linux-arm-msm/20240409-hdk-orientation-gpios-v2-0-658efd993987@linaro.org/
----
- arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 2 ++
- 1 file changed, 2 insertions(+)
+This patch seems to break validation for fsa4480 if data-lanes is set in
+the endpoint like the following
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-index 4ff9fc24e50e..f3432701945f 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-@@ -77,6 +77,8 @@ pmic-glink {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 
-+		orientation-gpios = <&tlmm 140 GPIO_ACTIVE_HIGH>;
-+
- 		connector@0 {
- 			compatible = "usb-c-connector";
- 			reg = <0>;
+diff --git a/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml b/Docum=
+entation/devicetree/bindings/usb/fcs,fsa4480.yaml
+index f9410eb76a62..3aa03fd65556 100644
+--- a/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml
++++ b/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml
+@@ -102,6 +102,7 @@ examples:
+           port {
+             fsa4480_ept: endpoint {
+               remote-endpoint =3D <&typec_controller>;
++              data-lanes =3D <0 1>;
+             };
+           };
+         };
 
----
-base-commit: 65b0418f6e86eef0f62fc053fb3622fbaa3e506e
-change-id: 20240411-fp5-usb-c-gpio-afd22741adcd
+Similar to how it's already used on qcom/qcm6490-fairphone-fp5.dts
 
-Best regards,
--- 
-Luca Weiss <luca.weiss@fairphone.com>
+I'm guessing the 'port' definition in the common schema somehow
+disallows the fsa4480 schema from describing it further?
+
+Regards
+Luca
+
+
+> diff --git a/Documentation/devicetree/bindings/usb/gpio-sbu-mux.yaml b/Do=
+cumentation/devicetree/bindings/usb/gpio-sbu-mux.yaml
+> index d3b2b666ec2a..88e1607cf053 100644
+> --- a/Documentation/devicetree/bindings/usb/gpio-sbu-mux.yaml
+> +++ b/Documentation/devicetree/bindings/usb/gpio-sbu-mux.yaml
+> @@ -33,13 +33,8 @@ properties:
+>    vcc-supply:
+>      description: power supply
+> =20
+> -  mode-switch:
+> -    description: Flag the port as possible handle of altmode switching
+> -    type: boolean
+> -
+> -  orientation-switch:
+> -    description: Flag the port as possible handler of orientation switch=
+ing
+> -    type: boolean
+> +  mode-switch: true
+> +  orientation-switch: true
+> =20
+>    port:
+>      $ref: /schemas/graph.yaml#/properties/port
+> @@ -54,6 +49,9 @@ required:
+>    - orientation-switch
+>    - port
+> =20
+> +allOf:
+> +  - $ref: usb-switch.yaml#
+> +
+>  additionalProperties: false
+> =20
+>  examples:
+> diff --git a/Documentation/devicetree/bindings/usb/nxp,ptn36502.yaml b/Do=
+cumentation/devicetree/bindings/usb/nxp,ptn36502.yaml
+> index eee548ac1abe..d805dde80796 100644
+> --- a/Documentation/devicetree/bindings/usb/nxp,ptn36502.yaml
+> +++ b/Documentation/devicetree/bindings/usb/nxp,ptn36502.yaml
+> @@ -20,13 +20,8 @@ properties:
+>    vdd18-supply:
+>      description: Power supply for VDD18 pin
+> =20
+> -  retimer-switch:
+> -    description: Flag the port as possible handle of SuperSpeed signals =
+retiming
+> -    type: boolean
+> -
+> -  orientation-switch:
+> -    description: Flag the port as possible handler of orientation switch=
+ing
+> -    type: boolean
+> +  orientation-switch: true
+> +  retimer-switch: true
+> =20
+>    ports:
+>      $ref: /schemas/graph.yaml#/properties/ports
+> @@ -49,6 +44,9 @@ required:
+>    - compatible
+>    - reg
+> =20
+> +allOf:
+> +  - $ref: usb-switch.yaml#
+> +
+>  additionalProperties: false
+> =20
+>  examples:
+> diff --git a/Documentation/devicetree/bindings/usb/onnn,nb7vpq904m.yaml b=
+/Documentation/devicetree/bindings/usb/onnn,nb7vpq904m.yaml
+> index c0201da002f6..589914d22bf2 100644
+> --- a/Documentation/devicetree/bindings/usb/onnn,nb7vpq904m.yaml
+> +++ b/Documentation/devicetree/bindings/usb/onnn,nb7vpq904m.yaml
+> @@ -21,14 +21,8 @@ properties:
+>      description: power supply (1.8V)
+> =20
+>    enable-gpios: true
+> -
+> -  retimer-switch:
+> -    description: Flag the port as possible handle of SuperSpeed signals =
+retiming
+> -    type: boolean
+> -
+> -  orientation-switch:
+> -    description: Flag the port as possible handler of orientation switch=
+ing
+> -    type: boolean
+> +  orientation-switch: true
+> +  retimer-switch: true
+> =20
+>    ports:
+>      $ref: /schemas/graph.yaml#/properties/ports
+> @@ -95,6 +89,9 @@ required:
+>    - compatible
+>    - reg
+> =20
+> +allOf:
+> +  - $ref: usb-switch.yaml#
+> +
+>  additionalProperties: false
+> =20
+>  examples:
+> diff --git a/Documentation/devicetree/bindings/usb/qcom,wcd939x-usbss.yam=
+l b/Documentation/devicetree/bindings/usb/qcom,wcd939x-usbss.yaml
+> index 7ddfd3313a18..96346723f3e9 100644
+> --- a/Documentation/devicetree/bindings/usb/qcom,wcd939x-usbss.yaml
+> +++ b/Documentation/devicetree/bindings/usb/qcom,wcd939x-usbss.yaml
+> @@ -35,13 +35,8 @@ properties:
+>    vdd-supply:
+>      description: USBSS VDD power supply
+> =20
+> -  mode-switch:
+> -    description: Flag the port as possible handle of altmode switching
+> -    type: boolean
+> -
+> -  orientation-switch:
+> -    description: Flag the port as possible handler of orientation switch=
+ing
+> -    type: boolean
+> +  mode-switch: true
+> +  orientation-switch: true
+> =20
+>    ports:
+>      $ref: /schemas/graph.yaml#/properties/ports
+> @@ -63,6 +58,9 @@ required:
+>    - reg
+>    - ports
+> =20
+> +allOf:
+> +  - $ref: usb-switch.yaml#
+> +
+>  additionalProperties: false
+> =20
+>  examples:
+> diff --git a/Documentation/devicetree/bindings/usb/usb-switch.yaml b/Docu=
+mentation/devicetree/bindings/usb/usb-switch.yaml
+> new file mode 100644
+> index 000000000000..da76118e73a5
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/usb/usb-switch.yaml
+> @@ -0,0 +1,67 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/usb/usb-switch.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: USB Orientation and Mode Switches Common Properties
+> +
+> +maintainers:
+> +  - Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> +
+> +description:
+> +  Common properties for devices handling USB mode and orientation switch=
+ing.
+> +
+> +properties:
+> +  mode-switch:
+> +    description: Possible handler of altmode switching
+> +    type: boolean
+> +
+> +  orientation-switch:
+> +    description: Possible handler of orientation switching
+> +    type: boolean
+> +
+> +  retimer-switch:
+> +    description: Possible handler of SuperSpeed signals retiming
+> +    type: boolean
+> +
+> +  port:
+> +    $ref: /schemas/graph.yaml#/properties/port
+> +    description:
+> +      A port node to link the device to a TypeC controller for the purpo=
+se of
+> +      handling altmode muxing and orientation switching.
+> +
+> +  ports:
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +    properties:
+> +      port@0:
+> +        $ref: /schemas/graph.yaml#/properties/port
+> +        description:
+> +          Super Speed (SS) Output endpoint to the Type-C connector
+> +
+> +      port@1:
+> +        $ref: /schemas/graph.yaml#/$defs/port-base
+> +        description:
+> +          Super Speed (SS) Input endpoint from the Super-Speed PHY
+> +        unevaluatedProperties: false
+> +
+> +        properties:
+> +          endpoint:
+> +            $ref: /schemas/graph.yaml#/$defs/endpoint-base
+> +            unevaluatedProperties: false
+> +            properties:
+> +              data-lanes:
+> +                $ref: /schemas/types.yaml#/definitions/uint32-array
+> +                minItems: 1
+> +                maxItems: 8
+> +                uniqueItems: true
+> +                items:
+> +                  maximum: 8
+> +
+> +oneOf:
+> +  - required:
+> +      - port
+> +  - required:
+> +      - ports
+> +
+> +additionalProperties: true
 
 
