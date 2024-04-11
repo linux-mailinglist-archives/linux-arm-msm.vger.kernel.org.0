@@ -1,202 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-17273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17274-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2AA848A1E09
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 20:25:38 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BCDA68A1E14
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 20:27:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D48CA28E857
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 18:25:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5F0CC1F22AAE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 18:27:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4307F130A4A;
-	Thu, 11 Apr 2024 17:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8B82134429;
+	Thu, 11 Apr 2024 17:48:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D57Dm9na"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oEd8xKdY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E321E892;
-	Thu, 11 Apr 2024 17:41:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE42436B08;
+	Thu, 11 Apr 2024 17:48:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712857303; cv=none; b=c2AOT/orD75sm7gM7ApRyLsj+do4gc65Bb1oiN431RFbYIrKamUE4CwmN5Q2rrefjkbCAoqedQyqo/88NpNfZQ9rKbfTxMJI3Qlw42QmzLkW9KQTagHYoxDslPQwZ1MInmNCdmpb2ldrzCWaQk9ZI98r0p6Whkbz3kaHxWksKR8=
+	t=1712857726; cv=none; b=A/Cawb/QDszW25oDCxc71o1dpvrheU+L8ZZ4PXyBLFxwT3nlHd+n7oGU19BJambfKk2gXbg2Dz/T3vkgzefkKV3tbFygfoaD6MIRiqEBB7ajauGA3iOHlCbqMPjQpXhImnTPWajhvNhxRNM8rb21ZMHDQydh/lIZRUGAYe/VE/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712857303; c=relaxed/simple;
-	bh=DoJYSiMJhYT9Zt6gL2BrmpCKBnw00cmz4PnYnC16w5w=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LwmNXKiRF1P5ivu9O5/WcYRnqwrD61JH4YR0+mMItMxHNUD7VKCiWA58hyn2+7+MAQqT0XqbF7CGT+rrCKrojfNhour7vwSz0ccejPPiwgvRhb1Wtk/8j7VRd/5MFmubw4B4Hyf1UDiZA7f7KEKXHkP6OUXB70hbZdF4WCph9Lw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D57Dm9na; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92EEDC2BD10;
-	Thu, 11 Apr 2024 17:41:42 +0000 (UTC)
+	s=arc-20240116; t=1712857726; c=relaxed/simple;
+	bh=9aJw8QoZy00PI1Vlq06euzR5zwJG7a7zFfna87TrmXU=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=FMRNjhRuuJJah9NQd+gO9jsBFsEsgoPkCeNxQz6gJrX2wOlBUekjq6cyljHxxGefXkc4iwlnGFuhZqCSiOXY8M/Qz0oBo6N1PMnYuDekwBai9WW0pgmn9iFPhgHScB9milVKdTWBrrPaeSy5wWjFyZLBbw+FwJTbuGLino7dkYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oEd8xKdY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4B96C072AA;
+	Thu, 11 Apr 2024 17:48:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712857302;
-	bh=DoJYSiMJhYT9Zt6gL2BrmpCKBnw00cmz4PnYnC16w5w=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=D57Dm9naJovNyxjN+f4aK9UEhia+7xBZ5MkhbWxsEKsouoD9VR5HyxJ5oTVAWHCjb
-	 dtJXrqqBbam7Ebzp9GS7S90fyxedAGal4WgfiO7sOcXo5myFf7hNnj0B/EH10Jxhsz
-	 8TiWXIpMKl7BCob/OsWv+skUeQDl/S0KYW0Vr/5EuGpJ16JCqcWzxaUvuHKJ9XUbbi
-	 CSENDnGpBt9rbplij+sVAGrhpZAtha0txZMtw6gUe8PkUKXdOJXiNbJsYo2NDTOcQL
-	 Y6PMOlqq3rqEDmXL2M0h33mpmxiQYTqjK5SqIn+kAlSm5TTPnngLQiq4aeZWDOr0eP
-	 I7UAhbLSYWkLg==
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4155819f710so878385e9.2;
-        Thu, 11 Apr 2024 10:41:42 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCV/t6ZleoCy+GTcclfp17JOnM1izxkprtDAhmvP26Jsyu17qxYGN97UyH9CiyNroggWtG6BYdiurW0mjcbZta3VTCpyqu/31ivhRoHdE0wW7xm91NpwVothIc6lSUqB4NNaacr8NgG0bbzSe+sPPqAkbVqiLZEQEjuhBSRYdG902KCYQ5zdvQ/XhnV7AMt5eJAoyQhoWhEYNB7mPJBrg4x+ecUt9GqlSnijns2YT/k0nXj0hI1VkmszVZzp7FD95/fN9sXM+Q==
-X-Gm-Message-State: AOJu0Ywe439K/4LIETRslV0ClpKONy8MP1tQ84+y5Eq46R6WUP2PWxCR
-	y5LI3TzGIx0wmIQlxNi2wE03zTPev0eu/rrUclZjYISvYBj1OBpZ7zTBcd5pZpjFlCCrEkMVAy1
-	oFMPn+wwiK13U1lpURt9y4J5GSA==
-X-Google-Smtp-Source: AGHT+IGTYTnd27cZwUZ7kXUf6/DQ0pj9531II4F7GuikLZRsZ/ZfHrcFFNL5HrA9aNOfAtjGuv7mboSXH/hsVf3pPeQ=
-X-Received: by 2002:a19:f60a:0:b0:517:535b:9f2d with SMTP id
- x10-20020a19f60a000000b00517535b9f2dmr231054lfe.25.1712857280506; Thu, 11 Apr
- 2024 10:41:20 -0700 (PDT)
+	s=k20201202; t=1712857726;
+	bh=9aJw8QoZy00PI1Vlq06euzR5zwJG7a7zFfna87TrmXU=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=oEd8xKdYy3jH3o3gCDEyDn2ste+PUbngtTrUbUy1QuoIMk6Sv8L1uCxR6jZc2qLZG
+	 PFBy0Y4DM+YNfPIj6B6dZhP2BIl/BxtZpX0CNhRH52BAW8JfJoz5cZYrotT8Bgvad1
+	 lWlrk9zVfCKUk+vHEUUH1JZYsAEJnml+0AjMKP4gWOAph2F7a/QkLy5zoM6QVSZYIi
+	 KqpZGc5hFuJ7Gm957Y2Px11Rszgi6amml5yYH1j5xMmF8/mxKWWE0I1SNC0qHFovi+
+	 SrnJhTWbwd5OEbf3qXN9lXpfmbTMv3emCDAwGNWUmrNTGfjBY0WH/9q71F6cEjUYCo
+	 8q6gH3YDRJ6LQ==
+From: Vinod Koul <vkoul@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Bard Liao <yung-chuan.liao@linux.intel.com>, 
+ Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>, 
+ Sanyog Kale <sanyog.r.kale@intel.com>, linux-arm-msm@vger.kernel.org, 
+ alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Mark Brown <broonie@kernel.org>
+In-Reply-To: <20240403132716.325880-1-krzysztof.kozlowski@linaro.org>
+References: <20240403132716.325880-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH RESEND] soundwire: qcom: allow multi-link on newer
+ devices
+Message-Id: <171285772329.544231.15578305335747563968.b4-ty@kernel.org>
+Date: Thu, 11 Apr 2024 23:18:43 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240411142107.GA3537062-robh@kernel.org> <20240411161108.GA2184354@bhelgaas>
-In-Reply-To: <20240411161108.GA2184354@bhelgaas>
-From: Rob Herring <robh@kernel.org>
-Date: Thu, 11 Apr 2024 12:41:07 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqKaJR9v=EEwm=rGf-XtXhhSd4_U2FUJoCoN_mcvPBtPBA@mail.gmail.com>
-Message-ID: <CAL_JsqKaJR9v=EEwm=rGf-XtXhhSd4_U2FUJoCoN_mcvPBtPBA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] dt-bindings: PCI: mediatek,mt7621: add missing
- child node reg
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: Sergio Paracuellos <sergio.paracuellos@gmail.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>, 
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>, Ray Jui <rjui@broadcom.com>, 
-	Scott Branden <sbranden@broadcom.com>, 
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
-	Florian Fainelli <florian.fainelli@broadcom.com>, Jim Quinlan <jim2101024@gmail.com>, 
-	Nicolas Saenz Julienne <nsaenz@kernel.org>, Will Deacon <will@kernel.org>, 
-	Linus Walleij <linus.walleij@linaro.org>, Srikanth Thokala <srikanth.thokala@intel.com>, 
-	Ryder Lee <ryder.lee@mediatek.com>, Jianjun Wang <jianjun.wang@mediatek.com>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Daire McNamara <daire.mcnamara@microchip.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Marek Vasut <marek.vasut+renesas@gmail.com>, 
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, Shawn Lin <shawn.lin@rock-chips.com>, 
-	Heiko Stuebner <heiko@sntech.de>, Jingoo Han <jingoohan1@gmail.com>, 
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
-	Bharat Kumar Gogada <bharat.kumar.gogada@amd.com>, Michal Simek <michal.simek@amd.com>, 
-	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Mark Kettenis <kettenis@openbsd.org>, 
-	Tom Joseph <tjoseph@cadence.com>, Ahmad Zainie <wan.ahmad.zainie.wan.mohamad@intel.com>, 
-	Jiaxun Yang <jiaxun.yang@flygoat.com>, Kishon Vijay Abraham I <kishon@kernel.org>, 
-	Thippeswamy Havalige <thippeswamy.havalige@amd.com>, linux-pci@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
-	linux-rpi-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	linux-rockchip@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.12.3
 
-On Thu, Apr 11, 2024 at 11:11=E2=80=AFAM Bjorn Helgaas <helgaas@kernel.org>=
- wrote:
->
-> On Thu, Apr 11, 2024 at 09:21:07AM -0500, Rob Herring wrote:
-> > On Thu, Apr 11, 2024 at 07:39:17AM -0500, Bjorn Helgaas wrote:
-> > > On Thu, Apr 11, 2024 at 08:13:18AM +0200, Sergio Paracuellos wrote:
-> > > > On Thu, Apr 11, 2024 at 8:01=E2=80=AFAM Krzysztof Kozlowski
-> > > > <krzysztof.kozlowski@linaro.org> wrote:
-> > > > > On 10/04/2024 23:26, Bjorn Helgaas wrote:
-> > > > > > On Wed, Apr 10, 2024 at 08:15:19PM +0200, Krzysztof Kozlowski w=
-rote:
-> > > > > >> MT7621 PCI host bridge has children which apparently are also =
-PCI host
-> > > > > >> bridges, at least that's what the binding suggest.
-> > > > > >
-> > > > > > What does it even mean for a PCI host bridge to have a child th=
-at is
-> > > > > > also a PCI host bridge?
-> >
-> > It should say 'root port' instead as the binding description correctly
-> > says.
->
-> OK, that makes a lot more sense, and we should fix the commit log.
->
-> > > > > I think the question should be towards Mediatek folks. I don't kn=
-ow what
-> > > > > this hardware is exactly, just looks like pci-pci-bridge. The dri=
-ver
-> > > > > calls the children host bridges as "ports".
-> > > >
-> > > > You can see the topology here in my first driver submit cover lette=
-r
-> > > > message [0].
-> > > >
-> > > >  [0]: https://lore.kernel.org/all/CAMhs-H-BA+KzEwuDPzcmrDPdgJBFA2Xd=
-YTBvT4R4MEOUB=3DWQ1g@mail.gmail.com/t/
-> > >
-> > > Nothing unusual here, this looks like the standard PCIe topology.
-> > >
-> > > What *might* be unusual is describing the Root Ports in DT.  Since
-> > > they are standard PCI devices, they shouldn't need DT description
-> > > unless there's some unusual power/clock/reset control or something
-> > > that is not discoverable via PCI enumeration.
-> >
-> > It's only unusual because typically there's only 1 RP per host bridge
-> > and properties which really apply to the RP get stuck in the host bridg=
-e
-> > node because we don't have a RP node. An example is perst-gpios. That's
-> > not a property of the RP either, but the RP is the upstream side of a
-> > slot and we often don't have a node for the device either.
->
-> Makes sense.
->
-> I'm still confused about one thing, maybe just because I don't really
-> know how to read these bindings.  The binding now looks like this:
->
->   properties:
->     compatible:
->       const: mediatek,mt7621-pci
->
->     reg:
->       items:
->         - description: host-pci bridge registers
->         - description: pcie port 0 RC control registers       # A
->         - description: pcie port 1 RC control registers       # A
->         - description: pcie port 2 RC control registers       # A
->
->   patternProperties:
->     '^pcie@[0-2],0$':
->       type: object
->       $ref: /schemas/pci/pci-pci-bridge.yaml#
->
->       properties:
->         reg:                                                  # B
->           maxItems: 1
->
-> It looks like the "A" items are separate things from the "B" items?
->
-> But I think the relevant code is here:
->
->   mt7621_pcie_probe
->     mt7621_pcie_parse_dt
->       pcie->base =3D devm_platform_ioremap_resource(pdev, 0)             =
-# 1
->       for_each_available_child_of_node(node, child)
->         mt7621_pcie_parse_port
->           port->base =3D devm_platform_ioremap_resource(pdev, slot + 1)  =
-# 2
->
-> where it looks like both "1" and "2" use the items in the "A" list,
-> i.e., resources 0, 1, 2, 3, all from the same platform device.  Is
-> there code that uses the "B" item that this patch adds?
 
-The A items are in the host address space. The B item is a PCI
-address. Specifically, for PCI devices, the first entry is config
-space with just the device and function (devfn). The format is defined
-in the OpenFirmware PCI bus supplement.
+On Wed, 03 Apr 2024 15:27:16 +0200, Krzysztof Kozlowski wrote:
+> Newer Qualcomm SoCs like X1E80100 might come with four speakers spread
+> over two Soundwire controllers, thus they need a multi-link Soundwire
+> stream runtime.
+> 
+> 
 
-Rob
+Applied, thanks!
+
+[1/1] soundwire: qcom: allow multi-link on newer devices
+      commit: ce5e811e069168898ae2ff02a90de68637ed7dc4
+
+Best regards,
+-- 
+~Vinod
+
+
 
