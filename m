@@ -1,216 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-17187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17189-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79D838A0AD1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 10:05:22 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 23B508A0B4D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 10:34:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 984F31C2157B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 08:05:21 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A4BA7B27E07
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 08:34:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06E7B13F435;
-	Thu, 11 Apr 2024 08:05:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C88F146A81;
+	Thu, 11 Apr 2024 08:32:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="K32ceWbo";
-	dkim=permerror (0-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="hbAjU+1d"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p+NCAXOP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.54])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA2613DDC7;
-	Thu, 11 Apr 2024 08:05:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=85.215.255.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712822719; cv=pass; b=bdOcYP3nisW1GdUt8adaEE9DN30mrWs74zGEatVWsUgTH2eL1zorbApAFTJxuI6uANL4KjxXk+8xow5FrQsbCDqiuCX0Pj2INL/iYGRfh38XrcVG3ZUd9TKbWI9US6kMbYMS71dE0lftsD4oI1FF2tbZq1PLi4oQE8NkewOBsSA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712822719; c=relaxed/simple;
-	bh=k0x/r8Jn3g2BWe8zJBk6R2s9O4m7icoE49i7gn3SsAM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hnltR4lQq6Eb3n2PwBBkGjZIhqLs+Rq/JY9xBEyf/yVtLlCgtY4thm41VW/aMDa/jM49a7AdKNK7QQ7J/Z+TyLk01stpFVK8wXJb8PCP31Or6anrQ2WTdfkk+e1Ifb/9NCxVC1Vn+1ktm+7xHrd2ndfwwI1I1ypUB7/7aP71Phk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gerhold.net; spf=none smtp.mailfrom=gerhold.net; dkim=pass (2048-bit key) header.d=gerhold.net header.i=@gerhold.net header.b=K32ceWbo; dkim=permerror (0-bit key) header.d=gerhold.net header.i=@gerhold.net header.b=hbAjU+1d; arc=pass smtp.client-ip=85.215.255.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gerhold.net
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=gerhold.net
-ARC-Seal: i=1; a=rsa-sha256; t=1712822529; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=P/kcwuIeoUbeZUYYUbIfF7pkrc/zL9KXLbblkcQMlKTuEg054A5KjJcKXMqyevkWiu
-    /q16ASNZAxnxEXn4hAD2/mVfSmsz/VNFbhPjJDFO9oBIiZNo8NivMEsIoSEIgDB5wdgm
-    7chzm/VM65Vpl5UUhSgJSvZMCUCfjCvjqrQzZ9LJu61Zmuk8TyXaMjpFyFUv66AL4MqA
-    z3SketrLhdmtXzTz/mD2G/b+qHbPj5VJIMgaytqBniNi4YUAn69yh52Fs0LtCoeU5jOC
-    S8Tefwceun5HVFo44Ysel2fnODs4ENmvFq5D2mKpATB+eJA5TcNX4qzpocuysr7zOcNi
-    NOiQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1712822529;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=ppwbDmup2wMDKDBXkN+XHpscPYZpnGSiu/96bn4RuWI=;
-    b=n+Hv92WnPunROayR9CAVpMFCGyNIh+8Ouqt6Q/13ZJ6pCPEOHwS8gjlTOVNjpiRCqY
-    pPpzCv6l70F4xqJv7n+ngpcLBBGMDOAdXJhQDswKqriDzpFseeUVXjVLNF2J6xlUYpUn
-    7i1anutXfGedvk2Q0Ig84J7hbq6pbv02vmwHifQSkhmmVQ4Jkq2CYYswlmbpJYgLdAmP
-    QCmUHsmmMo1n7yzmgj6CQyaUMgjuPVnm9jT7P+upVQxxacbjDOpHSlbhT856wOcawHCi
-    Nk+BmH9lBq8rwNoBDFhJrr2+fR6kuaRNyqVJ/AtAperWqMSxvo5/e8Cr0hbuLrk0VU5y
-    DPbQ==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1712822529;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=ppwbDmup2wMDKDBXkN+XHpscPYZpnGSiu/96bn4RuWI=;
-    b=K32ceWbo3Nrd2/oo7IB36ugdBJCa0xqS7kbgWFQRei+WOzcEjR5dVDM2B9KDUyoKzt
-    mm6BMvQMfeGkJACmcf4W0QimxLBnCPzD+MKLpY8TKO9vDvkLrJgXpO+i8Ps1bHMooYLi
-    RTa/+56U9/M147rYnjQSMA+W8uvGsX4ymV2HOJ0D1QDIr3h+FTm0X+IUx5gYy/AdodKm
-    3RxSb3dOHtygWfjIMdX716LZrw9WWDBjA+VSpJD/CCDoRQUwqwAkW2ym1/ZUAbjUvXKP
-    cLsrtex/+8WHfPqeWPyZLAIUIg1wj8EtaYszd+4Y/MPWPRevrmdN3tmEBwWqDUs64vnK
-    IvnA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1712822529;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=ppwbDmup2wMDKDBXkN+XHpscPYZpnGSiu/96bn4RuWI=;
-    b=hbAjU+1dVcVP51hOdENK5yo8tg2sqP+aopngPKHQVPiR9CFmZR129TP8ngMhC2aXBh
-    vVoFC7Rb21FpEf2kZJDw==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA+p3h"
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 50.3.2 DYNA|AUTH)
-    with ESMTPSA id Raf12503B828aP2
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Thu, 11 Apr 2024 10:02:08 +0200 (CEST)
-Date: Thu, 11 Apr 2024 10:02:01 +0200
-From: Stephan Gerhold <stephan@gerhold.net>
-To: Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>
-Cc: Caleb Connolly <caleb.connolly@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Rob Clark <robdclark@gmail.com>, Stephen Boyd <swboyd@chromium.org>,
-	Nikita Travkin <nikita@trvn.ru>
-Subject: Re: [PATCH] soc: qcom: cmd-db: map shared memory as WT, not WB
-Message-ID: <ZheY-S5VY2AZD7V-@gerhold.net>
-References: <20240327200917.2576034-1-volodymyr_babchuk@epam.com>
- <e0586d43-284c-4bef-a8be-4ffbc12bf787@linaro.org>
- <87a5mjz8s3.fsf@epam.com>
- <f4ebe819-9718-42c3-9874-037151587d0c@linaro.org>
- <cd549ee8-22dc-4bc4-af09-9c5c925ee03a@linaro.org>
- <ZgU_YDUhBeyS5wuh@gerhold.net>
- <875xwo6f57.fsf@epam.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D75B14659B;
+	Thu, 11 Apr 2024 08:32:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1712824327; cv=none; b=bcTcnJKYgLQyTskouniwa8AO+69QG+WbRDEQImsE9Oji1pgn/sgkm9JnesIu7bVpY0vWgpMmSEsmEMnKck1g8gmgAY8fGFUr1hDfuIeVp31WIi2Ud7i9Fwd7WOGybqpeYtt1IpyZ3xkEHATOHmwwt0CsDwTCDoXA6o/buQ804HI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1712824327; c=relaxed/simple;
+	bh=kNslZwOV3XuxhTTrri2kOLx2C0i3TRLUbLC5t/3fJag=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=iuL7G7SzVSGhAF4bbO/O2mNBcNn3YZsVeb7diWHqLGIjxeqvTVi+74+CjLLkJKpkmWD2+cIRLOXVGdYaObUxg3L/NNKSIDopinGhKie5je4OgAQmWZVsdpY8YwsryU4ouMD1qf7+blw0wzldkuOmLOatQl9hMrcuTgSS/cpEPQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p+NCAXOP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D81ECC433C7;
+	Thu, 11 Apr 2024 08:32:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712824326;
+	bh=kNslZwOV3XuxhTTrri2kOLx2C0i3TRLUbLC5t/3fJag=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=p+NCAXOP316q4cZnQ43z3YfBXFQlRyK9k6P9OSMK1p+cMZXIwx20fgss11dRcCxKm
+	 xtCIkPxy2dqRRj+WYb0cf3PSiDbcBln71q+Kz6shKQGV2w7lXo1ruNVdacQrnw1h/k
+	 r8Vs1cq4ddmvDz87ISTtK9GsyXjfMc01XKEhns8jlt8jvOanIsyLpZK9MHSnoiBvD2
+	 j472vfDNnmSVY0Pb6gHYfaHx83EIH5xxKiMF1B/r8XRHlI5NeNYuayNAfJwJ5OrA/C
+	 qmktfYU00aVVGFRrUy5MPqakZQf5h/ZWqpEBNDtv1a3lhk71z1ItZY//SxdkT4b7A2
+	 +YKXCiEqqxt9A==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB36BCD1284;
+	Thu, 11 Apr 2024 08:32:06 +0000 (UTC)
+From: Fenglin Wu via B4 Relay <devnull+quic_fenglinw.quicinc.com@kernel.org>
+Subject: [PATCH v9 0/4] Add support for vibrator in multiple PMICs
+Date: Thu, 11 Apr 2024 16:30:56 +0800
+Message-Id: <20240411-pm8xxx-vibrator-new-design-v9-0-7bf56cb92b28@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <875xwo6f57.fsf@epam.com>
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMGfF2YC/33NwRKCIBDG8VdxOLcNohZ26j0aD4Cr7kE0KKJxe
+ PfI7h3/38z+dmMeHaFnl2JjDgN5WmyO9lAwMyk7IlCfmwkual4JCessY4wQSDv1WBxYfEGPnkY
+ L2MiyVH3TolQsA6vDgeKO37rcE/l88d5/Bfldf2zNy39skMDhNAgtNa90bc7X+5MMWXM0y8y6l
+ NIHkF7MX8YAAAA=
+To: kernel@quicinc.com, Andy Gross <agross@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+ Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+ Fenglin Wu <quic_fenglinw@quicinc.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.13-dev-83828
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1712824325; l=2742;
+ i=quic_fenglinw@quicinc.com; s=20240327; h=from:subject:message-id;
+ bh=kNslZwOV3XuxhTTrri2kOLx2C0i3TRLUbLC5t/3fJag=;
+ b=2dQIoJ04TjfpOwLWNiOsikzGaOEQ5hG77y2zor95vsY7p9XzVxjbJPcNm4Ra1XQS1kZXv/SNz
+ 4EXJpCJmibpB8kSgsbJIy0E7DUe5l5ZCwA/YHuvocG6QglstEknmiN3
+X-Developer-Key: i=quic_fenglinw@quicinc.com; a=ed25519;
+ pk=BF8SA4IVDk8/EBCwlBehKtn2hp6kipuuAuDAHh9s+K4=
+X-Endpoint-Received: by B4 Relay for quic_fenglinw@quicinc.com/20240327
+ with auth_id=146
+X-Original-From: Fenglin Wu <quic_fenglinw@quicinc.com>
+Reply-To: quic_fenglinw@quicinc.com
 
-On Wed, Apr 10, 2024 at 10:12:37PM +0000, Volodymyr Babchuk wrote:
-> Stephan Gerhold <stephan@gerhold.net> writes:
-> > On Wed, Mar 27, 2024 at 11:29:09PM +0000, Caleb Connolly wrote:
-> >> On 27/03/2024 21:06, Konrad Dybcio wrote:
-> >> > On 27.03.2024 10:04 PM, Volodymyr Babchuk wrote:
-> >> >> Konrad Dybcio <konrad.dybcio@linaro.org> writes:
-> >> >>> On 27.03.2024 9:09 PM, Volodymyr Babchuk wrote:
-> >> >>>> It appears that hardware does not like cacheable accesses to this
-> >> >>>> region. Trying to access this shared memory region as Normal Memory
-> >> >>>> leads to secure interrupt which causes an endless loop somewhere in
-> >> >>>> Trust Zone.
-> >> >>>>
-> >> >>>> The only reason it is working right now is because Qualcomm Hypervisor
-> >> >>>> maps the same region as Non-Cacheable memory in Stage 2 translation
-> >> >>>> tables. The issue manifests if we want to use another hypervisor (like
-> >> >>>> Xen or KVM), which does not know anything about those specific
-> >> >>>> mappings. This patch fixes the issue by mapping the shared memory as
-> >> >>>> Write-Through. This removes dependency on correct mappings in Stage 2
-> >> >>>> tables.
-> >> >>>>
-> >> >>>> I tested this on SA8155P with Xen.
-> >> >>>>
-> >> >>>> Signed-off-by: Volodymyr Babchuk <volodymyr_babchuk@epam.com>
-> >> >>>> ---
-> >> >>>
-> >> >>> Interesting..
-> >> >>>
-> >> >>> +Doug, Rob have you ever seen this on Chrome? (FYI, Volodymyr, chromebooks
-> >> >>> ship with no qcom hypervisor)
-> >> >>
-> >> >> Well, maybe I was wrong when called this thing "hypervisor". All I know
-> >> >> that it sits in hyp.mbn partition and all what it does is setup EL2
-> >> >> before switching to EL1 and running UEFI.
-> >> >>
-> >> >> In my experiments I replaced contents of hyp.mbn with U-Boot, which gave
-> >> >> me access to EL2 and I was able to boot Xen and then Linux as Dom0.
-> >> > 
-> >> > Yeah we're talking about the same thing. I was just curious whether
-> >> > the Chrome folks have heard of it, or whether they have any changes/
-> >> > workarounds for it.
-> >> 
-> >> Does Linux ever write to this region? Given that the Chromebooks don't
-> >> seem to have issues with this (we have a bunch of them in pmOS and I'd
-> >> be very very surprised if this was an issue there which nobody had tried
-> >> upstreaming before) I'd guess the significant difference here is between
-> >> booting Linux in EL2 (as Chromebooks do?) vs with Xen.
-> >> 
-> >
-> > FWIW: This old patch series from Stephen Boyd is closely related:
-> > https://urldefense.com/v3/__https://lore.kernel.org/linux-arm-msm/20190910160903.65694-1-swboyd@chromium.org/__;!!GF_29dbcQIUBPA!yGecMHGezwkDU9t7XATVTI80PNGjZdQV2xsYFTl6EhpMMsRf_7xryKx8mEVpmTwTcKMGaaWomtyvr05zFcmsf2Kk$
-> > [lore[.]kernel[.]org]
-> >
-> >> The main use case I have is to map the command-db memory region on
-> >> Qualcomm devices with a read-only mapping. It's already a const marked
-> >> pointer and the API returns const pointers as well, so this series
-> >> makes sure that even stray writes can't modify the memory.
-> >
-> > Stephen, what was the end result of that patch series? Mapping the
-> > cmd-db read-only sounds cleaner than trying to be lucky with the right
-> > set of cache flags.
-> >
-> 
-> I checked the series, but I am afraid that I have no capacity to finish
-> this. Will it be okay to move forward with my patch? I understand that
-> this is not the best solution, but it is simple and it works. If this is
-> fine, I'll send v2 with all comments addressed.
-> 
+Add SW support for the vibrator module inside PMI632, PM7250B, PM7325B, PM7550BA.
+It is very similar to the vibrator module inside PM8916 which is supported in
+pm8xxx-vib driver but just the drive amplitude is controlled with 2 registers,
+and the register base offset in each PMIC is different.
 
-My current understanding is that the important property here is to have
-a non-cacheable mapping, which is the case for both MEMREMAP_WT and
-MEMREMAP_WC, but not MEMREMAP_WB. Unfortunately, the MEMREMAP_RO option
-Stephen introduced is also a cacheable mapping, which still seems to
-trigger the issue in some cases. I'm not sure why a cache writeback
-still happens when the mapping is read-only and nobody writes anything.
+Changes in v9:
+  1. Add a preceding change to correct VIB_MAX_LEVELS calculation
+  2. Address review comments from Konrad
+     Link to v8: https://lore.kernel.org/r/20240401-pm8xxx-vibrator-new-design-v8-0-6f2b8b03b4c7@quicinc.com
 
-You can also test it if you want. For a quick test,
+Changes in v8:
+  1. Remove hw_type, and still keep the register info in match data
+  2. Update to use register offset in pm8xxx_regs, and the base address
+     defined in DT for SPMI vibrator will be added in register access
+  3. Update voltage output range for SPMI vibrator which has 2 bytes drive
+     registers
 
--	cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WB);
-+	cmd_db_header = ioremap_prot(rmem->base, rmem->size, _PAGE_KERNEL_RO);
+Changes in v7:
+  1. Fix a typo: SSBL_VIB_DRV_REG --> SSBI_VIB_DRV_REG
+  2. Move the hw_type switch case in pm8xxx_vib_set() to the refactoring
+     change.
 
-should be (largely) equivalent to MEMREMAP_RO with Stephen's patch
-series. I asked Nikita to test this on SC7180 and it still seems to
-cause the crash.
+Changes in v6:
+  1. Add "qcom,pmi632-vib" as a standalone compatible string.
 
-It seems to work only with a read-only non-cacheable mapping, e.g. with
+Changes in v5:
+  1. Drop "qcom,spmi-vib-gen2" generic compatible string as requested
+     and use device specific compatible strings only.
 
-+	cmd_db_header = ioremap_prot(rmem->base, rmem->size,
-				     ((PROT_NORMAL_NC & ~PTE_WRITE) | PTE_RDONLY));
+Changes in v4:
+  1. Update to use the combination of the HW type and register offset
+     as the constant match data, the register base address defined in
+     'reg' property will be added when accessing SPMI registers using
+     regmap APIs.
+  2. Remove 'qcom,spmi-vib-gen1' generic compatible string.
 
-The lines I just suggested for testing are highly architecture-specific
-though so not usable for a proper patch. If MEMREMAP_RO does not solve
-the real problem here then the work to make an usable read-only mapping
-would go beyond just finishing Stephen's patch series, since one would
-need to introduce some kind of MEMREMAP_RO_NC flag that creates a
-read-only non-cacheable mapping.
+Changes in v3:
+  1. Refactor the driver to support different type of the vibrators with
+    better flexibility by introducing the HW type with corresponding
+    register fields definitions.
+  2. Add 'qcom,spmi-vib-gen1' and 'qcom,spmi-vib-gen2' compatible
+    strings, and add PMI632, PM7250B, PM7325B, PM7550BA as compatbile as
+    spmi-vib-gen2.
 
-It is definitely easier to just change the driver to use the existing
-MEMREMAP_WC. Given the crash you found, the hardware/firmware seems to
-have a built-in write protection on most platforms anyway. :D
+Changes in v2:
+  Remove the "pm7550ba-vib" compatible string as it's compatible with pm7325b.
 
-Thanks,
-Stephan
+Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+---
+Fenglin Wu (4):
+      input: pm8xxx-vibrator: correct VIB_MAX_LEVELS calculation
+      input: pm8xxx-vibrator: refactor to support new SPMI vibrator
+      dt-bindings: input: qcom,pm8xxx-vib: add new SPMI vibrator module
+      input: pm8xxx-vibrator: add new SPMI vibrator support
+
+ .../devicetree/bindings/input/qcom,pm8xxx-vib.yaml | 16 +++-
+ drivers/input/misc/pm8xxx-vibrator.c               | 92 ++++++++++++++++------
+ 2 files changed, 82 insertions(+), 26 deletions(-)
+---
+base-commit: 650cda2ce25f08e8fae391b3ba6be27e7296c6a5
+change-id: 20240328-pm8xxx-vibrator-new-design-e5811ad59e8a
+
+Best regards,
+-- 
+Fenglin Wu <quic_fenglinw@quicinc.com>
+
+
 
