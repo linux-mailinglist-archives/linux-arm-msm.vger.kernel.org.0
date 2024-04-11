@@ -1,224 +1,250 @@
-Return-Path: <linux-arm-msm+bounces-17256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 443D38A17CA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 16:48:27 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 64F4B8A1822
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 17:06:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1CB18B27C68
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 14:46:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1ACF2286FDE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 15:06:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78D84D530;
-	Thu, 11 Apr 2024 14:46:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E6B75382;
+	Thu, 11 Apr 2024 15:06:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LQDtuVrj"
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="qY5VnNkm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D267D529;
-	Thu, 11 Apr 2024 14:46:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+Received: from m15.mail.163.com (m15.mail.163.com [45.254.50.220])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D902DF42;
+	Thu, 11 Apr 2024 15:06:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.50.220
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712846784; cv=none; b=m0BnyszCvudG6CK1qRC/IUTP/8WvL8cDr1+GjVvhYGZWHLsFKj/ML0B9vsFGigkuEekPUFj8MYacmEF4/ZqFnEcTYQl4Zax3mKmtJwdBtkt6fAUSdov8Xdtx1JMmDnGOSPnGWwmP8eVaiwk3VDlyoQmVyGzXpwCSor9j/lG3lhE=
+	t=1712848008; cv=none; b=P9CW+jlFaUWnYHODc/lfxEQZE+lllLA5sEMJN2WBBZxlmosFBjlXHkLgs/V4b4qNevCStZpF1n36NO2D9nwyTvlpaWBJthKTSctyQhJRrB8IVqYJ+cuE0RxjdA78zvNepf8Emr/CBXezxy+lttWg7nLKvbFAIU+G/ML4J+hAIRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712846784; c=relaxed/simple;
-	bh=WOsfYlx/Hwa8Lsmj956+sM4HTD3hGnqHfcAoqJR9+zw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=N1W8nJhdgGWpcqniSY8MCuiYbxcavu6k47UHIxjiwPcJdTEdj7LRMg6jfoBj2fsXVrHAXbYHRaFpFvVvafInl2zbPBrJmJzQyAoHJHDKC3/3oDc8SEJATcDzjpf6PIMkoy2C68Ir6qhpvDlVgmlANVXO2L8L43+uDsaEXu1IxBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LQDtuVrj; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43BDw8xi018489;
-	Thu, 11 Apr 2024 14:46:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=A/oAT/wNDEmcZmpWTKzBi87UUHvcOVZ5gW5oGv6Ix1k=; b=LQ
-	DtuVrjhHO3o51L80DrYPItcEfvXePoFjknySqL9FSmvWRG3RoLNCoxtyFuANTCKI
-	q6/kJLdzx/bX9lWjiNApmTl7VlTkWqM84rp5EBOj/8sSpsdTKQMts6TOpwsgtd6N
-	DrAtlWJoRlb09Q7zxcRuk0g+t1DgJhVo8Uj7RkX5Cm+OgBP4G7RdSVrTrayy5Cni
-	xm1msJcScBqvWtGhRsH/1O6WHOalCoeuzx2URDPYWDJ6ABvY6XM+s5aj3anKvdZf
-	R3w5jVf2WwQZVy2jph37tbRAVGxDZf0VM/XcdcinTG8wEjylyJ/pzvSLwQx4MCki
-	+6bB9FLPfnjRZcXsBr5A==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xe5ehu2e9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Apr 2024 14:46:17 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43BEkGs4024437
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Apr 2024 14:46:16 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 11 Apr
- 2024 07:46:15 -0700
-Message-ID: <78de32be-7e3b-e7e9-61f3-9679993dbe71@quicinc.com>
-Date: Thu, 11 Apr 2024 08:46:15 -0600
+	s=arc-20240116; t=1712848008; c=relaxed/simple;
+	bh=C6vXPh7Ldx4KhgbuYgRJZPLELakzOPaiKKdVUBf4PSU=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=e9Q3udg4d6DtVhjJT4bTYpqAMRc1+dgtL6n3e1n/qmHTcfJwCNHcYPaK2L48Jse6iCvfSBZ7HIve26GrAd6ouQfiMpXeQexyROTjeti5MD5MMCIGWQ6lE17Tv+W3C2VFDLHZoZK7OwnWnVpkf+Vt1FxSUKH0o7ZULIIrpLub3F8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=qY5VnNkm; arc=none smtp.client-ip=45.254.50.220
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=LzweM
+	wJIknLqf15S3nYrZOUI8TDHp5K5t8mMB7psTts=; b=qY5VnNkmyXZMIEILoNSzc
+	ZDxQEegYk2q4oVFr2wRbgZPHhlC0zTDO9brzt9uoMDH+GC6ZIdWVO5EGMo/RrqRw
+	I1Ofnrq9upHfRHoav/SkLds6w5yIYMoano4idFatkbVj7COMkPbmXUIuHT2Ymgiu
+	1RW0Wc9nQci9nrfrFYczz4=
+Received: from localhost.localdomain (unknown [101.86.127.38])
+	by gzga-smtp-mta-g0-5 (Coremail) with SMTP id _____wDHT4dB_BdmjsBKAw--.39632S4;
+	Thu, 11 Apr 2024 23:05:59 +0800 (CST)
+From: Lizhe <sensor1010@163.com>
+To: ray.huang@amd.com,
+	rafael@kernel.org,
+	viresh.kumar@linaro.org,
+	srinivas.pandruvada@linux.intel.com,
+	lenb@kernel.org,
+	andersson@kernel.org,
+	konrad.dybcio@linaro.org,
+	thierry.reding@gmail.com,
+	jonathanh@nvidia.com
+Cc: linux-pm@vger.kernel.org,
+	inux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-tegra@vger.kernel.org,
+	Lizhe <sensor1010@163.com>
+Subject: [PATCH] cpufreq: Covert to offline callback returning void
+Date: Thu, 11 Apr 2024 08:05:27 -0700
+Message-Id: <20240411150527.19201-1-sensor1010@163.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v2 2/2] bus: mhi: host: pci_generic: Add edl callback to
- enter EDL
-Content-Language: en-US
-To: Qiang Yu <quic_qianyu@quicinc.com>, <mani@kernel.org>
-CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
-        <quic_mrana@quicinc.com>
-References: <1712805329-46158-1-git-send-email-quic_qianyu@quicinc.com>
- <1712805329-46158-3-git-send-email-quic_qianyu@quicinc.com>
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <1712805329-46158-3-git-send-email-quic_qianyu@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Zb4i8FTTj8nf5loz6u61n6neptFjabZT
-X-Proofpoint-ORIG-GUID: Zb4i8FTTj8nf5loz6u61n6neptFjabZT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-11_08,2024-04-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
- priorityscore=1501 adultscore=0 bulkscore=0 lowpriorityscore=0
- impostorscore=0 phishscore=0 mlxlogscore=999 spamscore=0 suspectscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404110108
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:_____wDHT4dB_BdmjsBKAw--.39632S4
+X-Coremail-Antispam: 1Uf129KBjvJXoWxKFyUKw13JF1UXw4xXF1kKrg_yoWxGr4fpF
+	4UWrWvkr10qFWDt3y7Ca1Dua4a9Fs7A3yUG34xCasYvanrJ3WYg3WDGryUZFWFkrykWF43
+	Ar1rtayxGa18JFUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pimhF7UUUUU=
+X-CM-SenderInfo: 5vhq20jurqiii6rwjhhfrp/1tbiKBq9q2XAk2EhBAABsX
 
-On 4/10/2024 9:15 PM, Qiang Yu wrote:
-> Add mhi_pci_generic_edl_trigger as edl_trigger for some devices (eg. SDX65)
-> to enter EDL mode by writing the 0xEDEDEDED cookie to the channel 91
-> doorbell register and forcing an SOC reset afterwards.
-> 
-> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-> ---
->   drivers/bus/mhi/host/pci_generic.c | 50 ++++++++++++++++++++++++++++++++++++++
->   1 file changed, 50 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index 51639bf..a529815 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -27,12 +27,23 @@
->   #define PCI_VENDOR_ID_THALES	0x1269
->   #define PCI_VENDOR_ID_QUECTEL	0x1eac
->   
-> +#define MHI_EDL_DB			91
-> +#define MHI_EDL_COOKIE			0xEDEDEDED
-> +
-> +/* Device can enter EDL by first setting edl cookie then issuing inband reset*/
-> +#define MHI_PCI_GENERIC_EDL_TRIGGER	BIT(0)
-> +
-> +#define CHDBOFF			0x18
+For the offline() callback function returning an int type value,
+this leads many driver authors mistakenly believing that error
+handling can be performed by returning an error code, However
+the returned value is ignored, and to improve this situation,
+it is proposed to modify the return type of the offline() callback
+function to void.
 
-This is already in drivers/bus/mhi/common.h why duplicate it here?
+Signed-off-by: Lizhe <sensor1010@163.com>
+---
+ drivers/cpufreq/amd-pstate.c       |  4 +---
+ drivers/cpufreq/cpufreq.c          |  3 +--
+ drivers/cpufreq/intel_pstate.c     | 10 ++++------
+ drivers/cpufreq/qcom-cpufreq-hw.c  |  6 ++----
+ drivers/cpufreq/tegra194-cpufreq.c | 11 -----------
+ include/linux/cpufreq.h            |  2 +-
+ 6 files changed, 9 insertions(+), 27 deletions(-)
 
-> +#define CHDBOFF_CHDBOFF_MASK	0xFFFFFFFF
-> +#define CHDBOFF_CHDBOFF_SHIFT	0
-> +
->   /**
->    * struct mhi_pci_dev_info - MHI PCI device specific information
->    * @config: MHI controller configuration
->    * @name: name of the PCI module
->    * @fw: firmware path (if any)
->    * @edl: emergency download mode firmware path (if any)
-> + * @edl_trigger: each bit represents a different way to enter EDL
->    * @bar_num: PCI base address register to use for MHI MMIO register space
->    * @dma_data_width: DMA transfer word size (32 or 64 bits)
->    * @mru_default: default MRU size for MBIM network packets
-> @@ -44,6 +55,7 @@ struct mhi_pci_dev_info {
->   	const char *name;
->   	const char *fw;
->   	const char *edl;
-> +	unsigned int edl_trigger;
->   	unsigned int bar_num;
->   	unsigned int dma_data_width;
->   	unsigned int mru_default;
-> @@ -292,6 +304,7 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx75_info = {
->   	.name = "qcom-sdx75m",
->   	.fw = "qcom/sdx75m/xbl.elf",
->   	.edl = "qcom/sdx75m/edl.mbn",
-> +	.edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
->   	.config = &modem_qcom_v2_mhiv_config,
->   	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->   	.dma_data_width = 32,
-> @@ -302,6 +315,7 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx65_info = {
->   	.name = "qcom-sdx65m",
->   	.fw = "qcom/sdx65m/xbl.elf",
->   	.edl = "qcom/sdx65m/edl.mbn",
-> +	.edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
->   	.config = &modem_qcom_v1_mhiv_config,
->   	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->   	.dma_data_width = 32,
-> @@ -312,6 +326,7 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
->   	.name = "qcom-sdx55m",
->   	.fw = "qcom/sdx55m/sbl1.mbn",
->   	.edl = "qcom/sdx55m/edl.mbn",
-> +	.edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
->   	.config = &modem_qcom_v1_mhiv_config,
->   	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->   	.dma_data_width = 32,
-> @@ -928,6 +943,38 @@ static void health_check(struct timer_list *t)
->   	mod_timer(&mhi_pdev->health_check_timer, jiffies + HEALTH_CHECK_PERIOD);
->   }
->   
-> +static int mhi_pci_generic_edl_trigger(struct mhi_controller *mhi_cntrl)
-> +{
-> +	int ret;
-> +	u32 val;
-> +	void __iomem *edl_db;
-> +	void __iomem *base = mhi_cntrl->regs;
-
-It looks like this file follows reverse christmas tree, but this 
-function does not. you should fix it.
-
-> +
-> +	ret = mhi_device_get_sync(mhi_cntrl->mhi_dev);
-> +	if (ret) {
-> +		dev_err(mhi_cntrl->cntrl_dev, "Wake up device fail before trigger EDL\n");
-> +		return ret;
-> +	}
-> +
-> +	pm_wakeup_event(&mhi_cntrl->mhi_dev->dev, 0);
-> +	mhi_cntrl->runtime_get(mhi_cntrl);
-> +
-> +	mhi_cntrl->read_reg(mhi_cntrl, base + CHDBOFF, &val);
-> +	val = (val & CHDBOFF_CHDBOFF_MASK) >> CHDBOFF_CHDBOFF_SHIFT;
-> +
-> +	edl_db = base + val + (8 * MHI_EDL_DB);
-> +
-> +	mhi_cntrl->write_reg(mhi_cntrl, edl_db + 4, upper_32_bits(MHI_EDL_COOKIE));
-> +	mhi_cntrl->write_reg(mhi_cntrl, edl_db, lower_32_bits(MHI_EDL_COOKIE));
-> +
-> +	mhi_soc_reset(mhi_cntrl);
-> +
-> +	mhi_cntrl->runtime_put(mhi_cntrl);
-> +	mhi_device_put(mhi_cntrl->mhi_dev);
-> +
-> +	return 0;
-> +}
-> +
->   static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->   {
->   	const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info *) id->driver_data;
-> @@ -962,6 +1009,9 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->   	mhi_cntrl->runtime_put = mhi_pci_runtime_put;
->   	mhi_cntrl->mru = info->mru_default;
->   
-> +	if (info->edl_trigger & MHI_PCI_GENERIC_EDL_TRIGGER)
-> +		mhi_cntrl->edl_trigger = mhi_pci_generic_edl_trigger;
-> +
->   	if (info->sideband_wake) {
->   		mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
->   		mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
+diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
+index 2015c9fcc3c9..036608935aaa 100644
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -1530,7 +1530,7 @@ static void amd_pstate_epp_offline(struct cpufreq_policy *policy)
+ 	mutex_unlock(&amd_pstate_limits_lock);
+ }
+ 
+-static int amd_pstate_epp_cpu_offline(struct cpufreq_policy *policy)
++static void amd_pstate_epp_cpu_offline(struct cpufreq_policy *policy)
+ {
+ 	struct amd_cpudata *cpudata = policy->driver_data;
+ 
+@@ -1541,8 +1541,6 @@ static int amd_pstate_epp_cpu_offline(struct cpufreq_policy *policy)
+ 
+ 	if (cppc_state == AMD_PSTATE_ACTIVE)
+ 		amd_pstate_epp_offline(policy);
+-
+-	return 0;
+ }
+ 
+ static int amd_pstate_epp_verify_policy(struct cpufreq_policy_data *policy)
+diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+index 66e10a19d76a..04d349372de3 100644
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -1685,7 +1685,7 @@ static void __cpufreq_offline(unsigned int cpu, struct cpufreq_policy *policy)
+ 	}
+ }
+ 
+-static int cpufreq_offline(unsigned int cpu)
++static void cpufreq_offline(unsigned int cpu)
+ {
+ 	struct cpufreq_policy *policy;
+ 
+@@ -1702,7 +1702,6 @@ static int cpufreq_offline(unsigned int cpu)
+ 	__cpufreq_offline(cpu, policy);
+ 
+ 	up_write(&policy->rwsem);
+-	return 0;
+ }
+ 
+ /*
+diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
+index dbbf299f4219..80dfe1c20210 100644
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -2679,14 +2679,14 @@ static int intel_pstate_verify_policy(struct cpufreq_policy_data *policy)
+ 	return 0;
+ }
+ 
+-static int intel_cpufreq_cpu_offline(struct cpufreq_policy *policy)
++static void intel_cpufreq_cpu_offline(struct cpufreq_policy *policy)
+ {
+ 	struct cpudata *cpu = all_cpu_data[policy->cpu];
+ 
+ 	pr_debug("CPU %d going offline\n", cpu->cpu);
+ 
+ 	if (cpu->suspended)
+-		return 0;
++		return;
+ 
+ 	/*
+ 	 * If the CPU is an SMT thread and it goes offline with the performance
+@@ -2700,8 +2700,6 @@ static int intel_cpufreq_cpu_offline(struct cpufreq_policy *policy)
+ 		intel_pstate_set_min_pstate(cpu);
+ 
+ 	intel_pstate_exit_perf_limits(policy);
+-
+-	return 0;
+ }
+ 
+ static int intel_pstate_cpu_online(struct cpufreq_policy *policy)
+@@ -2724,11 +2722,11 @@ static int intel_pstate_cpu_online(struct cpufreq_policy *policy)
+ 	return 0;
+ }
+ 
+-static int intel_pstate_cpu_offline(struct cpufreq_policy *policy)
++static void intel_pstate_cpu_offline(struct cpufreq_policy *policy)
+ {
+ 	intel_pstate_clear_update_util_hook(policy->cpu);
+ 
+-	return intel_cpufreq_cpu_offline(policy);
++	intel_cpufreq_cpu_offline(policy);
+ }
+ 
+ static int intel_pstate_cpu_exit(struct cpufreq_policy *policy)
+diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+index 70b0f21968a0..dc35fa3cc3ce 100644
+--- a/drivers/cpufreq/qcom-cpufreq-hw.c
++++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+@@ -482,12 +482,12 @@ static int qcom_cpufreq_hw_cpu_online(struct cpufreq_policy *policy)
+ 	return ret;
+ }
+ 
+-static int qcom_cpufreq_hw_cpu_offline(struct cpufreq_policy *policy)
++static void qcom_cpufreq_hw_cpu_offline(struct cpufreq_policy *policy)
+ {
+ 	struct qcom_cpufreq_data *data = policy->driver_data;
+ 
+ 	if (data->throttle_irq <= 0)
+-		return 0;
++		return;
+ 
+ 	mutex_lock(&data->throttle_lock);
+ 	data->cancel_throttle = true;
+@@ -496,8 +496,6 @@ static int qcom_cpufreq_hw_cpu_offline(struct cpufreq_policy *policy)
+ 	cancel_delayed_work_sync(&data->throttle_work);
+ 	irq_set_affinity_and_hint(data->throttle_irq, NULL);
+ 	disable_irq_nosync(data->throttle_irq);
+-
+-	return 0;
+ }
+ 
+ static void qcom_cpufreq_hw_lmh_exit(struct qcom_cpufreq_data *data)
+diff --git a/drivers/cpufreq/tegra194-cpufreq.c b/drivers/cpufreq/tegra194-cpufreq.c
+index 59865ea455a8..8b57dcd43d54 100644
+--- a/drivers/cpufreq/tegra194-cpufreq.c
++++ b/drivers/cpufreq/tegra194-cpufreq.c
+@@ -541,16 +541,6 @@ static int tegra194_cpufreq_online(struct cpufreq_policy *policy)
+ 	return 0;
+ }
+ 
+-static int tegra194_cpufreq_offline(struct cpufreq_policy *policy)
+-{
+-	/*
+-	 * Preserve policy->driver_data and don't free resources on light-weight
+-	 * tear down.
+-	 */
+-
+-	return 0;
+-}
+-
+ static int tegra194_cpufreq_exit(struct cpufreq_policy *policy)
+ {
+ 	struct device *cpu_dev = get_cpu_device(policy->cpu);
+@@ -590,7 +580,6 @@ static struct cpufreq_driver tegra194_cpufreq_driver = {
+ 	.init = tegra194_cpufreq_init,
+ 	.exit = tegra194_cpufreq_exit,
+ 	.online = tegra194_cpufreq_online,
+-	.offline = tegra194_cpufreq_offline,
+ 	.attr = cpufreq_generic_attr,
+ };
+ 
+diff --git a/include/linux/cpufreq.h b/include/linux/cpufreq.h
+index 9956afb9acc2..2472e9fd2df9 100644
+--- a/include/linux/cpufreq.h
++++ b/include/linux/cpufreq.h
+@@ -385,7 +385,7 @@ struct cpufreq_driver {
+ 	int		(*bios_limit)(int cpu, unsigned int *limit);
+ 
+ 	int		(*online)(struct cpufreq_policy *policy);
+-	int		(*offline)(struct cpufreq_policy *policy);
++	void		(*offline)(struct cpufreq_policy *policy);
+ 	int		(*exit)(struct cpufreq_policy *policy);
+ 	int		(*suspend)(struct cpufreq_policy *policy);
+ 	int		(*resume)(struct cpufreq_policy *policy);
+-- 
+2.25.1
 
 
