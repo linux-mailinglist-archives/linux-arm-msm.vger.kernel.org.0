@@ -1,141 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-17276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F81E8A1E39
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 20:30:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A2D0E8A1ECB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 20:44:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 568AF1F23BCD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 18:30:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5780E288867
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 18:44:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3145545BE4;
-	Thu, 11 Apr 2024 18:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 198AF16419;
+	Thu, 11 Apr 2024 18:41:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SD+uR9et"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HH0TN9yj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCCCE3F9CB;
-	Thu, 11 Apr 2024 18:00:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDF514AA7
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 18:41:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712858446; cv=none; b=rUC9d0TW2Kw7M6JrVNynXZdQ/U40aDh2I6B+3bjTV9RHK/AUa8ob60ke7gTThkyAgILdCivmthKFuO1I3OR5uvGCOePJb3qjqo31sLNckhzbf8V87awcHUG4GNFbB9/uw3doa+Bt0PbqFK6C50MBt7qMiYSDWOPeOwCJ8BieU48=
+	t=1712860885; cv=none; b=ivuXabUmP0CFmb8GngcPjiCjDq/fM3LrI8edC4W9pf1S2i8hHjLp8N9AeNQNk5m6oL8BinQZp0RlN0MjFLIKWR6JuDjooMAtfu7PC+rQeAx1tODglEc6x5MTtxosgcapL7HVj9ZhQ4LKkJFf0o9xXNt6FWNYWWiDpuNg6ApiKbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712858446; c=relaxed/simple;
-	bh=hzu/tgfoKXjQQl4hxSegoZdRQDXbBvEYoIa+xvPtr6w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qiMbhqvIU6M+6BuoLsbtPuRUCO4YIEW4G/58Jwqs8w1xyOIOHUIMyK6Z2Zy1QYkDuP8Je7W1UZCy/gEJ44d4z6txfTl0Zgp8dVKwodbvx2K8c8AHyE0qpZoX+vUmK34hRpyi1q4OyG888pP0gAjhwZxlBDZ4uh0U5GavZxRDDnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SD+uR9et; arc=none smtp.client-ip=209.85.161.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-5a522ae3747so42057eaf.1;
-        Thu, 11 Apr 2024 11:00:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712858444; x=1713463244; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=tKygXtwLt+wS+6rSBXso592J8xpcFDOvcPaDL6jZh3Q=;
-        b=SD+uR9et6Kb/+yml+Yf9wTYW/FG6WhOaW17WaB4eZ7dHDxSJRHfPsSGav+M8beEQRj
-         KRBw/fIKt+16leHTc+6iQKfnti1bb5+3DtcOlJk9JdRKvzV7N99fscgr08TGtU47AMDN
-         YGNBbzOrY41JGpkbqzwYWDtgYygU+kWe6eCqNXG3m3TT3svGhaGhAbo6Ext8pBB+R51n
-         Jm0Z/XcSwKus3iZQnw4zCXsnVoTBqxNAEDUU2BSIWjWduOx/v4xo3Q77oyQVq9/Eg8xS
-         7A8zd1BtmqYlxoxldOsmPUw6Tuco6A9bt5omaM53IcCpcNrvG+FSwn3F1qnsWRGc16ut
-         xFNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712858444; x=1713463244;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tKygXtwLt+wS+6rSBXso592J8xpcFDOvcPaDL6jZh3Q=;
-        b=TEgs8OMUd1xJJkH7s/FIpk4KZOPto1MIQh79fFUoe9aAjDPoLKvGKn5EXgowbkkwNK
-         d9gMfRJnU7AB92p1JfacfrisCcSuPeMCPOQgb+G2mDcIgKcw9InnXEmbFQsNlevqHSSd
-         B5NVmOhjlPPzkFRaR2mhBYwRLPcVchBlGU/YoV/qQZdMDF4x4heFcCr8jFotNo1KVuik
-         6XrnaWzACkemA1Zrn+NRu2pRMOejf/1lwmJywOT8Mnpv0AjxFqE+IsK0hlmpNxbKbODA
-         +uu2YdgQ0+KolbpBLR3uNYb7O7iMw39HMB9YgUa6RW9s5SCyUqFm0f5JxAMquJaU4YbQ
-         nlAQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVOr8aOHAEQ/hVyHts5KaDOPl/ILk9yDemiRjM4zPzjws9yVHdtJtmxOijvIotElJToAj0fTXOGq19jrhmzEoATGFAotNP/zQ5lD4cLrbFLviO3rsMkKCzyNYTrCj91RNRtq7Srgs1pa5QyGUCRM6ixxHv2EA4sSdZzLa1eZuNCaEKj3A==
-X-Gm-Message-State: AOJu0YxkhCjwwU0Oa6bsX03KyVh7L5Cg2aLyQ0+y6TlsfpWocEfUnYKM
-	WDICsYudERdqBdDXuojwSsuhE+aZCmPYwaAEQAoSvR9Sv8pvYZHxCoefFd0yvPQ=
-X-Google-Smtp-Source: AGHT+IHIfdBtJkYCx5rE45KA+2haYhADyvJn3GY3HPvd1BH3bdEIc+Uy9kKIPRg1ZCeBSxTh+j2QEQ==
-X-Received: by 2002:a05:6820:270d:b0:5aa:344e:f419 with SMTP id db13-20020a056820270d00b005aa344ef419mr176666oob.2.1712858443708;
-        Thu, 11 Apr 2024 11:00:43 -0700 (PDT)
-Received: from [192.168.7.169] (c-98-197-58-203.hsd1.tx.comcast.net. [98.197.58.203])
-        by smtp.gmail.com with ESMTPSA id di12-20020a0568201e8c00b005a4bcb155basm407718oob.23.2024.04.11.11.00.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Apr 2024 11:00:43 -0700 (PDT)
-Message-ID: <bcb03c7d-f566-11cc-21e2-47e5c5a0776a@gmail.com>
-Date: Thu, 11 Apr 2024 13:00:41 -0500
+	s=arc-20240116; t=1712860885; c=relaxed/simple;
+	bh=n/RLTKwutoK1N6W7pV7itlaSB/RAgcTsr1VXEIhb6gg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=uNDBSEjAVv5UprAwYG0NgCJWZmVWBgW3/6ZBPeQQp/hSI78Raio1PKQvyU3Txj+ga33xbbS0+b8jZPGg/8QQMbltxJQ2FVKdUfN6gGcn+dKfRyxxA35J9FehR5gIIkTnCFssaXnK9Ai7rXnHlyVOvenvSxUALUkd3MF03gk/eyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HH0TN9yj; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43BDvPE0005503;
+	Thu, 11 Apr 2024 18:41:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=hir8+2VrCHIvCF21DdaN7/DiG2Bz/BZSv4bvNuj7k2I=; b=HH
+	0TN9yjperQv57AYN/7FhLrNJrKVTLVNbnPj2NZJxnIh/IsJdCcGGOR4chn60/n34
+	kDY8LbxZyYe7WPKhz3XLqqO8e7qJvbCCQxEOgruBYEfnwo8ax3yDZrnWtCPE23QM
+	tNWtERPIvo2axQ1ADhmzWIh7wbzy5kri2a27oGoFkOgEwsPnF55PAWKR/EuL83Ua
+	gMNQMP8glMixthNq+JNcTMUlbu18D87wCvy53Zqbkg1ATUoGD7ZWaazGJN5DM0oC
+	F984Q6yaVS42IQpdBfFyuDrxMfq2PHLqRakh+XwgnoyHurYMjJIeuft/pp9Jgj9n
+	0nYSg53XSBcQc8nGZh3w==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xebq1t2wh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 11 Apr 2024 18:41:12 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43BIfBfB010853
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 11 Apr 2024 18:41:11 GMT
+Received: from [10.71.109.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 11 Apr
+ 2024 11:41:10 -0700
+Message-ID: <0ce28e37-0d92-2eaa-7d95-0b3829149a8f@quicinc.com>
+Date: Thu, 11 Apr 2024 11:41:09 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v2 3/7] dt-bindings: PCI: qcom: Add IPQ9574 PCIe
- controller
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 06/12] drm/msm/dpu: pull format flag definitions to
+ msm_drv.h
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240409190833.3485824-1-mr.nuke.me@gmail.com>
- <20240409190833.3485824-4-mr.nuke.me@gmail.com>
- <dbee301e-2e31-4db0-877a-96c972ea4bca@linaro.org>
-From: mr.nuke.me@gmail.com
-In-Reply-To: <dbee301e-2e31-4db0-877a-96c972ea4bca@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>
+CC: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20231202214016.1257621-1-dmitry.baryshkov@linaro.org>
+ <20231202214016.1257621-7-dmitry.baryshkov@linaro.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20231202214016.1257621-7-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 4fdm-8U2RToJpAAut9s9hrgMRyIa9VH5
+X-Proofpoint-GUID: 4fdm-8U2RToJpAAut9s9hrgMRyIa9VH5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-11_10,2024-04-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 spamscore=0
+ suspectscore=0 clxscore=1015 bulkscore=0 phishscore=0 impostorscore=0
+ lowpriorityscore=0 malwarescore=0 priorityscore=1501 adultscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404110136
 
 
 
-On 4/9/24 15:08, Krzysztof Kozlowski wrote:
-> On 09/04/2024 21:08, Alexandru Gagniuc wrote:
->> IPQ9574 has PCIe controllers which are almost identical to IPQ6018.
->> The only difference is that the "iface" clock is not required.
->> Document this difference along with the compatible string.
->>
->> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
->> ---
->>   .../devicetree/bindings/pci/qcom,pcie.yaml    | 34 +++++++++++++++++++
->>   1 file changed, 34 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->> index cf9a6910b542..1915bea580d3 100644
->> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->> @@ -26,6 +26,7 @@ properties:
->>             - qcom,pcie-ipq8064-v2
->>             - qcom,pcie-ipq8074
->>             - qcom,pcie-ipq8074-gen3
->> +          - qcom,pcie-ipq9574
->>             - qcom,pcie-msm8996
->>             - qcom,pcie-qcs404
->>             - qcom,pcie-sdm845
->> @@ -397,6 +398,37 @@ allOf:
->>               - const: axi_m_sticky # AXI Master Sticky reset
->>               - const: axi_s_sticky # AXI Slave Sticky reset
->>   
+On 12/2/2023 1:40 PM, Dmitry Baryshkov wrote:
+> In preparation to merger of formats databases, pull format flag
+> definitions to msm_drv.h header, so that they are visibile to both dpu
+> and mdp drivers.
 > 
-> Where do you constrain the reg?
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c | 98 ++++++++++-----------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h | 28 ++----
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c |  4 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   |  4 +-
+>   drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c  |  8 +-
+>   drivers/gpu/drm/msm/disp/mdp_format.c       |  6 +-
+>   drivers/gpu/drm/msm/disp/mdp_kms.h          |  3 +-
+>   drivers/gpu/drm/msm/msm_drv.h               | 24 +++++
+>   8 files changed, 91 insertions(+), 84 deletions(-)
+> 
 
-I didn't realize that was also required -- the make checks should have 
-picked this up too? I might be invoking the tests incorrectly.
+<snip>
 
-I should add the ipq9574 in the same list as ipq8074-gen3 and ipq6018, 
-correct?
+> +#define DPU_FORMAT_IS_YUV(X)		MSM_FORMAT_IS_YUV(&(X)->base)
+> +#define DPU_FORMAT_IS_DX(X)		MSM_FORMAT_IS_DX(&(X)->base)
+> +#define DPU_FORMAT_IS_LINEAR(X)		MSM_FORMAT_IS_LINEAR(&(X)->base)
+> +#define DPU_FORMAT_IS_TILE(X)		MSM_FORMAT_IS_TILE(&(X)->base)
+> +#define DPU_FORMAT_IS_UBWC(X)		MSM_FORMAT_IS_UBWC(&(X)->base)
+>   
 
-Alex
+Do we need another wrapper macro on top of MSM_FORMAT_*** macros? Why 
+cant we use them directly?
+
+Same comment for MDP_FORMAT_IS_YUV macro as well.
+
+Rest LGTM.
 
