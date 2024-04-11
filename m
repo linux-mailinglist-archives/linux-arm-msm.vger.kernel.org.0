@@ -1,234 +1,217 @@
-Return-Path: <linux-arm-msm+bounces-17191-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17193-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9D948A0B4F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 10:34:34 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 056DA8A0B85
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 10:42:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 901E8284643
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 08:34:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 83B26B24454
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 08:42:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCEBC146D70;
-	Thu, 11 Apr 2024 08:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FF682EAE5;
+	Thu, 11 Apr 2024 08:41:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rMmMevMo"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="jySAA3fM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856A3146A89;
-	Thu, 11 Apr 2024 08:32:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D4C1422DB
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 08:41:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712824327; cv=none; b=OT7cChLBKZlyUE4g4zVWN3Fc34eUOttyIaHvse9Q6SbNZsyjApvWgz3GiFJ1eZ75WxIknexKZfFrmfXR2cCmqOSCFzDBZhTtuohu3si2V14tnQg9hwe8YvbLih8i7sEOyaSGWZW182EP+sl09hvp04zQ0lATV9/rUkAtrEyhgtU=
+	t=1712824878; cv=none; b=gNemjyELAHw+4c0/EoAy+7Fl0OO8VCk2Cg+rCEaDqCMjP78kdpvtRFd6LgVhqXrrL3lXcrRb5W8LbAMrQ0WTunHceM9Jzq6lI4d50Qv9qlbW6kMdJQsD1O46PAl90Zvm+Gvbolt9XG8Li/IIM5m26oPf9DeWGCnP2EOS5IaPGBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712824327; c=relaxed/simple;
-	bh=t0BFVQH3c9KhLWbAWpY27qKlp18EmcbQmBMeJCcdds8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=NjcQtc9HXo0zrKeJmqA98wt+NYEgP5sJpiOFVa9cSvlM4n6VYv32VpETtOTibpQfyxY9ZQUGyqteNJdKL5SK3AWX5CP/PYuxnlfoDGeMcO72LVdGuXGkA6egFVFDs58YN6PS3bP/RwFXf3T3ZNFkKKg2JaD4Ua1c7IIu9dZtf38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rMmMevMo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 0EC5EC43143;
-	Thu, 11 Apr 2024 08:32:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712824327;
-	bh=t0BFVQH3c9KhLWbAWpY27qKlp18EmcbQmBMeJCcdds8=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=rMmMevMoH0eC3QDGUSgOXDZhUZVPpHPAo3mpIl+uqvsxIkZ4gGjkvvk74OLdzibYa
-	 9YELC7frhPh3b7VVwA/JEEJNgUGRvnMxLuZIQcak8PWK6twlw/A959wYPZxrMxMBJr
-	 +92CQ5hOB75TYajF20u3k1sn8kOE4nVytlkXqk1mbqk3RS6Oy/MK4ibGOw+kNL6zgG
-	 k9HS8WoSnXf7nSypO1HAQRQO4JlItCoSs7vTXvY1tp5jGoOjCgcEE4d2etffAVzFng
-	 DlulDaMKxXSzKwzUaSgudrmiH9GQ1GOOl2C/IRdI+dNbNayOssDiYgrJGWs2dlxEuA
-	 fDG4JS0n+LgTQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0729ECD129D;
-	Thu, 11 Apr 2024 08:32:07 +0000 (UTC)
-From: Fenglin Wu via B4 Relay <devnull+quic_fenglinw.quicinc.com@kernel.org>
-Date: Thu, 11 Apr 2024 16:31:00 +0800
-Subject: [PATCH v9 4/4] input: pm8xxx-vibrator: add new SPMI vibrator
- support
+	s=arc-20240116; t=1712824878; c=relaxed/simple;
+	bh=7XwS40heuSzS08AOg3Ct0waSlqMddnC3kfgp/oSL++0=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=b+3jPubRa9j82ZM0VTWsT3aJHbZE09ls2lEnyoq6mDDA6/cp3YXPobnDpXP4aLugOycXMB+BnoPw1zZJdrvwXIuW8YUQC47RBl+tLMRVjzgs557y/IMlV0M3pE3mStAIlAo8YXdfviLveqCO9a/mYNSvFKyGU9D8fDm17iRpXpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=jySAA3fM; arc=none smtp.client-ip=209.85.128.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-617dfcf80aeso62241657b3.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 01:41:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1712824875; x=1713429675; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7qyLF4kgizvTFTCCpOZdjrYGVi6dVtt6usPwLnMza0Q=;
+        b=jySAA3fM9sjmJc6KOy5wz+tA+U2JE4kRTTC2xOkKada4bLo5e0RXfUGIoPoVWfjoDl
+         UMF65QwUah3QQkTMdpDY0AFOdQS/hgB+kQ7zhurNy9AWHeJI3irDbfW6zg15zcfgWFl3
+         JvX/GqKsaFhl3fAODHi4KwVSZXmmGULqZXb6A=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712824875; x=1713429675;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7qyLF4kgizvTFTCCpOZdjrYGVi6dVtt6usPwLnMza0Q=;
+        b=NzhXALkCkttZ3h2Ej1o7sEaE5zEs1u8oTGrQAXogR2opbX1dy6j9gRBJmpQAGuk7K1
+         UQVtCvLIPYjYJ/XH95KMUliYVAcaFvSGP7WiuDTZ2UsQDVnNGpN78gzAfAkZVcpzi/15
+         HvZSZ4FqXPabxmYq02uxQhbj15EWmCGgmbaTH5JJb2B4A+XpLk4a3XjhYHD/NYCv2Rsj
+         r5SB4yodeuKNhErb/qxDCprQMFkMiT0Uxz2OI7FAdP0pgPugSHxZLh6teVs4a483dQv8
+         Z7FEiwkP2c823ZqB5hpkswHVGyOECQhez2qjcx3iQtPg2MGSCaKAPiQiqV6GsjTTS5ce
+         VtJQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXSxXkFFyT0YIKSWXG7u+Jxsq3qRgELux6T6hfZsOhi1+CvC5LeEmFjyIWAelmDY/fa8kz4t4hLzgfj+rg+BsFmNlz1xuW/EQ5lqKrmHg==
+X-Gm-Message-State: AOJu0Yy9moWiFF7lbH6K/RzHswpEwjuyyp4ilq17XvtE0q3ntWCCMBMz
+	HUtif+ZtpicHwGZ4Up0fFJL272yTgC6PekY58+BPq2csn00KEBNyO+fynp2D762TCgQ8NVO6AmN
+	/VEfOXY6bycCSQ0mDXD5Fn5dj2Xkdrjpbc5RN
+X-Google-Smtp-Source: AGHT+IGL4zM5jBbRWCJ3sWcug1eth1VghpvE74Gg+jytpS++vbIHeFuIe+Qgfzb0HLwMjL5frK037YhyOOmBSpJ0fAA=
+X-Received: by 2002:a81:6fd7:0:b0:609:ff6d:cb87 with SMTP id
+ k206-20020a816fd7000000b00609ff6dcb87mr4937781ywc.50.1712824875440; Thu, 11
+ Apr 2024 01:41:15 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 11 Apr 2024 01:41:14 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240411-pm8xxx-vibrator-new-design-v9-4-7bf56cb92b28@quicinc.com>
-References: <20240411-pm8xxx-vibrator-new-design-v9-0-7bf56cb92b28@quicinc.com>
-In-Reply-To: <20240411-pm8xxx-vibrator-new-design-v9-0-7bf56cb92b28@quicinc.com>
-To: kernel@quicinc.com, Andy Gross <agross@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
- Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org, 
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
- Fenglin Wu <quic_fenglinw@quicinc.com>
-X-Mailer: b4 0.13-dev-83828
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1712824325; l=5033;
- i=quic_fenglinw@quicinc.com; s=20240327; h=from:subject:message-id;
- bh=pTrC3cQoxz8pNZ4KpoF3OkEKSt7RYrt88MbWTTuCxL8=;
- b=TIEmWRFBPPnL83zharf5f0HHXbluRZMLc0eHt4/Lk+TBjGNhrYdxoj/1mo83UJyaUdCFlnWZa
- OahhOq+XR31DswuGEuPgOZCz8ovvvyM3c56rs3R4g2B/TiYXJ2Ww60s
-X-Developer-Key: i=quic_fenglinw@quicinc.com; a=ed25519;
- pk=BF8SA4IVDk8/EBCwlBehKtn2hp6kipuuAuDAHh9s+K4=
-X-Endpoint-Received: by B4 Relay for quic_fenglinw@quicinc.com/20240327
- with auth_id=146
-X-Original-From: Fenglin Wu <quic_fenglinw@quicinc.com>
-Reply-To: quic_fenglinw@quicinc.com
+In-Reply-To: <ZheY-S5VY2AZD7V-@gerhold.net>
+References: <20240327200917.2576034-1-volodymyr_babchuk@epam.com>
+ <e0586d43-284c-4bef-a8be-4ffbc12bf787@linaro.org> <87a5mjz8s3.fsf@epam.com>
+ <f4ebe819-9718-42c3-9874-037151587d0c@linaro.org> <cd549ee8-22dc-4bc4-af09-9c5c925ee03a@linaro.org>
+ <ZgU_YDUhBeyS5wuh@gerhold.net> <875xwo6f57.fsf@epam.com> <ZheY-S5VY2AZD7V-@gerhold.net>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Thu, 11 Apr 2024 01:41:14 -0700
+Message-ID: <CAE-0n52CkvS4ir15E-dXamsPuLhEt+_v7d2J3uQqGz3d+xz8Yg@mail.gmail.com>
+Subject: Re: [PATCH] soc: qcom: cmd-db: map shared memory as WT, not WB
+To: Stephan Gerhold <stephan@gerhold.net>, Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>
+Cc: Caleb Connolly <caleb.connolly@linaro.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Bjorn Andersson <andersson@kernel.org>, 
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>, 
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, Douglas Anderson <dianders@chromium.org>, 
+	Rob Clark <robdclark@gmail.com>, Nikita Travkin <nikita@trvn.ru>
+Content-Type: text/plain; charset="UTF-8"
 
-From: Fenglin Wu <quic_fenglinw@quicinc.com>
+Quoting Stephan Gerhold (2024-04-11 01:02:01)
+> On Wed, Apr 10, 2024 at 10:12:37PM +0000, Volodymyr Babchuk wrote:
+> > Stephan Gerhold <stephan@gerhold.net> writes:
+> > > On Wed, Mar 27, 2024 at 11:29:09PM +0000, Caleb Connolly wrote:
+> > >> On 27/03/2024 21:06, Konrad Dybcio wrote:
+> > >> > On 27.03.2024 10:04 PM, Volodymyr Babchuk wrote:
+> > >> >> Konrad Dybcio <konrad.dybcio@linaro.org> writes:
+> > >> >>> On 27.03.2024 9:09 PM, Volodymyr Babchuk wrote:
+> > >> >>>> It appears that hardware does not like cacheable accesses to this
+> > >> >>>> region. Trying to access this shared memory region as Normal Memory
+> > >> >>>> leads to secure interrupt which causes an endless loop somewhere in
+> > >> >>>> Trust Zone.
+> > >> >>>>
+> > >> >>>> The only reason it is working right now is because Qualcomm Hypervisor
+> > >> >>>> maps the same region as Non-Cacheable memory in Stage 2 translation
+> > >> >>>> tables. The issue manifests if we want to use another hypervisor (like
+> > >> >>>> Xen or KVM), which does not know anything about those specific
+> > >> >>>> mappings. This patch fixes the issue by mapping the shared memory as
+> > >> >>>> Write-Through. This removes dependency on correct mappings in Stage 2
+> > >> >>>> tables.
+> > >> >>>>
+> > >> >>>> I tested this on SA8155P with Xen.
+> > >> >>>>
+> > >> >>>> Signed-off-by: Volodymyr Babchuk <volodymyr_babchuk@epam.com>
+> > >> >>>> ---
+> > >> >>>
+> > >> >>> Interesting..
+> > >> >>>
+> > >> >>> +Doug, Rob have you ever seen this on Chrome? (FYI, Volodymyr, chromebooks
+> > >> >>> ship with no qcom hypervisor)
 
-Add support for a new SPMI vibrator module which is very similar
-to the vibrator module inside PM8916 but has a finer drive voltage
-step and different output voltage range, its drive level control
-is expanded across 2 registers. The vibrator module can be found
-in following Qualcomm PMICs: PMI632, PM7250B, PM7325B, PM7550BA.
+ChromeOS boots the kernel at EL2 on sc7180. But more importantly we
+don't enable whichever xPU it is that you're running into.
 
-Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
----
- drivers/input/misc/pm8xxx-vibrator.c | 51 +++++++++++++++++++++++++++++-------
- 1 file changed, 42 insertions(+), 9 deletions(-)
+> > >> >>
+> > >> >> Well, maybe I was wrong when called this thing "hypervisor". All I know
+> > >> >> that it sits in hyp.mbn partition and all what it does is setup EL2
+> > >> >> before switching to EL1 and running UEFI.
+> > >> >>
+> > >> >> In my experiments I replaced contents of hyp.mbn with U-Boot, which gave
+> > >> >> me access to EL2 and I was able to boot Xen and then Linux as Dom0.
+> > >> >
+> > >> > Yeah we're talking about the same thing. I was just curious whether
+> > >> > the Chrome folks have heard of it, or whether they have any changes/
+> > >> > workarounds for it.
+> > >>
+> > >> Does Linux ever write to this region? Given that the Chromebooks don't
+> > >> seem to have issues with this (we have a bunch of them in pmOS and I'd
+> > >> be very very surprised if this was an issue there which nobody had tried
+> > >> upstreaming before) I'd guess the significant difference here is between
+> > >> booting Linux in EL2 (as Chromebooks do?) vs with Xen.
+> > >>
+> > >
+> > > FWIW: This old patch series from Stephen Boyd is closely related:
+> > > https://urldefense.com/v3/__https://lore.kernel.org/linux-arm-msm/20190910160903.65694-1-swboyd@chromium.org/__;!!GF_29dbcQIUBPA!yGecMHGezwkDU9t7XATVTI80PNGjZdQV2xsYFTl6EhpMMsRf_7xryKx8mEVpmTwTcKMGaaWomtyvr05zFcmsf2Kk$
+> > > [lore[.]kernel[.]org]
+> > >
+> > >> The main use case I have is to map the command-db memory region on
+> > >> Qualcomm devices with a read-only mapping. It's already a const marked
+> > >> pointer and the API returns const pointers as well, so this series
+> > >> makes sure that even stray writes can't modify the memory.
+> > >
+> > > Stephen, what was the end result of that patch series? Mapping the
+> > > cmd-db read-only sounds cleaner than trying to be lucky with the right
+> > > set of cache flags.
+> > >
+> >
+> > I checked the series, but I am afraid that I have no capacity to finish
+> > this. Will it be okay to move forward with my patch? I understand that
+> > this is not the best solution, but it is simple and it works. If this is
+> > fine, I'll send v2 with all comments addressed.
+> >
+>
+> My current understanding is that the important property here is to have
+> a non-cacheable mapping, which is the case for both MEMREMAP_WT and
+> MEMREMAP_WC, but not MEMREMAP_WB. Unfortunately, the MEMREMAP_RO option
+> Stephen introduced is also a cacheable mapping, which still seems to
+> trigger the issue in some cases. I'm not sure why a cache writeback
+> still happens when the mapping is read-only and nobody writes anything.
 
-diff --git a/drivers/input/misc/pm8xxx-vibrator.c b/drivers/input/misc/pm8xxx-vibrator.c
-index 2959edca8eb9..35bb6f450fd2 100644
---- a/drivers/input/misc/pm8xxx-vibrator.c
-+++ b/drivers/input/misc/pm8xxx-vibrator.c
-@@ -12,10 +12,10 @@
- #include <linux/regmap.h>
- #include <linux/slab.h>
- 
--#define VIB_MAX_LEVEL_mV	(3100)
--#define VIB_MIN_LEVEL_mV	(1200)
--#define VIB_PER_STEP_mV	(100)
--#define VIB_MAX_LEVELS		(VIB_MAX_LEVEL_mV - VIB_MIN_LEVEL_mV + VIB_PER_STEP_mV)
-+#define VIB_MAX_LEVEL_mV(vib)	(vib->drv2_addr ? 3544 : 3100)
-+#define VIB_MIN_LEVEL_mV(vib)	(vib->drv2_addr ? 1504 : 1200)
-+#define VIB_PER_STEP_mV(vib)	(vib->drv2_addr ? 8 : 100)
-+#define VIB_MAX_LEVELS(vib)	(VIB_MAX_LEVEL_mV(vib) - VIB_MIN_LEVEL_mV(vib) + VIB_PER_STEP_mV(vib))
- 
- #define MAX_FF_SPEED		0xff
- 
-@@ -26,6 +26,9 @@ struct pm8xxx_regs {
- 	unsigned int drv_offset;
- 	unsigned int drv_mask;
- 	unsigned int drv_shift;
-+	unsigned int drv2_offset;
-+	unsigned int drv2_mask;
-+	unsigned int drv2_shift;
- 	unsigned int drv_en_manual_mask;
- };
- 
-@@ -45,6 +48,18 @@ static struct pm8xxx_regs pm8916_regs = {
- 	.drv_en_manual_mask = 0,
- };
- 
-+static struct pm8xxx_regs pmi632_regs = {
-+	.enable_offset = 0x46,
-+	.enable_mask = BIT(7),
-+	.drv_offset = 0x40,
-+	.drv_mask = GENMASK(7, 0),
-+	.drv_shift = 0,
-+	.drv2_offset = 0x41,
-+	.drv2_mask = GENMASK(3, 0),
-+	.drv2_shift = 8,
-+	.drv_en_manual_mask = 0,
-+};
-+
- /**
-  * struct pm8xxx_vib - structure to hold vibrator data
-  * @vib_input_dev: input device supporting force feedback
-@@ -53,6 +68,7 @@ static struct pm8xxx_regs pm8916_regs = {
-  * @regs: registers' info
-  * @enable_addr: vibrator enable register
-  * @drv_addr: vibrator drive strength register
-+ * @drv2_addr: vibrator drive strength upper byte register
-  * @speed: speed of vibration set from userland
-  * @active: state of vibrator
-  * @level: level of vibration to set in the chip
-@@ -65,6 +81,7 @@ struct pm8xxx_vib {
- 	const struct pm8xxx_regs *regs;
- 	unsigned int enable_addr;
- 	unsigned int drv_addr;
-+	unsigned int drv2_addr;
- 	int speed;
- 	int level;
- 	bool active;
-@@ -82,6 +99,10 @@ static int pm8xxx_vib_set(struct pm8xxx_vib *vib, bool on)
- 	unsigned int val = vib->reg_vib_drv;
- 	const struct pm8xxx_regs *regs = vib->regs;
- 
-+	/* vibrator without drv2_addr needs be programmed in step increments */
-+	if (!vib->drv2_addr)
-+		vib->level /= VIB_PER_STEP_mV(vib);
-+
- 	if (on)
- 		val |= (vib->level << regs->drv_shift) & regs->drv_mask;
- 	else
-@@ -93,6 +114,17 @@ static int pm8xxx_vib_set(struct pm8xxx_vib *vib, bool on)
- 
- 	vib->reg_vib_drv = val;
- 
-+	if (regs->drv2_mask) {
-+		if (on)
-+			val = (vib->level << regs->drv2_shift) & regs->drv2_mask;
-+		else
-+			val = 0;
-+
-+		rc = regmap_write_bits(vib->regmap, vib->drv2_addr, regs->drv2_mask, val);
-+		if (rc < 0)
-+			return rc;
-+	}
-+
- 	if (regs->enable_mask)
- 		rc = regmap_update_bits(vib->regmap, vib->enable_addr,
- 					regs->enable_mask, on ? regs->enable_mask : 0);
-@@ -115,17 +147,16 @@ static void pm8xxx_work_handler(struct work_struct *work)
- 		return;
- 
- 	/*
--	 * pmic vibrator supports voltage ranges from 1.2 to 3.1V, so
-+	 * pmic vibrator supports voltage ranges from MIN_LEVEL to MAX_LEVEL, so
- 	 * scale the level to fit into these ranges.
- 	 */
- 	if (vib->speed) {
- 		vib->active = true;
--		vib->level = ((VIB_MAX_LEVELS * vib->speed) / MAX_FF_SPEED) +
--						VIB_MIN_LEVEL_mV;
--		vib->level /= VIB_PER_STEP_mV;
-+		vib->level = VIB_MIN_LEVEL_mV(vib);
-+		vib->level += mult_frac(VIB_MAX_LEVELS(vib), vib->speed, MAX_FF_SPEED);
- 	} else {
- 		vib->active = false;
--		vib->level = VIB_MIN_LEVEL_mV / VIB_PER_STEP_mV;
-+		vib->level = VIB_MIN_LEVEL_mV(vib);
- 	}
- 
- 	pm8xxx_vib_set(vib, vib->active);
-@@ -203,6 +234,7 @@ static int pm8xxx_vib_probe(struct platform_device *pdev)
- 
- 	vib->enable_addr = reg_base + regs->enable_offset;
- 	vib->drv_addr = reg_base + regs->drv_offset;
-+	vib->drv2_addr = reg_base + regs->drv2_offset;
- 
- 	/* operate in manual mode */
- 	error = regmap_read(vib->regmap, vib->drv_addr, &val);
-@@ -257,6 +289,7 @@ static const struct of_device_id pm8xxx_vib_id_table[] = {
- 	{ .compatible = "qcom,pm8058-vib", .data = &pm8058_regs },
- 	{ .compatible = "qcom,pm8921-vib", .data = &pm8058_regs },
- 	{ .compatible = "qcom,pm8916-vib", .data = &pm8916_regs },
-+	{ .compatible = "qcom,pmi632-vib", .data = &pmi632_regs },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, pm8xxx_vib_id_table);
+Qualcomm knows for certain. It's not a cache writeback per my
+recollection. I recall the problem always being that it's a speculative
+access to xPU protected memory. If there's a cacheable mapping in the
+non-secure page tables then it may be loaded at the bus with the
+non-secure bit set (NS). Once the xPU sees that it reboots the system.
 
--- 
-2.25.1
+It used to be that we could never map secure memory regions in the
+kernel. I suspect with EL2 the story changes slightly. The hypervisor is
+the one mapping cmd-db at stage2, so any speculative access goes on the
+bus as EL2 tagged, and thus "approved" by the xPU. Then if the
+hypervisor sees EL1 (secure or non-secure) access cmd-db, it traps and
+makes sure it can actually access that address. If not, the hypervisor
+"panics" and reboots. Either way, EL1 can have a cacheable mapping and
+EL2 can make sure the secrets are safe, while the cache never goes out
+to the bus as anything besides EL2.
 
+>
+> You can also test it if you want. For a quick test,
+>
+> -       cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WB);
+> +       cmd_db_header = ioremap_prot(rmem->base, rmem->size, _PAGE_KERNEL_RO);
+>
+> should be (largely) equivalent to MEMREMAP_RO with Stephen's patch
+> series. I asked Nikita to test this on SC7180 and it still seems to
+> cause the crash.
+>
+> It seems to work only with a read-only non-cacheable mapping, e.g. with
+>
+> +       cmd_db_header = ioremap_prot(rmem->base, rmem->size,
+>                                      ((PROT_NORMAL_NC & ~PTE_WRITE) | PTE_RDONLY));
+>
+> The lines I just suggested for testing are highly architecture-specific
+> though so not usable for a proper patch. If MEMREMAP_RO does not solve
+> the real problem here then the work to make an usable read-only mapping
+> would go beyond just finishing Stephen's patch series, since one would
+> need to introduce some kind of MEMREMAP_RO_NC flag that creates a
+> read-only non-cacheable mapping.
+>
+> It is definitely easier to just change the driver to use the existing
+> MEMREMAP_WC. Given the crash you found, the hardware/firmware seems to
+> have a built-in write protection on most platforms anyway. :D
+>
 
+How is Xen mapping this protected memory region? It sounds like maybe
+that should be mapped differently. Also, how is EL2 accessible on this
+device?
 
