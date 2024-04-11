@@ -1,147 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-17146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65C738A0607
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 04:38:28 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 928468A067A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 05:07:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 20A7B28396B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 02:38:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4ECC128BF67
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 03:07:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF11813AD21;
-	Thu, 11 Apr 2024 02:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8411F13B5B4;
+	Thu, 11 Apr 2024 03:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="E9xq7WBn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F+Kk6WFz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1018B86256
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 02:38:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ABB5629E4;
+	Thu, 11 Apr 2024 03:07:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712803105; cv=none; b=PAp4rSm7WrYwJy7sNF+5o7Uel459cjzAQ7KGbhdwk9ENYe6pK/f1KqHD4jMoDwpDW0XjsM8+vnggk3eVQ4Y5cGOPhGYpEOwF4VS0M4mTpiHZGVO3KFZOf5vUTacIb7K7rHdY4npKM6pOUcbbTapnaczkFa2VX5x/SSMjhrHg/+0=
+	t=1712804824; cv=none; b=djwjX4n73toW0Vm92b4SjypF2JtVeLCOjSUFuZIX7umbOYDjoId4gPxYBrihb7zDUZbXw1cqB21nQHuMdxPJFrU0eiIiFO0lhrCooWEgU2lnFSR0TEzBFSVD7EJkXCljixFug5ugYbWW4iBXlVRmHAfasFeGX4r202XxXKH1Gu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712803105; c=relaxed/simple;
-	bh=lwHFdTjw8cUcQImvLPAXnLG1rIBtnZQ3zlRRIOlmSzQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eixMtMFKdhTGop3R5id1wOvhyS2XX8K6e3SKQUDrRlHJF2smaY2S3p6OL36pElbOiyQtQGARrOjf2H8M+8YdhLA/QKOaAN5TGOj9TWzqxxRRaicAPEg3bMhwyKoIyiMJ8GhAmbc7Cm7JkvtXmiYwyluM64ACGb5B+VTGbrCriVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=E9xq7WBn; arc=none smtp.client-ip=209.85.219.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-dc74e33fe1bso6653339276.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 19:38:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712803103; x=1713407903; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=h93OoPo3UL03Kq4q6u54g7RNND5keWjPBsuarAYZLLg=;
-        b=E9xq7WBnTBarMJkvQPeqxGUUt8VXhPh/xCyGJmrpI9lXmNmP9BfnnNJ8FmLw465US+
-         jn6qaSMRnppmoW3hoY8IVE5VzrvpSW4oB+SAuJbuixTseF/oGO9FFrDHb+9bOnfvAErP
-         C/K3VzNMy2myyn7qwbQ2CcAFo2be1Bk5yqsBgnvp2C95lXQ6m3ir0UY2B4HGht9l0QRU
-         kCTatRn3rk8OOMJb2CQCQlUBdFXhqcjIVuq9IQLsnQlIvvXSif4t4PE6NYNAYJSSB7/K
-         5u0BP4F0DZsBbQXB3rkLxSgjhnTnFBmSHjnuLaG8Ybl2AqXzs8VDn2uaRdmL49MHnZog
-         irEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712803103; x=1713407903;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=h93OoPo3UL03Kq4q6u54g7RNND5keWjPBsuarAYZLLg=;
-        b=T0CnhBrvVEvjyH56eRE4eo/9YhYmMbvGAcgs/OpOuRlpu1HH5M39pK/iye9+6GWCIV
-         XcaVAI7/jzLS10w6z8KJ6qP0CSVnJVA2AD1IFD4UgxB2aRzoZP0hr+ECpuI8uaXPhklk
-         bZvdJjdHhsswpzfsvz/9rwi/USZWYoN9TdcP5MggdcZrTDcZWHHNMAAOJLVhr7WJmPJ7
-         b9uSO/SqxMNSMLjW2dN/KeKvu/0q4FLakxRyepPjiOZjpPLkA3OwCYcFLensUr8wQoBu
-         bAQJuAS53bBH55eo97VKob6BLHwe8GcnAkbmzgSZwBAFOMymWDnc/cgZ7x9PfOdvu+sd
-         hR1g==
-X-Forwarded-Encrypted: i=1; AJvYcCVpTkluU4uwflRb3v+1Jr0+Nd9Bz8wWMacXqYYEM0UdGQEj1lWBIRehGtmolK9pKZ+ZpcN/8/S92ANXl3jaDvmV68+0TBkysR2bbkXx9A==
-X-Gm-Message-State: AOJu0YwuiNukExKdEmZ+8gQOl+j6lUxzimzhBxpgzVlo3uqzBe+mRCH5
-	GBHni7G6kLFXbYPftU4rFVw/MD+YvEU6IpinCFTDijT/HziQyVHmbzTP5BnGiqquke2WgiA5zgJ
-	Di+G5MyAnQhnbWlDYQol00v+KIHsNUfOE0kvzEQ==
-X-Google-Smtp-Source: AGHT+IGP2sQ+K4ZsCv7qDmaRap/BzFNEjUp/j+e152KeOUhVKcONvxn9nBq+rcTw5Wla3KyabJs1x5aa6IXmpGAfzUw=
-X-Received: by 2002:a25:33c1:0:b0:dc6:c2b2:c039 with SMTP id
- z184-20020a2533c1000000b00dc6c2b2c039mr4289918ybz.41.1712803102886; Wed, 10
- Apr 2024 19:38:22 -0700 (PDT)
+	s=arc-20240116; t=1712804824; c=relaxed/simple;
+	bh=bnVt6K57/nt4KUKgLs7f1HAwAdHPz3yZD2sdY2LGZYg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sXlMsOzmHjkxos/nvhF1bou8i9BsHQfZhXt3D6ESSI7fRN0V6SJ/QBv5egznM16u8gmoxj3dT5XSvErDucY5wrQx1gMgU63AexGVdpvCgSRzgxRSASULcyU5Bdoez/Whg3Y58n1hk+Uqf0aAQAWq7ySeP21tagHJM6GUvVnYx/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F+Kk6WFz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E09CBC433F1;
+	Thu, 11 Apr 2024 03:07:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712804823;
+	bh=bnVt6K57/nt4KUKgLs7f1HAwAdHPz3yZD2sdY2LGZYg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=F+Kk6WFznJkm35E5WxOhKTCjOdA8cL0sy0QkLxuGwnFd3phxBXaiiMquKB1OfYTcy
+	 PhkoGNFf6OHyLD6Bvu9Lmud8sJvq3nuoz/SCE9llK1A0tYE5+hBw5dVkzfISsB0wP1
+	 K+Kzo52gg9RaMzrqPdffRC25IUw3M9GkpFcgJuznaXoEAsgB3LJ5QzJ+J1YIJLMs+z
+	 OnFW46yiUrX2ABBp+N0uGpz6mvzGOpJ1eW3ZP7LPB3X7spU/gXIU1bw0P2wzD/H1no
+	 fRM0XOWuxV1YGu6/ocQDfG1cdvj2RdxCU2dZ3FRDBDsGSFZBSzN8Zbq4ShUaU8OnE6
+	 iA+/2kJy2+ymg==
+Date: Wed, 10 Apr 2024 22:07:00 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Marc Gonzalez <mgonzalez@freebox.fr>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	MSM <linux-arm-msm@vger.kernel.org>, linux-clk <linux-clk@vger.kernel.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Bryan O Donoghue <bryan.odonoghue@linaro.org>, 
+	Vikash Garodia <quic_vgarodia@quicinc.com>, Jeffrey Hugo <quic_jhugo@quicinc.com>, 
+	Douglas Anderson <dianders@chromium.org>, Pierre-Hugues Husson <phhusson@freebox.fr>, 
+	Arnaud Vrac <avrac@freebox.fr>
+Subject: Re: [PATCH v2] clk: qcom: mmcc-msm8998: fix venus clock issue
+Message-ID: <ev2laysswhkkqmm2lih5iztop2a2slkb36l77fzz6rquliqnab@2kr7c5xzphac>
+References: <c325691e-1cbe-4589-87fc-b67a41e93294@freebox.fr>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231202214016.1257621-1-dmitry.baryshkov@linaro.org>
- <20231202214016.1257621-4-dmitry.baryshkov@linaro.org> <bb448864-b974-55ac-4709-ea89bbd2694f@quicinc.com>
- <CAA8EJpqnjY35RF52yJ8gFRKHoh1ArnnviacDtfntSYZdALD3bQ@mail.gmail.com>
- <83b45b20-fb7e-564b-4e32-2b6a12c4dc6d@quicinc.com> <uhyqwsevbgvayqf7ky2tasvutpqgvuaa5o7y7scqete3jueuhk@zgji4hgmh4lu>
- <c0274d67-ae15-8b08-a6af-bd1d77698ab9@quicinc.com>
-In-Reply-To: <c0274d67-ae15-8b08-a6af-bd1d77698ab9@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 11 Apr 2024 05:38:11 +0300
-Message-ID: <CAA8EJppmyU246kFE3Xk7SLG9GDgfhfT4ONCu8ZzQg3ssx+njbQ@mail.gmail.com>
-Subject: Re: [PATCH 03/12] drm/msm/dpu: use format-related definitions from mdp_common.xml.h
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Stephen Boyd <swboyd@chromium.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c325691e-1cbe-4589-87fc-b67a41e93294@freebox.fr>
 
-On Thu, 11 Apr 2024 at 02:54, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->
->
->
-> On 4/10/2024 2:12 PM, Dmitry Baryshkov wrote:
-> > On Wed, Apr 10, 2024 at 01:18:42PM -0700, Abhinav Kumar wrote:
-> >>
-> >>
-> >> On 4/10/2024 1:16 PM, Dmitry Baryshkov wrote:
-> >>> On Wed, 10 Apr 2024 at 23:00, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
-> >>>>
-> >>>>
-> >>>>
-> >>>> On 12/2/2023 1:40 PM, Dmitry Baryshkov wrote:
-> >>>>> Instead of having DPU-specific defines, switch to the definitions from
-> >>>>> the mdp_common.xml.h file. This is the preparation for merged of DPU and
-> >>>>> MDP format tables.
-> >>>>>
-> >>>>
-> >>>> Adding MDP_***__ usages in DPU driver is quite confusing.
-> >>>>
-> >>>> Can we align to a common naming scheme such as DISP_***?
-> >>>
-> >>> No, it's not something display-generic. It is specific to MDP
-> >>> platforms. In the end DPU is a continuation of the MDP lineup, isn't
-> >>> it?
-> >>>
-> >>
-> >> No some aspects of the hw are completely different as you already know
-> >> between MDP4/MDP5 and DPU. Bringing back MDP usages into DPU does not seem
-> >> right.
-> >
-> > MDP4 is different, it's true. But there is a lot of common between MDP5
-> > and DPU. Frakly speaking, I don't see an issue with using the constant
-> > that was defined for MDP5 for DPU layer. Especially since we are also
-> > going to use mdp_ functions for format handling.
-> >
->
-> All the HW naming etc in the doc has migrated to DPU and in fact it only
-> makes sense to start using DPU for MDP5 as we plan to move mdp5 targets
-> to DPU anyway. Not the other way around.
->
-> MDP4 remains different.
->
-> How about MSM_DISP then? I dont get why this is MDP platform specific.
-> Because the term MDP no longer holds true for DPU.
->
-> I am even looking for future chipsets. We cannot live with MDP5 names.
-> Have to think of generic names for formats.
+On Wed, Apr 10, 2024 at 01:13:17PM +0200, Marc Gonzalez wrote:
+> Video decoder (venus) was broken on msm8998.
 
-Another point: MDP_ is still frequently used in the DPU driver. See
-dpu_hwio.h, dpu_hw_catalog.h or dpu_hw_interrupts.c
+Could you please express something about in what way it was broken, or
+how this manifested itself etc?
 
--- 
-With best wishes
-Dmitry
+> 
+> PH found crude work-around:
+
+Would be nice if these names are spelled out, if you'd like to give
+credit to the individuals.
+
+> Drop venus_sys_set_power_control() call.
+> 
+> Bryan suggested proper fix:
+> Set required register offsets in venus GDSC structs.
+> Set HW_CTRL flag.
+> 
+> GDSC = Globally Distributed Switch Controller
+> 
+> Use same code as mmcc-msm8996 with:
+> s/venus_gdsc/video_top_gdsc/
+> s/venus_core0_gdsc/video_subcore0_gdsc/
+> s/venus_core1_gdsc/video_subcore1_gdsc/
+> 
+> https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/include/dt-bindings/clock/msm-clocks-hwio-8996.h
+> https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/include/dt-bindings/clock/msm-clocks-hwio-8998.h
+> 
+> 0x1024 = MMSS_VIDEO GDSCR (undocumented)
+> 0x1028 = MMSS_VIDEO_CORE_CBCR
+> 0x1030 = MMSS_VIDEO_AHB_CBCR
+> 0x1034 = MMSS_VIDEO_AXI_CBCR
+> 0x1038 = MMSS_VIDEO_MAXI_CBCR
+> 0x1040 = MMSS_VIDEO_SUBCORE0 GDSCR (undocumented)
+> 0x1044 = MMSS_VIDEO_SUBCORE1 GDSCR (undocumented)
+> 0x1048 = MMSS_VIDEO_SUBCORE0_CBCR
+> 0x104c = MMSS_VIDEO_SUBCORE1_CBCR
+> 
+
+Would you mind providing me a Fixes tag as well?
+
+Thanks,
+Bjorn
+
+> Suggested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+> ---
+>  drivers/clk/qcom/mmcc-msm8998.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/drivers/clk/qcom/mmcc-msm8998.c b/drivers/clk/qcom/mmcc-msm8998.c
+> index 1180e48c687ac..275fb3b71ede4 100644
+> --- a/drivers/clk/qcom/mmcc-msm8998.c
+> +++ b/drivers/clk/qcom/mmcc-msm8998.c
+> @@ -2535,6 +2535,8 @@ static struct clk_branch vmem_ahb_clk = {
+>  
+>  static struct gdsc video_top_gdsc = {
+>  	.gdscr = 0x1024,
+> +	.cxcs = (unsigned int []){ 0x1028, 0x1034, 0x1038 },
+> +	.cxc_count = 3,
+>  	.pd = {
+>  		.name = "video_top",
+>  	},
+> @@ -2543,20 +2545,26 @@ static struct gdsc video_top_gdsc = {
+>  
+>  static struct gdsc video_subcore0_gdsc = {
+>  	.gdscr = 0x1040,
+> +	.cxcs = (unsigned int []){ 0x1048 },
+> +	.cxc_count = 1,
+>  	.pd = {
+>  		.name = "video_subcore0",
+>  	},
+>  	.parent = &video_top_gdsc.pd,
+>  	.pwrsts = PWRSTS_OFF_ON,
+> +	.flags = HW_CTRL,
+>  };
+>  
+>  static struct gdsc video_subcore1_gdsc = {
+>  	.gdscr = 0x1044,
+> +	.cxcs = (unsigned int []){ 0x104c },
+> +	.cxc_count = 1,
+>  	.pd = {
+>  		.name = "video_subcore1",
+>  	},
+>  	.parent = &video_top_gdsc.pd,
+>  	.pwrsts = PWRSTS_OFF_ON,
+> +	.flags = HW_CTRL,
+>  };
+>  
+>  static struct gdsc mdss_gdsc = {
+> -- 
+> 2.34.1
+> 
 
