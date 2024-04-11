@@ -1,78 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-17261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17262-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C311D8A1AAD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 19:03:30 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DAF208A1A6C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 18:51:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 16D0AB2836B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 16:36:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 96611283B7D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 16:51:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7331C1C820F;
-	Thu, 11 Apr 2024 15:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69211481D7;
+	Thu, 11 Apr 2024 15:40:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LD9duxIo"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="irYc3LU9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B9A41206
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 15:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6777C1DCA0D;
+	Thu, 11 Apr 2024 15:40:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712849916; cv=none; b=N14U6a5cPb0046tSA2Ma2y5uKWldtZowNqCIQY4XbrPzgVLgUIlkUSbW1+05j+HavOuqaioWPg6spzAxNCzbWyGy3scLfzlTSzOB47vgo7CMbcK7VhR4pQuh483DS7zB2FlSvMgBKijHajdAES7HBjH93dwooqDu6yzK89EJybs=
+	t=1712850020; cv=none; b=iI1lvx2ZXRT8/0zCNPpNPoCWohsBA8wVNdCqvlYsXB1fSz1O2B5Qhp8wLYDGBv3ZvnjNsoNs/FTPKNNJErFFXPnZW43Y3o/UmYjCBULr5A+qvggUHUG5HGynjLeUAO53Qp15QGdVs78tZZWcxdN27UJk7GO8n5oLCLalYHr1yVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712849916; c=relaxed/simple;
-	bh=dGDB02K0Viy+DR1u9XLb/QR6ktvmRU9W44q6QBkwxA4=;
+	s=arc-20240116; t=1712850020; c=relaxed/simple;
+	bh=lTfWgvoTvKVd9f2A24EXgrmmHmIkvyTrOaY05JbbVMA=;
 	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=przVTm8QOSn4oEn7+k+TTpsIOv0NFgA0nGteWuZ9FnaPTuzCwelROBcTCQqKOwpvCSr/Qdv9QOEX4oz/6csEOfDK4FE3UyfL4IWAD/20NZAR43Y7SLgESlEqo46Mk4NhWtKiKsQppPExKK70g2LmRUJ9B+CXwlLAoBRxLceedcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LD9duxIo; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q4edAbllL11DBlG+e1sSZg6ladn5OcmEjG1tA7FDOXvu6rUmDEWCyK9cfigzFkxXSCU7bKxdCnX77W+Vm5MYUv19Pxvn+GdU+JNRoVgH/IRKT82ze+HfOfqaMWHadmY1F/QU/+ezAlbaFQmLYdtAirpQ3NyurndHaHm62gWJQp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=irYc3LU9; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43BBuNcO001845;
-	Thu, 11 Apr 2024 15:38:26 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43BBKYEc022854;
+	Thu, 11 Apr 2024 15:39:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=80DHk0Fuz06Uku1wcCSuS
-	QnLdPfxG6C3CtabdVHSiqw=; b=LD9duxIovTWHZd0+EaPGMuTe3EToLjACY9hBR
-	Lfu47WgmMaVIXhi/j/5BSzwgRy46k421Iq/Ffq/r65Gty0TBqxzWIbOiM2dtuaN8
-	7+RR9CCsiQvdWkZbJNfxRCZGR4pc73CqzPyIBlGATEsqhGov7SMFCn1MjYvRX78c
-	/2USix69X+JuV2Jg7mu3dYb33l4IJvyAZ7bgpCogCDZ52lfnMcvSrSCDwcy9534T
-	K1QCBnfosC6wsKZ4hVMSbr4dB69XGgFX5IZ+lsiMD7BBPaz6blV1UfJX1mszhNMJ
-	rH33MB3irye9t/RWnwZaC6YHWAKnVCOSe4wy4PwOxPbYbpJug==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xedugs18c-1
+	:content-type:in-reply-to; s=qcppdkim1; bh=RFHrFkfwcQrgxQdoj1RVH
+	qtwLottyVNWq/7Jdndbpsc=; b=irYc3LU9Uc+DlT4ymOnGhcMVzq43CGTucGJSd
+	i21KmCSCnITu6Vo++gLvklaPtB3gO8opZuGA3o+n/Wz2qQ6f+Xpj6wjTRGrbjvEO
+	naCfid4zJ7ISb2TIioD9PX0BRnwW4VdD/65usS30OjHQayIFadedgnk5K8OraJ/1
+	Twqg7waPV2+ii/L1RKkC0JMWlYkbFo58qDRw8uS97TPcUdnd3fUUx0tUwtpvdbrL
+	J0FTt975FbFhadZ33BzJ25XMBP3g16rck0S1zNIq+/bTDIvrxodP/SQqwOp6+q/J
+	NEzx3/QDsMkUoOsDWJPzYpsT4c6P4hHHfOmhX+6g6uvOujjgQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xec6vsgks-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Apr 2024 15:38:25 +0000 (GMT)
+	Thu, 11 Apr 2024 15:39:57 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43BFcOQ6024473
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43BFdr3E029269
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Apr 2024 15:38:24 GMT
+	Thu, 11 Apr 2024 15:39:53 GMT
 Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
  nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Thu, 11 Apr 2024 08:38:24 -0700
-Date: Thu, 11 Apr 2024 08:38:23 -0700
+ 15.2.1544.4; Thu, 11 Apr 2024 08:39:53 -0700
+Date: Thu, 11 Apr 2024 08:39:52 -0700
 From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: Dong Aisheng <aisheng.dong@nxp.com>, Fabio Estevam <festevam@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>,
+        Pengutronix
+ Kernel Team <kernel@pengutronix.de>,
+        Linus Walleij
+	<linus.walleij@linaro.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Sean Wang
+	<sean.wang@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+        zhanghongchen <zhanghongchen@loongson.cn>,
+        Yinbo Zhu <zhuyinbo@loongson.cn>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio
 	<konrad.dybcio@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will
- Deacon <will@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH] arm64: defconfig: build INTERCONNECT_QCOM_SM6115 as
- module
-Message-ID: <ZhgD77bEoSiOmO3X@hu-bjorande-lv.qualcomm.com>
-References: <20240409-enable-sm6115-icc-v1-1-bf894fb5a585@linaro.org>
- <a1aa0f4a-868c-4386-ba6a-9962f827bb2b@linaro.org>
- <CAA8EJpoinJ999jYsEhBqoV=J0fB+0_odO_EEXveQdjB3+GfJkg@mail.gmail.com>
- <xzb37tt5e23pbsi2usdvtaamxqbjgivwfgd3lbpukoahkcziox@5mwat7kaicjl>
- <CAA8EJppAw9F8OnSW35xmYv_abzYaHp_EKtDgo7hgtE00-UmAFg@mail.gmail.com>
+        <linux-gpio@vger.kernel.org>, <imx@lists.linux.dev>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <linux-mediatek@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH 4/5] pinctrl: qcom: sm7150: fix module autoloading
+Message-ID: <ZhgESEq+9jRuta2B@hu-bjorande-lv.qualcomm.com>
+References: <20240410170150.248428-1-krzk@kernel.org>
+ <20240410170150.248428-4-krzk@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,83 +89,52 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <CAA8EJppAw9F8OnSW35xmYv_abzYaHp_EKtDgo7hgtE00-UmAFg@mail.gmail.com>
+In-Reply-To: <20240410170150.248428-4-krzk@kernel.org>
 X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: wzncNA3D_SEAPV226ecD-cXupr7XApJ9
-X-Proofpoint-ORIG-GUID: wzncNA3D_SEAPV226ecD-cXupr7XApJ9
+X-Proofpoint-ORIG-GUID: Q4hixGIkEX4CJwtmeiJ4oFt_FKE4yeeM
+X-Proofpoint-GUID: Q4hixGIkEX4CJwtmeiJ4oFt_FKE4yeeM
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-04-11_08,2024-04-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxscore=0
- priorityscore=1501 adultscore=0 suspectscore=0 bulkscore=0
- lowpriorityscore=0 mlxlogscore=876 impostorscore=0 clxscore=1015
- malwarescore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2404010003 definitions=main-2404110114
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
+ priorityscore=1501 mlxscore=0 clxscore=1011 adultscore=0
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 spamscore=0
+ mlxlogscore=999 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2404010003 definitions=main-2404110115
 
-On Thu, Apr 11, 2024 at 06:31:08AM +0300, Dmitry Baryshkov wrote:
-> On Thu, 11 Apr 2024 at 06:19, Bjorn Andersson <andersson@kernel.org> wrote:
-> >
-> > On Wed, Apr 10, 2024 at 01:12:15AM +0300, Dmitry Baryshkov wrote:
-> > > On Tue, 9 Apr 2024 at 23:02, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
-> > > > On 4/9/24 20:27, Dmitry Baryshkov wrote:
-> > > > > Enable CONFIG_INTERCONNECT_QCOM_SM6115 as module to enable the
-> > > > > interconnect driver for the SoC used on Qualcomm Robotics RB2 board.
-> > > > >
-> > > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > > ---
-> > > >
-> > > > =y for console?
-> > >
-> > > I think with pinctrl being set to m it won't reach the console anyway.
-> > > And earlycon should work w/o ICC driver if I'm not mistaken.
-> > >
-> > > Several other Qualcomm platforms also have interconnects built as
-> > > modules in defconfig. I really suppose that we should move all such
-> > > drivers to =m and force using initrd. But this sounds like a topic for
-> > > plumbers.
-> > >
-> >
-> > That currently does not work very well, because if you probe defer the
-> > UART into the future e.g. systemd will open /dev/console before it
-> > exist - with no interest in reopening that later.
-> >
-> > So, if you care about UART, that is suboptimal.
-> >
-> > Resolve this, and I'd be happy to see them all go =m.
+On Wed, Apr 10, 2024 at 07:01:49PM +0200, Krzysztof Kozlowski wrote:
+> Add MODULE_DEVICE_TABLE(), so the module could be properly autoloaded
+> based on the alias from of_device_id table.  Pin controllers are
+> considered core components, so usually they are built-in, however these
+> can be built and used as modules on some generic kernel.
 > 
-> Doesn't /dev/console handle switching between earlycon and actual
-> console? I'll take a look at some point in the future.
-> 
+> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-It does not, selection happens at open(). So user space need to reopen
-/dev/console once the console has been updated.
-
-> But I can't help but notice that currently we have 5 ICC drivers built
-> as modules (out of 21 mentioned in the defconfig). Should we fix them
-> too?
-
-I reviewed this a while back, at which time none of these had
-interconnects specified for their UART device.
-
-The lack of icc is likely a problem at some point, in which case this
-would need to be updated. But at this time (at the time I looked at it),
-there was no problem to motivate such change with.
+Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 
 Regards,
 Bjorn
 
+> ---
+>  drivers/pinctrl/qcom/pinctrl-sm7150.c | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> CONFIG_INTERCONNECT_QCOM_MSM8916=m
-> CONFIG_INTERCONNECT_QCOM_MSM8996=m
-> CONFIG_INTERCONNECT_QCOM_QCS404=m
-> CONFIG_INTERCONNECT_QCOM_SM8150=m
-> CONFIG_INTERCONNECT_QCOM_SM8350=m
-> 
-> 
+> diff --git a/drivers/pinctrl/qcom/pinctrl-sm7150.c b/drivers/pinctrl/qcom/pinctrl-sm7150.c
+> index c25357ca1963..c542f9bc6bcd 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-sm7150.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-sm7150.c
+> @@ -1246,6 +1246,7 @@ static const struct of_device_id sm7150_tlmm_of_match[] = {
+>  	{ .compatible = "qcom,sm7150-tlmm", },
+>  	{ },
+>  };
+> +MODULE_DEVICE_TABLE(of, sm7150_tlmm_of_match);
+>  
+>  static struct platform_driver sm7150_tlmm_driver = {
+>  	.driver = {
 > -- 
-> With best wishes
-> Dmitry
+> 2.34.1
+> 
 
