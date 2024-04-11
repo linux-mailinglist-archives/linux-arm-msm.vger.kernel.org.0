@@ -1,69 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-17155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17156-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F4138A06BB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 05:31:23 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 794A18A06CC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 05:35:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C01C61C2218A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 03:31:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2D2BF1F226B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 03:35:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31A801F176;
-	Thu, 11 Apr 2024 03:31:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E71D813B7BC;
+	Thu, 11 Apr 2024 03:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ATpRGJts"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tx0YkMiF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633C723BF
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 03:31:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 341311F176
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 03:33:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712806282; cv=none; b=ms8qV+v+VLoraSDhBUs/g38o3wIhlt5J903rvq4+ooJMkeDh0q4IIvkjDVaFlAREWbbmzqOt6caOJ7e7gvBANDmZ2/CHMsCLcgget1xkCsbrGiuyqTWo1MwZRksITRZhy3Gca/kogqUD7I2pfbESwoinAiNva7bsxv20aAwbh+s=
+	t=1712806410; cv=none; b=tvm9gPfQebmvAb+x1aIvoo9aBgVlWV75cM6LvQQ3I7dcMH096gR60KLC3WM7hJlUg8gNoPOY3jlv5DqXIROHDQmt7RxTNBQp2r3wRmCKFf5a5wk8Jli0czvhNHNLKjf0KHGCCKa4ZWhcr6XmmuTxk2vataGcaV1scqyvti7hylY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712806282; c=relaxed/simple;
-	bh=heYo1a1KOC8Rr+IsuUKInwPc+wv9TtCW14Y/0qZpIaY=;
+	s=arc-20240116; t=1712806410; c=relaxed/simple;
+	bh=DkyyV+DeeXtw5y1VitiFHacAfDUajfdXO3Zb3F2s9i0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gm/56wYrSYf8jroMlH4Ic/6hmCazuBtn5pEcIWoKEN6jo3kqFeTMD7so5esJJOmMVWDrA0gsbjL5ZFeV6PJ2qla/fvGx5aL8hyeZMAREWPAT9M3RPgq168fYmKE8nmXNj1IN59BcR9mykV5tyRt0/sXZ4cn2LzJartWovJBEzPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ATpRGJts; arc=none smtp.client-ip=209.85.128.172
+	 To:Cc:Content-Type; b=EkyuGIwegKmoVSyyEFbGxaNdYyC5IyxqgmFvfnuzX6AbBErSB/VoWiZpa+QsRpInHW5LhedS7Isjr3m0XMVQVO3aFRBdyyv77rWzh4aKl8eBOIA7EQZfeJiUxYkyZqCjqgivQQJj2IV7XL1iySDck/CUQo82sDC7FZ7GzaUJ9W0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tx0YkMiF; arc=none smtp.client-ip=209.85.219.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-617f8a59a24so41243917b3.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 20:31:20 -0700 (PDT)
+Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-dc74e33fe1bso6676285276.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Apr 2024 20:33:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712806279; x=1713411079; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1712806408; x=1713411208; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Moa4MA1KkX6UMmh8Sv0cr8Q+5qJYYe3aKfMwl7lChAQ=;
-        b=ATpRGJtsg4fu/Ia1MhHTZwFW0i+u5segnxHvGxQiYw7YWqcLzWq2NzPKnO+RtUrj7y
-         5oSM81O0usLgVlpg8icXiXAeFugSGRrCPcQwbaxg706XHWtd1Ny7wr2dNb5BKgfnCgt+
-         A7Ip0Pf5ARwwgUBytB4LwzpbXVzumLNBfiNQItrjXXauzjBF2lpv1XGNrlaUZ9xQ6Cho
-         86f24h4Bfkk7GMj/gEc0mDd02mk29sSHU9sNGLnQwLZIYgAsjel3HphPEpd/lEeXyiwo
-         o4KC8QbrPK9wGz9MnTi56AVdobI8Xn1iqgpL/gCpvcjKmSLO/3eiMmoA6P9POJdE8zdL
-         0Mag==
+        bh=NLQjM3XNXLTRHzsj7zKKY6yg7lqGV8iGkVr8wOADLrM=;
+        b=tx0YkMiFaowpNMaXxd/x1z3H3a6lfsEmiLRUvUGHWPBKVf21qAJZm907JIJSbnJV4e
+         +claqXTCCUAyA73QsXNkP+LFjSp7i3w3M7I3smC+iM3k8zP5KG5eUps8Z73nGFCrAQlJ
+         vAMXIHkVuDoG9A0tVodmtNb7PVAs2xF/UjWkiktgZ8MGZ0nF5pIvmK8rfbNPP6bsnjrK
+         72yTqPNQOrTHlsusshy+4DuXOKWS53t28C3G90HbohRigX91wq2sh+bbsi0lsGY7DZcS
+         bGIejhYgaRgsDBV+uGO0DekVw9fF1L1KVPCfJ+QOP3iIoBvzlPNE72mG3skSqxpoZG7D
+         VkxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712806279; x=1713411079;
+        d=1e100.net; s=20230601; t=1712806408; x=1713411208;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Moa4MA1KkX6UMmh8Sv0cr8Q+5qJYYe3aKfMwl7lChAQ=;
-        b=MKAcBOuVyS/rXR+idkafE5Y3hMFjIfFWovfexpiNDP9VxsHoQARdU3a2mN8PGxd81e
-         qO6HO+lN5ZZ2kclSU2Qo9SLVYJL5vWwBiUqPTJ92ZIRAmXZ5PRDgi3pzy+6srEYB4qFz
-         pjoytjA0ADtl6KcfQGA/bP+iFjeOnA+AfNjUoEC1MRX4p18W0vyrFU3rOhaM1EdA9AiQ
-         WMBes8rFKJKHICET8mA9wMAMwRVOWrxEco6fXE2DrbqTLpouacr1cZG4pMryfhpEjUln
-         HdWLAARAfxKqbxIP8tYdsBL1GuvDSpVir2iqrKoSmEASpWGLONRtElijxf1Q2jPGczmq
-         7HWA==
-X-Forwarded-Encrypted: i=1; AJvYcCW3cZAdFtEqpjXA3xpqLO+wKjeQ1U0lk4RLfV3iVoWm0p05bDa/BZyQeRiLR4p7b5i4PD8ZEMYq79v3fWDR9wivBg06hKr2lMQ3IEQn+Q==
-X-Gm-Message-State: AOJu0YzE8MMCNmglAcy3B7GnfmRu3aUhko1pInT0RlfOPhl+7U5MPce4
-	wMi8UOJwxlFUDWFHshpIj/NTaqzs9iPP0zheSV28Vsvy+6GjTI/2k44Plhi4vt9V6rcXoTwsE7t
-	ko2ZaYZJBW6ezcdjvXEde41Hrc49wfvymP1QWNw==
-X-Google-Smtp-Source: AGHT+IH+gm7IY0Pw6dKRRmPysnxF+cTGu33/iz4367xCj73QpeV2TdIRr2pZ0EcBeg2WRYVVYFbmys0uKxd2VYn9ta8=
-X-Received: by 2002:a05:6902:2b84:b0:dcb:ad22:1b1 with SMTP id
- fj4-20020a0569022b8400b00dcbad2201b1mr4561471ybb.3.1712806279384; Wed, 10 Apr
- 2024 20:31:19 -0700 (PDT)
+        bh=NLQjM3XNXLTRHzsj7zKKY6yg7lqGV8iGkVr8wOADLrM=;
+        b=intCC7SNmDuVr3VTGiArZbhA5eqb55Wf2sams8obkNjiatQLtw6YkQdhZcxkGM81Ri
+         kjJ347w/NjiwLLyZ0Ua+qqh0fDiZmU1xxYk2J/RhDNfrwBBrueS71BP6qL6sbhgVywQK
+         yNLuJWFDsCsmIaWS+iaC4Yn+pTDqrBxhYPTueDNtKZiysgiKcbq/YX5EDGbgMcNh1J7r
+         Sxj6vQYiPbAZRVnz6oJyaowjmFkNz053ESy2onfyk7HbTBI444zlObjRkOcwoyz0uJTX
+         W2FQbOWzvsyRq18tLA41VOSNePpOJyk4RssNNMhuhYcBkzo0TlBruWe+w+N7l6AWme0P
+         MXXw==
+X-Forwarded-Encrypted: i=1; AJvYcCXplG0erY8iYM5d617/szoWB/ZYE12NBQrHqrde6ORO+g24uzjjqv26gpZu00ISfZD14fxjlxz5DAsSd1n5DU8QmzEa0hMXKrGeJhR0lA==
+X-Gm-Message-State: AOJu0Yy9WTLRP+BWdgI3yeUfqo7vg594sLNwjgh7znkbcbsvZgzOjcJy
+	yyRGyFaHtMamakxR8xA3sd6uLNdEqHJjYgrGcHCUCYFqyqcBLVaVggvBtDH02tPV7xXkcWSuZKn
+	tuudOf2WINQmlLJrhuhemTxO9lcEGXxXfOZ/mtQ==
+X-Google-Smtp-Source: AGHT+IFTiIuDXnmNCiBX/58irNEJ1EqJhyoG80H3vr69UmLV6KIPu7hyPEBLc4eSkGSuiTbVejoGmZTAQzSohJ2OBjo=
+X-Received: by 2002:a05:6902:2b8c:b0:ddb:2e97:4715 with SMTP id
+ fj12-20020a0569022b8c00b00ddb2e974715mr5351388ybb.46.1712806408138; Wed, 10
+ Apr 2024 20:33:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,8 +75,8 @@ References: <20240409-enable-sm6115-icc-v1-1-bf894fb5a585@linaro.org>
  <xzb37tt5e23pbsi2usdvtaamxqbjgivwfgd3lbpukoahkcziox@5mwat7kaicjl>
 In-Reply-To: <xzb37tt5e23pbsi2usdvtaamxqbjgivwfgd3lbpukoahkcziox@5mwat7kaicjl>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 11 Apr 2024 06:31:08 +0300
-Message-ID: <CAA8EJppAw9F8OnSW35xmYv_abzYaHp_EKtDgo7hgtE00-UmAFg@mail.gmail.com>
+Date: Thu, 11 Apr 2024 06:33:17 +0300
+Message-ID: <CAA8EJprDPtmzzoZCQ8eyZXYydR6=13TsYFnO9A-StK_GxL4Gpg@mail.gmail.com>
 Subject: Re: [PATCH] arm64: defconfig: build INTERCONNECT_QCOM_SM6115 as module
 To: Bjorn Andersson <andersson@kernel.org>
 Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Catalin Marinas <catalin.marinas@arm.com>, 
@@ -114,19 +114,11 @@ On Thu, 11 Apr 2024 at 06:19, Bjorn Andersson <andersson@kernel.org> wrote:
 >
 > Resolve this, and I'd be happy to see them all go =m.
 
-Doesn't /dev/console handle switching between earlycon and actual
-console? I'll take a look at some point in the future.
-
-But I can't help but notice that currently we have 5 ICC drivers built
-as modules (out of 21 mentioned in the defconfig). Should we fix them
-too?
-
-CONFIG_INTERCONNECT_QCOM_MSM8916=m
-CONFIG_INTERCONNECT_QCOM_MSM8996=m
-CONFIG_INTERCONNECT_QCOM_QCS404=m
-CONFIG_INTERCONNECT_QCOM_SM8150=m
-CONFIG_INTERCONNECT_QCOM_SM8350=m
-
+BTW, so even if /dev/console doesn't handle switching behind the scenes,
+Systemd at initramfs opens /dev/console, maybe fails, loads icc and
+other modules. Then it does pivot_root and executes systemd on the
+rootfs. At this point the /dev/console exists and the systemd should
+continue without any issues.
 
 -- 
 With best wishes
