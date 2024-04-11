@@ -1,171 +1,377 @@
-Return-Path: <linux-arm-msm+bounces-17279-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19E478A1EF9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 20:55:38 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E620D8A1F05
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 21:00:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C8D3A283AAB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 18:55:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 143DA1C22B2D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 19:00:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4E1E205E21;
-	Thu, 11 Apr 2024 18:55:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC384205E2F;
+	Thu, 11 Apr 2024 19:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hPzQKzVn"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SnPIB2B4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7158A12E5D;
-	Thu, 11 Apr 2024 18:55:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2ED79DD;
+	Thu, 11 Apr 2024 19:00:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712861732; cv=none; b=RFp8lfNA4qBiQ+yyLziPY70BuCSx46nl/ovCyD1ZQqEVOWCwkH5ar09Gw60L0wtUY6hxUOA/wrDvFIbblvIOzUrPkOWTtt7lDBVWJkT9swMEUJ6QxaI2+60NLYxQbG2nkLW1q0USwBEHyRhkAhO3lWlTI8D71Sx1I7IDMJbxHWE=
+	t=1712862012; cv=none; b=HColfIMGoMRxMWvI2Kz9p9z84csMKMQ6MK0oSDmWnJepKcVOI5ChV1M9tPHz9+/64Eabkptj0X97vZWbotLScdHcrhWEImIMbfEDXh0QQfzL/fFzvXuushrV8eaOAjSj1lp6UAN8krVwHR1w23T26SL5uTo4XNGTu1lHnFJb7iw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712861732; c=relaxed/simple;
-	bh=82WAuKFIq3XAh9McX3MVSvtMbClD44X+hGmbxb/6VSs=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=luPKq1iIJCsXO6ZHoxkvyYmzerpaj6y4y1pFiafDht/6zABQcyZwOcPkO82shv4X0G4MyLCBagCNL7kmg7u3AE+nuUCeHu8kTlYjfeIkO8Aze5hFSDMCElXcCcAvwinjWnv2kjGgh3Jt+tidWN9+iJGc2jJPyeptNEELhGe1OCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hPzQKzVn; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43BCvQPb022085;
-	Thu, 11 Apr 2024 18:55:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=13hWRm+TBL3RIJcw2GrbA
-	uy0XhTMQdVLg5bf1cuNnwQ=; b=hPzQKzVn5pJ23T/voDQpLrvFroMlqgnJdP3AB
-	4zVxLuMNyTkigBn6MNA37m4H4bsr6VVVZ1fSpuc1dFfO87kSMdagaBZ+JQkfoMnw
-	gD9vecUN3vFrDUut1dm4vVa+8NpbasXQJ5osXv36zWgLhT2u4BD7VeWU4aLGnhZS
-	nbE89JyHt+ZO5RfiscXV4bcY8uSeKQDtjaBp8cN38kOBRxzvCFVhGcHnCpRO12vm
-	FFvNnWMIgnh+Fm72IJ7RL07XpPrxtrmcUMh8UXIplANXgSt77BfiNc17ylW1VaMc
-	gVp05IAcgq4EaFGZ0R7yxjQsI9DrtrHui5LX6u0EsXoQfWAow==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xec6dj0y5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Apr 2024 18:55:21 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43BItK8q012763
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Apr 2024 18:55:20 GMT
-Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 11 Apr 2024 11:55:19 -0700
-Date: Thu, 11 Apr 2024 11:55:19 -0700
-From: Elliot Berman <quic_eberman@quicinc.com>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Daniel
- Vetter" <daniel@ffwll.ch>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 1/6] soc: qcom: Move some socinfo defines to the header,
- expand them
-Message-ID: <20240410132510649-0700.eberman@hu-eberman-lv.qualcomm.com>
-References: <20240405-topic-smem_speedbin-v1-0-ce2b864251b1@linaro.org>
- <20240405-topic-smem_speedbin-v1-1-ce2b864251b1@linaro.org>
+	s=arc-20240116; t=1712862012; c=relaxed/simple;
+	bh=VKfhK/Nu9CBQbE792fSyKR0w1VxB4n2qqFit4dVdnSw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cMWk6IewlBssaBQO56KNTjsRA4pvXGPDF36vZrhwrSlD0gRlpHNbPwKHXiM/N5U9MYbuCUeebDPYEv5glTZBwWLFIgZn7iJRVbg2mdilWCvnvhdzdMRJ5JeXPjvIuWCBe7QN6QGGqi/cWbOD1eizw7yNor9MZTNQlD/WLBoEueE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SnPIB2B4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1624C072AA;
+	Thu, 11 Apr 2024 19:00:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712862012;
+	bh=VKfhK/Nu9CBQbE792fSyKR0w1VxB4n2qqFit4dVdnSw=;
+	h=References:In-Reply-To:From:Date:Subject:To:List-Id:Cc:From;
+	b=SnPIB2B4FZFNNUm79Y7SkIAsCRWfADaYq4iA5xsVlonanYXrPysZCnCH+iNgBkSmd
+	 Fn6jHp3Ii88UFOWAcA4KQLHLZzMdGMTyzQRnH+mahZ+OcpFC8jq72A2FVzftWryPPZ
+	 dh+Hc6v9R+5JexkvBcnaH/MW8AIDI5n12VgCLldAmAhg/7NKKpGdJMurwnlQEK7sz/
+	 XJOWDh8E5/bcuQMXBdRLiMVBdOt7AkfpmakxzA40nVVYjTIxs3snqxsPlPUD2bSCYI
+	 hSfl6YoKwLk0nF3FVf0S6F9GDRkASQyQzI3cNjP1pcJTI9hcdYzLJFcvZO14J/4Cf4
+	 ulawu8+919TOQ==
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-345b857d7adso45314f8f.1;
+        Thu, 11 Apr 2024 12:00:11 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCXVmFItVJX5ETqSSR/eWLSYoC1hXyXN5XyXLetXvXcwwn2a4OGrmW5doiJQNWDVAPDNI8VlgYW0tOSbGj8MW842toWQwD+QRhGI0hFbdK03Ef5bbxkRbr4om3VY2bAHnCorac/NAepULiE4ZvH31hIOOWruIRaDJHB/AhAMaqLYg9SQgRcQskM=
+X-Gm-Message-State: AOJu0Yyp9cztL9dsYbcFDvyvLDYZqiRoCtlb3it6IdM40U+GHUWQH+sD
+	mJkQlgeXfVxOMld0Q3afxK6AJMeIfITbFHtMDcuOioP+WqJTrFtUupo7O6o7PDiLewPYbQ9xHSH
+	t4CDbVW/QuBJBYMo49ldkXs1WCQ==
+X-Google-Smtp-Source: AGHT+IHouGQwbcl3OeZl/zdPg0dJBMMXgtf/0DZo/pxvXCSBPViYdLQLhJer0V+3fXtB/ZpDJwd4Jgxh638hmWwQ4cA=
+X-Received: by 2002:a2e:81c6:0:b0:2d6:a5cf:367c with SMTP id
+ s6-20020a2e81c6000000b002d6a5cf367cmr392152ljg.38.1712861989582; Thu, 11 Apr
+ 2024 11:59:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240405-topic-smem_speedbin-v1-1-ce2b864251b1@linaro.org>
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: mrfVQikCksSyfWHu_d7-aNRvrtFnBno1
-X-Proofpoint-ORIG-GUID: mrfVQikCksSyfWHu_d7-aNRvrtFnBno1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-11_10,2024-04-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1011
- phishscore=0 bulkscore=0 malwarescore=0 impostorscore=0 priorityscore=1501
- mlxlogscore=999 lowpriorityscore=0 mlxscore=0 adultscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
- definitions=main-2404110138
+References: <20240328211543.191876-1-quic_obabatun@quicinc.com> <20240328211543.191876-4-quic_obabatun@quicinc.com>
+In-Reply-To: <20240328211543.191876-4-quic_obabatun@quicinc.com>
+From: Rob Herring <robh+dt@kernel.org>
+Date: Thu, 11 Apr 2024 13:59:36 -0500
+X-Gmail-Original-Message-ID: <CAL_Jsq+RQaKTqB6hnsCJ_d0zM6FkrMXQ0NF0r1P22q95_ZDM4A@mail.gmail.com>
+Message-ID: <CAL_Jsq+RQaKTqB6hnsCJ_d0zM6FkrMXQ0NF0r1P22q95_ZDM4A@mail.gmail.com>
+Subject: Re: [PATCH v5 3/4] of: reserved_mem: Use the unflatten_devicetree
+ APIs to scan reserved mem. nodes
+To: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
+Cc: catalin.marinas@arm.com, will@kernel.org, frowand.list@gmail.com, 
+	vgupta@kernel.org, arnd@arndb.de, olof@lixom.net, soc@kernel.org, 
+	guoren@kernel.org, monstr@monstr.eu, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, dinguyen@kernel.org, chenhuacai@kernel.org, 
+	tsbogend@alpha.franken.de, jonas@southpole.se, 
+	stefan.kristiansson@saunalahti.fi, shorne@gmail.com, mpe@ellerman.id.au, 
+	ysato@users.sourceforge.jp, dalias@libc.org, glaubitz@physik.fu-berlin.de, 
+	richard@nod.at, anton.ivanov@cambridgegreys.com, johannes@sipsolutions.net, 
+	chris@zankel.net, jcmvbkbc@gmail.com, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, kernel@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Apr 05, 2024 at 10:41:29AM +0200, Konrad Dybcio wrote:
-> In preparation for parsing the chip "feature code" (FC) and "product
-> code" (PC) (essentially the parameters that let us conclusively
-> characterize the sillicon we're running on, including various speed
-> bins), move the socinfo version defines to the public header and
-> include some more FC/PC defines.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+On Thu, Mar 28, 2024 at 4:16=E2=80=AFPM Oreoluwa Babatunde
+<quic_obabatun@quicinc.com> wrote:
+>
+> The unflatten_devicetree APIs have been setup and are available to be
+> used by the time the fdt_init_reserved_mem() function is called.
+> Since the unflatten_devicetree APIs are a more efficient way of scanning
+> through the DT nodes, switch to using these APIs to facilitate the rest
+> of the reserved memory processing.
+
+Please use get_maintainers.pl. Specifically, you missed maintainers
+for kernel/dma/.
+
+>
+> Signed-off-by: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
 > ---
->  drivers/soc/qcom/socinfo.c       |  8 --------
->  include/linux/soc/qcom/socinfo.h | 36 ++++++++++++++++++++++++++++++++++++
->  2 files changed, 36 insertions(+), 8 deletions(-)
-> 
-...
-> diff --git a/include/linux/soc/qcom/socinfo.h b/include/linux/soc/qcom/socinfo.h
-...
-> @@ -74,4 +84,30 @@ struct socinfo {
->  	__le32 boot_core;
->  };
->  
-> +/* Internal feature codes */
-> +enum feature_code {
-> +	/* External feature codes */
-> +	SOCINFO_FC_UNKNOWN = 0x0,
-> +	SOCINFO_FC_AA,
-> +	SOCINFO_FC_AB,
-> +	SOCINFO_FC_AC,
-> +	SOCINFO_FC_AD,
-> +	SOCINFO_FC_AE,
-> +	SOCINFO_FC_AF,
-> +	SOCINFO_FC_AG,
-> +	SOCINFO_FC_AH,
-> +	SOCINFO_FC_EXT_RESERVE,
-> +};
+>  drivers/of/of_reserved_mem.c    | 77 +++++++++++++++++++++------------
+>  include/linux/of_reserved_mem.h |  2 +-
+>  kernel/dma/coherent.c           |  8 ++--
+>  kernel/dma/contiguous.c         |  8 ++--
+>  kernel/dma/swiotlb.c            | 10 ++---
+>  5 files changed, 64 insertions(+), 41 deletions(-)
+>
+> diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
+> index 0aba366eba59..68d1f4cca4bb 100644
+> --- a/drivers/of/of_reserved_mem.c
+> +++ b/drivers/of/of_reserved_mem.c
+> @@ -99,7 +99,7 @@ static void __init alloc_reserved_mem_array(void)
+>  /*
+>   * fdt_reserved_mem_save_node() - save fdt node for second pass initiali=
+zation
+>   */
+> -static void __init fdt_reserved_mem_save_node(unsigned long node, const =
+char *uname,
+> +static void __init fdt_reserved_mem_save_node(struct device_node *node, =
+const char *uname,
+>                                               phys_addr_t base, phys_addr=
+_t size)
+>  {
+>         struct reserved_mem *rmem =3D &reserved_mem[reserved_mem_count];
+> @@ -109,7 +109,7 @@ static void __init fdt_reserved_mem_save_node(unsigne=
+d long node, const char *un
+>                 return;
+>         }
+>
+> -       rmem->fdt_node =3D node;
+> +       rmem->dev_node =3D node;
+>         rmem->name =3D uname;
+>         rmem->base =3D base;
+>         rmem->size =3D size;
+> @@ -178,11 +178,11 @@ static int __init __reserved_mem_reserve_reg(unsign=
+ed long node,
+>  }
+>
+>  /*
+> - * __reserved_mem_check_root() - check if #size-cells, #address-cells pr=
+ovided
+> + * __fdt_reserved_mem_check_root() - check if #size-cells, #address-cell=
+s provided
+>   * in /reserved-memory matches the values supported by the current imple=
+mentation,
+>   * also check if ranges property has been provided
+>   */
+> -static int __init __reserved_mem_check_root(unsigned long node)
+> +static int __init __fdt_reserved_mem_check_root(unsigned long node)
+>  {
+>         const __be32 *prop;
+>
+> @@ -200,6 +200,29 @@ static int __init __reserved_mem_check_root(unsigned=
+ long node)
+>         return 0;
+>  }
+>
+> +/*
+> + * __dt_reserved_mem_check_root() - check if #size-cells, #address-cells=
+ provided
+> + * in /reserved-memory matches the values supported by the current imple=
+mentation,
+> + * also check if ranges property has been provided
+> + */
+> +static int __init __dt_reserved_mem_check_root(struct device_node *node)
 
-SOCINFO_FC_EXT_RESERVE was a convenient limit since we mapped
-SOCINFO_FC_AA -> string "AA" via an array, and we've only needed the 8
-feature codes so far.
+The normal prefix is 'of', not 'dt'. Weird, right?, but it dates back
+to OpenFirmware.
 
-We should remove the EXT_RESERVE and test for the Y0-YF (internal
-feature code) values instead.
-
+> +{
+> +       const __be32 *prop;
 > +
-> +/* Internal feature codes */
-> +/* Valid values: 0 <= n <= 0xf */
-> +#define SOCINFO_FC_Yn(n)		(0xf1 + n)
-> +#define SOCINFO_FC_INT_RESERVE		SOCINFO_FC_Yn(0x10)
+> +       prop =3D of_get_property(node, "#size-cells", NULL);
 
-We probably should've named this SOCINFO_FC_INT_MAX. Reserve implies
-it's reserved for some future use, but it's really the max value it
-could be.
+Throughout, use the appropriate typed function. Here for example,
+of_property_read_u32().
 
+> +       if (!prop || be32_to_cpup(prop) !=3D dt_root_size_cells)
+> +               return -EINVAL;
 > +
-> +/* Product codes */
-> +#define SOCINFO_PC_UNKNOWN		0
-> +/* Valid values: 0 <= n <= 8, the rest is reserved */
-> +#define SOCINFO_PCn(n)			(n + 1)
-> +#define SOCINFO_PC_RESERVE		(BIT(31) - 1)
-
-Similar comments here as the SOCINFO_FC_EXT_*. It's more like known
-values are [0,8], but more values could come in future chipsets.
-
+> +       prop =3D of_get_property(node, "#address-cells", NULL);
+> +       if (!prop || be32_to_cpup(prop) !=3D dt_root_addr_cells)
+> +               return -EINVAL;
 > +
->  #endif
-> 
+> +       prop =3D of_get_property(node, "ranges", NULL);
+
+Or for presence, just of_property_present().
+
+> +       if (!prop)
+> +               return -EINVAL;
+> +       return 0;
+> +}
+> +
+>  /**
+>   * fdt_scan_reserved_mem_reg_nodes() - Store info for the "reg" defined
+>   * reserved memory regions.
+> @@ -213,33 +236,38 @@ static int __init __reserved_mem_check_root(unsigne=
+d long node)
+>  static void __init fdt_scan_reserved_mem_reg_nodes(void)
+>  {
+>         int t_len =3D (dt_root_addr_cells + dt_root_size_cells) * sizeof(=
+__be32);
+> -       const void *fdt =3D initial_boot_params;
+> +       struct device_node *node, *child;
+>         phys_addr_t base, size;
+>         const __be32 *prop;
+> -       int node, child;
+>         int len;
+>
+> -       node =3D fdt_path_offset(fdt, "/reserved-memory");
+> -       if (node < 0) {
+> +       node =3D of_find_node_by_path("/reserved-memory");
+> +       if (!node) {
+>                 pr_info("Reserved memory: No reserved-memory node in the =
+DT\n");
+>                 return;
+>         }
+>
+> -       if (__reserved_mem_check_root(node)) {
+> +       if (__dt_reserved_mem_check_root(node)) {
+>                 pr_err("Reserved memory: unsupported node format, ignorin=
+g\n");
+>                 return;
+>         }
+>
+> -       fdt_for_each_subnode(child, fdt, node) {
+> +       for_each_child_of_node(node, child) {
+>                 const char *uname;
+> +               struct reserved_mem *rmem;
+>
+> -               prop =3D of_get_flat_dt_prop(child, "reg", &len);
+> -               if (!prop)
+> +               if (!of_device_is_available(child))
+>                         continue;
+> -               if (!of_fdt_device_is_available(fdt, child))
+> +
+> +               prop =3D of_get_property(child, "reg", &len);
+
+We have specific unflattened functions for reading 'reg'. Note that
+you should use the 'translated' ones even though we have a check to
+disallow any real translation. That restriction should be fixed at
+some point.
+
+> +               if (!prop) {
+> +                       rmem =3D of_reserved_mem_lookup(child);
+> +                       if (rmem)
+> +                               rmem->dev_node =3D child;
+>                         continue;
+> +               }
+>
+> -               uname =3D fdt_get_name(fdt, child, NULL);
+> +               uname =3D of_node_full_name(child);
+>                 if (len && len % t_len !=3D 0) {
+>                         pr_err("Reserved memory: invalid reg property in =
+'%s', skipping node.\n",
+>                                uname);
+> @@ -269,7 +297,7 @@ int __init fdt_scan_reserved_mem(void)
+>         if (node < 0)
+>                 return -ENODEV;
+>
+> -       if (__reserved_mem_check_root(node) !=3D 0) {
+> +       if (__fdt_reserved_mem_check_root(node) !=3D 0) {
+>                 pr_err("Reserved memory: unsupported node format, ignorin=
+g\n");
+>                 return -EINVAL;
+>         }
+> @@ -447,7 +475,7 @@ static int __init __reserved_mem_alloc_size(unsigned =
+long node, const char *unam
+>                        uname, (unsigned long)(size / SZ_1M));
+>                 return -ENOMEM;
+>         }
+> -       fdt_reserved_mem_save_node(node, uname, base, size);
+> +       fdt_reserved_mem_save_node(NULL, uname, base, size);
+>         return 0;
+>  }
+>
+> @@ -467,7 +495,7 @@ static int __init __reserved_mem_init_node(struct res=
+erved_mem *rmem)
+>                 reservedmem_of_init_fn initfn =3D i->data;
+>                 const char *compat =3D i->compatible;
+>
+> -               if (!of_flat_dt_is_compatible(rmem->fdt_node, compat))
+> +               if (!of_device_is_compatible(rmem->dev_node, compat))
+>                         continue;
+>
+>                 ret =3D initfn(rmem);
+> @@ -500,11 +528,6 @@ static int __init __rmem_cmp(const void *a, const vo=
+id *b)
+>         if (ra->size > rb->size)
+>                 return 1;
+>
+> -       if (ra->fdt_node < rb->fdt_node)
+> -               return -1;
+> -       if (ra->fdt_node > rb->fdt_node)
+> -               return 1;
+> -
+>         return 0;
+>  }
+>
+> @@ -551,16 +574,16 @@ void __init fdt_init_reserved_mem(void)
+>
+>         for (i =3D 0; i < reserved_mem_count; i++) {
+>                 struct reserved_mem *rmem =3D &reserved_mem[i];
+> -               unsigned long node =3D rmem->fdt_node;
+> +               struct device_node *node =3D rmem->dev_node;
+>                 int len;
+>                 const __be32 *prop;
+>                 int err =3D 0;
+>                 bool nomap;
+>
+> -               nomap =3D of_get_flat_dt_prop(node, "no-map", NULL) !=3D =
+NULL;
+> -               prop =3D of_get_flat_dt_prop(node, "phandle", &len);
+> +               nomap =3D of_get_property(node, "no-map", NULL) !=3D NULL=
+;
+> +               prop =3D of_get_property(node, "phandle", &len);
+
+We store the phandle in struct device_node, so reading and storing it
+here shouldn't be needed I think.
+
+>                 if (!prop)
+> -                       prop =3D of_get_flat_dt_prop(node, "linux,phandle=
+", &len);
+> +                       prop =3D of_get_property(node, "linux,phandle", &=
+len);
+>                 if (prop)
+>                         rmem->phandle =3D of_read_number(prop, len/4);
+>
+> @@ -574,7 +597,7 @@ void __init fdt_init_reserved_mem(void)
+>                 } else {
+>                         phys_addr_t end =3D rmem->base + rmem->size - 1;
+>                         bool reusable =3D
+> -                               (of_get_flat_dt_prop(node, "reusable", NU=
+LL)) !=3D NULL;
+> +                               (of_get_property(node, "reusable", NULL))=
+ !=3D NULL;
+>
+>                         pr_info("%pa..%pa (%lu KiB) %s %s %s\n",
+>                                 &rmem->base, &end, (unsigned long)(rmem->=
+size / SZ_1K),
+> diff --git a/include/linux/of_reserved_mem.h b/include/linux/of_reserved_=
+mem.h
+> index 4de2a24cadc9..b6107a18d170 100644
+> --- a/include/linux/of_reserved_mem.h
+> +++ b/include/linux/of_reserved_mem.h
+> @@ -10,7 +10,7 @@ struct reserved_mem_ops;
+>
+>  struct reserved_mem {
+>         const char                      *name;
+> -       unsigned long                   fdt_node;
+> +       struct device_node              *dev_node;
+>         unsigned long                   phandle;
+>         const struct reserved_mem_ops   *ops;
+>         phys_addr_t                     base;
+> diff --git a/kernel/dma/coherent.c b/kernel/dma/coherent.c
+> index ff5683a57f77..0db0aae83102 100644
+> --- a/kernel/dma/coherent.c
+> +++ b/kernel/dma/coherent.c
+> @@ -362,20 +362,20 @@ static const struct reserved_mem_ops rmem_dma_ops =
+=3D {
+>
+>  static int __init rmem_dma_setup(struct reserved_mem *rmem)
+>  {
+> -       unsigned long node =3D rmem->fdt_node;
+> +       struct device_node *node =3D rmem->dev_node;
+>
+> -       if (of_get_flat_dt_prop(node, "reusable", NULL))
+> +       if (of_get_property(node, "reusable", NULL))
+>                 return -EINVAL;
+>
+>  #ifdef CONFIG_ARM
+> -       if (!of_get_flat_dt_prop(node, "no-map", NULL)) {
+> +       if (!of_get_property(node, "no-map", NULL)) {
+
+While you are here, convert this to IS_ENABLED():
+
+if (IS_ENABLED(CONFIG_ARM) && !of_property_read_bool(node)) {
+  ...
+}
 
