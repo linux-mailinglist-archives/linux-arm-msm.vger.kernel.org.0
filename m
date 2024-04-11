@@ -1,153 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-17249-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17250-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62E898A162B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 15:47:50 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 297E98A1631
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 15:48:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 02A031F2212D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 13:47:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D1483283756
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 13:48:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D740152195;
-	Thu, 11 Apr 2024 13:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89A9D14D714;
+	Thu, 11 Apr 2024 13:45:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="os45frAu"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fk9dgjL/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E4914D6F5;
-	Thu, 11 Apr 2024 13:42:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 769FB1EB26;
+	Thu, 11 Apr 2024 13:45:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712842948; cv=none; b=ACr73MGEPj/wFoXyHbiCzF2LYweKwxB6Uy5juqTljgGrt42mr6kIg0NIxvkHKS8FeKoh1KTyl40K38OOqvDiK9wVTn+kuphiDfNxBHBI6/RrtlKYmzqQWIpktTlUpJPn0c+JUbVbczJ1GXfnfzAcE52BbZ6OJGBPi4wraVVjCP8=
+	t=1712843116; cv=none; b=IoZtqD2mXCQNpOJAdpXnXm0gl3DOqKLWzAyM9cQ6fPhzf3PnDF6Ycb5VTL+Ko12mYcn9gZQEdHHeMxr/HgIExvTfM1iSOF9RF2ZY5zI2nj//y4HcLLZLaU0LGeIpxcXUw23E96HfzDcySjUQMfrAhtddTXvvSwjLVJV+RcetO/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712842948; c=relaxed/simple;
-	bh=9V6B2FO1AfQz7iRZm7KKOdCMjIz0pjVVA3oJL+1fQF4=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=J+HWteeFLgkbWzB8QrjpVAUTE+ISZzW6sGCuHJWXMfMleUlIxrDzeCpBTxV9vs5AnUYxIIlonpRtGQRscVM8yvzrOSmdUnmSPkVsoNZCYEhwh3SXpjqQ2CIuZY9Nhw5qu3gLx1xyZsFiJmMb9G1WAthGQTcy4oF+0sO3LR9gKDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=os45frAu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43270C072AA;
-	Thu, 11 Apr 2024 13:42:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712842947;
-	bh=9V6B2FO1AfQz7iRZm7KKOdCMjIz0pjVVA3oJL+1fQF4=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=os45frAuxivL5UsqOsX4nD5FYkvM/2X1ZsSxyIUqlc7AuDOhSZWqJyGbYnfOSiO90
-	 T2jZxaacChyTVSyDlq11VS7GMf2svoz9p2lPvGUqMZl0fC7SI8xYnKJDMA07Q2j3PX
-	 0mKwZnm9AnbLjz3cvjQliddfwjNvyHUuxRTu95R1V+KQYZR/Exqc5D4wlFrtab/7Fk
-	 9aZNU/Uw2BSpkqMxqigBAYeRCYdvPrfV/XlPcgtEmE7SjOC0GkY2z+VshzcV71heIu
-	 LQhIC1RkZa/voGfaQtyI3pzcJLXjF7VCtu0Gg6+Fml8L8NI4garqzB2K3kK5+CiwBm
-	 h90uWPp1TbuBQ==
-Date: Thu, 11 Apr 2024 08:42:26 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1712843116; c=relaxed/simple;
+	bh=Vef2IPFjkusUWnM9mmNBw7GsUxZyGnBJjs80zDYEVf4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=bsZAVDzgvqbw92zH4/RTLELDjkfFZfClUfNZ+/SxdK7nKzoEh9nXewHik+26l7zI55lRdRjNAGq+FC0+2i1/6xs4Jicv+buNdZwSqXOP6VtA0N7DJx7yLtoKlyT0qfV0rXpMrHCLgqyo+Fqp8nI6J/Cb3yWon4KemHKHddQ73jA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fk9dgjL/; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43BDcJ37013981;
+	Thu, 11 Apr 2024 13:45:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=8vWKNp5NOyzk1nvCBVyzQsUw06V4AN1AfvxUVSvqf1M=; b=fk
+	9dgjL/sycJIMj1SDfqZL9GDehjEIzHsBaoWJSHSg3Be0hYMAEwl7Fw9zI72aIctk
+	SCNjuIpqbgWxqdq2Odqki9wA0PTv0f5MTK/D8cooPfmrABfRoct2tPn5B+Qkrgs8
+	CDA47mKhDjDIe+TYv2p8CNaPJESNmbsg/cRqJpwQ4IZ0jCE+goQz/ifQE4ZWKHHH
+	bmLXrfgbl/7dTfCD5+UzGSFOpoyEEkxgIQHee6beTqPuWpCiL1BdWeWgNJ9YMWbm
+	M3o8XKeGiVNjnHftwhSaYBgAJUrs5TQGWSEYFVtI6q2VO68CFsmFRoMq5PTlVUPe
+	Vl1gdyCsZb0nBulw5gMQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xe9jsa148-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 11 Apr 2024 13:44:47 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43BDi7RD018671
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 11 Apr 2024 13:44:07 GMT
+Received: from [10.253.34.126] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 11 Apr
+ 2024 06:44:02 -0700
+Message-ID: <fa6c8b30-11f3-bd80-67cb-713e4348eccf@quicinc.com>
+Date: Thu, 11 Apr 2024 21:43:59 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
-Cc: linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Bjorn Andersson <andersson@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-In-Reply-To: <20240410-samsung-galaxy-zfold5-q5q-v5-0-9311ee9a55f7@yahoo.com>
-References: <20240410-samsung-galaxy-zfold5-q5q-v5-0-9311ee9a55f7@yahoo.com>
-Message-Id: <171284284762.3456856.9357372275932519811.robh@kernel.org>
-Subject: Re: [PATCH v5 0/2] Samsung Galaxy Z Fold5 initial support
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Subject: Re: [PATCH v9 2/4] input: pm8xxx-vibrator: refactor to support new
+ SPMI vibrator
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <kernel@quicinc.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Dmitry
+ Torokhov" <dmitry.torokhov@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-input@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>
+References: <20240411-pm8xxx-vibrator-new-design-v9-0-7bf56cb92b28@quicinc.com>
+ <20240411-pm8xxx-vibrator-new-design-v9-2-7bf56cb92b28@quicinc.com>
+ <CAA8EJpoL9vCAUgWmHcoxppo_gJqaw_xqdYqcJkS6Xza-5aSh3A@mail.gmail.com>
+From: Fenglin Wu <quic_fenglinw@quicinc.com>
+In-Reply-To: <CAA8EJpoL9vCAUgWmHcoxppo_gJqaw_xqdYqcJkS6Xza-5aSh3A@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: PsVZnEuLpXAM2rwWwkWHRnxLKI3hnFcy
+X-Proofpoint-GUID: PsVZnEuLpXAM2rwWwkWHRnxLKI3hnFcy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-11_06,2024-04-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
+ mlxscore=0 malwarescore=0 priorityscore=1501 lowpriorityscore=0
+ spamscore=0 adultscore=0 suspectscore=0 impostorscore=0 mlxlogscore=958
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404110099
 
 
-On Wed, 10 Apr 2024 23:28:32 +0200, Alexandru Marc Serdeliuc wrote:
-> This documents and add intial dts support for Samsung Galaxy Z Fold5 (samsung,q5q)
-> which is a foldable phone by Samsung based on the sm8550 SoC.
+
+On 2024/4/11 18:58, Dmitry Baryshkov wrote:
+> On Thu, 11 Apr 2024 at 11:32, Fenglin Wu via B4 Relay
+> <devnull+quic_fenglinw.quicinc.com@kernel.org> wrote:
+>>
+>> From: Fenglin Wu <quic_fenglinw@quicinc.com>
+>>
+>> Currently, vibrator control register addresses are hard coded,
+>> including the base address and offsets, it's not flexible to
+>> support new SPMI vibrator module which is usually included in
+>> different PMICs with different base address. Refactor it by using
+>> the base address defined in devicetree.
+>>
+>> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+>> ---
+>>   drivers/input/misc/pm8xxx-vibrator.c | 42 ++++++++++++++++++++++++------------
+>>   1 file changed, 28 insertions(+), 14 deletions(-)
+>>
+>> diff --git a/drivers/input/misc/pm8xxx-vibrator.c b/drivers/input/misc/pm8xxx-vibrator.c
+>> index 89f0f1c810d8..2959edca8eb9 100644
+>> --- a/drivers/input/misc/pm8xxx-vibrator.c
+>> +++ b/drivers/input/misc/pm8xxx-vibrator.c
+>> @@ -20,26 +20,26 @@
+>>   #define MAX_FF_SPEED           0xff
+>>
+>>   struct pm8xxx_regs {
+>> -       unsigned int enable_addr;
+>> +       unsigned int enable_offset;
+>>          unsigned int enable_mask;
+>>
+>> -       unsigned int drv_addr;
+>> +       unsigned int drv_offset;
+>>          unsigned int drv_mask;
+>>          unsigned int drv_shift;
+>>          unsigned int drv_en_manual_mask;
+>>   };
+>>
+>>   static const struct pm8xxx_regs pm8058_regs = {
+>> -       .drv_addr = 0x4A,
+>> +       .drv_offset = 0x4A,
 > 
-> ChangeLog
+> If the DT already has reg = <0x4a> and you add drv_offset = 0x4a,
+> which register will be used by the driver?
 > 
-> - v5
->   . Added ChangeLog
->   . Added missing Acked-by tags in their respective section in ChangeLog
+> Also, while we are at it, please downcase all the hex numbers that you
+> are touching.
 > 
-> - v4
->   . removed a spurious new line
->   . removed pcie_1_phy_aux_clk as requested
->   . removed secondary pcie1 which does not exists on the device
->   . changed firmware extension from .mbn to .mdt
->   . added missing reserved memory regions required by firmware to properly load
+For SSBI vibrator, the "reg" value defined in DT is not used, see below.
+
+
+>>          .drv_mask = 0xf8,
+>>          .drv_shift = 3,
+>>          .drv_en_manual_mask = 0xfc,
+>>   };
+>>
+>>   static struct pm8xxx_regs pm8916_regs = {
+>> -       .enable_addr = 0xc046,
+>> +       .enable_offset = 0x46,
+
+[...]
+
+>> @@ -170,7 +173,7 @@ static int pm8xxx_vib_probe(struct platform_device *pdev)
+>>          struct pm8xxx_vib *vib;
+>>          struct input_dev *input_dev;
+>>          int error;
+>> -       unsigned int val;
+>> +       unsigned int val, reg_base = 0;
+>>          const struct pm8xxx_regs *regs;
+>>
+>>          vib = devm_kzalloc(&pdev->dev, sizeof(*vib), GFP_KERNEL);
+>> @@ -190,13 +193,24 @@ static int pm8xxx_vib_probe(struct platform_device *pdev)
+>>
+>>          regs = of_device_get_match_data(&pdev->dev);
+>>
+>> +       if (regs->enable_offset != 0) {
+>> +               error = fwnode_property_read_u32(pdev->dev.fwnode, "reg", &reg_base);
+>> +               if (error < 0) {
+>> +                       dev_err(&pdev->dev, "Failed to read reg address, rc=%d\n", error);
+>> +                       return error;
+>> +               }
+>> +       }
+>> +
+>> +       vib->enable_addr = reg_base + regs->enable_offset;
+>> +       vib->drv_addr = reg_base + regs->drv_offset;
+
+The reg_base is initialized as 0 and it is assigned as the "reg" value 
+defined in DT only for SPMI vibrators.
+
+>> +
+>>          /* operate in manual mode */
+>> -       error = regmap_read(vib->regmap, regs->drv_addr, &val);
+>> +       error = regmap_read(vib->regmap, vib->drv_addr, &val);
+>>          if (error < 0)
+>>                  return error;
+>>
+>>          val &= regs->drv_en_manual_mask;
+>> -       error = regmap_write(vib->regmap, regs->drv_addr, val);
+>> +       error = regmap_write(vib->regmap, vib->drv_addr, val);
+>>          if (error < 0)
+>>                  return error;
+>>
+>>
+>> --
+>> 2.25.1
+>>
+>>
 > 
-> - v3
->   . added b4 version 3
->   . removed address and size cells in device description
->   Acked-by: Rob Herring <robh@kernel.org>
 > 
-> - v2
->   . added both but added an extra v2 in the subject line instead to b4 subject header, was requested to send the patch again, along with following mods:
->   . removed whole bootargs line
->   . fixed underscores in reserved memory by removing all reserved memory regions
->   . added missing idetation to  spash_screen remark
->   . validated the dts with "dtbs_check"
->   . removed all comments at the end of nodes
->   . moved status of the node at the end of the node
->   . reversed pin control name with control numbers
->   . ordered the  nodes alphabetically
-> 
-> - v1
->   . The initial request was split in two patches sent due to the following checkpatch warning, was requested to re send them together:
->     WARNING: DT binding docs and includes should be a separate patch. See: Documentation/devicetree/bindings/submitting-patches.rst
->   Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> Signed-off-by: Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
-> ---
-> Alexandru Marc Serdeliuc (2):
->       dt-bindings: arm: qcom: Document the Samsung Galaxy Z Fold5
->       arm64: dts: qcom: sm8550: Add support for Samsung Galaxy Z Fold5
-> 
->  Documentation/devicetree/bindings/arm/qcom.yaml |   1 +
->  arch/arm64/boot/dts/qcom/Makefile               |   1 +
->  arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts | 593 ++++++++++++++++++++++++
->  3 files changed, 595 insertions(+)
-> ---
-> base-commit: 2c71fdf02a95b3dd425b42f28fd47fb2b1d22702
-> change-id: 20240410-samsung-galaxy-zfold5-q5q-d31cdeeac09f
-> 
-> Best regards,
-> --
-> Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
-> 
-> 
-> 
-
-
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
-
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-New warnings running 'make CHECK_DTBS=y qcom/sm8550-samsung-q5q.dtb' for 20240410-samsung-galaxy-zfold5-q5q-v5-0-9311ee9a55f7@yahoo.com:
-
-arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dtb: pcie-1-phy-aux-clk: 'clock-frequency' is a required property
-	from schema $id: http://devicetree.org/schemas/clock/fixed-clock.yaml#
-arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dtb: phy@1c0e000: clock-output-names: ['pcie1_pipe_clk'] is too short
-	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
-arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dtb: phy@1c0e000: #clock-cells:0:0: 1 was expected
-	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
-
-
-
-
-
 
