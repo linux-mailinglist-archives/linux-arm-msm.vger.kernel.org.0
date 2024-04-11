@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-17194-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17195-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3CC48A0B90
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 10:46:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE5F88A0B92
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 10:47:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 827051F2333B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 08:46:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4806C1F238BD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 08:47:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F5F1140396;
-	Thu, 11 Apr 2024 08:46:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E38F713FD61;
+	Thu, 11 Apr 2024 08:47:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CbLyl16F"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Osz6pd0J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A658140361
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 08:46:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D2F5140E3D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 08:47:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712825188; cv=none; b=jKAAos67cx/5EeG0QwrsDWqAn4s+svrz1K9VuSCNalzL30VOb+GSSa+8Zp8rYi19qH/D/FMbROpuEXbdGvMwhKFl8+pxDhRfweYj2mz1un+0QD2AxEYuv5C9N3d2TaMfVWIRtez+EZ0m6szhix4Hu85G7k0xvGa44QOsv7TylDA=
+	t=1712825239; cv=none; b=liM3Jce4LXJ61TMcCCQN7R4sIFEYLOaoTb+bVxwHl6Sl7pAMC/DHlTRZHB1WRV3pLa6RiAv6HqFPGIvf1LGfetQnbT4bGWHhJeqy5ChBlouscGdihtlogM6i+KCS5yTSuLRjXiLcAUp0PIaWyQBBBY9F6vDxdVfDaYrY3SfK1YM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712825188; c=relaxed/simple;
-	bh=rfUPztmV1sW7nnymaJ/fWKapZnj8kCKQheQjISGyv/c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=q9weyX4wlqyeJxT24KKn61jWJbVS05Lldu1M6xvuQUHkfEPW4j88sUJPniHU++QagmXd70UB0JQK1OHsx4djhWQ/81+kgRuDUKgUC5teah87IDPQ1SsQkUYqCto09LEi7b61kQYU2z7+BWOiut9PN9sbYBQdRdLpnaQLvLx4rgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CbLyl16F; arc=none smtp.client-ip=209.85.167.43
+	s=arc-20240116; t=1712825239; c=relaxed/simple;
+	bh=yB6JYunY8EXkmrBU9V8SnkS97vIvnw2jVMSGoyThXlA=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=i00ET3etRVElVtcEkMf3utXQFFiFCJ5PBKvqCpbLwcoG5ePhdD8UMWdkBEsD4OpIfdWryQGd/fLBszChXvfYdDACpq8s1T7jvrXyRhlvJ0E1XPs2xvE+8f81Fh33pVgwNg7uWZP4QUm1XQMmsm7AkZVI1/t/tQvbpClGx5YktCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Osz6pd0J; arc=none smtp.client-ip=209.85.221.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5176a67d6b5so518828e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 01:46:25 -0700 (PDT)
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-343bccc0b2cso5391222f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 01:47:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712825184; x=1713429984; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7QRDvta7GRv7uUUHZumRDzJ3COIZ4aNZQbAOXOQO3F4=;
-        b=CbLyl16F6qBQjxlciRERiS5x4vm/2+SFhNQsLsSPNXNH2/S0inG0zS1HctRrGQtypX
-         1AG7CK7TB+HznUuA5nXI8b8f0/Qb1O6Ucs07pDBAhlQsRDagsFbVQSXWgJqDeZrh5lIV
-         cThcbHr34H+VGxlXe2EeYFFFsVZkZAxCFiR0wKDSU5AMRXcBxJ4Htq3j09OKNukovwMC
-         Ky5Tn1QyIb9+9hLdYS9yz0PkapphOllvBZQo4sveTK07aoBVVT9vcwK1V93omdc/ucgb
-         NwfG0RF5wbPfQMzzflPqhD1dgLIx9Lr1zv/QxTwZmvJEV3YPaHlSIuwouCXB6kqvgY9Q
-         LYgw==
+        d=linaro.org; s=google; t=1712825236; x=1713430036; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :references:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=WGvYdrh9pjeShwzsHtKJ3B7j1+HaDBQWly/Ok2V2fDA=;
+        b=Osz6pd0JRFmO6/wv63VkIBWRqd8ByDD4g56eJA9vVzuaNQPUiV5DA2r8RE6Su1k3BN
+         XqiRPRxRHo4Dko1iRUvsA72JQ9SBWbpQWdi2RbgVpW1i2BzhxZHazIcymXa6MAGDLKYQ
+         xP8husgE79uJthaV02Lz3878xbP5FHMzyieW1NjbZcdhEvNoNhGHv1qMMy5425U+fc+K
+         QXPXsRG009BNaOTI21ex0mzdQRj9DVvV8ocAec8Lspy6Yq78tfPjo4muY1wYZNt8s7G5
+         q2eK1CLjdy3Z1fZwcck3TEUJhA/3RPu3fnwgdF9SVcXv7oOBzsibK/eOycat+/WNbs7b
+         lFrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712825184; x=1713429984;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7QRDvta7GRv7uUUHZumRDzJ3COIZ4aNZQbAOXOQO3F4=;
-        b=uuWgq4DoQIxqbRYhS17OEK7PQpbJ0WlLDCRzGwnzK1KByYuVP2f+dKT9VS3tjFbj1H
-         vxQSFJq7ayNTW/ehVvjE7kWCARasDcK6iePytuYANuPyQ3vLrHrJswmnukT0TS3uatUK
-         a5zMjEU9+NfjYIaWgnOVYQ4K2EauRnUssYU7PmoErpFYmIVg8Dd/gKyhUf3qHPpL6r4c
-         rB3VQQZE4afPvbksBuXoMBtalyBerkyh4o4wuIeLHTkFQDb2g9T07T0WvYsMYEHprcFy
-         zIe8nCHvX0FOcQFTQpRMokFvbDEBKIX2roNheYkNY7cYS72ewoauRBM9kpyDP0z/xc8m
-         SQ6A==
-X-Forwarded-Encrypted: i=1; AJvYcCWtdUWoLM1hAQ9C6S+e4ppfGvYzwvdjbya4HsHxR3B0s87WRsabDklq2Y3OX4HmThOxD6SabP036VxTM9KP+H3d4S8Wmt5W83QsP/lZxw==
-X-Gm-Message-State: AOJu0Yyq6JTHzGCMJNRd31SUGbUkU1jt+zkwADSTN3IflisF9Ydvlsag
-	DeKT1/bFzpSw0NHQCAagx/NjRHTJPXVJIcGMGIEtNK55L5n2djvw5v6Qv2rFbP4=
-X-Google-Smtp-Source: AGHT+IEqgb+bjAo4SCiLZ8f6Nr1VvZuHMt9mR4wWtdIbf0TkTkLGEXD5YOk7o1opx6dbKIl2tOQ2Pw==
-X-Received: by 2002:a05:6512:3c96:b0:517:8a22:e32e with SMTP id h22-20020a0565123c9600b005178a22e32emr1359068lfv.1.1712825184117;
-        Thu, 11 Apr 2024 01:46:24 -0700 (PDT)
-Received: from [192.168.1.102] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id h6-20020a19ca46000000b00515ce9f4a2bsm151934lfj.35.2024.04.11.01.46.23
+        d=1e100.net; s=20230601; t=1712825236; x=1713430036;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :references:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WGvYdrh9pjeShwzsHtKJ3B7j1+HaDBQWly/Ok2V2fDA=;
+        b=JaP0BAuzVaS8GygJR08C6AvqPetbxnA+rV8kOSw3D7Ak8JDb/G9bN9qUg2FjP9ZWcy
+         HrNGVzx6DFEDCUPNu3rbbTQ2/CfdK/yZw91WB5cvwbT4ZK+zlYnVPst4ip5dP34hnfE4
+         OwkHcT2a9GCKDP9DNFGVCFFzzBLrIgzyTdUEqKCU5/yBM6T98vVwGKXkgSAe+7WCmyV4
+         20FRVlZ9MqY0J9nF8e/3pqt++/FOTMXWxdJWeE2IWkpHN7b8kpkph0HhaKIQxWQNUDoQ
+         ILRjLpKbzAIpgPmxw0jafbHqUvnZwyfcNQmWcsbxerkGK0Mc4AXCJBu903dFK1HQVL93
+         EObg==
+X-Gm-Message-State: AOJu0YyHSBIU4W8xp4XCOUopXvL3pmq5XKkH7tnZFYOhj7VBNeNO78W7
+	k9xDKTvwyc9RdDYnFgMU8F9taoZoKqqksNM17Ygf8x89qpeBMqM1mxkZAzEBFvPO7MP9Pu7Lak5
+	h
+X-Google-Smtp-Source: AGHT+IEVnyycSJjD/BjnBncJtERr0l0A8WqQtwo7eX8HaIYmIUcX1aoVYefAc7MGFuu5r9vLq2aKUw==
+X-Received: by 2002:a05:6000:1101:b0:343:6ca4:97e4 with SMTP id z1-20020a056000110100b003436ca497e4mr3354318wrw.51.1712825236289;
+        Thu, 11 Apr 2024 01:47:16 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.16])
+        by smtp.gmail.com with ESMTPSA id j10-20020adff00a000000b003469e7f5c52sm1258222wro.80.2024.04.11.01.47.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Apr 2024 01:46:23 -0700 (PDT)
-Message-ID: <0fab9fb5-7d20-483b-9d40-c015bb8e2577@linaro.org>
-Date: Thu, 11 Apr 2024 11:46:22 +0300
+        Thu, 11 Apr 2024 01:47:15 -0700 (PDT)
+Message-ID: <fda53b22-c3b6-4c9f-80e6-8f22637b8b63@linaro.org>
+Date: Thu, 11 Apr 2024 10:47:14 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,113 +77,114 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sm8650: add description of CCI
- controllers
+Subject: Re: [PATCH v5 0/2] Samsung Galaxy Z Fold5 initial support
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Alexandru Serdeliuc <serdeliuk@yahoo.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240410-samsung-galaxy-zfold5-q5q-v5-0-9311ee9a55f7@yahoo.com>
+ <8f2c7963-c660-41b6-a93c-0ac19818ecda@linaro.org>
+ <46bee5df-3d66-44c1-9d7a-86e32a2149dc@yahoo.com>
+ <37c5710a-426f-4054-8632-e24b9d920bcc@linaro.org>
 Content-Language: en-US
-To: neil.armstrong@linaro.org, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Jagadeesh Kona <quic_jkona@quicinc.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20240410074951.447898-1-vladimir.zapolskiy@linaro.org>
- <72816a9f-3c25-44d3-8386-9b561a8ae996@linaro.org>
- <b5f81ed2-d2d9-4c48-8feb-d78bfd714a40@linaro.org>
- <4162174b-df35-4282-859e-84b0579ff91b@linaro.org>
- <f5611116-df8e-4118-8aad-16561f65c79f@linaro.org>
- <93bf3b2e-bf42-42d2-b10a-5586ee9efc6b@linaro.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <93bf3b2e-bf42-42d2-b10a-5586ee9efc6b@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <37c5710a-426f-4054-8632-e24b9d920bcc@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On 4/10/24 18:26, neil.armstrong@linaro.org wrote:
-> On 10/04/2024 17:19, Vladimir Zapolskiy wrote:
->> Hi Neil,
+On 11/04/2024 09:34, Krzysztof Kozlowski wrote:
+> On 11/04/2024 08:36, Alexandru Serdeliuc wrote:
+>> Hi,
 >>
->> On 4/10/24 16:50, neil.armstrong@linaro.org wrote:
->>> On 10/04/2024 15:11, Vladimir Zapolskiy wrote:
->>>> On 4/10/24 10:52, Neil Armstrong wrote:
->>>>> Hi,
->>>>>
->>>>> On 10/04/2024 09:49, Vladimir Zapolskiy wrote:
->>>>>> Qualcomm SM8650 SoC has three CCI controllers with two I2C busses
->>>>>> connected to each of them.
->>>>>>
->>>>>> The CCI controllers on SM8650 are compatible with the ones found on
->>>>>> many other older generations of Qualcomm SoCs.
->>>>>>
->>>>>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
->>>>>> ---
->>>>>> The change is based and depends on a patch series from Jagadeesh Kona:
->>>>>>
->>>>>>       https://lore.kernel.org/linux-arm-msm/20240321092529.13362-1-quic_jkona@quicinc.com/
->>>>>>
->>>>>> It might be an option to add this change right to the series,
->>>>>> since it anyway requires a respin.
->>>>>>
->>>>>> A new compatible value "qcom,sm8650-cci" is NOT added to
->>>>>> Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml , because
->>>>>> the controller IP description and selection is covered by a generic
->>>>>> compatible value "qcom,msm8996-cci".
->>>>>
->>>>> You'll still need to add qcom,sm8650-cci to the "CCI v2" list in qcom,i2c-cci.yaml,
->>>>> otherwise the DTBS check fail, even if the fallback is already present.
->>>>
->>>> I do recognize the problem related to a build time warning, my motivation was
->>>> to follow the rationale described in commit 3e383dce513f
->>>> ("Revert "dt-bindings: i2c: qcom-cci: Document sc8280xp compatible"").
->>>>
->>>> For a similar sc8280xp-cci case it was asked by Konrad to drop a new
->>>> compatible, I kindly ask the reviewers and maintainers to stick to one
->>>> of the two contradicting asks.
->>>
->>> This is totally different, this commit added a new compatible that is used in the driver,
->>> while here, you use a per-soc compatible that is (for now), only used in DT and uses
+>> The list of changes  (changelog) from the cover is not what I should  add?
 >>
->> I'm confused, please elaborate what do you mean above by "this commit" and "here".
->> Could you please be more specific to avoid any possible disambiguation?
-> 
-> "this" refer to "dt-bindings: i2c: qcom-cci: Document sc8280xp compatible".
-> 
->> If you refer to the driver drivers/i2c/busses/i2c-qcom-cci.c, then there is no
->> difference between sc8280xp-cci and sm8650-cci. What is the total difference,
->> which you found?
-> 
-> If there's no difference between sc8280xp-cci and sm8650-cci, then the policy says
-> you need to _not_ add a new compatible in the driver, which is what you did here.
-> 
+>> My patches received only two ACK tags, on V3 and on the initial request 
+>> (v1), I was not able to identify any other, I added them to their place 
+>> in the change log
 >>
->>> the generic "qcom,msm8996-cci" as a fallback because it is considered as beeing 99%
->>> compatible and no software change is needed.
->>>
+>> ...
+>> - v3
+>>    . added b4 version 3
+>>    . removed address and size cells in device description
+>>    Acked-by: Rob Herring<robh@kernel.org>
+>> ...
+>> - v1
+>>    . The initial request was split in two patches sent due to the following checkpatch warning, was requested to re send them together:
+>>      WARNING: DT binding docs and includes should be a separate patch. See: Documentation/devicetree/bindings/submitting-patches.rst
+>>    Acked-by: Krzysztof Kozlowski<krzysztof.kozlowski@linaro.org>
 >>
->> I have no objections to revert a "Revert "dt-bindings: i2c: qcom-cci: Document sc8280xp compatible""
->> commit and to update the change for sm8650-cci accordingly, but as I've
->> already said it would be good to have and follow one common approach for both
->> cases, since I based my change on the maintainer's decision from the past.
+>> I suppose that adding them to their place in change log is wrong, I 
+>> should create a v6 and put them at the end of the cover letter? Or how 
+>> to proceed?
 > 
-> The "new" policy is to use a fallback of an already defined compatible if no driver change
-> is needed, this is the case for the last year so far.
-> And updating the yaml bindings for the new per-soc compatible is also a year-old
-> policy, upstreaming of SM8550, SM8650 and X1E80100 have been done following this policy
-
-I'm sorry, I'm still failing to understand it, it's trivial to check that there is no
-"sc8280xp-cci" in Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml description.
-
-Despite my multiple asks I did not get an answer from anybody, if commit 3e383dce513f
-("Revert "dt-bindings: i2c: qcom-cci: Document sc8280xp compatible"") is wrong and
-shall be reverted or not.
-
-Since my point of discussion is all about the commit 3e383dce513f, because sm8650-cci
-change is based on it, I hope that my original understanding that commit 3e383dce513f
-shall be reverted, I'll send the change shorty.
-
-> in order to :
-> 1) reduce useless driver changes
-> 2) have a fully verifiable DT against bindings, so we can ensure the DT is 100% valid against the bindings
+> Please don't top post. If you add them to the changelog, how are they
+> going to be effective? Please apply your patch (e.g. b4 shazam) and look
+> for them...
+> 
+> Submitting patches explains where to add tags. Look at other mailings.
+> And finally: why even bothering about this if b4 does it for you?
 > 
 
--- 
-Best wishes,
-Vladimir
+BTW, in reply to your first posting I gave you detailed instruction how
+to proceed with tags. Let me quote:
+
+"Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+versions, under or above your Signed-off-by tag"
+
+I think it is clear where you should add it. I gave this instruction on
+purpose so we will avoid this mess...
+
+Drop all invalid acks from cover letter and send v6 with proper tags
+places in mentioned place.
+
+Best regards,
+Krzysztof
+
 
