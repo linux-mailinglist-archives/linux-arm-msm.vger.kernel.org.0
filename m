@@ -1,235 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-17264-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17265-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D3728A1B36
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 19:25:33 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 267448A1C32
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 19:41:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E717A1F215A5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 17:25:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C8FA0285A18
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 17:41:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC99B58ABF;
-	Thu, 11 Apr 2024 15:56:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E594315A4B9;
+	Thu, 11 Apr 2024 16:11:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bFchtk9h"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rvm0S2oJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2796E59B68;
-	Thu, 11 Apr 2024 15:56:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6EC115A4AF;
+	Thu, 11 Apr 2024 16:11:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712850985; cv=none; b=GP1k2wQxsgxm/TN8zKaDsLzyUibSB4U/fjPF9f93TEk/y63WEGcfBVbrptZjaIOtDSx6Krz81+Qd6s1T5MG/oHprXz8neAA7/3pM36alzSYe/H0QiSQigZvZ7uFYIpE0Zhp+L88yc9FY1R/c5Rsd4vcc1r7S/+/MVX8BGVZEN0o=
+	t=1712851870; cv=none; b=Nhsh5S1oKzDA7EsR7YOsKzxI9dRbsxTPPfn84iutEdMmKBoxD1eZod1O8VZhf7TYL6gL+upVRhTaq3neFdScsdKPgyCiiGDDP+Rwf1GEBL1s/4qTMgnzCE9iL9VmYVBxOZ3boatGms7aEDmVCVHZ4+SqOQ9NbZDbmkCFLJTHdGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712850985; c=relaxed/simple;
-	bh=1kr94gWtD4gpodN4EtYhU0DtzurVNmlQfM/n2kxm6Zs=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XTlOtyyfD14FCwB8bqNxmGv6T8XLZdEThFMwNh4oXobadI/oP1pofgvDIl1O63livPZceLjJNdGh+o+Te2nCRRYAnqNYXMUHfRBuL9TKgOa09voW1ovn/voSIFEhk42FJHYi5nEms07k68NwY+NFA/hbgpsoNDqc5Bz6UqCq1+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bFchtk9h; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43BDQ02D013715;
-	Thu, 11 Apr 2024 15:56:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:content-transfer-encoding:in-reply-to; s=
-	qcppdkim1; bh=xoq3QeVIsXKVJ1C1Ungc9M/cgxIE8WFkZQjqPfVldQA=; b=bF
-	chtk9huKRcOqhpCkCQeS6riKvBhbzv5EBBgozS9YahQEWFfN+qKi1cZkYeAgn5Ij
-	158dnly817YtEaLwGc/K8PV0T9T/pgdRFrx9n3dM1gi1Es78y/uL+BHEZbD7Up2S
-	d4WqvdK0Uvt8/iDuDIgTyER/MI5X1VcTNOqfZLGwkEWZ7zdRTcIxvUEDgTvRohki
-	AHRKwNI13XxBrPRTFj6VCE7P3DnFg6qNsIc1q5MJzblhnUGZcaT29o6rQGW1/L5J
-	1yeJejhLXDUoWKDrXcPerXoaJd2+CWzgjItfIKKvs+Na8all00/Vu60tTaAINcai
-	eP0usVoXyR/6tp8tNF9Q==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xe5ehu81j-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Apr 2024 15:56:15 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43BFuEv4026324
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Apr 2024 15:56:14 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Thu, 11 Apr 2024 08:56:14 -0700
-Date: Thu, 11 Apr 2024 08:56:12 -0700
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <linux-kernel@vger.kernel.org>,
-        <quic_msavaliy@quicinc.com>, <quic_vtanuku@quicinc.com>,
-        <quic_anupkulk@quicinc.com>, <quic_cchiluve@quicinc.com>
-Subject: Re: [PATCH v1 RESEND] slimbus: stream: Add null pointer check for
- client functions
-Message-ID: <ZhgIHHP1FUeCr+vx@hu-bjorande-lv.qualcomm.com>
-References: <20240327083214.29443-1-quic_vdadhani@quicinc.com>
+	s=arc-20240116; t=1712851870; c=relaxed/simple;
+	bh=Co3kGhkNsPgacB/pabyCsenR+0gNcn0apDUzg988VHA=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=q18mJbNr1XEByVMCT5shHMfoltp5jkb+eTD+yntIt286pUr9i8Q5ob0UPCd9qtDc46reH9KA02c4CLwOharuqaHIWRxf2kIaY/Ks4FqzXH/TMEKgQtJv4LwV6I2MQQH19xLo5TNS9MMzravLv21fa/xmUeiBnziQdxk58tEjGCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rvm0S2oJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 001FEC072AA;
+	Thu, 11 Apr 2024 16:11:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712851870;
+	bh=Co3kGhkNsPgacB/pabyCsenR+0gNcn0apDUzg988VHA=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=rvm0S2oJrwiPhJs3eMOF4f2WjbhaHXPCHhoQzlhlvGzTckM5NUJlGvZE//UJTbZuk
+	 7mUvnId3dLSEO383sQdQGizvtxlqOjpE6LHUGEUzOLcvm2FFMA5/b/WtwmbW9OxU3t
+	 vraPDqamiI8esjKLmEPlXpKeb3GokCNr0IyDHPJwJEbgyjnyrMewIrl/lr5uw3SXYu
+	 ufts0B5MaTMqZx4inTcApZhjiikn03+zpnbGKAZYEpPL3yc3b4UbwWwc/biOcTK9tx
+	 O2EDKKXK1jYU6zNUiteXtEM8WNQ9P2BCMa9UpGqUhrAINiWUMdVs8dvmVCMdMSalCs
+	 JbWrghBBIpbBg==
+Date: Thu, 11 Apr 2024 11:11:08 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Rob Herring <robh@kernel.org>
+Cc: Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jim Quinlan <jim2101024@gmail.com>,
+	Nicolas Saenz Julienne <nsaenz@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Srikanth Thokala <srikanth.thokala@intel.com>,
+	Ryder Lee <ryder.lee@mediatek.com>,
+	Jianjun Wang <jianjun.wang@mediatek.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Daire McNamara <daire.mcnamara@microchip.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Marek Vasut <marek.vasut+renesas@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Heiko Stuebner <heiko@sntech.de>, Jingoo Han <jingoohan1@gmail.com>,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bharat Kumar Gogada <bharat.kumar.gogada@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Magnus Damm <magnus.damm@gmail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Mark Kettenis <kettenis@openbsd.org>,
+	Tom Joseph <tjoseph@cadence.com>,
+	Ahmad Zainie <wan.ahmad.zainie.wan.mohamad@intel.com>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Thippeswamy Havalige <thippeswamy.havalige@amd.com>,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, asahi@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
+	linux-rpi-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org,
+	linux-rockchip@lists.infradead.org
+Subject: Re: [PATCH v2 2/4] dt-bindings: PCI: mediatek,mt7621: add missing
+ child node reg
+Message-ID: <20240411161108.GA2184354@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240327083214.29443-1-quic_vdadhani@quicinc.com>
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: diaaVCS9AuY8pGzvBedlPJdhJJ0m54XO
-X-Proofpoint-ORIG-GUID: diaaVCS9AuY8pGzvBedlPJdhJJ0m54XO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-11_08,2024-04-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1011
- priorityscore=1501 adultscore=0 bulkscore=0 lowpriorityscore=0
- impostorscore=0 phishscore=0 mlxlogscore=999 spamscore=0 suspectscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404110117
+In-Reply-To: <20240411142107.GA3537062-robh@kernel.org>
 
-On Wed, Mar 27, 2024 at 02:02:14PM +0530, Viken Dadhaniya wrote:
-> There is a possible scenario where client driver is calling
-
-How can we asses the validity or the risk of this problem?
-How would I know if this matches e.g. a bug report reported by a user?
-
-Describe the problem such that the reviewer can asses the validity and
-severity of your bug fixes.
-
-> slimbus stream APIs in incorrect sequence and it might lead to
-> invalid null access of the stream pointer in slimbus
-> enable/disable/prepare/unprepare/free function.
+On Thu, Apr 11, 2024 at 09:21:07AM -0500, Rob Herring wrote:
+> On Thu, Apr 11, 2024 at 07:39:17AM -0500, Bjorn Helgaas wrote:
+> > On Thu, Apr 11, 2024 at 08:13:18AM +0200, Sergio Paracuellos wrote:
+> > > On Thu, Apr 11, 2024 at 8:01 AM Krzysztof Kozlowski
+> > > <krzysztof.kozlowski@linaro.org> wrote:
+> > > > On 10/04/2024 23:26, Bjorn Helgaas wrote:
+> > > > > On Wed, Apr 10, 2024 at 08:15:19PM +0200, Krzysztof Kozlowski wrote:
+> > > > >> MT7621 PCI host bridge has children which apparently are also PCI host
+> > > > >> bridges, at least that's what the binding suggest.
+> > > > >
+> > > > > What does it even mean for a PCI host bridge to have a child that is
+> > > > > also a PCI host bridge?
 > 
-> Fix this by checking validity of the stream before accessing in
-> all function API’s exposed to client.
+> It should say 'root port' instead as the binding description correctly 
+> says.
+
+OK, that makes a lot more sense, and we should fix the commit log.
+
+> > > > I think the question should be towards Mediatek folks. I don't know what
+> > > > this hardware is exactly, just looks like pci-pci-bridge. The driver
+> > > > calls the children host bridges as "ports".
+> > > 
+> > > You can see the topology here in my first driver submit cover letter
+> > > message [0].
+> > > 
+> > >  [0]: https://lore.kernel.org/all/CAMhs-H-BA+KzEwuDPzcmrDPdgJBFA2XdYTBvT4R4MEOUB=WQ1g@mail.gmail.com/t/
+> > 
+> > Nothing unusual here, this looks like the standard PCIe topology.
+> > 
+> > What *might* be unusual is describing the Root Ports in DT.  Since
+> > they are standard PCI devices, they shouldn't need DT description
+> > unless there's some unusual power/clock/reset control or something
+> > that is not discoverable via PCI enumeration.
 > 
+> It's only unusual because typically there's only 1 RP per host bridge 
+> and properties which really apply to the RP get stuck in the host bridge 
+> node because we don't have a RP node. An example is perst-gpios. That's 
+> not a property of the RP either, but the RP is the upstream side of a 
+> slot and we often don't have a node for the device either.
 
-You use the work "fix" a few time, are you fixing an actual bug? Are you
-just guarding the driver from incorrect usage?
+Makes sense.
 
-If it's a fix, then add Fixes and Cc: stable here.
+I'm still confused about one thing, maybe just because I don't really
+know how to read these bindings.  The binding now looks like this:
 
-> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-> ---
->  drivers/slimbus/stream.c | 37 +++++++++++++++++++++++++++++++++----
->  1 file changed, 33 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/slimbus/stream.c b/drivers/slimbus/stream.c
-> index 1d6b38657917..c5a436fd0952 100644
-> --- a/drivers/slimbus/stream.c
-> +++ b/drivers/slimbus/stream.c
-> @@ -202,10 +202,16 @@ static int slim_get_prate_code(int rate)
->  int slim_stream_prepare(struct slim_stream_runtime *rt,
->  			struct slim_stream_config *cfg)
->  {
-> -	struct slim_controller *ctrl = rt->dev->ctrl;
-> +	struct slim_controller *ctrl;
->  	struct slim_port *port;
->  	int num_ports, i, port_id, prrate;
->  
-> +	if (!rt || !cfg) {
-> +		pr_err("%s: Stream or cfg is NULL, Check from client side\n", __func__);
+  properties:
+    compatible:
+      const: mediatek,mt7621-pci
 
-Use dev_err() and write your error messages such that they make sense
-without the use of __func__.
+    reg:
+      items:
+        - description: host-pci bridge registers
+        - description: pcie port 0 RC control registers       # A
+        - description: pcie port 1 RC control registers       # A
+        - description: pcie port 2 RC control registers       # A
 
-> +		return -EINVAL;
+  patternProperties:
+    '^pcie@[0-2],0$':
+      type: object
+      $ref: /schemas/pci/pci-pci-bridge.yaml#
 
-Is this expected to happen during normal operation, or is this a sign of
-a bug?
+      properties:
+        reg:                                                  # B
+          maxItems: 1
 
+It looks like the "A" items are separate things from the "B" items?
 
-Neither of the two callers of this function checks the return value, so
-is this really going to result in a good system state?
+But I think the relevant code is here:
 
+  mt7621_pcie_probe
+    mt7621_pcie_parse_dt
+      pcie->base = devm_platform_ioremap_resource(pdev, 0)             # 1
+      for_each_available_child_of_node(node, child)
+        mt7621_pcie_parse_port
+          port->base = devm_platform_ioremap_resource(pdev, slot + 1)  # 2
 
-It would make sense to require the client to pass valid rt and cfg
-pointers, and if you have an issue in the client driver in which we
-might end up with invalid points, then those drivers should be fixed -
-rather than relying on chance and swipe it under the rug here.
+where it looks like both "1" and "2" use the items in the "A" list,
+i.e., resources 0, 1, 2, 3, all from the same platform device.  Is
+there code that uses the "B" item that this patch adds?
 
-Regards,
 Bjorn
-
-> +	}
-> +
-> +	ctrl = rt->dev->ctrl;
->  	if (rt->ports) {
->  		dev_err(&rt->dev->dev, "Stream already Prepared\n");
->  		return -EINVAL;
-> @@ -358,9 +364,15 @@ int slim_stream_enable(struct slim_stream_runtime *stream)
->  {
->  	DEFINE_SLIM_BCAST_TXN(txn, SLIM_MSG_MC_BEGIN_RECONFIGURATION,
->  				3, SLIM_LA_MANAGER, NULL);
-> -	struct slim_controller *ctrl = stream->dev->ctrl;
-> +	struct slim_controller *ctrl;
->  	int ret, i;
->  
-> +	if (!stream) {
-> +		pr_err("%s: Stream is NULL, Check from client side\n", __func__);
-> +		return -EINVAL;
-> +	}
-> +
-> +	ctrl = stream->dev->ctrl;
->  	if (ctrl->enable_stream) {
->  		ret = ctrl->enable_stream(stream);
->  		if (ret)
-> @@ -411,12 +423,18 @@ int slim_stream_disable(struct slim_stream_runtime *stream)
->  {
->  	DEFINE_SLIM_BCAST_TXN(txn, SLIM_MSG_MC_BEGIN_RECONFIGURATION,
->  				3, SLIM_LA_MANAGER, NULL);
-> -	struct slim_controller *ctrl = stream->dev->ctrl;
-> +	struct slim_controller *ctrl;
->  	int ret, i;
->  
-> +	if (!stream) {
-> +		pr_err("%s: Stream is NULL, Check from client side\n", __func__);
-> +		return -EINVAL;
-> +	}
-> +
->  	if (!stream->ports || !stream->num_ports)
->  		return -EINVAL;
->  
-> +	ctrl = stream->dev->ctrl;
->  	if (ctrl->disable_stream)
->  		ctrl->disable_stream(stream);
->  
-> @@ -448,6 +466,11 @@ int slim_stream_unprepare(struct slim_stream_runtime *stream)
->  {
->  	int i;
->  
-> +	if (!stream) {
-> +		pr_err("%s: Stream is NULL, Check from client side\n", __func__);
-> +		return -EINVAL;
-> +	}
-> +
->  	if (!stream->ports || !stream->num_ports)
->  		return -EINVAL;
->  
-> @@ -476,8 +499,14 @@ EXPORT_SYMBOL_GPL(slim_stream_unprepare);
->   */
->  int slim_stream_free(struct slim_stream_runtime *stream)
->  {
-> -	struct slim_device *sdev = stream->dev;
-> +	struct slim_device *sdev;
-> +
-> +	if (!stream) {
-> +		pr_err("%s: Stream is NULL, Check from client side\n", __func__);
-> +		return -EINVAL;
-> +	}
->  
-> +	sdev = stream->dev;
->  	spin_lock(&sdev->stream_list_lock);
->  	list_del(&stream->node);
->  	spin_unlock(&sdev->stream_list_lock);
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-> of Code Aurora Forum, hosted by The Linux Foundation
-> 
 
