@@ -1,146 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-17173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17174-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C5488A08A1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 08:41:40 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1A038A08AC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 08:46:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8D5A91C22672
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 06:41:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 376621F219D2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 06:46:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F2F913D61C;
-	Thu, 11 Apr 2024 06:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 561D313D62A;
+	Thu, 11 Apr 2024 06:46:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jSC3lve+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kfihvtP2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AEDE4F5FE;
-	Thu, 11 Apr 2024 06:41:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228273EA72;
+	Thu, 11 Apr 2024 06:46:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712817695; cv=none; b=Ax6JoPhrtf3RFh7Xr2MNPWNIqzkqNQTGgmm0y9RpAYWtwtRS8y7CZ+uN3Uu8sipeaNmGcV5dMKjikGDFUeDHv46Y9I4lFpky8Km1eZ4GqlmFSe4U+R86h7joBdi9ZX+LElfgistp9uOasU9fNJbTDB8AdGi80RZtExt7JvhCLmQ=
+	t=1712817996; cv=none; b=lbTw991qbJKzBU88mrVE8QZx58/pm8LFSrCU4UzZF9IPzqMYUFOLDIYjDLhOLW5JYi2pmOM10h2lF4+jqDdYJtRFq6NLvHKRzioydS4sstjsk8WeqcMhmnJjyJ/0D+Y5B/ivL11fvmJWv9JIaQqp58sva55J/zPyWFnXWRvlrRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712817695; c=relaxed/simple;
-	bh=i4ItlNX7TbuFsOHfmGQsx52q+0Kg3uL7qQOODxT6NHk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=pWJLOuIzzWucnf0YVcHBDlF5o9p7vDuiuteeWG0n4X8Rzq8meJqfcoY+6x6rO3J3EoYih454E1PRzJlmYDHKbioS8ulDLeudFg+JRcrcmL8KG4ThPnGNPi47ar+WVh3Qwd6Csyp2+5pxwlTcKze/8pGRYrlF7+elWjT+StPzBMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jSC3lve+; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43B5Da1p028318;
-	Thu, 11 Apr 2024 06:41:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=mcdDJkJCVkNz828CwmAMGvCGhf1VhflNoT6vWunNHR0=; b=jS
-	C3lve+KDWKnr4lvhpAPj1NgN9omwb3q9sACmtTAtNI7hGT/Ah6qoe9MLTulgMJBa
-	f0o36RhyqaNfgWV9GfUaRxjcmASLMDD2e12zimXSNeZErY5vePU/7kTFs8yYK01y
-	mO4L5xvp5KApKUAKt/avOFmOzEEgo+GnUFeQNea9em3TOc9S3WPVAr2uncf3Ge0Q
-	vkqUQDb1lvNwXt2YVFlru3viUjaF3WDIW+MIu5JzfSJTRM+r2Fu7QsHJkVotjAmM
-	0oCY2pjh2b3GYFdtIK3QL71BkXQPdjYEgl/HYFIKjj6nmdNYtsQLj2GBf8+3HJwf
-	JBEGd7K46AycI8x85RRg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xe5ehs963-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Apr 2024 06:41:22 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43B6fLjm019752
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Apr 2024 06:41:21 GMT
-Received: from [10.253.12.44] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 10 Apr
- 2024 23:41:15 -0700
-Message-ID: <89bc03c9-9545-4886-aec7-91c9926257b3@quicinc.com>
-Date: Thu, 11 Apr 2024 14:41:13 +0800
+	s=arc-20240116; t=1712817996; c=relaxed/simple;
+	bh=WbLKltYK/s7kUm98XICzKNUnpZwUdIqRk1dgonQu5Yc=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Knj0P6peRoFIfA75WC/UEGZ3HL3AxOqj2KVF+eCHXq8prnJ9PBOhpGOADXQQwKFoULvRPbveGecFZdx9LTxMhqKh0ng9pAOWEIqeIJl/rrSDf/VQcB8pjyyXwo02RhHoj2rmVw4NE4iyIVHue0ZyOxLFP2aJhAweYhzS7s0GWwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kfihvtP2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E487C433C7;
+	Thu, 11 Apr 2024 06:46:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712817996;
+	bh=WbLKltYK/s7kUm98XICzKNUnpZwUdIqRk1dgonQu5Yc=;
+	h=From:To:Cc:Subject:Date:From;
+	b=kfihvtP24X739EE/kTEzwc2BdjlE2pfwBwO6OonyFbHsJNJCR1SdBGZlouBbwK7HJ
+	 +yErPp4MIvHGDfdln/y2MYCyZzDP0KsCGKYE+oiQtJxin+o6DL/1z3/6GKNRU6UAZF
+	 Esbb8FdcOechMyx53FoLOXcFwEFAM7uEVidM1vLBuJY01Sbk3EU9Iwzkfbrh5PzfAb
+	 lOpRpWe4EemuLChfxRE1gY2mLalzr3U4aPmKYlRl8x213dEy20XMsIpcsg29SXm7/o
+	 0eWmm3qJ+gyJ+oXhR/zE6dao+mZ8PTf7qRk/7QBbQQCmqmNXkJa1qLshIEYVIb8+4i
+	 4N4M4Q7KZ3/RQ==
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Dong Aisheng <aisheng.dong@nxp.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Jacky Bai <ping.bai@nxp.com>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Sean Wang <sean.wang@kernel.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	zhanghongchen <zhanghongchen@loongson.cn>,
+	Yinbo Zhu <zhuyinbo@loongson.cn>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-gpio@vger.kernel.org,
+	imx@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	linux-mediatek@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: [PATCH v2 1/5] pinctrl: freescale: imx8ulp: fix module autoloading
+Date: Thu, 11 Apr 2024 08:46:10 +0200
+Message-Id: <20240411064614.7409-1-krzk@kernel.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 3/3] input: pm8xxx-vibrator: add new SPMI vibrator
- support
-Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, <kernel@quicinc.com>,
-        Andy Gross
-	<agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Dmitry Torokhov
-	<dmitry.torokhov@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-input@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>
-References: <20240401-pm8xxx-vibrator-new-design-v8-0-6f2b8b03b4c7@quicinc.com>
- <20240401-pm8xxx-vibrator-new-design-v8-3-6f2b8b03b4c7@quicinc.com>
- <3f8c970c-6a0d-4fc3-a2d3-e0797e7055cf@linaro.org>
-From: Fenglin Wu <quic_fenglinw@quicinc.com>
-In-Reply-To: <3f8c970c-6a0d-4fc3-a2d3-e0797e7055cf@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8mxOIQfrsnj8gQvUfMzniYvrdn-kuydZ
-X-Proofpoint-ORIG-GUID: 8mxOIQfrsnj8gQvUfMzniYvrdn-kuydZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-11_02,2024-04-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
- priorityscore=1501 adultscore=0 bulkscore=0 lowpriorityscore=0
- impostorscore=0 phishscore=0 mlxlogscore=999 spamscore=0 suspectscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404110046
 
-Hi Konrad,
+Add MODULE_DEVICE_TABLE(), so the module could be properly autoloaded
+based on the alias from of_device_id table.  Pin controllers are
+considered core components, so usually they are built-in, however these
+can be built and used as modules on some generic kernel.
 
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-On 4/11/2024 2:10 AM, Konrad Dybcio wrote:
-> 
-> 
->> -#define VIB_MAX_LEVEL_mV    (3100)
->> -#define VIB_MIN_LEVEL_mV    (1200)
->> -#define VIB_MAX_LEVELS        (VIB_MAX_LEVEL_mV - VIB_MIN_LEVEL_mV)
->> +#define VIB_MAX_LEVEL_mV(vib)    (vib->drv2_addr ? (3544) : (3100))
-> 
-> You shouldn't need the additional inside parentheses
-> 
-> Also, is this really a good discriminator for the voltage ranges? Do *all*
-> PMIC vibrators with a drv2_addr operate within this range? If not, consider
-> a struct field here
-> 
-Currently, yes, all PMIC vibrators with a drv2_addr (PMI632, PM7250B, 
-PM7325B, PM7550BA) operate within the same range because they are the 
-same type.
+---
 
-> 
->> +#define VIB_MIN_LEVEL_mV(vib)    (vib->drv2_addr ? (1504) : (1200))
->> +#define VIB_MAX_LEVELS(vib)    (VIB_MAX_LEVEL_mV(vib) - 
->> VIB_MIN_LEVEL_mV(vib))
-> 
-> If the ranges are supposed to be inclusive, this is off-by-one. But looking
-> at the driver, it seems like MIN_LEVEL may be "off"? I'm not sure though.
-> 
-> Either way, this would be a separate fix.
-> [...]
-The voltage range [1504, 3544] for the new SPMI vibrator is inclusive. I 
-checked the voltage range [1200 3100] for PM8916 SPMI vibrator is also 
-inclusive. I couldn't find any document to confirm if the SSBI vibrator 
-but I assume it is the same as PM8916. I will make change before the 
-series to address it.
+Changes in v2:
+1. None
+---
+ drivers/pinctrl/freescale/pinctrl-imx8ulp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thanks for reviewing the changes!
+diff --git a/drivers/pinctrl/freescale/pinctrl-imx8ulp.c b/drivers/pinctrl/freescale/pinctrl-imx8ulp.c
+index 2e86ca9fc7ac..5632c7285147 100644
+--- a/drivers/pinctrl/freescale/pinctrl-imx8ulp.c
++++ b/drivers/pinctrl/freescale/pinctrl-imx8ulp.c
+@@ -252,6 +252,7 @@ static const struct of_device_id imx8ulp_pinctrl_of_match[] = {
+ 	{ .compatible = "fsl,imx8ulp-iomuxc1", },
+ 	{ /* sentinel */ }
+ };
++MODULE_DEVICE_TABLE(of, imx8ulp_pinctrl_of_match);
+ 
+ static int imx8ulp_pinctrl_probe(struct platform_device *pdev)
+ {
+-- 
+2.34.1
 
-Fenglin
 
