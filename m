@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-17255-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B00DB8A17AF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 16:44:06 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 443D38A17CA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 16:48:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1B5D41F218EA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 14:44:06 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1CB18B27C68
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 14:46:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABC6DD517;
-	Thu, 11 Apr 2024 14:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78D84D530;
+	Thu, 11 Apr 2024 14:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lAjalIOl"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LQDtuVrj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349A110A12;
-	Thu, 11 Apr 2024 14:41:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D267D529;
+	Thu, 11 Apr 2024 14:46:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712846495; cv=none; b=NE9yD6bqzPbZND4ucAkNyVFT8mLnUd3UhrB55wnuxkeFnWb9W6fxbqj969rgxmm35YBAwVn9Kh9Rci1+ZbfnHSBMR+S3/n3O92B7pOuyZJJIMHyKyAIQxlAP2P0U5ueoq3t3nD5wf4+dUMP7dMwvW7HOLM8htewmzJyABjgAcGY=
+	t=1712846784; cv=none; b=m0BnyszCvudG6CK1qRC/IUTP/8WvL8cDr1+GjVvhYGZWHLsFKj/ML0B9vsFGigkuEekPUFj8MYacmEF4/ZqFnEcTYQl4Zax3mKmtJwdBtkt6fAUSdov8Xdtx1JMmDnGOSPnGWwmP8eVaiwk3VDlyoQmVyGzXpwCSor9j/lG3lhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712846495; c=relaxed/simple;
-	bh=xDk5x1X48y95x13b69amPcrAqPG1labPWCD+8T/o+oU=;
+	s=arc-20240116; t=1712846784; c=relaxed/simple;
+	bh=WOsfYlx/Hwa8Lsmj956+sM4HTD3hGnqHfcAoqJR9+zw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=eYOWbBWURcrAwscsHA/TZ7ApmWHHOKuRAhWOWAIXH6ffbMbgekyw1ZtE14U+eorLsD3mqweSni8NzM1YCciRoECwhF1vBi3JKV1O+L//5HvqhNoCLhVA80XARyoURQdOATIIIUoUAlc9wZQoR6p/as8JfIF56w9YdHe4L1oVYFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lAjalIOl; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=N1W8nJhdgGWpcqniSY8MCuiYbxcavu6k47UHIxjiwPcJdTEdj7LRMg6jfoBj2fsXVrHAXbYHRaFpFvVvafInl2zbPBrJmJzQyAoHJHDKC3/3oDc8SEJATcDzjpf6PIMkoy2C68Ir6qhpvDlVgmlANVXO2L8L43+uDsaEXu1IxBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LQDtuVrj; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43BCKRL6015078;
-	Thu, 11 Apr 2024 14:41:31 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43BDw8xi018489;
+	Thu, 11 Apr 2024 14:46:18 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=9sWfzGlrxfAUEiU/5ARVQ5E8T5RbLqXOTBDK4jDrjGA=; b=lA
-	jalIOlIpMgzjU6EhgPDMslKtWRghoEJK2OAAwvbQgie3w+NOrCRSaaPTSevMJYah
-	vVZHwDplZBkzuN0idTyAMgwXiyqkZ0Iekrw6Q+KJThDQw6fYObttasdyykMO/Nt0
-	QmrolaPV3+Ez/JlnXQ0J2g6+L/kjrGW4a46ZmZOcwvHd3IBOSFlEYNVqlEuzkXwK
-	oAgP/PJ4eD10vf64MPjsU1h+2sf/FJQrWrTmyN426w/g0OWBVdeatpgaa8iKqeEn
-	5UR+JwItUiDgi++l9TwAQAg+t6zsyt0fIMcsR79PXs8TIVkNI2H5sssn5rWNZtv0
-	a0qYIVAG2UKyDmk1sb6w==
+	qcppdkim1; bh=A/oAT/wNDEmcZmpWTKzBi87UUHvcOVZ5gW5oGv6Ix1k=; b=LQ
+	DtuVrjhHO3o51L80DrYPItcEfvXePoFjknySqL9FSmvWRG3RoLNCoxtyFuANTCKI
+	q6/kJLdzx/bX9lWjiNApmTl7VlTkWqM84rp5EBOj/8sSpsdTKQMts6TOpwsgtd6N
+	DrAtlWJoRlb09Q7zxcRuk0g+t1DgJhVo8Uj7RkX5Cm+OgBP4G7RdSVrTrayy5Cni
+	xm1msJcScBqvWtGhRsH/1O6WHOalCoeuzx2URDPYWDJ6ABvY6XM+s5aj3anKvdZf
+	R3w5jVf2WwQZVy2jph37tbRAVGxDZf0VM/XcdcinTG8wEjylyJ/pzvSLwQx4MCki
+	+6bB9FLPfnjRZcXsBr5A==
 Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xebqx9f5p-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xe5ehu2e9-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Apr 2024 14:41:31 +0000 (GMT)
+	Thu, 11 Apr 2024 14:46:17 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43BEfUrY018031
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43BEkGs4024437
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Apr 2024 14:41:30 GMT
+	Thu, 11 Apr 2024 14:46:16 GMT
 Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 11 Apr
- 2024 07:41:29 -0700
-Message-ID: <ff04d11a-f5b5-6561-ef32-f85ccfe14f21@quicinc.com>
-Date: Thu, 11 Apr 2024 08:41:29 -0600
+ 2024 07:46:15 -0700
+Message-ID: <78de32be-7e3b-e7e9-61f3-9679993dbe71@quicinc.com>
+Date: Thu, 11 Apr 2024 08:46:15 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,7 +66,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.0
-Subject: Re: [PATCH v2 1/2] bus: mhi: host: Add sysfs entry to force device to
+Subject: Re: [PATCH v2 2/2] bus: mhi: host: pci_generic: Add edl callback to
  enter EDL
 Content-Language: en-US
 To: Qiang Yu <quic_qianyu@quicinc.com>, <mani@kernel.org>
@@ -74,115 +74,151 @@ CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
         <quic_mrana@quicinc.com>
 References: <1712805329-46158-1-git-send-email-quic_qianyu@quicinc.com>
- <1712805329-46158-2-git-send-email-quic_qianyu@quicinc.com>
+ <1712805329-46158-3-git-send-email-quic_qianyu@quicinc.com>
 From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <1712805329-46158-2-git-send-email-quic_qianyu@quicinc.com>
+In-Reply-To: <1712805329-46158-3-git-send-email-quic_qianyu@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Q0bSFpRyWnvBdigvW0v-B1CMFghYYK7d
-X-Proofpoint-ORIG-GUID: Q0bSFpRyWnvBdigvW0v-B1CMFghYYK7d
+X-Proofpoint-GUID: Zb4i8FTTj8nf5loz6u61n6neptFjabZT
+X-Proofpoint-ORIG-GUID: Zb4i8FTTj8nf5loz6u61n6neptFjabZT
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-04-11_08,2024-04-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- bulkscore=0 mlxlogscore=999 malwarescore=0 phishscore=0 suspectscore=0
- adultscore=0 spamscore=0 lowpriorityscore=0 clxscore=1015 mlxscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404110107
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
+ priorityscore=1501 adultscore=0 bulkscore=0 lowpriorityscore=0
+ impostorscore=0 phishscore=0 mlxlogscore=999 spamscore=0 suspectscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404110108
 
 On 4/10/2024 9:15 PM, Qiang Yu wrote:
-> Add sysfs entry to allow users of MHI bus force device to enter EDL.
-> Considering that the way to enter EDL mode varies from device to device and
-> some devices even do not support EDL. Hence, add a callback edl_trigger in
-> mhi controller as part of the sysfs entry to be invoked and MHI core will
-> only create EDL sysfs entry for mhi controller that provides edl_trigger
-> callback. All of the process a specific device required to enter EDL mode
-> can be placed in this callback.
+> Add mhi_pci_generic_edl_trigger as edl_trigger for some devices (eg. SDX65)
+> to enter EDL mode by writing the 0xEDEDEDED cookie to the channel 91
+> doorbell register and forcing an SOC reset afterwards.
 > 
 > Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
 > ---
->   drivers/bus/mhi/host/init.c | 35 +++++++++++++++++++++++++++++++++++
->   include/linux/mhi.h         |  1 +
-
-No update to Documentation/ABI/stable/sysfs-bus-mhi ?
-
->   2 files changed, 36 insertions(+)
+>   drivers/bus/mhi/host/pci_generic.c | 50 ++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 50 insertions(+)
 > 
-> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-> index 44f9349..333ac94 100644
-> --- a/drivers/bus/mhi/host/init.c
-> +++ b/drivers/bus/mhi/host/init.c
-> @@ -127,6 +127,32 @@ static ssize_t soc_reset_store(struct device *dev,
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index 51639bf..a529815 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -27,12 +27,23 @@
+>   #define PCI_VENDOR_ID_THALES	0x1269
+>   #define PCI_VENDOR_ID_QUECTEL	0x1eac
+>   
+> +#define MHI_EDL_DB			91
+> +#define MHI_EDL_COOKIE			0xEDEDEDED
+> +
+> +/* Device can enter EDL by first setting edl cookie then issuing inband reset*/
+> +#define MHI_PCI_GENERIC_EDL_TRIGGER	BIT(0)
+> +
+> +#define CHDBOFF			0x18
+
+This is already in drivers/bus/mhi/common.h why duplicate it here?
+
+> +#define CHDBOFF_CHDBOFF_MASK	0xFFFFFFFF
+> +#define CHDBOFF_CHDBOFF_SHIFT	0
+> +
+>   /**
+>    * struct mhi_pci_dev_info - MHI PCI device specific information
+>    * @config: MHI controller configuration
+>    * @name: name of the PCI module
+>    * @fw: firmware path (if any)
+>    * @edl: emergency download mode firmware path (if any)
+> + * @edl_trigger: each bit represents a different way to enter EDL
+>    * @bar_num: PCI base address register to use for MHI MMIO register space
+>    * @dma_data_width: DMA transfer word size (32 or 64 bits)
+>    * @mru_default: default MRU size for MBIM network packets
+> @@ -44,6 +55,7 @@ struct mhi_pci_dev_info {
+>   	const char *name;
+>   	const char *fw;
+>   	const char *edl;
+> +	unsigned int edl_trigger;
+>   	unsigned int bar_num;
+>   	unsigned int dma_data_width;
+>   	unsigned int mru_default;
+> @@ -292,6 +304,7 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx75_info = {
+>   	.name = "qcom-sdx75m",
+>   	.fw = "qcom/sdx75m/xbl.elf",
+>   	.edl = "qcom/sdx75m/edl.mbn",
+> +	.edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
+>   	.config = &modem_qcom_v2_mhiv_config,
+>   	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>   	.dma_data_width = 32,
+> @@ -302,6 +315,7 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx65_info = {
+>   	.name = "qcom-sdx65m",
+>   	.fw = "qcom/sdx65m/xbl.elf",
+>   	.edl = "qcom/sdx65m/edl.mbn",
+> +	.edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
+>   	.config = &modem_qcom_v1_mhiv_config,
+>   	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>   	.dma_data_width = 32,
+> @@ -312,6 +326,7 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
+>   	.name = "qcom-sdx55m",
+>   	.fw = "qcom/sdx55m/sbl1.mbn",
+>   	.edl = "qcom/sdx55m/edl.mbn",
+> +	.edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
+>   	.config = &modem_qcom_v1_mhiv_config,
+>   	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>   	.dma_data_width = 32,
+> @@ -928,6 +943,38 @@ static void health_check(struct timer_list *t)
+>   	mod_timer(&mhi_pdev->health_check_timer, jiffies + HEALTH_CHECK_PERIOD);
 >   }
->   static DEVICE_ATTR_WO(soc_reset);
 >   
-> +static ssize_t force_edl_store(struct device *dev,
-> +			       struct device_attribute *attr,
-> +			       const char *buf, size_t count)
+> +static int mhi_pci_generic_edl_trigger(struct mhi_controller *mhi_cntrl)
 > +{
-> +	struct mhi_device *mhi_dev = to_mhi_device(dev);
-> +	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> +	unsigned long val;
 > +	int ret;
+> +	u32 val;
+> +	void __iomem *edl_db;
+> +	void __iomem *base = mhi_cntrl->regs;
+
+It looks like this file follows reverse christmas tree, but this 
+function does not. you should fix it.
+
 > +
-> +	ret = kstrtoul(buf, 10, &val);
-> +	if (ret < 0) {
-> +		dev_err(dev, "Could not parse string: %d\n", ret);
+> +	ret = mhi_device_get_sync(mhi_cntrl->mhi_dev);
+> +	if (ret) {
+> +		dev_err(mhi_cntrl->cntrl_dev, "Wake up device fail before trigger EDL\n");
 > +		return ret;
 > +	}
 > +
-> +	if (!val)
-> +		return count;
+> +	pm_wakeup_event(&mhi_cntrl->mhi_dev->dev, 0);
+> +	mhi_cntrl->runtime_get(mhi_cntrl);
 > +
-> +	ret = mhi_cntrl->edl_trigger(mhi_cntrl);
-> +	if (ret)
-> +		return ret;
+> +	mhi_cntrl->read_reg(mhi_cntrl, base + CHDBOFF, &val);
+> +	val = (val & CHDBOFF_CHDBOFF_MASK) >> CHDBOFF_CHDBOFF_SHIFT;
 > +
-> +	return count;
+> +	edl_db = base + val + (8 * MHI_EDL_DB);
+> +
+> +	mhi_cntrl->write_reg(mhi_cntrl, edl_db + 4, upper_32_bits(MHI_EDL_COOKIE));
+> +	mhi_cntrl->write_reg(mhi_cntrl, edl_db, lower_32_bits(MHI_EDL_COOKIE));
+> +
+> +	mhi_soc_reset(mhi_cntrl);
+> +
+> +	mhi_cntrl->runtime_put(mhi_cntrl);
+> +	mhi_device_put(mhi_cntrl->mhi_dev);
+> +
+> +	return 0;
 > +}
-> +static DEVICE_ATTR_WO(force_edl);
 > +
->   static struct attribute *mhi_dev_attrs[] = {
->   	&dev_attr_serial_number.attr,
->   	&dev_attr_oem_pk_hash.attr,
-> @@ -1018,6 +1044,12 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
->   	if (ret)
->   		goto err_release_dev;
+>   static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+>   {
+>   	const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info *) id->driver_data;
+> @@ -962,6 +1009,9 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+>   	mhi_cntrl->runtime_put = mhi_pci_runtime_put;
+>   	mhi_cntrl->mru = info->mru_default;
 >   
-> +	if (mhi_cntrl->edl_trigger) {
-> +		ret = sysfs_create_file(&mhi_dev->dev.kobj, &dev_attr_force_edl.attr);
-> +		if (ret)
-> +			goto err_release_dev;
-> +	}
+> +	if (info->edl_trigger & MHI_PCI_GENERIC_EDL_TRIGGER)
+> +		mhi_cntrl->edl_trigger = mhi_pci_generic_edl_trigger;
 > +
->   	mhi_cntrl->mhi_dev = mhi_dev;
->   
->   	mhi_create_debugfs(mhi_cntrl);
-> @@ -1051,6 +1083,9 @@ void mhi_unregister_controller(struct mhi_controller *mhi_cntrl)
->   	mhi_deinit_free_irq(mhi_cntrl);
->   	mhi_destroy_debugfs(mhi_cntrl);
->   
-> +	if (mhi_cntrl->edl_trigger)
-> +		sysfs_remove_file(&mhi_dev->dev.kobj, &dev_attr_force_edl.attr);
-> +
->   	destroy_workqueue(mhi_cntrl->hiprio_wq);
->   	kfree(mhi_cntrl->mhi_cmd);
->   	kfree(mhi_cntrl->mhi_event);
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index cde01e1..8db56d7 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -435,6 +435,7 @@ struct mhi_controller {
->   	void (*write_reg)(struct mhi_controller *mhi_cntrl, void __iomem *addr,
->   			  u32 val);
->   	void (*reset)(struct mhi_controller *mhi_cntrl);
-> +	int (*edl_trigger)(struct mhi_controller *mhi_cntrl);
-
-No update to the documentation for this struct?
-
+>   	if (info->sideband_wake) {
+>   		mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
+>   		mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
 
 
