@@ -1,297 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-17180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC8758A08D2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 08:52:11 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD4518A08F7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 08:58:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4FF16B22F35
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 06:52:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6C08A1F2529E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 06:58:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9164A13D61D;
-	Thu, 11 Apr 2024 06:52:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EF0813DDB9;
+	Thu, 11 Apr 2024 06:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="TJ8Txo6a";
-	dkim=permerror (0-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="TlARS+X0"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iHG3m7pr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.167])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2488F13CA96;
-	Thu, 11 Apr 2024 06:52:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.167
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712818326; cv=pass; b=tbBlYTJrggmvGa3GQS6r4dREjmlU5KjrmBoZE3sTFbagqeosV7ez1HoOSbWVngrFdgUhQQOYxOyYU1M8Te0leYS25ufz5WwNLLgGplm50Ee1lHrMEVf6K800R5Mk/hDGmO+LYWcq/SEtqcwM7iqJH70IECng6Ox8CR+a3N5hXcs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712818326; c=relaxed/simple;
-	bh=TH4HZtEjG/LwmYSC5o0HNA9LRh0YL4WwK9LPpSWAYQI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hUKSqm5zQlzyuy9ZwPXXAV9VG/vHQNWVCXU+jlzQLnDRC+FYihgH4WVcSkhRJ8BvkTRK7cPWFVul6gRrMxiWVoWvQIB3XXJ1Js9nqRMq6GQkQDBBz1jAkydxc96/XCmafG/yqvwbNLXOgR2gozguqc1gnqPsN00iVqDsjxZEhAM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gerhold.net; spf=none smtp.mailfrom=gerhold.net; dkim=pass (2048-bit key) header.d=gerhold.net header.i=@gerhold.net header.b=TJ8Txo6a; dkim=permerror (0-bit key) header.d=gerhold.net header.i=@gerhold.net header.b=TlARS+X0; arc=pass smtp.client-ip=81.169.146.167
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gerhold.net
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=gerhold.net
-ARC-Seal: i=1; a=rsa-sha256; t=1712818320; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=V8iXPikpPqqlqbqu21p8ivJsMap4iH5bHN34ekv/bkLFtYgssRbJ7pGHD22mzdcqQi
-    ffgimiMvGc7rUVBWQMVfW3V9Nuxqa/OAYmDE00RzGrqFuJGaGtTOVpuE5eL0cGC5BT6B
-    s4tbElyr9WPRMdYsgJ6sfNcuLtj7kU5SMdQE3Iy5F1hbcZiybTTwRn+iGpXNAC56XZ0k
-    BD1IzCguRYe4w2ifTzwSf1lBMSOsn2Lu8IwYxs9c/LoO6iTWCi9GpsDZyTCBqRMBV0PF
-    hiQz+1NDoBEGsqQpQW50O6lGgSWyjOriQw4jyocnMg32xOZpm2aMtH3c3QRi3JujPomE
-    AB2g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1712818320;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=JFtOoHWMyTr+PHKm8LuDpKKbuPuSWvT6kPgYbpFClyk=;
-    b=nYYqb0WjX+sbyEZ6l2AhqT+K+zvqsGtCBfCjrVtGLHAUOE7KPiUWVJh2ko/Vwhq28J
-    xrUwW8sYUraNb16Sev8LNYP7Ey9PZxPMyWZ6Nbcwy/BQJB+mwBzF6IqJ4l/v27LWVv4V
-    Mv/gdwqAogMjbdsM/Mh0902E5ZXAc0RjDhgITx25WWdZTIBxhkLi6JZPxf6QuXPpFhmt
-    CBvOjhZfuvAMSfzn2Mi6hD27lz9+Dpt0yTLAZsog7gIyAy9ta7gHuiyokobBA1DLApmH
-    iBOxOq28jk4W9LIktBlffGOFAcmy+oENwdM7xvavLryAKlzDx+htZvN8WJ1nIK22P68a
-    qg4A==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1712818320;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=JFtOoHWMyTr+PHKm8LuDpKKbuPuSWvT6kPgYbpFClyk=;
-    b=TJ8Txo6auZYNQskve2e7sgGquK91scpaPth3RPe2juBtECrwBe9mEqeXDU7HALcTHb
-    UvHoFvyVcsjBFiXXwAQ6IKrr4VNIFGH3AKsW+BuWJMWN+gi7rlOQ1c0V/yBLhW2O5Gf/
-    6uQAYhZTAiuNm2L3oQmCHnxTzN6BK8kEK7uOd9ih5j1MvFOg45+2rJibQrGZ3TaHlXLA
-    ny+OO0WgKW6PYke3UTW6QgVTqXVVkMRKjXH0tp1fMsM0EmvqZPD/mZjauvD+hZh3fWwv
-    AFtJD4g+05H1Yrcu90LV74duopFJX8CR118bzBcF8fUz1V43SiXrjCQlgLKQswO85ev4
-    /HkA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1712818320;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=JFtOoHWMyTr+PHKm8LuDpKKbuPuSWvT6kPgYbpFClyk=;
-    b=TlARS+X09eyH+QShynE0SPXdrh+WqcO8SyyFxOT8Ie8o5HDHKX4S9Tl/FWRxnjND5l
-    RZBvuDrTcrSYZaGxImAw==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA+p3h"
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 50.3.2 DYNA|AUTH)
-    with ESMTPSA id Raf12503B6pxZm2
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Thu, 11 Apr 2024 08:51:59 +0200 (CEST)
-Date: Thu, 11 Apr 2024 08:51:52 +0200
-From: Stephan Gerhold <stephan@gerhold.net>
-To: Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: sa8155p-adp: use correct gpio for
- SDHC2 CD
-Message-ID: <ZheIiMZaTAFrxCOm@gerhold.net>
-References: <20240410134022.732767-1-volodymyr_babchuk@epam.com>
- <Zhb53i8-pJhDMVZM@gerhold.net>
- <87cyqw6fvh.fsf@epam.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D9713D622;
+	Thu, 11 Apr 2024 06:58:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1712818713; cv=none; b=Aqfz92tuDp6WkuyJOdnKoAZ83Vhaw1xHznMHhnmTABgSaSH5Z38esy1yhfOGoifyxjfQqJwBEVtGjJzR7Rd8hd5QyCcKJyP6hekmkjLKIuAGEV+n+Jlrtn9caLeKZmQfX10NDEsVG19V4Yj6yC1nZD0yCIVLs6x6Qqsc6zFHdZs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1712818713; c=relaxed/simple;
+	bh=kzfkR7Nf9Px5mfhdw6SO9VUjHqXz5tShkGg2fEBVLCI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ibOGnDbIwNeObixt9RMrtPMGsJAXbGHC96r4Iak+bHeonYoNOjdCalmRd0lG2/Z/84IMr3JUV37/9B92gTvNF2otFoEt7UbalTP8QbtRIyxkHaLJWiK3wQbyzpRnDxJ3w4xHVvzUjwB/rjAwv1Rjeu9c7DCvG5yhIyCI99YQQvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iHG3m7pr; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43B5CP3m030910;
+	Thu, 11 Apr 2024 06:58:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=HznUP1GEpxyDEujedrVeW8QT40sNoRwnMZ5vjMKDYxI=; b=iH
+	G3m7prKdg1YHci8A8iJMAM2rsYfhG9MxFyKP0amMdBPY6TOIzxSd7axUEi2p1Axt
+	ZPS86bbVHGmOlyDbdnvUfEgCc7wwhE+q2IMW3/fP4tHma6nvi5B2+Tui+k/2j4EO
+	DJwo1jMT9fWO4dOhvHHcri/woRLVu5+FD3eNFjgghu+BytkZohOShjT874UpVudC
+	AxkNALTkSkZCo1Q1bW6iK1iFIShfGZlyc2NjoHbN9cDc0IYy6Q6E4ih/qvZ9xdA0
+	YKWr5Q8ZjoyzPZDthJbxAiRaoD0EXeAVZXpX3ifJV5lf+hKfkqr/jF3VyxzDVUKh
+	hh5n5JhRkK34ywiWGXUA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xdquhvsem-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 11 Apr 2024 06:58:26 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43B6wP3L022483
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 11 Apr 2024 06:58:25 GMT
+Received: from [10.253.12.44] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 10 Apr
+ 2024 23:58:20 -0700
+Message-ID: <229fb5b2-34c9-402b-9812-f91e6cc31c57@quicinc.com>
+Date: Thu, 11 Apr 2024 14:58:18 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87cyqw6fvh.fsf@epam.com>
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 3/3] input: pm8xxx-vibrator: add new SPMI vibrator
+ support
+Content-Language: en-US
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, <kernel@quicinc.com>,
+        Andy Gross
+	<agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Dmitry Torokhov
+	<dmitry.torokhov@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-input@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>
+References: <20240401-pm8xxx-vibrator-new-design-v8-0-6f2b8b03b4c7@quicinc.com>
+ <20240401-pm8xxx-vibrator-new-design-v8-3-6f2b8b03b4c7@quicinc.com>
+ <3f8c970c-6a0d-4fc3-a2d3-e0797e7055cf@linaro.org>
+From: Fenglin Wu <quic_fenglinw@quicinc.com>
+In-Reply-To: <3f8c970c-6a0d-4fc3-a2d3-e0797e7055cf@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 3rYAA5HCMwsUzQ4-R7R_mCoI_ADh6Or3
+X-Proofpoint-GUID: 3rYAA5HCMwsUzQ4-R7R_mCoI_ADh6Or3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-11_02,2024-04-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
+ adultscore=0 clxscore=1015 mlxscore=0 malwarescore=0 mlxlogscore=685
+ phishscore=0 lowpriorityscore=0 suspectscore=0 impostorscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404110048
 
-On Wed, Apr 10, 2024 at 09:57:02PM +0000, Volodymyr Babchuk wrote:
-> Stephan Gerhold <stephan@gerhold.net> writes:
-> > On Wed, Apr 10, 2024 at 01:41:30PM +0000, Volodymyr Babchuk wrote:
-> >> Card Detect pin for SHDC2 on SA8155P-ADP is connected to GPIO4 of
-> >> PMM8155AU_1, not to internal TLMM. This change fixes two issues at
-> >> once: not working ethernet (because GPIO4 is used for MAC TX) and SD
-> >> detection.
-> >> 
-> >> Signed-off-by: Volodymyr Babchuk <volodymyr_babchuk@epam.com>
-> >> ---
-> >>  arch/arm64/boot/dts/qcom/sa8155p-adp.dts | 2 +-
-> >>  1 file changed, 1 insertion(+), 1 deletion(-)
-> >> 
-> >> diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-> >> index 5e4287f8c8cd1..6b08ce246b78c 100644
-> >> --- a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-> >> +++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-> >> @@ -384,7 +384,7 @@ &remoteproc_cdsp {
-> >>  &sdhc_2 {
-> >>  	status = "okay";
-> >>  
-> >> -	cd-gpios = <&tlmm 4 GPIO_ACTIVE_LOW>;
-> >> +	cd-gpios = <&pmm8155au_1_gpios 4 GPIO_ACTIVE_LOW>;
-> >
-> > Good catch!
+Hi Konrad,
+
+On 4/11/2024 2:10 AM, Konrad Dybcio wrote:
 > 
-> Yeah... It took time to understand why ethernet is not working
-> sometimes. It appeared that there were race between SDHC and MAC
-> initialization.
 > 
-> >
-> >>  	pinctrl-names = "default", "sleep";
-> >>  	pinctrl-0 = <&sdc2_on>;
-> >>  	pinctrl-1 = <&sdc2_off>;
-> >
-> > These two pinctrl configure "gpio96" for "sd-cd-pins". Yet another wrong
-> > GPIO? Should probably drop that and add proper pinctrl for the actual
-> > GPIO in the PMIC. Seems like Qualcomm configured the PMIC GPIO with
-> > pull-up downstream [1] (not sure if this is the right file). It might be
-> > redundant if there is an external pull-up on the board, but only the
-> > schematic could tell that for sure.
+>> +    if (regs->drv2_mask) {
+>> +        if (on)
+>> +            val = (vib->level << regs->drv2_shift) & regs->drv2_mask;
+>> +        else
+>> +            val = 0;
+>> +        rc = regmap_write(vib->regmap, vib->drv2_addr, val);
 > 
-> If I only had schematic for this board... gpio96 puzzles me as well. I
-> can understand where wrong GPIO4 come from. But gpio96 origin is
-> completely unclear. I have user manual for the board, it mention
-> functions of some GPIOs, but there is nothing about gpio96. Anyways, I
-> removed it from the DTS (see diff below) and I see no issues with SD card.
+> Are you purposefuly zeroing out the other bits?
 > 
-
-I believe this might have been mistakenly copied from some SM8150
-example, there you can occasionally find cd-gpios defined as <&tlmm 96>.
-E.g. in sm8150-pinctrl.dtsi downstream:
-
-https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/blob/484af352989c912db8f3b6393fc090006029066f/arch/arm64/boot/dts/qcom/sm8150-pinctrl.dtsi#L70-81
-
-> > FWIW: Looking closer at the broken commit, the regulator voltage setup
-> > of &sdhc_2 looks suspicious too. Typically one would want a 1.8V capable
-> > regulator for the vqmmc-supply to properly use ultra high-speed modes,
-> > but &vreg_l13c_2p96 seems to be configured with 2.504V-2.960V at the
-> > moment. On downstream it seems to be 1.8V-2.96V [2] (again, not sure if
-> > this is the right file). I would recommend re-checking this too and
-> > testing if UHS cards are detected correctly (if you have the board).
+> If yes, consider regmap_write_bits here
+> If not, consider regmap_update_bits here
 > 
-> This is actually a good catch. I changed the voltage range to 1.8V-2.96V and
-> now my card detects in UHS/SDR104 mode. Prior to this change it worked only
-> in HS mode.
+>> +        if (rc < 0)
+>> +            return rc;
 > 
-
-Yay!
-
-> > &vreg_l17a_2p96 has the same 2.504V-2.960V, but has 2.704V-2.960V
-> > downstream [3]. This is close at least, might be fine as-is (but I'm not
-> > convinced there is a good reason to differ there).
-> >
+> Ignore regmap_r/w errors, these mean a complete failure of the API and
+> we don't generally assume MMIO accesses can fail
 > 
-> Well, I believe that downstream configuration is more correct, but I
-> can't prove it, so I'll leave it as is.
+> Unless SPMI is known to have issues here
 > 
+Sorry, forgot to reply on this comment. Yes, SPMI transaction would fail 
+(even with very low odds) on some boards if the layout of SPMI lines is 
+not good enough. I'd like to keep the consistence since the whole driver 
+also checks the regmap_r/w errors.
 
-Ack.
 
-> Diff for additional changes looks like this:
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-> index 6b08ce246b78c..b2a3496ff68ad 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-> @@ -283,7 +283,7 @@ vreg_l12c_1p808: ldo12 {
->  
->                 vreg_l13c_2p96: ldo13 {
->                         regulator-name = "vreg_l13c_2p96";
-> -                       regulator-min-microvolt = <2504000>;
-> +                       regulator-min-microvolt = <1800000>;
->                         regulator-max-microvolt = <2960000>;
->                         regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->                 };
-> @@ -386,8 +386,8 @@ &sdhc_2 {
->  
->         cd-gpios = <&pmm8155au_1_gpios 4 GPIO_ACTIVE_LOW>;
->         pinctrl-names = "default", "sleep";
-> -       pinctrl-0 = <&sdc2_on>;
-> -       pinctrl-1 = <&sdc2_off>;
-> +       pinctrl-0 = <&sdc2_on &pmm8155au_1_sdc2_on>;
-> +       pinctrl-1 = <&sdc2_off &pmm8155au_1_sdc2_off>;
->         vqmmc-supply = <&vreg_l13c_2p96>; /* IO line power */
->         vmmc-supply = <&vreg_l17a_2p96>;  /* Card power line */
->         bus-width = <4>;
-> @@ -505,13 +505,6 @@ data-pins {
->                         bias-pull-up;           /* pull up */
->                         drive-strength = <16>;  /* 16 MA */
->                 };
-> -
-> -               sd-cd-pins {
-> -                       pins = "gpio96";
-> -                       function = "gpio";
-> -                       bias-pull-up;           /* pull up */
-> -                       drive-strength = <2>;   /* 2 MA */
-> -               };
->         };
->  
->         sdc2_off: sdc2-off-state {
->         @@ -532,13 +525,6 @@ data-pins {
->                         bias-pull-up;           /* pull up */
->                         drive-strength = <2>;   /* 2 MA */
->                 };
-> -
-> -               sd-cd-pins {
-> -                       pins = "gpio96";
-> -                       function = "gpio";
-> -                       bias-pull-up;           /* pull up */
-> -                       drive-strength = <2>;   /* 2 MA */
-> -               };
->         };
->  
->         usb2phy_ac_en1_default: usb2phy-ac-en1-default-state {
-> @@ -604,3 +590,25 @@ phy-reset-pins {
->                 };
->         };
->  };
-> +
-> +&pmm8155au_1_gpios {
-> +       pmm8155au_1_sdc2_on: pmm8155au_1-sdc2-on-state {
-> +               sd-cd-pin {
-> +                       pins = "gpio4";
-> +                       function = "normal";
-> +                       input-enable;
-> +                       bias-pull-up;
-> +                       power-source = <0>;
-> +               };
-> +       };
-> +
-> +       pmm8155au_1_sdc2_off: pmm8155au_1-sdc2-off-state {
-> +               sd-cd-pin {
-> +                       pins = "gpio4";
-> +                       function = "normal";
-> +                       input-enable;
-> +                       bias-pull-up;
-> +                       power-source = <0>;
-> +               };
-> +       };
-
-Since the configuration is the same for both on and off state, you can
-combine this into one node and then reference it twice. Also, the single
-subnode should not be needed:
-
-	pmm8155au_1_sdc2_cd: pmm8155au_1-sdc2-cd-state {
-		pins = "gpio4";
-		function = "normal";
-		input-enable;
-		bias-pull-up;
-		power-source = <0>;
-	};
-
-&sdhc_2 {
-	pinctrl-0 = <&sdc2_on &pmm8155au_1_sdc2_cd>;
-	pinctrl-1 = <&sdc2_off &pmm8155au_1_sdc2_cd>;
-};
-
-Looks good to me otherwise, thanks for cleaning this up!
-
-> 
-> I am planning to send v2 tomorrow.
-> 
-
-Thanks!
-Stephan
 
