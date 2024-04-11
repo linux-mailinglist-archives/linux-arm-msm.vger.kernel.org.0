@@ -1,58 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-17153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17154-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C5318A0695
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 05:16:24 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E4348A069F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 05:19:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C802C28BCAC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 03:16:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 907D61C220A6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 03:19:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E808513B7A4;
-	Thu, 11 Apr 2024 03:15:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD38613B5B4;
+	Thu, 11 Apr 2024 03:19:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QdrkL7LS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NbOGalvr"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B22A113B795;
-	Thu, 11 Apr 2024 03:15:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A951513B2A5
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 03:19:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712805356; cv=none; b=B8YZUvYFQRhJ7/lifoJuayzgJrnDXJHBodlDuPax6uKFyMkj8xTtSLFc/S1aeB8EvYY7YuELxqFDr27Qcxa/TWpqB6H9mAx6dZow6COsO+SeA9+nHknqdjtvuB33R8J0oTs8UZHLQa/bOK8EYX3J86tZAGE5Pj5u9empXLhe9bs=
+	t=1712805579; cv=none; b=XEYVb9h18N6wRBcFAgzOregLy9w6m7320SSvi7F0GOi3x0ncnuDQ2F+SAXjvlJCxkfnkkZMgJ3fm+C8/FzF8fzbzJeSV54iyi+rLrX0Nf025Q4c8ooKKpa5oE7h/Dzl/dmgDYtXrgPKuofpRMlulXepNEuptfo8Yy0HwxtDWaCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712805356; c=relaxed/simple;
-	bh=hy1z9iyb5VzHmSvD9OU1ijF/ELGQxBn3bMjuKQBN8zM=;
+	s=arc-20240116; t=1712805579; c=relaxed/simple;
+	bh=4g2EVh7ufizZZVvTNT68ZqhVPbZBy4kc6I/WqFW4K9I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DOyAdRBVxi1rV8KYoF5Evzr9arEiSaVW7ihlflL2K3fC3W+yNU2t1vPL69/vKNNZsh3Qwhys1KOxHhEES4W82eaoS8oP1XxcNDxZ8gGbY0bgD0dH/b3hlCagCkRAsxh2Wq+bu+qhmBo+hAWsH0dFvQ0TBOezXcg2eR7TUt5NC6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QdrkL7LS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F359C433C7;
-	Thu, 11 Apr 2024 03:15:55 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=bubWBnJSlGWJ55eZ0MqzBgG1quw7HBII4lelEU8isYMoTMDU6HLsn3mfu0ZxPWBZppyqtjsuEjuXoPjRDPBN75K4IzsH2h1d7Zr3UjkfrD0X0Ss/dxS3YJEyz7EJJ+j+vROcZjxMsjFf4Odi9ZBnOXrFwhWgg5xNwxRbDN/aBtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NbOGalvr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE256C433C7;
+	Thu, 11 Apr 2024 03:19:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712805356;
-	bh=hy1z9iyb5VzHmSvD9OU1ijF/ELGQxBn3bMjuKQBN8zM=;
+	s=k20201202; t=1712805579;
+	bh=4g2EVh7ufizZZVvTNT68ZqhVPbZBy4kc6I/WqFW4K9I=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QdrkL7LSwLI3ym8riSY+yo8E68yp85sPRsqxrxpkU6jdLBRG+I7iGX5Rzigk21D9X
-	 Kgkc1LyYXKuteE968Qjx8JbOtjjFrA1a3f+nxMG0v5d648KEC1+KOnFuKz1SAAudZQ
-	 HQYHHUkY2OhpBthIn4ZlOCiOOHI6jSiG6Ue0tpW6S0UgPUZZ3R2NB8064LEtMrwTcW
-	 K0vfZ+3Eg+BnDJOzHQk19wSnfAXwmviX5KDNvOIIEW4CnapLYX43Bthz9fwf8naHsK
-	 gd3R+bBnzMhplBYUsEs24rdqN1TndbthAUTRzCH1DZz0BhpjuA5W0j6qihQSrBnXca
-	 iftK5BtuBSyCA==
-Date: Wed, 10 Apr 2024 22:15:53 -0500
+	b=NbOGalvr+SuiCUcdzSe/p/9/60RWWezgDA6YM/Jgv9BZl7cCq+Hhspnlog5EoUhGm
+	 sk2Wj0GDxJpRo361HdVcO94Q6Nz7/ANDLwFJwQt35rDt6Uqk//4RR9KN+br1fIXK0C
+	 SxUyqsyXdQPfBCUcp5y/GMGeod7gfBDLyg08OCf++0PZ6PvN2pS40raYioaOpeXwBJ
+	 /iGTr4OhJsoT7Udot1g7QcK0mcSydmey9LoCdVQi1xapfSehLE6Q7iIGRw9n2Wahxx
+	 Rtp9wVpblR4s8eTKfTVO41cbT0eMJK7l/XR3lbJWbqA2FdT3/+L51kYL6ftd2qcK2V
+	 zXzlZ2ylROKlA==
+Date: Wed, 10 Apr 2024 22:19:36 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc: Amit Kucheria <amitk@kernel.org>, 
-	Thara Gopinath <thara.gopinath@gmail.com>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
-	Lukasz Luba <lukasz.luba@arm.com>, linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org, 
-	linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] thermal/drivers/qcom: Remove some unused fields in
- struct qpnp_tm_chip
-Message-ID: <h23clexblxinnqkrxtb7cngtq4eimt65vtcqaeavjglskp2o3y@ibdua6bug4y2>
-References: <d1c3a3c455f485dae46290e3488daf1dcc1d355a.1712687589.git.christophe.jaillet@wanadoo.fr>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH] arm64: defconfig: build INTERCONNECT_QCOM_SM6115 as
+ module
+Message-ID: <xzb37tt5e23pbsi2usdvtaamxqbjgivwfgd3lbpukoahkcziox@5mwat7kaicjl>
+References: <20240409-enable-sm6115-icc-v1-1-bf894fb5a585@linaro.org>
+ <a1aa0f4a-868c-4386-ba6a-9962f827bb2b@linaro.org>
+ <CAA8EJpoinJ999jYsEhBqoV=J0fB+0_odO_EEXveQdjB3+GfJkg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,44 +61,36 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d1c3a3c455f485dae46290e3488daf1dcc1d355a.1712687589.git.christophe.jaillet@wanadoo.fr>
+In-Reply-To: <CAA8EJpoinJ999jYsEhBqoV=J0fB+0_odO_EEXveQdjB3+GfJkg@mail.gmail.com>
 
-On Tue, Apr 09, 2024 at 09:56:34PM +0200, Christophe JAILLET wrote:
-> In "struct qpnp_tm_chip", the 'prev_stage' field is unused.
-> Remove it.
+On Wed, Apr 10, 2024 at 01:12:15AM +0300, Dmitry Baryshkov wrote:
+> On Tue, 9 Apr 2024 at 23:02, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> > On 4/9/24 20:27, Dmitry Baryshkov wrote:
+> > > Enable CONFIG_INTERCONNECT_QCOM_SM6115 as module to enable the
+> > > interconnect driver for the SoC used on Qualcomm Robotics RB2 board.
+> > >
+> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > ---
+> >
+> > =y for console?
 > 
-> Found with cppcheck, unusedStructMember.
+> I think with pinctrl being set to m it won't reach the console anyway.
+> And earlycon should work w/o ICC driver if I'm not mistaken.
 > 
-> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+> Several other Qualcomm platforms also have interconnects built as
+> modules in defconfig. I really suppose that we should move all such
+> drivers to =m and force using initrd. But this sounds like a topic for
+> plumbers.
+> 
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+That currently does not work very well, because if you probe defer the
+UART into the future e.g. systemd will open /dev/console before it
+exist - with no interest in reopening that later.
+
+So, if you care about UART, that is suboptimal.
+
+Resolve this, and I'd be happy to see them all go =m.
 
 Regards,
 Bjorn
-
-> ---
-> Compile tested only.
-> 
-> Apparently, it has never been used. It is not a left-over from a
-> refactoring.
-> ---
->  drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 1 -
->  1 file changed, 1 deletion(-)
-> 
-> diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-> index 78c5cfe6a0c0..3cd74f6cac8f 100644
-> --- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-> +++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-> @@ -74,7 +74,6 @@ struct qpnp_tm_chip {
->  	long				temp;
->  	unsigned int			thresh;
->  	unsigned int			stage;
-> -	unsigned int			prev_stage;
->  	unsigned int			base;
->  	/* protects .thresh, .stage and chip registers */
->  	struct mutex			lock;
-> -- 
-> 2.44.0
-> 
-> 
 
