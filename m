@@ -1,130 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-17289-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC8CB8A201D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 22:24:43 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 593D08A2068
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 22:47:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4F158B2352A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 20:24:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E1323281EFB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Apr 2024 20:47:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DD8E18030;
-	Thu, 11 Apr 2024 20:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0B841757D;
+	Thu, 11 Apr 2024 20:47:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HEPP92Ch"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gj7wHnzZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4CA17C7F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 20:24:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B561754B
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 20:47:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712867054; cv=none; b=T+Nv9Ks7TVDoERzgyBFCfX2c00O+eaNr0UM4g33VllQ8WWvS4bFuZLp4uavuJ+9H6C9Guo1KAf1SvS30p4YjgKbyBQkR7w+27kkYVv9ieaE78ROUdlyWXSo43SVmCCuyJ80TZ6VJ6uUzbV/SOxywX/+DMz7OdQwhFHL/9/N2uRw=
+	t=1712868445; cv=none; b=ONehOoJEqZAeE7OHTv8//Bhumt76zInZUanhkl7pOR2tRcxwQmOSg1bdsUamwR/UqukFgBuPoW2aa12EvwW9GxeuTSa3dLPDA42PooCAfBwXVJ1IHTyvRBAMPp/Mad5bB0jPXuOTgY6AuTuClX9K+jlbjM2VWS6isNshO+/IZ7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712867054; c=relaxed/simple;
-	bh=QqxmKREBd98R95lxy1BDt4/C4X/1ZCgWeLkeabMbOEM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GD1TMsJX2tSKYeT75qvmrxvf0ZswmRdJw0hj5wkLlRF9D1DLuzluecsEYCzvLGZ7gu0RnHJf0myLgxUXkHPLzLMJE/NbbMj4O+qnyvlQ0641NsdqtS+NSRe2uWPB4Pc/J5E4ETGvBhkXgvYo+83+yxnXkEkYtBJ8/RCjDGEr3i4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HEPP92Ch; arc=none smtp.client-ip=209.85.208.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2d82713f473so2647601fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 13:24:12 -0700 (PDT)
+	s=arc-20240116; t=1712868445; c=relaxed/simple;
+	bh=1jGscWygSPpyVB90quhNp5N8DN2RuihnZeSHorMACJA=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=JonpiEmIrXJL0Zz5vVKzxdlunvL68zgA2soXLAkJKi9J7z0wSo3BYZQpLgAwm1dl8KiGT+H1CMKzV3zBnFaBYBPjiKGAI1TyjBU1mmqhb04AqFReQddF9a4CKS8viGhGfIeKtxXnhdntR15SrYBITJjd9VrrqTGhZWdsh3J7dac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gj7wHnzZ; arc=none smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-56fd7df9ea9so241393a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 13:47:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712867051; x=1713471851; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OkivZAy8vHp+8K7Um26GAxu/l7QEtqH2ogeAPyc9feU=;
-        b=HEPP92ChPg4pOcong9yW0dsFZyHT0Pau2psj7nyeyyH7dnFsQGY4Y0h8klNpaIPMFr
-         uB1oCbuOnyZ/QQu4ltfgALX6pNC/G7Sh7z4twNAlZx5wIuoBbSrdqdKIvmQhq9z2R/MR
-         +FdaocwAISbH14MZQHBHxIID+chGKo2W6UFwVVXucOu/C0yWXPd6Tj7d5i2BiTvRC4KB
-         IoZDWRlpLYoB0ofPYmPPsq1I4GdWCbBCjy6ks9KT9nC/gLQLaIxMvfJ8GIC4L6GNC5fe
-         SLIDs3RhnrOGijK63uTkIC1GZDTBu8UFn+Chy0WQaEBxiXSZnTzCpUSL5RZMFni0CcYG
-         h9BQ==
+        d=gmail.com; s=20230601; t=1712868442; x=1713473242; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=pNvwduxpSq9WO+e0WyOpsKd++VksO+huhp6HjRMGyn8=;
+        b=Gj7wHnzZznJOtcX2VbNXHIoUS3gqogcYj3AI1NEgitzaZYiiXF/CUYhxpnBZMdlmqb
+         PGpqyZeHhIeZA3b0qo4knV3585G3moNllluRQcqCEzLee55D2cR97/L7nUiYgNIfO6Qw
+         /SOKtl2N5ewBDdngsOTiCpNrOpmWFWDMWivvn2cnMtxxVQYWptS/QEdqEs1qnAPbaFg3
+         /syuP9HErXnsP9SYQeycRkUm25oKKUoFLrdR9XfonNHB83yd6Dyv8rXFl+Ottz58fclP
+         j+bWte/JK8+AD+i2o1uwn+HH/f+BYN52tw5gVMMYfTnT3TxENaXTM8+XZfW3jTD17jjx
+         PqaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712867051; x=1713471851;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OkivZAy8vHp+8K7Um26GAxu/l7QEtqH2ogeAPyc9feU=;
-        b=r5GcVR/xIzH/s1yfiN5xowogCc0yiEA4NF+ZTMWeBdFEs9nsJV/hbFfMzMuc3+1Gyr
-         qdiWestjZKmfLsRYQv8ofv3gyXnJFUIC8/1KX5CAdPVooEijlL9aqnOQ/fdlhDZntU0o
-         auyWXtMsLRQT6Ax883A3KbZ5UGXNLgJF1wYHk6gyDro1S6awtiD7B6pyu6vZ6Y6DxVHj
-         OcbrJborXaa3zU5EmLsHE5QuwjC7/xX8+/+XEywRfjMaSTJuXFleFqlu5b1ZvvOA1KlR
-         xreeJHs/ybz29mnnJ+QIDzMfsSxs2GoQ4rB5xBw+FHEjyV1HLERhFlImHWnc8g06/1Io
-         SR9Q==
-X-Forwarded-Encrypted: i=1; AJvYcCV/AqGupe7+DN36JHdu6Ymf9Wkl0vlI2WC7SqU4S8039e/DkWspR1EaWk9zZhNEXEDM0jEPuACyk/VsbIvx/yPJrSci2E/DqlBov/QePg==
-X-Gm-Message-State: AOJu0Yy1LRoFA02hH11202nJ2jKndYX2ALAiJHQidGlrGR3fF53XxDws
-	V7xO1CNhUVWSHmt0pqaYuEbUSBP+bjEXAxF7yuQWs0JYCJQSRYQMF+KgU/jadqo=
-X-Google-Smtp-Source: AGHT+IFmKV1cZUNf2RDPXfgrp5jM/80Z18N3yhtpLtRxKHZ1VDKWNvDrx521CSjJRJIGHFCmxXfoWA==
-X-Received: by 2002:a2e:7d15:0:b0:2d4:49d1:38e with SMTP id y21-20020a2e7d15000000b002d449d1038emr508466ljc.28.1712867050958;
-        Thu, 11 Apr 2024 13:24:10 -0700 (PDT)
-Received: from [172.30.204.35] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id f24-20020a2e6a18000000b002d4295d8563sm291115ljc.62.2024.04.11.13.24.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Apr 2024 13:24:10 -0700 (PDT)
-Message-ID: <bbec514f-9672-4e5a-bd83-20ab59b3dcd9@linaro.org>
-Date: Thu, 11 Apr 2024 22:24:08 +0200
+        d=1e100.net; s=20230601; t=1712868442; x=1713473242;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pNvwduxpSq9WO+e0WyOpsKd++VksO+huhp6HjRMGyn8=;
+        b=D1jWuNQ4EidUAm4V8EwaGLED5SYIxDHgH7qQdFPtGylR4mJkhxr7laasyGBhjDQjNr
+         pDqUYmuJ2f24zsMJQD4xMMi/jSk9I0+ZmmWjJ9Mc4U8t0PsDW41TbWY+44BYkzyEGFsd
+         bepYmy5ndpf27mS8oBTAIt48lw7nnwOdah/Ef82DGuZE4CKcNu4YICOIYdovKEC2tMOD
+         YNhIXTKwyHvai77hBC6FKT9Cc4yYJxPnmCrXXOOBAl92O4PvcKYRNgy9BXUnCSpAk4TV
+         6cf12LQ5XGL9rt3O5EiQAXTOyN8m5Nme3YhckQ21qtF5razpU5BFf+zxt7kuQbkgP9vO
+         0rHA==
+X-Forwarded-Encrypted: i=1; AJvYcCWcEGaCW469NxtaifjugZZOVXfHWGBN5fcmTWVVBOYiMAe9E9atDFQT00nxT8TPg9f5ML3vTQs5ZXNxGK9BBgJIhCI1C+8dz9pBUrMk3Q==
+X-Gm-Message-State: AOJu0YyDpv7QAlwH1UtCa5Rp5nJ6sjxuI2NH7qEExH7iYgXAVxzVjwRl
+	Li6F/e1P/Msy0BVTJby8ybTahI3bkon5re1rGgRwigTnpfjZU1H0ZIzIxERq4FyJs6Rw5wJ2Yas
+	sTOZmzy+tUID1yBh+t6wqN/v75c8wWWeH
+X-Google-Smtp-Source: AGHT+IEXC8vd601g34DAlg+5kxr80HRO5E3BH8JsV/SefNBnF2wjRLMMLGOX8rcfSfcyTwdASctFl8TSdN66D0UF2Co=
+X-Received: by 2002:a50:931b:0:b0:56d:f5ff:83ab with SMTP id
+ m27-20020a50931b000000b0056df5ff83abmr572001eda.39.1712868440830; Thu, 11 Apr
+ 2024 13:47:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] soc: qcom: Move some socinfo defines to the header,
- expand them
-To: Elliot Berman <quic_eberman@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Clark <robdclark@gmail.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
- Neil Armstrong <neil.armstrong@linaro.org>
-References: <20240405-topic-smem_speedbin-v1-0-ce2b864251b1@linaro.org>
- <20240405-topic-smem_speedbin-v1-1-ce2b864251b1@linaro.org>
- <20240410132510649-0700.eberman@hu-eberman-lv.qualcomm.com>
- <2c2bca6c-b429-4cef-b63a-ee3bd6c9eecb@linaro.org>
- <20240411130802689-0700.eberman@hu-eberman-lv.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240411130802689-0700.eberman@hu-eberman-lv.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Rob Clark <robdclark@gmail.com>
+Date: Thu, 11 Apr 2024 13:47:09 -0700
+Message-ID: <CAF6AEGvFwRUcHGWva7oDeydq1PTiZMduuykCD2MWaFrT4iMGZA@mail.gmail.com>
+Subject: [pull] drm/msm: drm-msm-next-2024-04-11 for v6.9-rc4
+To: Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc: dri-devel <dri-devel@lists.freedesktop.org>, 
+	linux-arm-msm <linux-arm-msm@vger.kernel.org>, freedreno <freedreno@lists.freedesktop.org>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
+Hi Dave,
 
+Fixes for v6.9, description below
 
-On 4/11/24 22:09, Elliot Berman wrote:
-> On Thu, Apr 11, 2024 at 10:05:30PM +0200, Konrad Dybcio wrote:
->>
->>
->> On 4/11/24 20:55, Elliot Berman wrote:
->>> On Fri, Apr 05, 2024 at 10:41:29AM +0200, Konrad Dybcio wrote:
->>>> In preparation for parsing the chip "feature code" (FC) and "product
->>>> code" (PC) (essentially the parameters that let us conclusively
->>>> characterize the sillicon we're running on, including various speed
->>>> bins), move the socinfo version defines to the public header and
->>>> include some more FC/PC defines.
->>>>
->>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>> ---
+The following changes since commit 4be445f5b6b6810baf397b2d159bd07c3573fd75:
 
-[...]
+  drm/msm/dpu: capture snapshot on the first commit_done timeout
+(2024-03-04 11:44:03 +0200)
 
-> 
-> 0xf is the last one.
+are available in the Git repository at:
 
-One more question, are the "internal/external feature codes" referring to
-internality/externality of the chips (i.e. "are they QC-lab-only engineering
-samples), or what else does that represent?
+  https://gitlab.freedesktop.org/drm/msm.git tags/drm-msm-next-2024-04-11
 
-Konrad
+for you to fetch changes up to 9dc23cba0927d09cb481da064c8413eb9df42e2b:
+
+  drm/msm/adreno: Set highest_bank_bit for A619 (2024-04-05 11:24:53 -0700)
+
+----------------------------------------------------------------
+Fixes for v6.9
+
+Display:
+- Fixes for PM refcount leak when DP goes to disconnected state and
+  also when link training fails. This is also one of the issues found
+  with the pm runtime series
+- Add missing newlines to prints in msm_fb and msm_kms
+- Change permissions of some dpu debugfs entries which write to const
+  data from catalog to read-only to avoid protection faults
+- Fix the interface table for the catalog of X1E80100. This is an
+  important fix to bringup DP for X1E80100.
+- Logging fix to print the callback symbol in the invalid IRQ message
+  case rather than printing when its known to be NULL.
+- Bindings fix to add DP node as child of mdss for mdss node
+- Minor typo fix in DP driver API which handles port status change
+
+GPU:
+- fix CHRASHDUMP_READ()
+- fix HHB (highest bank bit) for a619 to fix UBWC corruption
+
+----------------------------------------------------------------
+Abhinav Kumar (1):
+      drm/msm/dp: fix typo in dp_display_handle_port_status_changed()
+
+Dmitry Baryshkov (3):
+      drm/msm/dpu: don't allow overriding data from catalog
+      drm/msm/dpu: make error messages at
+dpu_core_irq_register_callback() more sensible
+      dt-bindings: display/msm: sm8150-mdss: add DP node
+
+Johan Hovold (2):
+      drm/msm/dp: fix runtime PM leak on disconnect
+      drm/msm/dp: fix runtime PM leak on connect failure
+
+Kuogee Hsieh (1):
+      drm/msm/dp: assign correct DP controller ID to x1e80100 interface table
+
+Luca Weiss (1):
+      drm/msm/adreno: Set highest_bank_bit for A619
+
+Miguel Ojeda (1):
+      drm/msm: fix the `CRASHDUMP_READ` target of `a6xx_get_shader_block()`
+
+Stephen Boyd (1):
+      drm/msm: Add newlines to some debug prints
+
+ .../bindings/display/msm/qcom,sm8150-mdss.yaml     |  9 ++++++
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c              |  4 +++
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c        |  2 +-
+ .../drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h   | 34 ++++++++++++++++++++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c      | 10 +++----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c  |  8 ++---
+ drivers/gpu/drm/msm/dp/dp_display.c                |  6 ++--
+ drivers/gpu/drm/msm/msm_fb.c                       |  6 ++--
+ drivers/gpu/drm/msm/msm_kms.c                      |  4 +--
+ 9 files changed, 63 insertions(+), 20 deletions(-)
 
