@@ -1,134 +1,196 @@
-Return-Path: <linux-arm-msm+bounces-17339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9DEF48A308B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 16:25:41 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 721828A3182
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 16:51:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CF8061C24062
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 14:25:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C4CDEB24BF3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 14:51:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 160871292CA;
-	Fri, 12 Apr 2024 14:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 110A814389D;
+	Fri, 12 Apr 2024 14:49:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="T3ZTSdss"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lV9Mid44"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D96885C7F
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Apr 2024 14:22:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1DD55C3E;
+	Fri, 12 Apr 2024 14:49:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712931780; cv=none; b=an4HMxZFXIgLXBJsFPyI1UcH6kN5GHSQMrkgFCDx9RYpYRbQEUUbOSpphfmDazQ2FnGMppy3v+rrcWk8mnlql6vegpWOer5pfTNNS0SJWgNuOnM6+v9nOTPitv/CiEbN3+dr6pxESm6JIaZSmDJbtxMIoZYHwcpse+8mOfLEVjU=
+	t=1712933364; cv=none; b=APfWQNAArcxTHTDfvsFNCSRQePcxVPoF7Gt5TloxkJ1xtL9LzaK2oKvi5//pdZgc2hR9XhNk+lxRwjVAHpNanOB4LpeaEbheVtMxr/igIg9AZB6oS08cdHLcLOyhFZJdwKYgTuTYP8t3pv1F5Ge0+Dx+Al/SXMe5kti7sriWGtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712931780; c=relaxed/simple;
-	bh=1nhHHey9PJ8DLGIRPcryUPM5m7e5VFRwQCHuQCVRLEo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=tL3gybaj1VeKgUVPU3K468gH3Z5tbDo/yZmUxrCnvlnp5qZon1NX2U5f/73NnETS6KZ5x93XiAON5BEJOwzzEK0sblymBdpPvKchzqnZ4bvDilScnB0yOHVDVoIunJNmwlLPUZBNgHSDJMtHnVNSGJaYN5IY5eXpohqhHKPsAjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=T3ZTSdss; arc=none smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-56e2c1650d8so981132a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Apr 2024 07:22:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1712931775; x=1713536575; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=HkmahkPkQACrnB5JyLYBblQR+A7iG3SRr36SJvXv7cI=;
-        b=T3ZTSdssnVDpAuyCks8a9zh1MTGMYhkUQFTpkvW6L++Ogb0G9gXIwdPoYikfLZBgtq
-         cbcrzMu4lHxmw66T2Ps64kn2OUofu2y7RUU6XYW7i4oQM6ST3ze3pOPmUeGokk2tMLb9
-         0ck9aWoPomsfo6p7Wpv4W9bwTqf+RLPiop0YWAJpGW3AN5O6b8AsQA50W/zg0j0dyp0I
-         iM+bVvSPWn2ndbCYM98j2EJliNj7o/Gzib2MTDTvraRC5dsz8jB9novhuX8+2Jhrt+3q
-         hyUGEAVV69DWblxAUfy3eNA3MEW+gdZrKXUNFY2hvVuXjPwh8VYuIbeSGfx0JLm/Wrca
-         Yigw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712931775; x=1713536575;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=HkmahkPkQACrnB5JyLYBblQR+A7iG3SRr36SJvXv7cI=;
-        b=TEwSt9KPAvMuif1SNy2AJKF8chhq+rPkSYjQaKhHdRyjkkM/27vFFZXrJ/anVtbAWl
-         UgRpQJIh86JV618jAxbnEbn8gWUtU5Y00hw4NDIabvPwnp8QJJxvNwLPfcT7uOKILT0Y
-         me7yqLqlORNF3ILpsYYRMR4ZGdYUYvT9iUzTQBkICzPZRR/EPI+PqCC77PA7hoPJ7z7m
-         6/JNgR6ItD6GKab9F9Vj/Y4Ng116YXxAruTEniSdA+5+cAC3oy7f4DyBzOh2431F5hhP
-         qYJ+rHmenuLsTtEekz3+mj307efm414X7zDL0Ba5erGy2LdoxRmpOafO5kRi3Bd2JcbD
-         /GYQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUPT1kKKgpBnMIlUgJXwvoGmNHXHrFATgwt1fXl9QLgZaZCgpElDpQduF8BSkWDW53BKrQeIpx6Fqk7T+mGi3Z0RlYqjGLyt+ew7C+mqQ==
-X-Gm-Message-State: AOJu0YzRqpWymbwsZSdtEKYIFtprdUTFAxZnMOsO+MQnxT04UijuWbLV
-	IFjSDs9aNGBqxsZ4vK8Pf2xk2L4YmZJIVpdVLNiF9YCoqBTZ8SyqeD4dX/B4aio=
-X-Google-Smtp-Source: AGHT+IG7S6kcG25Ko/iQD8E1ukj2BrMGOMo+mSr1Prx4UJqquhinYSgF59xquhk/ALw5JQrPnyfQRg==
-X-Received: by 2002:a50:d501:0:b0:56e:2186:847d with SMTP id u1-20020a50d501000000b0056e2186847dmr1909304edi.16.1712931775390;
-        Fri, 12 Apr 2024 07:22:55 -0700 (PDT)
-Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id k20-20020aa7c054000000b0056ff82e54a0sm920166edo.31.2024.04.12.07.22.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Apr 2024 07:22:54 -0700 (PDT)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Fri, 12 Apr 2024 16:22:53 +0200
-Subject: [PATCH v2] dt-bindings: mfd: qcom,spmi-pmic: Add pbs to SPMI
- device types
+	s=arc-20240116; t=1712933364; c=relaxed/simple;
+	bh=VfyCjp9SYi22ZtLoSGO8b6l41+8emN2vMNAINPYpelM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=qKjIDB6UkYsxms5REsAZSKpZKNy5gXLhOmjdbOxAdu9ZZZudtTzSpGFosZqGmlsLFcTF4e/ZSkHSzW5yT90BMHv6XNjXGLUwxJySSj1w67TcP9/uG/l6EG4jpOxBK9EkfqwGZjx7kyJULTIy6uaR723kN4eH49cwitRmjy7PmHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lV9Mid44; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43C73TGZ014138;
+	Fri, 12 Apr 2024 14:49:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=YuOigx7oeB4RyJSzO7hm2LaTFu+Zor8U1lcP+8PaPBs=; b=lV
+	9Mid44BEPc8Fyjs+ze2kmQ4qAklRMnrGBpf3qJfqIvngBY0BT3tsSWR1m/2ZXYuG
+	dZPdB+go0WojcsJJ7tdcP2Lr+LTFW16jzg9aIkjPq/aSdaWOaHkWojq6+E9ImObg
+	1QZG7YoxiFFDexVwhuDYbUliGEIeLDuTfqRxigLv+LbBA9EweBIqbzf9CK4MF0w5
+	2KUGpZcXjGGdJ2f3VBMKyGihm7ZZ+bkuNwCt2IzhdSDIOUshV1QQuJwzxKdFIScg
+	NB8wvcRTNWpkyHLai8ubsmgKlvCgtELgWx2gMlS+K93OR2CuFZN870KLqPj9029f
+	pQl3P5A2Bh6ti6EeMQSw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xf06pgvp0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 12 Apr 2024 14:49:16 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43CEnFhB000390
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 12 Apr 2024 14:49:15 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 12 Apr
+ 2024 07:49:14 -0700
+Message-ID: <2c82d551-91f6-8165-dc75-d6e81b9b8504@quicinc.com>
+Date: Fri, 12 Apr 2024 08:49:13 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH v2] clk: qcom: mmcc-msm8998: fix venus clock issue
+Content-Language: en-US
+To: Marc Gonzalez <mgonzalez@freebox.fr>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Michael
+ Turquette" <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+CC: MSM <linux-arm-msm@vger.kernel.org>,
+        linux-clk
+	<linux-clk@vger.kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bryan O Donoghue <bryan.odonoghue@linaro.org>,
+        Vikash Garodia
+	<quic_vgarodia@quicinc.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Pierre-Hugues Husson <phhusson@freebox.fr>,
+        Arnaud Vrac <avrac@freebox.fr>
+References: <c325691e-1cbe-4589-87fc-b67a41e93294@freebox.fr>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <c325691e-1cbe-4589-87fc-b67a41e93294@freebox.fr>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240412-pmi632-ppg-v2-1-8ac892b1bb61@fairphone.com>
-X-B4-Tracking: v=1; b=H4sIALxDGWYC/03Myw7CIBCF4VdpZi0Gpjfble9huqg4lFkUCBiia
- fruYt24/E9yvg0SRaYEY7VBpMyJvSuBpwq0nd1Cgh+lASU2UqlehJW7GkUIizCKzL2p1aVHhHI
- IkQy/Duw2lbacnj6+Dzur7/pjULb/TFZCCsK600M7oxyGq5k5BusdnbVfYdr3/QNZ7iMkqAAAA
- A==
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Lee Jones <lee@kernel.org>, 
- Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>, 
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.13.0
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: fPGY-k3eUc0mn3KakD1CAetIdzifN4k0
+X-Proofpoint-GUID: fPGY-k3eUc0mn3KakD1CAetIdzifN4k0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-12_11,2024-04-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ bulkscore=0 phishscore=0 impostorscore=0 suspectscore=0 lowpriorityscore=0
+ malwarescore=0 clxscore=1011 spamscore=0 mlxlogscore=999 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
+ definitions=main-2404120107
 
-Add the PBS (Programmable Boot Sequencer) to the list of devices.
+On 4/10/2024 5:13 AM, Marc Gonzalez wrote:
+> Video decoder (venus) was broken on msm8998.
+> 
+> PH found crude work-around:
+> Drop venus_sys_set_power_control() call.
+> 
+> Bryan suggested proper fix:
+> Set required register offsets in venus GDSC structs.
+> Set HW_CTRL flag.
+> 
+> GDSC = Globally Distributed Switch Controller
+> 
+> Use same code as mmcc-msm8996 with:
+> s/venus_gdsc/video_top_gdsc/
+> s/venus_core0_gdsc/video_subcore0_gdsc/
+> s/venus_core1_gdsc/video_subcore1_gdsc/
+> 
+> https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/include/dt-bindings/clock/msm-clocks-hwio-8996.h
+> https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/include/dt-bindings/clock/msm-clocks-hwio-8998.h
+> 
+> 0x1024 = MMSS_VIDEO GDSCR (undocumented)
+> 0x1028 = MMSS_VIDEO_CORE_CBCR
+> 0x1030 = MMSS_VIDEO_AHB_CBCR
+> 0x1034 = MMSS_VIDEO_AXI_CBCR
+> 0x1038 = MMSS_VIDEO_MAXI_CBCR
+> 0x1040 = MMSS_VIDEO_SUBCORE0 GDSCR (undocumented)
+> 0x1044 = MMSS_VIDEO_SUBCORE1 GDSCR (undocumented)
+> 0x1048 = MMSS_VIDEO_SUBCORE0_CBCR
+> 0x104c = MMSS_VIDEO_SUBCORE1_CBCR
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
-Changes in v2:
-- Pick up tags
-- Rebase on linux-next, drop merged patches
-- Link to v1: https://lore.kernel.org/r/20240205-pmi632-ppg-v1-0-e236c95a2099@fairphone.com
----
- Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 4 ++++
- 1 file changed, 4 insertions(+)
+Reviewed the documentation, this is all correct.
 
-diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-index 8103fb61a16c..b7f01cbb8fff 100644
---- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-+++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-@@ -160,6 +160,10 @@ patternProperties:
-     type: object
-     $ref: /schemas/nvmem/qcom,spmi-sdam.yaml#
- 
-+  "^pbs@[0-9a-f]+$":
-+    type: object
-+    $ref: /schemas/soc/qcom/qcom,pbs.yaml#
-+
-   "phy@[0-9a-f]+$":
-     type: object
-     $ref: /schemas/phy/qcom,snps-eusb2-repeater.yaml#
+> 
+> Suggested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+> ---
+>   drivers/clk/qcom/mmcc-msm8998.c | 8 ++++++++
+>   1 file changed, 8 insertions(+)
+> 
+> diff --git a/drivers/clk/qcom/mmcc-msm8998.c b/drivers/clk/qcom/mmcc-msm8998.c
+> index 1180e48c687ac..275fb3b71ede4 100644
+> --- a/drivers/clk/qcom/mmcc-msm8998.c
+> +++ b/drivers/clk/qcom/mmcc-msm8998.c
+> @@ -2535,6 +2535,8 @@ static struct clk_branch vmem_ahb_clk = {
+>   
+>   static struct gdsc video_top_gdsc = {
+>   	.gdscr = 0x1024,
+> +	.cxcs = (unsigned int []){ 0x1028, 0x1034, 0x1038 },
 
----
-base-commit: fa8c2b5f446d6e8ff4bc8f67ba944b1be3aad790
-change-id: 20240117-pmi632-ppg-f1efb4318722
+Checked that these (and the ones below) have the proper bits in the 
+documentation to support this.  Sadly, the documentation does not 
+mention using them, so I can't really tell if this is required or not.
 
-Best regards,
--- 
-Luca Weiss <luca.weiss@fairphone.com>
+> +	.cxc_count = 3,
+>   	.pd = {
+>   		.name = "video_top",
+>   	},
+> @@ -2543,20 +2545,26 @@ static struct gdsc video_top_gdsc = {
+>   
+>   static struct gdsc video_subcore0_gdsc = {
+>   	.gdscr = 0x1040,
+> +	.cxcs = (unsigned int []){ 0x1048 },
+> +	.cxc_count = 1,
+>   	.pd = {
+>   		.name = "video_subcore0",
+>   	},
+>   	.parent = &video_top_gdsc.pd,
+>   	.pwrsts = PWRSTS_OFF_ON,
+> +	.flags = HW_CTRL,
+>   };
+>   
+>   static struct gdsc video_subcore1_gdsc = {
+>   	.gdscr = 0x1044,
+> +	.cxcs = (unsigned int []){ 0x104c },
+> +	.cxc_count = 1,
+>   	.pd = {
+>   		.name = "video_subcore1",
+>   	},
+>   	.parent = &video_top_gdsc.pd,
+>   	.pwrsts = PWRSTS_OFF_ON,
+> +	.flags = HW_CTRL,
+>   };
+>   
+>   static struct gdsc mdss_gdsc = {
 
+Overall, seems ok to me, but I did see Bjorn asking for some commit text 
+edits which I agree with.
 
