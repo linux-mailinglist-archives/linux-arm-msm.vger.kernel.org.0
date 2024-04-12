@@ -1,128 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-17303-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17304-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C61138A2316
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 03:01:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 740AE8A232C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 03:27:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3AFCEB21E27
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 01:00:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 21D801F22F2D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 01:27:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FD311FB2;
-	Fri, 12 Apr 2024 01:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 712E728E7;
+	Fri, 12 Apr 2024 01:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b="XohyHyVd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JWqTXu0o"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA63D1FA4
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Apr 2024 01:00:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419C94C6C;
+	Fri, 12 Apr 2024 01:27:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712883655; cv=none; b=c5VQNoafhjwzmqKLurr+LPVft+2xkNNnh4o+LDgI4iQXaU5L16U7/9/ElPaxAPsGkaTthAQ0nT4r5uGOuyVdXQ/SweahIv3jQkznb6vVqaDJ/HznTI8Ni+PJtTpJTSRK4/Np8Ql3bmeZw/lhiaRG6FrMEE03v9dv7bV+dlNBeYQ=
+	t=1712885248; cv=none; b=nlI+oRdeqjoGKH3xsmZ1LepPmFXiy4jQIUfHpxNGMtOqhbvUeHvoZJVpplauMWmkbsD7cXg8IKwWJTjXI3MRqxylaQYUuihsLk1hMr3YiDnLh8eE8Z/rpG5x32v3cGPzEiHzm39csAGU3VMKz9GgxKuysl7B/zhJ2iJqsGuf0ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712883655; c=relaxed/simple;
-	bh=n5DyHBQNH4jECC/1QiOWkv7+cWItmYfwHMaEulQwpkM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hqIgSGgx1m28wVtyjaoAJ8rqAG4lzawosaUrr+Uz6YGowHxgl5WwfTnYA0+o6Tza1x4iuwva5joZ8J5TaflR1IVI3bquNssNnRUC0bCTMXKkEOhnsw74FDtfZOJhvkE+K/6TjS+cl2YMrM66sviXRMXhYbz1luJGhubdjg9vUOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org; spf=pass smtp.mailfrom=kali.org; dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b=XohyHyVd; arc=none smtp.client-ip=209.85.208.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kali.org
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2d8743ecebdso3789871fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 18:00:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google; t=1712883652; x=1713488452; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=teCFUVoujc84LN4HbW/RAmyCbCBCbvdNQSWtdEKCzhs=;
-        b=XohyHyVdKHVt87sQxjygY3XU7FeRxPguOs/nGswYJ1nXvU8tuB5MrWf/rtdAohA1Il
-         B5QKVywe80SGmy5oc36qzZ9qSYC5zdFFqnud+RGnf0r5kjOIIs6jNb51dWA6eq1fDNFu
-         sps5fHmDOPPolGlAKJHQStjUAGpHRHIGeOjC/RcpyEtgHWZunDHrm7SZDwpk8JtMfVam
-         0tWcgbNn/NjH9LCrhpBhjhSp/9pm2oANq4w5oPe8Kv+ssUxemtHbnED9ZbwXgf21V1Lh
-         Gog+TWWRO7gZtpD9IS5GNdcL1l74DJPLyn1x9Z8HGKcIVe/8DzFSx79/52HNtmskXY+C
-         AXiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712883652; x=1713488452;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=teCFUVoujc84LN4HbW/RAmyCbCBCbvdNQSWtdEKCzhs=;
-        b=mZUFixrqBw9gk9yliMV1WV1OMTagHPHKzFCnfEgCSWsoUhnCV2Cy/XYSBdG1kctZ5h
-         Pa6KsofHK+5JwdGo1h1x8w/42eVQUVfs1X7nUY6vBVTLCggVf++unNdLDg/QW3zE6wmN
-         RSWQv+6D0j0lECS/d4Ur7mMS1ObqxaXapxJPJVkmqJERuDklNRAPvWig4pX+bXxhgpbj
-         o/iNQCtFM950pDzKc9IVrPiW9OsAdQEE91pL0gif/k4wtN5wg8mvcMp6mNpzAyNvyPO6
-         wWc7emEL2SPJA1+yzazOp5EreyTXLuplDHVOiKa/UK5WsDVLPVKyl26GkvmNzlxoK+Nu
-         u0MA==
-X-Forwarded-Encrypted: i=1; AJvYcCVQd9HibqIqpFLNdkA40YtrUIKk8eUmXiD3QY3zUahgF/7AGQb27sGMLgNGDMqSvzHJZ+2Zo4HoC/SPQ2foQXQRl/rJTAjWnHQ7gn7D/g==
-X-Gm-Message-State: AOJu0YyfzP+NBhOKJRBWGSzlx+nQHTDr5F7XNaMKkZo1i4mRkscdt0zg
-	UpGoOYZlqdUr9hn3b09FLcvWGYZuzYjHAB0ngZEeQlCV0Aud+ys3ApNwe4yr80jY7U7qLcmG+7T
-	VQE0fH6ff/JYCzNg4EB7HVS/vCuWd9yYhIh7/scRaUubwxaWt4hI=
-X-Google-Smtp-Source: AGHT+IHW3q4EFhtObEcsKd+CKgmrYyrIesE7GsuZI1aMdxOi1H3OtA5zBlVysSpjkiOwYvriDjUvouc2vkDplvtXREA=
-X-Received: by 2002:a2e:9890:0:b0:2d5:9cc4:da5c with SMTP id
- b16-20020a2e9890000000b002d59cc4da5cmr672075ljj.36.1712883651673; Thu, 11 Apr
- 2024 18:00:51 -0700 (PDT)
+	s=arc-20240116; t=1712885248; c=relaxed/simple;
+	bh=YW9xxHO7EdZuAhVJ5aAbnRjYGBZMzMVifI/U1z8qaWY=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=nNj6FaZUl90MDVpaMGHGBsboqNkcRRuMtaUXA5i962JaXHyaKqys1wR/7l3CGNNU3HgtgXH+ITUZznVJ6J41wHQzezXUAZoWTvSFKwVQa43nFd8hz3FezRPkqBobxcbP5wA02egHDYFEaLVr82l2r6LwkoyZkp9482TtEwo0nIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JWqTXu0o; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E50C072AA;
+	Fri, 12 Apr 2024 01:27:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712885247;
+	bh=YW9xxHO7EdZuAhVJ5aAbnRjYGBZMzMVifI/U1z8qaWY=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=JWqTXu0oYKuh+OS1ZrzzCW9yrKDztTSHLkGOuk1EEI8CFn+N+Cz71ECInihlydFoF
+	 qlkpwidcEBFCcOLoJRSC/FgVhTvgmF8xyxc5uOosC6DdhbBVHky/uL97+zHtGeP0In
+	 dnppocm2UsQ3jaefwTMRSAJ3g7rPlpH0nD/ww4NuwCD3tWGXWkua0PBwwQwJkF1t9t
+	 Qth+JFDOz1PWmwsH9eGvhPxC9e7ptlLLu+HoSJX97qZvngp8wekvIyEGuyJuEXG+6L
+	 iXR69jLm+K4wEe9Y0lQRo8NV3ZOC9WD/Y1PUPd+dz2pk3akpmGc46SnthUDw69xxqQ
+	 0pYqlb7QQkNRA==
+From: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Christian Marangi <ansuelsmth@gmail.com>
+Subject: Re: [PATCH] ARM: dts: qcom: ipq4019: add QCA8075 PHY Package nodes
+Date: Thu, 11 Apr 2024 20:27:21 -0500
+Message-ID: <171288524177.749915.3224551491309677040.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240211202700.17810-1-ansuelsmth@gmail.com>
+References: <20240211202700.17810-1-ansuelsmth@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240412-enable-sm6115-icc-v2-1-12a35d5d4acd@linaro.org>
-In-Reply-To: <20240412-enable-sm6115-icc-v2-1-12a35d5d4acd@linaro.org>
-From: Steev Klimaszewski <steev@kali.org>
-Date: Thu, 11 Apr 2024 20:00:40 -0500
-Message-ID: <CAKXuJqh+0kyWXHpsyABi3=4YRHTzzg7Ezn4Mbru+ZTLeryec7Q@mail.gmail.com>
-Subject: Re: [PATCH v2] arm64: defconfig: build INTERCONNECT_QCOM_SM6115 as module
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Thu, Apr 11, 2024 at 4:49=E2=80=AFPM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> Enable CONFIG_INTERCONNECT_QCOM_SM6115 as built-in to enable the
-> interconnect driver for the SoC used on Qualcomm Robotics RB2 board.
-> Building as built-in is required as on this platform interconnects are
-> required to bring up the console.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-> Changes in v2:
-> - Change it to be built-in (Bjorn)
-> - Link to v1: https://lore.kernel.org/r/20240409-enable-sm6115-icc-v1-1-b=
-f894fb5a585@linaro.org
-> ---
->  arch/arm64/configs/defconfig | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index 9957e126e32d..30e7598bd131 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -1600,6 +1600,7 @@ CONFIG_INTERCONNECT_QCOM_SC8180X=3Dy
->  CONFIG_INTERCONNECT_QCOM_SC8280XP=3Dy
->  CONFIG_INTERCONNECT_QCOM_SDM845=3Dy
->  CONFIG_INTERCONNECT_QCOM_SDX75=3Dy
-> +CONFIG_INTERCONNECT_QCOM_SM6115=3Dy
->  CONFIG_INTERCONNECT_QCOM_SM8150=3Dm
->  CONFIG_INTERCONNECT_QCOM_SM8250=3Dy
->  CONFIG_INTERCONNECT_QCOM_SM8350=3Dm
->
-> ---
-> base-commit: a053fd3ca5d1b927a8655f239c84b0d790218fda
-> change-id: 20240409-enable-sm6115-icc-7b0b0c08da2b
->
-> Best regards,
-> --
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
->
-Subject still says as module
+
+On Sun, 11 Feb 2024 21:26:55 +0100, Christian Marangi wrote:
+> Add QCA8075 PHY Package nodes. The PHY nodes that were previously
+> defined never worked and actually never had a driver to correctly setup
+> these PHY. Now that we have a correct driver, correctly add the PHY
+> Package node and set the default value of 300mw for tx driver strength
+> following specification of ipq4019 SoC.
+> 
+> 
+> [...]
+
+Applied, thanks!
+
+[1/1] ARM: dts: qcom: ipq4019: add QCA8075 PHY Package nodes
+      commit: 2338f4315f16b937e924ff679b91bb8c0ab53f25
+
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
