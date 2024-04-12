@@ -1,152 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-17302-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17303-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96DCD8A230C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 02:49:59 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C61138A2316
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 03:01:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C830C1C20F29
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 00:49:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3AFCEB21E27
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 01:00:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5843B1843;
-	Fri, 12 Apr 2024 00:49:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FD311FB2;
+	Fri, 12 Apr 2024 01:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AuPB5wDD"
+	dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b="XohyHyVd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7FC4A1E;
-	Fri, 12 Apr 2024 00:49:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA63D1FA4
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Apr 2024 01:00:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712882995; cv=none; b=PAg+8O3j0Fb4xDVJRS24AYF87goQlrMbFPPhPFmk8876d/fiftkvolWfJQP2ZpOj/nuWzyDS6LdFtpT3h6qwiBiPYgInymezC8PWDpyseRqWQM6Fk0h8++wJlEg22esbg6/ankyOITnCmhBnw9nWqTqI2kVoS2/852nwQLqv+Vo=
+	t=1712883655; cv=none; b=c5VQNoafhjwzmqKLurr+LPVft+2xkNNnh4o+LDgI4iQXaU5L16U7/9/ElPaxAPsGkaTthAQ0nT4r5uGOuyVdXQ/SweahIv3jQkznb6vVqaDJ/HznTI8Ni+PJtTpJTSRK4/Np8Ql3bmeZw/lhiaRG6FrMEE03v9dv7bV+dlNBeYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712882995; c=relaxed/simple;
-	bh=qDYgGpcVoXWK1Oz7IhTj8AZ45cXWNF2cfJCay6+5xgo=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sXyggdndqe+SOq75RXhuXdSAJ0Nx8KZo40piHX8zXNTC1nOJI0BY4F34Hf5S/YUlboe498LdBIGe9VYx28gSb8/iG1pzruotxGCzd7vI0uwwveNEDEMCLtRPPo+ojl8XmamGE/EOmbin6HeDkKmzYCOWMHe9VEwb0LaU0gmjemw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AuPB5wDD; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43C0M5eV005552;
-	Fri, 12 Apr 2024 00:49:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=5oLK5tzoOUKB3yOhIAUxG
-	DJCyOQUxXKysYGRltIOxZU=; b=AuPB5wDDKJ8FM6UBmHc6M36gSIa8YlAY6XIKZ
-	GPFksaJi2OmbhPK4mhshmJLyX0pTUSZVe8v60UQ3cLTCXN1hIG3b7z65MMQolkg7
-	nJtZeRwtKj68XVQF5+pYdIcwT2DpMaYa0oCHH344Ty2izsNwNfW2ylsnXkkkANkF
-	QM0jCly6HRshUeEwtbuNxPtXj9NbQDZzOUBgtfRzSvL1eC/IRZ/RxBSg/vJCtuHq
-	dVcMQ6sa3o6PwXE7G2ZrcOYytr+u2lzuGUjuf1f0b4VmEggCHLmL8KgsDmDhqD7m
-	S9FM1PRGbJq4vZg0XZLbr6P+6Mprz5ln8AYrN5witG4yETw7Q==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xedugt0vm-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 12 Apr 2024 00:49:43 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43C0nfJU024679
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 12 Apr 2024 00:49:41 GMT
-Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 11 Apr 2024 17:49:41 -0700
-Date: Thu, 11 Apr 2024 17:49:41 -0700
-From: Elliot Berman <quic_eberman@quicinc.com>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Daniel
- Vetter" <daniel@ffwll.ch>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 1/6] soc: qcom: Move some socinfo defines to the header,
- expand them
-Message-ID: <20240411174914343-0700.eberman@hu-eberman-lv.qualcomm.com>
-References: <20240405-topic-smem_speedbin-v1-0-ce2b864251b1@linaro.org>
- <20240405-topic-smem_speedbin-v1-1-ce2b864251b1@linaro.org>
- <20240410132510649-0700.eberman@hu-eberman-lv.qualcomm.com>
- <2c2bca6c-b429-4cef-b63a-ee3bd6c9eecb@linaro.org>
- <20240411130802689-0700.eberman@hu-eberman-lv.qualcomm.com>
- <bbec514f-9672-4e5a-bd83-20ab59b3dcd9@linaro.org>
- <20240411162849104-0700.eberman@hu-eberman-lv.qualcomm.com>
- <7634a8ba-e783-46ce-be91-779cd603bd3b@linaro.org>
+	s=arc-20240116; t=1712883655; c=relaxed/simple;
+	bh=n5DyHBQNH4jECC/1QiOWkv7+cWItmYfwHMaEulQwpkM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hqIgSGgx1m28wVtyjaoAJ8rqAG4lzawosaUrr+Uz6YGowHxgl5WwfTnYA0+o6Tza1x4iuwva5joZ8J5TaflR1IVI3bquNssNnRUC0bCTMXKkEOhnsw74FDtfZOJhvkE+K/6TjS+cl2YMrM66sviXRMXhYbz1luJGhubdjg9vUOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org; spf=pass smtp.mailfrom=kali.org; dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b=XohyHyVd; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kali.org
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2d8743ecebdso3789871fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Apr 2024 18:00:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kali.org; s=google; t=1712883652; x=1713488452; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=teCFUVoujc84LN4HbW/RAmyCbCBCbvdNQSWtdEKCzhs=;
+        b=XohyHyVdKHVt87sQxjygY3XU7FeRxPguOs/nGswYJ1nXvU8tuB5MrWf/rtdAohA1Il
+         B5QKVywe80SGmy5oc36qzZ9qSYC5zdFFqnud+RGnf0r5kjOIIs6jNb51dWA6eq1fDNFu
+         sps5fHmDOPPolGlAKJHQStjUAGpHRHIGeOjC/RcpyEtgHWZunDHrm7SZDwpk8JtMfVam
+         0tWcgbNn/NjH9LCrhpBhjhSp/9pm2oANq4w5oPe8Kv+ssUxemtHbnED9ZbwXgf21V1Lh
+         Gog+TWWRO7gZtpD9IS5GNdcL1l74DJPLyn1x9Z8HGKcIVe/8DzFSx79/52HNtmskXY+C
+         AXiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712883652; x=1713488452;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=teCFUVoujc84LN4HbW/RAmyCbCBCbvdNQSWtdEKCzhs=;
+        b=mZUFixrqBw9gk9yliMV1WV1OMTagHPHKzFCnfEgCSWsoUhnCV2Cy/XYSBdG1kctZ5h
+         Pa6KsofHK+5JwdGo1h1x8w/42eVQUVfs1X7nUY6vBVTLCggVf++unNdLDg/QW3zE6wmN
+         RSWQv+6D0j0lECS/d4Ur7mMS1ObqxaXapxJPJVkmqJERuDklNRAPvWig4pX+bXxhgpbj
+         o/iNQCtFM950pDzKc9IVrPiW9OsAdQEE91pL0gif/k4wtN5wg8mvcMp6mNpzAyNvyPO6
+         wWc7emEL2SPJA1+yzazOp5EreyTXLuplDHVOiKa/UK5WsDVLPVKyl26GkvmNzlxoK+Nu
+         u0MA==
+X-Forwarded-Encrypted: i=1; AJvYcCVQd9HibqIqpFLNdkA40YtrUIKk8eUmXiD3QY3zUahgF/7AGQb27sGMLgNGDMqSvzHJZ+2Zo4HoC/SPQ2foQXQRl/rJTAjWnHQ7gn7D/g==
+X-Gm-Message-State: AOJu0YyfzP+NBhOKJRBWGSzlx+nQHTDr5F7XNaMKkZo1i4mRkscdt0zg
+	UpGoOYZlqdUr9hn3b09FLcvWGYZuzYjHAB0ngZEeQlCV0Aud+ys3ApNwe4yr80jY7U7qLcmG+7T
+	VQE0fH6ff/JYCzNg4EB7HVS/vCuWd9yYhIh7/scRaUubwxaWt4hI=
+X-Google-Smtp-Source: AGHT+IHW3q4EFhtObEcsKd+CKgmrYyrIesE7GsuZI1aMdxOi1H3OtA5zBlVysSpjkiOwYvriDjUvouc2vkDplvtXREA=
+X-Received: by 2002:a2e:9890:0:b0:2d5:9cc4:da5c with SMTP id
+ b16-20020a2e9890000000b002d59cc4da5cmr672075ljj.36.1712883651673; Thu, 11 Apr
+ 2024 18:00:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <7634a8ba-e783-46ce-be91-779cd603bd3b@linaro.org>
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: O7C_Q6EzRdAyrBB5f99ahNauyd-nqlI9
-X-Proofpoint-ORIG-GUID: O7C_Q6EzRdAyrBB5f99ahNauyd-nqlI9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-11_13,2024-04-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxscore=0
- priorityscore=1501 adultscore=0 suspectscore=0 bulkscore=0
- lowpriorityscore=0 mlxlogscore=999 impostorscore=0 clxscore=1015
- malwarescore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2404010003 definitions=main-2404120004
+References: <20240412-enable-sm6115-icc-v2-1-12a35d5d4acd@linaro.org>
+In-Reply-To: <20240412-enable-sm6115-icc-v2-1-12a35d5d4acd@linaro.org>
+From: Steev Klimaszewski <steev@kali.org>
+Date: Thu, 11 Apr 2024 20:00:40 -0500
+Message-ID: <CAKXuJqh+0kyWXHpsyABi3=4YRHTzzg7Ezn4Mbru+ZTLeryec7Q@mail.gmail.com>
+Subject: Re: [PATCH v2] arm64: defconfig: build INTERCONNECT_QCOM_SM6115 as module
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Apr 12, 2024 at 02:10:30AM +0200, Konrad Dybcio wrote:
-> 
-> 
-> On 4/12/24 01:49, Elliot Berman wrote:
-> > On Thu, Apr 11, 2024 at 10:24:08PM +0200, Konrad Dybcio wrote:
-> > > 
-> > > 
-> > > On 4/11/24 22:09, Elliot Berman wrote:
-> > > > On Thu, Apr 11, 2024 at 10:05:30PM +0200, Konrad Dybcio wrote:
-> > > > > 
-> > > > > 
-> > > > > On 4/11/24 20:55, Elliot Berman wrote:
-> > > > > > On Fri, Apr 05, 2024 at 10:41:29AM +0200, Konrad Dybcio wrote:
-> > > > > > > In preparation for parsing the chip "feature code" (FC) and "product
-> > > > > > > code" (PC) (essentially the parameters that let us conclusively
-> > > > > > > characterize the sillicon we're running on, including various speed
-> > > > > > > bins), move the socinfo version defines to the public header and
-> > > > > > > include some more FC/PC defines.
-> > > > > > > 
-> > > > > > > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > > > > > > ---
-> > > 
-> > > [...]
-> > > 
-> > > > 
-> > > > 0xf is the last one.
-> > > 
-> > > One more question, are the "internal/external feature codes" referring to
-> > > internality/externality of the chips (i.e. "are they QC-lab-only engineering
-> > > samples), or what else does that represent?
-> > 
-> > Yes, QC-lab-only engineering samples is the right interpretation of
-> > these feature codes.
-> 
-> Do you think it would be beneficial to keep the logic for these ESes in
-> the upstream GPU driver? Otherwise, I can yank out half of the added lines.
-> 
-
-Should be fine to yank, IMO.
-
+On Thu, Apr 11, 2024 at 4:49=E2=80=AFPM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> Enable CONFIG_INTERCONNECT_QCOM_SM6115 as built-in to enable the
+> interconnect driver for the SoC used on Qualcomm Robotics RB2 board.
+> Building as built-in is required as on this platform interconnects are
+> required to bring up the console.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+> Changes in v2:
+> - Change it to be built-in (Bjorn)
+> - Link to v1: https://lore.kernel.org/r/20240409-enable-sm6115-icc-v1-1-b=
+f894fb5a585@linaro.org
+> ---
+>  arch/arm64/configs/defconfig | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index 9957e126e32d..30e7598bd131 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -1600,6 +1600,7 @@ CONFIG_INTERCONNECT_QCOM_SC8180X=3Dy
+>  CONFIG_INTERCONNECT_QCOM_SC8280XP=3Dy
+>  CONFIG_INTERCONNECT_QCOM_SDM845=3Dy
+>  CONFIG_INTERCONNECT_QCOM_SDX75=3Dy
+> +CONFIG_INTERCONNECT_QCOM_SM6115=3Dy
+>  CONFIG_INTERCONNECT_QCOM_SM8150=3Dm
+>  CONFIG_INTERCONNECT_QCOM_SM8250=3Dy
+>  CONFIG_INTERCONNECT_QCOM_SM8350=3Dm
+>
+> ---
+> base-commit: a053fd3ca5d1b927a8655f239c84b0d790218fda
+> change-id: 20240409-enable-sm6115-icc-7b0b0c08da2b
+>
+> Best regards,
+> --
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
+>
+Subject still says as module
 
