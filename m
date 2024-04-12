@@ -1,255 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-17337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 166A88A304C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 16:17:11 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0EE88A305D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 16:20:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C1CDB28407C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 14:17:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 81CF21F244C5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 14:20:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D6E786260;
-	Fri, 12 Apr 2024 14:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AED6286252;
+	Fri, 12 Apr 2024 14:20:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="N9zsLIpo"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="MABhp0+q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B60C85939;
-	Fri, 12 Apr 2024 14:16:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A8F8615C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Apr 2024 14:19:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712931420; cv=none; b=sZj9mlpfvMv5fA9shaem8gz6ZktypebFqomhiHnW9IldjOkmEZcndZo0G1t9igk0XYX0zZaeF+IoUDDnRs1+OtVA6OYl1idIzzw0YjjUxPn4t81H/ge3NKxMJl5OBMulzwhASu1veyyY6PrIC7ZyYJpMzCzxrZz4Mp6APyuwpIs=
+	t=1712931600; cv=none; b=BAgcfp4S1KszYAjSMHhTBH4mwq6jre8Ggos7AwP28sgeka3HMKEr3OHkE44v2jjxN07oCGTR8/tOEab5QlWg2Ru1alr1lyGocK0t2NyGT8F5Xxr4haQKhmWU72+KZkE+AAWpCE/VdsA8Mj90P5YNwbs1Q9gU2jTatxwPLweB9TY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712931420; c=relaxed/simple;
-	bh=WhpCUGI96ps9cF34rrRPTs7C3wi5FHut3sWV/vIx2tE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=HVMMSjFKMaMgxA4y9L6VCyGPXoEn+EHiIsvA1CZ0ySjMuZJLurZiIcwX76POFGzjW4EBTTq+jJP3t57++VFzsZeGpRam1RZ6cC72N0ZTjYlMjuZz0A/q3LhtNH6Gfooxz7H/k1nHqL5+n4/kn+lpgqmTOwLaD6YxkM+pj55/htc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=N9zsLIpo; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43CECtZ3029912;
-	Fri, 12 Apr 2024 14:16:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=8B4BRcwsnkqtLmK60tynQcbM45nbLBlll4ohJ8zthI8=; b=N9
-	zsLIpoXT/fjtE13LsgcU40h1bIFktnH43cH32dnfRR/Di+BMCfpsyzSYq18L5IEF
-	v09tyThgsG56zWhXvrnNwplYzVU7LmSJGcvQP+evwJUThDgltHCEg65wqwUbDt7V
-	6HV9FbZ5copjSSt/3bQuWGNiy9Qxgp/xdEMZwPcm+GpJsomEci4oYk7HD+eh1eZ2
-	PM7RBjx4pA2lQv2DWz39WHjIafCZ+O1xwjNIhJumFCWmk9FMWjr9QqoIyUvFlfbf
-	9nuAY4yrpwLkIbVr1Dev6+vmhawgQvjcjIFJL4K9Is+LRQNVSJdSZLNDphiLc6ZF
-	e/ww/K9PJIGYfu1/J+AQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xf6h6r07x-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 12 Apr 2024 14:16:54 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43CEGrKY008238
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 12 Apr 2024 14:16:53 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 12 Apr
- 2024 07:16:52 -0700
-Message-ID: <95ee53a5-e261-9106-1104-09077e348a99@quicinc.com>
-Date: Fri, 12 Apr 2024 08:16:52 -0600
+	s=arc-20240116; t=1712931600; c=relaxed/simple;
+	bh=6UZg2PMKGEVFmidiPHnfxY1Bc8juCTuAW/lviqlEAgE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=FYfZs3zYxTHjtEnEiYBQC4Gxv0ba66zQHPoy7P6rvWNwZ8muHpSdT/A0hAMj9bA0l/or+FWsZwAasOTLEZbbB6bIJzrCr3ggz+uaosrHakjqyc8GbK7h9aWgJP//sB7Ad7oORDqONjJ1EgeHQmnNG4m+/ipO0XF3A+/WfoNcYyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=MABhp0+q; arc=none smtp.client-ip=209.85.208.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-57009161122so259798a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Apr 2024 07:19:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1712931597; x=1713536397; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=YQsE65kxl32daih06Z5LQ2GRCxgTRsV2P+cCXBqOo8Y=;
+        b=MABhp0+qKXr36GWUembLKrNRmTMDFfU6wxB2lmMVrIidlcB0rDF6ozzpsEVl+c5Lxm
+         4xPZxPtAZHir8p7z93kAzG58N1elayR0mfnePdwWa7uFzhvqLyouFzWqmQ4vLOYAUAYz
+         MbYuhvvsXP5YSNKGsHGTtRtXztrEEJm6FSP+jNhqjD2SRuBKZMvks452oQCxw8g4ciFo
+         enctp7x+BXtyATx7XwLX/X+T0WnuwwXWPZOKbcjXu8PtglSBKShzkBHgHboLZIbUOudw
+         zLDNKbYBUP3siKtBWJZNWNZsU+y0HzgceQEWVy7dEfYIq3AQ+p35PlM3btu4WVkAC7ic
+         thjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712931597; x=1713536397;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YQsE65kxl32daih06Z5LQ2GRCxgTRsV2P+cCXBqOo8Y=;
+        b=ZpXCA7Wq/nHpTTZM+CxnCzmT7GloItWwjtK5sWHQdUiiUoq4Rf1OvKMeXtZsNJ07Fg
+         I+fpddUZI4Z8NjpXXUcSrS6lKbG4NWONLN7xOFKJcD9mHC/Cx/Q+FB4+IhKXFGqSl8C4
+         NYnuMIVwAGziO8Xxuh8oAUh1NAa1rOhY6eoxNMNqD4BYJXWV5avrlyR6wqYGR3kgQXZE
+         0LIUV9d+gstvFZXZMjeymG3f/tbxQStyLWqa4N2nK13oiXAWuhJjRhTJjs4PbyNj60pt
+         0cJaf6TISDPud3uYfQupH9n6yebqEHQx5dIaWvAFlj9Q9PAgdLA9GDIjAMNll/NWFWLg
+         45Lw==
+X-Forwarded-Encrypted: i=1; AJvYcCW4dswGG2Hh6FP0lb8kvgHbeoCrkw9aCzDeOnqUQDENmK4onfY+8wS5pHQF2AnQTxGaNfdz+atSqzcvHNlFsQ3zbNrOj0EwPvgg6ChAuQ==
+X-Gm-Message-State: AOJu0YzyAiJQMT3CNCRX9eF1gC60AGIA7CrpGkQwB9v+/uNcoDQwr+W0
+	ITLHVcop0amWJjzVpBGWYNgOeemlHGAVVWX6oxHsn1dEvM23G5MVgSEGImG5PvY=
+X-Google-Smtp-Source: AGHT+IGKj8XZqLdJ98ZKpJeEDnb8u+b2a/tdKdHn1TQCGxbINivns7Z1Inoz6n2Zx4JNYGOzijn8Qg==
+X-Received: by 2002:a17:907:c29:b0:a51:9304:19fa with SMTP id ga41-20020a1709070c2900b00a51930419famr2005912ejc.70.1712931597392;
+        Fri, 12 Apr 2024 07:19:57 -0700 (PDT)
+Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id pj24-20020a170906d79800b00a46a3ad035esm1877005ejb.179.2024.04.12.07.19.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Apr 2024 07:19:56 -0700 (PDT)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Date: Fri, 12 Apr 2024 16:19:50 +0200
+Subject: [PATCH v2] media: dt-bindings: qcom,sc7280-venus: Allow one IOMMU
+ entry
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v2 2/2] bus: mhi: host: pci_generic: Add edl callback to
- enter EDL
-Content-Language: en-US
-To: Qiang Yu <quic_qianyu@quicinc.com>, <mani@kernel.org>
-CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
-        <quic_mrana@quicinc.com>
-References: <1712805329-46158-1-git-send-email-quic_qianyu@quicinc.com>
- <1712805329-46158-3-git-send-email-quic_qianyu@quicinc.com>
- <78de32be-7e3b-e7e9-61f3-9679993dbe71@quicinc.com>
- <a901549e-c3ec-47b5-9523-a6342eca455f@quicinc.com>
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <a901549e-c3ec-47b5-9523-a6342eca455f@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: L-ZCnEf-_dsOi4i7LMByTFTmFKl4032Y
-X-Proofpoint-GUID: L-ZCnEf-_dsOi4i7LMByTFTmFKl4032Y
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-12_10,2024-04-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
- lowpriorityscore=0 malwarescore=0 mlxlogscore=999 impostorscore=0
- bulkscore=0 spamscore=0 mlxscore=0 phishscore=0 priorityscore=1501
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404120103
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240412-sc7280-venus-bindings-v2-1-48ca8c2ec532@fairphone.com>
+X-B4-Tracking: v=1; b=H4sIAAVDGWYC/4WNQQ6CMBBFr0Jm7Zh2Qqp15T0Mi1IGmIUtabHRE
+ O5u5QIu30v++xtkTsIZbs0GiYtkiaECnRrwswsTowyVgRS1SpPF7C90VVg4vDL2EgYJU0bDhpy
+ 1htTAULdL4lHeR/fRVZ4lrzF9jpuif/ZfsWjUSMrZ3mnbeqPuo5O0zDHw2ccndPu+fwHfYHCFv
+ gAAAA==
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, 
+ Vikash Garodia <quic_vgarodia@quicinc.com>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ Stanimir Varbanov <stanimir.varbanov@linaro.org>, 
+ linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.13.0
 
-On 4/12/2024 1:13 AM, Qiang Yu wrote:
-> 
-> On 4/11/2024 10:46 PM, Jeffrey Hugo wrote:
->> On 4/10/2024 9:15 PM, Qiang Yu wrote:
->>> Add mhi_pci_generic_edl_trigger as edl_trigger for some devices (eg. 
->>> SDX65)
->>> to enter EDL mode by writing the 0xEDEDEDED cookie to the channel 91
->>> doorbell register and forcing an SOC reset afterwards.
->>>
->>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
->>> ---
->>>   drivers/bus/mhi/host/pci_generic.c | 50 
->>> ++++++++++++++++++++++++++++++++++++++
->>>   1 file changed, 50 insertions(+)
->>>
->>> diff --git a/drivers/bus/mhi/host/pci_generic.c 
->>> b/drivers/bus/mhi/host/pci_generic.c
->>> index 51639bf..a529815 100644
->>> --- a/drivers/bus/mhi/host/pci_generic.c
->>> +++ b/drivers/bus/mhi/host/pci_generic.c
->>> @@ -27,12 +27,23 @@
->>>   #define PCI_VENDOR_ID_THALES    0x1269
->>>   #define PCI_VENDOR_ID_QUECTEL    0x1eac
->>>   +#define MHI_EDL_DB            91
->>> +#define MHI_EDL_COOKIE            0xEDEDEDED
->>> +
->>> +/* Device can enter EDL by first setting edl cookie then issuing 
->>> inband reset*/
->>> +#define MHI_PCI_GENERIC_EDL_TRIGGER    BIT(0)
->>> +
->>> +#define CHDBOFF            0x18
->>
->> This is already in drivers/bus/mhi/common.h why duplicate it here?
-> 
-> I only see common.h be included in ep/internal.h host/internal.h and
-> host/trace.h. So I thought it can only be used by MHI stack. Can we
-> include common.h in pci_generic.c?
+Some SC7280-based boards crash when providing the "secure_non_pixel"
+context bank, so allow only one iommu in the bindings also.
 
-Up to Mani, but duplicating the definition seems like it would result in 
-maintence overhead over time.  An alternative to including the header 
-might be a new API between MHI and controller which allow the setting of 
-a CHDB to a specific value.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Reference:
+https://lore.kernel.org/linux-arm-msm/20231201-sc7280-venus-pas-v3-2-bc132dc5fc30@fairphone.com/
+---
+Changes in v2:
+- Pick up tags
+- Otherwise just a resend, v1 was sent in January
+- Link to v1: https://lore.kernel.org/r/20240129-sc7280-venus-bindings-v1-1-20a9ba194c60@fairphone.com
+---
+ Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
->>
->>> +#define CHDBOFF_CHDBOFF_MASK 0xFFFFFFFF
->>> +#define CHDBOFF_CHDBOFF_SHIFT    0
->>> +
->>>   /**
->>>    * struct mhi_pci_dev_info - MHI PCI device specific information
->>>    * @config: MHI controller configuration
->>>    * @name: name of the PCI module
->>>    * @fw: firmware path (if any)
->>>    * @edl: emergency download mode firmware path (if any)
->>> + * @edl_trigger: each bit represents a different way to enter EDL
->>>    * @bar_num: PCI base address register to use for MHI MMIO register 
->>> space
->>>    * @dma_data_width: DMA transfer word size (32 or 64 bits)
->>>    * @mru_default: default MRU size for MBIM network packets
->>> @@ -44,6 +55,7 @@ struct mhi_pci_dev_info {
->>>       const char *name;
->>>       const char *fw;
->>>       const char *edl;
->>> +    unsigned int edl_trigger;
->>>       unsigned int bar_num;
->>>       unsigned int dma_data_width;
->>>       unsigned int mru_default;
->>> @@ -292,6 +304,7 @@ static const struct mhi_pci_dev_info 
->>> mhi_qcom_sdx75_info = {
->>>       .name = "qcom-sdx75m",
->>>       .fw = "qcom/sdx75m/xbl.elf",
->>>       .edl = "qcom/sdx75m/edl.mbn",
->>> +    .edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
->>>       .config = &modem_qcom_v2_mhiv_config,
->>>       .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->>>       .dma_data_width = 32,
->>> @@ -302,6 +315,7 @@ static const struct mhi_pci_dev_info 
->>> mhi_qcom_sdx65_info = {
->>>       .name = "qcom-sdx65m",
->>>       .fw = "qcom/sdx65m/xbl.elf",
->>>       .edl = "qcom/sdx65m/edl.mbn",
->>> +    .edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
->>>       .config = &modem_qcom_v1_mhiv_config,
->>>       .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->>>       .dma_data_width = 32,
->>> @@ -312,6 +326,7 @@ static const struct mhi_pci_dev_info 
->>> mhi_qcom_sdx55_info = {
->>>       .name = "qcom-sdx55m",
->>>       .fw = "qcom/sdx55m/sbl1.mbn",
->>>       .edl = "qcom/sdx55m/edl.mbn",
->>> +    .edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
->>>       .config = &modem_qcom_v1_mhiv_config,
->>>       .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->>>       .dma_data_width = 32,
->>> @@ -928,6 +943,38 @@ static void health_check(struct timer_list *t)
->>>       mod_timer(&mhi_pdev->health_check_timer, jiffies + 
->>> HEALTH_CHECK_PERIOD);
->>>   }
->>>   +static int mhi_pci_generic_edl_trigger(struct mhi_controller 
->>> *mhi_cntrl)
->>> +{
->>> +    int ret;
->>> +    u32 val;
->>> +    void __iomem *edl_db;
->>> +    void __iomem *base = mhi_cntrl->regs;
->>
->> It looks like this file follows reverse christmas tree, but this 
->> function does not. you should fix it.
-> 
-> Will fix it in next version patch.
->>
->>> +
->>> +    ret = mhi_device_get_sync(mhi_cntrl->mhi_dev);
->>> +    if (ret) {
->>> +        dev_err(mhi_cntrl->cntrl_dev, "Wake up device fail before 
->>> trigger EDL\n");
->>> +        return ret;
->>> +    }
->>> +
->>> +    pm_wakeup_event(&mhi_cntrl->mhi_dev->dev, 0);
->>> +    mhi_cntrl->runtime_get(mhi_cntrl);
->>> +
->>> +    mhi_cntrl->read_reg(mhi_cntrl, base + CHDBOFF, &val);
->>> +    val = (val & CHDBOFF_CHDBOFF_MASK) >> CHDBOFF_CHDBOFF_SHIFT;
->>> +
->>> +    edl_db = base + val + (8 * MHI_EDL_DB);
->>> +
->>> +    mhi_cntrl->write_reg(mhi_cntrl, edl_db + 4, 
->>> upper_32_bits(MHI_EDL_COOKIE));
->>> +    mhi_cntrl->write_reg(mhi_cntrl, edl_db, 
->>> lower_32_bits(MHI_EDL_COOKIE));
->>> +
->>> +    mhi_soc_reset(mhi_cntrl);
->>> +
->>> +    mhi_cntrl->runtime_put(mhi_cntrl);
->>> +    mhi_device_put(mhi_cntrl->mhi_dev);
->>> +
->>> +    return 0;
->>> +}
->>> +
->>>   static int mhi_pci_probe(struct pci_dev *pdev, const struct 
->>> pci_device_id *id)
->>>   {
->>>       const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info 
->>> *) id->driver_data;
->>> @@ -962,6 +1009,9 @@ static int mhi_pci_probe(struct pci_dev *pdev, 
->>> const struct pci_device_id *id)
->>>       mhi_cntrl->runtime_put = mhi_pci_runtime_put;
->>>       mhi_cntrl->mru = info->mru_default;
->>>   +    if (info->edl_trigger & MHI_PCI_GENERIC_EDL_TRIGGER)
->>> +        mhi_cntrl->edl_trigger = mhi_pci_generic_edl_trigger;
->>> +
->>>       if (info->sideband_wake) {
->>>           mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
->>>           mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
->>
+diff --git a/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
+index 8f9b6433aeb8..10c334e6b3dc 100644
+--- a/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
++++ b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
+@@ -43,6 +43,7 @@ properties:
+       - const: vcodec_bus
+ 
+   iommus:
++    minItems: 1
+     maxItems: 2
+ 
+   interconnects:
+
+---
+base-commit: 9ed46da14b9b9b2ad4edb3b0c545b6dbe5c00d39
+change-id: 20240129-sc7280-venus-bindings-6e62a99620de
+
+Best regards,
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
 
 
