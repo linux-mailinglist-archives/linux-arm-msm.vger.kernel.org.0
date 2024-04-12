@@ -1,187 +1,255 @@
-Return-Path: <linux-arm-msm+bounces-17336-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A65E78A2FEB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 15:53:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 166A88A304C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 16:17:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 10114B24554
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 13:53:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C1CDB28407C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 14:17:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A00A8593A;
-	Fri, 12 Apr 2024 13:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D6E786260;
+	Fri, 12 Apr 2024 14:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="K3UGL19g"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="N9zsLIpo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81DE8564A
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Apr 2024 13:53:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B60C85939;
+	Fri, 12 Apr 2024 14:16:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712930010; cv=none; b=pQ1+URxKhti2ZnZtuNUZMFxyagkSCu9d2hrKfUJl8SxtFP/wJOv7i+e1PU4owbz63hGQr10Xo0NkchklPJ7M/w6IAZmHr9LlZDCmrM8qwYJ2kKxePNRYo28PDwbgLsFUgARsxgRC5flnM90TqYgx10ro1JZvbg7AcnOrGjKra14=
+	t=1712931420; cv=none; b=sZj9mlpfvMv5fA9shaem8gz6ZktypebFqomhiHnW9IldjOkmEZcndZo0G1t9igk0XYX0zZaeF+IoUDDnRs1+OtVA6OYl1idIzzw0YjjUxPn4t81H/ge3NKxMJl5OBMulzwhASu1veyyY6PrIC7ZyYJpMzCzxrZz4Mp6APyuwpIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712930010; c=relaxed/simple;
-	bh=iGOYThuLmTpzb3Utxn5kuIV3NqKWOFg7MoLvVpWZBbw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=F533vOTETJ75dH4iZat7ZpiiASHgkcG54UCIckiwXjMy6IzLXtZDctas3oiLADrWLtzdVknNSAv20+5QWHVyZFLDYtaSxnk6jZmQDn91PD5AOTvvFognRnx6ROFJEoYjjxyGu8TUse6/0NZFEAodobvFaVN7D7OCJ4mRRyabTqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=K3UGL19g; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3458b699d6cso433830f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Apr 2024 06:53:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712930007; x=1713534807; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=CnwqkibrxM7stLHpO8eWZ/pH05GDjY5J+7dkB5B9riY=;
-        b=K3UGL19gFZy8qbcs5tEg++HkdG6MqsYsWIsAfZ+wfJ1TIuhe1fzBRI3aZnU9mUu8PY
-         VAK8RP2nEgMUs5sS/Xx1g3gfyRgnzjnwQhmk0GrbPB0M2H56HrKTDzyFQUOUVURWBGx3
-         zNDhCstqpODx4q1LHf8Rwjc3X77A9EQHn4JOlKoORQ8KWuOXBT3ClKm6KyBqNlj+tXO2
-         gCa3fEYWFfYbR0xYAo4RIVirfnwQcElPELGnrw+rTJUXBSN2vuEUHqHAd201ypVoNgQ7
-         x7r3+m1sX2igwdWyZ1mRfgFoFYd4Y2Qj7JGkBIVJ7j0XRlvTqLPWBwYhMwAGRCK4/ldd
-         MzuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712930007; x=1713534807;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CnwqkibrxM7stLHpO8eWZ/pH05GDjY5J+7dkB5B9riY=;
-        b=KLHApS0o4M9tEs9SpWunlw999JDNGuUVR17J7V3WI+K6nhPrRGMsLd4lFRWUFpOosB
-         e9CNu7gKH7w1AfvYo6sgJ4pKIx6PBMQ3yH2yv6NKMQh14oTMNKr3K0TUUS1t8HRMa7Ep
-         DRtYXkJ55n3bhXd6CiQVXSOlf26Qs0vPj0Exjafd7jDQSA57nZ/vEAfd6j7Qu5VbWIJy
-         w3JhiZn4ga6eTNNtJ/+AGZtB1QtEPIA6+Ghv84RFC3+vwBesbCRaa+FdVfdGR1fVzFaY
-         rf+XquWJBBz77XQ3QS+YsPFVvUJXXIn9sIWLxK6pgLlkcj1H8Ca1pyIpVKYQ1krGhqqx
-         BUvw==
-X-Forwarded-Encrypted: i=1; AJvYcCXyGACoFXd+ZXcUCEUo9J7bdzLldCnG8etTZfgV4Jm2WbuRW+83XAOgEHdMGNHZBJMbMDC8p+bfM4tyC2IXKonM2PhGYrPapZkVha5aeQ==
-X-Gm-Message-State: AOJu0YxudFx/S3VKocrRXzXO8JlY8IuprnETGrtfw8PIEcdr4ewVX1ie
-	MzSgySBlSICAa7P9TU4zsJwifJNK22MTz1UjX3zc/txBD1hmD7Sr2efxq+LMqIA=
-X-Google-Smtp-Source: AGHT+IGdbKal5eg4HHJJ5LTvNAhmcUz8lIulEbWZRD6lhJ9ZX2jWJVpnS5+KyYZ1PxxKUq7i0HgG5A==
-X-Received: by 2002:a5d:5482:0:b0:347:2077:53f2 with SMTP id h2-20020a5d5482000000b00347207753f2mr775710wrv.2.1712930007134;
-        Fri, 12 Apr 2024 06:53:27 -0700 (PDT)
-Received: from [127.0.1.1] ([176.61.106.68])
-        by smtp.gmail.com with ESMTPSA id h18-20020a5d4312000000b003455e5d2569sm4423521wrq.0.2024.04.12.06.53.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Apr 2024 06:53:26 -0700 (PDT)
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Date: Fri, 12 Apr 2024 14:53:25 +0100
-Subject: [PATCH] dt-bindings: i2c: qcom-cci: Document sc8280xp compatible
+	s=arc-20240116; t=1712931420; c=relaxed/simple;
+	bh=WhpCUGI96ps9cF34rrRPTs7C3wi5FHut3sWV/vIx2tE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=HVMMSjFKMaMgxA4y9L6VCyGPXoEn+EHiIsvA1CZ0ySjMuZJLurZiIcwX76POFGzjW4EBTTq+jJP3t57++VFzsZeGpRam1RZ6cC72N0ZTjYlMjuZz0A/q3LhtNH6Gfooxz7H/k1nHqL5+n4/kn+lpgqmTOwLaD6YxkM+pj55/htc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=N9zsLIpo; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43CECtZ3029912;
+	Fri, 12 Apr 2024 14:16:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=8B4BRcwsnkqtLmK60tynQcbM45nbLBlll4ohJ8zthI8=; b=N9
+	zsLIpoXT/fjtE13LsgcU40h1bIFktnH43cH32dnfRR/Di+BMCfpsyzSYq18L5IEF
+	v09tyThgsG56zWhXvrnNwplYzVU7LmSJGcvQP+evwJUThDgltHCEg65wqwUbDt7V
+	6HV9FbZ5copjSSt/3bQuWGNiy9Qxgp/xdEMZwPcm+GpJsomEci4oYk7HD+eh1eZ2
+	PM7RBjx4pA2lQv2DWz39WHjIafCZ+O1xwjNIhJumFCWmk9FMWjr9QqoIyUvFlfbf
+	9nuAY4yrpwLkIbVr1Dev6+vmhawgQvjcjIFJL4K9Is+LRQNVSJdSZLNDphiLc6ZF
+	e/ww/K9PJIGYfu1/J+AQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xf6h6r07x-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 12 Apr 2024 14:16:54 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43CEGrKY008238
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 12 Apr 2024 14:16:53 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 12 Apr
+ 2024 07:16:52 -0700
+Message-ID: <95ee53a5-e261-9106-1104-09077e348a99@quicinc.com>
+Date: Fri, 12 Apr 2024 08:16:52 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240412-linux-next-24-04-11-sc8280xp-cci-compat-string-fix-v1-1-7dbafff36932@linaro.org>
-X-B4-Tracking: v=1; b=H4sIANQ8GWYC/x2NwQrCMBAFf6Xs2QfJmkP0V8RDWbd1QdOQRAmU/
- rvB48xhZqeqxbTSddqp6NeqbWmAP00kzzmtCnsMJnYcXPCMl6VPR9LewAEuwHtUiRxdzxAxyPb
- Oc0NtxdKKxTqUeXZ6UYnnhUY4Fx36P73dj+MHFiMxS4QAAAA=
-To: wsa@kernel.org, Loic Poulain <loic.poulain@linaro.org>, 
- Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-X-Mailer: b4 0.14-dev
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH v2 2/2] bus: mhi: host: pci_generic: Add edl callback to
+ enter EDL
+Content-Language: en-US
+To: Qiang Yu <quic_qianyu@quicinc.com>, <mani@kernel.org>
+CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
+        <quic_mrana@quicinc.com>
+References: <1712805329-46158-1-git-send-email-quic_qianyu@quicinc.com>
+ <1712805329-46158-3-git-send-email-quic_qianyu@quicinc.com>
+ <78de32be-7e3b-e7e9-61f3-9679993dbe71@quicinc.com>
+ <a901549e-c3ec-47b5-9523-a6342eca455f@quicinc.com>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <a901549e-c3ec-47b5-9523-a6342eca455f@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: L-ZCnEf-_dsOi4i7LMByTFTmFKl4032Y
+X-Proofpoint-GUID: L-ZCnEf-_dsOi4i7LMByTFTmFKl4032Y
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-12_10,2024-04-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
+ lowpriorityscore=0 malwarescore=0 mlxlogscore=999 impostorscore=0
+ bulkscore=0 spamscore=0 mlxscore=0 phishscore=0 priorityscore=1501
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404120103
 
-Add sc8280xp compatible consistent with recent CAMSS CCI interfaces.
+On 4/12/2024 1:13 AM, Qiang Yu wrote:
+> 
+> On 4/11/2024 10:46 PM, Jeffrey Hugo wrote:
+>> On 4/10/2024 9:15 PM, Qiang Yu wrote:
+>>> Add mhi_pci_generic_edl_trigger as edl_trigger for some devices (eg. 
+>>> SDX65)
+>>> to enter EDL mode by writing the 0xEDEDEDED cookie to the channel 91
+>>> doorbell register and forcing an SOC reset afterwards.
+>>>
+>>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+>>> ---
+>>>   drivers/bus/mhi/host/pci_generic.c | 50 
+>>> ++++++++++++++++++++++++++++++++++++++
+>>>   1 file changed, 50 insertions(+)
+>>>
+>>> diff --git a/drivers/bus/mhi/host/pci_generic.c 
+>>> b/drivers/bus/mhi/host/pci_generic.c
+>>> index 51639bf..a529815 100644
+>>> --- a/drivers/bus/mhi/host/pci_generic.c
+>>> +++ b/drivers/bus/mhi/host/pci_generic.c
+>>> @@ -27,12 +27,23 @@
+>>>   #define PCI_VENDOR_ID_THALES    0x1269
+>>>   #define PCI_VENDOR_ID_QUECTEL    0x1eac
+>>>   +#define MHI_EDL_DB            91
+>>> +#define MHI_EDL_COOKIE            0xEDEDEDED
+>>> +
+>>> +/* Device can enter EDL by first setting edl cookie then issuing 
+>>> inband reset*/
+>>> +#define MHI_PCI_GENERIC_EDL_TRIGGER    BIT(0)
+>>> +
+>>> +#define CHDBOFF            0x18
+>>
+>> This is already in drivers/bus/mhi/common.h why duplicate it here?
+> 
+> I only see common.h be included in ep/internal.h host/internal.h and
+> host/trace.h. So I thought it can only be used by MHI stack. Can we
+> include common.h in pci_generic.c?
 
-sc8280xp has the following clock list and so requires its own compat
-string and sc8280xp specific clock definition in the yaml.
+Up to Mani, but duplicating the definition seems like it would result in 
+maintence overhead over time.  An alternative to including the header 
+might be a new API between MHI and controller which allow the setting of 
+a CHDB to a specific value.
 
-- const: camnoc_axi
-- const: slow_ahb_src
-- const: cpas_ahb
-- const: cci
-
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
-Initially I added a compat string to yaml and driver for sc8280xp but, it
-was incomplete and wrong so I asked for a revert.
-
-Subsequent to posting the compat string I had posted dtsi changes to
-sc8280xp to add in the CCI, forgetting to follow up on the compat revert.
-
-I then completely forgot about the compat string and worse still
-misremembered the whole reasoning behind it.
-
-This one patch series cleans up the mess.
-
-- The fallback compat qcom,msm8916-cci hooks the driver.
-  Since there are no driver changes specific to sc8280xp we don't
-  need to add yet another entry to the CCI driver.
-
-- The compat string qcom,sc8280xp-cci is additionally declared in
-  the dts -> compat = "qcom,msm8916-cci", "qcom,sc8280xp-cci";
-  The sc8280xp-cci will match the yaml and enforce constraints.
-
-- The yaml entry for qcom,sc8280xp-cci constrains the list of
-  clocks which is specific to sc8280xp-cci
-
-Result:
-
-- No new redundant compat string in the CCI driver
-
-- DTS is unchanged
-
-- YAML expanded to capture missing string
-
-- BOD suitably contrite
-
-Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-24-04-11-sc8280xp-cci-compat-string-fix?ref_type=heads
----
- .../devicetree/bindings/i2c/qcom,i2c-cci.yaml         | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
-
-diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
-index f0eabff863106..daf4e71b8e7f9 100644
---- a/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
-+++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
-@@ -26,6 +26,7 @@ properties:
-       - items:
-           - enum:
-               - qcom,sc7280-cci
-+              - qcom,sc8280xp-cci
-               - qcom,sdm845-cci
-               - qcom,sm6350-cci
-               - qcom,sm8250-cci
-@@ -176,6 +177,24 @@ allOf:
-             - const: cci
-             - const: cci_src
- 
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,sc8280xp-cci
-+    then:
-+      properties:
-+        clocks:
-+          minItems: 4
-+          maxItems: 4
-+        clock-names:
-+          items:
-+            - const: camnoc_axi
-+            - const: slow_ahb_src
-+            - const: cpas_ahb
-+            - const: cci
-+
- additionalProperties: false
- 
- examples:
-
----
-base-commit: 4118d9533ff3a5d16efb476a0d00afceecd92cf5
-change-id: 20240412-linux-next-24-04-11-sc8280xp-cci-compat-string-fix-e22a0e9ec83f
-
-Best regards,
--- 
-Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>
+>>> +#define CHDBOFF_CHDBOFF_MASK 0xFFFFFFFF
+>>> +#define CHDBOFF_CHDBOFF_SHIFT    0
+>>> +
+>>>   /**
+>>>    * struct mhi_pci_dev_info - MHI PCI device specific information
+>>>    * @config: MHI controller configuration
+>>>    * @name: name of the PCI module
+>>>    * @fw: firmware path (if any)
+>>>    * @edl: emergency download mode firmware path (if any)
+>>> + * @edl_trigger: each bit represents a different way to enter EDL
+>>>    * @bar_num: PCI base address register to use for MHI MMIO register 
+>>> space
+>>>    * @dma_data_width: DMA transfer word size (32 or 64 bits)
+>>>    * @mru_default: default MRU size for MBIM network packets
+>>> @@ -44,6 +55,7 @@ struct mhi_pci_dev_info {
+>>>       const char *name;
+>>>       const char *fw;
+>>>       const char *edl;
+>>> +    unsigned int edl_trigger;
+>>>       unsigned int bar_num;
+>>>       unsigned int dma_data_width;
+>>>       unsigned int mru_default;
+>>> @@ -292,6 +304,7 @@ static const struct mhi_pci_dev_info 
+>>> mhi_qcom_sdx75_info = {
+>>>       .name = "qcom-sdx75m",
+>>>       .fw = "qcom/sdx75m/xbl.elf",
+>>>       .edl = "qcom/sdx75m/edl.mbn",
+>>> +    .edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
+>>>       .config = &modem_qcom_v2_mhiv_config,
+>>>       .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>>>       .dma_data_width = 32,
+>>> @@ -302,6 +315,7 @@ static const struct mhi_pci_dev_info 
+>>> mhi_qcom_sdx65_info = {
+>>>       .name = "qcom-sdx65m",
+>>>       .fw = "qcom/sdx65m/xbl.elf",
+>>>       .edl = "qcom/sdx65m/edl.mbn",
+>>> +    .edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
+>>>       .config = &modem_qcom_v1_mhiv_config,
+>>>       .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>>>       .dma_data_width = 32,
+>>> @@ -312,6 +326,7 @@ static const struct mhi_pci_dev_info 
+>>> mhi_qcom_sdx55_info = {
+>>>       .name = "qcom-sdx55m",
+>>>       .fw = "qcom/sdx55m/sbl1.mbn",
+>>>       .edl = "qcom/sdx55m/edl.mbn",
+>>> +    .edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
+>>>       .config = &modem_qcom_v1_mhiv_config,
+>>>       .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>>>       .dma_data_width = 32,
+>>> @@ -928,6 +943,38 @@ static void health_check(struct timer_list *t)
+>>>       mod_timer(&mhi_pdev->health_check_timer, jiffies + 
+>>> HEALTH_CHECK_PERIOD);
+>>>   }
+>>>   +static int mhi_pci_generic_edl_trigger(struct mhi_controller 
+>>> *mhi_cntrl)
+>>> +{
+>>> +    int ret;
+>>> +    u32 val;
+>>> +    void __iomem *edl_db;
+>>> +    void __iomem *base = mhi_cntrl->regs;
+>>
+>> It looks like this file follows reverse christmas tree, but this 
+>> function does not. you should fix it.
+> 
+> Will fix it in next version patch.
+>>
+>>> +
+>>> +    ret = mhi_device_get_sync(mhi_cntrl->mhi_dev);
+>>> +    if (ret) {
+>>> +        dev_err(mhi_cntrl->cntrl_dev, "Wake up device fail before 
+>>> trigger EDL\n");
+>>> +        return ret;
+>>> +    }
+>>> +
+>>> +    pm_wakeup_event(&mhi_cntrl->mhi_dev->dev, 0);
+>>> +    mhi_cntrl->runtime_get(mhi_cntrl);
+>>> +
+>>> +    mhi_cntrl->read_reg(mhi_cntrl, base + CHDBOFF, &val);
+>>> +    val = (val & CHDBOFF_CHDBOFF_MASK) >> CHDBOFF_CHDBOFF_SHIFT;
+>>> +
+>>> +    edl_db = base + val + (8 * MHI_EDL_DB);
+>>> +
+>>> +    mhi_cntrl->write_reg(mhi_cntrl, edl_db + 4, 
+>>> upper_32_bits(MHI_EDL_COOKIE));
+>>> +    mhi_cntrl->write_reg(mhi_cntrl, edl_db, 
+>>> lower_32_bits(MHI_EDL_COOKIE));
+>>> +
+>>> +    mhi_soc_reset(mhi_cntrl);
+>>> +
+>>> +    mhi_cntrl->runtime_put(mhi_cntrl);
+>>> +    mhi_device_put(mhi_cntrl->mhi_dev);
+>>> +
+>>> +    return 0;
+>>> +}
+>>> +
+>>>   static int mhi_pci_probe(struct pci_dev *pdev, const struct 
+>>> pci_device_id *id)
+>>>   {
+>>>       const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info 
+>>> *) id->driver_data;
+>>> @@ -962,6 +1009,9 @@ static int mhi_pci_probe(struct pci_dev *pdev, 
+>>> const struct pci_device_id *id)
+>>>       mhi_cntrl->runtime_put = mhi_pci_runtime_put;
+>>>       mhi_cntrl->mru = info->mru_default;
+>>>   +    if (info->edl_trigger & MHI_PCI_GENERIC_EDL_TRIGGER)
+>>> +        mhi_cntrl->edl_trigger = mhi_pci_generic_edl_trigger;
+>>> +
+>>>       if (info->sideband_wake) {
+>>>           mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
+>>>           mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
+>>
 
 
