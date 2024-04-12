@@ -1,190 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-17356-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C5858A3621
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 21:03:48 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 76B158A367C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 21:47:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 02E42285632
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 19:03:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A2D7C1C21A1C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 19:47:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13AB014F9E5;
-	Fri, 12 Apr 2024 19:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0298923778;
+	Fri, 12 Apr 2024 19:47:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=epam.com header.i=@epam.com header.b="tz/83Gxj"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EdnGm+7O"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0039f301.pphosted.com (mx0a-0039f301.pphosted.com [148.163.133.242])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8F314EC44;
-	Fri, 12 Apr 2024 19:03:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.133.242
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712948618; cv=fail; b=l/XUPZCMI09nkD16aj0PkqWkQ+Upg6eJU/JK/+cd7GeoWBeQ3qmUDqg8sU70wBnHO7TQWsOtrnNfKz3+liI5Ckv1Vh36L4XQchp5wmCAExMkG62np0GHi0RotdZhY8wbysxn4w79P00YuQDqyP6Jippk6n7xkiXTLb3qzKH6W7A=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712948618; c=relaxed/simple;
-	bh=JYTHCTzNufeMvQsOs/8F5YTxYU5KUKE2bnMbfBt4h+o=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=bhd+WpAULL65+DL9d68rvdu2KVXLI+a89lQJemsJvK6Z8tl/82xE2HQUQzYnPFfAdV88f0yVO4t09fwCKf1alLoG11nsr+tYYXF/j4myJ+R/pHdq42U2Kg6w8eVaZCv2NnJIbMQr5NjNZYPGdsXH6uztfG2Thbac2WbapgZu0KY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=epam.com; spf=pass smtp.mailfrom=epam.com; dkim=pass (2048-bit key) header.d=epam.com header.i=@epam.com header.b=tz/83Gxj; arc=fail smtp.client-ip=148.163.133.242
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=epam.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=epam.com
-Received: from pps.filterd (m0174678.ppops.net [127.0.0.1])
-	by mx0a-0039f301.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43CDu5Bl020474;
-	Fri, 12 Apr 2024 19:03:30 GMT
-Received: from eur05-am6-obe.outbound.protection.outlook.com (mail-am6eur05lp2104.outbound.protection.outlook.com [104.47.18.104])
-	by mx0a-0039f301.pphosted.com (PPS) with ESMTPS id 3xf1saj9wy-2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80961446BD
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Apr 2024 19:47:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1712951260; cv=none; b=U0qR7eJ1tZMvAVpQ5nYk5xkw8I+IY0qKlUHlYWjC0rUXmhjv5KnDLasBB0NNOQJ208SvTZKsWeCmt7ARktc97ulQga5RYZzSO9Cio12bhoqJrldQlLu17Z9ZTDtzx/JcTz3oNTmUcAzlMQPKm78CqMdZDl72LAMH3MXmFkbBfY8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1712951260; c=relaxed/simple;
+	bh=+D09An2wOdBLmM34Q9EdVEqV6fuREbLWqGPy2r5RfGw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=lJxlxr5aRYJl/3BDVuZbBpkyp/CHSO34GUNTwgeWCQiX5M9lJBJ+/wuVpI+mwX1aqWUnbB6G892sgdPIiZPdjuZkl6VnYzkB7L80gxU8FcLNHHHpG/Og1e2DPya44xudLU2dboI1vF09KX+l8vaH+Fj/02TOpouANCjJyvg3ubw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EdnGm+7O; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43CEMj2o007544;
+	Fri, 12 Apr 2024 19:47:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=IZzstnZgSRevNWo7tzbcR4Kxui1W803aC8fJ7RM9t48=; b=Ed
+	nGm+7OH5Tboq7imjGb0JjNSJtIyeqls73F6quVVAP2aM7fZfevUjvj1sjhnDfiHl
+	8si0zG4bfrkSVKK4YFvSmbK7PmL6HhaIv8aOBLXO2iVBw6aBtxwBcm7DuwCW/iTs
+	9j9sm30OPpgKRRGKThSJf5y5oFFLgKe4CWozH6hFS9tCUJfYG5G2kfRCkVh1fgdI
+	jPUzaW8fWJlvWWfaQp2oHwulq2TyppV8gssWZ3x8wsnSqDkG6YA5Iv/IMdMoBcLC
+	fo+YHie+ystyiZ22hU/r5AZ750LEUcf0MZl4GZzh5OH3gc9r97Rv41WFOXPQ/v+P
+	oURs523qOE9B+Grc5iKg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xf0uw1st7-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 12 Apr 2024 19:03:30 +0000 (GMT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=WKH83Fv8hrgfiDzoB59j4CbB4anEZm4b2G3VWH7OSXviQG1lqMrkxfw/ZCoD2LoLqhj15rt8+5mW4Lv2vIzbUHsrdNW7pNXCev/YPJQKktcg6sDqJdemNxA/48A8ZTfeg3JUsVfqqSJo1732Ye+zrKLBVExnrhXD4S20FIlWnWnSTMWXL4Q4JjaE/176Jzpnvn5tU+2pQ5BTJrJtUDzXGvkfG9AoVqBIqK2bEOx/+2wrDge5i2IMTEF/16P/r/0zn0FIYpdTI4eRqiLTeMzfrPsHWUzQv7rJsxPPilRw1Ak9lCN60BQW/GrVgmHHmw6uASenItqUHnggip4BvJTOzg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iFkv1ZenAqJLci4soMiTzgMNyEIk8WBJE0rW85YTOKo=;
- b=S/VRaxBCB2YY2IXXr5VbbZgxn3ttrTrjzKmuJfDyhU7WJsk7wjy1dXI6kllvEGGP2ziPO3/PgfAW42wYjEG3qkLf89eZwT4twu2RXm3AMoOGCqG29l6intE/5tEzG+ip4T0svQsGZDITv+V1e8yQp0+7lRFTHJ2OwyvVwRnYmhrzxcXYs6uHy+dw0wXnaejoA3RIw6memq6ncf1Vm/pI1ZsiqavDeOIy+VAmmzJiMRi/NH3UhqQsl0BBY0crMnlOLwrpT4o4rT3KC8VAmE76iTJl7m3SYWp2ZIrDPDQjk9Lpy0R52f1qe3NPfzGEyL3UjqchmPmgRFb59jomv+TyCw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=epam.com; dmarc=pass action=none header.from=epam.com;
- dkim=pass header.d=epam.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epam.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=iFkv1ZenAqJLci4soMiTzgMNyEIk8WBJE0rW85YTOKo=;
- b=tz/83GxjMybxk8rcVUgU7K4PT9qG0EDlnCBMNNeqkkS/sxVYOZFEs9wIuqJ0af0UZnyddnXi+DsNcyaAhVz6KCz+zkliuonBTwmQk8n2onYQu5mxdi0XLleMBfNJ8JTOC/nZtrodxmxMj5zuGyEpUmGFdUj6Of6uZfERtpCfQdkKnjwH1rvwBLCCRbsz+kjP9Pi1wmHcpZOUtfIG6CV8W5JQufTbmZHBcENmmQ7GGiEmziVJZg4JmLOsB5fRuD7+IPk+frCdrTCn9DvyyuFo9qItoLJZ58BRO2Gr/3Xfse+YlG7IPz/SHXxOlKaldum8ioZ3CuBY/uh+nxvB4HQlSQ==
-Received: from GV1PR03MB10456.eurprd03.prod.outlook.com
- (2603:10a6:150:16a::21) by PAXPR03MB7934.eurprd03.prod.outlook.com
- (2603:10a6:102:219::8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.54; Fri, 12 Apr
- 2024 19:03:26 +0000
-Received: from GV1PR03MB10456.eurprd03.prod.outlook.com
- ([fe80::74c9:2488:1dd7:b976]) by GV1PR03MB10456.eurprd03.prod.outlook.com
- ([fe80::74c9:2488:1dd7:b976%3]) with mapi id 15.20.7409.053; Fri, 12 Apr 2024
- 19:03:26 +0000
-From: Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>
-To: "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
-CC: Stephan Gerhold <stephan@gerhold.net>,
-        Volodymyr Babchuk
-	<Volodymyr_Babchuk@epam.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad
- Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        "devicetree@vger.kernel.org"
-	<devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>
-Subject: [PATCH v3 2/2] arm64: dts: qcom: sa8155p-adp: lower min volt for L13C
- regulator
-Thread-Topic: [PATCH v3 2/2] arm64: dts: qcom: sa8155p-adp: lower min volt for
- L13C regulator
-Thread-Index: AQHajQwZoNf3a+cEJ06mugQP75YLSA==
-Date: Fri, 12 Apr 2024 19:03:26 +0000
-Message-ID: <20240412190310.1647893-2-volodymyr_babchuk@epam.com>
-References: <20240412190310.1647893-1-volodymyr_babchuk@epam.com>
-In-Reply-To: <20240412190310.1647893-1-volodymyr_babchuk@epam.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-mailer: git-send-email 2.44.0
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: GV1PR03MB10456:EE_|PAXPR03MB7934:EE_
-x-ms-office365-filtering-correlation-id: a9400d8b-7f82-4ef9-3c3e-08dc5b233bad
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 
- 0Qv0J9rq5Aj82D9qLwudaj+uFjMzip1pgSVQ1STDBvjQMZ/zLEEvBQpJKb7XZSao3qrIuO6yd7Q2koEab0SeVCTrKsg1RtC9wrVqWAe2ygwdH2b6cqsM7y5EAFozeKIqkvmPS3kFq2MHhEfFDY5+pdeIo9QtjIRdWcGlr4Pv9DsqpxE2EmiISq6vIVxqDkNvs9lGoSyr9VyCsExrEq4gU8b7ck3nz7TiynnIAmvtDiE5qzkJ9lOl7Yl4fy3QYbvx1amio060PDIOs+uujCSFXOZS0ajeELszNWIr4H+Utwd5CGtxDVXdb5X7rcF9iglCXmiLXflraWuYnNYQgrEAkzj7JC9//WCsiSvyon5K9Iim7oGmKfuSF3ATqxA9br84vEGnB0kPXZPRACWftPR1XOdf/luJEtP1XTsMKtkQKNEsWJ64S9sOw64Ag9xV3aEo08oZjET/CBx1THJ6e3XYNcebr2uC38y2PhdRQbVd8/23uB6fyZllXI2kaddM71dsMIinwdX+sSCSpKTL5bQveJhHMjL5CSE3Q2dmh1uOdBas/U2soGQ3q7Lj1FikKVIiAZWhzlWzIgve7o9/NkzD/Sjc5B5cLHiirEqHu/Mew+XiSzjhWBYf71FnoBdFZkfBx0no+Rp1+1cFauqKhdDZBi8tPjDXwosQWw/Rg1RLTyn5gPUK2GMNg2Dg2yMM502mXX0EDAm5RNYmbvONINYYn9aQxKHaUsQRMbMlF4RQTRk=
-x-forefront-antispam-report: 
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV1PR03MB10456.eurprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376005)(1800799015)(366007)(38070700009);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: 
- =?iso-8859-1?Q?0+XdLabSa2MOWOwmwwzpr+ww89BM+lzpgfdW8ImxHtCByZNIcTC1xXdpEF?=
- =?iso-8859-1?Q?7DEphVi8KpxpZaXMLrg42CgScyUj3jRGmJwwJs7opGEU0hVodfHyaLSCh0?=
- =?iso-8859-1?Q?KQnEoe7v+/T6zU8wJZvyfFW64z4Edis/ciUlf/JM8g3ImhRB2IkvHqJN+z?=
- =?iso-8859-1?Q?AOfH/3KjOLyZAPALb8qSV8UCeBgLracE++q+KM/H9PX415G6T/Jkc4U58s?=
- =?iso-8859-1?Q?zLtApXX3ByRFp941YDD4LWvt/0C1JRO2t0Yh9kfETbI5PH5SwH6vk4tttD?=
- =?iso-8859-1?Q?bbwUHR7dwDlz5XxEsVt7vYvmByRx2yYxmKJ9OyPvu/dZjC/OB+RRLb3a+7?=
- =?iso-8859-1?Q?tSrBiwGydPVDD0lcEGgd9ZngJi3DD7xcC8ICQbbWSmrFgyhdQr/iIs7SF9?=
- =?iso-8859-1?Q?fvgURUBpEW2ipkh3TjMBd1h56W/Lu3qinYiWKD6ud9WUuOAx4uFiHzU1Eq?=
- =?iso-8859-1?Q?h2gsPgL8GNbRSo3doOEHrDLoEtY89xe07v8Hz+ImfsOuYwyXbUXZTwwtp8?=
- =?iso-8859-1?Q?CsMMuLkySNqDOwU3en0N8uRVOfgrEgJhHAN0a4JcypCvAiP/rMsaKvVOaj?=
- =?iso-8859-1?Q?BuOtuHHW5R6EAUPRgtU+3cunReYrc8hXtyKKM2ra8ANVqW0iMGzGLZFrMr?=
- =?iso-8859-1?Q?MBg2iGmb75mV/3x9n7Lwhaj1+x9QbHKNA02N5V+dCKRYm1U9NUxdjy0oOW?=
- =?iso-8859-1?Q?I76jMTjuy4EMNfj0k7wiI3yzUWOKwr7tWA0pFAYwAk6lDMea455u23cu6Y?=
- =?iso-8859-1?Q?TjL4pF+/5aVLV35cEEdGLRPyuySTGqh0S4tsAVabmeNktbiYEEhEgcw3Ru?=
- =?iso-8859-1?Q?t56MgTFxPfZeIj3vFSAp5UtfHkcExPO4zWYdnWlCsk98dKTetZ4mEWmbxr?=
- =?iso-8859-1?Q?l6BtyyuVYQs9tNMjjPRMOizdyUWlhdCehD13oxVM7a+TFLbQXw05IDKCVN?=
- =?iso-8859-1?Q?CdSb7Lnceqgkhuci65lE/BLzfaM+BtbK5/ZBfDGIbB1Xp/I+dU3doDbXPs?=
- =?iso-8859-1?Q?RF+JdLocUjW1iXicc8sH7EE4tfbBZ5LQsLtJTK4VUMd+WQuj+yrCezQQdz?=
- =?iso-8859-1?Q?h9yYZy+ZFWLJh2V/MG6qyjbhT4x3KRKlc7jtdwXzNA1uSNH+He1ZcFFVb/?=
- =?iso-8859-1?Q?5UvNQkUQ3N33UAvTdPiiRcr37wtj8bgCpJxQmJzdhKx4RoRUP4sozLErSe?=
- =?iso-8859-1?Q?p/6wpuQ+PTxEqB92Wwjyzxm3YHNv1uY5R74i2h1JV39D+QcJtF0y4FuKaR?=
- =?iso-8859-1?Q?UJrbk5yO0YNb2ps8yiTziIAf8SLOHlHz0niL4lzMFJGdd15kGcn5XFsaPa?=
- =?iso-8859-1?Q?KN7cPoGnqN9sCanpgdXVZxChudhXoW3mf57/Dr8nd0Esj+8g7jvvRBvT8C?=
- =?iso-8859-1?Q?iH90xZklHMW/URcl+CogQm3HBlrzGKjFQ6B83/sHTxxELvP1g4YEAKXL1S?=
- =?iso-8859-1?Q?bN+VW8VsVkajoI0iORzP5cGWsBTGaJ5XBsikZ1TvZbTPp1Ni+SV4AoHJGz?=
- =?iso-8859-1?Q?xbH8xRoSd0haqzL35CFkjFiKCU8IZBkcGynwZlfDyHfCdaM1HJtiEIkG9X?=
- =?iso-8859-1?Q?8rkSK61/49Y4WoOjK64Mkwg8x0CTL8MfwXEgRytL/rxT/nZMvI+yqxF/WS?=
- =?iso-8859-1?Q?vV1QxQgV8PgXC2eHdOUL4B7e73DhgJ7A1dL9w6lpvtNQ2eUOSVwQFRAg?=
- =?iso-8859-1?Q?=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	Fri, 12 Apr 2024 19:47:25 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43CJlOHf019498
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 12 Apr 2024 19:47:24 GMT
+Received: from [10.110.81.58] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 12 Apr
+ 2024 12:47:23 -0700
+Message-ID: <6ed5bb25-979e-bb48-3dfe-4af581bb5dd1@quicinc.com>
+Date: Fri, 12 Apr 2024 12:47:22 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: epam.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: GV1PR03MB10456.eurprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a9400d8b-7f82-4ef9-3c3e-08dc5b233bad
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Apr 2024 19:03:26.1014
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: b41b72d0-4e9f-4c26-8a69-f949f367c91d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: fQoanK8jeZJ4CcxF/cR+CbtqTBNZjQXZZzB2GLO12PqLg26HEqp1etqHkaZbWSKVU3+ha86tZvxOc6epQz/z4hrf2hZEbcuQgvIwxR65bdk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR03MB7934
-X-Proofpoint-ORIG-GUID: dGoJA2tYSQ12aoLLR8FnD4TvVJHL5jXv
-X-Proofpoint-GUID: dGoJA2tYSQ12aoLLR8FnD4TvVJHL5jXv
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 11/12] drm/msm: merge dpu format database to MDP formats
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>
+CC: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20231202214016.1257621-1-dmitry.baryshkov@linaro.org>
+ <20231202214016.1257621-12-dmitry.baryshkov@linaro.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20231202214016.1257621-12-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: BFZqlp-R-AUWSzvUyHSXAl5PRCmRCWsT
+X-Proofpoint-ORIG-GUID: BFZqlp-R-AUWSzvUyHSXAl5PRCmRCWsT
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-12_15,2024-04-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
- bulkscore=0 priorityscore=1501 mlxlogscore=615 adultscore=0 suspectscore=0
- impostorscore=0 spamscore=0 lowpriorityscore=0 mlxscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
- definitions=main-2404120138
+ definitions=2024-04-12_16,2024-04-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 spamscore=0
+ mlxlogscore=999 bulkscore=0 phishscore=0 lowpriorityscore=0 mlxscore=0
+ clxscore=1015 impostorscore=0 suspectscore=0 malwarescore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404120144
 
-Voltage regulator L13C is used by SD card IO interface. In order to
-support UHS modes, IO interface voltage needs to be set to 1.8V. This
-patch extends minimum voltage range of L13C regulator to allow this.
 
-Signed-off-by: Volodymyr Babchuk <volodymyr_babchuk@epam.com>
----
- arch/arm64/boot/dts/qcom/sa8155p-adp.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/dts=
-/qcom/sa8155p-adp.dts
-index b2cf2c988336c..9e9c7f81096bb 100644
---- a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-@@ -283,7 +283,7 @@ vreg_l12c_1p808: ldo12 {
-=20
- 		vreg_l13c_2p96: ldo13 {
- 			regulator-name =3D "vreg_l13c_2p96";
--			regulator-min-microvolt =3D <2504000>;
-+			regulator-min-microvolt =3D <1800000>;
- 			regulator-max-microvolt =3D <2960000>;
- 			regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
- 		};
---=20
-2.44.0
+On 12/2/2023 1:40 PM, Dmitry Baryshkov wrote:
+> Finally remove duplication between DPU and generic MDP code by merging
+> DPU format lists to the MDP format database.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  |   2 +-
+>   .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   |   4 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c   | 602 ------------------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h   |  23 -
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h   |  10 -
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   2 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     |   3 +-
+>   drivers/gpu/drm/msm/disp/mdp_format.c         | 595 +++++++++++++++--
+>   drivers/gpu/drm/msm/disp/mdp_kms.h            |   2 -
+>   drivers/gpu/drm/msm/msm_drv.h                 |  12 +
+>   10 files changed, 549 insertions(+), 706 deletions(-)
+> 
+
+I cross-checked a few macros visually (not each one) and it LGTM in 
+terms of just moving it from dpu_formats.c to mdp_format.c
+
+Even in this change I had the same concern about whether to use MDP for 
+dpu formats.
+
+But I think even if we make it MSM_*** then we will have to keep them in 
+some msm_** header and not mdp_format.c
+
+So lets go ahead with the MDP naming which you have. If we see its not 
+working out later on, please be open to a mass renaming that time.
+
+<snip>
+
+> index dea6d47854fe..e7651a0e878c 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -267,6 +267,16 @@ enum msm_format_flags {
+>   #define MSM_FORMAT_FLAG_UNPACK_ALIGN_MSB BIT(MSM_FORMAT_FLAG_UNPACK_ALIGN_MSB_BIT)
+>   #define MSM_FORMAT_FLAG_ALPHA_ENABLE	BIT(MSM_FORMAT_FLAG_ALPHA_ENABLE_BIT)
+>   
+> +/**
+> + * DPU HW,Component order color map
+> + */
+> +enum {
+> +	C0_G_Y = 0,
+> +	C1_B_Cb = 1,
+> +	C2_R_Cr = 2,
+> +	C3_ALPHA = 3
+> +};
+> +
+>   /**
+>    * struct msm_format: defines the format configuration
+>    * @pixel_format: format fourcc
+> @@ -305,6 +315,8 @@ struct msm_format {
+>   	(((X)->fetch_mode == MDP_FETCH_UBWC) && \
+>   	 ((X)->flags & MSM_FORMAT_FLAG_COMPRESSED))
+>   
+> +const struct msm_format *mdp_get_format(struct msm_kms *kms, uint32_t format, uint64_t modifier);
+> +
+>   struct msm_pending_timer;
+>   
+>   int msm_atomic_init_pending_timer(struct msm_pending_timer *timer,
+
+I am now thinking that do you think it makes sense to move all 
+MDP_FORMAT macros to a new mdp_formats.h including the RGB/YUV bitfield 
+macros (even though I already acked that change).
+
+Instead of bloating msm_drv.h even more?
 
