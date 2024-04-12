@@ -1,238 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-17319-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17320-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B0458A2B42
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 11:33:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B5BA8A2CCD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 12:48:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 02A801F21715
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 09:33:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DF4D11F22190
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 10:48:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87330502BB;
-	Fri, 12 Apr 2024 09:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20EC942045;
+	Fri, 12 Apr 2024 10:48:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bzQmWAx3"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OyAkddjx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72054D58E;
-	Fri, 12 Apr 2024 09:33:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873013CF79;
+	Fri, 12 Apr 2024 10:48:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712914390; cv=none; b=M2kdLoCnaPzHJvk4XankF00w/IGOpXX8MC/52yL2Nq9ASvbBCZCZl4UIH4xlVBtjJQXMmExCmt0rhGzNYKY9M6yculwdy2TiGXYTALgUs3W7TE9r3gjVH6CJoGBIGZ6mxzpOoPf8e2w/D3EkfI54RhxD4BbXRPRz/8RHvg1FlNg=
+	t=1712918930; cv=none; b=bclKpbxDNxLSJHncEr5XCEL1QK4jsfsLDLXttMAsAht8V81sk1SwxLg+szUMeCwFj6RMmtf7M02qLK8ZR+9b6sY3aqLW/hymptKM5vxotES6WayHtPmC0JC/H8WTWInTZXO4rvjEre0PrJpyEinCsDZUej8HsLLgAfZ6HZogF68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712914390; c=relaxed/simple;
-	bh=447vID+BjsGAEuT5pXDvttIGggtbTmZ35xwoUndklWQ=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=flTm/A7QD2t7MCFxNvhHRIJWMvTaVbMo4NnUNZRFfOhcAoAC2Bgu+8GwskaQrDHdAddr0IfB1mnLfo5OVD60wLt0Fzr/k6MkalUyJLpJDFbD+GrwF9Uhc1MG1aXanBBhMRRhGusSNFpY4XdvsENuXuj6WV3+e6mzMVbQPYZ6LjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bzQmWAx3; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1712918930; c=relaxed/simple;
+	bh=FDqUajE9GfA8H5Akw2N7P80Hc9nZh1oc2O8o1X0XICw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=eNL30wXuVAjtYFpR/lPCndsogsDAHN1k++PIwB31nGgxvUeH45KOV1jneVvwgD8PNbjGTaWF159Nl61kTH3xkeQTjpB6YaipEtLjE1wGtDv+AMovcDpqdIa1hjfNuKEt2FLKD5ULtUdkxc+pgneUO7zPqQnHHCqTkfsa48ph5vI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OyAkddjx; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43C7l4aa025212;
-	Fri, 12 Apr 2024 09:32:58 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43C4ivdO010574;
+	Fri, 12 Apr 2024 10:48:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=sZ8qCrQrYqQLoJHciB//k
-	j+RjjDUdkNCd9ioYLTNi20=; b=bzQmWAx36Vt/7Vm3VjvnZuk/q91iMvKosXd67
-	yK9SnhpKF+GSYOe7HVV2ju6lv9mAZH1ClT5kF09hOtUHLZU9rmtSzEtt15SCxneu
-	NRPebQQwL2i9iFNvq8WdxGw0s/504QxDd/DGckKzQ94pzxJSQVr9wZ6cwqzKi1gh
-	Q5+GhorMEO4vaaHVKmeNM3W+h537tpv/DF7sl2Dq0Ob6LyG0zX/5JIgtoHHDsDdd
-	wUixavYnrRpVXquDWk5jvohC4wLAP9A1JFsXm6Yi8glWPqO/wopklL3I3smHkDcl
-	vkN3O0uu3J/48m8sx3gQsce8rge+LXWCvDhFzVJUj0EIUNVrQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xf0uw06mb-1
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=E//2tur9tqzFvXJEtnP+//xNEf8yb1xDRgrFPMK+W7g=; b=Oy
+	AkddjxSQwV5lDXSPhDv/sv1XIH+jC8tmnvNJgA5/Uy+HXUNiywhKcw1NiGmYzfO0
+	LGKRmI8Vmvry0WPozyokPm8D5A9G+B/y03sk5yQQL4emoG3e5NB61t4ab7D4lhV9
+	Ya8bDB/ylsLCAucgqst1KwBh+y9+TsmwopFsx7+1ilfTMKdRERCkzKzbzTOIW+/s
+	y4sPDRNNktjsjvo5EYYiZNxpNlbPspFH+ZjNwASMquw+zKbZj27CoR4TakMs5z/l
+	4TXc8J8j36kncKmsN+KOlkTsAxhuM4nY+/V1IZPiOQbhsTBVULZb5EtmmgYlgw9E
+	7Z2rWFxc3rZLcebg4RVg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xevwegvq0-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 12 Apr 2024 09:32:57 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43C9WuS9025598
+	Fri, 12 Apr 2024 10:48:43 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43CAmggB024674
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 12 Apr 2024 09:32:56 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 12 Apr 2024 02:32:51 -0700
-Date: Fri, 12 Apr 2024 15:02:47 +0530
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Konrad Dybcio <konrad.dybcio@linaro.org>, <andersson@kernel.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <djakov@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <quic_anusha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH v7 1/5] dt-bindings: interconnect: Add Qualcomm IPQ9574
- support
-Message-ID: <Zhj/v+AfzHlUCwRg@hu-varada-blr.qualcomm.com>
-References: <58c9b754-b9a7-444d-9545-9e6648010630@kernel.org>
- <Zg5q6mnWtK6hmPBT@hu-varada-blr.qualcomm.com>
- <ZhTxFVDH0xTSkw7r@hu-varada-blr.qualcomm.com>
- <1ec401be-11cb-416a-9eae-d72ea8acf06f@kernel.org>
- <ZhUghsa5Do5m7wrX@hu-varada-blr.qualcomm.com>
- <a0173a13-5f20-4e24-8417-afce5fdbda0e@kernel.org>
- <ZhZjuCkJrtPbwtS/@hu-varada-blr.qualcomm.com>
- <70d0afa7-4990-4180-8dfa-cdf267e4c7a2@kernel.org>
- <f1b0d280-6986-4055-a611-2caceb15867d@linaro.org>
- <82e5503c-0710-4b17-af79-8dece4794ec8@kernel.org>
+	Fri, 12 Apr 2024 10:48:42 GMT
+Received: from [10.216.31.21] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 12 Apr
+ 2024 03:48:39 -0700
+Message-ID: <3ca2f601-ce45-43cf-b0dd-e28865874455@quicinc.com>
+Date: Fri, 12 Apr 2024 16:18:36 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <82e5503c-0710-4b17-af79-8dece4794ec8@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RESEND] arm64: dts: qcom: qcs6490-rb3gen2: enable PMIC
+ Volume and Power buttons
+To: Bjorn Andersson <andersson@kernel.org>
+CC: Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20240403132839.2117675-1-quic_uchheda@quicinc.com>
+ <6b3gqfrvljvlfaf365l55kjcbjd4rfmw223tro6rqy5crykxgb@l66dptcrujip>
+Content-Language: en-US
+From: Umang Chheda <quic_uchheda@quicinc.com>
+In-Reply-To: <6b3gqfrvljvlfaf365l55kjcbjd4rfmw223tro6rqy5crykxgb@l66dptcrujip>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: EOkL0jt8Cn-SKNNZmytxTZuFP3PqlHd3
-X-Proofpoint-ORIG-GUID: EOkL0jt8Cn-SKNNZmytxTZuFP3PqlHd3
+X-Proofpoint-GUID: 9XSzGivasphI21k24OGbDc3i3NJar2Wx
+X-Proofpoint-ORIG-GUID: 9XSzGivasphI21k24OGbDc3i3NJar2Wx
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-12_06,2024-04-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 spamscore=0
- mlxlogscore=999 bulkscore=0 phishscore=0 lowpriorityscore=0 mlxscore=0
- clxscore=1015 impostorscore=0 suspectscore=0 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404120068
+ definitions=2024-04-12_07,2024-04-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ spamscore=0 clxscore=1015 priorityscore=1501 impostorscore=0
+ mlxlogscore=999 bulkscore=0 phishscore=0 adultscore=0 suspectscore=0
+ mlxscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404120078
 
-On Wed, Apr 10, 2024 at 02:01:00PM +0200, Krzysztof Kozlowski wrote:
-> On 10/04/2024 13:48, Konrad Dybcio wrote:
-> >
-> >
-> > On 4/10/24 13:15, Krzysztof Kozlowski wrote:
-> >> On 10/04/2024 12:02, Varadarajan Narayanan wrote:
-> >>>> Okay, so what happens if icc-clk way of generating them changes a bit?
-> >>>> It can change, why not, driver implementation is not an ABI.
-> >>>>
-> >>>>>
-> >>>>> 	2. These auto-generated id-numbers have to be correctly
-> >>>>> 	   tied to the DT nodes. Else, the relevant clocks may
-> >>>>> 	   not get enabled.
-> >>>>
-> >>>> Sorry, I don't get, how auto generated ID number is tied to DT node.
-> >>>> What DT node?
-> >>>
-> >>> I meant the following usage for the 'interconnects' entry of the
-> >>> consumer peripheral's node.
-> >>>
-> >>> 	interconnects = <&gcc MASTER_ANOC_PCIE0 &gcc SLAVE_ANOC_PCIE0>,
-> >>> 			      ^^^^^^^^^^^^^^^^^      ^^^^^^^^^^^^^^^^
-> >>> 			<&gcc MASTER_SNOC_PCIE0 &gcc SLAVE_SNOC_PCIE0>;
-> >>> 			      ^^^^^^^^^^^^^^^^^      ^^^^^^^^^^^^^^^^
-> >>>
-> >>>>> Since ICC-CLK creates two ids per clock entry (one MASTER_xxx and
-> >>>>> one SLAVE_xxx), using those MASTER/SLAVE_xxx macros as indices in
-> >>>>> the below array would create holes.
-> >>>>>
-> >>>>> 	static int icc_ipq9574_hws[] = {
-> >>>>> 		[MASTER_ANOC_PCIE0] = GCC_ANOC_PCIE0_1LANE_M_CLK,
-> >>>>> 		[MASTER_SNOC_PCIE0] = GCC_SNOC_PCIE0_1LANE_S_CLK,
-> >>>>> 		[MASTER_ANOC_PCIE1] = GCC_ANOC_PCIE1_1LANE_M_CLK,
-> >>>>> 		[MASTER_SNOC_PCIE1] = GCC_SNOC_PCIE1_1LANE_S_CLK,
-> >>>>> 		. . .
-> >>>>> 	};
-> >>>>>
-> >>>>> Other Qualcomm drivers don't have this issue and they can
-> >>>>> directly use the MASTER/SLAVE_xxx macros.
-> >>>>
-> >>>> I understand, thanks, yet your last patch keeps adding fake IDs, means
-> >>>> IDs which are not part of ABI.
-> >>>>
-> >>>>>
-> >>>>> As the MASTER_xxx macros cannot be used, have to define a new set
-> >>>>> of macros that can be used for indices in the above array. This
-> >>>>> is the reason for the ICC_BINDING_NAME macros.
-> >>>>
-> >>>> Then maybe fix the driver, instead of adding something which is not an
-> >>>> ABI to bindings and completely skipping the actual ABI.
-> >>>
-> >>> Will remove the ICC_xxx defines from the header. And in the
-> >>> driver will change the declaration as follows. Will that be
-> >>> acceptable?
-> >>>
-> >>> 	static int icc_ipq9574_hws[] = {
-> >>> 		[MASTER_ANOC_PCIE0 / 2] = GCC_ANOC_PCIE0_1LANE_M_CLK,
-> >>
-> >> What is the binding in such case? What exactly do you bind between
-> >> driver and DTS?
-> >
-> > I think what Krzysztof is trying to say here is "the icc-clk API is tragic"
-> > and the best solution would be to make it such that the interconnect indices
-> > are set explicitly, instead of (master, slave), (master, slave) etc.
-> >
-> > Does that sound good, Krzysztof?
->
-> Yes, I think earlier I expressed that icc-clk might needs fixes.
+Hi Bjorn,
 
-Ok
+On 4/9/2024 8:47 PM, Bjorn Andersson wrote:
+> On Wed, Apr 03, 2024 at 06:58:39PM +0530, Umang Chheda wrote:
+>> The Volume Down & Power buttons are controlled by the PMIC via
+>> the PON hardware, and the Volume Up is connected to a PMIC gpio.
+>>
+>> Enable the necessary hardware and setup the GPIO state for the
+>> Volume Up gpio key.
+>>
+>> Signed-off-by: Umang Chheda <quic_uchheda@quicinc.com>
+>> ---
+> 
+> I suppose this isn't a "resend" either, so please send me a new version
+> of this as well.
+> 
 
-> The indices you define in the binding must be used by DTS and by the driver.
+I had earlier sent [1] for review, on which I hadn't received any review comments.
 
-There are 3 drivers in play here.
-	1. The icc-clk driver
-	2. The gcc (i.e. the interconnect driver)
-	3. The consumer peripheral's driver
+Hence, I resent this patch again after 2 weeks for review.
 
-By 'driver' I assume, you mean the icc-clk driver.
+[1] https://lore.kernel.org/linux-arm-msm/20240320121016.2878367-1-quic_uchheda@quicinc.com/
 
-> Directly, otherwise it is error-prone and not really an ABI...
+Regards,
+Umang
 
-To address this, will modify the icc-clk driver as follows.
-
-	==========================================
-	diff --git a/include/linux/interconnect-clk.h b/include/linux/interconnect-clk.h
-	index 5c611a8b0892..9bcee3e9c56c 100644
-	--- a/include/linux/interconnect-clk.h
-	+++ b/include/linux/interconnect-clk.h
-	@@ -11,6 +11,8 @@ struct device;
-	 struct icc_clk_data {
-		struct clk *clk;
-		const char *name;
-	+	unsigned int master_id;
-	+	unsigned int slave_id;
-	 };
-
-
-	diff --git a/drivers/interconnect/icc-clk.c b/drivers/interconnect/icc-clk.c
-	index bce946592c98..f788db15cd76 100644
-	--- a/drivers/interconnect/icc-clk.c
-	+++ b/drivers/interconnect/icc-clk.c
-	@@ -108,7 +108,7 @@ struct icc_provider *icc_clk_register(struct device *dev,
-		for (i = 0, j = 0; i < num_clocks; i++) {
-			qp->clocks[i].clk = data[i].clk;
-
-	-		node = icc_node_create(first_id + j);
-	+		node = icc_node_create(first_id + data[i].master_id);
-			if (IS_ERR(node)) {
-				ret = PTR_ERR(node);
-				goto err;
-	@@ -118,10 +118,10 @@ struct icc_provider *icc_clk_register(struct device *dev,
-			node->data = &qp->clocks[i];
-			icc_node_add(node, provider);
-			/* link to the next node, slave */
-	-		icc_link_create(node, first_id + j + 1);
-	+		icc_link_create(node, first_id + data[i].slave_id);
-			onecell->nodes[j++] = node;
-
-	-		node = icc_node_create(first_id + j);
-	+		node = icc_node_create(first_id + data[i].slave_id);
-			if (IS_ERR(node)) {
-				ret = PTR_ERR(node);
-				goto err;
-	==========================================
-
-And update the inputs going from gcc-ipq9574.c accordingly
-to use the MASTER_xxx and SLAVE_xxx defines. Will this be ok?
-
-Konrad & Krzysztof kindly let me know.
-
-Thanks
-Varada
+> Regards,
+> Bjorn
+> 
+>>  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 37 ++++++++++++++++++++
+>>  1 file changed, 37 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+>> index 63ebe0774f1d..73f6d18d2331 100644
+>> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+>> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+>> @@ -9,6 +9,8 @@
+>>  #define PM7250B_SID 8
+>>  #define PM7250B_SID1 9
+>>  
+>> +#include <dt-bindings/input/linux-event-codes.h>
+>> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+>>  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>>  #include "sc7280.dtsi"
+>>  #include "pm7250b.dtsi"
+>> @@ -39,6 +41,22 @@ chosen {
+>>  		stdout-path = "serial0:115200n8";
+>>  	};
+>>  
+>> +	gpio-keys {
+>> +		compatible = "gpio-keys";
+>> +
+>> +		pinctrl-0 = <&key_vol_up_default>;
+>> +		pinctrl-names = "default";
+>> +
+>> +		key-volume-up {
+>> +			label = "Volume_up";
+>> +			gpios = <&pm7325_gpios 6 GPIO_ACTIVE_LOW>;
+>> +			linux,code = <KEY_VOLUMEUP>;
+>> +			wakeup-source;
+>> +			debounce-interval = <15>;
+>> +			linux,can-disable;
+>> +		};
+>> +	};
+>> +
+>>  	reserved-memory {
+>>  		xbl_mem: xbl@80700000 {
+>>  			reg = <0x0 0x80700000 0x0 0x100000>;
+>> @@ -471,6 +489,25 @@ &gcc {
+>>  			   <GCC_WPSS_RSCP_CLK>;
+>>  };
+>>  
+>> +&pm7325_gpios {
+>> +	key_vol_up_default: key-vol-up-state {
+>> +		pins = "gpio6";
+>> +		function = "normal";
+>> +		input-enable;
+>> +		bias-pull-up;
+>> +		qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
+>> +	};
+>> +};
+>> +
+>> +&pon_pwrkey {
+>> +	status = "okay";
+>> +};
+>> +
+>> +&pon_resin {
+>> +	linux,code = <KEY_VOLUMEDOWN>;
+>> +	status = "okay";
+>> +};
+>> +
+>>  &qupv3_id_0 {
+>>  	status = "okay";
+>>  };
+>> -- 
+>> 2.25.1
+>>
 
