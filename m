@@ -1,138 +1,238 @@
-Return-Path: <linux-arm-msm+bounces-17318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17319-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A12C8A2A36
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 11:04:23 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B0458A2B42
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 11:33:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A43EA282F26
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 09:04:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 02A801F21715
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Apr 2024 09:33:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D31A33C471;
-	Fri, 12 Apr 2024 08:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87330502BB;
+	Fri, 12 Apr 2024 09:33:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mzwR1GH1"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bzQmWAx3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB9853E13
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Apr 2024 08:53:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72054D58E;
+	Fri, 12 Apr 2024 09:33:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712912013; cv=none; b=AjVaFJtD+NuR5PQKeiKW9i8e89vXkEPQNwSyIyPAO+1BP0t/kC+zAeh3Prmzc1i1ua/EMvemX0lZ+G3qX7K6HmVGe53zrpFKcbvvaySmB0P6YDMM8KSuGzJaA7w/A3k0Vwd7tS2NN/1xZakRcNBCF3YzqLKDK2VUD1oktzZjrKM=
+	t=1712914390; cv=none; b=M2kdLoCnaPzHJvk4XankF00w/IGOpXX8MC/52yL2Nq9ASvbBCZCZl4UIH4xlVBtjJQXMmExCmt0rhGzNYKY9M6yculwdy2TiGXYTALgUs3W7TE9r3gjVH6CJoGBIGZ6mxzpOoPf8e2w/D3EkfI54RhxD4BbXRPRz/8RHvg1FlNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712912013; c=relaxed/simple;
-	bh=IfBjoXvsAqSszVL70UBX9LvJJQbmIVXzQ26EnPnGMSQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=qdqPKNQ09i9Gs7rtePhGDjfs/6saCSUaO7uY/aTbGma6qqmoKtPsYB0N28Pm75eRWNJqgfVqGoBfzo556c/wJRsqnqOUsbvez1I/7afSTRYIXA7ii2dlb1ABTFuJHeXU4/4bvbcP3/HmNJf6K6CD9EbLsD8TMCKtntszBvomzQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mzwR1GH1; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-516a01c8490so1244606e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Apr 2024 01:53:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712912010; x=1713516810; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=YxatRE/93mGsglGJYCl3WbRD1jFFlo897Trav2ySzAI=;
-        b=mzwR1GH12OCNt69vs/ntUYZCxC/vqaLcPnGz2xAGWFeo2mlMqy+s1yGQ0FREmwE2Y5
-         LGDOrM8VutxC1dPX0Og7D+Cn6pWyiB8hDfnD7mhArmXx24rk+5DhrGfOreaQ2Erv8ske
-         xnxj/QrZY02rCKnWgC2JsODysPs3TcqXL9KfiFDXp4BKFqzZ+eqRQuEDrPdC0d8OQv/X
-         vfIoGzuFhIe5Nlmvngydrz0S2Vx6YDtTagppotQDZnf1NVY+N0q2lZZDLWF4lWoXyK79
-         Qgb1pmxlmtCa2/l3bdrlrZa3Iok0pPdtWGHGm+aFfxJNRr15pgxgplUlwchvIVSc3Lyq
-         iWKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712912010; x=1713516810;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YxatRE/93mGsglGJYCl3WbRD1jFFlo897Trav2ySzAI=;
-        b=pfFfD4yp3lFKelOUH0rNzuTDi+hMniBCYLrwgqcNxMkdy/BDNa4s6r8/D2lfZOgUR1
-         h3Cw+bHR83bwv7vZhjXRPdADbuLHmq03F5Rj9ELbSeHRhOFCP+tkqvW6pZ15GxR4ysJx
-         FfRc7Yu+S4Ae+P5XN14eq2XaWUw+7enbmzl4AxHCPufz/yXQKe+PhsPqmAeIK58LqZUs
-         PvrmlIRXVF4FmKN/kJt+qCOM8AxwIPhjEvPjbSExYQWGqOpqULG6oVazygyjwP7dbcw8
-         viKGVlvq4lzIdXHrzn17SysveIxUwUKTVX8Ris1eeZJCWCGyS6/7BycGEPDmOnkbfPuZ
-         Xbjw==
-X-Forwarded-Encrypted: i=1; AJvYcCVvU/3MwYFOJGgB6XZv84o2px9/awxMTzwND3l2MO6G6ycmsyJhhXH7iRHUHqpE4yUV4oGybOdTOUKLNPVFIdSlc4Tv/OssvJ9mgWGeQQ==
-X-Gm-Message-State: AOJu0Yz6MSAxnv9SwI8sqW7RaOvjfACM+DDqEW38e0jOAmE80YVPXc+F
-	xH3jwtfVRIB2IwzbG5MCXVVJFNnHbMIkcwEJ6ByOIUC/5MjipvKOAo994opUaYE=
-X-Google-Smtp-Source: AGHT+IHjgkDtt9V366P7Lg32vys821kGAn+wZ3KJVBrDfDCBQOWLQL30EXbA0v1fE9uOESGSbmyVxw==
-X-Received: by 2002:ac2:538c:0:b0:517:30a3:d000 with SMTP id g12-20020ac2538c000000b0051730a3d000mr538477lfh.28.1712912010091;
-        Fri, 12 Apr 2024 01:53:30 -0700 (PDT)
-Received: from [127.0.1.1] (netpanel-87-246-222-133.pol.akademiki.lublin.pl. [87.246.222.133])
-        by smtp.gmail.com with ESMTPSA id u9-20020ac248a9000000b00516cbd3e982sm461779lfg.178.2024.04.12.01.53.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Apr 2024 01:53:29 -0700 (PDT)
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Fri, 12 Apr 2024 10:53:25 +0200
-Subject: [PATCH] drm/msm/a6xx: Avoid a nullptr dereference when speedbin
- setting fails
+	s=arc-20240116; t=1712914390; c=relaxed/simple;
+	bh=447vID+BjsGAEuT5pXDvttIGggtbTmZ35xwoUndklWQ=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=flTm/A7QD2t7MCFxNvhHRIJWMvTaVbMo4NnUNZRFfOhcAoAC2Bgu+8GwskaQrDHdAddr0IfB1mnLfo5OVD60wLt0Fzr/k6MkalUyJLpJDFbD+GrwF9Uhc1MG1aXanBBhMRRhGusSNFpY4XdvsENuXuj6WV3+e6mzMVbQPYZ6LjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bzQmWAx3; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43C7l4aa025212;
+	Fri, 12 Apr 2024 09:32:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=sZ8qCrQrYqQLoJHciB//k
+	j+RjjDUdkNCd9ioYLTNi20=; b=bzQmWAx36Vt/7Vm3VjvnZuk/q91iMvKosXd67
+	yK9SnhpKF+GSYOe7HVV2ju6lv9mAZH1ClT5kF09hOtUHLZU9rmtSzEtt15SCxneu
+	NRPebQQwL2i9iFNvq8WdxGw0s/504QxDd/DGckKzQ94pzxJSQVr9wZ6cwqzKi1gh
+	Q5+GhorMEO4vaaHVKmeNM3W+h537tpv/DF7sl2Dq0Ob6LyG0zX/5JIgtoHHDsDdd
+	wUixavYnrRpVXquDWk5jvohC4wLAP9A1JFsXm6Yi8glWPqO/wopklL3I3smHkDcl
+	vkN3O0uu3J/48m8sx3gQsce8rge+LXWCvDhFzVJUj0EIUNVrQ==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xf0uw06mb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 12 Apr 2024 09:32:57 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43C9WuS9025598
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 12 Apr 2024 09:32:56 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 12 Apr 2024 02:32:51 -0700
+Date: Fri, 12 Apr 2024 15:02:47 +0530
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: Konrad Dybcio <konrad.dybcio@linaro.org>, <andersson@kernel.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <djakov@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <quic_anusha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH v7 1/5] dt-bindings: interconnect: Add Qualcomm IPQ9574
+ support
+Message-ID: <Zhj/v+AfzHlUCwRg@hu-varada-blr.qualcomm.com>
+References: <58c9b754-b9a7-444d-9545-9e6648010630@kernel.org>
+ <Zg5q6mnWtK6hmPBT@hu-varada-blr.qualcomm.com>
+ <ZhTxFVDH0xTSkw7r@hu-varada-blr.qualcomm.com>
+ <1ec401be-11cb-416a-9eae-d72ea8acf06f@kernel.org>
+ <ZhUghsa5Do5m7wrX@hu-varada-blr.qualcomm.com>
+ <a0173a13-5f20-4e24-8417-afce5fdbda0e@kernel.org>
+ <ZhZjuCkJrtPbwtS/@hu-varada-blr.qualcomm.com>
+ <70d0afa7-4990-4180-8dfa-cdf267e4c7a2@kernel.org>
+ <f1b0d280-6986-4055-a611-2caceb15867d@linaro.org>
+ <82e5503c-0710-4b17-af79-8dece4794ec8@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240412-topic-adreno_nullptr_supphw-v1-1-eb30a1c1292f@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAIT2GGYC/x3MQQqEMAwAwK9IzltIa734FVlEbdSAtCHVXUH8u
- 8XjXOaCTMqUoa0uUPpx5hQL7KeCaR3iQoZDMTh0Hr11Zk/CkxmCUkx9PLZNdu3zIbL+jcUwzk1
- dI3oPZRClmc937773/QDRbrr7bQAAAA==
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc: Rob Clark <robdclark@chromium.org>, linux-arm-msm@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
- linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.14-dev
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <82e5503c-0710-4b17-af79-8dece4794ec8@kernel.org>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: EOkL0jt8Cn-SKNNZmytxTZuFP3PqlHd3
+X-Proofpoint-ORIG-GUID: EOkL0jt8Cn-SKNNZmytxTZuFP3PqlHd3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-12_06,2024-04-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 spamscore=0
+ mlxlogscore=999 bulkscore=0 phishscore=0 lowpriorityscore=0 mlxscore=0
+ clxscore=1015 impostorscore=0 suspectscore=0 malwarescore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404120068
 
-Calling a6xx_destroy() before adreno_gpu_init() leads to a null pointer
-dereference on:
+On Wed, Apr 10, 2024 at 02:01:00PM +0200, Krzysztof Kozlowski wrote:
+> On 10/04/2024 13:48, Konrad Dybcio wrote:
+> >
+> >
+> > On 4/10/24 13:15, Krzysztof Kozlowski wrote:
+> >> On 10/04/2024 12:02, Varadarajan Narayanan wrote:
+> >>>> Okay, so what happens if icc-clk way of generating them changes a bit?
+> >>>> It can change, why not, driver implementation is not an ABI.
+> >>>>
+> >>>>>
+> >>>>> 	2. These auto-generated id-numbers have to be correctly
+> >>>>> 	   tied to the DT nodes. Else, the relevant clocks may
+> >>>>> 	   not get enabled.
+> >>>>
+> >>>> Sorry, I don't get, how auto generated ID number is tied to DT node.
+> >>>> What DT node?
+> >>>
+> >>> I meant the following usage for the 'interconnects' entry of the
+> >>> consumer peripheral's node.
+> >>>
+> >>> 	interconnects = <&gcc MASTER_ANOC_PCIE0 &gcc SLAVE_ANOC_PCIE0>,
+> >>> 			      ^^^^^^^^^^^^^^^^^      ^^^^^^^^^^^^^^^^
+> >>> 			<&gcc MASTER_SNOC_PCIE0 &gcc SLAVE_SNOC_PCIE0>;
+> >>> 			      ^^^^^^^^^^^^^^^^^      ^^^^^^^^^^^^^^^^
+> >>>
+> >>>>> Since ICC-CLK creates two ids per clock entry (one MASTER_xxx and
+> >>>>> one SLAVE_xxx), using those MASTER/SLAVE_xxx macros as indices in
+> >>>>> the below array would create holes.
+> >>>>>
+> >>>>> 	static int icc_ipq9574_hws[] = {
+> >>>>> 		[MASTER_ANOC_PCIE0] = GCC_ANOC_PCIE0_1LANE_M_CLK,
+> >>>>> 		[MASTER_SNOC_PCIE0] = GCC_SNOC_PCIE0_1LANE_S_CLK,
+> >>>>> 		[MASTER_ANOC_PCIE1] = GCC_ANOC_PCIE1_1LANE_M_CLK,
+> >>>>> 		[MASTER_SNOC_PCIE1] = GCC_SNOC_PCIE1_1LANE_S_CLK,
+> >>>>> 		. . .
+> >>>>> 	};
+> >>>>>
+> >>>>> Other Qualcomm drivers don't have this issue and they can
+> >>>>> directly use the MASTER/SLAVE_xxx macros.
+> >>>>
+> >>>> I understand, thanks, yet your last patch keeps adding fake IDs, means
+> >>>> IDs which are not part of ABI.
+> >>>>
+> >>>>>
+> >>>>> As the MASTER_xxx macros cannot be used, have to define a new set
+> >>>>> of macros that can be used for indices in the above array. This
+> >>>>> is the reason for the ICC_BINDING_NAME macros.
+> >>>>
+> >>>> Then maybe fix the driver, instead of adding something which is not an
+> >>>> ABI to bindings and completely skipping the actual ABI.
+> >>>
+> >>> Will remove the ICC_xxx defines from the header. And in the
+> >>> driver will change the declaration as follows. Will that be
+> >>> acceptable?
+> >>>
+> >>> 	static int icc_ipq9574_hws[] = {
+> >>> 		[MASTER_ANOC_PCIE0 / 2] = GCC_ANOC_PCIE0_1LANE_M_CLK,
+> >>
+> >> What is the binding in such case? What exactly do you bind between
+> >> driver and DTS?
+> >
+> > I think what Krzysztof is trying to say here is "the icc-clk API is tragic"
+> > and the best solution would be to make it such that the interconnect indices
+> > are set explicitly, instead of (master, slave), (master, slave) etc.
+> >
+> > Does that sound good, Krzysztof?
+>
+> Yes, I think earlier I expressed that icc-clk might needs fixes.
 
-msm_gpu_cleanup() : platform_set_drvdata(gpu->pdev, NULL);
+Ok
 
-as gpu->pdev is only assigned in:
+> The indices you define in the binding must be used by DTS and by the driver.
 
-a6xx_gpu_init()
-|_ adreno_gpu_init
-    |_ msm_gpu_init()
+There are 3 drivers in play here.
+	1. The icc-clk driver
+	2. The gcc (i.e. the interconnect driver)
+	3. The consumer peripheral's driver
 
-Instead of relying on handwavy null checks down the cleanup chain,
-explicitly de-allocate the LLC data and free a6xx_gpu instead.
+By 'driver' I assume, you mean the icc-clk driver.
 
-Fixes: 76efc2453d0e ("drm/msm/gpu: Fix crash during system suspend after unbind")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+> Directly, otherwise it is error-prone and not really an ABI...
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 0674aca0f8a3..d10323f15d40 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -3058,7 +3058,8 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
- 
- 	ret = a6xx_set_supported_hw(&pdev->dev, config->info);
- 	if (ret) {
--		a6xx_destroy(&(a6xx_gpu->base.base));
-+		a6xx_llc_slices_destroy(a6xx_gpu);
-+		kfree(a6xx_gpu);
- 		return ERR_PTR(ret);
- 	}
- 
+To address this, will modify the icc-clk driver as follows.
 
----
-base-commit: 2b3d5988ae2cb5cd945ddbc653f0a71706231fdd
-change-id: 20240412-topic-adreno_nullptr_supphw-10dbf5330044
+	==========================================
+	diff --git a/include/linux/interconnect-clk.h b/include/linux/interconnect-clk.h
+	index 5c611a8b0892..9bcee3e9c56c 100644
+	--- a/include/linux/interconnect-clk.h
+	+++ b/include/linux/interconnect-clk.h
+	@@ -11,6 +11,8 @@ struct device;
+	 struct icc_clk_data {
+		struct clk *clk;
+		const char *name;
+	+	unsigned int master_id;
+	+	unsigned int slave_id;
+	 };
 
-Best regards,
--- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
 
+	diff --git a/drivers/interconnect/icc-clk.c b/drivers/interconnect/icc-clk.c
+	index bce946592c98..f788db15cd76 100644
+	--- a/drivers/interconnect/icc-clk.c
+	+++ b/drivers/interconnect/icc-clk.c
+	@@ -108,7 +108,7 @@ struct icc_provider *icc_clk_register(struct device *dev,
+		for (i = 0, j = 0; i < num_clocks; i++) {
+			qp->clocks[i].clk = data[i].clk;
+
+	-		node = icc_node_create(first_id + j);
+	+		node = icc_node_create(first_id + data[i].master_id);
+			if (IS_ERR(node)) {
+				ret = PTR_ERR(node);
+				goto err;
+	@@ -118,10 +118,10 @@ struct icc_provider *icc_clk_register(struct device *dev,
+			node->data = &qp->clocks[i];
+			icc_node_add(node, provider);
+			/* link to the next node, slave */
+	-		icc_link_create(node, first_id + j + 1);
+	+		icc_link_create(node, first_id + data[i].slave_id);
+			onecell->nodes[j++] = node;
+
+	-		node = icc_node_create(first_id + j);
+	+		node = icc_node_create(first_id + data[i].slave_id);
+			if (IS_ERR(node)) {
+				ret = PTR_ERR(node);
+				goto err;
+	==========================================
+
+And update the inputs going from gcc-ipq9574.c accordingly
+to use the MASTER_xxx and SLAVE_xxx defines. Will this be ok?
+
+Konrad & Krzysztof kindly let me know.
+
+Thanks
+Varada
 
