@@ -1,147 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-17395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17396-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BEF588A3E5F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Apr 2024 22:13:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DD5038A3EEB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Apr 2024 23:50:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DE8AD1C20BAA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Apr 2024 20:13:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 18F821C209F4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Apr 2024 21:50:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02A6054915;
-	Sat, 13 Apr 2024 20:13:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ir1RjVBh"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CDE25644A;
+	Sat, 13 Apr 2024 21:50:19 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [5.144.164.164])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90FA75644A
-	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Apr 2024 20:13:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB7555C2C
+	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Apr 2024 21:50:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.164
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713039193; cv=none; b=mbGBn+6Gr9DmoSm/n+pn5F4ws8JYM+FMtTx/6NM3tRgtgl1v3uQSxmfKkqG0X1KS3ncxtHURFl7qXR//moNQooIBwWW00XTWCuu/qWVjHrl8vDiIMI7b6PvQyeIrpY4OvZrc2qzIVNBQ3RDI82/rCJzoirLvMWTRHGsnuJo8ts8=
+	t=1713045019; cv=none; b=Qtkzcei+1I+F0SNIiN8A2IJEXG9pGD4zdirAqvBbD/owY/c/GsOTgVGsgOTSo3wnzHyN7PQfO9PrJPWgMiAbkX3+5rcxMsXFtUKcJqmNBKxJEhYdrpxCs2ABbcKr5cgvOlaWK5FTnJD+0rlBbh1SiVkGqq99Gheuu+quje/RT0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713039193; c=relaxed/simple;
-	bh=6An0L48kYFjflh8FlJpVAhC+mhCU5vKixogNl4dF0Lw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=E6kGLEWL93oj1zpvHk5Fcwu3CB01dbM4262ouGOpSlTfWUt1yIyDosA86QtjnGOvMQX1TFLY9s8oSuvN1EoaefQOt6bZH3l5RrkJJIcydthYNvkZYvPl12nXYOqculAtNfIMr8dWk9oQHn58kz89HSx73ZLDB6feoojel7nGYlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ir1RjVBh; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-516d8764656so720902e87.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Apr 2024 13:13:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713039190; x=1713643990; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=c21Lbybh5bmPv2qzfkq/dwgMQUd0Rl2nuEZhArPPfjE=;
-        b=ir1RjVBhYTpya0sQyy7zJMTQJwnyQ+iZZyW4z39MvEansbjihvqYYBTix6lm1e7eIy
-         BaIwCxyjSmb2nDJdnA8mqUFwhkbQpC1DKG+EF+UwdbXpO6VQDNX6Oir4+1kGQgsbJXFU
-         AhPH3CMpMAuMaqovpQcGdpU+KOoYaqUWMjd/EM9MBnhV0gYEkdooUJJUu/vIHv+eb1nH
-         R1EMPyjmWaIUEntXFRGJgt3LDPhEx9+uJbgV0wqIDybXk7mZEbaII3Soak1i24wupgOV
-         Pq++HXyW2S/xb9FyThU7v2s9IpaQC0SmqCUP/gZJXWq/7rYNASpiq3aO8eqsZYFJ+WkG
-         MZJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713039190; x=1713643990;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=c21Lbybh5bmPv2qzfkq/dwgMQUd0Rl2nuEZhArPPfjE=;
-        b=joAzU0UD4dqPBXv5CiP/FLPmrHqvoU5cqQjVg5Tvt4Rl7wL4rxOM42YLHT5obBLlTM
-         LvLzdjulgexc4BUE2JaMfuvD3kq991Cb+MnrXUJKtt9LfcAYLOKKP2GhnPV1CQynKd6/
-         laNRnZ0ysAYd6S2nlN8hpqcXJuLYFticr/0K918GYWtrdyGSMKVifgYQxALa+pAViEFm
-         IQ+3csayxe6Tb+YW2kg2gEDqG2VgEkTlwmzb3Gww/NhzLlmeT3sQ8dg+3SHx+CqoaLkk
-         vR408JLQtsLU8pcJ36QU3RdCo90jDgkiyej8xa7wqyQfS9vIoaIRv/dTN47M8TvLig3t
-         g3QQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX9LF3Q1wEacTtroHFzYXzBcL5XArl+sJhy7Oie/t6NO20rLFoesGi1wuoBeoc/l9cR9WlSNqQufvTSEUFdAUfXq7Hhj18JIpv4e6f1oA==
-X-Gm-Message-State: AOJu0YwVnAisHIBq4AWOEN5C3C8hzgGmyGI2nubTA6xsLdHQFpugvsdT
-	MzoVYUwfjj9bO3dnT4jttLiRnYvQXU67rIk2i0A4L9fBMVFpUB+0kjTepVUo/+3wjdcbhiy2z82
-	j+sQ=
-X-Google-Smtp-Source: AGHT+IEJIzEdlJ2h1Ko7lKjyl2QgL2RSUc87dFSTgw5U3NIFfqQuNFJckIWYYM5uOg82JI6kCKNPWw==
-X-Received: by 2002:a05:6512:3d1a:b0:513:ca5a:e9cb with SMTP id d26-20020a0565123d1a00b00513ca5ae9cbmr4541232lfv.4.1713039189663;
-        Sat, 13 Apr 2024 13:13:09 -0700 (PDT)
-Received: from [192.168.1.102] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id b17-20020a0565120b9100b00516d1afe4f6sm362963lfv.290.2024.04.13.13.13.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 13 Apr 2024 13:13:09 -0700 (PDT)
-Message-ID: <d689cbf6-d7e1-4f8a-94d9-fa2e0b8ecee3@linaro.org>
-Date: Sat, 13 Apr 2024 23:13:08 +0300
+	s=arc-20240116; t=1713045019; c=relaxed/simple;
+	bh=sSRLyOrAPUnlICcYlFjeeGuacJ5dYEn8lr800sZSWnU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=r5UMgYxUNombgEcGurk+k+wJR34ye1AN+3Ppj9l6Y7W05+LoBkCJmWQy96TUow5vy49NRKMT5w3XBJGfrGJl6YFBvuM6H4hreGaPKqJgP8suiPSbnPDVI68y1EybvseRL6GDriOrsQVpOctzbPkJius/5KA9Zr7qTGjR+B+udGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.164
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id ADFAC205A9;
+	Sat, 13 Apr 2024 23:12:44 +0200 (CEST)
+Date: Sat, 13 Apr 2024 23:12:43 +0200
+From: Marijn Suijten <marijn.suijten@somainline.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Sumit Semwal <sumit.semwal@linaro.org>, 
+	Caleb Connolly <caleb.connolly@linaro.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v5 3/4] drm/mipi-dsi: add mipi_dsi_compression_mode_ext()
+Message-ID: <ne2pxdg5fridoixlw46r66lcsl4okewvnucklrpwqiuxkqljmz@7tggpzxev5wo>
+References: <20240408-lg-sw43408-panel-v5-0-4e092da22991@linaro.org>
+ <20240408-lg-sw43408-panel-v5-3-4e092da22991@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: i2c: qcom-cci: Document sc8280xp compatible
-Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, wsa@kernel.org,
- Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>,
- Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240412-linux-next-24-04-11-sc8280xp-cci-compat-string-fix-v1-1-7dbafff36932@linaro.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20240412-linux-next-24-04-11-sc8280xp-cci-compat-string-fix-v1-1-7dbafff36932@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240408-lg-sw43408-panel-v5-3-4e092da22991@linaro.org>
 
-Hi Bryan,
+On 2024-04-08 02:53:52, Dmitry Baryshkov wrote:
+> Add the extended version of mipi_dsi_compression_mode(). It provides
+> a way to specify the algorithm and PPS selector.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-On 4/12/24 16:53, Bryan O'Donoghue wrote:
-> Add sc8280xp compatible consistent with recent CAMSS CCI interfaces.
-> 
-> sc8280xp has the following clock list and so requires its own compat
-> string and sc8280xp specific clock definition in the yaml.
-> 
-> - const: camnoc_axi
-> - const: slow_ahb_src
-> - const: cpas_ahb
-> - const: cci
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+
+Something doesn't stick with me on the _ext() naming, but I don't have something
+better to propose.
+
+- Marijn
+
 > ---
-> Initially I added a compat string to yaml and driver for sc8280xp but, it
-> was incomplete and wrong so I asked for a revert.
+>  drivers/gpu/drm/drm_mipi_dsi.c | 41 ++++++++++++++++++++++++++++++++++-------
+>  include/drm/drm_mipi_dsi.h     |  9 +++++++++
+>  2 files changed, 43 insertions(+), 7 deletions(-)
 > 
-> Subsequent to posting the compat string I had posted dtsi changes to
-> sc8280xp to add in the CCI, forgetting to follow up on the compat revert.
+> diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
+> index 9874ff6d4718..795001bb7ff1 100644
+> --- a/drivers/gpu/drm/drm_mipi_dsi.c
+> +++ b/drivers/gpu/drm/drm_mipi_dsi.c
+> @@ -645,29 +645,56 @@ int mipi_dsi_set_maximum_return_packet_size(struct mipi_dsi_device *dsi,
+>  EXPORT_SYMBOL(mipi_dsi_set_maximum_return_packet_size);
+>  
+>  /**
+> - * mipi_dsi_compression_mode() - enable/disable DSC on the peripheral
+> + * mipi_dsi_compression_mode_ext() - enable/disable DSC on the peripheral
+>   * @dsi: DSI peripheral device
+>   * @enable: Whether to enable or disable the DSC
+> + * @algo: Selected compression algorithm
+> + * @pps_selector: Select PPS from the table of pre-stored or uploaded PPS entries
+>   *
+> - * Enable or disable Display Stream Compression on the peripheral using the
+> - * default Picture Parameter Set and VESA DSC 1.1 algorithm.
+> + * Enable or disable Display Stream Compression on the peripheral.
+>   *
+>   * Return: 0 on success or a negative error code on failure.
+>   */
+> -int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
+> +int mipi_dsi_compression_mode_ext(struct mipi_dsi_device *dsi, bool enable,
+> +				  enum mipi_dsi_compression_algo algo,
+> +				  unsigned int pps_selector)
+>  {
+> -	/* Note: Needs updating for non-default PPS or algorithm */
+> -	u8 tx[2] = { enable << 0, 0 };
+> +	u8 tx[2] = { };
+>  	struct mipi_dsi_msg msg = {
+>  		.channel = dsi->channel,
+>  		.type = MIPI_DSI_COMPRESSION_MODE,
+>  		.tx_len = sizeof(tx),
+>  		.tx_buf = tx,
+>  	};
+> -	int ret = mipi_dsi_device_transfer(dsi, &msg);
+> +	int ret;
+> +
+> +	if (algo > 3 || pps_selector > 3)
+> +		return -EINVAL;
+> +
+> +	tx[0] = (enable << 0) |
+> +		(algo << 1) |
+> +		(pps_selector << 4);
+> +
+> +	ret = mipi_dsi_device_transfer(dsi, &msg);
+>  
+>  	return (ret < 0) ? ret : 0;
+>  }
+> +EXPORT_SYMBOL(mipi_dsi_compression_mode_ext);
+> +
+> +/**
+> + * mipi_dsi_compression_mode() - enable/disable DSC on the peripheral
+> + * @dsi: DSI peripheral device
+> + * @enable: Whether to enable or disable the DSC
+> + *
+> + * Enable or disable Display Stream Compression on the peripheral using the
+> + * default Picture Parameter Set and VESA DSC 1.1 algorithm.
+> + *
+> + * Return: 0 on success or a negative error code on failure.
+> + */
+> +int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
+> +{
+> +	return mipi_dsi_compression_mode_ext(dsi, enable, MIPI_DSI_COMPRESSION_DSC, 0);
+> +}
+>  EXPORT_SYMBOL(mipi_dsi_compression_mode);
+>  
+>  /**
+> diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
+> index 3011d33eccbd..82b1cc434ea3 100644
+> --- a/include/drm/drm_mipi_dsi.h
+> +++ b/include/drm/drm_mipi_dsi.h
+> @@ -226,6 +226,12 @@ static inline int mipi_dsi_pixel_format_to_bpp(enum mipi_dsi_pixel_format fmt)
+>  	return -EINVAL;
+>  }
+>  
+> +enum mipi_dsi_compression_algo {
+> +	MIPI_DSI_COMPRESSION_DSC = 0,
+> +	MIPI_DSI_COMPRESSION_VENDOR = 3,
+> +	/* other two values are reserved, DSI 1.3 */
+> +};
+> +
+>  struct mipi_dsi_device *
+>  mipi_dsi_device_register_full(struct mipi_dsi_host *host,
+>  			      const struct mipi_dsi_device_info *info);
+> @@ -242,6 +248,9 @@ int mipi_dsi_turn_on_peripheral(struct mipi_dsi_device *dsi);
+>  int mipi_dsi_set_maximum_return_packet_size(struct mipi_dsi_device *dsi,
+>  					    u16 value);
+>  int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable);
+> +int mipi_dsi_compression_mode_ext(struct mipi_dsi_device *dsi, bool enable,
+> +				  enum mipi_dsi_compression_algo algo,
+> +				  unsigned int pps_selector);
+>  int mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
+>  				   const struct drm_dsc_picture_parameter_set *pps);
+>  
 > 
-> I then completely forgot about the compat string and worse still
-> misremembered the whole reasoning behind it.
+> -- 
+> 2.39.2
 > 
-> This one patch series cleans up the mess.
-> 
-> - The fallback compat qcom,msm8916-cci hooks the driver.
->    Since there are no driver changes specific to sc8280xp we don't
->    need to add yet another entry to the CCI driver.
-> 
-> - The compat string qcom,sc8280xp-cci is additionally declared in
->    the dts -> compat = "qcom,msm8916-cci", "qcom,sc8280xp-cci";
->    The sc8280xp-cci will match the yaml and enforce constraints.
-> 
-> - The yaml entry for qcom,sc8280xp-cci constrains the list of
->    clocks which is specific to sc8280xp-cci
-> 
-> Result:
-> 
-> - No new redundant compat string in the CCI driver
-> 
-> - DTS is unchanged
-> 
-> - YAML expanded to capture missing string
-> 
-
-I believe it's excellent, thank you very much for the change and efforts!
-
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-
---
-Best wishes,
-Vladimir
 
