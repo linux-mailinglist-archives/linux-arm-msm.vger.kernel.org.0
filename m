@@ -1,253 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-17373-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17374-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B680F8A3B8F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Apr 2024 10:04:27 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A55A8A3C22
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Apr 2024 12:11:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D63E71C20ECC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Apr 2024 08:04:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 15D211F21119
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Apr 2024 10:11:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A83F1D551;
-	Sat, 13 Apr 2024 08:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A13F33D57A;
+	Sat, 13 Apr 2024 10:11:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TmJtYyuI"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MAev4S6o"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27DAB1CFBB;
-	Sat, 13 Apr 2024 08:04:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181462576B
+	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Apr 2024 10:11:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712995463; cv=none; b=bJKD13k6slE0+BP6vbpL/7jwhnOXPQanL4tou9BdwTy/gyezw4OZuFroZJASZPjt1bqCMAV+G5ELE6C1nDeMpBhPiFZ9hsEchX39pz82/yTKmXSZIsPZweOgF4Klf9j6vW7nzkiQtyJj6R/QZJ0/e4prsip//WUoHo0rfte0NNs=
+	t=1713003077; cv=none; b=VP4tYmCm1tnbhQY7t1wkOjy15E3HTfFUA3roE7yZxO4Pfqxqw8Ww21xAwpWABchmdMi0bX3RkdKdmOGdkfb4eyKsjN13HPWfScgh/HRNWw3b5NQgSnRZIdHe5yrDbi/2QgET9hBUdHeUfmb1gcIfTOP5c38HLNKQmcKYeK+OUBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712995463; c=relaxed/simple;
-	bh=QZCEK0CIagBybPLkRjQZB+ueBDbozC2tromIPFers3g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LxMle+v50VkPy6ZQuwm9ngTnoFmLRznb5QCEqN+JTjiELCGRFoj3st10KgoUgVVJ63Rba8rdZFbpQDlMnFUiCsnsyH7tFPSN9XmT7dxwm2EgxKRzaiI62tCHXsrFb6n844jzcj67/NG034tVS+orYjqeKbrz3CDoLXI1BJ+GdB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TmJtYyuI; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-1e3ff14f249so12471235ad.1;
-        Sat, 13 Apr 2024 01:04:21 -0700 (PDT)
+	s=arc-20240116; t=1713003077; c=relaxed/simple;
+	bh=GTnx26jyD576A9spBEofCrW+259pzNhlga+m/yDLy54=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=p8CfXNg36vuE+1w32v7N+dh5Hqa9PHLBou/PLl4tDpMgBjYbw1MmXPNO+madxnTAUE8bACcy/9AVdQ243qmkufc18kdGO1QiZyN2bEkBY0sGF+p9zoDJVQziRqpnmwKkuoUJx7FoVGdjAsqLcVArY7qIVhQ/UsDjfHxL4pkNOwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MAev4S6o; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-41822e2497cso2122395e9.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Apr 2024 03:11:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712995461; x=1713600261; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bxLRqhr1FqEjQA1PjAbGBGSdX+2n1rP+a8Vb8lQhOj4=;
-        b=TmJtYyuISRyej/RpB7e9gUcNkNuMxhsJnRQqL1aqKJUpHOGYlZqN9myFKA1CV3V3Ru
-         wf5/yXpeVtRIDjj3NTYlQWKGJ0yRDKjrgvj6Tr1XPOwHv32JO6IyDmSYhSaXEUsZaWVT
-         5V6km8uY/QRM+0cBHDgfoUvlSt1CUA3gHQGQbMuCdjsYfxx01QPSnPz76z8we3Rf0mmJ
-         xa2+HMb2DQGruI95GhALQz6CfRIwoN7VLoy2jB0JoL4GVw5J2mFRVgkM5SDgJlaJrt3k
-         M8mInFu4Kl/AOMY5wQtAgpcY/GZes9dzIc/wXcpcl8BNzjuKtHYltuPDb93ZDYTgPDJB
-         pZdQ==
+        d=linaro.org; s=google; t=1713003074; x=1713607874; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oCfWmtiLGf5Dk/iFf/fqzadXNsrCvt07/+qhRgK3ZMs=;
+        b=MAev4S6oFM+U6IIAyXDPR/JciWkN4602CCssZ597vQPx19ylQA+BHcveHa+MQO80cm
+         hBoikERzB24VHaWvqKzGXKKXVLjT452rQLZ6SOqLSl9I1GwPc8Rz0wLovJU1NZkjbgVA
+         jdZst2PgvLLd6EgbA0pSs5lXh+GQaomH2TZ1QH6VkaYFfU5VYV8kKLb2LL6eUnFrgF8F
+         s9/1smFO6roIV7U4/e0EghQfTP7eYPc17FQI69c+WQSa591l1aOSB9p0U9weK8j+t0nZ
+         Y+vEzfmYyH3VhB4SIZA5NmlzKZslIAUgP+lJ1U+ocv6x1teqcmhfYebiyaQAGbE1jEel
+         VytQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712995461; x=1713600261;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bxLRqhr1FqEjQA1PjAbGBGSdX+2n1rP+a8Vb8lQhOj4=;
-        b=GbAWbmA9h8mOMOI+OvcWoeoPRbauqk/3uLchdTDzF6EYw/l4GqJvGBr59uB69uUFhL
-         kNuF+ypViqU1Ko90AB+a1L2RlCJJi1m4dxS+Yz3mEuTfBPDrpJIYRubua7ydO+ATBraF
-         9X/g6YIUez2B9wWESN0Bm1+fKfUORD+QP8koiDZDikHhiJNXgiO7A8f8PXur5AqKSCS3
-         ItvIW9ratoO6Q4xtwBBD2Iga1jFTrbiR6eU4VoLU7cXPBhSzTknX8Cuotz6vLIc8j8Oa
-         scWVnO3XUBOTZyZm3mEznUllf0mivunslCnGb5p1B+vGZUCszBYPWITNUW0e9cbs7QjS
-         TJbQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWEX9f/1qxx59GCOrduS0GEYoFj+s439GqggBZldocjOFKTbWjtgkMjbQFMG+jrX/K1/rl5forGgrSHw4gFxtLnmxufBz8siBiGMpGMCjZuxRoo5TqbaIKayHtIPJU1WMS+iuzpeOMlYQ==
-X-Gm-Message-State: AOJu0YxZFtXBzdPa5bHmf1g0s59cpJUIQFvBdcyRYTk9YrT/jg4waSZi
-	z+mBM9DzEonGu3AdqBc5iZA04+HdUMvANYo1hz6ILUXOsRyrMa57dUFLSJhGCFk=
-X-Google-Smtp-Source: AGHT+IGUGLWSwfiw7R8x/M8N7rE7Rt5vT6K+6abu8hm6zxcpzczpPkE1/EDPv515yZpWvd8XwEVlPQ==
-X-Received: by 2002:a17:902:d4cb:b0:1e0:c0b9:589e with SMTP id o11-20020a170902d4cb00b001e0c0b9589emr9877377plg.25.1712995461252;
-        Sat, 13 Apr 2024 01:04:21 -0700 (PDT)
-Received: from [0.0.0.0] (42-3-109-144.ptr.netvigator.com. [42.3.109.144])
-        by smtp.gmail.com with ESMTPSA id i18-20020a170902c95200b001e3f148ffb8sm4121481pla.21.2024.04.13.01.04.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 13 Apr 2024 01:04:20 -0700 (PDT)
-Message-ID: <f2496498-d8cb-449c-905b-fb32d9b3deff@gmail.com>
-Date: Sat, 13 Apr 2024 16:04:12 +0800
+        d=1e100.net; s=20230601; t=1713003074; x=1713607874;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oCfWmtiLGf5Dk/iFf/fqzadXNsrCvt07/+qhRgK3ZMs=;
+        b=WaloFEllpxyjxqCtffFEiMr1E3WyTc52a0XfD2uq83crJAyn4d6nxrl5bP0+DlkWmz
+         gbefJ7Mj5mK0hnBPYCbMMbGJV1PPxtWgy8f2Hz2sxje/QGUdqupmcTY586dz1Unypnej
+         da7EZDsKAw+7YlsNHNAOBXvRgO9BU7ufPpXI9Sof1XIJ+Rnejf+SHsK6mmzTZtbF8w+X
+         wtwqImoIaN9kl0TunFOPoqJ2z0SzpqpOLKnUIoxei6HLmJJ8zwRZQXSe3RRq8n3JWBgK
+         dpSYPYS6Q7HCUmnkglzqGdPu1SUjg+UDehPX1tExyhjJh7O96Y1aoRU6b7HCZxvuG7N/
+         kvGg==
+X-Gm-Message-State: AOJu0YyFxVUJJuITLZZOHgbMs+hOluBuvZ/9eCQZtb4YZL/mnkdyM+LI
+	iSa3O9VmQZ6/snHUSlxlxRUwHm3QvYG9HmtBBJcPTyHBfL2YNuDDQw95oTdy1IY=
+X-Google-Smtp-Source: AGHT+IHnEx7mY83f6FxHfhh8wbkbgUNNlUcijZBsKkq2m9fO6al3hltka+gyqoXoSe0DdGsWQED7jw==
+X-Received: by 2002:a05:600c:35d5:b0:417:d4f6:1aa0 with SMTP id r21-20020a05600c35d500b00417d4f61aa0mr3363740wmq.6.1713003074305;
+        Sat, 13 Apr 2024 03:11:14 -0700 (PDT)
+Received: from [172.20.10.4] (82-132-212-30.dab.02.net. [82.132.212.30])
+        by smtp.gmail.com with ESMTPSA id gw7-20020a05600c850700b004146e58cc35sm11773696wmb.46.2024.04.13.03.11.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 13 Apr 2024 03:11:13 -0700 (PDT)
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To: andersson@kernel.org, konrad.dybcio@linaro.org, robh@kernel.org, 
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+ Mukesh Ojha <quic_mojha@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org
+In-Reply-To: <1709662869-10569-1-git-send-email-quic_mojha@quicinc.com>
+References: <1709662869-10569-1-git-send-email-quic_mojha@quicinc.com>
+Subject: Re: [PATCH] dt-bindings: nvmem: Add compatible for sm8450, sm8550
+ and sm8650
+Message-Id: <171300307263.22846.5421120272134098432.b4-ty@linaro.org>
+Date: Sat, 13 Apr 2024 11:11:12 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: Split PMU nodes for heterogeneous CPUs
-To: Rob Herring <robh@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240412222942.3874269-1-robh@kernel.org>
-Content-Language: en-US
-From: Xilin Wu <wuxilin123@gmail.com>
-In-Reply-To: <20240412222942.3874269-1-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.12.2
 
-On 2024/4/13 6:29, Rob Herring wrote:
-> Arm heterogeneous configurations should have separate PMU nodes for each
-> CPU uarch as the uarch specific events can be different. The
-> "arm,armv8-pmuv3" compatible is also intended for s/w models rather than
-> specific uarch implementations.
-> 
-> All the kryo CPUs are missing PMU compatibles, so they can't be fixed.
-> 
-> Signed-off-by: Rob Herring <robh@kernel.org>
-> ---
->   arch/arm64/boot/dts/qcom/msm8956.dtsi |  4 ++--
->   arch/arm64/boot/dts/qcom/msm8976.dtsi | 10 ++++++++++
->   arch/arm64/boot/dts/qcom/sm4450.dtsi  | 11 ++++++++---
->   arch/arm64/boot/dts/qcom/sm8350.dtsi  | 14 ++++++++++++--
->   arch/arm64/boot/dts/qcom/sm8550.dtsi  | 19 +++++++++++++++++--
->   arch/arm64/boot/dts/qcom/sm8650.dtsi  | 14 ++++++++++++--
->   6 files changed, 61 insertions(+), 11 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8956.dtsi b/arch/arm64/boot/dts/qcom/msm8956.dtsi
-> index 668e05185c21..fa36b62156bb 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8956.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8956.dtsi
-> @@ -8,8 +8,8 @@
->   
->   #include "msm8976.dtsi"
->   
-> -&pmu {
-> -	interrupts = <GIC_PPI 7 (GIC_CPU_MASK_SIMPLE(6) | IRQ_TYPE_LEVEL_HIGH)>;
-> +&pmu_a72 {
-> +	interrupts = <GIC_PPI 7 (GIC_CPU_MASK_RAW(0x30) | IRQ_TYPE_LEVEL_HIGH)>;
->   };
->   
->   &tsens {
-> diff --git a/arch/arm64/boot/dts/qcom/msm8976.dtsi b/arch/arm64/boot/dts/qcom/msm8976.dtsi
-> index d2bb1ada361a..1ad102b1633c 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8976.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8976.dtsi
-> @@ -226,6 +226,16 @@ pmu: pmu {
->   		compatible = "arm,armv8-pmuv3";
->   		interrupts = <GIC_PPI 7 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_HIGH)>;
->   	};
-> +	pmu-a53 {
-> +		compatible = "arm,cortex-a53-pmu";
-> +		interrupts = <GIC_PPI 7 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_HIGH)>;
-> +	};
-> +
-> +	pmu_a72: pmu-a72 {
-> +		compatible = "arm,cortex-a72-pmu";
-> +		interrupts = <GIC_PPI 7 (GIC_CPU_MASK_RAW(0xf0) | IRQ_TYPE_LEVEL_HIGH)>;
-> +	};
-> +
->   
->   	psci {
->   		compatible = "arm,psci-1.0";
-> diff --git a/arch/arm64/boot/dts/qcom/sm4450.dtsi b/arch/arm64/boot/dts/qcom/sm4450.dtsi
-> index 603c962661cc..411eb7577407 100644
-> --- a/arch/arm64/boot/dts/qcom/sm4450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm4450.dtsi
-> @@ -268,9 +268,14 @@ memory@a0000000 {
->   		reg = <0x0 0xa0000000 0x0 0x0>;
->   	};
->   
-> -	pmu {
-> -		compatible = "arm,armv8-pmuv3";
-> -		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_HIGH>;
-> +	pmu-a55 {
-> +		compatible = "arm,cortex-a55-pmu";
-> +		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
-> +	};
-> +
-> +	pmu-a78 {
-> +		compatible = "arm,cortex-a78-pmu";
-> +		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
->   	};
->   
->   	psci {
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> index a5e7dbbd8c6c..127fa9a935da 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> @@ -300,8 +300,18 @@ memory@80000000 {
->   		reg = <0x0 0x80000000 0x0 0x0>;
->   	};
->   
-> -	pmu {
-> -		compatible = "arm,armv8-pmuv3";
-> +	pmu-a55 {
-> +		compatible = "arm,cortex-a55-pmu";
-> +		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
-> +	};
-> +
-> +	pmu-a78 {
-> +		compatible = "arm,cortex-a78-pmu";
-> +		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
-> +	};
-> +
-> +	pmu-x1 {
-> +		compatible = "arm,cortex-x1-pmu";
->   		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
->   	};
->   
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index 3904348075f6..8e7d0ac17a12 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -357,8 +357,23 @@ memory@a0000000 {
->   		reg = <0 0xa0000000 0 0>;
->   	};
->   
-> -	pmu {
-> -		compatible = "arm,armv8-pmuv3";
-> +	pmu-a510 {
-> +		compatible = "arm,cortex-a510-pmu";
-> +		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
-> +	};
-> +
-> +	pmu-a710 {
-> +		compatible = "arm,cortex-a710-pmu";
-> +		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
-> +	};
-> +
-> +	pmu-a720 {
-> +		compatible = "arm,cortex-a720-pmu";
-> +		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
-> +	};
-> +
-> +	pmu-x3 {
-> +		compatible = "arm,cortex-x3-pmu";
->   		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
->   	};
->   
 
-I believe SM8550 uses cortex-a715 instead of a720.
+On Tue, 05 Mar 2024 23:51:09 +0530, Mukesh Ojha wrote:
+> Document QFPROM compatible for sm8450, sm8550 and sm8650 SoCs.
+> 
+> 
 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> index ba72d8f38420..90102a41489d 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> @@ -394,8 +394,18 @@ memory@a0000000 {
->   		reg = <0 0xa0000000 0 0>;
->   	};
->   
-> -	pmu {
-> -		compatible = "arm,armv8-pmuv3";
-> +	pmu-a520 {
-> +		compatible = "arm,cortex-a520-pmu";
-> +		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
-> +	};
-> +
-> +	pmu-a720 {
-> +		compatible = "arm,cortex-a720-pmu";
-> +		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
-> +	};
-> +
-> +	pmu-x4 {
-> +		compatible = "arm,cortex-x4-pmu";
->   		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
->   	};
->   
+Applied, thanks!
+
+[1/1] dt-bindings: nvmem: Add compatible for sm8450, sm8550 and sm8650
+      commit: e5630036dab1a99720b129360dd398bd0f19d1bc
+
+Best regards,
+-- 
+Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
 
