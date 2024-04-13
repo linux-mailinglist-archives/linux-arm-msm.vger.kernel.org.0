@@ -1,275 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-17377-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17378-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0E9378A3C9E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Apr 2024 13:31:59 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CB8ED8A3CEA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Apr 2024 16:04:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8614E1F21F56
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Apr 2024 11:31:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C99F41F21BF1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Apr 2024 14:04:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 439583F8F7;
-	Sat, 13 Apr 2024 11:31:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 831FC446AF;
+	Sat, 13 Apr 2024 14:04:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xqvkhgCb"
+	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="Px4/kXuk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from smtp.smtpout.orange.fr (smtp-25.smtpout.orange.fr [80.12.242.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9FC22EE4
-	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Apr 2024 11:31:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20F81AAC4;
+	Sat, 13 Apr 2024 14:04:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713007916; cv=none; b=HUdBGMSzxupQBp0dIJiPp1dB0ZEEq/Tk1EjsKxJP9pERk57RGsXNJ9iJuu43rZzRyRyJfHaGjjz1T2IvoAQIvUcgle+FZi0StigkvLc/lp0+VqjhYhVhBm6XkoYWaO1n192QS/gAYjHDTKj3+g85bI3T3H0ZDvmeYUpZ6vjO9po=
+	t=1713017058; cv=none; b=UrfXhqbEUFjUJ2R2fsVZQ/gjR3G+abPvk2nBTf8a67qqzFTl4Vqx+M3MnBcxYKIovQXyE588fH82ogrr1LxEQdvGZIqgg8ViajZm6kuhxxMSgV1i/v4er3bw947Uhb8qQHiLPgyAhvALOrLz5/2HXCJDDiHTc4imI/lH20Til1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713007916; c=relaxed/simple;
-	bh=6vRirpLmOtZE6DSzDNXVb1uJuDEiPhA+CYx6M9zr3yk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=MgYY/IyBQoeLlp59GNaEvY5YkdMtcjKME5qTsaxjE2gvaILBqpG7IdMdCw7fYFKoQ5CcQ6rWGwLZXQ1TtfjB8mm7UQE0Vb5iNyUBHbE9wVwhFRXebu0HXBDZ91swA6ZFrK71iSJh/HGoH9peu4ndEu3agMCRvYgIezCffoMDuu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xqvkhgCb; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-418215a9df3so1986085e9.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Apr 2024 04:31:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713007913; x=1713612713; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=jPKejXRsNRWTCZp534abFGDNN1elivq5IZpRnxY77II=;
-        b=xqvkhgCbB5Dei71gImhGQCUM72Yc1WJQG+BaNxCu/gAWBejgqERGccsU8SRQVKyNGf
-         wU8/Gdhd5Pqaht+XMNcyDRRkXKAaGpO5dx6m267BFYEsW/UwYrTFVh48BGfTOW4NH9+R
-         D5T1pDbNe4OgDCk8732GYXArvD1AkWmKT4+m53QMQRflFPFr60Nsu/xMWXTYLSU/QtGt
-         jlWZAM/OqmZMofsTYsfw1LiPvUyeSNw8t6XpW+y0WStix5ibh73L0dXI7UhZdDcGWLkb
-         uN7kVcO1VNQ24zLNyH6Um8/mn0LJHX/rBeL6p1+bxAgFTVlfWUphci7wxwSQ/y0QHI6V
-         r8VQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713007913; x=1713612713;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jPKejXRsNRWTCZp534abFGDNN1elivq5IZpRnxY77II=;
-        b=AJbv4A+4l36aDJEwFNR6ohVQa0ynNkDIIoEpKI61rnEboVqNDaWUnP6YtI3MJu3+5r
-         sWCirVbtsx/6WP0G6i/UWsUqSrK2BS2Nop+AdPO2rYTgDvhDq1I2nJ6lvufZv7VO2Wxn
-         9CBLmju5bhxDdNMSo1agH6S2bbkDwDR6KoDplYtkG2Fqh2KX/2mFNcU19ai7+zwrjeXp
-         GCGWc3lEidTfIJ7KB5Wsj7xjyx6Y16CYhzKsLUMO0R+qf/LUdwe0FDXWkVae4JHyju98
-         lNudX1xrY1chnULom5Fpuwh4Q2JYoVuxOTiW18vfkP5DBeNnKJ4O9yOJs2f1bhhUHwDL
-         bjBg==
-X-Forwarded-Encrypted: i=1; AJvYcCUKuAPTa9X/dUtewnQhVluziE06mrczdgMIpcNbxhG49Mg1cvbdB85dBeffPuUcGeZw3EOzHpNZFgeGvX4l+GpdjcMqomG43Ghjw/lEeA==
-X-Gm-Message-State: AOJu0YyAaRKHFM3FkFSpzgj7EjY5Z6ElVqbgvnkUus39xKrVG/F0+KbJ
-	ulnF/mhyfib7zvkxUDmUlleQBuysPxJGWJ0Oxgff7i30+d9rvQ+ak4BnJseXAmM=
-X-Google-Smtp-Source: AGHT+IFrj1MEO41CdpgEcMXqRlJ/NqperVPSOegO5lcM62YTMMpGA3HhgfCAq6ykf90EkkM8idlhEw==
-X-Received: by 2002:a05:600c:5493:b0:416:a0a9:213e with SMTP id iv19-20020a05600c549300b00416a0a9213emr3259942wmb.13.1713007912884;
-        Sat, 13 Apr 2024 04:31:52 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.16])
-        by smtp.gmail.com with ESMTPSA id o4-20020a05600c4fc400b004170e0aff7asm11455864wmq.35.2024.04.13.04.31.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 13 Apr 2024 04:31:52 -0700 (PDT)
-Message-ID: <07210bf0-b262-422a-ae97-83efb9cbe6de@linaro.org>
-Date: Sat, 13 Apr 2024 13:31:50 +0200
+	s=arc-20240116; t=1713017058; c=relaxed/simple;
+	bh=5hJR7Ru+XomF3n9mKOm3xJbma6kZ/IDKC9EDikaVd44=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=LClhMqAxkpBCp0Rw26AXM2HpQc90hWdOzo/MRlwKTZU35Iw0StdhaW2hkumLebCPHwsyhSf0Om7zp6VTDQMyzpxjpyHN3SnaHuMsmRICU5g5KZHve5Vl5+fmKGCEKBgcySiJ02Dedg9VUNoo6W57r/KnXUU+loS5TIxViK/bGk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=Px4/kXuk; arc=none smtp.client-ip=80.12.242.25
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
+Received: from fedora.home ([86.243.17.157])
+	by smtp.orange.fr with ESMTPA
+	id vdzDrkNrdPlGBvdzDrdQ2P; Sat, 13 Apr 2024 16:04:08 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
+	s=t20230301; t=1713017048;
+	bh=3oXb08cbb/bJvN3axG/lDrCM0AQ1pV4xL9cabkqd+XY=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version;
+	b=Px4/kXukbIVdawoPCnGeFXq5hFouWEazH/Vd0PDBOLsLIGmjy0ZTgwNyGJ29vNcA/
+	 Rm6qttTSqG7UrcPAgeYfg/rKzlqBlh4/bup6XJN8ZvnhP/zVhMwaToC3ZeqIZ+L5oF
+	 BovCUBT3Vnk/DyQ+VIcM/QDJbwTLH1p6PR/oSVoj3bvt6M4jPO/WwOH85p6UyFkJT1
+	 GTatqb8PuBBNgyrCckZ5rJGtDFBeYtAA/bi5Z6DrtkaAs3hN+m2y0Rm3Xk5YRCB6iq
+	 gGZ+i34W4xymcT/GQDUWWxRSbg4DfCbrqn7/adTBUNzHTtO+4mtFSFWOJwUjBKkvqx
+	 XbyaLAO4XPxlg==
+X-ME-Helo: fedora.home
+X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
+X-ME-Date: Sat, 13 Apr 2024 16:04:08 +0200
+X-ME-IP: 86.243.17.157
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	kernel-janitors@vger.kernel.org,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org
+Subject: [PATCH] clk: qcom: rpm: Remove an unused field in struct rpm_cc
+Date: Sat, 13 Apr 2024 16:04:04 +0200
+Message-ID: <9f92330c717e6f2dab27b1307565ffb108c304a7.1713017032.git.christophe.jaillet@wanadoo.fr>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] dt-bindings: usb: add common Type-C USB Switch schema
-To: Luca Weiss <luca.weiss@fairphone.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Neil Armstrong <neil.armstrong@linaro.org>, linux-usb@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-References: <20240122094406.32198-1-krzysztof.kozlowski@linaro.org>
- <D0H3VE6RLM2I.MK2NT1P9N02O@fairphone.com>
- <051c6e44-4844-48b9-846d-cf9b81611415@linaro.org>
- <D0H4CHG4KSRF.10Z6DOI8PORI8@fairphone.com>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <D0H4CHG4KSRF.10Z6DOI8PORI8@fairphone.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 11/04/2024 09:35, Luca Weiss wrote:
-> On Thu Apr 11, 2024 at 9:25 AM CEST, Krzysztof Kozlowski wrote:
->> On 11/04/2024 09:13, Luca Weiss wrote:
->>> On Mon Jan 22, 2024 at 10:44 AM CET, Krzysztof Kozlowski wrote:
->>>> Several bindings implement parts of Type-C USB orientation and mode
->>>> switching, and retiming.  Keep definition of such properties in one
->>>> place, new usb-switch schema, to avoid duplicate defines.
->>>>
->>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>>
->>>> ---
->>>>
->>>> Changes in v2:
->>>> 1. Fix language typos handle->handler (Luca)
->>>> 2. Drop debugging left-over (Luca)
->>>> ---
->>>>  .../devicetree/bindings/usb/fcs,fsa4480.yaml  | 12 ++--
->>>>  .../devicetree/bindings/usb/gpio-sbu-mux.yaml | 12 ++--
->>>>  .../devicetree/bindings/usb/nxp,ptn36502.yaml | 12 ++--
->>>>  .../bindings/usb/onnn,nb7vpq904m.yaml         | 13 ++--
->>>>  .../bindings/usb/qcom,wcd939x-usbss.yaml      | 12 ++--
->>>>  .../devicetree/bindings/usb/usb-switch.yaml   | 67 +++++++++++++++++++
->>>>  6 files changed, 92 insertions(+), 36 deletions(-)
->>>>  create mode 100644 Documentation/devicetree/bindings/usb/usb-switch.yaml
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml b/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml
->>>> index f9410eb76a62..8b25b9a01ced 100644
->>>> --- a/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml
->>>> +++ b/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml
->>>> @@ -27,13 +27,8 @@ properties:
->>>>    vcc-supply:
->>>>      description: power supply (2.7V-5.5V)
->>>>  
->>>> -  mode-switch:
->>>> -    description: Flag the port as possible handle of altmode switching
->>>> -    type: boolean
->>>> -
->>>> -  orientation-switch:
->>>> -    description: Flag the port as possible handler of orientation switching
->>>> -    type: boolean
->>>> +  mode-switch: true
->>>> +  orientation-switch: true
->>>>  
->>>>    port:
->>>>      $ref: /schemas/graph.yaml#/$defs/port-base
->>>> @@ -79,6 +74,9 @@ required:
->>>>    - reg
->>>>    - port
->>>>  
->>>> +allOf:
->>>> +  - $ref: usb-switch.yaml#
->>>> +
->>>>  additionalProperties: false
->>>>  
->>>>  examples:
->>>
->>> Hi Krzysztof,
->>>
->>> This patch seems to break validation for fsa4480 if data-lanes is set in
->>> the endpoint like the following
->>>
->>> diff --git a/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml b/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml
->>> index f9410eb76a62..3aa03fd65556 100644
->>> --- a/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml
->>> +++ b/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml
->>> @@ -102,6 +102,7 @@ examples:
->>>            port {
->>>              fsa4480_ept: endpoint {
->>>                remote-endpoint = <&typec_controller>;
->>> +              data-lanes = <0 1>;
->>>              };
->>>            };
->>>          };
->>>
->>> Similar to how it's already used on qcom/qcm6490-fairphone-fp5.dts
->>>
->>> I'm guessing the 'port' definition in the common schema somehow
->>> disallows the fsa4480 schema from describing it further?
->>
->> There is no such code in qcm6490-fairphone-fp5.dts. There was no such
->> code in the example of fsa4480 when I was testing my changes (and
->> examples should be complete), so this did not pop up.
-> 
-> Right, I'm sorry this is just out-of-tree for now, I've forgotten this.
-> There's some dependency chain with some unsupported DSC configuration in
-> DPU for now that blocks upstreaming this.
-> 
-> My tree with these patches is here if you want to take a look:
-> https://github.com/sc7280-mainline/linux/blob/sc7280-6.8.y/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts#L628
+In "struct rpm_cc", the 'rpm' field is unused.
 
-I think fsa4480 schema is incomplete. I looked at HDK8450 board diagram
-and fsa4480 sits between and connects:
-1. Type-c connector
-2. USB phy or controller
-3. DisplayPort controller for altmode
+Remove it.
 
-I think nxp,ptn36502 is done correctly. You need three ports and
-data-lanes would be on only one of them. usb-switch.yaml schema is ready
-for this and assumes data-lanes will be on (2) above.
+Found with cppcheck, unusedStructMember.
 
-> 
->>
->> You right, new schema does not allow extending the port. However the
->> true question is, why muxing happens on the port to the SoC controller?
->> The graph in commit msg fad89aa14 shows it happens on the side of the
->> connector.
->>
->> Looks like fsa4480 mixes connector with the controller.
-> 
-> Could be honestly.. I trust you with knowing better how the ports are
-> supposed to work.
-> 
-> The property is for telling the fsa4480 driver that essentially the
-> hardware is wired up the reverse way. So with this info the driver can
-> handle the orientation switching correctly.
-> 
-> There's another layer to this as explained in the patches there that the
-> OCP96011 essentially works reversed compared to FSA4480, that's why it's
-> all a bit of a mess.
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+---
+Compile tested only.
 
-Maybe Bjorn, Dmitry or Neil have some more ideas how this should look
-like, but as of now to me it feels we should add "ports" property and
-move there to port@1 the data-lanes part of fsa schema.
+Apparently, it has never been used. It is not a left-over from a
+refactoring.
+---
+ drivers/clk/qcom/clk-rpm.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-Driver then should check whether there is port or ports and use
-ports->port@1 in the latter case.
-
-
-Best regards,
-Krzysztof
+diff --git a/drivers/clk/qcom/clk-rpm.c b/drivers/clk/qcom/clk-rpm.c
+index 745026ef4d9c..9da034f8f2ff 100644
+--- a/drivers/clk/qcom/clk-rpm.c
++++ b/drivers/clk/qcom/clk-rpm.c
+@@ -98,7 +98,6 @@ struct clk_rpm {
+ };
+ 
+ struct rpm_cc {
+-	struct qcom_rpm *rpm;
+ 	struct clk_rpm **clks;
+ 	size_t num_clks;
+ 	u32 xo_buffer_value;
+-- 
+2.44.0
 
 
