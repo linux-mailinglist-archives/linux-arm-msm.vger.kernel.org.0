@@ -1,230 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-17393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 784448A3DDC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Apr 2024 19:04:33 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 14A708A3E3F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Apr 2024 21:32:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E66A61F21817
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Apr 2024 17:04:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BB354281C66
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Apr 2024 19:32:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43A9D54917;
-	Sat, 13 Apr 2024 17:03:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E16D53803;
+	Sat, 13 Apr 2024 19:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BbHuOOb0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OmD4fAKY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7925954747;
-	Sat, 13 Apr 2024 17:03:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A6145941
+	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Apr 2024 19:31:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713027817; cv=none; b=TX0woOOt04XGjBEOUKe1zaDgQd7fzMfzAiOMYap9NzF1RzUHDgdTJilrPpFVkXmh0eB6YyAngubIQ55IuYPymqv8BVQyKLehnxj/t4Z9K39BJ/mXX6ngfgLFfNaOjaN2tVLd0JjNUSzypLpDt827xOigzudy827SY3WEAgbN+Es=
+	t=1713036716; cv=none; b=eP/9xBOO5t/+kQ8OSmah3iVwiLiw++nZv76IKUIJmM1x5Yhp1eQuHeyP+FSLWYiGXMZIpHkE3diih534UfXKnxnnjNs9afw/Cn9HZ1/1CIegyPPi6653GJgofxVg3OISYRrBZfoeqMI+Rh71S3R7N8GgPAMLC27DVnWhOKORLmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713027817; c=relaxed/simple;
-	bh=qKY4A4MmWbKmYderFf+W1OfvpAN7c9I5RnDNG3KSuSs=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=pCD1YOfDz4gPWJGMlMtWcVb/uaLAoYsZup+kgRBXNKpjR3h7aKj4rpMaBbzz/GJ2/H9lhBX7LLmmVS7Uh+3QNMLck8mtMUht1yipuEI3mvnkaWVIp+mPa9zDGKK5oLxr0crcMFVR7afSsEXxHFWezzndzXTmGRpnDGlg+MJAU/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BbHuOOb0; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-516db2214e6so2275846e87.1;
-        Sat, 13 Apr 2024 10:03:35 -0700 (PDT)
+	s=arc-20240116; t=1713036716; c=relaxed/simple;
+	bh=YJ6jDS8SjWnTuVP9uJ1ghT1sfqZX9ES30YU+dQqnSYY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dhyQUV7HEOTSNEXs9+aKHdrwlb0OorPz3TCPpjW+UkvfbBQA3L3tvW4r75pWfypo1ETpa7PNAqC7RuaGHr0rW6FrM9J9q0PQ8vIlKNHOjUIZgbT5Sy0ethjcLiMhzz8N3Mn74OXKP4Wie45blRiYCTr9yMzdTfH8IoSy/FgHWeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OmD4fAKY; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a51d3193e54so234399466b.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Apr 2024 12:31:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713027813; x=1713632613; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+Z2iulFR3flOHDKo+G5rFGTvDxuUMRIV7oTixgtJK2M=;
-        b=BbHuOOb0oQJcMHV5QihhdaZEJS9Hv4PZy8F9I4MfRiWvH7PpuAZzduXB+ZPM66OVwU
-         8BeKoDUiWqSUljVPHHsJIntvaIX6ZTHQ3/7RVOlaAnTRPbBuAxM8o2gUv3yaDeKPoEWT
-         VXGApMbG8A9alaRdguar6L6/k9hpGvzm1fQ4EJ8NUY5H7dm0XJieWQPJKUtxCnIk8CuH
-         iCNK2QRU2J95CZhden3444bFGqwho44di45eB6zD+aABxwbasTU2Qzlo+589/Gnm6Sia
-         besbhqLUfFVh/JBkf7f49FTy1SMvYBx5H3AAqk5Z/XMy1IJTdx4CtJq92aKkHhSPrhoJ
-         E4cA==
+        d=linaro.org; s=google; t=1713036712; x=1713641512; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=hoM0XAEUpRVPIeinoPGbPpP3Hh4hNSukUOnMJ2HLsSE=;
+        b=OmD4fAKYGHCGIqNRpTYDFLuil6ZKAfwxtzKkm8uPW44ZA8iUPtu6wfi5VaDFis3c0P
+         wA0rZdvUxoG6aC3W1T1z8crx20hZ0ecZo1U2f7BtBf4mwHF63veKU/Q8tNe5LMA7cMnO
+         VU8nw2C+VWqmkApVK2d6vdjGcqQnGKYlNd0+OQh3aZhvPadjLZ5f9DRvjCnGmq0Uo5Wm
+         fjwGAWsPC22ELrzLVSdeFIfl4ZWMS4c9s2I3JpgZFsFA9+kn1Evgm8CdYgT08Fsd5qfV
+         ctFSgkDPayLPP+Z5epQa1YRmkemdm9xvwLNbV13lswtHIMmVQgdzQBn5VgFkAExPQzjQ
+         4xmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713027813; x=1713632613;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+Z2iulFR3flOHDKo+G5rFGTvDxuUMRIV7oTixgtJK2M=;
-        b=V7D2LyKFFIG3U7uckYrlsWBngiC2gAdfHIX/WD0vT6gnXG6eCzDTJ+ICmjirbB/Xpd
-         IWMYvN3/GemvlmEq9OybFc2RK3ujEMX4XgBGDJ08kd9oaJiDvCzZLm2Nb9v/k9DyMAbN
-         3BjhCyzMnn18VtI8bLfB2sfMEV04ckdD942STJrv7aQPNykTQrnLlXKI/E0/vqBXDRSL
-         0voOaC1xK+oa72NTSmRUL0wNY8DmWwcUzCi9cG0oa3eZc31CaYItjUFiI7oC8qTlAJ8F
-         UhtggRBRRk5NmihODdPTzPpdbRYEmTjeHFDo+jiLbTLhkDRCDtWV9KXD0x2dHwKUoFOI
-         RxQA==
-X-Forwarded-Encrypted: i=1; AJvYcCX9LD/uVlG3Bt9EuET1Ks3xjQltsF2jlMeSEZWKpqzMnXse3Sv3kRPwd9CrucK2u9LjC2xE+MVIIAApy8QoZ/r6NsZR/6ZkMEoa1afZhQ92VH3zhwtY6ANzOYNuEbSFpn/bEfkNwlWv3p1lLIL8es5gqfpBl0LwPzmlFeZ8Nud0yE1g3It0H6o=
-X-Gm-Message-State: AOJu0YyQfo6gGxAqSL6fHMcX0gIFKxQGfxNjv6VyphaBPg6MgWLl9tP4
-	CHNg6rp7OKH6Iz/WlNZlikjssMdRwvMWWSzSUqeBID6EsTQghZlUO7U2YQ==
-X-Google-Smtp-Source: AGHT+IGO20C0Q7eiwJ/Kcud3wC9muonu94i5qY2q7hwpVsFLafkKskiVVj7mg6O3OuIExcHXnGUw7w==
-X-Received: by 2002:a05:6512:b91:b0:518:a66e:aad2 with SMTP id b17-20020a0565120b9100b00518a66eaad2mr1628387lfv.63.1713027812986;
-        Sat, 13 Apr 2024 10:03:32 -0700 (PDT)
-Received: from localhost.localdomain (ccu225.neoplus.adsl.tpnet.pl. [83.30.144.225])
-        by smtp.gmail.com with ESMTPSA id kj15-20020a170907764f00b00a51a60bf400sm3195967ejc.76.2024.04.13.10.03.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Apr 2024 10:03:32 -0700 (PDT)
-From: Adam Skladowski <a39.skl@gmail.com>
-To: 
-Cc: phone-devel@vger.kernel.org,
-	~postmarketos/upstreaming@lists.sr.ht,
-	Adam Skladowski <a39.skl@gmail.com>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v3 4/4] arm64: dts: qcom: msm8976: Add WCNSS node
-Date: Sat, 13 Apr 2024 19:03:17 +0200
-Message-Id: <20240413170317.34553-5-a39.skl@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240413170317.34553-1-a39.skl@gmail.com>
-References: <20240413170317.34553-1-a39.skl@gmail.com>
+        d=1e100.net; s=20230601; t=1713036712; x=1713641512;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hoM0XAEUpRVPIeinoPGbPpP3Hh4hNSukUOnMJ2HLsSE=;
+        b=kBGQAdIOLmLLgNbD2PIcZDdNTlZHHOA9EntreWM/Vw8C03bZeSwAo5JUM+8s0BlacK
+         tBW2Y9ZPPW1XvdbBKFnA5BRNpy0wiVLq9PaL6RiYSuGO7rzhsgDW1/gcD5Z9orE4T7SN
+         RbNitTiamngzG3a3c7GOjLpsHZ16HAKCb/CxwBM0yFafsXMzkxK3L9U0ymzw3cT5noA6
+         srOD9Nz3wE2eY0wggXnlqMI7Rq1UWYwzwXWUkmz2lbYc9qMxlMFRCAFMiueqt+Iw/eqN
+         txnv/bgZdmmPUpDqHftVu1CsgWo5l0Iji25t49W7hH+U9YPCgYdR+cbK2aDztnMpzDC2
+         tLWw==
+X-Forwarded-Encrypted: i=1; AJvYcCUsxTGUlchzoWKNNDDbc7S8/KQLEV77kIEnePTU44TdjG00lG5ciq3SGdf0kt4AhkSEXjeiIhQYhW9pxjsR6MWDs/2L6Eb/v+qPBfk8Gw==
+X-Gm-Message-State: AOJu0YyFg6rewjuk1T0j7YaTVhG93O8aaCxvg+IMH/B4biOhV72odQGI
+	D1wBSB1ruQO0s6BSSmb6nAULKj9P0PTMLYwCZmSuspkuEL1mBjAnI+ljoTeta08=
+X-Google-Smtp-Source: AGHT+IHWPDhTqchT37eSS3hl4fS80ZHtZAxMHWMIjAccLluFFcknTGFsE11xDHgQYFR0iSEAVhIR3Q==
+X-Received: by 2002:a17:907:94c1:b0:a51:e5c7:55b7 with SMTP id dn1-20020a17090794c100b00a51e5c755b7mr4208196ejc.47.1713036711430;
+        Sat, 13 Apr 2024 12:31:51 -0700 (PDT)
+Received: from [192.168.45.55] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id oz16-20020a170906cd1000b00a51bf5932aesm3319727ejb.28.2024.04.13.12.31.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 13 Apr 2024 12:31:50 -0700 (PDT)
+Message-ID: <0a58e05a-7bf5-459a-b202-66d88c095b45@linaro.org>
+Date: Sat, 13 Apr 2024 21:31:47 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/4] interconnect: qcom: icc-rpmh: Add QoS
+ configuration support
+To: Odelu Kukatla <quic_okukatla@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>, Georgi Djakov <djakov@kernel.org>,
+ Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Kees Cook <keescook@chromium.org>, cros-qcom-dts-watchers@chromium.org,
+ "Gustavo A . R . Silva" <gustavoars@kernel.org>,
+ linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-hardening@vger.kernel.org, quic_rlaggysh@quicinc.com,
+ quic_mdtipton@quicinc.com
+References: <20240325181628.9407-1-quic_okukatla@quicinc.com>
+ <20240325181628.9407-2-quic_okukatla@quicinc.com>
+ <d59896bb-a559-4013-a615-37bb43278b2e@linaro.org>
+ <91f59477-1799-4db6-bcc2-3f0c5225d1c8@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <91f59477-1799-4db6-bcc2-3f0c5225d1c8@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Add node describing wireless connectivity subsystem.
+On 3.04.2024 10:45 AM, Odelu Kukatla wrote:
+> 
+> 
+> On 3/27/2024 2:26 AM, Konrad Dybcio wrote:
+>> On 25.03.2024 7:16 PM, Odelu Kukatla wrote:
+>>> It adds QoS support for QNOC device and includes support for
+>>> configuring priority, priority forward disable, urgency forwarding.
+>>> This helps in priortizing the traffic originating from different
+>>> interconnect masters at NoC(Network On Chip).
+>>>
+>>> Signed-off-by: Odelu Kukatla <quic_okukatla@quicinc.com>
+>>> ---
 
-Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
----
- arch/arm64/boot/dts/qcom/msm8976.dtsi | 104 ++++++++++++++++++++++++++
- 1 file changed, 104 insertions(+)
+[...]
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8976.dtsi b/arch/arm64/boot/dts/qcom/msm8976.dtsi
-index acb6331999bd..1e492bcc56f0 100644
---- a/arch/arm64/boot/dts/qcom/msm8976.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8976.dtsi
-@@ -771,6 +771,36 @@ blsp2_i2c4_sleep: blsp2-i2c4-sleep-state {
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
-+
-+			wcss_wlan_default: wcss-wlan-default-state  {
-+				wcss-wlan2-pins {
-+					pins = "gpio40";
-+					function = "wcss_wlan2";
-+					drive-strength = <6>;
-+					bias-pull-up;
-+				};
-+
-+				wcss-wlan1-pins {
-+					pins = "gpio41";
-+					function = "wcss_wlan1";
-+					drive-strength = <6>;
-+					bias-pull-up;
-+				};
-+
-+				wcss-wlan0-pins {
-+					pins = "gpio42";
-+					function = "wcss_wlan0";
-+					drive-strength = <6>;
-+					bias-pull-up;
-+				};
-+
-+				wcss-wlan-pins {
-+					pins = "gpio43", "gpio44";
-+					function = "wcss_wlan";
-+					drive-strength = <6>;
-+					bias-pull-up;
-+				};
-+			};
- 		};
- 
- 		gcc: clock-controller@1800000 {
-@@ -1458,6 +1488,80 @@ blsp2_i2c4: i2c@7af8000 {
- 			status = "disabled";
- 		};
- 
-+		wcnss: remoteproc@a204000 {
-+			compatible = "qcom,pronto-v3-pil", "qcom,pronto";
-+			reg = <0x0a204000 0x2000>,
-+			      <0x0a202000 0x1000>,
-+			      <0x0a21b000 0x3000>;
-+			reg-names = "ccu",
-+				    "dxe",
-+				    "pmu";
-+
-+			memory-region = <&wcnss_fw_mem>;
-+
-+			interrupts-extended = <&intc GIC_SPI 149 IRQ_TYPE_EDGE_RISING>,
-+					      <&wcnss_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
-+					      <&wcnss_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
-+					      <&wcnss_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
-+					      <&wcnss_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
-+			interrupt-names = "wdog",
-+					  "fatal",
-+					  "ready",
-+					  "handover",
-+					  "stop-ack";
-+
-+			power-domains = <&rpmpd MSM8976_VDDCX>,
-+					<&rpmpd MSM8976_VDDMX>;
-+			power-domain-names = "cx", "mx";
-+
-+			qcom,smem-states = <&wcnss_smp2p_out 0>;
-+			qcom,smem-state-names = "stop";
-+
-+			pinctrl-0 = <&wcss_wlan_default>;
-+			pinctrl-names = "default";
-+
-+			status = "disabled";
-+
-+			wcnss_iris: iris {
-+				/* Separate chip, compatible is board-specific */
-+				clocks = <&rpmcc RPM_SMD_RF_CLK2>;
-+				clock-names = "xo";
-+			};
-+
-+			smd-edge {
-+				interrupts = <GIC_SPI 142 IRQ_TYPE_EDGE_RISING>;
-+
-+				qcom,ipc = <&apcs 8 17>;
-+				qcom,smd-edge = <6>;
-+				qcom,remote-pid = <4>;
-+
-+				label = "pronto";
-+
-+				wcnss_ctrl: wcnss {
-+					compatible = "qcom,wcnss";
-+					qcom,smd-channels = "WCNSS_CTRL";
-+
-+					qcom,mmio = <&wcnss>;
-+
-+					wcnss_bt: bluetooth {
-+						compatible = "qcom,wcnss-bt";
-+					};
-+
-+					wcnss_wifi: wifi {
-+						compatible = "qcom,wcnss-wlan";
-+
-+						interrupts = <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
-+							     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>;
-+						interrupt-names = "tx", "rx";
-+
-+						qcom,smem-states = <&apps_smsm 10>, <&apps_smsm 9>;
-+						qcom,smem-state-names = "tx-enable",
-+									"tx-rings-empty";
-+					};
-+				};
-+			};
-+		};
-+
- 		intc: interrupt-controller@b000000 {
- 			compatible = "qcom,msm-qgic2";
- 			reg = <0x0b000000 0x1000>, <0x0b002000 0x1000>;
--- 
-2.44.0
+>>> @@ -70,6 +102,7 @@ struct qcom_icc_node {
+>>>  	u64 max_peak[QCOM_ICC_NUM_BUCKETS];
+>>>  	struct qcom_icc_bcm *bcms[MAX_BCM_PER_NODE];
+>>>  	size_t num_bcms;
+>>> +	const struct qcom_icc_qosbox *qosbox;
+>>
+>> I believe I came up with a better approach for storing this.. see [1]
+>>
+>> Konrad
+>>
+>> [1] https://lore.kernel.org/linux-arm-msm/20240326-topic-rpm_icc_qos_cleanup-v1-4-357e736792be@linaro.org/
+>>
+> 
+> I see in this series, QoS parameters are moved into struct qcom_icc_desc. 
+> Even though we program QoS at Provider/Bus level, it is property of the node/master connected to a Bus/NoC.
 
+I don't see how it could be the case, we're obviously telling the controller which
+endpoints have priority over others, not telling nodes whether the data they
+transfer can omit the queue.
+
+> It will be easier later to know which master's QoS we are programming if we add in node data.
+> Readability point of view,  it might be good to keep QoS parameters in node data.  
+
+I don't agree here either, with the current approach we've made countless mistakes
+when converting the downstream data (I have already submitted some fixes with more
+in flight), as there's tons of jumping around the code to find what goes where.
+
+Konrad
 
