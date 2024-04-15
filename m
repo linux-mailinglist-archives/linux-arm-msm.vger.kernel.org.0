@@ -1,169 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-17508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17509-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C4678A5BE7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 22:00:24 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9C788A5BF6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 22:04:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8ED8F1C21DB8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 20:00:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A4B1A282FDF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 20:04:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22BF715664A;
-	Mon, 15 Apr 2024 20:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 153E4811E7;
+	Mon, 15 Apr 2024 20:04:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YXQ4S8Cn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="a2+kMCpI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E0F155A58
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Apr 2024 20:00:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACF815625E
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Apr 2024 20:04:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713211219; cv=none; b=o4f/+DEA2L9ZaQMi0komNtxzVBXgxv25N8iUp5N4b/KBKday8bhi1Nej9kodHCHWq+QsJlsnzE0xAx+xRcBQ2FUhX83q7XStY8073RuSOSYv7p4Ld45z5HyG2vsR1fQ1TJQMNi1bPGSMY9C+Ey9aTFUVAuAa+j3PeocpwL+85vU=
+	t=1713211470; cv=none; b=qTc+E32ojq1qiiDxqxsoYQNgPN3yiXXCnBvdcgtvrI51VBrEwUDvjS8E/WFHBUr3FwLO2W6muDpcKdzw8XW8Rs9cJk+vZ3nku1MaJXR/+2v9OOv1J/ZOA6yXWaTPRi/kf+ronPXh8soJmg3/W5qQOBlY3Wobfz8oVAeoNRD9L4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713211219; c=relaxed/simple;
-	bh=PZQGZ+VuA6ELgE/fgHcQ1AmTRp9jWAlTMUEZb5w9AZM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mv3Y/8UA0pvIeuNMG0e5wvBXkt3AlW6wTPBsfDsswCb/jpz93XF1habQtzKsjxKjuYNS1vWiAOrpZ2ywX6436rAqSKTwWwsu8FwEH3kzVv+Oh89oR59hTRS+tr2ZlZB29PbX/YJjM/RZD9vuIIMvs6yY50HzXRy2SGaqlRUlGv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YXQ4S8Cn; arc=none smtp.client-ip=209.85.167.50
+	s=arc-20240116; t=1713211470; c=relaxed/simple;
+	bh=HKevHeXkZGuoEWykBFrnnyLmHY+4admTUN+lZ7NyEtc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DuGjlRUubpriigSxWYJQ/WJRzcU0AZbErvcDHaLrW/CYHt25NRLtwPWM2eP3Dhyzv2/nzZ775fNjE4rVTa04b5/8B4RanuJaCEJcv+CZRt4uq3JiBnWJhThzOgAwmZ5dT7pPFovGQu53Cw9lwfMy97sRpqAkDy5QGV3ps7m8XbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=a2+kMCpI; arc=none smtp.client-ip=209.85.128.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-516d0162fa1so4540523e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Apr 2024 13:00:17 -0700 (PDT)
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-61aaf71c495so21499867b3.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Apr 2024 13:04:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713211216; x=1713816016; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=iu4TsmsR0yr+hZlSUf3nbeWPU6VyzUbHeXgBs5JQM8I=;
-        b=YXQ4S8CngQzihiWuDb3L4QzPQf7rUC91sjSFJgwCdKM/y0rfgTZX+ltVgIoo9aT58C
-         ox5o7zKUOfrmDJQ/iNKiVeluh5QQsgLL/HfLMPiyaSwpVSZGLaD3bvhrQwPyjJ3zY+Sc
-         zWvB0cIGR3tI4bm3K7aqQI5e7ouWGtt+yt43D7KV/OUPoljNheRaDl4YQRj0+q4NC/Bo
-         dSUH7TX+ZH3/IRAUTwCgWDoTT1Gz3GEMX2uo8v6WcFstX6H+aSD3oz0724tctsWpa1MB
-         uk3qvgKo6nQHzlH8s2Ph14WGZUFfOYCt/b5Fgc7WDeT1BhcboWESgfxUGW/o+HNU5Il7
-         YdUg==
+        d=linaro.org; s=google; t=1713211467; x=1713816267; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=x+n4yDNeHcrTCJc7XCA965ghIKCFi6oK1ygO6iYz34Q=;
+        b=a2+kMCpIIVUrD/mzkxfLOFdfjNSVCTHrvIByBROGwHnn8ZyCZCe4K/QxjDGPx9A3yx
+         mHX/UG2DygM/BznGHKBgqdN0M4wrOf830WA6PajdZa7lNamXACjNSpz6TdaYbOz3h6lR
+         RJ4/qpr70Jsi5boycQTlvJKEM/LmHY8Ry18EGIa6JWizEunDhBTuyaIvdUE9lArlXOhX
+         itvNy8l76aSpUqQaEKOTBZtAGOtxqP6/eNSq0rYoij6oayP/+gjP6yFgAcDEpv77QR9l
+         vQI4IswKAzFbwZ4Vh8QWlBVreTDMxOq9zWEUBekG56C1cnWEuWkOJPleqLWsyuDpCFzP
+         d9tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713211216; x=1713816016;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iu4TsmsR0yr+hZlSUf3nbeWPU6VyzUbHeXgBs5JQM8I=;
-        b=iiN18Ra74wm8h5fONcprqvM5efk3rcHfXLRf0YCefzzDlPUByNcygm+Sjo3taL89AA
-         OYeXx9kwx5Re7d9kyAtVRG/yHAq5x/kMDFEDJcX5XJXIzyUN+0ilaNhZonQbByybTAwi
-         dUnVGOdNKd2EIWKoj40NCnKDvk2oOssVH/TTSzAV4Wp/3l+FYnt1jyuVxiZvc5D/4jmg
-         V2euAsTLofbbRKvWPaQupOgx9EF0SzJjpzPcVl06Z2AgRSG3ouju3LPj9nDTb61GM+sc
-         wS7Q0cHTzSd2xyNW6ZS20rEf1VA0IByPLw8x++aU1apA13XkMpPAp9qaFSvWs0Yzo9Sw
-         6CyQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW7YhdVrMbj6gnhVENt/DLhUHvdzhusiM7Gq/4vLm3U2hTXKtmsPkBiAOjB3PV9cUM70kmfCDOtAhW7ktWOnMi0Fz4BYYZoRxDRiPB8OQ==
-X-Gm-Message-State: AOJu0Yz0xtsr5Lu/IkLLDY3PLaAxsQn3dcrr+oWUJSwr5LOV7OadXuJG
-	0quE0bUSGn2DpVPIi/4i2IH4o4X9Z8j4T/tikCB/RhNPElG96IzWYpZza4djZHY=
-X-Google-Smtp-Source: AGHT+IEg2HPeaum23ALkOp0qFvulXUMO+CauhwOhhqKEHowUZVDqwmA6Yvnmjzgd6CxVDLPgd6HQRg==
-X-Received: by 2002:a19:7409:0:b0:519:3ce:a12b with SMTP id v9-20020a197409000000b0051903cea12bmr1612742lfe.23.1713211215573;
-        Mon, 15 Apr 2024 13:00:15 -0700 (PDT)
-Received: from [172.30.205.18] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id g33-20020a0565123ba100b00518b0fdbf60sm706180lfv.258.2024.04.15.13.00.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Apr 2024 13:00:14 -0700 (PDT)
-Message-ID: <b1462fb5-df86-45d9-9f67-697321e2b7dc@linaro.org>
-Date: Mon, 15 Apr 2024 22:00:05 +0200
+        d=1e100.net; s=20230601; t=1713211467; x=1713816267;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=x+n4yDNeHcrTCJc7XCA965ghIKCFi6oK1ygO6iYz34Q=;
+        b=ecIUfkqlApPgNEcRnJ0fx2Z8GW7oC7d4/UARioezJI4+29z4I6LZeXN9S5J4O238XQ
+         QHlBeD7iLwmNHAiN0Q01IuFX2qkWggHIWvjj+n/3E7M0yl4CX38AMU3uUg8BIbcjKEfv
+         +cL/6DPezgI/6K5kHRHjfKO0nNWqNhz6RbYdIIvWa4a5unRJ9mjUvtz/yMxXSl6wPOnO
+         Kd/0t80fISy2a2NGOXHh7uQmAOe7Hjzg0DKiOMU3IwopG7qTbq2b5JlXHIJE+QHZCLxe
+         PlmEby8elbCqPSzmfhpN3X4WvpINO3f3QNZ1HvHPfZBPrKmEJXMGSECYsyq01sSKhzVS
+         +SnA==
+X-Forwarded-Encrypted: i=1; AJvYcCWYoAp5LFYBGAlNXObuFwoohuzb89Y4bGqbb0NFZHYfBpIQXfQu2wugC3wL8Kpbej2bee25meM9Jgb4zm0hR+TZWck71MC4yZilV/0ZGQ==
+X-Gm-Message-State: AOJu0YylkE4RgK+m2TNAnXCc5ffpS2rY6Ls+8/q9abmZqIeuWVEBrAV2
+	EwCw3bU7fAWJgWeBiji+2NLZnZ+zFVMNG5Bl59AaDQKWl0w73tVs4dj56wakegTyrZvrfZM9E9y
+	9JsxJQ9KEPp7bmsDV1ISguwh4HWVkBC5Tn5195Q==
+X-Google-Smtp-Source: AGHT+IFgChYQoIbtXVFNn5dpONcRCuNNKjt9lSve7LdO+2SQ5EoJ4jqt3753eEsEcQ7mld6BIqWcJDJtBnxGz7Zk5/k=
+X-Received: by 2002:a25:2e0d:0:b0:dc6:dd80:430e with SMTP id
+ u13-20020a252e0d000000b00dc6dd80430emr9293179ybu.27.1713211467602; Mon, 15
+ Apr 2024 13:04:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm/arm64: dts: Drop "arm,armv8-pmuv3" compatible usage
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Rob Herring <robh@kernel.org>
-Cc: Bjorn Andersson <quic_bjorande@quicinc.com>, soc@kernel.org,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Florian Fainelli <florian.fainelli@broadcom.com>,
- Broadcom internal kernel review list
- <bcm-kernel-feedback-list@broadcom.com>, Dinh Nguyen <dinguyen@kernel.org>,
- Tsahee Zidenberg <tsahee@annapurnalabs.com>,
- Antoine Tenart <atenart@kernel.org>,
- Khuong Dinh <khuong@os.amperecomputing.com>,
- Liviu Dudau <liviu.dudau@arm.com>, Sudeep Holla <sudeep.holla@arm.com>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>, Ray Jui <rjui@broadcom.com>,
- Scott Branden <sbranden@broadcom.com>, Robert Richter <rric@kernel.org>,
- Shawn Guo <shawnguo@kernel.org>, Li Yang <leoyang.li@nxp.com>,
- Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, "Paul J. Murphy"
- <paul.j.murphy@intel.com>,
- Daniele Alessandrelli <daniele.alessandrelli@intel.com>,
- Andrew Lunn <andrew@lunn.ch>, Gregory Clement <gregory.clement@bootlin.com>,
- Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Thierry Reding <thierry.reding@gmail.com>,
- Jonathan Hunter <jonathanh@nvidia.com>,
- Bjorn Andersson <andersson@kernel.org>, =?UTF-8?Q?Andreas_F=C3=A4rber?=
- <afaerber@suse.de>, Heiko Stuebner <heiko@sntech.de>,
- Orson Zhai <orsonzhai@gmail.com>, Baolin Wang
- <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>,
- Jisheng Zhang <jszhang@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
- linux-fsd@tesla.com, Michal Simek <michal.simek@amd.com>,
- devicetree@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- imx@lists.linux.dev, linux-mediatek@lists.infradead.org,
- linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-realtek-soc@lists.infradead.org, linux-rockchip@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org
-References: <20240412222857.3873079-1-robh@kernel.org>
- <Zh0vXinxy7woerJQ@hu-bjorande-lv.qualcomm.com>
- <CAA8EJpqL2T4bJZqtZ9KF=V2NLnFxUjouA6_Hu_H07DofifZaoQ@mail.gmail.com>
- <CAL_Jsq+q3OLEMT=d8=d9o1D9deKGQ5TAtZg_bgptDPQ1cWcctw@mail.gmail.com>
- <CAL_JsqKSz_WVTTi7+AgjgDzXAnAqaxXM3i2NUv93nZSpyuZK5g@mail.gmail.com>
- <CAA8EJporYZBfDoN6m0Wu2wGqq=Y+TskNCguMOHtDAz05eXS6LA@mail.gmail.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAA8EJporYZBfDoN6m0Wu2wGqq=Y+TskNCguMOHtDAz05eXS6LA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20240415182052.374494-1-mr.nuke.me@gmail.com> <20240415182052.374494-3-mr.nuke.me@gmail.com>
+In-Reply-To: <20240415182052.374494-3-mr.nuke.me@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 15 Apr 2024 23:04:16 +0300
+Message-ID: <CAA8EJpq-UOd4dcuLyEvJNW4zckSGq1LSdq4eDMWPHX_98U8F=A@mail.gmail.com>
+Subject: Re: [PATCH v3 2/7] clk: qcom: gcc-ipq9574: Add PCIe pipe clocks
+To: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-phy@lists.infradead.org, linux-clk@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+
+On Mon, 15 Apr 2024 at 21:21, Alexandru Gagniuc <mr.nuke.me@gmail.com> wrote:
+>
+> The IPQ9574 has four PCIe "pipe" clocks. These clocks are required by
+> PCIe PHYs. Port the pipe clocks from the downstream 5.4 kernel.
+>
+> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+> ---
+>  drivers/clk/qcom/gcc-ipq9574.c | 76 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 76 insertions(+)
 
 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-On 4/15/24 19:41, Dmitry Baryshkov wrote:
-> On Mon, 15 Apr 2024 at 20:15, Rob Herring <robh@kernel.org> wrote:
->>
->> On Mon, Apr 15, 2024 at 12:05 PM Rob Herring <robh@kernel.org> wrote:
->>>
->>> On Mon, Apr 15, 2024 at 11:52 AM Dmitry Baryshkov
->>> <dmitry.baryshkov@linaro.org> wrote:
->>>>
->>>> On Mon, 15 Apr 2024 at 16:46, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
->>>>>
->>>>> On Fri, Apr 12, 2024 at 05:28:51PM -0500, Rob Herring wrote:
->>>>> [..]
->>>>>>   arch/arm64/boot/dts/qcom/qcm2290.dtsi                | 2 +-
->>>>>>   arch/arm64/boot/dts/qcom/qdu1000.dtsi                | 2 +-
->>>>>>   arch/arm64/boot/dts/qcom/sdm630.dtsi                 | 2 +-
->>>>>>   arch/arm64/boot/dts/qcom/sdx75.dtsi                  | 2 +-
->>>>>
->>>>> Acked-by: Bjorn Andersson <andersson@kernel.org>
->>>>
->>>> Note, we'd need to override PMU compatibles in sdm636.dtsi and
->>>> sdm660.dtsi. Ideally it should come as the same patch.
->>>
->>> Uh, that's an A for reuse, but an F for readability... It's sdm632 as
->>> well. Will drop sdm630.
->>
->> Actually, aren't those Kryo cores just Cortex-A53 derivatives? So the
->> A53 PMU compatible is an improvement over the generic one still. We
->> can't just add kryo260-pmu compatibles because that breaks
->> compatibility. We could have a fallback, but then that introduces a
->> pattern we don't want.
-> 
-> I think it is believed that Gold cores are A73-derivatives.
-
-8xA53 on 630
-4xA53+4xA73 on 636/660
-
-Konrad
+-- 
+With best wishes
+Dmitry
 
