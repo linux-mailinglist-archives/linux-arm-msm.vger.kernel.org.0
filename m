@@ -1,257 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-17415-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17416-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3B008A47AE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 07:49:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F1A8C8A487E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 08:57:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2D9781F21D5E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 05:49:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9F74A1F21C03
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 06:57:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C19E14C9D;
-	Mon, 15 Apr 2024 05:49:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2756E1EB5E;
+	Mon, 15 Apr 2024 06:57:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="To7LlRJW"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UhHWN/fS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2558763A5;
-	Mon, 15 Apr 2024 05:49:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920A522339;
+	Mon, 15 Apr 2024 06:57:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713160156; cv=none; b=bxL/hGBh7xRZgf/UlvcadhOOO+Fp/lStAd2R8sjvMdiH+XYwUpiBLNF+lZ4ZI44JvHwNSFsUjeVjC5rCwTr5hc8+A88lTW+Ct8zDqe0otfS8LccA/l2N4DcG8pWY983BTlgUDqd3ymkxACsJQ+21F+RNEqWbpzZqvkkqvTGaPys=
+	t=1713164267; cv=none; b=i43o8jlnNuPgxa1b52DrrtJ+9VA5HcGQZJL8OiPh883cXRGnHyjrEgMOgT85aEZNR0b1+mDlACExFswAIW6M2FZvSGQd1MBjUWlbA3TWsDbIFILHCSmaVGD/xNxXZpTCjZNrQdIjg3HRTNG1LtlVFhpXoxiicN3GZv6MSc63hgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713160156; c=relaxed/simple;
-	bh=RvsIj2/CxOu+Es+77iPviLcpSen5OK5EYaifN48R1ZQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=nr/1kEpCLG3zq7/4ilQ012icfZbhsbM5YWY0QYiV/2xaHVeT9YzBqGTLe52An+x31NeFwTZvd8z5QuhbKnHSVUTbLgWVKUmjS8xcsPTAY8jT8fLAWmFH4XrgxTH9m8oR5+gem3MOEZv+NtS1v/FE0ezdFddmoLth5GCIFFF5DC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=To7LlRJW; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43F5Aatn029477;
-	Mon, 15 Apr 2024 05:49:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=73LwgEeWelJcxJMEUcfUFeZn2voBLw1f0r8uGOoFOmQ=; b=To
-	7LlRJWYYTPxFitZ1yQKDaEQEulJbLi9oALTwYO+hDXKBL5SOF6FPMRReuhSDMZWW
-	USnxlohOgO2m+StwzYYKTC8zKY578AG9+EH7Q0U2Ur3t4gLzt0P2Uh+HoQEven7h
-	R6hQbvsCYpvOU/85DBEXCm0JxftANhdkUZyhb0xzZOCpi4gPChlJhxJO8e/D2UOL
-	PY/LbLIQhMhqhyAIzKMYm76YzoC/xlRelyDGJQSwYMsUMUYL0R8ThzXsFg8tQR4E
-	qI2JjN3USkUTQMOBThmayZehuuODHkA4AKHdndkTpdGOPYx3TczJx+vVuWq2FSbo
-	0JR6tFkSV8cDbtF+enVg==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xgwqfg29k-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 15 Apr 2024 05:49:11 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43F5n9Fe020608
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 15 Apr 2024 05:49:09 GMT
-Received: from [10.239.29.179] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 14 Apr
- 2024 22:49:07 -0700
-Message-ID: <a43f394e-9f6a-4ec0-aff7-b43de1e3035e@quicinc.com>
-Date: Mon, 15 Apr 2024 13:48:54 +0800
+	s=arc-20240116; t=1713164267; c=relaxed/simple;
+	bh=l/5ikTUlCuGMYa+EP5RPrvI2YkQPp2fXN7lr6jPgAes=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nVdy3o+V/OG3Et/Gv/biAjDBv/KeyUcJgmP0BWsu3h4wqxHq4FRu0Hs88fA3+Il7WoswxmUwgMpmnM5o36rkKN86jC+Rh1CU3RMqcWktWcVPIsrA5xSu3Ji1UOeEtXmTMCy+MdsNw17mfeKa9L6Hxj62+4xqNN3UKz3U1ErNAhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UhHWN/fS; arc=none smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1713164265; x=1744700265;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=l/5ikTUlCuGMYa+EP5RPrvI2YkQPp2fXN7lr6jPgAes=;
+  b=UhHWN/fS1Wph3+xF/dRu1LuXvYZTpmla2p+4YGsjIM9q10WWu/Vlb1MT
+   LlqtyLoQDO3fMt4CoMa2oe0g7b9oxbCnkfZfBT2kWT8Nz2htm+FvmWS8x
+   UGCmyHhoWrbZj13SEX7AYDMkwNumBjJ2rxD3y+qgy41gI7Vlg9TqUvL3i
+   8X05fsFe4ckPk04kQW/iZbNnrb0XJFzhnr8D0MXFAExOIps2MfJGbtPbb
+   MXQ4WQ2X12+dFkubcPBlH2QqqV/JiIcfQqkbyJkVpFGOyOiGShXMMkoUm
+   Ug+IYkRLNFcfwqPgti9JVF3N+WE9EiAU7QgS/46s8pnkAq5ybp6acFCEu
+   w==;
+X-CSE-ConnectionGUID: WkqBpKeSQb2kDd1salqHVw==
+X-CSE-MsgGUID: ae+opybOTBenKN77ZgUrAQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11044"; a="12314998"
+X-IronPort-AV: E=Sophos;i="6.07,202,1708416000"; 
+   d="scan'208";a="12314998"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Apr 2024 23:57:45 -0700
+X-CSE-ConnectionGUID: X+lfE9tNT46Ge5WTo6sBHw==
+X-CSE-MsgGUID: NUC9EHOjQ2GzK59pRUztmw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,202,1708416000"; 
+   d="scan'208";a="21910448"
+Received: from kuha.fi.intel.com ([10.237.72.185])
+  by fmviesa007.fm.intel.com with SMTP; 14 Apr 2024 23:57:42 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 15 Apr 2024 09:57:41 +0300
+Date: Mon, 15 Apr 2024 09:57:41 +0300
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/5] usb: typec: ucsi: add callback for connector
+ status updates
+Message-ID: <ZhzP5bQe6zw1jmlu@kuha.fi.intel.com>
+References: <20240411-ucsi-orient-aware-v2-0-d4b1cb22a33f@linaro.org>
+ <20240411-ucsi-orient-aware-v2-1-d4b1cb22a33f@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] bus: mhi: host: pci_generic: Add edl callback to
- enter EDL
-To: Manivannan Sadhasivam <mani@kernel.org>,
-        Jeffrey Hugo
-	<quic_jhugo@quicinc.com>
-CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
-        <quic_mrana@quicinc.com>
-References: <1712805329-46158-1-git-send-email-quic_qianyu@quicinc.com>
- <1712805329-46158-3-git-send-email-quic_qianyu@quicinc.com>
- <78de32be-7e3b-e7e9-61f3-9679993dbe71@quicinc.com>
- <a901549e-c3ec-47b5-9523-a6342eca455f@quicinc.com>
- <95ee53a5-e261-9106-1104-09077e348a99@quicinc.com>
- <20240412170910.GA21555@thinkpad>
-Content-Language: en-US
-From: Qiang Yu <quic_qianyu@quicinc.com>
-In-Reply-To: <20240412170910.GA21555@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Z_Hlk5786o_WfKPQOdP1d1di6Hg3AjEV
-X-Proofpoint-ORIG-GUID: Z_Hlk5786o_WfKPQOdP1d1di6Hg3AjEV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-15_04,2024-04-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
- malwarescore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015
- priorityscore=1501 impostorscore=0 mlxscore=0 mlxlogscore=999 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
- definitions=main-2404150035
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240411-ucsi-orient-aware-v2-1-d4b1cb22a33f@linaro.org>
 
+On Thu, Apr 11, 2024 at 07:49:53AM +0300, Dmitry Baryshkov wrote:
+> Allow UCSI glue driver to perform addtional work to update connector
+> status. For example, it might check the cable orientation.  This call is
+> performed after reading new connector statatus, so the platform driver
+> can peek at new connection status bits.
+> 
+> The callback is called both when registering the port and when the
+> connector change event is being handled.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-On 4/13/2024 1:09 AM, Manivannan Sadhasivam wrote:
-> On Fri, Apr 12, 2024 at 08:16:52AM -0600, Jeffrey Hugo wrote:
->> On 4/12/2024 1:13 AM, Qiang Yu wrote:
->>> On 4/11/2024 10:46 PM, Jeffrey Hugo wrote:
->>>> On 4/10/2024 9:15 PM, Qiang Yu wrote:
->>>>> Add mhi_pci_generic_edl_trigger as edl_trigger for some devices
->>>>> (eg. SDX65)
->>>>> to enter EDL mode by writing the 0xEDEDEDED cookie to the channel 91
->>>>> doorbell register and forcing an SOC reset afterwards.
->>>>>
->>>>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
->>>>> ---
->>>>>    drivers/bus/mhi/host/pci_generic.c | 50
->>>>> ++++++++++++++++++++++++++++++++++++++
->>>>>    1 file changed, 50 insertions(+)
->>>>>
->>>>> diff --git a/drivers/bus/mhi/host/pci_generic.c
->>>>> b/drivers/bus/mhi/host/pci_generic.c
->>>>> index 51639bf..a529815 100644
->>>>> --- a/drivers/bus/mhi/host/pci_generic.c
->>>>> +++ b/drivers/bus/mhi/host/pci_generic.c
->>>>> @@ -27,12 +27,23 @@
->>>>>    #define PCI_VENDOR_ID_THALES    0x1269
->>>>>    #define PCI_VENDOR_ID_QUECTEL    0x1eac
->>>>>    +#define MHI_EDL_DB            91
->>>>> +#define MHI_EDL_COOKIE            0xEDEDEDED
->>>>> +
->>>>> +/* Device can enter EDL by first setting edl cookie then
->>>>> issuing inband reset*/
->>>>> +#define MHI_PCI_GENERIC_EDL_TRIGGER    BIT(0)
->>>>> +
->>>>> +#define CHDBOFF            0x18
->>>> This is already in drivers/bus/mhi/common.h why duplicate it here?
->>> I only see common.h be included in ep/internal.h host/internal.h and
->>> host/trace.h. So I thought it can only be used by MHI stack. Can we
->>> include common.h in pci_generic.c?
->> Up to Mani, but duplicating the definition seems like it would result in
->> maintence overhead over time.  An alternative to including the header might
->> be a new API between MHI and controller which allow the setting of a CHDB to
->> a specific value.
->>
-> +1 to the new API suggestion.
->
-> - Mani
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-OK, will add a new API in MHI to allow controller get CHDB address.
->>>>> +#define CHDBOFF_CHDBOFF_MASK 0xFFFFFFFF
->>>>> +#define CHDBOFF_CHDBOFF_SHIFT    0
->>>>> +
->>>>>    /**
->>>>>     * struct mhi_pci_dev_info - MHI PCI device specific information
->>>>>     * @config: MHI controller configuration
->>>>>     * @name: name of the PCI module
->>>>>     * @fw: firmware path (if any)
->>>>>     * @edl: emergency download mode firmware path (if any)
->>>>> + * @edl_trigger: each bit represents a different way to enter EDL
->>>>>     * @bar_num: PCI base address register to use for MHI MMIO
->>>>> register space
->>>>>     * @dma_data_width: DMA transfer word size (32 or 64 bits)
->>>>>     * @mru_default: default MRU size for MBIM network packets
->>>>> @@ -44,6 +55,7 @@ struct mhi_pci_dev_info {
->>>>>        const char *name;
->>>>>        const char *fw;
->>>>>        const char *edl;
->>>>> +    unsigned int edl_trigger;
->>>>>        unsigned int bar_num;
->>>>>        unsigned int dma_data_width;
->>>>>        unsigned int mru_default;
->>>>> @@ -292,6 +304,7 @@ static const struct mhi_pci_dev_info
->>>>> mhi_qcom_sdx75_info = {
->>>>>        .name = "qcom-sdx75m",
->>>>>        .fw = "qcom/sdx75m/xbl.elf",
->>>>>        .edl = "qcom/sdx75m/edl.mbn",
->>>>> +    .edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
->>>>>        .config = &modem_qcom_v2_mhiv_config,
->>>>>        .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->>>>>        .dma_data_width = 32,
->>>>> @@ -302,6 +315,7 @@ static const struct mhi_pci_dev_info
->>>>> mhi_qcom_sdx65_info = {
->>>>>        .name = "qcom-sdx65m",
->>>>>        .fw = "qcom/sdx65m/xbl.elf",
->>>>>        .edl = "qcom/sdx65m/edl.mbn",
->>>>> +    .edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
->>>>>        .config = &modem_qcom_v1_mhiv_config,
->>>>>        .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->>>>>        .dma_data_width = 32,
->>>>> @@ -312,6 +326,7 @@ static const struct mhi_pci_dev_info
->>>>> mhi_qcom_sdx55_info = {
->>>>>        .name = "qcom-sdx55m",
->>>>>        .fw = "qcom/sdx55m/sbl1.mbn",
->>>>>        .edl = "qcom/sdx55m/edl.mbn",
->>>>> +    .edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
->>>>>        .config = &modem_qcom_v1_mhiv_config,
->>>>>        .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->>>>>        .dma_data_width = 32,
->>>>> @@ -928,6 +943,38 @@ static void health_check(struct timer_list *t)
->>>>>        mod_timer(&mhi_pdev->health_check_timer, jiffies +
->>>>> HEALTH_CHECK_PERIOD);
->>>>>    }
->>>>>    +static int mhi_pci_generic_edl_trigger(struct mhi_controller
->>>>> *mhi_cntrl)
->>>>> +{
->>>>> +    int ret;
->>>>> +    u32 val;
->>>>> +    void __iomem *edl_db;
->>>>> +    void __iomem *base = mhi_cntrl->regs;
->>>> It looks like this file follows reverse christmas tree, but this
->>>> function does not. you should fix it.
->>> Will fix it in next version patch.
->>>>> +
->>>>> +    ret = mhi_device_get_sync(mhi_cntrl->mhi_dev);
->>>>> +    if (ret) {
->>>>> +        dev_err(mhi_cntrl->cntrl_dev, "Wake up device fail
->>>>> before trigger EDL\n");
->>>>> +        return ret;
->>>>> +    }
->>>>> +
->>>>> +    pm_wakeup_event(&mhi_cntrl->mhi_dev->dev, 0);
->>>>> +    mhi_cntrl->runtime_get(mhi_cntrl);
->>>>> +
->>>>> +    mhi_cntrl->read_reg(mhi_cntrl, base + CHDBOFF, &val);
->>>>> +    val = (val & CHDBOFF_CHDBOFF_MASK) >> CHDBOFF_CHDBOFF_SHIFT;
->>>>> +
->>>>> +    edl_db = base + val + (8 * MHI_EDL_DB);
->>>>> +
->>>>> +    mhi_cntrl->write_reg(mhi_cntrl, edl_db + 4,
->>>>> upper_32_bits(MHI_EDL_COOKIE));
->>>>> +    mhi_cntrl->write_reg(mhi_cntrl, edl_db,
->>>>> lower_32_bits(MHI_EDL_COOKIE));
->>>>> +
->>>>> +    mhi_soc_reset(mhi_cntrl);
->>>>> +
->>>>> +    mhi_cntrl->runtime_put(mhi_cntrl);
->>>>> +    mhi_device_put(mhi_cntrl->mhi_dev);
->>>>> +
->>>>> +    return 0;
->>>>> +}
->>>>> +
->>>>>    static int mhi_pci_probe(struct pci_dev *pdev, const struct
->>>>> pci_device_id *id)
->>>>>    {
->>>>>        const struct mhi_pci_dev_info *info = (struct
->>>>> mhi_pci_dev_info *) id->driver_data;
->>>>> @@ -962,6 +1009,9 @@ static int mhi_pci_probe(struct pci_dev
->>>>> *pdev, const struct pci_device_id *id)
->>>>>        mhi_cntrl->runtime_put = mhi_pci_runtime_put;
->>>>>        mhi_cntrl->mru = info->mru_default;
->>>>>    +    if (info->edl_trigger & MHI_PCI_GENERIC_EDL_TRIGGER)
->>>>> +        mhi_cntrl->edl_trigger = mhi_pci_generic_edl_trigger;
->>>>> +
->>>>>        if (info->sideband_wake) {
->>>>>            mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
->>>>>            mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
->>
+> ---
+>  drivers/usb/typec/ucsi/ucsi.c | 6 ++++++
+>  drivers/usb/typec/ucsi/ucsi.h | 3 +++
+>  2 files changed, 9 insertions(+)
+> 
+> diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
+> index 3106e69050cd..7ad544c968e4 100644
+> --- a/drivers/usb/typec/ucsi/ucsi.c
+> +++ b/drivers/usb/typec/ucsi/ucsi.c
+> @@ -1199,6 +1199,9 @@ static void ucsi_handle_connector_change(struct work_struct *work)
+>  
+>  	trace_ucsi_connector_change(con->num, &con->status);
+>  
+> +	if (ucsi->ops->connector_status)
+> +		ucsi->ops->connector_status(con);
+> +
+>  	role = !!(con->status.flags & UCSI_CONSTAT_PWR_DIR);
+>  
+>  	if (con->status.change & UCSI_CONSTAT_POWER_DIR_CHANGE) {
+> @@ -1588,6 +1591,9 @@ static int ucsi_register_port(struct ucsi *ucsi, struct ucsi_connector *con)
+>  	}
+>  	ret = 0; /* ucsi_send_command() returns length on success */
+>  
+> +	if (ucsi->ops->connector_status)
+> +		ucsi->ops->connector_status(con);
+> +
+>  	switch (UCSI_CONSTAT_PARTNER_TYPE(con->status.flags)) {
+>  	case UCSI_CONSTAT_PARTNER_TYPE_UFP:
+>  	case UCSI_CONSTAT_PARTNER_TYPE_CABLE_AND_UFP:
+> diff --git a/drivers/usb/typec/ucsi/ucsi.h b/drivers/usb/typec/ucsi/ucsi.h
+> index 2caf2969668c..3e1241e38f3c 100644
+> --- a/drivers/usb/typec/ucsi/ucsi.h
+> +++ b/drivers/usb/typec/ucsi/ucsi.h
+> @@ -16,6 +16,7 @@
+>  
+>  struct ucsi;
+>  struct ucsi_altmode;
+> +struct ucsi_connector;
+>  struct dentry;
+>  
+>  /* UCSI offsets (Bytes) */
+> @@ -59,6 +60,7 @@ struct dentry;
+>   * @sync_write: Blocking write operation
+>   * @async_write: Non-blocking write operation
+>   * @update_altmodes: Squashes duplicate DP altmodes
+> + * @connector_status: Updates connector status, called holding connector lock
+>   *
+>   * Read and write routines for UCSI interface. @sync_write must wait for the
+>   * Command Completion Event from the PPM before returning, and @async_write must
+> @@ -73,6 +75,7 @@ struct ucsi_operations {
+>  			   const void *val, size_t val_len);
+>  	bool (*update_altmodes)(struct ucsi *ucsi, struct ucsi_altmode *orig,
+>  				struct ucsi_altmode *updated);
+> +	void (*connector_status)(struct ucsi_connector *con);
+>  };
+>  
+>  struct ucsi *ucsi_create(struct device *dev, const struct ucsi_operations *ops);
+> 
+> -- 
+> 2.39.2
+
+-- 
+heikki
 
