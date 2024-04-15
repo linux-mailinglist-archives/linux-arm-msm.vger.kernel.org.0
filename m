@@ -1,116 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-17527-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17543-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0207B8A60A4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 04:04:01 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C37D98A613D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 04:59:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3282F1C20C58
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 02:04:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7EFF0281B3E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 02:59:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76884AD59;
-	Tue, 16 Apr 2024 02:03:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="IFNxCzpK"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49586D512;
+	Tue, 16 Apr 2024 02:59:06 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
+Received: from 3.mo584.mail-out.ovh.net (3.mo584.mail-out.ovh.net [46.105.57.129])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B274ABA42;
-	Tue, 16 Apr 2024 02:03:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D7114A82
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 02:59:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.105.57.129
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713233037; cv=none; b=Qmkpyd7WXjChlCoQza5ctY7dSZvWnzbDNKVF4xWILHV2ddxFc8CCgpWffsMJp5ESw9yFwG/vLBjgzuE33aO5gRvQELznd8xvZbxTsPmz5rTECO68KcXyunfu0PA2miE7DLBDtGoSzVwg5vAiozRUP15wljmqtDZ7h9RQdt79L6A=
+	t=1713236346; cv=none; b=XAh+qPVbVcZzzag4clGIIeCL3YIEL6Zwl5jjCLGGor/vaa/0/OtUPZLQXsiiYaBzpp5P8YPzvqyIPn6MoOXIQDB7hn6bM2nFDGZQYhVZDQp5VTdkD41e9TsPK9Dbr4waTBGXgz0r+fMVJn0MQmOeym4KsrtnoM09KmepIC2Wt9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713233037; c=relaxed/simple;
-	bh=x2n7YztkZD11QLiH+N5XoPcJPoWlyoWKd+CrQ56g3vI=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=P/lGssdfXF9Y/GUTT3Xn7JZpnSL2ZLteuAMdjtA9RVbGpM8nSrQso3jezzVItdAi/1TwcsYRLRDT37ousHRz0+gubNIIzi1sKhKIHEZ/5u/6sVhZruEIg2T3wOiYFngmG6uPPNlQphfM2pUMB9rfEMLDniZSs6S6HVQNL3JqI14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=IFNxCzpK; arc=none smtp.client-ip=217.70.183.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 029581C0003;
-	Tue, 16 Apr 2024 02:03:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1713233025;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=jdhfOsUByq8rUAvMMWe9XMEbUc95e1ogkd9aQZm1obo=;
-	b=IFNxCzpKpOnKB5fD2zdxHmr4+x/odprRgDb1rV44iTZF88RaqG4RxMU+ttqzXq8OrutgfO
-	VAmz+TbMrq/IY69cjJIP0da5VNZ7cKiBkq1UnoOmzgOrxs2gTErWowdwuCzROabUtkwOsS
-	ZxDJnk31eyhyeF9s34aBwWGX+UOQfnnLyXXCMrTuD6A+J7WvE/gdZYnmhqZ4H+io4spEuz
-	SsxErIMnd13MRzCr1PCtxoET2JUPs7qWnI/3IxPjFHvh5XrCHLCjwwvZlUVdA+6IazbD8v
-	/mgR8byu4c7wptGosm3glSCwJcJHIDkiErIHWN8fCCWJHdd59bPXayxzBYieug==
-Date: Tue, 16 Apr 2024 04:03:29 +0200
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-To: Ricardo Ribalda <ribalda@chromium.org>
-Cc: Martin Tuma <martin.tuma@digiteqautomotive.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
- Hans Verkuil <hverkuil-cisco@xs4all.nl>, Hugues Fruchet
- <hugues.fruchet@foss.st.com>, Alain Volmat <alain.volmat@foss.st.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue
- <alexandre.torgue@foss.st.com>, Paul Kocialkowski
- <paul.kocialkowski@bootlin.com>, Greg Kroah-Hartman
- <gregkh@linuxfoundation.org>, Chen-Yu Tsai <wens@csie.org>, Jernej Skrabec
- <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, Sakari
- Ailus <sakari.ailus@linux.intel.com>, Thierry Reding
- <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>,
- Sowjanya Komatineni <skomatineni@nvidia.com>, Matthias Brugger
- <matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
- <angelogioacchino.delregno@collabora.com>, Hans Verkuil
- <hverkuil@xs4all.nl>, Sergey Kozlov <serjk@netup.ru>, Abylay Ospan
- <aospan@netup.ru>, Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>, Dmitry
- Osipenko <digetx@gmail.com>, Stanimir Varbanov
- <stanimir.k.varbanov@gmail.com>, Vikash Garodia
- <quic_vgarodia@quicinc.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio
- <konrad.dybcio@linaro.org>, Benjamin Mugnier
- <benjamin.mugnier@foss.st.com>, Sylvain Petinot
- <sylvain.petinot@foss.st.com>, Jacopo Mondi <jacopo+renesas@jmondi.org>,
- Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>, Laurent Pinchart
- <laurent.pinchart+renesas@ideasonboard.com>, Niklas =?UTF-8?Q?S=C3=B6derl?=
- =?UTF-8?Q?und?= <niklas.soderlund+renesas@ragnatech.se>, Pavel Machek
- <pavel@ucw.cz>, linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org, linux-staging@lists.linux.dev,
- linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
- linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 10/35] staging: media: tegra-video: Use swap macro
-Message-ID: <20240416040329.31547d8f@booty>
-In-Reply-To: <20240415-fix-cocci-v1-10-477afb23728b@chromium.org>
-References: <20240415-fix-cocci-v1-0-477afb23728b@chromium.org>
-	<20240415-fix-cocci-v1-10-477afb23728b@chromium.org>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1713236346; c=relaxed/simple;
+	bh=XybDZ2MMTdcokpPlkBJhrClPjnxT/2fqLvH9KOzHy64=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=V2V1tezW7eNzNu1u7LOV77ywrTsOVI+Z+PzG1N9iYrdLEzChBLrd8OZQbPm7lPvSByUUuEb3aqKZ17CPQ0eje6vOpCG2Davtb2puq19ZxV42qCGQA+xsvPv3AmiR0vPjAoRVkuVx234Iattr8DulxcuA7neyzk6W3XgEVRTr7Rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=etezian.org; arc=none smtp.client-ip=46.105.57.129
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etezian.org
+Received: from director3.ghost.mail-out.ovh.net (unknown [10.109.139.43])
+	by mo584.mail-out.ovh.net (Postfix) with ESMTP id 4VJKLX4bqhz1LsF
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Apr 2024 21:00:04 +0000 (UTC)
+Received: from ghost-submission-6684bf9d7b-w7sh2 (unknown [10.110.178.131])
+	by director3.ghost.mail-out.ovh.net (Postfix) with ESMTPS id CBAA21FE93;
+	Mon, 15 Apr 2024 21:00:01 +0000 (UTC)
+Received: from etezian.org ([37.59.142.106])
+	by ghost-submission-6684bf9d7b-w7sh2 with ESMTPSA
+	id 3/PYLVGVHWaUHQMArYzXgA
+	(envelope-from <andi@etezian.org>); Mon, 15 Apr 2024 21:00:01 +0000
+Authentication-Results:garm.ovh; auth=pass (GARM-106R0069717fa12-e9f8-4f4c-974d-fc8acd2e533f,
+                    1C060BB0AFB71ED4B605930205BB25055C08B83D) smtp.auth=andi@etezian.org
+X-OVh-ClientIp:89.217.109.169
+From: Andi Shyti <andi.shyti@kernel.org>
+To: wsa@kernel.org, Loic Poulain <loic.poulain@linaro.org>, 
+ Robert Foss <rfoss@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20240412-linux-next-24-04-11-sc8280xp-cci-compat-string-fix-v1-1-7dbafff36932@linaro.org>
+References: <20240412-linux-next-24-04-11-sc8280xp-cci-compat-string-fix-v1-1-7dbafff36932@linaro.org>
+Subject: Re: [PATCH] dt-bindings: i2c: qcom-cci: Document sc8280xp
+ compatible
+Message-Id: <171321479967.1758400.4418500996463350127.b4-ty@kernel.org>
+Date: Mon, 15 Apr 2024 22:59:59 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-GND-Sasl: luca.ceresoli@bootlin.com
+X-Mailer: b4 0.13.0
+X-Ovh-Tracer-Id: 10760225412810082960
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvledrudejvddgudehjecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevjghfuffkffggtgfgofesthejredtredtjeenucfhrhhomheptehnughiucfuhhihthhiuceorghnughirdhshhihthhisehkvghrnhgvlhdrohhrgheqnecuggftrfgrthhtvghrnhepffetheduffdvhfdugfffudfgjeejudehheegfeeguefhieeugffhgfeuffdvgfefnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucfkphepuddvjedrtddrtddruddpkeelrddvudejrddutdelrdduieelpdefjedrheelrddugedvrddutdeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpegrnhguihesvghtvgiiihgrnhdrohhrghdpnhgspghrtghpthhtohepuddprhgtphhtthhopehlihhnuhigqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdfovfetjfhoshhtpehmohehkeegpdhmohguvgepshhmthhpohhuth
 
-Hello Ricardo,
+Hi
 
-On Mon, 15 Apr 2024 19:34:27 +0000
-Ricardo Ribalda <ribalda@chromium.org> wrote:
-
-> Makes the code simpler and cocci happier:
+On Fri, 12 Apr 2024 14:53:25 +0100, Bryan O'Donoghue wrote:
+> Add sc8280xp compatible consistent with recent CAMSS CCI interfaces.
 > 
-> drivers/staging/media/tegra-video/tegra20.c:324:44-45: WARNING opportunity for swap()
+> sc8280xp has the following clock list and so requires its own compat
+> string and sc8280xp specific clock definition in the yaml.
 > 
-> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+> - const: camnoc_axi
+> - const: slow_ahb_src
+> - const: cpas_ahb
+> - const: cci
+> 
+> [...]
 
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Applied to i2c/i2c-host on
 
--- 
-Luca Ceresoli, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+git://git.kernel.org/pub/scm/linux/kernel/git/andi.shyti/linux.git
+
+Thank you,
+Andi
+
+Patches applied
+===============
+[1/1] dt-bindings: i2c: qcom-cci: Document sc8280xp compatible
+      commit: 32204e57f3fbe8863dc17ba59bdf3f5dd573896d
+
 
