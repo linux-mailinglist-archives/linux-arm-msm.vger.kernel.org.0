@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-17494-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17495-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0E2968A5B2C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 21:44:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C5CDD8A5B30
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 21:44:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3F20C1C20BAC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 19:44:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 035011C2037F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 19:44:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E3C21635AA;
-	Mon, 15 Apr 2024 19:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C035C168AF0;
+	Mon, 15 Apr 2024 19:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="LfHIP3YS"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="RKkbhxx8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94171635C6
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Apr 2024 19:35:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF691649C2
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Apr 2024 19:35:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713209704; cv=none; b=Oxq1Gp4IW8bCBOfJlt3TbBcKY7rhtEPAMZd0dIksV5Z1LQfOLIg3DmDqBuyA53IDa6q9/H1FMxAySZYPfzFSZx2AVZ1ajQGpCNhHhLVxoZYB/h2pTx8ub35rHJAwd8Tab7JLgJy4Po97pLKTGcdjaLzQQ6/qRRa+yUnLe/pIXBY=
+	t=1713209706; cv=none; b=jwcqaOG46no3xzlC9Cf3/Gx/VoNIWTJfHx4MnROsQkmJ70re1pQIVUSJhktChGmi5qcv7UFv6rJn1Fitiq6cGyynGDY5B2GXEr9D6WTQTMBXnBgSfd7Gr642Xh428NJTKrTeKZbyC0wUhNL49pVUun1OaRx5w1SkbKuA5/E1Sqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713209704; c=relaxed/simple;
-	bh=VhbJFqc8QmLlbHWJnEENrvmuq+ozcGe5o6fFyH1YYQU=;
+	s=arc-20240116; t=1713209706; c=relaxed/simple;
+	bh=XZhwvXRbcWKSHFSPcZ7MTtPfoRGwp5KRtZGpZNte2nU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=h+9azni65bE75OEEPdXMFeNANs6q9g5tXwHecbKFEbVoBD/lyxFYBbU+ezgvakwQ88B2ir3jNmH7lB9+IitiLjqPxremBMN2GJAsG7AwcmlkLJVDUO9t5kBtoG+BSHCA0r23pEZIQzo1XxAm4IHVTmss0Dn9//h5f2F2uNQP39k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=LfHIP3YS; arc=none smtp.client-ip=209.85.222.176
+	 In-Reply-To:To:Cc; b=MI2LTLLZyUdoMK3EsmJeKvHg1addtw0dEuVwLT3cvFRBe707wx2Uy9UZjbBC3to261nJO/9N1eqCgmAD7i0iO49BtxA/oqZt79XrUYzMcoow26IrwHJgRVURgviCzDWaGpv1GrqAU95xv9d5kjD09s2cctlp6qWjWCJHXfzOlgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=RKkbhxx8; arc=none smtp.client-ip=209.85.128.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-78d543db3a4so272591285a.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Apr 2024 12:35:01 -0700 (PDT)
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-61587aa956eso34881657b3.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Apr 2024 12:35:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1713209700; x=1713814500; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1713209702; x=1713814502; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=OhmQYYxWMuudLBjdJjOGHKHYUzO1QQEhFUDY1X02X9Q=;
-        b=LfHIP3YS/F+mTAzygDVHslx5fAuRJQnA2sSJ5ftryYm2qeaCsuA7qFlI+6p9qUxdkL
-         GuJ9mP67JlIOKKIPlIcpEvUvKrahgJfXZ2/yGY/pppGNfmjI/IW5WlCChJSzsdgMAgwb
-         oMUzsZcPcHH5obx5uHQ2Eq2tJlkHdq4Lai9No=
+        bh=jt2XKVmYwRsbqiFBuUwX1RfD+QA2xOHKpcd2HjFMj/E=;
+        b=RKkbhxx8/nD2gu72sVDXiA2L3ZsemLRvHQAOhyZx0+oDckJDWUwJxo8Zilq/WRybIQ
+         OfRIlhjMbNr60hcHzq863/1zI7lw1c+9hVTUql0GLfe19SiRssxXEQdOuRQ7SHDHYNoL
+         h0vwG0aeenOjDdPp8U5FtKb2brE0UpAWQwPbY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713209700; x=1713814500;
+        d=1e100.net; s=20230601; t=1713209702; x=1713814502;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OhmQYYxWMuudLBjdJjOGHKHYUzO1QQEhFUDY1X02X9Q=;
-        b=J9fXt/yu+d8rU24VmcSEfW6K0Ex4mmECR5C0sDU4F0ied0UMJU+KJUjT926hf5WBJY
-         2tig7XE8swNTqG0/3njGW7FLNUgvUdEaLi5MjRn+y115xjMcXqFKbqViQKAZ/Lwa9+CL
-         Wc7KS5f+ACbCPJFI2T4GXLx8N7Ydts7B579ElG4oOzQ+rdQ4KncwixbHjYqru1NqNa4a
-         Pl0FZTbzOoj7KZvA+Jr+M5M0IRXxWsXc4yvsNKsUoVXyYyG8Qu0Kk0JNOjjZbb/HIC9p
-         lpbFasFZI+kYqXC7Qh1CtTfNQkfwVeUXaYpRgW9lacvVmPjp2gC8MfmrHL4CO8Pw4KKI
-         f0wg==
-X-Forwarded-Encrypted: i=1; AJvYcCVboaxSOwJzytJKIMPdOI2YMS7FC90OKsIa+Cdi6vqBa0mHC90FoO5DRVuCKgtySVMUZEqV68RzVrTg4zt4vF+4Xe4FhhPUhQDPj7ZUyQ==
-X-Gm-Message-State: AOJu0YzS8Pj0CRm4mE4kC2AU7A5Y5oxnWTZ/6Bx5k8EtV21hon94L2NJ
-	ZabFpGgddZj4rG/xbda57ux8fR1J503qBipfhxw0U+gYxcYhdHS6O7FvNWG7lA==
-X-Google-Smtp-Source: AGHT+IExc3kiGm+hEFRw+kQDfViul4woHzF6WRs96subTZ4c8qoJuWqvczLaOhJGq/Hyw06BNYyVfg==
-X-Received: by 2002:a05:620a:3182:b0:78e:dcc4:339e with SMTP id bi2-20020a05620a318200b0078edcc4339emr7592795qkb.11.1713209700585;
-        Mon, 15 Apr 2024 12:35:00 -0700 (PDT)
+        bh=jt2XKVmYwRsbqiFBuUwX1RfD+QA2xOHKpcd2HjFMj/E=;
+        b=oGhsZuGGsFPdf4nPdiWE3ICF4nB5idO9JxjyrCfXrmlXt5Omx13gIeD2+LoJQQYOzS
+         mEJlFB98BZJK/BFh2PQP5GxtjDhmdNRzZiRqQySAb3F66OhhE/+DRbv0XMjKvCl+CzEk
+         /XBnKCmYM4w3eY9CdxPHIZ6h3ecQ+FhAUEXjUuigEwWlJCHg55age+/L74fiHec2h9RD
+         aCqN6FofBpx4P/6nP24wSvyY6Hr/nwbvxpvfW3VE7vn9SSLVXhTEoMagf4UJQ+HCrOCF
+         3uFXI/pSZ5KVHlDJ8+5nA/owgeM0DNZp5QA2MXvw/t6eSt+MoFt8HZUQzQi96XpLR0JP
+         5Cng==
+X-Forwarded-Encrypted: i=1; AJvYcCVqJZdR6SOy+zA9Pg2dZ2iQkGO+vrnl7i9d0rAHa1qRRDf444B3FIwUtpCJjOsjZt/5TS41LxchTGnUK6+8+v6veTCygAks6hlyS0ogAw==
+X-Gm-Message-State: AOJu0YxhRp/T03so6AG+/LMwbI6aytJalEbkGu3pOct42D61wXixZ/9B
+	Huhc77SsO4CM/irm+F/BqRnkqi1XmwWZzr44j3S0HqSliyG/obFLNvX1+kZteA==
+X-Google-Smtp-Source: AGHT+IEHr8lEllDyip6pAkUMGURPdINr08Mt5MZfIhMi3nIR8h+wyIaxQ16q8BBaKyR8INXB42ugWw==
+X-Received: by 2002:a0d:e292:0:b0:615:2078:9c0b with SMTP id l140-20020a0de292000000b0061520789c0bmr10298321ywe.40.1713209701695;
+        Mon, 15 Apr 2024 12:35:01 -0700 (PDT)
 Received: from denia.c.googlers.com (114.152.245.35.bc.googleusercontent.com. [35.245.152.114])
-        by smtp.gmail.com with ESMTPSA id s26-20020ae9f71a000000b0078d3b54eb76sm6718055qkg.78.2024.04.15.12.34.59
+        by smtp.gmail.com with ESMTPSA id s26-20020ae9f71a000000b0078d3b54eb76sm6718055qkg.78.2024.04.15.12.35.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Apr 2024 12:35:00 -0700 (PDT)
+        Mon, 15 Apr 2024 12:35:01 -0700 (PDT)
 From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Mon, 15 Apr 2024 19:34:46 +0000
-Subject: [PATCH 29/35] media: i2c: rdacm20: Refator return path
+Date: Mon, 15 Apr 2024 19:34:47 +0000
+Subject: [PATCH 30/35] media: i2c: et8ek8: Refator return path
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,7 +75,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240415-fix-cocci-v1-29-477afb23728b@chromium.org>
+Message-Id: <20240415-fix-cocci-v1-30-477afb23728b@chromium.org>
 References: <20240415-fix-cocci-v1-0-477afb23728b@chromium.org>
 In-Reply-To: <20240415-fix-cocci-v1-0-477afb23728b@chromium.org>
 To: Martin Tuma <martin.tuma@digiteqautomotive.com>, 
@@ -124,29 +124,28 @@ X-Mailer: b4 0.12.4
 This is a nop, but let cocci now that this is not a good candidate for
 min()
 
-drivers/media/i2c/rdacm20.c:363:12-13: WARNING opportunity for min()
+drivers/media/i2c/et8ek8/et8ek8_driver.c:255:13-14: WARNING opportunity for min()
 
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 ---
- drivers/media/i2c/rdacm20.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/media/i2c/et8ek8/et8ek8_driver.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/rdacm20.c b/drivers/media/i2c/rdacm20.c
-index b4647bda8c21..b40d40b0cdd4 100644
---- a/drivers/media/i2c/rdacm20.c
-+++ b/drivers/media/i2c/rdacm20.c
-@@ -360,7 +360,10 @@ static int __ov10635_write(struct rdacm20_device *dev, u16 reg, u8 val)
- 	dev_dbg(dev->dev, "%s(0x%04x, 0x%02x)\n", __func__, reg, val);
+diff --git a/drivers/media/i2c/et8ek8/et8ek8_driver.c b/drivers/media/i2c/et8ek8/et8ek8_driver.c
+index e932d25ca7b3..c7984f90ae4d 100644
+--- a/drivers/media/i2c/et8ek8/et8ek8_driver.c
++++ b/drivers/media/i2c/et8ek8/et8ek8_driver.c
+@@ -252,7 +252,9 @@ static int et8ek8_i2c_buffered_write_regs(struct i2c_client *client,
  
- 	ret = i2c_master_send(dev->sensor, buf, 3);
--	return ret < 0 ? ret : 0;
-+
-+	if (ret < 0)
-+		return ret;
+ 	rval = i2c_transfer(client->adapter, msg, wcnt);
+ 
+-	return rval < 0 ? rval : 0;
++	if (rval < 0)
++		return rval;
 +	return 0;
  }
  
- static int ov10635_write(struct rdacm20_device *dev, u16 reg, u8 val)
+ /*
 
 -- 
 2.44.0.683.g7961c838ac-goog
