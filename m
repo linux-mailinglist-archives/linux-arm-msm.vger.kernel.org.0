@@ -1,92 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-17447-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17449-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0EF18A52E8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 16:18:34 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD67D8A5484
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 16:37:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F21051C20B88
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 14:18:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1ACD71C21369
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 14:37:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E5B574E25;
-	Mon, 15 Apr 2024 14:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 817887A140;
+	Mon, 15 Apr 2024 14:35:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b="Kq8Hix0p"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h8ux2kJ9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from outbound6.mail.transip.nl (outbound6.mail.transip.nl [136.144.136.128])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33F873175;
-	Mon, 15 Apr 2024 14:18:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.144.136.128
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463AB74E11;
+	Mon, 15 Apr 2024 14:35:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713190706; cv=none; b=lpHs7pw221YsYRYAMZbK3XO7RNwzF0WcDSaItLTd54ZeVPdk/S17mdbnxjCYH1ojYZHwYCAb09iuUNku5TdxI7heOGddhbh4FwK3gXQoW9cbIqRBf0pzkKQT9RfwgDez6c0XGN2Wa3l3X1OfI7TH1BeijlABBG60zCLKLoft0wo=
+	t=1713191701; cv=none; b=IgcwM0QZAnhu7RZztIcN68C3OQ7Sop3KPtltXZac7O6RDEPptnryUNxMfGGQIBT/fkoVpEl4xHiLpRhQ3I0PsP/4b4xWozO7bZ76j4k4GCXTcCXj78gclWHh7ADI1uQQmKqlZLUJKLPuiJuCe/Uvw58w1JJqS0OA93RPnmP4dOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713190706; c=relaxed/simple;
-	bh=KsjfUPGlpRzaRp0MgK7YOyBeifgjIE37Gi21vj0GW8A=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=NcpcC354fZJfALoI2vjVCp7sh7zxm0f8cmnUNAvDQgPnAvRd/y7BKzvudZGdshlOGJ4G5FqtvuVDSgkMKy19Bqs4V4v6qWIbcPVX4DCf9xePdNtnu25vnb9cxxbZT21ArtDdaYb681//0j7lQlHG2gpqPEOvnCCujGWCIBs6PfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org; spf=pass smtp.mailfrom=herrie.org; dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b=Kq8Hix0p; arc=none smtp.client-ip=136.144.136.128
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=herrie.org
-Received: from submission6.mail.transip.nl (unknown [10.103.8.157])
-	by outbound6.mail.transip.nl (Postfix) with ESMTP id 4VJ8Qy3hCFzwLJF8;
-	Mon, 15 Apr 2024 16:18:18 +0200 (CEST)
-Received: from herrie-desktop.. (110-31-146-85.ftth.glasoperator.nl [85.146.31.110])
-	by submission6.mail.transip.nl (Postfix) with ESMTPA id 4VJ8Qw0tNWz12Ly6;
-	Mon, 15 Apr 2024 16:18:16 +0200 (CEST)
-From: Herman van Hazendonk <github.com@herrie.org>
-To: andersson@kernel.org
-Cc: benwolsieffer@gmail.com,
-	chris.chapuis@gmail.com,
-	Herman van Hazendonk <github.com@herrie.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] pinctrl: qcom-ssbi: add support for PM8901
-Date: Mon, 15 Apr 2024 16:18:13 +0200
-Message-Id: <20240415141814.1983384-1-github.com@herrie.org>
-X-Mailer: git-send-email 2.40.1
+	s=arc-20240116; t=1713191701; c=relaxed/simple;
+	bh=iY4lgc0Rhhg0QzocM/HxB+V+JgnIN6Pz/U6ay5f9MVA=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=iKxPweiJQ8kakUSx/0SiSbZqBobPNu1fhIwXuQGnYq08ye8bFTMRhgwwWhGp18UllZqSap9GGKAJNW6yh5ABHAC4TZKYK+7i5TA2Kb84JVZl0bL1Q5YimBsMO6sGEMd1LEhl/FqwOWE3tGOioAIUYEIeQvw8C534YmTqUjfGXlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h8ux2kJ9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 707A5C113CC;
+	Mon, 15 Apr 2024 14:35:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1713191700;
+	bh=iY4lgc0Rhhg0QzocM/HxB+V+JgnIN6Pz/U6ay5f9MVA=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=h8ux2kJ9VPc31EUKRstPFxlBtLqgAikyAAiDVJYFMkbo8mtxrOyOOK3NcACc+y8Ud
+	 iXpqVF0MEx6sJdy9lY0wvSVKeeW8uxfxRN67mmZIVLth3xLTpCnMe7hyPn5vAXAEap
+	 YJVO2lf3xgNEtO0oSJyygdI7v9QUj7HOXxZHY9dCiUhkDO7nzPi891PYd/BxHxCsHv
+	 UyVxwOClfOgHueSz5EuCeCSIoFui/BN6bMZkuezCEt2p/LTzprmU9aAAuHUtmtAdXW
+	 zFxLHFLFtq8kkv6xT1YhX19MuFUhTUT9zOppzKw1mDSETuxGYDPKQceVsXviKNPbDv
+	 gZmkSaNAV4YtQ==
+Date: Mon, 15 Apr 2024 09:34:58 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Marek Vasut <marek.vasut+renesas@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	NXP Linux Team <linux-imx@nxp.com>,
+	Minghuan Lian <minghuan.Lian@nxp.com>,
+	Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Jesper Nilsson <jesper.nilsson@axis.com>,
+	Srikanth Thokala <srikanth.thokala@intel.com>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Heiko Stuebner <heiko@sntech.de>, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
+	linux-omap@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linuxppc-dev@lists.ozlabs.org, Niklas Cassel <cassel@kernel.org>,
+	linux-arm-kernel@axis.com, linux-rockchip@lists.infradead.org,
+	Frank Li <Frank.Li@nxp.com>
+Subject: Re: [PATCH v12 2/8] PCI: dwc: ep: Add Kernel-doc comments for APIs
+Message-ID: <20240415143458.GA111010@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: ClueGetter at submission6.mail.transip.nl
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=transip-a; d=herrie.org; t=1713190696; h=from:subject:to:cc:date:
- mime-version; bh=4LHW9kxjWfO5y9vNvAIQy58sYhzSG2Pz9C7+L2RBBBA=;
- b=Kq8Hix0pHcXXF2GwFOfclW1BS9wkAVu7TL5ChHqO1NzWCPOmyslVdqvOD/bmVWGpJBk/25
- ZXDdSR0Nnla9XLQnTkoi79m3Hgdqyxt+crElakM0Xb3Z47XS7cur4lhFdR1PUFJxR3kaMZ
- lVRmhy5FrP/OMFkpBkiuuEOcLuZk1t75VXM8Q5lhAigF6ks0D3eZbmz2RELdugzVcFhFaC
- o31oEvqBZBdpl2gC86OwoLoVfkCUsm2aXftVCItun6kyNBIkwGWIGyoMpj+r08GYYMVeBA
- zhT5eEkgVE/jA91KGviYAfrrrlxyLX7jz4iIi2RUHbRr1Bti+W2KsykeueMQuA==
-X-Report-Abuse-To: abuse@transip.nl
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240415140015.GJ7537@thinkpad>
 
-The PM8901 is used alongside the APQ8060/MSM8660 on the APQ8060 Dragonboard
-and HP TouchPad. It works the same as all others, so just add the
-compatible string for this variant.
+On Mon, Apr 15, 2024 at 07:30:15PM +0530, Manivannan Sadhasivam wrote:
+> On Fri, Apr 12, 2024 at 02:58:36PM -0500, Bjorn Helgaas wrote:
+> > On Wed, Mar 27, 2024 at 02:43:31PM +0530, Manivannan Sadhasivam wrote:
+> > > All of the APIs are missing the Kernel-doc comments. Hence, add them.
+> > 
+> > > + * dw_pcie_ep_reset_bar - Reset endpoint BAR
+> > 
+> > Apparently this resets @bar for every function of the device, so it's
+> > not just a single BAR?
+> 
+> Right. It should've been 'Reset endpoint BARs'. And the API name is also
+> misleading, but that is not the scope of this series.
 
-Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
----
- drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c | 1 +
- 1 file changed, 1 insertion(+)
+Maybe just this for now:
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c b/drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c
-index 3aee6835a2de..82221d0c813b 100644
---- a/drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c
-+++ b/drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c
-@@ -808,6 +808,7 @@ static const struct of_device_id pm8xxx_mpp_of_match[] = {
- 	{ .compatible = "qcom,pm8038-mpp", .data = (void *) 6 },
- 	{ .compatible = "qcom,pm8058-mpp", .data = (void *) 12 },
- 	{ .compatible = "qcom,pm8821-mpp", .data = (void *) 4 },
-+	{ .compatible = "qcom,pm8901-mpp", .data = (void *) 4 },
- 	{ .compatible = "qcom,pm8917-mpp", .data = (void *) 10 },
- 	{ .compatible = "qcom,pm8921-mpp", .data = (void *) 12 },
- 	{ },
+s/Reset endpoint BAR/Reset @bar of every function/
+
+> > > + * dw_pcie_ep_raise_intx_irq - Raise INTx IRQ to the host
+> > > + * @ep: DWC EP device
+> > > + * @func_no: Function number of the endpoint
+> > > + *
+> > > + * Return: 0 if success, errono otherwise.
+> > 
+> > s/errono/errno/ (another instance below)
+> 
+> ah, thanks for spotting. Since this series is already merged, I hope
+> Krzysztof can ammend this.
+
+Sounds good, thanks!
+
+Bjorn
 
