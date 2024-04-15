@@ -1,75 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-17419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68FF38A489B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 09:03:48 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A55558A48B7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 09:08:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9A6831C221D4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 07:03:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 34CEB2812E0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 07:08:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89149200B7;
-	Mon, 15 Apr 2024 07:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D3851F951;
+	Mon, 15 Apr 2024 07:08:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HRqh85a6"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="AiZjjIvz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FEE21EEE0;
-	Mon, 15 Apr 2024 07:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DBAC2206E;
+	Mon, 15 Apr 2024 07:08:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713164623; cv=none; b=SRnzKovXGZQzvZCTulISWDaHGgRmEIIAOHlKeCGr7rQAA2Zzcq4eRBcm/3lJ6MipAEH5NRn7feyFDIcSyb8n1wcxuQYR4Tkxw1psW8FGTNZZY7boFTkt1IaWEWl0X9qNO77qk+kmlPcOoMhHuMsGl3jMP6Hrsp7VvZv9yJihwvg=
+	t=1713164902; cv=none; b=jCFd3isSJktev2coGhRBHuPwZeak07dzprvTBOX6WX6dNqG8089rrck+Xto/i8UFF9ye1lOJ8q0C7ku6CMyiPXGFdgQEENXhHOi82ngngcEVfQNLPQRae1PDleP8Lj4gHuGek7LBaYaCqnueJSpFZJhGHxlGczzcIjmUFTA6wbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713164623; c=relaxed/simple;
-	bh=KC35dCKpRK62iLfVMAKtkgEhq5jZFRZj3hQ5vv+ZEnA=;
+	s=arc-20240116; t=1713164902; c=relaxed/simple;
+	bh=Q/P5yjZRfoVZ5TbI1Low1FH019cQT1sVEhcJzOofFNk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RrgNHNde+XM2ieSYfhWxafNGZK1enphEPmsw2URHqeMvNBJvRoyjgVfXiAt1u1wQqSq9Z4+r5yf4VE5h71B0SGn/q6SGgEy4ww+JJF4mg8d4YsPTYTixJDYNWPk0+M3G/ili3aK3hGk8ynr2SREiZE94s3smsw2g7BHk9uY3Vg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HRqh85a6; arc=none smtp.client-ip=192.198.163.14
+	 Content-Type:Content-Disposition:In-Reply-To; b=adQRPnbeT3dXG/YYsvdvIZBvcahGlZC5CWEVlC0oK8XLQGi8OBf1g2ClPuf/REMU2Mh+aJXsJM4QtlEf5lZ6Q9Q28Kj4+on3z4v880MEd5DzNO6MhazCtCVywMoqx7wfxF/KJyJgsxFpSA2lj4CS+rGUvjEYO2R/DcfUkwOrzQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=AiZjjIvz; arc=none smtp.client-ip=192.198.163.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1713164618; x=1744700618;
+  t=1713164900; x=1744700900;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=KC35dCKpRK62iLfVMAKtkgEhq5jZFRZj3hQ5vv+ZEnA=;
-  b=HRqh85a6NmXEJDfPm+q34h/VNrSxm5/cU6iYyLXS0H14+GktftPT5d3j
-   drwuBpxiV8W1PkGjw7+9aITGxOAWey6h6RkYrJqlx7DbjL25QZfvXJYrJ
-   rHyFueR4dl4brI72VdcMH5BHVu69aHhWRZ36OK7X4ns0CA+1pKhiZFxRm
-   NDwAA4j8b2rU9WME+ADzdFw0WOIT5UnLFZv3ht+h1HY/o0CCsvHUJByW7
-   a/+KxstPTKllFHRB45woNcWvI8xTGDnrLO2+ZP4rHSV/eE6rxvpFy5xlD
-   AA89Uagc8pzPor83Fq3kqFc69mQrQ6U+9HxkdyVV+Wq4cf3mi0f42RaoO
-   w==;
-X-CSE-ConnectionGUID: o5FqpNTESH+IB0xMfWq2AA==
-X-CSE-MsgGUID: kgciskv5Tbil6rwMIIhz5Q==
-X-IronPort-AV: E=McAfee;i="6600,9927,11044"; a="8756701"
+  bh=Q/P5yjZRfoVZ5TbI1Low1FH019cQT1sVEhcJzOofFNk=;
+  b=AiZjjIvzJsSBuotRNaOiJ9zDtSkbDFGz69i9kE4wfLQtrCxa7Euzw3yx
+   6KeCbf9vYOEoCdoFZxQLe3t6FJRWWMcm5smi8MGafdK/nB/mZXinn+oIK
+   8Q0Fp87fSFNtpEv3VNFlOOsHQDIT32RajmAEgLAl1rlkVzKyQY2pIAIID
+   KM+FaVRKS5X38+dFPZRHeNfPc3yt/faZ/BtfD1HIrYAhwLrgBmvCsupN3
+   Y/yi0B6JPKqx0PJ06salFeZJttWEYxzrCvU1qa8BurFAeXIUZKevmqICt
+   OepNx2XtThclRpqg9cI7iVfQNiLOtkAJDI+cTunHATu9UH7xDiLOtOY54
+   g==;
+X-CSE-ConnectionGUID: HUtQlt1lSnKvrmZUikn10g==
+X-CSE-MsgGUID: wO/V/RRRS26fha7rgK7GGQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11044"; a="8757306"
 X-IronPort-AV: E=Sophos;i="6.07,202,1708416000"; 
-   d="scan'208";a="8756701"
+   d="scan'208";a="8757306"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Apr 2024 00:03:37 -0700
-X-CSE-ConnectionGUID: djRIw1aXRlGtMm58iYC+eg==
-X-CSE-MsgGUID: AHrMH6nETnOo7RKOav5w0Q==
+  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Apr 2024 00:08:19 -0700
+X-CSE-ConnectionGUID: 5TndEbYoR/qSGU2hMzMHvA==
+X-CSE-MsgGUID: nMUEnbp9TFOlkwtOfc81Bg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.07,202,1708416000"; 
-   d="scan'208";a="22240866"
+   d="scan'208";a="22242361"
 Received: from kuha.fi.intel.com ([10.237.72.185])
-  by orviesa006.jf.intel.com with SMTP; 15 Apr 2024 00:03:35 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 15 Apr 2024 10:03:34 +0300
-Date: Mon, 15 Apr 2024 10:03:34 +0300
+  by orviesa006.jf.intel.com with SMTP; 15 Apr 2024 00:08:16 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 15 Apr 2024 10:08:15 +0300
+Date: Mon, 15 Apr 2024 10:08:15 +0300
 From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 4/5] usb: typec: ucsi: add update_connector callback
-Message-ID: <ZhzRRhjWhyjR07Tg@kuha.fi.intel.com>
+Subject: Re: [PATCH v2 5/5] usb: typec: ucsi: glink: set orientation aware if
+ supported
+Message-ID: <ZhzSX0z7Ofl0I93+@kuha.fi.intel.com>
 References: <20240411-ucsi-orient-aware-v2-0-d4b1cb22a33f@linaro.org>
- <20240411-ucsi-orient-aware-v2-4-d4b1cb22a33f@linaro.org>
+ <20240411-ucsi-orient-aware-v2-5-d4b1cb22a33f@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,55 +79,49 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240411-ucsi-orient-aware-v2-4-d4b1cb22a33f@linaro.org>
+In-Reply-To: <20240411-ucsi-orient-aware-v2-5-d4b1cb22a33f@linaro.org>
 
-On Thu, Apr 11, 2024 at 07:49:56AM +0300, Dmitry Baryshkov wrote:
-> Add a callback to allow glue drivers to update the connector before
-> registering corresponding power supply and Type-C port. In particular
-> this is useful if glue drivers want to touch the connector's Type-C
-> capabilities structure.
+On Thu, Apr 11, 2024 at 07:49:57AM +0300, Dmitry Baryshkov wrote:
+> If the PMIC-GLINK device has orientation GPIOs declared, then it will
+> report connection orientation. In this case set the flag to mark
+> registered ports as orientation-aware.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
 > ---
->  drivers/usb/typec/ucsi/ucsi.c | 3 +++
->  drivers/usb/typec/ucsi/ucsi.h | 2 ++
->  2 files changed, 5 insertions(+)
+>  drivers/usb/typec/ucsi/ucsi_glink.c | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
 > 
-> diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
-> index 7ad544c968e4..57e73b823a4c 100644
-> --- a/drivers/usb/typec/ucsi/ucsi.c
-> +++ b/drivers/usb/typec/ucsi/ucsi.c
-> @@ -1559,6 +1559,9 @@ static int ucsi_register_port(struct ucsi *ucsi, struct ucsi_connector *con)
->  	cap->driver_data = con;
->  	cap->ops = &ucsi_ops;
+> diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
+> index d279e2cf9bba..f7546bb488c3 100644
+> --- a/drivers/usb/typec/ucsi/ucsi_glink.c
+> +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
+> @@ -186,6 +186,17 @@ static int pmic_glink_ucsi_sync_write(struct ucsi *__ucsi, unsigned int offset,
+>  	return ret;
+>  }
 >  
-> +	if (ucsi->ops->update_connector)
-> +		ucsi->ops->update_connector(con);
+> +static void pmic_glink_ucsi_update_connector(struct ucsi_connector *con)
+> +{
+> +	struct pmic_glink_ucsi *ucsi = ucsi_get_drvdata(con->ucsi);
+> +	int i;
 > +
->  	ret = ucsi_register_port_psy(con);
->  	if (ret)
->  		goto out;
-> diff --git a/drivers/usb/typec/ucsi/ucsi.h b/drivers/usb/typec/ucsi/ucsi.h
-> index 3e1241e38f3c..c4d103db9d0f 100644
-> --- a/drivers/usb/typec/ucsi/ucsi.h
-> +++ b/drivers/usb/typec/ucsi/ucsi.h
-> @@ -60,6 +60,7 @@ struct dentry;
->   * @sync_write: Blocking write operation
->   * @async_write: Non-blocking write operation
->   * @update_altmodes: Squashes duplicate DP altmodes
-> + * @update_connector: Update connector capabilities before registering
->   * @connector_status: Updates connector status, called holding connector lock
->   *
->   * Read and write routines for UCSI interface. @sync_write must wait for the
-> @@ -75,6 +76,7 @@ struct ucsi_operations {
->  			   const void *val, size_t val_len);
->  	bool (*update_altmodes)(struct ucsi *ucsi, struct ucsi_altmode *orig,
->  				struct ucsi_altmode *updated);
-> +	void (*update_connector)(struct ucsi_connector *con);
->  	void (*connector_status)(struct ucsi_connector *con);
+> +	for (i = 0; i < PMIC_GLINK_MAX_PORTS; i++) {
+> +		if (ucsi->port_orientation[i])
+> +			con->typec_cap.orientation_aware = true;
+> +	}
+> +}
+> +
+>  static void pmic_glink_ucsi_connector_status(struct ucsi_connector *con)
+>  {
+>  	struct pmic_glink_ucsi *ucsi = ucsi_get_drvdata(con->ucsi);
+> @@ -208,6 +219,7 @@ static const struct ucsi_operations pmic_glink_ucsi_ops = {
+>  	.read = pmic_glink_ucsi_read,
+>  	.sync_write = pmic_glink_ucsi_sync_write,
+>  	.async_write = pmic_glink_ucsi_async_write,
+> +	.update_connector = pmic_glink_ucsi_update_connector,
+>  	.connector_status = pmic_glink_ucsi_connector_status,
 >  };
 >  
 > 
