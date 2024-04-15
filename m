@@ -1,63 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-17521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46A1A8A5E52
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 01:31:26 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B300C8A5E5D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 01:34:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F2289284C5C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 23:31:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 21506B20E0E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 23:34:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79A4A159904;
-	Mon, 15 Apr 2024 23:31:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C01031591F8;
+	Mon, 15 Apr 2024 23:34:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="e/uogkw/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oOw7OV1K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B619C3E48F;
-	Mon, 15 Apr 2024 23:31:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12EA2158DC9
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Apr 2024 23:34:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713223873; cv=none; b=KFiLHvBFg/g9UX37xIYW1HAvzXAgd9gLvByfcKTgU5JiPZWqirLmmjLd+NPVav0Fukw96WRsxex+n5H0QkkYSOWnzSomJoK/zdFWyu7qUo1Vi5PvnT2+A0L82RRYDo47OPRvUFdQuAyB/9zam9aTfaLDKMxQlX4FCy0Hh4kXekc=
+	t=1713224065; cv=none; b=MNprDkyeVkA26a+44li1Z9zjwAiApp0nY/gwRxfrJCXaC/TJD9Ykzbc0zRC9vxOVTr5AfwMZZIiVbj2jx9KKfzzCfmNSUHMnyDIaJw+obG1H3mhUUmu6dllxCFfOGWLsj+QpCqj+ZFzm+nYE7H6Pszd9pihE/agfKsflJGgc70E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713223873; c=relaxed/simple;
-	bh=Ozqw81J6Cm7EIm7S9/9fhN/jyCcOAPejuOm/ULKeqgE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=fGPaRc7pbOrpSUYPfNGAWDkwetBms2QvQLjAlu5cXBNDaJwjhKrCs34JkWoDQtYYqQiDdKDMtW4Fn53MKvc++mG0AwG7sNNPeSAJz3CgOaSVnJGMB45rJyHohnrck4oCILlpifc7yJP++M7nWjWmfcgaULUmIWfODE9m4cBSo1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=e/uogkw/; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43FMw3Xn003994;
-	Mon, 15 Apr 2024 23:31:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=bBP6L1aZea7WJ/01FBS0Qvao0QV2TFtDmz1tmopxE38=; b=e/
-	uogkw/EBkdOFmchRLIrMAbqgXcyL60Jhk5MqoOhxb4pTfXr30qLlJz6RnhZ2JrJA
-	/Nyr9NYthhzjGNmQOMtdoXWQKNXj/qtQ99AX754iqdrf8fZPDR8wvm65KpmFB/1k
-	N7F+LTWCoMG9IoRO5aGM3odZELzr7vnbFcw5ZBaASO2Fp7w+2iOcGjbIS/FD8p3w
-	b0LU+ntwx2P1ClOUKX6623MUQdZP6xudcQG42vcsr7XfvtcUnfftXWlAXmoecILL
-	LnEORjURiPDt1RXY7jskzgeepRXvwc1rXTX6oLpTypP3PRIJKXtrQj+dmOYw/KR5
-	tQaRX7MZPcBmUAyOtFow==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xha8y8d2e-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 15 Apr 2024 23:31:00 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43FNUxYE018125
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 15 Apr 2024 23:30:59 GMT
-Received: from [10.110.122.232] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 15 Apr
- 2024 16:30:58 -0700
-Message-ID: <c623951e-1b47-4e0b-bfa4-338672a5eeb9@quicinc.com>
-Date: Mon, 15 Apr 2024 16:30:58 -0700
+	s=arc-20240116; t=1713224065; c=relaxed/simple;
+	bh=gDfOKvooARS595YuZePIjRQWJo1r71UJRl8JvveYf6U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Xel2EZ8b8aDxqweML67J5UDVFpSUomTaaIkxqLH0wfM0+X3+KRpamc4FXBqJXvlnqtnv4bfEcTjPGxGhQC76ILniargVPzjMbKnhNctdZHoU1wfTL3qzb5HP1AoM8Veb7ciDxuZnXhL+29UmhvYO1INdsZqbAdbkVoDfri1aEXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oOw7OV1K; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a51addddbd4so440493466b.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Apr 2024 16:34:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1713224062; x=1713828862; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=uWnsgwxyp2hync1lURb/DLtXuqHZbxB6A8Mb4rkvI9U=;
+        b=oOw7OV1Kt/rvgxF55ShUInwfEMGj1KZ1yTBhlKBkp+onqVaZDm6nt03zX3KL8P5CW7
+         ThnVt+WKF2f1Di6wGtYzYx/GlP8nho4g+MBJqlevljXxWNntnIyemYKn7Wor1yPg3atD
+         JzZI6P1ClyGSaasmmrCfeurcN9hm6uYs+deZN6TnkRfYnBKSiP7NAcJ9BmAV8SgNonP1
+         S0+rEMH0469270k8uiCgorYhQetW/btp66X9WINbXZTqNKX+/iC5PxOFDukw+ykYdQn5
+         dzXQYW6996zvo/oOXwhaOvLPF/iNTSCtqjo6u2kkNnpRntcFDBAJnNb8pxD4gTTZ189g
+         QuJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713224062; x=1713828862;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uWnsgwxyp2hync1lURb/DLtXuqHZbxB6A8Mb4rkvI9U=;
+        b=pufC8h/q+/uzN0SUV0h3uAkdUFuoC8Hz/dzP7/Z0kquqLg6qSKpqLf8YRONdyTgjJr
+         yCy/1vNYmGS3XSIJr3tPEQvUk8zh7JVtaEWXyZNuDfPMN8iuLwCNx7Q/q3ZTcdvbVfPv
+         5v6pL1OxfmC6A8/l6x8DIvTFt/DllLjZLTmTwKSik9u1i0aQYxT2RQgExgUaImIfmlpH
+         gpORFl17X6M70tvuvez2VRecDRTxkkYTcL33gOx+f2vhrkLPTWNdZ2GDs4m/MYRzGCpn
+         t22v2El9DYyIf825TsLhQCbgbbwP+M8Rnq0d1MrWwITzmnYOfIa6nqNeaUcshViBU1R0
+         CIqg==
+X-Forwarded-Encrypted: i=1; AJvYcCUc7CombF+cT/CmX46Cv7vWLfsEDehj20DHtzs+ov3dhHF9MW7VWCbY/5SvyKKvGnh8iX6dLBIfiGKis4PCDTpXclQ7tWuObqK8D8ZO+Q==
+X-Gm-Message-State: AOJu0Yybug7nNC2kiQw7gGmp/8beC5+lzNWe57M9E7lz/qD9W5LNwSoR
+	jHiybccV8Q3+sxGVdrxMToj23tXoqYGAEOx0jvIKeV7dJ8hllxGuej+hm2gNOP1iK2fZWXlsO9f
+	Qok8=
+X-Google-Smtp-Source: AGHT+IFDqJ7Gb2kmxnRa15zVV+E5hZy9b0WN+KN56XBvq/Ng/slpNQeTpIhhKfBlP+Rb2/KA+4whPg==
+X-Received: by 2002:a17:907:9705:b0:a52:4403:9c2 with SMTP id jg5-20020a170907970500b00a52440309c2mr6293627ejc.14.1713224062407;
+        Mon, 15 Apr 2024 16:34:22 -0700 (PDT)
+Received: from ?IPV6:2a00:f41:c52:73b0:74d6:fe8a:b9f:ef94? ([2a00:f41:c52:73b0:74d6:fe8a:b9f:ef94])
+        by smtp.gmail.com with ESMTPSA id cw4-20020a170906c78400b00a4e58c74c9fsm6008220ejb.6.2024.04.15.16.34.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Apr 2024 16:34:22 -0700 (PDT)
+Message-ID: <d8dc2a6b-4797-4829-9581-1a9e3fce069a@linaro.org>
+Date: Tue, 16 Apr 2024 01:34:19 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,141 +77,70 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 2/2] PCI: Add Qualcomm PCIe ECAM root complex driver
-To: Rob Herring <robh@kernel.org>
-CC: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        <linux-pci@vger.kernel.org>, <lpieralisi@kernel.org>, <kw@linux.com>,
-        <bhelgaas@google.com>, <andersson@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_ramkri@quicinc.com>, <quic_nkela@quicinc.com>,
-        <quic_shazhuss@quicinc.com>, <quic_msarkar@quicinc.com>,
-        <quic_nitegupt@quicinc.com>
-References: <1712257884-23841-1-git-send-email-quic_mrana@quicinc.com>
- <1712257884-23841-3-git-send-email-quic_mrana@quicinc.com>
- <20240405052918.GA2953@thinkpad>
- <e2ff3031-bd71-4df7-a3a4-cec9c2339eaa@quicinc.com>
- <20240406041717.GD2678@thinkpad>
- <0b738556-0042-43ab-80f2-d78ed3b432f7@quicinc.com>
- <20240410165829.GA418382-robh@kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: sm8650: add description of CCI
+ controllers
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Jagadeesh Kona <quic_jkona@quicinc.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20240410074951.447898-1-vladimir.zapolskiy@linaro.org>
 Content-Language: en-US
-From: Mayank Rana <quic_mrana@quicinc.com>
-In-Reply-To: <20240410165829.GA418382-robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20240410074951.447898-1-vladimir.zapolskiy@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: B6GBLqjdRmKNY-gl3PLAcn2kxvenlyI3
-X-Proofpoint-ORIG-GUID: B6GBLqjdRmKNY-gl3PLAcn2kxvenlyI3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-15_18,2024-04-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=999 adultscore=0 spamscore=0 malwarescore=0 priorityscore=1501
- clxscore=1015 phishscore=0 bulkscore=0 mlxscore=0 lowpriorityscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404150157
 
-Hi Rob
 
-Excuse me for late response on this (was OOO).
-On 4/10/2024 9:58 AM, Rob Herring wrote:
-> On Mon, Apr 08, 2024 at 11:57:58AM -0700, Mayank Rana wrote:
->> Hi Mani
->>
->> On 4/5/2024 9:17 PM, Manivannan Sadhasivam wrote:
->>> On Fri, Apr 05, 2024 at 10:41:15AM -0700, Mayank Rana wrote:
->>>> Hi Mani
->>>>
->>>> On 4/4/2024 10:30 PM, Manivannan Sadhasivam wrote:
->>>>> On Thu, Apr 04, 2024 at 12:11:24PM -0700, Mayank Rana wrote:
->>>>>> On some of Qualcomm platform, firmware configures PCIe controller into
->>>>>> ECAM mode allowing static memory allocation for configuration space of
->>>>>> supported bus range. Firmware also takes care of bringing up PCIe PHY
->>>>>> and performing required operation to bring PCIe link into D0. Firmware
->>>>>> also manages system resources (e.g. clocks/regulators/resets/ bus voting).
->>>>>> Hence add Qualcomm PCIe ECAM root complex driver which enumerates PCIe
->>>>>> root complex and connected PCIe devices. Firmware won't be enumerating
->>>>>> or powering up PCIe root complex until this driver invokes power domain
->>>>>> based notification to bring PCIe link into D0/D3cold mode.
->>>>>>
->>>>>
->>>>> Is this an in-house PCIe IP of Qualcomm or the same DWC IP that is used in other
->>>>> SoCs?
->>>>>
->>>>> - Mani
->>>> Driver is validated on SA8775p-ride platform using PCIe DWC IP for
->>>> now.Although this driver doesn't need to know used PCIe controller and PHY
->>>> IP as well programming sequence as that would be taken care by firmware.
->>>>
->>>
->>> Ok, so it is the same IP but firmware is controlling the resources now. This
->>> information should be present in the commit message.
->>>
->>> Btw, there is an existing generic ECAM host controller driver:
->>> drivers/pci/controller/pci-host-generic.c
->>>
->>> This driver is already being used by several vendors as well. So we should try
->>> to extend it for Qcom usecase also.
-> 
-> I would take it a bit further and say if you need your own driver, then
-> just use the default QCom driver. Perhaps extend it to support ECAM.
-> Better yet, copy your firmware setup and always configure the QCom h/w
-> to use ECAM.
-Good suggestion. Although here we are having 2 set of requirements:
-1. ECAM configuration
-2. Managing PCIe controller and PHY resources and programming from 
-firmware as well
-Hence it is not feasible to use default QCOM driver.
-> If you want to extend the generic driver, that's fine, but we don't need
-> a 3rd.
-I did consider this part before coming up with new driver. Although I 
-felt that
-below mentioned functionality may not look more generic to be part of 
-pci-host-generic.c driver.
->> I did review pci-host-generic.c driver for usage. although there are more
->> functionalityneeded for use case purpose as below:
->> 1. MSI functionality
-> 
-> Pretty sure the generic driver already supports that.
-I don't find any MSI support with pci-host-generic.c driver.
->> 2. Suspend/Resume
-> 
-> Others might want that to work as well.
-Others firmware won't have way to handle D3cold and D0 functionality 
-handling as
-needed here for supporting suspend/resume as I don't find any interface 
-for pci-host-generic.c driver to notify firmware. here we are having way 
-to talk to firmware using GenPD based power domain usage to communicate 
-with firmware.
 
->> 3. Wakeup Functionality (not part of current change, but would be added
->> later)
+On 4/10/24 09:49, Vladimir Zapolskiy wrote:
+> Qualcomm SM8650 SoC has three CCI controllers with two I2C busses
+> connected to each of them.
 > 
-> Others might want that to work as well.
-possible if suspend/resume support is available or used.
->> 4. Here this driver provides way to virtualized PCIe controller. So VMs only
->> talk to a generic ECAM whereas HW is only directed accessed by service VM.
+> The CCI controllers on SM8650 are compatible with the ones found on
+> many other older generations of Qualcomm SoCs.
 > 
-> That's the existing driver. If if doesn't work for a VM, fix the VM.
-Correct.
->> 5. Adding more Auto based safety use cases related implementation
-> 
-> Now that's just hand waving.
-Here I am trying to provide new set of changes plan to be added as part 
-of required functionality.
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> ---
 
->> Hence keeping pci-host-generic.c as generic driver where above functionality
->> may not be needed.
-> 
-> Duplicating things to avoid touching existing drivers is not how kernel
-> development works.
-I shall try your suggestion and see how it looks in terms of code 
-changes. Perhaps then we can have more clarity in terms of adding more
-functionality into generic or having separate driver.
-> Rob
-Regards,
-Mayank
+[...]
+
+>   
+> +		cci0: cci@ac15000 {
+> +			compatible = "qcom,sm8650-cci", "qcom,msm8996-cci";
+> +			reg = <0 0x0ac15000 0 0x1000>;
+> +			interrupts = <GIC_SPI 426 IRQ_TYPE_EDGE_RISING>;
+> +			power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
+> +			clocks = <&camcc CAM_CC_CAMNOC_AXI_NRT_CLK>,
+> +				 <&camcc CAM_CC_SLOW_AHB_CLK_SRC>,
+The DT should never ever touch the _SRC clocks directly, especially since
+you're referencing the branch downstream of it right below
+
+> +				 <&camcc CAM_CC_CPAS_AHB_CLK>,
+> +				 <&camcc CAM_CC_CCI_0_CLK>;
+> +			clock-names = "camnoc_axi",
+> +				      "slow_ahb_src",
+> +				      "cpas_ahb",
+> +				      "cci";
+> +			pinctrl-0 = <&cci0_default &cci1_default>;
+> +			pinctrl-1 = <&cci0_sleep &cci1_sleep>;
+> +			pinctrl-names = "default", "sleep";
+> +			status = "disabled";
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +
+> +			assigned-clocks = <&camcc CAM_CC_CCI_0_CLK_SRC>;
+> +			assigned-clock-rates = <37500000>;
+
+Why?
+
+[...]
+
+> +			pinctrl-0 = <&cci2_default &cci3_default>;
+> +			pinctrl-1 = <&cci2_sleep &cci3_sleep>;
+
+Please stick to a single naming scheme (cciX_Y or csiN)
+
+Konrad
 
