@@ -1,77 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-17417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16D4F8A488E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 08:59:18 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DA0C48A4894
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 09:00:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4AF49B23B7E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 06:59:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 96BBE283FEE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 07:00:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF784208A1;
-	Mon, 15 Apr 2024 06:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9A791F5E6;
+	Mon, 15 Apr 2024 06:59:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NAgybvLs"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="CZ3dPOn8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E829208D0;
-	Mon, 15 Apr 2024 06:58:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E2A72110F;
+	Mon, 15 Apr 2024 06:59:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713164324; cv=none; b=u/Z2TjprkZ0HQzgIKzggDBmR1PxWLnFih1+pdeinNxn/13SHhcrwO8p998pBwOeOot+DqnLG+RGz+5JlZ0m+et47pHUBKAJ3uuDZ0cZiYQPubPUk6cO5/lwA0XgL295PoPhaRGmW/XEStMgePOickmlDc0PFJEhD+t+guGlyZ34=
+	t=1713164393; cv=none; b=LmBIaBrtb5qZB9GFMUuNQQI6NNTRx4C2a2pz9P08T3QAjwqcZAVxH0pmVB9PAmIk7XOiMNGkQmc8O+Y5Z07Ue4Bvesy94fRKQl1Ke3svIlJBgy1CBUZmF1E5mPJNaneH0vCpvQVlQDUr3YEa1HM64FOa5i3I0PnCam8bZGytjPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713164324; c=relaxed/simple;
-	bh=zfww0Wo2P7sSM8KWNzZdQqLcfyZOloB9r7adpSfjsko=;
+	s=arc-20240116; t=1713164393; c=relaxed/simple;
+	bh=NCSWcMl4FzUtoQv8kYSRpYLCpVxJwO5V4c/PIkM/H5k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oKZiOoPUMA7g2TmZDd9YNv3Ly6fxUR44crPSgzeJP7mk4fSmOn8RtgRAqeHe1re324iiaEU9l2ScU858gvhWi7D4XcalN6vYOFlKAPMZwFCZOdO+cUHgjjfGx9L2B77lYiOelm4iKujlBDPhigRn9YtS8LYBjywE1zhNdqyZvFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NAgybvLs; arc=none smtp.client-ip=192.198.163.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=CZcIYd+HjrxyNlSAPF9v0kvsI7B9Onhcm251Akt6jbvLhVEFD8v9kiQvocw4qZ4DzSi7i3b/MhnrQSCn2WcivzpzCktSaSAIbC2bCOBq6XzJYtAwReKT5VIPltHOtQbSc7CCXoFd/1W1KR4eNwMK3WGFEYQfyjQjsVxcA/xJW4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=CZ3dPOn8; arc=none smtp.client-ip=198.175.65.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1713164324; x=1744700324;
+  t=1713164393; x=1744700393;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=zfww0Wo2P7sSM8KWNzZdQqLcfyZOloB9r7adpSfjsko=;
-  b=NAgybvLsiBH+P5YS6FcnFsnN2UTqNJgGhc4cvYcptP5vAgoQQ4m/LWfu
-   8ecutUvHTvaPzX5iYAsenYmEvdTOGJctfuVPlpPMlOLf4lepP9XyeqD9g
-   7TCsqPWVpoCg+q0x6DKf2HCgiYernpFk83VaOlfRXi6JFEO6OmK/utlDm
-   m/hPF0NH1K31eI/uw7CWsjpXngm9vr9DLypy/kitLhqcQBMQIbFRLSjXT
-   eFaEg3TYYFbGmxBML1Q9ysMRYk1xPuIAx03WIYenU9z1V0uH1EqopE/Fu
-   19MXan4csmdjRAqjEGeg8zuMtYFvxSnQN4si8WNAbFKFCaP6wm3yQpMTN
+  bh=NCSWcMl4FzUtoQv8kYSRpYLCpVxJwO5V4c/PIkM/H5k=;
+  b=CZ3dPOn801zp3asqSZPD0QliT6LxgysBo053Eba/TXZGAv8M8xG4/Uy7
+   qS6+FQYv4RbSaqOgwFzMrw3RJ5gq1elCPryxT0HclCqeNKULXLRNk9Nao
+   gDfT7/uolfN4GmCNvY7WebaIBuR5a0qR6NAgV6bncxyr6jYArfjsfGvnB
+   AzLfxB2T+WiqPJ6k7PFweKnk2iG7EdSmLG8h1jEAWbr0+Y1bTPno8lBdf
+   aC2it3pTwbaNUzgLIylmghQJRln893ByYC9+I1vVJoo+UztKT21NhyKNa
+   3d/TNoqAP43NtsbQlXSVSEQ/2N6QfCifti6ACJCRNM3pVDNACnQAKZprh
    w==;
-X-CSE-ConnectionGUID: U6Q9E9ZuT2K7Z1QKeB/WCQ==
-X-CSE-MsgGUID: 7arF35L4Q2u5xPUgIK3/Qw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11044"; a="8393078"
+X-CSE-ConnectionGUID: F04C7IPkSxavgxRBgKa4/Q==
+X-CSE-MsgGUID: wpE2wiE7T/2hlPC0a/HZiw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11044"; a="8452886"
 X-IronPort-AV: E=Sophos;i="6.07,202,1708416000"; 
-   d="scan'208";a="8393078"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Apr 2024 23:58:43 -0700
-X-CSE-ConnectionGUID: LFv7NqOrS8+x5/7bu+fpaw==
-X-CSE-MsgGUID: zoJdnraxStG3XzXTvNfKNA==
+   d="scan'208";a="8452886"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Apr 2024 23:59:52 -0700
+X-CSE-ConnectionGUID: V4v7JBRyT1+Xo7mAANy6uw==
+X-CSE-MsgGUID: JfdIo8QCSzyoMJ30W1Gyrg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.07,202,1708416000"; 
-   d="scan'208";a="26494139"
+   d="scan'208";a="22292475"
 Received: from kuha.fi.intel.com ([10.237.72.185])
-  by orviesa003.jf.intel.com with SMTP; 14 Apr 2024 23:58:39 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 15 Apr 2024 09:58:38 +0300
-Date: Mon, 15 Apr 2024 09:58:38 +0300
+  by orviesa007.jf.intel.com with SMTP; 14 Apr 2024 23:59:49 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 15 Apr 2024 09:59:48 +0300
+Date: Mon, 15 Apr 2024 09:59:48 +0300
 From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Krishna Kurapati <quic_kriskura@quicinc.com>
-Subject: Re: [PATCH v2 2/5] usb: typec: ucsi: glink: move GPIO reading into
- connector_status callback
-Message-ID: <ZhzQHoJLJzska3fd@kuha.fi.intel.com>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 3/5] usb: typec: ucsi: glink: use typec_set_orientation
+Message-ID: <ZhzQZB3zxyTlwGad@kuha.fi.intel.com>
 References: <20240411-ucsi-orient-aware-v2-0-d4b1cb22a33f@linaro.org>
- <20240411-ucsi-orient-aware-v2-2-d4b1cb22a33f@linaro.org>
+ <20240411-ucsi-orient-aware-v2-3-d4b1cb22a33f@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,103 +78,59 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240411-ucsi-orient-aware-v2-2-d4b1cb22a33f@linaro.org>
+In-Reply-To: <20240411-ucsi-orient-aware-v2-3-d4b1cb22a33f@linaro.org>
 
-On Thu, Apr 11, 2024 at 07:49:54AM +0300, Dmitry Baryshkov wrote:
-> To simplify the platform code move Type-C orientation handling into the
-> connector_status callback. As it is called both during connector
-> registration and on connector change events, duplicated code from
-> pmic_glink_ucsi_register() can be dropped.
+On Thu, Apr 11, 2024 at 07:49:55AM +0300, Dmitry Baryshkov wrote:
+> Use typec_set_orientation() instead of calling typec_switch_set()
+> manually. This way the rest of the typec framework and the userspace are
+> notified about the orientation change.
 > 
-> Also this moves operations that can sleep into a worker thread,
-> removing the only sleeping operation from pmic_glink_ucsi_notify().
-> 
-> Tested-by: Krishna Kurapati <quic_kriskura@quicinc.com>
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Reviewed-by: Heikki Krogerus <heikki.krogeurs@linux.intel.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
 > ---
->  drivers/usb/typec/ucsi/ucsi_glink.c | 48 ++++++++++++++++---------------------
->  1 file changed, 20 insertions(+), 28 deletions(-)
+>  drivers/usb/typec/ucsi/ucsi_glink.c | 13 ++++---------
+>  1 file changed, 4 insertions(+), 9 deletions(-)
 > 
 > diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-> index b91d2d15d7d9..d21f8cd2fe35 100644
+> index d21f8cd2fe35..d279e2cf9bba 100644
 > --- a/drivers/usb/typec/ucsi/ucsi_glink.c
 > +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-> @@ -187,10 +187,28 @@ static int pmic_glink_ucsi_sync_write(struct ucsi *__ucsi, unsigned int offset,
->  	return ret;
+> @@ -58,7 +58,6 @@ struct pmic_glink_ucsi {
+>  	struct device *dev;
+>  
+>  	struct gpio_desc *port_orientation[PMIC_GLINK_MAX_PORTS];
+> -	struct typec_switch *port_switch[PMIC_GLINK_MAX_PORTS];
+>  
+>  	struct pmic_glink_client *client;
+>  
+> @@ -198,9 +197,10 @@ static void pmic_glink_ucsi_connector_status(struct ucsi_connector *con)
+>  
+>  	orientation = gpiod_get_value(ucsi->port_orientation[con->num - 1]);
+>  	if (orientation >= 0) {
+> -		typec_switch_set(ucsi->port_switch[con->num - 1],
+> -				 orientation ? TYPEC_ORIENTATION_REVERSE
+> -				 : TYPEC_ORIENTATION_NORMAL);
+> +		typec_set_orientation(con->port,
+> +				      orientation ?
+> +				      TYPEC_ORIENTATION_REVERSE :
+> +				      TYPEC_ORIENTATION_NORMAL);
+>  	}
 >  }
 >  
-> +static void pmic_glink_ucsi_connector_status(struct ucsi_connector *con)
-> +{
-> +	struct pmic_glink_ucsi *ucsi = ucsi_get_drvdata(con->ucsi);
-> +	int orientation;
-> +
-> +	if (con->num >= PMIC_GLINK_MAX_PORTS ||
-> +	    !ucsi->port_orientation[con->num - 1])
-> +		return;
-> +
-> +	orientation = gpiod_get_value(ucsi->port_orientation[con->num - 1]);
-> +	if (orientation >= 0) {
-> +		typec_switch_set(ucsi->port_switch[con->num - 1],
-> +				 orientation ? TYPEC_ORIENTATION_REVERSE
-> +				 : TYPEC_ORIENTATION_NORMAL);
-> +	}
-> +}
-> +
->  static const struct ucsi_operations pmic_glink_ucsi_ops = {
->  	.read = pmic_glink_ucsi_read,
->  	.sync_write = pmic_glink_ucsi_sync_write,
-> -	.async_write = pmic_glink_ucsi_async_write
-> +	.async_write = pmic_glink_ucsi_async_write,
-> +	.connector_status = pmic_glink_ucsi_connector_status,
->  };
->  
->  static void pmic_glink_ucsi_read_ack(struct pmic_glink_ucsi *ucsi, const void *data, int len)
-> @@ -229,20 +247,8 @@ static void pmic_glink_ucsi_notify(struct work_struct *work)
+> @@ -378,11 +378,6 @@ static int pmic_glink_ucsi_probe(struct auxiliary_device *adev,
+>  			return dev_err_probe(dev, PTR_ERR(desc),
+>  					     "unable to acquire orientation gpio\n");
+>  		ucsi->port_orientation[port] = desc;
+> -
+> -		ucsi->port_switch[port] = fwnode_typec_switch_get(fwnode);
+> -		if (IS_ERR(ucsi->port_switch[port]))
+> -			return dev_err_probe(dev, PTR_ERR(ucsi->port_switch[port]),
+> -					"failed to acquire orientation-switch\n");
 >  	}
 >  
->  	con_num = UCSI_CCI_CONNECTOR(cci);
-> -	if (con_num) {
-> -		if (con_num <= PMIC_GLINK_MAX_PORTS &&
-> -		    ucsi->port_orientation[con_num - 1]) {
-> -			int orientation = gpiod_get_value(ucsi->port_orientation[con_num - 1]);
-> -
-> -			if (orientation >= 0) {
-> -				typec_switch_set(ucsi->port_switch[con_num - 1],
-> -						 orientation ? TYPEC_ORIENTATION_REVERSE
-> -							     : TYPEC_ORIENTATION_NORMAL);
-> -			}
-> -		}
-> -
-> +	if (con_num)
->  		ucsi_connector_change(ucsi->ucsi, con_num);
-> -	}
->  
->  	if (ucsi->sync_pending &&
->  		   (cci & (UCSI_CCI_ACK_COMPLETE | UCSI_CCI_COMMAND_COMPLETE))) {
-> @@ -253,20 +259,6 @@ static void pmic_glink_ucsi_notify(struct work_struct *work)
->  static void pmic_glink_ucsi_register(struct work_struct *work)
->  {
->  	struct pmic_glink_ucsi *ucsi = container_of(work, struct pmic_glink_ucsi, register_work);
-> -	int orientation;
-> -	int i;
-> -
-> -	for (i = 0; i < PMIC_GLINK_MAX_PORTS; i++) {
-> -		if (!ucsi->port_orientation[i])
-> -			continue;
-> -		orientation = gpiod_get_value(ucsi->port_orientation[i]);
-> -
-> -		if (orientation >= 0) {
-> -			typec_switch_set(ucsi->port_switch[i],
-> -					 orientation ? TYPEC_ORIENTATION_REVERSE
-> -					     : TYPEC_ORIENTATION_NORMAL);
-> -		}
-> -	}
->  
->  	ucsi_register(ucsi->ucsi);
->  }
+>  	ucsi->client = devm_pmic_glink_register_client(dev,
 > 
 > -- 
 > 2.39.2
