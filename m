@@ -1,133 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-17420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A55558A48B7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 09:08:31 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B44508A490F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 09:32:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 34CEB2812E0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 07:08:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D6F511C23387
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 07:31:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D3851F951;
-	Mon, 15 Apr 2024 07:08:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 716AF2374C;
+	Mon, 15 Apr 2024 07:31:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="AiZjjIvz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RSS59ZAS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DBAC2206E;
-	Mon, 15 Apr 2024 07:08:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEC52D058;
+	Mon, 15 Apr 2024 07:31:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713164902; cv=none; b=jCFd3isSJktev2coGhRBHuPwZeak07dzprvTBOX6WX6dNqG8089rrck+Xto/i8UFF9ye1lOJ8q0C7ku6CMyiPXGFdgQEENXhHOi82ngngcEVfQNLPQRae1PDleP8Lj4gHuGek7LBaYaCqnueJSpFZJhGHxlGczzcIjmUFTA6wbs=
+	t=1713166318; cv=none; b=tWAVd7H/obtFNmK69vxyTOr6iWYBkqlYW5XcA20/QvpjxkUfQ25FT4SEIky+V399xLnKbMrsn6XQhNk8Q7uKh/IUdBJfvNVy2Ho1iEce2FDRILTFZomWb9R5N8NLKQnMYdhiAWmEXBzwxPqktsihWUcpYffTAhQfQ60OhG3P02U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713164902; c=relaxed/simple;
-	bh=Q/P5yjZRfoVZ5TbI1Low1FH019cQT1sVEhcJzOofFNk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=adQRPnbeT3dXG/YYsvdvIZBvcahGlZC5CWEVlC0oK8XLQGi8OBf1g2ClPuf/REMU2Mh+aJXsJM4QtlEf5lZ6Q9Q28Kj4+on3z4v880MEd5DzNO6MhazCtCVywMoqx7wfxF/KJyJgsxFpSA2lj4CS+rGUvjEYO2R/DcfUkwOrzQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=AiZjjIvz; arc=none smtp.client-ip=192.198.163.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1713164900; x=1744700900;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Q/P5yjZRfoVZ5TbI1Low1FH019cQT1sVEhcJzOofFNk=;
-  b=AiZjjIvzJsSBuotRNaOiJ9zDtSkbDFGz69i9kE4wfLQtrCxa7Euzw3yx
-   6KeCbf9vYOEoCdoFZxQLe3t6FJRWWMcm5smi8MGafdK/nB/mZXinn+oIK
-   8Q0Fp87fSFNtpEv3VNFlOOsHQDIT32RajmAEgLAl1rlkVzKyQY2pIAIID
-   KM+FaVRKS5X38+dFPZRHeNfPc3yt/faZ/BtfD1HIrYAhwLrgBmvCsupN3
-   Y/yi0B6JPKqx0PJ06salFeZJttWEYxzrCvU1qa8BurFAeXIUZKevmqICt
-   OepNx2XtThclRpqg9cI7iVfQNiLOtkAJDI+cTunHATu9UH7xDiLOtOY54
-   g==;
-X-CSE-ConnectionGUID: HUtQlt1lSnKvrmZUikn10g==
-X-CSE-MsgGUID: wO/V/RRRS26fha7rgK7GGQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11044"; a="8757306"
-X-IronPort-AV: E=Sophos;i="6.07,202,1708416000"; 
-   d="scan'208";a="8757306"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Apr 2024 00:08:19 -0700
-X-CSE-ConnectionGUID: 5TndEbYoR/qSGU2hMzMHvA==
-X-CSE-MsgGUID: nMUEnbp9TFOlkwtOfc81Bg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,202,1708416000"; 
-   d="scan'208";a="22242361"
-Received: from kuha.fi.intel.com ([10.237.72.185])
-  by orviesa006.jf.intel.com with SMTP; 15 Apr 2024 00:08:16 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 15 Apr 2024 10:08:15 +0300
-Date: Mon, 15 Apr 2024 10:08:15 +0300
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 5/5] usb: typec: ucsi: glink: set orientation aware if
- supported
-Message-ID: <ZhzSX0z7Ofl0I93+@kuha.fi.intel.com>
-References: <20240411-ucsi-orient-aware-v2-0-d4b1cb22a33f@linaro.org>
- <20240411-ucsi-orient-aware-v2-5-d4b1cb22a33f@linaro.org>
+	s=arc-20240116; t=1713166318; c=relaxed/simple;
+	bh=RiMMGXA23rt3N/5UddmduV4dDe775hQfb8LLkY3/0Gg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EMeLb1lDL3vrfVx6RR98MJyqfhUyhr6HuJqbIm6BeiTxg7JodQ2b2G0Dmbdy6fSy6HGR2kC8nCaePEHRWCP49e3NHBA2N8OiqIs0QCitjc4LRceJClY/qlOFuQ8RUcF/3LW9iVNCT+9F8qmqDNdtuZcrwg+i80qSb8W00/5fp8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RSS59ZAS; arc=none smtp.client-ip=209.85.167.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-3c709e5e4f9so1023751b6e.3;
+        Mon, 15 Apr 2024 00:31:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1713166316; x=1713771116; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fyAUoqBvIOKTY3LdJCpcnCDojqj4JBfKWFR06e36DaU=;
+        b=RSS59ZASpatW3v7wMh06zmn8h4gzBMsbwcm5b33oqlx49NNgMRAeiKGFyNzJ1EEVdC
+         TsPGMJ5qn/khdN+YtV7wgsuh3IfbSFeTm7IhOjJeMo7xb67mcUL0oOYZdElnCxbbZSKn
+         cQUigmI/MUhqW8BkdQaBvovPKTZGfTI0q0ppiJElAlMoGgjCAO2GKl83uGmY/TBspAqO
+         V7GSzKZW6B0453CEgBq6SX0GapaNrA8EoFswrqUAgFBiIXnbRxvP8Z3aaceGpF8RDQvS
+         iZtstwj+lrg1w+qylCwZFnRpnBZdpIDadigxYnXJ1wYe4QTIQvf9LcNPX7eroZ5/C1h2
+         A2uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713166316; x=1713771116;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fyAUoqBvIOKTY3LdJCpcnCDojqj4JBfKWFR06e36DaU=;
+        b=C8iibwI2GDAf3dwCe4styRCJ7+T7YU132Vfxud9JPqIoLt39OdvFEFYAlyRRZhF9MX
+         69PUvy97oYVMz/vk1LRymsZ9diUmuCN1OH+GKFEMksW321HONMo6ma/tlvC2/1UcLZpH
+         jFGSTlULr8wwyNjeTQI2Vf8djmRKNzzsgLGrqIRz9GYFquhPLeozZol2kY9Zy1/7/vHA
+         eAyN6mt0UVglC7iEJOOfNa6Jz4NOuk4I9mhPKHqC1MNHY1VTmQtAbi0FFjSm1RxgV/me
+         kmXNb6549wqEv29evJ5sZqlIPHDUqkY7IK2FJZ2ecLCiOzFAkzB+RCHL9KhOQ8hTCSkS
+         5wLw==
+X-Forwarded-Encrypted: i=1; AJvYcCWY8DXVAr/fchcRvV94G4Rx4uHZGU4tz6LNKCl0487rGxRYHqfp985wSn+jlxuEzMt4pxx06h+STB88UojUe3MUXZt329DDLyf+nyp/NjbXFzXtG1IB55ZuDDeAKwXkdprQ0SEbsnL+8FQi1tWyL7vA8ZXjUqKtnWhp7J1iY7cP8FGYrOzY5b2kMqe76Wq0b2k/OA054IiE/lmDUnLEKrrw7/pdGEGZwNhMrHhvQ8TKp0e4jpnFMqfV+ULbyxNAbBc9gGRNzw==
+X-Gm-Message-State: AOJu0YzR5o/NBHxudyw4YGwh10QvTQel2OSzcsAKRzOay/UDoMVyjG+l
+	jogPvC6RceRrvF7CauLR/CKBwy4c2WKrFiMlZLTg+KuBjquQmxDaf3L8MxAA0Gx/HM5Ck4Giyxq
+	DT8ohRxSZCxbTI/hZghGxlS3rfB0=
+X-Google-Smtp-Source: AGHT+IG+mHEf+9pMHePulndcOmqJAFoy+0e8uxd+TwOgPTDj/IhKU2JtlX/85TmoPDDzrhRzFX9Fs3nWYPxdgLlCL2I=
+X-Received: by 2002:a05:6870:ac26:b0:233:b575:4b4a with SMTP id
+ kw38-20020a056870ac2600b00233b5754b4amr10413015oab.36.1713166316068; Mon, 15
+ Apr 2024 00:31:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240411-ucsi-orient-aware-v2-5-d4b1cb22a33f@linaro.org>
+References: <20240413151617.35630-1-krzysztof.kozlowski@linaro.org> <20240413151617.35630-4-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20240413151617.35630-4-krzysztof.kozlowski@linaro.org>
+From: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+Date: Mon, 15 Apr 2024 09:31:47 +0200
+Message-ID: <CAMhs-H9ADfuDkFcD==7x+VaN2q92JV1gxuyrWvfNYK1psEnrQA@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] dt-bindings: PCI: mediatek,mt7621-pcie: switch
+ from deprecated pci-bus.yaml
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Bjorn Helgaas <bhelgaas@google.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	=?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>, 
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>, Ray Jui <rjui@broadcom.com>, 
+	Scott Branden <sbranden@broadcom.com>, 
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
+	Florian Fainelli <florian.fainelli@broadcom.com>, Jim Quinlan <jim2101024@gmail.com>, 
+	Nicolas Saenz Julienne <nsaenz@kernel.org>, Will Deacon <will@kernel.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, Srikanth Thokala <srikanth.thokala@intel.com>, 
+	Ryder Lee <ryder.lee@mediatek.com>, Jianjun Wang <jianjun.wang@mediatek.com>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Daire McNamara <daire.mcnamara@microchip.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Marek Vasut <marek.vasut+renesas@gmail.com>, 
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, Shawn Lin <shawn.lin@rock-chips.com>, 
+	Heiko Stuebner <heiko@sntech.de>, Jingoo Han <jingoohan1@gmail.com>, 
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>, 
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+	Bharat Kumar Gogada <bharat.kumar.gogada@amd.com>, Michal Simek <michal.simek@amd.com>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Mark Kettenis <kettenis@openbsd.org>, 
+	Tom Joseph <tjoseph@cadence.com>, Ahmad Zainie <wan.ahmad.zainie.wan.mohamad@intel.com>, 
+	Jiaxun Yang <jiaxun.yang@flygoat.com>, Kishon Vijay Abraham I <kishon@kernel.org>, 
+	Thippeswamy Havalige <thippeswamy.havalige@amd.com>, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+	linux-rpi-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	linux-rockchip@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Apr 11, 2024 at 07:49:57AM +0300, Dmitry Baryshkov wrote:
-> If the PMIC-GLINK device has orientation GPIOs declared, then it will
-> report connection orientation. In this case set the flag to mark
-> registered ports as orientation-aware.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Hi Krzysztof,
 
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-
+On Sat, Apr 13, 2024 at 5:16=E2=80=AFPM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> dtschema package with core schemas deprecated pci-bus.yaml schema in
+> favor of individual schemas per host, device and pci-pci.
+>
+> Switch Mediatek MT7621 PCIe host bridge binding to this new schema.
+>
+> This requires dtschema package newer than v2024.02 to work fully.
+> v2024.02 will partially work: with a warning.
+>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>
 > ---
->  drivers/usb/typec/ucsi/ucsi_glink.c | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
-> 
-> diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-> index d279e2cf9bba..f7546bb488c3 100644
-> --- a/drivers/usb/typec/ucsi/ucsi_glink.c
-> +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-> @@ -186,6 +186,17 @@ static int pmic_glink_ucsi_sync_write(struct ucsi *__ucsi, unsigned int offset,
->  	return ret;
->  }
->  
-> +static void pmic_glink_ucsi_update_connector(struct ucsi_connector *con)
-> +{
-> +	struct pmic_glink_ucsi *ucsi = ucsi_get_drvdata(con->ucsi);
-> +	int i;
-> +
-> +	for (i = 0; i < PMIC_GLINK_MAX_PORTS; i++) {
-> +		if (ucsi->port_orientation[i])
-> +			con->typec_cap.orientation_aware = true;
-> +	}
-> +}
-> +
->  static void pmic_glink_ucsi_connector_status(struct ucsi_connector *con)
->  {
->  	struct pmic_glink_ucsi *ucsi = ucsi_get_drvdata(con->ucsi);
-> @@ -208,6 +219,7 @@ static const struct ucsi_operations pmic_glink_ucsi_ops = {
->  	.read = pmic_glink_ucsi_read,
->  	.sync_write = pmic_glink_ucsi_sync_write,
->  	.async_write = pmic_glink_ucsi_async_write,
-> +	.update_connector = pmic_glink_ucsi_update_connector,
->  	.connector_status = pmic_glink_ucsi_connector_status,
->  };
->  
-> 
-> -- 
-> 2.39.2
+>
+> Important: This depends on change recently merged to dtschema, however
+> no release was yet made with mentioned change.
+> Therefore this patch probably should wait a bit. Previous patches do not
+> depend anyhow on future release, so they can be taken as is.
 
--- 
-heikki
+Does this mean that we should set DT_SCHEMA_MIN_VERSION to 2024.02 in
+Documentation/devicetree/bindings/Makefile then before merging this
+patch?
+
+>
+> Changes in v3:
+> 1. None
+>
+> Changes in v2:
+> 1. New patch
+> 2. Split mediatek,mt7621-pcie to separate patch as it uses
+>    pci-pci-bridge schema.
+> ---
+>  .../devicetree/bindings/pci/mediatek,mt7621-pcie.yaml         | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+
+Acked-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+
+Thanks,
+    Sergio Paracuellos
 
