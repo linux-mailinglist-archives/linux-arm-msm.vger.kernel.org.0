@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-17522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17523-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B300C8A5E5D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 01:34:29 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 820878A5EB1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 01:45:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 21506B20E0E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 23:34:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 37C5C28502C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 23:45:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C01031591F8;
-	Mon, 15 Apr 2024 23:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F00F1DA21;
+	Mon, 15 Apr 2024 23:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oOw7OV1K"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="e1KR7WZg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12EA2158DC9
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Apr 2024 23:34:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BBF9156979
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Apr 2024 23:44:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713224065; cv=none; b=MNprDkyeVkA26a+44li1Z9zjwAiApp0nY/gwRxfrJCXaC/TJD9Ykzbc0zRC9vxOVTr5AfwMZZIiVbj2jx9KKfzzCfmNSUHMnyDIaJw+obG1H3mhUUmu6dllxCFfOGWLsj+QpCqj+ZFzm+nYE7H6Pszd9pihE/agfKsflJGgc70E=
+	t=1713224700; cv=none; b=qRmTofan+NpfhD/u7ytsH5aIxNVk+AsgVUAKW6sLiWd2L57oHICD3LDLtmBppBNBUs0RWgIUB8NEQa+8bngoKx1aWKTkPb2J+pTVcUl5nlUpscxF4Ubeo8EyTL/SCPkLRtSNJHrujUxrhG4O2r2ftnVIJvxSKkcLvwfzgHFaQB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713224065; c=relaxed/simple;
-	bh=gDfOKvooARS595YuZePIjRQWJo1r71UJRl8JvveYf6U=;
+	s=arc-20240116; t=1713224700; c=relaxed/simple;
+	bh=1yg3OygJVyqd8LdAwF5YHyIoztUiURYJApP0WPH4qMc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Xel2EZ8b8aDxqweML67J5UDVFpSUomTaaIkxqLH0wfM0+X3+KRpamc4FXBqJXvlnqtnv4bfEcTjPGxGhQC76ILniargVPzjMbKnhNctdZHoU1wfTL3qzb5HP1AoM8Veb7ciDxuZnXhL+29UmhvYO1INdsZqbAdbkVoDfri1aEXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oOw7OV1K; arc=none smtp.client-ip=209.85.218.48
+	 In-Reply-To:Content-Type; b=XkFvi9yBiktDFdX8ZFakRJYycQS12LwJtNjwQavWee6guV8ffbPWy9Lwmy9CNmVbn/emXLvvZHKCgyg+Jzapjt1QzR3crHemvAso+j6Sp9FuPBYHipCfyfvlHz5u3h0sc0xR5ChIRIictbjg8Tk3J2yZbs05T7SqIIFQYt7b/7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=e1KR7WZg; arc=none smtp.client-ip=209.85.167.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a51addddbd4so440493466b.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Apr 2024 16:34:23 -0700 (PDT)
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-516d6e23253so4145120e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Apr 2024 16:44:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713224062; x=1713828862; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1713224697; x=1713829497; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=uWnsgwxyp2hync1lURb/DLtXuqHZbxB6A8Mb4rkvI9U=;
-        b=oOw7OV1Kt/rvgxF55ShUInwfEMGj1KZ1yTBhlKBkp+onqVaZDm6nt03zX3KL8P5CW7
-         ThnVt+WKF2f1Di6wGtYzYx/GlP8nho4g+MBJqlevljXxWNntnIyemYKn7Wor1yPg3atD
-         JzZI6P1ClyGSaasmmrCfeurcN9hm6uYs+deZN6TnkRfYnBKSiP7NAcJ9BmAV8SgNonP1
-         S0+rEMH0469270k8uiCgorYhQetW/btp66X9WINbXZTqNKX+/iC5PxOFDukw+ykYdQn5
-         dzXQYW6996zvo/oOXwhaOvLPF/iNTSCtqjo6u2kkNnpRntcFDBAJnNb8pxD4gTTZ189g
-         QuJw==
+        bh=1yg3OygJVyqd8LdAwF5YHyIoztUiURYJApP0WPH4qMc=;
+        b=e1KR7WZgxSWTzDtMhhuAeYu4wD0YCTK0GcGBVqNOfCRrvJPNbuE5WC50k/cpEqrK1C
+         vLVwgNmMgEvAyEZA0xN8kFcFAdCPkZ975rRLqHT0Dq2nya9FnotJNrxHe496fdtNVBYA
+         8i3QnK23PYzJamlwayJlTX0ukh6fxK7dEjqoBk/43mzLuQ5sdiwQJwwwVvhMA7bcJrWz
+         Sz0Ik8DtEN6bBj875VQ0Z2Oj5Vl+52nCKoQYjTCxBAAu/N28rmc2TuFeqgPaJlqezi8N
+         vMPiSZnYZg1ogMH44YawnaeDElcvyTKmlMzsrCeBkm7rxSKtuGgiA/4jwZU55txiHe1D
+         UGVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713224062; x=1713828862;
+        d=1e100.net; s=20230601; t=1713224697; x=1713829497;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uWnsgwxyp2hync1lURb/DLtXuqHZbxB6A8Mb4rkvI9U=;
-        b=pufC8h/q+/uzN0SUV0h3uAkdUFuoC8Hz/dzP7/Z0kquqLg6qSKpqLf8YRONdyTgjJr
-         yCy/1vNYmGS3XSIJr3tPEQvUk8zh7JVtaEWXyZNuDfPMN8iuLwCNx7Q/q3ZTcdvbVfPv
-         5v6pL1OxfmC6A8/l6x8DIvTFt/DllLjZLTmTwKSik9u1i0aQYxT2RQgExgUaImIfmlpH
-         gpORFl17X6M70tvuvez2VRecDRTxkkYTcL33gOx+f2vhrkLPTWNdZ2GDs4m/MYRzGCpn
-         t22v2El9DYyIf825TsLhQCbgbbwP+M8Rnq0d1MrWwITzmnYOfIa6nqNeaUcshViBU1R0
-         CIqg==
-X-Forwarded-Encrypted: i=1; AJvYcCUc7CombF+cT/CmX46Cv7vWLfsEDehj20DHtzs+ov3dhHF9MW7VWCbY/5SvyKKvGnh8iX6dLBIfiGKis4PCDTpXclQ7tWuObqK8D8ZO+Q==
-X-Gm-Message-State: AOJu0Yybug7nNC2kiQw7gGmp/8beC5+lzNWe57M9E7lz/qD9W5LNwSoR
-	jHiybccV8Q3+sxGVdrxMToj23tXoqYGAEOx0jvIKeV7dJ8hllxGuej+hm2gNOP1iK2fZWXlsO9f
-	Qok8=
-X-Google-Smtp-Source: AGHT+IFDqJ7Gb2kmxnRa15zVV+E5hZy9b0WN+KN56XBvq/Ng/slpNQeTpIhhKfBlP+Rb2/KA+4whPg==
-X-Received: by 2002:a17:907:9705:b0:a52:4403:9c2 with SMTP id jg5-20020a170907970500b00a52440309c2mr6293627ejc.14.1713224062407;
-        Mon, 15 Apr 2024 16:34:22 -0700 (PDT)
+        bh=1yg3OygJVyqd8LdAwF5YHyIoztUiURYJApP0WPH4qMc=;
+        b=bUxQpPxw0hIqHlp6uhv2jxFcNiFIxxZrwGj9kQSis7c/eEUx9FHceFjJw38xLlkCMi
+         ZIHOgymOe49+6A9jX8QmXCH7X4xBM5jDg8RFRg0dnfzanYYbI0Kv7BUZv6LgZVpRbakH
+         fG7O3mU+dLMPIjgFVRzNYg4JhM4QvkYqw/k7prYYeuVl+3FKCzMPz+jIO4p0EHkORSQQ
+         1GsqEbtwIdo2sdL09ubP8E19D0GnoVRPc6g93YVUfeAT5eoPRrIwlMJel/mZLX3yx2aY
+         1VcWBZsK+EqToLP/RNT3aOzadizFRIHSINILfkjlUNI2+BXxH5pQlQmXEYFyEQeunr86
+         nuLA==
+X-Forwarded-Encrypted: i=1; AJvYcCWXunvDsanxAB16yd1GsiERZEuNDK6r23KfPAa2UMfVCNPG84ery7EBhRjBjj8rFqII1yPW/bU9qZa0MD2rbotSA8wnxQTaMJzcFmgQXw==
+X-Gm-Message-State: AOJu0YwFwXRMtjWu7zDbw4YGp8OH6UTpCis0r9AibTRZQ0F2c8uEYc2z
+	G4oTT4Kc3HiA/zrihcFK6qi1KAfQkvtR2btfwtNY9jYBfkE+jgZtReEK5n6b0eI=
+X-Google-Smtp-Source: AGHT+IHBvH4Nm4RXQK0TC/6z2MuiS3bWVyCqwBvp8+QBi3zVVu7rpiLllbv39OJbDZlfvC4nAFlbTw==
+X-Received: by 2002:ac2:5dca:0:b0:515:b164:4112 with SMTP id x10-20020ac25dca000000b00515b1644112mr7286371lfq.68.1713224696673;
+        Mon, 15 Apr 2024 16:44:56 -0700 (PDT)
 Received: from ?IPV6:2a00:f41:c52:73b0:74d6:fe8a:b9f:ef94? ([2a00:f41:c52:73b0:74d6:fe8a:b9f:ef94])
-        by smtp.gmail.com with ESMTPSA id cw4-20020a170906c78400b00a4e58c74c9fsm6008220ejb.6.2024.04.15.16.34.20
+        by smtp.gmail.com with ESMTPSA id 27-20020a170906319b00b00a4739efd7cesm6068859ejy.60.2024.04.15.16.44.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Apr 2024 16:34:22 -0700 (PDT)
-Message-ID: <d8dc2a6b-4797-4829-9581-1a9e3fce069a@linaro.org>
-Date: Tue, 16 Apr 2024 01:34:19 +0200
+        Mon, 15 Apr 2024 16:44:56 -0700 (PDT)
+Message-ID: <f4cbacca-c2e7-42e7-8ed9-dbc6bb59f1ce@linaro.org>
+Date: Tue, 16 Apr 2024 01:44:53 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,70 +76,42 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sm8650: add description of CCI
- controllers
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Jagadeesh Kona <quic_jkona@quicinc.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20240410074951.447898-1-vladimir.zapolskiy@linaro.org>
+Subject: Re: [PATCH v1] i2c: i2c-qcom-geni: Add support to share an I2C SE
+ from two subsystem
+To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>, andersson@kernel.org,
+ vkoul@kernel.org, andi.shyti@kernel.org, wsa@kernel.org,
+ linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org
+Cc: quic_vdadhani@quicinc.com
+References: <20240327101825.1142012-1-quic_msavaliy@quicinc.com>
+ <ccb312aa-3c4c-41bb-a3f4-b94971edb346@linaro.org>
+ <b7125064-4b20-438e-ac1d-7107d28b1bf9@quicinc.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240410074951.447898-1-vladimir.zapolskiy@linaro.org>
+In-Reply-To: <b7125064-4b20-438e-ac1d-7107d28b1bf9@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
 
 
-On 4/10/24 09:49, Vladimir Zapolskiy wrote:
-> Qualcomm SM8650 SoC has three CCI controllers with two I2C busses
-> connected to each of them.
-> 
-> The CCI controllers on SM8650 are compatible with the ones found on
-> many other older generations of Qualcomm SoCs.
-> 
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> ---
+On 4/2/24 08:21, Mukesh Kumar Savaliya wrote:
+> Thanks Konrad for detailed review. For dt-bindings sending a separate patch soon, rest comments tried to address and updated patch V2.
 
 [...]
 
->   
-> +		cci0: cci@ac15000 {
-> +			compatible = "qcom,sm8650-cci", "qcom,msm8996-cci";
-> +			reg = <0 0x0ac15000 0 0x1000>;
-> +			interrupts = <GIC_SPI 426 IRQ_TYPE_EDGE_RISING>;
-> +			power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
-> +			clocks = <&camcc CAM_CC_CAMNOC_AXI_NRT_CLK>,
-> +				 <&camcc CAM_CC_SLOW_AHB_CLK_SRC>,
-The DT should never ever touch the _SRC clocks directly, especially since
-you're referencing the branch downstream of it right below
+>>> +    if (of_property_read_bool(pdev->dev.of_node, "qcom,shared-se")) {
+>>> +        gi2c->is_shared = true;
+>>> +        dev_info(&pdev->dev, "Multi-EE usecase with shared SE\n");
+>>
+>> How would this line be useful in my kernel log?
+>>
+> It informs that particular SE is shared between SEs from two subsystems, hence respective debug can happen accordingly in case of the issue.
 
-> +				 <&camcc CAM_CC_CPAS_AHB_CLK>,
-> +				 <&camcc CAM_CC_CCI_0_CLK>;
-> +			clock-names = "camnoc_axi",
-> +				      "slow_ahb_src",
-> +				      "cpas_ahb",
-> +				      "cci";
-> +			pinctrl-0 = <&cci0_default &cci1_default>;
-> +			pinctrl-1 = <&cci0_sleep &cci1_sleep>;
-> +			pinctrl-names = "default", "sleep";
-> +			status = "disabled";
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			assigned-clocks = <&camcc CAM_CC_CCI_0_CLK_SRC>;
-> +			assigned-clock-rates = <37500000>;
-
-Why?
-
-[...]
-
-> +			pinctrl-0 = <&cci2_default &cci3_default>;
-> +			pinctrl-1 = <&cci2_sleep &cci3_sleep>;
-
-Please stick to a single naming scheme (cciX_Y or csiN)
+This amounts to "not very useful". As an end user, I couldn't care less
+about the nitty-gritty of firmware-hardware interactions, so long as the
+thing works. You must not spam the kernel log with debug messages, as it
+slows things down and makes actually useful messages harder to spot. If
+you want to keep it, use dev_dbg.
 
 Konrad
 
