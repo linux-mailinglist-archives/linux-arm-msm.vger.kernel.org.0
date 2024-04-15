@@ -1,208 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-17422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B12ED8A4949
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 09:45:38 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 556188A4ACC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 10:49:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 61665282060
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 07:45:37 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8B589B25A52
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 08:49:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D05E52C1A2;
-	Mon, 15 Apr 2024 07:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 454F03B28F;
+	Mon, 15 Apr 2024 08:49:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="m0BaOK7/"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LUuephRa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21FDE28DA4
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Apr 2024 07:45:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDDFB3A1DA;
+	Mon, 15 Apr 2024 08:49:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713167131; cv=none; b=ms5jyjyXIHl/AroNxmn48o1CbJWnTgsAGoNGVhiXmZSd4TXZ738mq5lHmyGtSvb5ZssII261fujY+3BO7Dz9JYvDJu8LnzRO9Q9RsKtIcR4wbXG5lPKvWI8DYTnnCFKIQpMvdI3FbdLgUiRhKfsdIA4JN9EQv4LG2yaLmGftDtU=
+	t=1713170967; cv=none; b=nm2kpdMp+YFClwKjN4djE4mqwAeuLKR1inTHXziuD8drpEnjLKS85wzkjLQO/wTQs0PMcQPJcGmQF6k0Iqhj8UphiA1ksFeTFPpw3qcj6qT6leDLPV/ADygroo6C3/ZkpPgRG5UWKmUluYNcSUIxayYeD69QVvCTauCn0NINDA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713167131; c=relaxed/simple;
-	bh=bUsjGOrjiKcsnBbSuyCqL2OW+lzREuaMt2hVVXp17uk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eRbLJASdNyxeIjfQWwkw94ks2J9AWrby+xFAGnKZY/lLKRWngtlTi0YAH6C6YJ4pS6Q8bo/amofLbjk9L1rxX9H2APB+RIXkqOojOuP+vWZa0rtpF6Iio/SOQ15jr1qzA/ZhcOkjtOIHS3A2azfrXt8nFDO/jDSdQRe73v7dH/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=m0BaOK7/; arc=none smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a51a7dc45easo311178266b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Apr 2024 00:45:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713167128; x=1713771928; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=DQNF7zkSXRFQf5KUOpvJNiIAOOs7YklqwV7aAB78wGs=;
-        b=m0BaOK7/ys1rV4QUZY0oykYIMaembu8/v6OlZPVSw2UW3XX/B2imql/k7kWQu42b6t
-         nEJ2rrPAQ+P2tzKR/W3TeazFuKUMPEv+N96N7jTsbuBMBfHsFD+tHguVHnWOsyNGjsmi
-         FHjQr64A9aFUrLrk5Wrueo2GBK1BCfZjkHoPK4XOurVem3I9beMeS55Ph7bZ3f/nrNUm
-         kms2qu7N+z4uNsOpxSm93n2jDo4AXhGHS35KvWdZtXBVkp+OXJyf6BEuMGWXOLeTDHz5
-         4SgwjkbUxomWfhef3UGFig+b3OO/U+5dHw69KcZTjJfyNXtZWk46R50xRZhm/ec90ecO
-         TMbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713167128; x=1713771928;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DQNF7zkSXRFQf5KUOpvJNiIAOOs7YklqwV7aAB78wGs=;
-        b=hFHKm2Gyas0myMfINBQUrJ+Mnk6KBeoGC2VInEKDanJONtszayilo/8QAz9iHT4wpF
-         7G+sPQecW8L8J/Ppr1+QI+TrXV+MqtD/j+Qr000oSfFJzOMAb2KYS9Ce+mVHWu94AgND
-         3raETz+3jjKdYnPlbNefc+BtDoVvQOdoCA1Y+YYcMz4OsQKwNSS8lAhYWleoJ4b/NbQc
-         s+j8GPgwLk5qbJt0rs0rBwecHoJMCMPFXCYO86RWUCmdSDKHb03EefYR0vDu4HbWTXiN
-         n5PehxxYN1YOBHoQjvYYQJINWIXCDNjMngYnAG0PEIvJCUhcdk80HQ9Q9H1qxeWVRebN
-         DXDg==
-X-Forwarded-Encrypted: i=1; AJvYcCXM6Dg1pcca80CcX2fPs3lCpaKXKzHyCtIy6Ie8VZRWIrUqm7MI7BmJL2f8ZztFYDyHTVZLYGgnWLzSc1y/pvpim9Vxtrsti5xrcJ/fzQ==
-X-Gm-Message-State: AOJu0YyoBjlrhBHpv+MReo1ZMJgVcEHGzUzjNbjfaU/49tBFJ5mIKe4w
-	FFM7ej9/BkjjQhzRCP16ZC3zjA9deWvExe7giHXVCYYW0OfGQtpKVKoZmoi6XjQ=
-X-Google-Smtp-Source: AGHT+IE6J9sEau9bksr4Utu4iSgDQu9L8YqhSxC7EB3LNaLN6CUQlDvqEMM+3KACsikXSfynV2Q0aA==
-X-Received: by 2002:a17:906:a048:b0:a52:2c0e:2e91 with SMTP id bg8-20020a170906a04800b00a522c0e2e91mr6548154ejb.17.1713167128339;
-        Mon, 15 Apr 2024 00:45:28 -0700 (PDT)
-Received: from [10.230.170.72] (46-253-189-43.dynamic.monzoon.net. [46.253.189.43])
-        by smtp.gmail.com with ESMTPSA id bw26-20020a170906c1da00b00a52222f2b21sm4994628ejb.66.2024.04.15.00.45.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Apr 2024 00:45:27 -0700 (PDT)
-Message-ID: <d90fc534-adf6-4783-8c2b-c4cf103a0e26@linaro.org>
-Date: Mon, 15 Apr 2024 09:45:25 +0200
+	s=arc-20240116; t=1713170967; c=relaxed/simple;
+	bh=g6kpKgzAHMgSKzudjehksGcsUcrpnUB9QtZmpGZ9ZdU=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=j6kS89TFwYvGD2B1LSWbDsjTeb9kw+jkXH8V9HnxAIr69fFuhhNyzIS4u4rrUziCNaHt2ecEilzaOwlsFRgUjt53xrqdeZb9WN3ubrTKSdlJiE1+layPpYAWS3rup1awSBAYkbec5q6mQdAI/6vlJsDWQ4C6Idq3prmNkCurk4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LUuephRa; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43F7C5Wn018166;
+	Mon, 15 Apr 2024 08:49:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=gU29RZ0V3i24
+	VCBgtUmCcC2PIz+t/ZVqq7W32gQcB4o=; b=LUuephRag7nN6GAAlOEYIdMEJSbt
+	iLnuQUhbRr1V4kW+KW1qJtGjDXeyeRBP0juWwMS8GvYsIuMSUpiTJ2eVdgm03Gty
+	KJsm+uJ6A4KZslAtLxOCTvoZNf2puY7fYC4Hq/jjJUPBVUzFlkTonhVM31x3ya/B
+	VJApiCVJsUqI9ulY06BXFwGAVacMuLk4xG84Ob3O13sv3ppj/bp5iQBW09qjhE92
+	LrRT5vEa8stPV7Klo1Zvpw4H5lo9fRH4fbMVeZFVSZps7lcFXkhOdh0bgnQWQUYk
+	1S6wnoTHprDTuE7Zh/E/B7s+EpCYiAC8DbNviSiG0orjXTR8Hl0CWSEZ/A==
+Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xgwqfgeyj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 15 Apr 2024 08:49:23 +0000 (GMT)
+Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+	by APTAIPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 43F8n89u005845;
+	Mon, 15 Apr 2024 08:49:08 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTP id 3xfk4kh5pq-1;
+	Mon, 15 Apr 2024 08:49:08 +0000
+Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43F8n7gL005840;
+	Mon, 15 Apr 2024 08:49:08 GMT
+Received: from cbsp-sh-gv.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTP id 43F8n7Oh005839;
+	Mon, 15 Apr 2024 08:49:07 +0000
+Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 4098150)
+	id D245D5AF9; Mon, 15 Apr 2024 16:49:06 +0800 (CST)
+From: Qiang Yu <quic_qianyu@quicinc.com>
+To: mani@kernel.org, quic_jhugo@quicinc.com
+Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
+        quic_mrana@quicinc.com, Qiang Yu <quic_qianyu@quicinc.com>
+Subject: [PATCH v3 0/3] Add sysfs entry to EDL mode
+Date: Mon, 15 Apr 2024 16:49:02 +0800
+Message-Id: <1713170945-44640-1-git-send-email-quic_qianyu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: CAW1G567_-oDGaQHkKJjkUQu5lorpukZ
+X-Proofpoint-ORIG-GUID: CAW1G567_-oDGaQHkKJjkUQu5lorpukZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-15_08,2024-04-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
+ malwarescore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 mlxscore=0 mlxlogscore=778 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
+ definitions=main-2404150058
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/4] dt-bindings: PCI: mediatek,mt7621-pcie: switch
- from deprecated pci-bus.yaml
-To: Sergio Paracuellos <sergio.paracuellos@gmail.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Hector Martin <marcan@marcan.st>,
- Sven Peter <sven@svenpeter.dev>, Alyssa Rosenzweig <alyssa@rosenzweig.io>,
- Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
- Broadcom internal kernel review list
- <bcm-kernel-feedback-list@broadcom.com>,
- Florian Fainelli <florian.fainelli@broadcom.com>,
- Jim Quinlan <jim2101024@gmail.com>,
- Nicolas Saenz Julienne <nsaenz@kernel.org>, Will Deacon <will@kernel.org>,
- Linus Walleij <linus.walleij@linaro.org>,
- Srikanth Thokala <srikanth.thokala@intel.com>,
- Ryder Lee <ryder.lee@mediatek.com>, Jianjun Wang
- <jianjun.wang@mediatek.com>, Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Daire McNamara <daire.mcnamara@microchip.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Marek Vasut <marek.vasut+renesas@gmail.com>,
- Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
- Shawn Lin <shawn.lin@rock-chips.com>, Heiko Stuebner <heiko@sntech.de>,
- Jingoo Han <jingoohan1@gmail.com>,
- Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Bharat Kumar Gogada <bharat.kumar.gogada@amd.com>,
- Michal Simek <michal.simek@amd.com>,
- Geert Uytterhoeven <geert+renesas@glider.be>,
- Magnus Damm <magnus.damm@gmail.com>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Mark Kettenis <kettenis@openbsd.org>, Tom Joseph <tjoseph@cadence.com>,
- Ahmad Zainie <wan.ahmad.zainie.wan.mohamad@intel.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Kishon Vijay Abraham I <kishon@kernel.org>,
- Thippeswamy Havalige <thippeswamy.havalige@amd.com>,
- linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, asahi@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org, linux-rpi-kernel@lists.infradead.org,
- linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org
-References: <20240413151617.35630-1-krzysztof.kozlowski@linaro.org>
- <20240413151617.35630-4-krzysztof.kozlowski@linaro.org>
- <CAMhs-H9ADfuDkFcD==7x+VaN2q92JV1gxuyrWvfNYK1psEnrQA@mail.gmail.com>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <CAMhs-H9ADfuDkFcD==7x+VaN2q92JV1gxuyrWvfNYK1psEnrQA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 
-On 15/04/2024 09:31, Sergio Paracuellos wrote:
-> Hi Krzysztof,
-> 
-> On Sat, Apr 13, 2024 at 5:16 PM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> dtschema package with core schemas deprecated pci-bus.yaml schema in
->> favor of individual schemas per host, device and pci-pci.
->>
->> Switch Mediatek MT7621 PCIe host bridge binding to this new schema.
->>
->> This requires dtschema package newer than v2024.02 to work fully.
->> v2024.02 will partially work: with a warning.
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>
->> ---
->>
->> Important: This depends on change recently merged to dtschema, however
->> no release was yet made with mentioned change.
->> Therefore this patch probably should wait a bit. Previous patches do not
->> depend anyhow on future release, so they can be taken as is.
-> 
-> Does this mean that we should set DT_SCHEMA_MIN_VERSION to 2024.02 in
-> Documentation/devicetree/bindings/Makefile then before merging this
-> patch?
+Add EDL sysfs entry for mhi controller that provides edl_trigger callback.
+Add mhi_pci_generic_edl_trigger for qualcomm sdx55,sdx65 and sdx75 as
+edl_trigger callback.
 
-For the previous changes: yes. For this one: we need newer...
-Best regards,
-Krzysztof
+v2->v3:
+1. Update Documentation/ABI/stable/sysfs-bus-mhi with description of
+   force_edl sysfs entry.
+
+2. Add comments about edl_trigger callback in mhi_controller struct.
+
+3. Follow reverse christmas tree in mhi_pci_generic_edl_trigger.
+
+4. Add a new API in MHI to allow controller to get CHDB address and avoid
+   duplicating the definition of CHDBOFF.
+
+v1->v2:
+1. Move all process needed by qualcomm sdx55,sdx65,sdx75 to enter EDL into
+   mhi_pci_generic_edl_trigger() as the callback to edl_trigger.
+
+2. MHI stack creates EDL sysfs entry to invoke edl_trigger callback so
+   that devices need different mechanism to enter EDL can provide its own
+   edl_trigger callabck .
+
+Qiang Yu (3):
+  bus: mhi: host: Add sysfs entry to force device to enter EDL
+  bus: mhi: host: Add a new API for getting channel doorbell address
+  bus: mhi: host: pci_generic: Add edl callback to enter EDL
+
+ Documentation/ABI/stable/sysfs-bus-mhi | 11 ++++++++
+ drivers/bus/mhi/host/init.c            | 35 +++++++++++++++++++++++++
+ drivers/bus/mhi/host/main.c            | 17 ++++++++++++
+ drivers/bus/mhi/host/pci_generic.c     | 47 ++++++++++++++++++++++++++++++++++
+ include/linux/mhi.h                    |  9 +++++++
+ 5 files changed, 119 insertions(+)
+
+-- 
+2.7.4
 
 
