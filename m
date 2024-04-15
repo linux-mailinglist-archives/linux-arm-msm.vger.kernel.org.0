@@ -1,135 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-17436-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DEE848A4E53
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 14:02:52 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A5D08A4E6E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 14:04:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7EE911F21B9C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 12:02:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0641A280FD7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 12:04:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94A0C69954;
-	Mon, 15 Apr 2024 12:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C60D1679ED;
+	Mon, 15 Apr 2024 12:04:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mRTtDkr0"
+	dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b="Vjofp4AR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from outbound9.mail.transip.nl (outbound9.mail.transip.nl [136.144.136.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6464A679ED;
-	Mon, 15 Apr 2024 12:02:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1196BB39;
+	Mon, 15 Apr 2024 12:04:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.144.136.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713182564; cv=none; b=abihrJwNcZ5ZNVD3VKFNRyPFbiCRDrnIfTW+oMaRBAhRXwrjs2XtwpTkrqcKCbn7k6vqiijDKOaZSHrkCXCHIRonRlzbTHjBGMGQPXn7f3450jIqGpFFKiHYwTt2vsgzfjJjUu+v/Z/jELccyRqXwZDX+ytYkBfGHK6HPYuB9EU=
+	t=1713182676; cv=none; b=eAne1aqBnxvRYd0IpI1eqzeVLCAgCejIwJuiTnE/KjWRg/WvPDvUd5wuse+FYOgj7P3dsqaJd79WP9xAHE3FdojwMCqlpmH1rkwl1Tnivb/Z9spwLk5Z7sI0Dmc2Wz01iwyNEo7aQMfVmu0nLhzpKT2lgu/lKJV7vseDRop0SgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713182564; c=relaxed/simple;
-	bh=NchaIwl0enMKrAZADevkzNL4pVQIaCSWH3SoIG+yOuo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Dn/jlgw0VgokqBgH+CE5ptpK2OWqw8GN8W9d0JXbHDQHlDyu2Ku1xcXNhQDhxve2gyrIAB2XIn8gBkyZiuw4n8gQESJvOhLMSSyofhofu2nMfq2n+W/+OUqS/A2D4Bo+28IpLFWoUWDn9mMEf5zGbunWkLnHXL50s1KIYHjLT9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mRTtDkr0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCB75C2BD11;
-	Mon, 15 Apr 2024 12:02:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713182563;
-	bh=NchaIwl0enMKrAZADevkzNL4pVQIaCSWH3SoIG+yOuo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=mRTtDkr0BCzbP+RDDyHgfeVPUsM9Gi2YfaRdVU+mGIlC50ZY5PwPARWJuuwoEGovK
-	 qJuIV1B1gLnkK7IKvSJqVKdd6eG93brhZeGjaDK+AoMaMVFkhC6p5uX4RdAexBioL1
-	 Ook+NV9X0aJL1u91pE7/aLKhXxSpuxVzAHGPScXbfEFD44EWe8YdYkpWUGdPK2nZKM
-	 VfWsdNhbgDYQeW8D/GxBNHKNCFBi3AtnjHq14GSlbP5yWcCAayZ5XwD/+HkuO9u+Lm
-	 1yfn0tYg6mmGI/S6q4w00NjX7AItSA4kq6If2Bwm8QRt3e+yRMgbCz/mZjfQanyw+3
-	 j073IdJlm/yRw==
-Date: Mon, 15 Apr 2024 17:32:37 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Qiang Yu <quic_qianyu@quicinc.com>
-Cc: quic_jhugo@quicinc.com, mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	quic_cang@quicinc.com, quic_mrana@quicinc.com
-Subject: Re: [PATCH v3 2/3] bus: mhi: host: Add a new API for getting channel
- doorbell address
-Message-ID: <20240415120237.GG7537@thinkpad>
-References: <1713170945-44640-1-git-send-email-quic_qianyu@quicinc.com>
- <1713170945-44640-3-git-send-email-quic_qianyu@quicinc.com>
+	s=arc-20240116; t=1713182676; c=relaxed/simple;
+	bh=nie7cPNROHKZ5ttu20WSAASaT3lPTeH5P0IxePoJuPs=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=ZgOZaVZPRUAeG421GbAWOdm46JCUQ/BIL+nwNUqyMjfzHYiW5kpRWXRTnXNTHte1NzYT8u6qcJj6C+VACHJHcehkaXCCfX4H4F+L3J8apUlm9VhRucz8SXlUEpCihThf2WvWmy5ZXCZ5ZP3CNC4owl4hqK8TPbC+x5+c1O79Ark=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org; spf=pass smtp.mailfrom=herrie.org; dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b=Vjofp4AR; arc=none smtp.client-ip=136.144.136.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=herrie.org
+Received: from submission4.mail.transip.nl (unknown [10.103.8.155])
+	by outbound9.mail.transip.nl (Postfix) with ESMTP id 4VJ5HH0gFPzTPNkM;
+	Mon, 15 Apr 2024 13:56:27 +0200 (CEST)
+Received: from herrie-desktop.. (110-31-146-85.ftth.glasoperator.nl [85.146.31.110])
+	by submission4.mail.transip.nl (Postfix) with ESMTPA id 4VJ5HG1N88znTZy;
+	Mon, 15 Apr 2024 13:56:26 +0200 (CEST)
+From: Herman van Hazendonk <github.com@herrie.org>
+To: "Bjorn Andersson " <andersson@kernel.org>
+Cc: benwolsieffer@gmail.com,
+	chris.chapuis@gmail.com,
+	Herman van Hazendonk <me@herrie.org>,
+	Herman van Hazendonk <github.com@herrie.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] dt-bindings: phy: qcom,usb-hs-phy: Add compatible
+Date: Mon, 15 Apr 2024 13:56:02 +0200
+Message-Id: <20240415115603.1523974-1-github.com@herrie.org>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <>
+References: <>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1713170945-44640-3-git-send-email-quic_qianyu@quicinc.com>
+X-Scanned-By: ClueGetter at submission4.mail.transip.nl
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=transip-a; d=herrie.org; t=1713182186; h=from:subject:to:cc:
+ references:in-reply-to:date:mime-version;
+ bh=GCn4MctOklijAimZP/GbpYzFdmp5YzqVGKFzoeYARW0=;
+ b=Vjofp4ARu7vEEvDbcNyEoCL/dQsfhTCVynR0GjMy995c1BTda0A0qwFeC6rJh5XY/EqUPl
+ Y1bMvUvc42SZhIojymAIKKFqCODLHnSh5zF79tOhUmA/GVH3yfOlwQ6miFfCCvDw4GQeDm
+ 0DNXbVbnijWj+ZNDbbPhSdG4jEl7hacn7QmMqy/P9etW4MDxtQ03gs3VLQaAkAqbgq1MiY
+ RtRewzoHiWZqOwml5n4LkhK8Xr8WF2xdG2LwJ/IrxUHGFdSCVru7f08lSfV/dxoWO14GMb
+ N3F/3WKQOT7UQDcCF2tfM58QGxCEmEsjSCPMfT4AFhmCd8k1JjzAbaXsgF+x3Q==
+X-Report-Abuse-To: abuse@transip.nl
 
-On Mon, Apr 15, 2024 at 04:49:04PM +0800, Qiang Yu wrote:
-> Some controllers may want to know the address of a certain doorbell. Hence
-> add a new API where we read CHDBOFF register to get the base address of
-> doorbell, so that the controller can calculate the address of the doorbell
-> it wants by adding additional offset.
-> 
-> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-> ---
->  drivers/bus/mhi/host/main.c | 17 +++++++++++++++++
->  include/linux/mhi.h         |  7 +++++++
->  2 files changed, 24 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-> index 15d657a..947b5ec 100644
-> --- a/drivers/bus/mhi/host/main.c
-> +++ b/drivers/bus/mhi/host/main.c
-> @@ -1691,3 +1691,20 @@ void mhi_unprepare_from_transfer(struct mhi_device *mhi_dev)
->  	}
->  }
->  EXPORT_SYMBOL_GPL(mhi_unprepare_from_transfer);
-> +
-> +int mhi_get_channel_doorbell(struct mhi_controller *mhi_cntrl, u32 *chdb_offset)
+From: Herman van Hazendonk <me@herrie.org>
 
-s/mhi_get_channel_doorbell/mhi_get_channel_doorbell_offset
+Adds qcom,usb-hs-phy-msm8660 compatible
 
-> +{
-> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> +	void __iomem *base = mhi_cntrl->regs;
-> +	int ret;
-> +
-> +	/* Read channel db offset */
+Used by HP Touchpad (tenderloin) for example.
 
-No need of this comment.
+Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
+---
+ Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-> +	ret = mhi_read_reg(mhi_cntrl, base, CHDBOFF, chdb_offset);
-> +	if (ret) {
-> +		dev_err(dev, "Unable to read CHDBOFF register\n");
-> +		return -EIO;
-> +	}
-> +
-> +	return 0;
-> +}
-
-Why can't you use this API in mhi_init_mmio()?
-
-> +EXPORT_SYMBOL_GPL(mhi_get_channel_doorbell);
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index 8280545..1135142 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -816,4 +816,11 @@ int mhi_queue_skb(struct mhi_device *mhi_dev, enum dma_data_direction dir,
->   */
->  bool mhi_queue_is_full(struct mhi_device *mhi_dev, enum dma_data_direction dir);
->  
-> +/**
-> + * mhi_get_channel_doorbell - read channel doorbell offset register to get
-
-'Get the channel doorbell offset'
-
-> + *                            channel doorbell address
-> + * @mhi_cntrl: MHI controller
-> + * @chdb_offset: channel doorbell address
-
-s/channel doorbell address/Channel doorbell offset
-
-- Mani
-
+diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
+index f042d6af1594..1faf1da9f583 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
+@@ -15,6 +15,7 @@ if:
+       contains:
+         enum:
+           - qcom,usb-hs-phy-apq8064
++          - qcom,usb-hs-phy-msm8660
+           - qcom,usb-hs-phy-msm8960
+ then:
+   properties:
+@@ -42,6 +43,7 @@ properties:
+           - qcom,usb-hs-phy-apq8064
+           - qcom,usb-hs-phy-msm8226
+           - qcom,usb-hs-phy-msm8916
++          - qcom,usb-hs-phy-msm8660
+           - qcom,usb-hs-phy-msm8960
+           - qcom,usb-hs-phy-msm8974
+       - const: qcom,usb-hs-phy
 -- 
-மணிவண்ணன் சதாசிவம்
+2.40.1
+
 
