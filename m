@@ -1,170 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-17438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE6428A4EAA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 14:13:00 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D8EDE8A4F2A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 14:36:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8E1D71F2275F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 12:13:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 94405283F4A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 12:36:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1D4E6E5E8;
-	Mon, 15 Apr 2024 12:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BD986F06A;
+	Mon, 15 Apr 2024 12:36:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cg0KzrXc"
+	dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b="vq/1QqC3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from outbound6.mail.transip.nl (outbound6.mail.transip.nl [136.144.136.128])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76E976A005;
-	Mon, 15 Apr 2024 12:12:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7A66EB75;
+	Mon, 15 Apr 2024 12:36:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.144.136.128
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713183127; cv=none; b=doy6lfsJypX9WET+MGbe6CjlhmOqD/hBxW4fcbFWiudexytjbTn7E9OYeK6pEjGQ4N9+uWLR4giPGsQyE1RPfab9E5NAaDaJw+6lqj90Zex42WN0CpqNprusmMP0311qSdkBFRTflsQ9Zo1oZObxUawOM1M5ZgjUE9Opo7gIbX0=
+	t=1713184594; cv=none; b=I4rImYyG3y8bI8HjYJgtwRU7CST+vxtQPQs1jaCiLcMZwYpSAJ1/aByMrIq1vu+/j4F1U/LBySLOlxhiBGX16C/o/o8vcSLSWw6EB+1VBQxwXsWPBGDuI5kuPdmg4nOIqpDCkrBuK61sD4KDrdY767ORNzP1T6Io74d3/k0JKtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713183127; c=relaxed/simple;
-	bh=49BXH0ae9TmsC+ZVdMQDanlSwY5xhkGJJZaqFTj7XJA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aQwzRYCk+p0XTiawHFaltf35Sq33sA0IMWK9eucdlq2dHVctFFaZH6Mw1WlxCoDPkbaFWMvervdozV9iLAupCfoZwJPjW49uaSgZciglh51fdEMhHjx0Ei9fd4upT47T8IycFg2E3lKoTkGseG3knAfkcMjuI45UMyU0uwIjRLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cg0KzrXc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D662C3277B;
-	Mon, 15 Apr 2024 12:12:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713183127;
-	bh=49BXH0ae9TmsC+ZVdMQDanlSwY5xhkGJJZaqFTj7XJA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=cg0KzrXcO4+o1oyoPNMzpuTpiKH1aOwgXCKdUveLdMW39FtPzn/bXuUxi2bkFFKMc
-	 BwgHBko0f+Z5gulFsfxZJHVj6QJ8DNRqt8NV+e/5sQRlXZROA7WOqmtPhC0NmAjKxp
-	 ky5xMm5I5lG5EaN6bPmVvD7hDtLyljNws0U3jvGclknWBfAQjrCcfbqa72LctqNrKN
-	 SVX58dv3AHaANUxzSMn/SX0cpeXGewgyK8ovqfd2aAaUlqzg+fFTPRcA0NSFGXP1x7
-	 ZdmtkwtxdYYZp/XMurJ1NdrM4di6+XDAxJPtXI5s+QG7k0ZO1lU8QHYgZzMhH1ZxwP
-	 JUeJf81lhCPXw==
-Date: Mon, 15 Apr 2024 17:42:00 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Qiang Yu <quic_qianyu@quicinc.com>
-Cc: quic_jhugo@quicinc.com, mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	quic_cang@quicinc.com, quic_mrana@quicinc.com
-Subject: Re: [PATCH v3 3/3] bus: mhi: host: pci_generic: Add edl callback to
- enter EDL
-Message-ID: <20240415121200.GH7537@thinkpad>
-References: <1713170945-44640-1-git-send-email-quic_qianyu@quicinc.com>
- <1713170945-44640-4-git-send-email-quic_qianyu@quicinc.com>
+	s=arc-20240116; t=1713184594; c=relaxed/simple;
+	bh=jNxeHg+oTTWWtYZWMUwMdJnwrZpUbPV9n1Ea3y9Gocw=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=BIFI5fpOS/KSrkDpeNIsrXIzTcXhJvFnHCpUsTOd2SwRSGScx3DaX/zvURhi8qiyr1QShoIfz/CY4h42CgSL24vLr3ytQmr2DRcosohPjfuS1npYg7Qswd5/VqY7l5kYH2FV27jLfKe7cqYCFN2EHw+9gtd9i5FDhx+6Qgbl1jI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org; spf=pass smtp.mailfrom=herrie.org; dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b=vq/1QqC3; arc=none smtp.client-ip=136.144.136.128
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=herrie.org
+Received: from submission5.mail.transip.nl (unknown [10.103.8.156])
+	by outbound6.mail.transip.nl (Postfix) with ESMTP id 4VJ62p2xxXzwLJDv;
+	Mon, 15 Apr 2024 14:30:42 +0200 (CEST)
+Received: from herrie-desktop.. (110-31-146-85.ftth.glasoperator.nl [85.146.31.110])
+	by submission5.mail.transip.nl (Postfix) with ESMTPA id 4VJ62n1SBpz7tDD;
+	Mon, 15 Apr 2024 14:30:41 +0200 (CEST)
+From: Herman van Hazendonk <github.com@herrie.org>
+To: andersson@kernel.org
+Cc: benwolsieffer@gmail.com,
+	chris.chapuis@gmail.com,
+	Herman van Hazendonk <github.com@herrie.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lee Jones <lee@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Satya Priya <quic_c_skakit@quicinc.com>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] dt-bindings: mfd: qcom: pm8xxx: Add pm8901 compatible
+Date: Mon, 15 Apr 2024 14:30:38 +0200
+Message-Id: <20240415123038.1526386-1-github.com@herrie.org>
+X-Mailer: git-send-email 2.40.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1713170945-44640-4-git-send-email-quic_qianyu@quicinc.com>
+X-Scanned-By: ClueGetter at submission5.mail.transip.nl
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=transip-a; d=herrie.org; t=1713184241; h=from:subject:to:cc:date:
+ mime-version; bh=24iK7R241bVwFtU8XHYOGUwB4N3mqV9EFuOa+luzOCQ=;
+ b=vq/1QqC3uNBHJv9T1gt6ln2doJiUzUwtffkGWloOt25ywaYIPxseX33IZBCPHElbJh4jOb
+ FC/WgR5Y/Xgia8yJ3zIwzDMdSPuWvPKT9lSmJTlnGTcCdBV6hPPgv3BHpCj/+p6y/KyLlf
+ 5iQG3/09vuSLwlfTVIGXYhxnXSR1HSekut/0/jOK1+nYEP1FwG8qiFYrWZQ2feK1nZGM4E
+ bVFqsEKF+biVxar2FHLq8XETY1ua54y3lrh+TktARkYPXW84qJ3Gx/oz8rAQeAIvUzHHHm
+ 6TtmHVA+cYk3/paxIW06CUMqMjmBP8xBC5ud/w44o2Ve+II1C5OkxDM6Ck+9ew==
+X-Report-Abuse-To: abuse@transip.nl
 
-On Mon, Apr 15, 2024 at 04:49:05PM +0800, Qiang Yu wrote:
+Add missing compatible for the pm8901 model used in msm8660
+such as (HP TouchPad (tenderloin).
 
-bus: mhi: host: pci_generic: Add support for triggering EDL mode in modems
+Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
+---
+ Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-> Add mhi_pci_generic_edl_trigger as edl_trigger for some devices (eg. SDX65)
-> to enter EDL mode by writing the 0xEDEDEDED cookie to the channel 91
-> doorbell register and forcing an SOC reset afterwards.
-> 
-
-'Some of the MHI modems like SDX65 based ones are capable of entering the EDL
-mode as per the standard triggering mechanism defined in the MHI spec <enter
-spec version>. So let's add a common mhi_pci_generic_edl_trigger() function that
-triggers the EDL mode in the device when user writes to the <insert full sysfs
-entry here> file.'
-
-> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-> ---
->  drivers/bus/mhi/host/pci_generic.c | 47 ++++++++++++++++++++++++++++++++++++++
->  1 file changed, 47 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index 51639bf..cbf8a58 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -27,12 +27,19 @@
->  #define PCI_VENDOR_ID_THALES	0x1269
->  #define PCI_VENDOR_ID_QUECTEL	0x1eac
->  
-> +#define MHI_EDL_DB			91
-> +#define MHI_EDL_COOKIE			0xEDEDEDED
-> +
-> +/* Device can enter EDL by first setting edl cookie then issuing inband reset*/
-> +#define MHI_PCI_GENERIC_EDL_TRIGGER	BIT(0)
-
-This is not needed as of now. Let the edl_trigger be bool for now. When vendors
-want to add their own methods of triggering EDL, we can extend it.
-
-> +
->  /**
->   * struct mhi_pci_dev_info - MHI PCI device specific information
->   * @config: MHI controller configuration
->   * @name: name of the PCI module
->   * @fw: firmware path (if any)
->   * @edl: emergency download mode firmware path (if any)
-> + * @edl_trigger: each bit represents a different way to enter EDL
-
-'capable of triggering EDL mode in the device (if supported)'
-
->   * @bar_num: PCI base address register to use for MHI MMIO register space
->   * @dma_data_width: DMA transfer word size (32 or 64 bits)
->   * @mru_default: default MRU size for MBIM network packets
-> @@ -44,6 +51,7 @@ struct mhi_pci_dev_info {
->  	const char *name;
->  	const char *fw;
->  	const char *edl;
-> +	unsigned int edl_trigger;
->  	unsigned int bar_num;
->  	unsigned int dma_data_width;
->  	unsigned int mru_default;
-> @@ -292,6 +300,7 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx75_info = {
->  	.name = "qcom-sdx75m",
->  	.fw = "qcom/sdx75m/xbl.elf",
->  	.edl = "qcom/sdx75m/edl.mbn",
-> +	.edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
->  	.config = &modem_qcom_v2_mhiv_config,
->  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->  	.dma_data_width = 32,
-> @@ -302,6 +311,7 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx65_info = {
->  	.name = "qcom-sdx65m",
->  	.fw = "qcom/sdx65m/xbl.elf",
->  	.edl = "qcom/sdx65m/edl.mbn",
-> +	.edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
->  	.config = &modem_qcom_v1_mhiv_config,
->  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->  	.dma_data_width = 32,
-> @@ -312,6 +322,7 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
->  	.name = "qcom-sdx55m",
->  	.fw = "qcom/sdx55m/sbl1.mbn",
->  	.edl = "qcom/sdx55m/edl.mbn",
-> +	.edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
->  	.config = &modem_qcom_v1_mhiv_config,
->  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->  	.dma_data_width = 32,
-> @@ -928,6 +939,39 @@ static void health_check(struct timer_list *t)
->  	mod_timer(&mhi_pdev->health_check_timer, jiffies + HEALTH_CHECK_PERIOD);
->  }
->  
-> +static int mhi_pci_generic_edl_trigger(struct mhi_controller *mhi_cntrl)
-> +{
-> +	void __iomem *base = mhi_cntrl->regs;
-> +	void __iomem *edl_db;
-> +	int ret;
-> +	u32 val;
-> +
-> +	ret = mhi_device_get_sync(mhi_cntrl->mhi_dev);
-> +	if (ret) {
-> +		dev_err(mhi_cntrl->cntrl_dev, "Wake up device fail before trigger EDL\n");
-
-'Failed to wakeup the device'
-
-- Mani
-
+diff --git a/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml b/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
+index 7fe3875a5996..63e18d6a9c21 100644
+--- a/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
++++ b/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
+@@ -19,6 +19,7 @@ properties:
+       - enum:
+           - qcom,pm8058
+           - qcom,pm8821
++          - qcom,pm8901
+           - qcom,pm8921
+       - items:
+           - enum:
 -- 
-மணிவண்ணன் சதாசிவம்
+2.40.1
+
 
