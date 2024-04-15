@@ -1,212 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-17426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17427-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 116828A4AD0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 10:50:11 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A91CA8A4AE1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 10:53:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8EF18B26E8B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 08:50:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 49C1B1F20C92
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 08:53:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04E2639FF4;
-	Mon, 15 Apr 2024 08:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AB3A3BBE1;
+	Mon, 15 Apr 2024 08:53:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Uo80+cG/"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="KZuz/w9x"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A07740868;
-	Mon, 15 Apr 2024 08:49:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.3])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A4792110F;
+	Mon, 15 Apr 2024 08:53:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713170976; cv=none; b=FaGb7bDViGYjO+K78C3UlQLVZ42vlpnDt0Wswi84CfecrJLJMtObdlTqkspxaSNlOBM4JX4ah3mdBwBnsh3mzPXWhxQ245UOEQEzPYV9FZ2zrO1qWix+6KipCI8CCdbKXVDJ2vQn9LdTTNcyk6OnLcWZR2fgAy2U0bCZ5LQ4I2I=
+	t=1713171191; cv=none; b=K7YJOtreNqFVQnZTEMnuWHQ1uA1BsXxgqnNn2xmU86XwLJZqVVaL9datZNAeS+vIDa0RGvMIsSInSm1OAZjpyjx9NXMP4se7g9XXJsJK6tozT+NTIy3cJcTB8TTJG4eEpk6CQ5PXfZn5TLUBjuyAR0GN+5TqmCcN1MHc3s27m7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713170976; c=relaxed/simple;
-	bh=MGgz9Cor2IBmN0/AQFwN26ChUvw8hSaMBL6F+iIJGC0=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=DA5AtD5s1WwXxK9LmJK+JAoA+3x3R6B8EcTOjTL7hoXt2g9dOEwRn0Wpy7ooJMw3z63o1u5wb2r0SAwT1nd6ky96SDYFB9QSSpCzgq9CnTTYH+QN5iaSTjBpyDNM19/9/2CZeJJclYE0v6PgkyZTc1PiMXHayofpy77A553AA3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Uo80+cG/; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43F4oYET003834;
-	Mon, 15 Apr 2024 08:49:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references; s=
-	qcppdkim1; bh=TzseajAnHwOdobaM5+KXAw1GO5mBXJ23A9dbPs893hk=; b=Uo
-	80+cG/4kujnLJdstoys86RRP8xXhhGkpGfmuBF14FVn2InrJNK2rZ5pIrhn4Vkta
-	5d6XF4Qq+jCbrLiXpPAcr2SCzUxWzCnz2yFmDm7++IasBtkic23NIhx04FYM6tzU
-	OgGuOEsgNMFMwdOXy/swcgldDyw789ZgspYhPaW4QsBSy+0dDz10wTU2EAHxZiMz
-	EXZrlLs6X+PRFL3LWsD88uGrjQdhzLy4RGY0NfUh3qcoTjPdKO3r5WkmuOB5o3HO
-	vRo5/B9z+OZFz3wdwZY1vS+LhlHI5CE1s9GfCpGUGXiUscmZ1qgjXvHNmmUAslJf
-	k3yxIezA6b95htgCm8ww==
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xgwhq0fc3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 15 Apr 2024 08:49:33 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 43F8n9ad008775;
-	Mon, 15 Apr 2024 08:49:09 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 3xfk4khayq-1;
-	Mon, 15 Apr 2024 08:49:09 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43F8n94F008770;
-	Mon, 15 Apr 2024 08:49:09 GMT
-Received: from cbsp-sh-gv.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 43F8n8ee008769;
-	Mon, 15 Apr 2024 08:49:09 +0000
-Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 4098150)
-	id 2E8F85AF9; Mon, 15 Apr 2024 16:49:08 +0800 (CST)
-From: Qiang Yu <quic_qianyu@quicinc.com>
-To: mani@kernel.org, quic_jhugo@quicinc.com
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
-        quic_mrana@quicinc.com, Qiang Yu <quic_qianyu@quicinc.com>
-Subject: [PATCH v3 3/3] bus: mhi: host: pci_generic: Add edl callback to enter EDL
-Date: Mon, 15 Apr 2024 16:49:05 +0800
-Message-Id: <1713170945-44640-4-git-send-email-quic_qianyu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1713170945-44640-1-git-send-email-quic_qianyu@quicinc.com>
-References: <1713170945-44640-1-git-send-email-quic_qianyu@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: f1Ocg_qiIW6s1uksEf8pN7du_erWEfMu
-X-Proofpoint-GUID: f1Ocg_qiIW6s1uksEf8pN7du_erWEfMu
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-15_08,2024-04-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
- mlxscore=0 clxscore=1015 priorityscore=1501 mlxlogscore=999 adultscore=0
- malwarescore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404150058
+	s=arc-20240116; t=1713171191; c=relaxed/simple;
+	bh=8oyoBvkStTpVskCvMWBdHyeZcZ4EnMx4KxN8q9qWTwA=;
+	h=Date:From:To:Cc:Subject:Content-Type:MIME-Version:Message-ID; b=YnxbEE3bJurIApR5PiyTjuWHdtMjG52Te3jEVuAT1kuMw9Ou1FWduceC1q6jmD+bzAKhrgrS9P/WqaDfF1gD2x1qZXp0tM8L+675g5+QafS6fkLkbPkbhM4nV1inydgCLMuN37u7MXKDp3O7WEiFgXnGpQhvrUvWUH29knyGBYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=KZuz/w9x reason="signature verification failed"; arc=none smtp.client-ip=220.197.31.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
+	Message-ID; bh=qYbmhSIlBOGpGAcKUkRPEkfru6Iubl4Z5Utz/vgD9RA=; b=K
+	Zuz/w9xejdqUrYW9PCpWbsFuGJ80b4KjeBjpFdiyw92gjAd97CVsp5jIv+kIrvlx
+	rNmJm6KxFUMSOYeSgt39YdP5DoNeDI0V2aXPm6kNGhLyQETy0YTUO6DHH1VT7Wsl
+	OSrooixKaGmiGR83pPtaP12KIX/GcXdVYK4ASjdfAU=
+Received: from congei42$163.com ( [159.226.94.118] ) by
+ ajax-webmail-wmsvr-40-122 (Coremail) ; Mon, 15 Apr 2024 16:52:41 +0800
+ (CST)
+Date: Mon, 15 Apr 2024 16:52:41 +0800 (CST)
+From: sicong <congei42@163.com>
+To: robdclark@gmail.com, quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org, 
+	sean@poorly.run, airlied@gmail.com, daniel@ffwll.ch
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Bug report: mdp5_crtc.c: use-after-free bug in mdp5_crtc_destroy
+ due to race condition
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
+ Copyright (c) 2002-2024 www.mailtech.cn 163com
+X-NTES-SC: AL_Qu2aAf2cvkkt5ymdY+kfm0YUh+c7UMO5ufQh245eOpF8jDHp+jgFQWJiI0D36NmCMgW2uTm2dztV29t4WZJfeIIObVLBd41QF5OXHFqc9BGSSQ==
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=GBK
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Message-ID: <4221f7a6.ce68.18ee0f5636b.Coremail.congei42@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:_____wD3vxHZ6hxml_sXAA--.15036W
+X-CM-SenderInfo: 5frqwvrlusqiywtou0bp/1tbivhrB8mV4Iq35ZQAKsT
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 
-Add mhi_pci_generic_edl_trigger as edl_trigger for some devices (eg. SDX65)
-to enter EDL mode by writing the 0xEDEDEDED cookie to the channel 91
-doorbell register and forcing an SOC reset afterwards.
-
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
----
- drivers/bus/mhi/host/pci_generic.c | 47 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 47 insertions(+)
-
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index 51639bf..cbf8a58 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -27,12 +27,19 @@
- #define PCI_VENDOR_ID_THALES	0x1269
- #define PCI_VENDOR_ID_QUECTEL	0x1eac
- 
-+#define MHI_EDL_DB			91
-+#define MHI_EDL_COOKIE			0xEDEDEDED
-+
-+/* Device can enter EDL by first setting edl cookie then issuing inband reset*/
-+#define MHI_PCI_GENERIC_EDL_TRIGGER	BIT(0)
-+
- /**
-  * struct mhi_pci_dev_info - MHI PCI device specific information
-  * @config: MHI controller configuration
-  * @name: name of the PCI module
-  * @fw: firmware path (if any)
-  * @edl: emergency download mode firmware path (if any)
-+ * @edl_trigger: each bit represents a different way to enter EDL
-  * @bar_num: PCI base address register to use for MHI MMIO register space
-  * @dma_data_width: DMA transfer word size (32 or 64 bits)
-  * @mru_default: default MRU size for MBIM network packets
-@@ -44,6 +51,7 @@ struct mhi_pci_dev_info {
- 	const char *name;
- 	const char *fw;
- 	const char *edl;
-+	unsigned int edl_trigger;
- 	unsigned int bar_num;
- 	unsigned int dma_data_width;
- 	unsigned int mru_default;
-@@ -292,6 +300,7 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx75_info = {
- 	.name = "qcom-sdx75m",
- 	.fw = "qcom/sdx75m/xbl.elf",
- 	.edl = "qcom/sdx75m/edl.mbn",
-+	.edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
- 	.config = &modem_qcom_v2_mhiv_config,
- 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
- 	.dma_data_width = 32,
-@@ -302,6 +311,7 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx65_info = {
- 	.name = "qcom-sdx65m",
- 	.fw = "qcom/sdx65m/xbl.elf",
- 	.edl = "qcom/sdx65m/edl.mbn",
-+	.edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
- 	.config = &modem_qcom_v1_mhiv_config,
- 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
- 	.dma_data_width = 32,
-@@ -312,6 +322,7 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
- 	.name = "qcom-sdx55m",
- 	.fw = "qcom/sdx55m/sbl1.mbn",
- 	.edl = "qcom/sdx55m/edl.mbn",
-+	.edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
- 	.config = &modem_qcom_v1_mhiv_config,
- 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
- 	.dma_data_width = 32,
-@@ -928,6 +939,39 @@ static void health_check(struct timer_list *t)
- 	mod_timer(&mhi_pdev->health_check_timer, jiffies + HEALTH_CHECK_PERIOD);
- }
- 
-+static int mhi_pci_generic_edl_trigger(struct mhi_controller *mhi_cntrl)
-+{
-+	void __iomem *base = mhi_cntrl->regs;
-+	void __iomem *edl_db;
-+	int ret;
-+	u32 val;
-+
-+	ret = mhi_device_get_sync(mhi_cntrl->mhi_dev);
-+	if (ret) {
-+		dev_err(mhi_cntrl->cntrl_dev, "Wake up device fail before trigger EDL\n");
-+		return ret;
-+	}
-+
-+	pm_wakeup_event(&mhi_cntrl->mhi_dev->dev, 0);
-+	mhi_cntrl->runtime_get(mhi_cntrl);
-+
-+	ret = mhi_get_channel_doorbell(mhi_cntrl, &val);
-+	if (ret)
-+		return ret;
-+
-+	edl_db = base + val + (8 * MHI_EDL_DB);
-+
-+	mhi_cntrl->write_reg(mhi_cntrl, edl_db + 4, upper_32_bits(MHI_EDL_COOKIE));
-+	mhi_cntrl->write_reg(mhi_cntrl, edl_db, lower_32_bits(MHI_EDL_COOKIE));
-+
-+	mhi_soc_reset(mhi_cntrl);
-+
-+	mhi_cntrl->runtime_put(mhi_cntrl);
-+	mhi_device_put(mhi_cntrl->mhi_dev);
-+
-+	return 0;
-+}
-+
- static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- {
- 	const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info *) id->driver_data;
-@@ -962,6 +1006,9 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	mhi_cntrl->runtime_put = mhi_pci_runtime_put;
- 	mhi_cntrl->mru = info->mru_default;
- 
-+	if (info->edl_trigger & MHI_PCI_GENERIC_EDL_TRIGGER)
-+		mhi_cntrl->edl_trigger = mhi_pci_generic_edl_trigger;
-+
- 	if (info->sideband_wake) {
- 		mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
- 		mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
--- 
-2.7.4
-
+CgptZHA1X2NydGMuYzogdXNlLWFmdGVyLWZyZWUgYnVnIGluIG1kcDVfY3J0Y19kZXN0cm95IGR1
+ZSB0byByYWNlIGNvbmRpdGlvbgoKSW4gbWRwNV9jcnRjX2luaXQsICZtZHA1X2NydGMtPnVucmVm
+X2N1cnNvcl93b3JrIGlzIGJvdW5kIHdpdGggCnVucmVmX2N1cnNvcl93b3JrZXIuIFRoaXMgd29y
+ayB3aWxsIGJlIGNvbW1pdGVkIGJ5IGRybV9mbGlwX3dvcmtfY29tbWl0IApsb2NhdGVkIGluIG1k
+cDVfY3J0Y192YmxhbmtfaXJxLgoKSWYgd2UgY2FsbCBtZHA1X2NydGNfZGVzdHJveSB0byBtYWtl
+IGNsZWFudXAsIHRoZXJlIG1heSBiZSBhIHVuZmluaXNoZWQgd29yay4gClRoaXMgZnVuY3Rpb24g
+d2lsbCBjYWxsIGRybV9mbGlwX3dvcmtfY2xlYW51cCB0byBkZXN0cm95IHJlc291cmNlcyBhbGxv
+Y2F0ZWQgCmZvciB0aGUgZmxpcC13b3JrLiBIb3dldmVyLCBkcm1fZmxpcF93b3JrX2NsZWFudXAg
+d29ya3MgYXMgZm9sbG93aW5nOgpXQVJOX09OKCFsaXN0X2VtcHR5KCZ3b3JrLT5xdWV1ZWQpIHx8
+ICFsaXN0X2VtcHR5KCZ3b3JrLT5jb21taXRlZCkpOwoKQWZ0ZXIgbWRwNV9jcnRjX2Rlc3Ryb3kg
+Y2FsbCBrZnJlZSB0byByZWxlYXNlIHRoZSBvYmplY3QgIm1kcDVfY3J0YyIsIAombWRwNV9jcnRj
+LT51bnJlZl9jdXJzb3Jfd29yayB3aWxsIGdldCB1c2UtYWZ0ZXItZnJlZSBlcnJvci4KCkNQVSAw
+ICAgICAgICAgICAgICAgICAgICAgICAgICAJICAgICAgICBDUFUgMQogICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgfAl1bnJlZl9jdXJzb3Jfd29ya2VyCm1kcDVfY3J0
+Y19kZXN0cm95ICAgICAgICAgICAgfAprZnJlZShtZHA1X2NydGMpICAoZnJlZSkgICAgfAogICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfAlnZXRfa21zKCZtZHA1X2Ny
+dGMtPmJhc2UpICh1c2UpCgpUaGlzIGJ1ZyBtYXkgYmUgZml4ZWQgYnkgYWRkaW5nIHRoZSBmb2xs
+b3dpbmcgaW5zdHJ1Y3Rpb25zIGluIGRybV9mbGlwX3dvcmtfY2xlYW51cC4KZmx1c2hfd29yaygm
+bWRwNV9jcnRjLT51bnJlZl9jdXJzb3Jfd29yaykKCkJlc3QgcmVnYXJkcywKU2ljb25nIEh1YW5n
+Cgo=
 
