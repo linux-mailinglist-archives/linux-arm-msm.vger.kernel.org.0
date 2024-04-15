@@ -1,85 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-17427-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17428-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A91CA8A4AE1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 10:53:19 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B8A98A4B00
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 10:58:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 49C1B1F20C92
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 08:53:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 00A0F1F2266E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 08:58:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AB3A3BBE1;
-	Mon, 15 Apr 2024 08:53:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="KZuz/w9x"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A81C3BBD2;
+	Mon, 15 Apr 2024 08:57:56 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.3])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A4792110F;
-	Mon, 15 Apr 2024 08:53:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.3
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D01D63BB25;
+	Mon, 15 Apr 2024 08:57:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713171191; cv=none; b=K7YJOtreNqFVQnZTEMnuWHQ1uA1BsXxgqnNn2xmU86XwLJZqVVaL9datZNAeS+vIDa0RGvMIsSInSm1OAZjpyjx9NXMP4se7g9XXJsJK6tozT+NTIy3cJcTB8TTJG4eEpk6CQ5PXfZn5TLUBjuyAR0GN+5TqmCcN1MHc3s27m7Y=
+	t=1713171476; cv=none; b=pt8A/MTvPtZ+oB70UEOA4vM0Xw0Lx9I257V3H3VdYXl+a1JFo1485+pX/eNyUF31ghFCuSw74PjYAIaoOV4OLt/BCv8XCyn6Gskmt/WjI0WVmUOa+Mxen062I678vDgfLLEeB+mbdvc3+/fI2oxsUrttN21rCSexyH1WZlVHYY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713171191; c=relaxed/simple;
-	bh=8oyoBvkStTpVskCvMWBdHyeZcZ4EnMx4KxN8q9qWTwA=;
-	h=Date:From:To:Cc:Subject:Content-Type:MIME-Version:Message-ID; b=YnxbEE3bJurIApR5PiyTjuWHdtMjG52Te3jEVuAT1kuMw9Ou1FWduceC1q6jmD+bzAKhrgrS9P/WqaDfF1gD2x1qZXp0tM8L+675g5+QafS6fkLkbPkbhM4nV1inydgCLMuN37u7MXKDp3O7WEiFgXnGpQhvrUvWUH29knyGBYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=KZuz/w9x reason="signature verification failed"; arc=none smtp.client-ip=220.197.31.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=qYbmhSIlBOGpGAcKUkRPEkfru6Iubl4Z5Utz/vgD9RA=; b=K
-	Zuz/w9xejdqUrYW9PCpWbsFuGJ80b4KjeBjpFdiyw92gjAd97CVsp5jIv+kIrvlx
-	rNmJm6KxFUMSOYeSgt39YdP5DoNeDI0V2aXPm6kNGhLyQETy0YTUO6DHH1VT7Wsl
-	OSrooixKaGmiGR83pPtaP12KIX/GcXdVYK4ASjdfAU=
-Received: from congei42$163.com ( [159.226.94.118] ) by
- ajax-webmail-wmsvr-40-122 (Coremail) ; Mon, 15 Apr 2024 16:52:41 +0800
- (CST)
-Date: Mon, 15 Apr 2024 16:52:41 +0800 (CST)
-From: sicong <congei42@163.com>
-To: robdclark@gmail.com, quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org, 
-	sean@poorly.run, airlied@gmail.com, daniel@ffwll.ch
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Bug report: mdp5_crtc.c: use-after-free bug in mdp5_crtc_destroy
- due to race condition
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
- Copyright (c) 2002-2024 www.mailtech.cn 163com
-X-NTES-SC: AL_Qu2aAf2cvkkt5ymdY+kfm0YUh+c7UMO5ufQh245eOpF8jDHp+jgFQWJiI0D36NmCMgW2uTm2dztV29t4WZJfeIIObVLBd41QF5OXHFqc9BGSSQ==
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+	s=arc-20240116; t=1713171476; c=relaxed/simple;
+	bh=y17O9lADy1koeCNGu1Oe7+FyvbVjW2CQKFJ5vnc/bJk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ny2kBMLj5rh7luH0Vl2mG1y2ZAPnkk0MLgXY8BDkVedg/WnVs8m78aBFzqovagbYpc6AZE1c8HsdbOgUlPvv2lt4NoCUbt9XaaGKFbbroH1Xr6s/Gwb5W21Tae2wzCbFjV2Kj2SHQY/Mdw/3A52pNimag8gkAWE//t88PCjXbBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8D38C2F;
+	Mon, 15 Apr 2024 01:58:22 -0700 (PDT)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5E68D3F64C;
+	Mon, 15 Apr 2024 01:57:48 -0700 (PDT)
+Date: Mon, 15 Apr 2024 09:57:45 +0100
+From: Sudeep Holla <sudeep.holla@arm.com>
+To: Rob Herring <robh@kernel.org>
+Cc: soc@kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Dinh Nguyen <dinguyen@kernel.org>,
+	Tsahee Zidenberg <tsahee@annapurnalabs.com>,
+	Antoine Tenart <atenart@kernel.org>,
+	Khuong Dinh <khuong@os.amperecomputing.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+	Robert Richter <rric@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
+	Li Yang <leoyang.li@nxp.com>, Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	"Paul J. Murphy" <paul.j.murphy@intel.com>,
+	Daniele Alessandrelli <daniele.alessandrelli@intel.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gregory Clement <gregory.clement@bootlin.com>,
+	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
+	Heiko Stuebner <heiko@sntech.de>, Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>, linux-fsd@tesla.com,
+	Michal Simek <michal.simek@amd.com>, devicetree@vger.kernel.org,
+	linux-rpi-kernel@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	imx@lists.linux.dev, linux-mediatek@lists.infradead.org,
+	linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-realtek-soc@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org
+Subject: Re: [PATCH] arm/arm64: dts: Drop "arm,armv8-pmuv3" compatible usage
+Message-ID: <ZhzsCYu4PEYaQFaF@bogus>
+References: <20240412222857.3873079-1-robh@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <4221f7a6.ce68.18ee0f5636b.Coremail.congei42@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:_____wD3vxHZ6hxml_sXAA--.15036W
-X-CM-SenderInfo: 5frqwvrlusqiywtou0bp/1tbivhrB8mV4Iq35ZQAKsT
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240412222857.3873079-1-robh@kernel.org>
 
-CgptZHA1X2NydGMuYzogdXNlLWFmdGVyLWZyZWUgYnVnIGluIG1kcDVfY3J0Y19kZXN0cm95IGR1
-ZSB0byByYWNlIGNvbmRpdGlvbgoKSW4gbWRwNV9jcnRjX2luaXQsICZtZHA1X2NydGMtPnVucmVm
-X2N1cnNvcl93b3JrIGlzIGJvdW5kIHdpdGggCnVucmVmX2N1cnNvcl93b3JrZXIuIFRoaXMgd29y
-ayB3aWxsIGJlIGNvbW1pdGVkIGJ5IGRybV9mbGlwX3dvcmtfY29tbWl0IApsb2NhdGVkIGluIG1k
-cDVfY3J0Y192YmxhbmtfaXJxLgoKSWYgd2UgY2FsbCBtZHA1X2NydGNfZGVzdHJveSB0byBtYWtl
-IGNsZWFudXAsIHRoZXJlIG1heSBiZSBhIHVuZmluaXNoZWQgd29yay4gClRoaXMgZnVuY3Rpb24g
-d2lsbCBjYWxsIGRybV9mbGlwX3dvcmtfY2xlYW51cCB0byBkZXN0cm95IHJlc291cmNlcyBhbGxv
-Y2F0ZWQgCmZvciB0aGUgZmxpcC13b3JrLiBIb3dldmVyLCBkcm1fZmxpcF93b3JrX2NsZWFudXAg
-d29ya3MgYXMgZm9sbG93aW5nOgpXQVJOX09OKCFsaXN0X2VtcHR5KCZ3b3JrLT5xdWV1ZWQpIHx8
-ICFsaXN0X2VtcHR5KCZ3b3JrLT5jb21taXRlZCkpOwoKQWZ0ZXIgbWRwNV9jcnRjX2Rlc3Ryb3kg
-Y2FsbCBrZnJlZSB0byByZWxlYXNlIHRoZSBvYmplY3QgIm1kcDVfY3J0YyIsIAombWRwNV9jcnRj
-LT51bnJlZl9jdXJzb3Jfd29yayB3aWxsIGdldCB1c2UtYWZ0ZXItZnJlZSBlcnJvci4KCkNQVSAw
-ICAgICAgICAgICAgICAgICAgICAgICAgICAJICAgICAgICBDUFUgMQogICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgfAl1bnJlZl9jdXJzb3Jfd29ya2VyCm1kcDVfY3J0
-Y19kZXN0cm95ICAgICAgICAgICAgfAprZnJlZShtZHA1X2NydGMpICAoZnJlZSkgICAgfAogICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfAlnZXRfa21zKCZtZHA1X2Ny
-dGMtPmJhc2UpICh1c2UpCgpUaGlzIGJ1ZyBtYXkgYmUgZml4ZWQgYnkgYWRkaW5nIHRoZSBmb2xs
-b3dpbmcgaW5zdHJ1Y3Rpb25zIGluIGRybV9mbGlwX3dvcmtfY2xlYW51cC4KZmx1c2hfd29yaygm
-bWRwNV9jcnRjLT51bnJlZl9jdXJzb3Jfd29yaykKCkJlc3QgcmVnYXJkcywKU2ljb25nIEh1YW5n
-Cgo=
+On Fri, Apr 12, 2024 at 05:28:51PM -0500, Rob Herring wrote:
+> The "arm,armv8-pmuv3" compatible is intended only for s/w models. Primarily,
+> it doesn't provide any detail on uarch specific events.
+> 
+> There's still remaining cases for CPUs without any corresponding PMU
+> definition and for big.LITTLE systems which only have a single PMU node
+> (there should be one per core type).
+> 
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
+> SoC Maintainers, Can you please apply this directly.
+> ---
+>  arch/arm/boot/dts/broadcom/bcm2711.dtsi              | 4 ++--
+>  arch/arm64/boot/dts/altera/socfpga_stratix10.dtsi    | 2 +-
+>  arch/arm64/boot/dts/amazon/alpine-v2.dtsi            | 2 +-
+>  arch/arm64/boot/dts/apm/apm-storm.dtsi               | 2 +-
+>  arch/arm64/boot/dts/arm/vexpress-v2f-1xv7-ca53x2.dts | 2 +-
+>  arch/arm64/boot/dts/broadcom/northstar2/ns2.dtsi     | 2 +-
+>  arch/arm64/boot/dts/broadcom/stingray/stingray.dtsi  | 2 +-
+>  arch/arm64/boot/dts/cavium/thunder-88xx.dtsi         | 2 +-
+>  arch/arm64/boot/dts/cavium/thunder2-99xx.dtsi        | 2 +-
+>  arch/arm64/boot/dts/freescale/fsl-ls1012a.dtsi       | 2 +-
+>  arch/arm64/boot/dts/freescale/fsl-ls1043a.dtsi       | 2 +-
+>  arch/arm64/boot/dts/freescale/fsl-ls2080a.dtsi       | 7 +++++++
+>  arch/arm64/boot/dts/freescale/fsl-ls2088a.dtsi       | 7 +++++++
+>  arch/arm64/boot/dts/freescale/fsl-ls208xa.dtsi       | 5 -----
+>  arch/arm64/boot/dts/freescale/imx8dxl.dtsi           | 2 +-
+>  arch/arm64/boot/dts/intel/keembay-soc.dtsi           | 2 +-
+>  arch/arm64/boot/dts/intel/socfpga_agilex.dtsi        | 2 +-
+>  arch/arm64/boot/dts/marvell/ac5-98dx25xx.dtsi        | 2 +-
+>  arch/arm64/boot/dts/marvell/armada-37xx.dtsi         | 2 +-
+>  arch/arm64/boot/dts/mediatek/mt8516.dtsi             | 2 +-
+>  arch/arm64/boot/dts/nvidia/tegra210.dtsi             | 2 +-
+>  arch/arm64/boot/dts/qcom/qcm2290.dtsi                | 2 +-
+>  arch/arm64/boot/dts/qcom/qdu1000.dtsi                | 2 +-
+>  arch/arm64/boot/dts/qcom/sdm630.dtsi                 | 2 +-
+>  arch/arm64/boot/dts/qcom/sdx75.dtsi                  | 2 +-
+>  arch/arm64/boot/dts/realtek/rtd16xx.dtsi             | 2 +-
+>  arch/arm64/boot/dts/rockchip/rk3368.dtsi             | 2 +-
+>  arch/arm64/boot/dts/sprd/sc9860.dtsi                 | 2 +-
+>  arch/arm64/boot/dts/sprd/sc9863a.dtsi                | 2 +-
+>  arch/arm64/boot/dts/synaptics/berlin4ct.dtsi         | 2 +-
+>  arch/arm64/boot/dts/tesla/fsd.dtsi                   | 2 +-
+>  arch/arm64/boot/dts/xilinx/zynqmp.dtsi               | 2 +-
+>  32 files changed, 44 insertions(+), 35 deletions(-)
+>
+
+[...]
+
+> diff --git a/arch/arm64/boot/dts/arm/vexpress-v2f-1xv7-ca53x2.dts b/arch/arm64/boot/dts/arm/vexpress-v2f-1xv7-ca53x2.dts
+> index 8db4243a4947..9115c99d0dc0 100644
+> --- a/arch/arm64/boot/dts/arm/vexpress-v2f-1xv7-ca53x2.dts
+> +++ b/arch/arm64/boot/dts/arm/vexpress-v2f-1xv7-ca53x2.dts
+> @@ -102,7 +102,7 @@ timer {
+>  	};
+>
+>  	pmu {
+> -		compatible = "arm,armv8-pmuv3";
+> +		compatible = "arm,cortex-a53-pmu";
+>  		interrupts = <GIC_SPI 68 IRQ_TYPE_LEVEL_HIGH>,
+>  			     <GIC_SPI 69 IRQ_TYPE_LEVEL_HIGH>;
+>  	};
+
+(For vexpress related change)
+
+Acked-by: Sudeep Holla <sudeep.holla@arm.com>
+
+--
+Regards,
+Sudeep
 
