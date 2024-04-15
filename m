@@ -1,230 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-17462-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3EEA28A59D2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 20:23:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFC8E8A5A8E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 21:31:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 619B21C21105
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 18:23:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5F89C1F22DE9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 19:31:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F6BC13C834;
-	Mon, 15 Apr 2024 18:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F74E156241;
+	Mon, 15 Apr 2024 19:31:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DasJJ/Su"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ujYGYJYQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E9B13C68A;
-	Mon, 15 Apr 2024 18:21:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99096155A58
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Apr 2024 19:31:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713205288; cv=none; b=pG+knBSqWIJxJPCfjKCbxlw65OCcKpzpw+6GT/GIzj7ET226ZzzLOfsU++OoozTOdVaxn1WojLdZDCPMlGRXGFUJ5wpt1R/2TcnQMDLJSXKIjfykLWgiQeZyJu/LWR9dB/A8tgSMS5t6D7PSce0rQt0n73tHyf8S62I8nsR+mIc=
+	t=1713209512; cv=none; b=LSDLrs7rhO5x1GZn3WfdWovKhU9DRD4h89Eivvy64EUjB+B7doa09ssyjHge2mIoxye/iWP5PSQLd1hUO3E2yhXtUw9VJ6/sC4xG3qaCi3mO6RWD6GD13tdiY4g+7t8AfPj63AzMyQatyv9hEB2boSuQDVBoyunx92DM2htgI6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713205288; c=relaxed/simple;
-	bh=AQI/LvmjE4IEpy1RdNz2zpAKf1LZ2lytZtsviYqCPIQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=LBsH+ECrGKCn9TMeuH+B6UXWnrB0cPDend9qgPzfAMJ2yvChvU3j8gXRG9Kqi45XDfLJOLUYiIS+9ALLDvz7VkowtPKqAe8EAJYKAbUPhTuJrAjmIuCE8tDm3a1aG4izpOL3JKguw+FOOw4IpYZwu3Ew8OgpGQB+g62hrbHtzVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DasJJ/Su; arc=none smtp.client-ip=209.85.161.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-5ac61cf3fffso2284216eaf.3;
-        Mon, 15 Apr 2024 11:21:26 -0700 (PDT)
+	s=arc-20240116; t=1713209512; c=relaxed/simple;
+	bh=yCsFlnUbGZWDCDqayNjxY166IYIvnKOr6fHx++JOY88=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Mg1TOwwhmh0uQc3Fb7Xh+rqP5yN2kY1KQVmp2NV0fpnBfFDjSyptzQxXCf5CLwFo4p5gH6fR7EyxfBfXA9PnWSIM+J//mi6OwPax0uASrY4n3K0RAi1VZIdugn3afPg5xp7FdldUQVTUzMA1hLprWz+6OHYt6L9zc0Eatx6qn5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ujYGYJYQ; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2d895e2c6efso45997821fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Apr 2024 12:31:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713205286; x=1713810086; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FzgGDQmklEWFrISIR4IcwxoAKiKCzk4r1Ppmvkj7XiQ=;
-        b=DasJJ/SuEyk5U8eyV8CwJGBs+NiZSfuC6fyIHE+BiD3SIliH8KjNbLDA1z9e5WrEtQ
-         iIFw/IEdJsK7F3Erl8VBEaWjVSnCqrP5+YVU9VihFGczyUYPWHWt1ddVZjj6XDwuC389
-         rjYc/xk0HSFY1s0ALNft4HE42KPV4moZF7GjJEoo3QTm2C2npM78spyaY4dVjGyKFp24
-         BPYg4eYi5drWcsMgaJpBRU5SQKvZ/3mqiRen5Ljq15Qi1Ixv6d0vAOdEq8aWabobd/Go
-         QQOq1nmX+9CER7byveGH9YVW6V7zJAovCc/BR6tbNbIxh2rzRip3Q9FCAXcnv9MaoR+e
-         rJBw==
+        d=linaro.org; s=google; t=1713209509; x=1713814309; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Gx47+NS9TsvFbo8I/9W/8DEAWOonZGJHwk+Es5dW8Wg=;
+        b=ujYGYJYQT+vXultdAhZU2cljUudDUoMTd/90kjQn0HAt/UFplbc7vCwcPMiUSt5S+n
+         uJFXso1G7XxpEzzI/ZAujzJda4YcVeQd7P54Qw4Ux3+yuVog1HVJLfQdQOEyhLF8IpFH
+         a8mGp3Xv1Fsk4Sdtx060h886smJFlIyUu21iK2dGgO5ieP77AT/EgCQbK5+YGEs0eISd
+         3oBa4ahj0rl6rfspmVgLwVdxsWtV4vWHkKDWC56A1soiHRYSsMG3lXmWYimB90VH0ns+
+         jMYRmI88m06/J3uW+XK38E0OQqq2jwp2s+oATfHXr17tpwoyIG1wKK2/D2fTtVHUSoCk
+         Op4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713205286; x=1713810086;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FzgGDQmklEWFrISIR4IcwxoAKiKCzk4r1Ppmvkj7XiQ=;
-        b=ATuwCKp/oUWegcQzwl3roIh4iDuj9Ghr1lNkOkoMrt91VMl6piIzZyyBjBWGAbVn+R
-         Hz7nVyUYm4Wr0LkBvb/XcDTqaob7k+WlK1GUOumed2CQozTV5y+nQ8FyNi3ivToKYe3h
-         6qteAasedrvg8ovcMDQrI33eFXYiTCg2GMO273ek0+yfuX7MgkvgUJtqlhTSXtSXbZ/c
-         wvmHR5CkLHjqoMQfl1lB9tifx8K+jWSPdL9HJGmdchlvQbgssUK8O5jTDv9+YOAqvTIX
-         Vfjfqq18HHMbVQnnndajChnT84rbvG+F5SZSy84508XYx0nkJQqXPHrWEP0Qm3OCQoIB
-         j8YQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV4YiqlDfFAk2k8a9JVdJD6OaQ3MiNWJ5/U6pwfGfGuPxJz1vWTMmuEIv/YWJyTx7u8Tqan006a4B5vk5nkv0ACHWdbARpXzZ5yl1/YyBKfAPURhXhGloQj9bu45wnUwpR8gfis5DHEsjwWdYx+Fz+lpZNPv784JWvajZPD0BE6Idb4B+F270AMRw6RUV72UHn9mKxO84r4Vx8PRQAZrbswKb9ZIcPoqfBgV17vmbhnWotzR3DHaNI9SgtBzjM=
-X-Gm-Message-State: AOJu0YxwcGumhWy151CsnXPwcRP7jjNAmaz40kT2Z1zgHA+55Y7AkVLc
-	5Gr8crHTUVFNqBBXIeWDxlkK00cH70fWY/1hyY0dJDMtqCjxg8Iv
-X-Google-Smtp-Source: AGHT+IFzBspjAQ4rLg81eFZJL29bkc3W+mz4hD/gAWcReSsmqzSYHyKiD0HMSDTzbp14adcuHiezMg==
-X-Received: by 2002:a4a:1ac3:0:b0:5ac:9ff2:8ca4 with SMTP id 186-20020a4a1ac3000000b005ac9ff28ca4mr4669479oof.6.1713205285937;
-        Mon, 15 Apr 2024 11:21:25 -0700 (PDT)
-Received: from nukework.lan (c-98-197-58-203.hsd1.tx.comcast.net. [98.197.58.203])
-        by smtp.gmail.com with ESMTPSA id x4-20020a056820104400b005a4dc7abc01sm2177494oot.11.2024.04.15.11.21.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Apr 2024 11:21:25 -0700 (PDT)
-From: Alexandru Gagniuc <mr.nuke.me@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	linux-clk@vger.kernel.org
-Cc: Alexandru Gagniuc <mr.nuke.me@gmail.com>
-Subject: [PATCH v3 7/7] arm64: dts: qcom: ipq9574: add PCIe2 nodes
-Date: Mon, 15 Apr 2024 13:20:52 -0500
-Message-Id: <20240415182052.374494-8-mr.nuke.me@gmail.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20240415182052.374494-1-mr.nuke.me@gmail.com>
-References: <20240415182052.374494-1-mr.nuke.me@gmail.com>
+        d=1e100.net; s=20230601; t=1713209509; x=1713814309;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Gx47+NS9TsvFbo8I/9W/8DEAWOonZGJHwk+Es5dW8Wg=;
+        b=aZMdKxjiyldLrIcxz4Y7hLc2hP1HmIXQ43mfiv6mRmBjR6fdR/9Hvat7RF81uKKNA7
+         MXCu5+6SS53raOc0iYFhH5eGs9RQJuw2enIJys98tQy+TfgYSyCUOAqypE11ATNOZJky
+         Tj5dl2j/BmgHwq2pDFaI6qScpiR56/bkLVqhrm5qR0H24fmB56TnTuI4MGAdVX6TmQUC
+         nVt8Y+A+CSAnxjDOzO+FzNbL82rw6cst8N+XomEDwVoNLzCxG9m2KgQCsfTWgjtCOMho
+         bFwYaWkNtSmYaGhe2FveI5Fx5n6sfYXh8zGDM4OLoV28m3RJUp+A2pOW/b8rviRx/Kf9
+         LlTw==
+X-Forwarded-Encrypted: i=1; AJvYcCWrSnG1fGlAP1bzb5zDnWct8EaGQZzFmr8fECsFmVEz++FsSytDU7n3x7AlX/KOiOHGXPS32iILJf+wF6nnYWIz2sx/xFbZVYBrP1YDCg==
+X-Gm-Message-State: AOJu0YzqEdnFJwvVSni/1HWoEYAbKDEAERh7m69FavpH+BqQCjhBsGIp
+	7LLb8VQCOLn3Nxfrw1J46prVv/dE18v7PELH1S53CKmhLzupdL8LvkOJAsrlSr4=
+X-Google-Smtp-Source: AGHT+IG8iFhS6jwBZfZytxVfBXzlshGGFS1RA4YXsHKJ+ntB17ZsXiMdIQ/RLrjWUdh4EMYOYWd1HQ==
+X-Received: by 2002:a2e:9b1a:0:b0:2d8:b2e:7bf3 with SMTP id u26-20020a2e9b1a000000b002d80b2e7bf3mr6448000lji.0.1713209508653;
+        Mon, 15 Apr 2024 12:31:48 -0700 (PDT)
+Received: from [172.30.205.18] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id p7-20020a2e9a87000000b002d9e3a525bfsm1291268lji.41.2024.04.15.12.31.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Apr 2024 12:31:48 -0700 (PDT)
+Message-ID: <1158f240-ea6b-4ac7-9697-a30d27311c50@linaro.org>
+Date: Mon, 15 Apr 2024 21:31:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mfd: pm8xxx: add support for PM8901
+To: Herman van Hazendonk <github.com@herrie.org>, andersson@kernel.org
+Cc: benwolsieffer@gmail.com, chris.chapuis@gmail.com,
+ Lee Jones <lee@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+References: <20240415123941.1527938-1-github.com@herrie.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20240415123941.1527938-1-github.com@herrie.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On ipq9574, there are 4 PCIe controllers. Describe the pcie2 node, and
-its PHY in devicetree.
 
-Only pcie2 is described, because only hardware using that controller
-was available for testing.
 
-Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
----
- arch/arm64/boot/dts/qcom/ipq9574.dtsi | 93 ++++++++++++++++++++++++++-
- 1 file changed, 92 insertions(+), 1 deletion(-)
+On 4/15/24 14:39, Herman van Hazendonk wrote:
+> Add support for the pm8901 PMIC used by msm8660.
+> 
+> Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
+> ---
+>   drivers/mfd/qcom-pm8xxx.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/mfd/qcom-pm8xxx.c b/drivers/mfd/qcom-pm8xxx.c
+> index 8b6285f687da..9cca14d54d8d 100644
+> --- a/drivers/mfd/qcom-pm8xxx.c
+> +++ b/drivers/mfd/qcom-pm8xxx.c
+> @@ -501,6 +501,7 @@ static const struct pm_irq_data pm8821_data = {
+>   static const struct of_device_id pm8xxx_id_table[] = {
+>   	{ .compatible = "qcom,pm8058", .data = &pm8xxx_data},
+>   	{ .compatible = "qcom,pm8821", .data = &pm8821_data},
+> +	{ .compatible = "qcom,pm8901", .data = &pm8xxx_data},
+>   	{ .compatible = "qcom,pm8921", .data = &pm8xxx_data},
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-index 7f2e5cbf3bbb..f075e2715300 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-@@ -300,7 +300,7 @@ gcc: clock-controller@1800000 {
- 				 <0>,
- 				 <0>,
- 				 <0>,
--				 <0>,
-+				 <&pcie2_phy>,
- 				 <0>,
- 				 <0>;
- 			#clock-cells = <1>;
-@@ -745,6 +745,97 @@ frame@b128000 {
- 				status = "disabled";
- 			};
- 		};
-+
-+		pcie2_phy: phy@8c000 {
-+			compatible = "qcom,ipq9574-qmp-gen3x2-pcie-phy";
-+			reg = <0x0008c000 0x14f4>;
-+
-+			clocks = <&gcc GCC_PCIE2_AUX_CLK>,
-+				 <&gcc GCC_PCIE2_AHB_CLK>,
-+				 <&gcc GCC_PCIE2_PIPE_CLK>,
-+				 <&gcc GCC_ANOC_PCIE2_2LANE_M_CLK>,
-+				 <&gcc GCC_SNOC_PCIE2_2LANE_S_CLK>;
-+			clock-names = "aux",
-+				      "cfg_ahb",
-+				      "pipe",
-+				      "anoc",
-+				      "snoc";
-+
-+			clock-output-names = "pcie_phy2_pipe_clk";
-+			#clock-cells = <0>;
-+			#phy-cells = <0>;
-+
-+			resets = <&gcc GCC_PCIE2_PHY_BCR>,
-+				 <&gcc GCC_PCIE2PHY_PHY_BCR>;
-+			reset-names = "phy",
-+				      "common";
-+			status = "disabled";
-+		};
-+
-+		pcie2: pcie@20000000 {
-+			compatible = "qcom,pcie-ipq9574";
-+			reg = <0x20000000 0xf1d>,
-+			      <0x20000f20 0xa8>,
-+			      <0x20001000 0x1000>,
-+			      <0x00088000 0x4000>,
-+			      <0x20100000 0x1000>;
-+			reg-names = "dbi", "elbi", "atu", "parf", "config";
-+
-+			ranges = <0x81000000 0x0 0x20200000 0x20200000 0x0 0x00100000>,	/* I/O */
-+				 <0x82000000 0x0 0x20300000 0x20300000 0x0 0x07d00000>;	/* MEM */
-+
-+			device_type = "pci";
-+			linux,pci-domain = <3>;
-+			bus-range = <0x00 0xff>;
-+			num-lanes = <2>;
-+			max-link-speed = <3>;
-+			#address-cells = <3>;
-+			#size-cells = <2>;
-+
-+			phys = <&pcie2_phy>;
-+			phy-names = "pciephy";
-+
-+			interrupts = <GIC_SPI 126 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "msi";
-+
-+			#interrupt-cells = <1>;
-+			interrupt-map-mask = <0 0 0 0x7>;
-+			interrupt-map = <0 0 0 1 &intc 0 0 164
-+					 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
-+					<0 0 0 2 &intc 0 0 165
-+					 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
-+					<0 0 0 3 &intc 0 0 186
-+					 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
-+					<0 0 0 4 &intc 0 0 187
-+					 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
-+
-+			clocks = <&gcc GCC_PCIE2_AXI_M_CLK>,
-+				 <&gcc GCC_PCIE2_AXI_S_CLK>,
-+				 <&gcc GCC_PCIE2_AXI_S_BRIDGE_CLK>,
-+				 <&gcc GCC_PCIE2_RCHNG_CLK>;
-+			clock-names = "axi_m",
-+				      "axi_s",
-+				      "axi_bridge",
-+				      "rchng";
-+
-+			resets = <&gcc GCC_PCIE2_PIPE_ARES>,
-+				 <&gcc GCC_PCIE2_AUX_ARES>,
-+				 <&gcc GCC_PCIE2_CORE_STICKY_ARES>,
-+				 <&gcc GCC_PCIE2_AXI_M_ARES>,
-+				 <&gcc GCC_PCIE2_AXI_S_ARES>,
-+				 <&gcc GCC_PCIE2_AXI_S_STICKY_ARES>,
-+				 <&gcc GCC_PCIE2_AXI_M_STICKY_ARES>,
-+				 <&gcc GCC_PCIE2_AHB_ARES>;
-+			reset-names = "pipe",
-+				      "aux",
-+				      "sticky",
-+				      "axi_m",
-+				      "axi_s",
-+				      "axi_s_sticky",
-+				      "axi_m_sticky",
-+				      "ahb";
-+			status = "disabled";
-+		};
- 	};
- 
- 	thermal-zones {
--- 
-2.40.1
+Please refrain from adding this new compatible, instead add a new,
+generic one and modify the dt-bindings such that we go like:
 
+compatible = "qcom,pm8901", "qcom,pm8xxx-ssbi-pmic"
+
+(or similar, +CC Krzysztof, please chime in)
+
+Konrad
 
