@@ -1,76 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-17416-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1A8C8A487E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 08:57:51 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 16D4F8A488E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 08:59:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9F74A1F21C03
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 06:57:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4AF49B23B7E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 06:59:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2756E1EB5E;
-	Mon, 15 Apr 2024 06:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF784208A1;
+	Mon, 15 Apr 2024 06:58:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UhHWN/fS"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NAgybvLs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920A522339;
-	Mon, 15 Apr 2024 06:57:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E829208D0;
+	Mon, 15 Apr 2024 06:58:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713164267; cv=none; b=i43o8jlnNuPgxa1b52DrrtJ+9VA5HcGQZJL8OiPh883cXRGnHyjrEgMOgT85aEZNR0b1+mDlACExFswAIW6M2FZvSGQd1MBjUWlbA3TWsDbIFILHCSmaVGD/xNxXZpTCjZNrQdIjg3HRTNG1LtlVFhpXoxiicN3GZv6MSc63hgo=
+	t=1713164324; cv=none; b=u/Z2TjprkZ0HQzgIKzggDBmR1PxWLnFih1+pdeinNxn/13SHhcrwO8p998pBwOeOot+DqnLG+RGz+5JlZ0m+et47pHUBKAJ3uuDZ0cZiYQPubPUk6cO5/lwA0XgL295PoPhaRGmW/XEStMgePOickmlDc0PFJEhD+t+guGlyZ34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713164267; c=relaxed/simple;
-	bh=l/5ikTUlCuGMYa+EP5RPrvI2YkQPp2fXN7lr6jPgAes=;
+	s=arc-20240116; t=1713164324; c=relaxed/simple;
+	bh=zfww0Wo2P7sSM8KWNzZdQqLcfyZOloB9r7adpSfjsko=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nVdy3o+V/OG3Et/Gv/biAjDBv/KeyUcJgmP0BWsu3h4wqxHq4FRu0Hs88fA3+Il7WoswxmUwgMpmnM5o36rkKN86jC+Rh1CU3RMqcWktWcVPIsrA5xSu3Ji1UOeEtXmTMCy+MdsNw17mfeKa9L6Hxj62+4xqNN3UKz3U1ErNAhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UhHWN/fS; arc=none smtp.client-ip=192.198.163.12
+	 Content-Type:Content-Disposition:In-Reply-To; b=oKZiOoPUMA7g2TmZDd9YNv3Ly6fxUR44crPSgzeJP7mk4fSmOn8RtgRAqeHe1re324iiaEU9l2ScU858gvhWi7D4XcalN6vYOFlKAPMZwFCZOdO+cUHgjjfGx9L2B77lYiOelm4iKujlBDPhigRn9YtS8LYBjywE1zhNdqyZvFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NAgybvLs; arc=none smtp.client-ip=192.198.163.18
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1713164265; x=1744700265;
+  t=1713164324; x=1744700324;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=l/5ikTUlCuGMYa+EP5RPrvI2YkQPp2fXN7lr6jPgAes=;
-  b=UhHWN/fS1Wph3+xF/dRu1LuXvYZTpmla2p+4YGsjIM9q10WWu/Vlb1MT
-   LlqtyLoQDO3fMt4CoMa2oe0g7b9oxbCnkfZfBT2kWT8Nz2htm+FvmWS8x
-   UGCmyHhoWrbZj13SEX7AYDMkwNumBjJ2rxD3y+qgy41gI7Vlg9TqUvL3i
-   8X05fsFe4ckPk04kQW/iZbNnrb0XJFzhnr8D0MXFAExOIps2MfJGbtPbb
-   MXQ4WQ2X12+dFkubcPBlH2QqqV/JiIcfQqkbyJkVpFGOyOiGShXMMkoUm
-   Ug+IYkRLNFcfwqPgti9JVF3N+WE9EiAU7QgS/46s8pnkAq5ybp6acFCEu
+  bh=zfww0Wo2P7sSM8KWNzZdQqLcfyZOloB9r7adpSfjsko=;
+  b=NAgybvLsiBH+P5YS6FcnFsnN2UTqNJgGhc4cvYcptP5vAgoQQ4m/LWfu
+   8ecutUvHTvaPzX5iYAsenYmEvdTOGJctfuVPlpPMlOLf4lepP9XyeqD9g
+   7TCsqPWVpoCg+q0x6DKf2HCgiYernpFk83VaOlfRXi6JFEO6OmK/utlDm
+   m/hPF0NH1K31eI/uw7CWsjpXngm9vr9DLypy/kitLhqcQBMQIbFRLSjXT
+   eFaEg3TYYFbGmxBML1Q9ysMRYk1xPuIAx03WIYenU9z1V0uH1EqopE/Fu
+   19MXan4csmdjRAqjEGeg8zuMtYFvxSnQN4si8WNAbFKFCaP6wm3yQpMTN
    w==;
-X-CSE-ConnectionGUID: WkqBpKeSQb2kDd1salqHVw==
-X-CSE-MsgGUID: ae+opybOTBenKN77ZgUrAQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11044"; a="12314998"
+X-CSE-ConnectionGUID: U6Q9E9ZuT2K7Z1QKeB/WCQ==
+X-CSE-MsgGUID: 7arF35L4Q2u5xPUgIK3/Qw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11044"; a="8393078"
 X-IronPort-AV: E=Sophos;i="6.07,202,1708416000"; 
-   d="scan'208";a="12314998"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Apr 2024 23:57:45 -0700
-X-CSE-ConnectionGUID: X+lfE9tNT46Ge5WTo6sBHw==
-X-CSE-MsgGUID: NUC9EHOjQ2GzK59pRUztmw==
+   d="scan'208";a="8393078"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Apr 2024 23:58:43 -0700
+X-CSE-ConnectionGUID: LFv7NqOrS8+x5/7bu+fpaw==
+X-CSE-MsgGUID: zoJdnraxStG3XzXTvNfKNA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.07,202,1708416000"; 
-   d="scan'208";a="21910448"
+   d="scan'208";a="26494139"
 Received: from kuha.fi.intel.com ([10.237.72.185])
-  by fmviesa007.fm.intel.com with SMTP; 14 Apr 2024 23:57:42 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 15 Apr 2024 09:57:41 +0300
-Date: Mon, 15 Apr 2024 09:57:41 +0300
+  by orviesa003.jf.intel.com with SMTP; 14 Apr 2024 23:58:39 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 15 Apr 2024 09:58:38 +0300
+Date: Mon, 15 Apr 2024 09:58:38 +0300
 From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/5] usb: typec: ucsi: add callback for connector
- status updates
-Message-ID: <ZhzP5bQe6zw1jmlu@kuha.fi.intel.com>
+	linux-kernel@vger.kernel.org,
+	Krishna Kurapati <quic_kriskura@quicinc.com>
+Subject: Re: [PATCH v2 2/5] usb: typec: ucsi: glink: move GPIO reading into
+ connector_status callback
+Message-ID: <ZhzQHoJLJzska3fd@kuha.fi.intel.com>
 References: <20240411-ucsi-orient-aware-v2-0-d4b1cb22a33f@linaro.org>
- <20240411-ucsi-orient-aware-v2-1-d4b1cb22a33f@linaro.org>
+ <20240411-ucsi-orient-aware-v2-2-d4b1cb22a33f@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,78 +80,103 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240411-ucsi-orient-aware-v2-1-d4b1cb22a33f@linaro.org>
+In-Reply-To: <20240411-ucsi-orient-aware-v2-2-d4b1cb22a33f@linaro.org>
 
-On Thu, Apr 11, 2024 at 07:49:53AM +0300, Dmitry Baryshkov wrote:
-> Allow UCSI glue driver to perform addtional work to update connector
-> status. For example, it might check the cable orientation.  This call is
-> performed after reading new connector statatus, so the platform driver
-> can peek at new connection status bits.
+On Thu, Apr 11, 2024 at 07:49:54AM +0300, Dmitry Baryshkov wrote:
+> To simplify the platform code move Type-C orientation handling into the
+> connector_status callback. As it is called both during connector
+> registration and on connector change events, duplicated code from
+> pmic_glink_ucsi_register() can be dropped.
 > 
-> The callback is called both when registering the port and when the
-> connector change event is being handled.
+> Also this moves operations that can sleep into a worker thread,
+> removing the only sleeping operation from pmic_glink_ucsi_notify().
 > 
+> Tested-by: Krishna Kurapati <quic_kriskura@quicinc.com>
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Heikki Krogerus <heikki.krogeurs@linux.intel.com>
 
 > ---
->  drivers/usb/typec/ucsi/ucsi.c | 6 ++++++
->  drivers/usb/typec/ucsi/ucsi.h | 3 +++
->  2 files changed, 9 insertions(+)
+>  drivers/usb/typec/ucsi/ucsi_glink.c | 48 ++++++++++++++++---------------------
+>  1 file changed, 20 insertions(+), 28 deletions(-)
 > 
-> diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
-> index 3106e69050cd..7ad544c968e4 100644
-> --- a/drivers/usb/typec/ucsi/ucsi.c
-> +++ b/drivers/usb/typec/ucsi/ucsi.c
-> @@ -1199,6 +1199,9 @@ static void ucsi_handle_connector_change(struct work_struct *work)
+> diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
+> index b91d2d15d7d9..d21f8cd2fe35 100644
+> --- a/drivers/usb/typec/ucsi/ucsi_glink.c
+> +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
+> @@ -187,10 +187,28 @@ static int pmic_glink_ucsi_sync_write(struct ucsi *__ucsi, unsigned int offset,
+>  	return ret;
+>  }
 >  
->  	trace_ucsi_connector_change(con->num, &con->status);
->  
-> +	if (ucsi->ops->connector_status)
-> +		ucsi->ops->connector_status(con);
+> +static void pmic_glink_ucsi_connector_status(struct ucsi_connector *con)
+> +{
+> +	struct pmic_glink_ucsi *ucsi = ucsi_get_drvdata(con->ucsi);
+> +	int orientation;
 > +
->  	role = !!(con->status.flags & UCSI_CONSTAT_PWR_DIR);
->  
->  	if (con->status.change & UCSI_CONSTAT_POWER_DIR_CHANGE) {
-> @@ -1588,6 +1591,9 @@ static int ucsi_register_port(struct ucsi *ucsi, struct ucsi_connector *con)
->  	}
->  	ret = 0; /* ucsi_send_command() returns length on success */
->  
-> +	if (ucsi->ops->connector_status)
-> +		ucsi->ops->connector_status(con);
+> +	if (con->num >= PMIC_GLINK_MAX_PORTS ||
+> +	    !ucsi->port_orientation[con->num - 1])
+> +		return;
 > +
->  	switch (UCSI_CONSTAT_PARTNER_TYPE(con->status.flags)) {
->  	case UCSI_CONSTAT_PARTNER_TYPE_UFP:
->  	case UCSI_CONSTAT_PARTNER_TYPE_CABLE_AND_UFP:
-> diff --git a/drivers/usb/typec/ucsi/ucsi.h b/drivers/usb/typec/ucsi/ucsi.h
-> index 2caf2969668c..3e1241e38f3c 100644
-> --- a/drivers/usb/typec/ucsi/ucsi.h
-> +++ b/drivers/usb/typec/ucsi/ucsi.h
-> @@ -16,6 +16,7 @@
->  
->  struct ucsi;
->  struct ucsi_altmode;
-> +struct ucsi_connector;
->  struct dentry;
->  
->  /* UCSI offsets (Bytes) */
-> @@ -59,6 +60,7 @@ struct dentry;
->   * @sync_write: Blocking write operation
->   * @async_write: Non-blocking write operation
->   * @update_altmodes: Squashes duplicate DP altmodes
-> + * @connector_status: Updates connector status, called holding connector lock
->   *
->   * Read and write routines for UCSI interface. @sync_write must wait for the
->   * Command Completion Event from the PPM before returning, and @async_write must
-> @@ -73,6 +75,7 @@ struct ucsi_operations {
->  			   const void *val, size_t val_len);
->  	bool (*update_altmodes)(struct ucsi *ucsi, struct ucsi_altmode *orig,
->  				struct ucsi_altmode *updated);
-> +	void (*connector_status)(struct ucsi_connector *con);
+> +	orientation = gpiod_get_value(ucsi->port_orientation[con->num - 1]);
+> +	if (orientation >= 0) {
+> +		typec_switch_set(ucsi->port_switch[con->num - 1],
+> +				 orientation ? TYPEC_ORIENTATION_REVERSE
+> +				 : TYPEC_ORIENTATION_NORMAL);
+> +	}
+> +}
+> +
+>  static const struct ucsi_operations pmic_glink_ucsi_ops = {
+>  	.read = pmic_glink_ucsi_read,
+>  	.sync_write = pmic_glink_ucsi_sync_write,
+> -	.async_write = pmic_glink_ucsi_async_write
+> +	.async_write = pmic_glink_ucsi_async_write,
+> +	.connector_status = pmic_glink_ucsi_connector_status,
 >  };
 >  
->  struct ucsi *ucsi_create(struct device *dev, const struct ucsi_operations *ops);
+>  static void pmic_glink_ucsi_read_ack(struct pmic_glink_ucsi *ucsi, const void *data, int len)
+> @@ -229,20 +247,8 @@ static void pmic_glink_ucsi_notify(struct work_struct *work)
+>  	}
+>  
+>  	con_num = UCSI_CCI_CONNECTOR(cci);
+> -	if (con_num) {
+> -		if (con_num <= PMIC_GLINK_MAX_PORTS &&
+> -		    ucsi->port_orientation[con_num - 1]) {
+> -			int orientation = gpiod_get_value(ucsi->port_orientation[con_num - 1]);
+> -
+> -			if (orientation >= 0) {
+> -				typec_switch_set(ucsi->port_switch[con_num - 1],
+> -						 orientation ? TYPEC_ORIENTATION_REVERSE
+> -							     : TYPEC_ORIENTATION_NORMAL);
+> -			}
+> -		}
+> -
+> +	if (con_num)
+>  		ucsi_connector_change(ucsi->ucsi, con_num);
+> -	}
+>  
+>  	if (ucsi->sync_pending &&
+>  		   (cci & (UCSI_CCI_ACK_COMPLETE | UCSI_CCI_COMMAND_COMPLETE))) {
+> @@ -253,20 +259,6 @@ static void pmic_glink_ucsi_notify(struct work_struct *work)
+>  static void pmic_glink_ucsi_register(struct work_struct *work)
+>  {
+>  	struct pmic_glink_ucsi *ucsi = container_of(work, struct pmic_glink_ucsi, register_work);
+> -	int orientation;
+> -	int i;
+> -
+> -	for (i = 0; i < PMIC_GLINK_MAX_PORTS; i++) {
+> -		if (!ucsi->port_orientation[i])
+> -			continue;
+> -		orientation = gpiod_get_value(ucsi->port_orientation[i]);
+> -
+> -		if (orientation >= 0) {
+> -			typec_switch_set(ucsi->port_switch[i],
+> -					 orientation ? TYPEC_ORIENTATION_REVERSE
+> -					     : TYPEC_ORIENTATION_NORMAL);
+> -		}
+> -	}
+>  
+>  	ucsi_register(ucsi->ucsi);
+>  }
 > 
 > -- 
 > 2.39.2
