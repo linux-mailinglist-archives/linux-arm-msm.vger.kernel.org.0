@@ -1,115 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-17437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A5D08A4E6E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 14:04:43 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id EE6428A4EAA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 14:13:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0641A280FD7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 12:04:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8E1D71F2275F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Apr 2024 12:13:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C60D1679ED;
-	Mon, 15 Apr 2024 12:04:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1D4E6E5E8;
+	Mon, 15 Apr 2024 12:12:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b="Vjofp4AR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cg0KzrXc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from outbound9.mail.transip.nl (outbound9.mail.transip.nl [136.144.136.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1196BB39;
-	Mon, 15 Apr 2024 12:04:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.144.136.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76E976A005;
+	Mon, 15 Apr 2024 12:12:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713182676; cv=none; b=eAne1aqBnxvRYd0IpI1eqzeVLCAgCejIwJuiTnE/KjWRg/WvPDvUd5wuse+FYOgj7P3dsqaJd79WP9xAHE3FdojwMCqlpmH1rkwl1Tnivb/Z9spwLk5Z7sI0Dmc2Wz01iwyNEo7aQMfVmu0nLhzpKT2lgu/lKJV7vseDRop0SgI=
+	t=1713183127; cv=none; b=doy6lfsJypX9WET+MGbe6CjlhmOqD/hBxW4fcbFWiudexytjbTn7E9OYeK6pEjGQ4N9+uWLR4giPGsQyE1RPfab9E5NAaDaJw+6lqj90Zex42WN0CpqNprusmMP0311qSdkBFRTflsQ9Zo1oZObxUawOM1M5ZgjUE9Opo7gIbX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713182676; c=relaxed/simple;
-	bh=nie7cPNROHKZ5ttu20WSAASaT3lPTeH5P0IxePoJuPs=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ZgOZaVZPRUAeG421GbAWOdm46JCUQ/BIL+nwNUqyMjfzHYiW5kpRWXRTnXNTHte1NzYT8u6qcJj6C+VACHJHcehkaXCCfX4H4F+L3J8apUlm9VhRucz8SXlUEpCihThf2WvWmy5ZXCZ5ZP3CNC4owl4hqK8TPbC+x5+c1O79Ark=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org; spf=pass smtp.mailfrom=herrie.org; dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b=Vjofp4AR; arc=none smtp.client-ip=136.144.136.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=herrie.org
-Received: from submission4.mail.transip.nl (unknown [10.103.8.155])
-	by outbound9.mail.transip.nl (Postfix) with ESMTP id 4VJ5HH0gFPzTPNkM;
-	Mon, 15 Apr 2024 13:56:27 +0200 (CEST)
-Received: from herrie-desktop.. (110-31-146-85.ftth.glasoperator.nl [85.146.31.110])
-	by submission4.mail.transip.nl (Postfix) with ESMTPA id 4VJ5HG1N88znTZy;
-	Mon, 15 Apr 2024 13:56:26 +0200 (CEST)
-From: Herman van Hazendonk <github.com@herrie.org>
-To: "Bjorn Andersson " <andersson@kernel.org>
-Cc: benwolsieffer@gmail.com,
-	chris.chapuis@gmail.com,
-	Herman van Hazendonk <me@herrie.org>,
-	Herman van Hazendonk <github.com@herrie.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] dt-bindings: phy: qcom,usb-hs-phy: Add compatible
-Date: Mon, 15 Apr 2024 13:56:02 +0200
-Message-Id: <20240415115603.1523974-1-github.com@herrie.org>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <>
-References: <>
+	s=arc-20240116; t=1713183127; c=relaxed/simple;
+	bh=49BXH0ae9TmsC+ZVdMQDanlSwY5xhkGJJZaqFTj7XJA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aQwzRYCk+p0XTiawHFaltf35Sq33sA0IMWK9eucdlq2dHVctFFaZH6Mw1WlxCoDPkbaFWMvervdozV9iLAupCfoZwJPjW49uaSgZciglh51fdEMhHjx0Ei9fd4upT47T8IycFg2E3lKoTkGseG3knAfkcMjuI45UMyU0uwIjRLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cg0KzrXc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D662C3277B;
+	Mon, 15 Apr 2024 12:12:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1713183127;
+	bh=49BXH0ae9TmsC+ZVdMQDanlSwY5xhkGJJZaqFTj7XJA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=cg0KzrXcO4+o1oyoPNMzpuTpiKH1aOwgXCKdUveLdMW39FtPzn/bXuUxi2bkFFKMc
+	 BwgHBko0f+Z5gulFsfxZJHVj6QJ8DNRqt8NV+e/5sQRlXZROA7WOqmtPhC0NmAjKxp
+	 ky5xMm5I5lG5EaN6bPmVvD7hDtLyljNws0U3jvGclknWBfAQjrCcfbqa72LctqNrKN
+	 SVX58dv3AHaANUxzSMn/SX0cpeXGewgyK8ovqfd2aAaUlqzg+fFTPRcA0NSFGXP1x7
+	 ZdmtkwtxdYYZp/XMurJ1NdrM4di6+XDAxJPtXI5s+QG7k0ZO1lU8QHYgZzMhH1ZxwP
+	 JUeJf81lhCPXw==
+Date: Mon, 15 Apr 2024 17:42:00 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Qiang Yu <quic_qianyu@quicinc.com>
+Cc: quic_jhugo@quicinc.com, mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_cang@quicinc.com, quic_mrana@quicinc.com
+Subject: Re: [PATCH v3 3/3] bus: mhi: host: pci_generic: Add edl callback to
+ enter EDL
+Message-ID: <20240415121200.GH7537@thinkpad>
+References: <1713170945-44640-1-git-send-email-quic_qianyu@quicinc.com>
+ <1713170945-44640-4-git-send-email-quic_qianyu@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: ClueGetter at submission4.mail.transip.nl
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=transip-a; d=herrie.org; t=1713182186; h=from:subject:to:cc:
- references:in-reply-to:date:mime-version;
- bh=GCn4MctOklijAimZP/GbpYzFdmp5YzqVGKFzoeYARW0=;
- b=Vjofp4ARu7vEEvDbcNyEoCL/dQsfhTCVynR0GjMy995c1BTda0A0qwFeC6rJh5XY/EqUPl
- Y1bMvUvc42SZhIojymAIKKFqCODLHnSh5zF79tOhUmA/GVH3yfOlwQ6miFfCCvDw4GQeDm
- 0DNXbVbnijWj+ZNDbbPhSdG4jEl7hacn7QmMqy/P9etW4MDxtQ03gs3VLQaAkAqbgq1MiY
- RtRewzoHiWZqOwml5n4LkhK8Xr8WF2xdG2LwJ/IrxUHGFdSCVru7f08lSfV/dxoWO14GMb
- N3F/3WKQOT7UQDcCF2tfM58QGxCEmEsjSCPMfT4AFhmCd8k1JjzAbaXsgF+x3Q==
-X-Report-Abuse-To: abuse@transip.nl
+In-Reply-To: <1713170945-44640-4-git-send-email-quic_qianyu@quicinc.com>
 
-From: Herman van Hazendonk <me@herrie.org>
+On Mon, Apr 15, 2024 at 04:49:05PM +0800, Qiang Yu wrote:
 
-Adds qcom,usb-hs-phy-msm8660 compatible
+bus: mhi: host: pci_generic: Add support for triggering EDL mode in modems
 
-Used by HP Touchpad (tenderloin) for example.
+> Add mhi_pci_generic_edl_trigger as edl_trigger for some devices (eg. SDX65)
+> to enter EDL mode by writing the 0xEDEDEDED cookie to the channel 91
+> doorbell register and forcing an SOC reset afterwards.
+> 
 
-Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
----
- Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+'Some of the MHI modems like SDX65 based ones are capable of entering the EDL
+mode as per the standard triggering mechanism defined in the MHI spec <enter
+spec version>. So let's add a common mhi_pci_generic_edl_trigger() function that
+triggers the EDL mode in the device when user writes to the <insert full sysfs
+entry here> file.'
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
-index f042d6af1594..1faf1da9f583 100644
---- a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
-@@ -15,6 +15,7 @@ if:
-       contains:
-         enum:
-           - qcom,usb-hs-phy-apq8064
-+          - qcom,usb-hs-phy-msm8660
-           - qcom,usb-hs-phy-msm8960
- then:
-   properties:
-@@ -42,6 +43,7 @@ properties:
-           - qcom,usb-hs-phy-apq8064
-           - qcom,usb-hs-phy-msm8226
-           - qcom,usb-hs-phy-msm8916
-+          - qcom,usb-hs-phy-msm8660
-           - qcom,usb-hs-phy-msm8960
-           - qcom,usb-hs-phy-msm8974
-       - const: qcom,usb-hs-phy
+> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> ---
+>  drivers/bus/mhi/host/pci_generic.c | 47 ++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 47 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index 51639bf..cbf8a58 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -27,12 +27,19 @@
+>  #define PCI_VENDOR_ID_THALES	0x1269
+>  #define PCI_VENDOR_ID_QUECTEL	0x1eac
+>  
+> +#define MHI_EDL_DB			91
+> +#define MHI_EDL_COOKIE			0xEDEDEDED
+> +
+> +/* Device can enter EDL by first setting edl cookie then issuing inband reset*/
+> +#define MHI_PCI_GENERIC_EDL_TRIGGER	BIT(0)
+
+This is not needed as of now. Let the edl_trigger be bool for now. When vendors
+want to add their own methods of triggering EDL, we can extend it.
+
+> +
+>  /**
+>   * struct mhi_pci_dev_info - MHI PCI device specific information
+>   * @config: MHI controller configuration
+>   * @name: name of the PCI module
+>   * @fw: firmware path (if any)
+>   * @edl: emergency download mode firmware path (if any)
+> + * @edl_trigger: each bit represents a different way to enter EDL
+
+'capable of triggering EDL mode in the device (if supported)'
+
+>   * @bar_num: PCI base address register to use for MHI MMIO register space
+>   * @dma_data_width: DMA transfer word size (32 or 64 bits)
+>   * @mru_default: default MRU size for MBIM network packets
+> @@ -44,6 +51,7 @@ struct mhi_pci_dev_info {
+>  	const char *name;
+>  	const char *fw;
+>  	const char *edl;
+> +	unsigned int edl_trigger;
+>  	unsigned int bar_num;
+>  	unsigned int dma_data_width;
+>  	unsigned int mru_default;
+> @@ -292,6 +300,7 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx75_info = {
+>  	.name = "qcom-sdx75m",
+>  	.fw = "qcom/sdx75m/xbl.elf",
+>  	.edl = "qcom/sdx75m/edl.mbn",
+> +	.edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
+>  	.config = &modem_qcom_v2_mhiv_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>  	.dma_data_width = 32,
+> @@ -302,6 +311,7 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx65_info = {
+>  	.name = "qcom-sdx65m",
+>  	.fw = "qcom/sdx65m/xbl.elf",
+>  	.edl = "qcom/sdx65m/edl.mbn",
+> +	.edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
+>  	.config = &modem_qcom_v1_mhiv_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>  	.dma_data_width = 32,
+> @@ -312,6 +322,7 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
+>  	.name = "qcom-sdx55m",
+>  	.fw = "qcom/sdx55m/sbl1.mbn",
+>  	.edl = "qcom/sdx55m/edl.mbn",
+> +	.edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
+>  	.config = &modem_qcom_v1_mhiv_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>  	.dma_data_width = 32,
+> @@ -928,6 +939,39 @@ static void health_check(struct timer_list *t)
+>  	mod_timer(&mhi_pdev->health_check_timer, jiffies + HEALTH_CHECK_PERIOD);
+>  }
+>  
+> +static int mhi_pci_generic_edl_trigger(struct mhi_controller *mhi_cntrl)
+> +{
+> +	void __iomem *base = mhi_cntrl->regs;
+> +	void __iomem *edl_db;
+> +	int ret;
+> +	u32 val;
+> +
+> +	ret = mhi_device_get_sync(mhi_cntrl->mhi_dev);
+> +	if (ret) {
+> +		dev_err(mhi_cntrl->cntrl_dev, "Wake up device fail before trigger EDL\n");
+
+'Failed to wakeup the device'
+
+- Mani
+
 -- 
-2.40.1
-
+மணிவண்ணன் சதாசிவம்
 
