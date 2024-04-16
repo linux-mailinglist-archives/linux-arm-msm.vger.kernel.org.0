@@ -1,145 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-17578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17579-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A20138A6951
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 13:04:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39D4D8A6996
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 13:30:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 395DFB2098E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 11:04:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BD52B1F21E3A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 11:30:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFCCB128396;
-	Tue, 16 Apr 2024 11:04:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ilgu4fgS"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CF851292D7;
+	Tue, 16 Apr 2024 11:30:22 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx.gpxsee.org (mx.gpxsee.org [37.205.14.76])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0AD612839F;
-	Tue, 16 Apr 2024 11:03:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 292D2128377;
+	Tue, 16 Apr 2024 11:30:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.205.14.76
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713265443; cv=none; b=euFggGVqVH0NhSxRKked5aMygQKcBmrp3coLDYjDipyVlEvH+fH6BiYnpR50e3eQTu8h22kP7Yy0k3StIrj9aRFff5OGxB16+8Fc2AOzK9YfBIwPb7MYoZ+bMVobSInbWdqF+77tRNbCox0ww0T7yOZ96C6PRYUlke3B8+GTIKw=
+	t=1713267022; cv=none; b=IuCXSrQUk80KNw43jFOPEeGK0I+rFzCkyopjEuko9j4P9PDoITrcFNa47RZpdta8GJ7ayQvtBggd0Ny3H6lDUMtbaAn2xcXfONG45/IKtjHOXQqUnHm7l2X4/9cbcVFLAqBMf5fepXiDPoZ9h/10hnxRatla9KtVJY4qxbIHsaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713265443; c=relaxed/simple;
-	bh=sYmuLspY/b0xXJ6GODuEyh5bTCuWxoBIgmUpur4bjzo=;
-	h=From:To:Cc:Subject:Date:Message-Id; b=VPFA2exi1KUTj3h+c1h6NnH6nyQ0gxZu2igtlv/D37YHYJGqBsl5uvL+pPm1Oh2W7lih30q/UqoreKBGUof3a+nlu04PyzDqPn3/IuIkssRFufngLli++w152KnjhejnMswxxeUxyfQsep5Zj6kBOfKndJFSfAb3O+/+SaDSCUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ilgu4fgS; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43G9PFdp019747;
-	Tue, 16 Apr 2024 11:03:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=HY44SXyh9AvL
-	QwBO+4Ku2R5e0M2EqqIcEr13txqbRok=; b=Ilgu4fgSBZ88xqWUjpZB7U8IEF7f
-	X+OD0ATaW1Y6G7Vsg7FuokjWMh4Z1POtxNpb9v5HvAUTzzMM5UAerkjpQACCXv4S
-	BqVu07PQt2hsakAO4i1LksygmZkelByiZiizWDw8/uPRRUpmtnLBNpfJw3z6X/MU
-	vce2ikssS2IrjcWxkHOOSgidTdXydLVI2wz5BmGydscCEOyTy857Dz/Yimot8u88
-	SAJttEn9pLaRKJN0/LG9yFnZrXAA997I7q6iPdkzTxWeqTbwRpX5vFvCESO/ZEpZ
-	WfSLSsqSPzTvnaEUvQVLAFGcjpNuzOzFyEOfAUPiSDgCg7AsZHkkiLswkw==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xhpny886b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 16 Apr 2024 11:03:22 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 43GB3ITN023067;
-	Tue, 16 Apr 2024 11:03:18 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3xfk4kqrj8-1;
-	Tue, 16 Apr 2024 11:03:18 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43GB3HXb023062;
-	Tue, 16 Apr 2024 11:03:17 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-vdadhani-hyd.qualcomm.com [10.213.106.28])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 43GB3AiR023031;
-	Tue, 16 Apr 2024 11:03:17 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 4047106)
-	id 6873C500C6C; Tue, 16 Apr 2024 16:26:52 +0530 (+0530)
-From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-To: cros-qcom-dts-watchers@chromium.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, swboyd@chromium.org, robh@kernel.org,
-        krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org, conor+dt@kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        rajpat@codeaurora.org, mka@chromium.org, rojay@codeaurora.org
-Cc: quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com,
-        Viken Dadhaniya <quic_vdadhani@quicinc.com>
-Subject: [PATCH v1] arm64: dts: qcom: sc7280: Remove CTS/RTS configuration
-Date: Tue, 16 Apr 2024 16:26:50 +0530
-Message-Id: <20240416105650.2626-1-quic_vdadhani@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 7w5elmBqewWqENvqVGj37HW3b70ZecdR
-X-Proofpoint-ORIG-GUID: 7w5elmBqewWqENvqVGj37HW3b70ZecdR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-16_08,2024-04-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- spamscore=0 adultscore=0 mlxscore=0 priorityscore=1501 impostorscore=0
- mlxlogscore=956 phishscore=0 malwarescore=0 lowpriorityscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404160068
+	s=arc-20240116; t=1713267022; c=relaxed/simple;
+	bh=hFklNXAFTh7lsJu6P5YapMDLqrxmPeSouEGbwGP1ixQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=m9M+QI56RbQPaxruY5yKh+nz3eHEidniZ49VU2RW6u3PlgPXbg1I1jNI1yCoFh8lUkj8ZnZDj6ZiWK3Fi8EJqrZStkEEqTdBEQ/6l5lnpUpaKi56CZbgl9j8w/JxAJ7HzW2wfyVEZCQg7Q+VdwJ/mLwgTJcVgRkRrmKmF9RdytA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gpxsee.org; spf=pass smtp.mailfrom=gpxsee.org; arc=none smtp.client-ip=37.205.14.76
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gpxsee.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gpxsee.org
+Received: from [192.168.4.14] (unknown [62.77.71.229])
+	by mx.gpxsee.org (Postfix) with ESMTPSA id 9583E3B254;
+	Tue, 16 Apr 2024 13:30:06 +0200 (CEST)
+Message-ID: <0bea915c-ddad-44b6-ade1-187307da504b@gpxsee.org>
+Date: Tue, 16 Apr 2024 13:30:02 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/35] media: pci: mgb4: Refactor struct resources
+To: Ricardo Ribalda <ribalda@chromium.org>,
+ Martin Tuma <martin.tuma@digiteqautomotive.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+ Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+ Hugues Fruchet <hugues.fruchet@foss.st.com>,
+ Alain Volmat <alain.volmat@foss.st.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Chen-Yu Tsai
+ <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Samuel Holland <samuel@sholland.org>,
+ Sakari Ailus <sakari.ailus@linux.intel.com>,
+ Thierry Reding <thierry.reding@gmail.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>,
+ Sowjanya Komatineni <skomatineni@nvidia.com>,
+ Luca Ceresoli <luca.ceresoli@bootlin.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Hans Verkuil <hverkuil@xs4all.nl>, Sergey Kozlov <serjk@netup.ru>,
+ Abylay Ospan <aospan@netup.ru>,
+ Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+ Dmitry Osipenko <digetx@gmail.com>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Benjamin Mugnier <benjamin.mugnier@foss.st.com>,
+ Sylvain Petinot <sylvain.petinot@foss.st.com>,
+ Jacopo Mondi <jacopo+renesas@jmondi.org>,
+ Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+ Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+ =?UTF-8?Q?Niklas_S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+ Pavel Machek <pavel@ucw.cz>
+Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, linux-staging@lists.linux.dev,
+ linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+ linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org
+References: <20240415-fix-cocci-v1-0-477afb23728b@chromium.org>
+ <20240415-fix-cocci-v1-1-477afb23728b@chromium.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Martin_T=C5=AFma?= <tumic@gpxsee.org>
+In-Reply-To: <20240415-fix-cocci-v1-1-477afb23728b@chromium.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Remove CTS and RTS pinctrl configuration for UART5 node as
-it's designed for debug UART for all the board variants of the
-sc7280 chipset.
+On 15. 04. 24 21:34, Ricardo Ribalda wrote:
+> The struct resource end field is inclusive not exclusive, this is, the
+> size is (end - start) +1.
+> 
+> Update the definitions and use the generic resource_size() function.
+> 
+> Fixes cocci check:
+> drivers/media/pci/mgb4/mgb4_regs.c:13:22-25: WARNING: Suspicious code. resource_size is maybe missing with res
+> 
+> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+> ---
+>   drivers/media/pci/mgb4/mgb4_core.c | 4 ++--
+>   drivers/media/pci/mgb4/mgb4_regs.c | 2 +-
+>   2 files changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/media/pci/mgb4/mgb4_core.c b/drivers/media/pci/mgb4/mgb4_core.c
+> index 9bcf10a77fd3..60498a5abebf 100644
+> --- a/drivers/media/pci/mgb4/mgb4_core.c
+> +++ b/drivers/media/pci/mgb4/mgb4_core.c
+> @@ -493,13 +493,13 @@ static int mgb4_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+>   	struct mgb4_dev *mgbdev;
+>   	struct resource video = {
+>   		.start	= 0x0,
+> -		.end	= 0x100,
+> +		.end	= 0xff,
+>   		.flags	= IORESOURCE_MEM,
+>   		.name	= "mgb4-video",
+>   	};
+>   	struct resource cmt = {
+>   		.start	= 0x1000,
+> -		.end	= 0x1800,
+> +		.end	= 0x17ff,
+>   		.flags	= IORESOURCE_MEM,
+>   		.name	= "mgb4-cmt",
+>   	};
+> diff --git a/drivers/media/pci/mgb4/mgb4_regs.c b/drivers/media/pci/mgb4/mgb4_regs.c
+> index 53d4e4503a74..31befd722d72 100644
+> --- a/drivers/media/pci/mgb4/mgb4_regs.c
+> +++ b/drivers/media/pci/mgb4/mgb4_regs.c
+> @@ -10,7 +10,7 @@
+>   int mgb4_regs_map(struct resource *res, struct mgb4_regs *regs)
+>   {
+>   	regs->mapbase = res->start;
+> -	regs->mapsize = res->end - res->start;
+> +	regs->mapsize = resource_size(res);
+>   
+>   	if (!request_mem_region(regs->mapbase, regs->mapsize, res->name))
+>   		return -EINVAL;
+> 
 
-Also change compatible string to debug UART.
-
-Fixes: 38cd93f413fd ("arm64: dts: qcom: sc7280: Update QUPv3 UART5 DT node")
-Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 38c183b2bb26..2a6b4c4639d1 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -1440,12 +1440,12 @@
- 			};
- 
- 			uart5: serial@994000 {
--				compatible = "qcom,geni-uart";
-+				compatible = "qcom,geni-debug-uart";
- 				reg = <0 0x00994000 0 0x4000>;
- 				clocks = <&gcc GCC_QUPV3_WRAP0_S5_CLK>;
- 				clock-names = "se";
- 				pinctrl-names = "default";
--				pinctrl-0 = <&qup_uart5_cts>, <&qup_uart5_rts>, <&qup_uart5_tx>, <&qup_uart5_rx>;
-+				pinctrl-0 = <&qup_uart5_tx>, <&qup_uart5_rx>;
- 				interrupts = <GIC_SPI 606 IRQ_TYPE_LEVEL_HIGH>;
- 				power-domains = <&rpmhpd SC7280_CX>;
- 				operating-points-v2 = <&qup_opp_table>;
-@@ -5397,16 +5397,6 @@
- 				function = "qup04";
- 			};
- 
--			qup_uart5_cts: qup-uart5-cts-state {
--				pins = "gpio20";
--				function = "qup05";
--			};
--
--			qup_uart5_rts: qup-uart5-rts-state {
--				pins = "gpio21";
--				function = "qup05";
--			};
--
- 			qup_uart5_tx: qup-uart5-tx-state {
- 				pins = "gpio22";
- 				function = "qup05";
--- 
-2.17.1
+Reviewed-by: Martin Tůma <martin.tuma@digiteqautomotive.com>
 
 
