@@ -1,43 +1,43 @@
-Return-Path: <linux-arm-msm+bounces-17638-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17637-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E26A8A7992
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 02:04:50 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A0358A7991
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 02:04:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F07361F23642
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 00:04:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B9EE7282F76
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 00:04:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CB3928DBF;
-	Wed, 17 Apr 2024 00:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94BCC25632;
+	Wed, 17 Apr 2024 00:03:33 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [5.144.164.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 361E1250EC
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 00:03:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B871824B21
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 00:03:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713312214; cv=none; b=loLQ1leGr2bB5oiajIc5y5zHeQvqWqNCbV7JA+iYVP9ddSOEz2duy4ftXPEftCF3ar3uqBV6LDivPTJz5ECowu4oo45zWt7ukHRrgE5w90QdXWTkvXGQuLnjvAF5lTmYHaCJITaB8L9FsxUeMcOWlWxGnX9ZM/rh7inHJw9Txlc=
+	t=1713312213; cv=none; b=Of4oSpkkfl5m8UCuUm0wu0XscN+JlR4ULCNeZlDjKxxNedrGbLmYC00H2V3OMfR1RYOkhAZrwYcMrrpfjAWcsyDQsWmzBb1qiqNuZCOmUDRUL4ZEQ6Vo17vuyFQKIS0D9Ys3rLm2r5e+ML6fx1Lre9gwE7anrQg++MYJAilobxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713312214; c=relaxed/simple;
-	bh=2ldmQuH+692mGKxbuAWUUy4JRVVa9UmxmBnOWJ4k5ms=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=sjyljIrvSE6+UJPbN9dJeKzecIMSkBhNCNFMsr/mjUmHt2NbsNsh1A9YJO3kqGyESwrMDuL+NOMRRzrIudB2kxWuWgy587qCACXCjJOyQwrU2KXXsZJNNiTayxmduQFgPHiGFpMY6whaXwO4V43xomYgcjsHUTZL/p7IqIrIYsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.169
+	s=arc-20240116; t=1713312213; c=relaxed/simple;
+	bh=9QpYWFlDk7dpKjtswDkzFrbc8q7R2ogVFo1jYxLjeaM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=mqngYxdt8am48h/d6XR3SYVFTahb05GFDMWnpq46tuxUL728i/pJJx6KvpL/5KP+/LOWCMdAxmfA6Qw6FEYVNrFgA5pjHOGsQmsnhGN8QmCmlaCqQ4Kkvt8jaJ/3Ybro3E4UyVihWOnm8/x8UqEJ3JaIyfR1dkZtK6NEnd/SgGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
 Received: from Marijn-Arch-PC.localdomain (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by m-r2.th.seeweb.it (Postfix) with ESMTPSA id B6BC33EFF8;
-	Wed, 17 Apr 2024 01:57:43 +0200 (CEST)
+	by m-r2.th.seeweb.it (Postfix) with ESMTPSA id CE7D73F012;
+	Wed, 17 Apr 2024 01:57:46 +0200 (CEST)
 From: Marijn Suijten <marijn.suijten@somainline.org>
-Subject: [PATCH 0/7] drm/msm: Initial fixes for DUALPIPE (+DSC) topology
-Date: Wed, 17 Apr 2024 01:57:40 +0200
-Message-Id: <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-0-78ae3ee9a697@somainline.org>
+Date: Wed, 17 Apr 2024 01:57:43 +0200
+Subject: [PATCH 3/7] drm/msm/dpu: Always flush the slave INTF on the CTL
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -46,9 +46,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAHUQH2YC/x3MQQqDMBBG4avIrDuQaKrgVUoX0UzqDyYNmbYUx
- Ls3dPnx4B2kUiFKc3dQlQ8Uz9xgLx2tm88PYYRm6k3vjLMjh5o4aWJkvOB3Dm+/FxThoCtHfEV
- 5iGay18UMS3TURqXKP7TP7X6eP3beIJV0AAAA
+Message-Id: <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-3-78ae3ee9a697@somainline.org>
+References: <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-0-78ae3ee9a697@somainline.org>
+In-Reply-To: <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-0-78ae3ee9a697@somainline.org>
 To: Rob Clark <robdclark@gmail.com>, 
  Abhinav Kumar <quic_abhinavk@quicinc.com>, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
@@ -69,80 +69,40 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  Marijn Suijten <marijn.suijten@somainline.org>
 X-Mailer: b4 0.13.0
 
-This series covers a step-up towards supporting the DUALPIPE DSC
-topology, also known as 2:2:2 topology (on active-CTL hardware).  It
-involves 2 layer mixers, 2 DSC compression encoders, and 2 interfaces
-(on DSI, this is called bonded-DSI) where bandwidth constraints (e.g. 4k
-panels at 120Hz) require two interfaces to transmit pixel data.
+As we can clearly see in a downstream kernel [1], flushing the slave INTF
+is skipped /only if/ the PPSPLIT topology is active.
 
-Enabling this topology will be hard(er) than downstream as hacking a
-layout type in DTS won't be describing the hardware, but "dynamically"
-determining it at runtime may pose some of a challenge that is left to a
-future series.  Such changes will also involve the 1:1:1 topology needed
-for constrained hardware like the Fairphone 5 on SC7280 with access to
-only one DSC encoder and thus ruled out of the current 2:2:1 topology.
+However, when DPU was originally submitted to mainline PPSPLIT was no
+longer part of it (seems to have been ripped out before submission), but
+this clause was incorrectly ported from the original SDE driver.  Given
+that there is no support for PPSPLIT (currently), flushing the slave
+INTF should /never/ be skipped (as the `if (ppsplit && !master) goto
+skip;` clause downstream never becomes true).
 
-Likewise, the patches and discussions around improving active-CTL
-configuration to support bonded interfaces (that share a single CTL
-block) are still in full swing and hence elided from this series, apart
-from one patch to fix the ACTIVE_DSC register coding to support updates,
-so that it is not forgotten about.
+[1]: https://git.codelinaro.org/clo/la/platform/vendor/opensource/display-drivers/-/blob/display-kernel.lnx.5.4.r1-rel/msm/sde/sde_encoder_phys_cmd.c?ref_type=heads#L1131-1139
 
-Note that some patches are applicable to DSC-less DUALPIPE bonded mode
-as well, such as the patch that allows the slave interface to always be
-flushed as that is only supposed to be excluded in the yet-unsupported
-PPSPLIT topology.
-
-This series also contains some patches that I'm not too sure about:
-
-  drm/msm/dpu: Correct dual-ctl -> dual-intf typo in comment
-
-    Downstream doesn't skip the slave INTF flush on active-CTL [1]
-    (again, just like cmdmode, only when PPSPLIT is enabled [2]), and
-    even added an extra comment [1] explaining this case.  Hence a
-    dual-intf but single-flush case doesn't seem to exist as there's
-    only one CTL according to the remainder of the comment.
-    Maybe the whole comment is wrong?
-
-  drm/msm/dsi: Set PHY usescase before registering DSI host
-
-    It seems intentional to only set the usecase after
-    msm_dsi_host_register() in case it fails, so maybe a non-zero `ret`
-    here should reset the usecase?  Likewise should the function call be
-    moved in !IS_BONDED_DSI() above?
-
-    Ideally we also understand what I am doing differently (maybe
-    wrongly) in my panel driver that makes the PLL turn on and configure
-    before the usecase has been set, even though these calls are messy
-    and error-prone nevertheless.
-
-[1]: https://git.codelinaro.org/clo/la/platform/vendor/opensource/display-drivers/-/blob/display-kernel.lnx.5.4.r1-rel/msm/sde/sde_encoder_phys_vid.c?ref_type=heads#L794-804
-[2]: https://git.codelinaro.org/clo/la/platform/vendor/opensource/display-drivers/-/blob/display-kernel.lnx.5.4.r1-rel/msm/sde/sde_encoder_phys_cmd.c?ref_type=heads#L1131-1139
-
+Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
 Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 ---
-Marijn Suijten (7):
-      drm/msm/dsi: Print dual-DSI-adjusted pclk instead of original mode pclk
-      drm/msm/dsi: Pass bonded-DSI hdisplay/2 to DSC timing configuration
-      drm/msm/dpu: Always flush the slave INTF on the CTL
-      drm/msm/dpu: Allow configuring multiple active DSC blocks
-      drm/msm/dpu: Correct dual-ctl -> dual-intf typo in comment
-      drm/msm/dsi: Set PHY usescase before registering DSI host
-      drm/msm/dpu: Rename `ctx` parameter to `intf` to match other functions
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c |  3 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c |  2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c           |  9 ++++++---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          | 14 +++++++-------
- drivers/gpu/drm/msm/dsi/dsi_host.c                   | 14 +++++++-------
- drivers/gpu/drm/msm/dsi/dsi_manager.c                | 15 +++++++++++----
- 6 files changed, 32 insertions(+), 25 deletions(-)
----
-base-commit: 6bd343537461b57f3efe5dfc5fc193a232dfef1e
-change-id: 20240416-drm-msm-initial-dualpipe-dsc-fixes-3f0715b03bf4
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+index fc1d5736d7fc..489be1c0c704 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+@@ -448,9 +448,6 @@ static void dpu_encoder_phys_cmd_enable_helper(
+ 
+ 	_dpu_encoder_phys_cmd_pingpong_config(phys_enc);
+ 
+-	if (!dpu_encoder_phys_cmd_is_master(phys_enc))
+-		return;
+-
+ 	ctl = phys_enc->hw_ctl;
+ 	ctl->ops.update_pending_flush_intf(ctl, phys_enc->hw_intf->idx);
+ }
 
-Best regards,
 -- 
-Marijn Suijten <marijn.suijten@somainline.org>
+2.44.0
 
 
