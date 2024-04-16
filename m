@@ -1,212 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-17575-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17576-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA7138A68B0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 12:40:19 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3EC08A6907
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 12:51:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8FD712874F2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 10:40:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6DBE4281901
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 10:51:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEA5D128361;
-	Tue, 16 Apr 2024 10:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 173AB12836E;
+	Tue, 16 Apr 2024 10:51:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="bszwTc6D"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="X9j2ipqP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD9B0127E23
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 10:40:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90DEA1E87F;
+	Tue, 16 Apr 2024 10:51:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713264015; cv=none; b=gU/XGCk0e4BcxbA26ZQ39mg3d/ArSYvFKTTaK7eugkNtzR0GCg8L2M6FDCrc8gE5UcsXfzstGQ719QY5rhMx5mLilfND/akxyAdxiXRuamdJMbP89C4abbkntd4HfkfeM1JBYOMUB+5PtekvxXl0c5CM+gpNw6T7C1bNjpWbwC8=
+	t=1713264690; cv=none; b=C0X6kk4cI3V725U970kPDycHRqEAAKDfl6kXFkGu/G//z2Kg13McWzRCFlvXBTkTpn7+jtqaWWResz1lZfBrnuwGHwk9mzlarxcrQQUypCNXvNTQ9IoQoVPQCgatwbDzjmcGtOlOjy5109TxJQmC1Aj2UjHyJuv5KX1ylSOSnSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713264015; c=relaxed/simple;
-	bh=JeEpQglRVkCPotl8Biax9CF54rtqlydCuXYo3Z4B5/Y=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qFz/1Zd60TEZ+HSBvVMrMjvyqcwTrwRPE8jmh9xqNGcyDSpAaD5lK8U8lyzU4aYZVV46MIWkjtmEe/Fv89vXIMsJ4y2x2NCaokJJaaoYYSoC9TKKwmpDgzykrFg+L1qMFK8HrHeu+1zxe8+qwifjTNXzNPi3dxrziatkhw/4C7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=bszwTc6D; arc=none smtp.client-ip=209.85.208.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-563cb3ba9daso4150297a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 03:40:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1713264012; x=1713868812; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=eHTLqtmJofb3OW9dwP60b9IkbybIqw6tzFbVJdsjmeU=;
-        b=bszwTc6Dwkmhu5N8+Y+bSR9RqV79yolSHX4piEBvFNNs53Q/4KX7vlgKJswWqomNh7
-         h0dGFClxwmkbVE2CoFcgW5YaW8XpNKhELMYvQPOMxiSI6JWs5TZ9dUWx5VqdEnT52day
-         /kEce4nsL8s7pCN/7VoZSl3CsCg1qYRZR1pWE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713264012; x=1713868812;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eHTLqtmJofb3OW9dwP60b9IkbybIqw6tzFbVJdsjmeU=;
-        b=INBV0nNDBr3nL8kU/4NK9hNywZ3je2DzoB73iSBK2F29DShGWuAqxFt2iU6pZ7Un17
-         JNsswjH86Hcrt1Bm7WKirtJ1uC+DZz5py6bQSvDHLBgcAfqey9UnyGluGwudY6yZPpf+
-         OIkdP0zO/bBMKPV798Pzp1nLqnOXfvXWupODe72ZM9SJgVJp8FhS3RgQIz9G1T6qcxhF
-         9o7EPesETOYYF4YfeiMK6NAcNWxsWniqKYwPaPujo4aSmSDUFklt4kICW92hGKASadc1
-         buPK3k5EUTBQpo2Odmf0EvB9UjRjrWn0FdzQTK9JI2fEAE1ThV1w6cDesErG/Y/zYeSJ
-         FjPg==
-X-Forwarded-Encrypted: i=1; AJvYcCUsozAj1rvK4Gmg7p0qlwgUeZ1Kp7N6idZqF/XAjcI5M9Ofyr7dH1BJcbKH0gFXpIsT7xry3J0VEh6HaINOGHO58L3vrpWIw+cSQmgcHg==
-X-Gm-Message-State: AOJu0Yw1pod5oCoc8LF45UVXdqeWilFDdRj+KCQV/Xoj6jMlLwabGAA2
-	oivD6nPCtAt+iDd6vwziRgAN8NhYER/VWznarUmUyVhH+fF2DOdFvbzGa6wD6nQ05PS1Dc2b+dt
-	3Ph1w
-X-Google-Smtp-Source: AGHT+IHPBOg9fjoLAHkjnDVew4m1mcuDNRVIUJwCbZhsRoU78hC9Ro49YCHhKmdh78j7bncLUeAieg==
-X-Received: by 2002:a17:907:9304:b0:a52:57a6:2f45 with SMTP id bu4-20020a170907930400b00a5257a62f45mr7725842ejc.21.1713264012180;
-        Tue, 16 Apr 2024 03:40:12 -0700 (PDT)
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com. [209.85.128.42])
-        by smtp.gmail.com with ESMTPSA id bm18-20020a170906c05200b00a51b403e30esm6666815ejb.90.2024.04.16.03.40.11
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Apr 2024 03:40:11 -0700 (PDT)
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-41896acb32fso2678655e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 03:40:11 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCWexQdmZW4ZUkj5WGyEqHKC+dWSLkO6SFBEU94vV1KIEY+Wia9+jdwwPO1vJSiZpXZX18QAtiIMCTDKPxJhcjQBbGEGTJAr/QgchyOJSQ==
-X-Received: by 2002:a05:6512:114b:b0:518:d5c4:b47f with SMTP id
- m11-20020a056512114b00b00518d5c4b47fmr7177225lfg.13.1713263990804; Tue, 16
- Apr 2024 03:39:50 -0700 (PDT)
+	s=arc-20240116; t=1713264690; c=relaxed/simple;
+	bh=Eg2d6DSO7vljcimSjm9nh5yaJmrhsxpma7PRC2x1+Uk=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=de82p2OUzfnKoZL46LQLzPJILIby2FZdsjAbO87sBXsbr+xX0rg9skNUW/VgG0eawb5TkN10akrcXNIeo+Gs+f4jTPmkdHyc0yPFlaJbB3IYUyz7Jr6PGSxaZQ6zHBvQDJUlgNlC8U2Zu0iv07vT4HvhgPpMnPiE4mcTPXuLwKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=X9j2ipqP; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43G4ua7f014191;
+	Tue, 16 Apr 2024 10:51:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=W38VflJdgyZa
+	byOkm+lr02s/pUISBOkObcSb0K+i7bQ=; b=X9j2ipqPlt+WPrW8AdhWiCgCqYcb
+	P/DVqEPFCLiwV/TLtSEcCRg26hSh8EEzhXs7k1GLLwfIZ3hljU5ByIwHggcVFjIR
+	XVac8UxZOJqgRhzgJvAT6HDWB18qCJBUUl+bZIIi6RwyGgwWgMoTr6vJk2EOqh29
+	zdBzAkBw5lNVJ9ONCiKFEK5OfZ+k1dwpMmylhWc0hM0jASbGTkRJ63ekj3E29wu7
+	mBGY1ssIN9Oi+lYVMArIb7pErobrDUJe7t4gtSzfcE9Jk8NGfu0gMGgwxDBfG9xV
+	uk3QUYLIPef9RMGRrzccV2tLgis0zjKywFiqKGWKiPMrPy1r9NtbzFAGbw==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xh5jxausv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Apr 2024 10:51:24 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 43GApK32010446;
+	Tue, 16 Apr 2024 10:51:20 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3xfk4kqq7g-1;
+	Tue, 16 Apr 2024 10:51:20 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43GApKZE010441;
+	Tue, 16 Apr 2024 10:51:20 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-vdadhani-hyd.qualcomm.com [10.213.106.28])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 43GAp4CQ010374;
+	Tue, 16 Apr 2024 10:51:20 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 4047106)
+	id 0CC93500C6C; Tue, 16 Apr 2024 16:21:02 +0530 (+0530)
+From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+To: andersson@kernel.org, konrad.dybcio@linaro.org, robh@kernel.org,
+        krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org, conor+dt@kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com,
+        Viken Dadhaniya <quic_vdadhani@quicinc.com>
+Subject: [PATCH v1] arm64: dts: qcom: qcm6490-rb3: Enable gpi-dma and qup node
+Date: Tue, 16 Apr 2024 16:20:59 +0530
+Message-Id: <20240416105059.1167-1-quic_vdadhani@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: a4IMRRPdpsUnI5-S7oRZatyBk4xq9Lbi
+X-Proofpoint-ORIG-GUID: a4IMRRPdpsUnI5-S7oRZatyBk4xq9Lbi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-16_08,2024-04-15_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 phishscore=0
+ suspectscore=0 adultscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0
+ mlxlogscore=756 spamscore=0 mlxscore=0 malwarescore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
+ definitions=main-2404160066
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <20240415-fix-cocci-v1-0-477afb23728b@chromium.org>
- <20240415-fix-cocci-v1-23-477afb23728b@chromium.org> <97f51ae8-6672-4bd4-b55b-f02114e3d8d0@moroto.mountain>
-In-Reply-To: <97f51ae8-6672-4bd4-b55b-f02114e3d8d0@moroto.mountain>
-From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Tue, 16 Apr 2024 12:39:33 +0200
-X-Gmail-Original-Message-ID: <CANiDSCvp9gBo6Oh31GghvcHmgBY1cYqq4uM_njFTTvQOcS1mbw@mail.gmail.com>
-Message-ID: <CANiDSCvp9gBo6Oh31GghvcHmgBY1cYqq4uM_njFTTvQOcS1mbw@mail.gmail.com>
-Subject: Re: [PATCH 23/35] media: dvb-frontends: tda10048: Use the right div
-To: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: Martin Tuma <martin.tuma@digiteqautomotive.com>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, 
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>, Hugues Fruchet <hugues.fruchet@foss.st.com>, 
-	Alain Volmat <alain.volmat@foss.st.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
-	Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Paul Kocialkowski <paul.kocialkowski@bootlin.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Chen-Yu Tsai <wens@csie.org>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
-	Sakari Ailus <sakari.ailus@linux.intel.com>, Thierry Reding <thierry.reding@gmail.com>, 
-	Jonathan Hunter <jonathanh@nvidia.com>, Sowjanya Komatineni <skomatineni@nvidia.com>, 
-	Luca Ceresoli <luca.ceresoli@bootlin.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Hans Verkuil <hverkuil@xs4all.nl>, 
-	Sergey Kozlov <serjk@netup.ru>, Abylay Ospan <aospan@netup.ru>, 
-	Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>, Dmitry Osipenko <digetx@gmail.com>, 
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, Vikash Garodia <quic_vgarodia@quicinc.com>, 
-	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Benjamin Mugnier <benjamin.mugnier@foss.st.com>, 
-	Sylvain Petinot <sylvain.petinot@foss.st.com>, Jacopo Mondi <jacopo+renesas@jmondi.org>, 
-	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>, 
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>, 
-	=?UTF-8?Q?Niklas_S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>, 
-	Pavel Machek <pavel@ucw.cz>, linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-kernel@lists.infradead.org, linux-staging@lists.linux.dev, 
-	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
 
-Hi Dan
+Enable gpi-dma0, gpi-dma1 and qupv3_id_1 nodes for
+busses usecase on RB3 platform.
 
-What about going the safe way?
+Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/media/dvb-frontends/tda10048.c
-+++ b/drivers/media/dvb-frontends/tda10048.c
-@@ -341,7 +341,7 @@ static int tda10048_set_wref(struct dvb_frontend
-*fe, u32 sample_freq_hz,
-        /* t *= 2147483648 on 32bit platforms */
-        t *= (2048 * 1024);
-        t *= 1024;
--       z = 7 * sample_freq_hz;
-+       z = (u64)7 * sample_freq_hz;
-        t = div64_u64(t, z) + 5;
-        do_div(t, 10);
-
-@@ -409,6 +409,7 @@ static int tda10048_set_if(struct dvb_frontend *fe, u32 bw)
-        struct tda10048_config *config = &state->config;
-        int i;
-        u32 if_freq_khz;
-+       u64 sample_freq;
-
-        dprintk(1, "%s(bw = %d)\n", __func__, bw);
-
-@@ -450,9 +451,10 @@ static int tda10048_set_if(struct dvb_frontend *fe, u32 bw)
-        dprintk(1, "- pll_pfactor = %d\n", state->pll_pfactor);
-
-        /* Calculate the sample frequency */
--       state->sample_freq = state->xtal_hz * (state->pll_mfactor + 45);
--       state->sample_freq /= (state->pll_nfactor + 1);
--       state->sample_freq /= (state->pll_pfactor + 4);
-+       sample_freq = (u64)state->xtal_hz * (state->pll_mfactor + 45);
-+       do_div(sample_freq, state->pll_nfactor + 1);
-+       do_div(sample_freq, state->pll_pfactor + 4);
-+       state->sample_freq = sample_freq;
-        dprintk(1, "- sample_freq = %d\n", state->sample_freq);
-
-        /* Update the I/F */
-
-I will add a extra patch to fix tda10048_set_if
-
-Thanks
-
-PS: Thanks a lot for your reviews, really appreciate! I have a v2 with
-your changes, I am giving it a couple of days before re-submitting
-
-On Tue, 16 Apr 2024 at 12:10, Dan Carpenter <dan.carpenter@linaro.org> wrote:
->
-> On Mon, Apr 15, 2024 at 07:34:40PM +0000, Ricardo Ribalda wrote:
-> > z does not fit in 32 bits.
-> >
->
-> z has to fit in 32 bits otherwise there is a different bug.
->
-> > Found by cocci:
-> > drivers/media/dvb-frontends/tda10048.c:345:1-7: WARNING: do_div() does a 64-by-32 division, please consider using div64_u64 instead.
-> >
-> > Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-> > ---
-> >  drivers/media/dvb-frontends/tda10048.c | 3 +--
-> >  1 file changed, 1 insertion(+), 2 deletions(-)
-> >
-> > diff --git a/drivers/media/dvb-frontends/tda10048.c b/drivers/media/dvb-frontends/tda10048.c
-> > index 5d5e4e9e4422..b176e7803e5b 100644
-> > --- a/drivers/media/dvb-frontends/tda10048.c
-> > +++ b/drivers/media/dvb-frontends/tda10048.c
-> > @@ -342,8 +342,7 @@ static int tda10048_set_wref(struct dvb_frontend *fe, u32 sample_freq_hz,
-> >       t *= (2048 * 1024);
-> >       t *= 1024;
-> >       z = 7 * sample_freq_hz;
->
-> sample_freq_hz is a u32 so z can't be more than U32_MAX.  Perhaps there
-> is an integer overflow bug on this line.
->
-> The sample frequency is set in tda10048_set_if().
->
->         state->sample_freq = state->xtal_hz * (state->pll_mfactor + 45);
->
-> ->xtal_hz is set earlier in tda10048_set_if() and it goes up to
-> 16,000,000.  So if ->pll_mfactor is non-zero this line will have an
-> integer overflow.  16million * 46 > U32_MAX.  Maybe when .clk_freq_khz
-> is TDA10048_CLK_16000 then ->pll_mfactor is zero?  Ugh...
->
-> > -     do_div(t, z);
-> > -     t += 5;
-> > +     t = div64_u64(t, z) + 5;
-> >       do_div(t, 10);
->
-> regards,
-> dan carpenter
->
-
-
+diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+index c98c41f8f3b1..811033592bab 100644
+--- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
++++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+@@ -603,10 +603,22 @@
+ 	status = "okay";
+ };
+ 
++&gpi_dma0 {
++	status = "okay";
++};
++
++&gpi_dma1 {
++	status = "okay";
++};
++
+ &qupv3_id_0 {
+ 	status = "okay";
+ };
+ 
++&qupv3_id_1 {
++	status = "okay";
++};
++
+ &remoteproc_adsp {
+ 	firmware-name = "qcom/qcs6490/adsp.mbn";
+ 	status = "okay";
 -- 
-Ricardo Ribalda
+2.17.1
+
 
