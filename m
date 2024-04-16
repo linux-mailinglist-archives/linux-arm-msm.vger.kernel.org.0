@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-17625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17627-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0CE128A785E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 01:10:50 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 029D48A7865
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 01:11:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 72FAE1F22018
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 23:10:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 255381C216B9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 23:11:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1133013A898;
-	Tue, 16 Apr 2024 23:10:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95BC313BC1A;
+	Tue, 16 Apr 2024 23:10:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="amOn9dPF"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="y4s07QsZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+Received: from mail-io1-f53.google.com (mail-io1-f53.google.com [209.85.166.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1300713A24D
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 23:10:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C2213AA31
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 23:10:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713309034; cv=none; b=S5D1/sG0FD0Wp4zj0sAUKFwgf6oLEoYlwlsdUH41mahzg9nsmFEIETluAcsMpzASVLRwzkDWDLh99ic8YeUt1rVXOr+ZEhBBwUUZOgPiJEz7zYDkCKXsCoKN0qgtJESf8BWqde7KyNsPzK3eEWE2wgKZOi9yvI+s0lveODf2r8s=
+	t=1713309037; cv=none; b=esO2np/xtfELxiH7yjMoOXrOJuR6Au6rNcBDAmHhsWeMYA9AlkdGSgV27UzlTzuUXtEmrJiooLy2MAivVXK4/2AdqpE4/JWaRqf7ZxfNBUWiyLXR9v72fjFTchvgHobofXyWgAja+xMXHBrZIoj/Bbc0NxXE2OlLN+s4PDJ5LqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713309034; c=relaxed/simple;
-	bh=bkKQYUPXViheM7/Pqge03AsMiP6sEOkmKPQNt/lxmrI=;
+	s=arc-20240116; t=1713309037; c=relaxed/simple;
+	bh=3UPhKAV2eGB7qIhnd7A8W04iWjDSndRcXDDgqxtM4BQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=jEBoc5y9MfDFPYPV/mBzxZbyw3/cTf+/pKURB5SgdwdSuP77z92LFPrJ1AigKHXU1suot9Snt7DtUdTMMdSa/kYDU7H6RUumyjfBNHBo8bG8AJVnJjGnjSAOq2gIvxMsI4Rf6pRrM8W+OEYY/M0bDRNahwjz57LoBKK8w8CiLvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=amOn9dPF; arc=none smtp.client-ip=209.85.166.43
+	 MIME-Version; b=aczbB/HLL8G32i0Cwzd1hRR27AIN11a45ouebodd0neSy5tn3Ej6H/AWXvdU2iIyDRsaNabB1sTGDWIfmT4Ex5pQCjed2VhhcVHX9RLfgPd3vSCDU3tKNdUaNzXBmI0y3FzrSJX7DNmJO5XX8FBKdKfx2MSGdhLTRUUm2dCvVhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=y4s07QsZ; arc=none smtp.client-ip=209.85.166.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-7d5e93b40feso226323939f.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 16:10:31 -0700 (PDT)
+Received: by mail-io1-f53.google.com with SMTP id ca18e2360f4ac-7d5de651252so230932939f.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 16:10:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713309031; x=1713913831; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1713309033; x=1713913833; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2NZzXjRloWgZebxRLPG0BGoJm/68zG1y3Pcw2+As738=;
-        b=amOn9dPFGTJDJCPAU6x4MZiHfkt5pIw8MdrsLudDZd5i8ynipOCK0lfL9qtKzXzeT9
-         4tVZDnyt4uV1pgnbWZjB83y75MivRJXvUa/ouLXOOIgQl+GSEx6q+V7opPLhj/NasInP
-         Bh8bjmOKPRenOlcHHQkY88HWeWZkQ15UAJGMKua/QQUZ8uzos6gwuX07AsmkuonnT+pl
-         5hisQCcaC4KIe2fQt5kbrEJFLIpwmZlGkgiGCQ+ugJ5qG3H63nYFF1RmYDU9NWnsQHXm
-         WtkhZtKnAz6i3p9V/zB/yg/Z4/4JCLub9ORVxj+a+crWKQNOle64sCESNx+YBsjafBN/
-         aCxg==
+        bh=t9FjhA/cFsDH2qqD4vdpl3ficCKrtPLZj5U8CtK/eWA=;
+        b=y4s07QsZAcXO6VB9OddLFTnQgOcfUL260b6UUigirYtXF8cIN2E8G/0zhVeHsI3Ius
+         NIGBy/IFWNdJbyzeqh511Hf8K7VEt46nBvNMB+38r0djVD1pUHrAt5qDq14B9GUEuewM
+         AoR62OLF9I6dogsVZS0pswDGNhNfPFrZ9SS6toyY47l+T1hT/eLyE9bldXxjJItrW2Oz
+         hbc3ax1JUb3Yxzoo3lAJNeVRugkjnVqVO8jnWxjkX7fDzuOmYVBn/Obo+2hE9sSS3lpI
+         xM5KgGNqYGORT4tvyaQA/eH3s6uTWl5rLA+suSOB6w8adVxSG8opJq0or6hAgPc2HkT4
+         hlSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713309031; x=1713913831;
+        d=1e100.net; s=20230601; t=1713309033; x=1713913833;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2NZzXjRloWgZebxRLPG0BGoJm/68zG1y3Pcw2+As738=;
-        b=LBGyA9zDRei0EKdX3RD0gJadinRFEZOFNwo93OjUkWe4UroWJTqcFhchngbl1Snp2u
-         YaCFg+6ezZZKspEfZVh/iHD/B2aCRra5pliNSqzBaRT6+CvdS8SebZp4P3315OwpIlEE
-         t2bFf2m/Oys7A8xSjQAX58fw2LB0gVY4lkbaBlE4cUMc6y5pXrtFZR8Mw4OSAur7mCIF
-         X8sSkjbYTPzAiKxX6a71yXUOutRnjoztyr9Eaj2YOAeANEaa1YZCnGaujZ4DX8TiH4m1
-         DJ1JL79m+eS/LRmKijMAq90LbG5xYV9m3A268XznwDgprZzdRTSuoBA2VI/ff5NLQnxt
-         svaw==
-X-Forwarded-Encrypted: i=1; AJvYcCUM96Ouw3BTm72dlnbyJSVbyA0/CHhkRYltH0jAs8wJXAt9cMhVvw7gYHDzTZcXHLmpW+KOijYSafxWmdM3QLwOMXsb6PGlKiHOYM7rpw==
-X-Gm-Message-State: AOJu0YxxvH7aST0hvFPQ3bZKhB+ffpW0oH8jidGUNgUXYD4j1nKaDk3l
-	d4FIWLuW9S9qE0jpeNCzPE1qom4KuydUz5TNzAL7r861ug5HrAHoF0GhJHHq0sQ=
-X-Google-Smtp-Source: AGHT+IEAfKRZEOuxIf+LEWv3ugurt1k0j12c8bmtW9GFysMB4XQs5qQK/elBVkoEQw8pLowN+Uq4uQ==
-X-Received: by 2002:a05:6602:3809:b0:7d6:991a:ef19 with SMTP id bb9-20020a056602380900b007d6991aef19mr19404862iob.8.1713309031045;
-        Tue, 16 Apr 2024 16:10:31 -0700 (PDT)
+        bh=t9FjhA/cFsDH2qqD4vdpl3ficCKrtPLZj5U8CtK/eWA=;
+        b=vhAw81i0TpzfgZaxRN8/I56K0Oz2M74Sa2E7mOJ97FFPysVfLUU5OsObwx3wcNV4nn
+         HBEKm4G7qx+QpfKc5QZS7rbieQxEDIBLm0/NgwCRAQmGasU0i/tfbEpTxwlPPNYNAzQN
+         aAspRFo4Fr5t2xVYJHBvoi7yvlvK/XmCc5L0NynHeK6dwNe1J0pGZTR7Ij0gWsMMekOb
+         OX2cVeT8PzMr5mtF/VOeM50bw1R++j99IIfP0lHUbgX43NgsPdE/6uq4jO9jkgwFhHQb
+         QEfEwLBnKagkmRtL4ApEcqLd9Q8r9FrSBVY7fMU40G0qWmmZ8sdtnvSNpxHIVjU2We19
+         vWig==
+X-Forwarded-Encrypted: i=1; AJvYcCVLXlkTicWkK6JNY0G0S2aEkB3mRRBP+tODDicqIMI29OvHgyW+TlfLLLz4gHOPX+cOACuEqBhoO6Ea+fb6DoCx5CJS43NeaDEAYlqmGw==
+X-Gm-Message-State: AOJu0YzSkch+K2QjpcnjEWSouhQsSfzUiJZpUEp05tRK+N0uONk9O1Uz
+	Cr2/S3CD0vCaES/+aE7Ye+ahSZjqCoztEE30APAaOOgSba5hJNcRUGoPPIgsP10=
+X-Google-Smtp-Source: AGHT+IHmpH5NluyPkr0pKUYPo6EzpBuWIpiIjHdBQk5YntL97Lk4C8wD1xRcQ9alhzvHhiLX7JmQTQ==
+X-Received: by 2002:a6b:c306:0:b0:7d9:594b:70cd with SMTP id t6-20020a6bc306000000b007d9594b70cdmr9860311iof.18.1713309032661;
+        Tue, 16 Apr 2024 16:10:32 -0700 (PDT)
 Received: from localhost.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id le9-20020a056638960900b004846ed9fcb1sm372170jab.101.2024.04.16.16.10.29
+        by smtp.gmail.com with ESMTPSA id le9-20020a056638960900b004846ed9fcb1sm372170jab.101.2024.04.16.16.10.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Apr 2024 16:10:30 -0700 (PDT)
+        Tue, 16 Apr 2024 16:10:31 -0700 (PDT)
 From: Alex Elder <elder@linaro.org>
 To: davem@davemloft.net,
 	edumazet@google.com,
@@ -82,9 +82,9 @@ Cc: mka@chromium.org,
 	netdev@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 1/7] net: ipa: include some standard header files
-Date: Tue, 16 Apr 2024 18:10:12 -0500
-Message-Id: <20240416231018.389520-2-elder@linaro.org>
+Subject: [PATCH net-next 2/7] net: ipa: remove unneeded standard includes
+Date: Tue, 16 Apr 2024 18:10:13 -0500
+Message-Id: <20240416231018.389520-3-elder@linaro.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20240416231018.389520-1-elder@linaro.org>
 References: <20240416231018.389520-1-elder@linaro.org>
@@ -96,557 +96,324 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Some IPA header files use types defined in <linux/types.h>, but do
-not include that file:
-  - In "ipa_mem.h", the ipa_mem structure has u16 and u32 fields
-  - In "ipa_power.h", ipa_power_retention() takes a bool argument,
-    and ipa_core_clock_rate() returns u32
-  - In "ipa_version.h", ipa_version_supported() returns bool
-Include it in these files to satisfy their dependencies.
-
-The ipa_qmi structure (defined in "ipa_qmi.h") contains a work
-structure, so include <linux/workqueue.h> in there.
-
-All of the data and register definition files, as well as "reg.h",
-use the ARRAY_SIZE() macro.  Include <linux/array_size.h> everywhere
-it's used.
-
-Similarly, all register definition files (and a few others) use the
-GENMASK() macro, so include <linux/bits.h> to ensure it's defined
-where used.  BIT() becomes available by including this file also.
+Some IPA header files include one or more other standard header
+files despite not directly needing anything defined in the included
+files.  Remove these unnecessary includes.
 
 Signed-off-by: Alex Elder <elder@linaro.org>
 ---
- drivers/net/ipa/data/ipa_data-v3.1.c   | 3 ++-
- drivers/net/ipa/data/ipa_data-v3.5.1.c | 3 ++-
- drivers/net/ipa/data/ipa_data-v4.11.c  | 3 ++-
- drivers/net/ipa/data/ipa_data-v4.2.c   | 3 ++-
- drivers/net/ipa/data/ipa_data-v4.5.c   | 3 ++-
- drivers/net/ipa/data/ipa_data-v4.7.c   | 3 ++-
- drivers/net/ipa/data/ipa_data-v4.9.c   | 3 ++-
- drivers/net/ipa/data/ipa_data-v5.0.c   | 3 ++-
- drivers/net/ipa/data/ipa_data-v5.5.c   | 3 ++-
- drivers/net/ipa/ipa_cmd.c              | 3 ++-
- drivers/net/ipa/ipa_endpoint.c         | 3 ++-
- drivers/net/ipa/ipa_mem.h              | 4 +++-
- drivers/net/ipa/ipa_power.h            | 4 +++-
- drivers/net/ipa/ipa_qmi.h              | 3 ++-
- drivers/net/ipa/ipa_version.h          | 4 +++-
- drivers/net/ipa/reg.h                  | 4 +++-
- drivers/net/ipa/reg/gsi_reg-v3.1.c     | 4 +++-
- drivers/net/ipa/reg/gsi_reg-v3.5.1.c   | 4 +++-
- drivers/net/ipa/reg/gsi_reg-v4.0.c     | 4 +++-
- drivers/net/ipa/reg/gsi_reg-v4.11.c    | 4 +++-
- drivers/net/ipa/reg/gsi_reg-v4.5.c     | 4 +++-
- drivers/net/ipa/reg/gsi_reg-v4.9.c     | 4 +++-
- drivers/net/ipa/reg/gsi_reg-v5.0.c     | 4 +++-
- drivers/net/ipa/reg/ipa_reg-v3.1.c     | 4 +++-
- drivers/net/ipa/reg/ipa_reg-v3.5.1.c   | 4 +++-
- drivers/net/ipa/reg/ipa_reg-v4.11.c    | 4 +++-
- drivers/net/ipa/reg/ipa_reg-v4.2.c     | 4 +++-
- drivers/net/ipa/reg/ipa_reg-v4.5.c     | 4 +++-
- drivers/net/ipa/reg/ipa_reg-v4.7.c     | 4 +++-
- drivers/net/ipa/reg/ipa_reg-v4.9.c     | 4 +++-
- drivers/net/ipa/reg/ipa_reg-v5.0.c     | 4 +++-
- drivers/net/ipa/reg/ipa_reg-v5.5.c     | 4 +++-
- 32 files changed, 84 insertions(+), 32 deletions(-)
+ drivers/net/ipa/gsi.c              | 4 +---
+ drivers/net/ipa/gsi.h              | 4 +---
+ drivers/net/ipa/ipa.h              | 4 +---
+ drivers/net/ipa/ipa_cmd.c          | 1 -
+ drivers/net/ipa/ipa_cmd.h          | 3 +--
+ drivers/net/ipa/ipa_endpoint.c     | 1 -
+ drivers/net/ipa/ipa_endpoint.h     | 1 -
+ drivers/net/ipa/ipa_interrupt.h    | 3 +--
+ drivers/net/ipa/ipa_main.c         | 4 +---
+ drivers/net/ipa/ipa_mem.c          | 4 +---
+ drivers/net/ipa/ipa_qmi.c          | 4 +---
+ drivers/net/ipa/ipa_reg.h          | 5 +----
+ drivers/net/ipa/ipa_resource.c     | 3 +--
+ drivers/net/ipa/ipa_smp2p.c        | 3 +--
+ drivers/net/ipa/ipa_sysfs.c        | 3 +--
+ drivers/net/ipa/ipa_table.c        | 3 ---
+ drivers/net/ipa/reg/ipa_reg-v5.5.c | 1 -
+ 17 files changed, 12 insertions(+), 39 deletions(-)
 
-diff --git a/drivers/net/ipa/data/ipa_data-v3.1.c b/drivers/net/ipa/data/ipa_data-v3.1.c
-index 3380fb3483b2c..58fe2a4fe37ce 100644
---- a/drivers/net/ipa/data/ipa_data-v3.1.c
-+++ b/drivers/net/ipa/data/ipa_data-v3.1.c
-@@ -1,9 +1,10 @@
+diff --git a/drivers/net/ipa/gsi.c b/drivers/net/ipa/gsi.c
+index 9a0b1fe4a93a8..e087074cec4f7 100644
+--- a/drivers/net/ipa/gsi.c
++++ b/drivers/net/ipa/gsi.c
+@@ -1,15 +1,13 @@
  // SPDX-License-Identifier: GPL-2.0
  
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2019-2021 Linaro Ltd.
-+ * Copyright (C) 2019-2024 Linaro Ltd.
+ /* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
+- * Copyright (C) 2018-2023 Linaro Ltd.
++ * Copyright (C) 2018-2024 Linaro Ltd.
   */
  
-+#include <linux/array_size.h>
- #include <linux/log2.h>
+ #include <linux/types.h>
+ #include <linux/bits.h>
+-#include <linux/bitfield.h>
+ #include <linux/mutex.h>
+ #include <linux/completion.h>
+-#include <linux/io.h>
+ #include <linux/bug.h>
+ #include <linux/interrupt.h>
+ #include <linux/platform_device.h>
+diff --git a/drivers/net/ipa/gsi.h b/drivers/net/ipa/gsi.h
+index 42063b227c185..3bf1a1cc972c2 100644
+--- a/drivers/net/ipa/gsi.h
++++ b/drivers/net/ipa/gsi.h
+@@ -1,16 +1,14 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
  
- #include "../gsi.h"
-diff --git a/drivers/net/ipa/data/ipa_data-v3.5.1.c b/drivers/net/ipa/data/ipa_data-v3.5.1.c
-index 4287114b24db1..c71e585ed3f1c 100644
---- a/drivers/net/ipa/data/ipa_data-v3.5.1.c
-+++ b/drivers/net/ipa/data/ipa_data-v3.5.1.c
-@@ -1,9 +1,10 @@
- // SPDX-License-Identifier: GPL-2.0
+ /* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
+- * Copyright (C) 2018-2023 Linaro Ltd.
++ * Copyright (C) 2018-2024 Linaro Ltd.
+  */
+ #ifndef _GSI_H_
+ #define _GSI_H_
+ 
+ #include <linux/types.h>
+-#include <linux/spinlock.h>
+ #include <linux/mutex.h>
+ #include <linux/completion.h>
+-#include <linux/platform_device.h>
+ #include <linux/netdevice.h>
+ 
+ #include "ipa_version.h"
+diff --git a/drivers/net/ipa/ipa.h b/drivers/net/ipa/ipa.h
+index 334cd62cf2866..968175019a5e3 100644
+--- a/drivers/net/ipa/ipa.h
++++ b/drivers/net/ipa/ipa.h
+@@ -1,15 +1,13 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
  
  /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2019-2021 Linaro Ltd.
-+ * Copyright (C) 2019-2024 Linaro Ltd.
+- * Copyright (C) 2018-2022 Linaro Ltd.
++ * Copyright (C) 2018-2024 Linaro Ltd.
   */
+ #ifndef _IPA_H_
+ #define _IPA_H_
  
-+#include <linux/array_size.h>
- #include <linux/log2.h>
+ #include <linux/types.h>
+-#include <linux/device.h>
+ #include <linux/notifier.h>
+-#include <linux/pm_wakeup.h>
  
- #include "../gsi.h"
-diff --git a/drivers/net/ipa/data/ipa_data-v4.11.c b/drivers/net/ipa/data/ipa_data-v4.11.c
-index 1b4b52501ee33..d1289de3ecf01 100644
---- a/drivers/net/ipa/data/ipa_data-v4.11.c
-+++ b/drivers/net/ipa/data/ipa_data-v4.11.c
-@@ -1,7 +1,8 @@
- // SPDX-License-Identifier: GPL-2.0
- 
--/* Copyright (C) 2021 Linaro Ltd. */
-+/* Copyright (C) 2021-2024 Linaro Ltd. */
- 
-+#include <linux/array_size.h>
- #include <linux/log2.h>
- 
- #include "../gsi.h"
-diff --git a/drivers/net/ipa/data/ipa_data-v4.2.c b/drivers/net/ipa/data/ipa_data-v4.2.c
-index 199ed0ed868b9..25194519df8e3 100644
---- a/drivers/net/ipa/data/ipa_data-v4.2.c
-+++ b/drivers/net/ipa/data/ipa_data-v4.2.c
-@@ -1,7 +1,8 @@
- // SPDX-License-Identifier: GPL-2.0
- 
--/* Copyright (C) 2019-2021 Linaro Ltd. */
-+/* Copyright (C) 2019-2024 Linaro Ltd. */
- 
-+#include <linux/array_size.h>
- #include <linux/log2.h>
- 
- #include "../gsi.h"
-diff --git a/drivers/net/ipa/data/ipa_data-v4.5.c b/drivers/net/ipa/data/ipa_data-v4.5.c
-index 19b549f2998b8..e9e375d530765 100644
---- a/drivers/net/ipa/data/ipa_data-v4.5.c
-+++ b/drivers/net/ipa/data/ipa_data-v4.5.c
-@@ -1,7 +1,8 @@
- // SPDX-License-Identifier: GPL-2.0
- 
--/* Copyright (C) 2021 Linaro Ltd. */
-+/* Copyright (C) 2021-2024 Linaro Ltd. */
- 
-+#include <linux/array_size.h>
- #include <linux/log2.h>
- 
- #include "../gsi.h"
-diff --git a/drivers/net/ipa/data/ipa_data-v4.7.c b/drivers/net/ipa/data/ipa_data-v4.7.c
-index b83390c486158..f3444c009fea8 100644
---- a/drivers/net/ipa/data/ipa_data-v4.7.c
-+++ b/drivers/net/ipa/data/ipa_data-v4.7.c
-@@ -1,7 +1,8 @@
- // SPDX-License-Identifier: GPL-2.0
- 
--/* Copyright (C) 2022 Linaro Ltd. */
-+/* Copyright (C) 2022-2024 Linaro Ltd. */
- 
-+#include <linux/array_size.h>
- #include <linux/log2.h>
- 
- #include "../gsi.h"
-diff --git a/drivers/net/ipa/data/ipa_data-v4.9.c b/drivers/net/ipa/data/ipa_data-v4.9.c
-index d30fc1fe6ca22..5284312c02f33 100644
---- a/drivers/net/ipa/data/ipa_data-v4.9.c
-+++ b/drivers/net/ipa/data/ipa_data-v4.9.c
-@@ -1,7 +1,8 @@
- // SPDX-License-Identifier: GPL-2.0
- 
--/* Copyright (C) 2021 Linaro Ltd. */
-+/* Copyright (C) 2021-2024 Linaro Ltd. */
- 
-+#include <linux/array_size.h>
- #include <linux/log2.h>
- 
- #include "../gsi.h"
-diff --git a/drivers/net/ipa/data/ipa_data-v5.0.c b/drivers/net/ipa/data/ipa_data-v5.0.c
-index 4d8171dae4cd7..615750c412fc7 100644
---- a/drivers/net/ipa/data/ipa_data-v5.0.c
-+++ b/drivers/net/ipa/data/ipa_data-v5.0.c
-@@ -1,7 +1,8 @@
- // SPDX-License-Identifier: GPL-2.0
- 
--/* Copyright (C) 2023 Linaro Ltd. */
-+/* Copyright (C) 2023-2024 Linaro Ltd. */
- 
-+#include <linux/array_size.h>
- #include <linux/log2.h>
- 
- #include "../gsi.h"
-diff --git a/drivers/net/ipa/data/ipa_data-v5.5.c b/drivers/net/ipa/data/ipa_data-v5.5.c
-index 2c6390f11354b..2c5bfa6d7101d 100644
---- a/drivers/net/ipa/data/ipa_data-v5.5.c
-+++ b/drivers/net/ipa/data/ipa_data-v5.5.c
-@@ -1,7 +1,8 @@
- // SPDX-License-Identifier: GPL-2.0
- 
--/* Copyright (C) 2023 Linaro Ltd. */
-+/* Copyright (C) 2023-2024 Linaro Ltd. */
- 
-+#include <linux/array_size.h>
- #include <linux/kernel.h>
- #include <linux/log2.h>
- 
+ #include "ipa_version.h"
+ #include "gsi.h"
 diff --git a/drivers/net/ipa/ipa_cmd.c b/drivers/net/ipa/ipa_cmd.c
-index 39219963dbb3f..ae489557bf355 100644
+index ae489557bf355..2e7762171e480 100644
 --- a/drivers/net/ipa/ipa_cmd.c
 +++ b/drivers/net/ipa/ipa_cmd.c
-@@ -1,9 +1,10 @@
- // SPDX-License-Identifier: GPL-2.0
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2019-2023 Linaro Ltd.
-+ * Copyright (C) 2019-2024 Linaro Ltd.
-  */
- 
-+#include <linux/bits.h>
+@@ -7,7 +7,6 @@
+ #include <linux/bits.h>
  #include <linux/types.h>
  #include <linux/device.h>
- #include <linux/slab.h>
-diff --git a/drivers/net/ipa/ipa_endpoint.c b/drivers/net/ipa/ipa_endpoint.c
-index dd490941615e2..0522267a7988a 100644
---- a/drivers/net/ipa/ipa_endpoint.c
-+++ b/drivers/net/ipa/ipa_endpoint.c
-@@ -1,9 +1,10 @@
- // SPDX-License-Identifier: GPL-2.0
+-#include <linux/slab.h>
+ #include <linux/bitfield.h>
+ #include <linux/dma-direction.h>
  
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2019-2023 Linaro Ltd.
-+ * Copyright (C) 2019-2024 Linaro Ltd.
-  */
- 
-+#include <linux/bits.h>
- #include <linux/types.h>
- #include <linux/device.h>
- #include <linux/slab.h>
-diff --git a/drivers/net/ipa/ipa_mem.h b/drivers/net/ipa/ipa_mem.h
-index 28aad00a151da..b25babade787e 100644
---- a/drivers/net/ipa/ipa_mem.h
-+++ b/drivers/net/ipa/ipa_mem.h
-@@ -1,11 +1,13 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2019-2023 Linaro Ltd.
-+ * Copyright (C) 2019-2024 Linaro Ltd.
-  */
- #ifndef _IPA_MEM_H_
- #define _IPA_MEM_H_
- 
-+#include <linux/types.h>
-+
- struct platform_device;
- 
- struct ipa;
-diff --git a/drivers/net/ipa/ipa_power.h b/drivers/net/ipa/ipa_power.h
-index 227cc04bea806..e41791f2a1be4 100644
---- a/drivers/net/ipa/ipa_power.h
-+++ b/drivers/net/ipa/ipa_power.h
-@@ -1,11 +1,13 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2018-2022 Linaro Ltd.
-+ * Copyright (C) 2018-2024 Linaro Ltd.
-  */
- #ifndef _IPA_POWER_H_
- #define _IPA_POWER_H_
- 
-+#include <linux/types.h>
-+
- struct device;
- 
- struct ipa;
-diff --git a/drivers/net/ipa/ipa_qmi.h b/drivers/net/ipa/ipa_qmi.h
-index 1c236826c17ab..ce7bbb97699f2 100644
---- a/drivers/net/ipa/ipa_qmi.h
-+++ b/drivers/net/ipa/ipa_qmi.h
-@@ -1,12 +1,13 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- 
- /* Copyright (c) 2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2018-2022 Linaro Ltd.
-+ * Copyright (C) 2018-2024 Linaro Ltd.
-  */
- #ifndef _IPA_QMI_H_
- #define _IPA_QMI_H_
- 
- #include <linux/types.h>
-+#include <linux/workqueue.h>
- #include <linux/soc/qcom/qmi.h>
- 
- struct ipa;
-diff --git a/drivers/net/ipa/ipa_version.h b/drivers/net/ipa/ipa_version.h
-index 38150345b607e..156388e90a141 100644
---- a/drivers/net/ipa/ipa_version.h
-+++ b/drivers/net/ipa/ipa_version.h
-@@ -1,11 +1,13 @@
+diff --git a/drivers/net/ipa/ipa_cmd.h b/drivers/net/ipa/ipa_cmd.h
+index e2cf1c2b0ef24..86ad4cd68d1aa 100644
+--- a/drivers/net/ipa/ipa_cmd.h
++++ b/drivers/net/ipa/ipa_cmd.h
+@@ -1,13 +1,12 @@
  /* SPDX-License-Identifier: GPL-2.0 */
  
  /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
 - * Copyright (C) 2019-2022 Linaro Ltd.
 + * Copyright (C) 2019-2024 Linaro Ltd.
   */
- #ifndef _IPA_VERSION_H_
- #define _IPA_VERSION_H_
+ #ifndef _IPA_CMD_H_
+ #define _IPA_CMD_H_
  
-+#include <linux/types.h>
-+
- /**
-  * enum ipa_version
-  * @IPA_VERSION_3_0:	IPA version 3.0/GSI version 1.0
-diff --git a/drivers/net/ipa/reg.h b/drivers/net/ipa/reg.h
-index 2ee07eebca677..e78eb0c0c6613 100644
---- a/drivers/net/ipa/reg.h
-+++ b/drivers/net/ipa/reg.h
-@@ -1,10 +1,12 @@
+ #include <linux/types.h>
+-#include <linux/dma-direction.h>
+ 
+ struct sk_buff;
+ struct scatterlist;
+diff --git a/drivers/net/ipa/ipa_endpoint.c b/drivers/net/ipa/ipa_endpoint.c
+index 0522267a7988a..4e8849c1f32d9 100644
+--- a/drivers/net/ipa/ipa_endpoint.c
++++ b/drivers/net/ipa/ipa_endpoint.c
+@@ -7,7 +7,6 @@
+ #include <linux/bits.h>
+ #include <linux/types.h>
+ #include <linux/device.h>
+-#include <linux/slab.h>
+ #include <linux/bitfield.h>
+ #include <linux/if_rmnet.h>
+ #include <linux/dma-direction.h>
+diff --git a/drivers/net/ipa/ipa_endpoint.h b/drivers/net/ipa/ipa_endpoint.h
+index 3ad2e802040aa..995f12af1623f 100644
+--- a/drivers/net/ipa/ipa_endpoint.h
++++ b/drivers/net/ipa/ipa_endpoint.h
+@@ -8,7 +8,6 @@
+ 
+ #include <linux/types.h>
+ #include <linux/workqueue.h>
+-#include <linux/if_ether.h>
+ 
+ #include "gsi.h"
+ #include "ipa_reg.h"
+diff --git a/drivers/net/ipa/ipa_interrupt.h b/drivers/net/ipa/ipa_interrupt.h
+index f3f4f4330a597..7f8ea8aff7fd4 100644
+--- a/drivers/net/ipa/ipa_interrupt.h
++++ b/drivers/net/ipa/ipa_interrupt.h
+@@ -1,13 +1,12 @@
  /* SPDX-License-Identifier: GPL-2.0 */
  
--/* *Copyright (C) 2022-2023 Linaro Ltd. */
-+/* Copyright (C) 2022-2024 Linaro Ltd. */
+ /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
+- * Copyright (C) 2018-2022 Linaro Ltd.
++ * Copyright (C) 2018-2024 Linaro Ltd.
+  */
+ #ifndef _IPA_INTERRUPT_H_
+ #define _IPA_INTERRUPT_H_
  
- #ifndef _REG_H_
- #define _REG_H_
- 
-+#include <linux/array_size.h>
-+#include <linux/bits.h>
  #include <linux/types.h>
- #include <linux/log2.h>
+-#include <linux/bits.h>
+ 
+ struct ipa;
+ struct ipa_interrupt;
+diff --git a/drivers/net/ipa/ipa_main.c b/drivers/net/ipa/ipa_main.c
+index 57b241417e8cd..82d23eac13f52 100644
+--- a/drivers/net/ipa/ipa_main.c
++++ b/drivers/net/ipa/ipa_main.c
+@@ -1,12 +1,10 @@
+ // SPDX-License-Identifier: GPL-2.0
+ 
+ /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
+- * Copyright (C) 2018-2023 Linaro Ltd.
++ * Copyright (C) 2018-2024 Linaro Ltd.
+  */
+ 
+ #include <linux/types.h>
+-#include <linux/atomic.h>
+-#include <linux/bitfield.h>
  #include <linux/bug.h>
-diff --git a/drivers/net/ipa/reg/gsi_reg-v3.1.c b/drivers/net/ipa/reg/gsi_reg-v3.1.c
-index e036805a78824..8d76d04058d57 100644
---- a/drivers/net/ipa/reg/gsi_reg-v3.1.c
-+++ b/drivers/net/ipa/reg/gsi_reg-v3.1.c
-@@ -1,7 +1,9 @@
+ #include <linux/io.h>
+ #include <linux/firmware.h>
+diff --git a/drivers/net/ipa/ipa_mem.c b/drivers/net/ipa/ipa_mem.c
+index 709f061ede617..bcf125b6439e8 100644
+--- a/drivers/net/ipa/ipa_mem.c
++++ b/drivers/net/ipa/ipa_mem.c
+@@ -1,12 +1,10 @@
  // SPDX-License-Identifier: GPL-2.0
  
--/* Copyright (C) 2023 Linaro Ltd. */
-+/* Copyright (C) 2023-2024 Linaro Ltd. */
+ /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
+- * Copyright (C) 2019-2023 Linaro Ltd.
++ * Copyright (C) 2019-2024 Linaro Ltd.
+  */
  
-+#include <linux/array_size.h>
-+#include <linux/bits.h>
  #include <linux/types.h>
- 
- #include "../gsi.h"
-diff --git a/drivers/net/ipa/reg/gsi_reg-v3.5.1.c b/drivers/net/ipa/reg/gsi_reg-v3.5.1.c
-index 8c3ab3a5288e6..f66c67996ff4c 100644
---- a/drivers/net/ipa/reg/gsi_reg-v3.5.1.c
-+++ b/drivers/net/ipa/reg/gsi_reg-v3.5.1.c
-@@ -1,7 +1,9 @@
+-#include <linux/bitfield.h>
+-#include <linux/bug.h>
+ #include <linux/dma-mapping.h>
+ #include <linux/iommu.h>
+ #include <linux/platform_device.h>
+diff --git a/drivers/net/ipa/ipa_qmi.c b/drivers/net/ipa/ipa_qmi.c
+index 65c40e207802a..2873e26168fbe 100644
+--- a/drivers/net/ipa/ipa_qmi.c
++++ b/drivers/net/ipa/ipa_qmi.c
+@@ -1,14 +1,12 @@
  // SPDX-License-Identifier: GPL-2.0
  
--/* Copyright (C) 2023 Linaro Ltd. */
-+/* Copyright (C) 2023-2024 Linaro Ltd. */
+ /* Copyright (c) 2013-2018, The Linux Foundation. All rights reserved.
+- * Copyright (C) 2018-2022 Linaro Ltd.
++ * Copyright (C) 2018-2024 Linaro Ltd.
+  */
  
-+#include <linux/array_size.h>
-+#include <linux/bits.h>
  #include <linux/types.h>
+ #include <linux/string.h>
+-#include <linux/slab.h>
+ #include <linux/qrtr.h>
+-#include <linux/soc/qcom/qmi.h>
  
- #include "../gsi.h"
-diff --git a/drivers/net/ipa/reg/gsi_reg-v4.0.c b/drivers/net/ipa/reg/gsi_reg-v4.0.c
-index 7cc7a21d07f90..8e689edc792b8 100644
---- a/drivers/net/ipa/reg/gsi_reg-v4.0.c
-+++ b/drivers/net/ipa/reg/gsi_reg-v4.0.c
-@@ -1,7 +1,9 @@
+ #include "ipa.h"
+ #include "ipa_endpoint.h"
+diff --git a/drivers/net/ipa/ipa_reg.h b/drivers/net/ipa/ipa_reg.h
+index 62c62495b7968..34150a893c532 100644
+--- a/drivers/net/ipa/ipa_reg.h
++++ b/drivers/net/ipa/ipa_reg.h
+@@ -1,14 +1,11 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+ 
+ /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
+- * Copyright (C) 2018-2023 Linaro Ltd.
++ * Copyright (C) 2018-2024 Linaro Ltd.
+  */
+ #ifndef _IPA_REG_H_
+ #define _IPA_REG_H_
+ 
+-#include <linux/bitfield.h>
+-#include <linux/bug.h>
+-
+ #include "ipa_version.h"
+ #include "reg.h"
+ 
+diff --git a/drivers/net/ipa/ipa_resource.c b/drivers/net/ipa/ipa_resource.c
+index 82c88a744d102..1b0c4695c32ac 100644
+--- a/drivers/net/ipa/ipa_resource.c
++++ b/drivers/net/ipa/ipa_resource.c
+@@ -1,11 +1,10 @@
  // SPDX-License-Identifier: GPL-2.0
  
--/* Copyright (C) 2023 Linaro Ltd. */
-+/* Copyright (C) 2023-2024 Linaro Ltd. */
+ /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
+- * Copyright (C) 2018-2022 Linaro Ltd.
++ * Copyright (C) 2018-2024 Linaro Ltd.
+  */
  
-+#include <linux/array_size.h>
-+#include <linux/bits.h>
  #include <linux/types.h>
+-#include <linux/kernel.h>
  
- #include "../gsi.h"
-diff --git a/drivers/net/ipa/reg/gsi_reg-v4.11.c b/drivers/net/ipa/reg/gsi_reg-v4.11.c
-index 01696519032fa..6d3ed0441f518 100644
---- a/drivers/net/ipa/reg/gsi_reg-v4.11.c
-+++ b/drivers/net/ipa/reg/gsi_reg-v4.11.c
-@@ -1,7 +1,9 @@
+ #include "ipa.h"
+ #include "ipa_data.h"
+diff --git a/drivers/net/ipa/ipa_smp2p.c b/drivers/net/ipa/ipa_smp2p.c
+index 2f917582c423e..17a61649cd4ff 100644
+--- a/drivers/net/ipa/ipa_smp2p.c
++++ b/drivers/net/ipa/ipa_smp2p.c
+@@ -1,7 +1,7 @@
  // SPDX-License-Identifier: GPL-2.0
  
--/* Copyright (C) 2023 Linaro Ltd. */
-+/* Copyright (C) 2023-2024 Linaro Ltd. */
+ /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
+- * Copyright (C) 2019-2022 Linaro Ltd.
++ * Copyright (C) 2019-2024 Linaro Ltd.
+  */
  
-+#include <linux/array_size.h>
-+#include <linux/bits.h>
  #include <linux/types.h>
+@@ -10,7 +10,6 @@
+ #include <linux/notifier.h>
+ #include <linux/panic_notifier.h>
+ #include <linux/pm_runtime.h>
+-#include <linux/soc/qcom/smem.h>
+ #include <linux/soc/qcom/smem_state.h>
  
- #include "../gsi.h"
-diff --git a/drivers/net/ipa/reg/gsi_reg-v4.5.c b/drivers/net/ipa/reg/gsi_reg-v4.5.c
-index 2900e5c3ff888..544db5852f499 100644
---- a/drivers/net/ipa/reg/gsi_reg-v4.5.c
-+++ b/drivers/net/ipa/reg/gsi_reg-v4.5.c
-@@ -1,7 +1,9 @@
+ #include "ipa_smp2p.h"
+diff --git a/drivers/net/ipa/ipa_sysfs.c b/drivers/net/ipa/ipa_sysfs.c
+index 2ff09ce343b73..24f4a5ff07c14 100644
+--- a/drivers/net/ipa/ipa_sysfs.c
++++ b/drivers/net/ipa/ipa_sysfs.c
+@@ -1,8 +1,7 @@
  // SPDX-License-Identifier: GPL-2.0
  
--/* Copyright (C) 2023 Linaro Ltd. */
-+/* Copyright (C) 2023-2024 Linaro Ltd. */
+-/* Copyright (C) 2021-2022 Linaro Ltd. */
++/* Copyright (C) 2021-2024 Linaro Ltd. */
  
-+#include <linux/array_size.h>
-+#include <linux/bits.h>
+-#include <linux/kernel.h>
  #include <linux/types.h>
+ #include <linux/device.h>
+ #include <linux/sysfs.h>
+diff --git a/drivers/net/ipa/ipa_table.c b/drivers/net/ipa/ipa_table.c
+index a24ac11b8893d..f5e1d3f43b57e 100644
+--- a/drivers/net/ipa/ipa_table.c
++++ b/drivers/net/ipa/ipa_table.c
+@@ -5,10 +5,7 @@
+  */
  
- #include "../gsi.h"
-diff --git a/drivers/net/ipa/reg/gsi_reg-v4.9.c b/drivers/net/ipa/reg/gsi_reg-v4.9.c
-index 8b5d95425a766..a6d0584ab7996 100644
---- a/drivers/net/ipa/reg/gsi_reg-v4.9.c
-+++ b/drivers/net/ipa/reg/gsi_reg-v4.9.c
-@@ -1,7 +1,9 @@
- // SPDX-License-Identifier: GPL-2.0
- 
--/* Copyright (C) 2023 Linaro Ltd. */
-+/* Copyright (C) 2023-2024 Linaro Ltd. */
- 
-+#include <linux/array_size.h>
-+#include <linux/bits.h>
  #include <linux/types.h>
- 
- #include "../gsi.h"
-diff --git a/drivers/net/ipa/reg/gsi_reg-v5.0.c b/drivers/net/ipa/reg/gsi_reg-v5.0.c
-index 145eb0bd096d6..a7b7f345c11a9 100644
---- a/drivers/net/ipa/reg/gsi_reg-v5.0.c
-+++ b/drivers/net/ipa/reg/gsi_reg-v5.0.c
-@@ -1,7 +1,9 @@
- // SPDX-License-Identifier: GPL-2.0
- 
--/* Copyright (C) 2023 Linaro Ltd. */
-+/* Copyright (C) 2023-2024 Linaro Ltd. */
- 
-+#include <linux/array_size.h>
-+#include <linux/bits.h>
- #include <linux/types.h>
- 
- #include "../gsi.h"
-diff --git a/drivers/net/ipa/reg/ipa_reg-v3.1.c b/drivers/net/ipa/reg/ipa_reg-v3.1.c
-index 648dbfe1fce3a..c05b382933ad8 100644
---- a/drivers/net/ipa/reg/ipa_reg-v3.1.c
-+++ b/drivers/net/ipa/reg/ipa_reg-v3.1.c
-@@ -1,7 +1,9 @@
- // SPDX-License-Identifier: GPL-2.0
- 
--/* Copyright (C) 2022 Linaro Ltd. */
-+/* Copyright (C) 2022-2024 Linaro Ltd. */
- 
-+#include <linux/array_size.h>
-+#include <linux/bits.h>
- #include <linux/types.h>
- 
- #include "../ipa.h"
-diff --git a/drivers/net/ipa/reg/ipa_reg-v3.5.1.c b/drivers/net/ipa/reg/ipa_reg-v3.5.1.c
-index 78b1bf60cd024..afbe042b166be 100644
---- a/drivers/net/ipa/reg/ipa_reg-v3.5.1.c
-+++ b/drivers/net/ipa/reg/ipa_reg-v3.5.1.c
-@@ -1,7 +1,9 @@
- // SPDX-License-Identifier: GPL-2.0
- 
--/* Copyright (C) 2022 Linaro Ltd. */
-+/* Copyright (C) 2022-2024 Linaro Ltd. */
- 
-+#include <linux/array_size.h>
-+#include <linux/bits.h>
- #include <linux/types.h>
- 
- #include "../ipa.h"
-diff --git a/drivers/net/ipa/reg/ipa_reg-v4.11.c b/drivers/net/ipa/reg/ipa_reg-v4.11.c
-index 29e71cce4a843..1d6b8ea9c5c80 100644
---- a/drivers/net/ipa/reg/ipa_reg-v4.11.c
-+++ b/drivers/net/ipa/reg/ipa_reg-v4.11.c
-@@ -1,7 +1,9 @@
- // SPDX-License-Identifier: GPL-2.0
- 
--/* Copyright (C) 2022 Linaro Ltd. */
-+/* Copyright (C) 2022-2024 Linaro Ltd. */
- 
-+#include <linux/array_size.h>
-+#include <linux/bits.h>
- #include <linux/types.h>
- 
- #include "../ipa.h"
-diff --git a/drivers/net/ipa/reg/ipa_reg-v4.2.c b/drivers/net/ipa/reg/ipa_reg-v4.2.c
-index bb7cf488144db..93a78352c3c81 100644
---- a/drivers/net/ipa/reg/ipa_reg-v4.2.c
-+++ b/drivers/net/ipa/reg/ipa_reg-v4.2.c
-@@ -1,7 +1,9 @@
- // SPDX-License-Identifier: GPL-2.0
- 
--/* Copyright (C) 2022 Linaro Ltd. */
-+/* Copyright (C) 2022-2024 Linaro Ltd. */
- 
-+#include <linux/array_size.h>
-+#include <linux/bits.h>
- #include <linux/types.h>
- 
- #include "../ipa.h"
-diff --git a/drivers/net/ipa/reg/ipa_reg-v4.5.c b/drivers/net/ipa/reg/ipa_reg-v4.5.c
-index 1c58f78851c21..9e23e503d4013 100644
---- a/drivers/net/ipa/reg/ipa_reg-v4.5.c
-+++ b/drivers/net/ipa/reg/ipa_reg-v4.5.c
-@@ -1,7 +1,9 @@
- // SPDX-License-Identifier: GPL-2.0
- 
--/* Copyright (C) 2022 Linaro Ltd. */
-+/* Copyright (C) 2022-2024 Linaro Ltd. */
- 
-+#include <linux/array_size.h>
-+#include <linux/bits.h>
- #include <linux/types.h>
- 
- #include "../ipa.h"
-diff --git a/drivers/net/ipa/reg/ipa_reg-v4.7.c b/drivers/net/ipa/reg/ipa_reg-v4.7.c
-index 731824fce1d4a..728ab90dc8d43 100644
---- a/drivers/net/ipa/reg/ipa_reg-v4.7.c
-+++ b/drivers/net/ipa/reg/ipa_reg-v4.7.c
-@@ -1,7 +1,9 @@
- // SPDX-License-Identifier: GPL-2.0
- 
--/* Copyright (C) 2022 Linaro Ltd. */
-+/* Copyright (C) 2022-2024 Linaro Ltd. */
- 
-+#include <linux/array_size.h>
-+#include <linux/bits.h>
- #include <linux/types.h>
- 
- #include "../ipa.h"
-diff --git a/drivers/net/ipa/reg/ipa_reg-v4.9.c b/drivers/net/ipa/reg/ipa_reg-v4.9.c
-index 01f87b5290e01..f61b66d36607f 100644
---- a/drivers/net/ipa/reg/ipa_reg-v4.9.c
-+++ b/drivers/net/ipa/reg/ipa_reg-v4.9.c
-@@ -1,7 +1,9 @@
- // SPDX-License-Identifier: GPL-2.0
- 
--/* Copyright (C) 2022 Linaro Ltd. */
-+/* Copyright (C) 2022-2024 Linaro Ltd. */
- 
-+#include <linux/array_size.h>
-+#include <linux/bits.h>
- #include <linux/types.h>
- 
- #include "../ipa.h"
-diff --git a/drivers/net/ipa/reg/ipa_reg-v5.0.c b/drivers/net/ipa/reg/ipa_reg-v5.0.c
-index 95e0edff41709..cba5be34106db 100644
---- a/drivers/net/ipa/reg/ipa_reg-v5.0.c
-+++ b/drivers/net/ipa/reg/ipa_reg-v5.0.c
-@@ -1,7 +1,9 @@
- // SPDX-License-Identifier: GPL-2.0
- 
--/* Copyright (C) 2023 Linaro Ltd. */
-+/* Copyright (C) 2023-2024 Linaro Ltd. */
- 
-+#include <linux/array_size.h>
-+#include <linux/bits.h>
- #include <linux/types.h>
- 
- #include "../ipa.h"
+-#include <linux/kernel.h>
+-#include <linux/bits.h>
+ #include <linux/bitops.h>
+-#include <linux/bitfield.h>
+ #include <linux/io.h>
+ #include <linux/build_bug.h>
+ #include <linux/device.h>
 diff --git a/drivers/net/ipa/reg/ipa_reg-v5.5.c b/drivers/net/ipa/reg/ipa_reg-v5.5.c
-index 26ca9c9bac599..2436d3489cf2b 100644
+index 2436d3489cf2b..fe0b4b50c62a7 100644
 --- a/drivers/net/ipa/reg/ipa_reg-v5.5.c
 +++ b/drivers/net/ipa/reg/ipa_reg-v5.5.c
-@@ -1,7 +1,9 @@
- // SPDX-License-Identifier: GPL-2.0
- 
--/* Copyright (C) 2023 Linaro Ltd. */
-+/* Copyright (C) 2023-2024 Linaro Ltd. */
- 
-+#include <linux/array_size.h>
-+#include <linux/bits.h>
+@@ -6,7 +6,6 @@
+ #include <linux/bits.h>
  #include <linux/kernel.h>
  #include <linux/types.h>
- #include <linux/bits.h>
+-#include <linux/bits.h>
+ 
+ #include "../ipa_reg.h"
+ #include "../ipa_version.h"
 -- 
 2.40.1
 
