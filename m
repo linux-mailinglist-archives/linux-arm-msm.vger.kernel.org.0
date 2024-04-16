@@ -1,173 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-17580-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17581-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF3248A69BF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 13:38:57 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C1578A6AF8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 14:32:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5C7E8B216D5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 11:38:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6D92E1C214B8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 12:32:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A0CA12882D;
-	Tue, 16 Apr 2024 11:38:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 917F312B148;
+	Tue, 16 Apr 2024 12:32:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="k/MOR36/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sxPlLjZ5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B90C1292DB
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 11:38:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28CC48662B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 12:32:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713267527; cv=none; b=nt1gdm8SkVct/daKmwTONyAbcrJ/90hQSAxdvL+G+m1amV+aS4qknoXOWp0Sh3xHDA3KEKFJO/92NnnHvWQ3GqRDLPYeD/Z2cWk+idWaT3GtQNhP9BaxwnirQ9JAR3S9soG2d4WDUyz3+xkFDXi8JBhp1Efzyreut4NOllyDXPU=
+	t=1713270736; cv=none; b=rCUjAl3kDvUSbNA/bZbCeZREdzzxuWiWoFks9UxZM1Do79R7snhYsMNGo6YPw9l/nmwpu260MmVcBcWiS2mFqdg0m39MCjngdGLIGOH6s/K/5AyeHEWECQ6daaCwy5DpKLj8fTdGr6/fml0VTkX580soeBQY7fD60hEJsiBZWh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713267527; c=relaxed/simple;
-	bh=78vEOqzL95dc+B7WbWraGxUA3wTUPg9rnOmG+t2Iy9Y=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=emuL2/pN1JLsy16sfjglNScPzinP02yt/hvZRbeli2zOuhXL7Vst54mM7RA/EPDGYx4sG5IxkwWZcjL4aKibTHIQK8nhgrvoNo6VGddiImPK6X1KvfPAlBIeSN9nCQrd2ZRQ6qqFPWIVn+FV70ojAUUbtmwCSuhICma6IQqfIr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=k/MOR36/; arc=none smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-570441bc23bso668130a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 04:38:46 -0700 (PDT)
+	s=arc-20240116; t=1713270736; c=relaxed/simple;
+	bh=Pt5/vGHuhGceeo+QpbsK2XpxTMgmfSIqSNFU1JiurME=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MVeNnBxDoFKPhnMFS5l7nCiFhqSmWgdcd05tElWCE8It0qIovx/In+0eA51dkKDGMrZksQHsR7ieV3OQ/oD17bxw1c67pdEvu/hcl6VBLkhtUtk3laW47pB4HMYn3LurlF3TblYGBYWUnJYlj88shpuvR4mo9ziGHp0tKVPQchA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sxPlLjZ5; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-617e6c873f3so47727637b3.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 05:32:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1713267524; x=1713872324; darn=vger.kernel.org;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yLga7OC4nYSq9BYdu8C0P/BImJRfA0KFWKdGFi9hq8g=;
-        b=k/MOR36/WBCAUC5+dkiiqXGmS4obsvDIBZlYz6RvPI82op2gyM8KmbYo+oIEYlAlD/
-         SkHj6oo84T1ovPXl6wnLHDqvKYvE2+xEuxdKlGniZC83ihYNW0cmkBUshBATeAFd0q6V
-         4kWySr22KCE2+jOJfGE4kns/GDu2EYUc5Ib3rO7I4n0x82+0i/F+RGiakp6VSGJalpJg
-         BxySIvIp3ZnsGcKR/266LaxJ5QfzxUde3PTpljchfq6bBtXC50szYOdIuNeu9ByV6pS0
-         Ep2Hpjm3TCna32jrxg23ONEINGEKeCBRNM3L7l/KdQVuTi9QX94RaM3u2+VE8TKy+ndP
-         LCgQ==
+        d=linaro.org; s=google; t=1713270734; x=1713875534; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=qFzNumwLL/PShEK3mtGPwjGln1YmU4ULHeA3GQnXIh8=;
+        b=sxPlLjZ5GCGhLrxd9XBWpj/89hu9GSM/WsGPuHEsYI6fuMPDZvBklz9i9rm3A//m7N
+         BqNqVOCg32CkqQwHMuNYLcmuTUAAqqBRXBRFRe7gsknq7Z2H2QhZ2m+kaEXT2/kaS0YS
+         3ApxjEXH51bBG7n1LdHPFQbAcaeByGEmuITFBRUa94BED/cdqkknpyepqqkqdVrsQRiO
+         8eTdErEl/tkZ+NZoldn1p4EkrCIYW2YuCnU9wHkxYyfnRZZLhOZG6Na4pCCYM0/XyLX1
+         8gf6iiqayylIGEC6smp/9tC3508NQHncAL8vKxl2S6yxLeq6UBw/Tm4aPfz+SuxMxsuw
+         dQEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713267524; x=1713872324;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=yLga7OC4nYSq9BYdu8C0P/BImJRfA0KFWKdGFi9hq8g=;
-        b=w6ODp1ypFt13/kMW87UtU8EIE9rnt6sWbIiCkA6YcXNBPSjgEUh4dPNcLJ0kOGN9re
-         CIb5fr+dYywsyCglBX5KDQ4fK0PYcfKe9s6yQgyfyIZKF0QS/TiRl0rYPCZyoOC/Hl64
-         54bQgKOhbU6nXsF9nAhUjoAThKqTggLeZlOIdLRlIWTJe9lzwNLWo1plFSpYtQlkhYhs
-         7n3yoXC/D9XbTXp4eryKiHoJGyl/CEVocrczzuAndFPEO3X7M5iZL88utH95kzGlfIJj
-         S5EaAk0gAw3TbEh20qWznuw135T37OBf97W9FRrcBCxCp7cvQeE4ZCCktro8bZgbnia0
-         cJag==
-X-Forwarded-Encrypted: i=1; AJvYcCW/PDWbSwK8TTWPGygluA0m1AUYes0LcvcOchZ7bWN7TMKEUf4/YTzjIlbCH1Uzte6t2FLtQiLExhoBf1XTHb8tRzSNcmovMMiB0bp+1A==
-X-Gm-Message-State: AOJu0YwoHP7wx6GKXwmezACZduYGt7EP2N/1nFLO6Z3ZiFgPh8VJpApq
-	OSyHfn7UcGJCrg3ojmgJKRoJeZ2NXYtVylnpK/QR+GqgKs+u3oasacWfoUVGoac=
-X-Google-Smtp-Source: AGHT+IGsl2HiaOewcfGkAfX8WYgD4puftl3jXzNcbfuXILpdAUeSXu7mMz9n+3mpi50aQf05U7taGQ==
-X-Received: by 2002:a50:9357:0:b0:56e:232b:95cd with SMTP id n23-20020a509357000000b0056e232b95cdmr8225752eda.41.1713267524650;
-        Tue, 16 Apr 2024 04:38:44 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id fe1-20020a056402390100b005701df2ea98sm3207437edb.32.2024.04.16.04.38.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Apr 2024 04:38:44 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1713270734; x=1713875534;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qFzNumwLL/PShEK3mtGPwjGln1YmU4ULHeA3GQnXIh8=;
+        b=TQfY8TQ/66/QsqmEfSmBA7f8d1xfRHDMB7+0bId64A471AcCv61AVG/Tup5G3Xa5Sa
+         ExWgqRNKVnPUUeY5rFH87Z5RdXJBdJaxNTxw6R2i4TNPTqLwNNySiJakTLElPAgfz9z/
+         flO944NO44qkd1sMWWsi0qy4mcXDE91m/pIB0fRgsIBis9Yp5LdZVfatq//9u1ZUw7wU
+         /+9H1cnfh4OGOIrLwF4tV/+hZq/txTRli6Sj8PNpVhQ18FWSp1PFwwfCx/n7tHjzA1yE
+         twvNwxuZN1MsNJ8YeyuNm2NRJLIcMUenzWuuKiM69aF3xdiDMqOlkuR0odlfVsVoaSR+
+         njvg==
+X-Forwarded-Encrypted: i=1; AJvYcCXeKtepLlGpoVxCfNbpjiAUyYi/Fe/hRWw020azdVxMaAFcHamOfvv8ZESwGynrnroBCrvHMLjsRuE/Li0At4KfBuLN1ImubcKiL0Irkg==
+X-Gm-Message-State: AOJu0YzBC4vEi/OnQCMUrKgt9m26zveH05pFfNNT0m10DJ6RLdkgVeFG
+	rd55vhQJwmfciZq0+94Lu7x640pLyxADlKoo3sIW2U/MFZ+/UFoltLxbn08863BZuFfla+VLyY5
+	rzqbQiqVoSaCab2tHY253Idq9/C6xTNfC6yU3cg==
+X-Google-Smtp-Source: AGHT+IGV27KS53nGXMmiHjntrt3Z5nGpbgyi0jBS2Pa+b7xJatvlhEtb1vxhnn5pvUEhuRd3C8c95o+slvde3TTPid0=
+X-Received: by 2002:a25:1687:0:b0:de0:fb80:5c6a with SMTP id
+ 129-20020a251687000000b00de0fb805c6amr10814478ybw.60.1713270734122; Tue, 16
+ Apr 2024 05:32:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 16 Apr 2024 13:38:43 +0200
-Message-Id: <D0LINETM8WNA.27BORT75W1N0C@fairphone.com>
-To: "Viken Dadhaniya" <quic_vdadhani@quicinc.com>,
- <cros-qcom-dts-watchers@chromium.org>, <andersson@kernel.org>,
- <konrad.dybcio@linaro.org>, <swboyd@chromium.org>, <robh@kernel.org>,
- <krzk+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <conor+dt@kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <rajpat@codeaurora.org>,
- <mka@chromium.org>, <rojay@codeaurora.org>
-Cc: <quic_msavaliy@quicinc.com>, <quic_anupkulk@quicinc.com>
-Subject: Re: [PATCH v1] arm64: dts: qcom: sc7280: Remove CTS/RTS
- configuration
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-X-Mailer: aerc 0.17.0
-References: <20240416105650.2626-1-quic_vdadhani@quicinc.com>
-In-Reply-To: <20240416105650.2626-1-quic_vdadhani@quicinc.com>
+MIME-Version: 1.0
+References: <20240414-arm-psci-system_reset2-vendor-reboots-v2-0-da9a055a648f@quicinc.com>
+ <20240414-arm-psci-system_reset2-vendor-reboots-v2-2-da9a055a648f@quicinc.com>
+ <Zh5FKtLVhIH-6R-I@bogus>
+In-Reply-To: <Zh5FKtLVhIH-6R-I@bogus>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 16 Apr 2024 15:32:02 +0300
+Message-ID: <CAA8EJpqHOWCLg65TSrpy6eh2kFL2=5uu8Kp+WKqu8dLZdowfZA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] dt-bindings: arm: Document reboot mode magic
+To: Sudeep Holla <sudeep.holla@arm.com>
+Cc: Elliot Berman <quic_eberman@quicinc.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Vinod Koul <vkoul@kernel.org>, Andy Yan <andy.yan@rock-chips.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Mark Rutland <mark.rutland@arm.com>, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>, Melody Olvera <quic_molvera@quicinc.com>, 
+	Shivendra Pratap <quic_spratap@quicinc.com>, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	Florian Fainelli <florian.fainelli@broadcom.com>, linux-pm@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue Apr 16, 2024 at 12:56 PM CEST, Viken Dadhaniya wrote:
-> Remove CTS and RTS pinctrl configuration for UART5 node as
-> it's designed for debug UART for all the board variants of the
-> sc7280 chipset.
+On Tue, 16 Apr 2024 at 12:30, Sudeep Holla <sudeep.holla@arm.com> wrote:
 >
-> Also change compatible string to debug UART.
-
-This change has little to do with the SoC design though and is dependent
-on the usage on a given board, right? Also the QCM6490 datasheet
-mentions gpio21 & gpio22 can be used for UART_CTS and UART_RFR.
-
-But at least consistency-wise this change makes sense, in practically
-all other SoCs one UART is marked as geni-debug-uart.
-
-But with this patch you should then also remove some overrides that are
-placed in various boards already?
-
-arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts:     compatible =3D "qco=
-m,geni-debug-uart";
-arch/arm64/boot/dts/qcom/qcm6490-idp.dts:       compatible =3D "qcom,geni-d=
-ebug-uart";
-arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts:   compatible =3D "qcom,geni-d=
-ebug-uart";
-arch/arm64/boot/dts/qcom/sc7280-idp.dtsi:       compatible =3D "qcom,geni-d=
-ebug-uart";
-arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi:     compatible =3D "qcom,geni-d=
-ebug-uart";
-
-Regards
-Luca
-
+> On Sun, Apr 14, 2024 at 12:30:25PM -0700, Elliot Berman wrote:
+> > Add bindings to describe vendor-specific reboot modes. Values here
+> > correspond to valid parameters to vendor-specific reset types in PSCI
+> > SYSTEM_RESET2 call.
+> >
 >
-> Fixes: 38cd93f413fd ("arm64: dts: qcom: sc7280: Update QUPv3 UART5 DT nod=
-e")
-> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sc7280.dtsi | 14 ++------------
->  1 file changed, 2 insertions(+), 12 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/q=
-com/sc7280.dtsi
-> index 38c183b2bb26..2a6b4c4639d1 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -1440,12 +1440,12 @@
->  			};
-> =20
->  			uart5: serial@994000 {
-> -				compatible =3D "qcom,geni-uart";
-> +				compatible =3D "qcom,geni-debug-uart";
->  				reg =3D <0 0x00994000 0 0x4000>;
->  				clocks =3D <&gcc GCC_QUPV3_WRAP0_S5_CLK>;
->  				clock-names =3D "se";
->  				pinctrl-names =3D "default";
-> -				pinctrl-0 =3D <&qup_uart5_cts>, <&qup_uart5_rts>, <&qup_uart5_tx>, <=
-&qup_uart5_rx>;
-> +				pinctrl-0 =3D <&qup_uart5_tx>, <&qup_uart5_rx>;
->  				interrupts =3D <GIC_SPI 606 IRQ_TYPE_LEVEL_HIGH>;
->  				power-domains =3D <&rpmhpd SC7280_CX>;
->  				operating-points-v2 =3D <&qup_opp_table>;
-> @@ -5397,16 +5397,6 @@
->  				function =3D "qup04";
->  			};
-> =20
-> -			qup_uart5_cts: qup-uart5-cts-state {
-> -				pins =3D "gpio20";
-> -				function =3D "qup05";
-> -			};
-> -
-> -			qup_uart5_rts: qup-uart5-rts-state {
-> -				pins =3D "gpio21";
-> -				function =3D "qup05";
-> -			};
-> -
->  			qup_uart5_tx: qup-uart5-tx-state {
->  				pins =3D "gpio22";
->  				function =3D "qup05";
+> IIUC, PSCI SYSTEM_RESET will be always supported, so the choice of using
+> SYSTEM_RESET2 sounds like a system policy and must not have any information
+> in the device tree. All required support from PSCI is discoverable and
+> the policy choice must be userspace driven. That's my opinion.
 
+Well, we are talking about the vendor-specific resets, which are not
+discoverable. The spec defines them as "implementation defined".
+For example, PCSI spec doesn't define a way to add "reset to
+bootloader" or "reset to recovery" kinds of resets.
+
+I think the bindings at least should make it clear that the vendor bit
+it being set automatically. I won't comment whether this is a good
+decision or not.
+
+-- 
+With best wishes
+Dmitry
 
