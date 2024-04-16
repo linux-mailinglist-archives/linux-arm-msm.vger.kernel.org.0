@@ -1,132 +1,392 @@
-Return-Path: <linux-arm-msm+bounces-17604-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17605-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D92AC8A6FAD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 17:22:36 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4EFA88A713F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 18:21:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8EEFC1F2211C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 15:22:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 07459281C0F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 16:21:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DF79131733;
-	Tue, 16 Apr 2024 15:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EBBE131BC9;
+	Tue, 16 Apr 2024 16:21:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dCxYMOWZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gu6YTQ10"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037BD13048E
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 15:20:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E21131BB9
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 16:21:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713280825; cv=none; b=ol/ymhpas7ns3IGSWh0fnvMJYtCJJHB6H5o18Cxo6N0iXiGxa8QKjCoNlvQGsHI+iFnFSh1feV6mckTLstbY6j4uxT4+PU0owU9an+sdUpizhFcQoTPVaR8jlxIXny9BYA4nQXbWJu0eCLCT0DJl+5tl0PUQZWd1CZmzRvYcxZ0=
+	t=1713284489; cv=none; b=su1Jsnacw2VzwkG5K4+IO0gtadt2dw12UR2XLtPsEFfkfqSK8JEiBPYSwFOuAFhA3+tAa3Ap3qZRRGcgapNRxCSW7+c7AJ5bISWamvvSS1KIgIue3yuGo09oGH83fETpd1P0HO9lI0OJSrM+bESnKoraQyFheYlfS+FaIAYS458=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713280825; c=relaxed/simple;
-	bh=ogk92evleqkPuUaIzhiJjs+SO3WbwlZaxhfQYNosFdo=;
+	s=arc-20240116; t=1713284489; c=relaxed/simple;
+	bh=LBaNh8aKL4DV54OtrVYLE36TZWBtU1SUkkDnzVmMTpA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RgX4y4s9kKI6l5CqGz7jlKSHsbMrGEfwFGeQWj9RvtZAKi1CEAsyO6FP199d3mktSrBIUfOEhVmnHNGne5Bg1ToYVtDu8vQZd0uobZNdqRos1MLjqVp+hr9ZvbivyvvCQywY4ohMlLVnyEvpwclXctst5t+oXtq9vpZh+hdadcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dCxYMOWZ; arc=none smtp.client-ip=209.85.219.177
+	 To:Cc:Content-Type; b=E7TadedKRn30sx0B1K9PDV1X8HsjAns3kzb7bD5rg1ybfwVem+xzAXU9mCPP4XtuPscLYTfAYO319uZ4rHmCwmKRp5bqWnJ6djvk76veHszgUkXVFKw3tKQNtPdl5j6DpymsPFvgsazRidZ0um9v1fmNKTazsXfuEW+TGXWmlW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gu6YTQ10; arc=none smtp.client-ip=209.85.219.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-d9b9adaf291so4501661276.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 08:20:22 -0700 (PDT)
+Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-dcc84ae94c1so4381241276.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 09:21:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713280822; x=1713885622; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1713284486; x=1713889286; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=mMO3J/koq2VtvnAEkr+zbw/DfMlDxsEOqsgIHHsF7Fg=;
-        b=dCxYMOWZLpi9SzxL82oYeoszXPlVu2T7t8nrGA8nYJLxiZHGfcZeqUGW2N2Nc0bm3a
-         bk2ap5DaEJrk81YgtZYVM9Ac+yo0XyNNW5Q86MnbkgwgklZYx32jhLM2rCKZ9n5isACl
-         TAjmyPrGUqhxvR5T1EhysxYFqE4nMnUpQkbL1dDgicmAq/BS2UuVSCjtUePDkT+vEkhy
-         zun6F2bxPh6b08BHa/HixWddN7DXmNt6A+4HxKn5B5OwY2pFsr6c2b63JpirD1A209YS
-         gz5RmufOo6AOOalk3LE0+AQVGLcgU+0SR7eeGb+j5cwGwpLWbKbx/jI8bOXaLefjRJIF
-         NMLw==
+        bh=hEvZfaEmxwcI8wMe4jWsSrr189JgI0uoTVpextxqfmc=;
+        b=gu6YTQ10wC3IKO/wkwOmxqyP5fa6azT3PtdjQo/AhYS4zNICgFW20Vm36Me0KBYZD6
+         4wiAEWjnXZYTm1YEcK7srVWKu3hW97FZSxlxid0bFhIg4rVSFVd2O7dadAvZDtNwKa2G
+         9N8mJ3Picr4EbHf0QTQPrrSgy4lInN6QtXasD4umtmi6/Jf9XvAL0L+mlfefXSvAt3Ws
+         CpGT2qNyYWv9Jh+zcLbU98asqKr+php0ZKzCvS/yXpP3AxbnU2eLWByLXxNCHDa1648I
+         DNxE+uaDD0sPv5Cz6wmTq04fQBVCep246QhKGC/XtfzbnPawp/KnCUZAUL5DPu6j2mNp
+         MINw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713280822; x=1713885622;
+        d=1e100.net; s=20230601; t=1713284486; x=1713889286;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=mMO3J/koq2VtvnAEkr+zbw/DfMlDxsEOqsgIHHsF7Fg=;
-        b=dCaRCIOTS8h5iaUSqAyl92wX5kPbH5HKjS4xmxU+wge7Yd+Wsji1tmFHEuBk+H6TTM
-         Kd0LqKDm/sEvAG6CVTYRPO5uB6HWVk//AFvK0EfNEz0rd/MZlYEdcjlKp8RgODjhH0DB
-         lzn7XeXcs7zhaqq7XCTWG8Zp4bvKgo6C+mgMQp7AiSIlFlOkmEzU4/lKvv4Wr5QnAvla
-         rEfZ7d3E9D0qNA+sghFZLAuu314qz6wx1ofRAWF/bYEwomgXZ7RMS7fMxXoM/05chz3w
-         RIn9C5xU9q3x5GYio0TYsFcsegLThzDVJE/rJesi+qlmgscrmLd6DspaoDaRPWLZ83l4
-         5LiQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWhx5s/qq2xvTNK75ErPyXsDoN6AGAiP0csH2K6NtAzahsdLYn7JHvkdjHDTg9tncEwXo2VEnOGz8a0ZwZvqlAmX/lPlkCOMafQVad96Q==
-X-Gm-Message-State: AOJu0Ywd1/EM5dqxZKm8nGuGJRYEHI/P80AFUb9eT9zDPdzAWhPjXYug
-	qtB7X4VYa8Ezm1i6QYaHM2pNK1CdsCFQSR4gHnNXobBqDtPFpwOUcJBJkI7I2iKwmLAAjwQ9M1u
-	Wg7Pmw4BND42mkBSA3Eq+ZQcNJKDDYxeNN6cOWA==
-X-Google-Smtp-Source: AGHT+IEtsDJfZJ76KZn5Td8LpcHSFPRQ3TKmnwcVPVblLvXhJ7AGte9txzMCMRd181hjAL5xfz3A+oms+boqL8Xkn4s=
-X-Received: by 2002:a25:8449:0:b0:dcf:b5b7:c72 with SMTP id
- r9-20020a258449000000b00dcfb5b70c72mr11140317ybm.0.1713280822073; Tue, 16 Apr
- 2024 08:20:22 -0700 (PDT)
+        bh=hEvZfaEmxwcI8wMe4jWsSrr189JgI0uoTVpextxqfmc=;
+        b=LoFtwP7DTAu/zXKdSLd3Ky1dRAazJOnsrk2mmgjgzX0VMR4/orQML1rMKyQmt224PS
+         +2NaA/89SqGdxT3806aqnbhlgjpc3G+il7pkwIi2/tYOzcz1Rjsmi4Sc0G54JfSHQ5aM
+         TvFOqaDPL9mktWfnbjdtQLGArLRZmbv9BgtkfVpbnzX45bWJ/IUNrsrItI6ffXeQFg9F
+         daVh8VVHPS2bs1lz3cPyeUQTwQuqCIJMhCecMdkjHmpkYvs0Wt0JYzenbCV7qDKE+yEF
+         IdEm1NJyBVOTP/nAx76LJR1yY0kGWy9mVWHUd8ndTnnc2K9haeJU0rVuoqxf3BAR7XBE
+         7j5Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXM0pmdUmTcp2YfzDS2e/Ro7ELha7Q37sLv3o7JGqqzVOKNVNho95T9mXzhzPdpnUpTVcxilQw4xWNjFr+gpy08WCzIqeTYXF4NQtzZRg==
+X-Gm-Message-State: AOJu0YxRs0snIWk0o6u5qvEbqJyavWDk9rkqRyNUH5s2A62lhwz2p7tg
+	HMPINBSz/H/v9a4xJ3hKfPUXwMLMMX619L3beE0ltrYcfXRJEDwljJkt/2nPP4/i3QNf52Xcbtc
+	GoV526aWD09UwK8erbCfaDHgwhpAP/CVT8uzqcA==
+X-Google-Smtp-Source: AGHT+IHs2A/yxNesuXs8eVGZJt+nh2Nt5NC9lR/fK5Z5dVdIiyD9iu9XKitJNNp++pQSha9xQQFEQ59qAR3QbKEq6JI=
+X-Received: by 2002:a25:b0b:0:b0:dc7:4c92:16a3 with SMTP id
+ 11-20020a250b0b000000b00dc74c9216a3mr12452857ybl.27.1713284486417; Tue, 16
+ Apr 2024 09:21:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240416-ucsi-glink-altmode-v1-0-890db00877ac@linaro.org>
- <20240416-ucsi-glink-altmode-v1-2-890db00877ac@linaro.org>
- <c129b349-dfaa-4b10-9b8c-6098d04b9373@linaro.org> <CAA8EJpqH2_ENE6am=m9dtwk_+_Vbc4pZG9=Y_4-b-p0fKQ4sBg@mail.gmail.com>
- <66cd0d96-7576-4f70-b4da-b8d518253763@linaro.org>
-In-Reply-To: <66cd0d96-7576-4f70-b4da-b8d518253763@linaro.org>
+References: <20240328095044.2926125-1-quic_sibis@quicinc.com> <20240328095044.2926125-3-quic_sibis@quicinc.com>
+In-Reply-To: <20240328095044.2926125-3-quic_sibis@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 16 Apr 2024 18:20:11 +0300
-Message-ID: <CAA8EJppf9z+q4_xjQE62Vi-2BiHJpUi7mS0EMSRV_XxbGH==qg@mail.gmail.com>
-Subject: Re: [PATCH 2/8] usb: typec: altmode: add low level altmode
- configuration helper
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Bjorn Andersson <andersson@kernel.org>, linux-usb@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Date: Tue, 16 Apr 2024 19:21:15 +0300
+Message-ID: <CAA8EJpoQyzF1E2xFPHvzz5Nk=w3J2abd3Y13nc+4FK-jRQbnFw@mail.gmail.com>
+Subject: Re: [PATCH 2/5] mailbox: Add support for QTI CPUCP mailbox controller
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: sudeep.holla@arm.com, cristian.marussi@arm.com, andersson@kernel.org, 
+	konrad.dybcio@linaro.org, jassisinghbrar@gmail.com, robh+dt@kernel.org, 
+	krzysztof.kozlowski+dt@linaro.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com, conor+dt@kernel.org, 
+	quic_gkohli@quicinc.com, quic_nkela@quicinc.com, quic_psodagud@quicinc.com
 Content-Type: text/plain; charset="UTF-8"
 
-On Tue, 16 Apr 2024 at 17:57, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+On Thu, 28 Mar 2024 at 11:52, Sibi Sankar <quic_sibis@quicinc.com> wrote:
 >
+> Add support for CPUSS Control Processor (CPUCP) mailbox controller,
+> this driver enables communication between AP and CPUCP by acting as
+> a doorbell between them.
 >
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
 >
-> On 4/16/24 16:48, Dmitry Baryshkov wrote:
-> > On Tue, 16 Apr 2024 at 17:32, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
-> >>
-> >>
-> >>
-> >> On 4/16/24 04:20, Dmitry Baryshkov wrote:
-> >>> In some obscure cases (Qualcomm PMIC Glink) altmode is completely
-> >>> handled by the firmware. Linux does not get proper partner altmode info.
-> >>> Instead we get the notification once the altmode is negotiated and
-> >>> entered (or left). However even in such a case the driver has to switch
-> >>> board components (muxes, switches and retimers) according to the altmode
-> >>> selected by the hardware.
-> >>>
-> >>> We can not use existing typec_altmode_enter() / typec_altmode_exit() /
-> >>> typec_altmode_notify() functions in such a case, since there is no
-> >>> corresponding partner's altmode instance.
-> >>>
-> >>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >>> ---
-> >>
-> >> Should this now be called from e.g. typec_almode_notify to limit
-> >> duplication?
-> >
-> > typec_altmode_notify works only if there is an altmode->partner (which
-> > we don't have with pmic-glink).
+> rfc:
+> * Use chan->lock and chan->cl to detect if the channel is no longer
+>   Available. [Dmitry]
+> * Use BIT() instead of using manual shifts. [Dmitry]
+> * Don't use integer as a pointer value. [Dmitry]
+> * Allow it to default to of_mbox_index_xlate. [Dmitry]
+> * Use devm_of_iomap. [Dmitry]
+> * Use module_platform_driver instead of module init/exit. [Dmitry]
+> * Get channel number using mailbox core (like other drivers) and
+>   further simplify the driver by dropping setup_mbox func.
 >
-> Yes and this seems to be an excerpt from these functions, should they
-> now drop that code and call this function instead, so as not to have
-> it in the tree twice?
+>  drivers/mailbox/Kconfig           |   8 ++
+>  drivers/mailbox/Makefile          |   2 +
+>  drivers/mailbox/qcom-cpucp-mbox.c | 205 ++++++++++++++++++++++++++++++
+>  3 files changed, 215 insertions(+)
+>  create mode 100644 drivers/mailbox/qcom-cpucp-mbox.c
+>
+> diff --git a/drivers/mailbox/Kconfig b/drivers/mailbox/Kconfig
+> index 42940108a187..23741a6f054e 100644
+> --- a/drivers/mailbox/Kconfig
+> +++ b/drivers/mailbox/Kconfig
+> @@ -273,6 +273,14 @@ config SPRD_MBOX
+>           to send message between application processors and MCU. Say Y here if
+>           you want to build the Spreatrum mailbox controller driver.
+>
+> +config QCOM_CPUCP_MBOX
+> +       tristate "Qualcomm Technologies, Inc. CPUCP mailbox driver"
+> +       depends on ARCH_QCOM || COMPILE_TEST
+> +       help
+> +         Qualcomm Technologies, Inc. CPUSS Control Processor (CPUCP) mailbox
+> +         controller driver enables communication between AP and CPUCP. Say
+> +         Y here if you want to build this driver.
+> +
+>  config QCOM_IPCC
+>         tristate "Qualcomm Technologies, Inc. IPCC driver"
+>         depends on ARCH_QCOM || COMPILE_TEST
+> diff --git a/drivers/mailbox/Makefile b/drivers/mailbox/Makefile
+> index 18793e6caa2f..53b512800bde 100644
+> --- a/drivers/mailbox/Makefile
+> +++ b/drivers/mailbox/Makefile
+> @@ -59,4 +59,6 @@ obj-$(CONFIG_SUN6I_MSGBOX)    += sun6i-msgbox.o
+>
+>  obj-$(CONFIG_SPRD_MBOX)                += sprd-mailbox.o
+>
+> +obj-$(CONFIG_QCOM_CPUCP_MBOX)  += qcom-cpucp-mbox.o
+> +
+>  obj-$(CONFIG_QCOM_IPCC)                += qcom-ipcc.o
+> diff --git a/drivers/mailbox/qcom-cpucp-mbox.c b/drivers/mailbox/qcom-cpucp-mbox.c
+> new file mode 100644
+> index 000000000000..e27a258fe57a
+> --- /dev/null
+> +++ b/drivers/mailbox/qcom-cpucp-mbox.c
+> @@ -0,0 +1,205 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2024, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#include <linux/interrupt.h>
+> +#include <linux/irq.h>
+> +#include <linux/irqdomain.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/mailbox_controller.h>
+> +#include <linux/module.h>
+> +
+> +#define APSS_CPUCP_IPC_CHAN_SUPPORTED          3
+> +#define APSS_CPUCP_MBOX_CMD_OFF                        0x4
+> +
+> +/* Tx Registers */
+> +#define APSS_CPUCP_TX_MBOX_IDR                 0
+> +#define APSS_CPUCP_TX_MBOX_CMD                 0x100
+> +
+> +/* Rx Registers */
+> +#define APSS_CPUCP_RX_MBOX_IDR                 0
+> +#define APSS_CPUCP_RX_MBOX_CMD                 0x100
+> +#define APSS_CPUCP_RX_MBOX_MAP                 0x4000
+> +#define APSS_CPUCP_RX_MBOX_STAT                        0x4400
+> +#define APSS_CPUCP_RX_MBOX_CLEAR               0x4800
+> +#define APSS_CPUCP_RX_MBOX_EN                  0x4C00
+> +#define APSS_CPUCP_RX_MBOX_CMD_MASK            0xFFFFFFFFFFFFFFFF
+> +
+> +/**
+> + * struct qcom_cpucp_mbox - Holder for the mailbox driver
+> + * @chans:                     The mailbox channel
+> + * @mbox:                      The mailbox controller
+> + * @tx_base:                   Base address of the CPUCP tx registers
+> + * @rx_base:                   Base address of the CPUCP rx registers
+> + * @dev:                       Device associated with this instance
+> + * @irq:                       CPUCP to AP irq
+> + */
+> +struct qcom_cpucp_mbox {
+> +       struct mbox_chan chans[APSS_CPUCP_IPC_CHAN_SUPPORTED];
+> +       struct mbox_controller mbox;
+> +       void __iomem *tx_base;
+> +       void __iomem *rx_base;
+> +       struct device *dev;
+> +       int irq;
+> +};
+> +
+> +static inline int channel_number(struct mbox_chan *chan)
+> +{
+> +       return chan - chan->mbox->chans;
+> +}
+> +
+> +static irqreturn_t qcom_cpucp_mbox_irq_fn(int irq, void *data)
+> +{
+> +       struct qcom_cpucp_mbox *cpucp = data;
+> +       struct mbox_chan *chan;
+> +       unsigned long flags;
+> +       u64 status;
+> +       u32 val;
+> +       int i;
+> +
+> +       status = readq(cpucp->rx_base + APSS_CPUCP_RX_MBOX_STAT);
+> +
+> +       for (i = 0; i < APSS_CPUCP_IPC_CHAN_SUPPORTED; i++) {
+> +               val = 0;
+> +               if (status & ((u64)1 << i)) {
 
-I thought about it, but then I abandoned this idea. The
-typec_altmode_notify() has its own use case, normal altmode drivers.
-It is an error to call it if there is no partner registered, etc. So I
-wanted to preserve error checks in that function instead of dropping
-them. The significant part of the code is shared anyway thanks to
-typec_altmode_set_switches().
+BIT() or test_bit()
+
+> +                       val = readl(cpucp->rx_base + APSS_CPUCP_RX_MBOX_CMD + (i * 8) + APSS_CPUCP_MBOX_CMD_OFF);
+
+#define APSS_CPUCP_MBOX_CMD_OFF(i)
+
+> +                       chan = &cpucp->chans[i];
+> +                       spin_lock_irqsave(&chan->lock, flags);
+> +                       if (chan->cl)
+> +                               mbox_chan_received_data(chan, &val);
+> +                       spin_unlock_irqrestore(&chan->lock, flags);
+> +                       writeq(status, cpucp->rx_base + APSS_CPUCP_RX_MBOX_CLEAR);
+
+Why is status written from inside the loop? If the bits are cleared by
+writing 1, then you should be writing BIT(i) to that register. Also
+make sure that it is written at the correct time, so that if there is
+an event before notifying the driver, it doesn't get lost.
+
+> +               }
+> +       }
+> +
+> +       return IRQ_HANDLED;
+> +}
+> +
+> +static int qcom_cpucp_mbox_startup(struct mbox_chan *chan)
+> +{
+> +       struct qcom_cpucp_mbox *cpucp = container_of(chan->mbox, struct qcom_cpucp_mbox, mbox);
+> +       unsigned long chan_id = channel_number(chan);
+> +       u64 val;
+> +
+> +       val = readq(cpucp->rx_base + APSS_CPUCP_RX_MBOX_EN);
+> +       val |= BIT(chan_id);
+> +       writeq(val, cpucp->rx_base + APSS_CPUCP_RX_MBOX_EN);
+> +
+> +       return 0;
+> +}
+> +
+> +static void qcom_cpucp_mbox_shutdown(struct mbox_chan *chan)
+> +{
+> +       struct qcom_cpucp_mbox *cpucp = container_of(chan->mbox, struct qcom_cpucp_mbox, mbox);
+> +       unsigned long chan_id = channel_number(chan);
+> +       u64 val;
+> +
+> +       val = readq(cpucp->rx_base + APSS_CPUCP_RX_MBOX_EN);
+> +       val &= ~BIT(chan_id);
+> +       writeq(val, cpucp->rx_base + APSS_CPUCP_RX_MBOX_EN);
+> +}
+> +
+> +static int qcom_cpucp_mbox_send_data(struct mbox_chan *chan, void *data)
+> +{
+> +       struct qcom_cpucp_mbox *cpucp = container_of(chan->mbox, struct qcom_cpucp_mbox, mbox);
+> +       unsigned long chan_id = channel_number(chan);
+> +       u32 *val = data;
+> +
+> +       writel(*val, cpucp->tx_base + APSS_CPUCP_TX_MBOX_CMD + (chan_id * 8) + APSS_CPUCP_MBOX_CMD_OFF);
+> +
+> +       return 0;
+> +}
+> +
+> +static const struct mbox_chan_ops qcom_cpucp_mbox_chan_ops = {
+> +       .startup = qcom_cpucp_mbox_startup,
+> +       .send_data = qcom_cpucp_mbox_send_data,
+> +       .shutdown = qcom_cpucp_mbox_shutdown
+> +};
+> +
+> +static int qcom_cpucp_mbox_probe(struct platform_device *pdev)
+> +{
+> +       struct qcom_cpucp_mbox *cpucp;
+> +       struct mbox_controller *mbox;
+> +       int ret;
+> +
+> +       cpucp = devm_kzalloc(&pdev->dev, sizeof(*cpucp), GFP_KERNEL);
+> +       if (!cpucp)
+> +               return -ENOMEM;
+> +
+> +       cpucp->dev = &pdev->dev;
+> +
+> +       cpucp->rx_base = devm_of_iomap(cpucp->dev, cpucp->dev->of_node, 0, NULL);
+> +       if (IS_ERR(cpucp->rx_base))
+> +               return PTR_ERR(cpucp->rx_base);
+> +
+> +       cpucp->tx_base = devm_of_iomap(cpucp->dev, cpucp->dev->of_node, 1, NULL);
+> +       if (IS_ERR(cpucp->tx_base))
+> +               return PTR_ERR(cpucp->tx_base);
+> +
+> +       writeq(0, cpucp->rx_base + APSS_CPUCP_RX_MBOX_EN);
+> +       writeq(0, cpucp->rx_base + APSS_CPUCP_RX_MBOX_CLEAR);
+> +       writeq(0, cpucp->rx_base + APSS_CPUCP_RX_MBOX_MAP);
+> +
+> +       cpucp->irq = platform_get_irq(pdev, 0);
+> +       if (cpucp->irq < 0) {
+> +               dev_err(&pdev->dev, "Failed to get the IRQ\n");
+> +               return cpucp->irq;
+
+It already prints the error message.
+
+> +       }
+> +
+> +       ret = devm_request_irq(&pdev->dev, cpucp->irq, qcom_cpucp_mbox_irq_fn,
+> +                              IRQF_TRIGGER_HIGH, "apss_cpucp_mbox", cpucp);
+> +       if (ret < 0) {
+> +               dev_err(&pdev->dev, "Failed to register the irq: %d\n", ret);
+> +               return ret;
+
+return dev_err_probe();
+
+> +       }
+> +
+> +       writeq(APSS_CPUCP_RX_MBOX_CMD_MASK, cpucp->rx_base + APSS_CPUCP_RX_MBOX_MAP);
+> +
+> +       mbox = &cpucp->mbox;
+> +       mbox->dev = cpucp->dev;
+> +       mbox->num_chans = APSS_CPUCP_IPC_CHAN_SUPPORTED;
+> +       mbox->chans = cpucp->chans;
+> +       mbox->ops = &qcom_cpucp_mbox_chan_ops;
+> +       mbox->txdone_irq = false;
+> +       mbox->txdone_poll = false;
+> +
+> +       ret = mbox_controller_register(mbox);
+
+Use devm_mbox_controller_register()
+
+> +       if (ret) {
+> +               dev_err(&pdev->dev, "Failed to create mailbox\n");
+> +               return ret;
+
+return dev_err_probe();
+
+> +       }
+> +
+> +       platform_set_drvdata(pdev, cpucp);
+> +
+> +       return 0;
+> +}
+> +
+> +static int qcom_cpucp_mbox_remove(struct platform_device *pdev)
+> +{
+> +       struct qcom_cpucp_mbox *cpucp = platform_get_drvdata(pdev);
+> +
+> +       mbox_controller_unregister(&cpucp->mbox);
+
+This will be replaced by devm_mbox_controller_register().
+
+> +
+> +       return 0;
+> +}
+> +
+> +static const struct of_device_id qcom_cpucp_mbox_of_match[] = {
+> +       { .compatible = "qcom,x1e80100-cpucp-mbox"},
+> +       {}
+> +};
+> +MODULE_DEVICE_TABLE(of, qcom_cpucp_mbox_of_match);
+> +
+> +static struct platform_driver qcom_cpucp_mbox_driver = {
+> +       .probe = qcom_cpucp_mbox_probe,
+> +       .remove = qcom_cpucp_mbox_remove,
+> +       .driver = {
+> +               .name = "qcom_cpucp_mbox",
+> +               .of_match_table = qcom_cpucp_mbox_of_match,
+> +               .suppress_bind_attrs = true,
+
+No need to. Please drop.
+
+> +       },
+> +};
+> +module_platform_driver(qcom_cpucp_mbox_driver);
+> +
+> +MODULE_DESCRIPTION("QTI CPUCP MBOX Driver");
+> +MODULE_LICENSE("GPL");
+> --
+> 2.34.1
+>
+>
+
 
 -- 
 With best wishes
