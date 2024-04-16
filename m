@@ -1,237 +1,246 @@
-Return-Path: <linux-arm-msm+bounces-17622-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17623-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 604B88A76C6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 23:37:28 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED26A8A7703
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 23:51:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7F7251C22403
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 21:37:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9D8652811A5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 21:51:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF10D13A24A;
-	Tue, 16 Apr 2024 21:25:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FFED6BFAB;
+	Tue, 16 Apr 2024 21:51:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BQnFdUBo"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="e8pTONLL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2582958203;
-	Tue, 16 Apr 2024 21:25:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8101A6BFD2
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 21:51:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713302734; cv=none; b=ta4Br4PVsYQSnmW3XKKqVtNaoMmAfH5Ze95KJOgps7p5JL8lHOQ0QBsigz1olxgMfyUr8tISVnxaKtcYJMeb/oQVlFogBwtQ+5hWhSG6CQUual8uyFZfe9ZtgNI+XKbRkwE6NXc59cklACqaKe5911EnFrEtX3aHacf5qIp5/t0=
+	t=1713304263; cv=none; b=kcB+E2le1mxu1T63udplYA7fZNyEkBaQrZWSryr0cEEi0QVPK9akh081m7AP0crs+3+xzcR7igtgV2Fi0KERRMS9dwuI9LN5ivhSUKbynDSuJt22juqR7WHoHVxhhPzyo9axCKbnZ122PIppoo14371I6Bw1sj2l4WBqBMUzuz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713302734; c=relaxed/simple;
-	bh=eO98DY7CIz7eC1ApeDbKUP4UlrTAg7IIAn5q3LTWsbE=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=lpZ7bM5tkr4VdDAsbM6neYmUFjHh6buWZyMx7a85fvOEh0jGrEhg04KW4yqF8WUDT8UrWpnuAOZdK5dLvqzmSb5ZnzYQHJbPCyxffO8Eyt4waAlEA/NFjJZbrr62aNDjLJlM/EYeWg5Lf5O/swLRj5PyleWltAkRLp+SGiXz+oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BQnFdUBo; arc=none smtp.client-ip=209.85.210.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-6e696ee8fa3so88792a34.1;
-        Tue, 16 Apr 2024 14:25:32 -0700 (PDT)
+	s=arc-20240116; t=1713304263; c=relaxed/simple;
+	bh=YO5IN0KZGxb6z4yVpPgZdYK16LCj/M+XOfATsFeZlLc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bjj8IzUr3V83d63f8CePbmJhd724iURiT0B+gebTPifkhoYjvE5qrlWBXt1kjSqNTDtUp7Zq/xLpt8h0l7RZ2NTrqzKWTaeJmkv64oP2GmvIfv54NM4Rs4/G6Cot6tBBX+H69sCtHrcoeQnus1ogL0vrcxFfh/95bC1lzHy+aWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=e8pTONLL; arc=none smtp.client-ip=209.85.128.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-6098a20ab22so43378447b3.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 14:51:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713302732; x=1713907532; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WP41hdtXelUpwcI0aj34hpgq/euzrgZ/XyTOcECec+8=;
-        b=BQnFdUBoi1vGSiFGT3BKG/bmM80DEwec7AiTay7gzXFgnHZAms7Z7UwiweTCSf4vJi
-         p2aoSwSOdQwsvFASBdFw5S3NO5JWes+FH3o3yS/w8Shnng8pV2KTeHOKafprxUW/4tQC
-         ibuXmuNfXHevsbDcvn40LG3cC3KKnVPtVnSN4+bQwcfYHvJEa058nmHd/hGw2N46s/XG
-         Yu9y4lqq6jHIeJmuMKfiCP3G5S4dYpMEOk3XbDZDxYzRl5tZ1K6Us9HDlecSpa33DEJ5
-         RaTbw9mtqYOWY4tXsEdyJnvwyGTAe6UNT3i0x4oQ853OeTz798tMcmsR4TtXjLk0dDuq
-         PoHw==
+        d=linaro.org; s=google; t=1713304260; x=1713909060; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=kjacwD0Z0JhzcTISBRsYUI2PwcebrTIi/3ViNZqx+HY=;
+        b=e8pTONLLAdpUkLNDhBueJPfuecshcYrK3O6FQLOdHZs8HvubglJ/zabeMEUddbe7oO
+         Oo6bOy+GFj3N8+1BuSz7BFwT7nFf/gKi4FjeD+xsRwsrS18Vsv2bUJJNl679hCQmeHxI
+         9bGkJXksghK48lfzu7MX/PnZTuvGcYyGtLgcPYb3JFzbTz9yE+GH5qDnutczz7GkhzfA
+         YkQzwEP1l/7bgKcbGGEU1e06ttoZcVcbupEnD2ACDoZwY+JK5J0j5mW03b/gA+lDPGy3
+         uCAxWThXsuesNk23vv2uFv0hKc5CzX2ohfwRQO0wuMQCxim6g8lDSPGo9pc0HzEYWls9
+         StAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713302732; x=1713907532;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WP41hdtXelUpwcI0aj34hpgq/euzrgZ/XyTOcECec+8=;
-        b=VYjVkLYeFsT2KJSst+/E4mekhMQJtqILivRli6e9M0SmqYVzqXsz8h0pIGaJoaijzh
-         wM67e+RE7A07qbN4uqX1miKJkNbVh5JMWt4fnJ4CFzKcQvgCFKZADUDSwcPx21EyF81e
-         +YUmR8ZFVdoXdL66uPX6xnFg2rUD3njT8vemmL/uPdC/gKC5Fpiny9DjFmM8rCaqdHT9
-         i0GS80t/6kDm32CUE3H523fD9ciR+I7R+UJqDileg2SgVYXiQLCZQy4bSptTk/EpS5Yt
-         os98MZy6vqukuGUMHRUYS/Udr/tFRo0CX4jGgl6B/0Y6dnlNhh2lAR8M81P3cQdDsv5w
-         rmfQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWIKFab3FjyC1zJJKN6ehOiWY0EEOgV5osLwlSqCHuMzECtkUokmbrylC16rxSJGGl28HsLUPIhxFOFmaxjZsHKDC35eH3xGtQIjz8IUF72CWxopL42Vn5cX8pPtB0+xgx489n2bqNi5cO8DXbpqhojE57sq5BzS8HQrhW3rmTky8cC9ShorAyYsVXSnqONioL8DIVuLFO2axALgq2I2OFkgmEBS0LX3PtT0qJ6C2RZaiFwWfiKhMOIsxUAwt4=
-X-Gm-Message-State: AOJu0YytqYmZxrdyZ45RM/bfSjlO6sREwEJwsZgmm0aVmKAkIrj9LXAQ
-	zYrSmuVpLE/8g2Ax5FlmKEWWGUuacNQlRDyTKpiLl3sm1IndoWcS
-X-Google-Smtp-Source: AGHT+IEfDmYbKj3xvgd6fPThcAdO/OKuBg0B8gvdcmmOULb0La1dI1vNl5sTDa1HjyWzJle9WGCrLQ==
-X-Received: by 2002:a05:6830:487b:b0:6eb:96b4:7018 with SMTP id dx27-20020a056830487b00b006eb96b47018mr429271otb.11.1713302731884;
-        Tue, 16 Apr 2024 14:25:31 -0700 (PDT)
-Received: from [192.168.7.110] (c-98-197-58-203.hsd1.tx.comcast.net. [98.197.58.203])
-        by smtp.gmail.com with ESMTPSA id eg7-20020a0568306f8700b006eb84466e68sm793940otb.55.2024.04.16.14.25.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Apr 2024 14:25:31 -0700 (PDT)
-Message-ID: <4a7b1e1d-ac68-4857-8925-f90c9e123fd1@gmail.com>
-Date: Tue, 16 Apr 2024 16:25:28 -0500
+        d=1e100.net; s=20230601; t=1713304260; x=1713909060;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kjacwD0Z0JhzcTISBRsYUI2PwcebrTIi/3ViNZqx+HY=;
+        b=abLDMQR3MdsV70bEEbuGGkdD6s3G1JoKS/Sk1cKaygM9FbGwBPR67MRH7z5se3v3Hu
+         I52ZWGsZnoKulTfpNTAU5OtNrGT4qwqGvujjWRHKdhBEcoBb3XbBhubuSmoF/GQUz8JJ
+         tv1M55eEi9T5CTstLNu8tFWS5FZoGFaC+7txdHmMMN8nbIZUytTC17qk8izMIF+h+x30
+         pCRFkQg/cyOuwJuzfxNh5TKSVFCe6IitzjkGgF2i1aogJdlWabKU4EGxkfk0c/7izxze
+         T619x/NJWtVDZeqKaUG6yarUs68MrZeP1nXfMRqTmMPxAk/GYo/ChtRYYQnr5NH+pmCE
+         kkzw==
+X-Forwarded-Encrypted: i=1; AJvYcCU9FQwuUtC9+rbaufaKiOXR1nGQ8bGE0GAp50ihS72eKgwXPKkZ6aEay5rb+yy0cYXPNNLigYdreuE7jonci51NTM0XOL3f9lTxpSdejQ==
+X-Gm-Message-State: AOJu0YyFmT/9Ldp5aGtE6g+bJYVl9HdryE+Zy+02X988lWzNQTBHre3j
+	j5+QH7EK2/3L7cYArrcqtWJAMn6wwSK83WPsoEQMvmQWcKlgX6brLPV4yGGQEQV2DMV6frvmLhX
+	RVBGOGUsbdn/0d5lB4RStG3wFpJZDAVxal7yi2bsp3eAorU9m
+X-Google-Smtp-Source: AGHT+IHwf4S0I3CIxt2zebmdygPEKzxzcZAva7zQrKgbnJ+VAk/Eu2tIwupOVk1YuWmguhQVN3+jp9oteWNx3Ywc3xc=
+X-Received: by 2002:a81:ac65:0:b0:611:1861:1f0 with SMTP id
+ z37-20020a81ac65000000b00611186101f0mr13251817ywj.52.1713304260489; Tue, 16
+ Apr 2024 14:51:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/7] phy: qcom-qmp-pcie: add support for ipq9574 gen3x2
- PHY
-Content-Language: en-US
-From: "Alex G." <mr.nuke.me@gmail.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Manivannan Sadhasivam
- <manivannan.sadhasivam@linaro.org>, linux-arm-msm@vger.kernel.org,
- linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-clk@vger.kernel.org
-References: <20240415182052.374494-1-mr.nuke.me@gmail.com>
- <20240415182052.374494-7-mr.nuke.me@gmail.com>
+References: <20240415182052.374494-1-mr.nuke.me@gmail.com> <20240415182052.374494-7-mr.nuke.me@gmail.com>
  <CAA8EJpqY1aDZMaeqBULEOD26UeGYbLd8RsA16jZw7zXJ7_oGPQ@mail.gmail.com>
- <6726fa2b-f5fe-10fb-6aab-f76d61f0b3cd@gmail.com>
-In-Reply-To: <6726fa2b-f5fe-10fb-6aab-f76d61f0b3cd@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+ <6726fa2b-f5fe-10fb-6aab-f76d61f0b3cd@gmail.com> <4a7b1e1d-ac68-4857-8925-f90c9e123fd1@gmail.com>
+In-Reply-To: <4a7b1e1d-ac68-4857-8925-f90c9e123fd1@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 17 Apr 2024 00:50:49 +0300
+Message-ID: <CAA8EJppGW=qyk2P6Z_S=dp0njsCjqZaXjw8qU4MY1HOZR-N=4A@mail.gmail.com>
+Subject: Re: [PATCH v3 6/7] phy: qcom-qmp-pcie: add support for ipq9574 gen3x2 PHY
+To: "Alex G." <mr.nuke.me@gmail.com>, Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-phy@lists.infradead.org, linux-clk@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Dmitry,
+On Wed, 17 Apr 2024 at 00:25, Alex G. <mr.nuke.me@gmail.com> wrote:
+>
+> Hi Dmitry,
+>
+> On 4/15/24 16:25, mr.nuke.me@gmail.com wrote:
+> >
+> >
+> > On 4/15/24 15:10, Dmitry Baryshkov wrote:
+> >> On Mon, 15 Apr 2024 at 21:23, Alexandru Gagniuc <mr.nuke.me@gmail.com>
+> >> wrote:
+> >>>
+> >>> Add support for the gen3x2 PCIe PHY on IPQ9574, ported form downstream
+> >>> 5.4 kernel. Only the serdes and pcs_misc tables are new, the others
+> >>> being reused from IPQ8074 and IPQ6018 PHYs.
+> >>>
+> >>> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+> >>> ---
+> >>>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 136 +++++++++++++++++-
+> >>>   .../phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5.h   |  14 ++
+> >>>   2 files changed, 149 insertions(+), 1 deletion(-)
+> >>>
+> >>
+> >> [skipped]
+> >>
+> >>> @@ -2448,7 +2542,7 @@ static inline void qphy_clrbits(void __iomem
+> >>> *base, u32 offset, u32 val)
+> >>>
+> >>>   /* list of clocks required by phy */
+> >>>   static const char * const qmp_pciephy_clk_l[] = {
+> >>> -       "aux", "cfg_ahb", "ref", "refgen", "rchng", "phy_aux",
+> >>> +       "aux", "cfg_ahb", "ref", "refgen", "rchng", "phy_aux",
+> >>> "anoc", "snoc"
+> >>
+> >> Are the NoC clocks really necessary to drive the PHY? I think they are
+> >> usually connected to the controllers, not the PHYs.
+> >
+> > The system will hang if these clocks are not enabled. They are also
+> > attached to the PHY in the QCA 5.4 downstream kernel.
 
-On 4/15/24 16:25, mr.nuke.me@gmail.com wrote:
-> 
-> 
-> On 4/15/24 15:10, Dmitry Baryshkov wrote:
->> On Mon, 15 Apr 2024 at 21:23, Alexandru Gagniuc <mr.nuke.me@gmail.com> 
->> wrote:
->>>
->>> Add support for the gen3x2 PCIe PHY on IPQ9574, ported form downstream
->>> 5.4 kernel. Only the serdes and pcs_misc tables are new, the others
->>> being reused from IPQ8074 and IPQ6018 PHYs.
->>>
->>> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
->>> ---
->>>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 136 +++++++++++++++++-
->>>   .../phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5.h   |  14 ++
->>>   2 files changed, 149 insertions(+), 1 deletion(-)
->>>
->>
->> [skipped]
->>
->>> @@ -2448,7 +2542,7 @@ static inline void qphy_clrbits(void __iomem 
->>> *base, u32 offset, u32 val)
->>>
->>>   /* list of clocks required by phy */
->>>   static const char * const qmp_pciephy_clk_l[] = {
->>> -       "aux", "cfg_ahb", "ref", "refgen", "rchng", "phy_aux",
->>> +       "aux", "cfg_ahb", "ref", "refgen", "rchng", "phy_aux", 
->>> "anoc", "snoc"
->>
->> Are the NoC clocks really necessary to drive the PHY? I think they are
->> usually connected to the controllers, not the PHYs.
-> 
-> The system will hang if these clocks are not enabled. They are also 
-> attached to the PHY in the QCA 5.4 downstream kernel.
-> 
-They are named "anoc_lane", and "snoc_lane" in the downstream kernel. 
-Would you like me to use these names instead?
+Interesting.
+I see that Varadarajan is converting these clocks into interconnects.
+Maybe it's better to wait for those patches to land and use
+interconnects instead. I think it would better suit the
+infrastructure.
 
-e>>>   };
->>>
->>>   /* list of regulators */
->>> @@ -2499,6 +2593,16 @@ static const struct qmp_pcie_offsets 
->>> qmp_pcie_offsets_v4x1 = {
->>>          .rx             = 0x0400,
->>>   };
->>>
->>> +static const struct qmp_pcie_offsets qmp_pcie_offsets_ipq9574 = {
->>> +       .serdes         = 0,
->>> +       .pcs            = 0x1000,
->>> +       .pcs_misc       = 0x1400,
->>> +       .tx             = 0x0200,
->>> +       .rx             = 0x0400,
->>> +       .tx2            = 0x0600,
->>> +       .rx2            = 0x0800,
->>> +};
->>> +
->>>   static const struct qmp_pcie_offsets qmp_pcie_offsets_v4x2 = {
->>>          .serdes         = 0,
->>>          .pcs            = 0x0a00,
->>> @@ -2728,6 +2832,33 @@ static const struct qmp_phy_cfg 
->>> sm8250_qmp_gen3x1_pciephy_cfg = {
->>>          .phy_status             = PHYSTATUS,
->>>   };
->>>
->>> +static const struct qmp_phy_cfg ipq9574_pciephy_gen3x2_cfg = {
->>> +       .lanes                  = 2,
->>> +
->>> +       .offsets                = &qmp_pcie_offsets_ipq9574,
->>> +
->>> +       .tbls = {
->>> +               .serdes         = ipq9574_gen3x2_pcie_serdes_tbl,
->>> +               .serdes_num     = 
->>> ARRAY_SIZE(ipq9574_gen3x2_pcie_serdes_tbl),
->>> +               .tx             = ipq8074_pcie_gen3_tx_tbl,
->>> +               .tx_num         = ARRAY_SIZE(ipq8074_pcie_gen3_tx_tbl),
->>> +               .rx             = ipq6018_pcie_rx_tbl,
->>> +               .rx_num         = ARRAY_SIZE(ipq6018_pcie_rx_tbl),
->>> +               .pcs            = ipq6018_pcie_pcs_tbl,
->>> +               .pcs_num        = ARRAY_SIZE(ipq6018_pcie_pcs_tbl),
->>> +               .pcs_misc       = ipq9574_gen3x2_pcie_pcs_misc_tbl,
->>> +               .pcs_misc_num   = 
->>> ARRAY_SIZE(ipq9574_gen3x2_pcie_pcs_misc_tbl),
->>> +       },
->>> +       .reset_list             = ipq8074_pciephy_reset_l,
->>> +       .num_resets             = ARRAY_SIZE(ipq8074_pciephy_reset_l),
->>> +       .vreg_list              = NULL,
->>> +       .num_vregs              = 0,
->>> +       .regs                   = pciephy_v4_regs_layout,
->>
->> So, is it v4 or v5?
-> 
-> Please give me a day or so to go over my notes and give you a more 
-> coherent explanation of why this versioning was chosen. I am only 
-> working from the QCA 5.4 downstream sources. I don't have any 
-> documentation for the silicon
+Varadarajan, could you please comment, are these interconnects
+connected to the PHY too or just to the PCIe controller?
 
-The downstream QCA kernel uses the same table for ipq6018, ipq8074-gen3, 
-and ipq9574. It is named "ipq_pciephy_gen3_regs_layout". Thus, it made 
-sense to use the same upstream table for ipq9574, "pciephy_v4_regs_layout".
+> >
+> They are named "anoc_lane", and "snoc_lane" in the downstream kernel.
+> Would you like me to use these names instead?
 
-As far as the register tables go, the pcs/pcs_misc are squashed into the 
-same table in the downstream 5.4 kernel. I was able to separate the two 
-tables because the pcs_misc registers were defined with an offset of 
-0x400. For example:
+I'm fine either way.
 
-/* QMP V2 PHY for PCIE gen3 2 Lane ports - PCS Misc registers */
-#define PCS_PCIE_X2_POWER_STATE_CONFIG2                    0x40c
-#define PCS_PCIE_X2_POWER_STATE_CONFIG4                    0x414
-#define PCS_PCIE_X2_ENDPOINT_REFCLK_DRIVE                  0x420
-#define PCS_PCIE_X2_L1P1_WAKEUP_DLY_TIME_AUXCLK_L          0x444
-#define PCS_PCIE_X2_L1P1_WAKEUP_DLY_TIME_AUXCLK_H          0x448
-#define PCS_PCIE_X2_L1P2_WAKEUP_DLY_TIME_AUXCLK_L          0x44c
-#define PCS_PCIE_X2_L1P2_WAKEUP_DLY_TIME_AUXCLK_H          0x450
-...
+> e>>>   };
+> >>>
+> >>>   /* list of regulators */
+> >>> @@ -2499,6 +2593,16 @@ static const struct qmp_pcie_offsets
+> >>> qmp_pcie_offsets_v4x1 = {
+> >>>          .rx             = 0x0400,
+> >>>   };
+> >>>
+> >>> +static const struct qmp_pcie_offsets qmp_pcie_offsets_ipq9574 = {
+> >>> +       .serdes         = 0,
+> >>> +       .pcs            = 0x1000,
+> >>> +       .pcs_misc       = 0x1400,
+> >>> +       .tx             = 0x0200,
+> >>> +       .rx             = 0x0400,
+> >>> +       .tx2            = 0x0600,
+> >>> +       .rx2            = 0x0800,
+> >>> +};
+> >>> +
+> >>>   static const struct qmp_pcie_offsets qmp_pcie_offsets_v4x2 = {
+> >>>          .serdes         = 0,
+> >>>          .pcs            = 0x0a00,
+> >>> @@ -2728,6 +2832,33 @@ static const struct qmp_phy_cfg
+> >>> sm8250_qmp_gen3x1_pciephy_cfg = {
+> >>>          .phy_status             = PHYSTATUS,
+> >>>   };
+> >>>
+> >>> +static const struct qmp_phy_cfg ipq9574_pciephy_gen3x2_cfg = {
+> >>> +       .lanes                  = 2,
+> >>> +
+> >>> +       .offsets                = &qmp_pcie_offsets_ipq9574,
+> >>> +
+> >>> +       .tbls = {
+> >>> +               .serdes         = ipq9574_gen3x2_pcie_serdes_tbl,
+> >>> +               .serdes_num     =
+> >>> ARRAY_SIZE(ipq9574_gen3x2_pcie_serdes_tbl),
+> >>> +               .tx             = ipq8074_pcie_gen3_tx_tbl,
+> >>> +               .tx_num         = ARRAY_SIZE(ipq8074_pcie_gen3_tx_tbl),
+> >>> +               .rx             = ipq6018_pcie_rx_tbl,
+> >>> +               .rx_num         = ARRAY_SIZE(ipq6018_pcie_rx_tbl),
+> >>> +               .pcs            = ipq6018_pcie_pcs_tbl,
+> >>> +               .pcs_num        = ARRAY_SIZE(ipq6018_pcie_pcs_tbl),
+> >>> +               .pcs_misc       = ipq9574_gen3x2_pcie_pcs_misc_tbl,
+> >>> +               .pcs_misc_num   =
+> >>> ARRAY_SIZE(ipq9574_gen3x2_pcie_pcs_misc_tbl),
+> >>> +       },
+> >>> +       .reset_list             = ipq8074_pciephy_reset_l,
+> >>> +       .num_resets             = ARRAY_SIZE(ipq8074_pciephy_reset_l),
+> >>> +       .vreg_list              = NULL,
+> >>> +       .num_vregs              = 0,
+> >>> +       .regs                   = pciephy_v4_regs_layout,
+> >>
+> >> So, is it v4 or v5?
+> >
+> > Please give me a day or so to go over my notes and give you a more
+> > coherent explanation of why this versioning was chosen. I am only
+> > working from the QCA 5.4 downstream sources. I don't have any
+> > documentation for the silicon
+>
+> The downstream QCA kernel uses the same table for ipq6018, ipq8074-gen3,
+> and ipq9574. It is named "ipq_pciephy_gen3_regs_layout". Thus, it made
+> sense to use the same upstream table for ipq9574, "pciephy_v4_regs_layout".
+>
+> As far as the register tables go, the pcs/pcs_misc are squashed into the
+> same table in the downstream 5.4 kernel. I was able to separate the two
+> tables because the pcs_misc registers were defined with an offset of
+> 0x400. For example:
+>
+> /* QMP V2 PHY for PCIE gen3 2 Lane ports - PCS Misc registers */
+> #define PCS_PCIE_X2_POWER_STATE_CONFIG2                    0x40c
+> #define PCS_PCIE_X2_POWER_STATE_CONFIG4                    0x414
+> #define PCS_PCIE_X2_ENDPOINT_REFCLK_DRIVE                  0x420
+> #define PCS_PCIE_X2_L1P1_WAKEUP_DLY_TIME_AUXCLK_L          0x444
+> #define PCS_PCIE_X2_L1P1_WAKEUP_DLY_TIME_AUXCLK_H          0x448
+> #define PCS_PCIE_X2_L1P2_WAKEUP_DLY_TIME_AUXCLK_L          0x44c
+> #define PCS_PCIE_X2_L1P2_WAKEUP_DLY_TIME_AUXCLK_H          0x450
+> ...
+>
+> Here, QPHY_V4_PCS_PCIE_POWER_STATE_CONFIG2 = 0xc would be correct,
+> assuming a pcs_misc offset of 0x400. However, starting with
+> ENDPOINT_REFCLK_DRIVE, the register would be
+> QPHY_V4_PCS_PCIE_ENDPOINT_REFCLK_DRIVE = 0x1c. Our offsets are off-by 0x4.
+>
+> The existing V5 offsets, on the other hand, were all correct. For this
+> reason, I considered that V5 is the most likely place to add the missing
+> PCS misc definitions.
 
-Here, QPHY_V4_PCS_PCIE_POWER_STATE_CONFIG2 = 0xc would be correct, 
-assuming a pcs_misc offset of 0x400. However, starting with 
-ENDPOINT_REFCLK_DRIVE, the register would be 
-QPHY_V4_PCS_PCIE_ENDPOINT_REFCLK_DRIVE = 0x1c. Our offsets are off-by 0x4.
+Ok, sounds sane. Please use _v5 for the regs layout.
 
-The existing V5 offsets, on the other hand, were all correct. For this 
-reason, I considered that V5 is the most likely place to add the missing 
-PCS misc definitions.
+>
+> Is this explanation sufficiently convincing? Where does the v4/v5 scheme
+> in upstream kernel originate?
 
-Is this explanation sufficiently convincing? Where does the v4/v5 scheme 
-in upstream kernel originate?
+Sometimes it's vendor kernels, sometimes it's a feedback from devs
+that have access to actual specs.
 
-Alex
 
+--
+With best wishes
+Dmitry
 
