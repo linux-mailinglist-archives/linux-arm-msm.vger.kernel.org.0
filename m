@@ -1,61 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-17571-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D3ED8A6733
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 11:35:36 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7D7D8A67D8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 12:10:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AB2BD1C214D5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 09:35:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 527941F21AB5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 10:10:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8488A8593D;
-	Tue, 16 Apr 2024 09:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 627A686AFA;
+	Tue, 16 Apr 2024 10:10:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="v4ROf7Gx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D28B184E0A;
-	Tue, 16 Apr 2024 09:35:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B1386626
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 10:10:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713260130; cv=none; b=MGijnzhyLtbzMY6nRJyAb9cy2XM1Zirej+DRYIICQFZ2D2p5+3YWir6lGqBPprvIRCl52L+RY+HM4aIbWPVabkkZvOBi5UUAdlW0NLxgG3F+s8mLvFr/Vz68LZvdzs97xhHSIkHmfw0Iwhp7WUeRm3MGOg6AJzvPfB81ShFS45g=
+	t=1713262213; cv=none; b=UZ4Y/DF2zSbUW2UUGu0u97InB+qtwf6CpneantBEMk5TSmBKIZlm92QjjBx59HFaQv7lw9U12mmZiEOCbZTpAlvPOR8bGO4jYSfOXNFwI3JA7u5gMAE8DQORsOOmNoaUTrG6N+vOYauWS1/DapYFkC//i3HLlEecs1Bv3IstyTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713260130; c=relaxed/simple;
-	bh=TNm9wA9VCf4GRpizHagVxFmlH0uk3TxbxAtSjpVSKiY=;
+	s=arc-20240116; t=1713262213; c=relaxed/simple;
+	bh=zgNyQhZ0NZqNb624DOhNVPrg3MWtvbHvOdq2lkk8n/o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nGlQ5+0CmJTlqMXrtZhxJ/o5LY02aPo+EeTrJHK67e5kkrZJTtBcnA8+5NWlyFgvXPi0SG/h76D06cX874rPYVQ61AG+EXB0ZOEvjEqRf77OvA+cP1BkKvNeKRRWtqQCzzd+MjUcsjeUTR0qKeqaGAnJvu82IBqEzTZwURzuN5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 28C53339;
-	Tue, 16 Apr 2024 02:35:56 -0700 (PDT)
-Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5B0A83F792;
-	Tue, 16 Apr 2024 02:35:25 -0700 (PDT)
-Date: Tue, 16 Apr 2024 10:35:22 +0100
-From: Sudeep Holla <sudeep.holla@arm.com>
-To: Elliot Berman <quic_eberman@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
+	 Content-Type:Content-Disposition:In-Reply-To; b=Bxc3V1CUl4yxZLhWmm1smsdleOWZxof7XMBM55n2nCzJrzUiL/t2djwOyV1rQgttMa9gCrfF7jb/PqacPL/iDsO4Rc2Kq4PvMzU4V7tIMOXyZXT36WsWkBNdZlN2cH9gpscl+zXWnaQrpQICCEvN4mlClP+D9eFbwHr40etm7A0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=v4ROf7Gx; arc=none smtp.client-ip=209.85.208.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-563cb3ba9daso4119137a12.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 03:10:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1713262210; x=1713867010; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=kPkV0sNugJ6qgQtdOYjt79FX134OLt8EXh0nbMQL+rg=;
+        b=v4ROf7Gx/BHobb0KpkcWmM8P8ng5Kbf/eSPaPF3HNMa+/Dgi/bVs63r2IzbW5qq2qH
+         NzoGnrFHAUHLAbQK4IXvIgE0TLMTQEQrWzLOvMgbLHmvtQyi6KLXlgk0U4h6wXN6YbfR
+         +NaqWwaVgiKYxT2L8dkThDLsxhHjMlST6zmCyzs/H+TZuCrpuiBeNusBw0m71tj4QZ5T
+         QLdIHby5dpES2oxfg61G+ErRyGFwIaORwiJ9pmHazm3ZurWAJTQyBobUW730BS6VwEUF
+         P/ZCqhYoExcGxifgXwDzN/P/403tG7y7rm3MbMw/NqjRHs6ujd3lVtdKbDO/EsbGaBf7
+         H87A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713262210; x=1713867010;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kPkV0sNugJ6qgQtdOYjt79FX134OLt8EXh0nbMQL+rg=;
+        b=jJk4SlCn15apX55TTyCQ0asqFB4n1f3vzQV9yQdMfhYZeqXzVXNQXw+/5Rtqh68YHG
+         sPjIfKFtRNEb2ngzBl8jNYFmGei1IeYqQtUUZCJhNlwZD5u0rvTxKSpzwRa9CcGEIhHt
+         G3gjAHoqoZIyAo+mYbUQl1kz6YzTN9i3bWX01SCYW4eTN97q97JncuZXx4F4gmSYZc9f
+         XKSDYzgRoXXR74EW0PNRV4CEXl3iZF7lrPBB/AjGwvm70/DDO+4i93jN4BYFMHKkjHtQ
+         46WTmJSsHqkoUsTLbBbHqn+ju5v5qmS/FnpHcJvViKaDSZddSR172cjljdlishYY0Cwz
+         hpeQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWnLm1ZzLL4mMKMzLOGodDqpEtahGypwf1UAJc4JZKch/BBPEMSKS83XMeUZygeRgpxnAn8HhnDtl8Zal3QTiaJl9Rajec7fj400Oxh8w==
+X-Gm-Message-State: AOJu0Yy6FZ2yrGtzdrgHWfyLl4sn7sysu/Id+D1x3SWB2U80YFM8jPE2
+	gyLtgIyt7WiwuqZ8R3xvmMw/V+ar6wpmMY6K6akSmUWa1fzswpzDW+O4q95xnIE=
+X-Google-Smtp-Source: AGHT+IFhSr3NXd446nyUjvnWQSCi0io0wiES4XmD0wl9oB47DE6g/h+2O4fAwSx4U05cyhNdrYyvxA==
+X-Received: by 2002:a50:d605:0:b0:56d:fc9f:cca0 with SMTP id x5-20020a50d605000000b0056dfc9fcca0mr8578449edi.41.1713262209754;
+        Tue, 16 Apr 2024 03:10:09 -0700 (PDT)
+Received: from localhost ([102.222.70.76])
+        by smtp.gmail.com with ESMTPSA id a15-20020a50ff0f000000b0056fc72bb490sm5823291edu.61.2024.04.16.03.10.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Apr 2024 03:10:09 -0700 (PDT)
+Date: Tue, 16 Apr 2024 13:10:05 +0300
+From: Dan Carpenter <dan.carpenter@linaro.org>
+To: Ricardo Ribalda <ribalda@chromium.org>
+Cc: Martin Tuma <martin.tuma@digiteqautomotive.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Hugues Fruchet <hugues.fruchet@foss.st.com>,
+	Alain Volmat <alain.volmat@foss.st.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Sowjanya Komatineni <skomatineni@nvidia.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>, Sergey Kozlov <serjk@netup.ru>,
+	Abylay Ospan <aospan@netup.ru>,
+	Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+	Dmitry Osipenko <digetx@gmail.com>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	"Mark Rutland" <mark.rutland@arm.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-	Melody Olvera <quic_molvera@quicinc.com>,
-	Shivendra Pratap <quic_spratap@quicinc.com>,
-	<devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	<linux-arm-kernel@lists.infradead.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	<linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v2 0/4] Implement vendor resets for PSCI SYSTEM_RESET2
-Message-ID: <Zh5GWqt2oCNHdF_h@bogus>
-References: <20240414-arm-psci-system_reset2-vendor-reboots-v2-0-da9a055a648f@quicinc.com>
+	Benjamin Mugnier <benjamin.mugnier@foss.st.com>,
+	Sylvain Petinot <sylvain.petinot@foss.st.com>,
+	Jacopo Mondi <jacopo+renesas@jmondi.org>,
+	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Niklas =?iso-8859-1?Q?S=F6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Pavel Machek <pavel@ucw.cz>, linux-media@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, linux-staging@lists.linux.dev,
+	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 23/35] media: dvb-frontends: tda10048: Use the right div
+Message-ID: <97f51ae8-6672-4bd4-b55b-f02114e3d8d0@moroto.mountain>
+References: <20240415-fix-cocci-v1-0-477afb23728b@chromium.org>
+ <20240415-fix-cocci-v1-23-477afb23728b@chromium.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,31 +122,49 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240414-arm-psci-system_reset2-vendor-reboots-v2-0-da9a055a648f@quicinc.com>
+In-Reply-To: <20240415-fix-cocci-v1-23-477afb23728b@chromium.org>
 
-On Sun, Apr 14, 2024 at 12:30:23PM -0700, Elliot Berman wrote:
-> The PSCI SYSTEM_RESET2 call allows vendor firmware to define additional
-> reset types which could be mapped to the reboot argument.
->
-> Setting up reboot on Qualcomm devices can be inconsistent from chipset
-> to chipset.
+On Mon, Apr 15, 2024 at 07:34:40PM +0000, Ricardo Ribalda wrote:
+> z does not fit in 32 bits.
+> 
 
-That doesn't sound good. Do you mean PSCI SYSTEM_RESET doesn't work as
-expected ? Does it mean it is not conformant to the specification ?
+z has to fit in 32 bits otherwise there is a different bug.
 
-> Generally, there is a PMIC register that gets written to
-> decide the reboot type. There is also sometimes a cookie that can be
-> written to indicate that the bootloader should behave differently than a
-> regular boot. These knobs evolve over product generations and require
-> more drivers. Qualcomm firmwares are beginning to expose vendor
-> SYSTEM_RESET2 types to simplify driver requirements from Linux.
->
+> Found by cocci:
+> drivers/media/dvb-frontends/tda10048.c:345:1-7: WARNING: do_div() does a 64-by-32 division, please consider using div64_u64 instead.
+> 
+> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+> ---
+>  drivers/media/dvb-frontends/tda10048.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/drivers/media/dvb-frontends/tda10048.c b/drivers/media/dvb-frontends/tda10048.c
+> index 5d5e4e9e4422..b176e7803e5b 100644
+> --- a/drivers/media/dvb-frontends/tda10048.c
+> +++ b/drivers/media/dvb-frontends/tda10048.c
+> @@ -342,8 +342,7 @@ static int tda10048_set_wref(struct dvb_frontend *fe, u32 sample_freq_hz,
+>  	t *= (2048 * 1024);
+>  	t *= 1024;
+>  	z = 7 * sample_freq_hz;
 
-Why can't this be fully userspace driven ? What is the need to keep the
-cookie in the DT ?
+sample_freq_hz is a u32 so z can't be more than U32_MAX.  Perhaps there
+is an integer overflow bug on this line.
 
+The sample frequency is set in tda10048_set_if().
 
--- 
-Regards,
-Sudeep
+	state->sample_freq = state->xtal_hz * (state->pll_mfactor + 45);
+
+->xtal_hz is set earlier in tda10048_set_if() and it goes up to
+16,000,000.  So if ->pll_mfactor is non-zero this line will have an
+integer overflow.  16million * 46 > U32_MAX.  Maybe when .clk_freq_khz
+is TDA10048_CLK_16000 then ->pll_mfactor is zero?  Ugh...
+
+> -	do_div(t, z);
+> -	t += 5;
+> +	t = div64_u64(t, z) + 5;
+>  	do_div(t, 10);
+
+regards,
+dan carpenter
+
 
