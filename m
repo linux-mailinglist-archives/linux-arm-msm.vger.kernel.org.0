@@ -1,175 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-17594-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17595-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 912CF8A6E60
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 16:34:19 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 003278A6E66
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 16:35:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A7853B2839E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 14:32:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 927181F2344E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 14:35:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D84012D1FA;
-	Tue, 16 Apr 2024 14:32:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 292B0130ACD;
+	Tue, 16 Apr 2024 14:33:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ELC8O1hE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="czGt5a0D"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC2712BF3A;
-	Tue, 16 Apr 2024 14:32:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C327130E54
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 14:33:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713277959; cv=none; b=JFNOnnT3oEY54OmL/VbVdVKP/fo/YqPt/pT9d9sOYxI4XTEofZ3r4pscPDfs5nivR8EgGh7HI4TomZb9dhCgdiloaC61Fi+czyKNEQK89P3UNdMHO9rI1OkL5k2wEzVH0Fskql+YCGSAltd5aAJXtz7YluZo8NiwrmXzCnc+RvI=
+	t=1713278026; cv=none; b=EQj0+ZYBATH4uzR9HVUOnUNHzMJTOdMfanBuDSGtSjNrM3R+zH1i+pG580H6OaYmYVxmkJWyhOaDRP4UIHUYScjJEmI5z0Ky6yx7WzM/Sl/Q5x0+7A59LkQYRpxYYkDCauRgY1PmHrP91ZGWP1XvjJ51lBf9tQ7hEp6Rlp4NaWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713277959; c=relaxed/simple;
-	bh=wjp4bLJ0fT33224ygvnRP0tblkyuZ6Q22imNSXQ8bQo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BC6oUK32U0Ae3LrqjJYPgXhUxdlqWzD5xLhQ3G5fc4H13LJjZpo/+kKmZDNNz8tItH+lceSJTwGIq/64ST4vLe4VmOHrGZ/bWdxh0iiDCbmnWliH6oYge0hTYDASuCGelmKc9YBGcBqyLiLNNYEtpREvUghVOtQ0dMD/sIpjr50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ELC8O1hE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61D84C2BD11;
-	Tue, 16 Apr 2024 14:32:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713277959;
-	bh=wjp4bLJ0fT33224ygvnRP0tblkyuZ6Q22imNSXQ8bQo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ELC8O1hEoEIPM2E6gWK8WyW2OayVVZCojXc4wIgfrTIBqIGH3wx4xw0daVirJGf5z
-	 BGi8uSFtsLKQoFWxjXtsWDqAYrvVpjT8GEnrxcmMzg0Ui4tZddBCzMy8LpZQJmd77Z
-	 6BVJbyLGOVbhNTJv3p5gZru86qStIGA4RPaHrLj+TT2FqCBWnNGyXpuXI+vo+OwBV1
-	 GqxSL+E3iIMyQJpwLWxQ0dD8NUvxelf4+yM4O92n9JUDULl4kIrncXMJxnBzokRHF0
-	 glHQcUDstoGq2M+lbLMwi5cTBRxI0AfD0R+AsSAPhrWRi+7lg9ApXRPC+oxKBp9nki
-	 r7YrNWAzZ09zQ==
-Date: Tue, 16 Apr 2024 09:32:37 -0500
-From: Rob Herring <robh@kernel.org>
-To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Banajit Goswami <bgoswami@quicinc.com>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-	alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
-	linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
-	quic_pkumpatl@quicinc.com
-Subject: Re: [PATCH v2 3/8] ASoC: dt-bindings: wcd937x-sdw: add bindings for
- wcd937x-sdw
-Message-ID: <20240416143237.GA2250258-robh@kernel.org>
-References: <20240416063600.309747-1-quic_mohs@quicinc.com>
- <20240416063600.309747-4-quic_mohs@quicinc.com>
+	s=arc-20240116; t=1713278026; c=relaxed/simple;
+	bh=FUyv0NtfjWgQR6OUBvhEgz4KRfytTZXEfryXpJkG4jE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=P2UUKaTpPkLGu+2VMW35DiiisEjqhPDRL8Oe84/TCaAOmdDa8HIs3gr5DnUX376EqxuJ73GwKvqhGboRFYYm6Zcs/q+Pn9aA2tE4nX3UkSxZfp317z52QJj+AIybFpTNrLGAqOyf/dwW83ASTkaW5zWmSG9giJl3DKTUnXh/jAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=czGt5a0D; arc=none smtp.client-ip=209.85.208.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2da01cb187cso80338651fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 07:33:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1713278022; x=1713882822; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=c+9nPjOVu5Pf5mma6CPtxz0axFmvz1ttoYWLOCI1v/I=;
+        b=czGt5a0DwOl83Zbn4NKU/IK2/IP39vVqczik2HdZk+PlEyvSEExDWz97SJjJ0h7xXo
+         itw1nuMB3k7MBqMmS69mQpE9lYDeR3Q06+asvmMCBSbYPvhiVghLpF6BVqfQF2Ej6Zrh
+         rKnU/qUerTtTXuG85fR2K8nBuKYnCwma4X3hT2eQfraDSqafwE95oJoblIkuhYWOAtKD
+         eZrw0eA/vNnGg6VayM+SQkPUOm7a6ouqNGbVQ1oGxMr0VPMMGIA8/rxXbmi0SfYGSObv
+         5d53k1dfkVNbmueO8vtfXI97J3TYiHIb4PLKPQw54jxvIcduRkUv4E4naeCtWVZPc5Mu
+         XzPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713278022; x=1713882822;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=c+9nPjOVu5Pf5mma6CPtxz0axFmvz1ttoYWLOCI1v/I=;
+        b=JJcsXkZ7Fto9YZWJcHa/OAoMIvX/HAxOa7MykL9YUzm1Eev2PyboThPOU3GHSM7WDK
+         FEQGlvKjMzxyJ3vdea6xuXX5g2DT/pivKESrZuVNnFCs5dq9pwAlsK4jTalb9QktFps/
+         x8EQ0+L/wMR92/P2VBcUvvUqgB+OJ8bgqCCRmXnB3jkAlfncKjpCJ/MgBGJU7zpRFbyk
+         5+tBmxhDMO1+03io0ksXggTC5SSZqKFSnN7YrXXP3RnFifu3hxWrLes9tyE1niOPa5Qn
+         5hdn/epMfpbe/AxmHea2sfHmuUOvErnBtTuGNRkb6zr31MyrdkTwTvzq2QV9Qxpe83U6
+         APJA==
+X-Forwarded-Encrypted: i=1; AJvYcCX1A7mlfjIrdLN3ANrp4XovHSj1HlF2qZWNNaqfAjdfuTC8HjK9AWhOp4olNkWD6R9LatCUEKYbOazJjTRmfrGFynYpYUnCcs9l5L8RMg==
+X-Gm-Message-State: AOJu0Ywrl/5FjY5ObsBbSGMInX/cfjrv7Ifv7/QtC2pMJ7zKzqwbcgAe
+	Oisfu1ZmSt5QpvOKg2rPYDtGnwvPjVpvhLg4DeRGmz8XIfwBgo+/CUlHwwOtwb8=
+X-Google-Smtp-Source: AGHT+IGL+ME3YooCYObcuCO1LfAPA5J4bnpf8IzOPa6orBn1PpHGOydAs/es6+R5/yPtPUtVbGF1LQ==
+X-Received: by 2002:a2e:908c:0:b0:2d4:5370:5e8a with SMTP id l12-20020a2e908c000000b002d453705e8amr10336108ljg.22.1713278022601;
+        Tue, 16 Apr 2024 07:33:42 -0700 (PDT)
+Received: from [172.30.205.49] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id y1-20020a2e95c1000000b002d2d1c11703sm1587994ljh.76.2024.04.16.07.33.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Apr 2024 07:33:42 -0700 (PDT)
+Message-ID: <1545d3fb-88f3-44e7-b981-610df6bdf6f7@linaro.org>
+Date: Tue, 16 Apr 2024 16:33:40 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240416063600.309747-4-quic_mohs@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/8] usb: typec: ucsi: glink: check message data sizes
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20240416-ucsi-glink-altmode-v1-0-890db00877ac@linaro.org>
+ <20240416-ucsi-glink-altmode-v1-3-890db00877ac@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20240416-ucsi-glink-altmode-v1-3-890db00877ac@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Apr 16, 2024 at 12:05:55PM +0530, Mohammad Rafi Shaik wrote:
-> From: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+
+
+On 4/16/24 04:20, Dmitry Baryshkov wrote:
+> The driver gets data from the DSP firmware. Sanitize data size before
+> reading corresponding message structures.
 > 
-> Qualcomm WCD9370/WCD9375 Codec is a standalone Hi-Fi audio codec IC
-> connected over SoundWire. This device has two SoundWire devices RX and
-> TX respectively.
-> This binding is for those slave devices on WCD9370/WCD9375.
-> 
-> Co-developed-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-> Signed-off-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+> Fixes: 62b5412b1f4a ("usb: typec: ucsi: add PMIC Glink UCSI driver")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  .../bindings/sound/qcom,wcd937x-sdw.yaml      | 71 +++++++++++++++++++
->  1 file changed, 71 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml b/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
-> new file mode 100644
-> index 000000000000..2b7358e266ba
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
-> @@ -0,0 +1,71 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/sound/qcom,wcd937x-sdw.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm SoundWire Slave devices on WCD9370
-> +
-> +maintainers:
-> +  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> +
-> +description: |
 
-Don't need '|' if no formatting.
+I think more backstory would be beneficial here.. Does this happen often?
+What are the consequences? What are the causes? Can there be one-off invalid
+messages, or does that mean the firwmare has entered some unstable state?
 
-> +  Qualcomm WCD9370 Codec is a standalone Hi-Fi audio codec IC.
-> +  It has RX and TX Soundwire slave devices. This bindings is for the
-> +  slave devices.
-> +
-> +properties:
-> +  compatible:
-> +    const: sdw20217010a00
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  qcom,tx-port-mapping:
-> +    description: |
-> +      Specifies static port mapping between slave and master tx ports.
-> +      In the order of slave port index.
+And I suppose, if answer to the last question is "unstable state", are we
+doing something incorrectly in Linux that causes it to happen?
 
-Are there constraints on the values of the entries?
-
-> +    $ref: /schemas/types.yaml#/definitions/uint32-array
-> +    minItems: 4
-> +    maxItems: 4
-> +
-> +  qcom,rx-port-mapping:
-> +    description: |
-> +      Specifies static port mapping between slave and master rx ports.
-> +      In the order of slave port index.
-> +    $ref: /schemas/types.yaml#/definitions/uint32-array
-> +    minItems: 5
-> +    maxItems: 5
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - qcom,port-mapping
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    soundwire@3210000 {
-> +        #address-cells = <2>;
-> +        #size-cells = <0>;
-> +        reg = <0x03210000 0x2000>;
-> +        wcd937x_rx: codec@0,4 {
-> +            compatible = "sdw20217010a00";
-> +            reg  = <0 4>;
-> +            qcom,rx-port-mapping = <1 2 3 4 5>;
-> +        };
-> +    };
-> +
-> +    soundwire@3230000 {
-> +        #address-cells = <2>;
-> +        #size-cells = <0>;
-> +        reg = <0x03230000 0x2000>;
-> +        wcd937x_tx: codec@0,3 {
-> +            compatible = "sdw20217010a00";
-> +            reg  = <0 3>;
-> +            qcom,tx-port-mapping = <2 3 4 5>;
-> +        };
-> +    };
-> +
-> +...
-> -- 
-> 2.25.1
-> 
+Konrad
 
