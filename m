@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-17597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17598-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E62D8A6E7F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 16:37:43 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id CDE018A6EA4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 16:42:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 35EF21F21D52
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 14:37:43 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 89516B2602B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 14:39:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 535B812F58A;
-	Tue, 16 Apr 2024 14:36:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3443D12DD99;
+	Tue, 16 Apr 2024 14:39:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="T2PTdqBM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Z9giONP2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4F112F5AA
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 14:36:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A244C12C7E1
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 14:39:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713278215; cv=none; b=J50hcX1uVKdbpcETULIK1SyfnCFuc6gd4Q1xhJlISio4KLVExW+7XUUtOiCnmuUtuU1JVz5Oj14CXhzM39YW23xaIZNUiTjpuMIyjjDVDapV3uym7RAz6PtCfz2dGnzRzJVZolntedTrkQ1gTabnS2+3ujrK8hO9a1mY1yNuaY0=
+	t=1713278371; cv=none; b=WCTyFrUb7mNPMZf+mW4o/1C8CKeJCmOigaTIKR/uKwnRojxZPMrwd93ZxGWXTywTlVNiN9LTDBtOg2ct+4d8Byz29Ik/5HNGWY9bx9lALUb2vBkHbIsuS4obNyxCUB6zL1Qa81ASs4FhAJ31nGzn7mgBvrxzjphgYq01G/Z3vSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713278215; c=relaxed/simple;
-	bh=ltPhve9DV3rQjCi4jUr/vTyyhzIxc2vfuMkK2VbQK/U=;
+	s=arc-20240116; t=1713278371; c=relaxed/simple;
+	bh=8mgu7k7er0cG/LWWBfVot7y4xrG2X6Pda5/j6HoeJ9U=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rJq8uGMoJDx2rrjpnW7zhdPbTgwc4ur7ONO2FiZ9+4BvhM2s6Z63O7ExxN4EwtpuA4Be/gpHqPbDz3LXg2HTo4KqNu8CxqodVTW/MXcGZcINb4csHVRNMmSb6k2Oh75rxPJc3jo0VTs1GXQI6AnvNYB8AMeo2MN+LP6g/8RVFxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=T2PTdqBM; arc=none smtp.client-ip=209.85.208.180
+	 In-Reply-To:Content-Type; b=ML4Mk5P2M76KNbkEV+HHQVGno6iSztpbdFm51YVaLdrZXkEVAeVX7RzEGg6ZbZo5H8GoLzHamLjDHdnIBbPPhSGPNgfAR8tCwIb1QNqFqWjG+8iglRfBnyxNw+AUmAfDYgRyMeObf+whF8RzCsNV9l4l5c7AUrLA7EG5+GqES20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Z9giONP2; arc=none smtp.client-ip=209.85.167.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2d8a2cbe1baso54364641fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 07:36:53 -0700 (PDT)
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-518a56cdbcfso5072176e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 07:39:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713278212; x=1713883012; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1713278368; x=1713883168; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=CzxNkkSDo+X3qz7VnDROj1uU4Maa9FIfJRwpKhOpNp4=;
-        b=T2PTdqBMKkQasDoV1R/sT8EEYl3TbJ7n0M24jOGI9WZKYWPZP2xctOsjXugpWiigCT
-         iu9gDDHi/XllDJ9niY0HBiPPT7h/umVdz7HMnZsfPjoSAMyYyFJLXS4qqxXwuex/VeCW
-         /SbPehHxQZGEXu/7JYNXSYNM2YEDtK73zpQhR5KRjmlYYQFICp1XW/KbBblP9aD3mygE
-         npl9pjQAyZLPm51bofDdIICek3gNCGLFJ1xNEhseZdt4/RAx9eX+Ta7X8FyNVxmJ/TjM
-         aC4cRwRVf5OsmQe1xP2ycHeaNG58DJLfsGLU2MgSSbFHspGRHyL1kr6Ruc9To9RNl3Xm
-         bR2A==
+        bh=aKE+g2uxmcwZKMXDL+tbh31r08+JhFyXRHabiw8XKP4=;
+        b=Z9giONP2B1+bjslr9x6dU4IKza7LZcwtFpsndRB200Sog9JXznl/ZMlocsV6RGjIL1
+         L0Wc2Vk1Qd1td5A2Gf9SxoMSBF7nYZtma09uQxoVTDW45KPbI/ohFUMhRQ5TpYdu05JH
+         hJjI6fGF6qMVr/0U2mMCABajpRDDKDaoTfaTXnUrzmD+xCM/LFE1WvQuH9zNZYWIUdIz
+         6DPHV2+bti2tNhanfs69LBs4IbOFHtdH/pBRzSBsQpq8jgc34tVOH9zXb5+zYR2UsezU
+         7sajGsxKm7Ntf8UXgYYOZcAyBLujgQNiTF95mr6Q5bpgdGRrMBXerYZBrSI+N0DN1Fmx
+         oMxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713278212; x=1713883012;
+        d=1e100.net; s=20230601; t=1713278368; x=1713883168;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CzxNkkSDo+X3qz7VnDROj1uU4Maa9FIfJRwpKhOpNp4=;
-        b=Hpw9I2wH/roZVIgjvpsQshXxF4HnKLy56WevYxZSaYXiKCXxHc+qbcq3bCT257GFfW
-         6U3/uAavrIEsDCOr0O73DaX67adxLaYm3MIjxEZ5TxoZrPbjyZRXovnkh70cJV1PhVoO
-         ga0/MnLlKCJL/gDBtwI7WhsVtO3aLlNAUpPbNxspRTns54pHUVAECWe3x7LMgQdnRz/C
-         XcsNrtv21wUf7kGO29GerhL0mlaXkwkU49eHpyhJQL/yT0hkFR21N4Q20UIa0wjtP5dS
-         SwDVJId8ZO2tuWduQHWbesYhPKNnqi91QSpUNw9b+YelovSKH9TkbmSPHPj9HJ27f95E
-         S3ig==
-X-Forwarded-Encrypted: i=1; AJvYcCVXTrVz1rZE/QWAOb77BpdEVJD/6HEs24J/ngxYIHy4P7jlYAzAtiy0zuAiYHqFu7G1NnuCrlk1XoWCj80do9lP6x0mNZZ3Wlcmcj84QA==
-X-Gm-Message-State: AOJu0YwCHpQE3g3VHQKfqgwU5oMq1VcMc8JcVItB7O9tsHwGo/IddE46
-	rFC6LmePH5tbGrvaHbML4vIWyfbj3624pdWKrXZFbbOkQjc6rCRAMwO6PVm7PjE=
-X-Google-Smtp-Source: AGHT+IEV8OOpIqaDgfXAYxwo5mdAH7Yt8IjgQoRSwEn7+byhG6+Hm46ZjAWVB/Tf99onqLXDOM2bTw==
-X-Received: by 2002:a2e:b98a:0:b0:2d8:7320:e36a with SMTP id p10-20020a2eb98a000000b002d87320e36amr8720600ljp.17.1713278212060;
-        Tue, 16 Apr 2024 07:36:52 -0700 (PDT)
+        bh=aKE+g2uxmcwZKMXDL+tbh31r08+JhFyXRHabiw8XKP4=;
+        b=BCvZPqUB5aO87yhBHnNiOZ/kotYOQ+ETgKErOdQGUQewWc0c3sF5/TC2uSEyKbrQel
+         ptI6Rl0dUq+VMI3B/NjUNzp91bDLkx3uiuRirgU8NPU9r4TmUqWWX6UHgmTGNnRZ3uid
+         tyxKCQ9ZadZVvTpZLSSTUiuB9TTmYEiFRWo9NvWJZDR/ZNF0Gv1lhATc1ZFAAtdgZWyV
+         qW9N2oqWTtCc610tukMkP+eOy5ct8o5yN0mYP3bt//vzINU6OxdSJP9tTKQfmXNOrJmV
+         /XCWzEcTzcr9jwljgFGdppd3/A/SbwZ65igjtVs42ucAaMS6o0ZnajXxD2mt72huQ1ci
+         4HbQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW/SbeZO2zZ2JiVcFG/tOW1daD3hUhl6Ep/U4zEyH82s/AGNQ/j3JhfNHqqNnhTHrDi80Ja/kuO23j374lXBkdjMLxoKGDyyP+EUGmJFQ==
+X-Gm-Message-State: AOJu0YzpQOcOzl2ENaCT2vTPIXHpMwndzFBMj2LFaHdzXSPUkqsehURW
+	DrelwWgxC+8ouyDaflFoI4ubCdLeIl1zDrewrFdI1R9407xZnxr2qFLY6ztgsqw=
+X-Google-Smtp-Source: AGHT+IGxEc8JWYlRRVBwo5GpOuhEyTvZ2rYm6axlJLpQ4twJi6sB5/ATPpNBTtlI8hkbiRTPatcArA==
+X-Received: by 2002:a05:6512:4014:b0:518:7df6:d9e1 with SMTP id br20-20020a056512401400b005187df6d9e1mr12975591lfb.10.1713278367884;
+        Tue, 16 Apr 2024 07:39:27 -0700 (PDT)
 Received: from [172.30.205.49] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id b11-20020a2e848b000000b002da6fb7ce36sm696853ljh.135.2024.04.16.07.36.51
+        by smtp.gmail.com with ESMTPSA id d3-20020a05651221c300b00515a5784750sm1611882lft.268.2024.04.16.07.39.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Apr 2024 07:36:51 -0700 (PDT)
-Message-ID: <80a8b7d4-2dd6-42a9-8305-81a93ba5e6bc@linaro.org>
-Date: Tue, 16 Apr 2024 16:36:50 +0200
+        Tue, 16 Apr 2024 07:39:27 -0700 (PDT)
+Message-ID: <886befb2-2be2-4db0-b205-b3d1043cde62@linaro.org>
+Date: Tue, 16 Apr 2024 16:39:25 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,34 +76,53 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/8] usb: typec: ucsi: glink: simplify notification
- handling
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Heikki Krogerus <heikki.krogerus@linux.intel.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20240416-ucsi-glink-altmode-v1-0-890db00877ac@linaro.org>
- <20240416-ucsi-glink-altmode-v1-5-890db00877ac@linaro.org>
+Subject: Re: [PATCH v1] arm64: dts: qcom: sc7280: Remove CTS/RTS configuration
+To: Luca Weiss <luca.weiss@fairphone.com>,
+ Viken Dadhaniya <quic_vdadhani@quicinc.com>,
+ cros-qcom-dts-watchers@chromium.org, andersson@kernel.org,
+ swboyd@chromium.org, robh@kernel.org, krzk+dt@kernel.org,
+ linux-arm-msm@vger.kernel.org, conor+dt@kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ rajpat@codeaurora.org, mka@chromium.org, rojay@codeaurora.org
+Cc: quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com
+References: <20240416105650.2626-1-quic_vdadhani@quicinc.com>
+ <D0LINETM8WNA.27BORT75W1N0C@fairphone.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240416-ucsi-glink-altmode-v1-5-890db00877ac@linaro.org>
+In-Reply-To: <D0LINETM8WNA.27BORT75W1N0C@fairphone.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
-On 4/16/24 04:20, Dmitry Baryshkov wrote:
-> All platforms except Qualcomm SC8180X pass CCI in the notification
-> message. Use it instead of going back and forth over RPMSG
-> interface to read CCI.
+On 4/16/24 13:38, Luca Weiss wrote:
+> On Tue Apr 16, 2024 at 12:56 PM CEST, Viken Dadhaniya wrote:
+>> Remove CTS and RTS pinctrl configuration for UART5 node as
+>> it's designed for debug UART for all the board variants of the
+>> sc7280 chipset.
+>>
+>> Also change compatible string to debug UART.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+> This change has little to do with the SoC design though and is dependent
+> on the usage on a given board, right? Also the QCM6490 datasheet
+> mentions gpio21 & gpio22 can be used for UART_CTS and UART_RFR.
 
-Are we sure it's reeeeallly just 8180?
+Yeah, using it as a debug uart doesn't rule out flow control I don't think
+
+> 
+> But at least consistency-wise this change makes sense, in practically
+> all other SoCs one UART is marked as geni-debug-uart.
+> 
+> But with this patch you should then also remove some overrides that are
+> placed in various boards already?
+> 
+> arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts:     compatible = "qcom,geni-debug-uart";
+> arch/arm64/boot/dts/qcom/qcm6490-idp.dts:       compatible = "qcom,geni-debug-uart";
+> arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts:   compatible = "qcom,geni-debug-uart";
+> arch/arm64/boot/dts/qcom/sc7280-idp.dtsi:       compatible = "qcom,geni-debug-uart";
+> arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi:     compatible = "qcom,geni-debug-uart";
+
+Definitely
 
 Konrad
 
