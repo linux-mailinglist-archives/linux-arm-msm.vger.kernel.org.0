@@ -1,130 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-17601-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17602-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FC258A6F1C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 16:57:26 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 325ED8A6F4A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 17:05:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3EAA71C2150B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 14:57:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AFF60B2441A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 15:05:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88F2B12E1E4;
-	Tue, 16 Apr 2024 14:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF91912FF65;
+	Tue, 16 Apr 2024 15:05:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nJnfgvXY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Evlue0WE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB6612F598
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 14:57:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE3E12AACA;
+	Tue, 16 Apr 2024 15:05:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713279441; cv=none; b=VSgoIgVQIlX62K92jDzLx5eFdb+1zUY/8xGQXQAis+xSYZiGusLUFejBskQ4D81QDNu3tp0rjxmjsAjcrR5NmMWKCK6ot4LJkuauUovz2pcWP1Ih8q6QGVtZX7gl0YK2GETlHraV49OxMijPmDNxxhc8zLTfQ5U88WYYkxZBCg4=
+	t=1713279925; cv=none; b=sQCTTemznZKOb9/jzHv83/zGIWdDpskWnFnJtV+aCAweUufGuOSlzYJQH7R6cMjeZfB+RUdxxgK+ONtOnfZf1xquF/pHYG1iEYbiGh5DQ8ghsrkRliHHiO89pNI9FkoNVUaLXCI3T9Zq/33SvYc0gg09VuwcC6I4EnVIE2I/JrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713279441; c=relaxed/simple;
-	bh=FrbIB/Z1SqzQ5A58Zqk4S74k2lIPrqfaXr5V7n8jcz8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FxtxuvN0jzOKOO8ACKcKF1g5Yj6pvsJcvzVqRH+RBsyfu8L0nAj+Knpk3s3YHwPKIyG5b+TqaPPm8vOmw8vj8baKG4LwnLlUAgP3QsdTLoUHleMeXC+6IdusnI1gTjbcBnzMqwZkmfm1mAeZF+7Tr12y6axhReokyul0eZ0Vhyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nJnfgvXY; arc=none smtp.client-ip=209.85.208.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2d8743ecebdso45016171fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 07:57:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713279438; x=1713884238; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Or5aD0vHhofq4hU9WI0SfKr5R6BUi9ScTzvy6tmm1s4=;
-        b=nJnfgvXYS2KiiYDk3B4MOcAJV6Vr6/Ewz6Q1ng1pT1foFIkEd2WO69nl5dENFiWmr2
-         JjGAmnjvYK/HEyzPEn+iBFU8PZMIW5kJvjnXRuah/SwCFhRCcP0qDF2uQAaPDsYujQda
-         lPV1yGhoUChQB9oMDtyvwS9ouWnzrHK4fNyJgcdYmyjIMmMyoKI00NYtP24N7gqmqeYM
-         H3YmLQr4V/UFy/zVGzdcqEVwsWXrKdApyjG7FAkbp2rgHSWBxgA1ZsLLzGzSxrgTmFQT
-         uLkQAYE1WDqqz4uPOHyULhyh5cHn8rSaLNtHznIoDYYIHqf11ymUt5H5vsa3PWJ/vNgR
-         6AjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713279438; x=1713884238;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Or5aD0vHhofq4hU9WI0SfKr5R6BUi9ScTzvy6tmm1s4=;
-        b=JFZyb3yOZZ1prkbrUukwVFL0QIKmFpBTqeR5XBnYor3qvjxNe19rR0yuY8ZpInlH/E
-         J8AzTTfpyqMFGkPLd/AFsxTqXxrnI/3haL4mKkOkUARwGYSC8lDVIWxi99RXE4mH0uTj
-         Lc3J1ptys82sfTlu/zK1nruAllR3ZKGN7k6LUkYK5iNzVyE/FwanjjMFHz0azE3W5gZn
-         TrPA0FZ/SMgINzoIc/XJxibMRvcKdkARSMPwTJn4Zpwv1XqzAxGZ5tm50eu/kO9TCxaq
-         nDap8klJ9mA664rNFEqKx2aWOXay3BhSFc4RUXjSpGdVRSxfUVae6UkNPGzV/X1nP4FY
-         Pi7Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWeKdcHrtKth8aq9ctQAYHzAFktJ46+mdaZtJLVb9HmycujRc07u0NtGpJyYMQL1l6A2CTJryx07Xi5wf6z8NEOp4IRxheocSaV55YKew==
-X-Gm-Message-State: AOJu0YwpDTc+eJy3pBJae4kyEE8kyuDYWWIfC6aH46R/qzYVP6fcj7Tv
-	lzCUuQQmfFmwGacuuVCnr/tofzmsEibRakjFqzZf4EKJGl78rlLQCjJvciGyAOo=
-X-Google-Smtp-Source: AGHT+IGhqmzkNdrX2UMlDS36AtNuOAiCapJDE/OBBjeoP4TRH2M/KqKJkejU4T3zaLkL6u2UP2FCAg==
-X-Received: by 2002:a2e:700e:0:b0:2d8:9fd7:859a with SMTP id l14-20020a2e700e000000b002d89fd7859amr8397471ljc.34.1713279438013;
-        Tue, 16 Apr 2024 07:57:18 -0700 (PDT)
-Received: from [172.30.205.49] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id o21-20020a2e90d5000000b002d86641176esm1571846ljg.32.2024.04.16.07.57.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Apr 2024 07:57:17 -0700 (PDT)
-Message-ID: <66cd0d96-7576-4f70-b4da-b8d518253763@linaro.org>
-Date: Tue, 16 Apr 2024 16:57:15 +0200
+	s=arc-20240116; t=1713279925; c=relaxed/simple;
+	bh=eoUEUNDDT3IISkVkLcQVShb7N8n4cu8oTCAwsjC3QRk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=b1E/ddFx7XUE+VfrRIlokjI9OFNRCgMx2/D1Ur96YXwcsjDlPyh1wSvl58ZebqU47YHDyCkG1okS2SasYVXisxgzpb0IoaULikr/ojAK2AYmeRh5aa36uJGDAzIIF4wSGXzwZnchSJ9RWw9I4YJ7Zy3ytroeUj9U5stxObiSv2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Evlue0WE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72DACC113CE;
+	Tue, 16 Apr 2024 15:05:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1713279925;
+	bh=eoUEUNDDT3IISkVkLcQVShb7N8n4cu8oTCAwsjC3QRk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Evlue0WEIc8vjVKo7214wtqrJwG33LppDFpOSjHmzZdLCpH0Q5ZwKbIIiRdjODvRi
+	 io69mrj6mVB9dGbkDBmiNtGdXiX5X/SQ19kkg4C77i/9vZM0ArEnmYW3JquUAY7Y+D
+	 idxob1Z1DbnhbnMD+JG+/TXq45ba4+/JMMJ5RIJrNmsReWNyKb3tuBkk4R9hBh1+r4
+	 PU1VIJvEhcRnV5C4TUQ6vOasuo0TndKz0yClmR+lyJfUPdkO3zcH6vquhQnZ8dBksj
+	 KjL8P5Dt8rAVG30LcylEElB/LEjPH+JGka8otxNzGzv5QGpGiAIhE8xV1GR8wMZY3x
+	 0dZbj9gZT6ESw==
+Date: Tue, 16 Apr 2024 17:05:21 +0200
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Vinod Koul <vkoul@kernel.org>
+Cc: konrad.dybcio@linaro.org, andersson@kernel.org, wsa@kernel.org, 
+	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-i2c@vger.kernel.org, Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>, 
+	quic_vdadhani@quicinc.com, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v4] i2c: i2c-qcom-geni: Parse Error correctly in i2c GSI
+ mode
+Message-ID: <j3zupurwq5vtzfwby7ubl7ft75fqqhutk4vfqolihkcldfcesi@ywwfnkjcfhgu>
+References: <20240313052639.1747078-1-quic_msavaliy@quicinc.com>
+ <171161140136.2698925.4294566764047886777.b4-ty@kernel.org>
+ <ZgbwJAb7Ffktf554@matsya>
+ <a76mmz5xrfipqpmq2ltsyobwc54dyw2d55gb4vta5d746dwb3i@5mm2ew5uudi3>
+ <ZhJVgDVthhr4hISg@matsya>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/8] usb: typec: altmode: add low level altmode
- configuration helper
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, linux-usb@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20240416-ucsi-glink-altmode-v1-0-890db00877ac@linaro.org>
- <20240416-ucsi-glink-altmode-v1-2-890db00877ac@linaro.org>
- <c129b349-dfaa-4b10-9b8c-6098d04b9373@linaro.org>
- <CAA8EJpqH2_ENE6am=m9dtwk_+_Vbc4pZG9=Y_4-b-p0fKQ4sBg@mail.gmail.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAA8EJpqH2_ENE6am=m9dtwk_+_Vbc4pZG9=Y_4-b-p0fKQ4sBg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZhJVgDVthhr4hISg@matsya>
 
+Hi Vinod, Mukesh,
 
-
-On 4/16/24 16:48, Dmitry Baryshkov wrote:
-> On Tue, 16 Apr 2024 at 17:32, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->>
->>
->> On 4/16/24 04:20, Dmitry Baryshkov wrote:
->>> In some obscure cases (Qualcomm PMIC Glink) altmode is completely
->>> handled by the firmware. Linux does not get proper partner altmode info.
->>> Instead we get the notification once the altmode is negotiated and
->>> entered (or left). However even in such a case the driver has to switch
->>> board components (muxes, switches and retimers) according to the altmode
->>> selected by the hardware.
->>>
->>> We can not use existing typec_altmode_enter() / typec_altmode_exit() /
->>> typec_altmode_notify() functions in such a case, since there is no
->>> corresponding partner's altmode instance.
->>>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>
->> Should this now be called from e.g. typec_almode_notify to limit
->> duplication?
+On Sun, Apr 07, 2024 at 01:42:48PM +0530, Vinod Koul wrote:
+> On 02-04-24, 18:44, Andi Shyti wrote:
+> > On Fri, Mar 29, 2024 at 10:15:24PM +0530, Vinod Koul wrote:
+> > > On 28-03-24, 08:36, Andi Shyti wrote:
+> > > > On Wed, 13 Mar 2024 10:56:39 +0530, Mukesh Kumar Savaliya wrote:
+> > > > > I2C driver currently reports "DMA txn failed" error even though it's
+> > > > > NACK OR BUS_PROTO OR ARB_LOST. Detect NACK error when no device ACKs
+> > > > > on the bus instead of generic transfer failure which doesn't give any
+> > > > > specific clue.
+> > > > > 
+> > > > > Make Changes inside i2c driver callback handler function
+> > > > > i2c_gpi_cb_result() to parse these errors and make sure GSI driver
+> > > > > stores the error status during error interrupt.
+> > > > > 
+> > > > > [...]
+> > > > 
+> > > > Applied to i2c/i2c-host-next on
+> > > > 
+> > > > git://git.kernel.org/pub/scm/linux/kernel/git/local tree
+> > > 
+> > > You applied changes to dmaengine driver without my ack! I dont agree to
+> > > the approach here, we could do better
+> > 
+> > this must be an error from b4 ty. The changes have been added to
+> > 
+> > pub/scm/linux/kernel/git/andi.shyti/linux.git
+> > 
+> > branch i2c/i2c-host, As it has been agreed from very long.
+> > 
+> > Anyway, the changes are in -next. What do we do now? Do I revert
+> > it? Mukesh, can you please agree with Vinod?
 > 
-> typec_altmode_notify works only if there is an altmode->partner (which
-> we don't have with pmic-glink).
+> I dont apply patches to other subsystem without the ack. Either way you
+> can ask always! 
 
-Yes and this seems to be an excerpt from these functions, should they
-now drop that code and call this function instead, so as not to have
-it in the tree twice?
+Yes, you are totally right; but please, keep in mind that this
+patch has some history and I would have loved to hear from you
+earlier. Anyway...
 
-Konrad
+> I will leave it upto you...
+
+... Mukesh, I'm sorry, but I'm going to revert this patch again
+until we address all the last minute issues from Vinod. The
+silence on this thread is worrying me more than reverting it.
+
+I hope this will be the last time I revert this patch.
+
+Moreover, in order to avoid maintainers' rumble (:)), please
+let's try to split patches that are touching more than one
+subsystems keeping the logical meainings intact.
+
+I hope this is fine with you, Vinod.
+
+Andi
 
