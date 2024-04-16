@@ -1,290 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-17558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E54DD8A641D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 08:38:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 392188A647B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 09:05:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1316C1C212BD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 06:38:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E8C67281221
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 07:05:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FBFC15698B;
-	Tue, 16 Apr 2024 06:37:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EC9E78C66;
+	Tue, 16 Apr 2024 07:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KxHToYqR"
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="uYYpoJTm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mout.web.de (mout.web.de [212.227.15.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB8B15574E;
-	Tue, 16 Apr 2024 06:37:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A2D07EEFD;
+	Tue, 16 Apr 2024 07:05:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713249448; cv=none; b=LLRY5s6BrMrMOH/Ak3zHUR0S3BXsi/5urcOLlebo9OGy17XkSKJ4Def9VxsdGqr5cMqRFwbPd4ThyYJcsAkmjUKQCIDQKk41FaPceWysEYZNB0jpvQyYxi9HCM4exhsIxQ0XRo6w8SvUcq4zD5NwNq/X/WbKwdHCr4cKpdrrleM=
+	t=1713251132; cv=none; b=Q8sEBSDiF6dCWwnkxz8z6t7SEq9F2oeYmA++DsD9TpbaVCp5qtfq3Cr46FLf9Gk5oj3Okf3rUiG1hIuJMl9SbuwrjwOmBXwcHlvMF4J7uf8awNAdBSuXvCdQHZx3uN6diTpd6QYS8ljuqJEK0qslwgpu/WGTB0fT+90mgua7r8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713249448; c=relaxed/simple;
-	bh=V6vBdqA+1/0QAN744yAvKXN/zayOAXioRLshFUwhcF0=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=E6YuFIBS1AHm0oGreY15FSlxirLtrzINZ5h3BD7ZjydnNiPo3qZYwPxdD0vNk0eVa+wVETqcaDH4Z3U2H9duIp7/Mh+SMGGR2vS7Vt9nzHQxnV7QrbHlmtkrgR4SL5T+5nVCueaxN08WPXWMTQrFIT6iU2f3OYPgrJ8x+0PJnrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KxHToYqR; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43G4e6K8021136;
-	Tue, 16 Apr 2024 06:37:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=c6TdiCbWj5rHM2MNFsGN3bhjHBR3WKc7S23Su7X75S0=; b=Kx
-	HToYqRvP2PkMCuEKrAUhY+NWMQB1KM3VdVKPrkxCGiXpQ69wA8Y7rBkQJzeSHW4W
-	LKZVUM6iDulxVnvtm3rEYnjgCXQUYqtDPNtrcrZsppLYCrgqcgdD1KDCy3ag2DBX
-	FaottgX3mLWiMU/fdeFUH9+yQ5X+26TfK25N4vrYg43zK7UppNKnXWb7A4p/zvv6
-	mSrDxigzhf+LY1wwnh8hBuw9DGfVWJ5YKjsVXUXquzKwilRWjxTgWG2HHhcC9C5v
-	G2lHWVYz+/RJ6oH29aaEmJv94CzRqBf+kynGw0d0upAFTxJBZFIrWUGMF94YsfHk
-	Y5PTJEU4Lktg4m/G394w==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xhftw0n9k-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 16 Apr 2024 06:37:12 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43G6bCKb029457
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 16 Apr 2024 06:37:12 GMT
-Received: from hu-mohs-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 15 Apr 2024 23:37:07 -0700
-From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami
-	<bgoswami@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown
-	<broonie@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela
-	<perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>
-CC: <alsa-devel@alsa-project.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_rohkumar@quicinc.com>,
-        <quic_pkumpatl@quicinc.com>,
-        Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Subject: [PATCH v2 8/8] ASoC: codecs: wcd937x: add audio routing and Kconfig
-Date: Tue, 16 Apr 2024 12:06:00 +0530
-Message-ID: <20240416063600.309747-9-quic_mohs@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240416063600.309747-1-quic_mohs@quicinc.com>
-References: <20240416063600.309747-1-quic_mohs@quicinc.com>
+	s=arc-20240116; t=1713251132; c=relaxed/simple;
+	bh=fpIr7vk9ma0F1Ajyvw7T8mvDHmQiafMnVUv8cVES/Q8=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=pbkEDZxhkZLvYoVyF910qvs5e34ZpDev5m6tO4WEyRpE99ImAQMo4mt3vfmbrn1oSv4t9QDWcKQApg2pxyn408c1PDGEqzR/zxC5SujK2CGlch7uwhFETBC7RddPugDRdvp3YYRON8Gs7RaYJ1u4SjQgDozAOjoqr02+2SU+p+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=uYYpoJTm; arc=none smtp.client-ip=212.227.15.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1713251047; x=1713855847; i=markus.elfring@web.de;
+	bh=11Y55v0AlzuRPO7ifOFiCZQ7lrJESQhpZwvX7xtpFpc=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
+	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=uYYpoJTmRqgk2fHBG3KnNz2CLPavpRrEfJtq6/fkxsSHPHo9hr9qcnbetfR4rbAv
+	 WWYYcMCU5QC3KoHYZsERO/uCRV2oxChX6X+Rafq4yYRbQohsxFKvostPltnlOgZUZ
+	 uF9kX12zxQQdi44vnDxMP2KDpxbIBaLpo5hqzClbmR4INeL93ovd+wCPNkORolTKA
+	 RsWEq1pb7kj6jurgWDs/BjuRAGZTklJtZ686dqKAidxv8QQmS4EmEZg2pw3cisyw+
+	 IuhR26xDJ4uJ6w3UN1gJ6I/LtVomRg8m99Raf/c0Fc4QVAeD0lf4ST2m6UyLR9hF4
+	 nOhZqEsl8lmkPGi/9Q==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.21] ([94.31.85.95]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mvspv-1smFwO1js7-010uHt; Tue, 16
+ Apr 2024 09:04:07 +0200
+Message-ID: <e0377059-4073-4779-8385-506b9b39301e@web.de>
+Date: Tue, 16 Apr 2024 09:03:36 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: VI0brMK1RMkKRZ22jcUpXRyBBwBVh7L6
-X-Proofpoint-ORIG-GUID: VI0brMK1RMkKRZ22jcUpXRyBBwBVh7L6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-16_04,2024-04-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- priorityscore=1501 mlxscore=0 phishscore=0 clxscore=1015 suspectscore=0
- bulkscore=0 mlxlogscore=999 adultscore=0 impostorscore=0
- lowpriorityscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2404010003 definitions=main-2404160039
+User-Agent: Mozilla Thunderbird
+To: Ricardo Ribalda <ribalda@chromium.org>, linux-media@vger.kernel.org,
+ kernel-janitors@vger.kernel.org, Abylay Ospan <aospan@netup.ru>,
+ Alain Volmat <alain.volmat@foss.st.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Angelo Gioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Benjamin Mugnier <benjamin.mugnier@foss.st.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Chen-Yu Tsai <wens@csie.org>,
+ Dmitry Osipenko <digetx@gmail.com>,
+ Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Hans Verkuil <hverkuil@xs4all.nl>,
+ Hugues Fruchet <hugues.fruchet@foss.st.com>,
+ Jacopo Mondi <jacopo+renesas@jmondi.org>,
+ Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>,
+ Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+ Luca Ceresoli <luca.ceresoli@bootlin.com>,
+ Martin Tuma <martin.tuma@digiteqautomotive.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ =?UTF-8?Q?Niklas_S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+ Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+ Pavel Machek <pavel@ucw.cz>, Sakari Ailus <sakari.ailus@linux.intel.com>,
+ Samuel Holland <samuel@sholland.org>, Sergey Kozlov <serjk@netup.ru>,
+ Sergey Senozhatsky <senozhatsky@chromium.org>,
+ Sowjanya Komatineni <skomatineni@nvidia.com>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Sylvain Petinot <sylvain.petinot@foss.st.com>,
+ Thierry Reding <thierry.reding@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>
+Cc: LKML <linux-kernel@vger.kernel.org>,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, linux-staging@lists.linux.dev,
+ linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+ linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org
+References: <20240415-fix-cocci-v1-3-477afb23728b@chromium.org>
+Subject: Re: [PATCH 03/35] media: uvcvideo: Refactor iterators
+Content-Language: en-GB
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <20240415-fix-cocci-v1-3-477afb23728b@chromium.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:sHR+TeGSFgoxPZvFUHAPIEuDVzgT2GvvVwRx2R0bQhoUCLrY21q
+ 4aVwGDwLU20D7GafylHrOJidGYSPJoSoIzoqf+nPfG0K+ORf8VF8LHB5EhsUv86XaNhisus
+ 3kmBAPbDemt8Lc42bbQEjY39bQYWH3PtxU6pQC03uggivELLPehSfNoyDhXXBzC0UmXhKFx
+ xJrtOT5azfeT6A+OIpOdg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:03HI85af2Ns=;yQ8sKTONouBI76raH8Z58fLgdPG
+ cDRdjqAFM/3eXwECjUZI9h4p6mlw8k+SOXiyN6GfwXod9KAZJOxaNqbO06huy2pgBzYXWcxaK
+ 1yvcUyUm5nteIAvRh5GEJ6k2V8yU4C8rRXv94JjainnOHsSdDuPbk0aZXSWp65ziquDFaUUDN
+ YJZN7AsXSRRYZMDVispdvHubrvkMarfGAxoCn4+Sw/adTSJ9UOxI6QREc49RSDDGj50+NsVZA
+ I9/YrIlsRw4OeLnNC7dBSfeh2gas2lmTVPAdeZE5dk0sIs7aiTx7Cpr5FEHhCUFXrkReal3EO
+ gELP/4ATALLJIJbZL8oac+FZhSpqW5irTqlO//L3y6eUAaDcuOSIPWLoaYJ2J97IzS1c9eCBT
+ dPZVw6RcJR7I1g+6lDJwbla9AWsE0cHKjE7xI2z8RiMQz8Rg1JfobeDUi4lCAeun4aY23r5ct
+ YWwBdDrs6QXbNlkfk+vAwFpDgJQbH27hI7BnJLDoXByi4vvXAuZw1dpfEkQ80cUKCCCXCdn7X
+ PvxRBpoBI4VG9b+hFjsF5IAAMMrnv9iTADoQIOgnuUIHJ96lnDCSfdzxHRFAWt2M+05cdkCb1
+ Xd22EYiLsJxLnQ9xjjeW2wTuQRB2DVUy1LO2KuI3z2ZDeT+FU9j9vuFhJTTTlhlzwnv9ycOI2
+ FCqhmVe/n6PxH/5bS4hKkm4lYwNU/GheqGDyJrBHSbogo2OEAjGtEGI1SveFeBPQ/PKRQkiQ8
+ msmag1gLjDLzUZ3GnLIpmC2bTBr5sENz7Knm/uddln2TX5kDsFZDCPf9L9KYANSpzIuCxNgkh
+ +sdpCGJrmyr6dMFVvuLSI8fFEJx9x6/qw+iAMnV+HSLrk=
 
-From: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+I would find a hint for a variable change more appropriate in the patch su=
+bject
+instead of the word =E2=80=9Citerators=E2=80=9D.
 
-This patch adds audio routing for both playback and capture and
-Makefile and Kconfigs changes for wcd937x.
 
-Co-developed-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Signed-off-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
----
- sound/soc/codecs/Kconfig   | 20 ++++++++++
- sound/soc/codecs/Makefile  |  7 ++++
- sound/soc/codecs/wcd937x.c | 80 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 107 insertions(+)
+=E2=80=A6
+> +++ b/drivers/media/usb/uvc/uvc_ctrl.c
+=E2=80=A6
+> @@ -2175,16 +2177,16 @@ int uvc_xu_ctrl_query(struct uvc_video_chain *ch=
+ain,
+>  	int ret;
+>
+>  	/* Find the extension unit. */
+=E2=80=A6
+> +	entity =3D NULL;
+> +	list_for_each_entry(iter, &chain->entities, chain) {
+=E2=80=A6
 
-diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
-index 995eab954dd5..daf42c0b0444 100644
---- a/sound/soc/codecs/Kconfig
-+++ b/sound/soc/codecs/Kconfig
-@@ -277,6 +277,7 @@ config SND_SOC_ALL_CODECS
- 	imply SND_SOC_UDA1380
- 	imply SND_SOC_WCD9335
- 	imply SND_SOC_WCD934X
-+	imply SND_SOC_WCD937X_SDW
- 	imply SND_SOC_WCD938X_SDW
- 	imply SND_SOC_WCD939X_SDW
- 	imply SND_SOC_LPASS_MACRO_COMMON
-@@ -2090,6 +2091,25 @@ config SND_SOC_WCD934X
- 	  The WCD9340/9341 is a audio codec IC Integrated in
- 	  Qualcomm SoCs like SDM845.
- 
-+config SND_SOC_WCD937X
-+	depends on SND_SOC_WCD937X_SDW
-+	tristate
-+	depends on SOUNDWIRE || !SOUNDWIRE
-+	select SND_SOC_WCD_CLASSH
-+
-+config SND_SOC_WCD937X_SDW
-+	tristate "WCD9370/WCD9375 Codec - SDW"
-+	select SND_SOC_WCD937X
-+	select SND_SOC_WCD_MBHC
-+	select REGMAP_IRQ
-+	depends on SOUNDWIRE
-+	select REGMAP_SOUNDWIRE
-+	help
-+	  The WCD9370/9375 is an audio codec IC used with SoCs
-+	  like SC7280 or QCM6490 chipsets, and it connected
-+	  via soundwire.
-+	  To compile this codec driver say Y or m.
-+
- config SND_SOC_WCD938X
- 	depends on SND_SOC_WCD938X_SDW
- 	tristate
-diff --git a/sound/soc/codecs/Makefile b/sound/soc/codecs/Makefile
-index 9ba24fb870b1..09aad6c12449 100644
---- a/sound/soc/codecs/Makefile
-+++ b/sound/soc/codecs/Makefile
-@@ -315,6 +315,8 @@ snd-soc-wcd-classh-objs := wcd-clsh-v2.o
- snd-soc-wcd-mbhc-objs := wcd-mbhc-v2.o
- snd-soc-wcd9335-objs := wcd9335.o
- snd-soc-wcd934x-objs := wcd934x.o
-+snd-soc-wcd937x-objs := wcd937x.o
-+snd-soc-wcd937x-sdw-objs := wcd937x-sdw.o
- snd-soc-wcd938x-objs := wcd938x.o
- snd-soc-wcd938x-sdw-objs := wcd938x-sdw.o
- snd-soc-wcd939x-objs := wcd939x.o
-@@ -708,6 +710,11 @@ obj-$(CONFIG_SND_SOC_WCD_CLASSH)	+= snd-soc-wcd-classh.o
- obj-$(CONFIG_SND_SOC_WCD_MBHC)	+= snd-soc-wcd-mbhc.o
- obj-$(CONFIG_SND_SOC_WCD9335)	+= snd-soc-wcd9335.o
- obj-$(CONFIG_SND_SOC_WCD934X)	+= snd-soc-wcd934x.o
-+obj-$(CONFIG_SND_SOC_WCD937X)	+= snd-soc-wcd937x.o
-+ifdef CONFIG_SND_SOC_WCD937X_SDW
-+# avoid link failure by forcing sdw code built-in when needed
-+obj-$(CONFIG_SND_SOC_WCD937X) += snd-soc-wcd937x-sdw.o
-+endif
- obj-$(CONFIG_SND_SOC_WCD938X)	+= snd-soc-wcd938x.o
- ifdef CONFIG_SND_SOC_WCD938X_SDW
- # avoid link failure by forcing sdw code built-in when needed
-diff --git a/sound/soc/codecs/wcd937x.c b/sound/soc/codecs/wcd937x.c
-index 87e571dc4a11..d0795e39e99b 100644
---- a/sound/soc/codecs/wcd937x.c
-+++ b/sound/soc/codecs/wcd937x.c
-@@ -2421,6 +2421,77 @@ static const struct snd_soc_dapm_widget wcd9375_dapm_widgets[] = {
- 	SND_SOC_DAPM_OUTPUT("DMIC6_OUTPUT"),
- };
- 
-+static const struct snd_soc_dapm_route wcd937x_audio_map[] = {
-+	{ "ADC1_OUTPUT", NULL, "ADC1_MIXER" },
-+	{ "ADC1_MIXER", "Switch", "ADC1 REQ" },
-+	{ "ADC1 REQ", NULL, "ADC1" },
-+	{ "ADC1", NULL, "AMIC1" },
-+
-+	{ "ADC2_OUTPUT", NULL, "ADC2_MIXER" },
-+	{ "ADC2_MIXER", "Switch", "ADC2 REQ" },
-+	{ "ADC2 REQ", NULL, "ADC2" },
-+	{ "ADC2", NULL, "ADC2 MUX" },
-+	{ "ADC2 MUX", "INP3", "AMIC3" },
-+	{ "ADC2 MUX", "INP2", "AMIC2" },
-+
-+	{ "IN1_HPHL", NULL, "VDD_BUCK" },
-+	{ "IN1_HPHL", NULL, "CLS_H_PORT" },
-+	{ "RX1", NULL, "IN1_HPHL" },
-+	{ "RDAC1", NULL, "RX1" },
-+	{ "HPHL_RDAC", "Switch", "RDAC1" },
-+	{ "HPHL PGA", NULL, "HPHL_RDAC" },
-+	{ "HPHL", NULL, "HPHL PGA" },
-+
-+	{ "IN2_HPHR", NULL, "VDD_BUCK" },
-+	{ "IN2_HPHR", NULL, "CLS_H_PORT" },
-+	{ "RX2", NULL, "IN2_HPHR" },
-+	{ "RDAC2", NULL, "RX2" },
-+	{ "HPHR_RDAC", "Switch", "RDAC2" },
-+	{ "HPHR PGA", NULL, "HPHR_RDAC" },
-+	{ "HPHR", NULL, "HPHR PGA" },
-+
-+	{ "IN3_AUX", NULL, "VDD_BUCK" },
-+	{ "IN3_AUX", NULL, "CLS_H_PORT" },
-+	{ "RX3", NULL, "IN3_AUX" },
-+	{ "RDAC4", NULL, "RX3" },
-+	{ "AUX_RDAC", "Switch", "RDAC4" },
-+	{ "AUX PGA", NULL, "AUX_RDAC" },
-+	{ "AUX", NULL, "AUX PGA" },
-+
-+	{ "RDAC3_MUX", "RX3", "RX3" },
-+	{ "RDAC3_MUX", "RX1", "RX1" },
-+	{ "RDAC3", NULL, "RDAC3_MUX" },
-+	{ "EAR_RDAC", "Switch", "RDAC3" },
-+	{ "EAR PGA", NULL, "EAR_RDAC" },
-+	{ "EAR", NULL, "EAR PGA" },
-+};
-+
-+static const struct snd_soc_dapm_route wcd9375_audio_map[] = {
-+	{ "ADC3_OUTPUT", NULL, "ADC3_MIXER" },
-+	{ "ADC3_OUTPUT", NULL, "ADC3_MIXER" },
-+	{ "ADC3_MIXER", "Switch", "ADC3 REQ" },
-+	{ "ADC3 REQ", NULL, "ADC3" },
-+	{ "ADC3", NULL, "AMIC4" },
-+
-+	{ "DMIC1_OUTPUT", NULL, "DMIC1_MIXER" },
-+	{ "DMIC1_MIXER", "Switch", "DMIC1" },
-+
-+	{ "DMIC2_OUTPUT", NULL, "DMIC2_MIXER" },
-+	{ "DMIC2_MIXER", "Switch", "DMIC2" },
-+
-+	{ "DMIC3_OUTPUT", NULL, "DMIC3_MIXER" },
-+	{ "DMIC3_MIXER", "Switch", "DMIC3" },
-+
-+	{ "DMIC4_OUTPUT", NULL, "DMIC4_MIXER" },
-+	{ "DMIC4_MIXER", "Switch", "DMIC4" },
-+
-+	{ "DMIC5_OUTPUT", NULL, "DMIC5_MIXER" },
-+	{ "DMIC5_MIXER", "Switch", "DMIC5" },
-+
-+	{ "DMIC6_OUTPUT", NULL, "DMIC6_MIXER" },
-+	{ "DMIC6_MIXER", "Switch", "DMIC6" },
-+};
-+
- static int wcd937x_set_micbias_data(struct wcd937x_priv *wcd937x)
- {
- 	int vout_ctl[3];
-@@ -2557,6 +2628,13 @@ static int wcd937x_soc_codec_probe(struct snd_soc_component *component)
- 			dev_err(component->dev, "Failed to add snd_ctls\n");
- 			return ret;
- 		}
-+
-+		ret = snd_soc_dapm_add_routes(dapm, wcd9375_audio_map,
-+					      ARRAY_SIZE(wcd9375_audio_map));
-+		if (ret < 0) {
-+			dev_err(component->dev, "Failed to add routes\n");
-+			return ret;
-+		}
- 	}
- 
- 	ret = wcd937x_mbhc_init(component);
-@@ -2600,6 +2678,8 @@ static const struct snd_soc_component_driver soc_codec_dev_wcd937x = {
- 	.num_controls = ARRAY_SIZE(wcd937x_snd_controls),
- 	.dapm_widgets = wcd937x_dapm_widgets,
- 	.num_dapm_widgets = ARRAY_SIZE(wcd937x_dapm_widgets),
-+	.dapm_routes = wcd937x_audio_map,
-+	.num_dapm_routes = ARRAY_SIZE(wcd937x_audio_map),
- 	.set_jack = wcd937x_codec_set_jack,
- 	.endianness = 1,
- };
--- 
-2.25.1
+I suggest to move this assignment into the definition for the affected loc=
+al variable.
 
+
+By the way:
+I see another source code adjustment opportunity in this function implemen=
+tation.
+https://elixir.bootlin.com/linux/v6.9-rc4/source/drivers/media/usb/uvc/uvc=
+_ctrl.c#L2165
+
+Can it be nicer to use labels =E2=80=9Cfree_data=E2=80=9D and =E2=80=9Cunl=
+ock=E2=80=9D (instead of =E2=80=9Cdone=E2=80=9D)?
+How do you think about to increase the application of scope-based resource=
+ management here?
+
+Regards,
+Markus
 
