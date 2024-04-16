@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-17562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB7388A6516
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 09:30:25 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B0F28A6527
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 09:32:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5A9811F22DC1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 07:30:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 78BF11F22360
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 07:32:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 060F17F48E;
-	Tue, 16 Apr 2024 07:30:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C73A7F48E;
+	Tue, 16 Apr 2024 07:32:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SNlf7vio"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jHdVgNVw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073CD6DCE8
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 07:30:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD4B77658
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 07:32:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713252619; cv=none; b=GBTF39yZvqjPrWOVwq858vwTFjkiopSYeW4t/BzyLf5v+bikzl8eanC/T46RqM3k9zNfPbY+0JcfZWmt/uorDA/ykRLmamc41FxxMSzvLtnaUkxSitdMfJ23dl8OskXz1nKyJIi0D7d2Sa+t6a8hv7KMiqT6Hib5TPozQBWB3lY=
+	t=1713252742; cv=none; b=ZJ09SCrcqr1Fv4YJMgSqfrBtli5IUMLYLX/f+t7K/epXPea7bYnDgbnrRlw65YpdRvxn1LWJw53kJcCgIGKmSAA+cRxit7Lg3PgjYaJpVNmQ9MU4XGIzslQ3Lo1qD6OEebj4DpedTUmgBZGG3pWGFDH7TtFbT77dwu5CNhlU2Ss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713252619; c=relaxed/simple;
-	bh=3EBKV7AoYCxlJECmklFzoEXRovNanxjXalvsVOT4m+o=;
+	s=arc-20240116; t=1713252742; c=relaxed/simple;
+	bh=Cs1dgXPtyii2K9Gr9D0keZ57yvHI7OfDP8UWsuFVXPo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gGS631JD9WDFZ/nUg/Ab/cBb6+vjf/fhwTr0CGxFuj3pRXMKjrZFNTB6sNlsqKpmS0sqOZiqHgL5eb2QMV8oJTfM3DNuGebMVx+P+zEScUTGO9RyIlPk/GWzuDDl9c8duxW9GuB5NHCreoOlhgQMctSrhbpq7VwEYosDCuJoIBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SNlf7vio; arc=none smtp.client-ip=209.85.218.51
+	 Content-Type:Content-Disposition:In-Reply-To; b=GDCcdgEh3AZXKdmfqBdMF9QhoddEKrOqmIwKdiDXVHDZMDDd56JimCH7qJZgyiP2w8zOAvQkVMNn0fJmM4eZvOxrHNl01DvmWPBjj4peudibgfEHGn+dywxasEtk78rT/r7xANVKsPAjxWqdk0KJVwPWlegDiL+7Cecn9XhXaZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jHdVgNVw; arc=none smtp.client-ip=209.85.218.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a4715991c32so515466666b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 00:30:17 -0700 (PDT)
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a51addddbd4so470522766b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 00:32:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713252616; x=1713857416; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1713252739; x=1713857539; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=cQoXqxQGz5UdNS/uHt9iOu3c65OCBEQl1AjepevvRYw=;
-        b=SNlf7vioxt9kCwvhEUN8obQyhDYbHdl4mPQtUdgYuiGObRsj3s3lTmyk/rgfuO9C0b
-         G/go3KPIiKXe8EL7p2wymeks0Ne2COByut5L6T4WRBNrmkwvDXUMfIYeCaaHBXelPe+z
-         6XNJdOsb275n+a2dt0ntwxe+TEOwv4IwBgUdks0IiqLlrWd85B3RoNpJazutUQIc1wxC
-         sz1XqbKDXYN84YdAWzEWn0OrUHfuvgBavPzJU8YjCcZmbUNz/tnjrtDE94ylLfSPr6ei
-         Po0ST2OC1kThPV2sUV4K3rGk8Lv/QKQdR9a41Wocb6oTxU35MJ+2E8qhC2dmJGK1n4IZ
-         Rkiw==
+        bh=8R9bVOGo16amHaHdQgn3vohiOg/80cUEYV+3t7qlHzM=;
+        b=jHdVgNVw0xBVycy6FryZ/6a/Xi0qXaubIU5rhNKkprqtgwmPi9meLe5k4zG6cyYM0+
+         mY7rWYsVMxd3whSYm19DgwcmIc8NovyyQ33uncARihnb9WImpyt1/tUMQKa5UqBBQI01
+         xYqlJRLWJulSbW1m5uNb2RhM32xcQzwI7X8Z4rENT55gwpQrHd8f95D8E/sDi5JWSDEz
+         6+7Sw2KGcjHP4AW4DtljQ+oRJZ0wsRQa3Euy/BaYS5P1ihyr8PCverM5GBIGfxhp+AwX
+         ky4CjKOxkjS/mR3Eh0iST5+t9O2wF2V/72j27kIEtnM4yzrrochKOVihGlJtYM5qaQNQ
+         hqKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713252616; x=1713857416;
+        d=1e100.net; s=20230601; t=1713252739; x=1713857539;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=cQoXqxQGz5UdNS/uHt9iOu3c65OCBEQl1AjepevvRYw=;
-        b=Buqfj1cgRHOFpInb1Blk9XMUDP1upAwyCfe2dJypZVghv3er4PVGXA8rZsO0+yob73
-         9viVVeNtqrlWpky1oJMetXLmJAnf/OsOHY/u1OUy5TcJgY69sj+1i/kqdFdZ6wfiNaQ4
-         PvJBFA69a56j2jZewcfVjTpatZDugApAV+yrs36GcGB2rgwtui6e5NjYQB5aLkAxnN5O
-         RhrBLfm80MU+qnAzExVAGL2o2ux3c/+1N6gU+d/rKJWOwqppRjwXiWL+PasEZaeu41yS
-         Xl7NbD9a6rr2rQ/DwLC+5ZW9B1QoZKpGqCVg8KFabHEF2RsgaqErTtAMe+1dl9aETnYb
-         pKCw==
-X-Forwarded-Encrypted: i=1; AJvYcCXf+1Xpw5faN5JbujiTbiu8grq53OeSvVJmbBFuhXEPd3sem1xzwr3sPmmef2GHiW2qmvqz721cCPW6AZ2eOMZ+Fq+kiGpK0jdiw64s9g==
-X-Gm-Message-State: AOJu0YyMcVY7IEMXRFMR8qhF7yYNFqbIe/sAHydhE8T6oM3S0y74Dhi7
-	s40Is3crcUboYRZW0h2gjbpYFQk6jCAa8261PxrtA/PLhXjGOFJ2e15QGPT1/qI=
-X-Google-Smtp-Source: AGHT+IES0flyaPsDqcItqmrdcMlT/9HhmNC59nIBd1+qe6iKBoJLQjAdExVi7n8xHc0r8DPQuGmsnQ==
-X-Received: by 2002:a17:906:fd89:b0:a52:24b7:b4fc with SMTP id xa9-20020a170906fd8900b00a5224b7b4fcmr9643955ejb.72.1713252616011;
-        Tue, 16 Apr 2024 00:30:16 -0700 (PDT)
+        bh=8R9bVOGo16amHaHdQgn3vohiOg/80cUEYV+3t7qlHzM=;
+        b=ivzQhksVYpy0K3PH8LWYh9a1HG/L4DAvI7iQ2jLZh4myX0I4mx8rlGPSNaIuy05hkH
+         qDkrBLz05Fmz8n7TAsPs9cXSmp2/CWVrAMNZqqEvVmKmMfVqt86vlIlaDaqMko7p0afM
+         hKGia4WtXky1T0KmxNPR90n+r52ssWLcOQHMZsL8WbxX/eA15pHLfPExfh6CgxqkEuht
+         0AHMpImUDIae66qU8ACnXN6g++rXLXUHDubK5WeHjZe2CTpbEksaKnXHY6XBbASKwH5W
+         AECXdPpn3CushxwuppJVlgSe1N/F5HKRfa+P5VG36pItdFnaUMdA05VVZA251L5VNQJ0
+         AFLA==
+X-Forwarded-Encrypted: i=1; AJvYcCUxdNenF8WJN8kOY4svAaQhjgkQkeGzMYeKO/yiH4bG0yiRfb3rQdDT9o1RaMrn9Iv5ITnDH/7HxWJiZFMzdOAySem0VVcyqj2pIGV18A==
+X-Gm-Message-State: AOJu0Yx1R7BWbUz0rS0zATTypW02nbfeYKZ9Lj0bsSDxj3GwszO4zVDk
+	uyJQpe+bO4WHOlgB25Vkttt6/V2pbL5uPInRBnnoE1oQbfAYmc+xrGtb39IozFQ=
+X-Google-Smtp-Source: AGHT+IEiSwmXJXJlRrwBTxtu6/XHomvPQRR0BAqxebaWeb0WkKlHDct2PHGh5ytZktKV5zyNXHYwQg==
+X-Received: by 2002:a17:906:57d6:b0:a52:6c4e:25ae with SMTP id u22-20020a17090657d600b00a526c4e25aemr2620587ejr.44.1713252739010;
+        Tue, 16 Apr 2024 00:32:19 -0700 (PDT)
 Received: from localhost ([102.222.70.76])
-        by smtp.gmail.com with ESMTPSA id h14-20020a1709070b0e00b00a518c69c4e3sm6421654ejl.23.2024.04.16.00.30.14
+        by smtp.gmail.com with ESMTPSA id qb11-20020a1709077e8b00b00a51ab065bf0sm6421883ejc.202.2024.04.16.00.32.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Apr 2024 00:30:15 -0700 (PDT)
-Date: Tue, 16 Apr 2024 10:30:11 +0300
+        Tue, 16 Apr 2024 00:32:18 -0700 (PDT)
+Date: Tue, 16 Apr 2024 10:32:14 +0300
 From: Dan Carpenter <dan.carpenter@linaro.org>
 To: Ricardo Ribalda <ribalda@chromium.org>
 Cc: Martin Tuma <martin.tuma@digiteqautomotive.com>,
@@ -110,10 +110,10 @@ Cc: Martin Tuma <martin.tuma@digiteqautomotive.com>,
 	linux-arm-kernel@lists.infradead.org, linux-staging@lists.linux.dev,
 	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
 	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 06/35] media: stm32-dcmipp: Remove redundant printk
-Message-ID: <cd4aac19-c4cf-4db0-a18c-42f1bf1441a8@moroto.mountain>
+Subject: Re: [PATCH 02/35] media: stb0899: Remove unreacheable code
+Message-ID: <e5824d5b-9aa4-4b92-91a4-7e26de8b293d@moroto.mountain>
 References: <20240415-fix-cocci-v1-0-477afb23728b@chromium.org>
- <20240415-fix-cocci-v1-6-477afb23728b@chromium.org>
+ <20240415-fix-cocci-v1-2-477afb23728b@chromium.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -122,42 +122,38 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240415-fix-cocci-v1-6-477afb23728b@chromium.org>
+In-Reply-To: <20240415-fix-cocci-v1-2-477afb23728b@chromium.org>
 
-On Mon, Apr 15, 2024 at 07:34:23PM +0000, Ricardo Ribalda wrote:
-> platform_get_irq() already prints an error message.
+On Mon, Apr 15, 2024 at 07:34:19PM +0000, Ricardo Ribalda wrote:
+> chip_id is an unsigned number, it can never be < 0
 > 
-> Found by cocci:
-> drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-core.c:444:3-10: line 444 is redundant because platform_get_irq() already prints an error
+> Fixes cocci check:
+> drivers/media/dvb-frontends/stb0899_drv.c:1280:8-15: WARNING: Unsigned expression compared with zero: chip_id > 0
 > 
 > Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 > ---
->  drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-core.c | 5 +----
->  1 file changed, 1 insertion(+), 4 deletions(-)
+>  drivers/media/dvb-frontends/stb0899_drv.c | 5 -----
+>  1 file changed, 5 deletions(-)
 > 
-> diff --git a/drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-core.c b/drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-core.c
-> index bce821eb71ce..c25027b0ca32 100644
-> --- a/drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-core.c
-> +++ b/drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-core.c
-> @@ -439,11 +439,8 @@ static int dcmipp_probe(struct platform_device *pdev)
->  				     "Could not get reset control\n");
->  
->  	irq = platform_get_irq(pdev, 0);
-> -	if (irq <= 0) {
-> -		if (irq != -EPROBE_DEFER)
-> -			dev_err(&pdev->dev, "Could not get irq\n");
-> +	if (irq <= 0)
->  		return irq ? irq : -ENXIO;
+> diff --git a/drivers/media/dvb-frontends/stb0899_drv.c b/drivers/media/dvb-frontends/stb0899_drv.c
+> index 2f4d8fb400cd..222b5476ebfd 100644
+> --- a/drivers/media/dvb-frontends/stb0899_drv.c
+> +++ b/drivers/media/dvb-frontends/stb0899_drv.c
+> @@ -1277,11 +1277,6 @@ static int stb0899_get_dev_id(struct stb0899_state *state)
+>  	dprintk(state->verbose, FE_ERROR, 1, "Demodulator Core ID=[%s], Version=[%d]", (char *) &demod_str, demod_ver);
+>  	CONVERT32(STB0899_READ_S2REG(STB0899_S2FEC, FEC_CORE_ID_REG), (char *)&fec_str);
+>  	fec_ver = STB0899_READ_S2REG(STB0899_S2FEC, FEC_VER_ID_REG);
+> -	if (! (chip_id > 0)) {
 
-platform_get_irq() can never return zero so this should be written as:
-
-	irq = platform_get_irq(pdev, 0);
-	if (irq < 0)
-		return irq;
-
-There is a comment next to platform_get_irq() which documents this.
+This is not dead code.  It's possible for chip_id to be equal to 0.
 
 regards,
 dan carpenter
+
+> -		dprintk(state->verbose, FE_ERROR, 1, "couldn't find a STB 0899");
+> -
+> -		return -ENODEV;
+> -	}
+>  	dprintk(state->verbose, FE_ERROR, 1, "FEC Core ID=[%s], Version=[%d]", (char*) &fec_str, fec_ver);
 
 
