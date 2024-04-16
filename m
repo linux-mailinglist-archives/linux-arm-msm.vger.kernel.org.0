@@ -1,254 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-17610-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 122828A72DC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 20:12:29 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE2758A72FD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 20:21:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 93EA11F226FC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 18:12:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7F487284135
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 18:21:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C93A2135418;
-	Tue, 16 Apr 2024 18:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEFB81350DD;
+	Tue, 16 Apr 2024 18:21:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IeTXk+Z7"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lQ0L3SgI"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8504134435;
-	Tue, 16 Apr 2024 18:12:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53C53134425;
+	Tue, 16 Apr 2024 18:21:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713291137; cv=none; b=C+mHonjv7AsklBFDDWiY9aHSshF/vJ3cNeJ3SGp+WLgh/KiNxdgyvKg7SS52QrGiQo7+wJ7StgNWg4EZtovx6sFT0kTjpfF7gqznsEDR6u3eEyMHwDw2G3dQBybF8Iv3i7HlJ5KaUgLYFj2A4lL2i9VVM5h6Sg9ESXQnB1BXpSM=
+	t=1713291667; cv=none; b=JnNaXO5v3HCaCXKMk0xDK5H9zm8zWhUMv5rr0BUW4X3XBsJGXDpROuVP6NyBIqPe3wHu6WM8dzC0uexxyUs/+/GUTMw1Slccg47W9672YGkoZX8VfSEfhW3DgngrIJCo8YSS9IsY0BuP2kKrSRQLeHcOxSb7WEOv0lDTfJTLRlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713291137; c=relaxed/simple;
-	bh=Vmw4aEQZNgF1MZK5diVS7D95NUEyNcPU6RgyKHjzLoM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=WcT2MGyW8keDhxcjNQoRg+8KP1YnXcsFVZVU5MlUrqsyBFFVOYX+5ztASkSH0Dd0izfmS0xiWY9w1RjjOe93HVpF2ES7TRNcL7H71kZZsoRqfuxy3pASf49dNEQunY9x6DMPoRjI4fx1uTawc5FhdhdnBBOd7KpSQtROZiwxgy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IeTXk+Z7; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1713291667; c=relaxed/simple;
+	bh=hODAtBoW28GRpf6eK1tEK/y5Fg0Q2GNj9a9v3pFmpPE=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Asdm0wIVCjnRIZsDsTFrjBsbtHq7u/g8i43Lu5v+desQW4crL+QRFl6t1G0x+8vvovIf7jvu5GXF4BO78YAgnrQHcAJgZxqa0hXTvW461fm80xtT/72bE8af/99IgHBo3vkVt6ND4ipVjsk9fuh1OqhskdIoeruFAVuG4MAVGdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lQ0L3SgI; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43GD66PV000532;
-	Tue, 16 Apr 2024 18:12:06 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43GHoal3032568;
+	Tue, 16 Apr 2024 18:21:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=qivhKUQzvzA991+4YJXxICyKrQ8l43Yn9blU0XnTCiU=; b=Ie
-	TXk+Z7UlzjaeSzA5Qq8iwCDFopCT9i8dfixS7lOYRU2kfoCm3ad100Ty+W14hBjf
-	LTCi4QRv54DqTnJld6bGuja0zPWhkeBgaM17Pnb8F23bDsofDA8WKW4wmp4LwxI6
-	ZyyOAP6wdGBJ8nLF8H6wN/VG6Yr0QqjS91ZUiq7IIo9HXIVwsxh1z/nNXft7/YC+
-	6FJiedF6quFVQKFp3TIdo1oLXBVVQtX0156o+oJaUPnuMZH+cozzslBQHmK6IK1Z
-	sUAGyqrEicb6EgqO6R/05e4trOeFI0wOw+ZJP03g2QDaLZtT37WyGQO0IjkRrRc/
-	phErLKK71TUXcGXNzqeA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xhswvrxqf-1
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=JM6GINH
+	US8Wl6DtWq1flatD5230ncoCZTko17XSCQR4=; b=lQ0L3SgI/Dpemq8Yp+odilZ
+	N/MHGvsUWKWewcJQBR1kU5sJ5bLvNWnM5ljDEU9nu/1BWghqwz7krSwLLnOJ4lap
+	EJsaBXS9DaWZ3YvsNzVWxGj/v79eziU8QMDmE67E/Ks7vExAjRvOnqZqmSDEVj/E
+	QBbMRc9q2nSzVnLNbR78hpuplkcY498LlMSaoa/Ah/rHh6A6ioJHOBSI/jwfJQKg
+	Jhjxa5ZH6Z1cVLj+IFzSPFGCNTsNz87A8f6HjZ/2f6Jt1d5iOqDKNlrc1CRs+gCb
+	Uo57vH83qxnOESqnJG0KquRYunoJYXU3QUUAcafSnnrP2KtPh76cT0GSLax/UIg=
+	=
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xhx32054r-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 16 Apr 2024 18:12:05 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43GIC4xx016500
+	Tue, 16 Apr 2024 18:21:02 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43GIL1wS032561
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 16 Apr 2024 18:12:04 GMT
-Received: from [10.110.122.232] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 16 Apr
- 2024 11:12:04 -0700
-Message-ID: <adb9ab3d-0fd2-4afe-96d7-573b1822e0c3@quicinc.com>
-Date: Tue, 16 Apr 2024 11:12:03 -0700
+	Tue, 16 Apr 2024 18:21:01 GMT
+Received: from hu-ajipan-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 16 Apr 2024 11:20:55 -0700
+From: Ajit Pandey <quic_ajipan@quicinc.com>
+To: Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd
+	<sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Vladimir Zapolskiy
+	<vladimir.zapolskiy@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Taniya Das
+	<quic_tdas@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Imran Shaik
+	<quic_imrashai@quicinc.com>,
+        Satya Priya Kakitapalli
+	<quic_skakitap@quicinc.com>,
+        Ajit Pandey <quic_ajipan@quicinc.com>
+Subject: [PATCH V2 0/8] clk: qcom: Add support for DISPCC, CAMCC and GPUCC on SM4450
+Date: Tue, 16 Apr 2024 23:49:57 +0530
+Message-ID: <20240416182005.75422-1-quic_ajipan@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] bus: mhi: host: pci_generic: Add edl callback to
- enter EDL
-Content-Language: en-US
-To: Qiang Yu <quic_qianyu@quicinc.com>, <mani@kernel.org>,
-        <quic_jhugo@quicinc.com>
-CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>
-References: <1713170945-44640-1-git-send-email-quic_qianyu@quicinc.com>
- <1713170945-44640-4-git-send-email-quic_qianyu@quicinc.com>
- <17d94b91-137c-409c-8af3-f32f1af2eb71@quicinc.com>
- <4b684db2-d384-404a-9c54-60d79ac7cf9f@quicinc.com>
-From: Mayank Rana <quic_mrana@quicinc.com>
-In-Reply-To: <4b684db2-d384-404a-9c54-60d79ac7cf9f@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: NqJhOr7DK6bGdMRmD-1rvF-YCgtBLaeB
-X-Proofpoint-ORIG-GUID: NqJhOr7DK6bGdMRmD-1rvF-YCgtBLaeB
+X-Proofpoint-GUID: QGfNgU7Spqn1RG8d5DTYBml_E4YlaDtM
+X-Proofpoint-ORIG-GUID: QGfNgU7Spqn1RG8d5DTYBml_E4YlaDtM
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-04-16_16,2024-04-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
- priorityscore=1501 spamscore=0 impostorscore=0 bulkscore=0 adultscore=0
- lowpriorityscore=0 malwarescore=0 clxscore=1015 suspectscore=0 mlxscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404160113
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 bulkscore=0
+ impostorscore=0 suspectscore=0 mlxscore=0 priorityscore=1501 adultscore=0
+ lowpriorityscore=0 spamscore=0 phishscore=0 mlxlogscore=999 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
+ definitions=main-2404160115
 
+This patch series add dt-bindings, driver and device tree support for DISPCC,
+CAMCC and GPUCC on QCOM SM4450 platform and also includes a fix related to
+LUCID EVO PLL config issue in clk-alpha-pll driver which is required for correct
+scaling of few supported frequencies in graphics clock controllers on SM4450.
 
+Changes in V2:
+- [PATCH 1/8]: Updated commit text adding stable kernel signoff for Fixes patch
+- [PATCH 2/8]: Updated commit msg and added Reviewed-by: Krzysztof Kozlowski tag
+- [PATCH 4/8]: Updated commit text as per review comments in v1
+- [PATCH 5/8]: Added Reviewed-by: Dmitry Baryshkov tags received in v1
+- [PATCH 7/8]: Fixed duplicate reset entries warnings
+- [PATCH 8/8]: New patch for adding dispcc, camcc and gpucc device-tree nodes
+- Link to V1: https://lore.kernel.org/all/20240330182817.3272224-1-quic_ajipan@quicinc.com/
+ 
 
-On 4/15/2024 8:50 PM, Qiang Yu wrote:
-> 
-> On 4/16/2024 7:53 AM, Mayank Rana wrote:
->> Hi Qiang
->>
->> On 4/15/2024 1:49 AM, Qiang Yu wrote:
->>> Add mhi_pci_generic_edl_trigger as edl_trigger for some devices (eg. 
->>> SDX65)
->>> to enter EDL mode by writing the 0xEDEDEDED cookie to the channel 91
->>> doorbell register and forcing an SOC reset afterwards.
->>>
->>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
->>> ---
->>>   drivers/bus/mhi/host/pci_generic.c | 47 
->>> ++++++++++++++++++++++++++++++++++++++
->>>   1 file changed, 47 insertions(+)
->>>
->>> diff --git a/drivers/bus/mhi/host/pci_generic.c 
->>> b/drivers/bus/mhi/host/pci_generic.c
->>> index 51639bf..cbf8a58 100644
->>> --- a/drivers/bus/mhi/host/pci_generic.c
->>> +++ b/drivers/bus/mhi/host/pci_generic.c
->>> @@ -27,12 +27,19 @@
->>>   #define PCI_VENDOR_ID_THALES    0x1269
->>>   #define PCI_VENDOR_ID_QUECTEL    0x1eac
->>>   +#define MHI_EDL_DB            91
->>> +#define MHI_EDL_COOKIE            0xEDEDEDED
->>> +
->>> +/* Device can enter EDL by first setting edl cookie then issuing 
->>> inband reset*/
->>> +#define MHI_PCI_GENERIC_EDL_TRIGGER    BIT(0)
->>> +
->>>   /**
->>>    * struct mhi_pci_dev_info - MHI PCI device specific information
->>>    * @config: MHI controller configuration
->>>    * @name: name of the PCI module
->>>    * @fw: firmware path (if any)
->>>    * @edl: emergency download mode firmware path (if any)
->>> + * @edl_trigger: each bit represents a different way to enter EDL
->>>    * @bar_num: PCI base address register to use for MHI MMIO register 
->>> space
->>>    * @dma_data_width: DMA transfer word size (32 or 64 bits)
->>>    * @mru_default: default MRU size for MBIM network packets
->>> @@ -44,6 +51,7 @@ struct mhi_pci_dev_info {
->>>       const char *name;
->>>       const char *fw;
->>>       const char *edl;
->>> +    unsigned int edl_trigger;
->>>       unsigned int bar_num;
->>>       unsigned int dma_data_width;
->>>       unsigned int mru_default;
->>> @@ -292,6 +300,7 @@ static const struct mhi_pci_dev_info 
->>> mhi_qcom_sdx75_info = {
->>>       .name = "qcom-sdx75m",
->>>       .fw = "qcom/sdx75m/xbl.elf",
->>>       .edl = "qcom/sdx75m/edl.mbn",
->>> +    .edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
->>>       .config = &modem_qcom_v2_mhiv_config,
->>>       .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->>>       .dma_data_width = 32,
->>> @@ -302,6 +311,7 @@ static const struct mhi_pci_dev_info 
->>> mhi_qcom_sdx65_info = {
->>>       .name = "qcom-sdx65m",
->>>       .fw = "qcom/sdx65m/xbl.elf",
->>>       .edl = "qcom/sdx65m/edl.mbn",
->>> +    .edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
->>>       .config = &modem_qcom_v1_mhiv_config,
->>>       .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->>>       .dma_data_width = 32,
->>> @@ -312,6 +322,7 @@ static const struct mhi_pci_dev_info 
->>> mhi_qcom_sdx55_info = {
->>>       .name = "qcom-sdx55m",
->>>       .fw = "qcom/sdx55m/sbl1.mbn",
->>>       .edl = "qcom/sdx55m/edl.mbn",
->>> +    .edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
->>>       .config = &modem_qcom_v1_mhiv_config,
->>>       .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->>>       .dma_data_width = 32,
->>> @@ -928,6 +939,39 @@ static void health_check(struct timer_list *t)
->>>       mod_timer(&mhi_pdev->health_check_timer, jiffies + 
->>> HEALTH_CHECK_PERIOD);
->>>   }
->>>   +static int mhi_pci_generic_edl_trigger(struct mhi_controller 
->>> *mhi_cntrl)
->>> +{
->>> +    void __iomem *base = mhi_cntrl->regs;
->>> +    void __iomem *edl_db;
->>> +    int ret;
->>> +    u32 val;
->>> +
->>> +    ret = mhi_device_get_sync(mhi_cntrl->mhi_dev);
->>> +    if (ret) {
->>> +        dev_err(mhi_cntrl->cntrl_dev, "Wake up device fail before 
->>> trigger EDL\n");
->>> +        return ret;
->>> +    }
->>> +
->>> +    pm_wakeup_event(&mhi_cntrl->mhi_dev->dev, 0);
->>> +    mhi_cntrl->runtime_get(mhi_cntrl);
->>> +
->>> +    ret = mhi_get_channel_doorbell(mhi_cntrl, &val);
->>> +    if (ret)
->>> +        return ret;
->> Don't we need error handling part here i.e. calling 
->> mhi_cntrl->runtime_put() as well mhi_device_put() ?
-> 
-> Hi Mayank
-> 
-> After soc_reset, device will reboot to EDL mode and MHI state will be 
-> SYSERR. So host will fail to suspend
-> anyway. The "error handling" we need here is actually to enter EDL mode, 
-> this will be done by SYSERR irq.
-> Here, mhi_cntrl->runtime_put() and mhi_device_put() are only to balance 
-> mhi_cntrl->runtime_get() and
-> mhi_device_get_sync().
-> 
-> Thanks,
-> Qiang
-I am saying is there possibility that mhi_get_channel_doorbell() returns 
-error ?
-If yes, then why don't we need error handling as part of it. you are 
-exiting if this API return error without doing anything.
->>> +    edl_db = base + val + (8 * MHI_EDL_DB);
->>> +
->>> +    mhi_cntrl->write_reg(mhi_cntrl, edl_db + 4, 
->>> upper_32_bits(MHI_EDL_COOKIE));
->>> +    mhi_cntrl->write_reg(mhi_cntrl, edl_db, 
->>> lower_32_bits(MHI_EDL_COOKIE));
->>> +
->>> +    mhi_soc_reset(mhi_cntrl);
->>> +
->>> +    mhi_cntrl->runtime_put(mhi_cntrl);
->>> +    mhi_device_put(mhi_cntrl->mhi_dev);
->>> +
->>> +    return 0;
->>> +}
->>> +
->>>   static int mhi_pci_probe(struct pci_dev *pdev, const struct 
->>> pci_device_id *id)
->>>   {
->>>       const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info 
->>> *) id->driver_data;
->>> @@ -962,6 +1006,9 @@ static int mhi_pci_probe(struct pci_dev *pdev, 
->>> const struct pci_device_id *id)
->>>       mhi_cntrl->runtime_put = mhi_pci_runtime_put;
->>>       mhi_cntrl->mru = info->mru_default;
->>>   +    if (info->edl_trigger & MHI_PCI_GENERIC_EDL_TRIGGER)
->>> +        mhi_cntrl->edl_trigger = mhi_pci_generic_edl_trigger;
->>> +
->>>       if (info->sideband_wake) {
->>>           mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
->>>           mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
->> Regards,
->> Mayank
+Ajit Pandey (8):
+  clk: qcom: clk-alpha-pll: Fix CAL_L_VAL override for LUCID EVO PLL
+  dt-bindings: clock: qcom: add bindings for dispcc on SM4450
+  clk: qcom: Add DISPCC driver support for SM4450
+  dt-bindings: clock: qcom: add bindings for camcc on SM4450
+  clk: qcom: Add CAMCC driver support for SM4450
+  dt-bindings: clock: qcom: add bindings for gpucc on SM4450
+  clk: qcom: Add GPUCC driver support for SM4450
+  arm64: dts: qcom: sm4450: add camera, display and gpu clock controller
+
+ .../bindings/clock/qcom,sm4450-camcc.yaml     |   63 +
+ .../bindings/clock/qcom,sm4450-dispcc.yaml    |   71 +
+ .../bindings/clock/qcom,sm8450-gpucc.yaml     |    2 +
+ arch/arm64/boot/dts/qcom/sm4450.dtsi          |   35 +
+ drivers/clk/qcom/Kconfig                      |   27 +
+ drivers/clk/qcom/Makefile                     |    3 +
+ drivers/clk/qcom/camcc-sm4450.c               | 1688 +++++++++++++++++
+ drivers/clk/qcom/clk-alpha-pll.c              |    2 +-
+ drivers/clk/qcom/dispcc-sm4450.c              |  781 ++++++++
+ drivers/clk/qcom/gpucc-sm4450.c               |  805 ++++++++
+ include/dt-bindings/clock/qcom,sm4450-camcc.h |  106 ++
+ .../dt-bindings/clock/qcom,sm4450-dispcc.h    |   51 +
+ include/dt-bindings/clock/qcom,sm4450-gpucc.h |   62 +
+ 13 files changed, 3695 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm4450-camcc.yaml
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm4450-dispcc.yaml
+ create mode 100644 drivers/clk/qcom/camcc-sm4450.c
+ create mode 100644 drivers/clk/qcom/dispcc-sm4450.c
+ create mode 100644 drivers/clk/qcom/gpucc-sm4450.c
+ create mode 100644 include/dt-bindings/clock/qcom,sm4450-camcc.h
+ create mode 100644 include/dt-bindings/clock/qcom,sm4450-dispcc.h
+ create mode 100644 include/dt-bindings/clock/qcom,sm4450-gpucc.h
+
+-- 
+2.25.1
+
 
