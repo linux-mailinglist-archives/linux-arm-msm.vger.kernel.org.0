@@ -1,246 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-17623-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17624-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED26A8A7703
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 23:51:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D5DE68A785D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 01:10:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9D8652811A5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 21:51:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8CC3E282B9F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 23:10:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FFED6BFAB;
-	Tue, 16 Apr 2024 21:51:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D16D13A86E;
+	Tue, 16 Apr 2024 23:10:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="e8pTONLL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sVPSgJ+E"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8101A6BFD2
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 21:51:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7AFC139D04
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 23:10:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713304263; cv=none; b=kcB+E2le1mxu1T63udplYA7fZNyEkBaQrZWSryr0cEEi0QVPK9akh081m7AP0crs+3+xzcR7igtgV2Fi0KERRMS9dwuI9LN5ivhSUKbynDSuJt22juqR7WHoHVxhhPzyo9axCKbnZ122PIppoo14371I6Bw1sj2l4WBqBMUzuz0=
+	t=1713309033; cv=none; b=HSgnObPvSrlsOUoSLLCXy2Bc8y2oi0AwndeB9w+5r+wLmdhyIECm2P8sQQsAhSncogH6j1aDRnJW+it9euPAj5+fLtzzmwKwPG4jF9vxXWBjzXaAlK8rzm4sHckczqccLObqoQwivoTRWc0R3LdI1uIoP2mwNFWg4itsRxpV0Qw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713304263; c=relaxed/simple;
-	bh=YO5IN0KZGxb6z4yVpPgZdYK16LCj/M+XOfATsFeZlLc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bjj8IzUr3V83d63f8CePbmJhd724iURiT0B+gebTPifkhoYjvE5qrlWBXt1kjSqNTDtUp7Zq/xLpt8h0l7RZ2NTrqzKWTaeJmkv64oP2GmvIfv54NM4Rs4/G6Cot6tBBX+H69sCtHrcoeQnus1ogL0vrcxFfh/95bC1lzHy+aWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=e8pTONLL; arc=none smtp.client-ip=209.85.128.178
+	s=arc-20240116; t=1713309033; c=relaxed/simple;
+	bh=ymDm8FNebz/mOiDajTJYRMBuXxCLleV3KCeiOkFjjXA=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=S67c05VU9qzyZ0Os9hIiD6woRw3o7c8PJArpKQn0C0l9nRBdHM00VWJJdv9FprjaFLut77uq06+tllYQV5qqs3gUzWOfBeqBFYpZ1zNDh8A5oK9sEDl7V0K3bgbPCZPv2PcOAtJxFfwrRDu9GM2k1iRP+g/9/VO1qIgjlFEy/TE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sVPSgJ+E; arc=none smtp.client-ip=209.85.166.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-6098a20ab22so43378447b3.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 14:51:01 -0700 (PDT)
+Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-7d6c6ed6b39so11616339f.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 16:10:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713304260; x=1713909060; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=kjacwD0Z0JhzcTISBRsYUI2PwcebrTIi/3ViNZqx+HY=;
-        b=e8pTONLLAdpUkLNDhBueJPfuecshcYrK3O6FQLOdHZs8HvubglJ/zabeMEUddbe7oO
-         Oo6bOy+GFj3N8+1BuSz7BFwT7nFf/gKi4FjeD+xsRwsrS18Vsv2bUJJNl679hCQmeHxI
-         9bGkJXksghK48lfzu7MX/PnZTuvGcYyGtLgcPYb3JFzbTz9yE+GH5qDnutczz7GkhzfA
-         YkQzwEP1l/7bgKcbGGEU1e06ttoZcVcbupEnD2ACDoZwY+JK5J0j5mW03b/gA+lDPGy3
-         uCAxWThXsuesNk23vv2uFv0hKc5CzX2ohfwRQO0wuMQCxim6g8lDSPGo9pc0HzEYWls9
-         StAw==
+        d=linaro.org; s=google; t=1713309030; x=1713913830; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wWdyAt9+nQw8Qr1h0NChEuvDVEscavXKBcKHv+jkRUk=;
+        b=sVPSgJ+EOb1X64uDWh1BKOW0kGRR6xqi7xKzBeI/IGTEk5KhgS3r85VbwLD0CzllFF
+         PN3566xc/AfbNPE1Bc+A2Kq7iO/It3Jr7fxF8UxOOiE7GHfO9hwmEnD3rPeXBOsjr6Oo
+         MivCLRbmppZBIzWhw1IpgARqFiwVjLLFAG2b7TlYwGgF3UwbRBr2TDGwH5uibPZNxvJS
+         okiSWKUic5rx3r9+xf4pOIPOou6nILtan2N6MrUscjjIQFqOLAiAWhFnZE5kmBdEwjsZ
+         EEfbaL+6X0w8dyyulCaZjBAACUlOwwhz9LQEIVHdYUnUcvSS7CJtGMvIK0NsCrKlkejB
+         XKAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713304260; x=1713909060;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1713309030; x=1713913830;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=kjacwD0Z0JhzcTISBRsYUI2PwcebrTIi/3ViNZqx+HY=;
-        b=abLDMQR3MdsV70bEEbuGGkdD6s3G1JoKS/Sk1cKaygM9FbGwBPR67MRH7z5se3v3Hu
-         I52ZWGsZnoKulTfpNTAU5OtNrGT4qwqGvujjWRHKdhBEcoBb3XbBhubuSmoF/GQUz8JJ
-         tv1M55eEi9T5CTstLNu8tFWS5FZoGFaC+7txdHmMMN8nbIZUytTC17qk8izMIF+h+x30
-         pCRFkQg/cyOuwJuzfxNh5TKSVFCe6IitzjkGgF2i1aogJdlWabKU4EGxkfk0c/7izxze
-         T619x/NJWtVDZeqKaUG6yarUs68MrZeP1nXfMRqTmMPxAk/GYo/ChtRYYQnr5NH+pmCE
-         kkzw==
-X-Forwarded-Encrypted: i=1; AJvYcCU9FQwuUtC9+rbaufaKiOXR1nGQ8bGE0GAp50ihS72eKgwXPKkZ6aEay5rb+yy0cYXPNNLigYdreuE7jonci51NTM0XOL3f9lTxpSdejQ==
-X-Gm-Message-State: AOJu0YyFmT/9Ldp5aGtE6g+bJYVl9HdryE+Zy+02X988lWzNQTBHre3j
-	j5+QH7EK2/3L7cYArrcqtWJAMn6wwSK83WPsoEQMvmQWcKlgX6brLPV4yGGQEQV2DMV6frvmLhX
-	RVBGOGUsbdn/0d5lB4RStG3wFpJZDAVxal7yi2bsp3eAorU9m
-X-Google-Smtp-Source: AGHT+IHwf4S0I3CIxt2zebmdygPEKzxzcZAva7zQrKgbnJ+VAk/Eu2tIwupOVk1YuWmguhQVN3+jp9oteWNx3Ywc3xc=
-X-Received: by 2002:a81:ac65:0:b0:611:1861:1f0 with SMTP id
- z37-20020a81ac65000000b00611186101f0mr13251817ywj.52.1713304260489; Tue, 16
- Apr 2024 14:51:00 -0700 (PDT)
+        bh=wWdyAt9+nQw8Qr1h0NChEuvDVEscavXKBcKHv+jkRUk=;
+        b=o+9icAO/RwKyNrO8dXOpGWdISTjqb7j216PH1UNARm41WiasiUAnXNtAi9/zGC6KE4
+         BikqrvtbDf4zTPpDV2FEDofq2GJL1VJk+WKm/cc9XODGxCk/WkkJ7qtWp88/iugJXw9l
+         WLZ8sDhX2xN4xxCaNbLywyzzbqHjtPZputzFezxwwC3KuOAgqeq7ITyeBmuuwaJDVLbe
+         K2jXe/u1J/WsKsEsSA7+wOA0nz/u/lak1qvplriyhf7mhUMm5/Cdgt7wleeXbrXykncW
+         P0g1dwHQunFkJRPisLQntZ30qNgmth+9GddZ4ASJrGg3sLEFdMpdmV8yBew+Vu0+Y2PR
+         AoxA==
+X-Forwarded-Encrypted: i=1; AJvYcCV5yGq8byGlKUtpWfWfBwzKTs0wkePvzjekB/0+0PsGyxqXDZ6VLhIPhaTydjLq8m6/6cn5imsGgfwAiKhx4xVo8HyTvBdAN5+5SKPiEA==
+X-Gm-Message-State: AOJu0Yz0iRpQQpAnKz0JbhtcjlXzJRWTKd8AdJFmMQElKxj5TOPTdVAw
+	2DxEFBePZ0ivW+m3Fm1nPJ+ZN3A72V5iCQQY4F/Uq3tu77iHLMZ30ViyCmACffE=
+X-Google-Smtp-Source: AGHT+IFBzqHKauKE431Ap7rruqxL8m+evB+FBiojGzEmkAMuz2sLkBpLbgNVXueReWbxd96Fq/JIug==
+X-Received: by 2002:a05:6602:1206:b0:7d6:12d1:5879 with SMTP id y6-20020a056602120600b007d612d15879mr3165187iot.1.1713309029684;
+        Tue, 16 Apr 2024 16:10:29 -0700 (PDT)
+Received: from localhost.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
+        by smtp.gmail.com with ESMTPSA id le9-20020a056638960900b004846ed9fcb1sm372170jab.101.2024.04.16.16.10.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Apr 2024 16:10:21 -0700 (PDT)
+From: Alex Elder <elder@linaro.org>
+To: davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com
+Cc: mka@chromium.org,
+	andersson@kernel.org,
+	quic_cpratapa@quicinc.com,
+	quic_avuyyuru@quicinc.com,
+	quic_jponduru@quicinc.com,
+	quic_subashab@quicinc.com,
+	elder@kernel.org,
+	netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH net-next 0/7] net: ipa: header hygiene
+Date: Tue, 16 Apr 2024 18:10:11 -0500
+Message-Id: <20240416231018.389520-1-elder@linaro.org>
+X-Mailer: git-send-email 2.40.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240415182052.374494-1-mr.nuke.me@gmail.com> <20240415182052.374494-7-mr.nuke.me@gmail.com>
- <CAA8EJpqY1aDZMaeqBULEOD26UeGYbLd8RsA16jZw7zXJ7_oGPQ@mail.gmail.com>
- <6726fa2b-f5fe-10fb-6aab-f76d61f0b3cd@gmail.com> <4a7b1e1d-ac68-4857-8925-f90c9e123fd1@gmail.com>
-In-Reply-To: <4a7b1e1d-ac68-4857-8925-f90c9e123fd1@gmail.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 17 Apr 2024 00:50:49 +0300
-Message-ID: <CAA8EJppGW=qyk2P6Z_S=dp0njsCjqZaXjw8qU4MY1HOZR-N=4A@mail.gmail.com>
-Subject: Re: [PATCH v3 6/7] phy: qcom-qmp-pcie: add support for ipq9574 gen3x2 PHY
-To: "Alex G." <mr.nuke.me@gmail.com>, Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-phy@lists.infradead.org, linux-clk@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Wed, 17 Apr 2024 at 00:25, Alex G. <mr.nuke.me@gmail.com> wrote:
->
-> Hi Dmitry,
->
-> On 4/15/24 16:25, mr.nuke.me@gmail.com wrote:
-> >
-> >
-> > On 4/15/24 15:10, Dmitry Baryshkov wrote:
-> >> On Mon, 15 Apr 2024 at 21:23, Alexandru Gagniuc <mr.nuke.me@gmail.com>
-> >> wrote:
-> >>>
-> >>> Add support for the gen3x2 PCIe PHY on IPQ9574, ported form downstream
-> >>> 5.4 kernel. Only the serdes and pcs_misc tables are new, the others
-> >>> being reused from IPQ8074 and IPQ6018 PHYs.
-> >>>
-> >>> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
-> >>> ---
-> >>>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 136 +++++++++++++++++-
-> >>>   .../phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5.h   |  14 ++
-> >>>   2 files changed, 149 insertions(+), 1 deletion(-)
-> >>>
-> >>
-> >> [skipped]
-> >>
-> >>> @@ -2448,7 +2542,7 @@ static inline void qphy_clrbits(void __iomem
-> >>> *base, u32 offset, u32 val)
-> >>>
-> >>>   /* list of clocks required by phy */
-> >>>   static const char * const qmp_pciephy_clk_l[] = {
-> >>> -       "aux", "cfg_ahb", "ref", "refgen", "rchng", "phy_aux",
-> >>> +       "aux", "cfg_ahb", "ref", "refgen", "rchng", "phy_aux",
-> >>> "anoc", "snoc"
-> >>
-> >> Are the NoC clocks really necessary to drive the PHY? I think they are
-> >> usually connected to the controllers, not the PHYs.
-> >
-> > The system will hang if these clocks are not enabled. They are also
-> > attached to the PHY in the QCA 5.4 downstream kernel.
+The end result of this series is that the list of files included in
+every IPA source file will be maintained in sorted order.  This
+imposes some consistency that was previously not possible.
 
-Interesting.
-I see that Varadarajan is converting these clocks into interconnects.
-Maybe it's better to wait for those patches to land and use
-interconnects instead. I think it would better suit the
-infrastructure.
+If an IPA header file requires a symbol or type declared in another
+header, that other header must be included.  E.g., if bool or u32
+type is used in a function declaration in an IPA header file, the
+IPA header must include <linux/types.h>.
 
-Varadarajan, could you please comment, are these interconnects
-connected to the PHY too or just to the PCIe controller?
+If a type used is just a struct or union *pointer* or enum type (and
+no members within these types are needed), then these types only need
+to be *declared* within the header that uses it.
 
-> >
-> They are named "anoc_lane", and "snoc_lane" in the downstream kernel.
-> Would you like me to use these names instead?
+This is sufficient, but in addition, this series removes includes of
+files that aren't necessary, as well as unneeded type declarations.
 
-I'm fine either way.
+					-Alex
 
-> e>>>   };
-> >>>
-> >>>   /* list of regulators */
-> >>> @@ -2499,6 +2593,16 @@ static const struct qmp_pcie_offsets
-> >>> qmp_pcie_offsets_v4x1 = {
-> >>>          .rx             = 0x0400,
-> >>>   };
-> >>>
-> >>> +static const struct qmp_pcie_offsets qmp_pcie_offsets_ipq9574 = {
-> >>> +       .serdes         = 0,
-> >>> +       .pcs            = 0x1000,
-> >>> +       .pcs_misc       = 0x1400,
-> >>> +       .tx             = 0x0200,
-> >>> +       .rx             = 0x0400,
-> >>> +       .tx2            = 0x0600,
-> >>> +       .rx2            = 0x0800,
-> >>> +};
-> >>> +
-> >>>   static const struct qmp_pcie_offsets qmp_pcie_offsets_v4x2 = {
-> >>>          .serdes         = 0,
-> >>>          .pcs            = 0x0a00,
-> >>> @@ -2728,6 +2832,33 @@ static const struct qmp_phy_cfg
-> >>> sm8250_qmp_gen3x1_pciephy_cfg = {
-> >>>          .phy_status             = PHYSTATUS,
-> >>>   };
-> >>>
-> >>> +static const struct qmp_phy_cfg ipq9574_pciephy_gen3x2_cfg = {
-> >>> +       .lanes                  = 2,
-> >>> +
-> >>> +       .offsets                = &qmp_pcie_offsets_ipq9574,
-> >>> +
-> >>> +       .tbls = {
-> >>> +               .serdes         = ipq9574_gen3x2_pcie_serdes_tbl,
-> >>> +               .serdes_num     =
-> >>> ARRAY_SIZE(ipq9574_gen3x2_pcie_serdes_tbl),
-> >>> +               .tx             = ipq8074_pcie_gen3_tx_tbl,
-> >>> +               .tx_num         = ARRAY_SIZE(ipq8074_pcie_gen3_tx_tbl),
-> >>> +               .rx             = ipq6018_pcie_rx_tbl,
-> >>> +               .rx_num         = ARRAY_SIZE(ipq6018_pcie_rx_tbl),
-> >>> +               .pcs            = ipq6018_pcie_pcs_tbl,
-> >>> +               .pcs_num        = ARRAY_SIZE(ipq6018_pcie_pcs_tbl),
-> >>> +               .pcs_misc       = ipq9574_gen3x2_pcie_pcs_misc_tbl,
-> >>> +               .pcs_misc_num   =
-> >>> ARRAY_SIZE(ipq9574_gen3x2_pcie_pcs_misc_tbl),
-> >>> +       },
-> >>> +       .reset_list             = ipq8074_pciephy_reset_l,
-> >>> +       .num_resets             = ARRAY_SIZE(ipq8074_pciephy_reset_l),
-> >>> +       .vreg_list              = NULL,
-> >>> +       .num_vregs              = 0,
-> >>> +       .regs                   = pciephy_v4_regs_layout,
-> >>
-> >> So, is it v4 or v5?
-> >
-> > Please give me a day or so to go over my notes and give you a more
-> > coherent explanation of why this versioning was chosen. I am only
-> > working from the QCA 5.4 downstream sources. I don't have any
-> > documentation for the silicon
->
-> The downstream QCA kernel uses the same table for ipq6018, ipq8074-gen3,
-> and ipq9574. It is named "ipq_pciephy_gen3_regs_layout". Thus, it made
-> sense to use the same upstream table for ipq9574, "pciephy_v4_regs_layout".
->
-> As far as the register tables go, the pcs/pcs_misc are squashed into the
-> same table in the downstream 5.4 kernel. I was able to separate the two
-> tables because the pcs_misc registers were defined with an offset of
-> 0x400. For example:
->
-> /* QMP V2 PHY for PCIE gen3 2 Lane ports - PCS Misc registers */
-> #define PCS_PCIE_X2_POWER_STATE_CONFIG2                    0x40c
-> #define PCS_PCIE_X2_POWER_STATE_CONFIG4                    0x414
-> #define PCS_PCIE_X2_ENDPOINT_REFCLK_DRIVE                  0x420
-> #define PCS_PCIE_X2_L1P1_WAKEUP_DLY_TIME_AUXCLK_L          0x444
-> #define PCS_PCIE_X2_L1P1_WAKEUP_DLY_TIME_AUXCLK_H          0x448
-> #define PCS_PCIE_X2_L1P2_WAKEUP_DLY_TIME_AUXCLK_L          0x44c
-> #define PCS_PCIE_X2_L1P2_WAKEUP_DLY_TIME_AUXCLK_H          0x450
-> ...
->
-> Here, QPHY_V4_PCS_PCIE_POWER_STATE_CONFIG2 = 0xc would be correct,
-> assuming a pcs_misc offset of 0x400. However, starting with
-> ENDPOINT_REFCLK_DRIVE, the register would be
-> QPHY_V4_PCS_PCIE_ENDPOINT_REFCLK_DRIVE = 0x1c. Our offsets are off-by 0x4.
->
-> The existing V5 offsets, on the other hand, were all correct. For this
-> reason, I considered that V5 is the most likely place to add the missing
-> PCS misc definitions.
+Alex Elder (7):
+  net: ipa: include some standard header files
+  net: ipa: remove unneeded standard includes
+  net: ipa: include "ipa_interrupt.h" where needed
+  net: ipa: add some needed struct declarations
+  net: ipa: eliminate unneeded struct declarations
+  net: ipa: more include file cleanup
+  net: ipa: sort all includes
 
-Ok, sounds sane. Please use _v5 for the regs layout.
+ drivers/net/ipa/data/ipa_data-v3.1.c   |  5 +++--
+ drivers/net/ipa/data/ipa_data-v3.5.1.c |  5 +++--
+ drivers/net/ipa/data/ipa_data-v4.11.c  |  5 +++--
+ drivers/net/ipa/data/ipa_data-v4.2.c   |  5 +++--
+ drivers/net/ipa/data/ipa_data-v4.5.c   |  5 +++--
+ drivers/net/ipa/data/ipa_data-v4.7.c   |  5 +++--
+ drivers/net/ipa/data/ipa_data-v4.9.c   |  5 +++--
+ drivers/net/ipa/data/ipa_data-v5.0.c   |  5 +++--
+ drivers/net/ipa/data/ipa_data-v5.5.c   |  5 +++--
+ drivers/net/ipa/gsi.c                  | 18 ++++++++---------
+ drivers/net/ipa/gsi.h                  | 10 +++-------
+ drivers/net/ipa/gsi_private.h          |  7 ++++---
+ drivers/net/ipa/gsi_reg.c              |  6 +++---
+ drivers/net/ipa/gsi_trans.c            | 12 ++++++------
+ drivers/net/ipa/gsi_trans.h            |  9 ++++-----
+ drivers/net/ipa/ipa.h                  | 15 +++++---------
+ drivers/net/ipa/ipa_cmd.c              | 13 +++++++------
+ drivers/net/ipa/ipa_cmd.h              | 10 +++-------
+ drivers/net/ipa/ipa_data.h             |  4 ++--
+ drivers/net/ipa/ipa_endpoint.c         | 19 ++++++++++--------
+ drivers/net/ipa/ipa_endpoint.h         |  4 ++--
+ drivers/net/ipa/ipa_gsi.c              |  7 ++++---
+ drivers/net/ipa/ipa_interrupt.c        | 10 +++++-----
+ drivers/net/ipa/ipa_interrupt.h        |  6 ++++--
+ drivers/net/ipa/ipa_main.c             | 27 +++++++++++++-------------
+ drivers/net/ipa/ipa_mem.c              | 15 +++++++-------
+ drivers/net/ipa/ipa_mem.h              |  4 +++-
+ drivers/net/ipa/ipa_modem.c            | 14 ++++++-------
+ drivers/net/ipa/ipa_modem.h            |  5 +++--
+ drivers/net/ipa/ipa_power.c            |  8 ++++----
+ drivers/net/ipa/ipa_power.h            |  5 +++--
+ drivers/net/ipa/ipa_qmi.c              | 10 +++-------
+ drivers/net/ipa/ipa_qmi.h              |  4 +++-
+ drivers/net/ipa/ipa_qmi_msg.c          |  3 ++-
+ drivers/net/ipa/ipa_qmi_msg.h          |  3 ++-
+ drivers/net/ipa/ipa_reg.c              |  4 ++--
+ drivers/net/ipa/ipa_reg.h              |  6 +-----
+ drivers/net/ipa/ipa_resource.c         |  3 +--
+ drivers/net/ipa/ipa_smp2p.c            | 10 +++++-----
+ drivers/net/ipa/ipa_sysfs.c            |  7 +++----
+ drivers/net/ipa/ipa_sysfs.h            |  4 +---
+ drivers/net/ipa/ipa_table.c            | 19 ++++++++----------
+ drivers/net/ipa/ipa_uc.c               | 10 ++++++----
+ drivers/net/ipa/ipa_uc.h               |  3 +--
+ drivers/net/ipa/ipa_version.h          |  4 +++-
+ drivers/net/ipa/reg.h                  |  8 +++++---
+ drivers/net/ipa/reg/gsi_reg-v3.1.c     |  8 +++++---
+ drivers/net/ipa/reg/gsi_reg-v3.5.1.c   |  8 +++++---
+ drivers/net/ipa/reg/gsi_reg-v4.0.c     |  8 +++++---
+ drivers/net/ipa/reg/gsi_reg-v4.11.c    |  8 +++++---
+ drivers/net/ipa/reg/gsi_reg-v4.5.c     |  8 +++++---
+ drivers/net/ipa/reg/gsi_reg-v4.9.c     |  8 +++++---
+ drivers/net/ipa/reg/gsi_reg-v5.0.c     |  8 +++++---
+ drivers/net/ipa/reg/ipa_reg-v3.1.c     |  6 ++++--
+ drivers/net/ipa/reg/ipa_reg-v3.5.1.c   |  6 ++++--
+ drivers/net/ipa/reg/ipa_reg-v4.11.c    |  6 ++++--
+ drivers/net/ipa/reg/ipa_reg-v4.2.c     |  6 ++++--
+ drivers/net/ipa/reg/ipa_reg-v4.5.c     |  6 ++++--
+ drivers/net/ipa/reg/ipa_reg-v4.7.c     |  6 ++++--
+ drivers/net/ipa/reg/ipa_reg-v4.9.c     |  6 ++++--
+ drivers/net/ipa/reg/ipa_reg-v5.0.c     |  6 ++++--
+ drivers/net/ipa/reg/ipa_reg-v5.5.c     |  6 +++---
+ 62 files changed, 253 insertions(+), 228 deletions(-)
 
->
-> Is this explanation sufficiently convincing? Where does the v4/v5 scheme
-> in upstream kernel originate?
+-- 
+2.40.1
 
-Sometimes it's vendor kernels, sometimes it's a feedback from devs
-that have access to actual specs.
-
-
---
-With best wishes
-Dmitry
 
