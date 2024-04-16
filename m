@@ -1,44 +1,43 @@
-Return-Path: <linux-arm-msm+bounces-17636-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17638-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B3DA8A7986
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 01:58:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E26A8A7992
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 02:04:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 11A0A1F248AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 23:58:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F07361F23642
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 00:04:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D09713C682;
-	Tue, 16 Apr 2024 23:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CB3928DBF;
+	Wed, 17 Apr 2024 00:03:34 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C20B13C3EE
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 23:57:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.168
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 361E1250EC
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 00:03:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713311875; cv=none; b=tZ1U9yyDpaNeX5nrY79JnwgOo8nC19TGtFDWO4/kokKiD4IIoefF3mX8hFqKxCJAM0u8YrH0U/v+ryp0UUpI3hZwZKDzTIXNYKSIhUaQPbfatNxzeFid17BiKTxQxY7E8g+eKP9fERsYIAJfGhNNj9soANWLE2RDepASObacAoI=
+	t=1713312214; cv=none; b=loLQ1leGr2bB5oiajIc5y5zHeQvqWqNCbV7JA+iYVP9ddSOEz2duy4ftXPEftCF3ar3uqBV6LDivPTJz5ECowu4oo45zWt7ukHRrgE5w90QdXWTkvXGQuLnjvAF5lTmYHaCJITaB8L9FsxUeMcOWlWxGnX9ZM/rh7inHJw9Txlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713311875; c=relaxed/simple;
-	bh=va9fPRtJ0SkXGycOhlB8Ezr85RrN/MriF/E14uxzkS0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=BnCiPC5cWvT9NebDCa5ryhyrvezAOxYZNdtwTFHpK2eZqRXfyfCwdM1Abus93Js05HFsOw7/rPtRm2VkPVhOaJsXKX+EDJHhrnRQ6QgCVdFgws4trDCKbcOo0ceyjT72AXNtVsiGSaJwMbGw78w+D+Jt8kqNO5kpezd/vEyk5w8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.168
+	s=arc-20240116; t=1713312214; c=relaxed/simple;
+	bh=2ldmQuH+692mGKxbuAWUUy4JRVVa9UmxmBnOWJ4k5ms=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=sjyljIrvSE6+UJPbN9dJeKzecIMSkBhNCNFMsr/mjUmHt2NbsNsh1A9YJO3kqGyESwrMDuL+NOMRRzrIudB2kxWuWgy587qCACXCjJOyQwrU2KXXsZJNNiTayxmduQFgPHiGFpMY6whaXwO4V43xomYgcjsHUTZL/p7IqIrIYsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
 Received: from Marijn-Arch-PC.localdomain (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by m-r2.th.seeweb.it (Postfix) with ESMTPSA id EB4833F0E3;
-	Wed, 17 Apr 2024 01:57:50 +0200 (CEST)
+	by m-r2.th.seeweb.it (Postfix) with ESMTPSA id B6BC33EFF8;
+	Wed, 17 Apr 2024 01:57:43 +0200 (CEST)
 From: Marijn Suijten <marijn.suijten@somainline.org>
-Date: Wed, 17 Apr 2024 01:57:47 +0200
-Subject: [PATCH 7/7] drm/msm/dpu: Rename `ctx` parameter to `intf` to match
- other functions
+Subject: [PATCH 0/7] drm/msm: Initial fixes for DUALPIPE (+DSC) topology
+Date: Wed, 17 Apr 2024 01:57:40 +0200
+Message-Id: <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-0-78ae3ee9a697@somainline.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -47,9 +46,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-7-78ae3ee9a697@somainline.org>
-References: <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-0-78ae3ee9a697@somainline.org>
-In-Reply-To: <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-0-78ae3ee9a697@somainline.org>
+X-B4-Tracking: v=1; b=H4sIAHUQH2YC/x3MQQqDMBBG4avIrDuQaKrgVUoX0UzqDyYNmbYUx
+ Ls3dPnx4B2kUiFKc3dQlQ8Uz9xgLx2tm88PYYRm6k3vjLMjh5o4aWJkvOB3Dm+/FxThoCtHfEV
+ 5iGay18UMS3TURqXKP7TP7X6eP3beIJV0AAAA
 To: Rob Clark <robdclark@gmail.com>, 
  Abhinav Kumar <quic_abhinavk@quicinc.com>, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
@@ -70,75 +69,80 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  Marijn Suijten <marijn.suijten@somainline.org>
 X-Mailer: b4 0.13.0
 
-All other functions in dpu_hw_intf name the "self" parameter `intf`,
-except dpu_hw_intf_setup_timing_engine() and the recently added
-dpu_hw_intf_program_intf_cmd_cfg().  Clean that up for consistency.
+This series covers a step-up towards supporting the DUALPIPE DSC
+topology, also known as 2:2:2 topology (on active-CTL hardware).  It
+involves 2 layer mixers, 2 DSC compression encoders, and 2 interfaces
+(on DSI, this is called bonded-DSI) where bandwidth constraints (e.g. 4k
+panels at 120Hz) require two interfaces to transmit pixel data.
+
+Enabling this topology will be hard(er) than downstream as hacking a
+layout type in DTS won't be describing the hardware, but "dynamically"
+determining it at runtime may pose some of a challenge that is left to a
+future series.  Such changes will also involve the 1:1:1 topology needed
+for constrained hardware like the Fairphone 5 on SC7280 with access to
+only one DSC encoder and thus ruled out of the current 2:2:1 topology.
+
+Likewise, the patches and discussions around improving active-CTL
+configuration to support bonded interfaces (that share a single CTL
+block) are still in full swing and hence elided from this series, apart
+from one patch to fix the ACTIVE_DSC register coding to support updates,
+so that it is not forgotten about.
+
+Note that some patches are applicable to DSC-less DUALPIPE bonded mode
+as well, such as the patch that allows the slave interface to always be
+flushed as that is only supposed to be excluded in the yet-unsupported
+PPSPLIT topology.
+
+This series also contains some patches that I'm not too sure about:
+
+  drm/msm/dpu: Correct dual-ctl -> dual-intf typo in comment
+
+    Downstream doesn't skip the slave INTF flush on active-CTL [1]
+    (again, just like cmdmode, only when PPSPLIT is enabled [2]), and
+    even added an extra comment [1] explaining this case.  Hence a
+    dual-intf but single-flush case doesn't seem to exist as there's
+    only one CTL according to the remainder of the comment.
+    Maybe the whole comment is wrong?
+
+  drm/msm/dsi: Set PHY usescase before registering DSI host
+
+    It seems intentional to only set the usecase after
+    msm_dsi_host_register() in case it fails, so maybe a non-zero `ret`
+    here should reset the usecase?  Likewise should the function call be
+    moved in !IS_BONDED_DSI() above?
+
+    Ideally we also understand what I am doing differently (maybe
+    wrongly) in my panel driver that makes the PLL turn on and configure
+    before the usecase has been set, even though these calls are messy
+    and error-prone nevertheless.
+
+[1]: https://git.codelinaro.org/clo/la/platform/vendor/opensource/display-drivers/-/blob/display-kernel.lnx.5.4.r1-rel/msm/sde/sde_encoder_phys_vid.c?ref_type=heads#L794-804
+[2]: https://git.codelinaro.org/clo/la/platform/vendor/opensource/display-drivers/-/blob/display-kernel.lnx.5.4.r1-rel/msm/sde/sde_encoder_phys_cmd.c?ref_type=heads#L1131-1139
 
 Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+Marijn Suijten (7):
+      drm/msm/dsi: Print dual-DSI-adjusted pclk instead of original mode pclk
+      drm/msm/dsi: Pass bonded-DSI hdisplay/2 to DSC timing configuration
+      drm/msm/dpu: Always flush the slave INTF on the CTL
+      drm/msm/dpu: Allow configuring multiple active DSC blocks
+      drm/msm/dpu: Correct dual-ctl -> dual-intf typo in comment
+      drm/msm/dsi: Set PHY usescase before registering DSI host
+      drm/msm/dpu: Rename `ctx` parameter to `intf` to match other functions
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-index 965692ef7892..34d0c4e04d27 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-@@ -96,11 +96,11 @@
- #define INTF_CFG2_DCE_DATA_COMPRESS     BIT(12)
- 
- 
--static void dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *ctx,
-+static void dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *intf,
- 		const struct dpu_hw_intf_timing_params *p,
- 		const struct dpu_format *fmt)
- {
--	struct dpu_hw_blk_reg_map *c = &ctx->hw;
-+	struct dpu_hw_blk_reg_map *c = &intf->hw;
- 	u32 hsync_period, vsync_period;
- 	u32 display_v_start, display_v_end;
- 	u32 hsync_start_x, hsync_end_x;
-@@ -118,7 +118,7 @@ static void dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *ctx,
- 	/* read interface_cfg */
- 	intf_cfg = DPU_REG_READ(c, INTF_CONFIG);
- 
--	if (ctx->cap->type == INTF_DP)
-+	if (intf->cap->type == INTF_DP)
- 		dp_intf = true;
- 
- 	hsync_period = p->hsync_pulse_width + p->h_back_porch + p->width +
-@@ -223,7 +223,7 @@ static void dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *ctx,
- 	DPU_REG_WRITE(c, INTF_FRAME_LINE_COUNT_EN, 0x3);
- 	DPU_REG_WRITE(c, INTF_CONFIG, intf_cfg);
- 	DPU_REG_WRITE(c, INTF_PANEL_FORMAT, panel_format);
--	if (ctx->cap->features & BIT(DPU_DATA_HCTL_EN)) {
-+	if (intf->cap->features & BIT(DPU_DATA_HCTL_EN)) {
- 		/*
- 		 * DATA_HCTL_EN controls data timing which can be different from
- 		 * video timing. It is recommended to enable it for all cases, except
-@@ -518,10 +518,10 @@ static void dpu_hw_intf_disable_autorefresh(struct dpu_hw_intf *intf,
- 
- }
- 
--static void dpu_hw_intf_program_intf_cmd_cfg(struct dpu_hw_intf *ctx,
-+static void dpu_hw_intf_program_intf_cmd_cfg(struct dpu_hw_intf *intf,
- 					     struct dpu_hw_intf_cmd_mode_cfg *cmd_mode_cfg)
- {
--	u32 intf_cfg2 = DPU_REG_READ(&ctx->hw, INTF_CONFIG2);
-+	u32 intf_cfg2 = DPU_REG_READ(&intf->hw, INTF_CONFIG2);
- 
- 	if (cmd_mode_cfg->data_compress)
- 		intf_cfg2 |= INTF_CFG2_DCE_DATA_COMPRESS;
-@@ -529,7 +529,7 @@ static void dpu_hw_intf_program_intf_cmd_cfg(struct dpu_hw_intf *ctx,
- 	if (cmd_mode_cfg->wide_bus_en)
- 		intf_cfg2 |= INTF_CFG2_DATABUS_WIDEN;
- 
--	DPU_REG_WRITE(&ctx->hw, INTF_CONFIG2, intf_cfg2);
-+	DPU_REG_WRITE(&intf->hw, INTF_CONFIG2, intf_cfg2);
- }
- 
- struct dpu_hw_intf *dpu_hw_intf_init(struct drm_device *dev,
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c |  3 ---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c |  2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c           |  9 ++++++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          | 14 +++++++-------
+ drivers/gpu/drm/msm/dsi/dsi_host.c                   | 14 +++++++-------
+ drivers/gpu/drm/msm/dsi/dsi_manager.c                | 15 +++++++++++----
+ 6 files changed, 32 insertions(+), 25 deletions(-)
+---
+base-commit: 6bd343537461b57f3efe5dfc5fc193a232dfef1e
+change-id: 20240416-drm-msm-initial-dualpipe-dsc-fixes-3f0715b03bf4
 
+Best regards,
 -- 
-2.44.0
+Marijn Suijten <marijn.suijten@somainline.org>
 
 
