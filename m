@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-17608-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17609-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF8668A723E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 19:26:51 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3EE58A7248
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 19:28:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 583331F21F84
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 17:26:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 210761C21460
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 17:28:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B016A133284;
-	Tue, 16 Apr 2024 17:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B8F813280C;
+	Tue, 16 Apr 2024 17:28:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HaArEITL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XgF0QLxS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B4B3133285
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 17:26:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAAD913328B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 17:28:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713288404; cv=none; b=ihjxkfK/59IV3a4wn8mrR3uec+jC5Ook2FZ6hGFlbgOCuULV9VmYqLLlcR6MeH7PLFyKMy00TxU8CYCdXBX7ZPCWSQjJ7zNExtGD7JKG/4eHu/wpMwXWZzVu0MYBZOtrnUjEXZPMBs+D5EDTaiGtaXS3FLLdxUtrE89sCLUG0N8=
+	t=1713288522; cv=none; b=YIXeGX7adEjA1AoAktfH3O05bJJgDVpsya0YGNqysStW+EFwIaeuGXvKaAR8pTV678Gs7ewDdIDqlH0qx5l7vlK0HHVMgPr8PjOsN8eU8RtPA0Hh/bzs1qVTM6yWJJt02Hx9uz2wVY7gJ9ZdVDsuFllnIFBEsnFcTzrbLWIrVOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713288404; c=relaxed/simple;
-	bh=yDIkoCCqZy8KpIEuGMp9fwluS74YQ+qtjkGJ9Pukq6Y=;
+	s=arc-20240116; t=1713288522; c=relaxed/simple;
+	bh=8XPbzCyiV/2fpDM6Skf+nUqvJTuMI/dwcR/DrTukkjE=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=siqrOlmgcTr2ZlDlTyQgkbCee6jlANzX8gGqp0T79D6KSEFoxAZOKLirbeNm9V52D6tNUqF72EWjKRnWlGWMCs6AsLbazK+cxbnx/teDfRssKwoE34S64RVyT1n8A3RIvxyY6r62XUvgUrDTsZEkMau3TqN6mtBED3vv1koe4GU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HaArEITL; arc=none smtp.client-ip=209.85.215.177
+	 In-Reply-To:Content-Type; b=KOSDIMddawwMIwh0HfNIENdPQjnI/CTLPe4B/sFOd/fs1il2Kyp6upS24nOUxAcwPG0qVQKizq7CIrQ6EdzKi3uAyem40b52RLA9Ib3gsAVlFmGxS+6retVTE4ZcUmU5Yj7gVXtK0i1rE28pTD+ReoOiqm+rWrjEkDgiaD82JQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XgF0QLxS; arc=none smtp.client-ip=209.85.216.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-5e8470c1cb7so3113607a12.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 10:26:43 -0700 (PDT)
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-2a4df5d83c7so3078420a91.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 10:28:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713288402; x=1713893202; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1713288520; x=1713893320; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=qvyZPxNBO+CCxhPPduaW1lszeS8Hl+R0uQxWHJXgpu8=;
-        b=HaArEITLveXCNws2xAKgtaumTYMHcq9krq/cgiB5x+bOGmUxzdAfL0x1FXjBm3SX3F
-         NeKRBA8qF+0tM2GvHZhJr3anTLblls+vRfIkkjnFfz/GXERgKXiup+qVgz/0eJTcuW/b
-         QcNsVs+skKzxA+vop8t5X7JtyJS6TpjSUl5fGBXWmF30BlWZgBqYMlU5CoS+hBViQRV+
-         PUrHBm+x1OPGw3tslXA3utaAn4YU+id1CpEVUTYBtnaSw2+S61YhVo81FQ4WNBZBCRFU
-         W9rcaTiJex3NFNrdGYU/YCbm/TMHS3OVacbZs1JLUSOQNMsu6j/DmR2lAocE3GZjpcNF
-         s6fA==
+        bh=zTuR9E70nAlgpS27zTEvS3dG58ZWZq9znfhZxK8dgH8=;
+        b=XgF0QLxSWJBkRaKDnbr0k3ufopsEOk1qDWNcqrma7Mt8CoamJkuwTAZy0LDUhuqLJ9
+         8L4UMWd594VKRzbKD44Dy1PsyJFEMr5uyQCC8dQaqSsFTmt3FzUHQsl3RHjohagFdATN
+         RJgO6atmwhONjyeEwQimUG/u+uZNL8cL/na3OCduGR8GxtnBp2QtxB5cLO8LQqAauK6r
+         cir43PDLCBbNmEFCBi+3U3Rc0LGFCNaps9iU3s/gZJ4iIVkpaOY+N2hVL97YAiNFZ0ku
+         prGOeUSfnU8ORbU0fhJ5GO4CMFk8DrWhODTrhUJAP5OxNWBR4t29vgKOf911r41gtJKf
+         wJEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713288402; x=1713893202;
+        d=1e100.net; s=20230601; t=1713288520; x=1713893320;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=qvyZPxNBO+CCxhPPduaW1lszeS8Hl+R0uQxWHJXgpu8=;
-        b=oeeeYrP8wF3l/6aRXkOOmosUu8J1iXKn79dx1UqKoXqvdUZyOQYGL6F7feApL/x/8X
-         tag3m1kqUlbvl+joHn0D2l2BrFLdHGtzLBHXmXBenhtGZhESwEPMxkVx4AaImS4bj4n3
-         CDeI4B4+Kql1x+S112oglQskcl3vu2MGM1Zm4KlAuhVMtfNL6tW4P2Xx95TuB0AJjDqj
-         RscNbZVrXPdk0Dw0pWMmlQamYt2rw3KE0bqRAbLVm7QXJj2x0sGR61Z1SGrmVs2ETVPy
-         nbcb+TijNSgDmIr5VUwkrWBgZ+ibCL7qXJWVNK5XNUrHST88TorF4GwPKLSgCO22ctDN
-         FRxg==
-X-Forwarded-Encrypted: i=1; AJvYcCUQu14TxwG5ZxVAvaNjuP9HwAkuAbXLfKx2RIUQ/rYSn6mXxRe2nrpMIk6n+jUBqDBa7VFh2H1mJsVE2F8sFpj5wLJdrrU2SPAbNYS74Q==
-X-Gm-Message-State: AOJu0YyFyrohBqPVB0drr8hBORmznM/pn1lJliCRyZZR8k7Dkfpkrsw/
-	2LYrWipS0hqrZO701Rx9xA0CgFbbPu6RACmQ2ZIVZwekrC1BDeo+vtLICMkFejo=
-X-Google-Smtp-Source: AGHT+IH+0YIFkodFoJleZkDWl2xMpPo6FmuTUX7Gin9tG2YYQDyZWrgRscix/FzGY/3b+sTDgReqQQ==
-X-Received: by 2002:a17:90b:3786:b0:29b:b6eb:3c0d with SMTP id mz6-20020a17090b378600b0029bb6eb3c0dmr12168255pjb.36.1713288402041;
-        Tue, 16 Apr 2024 10:26:42 -0700 (PDT)
+        bh=zTuR9E70nAlgpS27zTEvS3dG58ZWZq9znfhZxK8dgH8=;
+        b=LxjyswV1ZGmx3v7Ukq1DM0TqTOCgq/bv5ogQikJWHYJESQRtnvmWOKUp6ekLBKr7HB
+         k0sPbyZTHpfQv5MH1eEJLOcCRbwT1DhThSjFe+GOsfSQLRFbAhtZj086H/zZl3eYaRj+
+         YSvhJGbrtbPOac/7TKeDx4l4LesPhrAr6MD3yI6oylmHwgwPctDpnSRMzN6Aosshokp9
+         KheupugjTlRa19oVPRKwhUehXF5rfZ1HJP9qT7p+iRPmsdsneoWMIx/ywJkOMauRZN7C
+         v8jqBTfK6cd8Xb38cKDBCZy+Eqo3SHvBGH+HvOZMqNf4dyQTMQJzMVXqrw8qaMogPE1O
+         0CsA==
+X-Forwarded-Encrypted: i=1; AJvYcCVYQCKBuHdt7PhSmwwq4a5tkAiZhFAZkYs+3qTFUe2MROHyGTBmp327wF9EA4Miq3vY4WFqF4dPHWPC2KM/tdcHJsy4GLvllmQ6hon8fw==
+X-Gm-Message-State: AOJu0Yxsn65VbcgetjHy+11j5lUDaLxtCOrVV5m0G8D6f6A5tjYg1tXh
+	r3+w2sK+2N2ZIwVgJ8FUl+721eNusVjINPOltOJ4ve2ymBtqP6jxGzCC86TrfU8=
+X-Google-Smtp-Source: AGHT+IFxfA3rNQm6U5J0p3r8Nmv4+VJasUOaU4viGZz2EHrZrD+RsVzSJM5qFCloHItvUeR4h80LJw==
+X-Received: by 2002:a17:90a:8d84:b0:2aa:5c79:853c with SMTP id d4-20020a17090a8d8400b002aa5c79853cmr4465059pjo.21.1713288519972;
+        Tue, 16 Apr 2024 10:28:39 -0700 (PDT)
 Received: from [10.36.52.145] ([24.75.208.156])
-        by smtp.gmail.com with ESMTPSA id h16-20020a17090a051000b002a2e4b593cdsm11861124pjh.51.2024.04.16.10.26.40
+        by smtp.gmail.com with ESMTPSA id 42-20020a17090a09ad00b002a2a3aebb38sm10035010pjo.48.2024.04.16.10.28.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Apr 2024 10:26:41 -0700 (PDT)
-Message-ID: <c1af623f-055a-45d0-be30-8835756c384b@linaro.org>
-Date: Tue, 16 Apr 2024 19:26:39 +0200
+        Tue, 16 Apr 2024 10:28:39 -0700 (PDT)
+Message-ID: <2d0a026f-a4f0-49e2-8501-358db5935e14@linaro.org>
+Date: Tue, 16 Apr 2024 19:28:38 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,7 +80,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 1/8] usb: typec: Handle retimers in typec_set_mode()
+Subject: Re: [PATCH 4/8] usb: typec: ucsi: glink: use le32 for message data
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
  Heikki Krogerus <heikki.krogerus@linux.intel.com>,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -89,7 +89,7 @@ To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 Cc: linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org
 References: <20240416-ucsi-glink-altmode-v1-0-890db00877ac@linaro.org>
- <20240416-ucsi-glink-altmode-v1-1-890db00877ac@linaro.org>
+ <20240416-ucsi-glink-altmode-v1-4-890db00877ac@linaro.org>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -116,47 +116,60 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <20240416-ucsi-glink-altmode-v1-1-890db00877ac@linaro.org>
+In-Reply-To: <20240416-ucsi-glink-altmode-v1-4-890db00877ac@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 16/04/2024 04:20, Dmitry Baryshkov wrote:
-> Make typec_set_mode() also handle retimers in addition to muxes. Setting
-> the USB mode requires retimers to be configured in addition to just
-> switching the mux configuration.
+> The message structures as transferred by the PMIC_GLINK use le32 for
+> data encoding. Correct struct accessors to follow the lead of the main
+> pmic_glink.c driver.
 > 
+> Fixes: 62b5412b1f4a ("usb: typec: ucsi: add PMIC Glink UCSI driver")
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->   drivers/usb/typec/class.c | 9 ++++++++-
->   1 file changed, 8 insertions(+), 1 deletion(-)
+>   drivers/usb/typec/ucsi/ucsi_glink.c | 10 +++++-----
+>   1 file changed, 5 insertions(+), 5 deletions(-)
 > 
-> diff --git a/drivers/usb/typec/class.c b/drivers/usb/typec/class.c
-> index 9610e647a8d4..28d395535bd1 100644
-> --- a/drivers/usb/typec/class.c
-> +++ b/drivers/usb/typec/class.c
-> @@ -2095,14 +2095,21 @@ EXPORT_SYMBOL_GPL(typec_get_orientation);
->    * @mode: Accessory Mode, USB Operation or Safe State
->    *
->    * Configure @port for Accessory Mode @mode. This function will configure the
-> - * muxes needed for @mode.
-> + * muxes and retimeres needed for @mode.
->    */
->   int typec_set_mode(struct typec_port *port, int mode)
->   {
-> +	struct typec_retimer_state retimer_state = { };
->   	struct typec_mux_state state = { };
-> +	int ret;
+> diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
+> index 6be9d89d4a28..d029cc9d82e3 100644
+> --- a/drivers/usb/typec/ucsi/ucsi_glink.c
+> +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
+> @@ -33,7 +33,7 @@ struct ucsi_read_buf_req_msg {
+>   struct ucsi_read_buf_resp_msg {
+>   	struct pmic_glink_hdr   hdr;
+>   	u8                      buf[UCSI_BUF_SIZE];
+> -	u32                     ret_code;
+> +	__le32                  ret_code;
+>   };
 >   
-> +	retimer_state.mode = mode;
->   	state.mode = mode;
+>   struct ucsi_write_buf_req_msg {
+> @@ -44,13 +44,13 @@ struct ucsi_write_buf_req_msg {
 >   
-> +	ret = typec_retimer_set(port->retimer, &retimer_state);
-> +	if (ret)
-> +		return ret;
-> +
->   	return typec_mux_set(port->mux, &state);
+>   struct ucsi_write_buf_resp_msg {
+>   	struct pmic_glink_hdr   hdr;
+> -	u32                     ret_code;
+> +	__le32                  ret_code;
+>   };
+>   
+>   struct ucsi_notify_ind_msg {
+>   	struct pmic_glink_hdr   hdr;
+> -	u32                     notification;
+> -	u32                     receiver;
+> +	__le32                  notification;
+> +	__le32                  receiver;
+>   	u32                     reserved;
+>   };
+>   
+> @@ -255,7 +255,7 @@ static void pmic_glink_ucsi_write_ack(struct pmic_glink_ucsi *ucsi, const void *
+>   	if (resp->ret_code)
+>   		return;
+>   
+> -	ucsi->sync_val = resp->ret_code;
+> +	ucsi->sync_val = le32_to_cpu(resp->ret_code);
+>   	complete(&ucsi->write_ack);
 >   }
->   EXPORT_SYMBOL_GPL(typec_set_mode);
+>   
 > 
 
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
