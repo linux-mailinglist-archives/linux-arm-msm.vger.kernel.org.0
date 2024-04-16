@@ -1,76 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-17609-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17610-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3EE58A7248
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 19:28:46 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 122828A72DC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 20:12:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 210761C21460
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 17:28:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 93EA11F226FC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 18:12:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B8F813280C;
-	Tue, 16 Apr 2024 17:28:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C93A2135418;
+	Tue, 16 Apr 2024 18:12:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XgF0QLxS"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IeTXk+Z7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAAD913328B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 17:28:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8504134435;
+	Tue, 16 Apr 2024 18:12:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713288522; cv=none; b=YIXeGX7adEjA1AoAktfH3O05bJJgDVpsya0YGNqysStW+EFwIaeuGXvKaAR8pTV678Gs7ewDdIDqlH0qx5l7vlK0HHVMgPr8PjOsN8eU8RtPA0Hh/bzs1qVTM6yWJJt02Hx9uz2wVY7gJ9ZdVDsuFllnIFBEsnFcTzrbLWIrVOI=
+	t=1713291137; cv=none; b=C+mHonjv7AsklBFDDWiY9aHSshF/vJ3cNeJ3SGp+WLgh/KiNxdgyvKg7SS52QrGiQo7+wJ7StgNWg4EZtovx6sFT0kTjpfF7gqznsEDR6u3eEyMHwDw2G3dQBybF8Iv3i7HlJ5KaUgLYFj2A4lL2i9VVM5h6Sg9ESXQnB1BXpSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713288522; c=relaxed/simple;
-	bh=8XPbzCyiV/2fpDM6Skf+nUqvJTuMI/dwcR/DrTukkjE=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=KOSDIMddawwMIwh0HfNIENdPQjnI/CTLPe4B/sFOd/fs1il2Kyp6upS24nOUxAcwPG0qVQKizq7CIrQ6EdzKi3uAyem40b52RLA9Ib3gsAVlFmGxS+6retVTE4ZcUmU5Yj7gVXtK0i1rE28pTD+ReoOiqm+rWrjEkDgiaD82JQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XgF0QLxS; arc=none smtp.client-ip=209.85.216.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-2a4df5d83c7so3078420a91.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 10:28:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713288520; x=1713893320; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zTuR9E70nAlgpS27zTEvS3dG58ZWZq9znfhZxK8dgH8=;
-        b=XgF0QLxSWJBkRaKDnbr0k3ufopsEOk1qDWNcqrma7Mt8CoamJkuwTAZy0LDUhuqLJ9
-         8L4UMWd594VKRzbKD44Dy1PsyJFEMr5uyQCC8dQaqSsFTmt3FzUHQsl3RHjohagFdATN
-         RJgO6atmwhONjyeEwQimUG/u+uZNL8cL/na3OCduGR8GxtnBp2QtxB5cLO8LQqAauK6r
-         cir43PDLCBbNmEFCBi+3U3Rc0LGFCNaps9iU3s/gZJ4iIVkpaOY+N2hVL97YAiNFZ0ku
-         prGOeUSfnU8ORbU0fhJ5GO4CMFk8DrWhODTrhUJAP5OxNWBR4t29vgKOf911r41gtJKf
-         wJEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713288520; x=1713893320;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=zTuR9E70nAlgpS27zTEvS3dG58ZWZq9znfhZxK8dgH8=;
-        b=LxjyswV1ZGmx3v7Ukq1DM0TqTOCgq/bv5ogQikJWHYJESQRtnvmWOKUp6ekLBKr7HB
-         k0sPbyZTHpfQv5MH1eEJLOcCRbwT1DhThSjFe+GOsfSQLRFbAhtZj086H/zZl3eYaRj+
-         YSvhJGbrtbPOac/7TKeDx4l4LesPhrAr6MD3yI6oylmHwgwPctDpnSRMzN6Aosshokp9
-         KheupugjTlRa19oVPRKwhUehXF5rfZ1HJP9qT7p+iRPmsdsneoWMIx/ywJkOMauRZN7C
-         v8jqBTfK6cd8Xb38cKDBCZy+Eqo3SHvBGH+HvOZMqNf4dyQTMQJzMVXqrw8qaMogPE1O
-         0CsA==
-X-Forwarded-Encrypted: i=1; AJvYcCVYQCKBuHdt7PhSmwwq4a5tkAiZhFAZkYs+3qTFUe2MROHyGTBmp327wF9EA4Miq3vY4WFqF4dPHWPC2KM/tdcHJsy4GLvllmQ6hon8fw==
-X-Gm-Message-State: AOJu0Yxsn65VbcgetjHy+11j5lUDaLxtCOrVV5m0G8D6f6A5tjYg1tXh
-	r3+w2sK+2N2ZIwVgJ8FUl+721eNusVjINPOltOJ4ve2ymBtqP6jxGzCC86TrfU8=
-X-Google-Smtp-Source: AGHT+IFxfA3rNQm6U5J0p3r8Nmv4+VJasUOaU4viGZz2EHrZrD+RsVzSJM5qFCloHItvUeR4h80LJw==
-X-Received: by 2002:a17:90a:8d84:b0:2aa:5c79:853c with SMTP id d4-20020a17090a8d8400b002aa5c79853cmr4465059pjo.21.1713288519972;
-        Tue, 16 Apr 2024 10:28:39 -0700 (PDT)
-Received: from [10.36.52.145] ([24.75.208.156])
-        by smtp.gmail.com with ESMTPSA id 42-20020a17090a09ad00b002a2a3aebb38sm10035010pjo.48.2024.04.16.10.28.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Apr 2024 10:28:39 -0700 (PDT)
-Message-ID: <2d0a026f-a4f0-49e2-8501-358db5935e14@linaro.org>
-Date: Tue, 16 Apr 2024 19:28:38 +0200
+	s=arc-20240116; t=1713291137; c=relaxed/simple;
+	bh=Vmw4aEQZNgF1MZK5diVS7D95NUEyNcPU6RgyKHjzLoM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=WcT2MGyW8keDhxcjNQoRg+8KP1YnXcsFVZVU5MlUrqsyBFFVOYX+5ztASkSH0Dd0izfmS0xiWY9w1RjjOe93HVpF2ES7TRNcL7H71kZZsoRqfuxy3pASf49dNEQunY9x6DMPoRjI4fx1uTawc5FhdhdnBBOd7KpSQtROZiwxgy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IeTXk+Z7; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43GD66PV000532;
+	Tue, 16 Apr 2024 18:12:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=qivhKUQzvzA991+4YJXxICyKrQ8l43Yn9blU0XnTCiU=; b=Ie
+	TXk+Z7UlzjaeSzA5Qq8iwCDFopCT9i8dfixS7lOYRU2kfoCm3ad100Ty+W14hBjf
+	LTCi4QRv54DqTnJld6bGuja0zPWhkeBgaM17Pnb8F23bDsofDA8WKW4wmp4LwxI6
+	ZyyOAP6wdGBJ8nLF8H6wN/VG6Yr0QqjS91ZUiq7IIo9HXIVwsxh1z/nNXft7/YC+
+	6FJiedF6quFVQKFp3TIdo1oLXBVVQtX0156o+oJaUPnuMZH+cozzslBQHmK6IK1Z
+	sUAGyqrEicb6EgqO6R/05e4trOeFI0wOw+ZJP03g2QDaLZtT37WyGQO0IjkRrRc/
+	phErLKK71TUXcGXNzqeA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xhswvrxqf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Apr 2024 18:12:05 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43GIC4xx016500
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Apr 2024 18:12:04 GMT
+Received: from [10.110.122.232] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 16 Apr
+ 2024 11:12:04 -0700
+Message-ID: <adb9ab3d-0fd2-4afe-96d7-573b1822e0c3@quicinc.com>
+Date: Tue, 16 Apr 2024 11:12:03 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,99 +65,190 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 4/8] usb: typec: ucsi: glink: use le32 for message data
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Heikki Krogerus <heikki.krogerus@linux.intel.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20240416-ucsi-glink-altmode-v1-0-890db00877ac@linaro.org>
- <20240416-ucsi-glink-altmode-v1-4-890db00877ac@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20240416-ucsi-glink-altmode-v1-4-890db00877ac@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v3 3/3] bus: mhi: host: pci_generic: Add edl callback to
+ enter EDL
+Content-Language: en-US
+To: Qiang Yu <quic_qianyu@quicinc.com>, <mani@kernel.org>,
+        <quic_jhugo@quicinc.com>
+CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>
+References: <1713170945-44640-1-git-send-email-quic_qianyu@quicinc.com>
+ <1713170945-44640-4-git-send-email-quic_qianyu@quicinc.com>
+ <17d94b91-137c-409c-8af3-f32f1af2eb71@quicinc.com>
+ <4b684db2-d384-404a-9c54-60d79ac7cf9f@quicinc.com>
+From: Mayank Rana <quic_mrana@quicinc.com>
+In-Reply-To: <4b684db2-d384-404a-9c54-60d79ac7cf9f@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: NqJhOr7DK6bGdMRmD-1rvF-YCgtBLaeB
+X-Proofpoint-ORIG-GUID: NqJhOr7DK6bGdMRmD-1rvF-YCgtBLaeB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-16_16,2024-04-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
+ priorityscore=1501 spamscore=0 impostorscore=0 bulkscore=0 adultscore=0
+ lowpriorityscore=0 malwarescore=0 clxscore=1015 suspectscore=0 mlxscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404160113
 
-On 16/04/2024 04:20, Dmitry Baryshkov wrote:
-> The message structures as transferred by the PMIC_GLINK use le32 for
-> data encoding. Correct struct accessors to follow the lead of the main
-> pmic_glink.c driver.
-> 
-> Fixes: 62b5412b1f4a ("usb: typec: ucsi: add PMIC Glink UCSI driver")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/usb/typec/ucsi/ucsi_glink.c | 10 +++++-----
->   1 file changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-> index 6be9d89d4a28..d029cc9d82e3 100644
-> --- a/drivers/usb/typec/ucsi/ucsi_glink.c
-> +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-> @@ -33,7 +33,7 @@ struct ucsi_read_buf_req_msg {
->   struct ucsi_read_buf_resp_msg {
->   	struct pmic_glink_hdr   hdr;
->   	u8                      buf[UCSI_BUF_SIZE];
-> -	u32                     ret_code;
-> +	__le32                  ret_code;
->   };
->   
->   struct ucsi_write_buf_req_msg {
-> @@ -44,13 +44,13 @@ struct ucsi_write_buf_req_msg {
->   
->   struct ucsi_write_buf_resp_msg {
->   	struct pmic_glink_hdr   hdr;
-> -	u32                     ret_code;
-> +	__le32                  ret_code;
->   };
->   
->   struct ucsi_notify_ind_msg {
->   	struct pmic_glink_hdr   hdr;
-> -	u32                     notification;
-> -	u32                     receiver;
-> +	__le32                  notification;
-> +	__le32                  receiver;
->   	u32                     reserved;
->   };
->   
-> @@ -255,7 +255,7 @@ static void pmic_glink_ucsi_write_ack(struct pmic_glink_ucsi *ucsi, const void *
->   	if (resp->ret_code)
->   		return;
->   
-> -	ucsi->sync_val = resp->ret_code;
-> +	ucsi->sync_val = le32_to_cpu(resp->ret_code);
->   	complete(&ucsi->write_ack);
->   }
->   
-> 
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+
+On 4/15/2024 8:50 PM, Qiang Yu wrote:
+> 
+> On 4/16/2024 7:53 AM, Mayank Rana wrote:
+>> Hi Qiang
+>>
+>> On 4/15/2024 1:49 AM, Qiang Yu wrote:
+>>> Add mhi_pci_generic_edl_trigger as edl_trigger for some devices (eg. 
+>>> SDX65)
+>>> to enter EDL mode by writing the 0xEDEDEDED cookie to the channel 91
+>>> doorbell register and forcing an SOC reset afterwards.
+>>>
+>>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+>>> ---
+>>>   drivers/bus/mhi/host/pci_generic.c | 47 
+>>> ++++++++++++++++++++++++++++++++++++++
+>>>   1 file changed, 47 insertions(+)
+>>>
+>>> diff --git a/drivers/bus/mhi/host/pci_generic.c 
+>>> b/drivers/bus/mhi/host/pci_generic.c
+>>> index 51639bf..cbf8a58 100644
+>>> --- a/drivers/bus/mhi/host/pci_generic.c
+>>> +++ b/drivers/bus/mhi/host/pci_generic.c
+>>> @@ -27,12 +27,19 @@
+>>>   #define PCI_VENDOR_ID_THALES    0x1269
+>>>   #define PCI_VENDOR_ID_QUECTEL    0x1eac
+>>>   +#define MHI_EDL_DB            91
+>>> +#define MHI_EDL_COOKIE            0xEDEDEDED
+>>> +
+>>> +/* Device can enter EDL by first setting edl cookie then issuing 
+>>> inband reset*/
+>>> +#define MHI_PCI_GENERIC_EDL_TRIGGER    BIT(0)
+>>> +
+>>>   /**
+>>>    * struct mhi_pci_dev_info - MHI PCI device specific information
+>>>    * @config: MHI controller configuration
+>>>    * @name: name of the PCI module
+>>>    * @fw: firmware path (if any)
+>>>    * @edl: emergency download mode firmware path (if any)
+>>> + * @edl_trigger: each bit represents a different way to enter EDL
+>>>    * @bar_num: PCI base address register to use for MHI MMIO register 
+>>> space
+>>>    * @dma_data_width: DMA transfer word size (32 or 64 bits)
+>>>    * @mru_default: default MRU size for MBIM network packets
+>>> @@ -44,6 +51,7 @@ struct mhi_pci_dev_info {
+>>>       const char *name;
+>>>       const char *fw;
+>>>       const char *edl;
+>>> +    unsigned int edl_trigger;
+>>>       unsigned int bar_num;
+>>>       unsigned int dma_data_width;
+>>>       unsigned int mru_default;
+>>> @@ -292,6 +300,7 @@ static const struct mhi_pci_dev_info 
+>>> mhi_qcom_sdx75_info = {
+>>>       .name = "qcom-sdx75m",
+>>>       .fw = "qcom/sdx75m/xbl.elf",
+>>>       .edl = "qcom/sdx75m/edl.mbn",
+>>> +    .edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
+>>>       .config = &modem_qcom_v2_mhiv_config,
+>>>       .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>>>       .dma_data_width = 32,
+>>> @@ -302,6 +311,7 @@ static const struct mhi_pci_dev_info 
+>>> mhi_qcom_sdx65_info = {
+>>>       .name = "qcom-sdx65m",
+>>>       .fw = "qcom/sdx65m/xbl.elf",
+>>>       .edl = "qcom/sdx65m/edl.mbn",
+>>> +    .edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
+>>>       .config = &modem_qcom_v1_mhiv_config,
+>>>       .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>>>       .dma_data_width = 32,
+>>> @@ -312,6 +322,7 @@ static const struct mhi_pci_dev_info 
+>>> mhi_qcom_sdx55_info = {
+>>>       .name = "qcom-sdx55m",
+>>>       .fw = "qcom/sdx55m/sbl1.mbn",
+>>>       .edl = "qcom/sdx55m/edl.mbn",
+>>> +    .edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
+>>>       .config = &modem_qcom_v1_mhiv_config,
+>>>       .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>>>       .dma_data_width = 32,
+>>> @@ -928,6 +939,39 @@ static void health_check(struct timer_list *t)
+>>>       mod_timer(&mhi_pdev->health_check_timer, jiffies + 
+>>> HEALTH_CHECK_PERIOD);
+>>>   }
+>>>   +static int mhi_pci_generic_edl_trigger(struct mhi_controller 
+>>> *mhi_cntrl)
+>>> +{
+>>> +    void __iomem *base = mhi_cntrl->regs;
+>>> +    void __iomem *edl_db;
+>>> +    int ret;
+>>> +    u32 val;
+>>> +
+>>> +    ret = mhi_device_get_sync(mhi_cntrl->mhi_dev);
+>>> +    if (ret) {
+>>> +        dev_err(mhi_cntrl->cntrl_dev, "Wake up device fail before 
+>>> trigger EDL\n");
+>>> +        return ret;
+>>> +    }
+>>> +
+>>> +    pm_wakeup_event(&mhi_cntrl->mhi_dev->dev, 0);
+>>> +    mhi_cntrl->runtime_get(mhi_cntrl);
+>>> +
+>>> +    ret = mhi_get_channel_doorbell(mhi_cntrl, &val);
+>>> +    if (ret)
+>>> +        return ret;
+>> Don't we need error handling part here i.e. calling 
+>> mhi_cntrl->runtime_put() as well mhi_device_put() ?
+> 
+> Hi Mayank
+> 
+> After soc_reset, device will reboot to EDL mode and MHI state will be 
+> SYSERR. So host will fail to suspend
+> anyway. The "error handling" we need here is actually to enter EDL mode, 
+> this will be done by SYSERR irq.
+> Here, mhi_cntrl->runtime_put() and mhi_device_put() are only to balance 
+> mhi_cntrl->runtime_get() and
+> mhi_device_get_sync().
+> 
+> Thanks,
+> Qiang
+I am saying is there possibility that mhi_get_channel_doorbell() returns 
+error ?
+If yes, then why don't we need error handling as part of it. you are 
+exiting if this API return error without doing anything.
+>>> +    edl_db = base + val + (8 * MHI_EDL_DB);
+>>> +
+>>> +    mhi_cntrl->write_reg(mhi_cntrl, edl_db + 4, 
+>>> upper_32_bits(MHI_EDL_COOKIE));
+>>> +    mhi_cntrl->write_reg(mhi_cntrl, edl_db, 
+>>> lower_32_bits(MHI_EDL_COOKIE));
+>>> +
+>>> +    mhi_soc_reset(mhi_cntrl);
+>>> +
+>>> +    mhi_cntrl->runtime_put(mhi_cntrl);
+>>> +    mhi_device_put(mhi_cntrl->mhi_dev);
+>>> +
+>>> +    return 0;
+>>> +}
+>>> +
+>>>   static int mhi_pci_probe(struct pci_dev *pdev, const struct 
+>>> pci_device_id *id)
+>>>   {
+>>>       const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info 
+>>> *) id->driver_data;
+>>> @@ -962,6 +1006,9 @@ static int mhi_pci_probe(struct pci_dev *pdev, 
+>>> const struct pci_device_id *id)
+>>>       mhi_cntrl->runtime_put = mhi_pci_runtime_put;
+>>>       mhi_cntrl->mru = info->mru_default;
+>>>   +    if (info->edl_trigger & MHI_PCI_GENERIC_EDL_TRIGGER)
+>>> +        mhi_cntrl->edl_trigger = mhi_pci_generic_edl_trigger;
+>>> +
+>>>       if (info->sideband_wake) {
+>>>           mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
+>>>           mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
+>> Regards,
+>> Mayank
 
