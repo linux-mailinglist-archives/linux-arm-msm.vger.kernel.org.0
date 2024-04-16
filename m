@@ -1,243 +1,247 @@
-Return-Path: <linux-arm-msm+bounces-17542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17544-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 315B88A6127
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 04:45:01 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C01788A61D8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 05:50:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 536D01C20ACC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 02:45:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 472D41F2375F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 03:50:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1913E18E02;
-	Tue, 16 Apr 2024 02:44:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 108951BC5C;
+	Tue, 16 Apr 2024 03:50:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QZ40ErWr"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fQPl31W6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4480171D2;
-	Tue, 16 Apr 2024 02:44:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E69A199BC;
+	Tue, 16 Apr 2024 03:50:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713235481; cv=none; b=YnkuggRMlpAbvY+1PggAMlmF5E2i5GbtYrbb20wG2/WQ7yaloxVvQRBScCF1rKD5o2YpAnr2BWvb/QD1X0lpf9pb1g1EJUY1m1RTDypilcSDhan7eP7SXyDcBe8/4o214Cimii/qSlIXj5JeoUTcC9Sg3t1KpOOVyRsWJEXpSvQ=
+	t=1713239428; cv=none; b=qcePTG3debUzFr8KOmQ/wpOrTymn1eoJYpDkfcQqMcROi8HyarxgiDJnB38o7Iahw9DzDzL/Ys6Yz79y2zkfRyMcAygbllODhf+7sv4kg9lsYya1IUOVA1oRW9ttNgZwOIN2lgfvVyHh3/Lh8I8yCp9iZgoAxUYHxVdkn6xoQAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713235481; c=relaxed/simple;
-	bh=3ygo566KgNes/y1LnnasDIozu4wqPQgtkAmJdJFtQ0U=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=DxCiqFfEdNO7EHDCJRaPnKXKS2RV0IZt580Y8HSt6dxIH9Qae/Z0lfLI/6eqg6gBRQ8mXF+ssR4l6XKQLIhmu5EZpI3MatvvlfIRhyHuni2wwHv5n7iAPKqEdwPgGyxjGJI177bZoawGCBvBAtvxGvQiAJq8vVzZxMOJMXtuFp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QZ40ErWr; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 6F17DC4AF0C;
-	Tue, 16 Apr 2024 02:44:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713235481;
-	bh=3ygo566KgNes/y1LnnasDIozu4wqPQgtkAmJdJFtQ0U=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=QZ40ErWrn5XtEtonMojY5vHzFnnHAwMKEGafsomu8FfPecoagy8UIaz6TJ5C9VvE2
-	 TpFJRy6PH+PayzGui8+OMBqhMFXrq3w9zaQ/KrE+VbRfMDnHRFNyvk//+cx/PA3KgV
-	 Mmmb40/5HnY0pMiiHTxszGpWPfwmFSo9vKw+ps2hXA7BUVaw/AhrcymyQzLRuFRnYe
-	 kIzzzgzFcygnb4SKwXDxipu9aol7b/m7qxELm6o0Cl8KTA3vTwfp1iVCzhleKBAB6M
-	 0znEDxieW3OG1GzqyJ9URbPiGi9THpBTtX9zkhOJ+Xuxw1CveYr9/S07EEiHcGBhBd
-	 1K3g3SuO7zvtQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59803C04FFE;
-	Tue, 16 Apr 2024 02:44:41 +0000 (UTC)
-From: Fenglin Wu via B4 Relay <devnull+quic_fenglinw.quicinc.com@kernel.org>
-Date: Tue, 16 Apr 2024 10:44:34 +0800
-Subject: [PATCH v11 3/3] input: pm8xxx-vibrator: add new SPMI vibrator
- support
+	s=arc-20240116; t=1713239428; c=relaxed/simple;
+	bh=pwekYD8Wkc6Veq9X/9ki7fdgxaAJi5ssre0H+rqvVOQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=GkvXr2QthI/Wqx+bH1zFcg84tr498VDENVxD8jTCIYPJwNUaMq1r4XnYG6q934aDH/KMELB2KZNVBpRTAa/dIknZ5yJXq9OOBfMAyCKbbtBVQjcDTUUZzls0LzogOuD1JRDn2Vg1+qXO8UiJDJW9XxOSXytjsT370NB39Hrx/Jw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fQPl31W6; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43G3o12p011307;
+	Tue, 16 Apr 2024 03:50:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=Hte0m1rpzkCLyr+QyeNl0cr9HUN873o6biJxbNQpjVo=; b=fQ
+	Pl31W67xSr1GlRIljQlHG0f7yGoQFITbwd/fD+PzCOw/8o1jfWuVrXRnggiv3boz
+	dmfLYQ8NloVaUbAsm/I6bIQ+f+nRyWsD6QwSAUj70gBc6XPQ3u650P0q/+yYjYqg
+	v2iByUcW3EXS3JAghqXwtuAb5clAzGjjuVMFEkiOmLH93TxhhW9ihHdtoW0RFuqp
+	GzeseMFV20b81Eh3WacVmXBh9X7i+ZBbDHQhjBB/av7UIrX2ccIYsrQRokWVANU3
+	jc3fH0+IIUryQnsxOLfCS/iAtI2y0zmvCehJWQJ1rS4oizYDtAhSA0bMlaIKil5T
+	yckEdSKF6iEMLrygS8+A==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xh5jx9ka5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Apr 2024 03:50:21 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43G3oKrY022947
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Apr 2024 03:50:20 GMT
+Received: from [10.239.29.179] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 15 Apr
+ 2024 20:50:18 -0700
+Message-ID: <4b684db2-d384-404a-9c54-60d79ac7cf9f@quicinc.com>
+Date: Tue, 16 Apr 2024 11:50:15 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240416-pm8xxx-vibrator-new-design-v11-3-7b1c951e1515@quicinc.com>
-References: <20240416-pm8xxx-vibrator-new-design-v11-0-7b1c951e1515@quicinc.com>
-In-Reply-To: <20240416-pm8xxx-vibrator-new-design-v11-0-7b1c951e1515@quicinc.com>
-To: kernel@quicinc.com, Andy Gross <agross@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
- Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org, 
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
- Fenglin Wu <quic_fenglinw@quicinc.com>
-X-Mailer: b4 0.13-dev-83828
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1713235479; l=5248;
- i=quic_fenglinw@quicinc.com; s=20240327; h=from:subject:message-id;
- bh=O6jY1vE2jMlOuUDvAlQRyMO4JqLMmvGnt6KvdZSWoX4=;
- b=DoVE674AWh7yt0zyoiZS7k+TyNiecyJD6qsCJWj6VcIDOmE8qE0HfBZR8zD/tDtfLs4P4Die3
- wPTFMEcosIoC5u84zbHjJVsJI1xojlhrLWDyobziNQDybr+cg6EEK1H
-X-Developer-Key: i=quic_fenglinw@quicinc.com; a=ed25519;
- pk=BF8SA4IVDk8/EBCwlBehKtn2hp6kipuuAuDAHh9s+K4=
-X-Endpoint-Received: by B4 Relay for quic_fenglinw@quicinc.com/20240327
- with auth_id=146
-X-Original-From: Fenglin Wu <quic_fenglinw@quicinc.com>
-Reply-To: quic_fenglinw@quicinc.com
-
-From: Fenglin Wu <quic_fenglinw@quicinc.com>
-
-Add support for a new SPMI vibrator module which is very similar
-to the vibrator module inside PM8916 but has a finer drive voltage
-step and different output voltage range, its drive level control
-is expanded across 2 registers. The vibrator module can be found
-in following Qualcomm PMICs: PMI632, PM7250B, PM7325B, PM7550BA.
-
-Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
----
- drivers/input/misc/pm8xxx-vibrator.c | 52 +++++++++++++++++++++++++++++-------
- 1 file changed, 43 insertions(+), 9 deletions(-)
-
-diff --git a/drivers/input/misc/pm8xxx-vibrator.c b/drivers/input/misc/pm8xxx-vibrator.c
-index 2bcfa7ed3d6b..381b06473279 100644
---- a/drivers/input/misc/pm8xxx-vibrator.c
-+++ b/drivers/input/misc/pm8xxx-vibrator.c
-@@ -11,10 +11,11 @@
- #include <linux/regmap.h>
- #include <linux/slab.h>
- 
--#define VIB_MAX_LEVEL_mV	(3100)
--#define VIB_MIN_LEVEL_mV	(1200)
--#define VIB_PER_STEP_mV		(100)
--#define VIB_MAX_LEVELS		(VIB_MAX_LEVEL_mV - VIB_MIN_LEVEL_mV + VIB_PER_STEP_mV)
-+#define VIB_MAX_LEVEL_mV(vib)	(vib->drv2_addr ? 3544 : 3100)
-+#define VIB_MIN_LEVEL_mV(vib)	(vib->drv2_addr ? 1504 : 1200)
-+#define VIB_PER_STEP_mV(vib)	(vib->drv2_addr ? 8 : 100)
-+#define VIB_MAX_LEVELS(vib) \
-+	(VIB_MAX_LEVEL_mV(vib) - VIB_MIN_LEVEL_mV(vib) + VIB_PER_STEP_mV(vib))
- 
- #define MAX_FF_SPEED		0xff
- 
-@@ -25,7 +26,11 @@ struct pm8xxx_regs {
- 	unsigned int drv_offset;
- 	unsigned int drv_mask;
- 	unsigned int drv_shift;
-+	unsigned int drv2_offset;
-+	unsigned int drv2_mask;
-+	unsigned int drv2_shift;
- 	unsigned int drv_en_manual_mask;
-+	bool	     drv_in_step;
- };
- 
- static const struct pm8xxx_regs pm8058_regs = {
-@@ -33,6 +38,7 @@ static const struct pm8xxx_regs pm8058_regs = {
- 	.drv_mask = GENMASK(7, 3),
- 	.drv_shift = 3,
- 	.drv_en_manual_mask = 0xfc,
-+	.drv_in_step = true,
- };
- 
- static struct pm8xxx_regs pm8916_regs = {
-@@ -42,6 +48,20 @@ static struct pm8xxx_regs pm8916_regs = {
- 	.drv_mask = GENMASK(4, 0),
- 	.drv_shift = 0,
- 	.drv_en_manual_mask = 0,
-+	.drv_in_step = true,
-+};
-+
-+static struct pm8xxx_regs pmi632_regs = {
-+	.enable_offset = 0x46,
-+	.enable_mask = BIT(7),
-+	.drv_offset = 0x40,
-+	.drv_mask = GENMASK(7, 0),
-+	.drv_shift = 0,
-+	.drv2_offset = 0x41,
-+	.drv2_mask = GENMASK(3, 0),
-+	.drv2_shift = 8,
-+	.drv_en_manual_mask = 0,
-+	.drv_in_step = false,
- };
- 
- /**
-@@ -52,6 +72,7 @@ static struct pm8xxx_regs pm8916_regs = {
-  * @regs: registers' info
-  * @enable_addr: vibrator enable register
-  * @drv_addr: vibrator drive strength register
-+ * @drv2_addr: vibrator drive strength upper byte register
-  * @speed: speed of vibration set from userland
-  * @active: state of vibrator
-  * @level: level of vibration to set in the chip
-@@ -64,6 +85,7 @@ struct pm8xxx_vib {
- 	const struct pm8xxx_regs *regs;
- 	unsigned int enable_addr;
- 	unsigned int drv_addr;
-+	unsigned int drv2_addr;
- 	int speed;
- 	int level;
- 	bool active;
-@@ -81,6 +103,9 @@ static int pm8xxx_vib_set(struct pm8xxx_vib *vib, bool on)
- 	unsigned int val = vib->reg_vib_drv;
- 	const struct pm8xxx_regs *regs = vib->regs;
- 
-+	if (regs->drv_in_step)
-+		vib->level /= VIB_PER_STEP_mV(vib);
-+
- 	if (on)
- 		val |= (vib->level << regs->drv_shift) & regs->drv_mask;
- 	else
-@@ -92,6 +117,14 @@ static int pm8xxx_vib_set(struct pm8xxx_vib *vib, bool on)
- 
- 	vib->reg_vib_drv = val;
- 
-+	if (regs->drv2_mask) {
-+		val = vib->level << regs->drv2_shift;
-+		rc = regmap_write_bits(vib->regmap, vib->drv2_addr,
-+				regs->drv2_mask, on ? val : 0);
-+		if (rc < 0)
-+			return rc;
-+	}
-+
- 	if (regs->enable_mask)
- 		rc = regmap_update_bits(vib->regmap, vib->enable_addr,
- 					regs->enable_mask, on ? regs->enable_mask : 0);
-@@ -114,17 +147,16 @@ static void pm8xxx_work_handler(struct work_struct *work)
- 		return;
- 
- 	/*
--	 * pmic vibrator supports voltage ranges from 1.2 to 3.1V, so
-+	 * pmic vibrator supports voltage ranges from MIN_LEVEL to MAX_LEVEL, so
- 	 * scale the level to fit into these ranges.
- 	 */
- 	if (vib->speed) {
- 		vib->active = true;
--		vib->level = ((VIB_MAX_LEVELS * vib->speed) / MAX_FF_SPEED) +
--						VIB_MIN_LEVEL_mV;
--		vib->level /= VIB_PER_STEP_mV;
-+		vib->level = VIB_MIN_LEVEL_mV(vib);
-+		vib->level += mult_frac(VIB_MAX_LEVELS(vib), vib->speed, MAX_FF_SPEED);
- 	} else {
- 		vib->active = false;
--		vib->level = VIB_MIN_LEVEL_mV / VIB_PER_STEP_mV;
-+		vib->level = VIB_MIN_LEVEL_mV(vib);
- 	}
- 
- 	pm8xxx_vib_set(vib, vib->active);
-@@ -197,6 +229,7 @@ static int pm8xxx_vib_probe(struct platform_device *pdev)
- 	regs = of_device_get_match_data(&pdev->dev);
- 	vib->enable_addr = reg_base + regs->enable_offset;
- 	vib->drv_addr = reg_base + regs->drv_offset;
-+	vib->drv2_addr = reg_base + regs->drv2_offset;
- 
- 	/* operate in manual mode */
- 	error = regmap_read(vib->regmap, vib->drv_addr, &val);
-@@ -251,6 +284,7 @@ static const struct of_device_id pm8xxx_vib_id_table[] = {
- 	{ .compatible = "qcom,pm8058-vib", .data = &pm8058_regs },
- 	{ .compatible = "qcom,pm8921-vib", .data = &pm8058_regs },
- 	{ .compatible = "qcom,pm8916-vib", .data = &pm8916_regs },
-+	{ .compatible = "qcom,pmi632-vib", .data = &pmi632_regs },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, pm8xxx_vib_id_table);
-
--- 
-2.25.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/3] bus: mhi: host: pci_generic: Add edl callback to
+ enter EDL
+To: Mayank Rana <quic_mrana@quicinc.com>, <mani@kernel.org>,
+        <quic_jhugo@quicinc.com>
+CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>
+References: <1713170945-44640-1-git-send-email-quic_qianyu@quicinc.com>
+ <1713170945-44640-4-git-send-email-quic_qianyu@quicinc.com>
+ <17d94b91-137c-409c-8af3-f32f1af2eb71@quicinc.com>
+Content-Language: en-US
+From: Qiang Yu <quic_qianyu@quicinc.com>
+In-Reply-To: <17d94b91-137c-409c-8af3-f32f1af2eb71@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ZjP7A9NfbE99xMuEif1TzTvdzB6e-sMv
+X-Proofpoint-ORIG-GUID: ZjP7A9NfbE99xMuEif1TzTvdzB6e-sMv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-16_02,2024-04-15_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
+ suspectscore=0 adultscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0
+ mlxlogscore=999 spamscore=0 mlxscore=0 malwarescore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
+ definitions=main-2404160022
 
 
+On 4/16/2024 7:53 AM, Mayank Rana wrote:
+> Hi Qiang
+>
+> On 4/15/2024 1:49 AM, Qiang Yu wrote:
+>> Add mhi_pci_generic_edl_trigger as edl_trigger for some devices (eg. 
+>> SDX65)
+>> to enter EDL mode by writing the 0xEDEDEDED cookie to the channel 91
+>> doorbell register and forcing an SOC reset afterwards.
+>>
+>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+>> ---
+>>   drivers/bus/mhi/host/pci_generic.c | 47 
+>> ++++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 47 insertions(+)
+>>
+>> diff --git a/drivers/bus/mhi/host/pci_generic.c 
+>> b/drivers/bus/mhi/host/pci_generic.c
+>> index 51639bf..cbf8a58 100644
+>> --- a/drivers/bus/mhi/host/pci_generic.c
+>> +++ b/drivers/bus/mhi/host/pci_generic.c
+>> @@ -27,12 +27,19 @@
+>>   #define PCI_VENDOR_ID_THALES    0x1269
+>>   #define PCI_VENDOR_ID_QUECTEL    0x1eac
+>>   +#define MHI_EDL_DB            91
+>> +#define MHI_EDL_COOKIE            0xEDEDEDED
+>> +
+>> +/* Device can enter EDL by first setting edl cookie then issuing 
+>> inband reset*/
+>> +#define MHI_PCI_GENERIC_EDL_TRIGGER    BIT(0)
+>> +
+>>   /**
+>>    * struct mhi_pci_dev_info - MHI PCI device specific information
+>>    * @config: MHI controller configuration
+>>    * @name: name of the PCI module
+>>    * @fw: firmware path (if any)
+>>    * @edl: emergency download mode firmware path (if any)
+>> + * @edl_trigger: each bit represents a different way to enter EDL
+>>    * @bar_num: PCI base address register to use for MHI MMIO register 
+>> space
+>>    * @dma_data_width: DMA transfer word size (32 or 64 bits)
+>>    * @mru_default: default MRU size for MBIM network packets
+>> @@ -44,6 +51,7 @@ struct mhi_pci_dev_info {
+>>       const char *name;
+>>       const char *fw;
+>>       const char *edl;
+>> +    unsigned int edl_trigger;
+>>       unsigned int bar_num;
+>>       unsigned int dma_data_width;
+>>       unsigned int mru_default;
+>> @@ -292,6 +300,7 @@ static const struct mhi_pci_dev_info 
+>> mhi_qcom_sdx75_info = {
+>>       .name = "qcom-sdx75m",
+>>       .fw = "qcom/sdx75m/xbl.elf",
+>>       .edl = "qcom/sdx75m/edl.mbn",
+>> +    .edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
+>>       .config = &modem_qcom_v2_mhiv_config,
+>>       .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>>       .dma_data_width = 32,
+>> @@ -302,6 +311,7 @@ static const struct mhi_pci_dev_info 
+>> mhi_qcom_sdx65_info = {
+>>       .name = "qcom-sdx65m",
+>>       .fw = "qcom/sdx65m/xbl.elf",
+>>       .edl = "qcom/sdx65m/edl.mbn",
+>> +    .edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
+>>       .config = &modem_qcom_v1_mhiv_config,
+>>       .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>>       .dma_data_width = 32,
+>> @@ -312,6 +322,7 @@ static const struct mhi_pci_dev_info 
+>> mhi_qcom_sdx55_info = {
+>>       .name = "qcom-sdx55m",
+>>       .fw = "qcom/sdx55m/sbl1.mbn",
+>>       .edl = "qcom/sdx55m/edl.mbn",
+>> +    .edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
+>>       .config = &modem_qcom_v1_mhiv_config,
+>>       .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>>       .dma_data_width = 32,
+>> @@ -928,6 +939,39 @@ static void health_check(struct timer_list *t)
+>>       mod_timer(&mhi_pdev->health_check_timer, jiffies + 
+>> HEALTH_CHECK_PERIOD);
+>>   }
+>>   +static int mhi_pci_generic_edl_trigger(struct mhi_controller 
+>> *mhi_cntrl)
+>> +{
+>> +    void __iomem *base = mhi_cntrl->regs;
+>> +    void __iomem *edl_db;
+>> +    int ret;
+>> +    u32 val;
+>> +
+>> +    ret = mhi_device_get_sync(mhi_cntrl->mhi_dev);
+>> +    if (ret) {
+>> +        dev_err(mhi_cntrl->cntrl_dev, "Wake up device fail before 
+>> trigger EDL\n");
+>> +        return ret;
+>> +    }
+>> +
+>> +    pm_wakeup_event(&mhi_cntrl->mhi_dev->dev, 0);
+>> +    mhi_cntrl->runtime_get(mhi_cntrl);
+>> +
+>> +    ret = mhi_get_channel_doorbell(mhi_cntrl, &val);
+>> +    if (ret)
+>> +        return ret;
+> Don't we need error handling part here i.e. calling 
+> mhi_cntrl->runtime_put() as well mhi_device_put() ?
+
+Hi Mayank
+
+After soc_reset, device will reboot to EDL mode and MHI state will be 
+SYSERR. So host will fail to suspend
+anyway. The "error handling" we need here is actually to enter EDL mode, 
+this will be done by SYSERR irq.
+Here, mhi_cntrl->runtime_put() and mhi_device_put() are only to balance 
+mhi_cntrl->runtime_get() and
+mhi_device_get_sync().
+
+Thanks,
+Qiang
+
+>> +    edl_db = base + val + (8 * MHI_EDL_DB);
+>> +
+>> +    mhi_cntrl->write_reg(mhi_cntrl, edl_db + 4, 
+>> upper_32_bits(MHI_EDL_COOKIE));
+>> +    mhi_cntrl->write_reg(mhi_cntrl, edl_db, 
+>> lower_32_bits(MHI_EDL_COOKIE));
+>> +
+>> +    mhi_soc_reset(mhi_cntrl);
+>> +
+>> +    mhi_cntrl->runtime_put(mhi_cntrl);
+>> +    mhi_device_put(mhi_cntrl->mhi_dev);
+>> +
+>> +    return 0;
+>> +}
+>> +
+>>   static int mhi_pci_probe(struct pci_dev *pdev, const struct 
+>> pci_device_id *id)
+>>   {
+>>       const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info 
+>> *) id->driver_data;
+>> @@ -962,6 +1006,9 @@ static int mhi_pci_probe(struct pci_dev *pdev, 
+>> const struct pci_device_id *id)
+>>       mhi_cntrl->runtime_put = mhi_pci_runtime_put;
+>>       mhi_cntrl->mru = info->mru_default;
+>>   +    if (info->edl_trigger & MHI_PCI_GENERIC_EDL_TRIGGER)
+>> +        mhi_cntrl->edl_trigger = mhi_pci_generic_edl_trigger;
+>> +
+>>       if (info->sideband_wake) {
+>>           mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
+>>           mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
+> Regards,
+> Mayank
 
