@@ -1,146 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-17579-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17580-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39D4D8A6996
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 13:30:28 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF3248A69BF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 13:38:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BD52B1F21E3A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 11:30:27 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5C7E8B216D5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Apr 2024 11:38:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CF851292D7;
-	Tue, 16 Apr 2024 11:30:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A0CA12882D;
+	Tue, 16 Apr 2024 11:38:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="k/MOR36/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx.gpxsee.org (mx.gpxsee.org [37.205.14.76])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 292D2128377;
-	Tue, 16 Apr 2024 11:30:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.205.14.76
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B90C1292DB
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 11:38:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713267022; cv=none; b=IuCXSrQUk80KNw43jFOPEeGK0I+rFzCkyopjEuko9j4P9PDoITrcFNa47RZpdta8GJ7ayQvtBggd0Ny3H6lDUMtbaAn2xcXfONG45/IKtjHOXQqUnHm7l2X4/9cbcVFLAqBMf5fepXiDPoZ9h/10hnxRatla9KtVJY4qxbIHsaY=
+	t=1713267527; cv=none; b=nt1gdm8SkVct/daKmwTONyAbcrJ/90hQSAxdvL+G+m1amV+aS4qknoXOWp0Sh3xHDA3KEKFJO/92NnnHvWQ3GqRDLPYeD/Z2cWk+idWaT3GtQNhP9BaxwnirQ9JAR3S9soG2d4WDUyz3+xkFDXi8JBhp1Efzyreut4NOllyDXPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713267022; c=relaxed/simple;
-	bh=hFklNXAFTh7lsJu6P5YapMDLqrxmPeSouEGbwGP1ixQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=m9M+QI56RbQPaxruY5yKh+nz3eHEidniZ49VU2RW6u3PlgPXbg1I1jNI1yCoFh8lUkj8ZnZDj6ZiWK3Fi8EJqrZStkEEqTdBEQ/6l5lnpUpaKi56CZbgl9j8w/JxAJ7HzW2wfyVEZCQg7Q+VdwJ/mLwgTJcVgRkRrmKmF9RdytA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gpxsee.org; spf=pass smtp.mailfrom=gpxsee.org; arc=none smtp.client-ip=37.205.14.76
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gpxsee.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gpxsee.org
-Received: from [192.168.4.14] (unknown [62.77.71.229])
-	by mx.gpxsee.org (Postfix) with ESMTPSA id 9583E3B254;
-	Tue, 16 Apr 2024 13:30:06 +0200 (CEST)
-Message-ID: <0bea915c-ddad-44b6-ade1-187307da504b@gpxsee.org>
-Date: Tue, 16 Apr 2024 13:30:02 +0200
+	s=arc-20240116; t=1713267527; c=relaxed/simple;
+	bh=78vEOqzL95dc+B7WbWraGxUA3wTUPg9rnOmG+t2Iy9Y=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
+	 References:In-Reply-To; b=emuL2/pN1JLsy16sfjglNScPzinP02yt/hvZRbeli2zOuhXL7Vst54mM7RA/EPDGYx4sG5IxkwWZcjL4aKibTHIQK8nhgrvoNo6VGddiImPK6X1KvfPAlBIeSN9nCQrd2ZRQ6qqFPWIVn+FV70ojAUUbtmwCSuhICma6IQqfIr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=k/MOR36/; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-570441bc23bso668130a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 04:38:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1713267524; x=1713872324; darn=vger.kernel.org;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yLga7OC4nYSq9BYdu8C0P/BImJRfA0KFWKdGFi9hq8g=;
+        b=k/MOR36/WBCAUC5+dkiiqXGmS4obsvDIBZlYz6RvPI82op2gyM8KmbYo+oIEYlAlD/
+         SkHj6oo84T1ovPXl6wnLHDqvKYvE2+xEuxdKlGniZC83ihYNW0cmkBUshBATeAFd0q6V
+         4kWySr22KCE2+jOJfGE4kns/GDu2EYUc5Ib3rO7I4n0x82+0i/F+RGiakp6VSGJalpJg
+         BxySIvIp3ZnsGcKR/266LaxJ5QfzxUde3PTpljchfq6bBtXC50szYOdIuNeu9ByV6pS0
+         Ep2Hpjm3TCna32jrxg23ONEINGEKeCBRNM3L7l/KdQVuTi9QX94RaM3u2+VE8TKy+ndP
+         LCgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713267524; x=1713872324;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=yLga7OC4nYSq9BYdu8C0P/BImJRfA0KFWKdGFi9hq8g=;
+        b=w6ODp1ypFt13/kMW87UtU8EIE9rnt6sWbIiCkA6YcXNBPSjgEUh4dPNcLJ0kOGN9re
+         CIb5fr+dYywsyCglBX5KDQ4fK0PYcfKe9s6yQgyfyIZKF0QS/TiRl0rYPCZyoOC/Hl64
+         54bQgKOhbU6nXsF9nAhUjoAThKqTggLeZlOIdLRlIWTJe9lzwNLWo1plFSpYtQlkhYhs
+         7n3yoXC/D9XbTXp4eryKiHoJGyl/CEVocrczzuAndFPEO3X7M5iZL88utH95kzGlfIJj
+         S5EaAk0gAw3TbEh20qWznuw135T37OBf97W9FRrcBCxCp7cvQeE4ZCCktro8bZgbnia0
+         cJag==
+X-Forwarded-Encrypted: i=1; AJvYcCW/PDWbSwK8TTWPGygluA0m1AUYes0LcvcOchZ7bWN7TMKEUf4/YTzjIlbCH1Uzte6t2FLtQiLExhoBf1XTHb8tRzSNcmovMMiB0bp+1A==
+X-Gm-Message-State: AOJu0YwoHP7wx6GKXwmezACZduYGt7EP2N/1nFLO6Z3ZiFgPh8VJpApq
+	OSyHfn7UcGJCrg3ojmgJKRoJeZ2NXYtVylnpK/QR+GqgKs+u3oasacWfoUVGoac=
+X-Google-Smtp-Source: AGHT+IGsl2HiaOewcfGkAfX8WYgD4puftl3jXzNcbfuXILpdAUeSXu7mMz9n+3mpi50aQf05U7taGQ==
+X-Received: by 2002:a50:9357:0:b0:56e:232b:95cd with SMTP id n23-20020a509357000000b0056e232b95cdmr8225752eda.41.1713267524650;
+        Tue, 16 Apr 2024 04:38:44 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id fe1-20020a056402390100b005701df2ea98sm3207437edb.32.2024.04.16.04.38.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Apr 2024 04:38:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/35] media: pci: mgb4: Refactor struct resources
-To: Ricardo Ribalda <ribalda@chromium.org>,
- Martin Tuma <martin.tuma@digiteqautomotive.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
- Hans Verkuil <hverkuil-cisco@xs4all.nl>,
- Hugues Fruchet <hugues.fruchet@foss.st.com>,
- Alain Volmat <alain.volmat@foss.st.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Chen-Yu Tsai
- <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Samuel Holland <samuel@sholland.org>,
- Sakari Ailus <sakari.ailus@linux.intel.com>,
- Thierry Reding <thierry.reding@gmail.com>,
- Jonathan Hunter <jonathanh@nvidia.com>,
- Sowjanya Komatineni <skomatineni@nvidia.com>,
- Luca Ceresoli <luca.ceresoli@bootlin.com>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Hans Verkuil <hverkuil@xs4all.nl>, Sergey Kozlov <serjk@netup.ru>,
- Abylay Ospan <aospan@netup.ru>,
- Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
- Dmitry Osipenko <digetx@gmail.com>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Benjamin Mugnier <benjamin.mugnier@foss.st.com>,
- Sylvain Petinot <sylvain.petinot@foss.st.com>,
- Jacopo Mondi <jacopo+renesas@jmondi.org>,
- Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
- Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
- =?UTF-8?Q?Niklas_S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
- Pavel Machek <pavel@ucw.cz>
-Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org, linux-staging@lists.linux.dev,
- linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
- linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org
-References: <20240415-fix-cocci-v1-0-477afb23728b@chromium.org>
- <20240415-fix-cocci-v1-1-477afb23728b@chromium.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Martin_T=C5=AFma?= <tumic@gpxsee.org>
-In-Reply-To: <20240415-fix-cocci-v1-1-477afb23728b@chromium.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 16 Apr 2024 13:38:43 +0200
+Message-Id: <D0LINETM8WNA.27BORT75W1N0C@fairphone.com>
+To: "Viken Dadhaniya" <quic_vdadhani@quicinc.com>,
+ <cros-qcom-dts-watchers@chromium.org>, <andersson@kernel.org>,
+ <konrad.dybcio@linaro.org>, <swboyd@chromium.org>, <robh@kernel.org>,
+ <krzk+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <conor+dt@kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <rajpat@codeaurora.org>,
+ <mka@chromium.org>, <rojay@codeaurora.org>
+Cc: <quic_msavaliy@quicinc.com>, <quic_anupkulk@quicinc.com>
+Subject: Re: [PATCH v1] arm64: dts: qcom: sc7280: Remove CTS/RTS
+ configuration
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+X-Mailer: aerc 0.17.0
+References: <20240416105650.2626-1-quic_vdadhani@quicinc.com>
+In-Reply-To: <20240416105650.2626-1-quic_vdadhani@quicinc.com>
 
-On 15. 04. 24 21:34, Ricardo Ribalda wrote:
-> The struct resource end field is inclusive not exclusive, this is, the
-> size is (end - start) +1.
-> 
-> Update the definitions and use the generic resource_size() function.
-> 
-> Fixes cocci check:
-> drivers/media/pci/mgb4/mgb4_regs.c:13:22-25: WARNING: Suspicious code. resource_size is maybe missing with res
-> 
-> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+On Tue Apr 16, 2024 at 12:56 PM CEST, Viken Dadhaniya wrote:
+> Remove CTS and RTS pinctrl configuration for UART5 node as
+> it's designed for debug UART for all the board variants of the
+> sc7280 chipset.
+>
+> Also change compatible string to debug UART.
+
+This change has little to do with the SoC design though and is dependent
+on the usage on a given board, right? Also the QCM6490 datasheet
+mentions gpio21 & gpio22 can be used for UART_CTS and UART_RFR.
+
+But at least consistency-wise this change makes sense, in practically
+all other SoCs one UART is marked as geni-debug-uart.
+
+But with this patch you should then also remove some overrides that are
+placed in various boards already?
+
+arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts:     compatible =3D "qco=
+m,geni-debug-uart";
+arch/arm64/boot/dts/qcom/qcm6490-idp.dts:       compatible =3D "qcom,geni-d=
+ebug-uart";
+arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts:   compatible =3D "qcom,geni-d=
+ebug-uart";
+arch/arm64/boot/dts/qcom/sc7280-idp.dtsi:       compatible =3D "qcom,geni-d=
+ebug-uart";
+arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi:     compatible =3D "qcom,geni-d=
+ebug-uart";
+
+Regards
+Luca
+
+>
+> Fixes: 38cd93f413fd ("arm64: dts: qcom: sc7280: Update QUPv3 UART5 DT nod=
+e")
+> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
 > ---
->   drivers/media/pci/mgb4/mgb4_core.c | 4 ++--
->   drivers/media/pci/mgb4/mgb4_regs.c | 2 +-
->   2 files changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/media/pci/mgb4/mgb4_core.c b/drivers/media/pci/mgb4/mgb4_core.c
-> index 9bcf10a77fd3..60498a5abebf 100644
-> --- a/drivers/media/pci/mgb4/mgb4_core.c
-> +++ b/drivers/media/pci/mgb4/mgb4_core.c
-> @@ -493,13 +493,13 @@ static int mgb4_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->   	struct mgb4_dev *mgbdev;
->   	struct resource video = {
->   		.start	= 0x0,
-> -		.end	= 0x100,
-> +		.end	= 0xff,
->   		.flags	= IORESOURCE_MEM,
->   		.name	= "mgb4-video",
->   	};
->   	struct resource cmt = {
->   		.start	= 0x1000,
-> -		.end	= 0x1800,
-> +		.end	= 0x17ff,
->   		.flags	= IORESOURCE_MEM,
->   		.name	= "mgb4-cmt",
->   	};
-> diff --git a/drivers/media/pci/mgb4/mgb4_regs.c b/drivers/media/pci/mgb4/mgb4_regs.c
-> index 53d4e4503a74..31befd722d72 100644
-> --- a/drivers/media/pci/mgb4/mgb4_regs.c
-> +++ b/drivers/media/pci/mgb4/mgb4_regs.c
-> @@ -10,7 +10,7 @@
->   int mgb4_regs_map(struct resource *res, struct mgb4_regs *regs)
->   {
->   	regs->mapbase = res->start;
-> -	regs->mapsize = res->end - res->start;
-> +	regs->mapsize = resource_size(res);
->   
->   	if (!request_mem_region(regs->mapbase, regs->mapsize, res->name))
->   		return -EINVAL;
-> 
-
-Reviewed-by: Martin Tůma <martin.tuma@digiteqautomotive.com>
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 14 ++------------
+>  1 file changed, 2 insertions(+), 12 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/q=
+com/sc7280.dtsi
+> index 38c183b2bb26..2a6b4c4639d1 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -1440,12 +1440,12 @@
+>  			};
+> =20
+>  			uart5: serial@994000 {
+> -				compatible =3D "qcom,geni-uart";
+> +				compatible =3D "qcom,geni-debug-uart";
+>  				reg =3D <0 0x00994000 0 0x4000>;
+>  				clocks =3D <&gcc GCC_QUPV3_WRAP0_S5_CLK>;
+>  				clock-names =3D "se";
+>  				pinctrl-names =3D "default";
+> -				pinctrl-0 =3D <&qup_uart5_cts>, <&qup_uart5_rts>, <&qup_uart5_tx>, <=
+&qup_uart5_rx>;
+> +				pinctrl-0 =3D <&qup_uart5_tx>, <&qup_uart5_rx>;
+>  				interrupts =3D <GIC_SPI 606 IRQ_TYPE_LEVEL_HIGH>;
+>  				power-domains =3D <&rpmhpd SC7280_CX>;
+>  				operating-points-v2 =3D <&qup_opp_table>;
+> @@ -5397,16 +5397,6 @@
+>  				function =3D "qup04";
+>  			};
+> =20
+> -			qup_uart5_cts: qup-uart5-cts-state {
+> -				pins =3D "gpio20";
+> -				function =3D "qup05";
+> -			};
+> -
+> -			qup_uart5_rts: qup-uart5-rts-state {
+> -				pins =3D "gpio21";
+> -				function =3D "qup05";
+> -			};
+> -
+>  			qup_uart5_tx: qup-uart5-tx-state {
+>  				pins =3D "gpio22";
+>  				function =3D "qup05";
 
 
