@@ -1,72 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-17670-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC5318A80CB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 12:22:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 99D8A8A8149
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 12:50:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 43B2D1F2122F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 10:22:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 10E2F1F22BD4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 10:50:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EEE613AD1D;
-	Wed, 17 Apr 2024 10:20:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="mkJh3BtI"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5252013C681;
+	Wed, 17 Apr 2024 10:50:54 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB97A13C830
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 10:20:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.118.77.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97CF7132803;
+	Wed, 17 Apr 2024 10:50:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713349235; cv=none; b=QvKCtQNfMP2rt7m5W+Kf3Gm7kkzZDVCtYGUR5Yw016TxdUBAatdyj3JCScjFqaeva55pl48PTEdAG/byblvYj4njS0lPoHSWtgPVzcQieXBh7GMttDNo+NZ7F2/43gmQVSgCNgecPl0VZ5Y52pTviRWXYCvQRno0LT6H6EZXCNo=
+	t=1713351054; cv=none; b=tpr/6OidHDxw2gY+wyaBFawtGLZhBkgAklUh9RzVZ6KN8xMqPqHutWXqUMI/LOAu6e3bwA//6J6uWS5JoirqSTU0ADAUYZwqpOLKwfW778t2NMpnbYHr3OR+o2PA+VYwtcx+o4+lwCDdHz/Fg8AMj1I/TSYj0I50opztUGm240A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713349235; c=relaxed/simple;
-	bh=Hqfqwezo4j40e/O6q9Y5jOHPHshmKCtSIPdpxWSc8go=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:From:In-Reply-To:
-	 Content-Type:References; b=T8RQz+5uq92wwTROXEgZaLT3k45cfDsr5K8LtdWyJfpAGyxAYj8We4Ud2110jDuJJaLJjJVmPyZN5jHpHOSDMyOGyYG9yqc6TroT3XPeCkiOmcgAV7uqol0ziMV0pfXewvTUFIsrMYFXO5xuLT360z86l8YWKVenuLj6fbGIH8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=mkJh3BtI; arc=none smtp.client-ip=210.118.77.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-	by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20240417102031euoutp010d102326946f4afc5fdd5acb45bbbd50~HCgx5iWI_2112121121euoutp01T
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 10:20:31 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20240417102031euoutp010d102326946f4afc5fdd5acb45bbbd50~HCgx5iWI_2112121121euoutp01T
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1713349231;
-	bh=dFt6dfcqV3zT2/ZiPZ6VfWUb9Ittzgqcfr2mHlwzjko=;
-	h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
-	b=mkJh3BtIzO80Gg+ySnEXp6oFTse34sqblkl0o4Ue5vGXUqRxc0+v5gcoYkATjhzn6
-	 f6c1HGwzkv8ogHl1K6tt3qzJSoBEp5bZMwXosy6Njj8ewelg155GGIBUg+BoN23jTr
-	 pluVfCm7C5G9aCZXjpFUqCTJWeGLvXaXGuRBGTbY=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-	eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-	20240417102031eucas1p1a388b363c581a557fe3c4ca64f141a92~HCgxlaONv1596815968eucas1p1Z;
-	Wed, 17 Apr 2024 10:20:31 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-	eusmges2new.samsung.com (EUCPMTA) with SMTP id AA.39.09875.F62AF166; Wed, 17
-	Apr 2024 11:20:31 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-	eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-	20240417102031eucas1p221e613c1c12e7f71449935a2090cd72e~HCgxLJvvj1176911769eucas1p27;
-	Wed, 17 Apr 2024 10:20:31 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-	eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-	20240417102031eusmtrp1f8fa65831e1464c22b1362499d7a4fdd~HCgxJ80f-2417024170eusmtrp1B;
-	Wed, 17 Apr 2024 10:20:31 +0000 (GMT)
-X-AuditID: cbfec7f4-11bff70000002693-21-661fa26f07c1
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-	eusmgms2.samsung.com (EUCPMTA) with SMTP id 21.B5.09010.E62AF166; Wed, 17
-	Apr 2024 11:20:30 +0100 (BST)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-	eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20240417102030eusmtip21c4b82205fab31cb65d46fa91d3a4030~HCgwZ4A6z1594315943eusmtip2g;
-	Wed, 17 Apr 2024 10:20:30 +0000 (GMT)
-Message-ID: <c091da0b-a150-428a-bf96-75f9f3eab2e2@samsung.com>
-Date: Wed, 17 Apr 2024 12:20:29 +0200
+	s=arc-20240116; t=1713351054; c=relaxed/simple;
+	bh=XaAcT67M5RaPBWHbB+wNAlaIJeNyW5NuSWZzU/URrJU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=m9oPobLrX7b7HJJX1BcEWLBXLl4HPPb4L2CbuMeKzcM7fURUWywDiJ5Fk50GbZXn7C/dhgA0QOVHf0MaHgvWMFTKFFLr4mpHt4fewtnfEO1App83xcWhZ6Taxmb8tFVO3PkHd4zh/kmpY+J9yiEGwJ1414zGEGAhF0GgnmIY4pQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.208.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-56e48d0a632so8414409a12.2;
+        Wed, 17 Apr 2024 03:50:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713351051; x=1713955851;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vft5t+sb+qnt9u/cVXjqa7VMdCg/vVTNy1ZfkRM3NrY=;
+        b=Psacht6kvNsOHExGmrf2s7qxDg4GfiLOP7HxOVcg5UCxdHHrziVRPmstgEy6FssOJl
+         f8k3bXlyDOcvAG5cXkuEkglMJKvlGMOaRhWYf4X4cYXxCw+lP7jQY+AlHwWI4xn4ubId
+         zhWykE2c3NZT6f3mdpRkp7vRIeDWMv62/o6jub73Y4h3EHT3Kd1S+sM1B1zotEQo2y8d
+         plmNHlvQcrPPdMiSYRZaGRKyTkEcECV6CVnFfQY2NIsPS/2tC0mfMOD/MsL1XLD0yhb5
+         m/YqbAlYXljGm4twuZDYSNA8dbJMc5XRQgtns6Xvj7TfFexOS1HNgYiLmFbOh9qA2IR9
+         D/6g==
+X-Forwarded-Encrypted: i=1; AJvYcCVgJSgk1HQskxkET83pAwLX3e61JmLzkgk5jkIMF3fAvoGF1mPnWBtozP/Gk6ZWJ5K3usRUzi9JXw+d+Qm+HOzcVkL7d9ZtEGb798K9Q77ijYbJVn5rx9GAr6OUVpQM2lQv90jnkYVOsyIw3A==
+X-Gm-Message-State: AOJu0YwE6jXHqHEMKnIcuggxWXKFxEkhU/5DhaW7IT2BlxZSTIR+sQf2
+	fyfOeTaDmnR+D6a16a//m8z0C8sjFiRgVtKu8ufZ6Cgp0aI5FHxf6zOflVhA
+X-Google-Smtp-Source: AGHT+IGN9LcNvwblZ6ViBwpqt946fLccgyIeSYEbOBmB8loD7XnPuLo2PCB4MQwzI8484uEC8NEGsA==
+X-Received: by 2002:a17:906:eece:b0:a52:6eb7:7654 with SMTP id wu14-20020a170906eece00b00a526eb77654mr8049679ejb.46.1713351050667;
+        Wed, 17 Apr 2024 03:50:50 -0700 (PDT)
+Received: from ?IPV6:2a0b:e7c0:0:107::aaaa:69? ([2a0b:e7c0:0:107::aaaa:69])
+        by smtp.gmail.com with ESMTPSA id bv21-20020a170906b1d500b00a520b294d9dsm7978733ejb.150.2024.04.17.03.50.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Apr 2024 03:50:49 -0700 (PDT)
+Message-ID: <783c05cd-0cd2-4b0e-9dce-2a9fdfee7c74@kernel.org>
+Date: Wed, 17 Apr 2024 12:50:48 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,122 +63,120 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/15] tty: serial: switch from circ_buf to kfifo
-To: Anders Roxell <anders.roxell@linaro.org>, Jiri Slaby
-	<jirislaby@kernel.org>
-Cc: gregkh@linuxfoundation.org, linux-amlogic@lists.infradead.org,
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-	linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, Bjorn Andersson
-	<andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Neil
-	Armstrong <neil.armstrong@linaro.org>, Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>, Martin Blumenstingl
-	<martin.blumenstingl@googlemail.com>
-Content-Language: en-US
-From: Marek Szyprowski <m.szyprowski@samsung.com>
-In-Reply-To: <Zh-fgtujwjiSXz7D@monster>
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrCKsWRmVeSWpSXmKPExsWy7djPc7r5i+TTDK5eVbC4NeU3k8W2DhuL
-	5sXr2SzePDrCbPFurozFz/YtTBYdk7ezWCyYzW0xcf9ZdovLu+awWZxZ3MtucWzRSRaL9ztv
-	MTrwery/0cru8XTCZHaPTas62TzuXNvD5rF/7hp2j81L6j0+b5ILYI/isklJzcksSy3St0vg
-	ythw9hFLwWyRioldn9kaGA8JdDFyckgImEgsP3iNsYuRi0NIYAWjxNztx1ggnC+MEu8vdbND
-	OJ8ZJd5c388E0/JidR8bRGI5o8TlUxOgnI+MEjufPger4hWwk+g9O5MNxGYRUJVY2LKNGSIu
-	KHFy5hMWEFtUQF7i/q0Z7CC2sICrxKU3b8HqRQQCJbZc3wE2lFngLLPEriV3wYqYBcQlbj2Z
-	D7aATcBQouttF1gDp4C6xMkTi5kgauQltr+dwwzSLCEwmVPi6PdNLBB3u0isXnsZ6gdhiVfH
-	t7BD2DISpyf3sEA0tDNKLPh9nwnCmcAo0fD8FiNElbXEnXO/gNZxAK3QlFi/Sx8i7Chx82c/
-	K0hYQoBP4sZbQYgj+CQmbZvODBHmlehoE4KoVpOYdXwd3NqDFy4xT2BUmoUULrOQvDkLyTuz
-	EPYuYGRZxSieWlqcm55abJSXWq5XnJhbXJqXrpecn7uJEZjQTv87/mUH4/JXH/UOMTJxMB5i
-	lOBgVhLhbRGWTRPiTUmsrEotyo8vKs1JLT7EKM3BoiTOq5oinyokkJ5YkpqdmlqQWgSTZeLg
-	lGpg6tDesLvT3ks6+6orkza/cK6vZ1+izPTLM6N7WXImpzwQbrBYLxe24q7A028LDnBx//Z4
-	84TDfOZZK/7XEiaJE3asOZnJ9Kn9Y/PdPylyS5mD+vi2b0zks9E+0+ArXFb9z+TQu/kPDK69
-	vqO24ple3pZ3zRHaR8rPPC3ocPN/6v2zsnRCddfZ2yFC9jdaruZKXV+oVjjXI6DL7ALD1Hjj
-	zrY128RrasNYpzc9C71y9PYU+VUGn3pfWh5lfPZejsdRTW/uqsnMnjJfkt4GHrpee19/xYWG
-	av5Ivy5pWeGm3F+PWXOO9P62X6L/NdDD2vaZtmz1t1TmCf8N3i27X2Vywshh54Tc4x3bXTV1
-	PecpsRRnJBpqMRcVJwIAoUmG79cDAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrGIsWRmVeSWpSXmKPExsVy+t/xe7p5i+TTDN4/sbK4NeU3k8W2DhuL
-	5sXr2SzePDrCbPFurozFz/YtTBYdk7ezWCyYzW0xcf9ZdovLu+awWZxZ3MtucWzRSRaL9ztv
-	MTrwery/0cru8XTCZHaPTas62TzuXNvD5rF/7hp2j81L6j0+b5ILYI/SsynKLy1JVcjILy6x
-	VYo2tDDSM7S00DMysdQzNDaPtTIyVdK3s0lJzcksSy3St0vQy9hw9hFLwWyRioldn9kaGA8J
-	dDFyckgImEi8WN3H1sXIxSEksJRR4s6yVlaIhIzEyWkNULawxJ9rXVBF7xklHu08DZbgFbCT
-	6D07kw3EZhFQlVjYso0ZIi4ocXLmExYQW1RAXuL+rRnsILawgKvEpTdvwepFBAIlrt5Zwg4y
-	lFngPLPEhOZ9rBAbDjBJ3F23DqyDWUBc4taT+UwgNpuAoUTX2y6wbk4BdYmTJxYzQdSYSXRt
-	7WKEsOUltr+dwzyBUWgWkkNmIRk1C0nLLCQtCxhZVjGKpJYW56bnFhvpFSfmFpfmpesl5+du
-	YgRG8LZjP7fsYFz56qPeIUYmDsZDjBIczEoivC3CsmlCvCmJlVWpRfnxRaU5qcWHGE2BoTGR
-	WUo0OR+YQvJK4g3NDEwNTcwsDUwtzYyVxHk9CzoShQTSE0tSs1NTC1KLYPqYODilGphWKz++
-	WxdkKsZh9Pla9pEchZcXTbnfBoj/8Nsod1jt2F1XsSdTT5Xvr9ix1+lCjXCwweLDuVtszzxc
-	vVbdt3Lu66Ml5lptj3ImRO1YN3nKNUvpA9knP08PkZRItDt24a1PJ+eV82avT062+enwIVaL
-	JdxFh2caixWbhf7bTQ7752TLmSsFy2n2n3EV3X/MVmbLM8vKvs/mU4sWnYs8KHjI7RO/YeNs
-	Me19ixenvH/yvkrh8EZ192WCusFM9zaWf0vIkZhqJP6iz+fE0/QYPvGN9vHczwQz9sTP31As
-	+HLrmuv8M9pssu8fqwuxvx/G57jOP3uay+pojmlPFr1p7rn/cX/PvswDQWutlQL3XlJQYinO
-	SDTUYi4qTgQAEwnrVGkDAAA=
-X-CMS-MailID: 20240417102031eucas1p221e613c1c12e7f71449935a2090cd72e
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20240415125847eucas1p2bc180c35f40f9c490c713679871af9ae
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20240415125847eucas1p2bc180c35f40f9c490c713679871af9ae
+Subject: Re: [PATCH 11/15] tty: msm_serial: use dmaengine_prep_slave_sg()
+To: Marek Szyprowski <m.szyprowski@samsung.com>, gregkh@linuxfoundation.org
+Cc: linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org,
+ Anders Roxell <anders.roxell@linaro.org>
 References: <20240405060826.2521-1-jirislaby@kernel.org>
-	<20240405060826.2521-13-jirislaby@kernel.org>
-	<CGME20240415125847eucas1p2bc180c35f40f9c490c713679871af9ae@eucas1p2.samsung.com>
-	<91ac609b-0fae-4856-a2a6-636908d7ad3c@samsung.com>
-	<d70049d5-d0fe-465f-a558-45b6785f6014@kernel.org> <Zh-fgtujwjiSXz7D@monster>
+ <20240405060826.2521-12-jirislaby@kernel.org>
+ <CGME20240415211716eucas1p10050cc8d4024707dd6f6331111cd3ce1@eucas1p1.samsung.com>
+ <d3eb9f21-f3e1-43ec-bf41-984c6aa5cfc8@samsung.com>
+ <54679d54-3957-489d-a8b5-b98ea1c8a93c@kernel.org>
+ <0335b679-da36-42c1-a1ba-8affb7a98d44@samsung.com>
+Content-Language: en-US
+From: Jiri Slaby <jirislaby@kernel.org>
+Autocrypt: addr=jirislaby@kernel.org; keydata=
+ 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
+In-Reply-To: <0335b679-da36-42c1-a1ba-8affb7a98d44@samsung.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 17.04.2024 12:08, Anders Roxell wrote:
-> On 2024-04-15 15:28, Jiri Slaby wrote:
->> On 15. 04. 24, 14:58, Marek Szyprowski wrote:
+On 17. 04. 24, 12:15, Marek Szyprowski wrote:
+> Hi Jiri,
+> 
+> On 16.04.2024 12:23, Jiri Slaby wrote:
+>> On 15. 04. 24, 23:17, Marek Szyprowski wrote:
 >>> On 05.04.2024 08:08, Jiri Slaby (SUSE) wrote:
->>>> Switch from struct circ_buf to proper kfifo. kfifo provides much better
->>>> API, esp. when wrap-around of the buffer needs to be taken into account.
->>>> Look at pl011_dma_tx_refill() or cpm_uart_tx_pump() changes for example.
+>>>> This is a preparatory for the serial-to-kfifo switch. kfifo understands
+>>>> only scatter-gatter approach, so switch to that.
 >>>>
->>>> Kfifo API can also fill in scatter-gather DMA structures, so it easier
->>>> for that use case too. Look at lpuart_dma_tx() for example. Note that
->>>> not all drivers can be converted to that (like atmel_serial), they
->>>> handle DMA specially.
+>>>> No functional change intended, it's just dmaengine_prep_slave_single()
+>>>> inline expanded.
 >>>>
->>>> Note that usb-serial uses kfifo for TX for ages.
->>>>
->>>> omap needed a bit more care as it needs to put a char into FIFO to start
->>>> the DMA transfer when OMAP_DMA_TX_KICK is set. In that case, we have to
->>>> do kfifo_dma_out_prepare twice: once to find out the tx_size (to find
->>>> out if it is worths to do DMA at all -- size >= 4), the second time for
->>>> the actual transfer.
->>>>
->>>> All traces of circ_buf are removed from serial_core.h (and its struct
->>>> uart_state).
+>>>> And in this case, switch from dma_map_single() to dma_map_sg() too.
+>>>> This
+>>>> needs struct msm_dma changes. I split the rx and tx parts into an
+>>>> union.
+>>>> TX is now struct scatterlist, RX remains the old good phys-virt-count
+>>>> triple.
 >>>>
 >>>> Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
->>>> ...
->>> This patch landed in linux-next as commit 1788cf6a91d9 ("tty: serial:
->>> switch from circ_buf to kfifo"). Unfortunately it breaks UART operation
->>> on thr Amlogic Meson based boards (drivers/tty/serial/meson_uart.c
->>> driver) and Qualcomm RB5 board (drivers/tty/serial/qcom_geni_serial.c).
->>> Once the init process is started, a complete garbage is printed to the
->>> serial console. Here is an example how it looks:
->> Oh my!
+>>>> Cc: Bjorn Andersson <andersson@kernel.org>
+>>>> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>> Cc: linux-arm-msm@vger.kernel.org
+>>>
+>>> I've just found that this patch broke UART operation on DragonBoard
+>>> 410c. I briefly checked and didn't notice anything obviously wrong here,
+>>> but the board stops transmitting any data from its serial port after the
+>>> first message. I will try to analyze this issue a bit more tomorrow.
 >>
->> Both drivers move the tail using both kfifo and uart_xmit_advance()
->> interfaces. Bah. Does it help to remove that uart_xmit_advance() for both of
->> them? (TX stats will be broken.)
->>
->> Users of uart_port_tx() are not affected.
->>
->> This is my fault when merging uart_xmit_advance() with this series.
->>
-> I'm trying to run on two dragonboard devices db410c and db845c and both
-> fails to boot see the boot failure from db845c [1], linux-next tag: next-20240415.
-> I tried to apply the patch [2] (that you proposed in this thread) ontop of next-20240415. However, that didn't
-> help bootlog on db845c [3].
+>> I double checked, but I see no immediate issues in the patch too. So
+>> please, if you can analyze this more…
+> 
+> I've spent some time digging into this issue and frankly speaking I
+> still have no idea WHY it doesn't work (or I seriously mixed something
+> in the scatterlist principles). However I found a workaround to make it
+> working. Maybe it will help a bit guessing what happens there.
+...
+> @@ -434,7 +436,7 @@ static void msm_start_tx(struct uart_port *port)
+>           struct msm_dma *dma = &msm_port->tx_dma;
+> 
+>           /* Already started in DMA mode */
+> -       if (sg_dma_len(&dma->tx_sg))
+> +       if (dma->mapped)
 
-This is a different issue, which I've reported 2 days ago. See the 
-following thread:
+Thanks for looking into this.
 
-https://lore.kernel.org/all/d3eb9f21-f3e1-43ec-bf41-984c6aa5cfc8@samsung.com/
+I was hesitant if I should use a flag. I should have, apparently.
 
+Quick question:
+What's value of CONFIG_NEED_SG_DMA_LENGTH in your .config?
 
-Best regards
+thanks,
 -- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
+js
+suse labs
 
 
