@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-17717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7DA898A8595
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 16:08:09 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9162A8A85A3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 16:11:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7713DB21D52
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 14:08:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D30251F22D20
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 14:11:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50FD71411D3;
-	Wed, 17 Apr 2024 14:08:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD4911411FA;
+	Wed, 17 Apr 2024 14:11:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZQiaEkQ5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rRGhWObL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A92C14039D;
-	Wed, 17 Apr 2024 14:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84E6A1411D3;
+	Wed, 17 Apr 2024 14:11:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713362880; cv=none; b=iFetm3Aiw3+bLLarrzQvjO9OPxHXcrahsK54ziFLZUPHYVz3JCX24RplRJmLuD22EpcP7OBD5K4B37m+921T6YfQnDIk8KevrgCJbbdTjAnhKzEkrY9SEk+Vc9Tax/IjyQaFtePoWG5KeeeWHXx/PkzqO4DlsjrHHn/XAMmz1zo=
+	t=1713363102; cv=none; b=Layk8m159kUG0Kagng94137+ksQTKyzBMipkQNVIjTwqGRuRh8a6Guz18jCcnp97WrsLgkOblhW0XEvBsfjCLce1qu20/p7HXZ4KWyehuGxqIbzPpIssTZ10FOzKDS3dUCeTC80devtqxMnX3LjiLidzDDBXyOLDAAK9HRo+Ljc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713362880; c=relaxed/simple;
-	bh=5hS45g5M3LFot7tByWQpyieDDMvyjOnns7f0oJIOwl8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=L46LU/Lk3tsQZ0aCc+3Bwm/KQaxfPn0ZsdL5oi86bYXTm8THcPziAlPs4ylU4qDxB9d9u3cBIp0/4zrvHnG1nWDlfIMqgLnIgezKkJfpS9T3XNF6soIjGjtokBkRony2sQOEwx58IsQ7vGALgtw+iDlgNJos3cOARPKjfzu5z5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZQiaEkQ5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 602EEC072AA;
-	Wed, 17 Apr 2024 14:07:59 +0000 (UTC)
+	s=arc-20240116; t=1713363102; c=relaxed/simple;
+	bh=06f/qT6/nj6DQGEH60ItVsmrSVxeXycROuqQlnHdOFA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WleTaLYk9i2dQfvtPTZjHHMwaS4+J7Onj9tPRziEioTQophd+DsWsllJS6l4Cxo8X9mWY+S28PDjBfaPeOCq+UGOvm54utkWXNjzkdR7beMWzT21V/TKEj5K5N2V9b1n/uqBTwGCKg6QmUhJdb/RM2HbOnDAFuq5TeARBoMl+Ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rRGhWObL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB9B6C072AA;
+	Wed, 17 Apr 2024 14:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713362879;
-	bh=5hS45g5M3LFot7tByWQpyieDDMvyjOnns7f0oJIOwl8=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=ZQiaEkQ5LEF9f2Mr4pZ3UqHjKtntViJumK3VVtzx2AzjVPN6leObj1i4//Ek22y5Q
-	 hZJuO9bYZtgmaweNPcZzd1AvTehpALBan7rGpnzUGjrjTpaWMXOg/+b+j4Eq+uts0T
-	 GsOtD+rRY7ucw+zQEOcfXyA0BX9eDct9O2DymevoF1mZXgIgNzJ7/ckWg6k2ZXGou9
-	 hZ6kWrHWt5dvZdUos2pbjV/Lth9cQWzwCrra09fdKP6iwPFV/PiZzPT0CRSRm4/rHY
-	 GulJAyu8ZhgPL/dCT7+0TwAKn4j/Ui8oa2uCZvLHfJ6K7zDC1LlvNkjgOHfnCNUvqF
-	 8k2C9yrBV3qYg==
-Message-ID: <f00a62c8-6f4d-4be4-800e-58898ea58490@kernel.org>
-Date: Wed, 17 Apr 2024 16:07:59 +0200
+	s=k20201202; t=1713363102;
+	bh=06f/qT6/nj6DQGEH60ItVsmrSVxeXycROuqQlnHdOFA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=rRGhWObL8sehAg0hDZllAiBxOWziLTZ8FTINt66CEgNLuR1l49DxsqaCIaFKATJAi
+	 SnzsxQjo4zQCUrzCVykqGC7AUOIkaVJ6Opxm+bcA17X+VSqWrTmFkc6rHju1aP4SBE
+	 RNgtYDwk5Hi+uhutpJOf+SMQYFZTWfGo6CLjbGgL9gQUIhLLV6FjJI8Au7I/9Dope2
+	 weLyld3SaPCNc+33D8bxLSqwp3pm0OEmIqM4Kml2dfzHzDX5PC+ld+nVXlD6d8aEHY
+	 BxMh58rea3mwjEbojv9Da/CRLBSDXqRo7IsBPT06j3FuQbNo5+cwuWHqbfFmqL6UMy
+	 MH08+4dmUmJ4Q==
+Message-ID: <f3d2adfb-dbd7-49e4-8f5e-5d5cb4bd9fb8@kernel.org>
+Date: Wed, 17 Apr 2024 16:11:41 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,17 +50,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 3/7] dt-bindings: interconnect: Add Qualcomm IPQ9574
- support
-To: Varadarajan Narayanan <quic_varada@quicinc.com>, andersson@kernel.org,
- mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, konrad.dybcio@linaro.org,
- djakov@kernel.org, dmitry.baryshkov@linaro.org, quic_anusha@quicinc.com,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org
-References: <20240417105605.836705-1-quic_varada@quicinc.com>
- <20240417105605.836705-4-quic_varada@quicinc.com>
+Subject: Re: [PATCH 1/2] pinctrl: qcom-ssbi: add support for PM8901
+To: Herman van Hazendonk <github.com@herrie.org>, andersson@kernel.org
+Cc: benwolsieffer@gmail.com, chris.chapuis@gmail.com,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240415141743.1983350-1-github.com@herrie.org>
 Content-Language: en-US
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,75 +105,22 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240417105605.836705-4-quic_varada@quicinc.com>
+In-Reply-To: <20240415141743.1983350-1-github.com@herrie.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 17/04/2024 12:56, Varadarajan Narayanan wrote:
-> Add interconnect-cells to clock provider so that it can be
-> used as icc provider.
+On 15/04/2024 16:17, Herman van Hazendonk wrote:
+> The PM8901 is used alongside the APQ8060/MSM8660 on the APQ8060 Dragonboard
+> and HP TouchPad. It works the same as all others, so just add the
+> compatible string for this variant.
 > 
-> Add master/slave ids for Qualcomm IPQ9574 Network-On-Chip
-> interfaces. This will be used by the gcc-ipq9574 driver
-> that will for providing interconnect services using the
-> icc-clk framework.
-> 
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
 > ---
-> v8:
-> Remove ICC_xxx macros
-> Fix macro defines to be consistent with other bindings
-> v7:
-> Fix macro names to be consistent with other bindings
-> v6:
-> Removed Reviewed-by: Krzysztof Kozlowski
-> Redefine the bindings such that driver and DT can share them
-> 
-> v3:
-> Squash Documentation/ and include/ changes into same patch
-> 
-> qcom,ipq9574.h
-> 	Move 'first id' to clock driver
-> 
-> ---
->  .../bindings/clock/qcom,ipq9574-gcc.yaml      |  3 +
->  .../dt-bindings/interconnect/qcom,ipq9574.h   | 59 +++++++++++++++++++
->  2 files changed, 62 insertions(+)
->  create mode 100644 include/dt-bindings/interconnect/qcom,ipq9574.h
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml
-> index 944a0ea79cd6..824781cbdf34 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml
-> @@ -33,6 +33,9 @@ properties:
->        - description: PCIE30 PHY3 pipe clock source
->        - description: USB3 PHY pipe clock source
->  
-> +  '#interconnect-cells':
-> +    const: 1
-> +
->  required:
->    - compatible
->    - clocks
-> diff --git a/include/dt-bindings/interconnect/qcom,ipq9574.h b/include/dt-bindings/interconnect/qcom,ipq9574.h
-> new file mode 100644
-> index 000000000000..42019335c7dd
-> --- /dev/null
-> +++ b/include/dt-bindings/interconnect/qcom,ipq9574.h
-> @@ -0,0 +1,59 @@
-> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-> +#ifndef INTERCONNECT_QCOM_IPQ9574_H
-> +#define INTERCONNECT_QCOM_IPQ9574_H
-> +
-> +#define MASTER_ANOC_PCIE0		0
-> +#define SLAVE_ANOC_PCIE0		1
 
-I still do not see any usage of it. At least symbol cannot be resolved.
-I assume you use the value, otherwise it would mean our entire feedback
-was ignored, but then why this cannot be searchable?
+Please use subject prefixes matching the subsystem. You can get them for
+example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
+your patch is touching.
 
-Again, open existing drivers and look how it is there. Not being able to
-find the constant is not good.
 
 Best regards,
 Krzysztof
