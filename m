@@ -1,128 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-17644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1CDB68A7BFD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 07:57:44 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B735D8A7C0A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 08:05:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B7D91281B5F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 05:57:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DAA9D1C21853
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 06:05:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4C7952F87;
-	Wed, 17 Apr 2024 05:57:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B862F535A9;
+	Wed, 17 Apr 2024 06:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oyQdX9OS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KXmNwQd2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28EEE537EC
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 05:57:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A64150A6D
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 06:05:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713333459; cv=none; b=DL6z/+bIe1Tsiqv8g+sQYLKjMR02DY6KYn1PDRklK3kCi8uSLoFV9mSkmOfTpKYoZgag1cmY2t2QPQmwWjqKre0wo+E47AC5eBOVYWI3KdNCyYj/w/remTLqloKJKzgl3hPJfdAN8qdpWeIc4gbZXb7uWeNzvq7cqSEZ7l+q3uM=
+	t=1713333932; cv=none; b=WdJwJj6nqnAnFoXheN98fq4uTmlWddOUCzVt2iTV5+NmRTsMq3u12HuSIjjwgawzxt2cFqmp4aKEgwqkYI7MmNlSV4GpUsVYUulBDBMZ8t0fKKJ87LfE79rokCYU7q+sGXX9CJSFdWnABJglg1Cs3jUww+BdB6c8td8kXnp53+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713333459; c=relaxed/simple;
-	bh=+37MR6MdJMZsDizwLtZ66hNEIJ8H6WWiH+pKyVxVm+M=;
+	s=arc-20240116; t=1713333932; c=relaxed/simple;
+	bh=UC1sIFq1cP6r9vbQzk3FdwM8StBdT3LSYUFiXCYAAz8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HrRrD2qLIu3ZrfDh2CGf0IPC6coYK9pGxqoZH2qfTskMbEVB/Tl3qQPT0nqu7Je+9Blo1zRXH/BQFpOLAM/ofgotp8eGaRMdWMLilDyMF1CeMV3Fe9Y5dp80FCb8UDbboiClAFtwZ2JShkfWEj5BR3FcdUQXmrtPrIE3qM0TF+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oyQdX9OS; arc=none smtp.client-ip=209.85.219.174
+	 To:Cc:Content-Type; b=kuERUv7V//nCU5mFV5Sf1VdjPejAXDrUqWU6g1Gvc/RuKNvjByi3gRY8YIxB7D4ij1EdEXwtUiL1lBulCjs1VQ1qOSy/zl5PUXqNwRpV060h7cFXAFlpwLFDf4E+jiK6CPrx+u2frQuHyLu71qUBZQTZMSvP0SmWGh3Fq0B1AG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KXmNwQd2; arc=none smtp.client-ip=209.85.219.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-dd02fb9a31cso4555875276.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 22:57:37 -0700 (PDT)
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-dc23bf7e5aaso5388955276.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Apr 2024 23:05:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713333457; x=1713938257; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1713333930; x=1713938730; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=rNcOWvfk3UIO9gpF1vedzWy9UX8ITuyEtwuAcYcPDTE=;
-        b=oyQdX9OS3XwnqqvnV9Yo5QzeRKhxYMDPUxT8GAWmyl7Vow1SDMP3lKiOKPzpQmx7C+
-         Ehkv+9pV8OUT82mLXxi2+8j/v4BwYw8NSv1zpMjzJiZkKhIf0vIRrtxPfouMvB3otU/D
-         9ZgZiVh/yNkx6H4q5x3Ve8M/G8H48/lWzEIzWIg28P5H5dlyKmqOKsL5gKsQstQ3mF9z
-         HjKa7XNBr9DpEtUfUazLaIJ+LMhSrDO0MO8GDeHZ4Wx2yTNXQ4VCvPJ0nbTs6a9MnvYG
-         J3ITMn8MWPj/vaLGVmfpmnv9fSOGCBqOAaf3NsuH8T0+zRyo4BWKcLF1I0MEjIsTTRfc
-         gg/g==
+        bh=1J/3E5E/mDz2QdtRZ5VOE2JUZN+fe6PP/1m29WJY37Y=;
+        b=KXmNwQd22J4B9EdcFY0dB7E9HjmHlMjn21b3pcegO5r9tO1wTkb5Vj9LwgVj3gEs+t
+         8cikhrY82407GGFyt6nNF0CqGv86cHRja8CvRMGRZ6LTtchTzAmdMSfmhhkPDsh62hHI
+         eGK56xUleRv1GmFUiq1ZfzYVsEZYm7sx9n5O6htlxXEvvnSmEZIvPbM6ONFH2X9+e+25
+         P5rTL0A25g7EB6BC3B8yDCQj4WKoAiuPyL1PakkTi7/RZWMxpVIYxtdI4ucTq67/CZUs
+         RHaen943paLbhBvqn2p2kKYsWL6dNJbI7qB6QafJGYjj+odvIqxD6L9IgDcjEJrRthjo
+         nhgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713333457; x=1713938257;
+        d=1e100.net; s=20230601; t=1713333930; x=1713938730;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=rNcOWvfk3UIO9gpF1vedzWy9UX8ITuyEtwuAcYcPDTE=;
-        b=CjyhnIyG0tHxM0ab3woXWQvXl2566UwpD3HHNlWjLCaxEaOlC1sqSpwLmwiZ7tgd8R
-         FSLJVNFGCEfVGN/7RBlKwxp2u4N5huguuydCJiyX+sdHHaks3v/m94GRJrub/hG+NHUz
-         L5lxoCtKi5HS/zoXSto8W40lbFzuEJ7u84SzOP8EcDytV1ImfXzAfrzDpHxV6PFVhB5b
-         he9m2FCBsy2JbEagovxVuKHmglr/ZagG2KvaixI/3j0GJ8J4Mfn1P/KQyfEn93D/raA6
-         jMo3k40KHFxVGwIoAHSbOZfreqQrJuu2w5W5kUd3dOORaytQyDsuoFrBuJ8QLimkhere
-         p6Iw==
-X-Forwarded-Encrypted: i=1; AJvYcCW3h4obzhtqDIiynUOeTQrBmYGn7MNVq1ZBNJ6Cz/ZvmKS235LUVCwdLppOnSNmbivnC2ZyIX4lSiqpBR0KIjgszrtfjjgMIfiV6JMTvw==
-X-Gm-Message-State: AOJu0YwIbRNA8oONUOpMok4V1rIvp6krysk0MNGyvvCdSple2DrG1evN
-	bCwELsyLrX/RZ5bn8jkCq8RCLSp28POSZrjIbci9RfKuuJ9cY5uhw8xRHIXNHcsxL4ILY91hyJL
-	2YMQ8zyGpRWMT2QfmrRjYeOOFWg4czSJjh3MsQA==
-X-Google-Smtp-Source: AGHT+IFvUyY4VR6NF7RdZCvXFlEENeC2C1SHZuye8tqXC6fIwkIUmwR3VOt9Upi8bmgYZVnv+2wX6k4TBDNDViUqr10=
-X-Received: by 2002:a25:81ce:0:b0:dcc:245b:690e with SMTP id
- n14-20020a2581ce000000b00dcc245b690emr8017444ybm.40.1713333457167; Tue, 16
- Apr 2024 22:57:37 -0700 (PDT)
+        bh=1J/3E5E/mDz2QdtRZ5VOE2JUZN+fe6PP/1m29WJY37Y=;
+        b=s6B8bcicV6/Vdet3lv0mfFrfLs3In9Q9eal5I0vv9NLSbaC5kWk+MMSy+6eHxNi+xO
+         GMPk7rfAmpiRzoWULGa5X7wR2HZKjGXEzFxN9F4x7QxoRZp+lGzYZlKAGKQz6Jj/q+3u
+         pg/qUYBBYtibvWis9n1G9KnDL+Y3kqeRCGrjodRHOXcFIqhNIfb6cW2pSD4KiVwOdsB5
+         NQRMj5wkl1G+erCHl8Bd0wadv2nvqfSuiXNxZMfBU0IHdXIQHAmK1HYqZN2c58/mpVWy
+         tyh1Qx04JiYufLvRUBz6I5M6n0f4eu4GHPoKwoSw5UBkHYhFwr+GO2lMCOplxD7YgsDD
+         rx3A==
+X-Forwarded-Encrypted: i=1; AJvYcCX9qRbaPr15Pxb281EFh1MsJdquwr62UeSHiIUUJOP3pyPLGjtZ09/giV18sGDPxeZP2g6FbPk4XiCD9qu5osBX6lTpY/D5H0Ztu8COww==
+X-Gm-Message-State: AOJu0Yy4D9ANGJ5juRXTDF6MeivYiTxW6p/MJ1+5rvTO3oDCjWuFohEH
+	FWILlc93bc8a5lFNn1H62pp6dH9aRxuhE8x+xJFa/TexyUaRcPt7yrOslHKN8/FE0CWC2u2t0P7
+	SfGwwgINKDghhd5TKF+ABMWcVio2jAqC3x3PXog==
+X-Google-Smtp-Source: AGHT+IG+zoMzQqQ/q6dE6vRDF4nodM3ANPMJAehmBQIdP7EryRcFqpoupwSxnU0cMOL78CpmhaUMLsaVKv/Pqf0CWmM=
+X-Received: by 2002:a25:b9cb:0:b0:dcc:9e88:b15 with SMTP id
+ y11-20020a25b9cb000000b00dcc9e880b15mr14409265ybj.41.1713333930018; Tue, 16
+ Apr 2024 23:05:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240415115603.1523974-1-github.com@herrie.org> <20240417045207.3594931-1-github.com@herrie.org>
-In-Reply-To: <20240417045207.3594931-1-github.com@herrie.org>
+References: <20240416182005.75422-1-quic_ajipan@quicinc.com> <20240416182005.75422-8-quic_ajipan@quicinc.com>
+In-Reply-To: <20240416182005.75422-8-quic_ajipan@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 17 Apr 2024 08:57:26 +0300
-Message-ID: <CAA8EJpo=nd8ywUzz2e42p7WAyuFm439yvNf6H=MD63LCV0xTnw@mail.gmail.com>
-Subject: Re: [PATCH v2] dt-bindings: phy: qcom,usb-hs-phy: Add compatible
-To: Herman van Hazendonk <github.com@herrie.org>
-Cc: andersson@kernel.org, benwolsieffer@gmail.com, chris.chapuis@gmail.com, 
-	conor+dt@kernel.org, devicetree@vger.kernel.org, kishon@kernel.org, 
-	konrad.dybcio@linaro.org, krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org, me@herrie.org, 
-	robh@kernel.org, vkoul@kernel.org
+Date: Wed, 17 Apr 2024 09:05:19 +0300
+Message-ID: <CAA8EJpqwrKcgm7c57=LpxS7+CfrN2UxNg8k_46auBrdZG7vQnA@mail.gmail.com>
+Subject: Re: [PATCH V2 7/8] clk: qcom: Add GPUCC driver support for SM4450
+To: Ajit Pandey <quic_ajipan@quicinc.com>
+Cc: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>, 
+	Jagadeesh Kona <quic_jkona@quicinc.com>, Imran Shaik <quic_imrashai@quicinc.com>, 
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 17 Apr 2024 at 07:52, Herman van Hazendonk
-<github.com@herrie.org> wrote:
+On Tue, 16 Apr 2024 at 21:23, Ajit Pandey <quic_ajipan@quicinc.com> wrote:
 >
-> Adds qcom,usb-hs-phy-msm8660 compatible
+> Add Graphics Clock Controller (GPUCC) support for SM4450 platform.
 >
-> Used by HP Touchpad (tenderloin) for example.
->
-> Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
+> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
 > ---
->  Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml | 2 ++
->  1 file changed, 2 insertions(+)
+>  drivers/clk/qcom/Kconfig        |   9 +
+>  drivers/clk/qcom/Makefile       |   1 +
+>  drivers/clk/qcom/gpucc-sm4450.c | 805 ++++++++++++++++++++++++++++++++
+>  3 files changed, 815 insertions(+)
+>  create mode 100644 drivers/clk/qcom/gpucc-sm4450.c
+
+[skipped]
+
+> +
+> +static int gpu_cc_sm4450_probe(struct platform_device *pdev)
+> +{
+> +       struct regmap *regmap;
+> +
+> +       regmap = qcom_cc_map(pdev, &gpu_cc_sm4450_desc);
+> +       if (IS_ERR(regmap))
+> +               return PTR_ERR(regmap);
+> +
+> +       clk_lucid_evo_pll_configure(&gpu_cc_pll0, regmap, &gpu_cc_pll0_config);
+> +       clk_lucid_evo_pll_configure(&gpu_cc_pll1, regmap, &gpu_cc_pll1_config);
+> +
+> +       /* Keep some clocks always enabled */
+> +       qcom_branch_set_clk_en(regmap, 0x93a4); /* GPU_CC_CB_CLK */
+> +       qcom_branch_set_clk_en(regmap, 0x9004); /* GPU_CC_CXO_AON_CLK */
+> +       qcom_branch_set_clk_en(regmap, 0x900c); /* GPU_CC_DEMET_CLK */
+
+My main concern here is the AON clocks. If we don't model
+gpu_cc_demet_clk as a leaf clock, then gpu_cc_demet_div_clk_src
+becomes a clock without children and can be disabled by Linux.
+Likewise not modelling gpu_cc_cxo_aon_clk removes one of the voters on
+gpu_cc_xo_clk_src, which can now be turned off by Linux.
+Our usual recommendation is to model such clocks properly and to use
+CLK_IS_CRITICAL or CLK_IGNORE_UNUSED to mark then as aon.
+
+> +
+> +       return qcom_cc_really_probe(pdev, &gpu_cc_sm4450_desc, regmap);
+> +}
+> +
+> +static struct platform_driver gpu_cc_sm4450_driver = {
+> +       .probe = gpu_cc_sm4450_probe,
+> +       .driver = {
+> +               .name = "gpucc-sm4450",
+> +               .of_match_table = gpu_cc_sm4450_match_table,
+> +       },
+> +};
+> +
+> +module_platform_driver(gpu_cc_sm4450_driver);
+> +
+> +MODULE_DESCRIPTION("QTI GPUCC SM4450 Driver");
+> +MODULE_LICENSE("GPL");
+> --
+> 2.25.1
 >
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
-> index f042d6af1594..ccf23170cd17 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
-> @@ -15,6 +15,7 @@ if:
->        contains:
->          enum:
->            - qcom,usb-hs-phy-apq8064
-> +          - qcom,usb-hs-phy-msm8660
->            - qcom,usb-hs-phy-msm8960
->  then:
->    properties:
-> @@ -41,6 +42,7 @@ properties:
->        - enum:
->            - qcom,usb-hs-phy-apq8064
->            - qcom,usb-hs-phy-msm8226
-> +          - qcom,usb-hs-phy-msm8960
-
-This should probably be msm8660 rather than 8960
-
-Note, nowadays the rule would be to use qcom,msm8660-usb-hs-phy
-compatible, but I wonder if we should enforce this for such an old
-platform or whether similarity wins.
-
->            - qcom,usb-hs-phy-msm8916
->            - qcom,usb-hs-phy-msm8960
->            - qcom,usb-hs-phy-msm8974
 >
 
 
