@@ -1,100 +1,218 @@
-Return-Path: <linux-arm-msm+bounces-17657-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17658-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B42D48A7D2E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 09:36:40 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5FDA88A7DF1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 10:17:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7093228331C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 07:36:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 18E31284745
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 08:17:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE9DE74267;
-	Wed, 17 Apr 2024 07:35:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C9387E58F;
+	Wed, 17 Apr 2024 08:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b="wIrzrm4m"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ivKuyAT5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from outbound11.mail.transip.nl (outbound11.mail.transip.nl [136.144.136.18])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D20446CDA1;
-	Wed, 17 Apr 2024 07:35:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.144.136.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFBEE7D3E4;
+	Wed, 17 Apr 2024 08:17:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713339349; cv=none; b=ncJ3hakYj9iRu4sARzKBJNCkpYqHHrWO4gWUEHNwc8r9g9EihE3vc3j19XG1Ogkq4whrLxZtvPLGoP+0ZEl2xbAJHU/wE0ErdHfY02sB6OwTU28q7Q5c6P2pjWA9dR1i9USOaPYV6ua7xgYsK82qlw1wgmt5/6ihF7J9eQPb6wA=
+	t=1713341847; cv=none; b=GUGLQEwEKwCXYI0lxiw6+KgrPKrQwivtZkNqZ5XNcrHW7l6SbK0iPpCQcQVJlO2GocNWBvaU+iOC0vUHinLdfisJKyDFl5Ta44B1nlM2bXo9+JdNGwBfKjRJ4eb+v7cpqn18ZI900be2X5Wm2bMLtpBAWW1vDvoKytar9bZJau0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713339349; c=relaxed/simple;
-	bh=SHKa031b3gssZAFMARLpJsBsZfy5fESYEginTqV3/ZY=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=tUbzvntNZfs42zgLJPCbeL2usVifZqgd57dd4H6S0J+EnK9AULfOgYc+ChShJaJJvYDEpjSln/Be9h3ymEkt+Sl3g23eQzeL37ajN2zOJV14aKhalxfy4pFq3nq+LvMKJPQaRKmK3zExmuH43zOWQxjJmpi7VKNbqvbLyfw5rek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org; spf=pass smtp.mailfrom=herrie.org; dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b=wIrzrm4m; arc=none smtp.client-ip=136.144.136.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=herrie.org
-Received: from submission4.mail.transip.nl (unknown [10.103.8.155])
-	by outbound11.mail.transip.nl (Postfix) with ESMTP id 4VKCPM4hLSzkQNK4;
-	Wed, 17 Apr 2024 09:35:35 +0200 (CEST)
-Received: from herrie-desktop.. (110-31-146-85.ftth.glasoperator.nl [85.146.31.110])
-	by submission4.mail.transip.nl (Postfix) with ESMTPA id 4VKCPL5WpFznTp8;
-	Wed, 17 Apr 2024 09:35:34 +0200 (CEST)
-From: Herman van Hazendonk <github.com@herrie.org>
-To: github.com@herrie.org
-Cc: andersson@kernel.org,
-	benwolsieffer@gmail.com,
-	chris.chapuis@gmail.com,
-	conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	konrad.dybcio@linaro.org,
-	krzk+dt@kernel.org,
-	linus.walleij@linaro.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	robh@kernel.org
-Subject: [PATCH v2 1/2] dt-bindings: pinctrl: qcom,pmic-mpp: add support for PM8901
-Date: Wed, 17 Apr 2024 09:35:32 +0200
-Message-Id: <20240417073532.3718510-1-github.com@herrie.org>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20240415141743.1983350-1-github.com@herrie.org>
-References: <20240415141743.1983350-1-github.com@herrie.org>
+	s=arc-20240116; t=1713341847; c=relaxed/simple;
+	bh=RM9ZBHtvZ8LTwszIbZZWTkb98vredc/IQ7JGaF2pg7I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ltLxWYI6J/3Xf2dY5Za1Gt0I2cF4YnxwQ55bkKh3FUv5jjZrErrq9FX/1zruR0DuGt6ygqnRIJ3cs5BJa1ggOfOwt4ApbBecS2A7XR27yxVw/PRoAglySKsDy46KuFlZ3G7s3RWhpMctKbrlSzrsTAGiUxUjzSw6qKvr7BYqaNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ivKuyAT5; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43H6pNTJ005096;
+	Wed, 17 Apr 2024 08:17:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=Htu9QXA5aLlbaAxRyDgW1Hl5A5etbp7+sMkhoF3/F+k=; b=iv
+	KuyAT5kwmF+JgfSVVFVVg9RlSOiK0WPriR1IYBxryrfPHv/qrEPfgc/Fzi7VwoQk
+	yk+c05xdPvWpMjUq4Ihu6w05qzojExFLCPPFxFZ/o1a7ubQ7VlQegaoyVnDeTfjT
+	oJQTSP6yZM9xqvWXLhUlD63Bt6VNv2Wn5mwZAZ+v0d3Bprg+lyPswhm2x9bu8nja
+	Jir3aCKrkRkJ7yZQiF2T+TRviFRMkKqoNmv9/eC9+3NqfcIqFpV7qxDxmEKDP2YB
+	cIaHfNxILBxJoD7gC+Q/MFdY87DbVjpSr9UZf92wVYhjhP3yA1anup+7TOv+BcXs
+	HPTqQ6A8NSGP8r1eT79g==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xj2sxs1wj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Apr 2024 08:17:09 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43H8H8uX007517
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Apr 2024 08:17:08 GMT
+Received: from [10.216.25.227] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 17 Apr
+ 2024 01:17:03 -0700
+Message-ID: <13bff1dd-d134-e5ab-6691-b2bcb0a786c8@quicinc.com>
+Date: Wed, 17 Apr 2024 13:47:00 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: ClueGetter at submission4.mail.transip.nl
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=transip-a; d=herrie.org; t=1713339335; h=from:subject:to:cc:
- references:in-reply-to:date:mime-version;
- bh=j8qU9SmIWp5C34F+ofmR8Pu30Ccwt3X51g+H9Nuh7A4=;
- b=wIrzrm4mNADi9YB2TD+qH1W7ziWbHLnOqlQR9vF0PP3MAzyI2dNn0TbUv5vxEJy9+5rDj2
- 3hoVuPchMzGc05T3ICXZd2ukwu7dL3GIbRVEELaa1+fjBQ40XU/+EAamoA7xwzTrSNJqdo
- /kTtIHjF3KfU2VxG+3u3Vd4W9sIrxYqcwokVHRLDg9ldzkDF9V8/O/UT993jNxI+wBXwyd
- GKDqvGMvDd4ZKFt/H33zA+NKyOzSfiuChkQkr7QkNhsxXObaHKsOC5K0hnoS2cPuv71Fw1
- YgogaVYuG0d0cn5rQf2iCRAuov1aBeT1HhLISY5gy3CvtSlFkuPWuudOv7eirg==
-X-Report-Abuse-To: abuse@transip.nl
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v2 3/8] ASoC: dt-bindings: wcd937x-sdw: add bindings for
+ wcd937x-sdw
+Content-Language: en-US
+To: Rob Herring <robh@kernel.org>
+CC: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami
+	<bgoswami@quicinc.com>,
+        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown
+	<broonie@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai
+	<tiwai@suse.com>, <alsa-devel@alsa-project.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-sound@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_rohkumar@quicinc.com>, <quic_pkumpatl@quicinc.com>
+References: <20240416063600.309747-1-quic_mohs@quicinc.com>
+ <20240416063600.309747-4-quic_mohs@quicinc.com>
+ <20240416143237.GA2250258-robh@kernel.org>
+From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+In-Reply-To: <20240416143237.GA2250258-robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 0HHyvM2ank2fxScBe0q2l6VEcz40MkiC
+X-Proofpoint-ORIG-GUID: 0HHyvM2ank2fxScBe0q2l6VEcz40MkiC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-17_07,2024-04-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
+ impostorscore=0 mlxscore=0 priorityscore=1501 mlxlogscore=999
+ lowpriorityscore=0 clxscore=1015 spamscore=0 adultscore=0 bulkscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404170056
 
-The PM8901 is used alongside the APQ8060/MSM8660 on the APQ8060 Dragonboard
-and HP TouchPad. It works the same as all others, so just add the
-compatible string for this variant.
+On 4/16/2024 8:02 PM, Rob Herring wrote:
+> On Tue, Apr 16, 2024 at 12:05:55PM +0530, Mohammad Rafi Shaik wrote:
+>> From: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+>>
+>> Qualcomm WCD9370/WCD9375 Codec is a standalone Hi-Fi audio codec IC
+>> connected over SoundWire. This device has two SoundWire devices RX and
+>> TX respectively.
+>> This binding is for those slave devices on WCD9370/WCD9375.
+>>
+>> Co-developed-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+>> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+>> Signed-off-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+>> ---
+>>   .../bindings/sound/qcom,wcd937x-sdw.yaml      | 71 +++++++++++++++++++
+>>   1 file changed, 71 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml b/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
+>> new file mode 100644
+>> index 000000000000..2b7358e266ba
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
+>> @@ -0,0 +1,71 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/sound/qcom,wcd937x-sdw.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm SoundWire Slave devices on WCD9370
+>> +
+>> +maintainers:
+>> +  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>> +
+>> +description: |
+> 
+> Don't need '|' if no formatting.
+> 
+>> +  Qualcomm WCD9370 Codec is a standalone Hi-Fi audio codec IC.
+>> +  It has RX and TX Soundwire slave devices. This bindings is for the
+>> +  slave devices.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: sdw20217010a00
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  qcom,tx-port-mapping:
+>> +    description: |
+>> +      Specifies static port mapping between slave and master tx ports.
+>> +      In the order of slave port index.
+> 
+> Are there constraints on the values of the entries?
 
-Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
----
- Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml | 1 +
- 1 file changed, 1 insertion(+)
+The port mapping entries are fixed values.
+There is no constraints.
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
-index fe717d8d4798..43146709e204 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
-@@ -35,6 +35,7 @@ properties:
-               - qcom,pm8038-mpp
-               - qcom,pm8058-mpp
-               - qcom,pm8821-mpp
-+              - qcom,pm8901-mpp
-               - qcom,pm8917-mpp
-               - qcom,pm8921-mpp
-           - const: qcom,ssbi-mpp
+Thanks
+Rafi
+> 
+>> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+>> +    minItems: 4
+>> +    maxItems: 4
+>> +
+>> +  qcom,rx-port-mapping:
+>> +    description: |
+>> +      Specifies static port mapping between slave and master rx ports.
+>> +      In the order of slave port index.
+>> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+>> +    minItems: 5
+>> +    maxItems: 5
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - qcom,port-mapping
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    soundwire@3210000 {
+>> +        #address-cells = <2>;
+>> +        #size-cells = <0>;
+>> +        reg = <0x03210000 0x2000>;
+>> +        wcd937x_rx: codec@0,4 {
+>> +            compatible = "sdw20217010a00";
+>> +            reg  = <0 4>;
+>> +            qcom,rx-port-mapping = <1 2 3 4 5>;
+>> +        };
+>> +    };
+>> +
+>> +    soundwire@3230000 {
+>> +        #address-cells = <2>;
+>> +        #size-cells = <0>;
+>> +        reg = <0x03230000 0x2000>;
+>> +        wcd937x_tx: codec@0,3 {
+>> +            compatible = "sdw20217010a00";
+>> +            reg  = <0 3>;
+>> +            qcom,tx-port-mapping = <2 3 4 5>;
+>> +        };
+>> +    };
+>> +
+>> +...
+>> -- 
+>> 2.25.1
+>>
+
 
