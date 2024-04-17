@@ -1,297 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-17642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E04D58A7B7B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 06:41:38 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59B7D8A7B95
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 06:52:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0ED241C21724
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 04:41:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 833AE1C21241
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 04:52:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B067D2B9A2;
-	Wed, 17 Apr 2024 04:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0FF533981;
+	Wed, 17 Apr 2024 04:52:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Jng2FS+U"
+	dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b="YnKe5vYw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from outbound9.mail.transip.nl (outbound9.mail.transip.nl [136.144.136.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E201170F;
-	Wed, 17 Apr 2024 04:41:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086A4BE4E;
+	Wed, 17 Apr 2024 04:52:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.144.136.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713328894; cv=none; b=NbqPQwVYSedqMENK4vNwEH8hFjOgqdtog+/xIdQEziEF6MOq771+bZmUMqmL5rePlWjewj+rS7uxQ0r3omqIlkVhRUJEL/hogOkDrACGyF4ZES1OjNaMW9/JEEO5GemhBZa4yNa2HlgpavUHljR/3p/zXzTwPUX0fO8eqszo3Po=
+	t=1713329545; cv=none; b=mXqwzBgSBqmwAgiIdB78l6czeN5DXutUrbzW1sQRvhi0C6iC265f+u4Q0QV5uiMErqNoa1o0UvFakxHXa4oo+uQho2/zE5Xme5SUljg/vR4wXnVPWRiRS7oJ+sjRLZYM1k+FE9bNkCYIt/MjCXYfvIIDmJLA7EHX0eVDQDUGUzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713328894; c=relaxed/simple;
-	bh=W6eiK073siLs3Dhkn6KCYqrHQLJ9GalouQB9X0qLonk=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=QIHTIeyU/X+jTS54lZFjNfmP2boyYY0ImHb/wBKxzWozNiR6BS1Yx/hI2eb4xvk4x8BsWnJsW7lBz+s2/MfDuI6FfScMQsRC6ZZHDP3ylbCAbL0WQZ2drGXka2ZWte46UTVljUX1/TGd5KB6LM7F8A3KkKd19+BkrqVzNb5ZQPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Jng2FS+U; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43H4bdiq028011;
-	Wed, 17 Apr 2024 04:41:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:from:to:cc:references
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=6A3onIqfMU8lt87SKZb/ALZNnvDW51YVsVZg4C+Ln4U=; b=Jn
-	g2FS+UrQPNRXj41WCH9X5sQsGB8k/R6O6FBAVHmyoKMIM1GpuBBjfRzQ98Dqo9Zk
-	zBQvO7NLMboqbgVt3JDebgaKMO8LADyJsIDmwBRmZLi1BIBjXt2MXNVwB9nuvnN6
-	I8fxBfqLtz542txbx3Vq0fOYJgSkBfk4aSFY0gTcaMUWP4+e+AZTWB6C/uHd1PqN
-	oFXkN8AyywKHKo5UHCd+PcaGz7rNa7HcuTwCcBwzjmRxx4UFUTo4Is6Q3VURnYLF
-	Gg2t8QWTG6aKKalxfVtCh5CYCE4KKGLvJhxkVeNxKcqzk+WIi0BMX0lsHndvsGsB
-	aX1aklsZob6ueDg89cSg==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xj7j9009m-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 17 Apr 2024 04:41:30 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43H4fTjw026458
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 17 Apr 2024 04:41:29 GMT
-Received: from [10.239.29.179] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 16 Apr
- 2024 21:41:27 -0700
-Message-ID: <a5ea5263-8acb-48dd-a4e1-bc48a9bdf791@quicinc.com>
-Date: Wed, 17 Apr 2024 12:41:25 +0800
+	s=arc-20240116; t=1713329545; c=relaxed/simple;
+	bh=RsNmmksocaUHd5jF/DJhTq8Xf2uynyEKdVh2S3aGhqE=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=W6RMO9xwMai3hVa33dzJPAHk0X6BINDWRSQphaxLLIGlt85NJUQ1iG1xaGWASaCo9h7svlYb7tpXY6di4cfFGvenzhauptOB+rmb28pGNLAO3LUAzQYMA+ksXB+EPrUrmIf7J5LxbYExiGsChffUlsqBZ//AmPbeq7x0UJEMIdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org; spf=pass smtp.mailfrom=herrie.org; dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b=YnKe5vYw; arc=none smtp.client-ip=136.144.136.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=herrie.org
+Received: from submission1.mail.transip.nl (unknown [10.100.4.70])
+	by outbound9.mail.transip.nl (Postfix) with ESMTP id 4VK7mp4KnRzTPNDc;
+	Wed, 17 Apr 2024 06:52:10 +0200 (CEST)
+Received: from herrie-desktop.. (110-31-146-85.ftth.glasoperator.nl [85.146.31.110])
+	by submission1.mail.transip.nl (Postfix) with ESMTPA id 4VK7mn5xCzz1nsPv;
+	Wed, 17 Apr 2024 06:52:09 +0200 (CEST)
+From: Herman van Hazendonk <github.com@herrie.org>
+To: github.com@herrie.org
+Cc: andersson@kernel.org,
+	benwolsieffer@gmail.com,
+	chris.chapuis@gmail.com,
+	conor+dt@kernel.org,
+	devicetree@vger.kernel.org,
+	kishon@kernel.org,
+	konrad.dybcio@linaro.org,
+	krzk+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	me@herrie.org,
+	robh@kernel.org,
+	vkoul@kernel.org
+Subject: [PATCH v2] dt-bindings: phy: qcom,usb-hs-phy: Add compatible
+Date: Wed, 17 Apr 2024 06:52:07 +0200
+Message-Id: <20240417045207.3594931-1-github.com@herrie.org>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20240415115603.1523974-1-github.com@herrie.org>
+References: <20240415115603.1523974-1-github.com@herrie.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] bus: mhi: host: pci_generic: Add edl callback to
- enter EDL
-From: Qiang Yu <quic_qianyu@quicinc.com>
-To: Mayank Rana <quic_mrana@quicinc.com>, <mani@kernel.org>,
-        <quic_jhugo@quicinc.com>
-CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>
-References: <1713170945-44640-1-git-send-email-quic_qianyu@quicinc.com>
- <1713170945-44640-4-git-send-email-quic_qianyu@quicinc.com>
- <17d94b91-137c-409c-8af3-f32f1af2eb71@quicinc.com>
- <4b684db2-d384-404a-9c54-60d79ac7cf9f@quicinc.com>
- <adb9ab3d-0fd2-4afe-96d7-573b1822e0c3@quicinc.com>
- <ab27b383-dcbf-4337-b3ea-da91763e834a@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <ab27b383-dcbf-4337-b3ea-da91763e834a@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 29iTKwriFGePSalv3J5LK2CSaUHtwiKT
-X-Proofpoint-ORIG-GUID: 29iTKwriFGePSalv3J5LK2CSaUHtwiKT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-17_04,2024-04-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 priorityscore=1501
- adultscore=0 clxscore=1015 impostorscore=0 mlxlogscore=999 malwarescore=0
- phishscore=0 suspectscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
- definitions=main-2404170029
+X-Scanned-By: ClueGetter at submission1.mail.transip.nl
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=transip-a; d=herrie.org; t=1713329530; h=from:subject:to:cc:
+ references:in-reply-to:date:mime-version;
+ bh=ozEXOanBkuPb3pLYR7X9fOyvv86uTWm4XhOrIbW4kLU=;
+ b=YnKe5vYwIKSu3CqiydaIVwZH6V+iKwQCGmyoTDaoKvamMJcSxfiYQOJ7dNPCGXU0tejJDT
+ Ek2NThMe+9MV7S+niVKHseAaQzouvF02ThOuPwLPc3/+W73/rz0LNWSZikJyoLyQIwrl4D
+ PYQgq6TTgq0cY2Bia09X8wQr6SiJXmRgc4k8MyJzZqfrW6m7x+aGBZ0NyE2wtWSlcgoX54
+ g+USocZpS5Os23xxbgPbklOhdFxlyy8OI3bkdsKQOcpU7syKFepBfwJ4q6ogL/rZe1yxao
+ /04KihqM+bpXF4WrFRwnpDwzG3fnq7x+Y3NlGU1yMePlrRC7qE/9V1ftr7B+kw==
+X-Report-Abuse-To: abuse@transip.nl
 
+Adds qcom,usb-hs-phy-msm8660 compatible
 
-On 4/17/2024 11:01 AM, Qiang Yu wrote:
->
-> On 4/17/2024 2:12 AM, Mayank Rana wrote:
->>
->>
->> On 4/15/2024 8:50 PM, Qiang Yu wrote:
->>>
->>> On 4/16/2024 7:53 AM, Mayank Rana wrote:
->>>> Hi Qiang
->>>>
->>>> On 4/15/2024 1:49 AM, Qiang Yu wrote:
->>>>> Add mhi_pci_generic_edl_trigger as edl_trigger for some devices 
->>>>> (eg. SDX65)
->>>>> to enter EDL mode by writing the 0xEDEDEDED cookie to the channel 91
->>>>> doorbell register and forcing an SOC reset afterwards.
->>>>>
->>>>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
->>>>> ---
->>>>>   drivers/bus/mhi/host/pci_generic.c | 47 
->>>>> ++++++++++++++++++++++++++++++++++++++
->>>>>   1 file changed, 47 insertions(+)
->>>>>
->>>>> diff --git a/drivers/bus/mhi/host/pci_generic.c 
->>>>> b/drivers/bus/mhi/host/pci_generic.c
->>>>> index 51639bf..cbf8a58 100644
->>>>> --- a/drivers/bus/mhi/host/pci_generic.c
->>>>> +++ b/drivers/bus/mhi/host/pci_generic.c
->>>>> @@ -27,12 +27,19 @@
->>>>>   #define PCI_VENDOR_ID_THALES    0x1269
->>>>>   #define PCI_VENDOR_ID_QUECTEL    0x1eac
->>>>>   +#define MHI_EDL_DB            91
->>>>> +#define MHI_EDL_COOKIE            0xEDEDEDED
->>>>> +
->>>>> +/* Device can enter EDL by first setting edl cookie then issuing 
->>>>> inband reset*/
->>>>> +#define MHI_PCI_GENERIC_EDL_TRIGGER    BIT(0)
->>>>> +
->>>>>   /**
->>>>>    * struct mhi_pci_dev_info - MHI PCI device specific information
->>>>>    * @config: MHI controller configuration
->>>>>    * @name: name of the PCI module
->>>>>    * @fw: firmware path (if any)
->>>>>    * @edl: emergency download mode firmware path (if any)
->>>>> + * @edl_trigger: each bit represents a different way to enter EDL
->>>>>    * @bar_num: PCI base address register to use for MHI MMIO 
->>>>> register space
->>>>>    * @dma_data_width: DMA transfer word size (32 or 64 bits)
->>>>>    * @mru_default: default MRU size for MBIM network packets
->>>>> @@ -44,6 +51,7 @@ struct mhi_pci_dev_info {
->>>>>       const char *name;
->>>>>       const char *fw;
->>>>>       const char *edl;
->>>>> +    unsigned int edl_trigger;
->>>>>       unsigned int bar_num;
->>>>>       unsigned int dma_data_width;
->>>>>       unsigned int mru_default;
->>>>> @@ -292,6 +300,7 @@ static const struct mhi_pci_dev_info 
->>>>> mhi_qcom_sdx75_info = {
->>>>>       .name = "qcom-sdx75m",
->>>>>       .fw = "qcom/sdx75m/xbl.elf",
->>>>>       .edl = "qcom/sdx75m/edl.mbn",
->>>>> +    .edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
->>>>>       .config = &modem_qcom_v2_mhiv_config,
->>>>>       .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->>>>>       .dma_data_width = 32,
->>>>> @@ -302,6 +311,7 @@ static const struct mhi_pci_dev_info 
->>>>> mhi_qcom_sdx65_info = {
->>>>>       .name = "qcom-sdx65m",
->>>>>       .fw = "qcom/sdx65m/xbl.elf",
->>>>>       .edl = "qcom/sdx65m/edl.mbn",
->>>>> +    .edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
->>>>>       .config = &modem_qcom_v1_mhiv_config,
->>>>>       .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->>>>>       .dma_data_width = 32,
->>>>> @@ -312,6 +322,7 @@ static const struct mhi_pci_dev_info 
->>>>> mhi_qcom_sdx55_info = {
->>>>>       .name = "qcom-sdx55m",
->>>>>       .fw = "qcom/sdx55m/sbl1.mbn",
->>>>>       .edl = "qcom/sdx55m/edl.mbn",
->>>>> +    .edl_trigger = MHI_PCI_GENERIC_EDL_TRIGGER,
->>>>>       .config = &modem_qcom_v1_mhiv_config,
->>>>>       .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->>>>>       .dma_data_width = 32,
->>>>> @@ -928,6 +939,39 @@ static void health_check(struct timer_list *t)
->>>>>       mod_timer(&mhi_pdev->health_check_timer, jiffies + 
->>>>> HEALTH_CHECK_PERIOD);
->>>>>   }
->>>>>   +static int mhi_pci_generic_edl_trigger(struct mhi_controller 
->>>>> *mhi_cntrl)
->>>>> +{
->>>>> +    void __iomem *base = mhi_cntrl->regs;
->>>>> +    void __iomem *edl_db;
->>>>> +    int ret;
->>>>> +    u32 val;
->>>>> +
->>>>> +    ret = mhi_device_get_sync(mhi_cntrl->mhi_dev);
->>>>> +    if (ret) {
->>>>> +        dev_err(mhi_cntrl->cntrl_dev, "Wake up device fail before 
->>>>> trigger EDL\n");
->>>>> +        return ret;
->>>>> +    }
->>>>> +
->>>>> +    pm_wakeup_event(&mhi_cntrl->mhi_dev->dev, 0);
->>>>> +    mhi_cntrl->runtime_get(mhi_cntrl);
->>>>> +
->>>>> +    ret = mhi_get_channel_doorbell(mhi_cntrl, &val);
->>>>> +    if (ret)
->>>>> +        return ret;
->>>> Don't we need error handling part here i.e. calling 
->>>> mhi_cntrl->runtime_put() as well mhi_device_put() ?
->>>
->>> Hi Mayank
->>>
->>> After soc_reset, device will reboot to EDL mode and MHI state will 
->>> be SYSERR. So host will fail to suspend
->>> anyway. The "error handling" we need here is actually to enter EDL 
->>> mode, this will be done by SYSERR irq.
->>> Here, mhi_cntrl->runtime_put() and mhi_device_put() are only to 
->>> balance mhi_cntrl->runtime_get() and
->>> mhi_device_get_sync().
->>>
->>> Thanks,
->>> Qiang
->> I am saying is there possibility that mhi_get_channel_doorbell() 
->> returns error ?
->> If yes, then why don't we need error handling as part of it. you are 
->> exiting if this API return error without doing anything.
->
-> I think here mhi_get_channel_doorbell will not return error. But I still
-> add a error checking because it invoked mhi_read_reg, which is a must 
-> check
-> API. For modem mhi controller, this API eventually does a memory read.
-> This memory read will return a normal value if link is up and all f's 
-> if link
-> is bad.
->
-> Thanks,
-> Qiang
+Used by HP Touchpad (tenderloin) for example.
 
-Actually, mhi_get_channel_doorbell should also be used in mhi_init_mmio to
-replace the getting chdb operation by invoking mhi_read_reg as Mani 
-commented.
-In mhi_init_mmio, we invoke mhi_read_reg many times, but there is also not
-additionnal error handling.
+Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
+---
+ Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-I'm not very sure the reason but perhaps if mhi_read_reg returns error 
-(I don't
-know which controller will provide a memory read callback returning 
-errors), most
-probably something is wrong in PCIe, which is not predictable by MHI and 
-we can
-not add err handling every time invoking mhi_read_reg. But we have a 
-timer to
-do health_check in pci_generic.c. If link is down, we will do 
-pci_function_reset
-to try to reovery.
-
-Hi Mani, sorry, may I know the purpose of adding must_check attribute to
-mhi_read_reg? In which case will mhi controller provide a callback that
-returns error?
-
-Thanks,
-Qiang
->>>>> +    edl_db = base + val + (8 * MHI_EDL_DB);
->>>>> +
->>>>> +    mhi_cntrl->write_reg(mhi_cntrl, edl_db + 4, 
->>>>> upper_32_bits(MHI_EDL_COOKIE));
->>>>> +    mhi_cntrl->write_reg(mhi_cntrl, edl_db, 
->>>>> lower_32_bits(MHI_EDL_COOKIE));
->>>>> +
->>>>> +    mhi_soc_reset(mhi_cntrl);
->>>>> +
->>>>> +    mhi_cntrl->runtime_put(mhi_cntrl);
->>>>> +    mhi_device_put(mhi_cntrl->mhi_dev);
->>>>> +
->>>>> +    return 0;
->>>>> +}
->>>>> +
->>>>>   static int mhi_pci_probe(struct pci_dev *pdev, const struct 
->>>>> pci_device_id *id)
->>>>>   {
->>>>>       const struct mhi_pci_dev_info *info = (struct 
->>>>> mhi_pci_dev_info *) id->driver_data;
->>>>> @@ -962,6 +1006,9 @@ static int mhi_pci_probe(struct pci_dev 
->>>>> *pdev, const struct pci_device_id *id)
->>>>>       mhi_cntrl->runtime_put = mhi_pci_runtime_put;
->>>>>       mhi_cntrl->mru = info->mru_default;
->>>>>   +    if (info->edl_trigger & MHI_PCI_GENERIC_EDL_TRIGGER)
->>>>> +        mhi_cntrl->edl_trigger = mhi_pci_generic_edl_trigger;
->>>>> +
->>>>>       if (info->sideband_wake) {
->>>>>           mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
->>>>>           mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
->>>> Regards,
->>>> Mayank
->
+diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
+index f042d6af1594..ccf23170cd17 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
+@@ -15,6 +15,7 @@ if:
+       contains:
+         enum:
+           - qcom,usb-hs-phy-apq8064
++          - qcom,usb-hs-phy-msm8660
+           - qcom,usb-hs-phy-msm8960
+ then:
+   properties:
+@@ -41,6 +42,7 @@ properties:
+       - enum:
+           - qcom,usb-hs-phy-apq8064
+           - qcom,usb-hs-phy-msm8226
++          - qcom,usb-hs-phy-msm8960
+           - qcom,usb-hs-phy-msm8916
+           - qcom,usb-hs-phy-msm8960
+           - qcom,usb-hs-phy-msm8974
 
