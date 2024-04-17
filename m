@@ -1,179 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-17660-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5AF698A7E68
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 10:36:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 824A98A7E8C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 10:44:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 18CF2280C5A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 08:36:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2F8551F21B69
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 08:44:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11A958529D;
-	Wed, 17 Apr 2024 08:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42F95126F2C;
+	Wed, 17 Apr 2024 08:44:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="t7Q6Ct7S"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="anB29Elb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE2C7D07E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 08:36:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4EC01272C7
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 08:44:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713342991; cv=none; b=Olaj4o0uaqUa5v9V07BVVkrWUsTVoMVvEFNwQOzIe/fM6EXygKX/7NYUpZaTKimbCriqAY8ZuNkNVs9jZwWsnAzfKH7d3Bvr0mN7da1DLpQhur7Unp77Tkp/oqHOZrM4NJ3CjAgifK8/0RUIv2J7iha0lhVHWAxq/od2hleBnAg=
+	t=1713343490; cv=none; b=iOAGfwQy4vtpcZQh+vw0la8cohvTHzERSAMrNfEbBDSa3dLkVXAp7qKOp/KFGeGGhlULcwOY1yv6a3AQYQtlIbHr/GjNMsFpYqXpfa/6qALMpB41mG/wCLOYNM0E6IEyjAb6rTbfB1nUhMwvl1EFwJqOUZzMIJ9fWt+wZrS47uA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713342991; c=relaxed/simple;
-	bh=jLrSv3mDwVJf7c0urmHft4NujHyUwpP7/8/epSXi7WY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B4aXBb92PcshUsDHtwk4Sqp8jzlJCs8Kha+a0D7xOh4lJ2X5B7LW6gx00wExTWNJ600Ahl43ArljR4CXF5l7dhCT9+TruR50BYBJwJfCJREQa14H0CfZFPw2Er2kK/k7mihLUENar8pSRdYdtofHd8w6LikoOUt18qP57Sb1Nn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=t7Q6Ct7S; arc=none smtp.client-ip=209.85.218.41
+	s=arc-20240116; t=1713343490; c=relaxed/simple;
+	bh=62qdf0MjfZ9+olO2ON2tKhaWuTwZqvJ4hVI3GsU0ZsM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OIdIp0t/BVQm2HIKHIONSh3SD+dnaWnNo3u55VD8YT48/i7nWHd8R1Dw7RXONqy8ipCJB6trrB9HI3mAJSe7IBni1Ax2uEpQQSvnxPGfQPRxIM3GkeFSB0UtPu1UGkNP73t/fjBiAnZf0kr/x2i4euY++l7JZhjWybXQlxcRHNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=anB29Elb; arc=none smtp.client-ip=209.85.219.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a5544fd07easo212773866b.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 01:36:29 -0700 (PDT)
+Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-dc74e33fe1bso4762491276.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 01:44:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713342988; x=1713947788; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=iQiui35tGbgrLHrxJlWNcYO7KRQh2YZtezQ4w5QZix0=;
-        b=t7Q6Ct7S2/PJ0C1gD6abhxeDvZGAZmkQHqgYIfIA+Wpu5qwYOqSKjTWPOMd+KaqfNI
-         iuXCtg1wbAFy3ODG13QBvTtg+Ijmi9OEQEOHCT8PqEQ8iC9jLFW7z9RaTZVwtap0QF+5
-         Ckoy82ZCaSERUWFyhGjHgjBblrHVQ7GzasKMq2Mzy5vExx7ogT9OLhedEsUSubIaxV/z
-         n+/Hh8P5DrqqOtbtkW/XVCIYBuPT2WIl3EeESLpBjPXah+tOwugMuPcD8qwFYhgrImfc
-         hQH7Z7T+EgikKiN5y0/uO/gU6hZSvvGX9I3sArmsyXLynRU/mSYizP23syqIBNGb1zmp
-         +CAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713342988; x=1713947788;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=linaro.org; s=google; t=1713343488; x=1713948288; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=iQiui35tGbgrLHrxJlWNcYO7KRQh2YZtezQ4w5QZix0=;
-        b=HuL+ElsI+lhj+EZBnFiuwvj/LTyQuVdelFTsqe32GHUZr2vQToF1R3/o81sO+WG/jo
-         xCL2uxgTA8lKLyk/7K79XHkhu750OwHmBRPX9mYZOSrPM0yCqD0LXv2QlmVlPrWsfBn1
-         Ru+cz7W7x7miUnnRxisvSmjg6uR4QHxd+OPOHelhcfDai4M4kc5ThLxIoQ0WvH7VWAld
-         HKTervH+78XGTXLnCbUtGuH0Ztjfd3F512iG0bbD8sbF4Ywt+fFA04Bs9KHHU2S5iMo8
-         Sh7wV5CUbhQwqxmFtqTL3D1F2Gm98Tsd0BM0v351vvJs+3Y9wc4pqNX+dbkI7N1ZpyUh
-         T7dw==
-X-Forwarded-Encrypted: i=1; AJvYcCXvg7+JJ3LY6SYYXj25E+G12O/EX5EI4KdufjdedD6ftKMo9lSNP9Xhz0b55esL10vABa1QQ2iwSEGrnnfrbcnAiJc78CUq5u3YwMO2EA==
-X-Gm-Message-State: AOJu0YxW28fJDmqhd8l3k8qw+STLjLLGlnI+pSrN3Mtjy2PO0UueGmLi
-	T+T4USCXI5+gzwnFvLEYk09klTBG9QGrnd8gCXczSgfkDCnoYk+TxcykQVt0VGM=
-X-Google-Smtp-Source: AGHT+IGcBOrF6dlMwP4LWwT62iTJu3n3+RD0VmgZxc7ueD6NugKm/u+kb1GXFPPYn+h8dHTWajk2Vg==
-X-Received: by 2002:a17:907:846:b0:a52:6fcb:564a with SMTP id ww6-20020a170907084600b00a526fcb564amr5823920ejb.9.1713342987569;
-        Wed, 17 Apr 2024 01:36:27 -0700 (PDT)
-Received: from localhost ([102.222.70.76])
-        by smtp.gmail.com with ESMTPSA id cw21-20020a170906479500b00a52182471a2sm7905680ejc.13.2024.04.17.01.36.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Apr 2024 01:36:27 -0700 (PDT)
-Date: Wed, 17 Apr 2024 11:36:23 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: Ricardo Ribalda <ribalda@chromium.org>
-Cc: Martin Tuma <martin.tuma@digiteqautomotive.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Hugues Fruchet <hugues.fruchet@foss.st.com>,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Sowjanya Komatineni <skomatineni@nvidia.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>, Sergey Kozlov <serjk@netup.ru>,
-	Abylay Ospan <aospan@netup.ru>,
-	Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
-	Dmitry Osipenko <digetx@gmail.com>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Benjamin Mugnier <benjamin.mugnier@foss.st.com>,
-	Sylvain Petinot <sylvain.petinot@foss.st.com>,
-	Jacopo Mondi <jacopo+renesas@jmondi.org>,
-	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Niklas =?iso-8859-1?Q?S=F6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Pavel Machek <pavel@ucw.cz>, linux-media@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org, linux-staging@lists.linux.dev,
-	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 25/35] media: venus: Use the correct div_ function
-Message-ID: <06113ffe-11bd-4c73-aff7-5e55aa8e3edc@moroto.mountain>
-References: <20240415-fix-cocci-v1-0-477afb23728b@chromium.org>
- <20240415-fix-cocci-v1-25-477afb23728b@chromium.org>
+        bh=TUPDHuJgbEhcxGrf9RO0YvQKRqZaKvY08c3XMxThMtg=;
+        b=anB29ElbwgCn2H+zjD63i8KMz5CG+MJcqx6grJL4b7kC7Ojn+WmV2O5rlbHZscUJ4C
+         s4fMyU1+lyzoIHAMRNIQhT0dqNy3v0pr1wprRF6hm0FXxCwBKmk27gT2UP4UFmlSQFVU
+         hRYfjO8iOKykuRYUQCBDQ29KrNF+dehHUmmzXj249X9sBaQJSqmuBNR0QP4vlXvaMe81
+         hdy0dyyI0YEyXkv2Xmj3R6LjQjFM9u9xcHLRCaZ3/fEkBNWaszyGC/mQkwId8VZg2sRu
+         0ollAv6zl7qEXssBBV3g5N7kFTRHg1stBH0Bab6EGck1br3f1GMaavnETGbyu01fuqwN
+         O4VA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713343488; x=1713948288;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=TUPDHuJgbEhcxGrf9RO0YvQKRqZaKvY08c3XMxThMtg=;
+        b=EQaiWlk2dbNeoOn9Oa30G6QKEIQhw/WG3qxNF1PQtINzQqtsLZjZxVrM8gRkj8chSB
+         qQvNvCUCx70pSbjOU2YoESHjLd34YRh9Gtk5hvAlMaf1LPYr4dFEdwG+ZmylruGWq3qT
+         fd/RZMNz1Sw2zcKPcYsVMCazB5YInpVnJGgDzmlZa+hHdwahVyF9YWVeLGKop/rZggvm
+         P/n/Bpwad7PQRXBCsg5sdqV2rz7OSJ9bYhQCjTvNP9MhhUIOVLDdYL75MXNkz4j0Fd3W
+         tlNm4OA8DCKi3CTj3JNzklinD7cCUZkhctu20BjKBKS2fi/Z9vVXEOJyjbKR2NdtZBHc
+         wG8Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWaaZe/lEb7aFRqGXQjFimJ0ltd93OhUlHU6wFzC4Ukty/NB9gHafuCghmaVmH+/QdQZh/5W1vYHEmtpIVs/+EIg38qcN5cEmVxM48jyg==
+X-Gm-Message-State: AOJu0Yy5CBqJc7R0GnMyJNsP1Edg0f7DkjMJVcKU/ANqb/zs2dCIpdQ0
+	Gu/G5Ocu0evmynf2a1L9hJsw8ckcpUroSTsFyFrvo78+E3c/DFUypKH5+jj7OBxRtur1AGjPDZ+
+	t8/KIW0QCb5wKRN+qQvo3SjE4h6u+vrhvOyupnw==
+X-Google-Smtp-Source: AGHT+IEqHMRvom0iWLGcDMIX6MMDmGJuXm9C6a6p3VWgXb1lMC9v99HG9mosDP74t16pkkQoXUvXtUBwwTi6W1xBvYw=
+X-Received: by 2002:a25:ae97:0:b0:dc7:140:8c0c with SMTP id
+ b23-20020a25ae97000000b00dc701408c0cmr16434750ybj.23.1713343487742; Wed, 17
+ Apr 2024 01:44:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240415-fix-cocci-v1-25-477afb23728b@chromium.org>
+References: <20240411064614.7409-1-krzk@kernel.org>
+In-Reply-To: <20240411064614.7409-1-krzk@kernel.org>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Wed, 17 Apr 2024 10:44:36 +0200
+Message-ID: <CACRpkdYDDJ9g5iSZvi_4pPdH3LWNd7PHS4QP5mkt2q+O+t_FAw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/5] pinctrl: freescale: imx8ulp: fix module autoloading
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Dong Aisheng <aisheng.dong@nxp.com>, Fabio Estevam <festevam@gmail.com>, 
+	Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Sean Wang <sean.wang@kernel.org>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	zhanghongchen <zhanghongchen@loongson.cn>, Yinbo Zhu <zhuyinbo@loongson.cn>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	linux-gpio@vger.kernel.org, imx@lists.linux.dev, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 15, 2024 at 07:34:42PM +0000, Ricardo Ribalda wrote:
-> us_per_frame does not fit in u32
-> 
+On Thu, Apr 11, 2024 at 8:46=E2=80=AFAM Krzysztof Kozlowski <krzk@kernel.or=
+g> wrote:
 
-drivers/media/platform/qcom/venus/venc.c
-   391  static int venc_s_parm(struct file *file, void *fh, struct v4l2_streamparm *a)
-   392  {
-   393          struct venus_inst *inst = to_inst(file);
-   394          struct v4l2_outputparm *out = &a->parm.output;
-   395          struct v4l2_fract *timeperframe = &out->timeperframe;
-   396          u64 us_per_frame, fps;
-   397  
-   398          if (a->type != V4L2_BUF_TYPE_VIDEO_OUTPUT &&
-   399              a->type != V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
-   400                  return -EINVAL;
-   401  
-   402          memset(out->reserved, 0, sizeof(out->reserved));
-   403  
-   404          if (!timeperframe->denominator)
-   405                  timeperframe->denominator = inst->timeperframe.denominator;
-   406          if (!timeperframe->numerator)
-   407                  timeperframe->numerator = inst->timeperframe.numerator;
-   408  
-   409          out->capability = V4L2_CAP_TIMEPERFRAME;
-   410  
-   411          us_per_frame = timeperframe->numerator * (u64)USEC_PER_SEC;
-                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-It looks like in some drivers this multiply can go over U32_MAX.
+> Add MODULE_DEVICE_TABLE(), so the module could be properly autoloaded
+> based on the alias from of_device_id table.  Pin controllers are
+> considered core components, so usually they are built-in, however these
+> can be built and used as modules on some generic kernel.
+>
+> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-   412          do_div(us_per_frame, timeperframe->denominator);
-                       ^^^^^^^^^^^^
-But after this divide, then we're under 1,000,000 again.  Otherwise the
-FPS is zero.  So maybe the right thing to do is:
+All five patches applied, thanks for fixing this Krzysztof!
 
-	inst->fps = USEC_PER_SEC / (u32)us_per_frame;
-
-   413  
-   414          if (!us_per_frame)
-   415                  return -EINVAL;
-   416  
-   417          fps = (u64)USEC_PER_SEC;
-   418          do_div(fps, us_per_frame);
-   419  
-   420          inst->timeperframe = *timeperframe;
-   421          inst->fps = fps;
-   422  
-   423          return 0;
-   424  }
-
-regards,
-dan carpenter
-
+Yours,
+Linus Walleij
 
