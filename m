@@ -1,218 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-17711-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1D7A8A84E5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 15:38:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7DA898A8595
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 16:08:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 52FF0B25B64
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 13:38:49 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7713DB21D52
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 14:08:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E64901411F5;
-	Wed, 17 Apr 2024 13:38:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50FD71411D3;
+	Wed, 17 Apr 2024 14:08:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RO5ghTht"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZQiaEkQ5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49DA514039E;
-	Wed, 17 Apr 2024 13:38:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A92C14039D;
+	Wed, 17 Apr 2024 14:07:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713361087; cv=none; b=p+dZ8W5inXk/ZjTLIKWUJ4k83a/0njw6DBVElDp3yfBRQFjMreraxIJfXfwv7EAO44n8mhWciW9svWRHieGQBiuPpu/6+Rs08jlFhjxDjpp7BWhBnjRucfF0zwklmvY53UtCH9Yd2vPQIYZODMsceylfU2gOvJ03r6wpHdYUBKg=
+	t=1713362880; cv=none; b=iFetm3Aiw3+bLLarrzQvjO9OPxHXcrahsK54ziFLZUPHYVz3JCX24RplRJmLuD22EpcP7OBD5K4B37m+921T6YfQnDIk8KevrgCJbbdTjAnhKzEkrY9SEk+Vc9Tax/IjyQaFtePoWG5KeeeWHXx/PkzqO4DlsjrHHn/XAMmz1zo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713361087; c=relaxed/simple;
-	bh=UEEdj1JKNkabLBUs0ptodqONc1/I28wvSO19u3QYtEA=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VhtuIUg1Lxe/EDA/wFpf69BGkUgvNoDtwM3mVqNjpHZMngA2NWpu8wXQo9Pb+lsrTzJDfVkCKd7NIXhvCl/G+lZLaixGNc1OymjK+mP2bxDPooMnAHsZeCrkriydg2zNERMJP41Ii2fNdqJk2byZoOLAOhoqm99SXgywy05IxLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RO5ghTht; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43H9MxBu010177;
-	Wed, 17 Apr 2024 13:37:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=TTeye1iDsNWRa0CauBrZZxJVgWkii2SQSK57XEP5y/E=; b=RO
-	5ghThtNKppXuDBm1UmJb9f2AvQUzzFp587Jks8KsYKdsXT9tPXJdeMQDnJMyOESR
-	8yWoCuz7HVyjFrjABlCSj0typlK1tqNqB48Yqaw8dugNNUqn4aRZtCDpQc/xJQPx
-	6hAOj/UUVaEAIArzfTFauwja9jMkknjbenaQdvsYZqrW8tM80niZ1TZwaC3j+DUZ
-	GPgwM6pKLag//pd9PWdjAAf96FI8xxjhJDj0vWHm8w/7pg89pVqJS/Beg7UBWMt2
-	FX7sgAu8oZfyc6XspqEMq0ynpXALko5D6pfc2HAqjwHcVyPtJoL2kvW8EKYDgINj
-	akIu40D3F7rj7NgQOlzA==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xj7tr13uh-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 17 Apr 2024 13:37:48 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43HDbl3u022880
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 17 Apr 2024 13:37:47 GMT
-Received: from hu-c-gdjako-lv.qualcomm.com (10.49.16.6) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 17 Apr 2024 06:37:47 -0700
-From: Georgi Djakov <quic_c_gdjako@quicinc.com>
-To: <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>,
-        <iommu@lists.linux.dev>
-CC: <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <devicetree@vger.kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <robdclark@gmail.com>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_cgoldswo@quicinc.com>, <quic_sukadev@quicinc.com>,
-        <quic_pdaly@quicinc.com>, <quic_sudaraja@quicinc.com>,
-        <djakov@kernel.org>
-Subject: [PATCH v8 7/7] arm64: dts: qcom: sc7280: Add DT nodes for the TBUs
-Date: Wed, 17 Apr 2024 06:37:31 -0700
-Message-ID: <20240417133731.2055383-8-quic_c_gdjako@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240417133731.2055383-1-quic_c_gdjako@quicinc.com>
-References: <20240417133731.2055383-1-quic_c_gdjako@quicinc.com>
+	s=arc-20240116; t=1713362880; c=relaxed/simple;
+	bh=5hS45g5M3LFot7tByWQpyieDDMvyjOnns7f0oJIOwl8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=L46LU/Lk3tsQZ0aCc+3Bwm/KQaxfPn0ZsdL5oi86bYXTm8THcPziAlPs4ylU4qDxB9d9u3cBIp0/4zrvHnG1nWDlfIMqgLnIgezKkJfpS9T3XNF6soIjGjtokBkRony2sQOEwx58IsQ7vGALgtw+iDlgNJos3cOARPKjfzu5z5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZQiaEkQ5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 602EEC072AA;
+	Wed, 17 Apr 2024 14:07:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1713362879;
+	bh=5hS45g5M3LFot7tByWQpyieDDMvyjOnns7f0oJIOwl8=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=ZQiaEkQ5LEF9f2Mr4pZ3UqHjKtntViJumK3VVtzx2AzjVPN6leObj1i4//Ek22y5Q
+	 hZJuO9bYZtgmaweNPcZzd1AvTehpALBan7rGpnzUGjrjTpaWMXOg/+b+j4Eq+uts0T
+	 GsOtD+rRY7ucw+zQEOcfXyA0BX9eDct9O2DymevoF1mZXgIgNzJ7/ckWg6k2ZXGou9
+	 hZ6kWrHWt5dvZdUos2pbjV/Lth9cQWzwCrra09fdKP6iwPFV/PiZzPT0CRSRm4/rHY
+	 GulJAyu8ZhgPL/dCT7+0TwAKn4j/Ui8oa2uCZvLHfJ6K7zDC1LlvNkjgOHfnCNUvqF
+	 8k2C9yrBV3qYg==
+Message-ID: <f00a62c8-6f4d-4be4-800e-58898ea58490@kernel.org>
+Date: Wed, 17 Apr 2024 16:07:59 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Ef8dgOFj3UWSyvWEgHBkGAc2goWEDoPK
-X-Proofpoint-GUID: Ef8dgOFj3UWSyvWEgHBkGAc2goWEDoPK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-17_10,2024-04-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 mlxscore=0
- adultscore=0 suspectscore=0 impostorscore=0 phishscore=0 mlxlogscore=955
- clxscore=1015 priorityscore=1501 lowpriorityscore=0 bulkscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404170094
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 3/7] dt-bindings: interconnect: Add Qualcomm IPQ9574
+ support
+To: Varadarajan Narayanan <quic_varada@quicinc.com>, andersson@kernel.org,
+ mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, konrad.dybcio@linaro.org,
+ djakov@kernel.org, dmitry.baryshkov@linaro.org, quic_anusha@quicinc.com,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org
+References: <20240417105605.836705-1-quic_varada@quicinc.com>
+ <20240417105605.836705-4-quic_varada@quicinc.com>
+Content-Language: en-US
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240417105605.836705-4-quic_varada@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Add the device-tree nodes for the TBUs (translation buffer units) that
-are present on the sc7280 platforms. The TBUs can be used debug the
-kernel and provide additional information when a context faults occur.
+On 17/04/2024 12:56, Varadarajan Narayanan wrote:
+> Add interconnect-cells to clock provider so that it can be
+> used as icc provider.
+> 
+> Add master/slave ids for Qualcomm IPQ9574 Network-On-Chip
+> interfaces. This will be used by the gcc-ipq9574 driver
+> that will for providing interconnect services using the
+> icc-clk framework.
+> 
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
+> v8:
+> Remove ICC_xxx macros
+> Fix macro defines to be consistent with other bindings
+> v7:
+> Fix macro names to be consistent with other bindings
+> v6:
+> Removed Reviewed-by: Krzysztof Kozlowski
+> Redefine the bindings such that driver and DT can share them
+> 
+> v3:
+> Squash Documentation/ and include/ changes into same patch
+> 
+> qcom,ipq9574.h
+> 	Move 'first id' to clock driver
+> 
+> ---
+>  .../bindings/clock/qcom,ipq9574-gcc.yaml      |  3 +
+>  .../dt-bindings/interconnect/qcom,ipq9574.h   | 59 +++++++++++++++++++
+>  2 files changed, 62 insertions(+)
+>  create mode 100644 include/dt-bindings/interconnect/qcom,ipq9574.h
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml
+> index 944a0ea79cd6..824781cbdf34 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml
+> @@ -33,6 +33,9 @@ properties:
+>        - description: PCIE30 PHY3 pipe clock source
+>        - description: USB3 PHY pipe clock source
+>  
+> +  '#interconnect-cells':
+> +    const: 1
+> +
+>  required:
+>    - compatible
+>    - clocks
+> diff --git a/include/dt-bindings/interconnect/qcom,ipq9574.h b/include/dt-bindings/interconnect/qcom,ipq9574.h
+> new file mode 100644
+> index 000000000000..42019335c7dd
+> --- /dev/null
+> +++ b/include/dt-bindings/interconnect/qcom,ipq9574.h
+> @@ -0,0 +1,59 @@
+> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
+> +#ifndef INTERCONNECT_QCOM_IPQ9574_H
+> +#define INTERCONNECT_QCOM_IPQ9574_H
+> +
+> +#define MASTER_ANOC_PCIE0		0
+> +#define SLAVE_ANOC_PCIE0		1
 
-Describe all the registers, clocks, interconnects and power-domain
-resources that are needed for each of the TBUs.
+I still do not see any usage of it. At least symbol cannot be resolved.
+I assume you use the value, otherwise it would mean our entire feedback
+was ignored, but then why this cannot be searchable?
 
-Signed-off-by: Georgi Djakov <quic_c_gdjako@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 89 ++++++++++++++++++++++++++++
- 1 file changed, 89 insertions(+)
+Again, open existing drivers and look how it is there. Not being able to
+find the constant is not good.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 7e7f0f0fb41b..1842f78260c1 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -2970,6 +2970,18 @@ adreno_smmu: iommu@3da0000 {
- 			dma-coherent;
- 		};
- 
-+		gfx_0_tbu: tbu@3dd9000 {
-+			compatible = "qcom,sc7280-tbu";
-+			reg = <0x0 0x3dd9000 0x0 0x1000>;
-+			qcom,stream-id-range = <&adreno_smmu 0x0 0x400>;
-+		};
-+
-+		gfx_1_tbu: tbu@3ddd000 {
-+			compatible = "qcom,sc7280-tbu";
-+			reg = <0x0 0x3ddd000 0x0 0x1000>;
-+			qcom,stream-id-range = <&adreno_smmu 0x400 0x400>;
-+		};
-+
- 		remoteproc_mpss: remoteproc@4080000 {
- 			compatible = "qcom,sc7280-mpss-pas";
- 			reg = <0 0x04080000 0 0x10000>;
-@@ -5778,6 +5790,83 @@ apps_smmu: iommu@15000000 {
- 				     <GIC_SPI 408 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
-+		anoc_1_tbu: tbu@151dd000 {
-+			compatible = "qcom,sc7280-tbu";
-+			reg = <0x0 0x151dd000 0x0 0x1000>;
-+			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &cnoc3 SLAVE_TCU QCOM_ICC_TAG_ACTIVE_ONLY>;
-+			qcom,stream-id-range = <&apps_smmu 0x0 0x400>;
-+		};
-+
-+		anoc_2_tbu: tbu@151e1000 {
-+			compatible = "qcom,sc7280-tbu";
-+			reg = <0x0 0x151e1000 0x0 0x1000>;
-+			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &cnoc3 SLAVE_TCU QCOM_ICC_TAG_ACTIVE_ONLY>;
-+			qcom,stream-id-range = <&apps_smmu 0x400 0x400>;
-+		};
-+
-+		mnoc_hf_0_tbu: tbu@151e5000 {
-+			compatible = "qcom,sc7280-tbu";
-+			reg = <0x0 0x151e5000 0x0 0x1000>;
-+			interconnects = <&mmss_noc MASTER_MDP0 QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ACTIVE_ONLY>;
-+			power-domains = <&gcc HLOS1_VOTE_MMNOC_MMU_TBU_HF0_GDSC>;
-+			qcom,stream-id-range = <&apps_smmu 0x800 0x400>;
-+		};
-+
-+		mnoc_hf_1_tbu: tbu@151e9000 {
-+			compatible = "qcom,sc7280-tbu";
-+			reg = <0x0 0x151e9000 0x0 0x1000>;
-+			interconnects = <&mmss_noc MASTER_MDP0 QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ACTIVE_ONLY>;
-+			power-domains = <&gcc HLOS1_VOTE_MMNOC_MMU_TBU_HF1_GDSC>;
-+			qcom,stream-id-range = <&apps_smmu 0xc00 0x400>;
-+		};
-+
-+		compute_dsp_1_tbu: tbu@151ed000 {
-+			compatible = "qcom,sc7280-tbu";
-+			reg = <0x0 0x151ed000 0x0 0x1000>;
-+			interconnects = <&nsp_noc MASTER_CDSP_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ACTIVE_ONLY>;
-+			power-domains = <&gcc HLOS1_VOTE_TURING_MMU_TBU1_GDSC>;
-+			qcom,stream-id-range = <&apps_smmu 0x1000 0x400>;
-+		};
-+
-+		compute_dsp_0_tbu: tbu@151f1000 {
-+			compatible = "qcom,sc7280-tbu";
-+			reg = <0x0 0x151f1000 0x0 0x1000>;
-+			interconnects = <&nsp_noc MASTER_CDSP_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ACTIVE_ONLY>;
-+			power-domains = <&gcc HLOS1_VOTE_TURING_MMU_TBU0_GDSC>;
-+			qcom,stream-id-range = <&apps_smmu 0x1400 0x400>;
-+		};
-+
-+		adsp_tbu: tbu@151f5000 {
-+			compatible = "qcom,sc7280-tbu";
-+			reg = <0x0 0x151f5000 0x0 0x1000>;
-+			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &lpass_ag_noc SLAVE_LPASS_CORE_CFG QCOM_ICC_TAG_ACTIVE_ONLY>;
-+			qcom,stream-id-range = <&apps_smmu 0x1800 0x400>;
-+		};
-+
-+		anoc_1_pcie_tbu: tbu@151f9000 {
-+			compatible = "qcom,sc7280-tbu";
-+			reg = <0x0 0x151f9000 0x0 0x1000>;
-+			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &cnoc3 SLAVE_TCU QCOM_ICC_TAG_ACTIVE_ONLY>;
-+			qcom,stream-id-range = <&apps_smmu 0x1c00 0x400>;
-+		};
-+
-+		mnoc_sf_0_tbu: tbu@151fd000 {
-+			compatible = "qcom,sc7280-tbu";
-+			reg = <0x0 0x151fd000 0x0 0x1000>;
-+			interconnects = <&mmss_noc MASTER_CAMNOC_SF QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ACTIVE_ONLY>;
-+			power-domains = <&gcc HLOS1_VOTE_MMNOC_MMU_TBU_SF0_GDSC>;
-+			qcom,stream-id-range = <&apps_smmu 0x2000 0x400>;
-+		};
-+
- 		intc: interrupt-controller@17a00000 {
- 			compatible = "arm,gic-v3";
- 			reg = <0 0x17a00000 0 0x10000>,     /* GICD */
+Best regards,
+Krzysztof
+
 
