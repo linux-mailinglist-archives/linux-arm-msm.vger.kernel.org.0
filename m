@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-17722-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17723-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D579E8A882D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 17:53:00 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F9D78A8849
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 17:56:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 20F81B25610
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 15:52:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 325FF1C222A3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 15:56:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F1CF14830E;
-	Wed, 17 Apr 2024 15:52:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B71C5148301;
+	Wed, 17 Apr 2024 15:56:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ayk+78ij"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JT93LwK4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EF13147C7B;
-	Wed, 17 Apr 2024 15:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85B77147C9F;
+	Wed, 17 Apr 2024 15:56:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713369155; cv=none; b=t7QH8VH5BQ3bcZffHvISubenOwN+Ta3eDsOMs55z7XPJYUKPK5Wgcj7QmqOGgXZcFQndeEA9xkCTb+4UfViyikC3GXqFtSNZZ1yr9iReCTkxd5OLNYP2jz/0IR2A1Qn8eojtg5+UcY7UwLHKswLsfhqVsTM7ZTAM6b66XUhm7Nw=
+	t=1713369397; cv=none; b=KKufrYpXLLftDAX17oKVV/ks7Wd4vRq1CpxwCUyiqP1AnCSadN2esb68+cx2eotMsz7R/kiLeuDiABOj8PbOmWJge9KjbuxWwrEQo6IsCdQdOjKY+NbiVYr3re06uE4CwQ1MNyroFXd0AwdVMttyGig9LfU4ourvMIBpm4TJlpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713369155; c=relaxed/simple;
-	bh=7wb9H72Aj+y1YrETYNhTzY+E0Bau8VPmpQtR6PztyIk=;
+	s=arc-20240116; t=1713369397; c=relaxed/simple;
+	bh=vNcaPBrZO+ppAKRbORNz0nJqGNldg2Yat0x53LVhO6c=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ghZa1z5KMRWVLEcpAvHysm5nwTBa7TAXBN/LMMGputizSSzc0yaEMOLCwVUjc92rdSPWgtIaCoCqJ9an9NQc60syZTkiL0c9INbfbtalgwcL6sS1zNeNWVmp54IJdEp9GJ1Fm865ahPgFHxDzxldKVnFmsjHRYVymmA94W59hNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ayk+78ij; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8235FC072AA;
-	Wed, 17 Apr 2024 15:52:34 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=TwZ0+ssa+9i90FFiblevi9ggtbkfdu31btjHmoZV+y9ZzG7z5n2itE7CLO0pApnMHLTL+ZWzSpVXrFpuE9FTm6fs5h+yb/SmUBCRwS5eWRjsc/qgB8pYRPDnk6EcLREYs1w35HLIew1/AxR2lo+DWcfPh4lV5tEaubTvzx92yz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JT93LwK4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5D84C072AA;
+	Wed, 17 Apr 2024 15:56:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713369154;
-	bh=7wb9H72Aj+y1YrETYNhTzY+E0Bau8VPmpQtR6PztyIk=;
+	s=k20201202; t=1713369397;
+	bh=vNcaPBrZO+ppAKRbORNz0nJqGNldg2Yat0x53LVhO6c=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ayk+78ijXrawiR4kAXqOs0GiJcMWt+Zd77nW2/ETTzLnQdZcgqCu2wbwD8OdOq1Pw
-	 MzQoVUr8iIPuM7PU9Ry+4KAjsXsHBTq2EGqdrVPl4yA/4i9mqn1ZE/Y7WfPEa26/SA
-	 AVsw+R/uPyZUYzWXRQ6TGXshL88v1a0JxuqqXQBF5HBmF0WpSJ0J4/TVzBuTBxGA1b
-	 +Vy8g2XS4t9bjQHAEkM8ZobraS3/DQFBZ+WfG8tTyW1Jtja0AGy96Lse+Yy4Vz08m5
-	 QkPfgUL7wqggfDHe+8ZiDlzm+Roxd+Yq4qV/9F52xkUS9R8yhVw+ivlaiC87Z0ZeEo
-	 2lpPGJOg/ABCw==
-Message-ID: <38ed0465-5b29-4e81-8bbf-f5480bc27c7b@kernel.org>
-Date: Wed, 17 Apr 2024 17:52:34 +0200
+	b=JT93LwK4URemeDxxnQXFbKdAsHWRH02//UQVW/OGjosw4wKpyBgS/LjOHHSLucPFY
+	 GBHaU0xEeyVT2snGjrD4cvhebAJDa9enBKIHESiZjxPBsUOV8upfoivHaUTZWqNQHU
+	 Gk1M7HBdVMAL/wft4y0SUCDnIs1rhBhzJlHIbwJgZT9OO2TyoRhCJQRUcO2hQmpTpB
+	 O5rN0KrwWQtfEUCBv8Pnh4I8Ag5fmNbjfn8+6bXddvEDRoexOWyPpN/i0Y0iz3P1qf
+	 oBDkfLBEB3KQXf13+v23+P3GdKgQJAsKsqAYFbaMzL7CNSf18IKxfXqC++Yz+s8ldp
+	 WtZPCihqNS56A==
+Message-ID: <20acec19-0dc9-4926-aac5-f24fcc09cba3@kernel.org>
+Date: Wed, 17 Apr 2024 17:56:36 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,19 +52,19 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 3/8] ASoC: dt-bindings: wcd937x-sdw: add bindings for
  wcd937x-sdw
-To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>, Rob Herring <robh@kernel.org>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
  Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
- linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- quic_rohkumar@quicinc.com, quic_pkumpatl@quicinc.com
+ Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>
+Cc: alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
+ quic_pkumpatl@quicinc.com
 References: <20240416063600.309747-1-quic_mohs@quicinc.com>
  <20240416063600.309747-4-quic_mohs@quicinc.com>
- <20240416143237.GA2250258-robh@kernel.org>
- <13bff1dd-d134-e5ab-6691-b2bcb0a786c8@quicinc.com>
 Content-Language: en-US
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,72 +110,121 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <13bff1dd-d134-e5ab-6691-b2bcb0a786c8@quicinc.com>
+In-Reply-To: <20240416063600.309747-4-quic_mohs@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 17/04/2024 10:17, Mohammad Rafi Shaik wrote:
-> On 4/16/2024 8:02 PM, Rob Herring wrote:
->> On Tue, Apr 16, 2024 at 12:05:55PM +0530, Mohammad Rafi Shaik wrote:
->>> From: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
->>>
->>> Qualcomm WCD9370/WCD9375 Codec is a standalone Hi-Fi audio codec IC
->>> connected over SoundWire. This device has two SoundWire devices RX and
->>> TX respectively.
->>> This binding is for those slave devices on WCD9370/WCD9375.
->>>
->>> Co-developed-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
->>> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
->>> Signed-off-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
->>> ---
->>>   .../bindings/sound/qcom,wcd937x-sdw.yaml      | 71 +++++++++++++++++++
->>>   1 file changed, 71 insertions(+)
->>>   create mode 100644 Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
->>>
->>> diff --git a/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml b/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
->>> new file mode 100644
->>> index 000000000000..2b7358e266ba
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
->>> @@ -0,0 +1,71 @@
->>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->>> +%YAML 1.2
->>> +---
->>> +$id: http://devicetree.org/schemas/sound/qcom,wcd937x-sdw.yaml#
->>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>> +
->>> +title: Qualcomm SoundWire Slave devices on WCD9370
->>> +
->>> +maintainers:
->>> +  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->>> +
->>> +description: |
->>
->> Don't need '|' if no formatting.
->>
->>> +  Qualcomm WCD9370 Codec is a standalone Hi-Fi audio codec IC.
->>> +  It has RX and TX Soundwire slave devices. This bindings is for the
->>> +  slave devices.
->>> +
->>> +properties:
->>> +  compatible:
->>> +    const: sdw20217010a00
->>> +
->>> +  reg:
->>> +    maxItems: 1
->>> +
->>> +  qcom,tx-port-mapping:
->>> +    description: |
->>> +      Specifies static port mapping between slave and master tx ports.
->>> +      In the order of slave port index.
->>
->> Are there constraints on the values of the entries?
+On 16/04/2024 08:35, Mohammad Rafi Shaik wrote:
+> From: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
 > 
-> The port mapping entries are fixed values.
-> There is no constraints.
+> Qualcomm WCD9370/WCD9375 Codec is a standalone Hi-Fi audio codec IC
+> connected over SoundWire. This device has two SoundWire devices RX and
+> TX respectively.
+> This binding is for those slave devices on WCD9370/WCD9375.
+> 
+> Co-developed-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+> Signed-off-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+> ---
+>  .../bindings/sound/qcom,wcd937x-sdw.yaml      | 71 +++++++++++++++++++
+>  1 file changed, 71 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml b/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
+> new file mode 100644
+> index 000000000000..2b7358e266ba
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
+> @@ -0,0 +1,71 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/sound/qcom,wcd937x-sdw.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm SoundWire Slave devices on WCD9370
+> +
+> +maintainers:
+> +  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> +
+> +description: |
 
-If they are fixed, then for sure you have constraints, because they are
-known. I really do not understand your response.
+Do not need '|' unless you need to preserve formatting.
+
+> +  Qualcomm WCD9370 Codec is a standalone Hi-Fi audio codec IC.
+> +  It has RX and TX Soundwire slave devices. This bindings is for the
+> +  slave devices.
+> +
+> +properties:
+> +  compatible:
+> +    const: sdw20217010a00
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  qcom,tx-port-mapping:
+> +    description: |
+> +      Specifies static port mapping between slave and master tx ports.
+> +      In the order of slave port index.
+
+Use inclusive terminology. Describe what is here - what is the index?
+What is the value?
+
+> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+> +    minItems: 4
+> +    maxItems: 4
+
+Add constraints on values. You have maximum 15 TX ports, don't you?
+
+> +
+> +  qcom,rx-port-mapping:
+> +    description: |
+> +      Specifies static port mapping between slave and master rx ports.
+> +      In the order of slave port index.
+> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+> +    minItems: 5
+> +    maxItems: 5
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - qcom,port-mapping
+
+Test your binding. There is no need to engage reviewers for reviewing
+simple mistakes which *tools* can point. Respect reviewers time and use
+the tools first.
+
+You need oneOf: with required for TX and RX... or just unify the
+properties. Why do you need two?
+
+
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    soundwire@3210000 {
+Drop unit address.
+
+> +        #address-cells = <2>;
+> +        #size-cells = <0>;
+> +        reg = <0x03210000 0x2000>;
+
+Drop, not relevant and not placed correctly (see DTS coding style).
+
+> +        wcd937x_rx: codec@0,4 {
+
+Drop label, not used.
+
+> +            compatible = "sdw20217010a00";
+> +            reg  = <0 4>;
+> +            qcom,rx-port-mapping = <1 2 3 4 5>;
+> +        };
+> +    };
+> +
+> +    soundwire@3230000 {
+
+Drop this example, it's almost identical.
 
 Best regards,
 Krzysztof
