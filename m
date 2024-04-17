@@ -1,182 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-17671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17672-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99D8A8A8149
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 12:50:57 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id D1C9B8A8154
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 12:56:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 10E2F1F22BD4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 10:50:57 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9DA8AB2105E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 10:56:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5252013C681;
-	Wed, 17 Apr 2024 10:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFFC113C68A;
+	Wed, 17 Apr 2024 10:56:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Y7byvPVF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97CF7132803;
-	Wed, 17 Apr 2024 10:50:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A9513C80D;
+	Wed, 17 Apr 2024 10:56:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713351054; cv=none; b=tpr/6OidHDxw2gY+wyaBFawtGLZhBkgAklUh9RzVZ6KN8xMqPqHutWXqUMI/LOAu6e3bwA//6J6uWS5JoirqSTU0ADAUYZwqpOLKwfW778t2NMpnbYHr3OR+o2PA+VYwtcx+o4+lwCDdHz/Fg8AMj1I/TSYj0I50opztUGm240A=
+	t=1713351403; cv=none; b=QbU9j+4nmG7qhBT+qBqz2s1ub44hvs89sPZkcPTV9ZfXkTHnhiq1QA9RZ9aTvK68DZAtuSDih1TqUV4aHrzwaWoViVj/RLF7z1+nzkYK6MCn78t9//oFt00PmTvg8iYiq6OjoRywrYyHQtHfljhblJlXU4dCQN2W6r2G24vt/bE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713351054; c=relaxed/simple;
-	bh=XaAcT67M5RaPBWHbB+wNAlaIJeNyW5NuSWZzU/URrJU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=m9oPobLrX7b7HJJX1BcEWLBXLl4HPPb4L2CbuMeKzcM7fURUWywDiJ5Fk50GbZXn7C/dhgA0QOVHf0MaHgvWMFTKFFLr4mpHt4fewtnfEO1App83xcWhZ6Taxmb8tFVO3PkHd4zh/kmpY+J9yiEGwJ1414zGEGAhF0GgnmIY4pQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.208.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-56e48d0a632so8414409a12.2;
-        Wed, 17 Apr 2024 03:50:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713351051; x=1713955851;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vft5t+sb+qnt9u/cVXjqa7VMdCg/vVTNy1ZfkRM3NrY=;
-        b=Psacht6kvNsOHExGmrf2s7qxDg4GfiLOP7HxOVcg5UCxdHHrziVRPmstgEy6FssOJl
-         f8k3bXlyDOcvAG5cXkuEkglMJKvlGMOaRhWYf4X4cYXxCw+lP7jQY+AlHwWI4xn4ubId
-         zhWykE2c3NZT6f3mdpRkp7vRIeDWMv62/o6jub73Y4h3EHT3Kd1S+sM1B1zotEQo2y8d
-         plmNHlvQcrPPdMiSYRZaGRKyTkEcECV6CVnFfQY2NIsPS/2tC0mfMOD/MsL1XLD0yhb5
-         m/YqbAlYXljGm4twuZDYSNA8dbJMc5XRQgtns6Xvj7TfFexOS1HNgYiLmFbOh9qA2IR9
-         D/6g==
-X-Forwarded-Encrypted: i=1; AJvYcCVgJSgk1HQskxkET83pAwLX3e61JmLzkgk5jkIMF3fAvoGF1mPnWBtozP/Gk6ZWJ5K3usRUzi9JXw+d+Qm+HOzcVkL7d9ZtEGb798K9Q77ijYbJVn5rx9GAr6OUVpQM2lQv90jnkYVOsyIw3A==
-X-Gm-Message-State: AOJu0YwE6jXHqHEMKnIcuggxWXKFxEkhU/5DhaW7IT2BlxZSTIR+sQf2
-	fyfOeTaDmnR+D6a16a//m8z0C8sjFiRgVtKu8ufZ6Cgp0aI5FHxf6zOflVhA
-X-Google-Smtp-Source: AGHT+IGN9LcNvwblZ6ViBwpqt946fLccgyIeSYEbOBmB8loD7XnPuLo2PCB4MQwzI8484uEC8NEGsA==
-X-Received: by 2002:a17:906:eece:b0:a52:6eb7:7654 with SMTP id wu14-20020a170906eece00b00a526eb77654mr8049679ejb.46.1713351050667;
-        Wed, 17 Apr 2024 03:50:50 -0700 (PDT)
-Received: from ?IPV6:2a0b:e7c0:0:107::aaaa:69? ([2a0b:e7c0:0:107::aaaa:69])
-        by smtp.gmail.com with ESMTPSA id bv21-20020a170906b1d500b00a520b294d9dsm7978733ejb.150.2024.04.17.03.50.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Apr 2024 03:50:49 -0700 (PDT)
-Message-ID: <783c05cd-0cd2-4b0e-9dce-2a9fdfee7c74@kernel.org>
-Date: Wed, 17 Apr 2024 12:50:48 +0200
+	s=arc-20240116; t=1713351403; c=relaxed/simple;
+	bh=afjPJ+/sEGHXn5XptKJhYoMIJReCKeOloC55pJERJ/k=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=F18+aX4CDJyga0TMttdHJqrBuP5kwZUvsZTlZ+ZhkO2cvvlLmojbTBeT13LHS+z0cpWrCmyVvMLZZaq8GNoqz/KA3q9uiMP1lp3b6Edwk8KxScpDKS4uzv3GvDkA6IBWnL3A/F4x3n1gfbT8NJ1pBYROxkByA6hrBv6SBmPX6uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Y7byvPVF; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43HAe6vt008139;
+	Wed, 17 Apr 2024 10:56:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=jpKK8kT
+	JPz/dw2xT2ql4d4xaFedCm5918xzB0Fm1l9E=; b=Y7byvPVFY+qlvZ4fFvL+97O
+	+XSBzzg7afr1nP4/963tAsqY5dC4zby3GiR8YCDLW/g4O/h92ngvV63z5jYZyl2e
+	U9vOJP8cNwL2UO4iXmbU9rwxJrshqEXRnAEBuHyTYI+gHTjIWgylq0OWVXr3lseI
+	EGshGo4gH6+9MCpc03+hkzqPkQsWMBHD4NdJNyxATlcFIYZflmQKtHLKVPIxQAN2
+	eZOPWlSqaKPL4GwZIYPO5m3ssgDr50SttASRE16Nzw4xt/0+OKhjsta93XSguy2o
+	sAa/pmbFeDmiQ4GK1RqnYwTRxC6zOu0J+02qBxZ6Uui9QcIobsJCBYKL536ABQw=
+	=
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xj7j90t26-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Apr 2024 10:56:36 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43HAuZ0p008853
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Apr 2024 10:56:35 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 17 Apr 2024 03:56:30 -0700
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: <andersson@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <konrad.dybcio@linaro.org>, <djakov@kernel.org>,
+        <quic_varada@quicinc.com>, <dmitry.baryshkov@linaro.org>,
+        <quic_anusha@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>
+Subject: [PATCH v8 0/7] Add interconnect driver for IPQ9574 SoC
+Date: Wed, 17 Apr 2024 16:25:58 +0530
+Message-ID: <20240417105605.836705-1-quic_varada@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/15] tty: msm_serial: use dmaengine_prep_slave_sg()
-To: Marek Szyprowski <m.szyprowski@samsung.com>, gregkh@linuxfoundation.org
-Cc: linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org,
- Anders Roxell <anders.roxell@linaro.org>
-References: <20240405060826.2521-1-jirislaby@kernel.org>
- <20240405060826.2521-12-jirislaby@kernel.org>
- <CGME20240415211716eucas1p10050cc8d4024707dd6f6331111cd3ce1@eucas1p1.samsung.com>
- <d3eb9f21-f3e1-43ec-bf41-984c6aa5cfc8@samsung.com>
- <54679d54-3957-489d-a8b5-b98ea1c8a93c@kernel.org>
- <0335b679-da36-42c1-a1ba-8affb7a98d44@samsung.com>
-Content-Language: en-US
-From: Jiri Slaby <jirislaby@kernel.org>
-Autocrypt: addr=jirislaby@kernel.org; keydata=
- xsFNBE6S54YBEACzzjLwDUbU5elY4GTg/NdotjA0jyyJtYI86wdKraekbNE0bC4zV+ryvH4j
- rrcDwGs6tFVrAHvdHeIdI07s1iIx5R/ndcHwt4fvI8CL5PzPmn5J+h0WERR5rFprRh6axhOk
- rSD5CwQl19fm4AJCS6A9GJtOoiLpWn2/IbogPc71jQVrupZYYx51rAaHZ0D2KYK/uhfc6neJ
- i0WqPlbtIlIrpvWxckucNu6ZwXjFY0f3qIRg3Vqh5QxPkojGsq9tXVFVLEkSVz6FoqCHrUTx
- wr+aw6qqQVgvT/McQtsI0S66uIkQjzPUrgAEtWUv76rM4ekqL9stHyvTGw0Fjsualwb0Gwdx
- ReTZzMgheAyoy/umIOKrSEpWouVoBt5FFSZUyjuDdlPPYyPav+hpI6ggmCTld3u2hyiHji2H
- cDpcLM2LMhlHBipu80s9anNeZhCANDhbC5E+NZmuwgzHBcan8WC7xsPXPaiZSIm7TKaVoOcL
- 9tE5aN3jQmIlrT7ZUX52Ff/hSdx/JKDP3YMNtt4B0cH6ejIjtqTd+Ge8sSttsnNM0CQUkXps
- w98jwz+Lxw/bKMr3NSnnFpUZaxwji3BC9vYyxKMAwNelBCHEgS/OAa3EJoTfuYOK6wT6nadm
- YqYjwYbZE5V/SwzMbpWu7Jwlvuwyfo5mh7w5iMfnZE+vHFwp/wARAQABzSFKaXJpIFNsYWJ5
- IDxqaXJpc2xhYnlAa2VybmVsLm9yZz7CwXcEEwEIACEFAlW3RUwCGwMFCwkIBwIGFQgJCgsC
- BBYCAwECHgECF4AACgkQvSWxBAa0cEnVTg//TQpdIAr8Tn0VAeUjdVIH9XCFw+cPSU+zMSCH
- eCZoA/N6gitEcnvHoFVVM7b3hK2HgoFUNbmYC0RdcSc80pOF5gCnACSP9XWHGWzeKCARRcQR
- 4s5YD8I4VV5hqXcKo2DFAtIOVbHDW+0okOzcecdasCakUTr7s2fXz97uuoc2gIBB7bmHUGAH
- XQXHvdnCLjDjR+eJN+zrtbqZKYSfj89s/ZHn5Slug6w8qOPT1sVNGG+eWPlc5s7XYhT9z66E
- l5C0rG35JE4PhC+tl7BaE5IwjJlBMHf/cMJxNHAYoQ1hWQCKOfMDQ6bsEr++kGUCbHkrEFwD
- UVA72iLnnnlZCMevwE4hc0zVhseWhPc/KMYObU1sDGqaCesRLkE3tiE7X2cikmj/qH0CoMWe
- gjnwnQ2qVJcaPSzJ4QITvchEQ+tbuVAyvn9H+9MkdT7b7b2OaqYsUP8rn/2k1Td5zknUz7iF
- oJ0Z9wPTl6tDfF8phaMIPISYrhceVOIoL+rWfaikhBulZTIT5ihieY9nQOw6vhOfWkYvv0Dl
- o4GRnb2ybPQpfEs7WtetOsUgiUbfljTgILFw3CsPW8JESOGQc0Pv8ieznIighqPPFz9g+zSu
- Ss/rpcsqag5n9rQp/H3WW5zKUpeYcKGaPDp/vSUovMcjp8USIhzBBrmI7UWAtuedG9prjqfO
- wU0ETpLnhgEQAM+cDWLL+Wvc9cLhA2OXZ/gMmu7NbYKjfth1UyOuBd5emIO+d4RfFM02XFTI
- t4MxwhAryhsKQQcA4iQNldkbyeviYrPKWjLTjRXT5cD2lpWzr+Jx7mX7InV5JOz1Qq+P+nJW
- YIBjUKhI03ux89p58CYil24Zpyn2F5cX7U+inY8lJIBwLPBnc9Z0An/DVnUOD+0wIcYVnZAK
- DiIXODkGqTg3fhZwbbi+KAhtHPFM2fGw2VTUf62IHzV+eBSnamzPOBc1XsJYKRo3FHNeLuS8
- f4wUe7bWb9O66PPFK/RkeqNX6akkFBf9VfrZ1rTEKAyJ2uqf1EI1olYnENk4+00IBa+BavGQ
- 8UW9dGW3nbPrfuOV5UUvbnsSQwj67pSdrBQqilr5N/5H9z7VCDQ0dhuJNtvDSlTf2iUFBqgk
- 3smln31PUYiVPrMP0V4ja0i9qtO/TB01rTfTyXTRtqz53qO5dGsYiliJO5aUmh8swVpotgK4
- /57h3zGsaXO9PGgnnAdqeKVITaFTLY1ISg+Ptb4KoliiOjrBMmQUSJVtkUXMrCMCeuPDGHo7
- 39Xc75lcHlGuM3yEB//htKjyprbLeLf1y4xPyTeeF5zg/0ztRZNKZicgEmxyUNBHHnBKHQxz
- 1j+mzH0HjZZtXjGu2KLJ18G07q0fpz2ZPk2D53Ww39VNI/J9ABEBAAHCwV8EGAECAAkFAk6S
- 54YCGwwACgkQvSWxBAa0cEk3tRAAgO+DFpbyIa4RlnfpcW17AfnpZi9VR5+zr496n2jH/1ld
- wRO/S+QNSA8qdABqMb9WI4BNaoANgcg0AS429Mq0taaWKkAjkkGAT7mD1Q5PiLr06Y/+Kzdr
- 90eUVneqM2TUQQbK+Kh7JwmGVrRGNqQrDk+gRNvKnGwFNeTkTKtJ0P8jYd7P1gZb9Fwj9YLx
- jhn/sVIhNmEBLBoI7PL+9fbILqJPHgAwW35rpnq4f/EYTykbk1sa13Tav6btJ+4QOgbcezWI
- wZ5w/JVfEJW9JXp3BFAVzRQ5nVrrLDAJZ8Y5ioWcm99JtSIIxXxt9FJaGc1Bgsi5K/+dyTKL
- wLMJgiBzbVx8G+fCJJ9YtlNOPWhbKPlrQ8+AY52Aagi9WNhe6XfJdh5g6ptiOILm330mkR4g
- W6nEgZVyIyTq3ekOuruftWL99qpP5zi+eNrMmLRQx9iecDNgFr342R9bTDlb1TLuRb+/tJ98
- f/bIWIr0cqQmqQ33FgRhrG1+Xml6UXyJ2jExmlO8JljuOGeXYh6ZkIEyzqzffzBLXZCujlYQ
- DFXpyMNVJ2ZwPmX2mWEoYuaBU0JN7wM+/zWgOf2zRwhEuD3A2cO2PxoiIfyUEfB9SSmffaK/
- S4xXoB6wvGENZ85Hg37C7WDNdaAt6Xh2uQIly5grkgvWppkNy4ZHxE+jeNsU7tg=
-In-Reply-To: <0335b679-da36-42c1-a1ba-8affb7a98d44@samsung.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: CRyEgWiZEmJhBKsE7FkG-yEzEaWC1k1o
+X-Proofpoint-ORIG-GUID: CRyEgWiZEmJhBKsE7FkG-yEzEaWC1k1o
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-17_08,2024-04-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 priorityscore=1501
+ adultscore=0 clxscore=1011 impostorscore=0 mlxlogscore=970 malwarescore=0
+ phishscore=0 suspectscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
+ definitions=main-2404170075
 
-On 17. 04. 24, 12:15, Marek Szyprowski wrote:
-> Hi Jiri,
-> 
-> On 16.04.2024 12:23, Jiri Slaby wrote:
->> On 15. 04. 24, 23:17, Marek Szyprowski wrote:
->>> On 05.04.2024 08:08, Jiri Slaby (SUSE) wrote:
->>>> This is a preparatory for the serial-to-kfifo switch. kfifo understands
->>>> only scatter-gatter approach, so switch to that.
->>>>
->>>> No functional change intended, it's just dmaengine_prep_slave_single()
->>>> inline expanded.
->>>>
->>>> And in this case, switch from dma_map_single() to dma_map_sg() too.
->>>> This
->>>> needs struct msm_dma changes. I split the rx and tx parts into an
->>>> union.
->>>> TX is now struct scatterlist, RX remains the old good phys-virt-count
->>>> triple.
->>>>
->>>> Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
->>>> Cc: Bjorn Andersson <andersson@kernel.org>
->>>> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>> Cc: linux-arm-msm@vger.kernel.org
->>>
->>> I've just found that this patch broke UART operation on DragonBoard
->>> 410c. I briefly checked and didn't notice anything obviously wrong here,
->>> but the board stops transmitting any data from its serial port after the
->>> first message. I will try to analyze this issue a bit more tomorrow.
->>
->> I double checked, but I see no immediate issues in the patch too. So
->> please, if you can analyze this more…
-> 
-> I've spent some time digging into this issue and frankly speaking I
-> still have no idea WHY it doesn't work (or I seriously mixed something
-> in the scatterlist principles). However I found a workaround to make it
-> working. Maybe it will help a bit guessing what happens there.
-...
-> @@ -434,7 +436,7 @@ static void msm_start_tx(struct uart_port *port)
->           struct msm_dma *dma = &msm_port->tx_dma;
-> 
->           /* Already started in DMA mode */
-> -       if (sg_dma_len(&dma->tx_sg))
-> +       if (dma->mapped)
+MSM platforms manage NoC related clocks and scaling from RPM.
+However, in IPQ SoCs, RPM is not involved in managing NoC
+related clocks and there is no NoC scaling.
 
-Thanks for looking into this.
+However, there is a requirement to enable some NoC interface
+clocks for the accessing the peripherals present in the
+system. Hence add a minimalistic interconnect driver that
+establishes a path from the processor/memory to those peripherals
+and vice versa.
 
-I was hesitant if I should use a flag. I should have, apparently.
+---
+v8:	Change icc-clk driver to take master and slave ids instead
+	of auto generating
+	Remove ICC_xxx defines from dt-bindings header
+	Define MASTER/SLAVE_xxx macros from 0 .. n
 
-Quick question:
-What's value of CONFIG_NEED_SG_DMA_LENGTH in your .config?
+v7:	Fix macro names in dt-bindings header
+	Do clock get in icc driver
 
-thanks,
+v6:	Removed 'Reviewed-by: Krzysztof' from dt-bindings patch
+	Remove clock get from ICC driver as suggested by Stephen Boyd
+	so that the actual peripheral can do the clock get
+	first_id -> icc_first_node_id
+	Remove tristate from INTERCONNECT_CLK
+v5:
+	Split gcc-ipq9574.c and common.c changes into separate patches
+	Introduce devm_icc_clk_register
+	Fix error handling
+v4:
+gcc-ipq9574.c
+	Use clk_hw instead of indices
+common.c
+	Do icc register in qcom_cc_probe() call stream
+common.h
+	Add icc clock info to qcom_cc_desc structure
+
+v3:
+qcom,ipq9574.h
+	Move 'first id' define to clock driver
+gcc-ipq9574.c:
+	Use indexed identifiers here to avoid confusion
+	Fix error messages and move code to common.c as it can be
+	shared with future SoCs
+
+v2:
+qcom,ipq9574.h
+	Fix license identifier
+	Rename macros
+qcom,ipq9574-gcc.yaml
+	Include interconnect-cells
+gcc-ipq9574.c
+	Update commit log
+	Remove IS_ENABLED(CONFIG_INTERCONNECT) and auto select it from Kconfig
+ipq9574.dtsi
+	Moved to separate patch
+	Include interconnect-cells to clock controller node
+drivers/clk/qcom/Kconfig:
+	Auto select CONFIG_INTERCONNECT & CONFIG_INTERCONNECT_CLK
+
+Varadarajan Narayanan (7):
+  interconnect: icc-clk: Allow user to specify master/slave ids
+  clk: qcom: cbf-msm8996: Specify master and slave id
+  dt-bindings: interconnect: Add Qualcomm IPQ9574 support
+  interconnect: icc-clk: Add devm_icc_clk_register
+  clk: qcom: common: Add interconnect clocks support
+  clk: qcom: ipq9574: Use icc-clk for enabling NoC related clocks
+  arm64: dts: qcom: ipq9574: Add icc provider ability to gcc
+
+ .../bindings/clock/qcom,ipq9574-gcc.yaml      |  3 +
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi         |  2 +
+ drivers/clk/qcom/Kconfig                      |  2 +
+ drivers/clk/qcom/clk-cbf-8996.c               |  7 ++-
+ drivers/clk/qcom/common.c                     | 35 ++++++++++-
+ drivers/clk/qcom/common.h                     | 16 +++++
+ drivers/clk/qcom/gcc-ipq9574.c                | 31 ++++++++++
+ drivers/interconnect/icc-clk.c                | 24 +++++++-
+ .../dt-bindings/interconnect/qcom,ipq9574.h   | 59 +++++++++++++++++++
+ include/linux/interconnect-clk.h              |  4 ++
+ 10 files changed, 178 insertions(+), 5 deletions(-)
+ create mode 100644 include/dt-bindings/interconnect/qcom,ipq9574.h
+
 -- 
-js
-suse labs
+2.34.1
 
 
