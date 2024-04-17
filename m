@@ -1,124 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-17695-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17696-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9F7F8A82A7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 13:59:53 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C7A48A82DC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 14:10:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 79E531F215AB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 11:59:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 90C5EB2447E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 12:10:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0840913CF92;
-	Wed, 17 Apr 2024 11:59:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78F1913D2B5;
+	Wed, 17 Apr 2024 12:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EM7HsFgi"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="L/s35Z4+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C65B13C3D3
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 11:59:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECFD413D260;
+	Wed, 17 Apr 2024 12:09:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713355187; cv=none; b=GQIPSSIcFVQQLZ0VzLsLWtVWGw7C8jRBeFjaKUAZyVsHlI61Nft3XPboeuFaqAMknircmRaLLlVpRn07sZ6Z/4chCENIhrX3lo+HR46WEjdmQ4EJ1V/hafCj+zU4ufiES1Bjxet0+bno9f7XlaWYfWbGSPoqOUTfAIUoCuqzyiU=
+	t=1713355797; cv=none; b=aXXETYGE7L+gGNqw9leC/+sua30gkGhCittZf6I2WKy9uxchCNbkIS578rtgbHJEIx72PFoRoCROjGJnSY52VmmAl7EkR8zxeip6E8bpSpZqEY10Ks9o9IqVN/L1MHeoQ0haHkfY081au30G+c361b45Zjqb/YijO/59AQZA0ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713355187; c=relaxed/simple;
-	bh=ynVd21xe4kHy0pnYMDjSr0GDMyeh1LPBT7NXsK9/MLw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gI8O4OnqonXKNa2RaTPosMsMknpCAkXX2llwi0Mb/qIuwRAPcQDOeQXw7ZQ2AAnadeDsxMmnhNn8KueCw8RsjERUEqfRhJB4x2z6bqOhvfO687BeuqHpEO0+G2ihczpBZln181j9O4SEgK1ydks17CePD0AAw/yJz1DFpR5LACs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EM7HsFgi; arc=none smtp.client-ip=209.85.219.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-dc6dcd9124bso5386328276.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 04:59:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713355185; x=1713959985; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ka4Traa7ftszXUlTUn8V8lFxKGAbUY9Jgg8OQaEdzk0=;
-        b=EM7HsFgi5DOtYHFGRkKlbmCf4iNqTJUD9Bxlf72lRnoF9lOKTe75/agaAGIW6CIUfO
-         TXSnAWWM3P+CEn4l1Us02pImlczoQ6VkNrl5CXa8hZdXqNuBdidDenSvpvyLKIG0kdCb
-         asBe/GQAFV2zKuA4LuZv3EzNE0vlUwEn/ZUYXAFwLfgLMS1DDU1O/4uZtalPNiOmfToi
-         qW8e3hN9tefgZgZ3v9eFQ/Q/g4VXyyhb2yafj+ol7GCVc/RUtHiABvII/u+28c4vWMk0
-         4ZuVuIU4bEUuNXQ/X+fH4YKmyYu4re9mQ6486g2/2Bm6Aj/Spq9lOnB7lgKmC5wKA6lW
-         f8kQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713355185; x=1713959985;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Ka4Traa7ftszXUlTUn8V8lFxKGAbUY9Jgg8OQaEdzk0=;
-        b=Lz/JLsx9Im+CXt+tZFlL6ADfa6zA3jrgPtzT/nHQiGV+36RQbsRJzZOTHla0hEXvTg
-         6wanh+k7XiKzY6Z2MLMrUwUzZU3M2xJGrX6EkNf1Pa5gS1Am1u0IdkJrtFMlpQJuGpHI
-         GIN3KHQ1xNmhrqCwOtVYOtX3dQFeGEFNofA1wJdrIfyh1Liu4mUl4osUodrjXo86QtDK
-         pMBbtPTnNYTqHb/bpcQZgC/TtJ7akeEtYjGSxi48JO5smKVSB2Vl4UIRdU/d1ZWqNt0S
-         NkimJoJ0fzoENjttExcYL5A1DQpf2mwzOkpLjFf7DbA+RpydK4n2rI/7C7SkbOvaN5dm
-         HBMw==
-X-Forwarded-Encrypted: i=1; AJvYcCUv154pxDDQEjBFZZioliiU/jPB3cD55zZ79hoKZeEEGmjJXo0YF2Djm+rHIQl1HzdU4y+YeCZNWQrzUPTJ8FGu0iNLSLkim8XiThwLfg==
-X-Gm-Message-State: AOJu0YyBq6kXes7k8jb5iSv+V77QSAGDNsUoZ7hm27ZJK8UUkSiZ6hRo
-	j9RzO/+JpBM+FBak2GZcoMqNjCJRLfaMGS/KfUgLgQbAvClAFWe1njcwtH7BlR46KFNsxUdO+5w
-	jKY8d26if2CH/CDyBtx1doId+GbSX5tPYlIspQw==
-X-Google-Smtp-Source: AGHT+IFIYioWeJvin6gmStJ8KBQcUCJDKaGylQGDoJsTxsTjK1zWYmQIPOgobokhDNprh6Xmzq0t0x4PNZ8rgZDheDE=
-X-Received: by 2002:a25:aca0:0:b0:dd1:2f58:292b with SMTP id
- x32-20020a25aca0000000b00dd12f58292bmr16998050ybi.9.1713355185554; Wed, 17
- Apr 2024 04:59:45 -0700 (PDT)
+	s=arc-20240116; t=1713355797; c=relaxed/simple;
+	bh=5ZCuMbSOx5PzTzG86k0uHA7B5Sds+m43lxgfPjVxcaE=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=GXdiQ5oQXJ2JxVRJID4vKPdCiq0xPM2huIf3eR4xK2vBw0z6TKtgJxfNkNxOPyZPGeO5xwo5qndibXu39/RYfJ8M/VNnnfjEosH8KnOrNjh7OVrgOPasM4vv+Idn/o0wdsqBnfT2qSDaHoCKeqs2fw3fV1YQwo0vNSRLpw3bNII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=L/s35Z4+; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43H8Lw2p018158;
+	Wed, 17 Apr 2024 12:09:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=IUd6C29
+	1tIljlQ1DA+NAWe8phSTzOJc12+ylUffSaB0=; b=L/s35Z4+AP+1eSqiHsF90+H
+	ysb3kwtZJwCB+C1nGx7y4/jjC6vfC9GIi4hugXe3R/wIa4niENKKx7uPQNIU48E3
+	hHPQQXyM5CQZEMcX65pk/aUst5Ri5S5+Z5Dsz1mMlxMxTBA3llwWplschHeh9f1S
+	1UTdBU4zs+Hi1QzbQWZ3JlkrdcfXQmMlLzvUvEFDpMmF8LiWVSK/XQ2IUejyd6Wp
+	S+aqtfLYJ/MUYuw7d0UYUSUWej2SYBNcsXlvXZYtdxC3M36FTfsgrfKcwM5YbbwV
+	5SAPXOggDdh3kMnvjn8UBy/cOp2e+HiNMTMJWLiQkhzTBBtcKIdJlaZPm5e7RAg=
+	=
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xjauprg6v-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Apr 2024 12:09:50 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43HC9nOa031198
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Apr 2024 12:09:49 GMT
+Received: from hu-kbajaj-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 17 Apr 2024 05:09:45 -0700
+From: Komal Bajaj <quic_kbajaj@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Bjorn
+ Andersson" <quic_bjorande@quicinc.com>,
+        <quic_tsoni@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Komal Bajaj <quic_kbajaj@quicinc.com>
+Subject: [PATCH v3 0/2] Enable various remoteprocs for qcm6490-idp and qcs6490-rb3gen2
+Date: Wed, 17 Apr 2024 17:39:26 +0530
+Message-ID: <20240417120928.32344-1-quic_kbajaj@quicinc.com>
+X-Mailer: git-send-email 2.42.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-0-78ae3ee9a697@somainline.org>
- <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-4-78ae3ee9a697@somainline.org>
-In-Reply-To: <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-4-78ae3ee9a697@somainline.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 17 Apr 2024 14:59:34 +0300
-Message-ID: <CAA8EJprJ2zY=MoHt6YnFV7qU3H=who+YPAzXG+bUZHHmFLzyxg@mail.gmail.com>
-Subject: Re: [PATCH 4/7] drm/msm/dpu: Allow configuring multiple active DSC blocks
-To: Marijn Suijten <marijn.suijten@somainline.org>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Archit Taneja <architt@codeaurora.org>, Chandan Uddaraju <chandanu@codeaurora.org>, 
-	Vinod Koul <vkoul@kernel.org>, Sravanthi Kollukuduru <skolluku@codeaurora.org>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	Jordan Crouse <jordan@cosmicpenguin.net>, Rajesh Yadav <ryadav@codeaurora.org>, 
-	Jeykumar Sankaran <jsanka@codeaurora.org>, ~postmarketos/upstreaming@lists.sr.ht, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Martin Botka <martin.botka@somainline.org>, 
-	Jami Kettunen <jami.kettunen@somainline.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Pcuskxe2QWdddG_0pVf_fr6o0L_XHao_
+X-Proofpoint-ORIG-GUID: Pcuskxe2QWdddG_0pVf_fr6o0L_XHao_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-17_09,2024-04-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
+ suspectscore=0 priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0
+ spamscore=0 impostorscore=0 clxscore=1011 lowpriorityscore=0
+ mlxlogscore=424 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404170084
 
-On Wed, 17 Apr 2024 at 02:57, Marijn Suijten
-<marijn.suijten@somainline.org> wrote:
->
-> Just like the active interface and writeback block in ctl_intf_cfg_v1(),
-> and later the rest of the blocks in followup active-CTL fixes or
-> reworks, multiple calls to this function should enable additional DSC
-> blocks instead of overwriting the blocks that are enabled.
->
-> This pattern is observed in an active-CTL scenario since DPU 5.0.0 where
-> for example bonded-DSI uses a single CTL to drive multiple INTFs, and
-> each encoder calls this function individually with the INTF (hence the
-> pre-existing update instead of overwrite of this bitmask) and DSC blocks
-> it wishes to be enabled, and expects them to be OR'd into the bitmask.
->
-> The reverse already exists in reset_intf_cfg_v1() where only specified
-> DSC blocks are removed out of the CTL_DSC_ACTIVE bitmask (same for all
-> other blocks and ACTIVE bitmasks), leaving the rest enabled.
->
-> Fixes: 77f6da90487c ("drm/msm/disp/dpu1: Add DSC support in hw_ctl")
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
+Enable various applicable remoteproc nodes for qcm6490-idp
+and qcs6490-rb3gen2.
 
+Firmwares are not shared at linux-firmware.git, it is under legal approval process.
+Meantime, submitting the DT node changes for FW for review.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+--------
+Changes in v3:
+* Rebased on top of linux-next
+* Added firmware path for modem for rb3gen2 board for GPS usecase
+* Link to v2: https://lore.kernel.org/all/20240402090349.30172-1-quic_kbajaj@quicinc.com/
 
--- 
-With best wishes
-Dmitry
+Changes in v2:
+* Updating the firmware name from mdt to mbn
+* Link to v1: https://lore.kernel.org/all/20231220114225.26567-1-quic_kbajaj@quicinc.com/
+
+Komal Bajaj (2):
+  arm64: dts: qcom: qcm6490-idp: Enable various remoteprocs
+  arm64: dts: qcom: qcs6490-rb3gen2: Enable various remoteprocs
+
+ arch/arm64/boot/dts/qcom/qcm6490-idp.dts     | 20 ++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 10 ++++++++++
+ 2 files changed, 30 insertions(+)
+
+--
+2.42.0
+
 
