@@ -1,351 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-17691-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2A7C8A828E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 13:54:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id F247E8A8296
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 13:57:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 214081C219B2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 11:54:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 922B01F22DDD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 11:57:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CCBE13CFBD;
-	Wed, 17 Apr 2024 11:54:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 466AE13CF94;
+	Wed, 17 Apr 2024 11:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oTZLn+Kp"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TdQI+8Lv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E86613CF87
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 11:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA56913CF87
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 11:57:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713354885; cv=none; b=KKvnWiOay1gG43BptlvDf9zOAX2GJucXr/30OK7pdPL/RcL0lVha90j0IQeLDodZr8zFSZ+1NuiDZT+pScZClK34tvXcyf8brz1jWhhkTxsi8qS2xSf6wHC7k0kQpYMsk2Z1a9eH6lV31EEJKuB2ypXWQXtAFrdiOs1dbBrCMRA=
+	t=1713355022; cv=none; b=Rwo7V+BZpF8y/f4DgVEwlKFAhSVHDVkhUD6slLVv4f4qvELFkMViOmlUCMKvskl9fEnp5oKiMG85IPb0ZfdQYu5i4l8vS7LEV23lmxZVNrocOxvdHbUuMqQ4Rbeja2f63KiDAQ93jmP+IHMP5zGdVia+yykDTnj0l1JYpCYNZY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713354885; c=relaxed/simple;
-	bh=ikR4nZxOK0Zrn2QCHC7pm1fQ1ul5cEKckbJljCi6v6M=;
+	s=arc-20240116; t=1713355022; c=relaxed/simple;
+	bh=rFWYHRR/8wQe0/h8nXEAewAVnKCnbdH3Rt5dV8yzjTw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tz9sNZCMROsbMqNBXE4YMd7j5fHMiH7u++LkQDHT6Kl/UeRqOG1npCYNX8PxrDh5yu/pSzjLFOFWdKHAm7hFV3bqZSjKTwxHmV6INRvU4jR+LlQiY7WPBIsc8kNhLhg2/QAJ+ncUCo/Ri9OWLwIlL+sviaRW8B5Iregoqb0SRgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oTZLn+Kp; arc=none smtp.client-ip=209.85.219.177
+	 To:Cc:Content-Type; b=NX3GLW+nnfx4OHm7Iu/CempjLe9Pz7pT+7qoDockB5hCe44S5EJdrUgjNADKMyPuuYYERQWwfLfWsDoLf0Pekhd4lKS3i8qc0PlTiJg/SxJ4EnwVRLaR6KwcsOy+NIwGdbrti2bdpvyR02GK+nXz68OgGkvntijQE6cY9/KaOkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TdQI+8Lv; arc=none smtp.client-ip=209.85.219.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-dc23bf7e5aaso5668725276.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 04:54:42 -0700 (PDT)
+Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-dcbef31a9dbso3642384276.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 04:57:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713354881; x=1713959681; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1713355020; x=1713959820; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=+wTbu0Nn+T3CJEEi3xzg5dvMqu7Psfagz5+cmNlziwk=;
-        b=oTZLn+KpKyzsEn3oEPV04KWHbVbJEbU+p60cjTam/NHVGhEsrwBZhvrQP0w7I6oaLU
-         ZrYGVrrZdeUWIwfD+6rswRE7i51K/RdkmNv70Oe4ktc4VRjqX1kmF7Ff2IgG/Yb8XE/1
-         UBZckGyuXQS4PFAjmoOBe39BfHS/GUPgZnxSYAodZeDs25xurslCKQJMC1XCACgj+BQs
-         F842N3byRxbcpEVd/I3DHLbFahCphvMmdYQeJB3WdiITP1NZe4YrER6iEScO6+LF7n0C
-         hhN+OCrmWSpY+/kgdJBzWmBm6fX72i7YXqd0odWhc8z03JAkpVemXa13SA2TLfD+WzIv
-         de1A==
+        bh=7V6DnLCsUFkJaBmXGBgPYovHMmnV4qT3enJ4vhqHZQM=;
+        b=TdQI+8LvzmqPZn1yvqFHpPhC2u92d9udMKJM9NfzRHMAzuTe2zp06QyzB3p4zMhrN6
+         Su1io/EHPQCMCAWqeicjs65L7HFh/Tx42tFPibBJNmNoFoXThVgClvw6y3CUTBa1dl9b
+         PPa/kZKkacwtrVsXSh2t0CroQqeX/L0Dp0+9C4CGpk7NapZOXCS1LVOfx48mm3Xv3ylB
+         ZXv3IFKnlbyMXJOUXH9h7xzoNAbxGlrQusFjbE5kn0Ht4qvkJkhoXQ8EYrMl+Ir9mAsx
+         DCdAcZS447NmJ9J933ex3tLTVRPpWTNEnTVDD7k9oQj56+FkkayAiuf9JEkMAZtqAl4s
+         5CFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713354881; x=1713959681;
+        d=1e100.net; s=20230601; t=1713355020; x=1713959820;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+wTbu0Nn+T3CJEEi3xzg5dvMqu7Psfagz5+cmNlziwk=;
-        b=YwzEe3kVWpVbYDZuoaWy6Nwr/6uStRSbI8fmyV2ye0T6lOWVbibyUhBmbOwOKaJIxd
-         xQqDkZ6N/YZzWTRdHzycn+5XEIxu0glIbEHdnmzgavZevWf/nzyPS2U74JFTHQrN00G4
-         5TCjJ4u7vjelKkNZQ6ahBQXa6AI0zTlsXeSSSHLHlHFiDdaLR+CxDRkwaaMzM6U15rHP
-         UFdMbTgJB3T2nyy7YwrBQ+AbHC5WQAHc3V45pzNuj79sZ0+qAExSQ6k+6qqdi4O/9xnD
-         Hb2R+LjoPNH68QOolI8APJoQBFvmsRFrAyxkQ4dYNu4lJ0lHqu1vRrLjYgZZQAhT184f
-         UM2Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXFpHlfHGhONDCOKmc6T0FdWV4qReiis/1ErNSJ5CaLC2Y5tJPMBIMci2PMWm8gwdRRwzbaLyysPkzePuuDQAY+VuL6mpizDhS6htaViw==
-X-Gm-Message-State: AOJu0YwtNdzVAzdq+ytp5rDmPrIKSrm0jAakKMVhSNSULws3AfLWMzvp
-	2qTJgS8TjfK8oEle5GtWcxiJVuBjQJPiH071zwkzK2Xhi1sl8d/PkPxC6Eip/REm2sBRKImDE//
-	jzxKDZD5wDzGAsTxT+y+GYGVlskuY/5RP9TH5qw==
-X-Google-Smtp-Source: AGHT+IGdD940iUJhcJhp8ehVt6aqkRTyO2ZKf1Ew7LbisYbNffOYCRJ2TNbI0DmWPUFJEU9DZ8PHsbGJeMFmJRpMfQE=
-X-Received: by 2002:a25:b9cb:0:b0:dcc:9e88:b15 with SMTP id
- y11-20020a25b9cb000000b00dcc9e880b15mr15106658ybj.41.1713354881361; Wed, 17
- Apr 2024 04:54:41 -0700 (PDT)
+        bh=7V6DnLCsUFkJaBmXGBgPYovHMmnV4qT3enJ4vhqHZQM=;
+        b=JPEtxkBYO35oWzlyB+r8QLuhfm1bINp8WpTaG6/n+gEJ0ccAcXG6jr252TJgp0wEfR
+         tuTnvC572Yh01IV4XORmBcOWK4p0YCL5m6La1uwD5Et6IJw+dVbdu5Qj5jtcTZ87AsA7
+         CDy6z3Y+kXfhhn1kP1gTZqhx86cuxSGl1d1NDD1FMSEHXKWNgon9dJHfc2KmqK+jmuV5
+         7l2N57YU3Bifffv5xu8mAdFvJzfu6zfdxdm04X0xt6doSbElV88xF6x9QjJda4Oeo76W
+         2EbCEbQqQyRNqGM/heQhhQuHxlZaEUbEYMZy6RXQMuTRVFP+3aF7pBxjURcQPwOyzVom
+         F8yQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX7MBSb1Lub17h8tujgGILqQHZxNC12V3S0Xj5j2afDcXlEdOAXJ5iR0k381PRePzb1xLibReS1bo9QWzyaoi+GYb2tojCcunmlYK+tsw==
+X-Gm-Message-State: AOJu0Yx5T7vtcZ/6U7vsyHk1ZCXowbdtCa/KTFyJBMo1Q3mb6Pu4a1mz
+	RH8RotTwzK9h9tmdFSVLPns13b/h5x3l2NbDTUz0Ad5/P/4fXu/nrQvBzA0TFF1sEA4GEZWQR+w
+	HWvsty9hdpGwfE2jrqbFU1LYOKFYDQI04mQgz9Q==
+X-Google-Smtp-Source: AGHT+IHuJ+P0+tIP8Ja/s31hcE/lLfe8rzFJZRFTNiK24q6dN5Ov40yhIbmq423DTWh9Cjd7EAZUIsIKaKherzh7G/4=
+X-Received: by 2002:a25:4ec2:0:b0:dcc:1449:71ea with SMTP id
+ c185-20020a254ec2000000b00dcc144971eamr15228037ybb.50.1713355019639; Wed, 17
+ Apr 2024 04:56:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240328095044.2926125-1-quic_sibis@quicinc.com>
- <20240328095044.2926125-3-quic_sibis@quicinc.com> <CAA8EJpoQyzF1E2xFPHvzz5Nk=w3J2abd3Y13nc+4FK-jRQbnFw@mail.gmail.com>
- <f32b7e43-5e39-0c82-1e03-18a2219adfdb@quicinc.com>
-In-Reply-To: <f32b7e43-5e39-0c82-1e03-18a2219adfdb@quicinc.com>
+References: <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-0-78ae3ee9a697@somainline.org>
+ <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-1-78ae3ee9a697@somainline.org>
+In-Reply-To: <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-1-78ae3ee9a697@somainline.org>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 17 Apr 2024 14:54:30 +0300
-Message-ID: <CAA8EJppQ9Saoytar7-xXORR=BppddWQ5fnrqg+x1rzRFctOt8Q@mail.gmail.com>
-Subject: Re: [PATCH 2/5] mailbox: Add support for QTI CPUCP mailbox controller
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: sudeep.holla@arm.com, cristian.marussi@arm.com, andersson@kernel.org, 
-	konrad.dybcio@linaro.org, jassisinghbrar@gmail.com, robh+dt@kernel.org, 
-	krzysztof.kozlowski+dt@linaro.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com, conor+dt@kernel.org, 
-	quic_gkohli@quicinc.com, quic_nkela@quicinc.com, quic_psodagud@quicinc.com
+Date: Wed, 17 Apr 2024 14:56:48 +0300
+Message-ID: <CAA8EJpqJfkRd3hN-QoHaxhP2dUaEOyaqnGzA5MiGk96oTLRO2g@mail.gmail.com>
+Subject: Re: [PATCH 1/7] drm/msm/dsi: Print dual-DSI-adjusted pclk instead of
+ original mode pclk
+To: Marijn Suijten <marijn.suijten@somainline.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Archit Taneja <architt@codeaurora.org>, Chandan Uddaraju <chandanu@codeaurora.org>, 
+	Vinod Koul <vkoul@kernel.org>, Sravanthi Kollukuduru <skolluku@codeaurora.org>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	Jordan Crouse <jordan@cosmicpenguin.net>, Rajesh Yadav <ryadav@codeaurora.org>, 
+	Jeykumar Sankaran <jsanka@codeaurora.org>, ~postmarketos/upstreaming@lists.sr.ht, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Martin Botka <martin.botka@somainline.org>, 
+	Jami Kettunen <jami.kettunen@somainline.org>
 Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 17 Apr 2024 at 14:51, Sibi Sankar <quic_sibis@quicinc.com> wrote:
+On Wed, 17 Apr 2024 at 02:57, Marijn Suijten
+<marijn.suijten@somainline.org> wrote:
 >
+> When dual-DSI (bonded DSI) was added in commit ed9976a09b48
+> ("drm/msm/dsi: adjust dsi timing for dual dsi mode") some DBG() prints
+> were not updated, leading to print the original mode->clock rather
+> than the adjusted (typically the mode clock divided by two, though more
+> recently also adjusted for DSC compression) msm_host->pixel_clk_rate
+> which is passed to clk_set_rate() just below.  Fix that by printing the
+> actual pixel_clk_rate that is being set.
 >
->
-> On 4/16/24 21:51, Dmitry Baryshkov wrote:
-> > On Thu, 28 Mar 2024 at 11:52, Sibi Sankar <quic_sibis@quicinc.com> wrote:
-> >>
-> >> Add support for CPUSS Control Processor (CPUCP) mailbox controller,
-> >> this driver enables communication between AP and CPUCP by acting as
-> >> a doorbell between them.
-> >>
-> >> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> >> ---
-> >>
-> >> rfc:
-> >> * Use chan->lock and chan->cl to detect if the channel is no longer
-> >>    Available. [Dmitry]
-> >> * Use BIT() instead of using manual shifts. [Dmitry]
-> >> * Don't use integer as a pointer value. [Dmitry]
-> >> * Allow it to default to of_mbox_index_xlate. [Dmitry]
-> >> * Use devm_of_iomap. [Dmitry]
-> >> * Use module_platform_driver instead of module init/exit. [Dmitry]
-> >> * Get channel number using mailbox core (like other drivers) and
-> >>    further simplify the driver by dropping setup_mbox func.
->
-> Hey Dmitry,
->
-> Thanks for taking time to review the series.
->
-> >>
-> >>   drivers/mailbox/Kconfig           |   8 ++
-> >>   drivers/mailbox/Makefile          |   2 +
-> >>   drivers/mailbox/qcom-cpucp-mbox.c | 205 ++++++++++++++++++++++++++++++
-> >>   3 files changed, 215 insertions(+)
-> >>   create mode 100644 drivers/mailbox/qcom-cpucp-mbox.c
-> >>
-> [snip]
-> ...
-> >> +
-> >> +       status = readq(cpucp->rx_base + APSS_CPUCP_RX_MBOX_STAT);
-> >> +
-> >> +       for (i = 0; i < APSS_CPUCP_IPC_CHAN_SUPPORTED; i++) {
-> >> +               val = 0;
-> >> +               if (status & ((u64)1 << i)) {
-> >
-> > BIT() or test_bit()
->
-> I'll use BIT()
->
-> >
-> >> +                       val = readl(cpucp->rx_base + APSS_CPUCP_RX_MBOX_CMD + (i * 8) + APSS_CPUCP_MBOX_CMD_OFF);
-> >
-> > #define APSS_CPUCP_MBOX_CMD_OFF(i)
->
-> ack
->
-> >
-> >> +                       chan = &cpucp->chans[i];
-> >> +                       spin_lock_irqsave(&chan->lock, flags);
-> >> +                       if (chan->cl)
-> >> +                               mbox_chan_received_data(chan, &val);
-> >> +                       spin_unlock_irqrestore(&chan->lock, flags);
-> >> +                       writeq(status, cpucp->rx_base + APSS_CPUCP_RX_MBOX_CLEAR);
-> >
-> > Why is status written from inside the loop? If the bits are cleared by
-> > writing 1, then you should be writing BIT(i) to that register. Also
-> > make sure that it is written at the correct time, so that if there is
-> > an event before notifying the driver, it doesn't get lost.
->
-> Thanks for catching this. I probably didn't run into this scenario
-> because of using just one channel at point any time. I'll move it
-> outside the loop.
+> Fixes: ed9976a09b48 ("drm/msm/dsi: adjust dsi timing for dual dsi mode")
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> ---
+>  drivers/gpu/drm/msm/dsi/dsi_host.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
 
-It might be better to write single bits from within the loop under the spinlock.
-
->
-> >
-> >> +               }
-> >> +       }
-> >> +
-> >> +       return IRQ_HANDLED;
-> >> +}
-> >> +
-> >> +static int qcom_cpucp_mbox_startup(struct mbox_chan *chan)
-> >> +{
-> >> +       struct qcom_cpucp_mbox *cpucp = container_of(chan->mbox, struct qcom_cpucp_mbox, mbox);
-> >> +       unsigned long chan_id = channel_number(chan);
-> >> +       u64 val;
-> >> +
-> >> +       val = readq(cpucp->rx_base + APSS_CPUCP_RX_MBOX_EN);
-> >> +       val |= BIT(chan_id);
-> >> +       writeq(val, cpucp->rx_base + APSS_CPUCP_RX_MBOX_EN);
-> >> +
-> >> +       return 0;
-> >> +}
-> >> +
-> >> +static void qcom_cpucp_mbox_shutdown(struct mbox_chan *chan)
-> >> +{
-> >> +       struct qcom_cpucp_mbox *cpucp = container_of(chan->mbox, struct qcom_cpucp_mbox, mbox);
-> >> +       unsigned long chan_id = channel_number(chan);
-> >> +       u64 val;
-> >> +
-> >> +       val = readq(cpucp->rx_base + APSS_CPUCP_RX_MBOX_EN);
-> >> +       val &= ~BIT(chan_id);
-> >> +       writeq(val, cpucp->rx_base + APSS_CPUCP_RX_MBOX_EN);
-> >> +}
-> >> +
-> >> +static int qcom_cpucp_mbox_send_data(struct mbox_chan *chan, void *data)
-> >> +{
-> >> +       struct qcom_cpucp_mbox *cpucp = container_of(chan->mbox, struct qcom_cpucp_mbox, mbox);
-> >> +       unsigned long chan_id = channel_number(chan);
-> >> +       u32 *val = data;
-> >> +
-> >> +       writel(*val, cpucp->tx_base + APSS_CPUCP_TX_MBOX_CMD + (chan_id * 8) + APSS_CPUCP_MBOX_CMD_OFF);
-> >> +
-> >> +       return 0;
-> >> +}
-> >> +
-> >> +static const struct mbox_chan_ops qcom_cpucp_mbox_chan_ops = {
-> >> +       .startup = qcom_cpucp_mbox_startup,
-> >> +       .send_data = qcom_cpucp_mbox_send_data,
-> >> +       .shutdown = qcom_cpucp_mbox_shutdown
-> >> +};
-> >> +
-> >> +static int qcom_cpucp_mbox_probe(struct platform_device *pdev)
-> >> +{
-> >> +       struct qcom_cpucp_mbox *cpucp;
-> >> +       struct mbox_controller *mbox;
-> >> +       int ret;
-> >> +
-> >> +       cpucp = devm_kzalloc(&pdev->dev, sizeof(*cpucp), GFP_KERNEL);
-> >> +       if (!cpucp)
-> >> +               return -ENOMEM;
-> >> +
-> >> +       cpucp->dev = &pdev->dev;
-> >> +
-> >> +       cpucp->rx_base = devm_of_iomap(cpucp->dev, cpucp->dev->of_node, 0, NULL);
-> >> +       if (IS_ERR(cpucp->rx_base))
-> >> +               return PTR_ERR(cpucp->rx_base);
-> >> +
-> >> +       cpucp->tx_base = devm_of_iomap(cpucp->dev, cpucp->dev->of_node, 1, NULL);
-> >> +       if (IS_ERR(cpucp->tx_base))
-> >> +               return PTR_ERR(cpucp->tx_base);
-> >> +
-> >> +       writeq(0, cpucp->rx_base + APSS_CPUCP_RX_MBOX_EN);
-> >> +       writeq(0, cpucp->rx_base + APSS_CPUCP_RX_MBOX_CLEAR);
-> >> +       writeq(0, cpucp->rx_base + APSS_CPUCP_RX_MBOX_MAP);
-> >> +
-> >> +       cpucp->irq = platform_get_irq(pdev, 0);
-> >> +       if (cpucp->irq < 0) {
-> >> +               dev_err(&pdev->dev, "Failed to get the IRQ\n");
-> >> +               return cpucp->irq;
-> >
-> > It already prints the error message.
->
-> ack
->
-> >
-> >> +       }
-> >> +
-> >> +       ret = devm_request_irq(&pdev->dev, cpucp->irq, qcom_cpucp_mbox_irq_fn,
-> >> +                              IRQF_TRIGGER_HIGH, "apss_cpucp_mbox", cpucp);
-> >> +       if (ret < 0) {
-> >> +               dev_err(&pdev->dev, "Failed to register the irq: %d\n", ret);
-> >> +               return ret;
-> >
-> > return dev_err_probe();
->
-> ack
->
-> >
-> >> +       }
-> >> +
-> >> +       writeq(APSS_CPUCP_RX_MBOX_CMD_MASK, cpucp->rx_base + APSS_CPUCP_RX_MBOX_MAP);
-> >> +
-> >> +       mbox = &cpucp->mbox;
-> >> +       mbox->dev = cpucp->dev;
-> >> +       mbox->num_chans = APSS_CPUCP_IPC_CHAN_SUPPORTED;
-> >> +       mbox->chans = cpucp->chans;
-> >> +       mbox->ops = &qcom_cpucp_mbox_chan_ops;
-> >> +       mbox->txdone_irq = false;
-> >> +       mbox->txdone_poll = false;
-> >> +
-> >> +       ret = mbox_controller_register(mbox);
-> >
-> > Use devm_mbox_controller_register()
->
-> ack
->
-> >  >> +       if (ret) {
-> >> +               dev_err(&pdev->dev, "Failed to create mailbox\n");
-> >> +               return ret;
-> >
-> > return dev_err_probe();
->
-> I guess ^^ is a typo? Since devm_mbox_controller_register wouldn't
-> return -EPROBE_DEFER.
-
-Anyway, using dev_err_probe is a simpler and better style. It's not a
-question of returning -EPROBE_DEFER.
-
->
-> >
-> >> +       }
-> >> +
-> >> +       platform_set_drvdata(pdev, cpucp);
-> >> +
-> >> +       return 0;
-> >> +}
-> >> +
-> >> +static int qcom_cpucp_mbox_remove(struct platform_device *pdev)
-> >> +{
-> >> +       struct qcom_cpucp_mbox *cpucp = platform_get_drvdata(pdev);
-> >> +
-> >> +       mbox_controller_unregister(&cpucp->mbox);
-> >  > This will be replaced by devm_mbox_controller_register().
->
-> ack
->
-> >
-> >> +
-> >> +       return 0;
-> >> +}
-> >> +
-> >> +static const struct of_device_id qcom_cpucp_mbox_of_match[] = {
-> >> +       { .compatible = "qcom,x1e80100-cpucp-mbox"},
-> >> +       {}
-> >> +};
-> >> +MODULE_DEVICE_TABLE(of, qcom_cpucp_mbox_of_match);
-> >> +
-> >> +static struct platform_driver qcom_cpucp_mbox_driver = {
-> >> +       .probe = qcom_cpucp_mbox_probe,
-> >> +       .remove = qcom_cpucp_mbox_remove,
-> >> +       .driver = {
-> >> +               .name = "qcom_cpucp_mbox",
-> >> +               .of_match_table = qcom_cpucp_mbox_of_match,
-> >> +               .suppress_bind_attrs = true,
-> >
-> > No need to. Please drop.
->
-> ack
->
-> -Sibi
->
-> >
-> >> +       },
-> >> +};
-> >> +module_platform_driver(qcom_cpucp_mbox_driver);
-> >> +
-> >> +MODULE_DESCRIPTION("QTI CPUCP MBOX Driver");
-> >> +MODULE_LICENSE("GPL");
-> >> --
-> >> 2.34.1
-> >>
-> >>
-> >
-> >
-
-
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
 With best wishes
