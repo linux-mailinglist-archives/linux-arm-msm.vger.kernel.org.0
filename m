@@ -1,69 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-17693-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17694-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 209178A829E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 13:58:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42C9A8A82A4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 13:59:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CEEA92821B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 11:58:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EA20E1F212E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 11:58:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A861913CF88;
-	Wed, 17 Apr 2024 11:58:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0485D13CF88;
+	Wed, 17 Apr 2024 11:58:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MBRwF4Rt"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ggQP+mbx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C9B7FBD2
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 11:58:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DFAB13C8FB
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 11:58:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713355118; cv=none; b=LMLBdii3f1AAYGt4cWZsDPcmruyv/Zo25pCofZoK16gB2uj/Yc+6AM9uBe1xXwL6oUlTlaSu+c1hJSawjt0yCfF/kBwL/y+2BBxqapDBHxdU8in2ZK/8VOJz3DMzBkR/Yf3mjBBG5qPCsAkIXFAA7W2Ev9xZr0TQ1ivdlAOH7RU=
+	t=1713355131; cv=none; b=LwA5OgsYyz/blPBSpdP7cA4CqDeLL8pp4HKCjpn4npKbY1yuEzL3GGa5634i9OTYaFx8FfQExO+kBQ+XfMtqxwlpobWZLGc1vJ4ohhV8eglznkrTd3wj5uGpecgmKK1n6vZ39f0S5dzEr/mZtHf+n+PNioBHRnvUZP1UndT8IlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713355118; c=relaxed/simple;
-	bh=n3E7Lzw4xFNf9xuprek+3okMw/w892dRTyoP/dcO1Ps=;
+	s=arc-20240116; t=1713355131; c=relaxed/simple;
+	bh=Z17/MC6Fv2pd536Z3BjzeHPao04MS0TnqDelEF/QRdw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=W61rfZ0OCJBjVUFONmBQ2WWH6LTq1cnZCfcEnxKu/dAd4i6JrMubO1FB4iumruq552bnba+1OaqIZQRGt5GbeTypNgkx8y74Fk+uN6iCvcbAZB6g9WkB883/PnVDGg/FDO6l32HCBqKt0mKTTkifXwNRxqGNyGQ9Qk6UvKbYVr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MBRwF4Rt; arc=none smtp.client-ip=209.85.219.178
+	 To:Cc:Content-Type; b=UOchhSSJd0gieQW3Jyz3S1u2XXAYenPWsvbrt2dT3D/hdrt0eSFQ3Zlm9S/RF3yHhZfbNerOZQlbGiLGIalGOSPBHPyAi6iy0VohL011pBjTKg9VVH/fw8u+MnIeLp0cNUS7nMsUrDanM8Cjetp8iRGCV4Tt+mKpKXuCY9qwzZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ggQP+mbx; arc=none smtp.client-ip=209.85.219.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-dbed0710c74so4738313276.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 04:58:36 -0700 (PDT)
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-dcc73148611so6126028276.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 04:58:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713355116; x=1713959916; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1713355129; x=1713959929; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ox5LPkHgtGr2/XHUCfFXXYvppG+HqbU+7l8WZ9khYtU=;
-        b=MBRwF4Rt43DhVpdTLDXWW6zo7lKA/MV4W28NTk+6IDUp0wuMSeKZdHfYHf99RF3Mzz
-         xUwvHCH7SEf2npZy03ANQ852kEFy/qG21M/3O1tAbWYtX6Yc39jerL9WSEA5G6kBp1Wh
-         CEoIe3JV/dy8csAuCUbx84vkseglGQqNF86CorHcHl8z92SFVvshHt7A0nH6to5N7nPC
-         +7JZ+7vxlGnFXSme2ZP4/eBYWmMh9BMFADaODPbSaYZIGNT42NgbDkGRgENP9Xwm6iK3
-         UHmuKMjDGn+N4V+4HumpvKuym/fLLf5fk7ODQnSABIeZr08PB2z7gqGKjbdNIRj0Wb3u
-         1Q6w==
+        bh=XOPPymOpNWV4lEvf0/qp/BaWhSNyYN4sXc1brxkavt8=;
+        b=ggQP+mbxdG3Ff6vyyhZnj5ajWlGQ2Rw8ejmvuXriReR8IdHW37w0InVZOH5iK0gZlU
+         T9i7qQjl1jMb8cHzKDDE+0p9CFGShV9BFebdq9Jf+FTRCa0L/eHFMnrKysUBzUGOggxJ
+         5QEavAyZ8O74AZ0InL4kwTZYwsWtmy40XXOmQ/+ujx+ZHDImAwMIRvnNZs0vlc+kMyUP
+         j2Zd8nHrET+3wwIs6RPqzXvqQTYxDgEDxbRYebO4DO90r9iNybhBmZNVsJFeAKiqqdaD
+         rDdIQjbK4nHoTgxveazbdg508+6quCwBVGEaCkiy5NR/C3ksNi1sdAqLZKDkXI1zo/kB
+         MTSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713355116; x=1713959916;
+        d=1e100.net; s=20230601; t=1713355129; x=1713959929;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ox5LPkHgtGr2/XHUCfFXXYvppG+HqbU+7l8WZ9khYtU=;
-        b=jXShjv5l7DUTrnotvRlsmiYp4bWDvN/ripAuEatkHUC9jWQ7/f7Y5udv4v4dAvCGXw
-         CrKnwl1L+P2xA3erbd7d50Uv3blnS/crmdejfhlNJYy/AfD0I2HUJ/CMF3g681eq6ZlY
-         QSCbMbsDdYa5FP5A88eDa5Z4qW8o6jtRkCk69muV5InujpihlXK8s7bQucOgmvMpQy8Q
-         yPXWyVvHn9Qo7XZ6lcMobyTCVIgQz/OnKSExq9GVxl6+4J56i7pLC0ailW/NdAlAQm8A
-         qTV3UHqob6NKlYRpqYDInGwdRHM7pyWYg9fMNBy83yz3GHSPeKm/Gz+3LeorD5f69Tio
-         vEJA==
-X-Forwarded-Encrypted: i=1; AJvYcCVWrI1a9eH3K1Y1TLwh6LLf++qO2hO/hfIGNShhAhpyGtlHfLwTtHrJ3sQOtJW5Jy23j5P6b5TyxIvEmzVTmGFxWMEWjgilSG6DuxpjZg==
-X-Gm-Message-State: AOJu0YxncgF1mSffZ9w8NCW4qOKkiNAgkmGCY1c5YZ/nxH+gW8oZB3ze
-	IITAnRKZr8nhi3gCF6N/7L8xK1KvZab8arXucd2ZkWdI+GQ47uQ0QgG3ftrOjmIG4WQeu6jVeq7
-	B5yHinGKA1gMrTpbtpgexqKMHiTtv7jHDZOrE8Q==
-X-Google-Smtp-Source: AGHT+IHroa6k1HZ0B1EjkdHyvkWVW2/keRVisrkhSaTkSXI+Xy1B+n4dLICjNC9Mn6XDdWwQWSgpT8LgLcWwaM+pobs=
-X-Received: by 2002:a25:3d05:0:b0:dc6:d093:8622 with SMTP id
- k5-20020a253d05000000b00dc6d0938622mr15444148yba.15.1713355116056; Wed, 17
- Apr 2024 04:58:36 -0700 (PDT)
+        bh=XOPPymOpNWV4lEvf0/qp/BaWhSNyYN4sXc1brxkavt8=;
+        b=TtwP0j65IvK24JwcOyPOwxR24n4sc7w9eG+nqyVqD5jBPgRsmLIQEMhtHvwNDlZTKk
+         BFpQjCRQM7i2jyhpSfnZsVNwssajIjMzggbM8CJSLZTHig+Yl1REwx4YXWhLG0accmBt
+         l4fLCFBFw5yLOm0NexTV1e7MjHbB493N6hLo08Yg3GWBNbq1kD0023iLCMcmRsp2suHF
+         F/267hrsP6/hlNYoqAI+WCTyws3LEPqOlrfaRMdAZ1IpcE8nXsJf89r8abm7p9ar+I4Z
+         qVi+jZqz7z7DSAdkXUTNOhKiSCEY5Nj9ZofCxAgQzZKg6jL24Tic1TdOB4U79BphE4tf
+         VgOA==
+X-Forwarded-Encrypted: i=1; AJvYcCUH46IBdsGnu7Bm8qisXOCk78ZHFVPk9jHwoT143OTnNF2ZvrTd0nj+2YVWOtssqavAYJ5r7WRjmHzg02v63RmUtIpU/Ph2pf5lzRPSBA==
+X-Gm-Message-State: AOJu0YxOawS702sxO7T4CMFW9Sh3VGGXuwoDZjJXk2/Q4VIUawwox4dF
+	k6hM56Zj+SIIG7ElFKs0mS6Ev7iDRrSv1TzyQedyWdm/uRPWH3eyYq4+uyXENeXsoll5IDMbg6N
+	vWdcV7AEXASf1doSpQ4peawdMQynXyNJ3SAdQ3w==
+X-Google-Smtp-Source: AGHT+IGWuoBVMJIXjsmFPRcV8rj/qKuosgGA9fD35ftEBu5XLin6FbbgQbGoS5rFLXogGwGfuH4+cF7K3SUTk2qEnlk=
+X-Received: by 2002:a05:6902:1345:b0:dcd:aee6:fa9 with SMTP id
+ g5-20020a056902134500b00dcdaee60fa9mr15751750ybu.53.1713355129449; Wed, 17
+ Apr 2024 04:58:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,12 +71,12 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-0-78ae3ee9a697@somainline.org>
- <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-2-78ae3ee9a697@somainline.org>
-In-Reply-To: <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-2-78ae3ee9a697@somainline.org>
+ <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-3-78ae3ee9a697@somainline.org>
+In-Reply-To: <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-3-78ae3ee9a697@somainline.org>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 17 Apr 2024 14:58:25 +0300
-Message-ID: <CAA8EJpq-1QwoM2hEyegpfKnVH+qrswjmTd_hpYs9d9B7gikHjg@mail.gmail.com>
-Subject: Re: [PATCH 2/7] drm/msm/dsi: Pass bonded-DSI hdisplay/2 to DSC timing configuration
+Date: Wed, 17 Apr 2024 14:58:38 +0300
+Message-ID: <CAA8EJpoOMUbhqX2hcfCmU9+qr313naYi1d-rsUOqRuwaRC=3kQ@mail.gmail.com>
+Subject: Re: [PATCH 3/7] drm/msm/dpu: Always flush the slave INTF on the CTL
 To: Marijn Suijten <marijn.suijten@somainline.org>
 Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
 	Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
@@ -94,34 +94,26 @@ Content-Type: text/plain; charset="UTF-8"
 On Wed, 17 Apr 2024 at 02:57, Marijn Suijten
 <marijn.suijten@somainline.org> wrote:
 >
-> When configuring the timing of DSI hosts (interfaces) in
-> dsi_timing_setup() all values written to registers are taking bonded
-> DSI into account by dividing the original mode width by 2 (half the
-> data is sent over each of the two DSI hosts), but the full width
-> instead of the interface width is passed as hdisplay parameter to
-> dsi_update_dsc_timing().
+> As we can clearly see in a downstream kernel [1], flushing the slave INTF
+> is skipped /only if/ the PPSPLIT topology is active.
 >
-> Currently only msm_dsc_get_slices_per_intf() is called within
-> dsi_update_dsc_timing() with the `hdisplay` argument which clearly
-> documents that it wants the width of a single interface (which, again,
-> in bonded DSI mode is half the total width of the mode).  Thus pass the
-> bonded-mode-adjusted hdisplay parameter into dsi_update_dsc_timing()
-> otherwise all values written to registers by this function (i.e. the
-> number of slices per interface or packet, and derived from this the EOL
-> byte number) are twice too large.
+> However, when DPU was originally submitted to mainline PPSPLIT was no
+> longer part of it (seems to have been ripped out before submission), but
+> this clause was incorrectly ported from the original SDE driver.  Given
+> that there is no support for PPSPLIT (currently), flushing the slave
+> INTF should /never/ be skipped (as the `if (ppsplit && !master) goto
+> skip;` clause downstream never becomes true).
 >
-> Inversely the panel driver is expected to only set the slice width and
-> number of slices for half the panel, i.e. what will be sent by each
-> host individually, rather than fixing that up like hdisplay here.
+> [1]: https://git.codelinaro.org/clo/la/platform/vendor/opensource/display-drivers/-/blob/display-kernel.lnx.5.4.r1-rel/msm/sde/sde_encoder_phys_cmd.c?ref_type=heads#L1131-1139
 >
-> Fixes: 08802f515c3c ("drm/msm/dsi: Add support for DSC configuration")
+> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
 > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 > ---
->  drivers/gpu/drm/msm/dsi/dsi_host.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 3 ---
+>  1 file changed, 3 deletions(-)
+
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
 
 -- 
 With best wishes
