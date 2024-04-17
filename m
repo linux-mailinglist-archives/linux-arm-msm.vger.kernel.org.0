@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-17741-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17742-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 571FC8A8BD8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 21:09:52 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C966A8A8C0E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 21:26:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0D9D72859D3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 19:09:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 781AE28669B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 19:26:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FEBB22EEB;
-	Wed, 17 Apr 2024 19:09:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A70E28DD1;
+	Wed, 17 Apr 2024 19:26:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rjTzTzDw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yD4vJBB+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF682134B
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 19:09:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA3611712
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 19:26:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713380987; cv=none; b=l5OlZi9EwxIpl2RQ1fXeWE/wJoiZ7SGAnZRgLUGi8uZgsqTjUxWMhK64/Fn6tDRhAHLg1hwL59eQtoQ7DAzK20gvqqacqKbwuyqga+QQe2ag8ZxaEYB+YSFtwTXbkRzCQ0nEKScOxBMezR2brjM80VUc98tPp/8Zor/TUAtCp7s=
+	t=1713381985; cv=none; b=eJSpKt8c5N4LArQIK162Nq10rI681lT9VM1v6jGP0yz9NVVVVxpYnn83Fg4ZQF3Koz75XI5B/gL2wzBxs6BH0sIzXsVvLGzumIPIJLpUy7PojKF5Jg/Hr7/bNtj8G2ZwHIjzIp01OYxVjb51tv2zl9fPKc2Mnhx/Eg3+CSnik6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713380987; c=relaxed/simple;
-	bh=7F0omVEYl9aLdhKK64Qe55F30sKWhJSTnU314fKgRxQ=;
+	s=arc-20240116; t=1713381985; c=relaxed/simple;
+	bh=0TzEJdZ2NxceRDINkoJ2/uX5f1Kn/odwnxX/NF4rU1c=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Uk2vtkPVUSqavLojPHyISf4J7vNhi74QrgO1OZVsdrlk6bdks03R/1v8k7rxTez/y8TOI5mQbeLjZDtx91f+UphrrSG3dmr9xDl1zRLujslmXfJdh2jWmrP+PC4wLR5iX3kZGhB1jM8CAYZVA+hxsOWGmmx6UfAsrksGfnr/vHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rjTzTzDw; arc=none smtp.client-ip=209.85.210.169
+	 In-Reply-To:Content-Type; b=KjQKgblfzeshxivCm6BznOBiRooAUZiPN/p/bM2z9Qp9HcGzSx8ASvXDDV+SaKzATl1NbwyHQO9GnZlkrBM5PFyl5NxGAB7TmVfutyogYMyeGaPNpCs4XYobKZJ8I3+5aJO6EH29R+lvwZP49u9G7GTiW7qvNjUYERRGj8vHQN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yD4vJBB+; arc=none smtp.client-ip=209.85.210.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-6ed32341906so140775b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 12:09:45 -0700 (PDT)
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-6ecf05fd12fso134712b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 12:26:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713380985; x=1713985785; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1713381983; x=1713986783; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=EDnY7NG8tLjQYaJZVCkHJwJ7/O88b8QorT6FZnDHMMQ=;
-        b=rjTzTzDw5nz3bVNyQdNOlzjRs99CAB1L/OPsPGgCXMVHxuWPEaIiM43K7YoOtPYZWL
-         VgL2Fh8OOC/1vFzUfffDvI3HmoEvnryY4qGf+2jeN+3IxrqzFSyQIczjmVyLPp3pg9KL
-         P1tpBRbfp8XCX2yb6FGzZF1JPIvCq1rU7/D3L+V+WQcyJh8JWKhyRj69WtkQ+Jbj4Wes
-         opaZVQ6uAY7enDci8CowzAZK5Rk5ZsN7jLgvk72YsIiSco1g2TiDheOgDqqYtyiHnYGq
-         1H0XOzyvHi9tl+Hsv/rM8pvfGAHYmoFHNUmu8nrsRdgAjF9A6JXsAgsc0o4kZqS4UlTe
-         NT6Q==
+        bh=zojspO2lZSHjCc9gZRhsdBn+ZERiEMTcnc15s2GdMOA=;
+        b=yD4vJBB+RDSm+vP7Xcio76vgU8mp9HbIPq/3yAfd9OeUZUuhf2tRJc+sXIwYvhyIWW
+         OWofKlxD3rxJIzhQP+7Mjf2jFCaDzeJtlJKriy+UPeX+8gsRwFtU2TTQefSXhH8qsjaP
+         nF50eZgqaaTw97hMMW1O0MqmfIMO3RICSmmL9osOrIDUDony7gxbmRXmgHlbZE1AOEsx
+         BObfSOypM55WFn2YQrSxCRxoRXWK6xKcS+SfVPtQicJYv8A3azIsBcVw/IRQM/KM2vLg
+         H+q2B336mHjA/PqMaOUy0nk8kCpZKcZrXycBZToOkxAUePhkJQF8ZNTjLrViLtG5wnM2
+         EAMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713380985; x=1713985785;
+        d=1e100.net; s=20230601; t=1713381983; x=1713986783;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EDnY7NG8tLjQYaJZVCkHJwJ7/O88b8QorT6FZnDHMMQ=;
-        b=XGzbxUG2MvbqSAwykhSoZMWwCAUKUGa8rDb/rdn/HFd5uWxKc/zlYnlHL6ZeGzl4Ts
-         JUdpntgKf7IFkGEUpAP9bfHzW52s8+vVyE9ng19foHUK9XtFcINfyaRCWW6jT2VzKNAr
-         nM4zJV+j1KLqaaECkiYOf4dckY4HpbNBDQdApMnZrn8YRFIg0vng2XsNj/hRo1WftF+T
-         bUavhMl9aPSHcm6Nnj9K1yRl/dCkJPigha+jNZj0UkW0u3rToV18M2gEDNohe55olPCD
-         4ps+B4yr0LM69qJ/AkrOqUiqgZlWAfZVvgw1mDww/Dv3i3b6DHbfab7n2JuhRUgtWgmd
-         2agA==
-X-Gm-Message-State: AOJu0YxSSZ12J1Mrbws/d/CbFJSO/frhmu9PztF6kxu4miHbZAZyt7V/
-	5PnbAxefbBTKjA7vB3MzdXZvptr9Jd5SoJ/sqyHPMDOZLbvagMUuQJPhMx6YU4U=
-X-Google-Smtp-Source: AGHT+IFDEvak5wURqPaJeSKsqB5Y4HxeX2qM+g0DLupuKs1li99iFMqkzEhn7i/3qjRSC/5oh7CGAg==
-X-Received: by 2002:a05:6a21:8189:b0:1a8:1ecb:25b0 with SMTP id pd9-20020a056a21818900b001a81ecb25b0mr597826pzb.2.1713380985007;
-        Wed, 17 Apr 2024 12:09:45 -0700 (PDT)
-Received: from [10.36.51.174] ([24.75.208.154])
-        by smtp.gmail.com with ESMTPSA id hq6-20020a056a00680600b006ed14fed3a5sm11066397pfb.154.2024.04.17.12.09.44
+        bh=zojspO2lZSHjCc9gZRhsdBn+ZERiEMTcnc15s2GdMOA=;
+        b=NG0AfZC63Jn8gw3J20zh7N4pJRfBrtVtRsi0NX6cblvxioTaQmlLsXrYTpuv1NNan8
+         x8LOwI3mtTkdDZ5MmD+6vHd5E9pavDvdAEolheI52TEtTSBh7bjVWFLaWwGkHXfhpSvf
+         dAYN+sjr2YPwtwUpS1SzaKI8J8I6IuFLheNlYnHRFBOlnK0ajmprdtJmbrjGnkWhSLQX
+         t4ULBAbGX9Mr6C08LJVv6Pmc/OaU767PkVRgBvagZwAkNy6Zm80qWqbxOH3VppjGFjgz
+         nRThoKi5qg1bQPuU8IEM2PVYIXyipIBmrstbGbS643b35lK3n+ygrepT6avAB16Bl5Ux
+         JZhw==
+X-Gm-Message-State: AOJu0YxB1L8/PNsFj/075SnAZwLGWMdWdecsVK48/KFvLz5C1riaAso/
+	dShDBY3R1a/ldL8XLncNGDnw80QsEO77ItfDn9+vTU2v0Oh/jA7ELK6qIXXEgNY=
+X-Google-Smtp-Source: AGHT+IFqjtYlJ5fnyTEkurB6bDl0zodumgYQZIjV7B18xMiiBUVgBKV6f7SrhsQDaPlULoBKMYcOxg==
+X-Received: by 2002:a05:6a00:1146:b0:6ed:4a97:5dec with SMTP id b6-20020a056a00114600b006ed4a975decmr690567pfm.20.1713381982800;
+        Wed, 17 Apr 2024 12:26:22 -0700 (PDT)
+Received: from [10.36.51.174] ([24.75.208.145])
+        by smtp.gmail.com with ESMTPSA id i20-20020a632214000000b005cd835182c5sm10754476pgi.79.2024.04.17.12.26.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Apr 2024 12:09:44 -0700 (PDT)
-Message-ID: <682c4f9d-3456-4527-a7ea-18b2ef517ad0@linaro.org>
-Date: Wed, 17 Apr 2024 21:09:43 +0200
+        Wed, 17 Apr 2024 12:26:22 -0700 (PDT)
+Message-ID: <951b34d6-f465-42f7-b39d-eedd649f3c5b@linaro.org>
+Date: Wed, 17 Apr 2024 21:26:20 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,17 +76,22 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 0/3] Add support for vibrator in multiple PMICs
-To: quic_fenglinw@quicinc.com, kernel@quicinc.com,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Dmitry Torokhov <dmitry.torokhov@gmail.com>, Rob Herring
- <robh+dt@kernel.org>, Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20240416-pm8xxx-vibrator-new-design-v11-0-7b1c951e1515@quicinc.com>
+Subject: Re: [PATCH V2 6/8] dt-bindings: clock: qcom: add bindings for gpucc
+ on SM4450
+To: Ajit Pandey <quic_ajipan@quicinc.com>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Taniya Das <quic_tdas@quicinc.com>, Jagadeesh Kona <quic_jkona@quicinc.com>,
+ Imran Shaik <quic_imrashai@quicinc.com>,
+ Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+References: <20240416182005.75422-1-quic_ajipan@quicinc.com>
+ <20240416182005.75422-7-quic_ajipan@quicinc.com>
 Content-Language: en-US
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -133,21 +138,23 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240416-pm8xxx-vibrator-new-design-v11-0-7b1c951e1515@quicinc.com>
+In-Reply-To: <20240416182005.75422-7-quic_ajipan@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 16/04/2024 04:44, Fenglin Wu via B4 Relay wrote:
-> Add SW support for the vibrator module inside PMI632, PM7250B, PM7325B, PM7550BA.
-> It is very similar to the vibrator module inside PM8916 which is supported in
-> pm8xxx-vib driver but just the drive amplitude is controlled with 2 registers,
-> and the register base offset in each PMIC is different.
+On 16/04/2024 20:20, Ajit Pandey wrote:
+> Add device tree bindings for the graphics clock controller on
+> Qualcomm SM4450 platform.
 > 
-> Changes in v11:
->   1. Drop the 1st patch since it has been applied
->   2. Update to address review comments
+> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
+> ---
+>  .../bindings/clock/qcom,sm8450-gpucc.yaml     |  2 +
+>  include/dt-bindings/clock/qcom,sm4450-gpucc.h | 62 +++++++++++++++++++
 
-Everything is an update. Such changelog is not really helping. Be specific.
+I wrote you even instruction what to do with the tag and it was still
+ignored. Do you read the replies?
+
+I give up on this, good luck.
 
 Best regards,
 Krzysztof
