@@ -1,263 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-17667-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17668-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D8758A8004
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 11:42:59 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 78FD68A8069
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 12:08:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E86691F232B7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 09:42:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E4A6F1F22E1F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 10:08:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96D61130A78;
-	Wed, 17 Apr 2024 09:42:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2870313A3E8;
+	Wed, 17 Apr 2024 10:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BUoFuiSF"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ItTOHdYw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646FEF516;
-	Wed, 17 Apr 2024 09:42:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481D413281B
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 10:08:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713346975; cv=none; b=md5yQy4WPiR7KIqpDQfHF6VZnFA/ZfmSRQV5JzovJpxWPZc+gp9QGrYdnbJL19iYV4BvItgp7ha1bmuWNW+TtH/B2gcdIhLk68tubiZ4o9nkYDNBx+330oNbpWa1Fiusffhux76zFPj/WfsI+c3jXaO1/V4Ji6+KkCgt3XLV2bE=
+	t=1713348487; cv=none; b=it4UFFuzt/R3WvYbNmLVOD/qQtB7fLEbHvQD7zqvWDIZ0G33+Xa2nrQ+fGKCNCPSL289iAP//tZZjOxJDx3gN0HQjv8XLhLHkem+8nra32xjCKYUzPFfNy3BOpIEAVDBuyzD6OApm6yneiwNbi23xXylFiSICsuIdHOFbvQ14Kg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713346975; c=relaxed/simple;
-	bh=VbYJ4kEHAj9Rmh1z0P+Ie72tg4lO+L1d5IkKtKg9t0o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=C9pDybEx/vSCIto0Qy2469tzyu+J23U0VwmI7xlY2eE6yu3PWbWNL36/ujwcXoo+OoCu6jPRLgWDZ682teDd9JKNNMQPa/Hx7VL7s/mg/7RnLUPz9ClwH+Xj8D3R88y/Hgz9VH9zWC7okX55OiAURzK69fn/6d/DvZ9RHx4myzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BUoFuiSF; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43H8Gtd0015591;
-	Wed, 17 Apr 2024 09:42:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=nPrkdTRcH2FKiX4DtNfZTegoE6WoIshS52dgky2QtCM=; b=BU
-	oFuiSFCDx3l842lN/F1u/hFf/KWWx5VF3flwUYftNlQGJSXCLpyqODmp7C/RmQWp
-	WKkySnLulJwz4q7CM1hXSy/l5ztkNmFDIuNyyLSghKqKFgIuwXV2oPGUbjI953jE
-	y9OSh2vD+FaJ9d4l3ua4RF+41zPk+/DQqhXIaTEalwgfdUzj27rhOrcmhGu08833
-	sC7PY9/a9K6WUM897gdnK//Xdm6h23RfPprzKHSUGoD9aMi8zEM4R924Gbdpaa89
-	kXSAIm+7kdC5z17FyPPy2s6neXMOItpbzKfyFaXcTPJhMOCYMRKl0u59qW/kXlig
-	eavWaS6M73ZlCSiQApmg==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xjarpg69b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 17 Apr 2024 09:42:47 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43H9gk0E004109
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 17 Apr 2024 09:42:46 GMT
-Received: from [10.216.60.103] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 17 Apr
- 2024 02:42:41 -0700
-Message-ID: <720e1ee0-79b0-4d30-b1b8-a90676057161@quicinc.com>
-Date: Wed, 17 Apr 2024 15:12:38 +0530
+	s=arc-20240116; t=1713348487; c=relaxed/simple;
+	bh=brHN2J0g6h2FWOT2DJL+bvz0WjZxEx35HK2donLvmSU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QOQfTpviz8fXN/HXHNX6Yu6lk6yP2maNtPLJOAX1UbuY66esb8ekcNz1xUH3JVBT2KY47f6fRMy4pAjkPqC484+NbueaZixRMfGtLjKDOkvd6MXnscWDJvGG+Hboi++tUOqsrMGWahreI0OQgtK+F/POuunSzcxkiIXKlDVP8AY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ItTOHdYw; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-516d0c004b1so7235479e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 03:08:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1713348483; x=1713953283; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=rew6iLA0plRdxtIqeoXYtK2CEUSuSYY+qCYCtmDSd1o=;
+        b=ItTOHdYw7KVGBu8JyoCVRk0nOG06+jf6GFwUIIGCb7UH/R0LL60+/7JIl0DhDJQKwp
+         55xAPWFsd3wkhkmVfZO8hego//PLU1+xgNdJpwz24aIXE5onwqWTAs4Xu3uWM8XuWIVO
+         GNHrb02VxO8ThtdtRjb6O+qsMNPncqpsBrqkONzAsU1DvCBuVhKLNoEOARd1KiUJ5GSd
+         ks2U0E+payxQnWi9hEsa+mC7Z/NXgobU8vTr+4amZG2UztuN5MhAwWmgu9wjPdj2ZYkI
+         /STMyejLuJuu1bNLYaZuCRmZFKe2zqTeOo/hIeMZlAV2ZFTiGZbShOe7YfnGkncy/Wp1
+         wwtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713348483; x=1713953283;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rew6iLA0plRdxtIqeoXYtK2CEUSuSYY+qCYCtmDSd1o=;
+        b=s1LS2Oq3+Cl7yYf7PtL76feloA30baCuswDMU0BuEjxk74dsbmuNQ+OR/jTqXuYjLn
+         x9DCTLc2tF2cdsz0tgi8ZTDjPpdgscUbyQhPJbWOmXTkLiPLrvOjGTXkTWWtVZYfVf2O
+         A1YXk4LyMbejcvGt+wC6DX+GIDqPzEApBGbTyyRHmG6gS9rHuIDNR0NWWZ5oHh8Fr2cs
+         jm/mA30NVKSUGcqJmLxwsv96PEjaAXb/cqkNCM/EklRlWXQYn+SbjslR/5c9JLevxdCq
+         DhwZT89+eq/iGuDO6lI5bdGvJVaxHvz7gWNqqLFlY07puGhItM/x0eEHQwSfjGfHDBBX
+         PnRA==
+X-Forwarded-Encrypted: i=1; AJvYcCX5/3Bd+8i2xgftEuKDPFPoxgPtqUnvzN4XYVreq7zdRRHTk/7BUUu0w145V0Op79fycAvo8YLtWfXOQpnxemmurAk19hikw0T4IF2lTQ==
+X-Gm-Message-State: AOJu0YyUYlI0MIE7nbWh/YwoyfXHL3GcAkXJIhd7jcir5l/W2NkMSY6z
+	6k0GuYBhihjtAPoLwSMyPgYUbQdQYekCW+ngzWbrU/FK4DKE4bWM+eTsBJ5L0M8=
+X-Google-Smtp-Source: AGHT+IHpU2FckcUTS4T6HUYuJqnYbBgP+xCaAEopvwDiMHdA/fetkEHgQoPYTTOMp3Se2U1GhQcWFA==
+X-Received: by 2002:a19:ca03:0:b0:519:5c34:9652 with SMTP id a3-20020a19ca03000000b005195c349652mr10971lfg.31.1713348483318;
+        Wed, 17 Apr 2024 03:08:03 -0700 (PDT)
+Received: from localhost (c-9b0ee555.07-21-73746f28.bbcust.telenor.se. [85.229.14.155])
+        by smtp.gmail.com with ESMTPSA id i25-20020a0565123e1900b00518dfedc3ddsm1012464lfv.12.2024.04.17.03.08.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Apr 2024 03:08:02 -0700 (PDT)
+Date: Wed, 17 Apr 2024 12:08:02 +0200
+From: Anders Roxell <anders.roxell@linaro.org>
+To: Jiri Slaby <jirislaby@kernel.org>
+Cc: Marek Szyprowski <m.szyprowski@samsung.com>, gregkh@linuxfoundation.org,
+	linux-amlogic@lists.infradead.org,
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+	linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Subject: Re: [PATCH 12/15] tty: serial: switch from circ_buf to kfifo
+Message-ID: <Zh-fgtujwjiSXz7D@monster>
+References: <20240405060826.2521-1-jirislaby@kernel.org>
+ <20240405060826.2521-13-jirislaby@kernel.org>
+ <CGME20240415125847eucas1p2bc180c35f40f9c490c713679871af9ae@eucas1p2.samsung.com>
+ <91ac609b-0fae-4856-a2a6-636908d7ad3c@samsung.com>
+ <d70049d5-d0fe-465f-a558-45b6785f6014@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 RESEND] slimbus: stream: Add null pointer check for
- client functions
-Content-Language: en-US
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <linux-kernel@vger.kernel.org>,
-        <quic_msavaliy@quicinc.com>, <quic_vtanuku@quicinc.com>,
-        <quic_anupkulk@quicinc.com>, <quic_cchiluve@quicinc.com>
-References: <20240327083214.29443-1-quic_vdadhani@quicinc.com>
- <ZhgIHHP1FUeCr+vx@hu-bjorande-lv.qualcomm.com>
-From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-In-Reply-To: <ZhgIHHP1FUeCr+vx@hu-bjorande-lv.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: a-Ht6a8lg7W_lO9ZJvW6GY13FBFlUnVe
-X-Proofpoint-ORIG-GUID: a-Ht6a8lg7W_lO9ZJvW6GY13FBFlUnVe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-17_08,2024-04-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
- malwarescore=0 mlxlogscore=999 phishscore=0 adultscore=0 impostorscore=0
- priorityscore=1501 lowpriorityscore=0 spamscore=0 mlxscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
- definitions=main-2404170066
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d70049d5-d0fe-465f-a558-45b6785f6014@kernel.org>
 
-
-
-On 4/11/2024 9:26 PM, Bjorn Andersson wrote:
-> On Wed, Mar 27, 2024 at 02:02:14PM +0530, Viken Dadhaniya wrote:
->> There is a possible scenario where client driver is calling
+On 2024-04-15 15:28, Jiri Slaby wrote:
+> On 15. 04. 24, 14:58, Marek Szyprowski wrote:
+> > Dear All,
+> > 
+> > On 05.04.2024 08:08, Jiri Slaby (SUSE) wrote:
+> > > Switch from struct circ_buf to proper kfifo. kfifo provides much better
+> > > API, esp. when wrap-around of the buffer needs to be taken into account.
+> > > Look at pl011_dma_tx_refill() or cpm_uart_tx_pump() changes for example.
+> > > 
+> > > Kfifo API can also fill in scatter-gather DMA structures, so it easier
+> > > for that use case too. Look at lpuart_dma_tx() for example. Note that
+> > > not all drivers can be converted to that (like atmel_serial), they
+> > > handle DMA specially.
+> > > 
+> > > Note that usb-serial uses kfifo for TX for ages.
+> > > 
+> > > omap needed a bit more care as it needs to put a char into FIFO to start
+> > > the DMA transfer when OMAP_DMA_TX_KICK is set. In that case, we have to
+> > > do kfifo_dma_out_prepare twice: once to find out the tx_size (to find
+> > > out if it is worths to do DMA at all -- size >= 4), the second time for
+> > > the actual transfer.
+> > > 
+> > > All traces of circ_buf are removed from serial_core.h (and its struct
+> > > uart_state).
+> > > 
+> > > Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+> > > ...
+> > 
+> > This patch landed in linux-next as commit 1788cf6a91d9 ("tty: serial:
+> > switch from circ_buf to kfifo"). Unfortunately it breaks UART operation
+> > on thr Amlogic Meson based boards (drivers/tty/serial/meson_uart.c
+> > driver) and Qualcomm RB5 board (drivers/tty/serial/qcom_geni_serial.c).
+> > Once the init process is started, a complete garbage is printed to the
+> > serial console. Here is an example how it looks:
 > 
-> How can we asses the validity or the risk of this problem?
-> How would I know if this matches e.g. a bug report reported by a user?
+> Oh my!
 > 
-> Describe the problem such that the reviewer can asses the validity and
-> severity of your bug fixes.
-
-Ok. Updated commit log in v2
-
+> Both drivers move the tail using both kfifo and uart_xmit_advance()
+> interfaces. Bah. Does it help to remove that uart_xmit_advance() for both of
+> them? (TX stats will be broken.)
 > 
->> slimbus stream APIs in incorrect sequence and it might lead to
->> invalid null access of the stream pointer in slimbus
->> enable/disable/prepare/unprepare/free function.
->>
->> Fix this by checking validity of the stream before accessing in
->> all function API’s exposed to client.
->>
+> Users of uart_port_tx() are not affected.
 > 
-> You use the work "fix" a few time, are you fixing an actual bug? Are you
-> just guarding the driver from incorrect usage?
-> 
-> If it's a fix, then add Fixes and Cc: stable here.
-
-Let me correct myself there. Not a fix but consider an improvement where 
-preventing a crash due to client following the incorrect sequence.
-
-> 
->> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
->> ---
->>   drivers/slimbus/stream.c | 37 +++++++++++++++++++++++++++++++++----
->>   1 file changed, 33 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/slimbus/stream.c b/drivers/slimbus/stream.c
->> index 1d6b38657917..c5a436fd0952 100644
->> --- a/drivers/slimbus/stream.c
->> +++ b/drivers/slimbus/stream.c
->> @@ -202,10 +202,16 @@ static int slim_get_prate_code(int rate)
->>   int slim_stream_prepare(struct slim_stream_runtime *rt,
->>   			struct slim_stream_config *cfg)
->>   {
->> -	struct slim_controller *ctrl = rt->dev->ctrl;
->> +	struct slim_controller *ctrl;
->>   	struct slim_port *port;
->>   	int num_ports, i, port_id, prrate;
->>   
->> +	if (!rt || !cfg) {
->> +		pr_err("%s: Stream or cfg is NULL, Check from client side\n", __func__);
-> 
-> Use dev_err() and write your error messages such that they make sense
-> without the use of __func__.
-
-For error scenario, we don't have valid dev to be used in dev_err argument.
-this log will help for debug. Please let us know any concern with pr_err
-
-> 
->> +		return -EINVAL;
-> 
-> Is this expected to happen during normal operation, or is this a sign of
-> a bug?
+> This is my fault when merging uart_xmit_advance() with this series.
 > 
 
-It's a scenario where client doesn't follow the proper sequence and 
-slimbus driver can crash if not checked against NULL.
+I'm trying to run on two dragonboard devices db410c and db845c and both
+fails to boot see the boot failure from db845c [1], linux-next tag: next-20240415.
+I tried to apply the patch [2] (that you proposed in this thread) ontop of next-20240415. However, that didn't
+help bootlog on db845c [3].
 
-> 
-> Neither of the two callers of this function checks the return value, so
-> is this really going to result in a good system state?
-> 
-
-we expect client to check return value of framework APIs.
-
-> 
-> It would make sense to require the client to pass valid rt and cfg
-> pointers, and if you have an issue in the client driver in which we
-> might end up with invalid points, then those drivers should be fixed -
-> rather than relying on chance and swipe it under the rug here.
-> 
-> Regards,
-> Bjorn
-> 
-
-Agree. it is sequence mismatch from client driver, and they should take 
-care. it is leading to NULL pointer access in slimbus APIs, so prevent 
-crash by adding check.
-
->> +	}
->> +
->> +	ctrl = rt->dev->ctrl;
->>   	if (rt->ports) {
->>   		dev_err(&rt->dev->dev, "Stream already Prepared\n");
->>   		return -EINVAL;
->> @@ -358,9 +364,15 @@ int slim_stream_enable(struct slim_stream_runtime *stream)
->>   {
->>   	DEFINE_SLIM_BCAST_TXN(txn, SLIM_MSG_MC_BEGIN_RECONFIGURATION,
->>   				3, SLIM_LA_MANAGER, NULL);
->> -	struct slim_controller *ctrl = stream->dev->ctrl;
->> +	struct slim_controller *ctrl;
->>   	int ret, i;
->>   
->> +	if (!stream) {
->> +		pr_err("%s: Stream is NULL, Check from client side\n", __func__);
->> +		return -EINVAL;
->> +	}
->> +
->> +	ctrl = stream->dev->ctrl;
->>   	if (ctrl->enable_stream) {
->>   		ret = ctrl->enable_stream(stream);
->>   		if (ret)
->> @@ -411,12 +423,18 @@ int slim_stream_disable(struct slim_stream_runtime *stream)
->>   {
->>   	DEFINE_SLIM_BCAST_TXN(txn, SLIM_MSG_MC_BEGIN_RECONFIGURATION,
->>   				3, SLIM_LA_MANAGER, NULL);
->> -	struct slim_controller *ctrl = stream->dev->ctrl;
->> +	struct slim_controller *ctrl;
->>   	int ret, i;
->>   
->> +	if (!stream) {
->> +		pr_err("%s: Stream is NULL, Check from client side\n", __func__);
->> +		return -EINVAL;
->> +	}
->> +
->>   	if (!stream->ports || !stream->num_ports)
->>   		return -EINVAL;
->>   
->> +	ctrl = stream->dev->ctrl;
->>   	if (ctrl->disable_stream)
->>   		ctrl->disable_stream(stream);
->>   
->> @@ -448,6 +466,11 @@ int slim_stream_unprepare(struct slim_stream_runtime *stream)
->>   {
->>   	int i;
->>   
->> +	if (!stream) {
->> +		pr_err("%s: Stream is NULL, Check from client side\n", __func__);
->> +		return -EINVAL;
->> +	}
->> +
->>   	if (!stream->ports || !stream->num_ports)
->>   		return -EINVAL;
->>   
->> @@ -476,8 +499,14 @@ EXPORT_SYMBOL_GPL(slim_stream_unprepare);
->>    */
->>   int slim_stream_free(struct slim_stream_runtime *stream)
->>   {
->> -	struct slim_device *sdev = stream->dev;
->> +	struct slim_device *sdev;
->> +
->> +	if (!stream) {
->> +		pr_err("%s: Stream is NULL, Check from client side\n", __func__);
->> +		return -EINVAL;
->> +	}
->>   
->> +	sdev = stream->dev;
->>   	spin_lock(&sdev->stream_list_lock);
->>   	list_del(&stream->node);
->>   	spin_unlock(&sdev->stream_list_lock);
->> -- 
->> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
->> of Code Aurora Forum, hosted by The Linux Foundation
->>
+Cheers,
+Anders
+[1] https://tuxapi.tuxsuite.com/v1/groups/linaro/projects/lkft/tests/2f7sLxYtIQXQzsnTzE1Dye2xweg/logs?format=html
+[2] https://lore.kernel.org/lkml/20240416054825.6211-1-jirislaby@kernel.org/raw
+[3] https://tuxapi.tuxsuite.com/v1/groups/linaro/projects/anders/tests/2fDgvWnyEmFm9mqMCxOaruBOfTe/logs?format=html
 
