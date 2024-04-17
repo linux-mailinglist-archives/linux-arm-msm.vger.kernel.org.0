@@ -1,165 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-17700-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17701-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 623588A836B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 14:50:21 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 430FD8A8391
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 14:58:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 15FAF282955
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 12:50:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 745311C2115E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 12:58:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50B7A13C903;
-	Wed, 17 Apr 2024 12:50:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B76813D2BD;
+	Wed, 17 Apr 2024 12:58:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b="ortz7J2e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [5.144.164.170])
+Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C36F84E01;
-	Wed, 17 Apr 2024 12:50:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8C984DF6;
+	Wed, 17 Apr 2024 12:58:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.207.212.93
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713358217; cv=none; b=gKUWojkymmPk43dOtZJwSRHghEUwPbCuvwHpTlEV0WUhHn6tknfp8rA/nqnTESUXVr3z1MLb//nJqmdQJCDPp3Z5nLqs/gX/7gE9GnlWSMOiFvKetJn7En/5uG7yjf4NIirEQv14oxf3f5+xfhOfUOQninDE7BOMjQjoXMDjEOY=
+	t=1713358735; cv=none; b=C1ePYHnJ/HhR9rAgYBXgC4xwgEJxFUYgu2k1sCTmgoKUwd/rJOJISRrnJxEmipR93QmHxups9+zDHZouUVoPgSkGWhClINqeZErq0qX3y/wnXhjFOvLk8UvEKiq6jU2I33VbpAbH3/agJu5Tghm3Uxp+C6I5/Ecmcod7DDOT+kQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713358217; c=relaxed/simple;
-	bh=pmzhT20nSauiIOnj8ZHoK6RV/jEaeeK1HB/dKaWduKk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SgfInzUOgzxAhskw7F30Adb77aUPXxkx0g0cbIL2mIrLSnZzLto8gt1OmPGRbhviIO9HoaE5t1FpPsZrATI6pAb7PUxFy0GInTyMY3E9I4ldNDffI/SVuRhq5JSCOONdFPmI4ZC8DSM+EJKflLqDU9qc9XUJkuX0Ko/bM3fQFKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 2AB341F68B;
-	Wed, 17 Apr 2024 14:50:05 +0200 (CEST)
-Date: Wed, 17 Apr 2024 14:50:03 +0200
-From: Marijn Suijten <marijn.suijten@somainline.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Archit Taneja <architt@codeaurora.org>, 
-	Chandan Uddaraju <chandanu@codeaurora.org>, Vinod Koul <vkoul@kernel.org>, 
-	Sravanthi Kollukuduru <skolluku@codeaurora.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	Jordan Crouse <jordan@cosmicpenguin.net>, Rajesh Yadav <ryadav@codeaurora.org>, 
-	Jeykumar Sankaran <jsanka@codeaurora.org>, ~postmarketos/upstreaming@lists.sr.ht, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Martin Botka <martin.botka@somainline.org>, Jami Kettunen <jami.kettunen@somainline.org>
-Subject: Re: [PATCH 6/7] drm/msm/dsi: Set PHY usescase before registering DSI
- host
-Message-ID: <dwda6pf5e5k2ohxexxxrqdzvcgaxp3p7g3erqoqha4ouhtvzez@dmuxgqlvyp6x>
-References: <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-0-78ae3ee9a697@somainline.org>
- <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-6-78ae3ee9a697@somainline.org>
- <CAA8EJpry5Gct7Q2sAwFBVYV163X9BOcuKu9So47FEJaeXcdSaQ@mail.gmail.com>
+	s=arc-20240116; t=1713358735; c=relaxed/simple;
+	bh=mRlRkorupNuv+TJWx/y+uXXu1O9+ZgMbFD+YQNFOBqM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=tjb6XkGhsZox86JdBLtyE3D7d2DLcuBYGv+EdyNw5aw3bFmhGsSrV+VvdBIsAtG+PqbpPJWd+R6Q5uNepbYDJZlh0PZvBWN8v9BrapSg7DKGYTSO1dw20m9MyBDDS9wf0TqfcMsCEyyfVCSb4qNnR0zov+6WSBvAVFcls+NoUMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com; spf=pass smtp.mailfrom=foss.st.com; dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b=ortz7J2e; arc=none smtp.client-ip=91.207.212.93
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foss.st.com
+Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
+	by mx07-00178001.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43HClsCK003624;
+	Wed, 17 Apr 2024 14:57:28 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	selector1; bh=Oy6ydHY6pQ8DYm8xK8PeLsM+pd6WltoQh0mGRUSj86E=; b=or
+	tz7J2eIpRjwTS6nxsow94Im5O+PJ8pyQKEzgQC9x+TEQyuiVxirXsxSqUmOFi5z6
+	j9JuaMCVAueB7+ptBoHkZGcb+q5wgjo9DutZh3e/xcZNv9ir2WSLw5Tx3J4ORSCe
+	EA73ib1bb2NSzUytaI+3EJVy3k1Q1gI0fSP3IQEsjwu2YJe3ZCZaDZ9kzaEBLiHp
+	IczYev9vu0LgIHwFgY0toURY1M4EinAS1+idFQEUfhYnNuSSXU5+tp4rEI3eP1EF
+	QiCs84WlUXA+URlFhvVZDuDiVG8dZypP1QlE91pV8tkChGQWA45K8voZ9I1+fYd5
+	RRPfPDBlEjqpZ5kxlIMg==
+Received: from beta.dmz-ap.st.com (beta.dmz-ap.st.com [138.198.100.35])
+	by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3xgecyea3g-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Apr 2024 14:57:28 +0200 (MEST)
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id E01244002D;
+	Wed, 17 Apr 2024 14:57:10 +0200 (CEST)
+Received: from Webmail-eu.st.com (shfdag1node1.st.com [10.75.129.69])
+	by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id E51CB214D29;
+	Wed, 17 Apr 2024 14:55:47 +0200 (CEST)
+Received: from [10.130.72.241] (10.130.72.241) by SHFDAG1NODE1.st.com
+ (10.75.129.69) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.27; Wed, 17 Apr
+ 2024 14:55:46 +0200
+Message-ID: <ea60a9e8-6240-4a0a-a224-e132b67160b1@foss.st.com>
+Date: Wed, 17 Apr 2024 14:55:45 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpry5Gct7Q2sAwFBVYV163X9BOcuKu9So47FEJaeXcdSaQ@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 22/35] media: i2c: st-mipid02: Use the correct div
+ function
+To: Ricardo Ribalda <ribalda@chromium.org>,
+        Martin Tuma
+	<martin.tuma@digiteqautomotive.com>,
+        Mauro Carvalho Chehab
+	<mchehab@kernel.org>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Hugues Fruchet
+	<hugues.fruchet@foss.st.com>,
+        Alain Volmat <alain.volmat@foss.st.com>,
+        Maxime
+ Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue
+	<alexandre.torgue@foss.st.com>,
+        Paul Kocialkowski
+	<paul.kocialkowski@bootlin.com>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec
+	<jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Sakari
+ Ailus <sakari.ailus@linux.intel.com>,
+        Thierry Reding
+	<thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Sowjanya
+ Komatineni <skomatineni@nvidia.com>,
+        Luca Ceresoli
+	<luca.ceresoli@bootlin.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+        Hans
+ Verkuil <hverkuil@xs4all.nl>, Sergey Kozlov <serjk@netup.ru>,
+        Abylay Ospan
+	<aospan@netup.ru>,
+        Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+        Dmitry
+ Osipenko <digetx@gmail.com>,
+        Stanimir Varbanov
+	<stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Sylvain
+ Petinot <sylvain.petinot@foss.st.com>,
+        Jacopo Mondi
+	<jacopo+renesas@jmondi.org>,
+        Kieran Bingham
+	<kieran.bingham+renesas@ideasonboard.com>,
+        Laurent Pinchart
+	<laurent.pinchart+renesas@ideasonboard.com>,
+        =?UTF-8?Q?Niklas_S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+        Pavel Machek <pavel@ucw.cz>
+CC: <linux-media@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-staging@lists.linux.dev>, <linux-sunxi@lists.linux.dev>,
+        <linux-tegra@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20240415-fix-cocci-v1-0-477afb23728b@chromium.org>
+ <20240415-fix-cocci-v1-22-477afb23728b@chromium.org>
+Content-Language: en-US
+From: Benjamin Mugnier <benjamin.mugnier@foss.st.com>
+In-Reply-To: <20240415-fix-cocci-v1-22-477afb23728b@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SHFCAS1NODE1.st.com (10.75.129.72) To SHFDAG1NODE1.st.com
+ (10.75.129.69)
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-17_10,2024-04-16_01,2023-05-22_02
 
-On 2024-04-17 11:18:58, Dmitry Baryshkov wrote:
-> On Wed, 17 Apr 2024 at 02:57, Marijn Suijten
-> <marijn.suijten@somainline.org> wrote:
-> >
-> > Ordering issues here cause an uninitalized (default STANDALONE)
-> > usecase to be programmed (which appears to be a MUX) in some cases
-> > when msm_dsi_host_register() is called, leading to the slave PLL in
-> > bonded-DSI mode to source from a clock parent (dsi1vco) that is off.
-> >
-> > This should seemingly not be a problem as the actual dispcc clocks from
-> > DSI1 that are muxed in the clock tree of DSI0 are way further down, this
-> > bit still seems to have an effect on them somehow and causes the right
-> > side of the panel controlled by DSI1 to not function.
-> >
-> > In an ideal world this code is refactored to no longer have such
-> > error-prone calls "across subsystems", and instead model the "PLL src"
-> > register field as a regular mux so that changing the clock parents
-> > programmatically or in DTS via `assigned-clock-parents` has the
-> > desired effect.
-> > But for the avid reader, the clocks that we *are* muxing into DSI0's
-> > tree are way further down, so if this bit turns out to be a simple mux
-> > between dsiXvco and out_div, that shouldn't have any effect as this
-> > whole tree is off anyway.
-> >
-> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> > ---
-> >  drivers/gpu/drm/msm/dsi/dsi_manager.c | 15 +++++++++++----
-> >  1 file changed, 11 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> > index af2a287cb3bd..17f43b3c0494 100644
-> > --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> > +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> > @@ -85,6 +85,17 @@ static int dsi_mgr_setup_components(int id)
-> >                                                         msm_dsi : other_dsi;
-> >                 struct msm_dsi *slave_link_dsi = IS_MASTER_DSI_LINK(id) ?
-> >                                                         other_dsi : msm_dsi;
-> > +
-> > +               /* PLL0 is to drive both 2 DSI link clocks in bonded DSI mode.
-> > +                *
-> > +                * Set the usecase before calling msm_dsi_host_register() to prevent it from
-> > +                * enabling and configuring the usecase (which is just a mux bit) first.
-> > +                */
-> > +               msm_dsi_phy_set_usecase(clk_master_dsi->phy,
-> > +                                       MSM_DSI_PHY_MASTER);
-> > +               msm_dsi_phy_set_usecase(clk_slave_dsi->phy,
-> > +                                       MSM_DSI_PHY_SLAVE);
-> > +
-> >                 /* Register slave host first, so that slave DSI device
-> >                  * has a chance to probe, and do not block the master
-> >                  * DSI device's probe.
-> > @@ -100,10 +111,6 @@ static int dsi_mgr_setup_components(int id)
-> >                         return ret;
-> >
-> >                 /* PLL0 is to drive both 2 DSI link clocks in bonded DSI mode. */
-> > -               msm_dsi_phy_set_usecase(clk_master_dsi->phy,
-> > -                                       MSM_DSI_PHY_MASTER);
-> > -               msm_dsi_phy_set_usecase(clk_slave_dsi->phy,
-> > -                                       MSM_DSI_PHY_SLAVE);
-> >                 msm_dsi_host_set_phy_mode(msm_dsi->host, msm_dsi->phy);
-> >                 msm_dsi_host_set_phy_mode(other_dsi->host, other_dsi->phy);
+Hi Ricardo,
+
+Thanks a lot.
+Reviewed-by: Benjamin Mugnier <benjamin.mugnier@foss.st.com>
+
+On 4/15/24 21:34, Ricardo Ribalda wrote:
+> link_freq does not fit in 32 bits.
 > 
-> Please move msm_dsi_host_set_phy_mode() calls too.
-
-Ack.  Yeah, given that msm_dsi_host_register() causes a modeset and finally the
-PLL turning on, these should be set up as well.
-
-For anyone else following along, I have pasted the stacktrace that showcases
-the execution flow in the drm/msm tracker:
-
-https://gitlab.freedesktop.org/drm/msm/-/issues/41#note_2376115
-
-Abhinav also pointed out that this PLL source was correctly set in earlier
-devcoredump reports, so it might have been a recent development/regression?
-This seems to be the only issue originating from it, but folks were adamant that
-dsi_mgr_setup_components() (ultimately) would never turn the PLL on, which is
-"debunked" by said stacktrace.  Maybe other assumptions are affected by this
-change?
-
-> Also please update the non-bonded case.
-
-Definitely, as suggested in the cover letter.  A similar stacktrace to the above
-is acquired on a non-bonded setup, which is also relying on the variable to be
-initialized to 0 to select the "local PLL source", rather than being correctly
-set via this msm_dsi_phy_set_usecase() configuration.
-
-- Marijn
-
-> >         }
-> >
-> > --
-> > 2.44.0
-> >
+> Found by cocci:
+> drivers/media/i2c/st-mipid02.c:329:1-7: WARNING: do_div() does a 64-by-32 division, please consider using div64_s64 instead.
 > 
+> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+> ---
+>  drivers/media/i2c/st-mipid02.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> -- 
-> With best wishes
-> Dmitry
+> diff --git a/drivers/media/i2c/st-mipid02.c b/drivers/media/i2c/st-mipid02.c
+> index f250640729ca..93a40bfda1af 100644
+> --- a/drivers/media/i2c/st-mipid02.c
+> +++ b/drivers/media/i2c/st-mipid02.c
+> @@ -326,7 +326,7 @@ static int mipid02_configure_from_rx_speed(struct mipid02_dev *bridge,
+>  	}
+>  
+>  	dev_dbg(&client->dev, "detect link_freq = %lld Hz", link_freq);
+> -	do_div(ui_4, link_freq);
+> +	ui_4 = div64_s64(ui_4, link_freq);
+>  	bridge->r.clk_lane_reg1 |= ui_4 << 2;
+>  
+>  	return 0;
+> 
+
+-- 
+Regards,
+
+Benjamin
 
