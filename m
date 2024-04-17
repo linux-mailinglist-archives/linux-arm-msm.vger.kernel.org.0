@@ -1,326 +1,217 @@
-Return-Path: <linux-arm-msm+bounces-17774-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17775-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08E138A8DE5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 23:27:05 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 76AC68A8E2D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 23:39:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B40F9281966
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 21:27:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 03DDC1F23731
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 21:39:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45773651AB;
-	Wed, 17 Apr 2024 21:27:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3924747F62;
+	Wed, 17 Apr 2024 21:39:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pFXQOhgD"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XRTpbr+e"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F1718C19;
-	Wed, 17 Apr 2024 21:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8887F537E5;
+	Wed, 17 Apr 2024 21:39:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713389220; cv=none; b=I1F/8BXZ4JWPjIYwpNC9d8DiK1YyaMnFr0e/XATGuN3CvLkvOiZ5yLDDItevx3UOJhR95TTVJP+BzRgPxj5c3dK7my89Ak11C8NR81Gt+gM/P0GhnrePMn2KIM7GaxILSMgCdRGI+fPS8o60EmLIcxUIBvBnfLLb8hWZuGfAVGo=
+	t=1713389974; cv=none; b=pPnzV4DumjAM3ezjtTKR4EnZ2j5lIzol4kLewhlHRPCblWoa4tR+YiGmWfTx20YO2kRcA2SNQwaZB9r/sTm/lxud3JlzFIBSF8epGd21BapGwrSFQNd3iWpcGUIV58gBh9qpCM7dxt0X8OoyPLFK5bgh69C3WAgN6fEaWhPJ2Pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713389220; c=relaxed/simple;
-	bh=Kgr3l8oZ7Q3YDeZSqKwn97IzLy6iJhxl9AjXAxG/njM=;
+	s=arc-20240116; t=1713389974; c=relaxed/simple;
+	bh=q0QCaPKXFQaJRN1yKHQCY4iTcPAK8SFeGcseBNHXKuI=;
 	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QrgYfuMH4JEhYB/CZbDTdNcvU7rbGJw3jpjwbhGV47q7T/s+arAtoFISloWVvMWy5EcTWfr2WiKSQHPwQ7GVxJt16VNycOeo4Ia+7Jddb5LqLzWIuB/Ieoz6HfO8oW2LK6JUx6ECG6U7CG9IYGiqsVdnSCv+LP3KquSijAyjdqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pFXQOhgD; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=iYDTODPnhZsxgp3zQZ0fqdrBk1oPtQvuC6wa/dmCwDBvfmkNFJwYVcFboC2Mkz9HcX61kD4KIqXlHSl6LN0dA1qAn4zk11gOOizMV8kHLadcsx0ZrhVhPi55qxLBkCTt5cCaFQRa21d7ic7AngEmnwlSva533wVfeb3d2U8CEGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XRTpbr+e; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43HHsoBd004653;
-	Wed, 17 Apr 2024 21:26:51 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43H8LoRD018023;
+	Wed, 17 Apr 2024 21:39:24 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=Ae+HJFoCBY2/eyD7JuHwZ
-	HhB9vVQIk+PAqEYgisIwQ0=; b=pFXQOhgDNnc9TSOiBLZD5DO1hlkqGjRBvyIgl
-	q0XZQ2ndpEPWWTKQfcmggoOwbad4O2w72dl/qZNTduSM30Xkdg2a19D1WWoBR0Yz
-	RXTB+OQHpAwwVhJJbVdKQKo95Ti+gjlYKl1T/lMzYd5U5rHdS2D+7vEO5u0rixl6
-	OHTYQdPNqC4QM5G8hd4M2EwV6ZwKijmaRxu3w6XQdCE1acP3PfX7pxRy534c4GS0
-	AYXvlhRinBRRXAe/gmow4a1p0sFo/n2SHqAdV6/HjY7mpeJQKQ7R98H7g35bd3aF
-	Y5QShRi1vjXWGmZFo7Q9yb8c4bKuaMupDxhRiH9QQpqf0/s0g==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xjk888g7c-1
+	:content-type:content-transfer-encoding:in-reply-to; s=
+	qcppdkim1; bh=nz82gthU4H0gzVnKqCRneaII5j/RA0J3JmroyTGbXns=; b=XR
+	Tpbr+eghOqh92U4wjOh6wVPT5NRTbypCgO3o5fhk6dVO7O8oCYqzaKh1kQeblTZm
+	B2rmXxZy8EwdRDx/C+lJ0uAXGOCIjXW+sl/4F+09k/zdGx6QwBNWC+5lJHLNlhgW
+	Tfha3ujMEVPcixuxSXyNQO5xp65qAUfTv2Bq2ANrf564MXxwjDgQ72KK5B5ucOkG
+	9zSBAO/uSr6+wL0l5VwIz6V8qBifAdj7BRkDbdcGBFtjU3Pv2FVeXV0Ii48Cny4z
+	MoJ6JT+v97t2ddSvtYY4PGkUyD0kAiQQX9cI/0mFvf5tDm+WdwgWf6NU2Yhv1wbd
+	9wC/V6y5wLAQd2Iu7LZQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xjaupt2ng-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 17 Apr 2024 21:26:51 +0000 (GMT)
+	Wed, 17 Apr 2024 21:39:24 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43HLQo1r016175
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43HLdFfK029845
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 17 Apr 2024 21:26:50 GMT
+	Wed, 17 Apr 2024 21:39:16 GMT
 Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
  nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 17 Apr 2024 14:26:50 -0700
-Date: Wed, 17 Apr 2024 14:26:48 -0700
+ 15.2.1544.9; Wed, 17 Apr 2024 14:39:15 -0700
+Date: Wed, 17 Apr 2024 14:39:14 -0700
 From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: Sibi Sankar <quic_sibis@quicinc.com>
-CC: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <jassisinghbrar@gmail.com>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <dmitry.baryshkov@linaro.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <quic_rgottimu@quicinc.com>, <quic_kshivnan@quicinc.com>,
-        <conor+dt@kernel.org>, <quic_gkohli@quicinc.com>,
-        <quic_nkela@quicinc.com>, <quic_psodagud@quicinc.com>
-Subject: Re: [PATCH V3 2/5] mailbox: Add support for QTI CPUCP mailbox
- controller
-Message-ID: <ZiA+mE3QduLxc+a5@hu-bjorande-lv.qualcomm.com>
-References: <20240417132856.1106250-1-quic_sibis@quicinc.com>
- <20240417132856.1106250-3-quic_sibis@quicinc.com>
+To: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <linux-kernel@vger.kernel.org>,
+        <quic_msavaliy@quicinc.com>, <quic_vtanuku@quicinc.com>,
+        <quic_anupkulk@quicinc.com>, <quic_cchiluve@quicinc.com>
+Subject: Re: [PATCH v1 RESEND] slimbus: stream: Add null pointer check for
+ client functions
+Message-ID: <ZiBBgiQYVAEEaeZi@hu-bjorande-lv.qualcomm.com>
+References: <20240327083214.29443-1-quic_vdadhani@quicinc.com>
+ <ZhgIHHP1FUeCr+vx@hu-bjorande-lv.qualcomm.com>
+ <720e1ee0-79b0-4d30-b1b8-a90676057161@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-In-Reply-To: <20240417132856.1106250-3-quic_sibis@quicinc.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <720e1ee0-79b0-4d30-b1b8-a90676057161@quicinc.com>
 X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ETMeZ3OPLNVkcfOw_efzTQlFTcNAZCEf
-X-Proofpoint-GUID: ETMeZ3OPLNVkcfOw_efzTQlFTcNAZCEf
+X-Proofpoint-GUID: hzUEsAMLuivqaa-ID21jar4hQvkob5w3
+X-Proofpoint-ORIG-GUID: hzUEsAMLuivqaa-ID21jar4hQvkob5w3
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-04-17_18,2024-04-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 malwarescore=0
- mlxlogscore=999 clxscore=1015 lowpriorityscore=0 impostorscore=0
- bulkscore=0 spamscore=0 phishscore=0 adultscore=0 priorityscore=1501
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404170152
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
+ suspectscore=0 priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0
+ spamscore=0 impostorscore=0 clxscore=1015 lowpriorityscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404170154
 
-On Wed, Apr 17, 2024 at 06:58:53PM +0530, Sibi Sankar wrote:
-> diff --git a/drivers/mailbox/qcom-cpucp-mbox.c b/drivers/mailbox/qcom-cpucp-mbox.c
-> new file mode 100644
-> index 000000000000..059eb25f217c
-> --- /dev/null
-> +++ b/drivers/mailbox/qcom-cpucp-mbox.c
-> @@ -0,0 +1,188 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2024, The Linux Foundation. All rights reserved.
+On Wed, Apr 17, 2024 at 03:12:38PM +0530, Viken Dadhaniya wrote:
+> 
+> 
+> On 4/11/2024 9:26 PM, Bjorn Andersson wrote:
+> > On Wed, Mar 27, 2024 at 02:02:14PM +0530, Viken Dadhaniya wrote:
+> > > There is a possible scenario where client driver is calling
+> > 
+> > How can we asses the validity or the risk of this problem?
+> > How would I know if this matches e.g. a bug report reported by a user?
+> > 
+> > Describe the problem such that the reviewer can asses the validity and
+> > severity of your bug fixes.
+> 
+> Ok. Updated commit log in v2
+> 
+> > 
+> > > slimbus stream APIs in incorrect sequence and it might lead to
+> > > invalid null access of the stream pointer in slimbus
+> > > enable/disable/prepare/unprepare/free function.
+> > > 
+> > > Fix this by checking validity of the stream before accessing in
+> > > all function API’s exposed to client.
+> > > 
+> > 
+> > You use the work "fix" a few time, are you fixing an actual bug? Are you
+> > just guarding the driver from incorrect usage?
+> > 
+> > If it's a fix, then add Fixes and Cc: stable here.
+> 
+> Let me correct myself there. Not a fix but consider an improvement where
+> preventing a crash due to client following the incorrect sequence.
+> 
 
-Nope.
+This is C, this is the Linux kernel. We do not account for clients
+calling random functions in random order.
 
-> + */
-> +
-> +#include <linux/interrupt.h>
-> +#include <linux/irq.h>
-> +#include <linux/irqdomain.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/mailbox_controller.h>
-> +#include <linux/module.h>
-> +
-> +#define APSS_CPUCP_IPC_CHAN_SUPPORTED		3
-> +#define APSS_CPUCP_MBOX_CMD_OFF			0x4
-> +
-> +/* Tx Registers */
-> +#define APSS_CPUCP_TX_MBOX_IDR			0
-> +#define APSS_CPUCP_TX_MBOX_CMD(i)		(0x100 + ((i) * 8))
-> +
-> +/* Rx Registers */
-> +#define APSS_CPUCP_RX_MBOX_IDR			0
-> +#define APSS_CPUCP_RX_MBOX_CMD(i)		(0x100 + ((i) * 8))
-> +#define APSS_CPUCP_RX_MBOX_MAP			0x4000
-> +#define APSS_CPUCP_RX_MBOX_STAT			0x4400
-> +#define APSS_CPUCP_RX_MBOX_CLEAR		0x4800
-> +#define APSS_CPUCP_RX_MBOX_EN			0x4C00
+If it happens because there are race conditions, then fix the client
+driver (there's probably other bugs hidden there). If it's a problem
+that can happen during bringup due to some misconfiguration, let it go
+to kernel panic so we can catch it quickly.
 
-Can we have lower case hex digits, plz?
+If there is a valid scenario where this can happen, then clearly
+describe this in the commit message.
 
-> +#define APSS_CPUCP_RX_MBOX_CMD_MASK		0xFFFFFFFFFFFFFFFF
-> +
-> +/**
-> + * struct qcom_cpucp_mbox - Holder for the mailbox driver
-> + * @chans:			The mailbox channel
-> + * @mbox:			The mailbox controller
-> + * @tx_base:			Base address of the CPUCP tx registers
-> + * @rx_base:			Base address of the CPUCP rx registers
-> + * @dev:			Device associated with this instance
-> + * @irq:			CPUCP to AP irq
+> > 
+> > > Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+> > > ---
+> > >   drivers/slimbus/stream.c | 37 +++++++++++++++++++++++++++++++++----
+> > >   1 file changed, 33 insertions(+), 4 deletions(-)
+> > > 
+> > > diff --git a/drivers/slimbus/stream.c b/drivers/slimbus/stream.c
+> > > index 1d6b38657917..c5a436fd0952 100644
+> > > --- a/drivers/slimbus/stream.c
+> > > +++ b/drivers/slimbus/stream.c
+> > > @@ -202,10 +202,16 @@ static int slim_get_prate_code(int rate)
+> > >   int slim_stream_prepare(struct slim_stream_runtime *rt,
+> > >   			struct slim_stream_config *cfg)
+> > >   {
+> > > -	struct slim_controller *ctrl = rt->dev->ctrl;
+> > > +	struct slim_controller *ctrl;
+> > >   	struct slim_port *port;
+> > >   	int num_ports, i, port_id, prrate;
+> > > +	if (!rt || !cfg) {
+> > > +		pr_err("%s: Stream or cfg is NULL, Check from client side\n", __func__);
+> > 
+> > Use dev_err() and write your error messages such that they make sense
+> > without the use of __func__.
+> 
+> For error scenario, we don't have valid dev to be used in dev_err argument.
+> this log will help for debug. Please let us know any concern with pr_err
+> 
 
-@dev and @irq can be a local variables in qcom_cpucp_mbox_probe().
+Yes, I have a concern with this.
 
-> + */
-> +struct qcom_cpucp_mbox {
-> +	struct mbox_chan chans[APSS_CPUCP_IPC_CHAN_SUPPORTED];
-> +	struct mbox_controller mbox;
-> +	void __iomem *tx_base;
-> +	void __iomem *rx_base;
-> +	struct device *dev;
-> +	int irq;
-> +};
-> +
-> +static inline int channel_number(struct mbox_chan *chan)
-> +{
-> +	return chan - chan->mbox->chans;
-> +}
-> +
-> +static irqreturn_t qcom_cpucp_mbox_irq_fn(int irq, void *data)
-> +{
-> +	struct qcom_cpucp_mbox *cpucp = data;
-> +	struct mbox_chan *chan;
-> +	unsigned long flags;
-> +	u64 status;
-> +	u32 val;
-> +	int i;
-> +
-> +	status = readq(cpucp->rx_base + APSS_CPUCP_RX_MBOX_STAT);
-> +
-> +	for (i = 0; i < APSS_CPUCP_IPC_CHAN_SUPPORTED; i++) {
-> +		val = 0;
+You will print a line in the log and carry on as if nothing happened.
+Most likely this will go unnoticed during testing, or you will have bug
+reports that are extremely hard to take action on.
 
-This value is immediately overwritten (or unused).
+> > 
+> > > +		return -EINVAL;
+> > 
+> > Is this expected to happen during normal operation, or is this a sign of
+> > a bug?
+> > 
+> 
+> It's a scenario where client doesn't follow the proper sequence and slimbus
+> driver can crash if not checked against NULL.
+> 
+> > 
+> > Neither of the two callers of this function checks the return value, so
+> > is this really going to result in a good system state?
+> > 
+> 
+> we expect client to check return value of framework APIs.
+> 
 
-> +		if (status & BIT(i)) {
+Please send bug fixes for these.
 
-Can't you combine the for loop and this conditional into a
-for_each_bit_set()?
+> > 
+> > It would make sense to require the client to pass valid rt and cfg
+> > pointers, and if you have an issue in the client driver in which we
+> > might end up with invalid points, then those drivers should be fixed -
+> > rather than relying on chance and swipe it under the rug here.
+> > 
+> > Regards,
+> > Bjorn
+> > 
+> 
+> Agree. it is sequence mismatch from client driver, and they should take
+> care. it is leading to NULL pointer access in slimbus APIs, so prevent crash
+> by adding check.
+> 
 
-> +			val = readl(cpucp->rx_base + APSS_CPUCP_RX_MBOX_CMD(i) + APSS_CPUCP_MBOX_CMD_OFF);
-> +			chan = &cpucp->chans[i];
-> +			spin_lock_irqsave(&chan->lock, flags);
-
-Can you please add a comment here to document that the lock is taken
-here to deal with races against client registration? (It wasn't obvious
-to me...)
-
-> +			if (chan->cl)
-> +				mbox_chan_received_data(chan, &val);
-> +			writeq(BIT(i), cpucp->rx_base + APSS_CPUCP_RX_MBOX_CLEAR);
-> +			spin_unlock_irqrestore(&chan->lock, flags);
-> +		}
-> +	}
-> +
-> +	return IRQ_HANDLED;
-> +}
-> +
-> +static int qcom_cpucp_mbox_startup(struct mbox_chan *chan)
-> +{
-> +	struct qcom_cpucp_mbox *cpucp = container_of(chan->mbox, struct qcom_cpucp_mbox, mbox);
-> +	unsigned long chan_id = channel_number(chan);
-> +	u64 val;
-> +
-> +	val = readq(cpucp->rx_base + APSS_CPUCP_RX_MBOX_EN);
-> +	val |= BIT(chan_id);
-> +	writeq(val, cpucp->rx_base + APSS_CPUCP_RX_MBOX_EN);
-> +
-> +	return 0;
-> +}
-> +
-> +static void qcom_cpucp_mbox_shutdown(struct mbox_chan *chan)
-> +{
-> +	struct qcom_cpucp_mbox *cpucp = container_of(chan->mbox, struct qcom_cpucp_mbox, mbox);
-> +	unsigned long chan_id = channel_number(chan);
-> +	u64 val;
-> +
-> +	val = readq(cpucp->rx_base + APSS_CPUCP_RX_MBOX_EN);
-> +	val &= ~BIT(chan_id);
-> +	writeq(val, cpucp->rx_base + APSS_CPUCP_RX_MBOX_EN);
-> +}
-> +
-> +static int qcom_cpucp_mbox_send_data(struct mbox_chan *chan, void *data)
-> +{
-> +	struct qcom_cpucp_mbox *cpucp = container_of(chan->mbox, struct qcom_cpucp_mbox, mbox);
-> +	unsigned long chan_id = channel_number(chan);
-> +	u32 *val = data;
-> +
-> +	writel(*val, cpucp->tx_base + APSS_CPUCP_TX_MBOX_CMD(chan_id) + APSS_CPUCP_MBOX_CMD_OFF);
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct mbox_chan_ops qcom_cpucp_mbox_chan_ops = {
-> +	.startup = qcom_cpucp_mbox_startup,
-> +	.send_data = qcom_cpucp_mbox_send_data,
-> +	.shutdown = qcom_cpucp_mbox_shutdown
-> +};
-> +
-> +static int qcom_cpucp_mbox_probe(struct platform_device *pdev)
-> +{
-> +	struct qcom_cpucp_mbox *cpucp;
-> +	struct mbox_controller *mbox;
-> +	int ret;
-> +
-> +	cpucp = devm_kzalloc(&pdev->dev, sizeof(*cpucp), GFP_KERNEL);
-> +	if (!cpucp)
-> +		return -ENOMEM;
-> +
-> +	cpucp->dev = &pdev->dev;
-> +
-> +	cpucp->rx_base = devm_of_iomap(cpucp->dev, cpucp->dev->of_node, 0, NULL);
-> +	if (IS_ERR(cpucp->rx_base))
-> +		return PTR_ERR(cpucp->rx_base);
-> +
-> +	cpucp->tx_base = devm_of_iomap(cpucp->dev, cpucp->dev->of_node, 1, NULL);
-> +	if (IS_ERR(cpucp->tx_base))
-> +		return PTR_ERR(cpucp->tx_base);
-> +
-> +	writeq(0, cpucp->rx_base + APSS_CPUCP_RX_MBOX_EN);
-> +	writeq(0, cpucp->rx_base + APSS_CPUCP_RX_MBOX_CLEAR);
-> +	writeq(0, cpucp->rx_base + APSS_CPUCP_RX_MBOX_MAP);
-> +
-> +	cpucp->irq = platform_get_irq(pdev, 0);
-> +	if (cpucp->irq < 0)
-> +		return cpucp->irq;
-> +
-> +	ret = devm_request_irq(cpucp->dev, cpucp->irq, qcom_cpucp_mbox_irq_fn,
-> +			       IRQF_TRIGGER_HIGH, "apss_cpucp_mbox", cpucp);
-> +	if (ret < 0)
-> +		return dev_err_probe(cpucp->dev, ret, "Failed to register irq: %d\n", cpucp->irq);
-> +
-> +	writeq(APSS_CPUCP_RX_MBOX_CMD_MASK, cpucp->rx_base + APSS_CPUCP_RX_MBOX_MAP);
-> +
-> +	mbox = &cpucp->mbox;
-> +	mbox->dev = cpucp->dev;
-> +	mbox->num_chans = APSS_CPUCP_IPC_CHAN_SUPPORTED;
-> +	mbox->chans = cpucp->chans;
-> +	mbox->ops = &qcom_cpucp_mbox_chan_ops;
-> +	mbox->txdone_irq = false;
-> +	mbox->txdone_poll = false;
-> +
-> +	ret = devm_mbox_controller_register(cpucp->dev, mbox);
-> +	if (ret)
-> +		return dev_err_probe(cpucp->dev, ret, "Failed to create mailbox\n");
-> +
-> +	platform_set_drvdata(pdev, cpucp);
-
-I don't see you using the drvdata anywhere, can we drop this?
-
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct of_device_id qcom_cpucp_mbox_of_match[] = {
-> +	{ .compatible = "qcom,x1e80100-cpucp-mbox"},
-
-A space after the final '"' would be good for aesthetics.
+You're not just preventing a crash, you're introducing a unexpected
+(currently undefined, due to lack of error propagation) behavior by just
+returning an error here.
 
 Regards,
 Bjorn
-
-> +	{}
-> +};
-> +MODULE_DEVICE_TABLE(of, qcom_cpucp_mbox_of_match);
-> +
-> +static struct platform_driver qcom_cpucp_mbox_driver = {
-> +	.probe = qcom_cpucp_mbox_probe,
-> +	.driver = {
-> +		.name = "qcom_cpucp_mbox",
-> +		.of_match_table = qcom_cpucp_mbox_of_match,
-> +	},
-> +};
-> +module_platform_driver(qcom_cpucp_mbox_driver);
-> +
-> +MODULE_DESCRIPTION("QTI CPUCP MBOX Driver");
-> +MODULE_LICENSE("GPL");
-> -- 
-> 2.34.1
-> 
 
