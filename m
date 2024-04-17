@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-17756-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0836C8A8C9F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 22:05:01 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 283948A8CA5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 22:05:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B4ACB285569
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 20:04:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C8BEE286DF6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 20:05:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CBB544C8B;
-	Wed, 17 Apr 2024 20:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B829173339;
+	Wed, 17 Apr 2024 20:03:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jODWByOx"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IWnwi9PW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 684725FDB2
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 20:03:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632AD16FF4F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 20:03:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713384195; cv=none; b=lBPU5f/aLHqHUn6+FfmrQSF9hiCLnIuDwAGr6fNh7A61uwxtpWDM0Kj9viMv8ylfWNeXkV8bKQvEly+rPh0lne28g5B0/o3vSS+BqDX4EViSb0xPM2xvQ6gpj14Y5jbdExWofP3InzGnggAOPumSs7jZfBa2JVvCVkynC9FgFIA=
+	t=1713384197; cv=none; b=hjJxwfogH1peqiOSec7dVrNuo6iaDO8y0LTtV7GSbfEDgsPNgWd2AoYDao4Ft7eEXOCoJKbUr+J++4041cUL6W1L0UXREw1bnrKyx4C4jDi3bo4sCihrXH5fS7P1SFF6ipuQVevnXhbbV4Sn6yZSRmLK/ofTSts0j66iELfAj9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713384195; c=relaxed/simple;
-	bh=npBgux6bk5AO5WT4DCEsUOpTuW4/rkHnMNv0Oi6y770=;
+	s=arc-20240116; t=1713384197; c=relaxed/simple;
+	bh=7hn9yWc0x+ZGVLx5RkT997HsicwrF9htKGIWH4IlDYk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ZlzjwhOcmb53KyZ32MunwfovvWkrdK3IbBYUaClg8gsLXrQ5gkpAsVLCSHkCyTjY8RFNGJiZRJ4x9ilRsbM68lrqb3WOh/owJSL/u1XjaOCmlPAjcVeHrQPTP4H4SOC8cdoY63rQCoN40kTVfy24+RrIwNgwIgf9b30w4JSdxWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jODWByOx; arc=none smtp.client-ip=209.85.208.52
+	 In-Reply-To:To:Cc; b=IsbiqH5ufhfzgGJHOFh5Lckb+HIo7wWZVetUCBuowOjbKrd+1DBxH9s1qeGFveU7jTqwJP2x2hCx90UK+7WQooBP6BPuQTdXQ1ST/nDVbV70M/ktPGiTFbbFEz/D3JTFFktsqGiVsEDbV02YwXdled9lV+OfQmfGa5lWxnAsSJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IWnwi9PW; arc=none smtp.client-ip=209.85.218.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-563cb3ba9daso77460a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 13:03:13 -0700 (PDT)
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a526a200879so2803266b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 13:03:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713384192; x=1713988992; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1713384194; x=1713988994; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=eu1lCQsHeKnio7sOaXuXrZB9Uomc0EWGgn8cJ3gmGiI=;
-        b=jODWByOxMHq+ndK+VtKvQ0rqxav1u4xqNuA3gJqUxjC5j3pO0yaYXHrqQrQGgBmLBm
-         gYEe/XVoi4OuOvEaMGBy3zPLKDdkDJeSYXCZSyN10hrFClojoupmrgIRgEMrllXYvkRT
-         AFEW2H85LkranW/0ggmcgTgMxShBWLg0RUBUFjVmyv+UJ0Ec0mqyCAbWMa6zmJTSf2YU
-         oEmKl+qBXPhBKJyORjoCDUkmXDMn0OXBqaS9XgxZWzCLl/5cYda+3lpTpuybRQZsUsXH
-         jK0oY+S0DoUoY02j4uWV8jPB2AZXo7nDRN/jfvRgwwDfTfDtgGGS1jrpOgFNWZfjDqTM
-         cRew==
+        bh=Ug4Rbf1oUs+Ggz/DgrdHVTQ5VxhiXHJ5sy7PE+JibXc=;
+        b=IWnwi9PWBiXJlR/q81ymc74xt6FdNuwLeX1CtmN1feVVJD+hEU09qsaKElX1nUXY68
+         Ja9jCBMDTcJcVBH/q6sTyTWJDRE+TLLtduPib5r/H7b0G43oGxVKh1j+lJiVtNJooXUz
+         1Ghopy6VYJEbcXMLdo/fdcbJF/Ldln7T4lblP6wJ1y4vbAjcNero2/XK84GjkPhIjI+0
+         oFPRqy3FSyIsNbiG10wjShqnpqr9JYffQ/9eVvtNz0ma56tteferMWCJ0hXG5lcvmMCf
+         eUoxPYLa2qTXj6VoGgg7m5e5W2Z775YH6OcYB9muxhwJqGr/6nA2HESxN4Q69lWVOoVF
+         sqKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713384192; x=1713988992;
+        d=1e100.net; s=20230601; t=1713384194; x=1713988994;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eu1lCQsHeKnio7sOaXuXrZB9Uomc0EWGgn8cJ3gmGiI=;
-        b=fDPZ/a10ZUbcTDwBL16sWfsBqYD+hguR+Nx6Z2JrBBZW1394PyCkI8DH7OqLr5ZoiM
-         qSQXRg7RZvrlFe482a9cq5yupMT+kITkfJh5mLLiF5F3SAwWA6i/ReEs2/tliMraLOv3
-         3PuCWSFTWAvwLXRvmImZT28Ch3f3eEPNFi2gEKW2LqrcZ4BeT40CFi0LvyPCDau+nP5z
-         ynXiK5kyehl70hSqzsKzUDbUQG5I1O6Bks4K6K+KaepWq32TkjzZojPHC1cvwikLYAve
-         UzLhgMWknCJe4uW6LyxX/749n1PY3T2ZeALeGRwAmDejIQS7xR7SyE2/Ir9bl1CybPp5
-         LSeQ==
-X-Gm-Message-State: AOJu0YxpFc2d/IlZElz8XHjA39SPrJjhddtoalPFU6MA3Qc6A0HRyuSH
-	KparSl8ru+ZoUhLULRXYP673BGS58e+3BDZHQkyemA9YAS3lTGN0i+11476VZmE=
-X-Google-Smtp-Source: AGHT+IFIvDRiJ31s+hSlsYhn+Py3IPiDyVX7dHDZl0RdvShwTlsDWXxLhY8Sx9+RMVQJq2r7fm14cw==
-X-Received: by 2002:a17:906:f0c8:b0:a52:617d:d77f with SMTP id dk8-20020a170906f0c800b00a52617dd77fmr367738ejb.56.1713384191895;
-        Wed, 17 Apr 2024 13:03:11 -0700 (PDT)
+        bh=Ug4Rbf1oUs+Ggz/DgrdHVTQ5VxhiXHJ5sy7PE+JibXc=;
+        b=SqLE/WSE3kklVKfugjDO7pWX+RL7lZFZMwMspdzuH+PI9+lXKNPVyL/xURkbxdI2YG
+         tpCveu+rUyu8mt/PDZkb0C4/+2dRqXrgTbXa/vKq6BZzoHNAWikY1JemOF8TNVTRtOn6
+         B3UxSDdU3F4BOI+0oNX7waSMKihUKYHZ0j/kIuCGkcGmNhGnVsskXQ118rz6XTJg7wZX
+         xVPEEQ6eG1q5Vg5rTjg+KPtlWcIX+MmVF21ACUzHrI+5fRmt447cyva6p+VOz7tTMKLu
+         EhGG7BYhFNhaxPy21Idl4ECLq+5z6ja5IrAzNc9iD3p6K2TkQzO+hfchfb6o3d6ml0Ld
+         Pw5g==
+X-Gm-Message-State: AOJu0Yy4kBWKH2RdXEhjgucp4U9TVkCt5V7uorlAjOdvpNJO8nZQBXbK
+	riEeE0A8pgdWIHGFq1wW0IiGuHZ3oZHYQf+6kUcTMhyzhxRbGS6WITx0vVrLgHs=
+X-Google-Smtp-Source: AGHT+IHAyZr9H6TbxvORNTWmvyh+uqcRd5+zUK9vvdjV7xAkunQuJVY/6yEPaz70LpbJ+kjQSWci8w==
+X-Received: by 2002:a17:906:4f8b:b0:a52:613c:e41d with SMTP id o11-20020a1709064f8b00b00a52613ce41dmr308193eju.60.1713384193603;
+        Wed, 17 Apr 2024 13:03:13 -0700 (PDT)
 Received: from [192.168.45.55] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id xa4-20020a170906fd8400b00a5252e69c7dsm5905590ejb.160.2024.04.17.13.03.09
+        by smtp.gmail.com with ESMTPSA id xa4-20020a170906fd8400b00a5252e69c7dsm5905590ejb.160.2024.04.17.13.03.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Apr 2024 13:03:11 -0700 (PDT)
+        Wed, 17 Apr 2024 13:03:13 -0700 (PDT)
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Wed, 17 Apr 2024 22:02:56 +0200
-Subject: [PATCH v2 4/7] drm/msm/adreno: Add speedbin data for SM8550 / A740
+Date: Wed, 17 Apr 2024 22:02:57 +0200
+Subject: [PATCH v2 5/7] drm/msm/adreno: Define A530 speed bins explicitly
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,7 +77,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240404-topic-smem_speedbin-v2-4-c84f820b7e5b@linaro.org>
+Message-Id: <20240404-topic-smem_speedbin-v2-5-c84f820b7e5b@linaro.org>
 References: <20240404-topic-smem_speedbin-v2-0-c84f820b7e5b@linaro.org>
 In-Reply-To: <20240404-topic-smem_speedbin-v2-0-c84f820b7e5b@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, Rob Clark <robdclark@gmail.com>, 
@@ -92,37 +92,38 @@ Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
  devicetree@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>, 
  Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1713384181; l=902;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1713384181; l=816;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=npBgux6bk5AO5WT4DCEsUOpTuW4/rkHnMNv0Oi6y770=;
- b=ts7z6ZIKK7AXNNK+04lsJTke6GzCYGY4YjqPBzvs+E2Q9SC1gprs3T172vQ2M9MvAq5v0QKoP
- 40+y85UeVa6A+N71RkbN+f5uOrO831Eks8B8s+dyoqIMjDrvAsTCffT
+ bh=7hn9yWc0x+ZGVLx5RkT997HsicwrF9htKGIWH4IlDYk=;
+ b=upTendAZvVn04hs77lbaX9iwU13uA6OdwVPVHomF4WSNuRbSnxxNQ1VbFLsXhTSlGKv7MNqC7
+ HQN2Vlx8QvcClRxHnEl2kd0FCEeFyV/7u/F1K1YX5Tfvmb7mMOtuxN3
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-Add speebin data for A740, as found on SM8550 and derivative SoCs.
+In preparation for commonizing the speedbin handling code.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_device.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index 901ef767e491..3b631445c541 100644
+index 3b631445c541..53302995fc81 100644
 --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
 +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -570,6 +570,11 @@ static const struct adreno_info gpulist[] = {
- 		.zapfw = "a740_zap.mdt",
- 		.hwcg = a740_hwcg,
- 		.address_space_size = SZ_16G,
+@@ -258,6 +258,12 @@ static const struct adreno_info gpulist[] = {
+ 			ADRENO_QUIRK_FAULT_DETECT_MASK,
+ 		.init = a5xx_gpu_init,
+ 		.zapfw = "a530_zap.mdt",
 +		.speedbins = ADRENO_SPEEDBINS(
-+			{ ADRENO_SKU_ID(SOCINFO_FC_AB), 1 },
-+			{ ADRENO_SKU_ID(SOCINFO_FC_AC), 0 },
-+			{ ADRENO_SKU_ID(SOCINFO_FC_AF), 0 },
++			{ 0, 0 },
++			{ 1, 1 },
++			{ 2, 2 },
++			{ 3, 3 },
 +		),
  	}, {
- 		.chip_ids = ADRENO_CHIP_IDS(0x43051401), /* "C520v2" */
- 		.family = ADRENO_7XX_GEN3,
+ 		.chip_ids = ADRENO_CHIP_IDS(0x05040001),
+ 		.family = ADRENO_5XX,
 
 -- 
 2.44.0
