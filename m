@@ -1,68 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-17737-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17738-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53ABD8A8B97
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 20:50:39 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9A828A8BBD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 20:59:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 84BDD1C238FE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 18:50:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A0B141F216AC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 18:59:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4012218643;
-	Wed, 17 Apr 2024 18:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27D081E895;
+	Wed, 17 Apr 2024 18:59:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H7HypdlL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="toJRqIXd"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1330E14287;
-	Wed, 17 Apr 2024 18:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05D71D52C;
+	Wed, 17 Apr 2024 18:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713379834; cv=none; b=pCpOVZT5Vbwn0B4UM3GovxpLnc5z5lWY/2ZevL0/ZF5jc53FfX6rBJLFhY2hXtdKCYMQQl074cONPlBpic+kgbWQjucklf8y/k5TzqrkmVvDLUZqrpbvVcitT2/nzH+xIMyKuvCJ7yiceO3mbLRuw+YcLZ3aDCR1vlKHZHT6uXg=
+	t=1713380378; cv=none; b=Mqs7gPgFKvQi4ePYi3C9q/7ktwqdblU6pabfsjEW0awePsP5DzUEW52IchGh1kBn4JZJLrF/vnQx4mkZjRsnsE1KsIAP0uPQ803cbKdE92ejwINMfINGjzotY91K0wsynP2UO5UQBTJIJWShhcZoNZVHyaboxmL8+sQoQRrkB3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713379834; c=relaxed/simple;
-	bh=hqK4irrz7Bv5r/zDzSMYUGCUqRdTaAZbUy0HF/Hv68U=;
+	s=arc-20240116; t=1713380378; c=relaxed/simple;
+	bh=NUBuYhI/tPwR/CQU1XXDvBmqFVJxYglVJpqZiT9wFys=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iFpgzqfLWbjIGVTTdV0g0K69BbOtrhWzThyspU1fUura712DJ3IGzBoDxmInRalKUzu6sWSh9qcWioVWzexv7jjlk6W+Lp9B+ICovhuLAgugmJbDOG2dBE2jbG6tCrCgeHBKW1pmmlqpFrduEJDtyKmTb26eB1UtJdcsj5GER9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H7HypdlL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5EACC072AA;
-	Wed, 17 Apr 2024 18:50:33 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=BAY1w0+n29qW/Qv2tt23JV+MomxO3+hK+J759qPYBxYpcfETIU6M96ohLzosieNta7idxi9lTk45st7xccEZ/se1uyhafKxwTVrq+AKQOCH5T1DijG3Owf5XJVJWHRiPeuUDj0BVUPxlzFMVsQcqv6pmqap+iFoAFYD61bjkrG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=toJRqIXd; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95676C072AA;
+	Wed, 17 Apr 2024 18:59:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713379833;
-	bh=hqK4irrz7Bv5r/zDzSMYUGCUqRdTaAZbUy0HF/Hv68U=;
+	s=k20201202; t=1713380377;
+	bh=NUBuYhI/tPwR/CQU1XXDvBmqFVJxYglVJpqZiT9wFys=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=H7HypdlLNs02Gklyv3kz6NzC3xlYXuv8BKAHRIg4m7C/t82KpEjNywUG6klCPTVD6
-	 GL8HHK78g0rwem+rCY5opdCFpueZHTu+mX2z+zM2Q0T08SjUbBosxOgYKNgRn/Smqs
-	 nVsEFxn0vXmqX/Uha117hdgVhwZz5v8Cii9mWx4hfqa62H1OpVX/1UR4PgyLrG3qTY
-	 XC/llwBzKxIJMLcqU/TqdWTV1FrQOq/zKcJ+To7AQEBgL0bDUN6DOWWAciryKu1Fcq
-	 WJW5nsFliIoDo529lYka9fRO9i0i3Ag8W7U7/tQPZZiUkuzHfrI8BMwZ0FG+OWv8k0
-	 DuHLM7YTibzsA==
-Date: Wed, 17 Apr 2024 13:50:31 -0500
+	b=toJRqIXdNJxj/Dw8Gjp3I8h8A/CExTqMdayP8G1vftau+t1DGy0eho4sbVdPyuvu5
+	 HDnuCOE1jQ8e1p72iWO9RlHkBYSyq4JjdqlmT/3WM7osuluz0Wo5diHWt8cjKzg9Ow
+	 4Pilgf63oUyG43IzrTX99Thnjqo12E0estLi7WWr/5pD4W1J1EoT6DWy7X80yhYa3i
+	 BUgYAYWise1MqfU46ROI6hjeGVvsPzExfEqGUMCg/fjdUZm4x1YoSXeiy8tqGi/dXj
+	 TGDrjwXuZnihlh9G2qiXCBGuq8yT6Debu2gbcMcGgf/epzCWwPiVUSpm27jPTnjlrx
+	 arFspLbzGEd5Q==
+Date: Wed, 17 Apr 2024 13:59:35 -0500
 From: Rob Herring <robh@kernel.org>
-To: Ajit Pandey <quic_ajipan@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Jagadeesh Kona <quic_jkona@quicinc.com>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
+To: Herman van Hazendonk <github.com@herrie.org>
+Cc: benwolsieffer@gmail.com, Conor Dooley <conor+dt@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>, chris.chapuis@gmail.com,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	linux-kernel@vger.kernel.org,
-	Imran Shaik <quic_imrashai@quicinc.com>
-Subject: Re: [PATCH V2 4/8] dt-bindings: clock: qcom: add bindings for camcc
- on SM4450
-Message-ID: <171337981738.3083095.5538266376603051623.robh@kernel.org>
-References: <20240416182005.75422-1-quic_ajipan@quicinc.com>
- <20240416182005.75422-5-quic_ajipan@quicinc.com>
+	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3] dt-bindings: phy: qcom,usb-hs-phy: Add compatible
+Message-ID: <171338035822.3093343.24902837393327860.robh@kernel.org>
+References: <20240417065020.3599755-1-github.com@herrie.org>
+ <20240417065454.3599824-1-github.com@herrie.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,20 +64,18 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240416182005.75422-5-quic_ajipan@quicinc.com>
+In-Reply-To: <20240417065454.3599824-1-github.com@herrie.org>
 
 
-On Tue, 16 Apr 2024 23:50:01 +0530, Ajit Pandey wrote:
-> Add device tree bindings for the camera clock controller on
-> Qualcomm SM4450 platform.
+On Wed, 17 Apr 2024 08:54:54 +0200, Herman van Hazendonk wrote:
+> Adds qcom,usb-hs-phy-msm8660 compatible
 > 
-> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
+> Used by HP Touchpad (tenderloin) for example.
+> 
+> Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
 > ---
->  .../bindings/clock/qcom,sm4450-camcc.yaml     |  63 +++++++++++
->  include/dt-bindings/clock/qcom,sm4450-camcc.h | 106 ++++++++++++++++++
->  2 files changed, 169 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm4450-camcc.yaml
->  create mode 100644 include/dt-bindings/clock/qcom,sm4450-camcc.h
+>  Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
 
 Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
