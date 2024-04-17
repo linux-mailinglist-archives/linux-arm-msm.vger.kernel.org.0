@@ -1,101 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-17766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32DAE8A8CDB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 22:25:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B4488A8D0B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 22:36:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E3DAC284AF5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 20:25:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3691B28AC48
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 20:36:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3B8D381DF;
-	Wed, 17 Apr 2024 20:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D1C4381BA;
+	Wed, 17 Apr 2024 20:36:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="ATOnx/2w"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jkb2hrHt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-185.mta0.migadu.com (out-185.mta0.migadu.com [91.218.175.185])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6110A208CA
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 20:25:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.185
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81A73BBFF;
+	Wed, 17 Apr 2024 20:36:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713385520; cv=none; b=LOGCf7VYKGtSjKxyRKL9oAdWo20CYUbtyQh0Xfzl2J0Zm6JAkT/QL5xfZoMzV/Z1GIv20ZaR7t5kYMSxnDcpyX8/nZ/ws00NTvEVN3hajzJxooiBg1nH/WwlCrctlpxl17IjvX/mWTqsG+qaRy/raCpLiI91YRdU4sAnjOBIldc=
+	t=1713386194; cv=none; b=O66kj/6M6DW+z0bAXQo/MS1Xns1pqp0OWDNB0FcZWvGM6Hntupo3A4psxXQn+9w6xcwKUJcwQtOswUDDHi7hrax2FOUS/u7GEKY6lFyF8fFVXYI+ZSIuaLCk+qs67+9uaQHZm+/PgScaKpFt6l8HFtTKrRdR5mH3vHnJxW0CvJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713385520; c=relaxed/simple;
-	bh=pWXBe/vHkE5ouscTtZT8KCIjeqHGRYUlLlnF5gAbhJU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UKw5gaTkmZ4d+jCU8dhGaGeZ6CfmNiHhNnoRG3F60TzLvVg1Jkk0BJrg+gtcxB1iCwsYSuC5sPeArv4weqiwIpE6cPt+NozpXz5t7BxtWzFAYYs5HpVstBKkpreUFlXmD6KZYiIxL2oIaIBePq5MycjqXdfHou6Y/UP/Ilu7MB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=ATOnx/2w; arc=none smtp.client-ip=91.218.175.185
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
-Message-ID: <587b3cff-a8b6-4412-8cff-79eb48d9556b@postmarketos.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
-	s=key1; t=1713385516;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=h6rUr9bTJkPoASfG3Y7dLkjBo8BzVRWb+gB92W3GbXg=;
-	b=ATOnx/2wn9QuqErvMnHfiPTY09lnC1ZLFHM5UvwAOfSAHgvRB4d/DGSrfKkrKlEwVByGYd
-	4mHoyTcGU+BLIiQQi0/kBhMHLE9Ee8J+xTIueClUcSef/cglpyAAM12PRi9IRvi+55m4fS
-	Utn03zR6n6SyQzbd5MWGKSBJ1VNjX1/5h4+ASlMqsVjVr6s4cO0R4TR5iv4L2NGRLuwMEa
-	STUCTv9A+iWMhJjleADcOhtjaNUC25OPTRFf8sXmKDPFMdSUJT0+UPBycAOvIuaNRWBuIT
-	MM+8gSolkbMneBnSSqZwUHosgwA+TtQGu3Iq8jGttLX0O3KxRLxFPiY2IGlg/w==
-Date: Wed, 17 Apr 2024 23:25:12 +0300
+	s=arc-20240116; t=1713386194; c=relaxed/simple;
+	bh=CqGZuxfDVIAjfYCSiGGNbPn3pnChqCszlDtGTbPrBpQ=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EXzCSD0sBZ0hnHbnu/PXDx7Ie708rwLkXbP2zfSIIdNjwfEPmDiNibZxTWUFaDL0s9xxzkRBdwnSIAj++NpeR60KCHlakY+nK6wsL0H9aS+Sl5ar/0nbR6SqXvydBU/XiR5AZ2xcWvmSUa2MhA29ZQcR0NBerOyjaQP5WMWd3Xs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jkb2hrHt; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43H8LwNo018163;
+	Wed, 17 Apr 2024 20:36:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=Ji4o9nl6vfjIkUDkuW8yy
+	bp/lkqUCSYrJZ+4WVs2luI=; b=jkb2hrHt7cHGI0RVUtgOlzNNiCssKuTml79mu
+	gm+qlJUbRhy125d8fgFJdAdeAJgZATfFNAsPa2+6Ns4KjGR4eHbnvM09VkgrZO9L
+	4eMZh50g/j03l9F97pVpiHtxMbrFeC4z11yYa56Pkbr3zTCbcYAsafOSB0q8isFA
+	w3tQhyTJGWjGoZ06UlLU6mJnyC6kf8aSBfeOpN8xcDanQuKwZKwUK1YeAFHuzAig
+	mWbedKS/7W2LUmeBhmHa607PK5aCFI07UJK/J2EVI7I6A0Khuv6g+ypZ4lpP8Hh/
+	Vi3+c27t2qyq149+4CncQNiQla5M0nZMPPP4hWY4CCSFvzXzQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xjaupsxns-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Apr 2024 20:36:12 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43HKaBGO015755
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Apr 2024 20:36:12 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 17 Apr 2024 13:36:11 -0700
+Date: Wed, 17 Apr 2024 13:36:10 -0700
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>,
+        Robin
+ Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
+        <iommu@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>
+Subject: Re: [PATCH 1/2] iommu/qcom: Remove useless forward definition
+Message-ID: <ZiAyuked0Ide5tfm@hu-bjorande-lv.qualcomm.com>
+References: <20240416-topic-qcom_iommu-v1-0-fabe55b3b7b3@linaro.org>
+ <20240416-topic-qcom_iommu-v1-1-fabe55b3b7b3@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH v3 1/4] ARM: dts: qcom: msm8974: Split out common part of
- samsung-klte
-To: Rong Zhang <i@rong.moe>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Icenowy Zheng <uwu@icenowy.me>
-References: <20240213110137.122737-1-i@rong.moe>
- <20240213110137.122737-2-i@rong.moe>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Alexey Minnekhanov <alexeymin@postmarketos.org>
-In-Reply-To: <20240213110137.122737-2-i@rong.moe>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20240416-topic-qcom_iommu-v1-1-fabe55b3b7b3@linaro.org>
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: oqqfzRw7ej2xYQTqjlEohrVFT6yJg5le
+X-Proofpoint-ORIG-GUID: oqqfzRw7ej2xYQTqjlEohrVFT6yJg5le
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-17_18,2024-04-17_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
+ suspectscore=0 priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0
+ spamscore=0 impostorscore=0 clxscore=1011 lowpriorityscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404170145
 
+On Wed, Apr 17, 2024 at 10:06:59PM +0200, Konrad Dybcio wrote:
+> Simply move code around.
 
+Aint much of a motivation for the change in those words...
+Please do express a problem statement in your changes, even though if
+seems obvious to many why you would be doing this.
 
-On 13.02.2024 13:58, Rong Zhang wrote:
-> Samsung Galaxy S5 has many variants. Variants that support LTE use klte*
-> as their codename. Currently, the only supported one is the one without
-> any suffix, namely, klte. It is known that other klte* variants have
-> only minor differences compared to klte and can mostly work with the
-> klte DTB.
-> 
-> Split the common part into a common DTSI so that it can be imported in
-> the DTS of klte and other klte* variants.
-> 
-> Signed-off-by: Rong Zhang <i@rong.moe>
-> ---
->   ... qcom-msm8974pro-samsung-klte-common.dtsi} |   7 +-
->   .../dts/qcom/qcom-msm8974pro-samsung-klte.dts | 833 +-----------------
->   2 files changed, 17 insertions(+), 823 deletions(-)
->   copy arch/arm/boot/dts/qcom/{qcom-msm8974pro-samsung-klte.dts => qcom-msm8974pro-samsung-klte-common.dtsi} (98%)
->   rewrite arch/arm/boot/dts/qcom/qcom-msm8974pro-samsung-klte.dts (99%)
-> 
+Perhaps your obvious reason is not the same as my obvious reason? Now we
+will never know!
 
-Tested on regular Samsung Galaxy S5 (qcom-msm8974pro-samsung-klte).
+Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-Tested-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
-
--- 
 Regards,
-Alexey Minnekhanov
-postmarketOS developer
+Bjorn
+
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  drivers/iommu/arm/arm-smmu/qcom_iommu.c | 18 ++++++++----------
+>  1 file changed, 8 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+> index e079bb7a993e..3dca9293c509 100644
+> --- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+> +++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+> @@ -41,7 +41,14 @@ enum qcom_iommu_clk {
+>  	CLK_NUM,
+>  };
+>  
+> -struct qcom_iommu_ctx;
+> +struct qcom_iommu_ctx {
+> +	struct device		*dev;
+> +	void __iomem		*base;
+> +	bool			 secure_init;
+> +	bool			 secured_ctx;
+> +	u8			 asid;      /* asid and ctx bank # are 1:1 */
+> +	struct iommu_domain	*domain;
+> +};
+>  
+>  struct qcom_iommu_dev {
+>  	/* IOMMU core code handle */
+> @@ -54,15 +61,6 @@ struct qcom_iommu_dev {
+>  	struct qcom_iommu_ctx	*ctxs[];   /* indexed by asid */
+>  };
+>  
+> -struct qcom_iommu_ctx {
+> -	struct device		*dev;
+> -	void __iomem		*base;
+> -	bool			 secure_init;
+> -	bool			 secured_ctx;
+> -	u8			 asid;      /* asid and ctx bank # are 1:1 */
+> -	struct iommu_domain	*domain;
+> -};
+> -
+>  struct qcom_iommu_domain {
+>  	struct io_pgtable_ops	*pgtbl_ops;
+>  	spinlock_t		 pgtbl_lock;
+> 
+> -- 
+> 2.44.0
+> 
 
