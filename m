@@ -1,65 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-17646-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17647-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0E51D8A7C8A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 08:50:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DBCF8A7CA5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 09:02:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 39A881C20AB1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 06:50:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 22C1F1F2224F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 07:02:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E046365BA0;
-	Wed, 17 Apr 2024 06:50:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C2656A323;
+	Wed, 17 Apr 2024 07:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b="rkwPnbca"
+	dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b="ZPvF+/BI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from outbound9.mail.transip.nl (outbound9.mail.transip.nl [136.144.136.11])
+Received: from outbound8.mail.transip.nl (outbound8.mail.transip.nl [136.144.136.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD5F29D06;
-	Wed, 17 Apr 2024 06:50:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.144.136.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EDF5524BC;
+	Wed, 17 Apr 2024 07:02:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.144.136.8
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713336631; cv=none; b=ELU1HgAFkvKILRcAfVTkE+Twxs759ubFlzDK5Cjt5jIyRD1BZw9A2BOBOkV0jCt5m0NmeUAkneHaWmV0JoO9XeeK+nvcUzNeMI1j8GZqdir0skRYG/+fEUK19hZJ6i1WTgQFj18P8bJ/EePqcTTcxvfNxTR6eGV0JeiWFJ07XgM=
+	t=1713337341; cv=none; b=RtwWAMOrZmy7foAhs3fFSVNUOvfwilrhVmb0tqnEs43zDOns/VV1QUUSmZHovi5QG+1xbkiGm3YYSk3GUaYiIz5mcUgW5JqQ5SWjvyFQ9DykKYrfZCWXfKPAMgTa3lp7lyMiEq7gIj8XoWx/cTcho8NovZEntIPlFFkB22C7yWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713336631; c=relaxed/simple;
-	bh=3HxzvJ6OuwW8NkKZkqYr3vTgSjlJhi1guy2LIVfXoeY=;
+	s=arc-20240116; t=1713337341; c=relaxed/simple;
+	bh=oyTv7o1eonYTsAfT4cfj7AhE76HukCBjbWZvcV2c8dw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=u9BXx507s5yIpjQhOP/AHKQs/yr9nAoform7wiRnJUG+kBkY+UPj8nu3WU2xaxvHmtLLzL0LMZ/nYS6HpwJZOo/iEMjyZwiDqCi5rz+a0v+r1Hct9uIOqSJcwhvKc3JSQyI7u+OZFBDZnAflwnhRMmXGxNmF63WSPrsbYIUlRVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org; spf=pass smtp.mailfrom=herrie.org; dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b=rkwPnbca; arc=none smtp.client-ip=136.144.136.11
+	 MIME-Version; b=e2lH7OKxHxP3Hihi1rGbMoEw45MpvOaOcWedyOzRqoh2RD9ODPUHwK1L9TJuMeiR2mRDWYn201fLBbJpUO19kaAdiQMDFcgqwfFINEYY++nBP995lCb5jaFCP4qrmJr+s74OliaNk70ROV73cy4LvG8gXXSDTSa1FNinGbQu/N8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org; spf=pass smtp.mailfrom=herrie.org; dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b=ZPvF+/BI; arc=none smtp.client-ip=136.144.136.8
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=herrie.org
-Received: from submission14.mail.transip.nl (unknown [10.103.8.165])
-	by outbound9.mail.transip.nl (Postfix) with ESMTP id 4VKBPB0Mf8zTPNMs;
-	Wed, 17 Apr 2024 08:50:22 +0200 (CEST)
+Received: from submission4.mail.transip.nl (unknown [10.103.8.155])
+	by outbound8.mail.transip.nl (Postfix) with ESMTP id 4VKBVX4TpjzY75qH;
+	Wed, 17 Apr 2024 08:55:00 +0200 (CEST)
 Received: from herrie-desktop.. (110-31-146-85.ftth.glasoperator.nl [85.146.31.110])
-	by submission14.mail.transip.nl (Postfix) with ESMTPA id 4VKBP917Nqz2ST2q;
-	Wed, 17 Apr 2024 08:50:21 +0200 (CEST)
+	by submission4.mail.transip.nl (Postfix) with ESMTPA id 4VKBVW5l7qznTZy;
+	Wed, 17 Apr 2024 08:54:59 +0200 (CEST)
 From: Herman van Hazendonk <github.com@herrie.org>
-To: dmitry.baryshkov@linaro.org
-Cc: andersson@kernel.org,
-	benwolsieffer@gmail.com,
+To: github.com@herrie.org
+Cc: benwolsieffer@gmail.com,
 	chris.chapuis@gmail.com,
-	conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	github.com@herrie.org,
-	kishon@kernel.org,
-	konrad.dybcio@linaro.org,
-	krzk+dt@kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
 	linux-phy@lists.infradead.org,
-	me@herrie.org,
-	robh@kernel.org,
-	vkoul@kernel.org
-Subject: Re: [PATCH v2] dt-bindings: phy: qcom,usb-hs-phy: Add compatible
-Date: Wed, 17 Apr 2024 08:50:20 +0200
-Message-Id: <20240417065020.3599755-1-github.com@herrie.org>
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v3] dt-bindings: phy: qcom,usb-hs-phy: Add compatible
+Date: Wed, 17 Apr 2024 08:54:54 +0200
+Message-Id: <20240417065454.3599824-1-github.com@herrie.org>
 X-Mailer: git-send-email 2.40.1
-In-Reply-To: <CAA8EJpo=nd8ywUzz2e42p7WAyuFm439yvNf6H=MD63LCV0xTnw@mail.gmail.com>
-References: <CAA8EJpo=nd8ywUzz2e42p7WAyuFm439yvNf6H=MD63LCV0xTnw@mail.gmail.com>
+In-Reply-To: <20240417065020.3599755-1-github.com@herrie.org>
+References: <20240417065020.3599755-1-github.com@herrie.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,75 +65,45 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: ClueGetter at submission14.mail.transip.nl
+X-Scanned-By: ClueGetter at submission4.mail.transip.nl
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=transip-a; d=herrie.org; t=1713336621; h=from:subject:to:cc:
+ s=transip-a; d=herrie.org; t=1713336900; h=from:subject:to:cc:
  references:in-reply-to:date:mime-version;
- bh=yitk1PINuG+ZttWDjmHS+5CUubvYDjED2MOpSUGliao=;
- b=rkwPnbcaVbl+/j7vxyR4afo2tfgaVt3k5zO2AvGRlhzkPONCWrLPe4gUiCEe32ZY9aDYMJ
- 4j0VAiiYxB+cC3qUwWhoWx74XbrUYLzwSvo+c3hl4EH5bFalLOyLmcs/mOXXppNsGC7arg
- Zl5y3oRs2PMbtBYakdaFuKLA3C7x4zDjczQeOKaE9vLMrDPzI4Ms3k6bOYS1UnQniGcImK
- 6qH+0YGNgclTXewTp52AOSWd3jp+MBltoMoRs4thW7+uVPZ/6gWlG8Ac2SJStO0Pyp2XGT
- 8LPe2kelD5JtYpH2QsU2YSwqZG7/NGJKQj1EKBsJY1F7PuiuynIgR+wa5RvvSg==
+ bh=D6JFtwlOS+AWIs+Hh5HvpbMUdPE/n8YDLeJQmQvnz18=;
+ b=ZPvF+/BIPf/+uVoF/uO9Aw8JuwmI4AgXWBQGcK8Se6yLI1h7Rxof7+zTHSJcKP+Tla5crz
+ HUAimAbPFQ34MASE9P8Es2h7qZoH7g2XhB31t837Hu+/4H++isT/dBh4VMvUI0bAYz4+BO
+ gNsab8paxHjf+LWEFheDknSLmp+Ko8M3KYjiVhdhPmiamBQ/85DhIvHmM/98ZPOjMdAy9/
+ LfMnnWCEYz2EskriHJUkJFbOzA8HjTJvhF4LjWv5elED7Qe474A829cDRBYlWUqbcWqBKO
+ yHatklDkMyWU/WQm2tdstnF5JgcNM5i5IJ9AX7hkU1WNBfotYwWefQnO+MNJZQ==
 X-Report-Abuse-To: abuse@transip.nl
 
-On Wed, 17 Apr 2024 at 07:52, Herman van Hazendonk
-<github.com@herrie.org> wrote:
->>
->> Adds qcom,usb-hs-phy-msm8660 compatible
->>
->> Used by HP Touchpad (tenderloin) for example.
->>
->> Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
->> ---
->>  Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml | 2 ++
->>  1 file changed, 2 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
->> index f042d6af1594..ccf23170cd17 100644
->> --- a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
->> +++ b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
->> @@ -15,6 +15,7 @@ if:
->>        contains:
->>          enum:
->>            - qcom,usb-hs-phy-apq8064
->> +          - qcom,usb-hs-phy-msm8660
->>            - qcom,usb-hs-phy-msm8960
->>  then:
->>    properties:
->> @@ -41,6 +42,7 @@ properties:
->>        - enum:
->>            - qcom,usb-hs-phy-apq8064
->>            - qcom,usb-hs-phy-msm8226
->> +          - qcom,usb-hs-phy-msm8960
+Adds qcom,usb-hs-phy-msm8660 compatible
 
-> This should probably be msm8660 rather than 8960
-Hi Dmitry,
+Used by HP Touchpad (tenderloin) for example.
 
-Thanks for the swift feedback. I'll send a v3.
-I need more coffee before doing this in the morning
+Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
+---
+ Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-> Note, nowadays the rule would be to use qcom,msm8660-usb-hs-phy
-> compatible, but I wonder if we should enforce this for such an old
-> platform or whether similarity wins.
-
->>            - qcom,usb-hs-phy-msm8916
->>            - qcom,usb-hs-phy-msm8960
->>            - qcom,usb-hs-phy-msm8974
->>
-
-I plan to send more patches for the msm8660, so happy to understand what
-is the preferred approach, because it doesn't seem consistent.
-
-These are my first patches, so learning mainly from what I see in commit
-history (which might be outdated)
-It's indeed ancient platform, we just would like to get HP TouchPad
-(tenderloin) running with a mainline kernel, hence these patches.
-
-Best regards,
-Herman
-
-> --
-> With best wishes
-> Dmitry
+diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
+index f042d6af1594..e03b516c698c 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
+@@ -15,6 +15,7 @@ if:
+       contains:
+         enum:
+           - qcom,usb-hs-phy-apq8064
++          - qcom,usb-hs-phy-msm8660
+           - qcom,usb-hs-phy-msm8960
+ then:
+   properties:
+@@ -41,6 +42,7 @@ properties:
+       - enum:
+           - qcom,usb-hs-phy-apq8064
+           - qcom,usb-hs-phy-msm8226
++          - qcom,usb-hs-phy-msm8660
+           - qcom,usb-hs-phy-msm8916
+           - qcom,usb-hs-phy-msm8960
+           - qcom,usb-hs-phy-msm8974
 
