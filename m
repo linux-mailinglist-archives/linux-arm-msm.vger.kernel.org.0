@@ -1,191 +1,262 @@
-Return-Path: <linux-arm-msm+bounces-17724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C3F18A88B5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 18:20:31 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id EE5178A88F3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 18:34:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DDFC01F214D9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 16:20:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A5956281C45
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 16:34:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7573D15B999;
-	Wed, 17 Apr 2024 16:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41BBC16FF36;
+	Wed, 17 Apr 2024 16:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="kyvqRE83"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AejH3hmq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFD7A15AAA8
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 16:19:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E787130A4A;
+	Wed, 17 Apr 2024 16:34:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713370794; cv=none; b=BTLJ1aSlfKmOypgbb2L7wk8kghQsm8k258If7102jrYsUsJnlbxLjYBI/2YXe91SHLk486FQSupLx0VnvBsEbPYi3oUOSXpYjDZn3vWXk6jHVv7+HiYIJAskEplXE1srt2oB9b+71liA+xPQpJP66rsdszB73uqNmY2lKkgN3yU=
+	t=1713371679; cv=none; b=k4Luh2WjUqUXLb/2MbQA9F7d/OncO2t657w5hb8JnnEVdW4nPznOKxn7pHs3PuQDVDUE4Njqb7hmcNJ8EaLfz6CGbD+OyZ/nko6sgQT4PkYDH4TWQiW3oGm92gjPgrXN28Q5zrlQEenJr3szRABA3J2QDVSJD5K2UNfKKQ4TAMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713370794; c=relaxed/simple;
-	bh=fPxUcbghkVzBBb3O5m3J0h86wBDuD+Z0gMmR/qCLOwk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=g9ed+pDc/sSsn0MCITbyELl4aKK4DxWvBzGIJWH7KIRoZUaZeYrKSCCEgJ+Bsdu0O3I4QMuM68orl96WnBopeRgfzLCvsTBRGdpj1acGfpl7Aaa5F7B7/6lyiugHYOwXUb/EDAkRfom0xg3GAnPVChd8xED6OvPozz5zSGCCV+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=kyvqRE83; arc=none smtp.client-ip=209.85.210.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-6e9e1a52b74so1049046a34.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 09:19:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1713370792; x=1713975592; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=taaoAprv/l78nPfrpJUaaECkLiisEqHYV1iSW1K7qDE=;
-        b=kyvqRE83DW4jAyKNfayG2hBT3z+nH1qZs1oP1n+kltCurhL2NfeAEckvUuK7unt4f/
-         XuagkCAz8n/m8G547BGhV41hpsi7jbKWFcOpGfXbknjWmE6RJMkZ9dl4+1RmU609Nj+p
-         1FR4Sx86c6qNqeacFuCymCdX6AbICCdCikcNk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713370792; x=1713975592;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=taaoAprv/l78nPfrpJUaaECkLiisEqHYV1iSW1K7qDE=;
-        b=gcrSXdMsojBosDGftcBK5cbFRD+/tiwx8uQ7Cfdpv2zDY/u24v1N5OYpOa0J52TugQ
-         +v+5OGjCtHRiXpZ6evd7s3hSrQlKI772VZ4Em7sduyYe4Ee4yXZMGtMmmdmWqC68yyXS
-         rRYzKZY/E1qIXjRHjoY9ITXGbSCWM+fapdlFUx1AE9gsKOsYFHe9XIe8GeJynRzh0umI
-         a5o0yUGHIWwV29b66tnUf7hp/IINq97lI+0jzhOddtnyqF4H29IkG50N0QgzyozIoh9q
-         Mi8dFscQfjgRpDLbrBHt7/5dY78m874836eld48cft1nfAXKZAgQppGZ30LOvTW8UcCf
-         nPbA==
-X-Forwarded-Encrypted: i=1; AJvYcCVwrvz8/c/K9nf9cN9AXkp4FBQaif/XAKJz8EeUmnt//mCrdjK22f5wiiisa9uPSEW101TEjlp3JMG4V2lRGvjVUeE4cY9fi3p5kRFmwA==
-X-Gm-Message-State: AOJu0YwGkXAmJUTPs37AitKcU/vHLdBYFh2q1Gfh1PXQyMtBmAZvt1zq
-	03TC1ulqPbP7To3NjEoVWB2zZoXaC8XlF+FtMD/iK4HGUdBuwjoRduBDM+5DGaVW7IKNWlkOjtH
-	EKQ==
-X-Google-Smtp-Source: AGHT+IHupTxXoshH7+pNv/8tP3OfcuOPZn2Xk7nPmSns7EXxNUC/BN1lntodJMdZjaPYndPodEdVmA==
-X-Received: by 2002:a05:6870:9a95:b0:22e:be64:9895 with SMTP id hp21-20020a0568709a9500b0022ebe649895mr20199006oab.46.1713370791650;
-        Wed, 17 Apr 2024 09:19:51 -0700 (PDT)
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com. [209.85.210.47])
-        by smtp.gmail.com with ESMTPSA id ti11-20020a056871890b00b00238a938e5ddsm298194oab.23.2024.04.17.09.19.51
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Apr 2024 09:19:51 -0700 (PDT)
-Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-6eb6b9e1808so2499434a34.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 09:19:51 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCV4VyqL+GmtX6DG7BpLGgoT13Xk9GYDudD4PM7RHhhUQ8sv/IxM1oR1/J7+aG/xHhkivj3SFUb528pxSlxWaghaZvddp3ezfiMDKgNuzA==
-X-Received: by 2002:ad4:4f23:0:b0:69b:5445:6ab0 with SMTP id
- fc3-20020ad44f23000000b0069b54456ab0mr19079283qvb.46.1713370770447; Wed, 17
- Apr 2024 09:19:30 -0700 (PDT)
+	s=arc-20240116; t=1713371679; c=relaxed/simple;
+	bh=hSVAtHdLh3GZ5qktsnuNE0RH2Wh/OsoqP7Vgi6zNc2E=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gs4hJLOv1zTELTILVOHJCjWkObHtJilCyQ5zUY4Ldoqpqft84YketkQeqbkjSXy/z7t3g3T61+ImKoHB4WqBnKAoWBYa1sukxv/Mq9ae8xPK2BlRW/C/IdvevfeeG7soBj6NjiIX/DsYDZTK4oUOxNCH54O0uahFvYCtM40/UPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AejH3hmq; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43HAAn5M021176;
+	Wed, 17 Apr 2024 16:34:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=bzo1ROJ5Z5Y5K7x49YhXB
+	K5buUv408nJlb96llu1WWo=; b=AejH3hmqtc5JiFU+zF6awPICuDa1uBlyLS8Gr
+	R2d0j0Y2EODkeeXV7YGBgp83jDBOmQAjcIa/i+M86RDrGo8QoyhtVvIMzlix0rqg
+	h9WhZLJOA4LHdfEEQggZbAej5CZIsn6b/lzeaoVSq+laWYCj0S5+0RanDA+dk9c2
+	j47S/Oj7HJyiQVv/y0+WJ45L/ku7EB4QCSpZVfzKzsGAhn2SD9DhvSdKyqXIPNd6
+	jQDs33kE5q7jsdrwY3iVMG5n9z2SG3VPV6zGHMtT5eV28lScLEFlRgORoFb48BmT
+	QLU6/pQPFSdIauV3al46dVHxd+/y3e8iuk9oOK9gE7Tob3TPw==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xjceh1114-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Apr 2024 16:34:23 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43HGYMD3004308
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Apr 2024 16:34:22 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 17 Apr 2024 09:34:17 -0700
+Date: Wed, 17 Apr 2024 22:04:13 +0530
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <andersson@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <konrad.dybcio@linaro.org>, <djakov@kernel.org>,
+        <quic_anusha@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH v8 5/7] clk: qcom: common: Add interconnect clocks support
+Message-ID: <Zh/6BXYuKrVjq7MG@hu-varada-blr.qualcomm.com>
+References: <20240417105605.836705-1-quic_varada@quicinc.com>
+ <20240417105605.836705-6-quic_varada@quicinc.com>
+ <CAA8EJpq75LhY3BD4JEqAOVAt1SxTvSOsdJTTb2bZD9rj15FmGA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240415-fix-cocci-v1-0-477afb23728b@chromium.org>
- <a003494c-a1a9-4fcd-83d8-766a75d6bbb2@moroto.mountain> <20240417155112.GQ12561@pendragon.ideasonboard.com>
-In-Reply-To: <20240417155112.GQ12561@pendragon.ideasonboard.com>
-From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Wed, 17 Apr 2024 18:19:14 +0200
-X-Gmail-Original-Message-ID: <CANiDSCs_qOXkhzuL+cFhpw0hvFMwU0TYyN2B5ZdAStb96TTKFA@mail.gmail.com>
-Message-ID: <CANiDSCs_qOXkhzuL+cFhpw0hvFMwU0TYyN2B5ZdAStb96TTKFA@mail.gmail.com>
-Subject: Re: [PATCH 00/35] media: Fix coccinelle warning/errors
-To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Cc: Dan Carpenter <dan.carpenter@linaro.org>, 
-	Martin Tuma <martin.tuma@digiteqautomotive.com>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, Hans Verkuil <hverkuil-cisco@xs4all.nl>, 
-	Hugues Fruchet <hugues.fruchet@foss.st.com>, Alain Volmat <alain.volmat@foss.st.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Paul Kocialkowski <paul.kocialkowski@bootlin.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Chen-Yu Tsai <wens@csie.org>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
-	Sakari Ailus <sakari.ailus@linux.intel.com>, Thierry Reding <thierry.reding@gmail.com>, 
-	Jonathan Hunter <jonathanh@nvidia.com>, Sowjanya Komatineni <skomatineni@nvidia.com>, 
-	Luca Ceresoli <luca.ceresoli@bootlin.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Hans Verkuil <hverkuil@xs4all.nl>, 
-	Sergey Kozlov <serjk@netup.ru>, Abylay Ospan <aospan@netup.ru>, 
-	Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>, Dmitry Osipenko <digetx@gmail.com>, 
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, Vikash Garodia <quic_vgarodia@quicinc.com>, 
-	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Benjamin Mugnier <benjamin.mugnier@foss.st.com>, 
-	Sylvain Petinot <sylvain.petinot@foss.st.com>, Jacopo Mondi <jacopo+renesas@jmondi.org>, 
-	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>, 
-	=?UTF-8?Q?Niklas_S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>, 
-	Pavel Machek <pavel@ucw.cz>, linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-kernel@lists.infradead.org, linux-staging@lists.linux.dev, 
-	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	Oleg Drokin <green@linuxhacker.ru>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <CAA8EJpq75LhY3BD4JEqAOVAt1SxTvSOsdJTTb2bZD9rj15FmGA@mail.gmail.com>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: C6tbKKEP6CzLyZIDaNnNKh2Dg9FvUOqr
+X-Proofpoint-ORIG-GUID: C6tbKKEP6CzLyZIDaNnNKh2Dg9FvUOqr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-17_13,2024-04-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
+ bulkscore=0 adultscore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0
+ suspectscore=0 malwarescore=0 mlxlogscore=856 impostorscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404170114
 
-Hi Laurent
-
-On Wed, 17 Apr 2024 at 17:51, Laurent Pinchart
-<laurent.pinchart@ideasonboard.com> wrote:
+On Wed, Apr 17, 2024 at 02:29:03PM +0300, Dmitry Baryshkov wrote:
+> On Wed, 17 Apr 2024 at 13:57, Varadarajan Narayanan
+> <quic_varada@quicinc.com> wrote:
+> >
+> > Unlike MSM platforms that manage NoC related clocks and scaling
+> > from RPM, IPQ SoCs dont involve RPM in managing NoC related
+> > clocks and there is no NoC scaling.
+> >
+> > However, there is a requirement to enable some NoC interface
+> > clocks for accessing the peripheral controllers present on
+> > these NoCs. Though exposing these as normal clocks would work,
+> > having a minimalistic interconnect driver to handle these clocks
+> > would make it consistent with other Qualcomm platforms resulting
+> > in common code paths. This is similar to msm8996-cbf's usage of
+> > icc-clk framework.
+> >
+> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> > ---
+> > v8: Explicitly set master and slave ids
+> > v7: Restore clk_get
+> > v6: first_id -> icc_first_node_id
+> >     Remove clock get so that the peripheral that uses the clock
+> >     can do the clock get
+> > v5: Split changes in common.c to separate patch
+> >     Fix error handling
+> >     Use devm_icc_clk_register instead of icc_clk_register
+> > v4: Use clk_hw instead of indices
+> >     Do icc register in qcom_cc_probe() call stream
+> >     Add icc clock info to qcom_cc_desc structure
+> > v3: Use indexed identifiers here to avoid confusion
+> >     Fix error messages and move to common.c
+> > v2: Move DTS to separate patch
+> >     Update commit log
+> >     Auto select CONFIG_INTERCONNECT & CONFIG_INTERCONNECT_CLK to fix build error
+> > ---
+> >  drivers/clk/qcom/common.c | 35 ++++++++++++++++++++++++++++++++++-
+> >  drivers/clk/qcom/common.h | 16 ++++++++++++++++
+> >  2 files changed, 50 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
+> > index 75f09e6e057e..a6410b1828ca 100644
+> > --- a/drivers/clk/qcom/common.c
+> > +++ b/drivers/clk/qcom/common.c
+> > @@ -8,6 +8,7 @@
+> >  #include <linux/regmap.h>
+> >  #include <linux/platform_device.h>
+> >  #include <linux/clk-provider.h>
+> > +#include <linux/interconnect-clk.h>
+> >  #include <linux/reset-controller.h>
+> >  #include <linux/of.h>
+> >
+> > @@ -234,6 +235,38 @@ static struct clk_hw *qcom_cc_clk_hw_get(struct of_phandle_args *clkspec,
+> >         return cc->rclks[idx] ? &cc->rclks[idx]->hw : NULL;
+> >  }
+> >
+> > +static int qcom_cc_icc_register(struct device *dev,
+> > +                               const struct qcom_cc_desc *desc)
+> > +{
+> > +       struct icc_clk_data *icd;
+> > +       struct clk_hw *hws;
+> > +       int i;
+> > +
+> > +       if (!IS_ENABLED(CONFIG_INTERCONNECT_CLK))
+> > +               return 0;
+> > +
+> > +       if (!desc->icc_hws)
+> > +               return 0;
+> > +
+> > +       icd = devm_kcalloc(dev, desc->num_icc_hws, sizeof(*icd), GFP_KERNEL);
+> > +       if (!icd)
+> > +               return -ENOMEM;
+> > +
+> > +       for (i = 0; i < desc->num_icc_hws; i++) {
+> > +               icd[i].master_id = desc->icc_hws[i].master_id;
+> > +               icd[i].slave_id = desc->icc_hws[i].slave_id;
+> > +               hws = &desc->clks[desc->icc_hws[i].clk_id]->hw;
 >
-> On Tue, Apr 16, 2024 at 11:47:17AM +0300, Dan Carpenter wrote:
-> > In my opinion, it's better to just ignore old warnings.
+> I think I keep on repeating this again and again. Instead of passing
+> indices please pass clk_hw pointers.
+
+I'm sorry. Based on the following feedback for v7 from you I changed it to
+use indices instead of clk_hw pointers. Am I missing something?
+
+https://lore.kernel.org/linux-arm-msm/CAA8EJpohAe-aW1QqVkE9NBRU0DpZR7UiwdUKk6rS_YFAhenZZA@mail.gmail.com/
+<quote>
+	> +       struct clk_hw **icc_hws;
+
+	Still we are passing hws here. We already have all the hws in a
+	different array. Can we just pass the indices?
+</quote>
+
+Please confirm.
+
+> > +               icd[i].clk = devm_clk_hw_get_clk(dev, hws, "icc");
+> > +               if (!icd[i].clk)
+> > +                       return dev_err_probe(dev, -ENOENT,
+> > +                                            "(%d) clock entry is null\n", i);
+> > +               icd[i].name = clk_hw_get_name(hws);
+> > +       }
+> > +
+> > +       return devm_icc_clk_register(dev, desc->icc_first_node_id,
+> > +                                                    desc->num_icc_hws, icd);
+> > +}
+> > +
+> >  int qcom_cc_really_probe(struct platform_device *pdev,
+> >                          const struct qcom_cc_desc *desc, struct regmap *regmap)
+> >  {
+> > @@ -303,7 +336,7 @@ int qcom_cc_really_probe(struct platform_device *pdev,
+> >         if (ret)
+> >                 return ret;
+> >
+> > -       return 0;
+> > +       return qcom_cc_icc_register(dev, desc);
+> >  }
+> >  EXPORT_SYMBOL_GPL(qcom_cc_really_probe);
+> >
+> > diff --git a/drivers/clk/qcom/common.h b/drivers/clk/qcom/common.h
+> > index 9c8f7b798d9f..f6b25df1ca17 100644
+> > --- a/drivers/clk/qcom/common.h
+> > +++ b/drivers/clk/qcom/common.h
+> > @@ -19,6 +19,19 @@ struct clk_hw;
+> >  #define PLL_VOTE_FSM_ENA       BIT(20)
+> >  #define PLL_VOTE_FSM_RESET     BIT(21)
+> >
+> > +struct qcom_icc_hws_data {
+> > +       int master_id;
+> > +       int slave_id;
+> > +       int clk_id;
+> > +};
+> > +
+> > +#define HWS_DATA(_b, _c)               \
+> > +{                                      \
+> > +       .master_id = MASTER_##_b,       \
+> > +       .slave_id = SLAVE_##_b,         \
+> > +       .clk_id = _c,                   \
+> > +}
 >
-> I agree. Whatever checkers we enable, whatever code we test, there will
-> always be false positives. A CI system needs to be able to ignore those
-> false positives and only warn about new issues.
+> This shouldn't be a part of this commit. It is not used in it.
 
-We already have support for that:
-https://gitlab.freedesktop.org/linux-media/media-ci/-/tree/main/testdata/static?ref_type=heads
+Ok.
 
-But it would be great if those lists were as small as possible:
+Thanks
+Varada
 
-- If we have a lot of warnings, two error messages can be combined and
-will scape the filters
-eg:
-print(AAAA);
-print(BBBB);
-> AABBBAAB
-
-- The filters might hide new errors if they are too broad
-
-
-Most of the patches in this series are simple and make a nicer code:
-Eg the non return minmax() ,
-Other patches show real integer overflows.
-
-Now that the patches are ready, let's bite the bullet and try to
-reduce our technical debt.
-
-
-Regards!
+> > +
+> >  struct qcom_cc_desc {
+> >         const struct regmap_config *config;
+> >         struct clk_regmap **clks;
+> > @@ -29,6 +42,9 @@ struct qcom_cc_desc {
+> >         size_t num_gdscs;
+> >         struct clk_hw **clk_hws;
+> >         size_t num_clk_hws;
+> > +       struct qcom_icc_hws_data *icc_hws;
+> > +       size_t num_icc_hws;
+> > +       unsigned int icc_first_node_id;
+> >  };
+> >
+> >  /**
+> > --
+> > 2.34.1
+> >
 >
-> > When code is new the warnings are going to be mostly correct.  The
-> > original author is there and knows what the code does.  Someone has
-> > the hardware ready to test any changes.  High value, low burden.
-> >
-> > When the code is old only the false positives are left.  No one is
-> > testing the code.  It's low value, high burden.
-> >
-> > Plus it puts static checker authors in a difficult place because now
-> > people have to work around our mistakes.  It creates animosity.
-> >
-> > Now we have to hold ourselves to a much higher standard for false
-> > positives.  It sounds like I'm complaining and lazy, right?  But Oleg
-> > Drokin has told me previously that I spend too much time trying to
-> > silence false positives instead of working on new code.  He's has a
-> > point which is that actually we have limited amount of time and we have
-> > to make choices about what's the most useful thing we can do.
-> >
-> > So what I do and what the zero day bot does is we look at warnings one
-> > time and we re-review old warnings whenever a file is changed.
-> >
-> > Kernel developers are very good at addressing static checker warnings
-> > and fixing the real issues...  People sometimes ask me to create a
-> > database of warnings which I have reviewed but the answer is that
-> > anything old can be ignored.  As I write this, I've had a thought that
-> > instead of a database of false positives maybe we should record a
-> > database of real bugs to ensure that the fixes for anything real is
-> > applied.
 >
 > --
-> Regards,
->
-> Laurent Pinchart
-
-
-
--- 
-Ricardo Ribalda
+> With best wishes
+> Dmitry
 
