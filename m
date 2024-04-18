@@ -1,143 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-17875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 420A98AA13F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 19:39:25 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A23FA8AA151
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 19:46:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C4F6CB21AC7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 17:39:22 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ED451B22315
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 17:46:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F04B9176FBD;
-	Thu, 18 Apr 2024 17:39:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E1471EA8F;
+	Thu, 18 Apr 2024 17:45:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ee6ScVtO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Fb97ymLN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6ADA16191A;
-	Thu, 18 Apr 2024 17:39:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C334D1442F4
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 17:45:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713461950; cv=none; b=GD2DDp2flaEmTXZeTB+AzKPMeAGkMHMFS6DprLacrFKTTHFxpDTogIoS5NEdVkdFxKO5/qElKv9ZLABYYNu/9itLBdnaN61z6RspxpbbCqpcANpc4Zq9zl18/2Vzw/mvk7jsAAbWXPOV00cw/qIGHTPL8jC0bZh8+xBbGsLiV5s=
+	t=1713462359; cv=none; b=IDw2EKK5THz2yvum1g+bI5fDsTMqOlMttXv8SpQ5FPHPz6aXpxRIP8jRpjNCAsZxI93ZT1n3pt5Ecc0Ui4er9bNMorGOmhWO3wp3Laws6nBGR+eHsci8eU7qmvrR0lEvc3NDKSIFNLMxM3w2MCJNESMuoLTRoF0TAR+yW6S7Zjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713461950; c=relaxed/simple;
-	bh=FAHI99o3/qIUZzGqglZBZTI/az3nq3RPVxtdG60ysmk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=DvaKkOa+mHM5ZHk5BY3rfOcUI8s8S81tlZbmChERQtmq22QGOF9SgcW7ISygoovaASvGdfXSc+Fftxj3c42olEMj3hZfLR12Z4UZdYO+LyP3dOplxGd3uZnRG4ny2FzOnZXrd9cxIqXKBQ8rZdJXjlDzCWK8z24BYZeV3h2zJsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ee6ScVtO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23825C32782;
-	Thu, 18 Apr 2024 17:39:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713461950;
-	bh=FAHI99o3/qIUZzGqglZBZTI/az3nq3RPVxtdG60ysmk=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=ee6ScVtOC9dHPT6B1cHR9LbGZF5n66Z6tE4FHnzLSX8AnCtVVWdyBFpTglVQ6H7FT
-	 JUT97832b8pjDqQapHY1a3Q1FYULM9/AS5AyrrH40M3rNb7FPUi44KAEpAJsYGYto+
-	 kn556JiqoaiPWjiSZRqaXWxTx4ImfVjpTUmDNnZxtMMYmu6V8a9TH8/4iqd3k/Z1cZ
-	 RfLRJOlIh8bSowCU3WZa7EyKl3LmRGHkjaJK8JQiJb8nyNZiGtHoAT4eLvQ4UsPfyF
-	 divk1fPA+/ItNt5MepwAWsZRQQ9ozMy/zH0+o1+jRwYT15y8cBNba9nNZGvXM2dwlL
-	 fCldAwaCLQkkA==
-Message-ID: <2f94f990-77d2-43ec-9773-4ee0e9c0870a@kernel.org>
-Date: Thu, 18 Apr 2024 19:39:03 +0200
+	s=arc-20240116; t=1713462359; c=relaxed/simple;
+	bh=cmVM7114Wg4c+eTojAQNT4khmmHaTED7X82UXWToh7c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oxdyJZHfyp9w2Hz9l6GbOrovYjpY92KORUU8yZuyReiIqWD5OQy+9sR8nOI5YG0HqNpibfLv5tcZXZhi+HqImd2DBThtdBDfCl0WJCei+OBlLXqQtHXCZkJDmzx/kUWVwEmpKWC8iezme2/CTYIL2RsayPHHYQ4UBZIT48eKXLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Fb97ymLN; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-516d2600569so1480356e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 10:45:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1713462356; x=1714067156; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=CnaZqLleXkKRQtG9lodbPU6Ant05+dj1iWTT1GEt3P0=;
+        b=Fb97ymLNSS5pF2oHoQ7M0Sm+fkc/FR3rdNIvTvsbwpSoF3WWpo33jhDtk0+hIt8w31
+         S2+F5D4wujYAy9rQW56SIs1qqd474avBrGtcXVKGJ5uePCx4RB4je04c3bYszeEt2V1O
+         Yhw4QH3Uxl8ghxBYzEqPftCWhsDctReLp1srgLyHHQl5bPANL8rWCjJLsTVh7QeIOM/g
+         9962+HvpYUzrRQLscSS/ePxU5k8Nsje6YvP1yiC1njbHcleyW9+GT97KptvBHEvRdk3R
+         Op9CRvIrvIAJ/Ke6zW42Gt0rVIqICN26O+jw6A+GGcGO4LeLKk1wZkmWAHJUWliHYpmm
+         Akwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713462356; x=1714067156;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CnaZqLleXkKRQtG9lodbPU6Ant05+dj1iWTT1GEt3P0=;
+        b=gkp91Mj4P9klA0kUCM4veVBs1aKDdz3komLtGgVvSt27EzgIw39sRZKYYP7cyyvtiZ
+         xw03qstbpu1GrtBw2AGq9xFVxNNqdkfH1FxOzLMqej2cjvojCueYtZ+HZHqOYmraNPGQ
+         CZn/TexiBQh2KBhlCRiIM2dR4NTV41C5YeZA3lPtl5RzWJaxjBjFt+QNzr0XEPAT1J+N
+         Kfj3t1tgsMvxN5V1YRhK2WpqctTHl3UHjCtGZU6rq0HdHmWRHYXSLJcRDe/ZnNBKiHkJ
+         h7vlzLSHfUHPxreeKR6Mq8qZv9E7v4iqH/wvB1XNzNP3BbLt+AlI882Uxwi28TRMWfTE
+         8dPA==
+X-Forwarded-Encrypted: i=1; AJvYcCUtDsWU2UNhEIyDc/KDn6mZsD1fyIErKkOfQ7WxO7BgBDcdS97lbSdJTUas4IFXAhetV+IXx1oKijVfe6QWuuY9ilY18VrWGtD3SsmyhA==
+X-Gm-Message-State: AOJu0YyD3MEC8lQc6XTST/z1MzxmifW9yF7Sq8foBCm14sTSr7h/bIE5
+	a5QfXoUHGU3bVA5AufTGpfGneb8mgylS3EI43j7/0IteTlZJOGO4H/5AaDm88eM=
+X-Google-Smtp-Source: AGHT+IHyMINeDJMq/yGej8du0gbVkUuDu458MwsKllIzhnyz9PhEDktjd7blUOHB5UnvEw9HDOFp0w==
+X-Received: by 2002:a05:6512:2809:b0:518:dc5b:6f5e with SMTP id cf9-20020a056512280900b00518dc5b6f5emr3078202lfb.43.1713462355939;
+        Thu, 18 Apr 2024 10:45:55 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
+        by smtp.gmail.com with ESMTPSA id q18-20020ac25292000000b0051a20afb4d9sm171124lfm.255.2024.04.18.10.45.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Apr 2024 10:45:55 -0700 (PDT)
+Date: Thu, 18 Apr 2024 20:45:53 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	stable@vger.kernel.org
+Subject: Re: [PATCH 1/2] usb: typec: qcom-pmic: fix use-after-free on late
+ probe errors
+Message-ID: <whokqg6gei5knc6kpmp6jidalljlfvf2kpa4xwjyh6xfsfj4ql@rjkweiqeu5fq>
+References: <20240418145730.4605-1-johan+linaro@kernel.org>
+ <20240418145730.4605-2-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 2/6] dt-bindings: interconnect: Add Qualcomm IPQ9574
- support
-To: Varadarajan Narayanan <quic_varada@quicinc.com>, andersson@kernel.org,
- mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, konrad.dybcio@linaro.org,
- djakov@kernel.org, dmitry.baryshkov@linaro.org, quic_anusha@quicinc.com,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org
-References: <20240418092305.2337429-1-quic_varada@quicinc.com>
- <20240418092305.2337429-3-quic_varada@quicinc.com>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240418092305.2337429-3-quic_varada@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240418145730.4605-2-johan+linaro@kernel.org>
 
-On 18/04/2024 11:23, Varadarajan Narayanan wrote:
-> Add interconnect-cells to clock provider so that it can be
-> used as icc provider.
+On Thu, Apr 18, 2024 at 04:57:29PM +0200, Johan Hovold wrote:
+> Make sure to stop and deregister the port in case of late probe errors
+> to avoid use-after-free issues when the underlying memory is released by
+> devres.
 > 
-> Add master/slave ids for Qualcomm IPQ9574 Network-On-Chip
-> interfaces. This will be used by the gcc-ipq9574 driver
-> that will for providing interconnect services using the
-> icc-clk framework.
-> 
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> Fixes: a4422ff22142 ("usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
+> Cc: stable@vger.kernel.org	# 6.5
+> Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
-> v8:
-> Remove ICC_xxx macros
-> Fix macro defines to be consistent with other bindings
-> v7:
-> Fix macro names to be consistent with other bindings
-> v6:
-> Removed Reviewed-by: Krzysztof Kozlowski
-> Redefine the bindings such that driver and DT can share them
+>  drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
 > 
-> v3:
-> Squash Documentation/ and include/ changes into same patch
 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+-- 
+With best wishes
+Dmitry
 
