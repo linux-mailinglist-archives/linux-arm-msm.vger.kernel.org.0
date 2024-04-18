@@ -1,76 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-17831-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17832-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id B455A8A9890
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 13:31:45 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C7AE8A989B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 13:33:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1808BB214BB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 11:31:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 03B861F233E7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 11:33:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EA2A15E5DB;
-	Thu, 18 Apr 2024 11:31:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E933D15E7F5;
+	Thu, 18 Apr 2024 11:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CX7AnHBj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oSs2A/pj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635B815E5BC
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 11:31:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB86715E5DB
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 11:33:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713439900; cv=none; b=j4w48J1tsLijoscmq7YODuy4a51f+LUQNvCFPcwAy+LvZ4zkWdg6hTF+m0zBn65jnEkJsIhIEnn1Yv19DnH01XafrWLx+QcwkOc3Mh7mEI6zym8OY8WJxt7XBFIsAT0oyv1TbIqDF1iW9v1zaaj0aTdr/NRXqOgTgKMKSUkyM0g=
+	t=1713440005; cv=none; b=Tt3Ckk5r9K5MMiBQ1QHt3c/j5PgAkDwa7vOThvE7OfSev/jJdwrBntWGVt1xsd2AQXS4S1Bh6RAROdD2dtuXKvIAF9kqwrKOW6CzeIRiGhFgzF/Izt/53DZbacep4dfbrDDwlrcOSo3A5EaT+ed6MQzSjDtsRO1CTBb6UnWAsQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713439900; c=relaxed/simple;
-	bh=wMjzhmNcwcJa8Q8gnXG/YY/EB7MYL/bXGRm82Uqogzo=;
+	s=arc-20240116; t=1713440005; c=relaxed/simple;
+	bh=/rHfCjIVYXQVsvXGB8IxXfG+StoG4NwDe0rmylo5Qjg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=B8AXdLJMWO9lw4apHBMeBtjgcOePh4NMebHa1hMBrV8hGQKPAs8q78RhLYGEU4CZMyMivp38lEL8B+uGS2a0peuH84KV+ZXEw3dmlZiSMgouIzC8R9ZJ/tFhZRw5gl9Aj85pPtCf1o283E1Y2MZDqJiHswasAgqZGdoSUmis7nU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CX7AnHBj; arc=none smtp.client-ip=209.85.218.52
+	 In-Reply-To:Content-Type; b=VP3Fvl07bDC4zaeqMsPvlI5VUwxNRqJa146sBF3jKudXIQBM2cw3SRaDt3TMMdRmxQElKnGR0rK7FhYnEWB0YuLD2K7Nrn9IdnqVucy8axCNAGAp7QAueLiK+gWkxg2m/wFpYTc8SIr1R8D6vyisLTicOwq3drUEh4jVS9PeYqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oSs2A/pj; arc=none smtp.client-ip=209.85.208.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a51a7d4466bso80019566b.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 04:31:38 -0700 (PDT)
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-56e136cbcecso1071012a12.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 04:33:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713439897; x=1714044697; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1713440002; x=1714044802; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=X8LbQ8g2eKHuVcN88bhcgCY+RDxNHv8wy3DmMUUp3G4=;
-        b=CX7AnHBjvIh9Ab070lq+Zbl1Sx9c5x472NtUifjmgIU7rpfYyBOoAef1K816DosW9H
-         /LS/EtafzRhEctZBSw3joqVgh0AZQsj2/P05kWPYssbMy0sd/9OdNM6yd2tRKYJ/VNu8
-         9DxLFONlpLRerUKk0vK/KdVc+vlTY6isQ3tn/e6pqVMZv+vTrS+kwuVFMpAusAOLJjst
-         dO5XIOo8GHe/2h0TjumFgWQZP/kmaSDjSJgiIzcjKtqb3RIxEDhjNqXSCjNutmbUHPr3
-         jrH+pxi4zyJAiQkxyv4HDBOEHt0K+x3iKrbRuCkPAfSARWbdcuNYF0AggLZl10Y/4x87
-         BQAA==
+        bh=b9lgOdCdIOmICWwhRzdOoCn2EAweW38pbbCbx3C0dQk=;
+        b=oSs2A/pjkYgDkyeDPExMdwe0B1bAdjO+o5gb5wZ/3JTWCDp/CJJNW+LKWtQaNXlzGg
+         IzCBih18iifxmMAigngQJnAmSmS8J7wjR2/0IF3BvunGkvQTuMWJtZ6HOS+qq+Y+39y2
+         4FHkj3wiM2UJWUP9J1wHSmtoJZw9c36WV+7HlQmaYANz6cPdQRCKbBmJC/8ELEGy1SMB
+         EC3gF6e0J6ZtDnnLysjdU0UstqDbirjNpuqtsgBca4BazdjRYEdfGIEO6TIXiTJ4xACC
+         cFrGWiH5uK/V213GNMj9xbp2Qq9Py8FM2xd3UQoYPGhxWKD0DqecAgO8HrZXv5rkbd+u
+         diXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713439897; x=1714044697;
+        d=1e100.net; s=20230601; t=1713440002; x=1714044802;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=X8LbQ8g2eKHuVcN88bhcgCY+RDxNHv8wy3DmMUUp3G4=;
-        b=sKdZ9u7AVc6rlqnESoRhzHimYRkkttlCSWMuol24viqdgBaX072WOqkWqqurcfBJxH
-         F8/HBbLE/UIyXGbJx5UT4oju8Z/l+mAMvcWCva7GG+9rmDoGMGmiEL0SCyclMX0Rt227
-         Z9+uXlYgdeC0Qnp4t9NIc4nt3EAd+2GlT1+7IzR9NTRB5SQl+aXNrUViFO0Nbay4YxiS
-         abFzJV4JWKkn1USiRFu9WMKY/qqXuBIlLjXTVBH35kicMzczB8wr8dU68NJ/fnS3MzCf
-         zE8iBKzee4+wOhJQYO8o1WuVzJlNVA3jO2lGKg7cvGWfZVPM+BowQsVMrjrcsiSnyvgA
-         p2gg==
-X-Forwarded-Encrypted: i=1; AJvYcCUeEqviJY8At7UVZYYbpN0q4nYpgovA+EhbahygvZhtwPFCjJ08wQTXVoEIVn/yhL1Ga3L/cD7kLnu43PW08d7q3TZ6JlCpTr1p5ZQLdw==
-X-Gm-Message-State: AOJu0YwQzUpIEHAMUVNWrrEzxnec96NzEiAlhrH6zTBEeR4Fr7cHcpyl
-	Y2uBJj1GpE/LrDnDHTUJ/FxQ2E+jFZo3YWxMOgpU4OxE5klIohxCROU6GP4fmVYzYoggm2SXqX6
-	r
-X-Google-Smtp-Source: AGHT+IFZBWaL9q4qqsJ4/QwRyxBVHVegYNkev4N/HvJrN2plT9bgS3FGPggcIPHvWdIFXwlOdmjMlA==
-X-Received: by 2002:a17:906:1c10:b0:a47:20c3:7c51 with SMTP id k16-20020a1709061c1000b00a4720c37c51mr1422968ejg.71.1713439896601;
-        Thu, 18 Apr 2024 04:31:36 -0700 (PDT)
+        bh=b9lgOdCdIOmICWwhRzdOoCn2EAweW38pbbCbx3C0dQk=;
+        b=tlptmJbBG6TKVh+vHRh0FwHCAbz5+a9AN8S6gZGWfKXEO/hMNEymyMg2Gvevd05S8v
+         jQXYXqIfxbgJFkt2N3nHe+G82FDOz9aCCk0K0PQ3oRhfGhDhb+gsGXNvPggjFJDDcERZ
+         TtrRtJY2jy+wMSuuiD7EhMVxONhSglINEhAai9f2ZQYhdnxOkxwDZ/WMqdmLY6wmy46J
+         x+BjKnFcAhgvMOq7vgRv38IvoKHtMgzmX6yl02Imp2R/SWPrft9FAh2iPtGI6nR7IIgH
+         rGYKtVS8N+mi6uZKEC8Cs1MskfZsKkjnd3XOw/IsqoBfM/QBGIU+fFA9WAYyDi9vvG5t
+         d0Bw==
+X-Gm-Message-State: AOJu0YwlN9apnhX7qX5MiDnJhTbT+wzivz5dkXElky4/r5Z91PU1IKHz
+	eKf5ACOobUmXb0Dwe7gfHqHpBvstkm/u/6VohpsJpysmIoJEew3EJH3yhnD1Ad0=
+X-Google-Smtp-Source: AGHT+IHKiVh6Nj87GB2UGWDfWcSeS1Qxmuucy3GshEAHNragzY3My+7Qk0/Is0MtMJzE3QOxcEZd4Q==
+X-Received: by 2002:a50:cd04:0:b0:56d:f7ce:e879 with SMTP id z4-20020a50cd04000000b0056df7cee879mr1750351edi.37.1713440002011;
+        Thu, 18 Apr 2024 04:33:22 -0700 (PDT)
 Received: from [192.168.45.55] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id dq16-20020a170907735000b00a524318c380sm768037ejc.80.2024.04.18.04.31.34
+        by smtp.gmail.com with ESMTPSA id eh11-20020a0564020f8b00b00571be394478sm501245edb.69.2024.04.18.04.33.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Apr 2024 04:31:35 -0700 (PDT)
-Message-ID: <2b5f33ba-2108-464c-b4d2-eff2cc6e59cf@linaro.org>
-Date: Thu, 18 Apr 2024 13:31:33 +0200
+        Thu, 18 Apr 2024 04:33:21 -0700 (PDT)
+Message-ID: <e5c60b6f-3cab-4265-87fc-7eeab03795ec@linaro.org>
+Date: Thu, 18 Apr 2024 13:33:19 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,22 +76,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/7] drm/msm/adreno: Implement SMEM-based speed bin
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Clark <robdclark@gmail.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
- Neil Armstrong <neil.armstrong@linaro.org>
-References: <20240404-topic-smem_speedbin-v2-0-c84f820b7e5b@linaro.org>
- <20240404-topic-smem_speedbin-v2-3-c84f820b7e5b@linaro.org>
- <hi7vzqm5ebypzs6m6bw64ghgfwsdzuaxy65jpah37iw5ww7fku@n3c5sucic27i>
- <bfd6aa32-a28e-47a4-82c7-76c5dd99a44d@linaro.org>
- <7ynodjzjuxwwqkjgns5jtnkckw52qyldfpsqpjh7645swva4xk@7wucftyjyyy3>
+Subject: Re: [PATCH] clk: qcom: dispcc-x1e80100: Drop the reconfiguring of
+ PLL0 on probe
+To: Abel Vesa <abel.vesa@linaro.org>, Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Rajendra Nayak <quic_rjendra@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240418-x1e80100-dispcc-drop-pll0-reconfigure-v1-1-453e4e70e940@linaro.org>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -131,83 +122,28 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <7ynodjzjuxwwqkjgns5jtnkckw52qyldfpsqpjh7645swva4xk@7wucftyjyyy3>
+In-Reply-To: <20240418-x1e80100-dispcc-drop-pll0-reconfigure-v1-1-453e4e70e940@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 18.04.2024 1:07 PM, Dmitry Baryshkov wrote:
-> On Thu, Apr 18, 2024 at 11:51:16AM +0200, Konrad Dybcio wrote:
->> On 18.04.2024 1:43 AM, Dmitry Baryshkov wrote:
->>> On Wed, Apr 17, 2024 at 10:02:55PM +0200, Konrad Dybcio wrote:
->>>> On recent (SM8550+) Snapdragon platforms, the GPU speed bin data is
->>>> abstracted through SMEM, instead of being directly available in a fuse.
->>>>
->>>> Add support for SMEM-based speed binning, which includes getting
->>>> "feature code" and "product code" from said source and parsing them
->>>> to form something that lets us match OPPs against.
->>>>
->>>> Due to the product code being ignored in the context of Adreno on
->>>> production parts (as of SM8650), hardcode it to SOCINFO_PC_UNKNOWN.
->>>>
->>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>> ---
->>
->> [...]
->>
->>>> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
->>>> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
->>>> @@ -6,6 +6,8 @@
->>>>   * Copyright (c) 2014,2017 The Linux Foundation. All rights reserved.
->>>>   */
->>>>  
->>>> +#include <linux/soc/qcom/socinfo.h>
->>>> +
->>>
->>> Stray leftover?
->>
->> Looks like
->>
->> [...]
->>
->>>> +
->>>> +#ifdef CONFIG_QCOM_SMEM
->>>
->>> Please extract to a separate function and put the function under ifdef
->>> (providing a stub otherwise). Having #ifndefs inside funciton body is
->>> frowned upon.
->>
->> Hm, this looked quite sparse and straightforward, but I can do that.
->>
->> [...]
->>
->>>> +/* As of SM8650, PCODE on production SoCs is meaningless wrt the GPU bin */
->>>> +#define ADRENO_SKU_ID_FCODE		GENMASK(15, 0)
->>>> +#define ADRENO_SKU_ID(fcode)	(SOCINFO_PC_UNKNOWN << 16 | fcode)
->>>
->>> If we got rid of PCode matching, is there a need to actually use
->>> SOCINFO_PC_UNKNOWN here? Or just 0 would be fine?
->>
->> The IDs need to stay constant for mesa
->>
->> I used the define here to:
->>
->> a) define the SKU_ID structure so that it's clear what it's comprised of
->> b) make it easy to add back Pcode in case it becomes useful with future SoCs
->> c) avoid mistakes - PC_UNKNOWN happens to be zero, but that's a lucky
->>    coincidence
->>
->> We don't *match* based on PCODE, but still need to construct the ID properly
->>
->> Another option would be to pass the real pcode and add some sort of
->> "pcode_invalid" property that if found would ignore this part of the
->> SKU_ID in mesa, but that sounds overly and unnecessarily complex.
-> 
-> It's fine, just add a comment please. Maybe we can rename PC_UNKNOWN to
-> PC_PRODUCTION?
+On 18.04.2024 12:51 PM, Abel Vesa wrote:
+> Currently, PLL0 is configured by the bootloader is the parent of the
+> mdp_clk_src. Reconfiguring it on probe leaves the PLL0 in "stand-by"
+> state (unlocked), which will trigger RCG child clocks to not update
+> their config,
 
-I don't think that's right. The SoC "product code" may actually mean something
-(again, not necessarily for Adreno specifically), and with Adreno in mind, it
-being only meaningful for engineering samples may change in the future.
+Sounds like this is the problem that should be fixed instead.
+
+ which then breaks eDP on all x1e80100 boards. So rely
+> on the bootloader for now. Drop the config values as well. Also add
+> a comment to explain why the PLL0 is not configured alongside PLL1.
+> 
+> Fixes: ee3f0739035f ("clk: qcom: Add dispcc clock driver for x1e80100")
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+
+This works, because you have (at least) partially configured hardware, but
+we shouldn't assume this to be the case.
 
 Konrad
 
