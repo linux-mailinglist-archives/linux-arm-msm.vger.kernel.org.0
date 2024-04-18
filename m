@@ -1,189 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-17825-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17826-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3B448A9826
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 13:05:08 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E1118A9833
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 13:06:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 73EF31F22DF1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 11:05:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D9BB9281BD8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 11:06:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB00F15E5DF;
-	Thu, 18 Apr 2024 11:04:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E315A15E5A7;
+	Thu, 18 Apr 2024 11:06:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="ZGildrEZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="N7TBnTVq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFEAE15E5B2;
-	Thu, 18 Apr 2024 11:04:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70E715B558
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 11:06:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713438292; cv=none; b=LkoESuy9BWbBYA/6/lEWsx0qgQoz1yTzh5NCWIzMukkJelF9O0chR2dQ+3YieZhx3SO1SoHOw1Ca8I7+QGsntZ0+GP5tCDJlPeg3C7C5yJ6W0yYKxZIICAHZjSwatBobZ1T9Dl4cLK9P8EJp368agrVzPi/h8Youin6Tgt7xxxQ=
+	t=1713438377; cv=none; b=ixQQxKFgtGD2zsdr7NEew0u79v0WRxd9fRHG9gdvN6oczkEX7NYp0v/uohx6C3PtfY9xk0l3A28sh8NiD39h6P+zaL2ZGALU71yW31zylNJTU4dhoxD13Nlg+nI78Kk7tReIZTi4IFc5sz21NREahf6tb/Li02LPxWEXwkGP3E0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713438292; c=relaxed/simple;
-	bh=nVrJ30MzRcVeLHpwfXp7hOiRaAkKYzwTLRPhrFm0ixw=;
+	s=arc-20240116; t=1713438377; c=relaxed/simple;
+	bh=CiYAK71r1dKd1XBeQXn4trgSBWiLXMXsFU4bIEyKT/g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=alSGiumo+V9k2YRcQ2BaJNgIho4VRcDW+xSghTRst7h4GPLohSpZ3he6b4n3Cc4gEYjui15HX5qf7cU+Po39AsxsR6EQT3yatq8JQd3FJlJtz70LsuE/DDLNYqhpyw5VhkN40D5KnRpjQdgpebrfJyVOHa5POm7D0Udh7m229Sk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=ZGildrEZ; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
-Received: from pendragon.ideasonboard.com (117.145-247-81.adsl-dyn.isp.belgacom.be [81.247.145.117])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 8ACEBC8E;
-	Thu, 18 Apr 2024 13:03:57 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1713438237;
-	bh=nVrJ30MzRcVeLHpwfXp7hOiRaAkKYzwTLRPhrFm0ixw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ZGildrEZ8PscbwJPkrVEQ9AVQQ5ZqsFtIzLjmF9plRRPHNE6nYXij+2WJ4wHeQ/Vt
-	 tbErl0bgSpuTcVcaqqltDwf7r27d4aQqy4R23+6SvyevGzwbJqe+dJwie8wJOCDzuq
-	 WkVX5b8VtifCgZq58ru+v0enMsxJOUVui5DkYPqU=
-Date: Thu, 18 Apr 2024 14:04:38 +0300
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To: Ricardo Ribalda <ribalda@chromium.org>
-Cc: Martin Tuma <martin.tuma@digiteqautomotive.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Hugues Fruchet <hugues.fruchet@foss.st.com>,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Sowjanya Komatineni <skomatineni@nvidia.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>, Sergey Kozlov <serjk@netup.ru>,
-	Abylay Ospan <aospan@netup.ru>,
-	Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
-	Dmitry Osipenko <digetx@gmail.com>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Benjamin Mugnier <benjamin.mugnier@foss.st.com>,
-	Sylvain Petinot <sylvain.petinot@foss.st.com>,
-	Jacopo Mondi <jacopo+renesas@jmondi.org>,
-	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-	Niklas =?utf-8?Q?S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Pavel Machek <pavel@ucw.cz>, linux-media@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org, linux-staging@lists.linux.dev,
-	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 03/35] media: uvcvideo: Refactor iterators
-Message-ID: <20240418110438.GX12561@pendragon.ideasonboard.com>
-References: <20240415-fix-cocci-v1-0-477afb23728b@chromium.org>
- <20240415-fix-cocci-v1-3-477afb23728b@chromium.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=sLa3KAnENrp7TthaLn5tUar16kUpZmoSlpg3JYhPYaoc5Ppl6+T9UL/MwuUC4DfPPSoW/Dpfq/njn8xbbftWWr68O5xC34MIWhDkeYcn/O6Ev1ZH0hUi2c7xinZHVzX+abXPlYod8LTvPHAOcV3WYBWWGMbzxALqTWI0xUurTIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=N7TBnTVq; arc=none smtp.client-ip=209.85.167.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-516db2214e6so879300e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 04:06:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1713438374; x=1714043174; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=QoJVv2RWvbhhnx6gOF70bQ+Hht7rDXtw9zkh1pmPgSE=;
+        b=N7TBnTVqOH3rQKnDlU9M7pV4dp00hfDdKBAN1Yr8WFw1bTf8Iw+HOSC6vR0X5FtmSa
+         2G4N7RLk/64iOi8qp3aoIOizphLAJOiTY+66zsmmR0V3UxhRetdoXHcWFpm/EyIxxloA
+         yrDc55OijeCgRtcNL6HiP6XysviRRZQdDwjbdjGnAop8FOSp/uGKltFGtVLRSWe+k0Bp
+         Sg9FhGlpm9O3V+etVMIWhgxF3fr++JuxTUJOHxGMcvytxIhalI7O+yksC1jXXTNekM6z
+         luJxCtDQp26sLlv+c+pJ4xwisCOobNwia9O2Zl2uYDFIiqC5wu1gSJilcf0nEEmSXXbH
+         spdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713438374; x=1714043174;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QoJVv2RWvbhhnx6gOF70bQ+Hht7rDXtw9zkh1pmPgSE=;
+        b=mPfUqbuW0kaQ5jBTLTLL3XK+PdjDqgxLAfWAR+DiPzWX0E5kb/bPZJyxHkVCObki7Y
+         litdqwiAiHyk5QU2S0Jlx/wRf7hyI3BR5YsBfIlWPTXEjDd7I7IjQutQFdVMPJgWDqR7
+         lfT5fX/Tc2lIMZt7FvTTLukBp5jgxbFDBuqPCThbzHqORE7ITowpHDNnnnjFzjpvJFWj
+         c5whXJaDdY3q1cate20DcDk+kS+bYIIc6MwBoAumJgWd+AxmQJwDm4Z2HixWXpX50tqn
+         ikLig/LJTgVWxFzlEOpY4+uwYyGGTAfqpb0kJvnu2Dv2CbXgl1BTCrQfj1mO6DPAyDvW
+         T7HA==
+X-Forwarded-Encrypted: i=1; AJvYcCWyopEUhB8xs76x4eX6fWW5J3T+zL4DOiJlxrpX6zFBMmGqIkWsrCrIWVu6Vac4cdR9nYysZcpMkDwXMz/Wld4LIPBim4CsWlp1dv6sFw==
+X-Gm-Message-State: AOJu0YxEM2y+En+3H4AzDqgZxwzYs0dsmXR7X6e+HuqPcIk8Qb6Ahgl7
+	ZZoPdEiyIVe3IrMfOlfFKlazg7+OpwoQIpPwaMaISqZBjVkbYi3TrCdpdDDVXTU=
+X-Google-Smtp-Source: AGHT+IHgHUXxxgO0WITTWXYfqenB1WfhObEW5gekCSgDerJnKgE92t/J5oVbQQuVVqEzZHGbF9DmSg==
+X-Received: by 2002:ac2:4e44:0:b0:519:591d:45da with SMTP id f4-20020ac24e44000000b00519591d45damr1140132lfr.18.1713438373824;
+        Thu, 18 Apr 2024 04:06:13 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
+        by smtp.gmail.com with ESMTPSA id r1-20020ac25a41000000b00516c1fa74e3sm194631lfn.207.2024.04.18.04.06.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Apr 2024 04:06:13 -0700 (PDT)
+Date: Thu, 18 Apr 2024 14:06:11 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v2 2/7] soc: qcom: smem: Add a feature code getter
+Message-ID: <s7mfapok2tvrp5vfm7dkrmyb7htgfucuuvry4shsl7vrxj7e6y@nosu2a7axjxo>
+References: <20240404-topic-smem_speedbin-v2-0-c84f820b7e5b@linaro.org>
+ <20240404-topic-smem_speedbin-v2-2-c84f820b7e5b@linaro.org>
+ <mg6ojmzl3snj3k6fuyi6opkbdovs7xna6sn65pjh52ii4yy7u6@ny2spvjjbfpu>
+ <89eccb1f-c527-4820-a084-7fc4ad3f0ab4@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240415-fix-cocci-v1-3-477afb23728b@chromium.org>
+In-Reply-To: <89eccb1f-c527-4820-a084-7fc4ad3f0ab4@linaro.org>
 
-Hi Ricardo,
-
-Thank you for the patch.
-
-On Mon, Apr 15, 2024 at 07:34:20PM +0000, Ricardo Ribalda wrote:
-> Avoid using the iterators after the list_for_each() constructs.
-> This patch should be a NOP, but makes cocci, happier:
+On Thu, Apr 18, 2024 at 11:53:31AM +0200, Konrad Dybcio wrote:
+> On 18.04.2024 1:39 AM, Dmitry Baryshkov wrote:
+> > On Wed, Apr 17, 2024 at 10:02:54PM +0200, Konrad Dybcio wrote:
+> >> Recent (SM8550+ ish) Qualcomm SoCs have a new mechanism for precisely
+> >> identifying the specific SKU and the precise speed bin (in the general
+> >> meaning of this word, anyway): a pair of values called Product Code
+> >> and Feature Code.
+> >>
+> >> Based on this information, we can deduce the available frequencies for
+> >> things such as Adreno. In the case of Adreno specifically, Pcode is
+> >> useless for non-prototype SoCs.
+> >>
+> >> Introduce a getter for the feature code and export it.
+> >>
+> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> >> ---
 > 
-> drivers/media/usb/uvc/uvc_ctrl.c:1861:44-50: ERROR: invalid reference to the index variable of the iterator on line 1850
-> drivers/media/usb/uvc/uvc_ctrl.c:2195:17-23: ERROR: invalid reference to the index variable of the iterator on line 2179
+> [...]
 > 
-> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-> ---
->  drivers/media/usb/uvc/uvc_ctrl.c | 24 +++++++++++++-----------
->  1 file changed, 13 insertions(+), 11 deletions(-)
+> >> +/* Internal feature codes */
+> >> +/* Valid values: 0 <= n <= 0xf */
+> >> +#define SOCINFO_FC_Yn(n)		(0xf1 + n)
+> >> +#define SOCINFO_FC_INT_MAX		SOCINFO_FC_Yn(0x10)
+> > 
+> > This is 0x101 rather than 0x100 or 0xff. Is that expected?
 > 
-> diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
-> index e59a463c2761..a4a987913430 100644
-> --- a/drivers/media/usb/uvc/uvc_ctrl.c
-> +++ b/drivers/media/usb/uvc/uvc_ctrl.c
-> @@ -1850,16 +1850,18 @@ int __uvc_ctrl_commit(struct uvc_fh *handle, int rollback,
->  	list_for_each_entry(entity, &chain->entities, chain) {
-
-If we really want to ensure the iterator won't be used after the loop,
-it could be declared in the loop statement itself, now that the kernel
-has switched to a newer C version.
-
->  		ret = uvc_ctrl_commit_entity(chain->dev, entity, rollback,
->  					     &err_ctrl);
-> -		if (ret < 0)
-> +		if (ret < 0) {
-> +			if (ctrls)
-> +				ctrls->error_idx =
-> +					uvc_ctrl_find_ctrl_idx(entity, ctrls,
-> +							       err_ctrl);
->  			goto done;
-> +		}
->  	}
->  
->  	if (!rollback)
->  		uvc_ctrl_send_events(handle, ctrls->controls, ctrls->count);
->  done:
-> -	if (ret < 0 && ctrls)
-> -		ctrls->error_idx = uvc_ctrl_find_ctrl_idx(entity, ctrls,
-> -							  err_ctrl);
->  	mutex_unlock(&chain->ctrl_mutex);
->  	return ret;
->  }
-> @@ -2165,7 +2167,7 @@ static int uvc_ctrl_init_xu_ctrl(struct uvc_device *dev,
->  int uvc_xu_ctrl_query(struct uvc_video_chain *chain,
->  	struct uvc_xu_control_query *xqry)
->  {
-> -	struct uvc_entity *entity;
-> +	struct uvc_entity *entity, *iter;
->  	struct uvc_control *ctrl;
->  	unsigned int i;
->  	bool found;
-> @@ -2175,16 +2177,16 @@ int uvc_xu_ctrl_query(struct uvc_video_chain *chain,
->  	int ret;
->  
->  	/* Find the extension unit. */
-> -	found = false;
-> -	list_for_each_entry(entity, &chain->entities, chain) {
-> -		if (UVC_ENTITY_TYPE(entity) == UVC_VC_EXTENSION_UNIT &&
-> -		    entity->id == xqry->unit) {
-> -			found = true;
-> +	entity = NULL;
-> +	list_for_each_entry(iter, &chain->entities, chain) {
-
-Same here, iter could be declared in the loop.
-
-> +		if (UVC_ENTITY_TYPE(iter) == UVC_VC_EXTENSION_UNIT &&
-> +		    iter->id == xqry->unit) {
-> +			entity = iter;
->  			break;
->  		}
->  	}
->  
-> -	if (!found) {
-> +	if (!entity) {
->  		uvc_dbg(chain->dev, CONTROL, "Extension unit %u not found\n",
->  			xqry->unit);
->  		return -ENOENT;
+> Yes, this is "the first invalid one", similar to ENUMNAME_NUM
 > 
+> > 
+> >> +
+> >> +/* Product codes */
+> >> +#define SOCINFO_PC_UNKNOWN		0
+> >> +#define SOCINFO_PCn(n)			(n + 1)
+> >> +#define SOCINFO_PC_RESERVE		(BIT(31) - 1)
+> > 
+> > This patch works on fcodes, why do we have PCode defines here?
+> 
+> I decided they're useful to keep.. Didn't want to split them to a separate
+> patch for no reason.
+
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
-Regards,
-
-Laurent Pinchart
+With best wishes
+Dmitry
 
