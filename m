@@ -1,74 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-17814-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A26D8A973B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 12:22:46 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A53EF8A973E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 12:22:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D9C6B286233
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 10:22:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5B1A71F2368D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 10:22:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0537F15B572;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F23DA15CD6C;
 	Thu, 18 Apr 2024 10:22:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vTGzOFFb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lO8HbYQ0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417A315B99E
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 10:22:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5857815B969
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 10:22:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713435758; cv=none; b=GWzijqKKGrfxepIhyElChxe93uBRn+S3UEt6MFNFmUBF3ENca7Q9Po33oydpgUQs85KqSIYSeJgl4lS/9+qR2jVgjV1CefcFBX7P1DQrvsS+ADoWf3NHi1z71TxKa3U76/oIiQhH9UrldvndJvVTbmT74VWnpEv6i8qBTay/Eno=
+	t=1713435759; cv=none; b=ps2MaJStK2T4SuEDfatyGyLN2c6WZEJQULbioaW9b9lqHc/iUs75y91DiiqRsGXAi5mPMeYZ0DhBBDABryEgMwIsmmGABOOlHPgfa/3WSYmbZY+qIP7XE1kGLEtYXjL3/HLObCBBuoRhtQ3RjpeOOkJ67IezQtJkWFB8onR4Iwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713435758; c=relaxed/simple;
-	bh=g88ezTfAckaptJZiToK56mT5BjIsikVqvolo+i3NmL0=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=YPvhffiyqclhDIDVvA0vN2ZCzCUovO/i1fUdh59typqRyDWa87mQ+5fMNnUaSLs/xnrpQz0tN0zoLyFzFQTE0Wfpbdkue8r8/mnZrXVl160J0Hw2QSVXjvisaMnMIrUqL2FWX+FRAl5NVUu4UAj/Bd2Uy8EhXYGytJeo7GJS7C0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vTGzOFFb; arc=none smtp.client-ip=209.85.221.41
+	s=arc-20240116; t=1713435759; c=relaxed/simple;
+	bh=7GpLZVZmb8i9TfKBnOQlREy+56bJMbzxa2IuOjKc8R8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=sg60D6MRMLfDHiwFHNZhbxA8cslGosfgR4HX8pVv0YoEKUOajqFpuTzrzLmbucrcjbQQW97FWYyGSd0GbnGEkHfvCbyZJCgUDeop+T/2VX3a9nazIm8MF2mi0s9nwBJvdY+gWyc6cHm2mek0Bo4p9Mm3juMDvKMMOQH4Ae/TEi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lO8HbYQ0; arc=none smtp.client-ip=209.85.221.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-349c4505058so467201f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 03:22:37 -0700 (PDT)
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-344047ac7e4so1142988f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 03:22:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713435755; x=1714040555; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=vqFBnUYqWjHtuRBL7UFjmbmXzv3dRjGPkMqRE6NGT/Y=;
-        b=vTGzOFFbpRXgM4RKBXfgP5buoLkjNJBgEEk6wpg7hHf/pIuDWtTuIuqYYiNKmVSFgh
-         s/ALKbsOjJPSPIMoh4owIQacspa0cZrTn3I+KDfgfEglHijwTHPfq74A/kg3z6auy9DY
-         K09dZdap4WuEWm12pWY8eh+n11Lu3zvWgo3n+R0CzXdfbRdDSlDhcV2GMOfWtd3f5NeN
-         gwNN3Q8zc0QW+XtOg568jnJpFaRzo52f3e1QkmFEc3e6d62k6ROQKgXcxYmxvm8l/5RZ
-         Cr9BOA7hKL4RrfVu/uLyWMd9QXBXfbE0TQOUPWHoXuX2wDpUFzx0lmb9IzOnbCP8Bivr
-         L7Fw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713435755; x=1714040555;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1713435757; x=1714040557; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=vqFBnUYqWjHtuRBL7UFjmbmXzv3dRjGPkMqRE6NGT/Y=;
-        b=t+0Bgx+gl2qh2VEMYXsR6Z5Cl1/onAstn6GzGFVLA0AWrj1NJSh5+D2YSZe1NWSDWq
-         ZUiaE7i2uSIFD0SkvMke/TZ6oK0SBcwwsenzTz8H2EEhsZNuCQ1c3q7dt1njwsrOaXBF
-         py3Fizc7UtbLLysoLXHNHgWowp1Xb6+s99vyfRqrqWFGogkkVEzJH1kCQ2A5O/XgSZdg
-         xuvcyI9AoLE3AqsA5KzO6utLBoXxeeDzoW9QuLjy494VAkJMeoAb2X5LDBbeOhladgCi
-         VloPlZRepLaHcVFly1ZgE3x9qOngn9nfZZpmhTbX2Gzx3dxRA1LPezmjY1N5nO2du4p8
-         su4Q==
-X-Gm-Message-State: AOJu0YyjgnIZjx0tsbfjHCznWIqv2Y/79GFF0vpSbdllbKW74bIH6AoQ
-	uUKun6Cr9uEn0KHvs05xT2cmaaUibE/BM3QRf0hIw4r5g3WIn+V/srb0Pf+YOA4=
-X-Google-Smtp-Source: AGHT+IGRk4TcsdmzUU3S4KO9/Z9b3IiVV0MPR3zkJ8KLS2qeob3FXNCohxO17ohfXp49ed6JbTdKKQ==
-X-Received: by 2002:a5d:4689:0:b0:346:65dd:55f1 with SMTP id u9-20020a5d4689000000b0034665dd55f1mr1214547wrq.31.1713435755394;
-        Thu, 18 Apr 2024 03:22:35 -0700 (PDT)
+        bh=vIpP74SBRbvnsLSeXLPH0e/Y8v00cuzF8mq86DytmQI=;
+        b=lO8HbYQ011nI8bL/utqmto4uteUpoZL03ZMVRLnO5919qYFjjk/OVlvR7e/qtPcTHQ
+         fVb9byjD6sRUCBpWfMq1ecOvLxGbg49JpiLQxl9ZlsDWP1s/gaeWQxFXbLXcr3r0FJZ9
+         yTqTM81dI/qkwb/574mq+yT6vypcIeCOfU2ZSf2tWQA5uEeJYyMeSv0nSvS3VuhRP+FB
+         kf5CbgYkBmKBOG6Pxa6KxuUh7laC+aEicPSnU4/Ad2RNUtv7jHe7sOvwbdeUbhhTvYlI
+         OM6MROrMyPwkaoce+hmhp0JW9PPTN8Fw3a16ngSrThm/XfZwSEU04BJAK9oJ3aYZ67Vx
+         Fldw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713435757; x=1714040557;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vIpP74SBRbvnsLSeXLPH0e/Y8v00cuzF8mq86DytmQI=;
+        b=UtxoP/nobRrKgZ1QhqQ5U6hSp5ftnRN/ezwKP6H7bcVoC/mHSqxJGZSbkzfnQmD865
+         N6kRj+IwgFRK10YsL2Eh0w4fBT9YtRa391at6YU5Z6+eKZ/sMBDQJyNKZtHMsfWc1e8a
+         OCCI7/B6LIb8ldOfqMihyIBdaZAM6jPZR6sVFA6iNK99QNi6YX+rPhsk/o65zi7ErpRP
+         Yh8DzKkFUONooD4kBboUW53mTX3VbK8/kiIkmeqVh+I+oXmAoN1WGToB73t8UEFmxq+W
+         NxNpewOy16wK4q+ekfItoaFEeUpNFSNrEVrdbXhoi/5HXQp7dJGjFnso/tDB+q4GvR3w
+         7xGw==
+X-Gm-Message-State: AOJu0YwHye8hPrOTGapjN6XfYJZpFFnD3zzNt3yNNQ8oNGaGkuzext2A
+	iVWOax4EykncU5Y9i7lclv76ceU1q/FzecP2q771XihqSCQXVSghSMvgRSLaUlxvE9A1CQpuikP
+	d
+X-Google-Smtp-Source: AGHT+IG3d3Al+0fXQsknI8MlR6/Rh9X6wgwlEWzldDRSyn3m7LXcAjShn+LIL1iWdTSr8YsfICtkMQ==
+X-Received: by 2002:a5d:6392:0:b0:346:e2f:a21f with SMTP id p18-20020a5d6392000000b003460e2fa21fmr1384687wru.8.1713435756541;
+        Thu, 18 Apr 2024 03:22:36 -0700 (PDT)
 Received: from [127.0.1.1] ([62.231.100.236])
-        by smtp.gmail.com with ESMTPSA id e32-20020a5d5960000000b0033ec9ddc638sm1472731wri.31.2024.04.18.03.22.34
+        by smtp.gmail.com with ESMTPSA id e32-20020a5d5960000000b0033ec9ddc638sm1472731wri.31.2024.04.18.03.22.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Apr 2024 03:22:35 -0700 (PDT)
+        Thu, 18 Apr 2024 03:22:36 -0700 (PDT)
 From: Abel Vesa <abel.vesa@linaro.org>
-Subject: [PATCH 0/3] arm64: dts: qcom: x1e80100: Fix the data-lanes and
- link-frequencies
-Date: Thu, 18 Apr 2024 13:22:17 +0300
-Message-Id: <20240418-x1e80100-dts-fix-mdss-dp3-v1-0-9f8420e395d4@linaro.org>
+Date: Thu, 18 Apr 2024 13:22:18 +0300
+Subject: [PATCH 1/3] arm64: dts: qcom: x1e80100: Drop the link-frequencies
+ from mdss_dp3_in
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,9 +79,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAFn0IGYC/x2MSwqEQAwFryJZG0h/BJmriAvpfs5koSMdEUG8u
- 43Loqi6yFAURp/mooJDTf9rBdc2lH7T+gVrrkxefJToej4denEinHfjWU9eshnnLXDyIXZAAPx
- Mtd8Kqn/fw3jfD0+Nig1rAAAA
+Message-Id: <20240418-x1e80100-dts-fix-mdss-dp3-v1-1-9f8420e395d4@linaro.org>
+References: <20240418-x1e80100-dts-fix-mdss-dp3-v1-0-9f8420e395d4@linaro.org>
+In-Reply-To: <20240418-x1e80100-dts-fix-mdss-dp3-v1-0-9f8420e395d4@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -89,46 +91,46 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=961; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=g88ezTfAckaptJZiToK56mT5BjIsikVqvolo+i3NmL0=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBmIPRdcE/0l298JORSkNny351yxby0lPLs2h5fC
- gVOqXhhwlOJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZiD0XQAKCRAbX0TJAJUV
- VimDEACysaNZ9He02cR2cVVLph8XbdGqGwZYoBbWKQDvfJGZful45d/hh1584iMxlKJGcIdnThU
- n+1QXUeyBtg5yJ9X4Zxv5IzyzXPueDglUEi2TOiQwiniSpyY63RCvgmX6+DVCtKlj+fjCOWNZdm
- 6ShdjE41PUagfi+ONcykGeRrPwneTsXIQz3DNqVubySUpFHg6EyNwgcLiiSSeEf9CDS0WRzyXGJ
- vlUiZgm1rBZ29EQBdS/Ih0gv2pnGXjqcgaSjadMV3nP/7q0Ncq/dai8mKmgk4+zXTgw6w4KIo/v
- iofLse0atFj+ZZj843YqvEazZmojlMb+xVZzLuGnKP2w1kjJveaenOy2xmdGMQvg0BAxoheRmvE
- t8BRRO1lhCXs+StIhTKmeGSboBMLZi3ArxsjG+nZFScoMd3nac+gCkdsSMd3LzZA0Jm9/FA347m
- rBRkiPnOnXjyFYNuRKs0xfKV+noM4yC9+Fs0a8VZamLvzZRwHFJ/vBj+ykfAG1B2HpNWoitJa8r
- OMRNIx+UDukSz6Uz7ShjWiZk3C8tRfrXL0WdlBt/GGdoPp3uLeubTbMWj+v7PTPspwJbl74C0Fb
- e+Ji5kQXYsot3JIB+rWlewj8BEi5PycxmWBnZcuSQRCMvHACvO17H/inkAte+EIvrx9Xippv8cA
- AB6l04HdpmLpSjg==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=748; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=7GpLZVZmb8i9TfKBnOQlREy+56bJMbzxa2IuOjKc8R8=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBmIPRnXB6q1R9WL1Wy/skA3bZ+dnkBuUxa6mOqL
+ 9lvkcilT2mJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZiD0ZwAKCRAbX0TJAJUV
+ Vv7qD/4tS+AiTcSLlzOJHT+e5KQdsvw6JqDfU1guv7ATaftz5QJxq92ClgXTCgiogNRWnCWH/AD
+ FhyvDw+r1khlV7w2PrgvL8BoBFOMQPIKLzpDSIMjN69UfNO1QDcyUqkpjWCQZQ29yAUvyNuaqhw
+ e+1YEFmCQ+E+XWOj2iMDvaPQt3ZEPe1IFCC96OHQUCHSZXpZIvrh0wMuqDWkyzkJqLZOmc2czAt
+ uOPEtM4lpGsJaIWu+pMCggXFiRt0Q0UyRWKpGfPWuLKH4G6cv60TZGeCpaL03K3uXero6BYGrg2
+ KS5lXZblORFmSQembRto+wgTllG2FPwThYSoZbMHtPL074Qfi8EJN+q92DwwYCZ4WX5yIvnX6bu
+ JTg7Yn6wcsW8uhYqsoqv2f1swwVsGDzt1P63MJchJ3OgsY68+S49mMH2AD0bFHQiHm1xK9sMY21
+ WXJmcP9Aog2nuNaBNb69D4YIBSZvZXNKLzdQzxLK4Huot6CaLilYjt97st/MN9wpTzJnbqy83fq
+ NCtwyI6kytx5xBt6PMVjU0w3p8KviywZ6pKYzIV4KB2fgSs3av8a046oVYn7w0uqATHTNGt+ACg
+ rwkVRo3aHtQxW6hnYQyrtyZLwlz1+PbGGgfu5zQFYo8WlB0Wbm9nQhVlKbKgW+4DRT4/TYUi+i3
+ hVkYg3CMV1Qe9wA==
 X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
  fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-Both the CRD and the QCP have the data-lanes and the link-frequencies
-for the DP3 in the wrong place. Both are properties of the out remote
-endpoint. So move them to the mdss_dp3_out for each board.
+The link-frequences belong in mdss_dp3_out. Display is broken because of
+this. Drop them from mdss_dp3_in.
 
-Without these fixes, the eDP is broken on both boards.
-
+Fixes: 1940c25eaa63 ("arm64: dts: qcom: x1e80100: Add display nodes")
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
-Abel Vesa (3):
-      arm64: dts: qcom: x1e80100: Drop the link-frequencies from mdss_dp3_in
-      arm64: dts: qcom: x1e80100-crd: Add data-lanes and link-frequencies to DP3
-      arm64: dts: qcom: x1e80100-qcp: Add data-lanes and link-frequencies to DP3
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
- arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 5 +++--
- arch/arm64/boot/dts/qcom/x1e80100-qcp.dts | 5 +++--
- arch/arm64/boot/dts/qcom/x1e80100.dtsi    | 1 -
- 3 files changed, 6 insertions(+), 5 deletions(-)
----
-base-commit: 4eab358930711bbeb85bf5ee267d0d42d3394c2c
-change-id: 20240418-x1e80100-dts-fix-mdss-dp3-c2345ee3ee2f
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index f5a3b39ae70e..0642b5e88639 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -4096,7 +4096,6 @@ port@0 {
+ 						mdss_dp3_in: endpoint {
+ 							remote-endpoint = <&mdss_intf5_out>;
+ 
+-							link-frequencies = /bits/ 64 <8100000000>;
+ 						};
+ 					};
+ 
 
-Best regards,
 -- 
-Abel Vesa <abel.vesa@linaro.org>
+2.34.1
 
 
