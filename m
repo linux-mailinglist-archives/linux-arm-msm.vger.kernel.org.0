@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-17824-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17825-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E50E88A97F2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 12:55:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D3B448A9826
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 13:05:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 14E4A1C20E05
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 10:55:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 73EF31F22DF1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 11:05:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F18815E5B0;
-	Thu, 18 Apr 2024 10:54:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB00F15E5DF;
+	Thu, 18 Apr 2024 11:04:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="P0IlIS+z"
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="ZGildrEZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3075D15DBD8;
-	Thu, 18 Apr 2024 10:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFEAE15E5B2;
+	Thu, 18 Apr 2024 11:04:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713437683; cv=none; b=TwkGOX/3FBp1e0ogiOXDhtFGwsyDnhSOOfD6vMz/jtkPHlOR0yG/2B5G5Ciq+ZLmqkA8eleisqB1lfHrQhQKTkhHozNCcBzbcJrEZPzbLx5FZRWfXuU+XXZeXDPGun/Mg/KCzGPS1PanZ3Z+m40iRMwlwBYvmJTuwjqpoYNFgdM=
+	t=1713438292; cv=none; b=LkoESuy9BWbBYA/6/lEWsx0qgQoz1yTzh5NCWIzMukkJelF9O0chR2dQ+3YieZhx3SO1SoHOw1Ca8I7+QGsntZ0+GP5tCDJlPeg3C7C5yJ6W0yYKxZIICAHZjSwatBobZ1T9Dl4cLK9P8EJp368agrVzPi/h8Youin6Tgt7xxxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713437683; c=relaxed/simple;
-	bh=qmeQraQobwFJ1DUcADmA6F6yy0zqT0LaiY4LgwR4qkU=;
+	s=arc-20240116; t=1713438292; c=relaxed/simple;
+	bh=nVrJ30MzRcVeLHpwfXp7hOiRaAkKYzwTLRPhrFm0ixw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GvTSykOJsxoVBEGif7Hd2BAVa3Pxr3eCVQrykJ9XZKJB5ENdoHUywokl+OfTVthYwGGnUvqIuHUmBEniXFMuYFGBBEV4A2SYoXhfOGpy6i1l3Dh8DE/m6xRSNxCZu+mB7DETfNL41vVpWn95mVBoJQJWzvzsHYr/TBMRG+2z9AM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=P0IlIS+z; arc=none smtp.client-ip=213.167.242.64
+	 Content-Type:Content-Disposition:In-Reply-To; b=alSGiumo+V9k2YRcQ2BaJNgIho4VRcDW+xSghTRst7h4GPLohSpZ3he6b4n3Cc4gEYjui15HX5qf7cU+Po39AsxsR6EQT3yatq8JQd3FJlJtz70LsuE/DDLNYqhpyw5VhkN40D5KnRpjQdgpebrfJyVOHa5POm7D0Udh7m229Sk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=ZGildrEZ; arc=none smtp.client-ip=213.167.242.64
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
 Received: from pendragon.ideasonboard.com (117.145-247-81.adsl-dyn.isp.belgacom.be [81.247.145.117])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 0C9F7827;
-	Thu, 18 Apr 2024 12:53:53 +0200 (CEST)
+	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 8ACEBC8E;
+	Thu, 18 Apr 2024 13:03:57 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1713437633;
-	bh=qmeQraQobwFJ1DUcADmA6F6yy0zqT0LaiY4LgwR4qkU=;
+	s=mail; t=1713438237;
+	bh=nVrJ30MzRcVeLHpwfXp7hOiRaAkKYzwTLRPhrFm0ixw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=P0IlIS+ziVDtl4f60+Ieht6xhGxxe1vPBTPIJV2vEE6YXwaMvW9C341eya7vHrgKn
-	 hDDs3rdw0lyWR3hpZCcC/KKbyKqWJe5yo7Kqsp9X1M/SqQt40ZksufpkG9TFdDRKWc
-	 22mGTs51GSx/t1hfv3CzS2X37iOyRbA7KYKIFm1s=
-Date: Thu, 18 Apr 2024 13:54:33 +0300
+	b=ZGildrEZ8PscbwJPkrVEQ9AVQQ5ZqsFtIzLjmF9plRRPHNE6nYXij+2WJ4wHeQ/Vt
+	 tbErl0bgSpuTcVcaqqltDwf7r27d4aQqy4R23+6SvyevGzwbJqe+dJwie8wJOCDzuq
+	 WkVX5b8VtifCgZq58ru+v0enMsxJOUVui5DkYPqU=
+Date: Thu, 18 Apr 2024 14:04:38 +0300
 From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 To: Ricardo Ribalda <ribalda@chromium.org>
 Cc: Martin Tuma <martin.tuma@digiteqautomotive.com>,
@@ -83,10 +83,10 @@ Cc: Martin Tuma <martin.tuma@digiteqautomotive.com>,
 	linux-arm-kernel@lists.infradead.org, linux-staging@lists.linux.dev,
 	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
 	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 04/35] media: uvcvideo: Use max() macro
-Message-ID: <20240418105433.GW12561@pendragon.ideasonboard.com>
+Subject: Re: [PATCH 03/35] media: uvcvideo: Refactor iterators
+Message-ID: <20240418110438.GX12561@pendragon.ideasonboard.com>
 References: <20240415-fix-cocci-v1-0-477afb23728b@chromium.org>
- <20240415-fix-cocci-v1-4-477afb23728b@chromium.org>
+ <20240415-fix-cocci-v1-3-477afb23728b@chromium.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -95,34 +95,92 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240415-fix-cocci-v1-4-477afb23728b@chromium.org>
+In-Reply-To: <20240415-fix-cocci-v1-3-477afb23728b@chromium.org>
 
-On Mon, Apr 15, 2024 at 07:34:21PM +0000, Ricardo Ribalda wrote:
-> It makes the code slightly more clear and makes cocci incredibly happy:
+Hi Ricardo,
+
+Thank you for the patch.
+
+On Mon, Apr 15, 2024 at 07:34:20PM +0000, Ricardo Ribalda wrote:
+> Avoid using the iterators after the list_for_each() constructs.
+> This patch should be a NOP, but makes cocci, happier:
 > 
-> drivers/media/usb/uvc/uvc_ctrl.c:839:22-23: WARNING opportunity for max()
+> drivers/media/usb/uvc/uvc_ctrl.c:1861:44-50: ERROR: invalid reference to the index variable of the iterator on line 1850
+> drivers/media/usb/uvc/uvc_ctrl.c:2195:17-23: ERROR: invalid reference to the index variable of the iterator on line 2179
 > 
 > Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 > ---
->  drivers/media/usb/uvc/uvc_ctrl.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  drivers/media/usb/uvc/uvc_ctrl.c | 24 +++++++++++++-----------
+>  1 file changed, 13 insertions(+), 11 deletions(-)
 > 
 > diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
-> index a4a987913430..4b685f883e4d 100644
+> index e59a463c2761..a4a987913430 100644
 > --- a/drivers/media/usb/uvc/uvc_ctrl.c
 > +++ b/drivers/media/usb/uvc/uvc_ctrl.c
-> @@ -836,7 +836,7 @@ static s32 uvc_get_le_value(struct uvc_control_mapping *mapping,
->  	while (1) {
->  		u8 byte = *data & mask;
->  		value |= offset > 0 ? (byte >> offset) : (byte << (-offset));
-> -		bits -= 8 - (offset > 0 ? offset : 0);
-> +		bits -= 8 - max(offset, 0);
+> @@ -1850,16 +1850,18 @@ int __uvc_ctrl_commit(struct uvc_fh *handle, int rollback,
+>  	list_for_each_entry(entity, &chain->entities, chain) {
 
-I don't think this really improve readability.
+If we really want to ensure the iterator won't be used after the loop,
+it could be declared in the loop statement itself, now that the kernel
+has switched to a newer C version.
 
->  		if (bits <= 0)
->  			break;
+>  		ret = uvc_ctrl_commit_entity(chain->dev, entity, rollback,
+>  					     &err_ctrl);
+> -		if (ret < 0)
+> +		if (ret < 0) {
+> +			if (ctrls)
+> +				ctrls->error_idx =
+> +					uvc_ctrl_find_ctrl_idx(entity, ctrls,
+> +							       err_ctrl);
+>  			goto done;
+> +		}
+>  	}
 >  
+>  	if (!rollback)
+>  		uvc_ctrl_send_events(handle, ctrls->controls, ctrls->count);
+>  done:
+> -	if (ret < 0 && ctrls)
+> -		ctrls->error_idx = uvc_ctrl_find_ctrl_idx(entity, ctrls,
+> -							  err_ctrl);
+>  	mutex_unlock(&chain->ctrl_mutex);
+>  	return ret;
+>  }
+> @@ -2165,7 +2167,7 @@ static int uvc_ctrl_init_xu_ctrl(struct uvc_device *dev,
+>  int uvc_xu_ctrl_query(struct uvc_video_chain *chain,
+>  	struct uvc_xu_control_query *xqry)
+>  {
+> -	struct uvc_entity *entity;
+> +	struct uvc_entity *entity, *iter;
+>  	struct uvc_control *ctrl;
+>  	unsigned int i;
+>  	bool found;
+> @@ -2175,16 +2177,16 @@ int uvc_xu_ctrl_query(struct uvc_video_chain *chain,
+>  	int ret;
+>  
+>  	/* Find the extension unit. */
+> -	found = false;
+> -	list_for_each_entry(entity, &chain->entities, chain) {
+> -		if (UVC_ENTITY_TYPE(entity) == UVC_VC_EXTENSION_UNIT &&
+> -		    entity->id == xqry->unit) {
+> -			found = true;
+> +	entity = NULL;
+> +	list_for_each_entry(iter, &chain->entities, chain) {
+
+Same here, iter could be declared in the loop.
+
+> +		if (UVC_ENTITY_TYPE(iter) == UVC_VC_EXTENSION_UNIT &&
+> +		    iter->id == xqry->unit) {
+> +			entity = iter;
+>  			break;
+>  		}
+>  	}
+>  
+> -	if (!found) {
+> +	if (!entity) {
+>  		uvc_dbg(chain->dev, CONTROL, "Extension unit %u not found\n",
+>  			xqry->unit);
+>  		return -ENOENT;
+> 
 
 -- 
 Regards,
