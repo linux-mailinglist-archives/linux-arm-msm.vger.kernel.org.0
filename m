@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-17826-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17827-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E1118A9833
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 13:06:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 905988A9838
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 13:07:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D9BB9281BD8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 11:06:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1D0F1282CF6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 11:07:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E315A15E5A7;
-	Thu, 18 Apr 2024 11:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 350C515E20D;
+	Thu, 18 Apr 2024 11:07:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="N7TBnTVq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mjrGAeHy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70E715B558
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 11:06:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8291615DBA1
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 11:07:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713438377; cv=none; b=ixQQxKFgtGD2zsdr7NEew0u79v0WRxd9fRHG9gdvN6oczkEX7NYp0v/uohx6C3PtfY9xk0l3A28sh8NiD39h6P+zaL2ZGALU71yW31zylNJTU4dhoxD13Nlg+nI78Kk7tReIZTi4IFc5sz21NREahf6tb/Li02LPxWEXwkGP3E0=
+	t=1713438456; cv=none; b=naJK0RSbPyeigR3OMgiTMO+wbXCHkgIddt/7W0e33slEbpT1uQsfXqpYgv18DrrTBL+f2nT94d98EhDreJukSXKBtnUWZGk+vDx5pEX/GFHY3Fi7o8FsiqIj3uXg54ExfLNLoJmCH3gQ3flPaOyN30zS4fhdP564myGMliOvMkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713438377; c=relaxed/simple;
-	bh=CiYAK71r1dKd1XBeQXn4trgSBWiLXMXsFU4bIEyKT/g=;
+	s=arc-20240116; t=1713438456; c=relaxed/simple;
+	bh=uVSRpt8F3GFhGujnI01U5SChDc2eJ2JPLMzVIQUMANQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sLa3KAnENrp7TthaLn5tUar16kUpZmoSlpg3JYhPYaoc5Ppl6+T9UL/MwuUC4DfPPSoW/Dpfq/njn8xbbftWWr68O5xC34MIWhDkeYcn/O6Ev1ZH0hUi2c7xinZHVzX+abXPlYod8LTvPHAOcV3WYBWWGMbzxALqTWI0xUurTIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=N7TBnTVq; arc=none smtp.client-ip=209.85.167.49
+	 Content-Type:Content-Disposition:In-Reply-To; b=emPRQo5XGBNxT/Tups9sGOp8mjWU+wFDI/fSjobVYuSQ83RKo2hvKsanZg1kPSxnF1UOl2HvQjvyA+PTr7RkaCaz0u3UBhib8ihCwnv3qrp7h3VSicsDDLPjDlPFgHjCcXkHea+L25bXPf1XPE3P/smxIwiKRR3XspIuazdklfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mjrGAeHy; arc=none smtp.client-ip=209.85.167.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-516db2214e6so879300e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 04:06:15 -0700 (PDT)
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-518f8a69f82so867062e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 04:07:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713438374; x=1714043174; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1713438453; x=1714043253; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QoJVv2RWvbhhnx6gOF70bQ+Hht7rDXtw9zkh1pmPgSE=;
-        b=N7TBnTVqOH3rQKnDlU9M7pV4dp00hfDdKBAN1Yr8WFw1bTf8Iw+HOSC6vR0X5FtmSa
-         2G4N7RLk/64iOi8qp3aoIOizphLAJOiTY+66zsmmR0V3UxhRetdoXHcWFpm/EyIxxloA
-         yrDc55OijeCgRtcNL6HiP6XysviRRZQdDwjbdjGnAop8FOSp/uGKltFGtVLRSWe+k0Bp
-         Sg9FhGlpm9O3V+etVMIWhgxF3fr++JuxTUJOHxGMcvytxIhalI7O+yksC1jXXTNekM6z
-         luJxCtDQp26sLlv+c+pJ4xwisCOobNwia9O2Zl2uYDFIiqC5wu1gSJilcf0nEEmSXXbH
-         spdQ==
+        bh=MyO/GjotGUHlFltRGjYbztp9IACAS8Q+nLylpcG9+Rw=;
+        b=mjrGAeHySRDtvBpntukQETGWe7ArFTV4Mc7D8bj2g1MTbd5whEtkLswF0qf2NoTCN8
+         DzoGS9XeTu7SFZ2gcIj4lfO6WORu0cfD0iZzrAU1dT6RMv+2yGRkXeYkUrqzsrx/rJCW
+         f3Do5/S8rfoWlmcBG6zif5GzjAyHxh0ZfWdzPzwodI8BAlV/oFBOOvMSgjFvj46T+Bgl
+         tCM2SVztDCpV2ibYcLsJrYK/W8576pwZZbYMHCCv58vjeGjYk4gLGX+bosEHy7nMHSjA
+         NZc6JXwb+3d7wkR+/pND8jNUdVr0k7I5EsR7R1mVrs8nMxDkqvd/Emjkbl/Q3hZLgOG/
+         /EPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713438374; x=1714043174;
+        d=1e100.net; s=20230601; t=1713438453; x=1714043253;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QoJVv2RWvbhhnx6gOF70bQ+Hht7rDXtw9zkh1pmPgSE=;
-        b=mPfUqbuW0kaQ5jBTLTLL3XK+PdjDqgxLAfWAR+DiPzWX0E5kb/bPZJyxHkVCObki7Y
-         litdqwiAiHyk5QU2S0Jlx/wRf7hyI3BR5YsBfIlWPTXEjDd7I7IjQutQFdVMPJgWDqR7
-         lfT5fX/Tc2lIMZt7FvTTLukBp5jgxbFDBuqPCThbzHqORE7ITowpHDNnnnjFzjpvJFWj
-         c5whXJaDdY3q1cate20DcDk+kS+bYIIc6MwBoAumJgWd+AxmQJwDm4Z2HixWXpX50tqn
-         ikLig/LJTgVWxFzlEOpY4+uwYyGGTAfqpb0kJvnu2Dv2CbXgl1BTCrQfj1mO6DPAyDvW
-         T7HA==
-X-Forwarded-Encrypted: i=1; AJvYcCWyopEUhB8xs76x4eX6fWW5J3T+zL4DOiJlxrpX6zFBMmGqIkWsrCrIWVu6Vac4cdR9nYysZcpMkDwXMz/Wld4LIPBim4CsWlp1dv6sFw==
-X-Gm-Message-State: AOJu0YxEM2y+En+3H4AzDqgZxwzYs0dsmXR7X6e+HuqPcIk8Qb6Ahgl7
-	ZZoPdEiyIVe3IrMfOlfFKlazg7+OpwoQIpPwaMaISqZBjVkbYi3TrCdpdDDVXTU=
-X-Google-Smtp-Source: AGHT+IHgHUXxxgO0WITTWXYfqenB1WfhObEW5gekCSgDerJnKgE92t/J5oVbQQuVVqEzZHGbF9DmSg==
-X-Received: by 2002:ac2:4e44:0:b0:519:591d:45da with SMTP id f4-20020ac24e44000000b00519591d45damr1140132lfr.18.1713438373824;
-        Thu, 18 Apr 2024 04:06:13 -0700 (PDT)
+        bh=MyO/GjotGUHlFltRGjYbztp9IACAS8Q+nLylpcG9+Rw=;
+        b=P+DxNEbdV2O8aNnx+PrAiFIzsnOMO50MjW5crtOag2nszWiefmnt71pq6r4VJWOx6/
+         gE97jzqiXnZ7KBKGWWoSKZWsxo/29PYAZuRdGn7jvsT0UTTTW1o7Y4cr1nfdrZVLHISC
+         CqYz/qMVKIqA6OdcYeEMvBMtFsxhJxEoM+n7qf9OP24LHGCXgUZISqSPmL8/VQ4C2rpO
+         M6cLWKURxZiGuTLwiKjUIFVxGdsBzPBVd1CgXgcd3kLBdGs4FhS7z0hMgtzZm6gQVbXu
+         UmqK670/nIcEAvpDBZz1qUpovtx/1RACquvaUjujRqwscG1numC6UBjs3H3CGn4cW+tW
+         nzUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWTa4o1klNmJNWKcTM5mYxZXLzYEf8Z1TaJoHtGXqSawDX65TAfYnkaGjpW1SxYn0cBKcNZtEC/TFTSw2mtMsUv+cCmDIKKINjVRBntjQ==
+X-Gm-Message-State: AOJu0Yx7R+9vsvgbB0Mqabtx2Ic3qhh0u00x0jz55Sv31+5l7mbk9GK4
+	Do6VOJYaFf99tMIDyL/zfQIKQklrNljynVZwkjnRExqjmrlHr8CgtuFtJxXptS0=
+X-Google-Smtp-Source: AGHT+IEwPXTDTwrWeLYeoadFGaTFA9rHj1W+CNy99dyVg08+5SUOCAzomXSQbfzVVzpXPPNwtz7O1Q==
+X-Received: by 2002:ac2:4853:0:b0:518:b4a3:dee1 with SMTP id 19-20020ac24853000000b00518b4a3dee1mr1574836lfy.66.1713438452661;
+        Thu, 18 Apr 2024 04:07:32 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
-        by smtp.gmail.com with ESMTPSA id r1-20020ac25a41000000b00516c1fa74e3sm194631lfn.207.2024.04.18.04.06.13
+        by smtp.gmail.com with ESMTPSA id t14-20020ac24c0e000000b00517374e92e9sm191076lfq.167.2024.04.18.04.07.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Apr 2024 04:06:13 -0700 (PDT)
-Date: Thu, 18 Apr 2024 14:06:11 +0300
+        Thu, 18 Apr 2024 04:07:32 -0700 (PDT)
+Date: Thu, 18 Apr 2024 14:07:30 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
@@ -77,12 +77,12 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
 	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
 	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v2 2/7] soc: qcom: smem: Add a feature code getter
-Message-ID: <s7mfapok2tvrp5vfm7dkrmyb7htgfucuuvry4shsl7vrxj7e6y@nosu2a7axjxo>
+Subject: Re: [PATCH v2 3/7] drm/msm/adreno: Implement SMEM-based speed bin
+Message-ID: <7ynodjzjuxwwqkjgns5jtnkckw52qyldfpsqpjh7645swva4xk@7wucftyjyyy3>
 References: <20240404-topic-smem_speedbin-v2-0-c84f820b7e5b@linaro.org>
- <20240404-topic-smem_speedbin-v2-2-c84f820b7e5b@linaro.org>
- <mg6ojmzl3snj3k6fuyi6opkbdovs7xna6sn65pjh52ii4yy7u6@ny2spvjjbfpu>
- <89eccb1f-c527-4820-a084-7fc4ad3f0ab4@linaro.org>
+ <20240404-topic-smem_speedbin-v2-3-c84f820b7e5b@linaro.org>
+ <hi7vzqm5ebypzs6m6bw64ghgfwsdzuaxy65jpah37iw5ww7fku@n3c5sucic27i>
+ <bfd6aa32-a28e-47a4-82c7-76c5dd99a44d@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,50 +91,81 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <89eccb1f-c527-4820-a084-7fc4ad3f0ab4@linaro.org>
+In-Reply-To: <bfd6aa32-a28e-47a4-82c7-76c5dd99a44d@linaro.org>
 
-On Thu, Apr 18, 2024 at 11:53:31AM +0200, Konrad Dybcio wrote:
-> On 18.04.2024 1:39 AM, Dmitry Baryshkov wrote:
-> > On Wed, Apr 17, 2024 at 10:02:54PM +0200, Konrad Dybcio wrote:
-> >> Recent (SM8550+ ish) Qualcomm SoCs have a new mechanism for precisely
-> >> identifying the specific SKU and the precise speed bin (in the general
-> >> meaning of this word, anyway): a pair of values called Product Code
-> >> and Feature Code.
+On Thu, Apr 18, 2024 at 11:51:16AM +0200, Konrad Dybcio wrote:
+> On 18.04.2024 1:43 AM, Dmitry Baryshkov wrote:
+> > On Wed, Apr 17, 2024 at 10:02:55PM +0200, Konrad Dybcio wrote:
+> >> On recent (SM8550+) Snapdragon platforms, the GPU speed bin data is
+> >> abstracted through SMEM, instead of being directly available in a fuse.
 > >>
-> >> Based on this information, we can deduce the available frequencies for
-> >> things such as Adreno. In the case of Adreno specifically, Pcode is
-> >> useless for non-prototype SoCs.
+> >> Add support for SMEM-based speed binning, which includes getting
+> >> "feature code" and "product code" from said source and parsing them
+> >> to form something that lets us match OPPs against.
 > >>
-> >> Introduce a getter for the feature code and export it.
+> >> Due to the product code being ignored in the context of Adreno on
+> >> production parts (as of SM8650), hardcode it to SOCINFO_PC_UNKNOWN.
 > >>
 > >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > >> ---
 > 
 > [...]
 > 
-> >> +/* Internal feature codes */
-> >> +/* Valid values: 0 <= n <= 0xf */
-> >> +#define SOCINFO_FC_Yn(n)		(0xf1 + n)
-> >> +#define SOCINFO_FC_INT_MAX		SOCINFO_FC_Yn(0x10)
-> > 
-> > This is 0x101 rather than 0x100 or 0xff. Is that expected?
-> 
-> Yes, this is "the first invalid one", similar to ENUMNAME_NUM
-> 
-> > 
+> >> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> >> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> >> @@ -6,6 +6,8 @@
+> >>   * Copyright (c) 2014,2017 The Linux Foundation. All rights reserved.
+> >>   */
+> >>  
+> >> +#include <linux/soc/qcom/socinfo.h>
 > >> +
-> >> +/* Product codes */
-> >> +#define SOCINFO_PC_UNKNOWN		0
-> >> +#define SOCINFO_PCn(n)			(n + 1)
-> >> +#define SOCINFO_PC_RESERVE		(BIT(31) - 1)
 > > 
-> > This patch works on fcodes, why do we have PCode defines here?
+> > Stray leftover?
 > 
-> I decided they're useful to keep.. Didn't want to split them to a separate
-> patch for no reason.
+> Looks like
+> 
+> [...]
+> 
+> >> +
+> >> +#ifdef CONFIG_QCOM_SMEM
+> > 
+> > Please extract to a separate function and put the function under ifdef
+> > (providing a stub otherwise). Having #ifndefs inside funciton body is
+> > frowned upon.
+> 
+> Hm, this looked quite sparse and straightforward, but I can do that.
+> 
+> [...]
+> 
+> >> +/* As of SM8650, PCODE on production SoCs is meaningless wrt the GPU bin */
+> >> +#define ADRENO_SKU_ID_FCODE		GENMASK(15, 0)
+> >> +#define ADRENO_SKU_ID(fcode)	(SOCINFO_PC_UNKNOWN << 16 | fcode)
+> > 
+> > If we got rid of PCode matching, is there a need to actually use
+> > SOCINFO_PC_UNKNOWN here? Or just 0 would be fine?
+> 
+> The IDs need to stay constant for mesa
+> 
+> I used the define here to:
+> 
+> a) define the SKU_ID structure so that it's clear what it's comprised of
+> b) make it easy to add back Pcode in case it becomes useful with future SoCs
+> c) avoid mistakes - PC_UNKNOWN happens to be zero, but that's a lucky
+>    coincidence
+> 
+> We don't *match* based on PCODE, but still need to construct the ID properly
+> 
+> Another option would be to pass the real pcode and add some sort of
+> "pcode_invalid" property that if found would ignore this part of the
+> SKU_ID in mesa, but that sounds overly and unnecessarily complex.
 
+It's fine, just add a comment please. Maybe we can rename PC_UNKNOWN to
+PC_PRODUCTION?
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
+> Konrad
+> 
+> Konrad
 
 -- 
 With best wishes
