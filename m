@@ -1,122 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-17862-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16B5A8A9DCB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 16:59:29 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 837C88A9E0C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 17:12:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C068D1F2355D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 14:59:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3DBBF282CFC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 15:12:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 988F516EC00;
-	Thu, 18 Apr 2024 14:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6474B16C447;
+	Thu, 18 Apr 2024 15:12:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mGPfueHz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DeSevptl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F0CC16C451;
-	Thu, 18 Apr 2024 14:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 361FD16ABEE;
+	Thu, 18 Apr 2024 15:12:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713452292; cv=none; b=VYnf8SVhVQWWDMHx4uYMZtYNCQxPHopZFbvofHPcecSVt/1Di5EApzsER908EqTXeV3N44erLnkiPiv6Y28HsnF0sirIguKtzkaFB1Un9HZTzX9EogbuKAp2dQg+qMoAw1nJS51iiNxKlZjCzKk6mVdgq12fBQKNTtJNKJEZNAo=
+	t=1713453149; cv=none; b=Jm86WvcOhM2vwlH3e2CMqRjXsAv8loBMk+n1Bdha7PhrthHrgf8GC9qH8uSupLNI1PWP4TGYJGpGTr1AzJ7OEI30uhl0xlDPWV1WSDhYKW0R50jFfrIShsK46OKXRi3CxzgHdA0EToa4tgHqhDnOGxwJxdMXHxKxPaYUvobr0Cc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713452292; c=relaxed/simple;
-	bh=7w01AiG11Y7amIIDkVp7Po/rT6bsXkEo2AhSc//sXgI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NrRNlgNffAVHolSe8mDOHqaNBshgZFvt+McBMGZu334g0LDKkhsx0jlIhvTafGBq5JHJp3DlH0ZzFQMX59unj+ppifTN3dWIxoqhYHIWeQe8DHolRpZYx9amxYI856MQhtQeeanWn2yzAHWL1YTjt8SXGxPPNpvIcf3d2Xaialk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mGPfueHz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 106E1C4AF0C;
-	Thu, 18 Apr 2024 14:58:12 +0000 (UTC)
+	s=arc-20240116; t=1713453149; c=relaxed/simple;
+	bh=EwDk+acs40utZgqR2KMpvEatz3bas2MtIZ7ZVuGevL0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ewuu0t+ghb5KC/P2fHDpAqi7VnJYOQxxOxEDxLerdFOUlhOhq1sXnlCkOLC6B9WJt02Zv1w3I5vYpriv/pL5Me+ecsyzo00S/GGQacrHIEq+GILltdna3ofdczf9AFVp/e4DbWZQGJr07n3nerW0mzkR4Jx6bdb/CeOEFJEpHP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DeSevptl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E15C113CC;
+	Thu, 18 Apr 2024 15:12:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713452292;
-	bh=7w01AiG11Y7amIIDkVp7Po/rT6bsXkEo2AhSc//sXgI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mGPfueHzJOPx7dUM8DqwQ2dk78uCt5nikkbAQpTi3dY8RhP3WEvCTqqNNehyPMb+R
-	 1Ie+rJDj6tDsJPTyMSMvJ37OQsqF1wTXiMYSlFG9EBU4WBeeG4Knyv6q//d9647hr8
-	 ZHM/IfXkGjDktkDHm6WCBxwDgeQfNg4waOvOVvNyWUU825UaXbWiCAF1B+zielsGw5
-	 CG/1plURpp4WurkDQ2GUBVVqjSH0Mv4fp+fa13nI9N2xt5wb6y4Jdum0651LjKaMz5
-	 TXIhQIS8rpC49HP0YxloM+kSuM1MkyNp4ugHYRH8Ae0VbHVdxIZ1GP9zOAXlBg/Hez
-	 NxpRuLu9qPmOA==
+	s=k20201202; t=1713453148;
+	bh=EwDk+acs40utZgqR2KMpvEatz3bas2MtIZ7ZVuGevL0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=DeSevptlefNRiLs6nr2IrizdzKvBEPRi0LXFaXIzoZkqEtfTbs3hjC9rZzBhaqPDR
+	 Ne4wRFifwbVdZn7uDz0CNmIzRF6sK+azDYtywG9BuHPZmizapHWzrdg8DU4VKQD8ql
+	 hMAvg6FlWiGuPorvoCJQYTsX8HNrQ2wgjFrfUYnZdT+yehHZuOZoTqHLn6+Ef6oGTl
+	 mAnDvcOt8Z3v9bfwDbHt2hdj5e/3BJE2B6QJ2N9qkD761sRSGxQ6L/iy/lu4TBHleq
+	 DAVh8vGeeqpAEN53dnW7CZMvxC/YHclsPJzVi9WRPIadvu7+uuIVfUC6cJUDCxZVfh
+	 cH7OnZ5VuJBbg==
 Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan+linaro@kernel.org>)
-	id 1rxTDK-000000001DT-2uhC;
-	Thu, 18 Apr 2024 16:58:14 +0200
-From: Johan Hovold <johan+linaro@kernel.org>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
+	(envelope-from <johan@kernel.org>)
+	id 1rxTR8-000000001QT-3nmZ;
+	Thu, 18 Apr 2024 17:12:31 +0200
+Date: Thu, 18 Apr 2024 17:12:30 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-usb@vger.kernel.org,
+	Johan Hovold <johan+linaro@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 2/2] usb: typec: qcom-pmic: fix pdphy start() error handling
-Date: Thu, 18 Apr 2024 16:57:30 +0200
-Message-ID: <20240418145730.4605-3-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240418145730.4605-1-johan+linaro@kernel.org>
-References: <20240418145730.4605-1-johan+linaro@kernel.org>
+	Caleb Connolly <caleb.connolly@linaro.org>
+Subject: Re: [PATCH v3] usb: typec: qcom-pmic-typec: split HPD bridge alloc
+ and registration
+Message-ID: <ZiE4Xpjhv2llY4pG@hovoldconsulting.com>
+References: <20240416-qc-pmic-typec-hpd-split-v3-1-fd071e3191a1@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240416-qc-pmic-typec-hpd-split-v3-1-fd071e3191a1@linaro.org>
 
-Move disabling of the vdd-pdphy supply to the start() function which
-enabled it for symmetry and to make sure that it is disabled as intended
-in all error paths of pmic_typec_pdphy_reset() (i.e. not just when
-qcom_pmic_typec_pdphy_enable() fails).
+On Tue, Apr 16, 2024 at 05:18:56AM +0300, Dmitry Baryshkov wrote:
+> If a probe function returns -EPROBE_DEFER after creating another device
+> there is a change of ending up in a probe deferral loop, (see commit
+> fbc35b45f9f6 ("Add documentation on meaning of -EPROBE_DEFER"). In case
+> of the qcom-pmic-typec driver the tcpm_register_port() function looks up
+> external resources (USB role switch and inherently via called
+> typec_register_port() USB-C muxes, switches and retimers).
+> 
+> In order to prevent such probe-defer loops caused by qcom-pmic-typec
+> driver, use the API added by Johan Hovold and move HPD bridge
+> registration to the end of the probe function.
+> 
+> The devm_drm_dp_hpd_bridge_add() is called at the end of the probe
+> function after all TCPM start functions. This is done as a way to
+> overcome a different problem, the DRM subsystem can not properly cope
+> with the DRM bridges being destroyed once the bridge is attached. Having
+> this function call at the end of the probe function prevents possible
+> DRM bridge device creation followed by destruction in case one of the
+> TCPM start functions returns an error.
 
-Fixes: a4422ff22142 ("usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+You're still not explaining why it is ok to move registration of the
+bridge to after starting the port and pdphy.
 
-diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
-index 6560f4fc98d5..5b7f52b74a40 100644
---- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
-+++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
-@@ -475,10 +475,8 @@ static int qcom_pmic_typec_pdphy_enable(struct pmic_typec_pdphy *pmic_typec_pdph
- 
- 	qcom_pmic_typec_pdphy_reset_off(pmic_typec_pdphy);
- done:
--	if (ret) {
--		regulator_disable(pmic_typec_pdphy->vdd_pdphy);
-+	if (ret)
- 		dev_err(dev, "pdphy_enable fail %d\n", ret);
--	}
- 
- 	return ret;
- }
-@@ -524,12 +522,17 @@ static int qcom_pmic_typec_pdphy_start(struct pmic_typec *tcpm,
- 
- 	ret = pmic_typec_pdphy_reset(pmic_typec_pdphy);
- 	if (ret)
--		return ret;
-+		goto err_disable_vdd_pdhy;
- 
- 	for (i = 0; i < pmic_typec_pdphy->nr_irqs; i++)
- 		enable_irq(pmic_typec_pdphy->irq_data[i].irq);
- 
- 	return 0;
-+
-+err_disable_vdd_pdhy:
-+	regulator_disable(pmic_typec_pdphy->vdd_pdphy);
-+
-+	return ret;
- }
- 
- static void qcom_pmic_typec_pdphy_stop(struct pmic_typec *tcpm)
--- 
-2.43.2
+Perhaps it's obvious to you but it should still go in the commit message
+as such a change is potentially something that could end up causing
+trouble (e.g. enabling interrupts before all resources have been setup
+and registered).
 
+As I've mentioned before, I'm also sceptical to papering over the DRM
+issue in each and every driver registering a bridge. These late error
+paths would normally not be taken, unlike the earlier ones which can be
+triggered by probe deferrals and which we have to fix also for the probe
+deferral loops.
+
+> @@ -92,7 +92,7 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
+>  	if (!tcpm->tcpc.fwnode)
+>  		return -EINVAL;
+>  
+> -	bridge_dev = drm_dp_hpd_bridge_register(tcpm->dev, to_of_node(tcpm->tcpc.fwnode));
+> +	bridge_dev = devm_drm_dp_hpd_bridge_alloc(tcpm->dev, to_of_node(tcpm->tcpc.fwnode));
+>  	if (IS_ERR(bridge_dev))
+>  		return PTR_ERR(bridge_dev);
+>  
+> @@ -110,6 +110,10 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		goto fwnode_remove;
+>  
+> +	ret = devm_drm_dp_hpd_bridge_add(tcpm->dev, bridge_dev);
+> +	if (ret)
+> +		goto fwnode_remove;
+
+This is leaking resources and can lead to a use-after-free.
+
+When looking at the driver, I noticed that the existing error handling
+is already broken so I just sent a fix here:
+
+	https://lore.kernel.org/lkml/20240418145730.4605-1-johan+linaro@kernel.org/
+
+You should rebase on that series and not introduce further issues with
+the new bridge-add error path.
+
+> +
+>  	return 0;
+>  
+>  fwnode_remove:
+
+Johan
 
