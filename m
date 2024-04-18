@@ -1,176 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-17833-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17834-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9BBA8A98F1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 13:48:50 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D964A8A9936
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 13:58:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1E54CB21F25
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 11:48:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 08C401C208DE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 11:58:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85E7115F404;
-	Thu, 18 Apr 2024 11:48:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2458F15F320;
+	Thu, 18 Apr 2024 11:58:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vsNt5fbK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rRAHjDd2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0DA15F3E0
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 11:48:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8189A15F322
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 11:58:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713440907; cv=none; b=Y4OocYRCsnUJ7mPLt9amgrvSdr75EkEylZkRGuWK88pTPKk13QrmgVkkVrvVXacEeHIKGcVpo+WC745ZrPa5q3n/0JM0MVfrCmbU8S+3RyFOKQFFvaH7qOdAUiLmja7k4+tEV4s5qzmJJ+QtbK8Wkao04e695WbSZrhlN9LGEuc=
+	t=1713441531; cv=none; b=qFR3OoJLGpDsuUtNEeGeqNeJmr/Cr+D0X7bsljmGrZT3lF49/8Ar7UDlpRmj3u9Kl8n2/Sj2cor4+RmXvXnjHUIuUW+xMV6wTEju2FO0bXhSIMFf5ZCfReLtWngxfpqmrDdv/BNm/ajYkRl8T/UU1VOM4LAWICfQ2Fci2o832pI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713440907; c=relaxed/simple;
-	bh=gE136ijLAtKzyRYGVhVe2CMoT2C2wSdXn/ajEG1GWyU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HpJ5/SAxQU6526Eh0KmEdi9j9sT1pVyKmvdxSglSixKBpri6Ntup1WUWZXNKomuFGsRMI/ukg/izxOeRzoeAJ7MwHWpwRCbK3ZEqlXyUdP5biz3UjnEpvSkhrsa6sHZQX8pP4ACqfj7Qcv4dMSEw3+xKSIE4h6F/2iojW+c0cpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vsNt5fbK; arc=none smtp.client-ip=209.85.219.171
+	s=arc-20240116; t=1713441531; c=relaxed/simple;
+	bh=0T8bNbgbYJmSiH1c9/RWSLart5xq9j5qFnGxJ69MW2M=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=MP8QUzH9mCMfJD+F3WJJH28nLIDqwLcLZH7gPYcgxviLV6YEH0HSwHvHKjhAD2TbPLCDGjeWTxg1HK4P0pSt5GjJReMQaPimG+lT3zZpdT6oSeXxeDM1ogJkaUAnC1s5r4SokfNNjsCbfVdPt6PhmFtksHNBvpRGh/tnnSw9XLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rRAHjDd2; arc=none smtp.client-ip=209.85.210.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-dcc6fc978ddso649649276.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 04:48:25 -0700 (PDT)
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-6ed3cafd766so743129b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 04:58:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713440905; x=1714045705; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=NuxTFXDlrm+BFnpHmLBiKm3zNo8+3C9CrzDgCHuzRNk=;
-        b=vsNt5fbKOxQkX010Y7B0jwogqFOgePEz+AGFZqPHSmeQeVOrlEEzKl0hO76Amvsgal
-         u5r3LP4eECgjWFfcpzb1WXottf2q0j0Guicou9cmWr/eMkcFlz3Z36hIRDrYna8OXzMN
-         XDty0nq04+OmzrtmoYhZ3PnBC3gBPdKAS17/67qiBSZ6AsArf2a85CruazPsx075v9a2
-         iPXaSOXj97eSc9qBn4xj3QeVwkAIxx1kPiilbhz9R8sw4SRMRZvC7L6/peb7gKWYXf9x
-         zTvcvrjjbEC6mlaf8RAYf8IhZ8nCTHkXToozwom+fqc0YB63v43gMgkZuyL45CqI4Ruh
-         V+zg==
+        d=linaro.org; s=google; t=1713441529; x=1714046329; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/m9mYsEVOVi3Gw/TMsG70ggRl65xkCqo+gadqykEay8=;
+        b=rRAHjDd22uKppwhulZHBEfAoa371xTHVYXzbCNVHatEioaOKcqMgIuCPdFqhqwPy2w
+         A2ibJhyK7V1CwOurMhZGoU8I/yKRjjVk6HTswdgjmLE5wieDY5BKqtOe0ACSy0BPYxhg
+         DHtVpvfmVHTGP4rmky59zdUAH3IPTLoO3VtCA6PjWRqnuig+JVOcHLYmogLrc2jpaeM2
+         i0t11Y1v3YnWpxfE+aOitg0l3p9FyxMJBN9dkoMP61eexTBdKMCsfHEcFEBQoqisyeG6
+         +gRfh+pA8ZunyQXkQGWdfpoNS3JUCuYXBSRSKlny7husImWI+QhEeOE6QgfafYyF/XlM
+         HxXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713440905; x=1714045705;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1713441529; x=1714046329;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=NuxTFXDlrm+BFnpHmLBiKm3zNo8+3C9CrzDgCHuzRNk=;
-        b=a5vg2yYDTSN1F0gvvhsnNg4TIf6QaVvcHqDcnPt16OuFIw/365Sl8rfXoMMqh0hQzm
-         42HVSFYf/j2LXLDI7hYJ+LzVS+n7cP5H3+ZgnCJa1DESzo6rWOb6y6r55kNuRdNUyljh
-         IWtz547K1tXLV3v2/eqsX1fiMSMxcAln+JB8BhG2HkvLt+dCPT9iLgMhmdQ8vxAMF8ft
-         Ix1ddQf7TgORWolz9SCNDuDmHZOpQO86NJnWcqPBn7d3uCqEpPp3kBu6lyp8rWy4gpHH
-         Da0L9yVY34qFY8m88qqm3lDudUL3tgiaCBRvQIJMJCJdkcvA+sv4y+0gNHgRTyBsCkSM
-         qAcg==
-X-Forwarded-Encrypted: i=1; AJvYcCVQvh6uslReVfghiM1Sl6Cj/PYdNhg1EheNRACr8zmKvSlr53TO7y7WYHOZYwew4ONSQmMw7RqY5e5fQl0/ZVrZE6xMNX2eGRWIZ4RHcg==
-X-Gm-Message-State: AOJu0YztWSqKrHyN3idDMviFb6SmNXlK1Lt0Pz6SyxaRgK6CoYgOfi3u
-	b9E0kC6PV7WVPnqoex975V7d86C1XlexMSzZiVFJVe2wWwXg1Tpg8eUZYGSlJyqUuTb37rMr7Nc
-	KdQim+az3dvtf7JKNjHr/Qg6wEZrmgwZJjuMsBw==
-X-Google-Smtp-Source: AGHT+IGKBPlfH5drQwVfSarXKWibHJIXInY29SG6VZ1jJJB3cdumDdDbAMYX6JlD836WHkNKoYSwv0xG3WG+/ElPO7w=
-X-Received: by 2002:a25:b121:0:b0:dc6:d1a9:d858 with SMTP id
- g33-20020a25b121000000b00dc6d1a9d858mr1686669ybj.8.1713440904861; Thu, 18 Apr
- 2024 04:48:24 -0700 (PDT)
+        bh=/m9mYsEVOVi3Gw/TMsG70ggRl65xkCqo+gadqykEay8=;
+        b=Z4UvL+xFGlEaYUo80EzBsO0jJQpTATFPrayqkJ13IcZkyDSJcA8YwqSIp3UrnAcIBy
+         zL+sKto0qD56U+TN6005f9BDJLvXvMpgHpSLzGt6W0y5f9sv8ZJ4MXgTGLOiPD17n/lg
+         xIpHXXJKagUjCkMJ6CZ+JhjBGpaJFYhL2XgjL/VjDA/s7u+HwWjPHNgk6lLjqrV9KiCC
+         DnHXN1tCKVKo/+ip/CRU3h4p7mABlo3qNUxa/0tjslZ2RvTIRVqBdp5r7mHTFpPYR7Hu
+         BCeg9XAlhjwJPazyH4U0OrpUpggb5JhxM9aDfDkUG3accXqnO8XOMRe7cejdTkE8lVYF
+         snKA==
+X-Forwarded-Encrypted: i=1; AJvYcCXBEDifKyyEj/B9SpFDBbCpkG3O8frB8/ie3Se46Kzl1LjlOgxCzcIIJDGyLTXfTKZ0qW4GutInRNQuGMdk2rCAtsJj37P8WKPzjujApg==
+X-Gm-Message-State: AOJu0Yx6O9+0q3GPwtKgTbwys/CmElhs5e5dkqkCXUgkteKisy77R9sQ
+	h94WLQWNwZfqgt0up5gpjdV9NtEiXaf1SxMWehNEBwWPioZG6AjfwWQiVu31kA==
+X-Google-Smtp-Source: AGHT+IGVB1LvunC2qEVzKKZKTV4+bcGe7kvNx74AXifHmOk3+Bo8xo9Am99F+YEUY89ktZX6VTqsNw==
+X-Received: by 2002:a05:6a00:c81:b0:6ea:bd59:9389 with SMTP id a1-20020a056a000c8100b006eabd599389mr2662351pfv.8.1713441528605;
+        Thu, 18 Apr 2024 04:58:48 -0700 (PDT)
+Received: from [127.0.1.1] ([120.56.197.253])
+        by smtp.gmail.com with ESMTPSA id ei16-20020a056a0080d000b006ed06c4074bsm1305512pfb.85.2024.04.18.04.58.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Apr 2024 04:58:48 -0700 (PDT)
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v3 0/9] PCI: endpoint: Make host reboot handling more
+ robust
+Date: Thu, 18 Apr 2024 17:28:28 +0530
+Message-Id: <20240418-pci-epf-rework-v3-0-222a5d1ed2e5@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240404-topic-smem_speedbin-v2-0-c84f820b7e5b@linaro.org>
- <20240404-topic-smem_speedbin-v2-3-c84f820b7e5b@linaro.org>
- <hi7vzqm5ebypzs6m6bw64ghgfwsdzuaxy65jpah37iw5ww7fku@n3c5sucic27i>
- <bfd6aa32-a28e-47a4-82c7-76c5dd99a44d@linaro.org> <7ynodjzjuxwwqkjgns5jtnkckw52qyldfpsqpjh7645swva4xk@7wucftyjyyy3>
- <2b5f33ba-2108-464c-b4d2-eff2cc6e59cf@linaro.org>
-In-Reply-To: <2b5f33ba-2108-464c-b4d2-eff2cc6e59cf@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 18 Apr 2024 14:48:13 +0300
-Message-ID: <CAA8EJpqW-YxJdw-+QDEdhqjwAPK1dzmW1dW6=18wcRQgp+Oq6w@mail.gmail.com>
-Subject: Re: [PATCH v2 3/7] drm/msm/adreno: Implement SMEM-based speed bin
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
-	Neil Armstrong <neil.armstrong@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOQKIWYC/3XMSwrCMBSF4a2UjI3kZUocuQ9xkDa37UVpyo1Ep
+ XTvpp2IiMNz4PtnloAQEjtWMyPImDCOZehdxdrBjz1wDGUzJZQRWho+tchh6jjBI9KVewv20Ei
+ hfe1YQRNBh88teL6UPWC6R3pt/SzX928qSy64ldqAbWUwTp5uOHqK+0g9W1tZfbwR8ser4l0tQ
+ gNONM6FL78syxshzEZB7QAAAA==
+To: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Thierry Reding <thierry.reding@gmail.com>, 
+ Jonathan Hunter <jonathanh@nvidia.com>, Jingoo Han <jingoohan1@gmail.com>
+Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, mhi@lists.linux.dev, 
+ linux-tegra@vger.kernel.org, Niklas Cassel <cassel@kernel.org>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Damien Le Moal <dlemoal@kernel.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3248;
+ i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
+ bh=0T8bNbgbYJmSiH1c9/RWSLart5xq9j5qFnGxJ69MW2M=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBmIQrxcz5ybFnUiJwKxoAXrBZC2YgZAbMO75Ehc
+ lMFY1sne+iJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZiEK8QAKCRBVnxHm/pHO
+ 9WXzCACGEr3EQYv7NBNDTtjHkKmE5HiuF3NmZv3x6qki54w9TlLp5Fppi9xFJOPekHndUI82iyq
+ WbVhVhWXIB5806UNqGlQ7/DJBh5at2yVqi1D5HeOjbN+tdVw0OEv2dOnk194r+k+aiWgWy+RTA7
+ aXa0xNAolc5Q88Q0uPwODQzxPPVxbhi9ATuhBvU39kNk4Ir3ar0w5cgg7Mw+0pUpLCdHpc0U3Zc
+ KV2shiP06yELv065SWHGPJ1SuQC6jb6DaQYmlL3Xl/KoOHmGiO0F7wvxSdX6gA+MYPxr/bSHXav
+ jG+y/arJU/TkAyF/UgmJS9EfPwFmn6ETxMokyDz95uY/2ZdZ
+X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
 
-On Thu, 18 Apr 2024 at 14:31, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
-> On 18.04.2024 1:07 PM, Dmitry Baryshkov wrote:
-> > On Thu, Apr 18, 2024 at 11:51:16AM +0200, Konrad Dybcio wrote:
-> >> On 18.04.2024 1:43 AM, Dmitry Baryshkov wrote:
-> >>> On Wed, Apr 17, 2024 at 10:02:55PM +0200, Konrad Dybcio wrote:
-> >>>> On recent (SM8550+) Snapdragon platforms, the GPU speed bin data is
-> >>>> abstracted through SMEM, instead of being directly available in a fuse.
-> >>>>
-> >>>> Add support for SMEM-based speed binning, which includes getting
-> >>>> "feature code" and "product code" from said source and parsing them
-> >>>> to form something that lets us match OPPs against.
-> >>>>
-> >>>> Due to the product code being ignored in the context of Adreno on
-> >>>> production parts (as of SM8650), hardcode it to SOCINFO_PC_UNKNOWN.
-> >>>>
-> >>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> >>>> ---
-> >>
-> >> [...]
-> >>
-> >>>> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> >>>> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> >>>> @@ -6,6 +6,8 @@
-> >>>>   * Copyright (c) 2014,2017 The Linux Foundation. All rights reserved.
-> >>>>   */
-> >>>>
-> >>>> +#include <linux/soc/qcom/socinfo.h>
-> >>>> +
-> >>>
-> >>> Stray leftover?
-> >>
-> >> Looks like
-> >>
-> >> [...]
-> >>
-> >>>> +
-> >>>> +#ifdef CONFIG_QCOM_SMEM
-> >>>
-> >>> Please extract to a separate function and put the function under ifdef
-> >>> (providing a stub otherwise). Having #ifndefs inside funciton body is
-> >>> frowned upon.
-> >>
-> >> Hm, this looked quite sparse and straightforward, but I can do that.
-> >>
-> >> [...]
-> >>
-> >>>> +/* As of SM8650, PCODE on production SoCs is meaningless wrt the GPU bin */
-> >>>> +#define ADRENO_SKU_ID_FCODE               GENMASK(15, 0)
-> >>>> +#define ADRENO_SKU_ID(fcode)      (SOCINFO_PC_UNKNOWN << 16 | fcode)
-> >>>
-> >>> If we got rid of PCode matching, is there a need to actually use
-> >>> SOCINFO_PC_UNKNOWN here? Or just 0 would be fine?
-> >>
-> >> The IDs need to stay constant for mesa
-> >>
-> >> I used the define here to:
-> >>
-> >> a) define the SKU_ID structure so that it's clear what it's comprised of
-> >> b) make it easy to add back Pcode in case it becomes useful with future SoCs
-> >> c) avoid mistakes - PC_UNKNOWN happens to be zero, but that's a lucky
-> >>    coincidence
-> >>
-> >> We don't *match* based on PCODE, but still need to construct the ID properly
-> >>
-> >> Another option would be to pass the real pcode and add some sort of
-> >> "pcode_invalid" property that if found would ignore this part of the
-> >> SKU_ID in mesa, but that sounds overly and unnecessarily complex.
-> >
-> > It's fine, just add a comment please. Maybe we can rename PC_UNKNOWN to
-> > PC_PRODUCTION?
->
-> I don't think that's right. The SoC "product code" may actually mean something
-> (again, not necessarily for Adreno specifically), and with Adreno in mind, it
-> being only meaningful for engineering samples may change in the future.
+Hello,
 
-Ack
+This is the follow up series of [1], to improve the handling of host reboot in
+the endpoint subsystem. This involves refining the PERST# and Link Down event
+handling in both the controller and function drivers.
 
+Testing
+=======
 
+This series is tested on Qcom SM8450 based development board with both MHI_EPF
+and EPF_TEST function drivers.
+
+Dependency
+==========
+
+This series depends on [1] and [2] which are currently in pci/next.
+
+@Niklas: I've dropped your Tested-by tags as there were some changes in between
+and I want to make sure this version gets tested again. So please give it a go!
+
+- Mani
+
+[1] https://lore.kernel.org/linux-pci/20240314-pci-dbi-rework-v10-0-14a45c5a938e@linaro.org/
+[2] https://lore.kernel.org/linux-pci/20240320113157.322695-1-cassel@kernel.org/
+
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+Changes in v3:
+- Dropped the patch that split epc_events into two
+- Added a patch to rename BME to Bus Master Enable
+- Added back the comment for REBAR
+- Switched to cancel_delayed_work_sync() for Link Down event
+- Rebased on top of pci/next
+- Dropped the tested-by tag from Niklas as I'd like to get this series tested
+  one more time due to changes
+- Link to v2: https://lore.kernel.org/r/20240401-pci-epf-rework-v2-0-970dbe90b99d@linaro.org
+
+Changes in v2:
+- Dropped the {start/stop}_link rework patches
+- Incorporated comments from Niklas
+- Collected review tags
+- Rebased on top of v6.9-rc1 and https://lore.kernel.org/linux-pci/20240320113157.322695-1-cassel@kernel.org/
+- Link to v1: https://lore.kernel.org/r/20240314-pci-epf-rework-v1-0-6134e6c1d491@linaro.org
+
+---
+Manivannan Sadhasivam (9):
+      PCI: qcom-ep: Disable resources unconditionally during PERST# assert
+      PCI: endpoint: Rename core_init() callback in 'struct pci_epc_event_ops' to epc_init()
+      PCI: endpoint: Rename BME to Bus Master Enable
+      PCI: endpoint: pci-epf-test: Refactor pci_epf_test_unbind() function
+      PCI: endpoint: pci-epf-{mhi/test}: Move DMA initialization to EPC init callback
+      PCI: endpoint: Introduce 'epc_deinit' event and notify the EPF drivers
+      PCI: dwc: ep: Add a generic dw_pcie_ep_linkdown() API to handle Link Down event
+      PCI: qcom-ep: Use the generic dw_pcie_ep_linkdown() API to handle Link Down event
+      PCI: endpoint: pci-epf-test: Handle Link Down event
+
+ drivers/pci/controller/dwc/pcie-designware-ep.c | 104 ++++++++++++++++--------
+ drivers/pci/controller/dwc/pcie-designware.h    |   5 ++
+ drivers/pci/controller/dwc/pcie-qcom-ep.c       |  13 +--
+ drivers/pci/controller/dwc/pcie-tegra194.c      |   1 +
+ drivers/pci/endpoint/functions/pci-epf-mhi.c    |  47 +++++++----
+ drivers/pci/endpoint/functions/pci-epf-test.c   |  95 ++++++++++++++++------
+ drivers/pci/endpoint/pci-epc-core.c             |  58 +++++++++----
+ include/linux/pci-epc.h                         |   3 +-
+ include/linux/pci-epf.h                         |  10 ++-
+ 9 files changed, 230 insertions(+), 106 deletions(-)
+---
+base-commit: 13ccfe1d824dd392c9200b91655929b6f49a3e69
+change-id: 20240314-pci-epf-rework-a6e65b103a79
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
 
