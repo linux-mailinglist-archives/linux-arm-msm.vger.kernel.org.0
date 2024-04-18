@@ -1,141 +1,229 @@
-Return-Path: <linux-arm-msm+bounces-17864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 837C88A9E0C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 17:12:34 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93F3E8A9E7E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 17:33:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3DBBF282CFC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 15:12:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DEC6BB22C39
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 15:33:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6474B16C447;
-	Thu, 18 Apr 2024 15:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6028B16E88B;
+	Thu, 18 Apr 2024 15:33:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DeSevptl"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PyurcYtR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 361FD16ABEE;
-	Thu, 18 Apr 2024 15:12:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9FDD16D313;
+	Thu, 18 Apr 2024 15:33:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713453149; cv=none; b=Jm86WvcOhM2vwlH3e2CMqRjXsAv8loBMk+n1Bdha7PhrthHrgf8GC9qH8uSupLNI1PWP4TGYJGpGTr1AzJ7OEI30uhl0xlDPWV1WSDhYKW0R50jFfrIShsK46OKXRi3CxzgHdA0EToa4tgHqhDnOGxwJxdMXHxKxPaYUvobr0Cc=
+	t=1713454408; cv=none; b=s0ZDBvL+8AZgYLB4TbqUV1rrXtHDNg02VorXDDwzu+cllr7o4I6yyqAkWV1LoXK/wcSkpU+nfxLq3L6jL8bJ5wjgGpJltoxMvO/+4BeE19LxaWMC6WOFlZnAiiJx3IRUNgTNGGr4GohUpo73IRA7azStS0VL+xI1ktuVO3J7wuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713453149; c=relaxed/simple;
-	bh=EwDk+acs40utZgqR2KMpvEatz3bas2MtIZ7ZVuGevL0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ewuu0t+ghb5KC/P2fHDpAqi7VnJYOQxxOxEDxLerdFOUlhOhq1sXnlCkOLC6B9WJt02Zv1w3I5vYpriv/pL5Me+ecsyzo00S/GGQacrHIEq+GILltdna3ofdczf9AFVp/e4DbWZQGJr07n3nerW0mzkR4Jx6bdb/CeOEFJEpHP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DeSevptl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E15C113CC;
-	Thu, 18 Apr 2024 15:12:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713453148;
-	bh=EwDk+acs40utZgqR2KMpvEatz3bas2MtIZ7ZVuGevL0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DeSevptlefNRiLs6nr2IrizdzKvBEPRi0LXFaXIzoZkqEtfTbs3hjC9rZzBhaqPDR
-	 Ne4wRFifwbVdZn7uDz0CNmIzRF6sK+azDYtywG9BuHPZmizapHWzrdg8DU4VKQD8ql
-	 hMAvg6FlWiGuPorvoCJQYTsX8HNrQ2wgjFrfUYnZdT+yehHZuOZoTqHLn6+Ef6oGTl
-	 mAnDvcOt8Z3v9bfwDbHt2hdj5e/3BJE2B6QJ2N9qkD761sRSGxQ6L/iy/lu4TBHleq
-	 DAVh8vGeeqpAEN53dnW7CZMvxC/YHclsPJzVi9WRPIadvu7+uuIVfUC6cJUDCxZVfh
-	 cH7OnZ5VuJBbg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rxTR8-000000001QT-3nmZ;
-	Thu, 18 Apr 2024 17:12:31 +0200
-Date: Thu, 18 Apr 2024 17:12:30 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Caleb Connolly <caleb.connolly@linaro.org>
-Subject: Re: [PATCH v3] usb: typec: qcom-pmic-typec: split HPD bridge alloc
- and registration
-Message-ID: <ZiE4Xpjhv2llY4pG@hovoldconsulting.com>
-References: <20240416-qc-pmic-typec-hpd-split-v3-1-fd071e3191a1@linaro.org>
+	s=arc-20240116; t=1713454408; c=relaxed/simple;
+	bh=Pe8LF00fKAkUIpSGDfqhCDFPUTrRkXNW/s0iu1qxFS4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ozPrNdYyClYtlMyycHYrHouwzWZZb7th7PwtXZZ0eFpN8aWPSEcFQyXQqoA1VrsvPDbH4L6Pl0h51BwUgTjkj9iUJX4OiSRorPd+5sisVpZ35dhSfXp1ltAHtIeNo5TMjLO2D6d8fZc0tEBrFgCPJB2pF7awksf/ifZi4MVsSV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PyurcYtR; arc=none smtp.client-ip=209.85.161.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-5aa1e9527d1so749092eaf.1;
+        Thu, 18 Apr 2024 08:33:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1713454406; x=1714059206; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0PpqV3h5TqPps9cVfBqAG1UcArnq9DB4nfERwYi+F10=;
+        b=PyurcYtR3Uh2CQr/ZiQhaIKJWeyWKk8qwj9HOUmIYD3IH1qhMRYZyBkI6PX+Kn9fsD
+         p1/P4tBYb9CaFK8f9yM4iYnkEuMVN0M58nWHJFXBNF3XUBCHXbFu9BykIXNxYs0RJKUn
+         ihaAN5Bhj4mZSnrqlAaRaXd/1wwwswHkVFHaXE/jVYu8ndpTQ47CKlVlsa4MNGSuV7zg
+         7Mh5gv5DzQ5xSvNb/i13yp3ZlQmS/uChIDF7KtCywycrpewGhYCVzIZKZC4QO7EjolHI
+         4XFsiScm8L9VxdRkCPhF/oFFFIAlrjXn17tf7DlBenp/eAIhn9jOVjUWvEw6ZSdVPLc0
+         P4Cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713454406; x=1714059206;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0PpqV3h5TqPps9cVfBqAG1UcArnq9DB4nfERwYi+F10=;
+        b=sQozywEd2Lb4z11Atj6Zyl0mO+7N+HeqTnvs3CNx9yqdUFe16vJc+U55i0aFw4oUca
+         GJUqqEUsU9BsZOW5WT1R8yN3Ua+jftaw9Hvy+8TFTYV3PzkbNDUXQdbLbjFzGr1N9AtU
+         GxOawVNZ/Jkx7Qa3Oe7kH5sxpNdEt5XzcKtzhLCWoBezaVGF1n07ySsOcpyWuiBW9pOg
+         3GDv1vVQTkypW7HrWyMg3eo/v0xYjBHrRCHEjEqnN0fYzDIS6TBIeH8qQMyKU9B59RFb
+         3YcnAOTklfiLS4sEvC7EKuPmNwAeNB4sgdWYe/DTx7KHSR79+KfxSG8wSZr3ehFuO9lt
+         Dr4g==
+X-Forwarded-Encrypted: i=1; AJvYcCVHY9vxVWDi6dQ+aAR7U0qydkPPtZKHTKFPtCfI3URxeDZxLfEZJPyLCu9x+73+kkL4Cb7cJ0mBYuvzprEeGn1Xiu/nmipiAK1vfxQW593dDhS5Abc707Ms83GzVl85wRvRhjPiRh7erVO3a/6gXBTGfKRrC2keQ81GIEqhJlQv4fwCPLqeD71oaFovBy3SjK0H2qqO65pjHKYJQX5evieEvbPg2/jKNU8i5MlvRpXtT5A2yR5qB/34nTdrKuk=
+X-Gm-Message-State: AOJu0YzcHu7WqdaUCzZ2lZDzfdBdsYnnYKYeB/Wa9keIBAOLWSSC8Dng
+	vm7QWaCQ9K/sWPKnn/3ba4IRw3s3y9bN2Ye7q9yS/JOyzfYxEU9y
+X-Google-Smtp-Source: AGHT+IFPSo0EiZkOCg4SbYDajm04Bi8eymG+RVOa0yqnQTLBlt5WMDawfM15TlYrRZA1R3HZD5ZEcg==
+X-Received: by 2002:a4a:98c8:0:b0:5ac:9ece:a7c with SMTP id b8-20020a4a98c8000000b005ac9ece0a7cmr3660118ooj.5.1713454405693;
+        Thu, 18 Apr 2024 08:33:25 -0700 (PDT)
+Received: from [192.168.7.169] (c-98-197-58-203.hsd1.tx.comcast.net. [98.197.58.203])
+        by smtp.gmail.com with ESMTPSA id bu10-20020a0568201aca00b005a4799f5428sm421440oob.21.2024.04.18.08.33.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Apr 2024 08:33:25 -0700 (PDT)
+Message-ID: <e8957b07-692f-7d38-e276-b0e3791d31f4@gmail.com>
+Date: Thu, 18 Apr 2024 10:33:23 -0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240416-qc-pmic-typec-hpd-split-v3-1-fd071e3191a1@linaro.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v3 7/7] arm64: dts: qcom: ipq9574: add PCIe2 nodes
+Content-Language: en-US
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-clk@vger.kernel.org
+References: <20240415182052.374494-1-mr.nuke.me@gmail.com>
+ <20240415182052.374494-8-mr.nuke.me@gmail.com>
+ <20240417073412.GD3894@thinkpad>
+From: mr.nuke.me@gmail.com
+In-Reply-To: <20240417073412.GD3894@thinkpad>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Apr 16, 2024 at 05:18:56AM +0300, Dmitry Baryshkov wrote:
-> If a probe function returns -EPROBE_DEFER after creating another device
-> there is a change of ending up in a probe deferral loop, (see commit
-> fbc35b45f9f6 ("Add documentation on meaning of -EPROBE_DEFER"). In case
-> of the qcom-pmic-typec driver the tcpm_register_port() function looks up
-> external resources (USB role switch and inherently via called
-> typec_register_port() USB-C muxes, switches and retimers).
+
+
+On 4/17/24 02:34, Manivannan Sadhasivam wrote:
+> On Mon, Apr 15, 2024 at 01:20:52PM -0500, Alexandru Gagniuc wrote:
+>> On ipq9574, there are 4 PCIe controllers. Describe the pcie2 node, and
+>> its PHY in devicetree.
+>>
+>> Only pcie2 is described, because only hardware using that controller
+>> was available for testing.
+>>
 > 
-> In order to prevent such probe-defer loops caused by qcom-pmic-typec
-> driver, use the API added by Johan Hovold and move HPD bridge
-> registration to the end of the probe function.
+> You should describe all the instances in DT. Since the unused ones will be
+> 'disabled', it won't affect anyone.
+
+My concern with untested but "disabled" descriptions is that someone may 
+think it's supported, try to enable it on their board, and run into 
+issues. Theoretically, we could describe pcie3, as it uses the same 
+gen3x2 phy.
+
+The pcie0 and pcie1 use a gen3x1 phy, which I do not support in this 
+series. I would have to leave the "phys" and "phy-names" for these 
+nodes, leading to an incomplete description
+
+Given this info, do you still wish that I add all other pcie nodes?
+
+>> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 93 ++++++++++++++++++++++++++-
+>>   1 file changed, 92 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>> index 7f2e5cbf3bbb..f075e2715300 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>> @@ -300,7 +300,7 @@ gcc: clock-controller@1800000 {
+>>   				 <0>,
+>>   				 <0>,
+>>   				 <0>,
+>> -				 <0>,
+>> +				 <&pcie2_phy>,
+>>   				 <0>,
+>>   				 <0>;
+>>   			#clock-cells = <1>;
+>> @@ -745,6 +745,97 @@ frame@b128000 {
+>>   				status = "disabled";
+>>   			};
+>>   		};
+>> +
+>> +		pcie2_phy: phy@8c000 {
+>> +			compatible = "qcom,ipq9574-qmp-gen3x2-pcie-phy";
+>> +			reg = <0x0008c000 0x14f4>;
+>> +
+>> +			clocks = <&gcc GCC_PCIE2_AUX_CLK>,
+>> +				 <&gcc GCC_PCIE2_AHB_CLK>,
+>> +				 <&gcc GCC_PCIE2_PIPE_CLK>,
+>> +				 <&gcc GCC_ANOC_PCIE2_2LANE_M_CLK>,
+>> +				 <&gcc GCC_SNOC_PCIE2_2LANE_S_CLK>;
+>> +			clock-names = "aux",
+>> +				      "cfg_ahb",
+>> +				      "pipe",
+>> +				      "anoc",
+>> +				      "snoc";
+>> +
+>> +			clock-output-names = "pcie_phy2_pipe_clk";
+>> +			#clock-cells = <0>;
+>> +			#phy-cells = <0>;
+>> +
+>> +			resets = <&gcc GCC_PCIE2_PHY_BCR>,
+>> +				 <&gcc GCC_PCIE2PHY_PHY_BCR>;
+>> +			reset-names = "phy",
+>> +				      "common";
+>> +			status = "disabled";
+>> +		};
+>> +
+>> +		pcie2: pcie@20000000 {
+>> +			compatible = "qcom,pcie-ipq9574";
+>> +			reg = <0x20000000 0xf1d>,
+>> +			      <0x20000f20 0xa8>,
+>> +			      <0x20001000 0x1000>,
+>> +			      <0x00088000 0x4000>,
+>> +			      <0x20100000 0x1000>;
+>> +			reg-names = "dbi", "elbi", "atu", "parf", "config";
+>> +
+>> +			ranges = <0x81000000 0x0 0x20200000 0x20200000 0x0 0x00100000>,	/* I/O */
 > 
-> The devm_drm_dp_hpd_bridge_add() is called at the end of the probe
-> function after all TCPM start functions. This is done as a way to
-> overcome a different problem, the DRM subsystem can not properly cope
-> with the DRM bridges being destroyed once the bridge is attached. Having
-> this function call at the end of the probe function prevents possible
-> DRM bridge device creation followed by destruction in case one of the
-> TCPM start functions returns an error.
+> Please use below range:
+> 
+> <0x01000000 0x0 0x00000000 0x20200000 0x0 0x00100000>
+> <0x02000000 0x0 0x20300000 0x20300000 0x0 0x07d00000>
+> 
+Of course, thank you.
 
-You're still not explaining why it is ok to move registration of the
-bridge to after starting the port and pdphy.
+>> +				 <0x82000000 0x0 0x20300000 0x20300000 0x0 0x07d00000>;	/* MEM */
+>> +
+>> +			device_type = "pci";
+>> +			linux,pci-domain = <3>;
+>> +			bus-range = <0x00 0xff>;
+>> +			num-lanes = <2>;
+>> +			max-link-speed = <3>;
+>> +			#address-cells = <3>;
+>> +			#size-cells = <2>;
+>> +
+>> +			phys = <&pcie2_phy>;
+>> +			phy-names = "pciephy";
+>> +
+>> +			interrupts = <GIC_SPI 126 IRQ_TYPE_LEVEL_HIGH>;
+>> +			interrupt-names = "msi";
+>> +
+>> +			#interrupt-cells = <1>;
+>> +			interrupt-map-mask = <0 0 0 0x7>;
+>> +			interrupt-map = <0 0 0 1 &intc 0 0 164
+>> +					 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
+>> +					<0 0 0 2 &intc 0 0 165
+>> +					 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
+>> +					<0 0 0 3 &intc 0 0 186
+>> +					 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+>> +					<0 0 0 4 &intc 0 0 187
+>> +					 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
+> 
+> Use a single line for each INTX entry even if it exceeds 80 column width.
 
-Perhaps it's obvious to you but it should still go in the commit message
-as such a change is potentially something that could end up causing
-trouble (e.g. enabling interrupts before all resources have been setup
-and registered).
+Yes. Will do.
 
-As I've mentioned before, I'm also sceptical to papering over the DRM
-issue in each and every driver registering a bridge. These late error
-paths would normally not be taken, unlike the earlier ones which can be
-triggered by probe deferrals and which we have to fix also for the probe
-deferral loops.
-
-> @@ -92,7 +92,7 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
->  	if (!tcpm->tcpc.fwnode)
->  		return -EINVAL;
->  
-> -	bridge_dev = drm_dp_hpd_bridge_register(tcpm->dev, to_of_node(tcpm->tcpc.fwnode));
-> +	bridge_dev = devm_drm_dp_hpd_bridge_alloc(tcpm->dev, to_of_node(tcpm->tcpc.fwnode));
->  	if (IS_ERR(bridge_dev))
->  		return PTR_ERR(bridge_dev);
->  
-> @@ -110,6 +110,10 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
->  	if (ret)
->  		goto fwnode_remove;
->  
-> +	ret = devm_drm_dp_hpd_bridge_add(tcpm->dev, bridge_dev);
-> +	if (ret)
-> +		goto fwnode_remove;
-
-This is leaking resources and can lead to a use-after-free.
-
-When looking at the driver, I noticed that the existing error handling
-is already broken so I just sent a fix here:
-
-	https://lore.kernel.org/lkml/20240418145730.4605-1-johan+linaro@kernel.org/
-
-You should rebase on that series and not introduce further issues with
-the new bridge-add error path.
-
-> +
->  	return 0;
->  
->  fwnode_remove:
-
-Johan
+> - Mani
+> 
 
