@@ -1,138 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-17868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17869-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3CDBD8A9F53
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 17:58:07 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 320018A9FB7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 18:12:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E56B31F23457
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 15:58:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E223F286981
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 16:12:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0B6A16F905;
-	Thu, 18 Apr 2024 15:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27A7416F905;
+	Thu, 18 Apr 2024 16:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mUmbAQTK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iE+QD7BL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9FC16F851;
-	Thu, 18 Apr 2024 15:57:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E879C23D7;
+	Thu, 18 Apr 2024 16:12:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713455865; cv=none; b=OwbCgvSiSP8A/AQ6DXa5DfklhXPaz3nVxxhrpgwwNpCkyIqByXdgfGuaHppYYvefED30PqoJLG6SDqwVdCdKUB2H9jESDz8lfZeVsvlqgUvaNouMWthl+vmfe1oIgR+dpoR7jW8gAa/ZGu0+DwmwLFXkWRgukTiB5+vhqcqbEjk=
+	t=1713456732; cv=none; b=H1Rgl7mnsICXKKdnnAEt4Wrfa61zMhIACVtS5Ib/ItG0HoayTEl+0gSmrtz8oQCbvb1LQDHhFBnMu/9QQDEXt+lojcUAfHbn1zQ249St4wNP7e3VUJWXOfuXeh74bwR7MLU8CSG1V9Co5HvpIoC+a+o2Gp9/sIs3EnAgEyay+K0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713455865; c=relaxed/simple;
-	bh=qI2NDyYBetjYiJ8+DJsHQPX1KNa1xaxmLQvZQPm4Y+M=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=muJmzG8G9T0htO8X/FXzLaYKuFyfc/ylfBXiHAOK23AxUmZb7JozSwFvapNq++9R9BZd7ZboJBP7cOZYTu6xKJP0rD2pV65eRUDrl2kgjEwiD0z8kvvOK2zWIUg4DIE7rEaiD0Mj667apdrg71PPy9oehYDtl3Nyqtv75NBRb+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mUmbAQTK; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43IDLr3n026802;
-	Thu, 18 Apr 2024 15:57:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=keHmXRi4wuYZaHcMOahf+
-	Dk9RbwXyJs1kracniYm16k=; b=mUmbAQTKygnnDNK26Fsg/fQ/gjW7X0S7DecDO
-	rfWyjXNOeIcsBd8yUbi07zbbEpJnm5mxq7JMpLZVz5OGucRupnguMqj9OCnBLyLP
-	X5kNpAtzAi31B1Y9ntOJm0flQjJtkOPD4VJne5DdC6mLKL+CJBvr76BqIi3fYebe
-	6QLW8YS3otMgxRZBj34fjMGnx79MMP3a6grq3gIwvrUqwFSbWqT3MaLRzJ4ChGKc
-	Q9cUtuXJPgviqfcGLpfg+fhaMWKmtUdFZW4NJaa9MDOjstEEUUmNGlsUB5GUmSmS
-	v3NebBC7dq9hwOySJMu6NubLHmStro+UyVhC2+Y5VJQpeqOxQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xjx54h90f-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Apr 2024 15:57:39 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43IFvcF1013191
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Apr 2024 15:57:38 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 18 Apr 2024 08:57:38 -0700
-Date: Thu, 18 Apr 2024 08:57:37 -0700
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: Abel Vesa <abel.vesa@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Rajendra Nayak" <quic_rjendra@quicinc.com>,
-        Sibi Sankar
-	<quic_sibis@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: x1e80100: Drop the
- link-frequencies from mdss_dp3_in
-Message-ID: <ZiFC8d6cD35B+PaC@hu-bjorande-lv.qualcomm.com>
-References: <20240418-x1e80100-dts-fix-mdss-dp3-v1-0-9f8420e395d4@linaro.org>
- <20240418-x1e80100-dts-fix-mdss-dp3-v1-1-9f8420e395d4@linaro.org>
+	s=arc-20240116; t=1713456732; c=relaxed/simple;
+	bh=eRwB3YCw2t/w180tUcjZCYanbt8cMadquiphPHE1TiA=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=jZD1eXFAoY/jMxKPYDUvpmNxcKgmwAnQXTPldh4r115dTkYnJdIteQPaR+GD0mrIyOlIdClX7MmOwBdKLB9v9lc/L03VLxyvDYVYCvmpUuFsFwFKl2Rm56kfFuNHKSEe+w06AHn4UH325xqwOe6agOnCD1zpPth0LK65/kuxmYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iE+QD7BL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A8ABC3277B;
+	Thu, 18 Apr 2024 16:12:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1713456731;
+	bh=eRwB3YCw2t/w180tUcjZCYanbt8cMadquiphPHE1TiA=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=iE+QD7BLSB9x6TGqXDdv4Zdg0SxEzUneBlr02PnQCY9J93OeWYeFLE7Z2izfpbo9V
+	 7/+xMMaxc5o490jmdY8cyBOuAqJvTrU/lKvPAybVUs1PzpSi1j4spg6tN01mYU9IRH
+	 Xma2PLYFuPx07sHGMvWD9p0LAv85X0uQGQx595NQQWssB09z18Cu7PlY9Fsqij/gxM
+	 j5iY0NBTID0B8Te4oEcr54uWMWuqbqCy/bZLKQthJgZYhSc2nQYHjmWac4O7HdRbSE
+	 +FVfiKdrXzgdjmNmwwDyTTudYOePPw6pyTJvqzQRQ3ccMjXHdY0PUdgphryOjC2tsn
+	 tInUT5nAvtNhg==
+Date: Thu, 18 Apr 2024 11:12:09 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	mhi@lists.linux.dev, linux-tegra@vger.kernel.org,
+	Niklas Cassel <cassel@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: Re: [PATCH v3 3/9] PCI: endpoint: Rename BME to Bus Master Enable
+Message-ID: <20240418161209.GA239309@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240418-x1e80100-dts-fix-mdss-dp3-v1-1-9f8420e395d4@linaro.org>
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: NW4TPYbzOL1EXy3pjwrDa-nvTR2SjDn5
-X-Proofpoint-ORIG-GUID: NW4TPYbzOL1EXy3pjwrDa-nvTR2SjDn5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-18_14,2024-04-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxscore=0
- suspectscore=0 malwarescore=0 phishscore=0 mlxlogscore=359 bulkscore=0
- impostorscore=0 spamscore=0 lowpriorityscore=0 priorityscore=1501
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404180113
+In-Reply-To: <20240418-pci-epf-rework-v3-3-222a5d1ed2e5@linaro.org>
 
-On Thu, Apr 18, 2024 at 01:22:18PM +0300, Abel Vesa wrote:
-> The link-frequences belong in mdss_dp3_out. Display is broken because of
-> this. Drop them from mdss_dp3_in.
-> 
+On Thu, Apr 18, 2024 at 05:28:31PM +0530, Manivannan Sadhasivam wrote:
+> BME which stands for 'Bus Master Enable' is not defined in the PCIe base
+> spec even though it is commonly referred in many places (vendor docs). But
+> to align with the spec, let's rename it to its expansion 'Bus Master
+> Enable'.
 
-Why is display broken because you have this property in the wrong node?
-Isn't it broken because you don't have it in &mdss_dp3_out and this is
-just a cleanup of an invalid property?
+Thanks for doing this.  I'm always in favor of using terms from the
+spec.
 
-Perhaps that's what you're trying to say? Would be nice to have that
-clarified.
+> -		dev_dbg(dev, "Received BME event. Link is enabled!\n");
+> +		dev_dbg(dev, "Received Bus Master Enable event. Link is enabled!\n");
 
-Regards,
+Nothing to do with *this* patch, but this message reads a little weird
+to me because setting Bus Master Enable has nothing to do with link
+enablement.
+
+Also incidental: some of these messages and comments refer to a "Bus
+Master Enable *event*".  Does "event" here refer to the act of the
+host setting the Bus Master Enable bit in the Command register?  This
+is in qcom_pcie_ep_global_irq_thread(), so I assume there's something
+in the endpoint hardware that generates an IRQ when the Command
+register is written?
+
+> - * pci_epc_bme_notify() - Notify the EPF device that the EPC device has received
+> - *			  the BME event from the Root complex
+> - * @epc: the EPC device that received the BME event
+> + * pci_epc_bus_master_enable_notify() - Notify the EPF device that the EPC
+> + *					device has received the Bus Master
+> + *					Enable event from the Root complex
+> + * @epc: the EPC device that received the Bus Master Enable event
+>   *
+>   * Invoke to Notify the EPF device that the EPC device has received the Bus
+> - * Master Enable (BME) event from the Root complex
+> + * Master Enable event from the Root complex
+
+There's no "set Bus Master Enable" transaction that would appear on
+the PCIe link, so I assume "the Bus Master Enable event from the Root
+Complex" is a way of saying something like "host has written the
+Command register to set the Bus Master Enable bit"?
+
 Bjorn
-
-> Fixes: 1940c25eaa63 ("arm64: dts: qcom: x1e80100: Add display nodes")
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 1 -
->  1 file changed, 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> index f5a3b39ae70e..0642b5e88639 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> @@ -4096,7 +4096,6 @@ port@0 {
->  						mdss_dp3_in: endpoint {
->  							remote-endpoint = <&mdss_intf5_out>;
->  
-> -							link-frequencies = /bits/ 64 <8100000000>;
->  						};
->  					};
->  
-> 
-> -- 
-> 2.34.1
-> 
 
