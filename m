@@ -1,111 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-17786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17787-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB1928A8FB0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 01:49:38 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A2A778A9310
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 08:27:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 225851F2219D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Apr 2024 23:49:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CC2021C20C6B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 06:27:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1C2F126F11;
-	Wed, 17 Apr 2024 23:49:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA4396A353;
+	Thu, 18 Apr 2024 06:27:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wLiMXiYf"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="i/Kw3dy2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A3F86642
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 23:49:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0228C11;
+	Thu, 18 Apr 2024 06:27:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713397773; cv=none; b=SYhj93XfGDn4j2o5KUemATamYOjZQpssNRkt4XSCl7ktNa1Zin1nGXi7WZeWZAduF4nbBCaP+jzeiSWhGoldj6gnhJxKnEoZqwKd44eu3E9b5umGQYCTTY6ymVw+lYEirkwPo1Cf1ZYdxWF1oMpJQWHZaCuaVG+kwTaE0Z0dvQQ=
+	t=1713421654; cv=none; b=h72GvjAxidnBSnsMFiPmdRfTeDCXNv/S3Vj1l/6E3QDkRq9xRx9ztdDSmXCFYpcf57TlU8NvLSqEvhUjVb2qYyXZ7QKZbvLdR5+OXHnqkvMaqRCfoAk10HcdjGAWWuc2Hf0RZRFhVnddG94gp6hhg0hKPNJZKI4Kb+pa4amOk+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713397773; c=relaxed/simple;
-	bh=tlqRCKx02DY699x9+WjnG6mz6EwDvyHTPJ2Fyqrda4w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bl0wti2XNja8L8nDUnoyxX8W+4flXyxy5R6unnmX87WEgOAolzUm8AGhGqv6bLnpPUUammhFiSG0B+oo2JclpTLTxsNRqKBO5N/GOq6A9FcaHSiyi1AFhYzRmWAJMiePIiS8BLLZKhQL6Ybe+1EvdfssOHjXRbeGZJfLyfc16d0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wLiMXiYf; arc=none smtp.client-ip=209.85.208.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2db2f6cb312so5585561fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 16:49:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713397770; x=1714002570; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=IDyTmfUTB48zbrRJ3Ex/J4eaqhXRSOEtnoHY2dxsblE=;
-        b=wLiMXiYf2b7jVK60Y4Xk80xrnrYpwkFRF0QRtTjIJNbCiiCKCis7dGA2A0n8h7nETZ
-         blrDyIZY3JqybtERQzTtW0YSC9c/izXJ5D7rkDOY703lOOTW7Jz9uqnNK7WNRnuLJ5l+
-         GlB4LsRojZIL4jCYaaIUHJxKPBAIJ91maa19rJRqPSl9FI45t3QUxKdJmzhLy2a0eOk0
-         o0uUKEWByurYKGjpO0CsdeDeWOXrmQDSaJh75SeDX6eRFEld18hy3JNyyW/ZWKpurNx/
-         w29kBDCOFmTeDu2VqWVSPbYmx0G7iVWdxR5IM1Hif93/U/tSZkHwVXvFmT2vuEEOYNho
-         L/ZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713397770; x=1714002570;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IDyTmfUTB48zbrRJ3Ex/J4eaqhXRSOEtnoHY2dxsblE=;
-        b=iFdRqZ3KSBiZgBIIKWWk6M55SoZBOf39X9Vw1QIE7/QamfTX2j0pGqkIZENWxync8m
-         xHmCdhkbci64SmurXftaMghZiCk8Gfu9VlNUXw2sJLYruQPC8Jxy+s+l9oD3vavtpmY0
-         LMwvisAGgSlEmPoC6evePwb4Tl4LL3EbAY7NObmzo3T2FPs4/G3yA5bt7ulGRITH5TAU
-         uibbMMWdSY53+9f5p0pygIZF0y6mr5EdsWNr4a8687EtDBanCMoFXdT+hWmv2S5Di5vj
-         s0eUQOhlb4+A31Rrr9ghDt/qYKOovQPXRUbeGsKbkvcKlIOAF2yPEYqAZ/MzBCFiaM2h
-         EBbQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWZH1DODPVkMgZffIieLE3WkrhXZ4tQo7bhtvzuaLa8CRmymlV6BlX40AZkxC5Z7+JA2mXaGBurVUiBcuQgvkoKXV2ckfCe1FHygGRqEA==
-X-Gm-Message-State: AOJu0YxO/661EMlYggxNkmrTMwxmVA/5e+RySgxgESfz0L8WWYYVPTDN
-	xEnwWxX4I4gFnpkyVaBEU36p0wtzP+UpTb0mi97sCqhRSj66thnQ3xRTQav65I4=
-X-Google-Smtp-Source: AGHT+IH/MUOBgyPCemAoyY2nfZkjc3UXoMr2/x45ATSbPEjenP4BTGIPiOlkgeZVrWhJMW0EEXYW4w==
-X-Received: by 2002:a05:651c:50c:b0:2d4:6893:24e1 with SMTP id o12-20020a05651c050c00b002d4689324e1mr536858ljp.50.1713397770075;
-        Wed, 17 Apr 2024 16:49:30 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
-        by smtp.gmail.com with ESMTPSA id e21-20020a2ea555000000b002d70a040f21sm35241ljn.91.2024.04.17.16.49.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Apr 2024 16:49:29 -0700 (PDT)
-Date: Thu, 18 Apr 2024 02:49:28 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v2 7/7] arm64: dts: qcom: sm8550: Wire up GPU speed bin &
- more OPPs
-Message-ID: <hykql6t7xy5uajvnzbslagrki6xvg3mjuba5hpjha36ue5ra76@4s3m2vsbxjav>
-References: <20240404-topic-smem_speedbin-v2-0-c84f820b7e5b@linaro.org>
- <20240404-topic-smem_speedbin-v2-7-c84f820b7e5b@linaro.org>
+	s=arc-20240116; t=1713421654; c=relaxed/simple;
+	bh=ck6D+u1yHGSMSsvI+farJRo08q/q17J/RdpWxcYLUzU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=V88VafIgtlU15OJ66JDzEFgI59Sct4BCBnK9odoIOZJql1WM+LLB3OorkxQgEV6VRAlWYWbdh06gJbh4kjmFRCSjP1wSRNAGv2I2dSdc03fgJ/8d3kIIH39jrCm/Vq0mSPzS1A/u5203NJZee3GKQO9DXRc/X2hHer9g6h0rLvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=i/Kw3dy2; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43HNrE0P018338;
+	Thu, 18 Apr 2024 06:27:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=tbWp83ngc6+C04lMqJmQF5eKNNcGbKVIZblsmEVEZDk=; b=i/
+	Kw3dy2+SLlBMkynWa4ccWUpbylndODYMvO/yknuuebbdm/N5JASvLAjc1ZzkXaXy
+	wwCVNdDoIDPSNX+b8vabYIT22lK/OUo8tflP6MZsqbXJdJjZwCioaOPDzqImcSPh
+	TUUlM7CjVsWUfyMPQxWum54UwUzelmXQlJnq0vWK2z0Z2ojeohNH3SSdXXAufciX
+	n9n2zFx+OhJs1G3/KCeWjvE7XgGqIQoDI4FCgswnYU371iMF+B4RzmA5mIRra/tS
+	Q4Tz1+RZxtpwMS9BQLs7Kx9Jz57Owz4fGr22nUDl+2l4XY6u0n3lkW25egFxsA+Y
+	1Bed6WS9/govow426Gqg==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xjrfxgv25-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 18 Apr 2024 06:27:25 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43I6RNZO027974
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 18 Apr 2024 06:27:23 GMT
+Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 17 Apr
+ 2024 23:27:18 -0700
+Message-ID: <1e334bd5-6d90-8ac7-084f-8b7928072c17@quicinc.com>
+Date: Thu, 18 Apr 2024 11:57:14 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240404-topic-smem_speedbin-v2-7-c84f820b7e5b@linaro.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH V3 1/5] dt-bindings: mailbox: qcom: Add CPUCP mailbox
+ controller bindings
+Content-Language: en-US
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+CC: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <jassisinghbrar@gmail.com>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <dmitry.baryshkov@linaro.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_rgottimu@quicinc.com>, <quic_kshivnan@quicinc.com>,
+        <conor+dt@kernel.org>, <quic_gkohli@quicinc.com>,
+        <quic_nkela@quicinc.com>, <quic_psodagud@quicinc.com>,
+        Rob Herring <robh@kernel.org>
+References: <20240417132856.1106250-1-quic_sibis@quicinc.com>
+ <20240417132856.1106250-2-quic_sibis@quicinc.com>
+ <ZiA0hOkpGVlVFp5u@hu-bjorande-lv.qualcomm.com>
+From: Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <ZiA0hOkpGVlVFp5u@hu-bjorande-lv.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: CBqy4x_L3vRJwV6AY0rDmH2Iand2eEA2
+X-Proofpoint-GUID: CBqy4x_L3vRJwV6AY0rDmH2Iand2eEA2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-18_04,2024-04-17_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ priorityscore=1501 spamscore=0 mlxscore=0 phishscore=0 suspectscore=0
+ adultscore=0 mlxlogscore=908 clxscore=1015 malwarescore=0 impostorscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404180042
 
-On Wed, Apr 17, 2024 at 10:02:59PM +0200, Konrad Dybcio wrote:
-> Add the speedbin masks to ensure only the desired OPPs are available on
-> chips of a given bin.
+
+
+On 4/18/24 02:13, Bjorn Andersson wrote:
+> On Wed, Apr 17, 2024 at 06:58:52PM +0530, Sibi Sankar wrote:
+>> Add devicetree binding for CPUSS Control Processor (CPUCP) mailbox
+>> controller.
+>>
+>> Reviewed-by: Rob Herring <robh@kernel.org>
+>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+>> ---
+>>
+>> v2:
+>> * Pickup Rb from Dimitry.
+>>
+>>   .../bindings/mailbox/qcom,cpucp-mbox.yaml     | 49 +++++++++++++++++++
+>>   1 file changed, 49 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml b/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
+>> new file mode 100644
+>> index 000000000000..491b0a05e630
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
+>> @@ -0,0 +1,49 @@
+>> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/mailbox/qcom,cpucp-mbox.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Technologies, Inc. CPUCP Mailbox Controller
+>> +
+>> +maintainers:
+>> +  - Sibi Sankar <quic_sibis@qti.qualcomm.com>
 > 
-> Using this, add the binned 719 MHz OPP and the non-binned 124.8 MHz.
+> That doesn't look like the correct domain.
+
+Thanks, I don't know how I even constructed this chimera of an email-id
+lol.
+
+-Sibi
+
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8550.dtsi | 21 ++++++++++++++++++++-
->  1 file changed, 20 insertions(+), 1 deletion(-)
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
--- 
-With best wishes
-Dmitry
+> Regards,
+> Bjorn
 
