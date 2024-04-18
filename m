@@ -1,168 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-17877-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A64E08AA180
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 19:53:11 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED57D8AA1B7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 20:01:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 61C5D28264E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 17:53:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 298BB1C21300
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 18:01:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 290AE175564;
-	Thu, 18 Apr 2024 17:53:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4010B179204;
+	Thu, 18 Apr 2024 18:00:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="h4KKn1zH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="N2DRobMN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E2F6168B06;
-	Thu, 18 Apr 2024 17:53:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F390176FD3
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 18:00:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713462789; cv=none; b=G6cUAiP2cdfaNWmiA+y4gTc6mX/UN+QxauswLdZOJoyKEbYrEOa1L6ZxrHL4uDTe2rzjsIh22RnFaOvRYXCF0nrybDVe4xxwYMYAYVHoB/nDBA5oJm5wjV29aoNSyywq5HHEWrS6cg2WRC1DqsvtoKnHVtIWxvIM+aUg/txVy+0=
+	t=1713463251; cv=none; b=aEdG53qrnBHuGs3a94VcMLUn9mg9tk712/euWIjrkcOuJ7kypSVm5kt9T/JMB8EPSikBATgXa4iNv/Cno13/Hys1nD56yyw/ZPtx59mdK3l/TIoj2H1U3Jvf/fyQXRqzvJWzwAZuiCe6oi5/wRDYSv8/4pyuzKTfxPa4Mpc1yGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713462789; c=relaxed/simple;
-	bh=mxsmswwSv3MlubdkJSAH9bBgma7I297X5/cGzKeLz7w=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Sn4cwjPyaMPL1gZTFftODQL5Ee2Uu+R072lvuPKMJGQ13lQMv1JCmq/N2A0uxDgWKJhhQbGv7WuJTQ/WhqGSo2nd9npoabrxCjaTuDj90tguL2VMXwSTlkC6OTMDgE7zPMYxOYeVQl7hyAckuB+PC9QjUuGY9H3XR0WJVINw7BM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=h4KKn1zH; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43I6JJvP031164;
-	Thu, 18 Apr 2024 17:52:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=bnrzjQhNziNHAvrM2jWXW
-	X33bItHGVrnqHoeBXEuOnY=; b=h4KKn1zHYpvv7htN4StCfL5fe2OlUeJkwh7Wc
-	EiqzKzeL2mNkdWc+1lVCkjgm47r0p/ZXFrBuQGtox8V0zfEfn4K/VSnMBnQ5WJK3
-	yTorHf1eEZybGd9zy47lXEcV6+gYnmICz15uvkw+zWyUIT7kRwEURoscz4UPcxpl
-	GEfqI9qR64syFJNJKvAIDrPU5F/XrbJ4hKb3O8Ur70jre3z2W1MrKmWf5oq+23vU
-	t20abfRdTv7DKuM0JI+4WFiETwMl8BnhaqqZ7IN/TXCKy2vPicAcagbvyH0MVtUH
-	a8Z4WVACBjDpP0YiXufCD/I46wvn7AYY8HcHkuRDgRJWMvBXg==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xjx51hm2v-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Apr 2024 17:52:53 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43IHqq6o025795
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Apr 2024 17:52:52 GMT
-Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 18 Apr 2024 10:52:51 -0700
-Date: Thu, 18 Apr 2024 10:52:51 -0700
-From: Elliot Berman <quic_eberman@quicinc.com>
-To: Florian Fainelli <florian.fainelli@broadcom.com>
-CC: Sudeep Holla <sudeep.holla@arm.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Sebastian
- Reichel" <sre@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Andy Yan <andy.yan@rock-chips.com>,
-        "Lorenzo
- Pieralisi" <lpieralisi@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        "Satya Durga Srinivasu
- Prabhala" <quic_satyap@quicinc.com>,
-        Melody Olvera
-	<quic_molvera@quicinc.com>,
-        Shivendra Pratap <quic_spratap@quicinc.com>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v2 0/4] Implement vendor resets for PSCI SYSTEM_RESET2
-Message-ID: <20240418104330754-0700.eberman@hu-eberman-lv.qualcomm.com>
-References: <20240414-arm-psci-system_reset2-vendor-reboots-v2-0-da9a055a648f@quicinc.com>
- <Zh5GWqt2oCNHdF_h@bogus>
- <20240417140957985-0700.eberman@hu-eberman-lv.qualcomm.com>
- <fda6e9f8-5c86-4e8f-a40b-986708e1b03b@broadcom.com>
+	s=arc-20240116; t=1713463251; c=relaxed/simple;
+	bh=usm7tepmfqiHf+FiexAMtactC+FuISQE/tDTb1eshBE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=U+diI9KFrbGi8SRLO8ItCMuhaYRzwcFO0BX+Bhh3FhW//m89QNjWF6KKs9ioKObSHRp52ajXj+tQBcaFWLFXgMx4TelRv2eo09rIpLqP8+yqXYgCWvFnyzafrUDJqanOtOez2YGfUd+AHCcefaMTaOZaKsjELLhkC9grH8QgQu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=N2DRobMN; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2da0b3f7ad2so17821941fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 11:00:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1713463246; x=1714068046; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=H7LM8/XVqX5vMhc0pR52NCARjJborSnDK4sHREh98K0=;
+        b=N2DRobMNluGBzWhEv8MvrVp9xPHZbxnD5dokzzQls8OuceN698VWxpVIM2Vt+Y/FDl
+         QorJBv8Z6bEpZbn7jxUXd8a6GUnqaO+TIrEFwEWgTsfOXmy3zrprs9mN1sKJtOmmw8qP
+         b+SqJWrdLix544m92KryVK2sVXrSSl58Fdmt3FnUBB2RfuMmGcIQ7JpSEsk7eIB/u+wW
+         W5NCnCC12/IBln4x5R8nhINO+Dn8FW/RW7iIWI4lQusl9E0XI7XsPbFU1KGxB1n7wPuj
+         9bjHkra5BCswTwjntalzY9wom/+48F080Qyd+ViBXvaP4HHrmrUpvpInIb3NgfEsNgbb
+         Gczw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713463246; x=1714068046;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=H7LM8/XVqX5vMhc0pR52NCARjJborSnDK4sHREh98K0=;
+        b=UtV9Ici71c2UvruCMBnWJBNMvqP7GyXG6m8JUx29niaKYnW6Mk70VdcY6C1J/dmg04
+         LDX9Gpp4AmqC/HSvfD52E4qD7ZTwOmhZoU6zE5veOdNbfou53XcBTLSTzalNtdOwRM4B
+         OSogHxlNMGKyG4l1UP9xk3oC3ZVK+zkQETMzxtgQAdKEwilnC3kLhlfc640alAJVEXrw
+         t1IPvtZaGew+y0T0rS3Wfm0EA3fS8HUursVqhZn0saPMaCRDYYmRsWdP2THKfOj00e2o
+         Z9ssGwgqC4I4GAv5jqXUZm9IPZCvGB4xCFymw7KWmMVa50qOz7jzwhzY25hktc5obuOu
+         TsoQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU5Y1G6OYE+m2nj1SZCt+v5rOZAYp9R6zBYY25MrxF2G7HO7tnT7rspZ56eendctVmoG9IbMwD2qz9G4+9B14lOHpQ0wXm3D6D42wA6OQ==
+X-Gm-Message-State: AOJu0YzhqhzHbPqRd49oyZ8fccr0eaBZdij0o4gBJJDGq/Y1Zxks19ai
+	D5uVkrYKokI/ouOpGTKY1OWip1kEENSS1siMI+lXmPqrE5+HmhTgDFpfmfzmUK8=
+X-Google-Smtp-Source: AGHT+IEiCnXhU9PTGsX0TLChbLHO7a0C2mIRpAW6uKL9oA/lX5wxAQodhjtIHXsX6ynTa1q9kAeGvw==
+X-Received: by 2002:a2e:a682:0:b0:2d8:71d4:4c62 with SMTP id q2-20020a2ea682000000b002d871d44c62mr1666799lje.49.1713463246082;
+        Thu, 18 Apr 2024 11:00:46 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
+        by smtp.gmail.com with ESMTPSA id y19-20020a2e3213000000b002d9fe841110sm269655ljy.75.2024.04.18.11.00.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Apr 2024 11:00:45 -0700 (PDT)
+Date: Thu, 18 Apr 2024 21:00:44 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] usb: typec: qcom-pmic: fix pdphy start() error
+ handling
+Message-ID: <rk3xamvds6vemiy4h36og6uzy3die7sd33jzc6xqbebuzngnyy@eat7ctv7srmu>
+References: <20240418145730.4605-1-johan+linaro@kernel.org>
+ <20240418145730.4605-3-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <fda6e9f8-5c86-4e8f-a40b-986708e1b03b@broadcom.com>
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 8EQdvq8Szf_dUbX10ikuEb4a6WYUrCe_
-X-Proofpoint-GUID: 8EQdvq8Szf_dUbX10ikuEb4a6WYUrCe_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-18_16,2024-04-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
- impostorscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
- spamscore=0 malwarescore=0 phishscore=0 mlxlogscore=999 mlxscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404180128
+In-Reply-To: <20240418145730.4605-3-johan+linaro@kernel.org>
 
-On Wed, Apr 17, 2024 at 03:01:00PM -0700, Florian Fainelli wrote:
-> On 4/17/24 14:54, Elliot Berman wrote:
-> > On Tue, Apr 16, 2024 at 10:35:22AM +0100, Sudeep Holla wrote:
-> > > On Sun, Apr 14, 2024 at 12:30:23PM -0700, Elliot Berman wrote:
-> > > > The PSCI SYSTEM_RESET2 call allows vendor firmware to define additional
-> > > > reset types which could be mapped to the reboot argument.
-> > > > 
-> > > > Setting up reboot on Qualcomm devices can be inconsistent from chipset
-> > > > to chipset.
-> > > 
-> > > That doesn't sound good. Do you mean PSCI SYSTEM_RESET doesn't work as
-> > > expected ? Does it mean it is not conformant to the specification ?
-> > > 
-> > 
-> > I was motivating the reason for using SYSTEM_RESET2. How to set the PMIC
-> > register and IMEM cookie can change between chipsets. Using
-> > SYSTEM_RESET2 alows us to abstract how to perform the reset.
-> > 
-> > > > Generally, there is a PMIC register that gets written to
-> > > > decide the reboot type. There is also sometimes a cookie that can be
-> > > > written to indicate that the bootloader should behave differently than a
-> > > > regular boot. These knobs evolve over product generations and require
-> > > > more drivers. Qualcomm firmwares are beginning to expose vendor
-> > > > SYSTEM_RESET2 types to simplify driver requirements from Linux.
-> > > > 
-> > > 
-> > > Why can't this be fully userspace driven ? What is the need to keep the
-> > > cookie in the DT ?
-> > 
-> > As Dmitry pointed out, this information isn't discoverable. I suppose
-> > we could technically use bootconfig or kernel command-line to convey the
-> > map although I think devicetree is the right spot for this mapping.
-> > 
-> > - Other vendor-specific bits for PSCI are described in the devicetree.
-> >    One example is the suspend param (e.g. the StateID) for cpu idle
-> >    states.
-> > - Describing firmware bits in the DT isn't unprecedented, and putting
-> >    this information outside the DT means that other OSes (besides Linux)
-> >    need their own way to convey this information.
-> > - PSCI would be the odd one out that reboot mode map is not described in
-> >    DT. Other reboot-mode drivers specify the mapping in the DT. Userspace
-> >    that runs with firmware that support vendor reset2 need to make sure
-> >    they can configure the mapping early enough.
+On Thu, Apr 18, 2024 at 04:57:30PM +0200, Johan Hovold wrote:
+> Move disabling of the vdd-pdphy supply to the start() function which
+> enabled it for symmetry and to make sure that it is disabled as intended
+> in all error paths of pmic_typec_pdphy_reset() (i.e. not just when
+> qcom_pmic_typec_pdphy_enable() fails).
 > 
-> FWIW, I read Sudeep's response as being specifically inquiring about the
-> 'cookie' parameter, do you see a need for that to be in described in the DT
-> or could that just be an user-space parameter that is conveyed through the
-> reboot system call?
+> Fixes: a4422ff22142 ("usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>  drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c | 11 +++++++----
+>  1 file changed, 7 insertions(+), 4 deletions(-)
 
-Ah, I had thought the ask was for the reboot type as well as the cookie.
-We don't do this for hardware-based reboot mode cookies and I didn't see
-why we should ask userspace to do something different for PSCI.
-It seems to me that SYSTEM_RESET2 fits nicely with the existing design
-for reboot-mode bindings.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
+
+-- 
+With best wishes
+Dmitry
 
