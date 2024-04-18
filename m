@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-17872-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 556658AA092
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 18:59:50 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 514F28AA099
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 19:00:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 874B11C21FCD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 16:59:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E5C581F22349
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 17:00:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93B30171E6E;
-	Thu, 18 Apr 2024 16:59:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32089172BD5;
+	Thu, 18 Apr 2024 16:59:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ru7QLtXj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gW5egASk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F40A6A8D8;
-	Thu, 18 Apr 2024 16:59:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2839168B06;
+	Thu, 18 Apr 2024 16:59:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713459540; cv=none; b=cYYAvRvJttKaBswOmfLMLx1zTrnAcDiqB04o0XabZoWV6uMo5g2jKaKfAjWsocDpeLUHNkRThncAvP6j3XhP9MYnJRMjNCxu7zvj06Aize7fBGiMLhgephjArkdyYnsaUA+W1pVnFGbLnGbFF4s+LZF++8G8ZxlWOKECWwYmJVM=
+	t=1713459586; cv=none; b=R9QMfmi8Hl0nVc6JB1o11bhsl8XHtOOEgp7+d47EuchuS5kjq+V2+e/0oAngOvoYPZdqWbuF+5VG0DV1kgQvADtYySmH0Gdg1BvX3AgEobbaTo42V+k2wnBdWy8dOvFO/1siOIalRPCZYvA4SfJBCkXk2/A5BHs3KCdvgt48gw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713459540; c=relaxed/simple;
-	bh=5chOe6JIMo3R8o3U5AdjF8G33+dSjfClr9tPBijYi9A=;
+	s=arc-20240116; t=1713459586; c=relaxed/simple;
+	bh=SGaBkLwHGXiQjOSZ6rImYj0wIHY8OAAf1B8PiCWHIx0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=P2eT4rTisrylYxjsIQ71cd87FeXcxujhAlCPSxy0ZkixGmB6IiIc23kTb929rz8hT1f3cjf+oPcJNAo5ZBp3uqXfGmjQrDDjB966/2utKT8+w3TsODxUHwuQAhVwOvTQhOBKC8oSxN3Y32KtO9Vv8nAhP1Z1Je4T6G5jBWn8W6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ru7QLtXj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E82C113CC;
-	Thu, 18 Apr 2024 16:58:50 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=tU8jk+hQ65O4rolLJZ712QVWzaJcn7FWkU4mEA+Gz+mrGWbj21k1dblaltm4HHKkEgHMFL7wnya7nuONNe2ofjBCZqXi21ouSXJ7gEF1OCHS8939SXgOfyHCa8kPFqi3gCDCroXomIG9lYJqvGHzm3wNWZiGcJEvCf/9JwebVX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gW5egASk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D6C8C113CC;
+	Thu, 18 Apr 2024 16:59:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713459539;
-	bh=5chOe6JIMo3R8o3U5AdjF8G33+dSjfClr9tPBijYi9A=;
+	s=k20201202; t=1713459585;
+	bh=SGaBkLwHGXiQjOSZ6rImYj0wIHY8OAAf1B8PiCWHIx0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Ru7QLtXjoA1yUtQ6/7BbjmYkLt76lJ1vOUtNI9mJJ+aDRV/1Sd0Cy/5I3mdvmIuVL
-	 0zhq0ILGaJUvxBuC05xOk5I6uVwr8h2TNOWITKINrWUfJafqMEpvUE2EVH+/H1lTSg
-	 sfgupJ6CdIhyX+0LlZeI63IETaAQoX7oidw8UCWn6pQQNyJ567Q6XspDyVQCUWcNd4
-	 wao/otuQ9Tc5ojFEYd1+YZfX62yBqiTarXEHuFoURzOBd9oNEsHxCFIEvBuIl9sKqW
-	 iZ1qXNFdl74Yr03sOPifoDU3RbTuyD6ODLr95hwaFSEgSvLTNTgpQKMWJUiOUhG4s7
-	 oZdl7lF/5daJA==
-Message-ID: <daec0a0e-057a-4f14-ac1b-40e147c2fa6a@kernel.org>
-Date: Thu, 18 Apr 2024 18:58:48 +0200
+	b=gW5egASkpWfH1qyhScBbXoA93Fz0/B6p9Rc1MZjUZ1PIE/8VQMX2ZwAh1jZ2uXxwj
+	 nTKbvgks+IM7bwiI6+y4w5EcKxhNdDT6nRSM7w+suINdjppnTxID6ZabIv/NNmGGVP
+	 xgIGCfGpczn36x3s5gdNu3UvV+hTYDwonW7C70H6Ni4Mxdg2Na1N4uhUp5yy4Ri6BJ
+	 eDJz0ok7SzxtVsOQON4ENd9Dlf+gHMu0Q+lpbSDOuORUdR92qvo5nZ1yfhjpwOBWfR
+	 PZye+QlAXzgBDS/H0wqEoBBMSgv/OhILED0lc9hlsLZxM/4B9SaG6OLsXqRqERmXlJ
+	 7P1rI9sxrsFAw==
+Message-ID: <4a06b79b-b1b4-4b25-bf36-ba23d3418b8b@kernel.org>
+Date: Thu, 18 Apr 2024 18:59:41 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/5] arm64: dts: freescale: imx8mp-verdin: remove
- tx-sched-sp property
+Subject: Re: [PATCH v2 5/5] arm64: dts: qcom: sa8775p-ride: remove tx-sched-sp
+ property
 To: Flavio Suligoi <f.suligoi@asem.it>,
  Alexandre Torgue <alexandre.torgue@foss.st.com>,
  Jose Abreu <joabreu@synopsys.com>, "David S . Miller" <davem@davemloft.net>,
@@ -70,7 +70,7 @@ Cc: netdev@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
  imx@lists.linux.dev, linux-arm-msm@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20240418122859.2079099-1-f.suligoi@asem.it>
- <20240418122859.2079099-4-f.suligoi@asem.it>
+ <20240418122859.2079099-6-f.suligoi@asem.it>
 Content-Language: en-US
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -116,7 +116,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240418122859.2079099-4-f.suligoi@asem.it>
+In-Reply-To: <20240418122859.2079099-6-f.suligoi@asem.it>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
@@ -130,7 +130,7 @@ On 18/04/2024 14:28, Flavio Suligoi wrote:
 > Signed-off-by: Flavio Suligoi <f.suligoi@asem.it>
 > Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-NAK, not true.
+NAK. Not true. Please point me to my review for this patch.
 
 Best regards,
 Krzysztof
