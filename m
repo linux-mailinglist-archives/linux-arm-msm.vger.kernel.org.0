@@ -1,166 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-17822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17823-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CE148A97D8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 12:52:45 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BDB8C8A97E6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 12:54:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C00011C20400
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 10:52:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EED381C2106B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 10:54:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56B6B15E21C;
-	Thu, 18 Apr 2024 10:51:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F2A615E20F;
+	Thu, 18 Apr 2024 10:53:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wdqq8KVg"
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="M6E1BxnR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B87615E218
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 10:51:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E3615DBD8;
+	Thu, 18 Apr 2024 10:53:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713437495; cv=none; b=mu/uWrjgPrlhmGc8jVaJYxuewjuasMA3YWJMBNK+LNzflzuIRooNCKDrBS5lNKbs9YM646TN3F0BnRdJQvBsT9IYu9/+vVh02NTHZ9YjANOimK+ycQOYAahUUjWHloSMurhO2zwZAenKHAuKW5MtzC9CZv66WLC1ArbdaaCy8iA=
+	t=1713437602; cv=none; b=Q/vFqW0iUQ+wCW/qEpvmynOc8+nDRlB9FG999dbtFUdD0E+KGsgENpbFZOkVzJOGM3Js+RiEOdgJUfYSCrL6oH4MvMc4sxen3uD7WrE4ZH98B4Fd122RWkhq0eLU24Xu4dhXrm6cWMYlgyOhTBdyOYREz7BB1LzOGitZ3ehmt+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713437495; c=relaxed/simple;
-	bh=0ciFJjYNBna6Z51Gvl7mG87GzaYImzsPtuVsZFJjh6Q=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=PsJBcNSZzVoYCq1tDbNohknYTHo16UIW2HFSxeEa0GHWdBCa3MR+1N0Dx+IngFQQ4C8AOoMKNoYfO5DRgup1W6neOPMnxcE01yh3F959xAmTce+cwFVj+91pWwrkLpIEF2ieomyvu4Pr76zxUzR4vT/9VsTeCepRT+Q1hhFItIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wdqq8KVg; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-343d1003106so477762f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 03:51:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713437492; x=1714042292; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ffWz4ggcM0E0BoGGSniCNW1lk0qBr3Zu+n3EFocarJo=;
-        b=wdqq8KVgeVNQwBZ7wYi4h9Snn+eByhE/4yH42kjjF8V872u2RzHECfsATGasSGefJw
-         cHmPZXT84qncRwYmw2Wab9rKC5VNDUyY8Jh38CJbwTXOqnSad54iitvibLQUnejGbNf9
-         KauQJq2bWP1I1zR3U8Q/yIa7U10APgKIqnMtulMw/QaIeXXXoN0kyQ8SgNr2Rr10o2/3
-         Yy0USTQO9GFACGBNQZ8PLu3BZc9UoTypKi45S67BGDuAyA/w0m1UsaE4xXFYtzhbMzAj
-         ZHW+i0FkUjcApMhKUU8dapAOWAtlBWXhGDjrHEDU9l/vAzSQxoKjUmZA4ZVGiNDCzQyz
-         06Rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713437492; x=1714042292;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ffWz4ggcM0E0BoGGSniCNW1lk0qBr3Zu+n3EFocarJo=;
-        b=XDaEYnxZp8OyPSKjgx4cjA2Po+vSehk7G/l1WlvpInhu1M13qUoYTU9znHkhZjNxfY
-         oB2mdcAVwu8jo40ofa+BQYWHeqC2hwyStHGf47ZIKBNJ3SzsVzp3s503R+sKCqJsMzE8
-         lvwpXpZn9F2AxbyVT2ujqnMAoVLw+7cuJw7J6noh2eg1I/LiV4cWDSjYO8bTff1HxN3b
-         KxwBl0q7UQCo1N/gOb8dZTZW7NhJVLdUNZo2qJ6r9233je+mQNcnwwSJaiRF91ZN4d1p
-         YtxujkbpmJAP521D3lAbD6Kt16L2TJDxc48uW8A8pHLbsr+ZhOx89oXNmg57kYPmZFn9
-         Ypfw==
-X-Forwarded-Encrypted: i=1; AJvYcCWnkchddEnNSdgXj9qA0m8gkFAr8Z1fEB2qhXdN6loamDStb1fVtuv315ew9t7rRyLRN/ofWDh/nVEg9CweOEXH4KwZxQ8Xv1CikhT1tA==
-X-Gm-Message-State: AOJu0YwohpdTndwxmVFBvbhnJltnZbWqEFht9GaOfGtzKN8H78NYHFgt
-	AIveFEe0apX+c9v4JpUeUVbPF5J5tx0siZ32nHMpHVgXMl6l8Il+la5mwGDs0EM=
-X-Google-Smtp-Source: AGHT+IGayePpAYxdxkQ6lrjF9h/2Dh3xPxJfDGn5zbuN2vyze23VCBwFY299S/JBIvSepohp16hROA==
-X-Received: by 2002:a5d:498f:0:b0:349:ca9b:545a with SMTP id r15-20020a5d498f000000b00349ca9b545amr2135137wrq.29.1713437491673;
-        Thu, 18 Apr 2024 03:51:31 -0700 (PDT)
-Received: from [127.0.1.1] ([62.231.100.236])
-        by smtp.gmail.com with ESMTPSA id j10-20020adfff8a000000b0034335f13570sm1509773wrr.116.2024.04.18.03.51.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Apr 2024 03:51:31 -0700 (PDT)
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Thu, 18 Apr 2024 13:51:22 +0300
-Subject: [PATCH] clk: qcom: dispcc-x1e80100: Drop the reconfiguring of PLL0
- on probe
+	s=arc-20240116; t=1713437602; c=relaxed/simple;
+	bh=y44ptJ3mDFUWxmkBcurUdX8DIYAovhjAxSbpW9R/eNQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jBvX7QokVICKIa9GvRbG85F3P2lclry895nFjdGP8RgYW00b8vFIl8ZqtkVdyVAuEOakeeFfncsJQDPV2SyM1b2Q7QyKCKTCTNqcVfU2Z8e75DehNcEZk+dQ9q3qeA4dkGN2zGAbkUfqoZ1W3IlX0IPUVkHZA5HxoJdYHI2ZfY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=M6E1BxnR; arc=none smtp.client-ip=213.167.242.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+Received: from pendragon.ideasonboard.com (117.145-247-81.adsl-dyn.isp.belgacom.be [81.247.145.117])
+	by perceval.ideasonboard.com (Postfix) with ESMTPSA id B9034827;
+	Thu, 18 Apr 2024 12:52:29 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1713437549;
+	bh=y44ptJ3mDFUWxmkBcurUdX8DIYAovhjAxSbpW9R/eNQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=M6E1BxnRdcjsS4JSj03zg7VJHuDZPXJ+ccXs0PNg0Q6+F9PZypIPKnmHsM7+MY+QG
+	 i4OWslc7wfgQ8vqT7fK1OBDEdeUb+3KXLPbYZy4/Py4vKtQ7bl65D6tTnVXUuYzsgG
+	 Q/FjedEb+g0AcsE72tr78ry7U9NTypqT9lt5kX70=
+Date: Thu, 18 Apr 2024 13:53:10 +0300
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To: Ricardo Ribalda <ribalda@chromium.org>
+Cc: Dan Carpenter <dan.carpenter@linaro.org>,
+	Martin Tuma <martin.tuma@digiteqautomotive.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Hugues Fruchet <hugues.fruchet@foss.st.com>,
+	Alain Volmat <alain.volmat@foss.st.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Sowjanya Komatineni <skomatineni@nvidia.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>, Sergey Kozlov <serjk@netup.ru>,
+	Abylay Ospan <aospan@netup.ru>,
+	Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+	Dmitry Osipenko <digetx@gmail.com>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Benjamin Mugnier <benjamin.mugnier@foss.st.com>,
+	Sylvain Petinot <sylvain.petinot@foss.st.com>,
+	Jacopo Mondi <jacopo+renesas@jmondi.org>,
+	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+	Niklas =?utf-8?Q?S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Pavel Machek <pavel@ucw.cz>, linux-media@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, linux-staging@lists.linux.dev,
+	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	Oleg Drokin <green@linuxhacker.ru>
+Subject: Re: [PATCH 00/35] media: Fix coccinelle warning/errors
+Message-ID: <20240418105310.GV12561@pendragon.ideasonboard.com>
+References: <20240415-fix-cocci-v1-0-477afb23728b@chromium.org>
+ <a003494c-a1a9-4fcd-83d8-766a75d6bbb2@moroto.mountain>
+ <20240417155112.GQ12561@pendragon.ideasonboard.com>
+ <CANiDSCs_qOXkhzuL+cFhpw0hvFMwU0TYyN2B5ZdAStb96TTKFA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240418-x1e80100-dispcc-drop-pll0-reconfigure-v1-1-453e4e70e940@linaro.org>
-X-B4-Tracking: v=1; b=H4sIACn7IGYC/x3NwQqDMAyA4VeRnBdIrIfgq8gOWxtdQNqSsiGI7
- 27Z8bv8/wlN3bTBPJzg+rNmJXfwY4D4eeVN0VI3jDRONLHgwSrERJis1RgxealY953QNZa82vZ
- 1RWLmdwgSJQj0VnVd7fh/lud13bwbv0Z3AAAA
-To: Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Rajendra Nayak <quic_rjendra@quicinc.com>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org, 
- linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Abel Vesa <abel.vesa@linaro.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2061; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=0ciFJjYNBna6Z51Gvl7mG87GzaYImzsPtuVsZFJjh6Q=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBmIPstSihNwBB5uM+APSfl0MdpNjzf3YHx4nqaG
- pJoutt7etOJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZiD7LQAKCRAbX0TJAJUV
- Vk4PD/9dDOkeP3I3QqwI7R9LK6r5V2cL1yMl5oWEI0n2hltX6TkrpX1cA8O2f9u3c0uVLlSXjT6
- oDzDy8WzTgckmYbM75d2w6WPcxq9M8oSB0P33VC8SNKHsSc20fr0J1qyvTgxwfKp3IHq/hsz0HB
- MOxs0hP5a+30P/H4DlD+4noruu7tsd/gf97bEVqDlOteIZUF42RT6VhPjTl1+AeN9pFHRJz9tXJ
- 7+Y0kqlibxAGoxNwaqhmerc/1PVL4XvO9C2B7w9LwA2fP0Q9AcQhFbL10K7iowjybSpFqr5GfA3
- 24mbKmaBf2gOM4Veq1UgwVvrBZzzrvd9s6pQ3rBCIIclsVCMFmMBXikJWkpbaLftxyMYUM2tSSg
- ziANbI47Cz3W+w8RD5LYdx/j7dyPnO1k+wkF0zl3SchecP84bW5nYZLJ6KYqUUacmJOTVdSOJsK
- p2le2fZmiRydElDGs1a4KsXS8TCkMlNECKsBmDaNkTMbMjgPJ7MVB6VPIFugwZru9hFpP8a+Pgc
- Tv/QXwoP+EYFjO1JBDbLeN/154gBrUPcJ1qUPenh+ixFAEtxHtQ4Mmxa0MB9hMW2X5YZFgZHStd
- 2WEVEwXTVKiF8BVt7Ch/dOkMXAlX9tWDzdoCtXQlsD8rWNJ/VnEMHXr6zpbCnlSHYUS4iKofcNz
- 1SfuP7hAoITTmIg==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CANiDSCs_qOXkhzuL+cFhpw0hvFMwU0TYyN2B5ZdAStb96TTKFA@mail.gmail.com>
 
-Currently, PLL0 is configured by the bootloader is the parent of the
-mdp_clk_src. Reconfiguring it on probe leaves the PLL0 in "stand-by"
-state (unlocked), which will trigger RCG child clocks to not update
-their config, which then breaks eDP on all x1e80100 boards. So rely
-on the bootloader for now. Drop the config values as well. Also add
-a comment to explain why the PLL0 is not configured alongside PLL1.
+Hi Ricardo,
 
-Fixes: ee3f0739035f ("clk: qcom: Add dispcc clock driver for x1e80100")
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/clk/qcom/dispcc-x1e80100.c | 16 +---------------
- 1 file changed, 1 insertion(+), 15 deletions(-)
+On Wed, Apr 17, 2024 at 06:19:14PM +0200, Ricardo Ribalda wrote:
+> On Wed, 17 Apr 2024 at 17:51, Laurent Pinchart wrote:
+> > On Tue, Apr 16, 2024 at 11:47:17AM +0300, Dan Carpenter wrote:
+> > > In my opinion, it's better to just ignore old warnings.
+> >
+> > I agree. Whatever checkers we enable, whatever code we test, there will
+> > always be false positives. A CI system needs to be able to ignore those
+> > false positives and only warn about new issues.
+> 
+> We already have support for that:
+> https://gitlab.freedesktop.org/linux-media/media-ci/-/tree/main/testdata/static?ref_type=heads
 
-diff --git a/drivers/clk/qcom/dispcc-x1e80100.c b/drivers/clk/qcom/dispcc-x1e80100.c
-index 0b2ee6456762..525f645094a8 100644
---- a/drivers/clk/qcom/dispcc-x1e80100.c
-+++ b/drivers/clk/qcom/dispcc-x1e80100.c
-@@ -73,20 +73,6 @@ static const struct pll_vco lucid_ole_vco[] = {
- 	{ 249600000, 2300000000, 0 },
- };
- 
--static const struct alpha_pll_config disp_cc_pll0_config = {
--	.l = 0xd,
--	.alpha = 0x6492,
--	.config_ctl_val = 0x20485699,
--	.config_ctl_hi_val = 0x00182261,
--	.config_ctl_hi1_val = 0x82aa299c,
--	.test_ctl_val = 0x00000000,
--	.test_ctl_hi_val = 0x00000003,
--	.test_ctl_hi1_val = 0x00009000,
--	.test_ctl_hi2_val = 0x00000034,
--	.user_ctl_val = 0x00000000,
--	.user_ctl_hi_val = 0x00000005,
--};
--
- static struct clk_alpha_pll disp_cc_pll0 = {
- 	.offset = 0x0,
- 	.vco_table = lucid_ole_vco,
-@@ -1670,7 +1656,7 @@ static int disp_cc_x1e80100_probe(struct platform_device *pdev)
- 		goto err_put_rpm;
- 	}
- 
--	clk_lucid_evo_pll_configure(&disp_cc_pll0, regmap, &disp_cc_pll0_config);
-+	/* Configure only PLL1. PLL0 is already configured by bootloader */
- 	clk_lucid_evo_pll_configure(&disp_cc_pll1, regmap, &disp_cc_pll1_config);
- 
- 	/* Enable clock gating for MDP clocks */
+Those are manually written filters. Would it be possible to reduce the
+manual step to flagging something as a false positive, and have a
+machine build the filters ?
 
----
-base-commit: 4eab358930711bbeb85bf5ee267d0d42d3394c2c
-change-id: 20240418-x1e80100-dispcc-drop-pll0-reconfigure-0111b338c838
+> But it would be great if those lists were as small as possible:
+> 
+> - If we have a lot of warnings, two error messages can be combined and
+> will scape the filters
+> eg:
+> print(AAAA);
+> print(BBBB);
+> > AABBBAAB
+> 
+> - The filters might hide new errors if they are too broad
+> 
+> 
+> Most of the patches in this series are simple and make a nicer code:
+> Eg the non return minmax() ,
+> Other patches show real integer overflows.
+> 
+> Now that the patches are ready, let's bite the bullet and try to
+> reduce our technical debt.
+> 
+> > > When code is new the warnings are going to be mostly correct.  The
+> > > original author is there and knows what the code does.  Someone has
+> > > the hardware ready to test any changes.  High value, low burden.
+> > >
+> > > When the code is old only the false positives are left.  No one is
+> > > testing the code.  It's low value, high burden.
+> > >
+> > > Plus it puts static checker authors in a difficult place because now
+> > > people have to work around our mistakes.  It creates animosity.
+> > >
+> > > Now we have to hold ourselves to a much higher standard for false
+> > > positives.  It sounds like I'm complaining and lazy, right?  But Oleg
+> > > Drokin has told me previously that I spend too much time trying to
+> > > silence false positives instead of working on new code.  He's has a
+> > > point which is that actually we have limited amount of time and we have
+> > > to make choices about what's the most useful thing we can do.
+> > >
+> > > So what I do and what the zero day bot does is we look at warnings one
+> > > time and we re-review old warnings whenever a file is changed.
+> > >
+> > > Kernel developers are very good at addressing static checker warnings
+> > > and fixing the real issues...  People sometimes ask me to create a
+> > > database of warnings which I have reviewed but the answer is that
+> > > anything old can be ignored.  As I write this, I've had a thought that
+> > > instead of a database of false positives maybe we should record a
+> > > database of real bugs to ensure that the fixes for anything real is
+> > > applied.
 
-Best regards,
 -- 
-Abel Vesa <abel.vesa@linaro.org>
+Regards,
 
+Laurent Pinchart
 
