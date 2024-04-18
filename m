@@ -1,252 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-17829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6EB8E8A9862
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 13:17:31 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F8B98A988B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 13:29:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2462A2833B1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 11:17:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C45991C20A39
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 11:29:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC24215E5B8;
-	Thu, 18 Apr 2024 11:17:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1088D15E7F0;
+	Thu, 18 Apr 2024 11:29:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="D9EgvZPf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="p7gOe1Hj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B5F127B57;
-	Thu, 18 Apr 2024 11:17:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8C315E5DB
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 11:29:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713439046; cv=none; b=IvncbntXhpPH9X9IK+YMixpbyWJZpom+iw0g/k7dHfM573Fx1ouuKTzaBgmWIiXCL75ZFmQHStk4R2kKiKTm4u6ax3l5DQF5WO3xzXfCynlNeL9S33WnPUnfbLQRd6HAzHptGT0aWECLIcEtXIBhGFt7QUJjyDOCZoII1ugpZKU=
+	t=1713439776; cv=none; b=juJw/8HdvlReVbsYp3/hyExHS59nSIsmfKAhusmQtSYmkRHUBKwnyj67oMBlhQwVVRhTXjvkq9xMyxRvx8HKmm9DW/bMAEJJmYk+fVm6cB7Vo1ODEtQ/asDqG0ELaU62vNuecp0P6Wv3g/Hals2W8Ardg4ihiwesaxcKr4M5Yrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713439046; c=relaxed/simple;
-	bh=JlnMP29BA9ckO7o/JfUh/HWvtUqb2lGygKn6TfxaAaQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=C2kDSGIiTTnGE5Nwk+4f77TjzfSqo6500SfHRLPGR+l9Qk/fiII79X84wC0sDiWDchsmkSRG76dd+E0xZE8B5HGq6sJ6URvQLTaPxPvk0jSCIuS2Gl5LWJyZMKS1gJSOsu+fSg5EmeALbbQPaAe7EMceKXzd528az09bBzykwF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=D9EgvZPf; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43I1QpJn019526;
-	Thu, 18 Apr 2024 11:17:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=9m6uuRLNE/WkTR41JGciqY2IZosPbNatEn7yCqgC8Mc=; b=D9
-	EgvZPf9D6LBghPbjKrYenfb60/43H17SiTMy3viksLulLAQrCgS1PF4QTHCIZ8rJ
-	6nQuV93lc7IIPf20HsIXL5zl/TNBm0LQHLW/kEV6PIIgvLU8aa9ikeiXXcm+KEG4
-	cxW8VGnaNT6fIoqBHwwPSnlli9uzUcXRZkgr/UJj2/i1tyddIE6mpxKOEy+1hrIj
-	J7y7V1sel1gk7IRPH1YItZHjr6NDo5dU/i4DEsDybqBkATdZtJHAmGn2mRK0auj2
-	PRjUd7JuatAXFSzeDAUXW7+cjL+mRBu9vZihbXaOoLEVTUuWIjVQelYR38KeD0bb
-	f4VajdrnblQ+tjizL5AA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xjr92hk8x-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Apr 2024 11:17:21 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43IBHKVd012485
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Apr 2024 11:17:20 GMT
-Received: from [10.217.216.47] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 18 Apr
- 2024 04:17:14 -0700
-Message-ID: <f8aa5b5e-b7c4-4ef4-ac45-de04c84b3fa4@quicinc.com>
-Date: Thu, 18 Apr 2024 16:47:01 +0530
+	s=arc-20240116; t=1713439776; c=relaxed/simple;
+	bh=lN1vDTT/1GpDlMc7dTQoQFul/16jZ2rP94h7wx/6jI4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=A5wWoUq+58C02bcyxRUgbttPmlXXKRSk5IpMd34jE8WoW6xm3BAOFeb/tx2EU+FohdI4gF+t1FkJ84scYQPiGF2UKj3k6DHN4tUq16Amm571SL4ZSVVyg4WLkyf2D4+0uKhz/JXTIzu8kNAEMbYoaV0xNKSpU/AF11EFyGSsewc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=p7gOe1Hj; arc=none smtp.client-ip=209.85.167.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-516d2600569so929645e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 04:29:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1713439772; x=1714044572; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=VnnE/IfmzmlA5CHyUgqh20yYFBPuvnnShtetUjnyr8w=;
+        b=p7gOe1HjaE+WJl5Zyf9NG4wwUdgRLiy+jDK0WDsxYVRzvQzwOm+RFdvrER9BKtoSgz
+         44nuQxIsUkS0qzaRojKw1AvN/jbJOXPyblXD3pBGl4G0+SGaI4fMkp4lxFsmhXtWyPG6
+         /mChTzrIJ5nzXEOa5CcAErL7dtSN7Ytpy/8zsQB9myWsTFI4le/wRBqMpTvcjGUtsznw
+         OCENGPeKjsf1cTF7wxSoo12xCMYaOOA5N5ekBqfwQ/njkUf10RdoTZQtrgr6WpCLi9Ie
+         AHBqDn3mAvFbnzeyVmx/efq+1Omf01GH6kSkyUePCBklZzoPXRS4vh7kPVskt5pyv/Pc
+         PnDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713439772; x=1714044572;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VnnE/IfmzmlA5CHyUgqh20yYFBPuvnnShtetUjnyr8w=;
+        b=RGMvSBfZcGBMpXDMHuTtjMHyL1I7ZmYoMnivNfAbxuRXA/g/QEx6N6QZNMi4Fkk2Ql
+         sgwUQNMytkiKLwXyK35xYaTIFkQyJG9wXPDxWcAjizxIkq9QPYjPUkJRyII5uaLZ0ia/
+         b42LI7xId6eNsQkXHjJMpXOjg862+/l/+f6jJQ3FHcc803BfGuwb0laJXV247FP3QrE2
+         DKBznHL6EHh53c23bgUrEXb8Fwv1xC8gjcdr8yac4xCymRXu0fIYV4KU0Nhp7coYvUeh
+         jSa2TiQFd7UJiiCuDG9eis+QLgUraFwvfLrxQaUWbVJbeYq0fVNB9oL6DfYtd+f02byf
+         nUrQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVlnyyGkaWwUuRMEPTuN6gfpwaLjRA63IWYvcJsZOq7c2gvZ4trO1mgbpYnmRs64blLgqiRGIa1RrkslQRAIUXJhue2U6LT3PFOqYeaGQ==
+X-Gm-Message-State: AOJu0YxrGQEgT2aTOMbxD7EGoV2Sm5nFz589eK+KWPzxk+XYxuhr/HSH
+	xwv/tHdH8IE1ouf3Bgwgt7w1QulY1zMlVNrLNuWFgKMY8RckZYt7gDHVzDF/l0I=
+X-Google-Smtp-Source: AGHT+IHDv6oDHXnx691EqLgUPOwR5cVUUBZLA5KH4jyaTEU8AhEQ4q2Ks28SwOSGF59XRR6bH5r3jg==
+X-Received: by 2002:a05:6512:158d:b0:519:591b:6d7a with SMTP id bp13-20020a056512158d00b00519591b6d7amr2116064lfb.7.1713439771793;
+        Thu, 18 Apr 2024 04:29:31 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
+        by smtp.gmail.com with ESMTPSA id n17-20020a056512389100b005175dbca53bsm202809lft.185.2024.04.18.04.29.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Apr 2024 04:29:31 -0700 (PDT)
+Date: Thu, 18 Apr 2024 14:29:29 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v2 6/7] drm/msm/adreno: Redo the speedbin assignment
+Message-ID: <2ha26ft5hliicfgaiu6uk7cywyjhhl4x6gygg7rhqqftyfmwqo@qpqf6xr4zudy>
+References: <20240404-topic-smem_speedbin-v2-0-c84f820b7e5b@linaro.org>
+ <20240404-topic-smem_speedbin-v2-6-c84f820b7e5b@linaro.org>
+ <rilfqdvei26bjyz76hdsh5wlh4s2lcn235up2vxbs65pnolyty@rs77jbxxqzye>
+ <132c1e03-f55c-46ba-8a22-9cea1ebdfae1@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 RESEND 6/6] arm64: dts: qcom: sm8650: Add video and
- camera clock controllers
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Taniya Das
-	<quic_tdas@quicinc.com>,
-        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik
-	<quic_imrashai@quicinc.com>
-References: <20240321092529.13362-1-quic_jkona@quicinc.com>
- <20240321092529.13362-7-quic_jkona@quicinc.com>
- <CAA8EJppHGS+W-aiXvJ2cE=jCbua8Y0Q+zv_QTs+C9V5+Y1vuZg@mail.gmail.com>
- <008d574f-9c9e-48c6-b64e-89fb469cbde4@quicinc.com>
- <b3464321-0c52-4c41-9198-e9e7b16aa419@quicinc.com>
- <CAA8EJpqDwCVAjDphnC-HdfseMJ-xd8VVxb5+9UcGEcKLcn-heg@mail.gmail.com>
- <fba2474e-31a6-4fef-acf9-7069933584c8@quicinc.com>
- <CAA8EJprfaALkQe-wUrBow6B1A66ro0AoVpfnQJLXgqFmL8isNQ@mail.gmail.com>
- <8a5a3cf8-5b4f-487f-ad91-00499509f8ec@quicinc.com>
- <CAA8EJpoW8MQQ3OPfOVYRJtgsn1JgKd5Ew7vqgWx3xWE-xJ=R-g@mail.gmail.com>
- <03f8d2ee-2467-48aa-9b76-06eb13202b8c@quicinc.com>
- <CAA8EJpqL_bkyoUKkY_nr7PvbvC-1dVKr9kNQKsAU-2PPO9717g@mail.gmail.com>
-Content-Language: en-US
-From: Jagadeesh Kona <quic_jkona@quicinc.com>
-In-Reply-To: <CAA8EJpqL_bkyoUKkY_nr7PvbvC-1dVKr9kNQKsAU-2PPO9717g@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 7eZP1_B5DiwfOIFvaRmCvnGQJtAce5FB
-X-Proofpoint-ORIG-GUID: 7eZP1_B5DiwfOIFvaRmCvnGQJtAce5FB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-18_09,2024-04-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
- priorityscore=1501 lowpriorityscore=0 suspectscore=0 bulkscore=0
- phishscore=0 impostorscore=0 spamscore=0 clxscore=1011 mlxlogscore=999
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404180080
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <132c1e03-f55c-46ba-8a22-9cea1ebdfae1@linaro.org>
 
-
-
-On 4/5/2024 1:14 PM, Dmitry Baryshkov wrote:
-> On Fri, 5 Apr 2024 at 09:01, Jagadeesh Kona <quic_jkona@quicinc.com> wrote:
->>
->>
->>
->> On 4/4/2024 9:35 PM, Dmitry Baryshkov wrote:
->>> On Thu, 4 Apr 2024 at 13:06, Jagadeesh Kona <quic_jkona@quicinc.com> wrote:
->>>>
->>>>
->>>>
->>>> On 4/4/2024 11:00 AM, Dmitry Baryshkov wrote:
->>>>> On Thu, 4 Apr 2024 at 08:13, Jagadeesh Kona <quic_jkona@quicinc.com> wrote:
->>>>>>
->>>>>>
->>>>>>
->>>>>> On 4/3/2024 9:24 PM, Dmitry Baryshkov wrote:
->>>>>>> On Wed, 3 Apr 2024 at 10:16, Jagadeesh Kona <quic_jkona@quicinc.com> wrote:
->>>>>>>>
->>>>>>>>
->>>>>>>>
->>>>>>>> On 3/25/2024 11:38 AM, Jagadeesh Kona wrote:
->>>>>>>>>
->>>>>>>>>
->>>>>>>>> On 3/21/2024 6:43 PM, Dmitry Baryshkov wrote:
->>>>>>>>>> On Thu, 21 Mar 2024 at 11:27, Jagadeesh Kona <quic_jkona@quicinc.com>
->>>>>>>>>> wrote:
->>>>>>>>>>>
->>>>>>>>>>> Add device nodes for video and camera clock controllers on Qualcomm
->>>>>>>>>>> SM8650 platform.
->>>>>>>>>>>
->>>>>>>>>>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
->>>>>>>>>>> ---
->>>>>>>>>>>       arch/arm64/boot/dts/qcom/sm8650.dtsi | 28 ++++++++++++++++++++++++++++
->>>>>>>>>>>       1 file changed, 28 insertions(+)
->>>>>>>>>>>
->>>>>>>>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi
->>>>>>>>>>> b/arch/arm64/boot/dts/qcom/sm8650.dtsi
->>>>>>>>>>> index 32c0a7b9aded..d862aa6be824 100644
->>>>>>>>>>> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
->>>>>>>>>>> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
->>>>>>>>>>> @@ -4,6 +4,8 @@
->>>>>>>>>>>        */
->>>>>>>>>>>
->>>>>>>>>>>       #include <dt-bindings/clock/qcom,rpmh.h>
->>>>>>>>>>> +#include <dt-bindings/clock/qcom,sm8450-videocc.h>
->>>>>>>>>>> +#include <dt-bindings/clock/qcom,sm8650-camcc.h>
->>>>>>>>>>>       #include <dt-bindings/clock/qcom,sm8650-dispcc.h>
->>>>>>>>>>>       #include <dt-bindings/clock/qcom,sm8650-gcc.h>
->>>>>>>>>>>       #include <dt-bindings/clock/qcom,sm8650-gpucc.h>
->>>>>>>>>>> @@ -3110,6 +3112,32 @@ opp-202000000 {
->>>>>>>>>>>                              };
->>>>>>>>>>>                      };
->>>>>>>>>>>
->>>>>>>>>>> +               videocc: clock-controller@aaf0000 {
->>>>>>>>>>> +                       compatible = "qcom,sm8650-videocc";
->>>>>>>>>>> +                       reg = <0 0x0aaf0000 0 0x10000>;
->>>>>>>>>>> +                       clocks = <&bi_tcxo_div2>,
->>>>>>>>>>> +                                <&gcc GCC_VIDEO_AHB_CLK>;
->>>>>>>>>>> +                       power-domains = <&rpmhpd RPMHPD_MMCX>;
->>>>>>>>>>> +                       required-opps = <&rpmhpd_opp_low_svs>;
->>>>>>>>>>
->>>>>>>>>> The required-opps should no longer be necessary.
->>>>>>>>>>
->>>>>>>>>
->>>>>>>>> Sure, will check and remove this if not required.
->>>>>>>>
->>>>>>>>
->>>>>>>> I checked further on this and without required-opps, if there is no vote
->>>>>>>> on the power-domain & its peer from any other consumers, when runtime
->>>>>>>> get is called on device, it enables the power domain just at the minimum
->>>>>>>> non-zero level. But in some cases, the minimum non-zero level of
->>>>>>>> power-domain could be just retention and is not sufficient for clock
->>>>>>>> controller to operate, hence required-opps property is needed to specify
->>>>>>>> the minimum level required on power-domain for this clock controller.
->>>>>>>
->>>>>>> In which cases? If it ends up with the retention vote, it is a bug
->>>>>>> which must be fixed.
->>>>>>>
->>>>>>
->>>>>> The minimum non-zero level(configured from bootloaders) of MMCX is
->>>>>> retention on few chipsets but it can vary across the chipsets. Hence to
->>>>>> be on safer side from our end, it is good to have required-opps in DT to
->>>>>> specify the minimum level required for this clock controller.
->>>>>
->>>>> We are discussing sm8650, not some abstract chipset. Does it list
->>>>> retention or low_svs as a minimal level for MMCX?
->>>>>
->>>>
->>>> Actually, the minimum level for MMCX is external to the clock
->>>> controllers.
->>>
->>> Yes, it comes from cmd-db
->>>
->>>>    But the clock controller requires MMCX to be atleast at
->>>> lowsvs for it to be functional.
->>>
->>> Correct
->>>
->>>> Hence we need to keep required-opps to
->>>> ensure the same without relying on the actual minimum level for MMCX.
->>>
->>> And this is not correct. There is no need for the DT to be redundant.
->>> I plan to send patches removing the existing required-opps when they
->>> are not required.
->>>
-
-In my opinion, it is better not to remove the required-opps for the 
-existing targets atleast since it may lead to some random clock issues 
-if cmd-db minimum level is lower than the HW recommended voltage level 
-clock controller requires.
-
->> I agree this is not required if cmd-db minimum level is already at
->> lowsvs. But since MMCX running at lowsvs is a mandatory requirement for
->> clock controller to operate, I believe it is good to have required-opps
->> to ensure we meet this requirement in all cases, rather than relying on
->> the cmd-db minimum level which we have no control over.
+On Thu, Apr 18, 2024 at 11:57:35AM +0200, Konrad Dybcio wrote:
+> On 18.04.2024 1:49 AM, Dmitry Baryshkov wrote:
+> > On Wed, Apr 17, 2024 at 10:02:58PM +0200, Konrad Dybcio wrote:
+> >> There is no need to reinvent the wheel for simple read-match-set logic.
+> >>
+> >> Make speedbin discovery and assignment generation independent.
+> >>
+> >> This implicitly removes the bogus 0x80 / BIT(7) speed bin on A5xx,
+> >> which has no representation in hardware whatshowever.
+> >>
+> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> >> ---
 > 
-> IIf we follow this logic, we should throw cmd-db away and hardcode all
-> those values in the RPMh drivers.
+> [...]
 > 
-> We have cmd-db. If it is correct, there is no need to duplicate it. If
-> it is incorrect, it is a bug that should be fixed or worked around.
+> >> +	/* No speedbins defined for this GPU SKU => allow all defined OPPs */
+> >> +	if (!info->speedbins) {
+> >> +		adreno_gpu->speedbin = ADRENO_SPEEDBIN_FUSE_NODATA;
+> >> +		return devm_pm_opp_set_supported_hw(dev, &supp_hw, 1);
+> > 
+> > BIT(0)
 > 
+> You mean for &supp_hw, or "1"?
+> 
+> 1 is the "count" parameter, supp_hw is a "u32 supported_hw[count]"
 
-Sure will check and remove required-opps property for SM8650.
+I see. It confused me. This way it's getting set to UINT_MAX, which
+will match against any non-zero opp-supported-hw. Ack.
 
-Thanks,
-Jagadeesh
+> 
+> > 
+> >> +	}
+> >> +
+> >> +	/*
+> >> +	 * If a real error (not counting older devicetrees having no nvmem references)
+> >> +	 * occurs when trying to get the fuse value, bail out.
+> >> +	 */
+> >> +	ret = adreno_read_speedbin(adreno_gpu, dev, &fuse);
+> >> +	if (ret) {
+> >> +		return ret;
+> >> +	} else if (fuse == ADRENO_SPEEDBIN_FUSE_NODATA) {
+> >> +		/* The info struct has speedbin data, but the DT is too old => allow all OPPs */
+> > 
+> > Missing assignment to adeno_gpu->speedbin ? Or is it fine?
+> 
+> Good catch. Only mesa (and I suppose you :D) read this value.
+> 
+> > 
+> >> +		DRM_DEV_INFO(dev, "No GPU speed bin fuse, please update your device tree\n");
+> >> +		return devm_pm_opp_set_supported_hw(dev, &supp_hw, 1);
+> > 
+> > BIT(0)
+> > maybe #define it?
+> 
+> (ditto)
+> 
+> Konrad
 
+-- 
+With best wishes
+Dmitry
 
