@@ -1,229 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-17865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 93F3E8A9E7E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 17:33:40 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D76308A9EE6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 17:46:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DEC6BB22C39
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 15:33:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0446B1C223EC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 15:46:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6028B16E88B;
-	Thu, 18 Apr 2024 15:33:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2CB116EBEA;
+	Thu, 18 Apr 2024 15:46:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PyurcYtR"
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="mNiKJAJD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9FDD16D313;
-	Thu, 18 Apr 2024 15:33:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41A116E89A;
+	Thu, 18 Apr 2024 15:46:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713454408; cv=none; b=s0ZDBvL+8AZgYLB4TbqUV1rrXtHDNg02VorXDDwzu+cllr7o4I6yyqAkWV1LoXK/wcSkpU+nfxLq3L6jL8bJ5wjgGpJltoxMvO/+4BeE19LxaWMC6WOFlZnAiiJx3IRUNgTNGGr4GohUpo73IRA7azStS0VL+xI1ktuVO3J7wuA=
+	t=1713455205; cv=none; b=YR//jvise81xYQ2aQEMmbPtmnrRDx4bZGp6Um27E4jtfc0u6ohLe78f/y0pGsRg17q7oCwr49QPSB9bUi2P2ovbsF/is64C/Cc20yLaeKWJtZBOfYOwLuZmFub/QKrPv3EgnyriyPBeod7z4cxdK6YST2cyBlqwNRh/QPl3nMf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713454408; c=relaxed/simple;
-	bh=Pe8LF00fKAkUIpSGDfqhCDFPUTrRkXNW/s0iu1qxFS4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ozPrNdYyClYtlMyycHYrHouwzWZZb7th7PwtXZZ0eFpN8aWPSEcFQyXQqoA1VrsvPDbH4L6Pl0h51BwUgTjkj9iUJX4OiSRorPd+5sisVpZ35dhSfXp1ltAHtIeNo5TMjLO2D6d8fZc0tEBrFgCPJB2pF7awksf/ifZi4MVsSV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PyurcYtR; arc=none smtp.client-ip=209.85.161.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-5aa1e9527d1so749092eaf.1;
-        Thu, 18 Apr 2024 08:33:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713454406; x=1714059206; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0PpqV3h5TqPps9cVfBqAG1UcArnq9DB4nfERwYi+F10=;
-        b=PyurcYtR3Uh2CQr/ZiQhaIKJWeyWKk8qwj9HOUmIYD3IH1qhMRYZyBkI6PX+Kn9fsD
-         p1/P4tBYb9CaFK8f9yM4iYnkEuMVN0M58nWHJFXBNF3XUBCHXbFu9BykIXNxYs0RJKUn
-         ihaAN5Bhj4mZSnrqlAaRaXd/1wwwswHkVFHaXE/jVYu8ndpTQ47CKlVlsa4MNGSuV7zg
-         7Mh5gv5DzQ5xSvNb/i13yp3ZlQmS/uChIDF7KtCywycrpewGhYCVzIZKZC4QO7EjolHI
-         4XFsiScm8L9VxdRkCPhF/oFFFIAlrjXn17tf7DlBenp/eAIhn9jOVjUWvEw6ZSdVPLc0
-         P4Cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713454406; x=1714059206;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0PpqV3h5TqPps9cVfBqAG1UcArnq9DB4nfERwYi+F10=;
-        b=sQozywEd2Lb4z11Atj6Zyl0mO+7N+HeqTnvs3CNx9yqdUFe16vJc+U55i0aFw4oUca
-         GJUqqEUsU9BsZOW5WT1R8yN3Ua+jftaw9Hvy+8TFTYV3PzkbNDUXQdbLbjFzGr1N9AtU
-         GxOawVNZ/Jkx7Qa3Oe7kH5sxpNdEt5XzcKtzhLCWoBezaVGF1n07ySsOcpyWuiBW9pOg
-         3GDv1vVQTkypW7HrWyMg3eo/v0xYjBHrRCHEjEqnN0fYzDIS6TBIeH8qQMyKU9B59RFb
-         3YcnAOTklfiLS4sEvC7EKuPmNwAeNB4sgdWYe/DTx7KHSR79+KfxSG8wSZr3ehFuO9lt
-         Dr4g==
-X-Forwarded-Encrypted: i=1; AJvYcCVHY9vxVWDi6dQ+aAR7U0qydkPPtZKHTKFPtCfI3URxeDZxLfEZJPyLCu9x+73+kkL4Cb7cJ0mBYuvzprEeGn1Xiu/nmipiAK1vfxQW593dDhS5Abc707Ms83GzVl85wRvRhjPiRh7erVO3a/6gXBTGfKRrC2keQ81GIEqhJlQv4fwCPLqeD71oaFovBy3SjK0H2qqO65pjHKYJQX5evieEvbPg2/jKNU8i5MlvRpXtT5A2yR5qB/34nTdrKuk=
-X-Gm-Message-State: AOJu0YzcHu7WqdaUCzZ2lZDzfdBdsYnnYKYeB/Wa9keIBAOLWSSC8Dng
-	vm7QWaCQ9K/sWPKnn/3ba4IRw3s3y9bN2Ye7q9yS/JOyzfYxEU9y
-X-Google-Smtp-Source: AGHT+IFPSo0EiZkOCg4SbYDajm04Bi8eymG+RVOa0yqnQTLBlt5WMDawfM15TlYrRZA1R3HZD5ZEcg==
-X-Received: by 2002:a4a:98c8:0:b0:5ac:9ece:a7c with SMTP id b8-20020a4a98c8000000b005ac9ece0a7cmr3660118ooj.5.1713454405693;
-        Thu, 18 Apr 2024 08:33:25 -0700 (PDT)
-Received: from [192.168.7.169] (c-98-197-58-203.hsd1.tx.comcast.net. [98.197.58.203])
-        by smtp.gmail.com with ESMTPSA id bu10-20020a0568201aca00b005a4799f5428sm421440oob.21.2024.04.18.08.33.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Apr 2024 08:33:25 -0700 (PDT)
-Message-ID: <e8957b07-692f-7d38-e276-b0e3791d31f4@gmail.com>
-Date: Thu, 18 Apr 2024 10:33:23 -0500
+	s=arc-20240116; t=1713455205; c=relaxed/simple;
+	bh=K6H40zZOBruNXEKy+mLBxL40J3Voj2XWEqqGuvJ9w94=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VfVRCHVMHNoh9wGLSl4uMOSmJROR8cKJdQYUjvElGmsW/wkiKcZqQx570pEsg6O15wwQ7y12722j5dbSyH0ZIEE2auO+fa1uiNhnzkJqgCa0Lb2JpDB8ZnebOYXznVgx5eOrAws7/H/yqow9cd68DaSZSgyBnyD5QDfhW7jmF8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=mNiKJAJD; arc=none smtp.client-ip=213.167.242.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+Received: from pendragon.ideasonboard.com (117.145-247-81.adsl-dyn.isp.belgacom.be [81.247.145.117])
+	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 2A03C802;
+	Thu, 18 Apr 2024 17:45:53 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1713455153;
+	bh=K6H40zZOBruNXEKy+mLBxL40J3Voj2XWEqqGuvJ9w94=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=mNiKJAJDsTkJYMYK4ZtsZ9zlV7xPYE85xk9V7yAnZZ4lXnvj+UhwJ4fKqYaFra0Xc
+	 2eBi44CBZWoMWyMkwDoCJV3GUcE9zfI7hzMI60oHIg/o5NGSS92iXbFgMGqv+gOkZe
+	 2N/SspWfXOLe5x5IbsUKTfY8A/Ga1vjvyZkxLsrw=
+Date: Thu, 18 Apr 2024 18:46:33 +0300
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To: Ricardo Ribalda <ribalda@chromium.org>
+Cc: Dan Carpenter <dan.carpenter@linaro.org>,
+	Martin Tuma <martin.tuma@digiteqautomotive.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Hugues Fruchet <hugues.fruchet@foss.st.com>,
+	Alain Volmat <alain.volmat@foss.st.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Sowjanya Komatineni <skomatineni@nvidia.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>, Sergey Kozlov <serjk@netup.ru>,
+	Abylay Ospan <aospan@netup.ru>,
+	Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+	Dmitry Osipenko <digetx@gmail.com>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Benjamin Mugnier <benjamin.mugnier@foss.st.com>,
+	Sylvain Petinot <sylvain.petinot@foss.st.com>,
+	Jacopo Mondi <jacopo+renesas@jmondi.org>,
+	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+	Niklas =?utf-8?Q?S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Pavel Machek <pavel@ucw.cz>, linux-media@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, linux-staging@lists.linux.dev,
+	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	Oleg Drokin <green@linuxhacker.ru>
+Subject: Re: [PATCH 00/35] media: Fix coccinelle warning/errors
+Message-ID: <20240418154633.GD31776@pendragon.ideasonboard.com>
+References: <20240415-fix-cocci-v1-0-477afb23728b@chromium.org>
+ <a003494c-a1a9-4fcd-83d8-766a75d6bbb2@moroto.mountain>
+ <20240417155112.GQ12561@pendragon.ideasonboard.com>
+ <CANiDSCs_qOXkhzuL+cFhpw0hvFMwU0TYyN2B5ZdAStb96TTKFA@mail.gmail.com>
+ <20240418105310.GV12561@pendragon.ideasonboard.com>
+ <CANiDSCuS3KQK9H37sDZJ+mcqheNSh7NBwchS3dPccVXcPTSNRA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v3 7/7] arm64: dts: qcom: ipq9574: add PCIe2 nodes
-Content-Language: en-US
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-clk@vger.kernel.org
-References: <20240415182052.374494-1-mr.nuke.me@gmail.com>
- <20240415182052.374494-8-mr.nuke.me@gmail.com>
- <20240417073412.GD3894@thinkpad>
-From: mr.nuke.me@gmail.com
-In-Reply-To: <20240417073412.GD3894@thinkpad>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CANiDSCuS3KQK9H37sDZJ+mcqheNSh7NBwchS3dPccVXcPTSNRA@mail.gmail.com>
 
+Hi Ricardo,
 
-
-On 4/17/24 02:34, Manivannan Sadhasivam wrote:
-> On Mon, Apr 15, 2024 at 01:20:52PM -0500, Alexandru Gagniuc wrote:
->> On ipq9574, there are 4 PCIe controllers. Describe the pcie2 node, and
->> its PHY in devicetree.
->>
->> Only pcie2 is described, because only hardware using that controller
->> was available for testing.
->>
+On Thu, Apr 18, 2024 at 04:51:06PM +0200, Ricardo Ribalda wrote:
+> On Thu, 18 Apr 2024 at 12:53, Laurent Pinchart wrote:
+> > On Wed, Apr 17, 2024 at 06:19:14PM +0200, Ricardo Ribalda wrote:
+> > > On Wed, 17 Apr 2024 at 17:51, Laurent Pinchart wrote:
+> > > > On Tue, Apr 16, 2024 at 11:47:17AM +0300, Dan Carpenter wrote:
+> > > > > In my opinion, it's better to just ignore old warnings.
+> > > >
+> > > > I agree. Whatever checkers we enable, whatever code we test, there will
+> > > > always be false positives. A CI system needs to be able to ignore those
+> > > > false positives and only warn about new issues.
+> > >
+> > > We already have support for that:
+> > > https://gitlab.freedesktop.org/linux-media/media-ci/-/tree/main/testdata/static?ref_type=heads
+> >
+> > Those are manually written filters. Would it be possible to reduce the
+> > manual step to flagging something as a false positive, and have a
+> > machine build the filters ?
 > 
-> You should describe all the instances in DT. Since the unused ones will be
-> 'disabled', it won't affect anyone.
-
-My concern with untested but "disabled" descriptions is that someone may 
-think it's supported, try to enable it on their board, and run into 
-issues. Theoretically, we could describe pcie3, as it uses the same 
-gen3x2 phy.
-
-The pcie0 and pcie1 use a gen3x1 phy, which I do not support in this 
-series. I would have to leave the "phys" and "phy-names" for these 
-nodes, leading to an incomplete description
-
-Given this info, do you still wish that I add all other pcie nodes?
-
->> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
->> ---
->>   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 93 ++++++++++++++++++++++++++-
->>   1 file changed, 92 insertions(+), 1 deletion(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> index 7f2e5cbf3bbb..f075e2715300 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> @@ -300,7 +300,7 @@ gcc: clock-controller@1800000 {
->>   				 <0>,
->>   				 <0>,
->>   				 <0>,
->> -				 <0>,
->> +				 <&pcie2_phy>,
->>   				 <0>,
->>   				 <0>;
->>   			#clock-cells = <1>;
->> @@ -745,6 +745,97 @@ frame@b128000 {
->>   				status = "disabled";
->>   			};
->>   		};
->> +
->> +		pcie2_phy: phy@8c000 {
->> +			compatible = "qcom,ipq9574-qmp-gen3x2-pcie-phy";
->> +			reg = <0x0008c000 0x14f4>;
->> +
->> +			clocks = <&gcc GCC_PCIE2_AUX_CLK>,
->> +				 <&gcc GCC_PCIE2_AHB_CLK>,
->> +				 <&gcc GCC_PCIE2_PIPE_CLK>,
->> +				 <&gcc GCC_ANOC_PCIE2_2LANE_M_CLK>,
->> +				 <&gcc GCC_SNOC_PCIE2_2LANE_S_CLK>;
->> +			clock-names = "aux",
->> +				      "cfg_ahb",
->> +				      "pipe",
->> +				      "anoc",
->> +				      "snoc";
->> +
->> +			clock-output-names = "pcie_phy2_pipe_clk";
->> +			#clock-cells = <0>;
->> +			#phy-cells = <0>;
->> +
->> +			resets = <&gcc GCC_PCIE2_PHY_BCR>,
->> +				 <&gcc GCC_PCIE2PHY_PHY_BCR>;
->> +			reset-names = "phy",
->> +				      "common";
->> +			status = "disabled";
->> +		};
->> +
->> +		pcie2: pcie@20000000 {
->> +			compatible = "qcom,pcie-ipq9574";
->> +			reg = <0x20000000 0xf1d>,
->> +			      <0x20000f20 0xa8>,
->> +			      <0x20001000 0x1000>,
->> +			      <0x00088000 0x4000>,
->> +			      <0x20100000 0x1000>;
->> +			reg-names = "dbi", "elbi", "atu", "parf", "config";
->> +
->> +			ranges = <0x81000000 0x0 0x20200000 0x20200000 0x0 0x00100000>,	/* I/O */
+> Do you expect that the list of exceptions will grow?
 > 
-> Please use below range:
-> 
-> <0x01000000 0x0 0x00000000 0x20200000 0x0 0x00100000>
-> <0x02000000 0x0 0x20300000 0x20300000 0x0 0x07d00000>
-> 
-Of course, thank you.
+> I hope that once the CI is in place we will fix the warnings before
+> they land in the tree.
 
->> +				 <0x82000000 0x0 0x20300000 0x20300000 0x0 0x07d00000>;	/* MEM */
->> +
->> +			device_type = "pci";
->> +			linux,pci-domain = <3>;
->> +			bus-range = <0x00 0xff>;
->> +			num-lanes = <2>;
->> +			max-link-speed = <3>;
->> +			#address-cells = <3>;
->> +			#size-cells = <2>;
->> +
->> +			phys = <&pcie2_phy>;
->> +			phy-names = "pciephy";
->> +
->> +			interrupts = <GIC_SPI 126 IRQ_TYPE_LEVEL_HIGH>;
->> +			interrupt-names = "msi";
->> +
->> +			#interrupt-cells = <1>;
->> +			interrupt-map-mask = <0 0 0 0x7>;
->> +			interrupt-map = <0 0 0 1 &intc 0 0 164
->> +					 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
->> +					<0 0 0 2 &intc 0 0 165
->> +					 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
->> +					<0 0 0 3 &intc 0 0 186
->> +					 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
->> +					<0 0 0 4 &intc 0 0 187
->> +					 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
-> 
-> Use a single line for each INTX entry even if it exceeds 80 column width.
+Any static checker is bound to produce false positives. Some of them can
+be addressed by improving the checker, others by modifying the source
+code, but in some cases the first option would be too difficult and the
+second would reduce readability of the code. I thus thing the list of
+accepted false positives will grow over time.
 
-Yes. Will do.
+> > > But it would be great if those lists were as small as possible:
+> > >
+> > > - If we have a lot of warnings, two error messages can be combined and
+> > > will scape the filters
+> > > eg:
+> > > print(AAAA);
+> > > print(BBBB);
+> > > > AABBBAAB
+> > >
+> > > - The filters might hide new errors if they are too broad
+> > >
+> > >
+> > > Most of the patches in this series are simple and make a nicer code:
+> > > Eg the non return minmax() ,
+> > > Other patches show real integer overflows.
+> > >
+> > > Now that the patches are ready, let's bite the bullet and try to
+> > > reduce our technical debt.
+> > >
+> > > > > When code is new the warnings are going to be mostly correct.  The
+> > > > > original author is there and knows what the code does.  Someone has
+> > > > > the hardware ready to test any changes.  High value, low burden.
+> > > > >
+> > > > > When the code is old only the false positives are left.  No one is
+> > > > > testing the code.  It's low value, high burden.
+> > > > >
+> > > > > Plus it puts static checker authors in a difficult place because now
+> > > > > people have to work around our mistakes.  It creates animosity.
+> > > > >
+> > > > > Now we have to hold ourselves to a much higher standard for false
+> > > > > positives.  It sounds like I'm complaining and lazy, right?  But Oleg
+> > > > > Drokin has told me previously that I spend too much time trying to
+> > > > > silence false positives instead of working on new code.  He's has a
+> > > > > point which is that actually we have limited amount of time and we have
+> > > > > to make choices about what's the most useful thing we can do.
+> > > > >
+> > > > > So what I do and what the zero day bot does is we look at warnings one
+> > > > > time and we re-review old warnings whenever a file is changed.
+> > > > >
+> > > > > Kernel developers are very good at addressing static checker warnings
+> > > > > and fixing the real issues...  People sometimes ask me to create a
+> > > > > database of warnings which I have reviewed but the answer is that
+> > > > > anything old can be ignored.  As I write this, I've had a thought that
+> > > > > instead of a database of false positives maybe we should record a
+> > > > > database of real bugs to ensure that the fixes for anything real is
+> > > > > applied.
 
-> - Mani
-> 
+-- 
+Regards,
+
+Laurent Pinchart
 
