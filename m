@@ -1,149 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-17787-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17788-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2A778A9310
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 08:27:36 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DBE448A932A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 08:37:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CC2021C20C6B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 06:27:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 62DCA281EFA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 06:37:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA4396A353;
-	Thu, 18 Apr 2024 06:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B20902C68C;
+	Thu, 18 Apr 2024 06:37:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="i/Kw3dy2"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="ZL4kamYD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0228C11;
-	Thu, 18 Apr 2024 06:27:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1FDB125D6
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 06:37:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713421654; cv=none; b=h72GvjAxidnBSnsMFiPmdRfTeDCXNv/S3Vj1l/6E3QDkRq9xRx9ztdDSmXCFYpcf57TlU8NvLSqEvhUjVb2qYyXZ7QKZbvLdR5+OXHnqkvMaqRCfoAk10HcdjGAWWuc2Hf0RZRFhVnddG94gp6hhg0hKPNJZKI4Kb+pa4amOk+0=
+	t=1713422240; cv=none; b=q9P//zSP6K9Vyams4ajtOd1byTM8Eam/BytUElNjW2BHqmVK1jwj2G6E26OMmeUZATWC5R7VbQuoW58k5D7iDCOB/LYU3pvCN9qDg29Kbdm9HLsi5MyVYH6AqTGFX5qaWJ9TE31fn5rcRfmUmhdcxR3P7mOmLytdHdMVfnGDYCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713421654; c=relaxed/simple;
-	bh=ck6D+u1yHGSMSsvI+farJRo08q/q17J/RdpWxcYLUzU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=V88VafIgtlU15OJ66JDzEFgI59Sct4BCBnK9odoIOZJql1WM+LLB3OorkxQgEV6VRAlWYWbdh06gJbh4kjmFRCSjP1wSRNAGv2I2dSdc03fgJ/8d3kIIH39jrCm/Vq0mSPzS1A/u5203NJZee3GKQO9DXRc/X2hHer9g6h0rLvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=i/Kw3dy2; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43HNrE0P018338;
-	Thu, 18 Apr 2024 06:27:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=tbWp83ngc6+C04lMqJmQF5eKNNcGbKVIZblsmEVEZDk=; b=i/
-	Kw3dy2+SLlBMkynWa4ccWUpbylndODYMvO/yknuuebbdm/N5JASvLAjc1ZzkXaXy
-	wwCVNdDoIDPSNX+b8vabYIT22lK/OUo8tflP6MZsqbXJdJjZwCioaOPDzqImcSPh
-	TUUlM7CjVsWUfyMPQxWum54UwUzelmXQlJnq0vWK2z0Z2ojeohNH3SSdXXAufciX
-	n9n2zFx+OhJs1G3/KCeWjvE7XgGqIQoDI4FCgswnYU371iMF+B4RzmA5mIRra/tS
-	Q4Tz1+RZxtpwMS9BQLs7Kx9Jz57Owz4fGr22nUDl+2l4XY6u0n3lkW25egFxsA+Y
-	1Bed6WS9/govow426Gqg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xjrfxgv25-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Apr 2024 06:27:25 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43I6RNZO027974
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Apr 2024 06:27:23 GMT
-Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 17 Apr
- 2024 23:27:18 -0700
-Message-ID: <1e334bd5-6d90-8ac7-084f-8b7928072c17@quicinc.com>
-Date: Thu, 18 Apr 2024 11:57:14 +0530
+	s=arc-20240116; t=1713422240; c=relaxed/simple;
+	bh=AZORWu8R8zYeP/ZFHg4EUePNoeAt6LSIC3aOkhrqNuU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=QEupDaOF18vvLwz+7tGBc0tLZqoX6u6eOXWL7GTSjPQcEhMF8xLyliReLxCuJMZtmf7rCMn4XmZ25+JEH69DXu2nfLcxCIzuEf2LqCtgXhBqhDY9ZEOXGQqXi/nWaALe12NBWdM4RlBwvaKB7dSL9qwEnC9bR6W7pxBZYhQxOLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=ZL4kamYD; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-56e48d0a632so677679a12.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Apr 2024 23:37:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1713422236; x=1714027036; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=llTPKlZu+m+rPiTyn8KmBYZdyOU2ppQM2B/d4Fcas6w=;
+        b=ZL4kamYDnq4I/3sMTFRWPqRnenMQspeDCSZhKvoKuMzWRBpw2VAdwPRYk6btSq7z10
+         noUn2UqPQDQP7NcimdPyyoZQt45m93n1wBW+7D2kH8txQn38uuDCIfqwqJ0wom8oRoBG
+         DXS+c5cEKf9QGI0dLFSfnsjsyJ0WhhugUYT6kzI/4GCOxkimfyy7ifGgtRiAfYJu0V83
+         SqolXRS0glH1a0EVXhy6YTIrm4Y9r5rpwgALSqISGlqklEVTfCCE6RPnV6vWms91KkdT
+         Y5xRUVlhIZYi6CkXmShKsFJssd5pWkCxwlx97HMYGr46cluuew+duQRzfc44rbR2W5kn
+         Nb/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713422236; x=1714027036;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=llTPKlZu+m+rPiTyn8KmBYZdyOU2ppQM2B/d4Fcas6w=;
+        b=hWMdb2K8zfsIBKlJcc+gAS04td35O/4rfXznlV2xH1/59TTwkqvKlnRYybT89FOw2G
+         b1xKzWqA64/po1K2QAhE6yM590j7qs0+0vIYyZdKEfGrEOdQNVy7jc93GwGLX+O6EjqD
+         Dfe91hZ2exrNoxtsO29Cf7Xv0734054/8kAPUJ98xTZXGeyOE9pc51PaLYYMMquXHsdY
+         6n3LcGh+iKT2JbLgROA8SwAlHal6gIt8oklbMwKSV/3EtXQIp4Wtfze3Uqtt1aev3xDZ
+         +90HSJ6/wmlU5qgJVeRQwu3KXRUD6j622gGmgy7+6hWuVFXNhggINFBCPGNkPGJ8keNj
+         vs5g==
+X-Forwarded-Encrypted: i=1; AJvYcCU+7jgfKqidZjwiKemNgimUExzjMXNLdr2vgkCFockzEE+k5ntxXC4izQlrroi/Ea59E3+9Yzo8+kw3ZyCGkaZo8VMPE7ZQu/G/v5fD3Q==
+X-Gm-Message-State: AOJu0YykLvp8DpPjFOXcVmVt3K2jHJoh/EM8ujAQA53bwFvf14spmZPD
+	LETm9di9dEy/VhHHJNBjyqDYLHpM7Mr4a+kZEzLvIPnHhaVRG1Q3z2sWOVdlg2k=
+X-Google-Smtp-Source: AGHT+IHqtCV++Wsw9wK28VHIK6gcb8fIo2SrGPjBtDGKkrvJzKQWMEY51hHoxq1zqO+rtWtMTTyGHw==
+X-Received: by 2002:a50:d514:0:b0:56f:e7b9:e67d with SMTP id u20-20020a50d514000000b0056fe7b9e67dmr1671298edi.12.1713422235845;
+        Wed, 17 Apr 2024 23:37:15 -0700 (PDT)
+Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id cf8-20020a0564020b8800b0056c24df7a78sm472277edb.5.2024.04.17.23.37.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Apr 2024 23:37:15 -0700 (PDT)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH 0/2] Enable vibrator on PMI632 + Fairphone 3
+Date: Thu, 18 Apr 2024 08:36:53 +0200
+Message-Id: <20240418-fp3-vibra-v1-0-b636b8b3ff32@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH V3 1/5] dt-bindings: mailbox: qcom: Add CPUCP mailbox
- controller bindings
-Content-Language: en-US
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-CC: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <jassisinghbrar@gmail.com>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <dmitry.baryshkov@linaro.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <quic_rgottimu@quicinc.com>, <quic_kshivnan@quicinc.com>,
-        <conor+dt@kernel.org>, <quic_gkohli@quicinc.com>,
-        <quic_nkela@quicinc.com>, <quic_psodagud@quicinc.com>,
-        Rob Herring <robh@kernel.org>
-References: <20240417132856.1106250-1-quic_sibis@quicinc.com>
- <20240417132856.1106250-2-quic_sibis@quicinc.com>
- <ZiA0hOkpGVlVFp5u@hu-bjorande-lv.qualcomm.com>
-From: Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <ZiA0hOkpGVlVFp5u@hu-bjorande-lv.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: CBqy4x_L3vRJwV6AY0rDmH2Iand2eEA2
-X-Proofpoint-GUID: CBqy4x_L3vRJwV6AY0rDmH2Iand2eEA2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-18_04,2024-04-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 spamscore=0 mlxscore=0 phishscore=0 suspectscore=0
- adultscore=0 mlxlogscore=908 clxscore=1015 malwarescore=0 impostorscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404180042
+X-B4-Tracking: v=1; b=H4sIAIW/IGYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDE0ML3bQCY92yzKSiRF1Di2QTAwMLC0sLU2MloPqCotS0zAqwWdGxtbU
+ A66ZMc1sAAAA=
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Fenglin Wu <quic_fenglinw@quicinc.com>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.13.0
 
+With the patches to add vibration support for PMI632 finally applied,
+let's enable this for the PMI632 PMIC and Fairphone 3 smartphone.
 
+https://lore.kernel.org/linux-arm-msm/20240416-pm8xxx-vibrator-new-design-v11-0-7b1c951e1515@quicinc.com/
 
-On 4/18/24 02:13, Bjorn Andersson wrote:
-> On Wed, Apr 17, 2024 at 06:58:52PM +0530, Sibi Sankar wrote:
->> Add devicetree binding for CPUSS Control Processor (CPUCP) mailbox
->> controller.
->>
->> Reviewed-by: Rob Herring <robh@kernel.org>
->> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->> ---
->>
->> v2:
->> * Pickup Rb from Dimitry.
->>
->>   .../bindings/mailbox/qcom,cpucp-mbox.yaml     | 49 +++++++++++++++++++
->>   1 file changed, 49 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml b/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
->> new file mode 100644
->> index 000000000000..491b0a05e630
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
->> @@ -0,0 +1,49 @@
->> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/mailbox/qcom,cpucp-mbox.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm Technologies, Inc. CPUCP Mailbox Controller
->> +
->> +maintainers:
->> +  - Sibi Sankar <quic_sibis@qti.qualcomm.com>
-> 
-> That doesn't look like the correct domain.
+Patches have landed in the input tree:
+https://git.kernel.org/pub/scm/linux/kernel/git/dtor/input.git/
 
-Thanks, I don't know how I even constructed this chimera of an email-id
-lol.
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Luca Weiss (2):
+      arm64: dts: qcom: pmi632: Add vibrator
+      arm64: dts: qcom: sdm632-fairphone-fp3: Enable vibrator
 
--Sibi
+ arch/arm64/boot/dts/qcom/pmi632.dtsi              | 6 ++++++
+ arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts | 4 ++++
+ 2 files changed, 10 insertions(+)
+---
+base-commit: eecc5d90861b551d3b8fbd0d0e6f25c40496f3c0
+change-id: 20240418-fp3-vibra-18c400889853
 
-> 
-> Regards,
-> Bjorn
+Best regards,
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
+
 
