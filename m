@@ -1,135 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-17805-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17807-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5C7E8A9621
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 11:28:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 046528A96A2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 11:49:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 70B3A2831D7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 09:28:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id ACFF61F22B6F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Apr 2024 09:49:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A3FF1607BF;
-	Thu, 18 Apr 2024 09:24:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5ECB615B147;
+	Thu, 18 Apr 2024 09:49:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="C7OnSNOu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IYnlDahX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B1715B993;
-	Thu, 18 Apr 2024 09:24:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318B715AAD7;
+	Thu, 18 Apr 2024 09:49:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713432268; cv=none; b=raWOFQKk1Wsn0uTh3Ia2cf5e2xQlGItOb+Ee4ABLCfDjSthUm/D5aHjyp+w7yGYUe0BzQVshjE94LyZFPD9idayX/o45o8a4TaiwoTQkAvvfAE8DyHbrlaLFTCiZFh6fgLw+pOVshfIMT4o1UYtQHIM9b9/LTvnSc+ZuuPhEjqU=
+	t=1713433759; cv=none; b=Cb9C3pRiV4SYK8mvZrUhvOgwX5zYVn/7GIdGQ12haafEoJKrRGu2QwX6kG9r2a4vVmHeaBt5eMUKa1lm19moc7dckfwo1X9UyweXed9yQxGt95idjfzVhZC1k3gLLAvsrUg5qTLDrazHnUdFZH+sNdXbnyjmmj4gkHTI8Gck/bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713432268; c=relaxed/simple;
-	bh=T6AypkH3WpV7sX0/al8Y8+9eYsNDm9sgfT2ZqgdoI8k=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cxuUvhu3idUFXrxeEK62CUHee5A3r46MTNUMEuJEyKsoPAqGiyVSIT5O31LAW5c2Lx6UU171wRg6Z+s6w9jsXNbnWnL/IRPhv2A8ya/TcWE0F0HT22/hpZSfeXWl6ywp8z0D6KVobUv2TKjYp2HgtS2nJScTu4IEci/8VlADT04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=C7OnSNOu; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43I8dNaS010824;
-	Thu, 18 Apr 2024 09:24:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=XQz0y87xjJzpSve+PFnGb8Dxx4cy4BCAlvoWDerKyCU=; b=C7
-	OnSNOuJM73wQOp1CutkdQo9X3If1XIHr0z0OghcKyYY/hpER73ov4CMaGM+SGlAN
-	Qc7lgCd7G1YYOfV649oVNcx/eERm6qnZ8ZobC1cwCD6DFOj+pfY5vX/6HDFPHhQW
-	6ryWQXpXztzifkHZoGuoe3bttRrxFU334XfdvIGjnCxrAToKtoJFYfx3SQaXVerh
-	wAFYAn0hfnKpVVAZTAOVf0Ew/4rlK4HZBf5yKYmM4YLCrgY6SVDlou6RQIQwbt8l
-	KadCv6xz8qyOxnceUw9qhe6otRQIIyqajJ5On/GYSgz1jk5BidpxXvxjxYvlFyzX
-	f5mYFW99YQqtqMoYjKvw==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xk06n0327-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Apr 2024 09:24:22 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43I9O46s009459
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Apr 2024 09:24:04 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 18 Apr 2024 02:23:59 -0700
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: <andersson@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <konrad.dybcio@linaro.org>, <djakov@kernel.org>,
-        <quic_varada@quicinc.com>, <dmitry.baryshkov@linaro.org>,
-        <quic_anusha@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>
-Subject: [PATCH v9 6/6] arm64: dts: qcom: ipq9574: Add icc provider ability to gcc
-Date: Thu, 18 Apr 2024 14:53:05 +0530
-Message-ID: <20240418092305.2337429-7-quic_varada@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240418092305.2337429-1-quic_varada@quicinc.com>
-References: <20240418092305.2337429-1-quic_varada@quicinc.com>
+	s=arc-20240116; t=1713433759; c=relaxed/simple;
+	bh=tJ0Urn4BLG+quubxU9dNS3fApOza0xmBM3lZkeFRNuc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FOdKGFfDhajYEZ2i1Ut0q7fAHZ3Hitom641JN1Cj4EkcaMH3DkHPHalxtFvPA37XFiZVxDLFO4vDbuDuFjTFQXRtVCujCoR0nVSWNss28nerkrh6HQbsSY4jr0uGeAAkUWhu5nrTW/Rdt1ppT6duGC5IODHoDnnku0jvOWDBdyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IYnlDahX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60988C113CC;
+	Thu, 18 Apr 2024 09:49:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1713433758;
+	bh=tJ0Urn4BLG+quubxU9dNS3fApOza0xmBM3lZkeFRNuc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=IYnlDahXBVoeo0e0ajK4M+gQ/Rq2df/pwFzDaDQbg08tu+ujOjvYnuCiGgTjqh79d
+	 m8jVwc0FCDR6F/ZMazzvuDfm6FHdLfmDsjozbVwnQJoXtAM7vu2shB2fSYhWUqOQnm
+	 V3wD/ZmbMJ0+fluru/XzGpVFPuO4og1mdeHP8bJl82Ry1eejXTnI6XmWEAMoPe8Ch4
+	 nC5+3Z91kFslHfuRB1LaY9iukv46Su2hmVw3nnolGW3HUBUjSG66AqlX5rPnvaMq6D
+	 80WHxrx28lUyyHODhjGz8Rurh8dwRPVugPdKXblQ0sLfte9Mxj9F2aHRJuOtdld7so
+	 9GT2KtMz0s28w==
+Date: Thu, 18 Apr 2024 11:49:15 +0200
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Vinod Koul <vkoul@kernel.org>
+Cc: konrad.dybcio@linaro.org, andersson@kernel.org, wsa@kernel.org, 
+	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-i2c@vger.kernel.org, Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>, 
+	quic_vdadhani@quicinc.com, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v4] i2c: i2c-qcom-geni: Parse Error correctly in i2c GSI
+ mode
+Message-ID: <xdefqlzo6ttlpxzi2o6yjf7pkhdokx377lblqtrgleoxua5dfu@mtolpvw6lln2>
+References: <20240313052639.1747078-1-quic_msavaliy@quicinc.com>
+ <171161140136.2698925.4294566764047886777.b4-ty@kernel.org>
+ <ZgbwJAb7Ffktf554@matsya>
+ <a76mmz5xrfipqpmq2ltsyobwc54dyw2d55gb4vta5d746dwb3i@5mm2ew5uudi3>
+ <ZhJVgDVthhr4hISg@matsya>
+ <j3zupurwq5vtzfwby7ubl7ft75fqqhutk4vfqolihkcldfcesi@ywwfnkjcfhgu>
+ <Zh__kAdzU8a2DHLH@matsya>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: B91TqVD3TfvBU7fVMsw8obO6U3BnMPDM
-X-Proofpoint-GUID: B91TqVD3TfvBU7fVMsw8obO6U3BnMPDM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-18_08,2024-04-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- spamscore=0 priorityscore=1501 impostorscore=0 mlxlogscore=999
- adultscore=0 clxscore=1015 malwarescore=0 lowpriorityscore=0 phishscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404180066
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Zh__kAdzU8a2DHLH@matsya>
 
-IPQ SoCs dont involve RPM in managing NoC related clocks and
-there is no NoC scaling. Linux itself handles these clocks.
-However, these should not be exposed as just clocks and align
-with other Qualcomm SoCs that handle these clocks from a
-interconnect provider.
+Hi,
 
-Hence include icc provider capability to the gcc node so that
-peripherals can use the interconnect facility to enable these
-clocks.
+On Wed, Apr 17, 2024 at 10:27:52PM +0530, Vinod Koul wrote:
+> On 16-04-24, 17:05, Andi Shyti wrote:
+> > > > Anyway, the changes are in -next. What do we do now? Do I revert
+> > > > it? Mukesh, can you please agree with Vinod?
+> > > 
+> > > I dont apply patches to other subsystem without the ack. Either way you
+> > > can ask always! 
+> > 
+> > Yes, you are totally right; but please, keep in mind that this
+> > patch has some history and I would have loved to hear from you
+> > earlier. Anyway...
+> 
+> There was merge window, I dont look up during that. Then I had some
+> family stuff and travel to take care... Things happen.
+> 
+> When in doubt pls ask, a gentle reminder goes long way!
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
----
- arch/arm64/boot/dts/qcom/ipq9574.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+sure... I'll be more patient... thanks!
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-index 7f2e5cbf3bbb..5b3e69379b1f 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-@@ -8,6 +8,7 @@
- 
- #include <dt-bindings/clock/qcom,apss-ipq.h>
- #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
-+#include <dt-bindings/interconnect/qcom,ipq9574.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/reset/qcom,ipq9574-gcc.h>
- #include <dt-bindings/thermal/thermal.h>
-@@ -306,6 +307,7 @@ gcc: clock-controller@1800000 {
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
- 			#power-domain-cells = <1>;
-+			#interconnect-cells = <1>;
- 		};
- 
- 		tcsr_mutex: hwlock@1905000 {
--- 
-2.34.1
+> > > I will leave it upto you...
+> > 
+> > ... Mukesh, I'm sorry, but I'm going to revert this patch again
+> > until we address all the last minute issues from Vinod. The
+> > silence on this thread is worrying me more than reverting it.
+> > 
+> > I hope this will be the last time I revert this patch.
+> > 
+> > Moreover, in order to avoid maintainers' rumble (:)), please
+> > let's try to split patches that are touching more than one
+> > subsystems keeping the logical meainings intact.
+> 
+> That is best. Very rarely we have a situation where we add
+> changes which break bisect and it has to be clubbed together. But for
+> other cases, it should always be split!
 
+Please Mukesh, address Vinod's comments and let's get this patch
+in.
+
+Thanks,
+Andi
 
