@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-17908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 768C68AA964
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 09:43:56 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4AC008AA98C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 09:53:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2C6361F21C0C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 07:43:56 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5E987B20EEA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 07:53:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 486B543ACA;
-	Fri, 19 Apr 2024 07:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEA6D4779E;
+	Fri, 19 Apr 2024 07:53:10 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C17DC15D;
-	Fri, 19 Apr 2024 07:43:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 377972AF16;
+	Fri, 19 Apr 2024 07:53:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713512632; cv=none; b=UI9/dL6JqW+fyOmQf4OaSMXotqjq2OefsfltfR58KWlVcWRHuBhJ9w1PXUXo9q0EYZ3ntDw+6CuNKN18WDVQPdt1bdYGZ8AiMtJz9otuDkGygoakPk4YmSHyvl3LBDeUQC70Ga8+BfL5LR0TBjJB6MLHF+8u6Ewt0MjDAfZx8Ko=
+	t=1713513190; cv=none; b=c7cHG49EHJkvTKpYGoMJ8QfKulqx/hJmame0vfIjmsOQ4VfkLyV4pY9CAy0uCEGfHOoroOrMBv6SApUrFnSLHob4YU3Dt7GWQsnRtzgKayQeVlsG5Dop5uSguv8/S84hDkB8CnQ/bnBS3vwPjsKBLtHoTAlMbXCmqpfq31qwZAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713512632; c=relaxed/simple;
-	bh=4hpazauHpk/RFf3gdbIxuFYd45VFPO+t6024y+3xeRM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=b9XzZyqhT3AK6R1ryob2UFyo8AUb1sfedVGMXzCX2t0+Ep+h5mvTkxBwUGATaQ7kjZk9zMtkxv0PbT6xE+k71YdsHb/tCn1eZnkzs0+AvO3vSIHFJwpNbv2++oCf2mQ5yFyJ2jT67OrbsySD4Y5Lb1nSjQ30qdhPbreJ61Hi0d0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.218.43
+	s=arc-20240116; t=1713513190; c=relaxed/simple;
+	bh=q/5APZuZ3d+HFuI6lhPu++jsp67VUOCrWPJcpMnETSM=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=WZAjA9jAdPr1Q4fmANPsU4huKXAyevvlfGBn23goKxO2c5CMplZoPlE+69mMprEmo2RGi9mLrf7QIMwZ4XjsgGibj3oB844mKpLPJyz92sc3n8D4bue1wEmFLYD4khfFUDgWYTHUk4PNetLIzvfvxNQCtHYLgENx2oGRD4tVjMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a55323f2ef9so203204366b.1;
-        Fri, 19 Apr 2024 00:43:50 -0700 (PDT)
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-56e6affdd21so769438a12.3;
+        Fri, 19 Apr 2024 00:53:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713512629; x=1714117429;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=URGRMsGWGx8jqhA5xtGZg7iC9b/+P8WUOx6u5XW1lAs=;
-        b=PIcBpL3Ar+Koc9axnZ/D82fw9vIX+bxbjzyncvQXC8jm0OjV1m3x3GpUW45+WkfmqK
-         czaxWvy7oJY5+237Fr7wFWSTnuCf5iByW+8NnsEOjPMe5fj5W5liYM0DE+LHnKET8cSk
-         G2nirvi/4aOU0rNs/ZcHZcfWoZClSekhb/EK6ZBH/DBRvK+hwW2bOmkCD0adblVW/sP2
-         214m6Ls3mazRyVuSuHaFhF8CD2q98Cw5cEngC9750g6k74wnIa5n9ML8HhzsdchI28GO
-         r70Pz90U1Xg33wpK6nqZasr1pO210Ba/aSZfbA7DHt5HLFleX2C9omyGTlQh4UCDqULs
-         QnKw==
-X-Forwarded-Encrypted: i=1; AJvYcCVbpAAUZYuAUEuHzbxnVz81EKEFD5yUhAjviJPn2gmgkgDnZW+sV4q2QyMXQzK7zWskZ58ch9xuMYPBhKK1lsavELnYXvd+JsoBdlBihwS2gKrCbP2uVhD8OSU86T7IjPo0yM87bsLq6LWVpQ==
-X-Gm-Message-State: AOJu0Yx9p/pxw34ymgBTxzoppwHMBfrC23qNu8sV9YGvMtKMFs5bHCnX
-	0gtqWUUmDZ2OIp4In/XAswHgg0UXQZZanUS2rVD5YZbSBE1on7Kn
-X-Google-Smtp-Source: AGHT+IFP+KUkv1lYrOQYdGcxpr+CwPdtgWdt1ls/Qt4trBh/o1XU0HXxPgQ7ImVy+yB+OmeA1BJ/sw==
-X-Received: by 2002:a17:906:3d6:b0:a55:a04:6fbc with SMTP id c22-20020a17090603d600b00a550a046fbcmr913858eja.23.1713512628839;
-        Fri, 19 Apr 2024 00:43:48 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1713513187; x=1714117987;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :references:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dkg2PsPWwQuUQlT1wRqaFRT1C3anmOX1PDdZQuQBq4k=;
+        b=VX5Xg5RfSMuZk+rVZS8oi4KmxS1dpTGUgIltPyYUWU4NrVty/QwaPqczM/XLHLDHTp
+         yljF2RCytpZw5IjKLmY40h+/Yl+1Xn/L0MlTO44H2g/SL9D3jNNKhmRi4WYARgzaSz8H
+         Kz0VCTaU5WQVwU1baTc186avUxZ0S22MWgB/nNDu9AF+c7taVIMzMCt0ycV0Vo+4Y9yg
+         4AZqpbR0a9jPS3fAyXLPgVMPnS953NbHKdZ5sGQq3VKRaMcAL2VxldgDfj5n2s1ikUcD
+         9R/8xShn9uymRHQBRVhK7xCzcuidW886FUf98069n2Ve88TCdO8ixCFO/AYLcVXGl+9y
+         p7vA==
+X-Forwarded-Encrypted: i=1; AJvYcCXiGg0lcqZ5a8J8y0kGjhSy8iA4PtiZo+hVsl1T4ATaNoSEOa0w56xKLh+S5WeXdE9enkcA9uptmO/1Luvl3Ldq4k684UiX8N30A9ZCf0oo2OizXkkZJqCQ/7MWombTATIQRGo31I188InrgQ==
+X-Gm-Message-State: AOJu0Yy06X9m6TE+wALunlkTrjCvjQ0645JrksPrBT+XsfkmaOMziwV+
+	0rzBoGSZDxiey9GqUE6aXi5P60EnO6OF2NATqDmB08N+O4hP6NGx
+X-Google-Smtp-Source: AGHT+IEgBOUgLIkEJ6kCFr/WsQTpsuLhwjRJ0h00DqJHqbr/vz6eCdlY6WS9+se8yPxp3p6D1AZerQ==
+X-Received: by 2002:a50:8e17:0:b0:56e:57f9:8c83 with SMTP id 23-20020a508e17000000b0056e57f98c83mr961424edw.19.1713513187398;
+        Fri, 19 Apr 2024 00:53:07 -0700 (PDT)
 Received: from ?IPV6:2a0b:e7c0:0:107::aaaa:69? ([2a0b:e7c0:0:107::aaaa:69])
-        by smtp.gmail.com with ESMTPSA id nb33-20020a1709071ca100b00a55778c1af7sm1457690ejc.11.2024.04.19.00.43.48
+        by smtp.gmail.com with ESMTPSA id e22-20020a50ec96000000b0056e2b351956sm1812134edr.22.2024.04.19.00.53.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 Apr 2024 00:43:48 -0700 (PDT)
-Message-ID: <8947962f-e39e-4e96-9d1e-691e40d49349@kernel.org>
-Date: Fri, 19 Apr 2024 09:43:47 +0200
+        Fri, 19 Apr 2024 00:53:07 -0700 (PDT)
+Message-ID: <cbf6d34a-663c-440d-84e2-86054c605c8e@kernel.org>
+Date: Fri, 19 Apr 2024 09:53:06 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,6 +64,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 11/15] tty: msm_serial: use dmaengine_prep_slave_sg()
+From: Jiri Slaby <jirislaby@kernel.org>
 To: Marek Szyprowski <m.szyprowski@samsung.com>, gregkh@linuxfoundation.org
 Cc: linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org,
  Bjorn Andersson <andersson@kernel.org>,
@@ -77,8 +78,8 @@ References: <20240405060826.2521-1-jirislaby@kernel.org>
  <0335b679-da36-42c1-a1ba-8affb7a98d44@samsung.com>
  <783c05cd-0cd2-4b0e-9dce-2a9fdfee7c74@kernel.org>
  <c26a049c-07ef-4837-9c1f-ac19b1251c3b@samsung.com>
+ <8947962f-e39e-4e96-9d1e-691e40d49349@kernel.org>
 Content-Language: en-US
-From: Jiri Slaby <jirislaby@kernel.org>
 Autocrypt: addr=jirislaby@kernel.org; keydata=
  xsFNBE6S54YBEACzzjLwDUbU5elY4GTg/NdotjA0jyyJtYI86wdKraekbNE0bC4zV+ryvH4j
  rrcDwGs6tFVrAHvdHeIdI07s1iIx5R/ndcHwt4fvI8CL5PzPmn5J+h0WERR5rFprRh6axhOk
@@ -121,53 +122,58 @@ Autocrypt: addr=jirislaby@kernel.org; keydata=
  f/bIWIr0cqQmqQ33FgRhrG1+Xml6UXyJ2jExmlO8JljuOGeXYh6ZkIEyzqzffzBLXZCujlYQ
  DFXpyMNVJ2ZwPmX2mWEoYuaBU0JN7wM+/zWgOf2zRwhEuD3A2cO2PxoiIfyUEfB9SSmffaK/
  S4xXoB6wvGENZ85Hg37C7WDNdaAt6Xh2uQIly5grkgvWppkNy4ZHxE+jeNsU7tg=
-In-Reply-To: <c26a049c-07ef-4837-9c1f-ac19b1251c3b@samsung.com>
+In-Reply-To: <8947962f-e39e-4e96-9d1e-691e40d49349@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 17. 04. 24, 14:45, Marek Szyprowski wrote:
-> I alse tried to change the "if (dma->mapped)" check in msm_start_tx() to:
+On 19. 04. 24, 9:43, Jiri Slaby wrote:
+> On 17. 04. 24, 14:45, Marek Szyprowski wrote:
+>> I alse tried to change the "if (dma->mapped)" check in msm_start_tx() to:
+>>
+>> 1. if (dma->tx_sg.length)
+>>
+>> 2. if (dma->tx_sg.page_link & ~SG_PAGE_LINK_MASK)
+>>
+>> but none of the above worked what is really strange and incomprehensible
+>> for me.
+>>
 > 
-> 1. if (dma->tx_sg.length)
+> Aaaah, nevermind, what about this?
 > 
-> 2. if (dma->tx_sg.page_link & ~SG_PAGE_LINK_MASK)
+> Two bugs:
+> 1) dma_map_sg() returns the number of mapped entries. Not zero!
+> 2) And I forgot to zero tx_sg in case of error.
 > 
-> but none of the above worked what is really strange and incomprehensible
-> for me.
+> --- a/drivers/tty/serial/msm_serial.c
+> +++ b/drivers/tty/serial/msm_serial.c
+> @@ -506,8 +506,8 @@ static int msm_handle_tx_dma(struct msm_port 
+> *msm_port, unsigned int count)
+>          kfifo_dma_out_prepare(&tport->xmit_fifo, &dma->tx_sg, 1, count);
 > 
+>          ret = dma_map_sg(port->dev, &dma->tx_sg, 1, dma->dir);
+> -       if (ret)
+> -               return ret;
+> +       if (!ret)
 
-Aaaah, nevermind, what about this?
+Still wrong, ret = -EIO missing in here.
 
-Two bugs:
-1) dma_map_sg() returns the number of mapped entries. Not zero!
-2) And I forgot to zero tx_sg in case of error.
+> +               goto zero_out;
+> 
+>          dma->desc = dmaengine_prep_slave_sg(dma->chan, &dma->tx_sg, 1,
+>                                                  DMA_MEM_TO_DEV,
+> @@ -548,6 +548,7 @@ static int msm_handle_tx_dma(struct msm_port 
+> *msm_port, unsigned int count)
+>          return 0;
+>   unmap:
+>          dma_unmap_sg(port->dev, &dma->tx_sg, 1, dma->dir);
+> +zero_out:
+>          sg_init_table(&dma->tx_sg, 1);
+>          return ret;
+>   }
+> 
+> 
+> thanks,
 
---- a/drivers/tty/serial/msm_serial.c
-+++ b/drivers/tty/serial/msm_serial.c
-@@ -506,8 +506,8 @@ static int msm_handle_tx_dma(struct msm_port 
-*msm_port, unsigned int count)
-         kfifo_dma_out_prepare(&tport->xmit_fifo, &dma->tx_sg, 1, count);
-
-         ret = dma_map_sg(port->dev, &dma->tx_sg, 1, dma->dir);
--       if (ret)
--               return ret;
-+       if (!ret)
-+               goto zero_out;
-
-         dma->desc = dmaengine_prep_slave_sg(dma->chan, &dma->tx_sg, 1,
-                                                 DMA_MEM_TO_DEV,
-@@ -548,6 +548,7 @@ static int msm_handle_tx_dma(struct msm_port 
-*msm_port, unsigned int count)
-         return 0;
-  unmap:
-         dma_unmap_sg(port->dev, &dma->tx_sg, 1, dma->dir);
-+zero_out:
-         sg_init_table(&dma->tx_sg, 1);
-         return ret;
-  }
-
-
-thanks,
 -- 
 js
 suse labs
