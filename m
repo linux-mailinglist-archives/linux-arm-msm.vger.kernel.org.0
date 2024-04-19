@@ -1,72 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-17910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17911-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16E4E8AA9A0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 10:01:07 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D18DB8AA9C6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 10:09:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 979A21F22CA3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 08:01:06 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0E596B248E6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 08:09:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7879C4D131;
-	Fri, 19 Apr 2024 08:00:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="gBW0EeNi"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBFA64CE05;
+	Fri, 19 Apr 2024 08:09:16 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38CDC46453
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 08:00:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.118.77.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35CFF405EC;
+	Fri, 19 Apr 2024 08:09:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713513658; cv=none; b=TmAlGRaRLuBpMYMpNpKxJ2uSCXRShwYCAUqw/+h1USenUjDls40jAClMn5McOc7GZ6jjZPlUnq5O/11EFLXFkdHGH+pQCFsVvycC+w4NVD+8z9XtI7f2DZqioWUUawoMoDzNvFmqFsSEnYlpyUuG+IjLcdfIsnAIEry9LKDlsyc=
+	t=1713514156; cv=none; b=LMsQY2LHTd6HwqYR+QJMeq3h9bB7nhPB5U4RHADcNLyfxHNaEidhAlSjZVni1aUxXva0jnIQ1mBg7jia1aulCC+D3YTIyCky02FwdKi1pT5MMX5gHoSwy5y0yN9pGo37oIP8QOD61p2Ca7lgzIzNA4PCAuuHjUUGsmX3zfmSHvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713513658; c=relaxed/simple;
-	bh=AgrdqcfcVenz/u2x8vvoZSIcULG4CY5K/v+Edvos+bU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:From:In-Reply-To:
-	 Content-Type:References; b=sRl3c2aIjGDTL9IUw45g+c3fF4fH3HaGhdhVjnxUC16/qK3B+t+cSd919fgH6glGkwT1HdU+LTWAO94wIbo0lRtp2j4q8Dxwv123j5SDix2Hlt8I/tE/Wq4nK36km7YJoEznRAPVXPc3WNmo8ArzzE0MocCC6k0d7g7NO2pGOic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=gBW0EeNi; arc=none smtp.client-ip=210.118.77.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-	by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20240419080048euoutp018f801f7ea8b5ed74fc2cf6ad4a6d1575~Hn5WxFHkM0913509135euoutp01j
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 08:00:48 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20240419080048euoutp018f801f7ea8b5ed74fc2cf6ad4a6d1575~Hn5WxFHkM0913509135euoutp01j
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1713513648;
-	bh=J9bihqNNeBouBSVdYnB6FnDBnwZNOKQIvLcjL9JmkYw=;
-	h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
-	b=gBW0EeNiw1nnZA5YaD7ATlgFadq/boYP+dQhquA3i4syUWnxNENtPHg4aovQSzg0I
-	 qaMVUZmAZIRtuuWz/u2mUPL7dinx3KF+IscS8Y/8AXX5dhL7Si976oZ+5bqa6CTs35
-	 SJjtKRu19SjF2GyjxbmmmnZrk7JJ0L8ZSR55gBCg=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-	eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-	20240419080048eucas1p19edea2062fc38a56d38e09d4fdc612bb~Hn5WbO-MQ2067220672eucas1p1u;
-	Fri, 19 Apr 2024 08:00:48 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-	eusmges2new.samsung.com (EUCPMTA) with SMTP id 5E.95.09875.0B422266; Fri, 19
-	Apr 2024 09:00:48 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-	eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-	20240419080047eucas1p2c8bf21f4654b592ec250f04c76eee380~Hn5WIvRYQ2267722677eucas1p2b;
-	Fri, 19 Apr 2024 08:00:47 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-	eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-	20240419080047eusmtrp20f97472dc91695be666a2963f1cac9d7~Hn5WIH6_s2364823648eusmtrp2r;
-	Fri, 19 Apr 2024 08:00:47 +0000 (GMT)
-X-AuditID: cbfec7f4-11bff70000002693-9c-662224b0da16
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-	eusmgms1.samsung.com (EUCPMTA) with SMTP id 5A.E1.08810.FA422266; Fri, 19
-	Apr 2024 09:00:47 +0100 (BST)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-	eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20240419080047eusmtip28a71cb280150640c6b7b24ddda1a9e4a~Hn5VnrEMi0746207462eusmtip29;
-	Fri, 19 Apr 2024 08:00:47 +0000 (GMT)
-Message-ID: <cbf77a8b-b37c-41d8-a7b5-a1c935571a1d@samsung.com>
-Date: Fri, 19 Apr 2024 10:00:47 +0200
+	s=arc-20240116; t=1713514156; c=relaxed/simple;
+	bh=0FeIyAl5J+f6MhxHikfAvdWtKm6sUtgx5AhVM0OAZm8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=k9fZ6xV8IlYbUjP89lRtvaEv6oF9VPcbuYfydu3USZkXcI14xMXXNHHcVSwWwpzOxZp3TIjdzjtRujETGB3MtLRkxGl3YsfSOzhLiAXKhuuCRzD4zpHeNDfdv72AU3SBVKb9yleG5hjFZEhySQ3iJRWaKxb63hGSy2aseosGoAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-516d6e23253so2045341e87.1;
+        Fri, 19 Apr 2024 01:09:14 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713514153; x=1714118953;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sYKfC0KCIs1kuXetvqewFSEH/qY4fmwUu3v54HoMOz8=;
+        b=S88/JiEZapqwtfhgTVQbw0QSFPR3+qqSJkdANtDqFlh+LXhuM1VwLm7eDOc3JM9FYA
+         wK9cRld9z53dW/tAc2Z8LaV+hb9JTrY27eAtI8BEzoXq6aeooBxOIrWZpClo4T1mKH3n
+         mfl9slpBnlPK5BiGZ2R01WOH/AvlsW0xNx2PIxcqVXWUkTXyb4WI30rC0TloQrh1eRC4
+         IB8MhSSKLDyJ/3T1ro2k8PZXXBOybuNJjK+Cr0hHG1+XOIiXo6T01WAdVAkHCliw1Du1
+         9fOcYmJ27R4DqRH1b9vYYkeiDWBl025iVYdFvRfgeC8jE9bwX2EmocxqPOpUPEeApzLA
+         L2zw==
+X-Forwarded-Encrypted: i=1; AJvYcCXtdz0Tu+XqJhCuLgaQhk2hWfiTJZKmOB91Ycj+Pv43rd2ELslLyd+jPen30uh0kV5JIgq3+0wJT1zlUgVv+vb9B9vqWoqZQ77T7Fw7wNDgc45er8VqgL/g8TJOTBlIPNs4W9g9DhOVxa8eKQ==
+X-Gm-Message-State: AOJu0YzVhW8YJwegpyMCC1uL0TJ15q5liRUsBb+rQC3JJJe3BoHlYSmU
+	hUv16AEddJ1og8Ni/E3v+EKOolWhISY8vhWkGpgxPoyBaCyfaIZtTorT53NX
+X-Google-Smtp-Source: AGHT+IH/q/7de2ceMPrwn9e0gAEKOdVqmd7DaOIp9JdejswMIkXfjo1HLvOqoGrDiWXrgikox1sj+A==
+X-Received: by 2002:ac2:47f9:0:b0:515:a8c9:6e99 with SMTP id b25-20020ac247f9000000b00515a8c96e99mr1129368lfp.5.1713514153014;
+        Fri, 19 Apr 2024 01:09:13 -0700 (PDT)
+Received: from ?IPV6:2a0b:e7c0:0:107::aaaa:69? ([2a0b:e7c0:0:107::aaaa:69])
+        by smtp.gmail.com with ESMTPSA id et3-20020a056402378300b00571d8da8d09sm87749edb.68.2024.04.19.01.09.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Apr 2024 01:09:09 -0700 (PDT)
+Message-ID: <ac79cc6f-9da2-4c09-b1d3-daa6f9baeea2@kernel.org>
+Date: Fri, 19 Apr 2024 10:09:08 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,126 +64,122 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 11/15] tty: msm_serial: use dmaengine_prep_slave_sg()
-To: Jiri Slaby <jirislaby@kernel.org>, gregkh@linuxfoundation.org
-Cc: linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, Bjorn
-	Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-arm-msm@vger.kernel.org, Anders Roxell <anders.roxell@linaro.org>
-Content-Language: en-US
-From: Marek Szyprowski <m.szyprowski@samsung.com>
-In-Reply-To: <cbf6d34a-663c-440d-84e2-86054c605c8e@kernel.org>
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNKsWRmVeSWpSXmKPExsWy7djPc7obVJTSDM6sZLW4NeU3k8W2DhuL
-	5sXr2SzezZWx6Ji8ncVi4v6z7BaXd81hszizuJfdgcNj06pONo871/aweeyfu4bd4/MmuQCW
-	KC6blNSczLLUIn27BK6MA3/3MBc84a/oWHqRsYFxAm8XIyeHhICJRMeEs+wgtpDACkaJE1c0
-	uhi5gOwvjBJ/+6ayQDifGSVerr/ACNPR3raGFSKxnFHizuKdUFUfGSWe3rgBlOHg4BWwk/jX
-	Eg3SwCKgKvH2yHSwFbwCghInZz5hAbFFBeQl7t+aARYXFvCUeNpymxmkVUTAUaL1bzXISGaB
-	u4wSM3ZvZQOpYRYQl7j1ZD4TiM0mYCjR9bYLLM4JtGrdxbvMEDXyEs1bZzODNEsI3OGQWHNo
-	PjvE1S4Sv+euZYKwhSVeHd8CFZeR+L8TZChIQzujxILf96GcCYwSDc9vQf1sLXHn3C82kPOY
-	BTQl1u/Shwg7SszZcQvsYQkBPokbbwUhjuCTmLRtOjNEmFeio00IolpNYtbxdXBrD164xDyB
-	UWkWUrDMQvLmLCTvzELYu4CRZRWjeGppcW56arFRXmq5XnFibnFpXrpecn7uJkZg+jn97/iX
-	HYzLX33UO8TIxMF4iFGCg1lJhNeMQzFNiDclsbIqtSg/vqg0J7X4EKM0B4uSOK9qinyqkEB6
-	YklqdmpqQWoRTJaJg1OqgSm779TvgKj1lcV9jNcalhue/7r0yTaxe4vTtEX3TbslNFnzbYhS
-	zT39JK7py3J8g+f2nE44r70htGZCqpzgrtrPOi/qnXaWrLu7a+n5J8Yq9mdKv9UFzf8QxaK2
-	/arEnOuv5p+4svrt6bMCpztW3plXF83J6B+w++nf8IiVv8OfJLlmtmcfi9rf+Drs62X21ffN
-	LoZui11jX+FQ/Um231HL3yjLue2uxh5nxUfvCzhOFdYJLyxev/KKw+qEgqdWnPu2HTt0SXsL
-	y+p5LpkB1vnLn/8XiVmZ2Lmm0/nW5zu7Tv65vJX3/uz91s/2rMlaYM62iWmpvTpTh9njraqJ
-	CVuu/w5Wm1/dfHzO3dvLggzjlViKMxINtZiLihMBShR3aK4DAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrHIsWRmVeSWpSXmKPExsVy+t/xe7rrVZTSDK5e0bO4NeU3k8W2DhuL
-	5sXr2SzezZWx6Ji8ncVi4v6z7BaXd81hszizuJfdgcNj06pONo871/aweeyfu4bd4/MmuQCW
-	KD2bovzSklSFjPziElulaEMLIz1DSws9IxNLPUNj81grI1MlfTublNSczLLUIn27BL2MA3/3
-	MBc84a/oWHqRsYFxAm8XIyeHhICJRHvbGtYuRi4OIYGljBI9kx6xQyRkJE5Oa2CFsIUl/lzr
-	YoMoes8ocWHFWyCHg4NXwE7iX0s0SA2LgKrE2yPTwXp5BQQlTs58wgJiiwrIS9y/NQMsLizg
-	KfG05TYzSKuIgKNE699qkJHMAvcZJSa+PMsMMX81i8TvlplgDcwC4hK3nsxnArHZBAwlut6C
-	HMHJwQm0d93Fu8wQNWYSXVu7GCFseYnmrbOZJzAKzUJyxywko2YhaZmFpGUBI8sqRpHU0uLc
-	9NxiQ73ixNzi0rx0veT83E2MwIjbduzn5h2M81591DvEyMTBeIhRgoNZSYTXjEMxTYg3JbGy
-	KrUoP76oNCe1+BCjKTAwJjJLiSbnA2M+ryTe0MzA1NDEzNLA1NLMWEmc17OgI1FIID2xJDU7
-	NbUgtQimj4mDU6qBSfwDl3PcTr8lKz5XHPi9rmlK//slITLGwt/LlzQZN0xlbyg85t/EsfBj
-	kkDIuSznexsieyMr7i37+/B23uevfO2C3xjMMndVefy2WvrperPcnCb3I6cv5AfmnzxccuTa
-	Ks6XO3dl3XnPEX9ZWWuX8C3bVtW22kABxd0dgavd9rktfVO64e+WKoY5Gw4d/LMv95CIg3Hu
-	U9X5f3kfKz/tnBv597Ea1+b1EzdOWW10W8itUbnAZOE2QT9n/yhhk6KU16bp/UzFzY0VxScv
-	X3p6O3ndkiQf94Ajka8jv4nxrt+yP3teA0/exNwCs2UGoc92p0+0Ynmxocj0nXONW72eYlu4
-	T4xn/VqNyH9FHJNXK7EUZyQaajEXFScCAICzG1BBAwAA
-X-CMS-MailID: 20240419080047eucas1p2c8bf21f4654b592ec250f04c76eee380
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20240415211716eucas1p10050cc8d4024707dd6f6331111cd3ce1
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20240415211716eucas1p10050cc8d4024707dd6f6331111cd3ce1
+To: Marek Szyprowski <m.szyprowski@samsung.com>, gregkh@linuxfoundation.org
+Cc: linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org,
+ Anders Roxell <anders.roxell@linaro.org>
 References: <20240405060826.2521-1-jirislaby@kernel.org>
-	<20240405060826.2521-12-jirislaby@kernel.org>
-	<CGME20240415211716eucas1p10050cc8d4024707dd6f6331111cd3ce1@eucas1p1.samsung.com>
-	<d3eb9f21-f3e1-43ec-bf41-984c6aa5cfc8@samsung.com>
-	<54679d54-3957-489d-a8b5-b98ea1c8a93c@kernel.org>
-	<0335b679-da36-42c1-a1ba-8affb7a98d44@samsung.com>
-	<783c05cd-0cd2-4b0e-9dce-2a9fdfee7c74@kernel.org>
-	<c26a049c-07ef-4837-9c1f-ac19b1251c3b@samsung.com>
-	<8947962f-e39e-4e96-9d1e-691e40d49349@kernel.org>
-	<cbf6d34a-663c-440d-84e2-86054c605c8e@kernel.org>
+ <20240405060826.2521-12-jirislaby@kernel.org>
+ <CGME20240415211716eucas1p10050cc8d4024707dd6f6331111cd3ce1@eucas1p1.samsung.com>
+ <d3eb9f21-f3e1-43ec-bf41-984c6aa5cfc8@samsung.com>
+ <54679d54-3957-489d-a8b5-b98ea1c8a93c@kernel.org>
+ <0335b679-da36-42c1-a1ba-8affb7a98d44@samsung.com>
+ <783c05cd-0cd2-4b0e-9dce-2a9fdfee7c74@kernel.org>
+ <c26a049c-07ef-4837-9c1f-ac19b1251c3b@samsung.com>
+ <8947962f-e39e-4e96-9d1e-691e40d49349@kernel.org>
+ <cbf6d34a-663c-440d-84e2-86054c605c8e@kernel.org>
+ <cbf77a8b-b37c-41d8-a7b5-a1c935571a1d@samsung.com>
+Content-Language: en-US
+From: Jiri Slaby <jirislaby@kernel.org>
+Autocrypt: addr=jirislaby@kernel.org; keydata=
+ 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
+In-Reply-To: <cbf77a8b-b37c-41d8-a7b5-a1c935571a1d@samsung.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 19.04.2024 09:53, Jiri Slaby wrote:
-> On 19. 04. 24, 9:43, Jiri Slaby wrote:
->> On 17. 04. 24, 14:45, Marek Szyprowski wrote:
->>> I alse tried to change the "if (dma->mapped)" check in 
->>> msm_start_tx() to:
+On 19. 04. 24, 10:00, Marek Szyprowski wrote:
+> On 19.04.2024 09:53, Jiri Slaby wrote:
+>> On 19. 04. 24, 9:43, Jiri Slaby wrote:
+>>> On 17. 04. 24, 14:45, Marek Szyprowski wrote:
+>>>> I alse tried to change the "if (dma->mapped)" check in
+>>>> msm_start_tx() to:
+>>>>
+>>>> 1. if (dma->tx_sg.length)
+>>>>
+>>>> 2. if (dma->tx_sg.page_link & ~SG_PAGE_LINK_MASK)
+>>>>
+>>>> but none of the above worked what is really strange and
+>>>> incomprehensible
+>>>> for me.
+>>>>
 >>>
->>> 1. if (dma->tx_sg.length)
+>>> Aaaah, nevermind, what about this?
 >>>
->>> 2. if (dma->tx_sg.page_link & ~SG_PAGE_LINK_MASK)
+>>> Two bugs:
+>>> 1) dma_map_sg() returns the number of mapped entries. Not zero!
+>>> 2) And I forgot to zero tx_sg in case of error.
 >>>
->>> but none of the above worked what is really strange and 
->>> incomprehensible
->>> for me.
+>>> --- a/drivers/tty/serial/msm_serial.c
+>>> +++ b/drivers/tty/serial/msm_serial.c
+>>> @@ -506,8 +506,8 @@ static int msm_handle_tx_dma(struct msm_port
+>>> *msm_port, unsigned int count)
+>>>           kfifo_dma_out_prepare(&tport->xmit_fifo, &dma->tx_sg, 1,
+>>> count);
 >>>
+>>>           ret = dma_map_sg(port->dev, &dma->tx_sg, 1, dma->dir);
+>>> -       if (ret)
+>>> -               return ret;
+>>> +       if (!ret)
 >>
->> Aaaah, nevermind, what about this?
->>
->> Two bugs:
->> 1) dma_map_sg() returns the number of mapped entries. Not zero!
->> 2) And I forgot to zero tx_sg in case of error.
->>
->> --- a/drivers/tty/serial/msm_serial.c
->> +++ b/drivers/tty/serial/msm_serial.c
->> @@ -506,8 +506,8 @@ static int msm_handle_tx_dma(struct msm_port 
->> *msm_port, unsigned int count)
->>          kfifo_dma_out_prepare(&tport->xmit_fifo, &dma->tx_sg, 1, 
->> count);
->>
->>          ret = dma_map_sg(port->dev, &dma->tx_sg, 1, dma->dir);
->> -       if (ret)
->> -               return ret;
->> +       if (!ret)
->
-> Still wrong, ret = -EIO missing in here.
+>> Still wrong, ret = -EIO missing in here.
+> 
+> "if (ret <= 0)" seems to be better here.
 
-"if (ret <= 0)" seems to be better here.
+It returns unsigned, so I have a better patch. Will send in a second.
 
-Indeed this fixed the issue. I checked the code many times, but I missed 
-this dma_map_sg() return value issue.
+> Indeed this fixed the issue. I checked the code many times, but I missed
+> this dma_map_sg() return value issue.
 
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Perfect!
 
->
->> +               goto zero_out;
->>
->>          dma->desc = dmaengine_prep_slave_sg(dma->chan, &dma->tx_sg, 1,
->>                                                  DMA_MEM_TO_DEV,
->> @@ -548,6 +548,7 @@ static int msm_handle_tx_dma(struct msm_port 
->> *msm_port, unsigned int count)
->>          return 0;
->>   unmap:
->>          dma_unmap_sg(port->dev, &dma->tx_sg, 1, dma->dir);
->> +zero_out:
->>          sg_init_table(&dma->tx_sg, 1);
->>          return ret;
->>   }
->>
->>
->> thanks,
->
-Best regards
+> Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+
+Could you test that one too :)?
+
+thanks,
 -- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
+js
+suse labs
 
 
