@@ -1,158 +1,251 @@
-Return-Path: <linux-arm-msm+bounces-17915-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17916-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BDFB28AAB8B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 11:39:00 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 87ABC8AABC0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 11:49:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 33E341F2165F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 09:39:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3F40828318D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 09:49:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 418BF79950;
-	Fri, 19 Apr 2024 09:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 161C37C089;
+	Fri, 19 Apr 2024 09:49:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r8Wgpovf"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Idfbl1l6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F651E491
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 09:38:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264AA3A8F7
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 09:49:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713519536; cv=none; b=FnHQk37fDHj929GFIMHBwmlA1afeoriCh/Q7t7z6gC3n1vKVweLUiHYn4O871dSOAIuAjCuzeOYu+d0JdpL6V/zABzf/p/7yr0NnTL+0IQ/ywvuyAaBx1jpzmoRb+hIBqzXvvrwAMUM8L0JCD62W4tueIUcNuJoQpmFuoZFeZGM=
+	t=1713520161; cv=none; b=IuG0MHGdz9kVb8Ax6/mDOFZ1PIKFZCAlSS2bY+OL1Mw6XEylHbAg+e1xTlaL45vVdBsZIkm397OGw29XStIeeXWyn/hl9D9OcEbL31ucQmD+Cg7VIfoyH6vGGNKmyX/0+Ekr0nX/shCtvxy+cRdElmOyGhLmroUAdzjas5CYipg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713519536; c=relaxed/simple;
-	bh=N2UXq2U4pdLZn+hJU/sN9WPbe0o2JK8fp42YrnciohQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=F06jkLcA44KxltnyQtol6FkGpFBGQ5H0y/sBO4dNiOdYFpZhIlh3TnUR1mX7ooDXJ5ozzVV64I0D4gBI4kxStbTcsg/1szyQBBXF4fiZZe16kzIlgYn4MFZcHSCM8lDTTDqiSkskrnGCb8Krc2DAEaDJhlTLEPudQJ+g0VSmlMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=r8Wgpovf; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1e0bec01232so15372305ad.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 02:38:54 -0700 (PDT)
+	s=arc-20240116; t=1713520161; c=relaxed/simple;
+	bh=pKDV/DDljfYbyJBEoKPsy5J2SxcCvPCQTO74udVktBA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=jR1JUAbC0MG4ig/Z2GaX+cKMi+dcIhdiEDesyMlWtPRWOQyywTo3JDt2xC0SMazZNROD0LCp/6G1Ovl7GekHLIYjaPK4/KWbn/6nJWRYYY5jyCuPEgAD02rzQEnnWzGkdRAQ/q17tKM85hDn+SnLckSQw/qWxu72ZWm8ksP6chM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Idfbl1l6; arc=none smtp.client-ip=209.85.222.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-78f0440656eso106840585a.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 02:49:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713519534; x=1714124334; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=vhyd8ERSjL+j/lnHLclAKIR9eCMnjtkAQONWEXxntro=;
-        b=r8WgpovfxHO+9o4Vk2OdGmDFDpoVuLXB8t2kMlsau672uhITC5nhwpDfKnWMTJiEEO
-         75XepK41XF3j5Ie76I2YX3wISpTEm8GycyBj770De4CLCTNW72N/qjDBHp2Nkm0GWp/+
-         jjJUbW1XUt8eCxHA0XzDRKCAy9K14L0N78HbstXmpZQgJw6i0UnZvTgKtmd9ACwyWs+y
-         nt1I5v/567QrYLs8XimgqcdJF+TXDrbJDByQprxlPm5KcT8uLBhfAnAdapkEXdoCLybU
-         wmsAy0Pe8duichiU/LVlZVfvOKXwtGs/iBvYgronLw6pkit6zXvFLce8IGmzCCNSC/yw
-         U54w==
+        d=chromium.org; s=google; t=1713520158; x=1714124958; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=cRNZApPOWNGUw9rh6uD/J/LwtHi/yERWjgUEfHZaap4=;
+        b=Idfbl1l6Bz8rBtDI/g5CHK5dcpqZcXJSkObZTfqMpExfgp9orquZpn7wc/v3hMmPfI
+         HtlvRYCkWQomDW7iiWg8NkG4rmfoA0N1cij5+HYu0Td4s1SG+kbTC27pBXLvUWbcntvm
+         sOtEgfIKf6+u3q6TIxjF7U4HoroB2CttxP10w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713519534; x=1714124334;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vhyd8ERSjL+j/lnHLclAKIR9eCMnjtkAQONWEXxntro=;
-        b=n8dtFWm7j3kKbnWfkjAgDTlkN6jPhI3rnjN3FAXEk1ISbI5zdb1zVV+Cjh1JcXW8YK
-         adFZsGcdZSRus7Ef4sVtonozd95E5jHhYROncuZYbm9T3sR75vPrIqcoxJmxiWyoQqtJ
-         3pEQ3FBoXufHkZqftiomRNhulZIgTAR2pxzIF9Bs/7BDkL9yIcC8RCIdLMW2S5mDnWLm
-         wBiHbKT5tVM1jYbRC9NwIsmjDqdzKHNNwWmBACgFBXaNJmHODdyDmcqhDRC/POKweaOF
-         qkF4FtlhOTyxaOanNUQvuIvqJ5QteeaPIS32EFN9kROuti+KdwldU2ajm9bY2ihaIPtP
-         ZB0A==
-X-Forwarded-Encrypted: i=1; AJvYcCWq5QJzZEI+lBKYOrzEinlgk7CjOA5nrV2xYZwuhd5Ciy3ZAxkE0572vxHjQiaubp+S/3K0eI+B4xf/gmNbAAXvx0zw4tj20BrAp2DWsg==
-X-Gm-Message-State: AOJu0YyZZjfmr2edH6xn6t9FziW55e5qP7uwneeQh8Av0EpxsWeQf+rE
-	evy8WkHAqjbG1ayTq1XCd9+YpEzxKFe48itfes8OkPx726SycLC0It2h5yL80w==
-X-Google-Smtp-Source: AGHT+IFgkuWsPXN+rSZfXHVUnr0hyu5KXgc5mjxITXWDgbYW6u2XoyVyZFujajA80aZnB7uRLwsNkw==
-X-Received: by 2002:a17:902:ec81:b0:1de:f93f:4410 with SMTP id x1-20020a170902ec8100b001def93f4410mr1752104plg.8.1713519533970;
-        Fri, 19 Apr 2024 02:38:53 -0700 (PDT)
-Received: from thinkpad ([220.158.156.51])
-        by smtp.gmail.com with ESMTPSA id t20-20020a170902b21400b001e3e081dea1sm2946412plr.0.2024.04.19.02.38.49
+        d=1e100.net; s=20230601; t=1713520158; x=1714124958;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cRNZApPOWNGUw9rh6uD/J/LwtHi/yERWjgUEfHZaap4=;
+        b=AEQvTW793CCk9Q5PJM/QxOLi/ABVYHhEAF4RO3lA5zKhjkGvNayPntlMuAfWoZXwYE
+         2LlfZci/X9Wv1pRakh+Jz4ABhCGdundsyPzpJPjWSwTiQEq5J31ADq0/XhJvHz9J2ZEt
+         lXIPGVRS+I0EwrrRgDjmG8XAhUzzuL8jdgdbflYSuVFKEm+2vQSuxcLJZSYCUQRtaJLE
+         1bOMFXf6WUn4rord4bVUXY6Mpw5KexE56NJ07DW2IMuiDJdInIMyrqWPX0DLkqOQogwJ
+         bYrvZkDhlvLR1yyflSYRoFwptfd4XzBLkwrL1QGpi5VNasrMcjr++U1rc7yVryrEvAd8
+         4YXA==
+X-Forwarded-Encrypted: i=1; AJvYcCVcz/gO0Ffdv9dM+p0spgRl79Tfn8hR74y05PAF0qVm+8ipa9Df8N71IBxfCg9krmFhFFm35g+ayU6JoXsNGHhGIaZKLp3FWf8qvx1OPw==
+X-Gm-Message-State: AOJu0YzytAOS5Ud+q2AGjxQYKVkilIUFBXwOvhNeJP1iAB2t+136Zwz2
+	yvtKlvzjqcKTj1f0/oRQAPDqQ5FPNfoNBEPlO4CFc2CEYGhH8cweEncmWL+/Eg==
+X-Google-Smtp-Source: AGHT+IEwFEqraeOqWxkPQAAFkUs5oWfyDBRxF4A8wk2qhAECZd6CFNAdYxUvmXxXTuoou68/E0VA+g==
+X-Received: by 2002:a05:620a:5a4f:b0:78d:6c05:b498 with SMTP id wx15-20020a05620a5a4f00b0078d6c05b498mr1754759qkn.14.1713520158006;
+        Fri, 19 Apr 2024 02:49:18 -0700 (PDT)
+Received: from denia.c.googlers.com (114.152.245.35.bc.googleusercontent.com. [35.245.152.114])
+        by smtp.gmail.com with ESMTPSA id dt14-20020a05620a478e00b0078d735ca917sm1434532qkb.123.2024.04.19.02.49.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Apr 2024 02:38:53 -0700 (PDT)
-Date: Fri, 19 Apr 2024 15:08:47 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	mhi@lists.linux.dev, linux-tegra@vger.kernel.org,
-	Niklas Cassel <cassel@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: Re: [PATCH v3 3/9] PCI: endpoint: Rename BME to Bus Master Enable
-Message-ID: <20240419093847.GB3636@thinkpad>
-References: <20240418-pci-epf-rework-v3-3-222a5d1ed2e5@linaro.org>
- <20240418161209.GA239309@bhelgaas>
+        Fri, 19 Apr 2024 02:49:17 -0700 (PDT)
+From: Ricardo Ribalda <ribalda@chromium.org>
+Subject: [PATCH v2 00/26] media: Fix coccinelle warning/errors
+Date: Fri, 19 Apr 2024 09:47:46 +0000
+Message-Id: <20240419-fix-cocci-v2-0-2119e692309c@chromium.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240418161209.GA239309@bhelgaas>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMI9ImYC/22MQQ7CIBBFr9LMWgxMUYwr72G6oBTKLFrMoETTc
+ Hexa5fv/5e3QfZMPsO124B9oUxpbYCHDly06+wFTY0BJWqp1UkEeguXnCOBU+h9QLTnYKD5D/b
+ t3Fv3oXGk/Ez82dNF/dZ/laKEFNoYG0bsDV7Gm4ucFnotx8QzDLXWL2eD/W6lAAAA
+To: Martin Tuma <martin.tuma@digiteqautomotive.com>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>, 
+ Hugues Fruchet <hugues.fruchet@foss.st.com>, 
+ Alain Volmat <alain.volmat@foss.st.com>, 
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+ Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+ Paul Kocialkowski <paul.kocialkowski@bootlin.com>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ Chen-Yu Tsai <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+ Samuel Holland <samuel@sholland.org>, 
+ Sakari Ailus <sakari.ailus@linux.intel.com>, 
+ Thierry Reding <thierry.reding@gmail.com>, 
+ Jonathan Hunter <jonathanh@nvidia.com>, 
+ Sowjanya Komatineni <skomatineni@nvidia.com>, 
+ Luca Ceresoli <luca.ceresoli@bootlin.com>, 
+ Matthias Brugger <matthias.bgg@gmail.com>, 
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+ Hans Verkuil <hverkuil@xs4all.nl>, Sergey Kozlov <serjk@netup.ru>, 
+ Abylay Ospan <aospan@netup.ru>, 
+ Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>, 
+ Dmitry Osipenko <digetx@gmail.com>, 
+ Benjamin Mugnier <benjamin.mugnier@foss.st.com>, 
+ Sylvain Petinot <sylvain.petinot@foss.st.com>, 
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, 
+ Vikash Garodia <quic_vgarodia@quicinc.com>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-stm32@st-md-mailman.stormreply.com, 
+ linux-arm-kernel@lists.infradead.org, linux-staging@lists.linux.dev, 
+ linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
+ linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+ Ricardo Ribalda <ribalda@chromium.org>, 
+ Sergey Senozhatsky <senozhatsky@chromium.org>, 
+ Kieran Bingham <kieran.bingham@ideasonboard.com>, 
+ Dan Carpenter <dan.carpenter@linaro.org>
+X-Mailer: b4 0.12.4
 
-On Thu, Apr 18, 2024 at 11:12:09AM -0500, Bjorn Helgaas wrote:
-> On Thu, Apr 18, 2024 at 05:28:31PM +0530, Manivannan Sadhasivam wrote:
-> > BME which stands for 'Bus Master Enable' is not defined in the PCIe base
-> > spec even though it is commonly referred in many places (vendor docs). But
-> > to align with the spec, let's rename it to its expansion 'Bus Master
-> > Enable'.
-> 
-> Thanks for doing this.  I'm always in favor of using terms from the
-> spec.
-> 
-> > -		dev_dbg(dev, "Received BME event. Link is enabled!\n");
-> > +		dev_dbg(dev, "Received Bus Master Enable event. Link is enabled!\n");
-> 
-> Nothing to do with *this* patch, but this message reads a little weird
-> to me because setting Bus Master Enable has nothing to do with link
-> enablement.
-> 
+After this set is applied, these are the only warnings left:
+drivers/media/pci/ivtv/ivtv-fileops.c:223:4-10: preceding lock on line 267
+drivers/media/pci/ivtv/ivtv-fileops.c:230:3-9: preceding lock on line 267
+drivers/media/pci/ivtv/ivtv-fileops.c:236:4-10: preceding lock on line 267
+drivers/media/pci/ivtv/ivtv-fileops.c:245:3-9: preceding lock on line 267
+drivers/media/pci/ivtv/ivtv-fileops.c:251:3-9: preceding lock on line 267
+drivers/media/pci/ivtv/ivtv-fileops.c:257:3-9: preceding lock on line 267
+drivers/media/pci/ivtv/ivtv-fileops.c:272:3-9: preceding lock on line 267
+drivers/media/pci/ivtv/ivtv-fileops.c:598:4-10: preceding lock on line 627
+drivers/media/pci/ivtv/ivtv-fileops.c:598:4-10: preceding lock on line 689
+drivers/media/pci/ivtv/ivtv-fileops.c:606:3-9: preceding lock on line 627
+drivers/media/pci/ivtv/ivtv-fileops.c:606:3-9: preceding lock on line 689
+drivers/media/pci/ivtv/ivtv-fileops.c:648:3-9: preceding lock on line 627
+drivers/media/pci/ivtv/ivtv-fileops.c:648:3-9: preceding lock on line 689
+drivers/media/pci/ivtv/ivtv-fileops.c:692:4-10: preceding lock on line 689
+drivers/media/dvb-core/dvb_frontend.c:2897:1-7: preceding lock on line 2776
+drivers/media/dvb-core/dvb_frontend.c:2897:1-7: preceding lock on line 2786
+drivers/media/dvb-core/dvb_frontend.c:2897:1-7: preceding lock on line 2809
+drivers/media/dvb-frontends/stv090x.c:799:1-7: preceding lock on line 768
+drivers/media/usb/go7007/go7007-i2c.c:125:1-7: preceding lock on line 61
+drivers/media/rc/imon.c:1167:1-7: preceding lock on line 1153
+drivers/media/pci/cx18/cx18-scb.h:261:22-29: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/platform/qcom/venus/hfi_cmds.h:77:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/platform/qcom/venus/hfi_cmds.h:85:5-16: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/platform/qcom/venus/hfi_cmds.h:154:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/platform/qcom/venus/hfi_cmds.h:171:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/platform/qcom/venus/hfi_cmds.h:180:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/platform/qcom/venus/hfi_cmds.h:189:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/platform/qcom/venus/hfi_cmds.h:201:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/platform/qcom/venus/hfi_cmds.h:220:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/platform/qcom/venus/hfi_cmds.h:230:5-16: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/platform/qcom/venus/hfi_helper.h:764:5-15: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/platform/qcom/venus/hfi_helper.h:1008:43-60: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/platform/qcom/venus/hfi_helper.h:1014:36-46: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/platform/qcom/venus/hfi_helper.h:1041:5-15: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/platform/qcom/venus/hfi_helper.h:1088:39-51: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/platform/qcom/venus/hfi_helper.h:1093:5-22: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/platform/qcom/venus/hfi_helper.h:1144:4-8: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/platform/qcom/venus/hfi_helper.h:1239:4-8: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/platform/qcom/venus/hfi_helper.h:1267:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/platform/qcom/venus/hfi_helper.h:1272:4-13: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/common/siano/smscoreapi.h:619:5-13: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/common/siano/smscoreapi.h:669:6-13: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/common/siano/smscoreapi.h:1049:4-8: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/common/siano/smscoreapi.h:1055:4-8: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/dvb-frontends/mxl5xx_defs.h:171:4-8: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/dvb-frontends/mxl5xx_defs.h:182:4-8: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/platform/allegro-dvt/nal-hevc.h:102:14-22: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/platform/xilinx/xilinx-dma.h:100:19-22: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/staging/media/atomisp/pci/atomisp_tpg.h:30:18-22: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
 
-That's my bad. I'll remove it.
+CI tested:
+https://gitlab.freedesktop.org/linux-media/media-staging/-/commit/055b5211c68e721c3a7090be5373cf44859da1a7/pipelines?ref=ribalda%2Ftest-cocci
 
-> Also incidental: some of these messages and comments refer to a "Bus
-> Master Enable *event*".  Does "event" here refer to the act of the
-> host setting the Bus Master Enable bit in the Command register?  This
-> is in qcom_pcie_ep_global_irq_thread(), so I assume there's something
-> in the endpoint hardware that generates an IRQ when the Command
-> register is written?
-> 
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+---
+Changes in v2:
+- Remove all the min() retval, and send a patch for cocci:  https://lore.kernel.org/lkml/20240415-minimax-v1-1-5feb20d66a79@chromium.org/T/#u
+- platform_get_irq() cannot return 0, fix that (Thanks Dan).
+- Fix stb0800 patch. chip_id can be 0 (Thanks Dan).
+- Use runtime (IS_ENABLED), code looks nicer. (Thanks Dan).
+- Do not replace do_div for venus (Thanks Dan).
+- Do not replace do_div for tda10048 (Thanks Dan).
+- Link to v1: https://lore.kernel.org/r/20240415-fix-cocci-v1-0-477afb23728b@chromium.org
 
-Yes, the PCIe endpoint controller generates an IRQ when host sets Bus Master
-Enable bit.
+---
+Ricardo Ribalda (26):
+      media: pci: mgb4: Refactor struct resources
+      media: stb0899: Simplify check
+      media: uvcvideo: Refactor iterators
+      media: uvcvideo: Use max() macro
+      media: go7007: Use min and max macros
+      media: stm32-dcmipp: Remove redundant printk
+      media: staging: sun6i-isp: Remove redundant printk
+      media: dvb-frontends: tda18271c2dd: Remove casting during div
+      media: v4l: async: refactor v4l2_async_create_ancillary_links
+      staging: media: tegra-video: Use swap macro
+      media: s2255: Use refcount_t instead of atomic_t for num_channels
+      media: platform: mtk-mdp3: Use refcount_t for job_count
+      media: common: saa7146: Use min macro
+      media: dvb-frontends: drx39xyj: Use min macro
+      media: netup_unidvb: Use min macro
+      media: au0828: Use min macro
+      media: flexcop-usb: Use min macro
+      media: gspca: cpia1: Use min macro
+      media: stk1160: Use min macro
+      media: tegra-vde: Refactor timeout handling
+      media: i2c: st-mipid02: Use the correct div function
+      media: tc358746: Use the correct div_ function
+      media: venus: vdec: Make explicit the range of us_per_frame
+      media: venus: venc: Make explicit the range of us_per_frame
+      media: dvb-frontends: tda10048: Fix integer overflow
+      media: dvb-frontends: tda10048: Make explicit the range of z.
 
-> > - * pci_epc_bme_notify() - Notify the EPF device that the EPC device has received
-> > - *			  the BME event from the Root complex
-> > - * @epc: the EPC device that received the BME event
-> > + * pci_epc_bus_master_enable_notify() - Notify the EPF device that the EPC
-> > + *					device has received the Bus Master
-> > + *					Enable event from the Root complex
-> > + * @epc: the EPC device that received the Bus Master Enable event
-> >   *
-> >   * Invoke to Notify the EPF device that the EPC device has received the Bus
-> > - * Master Enable (BME) event from the Root complex
-> > + * Master Enable event from the Root complex
-> 
-> There's no "set Bus Master Enable" transaction that would appear on
-> the PCIe link, so I assume "the Bus Master Enable event from the Root
-> Complex" is a way of saying something like "host has written the
-> Command register to set the Bus Master Enable bit"?
-> 
+ drivers/media/common/saa7146/saa7146_hlp.c         |  8 +++----
+ drivers/media/dvb-frontends/drx39xyj/drxj.c        |  9 +++-----
+ drivers/media/dvb-frontends/stb0899_drv.c          |  2 +-
+ drivers/media/dvb-frontends/tda10048.c             | 13 +++++++----
+ drivers/media/dvb-frontends/tda18271c2dd.c         |  4 ++--
+ drivers/media/i2c/st-mipid02.c                     |  2 +-
+ drivers/media/i2c/tc358746.c                       |  3 +--
+ drivers/media/pci/mgb4/mgb4_core.c                 |  4 ++--
+ drivers/media/pci/mgb4/mgb4_regs.c                 |  2 +-
+ drivers/media/pci/netup_unidvb/netup_unidvb_i2c.c  |  2 +-
+ .../media/platform/mediatek/mdp3/mtk-mdp3-cmdq.c   | 10 ++++-----
+ .../media/platform/mediatek/mdp3/mtk-mdp3-core.c   |  6 ++---
+ .../media/platform/mediatek/mdp3/mtk-mdp3-core.h   |  2 +-
+ .../media/platform/mediatek/mdp3/mtk-mdp3-m2m.c    |  6 ++---
+ drivers/media/platform/nvidia/tegra-vde/h264.c     |  6 ++---
+ drivers/media/platform/qcom/venus/vdec.c           |  7 ++----
+ drivers/media/platform/qcom/venus/venc.c           |  7 ++----
+ .../platform/st/stm32/stm32-dcmipp/dcmipp-core.c   |  7 ++----
+ drivers/media/usb/au0828/au0828-video.c            |  5 +----
+ drivers/media/usb/b2c2/flexcop-usb.c               |  5 +----
+ drivers/media/usb/go7007/go7007-fw.c               |  4 ++--
+ drivers/media/usb/gspca/cpia1.c                    |  6 ++---
+ drivers/media/usb/s2255/s2255drv.c                 | 20 ++++++++---------
+ drivers/media/usb/stk1160/stk1160-video.c          | 10 ++-------
+ drivers/media/usb/uvc/uvc_ctrl.c                   | 26 ++++++++++++----------
+ drivers/media/v4l2-core/v4l2-async.c               |  7 +++---
+ drivers/staging/media/sunxi/sun6i-isp/sun6i_isp.c  |  3 +--
+ drivers/staging/media/tegra-video/tegra20.c        |  9 ++------
+ 28 files changed, 84 insertions(+), 111 deletions(-)
+---
+base-commit: 836e2548524d2dfcb5acaf3be78f203b6b4bde6f
+change-id: 20240415-fix-cocci-2df3ef22a6f7
 
-Yes. But looking at it again, it could be reworded as below:
-
-'Invoke to notify the EPF device that the EPC device has generated the Bus
-Master Enable event due to host setting the Bus Master Enable bit in the
-Command register.'
-
-- Mani
-
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Ricardo Ribalda <ribalda@chromium.org>
+
 
