@@ -1,230 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-17902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA5D18AA62B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 02:13:07 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E024E8AA653
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 02:46:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 443731F226AB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 00:13:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 101171C20AEC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 00:46:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E1FB3C39;
-	Fri, 19 Apr 2024 00:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB6E463E;
+	Fri, 19 Apr 2024 00:46:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bKwJ4PPk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aoHeQSpw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A8510A25;
-	Fri, 19 Apr 2024 00:11:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E08D64A
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 00:46:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713485474; cv=none; b=H+7n8dlyzZ1mYS/f7M4BsX1lJBM9NBYypD+AiB3XXGXKrUdweYzdRwLQBeD2CziFP8gdfTi4trBL7ufBUe1Rypn5xZv59ME4g4/ACKT+UgxKfIDaoDrBCKKR/6s2tMk7QF8ar3tanOhdvtpRgb4MmTvdtEjYqO92piAFmPUJIEk=
+	t=1713487603; cv=none; b=ajQr09eN+1xrdzMoMINqDsn5rvyeBsIu/huMh+cTacA+9gwd70jt4OEV/oNFlBoArYqpRJzv9zvURFMCFICbuj9aA2kMi7UplQboon2gX5pDE8//HHIa90Xz71mg6ma1nGuZnl9WQ6EWYIqgktOBjYXaDDuz8a5r7vWxyr/4wQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713485474; c=relaxed/simple;
-	bh=qTRflK83hWPe8WMZaUDFvxeBpnPe3PBX9JmEeKHKz5g=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GOblJ+LTqjcKp44aV30szgX+1S9xgOIppjuJDBvrfIdMuUT6s2153J7Eeq5k4fkwu/RMlisbM2LF3ENMAMca5jRAzOe6cuWAaxn5Eo7/0M2qU7jItSsfl1VuDUPcbXMCOrQBEKX/whQgm0p4KRSGqfKzqaGMMFbFC5i7TkRjDu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bKwJ4PPk; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43IMserW000792;
-	Fri, 19 Apr 2024 00:10:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=QMLqYCG5YLp0bH+Im5zgY8BvC8QMj6jH3G/EsLQGnTk=; b=bK
-	wJ4PPkTweKhfPAuSEwzkO/epfybcwuFn6JOQRIzLaV1V+kW+BA7yNt+4B9uj9wT/
-	GTPyZQKXOzHk55RBTblHici9wb69fGexbBO+KrklLmBYi2DOvrVaLTGTfwR4z7+2
-	+be0vr4w9B2Ox4i9Q13Lc8vUBNXi0SAM12fAQaSHj5egP8KOy6Ds6q0d0aqPAN+T
-	RvCdWhvIbm4U1HaoJU9INY4BYHtVHnTFT9rDRBxveZPGv8sej3LDDIb6RoS1B11n
-	7BqzspI5ML2emdlImYaQRPk6of+1ojnNJzm3ZyThGN7M87YMyc9N8OgSJ+eQM0ZT
-	K0u/e4fMaCdOVTtHsU+g==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xk4vm9a4r-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 19 Apr 2024 00:10:57 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43J0Aud6001710
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 19 Apr 2024 00:10:56 GMT
-Received: from adas-linux5.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 18 Apr 2024 17:10:55 -0700
-From: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
-To: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mani@kernel.org>
-CC: <quic_msarkar@quicinc.com>, <quic_kraravin@quicinc.com>,
-        Lorenzo Pieralisi
-	<lpieralisi@kernel.org>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?=
-	<kw@linux.com>,
-        Rob Herring <robh@kernel.org>, Bjorn Helgaas
-	<bhelgaas@google.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel
-	<gustavo.pimentel@synopsys.com>,
-        Manivannan Sadhasivam
-	<manivannan.sadhasivam@linaro.org>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Conor Dooley
-	<conor.dooley@microchip.com>,
-        <linux-kernel@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-Subject: [PATCH v3 3/3] PCI: qcom: Add rx margining settings for 16GT/s
-Date: Thu, 18 Apr 2024 17:09:36 -0700
-Message-ID: <20240419001013.28788-4-quic_schintav@quicinc.com>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240419001013.28788-1-quic_schintav@quicinc.com>
-References: <20240419001013.28788-1-quic_schintav@quicinc.com>
+	s=arc-20240116; t=1713487603; c=relaxed/simple;
+	bh=SAxwfbUODKuVZAjbg4c/ynrHR8AgFFORXQJplr0LD0o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=U74guHJTkaZeE5FoKbgXYPqPMrA6AlLfG/W6RsQrK6CRCDvM5MZdPeDxzBe5bT4H2TdTLtQvopwYWJyI9zXtTok3ndmbhJeyudiXql9AgMATlUYKijD8sxObJrmTO6RLFcnpVYQ3s0sCl/X//8KTtpJ4ulLi4vi5H8xqd7yiwHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aoHeQSpw; arc=none smtp.client-ip=209.85.128.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-61ac183ee82so22524227b3.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Apr 2024 17:46:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1713487601; x=1714092401; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pc2K8oSIkotNB7jJyCQuIZXRU6et6cxNtG+X9+wOPdo=;
+        b=aoHeQSpwvAlLt95baNIHl+F8Ul2uCXeMaX47VKhkcnpvawVmACbeFstUt0KTes1vlT
+         P9zbq54ubf9x8dTy08faGjpYN2zE5s7WMRFI3h8cEqx0DosPFnEb7UOuUNmHoJSkPqvb
+         OazrqAKCt4oD/q6JAlw3FeqxcL2+zuxzPPJrA7kYSx3T5vtuWPhgkqnvnTr81PZpGWP1
+         KMM8pKjhGam3sOCB6DwKup0Smm4aP+hmAi3rDnUKf2lkKaHpuU9jp8MmO3FioCTghG4I
+         +L/jpFH38MBpsTYq72LnRLBmWDSCoxZSwu8+d63dgkAdPR+5VLrHhRfJUxIDUErbEv+v
+         jaxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713487601; x=1714092401;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pc2K8oSIkotNB7jJyCQuIZXRU6et6cxNtG+X9+wOPdo=;
+        b=wzgFkEgpyRcrsiCrxFb1IgYyB4hR+T9yoRr7LuN6A07W9DU2rCQHwCM299K2pFPhDQ
+         bEdbQ9Q4uCuM4hu6ng6TkAM7HLemgzaInunVMwLjRKSWK/f/owEM4mZD8FVE5w7WJMYk
+         ZjsBz4HyWmPyTk+LkgPnLrmCpIf+CPFwdd0qC4a6zxbGQfjkiI7Nk7GsPOOv0Em0UTKt
+         4DqKIpxR+bs94pEnk2gEy3hv8A9nM8//sRebW3zoXYLZz3ZOTiUhI3y0vAXDEm2/aYY0
+         sr1TQ6O+3ClQ93yxugyqcE3SP9I2HcyBmtQ6NaNnV9dqjdrYP7zMA3nLSPNN8F8+q2Rg
+         Kzyg==
+X-Forwarded-Encrypted: i=1; AJvYcCWWX2sVF3BgWKK40LIno8Zxf7m6BvVIPF7GKg0cYAS6lbX83nvijzLJ3BAusgnH1jR9ips8agfTX71nCCW/oMVqwwzdysbCVx4d8oddSg==
+X-Gm-Message-State: AOJu0Yz6Ws68EsKcyc5fhiD/+Nz/bEmlUSr7AtMC1UpfV1oGQZUGuQiQ
+	z7B5UEL8eTQpZyYIfMNM0mFGQAgA76hyv/tJekLSzJWcb9Z6RlSEDOcbvCfO5TQ=
+X-Google-Smtp-Source: AGHT+IF9ox7XbuwU6pn2xh/zYYuFHCg4Tx9H6JkTzr7/7WPL8AC/fAwnxlf8VeYoxCBjnfRBP9KNDA==
+X-Received: by 2002:a0d:cc87:0:b0:61a:e7db:5f81 with SMTP id o129-20020a0dcc87000000b0061ae7db5f81mr3097958ywd.18.1713487601185;
+        Thu, 18 Apr 2024 17:46:41 -0700 (PDT)
+Received: from [172.22.22.28] (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
+        by smtp.gmail.com with ESMTPSA id t192-20020a0deac9000000b0061accf6a37esm561363ywe.131.2024.04.18.17.46.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Apr 2024 17:46:40 -0700 (PDT)
+Message-ID: <b675810d-d06b-454e-9726-c987603453e7@linaro.org>
+Date: Thu, 18 Apr 2024 19:46:38 -0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next 1/8] net: ipa: maintain bitmap of suspend-enabled
+ endpoints
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, davem@davemloft.net,
+ edumazet@google.com, kuba@kernel.org, pabeni@redhat.com
+Cc: mka@chromium.org, andersson@kernel.org, quic_cpratapa@quicinc.com,
+ quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
+ quic_subashab@quicinc.com, elder@kernel.org, netdev@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240418204729.1952353-1-elder@linaro.org>
+ <20240418204729.1952353-2-elder@linaro.org>
+ <2614c8b3-ee7f-4ac0-9b43-20905759756e@linaro.org>
+Content-Language: en-US
+From: Alex Elder <elder@linaro.org>
+In-Reply-To: <2614c8b3-ee7f-4ac0-9b43-20905759756e@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: a0jWp-cJVae7NLxedAhk-PU-PCefoKqu
-X-Proofpoint-GUID: a0jWp-cJVae7NLxedAhk-PU-PCefoKqu
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-18_21,2024-04-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 malwarescore=0
- spamscore=0 impostorscore=0 bulkscore=0 clxscore=1015 suspectscore=0
- lowpriorityscore=0 mlxlogscore=859 mlxscore=0 priorityscore=1501
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404190000
 
-Add rx lane margining settings for 16GT/s(GEN 4) data rate. These
-settings improve link stability while operating at high date rates
-and helps to improve signal quality.
+On 4/18/24 6:52 PM, Bryan O'Donoghue wrote:
+> On 18/04/2024 21:47, Alex Elder wrote:
+>> Keep track of which endpoints have the SUSPEND IPA interrupt enabled
+>> in a variable-length bitmap.  This will be used in the next patch to
+>> allow the SUSPEND interrupt type to be disabled except when needed.
+>>
+>> Signed-off-by: Alex Elder <elder@linaro.org>
+>> ---
+>>   drivers/net/ipa/ipa_interrupt.c | 19 +++++++++++++++++--
+>>   1 file changed, 17 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/net/ipa/ipa_interrupt.c 
+>> b/drivers/net/ipa/ipa_interrupt.c
+>> index c44ec05f71e6f..0e8d4e43275ea 100644
+>> --- a/drivers/net/ipa/ipa_interrupt.c
+>> +++ b/drivers/net/ipa/ipa_interrupt.c
+>> @@ -37,11 +37,13 @@
+>>    * @ipa:        IPA pointer
+>>    * @irq:        Linux IRQ number used for IPA interrupts
+>>    * @enabled:        Mask indicating which interrupts are enabled
+>> + * @suspend_enabled:    Bitmap of endpoints with the SUSPEND 
+>> interrupt enabled
+>>    */
+>>   struct ipa_interrupt {
+>>       struct ipa *ipa;
+>>       u32 irq;
+>>       u32 enabled;
+>> +    unsigned long *suspend_enabled;
+>>   };
+>>   /* Clear the suspend interrupt for all endpoints that signaled it */
+>> @@ -211,6 +213,7 @@ static void ipa_interrupt_suspend_control(struct 
+>> ipa_interrupt *interrupt,
+>>           val |= mask;
+>>       else
+>>           val &= ~mask;
+>> +    __change_bit(endpoint_id, interrupt->suspend_enabled);
+>>       iowrite32(val, ipa->reg_virt + offset);
+>>   }
+>> @@ -246,7 +249,16 @@ int ipa_interrupt_config(struct ipa *ipa)
+>>       interrupt->ipa = ipa;
+>> -    /* Disable all IPA interrupt types */
+>> +    /* Initially all IPA interrupt types are disabled */
+>> +    interrupt->enabled = 0;
+>> +    interrupt->suspend_enabled = bitmap_zalloc(ipa->endpoint_count,
+>> +                           GFP_KERNEL);
+> 
+> why not use devm_bitmap_zalloc() instead and skip managing the cleanup ?
 
-Signed-off-by: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
----
- drivers/pci/controller/dwc/pcie-designware.h  | 18 ++++++++++++++
- drivers/pci/controller/dwc/pcie-qcom-common.c | 24 +++++++++++++++++++
- drivers/pci/controller/dwc/pcie-qcom-common.h |  1 +
- drivers/pci/controller/dwc/pcie-qcom-ep.c     |  4 +++-
- drivers/pci/controller/dwc/pcie-qcom.c        |  4 +++-
- 5 files changed, 49 insertions(+), 2 deletions(-)
+I don't use the devm_*() variants in the IPA driver.
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-index ad771bb52d29..e8c48855143f 100644
---- a/drivers/pci/controller/dwc/pcie-designware.h
-+++ b/drivers/pci/controller/dwc/pcie-designware.h
-@@ -203,6 +203,24 @@
- 
- #define PCIE_PL_CHK_REG_ERR_ADDR			0xB28
- 
-+/*
-+ * GEN4 lane margining register definitions
-+ */
-+#define GEN4_LANE_MARGINING_1_OFF		0xb80
-+#define MARGINING_MAX_VOLTAGE_OFFSET(n)		FIELD_PREP(GENMASK(29, 24), n)
-+#define MARGINING_NUM_VOLTAGE_STEPS(n)		FIELD_PREP(GENMASK(22, 16), n)
-+#define MARGINING_MAX_TIMING_OFFSET(n)		FIELD_PREP(GENMASK(13, 8), n)
-+#define MARGINING_NUM_TIMING_STEPS(n)		FIELD_PREP(GENMASK(5, 0), n)
-+
-+#define GEN4_LANE_MARGINING_2_OFF		0xb84
-+#define MARGINING_IND_ERROR_SAMPLER(n)		FIELD_PREP(BIT(28), n)
-+#define MARGINING_SAMPLE_REPORTING_METHOD(n)	FIELD_PREP(BIT(27), n)
-+#define MARGINING_IND_LEFT_RIGHT_TIMING(n)	FIELD_PREP(BIT(26), n)
-+#define MARGINING_IND_UP_DOWN_VOLTAGE(n)	FIELD_PREP(BIT(25), n)
-+#define MARGINING_VOLTAGE_SUPPORTED(n)		FIELD_PREP(BIT(24), n)
-+#define MARGINING_MAXLANES(n)			FIELD_PREP(GENMASK(20, 16), n)
-+#define MARGINING_SAMPLE_RATE_TIMING(n)		FIELD_PREP(GENMASK(13, 8), n)
-+#define MARGINING_SAMPLE_RATE_VOLTAGE(n)	FIELD_PREP(GENMASK(5, 0), n)
- /*
-  * iATU Unroll-specific register definitions
-  * From 4.80 core version the address translation will be made by unroll
-diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.c b/drivers/pci/controller/dwc/pcie-qcom-common.c
-index a6f3eb4c3ee6..3279314ae78c 100644
---- a/drivers/pci/controller/dwc/pcie-qcom-common.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom-common.c
-@@ -46,6 +46,30 @@ void qcom_pcie_common_set_16gt_eq_settings(struct dw_pcie *pci)
- }
- EXPORT_SYMBOL_GPL(qcom_pcie_common_set_16gt_eq_settings);
- 
-+void qcom_pcie_common_set_16gt_rx_margining_settings(struct dw_pcie *pci)
-+{
-+	u32 reg;
-+
-+	reg = dw_pcie_readl_dbi(pci, GEN4_LANE_MARGINING_1_OFF);
-+	reg = MARGINING_MAX_VOLTAGE_OFFSET(0x24) |
-+		MARGINING_NUM_VOLTAGE_STEPS(0x78) |
-+		MARGINING_MAX_TIMING_OFFSET(0x32) |
-+		MARGINING_NUM_TIMING_STEPS(0x10);
-+	dw_pcie_writel_dbi(pci, GEN4_LANE_MARGINING_1_OFF, reg);
-+
-+	reg = dw_pcie_readl_dbi(pci, GEN4_LANE_MARGINING_2_OFF);
-+	reg = MARGINING_IND_ERROR_SAMPLER(1) |
-+		MARGINING_SAMPLE_REPORTING_METHOD(1) |
-+		MARGINING_IND_LEFT_RIGHT_TIMING(1) |
-+		MARGINING_VOLTAGE_SUPPORTED(1) |
-+		MARGINING_IND_UP_DOWN_VOLTAGE(0) |
-+		MARGINING_MAXLANES(pci->num_lanes) |
-+		MARGINING_SAMPLE_RATE_TIMING(0x3f) |
-+		MARGINING_SAMPLE_RATE_VOLTAGE(0x3f);
-+	dw_pcie_writel_dbi(pci, GEN4_LANE_MARGINING_2_OFF, reg);
-+}
-+EXPORT_SYMBOL_GPL(qcom_pcie_common_set_16gt_rx_margining_settings);
-+
- int qcom_pcie_common_icc_get_resource(struct dw_pcie *pci, struct icc_path **icc_mem_p)
- {
- 	*icc_mem_p = devm_of_icc_get(pci->dev, "pcie-mem");
-diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.h b/drivers/pci/controller/dwc/pcie-qcom-common.h
-index e72c651b0d28..b9eb78fcc766 100644
---- a/drivers/pci/controller/dwc/pcie-qcom-common.h
-+++ b/drivers/pci/controller/dwc/pcie-qcom-common.h
-@@ -11,3 +11,4 @@ int qcom_pcie_common_icc_get_resource(struct dw_pcie *pci, struct icc_path **icc
- int qcom_pcie_common_icc_init(struct dw_pcie *pci, struct icc_path *icc_mem);
- void qcom_pcie_common_icc_update(struct dw_pcie *pci, struct icc_path *icc_mem);
- void qcom_pcie_common_set_16gt_eq_settings(struct dw_pcie *pci);
-+void qcom_pcie_common_set_16gt_rx_margining_settings(struct dw_pcie *pci);
-diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-index cb75a874f76c..3032dd91514c 100644
---- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-@@ -438,8 +438,10 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
- 		goto err_disable_resources;
- 	}
- 
--	if (pcie_link_speed[pci->link_gen] == PCIE_SPEED_16_0GT)
-+	if (pcie_link_speed[pci->link_gen] == PCIE_SPEED_16_0GT) {
- 		qcom_pcie_common_set_16gt_eq_settings(pci);
-+		qcom_pcie_common_set_16gt_rx_margining_settings(pci);
-+	}
- 
- 	/*
- 	 * The physical address of the MMIO region which is exposed as the BAR
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index acf66f974edc..f69364ecf2de 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -263,8 +263,10 @@ static int qcom_pcie_start_link(struct dw_pcie *pci)
- {
- 	struct qcom_pcie *pcie = to_qcom_pcie(pci);
- 
--	if (pcie_link_speed[pci->link_gen] == PCIE_SPEED_16_0GT)
-+	if (pcie_link_speed[pci->link_gen] == PCIE_SPEED_16_0GT) {
- 		qcom_pcie_common_set_16gt_eq_settings(pci);
-+		qcom_pcie_common_set_16gt_rx_margining_settings(pci);
-+	}
- 
- 	/* Enable Link Training state machine */
- 	if (pcie->cfg->ops->ltssm_enable)
--- 
-2.43.2
+I know I can, but if I'm make the switch I want to
+do it everywhere.  Not now.
+
+Thanks for the review.
+
+					-Alex
+
+>> +    if (!interrupt->suspend_enabled) {
+>> +        ret = -ENOMEM;
+>> +        goto err_kfree;
+>> +    }
+>> +
+>> +    /* Disable IPA interrupt types */
+>>       reg = ipa_reg(ipa, IPA_IRQ_EN);
+>>       iowrite32(0, ipa->reg_virt + reg_offset(reg));
+>> @@ -254,7 +266,7 @@ int ipa_interrupt_config(struct ipa *ipa)
+>>                      "ipa", interrupt);
+>>       if (ret) {
+>>           dev_err(dev, "error %d requesting \"ipa\" IRQ\n", ret);
+>> -        goto err_kfree;
+>> +        goto err_free_bitmap;
+>>       }
+>>       ret = dev_pm_set_wake_irq(dev, irq);
+>> @@ -270,6 +282,8 @@ int ipa_interrupt_config(struct ipa *ipa)
+>>   err_free_irq:
+>>       free_irq(interrupt->irq, interrupt);
+>> +err_free_bitmap:
+>> +    bitmap_free(interrupt->suspend_enabled);
+>>   err_kfree:
+>>       kfree(interrupt);
+> 
+> You could also use devm_kzalloc() and do away with the kfree()s you have 
+> here on the probe path.
+> 
+>> @@ -286,6 +300,7 @@ void ipa_interrupt_deconfig(struct ipa *ipa)
+>>       dev_pm_clear_wake_irq(dev);
+>>       free_irq(interrupt->irq, interrupt);
+>> +    bitmap_free(interrupt->suspend_enabled);
+>>   }
+>>   /* Initialize the IPA interrupt structure */
+> 
+> Just suggestions though.
+> 
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
 
