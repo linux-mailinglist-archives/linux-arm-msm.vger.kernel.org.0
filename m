@@ -1,223 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-17956-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7590F8AB09E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 16:22:19 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 45E148AB0C3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 16:28:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E240D1F2267B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 14:22:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EE580284B0A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 14:28:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA4832E40E;
-	Fri, 19 Apr 2024 14:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7F7D12EBD4;
+	Fri, 19 Apr 2024 14:28:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="RobKPGPP"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CGzj7yAj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2047.outbound.protection.outlook.com [40.107.236.47])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 233FF2AE90
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 14:22:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713536535; cv=fail; b=jjSze4O0fBBf6LwX2wzhYRDnkHJY502VygKwklQRfwPBjcM/lt1JCNXL+6qn7GorijhZnXbMTzZu7H8PrCjTIVXM0603kLFHHfDAL/9V276rmKCvpO1+QEI8TWWhPKl5EDn7NvkFazwyZNT2QPFmz8NYLG7y7C+Wv+DrdjKHTyU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713536535; c=relaxed/simple;
-	bh=ZOWeTNzuoUsKVmvuA764VYfTc+SyWrytC9G1yKBFZzQ=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=b1NjN8tgU1WFkxuPv0651BYVS2mWj654Sr7td0stHu9SwD/wrUqMYu3XCR8TFJQlaZOtdoPviFR+t672u4UnXiC8X1pRxRaU9MLlWOmBi+UOw/QBKnf7Op90to/oRZz57fhs8jlmcMbGmkjqKRh8IQ0gfc66C8wO6LOeTZgZc/c=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=RobKPGPP; arc=fail smtp.client-ip=40.107.236.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=VgGEOIjRqM8CLd8AaxZkA+fatV+avFnqznAuK3FylwrRjAXX3Tr786bDtWEJ44OA7rh/+5I+zuwMejk31gDtUDfZtI1bFZy0ah/vHKmNIV0SoxNHQByq7hiIUt72t+RlbMkgEHz78r1LamMoFj9mJwvB3T5J+uxugqHDXAptl6BvinDKKCc759XajkB87SPWpimh1sDKBcCoUhk0T6487RzvoEM8P/qADOHVESicfNg/GgZMH93FRBRMn62hAyi8RC+w9Zei3n5LB2igRCGP8qs4FAoj5ooQHdkGuU+5Zxlce0j0XKfRhHXrb54fNQxBl3/bmMwDYKsyYVGQELrv5w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RrQnSgbXlJQVQpeeVSrGr6JJLsN2VbOCmKsQwrlk7WA=;
- b=P73vsweokobZ7STtB+cYzUr4EIMPT7d733/ydqVzCFijnqjf5ecjGaxLtczdTiImVPs+d9ShaqrD0ihNE5ZQC4tu1OyafOa6d6rCI/sVo3iLM4OOVkZdy4TNH1NtOiMzHEL+hIE4W2z+YQj6RosoWhY6ibZ5YTc8aR1kXV9iO+3QHJPjB5nkgFpBI38gfjZD/xqRngm8UHZf7Q4MQ67V/q2quH/CChTQE64vNoFRBJvTmwsmRcQTRM/qcYvzZuT1AItJ+JEJ7M7N2NZNAXyHHFq0sdg2vIDljvCz3Qp82q5N4Mor3p1ql1Qh6HyU2N51bazgFUHq2jBjllaSquoIhg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RrQnSgbXlJQVQpeeVSrGr6JJLsN2VbOCmKsQwrlk7WA=;
- b=RobKPGPPvU7J+4oZ6Mx9b0v0gXBhsW+a0g9bHSAVhswIT3ZURpdah+rivl3ki2pGwNKEBvWKGSJG7Zzfjy5nU3eN+0+fNOZQWz17W1bhEswgKJXs2S6PHRSY1/MpOPPfShUm/s5jLOJjf7TJ+7zA76jDepRy/KnZK2xPwHKXMjKjgPrCA2VMtMcqM9S/4tRfLjJsHBCeaUJ18Fb5wnkEoL0jntbY3+FDyq0Tvhc+Oxhp0IWJlxW3uRlbNoGCuLnahYQ9cc1PnNuFULmnbf7GdZzlCkFvi4r2QHTfr5Tb8ImN/r5g4uKoH0PZMxZb99LB1uvo5igAWUerS3dcs4YZCA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CO6PR12MB5444.namprd12.prod.outlook.com (2603:10b6:5:35e::8) by
- MW3PR12MB4412.namprd12.prod.outlook.com (2603:10b6:303:58::10) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7472.42; Fri, 19 Apr 2024 14:22:09 +0000
-Received: from CO6PR12MB5444.namprd12.prod.outlook.com
- ([fe80::ae68:3461:c09b:e6e3]) by CO6PR12MB5444.namprd12.prod.outlook.com
- ([fe80::ae68:3461:c09b:e6e3%5]) with mapi id 15.20.7472.037; Fri, 19 Apr 2024
- 14:22:08 +0000
-Message-ID: <81c72b06-d3db-49d5-b1a7-9d16cd9ea0a4@nvidia.com>
-Date: Fri, 19 Apr 2024 15:22:02 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/msm: Fix gen_header.py for older python3 versions
-To: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
- <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org
-References: <20240412165407.42163-1-jonathanh@nvidia.com>
-Content-Language: en-US
-From: Jon Hunter <jonathanh@nvidia.com>
-In-Reply-To: <20240412165407.42163-1-jonathanh@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO2P265CA0159.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:9::27) To CO6PR12MB5444.namprd12.prod.outlook.com
- (2603:10b6:5:35e::8)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46DA312E1F6;
+	Fri, 19 Apr 2024 14:28:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1713536923; cv=none; b=MHvCP6dgX0R1jRtki7o8PFzTJ9Ywg03PdiaeuLAJe5ddLwHkmGphDMJYQi+PxS06Xw3QltUL0eyoRtLDt1CpDI6B4JYVJzNtUKNFWBihT7F0huhZMLC+wPV/sgVtTlXzPMRxcBPDSh6nHvCgLVdgyTvgpl19zS+F7NAsksUEMgM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1713536923; c=relaxed/simple;
+	bh=w4dSRLxO7SADjX8lbbGLrNHxtnVtV8dTjvr+uJLW3ag=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=sUcTtv2knHS7fvm+pO/E6vjeKaxyY6UB3EZbGWVZlRsk0Yguo8hgtzaugQbYPL6vJU2ZS4gKLEwGhaj1OG/Y0Ym5MLBVbjmgJ7P/6GZb4t394+gYiQrFh3qdvNVhue1Pw7P/EtYmd8Xi/+IbXRU5Khpave8yOr51B6YFBgb9Eek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CGzj7yAj; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43JD629E017627;
+	Fri, 19 Apr 2024 14:28:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=/7AD6EwruIBOLZzV5oOINOaZDwI2eqymeSzVhuKzQpE=; b=CG
+	zj7yAjeTYIKlJiJJQI0tO4qcKFU7GuUcwUEwtkUcsUvhUavs9TkZPFggqACOreAb
+	4bWREDIo+WThsQg1Px+oBKzPUhuZS4r/antob7rPievHyz4dPEizvq6E1ED5qtkT
+	3XGtcksOEJdE7tjB65Sqo2Oef6uToIPIlW0Vv6cj70aXBjE08ND6U4AGenY72/dd
+	Xe9451BsEbN+Lwh0tdVvItLgv3xfdqQm+Z0EWPlS+VPKp17emLSxEZG6H06Lel9Z
+	F964EEhJLpUcEfqpbY7CQIVKYE1INxqMXYL3p17F1s53CVftBP89tO2Ezil1Jtus
+	OLlh4SsOYtXwqPDNW+pA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xks6s8550-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 19 Apr 2024 14:28:22 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43JESL0M014875
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 19 Apr 2024 14:28:21 GMT
+Received: from [10.216.17.233] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 19 Apr
+ 2024 07:28:13 -0700
+Message-ID: <4a83afeb-8e82-4f95-b44e-74d39d55f448@quicinc.com>
+Date: Fri, 19 Apr 2024 19:58:08 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO6PR12MB5444:EE_|MW3PR12MB4412:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2fab84e3-187d-40b6-f64e-08dc607c189b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?bUt3SUFrdnlXZjJ3UHdXaHlyam5BKzZhVE1IS0VJUHp0VVRvUFFpYUgraU1D?=
- =?utf-8?B?SFYzWUVkR0pDc1NqaGFCUWpEQk5Uc3dLa1h3a2dYUGoyMWJOMnQ1RWZQcmo2?=
- =?utf-8?B?dVNjRWNReEpxZm5ZbVdPK1EzcEpCR3BRc25SQlhJczlNNjE0YWlVdWdvM2tC?=
- =?utf-8?B?c1VnMnRTSHU2VDlvdWdRNjR1K01mdkcySDFQMTdKSlFGa2EzRHRTVWNXb1ZP?=
- =?utf-8?B?dGlwU0NtWmhjemlCQ2FyMGEwVHRDMGtFUC82OVZlWk0rKzNycjBwdi9qeExH?=
- =?utf-8?B?ekgwYkZpdy90UXkyZmRpcFBUYUpJVk1Td2NkdWRiaE92MDN5dXJpSWJMM2Mw?=
- =?utf-8?B?RjlBYTlqcWdPZVhidEo0Q21JK3lpTWVjaHVUZjBmWG9GOElvZHMzQ2RpTUps?=
- =?utf-8?B?YkdFR3dON0hXUnA5M0ZEY2R6ZG5RellwdVl5YldSU1JYQ3FVL1BqU2tESXVC?=
- =?utf-8?B?Vkw1NjRidlRDdXQrVTQ4V0xIRzFzaS92cDVIT1drYTRLaHpqMDV5WVVtTHlO?=
- =?utf-8?B?UFc5Y3lwc1N3bTJyek5nY25BZEhCRTdxbi9rcEpWMHBQNDRIejRUL2NJWWdk?=
- =?utf-8?B?Q2dIVDJaZE9yL0JZTThZd1BIN3hhYk9ZVlJBc3Uva1pnQXpXU292c0U5NElh?=
- =?utf-8?B?STJZSFQ0R2JpbjhBWWhNWmlnUHRTclRzTkF6eDBVbjZ5VXhaalgrOGdLb0pp?=
- =?utf-8?B?eWpJRHU1Z1p0RjFJb0cwNVFKMVVPbktrR1VYZ1ZEZ3hQNmVNcGJZSHViT01y?=
- =?utf-8?B?cXRSY1l1ZnlTS3lsM1Rtd21pMmdEazhRQUZxMGhDdkl5V3lEdElndjBrVVJO?=
- =?utf-8?B?cHhYVTltQXMxVCtGT090ZVVKMFJGZlBpM3ZOYlVBVEo0Q0YwNW1DWEtUUGRN?=
- =?utf-8?B?a3lRMUZKWEtaZ2w5T01LTFBWa1ZOM3N0ODg2S1YzSUxvaVU3NkllcnZzMlZs?=
- =?utf-8?B?am91NjRsZmNrK212UE4rN3ZZVWRYMlhnN0NwVFdnalhOZFdsRVBoOEtPUFFo?=
- =?utf-8?B?cllKMkxoeGdSRWlvdHFsQ3kyZlpNeHFMQ1JxU2QyQTVRb0QxUkE4c2JhZkRR?=
- =?utf-8?B?bmwwcHAxL090R0JJamNJZHpYanFBMUFHRkpuMk1OQ0Q0NDZjTitLbWVEeG5n?=
- =?utf-8?B?MEpnUWhxRTVwSXRwTDJFR3JCcWlUQmRrTGdQVWxBdFdWNVdjSmVTK2dBeHg2?=
- =?utf-8?B?MmxhMWg5ZFVETkNVZ3EreGtncDlxQng0aDdCMHp4ZXd4NUtBcVFHdEljTFhy?=
- =?utf-8?B?aXdmWFdpVWUrcGVZTlRhTkxEY0hZZmZZRVdOcWQ3TVF4anVSbFJIRzI2bVBY?=
- =?utf-8?B?Zm9IUE1iZGd4SlFYanRMNGExTW5QOGxETm1rdnBlV01nZFFYeGlvZFgxVmxz?=
- =?utf-8?B?amE3cG1tak54ekswSVpBSjI3a3BaQzJJYlo4RldIbElKejArRnhFNE5pd0lY?=
- =?utf-8?B?cVpJTWVac1NTRlBlalhNVE1SbGh0Rk5sZUlaL1RPOFZDci9vTkovWm9kYnpo?=
- =?utf-8?B?OFZNZ1c2RCtyRWM0aVU3OGRELzJzTm5XVmxRdXN2OFhzVnJKc1ROWlp1VUNJ?=
- =?utf-8?B?K0g3aUZuRVR3UlBCaDAzdkR3SzdsVFBCcXg2bHhxKzU2cTk4VjBLakp2QzFj?=
- =?utf-8?B?MGtIS0FmemFYelJZL2FrWVAwVWNGWS9CZ0xIaTc1R0lTU0RLYUlXR3pzWWRX?=
- =?utf-8?B?eVBISkwrUUxhanlwQ3J0bnZqWC9ja0xVcmQrR0ZmVy81RmhPSlArSDBBPT0=?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO6PR12MB5444.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366007)(1800799015)(376005);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?M2NFRmVLSlo2RVJOQWwwZFh6Yzh0RFhnL01uOTA3bExPbzF2a29IaVBTNnNu?=
- =?utf-8?B?MUZUSWFHV2E1VndST0k3eHptRzZMQmk0SzRYT3dybU5WYnNHOHNBSU5qS2FK?=
- =?utf-8?B?VDJDNUExNmdEdHdFS1pncGZhL2ovbXZjNStRZHE4THczRW16bXNDcmNoQjFj?=
- =?utf-8?B?Ym1GUktJMzJFWS9rUVIvU2duVmNNZFBUbDBBYWxqVkJ2Y25yN01kL09UZmJh?=
- =?utf-8?B?L3p1WWhzSHdXdmFQZkJlOENsUHFUL3h4V2pteXNacmVHV245U3FZU0VrRjFE?=
- =?utf-8?B?cG5UWUt5OWpsTFZTdVhBZElIL2hKb3pqbTNYUFJWdTNTODRFcXZJd0F6b3pk?=
- =?utf-8?B?Y2ltcmI2NG9sYkxWTlBvSHVpOTlIb3E2ekNMKzR2Z0hZZHNKZm1CTCs2QTJn?=
- =?utf-8?B?Zks1dnJjUXNtNkJlaXl2aHM4Z0tIUmh2YkpZY1RMaFFEUnp5QnNkUDd0S3g5?=
- =?utf-8?B?anIxblpRUjVEMGU4eHVhVWcyYXJZV0dZb1MwWEdXdllKSW5jelZqTy9kTWdv?=
- =?utf-8?B?ODVsRlFoRUV4ODZrOXRPdEJ4ZmwyaGlVRTcrNXJhZXZwdGlucVBNR3NHcE93?=
- =?utf-8?B?dGtKdVNCNWlBb0wwNVlUazROVXpGTXlCM1NzTDBrZ01vVEVqR1BuU1lFSTJG?=
- =?utf-8?B?dDQ5SHlvSmlESDJTYzVXT0FYMjJFWEpGNzZZWGtyWXJrKzM4NUFNWjNVL210?=
- =?utf-8?B?cUVHdXp2Z1BmZEtWNXUwQldWUHREU1BwMDloNUk2WW9udkZoc3E3RkRGd05l?=
- =?utf-8?B?WHhVRVFqRFowcFc0Y041eUV1VlBaMXo0UlVEMTY1UnRqbU05QTcxczdKU2NP?=
- =?utf-8?B?c295ZnhuNlRmOXRwWWt5S3dOWjN3dk9JRXBnYnVzVElZRjg3MGQyWHZ6d3Vi?=
- =?utf-8?B?M21ENVphUnBuYXRKRVBCdWl6UEl4YTVQbkxvdlk3M2ljWm1ESnJsWlBNY3NP?=
- =?utf-8?B?OFRaSTJPdFV2eWFkQVNYRCt6djJ2eWtMTkJUNUhudDRYaG9RVFJaNno2Tkdv?=
- =?utf-8?B?NEJkaXFXbGdFV0NyREtIZlhuM3V1OHQ0bUZ5OThlTUhidVMvdFFVSWxLa2hO?=
- =?utf-8?B?cksvRkgrbGlzdmQ2dTVBUGkvYjkxajRTR0ZUdi9mbWJ4TklBNlEvZFU1T3RP?=
- =?utf-8?B?Mm5LY01DWWk2anlCVFhMUEkzeGpRUHR0QklDcG1mRjR1aG5mKzBQdXpudktt?=
- =?utf-8?B?UUhWNzArbDRUQkY0Ym1YM09Ca3lSRFE1Q01VRDdBQWxwZkVndXBqT05Zck5V?=
- =?utf-8?B?MVIvZHl4YmNhYzVyZ1AyQW0wSDREaytXZ1hiVVZmdGZabGhvMnpvNFlPQTMr?=
- =?utf-8?B?M3hNeHlIWUw1cFNhbGhZdnZKOEJyejA2cUQyVnZBQXp3YUVaTHJ5R2N4V2RS?=
- =?utf-8?B?QW9TellJem1TQjlpOUxUSEZrNmZCdGpzeUFZTjNCL25ZeE9CSnNQc0twZ1BP?=
- =?utf-8?B?bmZjQ2FOcm9MV0hLSjdHREFhaEZBSklDUVpYaFFlbVhFTlk2RDNyMW9PMUd6?=
- =?utf-8?B?M3krMURPc3grZlIxc0tNdWlWaVFrb3FPTHRHNjMybHV2VzBBNUtXbUtDc3Ba?=
- =?utf-8?B?cjRuSjlQcmo2QVh2U25uekNFNEswMUcwc0hNVEpDelp1c1JZYkhiM2krTGhO?=
- =?utf-8?B?Qk43OTFPQjVSUzlpODNFQ0VvcGIyTDVLNHBWTjVRWXBuWjlWamtXbXJFallU?=
- =?utf-8?B?VHJiVEROak5BRnNDY0hkek5FNktJbnV5eWhWNnk5azFUalVOaVNGWHloWG1s?=
- =?utf-8?B?c3I4cXRWUHNrd1RDUHNOVXRTc2pQaGRiVDkrdmI2TndwR0JVZ2s0ck51UjdZ?=
- =?utf-8?B?S2tQYXUvSEdPWkNiT2VoYTRCbm9iT0VqV01tSmI1b01BU3ZlcnJTN0tCcHF1?=
- =?utf-8?B?QnBobjdkT09uS0RsWXlZSStkVWlVdnJuTjJQSE5keTB3QlBEUHVBVSt6MHBr?=
- =?utf-8?B?TTJwamFlNkJzcFE4UCtPR2lEKytyUVZSdkY2UUs3RGJMbTIwbUg2TEVKYmhV?=
- =?utf-8?B?bGdRWHBjak5MVk0xWHQwbGgyenFDMEc3MG5Jc2Y2SjJUR3VUSjdjZWlISUFK?=
- =?utf-8?B?VGhWdDNtckJSS2dYUFVpclY2b3hqTlBuWWNjRVdOaENxZzBRaUptd2Nkb2RU?=
- =?utf-8?B?OE9pcFllMHFzc2pReXcrQXUwSU55MGE4OG9JVHZ1V3FNa1ZpRkVCdHNPbFQy?=
- =?utf-8?B?bmYxY2YraFNYaXpzN08ya3Q4WmdBSUZNRFhBSEhkTWNaRFFLWWdkbXRvbCtN?=
- =?utf-8?B?N2hjcW1hY2kzb0xoY0ZqL093R0xRPT0=?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2fab84e3-187d-40b6-f64e-08dc607c189b
-X-MS-Exchange-CrossTenant-AuthSource: CO6PR12MB5444.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Apr 2024 14:22:08.7660
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: IFkDrh0ki7eZ9CiEus54SwnKiXr6lvA5a9j0WoOgz2CpLsJOsVoqaTsMdDN97USJSphuUWQlVtBqmhws92cPRw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR12MB4412
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/7] ipq9574: Enable PCI-Express support
+To: Alexandru Gagniuc <mr.nuke.me@gmail.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Lorenzo
+ Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?=
+	<kw@linux.com>,
+        Rob Herring <robh@kernel.org>, Bjorn Helgaas
+	<bhelgaas@google.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I
+	<kishon@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen
+ Boyd <sboyd@kernel.org>,
+        Manivannan Sadhasivam
+	<manivannan.sadhasivam@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <linux-clk@vger.kernel.org>
+References: <20240415182052.374494-1-mr.nuke.me@gmail.com>
+Content-Language: en-US
+From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+In-Reply-To: <20240415182052.374494-1-mr.nuke.me@gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: f5HZFmDXBrCPKCpPNSOydsESSpTxuWBO
+X-Proofpoint-ORIG-GUID: f5HZFmDXBrCPKCpPNSOydsESSpTxuWBO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-19_09,2024-04-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 impostorscore=0
+ priorityscore=1501 bulkscore=0 adultscore=0 suspectscore=0 spamscore=0
+ mlxscore=0 lowpriorityscore=0 mlxlogscore=999 malwarescore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
+ definitions=main-2404190108
 
-Hi all,
 
-On 12/04/2024 17:54, Jon Hunter wrote:
-> The gen_header.py script is failing for older versions of python3 such
-> as python 3.5. Two issues observed with python 3.5 are ...
+
+On 4/15/2024 11:50 PM, Alexandru Gagniuc wrote:
+> There are four PCIe ports on IPQ9574, pcie0 thru pcie3. This series
+> addresses pcie2, which is a gen3x2 port. The board I have only uses
+> pcie2, and that's the only one enabled in this series.
 > 
->   1. Python 3 versions prior to 3.6 do not support the f-string format.
->   2. Early python 3 versions do not support the 'required' argument for
->      the argparse add_subparsers().
+> I believe this makes sense as a monolithic series, as the individual
+> pieces are not that useful by themselves.
 > 
-> Fix both of the above so that older versions of python 3 still work.
+> In v2, I've had some issues regarding the dt schema checks. For
+> transparency, I used the following test invocations to test v3:
 > 
-> Fixes: 8f7abf0b86fe ("drm/msm: generate headers on the fly")
-> Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
-> ---
->   drivers/gpu/drm/msm/registers/gen_header.py | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
+>        make dt_binding_check     DT_SCHEMA_FILES=qcom,pcie.yaml:qcom,ipq8074-qmp-pcie-phy.yaml
+>        make dtbs_check           DT_SCHEMA_FILES=qcom,pcie.yaml:qcom,ipq8074-qmp-pcie-phy.yaml
 > 
-> diff --git a/drivers/gpu/drm/msm/registers/gen_header.py b/drivers/gpu/drm/msm/registers/gen_header.py
-> index 9b2842d4a354..90d5c2991d05 100644
-> --- a/drivers/gpu/drm/msm/registers/gen_header.py
-> +++ b/drivers/gpu/drm/msm/registers/gen_header.py
-> @@ -323,7 +323,7 @@ class Array(object):
->   			indices = []
->   		if self.length != 1:
->   			if self.fixed_offsets:
-> -				indices.append((self.index_ctype(), None, f"__offset_{self.local_name}"))
-> +				indices.append((self.index_ctype(), None, "__offset_%s" % self.local_name))
->   			else:
->   				indices.append((self.index_ctype(), self.stride, None))
->   		return indices
-> @@ -942,7 +942,8 @@ def main():
->   	parser.add_argument('--rnn', type=str, required=True)
->   	parser.add_argument('--xml', type=str, required=True)
->   
-> -	subparsers = parser.add_subparsers(required=True)
-> +	subparsers = parser.add_subparsers()
-> +	subparsers.required = True
->   
->   	parser_c_defines = subparsers.add_parser('c-defines')
->   	parser_c_defines.set_defaults(func=dump_c_defines)
+> 
+
+Alexandru,
+
+Thanks for your contributions to the Qualcomm IPQ chipsets.
+
+I would like to inform you that we have also submitted the patches to 
+enable the PCIe support on IPQ9574[1][2] and waiting for the ICC 
+support[3] to land to enable the NOC clocks.
+
+[1] 
+https://lore.kernel.org/linux-arm-msm/20230519090219.15925-1-quic_devipriy@quicinc.com/
+[2] 
+https://lore.kernel.org/linux-arm-msm/20230519085723.15601-1-quic_devipriy@quicinc.com/
+[3] 
+https://lore.kernel.org/linux-arm-msm/20240418092305.2337429-1-quic_varada@quicinc.com/
+
+Please take a look at these patches as well.
+
+Thanks,
+Kathiravan T.
 
 
-Any feedback on this? All our farm builders are still broken :-(
-
-Thanks
-Jon
-
--- 
-nvpublic
+> Changes since v2:
+>   - reworked resets in qcom,pcie.yaml to resolve dt schema errors
+>   - constrained "reg" in qcom,pcie.yaml
+>   - reworked min/max intems in qcom,ipq8074-qmp-pcie-phy.yaml
+>   - dropped msi-parent for pcie node, as it is handled by "msi" IRQ
+> 
+> Changes since v1:
+>   - updated new tables in phy-qcom-qmp-pcie.c to use lowercase hex numbers
+>   - reorganized qcom,ipq8074-qmp-pcie-phy.yaml to use a single list of clocks
+>   - reorganized qcom,pcie.yaml to include clocks+resets per compatible
+>   - Renamed "pcie2_qmp_phy" label to "pcie2_phy"
+>   - moved "ranges" property of pcie@20000000 higher up
+> 
+> Alexandru Gagniuc (7):
+>    dt-bindings: clock: Add PCIe pipe related clocks for IPQ9574
+>    clk: qcom: gcc-ipq9574: Add PCIe pipe clocks
+>    dt-bindings: PCI: qcom: Add IPQ9574 PCIe controller
+>    PCI: qcom: Add support for IPQ9574
+>    dt-bindings: phy: qcom,ipq8074-qmp-pcie: add ipq9574 gen3x2 PHY
+>    phy: qcom-qmp-pcie: add support for ipq9574 gen3x2 PHY
+>    arm64: dts: qcom: ipq9574: add PCIe2 nodes
+> 
+>   .../devicetree/bindings/pci/qcom,pcie.yaml    |  35 +++++
+>   .../phy/qcom,ipq8074-qmp-pcie-phy.yaml        |  36 ++++-
+>   arch/arm64/boot/dts/qcom/ipq9574.dtsi         |  93 +++++++++++-
+>   drivers/clk/qcom/gcc-ipq9574.c                |  76 ++++++++++
+>   drivers/pci/controller/dwc/pcie-qcom.c        |  13 +-
+>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 136 +++++++++++++++++-
+>   .../phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5.h   |  14 ++
+>   include/dt-bindings/clock/qcom,ipq9574-gcc.h  |   4 +
+>   8 files changed, 400 insertions(+), 7 deletions(-)
+> 
 
