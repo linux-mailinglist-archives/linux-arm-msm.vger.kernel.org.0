@@ -1,76 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-17914-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17915-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 066528AAB73
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 11:26:52 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BDFB28AAB8B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 11:39:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1D5971C22131
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 09:26:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 33E341F2165F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 09:39:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EFF37BAEE;
-	Fri, 19 Apr 2024 09:26:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 418BF79950;
+	Fri, 19 Apr 2024 09:38:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zGUF9Kg+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r8Wgpovf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64ED076402
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 09:26:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F651E491
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 09:38:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713518800; cv=none; b=pd4K4MwtSm4xU4aWjdpqm9l+AzZ+Q9JrATS5mPzM6iaujyMdjbCPZZcI9DR3IcYTOna2mgvEjBLl2Rl/Hb6uJIm2ZAjQh9wsq2nBC8nJr0WTKVNJ3PghiS9eClxG/UqUWfwamiTHP7RGHKjlnIaAZbCgSfvfW4hWEezLMV5PM/4=
+	t=1713519536; cv=none; b=FnHQk37fDHj929GFIMHBwmlA1afeoriCh/Q7t7z6gC3n1vKVweLUiHYn4O871dSOAIuAjCuzeOYu+d0JdpL6V/zABzf/p/7yr0NnTL+0IQ/ywvuyAaBx1jpzmoRb+hIBqzXvvrwAMUM8L0JCD62W4tueIUcNuJoQpmFuoZFeZGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713518800; c=relaxed/simple;
-	bh=nEQE1bgcahfGAeEROm4nIOqoBwmVPoodJbRFX+eJFiA=;
+	s=arc-20240116; t=1713519536; c=relaxed/simple;
+	bh=N2UXq2U4pdLZn+hJU/sN9WPbe0o2JK8fp42YrnciohQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qUKFLqJCVHGdjTmb5o5yJDmfF+b7rSDN31urXqIdAL6+2O95Qu8cnp08hKcEGci6H4zUPgC617ao+im5KjEUG2awinASNJN7Xd8+g3Q9axeW802RWSQgUT4kNBzPdC9gN4JPuES3dg7l6zYEaX4MG9AqF4h4LFRQX/SQaoZ6Axs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zGUF9Kg+; arc=none smtp.client-ip=209.85.160.47
+	 Content-Type:Content-Disposition:In-Reply-To; b=F06jkLcA44KxltnyQtol6FkGpFBGQ5H0y/sBO4dNiOdYFpZhIlh3TnUR1mX7ooDXJ5ozzVV64I0D4gBI4kxStbTcsg/1szyQBBXF4fiZZe16kzIlgYn4MFZcHSCM8lDTTDqiSkskrnGCb8Krc2DAEaDJhlTLEPudQJ+g0VSmlMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=r8Wgpovf; arc=none smtp.client-ip=209.85.214.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-22edcfcd187so730036fac.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 02:26:37 -0700 (PDT)
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1e0bec01232so15372305ad.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 02:38:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713518796; x=1714123596; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1713519534; x=1714124334; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=f2k6wBjEwpSJIIcZ8MPn1YroTKsxMSXWDSsv1Yc3sRE=;
-        b=zGUF9Kg+YfIg5reVeeXUQSnLyDkpUGj4ulcrTG/5U9jobWew3+UbDq2OCWNOICgrin
-         7hq+3cPPix++lBy9F14RWm5Kz62j93bljrW2wyIbZfSBeV6hVlDONbm0khRSoONFcdlX
-         m41WZ3vCnL/HRQCbm9Qj5cOGZ83h+9xNVYIElD3ISyaC3qoGA2OXFv93nWqtkEmGcRmf
-         xia1REZQMbnyGTtMXEg7PqQug4haRsaTWrvhTunIto3xjfTmbDau0evVRjD2xId5dtLs
-         XrYMSEZPOuvjnznpUiRiIb5UH5FkSK+75423udCleJnPXJH82URJBsBFXKV9Z6T+oSqn
-         DmWw==
+        bh=vhyd8ERSjL+j/lnHLclAKIR9eCMnjtkAQONWEXxntro=;
+        b=r8WgpovfxHO+9o4Vk2OdGmDFDpoVuLXB8t2kMlsau672uhITC5nhwpDfKnWMTJiEEO
+         75XepK41XF3j5Ie76I2YX3wISpTEm8GycyBj770De4CLCTNW72N/qjDBHp2Nkm0GWp/+
+         jjJUbW1XUt8eCxHA0XzDRKCAy9K14L0N78HbstXmpZQgJw6i0UnZvTgKtmd9ACwyWs+y
+         nt1I5v/567QrYLs8XimgqcdJF+TXDrbJDByQprxlPm5KcT8uLBhfAnAdapkEXdoCLybU
+         wmsAy0Pe8duichiU/LVlZVfvOKXwtGs/iBvYgronLw6pkit6zXvFLce8IGmzCCNSC/yw
+         U54w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713518796; x=1714123596;
+        d=1e100.net; s=20230601; t=1713519534; x=1714124334;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=f2k6wBjEwpSJIIcZ8MPn1YroTKsxMSXWDSsv1Yc3sRE=;
-        b=hXPDkg2pacB6RhpPWUJ6tU0BiOjcYdp4T2B4q3ctbHwy8TYmNkg/GfwYIRTudSECzJ
-         GqaBHBXrKvnLOVgjZLePt2wyOYf4ekk080arz2/C3bDBZelmzVcm5qGn27HUfm2jDYMw
-         M7UW50qPpWfwA3+gjbN428kZXA/4k80BW1eJ/iUQZOGK7a09qzHpqN+lmLtyYBGbeHfp
-         gMUINHHPc5dPgdlMlQRGCPvxZgSzEX3W+6LIGzVo6pMiz0sKgq+v834tiUCgYSx8BB7v
-         A4+64SAwUM9i8rUOnCI9HK+8ZEXmks8y4ShXzeaGtbR9qaTS778QYqgByb45YBPfOfry
-         GM9Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUWfXcIFo0iQS8YqBiHUlNDz60uCCk272Lx+ADKB+5f9Y3gjrmzd2713Wob5nwBDsFzfisZY1x/XQYUdQM1lr1ufJBdzZOCpzZlrppMxg==
-X-Gm-Message-State: AOJu0Yz+0UJuLTMqZms3cU897unW1hJVnntmnElbqfjemZ6ru642qNa/
-	QCSILhQOxAZs0VQgHBcoLmIn+hft0sJ5iw8QbsTGV95LGlNBbrAQcajy7yC0xlofYdX/FtOgd/Q
-	=
-X-Google-Smtp-Source: AGHT+IGPIPPIitXX4Yw0hrulDjF2tnglO0Qdegfb3hKjRqYEF4E5wtIteUhkJR61YJc1aF7VAjq+9A==
-X-Received: by 2002:a05:6870:12d9:b0:22e:c37c:453d with SMTP id 25-20020a05687012d900b0022ec37c453dmr1625314oam.30.1713518796449;
-        Fri, 19 Apr 2024 02:26:36 -0700 (PDT)
+        bh=vhyd8ERSjL+j/lnHLclAKIR9eCMnjtkAQONWEXxntro=;
+        b=n8dtFWm7j3kKbnWfkjAgDTlkN6jPhI3rnjN3FAXEk1ISbI5zdb1zVV+Cjh1JcXW8YK
+         adFZsGcdZSRus7Ef4sVtonozd95E5jHhYROncuZYbm9T3sR75vPrIqcoxJmxiWyoQqtJ
+         3pEQ3FBoXufHkZqftiomRNhulZIgTAR2pxzIF9Bs/7BDkL9yIcC8RCIdLMW2S5mDnWLm
+         wBiHbKT5tVM1jYbRC9NwIsmjDqdzKHNNwWmBACgFBXaNJmHODdyDmcqhDRC/POKweaOF
+         qkF4FtlhOTyxaOanNUQvuIvqJ5QteeaPIS32EFN9kROuti+KdwldU2ajm9bY2ihaIPtP
+         ZB0A==
+X-Forwarded-Encrypted: i=1; AJvYcCWq5QJzZEI+lBKYOrzEinlgk7CjOA5nrV2xYZwuhd5Ciy3ZAxkE0572vxHjQiaubp+S/3K0eI+B4xf/gmNbAAXvx0zw4tj20BrAp2DWsg==
+X-Gm-Message-State: AOJu0YyZZjfmr2edH6xn6t9FziW55e5qP7uwneeQh8Av0EpxsWeQf+rE
+	evy8WkHAqjbG1ayTq1XCd9+YpEzxKFe48itfes8OkPx726SycLC0It2h5yL80w==
+X-Google-Smtp-Source: AGHT+IFgkuWsPXN+rSZfXHVUnr0hyu5KXgc5mjxITXWDgbYW6u2XoyVyZFujajA80aZnB7uRLwsNkw==
+X-Received: by 2002:a17:902:ec81:b0:1de:f93f:4410 with SMTP id x1-20020a170902ec8100b001def93f4410mr1752104plg.8.1713519533970;
+        Fri, 19 Apr 2024 02:38:53 -0700 (PDT)
 Received: from thinkpad ([220.158.156.51])
-        by smtp.gmail.com with ESMTPSA id z17-20020a634c11000000b005f0793db2ebsm2715872pga.74.2024.04.19.02.26.32
+        by smtp.gmail.com with ESMTPSA id t20-20020a170902b21400b001e3e081dea1sm2946412plr.0.2024.04.19.02.38.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Apr 2024 02:26:35 -0700 (PDT)
-Date: Fri, 19 Apr 2024 14:56:29 +0530
+        Fri, 19 Apr 2024 02:38:53 -0700 (PDT)
+Date: Fri, 19 Apr 2024 15:08:47 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Niklas Cassel <cassel@kernel.org>
+To: Bjorn Helgaas <helgaas@kernel.org>
 Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
 	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
@@ -80,12 +79,12 @@ Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
 	mhi@lists.linux.dev, linux-tegra@vger.kernel.org,
+	Niklas Cassel <cassel@kernel.org>,
 	Damien Le Moal <dlemoal@kernel.org>
 Subject: Re: [PATCH v3 3/9] PCI: endpoint: Rename BME to Bus Master Enable
-Message-ID: <20240419092629.GA3636@thinkpad>
-References: <20240418-pci-epf-rework-v3-0-222a5d1ed2e5@linaro.org>
- <20240418-pci-epf-rework-v3-3-222a5d1ed2e5@linaro.org>
- <ZiEy4EVcVpUry9qn@ryzen>
+Message-ID: <20240419093847.GB3636@thinkpad>
+References: <20240418-pci-epf-rework-v3-3-222a5d1ed2e5@linaro.org>
+ <20240418161209.GA239309@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -95,36 +94,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZiEy4EVcVpUry9qn@ryzen>
+In-Reply-To: <20240418161209.GA239309@bhelgaas>
 
-On Thu, Apr 18, 2024 at 04:49:04PM +0200, Niklas Cassel wrote:
+On Thu, Apr 18, 2024 at 11:12:09AM -0500, Bjorn Helgaas wrote:
 > On Thu, Apr 18, 2024 at 05:28:31PM +0530, Manivannan Sadhasivam wrote:
 > > BME which stands for 'Bus Master Enable' is not defined in the PCIe base
 > > spec even though it is commonly referred in many places (vendor docs). But
 > > to align with the spec, let's rename it to its expansion 'Bus Master
 > > Enable'.
-> > 
-> > Suggested-by: Damien Le Moal <dlemoal@kernel.org>
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
 > 
-> Reviewed-by: Niklas Cassel <cassel@kernel.org>
+> Thanks for doing this.  I'm always in favor of using terms from the
+> spec.
 > 
+> > -		dev_dbg(dev, "Received BME event. Link is enabled!\n");
+> > +		dev_dbg(dev, "Received Bus Master Enable event. Link is enabled!\n");
 > 
-> Outside the scope of this patch/series:
-> Do we perhaps want to add a bus_master_enable() callback also for the
-> pci-epf-test driver?
-> 
-
-Makes sense to me.
-
-> In my opinion, the test driver should be "the driver" that tests that
-> all the EPF features/callbacks work, at least a basic test "does it
-> work at all". Other EPF drivers can implement the callbacks, and do
-> more intelligent things, i.e. more than just seeing that "it works".
+> Nothing to do with *this* patch, but this message reads a little weird
+> to me because setting Bus Master Enable has nothing to do with link
+> enablement.
 > 
 
-Agree. Feel free to send a patch :)
+That's my bad. I'll remove it.
+
+> Also incidental: some of these messages and comments refer to a "Bus
+> Master Enable *event*".  Does "event" here refer to the act of the
+> host setting the Bus Master Enable bit in the Command register?  This
+> is in qcom_pcie_ep_global_irq_thread(), so I assume there's something
+> in the endpoint hardware that generates an IRQ when the Command
+> register is written?
+> 
+
+Yes, the PCIe endpoint controller generates an IRQ when host sets Bus Master
+Enable bit.
+
+> > - * pci_epc_bme_notify() - Notify the EPF device that the EPC device has received
+> > - *			  the BME event from the Root complex
+> > - * @epc: the EPC device that received the BME event
+> > + * pci_epc_bus_master_enable_notify() - Notify the EPF device that the EPC
+> > + *					device has received the Bus Master
+> > + *					Enable event from the Root complex
+> > + * @epc: the EPC device that received the Bus Master Enable event
+> >   *
+> >   * Invoke to Notify the EPF device that the EPC device has received the Bus
+> > - * Master Enable (BME) event from the Root complex
+> > + * Master Enable event from the Root complex
+> 
+> There's no "set Bus Master Enable" transaction that would appear on
+> the PCIe link, so I assume "the Bus Master Enable event from the Root
+> Complex" is a way of saying something like "host has written the
+> Command register to set the Bus Master Enable bit"?
+> 
+
+Yes. But looking at it again, it could be reworded as below:
+
+'Invoke to notify the EPF device that the EPC device has generated the Bus
+Master Enable event due to host setting the Bus Master Enable bit in the
+Command register.'
 
 - Mani
 
