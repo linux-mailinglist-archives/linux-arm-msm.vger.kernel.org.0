@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-17964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F4448AB199
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 17:19:05 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 236468AB19B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 17:19:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CB690283011
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 15:19:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B72381F24050
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 15:19:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1951512F38C;
-	Fri, 19 Apr 2024 15:18:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E7BD13172E;
+	Fri, 19 Apr 2024 15:18:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vcqrhD6B"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zm2w4PNo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
+Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1851304BD
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 15:18:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68706130AEF
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 15:18:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713539891; cv=none; b=ukGMcH8o4mIpsusdNVl/C51EF4qWd3ARqZvoQrmgfM4LEJPXNfQ51ob1+G1PLammLIx6LGgrNYkc9Jy3usSlKqHSacTAIHoPUcQ3QSKT10tJ54FGb1d0qw7kqx8IsOvXqvU+L7TEUfnLqzLyVY8Hvza14m5lAWA2ot91JJCTp98=
+	t=1713539892; cv=none; b=pxPmAov7t8j9kQzhdAFo23njJ08QrTCH413Gh165Z4vQGg9XBI3Q+067y9lC5q8xsL/OpbInOm2gt6dIuDR3NeUzV+kuXg2KecIiTjeSOOTB8reDnwTrVzx3nrMy0P2sbslq6c3Q7LOsN8wvjBDtrDazWcGE4RzMI2mzGRgPa20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713539891; c=relaxed/simple;
-	bh=oB096HyNcXkj+8OW4Cvuw9utWZDB5OfhuhFopOEo+XU=;
+	s=arc-20240116; t=1713539892; c=relaxed/simple;
+	bh=mgG51iYBDDFdQeIEUv5d3iCvX4AlEHh4+4ja42oAgYE=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=neTWPzQaNL1A4XN+49Qp4DT7Ydd5sIK0D2dm6EtaivQV591RFpz49+cvIqJSnQhQd589Y+83AQZL9Y1jYCmWtAGIw55TJA9FhYTQoi7jxkt6S4+2cW3V5Kyav81CPLRJ5moJ+vwm5Sw+rFNhcDIeH36Y+vtT2k7L9xOfHVtDb98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vcqrhD6B; arc=none smtp.client-ip=209.85.166.51
+	 MIME-Version; b=ZvE3Wl181O4wX98Wjw/93bfw+0wpIe4J5A/JaefoJ7MlRnzsBF29nFE24O0LxHkdPmSWH/VYVBfeD3t9leDxqAmLPJRhXbSDEmjW0h4s1FB579wTTyriLANrb9t24sQC/KjSbLCENYhCFlCboTeiOa4wGtL3ot2MqXn02rDWnP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zm2w4PNo; arc=none smtp.client-ip=209.85.166.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-7da3ec3e044so54826039f.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 08:18:09 -0700 (PDT)
+Received: by mail-io1-f46.google.com with SMTP id ca18e2360f4ac-7d622edf790so80338939f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 08:18:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713539888; x=1714144688; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1713539889; x=1714144689; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KW+xodU0leEhVx50ESvAxH61dvrN0r6GXKBXbX3qcpk=;
-        b=vcqrhD6BA9b8Mo1yqcCoBriSKlStkiODJW9Yv7YU5iOrVfSzs2+UgA8DAha7gNCTPG
-         9JQJIsnIZ4bDXO8tIfiZiR7hn6ZSFDgYAqxMzmli6KLgacE2kmysiPsmKxfMrWJTWZQz
-         0wWJViVjNclzFLS1DFEnwt0gHeZn3Vx0fXsGjfdpfCkSw+876bNI2XYZhgeGykFzv5ZM
-         JV4vxpwQmbT2FQagAB2U0aDlEUm26ueB7vJXO4+suXwRP54OKUgd+mujj6/kLnmSJ01H
-         hLx+1I7N7+w1+cRHDAeJMg676wgPCL+MqY1wW2VUjx1juskIVfrHx6pymiB422s8MwhB
-         WMeQ==
+        bh=BfCN4tlBj+RpqK9tOiyo6f0tvsgy7nTKe81fkNY9Se8=;
+        b=zm2w4PNooR42TiMCwEYKQTbZj8yz0Mc7TI2DTm+6HzdKP5CcQ2tO85RyJ7FxXC6g5a
+         ZCcKfcJc+Oz8P2zuuxf3Fj7IEYzwoDMLeROw9dGUHr2HpVKH/P/vCi1R1CkqrwRldIoE
+         lB33OXq2P2DYGeCZr2tpqqr9coyNY84J7WohWXTgFsH8gw7HvSpwPnBMYM3VcfaaHkuJ
+         uQP2iFDNDtIb4/nAKl6yH3GGVoA+/TfV0fh1KginmlVCsyhX3DFaSOnInxnmYvoL0iRP
+         9gdaiaqyDkqiGXy9lNFSTq4VASSuKGkmo6i0rPuk6ulUs01bRB4582b9lVCLf93bXdLD
+         1CTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713539888; x=1714144688;
+        d=1e100.net; s=20230601; t=1713539889; x=1714144689;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=KW+xodU0leEhVx50ESvAxH61dvrN0r6GXKBXbX3qcpk=;
-        b=nvQ8eXPAbsEuv4X6CS7OFn9q9bxP7/HHqOl/HmT7Urvul13Y2nJs87AFBjf7zqXPu2
-         FW9kPHelhjkGsXyAYOoqTd/SUy6YJCjMihcxkcJqOn629NO7bKr6T/JCzBDNyUUVxpzd
-         vJxf6PYrlNoL/QF+uohJU33FtJn/pPC+so5cr11pirgMiRF12Dd0iPEf98sywWS5a1HF
-         ku/riUcoosujQ4H6varntIS3kGQAsC58xngzH93bgDpcojiAufNmSseb13DHNfFBD4rz
-         JDRzWZnyBM5G1ZRSHEiN1UXaEhWSvLI/oecmHr3gBDJ63hUwC5IMIwPsxX0T0fLMnBv5
-         taRg==
-X-Forwarded-Encrypted: i=1; AJvYcCVHUvRLZ8n5vbY805YC7I4wsJTNVs7tLIHaBG3alCDfOHvI4ds6ESzGWt3rGNUSlsap9+V9+mp4oz5c6zsS/6aAxEdvYTji5a+rOxnX3A==
-X-Gm-Message-State: AOJu0YwkITj8Td9I4JxyBcG5PT0oTtvoIfwStf30Lq0DzxMRkmKmMZPy
-	uNxc75/jlOIidZqB/Ns6PNtTLUfHlS8BuPJjq96/wB2jmhXke0tXeWFXYPfjWfI=
-X-Google-Smtp-Source: AGHT+IG+dQS0s8hDk+7SovzXn0ZCvGbkZQQZ2v0B2TFNw4W36id+MfFXUHuGZlHqxwI/1RglHK6trw==
-X-Received: by 2002:a5d:8995:0:b0:7d0:d84d:9e13 with SMTP id m21-20020a5d8995000000b007d0d84d9e13mr2743043iol.19.1713539888393;
-        Fri, 19 Apr 2024 08:18:08 -0700 (PDT)
+        bh=BfCN4tlBj+RpqK9tOiyo6f0tvsgy7nTKe81fkNY9Se8=;
+        b=FMt6A6AmnlS1G7WUOIbRgM1sDOpP6F5OD1Ya1WplFjkxwO9gUuQvBfwecwY952vfg4
+         GzsdEMYpvP3FQWUAskaGMbKndvmzzfMJEBst0XVHJJa+0/1AEeQSbhw6bUN09XlYNmXw
+         +PRpJftTWuf1qzmxxoERVbrafj7Z49nog1imXmr/d5vJ0LedeQM3fJa5Sh5kmWyRvh9s
+         r22UQzPj2KF7Nm42+QJyJb8lGF/z64I2ouUfMBNerXsLVccA+eUq0oG/zCKf77G4p72e
+         qEakB9Ezq3ERFQNHytmF6J4JyzWQpUegcUXEqMqE6oQCtWkLBZ+Z4zgC5q7aPi6SlNfr
+         hXng==
+X-Forwarded-Encrypted: i=1; AJvYcCUcfxNhKBST5t7AzPzFVZk7ReeWi+QR4h8iBY7gC8cYbabUzq+ZP6t5Yd36go4mxcsOIvjT0ulHmuT9lbBLCfjDjP2A+4Cfkjc8z0FYQQ==
+X-Gm-Message-State: AOJu0YzZyNB0ONJMWNzhx+InD7hG9DBkD7GB3o36qUjc4Jd+SqtN5p6M
+	fcvLLCp2PlPdRrBzzUg45JJAh3E12bZIUdctXnKbQm4kiDivqzpebJ6xvp+W5qU=
+X-Google-Smtp-Source: AGHT+IFzvpR/FxtDaUoycVyCQ0DALrphK+JAM+rF9e/T3ecb+xze3a7ALLi+77hxZ7f3BlMDFxC8Rw==
+X-Received: by 2002:a5e:9910:0:b0:7d5:df5e:506 with SMTP id t16-20020a5e9910000000b007d5df5e0506mr2970977ioj.9.1713539889593;
+        Fri, 19 Apr 2024 08:18:09 -0700 (PDT)
 Received: from localhost.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id lc8-20020a056638958800b00484e9c7014bsm116126jab.153.2024.04.19.08.18.07
+        by smtp.gmail.com with ESMTPSA id lc8-20020a056638958800b00484e9c7014bsm116126jab.153.2024.04.19.08.18.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Apr 2024 08:18:08 -0700 (PDT)
+        Fri, 19 Apr 2024 08:18:09 -0700 (PDT)
 From: Alex Elder <elder@linaro.org>
 To: davem@davemloft.net,
 	edumazet@google.com,
@@ -82,9 +82,9 @@ Cc: mka@chromium.org,
 	netdev@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v2 4/8] net: ipa: remove unneeded FILT_ROUT_HASH_EN definitions
-Date: Fri, 19 Apr 2024 10:17:56 -0500
-Message-Id: <20240419151800.2168903-5-elder@linaro.org>
+Subject: [PATCH net-next v2 5/8] net: ipa: make ipa_table_hash_support() a real function
+Date: Fri, 19 Apr 2024 10:17:57 -0500
+Message-Id: <20240419151800.2168903-6-elder@linaro.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20240419151800.2168903-1-elder@linaro.org>
 References: <20240419151800.2168903-1-elder@linaro.org>
@@ -96,215 +96,69 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The FILT_ROUT_HASH_EN register is only used for IPA v4.2.  There,
-routing and filter table hashing are not supported, and so the
-register must be written to disable the feature.  No other version
-uses this register, so its definition can be removed.  If we need to
-use these some day (for example, explicitly enable the feature) this
-commit can be reverted.
+With the exception of ipa_table_hash_support(), nothing defined in
+"ipa_table.h" requires the full definition of the IPA structure.
+
+Change that function to be a "real" function rather than an inline,
+to avoid requring the IPA structure to be defined.
 
 Signed-off-by: Alex Elder <elder@linaro.org>
 ---
- drivers/net/ipa/reg/ipa_reg-v3.1.c   | 14 --------------
- drivers/net/ipa/reg/ipa_reg-v3.5.1.c | 14 --------------
- drivers/net/ipa/reg/ipa_reg-v4.11.c  | 14 --------------
- drivers/net/ipa/reg/ipa_reg-v4.5.c   | 14 --------------
- drivers/net/ipa/reg/ipa_reg-v4.7.c   | 14 --------------
- drivers/net/ipa/reg/ipa_reg-v4.9.c   | 14 --------------
- 6 files changed, 84 deletions(-)
+ drivers/net/ipa/ipa_table.c | 8 +++++++-
+ drivers/net/ipa/ipa_table.h | 7 ++-----
+ 2 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ipa/reg/ipa_reg-v3.1.c b/drivers/net/ipa/reg/ipa_reg-v3.1.c
-index 63a44dce88353..a891037015836 100644
---- a/drivers/net/ipa/reg/ipa_reg-v3.1.c
-+++ b/drivers/net/ipa/reg/ipa_reg-v3.1.c
-@@ -78,19 +78,6 @@ static const u32 reg_qsb_max_reads_fmask[] = {
+diff --git a/drivers/net/ipa/ipa_table.c b/drivers/net/ipa/ipa_table.c
+index 45eb24be78a2e..4e4a3f8aa8e84 100644
+--- a/drivers/net/ipa/ipa_table.c
++++ b/drivers/net/ipa/ipa_table.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0
  
- REG_FIELDS(QSB_MAX_READS, qsb_max_reads, 0x00000078);
+ /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
+- * Copyright (C) 2018-2023 Linaro Ltd.
++ * Copyright (C) 2018-2024 Linaro Ltd.
+  */
  
--static const u32 reg_filt_rout_hash_en_fmask[] = {
--	[IPV6_ROUTER_HASH]				= BIT(0),
--						/* Bits 1-3 reserved */
--	[IPV6_FILTER_HASH]				= BIT(4),
--						/* Bits 5-7 reserved */
--	[IPV4_ROUTER_HASH]				= BIT(8),
--						/* Bits 9-11 reserved */
--	[IPV4_FILTER_HASH]				= BIT(12),
--						/* Bits 13-31 reserved */
--};
--
--REG_FIELDS(FILT_ROUT_HASH_EN, filt_rout_hash_en, 0x000008c);
--
- static const u32 reg_filt_rout_hash_flush_fmask[] = {
- 	[IPV6_ROUTER_HASH]				= BIT(0),
- 						/* Bits 1-3 reserved */
-@@ -405,7 +392,6 @@ static const struct reg *reg_array[] = {
- 	[SHARED_MEM_SIZE]		= &reg_shared_mem_size,
- 	[QSB_MAX_WRITES]		= &reg_qsb_max_writes,
- 	[QSB_MAX_READS]			= &reg_qsb_max_reads,
--	[FILT_ROUT_HASH_EN]		= &reg_filt_rout_hash_en,
- 	[FILT_ROUT_HASH_FLUSH]		= &reg_filt_rout_hash_flush,
- 	[STATE_AGGR_ACTIVE]		= &reg_state_aggr_active,
- 	[IPA_BCR]			= &reg_ipa_bcr,
-diff --git a/drivers/net/ipa/reg/ipa_reg-v3.5.1.c b/drivers/net/ipa/reg/ipa_reg-v3.5.1.c
-index 4a7b6d92207de..c81c48ec51f90 100644
---- a/drivers/net/ipa/reg/ipa_reg-v3.5.1.c
-+++ b/drivers/net/ipa/reg/ipa_reg-v3.5.1.c
-@@ -83,19 +83,6 @@ static const u32 reg_qsb_max_reads_fmask[] = {
+ #include <linux/bitops.h>
+@@ -158,6 +158,12 @@ ipa_table_mem(struct ipa *ipa, bool filter, bool hashed, bool ipv6)
+ 	return ipa_mem_find(ipa, mem_id);
+ }
  
- REG_FIELDS(QSB_MAX_READS, qsb_max_reads, 0x00000078);
++/* Return true if hashed tables are supported */
++bool ipa_table_hash_support(struct ipa *ipa)
++{
++	return ipa->version != IPA_VERSION_4_2;
++}
++
+ bool ipa_filtered_valid(struct ipa *ipa, u64 filtered)
+ {
+ 	struct device *dev = ipa->dev;
+diff --git a/drivers/net/ipa/ipa_table.h b/drivers/net/ipa/ipa_table.h
+index 7cc951904bb48..16d4d15df9e9c 100644
+--- a/drivers/net/ipa/ipa_table.h
++++ b/drivers/net/ipa/ipa_table.h
+@@ -1,7 +1,7 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
  
--static const u32 reg_filt_rout_hash_en_fmask[] = {
--	[IPV6_ROUTER_HASH]				= BIT(0),
--						/* Bits 1-3 reserved */
--	[IPV6_FILTER_HASH]				= BIT(4),
--						/* Bits 5-7 reserved */
--	[IPV4_ROUTER_HASH]				= BIT(8),
--						/* Bits 9-11 reserved */
--	[IPV4_FILTER_HASH]				= BIT(12),
--						/* Bits 13-31 reserved */
--};
--
--REG_FIELDS(FILT_ROUT_HASH_EN, filt_rout_hash_en, 0x000008c);
--
- static const u32 reg_filt_rout_hash_flush_fmask[] = {
- 	[IPV6_ROUTER_HASH]				= BIT(0),
- 						/* Bits 1-3 reserved */
-@@ -416,7 +403,6 @@ static const struct reg *reg_array[] = {
- 	[SHARED_MEM_SIZE]		= &reg_shared_mem_size,
- 	[QSB_MAX_WRITES]		= &reg_qsb_max_writes,
- 	[QSB_MAX_READS]			= &reg_qsb_max_reads,
--	[FILT_ROUT_HASH_EN]		= &reg_filt_rout_hash_en,
- 	[FILT_ROUT_HASH_FLUSH]		= &reg_filt_rout_hash_flush,
- 	[STATE_AGGR_ACTIVE]		= &reg_state_aggr_active,
- 	[IPA_BCR]			= &reg_ipa_bcr,
-diff --git a/drivers/net/ipa/reg/ipa_reg-v4.11.c b/drivers/net/ipa/reg/ipa_reg-v4.11.c
-index 257eaff9436e5..18bddc32c9318 100644
---- a/drivers/net/ipa/reg/ipa_reg-v4.11.c
-+++ b/drivers/net/ipa/reg/ipa_reg-v4.11.c
-@@ -115,19 +115,6 @@ static const u32 reg_qsb_max_reads_fmask[] = {
+ /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
+- * Copyright (C) 2019-2022 Linaro Ltd.
++ * Copyright (C) 2019-2024 Linaro Ltd.
+  */
+ #ifndef _IPA_TABLE_H_
+ #define _IPA_TABLE_H_
+@@ -23,10 +23,7 @@ bool ipa_filtered_valid(struct ipa *ipa, u64 filtered);
+  * ipa_table_hash_support() - Return true if hashed tables are supported
+  * @ipa:	IPA pointer
+  */
+-static inline bool ipa_table_hash_support(struct ipa *ipa)
+-{
+-	return ipa->version != IPA_VERSION_4_2;
+-}
++bool ipa_table_hash_support(struct ipa *ipa);
  
- REG_FIELDS(QSB_MAX_READS, qsb_max_reads, 0x00000078);
- 
--static const u32 reg_filt_rout_hash_en_fmask[] = {
--	[IPV6_ROUTER_HASH]				= BIT(0),
--						/* Bits 1-3 reserved */
--	[IPV6_FILTER_HASH]				= BIT(4),
--						/* Bits 5-7 reserved */
--	[IPV4_ROUTER_HASH]				= BIT(8),
--						/* Bits 9-11 reserved */
--	[IPV4_FILTER_HASH]				= BIT(12),
--						/* Bits 13-31 reserved */
--};
--
--REG_FIELDS(FILT_ROUT_HASH_EN, filt_rout_hash_en, 0x0000148);
--
- static const u32 reg_filt_rout_hash_flush_fmask[] = {
- 	[IPV6_ROUTER_HASH]				= BIT(0),
- 						/* Bits 1-3 reserved */
-@@ -472,7 +459,6 @@ static const struct reg *reg_array[] = {
- 	[SHARED_MEM_SIZE]		= &reg_shared_mem_size,
- 	[QSB_MAX_WRITES]		= &reg_qsb_max_writes,
- 	[QSB_MAX_READS]			= &reg_qsb_max_reads,
--	[FILT_ROUT_HASH_EN]		= &reg_filt_rout_hash_en,
- 	[FILT_ROUT_HASH_FLUSH]		= &reg_filt_rout_hash_flush,
- 	[STATE_AGGR_ACTIVE]		= &reg_state_aggr_active,
- 	[LOCAL_PKT_PROC_CNTXT]		= &reg_local_pkt_proc_cntxt,
-diff --git a/drivers/net/ipa/reg/ipa_reg-v4.5.c b/drivers/net/ipa/reg/ipa_reg-v4.5.c
-index dc396344d868a..8494731efdd3b 100644
---- a/drivers/net/ipa/reg/ipa_reg-v4.5.c
-+++ b/drivers/net/ipa/reg/ipa_reg-v4.5.c
-@@ -109,19 +109,6 @@ static const u32 reg_qsb_max_reads_fmask[] = {
- 
- REG_FIELDS(QSB_MAX_READS, qsb_max_reads, 0x00000078);
- 
--static const u32 reg_filt_rout_hash_en_fmask[] = {
--	[IPV6_ROUTER_HASH]				= BIT(0),
--						/* Bits 1-3 reserved */
--	[IPV6_FILTER_HASH]				= BIT(4),
--						/* Bits 5-7 reserved */
--	[IPV4_ROUTER_HASH]				= BIT(8),
--						/* Bits 9-11 reserved */
--	[IPV4_FILTER_HASH]				= BIT(12),
--						/* Bits 13-31 reserved */
--};
--
--REG_FIELDS(FILT_ROUT_HASH_EN, filt_rout_hash_en, 0x0000148);
--
- static const u32 reg_filt_rout_hash_flush_fmask[] = {
- 	[IPV6_ROUTER_HASH]				= BIT(0),
- 						/* Bits 1-3 reserved */
-@@ -491,7 +478,6 @@ static const struct reg *reg_array[] = {
- 	[SHARED_MEM_SIZE]		= &reg_shared_mem_size,
- 	[QSB_MAX_WRITES]		= &reg_qsb_max_writes,
- 	[QSB_MAX_READS]			= &reg_qsb_max_reads,
--	[FILT_ROUT_HASH_EN]		= &reg_filt_rout_hash_en,
- 	[FILT_ROUT_HASH_FLUSH]		= &reg_filt_rout_hash_flush,
- 	[STATE_AGGR_ACTIVE]		= &reg_state_aggr_active,
- 	[LOCAL_PKT_PROC_CNTXT]		= &reg_local_pkt_proc_cntxt,
-diff --git a/drivers/net/ipa/reg/ipa_reg-v4.7.c b/drivers/net/ipa/reg/ipa_reg-v4.7.c
-index 37a2e466e4755..2c161cf691935 100644
---- a/drivers/net/ipa/reg/ipa_reg-v4.7.c
-+++ b/drivers/net/ipa/reg/ipa_reg-v4.7.c
-@@ -109,19 +109,6 @@ static const u32 reg_qsb_max_reads_fmask[] = {
- 
- REG_FIELDS(QSB_MAX_READS, qsb_max_reads, 0x00000078);
- 
--static const u32 reg_filt_rout_hash_en_fmask[] = {
--	[IPV6_ROUTER_HASH]				= BIT(0),
--						/* Bits 1-3 reserved */
--	[IPV6_FILTER_HASH]				= BIT(4),
--						/* Bits 5-7 reserved */
--	[IPV4_ROUTER_HASH]				= BIT(8),
--						/* Bits 9-11 reserved */
--	[IPV4_FILTER_HASH]				= BIT(12),
--						/* Bits 13-31 reserved */
--};
--
--REG_FIELDS(FILT_ROUT_HASH_EN, filt_rout_hash_en, 0x0000148);
--
- static const u32 reg_filt_rout_hash_flush_fmask[] = {
- 	[IPV6_ROUTER_HASH]				= BIT(0),
- 						/* Bits 1-3 reserved */
-@@ -464,7 +451,6 @@ static const struct reg *reg_array[] = {
- 	[SHARED_MEM_SIZE]		= &reg_shared_mem_size,
- 	[QSB_MAX_WRITES]		= &reg_qsb_max_writes,
- 	[QSB_MAX_READS]			= &reg_qsb_max_reads,
--	[FILT_ROUT_HASH_EN]		= &reg_filt_rout_hash_en,
- 	[FILT_ROUT_HASH_FLUSH]		= &reg_filt_rout_hash_flush,
- 	[STATE_AGGR_ACTIVE]		= &reg_state_aggr_active,
- 	[LOCAL_PKT_PROC_CNTXT]		= &reg_local_pkt_proc_cntxt,
-diff --git a/drivers/net/ipa/reg/ipa_reg-v4.9.c b/drivers/net/ipa/reg/ipa_reg-v4.9.c
-index 09755d700784e..fa6fd312e4867 100644
---- a/drivers/net/ipa/reg/ipa_reg-v4.9.c
-+++ b/drivers/net/ipa/reg/ipa_reg-v4.9.c
-@@ -114,19 +114,6 @@ static const u32 reg_qsb_max_reads_fmask[] = {
- 
- REG_FIELDS(QSB_MAX_READS, qsb_max_reads, 0x00000078);
- 
--static const u32 reg_filt_rout_hash_en_fmask[] = {
--	[IPV6_ROUTER_HASH]				= BIT(0),
--						/* Bits 1-3 reserved */
--	[IPV6_FILTER_HASH]				= BIT(4),
--						/* Bits 5-7 reserved */
--	[IPV4_ROUTER_HASH]				= BIT(8),
--						/* Bits 9-11 reserved */
--	[IPV4_FILTER_HASH]				= BIT(12),
--						/* Bits 13-31 reserved */
--};
--
--REG_FIELDS(FILT_ROUT_HASH_EN, filt_rout_hash_en, 0x0000148);
--
- static const u32 reg_filt_rout_hash_flush_fmask[] = {
- 	[IPV6_ROUTER_HASH]				= BIT(0),
- 						/* Bits 1-3 reserved */
-@@ -469,7 +456,6 @@ static const struct reg *reg_array[] = {
- 	[SHARED_MEM_SIZE]		= &reg_shared_mem_size,
- 	[QSB_MAX_WRITES]		= &reg_qsb_max_writes,
- 	[QSB_MAX_READS]			= &reg_qsb_max_reads,
--	[FILT_ROUT_HASH_EN]		= &reg_filt_rout_hash_en,
- 	[FILT_ROUT_HASH_FLUSH]		= &reg_filt_rout_hash_flush,
- 	[STATE_AGGR_ACTIVE]		= &reg_state_aggr_active,
- 	[LOCAL_PKT_PROC_CNTXT]		= &reg_local_pkt_proc_cntxt,
+ /**
+  * ipa_table_reset() - Reset filter and route tables entries to "none"
 -- 
 2.40.1
 
