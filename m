@@ -1,170 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-17998-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17999-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A5E48AB761
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 00:59:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E5CCA8AB77C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 01:31:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 479F7B211DB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 22:59:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3B30EB2159B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 23:31:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4662513D60E;
-	Fri, 19 Apr 2024 22:59:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3F0013D88B;
+	Fri, 19 Apr 2024 23:31:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ve1zoOjS"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="p6dZWNO1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF8A13C3F2
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 22:59:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4408F64D;
+	Fri, 19 Apr 2024 23:31:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713567563; cv=none; b=LEPPrk3nof8azTQvDshImKaBBw1T1CZ0N2fznWntkgpXczEgHolPli6r07c8BokisHTIp4/i3Dag/hUbM0sb9lOGiyJ16Xe/+3YrVNNok3MpP9+TcoyuKX1G07yOa4B+gjkjllsfNgV1jGysiDvYe2xypgJvQBB0Je/FE0MxQsk=
+	t=1713569498; cv=none; b=uVc244I0b5KTZuGy+pVIB+NccgsMLNbj+gncKTuf0dQim383U9OIeZGVKz9dv9howZPrXD4cbTiUDLkEGySOAgbDcv57fIoGPZxo72X+H1vosjbj4LJ25KtH6SWXuVOvne+C8bSb1vIvH8Ci0bGnfCX9x6fGIQtEE6rrw3WltYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713567563; c=relaxed/simple;
-	bh=dq66rNJndbQc60lsm/BjaeR3uKnAGkQCnG7ybzMIKnQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iKEhymmUhCOrO+Si4hnxN6DnRVSwDcXJhdatXeDoSrSBIRvAm8gmXPvVUl57zBnpPc3j6HEpsaztlfO/Jzs4FcRTkrrbP00HfffvannxQs3EXFerX71LrnlC44eY6ScEOdRTpSkKsFxopVc7lqJeNLcpJMLa50Gt3Uc6cyaineA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ve1zoOjS; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-516d6c1e238so3185664e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 15:59:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713567559; x=1714172359; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y/pykJ+iNZaZvxsy5yVJ+QnkNtTRNc8ccYnjEfcauKg=;
-        b=Ve1zoOjSG3xxakg5n72/UVdaXqdwP/tkldZ8KXQqaRdFWEba+Qv990rwKcTqst1Vi0
-         fSOV4RiX+nixGdu3VrVZC55daDW/HSv7rwz5nJg8eZI8r7q5aa/B4xoICw9xmQLT6rRG
-         /SPWrX1duZIjJaIBNq6Sasge0M7MJZkDFEg6fRQRlXIrrlvdASlzkeSxLqHqCcbLN9d/
-         B8vSFC7vHBpG6s6bDGUT6BRl2PFngxEzRcDikBiQwCIYEnEwIbDd1M6pK6d39s04Fgce
-         gxvd/vhNZPkouL2ojaxVkpFuW/ZWb0jW4jR7bTl7DRBZNLumNZwSEFsjoXzfZ3x5vCZu
-         kfrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713567559; x=1714172359;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Y/pykJ+iNZaZvxsy5yVJ+QnkNtTRNc8ccYnjEfcauKg=;
-        b=iNm/+LFsb6pdNJc+8p/CW9KlXdevxtXriUb+rqOK5Xt+01fuBx8iKlTKtyPQ6q39B5
-         KRxGqe9xL6P9JuKyB2vMKSVJFJJGXMMrkIzvqcBU6Ip3C2+WRp4Z/+qTzrELBqnEl1F2
-         jpb7YTE0p8GDjD0b7YvvfYX4KtxEplONQBslH/jZg/4CbrhSw5FQJuvXO2gCiEQZ0cSN
-         TyTzw8Q5RJ2AXUd8xP+XDpsqsXNFboofo3yi15nOH+mARG//1ZlZbI3bRrgAIimXO6xE
-         k1Ab+dFcMTCV/TAV8GLzTzGmHGiaMY2afrG5KWoM4qyGdffZsQNykjtO+Dm7zD8KN28g
-         L8qQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWaHC/9Vkl9ZseZaFxDlWFsLxU/qrjATAoEvtsJ01yS3AfYyZFv0iPjdGyTAkDGsuOVGwfh+U3JhgcWI4R2gLWGP2kVwOVxgEr9OZkRbQ==
-X-Gm-Message-State: AOJu0Ywg+7LS7KCksELY/BdVQmao7CJeiO4vEMEaQo+3vCB1aICGLqLU
-	vDC/kKj4z8shsSIZ9LyQqi2qWPFAO4E9gT44fWQ0Vzo4kcjz+nPc2UV1cGNOtMw=
-X-Google-Smtp-Source: AGHT+IESWYEtVXjigtQ0L5bOUF7zr3weAYEinceRJ7EB6HeSNIHj7J9wJmp0cfKzhv8mnoUheJDP1A==
-X-Received: by 2002:ac2:58cd:0:b0:51a:bdd6:e718 with SMTP id u13-20020ac258cd000000b0051abdd6e718mr1877655lfo.31.1713567559098;
-        Fri, 19 Apr 2024 15:59:19 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::8a5])
-        by smtp.gmail.com with ESMTPSA id s6-20020a197706000000b00518d7c38cb9sm913814lfc.284.2024.04.19.15.59.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Apr 2024 15:59:18 -0700 (PDT)
-Date: Sat, 20 Apr 2024 01:59:16 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Marijn Suijten <marijn.suijten@somainline.org>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Archit Taneja <architt@codeaurora.org>, 
-	Chandan Uddaraju <chandanu@codeaurora.org>, Vinod Koul <vkoul@kernel.org>, 
-	Sravanthi Kollukuduru <skolluku@codeaurora.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	Jordan Crouse <jordan@cosmicpenguin.net>, Rajesh Yadav <ryadav@codeaurora.org>, 
-	Jeykumar Sankaran <jsanka@codeaurora.org>, ~postmarketos/upstreaming@lists.sr.ht, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Martin Botka <martin.botka@somainline.org>, Jami Kettunen <jami.kettunen@somainline.org>
-Subject: Re: [PATCH 2/7] drm/msm/dsi: Pass bonded-DSI hdisplay/2 to DSC
- timing configuration
-Message-ID: <omnlm4e6yq5u2iurxld5gwo7rma4jpfmmhvpzsddjz5aensumc@ffsolnsblmyx>
-References: <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-0-78ae3ee9a697@somainline.org>
- <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-2-78ae3ee9a697@somainline.org>
- <CAA8EJpq-1QwoM2hEyegpfKnVH+qrswjmTd_hpYs9d9B7gikHjg@mail.gmail.com>
- <7fqwkryeumkt7zxsec6va7ys22nfs3tr4rrcz323extdz3f6zv@w4uu2lk4uh7v>
+	s=arc-20240116; t=1713569498; c=relaxed/simple;
+	bh=6IGgM1ninH2UvKvYGTOhBMyMEqSh2CQFZKSqqRp6Ml4=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BaPKBY0XsnfWZqv0xE72OP9PMFE4Mrvcr2zspA+auni5G8pDojVwwHqqAWFfeayHb1oUdahNHIx8/F3YTDBOhelYXv2qzAzfxzIJs8MtpgKpvF92dMiYUq1kmoFI3QcbsvAB8WFyOb4Y4/HJ030CHKgrFsA/6vGbs8zREZtsEJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=p6dZWNO1; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43JMsPNc025597;
+	Fri, 19 Apr 2024 23:31:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=7YnOs/zIN96oMB3AwWlXg
+	64tPuvFDKMPlHsSp9oJv1I=; b=p6dZWNO1tSiHG2IBHs697YnUU6PtAm4t1qJml
+	/CsthJIMrWP0pL/iukK6CKVPqKADiZ5a7v8m+mUFCw7IQM4Tc2AQtILnQQjY9L0N
+	xabs1UGVHrWYVtNOKeMairbBSR4ogrT2LbiRZ6t3Qnnant9r2Eh1iyFsURos8wm6
+	tS62m00iiCjsVOqO1oIIVTedot3sbo9u16EFIivfkNh+WF6RpNFgaUNxRySXXOh8
+	LSABk1GO4Ajley8x/kuIAzvChn5wQf2lrez7KPAG7T9IINAyTgHluFdJ7yQWzCeJ
+	B686XdG5N7wun21PfCGLIOODR9/9yeJm5PHcp7UMv0GTqLYtw==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xkkss9uc7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 19 Apr 2024 23:31:19 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43JNVIsT003709
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 19 Apr 2024 23:31:18 GMT
+Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 19 Apr 2024 16:31:17 -0700
+Date: Fri, 19 Apr 2024 16:31:17 -0700
+From: Elliot Berman <quic_eberman@quicinc.com>
+To: Sudeep Holla <sudeep.holla@arm.com>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Sebastian Reichel <sre@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Andy Yan
+	<andy.yan@rock-chips.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        "Mark
+ Rutland" <mark.rutland@arm.com>,
+        Bartosz Golaszewski
+	<bartosz.golaszewski@linaro.org>,
+        Satya Durga Srinivasu Prabhala
+	<quic_satyap@quicinc.com>,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        Shivendra Pratap <quic_spratap@quicinc.com>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        Florian Fainelli <florian.fainelli@broadcom.com>,
+        <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v2 0/4] Implement vendor resets for PSCI SYSTEM_RESET2
+Message-ID: <20240419134542691-0700.eberman@hu-eberman-lv.qualcomm.com>
+References: <20240414-arm-psci-system_reset2-vendor-reboots-v2-0-da9a055a648f@quicinc.com>
+ <Zh5GWqt2oCNHdF_h@bogus>
+ <20240417140957985-0700.eberman@hu-eberman-lv.qualcomm.com>
+ <20240419085345.4ovebbbmcabo3f73@bogus>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <7fqwkryeumkt7zxsec6va7ys22nfs3tr4rrcz323extdz3f6zv@w4uu2lk4uh7v>
+In-Reply-To: <20240419085345.4ovebbbmcabo3f73@bogus>
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ptwZxpIb3YjMjehV0iVZZt6crq1l_sl3
+X-Proofpoint-GUID: ptwZxpIb3YjMjehV0iVZZt6crq1l_sl3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-19_15,2024-04-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 priorityscore=1501
+ mlxscore=0 mlxlogscore=949 adultscore=0 bulkscore=0 clxscore=1015
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404190183
 
-On Sat, Apr 20, 2024 at 12:18:39AM +0200, Marijn Suijten wrote:
-> On 2024-04-17 14:58:25, Dmitry Baryshkov wrote:
-> > On Wed, 17 Apr 2024 at 02:57, Marijn Suijten
-> > <marijn.suijten@somainline.org> wrote:
+On Fri, Apr 19, 2024 at 09:53:45AM +0100, Sudeep Holla wrote:
+> On Wed, Apr 17, 2024 at 02:54:41PM -0700, Elliot Berman wrote:
+> > On Tue, Apr 16, 2024 at 10:35:22AM +0100, Sudeep Holla wrote:
+> > > On Sun, Apr 14, 2024 at 12:30:23PM -0700, Elliot Berman wrote:
+> > > > The PSCI SYSTEM_RESET2 call allows vendor firmware to define additional
+> > > > reset types which could be mapped to the reboot argument.
+> > > >
+> > > > Setting up reboot on Qualcomm devices can be inconsistent from chipset
+> > > > to chipset.
 > > >
-> > > When configuring the timing of DSI hosts (interfaces) in
-> > > dsi_timing_setup() all values written to registers are taking bonded
-> > > DSI into account by dividing the original mode width by 2 (half the
-> > > data is sent over each of the two DSI hosts), but the full width
-> > > instead of the interface width is passed as hdisplay parameter to
-> > > dsi_update_dsc_timing().
+> > > That doesn't sound good. Do you mean PSCI SYSTEM_RESET doesn't work as
+> > > expected ? Does it mean it is not conformant to the specification ?
 > > >
-> > > Currently only msm_dsc_get_slices_per_intf() is called within
-> > > dsi_update_dsc_timing() with the `hdisplay` argument which clearly
-> > > documents that it wants the width of a single interface (which, again,
-> > > in bonded DSI mode is half the total width of the mode).  Thus pass the
-> > > bonded-mode-adjusted hdisplay parameter into dsi_update_dsc_timing()
-> > > otherwise all values written to registers by this function (i.e. the
-> > > number of slices per interface or packet, and derived from this the EOL
-> > > byte number) are twice too large.
-> > >
-> > > Inversely the panel driver is expected to only set the slice width and
-> > > number of slices for half the panel, i.e. what will be sent by each
-> > > host individually, rather than fixing that up like hdisplay here.
-> > >
-> > > Fixes: 08802f515c3c ("drm/msm/dsi: Add support for DSC configuration")
-> > > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> > > ---
-> > >  drivers/gpu/drm/msm/dsi/dsi_host.c | 4 ++--
-> > >  1 file changed, 2 insertions(+), 2 deletions(-)
-> > 
-> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >
+> > I was motivating the reason for using SYSTEM_RESET2. How to set the PMIC
+> > register and IMEM cookie can change between chipsets. Using
+> > SYSTEM_RESET2 alows us to abstract how to perform the reset.
 > 
-> Thanks, it seems this patch has already been picked up for 6.10 [1] to test at
-> least, but I'd advise you to drop it until I resend it in v2, as it no longer
-> performs as written in the title.
+> Fair enough. But I assume you are not providing the details of PMIC register
+> or IMEM cookie via DT.
 
-Ok, dropping.
+Kernel doesn't need this info.
 
 > 
-> When I wrote this patch in in June 2023, commit efcbd6f9cdeb ("drm/msm/
-> dsi: Enable widebus for DSI") from August 2023 wasn't there yet.  That patch
-> updates hdisplay (because it is unused after that point) with the number
-> of compressed bytes to be sent over each interface, which is effectively
-> hdisplay (based on slice_count * slice_width, so as explained in the commit
-> message that corresponds to half the panel width), divided by a compression
-> ratio of 3 or 6 depending on widebus, thus passing a way too low value into
-> dsi_update_dsc_timing().
+> Anyways you did confirm if PSCI SYSTEM_RESET works as expected or not. That
+> is default and must work.
 > 
-> As a result this patch regresses the DSC panel on my SM8150 Sony Xperia 1, and
-> likely also explains why it was quite hard to get the porches "just right" on
-> the Xperia 1 III with its dual-DSI dual-DSC 4k@120Hz panel (that these patches
-> are specifically for).
-> 
-> I'm still thinking of how to best fix that: probably introducing a new separate
-> local variable, though dsi_update_dsc_timing() only uses it to calculate
-> the number of slices per interface, which again as written in the commit
-> description, is currently required to already be for one interface (in other
-> words, the Xperia 1 with only a single intf sets slice_count=2, but the Xperia 1
-> III with 2 bonded DSI interfaces sets slice_count=1).  Which means that this is
-> always equivalent to slice_per_intf = dsc->slice_count.
-> 
-> Let me know which approach is preferred.
-> 
-> - Marijn
-> 
-> [1]: https://gitlab.freedesktop.org/drm/msm/-/merge_requests/110
 
--- 
-With best wishes
-Dmitry
+Yes, SYSTEM_RESET works on Quacomm firmware. The bindings disallow
+trying to override the default reboot. (reboot command = NULL or "") The
+PSCI parsing of the DT also doesn't have any of the special handling to
+deal with "mode-normal".
+
+> > > > Generally, there is a PMIC register that gets written to
+> > > > decide the reboot type. There is also sometimes a cookie that can be
+> > > > written to indicate that the bootloader should behave differently than a
+> > > > regular boot. These knobs evolve over product generations and require
+> > > > more drivers. Qualcomm firmwares are beginning to expose vendor
+> > > > SYSTEM_RESET2 types to simplify driver requirements from Linux.
+> > > >
+> > >
+> > > Why can't this be fully userspace driven ? What is the need to keep the
+> > > cookie in the DT ?
+> >
+> > As Dmitry pointed out, this information isn't discoverable. I suppose
+> > we could technically use bootconfig or kernel command-line to convey the
+> > map although I think devicetree is the right spot for this mapping.
+> >
+> 
+> Yes and as usual DT has become dumping ground for firmware that don't
+> make things discoverable. Make crap that Qcom puts in the DT are firmware
+> related and can be make discoverable. Anyways it is sad that no efforts
+> to make it so are done as DT is always there to provide shortcuts.
+> 
+> > - Other vendor-specific bits for PSCI are described in the devicetree.
+> >   One example is the suspend param (e.g. the StateID) for cpu idle
+> >   states.
+> 
+> You are right, but that is the only example I can see and it was done
+> in very early days of PSCI. It shouldn't be example if there are better
+> ways.
+> 
+> > - Describing firmware bits in the DT isn't unprecedented, and putting
+> >   this information outside the DT means that other OSes (besides Linux)
+> >   need their own way to convey this information.
+> 
+> Correct but it can be Qcom specific firmware interface. There are so many
+> already. This splitting information between firmware and DT works well
+> for vertically integrated things which probably is the case with most of
+> Qcom SoCs but it is prone to issues if DT and firmware mismatch. Firmware
+> discovery eliminates such issues.
+> 
+
+I worry about designing interfaces both in Qualcomm firmware and in
+the PSCI driver which doesn't really suit handling the discovery. We can
+implement the dynamic discovery mechanims once there is a board which
+needs it.
+
+Thanks,
+Elliot
 
