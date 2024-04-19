@@ -1,145 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-17913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17914-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 449728AAAF0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 10:53:58 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 066528AAB73
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 11:26:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EB36B283CFD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 08:53:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1D5971C22131
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 09:26:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B6A36EB41;
-	Fri, 19 Apr 2024 08:53:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EFF37BAEE;
+	Fri, 19 Apr 2024 09:26:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zGUF9Kg+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C00AFF9CD;
-	Fri, 19 Apr 2024 08:53:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64ED076402
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 09:26:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713516834; cv=none; b=oQfzDhx1zdC34i6Q73AbvMaiU0J0E+n82hAI9/DRWe8/zqwiDkfQpVKAyOqoTB5jU2K8Fr5s5tk/OkOr6DXpF6zhvvakWF24kYARs+4PAiQ+bKgprgdWLZ43lHSPmzjRG6h86bg0FXoCaSoMZSlJIjd9Ks1bKBBRfBDUXx5T2X8=
+	t=1713518800; cv=none; b=pd4K4MwtSm4xU4aWjdpqm9l+AzZ+Q9JrATS5mPzM6iaujyMdjbCPZZcI9DR3IcYTOna2mgvEjBLl2Rl/Hb6uJIm2ZAjQh9wsq2nBC8nJr0WTKVNJ3PghiS9eClxG/UqUWfwamiTHP7RGHKjlnIaAZbCgSfvfW4hWEezLMV5PM/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713516834; c=relaxed/simple;
-	bh=mZaqwvICdeQc4Uk1/mG9rpCXgLLl45RMWhDGIpJ27DU=;
+	s=arc-20240116; t=1713518800; c=relaxed/simple;
+	bh=nEQE1bgcahfGAeEROm4nIOqoBwmVPoodJbRFX+eJFiA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YRIkL5xv59i2SOpty6Qle+dx6GdAnJAZ93rIE9oY3EZlbWn3GQGpF3vUXq/DSy+1AejJgILOg3+obowcyfomY6ChsICpwV90uRIbCvqI/u8uXtth6LWGMZz/z1Us6XhSxXPPivzi36T2wnKh0AcaPxMJ8T09arF0+9GIeO7J7zM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 198A42F;
-	Fri, 19 Apr 2024 01:54:19 -0700 (PDT)
-Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D14E23F792;
-	Fri, 19 Apr 2024 01:53:47 -0700 (PDT)
-Date: Fri, 19 Apr 2024 09:53:45 +0100
-From: Sudeep Holla <sudeep.holla@arm.com>
-To: Elliot Berman <quic_eberman@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-	Melody Olvera <quic_molvera@quicinc.com>,
-	Shivendra Pratap <quic_spratap@quicinc.com>,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 0/4] Implement vendor resets for PSCI SYSTEM_RESET2
-Message-ID: <20240419085345.4ovebbbmcabo3f73@bogus>
-References: <20240414-arm-psci-system_reset2-vendor-reboots-v2-0-da9a055a648f@quicinc.com>
- <Zh5GWqt2oCNHdF_h@bogus>
- <20240417140957985-0700.eberman@hu-eberman-lv.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=qUKFLqJCVHGdjTmb5o5yJDmfF+b7rSDN31urXqIdAL6+2O95Qu8cnp08hKcEGci6H4zUPgC617ao+im5KjEUG2awinASNJN7Xd8+g3Q9axeW802RWSQgUT4kNBzPdC9gN4JPuES3dg7l6zYEaX4MG9AqF4h4LFRQX/SQaoZ6Axs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zGUF9Kg+; arc=none smtp.client-ip=209.85.160.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-22edcfcd187so730036fac.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 02:26:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1713518796; x=1714123596; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=f2k6wBjEwpSJIIcZ8MPn1YroTKsxMSXWDSsv1Yc3sRE=;
+        b=zGUF9Kg+YfIg5reVeeXUQSnLyDkpUGj4ulcrTG/5U9jobWew3+UbDq2OCWNOICgrin
+         7hq+3cPPix++lBy9F14RWm5Kz62j93bljrW2wyIbZfSBeV6hVlDONbm0khRSoONFcdlX
+         m41WZ3vCnL/HRQCbm9Qj5cOGZ83h+9xNVYIElD3ISyaC3qoGA2OXFv93nWqtkEmGcRmf
+         xia1REZQMbnyGTtMXEg7PqQug4haRsaTWrvhTunIto3xjfTmbDau0evVRjD2xId5dtLs
+         XrYMSEZPOuvjnznpUiRiIb5UH5FkSK+75423udCleJnPXJH82URJBsBFXKV9Z6T+oSqn
+         DmWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713518796; x=1714123596;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=f2k6wBjEwpSJIIcZ8MPn1YroTKsxMSXWDSsv1Yc3sRE=;
+        b=hXPDkg2pacB6RhpPWUJ6tU0BiOjcYdp4T2B4q3ctbHwy8TYmNkg/GfwYIRTudSECzJ
+         GqaBHBXrKvnLOVgjZLePt2wyOYf4ekk080arz2/C3bDBZelmzVcm5qGn27HUfm2jDYMw
+         M7UW50qPpWfwA3+gjbN428kZXA/4k80BW1eJ/iUQZOGK7a09qzHpqN+lmLtyYBGbeHfp
+         gMUINHHPc5dPgdlMlQRGCPvxZgSzEX3W+6LIGzVo6pMiz0sKgq+v834tiUCgYSx8BB7v
+         A4+64SAwUM9i8rUOnCI9HK+8ZEXmks8y4ShXzeaGtbR9qaTS778QYqgByb45YBPfOfry
+         GM9Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUWfXcIFo0iQS8YqBiHUlNDz60uCCk272Lx+ADKB+5f9Y3gjrmzd2713Wob5nwBDsFzfisZY1x/XQYUdQM1lr1ufJBdzZOCpzZlrppMxg==
+X-Gm-Message-State: AOJu0Yz+0UJuLTMqZms3cU897unW1hJVnntmnElbqfjemZ6ru642qNa/
+	QCSILhQOxAZs0VQgHBcoLmIn+hft0sJ5iw8QbsTGV95LGlNBbrAQcajy7yC0xlofYdX/FtOgd/Q
+	=
+X-Google-Smtp-Source: AGHT+IGPIPPIitXX4Yw0hrulDjF2tnglO0Qdegfb3hKjRqYEF4E5wtIteUhkJR61YJc1aF7VAjq+9A==
+X-Received: by 2002:a05:6870:12d9:b0:22e:c37c:453d with SMTP id 25-20020a05687012d900b0022ec37c453dmr1625314oam.30.1713518796449;
+        Fri, 19 Apr 2024 02:26:36 -0700 (PDT)
+Received: from thinkpad ([220.158.156.51])
+        by smtp.gmail.com with ESMTPSA id z17-20020a634c11000000b005f0793db2ebsm2715872pga.74.2024.04.19.02.26.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Apr 2024 02:26:35 -0700 (PDT)
+Date: Fri, 19 Apr 2024 14:56:29 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Niklas Cassel <cassel@kernel.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	mhi@lists.linux.dev, linux-tegra@vger.kernel.org,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: Re: [PATCH v3 3/9] PCI: endpoint: Rename BME to Bus Master Enable
+Message-ID: <20240419092629.GA3636@thinkpad>
+References: <20240418-pci-epf-rework-v3-0-222a5d1ed2e5@linaro.org>
+ <20240418-pci-epf-rework-v3-3-222a5d1ed2e5@linaro.org>
+ <ZiEy4EVcVpUry9qn@ryzen>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240417140957985-0700.eberman@hu-eberman-lv.qualcomm.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZiEy4EVcVpUry9qn@ryzen>
 
-On Wed, Apr 17, 2024 at 02:54:41PM -0700, Elliot Berman wrote:
-> On Tue, Apr 16, 2024 at 10:35:22AM +0100, Sudeep Holla wrote:
-> > On Sun, Apr 14, 2024 at 12:30:23PM -0700, Elliot Berman wrote:
-> > > The PSCI SYSTEM_RESET2 call allows vendor firmware to define additional
-> > > reset types which could be mapped to the reboot argument.
-> > >
-> > > Setting up reboot on Qualcomm devices can be inconsistent from chipset
-> > > to chipset.
-> >
-> > That doesn't sound good. Do you mean PSCI SYSTEM_RESET doesn't work as
-> > expected ? Does it mean it is not conformant to the specification ?
-> >
->
-> I was motivating the reason for using SYSTEM_RESET2. How to set the PMIC
-> register and IMEM cookie can change between chipsets. Using
-> SYSTEM_RESET2 alows us to abstract how to perform the reset.
+On Thu, Apr 18, 2024 at 04:49:04PM +0200, Niklas Cassel wrote:
+> On Thu, Apr 18, 2024 at 05:28:31PM +0530, Manivannan Sadhasivam wrote:
+> > BME which stands for 'Bus Master Enable' is not defined in the PCIe base
+> > spec even though it is commonly referred in many places (vendor docs). But
+> > to align with the spec, let's rename it to its expansion 'Bus Master
+> > Enable'.
+> > 
+> > Suggested-by: Damien Le Moal <dlemoal@kernel.org>
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> 
+> Reviewed-by: Niklas Cassel <cassel@kernel.org>
+> 
+> 
+> Outside the scope of this patch/series:
+> Do we perhaps want to add a bus_master_enable() callback also for the
+> pci-epf-test driver?
+> 
 
-Fair enough. But I assume you are not providing the details of PMIC register
-or IMEM cookie via DT.
+Makes sense to me.
 
-Anyways you did confirm if PSCI SYSTEM_RESET works as expected or not. That
-is default and must work.
+> In my opinion, the test driver should be "the driver" that tests that
+> all the EPF features/callbacks work, at least a basic test "does it
+> work at all". Other EPF drivers can implement the callbacks, and do
+> more intelligent things, i.e. more than just seeing that "it works".
+> 
 
-> > > Generally, there is a PMIC register that gets written to
-> > > decide the reboot type. There is also sometimes a cookie that can be
-> > > written to indicate that the bootloader should behave differently than a
-> > > regular boot. These knobs evolve over product generations and require
-> > > more drivers. Qualcomm firmwares are beginning to expose vendor
-> > > SYSTEM_RESET2 types to simplify driver requirements from Linux.
-> > >
-> >
-> > Why can't this be fully userspace driven ? What is the need to keep the
-> > cookie in the DT ?
->
-> As Dmitry pointed out, this information isn't discoverable. I suppose
-> we could technically use bootconfig or kernel command-line to convey the
-> map although I think devicetree is the right spot for this mapping.
->
+Agree. Feel free to send a patch :)
 
-Yes and as usual DT has become dumping ground for firmware that don't
-make things discoverable. Make crap that Qcom puts in the DT are firmware
-related and can be make discoverable. Anyways it is sad that no efforts
-to make it so are done as DT is always there to provide shortcuts.
+- Mani
 
-> - Other vendor-specific bits for PSCI are described in the devicetree.
->   One example is the suspend param (e.g. the StateID) for cpu idle
->   states.
-
-You are right, but that is the only example I can see and it was done
-in very early days of PSCI. It shouldn't be example if there are better
-ways.
-
-> - Describing firmware bits in the DT isn't unprecedented, and putting
->   this information outside the DT means that other OSes (besides Linux)
->   need their own way to convey this information.
-
-Correct but it can be Qcom specific firmware interface. There are so many
-already. This splitting information between firmware and DT works well
-for vertically integrated things which probably is the case with most of
-Qcom SoCs but it is prone to issues if DT and firmware mismatch. Firmware
-discovery eliminates such issues.
-
-> - PSCI would be the odd one out that reboot mode map is not described in
->   DT. Other reboot-mode drivers specify the mapping in the DT. Userspace
->   that runs with firmware that support vendor reset2 need to make sure
->   they can configure the mapping early enough.
->
-
-Well I am not saying not to this yet, just exploring and getting more info
-so that whatever is done here can be reused on all PSCI based systems.
-
---
-Regards,
-Sudeep
+-- 
+மணிவண்ணன் சதாசிவம்
 
