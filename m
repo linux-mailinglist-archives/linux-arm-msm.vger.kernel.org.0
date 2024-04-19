@@ -1,73 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-17925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17926-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5CDA68AABFE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 11:51:39 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 333978AAC03
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 11:52:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 117D82835BE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 09:51:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B21A01F21477
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 09:51:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E13B83CB0;
-	Fri, 19 Apr 2024 09:49:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 611358563B;
+	Fri, 19 Apr 2024 09:49:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="dwHJJPHO"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="RDXZTLyW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 367807FBB9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29524823A9
 	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 09:49:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713520173; cv=none; b=TSJY0OrN+5cX6CYxHZgE8o40D5Kzl+24e/QvaOYTP8OvfHsCYfsL3ZNamhybi5N2TL0jG+5d7MYypLF1Alss++5NgaOA2YX9UJM8qjDTLf5WOWO3kBJx2zl9sLdlcjJtfgwJQ/E9dL2EJt+4wVAApPKXUE5n98FR2SB0oGK97Fw=
+	t=1713520174; cv=none; b=peSul14aRnIW2psyifxp1ZcUgvGJpuHCk0aiqSaJgYIuXeVUaDTKo6NfqcSXIeZJpURwnM/3XEvn+SSarFg//advqRALnSBQ/deGprmjbPnmpClnR+JsMQDbXIVB7Kcb7lntNMlbCXoDyaV0UrR9xyPAFnEKuAa7wrTPFAMwSzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713520173; c=relaxed/simple;
-	bh=aAxsx+GHEjYnJMiAWqwUDNgaIzi1dYkLjFRqwX4O4Cc=;
+	s=arc-20240116; t=1713520174; c=relaxed/simple;
+	bh=+AXbzIt1DCOyX+j9nTM1S5LGWAW6l5Ne8tHYdxY2P08=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=n03v688NotYe3fF/trXgz5GMmRE8EtjKEeuP/1po3YDmYIeiyRjzj8lHZmJ6EHNqJDsTdhtKJJXYofY1by8JggPrMe5A08lox6FareS8hbvJ18Yrq7mhzGu2AaVtey1pVdhCnsXdYwLFWLjSVJQlGx44eNOw84ALr65qRs0uq/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=dwHJJPHO; arc=none smtp.client-ip=209.85.160.179
+	 In-Reply-To:To:Cc; b=d5bNo1/sGmZP2EhRr4lCli9d5KM30NiwpaI2JvbYvuXBLhcr895lHG5xpCt3eAaCpLWnzXYJE9aoaC5K++emVD6DFAnjEsYvswv/FM5NFiQvYxiUZG0Twyi2c4/ZWDyhD93fGGRfZasFfzsJRZY+A3EW3umWq98DB/34Cjw4AYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=RDXZTLyW; arc=none smtp.client-ip=209.85.222.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-4379f9160a7so9526281cf.2
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-78f031a4442so119083285a.2
         for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 02:49:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1713520170; x=1714124970; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1713520171; x=1714124971; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=PtHT2dnCrKtU2tz1OyJJw1d0hzBN/YL8p+52UQFaJZo=;
-        b=dwHJJPHODXiKSarwV6nm3I3I7P1+j5DULH4hERbmBQjxOW8dPVI+RDJZUUshs1f8Sx
-         FnQG7TFdVgOvfTpO9qxTZ2PdFm1Zpe+LBeM8luYze/vuxxBN06/Y4hxuEaNATaVdT1aA
-         DJ1hYwJj6K8xXoYGNdInHHjg5Zfcq0+/lQfNI=
+        bh=I5MK517M661jXeUTMXVPJlov9z4l8/dISyr2IlNuzMY=;
+        b=RDXZTLyWM1k8dfz8A7WFBrq7+rQc1zX11Zn60dcP33fCc05oAyeDWx+WhVTNfuyiYq
+         SZf4mw1lAQXWdrsEEtmTze09iT73ZK8HUFB+yyMCM98PKAzQZ9yUBEwnWEYyj7UYt9T8
+         xA2Rx2ovIzqhYA7DyPbfNIZlLqwxAtlu+p69s=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713520170; x=1714124970;
+        d=1e100.net; s=20230601; t=1713520171; x=1714124971;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=PtHT2dnCrKtU2tz1OyJJw1d0hzBN/YL8p+52UQFaJZo=;
-        b=EKSVTSy60HQpo5QUkp3lUQMCaOtxt++PdDLH4nBbPLjzvvX9as1E+2zgVLByorN8nA
-         23X8yc31MxyTKSLQw4Mr4y38RIu+WHysgjvcBtqUKo9AGVbxYIdB7amo0ZWMg0IIoF4R
-         bHUi07twmVl4G72KfMPoxm41v1txSX186djUvsK8S/SWWO2mNHpk8TNmzz8LB5t/PSpH
-         1yojy+wiOIlE2K4nWQ8WS8XnXT7P1DNCUJI49XVvjYbg6NVRKtnJxs/enBBU7oNU1Rvu
-         Gmh+octp0H/FYcuBbc3BIMEU7Y7bfhWcECm96Bu7K5ceT5URZyOu6o7dambPREosWF9z
-         EsYA==
-X-Forwarded-Encrypted: i=1; AJvYcCVjXtM6UncUqzQ1VOkT0oF81cQVXCOf1SbqtkbwZTrX5YFVBzdVx21SqXrHg49YKZ9m2uF5iahYDWWbgzynKwYmVx9pd59D5hU/3AY/uQ==
-X-Gm-Message-State: AOJu0YzO7vsJek5GH5HQxzNWZd2OU5N5G4uPvwTUFb6CKSNR/gArXc8/
-	u2FLsm6GbqRVFJUbrqE1XIv5huH+75bJ3FsyCe2p/souG489zhYwV9+9IgK2Ng==
-X-Google-Smtp-Source: AGHT+IEq5/HFwcn26nQnIIJ8VXOEY35h4vBPeSOiEtFFD1Z7vC7s7kPOFrGUrC/lVDARzsxRqq1juw==
-X-Received: by 2002:a05:622a:1386:b0:437:b995:98b5 with SMTP id o6-20020a05622a138600b00437b99598b5mr1747672qtk.57.1713520170255;
-        Fri, 19 Apr 2024 02:49:30 -0700 (PDT)
+        bh=I5MK517M661jXeUTMXVPJlov9z4l8/dISyr2IlNuzMY=;
+        b=GE1/oxfJoHYC3OUFo8VxUX/u4JYWx2QPvZQBrTifdUC4rkz/NOcZHAjLTCmcS5+Om5
+         LP8zq85+UUxZWEZkZiFp49MBlYAqiSqWeRKVCihUlzZiAFfgTPjpZAHHyfjIWQjApgdt
+         0en4rizYR4yUFeLiY+Vxp8y+K4geLs22Y6sWhL533JsbgZIbZNd6XSpR82mp7lHLfF92
+         Hi3HOfh/3ULwkCAHFqGZNCJdNSbP1NdpEoHfM/sxAcswz58hdb2nsYfRCCeMaDGIiWZ2
+         JdB3J9/xeusTpR+oMFfIRstnbokaZmhftaVF8beFmh/cvxzvMtB6Pn72d24sY971kLNd
+         U7Qg==
+X-Forwarded-Encrypted: i=1; AJvYcCU7uL/Mn0dN4RN6H8g6q48DhH+9yhKRLzkyBcFD/W5k+BmSqv1Yxg1ICJ1cZTIJMQHsC2tSU05MqKfa59Kyalzx3naFEpTzNgMeB3SO1Q==
+X-Gm-Message-State: AOJu0Yx6i4C0TclckLL08m/t3F2JOGYZ/Ef5Eokixw2wfL1cSzrgto+l
+	hN6OnT/akevU5TPH747TqPEpCSD/J1RmGM2zL8eJh5h1zgP4VBtIXWbts/z8nQ==
+X-Google-Smtp-Source: AGHT+IGTA8hVputhy9D1xoHe1Hnr3yG2C7dQHpLq8IKH//vLRvJ+A58aCJR9JO6Y/w8HTYrMtJHvqA==
+X-Received: by 2002:a05:620a:1da6:b0:78d:5065:c5df with SMTP id pj38-20020a05620a1da600b0078d5065c5dfmr1596268qkn.18.1713520171055;
+        Fri, 19 Apr 2024 02:49:31 -0700 (PDT)
 Received: from denia.c.googlers.com (114.152.245.35.bc.googleusercontent.com. [35.245.152.114])
-        by smtp.gmail.com with ESMTPSA id dt14-20020a05620a478e00b0078d735ca917sm1434532qkb.123.2024.04.19.02.49.29
+        by smtp.gmail.com with ESMTPSA id dt14-20020a05620a478e00b0078d735ca917sm1434532qkb.123.2024.04.19.02.49.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Apr 2024 02:49:29 -0700 (PDT)
+        Fri, 19 Apr 2024 02:49:30 -0700 (PDT)
 From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Fri, 19 Apr 2024 09:47:55 +0000
-Subject: [PATCH v2 09/26] media: v4l: async: refactor
- v4l2_async_create_ancillary_links
+Date: Fri, 19 Apr 2024 09:47:56 +0000
+Subject: [PATCH v2 10/26] staging: media: tegra-video: Use swap macro
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,7 +75,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240419-fix-cocci-v2-9-2119e692309c@chromium.org>
+Message-Id: <20240419-fix-cocci-v2-10-2119e692309c@chromium.org>
 References: <20240419-fix-cocci-v2-0-2119e692309c@chromium.org>
 In-Reply-To: <20240419-fix-cocci-v2-0-2119e692309c@chromium.org>
 To: Martin Tuma <martin.tuma@digiteqautomotive.com>, 
@@ -116,44 +115,36 @@ Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
  Ricardo Ribalda <ribalda@chromium.org>
 X-Mailer: b4 0.12.4
 
-Return 0 without checking IS_ERR or PTR_ERR if CONFIG_MEDIA_CONTROLLER
-is not enabled.
+Makes the code simpler and cocci happier:
 
-This makes cocci happier:
+drivers/staging/media/tegra-video/tegra20.c:324:44-45: WARNING opportunity for swap()
 
-drivers/media/v4l2-core/v4l2-async.c:331:23-30: ERROR: PTR_ERR applied after initialization to constant on line 319
-
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 ---
- drivers/media/v4l2-core/v4l2-async.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/staging/media/tegra-video/tegra20.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/media/v4l2-core/v4l2-async.c b/drivers/media/v4l2-core/v4l2-async.c
-index 4bb073587817..915a9f3ea93c 100644
---- a/drivers/media/v4l2-core/v4l2-async.c
-+++ b/drivers/media/v4l2-core/v4l2-async.c
-@@ -316,9 +316,10 @@ v4l2_async_nf_try_all_subdevs(struct v4l2_async_notifier *notifier);
- static int v4l2_async_create_ancillary_links(struct v4l2_async_notifier *n,
- 					     struct v4l2_subdev *sd)
- {
--	struct media_link *link = NULL;
-+	struct media_link *link;
+diff --git a/drivers/staging/media/tegra-video/tegra20.c b/drivers/staging/media/tegra-video/tegra20.c
+index 630e2ff987a3..7b8f8f810b35 100644
+--- a/drivers/staging/media/tegra-video/tegra20.c
++++ b/drivers/staging/media/tegra-video/tegra20.c
+@@ -317,13 +317,8 @@ static void tegra20_channel_queue_setup(struct tegra_vi_channel *chan)
+ 		chan->addr_offset_v = chan->addr_offset_u + stride * height / 4;
  
--#if IS_ENABLED(CONFIG_MEDIA_CONTROLLER)
-+	if (!IS_ENABLED(CONFIG_MEDIA_CONTROLLER))
-+		return 0;
- 
- 	if (sd->entity.function != MEDIA_ENT_F_LENS &&
- 	    sd->entity.function != MEDIA_ENT_F_FLASH)
-@@ -326,8 +327,6 @@ static int v4l2_async_create_ancillary_links(struct v4l2_async_notifier *n,
- 
- 	link = media_create_ancillary_link(&n->sd->entity, &sd->entity);
- 
--#endif
+ 		/* For YVU420, we swap the locations of the U and V planes. */
+-		if (chan->format.pixelformat == V4L2_PIX_FMT_YVU420) {
+-			unsigned long temp;
 -
- 	return IS_ERR(link) ? PTR_ERR(link) : 0;
- }
+-			temp = chan->addr_offset_u;
+-			chan->addr_offset_u = chan->addr_offset_v;
+-			chan->addr_offset_v = temp;
+-		}
++		if (chan->format.pixelformat == V4L2_PIX_FMT_YVU420)
++			swap(chan->addr_offset_u, chan->addr_offset_v);
  
+ 		chan->start_offset_u = chan->addr_offset_u;
+ 		chan->start_offset_v = chan->addr_offset_v;
 
 -- 
 2.44.0.769.g3c40516874-goog
