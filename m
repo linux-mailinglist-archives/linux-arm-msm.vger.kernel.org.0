@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-17963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-17964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26DA98AB197
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 17:19:03 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F4448AB199
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 17:19:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 79EDEB222ED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 15:19:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CB690283011
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Apr 2024 15:19:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF88E130AFE;
-	Fri, 19 Apr 2024 15:18:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1951512F38C;
+	Fri, 19 Apr 2024 15:18:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zs4XPMpR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vcqrhD6B"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-io1-f41.google.com (mail-io1-f41.google.com [209.85.166.41])
+Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9A312FF74
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 15:18:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1851304BD
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 15:18:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713539890; cv=none; b=UJMEjY9DXuvPZM6lsYaKz5owTV9eJr6ZuhcEAD/gjnq/GhEfuQ57ifOBxayHGu1ODOQDh7wtaUC0u3CuuNqSC3KGb2w9NvZO8KhGPLV5L0p34Y1QKwZTjj9vOwirHi/K/BGISQPHHhmUCT222xwaLIC5CbHBPz0sb/8WD3VTB2Q=
+	t=1713539891; cv=none; b=ukGMcH8o4mIpsusdNVl/C51EF4qWd3ARqZvoQrmgfM4LEJPXNfQ51ob1+G1PLammLIx6LGgrNYkc9Jy3usSlKqHSacTAIHoPUcQ3QSKT10tJ54FGb1d0qw7kqx8IsOvXqvU+L7TEUfnLqzLyVY8Hvza14m5lAWA2ot91JJCTp98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713539890; c=relaxed/simple;
-	bh=Q0E7FhXIRDhGAblpeieYVhQkwbjvfK6IuTNLIIQZVUY=;
+	s=arc-20240116; t=1713539891; c=relaxed/simple;
+	bh=oB096HyNcXkj+8OW4Cvuw9utWZDB5OfhuhFopOEo+XU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=EgJRVL31CVSD2RnVG9AwbffFjW0MnhoUs4liuQg+ozpLi1ItG9Q1Wu97idx4wYK44lKY2RGsWRAtBSl6iZ+5T4Er9M/v01GVwIP6TegtwEg6sJ533L7lnbFOq36TkJP/9wAY9QiBc5kSZcEVe3ZDBpbtI8rKGDyOxJr7cJciAWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zs4XPMpR; arc=none smtp.client-ip=209.85.166.41
+	 MIME-Version; b=neTWPzQaNL1A4XN+49Qp4DT7Ydd5sIK0D2dm6EtaivQV591RFpz49+cvIqJSnQhQd589Y+83AQZL9Y1jYCmWtAGIw55TJA9FhYTQoi7jxkt6S4+2cW3V5Kyav81CPLRJ5moJ+vwm5Sw+rFNhcDIeH36Y+vtT2k7L9xOfHVtDb98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vcqrhD6B; arc=none smtp.client-ip=209.85.166.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-io1-f41.google.com with SMTP id ca18e2360f4ac-7d9f35fcd2eso85228539f.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 08:18:07 -0700 (PDT)
+Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-7da3ec3e044so54826039f.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 08:18:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713539887; x=1714144687; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1713539888; x=1714144688; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fHMnYNBF3duo4/+KlP8bC20trtUqzEZR9+R77ODU+ms=;
-        b=zs4XPMpRES3TNyK+j9+QHQTgL+NJShzfWixar8oc/Nzf3mZ8uKQvG6E/kZEY4u4IOO
-         IajvXiPrBbc8T6ituCkQjP0raFR7nD8GJ0vdpfZRo5eDfvgfInct1m/Usnbv9Yo89aCs
-         ZGzBEhoPYlHdfw02udGGlJo2ETffqxAyHHqepWsQzmC6v4e9+Xi7pyK2BJ3ycoQ5m7Hh
-         /TRlrYInI0DLXiTet/5NzEz931+/q44n464D35PW+JgPEmgUURP0K4CqKcoRJ7OQsFAG
-         eVV7rueNix9HwHMXdS6NGraHLiMKB/kihBo1tNQNqKsAhbBCHhP59hIJJhLBvlDG2g7V
-         yrSw==
+        bh=KW+xodU0leEhVx50ESvAxH61dvrN0r6GXKBXbX3qcpk=;
+        b=vcqrhD6BA9b8Mo1yqcCoBriSKlStkiODJW9Yv7YU5iOrVfSzs2+UgA8DAha7gNCTPG
+         9JQJIsnIZ4bDXO8tIfiZiR7hn6ZSFDgYAqxMzmli6KLgacE2kmysiPsmKxfMrWJTWZQz
+         0wWJViVjNclzFLS1DFEnwt0gHeZn3Vx0fXsGjfdpfCkSw+876bNI2XYZhgeGykFzv5ZM
+         JV4vxpwQmbT2FQagAB2U0aDlEUm26ueB7vJXO4+suXwRP54OKUgd+mujj6/kLnmSJ01H
+         hLx+1I7N7+w1+cRHDAeJMg676wgPCL+MqY1wW2VUjx1juskIVfrHx6pymiB422s8MwhB
+         WMeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713539887; x=1714144687;
+        d=1e100.net; s=20230601; t=1713539888; x=1714144688;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fHMnYNBF3duo4/+KlP8bC20trtUqzEZR9+R77ODU+ms=;
-        b=QUavGLzediud/VlEOUBuzIRupxnkaFB6QBcFtRzt4qCzXBCWjEOmYy2kivLw89ZoAA
-         bW8kdsu2PFNKdKnyzOjTfEHknI4dXEDFu3DUQ6vefx222QM/94i5UTTdhrR42fmCsus9
-         r0tYKK2wh3h0Te+DfuEwkxsXEL4riflBDDj4TICgDxT2TfvP6OoplUR2m/kI6a/Q81NK
-         9NnF4HdLyA08DFmPcaiu1jAUQBE6KKLvG0TQBedLWvS2uD4OhDhDaVPbzVTEjN88kpyZ
-         +M98u2BnF9RVvtqPCK8i4EotQEhfwGEHlMD8Je1hanba+uYqe+bWAWd50CvEPJD45aAy
-         QFuA==
-X-Forwarded-Encrypted: i=1; AJvYcCX7fI35yOCMqnsV3yZy37zSo0yRgLuBB47k//dULfABFYmCd9Zq7Cjr551E7Jb7S5sMF1SzZJt3FZ6Oy6Zcj5nDWytCvvOn2v65wO+qjg==
-X-Gm-Message-State: AOJu0YxWWrmKXcElLkSpwLHpFQrdtN9l9vs79oxMUzzTQF0r2FElF5m3
-	478q+zIgxyrW4TBiPYweK8LKVv8gkQtytHfX782qCoD7JZte0vDXjoYX1vFvvuE=
-X-Google-Smtp-Source: AGHT+IF7GPcHIRyDVCOIwyo6NIzltkE/fTfp0QyP4PY6C2+tHxBzXNvbfCeSsFlZBX8lhUSM7W80YA==
-X-Received: by 2002:a05:6602:1d52:b0:7d9:6474:812e with SMTP id hi18-20020a0566021d5200b007d96474812emr3076780iob.2.1713539887321;
-        Fri, 19 Apr 2024 08:18:07 -0700 (PDT)
+        bh=KW+xodU0leEhVx50ESvAxH61dvrN0r6GXKBXbX3qcpk=;
+        b=nvQ8eXPAbsEuv4X6CS7OFn9q9bxP7/HHqOl/HmT7Urvul13Y2nJs87AFBjf7zqXPu2
+         FW9kPHelhjkGsXyAYOoqTd/SUy6YJCjMihcxkcJqOn629NO7bKr6T/JCzBDNyUUVxpzd
+         vJxf6PYrlNoL/QF+uohJU33FtJn/pPC+so5cr11pirgMiRF12Dd0iPEf98sywWS5a1HF
+         ku/riUcoosujQ4H6varntIS3kGQAsC58xngzH93bgDpcojiAufNmSseb13DHNfFBD4rz
+         JDRzWZnyBM5G1ZRSHEiN1UXaEhWSvLI/oecmHr3gBDJ63hUwC5IMIwPsxX0T0fLMnBv5
+         taRg==
+X-Forwarded-Encrypted: i=1; AJvYcCVHUvRLZ8n5vbY805YC7I4wsJTNVs7tLIHaBG3alCDfOHvI4ds6ESzGWt3rGNUSlsap9+V9+mp4oz5c6zsS/6aAxEdvYTji5a+rOxnX3A==
+X-Gm-Message-State: AOJu0YwkITj8Td9I4JxyBcG5PT0oTtvoIfwStf30Lq0DzxMRkmKmMZPy
+	uNxc75/jlOIidZqB/Ns6PNtTLUfHlS8BuPJjq96/wB2jmhXke0tXeWFXYPfjWfI=
+X-Google-Smtp-Source: AGHT+IG+dQS0s8hDk+7SovzXn0ZCvGbkZQQZ2v0B2TFNw4W36id+MfFXUHuGZlHqxwI/1RglHK6trw==
+X-Received: by 2002:a5d:8995:0:b0:7d0:d84d:9e13 with SMTP id m21-20020a5d8995000000b007d0d84d9e13mr2743043iol.19.1713539888393;
+        Fri, 19 Apr 2024 08:18:08 -0700 (PDT)
 Received: from localhost.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id lc8-20020a056638958800b00484e9c7014bsm116126jab.153.2024.04.19.08.18.06
+        by smtp.gmail.com with ESMTPSA id lc8-20020a056638958800b00484e9c7014bsm116126jab.153.2024.04.19.08.18.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Apr 2024 08:18:07 -0700 (PDT)
+        Fri, 19 Apr 2024 08:18:08 -0700 (PDT)
 From: Alex Elder <elder@linaro.org>
 To: davem@davemloft.net,
 	edumazet@google.com,
@@ -82,9 +82,9 @@ Cc: mka@chromium.org,
 	netdev@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v2 3/8] net: ipa: call device_init_wakeup() earlier
-Date: Fri, 19 Apr 2024 10:17:55 -0500
-Message-Id: <20240419151800.2168903-4-elder@linaro.org>
+Subject: [PATCH net-next v2 4/8] net: ipa: remove unneeded FILT_ROUT_HASH_EN definitions
+Date: Fri, 19 Apr 2024 10:17:56 -0500
+Message-Id: <20240419151800.2168903-5-elder@linaro.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20240419151800.2168903-1-elder@linaro.org>
 References: <20240419151800.2168903-1-elder@linaro.org>
@@ -96,145 +96,215 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Currently, enabling wakeup for the IPA device doesn't occur until
-the setup phase of initialization (in ipa_power_setup()).
-
-There is no need to delay doing that, however.  We can conveniently
-do it during the config phase, in ipa_interrupt_config(), where we
-enable power management wakeup mode for the IPA interrupt.
-
-Moving the device_init_wakeup() out of ipa_power_setup() leaves that
-function empty, so it can just be eliminated.
-
-Similarly, rearrange all of the matching inverse calls, disabling
-device wakeup in ipa_interrupt_deconfig() and removing that function
-as well.
+The FILT_ROUT_HASH_EN register is only used for IPA v4.2.  There,
+routing and filter table hashing are not supported, and so the
+register must be written to disable the feature.  No other version
+uses this register, so its definition can be removed.  If we need to
+use these some day (for example, explicitly enable the feature) this
+commit can be reverted.
 
 Signed-off-by: Alex Elder <elder@linaro.org>
 ---
- drivers/net/ipa/ipa_interrupt.c | 11 ++++++++++-
- drivers/net/ipa/ipa_main.c      |  7 -------
- drivers/net/ipa/ipa_power.c     | 10 ----------
- drivers/net/ipa/ipa_power.h     | 14 --------------
- 4 files changed, 10 insertions(+), 32 deletions(-)
+ drivers/net/ipa/reg/ipa_reg-v3.1.c   | 14 --------------
+ drivers/net/ipa/reg/ipa_reg-v3.5.1.c | 14 --------------
+ drivers/net/ipa/reg/ipa_reg-v4.11.c  | 14 --------------
+ drivers/net/ipa/reg/ipa_reg-v4.5.c   | 14 --------------
+ drivers/net/ipa/reg/ipa_reg-v4.7.c   | 14 --------------
+ drivers/net/ipa/reg/ipa_reg-v4.9.c   | 14 --------------
+ 6 files changed, 84 deletions(-)
 
-diff --git a/drivers/net/ipa/ipa_interrupt.c b/drivers/net/ipa/ipa_interrupt.c
-index 2ef640f9197c7..245a069970556 100644
---- a/drivers/net/ipa/ipa_interrupt.c
-+++ b/drivers/net/ipa/ipa_interrupt.c
-@@ -277,17 +277,25 @@ int ipa_interrupt_config(struct ipa *ipa)
- 		goto err_free_bitmap;
- 	}
+diff --git a/drivers/net/ipa/reg/ipa_reg-v3.1.c b/drivers/net/ipa/reg/ipa_reg-v3.1.c
+index 63a44dce88353..a891037015836 100644
+--- a/drivers/net/ipa/reg/ipa_reg-v3.1.c
++++ b/drivers/net/ipa/reg/ipa_reg-v3.1.c
+@@ -78,19 +78,6 @@ static const u32 reg_qsb_max_reads_fmask[] = {
  
-+	ret = device_init_wakeup(dev, true);
-+	if (ret) {
-+		dev_err(dev, "error %d enabling wakeup\n", ret);
-+		goto err_free_irq;
-+	}
-+
- 	ret = dev_pm_set_wake_irq(dev, irq);
- 	if (ret) {
- 		dev_err(dev, "error %d registering \"ipa\" IRQ as wakeirq\n",
- 			ret);
--		goto err_free_irq;
-+		goto err_disable_wakeup;
- 	}
+ REG_FIELDS(QSB_MAX_READS, qsb_max_reads, 0x00000078);
  
- 	ipa->interrupt = interrupt;
- 
- 	return 0;
- 
-+err_disable_wakeup:
-+	(void)device_init_wakeup(dev, false);
- err_free_irq:
- 	free_irq(interrupt->irq, interrupt);
- err_free_bitmap:
-@@ -307,6 +315,7 @@ void ipa_interrupt_deconfig(struct ipa *ipa)
- 	ipa->interrupt = NULL;
- 
- 	dev_pm_clear_wake_irq(dev);
-+	(void)device_init_wakeup(dev, false);
- 	free_irq(interrupt->irq, interrupt);
- 	bitmap_free(interrupt->suspend_enabled);
- }
-diff --git a/drivers/net/ipa/ipa_main.c b/drivers/net/ipa/ipa_main.c
-index 6523878c0d7f6..b13a59f27106d 100644
---- a/drivers/net/ipa/ipa_main.c
-+++ b/drivers/net/ipa/ipa_main.c
-@@ -119,10 +119,6 @@ int ipa_setup(struct ipa *ipa)
- 	if (ret)
- 		return ret;
- 
--	ret = ipa_power_setup(ipa);
--	if (ret)
--		goto err_gsi_teardown;
+-static const u32 reg_filt_rout_hash_en_fmask[] = {
+-	[IPV6_ROUTER_HASH]				= BIT(0),
+-						/* Bits 1-3 reserved */
+-	[IPV6_FILTER_HASH]				= BIT(4),
+-						/* Bits 5-7 reserved */
+-	[IPV4_ROUTER_HASH]				= BIT(8),
+-						/* Bits 9-11 reserved */
+-	[IPV4_FILTER_HASH]				= BIT(12),
+-						/* Bits 13-31 reserved */
+-};
 -
- 	ipa_endpoint_setup(ipa);
- 
- 	/* We need to use the AP command TX endpoint to perform other
-@@ -169,8 +165,6 @@ int ipa_setup(struct ipa *ipa)
- 	ipa_endpoint_disable_one(command_endpoint);
- err_endpoint_teardown:
- 	ipa_endpoint_teardown(ipa);
--	ipa_power_teardown(ipa);
--err_gsi_teardown:
- 	gsi_teardown(&ipa->gsi);
- 
- 	return ret;
-@@ -195,7 +189,6 @@ static void ipa_teardown(struct ipa *ipa)
- 	command_endpoint = ipa->name_map[IPA_ENDPOINT_AP_COMMAND_TX];
- 	ipa_endpoint_disable_one(command_endpoint);
- 	ipa_endpoint_teardown(ipa);
--	ipa_power_teardown(ipa);
- 	gsi_teardown(&ipa->gsi);
- }
- 
-diff --git a/drivers/net/ipa/ipa_power.c b/drivers/net/ipa/ipa_power.c
-index 1a413061472d8..65fd14da0f86f 100644
---- a/drivers/net/ipa/ipa_power.c
-+++ b/drivers/net/ipa/ipa_power.c
-@@ -232,16 +232,6 @@ void ipa_power_retention(struct ipa *ipa, bool enable)
- 			ret, enable ? "en" : "dis");
- }
- 
--int ipa_power_setup(struct ipa *ipa)
--{
--	return device_init_wakeup(ipa->dev, true);
--}
+-REG_FIELDS(FILT_ROUT_HASH_EN, filt_rout_hash_en, 0x000008c);
 -
--void ipa_power_teardown(struct ipa *ipa)
--{
--	(void)device_init_wakeup(ipa->dev, false);
--}
--
- /* Initialize IPA power management */
- struct ipa_power *
- ipa_power_init(struct device *dev, const struct ipa_power_data *data)
-diff --git a/drivers/net/ipa/ipa_power.h b/drivers/net/ipa/ipa_power.h
-index 3ffaa0687caa8..a83524a61c28b 100644
---- a/drivers/net/ipa/ipa_power.h
-+++ b/drivers/net/ipa/ipa_power.h
-@@ -31,20 +31,6 @@ u32 ipa_core_clock_rate(struct ipa *ipa);
-  */
- void ipa_power_retention(struct ipa *ipa, bool enable);
+ static const u32 reg_filt_rout_hash_flush_fmask[] = {
+ 	[IPV6_ROUTER_HASH]				= BIT(0),
+ 						/* Bits 1-3 reserved */
+@@ -405,7 +392,6 @@ static const struct reg *reg_array[] = {
+ 	[SHARED_MEM_SIZE]		= &reg_shared_mem_size,
+ 	[QSB_MAX_WRITES]		= &reg_qsb_max_writes,
+ 	[QSB_MAX_READS]			= &reg_qsb_max_reads,
+-	[FILT_ROUT_HASH_EN]		= &reg_filt_rout_hash_en,
+ 	[FILT_ROUT_HASH_FLUSH]		= &reg_filt_rout_hash_flush,
+ 	[STATE_AGGR_ACTIVE]		= &reg_state_aggr_active,
+ 	[IPA_BCR]			= &reg_ipa_bcr,
+diff --git a/drivers/net/ipa/reg/ipa_reg-v3.5.1.c b/drivers/net/ipa/reg/ipa_reg-v3.5.1.c
+index 4a7b6d92207de..c81c48ec51f90 100644
+--- a/drivers/net/ipa/reg/ipa_reg-v3.5.1.c
++++ b/drivers/net/ipa/reg/ipa_reg-v3.5.1.c
+@@ -83,19 +83,6 @@ static const u32 reg_qsb_max_reads_fmask[] = {
  
--/**
-- * ipa_power_setup() - Set up IPA power management
-- * @ipa:	IPA pointer
-- *
-- * Return:	0 if successful, or a negative error code
-- */
--int ipa_power_setup(struct ipa *ipa);
+ REG_FIELDS(QSB_MAX_READS, qsb_max_reads, 0x00000078);
+ 
+-static const u32 reg_filt_rout_hash_en_fmask[] = {
+-	[IPV6_ROUTER_HASH]				= BIT(0),
+-						/* Bits 1-3 reserved */
+-	[IPV6_FILTER_HASH]				= BIT(4),
+-						/* Bits 5-7 reserved */
+-	[IPV4_ROUTER_HASH]				= BIT(8),
+-						/* Bits 9-11 reserved */
+-	[IPV4_FILTER_HASH]				= BIT(12),
+-						/* Bits 13-31 reserved */
+-};
 -
--/**
-- * ipa_power_teardown() - Inverse of ipa_power_setup()
-- * @ipa:	IPA pointer
-- */
--void ipa_power_teardown(struct ipa *ipa);
+-REG_FIELDS(FILT_ROUT_HASH_EN, filt_rout_hash_en, 0x000008c);
 -
- /**
-  * ipa_power_init() - Initialize IPA power management
-  * @dev:	IPA device
+ static const u32 reg_filt_rout_hash_flush_fmask[] = {
+ 	[IPV6_ROUTER_HASH]				= BIT(0),
+ 						/* Bits 1-3 reserved */
+@@ -416,7 +403,6 @@ static const struct reg *reg_array[] = {
+ 	[SHARED_MEM_SIZE]		= &reg_shared_mem_size,
+ 	[QSB_MAX_WRITES]		= &reg_qsb_max_writes,
+ 	[QSB_MAX_READS]			= &reg_qsb_max_reads,
+-	[FILT_ROUT_HASH_EN]		= &reg_filt_rout_hash_en,
+ 	[FILT_ROUT_HASH_FLUSH]		= &reg_filt_rout_hash_flush,
+ 	[STATE_AGGR_ACTIVE]		= &reg_state_aggr_active,
+ 	[IPA_BCR]			= &reg_ipa_bcr,
+diff --git a/drivers/net/ipa/reg/ipa_reg-v4.11.c b/drivers/net/ipa/reg/ipa_reg-v4.11.c
+index 257eaff9436e5..18bddc32c9318 100644
+--- a/drivers/net/ipa/reg/ipa_reg-v4.11.c
++++ b/drivers/net/ipa/reg/ipa_reg-v4.11.c
+@@ -115,19 +115,6 @@ static const u32 reg_qsb_max_reads_fmask[] = {
+ 
+ REG_FIELDS(QSB_MAX_READS, qsb_max_reads, 0x00000078);
+ 
+-static const u32 reg_filt_rout_hash_en_fmask[] = {
+-	[IPV6_ROUTER_HASH]				= BIT(0),
+-						/* Bits 1-3 reserved */
+-	[IPV6_FILTER_HASH]				= BIT(4),
+-						/* Bits 5-7 reserved */
+-	[IPV4_ROUTER_HASH]				= BIT(8),
+-						/* Bits 9-11 reserved */
+-	[IPV4_FILTER_HASH]				= BIT(12),
+-						/* Bits 13-31 reserved */
+-};
+-
+-REG_FIELDS(FILT_ROUT_HASH_EN, filt_rout_hash_en, 0x0000148);
+-
+ static const u32 reg_filt_rout_hash_flush_fmask[] = {
+ 	[IPV6_ROUTER_HASH]				= BIT(0),
+ 						/* Bits 1-3 reserved */
+@@ -472,7 +459,6 @@ static const struct reg *reg_array[] = {
+ 	[SHARED_MEM_SIZE]		= &reg_shared_mem_size,
+ 	[QSB_MAX_WRITES]		= &reg_qsb_max_writes,
+ 	[QSB_MAX_READS]			= &reg_qsb_max_reads,
+-	[FILT_ROUT_HASH_EN]		= &reg_filt_rout_hash_en,
+ 	[FILT_ROUT_HASH_FLUSH]		= &reg_filt_rout_hash_flush,
+ 	[STATE_AGGR_ACTIVE]		= &reg_state_aggr_active,
+ 	[LOCAL_PKT_PROC_CNTXT]		= &reg_local_pkt_proc_cntxt,
+diff --git a/drivers/net/ipa/reg/ipa_reg-v4.5.c b/drivers/net/ipa/reg/ipa_reg-v4.5.c
+index dc396344d868a..8494731efdd3b 100644
+--- a/drivers/net/ipa/reg/ipa_reg-v4.5.c
++++ b/drivers/net/ipa/reg/ipa_reg-v4.5.c
+@@ -109,19 +109,6 @@ static const u32 reg_qsb_max_reads_fmask[] = {
+ 
+ REG_FIELDS(QSB_MAX_READS, qsb_max_reads, 0x00000078);
+ 
+-static const u32 reg_filt_rout_hash_en_fmask[] = {
+-	[IPV6_ROUTER_HASH]				= BIT(0),
+-						/* Bits 1-3 reserved */
+-	[IPV6_FILTER_HASH]				= BIT(4),
+-						/* Bits 5-7 reserved */
+-	[IPV4_ROUTER_HASH]				= BIT(8),
+-						/* Bits 9-11 reserved */
+-	[IPV4_FILTER_HASH]				= BIT(12),
+-						/* Bits 13-31 reserved */
+-};
+-
+-REG_FIELDS(FILT_ROUT_HASH_EN, filt_rout_hash_en, 0x0000148);
+-
+ static const u32 reg_filt_rout_hash_flush_fmask[] = {
+ 	[IPV6_ROUTER_HASH]				= BIT(0),
+ 						/* Bits 1-3 reserved */
+@@ -491,7 +478,6 @@ static const struct reg *reg_array[] = {
+ 	[SHARED_MEM_SIZE]		= &reg_shared_mem_size,
+ 	[QSB_MAX_WRITES]		= &reg_qsb_max_writes,
+ 	[QSB_MAX_READS]			= &reg_qsb_max_reads,
+-	[FILT_ROUT_HASH_EN]		= &reg_filt_rout_hash_en,
+ 	[FILT_ROUT_HASH_FLUSH]		= &reg_filt_rout_hash_flush,
+ 	[STATE_AGGR_ACTIVE]		= &reg_state_aggr_active,
+ 	[LOCAL_PKT_PROC_CNTXT]		= &reg_local_pkt_proc_cntxt,
+diff --git a/drivers/net/ipa/reg/ipa_reg-v4.7.c b/drivers/net/ipa/reg/ipa_reg-v4.7.c
+index 37a2e466e4755..2c161cf691935 100644
+--- a/drivers/net/ipa/reg/ipa_reg-v4.7.c
++++ b/drivers/net/ipa/reg/ipa_reg-v4.7.c
+@@ -109,19 +109,6 @@ static const u32 reg_qsb_max_reads_fmask[] = {
+ 
+ REG_FIELDS(QSB_MAX_READS, qsb_max_reads, 0x00000078);
+ 
+-static const u32 reg_filt_rout_hash_en_fmask[] = {
+-	[IPV6_ROUTER_HASH]				= BIT(0),
+-						/* Bits 1-3 reserved */
+-	[IPV6_FILTER_HASH]				= BIT(4),
+-						/* Bits 5-7 reserved */
+-	[IPV4_ROUTER_HASH]				= BIT(8),
+-						/* Bits 9-11 reserved */
+-	[IPV4_FILTER_HASH]				= BIT(12),
+-						/* Bits 13-31 reserved */
+-};
+-
+-REG_FIELDS(FILT_ROUT_HASH_EN, filt_rout_hash_en, 0x0000148);
+-
+ static const u32 reg_filt_rout_hash_flush_fmask[] = {
+ 	[IPV6_ROUTER_HASH]				= BIT(0),
+ 						/* Bits 1-3 reserved */
+@@ -464,7 +451,6 @@ static const struct reg *reg_array[] = {
+ 	[SHARED_MEM_SIZE]		= &reg_shared_mem_size,
+ 	[QSB_MAX_WRITES]		= &reg_qsb_max_writes,
+ 	[QSB_MAX_READS]			= &reg_qsb_max_reads,
+-	[FILT_ROUT_HASH_EN]		= &reg_filt_rout_hash_en,
+ 	[FILT_ROUT_HASH_FLUSH]		= &reg_filt_rout_hash_flush,
+ 	[STATE_AGGR_ACTIVE]		= &reg_state_aggr_active,
+ 	[LOCAL_PKT_PROC_CNTXT]		= &reg_local_pkt_proc_cntxt,
+diff --git a/drivers/net/ipa/reg/ipa_reg-v4.9.c b/drivers/net/ipa/reg/ipa_reg-v4.9.c
+index 09755d700784e..fa6fd312e4867 100644
+--- a/drivers/net/ipa/reg/ipa_reg-v4.9.c
++++ b/drivers/net/ipa/reg/ipa_reg-v4.9.c
+@@ -114,19 +114,6 @@ static const u32 reg_qsb_max_reads_fmask[] = {
+ 
+ REG_FIELDS(QSB_MAX_READS, qsb_max_reads, 0x00000078);
+ 
+-static const u32 reg_filt_rout_hash_en_fmask[] = {
+-	[IPV6_ROUTER_HASH]				= BIT(0),
+-						/* Bits 1-3 reserved */
+-	[IPV6_FILTER_HASH]				= BIT(4),
+-						/* Bits 5-7 reserved */
+-	[IPV4_ROUTER_HASH]				= BIT(8),
+-						/* Bits 9-11 reserved */
+-	[IPV4_FILTER_HASH]				= BIT(12),
+-						/* Bits 13-31 reserved */
+-};
+-
+-REG_FIELDS(FILT_ROUT_HASH_EN, filt_rout_hash_en, 0x0000148);
+-
+ static const u32 reg_filt_rout_hash_flush_fmask[] = {
+ 	[IPV6_ROUTER_HASH]				= BIT(0),
+ 						/* Bits 1-3 reserved */
+@@ -469,7 +456,6 @@ static const struct reg *reg_array[] = {
+ 	[SHARED_MEM_SIZE]		= &reg_shared_mem_size,
+ 	[QSB_MAX_WRITES]		= &reg_qsb_max_writes,
+ 	[QSB_MAX_READS]			= &reg_qsb_max_reads,
+-	[FILT_ROUT_HASH_EN]		= &reg_filt_rout_hash_en,
+ 	[FILT_ROUT_HASH_FLUSH]		= &reg_filt_rout_hash_flush,
+ 	[STATE_AGGR_ACTIVE]		= &reg_state_aggr_active,
+ 	[LOCAL_PKT_PROC_CNTXT]		= &reg_local_pkt_proc_cntxt,
 -- 
 2.40.1
 
