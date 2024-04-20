@@ -1,93 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-18058-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18059-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C7578ABC98
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 19:52:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA9188ABCA0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 20:05:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 58E90280F1D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 17:52:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6DD271F21382
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 18:05:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E067B3BBDF;
-	Sat, 20 Apr 2024 17:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02F783AC08;
+	Sat, 20 Apr 2024 18:05:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PJe03Sk6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ewurhUIj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1FB13BB21;
-	Sat, 20 Apr 2024 17:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70B72032C;
+	Sat, 20 Apr 2024 18:05:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713635517; cv=none; b=UvC3XQCZVL/xmsDNG3BHkymQTjPvJI4URnL4rgQoU1eG4bC0pjwWB5Ci5G4b0Q39TH1qy4nXTXnFhRUsWI5czruqDboSmvtLotwsph2C+bIAzuGpf42g4vKMvAlOonO5P+BVybkORQV7qFOsmIvTmQi/nwRJJG+Hce1ZVVha4kY=
+	t=1713636311; cv=none; b=FoVY79iQ+UeOOn98DMibRJYG7Wa637d/0AWPDC7h3PjDcg0abFgPx6qn5vsEmqDXcq/ojFFhXbAL1qEOa39hFc0FWcdAZAJZNa5ZyKFetlY5gC6y42QfK4UtGeIjNU50peRrU6YWRVVNoNkKNmBrjQrO3WU2qxN11Cp4k5Ox3Cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713635517; c=relaxed/simple;
-	bh=ROExDQsEH+OHB8y7wgpPcV5MjxcqRC2Bc6cOct/bMh4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KSEdskPIuvsnVfIG1KCu7S+pA8NiyOPlI2jERdMjBCA73YY7hSQNRl7g2NusCZxOV7XzUmR4yMAMR036BVFthgoj+OgQTWEkCcpgnnCRzTQmXc82gq7SpdlVNnuRZkcP1FLn10nyFle1c1wWEk7ZJGXdSlO+i8K1j2rkwU1LADk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PJe03Sk6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70123C116B1;
-	Sat, 20 Apr 2024 17:51:56 +0000 (UTC)
+	s=arc-20240116; t=1713636311; c=relaxed/simple;
+	bh=TuXNUH5RDD848QvCR30xBttt0uVqKcfNZhdQm68GaxU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RpAamCwnATss6LGBidsyvDT8CT9EYgjr42krmFCf9ZDdDtFirXx/79TGm3IIDI8ceiJpnJ9/IcoHz5FWL7ZW295mXwBxzXNniormKnx0hfol0NTI2aaLW7G/Y69T/osN3Jkg8YOh8V49zedBiCPsLvTng7pWMQWLEHVTg/plLz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ewurhUIj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83393C072AA;
+	Sat, 20 Apr 2024 18:05:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713635517;
-	bh=ROExDQsEH+OHB8y7wgpPcV5MjxcqRC2Bc6cOct/bMh4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PJe03Sk6HAYpaBgcD9jHvif4/cEblSghqrcbpiePkVHFiEITyOaGHS7rh36fu57G3
-	 dJ8RxNouW6x+/wM0KBo7uV+RxaeizJ2askKhguwowzhKnh873P3r8HRWeDh+7Izsmc
-	 CG8xM+ZzURiioNNDHfxfVOTVL5o/HhW+VlTb4gXvTymM9074OqaC7+MkuPgdxY/dC7
-	 bxK/tSfykppgCYW2LozlZJgl22BDOLR65E68Nz+vrZ0SX4wepuZ29KR+UsbgaHn0ie
-	 yyavFw5zP28vTl3mW/ELPQTIao0z+ZGUKtecDi4zN4aZp93oNDnzxVZg6OENAKUG9y
-	 9sVf27rZXS4Ug==
+	s=k20201202; t=1713636310;
+	bh=TuXNUH5RDD848QvCR30xBttt0uVqKcfNZhdQm68GaxU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ewurhUIj08jWGxmOx1xk5un6TOl0HZyo1j+ZYq/ro26Ch/IIXBEMLO0DhMT5cOgZn
+	 Ta+XDnDiCfR0HlVATMtRvZP1JHulBYF412gm5eNmbew5eF6N2QGKMyjivyMVEs3Qcz
+	 Ht8j95lqwffs7FtSa3fSndlZhJYWXugPjcApjrH9guFYPLTFB9oquBYi1lmYXx/2Ov
+	 TqQSwQBZ/oZwE4421bBgZ2Ris1Cgluppr+3PdoAcAyB7OTBkoNdX1H1c37xCysWvjm
+	 A2nzSPsWfXpLMPyFD/kjwMcPCZRQRAq8O9eowK9fbPkS9hqWe5RMiiRyLuvaMLOjht
+	 m5Nyu3WIRFbkg==
+Date: Sat, 20 Apr 2024 13:05:07 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Abel Vesa <abel.vesa@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/3] arm64: dts: qcom: x1e80100: Fix the data-lanes and link-frequencies
-Date: Sat, 20 Apr 2024 12:51:54 -0500
-Message-ID: <171363551100.1138274.16090356735717665466.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240419-x1e80100-dts-fix-mdss-dp3-v2-0-10f4ed7a09b4@linaro.org>
-References: <20240419-x1e80100-dts-fix-mdss-dp3-v2-0-10f4ed7a09b4@linaro.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Konrad Dybcio <konrad.dybcio@somainline.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/4] clk: qcom: dispcc: fix DisplayPort link clocks
+Message-ID: <jwjrnxboz2cdkkrufxhpvxhueqdvswil3ffn47wo4gwmt3r3tz@jm6cduxcd6my>
+References: <20240408-dispcc-dp-clocks-v1-0-f9e44902c28d@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240408-dispcc-dp-clocks-v1-0-f9e44902c28d@linaro.org>
 
-
-On Fri, 19 Apr 2024 19:13:55 +0300, Abel Vesa wrote:
-> Both the CRD and the QCP have the data-lanes and the link-frequencies
-> for the DP3 in the wrong place. Both are properties of the out remote
-> endpoint. So move them to the mdss_dp3_out for each board.
+On Mon, Apr 08, 2024 at 02:47:03PM +0300, Dmitry Baryshkov wrote:
+> On several Qualcomm platforms DisplayPort link clocks used incorrect
+> frequency tables. Drop frequency tables and use clk_byte2_ops instead of
+> clk_rcg2_ops.
 > 
-> Without these fixes, the eDP is broken on both boards.
+> Note, this was tested on SM8450 only and then extended to other
+> platforms.
 > 
+
+As Stephen points out, it seems from the commit messages that this just
+cleans up the code because it's wrong. But both Luca and Neil points out
+that it resolves a visible issue/error.
+
+Can we please have this (the actual problem being resolved) captured in
+the commit messages?
+
+Regards,
+Bjorn
+
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+> Dmitry Baryshkov (4):
+>       clk: qcom: dispcc-sm8450: fix DisplayPort clocks
+>       clk: qcom: dispcc-sm6350: fix DisplayPort clocks
+>       clk: qcom: dispcc-sm8550: fix DisplayPort clocks
+>       clk: qcom: dispcc-sm8650: fix DisplayPort clocks
 > 
-> [...]
-
-Applied, thanks!
-
-[1/3] arm64: dts: qcom: x1e80100: Drop the link-frequencies from mdss_dp3_in
-      commit: 8a2a43a978e51bcddfe8a89bb2acebcf24f1d767
-[2/3] arm64: dts: qcom: x1e80100-crd: Add data-lanes and link-frequencies to DP3
-      commit: 2351d205081cf4e7d960c0dbc5891e5fbda0b1f0
-[3/3] arm64: dts: qcom: x1e80100-qcp: Add data-lanes and link-frequencies to DP3
-      commit: 78a4407ca834cc448cb015e714ca230ec6bb4503
-
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+>  drivers/clk/qcom/dispcc-sm6350.c | 11 +----------
+>  drivers/clk/qcom/dispcc-sm8450.c | 20 ++++----------------
+>  drivers/clk/qcom/dispcc-sm8550.c | 20 ++++----------------
+>  drivers/clk/qcom/dispcc-sm8650.c | 20 ++++----------------
+>  4 files changed, 13 insertions(+), 58 deletions(-)
+> ---
+> base-commit: 8568bb2ccc278f344e6ac44af6ed010a90aa88dc
+> change-id: 20240408-dispcc-dp-clocks-5ee5d5926346
+> 
+> Best regards,
+> -- 
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
 
