@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-18050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B70D8ABB69
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 13:32:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 255A88ABB6C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 13:40:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 79F74B20C08
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 11:32:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B151C1F21193
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 11:40:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3B8614AB0;
-	Sat, 20 Apr 2024 11:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6450C288D1;
+	Sat, 20 Apr 2024 11:40:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XeCNFOdz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T9jIj78Q"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBBB8625;
-	Sat, 20 Apr 2024 11:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1CE1CAA8;
+	Sat, 20 Apr 2024 11:40:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713612772; cv=none; b=EGHSDLIJHy8ZgmMlGQ4zVjSEsUlT6ViClVmdHkQwOg+fD6ngjwU5Cqc9IO0QNiAz+anMOPxgKQ08cUi8ISNc+1NsJyS+SvlUVqVy8v9tVzULyLSur6cedhuzoUVXkvwMxwnI5+rcWGVPE+gAJyUF3teEIjC1yH5+pIHPajiiIz4=
+	t=1713613216; cv=none; b=u05Kgr0iHm956G8I0bYumH33mZtDCgR4Hnemn+aVc6xvkq9IthGP3MseD9lN/EcpPcI1Dinro9T49mjMiVM/dM8igY+Y1RSJq+rXCXleja6zyfJwcJb9sreY4AajnL5aqoDsqSwE1Wse1GGIM/J3yeKeSODpQ3Q3P+2rzthzr3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713612772; c=relaxed/simple;
-	bh=b7oS818UyC3NvZeO1MX3HJJ2XRk22iatPpSstO42NuE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MnuNSQH/ptg3K7eh4Y+LrgW9XVd6GmOAHUYb05hVY5Yk/ZpvI/q6TfYSrTjxIT2KcNY9+qgmTaE8rat9jctCtQf2dEPuGTh5Pe/TxM9twy8DvPqnd0rds2ndw9Kk9i8kwabRgKdHYwTevkHy+aE9xM+tQBoAI5UVRg90tFuKzHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XeCNFOdz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 330BEC072AA;
-	Sat, 20 Apr 2024 11:32:49 +0000 (UTC)
+	s=arc-20240116; t=1713613216; c=relaxed/simple;
+	bh=UVqO4y//njIlBbGdFg3Uk9hYqThRr/O1BYn9DgJTfj4=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=K5o7vfmhyTJeGHC/X84y3W8NgSM1bKusAd0CL07UlCcpvR91fHavFpbu2ELXtZldz77/WWvaM6Fi5tS5XxR5i1oUg4xWCe560EWoyHqteQlja5Y+RC5lGgTfbN6oEBS3KMW+u1yc9DNMffpo978M38DyH49uOuqKELL6q6XbDvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T9jIj78Q; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67368C072AA;
+	Sat, 20 Apr 2024 11:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713612772;
-	bh=b7oS818UyC3NvZeO1MX3HJJ2XRk22iatPpSstO42NuE=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=XeCNFOdz8+So3ViD7kezaNJxHOs8S8/kj4sxCTv7RAUoF5QgNQ2g3KdaLdrSOB5WT
-	 Np7IO9kiPYOViLWz79lfLwSvDY+GJD5gAsk/419yohklBNqTLIblXppNO19aHVNSLH
-	 HALrAHzyC/Ub1wuxqUzIUPLzNh8wR3gVQg9gehcSaW7TAWsDClinxZyAAzhaWfnhCZ
-	 A/GLcHVbsxuTr4is9z4KKulPmSBzNLNpfVqdXLjjTUjj3qu1PXGd2SAMgAZSeDmHrm
-	 AIBwkpz6LsLOXyagHhhMuoEGiXfo1vNssNQCD6UHFXJj+/N/J8MJzYgDF4BI1inSLC
-	 iv7GjNFmcYc0g==
-Message-ID: <57a99244-373c-40c0-9e32-9e8272c0c3e1@kernel.org>
-Date: Sat, 20 Apr 2024 13:32:48 +0200
+	s=k20201202; t=1713613215;
+	bh=UVqO4y//njIlBbGdFg3Uk9hYqThRr/O1BYn9DgJTfj4=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=T9jIj78QEanT7FIW72Kvxw+je2l4UacyuVWhs5FMrdRUfeMvozpcAL+rrnZUFMl1N
+	 fHorhInZEUWDfmnTheO/KEhgwYKyL3JBMsOlNYlV8E89W1QSqR3o58p+qmfp+zfHen
+	 szjJ5osV819yNRCkNrQrtcNkbvvOSI3VDX9Vy+YbAKjXA/oG/FxjLx9DLfYu1ROWAN
+	 HwxbnOZvWlklTgzWJtKjiv66KJNJ27qNF0lF0H1CJj2ISQ1eWW+gnwMg5q0YnZbUk7
+	 1zvAd/uee8aTWmaouLLKiIiKU5suLWTz7AIeoyiBc+r91yIMaPzUoP/uPHXKcPHyje
+	 kQ+BkHG0IfV1A==
+Message-ID: <5d054c36-a082-4484-bab1-746b7b30c71b@kernel.org>
+Date: Sat, 20 Apr 2024 13:40:09 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,18 +50,24 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/6] soc: qcom: add in-kernel pd-mapper implementation
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
+Subject: Re: [PATCH v5 5/6] soc: qcom: add pd-mapper implementation
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konrad.dybcio@linaro.org>,
  Mathieu Poirier <mathieu.poirier@linaro.org>,
- Sibi Sankar <quic_sibis@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- Johan Hovold <johan+linaro@kernel.org>, Xilin Wu <wuxilin123@gmail.com>,
- Neil Armstrong <neil.armstrong@linaro.org>
+ Sibi Sankar <quic_sibis@quicinc.com>,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+ linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+ Johan Hovold <johan+linaro@kernel.org>, Xilin Wu <wuxilin123@gmail.com>
 References: <20240419-qcom-pd-mapper-v5-0-e35b6f847e99@linaro.org>
+ <20240419-qcom-pd-mapper-v5-5-e35b6f847e99@linaro.org>
+ <b26b5d54-d04d-41e1-abe1-600633882989@kernel.org>
+ <CAA8EJpoyTXWY5uxJs2gt1Rths-HdgskuQFyw5dJSL66mxQOv7g@mail.gmail.com>
+ <67c90fcd-df2f-40e4-9507-dcc9340f2319@kernel.org>
+ <CAA8EJprQzp+bmTa9CFoev_vk8Xf-H+ZAc-dFsqev76WOB6GtJQ@mail.gmail.com>
+ <c255c9d5-f3fc-438c-abbe-64995823e80c@kernel.org>
 Content-Language: en-US
-From: Krzysztof Kozlowski <krzk@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -105,39 +111,27 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240419-qcom-pd-mapper-v5-0-e35b6f847e99@linaro.org>
+In-Reply-To: <c255c9d5-f3fc-438c-abbe-64995823e80c@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 19/04/2024 16:00, Dmitry Baryshkov wrote:
-> Protection domain mapper is a QMI service providing mapping between
-> 'protection domains' and services supported / allowed in these domains.
-> For example such mapping is required for loading of the WiFi firmware or
-> for properly starting up the UCSI / altmode / battery manager support.
+On 19/04/2024 20:45, Krzysztof Kozlowski wrote:
+>>
+>>>
+>>>> Remoteproc module depends on this symbol. Once q6v5 remoteproc modules
+>>>> are unloaded this module can be unloaded too.
+>>>
+>>> I am pretty sure you can unload this and get crashes.
+>>
+>> If for some reason somebody has called qcom_pdm_get() without
+>> qcom_pdm_release(), then yes. To make it 100% safe, I can cleanup
+>> actions to module_exit(), but for me it looks like an overkill.
 > 
-> The existing userspace implementation has several issue. It doesn't play
-> well with CONFIG_EXTRA_FIRMWARE, it doesn't reread the JSON files if the
-> firmware location is changed (or if the firmware was not available at
-> the time pd-mapper was started but the corresponding directory is
-> mounted later), etc.
-> 
-> However this configuration is largely static and common between
-> different platforms. Provide in-kernel service implementing static
-> per-platform data.
-> 
-> Unlike previous revisions of the patchset, this iteration uses static
-> configuration per platform, rather than building it dynamically from the
-> list of DSPs being started.
-> 
+> I'll come with some more concrete example if you are not convinced.
 
-I applied this patchset and... it does not compile.
-
-drivers/remoteproc/qcom_q6v5_wcss.c:243:15: error: implicit declaration
-of function ‘qcom_pdm_get’; did you mean ‘em_pd_get’?
-[-Werror=implicit-function-declaration]
-
-
-That's just defconfig, so I have doubts this was tested.
+It's not possible, this code does not compile. I fixed one thing but
+then it fails in other places. This was probably never built and for
+sure never really compile-tested in few more configurations.
 
 Best regards,
 Krzysztof
