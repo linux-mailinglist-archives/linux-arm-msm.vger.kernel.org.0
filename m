@@ -1,75 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-18047-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC0B38ABB2A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 12:57:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 771FD8ABB5F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 13:28:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 63A8C281920
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 10:57:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2E0B82814CC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 11:28:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82B702746A;
-	Sat, 20 Apr 2024 10:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4FA429428;
+	Sat, 20 Apr 2024 11:28:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="owxG409S"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HS7HRcgE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEDA61C294
-	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Apr 2024 10:57:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFE8417C79;
+	Sat, 20 Apr 2024 11:28:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713610669; cv=none; b=LhAubdMgcFpeDDLzSlSoFniQvKiAJERWwotkG9B/aD+2g/7hvGyZyqINrLj1FaOaQtX8SgR3WdSQhaSwv9aMzW3BX8gBg2rekPwyvT2kiz6woLLPLH4onJAF+Kh3DaI51zCAo6P4/B2nj+vSttAFdHSpzpljE+R8joVy4MaVRrQ=
+	t=1713612515; cv=none; b=ScBq2GwODlB3VZ+0zKe29/4kMEg121o4TMZdPdcZuBOP2bjsWpHrF8OgwlZz6VOwlnA7HSz8LXxWyfeNkgG77/Jg/49SluwMNrHNov25O+LSIw3qdg4xzg7IV2SQtdm8BHLHjb5OQHJnaOqteqs5gwvhUuvzHgUhF8llHaxWzuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713610669; c=relaxed/simple;
-	bh=23hWeEr+W84WKW10MFW2wGv1mxXeR0jauqdsZvPF0GI=;
+	s=arc-20240116; t=1713612515; c=relaxed/simple;
+	bh=c7G3kkxTBiWSZQbnQHzdrPa+vBbXlsuTVA4w8xP+bx4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=O0TwPBcjLLLcDTJGcfq/oTHLLB1ozSj/vnvsqX5moIrmchRmkkvugotjXjsFDjbAcCWp7M8gIQ2ONvZQpsXGuH4+fSfAQohP+zZwANq/fQi4CmlyRQY2JcDrQQl9SpcnCAtvSivq2r+d0TpK1wl3y3teGzuiPsdEKHtxpPY2ZkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=owxG409S; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-343d1003106so2140848f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Apr 2024 03:57:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713610666; x=1714215466; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ipeqzc6ZZ02TREHla/6ToLuSgvq7MVUYfKOCJgBT6bM=;
-        b=owxG409SfEpU5cOFtgZcJEhFPcw5NUntZLZBL4vQs9lTeeDnpX62Bc7d4YGtoIdjBJ
-         Eu4ha6pi+t9LwujS2virBMeoVM05N+76ryd4eFqtWigv3cFXof2vmk2HTG7imdl8AcFr
-         TK5lgdcYMtJpiLa/obgpULqJqF9kQxd5nO0sXEGm/9JcVHRjVEiIseBvOfjctV3boKfg
-         fRubbjbs3cvZeyQBqZcPYXlCrytsAYHLv5PRcb2eLwxMDDwDp57ifaTVKIKZDdXAStLU
-         6b3ynl6ikthICRhfwC0IlIwH5c/mKHWsawyh7VPnxDJr206mqw148gF+q66XkcFR/BTg
-         +3tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713610666; x=1714215466;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ipeqzc6ZZ02TREHla/6ToLuSgvq7MVUYfKOCJgBT6bM=;
-        b=P4PdKudJS7fFHpln+JeedLbSwkxyvgAO6mR+qB/C96yKNBNEpONas7GdKBDZsHi9p/
-         djnmHV91VlcRUY/OnA/VUG/QvMgSZCPN2J9sCjJd6BEDYanw0tty8tBj6WHWER1Oz6Hl
-         EGNgM6eUqbgmODDBweOm7KyL9V+L9W2cxtSeSWg/s7dfG1EhUYjh4eAHgD/busHAMtzp
-         I84r9Ppw+lOIycoQGoseQ12tqZvGX86XhdARImL13kKur+2Ui1GN65YEXpTMjZ2X5NbX
-         8zIgX//npBxPm++UwWYGPQjMecY9YLbutGs9ksjvYY1j5rjPAGYAFMczKYpfaBtAMphC
-         smjw==
-X-Forwarded-Encrypted: i=1; AJvYcCU05yu7nk9qmTO3Jp2EdakCVE7j9hp5f94URsLJnfOLTvz5uBhmC0EeYhVqusZDkOuvI/IEdjHzC8w+h1r1uc7bRmmigYDgG2s92jrYGw==
-X-Gm-Message-State: AOJu0YxHSftnZzENyHYIdekBcvpjPiAmXtw87eXLmWvyomgMqrC/uRRt
-	Rk+Q6u2yfz0A9b+UBYeOxkRAk8UREc983llW+jPwz6J1/gQ36YZF+0hcTnAbuk0=
-X-Google-Smtp-Source: AGHT+IFkA8Y7ennaLjq8bZ4n1JCaFKc7IdLrpPRWj5rTDXNWayaiI2eIh0FoCthPJ/SBJ9VRtl2pYg==
-X-Received: by 2002:a5d:49c9:0:b0:343:44d2:3828 with SMTP id t9-20020a5d49c9000000b0034344d23828mr3230642wrs.16.1713610666016;
-        Sat, 20 Apr 2024 03:57:46 -0700 (PDT)
-Received: from [10.236.36.88] ([88.128.88.151])
-        by smtp.gmail.com with ESMTPSA id n17-20020a05600c501100b00419e078677csm2258995wmr.16.2024.04.20.03.57.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 20 Apr 2024 03:57:45 -0700 (PDT)
-Message-ID: <19bee3e2-ea14-4fe9-ba10-497166ab791e@linaro.org>
-Date: Sat, 20 Apr 2024 02:50:26 +0200
+	 In-Reply-To:Content-Type; b=tOTS1D6KAwV08xVQQZP7YCxaifed5GsszzQpNEAhnFXrvpW3zXVrfCxQwFgVvvTaEM7jDrcVfTW2VI7lM6ULTzFvFA9WXJocBRDrGtiDmlNCDe9p7Tp4lP9Y7ALZKyUGMY+ZkS8aCFvLBDyrm90o8/r0A/v0lXyouEDGszWFGs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HS7HRcgE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C50DC072AA;
+	Sat, 20 Apr 2024 11:28:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1713612515;
+	bh=c7G3kkxTBiWSZQbnQHzdrPa+vBbXlsuTVA4w8xP+bx4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=HS7HRcgESuPWrio0yEkr71HXvHwZ4+M1SR1lr4ySbIJi1MyQuatprhN+EZsWIjfb6
+	 5OJyekTZUSvvyyAbB6L9jL80ewFc0ncwY54MDxOaHl4hRC2zSBjoYdL1cHlv9BfC++
+	 uj6pgPFxjuphGHrJS3/4Vb8zWN+zBSq2OalS/B/d8OD5wvYPtDdskD7d0EJBbBFfzF
+	 Lgtuq8FqnhljmA8r++98UqNaGFIIWv0ep+TsPw6hiirGbcNkb/8aGcxJCzn+Gzn23c
+	 bnF5hRIkH3c+gKsghAHqjicQEhCBQX3olrh1fIoHFWBJ7mZvZqJs+VIBICovQVW21g
+	 IX9YaJg5NUiHQ==
+Message-ID: <c33d7def-cf56-4275-bf65-e7b1c70485a8@kernel.org>
+Date: Sat, 20 Apr 2024 13:28:26 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,28 +50,26 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] dt-bindings: power: reset: Convert mode-.*
- properties to array
-To: Elliot Berman <quic_eberman@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Sebastian Reichel
- <sre@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v21 1/9] dt-bindings: usb: Add bindings for multiport
+ properties on DWC3 controller
+To: Krishna Kurapati <quic_kriskura@quicinc.com>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Andy Yan <andy.yan@rock-chips.com>, Lorenzo Pieralisi
- <lpieralisi@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Cc: Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
- Melody Olvera <quic_molvera@quicinc.com>,
- Shivendra Pratap <quic_spratap@quicinc.com>, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- Florian Fainelli <florian.fainelli@broadcom.com>, linux-pm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20240414-arm-psci-system_reset2-vendor-reboots-v2-0-da9a055a648f@quicinc.com>
- <20240414-arm-psci-system_reset2-vendor-reboots-v2-1-da9a055a648f@quicinc.com>
+ Rob Herring <robh@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Wesley Cheng <quic_wcheng@quicinc.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Conor Dooley <conor+dt@kernel.org>, Thinh Nguyen
+ <Thinh.Nguyen@synopsys.com>, Felipe Balbi <balbi@kernel.org>,
+ Johan Hovold <johan@kernel.org>
+Cc: devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+ quic_ppratap@quicinc.com, quic_jackp@quicinc.com,
+ Bjorn Andersson <quic_bjorande@quicinc.com>
+References: <20240420044901.884098-1-quic_kriskura@quicinc.com>
+ <20240420044901.884098-2-quic_kriskura@quicinc.com>
 Content-Language: en-US
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
  JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
@@ -108,79 +79,51 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  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
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240414-arm-psci-system_reset2-vendor-reboots-v2-1-da9a055a648f@quicinc.com>
+ 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 fv0=
+In-Reply-To: <20240420044901.884098-2-quic_kriskura@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 14/04/2024 21:30, Elliot Berman wrote:
-> PSCI reboot mode will map a mode name to multiple magic values instead
-> of just one. Convert the mode-.* property to an array. Users of the
-> reboot-mode schema will need to specify the maxItems of the mode-.*
-> properties. Existing users will all be 1.
+On 20/04/2024 06:48, Krishna Kurapati wrote:
+> Add bindings to indicate properties required to support multiport
+> on Synopsys DWC3 controller.
 > 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> ---
->  .../devicetree/bindings/power/reset/nvmem-reboot-mode.yaml   |  4 ++++
->  Documentation/devicetree/bindings/power/reset/qcom,pon.yaml  |  4 ++++
->  .../devicetree/bindings/power/reset/reboot-mode.yaml         | 12 ++++++++++--
->  .../devicetree/bindings/power/reset/syscon-reboot-mode.yaml  |  4 ++++
->  4 files changed, 22 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/power/reset/nvmem-reboot-mode.yaml b/Documentation/devicetree/bindings/power/reset/nvmem-reboot-mode.yaml
-> index 627f8a6078c2..03b3b9be36de 100644
-> --- a/Documentation/devicetree/bindings/power/reset/nvmem-reboot-mode.yaml
-> +++ b/Documentation/devicetree/bindings/power/reset/nvmem-reboot-mode.yaml
-> @@ -30,6 +30,10 @@ properties:
->  
->  allOf:
->    - $ref: reboot-mode.yaml#
-> +  - patternProperties:
-> +      "^mode-.*$":
-> +        items:
-> +          maxItems: 1
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-You still need to limit total number of items. This only defines how
-many items you have in each inner cell of the matrix. What about the
-other cell?
-
-I understood that you want something more or less equivalent, but the
-code does not look like.
-
-
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 
 Best regards,
 Krzysztof
