@@ -1,144 +1,234 @@
-Return-Path: <linux-arm-msm+bounces-18004-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 377108AB814
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 02:16:46 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 083F98AB852
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 03:26:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E46CB281B26
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 00:16:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8AB101F21834
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 01:26:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B70E17C;
-	Sat, 20 Apr 2024 00:16:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 629E77FD;
+	Sat, 20 Apr 2024 01:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="K6NN8vvF"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="M+EMRzu9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5286623
-	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Apr 2024 00:16:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D7B7F9
+	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Apr 2024 01:26:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713572203; cv=none; b=jyEagoKK7l3urZhyTTz1G1FKFBQZWvQxiLIz6P8NNyoB8w0sChw80vNn7n1ZZi2YGvRt/1whbcchTwdI4yIdp6//qZAh7DiM+MqVP9Xgphslj/tlECc1QQzs/thZ3SSdvTfa86JF3RHzAkIBVg20tULZpUGRJK+trQtMDQbBK8c=
+	t=1713576389; cv=none; b=J+d4FHKkdwHlCak16bcfQ3UsiTdAxpkr/H1LE3qC8cj6DEOrgx1oEjNp3CR0g70nIuT3R98MZPqB20gmmZlrTwAQPuC7sgAM1a8qom8goGgktpB9FDTvGD/ozL9rwEDf/PddtFZihigfNHBoKMOrx3R+cYfXd6bbIhFwhtl1qtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713572203; c=relaxed/simple;
-	bh=J9dLPlYVRLaJ+9JMGM91c61DSlzxb6CW7OA9zw/14AQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=O6b0fuSKn4DPW2b+buxSM0cIawgMWaDr3tzGpDQwjoQqWLzVylmVy3nXgt9F56oiJrcTSmI2KYdhbaHJybMaA2ZRiyDVARrTGk2TAiqFsqG8/FFnb0VGbCLaE4OfjgGlvZRAETRgVWq+gnNqi5yI+qQg0up+u9rHoy4G+YrJpFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=K6NN8vvF; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43JNdIrc025225;
-	Sat, 20 Apr 2024 00:16:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=v2jkwk2Q2bfqWwAEK2Q0cws0YbSB/bnuvrYVTOyrFAs=; b=K6
-	NN8vvFFiXzuHQVTSzA88KNTz6MDuNYm8BWqKvcLl3bj6mglfzctHRLe4p7Ot2iMD
-	wgOWELCSalYHOEyyAUm/Jm3clhM7LK/XJpJrgfv+ebet85tkyLemugXr1wJ+8Bq2
-	PAIDhjxIqCaKNxVsp4NsZ83At5GYVn/bqP8+wMtGEMj4Alps+/mfSbr/9G/bF3uP
-	59q4lTLTWOJBXI31cL537CWGa95T6UaQWQAuxIDHcrYqU3BmfU0vca0Kie0SDpwg
-	4rXarvxRsRw0obWtgmyNKkjwr/dvq4kao9XoNjq/eFbeJfvx4qTVNHGd+05I5bDs
-	IcHsb3WzhyCGMn3Xc4jQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xkt3mh37y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 20 Apr 2024 00:16:33 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43K0GVIx010267
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 20 Apr 2024 00:16:31 GMT
-Received: from [10.110.104.191] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 19 Apr
- 2024 17:16:31 -0700
-Message-ID: <2d0e922f-8d68-aa5b-ebbf-b1bde3e9e2af@quicinc.com>
-Date: Fri, 19 Apr 2024 17:16:30 -0700
+	s=arc-20240116; t=1713576389; c=relaxed/simple;
+	bh=YujLvW74K3r5ReLI3gcVkI5Hz3XkQVYVfpgHo541Ot8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rF54hrP8PfNIJKU35VniCD0DVbDjqaaFztAkKk/DBuiCcM5CyubhVl6YKAVXyJaCdMZTuq0D6gU1lEPOuwl7OWZBpuNgY8cXII8RLrbZ4MhTGoTMTaYAWvsk7mPBYGwqD3hhbxkOrxAQquC+KDBaWe7+yUL1Y44b3PeENaLuedc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=M+EMRzu9; arc=none smtp.client-ip=209.85.167.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-516d264d0e4so3458623e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 18:26:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1713576385; x=1714181185; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=82tFBgEdIxjnsfXiodhMe/pFfwk8UfoM7JglpDttIJo=;
+        b=M+EMRzu9+t42bE584X5Q7d3bjRSoBtvxJ3C1T2XzhPUQBruvaAA1z03lOgc5pDMnwl
+         ztzcIBJ7ilkSoDrM0vLwpWLeROwFGBGnhCgo1bQaboWdlRNt9FFNYqZE3a8U0k0zyd6L
+         jvR+BK+4RfWY0QlnP/tdljqmg9CigCKJ7OaleiWlY3L+VOeyNNHTTvuah2Eoq7XFr+0w
+         XM4dsCuaFD+/51A3ZvQ80pfJSJL4Vo5j0aPKxbJFnIhT4J2gvla6r2jmAyR7lYZcwIWI
+         4YaeCbcm/d/fRUgnvtFZ6zQ9vmcXWKQylamtsIdsYEx23p3NfMvukmEcXzYdnXaXsakq
+         Fatg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713576385; x=1714181185;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=82tFBgEdIxjnsfXiodhMe/pFfwk8UfoM7JglpDttIJo=;
+        b=W+UI+eyX3AwYobzwCQdB5xeSaz3sGS6lVCPGqm/k6s9K0/e9GlBTVatpH2iQCwzuAF
+         HkrjgCfztDNcmMhb+cZWeWrMugp4NjE9+qPa7SnKudao+9wytaLNbHDQ9ssIDyiJzDeQ
+         kYLRhn5/pBwUMz4aUJjkQwwm+gg9rWLy1Bg0OmN9E17dN2cOdgjDNEnpLUqHPhnVxhOW
+         K1Am36+sRbOI6F7qzty0MMnNVcgxZ9C09VLQaZs9IsrXPg021zXEgXkSMMiZ5x3k3G+w
+         s0MfrRrs3nSe5aMhWCep46F+vDNKhXgPhaNxG6x05MhJOsaHDrI4XD/UYj3Pr8FraJLc
+         FoYA==
+X-Forwarded-Encrypted: i=1; AJvYcCVrG8vijY2tp+RaQmK7VkPAkj0DA1f6BIpQ1FwuOMd79PIfsTWCtswmotmfRpPF8MXcLUYQ5zw2hIt+QMq3IzDo60I4a8So199lpT1MRQ==
+X-Gm-Message-State: AOJu0Ywp910JgP8WbEP1jCzmAMAebmBdrhH8MoYah47HWLAWgnj0R7TA
+	janWzYa2NAIuGCtmMBKuYvdo2UqtLAM0O9ARYhhEGTx3mWTIEqXA6Rg1dR/Ee54=
+X-Google-Smtp-Source: AGHT+IGJrr07aHC/Cs7bDT/YFGzvwRXVO7yvc2tL4V11EO+OlyAP8FyUQmvwWb7usmWdo7JZH01J7Q==
+X-Received: by 2002:a05:6512:2003:b0:515:8a20:71de with SMTP id a3-20020a056512200300b005158a2071demr1847450lfb.5.1713576385258;
+        Fri, 19 Apr 2024 18:26:25 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::8a5])
+        by smtp.gmail.com with ESMTPSA id o13-20020ac24e8d000000b005178f5ad215sm954850lfr.122.2024.04.19.18.26.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Apr 2024 18:26:24 -0700 (PDT)
+Date: Sat, 20 Apr 2024 04:26:23 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Abel Vesa <abel.vesa@linaro.org>, 
+	Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org
+Subject: Re: [PATCH 1/9] drm/msm/dpu: drop dpu_format_check_modified_format
+Message-ID: <ccgx5mjsxf2asvadithitzl7shkboj6ipcg6onfawa5pskchgd@etighi5usone>
+References: <20240319-dpu-mode-config-width-v1-0-d0fe6bf81bf1@linaro.org>
+ <20240319-dpu-mode-config-width-v1-1-d0fe6bf81bf1@linaro.org>
+ <9c2f5f63-291c-c2b5-41a1-d2004055cf7a@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 5/9] drm/msm/dpu: check for the plane pitch overflow
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Daniel
- Vetter <daniel@ffwll.ch>
-CC: Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan+linaro@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20240319-dpu-mode-config-width-v1-0-d0fe6bf81bf1@linaro.org>
- <20240319-dpu-mode-config-width-v1-5-d0fe6bf81bf1@linaro.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240319-dpu-mode-config-width-v1-5-d0fe6bf81bf1@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: r3s7YrrP-VBWTsLs7OnyZjEwmlzesZNO
-X-Proofpoint-ORIG-GUID: r3s7YrrP-VBWTsLs7OnyZjEwmlzesZNO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-19_16,2024-04-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- impostorscore=0 mlxlogscore=999 spamscore=0 priorityscore=1501
- phishscore=0 adultscore=0 clxscore=1015 lowpriorityscore=0 mlxscore=0
- bulkscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404190188
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9c2f5f63-291c-c2b5-41a1-d2004055cf7a@quicinc.com>
 
-
-
-On 3/19/2024 6:22 AM, Dmitry Baryshkov wrote:
-> Check that the plane pitch doesn't overflow the maximum pitch size
-> allowed by the hardware.
+On Fri, Apr 19, 2024 at 04:43:20PM -0700, Abhinav Kumar wrote:
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h | 2 ++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   | 6 +++++-
->   2 files changed, 7 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-> index b7dc52312c39..86b1defa5d21 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-> @@ -12,6 +12,8 @@
->   
->   struct dpu_hw_sspp;
->   
-> +#define DPU_SSPP_MAX_PITCH_SIZE		0xffff
-> +
+> On 3/19/2024 6:21 AM, Dmitry Baryshkov wrote:
+> > The msm_kms_funcs::check_modified_format() callback is not used by the
+> > driver. Drop it completely.
+> > 
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c | 45 -----------------------------
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h | 15 ----------
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |  1 -
+> >   drivers/gpu/drm/msm/msm_kms.h               |  5 ----
+> >   4 files changed, 66 deletions(-)
+> > 
+> 
+> I think in this case, I am leaning towards completing the implementation
+> rather than dropping it as usual.
+> 
+> It seems its easier to just add the support to call this like the attached
+> patch?
 
-You obtained this value from below code right?
+Please don't attach patches to the email. It makes it impossible to
+respond to them.
 
-	if (pipe->multirect_index == DPU_SSPP_RECT_0) {
-487 			ystride0 = (ystride0 & 0xFFFF0000) |
-488 				(layout->plane_pitch[0] & 0x0000FFFF);
-489 			ystride1 = (ystride1 & 0xFFFF0000)|
-490 				(layout->plane_pitch[2] & 0x0000FFFF);
-491 		} else {
-492 			ystride0 = (ystride0 & 0x0000FFFF) |
-493 				((layout->plane_pitch[0] << 16) &
-494 				 0xFFFF0000);
-495 			ystride1 = (ystride1 & 0x0000FFFF) |
-496 				((layout->plane_pitch[2] << 16) &
-497 				 0xFFFF0000);
-498 		}
+Anyway, what are we missing with the current codebase? Why wasn't the
+callback / function used in the first place?
 
-Seems correct, but was just curious
+> 
+> WDYT?
+> 
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
+> > index e366ab134249..ff0df478c958 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
+> > @@ -960,51 +960,6 @@ int dpu_format_populate_layout(
+> >   	return ret;
+> >   }
+> > -int dpu_format_check_modified_format(
+> > -		const struct msm_kms *kms,
+> > -		const struct msm_format *msm_fmt,
+> > -		const struct drm_mode_fb_cmd2 *cmd,
+> > -		struct drm_gem_object **bos)
+> > -{
+> > -	const struct drm_format_info *info;
+> > -	const struct dpu_format *fmt;
+> > -	struct dpu_hw_fmt_layout layout;
+> > -	uint32_t bos_total_size = 0;
+> > -	int ret, i;
+> > -
+> > -	if (!msm_fmt || !cmd || !bos) {
+> > -		DRM_ERROR("invalid arguments\n");
+> > -		return -EINVAL;
+> > -	}
+> > -
+> > -	fmt = to_dpu_format(msm_fmt);
+> > -	info = drm_format_info(fmt->base.pixel_format);
+> > -	if (!info)
+> > -		return -EINVAL;
+> > -
+> > -	ret = dpu_format_get_plane_sizes(fmt, cmd->width, cmd->height,
+> > -			&layout, cmd->pitches);
+> > -	if (ret)
+> > -		return ret;
+> > -
+> > -	for (i = 0; i < info->num_planes; i++) {
+> > -		if (!bos[i]) {
+> > -			DRM_ERROR("invalid handle for plane %d\n", i);
+> > -			return -EINVAL;
+> > -		}
+> > -		if ((i == 0) || (bos[i] != bos[0]))
+> > -			bos_total_size += bos[i]->size;
+> > -	}
+> > -
+> > -	if (bos_total_size < layout.total_size) {
+> > -		DRM_ERROR("buffers total size too small %u expected %u\n",
+> > -				bos_total_size, layout.total_size);
+> > -		return -EINVAL;
+> > -	}
+> > -
+> > -	return 0;
+> > -}
+> > -
+> >   const struct dpu_format *dpu_get_dpu_format_ext(
+> >   		const uint32_t format,
+> >   		const uint64_t modifier)
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h
+> > index 84b8b3289f18..9442445f1a86 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h
+> > @@ -54,21 +54,6 @@ const struct msm_format *dpu_get_msm_format(
+> >   		const uint32_t format,
+> >   		const uint64_t modifiers);
+> > -/**
+> > - * dpu_format_check_modified_format - validate format and buffers for
+> > - *                   dpu non-standard, i.e. modified format
+> > - * @kms:             kms driver
+> > - * @msm_fmt:         pointer to the msm_fmt base pointer of an dpu_format
+> > - * @cmd:             fb_cmd2 structure user request
+> > - * @bos:             gem buffer object list
+> > - *
+> > - * Return: error code on failure, 0 on success
+> > - */
+> > -int dpu_format_check_modified_format(
+> > -		const struct msm_kms *kms,
+> > -		const struct msm_format *msm_fmt,
+> > -		const struct drm_mode_fb_cmd2 *cmd,
+> > -		struct drm_gem_object **bos);
+> >   /**
+> >    * dpu_format_populate_layout - populate the given format layout based on
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > index a1f5d7c4ab91..7257ac4020d8 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > @@ -969,7 +969,6 @@ static const struct msm_kms_funcs kms_funcs = {
+> >   	.complete_commit = dpu_kms_complete_commit,
+> >   	.enable_vblank   = dpu_kms_enable_vblank,
+> >   	.disable_vblank  = dpu_kms_disable_vblank,
+> > -	.check_modified_format = dpu_format_check_modified_format,
+> >   	.get_format      = dpu_get_msm_format,
+> >   	.destroy         = dpu_kms_destroy,
+> >   	.snapshot        = dpu_kms_mdp_snapshot,
+> > diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
+> > index 0641f6111b93..b794ed918b56 100644
+> > --- a/drivers/gpu/drm/msm/msm_kms.h
+> > +++ b/drivers/gpu/drm/msm/msm_kms.h
+> > @@ -96,11 +96,6 @@ struct msm_kms_funcs {
+> >   	const struct msm_format *(*get_format)(struct msm_kms *kms,
+> >   					const uint32_t format,
+> >   					const uint64_t modifiers);
+> > -	/* do format checking on format modified through fb_cmd2 modifiers */
+> > -	int (*check_modified_format)(const struct msm_kms *kms,
+> > -			const struct msm_format *msm_fmt,
+> > -			const struct drm_mode_fb_cmd2 *cmd,
+> > -			struct drm_gem_object **bos);
+> >   	/* misc: */
+> >   	long (*round_pixclk)(struct msm_kms *kms, unsigned long rate,
+> > 
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+-- 
+With best wishes
+Dmitry
 
