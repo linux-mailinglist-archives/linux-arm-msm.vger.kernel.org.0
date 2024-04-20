@@ -1,124 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-18064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D04A68ABDA3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Apr 2024 00:50:59 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D65518ABDA5
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Apr 2024 01:00:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3D9441F2143A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 22:50:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0810D1C20A4D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 23:00:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 570873E478;
-	Sat, 20 Apr 2024 22:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E9284AEFD;
+	Sat, 20 Apr 2024 23:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="L3V9oR55"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yr5uPDGS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF2F205E0A;
-	Sat, 20 Apr 2024 22:50:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682C546556
+	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Apr 2024 23:00:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713653454; cv=none; b=h0E4ZAUY2skCNhGyfkk87FrPv8YFpZ3hUQDwSv8ximnJhwYVLwNsTf4KLJi0HsvvtIykxojh9Mxhekf0AZ6C3pllvRa92hXgtPXPkmRs0+fyrsiAdNPNKrC8zrdToqyv1WewkrsHuUHxX+KoL6/GdrattGuZeRWO4OEL4q/77fQ=
+	t=1713654033; cv=none; b=kvsEE+vpw2rGD8Caihw3IvplgUpJA04OB1Uma/opSjQQh4cE/ZJwe2ZBHXzRksdhlRyvMvPuRAv1bFQyKCWamsSJkRmaBAalNqR6WpgUsg4JNnayLkJAg79SdegMpfejTkBGJoZHQPoRcIPYhtnWArDa+rSId1Srx94XWS2oLv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713653454; c=relaxed/simple;
-	bh=+QjP6FIkutACqLjF/qLHwxXm9b2wg34D8W5h1sfbhes=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=tEKgwZXFnnQ87ger+bmuAMn+aiKEMKfDnUhgGm+YxppZLmJHIZ0UWPJBT171gygqWwNSGdMSKV7SLO34rInGvmq41B47ZWG8PLXs1CZwarjgBmc1eGPCwLQxKm7lyOAsoof+ThB16+BcBn5JUyibjz1H5Yocc73r7UbyrV2NNDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=L3V9oR55; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43KMbAuU014226;
-	Sat, 20 Apr 2024 22:50:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=zBXf5IpjaMToDMLjr6lG68Po82sfsNY1AWrtBj7dZjE=; b=L3
-	V9oR55NzWzd+RCU1duYXo0ia8m5XFYZEjXv6f+wVkJiFvF72inqFmcMYvUA+2wBm
-	yGFS46cxQUuN9d9KTGgAVBJ2mk3e+Cul9ilebYV2OcWXDkLN2x+rQ5y8HaVP9LWy
-	G34WGWj/6UVv0rWFNbbHzbHcIUEMfPc01nFK7sWUQKzYIDSLrszrgO8mNGQ7ZJrw
-	KF8Nj0FIyLpoTrzsZxUvpIrrim3x36M0+esL5wHNnR8vxqK5Rg1ASLt/tZj9taV+
-	zalAH0Ssy0tXLuMsZJ+//HOTGaOCpRKoSdOSQbz/9tp8EQBXHJrftCog8iST/uaP
-	9mGTIXCqMMZWG9jfFmgA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xm5a31f4e-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 20 Apr 2024 22:50:45 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43KMoijG006206
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 20 Apr 2024 22:50:44 GMT
-Received: from [10.110.104.191] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sat, 20 Apr
- 2024 15:50:43 -0700
-Message-ID: <8afaef40-856d-0faa-5b5f-99d5b6095bc0@quicinc.com>
-Date: Sat, 20 Apr 2024 15:50:42 -0700
+	s=arc-20240116; t=1713654033; c=relaxed/simple;
+	bh=4W4kNBK/xrEcrUApwzCM7sLtC45HuF/KUzFjcCmXLt4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oHinww1amDT+ddUdrk7elNVhMX5heti7e7AqDB+G6Dgos2z2gP1xuHJlhxA+0ar4S5lNXDwqDzAhsVCeB4JhZs9iqv9rekri4ftwcqk2n0Tc+HQnGqvycwl8fa12IDSpCBrZmf+JjtCLFRqiu41VO8uhE97eW+ZPNm7pUX27A+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yr5uPDGS; arc=none smtp.client-ip=209.85.208.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-571d8daff86so1609636a12.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Apr 2024 16:00:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1713654030; x=1714258830; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gS/avcdT3uZE+/g4l+u7eNrKfkVrRBnHoxOYygE+RDE=;
+        b=yr5uPDGSisSRWg2BdtLz4v/8WoQaybLA7Pyun9XdF+c2IjnCoJEE+28J0xFgKDDFUA
+         jLy+1Ozibv+WHlOotmMQIzz7Z9UDCUBXKnvHmD+40IFh6LhkgWnkb1sUyD07WI/dK5eI
+         74ZZo9DP3bxK1rUBP+g3y+19ehWxbKCnYUZQnB/EwNq5QPEXaiRutWzZOdPjzStM7pvA
+         +x15lAWyTKucfjzbirdYgmDwy4ZLQ9i8De9vBC77mdCD3xJYXzOGrj4JhacqcTQJOBPB
+         uXsFxQ8ML2FJwIgERF7kFGec4d6/ZxJHi/FPJa0cwiwotn1wXqNSdkVOuJKN1Q5ZonZJ
+         9GOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713654030; x=1714258830;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gS/avcdT3uZE+/g4l+u7eNrKfkVrRBnHoxOYygE+RDE=;
+        b=amQ/IPnDX3PFHMa+mdQ//StRDofo/bnP8e2/z8ynUYokYDFDfqRn/XYErfJmR3zFq3
+         nPi20MkOeoCSZtRalgkzONpO3wnJEAK2k9q3zOAj0WSBqCJ7FhBA8OiGHkwAypPPhhE7
+         oqCDQuuATiLJEGCw4lmAYTzoDBU0yBY0TB+E9SelPrLM7n+jvQrr1396Q6AEJFkV0zja
+         e2Khh1a1jrituI1g0azU+H9d69s8LiX5oNlQ/jLxUxtnGmy7G18dErpD72x0mf7754xJ
+         uhBspkSHhn/Y8CXe2birSu2mCPKmo5kX2itNIU2rXknMkzTsSk1KaIWgZTFYz5W1At+t
+         6NoA==
+X-Forwarded-Encrypted: i=1; AJvYcCWoUzH4LfUxPSfcU1hIkUNyzHAQ78jNFzdWpFTkd/6n0tEkAuEkLHKEdDcCraMt61MKkMwFTSvexItkD9BkRXC2+hbSK66OsHVJFf8BIg==
+X-Gm-Message-State: AOJu0YxHy66GOUZSrj+Mw98lxbslkznEKlH78DLsB9CFwBTIFURPrwPn
+	itn6358bo7ZQ/vnOevso7wotAOS7Q1VZYj/jYMMIK38Rl0R2B5yjOnzqJLMkZv4=
+X-Google-Smtp-Source: AGHT+IH4lwqPioLpoIzW6dLhOLlXPP3zMShUOxH0TJXNnW3DIij9PpcqOmEnmKfQrSavTUI2UaMo9Q==
+X-Received: by 2002:a50:9ece:0:b0:570:cd6:8ef with SMTP id a72-20020a509ece000000b005700cd608efmr4297896edf.29.1713654029517;
+        Sat, 20 Apr 2024 16:00:29 -0700 (PDT)
+Received: from [192.168.0.102] ([176.61.106.68])
+        by smtp.gmail.com with ESMTPSA id eo9-20020a056402530900b00571ef2c1308sm913940edb.12.2024.04.20.16.00.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 20 Apr 2024 16:00:29 -0700 (PDT)
+Message-ID: <9f44c386-4be9-4904-bf67-f0e664773baa@linaro.org>
+Date: Sun, 21 Apr 2024 00:00:27 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v2 8/9] drm/msm: merge dpu format database to MDP formats
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/26] media: pci: mgb4: Refactor struct resources
+To: Ricardo Ribalda <ribalda@chromium.org>,
+ Martin Tuma <martin.tuma@digiteqautomotive.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+ Hugues Fruchet <hugues.fruchet@foss.st.com>,
+ Alain Volmat <alain.volmat@foss.st.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Chen-Yu Tsai
+ <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Samuel Holland <samuel@sholland.org>,
+ Sakari Ailus <sakari.ailus@linux.intel.com>,
+ Thierry Reding <thierry.reding@gmail.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>,
+ Sowjanya Komatineni <skomatineni@nvidia.com>,
+ Luca Ceresoli <luca.ceresoli@bootlin.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Hans Verkuil <hverkuil@xs4all.nl>, Sergey Kozlov <serjk@netup.ru>,
+ Abylay Ospan <aospan@netup.ru>,
+ Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+ Dmitry Osipenko <digetx@gmail.com>,
+ Benjamin Mugnier <benjamin.mugnier@foss.st.com>,
+ Sylvain Petinot <sylvain.petinot@foss.st.com>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, linux-staging@lists.linux.dev,
+ linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+ linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org
+References: <20240419-fix-cocci-v2-0-2119e692309c@chromium.org>
+ <20240419-fix-cocci-v2-1-2119e692309c@chromium.org>
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Daniel
- Vetter <daniel@ffwll.ch>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20240420-dpu-format-v2-0-9e93226cbffd@linaro.org>
- <20240420-dpu-format-v2-8-9e93226cbffd@linaro.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240420-dpu-format-v2-8-9e93226cbffd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20240419-fix-cocci-v2-1-2119e692309c@chromium.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: msLpeX5mKaH_n5O6kmVPWosRJ-wVIre7
-X-Proofpoint-ORIG-GUID: msLpeX5mKaH_n5O6kmVPWosRJ-wVIre7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-20_20,2024-04-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- clxscore=1015 suspectscore=0 phishscore=0 malwarescore=0 adultscore=0
- mlxlogscore=825 priorityscore=1501 mlxscore=0 bulkscore=0 spamscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404200169
 
+On 19/04/2024 10:47, Ricardo Ribalda wrote:
+> The struct resource end field is inclusive not exclusive, this is, the
+> size is (end - start) +1.
 
+", this is," doesn't parse on my end
 
-On 4/19/2024 9:01 PM, Dmitry Baryshkov wrote:
-> Finally remove duplication between DPU and generic MDP code by merging
-> DPU format lists to the MDP format database.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |   4 +-
->   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c    |   7 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c        | 602 --------------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h        |  23 -
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |  10 -
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   2 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c          |   3 +-
->   drivers/gpu/drm/msm/disp/mdp_format.c              | 614 ++++++++++++++++++---
->   drivers/gpu/drm/msm/disp/mdp_format.h              |  10 +
->   drivers/gpu/drm/msm/disp/mdp_kms.h                 |   2 -
->   drivers/gpu/drm/msm/msm_drv.h                      |   2 +
->   11 files changed, 571 insertions(+), 708 deletions(-)
-> 
+"i.e" => that is, would be more appropriate I think.
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+"The struct resource end field is inclusive not exclusive of the size" 
+which I still think is a confusing statement.
+
+Perhaps something much easier to understand is called for
+
+"The struct resource end field signifies the end address not the 
+relative offset from the start field i.e size == (end - start) + 1.
+
+Amend the .end field to specify the end address not the relative size 
+from the offset as is currently given."
+
+Other than that, I think its reasonable to assume the mapping != 0 - 
+0x100 inclusive.
+
+Please consider updating your commit log and if you do add my
+
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
+---
+bod
 
