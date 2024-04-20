@@ -1,246 +1,331 @@
-Return-Path: <linux-arm-msm+bounces-18033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18039-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E22E8AB973
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 06:02:27 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 093F68AB9A3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 06:50:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DDBD41F216B9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 04:02:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 370851C2089F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 04:50:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93FF6D52A;
-	Sat, 20 Apr 2024 04:01:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C93B17735;
+	Sat, 20 Apr 2024 04:49:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zwhsq/Tw"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="d9AUh7Ab"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6807414005
-	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Apr 2024 04:01:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522B91758E;
+	Sat, 20 Apr 2024 04:49:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713585684; cv=none; b=ScUCMjPM+e/1MPK8A0JJQPHmS6BRFfmjWRIOyguSvRxuMDC7Kz7Y97HIYchfZMvRwjtkfbHX+ex4+exptp0JWDImqS0UTOf72+SBN4stC9dEbzc4DfkYliUd0jWzeBaBPhXRAiVUNA7mbcDi9JGTmJuzJ/xD/Uik179RnAYs7X8=
+	t=1713588597; cv=none; b=u207gZqucsMnBqnR1Isb6m/Cyf6fb+1/Rj3lEoNQ/QXhCWKmlUjvARz4J9kV+qguimlUDA6ipjn/Dglgc//LHmu/IZU/95rLKiVb9+HglqYcLDRGDyDTlKaUTTK+O9a+I9qAr2YrphAbt8Xy+m3yf0DTkSHHqM4QeDiHNlOwJPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713585684; c=relaxed/simple;
-	bh=AuQCRrUqnRgpA+wocS6SRQv47Exck7/IT0ZD+APsLPs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=py2G8VP1ZC5GVd52ea9drUlq4D0O708JDTVcRx4xTZ7MKk9F+KpMcNzXZIjNwXn3HjPBqZj2SpxsEfGfd1CVfh9lpoZ83nEOrwUvMs0NDZ9oTN1y+/SvPI2qcXPAKFGsdR+b4Jolay3YE1yOQc9JavhD7VM/f5PKyamabwi15+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zwhsq/Tw; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-51ab4ee9df8so1877003e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Apr 2024 21:01:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713585680; x=1714190480; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=x/VxGMXcUC7972zZCvX/pqSyv12NV0CZxNoZzzTE6kI=;
-        b=zwhsq/Tw+L39we1Xcfko9l7N0PuBBb1AOn/oniYuisxQSyYC9/sCXgz8QhSvBCVPGb
-         tUEUX2OPDW5xUUR0zowcLK6gi1mzI8uxjCSDYK52aWu3QasdjuVVdJBPOKS+PteWm8EX
-         I5wUPckHI83y8FhQvut+SFmUF7IAdMhSDiijxEIn0geF21lFboCRmyk0J5jSBB7GcPVS
-         OMmMfA5Woocti2fNSN/ITtcMSiu0RTt/JujMtbJnuz0uKiKMTSt73VEg+P4jlVWmqlyR
-         +Rc5/Dr4+4PrkJmrQQVHWLJGx6/tjqsXRaOZB505IjC/A1AP/5i4SlgdWrVXNlrYIkTm
-         FApQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713585680; x=1714190480;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=x/VxGMXcUC7972zZCvX/pqSyv12NV0CZxNoZzzTE6kI=;
-        b=dw0HuwhJqXhiWwX4w8WbiMgoKrWevXmdeMQ1xAPomZpcM8T4/WLkDjmofMUE0UTBuo
-         6//hWDMb34kyOV7cMUuEewHf6xmEYB3nE6yhy+4YbdFo/CKk7lc7SycfMwNqg3BQfgAW
-         SrpikjwMJUz4SYy54LiVHAIu4MsGdgLMQtB8EWhhoWfC0mR06mY/LBMsPqXNyKmq/n/p
-         JhoBqPU1YxDqkrzd46K1oXtPxx790PxFAFT/kp5e/yiD5848quurZfD/Zw4rKcIVk+8i
-         xPgIYkyvyEtJntWm6EPkU28yG8ScWhcxICxK4Eg1SaKdSc2uyWT4pQVfOejrNDtNTAWg
-         0eOQ==
-X-Gm-Message-State: AOJu0YxeSo7HYixGaFliqkCTQy89XIp5o7O0950LZOhEKZYOjI56xMRw
-	KWktLc9gv1lbynnRmiENpB1xmpd9PqfQl/Uw6bnlumOKli2ZQZZFi5wROn5CHjk=
-X-Google-Smtp-Source: AGHT+IExfEx8mtIjS5cmRBdCMsJal/rOeQBcMIzLPL1KlsMhscz6HdMjaPI7HsEUj9jEqYhbV7LABQ==
-X-Received: by 2002:a05:6512:20c6:b0:519:5fdb:82b4 with SMTP id u6-20020a05651220c600b005195fdb82b4mr2619745lfr.53.1713585680688;
-        Fri, 19 Apr 2024 21:01:20 -0700 (PDT)
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id n2-20020a0565120ac200b00518c9ccef2esm1003993lfu.22.2024.04.19.21.01.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Apr 2024 21:01:20 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 20 Apr 2024 07:01:06 +0300
-Subject: [PATCH v2 9/9] drm/msm: drop msm_kms_funcs::get_format() callback
+	s=arc-20240116; t=1713588597; c=relaxed/simple;
+	bh=rvvAEcFxj68U/eppV5ZNrkIXIbC1tOKhvTnQgOwhx2Q=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=qDPx8KYC1pd/6W4gU7V6oaKl3tl2xVBhaGxAU/AqVYTodHNuKiZr/ZhxoXaKrmeuFFN9JWErqUKsMX6FpdDeSvL0kq5TAzr9f8XW2GID3iS9iFurJZkf3doYiuQNfRrTckXnTg5+PPFY1cDH83wTDHaEgJYYx2vtpSaD82NJPzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=d9AUh7Ab; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43K4S8qJ023601;
+	Sat, 20 Apr 2024 04:49:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=iVcnXuV
+	gCpYOkIL1qkNKincF/jgaMLxGW+gnXPpLfJo=; b=d9AUh7Ab9xOz4MPgKDdq1Np
+	nUZpk6XNiamklxUMN2DWd12dRNlSfAOVrRKA3fBroQ9xjczN5/LSai+cQsh+LNcM
+	orW9GQb/K1WdAB++czvlK18DOcRE6ro8WJsiMgXPKArEQhOZDhfcZCs0pymn4lFf
+	VmvDQBniC+n3U7hVtHHD6aTmqQSicq7S890+hfWxc1nzrqt8rX2gceG0Y49IQS0t
+	Hbl1xWu0dp1DD2duuKzY8FJI15QgUpULyt+5DcV0iuLGDFtOhYCG1igWpUQliZBP
+	nu5KuCMoYovj43/2S67K16S93tzRd58Z5pUbKAj3+/64fdtllRHknTcqe+tU33A=
+	=
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xm5x682nh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 20 Apr 2024 04:49:40 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43K4nHiq000978
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 20 Apr 2024 04:49:17 GMT
+Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 19 Apr 2024 21:49:12 -0700
+From: Krishna Kurapati <quic_kriskura@quicinc.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring
+	<robh@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+        Wesley Cheng
+	<quic_wcheng@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Greg
+ Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Felipe Balbi
+	<balbi@kernel.org>, Johan Hovold <johan@kernel.org>
+CC: <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>,
+        Krishna Kurapati
+	<quic_kriskura@quicinc.com>
+Subject: [PATCH v21 0/9] Add multiport support for DWC3 controllers
+Date: Sat, 20 Apr 2024 10:18:52 +0530
+Message-ID: <20240420044901.884098-1-quic_kriskura@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240420-dpu-format-v2-9-9e93226cbffd@linaro.org>
-References: <20240420-dpu-format-v2-0-9e93226cbffd@linaro.org>
-In-Reply-To: <20240420-dpu-format-v2-0-9e93226cbffd@linaro.org>
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6653;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=AuQCRrUqnRgpA+wocS6SRQv47Exck7/IT0ZD+APsLPs=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmIz4JalQ/C4huecCuIwaBnq4a41g+VFrXEY/0k
- 5kyuo/oA6SJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZiM+CQAKCRCLPIo+Aiko
- 1d7gB/95fNnDzI2OUr6Gjh7izMHsbdDyeuAtsuUWPCMo5pm+tRuaZ+l2n9RhkqrOourPY7ME1uH
- hwUzKuoFxQgX57jLZxS/xbwAbaOtD+u/cxNWxnD+9W9fpgqKlwtuyfvVEuVGJ1KoYNKjHSI8vOt
- MMUvV70iQ962b/z0W82zpmvIbAycbedL8/RgpEsfZndaL5L887ojD5dUztpVwn4Zz4/s9OyTm4s
- ECiQO/JghIJGsDgRJSVd4DS+6o0Kj+EhNiuFkeDRf+7xwlshH0T/23JmLB9+4VXzE3V/g/oVPpV
- 74zvI9peLb5aH9Q0pYEelC0vfUquaEO0Up8zi6WCdicyHGBV
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: XkwXDCVJTfta3DtigARuNFeBdpMgxEnn
+X-Proofpoint-GUID: XkwXDCVJTfta3DtigARuNFeBdpMgxEnn
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-20_03,2024-04-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 malwarescore=0 lowpriorityscore=0 bulkscore=0 phishscore=0
+ spamscore=0 mlxscore=0 adultscore=0 mlxlogscore=999 clxscore=1015
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404200033
 
-Now as all subdrivers were converted to use common database of formats,
-drop the get_format() callback and use mdp_get_format() directly.
+Currently the DWC3 driver supports only single port controller which
+requires at most two PHYs ie HS and SS PHYs. There are SoCs that has
+DWC3 controller with multiple ports that can operate in host mode.
+Some of the port supports both SS+HS and other port supports only HS
+mode.
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 4 ++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c  | 5 ++---
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c              | 1 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c            | 2 +-
- drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c             | 1 -
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c             | 1 -
- drivers/gpu/drm/msm/msm_fb.c                         | 2 +-
- drivers/gpu/drm/msm/msm_kms.h                        | 4 ----
- 8 files changed, 6 insertions(+), 14 deletions(-)
+This change primarily refactors the Phy logic in core driver to allow
+multiport support with Generic Phy's.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-index b966c44ec835..ef69c2f408c3 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-@@ -274,7 +274,7 @@ static void dpu_encoder_phys_vid_setup_timing_engine(
- 
- 	drm_mode_to_intf_timing_params(phys_enc, &mode, &timing_params);
- 
--	fmt = phys_enc->dpu_kms->base.funcs->get_format(&phys_enc->dpu_kms->base, fmt_fourcc, 0);
-+	fmt = mdp_get_format(&phys_enc->dpu_kms->base, fmt_fourcc, 0);
- 	DPU_DEBUG_VIDENC(phys_enc, "fmt_fourcc 0x%X\n", fmt_fourcc);
- 
- 	if (phys_enc->hw_cdm)
-@@ -414,7 +414,7 @@ static void dpu_encoder_phys_vid_enable(struct dpu_encoder_phys *phys_enc)
- 
- 	ctl = phys_enc->hw_ctl;
- 	fmt_fourcc = dpu_encoder_get_drm_fmt(phys_enc);
--	fmt = phys_enc->dpu_kms->base.funcs->get_format(&phys_enc->dpu_kms->base, fmt_fourcc, 0);
-+	fmt = mdp_get_format(&phys_enc->dpu_kms->base, fmt_fourcc, 0);
- 
- 	DPU_DEBUG_VIDENC(phys_enc, "\n");
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-index de17bcbb8492..d3ea91c1d7d2 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-@@ -326,8 +326,7 @@ static void dpu_encoder_phys_wb_setup(
- 
- 	wb_job = wb_enc->wb_job;
- 	format = msm_framebuffer_format(wb_enc->wb_job->fb);
--	dpu_fmt = phys_enc->dpu_kms->base.funcs->get_format(&phys_enc->dpu_kms->base,
--							    format->pixel_format, wb_job->fb->modifier);
-+	dpu_fmt = mdp_get_format(&phys_enc->dpu_kms->base, format->pixel_format, wb_job->fb->modifier);
- 
- 	DPU_DEBUG("[mode_set:%d, \"%s\",%d,%d]\n",
- 			hw_wb->idx - WB_0, mode.name,
-@@ -577,7 +576,7 @@ static void dpu_encoder_phys_wb_prepare_wb_job(struct dpu_encoder_phys *phys_enc
- 
- 	format = msm_framebuffer_format(job->fb);
- 
--	wb_cfg->dest.format = phys_enc->dpu_kms->base.funcs->get_format(&phys_enc->dpu_kms->base,
-+	wb_cfg->dest.format = mdp_get_format(&phys_enc->dpu_kms->base,
- 					     format->pixel_format, job->fb->modifier);
- 	if (!wb_cfg->dest.format) {
- 		/* this error should be detected during atomic_check */
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index cb30137443e8..1955848b1b78 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -982,7 +982,6 @@ static const struct msm_kms_funcs kms_funcs = {
- 	.enable_vblank   = dpu_kms_enable_vblank,
- 	.disable_vblank  = dpu_kms_disable_vblank,
- 	.check_modified_format = dpu_format_check_modified_format,
--	.get_format      = mdp_get_format,
- 	.destroy         = dpu_kms_destroy,
- 	.snapshot        = dpu_kms_mdp_snapshot,
- #ifdef CONFIG_DEBUG_FS
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index b92a13cc9b36..1c3a2657450c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -627,7 +627,7 @@ static void _dpu_plane_color_fill(struct dpu_plane *pdpu,
- 	 * select fill format to match user property expectation,
- 	 * h/w only supports RGB variants
- 	 */
--	fmt = priv->kms->funcs->get_format(priv->kms, DRM_FORMAT_ABGR8888, 0);
-+	fmt = mdp_get_format(priv->kms, DRM_FORMAT_ABGR8888, 0);
- 	/* should not happen ever */
- 	if (!fmt)
- 		return;
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-index 4ba1cb74ad76..6e4e74f9d63d 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-@@ -151,7 +151,6 @@ static const struct mdp_kms_funcs kms_funcs = {
- 		.flush_commit    = mdp4_flush_commit,
- 		.wait_flush      = mdp4_wait_flush,
- 		.complete_commit = mdp4_complete_commit,
--		.get_format      = mdp_get_format,
- 		.round_pixclk    = mdp4_round_pixclk,
- 		.destroy         = mdp4_destroy,
- 	},
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index a874fd95cc20..374704cce656 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -224,7 +224,6 @@ static const struct mdp_kms_funcs kms_funcs = {
- 		.prepare_commit  = mdp5_prepare_commit,
- 		.wait_flush      = mdp5_wait_flush,
- 		.complete_commit = mdp5_complete_commit,
--		.get_format      = mdp_get_format,
- 		.destroy         = mdp5_kms_destroy,
- 	},
- 	.set_irqmask         = mdp5_set_irqmask,
-diff --git a/drivers/gpu/drm/msm/msm_fb.c b/drivers/gpu/drm/msm/msm_fb.c
-index ad4bb2b2cd66..09268e416843 100644
---- a/drivers/gpu/drm/msm/msm_fb.c
-+++ b/drivers/gpu/drm/msm/msm_fb.c
-@@ -181,7 +181,7 @@ static struct drm_framebuffer *msm_framebuffer_init(struct drm_device *dev,
- 		      &mode_cmd->pixel_format);
- 
- 	n = info->num_planes;
--	format = kms->funcs->get_format(kms, mode_cmd->pixel_format,
-+	format = mdp_get_format(kms, mode_cmd->pixel_format,
- 			mode_cmd->modifier[0]);
- 	if (!format) {
- 		DRM_DEV_ERROR(dev->dev, "unsupported pixel format: %p4cc\n",
-diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
-index 0641f6111b93..1e0c54de3716 100644
---- a/drivers/gpu/drm/msm/msm_kms.h
-+++ b/drivers/gpu/drm/msm/msm_kms.h
-@@ -92,10 +92,6 @@ struct msm_kms_funcs {
- 	 * Format handling:
- 	 */
- 
--	/* get msm_format w/ optional format modifiers from drm_mode_fb_cmd2 */
--	const struct msm_format *(*get_format)(struct msm_kms *kms,
--					const uint32_t format,
--					const uint64_t modifiers);
- 	/* do format checking on format modified through fb_cmd2 modifiers */
- 	int (*check_modified_format)(const struct msm_kms *kms,
- 			const struct msm_format *msm_fmt,
+The DWC3 controller supports up to 15 High-Speed phys and 4 SuperSpeed
+phys. The multiport controller in Qualcomm SA8295P is paired with two
+High-Speed + SuperSpeed and two High-Speed-only ports. It is assumed
+that the N SuperSpeed PHYs are paired with the first N High-Speed PHYs.
 
+Changes in v21:
+Updated core driver bindings to support up to 19 max items.
+Updated commit text in patches 2/5/6.
+Updated core driver to support 15 HS and 4 SS PHYs as indicated by
+Thinh in [1].
+Chaned usage of sprintf to snprintf while reading phys in core driver.
+Added a separate macro for DWC3 QCOM driver for indicating max ports.
+Removed unused PWR_EVENT_IRQ_STAT_REG macro in patch (9/9).
+Code re-verified internally and added Bjorn.A RB tag for patches.
+
+Changes in v20:
+Modified return check in get_num_ports call.
+Code re-verified internally and added Bjorn.A RB Tag in patch (2/9)
+from internal review.
+
+Changes in v19:
+Replaced IS_ERR(ptr) with a NULL check.
+Modified name of function reading the port num in core file.
+
+Changes in v18:
+Updated variable names in patch-7 for setup_port_irq and
+find_num_ports calls.
+
+Changes in v17:
+Modified DT handling patch by checking if dp_hs_phy_1 is present
+or not and then going for DT parsing.
+
+Changes in v16:
+Removing ACPI has simplified the interrupt reading in wrapper. Also
+the logic to find number of ports is based on dp_hs_phy interrupt check
+in DT. Enabling and disabling interrupts is now done per port. Added
+info on power event irq in commit message.
+
+Changes in v15:
+Added minItems property in qcom,dwc3 bindings as suggested by Rob.
+Retained all RB's/ACK's got in v14.
+
+Changes in v14:
+Moved wrapper binding update to 5th patch in the series as it deals
+with only wakeup and not enumeration. The first part of the series
+deals with enumeration and the next part deals with wakeup.
+Updated commit text for wrapper driver patches.
+Added error checks in get_port_index and setup_irq call which were
+missing in v13.
+Added SOB and CDB tags appropriately for the patches.
+Rebased code on top of latest usb next.
+DT changes have been removed and will be sent as a separate series.
+
+Changes in v13:
+This series is a subset of patches in v11 as the first 3 patches in v11
+have been mereged into usb-next.
+Moved dr_mode property from platform specific files to common sc8280xp DT.
+Fixed function call wrapping, added comments and replaced #defines with
+enum in dwc3-qcom for identifying IRQ index appropriately.
+Fixed nitpicks pointed out in v11 for suspend-resume handling.
+Added reported-by tag for phy refactoring patch as a compile error was
+found by kernel test bot [1].
+Removed reviewed-by tag of maintainer for phy refactoring patch as a minor
+change of increasing phy-names array size by 2-bytes was done to fix
+compilation issue mentioned in [1].
+
+Changes in v12:
+Pushed as a subset of acked but no-yet-merged patches of v11 with intent
+of making rebase of other patches easy. Active reviewers from community
+suggested that it would be better to push the whole series in one go as it
+would give good clarity and context for all the patches in the series.
+So pushed v13 for the same addressing comments received in v11.
+
+Changes in v11:
+Implemented port_count calculation by reading interrupt-names from DT.
+Refactored IRQ handling in dwc3-qcom.
+Moving of macros to xhci-ext-caps.h made as a separate patch.
+Names of interrupts to be displayed on /proc/interrupts set to the ones
+present in DT.
+
+Changes in v10:
+Refactored phy init/exit/power-on/off functions in dwc3 core
+Refactored dwc3-qcom irq registration and handling
+Implemented wakeup for multiport irq's
+Moved few macros from xhci.h to xhci-ext-caps.h
+Fixed nits pointed out in v9
+Fixed Co-developed by and SOB tags in patches 5 and 11
+
+Changes in v9:
+Added IRQ support for DP/DM/SS MP Irq's of SC8280
+Refactored code to read port count by accessing xhci registers
+
+Changes in v8:
+Reorganised code in patch-5
+Fixed nitpicks in code according to comments received on v7
+Fixed indentation in DT patches
+Added drive strength for pinctrl nodes in SA8295 DT
+
+Changes in v7:
+Added power event irq's for Multiport controller.
+Udpated commit text for patch-9 (adding DT changes for enabling first
+port of multiport controller on sa8540-ride).
+Fixed check-patch warnings for driver code.
+Fixed DT binding errors for changes in snps,dwc3.yaml
+Reabsed code on top of usb-next
+
+Changes in v6:
+Updated comments in code after.
+Updated variables names appropriately as per review comments.
+Updated commit text in patch-2 and added additional info as per review
+comments.
+The patch header in v5 doesn't have "PATHCH v5" notation present. Corrected
+it in this version.
+
+Changes in v5:
+Added DT support for first port of Teritiary USB controller on SA8540-Ride
+Added support for reading port info from XHCI Extended Params registers.
+
+Changes in RFC v4:
+Added DT support for SA8295p.
+
+Changes in RFC v3:
+Incase any PHY init fails, then clear/exit the PHYs that
+are already initialized.
+
+Changes in RFC v2:
+Changed dwc3_count_phys to return the number of PHY Phandles in the node.
+This will be used now in dwc3_extract_num_phys to increment num_usb2_phy 
+and num_usb3_phy.
+Added new parameter "ss_idx" in dwc3_core_get_phy_ny_node and changed its
+structure such that the first half is for HS-PHY and second half is for
+SS-PHY.
+In dwc3_core_get_phy, for multiport controller, only if SS-PHY phandle is
+present, pass proper SS_IDX else pass -1.
+
+Tested enumeration interrupt registration on Tertiary controller of
+SA8295 ADP:
+
+/ # lsusb
+Bus 001 Device 001: ID 1d6b:0002
+Bus 002 Device 001: ID 1d6b:0003
+Bus 001 Device 002: ID 046d:c06a
+/ #
+/ # dmesg  | grep ports
+[    0.066250] Serial: 8250/16550 driver, 4 ports, IRQ sharing enabled
+[    0.154668] dwc3 a400000.usb: K: hs-ports: 4 ss-ports: 2
+[    0.223137] xhci-hcd xhci-hcd.0.auto: Host supports USB 3.1 Enhanced SuperSpeed
+[    0.227795] hub 1-0:1.0: 4 ports detected
+[    0.233724] hub 2-0:1.0: 2 ports detected
+
+Tested interrupt registration for all 4 ports of SA8295 ADP:
+
+/ # cat /proc/interrupts  |grep phy
+162: 0 0 0 0 0 0 0 0       PDC 127 Edge      dp_hs_phy_1
+163: 0 0 0 0 0 0 0 0       PDC 129 Edge      dp_hs_phy_2
+164: 0 0 0 0 0 0 0 0       PDC 131 Edge      dp_hs_phy_3
+165: 0 0 0 0 0 0 0 0       PDC 133 Edge      dp_hs_phy_4
+166: 0 0 0 0 0 0 0 0       PDC 126 Edge      dm_hs_phy_1
+167: 0 0 0 0 0 0 0 0       PDC  16 Level     ss_phy_1
+168: 0 0 0 0 0 0 0 0       PDC 128 Edge      dm_hs_phy_2
+169: 0 0 0 0 0 0 0 0       PDC  17 Level     ss_phy_2
+170: 0 0 0 0 0 0 0 0       PDC 130 Edge      dm_hs_phy_3
+171: 0 0 0 0 0 0 0 0       PDC 132 Edge      dm_hs_phy_4
+173: 0 0 0 0 0 0 0 0       PDC  14 Edge      dp_hs_phy_irq
+174: 0 0 0 0 0 0 0 0       PDC  15 Edge      dm_hs_phy_irq
+175: 0 0 0 0 0 0 0 0       PDC 138 Level     ss_phy_irq
+
+Tested working of ADB on SM8450 QRD.
+
+Links to previous versions:
+Link to v20: https://lore.kernel.org/all/20240408132925.1880571-1-quic_kriskura@quicinc.com/
+Link to v19: https://lore.kernel.org/all/20240404051229.3082902-1-quic_kriskura@quicinc.com/
+Link to v18: https://lore.kernel.org/all/20240326113253.3010447-1-quic_kriskura@quicinc.com/
+Link to v17: https://lore.kernel.org/all/20240326102809.2940123-1-quic_kriskura@quicinc.com/
+Link to v16: https://lore.kernel.org/all/20240307062052.2319851-1-quic_kriskura@quicinc.com/
+Link to v15: https://lore.kernel.org/all/20240216005756.762712-1-quic_kriskura@quicinc.com/
+Link to v14: https://lore.kernel.org/all/20240206051825.1038685-1-quic_kriskura@quicinc.com/
+Link to v13: https://lore.kernel.org/all/20231007154806.605-1-quic_kriskura@quicinc.com/
+Link to v12: https://lore.kernel.org/all/20231004165922.25642-1-quic_kriskura@quicinc.com/
+Link to v11: https://lore.kernel.org/all/20230828133033.11988-1-quic_kriskura@quicinc.com/
+Link to v10: https://lore.kernel.org/all/20230727223307.8096-1-quic_kriskura@quicinc.com/
+Link to v9: https://lore.kernel.org/all/20230621043628.21485-1-quic_kriskura@quicinc.com/
+Link to v8: https://lore.kernel.org/all/20230514054917.21318-1-quic_kriskura@quicinc.com/
+Link to v7: https://lore.kernel.org/all/20230501143445.3851-1-quic_kriskura@quicinc.com/
+Link to v6: https://lore.kernel.org/all/20230405125759.4201-1-quic_kriskura@quicinc.com/
+Link to v5: https://lore.kernel.org/all/20230310163420.7582-1-quic_kriskura@quicinc.com/
+Link to RFC v4: https://lore.kernel.org/all/20230115114146.12628-1-quic_kriskura@quicinc.com/
+Link to RFC v3: https://lore.kernel.org/all/1654709787-23686-1-git-send-email-quic_harshq@quicinc.com/#r
+Link to RFC v2: https://lore.kernel.org/all/1653560029-6937-1-git-send-email-quic_harshq@quicinc.com/#r
+
+[1]: https://lore.kernel.org/linux-usb/20230801013031.ft3zpoatiyfegmh6@synopsys.com/
+
+Krishna Kurapati (9):
+  dt-bindings: usb: Add bindings for multiport properties on DWC3
+    controller
+  usb: dwc3: core: Access XHCI address space temporarily to read port
+    info
+  usb: dwc3: core: Skip setting event buffers for host only controllers
+  usb: dwc3: core: Refactor PHY logic to support Multiport Controller
+  dt-bindings: usb: qcom,dwc3: Add bindings for SC8280 Multiport
+  usb: dwc3: qcom: Add helper function to request wakeup interrupts
+  usb: dwc3: qcom: Refactor IRQ handling in glue driver
+  usb: dwc3: qcom: Enable wakeup for applicable ports of multiport
+  usb: dwc3: qcom: Add multiport suspend/resume support for wrapper
+
+ .../devicetree/bindings/usb/qcom,dwc3.yaml    |  34 ++
+ .../devicetree/bindings/usb/snps,dwc3.yaml    |  13 +-
+ drivers/usb/dwc3/core.c                       | 329 ++++++++++++++----
+ drivers/usb/dwc3/core.h                       |  20 +-
+ drivers/usb/dwc3/drd.c                        |  15 +-
+ drivers/usb/dwc3/dwc3-qcom.c                  | 255 +++++++++-----
+ 6 files changed, 493 insertions(+), 173 deletions(-)
+
+
+base-commit: 684e9f5f97eb4b7831298ffad140d5c1d426ff27
 -- 
-2.39.2
+2.34.1
 
 
