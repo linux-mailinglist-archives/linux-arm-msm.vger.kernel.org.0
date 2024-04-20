@@ -1,93 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-18055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B536A8ABC72
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 18:38:20 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 820368ABC7C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 18:48:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E68461C206A0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 16:38:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3533D2816EA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 16:48:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F9D3205E16;
-	Sat, 20 Apr 2024 16:38:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D66141D558;
+	Sat, 20 Apr 2024 16:48:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hNMB5ygz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iHus5nNJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF6A1851
-	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Apr 2024 16:38:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A04DF5C;
+	Sat, 20 Apr 2024 16:48:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713631098; cv=none; b=lflGwI/R2N6jobw8A5WI7LJZbswT96tSai5rioEFFgQwqV3IVDoh8Ctbyr8jWK/iPPjgoTxUbegWS8kwYBFWtst9eFDrJWf8+l33oC0Y3dC0M1sCcQjmIDGDKHWeoDHw6SO0Jb1SSpjGUPOtW37NBxt1CXzSWdEbhOzT1tNHxIw=
+	t=1713631727; cv=none; b=On63VgMLIb0/LlSMwB80dezAQf6j+dIUFTUevATqfR1WyNjeNl0FjmKUub8rLQYl3UVpItF/sXCCWV00N2BgtREjWh+PPr7UnEY4woj6csa9bwmsFmGku3bc6azySV9UBsS1oWxiFmnxApXVoMdXori36pd/OKBw8ZFC1E4f5zc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713631098; c=relaxed/simple;
-	bh=x5g+GsMpkCGqTq+NoDix0056YOAskfAgPwwslUb6gSY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=cM1THm1JanSHqSZCDjwyW5Qrav4YFL/oW7MDgfb6Yu8xSGIle5dp+xgog5RPVsSqw1yZ4wblgGbfF3U4ytraxgg7Bk7wMqXaXOPNS5mXn6KPu3R1DPE5+SeZZEPlUB4N7It5CTq8zZ7C3OUjB5mK59BPF8HH2b6TtaLuN6y8DFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hNMB5ygz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03355C072AA;
-	Sat, 20 Apr 2024 16:38:16 +0000 (UTC)
+	s=arc-20240116; t=1713631727; c=relaxed/simple;
+	bh=adGRPe4RnRaos7wZCZDN9oz8Xef/g/CeoQIkxG6QljE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=g8+oPuJuz84x1m0YGFY4z5wrG4hherMgK+b21KYcj1VtxVMv+Fuzzd9rEKA+NyxRfYXq8X5cnumP71zJPbqBgsE5ZXOOrVxCwSmIR+UaAIX5A/81QrJt6vC8n83tEsD75spOrc/IUTk5GvdYQ8huOz2CBxATlv7/CLyac0hhIzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iHus5nNJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9FCC072AA;
+	Sat, 20 Apr 2024 16:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713631097;
-	bh=x5g+GsMpkCGqTq+NoDix0056YOAskfAgPwwslUb6gSY=;
-	h=From:List-Id:To:Cc:Subject:Date:From;
-	b=hNMB5ygz9LXk8GtvMA32tH2+EImeolH/9BM8tXTq1MYsr90GwHGDsvRgy55fn9fBU
-	 B8oWCsKbauaWO2oEVQw4fMoiMVCShsAHaVEY10M0hNA3WxnjWYTbQX4wfSDTvqQr+P
-	 H4Y9srWX6G3VpBuqiqMO9n7M3iYu5Vd8lQSrW8yIE/Kix6kuDqmJ29EA2B3/KMdL0u
-	 okLfXTKgxu4z2pT66X5ESgb+3FD6yIgzlBMR3FYouDPuIdBWhIR2iWmVF0w65j1e/g
-	 XMKzDGmPI0qxIB63KQE1e/xJW0iJWe2UXVksNFcHSXfpye71RxkTi6LYx/QZanHsym
-	 6E3iBdrTncsUA==
+	s=k20201202; t=1713631727;
+	bh=adGRPe4RnRaos7wZCZDN9oz8Xef/g/CeoQIkxG6QljE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=iHus5nNJAIV/On5Hdc2TnfC11WYHDpVSbIAtZCzq0ikA1WUnnY1WGIYMpFG5iUDF6
+	 qiIRXAqVAyfwV7sbJplufNF40p4Vp4Fg4OFZmOuG+3IDuwSnjWylzLp55slZkTFMah
+	 M8YPSw3AqLGGBg7igIogiv4SF5fEEYB/q3YAGtvGKe9oB4/HmdBMQTih8EKaJfUZCt
+	 0G/B5einO6/zHCLQvNRMy2RNLPi//hifdfAYL4oLATh6iV0OtrigxvbWkA3YwCRYzg
+	 PmxFg7exUGHFEbt/IuXPbjgIXjTHK3l1CoNJb3FzZHbkEkzc8KZRNcKYFZrSCMNSME
+	 584sEsX9Cfnvg==
+Date: Sat, 20 Apr 2024 11:48:44 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: arm@kernel.org,
-	soc@kernel.org
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Andy Gross <agross@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Olof Johansson <olof@lixom.net>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Maximilian Luz <luzmaximilian@gmail.com>
-Subject: [GIT PULL] Qualcomm driver fix for v6.9
-Date: Sat, 20 Apr 2024 11:38:15 -0500
-Message-ID: <20240420163816.1133528-1-andersson@kernel.org>
-X-Mailer: git-send-email 2.43.0
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] clk: qcom: clk-alpha-pll: Skip reconfiguring the running
+ Lucid Evo
+Message-ID: <muiuqvl44fnbbhwatwczek6nvcyl6rtak37owjfazmhefibfof@4sedw3mzcc33>
+References: <20240418-clk-qcom-lucid-evo-skip-configuring-enabled-v1-1-caede5f1c7a3@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240418-clk-qcom-lucid-evo-skip-configuring-enabled-v1-1-caede5f1c7a3@linaro.org>
 
+On Thu, Apr 18, 2024 at 04:41:32PM +0300, Abel Vesa wrote:
+> The PLL0 is configured by the bootlader and is the parent of the
+> mdp_clk_src. The Trion implementation of the configure function is
+> already skipping this step if the PLL is enabled, so lets extend the
+> same behavior to Lucid Evo variant.
+> 
 
-The following changes since commit 4cece764965020c22cff7665b18a012006359095:
+:set spell
 
-  Linux 6.9-rc1 (2024-03-24 14:10:05 -0700)
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 
-are available in the Git repository at:
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-drivers-fixes-for-6.9
+Regards,
+Bjorn
 
-for you to fetch changes up to ed09f81eeaa8f9265e1787282cb283f10285c259:
-
-  firmware: qcom: uefisecapp: Fix memory related IO errors and crashes (2024-04-09 10:05:03 -0500)
-
-----------------------------------------------------------------
-Qualcomm driver fix for v6.9
-
-This reworks the memory layout of the argument buffers passed to trusted
-applications in QSEECOM, to avoid failures and system crashes.
-
-----------------------------------------------------------------
-Maximilian Luz (1):
-      firmware: qcom: uefisecapp: Fix memory related IO errors and crashes
-
- drivers/firmware/qcom/qcom_qseecom_uefisecapp.c | 137 ++++++++++++++++--------
- drivers/firmware/qcom/qcom_scm.c                |  37 ++-----
- include/linux/firmware/qcom/qcom_qseecom.h      |  55 +++++++++-
- include/linux/firmware/qcom/qcom_scm.h          |  10 +-
- 4 files changed, 153 insertions(+), 86 deletions(-)
+> ---
+>  drivers/clk/qcom/clk-alpha-pll.c | 9 +++++++++
+>  1 file changed, 9 insertions(+)
+> 
+> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+> index 8a412ef47e16..4c5aeccff0ef 100644
+> --- a/drivers/clk/qcom/clk-alpha-pll.c
+> +++ b/drivers/clk/qcom/clk-alpha-pll.c
+> @@ -2114,6 +2114,15 @@ void clk_lucid_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regma
+>  {
+>  	u32 lval = config->l;
+>  
+> +	/*
+> +	 * If the bootloader left the PLL enabled it's likely that there are
+> +	 * RCGs that will lock up if we disable the PLL below.
+> +	 */
+> +	if (trion_pll_is_enabled(pll, regmap)) {
+> +		pr_debug("Lucid Evo PLL is already enabled, skipping configuration\n");
+> +		return;
+> +	}
+> +
+>  	lval |= TRION_PLL_CAL_VAL << LUCID_EVO_PLL_CAL_L_VAL_SHIFT;
+>  	clk_alpha_pll_write_config(regmap, PLL_L_VAL(pll), lval);
+>  	clk_alpha_pll_write_config(regmap, PLL_ALPHA_VAL(pll), config->alpha);
+> 
+> ---
+> base-commit: 4eab358930711bbeb85bf5ee267d0d42d3394c2c
+> change-id: 20240418-clk-qcom-lucid-evo-skip-configuring-enabled-711b7e7835b0
+> 
+> Best regards,
+> -- 
+> Abel Vesa <abel.vesa@linaro.org>
+> 
 
