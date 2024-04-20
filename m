@@ -1,75 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-18049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14C8B8ABB67
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 13:31:19 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B70D8ABB69
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 13:32:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 828F81F21449
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 11:31:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 79F74B20C08
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 11:32:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFDE31B809;
-	Sat, 20 Apr 2024 11:31:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3B8614AB0;
+	Sat, 20 Apr 2024 11:32:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uVqX/oD1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XeCNFOdz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E7D2942C
-	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Apr 2024 11:31:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBBB8625;
+	Sat, 20 Apr 2024 11:32:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713612669; cv=none; b=uRGV7aOQd3u/pRLBIG1hDhM6He5fd1WiCsDj/S8OJsEVDCTfP6WkiwjySDmh8vldv9DLaKaIdGl0sZi4flMb1px5okitc8Yi51+Yf37Rvi79ul4brP6JkKbTHTfMm3CB4Q9MimgWXIGwmFcMX4z+Ta55t2mNpl+l2Wpw5FmAjuU=
+	t=1713612772; cv=none; b=EGHSDLIJHy8ZgmMlGQ4zVjSEsUlT6ViClVmdHkQwOg+fD6ngjwU5Cqc9IO0QNiAz+anMOPxgKQ08cUi8ISNc+1NsJyS+SvlUVqVy8v9tVzULyLSur6cedhuzoUVXkvwMxwnI5+rcWGVPE+gAJyUF3teEIjC1yH5+pIHPajiiIz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713612669; c=relaxed/simple;
-	bh=pawPlGAegmUcbHOz9d1bltyJzb5yP4n4W4h5P5ZnyJA=;
+	s=arc-20240116; t=1713612772; c=relaxed/simple;
+	bh=b7oS818UyC3NvZeO1MX3HJJ2XRk22iatPpSstO42NuE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=E0q1ubIxv9v3Uy4Cxmi0yOKybBwYOls5ytc5sgge0J8gkRwKwfxsmZZMT2oXBp8k4erfyyvYkoGAOQZBSVKetOAlyr17mlBRHpCro8Mje1FvXBqssbDiPkIE93dtUBdaT3Gc/LRMCnhljvsxNeP7KHghoIpglEZDYwsa5qtgqe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uVqX/oD1; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4187c47405aso19548655e9.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Apr 2024 04:31:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713612665; x=1714217465; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=juH++PmotbDBKPrtgNOyCREifYMeAZx5cOkMx0r15I4=;
-        b=uVqX/oD16IySV79kxGJSDp41PuJa0UmW/a/L8hS4ImoNFBNm9V9+gd0BUar32naxxn
-         WqCcv40AQcd+jdz1CBK3ORkqt1mSUrbGcwGotATJwsay1BxupUuNuJCZRiAv47hm8+TU
-         TevM6dmV2N6QSbnGgvWc9JnYhPLn5xFtaL+6FGre9NU4UToIrT91cgNayBODJeEfHt2Q
-         eiMcVCED3WF/MLOM0UBZigxH/CgC5riIIk9TeBYSQJq5g99NSjoZfOJTmLEjXqmhG9Dc
-         5WEDZ44LP+ofrafn8h6Ht4Ct9HlsOehE7AgSW8DWNn3KALt2WsO2n+xdRPES0EI0GVFw
-         H+Ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713612665; x=1714217465;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=juH++PmotbDBKPrtgNOyCREifYMeAZx5cOkMx0r15I4=;
-        b=OvUl6p67EL6TFoO8KNTL8M7xRqewqOTbnu6U+ON9I94F62T/uYEvs2kfL8NQCyAGdM
-         CRPl8ZJU3SHjHHHbnCP0Lrr8qpnHee1wwTW4tZZvRICL548KVgUo0+9Nc/UfeZiD3PzQ
-         +u1+9uYD76fHvImRudPK5Dj1eaw1DjxskfqRqBPHQJCuEu2sb2Ds6DNGFC0PYQZuJhs9
-         wB0K+jNmHZknBMFGFRVIQ9ZenxVRKUIMKT9nP62ZoK/iVl9FpZJ2ygJnMGZOjltWgP9p
-         +lt0/CIV6jFSTS/hUBqxq1BaPuFleXwxYJyLG/gRja4HsvJpld2XS0fub+1CMpIF+jDX
-         lxcg==
-X-Forwarded-Encrypted: i=1; AJvYcCVVPjqBM3D5/zMb3Czz/x/ubZ37c99ZrvTE3zZtGep2qNFICMkH4UH4dlEEWGQrrMp2BQIaC30qH+kVRk7OacqPstwHtyDknnE5+wCtTw==
-X-Gm-Message-State: AOJu0YzQGQ0Xig+sqwC8kYRj9FkpfmoXuphxgvcnS08rfs8L+LQ/Uw4E
-	te6Wv3CkD1IR1cMF2tYpXmdB4PMxXDHpx/BXE1oZmJHM6ujZDRmQMkbHPsbxpBE=
-X-Google-Smtp-Source: AGHT+IEpQxOwPl01GAZYfLQXS5h7m+Das6WRfoys9gwq53gGo43TGH0uMgnPLs6RMT7q5Qc1Ri4NFw==
-X-Received: by 2002:a05:600c:5489:b0:419:a1c:8fe1 with SMTP id iv9-20020a05600c548900b004190a1c8fe1mr3328386wmb.38.1713612665269;
-        Sat, 20 Apr 2024 04:31:05 -0700 (PDT)
-Received: from [10.236.36.88] ([88.128.88.151])
-        by smtp.gmail.com with ESMTPSA id j10-20020adfff8a000000b0034335f13570sm6594513wrr.116.2024.04.20.04.31.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 20 Apr 2024 04:31:04 -0700 (PDT)
-Message-ID: <3ca24a3d-e7e0-4f68-9a6f-ebaf83079ebe@linaro.org>
-Date: Sat, 20 Apr 2024 13:31:03 +0200
+	 In-Reply-To:Content-Type; b=MnuNSQH/ptg3K7eh4Y+LrgW9XVd6GmOAHUYb05hVY5Yk/ZpvI/q6TfYSrTjxIT2KcNY9+qgmTaE8rat9jctCtQf2dEPuGTh5Pe/TxM9twy8DvPqnd0rds2ndw9Kk9i8kwabRgKdHYwTevkHy+aE9xM+tQBoAI5UVRg90tFuKzHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XeCNFOdz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 330BEC072AA;
+	Sat, 20 Apr 2024 11:32:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1713612772;
+	bh=b7oS818UyC3NvZeO1MX3HJJ2XRk22iatPpSstO42NuE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=XeCNFOdz8+So3ViD7kezaNJxHOs8S8/kj4sxCTv7RAUoF5QgNQ2g3KdaLdrSOB5WT
+	 Np7IO9kiPYOViLWz79lfLwSvDY+GJD5gAsk/419yohklBNqTLIblXppNO19aHVNSLH
+	 HALrAHzyC/Ub1wuxqUzIUPLzNh8wR3gVQg9gehcSaW7TAWsDClinxZyAAzhaWfnhCZ
+	 A/GLcHVbsxuTr4is9z4KKulPmSBzNLNpfVqdXLjjTUjj3qu1PXGd2SAMgAZSeDmHrm
+	 AIBwkpz6LsLOXyagHhhMuoEGiXfo1vNssNQCD6UHFXJj+/N/J8MJzYgDF4BI1inSLC
+	 iv7GjNFmcYc0g==
+Message-ID: <57a99244-373c-40c0-9e32-9e8272c0c3e1@kernel.org>
+Date: Sat, 20 Apr 2024 13:32:48 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,26 +50,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v21 5/9] dt-bindings: usb: qcom,dwc3: Add bindings for
- SC8280 Multiport
-To: Krishna Kurapati <quic_kriskura@quicinc.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Rob Herring <robh@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Wesley Cheng <quic_wcheng@quicinc.com>,
+Subject: Re: [PATCH v5 0/6] soc: qcom: add in-kernel pd-mapper implementation
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konrad.dybcio@linaro.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Conor Dooley <conor+dt@kernel.org>, Thinh Nguyen
- <Thinh.Nguyen@synopsys.com>, Felipe Balbi <balbi@kernel.org>,
- Johan Hovold <johan@kernel.org>
-Cc: devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
- quic_ppratap@quicinc.com, quic_jackp@quicinc.com,
- Bjorn Andersson <quic_bjorande@quicinc.com>
-References: <20240420044901.884098-1-quic_kriskura@quicinc.com>
- <20240420044901.884098-6-quic_kriskura@quicinc.com>
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Sibi Sankar <quic_sibis@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+ Johan Hovold <johan+linaro@kernel.org>, Xilin Wu <wuxilin123@gmail.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>
+References: <20240419-qcom-pd-mapper-v5-0-e35b6f847e99@linaro.org>
 Content-Language: en-US
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
  JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
@@ -106,80 +72,72 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  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
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240420044901.884098-6-quic_kriskura@quicinc.com>
+ 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 fv0=
+In-Reply-To: <20240419-qcom-pd-mapper-v5-0-e35b6f847e99@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 20/04/2024 06:48, Krishna Kurapati wrote:
-> Add the compatible string for SC8280 Multiport USB controller from
-> Qualcomm.
+On 19/04/2024 16:00, Dmitry Baryshkov wrote:
+> Protection domain mapper is a QMI service providing mapping between
+> 'protection domains' and services supported / allowed in these domains.
+> For example such mapping is required for loading of the WiFi firmware or
+> for properly starting up the UCSI / altmode / battery manager support.
 > 
-> There are 4 power event interrupts supported by this controller
-> (one for each port of multiport controller). Add all the 4 as
-> non-optional interrupts for SC8280XP-MP
+> The existing userspace implementation has several issue. It doesn't play
+> well with CONFIG_EXTRA_FIRMWARE, it doesn't reread the JSON files if the
+> firmware location is changed (or if the firmware was not available at
+> the time pd-mapper was started but the corresponding directory is
+> mounted later), etc.
 > 
-> Also each port of multiport has one DP and one DM IRQ. Add all DP/DM
-> IRQs related to 4 ports of SC8280XP Teritiary controller.
+> However this configuration is largely static and common between
+> different platforms. Provide in-kernel service implementing static
+> per-platform data.
 > 
-> Also added SuperSpeed PHY interrupt for both Superspeed ports.
+> Unlike previous revisions of the patchset, this iteration uses static
+> configuration per platform, rather than building it dynamically from the
+> list of DSPs being started.
 > 
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-v21 and suddenly you drop tags requiring everyone to re-review this. I
-do not think this process is working. I will not re-review this.
+I applied this patchset and... it does not compile.
 
-This is a friendly reminder during the review process.
-
-It looks like you received a tag and forgot to add it.
-
-If you do not know the process, here is a short explanation:
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions, under or above your Signed-off-by tag. Tag is "received", when
-provided in a message replied to you on the mailing list. Tools like b4
-can help here. However, there's no need to repost patches *only* to add
-the tags. The upstream maintainer will do that for tags received on the
-version they apply.
-
-https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
-
-If a tag was not added on purpose, please state why and what changed.
+drivers/remoteproc/qcom_q6v5_wcss.c:243:15: error: implicit declaration
+of function ‘qcom_pdm_get’; did you mean ‘em_pd_get’?
+[-Werror=implicit-function-declaration]
 
 
+That's just defconfig, so I have doubts this was tested.
 
 Best regards,
 Krzysztof
