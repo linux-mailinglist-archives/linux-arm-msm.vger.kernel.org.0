@@ -1,73 +1,256 @@
-Return-Path: <linux-arm-msm+bounces-18015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18016-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FFA38AB892
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 03:56:54 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C83DE8AB8B4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 04:32:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B8BE11F2174C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 01:56:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 89C09281CBE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Apr 2024 02:32:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDADDA32;
-	Sat, 20 Apr 2024 01:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDDD3621;
+	Sat, 20 Apr 2024 02:32:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B8ZCJpEu"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QdSXNpfg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAAFB524A;
-	Sat, 20 Apr 2024 01:56:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 190975CB5
+	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Apr 2024 02:32:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713578207; cv=none; b=E3MNRFH/M1SOxcjG+Hsp5zwsteZtWJ55GNgzPm4mP0Qwo+S02ibW49OvcMd37aPoHvP6eENULoLcru98I4iSGgH+Aq6VzNnlQYVknkK8nX9vOoOqMnXEnFHCDNMU7L0DPXrmJFnVrTdR20LlHE6FaGrkXSk4xezySB+BoIh5FyU=
+	t=1713580370; cv=none; b=ju5I9hFzaWjwBhvvyUUUiNEMLcZkPemh47efVNeJ+gI3SA+kjRa5RNPirogbS03PcoTPzFmem1mmc/HrlK2CH0UT22beay6VPJbR4hZutjmN9gFeU6tVrTCElJTOooSbSN1DhKgOnSwKFbKoV468FE02eaSO0qOURzjFO27roj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713578207; c=relaxed/simple;
-	bh=aERJgvt2NrkTLPGOoaveQmF0rnRSZUUJv1EbpcJg+5E=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=sOyHJnCh7q2HxwBY3xpx7DDsiEEwMDTh64ycE+xGP2/G6RQfsprOqpTYOzYMz6SMuWesuUDLc7ouGcieJo9cHC2W2eAaqri23tOSrGYSi9spezDSGy/rX17Zgst7PB1iB6PobEMWKWHUQvra2N11BjcwMTMfJg3usMjj/zV2CZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B8ZCJpEu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B2C0C072AA;
-	Sat, 20 Apr 2024 01:56:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713578207;
-	bh=aERJgvt2NrkTLPGOoaveQmF0rnRSZUUJv1EbpcJg+5E=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=B8ZCJpEuKloyK3gIKcZcAQdaUF6k9j3JPIZo4b4tbxdIE755P1grYDPjYMmL2W2wm
-	 DP5QXst9tLPAfL3f4qZM/MKMWbuVUNTC3Qlzzstly1jZ30aJVRtqCirT0yRrhW/W//
-	 1Ecka6PRNFge//QrfNtPDBzcuHV+HuEHL85nl7FsNh9XOWxg0yZqB0NR3D6OTe9Un2
-	 X3EyLpz92EJ+hvF9U9e8YQdtYql7bDrPDoobTlgkB/L9pE6n885BLhiPozIeGdo4ee
-	 tobFZWCo4fBbLpwbBugJmPZV+quHnkRxN2PCZH/DGTSacwT0QWaGt8kOawFrJcaW7L
-	 RdA0dSWDvK5sA==
-Message-ID: <473fa377de13bfeb909317a43aad0e00.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1713580370; c=relaxed/simple;
+	bh=IHLp4RnQfffaPemXJTQZjRbm1rbzr387PvC447GB7qI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=PRRH0Enu6tYVC+Z1/g8lS6v1vQKUrkxJpMdVLrqVlI2A8gonOD+XuJuvsBY9no4auSX/I9tXdTvMpIbeWozdqdyFFOtQEOJHQUs0sxVammUTapUGPwzxJrxjjQs4DK53vh8gapdEKkGCpoHd+gZExqqJLuaBk2VvSTwB/HnrSW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QdSXNpfg; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43K2RA82003567;
+	Sat, 20 Apr 2024 02:32:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=l7y4c0wkCTVkz5tMFpBQmjxqwlEsHsyE/IjgrIFtLOE=; b=Qd
+	SXNpfgjmBfWQKlcXAQNw3EUxcGar4i++uYydwNjQ3Pih22k7KlH2dxfoIrpCnTZb
+	xwswr74ZtM7CWM7f6k8di5KTOUa2KSB48Zl32jz/qzM0TNycAnNOfG9m2eJTyRXu
+	5V0lz6J6pXCRtXB+12L8Zk7Sg9SEubFZAMU5AQ4cOnv4KGWIxAP/PzqPkwPJFTym
+	Vx+ILvZ7hC1Fok9fkU2yGOl1chUHKmE1PuF1f+qIbUZ4NOc8jqUkiE7ycZsUqS/d
+	NCByYrY1Jo3YmBno249ZfRX+eDB/XWTICqDqlR1VkGn9NuAVWPuny+ZJF+gx3oQY
+	4LsB3iIVzdDWsgLEOmNA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xm4qd80w6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 20 Apr 2024 02:32:38 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43K2Wb4N004922
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 20 Apr 2024 02:32:37 GMT
+Received: from [10.110.104.191] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 19 Apr
+ 2024 19:32:36 -0700
+Message-ID: <c3021397-5d2e-c331-663f-eb3803cfc0e0@quicinc.com>
+Date: Fri, 19 Apr 2024 19:32:35 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <9f92330c717e6f2dab27b1307565ffb108c304a7.1713017032.git.christophe.jaillet@wanadoo.fr>
-References: <9f92330c717e6f2dab27b1307565ffb108c304a7.1713017032.git.christophe.jaillet@wanadoo.fr>
-Subject: Re: [PATCH] clk: qcom: rpm: Remove an unused field in struct rpm_cc
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org, Christophe JAILLET <christophe.jaillet@wanadoo.fr>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-To: Bjorn Andersson <andersson@kernel.org>, Christophe JAILLET <christophe.jaillet@wanadoo.fr>, Michael Turquette <mturquette@baylibre.com>
-Date: Fri, 19 Apr 2024 18:56:44 -0700
-User-Agent: alot/0.10
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 1/9] drm/msm/dpu: drop dpu_format_check_modified_format
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn
+ Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Johan
+ Hovold <johan+linaro@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20240319-dpu-mode-config-width-v1-0-d0fe6bf81bf1@linaro.org>
+ <20240319-dpu-mode-config-width-v1-1-d0fe6bf81bf1@linaro.org>
+ <9c2f5f63-291c-c2b5-41a1-d2004055cf7a@quicinc.com>
+ <ccgx5mjsxf2asvadithitzl7shkboj6ipcg6onfawa5pskchgd@etighi5usone>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <ccgx5mjsxf2asvadithitzl7shkboj6ipcg6onfawa5pskchgd@etighi5usone>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: qxEj847B586IqRPISCriFjeTieXptOyl
+X-Proofpoint-ORIG-GUID: qxEj847B586IqRPISCriFjeTieXptOyl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-19_17,2024-04-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ spamscore=0 impostorscore=0 lowpriorityscore=0 mlxscore=0 adultscore=0
+ mlxlogscore=999 bulkscore=0 suspectscore=0 malwarescore=0 clxscore=1015
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404200004
 
-Quoting Christophe JAILLET (2024-04-13 07:04:04)
-> In "struct rpm_cc", the 'rpm' field is unused.
->=20
-> Remove it.
->=20
-> Found with cppcheck, unusedStructMember.
->=20
-> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-> ---
 
-Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+
+On 4/19/2024 6:26 PM, Dmitry Baryshkov wrote:
+> On Fri, Apr 19, 2024 at 04:43:20PM -0700, Abhinav Kumar wrote:
+>>
+>>
+>> On 3/19/2024 6:21 AM, Dmitry Baryshkov wrote:
+>>> The msm_kms_funcs::check_modified_format() callback is not used by the
+>>> driver. Drop it completely.
+>>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c | 45 -----------------------------
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h | 15 ----------
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |  1 -
+>>>    drivers/gpu/drm/msm/msm_kms.h               |  5 ----
+>>>    4 files changed, 66 deletions(-)
+>>>
+>>
+>> I think in this case, I am leaning towards completing the implementation
+>> rather than dropping it as usual.
+>>
+>> It seems its easier to just add the support to call this like the attached
+>> patch?
+> 
+> Please don't attach patches to the email. It makes it impossible to
+> respond to them.
+> 
+
+I attached it because it was too much to paste over here.
+
+Please review msm_framebuffer_init() in the downstream sources.
+
+The only missing piece I can see is the handling of 
+DRM_MODE_FB_MODIFIERS flags.
+
+I am unable to trace back why this support was not present.
+
+> Anyway, what are we missing with the current codebase? Why wasn't the
+> callback / function used in the first place?
+> 
+>>
+>> WDYT?
+>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
+>>> index e366ab134249..ff0df478c958 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
+>>> @@ -960,51 +960,6 @@ int dpu_format_populate_layout(
+>>>    	return ret;
+>>>    }
+>>> -int dpu_format_check_modified_format(
+>>> -		const struct msm_kms *kms,
+>>> -		const struct msm_format *msm_fmt,
+>>> -		const struct drm_mode_fb_cmd2 *cmd,
+>>> -		struct drm_gem_object **bos)
+>>> -{
+>>> -	const struct drm_format_info *info;
+>>> -	const struct dpu_format *fmt;
+>>> -	struct dpu_hw_fmt_layout layout;
+>>> -	uint32_t bos_total_size = 0;
+>>> -	int ret, i;
+>>> -
+>>> -	if (!msm_fmt || !cmd || !bos) {
+>>> -		DRM_ERROR("invalid arguments\n");
+>>> -		return -EINVAL;
+>>> -	}
+>>> -
+>>> -	fmt = to_dpu_format(msm_fmt);
+>>> -	info = drm_format_info(fmt->base.pixel_format);
+>>> -	if (!info)
+>>> -		return -EINVAL;
+>>> -
+>>> -	ret = dpu_format_get_plane_sizes(fmt, cmd->width, cmd->height,
+>>> -			&layout, cmd->pitches);
+>>> -	if (ret)
+>>> -		return ret;
+>>> -
+>>> -	for (i = 0; i < info->num_planes; i++) {
+>>> -		if (!bos[i]) {
+>>> -			DRM_ERROR("invalid handle for plane %d\n", i);
+>>> -			return -EINVAL;
+>>> -		}
+>>> -		if ((i == 0) || (bos[i] != bos[0]))
+>>> -			bos_total_size += bos[i]->size;
+>>> -	}
+>>> -
+>>> -	if (bos_total_size < layout.total_size) {
+>>> -		DRM_ERROR("buffers total size too small %u expected %u\n",
+>>> -				bos_total_size, layout.total_size);
+>>> -		return -EINVAL;
+>>> -	}
+>>> -
+>>> -	return 0;
+>>> -}
+>>> -
+>>>    const struct dpu_format *dpu_get_dpu_format_ext(
+>>>    		const uint32_t format,
+>>>    		const uint64_t modifier)
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h
+>>> index 84b8b3289f18..9442445f1a86 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h
+>>> @@ -54,21 +54,6 @@ const struct msm_format *dpu_get_msm_format(
+>>>    		const uint32_t format,
+>>>    		const uint64_t modifiers);
+>>> -/**
+>>> - * dpu_format_check_modified_format - validate format and buffers for
+>>> - *                   dpu non-standard, i.e. modified format
+>>> - * @kms:             kms driver
+>>> - * @msm_fmt:         pointer to the msm_fmt base pointer of an dpu_format
+>>> - * @cmd:             fb_cmd2 structure user request
+>>> - * @bos:             gem buffer object list
+>>> - *
+>>> - * Return: error code on failure, 0 on success
+>>> - */
+>>> -int dpu_format_check_modified_format(
+>>> -		const struct msm_kms *kms,
+>>> -		const struct msm_format *msm_fmt,
+>>> -		const struct drm_mode_fb_cmd2 *cmd,
+>>> -		struct drm_gem_object **bos);
+>>>    /**
+>>>     * dpu_format_populate_layout - populate the given format layout based on
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>>> index a1f5d7c4ab91..7257ac4020d8 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>>> @@ -969,7 +969,6 @@ static const struct msm_kms_funcs kms_funcs = {
+>>>    	.complete_commit = dpu_kms_complete_commit,
+>>>    	.enable_vblank   = dpu_kms_enable_vblank,
+>>>    	.disable_vblank  = dpu_kms_disable_vblank,
+>>> -	.check_modified_format = dpu_format_check_modified_format,
+>>>    	.get_format      = dpu_get_msm_format,
+>>>    	.destroy         = dpu_kms_destroy,
+>>>    	.snapshot        = dpu_kms_mdp_snapshot,
+>>> diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
+>>> index 0641f6111b93..b794ed918b56 100644
+>>> --- a/drivers/gpu/drm/msm/msm_kms.h
+>>> +++ b/drivers/gpu/drm/msm/msm_kms.h
+>>> @@ -96,11 +96,6 @@ struct msm_kms_funcs {
+>>>    	const struct msm_format *(*get_format)(struct msm_kms *kms,
+>>>    					const uint32_t format,
+>>>    					const uint64_t modifiers);
+>>> -	/* do format checking on format modified through fb_cmd2 modifiers */
+>>> -	int (*check_modified_format)(const struct msm_kms *kms,
+>>> -			const struct msm_format *msm_fmt,
+>>> -			const struct drm_mode_fb_cmd2 *cmd,
+>>> -			struct drm_gem_object **bos);
+>>>    	/* misc: */
+>>>    	long (*round_pixclk)(struct msm_kms *kms, unsigned long rate,
+>>>
+> 
 
