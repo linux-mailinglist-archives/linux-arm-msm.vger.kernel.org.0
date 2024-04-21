@@ -1,223 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-18073-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18074-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B1D1F8ABED2
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Apr 2024 10:49:57 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7AC088ABF3F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Apr 2024 15:16:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EC5CBB20B40
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Apr 2024 08:49:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 30ECC1F215C6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Apr 2024 13:16:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BCDEDDA9;
-	Sun, 21 Apr 2024 08:49:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E89B14012;
+	Sun, 21 Apr 2024 13:16:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kbokX4Dy"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="p3ndwcCW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E82B410A03;
-	Sun, 21 Apr 2024 08:49:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102B113FF5
+	for <linux-arm-msm@vger.kernel.org>; Sun, 21 Apr 2024 13:16:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713689390; cv=none; b=RTp/2zhTskN364EPpuYXv+7/f8XHv6oJ4/XtTptbhY2F36UDh7lmMitZLr/jtKWzW00z8QQIt4S7e4l21fp67H4KDnW7u6SHCzofXrMT0hleUNN6dmTrL2O9RAe9e0N+HBBiuoyh7JZsMCJz7otiBoSQdjgh3TrfH5F24eZ9vcI=
+	t=1713705382; cv=none; b=FCBK4T4x4MnaVZ+BGJZjmC4EvnguoXsMM8KZ4cmn8dCYJhWeWNPhLKMNz5cfv3Jexb7LIemAWcDDVQzSRLkU32FhlVQRICSohjNq1/lHmhgh5Tv6ImXz1Iqho42JjRXR0ag7eI2GVLGlobACtpyyS3QyqmUvGjZsx/CHKFhpBxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713689390; c=relaxed/simple;
-	bh=xM9lXqlYZOpwamIi6wqW2Ib1u9BbnYJVFjHkfNNDcQU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OBilUCXAH2HSFlqfCVx9MXdWduis6DlowWP/qjIKMHeypWb5XOTHfC1HngT0W4Qk4mWO9iDWPHf4/LM4nwLtFEEYUVgYNbGLIFfiJt5/56+OqM5JuTct8odKw56ED+QfjZNw01XoqUY/rATPRek67UKMLwk4oW9fl/JwblTf/14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kbokX4Dy; arc=none smtp.client-ip=198.175.65.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1713689388; x=1745225388;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=xM9lXqlYZOpwamIi6wqW2Ib1u9BbnYJVFjHkfNNDcQU=;
-  b=kbokX4DyWEEBhoiepGr2aNZS4gpGQCmW9jjo8jYUw8I7R/A/+VZjkzcp
-   7OQeVTkHdK7JQW+9c/JYHx0qr2FudjD0G8KxXSJ7ntQv1u1NCkQ+MIdKI
-   Jqi5tb7k+SZgTTPTLC83lHC/W3eQgPVUklMCcRefYesdD2mUTdkvHwll/
-   5mQ6/+/wPKatBxtGa6k8xRoAxVlhhqo6BIFBcRPSpYFmqeLOr/iM9ekSn
-   zUuhAzc7janT1MWPQKLkwvwqvVBPBgzTpP8Dxtqy7huzMlAUF5c+UkZE3
-   JMmbw7bZB353h5zyc4qW0YrugVQLvOzKPaL9KJURjPi/PB6X+aMhs9C8d
-   w==;
-X-CSE-ConnectionGUID: rbnzgxu8TbmarVs7RyRDXA==
-X-CSE-MsgGUID: 93gYRwtgTVej/9oQ1yWWeA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11050"; a="9073131"
-X-IronPort-AV: E=Sophos;i="6.07,218,1708416000"; 
-   d="scan'208";a="9073131"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Apr 2024 01:49:47 -0700
-X-CSE-ConnectionGUID: u2lN+IqUTRuMfKsVTFbUOA==
-X-CSE-MsgGUID: 12Q7yg7+QIqL7BIOirSgNg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,218,1708416000"; 
-   d="scan'208";a="23780258"
-Received: from unknown (HELO 23c141fc0fd8) ([10.239.97.151])
-  by fmviesa006.fm.intel.com with ESMTP; 21 Apr 2024 01:49:42 -0700
-Received: from kbuild by 23c141fc0fd8 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1ryStI-000Bp8-1S;
-	Sun, 21 Apr 2024 08:49:40 +0000
-Date: Sun, 21 Apr 2024 16:49:28 +0800
-From: kernel test robot <lkp@intel.com>
-To: Sibi Sankar <quic_sibis@quicinc.com>, sudeep.holla@arm.com,
-	cristian.marussi@arm.com, andersson@kernel.org,
-	konrad.dybcio@linaro.org, jassisinghbrar@gmail.com,
-	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-	dmitry.baryshkov@linaro.org
-Cc: oe-kbuild-all@lists.linux.dev, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com,
-	quic_sibis@quicinc.com, conor+dt@kernel.org,
-	quic_gkohli@quicinc.com, quic_nkela@quicinc.com,
-	quic_psodagud@quicinc.com
-Subject: Re: [PATCH V3 2/5] mailbox: Add support for QTI CPUCP mailbox
- controller
-Message-ID: <202404211602.d8vcGEH0-lkp@intel.com>
-References: <20240417132856.1106250-3-quic_sibis@quicinc.com>
+	s=arc-20240116; t=1713705382; c=relaxed/simple;
+	bh=a1fd6e6Gs1jt19mS2k5P5+/TYULLQJhNPZixk4mK/R0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KtYH7SiDfsWBxQP16Duv62vehjItrZQcv81Y0G3P4zMM/CIgde7vmIEk3CTihXeAkFg2nD/AQKKALaXzXIirqxcbfbRXM6YBFy5S9mTfLu0/kcdJZD+za/twhEYTEjmuEG/xffVhTdOFo7P9Hea3x7F7v0YDUKkCs3cNJaKhfwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=p3ndwcCW; arc=none smtp.client-ip=209.85.219.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-de462f3d992so3648016276.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Apr 2024 06:16:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1713705380; x=1714310180; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=9b23fzJgHNWlYEQwRHhUtIVBTetbxKE4NVXPqvIaIrk=;
+        b=p3ndwcCWHeJ/OJYWXoU6TdV3BiNFxxgDLO8i9HxkrRoTwzpsktAu6s61SndT/Rlhn4
+         wiOwi2v6eYrLiUEJAy6jt2RmzlQn8HoG8THHzMVMob0oRcGQHjJlx1+FsJPXmuMMkTLe
+         HV7SHL0fE9BTcCRvmTKQ0nUSK23wt2ddYEr5/vEHV9VepcDv/7ITGRy4cY2AqljYH1T/
+         6cg9c0N5iFhDGMzmcsmqCOlE7n+KSGPa+8VpEpoH2ojq+j5VwZUVgZAu8YOtb9W1MCdO
+         ZFj3uZTLy86AfxyENB6G3wkswsOq4IomI0ie6hCnrAf9HETajSFIDVhzDee8ZgLHF8fC
+         db0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713705380; x=1714310180;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9b23fzJgHNWlYEQwRHhUtIVBTetbxKE4NVXPqvIaIrk=;
+        b=vqnJjfubEmxovTDLyMawfhnxPtPp/CLhjcWrfHmvYK2T89w+FdQyNcdRpKUhbo0DzN
+         hKCBbCcTIu1LIn5K68mvS8D7kpMaxX1BunGUTw7GfA6j8/uafvbrpx2zvDDodOvOLtQz
+         h/vI/hbUA0eOVCqrnP7nw0VeF6u9D7Yfn5lU2GXG77OBj1wnz/noKuA/oAWTdu/xjG/0
+         GRv51Udv2OiEZgQixeFhMVKN5vQMIGO1GQWmRM8EBZPH2GOhyUo4mleq7yzQoGc9RGFB
+         Kg/xdKhuiRmeKFT2ZNNiMtKjh3o6XpAWPmRTu6tl+W/xEjUzOLrvNTt8uF2RS2tZGlry
+         rBEg==
+X-Forwarded-Encrypted: i=1; AJvYcCVTlT7IXxvhphY5dKZBYurP4JX5Uj/NSfUjFuh9bY/156wWIYUcrb/WOR+N9i8P3DNPrPl2DUFOfYNVq9jqc7lrcOrCkNE97wKnePpWBQ==
+X-Gm-Message-State: AOJu0YzYLK0zagbzcjXt6LxdUpf/CN79eyaXr8C1gHejcPN2kEVReH5x
+	v0fq0Yq1hGl9soW4rhhj548d1HD5jK0ZUb+pHwn/UIgaTdPzG3ODVEYGjIqJPXjcvBLkKppH9Uc
+	Ocj0CCJa3BwVuyD2Sn2jWbtYXaWj66vrIqH4gSQ==
+X-Google-Smtp-Source: AGHT+IHz7/ue+3qHJOx20G0EY6HjLKwRCFO+3MTk6f+JYhQyLzBF67jQE/qFXNu4AbkFXvkPTeDUIc/sANXq+e3DjYI=
+X-Received: by 2002:a25:ae8b:0:b0:dcd:40fa:7bd0 with SMTP id
+ b11-20020a25ae8b000000b00dcd40fa7bd0mr6131741ybj.3.1713705380035; Sun, 21 Apr
+ 2024 06:16:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240417132856.1106250-3-quic_sibis@quicinc.com>
+References: <20240419-qcom-pd-mapper-v5-0-e35b6f847e99@linaro.org>
+ <20240419-qcom-pd-mapper-v5-3-e35b6f847e99@linaro.org> <84a70058-38f2-4e76-b62e-b6c44e880f7b@nexus-software.ie>
+In-Reply-To: <84a70058-38f2-4e76-b62e-b6c44e880f7b@nexus-software.ie>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Sun, 21 Apr 2024 16:16:09 +0300
+Message-ID: <CAA8EJpoqs_cgqyosnHHZnsTkMepxRbpcWOQSKfT6zZJyVd2zDg@mail.gmail.com>
+Subject: Re: [PATCH v5 3/6] soc: qcom: pdr: extract PDR message marshalling data
+To: "Bryan O'Donoghue" <pure.logic@nexus-software.ie>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Mathieu Poirier <mathieu.poirier@linaro.org>, Sibi Sankar <quic_sibis@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
+	Johan Hovold <johan+linaro@kernel.org>, Xilin Wu <wuxilin123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Sibi,
+On Sun, 21 Apr 2024 at 02:42, Bryan O'Donoghue
+<pure.logic@nexus-software.ie> wrote:
+>
+> On 19/04/2024 15:00, Dmitry Baryshkov wrote:
+> > The in-kernel PD mapper is going to use same message structures as the
+> > QCOM_PDR_HELPERS module. Extract message marshalling data to separate
+> > module that can be used by both PDR helpers and by PD mapper.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
+> > @@ -0,0 +1,315 @@
+> > +// SPDX-License-Identifier: GPL-2.0
+> > +/*
+> > + * Copyright (C) 2020 The Linux Foundation. All rights reserved.
+> > + */
+>
+> Is this the right org attributed ? Definitely not the right year/years.
 
-kernel test robot noticed the following build errors:
+Yes, it is the right org & year. While the pdr_internal.h header (from
+which these definitions were moved) didn't contain copyright, the
+pdr_interface.c file was a part of the commit that brought the header
+file in. The file contained this copyright header. Thus I assume the
+most correct action is to use it for the new source file.
 
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on linus/master v6.9-rc4 next-20240419]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Sibi-Sankar/dt-bindings-mailbox-qcom-Add-CPUCP-mailbox-controller-bindings/20240417-213339
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/20240417132856.1106250-3-quic_sibis%40quicinc.com
-patch subject: [PATCH V3 2/5] mailbox: Add support for QTI CPUCP mailbox controller
-config: hexagon-randconfig-r121-20240421 (https://download.01.org/0day-ci/archive/20240421/202404211602.d8vcGEH0-lkp@intel.com/config)
-compiler: clang version 15.0.7 (https://github.com/llvm/llvm-project.git 8dfdcc7b7bf66834a761bd8de445840ef68e4d1a)
-reproduce: (https://download.01.org/0day-ci/archive/20240421/202404211602.d8vcGEH0-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202404211602.d8vcGEH0-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   In file included from drivers/mailbox/qcom-cpucp-mbox.c:6:
-   In file included from include/linux/interrupt.h:11:
-   In file included from include/linux/hardirq.h:11:
-   In file included from ./arch/hexagon/include/generated/asm/hardirq.h:1:
-   In file included from include/asm-generic/hardirq.h:17:
-   In file included from include/linux/irq.h:20:
-   In file included from include/linux/io.h:13:
-   In file included from arch/hexagon/include/asm/io.h:328:
-   include/asm-generic/io.h:547:31: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           val = __raw_readb(PCI_IOBASE + addr);
-                             ~~~~~~~~~~ ^
-   include/asm-generic/io.h:560:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           val = __le16_to_cpu((__le16 __force)__raw_readw(PCI_IOBASE + addr));
-                                                           ~~~~~~~~~~ ^
-   include/uapi/linux/byteorder/little_endian.h:37:51: note: expanded from macro '__le16_to_cpu'
-   #define __le16_to_cpu(x) ((__force __u16)(__le16)(x))
-                                                     ^
-   In file included from drivers/mailbox/qcom-cpucp-mbox.c:6:
-   In file included from include/linux/interrupt.h:11:
-   In file included from include/linux/hardirq.h:11:
-   In file included from ./arch/hexagon/include/generated/asm/hardirq.h:1:
-   In file included from include/asm-generic/hardirq.h:17:
-   In file included from include/linux/irq.h:20:
-   In file included from include/linux/io.h:13:
-   In file included from arch/hexagon/include/asm/io.h:328:
-   include/asm-generic/io.h:573:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           val = __le32_to_cpu((__le32 __force)__raw_readl(PCI_IOBASE + addr));
-                                                           ~~~~~~~~~~ ^
-   include/uapi/linux/byteorder/little_endian.h:35:51: note: expanded from macro '__le32_to_cpu'
-   #define __le32_to_cpu(x) ((__force __u32)(__le32)(x))
-                                                     ^
-   In file included from drivers/mailbox/qcom-cpucp-mbox.c:6:
-   In file included from include/linux/interrupt.h:11:
-   In file included from include/linux/hardirq.h:11:
-   In file included from ./arch/hexagon/include/generated/asm/hardirq.h:1:
-   In file included from include/asm-generic/hardirq.h:17:
-   In file included from include/linux/irq.h:20:
-   In file included from include/linux/io.h:13:
-   In file included from arch/hexagon/include/asm/io.h:328:
-   include/asm-generic/io.h:584:33: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           __raw_writeb(value, PCI_IOBASE + addr);
-                               ~~~~~~~~~~ ^
-   include/asm-generic/io.h:594:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           __raw_writew((u16 __force)cpu_to_le16(value), PCI_IOBASE + addr);
-                                                         ~~~~~~~~~~ ^
-   include/asm-generic/io.h:604:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           __raw_writel((u32 __force)cpu_to_le32(value), PCI_IOBASE + addr);
-                                                         ~~~~~~~~~~ ^
->> drivers/mailbox/qcom-cpucp-mbox.c:61:11: error: call to undeclared function 'readq'; ISO C99 and later do not support implicit function declarations [-Werror,-Wimplicit-function-declaration]
-           status = readq(cpucp->rx_base + APSS_CPUCP_RX_MBOX_STAT);
-                    ^
->> drivers/mailbox/qcom-cpucp-mbox.c:71:4: error: call to undeclared function 'writeq'; ISO C99 and later do not support implicit function declarations [-Werror,-Wimplicit-function-declaration]
-                           writeq(BIT(i), cpucp->rx_base + APSS_CPUCP_RX_MBOX_CLEAR);
-                           ^
-   drivers/mailbox/qcom-cpucp-mbox.c:85:8: error: call to undeclared function 'readq'; ISO C99 and later do not support implicit function declarations [-Werror,-Wimplicit-function-declaration]
-           val = readq(cpucp->rx_base + APSS_CPUCP_RX_MBOX_EN);
-                 ^
-   drivers/mailbox/qcom-cpucp-mbox.c:87:2: error: call to undeclared function 'writeq'; ISO C99 and later do not support implicit function declarations [-Werror,-Wimplicit-function-declaration]
-           writeq(val, cpucp->rx_base + APSS_CPUCP_RX_MBOX_EN);
-           ^
-   drivers/mailbox/qcom-cpucp-mbox.c:98:8: error: call to undeclared function 'readq'; ISO C99 and later do not support implicit function declarations [-Werror,-Wimplicit-function-declaration]
-           val = readq(cpucp->rx_base + APSS_CPUCP_RX_MBOX_EN);
-                 ^
-   drivers/mailbox/qcom-cpucp-mbox.c:100:2: error: call to undeclared function 'writeq'; ISO C99 and later do not support implicit function declarations [-Werror,-Wimplicit-function-declaration]
-           writeq(val, cpucp->rx_base + APSS_CPUCP_RX_MBOX_EN);
-           ^
-   drivers/mailbox/qcom-cpucp-mbox.c:140:2: error: call to undeclared function 'writeq'; ISO C99 and later do not support implicit function declarations [-Werror,-Wimplicit-function-declaration]
-           writeq(0, cpucp->rx_base + APSS_CPUCP_RX_MBOX_EN);
-           ^
-   6 warnings and 7 errors generated.
+>
+> Please fix, then.
+>
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
 
-vim +/readq +61 drivers/mailbox/qcom-cpucp-mbox.c
-
-    51	
-    52	static irqreturn_t qcom_cpucp_mbox_irq_fn(int irq, void *data)
-    53	{
-    54		struct qcom_cpucp_mbox *cpucp = data;
-    55		struct mbox_chan *chan;
-    56		unsigned long flags;
-    57		u64 status;
-    58		u32 val;
-    59		int i;
-    60	
-  > 61		status = readq(cpucp->rx_base + APSS_CPUCP_RX_MBOX_STAT);
-    62	
-    63		for (i = 0; i < APSS_CPUCP_IPC_CHAN_SUPPORTED; i++) {
-    64			val = 0;
-    65			if (status & BIT(i)) {
-    66				val = readl(cpucp->rx_base + APSS_CPUCP_RX_MBOX_CMD(i) + APSS_CPUCP_MBOX_CMD_OFF);
-    67				chan = &cpucp->chans[i];
-    68				spin_lock_irqsave(&chan->lock, flags);
-    69				if (chan->cl)
-    70					mbox_chan_received_data(chan, &val);
-  > 71				writeq(BIT(i), cpucp->rx_base + APSS_CPUCP_RX_MBOX_CLEAR);
-    72				spin_unlock_irqrestore(&chan->lock, flags);
-    73			}
-    74		}
-    75	
-    76		return IRQ_HANDLED;
-    77	}
-    78	
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+With best wishes
+Dmitry
 
