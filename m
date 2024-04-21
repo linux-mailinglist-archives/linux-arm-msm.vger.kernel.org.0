@@ -1,113 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-18088-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18089-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BDD558AC015
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Apr 2024 18:17:05 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1AB98AC0B6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Apr 2024 20:18:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E9EEA1C20370
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Apr 2024 16:17:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9E5BC2813E2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Apr 2024 18:18:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E9E91B969;
-	Sun, 21 Apr 2024 16:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CE773AC34;
+	Sun, 21 Apr 2024 18:18:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YrvTKj9y"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R4KMYwQ1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4720DF78;
-	Sun, 21 Apr 2024 16:17:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874F6286AC;
+	Sun, 21 Apr 2024 18:18:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713716223; cv=none; b=bGgGDvfpQVvJaC8jK7lhi9ZDI+gaTmWdGNNm2ZJhubM69xfHafDsekRsYxD78HXxnDw9Nq0Tvd01lgHE5V1Okw9ZzcywaHWWuhp9Vj4QQT9SDqrzRaNPL7nH23oS5CD+VRJeAYtO5UG4PXPCMduySjfVEuIQ318SS9iXFn0N9Ic=
+	t=1713723524; cv=none; b=npNXAmotQi6FdXsPTUs5Dznbf3/hP3qLwcg5t5f7oJHzlJe32N84mv3myOTFrK/Xxo+XSZMwIWdryFmXNBq8qYmTNOd1OiwlX3hQr51kE0CmLjGP2Me6LbXUg0yRsr6eLipLKE7bwrpIY0U/9KaRrapR6R+7O8gBSdq1whmUYsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713716223; c=relaxed/simple;
-	bh=Y1i2tiiqhiRWOo34ZNUl9IFztlFEiOXgTNHgBSzqWmo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N9AgFjW50Wtu5iCvkyCZ6bBgZ0jYpGra6P0Bi1xjukoud5+ci7074s5wF6pZBsMQpqcPb8U+oLQ1uDcuZ8Z6OjZNzB5XCfmhbAGyWIe7/nfljbHH0WC/f23CiXjSjYvlI/SItU6ZNn5SDacSZE8/Q6y3A3xUJkfCtXZJimNALgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YrvTKj9y; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 594FAC113CE;
-	Sun, 21 Apr 2024 16:17:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713716222;
-	bh=Y1i2tiiqhiRWOo34ZNUl9IFztlFEiOXgTNHgBSzqWmo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YrvTKj9y8BEB6qJ5+mg+FzzbwWc+B5rwssBf7qFHW+vacT2eTp8REsNvnBbai78fy
-	 4Lqgf4EtkSuN38z33+bYymqqiAkO2t/NZBnaWGgZgubjcOdX2vG9qzNzUhy/LEtaD7
-	 CJ3QBXqM/omb7TBIu8Kc25JcfoUo+pNZTZnoWk5Bzdqz7WX7aZofc/1xnoW/Ru0Gah
-	 d1F7UBNKGJ/Tc7ujCQ3EEfbiVEwsolRir6Ah8q/1qCEnEy0Qqy/M4zkh+JEOpuGnxW
-	 aQaR8EUch5RjUNYvwsXwd09zZHlC4UYk5rADceYqwK/A6yPBi+n+9ZWaFxhPvkEgsd
-	 p+cnyW6hIH5TA==
-Date: Sun, 21 Apr 2024 11:16:59 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Alex Elder <elder@linaro.org>
-Cc: davem@davemloft.net, edumazet@google.com, kuba@kernel.org, 
-	pabeni@redhat.com, mka@chromium.org, quic_cpratapa@quicinc.com, 
-	quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com, quic_subashab@quicinc.com, 
-	elder@kernel.org, netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next] mailmap: add entries for Alex Elder
-Message-ID: <kabhsybtcfg6ky46rwry462dpql2k6mcrnb7w7xtb5d2httg7r@lg6rbbmaiggp>
-References: <20240421151732.2203345-1-elder@linaro.org>
+	s=arc-20240116; t=1713723524; c=relaxed/simple;
+	bh=6H1TIF/0XcXz6iEQrWrwLwyYZgPxQRBE8Doz/MbHlYc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fB+xHXJO/mSZOl2T/vlWIOX2Ar61gZHKlSMuVR0rDEj8IHCZCmiwlhd4dcT4rGLq8o7zw4FPhWdffjuF45tGn9H8L6dmQvSeKW2ThX3f8jj1iWf/EV7PwxbIyjdIlNJca7ngHO/09bnAzLWQGhcetArLoVXR5VzRjQiGqxUFJSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R4KMYwQ1; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a52223e004dso340282566b.2;
+        Sun, 21 Apr 2024 11:18:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1713723521; x=1714328321; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kGTvaXqfOO9FIjG6XNcvN3Rhrhq89n4tPuy0EipmS14=;
+        b=R4KMYwQ1oZxqrFra+61GeVA96BEUeywvRtnzNooJBA8UluGc3XLdkUpMhn3ehUy+OS
+         wjqR/wnXItP5iEoIW3L4EauRKDnI/0fpsWX/Ar/TiR5Kq6S+UxoGsPsJmPsAQFAQDgpR
+         GXrGVWrF4iaz/hvJE0KTYKPA81FHnX1KbMXkKym83rP2wvJ0DMrUFVMGqgcd+oTdluIS
+         H3Bn1aYjcC05J0A1xXjM/V3+ww0mBvGXORa+jpaW3sHPaw3eq6gK+vD+34I/L2p6pzKL
+         2Nppq5gw0BSRinIqAI5gxa8oBnG33cPWvpuOLmnecB6MVriIXweDFFZBpQDvumL2ZbgS
+         Ie1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713723521; x=1714328321;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kGTvaXqfOO9FIjG6XNcvN3Rhrhq89n4tPuy0EipmS14=;
+        b=gszDhA/FdeYvzNf1kgM8VC7m4Cv+A3N1fyaA6ZnCY8qHwahIoRma0MfZb0W4sPTJz0
+         Fv55VgmQ8b3pxgymgpA8w58nJr/yYF2D343Sn7ged5Oiw6+aGP6H4Qu1/rVjgkiGGuUH
+         omG6LR5wz2/7MzBNBOOAnJqSYQ83zzdXBPHeP/3fYdrSCJozl6mBo2PVtwQsloWvrlha
+         XH9agULU5kmAyswHayIwuQB6a+CgzeG9WsE656mm7uC/AUiVWXR0mblYRV67gL7iuf8m
+         Crj1+3sWkNwS+FTbJYE6G3I5ozhv19B87IEoDyq3mJjvuq7SEUynYKTrxpfhy04IKauA
+         0hIw==
+X-Forwarded-Encrypted: i=1; AJvYcCVQS9GAxGYPo29GR9Rh4Ha9vGER13OKWlTlRYodBN0zHKThksrrfqLtHAmZXr93+qa9YUAyAv5Lj5TfjmrfkrG8vVUWwj70OSdTch2bjHKBIrtIinz2PscFsc/TcNFumOIPlNC/mhZ/ZnmRRBoINEN5tV8p8BgtRaAfr36fCftGJxctPJOavHQH
+X-Gm-Message-State: AOJu0YyWR4Wvhg/n5jUQQGVeXgCAhShyYayl/ES0B2KYbQCxLldsH0U6
+	heS1OMQe+KGhe1sjJvXghLAm4AFysDYQWzDpgTecmRPtG9g3lKOV
+X-Google-Smtp-Source: AGHT+IEpeqp+JRc5yuVDctR/zRlHhMoEHEr9CcTtSJ5st1r/avCC7rh7p15I8Syu+76e0j3BpnFHIA==
+X-Received: by 2002:a17:906:394e:b0:a52:4246:92fe with SMTP id g14-20020a170906394e00b00a52424692femr7529330eje.48.1713723520561;
+        Sun, 21 Apr 2024 11:18:40 -0700 (PDT)
+Received: from [192.168.1.19] (77-76-56-128.ip.btc-net.bg. [77.76.56.128])
+        by smtp.gmail.com with ESMTPSA id z13-20020a17090655cd00b00a4739efd7cesm4823285ejp.60.2024.04.21.11.18.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 21 Apr 2024 11:18:40 -0700 (PDT)
+Message-ID: <de4698af-e248-4653-89d9-8a421774d1fc@gmail.com>
+Date: Sun, 21 Apr 2024 21:18:36 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240421151732.2203345-1-elder@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] media: venus: flush all buffers in output plane
+ streamoff
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <1704867134-5522-1-git-send-email-quic_dikshita@quicinc.com>
+Content-Language: en-US, bg-BG
+From: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+In-Reply-To: <1704867134-5522-1-git-send-email-quic_dikshita@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Sun, Apr 21, 2024 at 10:17:32AM -0500, Alex Elder wrote:
-> Define my kernel.org address to be the canonical one, and add mailmap
-> entries for the various addresses (including typos) that have been
-> used over the years.
+Hello Dikshita,
+
+On 10.01.24 г. 8:12 ч., Dikshita Agarwal wrote:
+> For scenarios, when source change is followed by VIDIOC_STREAMOFF
+> on output plane, driver should discard any queued OUTPUT
+> buffers, which are not decoded or dequeued.
+> Flush with HFI_FLUSH_INPUT does not have any actual impact.
+> So, fix it, by invoking HFI_FLUSH_ALL, which will flush all
+> queued buffers.
 > 
-> Signed-off-by: Alex Elder <elder@linaro.org>
+> Fixes: 85872f861d4c ("media: venus: Mark last capture buffer")
+
+Cc: stable is missing with a kernel version.
+
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 > ---
->  .mailmap | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
+> Changes since v1:
+> - Added fixes tag (Bryan)
 > 
-> diff --git a/.mailmap b/.mailmap
-> index 8284692f96107..a78cd3d300eb1 100644
-> --- a/.mailmap
-> +++ b/.mailmap
-> @@ -38,6 +38,18 @@ Alexei Starovoitov <ast@kernel.org> <alexei.starovoitov@gmail.com>
->  Alexei Starovoitov <ast@kernel.org> <ast@fb.com>
->  Alexei Starovoitov <ast@kernel.org> <ast@plumgrid.com>
->  Alexey Makhalov <alexey.amakhalov@broadcom.com> <amakhalov@vmware.com>
-> +Alex Elder <elder@kernel.org>
-> +Alex Elder <elder@kernel.org> <aelder@sgi.com>
-> +Alex Elder <elder@kernel.org> <alex.elder@linaro.org>
-> +Alex Elder <elder@kernel.org> <alex.elder@linary.org>
-> +Alex Elder <elder@kernel.org> <elder@dreamhost.com>
-> +Alex Elder <elder@kernel.org> <elder@dreawmhost.com>
-> +Alex Elder <elder@kernel.org> <elder@ieee.org>
-> +Alex Elder <elder@kernel.org> <elder@inktank.com>
-> +Alex Elder <elder@kernel.org> <elder@kernel.org>
-> +Alex Elder <elder@kernel.org> <elder@linaro.org>
-> +Alex Elder <elder@kernel.org> <elder@newdream.net>
-> +Alex Elder <elder@kernel.org> Alex Elder (Linaro) <elder@linaro.org>
-
-Isn't this form (with the name in the middle) when you want to be able
-to map one email with two different names, to two different addresses?
-
-As described in last example in the "gitmailmap" man page?
-
-I think thereby this would be a duplicate with the entry two lines
-above?
-
-Regards,
-Bjorn
-
->  Alex Hung <alexhung@gmail.com> <alex.hung@canonical.com>
->  Alex Shi <alexs@kernel.org> <alex.shi@intel.com>
->  Alex Shi <alexs@kernel.org> <alex.shi@linaro.org>
-> -- 
-> 2.40.1
+>   drivers/media/platform/qcom/venus/vdec.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+> index 29130a9..0d2ab95 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -1255,7 +1255,7 @@ static int vdec_stop_output(struct venus_inst *inst)
+>   		break;
+>   	case VENUS_DEC_STATE_INIT:
+>   	case VENUS_DEC_STATE_CAPTURE_SETUP:
+> -		ret = hfi_session_flush(inst, HFI_FLUSH_INPUT, true);
+> +		ret = hfi_session_flush(inst, HFI_FLUSH_ALL, true);
+
+Is it tested on msm8916? If I remember correctly FLUSH_ALL produces 
+session error, could you confirm, please.
+
+-- 
+regards,
+Stan
 
