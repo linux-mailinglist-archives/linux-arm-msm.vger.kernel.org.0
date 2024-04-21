@@ -1,64 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-18103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18104-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05FF98AC1CA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 00:31:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B1008AC1CC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 00:32:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9A7351F21063
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Apr 2024 22:31:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9A1B11F2110B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Apr 2024 22:32:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5D08502AA;
-	Sun, 21 Apr 2024 22:29:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E436150A87;
+	Sun, 21 Apr 2024 22:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jT9pSU3V"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JyJDrPu/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8608502A2;
-	Sun, 21 Apr 2024 22:29:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA65550A65;
+	Sun, 21 Apr 2024 22:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713738585; cv=none; b=CnLQ5zsMbym1aOZIkl7U7HCmJSeTowirwFziT1P82OXmMJfDOY4v5emZ3k9T3tvxwwdtaCa9S5qL/VDtzP47/RuNQlI69LWUpyqgtbNKHPkdDPLetxXHHVu4CX5G3mnPg+wxk+ZqHTu6fvIGd8+4LM67jwvzLtPkm6iMWbEZVQY=
+	t=1713738586; cv=none; b=CsZ6hQkS0SH83ScU+a4a8CpZJUTbk+Y+9k8fMNk1QWAuHlHF9Mr+JQ5092QCSm7yUTIM6hl5M0zhtExFKDc3AMj7bN16LoxQ1eskXDoVR6636xefde3PeQ4+M9tftJ/kA64KXT/Ma0t9SqheSNzC6b/mguhTSD3qmPgOuXV7AVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713738585; c=relaxed/simple;
-	bh=Icxr00eu7phRmjhceitMWHQ47bKw4KMtmpSLr+rgzbs=;
+	s=arc-20240116; t=1713738586; c=relaxed/simple;
+	bh=w/xWsMj6GMAy+FKXfCKW1NhgakVrHhumWn47xc68dIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=M27KxzMslErmI6R4wNpAIRUfFbID3gYiltdxG6SGLMJVl+G/sGqugyCQcfnw+eoygORq3titCYqqHtzrsjIQzyzfTKokO67eBRKZEFOJu2CqiAcJroCw5KLJk5JCdxnWXJzJdkUAuBoZIRn1dJYDLaOc3fFSH2lCug/v6LJv/yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jT9pSU3V; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE7CEC32782;
-	Sun, 21 Apr 2024 22:29:44 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Osgv/vrquXbJGZMfrIa0Dt6Tm3VDW98kVJSleKyUUUwPNXZQjO5fwW1/3seY3LLYBYp3QyKuGiudXZyFd+yuvbI5RaJc6sFh2HJX9fUykdHvrn4FVvf3ttT4Jq1OUpCkMfn2q9O7J5jbIBuxWBOrqX5z/g8X6LwuuGVXoBNX+MQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JyJDrPu/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBBBCC32783;
+	Sun, 21 Apr 2024 22:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713738585;
-	bh=Icxr00eu7phRmjhceitMWHQ47bKw4KMtmpSLr+rgzbs=;
+	s=k20201202; t=1713738586;
+	bh=w/xWsMj6GMAy+FKXfCKW1NhgakVrHhumWn47xc68dIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jT9pSU3VCyxvNADkWNW8Nzgxr0WTXORPt/9Y3RFK86501vYqYVFWQon/jsX42hFRG
-	 LM83r2a6UYSTjkGb5QE9b14aXSVMmlJkR2PA0nPSOh7k7RG2q4xJmKjYzknSwUEMyg
-	 TTUmnHmJ3wBsEUBmCqFiaKYU/IrYW+wzRTAI5xsWi6TDrkOIE8x9GvthQhIoLqFZp3
-	 EoGekpaaXldjGTIXx2rnN+hMdkLHBnE+BA72JUR++ZyX3EDBFWUVY97Tiz/0jJz/+f
-	 knMLRGShIWbWRiI03PAFDqz11Sp0znceuEkhXkFHxiJF4FoGXEyb7s+8WYvx4c9Y/K
-	 0X2BrCMrvHWHg==
+	b=JyJDrPu/pADswzE8YtcbuOocNYOqRxJk6uKRyhDu06RKUZvns0b45tXnpUZAV0hi4
+	 OCa67HN1PZWc7kA9X9yWA134cn9MYUxknFYzO1xtCNXh5D3rKDzzjTp4Nlvl2nWdox
+	 TZOYUY9EWK7X/68/K4LpJuCerzv2f1cF22zFmVoHvSLcSmH8RcihoGvbd0mhsGreGo
+	 GfX3QiSHLW2E73zH3xjgWPMnlXYv0cHGipBKHTJaupg5yvcnwGN+tKB/qptdp89JRB
+	 KEeNUGge6GmvV6PUghPVtKvjxvUxsdrUBStHkYUTxNKW1OMklbvbSCBA1X845QZrEr
+	 OrmivM16PqVOg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org,
-	Rob Herring <robh@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: (subset) [PATCH v2 00/21] Add PCIe bridge node in DT for Qcom SoCs
-Date: Sun, 21 Apr 2024 17:29:19 -0500
-Message-ID: <171373856771.1196479.2864036969713172935.b4-ty@kernel.org>
+To: sboyd@kernel.org,
+	Nathan Chancellor <nathan@kernel.org>
+Cc: konrad.dybcio@linaro.org,
+	mturquette@baylibre.com,
+	bryan.odonoghue@linaro.org,
+	neil.armstrong@linaro.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH 0/2] clk: qcom: Fix two driver Kconfig dependencies
+Date: Sun, 21 Apr 2024 17:29:20 -0500
+Message-ID: <171373856767.1196479.14241619358074535915.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240321-pcie-qcom-bridge-dts-v2-0-1eb790c53e43@linaro.org>
-References: <20240321-pcie-qcom-bridge-dts-v2-0-1eb790c53e43@linaro.org>
+In-Reply-To: <20240318-fix-some-qcom-kconfig-deps-v1-0-ea0773e3df5a@kernel.org>
+References: <20240318-fix-some-qcom-kconfig-deps-v1-0-ea0773e3df5a@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,27 +67,23 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 21 Mar 2024 16:46:20 +0530, Manivannan Sadhasivam wrote:
-> On Qcom SoCs, the PCIe host bridge is connected to a single PCIe bridge
-> for each controller instance. Hence, this series adds a DT node for the
-> PCIe bridges across all SoCs.
+On Mon, 18 Mar 2024 08:18:09 -0700, Nathan Chancellor wrote:
+> This series fixes two Kconfig warnings that I recently saw crop up in my
+> build tests because the dependencies for newly added drivers in 6.8 are
+> not correct.
 > 
-> There is no functionality change with this series, but the PCIe bridge
-> representation in DT will be necessary to add the DT node for the client
-> devices like the one proposed in power sequencing series [1].
+> This is now the fourth set of changes to avoid warnings of this nature
+> for the exact same reason... is there anything that can be done to
+> ensure this does not continue to happen? See
 > 
 > [...]
 
 Applied, thanks!
 
-[17/21] ARM: dts: qcom: ipq8064: Add PCIe bridge node
-        commit: 0c4d19b125401957123989a25094972cf0e77670
-[18/21] ARM: dts: qcom: ipq4019: Add PCIe bridge node
-        commit: ed9b196418d4e2fa4f6c27b61a92c2038e1ba04d
-[19/21] ARM: dts: qcom: apq8064: Add PCIe bridge node
-        commit: 27cb9eccf94cb163f9bf3b945f249ab7c42861db
-[20/21] ARM: dts: qcom: sdx55: Add PCIe bridge node
-        commit: 669841a2eff4c0132841dea3ae40d9148a36f257
+[1/2] clk: qcom: Fix SC_CAMCC_8280XP dependencies
+      commit: 0e79d702bf7fac2e63fc32a1b4ff307d71db692f
+[2/2] clk: qcom: Fix SM_GPUCC_8650 dependencies
+      commit: 551eb5194bf328652decc5531edd9c65a5d2a17c
 
 Best regards,
 -- 
