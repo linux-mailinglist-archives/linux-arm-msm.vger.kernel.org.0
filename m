@@ -1,76 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-18078-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18079-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 511B48ABF6D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Apr 2024 15:55:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A19038ABF7A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Apr 2024 16:03:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 08CD2280ECB
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Apr 2024 13:55:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D6821280F8F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Apr 2024 14:03:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1212B168B1;
-	Sun, 21 Apr 2024 13:55:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B522E175B7;
+	Sun, 21 Apr 2024 14:03:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rVG+tIgD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cq7ZSLcG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5220C14006
-	for <linux-arm-msm@vger.kernel.org>; Sun, 21 Apr 2024 13:55:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1127E1757A
+	for <linux-arm-msm@vger.kernel.org>; Sun, 21 Apr 2024 14:03:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713707725; cv=none; b=TkghLbe7YjnQvC0af9Gl0WyZaIsXd5Dy9EUMwnI8BoKvaXqHr/QgbNfvO+CzsbO7iIWgEuvesw/tS2Dl7KxHtY5E3WludNrUjQ4SCKAjb26cnRrIrC6oioXQ/G4TYL/DYATZJwje0AHUBPIpbxUdjWA7SPYoWen5kmAvPymr89I=
+	t=1713708212; cv=none; b=qFRGRHzddAwqI8q1FSRcNnnaw+JFPgv/dUhPU0YDsU9+9MsY7DUGB/UJx49omBIIO1MY9mzKQfIXPAmuDYo4S0Kbki0vwtEzIdyJoLQkJNdlhMHn40RoUo8yK/LcLOJiFKeqL+W0zzVzA8OYEU6AvKuoNuiEpM5J+cJzml6IWi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713707725; c=relaxed/simple;
-	bh=5WY9ZmFX/po3yro2cTpsxF7cNgrPQao7dI88pEgGP5o=;
+	s=arc-20240116; t=1713708212; c=relaxed/simple;
+	bh=t4LTkonD4i06Ex7cZRKGZh5MSInx3YygrGIzRDI+Mh0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=e8ypyo+slNVtNq39EoO2HcWe4HXE0doshK6Siu16QE5Fks5xt3k6q5z0NFqDd1adpuqoPxrwF5NIcX870I9H81i5Gp/RxF4x4y1mmA8Xl3THRKoFbBO3FEBfq2UfDQOmY0BhzJd+xZ9kl02sA1On47SrPFI+jYgyOIiKqiIL1po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rVG+tIgD; arc=none smtp.client-ip=209.85.221.42
+	 In-Reply-To:Content-Type; b=NhTgngHzli4uxT3otnnsZlWSTRISa56CZfyyh5iPPKH7Wwr/OcPDLGsA0LmbPqvPypX2aC2/crtwwNqkXwJRAhUrxRIKfl0GiC3Y99fuqyxZYGUn8e7XCLp5vptHDAVokRa/zsP0uwdSO9I453vvNWhPhQQ1Ht5t/1mi1ZV6sNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cq7ZSLcG; arc=none smtp.client-ip=209.85.208.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-343f62d8124so2878044f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Apr 2024 06:55:23 -0700 (PDT)
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-571d8daff86so1909004a12.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Apr 2024 07:03:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713707722; x=1714312522; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=9PnemVxUHccS6J/FssdoCvoHybmMHnNiHLkwhHSyMCQ=;
-        b=rVG+tIgDMaEOvchA8IAfTpDTBbWrW1MDtnykhOBNHuDwweH17amxUp08hWD7eUuFFg
-         xYpRMMMtQI0fKFTPKdof54WPKdo+U4btMOIsOHugXonJJsMTidsFZapIk0vGCpkpEVHG
-         JfW3Vvwu5eLqmAGSM/XtYkgRUU/HKydxMzuW/IiL6mX+Cm/LRjB/7QE/rQ5B0jTIwIgU
-         kHDTEAai97xGwDV+QVBwxMbmRkqaPCwva5bcvVsQ/ZRLvAAy5lVT9N0xoFo1QvGkN3RC
-         p4nC6GhV0zV9jeWr4ekwGqSFkknBo/foISoMriTCRO4ecLMtPIFJInC54WZA9Tv3gUob
-         2xWw==
+        d=linaro.org; s=google; t=1713708209; x=1714313009; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=DTW/CJQ4s88DVa55ELjYpLvZW6dhOyn4d4BvCYkVK9Y=;
+        b=cq7ZSLcG23SrXZmSripEbgotIXnb14vMeFk8J3ogudpYrpX8sMImB3/3kXSdNeh9v4
+         yCyIlP3wwf/1qVUFN3DttFtL2e2x/l40sWhO43nItAPyOgZIkWJxxupwBn6pffJ0wLbG
+         7OIJozie1JS6DSu0gg9L12UNivMsf/0QC6Hi2jGA5bRLjzXo3jiKjjr3iu6IKxYAk8cp
+         PfnK30jYpRtd9FEsjRHkepDvu0bYVQHvv6hnglM/fyaYU914ijcgpKOl8ZqrVtoOCoPc
+         i0QkXVIfSRhZNN9Tv7tmyFLSTk4rxVXVNtcmsdF1qYqN24kwsdVJfKYig3HweRRfsmGJ
+         U/ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713707722; x=1714312522;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9PnemVxUHccS6J/FssdoCvoHybmMHnNiHLkwhHSyMCQ=;
-        b=GOq5dHfoPZyOpaxModwoFWtb38Rl3tPaVIFqmIeon8p62iWAcKsCVe6RGQ329PsO1g
-         lhm2HKpEBM7FOx94FQDw+8KLQP+wYWmOLsOELt7lWTR58K2lYEzlJUL2fahpJ2fjiEp7
-         hbESaEToKSKpzSQPeWU7fBKS81bJTUxGYe2yMryW59w8atXSpGLXJvsAA8Gw9wljFK/P
-         Y61MIK3zho9wBRi88SSaiJ0w76VgEE4XqKTS4deM96KQ9kI3fMRyQfVujtuPahGer6c9
-         upXfiJCDav/63IiVQhM1V5xI0u3Bbg5/oUworCmfRlsUaF/C3hVE5sPDbQk1AwChCqv2
-         u6Yg==
-X-Forwarded-Encrypted: i=1; AJvYcCVb8Zp+gEXq824JZ+7lSn/7V4MgBtfYkmpusGFavzAf97Um1hF580e1xspVKErPrGlYeYYDRqVsxip9rQjoY/YK09gEVaqAtk8xcR3DYw==
-X-Gm-Message-State: AOJu0Ywq/ZxKhfQ3aZaK1uCnVTiSewQrLx3kePOXfRCmlqG/zJWL90p5
-	Zy81hOUOHj8X6297MC2WkI7uIODMUN3vHl4itKSGssq6WrPxgXN+RU+bNyYxj3NtmvkstRmFV5H
-	Y
-X-Google-Smtp-Source: AGHT+IF92LowgyQdnK/1ouTrIMFjwYmHLzLofktgLfCSyNrPIX2W6jSk4kkOv/zildJrGb18GHlgvA==
-X-Received: by 2002:a05:6000:d05:b0:345:72af:769b with SMTP id dt5-20020a0560000d0500b0034572af769bmr4483039wrb.38.1713707721689;
-        Sun, 21 Apr 2024 06:55:21 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1713708209; x=1714313009;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DTW/CJQ4s88DVa55ELjYpLvZW6dhOyn4d4BvCYkVK9Y=;
+        b=Oz/qh9FV4fFRAd/KB1YRfEIGuE1uzj9+57TtFn1zOup7pdWQiXlrnO8TRYTButDXwz
+         7sytol3/XV2eEGTWg00eLpe9LDlBhQpxWAtov2JVjwg9OxnJba4bcqRvpMc88Wr4Z+n0
+         gi2sIirVClfK/vGXK4U6HClbfbCSNCx/3wYRozpIAyhinXQMmqOo5bzKlr1+hMxX8GwE
+         KdpSqkMkjC3gGBE1ZMGAFlRPud9LUWEvTwhrH25dX3XKmv3igTwRSy+ajevnmH/9JskK
+         jsFVDTQSQxmqmvOde2x4qmw4sEzVZOSludgHapAggHIvY+80yv0fyxhFTvXPtnMjLVgA
+         VCOA==
+X-Forwarded-Encrypted: i=1; AJvYcCUfNrq4UoH/M59mqdx33ELfCWFEFRTuZFP4O3J4cvBVQxapaMHfB+Yt3od4DiWsXMQ4bewVWQ0tAcL/1h2gTEr3e1uadQroK3hFhJYd6g==
+X-Gm-Message-State: AOJu0YwIep/jdZ/vlYQy19xbT7vSOY/ex8cewIoAwpkSdl1q8424fU0F
+	bojI2VZO13mgpM5HksSFx/ejnE0sAY6opPOVw2GprPNbfL4BqNJGzrY6vfkXIhY=
+X-Google-Smtp-Source: AGHT+IEbBYYmKJn5bzeTvWfcW2l/wHJTBjpKqiCdGf182vrNU/MwXM6wS5bCcbDD74qJFnFVN5U2dw==
+X-Received: by 2002:aa7:c702:0:b0:571:fc5d:dbab with SMTP id i2-20020aa7c702000000b00571fc5ddbabmr1780010edq.7.1713708209411;
+        Sun, 21 Apr 2024 07:03:29 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.223.16])
-        by smtp.gmail.com with ESMTPSA id j1-20020a05600c1c0100b00419ea5fb0cbsm5523580wms.42.2024.04.21.06.55.20
+        by smtp.gmail.com with ESMTPSA id fi5-20020a056402550500b0056e598155fasm4360037edb.64.2024.04.21.07.03.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 21 Apr 2024 06:55:21 -0700 (PDT)
-Message-ID: <af2701c5-034c-46fb-810b-81d5345f4084@linaro.org>
-Date: Sun, 21 Apr 2024 15:55:20 +0200
+        Sun, 21 Apr 2024 07:03:28 -0700 (PDT)
+Message-ID: <4e03d84e-490f-4054-a175-94e769770b37@linaro.org>
+Date: Sun, 21 Apr 2024 16:03:27 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,14 +77,27 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RESEND] arm64: defconfig: qcom: enable X1E80100 sound card
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240403094422.15140-1-krzysztof.kozlowski@linaro.org>
- <6sfk3n65fbq444ezbuj53litc3lizuhqbmk6mwyngja3orw4fu@ez2bqiub5235>
-Content-Language: en-US
+Subject: Re: [PATCH v21 5/9] dt-bindings: usb: qcom,dwc3: Add bindings for
+ SC8280 Multiport
+To: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Rob Herring <robh@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>,
+ quic_ppratap@quicinc.com, quic_jackp@quicinc.com,
+ Bjorn Andersson <quic_bjorande@quicinc.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Conor Dooley <conor+dt@kernel.org>, Thinh Nguyen
+ <Thinh.Nguyen@synopsys.com>, Johan Hovold <johan@kernel.org>,
+ Felipe Balbi <balbi@kernel.org>
+References: <20240420044901.884098-1-quic_kriskura@quicinc.com>
+ <20240420044901.884098-6-quic_kriskura@quicinc.com>
+ <3ca24a3d-e7e0-4f68-9a6f-ebaf83079ebe@linaro.org>
+ <7034e026-5c50-4c65-ba78-e9c73f4a276a@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -130,36 +142,65 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <6sfk3n65fbq444ezbuj53litc3lizuhqbmk6mwyngja3orw4fu@ez2bqiub5235>
+In-Reply-To: <7034e026-5c50-4c65-ba78-e9c73f4a276a@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 20/04/2024 20:13, Bjorn Andersson wrote:
-> On Wed, Apr 03, 2024 at 11:44:22AM +0200, Krzysztof Kozlowski wrote:
->> Enable the sound machine driver for Qualcomm X1E80100 sound card, used
->> on several boards with X1E80100 (e.g. X1E80100 CRD).
+On 20/04/2024 15:53, Krishna Kurapati PSSNV wrote:
+> 
+> 
+> On 4/20/2024 5:01 PM, Krzysztof Kozlowski wrote:
+>> On 20/04/2024 06:48, Krishna Kurapati wrote:
+>>> Add the compatible string for SC8280 Multiport USB controller from
+>>> Qualcomm.
+>>>
+>>> There are 4 power event interrupts supported by this controller
+>>> (one for each port of multiport controller). Add all the 4 as
+>>> non-optional interrupts for SC8280XP-MP
+>>>
+>>> Also each port of multiport has one DP and one DM IRQ. Add all DP/DM
+>>> IRQs related to 4 ports of SC8280XP Teritiary controller.
+>>>
+>>> Also added SuperSpeed PHY interrupt for both Superspeed ports.
+>>>
+>>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>>> Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 >>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> v21 and suddenly you drop tags requiring everyone to re-review this. I
+>> do not think this process is working. I will not re-review this.
+>>
+>> This is a friendly reminder during the review process.
+>>
+>> It looks like you received a tag and forgot to add it.
+>>
+>> If you do not know the process, here is a short explanation:
+>> Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+>> versions, under or above your Signed-off-by tag. Tag is "received", when
+>> provided in a message replied to you on the mailing list. Tools like b4
+>> can help here. However, there's no need to repost patches *only* to add
+>> the tags. The upstream maintainer will do that for tags received on the
+>> version they apply.
+>>
+>> https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
+>>
+>> If a tag was not added on purpose, please state why and what changed.
+>>
 >>
 > 
-> I'm completely lost on your strategy for these sound card drivers!
+> Hi Krzysztof,
 > 
-> Why is x1e a separate driver when we're shoehorning in qc*6490 into the
-> sc8280xp?
+>   There was a commit text change to fix minor nits:
+>   -> One minor spell check: /s/oen/one
+>   -> minor nits like: /s/ss/SuperSpeed
+> 
+>   So removed the tags and requested for a review.
+>   "Updated commit text in patches 2/5/6."
 
-Because x1e is different. It has 4 speakers. sc8280xp does not have four
-speakers.
 
-> Why does Srini answer me that the compatible should contain the device
-> name (qcom,qcs6490-rb3gen2-sndcard) while you're at the same time adding
-> a platform-based compatible for x1e.
+Did you read the doc I linked? I am pretty sure I linked it many times
+before as well...
 
-That's defconfig change... But yeah, probably x1e sound card should be
-tied to the board model. I prepared and sent the patches much earlier,
-before qcom,qcs6490-rb3gen2-sndcard came to discussion.
 
-For most of the boards I would just go with generic soc compatible. I
-think I provided rationale qcs6490 discussion.
 
 Best regards,
 Krzysztof
