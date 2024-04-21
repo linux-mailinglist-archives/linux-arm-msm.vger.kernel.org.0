@@ -1,61 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-18098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18099-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 018258AC1BB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 00:30:36 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0FAEA8AC1BE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 00:30:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B3378280DE0
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Apr 2024 22:30:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BF7D6280DB7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Apr 2024 22:30:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 327714AEF0;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C57B74CE13;
 	Sun, 21 Apr 2024 22:29:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SiGz2npN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jEb7CGex"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0767F4AEDF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3CD4595D;
 	Sun, 21 Apr 2024 22:29:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713738580; cv=none; b=CoUYiyoTL9N4p7tvJyh988FAnLa2ed5IPKUym4MyMaa8coomwXbkPAA+pOUeaMYNLrdLPNIu+RcbA/tChJhtktGNgRROOLXKapLyWetxTVcaYuapWsPViRbxUk1I2a7XhcX35VswyDA79GvKJ0RY7kOKEl2jTnvBue2FE+Xwtpc=
+	t=1713738580; cv=none; b=a/7wWdJ3MxV9Tf5Tadet9Ln2TQdym/qMVb+56h2t5D1o8zpaoT4lBf1aXbStsqworjP+J4pZpClU/M1+k0Qh5oeCpoCCMJUE6Pbz30E7WwaTHAsjD8zrC7swweb4cY7kXBZduahEweE1SAghqlp4QRYZDevR3eEoEUx0bC9aNLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713738580; c=relaxed/simple;
-	bh=KT4Zr8XakFQd+cvqM2qj2rWx1AuzeHfgNWVDm8VCpgA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MLb2hgM4jzeipcV2B9ZFsUCQ6ET0Sf1P+Qmdt72gYtvjxm0Xvzwg346ve84og2GS6XPhVhGilXxgGekHOk9Xo/mec3gvM+N+xbxSdR47+ssxH8ABow1UwH5pMejHC3Uv1989m4mjzaCCN9bpTuKuryBU9w+OJkQhbSPLOhvSPU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SiGz2npN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32EB7C4AF0C;
-	Sun, 21 Apr 2024 22:29:39 +0000 (UTC)
+	bh=RqogyZpi7GC6sa8OQ+7M08Zm/rG5cDcCF1hfrjrpgSo=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=r4PR3fhNA/P0Xy/UxgiqV/zMIM/x9URkpiMycxgBvx+0ruQuvhRoJdnYgZGVnK0tY7+YlLaOdkZlKXLt9Ml0iccGjrPSfHYHm8n39sSayGlJemiWjQPJgyikdPlyVNshSpYcPzqCt0MNnx5o5HTMBDXVUdpx0y58rgRRiJW3ktc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jEb7CGex; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B845C4AF07;
+	Sun, 21 Apr 2024 22:29:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713738579;
-	bh=KT4Zr8XakFQd+cvqM2qj2rWx1AuzeHfgNWVDm8VCpgA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SiGz2npN0YobmOjsxd7pB/3Nbiq6G6Ak3+xo6j1MVUKGugKAp23IbGPAvgN7+4bmD
-	 w97lc/AcBavYNURAlV3DYa4U6cqGiSEhWjxVNezUHbPnX/Fz0AuU6tTa7+UWJp5MCI
-	 FkMTXSlYcw1Gd5Pw86bcIRyTicyOh4JBejIBmGiLzWCDBW4NGluSvAMcxUjSbEIiNW
-	 +Pi8j4O4LZZiBP+5vyGt/TNCiz5INGuOXkHyJqP038GCj7BBokWjIEr+qrPsINECB9
-	 XBHDBreX9oRUhMTe4mFja3uuH2jEWximZ7UiBTky2LoYkmBRWcOR3SMtep41eaiAbm
-	 mkpwyysj5dqdA==
+	s=k20201202; t=1713738580;
+	bh=RqogyZpi7GC6sa8OQ+7M08Zm/rG5cDcCF1hfrjrpgSo=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=jEb7CGexfNIn1vtrnnHFvxuV971Ai+QhMmNdOi3w1hS0P8N6kfrH1CDY7lxfcobBy
+	 /Fa0SsibjNOAv32xTkDY5l/IvXxUrjZvk3fgJW1axITJR/ux0J6Qx3ssj3rXP7QZHC
+	 A47kze7q78YOIcuDse79tlNcs8j/LiQhCBtXc7K1SANJ0lFs9wDLKhCldscct4q+Hk
+	 dYgNXJLH/XgUlLEXrRNYZeYR84h2QuLRWc4bLE1QGRmySA+c1X1ilZOO+bpLOlTsyC
+	 O0hEsutcD0VcoT32DzBx0YRhOkfRXBVwMOuVRx4AwNsez1jsO71Rk5VbM8X9797Eip
+	 U3BaH7JDaS7iw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: Fill in EAS properties
-Date: Sun, 21 Apr 2024 17:29:14 -0500
-Message-ID: <171373856768.1196479.18038444368463734568.b4-ty@kernel.org>
+	Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v2] soc: qcom: mention intentionally broken module autoloading
+Date: Sun, 21 Apr 2024 17:29:15 -0500
+Message-ID: <171373856754.1196479.16545150503325714194.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240319-topic-8280_eas-v1-1-c605b4ea063d@linaro.org>
-References: <20240319-topic-8280_eas-v1-1-c605b4ea063d@linaro.org>
+In-Reply-To: <20240410184522.271889-1-krzk@kernel.org>
+References: <20240410184522.271889-1-krzk@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,22 +62,17 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 19 Mar 2024 16:23:33 +0100, Konrad Dybcio wrote:
-> Replace the bogus capacity-dmips-mhz values and add the measured
-> dynamic-power-coefficient values.
+On Wed, 10 Apr 2024 20:45:22 +0200, Krzysztof Kozlowski wrote:
+> Qualcomm PMIC ChargerPD ULOG and RPM Master Statistics drivers are
+> solely for debugging purposes and should not be autoloaded as modules.
+> Add comments to annotate missing MODULE_DEVICE_TABLE.
 > 
-> The power numbers were measured by matters much more precise than the
-> laggy and cache-y pmic_glink battery data, though the reported values
-> were only accurate to 10mA. But that shouldn't be an issue, especially
-> for the fat and power-hungry X1Cs and given that *each SoC unit* has
-> somewhat different frequency-voltage maps.
 > 
-> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sc8280xp: Fill in EAS properties
-      commit: 365e19c466a57ff17093cf6e9f8ad362dd122602
+[1/1] soc: qcom: mention intentionally broken module autoloading
+      commit: 77706838f837785189578bd8fd768e646e63f8c2
 
 Best regards,
 -- 
