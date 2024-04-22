@@ -1,91 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-18130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BF2C8AC568
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 09:25:11 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 78B748AC587
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 09:28:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BF876282D2D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 07:25:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2A7611F23FA3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 07:28:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C2E34AEE0;
-	Mon, 22 Apr 2024 07:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 529AB537F7;
+	Mon, 22 Apr 2024 07:25:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TfEsq+7z"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BNdDQvcq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDCCA482D3;
-	Mon, 22 Apr 2024 07:22:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0C851037;
+	Mon, 22 Apr 2024 07:24:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713770568; cv=none; b=uWaOdRezDU+tjf+ijdwpq2D46Qi8Biobcgq4tMSC7mXYZGiqIRalsdpxPeNBQ6JToWk6NVqnM2pniU9JpcklnpVUFDH0wDKVaaBz+FDVTA0V2nxI6p8e+rwp4fpEbzqG+Id4wASzMLAuazJX1YZ/PWFFymAwLiKg4Oz5zwQf6ug=
+	t=1713770700; cv=none; b=BKCBh4PAdTWAJQ9ausCLRQBY0AFR9TTD/1xqP6rBacvZ7wxKZMUpMqtNyHL7o81C2dA93BpEEc241u677mufFhYnxIqlrULFodbclBqI00vFoDIRNH0sCkwun4eHhAe//ZfiYWcDgPLZZKl7fKOSVvGlXYItOb3uMOAFwy6+AAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713770568; c=relaxed/simple;
-	bh=+bds4KaPIsETmyKenODVb60+fYLzI98dsErkjcissAU=;
+	s=arc-20240116; t=1713770700; c=relaxed/simple;
+	bh=n1rgUnp+TQN8uWTIEcVitLd7jUdMIkcsybmOH7TAZDM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YAhHi1B2BM5Q/UiRgAAAqn5P1s3thuuMI4Ym9FOlqE1/VogCoo+DPYoH4XImCaDcqs4xrCFxWrcEtII6kzBmmCP7gKNcp3f1eTPX0CRCFay+bNSINJJg8CexCFpr+QMuf2juJIbhP8JiHdoeWDChj3e+4lXJR2vJSopD4sytJKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TfEsq+7z; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 550F8C113CC;
-	Mon, 22 Apr 2024 07:22:48 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=SXtVY8MCYE+kMRlXEyiQBLVYayOUQDXr3zymxKHHHTwBkmbbw2ANcC0oZjnMwcXmPo+vAuDmZmSAseD2Bj4/PwoKmAbwjjuY50Mdq+t0PQE+kYG4bgd95VOKudC/bQHUJjDzZCxu01p6JegQqCvldIKE4+GgvV6TsGqnC8fHXOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BNdDQvcq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9C12C113CC;
+	Mon, 22 Apr 2024 07:24:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713770568;
-	bh=+bds4KaPIsETmyKenODVb60+fYLzI98dsErkjcissAU=;
+	s=k20201202; t=1713770699;
+	bh=n1rgUnp+TQN8uWTIEcVitLd7jUdMIkcsybmOH7TAZDM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TfEsq+7zn8VY+YIX+RPml3IpRBjLNn9PikKkg+hcWyjq00kszngeJWoL5Ez+pM5sM
-	 O9mo45hpSJdwaZ+BuSoL7eSqfdM13VgzY9zQg9N99f88QoBHX//Wq9SNxpWyGoai0Z
-	 PsXlKE5C24KWFCX2Oht8WvvlrhEkytzScW4LneRrstDvI+d4gtrx9aIHoVOLwdyRb0
-	 JuU8cyI+GAAhlkkwutO3NWjmgF8a3COz5+E/L6CPG5hLNHGMHpjqprySFinOiKHA+d
-	 bseQVbRrknxFejxlORusHH1YNleZEjEoZ4Le4bXzR1TcLwnDd7aTwnsQaQO2218VgD
-	 dcFzcgwfOF2mg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1ryo0h-000000002ix-0Prm;
-	Mon, 22 Apr 2024 09:22:43 +0200
-Date: Mon, 22 Apr 2024 09:22:43 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Felipe Balbi <balbi@kernel.org>, devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_ppratap@quicinc.com,
-	quic_jackp@quicinc.com, Bjorn Andersson <quic_bjorande@quicinc.com>
-Subject: Re: [PATCH v21 9/9] usb: dwc3: qcom: Add multiport suspend/resume
- support for wrapper
-Message-ID: <ZiYQQ6DlGPFcxrdI@hovoldconsulting.com>
-References: <20240420044901.884098-1-quic_kriskura@quicinc.com>
- <20240420044901.884098-10-quic_kriskura@quicinc.com>
+	b=BNdDQvcq3vorF+4E/GkyW3Slc1cKMfuikW6UJWa5Q1Nw/MLXBBskJVr3CZVE/FrVV
+	 ujwUNsRTCw2V3HEFMEC1kv7Ly9C2a3MsxXtSejilKS3nJfam3MajMs9Gezu1iRA4g4
+	 41xUqxSy8StJ/+EiwVk89Y3tUAr4Qj6IpygcUTS33Q5zbFj8osSJh9s0SLmGdp0DWw
+	 OgBnpzQO5j97U9QRYYLWMsaPP61b0c/MshrGnd7VnYynl/klGnImS/IU+n2zkFjWtK
+	 AiK76IXJhUkO67rWRMv05RmNq6rP+x11SaRt1kWkzKbElKJY+ATvTtKhNlxDD/ba4R
+	 fx8S+ZGbdzyQQ==
+Date: Mon, 22 Apr 2024 12:54:46 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Qiang Yu <quic_qianyu@quicinc.com>
+Cc: Manivannan Sadhasivam <mani@kernel.org>, quic_jhugo@quicinc.com,
+	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
+	quic_mrana@quicinc.com
+Subject: Re: [PATCH v3 1/3] bus: mhi: host: Add sysfs entry to force device
+ to enter EDL
+Message-ID: <20240422072446.GA9775@thinkpad>
+References: <1713170945-44640-1-git-send-email-quic_qianyu@quicinc.com>
+ <1713170945-44640-2-git-send-email-quic_qianyu@quicinc.com>
+ <20240415115616.GF7537@thinkpad>
+ <a62cb28a-e6ab-4f60-9210-b7aa8e0c34e0@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240420044901.884098-10-quic_kriskura@quicinc.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <a62cb28a-e6ab-4f60-9210-b7aa8e0c34e0@quicinc.com>
 
-On Sat, Apr 20, 2024 at 10:19:01AM +0530, Krishna Kurapati wrote:
-> Power event IRQ is used for wakeup either when the controller is
-> SuperSpeed capable but is missing an SuperSpeed PHY interrupt, or when
-> the GIC is not capable of detecting DP/DM High-Speed PHY interrupts.
+On Tue, Apr 16, 2024 at 01:45:18PM +0800, Qiang Yu wrote:
 > 
-> The Power event IRQ stat register indicates whether the High-Speed
-> phy entered and exited L2 successfully during suspend and resume.
-> Indicate the same for all ports of a multiport controller.
+> On 4/15/2024 7:56 PM, Manivannan Sadhasivam wrote:
+> > On Mon, Apr 15, 2024 at 04:49:03PM +0800, Qiang Yu wrote:
+> > > Add sysfs entry to allow users of MHI bus force device to enter EDL.
+> > > Considering that the way to enter EDL mode varies from device to device and
+> > > some devices even do not support EDL. Hence, add a callback edl_trigger in
+> > > mhi controller as part of the sysfs entry to be invoked and MHI core will
+> > > only create EDL sysfs entry for mhi controller that provides edl_trigger
+> > > callback. All of the process a specific device required to enter EDL mode
+> > > can be placed in this callback.
+> > > 
+> > > Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> > > ---
+> > >   Documentation/ABI/stable/sysfs-bus-mhi | 11 +++++++++++
+> > >   drivers/bus/mhi/host/init.c            | 35 ++++++++++++++++++++++++++++++++++
+> > >   include/linux/mhi.h                    |  2 ++
+> > >   3 files changed, 48 insertions(+)
+> > > 
+> > > diff --git a/Documentation/ABI/stable/sysfs-bus-mhi b/Documentation/ABI/stable/sysfs-bus-mhi
+> > > index 1a47f9e..d0bf9ae 100644
+> > > --- a/Documentation/ABI/stable/sysfs-bus-mhi
+> > > +++ b/Documentation/ABI/stable/sysfs-bus-mhi
+> > > @@ -29,3 +29,14 @@ Description:	Initiates a SoC reset on the MHI controller.  A SoC reset is
+> > >                   This can be useful as a method of recovery if the device is
+> > >                   non-responsive, or as a means of loading new firmware as a
+> > >                   system administration task.
+> > > +
+> > > +What:           /sys/bus/mhi/devices/.../force_edl
+> > s/force_edl/trigger_edl
+> > 
+> > > +Date:           April 2024
+> > > +KernelVersion:  6.9
+> > > +Contact:        mhi@lists.linux.dev
+> > > +Description:    Force devices to enter EDL (emergency download) mode. Only MHI
+> > How can the user trigger EDL mode? Writing to this file? If so, what is the
+> > value?
 > 
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> User can trigger EDL mode by writing a non-zero value to this file.
+> 
+> > 
+> > 'Emergency Download'
+> > 
+> > > +                controller that supports EDL mode and provides a mechanism for
+> > > +                manually triggering EDL contains this file. Once in EDL mode,
+> > 'This entry only exists for devices capable of entering the EDL mode using the
+> > standard EDL triggering mechanism defined in the MHI spec <insert the version>.'
+> > 
+> > > +                the flash programmer image can be downloaded to the device to
+> > > +                enter the flash programmer execution environment. This can be
+> > > +                useful if user wants to update firmware.
+> > It'd be good to mention the OS tool like QDL that is used to download firmware
+> > over EDL.
+> 
+> OK, can I add an additionnal line like this
+> Users:          Any OS tools that is used to download firmware over EDL like
+> QDL.
+> 
+> > 
+> > > diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+> > > index 44f9349..333ac94 100644
+> > > --- a/drivers/bus/mhi/host/init.c
+> > > +++ b/drivers/bus/mhi/host/init.c
+> > > @@ -127,6 +127,32 @@ static ssize_t soc_reset_store(struct device *dev,
+> > >   }
+> > >   static DEVICE_ATTR_WO(soc_reset);
+> > > +static ssize_t force_edl_store(struct device *dev,
+> > s/force_edl/trigger_edl
+> > 
+> > > +			       struct device_attribute *attr,
+> > > +			       const char *buf, size_t count)
+> > > +{
+> > > +	struct mhi_device *mhi_dev = to_mhi_device(dev);
+> > > +	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+> > > +	unsigned long val;
+> > > +	int ret;
+> > > +
+> > > +	ret = kstrtoul(buf, 10, &val);
+> > > +	if (ret < 0) {
+> > > +		dev_err(dev, "Could not parse string: %d\n", ret);
+> > No need to print error.
+> > 
+> > > +		return ret;
+> > > +	}
+> > > +
+> > > +	if (!val)
+> > > +		return count;
+> > What does this mean?
+> 
+> If user want to trigger EDL mode,he has to write a non-zero value to this
+> file. If he writes zero, nothing will happen.
+> 
 
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+You need to throw -EINVAL for invalid inputs ie., <= 0.
+
+> Do we need to limit the valid value to a specific value like 1?
+> 
+
+That's not needed.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
