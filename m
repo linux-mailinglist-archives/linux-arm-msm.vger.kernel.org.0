@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-18122-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18123-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BFCE18AC495
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 08:57:02 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D11298AC4D3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 09:12:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7AADB2825AE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 06:57:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6E2241F21E11
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 07:12:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70A6F482ED;
-	Mon, 22 Apr 2024 06:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF8624AEC1;
+	Mon, 22 Apr 2024 07:10:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oKRwIrma"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jj1BMdGR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F528482DA;
-	Mon, 22 Apr 2024 06:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CAC148CF2;
+	Mon, 22 Apr 2024 07:10:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713769017; cv=none; b=HIKB6/Ewk/HM/B2WqO3SAVy3sQUfJmc/0mLDvEsm0wJkcFWLq1oqke05SdIQhPtcL9lbd2JFYw7kfUZULrratN1UZU2N8arcdGDdhmZQ3GqSgIy+oWlu/AnX8b/NqvK1qjpEbXxYJw20B71YO0VGBMHu0bi7duW+PNiUUGyk4a8=
+	t=1713769839; cv=none; b=IWhwdpJNULj9w/ah0jtWxy3ziRMdAVhvf9csFef7nTWPxswC2ttDr7fu5NmxX1IlLNpd0scMAE1rdd2Lhkx+HG9z/q9v7DQY5DZ1X3hFlZsgGfyWdjdMZO/WlTmQi/YYlh50u1quWy2f8bbCiENpc6xpCsIR1QDzepdHdwt2/kI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713769017; c=relaxed/simple;
-	bh=hzRcfa23v/DUT+2N5bmwRSQG9X1L2rHH3P2NVUnJhzA=;
+	s=arc-20240116; t=1713769839; c=relaxed/simple;
+	bh=KFsVNGLXwmalWCExiI1bfO6IRb+bF09aXGJFizeOp2o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UeUXJfrYWGAFfMqZhjbsfzzFkuKOoE3R5PheKMbCfMA9yeEVWdrqZYKVwnX+4m2ndR19PMWnTXT8cvPeeWWE7SoOCBX/XE5XO6OoGxtAbCxFLQeSrYpwqIEBLsabhewtziKmoUWm5nnD8w9EN+k0mHTo60SoI+/7Rmb2K4yU1tI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oKRwIrma; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D917C2BD11;
-	Mon, 22 Apr 2024 06:56:57 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=e3+EB1+Yf8NPTqpYcJsIRLAdAp7G1ljprXLthk8sglgKDVI2OfMGtwWydfSQH9nelbRAFF58bemN6eh+e7nZrz4GAHwGTbuR3r0jfrNoHad5CNMx0ZRTKxocm3Kt4Mr2ppfTVOqP5ZfBV7iwIGr/jQHmoKMsrLyJHAqMu8vKSnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jj1BMdGR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DABEEC113CC;
+	Mon, 22 Apr 2024 07:10:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713769017;
-	bh=hzRcfa23v/DUT+2N5bmwRSQG9X1L2rHH3P2NVUnJhzA=;
+	s=k20201202; t=1713769838;
+	bh=KFsVNGLXwmalWCExiI1bfO6IRb+bF09aXGJFizeOp2o=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=oKRwIrmafhE3wmAjRxTDaI7GMTAoAul8XQALTapw4bxL3n6wKBjFb1DnX/NMtDEdm
-	 TOUU7QwZOPVKnGatAAdhtPSwpZOBQmENez6M+VepU++yASUhU5J1wwn8acmS2uakAS
-	 enkAJ3HtS1zL1v60b69ewlVanugP0e/VuaePpORQxeB8kgqr9X6nHjCB5R6/TrYeqC
-	 399IiONqTGiLv7DG2GiL0Y2K1KheiGJPv018eBq6ZkUgKP1Vwvq2SPKIZO/tdQgOo5
-	 WrRl3iu3LfLn6TzcBpRldeXNvghtuskDT3visf+RnpBYTDT0rNycAS0l4lqfyfQeXc
-	 RB9AVYyDZ4IRg==
+	b=Jj1BMdGR1FrmoIsUKIUW9iBgDUt/xXxF3tllfdOwY4sI5jrPEPE0EuKLsTJNY1/jI
+	 qqaKK2dCBfFrh2ZouMdmvsjTywEhjw0Tp1aXnj2Vba1EE94AlTZCeto2KdMcs7iuta
+	 3OY8E4UWjGeqyCIt12BnUZnwhRbVOhp/WGwDg8VeeIRz2QOSiXcsznprm6s9Fugo/L
+	 Tv4sVXFifVn33gtoI68Mbj6hKIq32j313P2GTUzUOm4uHUHKkIivrM5oqvkzVhQXOp
+	 3berZULi6Zi+BjfzP3t/AwguZ9e7uvjBCuLScNG2KzAoifIjhvZCiHquglQ2bfVcav
+	 JQX8QH/ZKIjgQ==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan@kernel.org>)
-	id 1rynbf-000000002PO-1zHP;
-	Mon, 22 Apr 2024 08:56:51 +0200
-Date: Mon, 22 Apr 2024 08:56:51 +0200
+	id 1rynou-000000002ZM-3EbG;
+	Mon, 22 Apr 2024 09:10:33 +0200
+Date: Mon, 22 Apr 2024 09:10:32 +0200
 From: Johan Hovold <johan@kernel.org>
 To: Krishna Kurapati <quic_kriskura@quicinc.com>
 Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -60,11 +60,11 @@ Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
 	linux-kernel@vger.kernel.org, quic_ppratap@quicinc.com,
 	quic_jackp@quicinc.com, Bjorn Andersson <quic_bjorande@quicinc.com>
-Subject: Re: [PATCH v21 2/9] usb: dwc3: core: Access XHCI address space
- temporarily to read port info
-Message-ID: <ZiYKM7tQ-FXwTcpD@hovoldconsulting.com>
+Subject: Re: [PATCH v21 4/9] usb: dwc3: core: Refactor PHY logic to support
+ Multiport Controller
+Message-ID: <ZiYNaJ8rwz6DXUGT@hovoldconsulting.com>
 References: <20240420044901.884098-1-quic_kriskura@quicinc.com>
- <20240420044901.884098-3-quic_kriskura@quicinc.com>
+ <20240420044901.884098-5-quic_kriskura@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,18 +73,21 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240420044901.884098-3-quic_kriskura@quicinc.com>
+In-Reply-To: <20240420044901.884098-5-quic_kriskura@quicinc.com>
 
-On Sat, Apr 20, 2024 at 10:18:54AM +0530, Krishna Kurapati wrote:
-> All DWC3 Multi Port controllers that exist today only support host mode.
-> Temporarily map XHCI address space for host-only controllers and parse
-> XHCI Extended Capabilities registers to read number of usb2 ports and
-> usb3 ports present on multiport controller. Each USB Port is at least HS
-> capable.
+On Sat, Apr 20, 2024 at 10:18:56AM +0530, Krishna Kurapati wrote:
+> Currently the DWC3 driver supports only single port controller
+> which requires at least one HS PHY and at most one SS PHY.
 > 
-> The port info for usb2 and usb3 phy are identified as num_usb2_ports
-> and num_usb3_ports and these are used as iterators for phy operations
-> and for modifying GUSB2PHYCFG/ GUSB3PIPECTL registers accordingly.
+> But the DWC3 USB controller can be connected to multiple ports and
+> each port can have their own PHYs. Each port of the multiport
+> controller can either be HS+SS capable or HS only capable
+> Proper quantification of them is required to modify GUSB2PHYCFG
+> and GUSB3PIPECTL registers appropriately.
+> 
+> DWC3 multiport controllers are capable to service at most 15 High Speed
+> PHYs and 4 Supser Speed PHYs. Add support for detecting, obtaining and
+> configuring PHYs supported by a multiport controller.
 > 
 > Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
 > Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
