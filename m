@@ -1,109 +1,247 @@
-Return-Path: <linux-arm-msm+bounces-18160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B6158ACAC4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 12:34:27 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BF518ACAE9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 12:40:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CB906281BD3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 10:34:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9A47EB2323D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 10:40:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98EEF14A09D;
-	Mon, 22 Apr 2024 10:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3282914A4C4;
+	Mon, 22 Apr 2024 10:38:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=leemhuis.info header.i=@leemhuis.info header.b="d4Aq3BUT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pMX2P/dO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF132149E0F;
-	Mon, 22 Apr 2024 10:31:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.237.130.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A58145FFE;
+	Mon, 22 Apr 2024 10:38:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713781902; cv=none; b=PS5yVIPcK8uVf7wAa/TTFZ7jv8ZMH+01TpllDqBgm93AZgoAu1g70j8ubqL73imsJH/bE3Vvyju7kWYT5bTZH+JOZBFUKjcja97TEb3D64VfTlPfRn39iXSSg8tazT+UWlxV7MGz/3nAYPcZnIzPzmVgfKWpmMgpNpE+T/UsHEg=
+	t=1713782307; cv=none; b=HCvh5VESKT3+3Wc9fWNgMsUIaadJawlmR4TEywy9RfUeAn90SARO6WsqG2M2paeeIOsLlJEPSYM5purhk3+GEGOvhtbvhMuP/DmtyIWiz9ql/Aqou8O5aKCH7z8aVti66eN2T8oe83WK9r4cj/IjAEetWKbdWfAhSmyt8KplyDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713781902; c=relaxed/simple;
-	bh=+j2bNi8k/alLWVzZXt5+/z70HAC4NEQb/EVIcPMzr/0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eYR+tPhf5AFNL/kd4FsSI2iwxG4jbr9or/qMklIq6TbpnvlrCvsssn3c3TSkx09nmYma8jYvMv6kbFoL6uX+VgJL+gPNnbz5T6gjGdbb4mlGkPgXopepVcL7dov1nNMEjxG42iW+4gLDgyn4SzMqqW+kcjLott2hd6rFeLDZUSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=leemhuis.info; spf=pass smtp.mailfrom=leemhuis.info; dkim=pass (2048-bit key) header.d=leemhuis.info header.i=@leemhuis.info header.b=d4Aq3BUT; arc=none smtp.client-ip=80.237.130.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=leemhuis.info
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=leemhuis.info
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=leemhuis.info; s=he214686; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:Reply-To:MIME-Version:Date:
-	Message-ID:From:Sender:Reply-To:Subject:Date:Message-ID:To:Cc:MIME-Version:
-	Content-Type:Content-Transfer-Encoding:Content-ID:Content-Description:
-	In-Reply-To:References; bh=s/c3dJrF+9TupMEh+95zrLT8ysApMrEChVLOaNR1tJE=;
-	t=1713781900; x=1714213900; b=d4Aq3BUTX8hDvY1K/1zvbRMEcd+wHaGzKq+7eDBwh345V/o
-	sSd+nHHu7M469tR5oS4ejLE12f6eu5DYDMkPuLryGb92TkzbM17xIto61JbO58QHqINlAYWALAIN5
-	hhWKYeSodu0eLHwfze0DPZ5/KpL5jrGO3ae3eCnXWk8NNPTPTAoOEAAwr08Lk7SldykiYW4Jz8Pc/
-	PrbZNLpPMiNxZ3+MZdYE7NHmeA1skurkKzKbIajMRcFg1R1YDtaIVYmp04JbunfBoSWyL1Tk6TqfK
-	Zu6iBpc6lbYd+/P7bIRxogFTgMiDUYS1gsLDOZwFmGprd/AdNRw9xowv1uQfKqlw==;
-Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
-	by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
-	id 1ryqxW-0003dJ-62; Mon, 22 Apr 2024 12:31:38 +0200
-Message-ID: <59372e42-2eab-4efd-b7d8-d0ef6f8c2300@leemhuis.info>
-Date: Mon, 22 Apr 2024 12:31:37 +0200
+	s=arc-20240116; t=1713782307; c=relaxed/simple;
+	bh=q/00YOU88u3Zmpm8wkpicJ6lwNSaTO8+ZG7NhTlGPS8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=lkT76ca6f1f2kXFWnV7qyDWj17N2y5AGjWDSSSL1IrAc7Q6DsAZaiXe3LxgmtQVhAkHECczOMAXGml7E+vGmy+g9cPYrMCawHkxxXyR9RuYBJQsGE6UzU4YbeTpYZ+E2cC6CCZ87lsN1nJKLT+NnYvgWL1Bcv4IBv1LuJUleAMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pMX2P/dO; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43M9Okt4012232;
+	Mon, 22 Apr 2024 10:38:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=QzHrQbucuEK6n03pMLytmAk+wB/HJQb+xXrNsqqX0zw=; b=pM
+	X2P/dOA/igi0+GhGy5jvLREkri8m80CU4+8WJ/jNI//W5QICtJbDM/ugm1isGsEA
+	381c4i/IE1kveN4A3J5B2vD6YaCkv7c7hgyD55I/aoqx5PGA8E4AMlrP+SzefAFk
+	zwDcRdquhQvp8xK4apwwprXVl4Fw4TecfyARVwKqicn3VzS2WNVIPwjHkjYWUzJf
+	Va24K0pOK+34lDwcO/2bdvvHfcrGRTWSXe/GY3HGEx1YOenxcBC2Bh2JoYiaF9cm
+	kHdIsbJbGs8RvL1XJAmCLss+D9Ssrw945MOIFjK5PbgU5Id5184J5+XkFe+aehJI
+	+2o1VongqUQtq1bxYTIQ==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xnn82r80e-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 22 Apr 2024 10:38:05 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43MAc4d2027818
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 22 Apr 2024 10:38:04 GMT
+Received: from [10.216.28.79] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 22 Apr
+ 2024 03:37:59 -0700
+Message-ID: <ced05784-79f8-2ec5-59ef-7fcbb3ac1988@quicinc.com>
+Date: Mon, 22 Apr 2024 16:07:56 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: Linux regressions mailing list <regressions@lists.linux.dev>
-Subject: Re: [PATCH] clk: qcom: gdsc: treat optional supplies as optional
-To: Bjorn Andersson <andersson@kernel.org>,
- Johan Hovold <johan+linaro@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Linux kernel regressions list <regressions@lists.linux.dev>
-References: <20240325085835.26158-1-johan+linaro@kernel.org>
- <171226578689.615813.4474720130637817355.b4-ty@kernel.org>
-From: "Linux regression tracking (Thorsten Leemhuis)"
- <regressions@leemhuis.info>
-Content-Language: en-US, de-DE
-In-Reply-To: <171226578689.615813.4474720130637817355.b4-ty@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v2 3/8] ASoC: dt-bindings: wcd937x-sdw: add bindings for
+ wcd937x-sdw
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Srinivas Kandagatla
+	<srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        "Rob
+ Herring" <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Conor
+ Dooley" <conor+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai
+	<tiwai@suse.com>
+CC: <alsa-devel@alsa-project.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_rohkumar@quicinc.com>,
+        <quic_pkumpatl@quicinc.com>
+References: <20240416063600.309747-1-quic_mohs@quicinc.com>
+ <20240416063600.309747-4-quic_mohs@quicinc.com>
+ <20acec19-0dc9-4926-aac5-f24fcc09cba3@kernel.org>
+From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+In-Reply-To: <20acec19-0dc9-4926-aac5-f24fcc09cba3@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1713781900;2106b9ec;
-X-HE-SMSGID: 1ryqxW-0003dJ-62
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: BmvezGpEuMkSvJ_mXWp02lNoRtRdZ62X
+X-Proofpoint-ORIG-GUID: BmvezGpEuMkSvJ_mXWp02lNoRtRdZ62X
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-22_08,2024-04-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ suspectscore=0 adultscore=0 clxscore=1015 bulkscore=0 malwarescore=0
+ spamscore=0 impostorscore=0 priorityscore=1501 mlxlogscore=999
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404220049
 
-On 04.04.24 23:22, Bjorn Andersson wrote:
-> 
-> On Mon, 25 Mar 2024 09:58:35 +0100, Johan Hovold wrote:
->> Since commit deebc79b28d6 ("clk: qcom: gpucc-sc8280xp: Add external
->> supply for GX gdsc") the GDSC supply must be treated as optional to
->> avoid warnings like:
+On 4/17/2024 9:26 PM, Krzysztof Kozlowski wrote:
+> On 16/04/2024 08:35, Mohammad Rafi Shaik wrote:
+>> From: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
 >>
->> 	gpu_cc-sc8280xp 3d90000.clock-controller: supply vdd-gfx not found, using dummy regulator
+>> Qualcomm WCD9370/WCD9375 Codec is a standalone Hi-Fi audio codec IC
+>> connected over SoundWire. This device has two SoundWire devices RX and
+>> TX respectively.
+>> This binding is for those slave devices on WCD9370/WCD9375.
 >>
->> on SC8280XP.
+>> Co-developed-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+>> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+>> Signed-off-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+>> ---
+>>   .../bindings/sound/qcom,wcd937x-sdw.yaml      | 71 +++++++++++++++++++
+>>   1 file changed, 71 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
 >>
->> [...]
+>> diff --git a/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml b/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
+>> new file mode 100644
+>> index 000000000000..2b7358e266ba
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
+>> @@ -0,0 +1,71 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/sound/qcom,wcd937x-sdw.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm SoundWire Slave devices on WCD9370
+>> +
+>> +maintainers:
+>> +  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>> +
+>> +description: |
 > 
-> Applied, thanks!
+> Do not need '|' unless you need to preserve formatting.
+
+ACK
+
+will remove '|' in next version patch set.
+
 > 
-> [1/1] clk: qcom: gdsc: treat optional supplies as optional
->       commit: 6677196fb1932e60b88ad0794a7ae532df178654
+>> +  Qualcomm WCD9370 Codec is a standalone Hi-Fi audio codec IC.
+>> +  It has RX and TX Soundwire slave devices. This bindings is for the
+>> +  slave devices.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: sdw20217010a00
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  qcom,tx-port-mapping:
+>> +    description: |
+>> +      Specifies static port mapping between slave and master tx ports.
+>> +      In the order of slave port index.
+> 
+> Use inclusive terminology. Describe what is here - what is the index?
+> What is the value?
 
-Bjorn, quick question: this regression fix after more than two and a
-half weeks is not yet mainlined. Is there a reason? Or am I missing
-something here?
+ACK
 
-Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
---
-Everything you wanna know about Linux kernel regression tracking:
-https://linux-regtracking.leemhuis.info/about/#tldr
-If I did something stupid, please tell me, as explained on that page.
+> 
+>> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+>> +    minItems: 4
+>> +    maxItems: 4
+> 
+> Add constraints on values. You have maximum 15 TX ports, don't you?
+> 
+>> +
+>> +  qcom,rx-port-mapping:
+>> +    description: |
+>> +      Specifies static port mapping between slave and master rx ports.
+>> +      In the order of slave port index.
+>> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+>> +    minItems: 5
+>> +    maxItems: 5
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - qcom,port-mapping
+> 
+> Test your binding. There is no need to engage reviewers for reviewing
+> simple mistakes which *tools* can point. Respect reviewers time and use
+> the tools first.
+> 
+> You need oneOf: with required for TX and RX... or just unify the
+> properties. Why do you need two?
+> 
+ACK,
 
-#regzbot poke
+will fix the binding errors.
+> 
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    soundwire@3210000 {
+> Drop unit address.
+
+
+actually took the reference from wcd938x.
+
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/Documentation/devicetree/bindings/sound/qcom,wcd938x-sdw.yaml#n48
+
+
+> 
+>> +        #address-cells = <2>;
+>> +        #size-cells = <0>;
+>> +        reg = <0x03210000 0x2000>;
+> 
+> Drop, not relevant and not placed correctly (see DTS coding style).
+
+>> +        wcd937x_rx: codec@0,4 {
+> 
+> Drop label, not used.
+> 
+>> +            compatible = "sdw20217010a00";
+>> +            reg  = <0 4>;
+>> +            qcom,rx-port-mapping = <1 2 3 4 5>;
+>> +        };
+>> +    };
+>> +
+>> +    soundwire@3230000 {
+> 
+> Drop this example, it's almost identical.
+> 
+> Best regards,
+> Krzysztof
+> 
+
+Thanks & Regards,
+Rafi
 
