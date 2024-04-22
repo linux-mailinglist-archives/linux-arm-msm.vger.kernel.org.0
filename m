@@ -1,150 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-18169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18170-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC6CB8ACC53
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 13:51:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 001368ACC71
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 14:06:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A5493285ADA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 11:51:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 431112858AC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 12:06:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6542D14A09E;
-	Mon, 22 Apr 2024 11:50:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B43C146D57;
+	Mon, 22 Apr 2024 12:06:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bpEmg+5m"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Po5YNxFO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39BCE146A9A;
-	Mon, 22 Apr 2024 11:50:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FAB1465A6;
+	Mon, 22 Apr 2024 12:06:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713786628; cv=none; b=PQP8WnGsx/apw0FbyXz/pr7j1YwyWkShSq9h86M71h3/WZvNofPfCfa2Hve0qjVbsE1ECl/jxQxM42nOG2OhXfxotOcVDb3wlk0mhQZOV8xFL0a11T9bRF94AhPUCiWYIUPS6OW9Y1cxAGVWlqIcgH1GW3cnNqnK+d9xMlBcCfg=
+	t=1713787580; cv=none; b=omKz4XGAnPXC79JH9EoDeUFaozHQ6KVR//YLXsq/fZGtTl2clt2Rnfhu3Gac1JqQulmyw1/JVPuc5qaTj81PrzFAiUeByZedS78xqs7x6DXcxWzpBEBl65T3uG1RdEuFC0nq26Lc55IFUUZwyalO2m7+YT/gW54/jxDkKHfuJI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713786628; c=relaxed/simple;
-	bh=zIsEFBhzD+ZLEO1S9a4Cy+7IngF0zRAtRSaUbuQMgQ0=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=MPYydDTES9kHxbuKfr3f87g2h4kbnpH7plMTkrGoKtBfdSAjcdKIAJpUAdPFW7Dtxs47qqbD6j6GcG07HlWtdykpaQfwJRstAx6MIyaZqaTmDxa9puxWeEPHea2g3w4EsXePPdJCDQvpdElAJYzPjRMFdCrhtNDgUhHEl2q3c2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bpEmg+5m; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74B58C32782;
-	Mon, 22 Apr 2024 11:50:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713786627;
-	bh=zIsEFBhzD+ZLEO1S9a4Cy+7IngF0zRAtRSaUbuQMgQ0=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=bpEmg+5mn+onj3b66rqHoJKYf13F+mBQn6j56G+3+iyAuuian6f5TSaJcbAPMG1JX
-	 h3ICYktXKg5hhzHsUobwLyzm46KYj5mn37dGf9FFoWTDdqK+lPjdhhAvKVDDOhPN4b
-	 yIEc4HifqRQGw1bVR8PnS62Q7maQYpNVXDERrDhq3RmtCGKLlD4Psr7CpOe8IVeRId
-	 chXylBwNAE9yPunHZywdrdU4Jabixsg0lSV58u5n0ZWZfu0RGQ3twcBvfI+6Kre1oz
-	 0Nly5z40HFKG2t7ZGyopobEAg/fpFPLCxZLCZJMz0r0asFp+IwUB4vZfgCqVQB7HHe
-	 Q8jhbsXjv6P4Q==
-Date: Mon, 22 Apr 2024 06:50:26 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1713787580; c=relaxed/simple;
+	bh=c+ec/JzT6ZChnI8VNR+kjXpMJ5qQ8sRKNMGsYEOD6ps=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=BCLmtG6d69Nsd6Ltjnk4E3jVsdcz5ZId/puOYrBbVXb/c3PMmvh3oUvt5e+it0SoSDfFIjroFZ/L64SkAFtUqBJ+pCmJmWCdrjXJ1hVioLVpob2RJgUdp/nO11Uzd2KBjICmJ1ka2MUAM4pHET+TT8u3qUqy34cj5DP4ggvCMxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Po5YNxFO; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43M9OoWK026512;
+	Mon, 22 Apr 2024 12:06:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=c+ec/JzT6ZChnI8VNR+kjXpMJ5qQ8sRKNMGsYEOD6ps=; b=Po
+	5YNxFOwSo/3k54iwijC0BRwiz5CeukeGjKGQh2WPyCwUeDfzIOQ8BAZN4QwT1Gy7
+	x1BGj1gRpZJ6c7D06BVBNqziqc9qk2LtU7REOzc/5qA/oMjAaIL4AHWgYewVydrv
+	YuMV8p7wsvnsAzGlUVKvYy4f84HllT6Tb/UKDy/imIHI0qM33GlnHu+X7d7AckJ1
+	pn0QcRXwkgjckDEiXcSc07m4gP0xGgq8+VnEyq5S6vCKWLtmR0zOdKQKxopBc87f
+	nN/KTjZAqoJ4NCDA5AS/SGyNz8TKUcA67bwxpcHgBl5pxtae+oQ0DUehpvzGMp65
+	nWMu/9b+ygmkZODSEvBQ==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xnn82gdt5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 22 Apr 2024 12:06:11 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43MC6AuM024085
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 22 Apr 2024 12:06:10 GMT
+Received: from [10.253.39.160] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 22 Apr
+ 2024 05:06:08 -0700
+Message-ID: <d9908e10-66d6-4737-b366-80cbc9df1801@quicinc.com>
+Date: Mon, 22 Apr 2024 20:06:06 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
- devicetree@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>
-In-Reply-To: <20240422-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v3-0-799475a27cce@linaro.org>
-References: <20240422-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v3-0-799475a27cce@linaro.org>
-Message-Id: <171378646293.749182.6639047187760279527.robh@kernel.org>
-Subject: Re: [PATCH v3 0/3] arm64: qcom-sm8[456]50: properly describe the
- PCIe Gen4x2 PHY AUX clock
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/3] bus: mhi: host: pci_generic: Add edl callback to
+ enter EDL
+To: Manivannan Sadhasivam <mani@kernel.org>
+CC: Mayank Rana <quic_mrana@quicinc.com>, <quic_jhugo@quicinc.com>,
+        <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>
+References: <1713170945-44640-1-git-send-email-quic_qianyu@quicinc.com>
+ <1713170945-44640-4-git-send-email-quic_qianyu@quicinc.com>
+ <17d94b91-137c-409c-8af3-f32f1af2eb71@quicinc.com>
+ <4b684db2-d384-404a-9c54-60d79ac7cf9f@quicinc.com>
+ <adb9ab3d-0fd2-4afe-96d7-573b1822e0c3@quicinc.com>
+ <ab27b383-dcbf-4337-b3ea-da91763e834a@quicinc.com>
+ <a5ea5263-8acb-48dd-a4e1-bc48a9bdf791@quicinc.com>
+ <20240422080837.GC9775@thinkpad>
+Content-Language: en-US
+From: Qiang Yu <quic_qianyu@quicinc.com>
+In-Reply-To: <20240422080837.GC9775@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: GTsngNAd7myf_oDO4773FwzjWvB_ZHt3
+X-Proofpoint-ORIG-GUID: GTsngNAd7myf_oDO4773FwzjWvB_ZHt3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-22_09,2024-04-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ mlxlogscore=999 priorityscore=1501 clxscore=1015 suspectscore=0
+ lowpriorityscore=0 bulkscore=0 adultscore=0 spamscore=0 phishscore=0
+ mlxscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404220054
 
 
-On Mon, 22 Apr 2024 10:33:10 +0200, Neil Armstrong wrote:
-> The PCIe Gen4x2 PHY found in the SM8[456]50 SoCs have a second clock named
-> "PHY_AUX_CLK" which is an input of the Global Clock Controller (GCC) which
-> is muxed & gated then returned to the PHY as an input.
-> 
-> Document the clock IDs to select the PIPE clock or the AUX clock,
-> also enforce a second clock-output-names and a #clock-cells value of 1
-> for the PCIe Gen4x2 PHY found in the SM8[456]50 SoCs.
-> 
-> The PHY driver needs a light refactoring to support a second clock,
-> and finally the DT is changed to connect the PHY second clock to the
-> corresponding GCC input then drop the dummy fixed rate clock.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
-> Changes in v3:
-> - Rebased on linux-next, applies now cleanly
-> - Link to v2: https://lore.kernel.org/r/20240322-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v2-0-3ec0a966d52f@linaro.org
-> 
-> Changes in v2:
-> - Collected review tags
-> - Switched back to of_clk_add_hw_provider/devm_add_action_or_reset to maintain compatibility
-> - Tried to use generic of_clk_hw_onecell_get() but it requires to much boilerplate code
->   and would still need a local qmp_pcie_clk_hw_get() to support the current #clock-cells=0
->   when exposing 2 clocks, so it's simpler to just return the clocks in qmp_pcie_clk_hw_get()
-> - Link to v1: https://lore.kernel.org/r/20240319-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v1-0-926d7a4ccd80@linaro.org
-> 
-> ---
-> Neil Armstrong (3):
->       arm64: dts: qcom: sm8450: remove pcie-1-phy-aux-clk and add pcie1_phy pcie1_phy_aux_clk
->       arm64: dts: qcom: sm8550: remove pcie-1-phy-aux-clk and add pcie1_phy pcie1_phy_aux_clk
->       arm64: dts: qcom: sm8650: remove pcie-1-phy-aux-clk and add pcie1_phy pcie1_phy_aux_clk
-> 
->  arch/arm64/boot/dts/qcom/sm8450.dtsi    |  8 ++++----
->  arch/arm64/boot/dts/qcom/sm8550-hdk.dts |  4 ----
->  arch/arm64/boot/dts/qcom/sm8550-mtp.dts |  4 ----
->  arch/arm64/boot/dts/qcom/sm8550-qrd.dts |  8 --------
->  arch/arm64/boot/dts/qcom/sm8550.dtsi    | 13 ++++---------
->  arch/arm64/boot/dts/qcom/sm8650-mtp.dts |  4 ----
->  arch/arm64/boot/dts/qcom/sm8650-qrd.dts |  4 ----
->  arch/arm64/boot/dts/qcom/sm8650.dtsi    | 13 ++++---------
->  8 files changed, 12 insertions(+), 46 deletions(-)
-> ---
-> base-commit: f529a6d274b3b8c75899e949649d231298f30a32
-> change-id: 20240319-topic-sm8x50-upstream-pcie-1-phy-aux-clk-4b35169707dd
-> 
-> Best regards,
-> --
-> Neil Armstrong <neil.armstrong@linaro.org>
-> 
-> 
-> 
+On 4/22/2024 4:08 PM, Manivannan Sadhasivam wrote:
+> On Wed, Apr 17, 2024 at 12:41:25PM +0800, Qiang Yu wrote:
+>
+> [...]
+>
+>>>>>>> +    ret = mhi_get_channel_doorbell(mhi_cntrl, &val);
+>>>>>>> +    if (ret)
+>>>>>>> +        return ret;
+>>>>>> Don't we need error handling part here i.e. calling
+>>>>>> mhi_cntrl->runtime_put() as well mhi_device_put() ?
+>>>>> Hi Mayank
+>>>>>
+>>>>> After soc_reset, device will reboot to EDL mode and MHI state
+>>>>> will be SYSERR. So host will fail to suspend
+>>>>> anyway. The "error handling" we need here is actually to enter
+>>>>> EDL mode, this will be done by SYSERR irq.
+>>>>> Here, mhi_cntrl->runtime_put() and mhi_device_put() are only to
+>>>>> balance mhi_cntrl->runtime_get() and
+>>>>> mhi_device_get_sync().
+>>>>>
+>>>>> Thanks,
+>>>>> Qiang
+>>>> I am saying is there possibility that mhi_get_channel_doorbell()
+>>>> returns error ?
+>>>> If yes, then why don't we need error handling as part of it. you are
+>>>> exiting if this API return error without doing anything.
+>>> I think here mhi_get_channel_doorbell will not return error. But I still
+>>> add a error checking because it invoked mhi_read_reg, which is a must
+>>> check
+>>> API. For modem mhi controller, this API eventually does a memory read.
+>>> This memory read will return a normal value if link is up and all f's if
+>>> link
+>>> is bad.
+>>>
+>>> Thanks,
+>>> Qiang
+>> Actually, mhi_get_channel_doorbell should also be used in mhi_init_mmio to
+>> replace the getting chdb operation by invoking mhi_read_reg as Mani
+>> commented.
+>> In mhi_init_mmio, we invoke mhi_read_reg many times, but there is also not
+>> additionnal error handling.
+>>
+>> I'm not very sure the reason but perhaps if mhi_read_reg returns error (I
+>> don't
+>> know which controller will provide a memory read callback returning errors),
+> Take a look at AIC100 driver: drivers/accel/qaic/mhi_controller.c
+>
+>> most
+>> probably something is wrong in PCIe, which is not predictable by MHI and we
+>> can
+>> not add err handling every time invoking mhi_read_reg. But we have a timer
+>> to
+>> do health_check in pci_generic.c. If link is down, we will do
+>> pci_function_reset
+>> to try to reovery.
+>>
+> Right, but the MHI stack is designed to be bus agnostic. So if we happen to use
+> it with other busses like USB, I2C etc... then read APIs may fail.
+>
+> Even with PCIe, read transaction may return all 1 response and MHI needs to
+> treat it as an error condition. But sadly, both pci_generic and ath controllers
+> are not checking for invalid read value. But those need to be fixed.
+>
+> Regarding Mayank's query, you should do error cleanups if
+> mhi_get_channel_doorbell() API fails.
+>
+> - Mani
+Hi Mani, Mayank
 
+Checked drivers/accel/qaic/mhi_controller.c, the mhi_read_reg
+callback of AIC100 does return -EIO if it reads out all'f.
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
+Considering that pci_generic controller also needs to check for
+invalid read value which is not fixed though. It's better to invoke
+mhi_cntrl->runtime_put() and mhi_device_put() as error cleanups if
+mhi_get_channel_doorbell returns error here.
 
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
+Let me address all your comments and prepare next version patch.
 
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-New warnings running 'make CHECK_DTBS=y qcom/sm8550-hdk.dtb qcom/sm8550-mtp.dtb qcom/sm8550-qrd.dtb qcom/sm8650-mtp.dtb qcom/sm8650-qrd.dtb' for 20240422-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v3-0-799475a27cce@linaro.org:
-
-arch/arm64/boot/dts/qcom/sm8550-qrd.dtb: clock-controller@100000: clocks: [[41], [42], [43], [44, 0], [45, 0], [45, 1], [45, 2], [46, 0]] is too short
-	from schema $id: http://devicetree.org/schemas/clock/qcom,sm8550-gcc.yaml#
-arch/arm64/boot/dts/qcom/sm8550-qrd.dtb: clock-controller@100000: Unevaluated properties are not allowed ('clocks' was unexpected)
-	from schema $id: http://devicetree.org/schemas/clock/qcom,sm8550-gcc.yaml#
-
-
-
-
-
+Thanks,
+Qiang
+>
 
