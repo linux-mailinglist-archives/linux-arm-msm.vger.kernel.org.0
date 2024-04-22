@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-18127-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20DB88AC524
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 09:16:29 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F7A18AC54F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 09:22:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 08ECF1C20CC7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 07:16:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 20E9B2813C5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 07:22:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE5804CB2E;
-	Mon, 22 Apr 2024 07:13:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC9DC4C630;
+	Mon, 22 Apr 2024 07:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dRfy41E6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mK0Z80cK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1321C8F3;
-	Mon, 22 Apr 2024 07:13:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACEE74C62A;
+	Mon, 22 Apr 2024 07:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713770028; cv=none; b=fKdTlHQ9TeAL68+voi5LtyXFegdICkYVAU3JXznz9j20/FCMKsA7Soo7PcnBam3eyr1q+61lS/IhVv4ZJWJ7v7qnsu/tBiefDlCz9027qb2ThiZpH7OnLqjNG2OA59D6GjiUegVpthCa/RqLqe+4Fgqyjsecf3hEBQf3n0JEMoA=
+	t=1713770300; cv=none; b=XJws4X3E6xnZhwdCIB4/CxSTpcrh7vTv09fxr0cWeXMfy+DUTw3gOYEgMdkXCiyM1YDIJq23UpcNudJ7r6uH9V2cbA0CO+ZSnreuhTY4eekgRZ5sX7zQeiNylVj8dupyO//YJxf3L0zdT2SzX2gAeV5NIZNXescaiCRvAntj4C0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713770028; c=relaxed/simple;
-	bh=nANodsRQh0SlHeZ8TSIrbcrOjTmp+PFztQpd3BDIO14=;
+	s=arc-20240116; t=1713770300; c=relaxed/simple;
+	bh=4j9/ixBcrRXzHNP/FULKIaHBtcfKqIhHzURyKg3qzdA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VvqbHR/jydyLUjyRIHvi0W1mAL9IGAqEtkV6p3bw2Bm6z1LMJetk8rg+ui3JE9na1p9VcxNWIWYN0xpVexfcPTaAjaAt5DALuTjmzeAXMd4lbMUAysTIv/FiTYYujgXnCBMKJpiqiP7gwX4ZeFSKMZnON6fWrM/GbWPMwbJrFxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dRfy41E6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42188C113CC;
-	Mon, 22 Apr 2024 07:13:48 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=eh/dOXyhvmR3r1K6AAoxnU6FrlHxClxpLO5Gq9WJkxsUfmMkQF/tbHA3RdWGEzKaqlVrTMOne4DG5bjz6kIu0yqSkavPiJWnEMqvw0v8bLOrIzcnYdnrauVwZUJ9Z3WwOPQJRkBlCgKJ8cOiGPb9r8Ib+Z0lTKU9H4tUaXqK0Ik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mK0Z80cK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E8AFC113CC;
+	Mon, 22 Apr 2024 07:18:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713770028;
-	bh=nANodsRQh0SlHeZ8TSIrbcrOjTmp+PFztQpd3BDIO14=;
+	s=k20201202; t=1713770300;
+	bh=4j9/ixBcrRXzHNP/FULKIaHBtcfKqIhHzURyKg3qzdA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=dRfy41E6vUIkYxsNdD6rO3NiJJjKegcOJ2ILw505xnUWuaMYmd2y0Ouh9eG5Y0Al8
-	 9XUxKoKib0O/SCuQNVmmJ9fdUUXeSDaqjjMrS+0eYUcNgVXy+IJH3hw2f2cEiXbYeQ
-	 B1lj1CUIRjICUJrmg8VW93yAk/u2QLv0JdQwUoD/DDeGADHQolQrQfETM3aSn7D+aM
-	 acd5+5Ztxwlxr/qRzLAac5VY6lUcqECdqPTtcXBiizrfJl/Qz6XoH2CZ6SP4bbneBb
-	 8gN1GhX3ckEUIPQCuaFKxU7bn+wm6Hw5LtChBM53gampmICaUO/hJRlipt2yRWJu1R
-	 mTqYmB878Fn7w==
+	b=mK0Z80cKCAI+uDxSxdZHcaGs5+UT4XVQgZnS0F5bwO8/s8LgGk+/jsdRgfIB/Mgmx
+	 tS8XBioRztDxO4OLF0s2jjbrzM57aXUgIkAcYYfAfNkAeJWcMqMglFZpMz71SHWYgg
+	 mm0AXjUyQriCTOWMDeLd5h6v2gNV9qEkzvD3M2Z+vmTXEeQVQNmZCpmfLZrMRjBB4D
+	 70e3EfS7O5BOG4E1E9j0SFe9yr5cQo3iZbLBigNhr1XKg3Fj72hoI1c7a0vFE5u7bJ
+	 XnRjx3kwgRMcbn7ueNLFlHmea+een/YxKporS4WRUaPTCZTRVdydIOVULyJuzeK1CJ
+	 OFi1v4keCfTIQ==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan@kernel.org>)
-	id 1rynry-000000002bu-3VFf;
-	Mon, 22 Apr 2024 09:13:42 +0200
-Date: Mon, 22 Apr 2024 09:13:42 +0200
+	id 1rynwM-000000002f8-3LC2;
+	Mon, 22 Apr 2024 09:18:14 +0200
+Date: Mon, 22 Apr 2024 09:18:14 +0200
 From: Johan Hovold <johan@kernel.org>
 To: Krishna Kurapati <quic_kriskura@quicinc.com>
 Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -60,11 +60,11 @@ Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
 	linux-kernel@vger.kernel.org, quic_ppratap@quicinc.com,
 	quic_jackp@quicinc.com, Bjorn Andersson <quic_bjorande@quicinc.com>
-Subject: Re: [PATCH v21 5/9] dt-bindings: usb: qcom,dwc3: Add bindings for
- SC8280 Multiport
-Message-ID: <ZiYOJuUSF_iDUTeI@hovoldconsulting.com>
+Subject: Re: [PATCH v21 6/9] usb: dwc3: qcom: Add helper function to request
+ wakeup interrupts
+Message-ID: <ZiYPNv8Q46rFj5CJ@hovoldconsulting.com>
 References: <20240420044901.884098-1-quic_kriskura@quicinc.com>
- <20240420044901.884098-6-quic_kriskura@quicinc.com>
+ <20240420044901.884098-7-quic_kriskura@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,23 +73,25 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240420044901.884098-6-quic_kriskura@quicinc.com>
+In-Reply-To: <20240420044901.884098-7-quic_kriskura@quicinc.com>
 
-On Sat, Apr 20, 2024 at 10:18:57AM +0530, Krishna Kurapati wrote:
-> Add the compatible string for SC8280 Multiport USB controller from
-> Qualcomm.
+On Sat, Apr 20, 2024 at 10:18:58AM +0530, Krishna Kurapati wrote:
+> The logic for requesting interrupts is duplicated for each interrupt. In
+> the upcoming patches that introduces support for multiport, it would be
+> better to clean up the duplication before reading mulitport related
+> interrupts.
 > 
-> There are 4 power event interrupts supported by this controller
-> (one for each port of multiport controller). Add all the 4 as
-> non-optional interrupts for SC8280XP-MP
-> 
-> Also each port of multiport has one DP and one DM IRQ. Add all DP/DM
-> IRQs related to 4 ports of SC8280XP Teritiary controller.
-> 
-> Also added SuperSpeed PHY interrupt for both Superspeed ports.
+> Refactor interrupt setup call by adding a new helper function for
+> requesting the wakeup interrupts. To simplify implementation, make
+> the display name same as the interrupt name expected in Device tree.
 > 
 > Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
 > Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+
+As far I can see, you only replaced "DT" with "Device tree" in the
+commit message. For changes like that you could have kept my
+Reviewed-by tag (but I appreciate that you dropped it from some of the
+others):
 
 Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
 
