@@ -1,215 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-18186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 666D58AD18B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 18:07:41 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2EE668AD19E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 18:12:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 898D31C21F9D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 16:07:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 135831C21180
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 16:12:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BD3F153586;
-	Mon, 22 Apr 2024 16:07:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A30515358E;
+	Mon, 22 Apr 2024 16:12:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AT/1j9Zr"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EkdefmYe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22380153581
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 16:07:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B70E153581;
+	Mon, 22 Apr 2024 16:12:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713802058; cv=none; b=mugZ10o8CuBHFB0TGrnifU3sj+dqUOy2MjgIKyW/rJsCLHptBtrYPWwWaEMzSXimmkEferiUxn3zFroarPsiTanyy6zZKIGuI2Z+xkQTo4qrlWFmbGu9MUaPTiprIkCt7yoYzO62ijp8g8vRq6059+ylOsz1yvhWy8UqxJD9eRE=
+	t=1713802354; cv=none; b=Zagn3KEkEDhemA6tKspsaxNC4Uz1Xrkkd0nCh+Gv0BQev1VIgquCsJ4gdfo9p3nKFrTD8htnngp+kPH8zDmOXeYPmOEhxEma8HD8nE2TF1lP24llp2ihcjkpqhxsjXG89Zch9QA9E3rrPXEY+K4htNS3veeGB8YL3qlkipDu16s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713802058; c=relaxed/simple;
-	bh=0MpppCeAGRGqoLAeeDV5dqYgLXIhh9N0FJAVoQeSrB0=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=U2DDvN1HjFyojH2CnJuaG51PqeWfNB0G5zn1JssURwWIsMO4jdnaim/r/5lxQjJvIxrE9ro93zkNZXID6Sk1/nej9nan30tF3a7x1KF6Ibz+RwdPpt6p+EIhFLa6phYJRFhrzq3ZY1P9hORWCYdBTUstfUKx5Agma0xY5yTg3aE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AT/1j9Zr; arc=none smtp.client-ip=209.85.208.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2d8863d8a6eso65524411fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 09:07:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713802053; x=1714406853; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rV5YhSHRl9//iqDa2BiuSCB2EW4ixdSWZiS3tQXSouc=;
-        b=AT/1j9Zr/v5V+AuRycg1xWFleNsiX7J28EygEjNgW0qVDm3+V/9OyawOuoMiM5/z4i
-         57yOfWHa8zqiiwa5Fnz/mmfctcFhDNFIVgNgNjgTDUNXABLfrjRIQmG+JzxETUt6QKGw
-         TMTr/erXv68sxpAaRwisArplqjPA29MxVur51A9gu1R79MZNSqL/bN8AHcAr1U+iGMlu
-         3b1nZcxx9ODRuw30KJjnSOKRqT3LykU0Ko1JsvHDqQHILQi0sR2eCWPoCUK6NLIyAlBt
-         FItjQ9Zog0CiUWMJrw63lS2WQfDDS395O1KB9FgFRP0rtMC6YrficBQxfS/bJN4FdsmX
-         IoAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713802053; x=1714406853;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=rV5YhSHRl9//iqDa2BiuSCB2EW4ixdSWZiS3tQXSouc=;
-        b=beKOuyx5p4EyIO063B/9qNnJrQtKe5+djWkQRIKrLL6EcH65Hfgrms+l81qY0Zbl1/
-         o7rzXdWRrCrducbHiQtET6eFV7CSm2ve9VqHqeB8bBfBPHTit3sXrwwJcKBfryjhB3re
-         +2CggEJU4mzvKf97C6RvAvS/d5Nliwrx3g1WeH2cPuRyT29/gi3J51raamYqeVH9iuoI
-         TGhs96i7lIW+a7zHmvD7mKT0uTcRwxr2+7hPRU985G2DWwVC2se2nMy6uHKPv/JncjT9
-         udmxi1BLmGsLbP8E9fsFaPtb9jKqX8Gv3ibK383kPD9bh8cTyNEkSnAgATWvdhLvUpku
-         GbUg==
-X-Forwarded-Encrypted: i=1; AJvYcCUi86V9ezamE6gL8pZ978x7nC0m9O21a8do0yj0FwcTQuyVoa58vy1ci5N6pxFAHmTUxKexqLWj5zY75taHcNl4SgHo8FvAhaJ5uWnhgQ==
-X-Gm-Message-State: AOJu0YzXDT5hgLHMALuZn5/aFWe+/mc9nYPQD5DklGGL9Cb4/zegSEVC
-	KQgR1410tLasK++JAxbBidCtzDPacRsmyQF2aD1IjDlCmyVZ/7YFjdc1fdgmMq4=
-X-Google-Smtp-Source: AGHT+IH8eWW2BXlr/BFcs+LhyLxysUqw8CXmw+UlSNai+Eyp44b0clJUmsx90/mDvUjyTf6hUWW7kA==
-X-Received: by 2002:a05:651c:19ac:b0:2dd:2e6c:21c6 with SMTP id bx44-20020a05651c19ac00b002dd2e6c21c6mr5668327ljb.2.1713802053058;
-        Mon, 22 Apr 2024 09:07:33 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:e5e5:892f:e81f:7cad? ([2a01:e0a:982:cbb0:e5e5:892f:e81f:7cad])
-        by smtp.gmail.com with ESMTPSA id q15-20020a05600c46cf00b00416e2c8b290sm21158551wmo.1.2024.04.22.09.07.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Apr 2024 09:07:32 -0700 (PDT)
-Message-ID: <855a97c3-f96a-4606-a25e-a063a96782d1@linaro.org>
-Date: Mon, 22 Apr 2024 18:07:31 +0200
+	s=arc-20240116; t=1713802354; c=relaxed/simple;
+	bh=XwhpVp2uoJPgTaCeNcW7RZT9m15w1RdcLwxSuXD7Aeo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=qRUDI9lHm7iXdo/t7DArZr+Wd+6hN5dyU/oGAzkfE2bKjLn8AzQdtQJYlymeUPbhBpCVdeT8+pGmuHmmS7CMIRrxcOJNlL70dlU+Wy/hf8Sv+FqR4HvDgz9aUTjRtE+xIHmgAJt1WtMSBEf0cK62n9uyjGHoTp2hu5IR7LKli6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EkdefmYe; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43M8mKK3000381;
+	Mon, 22 Apr 2024 16:12:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=sCyLpknTZwvWXYoyKMfM/GI5z3ThcbGqTFkPKhPm5us=; b=Ek
+	defmYeeppshj66AFg3XqOQORVJDDHxCQrzCtg2X0eaU7JMlWRHgYf7Ro44HOMKuQ
+	miMmQ02Aw1eOsxVUIAg9cKmnV3fhDP+xksRN6oX1llCtKWIeayjmmFklawfWo+4M
+	SXh30pEfKOeenhNtaYY7r1IB7NrZ1ypq1G8IZsYnqugxNChCVTTo3cMAn+EGp9QG
+	wK+kC13cP3gfGtpBRiuuixu6P5C/tfJbIqsWzq7X7Gg0B3km7UKAUwFWmoQOiAIg
+	zNBMeIxPWwp0oJl/MXJNgUYN9Ok3thuAHdOi5D/2zM2rTdPb3o7mSkjLpHnIapdC
+	XijGzpCOZaJAyefPELoQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xm4qdd18v-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 22 Apr 2024 16:12:22 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43MGCL0V031372
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 22 Apr 2024 16:12:21 GMT
+Received: from [10.110.104.191] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 22 Apr
+ 2024 09:12:21 -0700
+Message-ID: <456bb6f6-03cc-aae1-b7d5-9d97300ba383@quicinc.com>
+Date: Mon, 22 Apr 2024 09:12:20 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v3 0/3] arm64: qcom-sm8[456]50: properly describe the PCIe
- Gen4x2 PHY AUX clock
-To: Rob Herring <robh@kernel.org>
-Cc: Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- devicetree@vger.kernel.org,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>
-References: <20240422-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v3-0-799475a27cce@linaro.org>
- <171378646293.749182.6639047187760279527.robh@kernel.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <171378646293.749182.6639047187760279527.robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 1/3] drm/msm: don't clean up priv->kms prematurely
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn
+ Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20240420-mdp4-fixes-v1-0-96a70f64fa85@linaro.org>
+ <20240420-mdp4-fixes-v1-1-96a70f64fa85@linaro.org>
+ <67fbd629-3e80-b706-83a3-7baff3efd6c1@quicinc.com>
+ <n7eet54g72usmuh4hdz6yce3i4ieweu4orgd7gewu7y53ejucc@dzmq2a2wdxkc>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <n7eet54g72usmuh4hdz6yce3i4ieweu4orgd7gewu7y53ejucc@dzmq2a2wdxkc>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-
-On 22/04/2024 13:50, Rob Herring wrote:
-> 
-> On Mon, 22 Apr 2024 10:33:10 +0200, Neil Armstrong wrote:
->> The PCIe Gen4x2 PHY found in the SM8[456]50 SoCs have a second clock named
->> "PHY_AUX_CLK" which is an input of the Global Clock Controller (GCC) which
->> is muxed & gated then returned to the PHY as an input.
->>
->> Document the clock IDs to select the PIPE clock or the AUX clock,
->> also enforce a second clock-output-names and a #clock-cells value of 1
->> for the PCIe Gen4x2 PHY found in the SM8[456]50 SoCs.
->>
->> The PHY driver needs a light refactoring to support a second clock,
->> and finally the DT is changed to connect the PHY second clock to the
->> corresponding GCC input then drop the dummy fixed rate clock.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->> Changes in v3:
->> - Rebased on linux-next, applies now cleanly
->> - Link to v2: https://lore.kernel.org/r/20240322-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v2-0-3ec0a966d52f@linaro.org
->>
->> Changes in v2:
->> - Collected review tags
->> - Switched back to of_clk_add_hw_provider/devm_add_action_or_reset to maintain compatibility
->> - Tried to use generic of_clk_hw_onecell_get() but it requires to much boilerplate code
->>    and would still need a local qmp_pcie_clk_hw_get() to support the current #clock-cells=0
->>    when exposing 2 clocks, so it's simpler to just return the clocks in qmp_pcie_clk_hw_get()
->> - Link to v1: https://lore.kernel.org/r/20240319-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v1-0-926d7a4ccd80@linaro.org
->>
->> ---
->> Neil Armstrong (3):
->>        arm64: dts: qcom: sm8450: remove pcie-1-phy-aux-clk and add pcie1_phy pcie1_phy_aux_clk
->>        arm64: dts: qcom: sm8550: remove pcie-1-phy-aux-clk and add pcie1_phy pcie1_phy_aux_clk
->>        arm64: dts: qcom: sm8650: remove pcie-1-phy-aux-clk and add pcie1_phy pcie1_phy_aux_clk
->>
->>   arch/arm64/boot/dts/qcom/sm8450.dtsi    |  8 ++++----
->>   arch/arm64/boot/dts/qcom/sm8550-hdk.dts |  4 ----
->>   arch/arm64/boot/dts/qcom/sm8550-mtp.dts |  4 ----
->>   arch/arm64/boot/dts/qcom/sm8550-qrd.dts |  8 --------
->>   arch/arm64/boot/dts/qcom/sm8550.dtsi    | 13 ++++---------
->>   arch/arm64/boot/dts/qcom/sm8650-mtp.dts |  4 ----
->>   arch/arm64/boot/dts/qcom/sm8650-qrd.dts |  4 ----
->>   arch/arm64/boot/dts/qcom/sm8650.dtsi    | 13 ++++---------
->>   8 files changed, 12 insertions(+), 46 deletions(-)
->> ---
->> base-commit: f529a6d274b3b8c75899e949649d231298f30a32
->> change-id: 20240319-topic-sm8x50-upstream-pcie-1-phy-aux-clk-4b35169707dd
->>
->> Best regards,
->> --
->> Neil Armstrong <neil.armstrong@linaro.org>
->>
->>
->>
-> 
-> 
-> My bot found new DTB warnings on the .dts files added or changed in this
-> series.
-> 
-> Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-> are fixed by another series. Ultimately, it is up to the platform
-> maintainer whether these warnings are acceptable or not. No need to reply
-> unless the platform maintainer has comments.
-> 
-> If you already ran DT checks and didn't see these error(s), then
-> make sure dt-schema is up to date:
-> 
->    pip3 install dtschema --upgrade
-> 
-> 
-> New warnings running 'make CHECK_DTBS=y qcom/sm8550-hdk.dtb qcom/sm8550-mtp.dtb qcom/sm8550-qrd.dtb qcom/sm8650-mtp.dtb qcom/sm8650-qrd.dtb' for 20240422-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v3-0-799475a27cce@linaro.org:
-> 
-> arch/arm64/boot/dts/qcom/sm8550-qrd.dtb: clock-controller@100000: clocks: [[41], [42], [43], [44, 0], [45, 0], [45, 1], [45, 2], [46, 0]] is too short
-> 	from schema $id: http://devicetree.org/schemas/clock/qcom,sm8550-gcc.yaml#
-> arch/arm64/boot/dts/qcom/sm8550-qrd.dtb: clock-controller@100000: Unevaluated properties are not allowed ('clocks' was unexpected)
-> 	from schema $id: http://devicetree.org/schemas/clock/qcom,sm8550-gcc.yaml#
-> 
-
-Ok thx, I found out why, sending a v4 fixing that
-
-Neil
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 2Y9GD3Dd-GNRSN9jpGiRQi3o-1st-3iv
+X-Proofpoint-ORIG-GUID: 2Y9GD3Dd-GNRSN9jpGiRQi3o-1st-3iv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-22_09,2024-04-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ spamscore=0 impostorscore=0 lowpriorityscore=0 mlxscore=0 adultscore=0
+ mlxlogscore=601 bulkscore=0 suspectscore=0 malwarescore=0 clxscore=1015
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404220068
 
 
 
+On 4/21/2024 3:35 PM, Dmitry Baryshkov wrote:
+> On Sat, Apr 20, 2024 at 04:02:00PM -0700, Abhinav Kumar wrote:
+>>
+>>
+>> On 4/19/2024 7:33 PM, Dmitry Baryshkov wrote:
+>>> MSM display drivers provide kms structure allocated during probe().
+>>> Don't clean up priv->kms field in case of an error. Otherwise probe
+>>> functions might fail after KMS probe deferral.
+>>>
+>>
+>> So just to understand this more, this will happen when master component
+>> probe (dpu) succeeded but other sub-component probe (dsi) deferred?
+>>
+>> Because if master component probe itself deferred it will allocate priv->kms
+>> again isnt it and we will not even hit here.
 > 
-> 
+> Master probing succeeds (so priv->kms is set), then kms_init fails at
+> runtime, during binding of the master device. This results in probe
+> deferral from the last component's component_add() function and reprobe
+> attempt when possible (once the next device is added or probed). However
+> as priv->kms is NULL, probe crashes.
 > 
 
+Got it, a better commit text would have helped here. Either way,
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
