@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-18202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 583428AD347
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 19:23:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56BDE8AD3C2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 20:17:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A726DB25348
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 17:23:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 14B28281C8A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 18:17:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B683153819;
-	Mon, 22 Apr 2024 17:23:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3548153BFF;
+	Mon, 22 Apr 2024 18:17:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WpJf0AwF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="G919xZXz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934EE146A6A;
-	Mon, 22 Apr 2024 17:23:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657B650271;
+	Mon, 22 Apr 2024 18:17:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713806610; cv=none; b=C2IpVsZ4GR6/ebtYGb9U529ZfMDez9pgjbwEcbtMbrSoEeAWzw9myaczUJkqW68kBKu5WRL4wKS3vxlSfIk5AUPb1QLGff0/GqQqZUh3kPU7qlE26zhjM2/WIrPev6kgn1mE8tEn36gezJLcSDmQs7/splgKSlxucMQAa6eLzH0=
+	t=1713809849; cv=none; b=UJbs9oPzdxsKsx7XjsQeuwaV1qiqFjg4AGq+EYoIl1RgQ+14J5sdEAjlRUX3Yon6P6vCqIbF4yDbElXRjiFaufWYTPKeuvy6QUhlr1iImyJ3Moer8x5N7JpvaoEGeqDahoi7TWWQbCMHMEmlyfqWydSZmR689JOtUl+yPmHUkVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713806610; c=relaxed/simple;
-	bh=7sR9LTQhv+ccDVxIYPm8fhQPGdyYb5+zpwnVqUksIPk=;
+	s=arc-20240116; t=1713809849; c=relaxed/simple;
+	bh=SyPKYHKBt4L0MNfWQmQ7n23u+GSBfZkPzueZ9ySthec=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=DbjtzRX95hKjcq8xuE2ctsS6YxCPmgs4UbKMXx3HLHns4Mco52VS/fRmNRua9BIyFcTC4WSyePJ6LgobljbjoQ3PIuYI0Do0uCMDHGblXiCgy3AAEsyRfmK98xEwuVyQxavbD4WtX6YIupavpq9VrGwIGNJgUNwTtEdL98r+7eM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WpJf0AwF; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=MnEONC7D9FtKRIq4bShgbS4gEQKDg4myRjIbqDzrVOrdmfRKAeY4lO0kTFpUp3ARhuMaLjAaE8dAKgtz09u2d0BEzctx+Pj9GSh0sNuCU5rGvIArDt/+pGttxF0x4omjlPjKM9tj9sqo3aTHZe57u8wgzf15hdG9Ffc/UHZb+pM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=G919xZXz; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43M9bGIv004777;
-	Mon, 22 Apr 2024 17:23:20 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43M5dqwu022705;
+	Mon, 22 Apr 2024 18:17:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=VRd+FqoZJAkqncCjwp7KhsDNB5TkvPIXDmBsNGsOv6c=; b=Wp
-	Jf0AwFPnpDZtLCIsOfhqetGbQHanZZX1VmZkjR/oWj/D+1I7nAEXWSQWoY1Dbd6r
-	ham4ZCYwyB/JI3FaTPfPlVzlgUaEsJIHmZxEK0kiX3d0ojhN4dxpZmiWj6he3Uku
-	kbxHUW437UemFOZcXBzUIGg6mK9NONnCSPcfQFtCTT4fAh5pkQbZCBlm8aP9tnA3
-	RlOoDTHgdGoCm7zgGo/VPFb1ixZ3FIR0l9AGPcb6KxIdhATXePNkoo8oKA2SDeSa
-	b6C58Cidgnf3SNZHDPCX1IUuEYXnHh2+M9eNLkga+n0yoKufVy4j7wSCCexlP5tb
-	0YfIlS1bZBCdzsjqvcTw==
+	qcppdkim1; bh=fhtoU6wrZha9yXgeF9yhzKdvL23EjHQpIAGTzb24zgw=; b=G9
+	19xZXzcYUCeX6aD7IL+a3f77tfqOkRSjeMYgxuZKSrQXObWW7tNnkqq9rIO9zEu6
+	o0j3WxLuHuO3gMG2k7VlCUVhXeJ5iCzRIGMNr7w4Qbs3ug6aMmCemJ4yZrID2m+I
+	8IrwIYU2WRO4cPQ4zrzEyJIQNctViHun0rJVz7pv0jOoDeIHvQhWKBcBeiZm6TQs
+	IlB0UYD5WgCC805xN+6fP2HKteuadOH3fuBgq5JBnzJFEia93U0wl9XfinYVqolj
+	V4bJI9SsLN5bRsYUCSjeqBSeLPAMaR5W555gLFNoj+hRt7yeQJHZL144j+s9dh2W
+	VLgZeWUeN42TY40wY+FA==
 Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xnne295jx-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xm5sx58x1-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Apr 2024 17:23:20 +0000 (GMT)
+	Mon, 22 Apr 2024 18:17:21 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43MHNJWe005527
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43MIHFJg007592
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Apr 2024 17:23:19 GMT
+	Mon, 22 Apr 2024 18:17:15 GMT
 Received: from [10.71.109.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 22 Apr
- 2024 10:23:19 -0700
-Message-ID: <7daeeaba-a33d-bf05-1371-d9b5fa0bf0a5@quicinc.com>
-Date: Mon, 22 Apr 2024 10:23:18 -0700
+ 2024 11:17:15 -0700
+Message-ID: <313d9eed-098f-c09b-eb5d-ac9ad56a8e1d@quicinc.com>
+Date: Mon, 22 Apr 2024 11:17:15 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,88 +66,172 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH 1/3] drm/msm: don't clean up priv->kms prematurely
+Subject: Re: [PATCH 2/3] drm/msm/mdp4: don't destroy mdp4_kms in mdp4_kms_init
+ error path
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn
- Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel
+ Vetter <daniel@ffwll.ch>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
         <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
 References: <20240420-mdp4-fixes-v1-0-96a70f64fa85@linaro.org>
- <20240420-mdp4-fixes-v1-1-96a70f64fa85@linaro.org>
- <67fbd629-3e80-b706-83a3-7baff3efd6c1@quicinc.com>
- <n7eet54g72usmuh4hdz6yce3i4ieweu4orgd7gewu7y53ejucc@dzmq2a2wdxkc>
+ <20240420-mdp4-fixes-v1-2-96a70f64fa85@linaro.org>
 From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <n7eet54g72usmuh4hdz6yce3i4ieweu4orgd7gewu7y53ejucc@dzmq2a2wdxkc>
+In-Reply-To: <20240420-mdp4-fixes-v1-2-96a70f64fa85@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Gik2XTWn6sjBZbjbXowMENMblUen81bD
-X-Proofpoint-ORIG-GUID: Gik2XTWn6sjBZbjbXowMENMblUen81bD
+X-Proofpoint-ORIG-GUID: HtMI5gdiaWWW4jtP--Qo4wsUXMZYqC1Y
+X-Proofpoint-GUID: HtMI5gdiaWWW4jtP--Qo4wsUXMZYqC1Y
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-22_09,2024-04-22_01,2023-05-22_02
+ definitions=2024-04-22_13,2024-04-22_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- suspectscore=0 mlxlogscore=740 mlxscore=0 malwarescore=0 clxscore=1015
- adultscore=0 bulkscore=0 spamscore=0 phishscore=0 lowpriorityscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404220072
+ impostorscore=0 phishscore=0 clxscore=1015 suspectscore=0 malwarescore=0
+ spamscore=0 bulkscore=0 mlxscore=0 lowpriorityscore=0 adultscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404220077
 
 
 
-On 4/21/2024 3:35 PM, Dmitry Baryshkov wrote:
-> On Sat, Apr 20, 2024 at 04:02:00PM -0700, Abhinav Kumar wrote:
->>
->>
->> On 4/19/2024 7:33 PM, Dmitry Baryshkov wrote:
->>> MSM display drivers provide kms structure allocated during probe().
->>> Don't clean up priv->kms field in case of an error. Otherwise probe
->>> functions might fail after KMS probe deferral.
->>>
->>
->> So just to understand this more, this will happen when master component
->> probe (dpu) succeeded but other sub-component probe (dsi) deferred?
->>
->> Because if master component probe itself deferred it will allocate priv->kms
->> again isnt it and we will not even hit here.
+On 4/19/2024 7:33 PM, Dmitry Baryshkov wrote:
+> Since commit 3c74682637e6 ("drm/msm/mdp4: move resource allocation to
+> the _probe function") the mdp4_kms data is allocated during probe. It is
+> an error to destroy it during mdp4_kms_init(), as the data is still
+> referenced by the drivers's data and can be used later in case of probe
+> deferral.
 > 
-> Master probing succeeds (so priv->kms is set), then kms_init fails at
-> runtime, during binding of the master device. This results in probe
-> deferral from the last component's component_add() function and reprobe
-> attempt when possible (once the next device is added or probed). However
-> as priv->kms is NULL, probe crashes.
+
+mdp4_destroy() currently detaches mmu, calls msm_kms_destroy() which 
+destroys pending timers and releases refcount on the aspace.
+
+It does not touch the mdp4_kms as that one is devm managed.
+
+In the comment 
+https://patchwork.freedesktop.org/patch/590411/?series=132664&rev=1#comment_1074306, 
+we had discussed that the last component's reprobe attempt is affected 
+(which is not dpu or mdp4 or mdp5 right? )
+
+If it was an interface (such as DSI OR DP), is it the aspace detach 
+which is causing the crash?
+
+Another note is, mdp5 needs the same fix in that case.
+
+dpu_kms_init() looks fine.
+
+> Fixes: 3c74682637e6 ("drm/msm/mdp4: move resource allocation to the _probe function")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 28 +++++++++-------------------
+>   1 file changed, 9 insertions(+), 19 deletions(-)
 > 
->>
->>> Fixes: a2ab5d5bb6b1 ("drm/msm: allow passing struct msm_kms to msm_drv_probe()")
-
-Actually, Is this Fixes tag correct?
-
-OR is this one better
-
-Fixes: 506efcba3129 ("drm/msm: carve out KMS code from msm_drv.c")
-
-
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>>    drivers/gpu/drm/msm/msm_kms.c | 1 -
->>>    1 file changed, 1 deletion(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/msm_kms.c b/drivers/gpu/drm/msm/msm_kms.c
->>> index af6a6fcb1173..6749f0fbca96 100644
->>> --- a/drivers/gpu/drm/msm/msm_kms.c
->>> +++ b/drivers/gpu/drm/msm/msm_kms.c
->>> @@ -244,7 +244,6 @@ int msm_drm_kms_init(struct device *dev, const struct drm_driver *drv)
->>>    	ret = priv->kms_init(ddev);
->>>    	if (ret) {
->>>    		DRM_DEV_ERROR(dev, "failed to load kms\n");
->>> -		priv->kms = NULL;
->>>    		return ret;
->>>    	}
->>>
+> diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+> index 4ba1cb74ad76..4c5f72b7e0e5 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+> @@ -392,7 +392,7 @@ static int mdp4_kms_init(struct drm_device *dev)
+>   	ret = mdp_kms_init(&mdp4_kms->base, &kms_funcs);
+>   	if (ret) {
+>   		DRM_DEV_ERROR(dev->dev, "failed to init kms\n");
+> -		goto fail;
+> +		return ret;
+>   	}
+>   
+>   	kms = priv->kms;
+> @@ -403,7 +403,7 @@ static int mdp4_kms_init(struct drm_device *dev)
+>   		ret = regulator_enable(mdp4_kms->vdd);
+>   		if (ret) {
+>   			DRM_DEV_ERROR(dev->dev, "failed to enable regulator vdd: %d\n", ret);
+> -			goto fail;
+> +			return ret;
+>   		}
+>   	}
+>   
+> @@ -414,8 +414,7 @@ static int mdp4_kms_init(struct drm_device *dev)
+>   	if (major != 4) {
+>   		DRM_DEV_ERROR(dev->dev, "unexpected MDP version: v%d.%d\n",
+>   			      major, minor);
+> -		ret = -ENXIO;
+> -		goto fail;
+> +		return -ENXIO;
+>   	}
+>   
+>   	mdp4_kms->rev = minor;
+> @@ -423,8 +422,7 @@ static int mdp4_kms_init(struct drm_device *dev)
+>   	if (mdp4_kms->rev >= 2) {
+>   		if (!mdp4_kms->lut_clk) {
+>   			DRM_DEV_ERROR(dev->dev, "failed to get lut_clk\n");
+> -			ret = -ENODEV;
+> -			goto fail;
+> +			return -ENODEV;
+>   		}
+>   		clk_set_rate(mdp4_kms->lut_clk, max_clk);
+>   	}
+> @@ -445,8 +443,7 @@ static int mdp4_kms_init(struct drm_device *dev)
+>   
+>   	mmu = msm_iommu_new(&pdev->dev, 0);
+>   	if (IS_ERR(mmu)) {
+> -		ret = PTR_ERR(mmu);
+> -		goto fail;
+> +		return PTR_ERR(mmu);
+>   	} else if (!mmu) {
+>   		DRM_DEV_INFO(dev->dev, "no iommu, fallback to phys "
+>   				"contig buffers for scanout\n");
+> @@ -458,8 +455,7 @@ static int mdp4_kms_init(struct drm_device *dev)
+>   		if (IS_ERR(aspace)) {
+>   			if (!IS_ERR(mmu))
+>   				mmu->funcs->destroy(mmu);
+> -			ret = PTR_ERR(aspace);
+> -			goto fail;
+> +			return PTR_ERR(aspace);
+>   		}
+>   
+>   		kms->aspace = aspace;
+> @@ -468,7 +464,7 @@ static int mdp4_kms_init(struct drm_device *dev)
+>   	ret = modeset_init(mdp4_kms);
+>   	if (ret) {
+>   		DRM_DEV_ERROR(dev->dev, "modeset_init failed: %d\n", ret);
+> -		goto fail;
+> +		return ret;
+>   	}
+>   
+>   	mdp4_kms->blank_cursor_bo = msm_gem_new(dev, SZ_16K, MSM_BO_WC | MSM_BO_SCANOUT);
+> @@ -476,14 +472,14 @@ static int mdp4_kms_init(struct drm_device *dev)
+>   		ret = PTR_ERR(mdp4_kms->blank_cursor_bo);
+>   		DRM_DEV_ERROR(dev->dev, "could not allocate blank-cursor bo: %d\n", ret);
+>   		mdp4_kms->blank_cursor_bo = NULL;
+> -		goto fail;
+> +		return ret;
+>   	}
+>   
+>   	ret = msm_gem_get_and_pin_iova(mdp4_kms->blank_cursor_bo, kms->aspace,
+>   			&mdp4_kms->blank_cursor_iova);
+>   	if (ret) {
+>   		DRM_DEV_ERROR(dev->dev, "could not pin blank-cursor bo: %d\n", ret);
+> -		goto fail;
+> +		return ret;
+>   	}
+>   
+>   	dev->mode_config.min_width = 0;
+> @@ -492,12 +488,6 @@ static int mdp4_kms_init(struct drm_device *dev)
+>   	dev->mode_config.max_height = 2048;
+>   
+>   	return 0;
+> -
+> -fail:
+> -	if (kms)
+> -		mdp4_destroy(kms);
+> -
+> -	return ret;
+>   }
+>   
+>   static const struct dev_pm_ops mdp4_pm_ops = {
 > 
 
