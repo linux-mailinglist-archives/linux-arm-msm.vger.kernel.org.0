@@ -1,199 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-18172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 84E148ACCA2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 14:14:08 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 641328ACCB4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 14:22:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B3CD282F31
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 12:14:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7B4D71C20956
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 12:22:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 251FC1474D2;
-	Mon, 22 Apr 2024 12:14:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 185144F213;
+	Mon, 22 Apr 2024 12:22:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eFP9Enxa"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QeKnMPgT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC231474A7;
-	Mon, 22 Apr 2024 12:14:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4085C4AEE0
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 12:22:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713788044; cv=none; b=EvQ1nbRcvEHRh2fKkTQiOE1waKK7i9zFxqyvjBUXAQPTQVaDPrvzvGhr+At0q2tIJ+mUy6SaJqpQPWIvbwXkdHvo7aPsvJ9/p3XAZL397/IxVuJFL39SNKtujCM0W34D2SPHiRwCPz6QWo6MFOMxfy1KaWkobSYF7AtuI9Pz1DY=
+	t=1713788569; cv=none; b=u67E0VAqZ2UKUXu7O1kZBkXLYrk+rUmfXSl5KvAmKq4kS2jsJ3WDVScy8mKZ8b4NBDRHQFTRz6/ukOegG5U54J+0yMwQ3wn3FWwRxRGLXJgpkSqnmvlOJuJpBrPecE0szkKhJsWC5vwUQ7n+RmTyZ+d1Pei+xnOb2Hvh29Syiog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713788044; c=relaxed/simple;
-	bh=OLkbUzMPUszdz5K/Wphn/aPVtp5/ebUhvY8bBi1KAVs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=OOR98Af0bbCXHvN42cAPH/W6O7pBjF1mEHIio/Q+DKt7mwCWdHa/u6q/z+5gmB9WHn4C4i5tMc76cl4noMbPibqwQCD+b8Ey00usoqx52XCSQGeSq7VAhbaOpITfr1A4RF5RF2ooCUwpeRu44tV9N+7NP/QJ/vcOLoobUvLDH04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eFP9Enxa; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43M1iUWl011793;
-	Mon, 22 Apr 2024 12:13:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=+HnL9pPF7mUoU4MDvPdVFN0atfY5XRJji9PdxeuXMqw=; b=eF
-	P9EnxadQwUcEgcSP5/TUeaNegTh4tr8rBZ98q7g+uVEBNrDpO0DPQzg+LxTFtDlh
-	CgZOiLFZNabgXRcuS5ukmkC1EaxKjn7+eVxgkXkqyL8LLw/XbReJ/Q6vXdQgyG0Z
-	QlgCbpnAkAVFNef4IHx9B4XGSkaehnd9X/VbhpRN+ojKFlU63gzSj0o+/IohWwtT
-	PiTRq4WT9RsoL3WS/fxucqGf+DK40m66iy9ebGpWNuzY9dMCI9UL0OxVxuIbmBTo
-	cBFIArsgwPs+96Sobdvy4z7Te1hIEtZ3TyqeN3aOmZHyKs8CSXPGxx+BLoRlMCE6
-	FvFMV/wwykSMmowRmL2g==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xm4qdcc8c-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Apr 2024 12:13:57 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43MCDu9R003025
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Apr 2024 12:13:56 GMT
-Received: from [10.253.39.160] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 22 Apr
- 2024 05:13:54 -0700
-Message-ID: <3b583308-338b-4ac8-82c2-2b4c100c9c35@quicinc.com>
-Date: Mon, 22 Apr 2024 20:13:52 +0800
+	s=arc-20240116; t=1713788569; c=relaxed/simple;
+	bh=zsAjOGFW/ovhfYrakFZgk3NXRPeEIYW7Z8zvJm6nKTU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=B3ZSELH43FrpFvDWjjxzPBscJHfksfCJeOhyixXQDg28vR1dibhEQAu6nYqC4PWf2xaMP9G6oU5T+z6tmzm7aBqACr+nNtrMKBDqkGHwuFODqOgQjilZvBhN9v6ZWG5Vu7PQpgaxOxKxbA9oY9W+rApKxQ8GCjTmaknkTH7/DPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QeKnMPgT; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2d8863d8a6eso61546271fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 05:22:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1713788565; x=1714393365; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=0N97Un7iKJy6ZaKa37UlkZBwuE/KTJjFA85IfE4WHbE=;
+        b=QeKnMPgT+Ihq9ke47lF6h7eQYd6I/7SRuxxbBmnkKg9qxXkH8Nis2S1k++NlzWF7Pe
+         9jahU6LwAX80wTcLM3k+r4h36Lq4LE2v2tDm9JWsSJ5XPR/nmMRVc/UFX8icUndIZW8O
+         XlwBqR9yCdjWFbfg027MbUo2VfMKdaVags38qmdFUTySuOUWmTdO8Tr/nsl1t19mdGQk
+         nNBndBuKlizC7hEdxije6ML3nNgl5gI1+t4DqvNDJCBqNklWevwEA77F3v8RL4eIn2CP
+         gGQRmtrS6wGZFL+OwbSJm5OyVJ+L5wAJiktBkigto2L726hRKjxMs6+ky1wF6aZ7gpKA
+         Uajw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713788565; x=1714393365;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0N97Un7iKJy6ZaKa37UlkZBwuE/KTJjFA85IfE4WHbE=;
+        b=HotTdYRkgRflQgy0r+nR6HWXOptsxr3068356SG1wYnFWUgJ//+NU+G5nr3kINXybR
+         N3oJB6lqQf4+1IzRI7jPPyrYOn8K9obpIF1USJzjsjhsmt6te+KgZQ/djyI8INT4stI+
+         uJAilx2NW8feDPM3ympxJP1mJPHBavY5/gt95MdkR4p8bi3jyymtl9KPrjmVxLrzxsIO
+         68lxmYk0DcHmSGQ4sdbL3Nrj5n8BrZ/kH2MG38BQlih6QfHhtGi3R1v933/G2FZrCvzr
+         a0QmO6swA7GEIQ4cfmhWnslWNDBfMqJvqQ58q7KYULPwVZqD+KWpSJtc+1ahBpqMvuWL
+         Lhcg==
+X-Forwarded-Encrypted: i=1; AJvYcCVOoY9kZ/jlFoDcfpxV1y4CjZDNvZo98nmrlBWlYqLh+ENQly9rKIIRCiruklgn/naB3cXeazROx6pm2Ox4ux0LCygObtZhs740LUlOJg==
+X-Gm-Message-State: AOJu0Ywd3FAXQ+1CtpzFswzpsmmjP15djSsWk0RdmeR4fimpCW84oAGA
+	9d8r0fH69nlAeFSDyxW9qXPGZMPdSzkxJgh+zg3SFRt01d/W5fA5hBqG0YyWgZo=
+X-Google-Smtp-Source: AGHT+IHEwl9kdeoIRBSg/s27Fmo9cBqQ8a+PpvHL/HWOE1hVoBjq2Q2cW4BifI+Wc2xbXVRZ04Q9xw==
+X-Received: by 2002:a05:6512:104a:b0:519:5a60:5fe7 with SMTP id c10-20020a056512104a00b005195a605fe7mr9132480lfb.66.1713788565217;
+        Mon, 22 Apr 2024 05:22:45 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::8a5])
+        by smtp.gmail.com with ESMTPSA id c9-20020a056512104900b00516be0a0579sm1661591lfb.75.2024.04.22.05.22.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Apr 2024 05:22:44 -0700 (PDT)
+Date: Mon, 22 Apr 2024 15:22:43 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Abel Vesa <abel.vesa@linaro.org>, 
+	Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org
+Subject: Re: [PATCH 4/9] drm/msm/dpu: move dpu_format_populate_plane_sizes to
+ atomic_check
+Message-ID: <7uqzoioa6enpxocrcsbykmdcucfgb4mglgep3k6b7strevs7cc@dqeyxrmieuvv>
+References: <20240319-dpu-mode-config-width-v1-0-d0fe6bf81bf1@linaro.org>
+ <20240319-dpu-mode-config-width-v1-4-d0fe6bf81bf1@linaro.org>
+ <a122a43a-8def-0c11-41ef-b01fab33f98e@quicinc.com>
+ <rqddqmqznhq4liusiyvowt4lfybb25qfdxak6ql6hdrreduutt@6uwkrlsxa4gw>
+ <81322c16-8d82-16e7-dafd-93c29b07f169@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] bus: mhi: host: Add sysfs entry to force device to
- enter EDL
-To: Manivannan Sadhasivam <mani@kernel.org>
-CC: <quic_jhugo@quicinc.com>, <mhi@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_cang@quicinc.com>, <quic_mrana@quicinc.com>
-References: <1713170945-44640-1-git-send-email-quic_qianyu@quicinc.com>
- <1713170945-44640-2-git-send-email-quic_qianyu@quicinc.com>
- <20240415115616.GF7537@thinkpad>
- <a62cb28a-e6ab-4f60-9210-b7aa8e0c34e0@quicinc.com>
- <20240422072446.GA9775@thinkpad>
-Content-Language: en-US
-From: Qiang Yu <quic_qianyu@quicinc.com>
-In-Reply-To: <20240422072446.GA9775@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -Rb1s_NHFWl1wGrgobAdiarwOGhUMfQr
-X-Proofpoint-ORIG-GUID: -Rb1s_NHFWl1wGrgobAdiarwOGhUMfQr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-22_09,2024-04-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- spamscore=0 impostorscore=0 lowpriorityscore=0 mlxscore=0 adultscore=0
- mlxlogscore=999 bulkscore=0 suspectscore=0 malwarescore=0 clxscore=1015
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404220055
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <81322c16-8d82-16e7-dafd-93c29b07f169@quicinc.com>
 
+On Fri, Apr 19, 2024 at 07:37:44PM -0700, Abhinav Kumar wrote:
+> 
+> 
+> On 4/19/2024 6:34 PM, Dmitry Baryshkov wrote:
+> > On Fri, Apr 19, 2024 at 05:14:01PM -0700, Abhinav Kumar wrote:
+> > > 
+> > > 
+> > > On 3/19/2024 6:22 AM, Dmitry Baryshkov wrote:
+> > > > Move a call to dpu_format_populate_plane_sizes() to the atomic_check
+> > > > step, so that any issues with the FB layout can be reported as early as
+> > > > possible.
+> > > > 
+> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > ---
+> > > >    drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 12 ++++++------
+> > > >    1 file changed, 6 insertions(+), 6 deletions(-)
+> > > > 
+> > > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > > > index d9631fe90228..a9de1fbd0df3 100644
+> > > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > > > @@ -673,12 +673,6 @@ static int dpu_plane_prepare_fb(struct drm_plane *plane,
+> > > >    		}
+> > > >    	}
+> > > > -	ret = dpu_format_populate_plane_sizes(new_state->fb, &pstate->layout);
+> > > > -	if (ret) {
+> > > > -		DPU_ERROR_PLANE(pdpu, "failed to get format plane sizes, %d\n", ret);
+> > > > -		return ret;
+> > > > -	}
+> > > > -
+> > > >    	/* validate framebuffer layout before commit */
+> > > >    	ret = dpu_format_populate_addrs(pstate->aspace,
+> > > >    					new_state->fb,
+> > > > @@ -864,6 +858,12 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+> > > >    		return -E2BIG;
+> > > >    	}
+> > > > +	ret = dpu_format_populate_plane_sizes(new_plane_state->fb, &pstate->layout);
+> > > > +	if (ret) {
+> > > > +		DPU_ERROR_PLANE(pdpu, "failed to get format plane sizes, %d\n", ret);
+> > > > +		return ret;
+> > > > +	}
+> > > > +
+> > > 
+> > > I think we need another function to do the check. It seems incorrect to
+> > > populate the layout to the plane state knowing it can potentially fail.
+> > 
+> > why? The state is interim object, which is subject to checks. In other
+> > parts of the atomic_check we also fill parts of the state, perform
+> > checks and then destroy it if the check fails.
+> > 
+> 
+> Yes, the same thing you wrote.
+> 
+> I felt we can perform the validation and reject it before populating it in
+> the state as it seems thats doable here rather than populating it without
+> knowing whether it can be discarded.
 
-On 4/22/2024 3:24 PM, Manivannan Sadhasivam wrote:
-> On Tue, Apr 16, 2024 at 01:45:18PM +0800, Qiang Yu wrote:
->> On 4/15/2024 7:56 PM, Manivannan Sadhasivam wrote:
->>> On Mon, Apr 15, 2024 at 04:49:03PM +0800, Qiang Yu wrote:
->>>> Add sysfs entry to allow users of MHI bus force device to enter EDL.
->>>> Considering that the way to enter EDL mode varies from device to device and
->>>> some devices even do not support EDL. Hence, add a callback edl_trigger in
->>>> mhi controller as part of the sysfs entry to be invoked and MHI core will
->>>> only create EDL sysfs entry for mhi controller that provides edl_trigger
->>>> callback. All of the process a specific device required to enter EDL mode
->>>> can be placed in this callback.
->>>>
->>>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
->>>> ---
->>>>    Documentation/ABI/stable/sysfs-bus-mhi | 11 +++++++++++
->>>>    drivers/bus/mhi/host/init.c            | 35 ++++++++++++++++++++++++++++++++++
->>>>    include/linux/mhi.h                    |  2 ++
->>>>    3 files changed, 48 insertions(+)
->>>>
->>>> diff --git a/Documentation/ABI/stable/sysfs-bus-mhi b/Documentation/ABI/stable/sysfs-bus-mhi
->>>> index 1a47f9e..d0bf9ae 100644
->>>> --- a/Documentation/ABI/stable/sysfs-bus-mhi
->>>> +++ b/Documentation/ABI/stable/sysfs-bus-mhi
->>>> @@ -29,3 +29,14 @@ Description:	Initiates a SoC reset on the MHI controller.  A SoC reset is
->>>>                    This can be useful as a method of recovery if the device is
->>>>                    non-responsive, or as a means of loading new firmware as a
->>>>                    system administration task.
->>>> +
->>>> +What:           /sys/bus/mhi/devices/.../force_edl
->>> s/force_edl/trigger_edl
->>>
->>>> +Date:           April 2024
->>>> +KernelVersion:  6.9
->>>> +Contact:        mhi@lists.linux.dev
->>>> +Description:    Force devices to enter EDL (emergency download) mode. Only MHI
->>> How can the user trigger EDL mode? Writing to this file? If so, what is the
->>> value?
->> User can trigger EDL mode by writing a non-zero value to this file.
->>
->>> 'Emergency Download'
->>>
->>>> +                controller that supports EDL mode and provides a mechanism for
->>>> +                manually triggering EDL contains this file. Once in EDL mode,
->>> 'This entry only exists for devices capable of entering the EDL mode using the
->>> standard EDL triggering mechanism defined in the MHI spec <insert the version>.'
->>>
->>>> +                the flash programmer image can be downloaded to the device to
->>>> +                enter the flash programmer execution environment. This can be
->>>> +                useful if user wants to update firmware.
->>> It'd be good to mention the OS tool like QDL that is used to download firmware
->>> over EDL.
->> OK, can I add an additionnal line like this
->> Users:          Any OS tools that is used to download firmware over EDL like
->> QDL.
->>
->>>> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
->>>> index 44f9349..333ac94 100644
->>>> --- a/drivers/bus/mhi/host/init.c
->>>> +++ b/drivers/bus/mhi/host/init.c
->>>> @@ -127,6 +127,32 @@ static ssize_t soc_reset_store(struct device *dev,
->>>>    }
->>>>    static DEVICE_ATTR_WO(soc_reset);
->>>> +static ssize_t force_edl_store(struct device *dev,
->>> s/force_edl/trigger_edl
->>>
->>>> +			       struct device_attribute *attr,
->>>> +			       const char *buf, size_t count)
->>>> +{
->>>> +	struct mhi_device *mhi_dev = to_mhi_device(dev);
->>>> +	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
->>>> +	unsigned long val;
->>>> +	int ret;
->>>> +
->>>> +	ret = kstrtoul(buf, 10, &val);
->>>> +	if (ret < 0) {
->>>> +		dev_err(dev, "Could not parse string: %d\n", ret);
->>> No need to print error.
->>>
->>>> +		return ret;
->>>> +	}
->>>> +
->>>> +	if (!val)
->>>> +		return count;
->>> What does this mean?
->> If user want to trigger EDL mode,he has to write a non-zero value to this
->> file. If he writes zero, nothing will happen.
->>
-> You need to throw -EINVAL for invalid inputs ie., <= 0.
-Thanks for pointing this out. Will also address it in next version
-patch.
+But populate function does the check. It seems like an overkill to add
+another function. Also I still don't see the point. It was fine to call
+this function from .prepare_fb, but it's not fine to call it from
+.atomic_check?
 
-Thanks,
-Qiang
->> Do we need to limit the valid value to a specific value like 1?
->>
-> That's not needed.
->
-> - Mani
->
+> 
+> > Maybe I'm missing your point here. Could you please explain what is the
+> > problem from your point of view?
+> > 
+> > > 
+> > > Can we move the validation part of dpu_format_populate_plane_sizes() out to
+> > > another helper dpu_format_validate_plane_sizes() and use that?
+> > > 
+> > > And then make the remaining dpu_format_populate_plane_sizes() just a void
+> > > API to fill the layout?
+> > 
+
+-- 
+With best wishes
+Dmitry
 
