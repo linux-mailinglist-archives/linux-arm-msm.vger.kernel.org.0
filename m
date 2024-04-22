@@ -1,188 +1,258 @@
-Return-Path: <linux-arm-msm+bounces-18135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3AD568AC5F6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 09:51:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 439CC8AC617
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 09:56:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B0A5A1F21100
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 07:51:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AA3DA1F214FB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 07:56:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC1984EB3F;
-	Mon, 22 Apr 2024 07:50:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E1614DA08;
+	Mon, 22 Apr 2024 07:55:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u4qienJu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OCbjH1yy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6454E1C8
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 07:50:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BE94CE1F;
+	Mon, 22 Apr 2024 07:55:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713772247; cv=none; b=BnDass7pWkBirolTL8DpRH3z5LdDzbQtqFtMrXAgRIpjC/+2L97/Dtfzo+N5ZgAYVoHe6Dm5427Mx2QPrdwtgODOeiT/zRWRZ9DPBloCi6mlAKp14pirhM3Q5Pll52/59C5mcua5RlvdBEfoHu0jKx52h+Q92x7VvSATjuvNRCg=
+	t=1713772533; cv=none; b=drwYbwnGRYv0EwskYluVxqmmJiJiLK8KeZ66rF0BvTCe6JtRMzTHSCM3qJ0YEKVtZwYk8d3IxNwv4WfePAkSGYxY1OekVdyzKV9ArjqNVhyXyb1fzUiccA1EraCBgPtucU2IYKzU/QBzqpaivKyIVLC3lQnkh2liHAIbybXlz/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713772247; c=relaxed/simple;
-	bh=ll7xpI05vG+OSYFaHbFKnPZj/8mZGc85w/FkFElFwjw=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=FJ/LFrnMEcav0lcQEyLL/1EBki8p+48EYsgTTo3nsNp24U6j1CHZtnIvLhQgCFffnqik3q9dXJgen0oFweP99snO1jJZKa0T2613QYwwyeFAvPUQshG8v1CGPqRWZad1/bjnsxGkYiKV6DYCHOXUmis61nymoDcphQoImU0n/sM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u4qienJu; arc=none smtp.client-ip=209.85.208.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2dda77dfb9eso4589891fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 00:50:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713772244; x=1714377044; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=v+71MZ9wrQ9ox9rnQ8IGeE2LhRSl4xdE1GR9dh+ng9Q=;
-        b=u4qienJuFWayQfLR+rXFP6p7HKtoJTr8WkYR/bQUXqjGVswXq0fxL/J6dApyV2JPy+
-         PsfIoeN0jHr7SJwMIkF9lHmx51qcoN+M70bN++5wBZxsIzOkyJIfv0wZmRovB3QDjRWF
-         WN+0KnGGrP8q26gDNPUgtCqE/gphN94UqKiPEbThOwEpqDFMVZa6NHW1gzTEkA0O7Nc7
-         +vNY89qLqYguk0BsODeQ1kN85Il2+/eTy8uXoAz9ofysJoZ5IIFR3xrmPE69OqReHmUI
-         DlGWfnYPaPMdKuClbum+JPsAIK5/jdM8xaSgg4MFo+kHE/FudHivDY/0CEzgOyJEf+Ip
-         xqKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713772244; x=1714377044;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=v+71MZ9wrQ9ox9rnQ8IGeE2LhRSl4xdE1GR9dh+ng9Q=;
-        b=u83jISw90cqr8uJQ1SdywcWZkQtEfbbXYGv42Ag5cYaVmL1wHa9a90NdDLFvvsyaSK
-         k+Lmvf9ctbF+Du4f4qRNZ726YZV8x1F76pkE3Ge3P3Aag+gOwif7i+BI5H98SNnmVKUY
-         TrKOZlZrDDB818SYawkvpg7C+516njxb2pwofP74MJ+BJjcKnObmllqVIPApgpzXlSHo
-         kE6TMvrL6TkEAxuTpXetkAN7/NY5YMsfxFrNvuBonR5g/p3zOtiLTr3lxyzaB+KCtC90
-         5X4Vk/nZbeMQbILkNGTqMhA+6mTraVWA3cd3kznyr/uZMyxz60ngD+Fq4D2I4eRAfUOM
-         TZAQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX32vfo6m1xDndHaQFpNw66uhrDSWZe3mQVfdOF2F+XeSvdOxlyiOIiC5kVNXVZWdotnVGjGoUXFcPuQ/d90l22IsNDH9iNaWZfqwQtYw==
-X-Gm-Message-State: AOJu0YyMjuQSMsq1bLfbOyQdB58W3gHWIQ4o1ZUnCC5/AaFt92d9QcCR
-	7oUmiq4jVD7VVGyEzBv+8qPKz0Po5+zmayIIasqpzDuTt/X1CNufFR7pZcNZMAk=
-X-Google-Smtp-Source: AGHT+IEO+hs7djOE8BhqvbO1jw9iehaX2qdysNQjBTx57bMY99Rnnu0XpYuWpXJnIxcp1ufaEMbYgQ==
-X-Received: by 2002:a2e:380b:0:b0:2d8:68fb:399b with SMTP id f11-20020a2e380b000000b002d868fb399bmr5464268lja.7.1713772244119;
-        Mon, 22 Apr 2024 00:50:44 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:e5e5:892f:e81f:7cad? ([2a01:e0a:982:cbb0:e5e5:892f:e81f:7cad])
-        by smtp.gmail.com with ESMTPSA id ay39-20020a05600c1e2700b0041a7a923502sm982614wmb.3.2024.04.22.00.50.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Apr 2024 00:50:43 -0700 (PDT)
-Message-ID: <a27572a5-2f1c-46ff-8528-4cae17c8e5e9@linaro.org>
-Date: Mon, 22 Apr 2024 09:50:40 +0200
+	s=arc-20240116; t=1713772533; c=relaxed/simple;
+	bh=EzRjNCSbKtQiwQ0eT1S66pyOa6ClYC4xUHa8zMfB0Xs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=trn4w3RGC8pl3guK2ha+Lw+5daTz0zaMV26mSmQAcseQrFDyHn7bffjhv4uL0eVSoj3cxXBMLeHjEZgV+hXqPr39U2KoLuQ4cnoQ6Ngro6qztd/lWrzfBSQahGgMok7attd1lI0k7uQ4bpJZqJWsLlKSJA2wV///7fHWEUGJeuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OCbjH1yy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A25BC113CC;
+	Mon, 22 Apr 2024 07:55:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1713772532;
+	bh=EzRjNCSbKtQiwQ0eT1S66pyOa6ClYC4xUHa8zMfB0Xs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=OCbjH1yyvhAAC80zHQuNReQp/rrz/BGPMuAGGM/ammvFcPPjak7uc/6WVl6aN27Np
+	 pI7SHZa8uYH4bVlWlOGhJCaf9TF5Bm6hKs5f/gOUy2yHjwgSvE0QzCYO6oy8Bu4EpX
+	 QlRuOfIA2kVBhXGS1Win0JCN5tjkcYVbtWYhJoFTzb03F5qmeDjDaHovMcIfjlfwjE
+	 RW655maF2+Kfipl8t95EI8UwQXCnHY+xWc0gEgOD5MHZ4vW9KjescbzLZTSIUVzXUb
+	 ta0hpcY5GpaS7JDPeUR59YbKNwvi3Bmsv0hH6JfwvGcd4XFj0GLkBRg68vFhh0edDE
+	 VianSv1g9oOiw==
+Date: Mon, 22 Apr 2024 13:25:21 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Niklas Cassel <cassel@kernel.org>
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
+	linux-tegra@vger.kernel.org, Damien Le Moal <dlemoal@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>
+Subject: Re: [PATCH 05/11] PCI: epf-{mhi/test}: Move DMA initialization to
+ EPC init callback
+Message-ID: <20240422075521.GB9775@thinkpad>
+References: <20240314-pci-epf-rework-v1-0-6134e6c1d491@linaro.org>
+ <20240314-pci-epf-rework-v1-5-6134e6c1d491@linaro.org>
+ <Zf2tXgKo-gc3qy1D@ryzen>
+ <20240326082636.GG9565@thinkpad>
+ <ZgKsBoTvPWWhPO9e@ryzen>
+ <20240327055457.GA2742@thinkpad>
+ <ZgQFXsgqpeLbXMTb@ryzen>
+ <ZgW6KB73Wh1X6911@matsya>
+ <Zg5oeDzq5u3jmKIu@ryzen>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 00/15] tty: serial: switch from circ_buf to kfifo
-To: Greg KH <gregkh@linuxfoundation.org>
-Cc: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>, linux-serial@vger.kernel.org,
- linux-kernel@vger.kernel.org, Al Cooper <alcooperx@gmail.com>,
- Alexander Shiyan <shc_work@mail.ru>,
- Alexandre Belloni <alexandre.belloni@bootlin.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Alim Akhtar <alim.akhtar@samsung.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Baolin Wang <baolin.wang@linux.alibaba.com>, Baruch Siach
- <baruch@tkos.co.il>, Bjorn Andersson <andersson@kernel.org>,
- Claudiu Beznea <claudiu.beznea@tuxon.dev>,
- "David S. Miller" <davem@davemloft.net>, Fabio Estevam <festevam@gmail.com>,
- Hammer Hsieh <hammerh0314@gmail.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Christophe Leroy <christophe.leroy@csgroup.eu>,
- Chunyan Zhang <zhang.lyra@gmail.com>, Jerome Brunet <jbrunet@baylibre.com>,
- Jonathan Hunter <jonathanh@nvidia.com>, Kevin Hilman <khilman@baylibre.com>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Kumaravel Thiagarajan <kumaravel.thiagarajan@microchip.com>,
- Laxman Dewangan <ldewangan@nvidia.com>,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- "Maciej W. Rozycki" <macro@orcam.me.uk>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Michael Ellerman <mpe@ellerman.id.au>, Michal Simek <michal.simek@amd.com>,
- "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>,
- Nicolas Ferre <nicolas.ferre@microchip.com>,
- Nicholas Piggin <npiggin@gmail.com>, Orson Zhai <orsonzhai@gmail.com>,
- =?UTF-8?Q?Pali_Roh=C3=A1r?= <pali@kernel.org>,
- Patrice Chotard <patrice.chotard@foss.st.com>,
- Peter Korsgaard <jacmet@sunsite.dk>,
- Richard Genoud <richard.genoud@gmail.com>,
- Russell King <linux@armlinux.org.uk>, Sascha Hauer <s.hauer@pengutronix.de>,
- Shawn Guo <shawnguo@kernel.org>, Stefani Seibold <stefani@seibold.net>,
- Sumit Semwal <sumit.semwal@linaro.org>,
- Taichi Sugaya <sugaya.taichi@socionext.com>,
- Takao Orito <orito.takao@socionext.com>,
- Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>,
- Thierry Reding <thierry.reding@gmail.com>, Timur Tabi <timur@kernel.org>,
- Vineet Gupta <vgupta@kernel.org>
-References: <20240405060826.2521-1-jirislaby@kernel.org>
- <daf06969-15fd-470e-88b8-a717066fe312@linaro.org>
- <2024042030-gumdrop-outdoors-fc81@gregkh>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <2024042030-gumdrop-outdoors-fc81@gregkh>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Zg5oeDzq5u3jmKIu@ryzen>
 
-Hi Greg,
-
-On 20/04/2024 07:42, Greg KH wrote:
-> On Fri, Apr 19, 2024 at 05:12:28PM +0200, Neil Armstrong wrote:
->> This patchset has at least broken all Amlogic and Qualcomm boards so
->> far, only part of them were fixed in next- but this serie has been
->> merged in v1 with no serious testing and should've been dropped
->> immediately when the first regressions were reported.
+On Thu, Apr 04, 2024 at 10:44:40AM +0200, Niklas Cassel wrote:
+> On Fri, Mar 29, 2024 at 12:12:48AM +0530, Vinod Koul wrote:
+> > On 27-03-24, 12:39, Niklas Cassel wrote:
+> > > 
+> > > So my question is:
+> > > Is the "dummy memcpy" DMA channel always available?
+> > 
+> > That depends on the system, you may or maynot have such a system where
+> > you have a generic memcpy dma controller which can provide you with
+> > these channels
 > 
-> What is not yet fixed with the recent patch that was just sent to the
-> list?
+> I misunderstood DMA_MEMCPY then, I assumed that it was a "software emulated"
+> DMA channel, which allowed the a driver to always use dmaengine + DMA API.
 > 
-> Doing core changes like this is hard, I have seen no lack of willingness
-> to fix reported problems or major breakages that would deserve a revert.
-
-It broken all Amlogic and Qualcomm boards, are we sure it didn't break other systems that are not CI tested on -next ?
-
-This serie clearly deserved a v2, patch 11 wasn't seriously reviewed, and it deserved a ping on the RFT before sending a v1.
-
-I don't understand why speeding up this changeset and applying it without any reviews nor tests was so important.
-
-Thanks,
-Neil
+> It actually uses a real DMA controller. I don't have any DMA controller in
+> the PCIe EP device tree node, but perhaps it can use any DMA controller that
+> has been registered with dmaengine?
 > 
-> greg k-h
 
+AFAIK, most of the dma controllers support both memcpy and separate tx/rx
+channels except a few like dw-edma where memcpy is not supported.
+
+But for just memcpy, clients can use any registered DMA controller in the
+system. For slave channels, it is best to pass them in DT since the client may
+not know how the channels are laid out in the DMA controller.
+
+> 
+> > Based on my reading you might have this mechanism:
+> > - eDMA provides dmaengine_prep_slave_single() which transfers data from
+> >   mem to pci ep device, so fasted
+> > - dmaengine_prep_dma_memcpy: This will copy the data but treat it as
+> >   memory. I dont pci internals to figure out how both can work... So
+> >   cant really make out why it is slowed
+> > - memcpy_xxx that is IO mem functions, so ofc they will be slowest
+> > 
+> > I think the code is decent from fallback pov... chooses fastest path if
+> > available on a system
+> 
+> Indeed, it makes more sense to me now, thank you Vinod.
+> 
+> 
+> > > I was wrong here, pci-epf-test always calls pci_epc_map_addr()
+> > > regardless if FLAG_USE_DMA is set or not.
+> > > 
+> > > (Even though this should be unnecessary when using the eDMA.)
+> > > 
+> > > However, if we look at pci-epf-mhi.c we can see that it does
+> > > NOT call pci_epc_map_addr() when using DMA API + dmaengine.
+> > > 
+> > > Is it really safe to avoid pci_epc_map_addr() in all EPC controllers?
+> > > I assume that it should be safe for all "real" DMA channels.
+> > > We can see that it is not safe when using DMA API + "dummy" memcpy
+> > > dma-channel. (That is why I was asking if we need a NEEDS_MAP, or
+> > > MAP_NOT_NEEDED flag.)
+> 
+> 
+> > > pci-epf-test.c:
+> > > -Always calls pci_epc_map_addr() when using DMA API.
+> > > 
+> > > pci-epf-mhi.c:
+> > > -Never calls pci_epc_map_addr() when using DMA API.
+> 
+> Mani, I still think that this part is inconsistent between PCI EPF drivers.
+> 
+> Looking more at commit:
+> 8353813c88ef ("PCI: endpoint: Enable DMA tests for endpoints with DMA capabilities")
+> 
+> Adding Frank on CC, since he is the author of that commit.
+> 
+> When the commit added support for eDMA to pci-epf-test, it added an extra
+> parameter to pci_epf_test_data_transfer(), to pass the PCI/DMA address of
+> the remote buffer, in addition to the already provided local physical address
+> that pci_epc_map_addr() has mapped the PCI/DMA address to.
+> 
+> So in the case of eDMA transfer, the pci_epc_map_addr() operation is still
+> being performed, even though pci-epf-test never uses the result of the
+> the mapping operation... This is just confusing and a waste of CPU cycles.
+> 
+> What I would like is more consistency between the EPF drivers.
+> 
+> I guess an if-statement that skips the pci_epc_map_addr() in pci-epf-test
+> if using eDMA would make pci-epf-mhi and pci-epf-test most consistent.
+> 
+
+Agree.
+
+> 
+> However, when reading the DWC databook:
+> -The eDMA and HDMA always goes via the iATU table.
+> If you do not want this, then you need to set the the appropriate bypass bit.
+> 
+> 
+> For eDMA:
+> ""
+> When you do not want the iATU to translate outbound requests that are generated by the
+> internal DMA module, then you must implement one of the following approaches:
+> - Ensure that the combination of DMA channel programming and iATU control register
+> programming, causes no translation of DMA traffic to be done in the iATU.
+> or
+> - Activate the DMA bypass mode to allow request TLPs which are initiated by the DMA
+> controller to pass through the iATU untranslated. You can activate DMA bypass mode by
+> setting the DMA Bypass field of the iATU Control 2 Register (IATU_REGION_C-
+> TRL_OFF_2_OUTBOUND_0).
+> ""
+> 
+> For HDMA:
+> ""
+> When you do not want the iATU to translate outbound requests that are generated by the
+> internal HDMA module, then you must implement one of the following approaches:
+> - Ensure that the combination of HDMA channel programming and iATU control register
+> programming, causes no translation of DMA traffic to be done in the iATU.
+> or
+> - Activate the HDMA bypass mode to allow request TLPs which are initiated by the HDMA
+> controller to pass through the iATU untranslated. You can activate HDMA bypass mode by
+> setting the HDMA Bypass field of the iATU Control 2 Register (IATU_REGION_C-
+> TRL_OFF_2_OUTBOUND_0).
+> ""
+> 
+> We also know that, if there is no match in the iATU table:
+> ""
+> The default behavior of the ATU when there is no address match in the outbound direction or no
+> TLP attribute match in the inbound direction, is to pass the transaction through.
+> ""
+> 
+> So even if we do not call pci_epc_map_addr(), the eDMA and HDMA will go via
+> the iATU table, it will most likely not find a match, so it will go through
+> untranslated.
+> 
+> So I think we need to answer these questions:
+> 1) Do we want to rely on the fact that hopefully none of the iATUs in the DWC
+> controller has configured a mapping that might mess things up for us?
+> I don't see why the PCI/DMA address of the remote buffer, supplied to
+> pci-epf-test via test_reg BAR, might not fall within the physical iATU window
+> on the local EP system. (As long as the PCI EPF driver has mapped any address
+> using pci_epc_map_addr().)
+> 
+> This is a big argument that EPF drivers running on a DWC-based EPC should
+> definitely NOT call pci_epc_map_addr() needlessly when using eDMA, as it
+> can be catastrophic. (pci-epf-test needs to be patched.)
+> 
+
+Right. There is no need to do iATU translation for DMA. I avoid that in MHI
+driver.
+
+> 
+> 2) Can we really assume that both pci-epf-test and pci-epf-mhi does not need
+> to call pci_epc_map_addr() when using a DMA_SLAVE DMA controller?
+> This seems to be designed only with DWC in mind. Other PCIe endpoint
+> controllers might require this.
+> (Yes, for DWC-based controllers, this definitely should be skipped, but EPF
+> drivers are supposed to be independent from a specific EPC.)
+> 
+
+For TEST yes, but for MHI, no. In MHI, I kind of mix both iATU and DMA to ripe
+most of the performance (small vs big transactions). But for the TEST driver, it
+is fair to not call pci_epc_map_addr() when DMA_SLAVE is supported.
+
+I do feel that we need to maintain the similarity within the EPF drivers, but it
+is OK to let the drivers diverge a little for optimization.
+
+> I'm fine with just avoiding the pci_epc_map_addr() call when using DMA_SLAVE
+> DMA in pci-epf-test for now, as that is the only DMA controller that I'm
+> familiar with. This second question was more a question for how EPF drivers
+> are should be designed now and in the future.
+> 
+
+Regarding the DMA_MEMCPY code in TEST driver. We need to keep it for backwards
+compatibility since not all platforms are passing the slave channels in
+devicetree.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
