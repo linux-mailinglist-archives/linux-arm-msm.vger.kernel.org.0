@@ -1,81 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-18205-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18206-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 45CCF8AD479
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 20:59:42 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C80EB8AD509
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 21:44:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 774821C213DA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 18:59:41 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 58A1FB2139B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 19:44:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CEC71552E1;
-	Mon, 22 Apr 2024 18:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19BF25025E;
+	Mon, 22 Apr 2024 19:44:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bX88AI0t"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tdJ0YiW2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44915154C10;
-	Mon, 22 Apr 2024 18:59:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681EE15533B
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 19:44:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713812377; cv=none; b=n2Vs93HeeKMmpWX+/Q/oDqKQJSfZ6dBbeyUg4fx9Ow5bU3LyjCMN1RwvrMkwqEUFeg7aGH20KA2MYhEexVT8ojwIHG2A8Lwt6ZTkk7JIWKZQzBF8GcON95JWmnpZFxh4V5Zqm8R8MMSwFO+T59UjEzTYFPTQlPTmsCT0gXo0+Gk=
+	t=1713815065; cv=none; b=A3H3pLjiwUymGykhx/6UFmra+vqEXOGzcMyF+H6l80zJW7Lf0idSGtUhL7beWKcmJiFoR5gb18T1eSnw94yt/mbUTI98rNvYCWjk1RGvU+n3qp8rgURGaB0kifE55VLtEPE/bwN06D5j9YindAXsB9FCjfDehovuPSARpx8WeLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713812377; c=relaxed/simple;
-	bh=eGFdW3sldzR08VZu/MJcJfX2g/Wox3smD8F5MC8UyeI=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=K9rWPY7++9KOzkm6QQyGzokFAord519FhhX6cBGMtNcSmywqlytb1MaybyCBwCX/vG3nQDGaLh/RKFRcLUUlHBefwV7SqkjG46Nep+PuO4km/XlHnoGulnmLboeCfg0heoS0Eu13Grx/JxtmNYpwTuQ+UAEchN3YF6k7PnNXl2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bX88AI0t; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB078C113CC;
-	Mon, 22 Apr 2024 18:59:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713812376;
-	bh=eGFdW3sldzR08VZu/MJcJfX2g/Wox3smD8F5MC8UyeI=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=bX88AI0tK3/ReNpXkTH1n7VCIgLWocKKCTLwkUJPke5ONO8t6gfUVcRJ9zadYemIg
-	 n6cpwTZcVJGfkPeVQMKjWBdqKszt9Raw46xATkFOOvigxDkUgiS01OZcnW/x+Iq8oP
-	 L5Ih6Kgg6iGT5Uh7dMgajGx4d46owvfrW6WRbm/KSr9X7szwtFXYp4oio/cqlyNF21
-	 UrcGCIqx/D5i7/ZFlL11ES8H9LY/5U1B1rwePmfc52H6l7uUtE7rYJSBXQs6kxmAIm
-	 3v13V1/fl5IK7FyUAH1sCer8RbW4CWJlA7HlbFVcfdCpq+ojqzDbqK7VG5t38BJXJE
-	 4DNkN/OYaOJ6g==
-Message-ID: <048797d988e487f79f74370e1a390b42.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1713815065; c=relaxed/simple;
+	bh=teUOH+Iz6NWDZL8ij++AYo7mAAoW9rkXT9ZCcHSMccA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=daAmyEyYHl5Dz67TN703ELrJT6YH+bfwRk7Hyjlff4b+na83idGlRxa+PYW7WQHC6LLaFUKFeEOvsfLgF7olewgdbaUR8uNEpCKZ2J+3Cn4zEdvSqsz/xD6oqOR1VvxEhRmQwfJOKWUYcr26yrWviY+fwamnY4lHwT1kORRa8p0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tdJ0YiW2; arc=none smtp.client-ip=209.85.208.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2db17e8767cso63934691fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 12:44:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1713815062; x=1714419862; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=PNSqhnViCny5sGqp7Qjs50p3XAx1lbvYw/hoV+0zczM=;
+        b=tdJ0YiW2jWV6Mq6f3ZFlutq1o/NxdmwFFDUfbSY7aFHcJ/movQY+tarSUpIhYUlboE
+         tUPhSIHDCgnxRBlmtkTS3hsCxqi/nxeLLciEOKT71Ten9paF6ml5F64F59kJV0pUph1A
+         SlCnUvf25MEI5mM+9I/pgq0j8A6Cc6TPfnIoYEpZjdkj9qw7stVXoKCSzg/IjcENNSY0
+         ml3o/h8NKvjMdKwrmPTtszXnPjh0O3pdDGYo2axwUXr/lqoDAlGRr8DmLDrc3zeWP9ds
+         krzm0hLVXA86ZIs23FUePjGJ6E+UoMaCoLv+GrJywSCghEafPzGhmSQZGe3xPO7ByXzr
+         FXLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713815062; x=1714419862;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PNSqhnViCny5sGqp7Qjs50p3XAx1lbvYw/hoV+0zczM=;
+        b=bTA8lOW1b4usk4kPtdDDQqIJRABP6ingOAPfrIc+yGDKKKbiEuEMjRec08Yl1CLP71
+         pZyqal2RxVjBhd+wzHJnm/Pv0SpB8k/qzjDA25xE17VKgGz5dTAr9vQs7zp9A17MhADQ
+         NTlCotjpAcB3shVPwhu95rvA/NyWELilnL89OZ57/F/4uB8KVuayOf95evfbZvirbfUP
+         eNERYZR7VzS90gJiO5PwDssnyAjQ2Fg76E7iHvY5zxJeI072yHHDueG2JRX+BeIfWDMS
+         6336nx5jZT0UGXGfA67WmOz599JUjHW/bEsosCVyUj97JtHWk0HPUMz9z7JiltdWRRYm
+         /fLQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXvyWMrT0Ibg+1urkh95oePw5gK4zCgWXp2w/v0nEazxLGOMhFezXq8MHVh+jczrxWIhS5sQaJ3TKl3IXg24EbS7GnxJxzcT6Oe/F8tXA==
+X-Gm-Message-State: AOJu0Yzn7IWKNtLlnhOgjbxR6vvZTqMcSLrvUCubUMs5mVpMRgrl4Pdc
+	LGg+kIeztHQSKot/WPpUU102wC6JUBeBWbEYZNxGh8gK0xf49mEpauF+qqxihho=
+X-Google-Smtp-Source: AGHT+IFB4vlO61dRgJLfBsF513ju46qQFEo5RGhENHLFJUifWdD3Ld8YIEwoMTEdpoaSF4uOjBiDJA==
+X-Received: by 2002:a05:651c:2102:b0:2dc:f188:a073 with SMTP id a2-20020a05651c210200b002dcf188a073mr7128155ljq.35.1713815061649;
+        Mon, 22 Apr 2024 12:44:21 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::8a5])
+        by smtp.gmail.com with ESMTPSA id l3-20020a2e9083000000b002da6fb7ce36sm1533716ljg.135.2024.04.22.12.44.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Apr 2024 12:44:21 -0700 (PDT)
+Date: Mon, 22 Apr 2024 22:44:19 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] drm/msm: don't clean up priv->kms prematurely
+Message-ID: <pirzyu6ki7hfrax2uo3qlg7fdzlvzpg7vfgfqawogtybdd6e3c@zvgh3n4o67zi>
+References: <20240420-mdp4-fixes-v1-0-96a70f64fa85@linaro.org>
+ <20240420-mdp4-fixes-v1-1-96a70f64fa85@linaro.org>
+ <67fbd629-3e80-b706-83a3-7baff3efd6c1@quicinc.com>
+ <n7eet54g72usmuh4hdz6yce3i4ieweu4orgd7gewu7y53ejucc@dzmq2a2wdxkc>
+ <7daeeaba-a33d-bf05-1371-d9b5fa0bf0a5@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20240420162801.1132878-1-andersson@kernel.org>
-References: <20240420162801.1132878-1-andersson@kernel.org>
-Subject: Re: [GIT PULL] Qualcomm clock fixes for v6.9
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, Adam Skladowski <a39.skl@gmail.com>, Johan Hovold <johan+linaro@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>, linux-clk@vger.kernel.org
-Date: Mon, 22 Apr 2024 11:59:32 -0700
-User-Agent: alot/0.10
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7daeeaba-a33d-bf05-1371-d9b5fa0bf0a5@quicinc.com>
 
-Quoting Bjorn Andersson (2024-04-20 09:28:00)
->=20
-> The following changes since commit 4cece764965020c22cff7665b18a0120063590=
-95:
->=20
->   Linux 6.9-rc1 (2024-03-24 14:10:05 -0700)
->=20
-> are available in the Git repository at:
->=20
->   https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qco=
-m-clk-fixes-for-6.9
->=20
-> for you to fetch changes up to 0d4ce2458cd7d1d66a5ee2f3c036592fb663d5bc:
->=20
->   clk: qcom: smd-rpm: Restore msm8976 num_clk (2024-04-02 22:49:07 -0500)
->=20
-> ----------------------------------------------------------------
+On Mon, Apr 22, 2024 at 10:23:18AM -0700, Abhinav Kumar wrote:
+> 
+> 
+> On 4/21/2024 3:35 PM, Dmitry Baryshkov wrote:
+> > On Sat, Apr 20, 2024 at 04:02:00PM -0700, Abhinav Kumar wrote:
+> > > 
+> > > 
+> > > On 4/19/2024 7:33 PM, Dmitry Baryshkov wrote:
+> > > > MSM display drivers provide kms structure allocated during probe().
+> > > > Don't clean up priv->kms field in case of an error. Otherwise probe
+> > > > functions might fail after KMS probe deferral.
+> > > > 
+> > > 
+> > > So just to understand this more, this will happen when master component
+> > > probe (dpu) succeeded but other sub-component probe (dsi) deferred?
+> > > 
+> > > Because if master component probe itself deferred it will allocate priv->kms
+> > > again isnt it and we will not even hit here.
+> > 
+> > Master probing succeeds (so priv->kms is set), then kms_init fails at
+> > runtime, during binding of the master device. This results in probe
+> > deferral from the last component's component_add() function and reprobe
+> > attempt when possible (once the next device is added or probed). However
+> > as priv->kms is NULL, probe crashes.
+> > 
+> > > 
+> > > > Fixes: a2ab5d5bb6b1 ("drm/msm: allow passing struct msm_kms to msm_drv_probe()")
+> 
+> Actually, Is this Fixes tag correct?
+> 
+> OR is this one better
+> 
+> Fixes: 506efcba3129 ("drm/msm: carve out KMS code from msm_drv.c")
 
-Thanks. Pulled into clk-fixes
+No. The issue existed even before the carve-out.
+
+> 
+> 
+> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > ---
+> > > >    drivers/gpu/drm/msm/msm_kms.c | 1 -
+> > > >    1 file changed, 1 deletion(-)
+> > > > 
+> > > > diff --git a/drivers/gpu/drm/msm/msm_kms.c b/drivers/gpu/drm/msm/msm_kms.c
+> > > > index af6a6fcb1173..6749f0fbca96 100644
+> > > > --- a/drivers/gpu/drm/msm/msm_kms.c
+> > > > +++ b/drivers/gpu/drm/msm/msm_kms.c
+> > > > @@ -244,7 +244,6 @@ int msm_drm_kms_init(struct device *dev, const struct drm_driver *drv)
+> > > >    	ret = priv->kms_init(ddev);
+> > > >    	if (ret) {
+> > > >    		DRM_DEV_ERROR(dev, "failed to load kms\n");
+> > > > -		priv->kms = NULL;
+> > > >    		return ret;
+> > > >    	}
+> > > > 
+> > 
+
+-- 
+With best wishes
+Dmitry
 
