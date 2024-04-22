@@ -1,135 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-18115-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18116-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE5808AC1F4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 00:35:36 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 707E08AC28B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 03:37:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7A2E4280E93
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Apr 2024 22:35:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D9C981F21033
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 01:37:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 058933CF40;
-	Sun, 21 Apr 2024 22:35:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TEFObCcY"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E50EA17C8;
+	Mon, 22 Apr 2024 01:37:07 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from CHN02-SH0-obe.outbound.protection.partner.outlook.cn (mail-sh0chn02on2132.outbound.protection.partner.outlook.cn [139.219.146.132])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79ED81BC4C
-	for <linux-arm-msm@vger.kernel.org>; Sun, 21 Apr 2024 22:35:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713738909; cv=none; b=tv5p8m1AfEMHUFMzbfUxl353woLpGQ10CSIjvlhIjO0SQ5S4/JKfFzhLC1jAMkunxHSP/MY/NKvJuOXaGJLms9/JIb3Io8H/DIMio+8L44AhYqWikWU1zHjITbnUfouq7iMlK0Gk3Pz/7FwSq8SBR0ox1Bz9TNz45YeA9G46uiI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713738909; c=relaxed/simple;
-	bh=qb9KZrNjv3KJHdQgXErZFHSs9C9IWBLPfq0Gihr0OCc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KhxV8K+L0sLNKgG+cBibq21U60nHome0sHjPtXQ36vB9G8pzdslJg2uc6EHu0NvwTBlcOI1LWavbYf/7djAZ5H7K7ywvLM6T4awPo7+Qz5ep+Py2b1H44j/EB59+kuOd5wxqMqMkYnr+EEEsE1ygpwc37EEHTWHpjxk3lo3D0GE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TEFObCcY; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-51abf1a9332so3296838e87.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Apr 2024 15:35:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713738906; x=1714343706; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9bRTN9Ob4QM4MboZv5j+iipkeqQdN46sghn8IdzK36Q=;
-        b=TEFObCcYL9Su6wcxZ8tldc685c1Js1oeKoPcD7oClmVfXLpmkNxfO6fnOivfC3g2DH
-         DHvP1k5J2WqcSlyieHG+fKUQr/NQXIaf/QcBpgCePVBoCP8McA/1b2JgOjV1I04s8J/a
-         XQrwPDqPwyp3qkfsy77aW4i0gC960c2kK/ASTeU3G0WQZewjENXnQw6XfPpqRCMLcx/+
-         pZhXIIhsITRP65z64MPhTKpi6hTMoh1IDZ5qhN82SkF19WMN5V6JZmY2G9J4+v9GD+qm
-         60AWdGS/5bWlQ5Dl2sc7XCjj9BY3DCfxR2JNxhuK7F0NbA6udPK5l+juuTCMcXT6VCKn
-         EKjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713738906; x=1714343706;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9bRTN9Ob4QM4MboZv5j+iipkeqQdN46sghn8IdzK36Q=;
-        b=vPMU7jz28EA/3jjD6IhQgnLUg1FTX1p1lQq/TuGwuq1epIAPHb+wbbHI9e0a6s1352
-         9rY7wmG7/WFvepQvbTRP85uXTmxRCLvdjEXz6U307u97kDPF9PxQkx6g9Ko9MY41rXMd
-         H8xPOflmj2BFa92GVl7yGK5P8YbkZO61NN4/1R6NafYmd+RYt02Mu4ApNQUgCZ9LOwFy
-         5yQl2mzWlGd6I+rC+tAPLUDNheqqfRbiGpIc8B7UONMxOKvR8ixr8CzAQPNREdIarhaG
-         Xrq9mDSxrmWu1/jBPTS0zcHISPhjKFJMaSa/BEQfkYJ4R3TH6ur0m3jVb5poQ/39uGSA
-         n9ZQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVLTg7C5r0L/pO52xMIB4rLI6HwThLTEKhkTxQ3UjMvIBNVK81HJQA0XN7Tsjr690bh952k9cdFKLmber0xucPGbBR8AgVio8j9pE/Vnw==
-X-Gm-Message-State: AOJu0YwpHvXjVOrFhnJybItPWJvg4ecgXloFXxyVS6BiU97dLoAN1SH6
-	dfKrsss6IuamH6wD65/zLhlfhYlhO9DCDkmzd0RjPlsLvXfz8sX+aEZRA8zlRJU=
-X-Google-Smtp-Source: AGHT+IHLjZAuG9ugDalv8mPVHpO3RxdThgs11PfJ94yvOVMbJYooEIDDJ73Y6EPItQfYa7v0M9uNww==
-X-Received: by 2002:a05:6512:7a:b0:519:1eba:6381 with SMTP id i26-20020a056512007a00b005191eba6381mr4931611lfo.49.1713738905670;
-        Sun, 21 Apr 2024 15:35:05 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::8a5])
-        by smtp.gmail.com with ESMTPSA id w17-20020a05651203d100b00515b62690a6sm1572911lfp.32.2024.04.21.15.35.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 21 Apr 2024 15:35:05 -0700 (PDT)
-Date: Mon, 22 Apr 2024 01:35:03 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] drm/msm: don't clean up priv->kms prematurely
-Message-ID: <n7eet54g72usmuh4hdz6yce3i4ieweu4orgd7gewu7y53ejucc@dzmq2a2wdxkc>
-References: <20240420-mdp4-fixes-v1-0-96a70f64fa85@linaro.org>
- <20240420-mdp4-fixes-v1-1-96a70f64fa85@linaro.org>
- <67fbd629-3e80-b706-83a3-7baff3efd6c1@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8CEC1109;
+	Mon, 22 Apr 2024 01:37:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=139.219.146.132
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1713749827; cv=fail; b=CAWnJ+PY6pxHslPvXZ0K9C5zrFwNVLRDrdHATUx0ORkKVhIaix9brbGoCpSqB4MP3glISCTjUgjquY0/R9Tn35Fq6ibWf6GOA51ysE9XXkJDhcFrFVPHNlGcXwUvLDKji4fZJ20iPwcbeQorAAMRBz6hcamoFa8RmDp0Ev4C0Co=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1713749827; c=relaxed/simple;
+	bh=m9EaUIsiOMcIGATi0/CEZAGAFl03tC15eaZdXjNMkxg=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=Ybzi80DubhYQat6kAdhxR/AazcK38qb3zYirzfMIgMoDJCU3YmATLX+fL1xJkixZrIqkfbttidByDG+Kl9BA6uDQjQ2Szhlyazl+zr7n0kok78LrjFi4AIqyLxnBmR2Uvmn1vbucT6HfqzEFXcpxRwvILwHMQ1XZOJr3mBaLLsk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=starfivetech.com; spf=pass smtp.mailfrom=starfivetech.com; arc=fail smtp.client-ip=139.219.146.132
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=starfivetech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=starfivetech.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=bQjmbm4h7VJyLaXqWt65/ASdZWL5bczQr+P9qq63hRhNZPG4TzF0JEKf/o2/pmASxVpkBw77bCene+3uH5NFiI1snYVOzlZlTExFiSf15xWrX56cbxdhsWkkeOIsFl1ofnMnYGS/4oKKklbW26/e7lC/5TcK/hPDJSjJF0nZ8aG6m6/pnMJWExuCCFeLsc41JprW9DOi6oX8C718Tz4qbxn5kPhPZHSv3soC9FjE5YMGiPgiI7aoGVtR5BBinb1Zxvb20KsnxhoyYWV6DZ9qO+DR0wyp0KcKJfOCBcxTPY1O/g5Cq9d/PkcoOzpo4XNNtC12UUwluJynQJpX69ZPbg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=LxHlCI12nXeVMbEctzvS7WxO/8uLRaRlpA6GwNn1+9Y=;
+ b=ZcYzj7NVy5souCUVgHxeL58aNdquV8/x5gRZoLUZBUxisme9HMvCHiBHN4Pk+IWzsyQBnA/RCIViMreLFoottLYVL2EG2ZM0Ig8hfWMQbybrKOr5xVICd1acDe0YLsPUX20BrvhqfXfI45dCtWFF4WIgS0XongfIS+lFqXp40kE0vhOBtGNt4IKa7QcI/vYvzYDOxRHnI5ZL3/CuVPrhh0cFIZgjYin3jWJf3mQewklNNl7l9cQvIosJtk8tdMbpV+MZHmbExqvV6b6IEjHyQUcrTTHWuC+xQJU6hOAddqsiRWybqavb9+oKuErZqq/aCIhaFu5NIW1kdELN8I1Tpw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=starfivetech.com; dmarc=pass action=none
+ header.from=starfivetech.com; dkim=pass header.d=starfivetech.com; arc=none
+Received: from SHXPR01MB0863.CHNPR01.prod.partner.outlook.cn
+ (2406:e500:c311:25::15) by SHXPR01MB0736.CHNPR01.prod.partner.outlook.cn
+ (2406:e500:c311:26::19) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7249.41; Mon, 22 Apr
+ 2024 01:21:07 +0000
+Received: from SHXPR01MB0863.CHNPR01.prod.partner.outlook.cn
+ ([fe80::a137:b8e5:8a0e:ca9f]) by
+ SHXPR01MB0863.CHNPR01.prod.partner.outlook.cn ([fe80::a137:b8e5:8a0e:ca9f%5])
+ with mapi id 15.20.7472.044; Mon, 22 Apr 2024 01:21:07 +0000
+From: Minda Chen <minda.chen@starfivetech.com>
+To: Krishna Kurapati <quic_kriskura@quicinc.com>, Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>, Rob Herring <robh@kernel.org>, Bjorn
+ Andersson <andersson@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>, Conor Dooley <conor+dt@kernel.org>, Thinh
+ Nguyen <Thinh.Nguyen@synopsys.com>, Felipe Balbi <balbi@kernel.org>, Johan
+ Hovold <johan@kernel.org>
+CC: "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+	"linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"quic_ppratap@quicinc.com" <quic_ppratap@quicinc.com>,
+	"quic_jackp@quicinc.com" <quic_jackp@quicinc.com>
+Subject: Re: [PATCH v21 0/9] Add multiport support for DWC3 controllers
+Thread-Topic: [PATCH v21 0/9] Add multiport support for DWC3 controllers
+Thread-Index: AQHakt5cTCGj6o4U1kO+Ia5MuXnVybFzgPUA
+Date: Mon, 22 Apr 2024 01:21:07 +0000
+Message-ID:
+ <SHXPR01MB0863AA6AE7B391F26EF882ADE612A@SHXPR01MB0863.CHNPR01.prod.partner.outlook.cn>
+References: <20240420044901.884098-1-quic_kriskura@quicinc.com>
+In-Reply-To: <20240420044901.884098-1-quic_kriskura@quicinc.com>
+Accept-Language: en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=starfivetech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SHXPR01MB0863:EE_|SHXPR01MB0736:EE_
+x-ms-office365-filtering-correlation-id: 636e2538-c519-4436-6794-08dc626a7c4d
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ J6IoKXT0XCmAwz39gPfxDeUmb4lH3UhO9oh/1633yqM9pmi7of4dM5P47FTBZyNO+6v+zMwshF8z1T5qfojR5+OYaenGLXhmfuPfo54HuNeG7W9Ye7YU9o6v6nd+byK17P0BMGHgq+9a8SZxcGRGPRae6Rwj0BRUksLew8uhpDXh650GmdyEvETzm7m3MqmIbyLpIC7yo3o8gc5mtUd2Ki+5Zppj18K6og2vO6WoC88HdR8/TTszjDioccJ+CLb9KxOZEUP/wNovPwtJ5GD4YZVyAf9cUxgh6CLAK1+afJPZd8R8NlLD/OA+Bvf3BcCZjD41jB7dj//LtU5ym1TxGXv0V50f85Qqighzqi87AQX9kRAgV2VvvETeOCeQCmolHOdp4oyQPhcA5co+XyJtZ+j1n2CO9z9uRvuRfJtxVkUyI3txT6c0gKV00QF+NyYZ8o+f+WiXiwFJWDdkxYbPSxyBx1mlrgDSxc+/e0LmPbwc+Hkm/AzgfUzqpX3miSwwNaSHgyvzEUruFS2GDwSho7x652u4f44kNdCbUUixbJU+UeYr3H+ZjqgkKaaC+u7yR+BcYl+YuftGnCA82NRql2wsFpaslSsrKcTlIQ1gkOSv87qdTkWpmqHQa2bbCpdIEDaxKnLXAkXaSZQ/75Cl7Q==
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SHXPR01MB0863.CHNPR01.prod.partner.outlook.cn;PTR:;CAT:NONE;SFS:(13230031)(7416005)(366007)(1800799015)(41320700004)(38070700009)(921011);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?QFNuAqupuMnInnESsjm7vCjx/ZfiLiMNtwZxm/HOd0Ow/tfMlQWRm5GNMlaY?=
+ =?us-ascii?Q?F0FeLTBq+gGVwqo98VBo2aDax+wbziVW/5XFuKAofNw2v3P4e2guW3zYWdYg?=
+ =?us-ascii?Q?OtTdJ2TklP1ZK/Cfvh8BdXmS0h2M3c9HGhoh0DLTjrIj99NeP4GFQQm0lA6c?=
+ =?us-ascii?Q?329mGTEZUtPeJimdSKe5BZgQlLeayC9q7HBIwJ1+QPu1PIPrK7jCC6hN4IsY?=
+ =?us-ascii?Q?Nni+Br24XZ4SueFBX+UvNzo0elBHIXkLPVjf+Z7Lt8mv1LVrZbLUP6oBEWWG?=
+ =?us-ascii?Q?ITbOiGMxGR+wi4PoofZFMzWqxIggXyadt0Soafa8XwDgjmU4SrX4IMJE6NtB?=
+ =?us-ascii?Q?pr4BkQMGuweBMcCOSZukDr+3ijBNGU7rzvwWPiVbK85F25VXme3rASOml4Ko?=
+ =?us-ascii?Q?2mSIOv9VGTw1FnKUBjJJaCpddaPFU/yHDzjQS3OLaVsaK5nhrmC2E2CpUjwX?=
+ =?us-ascii?Q?fgKrI62iv2NoUxBB8N6hYAVh5SWQF8Bm8f2W8M/BNOH8wm2iPh8DFm55gf4U?=
+ =?us-ascii?Q?46MIBgXEQXQnc18h3anCUeGmrYv/h2y9I4CW9GJGOagvJNyCatUrHrFcCjeV?=
+ =?us-ascii?Q?IfkgBTdzAmmvbg6kEWbBHXfjQ5SclZaiR5M351BjCCMQfIssJideqE2N5FVi?=
+ =?us-ascii?Q?RaEINGcRKuChVK3zN27icQ4g7kuWo4IhsflXJEoS23K/wq4jCqKqSZHtHpjK?=
+ =?us-ascii?Q?E5cyqP3gMuDZQMKviJcqvTfk2JEAaoapnDZl4tbBrJSOnvV+6NA/CzfrVr8J?=
+ =?us-ascii?Q?BgjhCenPu0m45zHi6jnjSC2/Frc8zcYLMzz0AoOQ12Ach7lB0o4LdEHqVb4J?=
+ =?us-ascii?Q?8xMAYkGgg3KV0Wy6lJodGlqc0TKrCBAfS4u9piFHfsUZYusHlKiy3UEeQMJR?=
+ =?us-ascii?Q?kEhOu76gM6pBOtCGNG/2U6HBj2zzD/x6wi3qE6qe9gfTrnd27xhxtSxeuQgd?=
+ =?us-ascii?Q?JHQaXNrlD4dk0riVCz9SM/MV1SqN+wmTX9V+jh7h87+6O0fwu1JCqx0drwAt?=
+ =?us-ascii?Q?CeXGHNlHeg+UiGEZgcMctEbmcc+u3MX/m0bhW9rG73U1uBrToQaUp+kwSQiF?=
+ =?us-ascii?Q?76OrCfwIWMPl9/aaNqSSW99JtMPPm8RsHWypCihfBgXLv4y4/YR0oe6Aymwm?=
+ =?us-ascii?Q?DnTPCABCz9+evjAkUU2LqHKFgqMCru3sjKzTF19UREZ+MC4G5xh2kU6BwrgW?=
+ =?us-ascii?Q?7ttwBK6ylHAljXpvU5u84YvEp0dDVB9VGJGb0P724dOP2SjmcvuAdMPKo8it?=
+ =?us-ascii?Q?YQXwYDV2ChXDQhC953vMKKKS9L2f27s6ZUTqvQJckRukNx9nByU/eCeeYYYt?=
+ =?us-ascii?Q?BU9q+1OpN2KzKez3UCWClCDNd5ZaSlYJAfMs6YJmL982ds1W16XXF/Wbp7Zk?=
+ =?us-ascii?Q?C7uGZNXW9zmCMa2OJrtjKSpioE3Gn6gaBHMVSFXRV+zRo6rb/M1x09lWBmev?=
+ =?us-ascii?Q?A3A38NNkYF2nLB3HdHAJAPwLEnfkg54+Ed86bWQgwy/8CZxD9XXxxC7ucu8w?=
+ =?us-ascii?Q?ahgunKBXg64yvTyNKc6pbDoaDMo40oirQJELV9bkhHB6MLW43nsU/5ma4Qoa?=
+ =?us-ascii?Q?A0cdsNYGA2vTlT4b2NkGMftG2eehivVrGYkd8v9/FFWpnZC+czQKa07GqjyN?=
+ =?us-ascii?Q?ag=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <67fbd629-3e80-b706-83a3-7baff3efd6c1@quicinc.com>
+X-OriginatorOrg: starfivetech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SHXPR01MB0863.CHNPR01.prod.partner.outlook.cn
+X-MS-Exchange-CrossTenant-Network-Message-Id: 636e2538-c519-4436-6794-08dc626a7c4d
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Apr 2024 01:21:07.1212
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 06fe3fa3-1221-43d3-861b-5a4ee687a85c
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 2rg02vXBpY1MTOBP0Bq//MWwKI6z+EYiq0wP9qYDKSVY814loPDHRUJr6Oa/sys0DnBoNbUA+ou1UMMOfQHvmaAVUiOz3KLRPI3uQayBDBs=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SHXPR01MB0736
 
-On Sat, Apr 20, 2024 at 04:02:00PM -0700, Abhinav Kumar wrote:
-> 
-> 
-> On 4/19/2024 7:33 PM, Dmitry Baryshkov wrote:
-> > MSM display drivers provide kms structure allocated during probe().
-> > Don't clean up priv->kms field in case of an error. Otherwise probe
-> > functions might fail after KMS probe deferral.
-> > 
-> 
-> So just to understand this more, this will happen when master component
-> probe (dpu) succeeded but other sub-component probe (dsi) deferred?
-> 
-> Because if master component probe itself deferred it will allocate priv->kms
-> again isnt it and we will not even hit here.
-
-Master probing succeeds (so priv->kms is set), then kms_init fails at
-runtime, during binding of the master device. This results in probe
-deferral from the last component's component_add() function and reprobe
-attempt when possible (once the next device is added or probed). However
-as priv->kms is NULL, probe crashes.
-
-> 
-> > Fixes: a2ab5d5bb6b1 ("drm/msm: allow passing struct msm_kms to msm_drv_probe()")
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >   drivers/gpu/drm/msm/msm_kms.c | 1 -
-> >   1 file changed, 1 deletion(-)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/msm_kms.c b/drivers/gpu/drm/msm/msm_kms.c
-> > index af6a6fcb1173..6749f0fbca96 100644
-> > --- a/drivers/gpu/drm/msm/msm_kms.c
-> > +++ b/drivers/gpu/drm/msm/msm_kms.c
-> > @@ -244,7 +244,6 @@ int msm_drm_kms_init(struct device *dev, const struct drm_driver *drv)
-> >   	ret = priv->kms_init(ddev);
-> >   	if (ret) {
-> >   		DRM_DEV_ERROR(dev, "failed to load kms\n");
-> > -		priv->kms = NULL;
-> >   		return ret;
-> >   	}
-> > 
-
--- 
-With best wishes
-Dmitry
+>=20
+> Currently the DWC3 driver supports only single port controller which requ=
+ires at
+> most two PHYs ie HS and SS PHYs. There are SoCs that has
+> DWC3 controller with multiple ports that can operate in host mode.
+> Some of the port supports both SS+HS and other port supports only HS mode=
+.
+>=20
+> This change primarily refactors the Phy logic in core driver to allow mul=
+tiport
+> support with Generic Phy's.
+>=20
+> The DWC3 controller supports up to 15 High-Speed phys and 4 SuperSpeed ph=
+ys.
+> The multiport controller in Qualcomm SA8295P is paired with two High-Spee=
+d +
+> SuperSpeed and two High-Speed-only ports. It is assumed that the N
+> SuperSpeed PHYs are paired with the first N High-Speed PHYs.
+>=20
+Hi All, Thinh
+Can DW multiple port host patches be (patch 1-4) accepted first?  Other mul=
+tiport
+vendor will use this.
 
