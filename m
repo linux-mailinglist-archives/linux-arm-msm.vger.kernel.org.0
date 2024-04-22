@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-18117-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DEE098AC3EC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 07:52:04 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F8028AC470
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 08:45:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6BD5A1F22595
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 05:52:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1B416282085
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 06:45:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F36D3182BB;
-	Mon, 22 Apr 2024 05:51:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E22FD481A4;
+	Mon, 22 Apr 2024 06:45:53 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4623E18EA1;
-	Mon, 22 Apr 2024 05:51:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48BD41F61C;
+	Mon, 22 Apr 2024 06:45:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713765119; cv=none; b=BQ5GRsug/vtJU+IJd04IQ+Z+yeP94Uym89XSTxeto2hXENoTAGt4h9+uydNi6Jy5+3WYKgbGweizVeFCCSJhPm7QCAQUJusPNg4m03qD5wAPWAbdpARwVr6O36N3MrMgcELkU5kRa8IdGje/W4GMggc5C6+olKxoeC5SQGbYZfc=
+	t=1713768353; cv=none; b=NDOxH124baUycsFYDZfMn5LMH/XKCei0madf73VqFQhMdKSiJXpuG31FijecF0/T45Sd8T9nuGilGN3DJ1BaGHkYvG+w18T0spXeiPPQ+XK5+sChPXQKjKe5ZRjk+NiJDqEIwD3RGM9QlpYFN4rQJpv3HiiYiXFJFjsfJJ4rmAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713765119; c=relaxed/simple;
-	bh=mO8C0+DnaefprQAj5qHiLjNWa7ajQUzDbr/Y+36xOAg=;
+	s=arc-20240116; t=1713768353; c=relaxed/simple;
+	bh=55gYPbLVDIntV96sOLdLdGIt6h1AKDgfjZMY+knQ09Q=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qk7+Rse+M50Gke5M+7OCVzudT5OSat5WneWdPn3qQhV7Co8y5yIvQi21lSZWAbQsthvE6g8ZC9XGIHv9eF4FyWNqqgWsfT7S5cQYi9iv6X62Y964MFxl2lk/big+rljG68lbZ9PKprOaVMyPmYMYm8TncKjPgLK0tEVBoBHbOd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.218.47
+	 In-Reply-To:Content-Type; b=MBTH0krRx5KaMeIJJaGmjDayvwHp7+yRfxaR0a7+iCQ31u/OMZlrvCzQ9GhNNq0vW3+MqCPq99titdMHtSd+N4ho5Kc5RcGodMaaZg6hKMynoSsqi6KABo8M/ptH/7Y15asL/46vXtCwBhjMC8QGcor7t8JRrjfnL2P7T+2sNyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.208.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a55ab8e8766so99167866b.3;
-        Sun, 21 Apr 2024 22:51:58 -0700 (PDT)
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-571bddd74c1so3684125a12.0;
+        Sun, 21 Apr 2024 23:45:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713765116; x=1714369916;
+        d=1e100.net; s=20230601; t=1713768350; x=1714373150;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=T1xC9IH1uhHctutEG+h6tW/1KnsOeke58MLcXUfvXz8=;
-        b=WtzoMhuFNASrp7TKnjzsnVOtATughtjJ165teHCkR+b3idhOmgLBDOuynSwkbtKr2H
-         +g+lYXz1ID5dyLygkyeCmY9iJhPn2GqExqIihFtBYGnk1pJ9Vfg0jRImV1oMguB+RXzr
-         mKHXUgm2mES4jQW47NhdNw6DWR4SVUQoMecEOxvjipV7fKmh0dbyXsehWbN5gj9iUuha
-         NlVCrhA9jOtXW8FROBwMcSnK+1aurKNZwZwBF91Z1GFsqsHh3CXxuKfc9ve4azvFQ49G
-         HJK4OQ9k4ocbhCZGypYnBGnbVjZLoHD7qspwd0SSj+2v+04MdlAGJ+bOx2P9AgldJvZn
-         CETw==
-X-Forwarded-Encrypted: i=1; AJvYcCW1uJtwng5YzPNbv8kBt8o7zKLUWFAh2T0TOyo6VzJrLkJCgqgRKftlFP/2W/OVILBPwvuCQu4+myaZxByNY/4V9ug6ooW4Y4ZmvXmbGFb56OCnkvdmBVoG3mwiMGbQ4Ei2i2n8uL+pSoPH/A==
-X-Gm-Message-State: AOJu0YwpCJ6ZtggFAEdr3g2a7MJCYKFYcY2Lhc819W+dZ+0430Lvvof8
-	adbhhEKf9PNSA7u6WWu1llLUE0Ph0gA6cD2A3hdsRKPpP9cDRjOG
-X-Google-Smtp-Source: AGHT+IEDRFzn0r5q/74qNxeJa3z0kk9oCbDh89eIoWGbMdy9FbHdtf38egPNlEgBo6+Wds6horaIvA==
-X-Received: by 2002:a17:906:e91:b0:a51:cc20:9116 with SMTP id p17-20020a1709060e9100b00a51cc209116mr4948595ejf.68.1713765116249;
-        Sun, 21 Apr 2024 22:51:56 -0700 (PDT)
+        bh=GhIyK0k38NfXA3SQgYdyxr+nopAq4gC1c596LtQxjg8=;
+        b=ctGozYDCH0TaCJGcuh/aMGEFDabSRe4eTqFQU48J5DwUXO8f4XB7t8mu7f1ij3jAMi
+         Y3BRbCuba0xV7I3nmYSxN9y3jBalIEKVAmP9PyuWhJ4xb6zF35s1MGjat9l/pNAUOfeA
+         R+5yWHnkw5CvRvpP0uKaMCiW1bp6fNrl5OTfu8p+WZwYNnhWOPdikD/MCsxAt6OqvW4u
+         4NzbZZHzTkTnnHsFDqsCutwlFwpso4U6PkYs6N77TyltzXUF2wX5xeXG/ljduA3VatLY
+         HwCTTo3ebGrdKurej6tLJLTUZYT32Sir7na7ySyL6wkHfpZFJtUqwQoMSK5vD1MuEo75
+         Vdsg==
+X-Forwarded-Encrypted: i=1; AJvYcCXMLJQSoL/+6wOhWO4V92cRX5qC2vtUoPmkkAA20fF9BF654U1mCBl6e9CzIw1x3V6tiINOmTzlO0oVuV5iqCYh8QBBaE6kSFHSu6qbWdTrpgBYyeT0zXxmnmOb0MStN6qdW4+ea0XYwpiZKYbfg/fL+lChwGba4pwVl2Ou7Mlm9UW1MIcl7dULJw==
+X-Gm-Message-State: AOJu0YzwWdjXhFyINGUJey7pfPojA9Bo/ZWdt2WnR8nndoEoi368lfNp
+	laHGIpTWsfBtxyXRORDxkRLPeS4QYlT2EhRqLpV59aP32VL75Pqh
+X-Google-Smtp-Source: AGHT+IF6pFeOYyFJcUR2YYwktzKqqEsVL+7YNw2LCDfI4a+snMHD6EFtqrqfydxM5T1KrxphxXBijw==
+X-Received: by 2002:a17:907:1b1e:b0:a55:ac3d:5871 with SMTP id mp30-20020a1709071b1e00b00a55ac3d5871mr2083265ejc.77.1713768350171;
+        Sun, 21 Apr 2024 23:45:50 -0700 (PDT)
 Received: from ?IPV6:2a0b:e7c0:0:107::aaaa:69? ([2a0b:e7c0:0:107::aaaa:69])
-        by smtp.gmail.com with ESMTPSA id bi10-20020a170906a24a00b00a54c12de34dsm5280037ejb.188.2024.04.21.22.51.53
+        by smtp.gmail.com with ESMTPSA id sa40-20020a1709076d2800b00a5255afc856sm5357362ejc.84.2024.04.21.23.45.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 21 Apr 2024 22:51:55 -0700 (PDT)
-Message-ID: <cebad7f8-3f47-4e6a-93b7-32fcf2367874@kernel.org>
-Date: Mon, 22 Apr 2024 07:51:52 +0200
+        Sun, 21 Apr 2024 23:45:49 -0700 (PDT)
+Message-ID: <6ef3422c-d931-4993-856d-c080b11d72d5@kernel.org>
+Date: Mon, 22 Apr 2024 08:45:48 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,53 +63,24 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/15] tty: serial: switch from circ_buf to kfifo
-To: neil.armstrong@linaro.org, gregkh@linuxfoundation.org
-Cc: linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org,
- Al Cooper <alcooperx@gmail.com>, Alexander Shiyan <shc_work@mail.ru>,
- Alexandre Belloni <alexandre.belloni@bootlin.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Alim Akhtar <alim.akhtar@samsung.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Baolin Wang <baolin.wang@linux.alibaba.com>, Baruch Siach
- <baruch@tkos.co.il>, Bjorn Andersson <andersson@kernel.org>,
- Claudiu Beznea <claudiu.beznea@tuxon.dev>,
- "David S. Miller" <davem@davemloft.net>, Fabio Estevam <festevam@gmail.com>,
- Hammer Hsieh <hammerh0314@gmail.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Christophe Leroy <christophe.leroy@csgroup.eu>,
- Chunyan Zhang <zhang.lyra@gmail.com>, Jerome Brunet <jbrunet@baylibre.com>,
- Jonathan Hunter <jonathanh@nvidia.com>, Kevin Hilman <khilman@baylibre.com>,
+Subject: Re: [PATCH 12/15] tty: serial: switch from circ_buf to kfifo
+To: Anders Roxell <anders.roxell@linaro.org>,
+ Marek Szyprowski <m.szyprowski@samsung.com>
+Cc: gregkh@linuxfoundation.org, linux-amlogic@lists.infradead.org,
+ "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+ linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konrad.dybcio@linaro.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Kumaravel Thiagarajan <kumaravel.thiagarajan@microchip.com>,
- Laxman Dewangan <ldewangan@nvidia.com>,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- "Maciej W. Rozycki" <macro@orcam.me.uk>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Michael Ellerman <mpe@ellerman.id.au>, Michal Simek <michal.simek@amd.com>,
- "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>,
- Nicolas Ferre <nicolas.ferre@microchip.com>,
- Nicholas Piggin <npiggin@gmail.com>, Orson Zhai <orsonzhai@gmail.com>,
- =?UTF-8?Q?Pali_Roh=C3=A1r?= <pali@kernel.org>,
- Patrice Chotard <patrice.chotard@foss.st.com>,
- Peter Korsgaard <jacmet@sunsite.dk>,
- Richard Genoud <richard.genoud@gmail.com>,
- Russell King <linux@armlinux.org.uk>, Sascha Hauer <s.hauer@pengutronix.de>,
- Shawn Guo <shawnguo@kernel.org>, Stefani Seibold <stefani@seibold.net>,
- Sumit Semwal <sumit.semwal@linaro.org>,
- Taichi Sugaya <sugaya.taichi@socionext.com>,
- Takao Orito <orito.takao@socionext.com>,
- Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>,
- Thierry Reding <thierry.reding@gmail.com>, Timur Tabi <timur@kernel.org>,
- Vineet Gupta <vgupta@kernel.org>, Marek Szyprowski <m.szyprowski@samsung.com>
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>,
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 References: <20240405060826.2521-1-jirislaby@kernel.org>
- <daf06969-15fd-470e-88b8-a717066fe312@linaro.org>
+ <20240405060826.2521-13-jirislaby@kernel.org>
+ <CGME20240415125847eucas1p2bc180c35f40f9c490c713679871af9ae@eucas1p2.samsung.com>
+ <91ac609b-0fae-4856-a2a6-636908d7ad3c@samsung.com>
+ <d70049d5-d0fe-465f-a558-45b6785f6014@kernel.org> <Zh-fgtujwjiSXz7D@monster>
+ <c091da0b-a150-428a-bf96-75f9f3eab2e2@samsung.com>
+ <CADYN=9LCJS0SW4PuF+e356HUxhzJYi093K6U+BdErPohq4RDWQ@mail.gmail.com>
 Content-Language: en-US
 From: Jiri Slaby <jirislaby@kernel.org>
 Autocrypt: addr=jirislaby@kernel.org; keydata=
@@ -154,66 +125,33 @@ Autocrypt: addr=jirislaby@kernel.org; keydata=
  f/bIWIr0cqQmqQ33FgRhrG1+Xml6UXyJ2jExmlO8JljuOGeXYh6ZkIEyzqzffzBLXZCujlYQ
  DFXpyMNVJ2ZwPmX2mWEoYuaBU0JN7wM+/zWgOf2zRwhEuD3A2cO2PxoiIfyUEfB9SSmffaK/
  S4xXoB6wvGENZ85Hg37C7WDNdaAt6Xh2uQIly5grkgvWppkNy4ZHxE+jeNsU7tg=
-In-Reply-To: <daf06969-15fd-470e-88b8-a717066fe312@linaro.org>
+In-Reply-To: <CADYN=9LCJS0SW4PuF+e356HUxhzJYi093K6U+BdErPohq4RDWQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi,
-
-On 19. 04. 24, 17:12, Neil Armstrong wrote:
-> On 05/04/2024 08:08, Jiri Slaby (SUSE) wrote:
->> This series switches tty serial layer to use kfifo instead of circ_buf.
+On 17. 04. 24, 13:19, Anders Roxell wrote:
+>> I'm trying to run on two dragonboard devices db410c and db845c and both
+>>> fails to boot see the boot failure from db845c [1], linux-next tag: next-20240415.
+>>> I tried to apply the patch [2] (that you proposed in this thread) ontop of next-20240415. However, that didn't
+>>> help bootlog on db845c [3].
 >>
->> The reasoning can be found in the switching patch in this series:
->> """
->> Switch from struct circ_buf to proper kfifo. kfifo provides much better
->> API, esp. when wrap-around of the buffer needs to be taken into account.
->> Look at pl011_dma_tx_refill() or cpm_uart_tx_pump() changes for example.
+>> This is a different issue, which I've reported 2 days ago. See the
+>> following thread:
 >>
->> Kfifo API can also fill in scatter-gather DMA structures, so it easier
->> for that use case too. Look at lpuart_dma_tx() for example. Note that
->> not all drivers can be converted to that (like atmel_serial), they
->> handle DMA specially.
->>
->> Note that usb-serial uses kfifo for TX for ages.
->> """
-...
-> This patchset has at least broken all Amlogic and Qualcomm boards so 
-> far, only part of them were fixed in next-
+>> https://lore.kernel.org/all/d3eb9f21-f3e1-43ec-bf41-984c6aa5cfc8@samsung.com/
+> 
+> Oh ok, I did the bisection on db845v, and that led me to this
+> patch 1788cf6a91d9 ("tty: serial: switch from circ_buf to kfifo")
 
-So are there still not fixed problems yet?
+Could you re-test with the today's -next?
 
-> but this serie has been 
-> merged in v1
+In particular, with this commit:
+commit f70f95b485d78838ad28dbec804b986d11ad7bb0
+Author: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Date:   Fri Apr 19 10:09:31 2024 +0200
 
-Ugh, are you saying that v1 patches are not worth taking? That doesn't 
-fit with my experience.
+     serial: msm: check dma_map_sg() return value properly
 
-> with no serious testing
-
-Sadly, everyone had a chance to test the series:
-   https://lore.kernel.org/all/20240319095315.27624-1-jirislaby@kernel.org/
-for more than two weeks before I sent this version for inclusion. And 
-then it took another 5 days till this series appeared in -next. But 
-noone with this HW apparently cared enough back then. I'd wish they 
-(you) didn't. Maybe next time, people will listen more carefully:
-===
-This is Request for Testing as I cannot test all the changes
-(obviously). So please test your HW's serial properly.
-===
-
-> and should've been dropped 
-> immediately when the first regressions were reported.
-
-Provided the RFT was mostly ignored (anyone who tested that here, or I 
-only wasted my time?), how exactly would dropping help me finding 
-potential issues in the series? In the end, noone is running -next in 
-production, so glitches are sort of expected, right? And I believe I 
-smashed them quickly enough (despite I was sidetracked to handle the 
-n_gsm issue). But I might be wrong, as usual.
-
-So no, dropping is not helping moving forward, actions taken by e.g. 
-Marek Szyprowski <m.szyprowski@samsung.com> do, IMNSHO.
 
 thanks,
 -- 
