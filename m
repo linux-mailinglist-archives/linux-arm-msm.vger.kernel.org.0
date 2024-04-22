@@ -1,87 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-18173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18174-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 641328ACCB4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 14:22:52 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F5778ACD29
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 14:46:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7B4D71C20956
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 12:22:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B31681F23C17
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 12:46:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 185144F213;
-	Mon, 22 Apr 2024 12:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F29D14F123;
+	Mon, 22 Apr 2024 12:45:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QeKnMPgT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dAgOEWdK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4085C4AEE0
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 12:22:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F33714A4C7
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 12:45:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713788569; cv=none; b=u67E0VAqZ2UKUXu7O1kZBkXLYrk+rUmfXSl5KvAmKq4kS2jsJ3WDVScy8mKZ8b4NBDRHQFTRz6/ukOegG5U54J+0yMwQ3wn3FWwRxRGLXJgpkSqnmvlOJuJpBrPecE0szkKhJsWC5vwUQ7n+RmTyZ+d1Pei+xnOb2Hvh29Syiog=
+	t=1713789928; cv=none; b=jx5pcAJnobkdQFtYhyXcHcXNEtJYastfLaLxVXVnGA5voe8fjd0O8HlBtmg5YPBtlWSec7OG1RqQ7rQ/jDQQ2YdPRa1Lv+sp39QEg6znCuBB1ALG2vfMwjsDm9XV+KHZ6kQFChosqbfbIooIIzbzdrHTQGehw18Pr4i5mS+ZFm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713788569; c=relaxed/simple;
-	bh=zsAjOGFW/ovhfYrakFZgk3NXRPeEIYW7Z8zvJm6nKTU=;
+	s=arc-20240116; t=1713789928; c=relaxed/simple;
+	bh=7swys0gIUQCA8MyBNxRzR4CgEVC6QbULAKLQhq+trVI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B3ZSELH43FrpFvDWjjxzPBscJHfksfCJeOhyixXQDg28vR1dibhEQAu6nYqC4PWf2xaMP9G6oU5T+z6tmzm7aBqACr+nNtrMKBDqkGHwuFODqOgQjilZvBhN9v6ZWG5Vu7PQpgaxOxKxbA9oY9W+rApKxQ8GCjTmaknkTH7/DPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QeKnMPgT; arc=none smtp.client-ip=209.85.208.178
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZoWRHlqsRr87jW/iGKOpOVSc4wp11NSE5Mnb3hZQJe0F7OCk/UWKHcfvQHO8lidK9XvyRHqKYn4TX5/2oJ6+ecp8/DKjrR9dfhN7eFu3tTiGk3gL2fza//KQ7Eka1+mtuI5facWVpnXhAQDYDvvggMg7BH4Lh04D4KMUNI/EVR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dAgOEWdK; arc=none smtp.client-ip=209.85.167.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2d8863d8a6eso61546271fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 05:22:46 -0700 (PDT)
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-516d6c1e238so5549074e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 05:45:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713788565; x=1714393365; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1713789925; x=1714394725; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0N97Un7iKJy6ZaKa37UlkZBwuE/KTJjFA85IfE4WHbE=;
-        b=QeKnMPgT+Ihq9ke47lF6h7eQYd6I/7SRuxxbBmnkKg9qxXkH8Nis2S1k++NlzWF7Pe
-         9jahU6LwAX80wTcLM3k+r4h36Lq4LE2v2tDm9JWsSJ5XPR/nmMRVc/UFX8icUndIZW8O
-         XlwBqR9yCdjWFbfg027MbUo2VfMKdaVags38qmdFUTySuOUWmTdO8Tr/nsl1t19mdGQk
-         nNBndBuKlizC7hEdxije6ML3nNgl5gI1+t4DqvNDJCBqNklWevwEA77F3v8RL4eIn2CP
-         gGQRmtrS6wGZFL+OwbSJm5OyVJ+L5wAJiktBkigto2L726hRKjxMs6+ky1wF6aZ7gpKA
-         Uajw==
+        bh=D4xGjGmCM1dKlkvc8xI8Q2SlpqnDstcnL9eCefAdYpM=;
+        b=dAgOEWdKaB7NzAmbSw8CIUIf9cDXElGtE7WqULSgePIi0n8DB1Lwl1pgBxCsq6OESD
+         nvvoTIp4RnonSeAUgSUtzfxufVEoJ0ftaEZFqlhQbw1gWQhHnJXHC/GLziUTH342DBOB
+         7832ceOv7qVL51v5RdG06FFGFy5KKx+iL7C98d5hMxk8iyClcDyvLN090M9VAQasmLG2
+         TbDbNPcI5+rSUwmv7f2B7GqoEtDNeB2YQfa0wBWSQ6fXEEfXf8fIblxcd38SVYmin8Uj
+         4BtFkgX6+v/6G7dOURLW2IaGHDXoo4nT4qOcGC+r0lS7M69giNP9WxBX8YAHi0eaOOrq
+         bYbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713788565; x=1714393365;
+        d=1e100.net; s=20230601; t=1713789925; x=1714394725;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0N97Un7iKJy6ZaKa37UlkZBwuE/KTJjFA85IfE4WHbE=;
-        b=HotTdYRkgRflQgy0r+nR6HWXOptsxr3068356SG1wYnFWUgJ//+NU+G5nr3kINXybR
-         N3oJB6lqQf4+1IzRI7jPPyrYOn8K9obpIF1USJzjsjhsmt6te+KgZQ/djyI8INT4stI+
-         uJAilx2NW8feDPM3ympxJP1mJPHBavY5/gt95MdkR4p8bi3jyymtl9KPrjmVxLrzxsIO
-         68lxmYk0DcHmSGQ4sdbL3Nrj5n8BrZ/kH2MG38BQlih6QfHhtGi3R1v933/G2FZrCvzr
-         a0QmO6swA7GEIQ4cfmhWnslWNDBfMqJvqQ58q7KYULPwVZqD+KWpSJtc+1ahBpqMvuWL
-         Lhcg==
-X-Forwarded-Encrypted: i=1; AJvYcCVOoY9kZ/jlFoDcfpxV1y4CjZDNvZo98nmrlBWlYqLh+ENQly9rKIIRCiruklgn/naB3cXeazROx6pm2Ox4ux0LCygObtZhs740LUlOJg==
-X-Gm-Message-State: AOJu0Ywd3FAXQ+1CtpzFswzpsmmjP15djSsWk0RdmeR4fimpCW84oAGA
-	9d8r0fH69nlAeFSDyxW9qXPGZMPdSzkxJgh+zg3SFRt01d/W5fA5hBqG0YyWgZo=
-X-Google-Smtp-Source: AGHT+IHEwl9kdeoIRBSg/s27Fmo9cBqQ8a+PpvHL/HWOE1hVoBjq2Q2cW4BifI+Wc2xbXVRZ04Q9xw==
-X-Received: by 2002:a05:6512:104a:b0:519:5a60:5fe7 with SMTP id c10-20020a056512104a00b005195a605fe7mr9132480lfb.66.1713788565217;
-        Mon, 22 Apr 2024 05:22:45 -0700 (PDT)
+        bh=D4xGjGmCM1dKlkvc8xI8Q2SlpqnDstcnL9eCefAdYpM=;
+        b=MejLyGdkEWLM/K8f1rphdTrlXzE+ErqZl1Y0fLbxSNHB9C8P/KeUqxGAd0PehVwVhp
+         wMmTDjUMS3Kby0zs4Hj4RAE9KCS32gj1ByJE4MMHTpfA6AC+ulK+79Y+ppa6C6olp3CH
+         5ADQU/yrBOpoAJg0M6Ly7hRRBwmpAlG3H2Vb7AbkNse0iCwNC42LAngErqFQjDotaK+q
+         qI73Xamq9gHZYOCIKOUm+/DLo87WRQ149Lr/oNEBESi7VisSIQ9rIN4XWcLQYye5a9Nz
+         7PLjlrflUE4HDme2K02srZboXxsreN+iLInsQqv1a+kg0L8pXBuKUkJPDqeWNcdQo+Bz
+         3b+g==
+X-Forwarded-Encrypted: i=1; AJvYcCU5IRrMh6PQSte/jB+q3C/1Iy9xpKDHaVOls2Hn3hpMO4QDARJuKNj0wB/UBzSeuazxdC4ee6KbtELJ+pt154XRYRE4GGrtevccFAJuGQ==
+X-Gm-Message-State: AOJu0YzZXHMGwi1aQ6oXST1QQ9pOoRoXQ71Se2Frcdxs1Tpi5LNkbXJj
+	5SJ5NDfqAg5CQJZP/qp126ABrXyRyGCd42oAxWj0NoY7Ssr7z+IeNY5Vj2aKFY0=
+X-Google-Smtp-Source: AGHT+IER5n3zd+unC2/+nLZFWA6BJ20dL00ykgO9rIro/Yb6KEoRo+IQMxzDziptwJXENT0sBonYaw==
+X-Received: by 2002:a05:6512:1595:b0:518:ddc3:b3a8 with SMTP id bp21-20020a056512159500b00518ddc3b3a8mr7249634lfb.61.1713789924617;
+        Mon, 22 Apr 2024 05:45:24 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::8a5])
-        by smtp.gmail.com with ESMTPSA id c9-20020a056512104900b00516be0a0579sm1661591lfb.75.2024.04.22.05.22.44
+        by smtp.gmail.com with ESMTPSA id d16-20020a05651233d000b00517806dccdfsm1742524lfg.34.2024.04.22.05.45.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Apr 2024 05:22:44 -0700 (PDT)
-Date: Mon, 22 Apr 2024 15:22:43 +0300
+        Mon, 22 Apr 2024 05:45:24 -0700 (PDT)
+Date: Mon, 22 Apr 2024 15:45:22 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Abel Vesa <abel.vesa@linaro.org>, 
-	Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 4/9] drm/msm/dpu: move dpu_format_populate_plane_sizes to
- atomic_check
-Message-ID: <7uqzoioa6enpxocrcsbykmdcucfgb4mglgep3k6b7strevs7cc@dqeyxrmieuvv>
-References: <20240319-dpu-mode-config-width-v1-0-d0fe6bf81bf1@linaro.org>
- <20240319-dpu-mode-config-width-v1-4-d0fe6bf81bf1@linaro.org>
- <a122a43a-8def-0c11-41ef-b01fab33f98e@quicinc.com>
- <rqddqmqznhq4liusiyvowt4lfybb25qfdxak6ql6hdrreduutt@6uwkrlsxa4gw>
- <81322c16-8d82-16e7-dafd-93c29b07f169@quicinc.com>
+To: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 7/8] usb: typec: ucsi: glink: merge pmic_glink_altmode
+ driver
+Message-ID: <46fktwtp3xers6tcpov3qo4zswptvajewsdltm45zbz2kmmpzp@cthu6ylttup3>
+References: <20240416-ucsi-glink-altmode-v1-0-890db00877ac@linaro.org>
+ <20240416-ucsi-glink-altmode-v1-7-890db00877ac@linaro.org>
+ <ZiZC/l9nOmzWx+j6@kuha.fi.intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,81 +87,178 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <81322c16-8d82-16e7-dafd-93c29b07f169@quicinc.com>
+In-Reply-To: <ZiZC/l9nOmzWx+j6@kuha.fi.intel.com>
 
-On Fri, Apr 19, 2024 at 07:37:44PM -0700, Abhinav Kumar wrote:
+On Mon, Apr 22, 2024 at 01:59:10PM +0300, Heikki Krogerus wrote:
+> Hi Dmitry,
 > 
-> 
-> On 4/19/2024 6:34 PM, Dmitry Baryshkov wrote:
-> > On Fri, Apr 19, 2024 at 05:14:01PM -0700, Abhinav Kumar wrote:
-> > > 
-> > > 
-> > > On 3/19/2024 6:22 AM, Dmitry Baryshkov wrote:
-> > > > Move a call to dpu_format_populate_plane_sizes() to the atomic_check
-> > > > step, so that any issues with the FB layout can be reported as early as
-> > > > possible.
-> > > > 
-> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > ---
-> > > >    drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 12 ++++++------
-> > > >    1 file changed, 6 insertions(+), 6 deletions(-)
-> > > > 
-> > > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> > > > index d9631fe90228..a9de1fbd0df3 100644
-> > > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> > > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> > > > @@ -673,12 +673,6 @@ static int dpu_plane_prepare_fb(struct drm_plane *plane,
-> > > >    		}
-> > > >    	}
-> > > > -	ret = dpu_format_populate_plane_sizes(new_state->fb, &pstate->layout);
-> > > > -	if (ret) {
-> > > > -		DPU_ERROR_PLANE(pdpu, "failed to get format plane sizes, %d\n", ret);
-> > > > -		return ret;
-> > > > -	}
-> > > > -
-> > > >    	/* validate framebuffer layout before commit */
-> > > >    	ret = dpu_format_populate_addrs(pstate->aspace,
-> > > >    					new_state->fb,
-> > > > @@ -864,6 +858,12 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
-> > > >    		return -E2BIG;
-> > > >    	}
-> > > > +	ret = dpu_format_populate_plane_sizes(new_plane_state->fb, &pstate->layout);
-> > > > +	if (ret) {
-> > > > +		DPU_ERROR_PLANE(pdpu, "failed to get format plane sizes, %d\n", ret);
-> > > > +		return ret;
-> > > > +	}
-> > > > +
-> > > 
-> > > I think we need another function to do the check. It seems incorrect to
-> > > populate the layout to the plane state knowing it can potentially fail.
+> On Tue, Apr 16, 2024 at 05:20:56AM +0300, Dmitry Baryshkov wrote:
+> > Move handling of USB Altmode to the ucsi_glink driver. This way the
+> > altmode is properly registered in the Type-C framework, the altmode
+> > handlers can use generic typec calls, the UCSI driver can use
+> > orientation information from altmode messages and vice versa, the
+> > altmode handlers can use GPIO-based orientation inormation from UCSI
+> > GLINK driver.
 > > 
-> > why? The state is interim object, which is subject to checks. In other
-> > parts of the atomic_check we also fill parts of the state, perform
-> > checks and then destroy it if the check fails.
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  drivers/soc/qcom/Makefile             |   1 -
+> >  drivers/soc/qcom/pmic_glink_altmode.c | 546 ----------------------------------
+> >  drivers/usb/typec/ucsi/ucsi_glink.c   | 495 ++++++++++++++++++++++++++++--
+> >  3 files changed, 475 insertions(+), 567 deletions(-)
 > > 
-> 
-> Yes, the same thing you wrote.
-> 
-> I felt we can perform the validation and reject it before populating it in
-> the state as it seems thats doable here rather than populating it without
-> knowing whether it can be discarded.
 
-But populate function does the check. It seems like an overkill to add
-another function. Also I still don't see the point. It was fine to call
-this function from .prepare_fb, but it's not fine to call it from
-.atomic_check?
+[skipped the patch]
+
+> > +
+> > +static void pmic_glink_ucsi_register_altmode(struct ucsi_connector *con)
+> > +{
+> > +	static const u8 all_assignments = BIT(DP_PIN_ASSIGN_C) | BIT(DP_PIN_ASSIGN_D) |
+> > +			     BIT(DP_PIN_ASSIGN_E);
+> > +	struct typec_altmode_desc desc;
+> > +	struct typec_altmode *alt;
+> > +
+> > +	mutex_lock(&con->lock);
+> > +
+> > +	if (con->port_altmode[0])
+> > +		goto out;
+> > +
+> > +	memset(&desc, 0, sizeof(desc));
+> > +	desc.svid = USB_TYPEC_DP_SID;
+> > +	desc.mode = USB_TYPEC_DP_MODE;
+> > +
+> > +	desc.vdo = DP_CAP_CAPABILITY(DP_CAP_DFP_D);
+> > +
+> > +	/* We can't rely on the firmware with the capabilities. */
+> > +	desc.vdo |= DP_CAP_DP_SIGNALLING(0) | DP_CAP_RECEPTACLE;
+> > +
+> > +	/* Claiming that we support all pin assignments */
+> > +	desc.vdo |= all_assignments << 8;
+> > +	desc.vdo |= all_assignments << 16;
+> > +
+> > +	alt = typec_port_register_altmode(con->port, &desc);
+> 
+>         alt = ucsi_register_displayport(con, 0, 0, &desc);
+
+Note, the existing UCSI displayport AltMode driver depends on the UCSI
+actually handling the altomode. It needs a partner, etc.
 
 > 
-> > Maybe I'm missing your point here. Could you please explain what is the
-> > problem from your point of view?
-> > 
-> > > 
-> > > Can we move the validation part of dpu_format_populate_plane_sizes() out to
-> > > another helper dpu_format_validate_plane_sizes() and use that?
-> > > 
-> > > And then make the remaining dpu_format_populate_plane_sizes() just a void
-> > > API to fill the layout?
-> > 
+> You need to export that function, but that should not be a problem:
+> 
+> diff --git a/drivers/usb/typec/ucsi/displayport.c b/drivers/usb/typec/ucsi/displayport.c
+> index d9d3c91125ca..f2754d7b5876 100644
+> --- a/drivers/usb/typec/ucsi/displayport.c
+> +++ b/drivers/usb/typec/ucsi/displayport.c
+> @@ -315,11 +315,13 @@ struct typec_altmode *ucsi_register_displayport(struct ucsi_connector *con,
+>         struct ucsi_dp *dp;
+>  
+>         /* We can't rely on the firmware with the capabilities. */
+> -       desc->vdo |= DP_CAP_DP_SIGNALLING(0) | DP_CAP_RECEPTACLE;
+> +       if (!desc->vdo) {
+> +               desc->vdo = DP_CAP_DP_SIGNALLING(0) | DP_CAP_RECEPTACLE;
+>  
+> -       /* Claiming that we support all pin assignments */
+> -       desc->vdo |= all_assignments << 8;
+> -       desc->vdo |= all_assignments << 16;
+> +               /* Claiming that we support all pin assignments */
+> +               desc->vdo |= all_assignments << 8;
+> +               desc->vdo |= all_assignments << 16;
+> +       }
+>  
+>         alt = typec_port_register_altmode(con->port, desc);
+>         if (IS_ERR(alt))
+> @@ -342,3 +344,4 @@ struct typec_altmode *ucsi_register_displayport(struct ucsi_connector *con,
+>  
+>         return alt;
+>  }
+> +EXPORT_SYMBOL_GPL(ucsi_register_displayport);
+> 
+> <snip>
+> 
+> > +static void pmic_glink_ucsi_set_state(struct ucsi_connector *con,
+> > +				      struct pmic_glink_ucsi_port *port)
+> > +{
+> > +	struct typec_displayport_data dp_data = {};
+> > +	struct typec_altmode *altmode = NULL;
+> > +	unsigned long flags;
+> > +	void *data = NULL;
+> > +	int mode;
+> > +
+> > +	spin_lock_irqsave(&port->lock, flags);
+> > +
+> > +	if (port->svid == USB_SID_PD) {
+> > +		mode = TYPEC_STATE_USB;
+> > +	} else if (port->svid == USB_TYPEC_DP_SID && port->mode == DPAM_HPD_OUT) {
+> > +		mode = TYPEC_STATE_SAFE;
+> > +	} else if (port->svid == USB_TYPEC_DP_SID) {
+> > +		altmode = find_altmode(con, port->svid);
+> > +		if (!altmode) {
+> > +			dev_err(con->ucsi->dev, "altmode woth SVID 0x%04x not found\n",
+> > +				port->svid);
+> > +			spin_unlock_irqrestore(&port->lock, flags);
+> > +			return;
+> > +		}
+> > +
+> > +		mode = TYPEC_MODAL_STATE(port->mode - DPAM_HPD_A);
+> > +
+> > +		dp_data.status = DP_STATUS_ENABLED;
+> > +		dp_data.status |= DP_STATUS_CON_DFP_D;
+> > +		if (port->hpd_state)
+> > +			dp_data.status |= DP_STATUS_HPD_STATE;
+> > +		if (port->hpd_irq)
+> > +			dp_data.status |= DP_STATUS_IRQ_HPD;
+> > +		dp_data.conf = DP_CONF_SET_PIN_ASSIGN(port->mode - DPAM_HPD_A);
+> > +
+> > +		data = &dp_data;
+> > +	} else {
+> > +		dev_err(con->ucsi->dev, "Unsupported SVID 0x%04x\n", port->svid);
+> > +		spin_unlock_irqrestore(&port->lock, flags);
+> > +		return;
+> > +	}
+> > +
+> > +	spin_unlock_irqrestore(&port->lock, flags);
+> > +
+> > +	if (altmode)
+> > +		typec_altmode_set_port(altmode, mode, data);
+> 
+> So if the port altmode is using the ucsi_displayport_ops, you can
+> simply register the partner altmode here instead. That should
+> guarantee that it'll bind to the DP altmode driver which will take
+> care of typec_altmode_enter() etc.
+
+In our case the altmode is unfortunately completely hidden inside the
+firmware. It is not exported via the native UCSI interface. Even if I
+plug the DP dongle, there is no partner / altmode being reported by the
+PPM. All DP events are reported via additional GLINK messages.
+
+The goal is to use the core Type-C altmode handling, while keeping UCSI
+out of the altmode business.
+
+This allows the core to handle switches / muxes / retimers, report the
+altmode to the userspace via sysfs, keep the link between the DP part of
+the stack and the typec port, but at the same time we don't get errors
+from UCSI because of the PPM reporting unsupported commands, etc.
+
+> 
+> This will also allow the user space to see the altmode normally in
+> sysfs.
+> 
+> > +	else
+> > +		typec_set_mode(con->port, mode);
+> > +
+> > +	if (port->bridge)
+> > +		drm_aux_hpd_bridge_notify(&port->bridge->dev,
+> > +					  port->hpd_state ?
+> > +					  connector_status_connected :
+> > +					  connector_status_disconnected);
+> > +
+> > +}
+> 
+> thanks,
+> 
+> -- 
+> heikki
 
 -- 
 With best wishes
