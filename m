@@ -1,104 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-18133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A00CB8AC5B6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 09:40:26 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8630A8AC5D9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 09:45:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 48BA5B207D2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 07:40:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9D3D61C210E3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 07:45:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE22C4CDEC;
-	Mon, 22 Apr 2024 07:40:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B52A4F898;
+	Mon, 22 Apr 2024 07:44:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="be+2sgZy"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LFyOavKO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B4C4AEFE;
-	Mon, 22 Apr 2024 07:40:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA584F613
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 07:44:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713771618; cv=none; b=klxtUydSbd/s+NzBr4e5EzTaohNtguHHkNhixB9ZtnNJ5vf2G5HHC+TYwprWGJzu3VNV2uBHYhkcbmpVQ+27EAZjQDmrJFr1LHQl6X4H01i8H5UcrRuaSVXZseOm9Ej8vwnflvCrN8W6HOSSym9I5lk7rKREjoZlw7E/YOAoKjM=
+	t=1713771846; cv=none; b=HgcSD0cUpPsrXYexUsaYiSQIfaoxe4rDMshqpSP6iEqqrtw3q39D031MscyADBOfK2/M+a7X9KUZku+VeEKQ4MM5FYv9ZzYNTNsgcNjoZrPSdwKKCQgjn28VR4wgcBaSYJJaFB3stoVdUlH3V1WA9WbCv0np1LKnb1diTQTgMaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713771618; c=relaxed/simple;
-	bh=3p99fopQtEIZdwt4QoUoj1J66fCCoXwK2F+w8THHEDw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=US8REULLmLjnXah2y1JAa9QmN4eGzCwRdxGu45LwE7brA7AYKrcKsijNAZVrAyKCUlffTOBMgO2l50lu00EVh2lCH89p5GILD6BB/B9g95+CimeO6it9pjmHYIPv4SDQbH0wfMEYenx/vINOfDWyk9R3NC26u0RNhjzl9uw4SMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=be+2sgZy; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24630C32782;
-	Mon, 22 Apr 2024 07:40:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713771618;
-	bh=3p99fopQtEIZdwt4QoUoj1J66fCCoXwK2F+w8THHEDw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=be+2sgZyy0L9gj3jytR1FK4MPVcb9ZLAlfHqWiaDH7MC4Lv1TbfuZNnnQaeJXzSZv
-	 VPHF9h4aN6Z2iBy+sngyZ1gUkYzcdWzXF2DDPdmyWuYre+Jj3UXzrlT8FyKu08X7rW
-	 yS1r9jiHUi9nQktfDfFasCRtfbpQ312zdzaxS9UlKo0xZDtGtW41bSd/35A/izdQYu
-	 x0t8G3zXHIHRm1t0r9bm6PF04q4jzxJWKPGKNKt02oE+lOrZaQcuIgjovS7XbdYYsP
-	 dFoP1wc6+awLNV6Zi4orHWfIeQv1vRQGlmRIr1KuNv9/FlGhV+BREGyto0eZgAt+Eg
-	 GPuUJSkueLFCA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1ryoHc-00000000487-0cmS;
-	Mon, 22 Apr 2024 09:40:12 +0200
-Date: Mon, 22 Apr 2024 09:40:12 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Felipe Balbi <balbi@kernel.org>, devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_ppratap@quicinc.com,
-	quic_jackp@quicinc.com
-Subject: Re: [PATCH v21 0/9] Add multiport support for DWC3 controllers
-Message-ID: <ZiYUXCHGlUKSnXXM@hovoldconsulting.com>
-References: <20240420044901.884098-1-quic_kriskura@quicinc.com>
+	s=arc-20240116; t=1713771846; c=relaxed/simple;
+	bh=ffLRdcaZUgrUwWcFf3srztERpUaDnshkDyUkPvhByj0=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=N1eeEGCFeQV7sOkF2FRpoRU87k8mbzusk4rqkAAp8ErcU5xEi4RGC4awIajelEZpPTmcUftGuN5j2P68xJud0sgQGuOwmhjghtOhTWYFtPzjfrw7Bm0+U2ONZf1XyWdmymTvh8iU0bzhuqJcsQJW2Sp2Ty+Ysl87dz/7vr52Dig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LFyOavKO; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-41a7aa24c4fso1546105e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 00:44:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1713771842; x=1714376642; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8EACDU5ZIYK9Tlo7z1R2GyLFJTNAKhZcDGfQ+M5Qfec=;
+        b=LFyOavKOWubM6eMsVFDgd84jWBEwl/EQW6AmgpK+yrjEng2xcCiRGCpmKCmqZh9wlE
+         NvYoflA6IbYuKGm6KSQTDkkKiTMveWaTsecZk/KkxiROQdkBv9j82dpaM8kX7UsF/kvN
+         +neGtfX9yLbbsotmS91pECZhS6ITSloDzMbrRZwezGsjwDnLpU9msegC06W4XCB1PpJ2
+         m0Pq32+tME2go7tyn4+lf0rCiouglR0mROqowdr1sy3x3c+GqkbDMUHIm93vcXMNQEJ5
+         ZfQvtpWog5/NwBhdzEZ3X0R+DbssXpaF2cJfHGQolnkqFPkB5KUd1Xkj1x8ANHYcF2sa
+         pv5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713771842; x=1714376642;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=8EACDU5ZIYK9Tlo7z1R2GyLFJTNAKhZcDGfQ+M5Qfec=;
+        b=IlMkkHCdFyyFOoK7pfh7ahsHnK56r0oyOuP+EsRPZq/X6cJ4vNc0OMMUnxhvL+Y79E
+         jjrwe7EaO5X1Yd/YXIHHU5jwIISn27Hy/8U5jwEbfHfrOlSiScjiMZfadmfPQnnfsJQ5
+         dw43Vwvmm6cq2VJpTWLhZCQhUZVsgKR6mdvvqMs8v/JDqxtzUXfi1Nu79PecTWLuDFIC
+         PMiIJV/xVtw7h+tIzAu+1tsH0Ru63+hSo445c6LyUflQmf1aiabvb3sXNWJ5CqtUpZ5N
+         KBzaaZ7/1/PXuCiHzp0wugByJJBf3XDzflbcGa2HSPKNbZ9vpYkGvcL8GVxJ46xGzM+5
+         VzYQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXP5YEyMmcRAOzOcItEj3wX+Mw5f/2g9Azim19YGEaBmTC2QA6dL2RL1wFLpn1bWL2KXYZRStVwd57ikEexGvDD2B9dqiurW/ZZDfQtRw==
+X-Gm-Message-State: AOJu0YzKeCS02zVt/CXzXS4LA2xl3lvKwB/VmFMspdwR1kqo3cw5oLUb
+	zQFeVYLyvnlkFLhIgS4HX9gX0stV7JLJjwuJ1qXGmh5atA8TQwXgPEtek89x8KM=
+X-Google-Smtp-Source: AGHT+IEobCAD1woSZ5EJiB0NRH7BEjZlQI+0HXHHE4nnOPzWe+XQOjOdqoLZt1DsJbBVAkn1X3/8fw==
+X-Received: by 2002:a05:600c:358c:b0:41a:3150:cbe7 with SMTP id p12-20020a05600c358c00b0041a3150cbe7mr2136856wmq.28.1713771842235;
+        Mon, 22 Apr 2024 00:44:02 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:e5e5:892f:e81f:7cad? ([2a01:e0a:982:cbb0:e5e5:892f:e81f:7cad])
+        by smtp.gmail.com with ESMTPSA id a12-20020a056000100c00b00349ceadededsm11300565wrx.16.2024.04.22.00.43.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Apr 2024 00:44:01 -0700 (PDT)
+Message-ID: <17308e8f-59a1-40aa-9d44-2fb998b9f39c@linaro.org>
+Date: Mon, 22 Apr 2024 09:43:58 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240420044901.884098-1-quic_kriskura@quicinc.com>
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 00/15] tty: serial: switch from circ_buf to kfifo
+To: Jiri Slaby <jirislaby@kernel.org>, gregkh@linuxfoundation.org
+Cc: linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Al Cooper <alcooperx@gmail.com>, Alexander Shiyan <shc_work@mail.ru>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Alim Akhtar <alim.akhtar@samsung.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Baolin Wang <baolin.wang@linux.alibaba.com>, Baruch Siach
+ <baruch@tkos.co.il>, Bjorn Andersson <andersson@kernel.org>,
+ Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+ "David S. Miller" <davem@davemloft.net>, Fabio Estevam <festevam@gmail.com>,
+ Hammer Hsieh <hammerh0314@gmail.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Christophe Leroy <christophe.leroy@csgroup.eu>,
+ Chunyan Zhang <zhang.lyra@gmail.com>, Jerome Brunet <jbrunet@baylibre.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>, Kevin Hilman <khilman@baylibre.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Kumaravel Thiagarajan <kumaravel.thiagarajan@microchip.com>,
+ Laxman Dewangan <ldewangan@nvidia.com>,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ "Maciej W. Rozycki" <macro@orcam.me.uk>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Michael Ellerman <mpe@ellerman.id.au>, Michal Simek <michal.simek@amd.com>,
+ "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>,
+ Nicolas Ferre <nicolas.ferre@microchip.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Orson Zhai <orsonzhai@gmail.com>,
+ =?UTF-8?Q?Pali_Roh=C3=A1r?= <pali@kernel.org>,
+ Patrice Chotard <patrice.chotard@foss.st.com>,
+ Peter Korsgaard <jacmet@sunsite.dk>,
+ Richard Genoud <richard.genoud@gmail.com>,
+ Russell King <linux@armlinux.org.uk>, Sascha Hauer <s.hauer@pengutronix.de>,
+ Shawn Guo <shawnguo@kernel.org>, Stefani Seibold <stefani@seibold.net>,
+ Sumit Semwal <sumit.semwal@linaro.org>,
+ Taichi Sugaya <sugaya.taichi@socionext.com>,
+ Takao Orito <orito.takao@socionext.com>,
+ Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>,
+ Thierry Reding <thierry.reding@gmail.com>, Timur Tabi <timur@kernel.org>,
+ Vineet Gupta <vgupta@kernel.org>, Marek Szyprowski <m.szyprowski@samsung.com>
+References: <20240405060826.2521-1-jirislaby@kernel.org>
+ <daf06969-15fd-470e-88b8-a717066fe312@linaro.org>
+ <cebad7f8-3f47-4e6a-93b7-32fcf2367874@kernel.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <cebad7f8-3f47-4e6a-93b7-32fcf2367874@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Sat, Apr 20, 2024 at 10:18:52AM +0530, Krishna Kurapati wrote:
+Hi Jiri,
 
-> Krishna Kurapati (9):
->   dt-bindings: usb: Add bindings for multiport properties on DWC3
->     controller
->   usb: dwc3: core: Access XHCI address space temporarily to read port
->     info
->   usb: dwc3: core: Skip setting event buffers for host only controllers
->   usb: dwc3: core: Refactor PHY logic to support Multiport Controller
->   dt-bindings: usb: qcom,dwc3: Add bindings for SC8280 Multiport
->   usb: dwc3: qcom: Add helper function to request wakeup interrupts
->   usb: dwc3: qcom: Refactor IRQ handling in glue driver
->   usb: dwc3: qcom: Enable wakeup for applicable ports of multiport
->   usb: dwc3: qcom: Add multiport suspend/resume support for wrapper
+On 22/04/2024 07:51, Jiri Slaby wrote:
+> Hi,
+> 
+> On 19. 04. 24, 17:12, Neil Armstrong wrote:
+>> On 05/04/2024 08:08, Jiri Slaby (SUSE) wrote:
+>>> This series switches tty serial layer to use kfifo instead of circ_buf.
+>>>
+>>> The reasoning can be found in the switching patch in this series:
+>>> """
+>>> Switch from struct circ_buf to proper kfifo. kfifo provides much better
+>>> API, esp. when wrap-around of the buffer needs to be taken into account.
+>>> Look at pl011_dma_tx_refill() or cpm_uart_tx_pump() changes for example.
+>>>
+>>> Kfifo API can also fill in scatter-gather DMA structures, so it easier
+>>> for that use case too. Look at lpuart_dma_tx() for example. Note that
+>>> not all drivers can be converted to that (like atmel_serial), they
+>>> handle DMA specially.
+>>>
+>>> Note that usb-serial uses kfifo for TX for ages.
+>>> """
+> ...
+>> This patchset has at least broken all Amlogic and Qualcomm boards so far, only part of them were fixed in next-
+> 
+> So are there still not fixed problems yet?
 
-Verified that the finger print reader on the Lenovo ThinkPad X13s works
-with this series (and not yet merged devicetree changes). 
+My last ci run on next-20240419 was still failing on db410c.
 
-Not sure when or why, but the error message I previously reported seeing
-during suspend is now also gone:
+> 
+>> but this serie has been merged in v1
+> 
+> Ugh, are you saying that v1 patches are not worth taking? That doesn't fit with my experience.
 
-	dwc3-qcom a4f8800.usb: HS-PHY2 not in L2
+In my experience, most of my patches are taken in v2, it's not an uncommon thing to have more versions, especially when touching core subsystems.
 
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
+> 
+>> with no serious testing
+> 
+> Sadly, everyone had a chance to test the series:
+>    https://lore.kernel.org/all/20240319095315.27624-1-jirislaby@kernel.org/
+> for more than two weeks before I sent this version for inclusion. And then it took another 5 days till this series appeared in -next. But noone with this HW apparently cared enough back then. I'd wish they (you) didn't. Maybe next time, people will listen more carefully:
+> ===
+> This is Request for Testing as I cannot test all the changes
+> (obviously). So please test your HW's serial properly.
+> ===
 
-Thanks for sticking with it, Krishna.
+This RFT was sent during the merge window, only a few people looks at the list between those 2 weeks.
 
-Johan
+> 
+>> and should've been dropped immediately when the first regressions were reported.
+> 
+> Provided the RFT was mostly ignored (anyone who tested that here, or I only wasted my time?), how exactly would dropping help me finding potential issues in the series? In the end, noone is running -next in production, so glitches are sort of expected, right? And I believe I smashed them quickly enough (despite I was sidetracked to handle the n_gsm issue). But I might be wrong, as usual.
+
+So since it was ignored, it's ok to apply it as-is ??????
+
+> 
+> So no, dropping is not helping moving forward, actions taken by e.g. Marek Szyprowski <m.szyprowski@samsung.com> do, IMNSHO.
+
+well thanks to Marek, but most of Qualcomm maintainers and myself were in EOSS in Seattle for the week and came back home in Saturday, and we were busy. Hopefully Marek was available.
+
+> 
+> thanks,
+
+Neil
+
+
 
