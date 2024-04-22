@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-18206-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18207-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C80EB8AD509
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 21:44:30 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 323668AD513
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 21:45:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 58A1FB2139B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 19:44:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 560DA1C21015
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 19:45:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19BF25025E;
-	Mon, 22 Apr 2024 19:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7C49155356;
+	Mon, 22 Apr 2024 19:44:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tdJ0YiW2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gelMmyJQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681EE15533B
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 19:44:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D502615533B
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 19:44:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713815065; cv=none; b=A3H3pLjiwUymGykhx/6UFmra+vqEXOGzcMyF+H6l80zJW7Lf0idSGtUhL7beWKcmJiFoR5gb18T1eSnw94yt/mbUTI98rNvYCWjk1RGvU+n3qp8rgURGaB0kifE55VLtEPE/bwN06D5j9YindAXsB9FCjfDehovuPSARpx8WeLc=
+	t=1713815090; cv=none; b=lPkOtnu6H4sly0PJs1xI6a5PV9Oz8lABqz3/sEebmbyKlOnR7QppEXPfpQ39OQP3NxANdu0zLiJoaxnaImIQSL7xaeEb2euhONrxJC1exBAaD2pqfvLgGyNKcPefVPxEJ/pf1C6FZupgTMZzs9JgD8L+9Mi4/HEJp3Q0sTR6LF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713815065; c=relaxed/simple;
-	bh=teUOH+Iz6NWDZL8ij++AYo7mAAoW9rkXT9ZCcHSMccA=;
+	s=arc-20240116; t=1713815090; c=relaxed/simple;
+	bh=9Nx8Aoim3ajZIbu1UpzqCFqC7ex9zJqVAjHbfqFAjec=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=daAmyEyYHl5Dz67TN703ELrJT6YH+bfwRk7Hyjlff4b+na83idGlRxa+PYW7WQHC6LLaFUKFeEOvsfLgF7olewgdbaUR8uNEpCKZ2J+3Cn4zEdvSqsz/xD6oqOR1VvxEhRmQwfJOKWUYcr26yrWviY+fwamnY4lHwT1kORRa8p0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tdJ0YiW2; arc=none smtp.client-ip=209.85.208.179
+	 Content-Type:Content-Disposition:In-Reply-To; b=McwBsC/qY9kXkz4MjnEMC3ir+1C7rD6n+EMWDD6sYPZUaPl4E5XY3BK8HcihR+hgm/bRoNro9y5pPAZEbhzqXSSqlgKMy42I5mkC1GoAFkj8Ro8foNLf5R28a9p7PHqfivgbbSkx/TYsRs9HkeGiQVnQ7g/m2i7BcOU/H8Yden4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gelMmyJQ; arc=none smtp.client-ip=209.85.167.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2db17e8767cso63934691fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 12:44:23 -0700 (PDT)
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-51acc258075so3805069e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 12:44:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713815062; x=1714419862; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1713815086; x=1714419886; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=PNSqhnViCny5sGqp7Qjs50p3XAx1lbvYw/hoV+0zczM=;
-        b=tdJ0YiW2jWV6Mq6f3ZFlutq1o/NxdmwFFDUfbSY7aFHcJ/movQY+tarSUpIhYUlboE
-         tUPhSIHDCgnxRBlmtkTS3hsCxqi/nxeLLciEOKT71Ten9paF6ml5F64F59kJV0pUph1A
-         SlCnUvf25MEI5mM+9I/pgq0j8A6Cc6TPfnIoYEpZjdkj9qw7stVXoKCSzg/IjcENNSY0
-         ml3o/h8NKvjMdKwrmPTtszXnPjh0O3pdDGYo2axwUXr/lqoDAlGRr8DmLDrc3zeWP9ds
-         krzm0hLVXA86ZIs23FUePjGJ6E+UoMaCoLv+GrJywSCghEafPzGhmSQZGe3xPO7ByXzr
-         FXLw==
+        bh=O5xyyivQsMTHQ7dLcNsluj0Jp99yRb62wMbu9zf5p5s=;
+        b=gelMmyJQcKALWwhKJj9/ckv7vWNIkD0wVzZUcfU/o6RQiRHdoRksHtLuvS5RD+eyYS
+         bcxM9tiT8zNfkzGCmRrG3AGaYAl40dVSckOjfvKpHNQo17mbeBx7PSxc5Ni6BIbn6JEX
+         LPEcW7OpilQhB8KHu2Z6cStQ7TZpP0TUMW907kO7CVkHjIO4rF0At33a6h+RzOH0BgAC
+         tLusNMwXIixRCEV6cape1TX1Jm5WfB2HFV0vRmVkL8CcjkB3lBu/iZeaUKiRq8Y84v+5
+         1yWA2jpclUlVRw23UfCB0T3BTbDTKNQilxrVGTrA0xtJ7Pmwgy1gsvMjuXzHB7kzEPVr
+         wp+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713815062; x=1714419862;
+        d=1e100.net; s=20230601; t=1713815086; x=1714419886;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PNSqhnViCny5sGqp7Qjs50p3XAx1lbvYw/hoV+0zczM=;
-        b=bTA8lOW1b4usk4kPtdDDQqIJRABP6ingOAPfrIc+yGDKKKbiEuEMjRec08Yl1CLP71
-         pZyqal2RxVjBhd+wzHJnm/Pv0SpB8k/qzjDA25xE17VKgGz5dTAr9vQs7zp9A17MhADQ
-         NTlCotjpAcB3shVPwhu95rvA/NyWELilnL89OZ57/F/4uB8KVuayOf95evfbZvirbfUP
-         eNERYZR7VzS90gJiO5PwDssnyAjQ2Fg76E7iHvY5zxJeI072yHHDueG2JRX+BeIfWDMS
-         6336nx5jZT0UGXGfA67WmOz599JUjHW/bEsosCVyUj97JtHWk0HPUMz9z7JiltdWRRYm
-         /fLQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXvyWMrT0Ibg+1urkh95oePw5gK4zCgWXp2w/v0nEazxLGOMhFezXq8MHVh+jczrxWIhS5sQaJ3TKl3IXg24EbS7GnxJxzcT6Oe/F8tXA==
-X-Gm-Message-State: AOJu0Yzn7IWKNtLlnhOgjbxR6vvZTqMcSLrvUCubUMs5mVpMRgrl4Pdc
-	LGg+kIeztHQSKot/WPpUU102wC6JUBeBWbEYZNxGh8gK0xf49mEpauF+qqxihho=
-X-Google-Smtp-Source: AGHT+IFB4vlO61dRgJLfBsF513ju46qQFEo5RGhENHLFJUifWdD3Ld8YIEwoMTEdpoaSF4uOjBiDJA==
-X-Received: by 2002:a05:651c:2102:b0:2dc:f188:a073 with SMTP id a2-20020a05651c210200b002dcf188a073mr7128155ljq.35.1713815061649;
-        Mon, 22 Apr 2024 12:44:21 -0700 (PDT)
+        bh=O5xyyivQsMTHQ7dLcNsluj0Jp99yRb62wMbu9zf5p5s=;
+        b=N9rGHxgHPGfPzMvbzvBg2QhwaEiRQMsrho1ClTmCja1wAUZeUrYdqx41huTOrP2psU
+         8qgNXUPOYLX2/WHIUj4HN9hd2VGAyv9FIJJdsq0Ca3F4YnzAx1irJJlsZ+9yIog5nkkv
+         QrXEBghF8zRElAe7Kd0cUOTud1SAAoK6OvDL8D7GcXsKcRm4U4aAad60QHXswruebNQw
+         n/xj9IGKdKU6JwOtjtrGR54yizBzJGM+bvTv+I+If/ERJ8QLz/8Ef3Gcc4E/lwalwlf2
+         FT/WJsemqXJlsBAj+SiOWDNiL2R7fpJY23ESHdF2oSZ+5fdHe3ckY4fyQtygWFmeuXXU
+         puQA==
+X-Forwarded-Encrypted: i=1; AJvYcCWiuGnLQkSJ9J7bw4ljs7ftBOBkjum/tZVyBCw4/VOpqb8NifjQ9kEnmPTeQgFMhf5zoNhBk1McvtuPS4DC9wUPWvYjGCEDzb4YIi8OiQ==
+X-Gm-Message-State: AOJu0YyDyYZWfOn71mxaKy0eBvA9HExzRK5wsVcJ99CUM+zzTaeT1YEB
+	S8Ev0pc4mRojlSYM1DcEpqt41qZAUM9LGep3+0i7MgwlNMsn+kT6GjOdNgACL2g=
+X-Google-Smtp-Source: AGHT+IFB1Kv7g4uVpDs46ZAzOEBDJZtGjxsU0UGxK762fiEgaJ1n/WHkpnV0MuYvu79JTdl4W3x0SQ==
+X-Received: by 2002:a05:6512:3af:b0:51a:d7c7:769f with SMTP id v15-20020a05651203af00b0051ad7c7769fmr4830577lfp.65.1713815085997;
+        Mon, 22 Apr 2024 12:44:45 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::8a5])
-        by smtp.gmail.com with ESMTPSA id l3-20020a2e9083000000b002da6fb7ce36sm1533716ljg.135.2024.04.22.12.44.21
+        by smtp.gmail.com with ESMTPSA id r1-20020ac25a41000000b00516c1fa74e3sm1824681lfn.207.2024.04.22.12.44.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Apr 2024 12:44:21 -0700 (PDT)
-Date: Mon, 22 Apr 2024 22:44:19 +0300
+        Mon, 22 Apr 2024 12:44:45 -0700 (PDT)
+Date: Mon, 22 Apr 2024 22:44:44 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
@@ -74,12 +74,12 @@ Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
 	Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
 	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
 Subject: Re: [PATCH 1/3] drm/msm: don't clean up priv->kms prematurely
-Message-ID: <pirzyu6ki7hfrax2uo3qlg7fdzlvzpg7vfgfqawogtybdd6e3c@zvgh3n4o67zi>
+Message-ID: <ohzwt5llvvogo46757iemkrnqwdzwqldi3bhbgvk4pxsp3wpuo@enc4bzir3uur>
 References: <20240420-mdp4-fixes-v1-0-96a70f64fa85@linaro.org>
  <20240420-mdp4-fixes-v1-1-96a70f64fa85@linaro.org>
  <67fbd629-3e80-b706-83a3-7baff3efd6c1@quicinc.com>
  <n7eet54g72usmuh4hdz6yce3i4ieweu4orgd7gewu7y53ejucc@dzmq2a2wdxkc>
- <7daeeaba-a33d-bf05-1371-d9b5fa0bf0a5@quicinc.com>
+ <456bb6f6-03cc-aae1-b7d5-9d97300ba383@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,9 +88,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <7daeeaba-a33d-bf05-1371-d9b5fa0bf0a5@quicinc.com>
+In-Reply-To: <456bb6f6-03cc-aae1-b7d5-9d97300ba383@quicinc.com>
 
-On Mon, Apr 22, 2024 at 10:23:18AM -0700, Abhinav Kumar wrote:
+On Mon, Apr 22, 2024 at 09:12:20AM -0700, Abhinav Kumar wrote:
 > 
 > 
 > On 4/21/2024 3:35 PM, Dmitry Baryshkov wrote:
@@ -115,37 +115,13 @@ On Mon, Apr 22, 2024 at 10:23:18AM -0700, Abhinav Kumar wrote:
 > > attempt when possible (once the next device is added or probed). However
 > > as priv->kms is NULL, probe crashes.
 > > 
-> > > 
-> > > > Fixes: a2ab5d5bb6b1 ("drm/msm: allow passing struct msm_kms to msm_drv_probe()")
 > 
-> Actually, Is this Fixes tag correct?
-> 
-> OR is this one better
-> 
-> Fixes: 506efcba3129 ("drm/msm: carve out KMS code from msm_drv.c")
+> Got it, a better commit text would have helped here. Either way,
 
-No. The issue existed even before the carve-out.
+I'll update the commit text with the text above.
 
 > 
-> 
-> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > ---
-> > > >    drivers/gpu/drm/msm/msm_kms.c | 1 -
-> > > >    1 file changed, 1 deletion(-)
-> > > > 
-> > > > diff --git a/drivers/gpu/drm/msm/msm_kms.c b/drivers/gpu/drm/msm/msm_kms.c
-> > > > index af6a6fcb1173..6749f0fbca96 100644
-> > > > --- a/drivers/gpu/drm/msm/msm_kms.c
-> > > > +++ b/drivers/gpu/drm/msm/msm_kms.c
-> > > > @@ -244,7 +244,6 @@ int msm_drm_kms_init(struct device *dev, const struct drm_driver *drv)
-> > > >    	ret = priv->kms_init(ddev);
-> > > >    	if (ret) {
-> > > >    		DRM_DEV_ERROR(dev, "failed to load kms\n");
-> > > > -		priv->kms = NULL;
-> > > >    		return ret;
-> > > >    	}
-> > > > 
-> > 
+> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
 -- 
 With best wishes
