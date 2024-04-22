@@ -1,272 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-18181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18182-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16F2A8AD017
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 17:03:09 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 599848AD06C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 17:16:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 829DC1F229A1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 15:03:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7CA751C212E7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 15:16:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A129152531;
-	Mon, 22 Apr 2024 15:02:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F50D152516;
+	Mon, 22 Apr 2024 15:16:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="J/WotRtH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DddYxD9Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C28B152509;
-	Mon, 22 Apr 2024 15:02:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F8913E8B2;
+	Mon, 22 Apr 2024 15:16:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713798169; cv=none; b=WFbMUr+1BhjqrLOxMeAFtCcbrIPj7n3oyJTFeGeQhu8bkSHjd1e4ybBSTlR4e706cVYEQXyt6g0P0QK2gPDm0AKC6qAD37w41dz53/ZxhKyzPSw8UteB3jyENXofRf1dENHeuYi+gVtSjmHLdEH1TR/ZfwIwVu492mZjAVhzm+w=
+	t=1713799009; cv=none; b=MbWLap5TVNrcImOYkW0H9YaFL5ivQwLKR06HG7L2K4bPzSQEerl4S4Dv7IppWHyoOdeoaLIbUclASU58ArLeGhP79qSmzjkRX856W0i7D1/6w01yQM+3ZeIIfMqygScTFlBn637PAtH/7a5MHQiyqzmfnLnnTtdzY2BqI7saj5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713798169; c=relaxed/simple;
-	bh=s/yAQNU9GSF83apsgHMrji7p4cNjFRrC4o9zCRQu88Y=;
+	s=arc-20240116; t=1713799009; c=relaxed/simple;
+	bh=xdss4el+V60V2ws+xgbpajq8iInRegrkoN8TP9o57z4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=byvoRK/gZBNuZyKXxSyqt07rjt/vsMTOj1LKMhy+c+6O532baee5gdMojMvkaHxlvsNw9MiQaHAtRE645NxVSeRaHSRN+/5hZCem4JYzmjSLnw/0xhdtrL1ir30Pp7JHK2bhWXnAc2W0WodSkPSk7+dSEoSf0TfGYz7+OBmuu7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=J/WotRtH; arc=none smtp.client-ip=198.175.65.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1713798167; x=1745334167;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=s/yAQNU9GSF83apsgHMrji7p4cNjFRrC4o9zCRQu88Y=;
-  b=J/WotRtH13hvYNM1HVEOSsqMRvm5Lc13bULwp6xZbbDVlxMT6cTLgsV5
-   ZjtX5HFj0zC/jO5BgtxFZwZw5KM+6TTyy5O9Vchzfs1u+nJg1x5wNeAhL
-   tvnRpcXi5hN7kb6lIYIFHBEVDXvEMoGXPVdfu2EY1NOBO3B3a2YpCYsyy
-   1nPQvS4thz4P4FuYCRNs/luWqNoTJnOyOR3ub1GF8uqrz2+/lGSmTLadT
-   wrGombMxaIZEkHsxv33TXjCUC6ZyZEiYVcG5ViTazF9En7BXZgPWhNQbO
-   K6d27OUfeTHdDi+Ci5vgqq3m6W5ScbUShfiUcmQ8N6ZK4q7neTgaVuMIt
-   g==;
-X-CSE-ConnectionGUID: XS+jQdP1QS+f1aE1J1BaLw==
-X-CSE-MsgGUID: Y8+plzsLSj+vJlHoNhe9dw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11052"; a="20763291"
-X-IronPort-AV: E=Sophos;i="6.07,220,1708416000"; 
-   d="scan'208";a="20763291"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Apr 2024 08:02:46 -0700
-X-CSE-ConnectionGUID: nrUTY4uHTlerD38yKrgqzA==
-X-CSE-MsgGUID: LYNhFMoQRZCSipOm7AL7BA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,220,1708416000"; 
-   d="scan'208";a="24118571"
-Received: from kuha.fi.intel.com ([10.237.72.185])
-  by fmviesa008.fm.intel.com with SMTP; 22 Apr 2024 08:02:43 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 22 Apr 2024 18:02:42 +0300
-Date: Mon, 22 Apr 2024 18:02:42 +0300
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 7/8] usb: typec: ucsi: glink: merge pmic_glink_altmode
- driver
-Message-ID: <ZiZ8El4779l0W1Ig@kuha.fi.intel.com>
-References: <20240416-ucsi-glink-altmode-v1-0-890db00877ac@linaro.org>
- <20240416-ucsi-glink-altmode-v1-7-890db00877ac@linaro.org>
- <ZiZC/l9nOmzWx+j6@kuha.fi.intel.com>
- <46fktwtp3xers6tcpov3qo4zswptvajewsdltm45zbz2kmmpzp@cthu6ylttup3>
+	 Content-Type:Content-Disposition:In-Reply-To; b=PW60hQyYDN30s72eA6xcvVEyhwz8hSFddXbP73h0Wl3EDc+Gg/tJucDAzWsdATNpvLyCaJvHj/VM54oPPmcH0JZAZJoRyhN0JdlyhSshzxZzXtPm9HSfvBPUAx59AqvC8m6W9GhYhg5W8kvOczJZ6PW1jxwsMRPA8HvPp9me6DE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DddYxD9Y; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB90C113CC;
+	Mon, 22 Apr 2024 15:16:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1713799009;
+	bh=xdss4el+V60V2ws+xgbpajq8iInRegrkoN8TP9o57z4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=DddYxD9YcuuEidSLLrYzsRR3+SBt+y8BsJI9lzFM7Oh2dDlY4SIjUYUdFZXrjUwjg
+	 DvPq5dxVbuSrfeWu/L2fBW+txJx9AS5lKr/EBr0qaSErcEJnEA/Uyz9nT3L/92mTut
+	 o4dTFf4CJF/PezRBGIdcAs0tFvnlm46Lgl13kEeLFbvfwar4gLgyVCLc0JsR3Yj72H
+	 YdXfREIcykUKw6GlqJSMj3bWZyTMkJRB91aNXiagWco5GJ+Gwv91f+F8876d94qrJv
+	 qLC1BizS13XrI9+LTmn7L9mUPGHvfxVaIHmDqjBChimXf1+CNtM2C5oTR04gd/rFlN
+	 iOwKaftYRw7yg==
+Date: Mon, 22 Apr 2024 20:46:25 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
+Cc: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+	quic_msarkar@quicinc.com, quic_kraravin@quicinc.com,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] PCI: qcom: Add equalization settings for 16GT/s
+Message-ID: <20240422151625.GG9775@thinkpad>
+References: <20240419001013.28788-1-quic_schintav@quicinc.com>
+ <20240419001013.28788-3-quic_schintav@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <46fktwtp3xers6tcpov3qo4zswptvajewsdltm45zbz2kmmpzp@cthu6ylttup3>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240419001013.28788-3-quic_schintav@quicinc.com>
 
-Hi Dmitry,
+On Thu, Apr 18, 2024 at 05:09:35PM -0700, Shashank Babu Chinta Venkata wrote:
 
-On Mon, Apr 22, 2024 at 03:45:22PM +0300, Dmitry Baryshkov wrote:
-> On Mon, Apr 22, 2024 at 01:59:10PM +0300, Heikki Krogerus wrote:
-> > Hi Dmitry,
-> > 
-> > On Tue, Apr 16, 2024 at 05:20:56AM +0300, Dmitry Baryshkov wrote:
-> > > Move handling of USB Altmode to the ucsi_glink driver. This way the
-> > > altmode is properly registered in the Type-C framework, the altmode
-> > > handlers can use generic typec calls, the UCSI driver can use
-> > > orientation information from altmode messages and vice versa, the
-> > > altmode handlers can use GPIO-based orientation inormation from UCSI
-> > > GLINK driver.
-> > > 
-> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > ---
-> > >  drivers/soc/qcom/Makefile             |   1 -
-> > >  drivers/soc/qcom/pmic_glink_altmode.c | 546 ----------------------------------
-> > >  drivers/usb/typec/ucsi/ucsi_glink.c   | 495 ++++++++++++++++++++++++++++--
-> > >  3 files changed, 475 insertions(+), 567 deletions(-)
-> > > 
+PCI: qcom: Add PCIe link equalization settings for 16 GT/s
+
+> GEN3_RELATED_OFFSET is being used to determine data rate of shadow
+> registers. Select data rate as 16GT/s and set appropriate equilization
+> settings to improve link stability for 16GT/s data rate.
 > 
-> [skipped the patch]
+
+How about:
+
+'To improve the PCIe link stability while running at the rate of 16 GT/s, set
+the appropriate link equalization settings for both RC and EP controllers.'
+
+However, I don't understand the statement about 'GEN3_RELATED_OFFSET' and
+'shadow registers'. Please reword it to make it understandable.
+
+> Signed-off-by: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-designware.h  | 12 ++++++++
+>  drivers/pci/controller/dwc/pcie-qcom-common.c | 30 +++++++++++++++++++
+>  drivers/pci/controller/dwc/pcie-qcom-common.h |  1 +
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c     |  3 ++
+>  drivers/pci/controller/dwc/pcie-qcom.c        |  3 ++
+>  5 files changed, 49 insertions(+)
 > 
-> > > +
-> > > +static void pmic_glink_ucsi_register_altmode(struct ucsi_connector *con)
-> > > +{
-> > > +	static const u8 all_assignments = BIT(DP_PIN_ASSIGN_C) | BIT(DP_PIN_ASSIGN_D) |
-> > > +			     BIT(DP_PIN_ASSIGN_E);
-> > > +	struct typec_altmode_desc desc;
-> > > +	struct typec_altmode *alt;
-> > > +
-> > > +	mutex_lock(&con->lock);
-> > > +
-> > > +	if (con->port_altmode[0])
-> > > +		goto out;
-> > > +
-> > > +	memset(&desc, 0, sizeof(desc));
-> > > +	desc.svid = USB_TYPEC_DP_SID;
-> > > +	desc.mode = USB_TYPEC_DP_MODE;
-> > > +
-> > > +	desc.vdo = DP_CAP_CAPABILITY(DP_CAP_DFP_D);
-> > > +
-> > > +	/* We can't rely on the firmware with the capabilities. */
-> > > +	desc.vdo |= DP_CAP_DP_SIGNALLING(0) | DP_CAP_RECEPTACLE;
-> > > +
-> > > +	/* Claiming that we support all pin assignments */
-> > > +	desc.vdo |= all_assignments << 8;
-> > > +	desc.vdo |= all_assignments << 16;
-> > > +
-> > > +	alt = typec_port_register_altmode(con->port, &desc);
-> > 
-> >         alt = ucsi_register_displayport(con, 0, 0, &desc);
-> 
-> Note, the existing UCSI displayport AltMode driver depends on the UCSI
-> actually handling the altomode. It needs a partner, etc.
-> 
-> > You need to export that function, but that should not be a problem:
-> > 
-> > diff --git a/drivers/usb/typec/ucsi/displayport.c b/drivers/usb/typec/ucsi/displayport.c
-> > index d9d3c91125ca..f2754d7b5876 100644
-> > --- a/drivers/usb/typec/ucsi/displayport.c
-> > +++ b/drivers/usb/typec/ucsi/displayport.c
-> > @@ -315,11 +315,13 @@ struct typec_altmode *ucsi_register_displayport(struct ucsi_connector *con,
-> >         struct ucsi_dp *dp;
-> >  
-> >         /* We can't rely on the firmware with the capabilities. */
-> > -       desc->vdo |= DP_CAP_DP_SIGNALLING(0) | DP_CAP_RECEPTACLE;
-> > +       if (!desc->vdo) {
-> > +               desc->vdo = DP_CAP_DP_SIGNALLING(0) | DP_CAP_RECEPTACLE;
-> >  
-> > -       /* Claiming that we support all pin assignments */
-> > -       desc->vdo |= all_assignments << 8;
-> > -       desc->vdo |= all_assignments << 16;
-> > +               /* Claiming that we support all pin assignments */
-> > +               desc->vdo |= all_assignments << 8;
-> > +               desc->vdo |= all_assignments << 16;
-> > +       }
-> >  
-> >         alt = typec_port_register_altmode(con->port, desc);
-> >         if (IS_ERR(alt))
-> > @@ -342,3 +344,4 @@ struct typec_altmode *ucsi_register_displayport(struct ucsi_connector *con,
-> >  
-> >         return alt;
-> >  }
-> > +EXPORT_SYMBOL_GPL(ucsi_register_displayport);
-> > 
-> > <snip>
-> > 
-> > > +static void pmic_glink_ucsi_set_state(struct ucsi_connector *con,
-> > > +				      struct pmic_glink_ucsi_port *port)
-> > > +{
-> > > +	struct typec_displayport_data dp_data = {};
-> > > +	struct typec_altmode *altmode = NULL;
-> > > +	unsigned long flags;
-> > > +	void *data = NULL;
-> > > +	int mode;
-> > > +
-> > > +	spin_lock_irqsave(&port->lock, flags);
-> > > +
-> > > +	if (port->svid == USB_SID_PD) {
-> > > +		mode = TYPEC_STATE_USB;
-> > > +	} else if (port->svid == USB_TYPEC_DP_SID && port->mode == DPAM_HPD_OUT) {
-> > > +		mode = TYPEC_STATE_SAFE;
-> > > +	} else if (port->svid == USB_TYPEC_DP_SID) {
-> > > +		altmode = find_altmode(con, port->svid);
-> > > +		if (!altmode) {
-> > > +			dev_err(con->ucsi->dev, "altmode woth SVID 0x%04x not found\n",
-> > > +				port->svid);
-> > > +			spin_unlock_irqrestore(&port->lock, flags);
-> > > +			return;
-> > > +		}
-> > > +
-> > > +		mode = TYPEC_MODAL_STATE(port->mode - DPAM_HPD_A);
-> > > +
-> > > +		dp_data.status = DP_STATUS_ENABLED;
-> > > +		dp_data.status |= DP_STATUS_CON_DFP_D;
-> > > +		if (port->hpd_state)
-> > > +			dp_data.status |= DP_STATUS_HPD_STATE;
-> > > +		if (port->hpd_irq)
-> > > +			dp_data.status |= DP_STATUS_IRQ_HPD;
-> > > +		dp_data.conf = DP_CONF_SET_PIN_ASSIGN(port->mode - DPAM_HPD_A);
-> > > +
-> > > +		data = &dp_data;
-> > > +	} else {
-> > > +		dev_err(con->ucsi->dev, "Unsupported SVID 0x%04x\n", port->svid);
-> > > +		spin_unlock_irqrestore(&port->lock, flags);
-> > > +		return;
-> > > +	}
-> > > +
-> > > +	spin_unlock_irqrestore(&port->lock, flags);
-> > > +
-> > > +	if (altmode)
-> > > +		typec_altmode_set_port(altmode, mode, data);
-> > 
-> > So if the port altmode is using the ucsi_displayport_ops, you can
-> > simply register the partner altmode here instead. That should
-> > guarantee that it'll bind to the DP altmode driver which will take
-> > care of typec_altmode_enter() etc.
-> 
-> In our case the altmode is unfortunately completely hidden inside the
-> firmware. It is not exported via the native UCSI interface. Even if I
-> plug the DP dongle, there is no partner / altmode being reported by the
-> PPM. All DP events are reported via additional GLINK messages.
+> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+> index 26dae4837462..ad771bb52d29 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware.h
+> +++ b/drivers/pci/controller/dwc/pcie-designware.h
+> @@ -122,6 +122,18 @@
+>  #define GEN3_RELATED_OFF_RATE_SHADOW_SEL_SHIFT	24
+>  #define GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK	GENMASK(25, 24)
+>  
+> +#define GEN3_EQ_CONTROL_OFF			0x8a8
+> +#define GEN3_EQ_CONTROL_OFF_FB_MODE(n)		FIELD_PREP(GENMASK(3, 0), n)
+> +#define GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE(n)	FIELD_PREP(BIT(4), n)
+> +#define GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC(n)	FIELD_PREP(GENMASK(23, 8), n)
+> +#define GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL(n)	FIELD_PREP(BIT(24), n)
+> +
+> +#define GEN3_EQ_FB_MODE_DIR_CHANGE_OFF          0x8ac
+> +#define GEN3_EQ_FMDC_T_MIN_PHASE23(n)	FIELD_PREP(GENMASK(4, 0), n)
+> +#define GEN3_EQ_FMDC_N_EVALS(n)		FIELD_PREP(GENMASK(9, 5), n)
+> +#define GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA(n)	FIELD_PREP(GENMASK(13, 10), n)
+> +#define GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA(n)	FIELD_PREP(GENMASK(17, 14), n)
+> +
+>  #define PCIE_PORT_MULTI_LANE_CTRL	0x8C0
+>  #define PORT_MLTI_UPCFG_SUPPORT		BIT(7)
+>  
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.c b/drivers/pci/controller/dwc/pcie-qcom-common.c
+> index dc2120ec5fef..a6f3eb4c3ee6 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom-common.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom-common.c
+> @@ -16,6 +16,36 @@
+>  #define QCOM_PCIE_LINK_SPEED_TO_BW(speed) \
+>  		Mbps_to_icc(PCIE_SPEED2MBS_ENC(pcie_link_speed[speed]))
+>  
+> +void qcom_pcie_common_set_16gt_eq_settings(struct dw_pcie *pci)
+> +{
+> +	u32 reg;
+> +
+> +	/*
+> +	 * GEN3_RELATED_OFF is repurposed to be used with GEN4(16GT/s) rate
+> +	 * as well based on RATE_SHADOW_SEL_MASK settings on this register.
 
-I understand that there is no alt mode being reported, but I assumed
-that there is a notification about connections.
+Same comment as above.
 
-If that's not the case, then you need to use this code path to
-register the partner device as well I think. The partner really has to
-be registered somehow.
+> +	 */
+> +	reg = dw_pcie_readl_dbi(pci, GEN3_RELATED_OFF);
+> +	reg &= ~GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL;
+> +	reg &= ~GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK;
+> +	reg |= (0x1 << GEN3_RELATED_OFF_RATE_SHADOW_SEL_SHIFT);
 
-> The goal is to use the core Type-C altmode handling, while keeping UCSI
-> out of the altmode business.
-> 
-> This allows the core to handle switches / muxes / retimers, report the
-> altmode to the userspace via sysfs, keep the link between the DP part of
-> the stack and the typec port, but at the same time we don't get errors
-> from UCSI because of the PPM reporting unsupported commands, etc.
+Use FIELD_PREP()
 
-I understand, and just to be clear, I don't have a problem with
-bypassing UCSI. But that does not mean you can skip the alt mode
-registration.
+> +	dw_pcie_writel_dbi(pci, GEN3_RELATED_OFF, reg);
+> +
+> +	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF);
+> +	reg = GEN3_EQ_FMDC_T_MIN_PHASE23(0) |
 
-The primary purpose of drivers/usb/typec/ucsi/displayport.c is to
-emulate the partner DP alt mode device a little so that the actual DP
-alt mode driver drivers/usb/typec/altmodes/displayport.c is happy. The
-altmode driver will then make sure that all the muxes, switches and
-what have you, are configured as they should, and more importantly,
-make sure the DP alt mode is exposed to the user space exactly the
-same way as it's exposed on all the other systems.
+You are reading 'reg' above and then overwriting immediately.
 
-There are a couple of UCSI commands that are being used there yes, but
-by modifying it so that those UCSI commands are executed conditionally
-- by checking the ALT_MODE_DETAILS feature - you should be able to use
-it also in this case.
+> +		GEN3_EQ_FMDC_N_EVALS(0xD) |
 
-You really need to register the partner alt mode(s) one way or the
-other in any case, and the partner device itself you absolutely must
-register. The user space interface needs to be consistent.
+'0xd'
 
-thanks,
+> +		GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA(0x5) |
+> +		GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA(0x5);
+> +	dw_pcie_writel_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF, reg);
+> +
+> +	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
+> +	reg = GEN3_EQ_CONTROL_OFF_FB_MODE(0) |
+
+Same as above.
+
+- Mani
 
 -- 
-heikki
+மணிவண்ணன் சதாசிவம்
 
