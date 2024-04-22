@@ -1,132 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-18150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB8328ACA31
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 12:06:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 270DD8ACA4F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 12:11:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 02E421C20F46
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 10:06:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D2BF0283386
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 10:11:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B97E513D521;
-	Mon, 22 Apr 2024 10:06:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BB5483CDF;
+	Mon, 22 Apr 2024 10:11:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u0HotfNE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="y3rzCT3O"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9799C13D509
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 10:06:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD4313B7A0
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 10:11:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713780367; cv=none; b=kgHBXsZQUQDvgFx0bWr2oZjstU1nGRgBOOXFwwAc8J4eJGj5c7SxmyZhy1WyPUZrivB+PI17ZT0SchfpMOoonrSILgpEEYwUPU98D7pnVw0bDgEycWzguUQxFuneNJS4QMtLsq5P+1HnuaFyDff+fyCTmzZ0WCK9dbdxQc69I2c=
+	t=1713780687; cv=none; b=uiwiQyMehSSRwOJIDFShCy+VDVQMM2HR4S6mXBX40hFZ4k4ZPJq2PPdbMF6VqPbCtnMbL9q9tFs0VM0arr5t2qytTkl+ARJ9EbLvd0J5VS3uuw0XYGu/RPL21nDDp0yVfSDQMk3bXJt8QmIJBXSTviQJbc0ARBwyHGkCzYloF7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713780367; c=relaxed/simple;
-	bh=bL2hSvdJUbEjiVu8mOzngLcfDSFc2sqN+pYwEXjIoRA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Dhsm6wtAfYXEV88MmreuNGv0Cy62ZMwq+0N2HtwZ1y1g9TJPQGCS1bAkiNGBDWCAWXBuUYR0w9+OFJr2vgn0RYYAReqk331eQdKcYXDz4eo0QPxr94cmZDWKvaHlvJhW/ULKEDf9m17LHMsOv0OlKtklvF6K1CzGu3UoowJgkvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u0HotfNE; arc=none smtp.client-ip=209.85.161.43
+	s=arc-20240116; t=1713780687; c=relaxed/simple;
+	bh=tBpi40/zB5GxFBlNNNsb9NVLwpxRzapyur7krJNrANw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=A6jAuayiieH4b++6j219Pb5sNHWMiYmOLqMwcu07Dcbaw6TwLWkx52D0f6bFAE3cdoysaIN5sAVcOhq/kWeOB5LSZFMAFUcp6AfI0ZGKXLaYYvRIu/NxuseHWzl1/rfOjNKxmJi70CZY5WWLZEY8yL1XS37+V8IGMqtK98r/oOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=y3rzCT3O; arc=none smtp.client-ip=209.85.208.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-5aa2551d33dso2721221eaf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 03:06:05 -0700 (PDT)
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-571c22d9de4so5467112a12.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 03:11:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713780364; x=1714385164; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Pp9lUQ4HZ5PgJGPmf9IQ95ImHEOQFdQIgczUTfI1TFI=;
-        b=u0HotfNEzSISiyO9rtcg9IMvD2AtAwPquxNa0gaCu+VEpQfh6LFtCsS6MuQ0iNqEIj
-         8EMRrjwljGu0avUC76OW+0jdg8endhqeaoJXGLa4xo+RsIubY65+Z43iCHosG2KbHI9q
-         r9+DMGRdnHsuv88L4olNVnfGnexO9yTRa8ZIlmPrAfMJouw6pSmwzCqnSczoeEa094Vh
-         dX5tnK9qXID3lQlsAkMn1KRsVUYEN8R+hIEB7cmL7FkhhnOzGbsdUIA7XQZ3DTewqgHI
-         n7D3bHLyxMuepgIot7ooTXLjAfBIs2p3MWJQVVZW9dseLj6DRspMApAfDY4DM87qbKeC
-         pALg==
+        d=linaro.org; s=google; t=1713780684; x=1714385484; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7V/ShmXk7/p6SXAN3Z2PaUcTmaFz1OajveTK4GbFWGY=;
+        b=y3rzCT3OUNXCoPJtVKYvahG5Uyqn3gT6cfcZDtq427OShnTsMqfpD5p1170qbW2ERR
+         vPZJWwEJ/MYY5xa5p/jQ4fw2TohPuW8qfExhx0mxZcbabPeNdwL+Itjv4D80SrW3xDjd
+         nckcZ7QqMWroUYNEJbmPMTph4xkISW5rF1usiN/eT4j8n5Tlb3wrgqM6g6RXeVN2pt+y
+         WrBe2CFbtnpDbT50WzLJbxUtT5BMzukSuyja4BS0+ExwvbWLZtUMcazV+F44lONifRef
+         WQCKIVVwTFVEGPySsz+l/5PHDDQSpxFq7H+EL3cgnJ2c9rd2kpLZrlz1r4AmoBkXiwRZ
+         KBgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713780364; x=1714385164;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1713780684; x=1714385484;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Pp9lUQ4HZ5PgJGPmf9IQ95ImHEOQFdQIgczUTfI1TFI=;
-        b=H3VKqD9Z+riF8DLKg6Y/RJ+rpHOuFjQvbWL0T8u8x4Q/WRIcuorQuoZHnVJWHfqb8i
-         drUJRq0nQNUQW11tzf9NM8x8Qg0wWOMsgfEv1NPZ95IE3Veo/AR8G2payTsvG/8ESbl1
-         rNzlDlEZ9ZKz+MUEIYsDxlef9z0zy+wn8MD+hoCczRmp9mI0+krObA+QNZzdYQ7wLgC9
-         8BabTDrI+omgrDMjIJnT17ZnShjbyJq4TMetQjlDFhTj8ybjBJmr7Kn1UNcj3xMihQDS
-         ErDvEilT11Tmv9c2fFMWg9VBCf31d/cy6Ag3blIlPxAce+lnkiGZBJQJyU7+U0m3hzij
-         TcLg==
-X-Forwarded-Encrypted: i=1; AJvYcCV4+2KxTusHVtkaB/hhoaaIPWSWFnZspe9cZVO6ytdTIVz44vIWnR7qLFk3QAKorIblpvego6+BbpVjaiw6XLaZXBVMUelKeVVu5ZKSqQ==
-X-Gm-Message-State: AOJu0YzKTznR8PvAlKHeLfbewSwjVQd9lGARMEBoTkL9hXLTJA8rMUwl
-	neNEtCh/LR38WV48iPqT0djkmJz73K7mwSvNO8yuyk9yO3u+vQs5UZmNWsoXX6SNEyqXjeW9HlH
-	0ucvwJnxkt3gq6WCs1mNiWmQFaswloOVn3Qy1Og==
-X-Google-Smtp-Source: AGHT+IH2cO2rZIY+HwOOnVAFVGLIKgIBh5VFjqWuGGTbO6sx2Y1eZMlp8KcjvsVT5MV0EfKhJfiXJpIcIBTuwaWiisY=
-X-Received: by 2002:a05:6359:4287:b0:183:dda6:4470 with SMTP id
- kp7-20020a056359428700b00183dda64470mr6527469rwb.12.1713780364561; Mon, 22
- Apr 2024 03:06:04 -0700 (PDT)
+        bh=7V/ShmXk7/p6SXAN3Z2PaUcTmaFz1OajveTK4GbFWGY=;
+        b=RnuIl8xkH6wsN4DYo+kmPynzROEqX6AOuz+Mjt3PyG5jT6Ir92oNlxZWUtzLk3U/+5
+         YRsi2iLLYlo/ddTHSApbDtA0k56dHKS/nFCDhpIKVPJEdNxwljwLi+Vq/YuZ3Zdounhp
+         W9jXnaMjiN0lu+khS3rCYTmzWDlM52q54nqGGlyOyqasVZ6h1ha6Xc15YW9tAPS7Etgx
+         E+rtkJ/MzKIw9rQSH18fFHoaEP3fGCAATEIf93xwrzCzze2u4BVP796NPDTrCSm7lNly
+         tb1fG6/nth6d+zCxLLLP95ScDrxHLTIMJeUjdN4Fk4vYEMi1dHHNL5RiwyPiSX90zLOx
+         PTsA==
+X-Gm-Message-State: AOJu0YwGrCmYC11Y2jtc7QOz8dB67fYfHFDYQXjIItl367JQbDHZnvRO
+	rvhLQEzmqmQ6TBhus4FARIG2g+uqw2ihppDEpnqUWQoE5cFSzdeEXWa+cZCI6iM=
+X-Google-Smtp-Source: AGHT+IFvUxvG3qgOiGLQ/SWeR+itOkvSCwTMQCSbJ0W3DbcMi1M5rvlE47NfA7GOAYc8yjwRZzsvlQ==
+X-Received: by 2002:a17:906:e091:b0:a57:c758:738f with SMTP id gh17-20020a170906e09100b00a57c758738fmr255771ejb.0.1713780683584;
+        Mon, 22 Apr 2024 03:11:23 -0700 (PDT)
+Received: from umbar.lan ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id k14-20020a170906128e00b00a525609ae30sm5576339ejb.169.2024.04.22.03.11.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Apr 2024 03:11:23 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH v6 0/6] soc: qcom: add in-kernel pd-mapper implementation
+Date: Mon, 22 Apr 2024 13:11:15 +0300
+Message-Id: <20240422-qcom-pd-mapper-v6-0-f96957d01207@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240405060826.2521-1-jirislaby@kernel.org> <20240405060826.2521-13-jirislaby@kernel.org>
- <CGME20240415125847eucas1p2bc180c35f40f9c490c713679871af9ae@eucas1p2.samsung.com>
- <91ac609b-0fae-4856-a2a6-636908d7ad3c@samsung.com> <d70049d5-d0fe-465f-a558-45b6785f6014@kernel.org>
- <Zh-fgtujwjiSXz7D@monster> <c091da0b-a150-428a-bf96-75f9f3eab2e2@samsung.com>
- <CADYN=9LCJS0SW4PuF+e356HUxhzJYi093K6U+BdErPohq4RDWQ@mail.gmail.com> <6ef3422c-d931-4993-856d-c080b11d72d5@kernel.org>
-In-Reply-To: <6ef3422c-d931-4993-856d-c080b11d72d5@kernel.org>
-From: Anders Roxell <anders.roxell@linaro.org>
-Date: Mon, 22 Apr 2024 12:05:53 +0200
-Message-ID: <CADYN=9LtODPtcFiuZ_Zv5O9M4S1+pAYJD8Fu8r5__67bPK98RA@mail.gmail.com>
-Subject: Re: [PATCH 12/15] tty: serial: switch from circ_buf to kfifo
-To: Jiri Slaby <jirislaby@kernel.org>
-Cc: Marek Szyprowski <m.szyprowski@samsung.com>, gregkh@linuxfoundation.org, 
-	linux-amlogic@lists.infradead.org, 
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>, linux-serial@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMQ3JmYC/3XO0W6EIBAF0F/Z8FwMDANqn/ofTR9YwJW0ih2Nq
+ dn478VNmtqQPt5kzp17Z3OgGGb2fLkzCmucYxpzME8X5no73gKPPmcGAlAoIfmnSwOfPB/sNAX
+ iQYI3AB6tFyyjiUIXvx6Fr285d5TPl56C/alREsAIoRDrSglEZTSX3A9xoa26Wtrm/j2tLx9xt
+ JSqRLejto/zkmh7zFzhKP930QpccO0lWNFI33p5rjomrerssfAqe9PoprPSOumawuPJy/I/Zg9
+ o6tY5qx1g4fWvR9kWXmcflL6arsE6tO0fv+/7NzIhezO0AQAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, 
+ Sibi Sankar <quic_sibis@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
+ Johan Hovold <johan+linaro@kernel.org>, Xilin Wu <wuxilin123@gmail.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4190;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=tBpi40/zB5GxFBlNNNsb9NVLwpxRzapyur7krJNrANw=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmJjfJ9KXx53A8ro8IPqJGL192PsQc0e8IYYzF5
+ i8GiT0/tsWJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZiY3yQAKCRCLPIo+Aiko
+ 1QLyB/oD2C1PDQAYdttcA+eW0hQpbGnUxH9k0MDFq2AOlp8XbC+n0BbsOT/YujiDzTHnCf4Oi7v
+ ahpVjTOtlsa1H0lW0TwqfwnjXbnuPbAQBVuz1MPKsB6wPg/sp4IyIrpuIy7HWKDFN5D9HxMMj7A
+ y4/92w8ZVl5/HX7G351dqdf5C8hhrxMBamc/S+jxH6KAaqQaIt0owj4N+pF58twdletsuU2ZyIN
+ 2a2PvjttIy3Ge/sdCAsiWXMSMFrLr6PSwBcMnfkroAM17XB/hi8DNIHnqsH3+iYMzs9RsfmuNtT
+ F26mi438aU58m2MocyPxrrp5eXiBZADxNydKfizAZ2Q5uzP9
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-On Mon, 22 Apr 2024 at 08:45, Jiri Slaby <jirislaby@kernel.org> wrote:
->
-> On 17. 04. 24, 13:19, Anders Roxell wrote:
-> >> I'm trying to run on two dragonboard devices db410c and db845c and both
-> >>> fails to boot see the boot failure from db845c [1], linux-next tag: next-20240415.
-> >>> I tried to apply the patch [2] (that you proposed in this thread) ontop of next-20240415. However, that didn't
-> >>> help bootlog on db845c [3].
-> >>
-> >> This is a different issue, which I've reported 2 days ago. See the
-> >> following thread:
-> >>
-> >> https://lore.kernel.org/all/d3eb9f21-f3e1-43ec-bf41-984c6aa5cfc8@samsung.com/
-> >
-> > Oh ok, I did the bisection on db845v, and that led me to this
-> > patch 1788cf6a91d9 ("tty: serial: switch from circ_buf to kfifo")
->
-> Could you re-test with the today's -next?
+Protection domain mapper is a QMI service providing mapping between
+'protection domains' and services supported / allowed in these domains.
+For example such mapping is required for loading of the WiFi firmware or
+for properly starting up the UCSI / altmode / battery manager support.
 
-Tested todays next and it boots fine.
+The existing userspace implementation has several issue. It doesn't play
+well with CONFIG_EXTRA_FIRMWARE, it doesn't reread the JSON files if the
+firmware location is changed (or if the firmware was not available at
+the time pd-mapper was started but the corresponding directory is
+mounted later), etc.
 
-Tested-by: Anders Roxell <anders.roxell@linaro.org>
+However this configuration is largely static and common between
+different platforms. Provide in-kernel service implementing static
+per-platform data.
 
-Cheers,
-Anders
+Unlike previous revisions of the patchset, this iteration uses static
+configuration per platform, rather than building it dynamically from the
+list of DSPs being started.
 
->
-> In particular, with this commit:
-> commit f70f95b485d78838ad28dbec804b986d11ad7bb0
-> Author: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-> Date:   Fri Apr 19 10:09:31 2024 +0200
->
->      serial: msm: check dma_map_sg() return value properly
->
->
-> thanks,
-> --
-> js
-> suse labs
->
+--
+2.39.2
+
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+To: Mathieu Poirier <mathieu.poirier@linaro.org>
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-remoteproc@vger.kernel.org
+Cc: Johan Hovold <johan+linaro@kernel.org>
+Cc: Xilin Wu <wuxilin123@gmail.com>
+
+Changes in v6:
+- Reworked mutex to fix lockdep issue on deregistration
+- Fixed dependencies between PD-mapper and remoteproc to fix modular
+  builds (Krzysztof)
+- Added EXPORT_SYMBOL_GPL to fix modular builds (Krzysztof)
+- Fixed kerneldocs (Krzysztof)
+- Removed extra pr_debug messages (Krzysztof)
+- Fixed wcss build (Krzysztof)
+- Added platforms which do not require protection domain mapping to
+  silence the notice on those platforms
+- Link to v5: https://lore.kernel.org/r/20240419-qcom-pd-mapper-v5-0-e35b6f847e99@linaro.org
+
+Changes in v5:
+- pdr: drop lock in pdr_register_listener, list_lock is already held (Chris Lew)
+- pd_mapper: reworked to provide static configuration per platform
+  (Bjorn)
+- Link to v4: https://lore.kernel.org/r/20240311-qcom-pd-mapper-v4-0-24679cca5c24@linaro.org
+
+Changes in v4:
+- Fixed missing chunk, reenabled kfree in qmi_del_server (Konrad)
+- Added configuration for sm6350 (Thanks to Luca)
+- Removed RFC tag (Konrad)
+- Link to v3: https://lore.kernel.org/r/20240304-qcom-pd-mapper-v3-0-6858fa1ac1c8@linaro.org
+
+Changes in RFC v3:
+- Send start / stop notifications when PD-mapper domain list is changed
+- Reworked the way PD-mapper treats protection domains, register all of
+  them in a single batch
+- Added SC7180 domains configuration based on TCL Book 14 GO
+- Link to v2: https://lore.kernel.org/r/20240301-qcom-pd-mapper-v2-0-5d12a081d9d1@linaro.org
+
+Changes in RFC v2:
+- Swapped num_domains / domains (Konrad)
+- Fixed an issue with battery not working on sc8280xp
+- Added missing configuration for QCS404
+
+---
+Dmitry Baryshkov (6):
+      soc: qcom: pdr: protect locator_addr with the main mutex
+      soc: qcom: pdr: fix parsing of domains lists
+      soc: qcom: pdr: extract PDR message marshalling data
+      soc: qcom: qmi: add a way to remove running service
+      soc: qcom: add pd-mapper implementation
+      remoteproc: qcom: enable in-kernel PD mapper
+
+ drivers/remoteproc/Kconfig          |   4 +
+ drivers/remoteproc/qcom_q6v5_adsp.c |  11 +-
+ drivers/remoteproc/qcom_q6v5_mss.c  |  10 +-
+ drivers/remoteproc/qcom_q6v5_pas.c  |  12 +-
+ drivers/remoteproc/qcom_q6v5_wcss.c |  12 +-
+ drivers/soc/qcom/Kconfig            |  14 +
+ drivers/soc/qcom/Makefile           |   2 +
+ drivers/soc/qcom/pdr_interface.c    |   6 +-
+ drivers/soc/qcom/pdr_internal.h     | 318 ++---------------
+ drivers/soc/qcom/qcom_pd_mapper.c   | 656 ++++++++++++++++++++++++++++++++++++
+ drivers/soc/qcom/qcom_pdr_msg.c     | 349 +++++++++++++++++++
+ drivers/soc/qcom/qmi_interface.c    |  67 ++++
+ include/linux/soc/qcom/pd_mapper.h  |  28 ++
+ include/linux/soc/qcom/qmi.h        |   2 +
+ 14 files changed, 1189 insertions(+), 302 deletions(-)
+---
+base-commit: a35e92ef04c07bd473404b9b73d489aea19a60a8
+change-id: 20240301-qcom-pd-mapper-e12d622d4ad0
+
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 
