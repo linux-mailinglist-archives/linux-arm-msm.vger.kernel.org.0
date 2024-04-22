@@ -1,86 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-18165-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18166-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5177C8ACB9F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 13:06:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0580D8ACBC1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 13:14:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BAFC91F22B7D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 11:06:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B3F6D286209
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 11:14:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15231482C1;
-	Mon, 22 Apr 2024 11:06:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8A5A146012;
+	Mon, 22 Apr 2024 11:14:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CS1BOocC"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Sqkpgcbg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FDA250A9D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 11:06:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7BF145FEE;
+	Mon, 22 Apr 2024 11:13:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713783982; cv=none; b=FABOTj8XE5FXEdbD7/4IHMc9gFwRGv2+KxCEXq46784DdEbog+9+wPM9ypno66PpAEF0n20DsclBPgxUDvck8vmzAwoLUzQ+cgi7mdJWsYuygHVmXzp+ssN/MuZHULhLu+/AyjQHx/OFdSvW18hHrD4WBzIM050VxLZMqg8mxcI=
+	t=1713784440; cv=none; b=pI2GXDgNjTXQSGJphikB/yJvkMIslMSs/MOzl7bfJYlr6jgEDrRfVktLoLBPXImRdCtpoyltF/B0DUcwODDvmDUsuryGHan0A6csFnUJl/TklLcg/UC6rd1VxkuSFvcgH3BpkC0miiUzIPDg3HXMOoP/DowHpte0KQvML5PtkA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713783982; c=relaxed/simple;
-	bh=93WwzxaWpJZZdbp+arFrvTRu7gbM1Be3T1x8386+l1E=;
+	s=arc-20240116; t=1713784440; c=relaxed/simple;
+	bh=Zdgd6Fj5wUDm/hSh8fpDnEnjpUDlT+CuNtJ1yiPZDh8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s6fjRIK9XDlo0mGv2HyM1Njzo7LKTqUjPKRmyulvqGMOy3Exj4unjEey2tpmqtPcEBlXOxT1wZEnQlQ6UouMgb+ZkgM3jljfa/ff+WWaiHWOqwGliaPqhUyPg3pfpctG5CJx6uq9/PEs9UrIyx4DCEemMLCSH5sOMqghUeWfvIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CS1BOocC; arc=none smtp.client-ip=209.85.167.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-516d4d80d00so5378774e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 04:06:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713783978; x=1714388778; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=YpQrXbEcCU95VEbn1ht9SCgCeWNIV1UG30wM8nT8/HA=;
-        b=CS1BOocCY1kJ4OlSc8WTccXKqxqgc07LQyt0rouzyYqaQ5HjLCBTY0xu5fMD0jW5lo
-         tRTe0I+H86+hXsiwpsl0baG6rj5AnT19VjR6BljIFD91c1Mzeta1gyvbLlPucLge9O2P
-         8rCVrX/QeEkdxlX1BLJ8DRfLr5jtH9Wx+3AjuiqE6JkAK9QPIcHrhnWiBythzEVPC9ch
-         Xst5kQy+lkQ3i8XlRDD+UxaLeSNp2eioLqAXOuooa5X44pqIdGn5x508y6UQeMduQKju
-         GUBSR05TURZNYVCDM2aYomMUJup3/7Kquh8k/xlQr0EnSTOxLJEb4abFULoriV1bCofc
-         qJbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713783978; x=1714388778;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YpQrXbEcCU95VEbn1ht9SCgCeWNIV1UG30wM8nT8/HA=;
-        b=A/Ezo5BH78YC1OhaBIbW/7zmxRwe3c7hXbDEnazoxxk4xSb3sSoeHAZ4X+hc/4gyjf
-         Tk9s8QnWZww1u/JFJKK6F2FRQEpyd3BY7QylSbPsyOHnSkgb3olY/Vgen8Gac9S9sz22
-         ZrDqFMXfSc8Gedmn4SkekfbM/ps5rorw6jHLL1MGRItBNKcGhDBlqQG4TrTjbmzO1gwh
-         ipsCM2iIgtFa+ys7xzqWPcbHLs80VUPEjyQtYWaCOplqzEG/9+r5SgPMN2CT4KeE9pNm
-         wvo0lNP4qQyFIO/7uNUyFLKX7KkQSE9wegieTv1D9BCNH0HZE/MIU8agggLD+B0F/YO2
-         ghWw==
-X-Forwarded-Encrypted: i=1; AJvYcCUZFpwarVzU/d/1z46cf5PYJUwMWsrbRtRPlzdL9/8DQ1bl1l9aixPhi9vwJC6un00w7UOXbNerCBNfJWhdWRbC+a2U7jbt3TwlPY2XaA==
-X-Gm-Message-State: AOJu0Yw2hH5DlFsE1vsuNchFyW1+Da3eapl2yLreai9/VVpZakuoYjbI
-	w/7tEAU0WlGrU6059aRvh9RxgmDlz4XZzFwItsFp3Q7MSvb7kuqxvfZPL4U6ubk=
-X-Google-Smtp-Source: AGHT+IGvMJPnVtav8C7a9RvZzJ6oUxfqmZc0E21ejXxuWH9bYRI8cN0vx9XysiMv+sjyZIgD4/s9rw==
-X-Received: by 2002:ac2:4182:0:b0:518:dae6:d0ec with SMTP id z2-20020ac24182000000b00518dae6d0ecmr5805319lfh.4.1713783978031;
-        Mon, 22 Apr 2024 04:06:18 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::8a5])
-        by smtp.gmail.com with ESMTPSA id z4-20020ac24184000000b0051589cc26afsm1707031lfh.72.2024.04.22.04.06.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Apr 2024 04:06:17 -0700 (PDT)
-Date: Mon, 22 Apr 2024 14:06:16 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Abel Vesa <abel.vesa@linaro.org>, 
-	Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 1/9] drm/msm/dpu: drop dpu_format_check_modified_format
-Message-ID: <wpc7hzr2xol6mz6j4se2a3j7u52fvs6rpikcbpzet7ebz24dbf@g7rlhiz72q46>
-References: <20240319-dpu-mode-config-width-v1-0-d0fe6bf81bf1@linaro.org>
- <20240319-dpu-mode-config-width-v1-1-d0fe6bf81bf1@linaro.org>
- <9c2f5f63-291c-c2b5-41a1-d2004055cf7a@quicinc.com>
- <ccgx5mjsxf2asvadithitzl7shkboj6ipcg6onfawa5pskchgd@etighi5usone>
- <c3021397-5d2e-c331-663f-eb3803cfc0e0@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=R5LWHt4EkpkS0LyoO+bpVxNIFkV2tMksaN3iVrhwFL5rWkLw6WspRiPaEZgYqXGEoTtZXgvC/5uLZSHCIqlKLl7Mpz1KYl0ebDEwuOlHaxTRZjqpbvPRw6iXyd8eODjUPUg6wNgQIK5IqFPGica7ogiiY1MVcHtlS8FyIsxC/3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Sqkpgcbg; arc=none smtp.client-ip=198.175.65.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1713784439; x=1745320439;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Zdgd6Fj5wUDm/hSh8fpDnEnjpUDlT+CuNtJ1yiPZDh8=;
+  b=SqkpgcbgM3rpvAywqse7i02x6QveAKJ0E1JlzLFZxTfSXIVGCfS89sZp
+   M6geA4fjdcTAdhdsfaDJRKFNckLjeLIr1/azKKyim5L+NlhedFYcdXghy
+   JWLKcbIt3EtVaX7P1Q/i1qiy1XKsGem7smwB2bWHlTFBIbVYAc7hmXgzo
+   gtOHtGhRhDt6c5ZA2Ccw9LG8BQ4HfoeUKfySemD8L6mrF1YbCSHhHbMN8
+   O7FsIWVg5ZTpPr3qLl0pdAfDV6YH9op6Kt0FJ/+ZJ8m/g/yYqf1Nk0Q55
+   /AVIsz3AF19+uZ9oKvV8yjp/VnZ9xMbYoMAqrF8ggUBMLw0wFsSuVdFvp
+   w==;
+X-CSE-ConnectionGUID: F4kCHlZaTC+15N7YdWEXNA==
+X-CSE-MsgGUID: s+n5UrveSwG2/vIaR+0zlw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11051"; a="19868743"
+X-IronPort-AV: E=Sophos;i="6.07,220,1708416000"; 
+   d="scan'208";a="19868743"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Apr 2024 04:13:58 -0700
+X-CSE-ConnectionGUID: 59KrG3F5Svasv566kQDXJg==
+X-CSE-MsgGUID: jiOK+9VtQV+MSJDUnNQ9hg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,220,1708416000"; 
+   d="scan'208";a="28649184"
+Received: from kuha.fi.intel.com ([10.237.72.185])
+  by fmviesa004.fm.intel.com with SMTP; 22 Apr 2024 04:13:55 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 22 Apr 2024 14:13:54 +0300
+Date: Mon, 22 Apr 2024 14:13:54 +0300
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH 1/2] usb: typec: qcom-pmic: fix use-after-free on late
+ probe errors
+Message-ID: <ZiZGciWjmA5SfjUD@kuha.fi.intel.com>
+References: <20240418145730.4605-1-johan+linaro@kernel.org>
+ <20240418145730.4605-2-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,173 +82,52 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <c3021397-5d2e-c331-663f-eb3803cfc0e0@quicinc.com>
+In-Reply-To: <20240418145730.4605-2-johan+linaro@kernel.org>
 
-On Fri, Apr 19, 2024 at 07:32:35PM -0700, Abhinav Kumar wrote:
+On Thu, Apr 18, 2024 at 04:57:29PM +0200, Johan Hovold wrote:
+> Make sure to stop and deregister the port in case of late probe errors
+> to avoid use-after-free issues when the underlying memory is released by
+> devres.
 > 
-> 
-> On 4/19/2024 6:26 PM, Dmitry Baryshkov wrote:
-> > On Fri, Apr 19, 2024 at 04:43:20PM -0700, Abhinav Kumar wrote:
-> > > 
-> > > 
-> > > On 3/19/2024 6:21 AM, Dmitry Baryshkov wrote:
-> > > > The msm_kms_funcs::check_modified_format() callback is not used by the
-> > > > driver. Drop it completely.
-> > > > 
-> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > ---
-> > > >    drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c | 45 -----------------------------
-> > > >    drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h | 15 ----------
-> > > >    drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |  1 -
-> > > >    drivers/gpu/drm/msm/msm_kms.h               |  5 ----
-> > > >    4 files changed, 66 deletions(-)
-> > > > 
-> > > 
-> > > I think in this case, I am leaning towards completing the implementation
-> > > rather than dropping it as usual.
-> > > 
-> > > It seems its easier to just add the support to call this like the attached
-> > > patch?
-> > 
-> > Please don't attach patches to the email. It makes it impossible to
-> > respond to them.
-> > 
-> 
-> I attached it because it was too much to paste over here.
-> 
-> Please review msm_framebuffer_init() in the downstream sources.
-> 
-> The only missing piece I can see is the handling of DRM_MODE_FB_MODIFIERS
-> flags.
+> Fixes: a4422ff22142 ("usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
+> Cc: stable@vger.kernel.org	# 6.5
+> Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-I checked and I don't like this approach.
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-With the generic formats database in place, there should be no
-driver-specific code that handles formats. Moreover, I think this should
-be handled by the generic code in framebuffer_check() if msm driver
-implements a proper get_format_info() callback. Please consider sending
-a patch that does it. For now I can only consider the function in
-question to be a dead code which should be dropped.
-
+> ---
+>  drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
 > 
-> I am unable to trace back why this support was not present.
-> 
-> > Anyway, what are we missing with the current codebase? Why wasn't the
-> > callback / function used in the first place?
-> > 
-> > > 
-> > > WDYT?
-> > > 
-> > > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> > > > index e366ab134249..ff0df478c958 100644
-> > > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> > > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> > > > @@ -960,51 +960,6 @@ int dpu_format_populate_layout(
-> > > >    	return ret;
-> > > >    }
-> > > > -int dpu_format_check_modified_format(
-> > > > -		const struct msm_kms *kms,
-> > > > -		const struct msm_format *msm_fmt,
-> > > > -		const struct drm_mode_fb_cmd2 *cmd,
-> > > > -		struct drm_gem_object **bos)
-> > > > -{
-> > > > -	const struct drm_format_info *info;
-> > > > -	const struct dpu_format *fmt;
-> > > > -	struct dpu_hw_fmt_layout layout;
-> > > > -	uint32_t bos_total_size = 0;
-> > > > -	int ret, i;
-> > > > -
-> > > > -	if (!msm_fmt || !cmd || !bos) {
-> > > > -		DRM_ERROR("invalid arguments\n");
-> > > > -		return -EINVAL;
-> > > > -	}
-> > > > -
-> > > > -	fmt = to_dpu_format(msm_fmt);
-> > > > -	info = drm_format_info(fmt->base.pixel_format);
-> > > > -	if (!info)
-> > > > -		return -EINVAL;
-> > > > -
-> > > > -	ret = dpu_format_get_plane_sizes(fmt, cmd->width, cmd->height,
-> > > > -			&layout, cmd->pitches);
-> > > > -	if (ret)
-> > > > -		return ret;
-> > > > -
-> > > > -	for (i = 0; i < info->num_planes; i++) {
-> > > > -		if (!bos[i]) {
-> > > > -			DRM_ERROR("invalid handle for plane %d\n", i);
-> > > > -			return -EINVAL;
-> > > > -		}
-> > > > -		if ((i == 0) || (bos[i] != bos[0]))
-> > > > -			bos_total_size += bos[i]->size;
-> > > > -	}
-> > > > -
-> > > > -	if (bos_total_size < layout.total_size) {
-> > > > -		DRM_ERROR("buffers total size too small %u expected %u\n",
-> > > > -				bos_total_size, layout.total_size);
-> > > > -		return -EINVAL;
-> > > > -	}
-> > > > -
-> > > > -	return 0;
-> > > > -}
-> > > > -
-> > > >    const struct dpu_format *dpu_get_dpu_format_ext(
-> > > >    		const uint32_t format,
-> > > >    		const uint64_t modifier)
-> > > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h
-> > > > index 84b8b3289f18..9442445f1a86 100644
-> > > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h
-> > > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h
-> > > > @@ -54,21 +54,6 @@ const struct msm_format *dpu_get_msm_format(
-> > > >    		const uint32_t format,
-> > > >    		const uint64_t modifiers);
-> > > > -/**
-> > > > - * dpu_format_check_modified_format - validate format and buffers for
-> > > > - *                   dpu non-standard, i.e. modified format
-> > > > - * @kms:             kms driver
-> > > > - * @msm_fmt:         pointer to the msm_fmt base pointer of an dpu_format
-> > > > - * @cmd:             fb_cmd2 structure user request
-> > > > - * @bos:             gem buffer object list
-> > > > - *
-> > > > - * Return: error code on failure, 0 on success
-> > > > - */
-> > > > -int dpu_format_check_modified_format(
-> > > > -		const struct msm_kms *kms,
-> > > > -		const struct msm_format *msm_fmt,
-> > > > -		const struct drm_mode_fb_cmd2 *cmd,
-> > > > -		struct drm_gem_object **bos);
-> > > >    /**
-> > > >     * dpu_format_populate_layout - populate the given format layout based on
-> > > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> > > > index a1f5d7c4ab91..7257ac4020d8 100644
-> > > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> > > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> > > > @@ -969,7 +969,6 @@ static const struct msm_kms_funcs kms_funcs = {
-> > > >    	.complete_commit = dpu_kms_complete_commit,
-> > > >    	.enable_vblank   = dpu_kms_enable_vblank,
-> > > >    	.disable_vblank  = dpu_kms_disable_vblank,
-> > > > -	.check_modified_format = dpu_format_check_modified_format,
-> > > >    	.get_format      = dpu_get_msm_format,
-> > > >    	.destroy         = dpu_kms_destroy,
-> > > >    	.snapshot        = dpu_kms_mdp_snapshot,
-> > > > diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
-> > > > index 0641f6111b93..b794ed918b56 100644
-> > > > --- a/drivers/gpu/drm/msm/msm_kms.h
-> > > > +++ b/drivers/gpu/drm/msm/msm_kms.h
-> > > > @@ -96,11 +96,6 @@ struct msm_kms_funcs {
-> > > >    	const struct msm_format *(*get_format)(struct msm_kms *kms,
-> > > >    					const uint32_t format,
-> > > >    					const uint64_t modifiers);
-> > > > -	/* do format checking on format modified through fb_cmd2 modifiers */
-> > > > -	int (*check_modified_format)(const struct msm_kms *kms,
-> > > > -			const struct msm_format *msm_fmt,
-> > > > -			const struct drm_mode_fb_cmd2 *cmd,
-> > > > -			struct drm_gem_object **bos);
-> > > >    	/* misc: */
-> > > >    	long (*round_pixclk)(struct msm_kms *kms, unsigned long rate,
-> > > > 
-> > 
+> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+> index e48412cdcb0f..d3958c061a97 100644
+> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+> @@ -104,14 +104,18 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
+>  
+>  	ret = tcpm->port_start(tcpm, tcpm->tcpm_port);
+>  	if (ret)
+> -		goto fwnode_remove;
+> +		goto port_unregister;
+>  
+>  	ret = tcpm->pdphy_start(tcpm, tcpm->tcpm_port);
+>  	if (ret)
+> -		goto fwnode_remove;
+> +		goto port_stop;
+>  
+>  	return 0;
+>  
+> +port_stop:
+> +	tcpm->port_stop(tcpm);
+> +port_unregister:
+> +	tcpm_unregister_port(tcpm->tcpm_port);
+>  fwnode_remove:
+>  	fwnode_remove_software_node(tcpm->tcpc.fwnode);
+>  
+> -- 
+> 2.43.2
 
 -- 
-With best wishes
-Dmitry
+heikki
 
