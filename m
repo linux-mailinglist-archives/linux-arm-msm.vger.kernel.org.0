@@ -1,185 +1,626 @@
-Return-Path: <linux-arm-msm+bounces-18170-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18171-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 001368ACC71
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 14:06:23 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 982BD8ACC87
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 14:10:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 431112858AC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 12:06:22 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8F256B24194
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 12:10:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B43C146D57;
-	Mon, 22 Apr 2024 12:06:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19D0F145342;
+	Mon, 22 Apr 2024 12:10:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Po5YNxFO"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kGm8TTH2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FAB1465A6;
-	Mon, 22 Apr 2024 12:06:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E962524A0
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 12:10:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713787580; cv=none; b=omKz4XGAnPXC79JH9EoDeUFaozHQ6KVR//YLXsq/fZGtTl2clt2Rnfhu3Gac1JqQulmyw1/JVPuc5qaTj81PrzFAiUeByZedS78xqs7x6DXcxWzpBEBl65T3uG1RdEuFC0nq26Lc55IFUUZwyalO2m7+YT/gW54/jxDkKHfuJI4=
+	t=1713787832; cv=none; b=OHCwr9QE06Idll8SUbPgPQGl5wWTdF18NyqaLdIQ2P3Uwu87B6HAn0rFq06adakaoI/ikhTeccjMWt/8qHWuAlH6cGXq3buhNNDBD+sSRuXBD//hA2BojYYv6pdGGQPmnbaBe4lpZFv6tMZPN9DJc7BAVPIsDVostDlrzZEk1Tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713787580; c=relaxed/simple;
-	bh=c+ec/JzT6ZChnI8VNR+kjXpMJ5qQ8sRKNMGsYEOD6ps=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=BCLmtG6d69Nsd6Ltjnk4E3jVsdcz5ZId/puOYrBbVXb/c3PMmvh3oUvt5e+it0SoSDfFIjroFZ/L64SkAFtUqBJ+pCmJmWCdrjXJ1hVioLVpob2RJgUdp/nO11Uzd2KBjICmJ1ka2MUAM4pHET+TT8u3qUqy34cj5DP4ggvCMxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Po5YNxFO; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43M9OoWK026512;
-	Mon, 22 Apr 2024 12:06:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=c+ec/JzT6ZChnI8VNR+kjXpMJ5qQ8sRKNMGsYEOD6ps=; b=Po
-	5YNxFOwSo/3k54iwijC0BRwiz5CeukeGjKGQh2WPyCwUeDfzIOQ8BAZN4QwT1Gy7
-	x1BGj1gRpZJ6c7D06BVBNqziqc9qk2LtU7REOzc/5qA/oMjAaIL4AHWgYewVydrv
-	YuMV8p7wsvnsAzGlUVKvYy4f84HllT6Tb/UKDy/imIHI0qM33GlnHu+X7d7AckJ1
-	pn0QcRXwkgjckDEiXcSc07m4gP0xGgq8+VnEyq5S6vCKWLtmR0zOdKQKxopBc87f
-	nN/KTjZAqoJ4NCDA5AS/SGyNz8TKUcA67bwxpcHgBl5pxtae+oQ0DUehpvzGMp65
-	nWMu/9b+ygmkZODSEvBQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xnn82gdt5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Apr 2024 12:06:11 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43MC6AuM024085
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Apr 2024 12:06:10 GMT
-Received: from [10.253.39.160] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 22 Apr
- 2024 05:06:08 -0700
-Message-ID: <d9908e10-66d6-4737-b366-80cbc9df1801@quicinc.com>
-Date: Mon, 22 Apr 2024 20:06:06 +0800
+	s=arc-20240116; t=1713787832; c=relaxed/simple;
+	bh=EF6pkn9UoDy2Qvqx3xYJi0vD2nMGtY5F4i8Ku6Jw7Jw=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=JaWNQ01xMgUBqJ+pY14HZJt0farejyMkQ36iI6EInV4l2RzdQ2PLaVAXKCs25di3fLxZuU5wlveK83T/xvqn/RauDBtkkgabb9JtJXScK3UJa1JwtZVjg8kow6a3Wspn2mlqIxrL2sg7FMtiFAA2q+r6xA0x69QaVo3rK1qPLXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kGm8TTH2; arc=none smtp.client-ip=198.175.65.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1713787829; x=1745323829;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=EF6pkn9UoDy2Qvqx3xYJi0vD2nMGtY5F4i8Ku6Jw7Jw=;
+  b=kGm8TTH2p57B6W9BhVjtg26XKYxVy45OWu6P0xu0NgtI9nJs1uhUGUBj
+   rXENKnA0lugG4bIP34ebuWRkF/4Wvn+qp3CJheJzAtz5a+k/iXxBNDezW
+   T6i1rEjiPdxu0Qh6+oIn5zgH1WvBghNOQLAezDIYGEud0TOzx0IwPPjO4
+   FBdxqQIpj2B/ZNQFPeedLZ1HAVoB95JtP/kG+Q8xKi1YJf8USe5uh0yVr
+   e/JqxgRFkruAieHTNpK8Uun2GGOu28XiWoQG7QrvHRxBiQKUwmKKiv3AV
+   2BFPgwTDPAHgo2AB+SVdVJtJLLDo6w9USoDh/hevE7fRrUprGC82YniBG
+   g==;
+X-CSE-ConnectionGUID: y4Td25MmTwmlOOn8A16G3A==
+X-CSE-MsgGUID: yNQvaNXNTDKYIpY5ufyRuQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11051"; a="26771544"
+X-IronPort-AV: E=Sophos;i="6.07,220,1708416000"; 
+   d="scan'208";a="26771544"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Apr 2024 05:10:28 -0700
+X-CSE-ConnectionGUID: 0yux8pNgQFmWb7nP4GDMPg==
+X-CSE-MsgGUID: OgC+Yrd0QJikgwBIRVJQaQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,220,1708416000"; 
+   d="scan'208";a="24035074"
+Received: from ralbanes-mobl.ger.corp.intel.com (HELO localhost) ([10.252.63.128])
+  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Apr 2024 05:10:16 -0700
+From: Jani Nikula <jani.nikula@intel.com>
+To: dri-devel@lists.freedesktop.org
+Cc: jani.nikula@intel.com,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
+	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
+	Oded Gabbay <ogabbay@kernel.org>,
+	Russell King <linux@armlinux.org.uk>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Robert Foss <rfoss@kernel.org>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Frank Binns <frank.binns@imgtec.com>,
+	Matt Coster <matt.coster@imgtec.com>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Karol Herbst <kherbst@redhat.com>,
+	Lyude Paul <lyude@redhat.com>,
+	Danilo Krummrich <dakr@redhat.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	"Pan, Xinhui" <Xinhui.Pan@amd.com>,
+	Alain Volmat <alain.volmat@foss.st.com>,
+	Huang Rui <ray.huang@amd.com>,
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	intel-gfx@lists.freedesktop.org,
+	intel-xe@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	nouveau@lists.freedesktop.org,
+	amd-gfx@lists.freedesktop.org
+Subject: [PATCH 1/2] drm/print: drop include debugfs.h and include where needed
+Date: Mon, 22 Apr 2024 15:10:10 +0300
+Message-Id: <20240422121011.4133236-1-jani.nikula@intel.com>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] bus: mhi: host: pci_generic: Add edl callback to
- enter EDL
-To: Manivannan Sadhasivam <mani@kernel.org>
-CC: Mayank Rana <quic_mrana@quicinc.com>, <quic_jhugo@quicinc.com>,
-        <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>
-References: <1713170945-44640-1-git-send-email-quic_qianyu@quicinc.com>
- <1713170945-44640-4-git-send-email-quic_qianyu@quicinc.com>
- <17d94b91-137c-409c-8af3-f32f1af2eb71@quicinc.com>
- <4b684db2-d384-404a-9c54-60d79ac7cf9f@quicinc.com>
- <adb9ab3d-0fd2-4afe-96d7-573b1822e0c3@quicinc.com>
- <ab27b383-dcbf-4337-b3ea-da91763e834a@quicinc.com>
- <a5ea5263-8acb-48dd-a4e1-bc48a9bdf791@quicinc.com>
- <20240422080837.GC9775@thinkpad>
-Content-Language: en-US
-From: Qiang Yu <quic_qianyu@quicinc.com>
-In-Reply-To: <20240422080837.GC9775@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=UTF-8
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: GTsngNAd7myf_oDO4773FwzjWvB_ZHt3
-X-Proofpoint-ORIG-GUID: GTsngNAd7myf_oDO4773FwzjWvB_ZHt3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-22_09,2024-04-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=999 priorityscore=1501 clxscore=1015 suspectscore=0
- lowpriorityscore=0 bulkscore=0 adultscore=0 spamscore=0 phishscore=0
- mlxscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404220054
 
+Surprisingly many places depend on debugfs.h to be included via
+drm_print.h. Fix them.
 
-On 4/22/2024 4:08 PM, Manivannan Sadhasivam wrote:
-> On Wed, Apr 17, 2024 at 12:41:25PM +0800, Qiang Yu wrote:
->
-> [...]
->
->>>>>>> +    ret = mhi_get_channel_doorbell(mhi_cntrl, &val);
->>>>>>> +    if (ret)
->>>>>>> +        return ret;
->>>>>> Don't we need error handling part here i.e. calling
->>>>>> mhi_cntrl->runtime_put() as well mhi_device_put() ?
->>>>> Hi Mayank
->>>>>
->>>>> After soc_reset, device will reboot to EDL mode and MHI state
->>>>> will be SYSERR. So host will fail to suspend
->>>>> anyway. The "error handling" we need here is actually to enter
->>>>> EDL mode, this will be done by SYSERR irq.
->>>>> Here, mhi_cntrl->runtime_put() and mhi_device_put() are only to
->>>>> balance mhi_cntrl->runtime_get() and
->>>>> mhi_device_get_sync().
->>>>>
->>>>> Thanks,
->>>>> Qiang
->>>> I am saying is there possibility that mhi_get_channel_doorbell()
->>>> returns error ?
->>>> If yes, then why don't we need error handling as part of it. you are
->>>> exiting if this API return error without doing anything.
->>> I think here mhi_get_channel_doorbell will not return error. But I still
->>> add a error checking because it invoked mhi_read_reg, which is a must
->>> check
->>> API. For modem mhi controller, this API eventually does a memory read.
->>> This memory read will return a normal value if link is up and all f's if
->>> link
->>> is bad.
->>>
->>> Thanks,
->>> Qiang
->> Actually, mhi_get_channel_doorbell should also be used in mhi_init_mmio to
->> replace the getting chdb operation by invoking mhi_read_reg as Mani
->> commented.
->> In mhi_init_mmio, we invoke mhi_read_reg many times, but there is also not
->> additionnal error handling.
->>
->> I'm not very sure the reason but perhaps if mhi_read_reg returns error (I
->> don't
->> know which controller will provide a memory read callback returning errors),
-> Take a look at AIC100 driver: drivers/accel/qaic/mhi_controller.c
->
->> most
->> probably something is wrong in PCIe, which is not predictable by MHI and we
->> can
->> not add err handling every time invoking mhi_read_reg. But we have a timer
->> to
->> do health_check in pci_generic.c. If link is down, we will do
->> pci_function_reset
->> to try to reovery.
->>
-> Right, but the MHI stack is designed to be bus agnostic. So if we happen to use
-> it with other busses like USB, I2C etc... then read APIs may fail.
->
-> Even with PCIe, read transaction may return all 1 response and MHI needs to
-> treat it as an error condition. But sadly, both pci_generic and ath controllers
-> are not checking for invalid read value. But those need to be fixed.
->
-> Regarding Mayank's query, you should do error cleanups if
-> mhi_get_channel_doorbell() API fails.
->
-> - Mani
-Hi Mani, Mayank
+v3: Also fix armada, ite-it6505, imagination, msm, sti, vc4, and xe
 
-Checked drivers/accel/qaic/mhi_controller.c, the mhi_read_reg
-callback of AIC100 does return -EIO if it reads out all'f.
+v2: Also fix ivpu and vmwgfx
 
-Considering that pci_generic controller also needs to check for
-invalid read value which is not fixed though. It's better to invoke
-mhi_cntrl->runtime_put() and mhi_device_put() as error cleanups if
-mhi_get_channel_doorbell returns error here.
+Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240410141434.157908-1-jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 
-Let me address all your comments and prepare next version patch.
+---
 
-Thanks,
-Qiang
->
+Cc: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Cc: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Cc: Oded Gabbay <ogabbay@kernel.org>
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Robert Foss <rfoss@kernel.org>
+Cc: Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
+Cc: Jonas Karlman <jonas@kwiboo.se>
+Cc: Jernej Skrabec <jernej.skrabec@gmail.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: Tvrtko Ursulin <tursulin@ursulin.net>
+Cc: Frank Binns <frank.binns@imgtec.com>
+Cc: Matt Coster <matt.coster@imgtec.com>
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Sean Paul <sean@poorly.run>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>
+Cc: Karol Herbst <kherbst@redhat.com>
+Cc: Lyude Paul <lyude@redhat.com>
+Cc: Danilo Krummrich <dakr@redhat.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: "Christian König" <christian.koenig@amd.com>
+Cc: "Pan, Xinhui" <Xinhui.Pan@amd.com>
+Cc: Alain Volmat <alain.volmat@foss.st.com>
+Cc: Huang Rui <ray.huang@amd.com>
+Cc: Zack Rusin <zack.rusin@broadcom.com>
+Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
+Cc: Lucas De Marchi <lucas.demarchi@intel.com>
+Cc: "Thomas Hellström" <thomas.hellstrom@linux.intel.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: intel-gfx@lists.freedesktop.org
+Cc: intel-xe@lists.freedesktop.org
+Cc: linux-arm-msm@vger.kernel.org
+Cc: freedreno@lists.freedesktop.org
+Cc: nouveau@lists.freedesktop.org
+Cc: amd-gfx@lists.freedesktop.org
+---
+ drivers/accel/ivpu/ivpu_debugfs.c           | 2 ++
+ drivers/gpu/drm/armada/armada_debugfs.c     | 1 +
+ drivers/gpu/drm/bridge/ite-it6505.c         | 1 +
+ drivers/gpu/drm/bridge/panel.c              | 2 ++
+ drivers/gpu/drm/drm_print.c                 | 6 +++---
+ drivers/gpu/drm/i915/display/intel_dmc.c    | 1 +
+ drivers/gpu/drm/imagination/pvr_fw_trace.c  | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 2 ++
+ drivers/gpu/drm/nouveau/dispnv50/crc.c      | 2 ++
+ drivers/gpu/drm/radeon/r100.c               | 1 +
+ drivers/gpu/drm/radeon/r300.c               | 1 +
+ drivers/gpu/drm/radeon/r420.c               | 1 +
+ drivers/gpu/drm/radeon/r600.c               | 3 ++-
+ drivers/gpu/drm/radeon/radeon_fence.c       | 1 +
+ drivers/gpu/drm/radeon/radeon_gem.c         | 1 +
+ drivers/gpu/drm/radeon/radeon_ib.c          | 2 ++
+ drivers/gpu/drm/radeon/radeon_pm.c          | 1 +
+ drivers/gpu/drm/radeon/radeon_ring.c        | 2 ++
+ drivers/gpu/drm/radeon/radeon_ttm.c         | 1 +
+ drivers/gpu/drm/radeon/rs400.c              | 1 +
+ drivers/gpu/drm/radeon/rv515.c              | 1 +
+ drivers/gpu/drm/sti/sti_drv.c               | 1 +
+ drivers/gpu/drm/ttm/ttm_device.c            | 1 +
+ drivers/gpu/drm/ttm/ttm_resource.c          | 3 ++-
+ drivers/gpu/drm/ttm/ttm_tt.c                | 5 +++--
+ drivers/gpu/drm/vc4/vc4_drv.h               | 1 +
+ drivers/gpu/drm/vmwgfx/vmwgfx_gem.c         | 2 ++
+ drivers/gpu/drm/xe/xe_debugfs.c             | 1 +
+ drivers/gpu/drm/xe/xe_gt_debugfs.c          | 2 ++
+ drivers/gpu/drm/xe/xe_uc_debugfs.c          | 2 ++
+ include/drm/drm_print.h                     | 2 +-
+ 31 files changed, 46 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/accel/ivpu/ivpu_debugfs.c b/drivers/accel/ivpu/ivpu_debugfs.c
+index d09d29775b3f..e07e447d08d1 100644
+--- a/drivers/accel/ivpu/ivpu_debugfs.c
++++ b/drivers/accel/ivpu/ivpu_debugfs.c
+@@ -3,6 +3,8 @@
+  * Copyright (C) 2020-2023 Intel Corporation
+  */
+ 
++#include <linux/debugfs.h>
++
+ #include <drm/drm_debugfs.h>
+ #include <drm/drm_file.h>
+ #include <drm/drm_print.h>
+diff --git a/drivers/gpu/drm/armada/armada_debugfs.c b/drivers/gpu/drm/armada/armada_debugfs.c
+index 29f4b52e3c8d..a763349dd89f 100644
+--- a/drivers/gpu/drm/armada/armada_debugfs.c
++++ b/drivers/gpu/drm/armada/armada_debugfs.c
+@@ -5,6 +5,7 @@
+  */
+ 
+ #include <linux/ctype.h>
++#include <linux/debugfs.h>
+ #include <linux/module.h>
+ #include <linux/seq_file.h>
+ #include <linux/uaccess.h>
+diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/bridge/ite-it6505.c
+index 27334173e911..3f68c82888c2 100644
+--- a/drivers/gpu/drm/bridge/ite-it6505.c
++++ b/drivers/gpu/drm/bridge/ite-it6505.c
+@@ -3,6 +3,7 @@
+  * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+  */
+ #include <linux/bits.h>
++#include <linux/debugfs.h>
+ #include <linux/delay.h>
+ #include <linux/device.h>
+ #include <linux/err.h>
+diff --git a/drivers/gpu/drm/bridge/panel.c b/drivers/gpu/drm/bridge/panel.c
+index 7f41525f7a6e..32506524d9a2 100644
+--- a/drivers/gpu/drm/bridge/panel.c
++++ b/drivers/gpu/drm/bridge/panel.c
+@@ -4,6 +4,8 @@
+  * Copyright (C) 2017 Broadcom
+  */
+ 
++#include <linux/debugfs.h>
++
+ #include <drm/drm_atomic_helper.h>
+ #include <drm/drm_bridge.h>
+ #include <drm/drm_connector.h>
+diff --git a/drivers/gpu/drm/drm_print.c b/drivers/gpu/drm/drm_print.c
+index 699b7dbffd7b..cf2efb44722c 100644
+--- a/drivers/gpu/drm/drm_print.c
++++ b/drivers/gpu/drm/drm_print.c
+@@ -23,13 +23,13 @@
+  * Rob Clark <robdclark@gmail.com>
+  */
+ 
+-#include <linux/stdarg.h>
+-
++#include <linux/debugfs.h>
++#include <linux/dynamic_debug.h>
+ #include <linux/io.h>
+ #include <linux/moduleparam.h>
+ #include <linux/seq_file.h>
+ #include <linux/slab.h>
+-#include <linux/dynamic_debug.h>
++#include <linux/stdarg.h>
+ 
+ #include <drm/drm.h>
+ #include <drm/drm_drv.h>
+diff --git a/drivers/gpu/drm/i915/display/intel_dmc.c b/drivers/gpu/drm/i915/display/intel_dmc.c
+index 3697a02b51b6..09346afd1f0e 100644
+--- a/drivers/gpu/drm/i915/display/intel_dmc.c
++++ b/drivers/gpu/drm/i915/display/intel_dmc.c
+@@ -22,6 +22,7 @@
+  *
+  */
+ 
++#include <linux/debugfs.h>
+ #include <linux/firmware.h>
+ 
+ #include "i915_drv.h"
+diff --git a/drivers/gpu/drm/imagination/pvr_fw_trace.c b/drivers/gpu/drm/imagination/pvr_fw_trace.c
+index 31199e45b72e..73707daa4e52 100644
+--- a/drivers/gpu/drm/imagination/pvr_fw_trace.c
++++ b/drivers/gpu/drm/imagination/pvr_fw_trace.c
+@@ -12,6 +12,7 @@
+ 
+ #include <linux/build_bug.h>
+ #include <linux/dcache.h>
++#include <linux/debugfs.h>
+ #include <linux/sysfs.h>
+ #include <linux/types.h>
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+index 0bf8a83e8df3..8586f2761782 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+@@ -2,6 +2,8 @@
+ /* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
+  */
+ 
++#include <linux/debugfs.h>
++
+ #include "dpu_hwio.h"
+ #include "dpu_hw_catalog.h"
+ #include "dpu_hw_lm.h"
+diff --git a/drivers/gpu/drm/nouveau/dispnv50/crc.c b/drivers/gpu/drm/nouveau/dispnv50/crc.c
+index 9c942fbd836d..5936b6b3b15d 100644
+--- a/drivers/gpu/drm/nouveau/dispnv50/crc.c
++++ b/drivers/gpu/drm/nouveau/dispnv50/crc.c
+@@ -1,5 +1,7 @@
+ // SPDX-License-Identifier: MIT
++#include <linux/debugfs.h>
+ #include <linux/string.h>
++
+ #include <drm/drm_crtc.h>
+ #include <drm/drm_atomic_helper.h>
+ #include <drm/drm_vblank.h>
+diff --git a/drivers/gpu/drm/radeon/r100.c b/drivers/gpu/drm/radeon/r100.c
+index 86b8b770af19..0b1e19345f43 100644
+--- a/drivers/gpu/drm/radeon/r100.c
++++ b/drivers/gpu/drm/radeon/r100.c
+@@ -26,6 +26,7 @@
+  *          Jerome Glisse
+  */
+ 
++#include <linux/debugfs.h>
+ #include <linux/firmware.h>
+ #include <linux/module.h>
+ #include <linux/pci.h>
+diff --git a/drivers/gpu/drm/radeon/r300.c b/drivers/gpu/drm/radeon/r300.c
+index 25201b9a5aae..1620f534f55f 100644
+--- a/drivers/gpu/drm/radeon/r300.c
++++ b/drivers/gpu/drm/radeon/r300.c
+@@ -26,6 +26,7 @@
+  *          Jerome Glisse
+  */
+ 
++#include <linux/debugfs.h>
+ #include <linux/pci.h>
+ #include <linux/seq_file.h>
+ #include <linux/slab.h>
+diff --git a/drivers/gpu/drm/radeon/r420.c b/drivers/gpu/drm/radeon/r420.c
+index eae8a6389f5e..a979662eaa73 100644
+--- a/drivers/gpu/drm/radeon/r420.c
++++ b/drivers/gpu/drm/radeon/r420.c
+@@ -26,6 +26,7 @@
+  *          Jerome Glisse
+  */
+ 
++#include <linux/debugfs.h>
+ #include <linux/pci.h>
+ #include <linux/seq_file.h>
+ #include <linux/slab.h>
+diff --git a/drivers/gpu/drm/radeon/r600.c b/drivers/gpu/drm/radeon/r600.c
+index b5e97d95a19f..087d41e370fd 100644
+--- a/drivers/gpu/drm/radeon/r600.c
++++ b/drivers/gpu/drm/radeon/r600.c
+@@ -26,11 +26,12 @@
+  *          Jerome Glisse
+  */
+ 
++#include <linux/debugfs.h>
+ #include <linux/firmware.h>
+ #include <linux/module.h>
+ #include <linux/pci.h>
+-#include <linux/slab.h>
+ #include <linux/seq_file.h>
++#include <linux/slab.h>
+ 
+ #include <drm/drm_device.h>
+ #include <drm/drm_vblank.h>
+diff --git a/drivers/gpu/drm/radeon/radeon_fence.c b/drivers/gpu/drm/radeon/radeon_fence.c
+index 9ebe4a0b9a6c..4fb780d96f32 100644
+--- a/drivers/gpu/drm/radeon/radeon_fence.c
++++ b/drivers/gpu/drm/radeon/radeon_fence.c
+@@ -30,6 +30,7 @@
+  */
+ 
+ #include <linux/atomic.h>
++#include <linux/debugfs.h>
+ #include <linux/firmware.h>
+ #include <linux/kref.h>
+ #include <linux/sched/signal.h>
+diff --git a/drivers/gpu/drm/radeon/radeon_gem.c b/drivers/gpu/drm/radeon/radeon_gem.c
+index 3fec3acdaf28..2ef201a072f1 100644
+--- a/drivers/gpu/drm/radeon/radeon_gem.c
++++ b/drivers/gpu/drm/radeon/radeon_gem.c
+@@ -26,6 +26,7 @@
+  *          Jerome Glisse
+  */
+ 
++#include <linux/debugfs.h>
+ #include <linux/iosys-map.h>
+ #include <linux/pci.h>
+ 
+diff --git a/drivers/gpu/drm/radeon/radeon_ib.c b/drivers/gpu/drm/radeon/radeon_ib.c
+index fb9ecf5dbe2b..63d914f3414d 100644
+--- a/drivers/gpu/drm/radeon/radeon_ib.c
++++ b/drivers/gpu/drm/radeon/radeon_ib.c
+@@ -27,6 +27,8 @@
+  *          Christian König
+  */
+ 
++#include <linux/debugfs.h>
++
+ #include <drm/drm_file.h>
+ 
+ #include "radeon.h"
+diff --git a/drivers/gpu/drm/radeon/radeon_pm.c b/drivers/gpu/drm/radeon/radeon_pm.c
+index 4482c8c5f5ce..2d9d9f46f243 100644
+--- a/drivers/gpu/drm/radeon/radeon_pm.c
++++ b/drivers/gpu/drm/radeon/radeon_pm.c
+@@ -21,6 +21,7 @@
+  *          Alex Deucher <alexdeucher@gmail.com>
+  */
+ 
++#include <linux/debugfs.h>
+ #include <linux/hwmon-sysfs.h>
+ #include <linux/hwmon.h>
+ #include <linux/pci.h>
+diff --git a/drivers/gpu/drm/radeon/radeon_ring.c b/drivers/gpu/drm/radeon/radeon_ring.c
+index 38048593bb4a..8d1d458286a8 100644
+--- a/drivers/gpu/drm/radeon/radeon_ring.c
++++ b/drivers/gpu/drm/radeon/radeon_ring.c
+@@ -27,6 +27,8 @@
+  *          Christian König
+  */
+ 
++#include <linux/debugfs.h>
++
+ #include <drm/drm_device.h>
+ #include <drm/drm_file.h>
+ 
+diff --git a/drivers/gpu/drm/radeon/radeon_ttm.c b/drivers/gpu/drm/radeon/radeon_ttm.c
+index 2078b0000e22..5c65b6dfb99a 100644
+--- a/drivers/gpu/drm/radeon/radeon_ttm.c
++++ b/drivers/gpu/drm/radeon/radeon_ttm.c
+@@ -30,6 +30,7 @@
+  *    Dave Airlie
+  */
+ 
++#include <linux/debugfs.h>
+ #include <linux/dma-mapping.h>
+ #include <linux/pagemap.h>
+ #include <linux/pci.h>
+diff --git a/drivers/gpu/drm/radeon/rs400.c b/drivers/gpu/drm/radeon/rs400.c
+index d7f552d441ab..d4d1501e6576 100644
+--- a/drivers/gpu/drm/radeon/rs400.c
++++ b/drivers/gpu/drm/radeon/rs400.c
+@@ -26,6 +26,7 @@
+  *          Jerome Glisse
+  */
+ 
++#include <linux/debugfs.h>
+ #include <linux/seq_file.h>
+ #include <linux/slab.h>
+ 
+diff --git a/drivers/gpu/drm/radeon/rv515.c b/drivers/gpu/drm/radeon/rv515.c
+index 79709d26d983..bbc6ccabf788 100644
+--- a/drivers/gpu/drm/radeon/rv515.c
++++ b/drivers/gpu/drm/radeon/rv515.c
+@@ -26,6 +26,7 @@
+  *          Jerome Glisse
+  */
+ 
++#include <linux/debugfs.h>
+ #include <linux/seq_file.h>
+ #include <linux/slab.h>
+ 
+diff --git a/drivers/gpu/drm/sti/sti_drv.c b/drivers/gpu/drm/sti/sti_drv.c
+index 4bab93c4fefd..1799c12babf5 100644
+--- a/drivers/gpu/drm/sti/sti_drv.c
++++ b/drivers/gpu/drm/sti/sti_drv.c
+@@ -5,6 +5,7 @@
+  */
+ 
+ #include <linux/component.h>
++#include <linux/debugfs.h>
+ #include <linux/dma-mapping.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+diff --git a/drivers/gpu/drm/ttm/ttm_device.c b/drivers/gpu/drm/ttm/ttm_device.c
+index 76027960054f..434cf0258000 100644
+--- a/drivers/gpu/drm/ttm/ttm_device.c
++++ b/drivers/gpu/drm/ttm/ttm_device.c
+@@ -27,6 +27,7 @@
+ 
+ #define pr_fmt(fmt) "[TTM DEVICE] " fmt
+ 
++#include <linux/debugfs.h>
+ #include <linux/mm.h>
+ 
+ #include <drm/ttm/ttm_bo.h>
+diff --git a/drivers/gpu/drm/ttm/ttm_resource.c b/drivers/gpu/drm/ttm/ttm_resource.c
+index be8d286513f9..4a66b851b67d 100644
+--- a/drivers/gpu/drm/ttm/ttm_resource.c
++++ b/drivers/gpu/drm/ttm/ttm_resource.c
+@@ -22,8 +22,9 @@
+  * Authors: Christian König
+  */
+ 
+-#include <linux/iosys-map.h>
++#include <linux/debugfs.h>
+ #include <linux/io-mapping.h>
++#include <linux/iosys-map.h>
+ #include <linux/scatterlist.h>
+ 
+ #include <drm/ttm/ttm_bo.h>
+diff --git a/drivers/gpu/drm/ttm/ttm_tt.c b/drivers/gpu/drm/ttm/ttm_tt.c
+index 578a7c37f00b..474fe7aad2a0 100644
+--- a/drivers/gpu/drm/ttm/ttm_tt.c
++++ b/drivers/gpu/drm/ttm/ttm_tt.c
+@@ -32,10 +32,11 @@
+ #define pr_fmt(fmt) "[TTM] " fmt
+ 
+ #include <linux/cc_platform.h>
+-#include <linux/sched.h>
+-#include <linux/shmem_fs.h>
++#include <linux/debugfs.h>
+ #include <linux/file.h>
+ #include <linux/module.h>
++#include <linux/sched.h>
++#include <linux/shmem_fs.h>
+ #include <drm/drm_cache.h>
+ #include <drm/drm_device.h>
+ #include <drm/drm_util.h>
+diff --git a/drivers/gpu/drm/vc4/vc4_drv.h b/drivers/gpu/drm/vc4/vc4_drv.h
+index ab61e96e7e14..08e29fa82563 100644
+--- a/drivers/gpu/drm/vc4/vc4_drv.h
++++ b/drivers/gpu/drm/vc4/vc4_drv.h
+@@ -5,6 +5,7 @@
+ #ifndef _VC4_DRV_H_
+ #define _VC4_DRV_H_
+ 
++#include <linux/debugfs.h>
+ #include <linux/delay.h>
+ #include <linux/of.h>
+ #include <linux/refcount.h>
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_gem.c b/drivers/gpu/drm/vmwgfx/vmwgfx_gem.c
+index 2132a8ad8c0c..07185c108218 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_gem.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_gem.c
+@@ -30,6 +30,8 @@
+ #include "drm/drm_prime.h"
+ #include "drm/drm_gem_ttm_helper.h"
+ 
++#include <linux/debugfs.h>
++
+ static void vmw_gem_object_free(struct drm_gem_object *gobj)
+ {
+ 	struct ttm_buffer_object *bo = drm_gem_ttm_of_gem(gobj);
+diff --git a/drivers/gpu/drm/xe/xe_debugfs.c b/drivers/gpu/drm/xe/xe_debugfs.c
+index c9b30dbdc14d..0b7aebaae843 100644
+--- a/drivers/gpu/drm/xe/xe_debugfs.c
++++ b/drivers/gpu/drm/xe/xe_debugfs.c
+@@ -5,6 +5,7 @@
+ 
+ #include "xe_debugfs.h"
+ 
++#include <linux/debugfs.h>
+ #include <linux/string_helpers.h>
+ 
+ #include <drm/drm_debugfs.h>
+diff --git a/drivers/gpu/drm/xe/xe_gt_debugfs.c b/drivers/gpu/drm/xe/xe_gt_debugfs.c
+index ff7f4cf52fa9..8cf0b2625efc 100644
+--- a/drivers/gpu/drm/xe/xe_gt_debugfs.c
++++ b/drivers/gpu/drm/xe/xe_gt_debugfs.c
+@@ -5,6 +5,8 @@
+ 
+ #include "xe_gt_debugfs.h"
+ 
++#include <linux/debugfs.h>
++
+ #include <drm/drm_debugfs.h>
+ #include <drm/drm_managed.h>
+ 
+diff --git a/drivers/gpu/drm/xe/xe_uc_debugfs.c b/drivers/gpu/drm/xe/xe_uc_debugfs.c
+index 0a39ec5a6e99..78eb8db73791 100644
+--- a/drivers/gpu/drm/xe/xe_uc_debugfs.c
++++ b/drivers/gpu/drm/xe/xe_uc_debugfs.c
+@@ -3,6 +3,8 @@
+  * Copyright © 2022 Intel Corporation
+  */
+ 
++#include <linux/debugfs.h>
++
+ #include <drm/drm_debugfs.h>
+ 
+ #include "xe_gt.h"
+diff --git a/include/drm/drm_print.h b/include/drm/drm_print.h
+index 9cc473e5d353..561c3b96b6fd 100644
+--- a/include/drm/drm_print.h
++++ b/include/drm/drm_print.h
+@@ -30,11 +30,11 @@
+ #include <linux/printk.h>
+ #include <linux/seq_file.h>
+ #include <linux/device.h>
+-#include <linux/debugfs.h>
+ #include <linux/dynamic_debug.h>
+ 
+ #include <drm/drm.h>
+ 
++struct debugfs_regset32;
+ struct drm_device;
+ 
+ /* Do *not* use outside of drm_print.[ch]! */
+-- 
+2.39.2
+
 
