@@ -1,247 +1,315 @@
-Return-Path: <linux-arm-msm+bounces-18161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5BF518ACAE9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 12:40:17 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A97218ACB7D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 12:58:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9A47EB2323D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 10:40:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CCACF1C21E88
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 10:58:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3282914A4C4;
-	Mon, 22 Apr 2024 10:38:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9782E1448DD;
+	Mon, 22 Apr 2024 10:58:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pMX2P/dO"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hXbvKiMM"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A58145FFE;
-	Mon, 22 Apr 2024 10:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF49482C1;
+	Mon, 22 Apr 2024 10:58:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713782307; cv=none; b=HCvh5VESKT3+3Wc9fWNgMsUIaadJawlmR4TEywy9RfUeAn90SARO6WsqG2M2paeeIOsLlJEPSYM5purhk3+GEGOvhtbvhMuP/DmtyIWiz9ql/Aqou8O5aKCH7z8aVti66eN2T8oe83WK9r4cj/IjAEetWKbdWfAhSmyt8KplyDE=
+	t=1713783497; cv=none; b=maV2D+2yuz3Kn+aZYKdy09KEbJAlrW6L/6pDqPYtE3RkXURBiCLSY2u/NNi64+BmSKy8X9SjpgsUpSOEJ9FfQ5WNgCYDbR8cWzSt0R3rKPBoIuLWgMZbsDRRatgWQHoTp7ovLJo1uijSI8rksgnGhcvOknkF1kp4npLDIG07gvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713782307; c=relaxed/simple;
-	bh=q/00YOU88u3Zmpm8wkpicJ6lwNSaTO8+ZG7NhTlGPS8=;
+	s=arc-20240116; t=1713783497; c=relaxed/simple;
+	bh=0rNt3QdClu+MsiAcTHPsILQpK5sBVa6rNFHj/WQ4GRE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=lkT76ca6f1f2kXFWnV7qyDWj17N2y5AGjWDSSSL1IrAc7Q6DsAZaiXe3LxgmtQVhAkHECczOMAXGml7E+vGmy+g9cPYrMCawHkxxXyR9RuYBJQsGE6UzU4YbeTpYZ+E2cC6CCZ87lsN1nJKLT+NnYvgWL1Bcv4IBv1LuJUleAMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pMX2P/dO; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=KdcYORfyVCuuSfcRceJAbvgIGp5dSmYq9NUazBd7FbWbPl4hHgoXqHvwm74oh5SiuUBIkdTy37eqgtPy8r6SYNFcJgSnCLR3Vcsc7W672NTP0UxgcJSFxbRl8BvEbKeLtBBy6y0FJSruHipzo5lv35zHRycZt3SpuLaHQWs9238=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hXbvKiMM; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43M9Okt4012232;
-	Mon, 22 Apr 2024 10:38:05 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43M2lDBa014858;
+	Mon, 22 Apr 2024 10:58:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=QzHrQbucuEK6n03pMLytmAk+wB/HJQb+xXrNsqqX0zw=; b=pM
-	X2P/dOA/igi0+GhGy5jvLREkri8m80CU4+8WJ/jNI//W5QICtJbDM/ugm1isGsEA
-	381c4i/IE1kveN4A3J5B2vD6YaCkv7c7hgyD55I/aoqx5PGA8E4AMlrP+SzefAFk
-	zwDcRdquhQvp8xK4apwwprXVl4Fw4TecfyARVwKqicn3VzS2WNVIPwjHkjYWUzJf
-	Va24K0pOK+34lDwcO/2bdvvHfcrGRTWSXe/GY3HGEx1YOenxcBC2Bh2JoYiaF9cm
-	kHdIsbJbGs8RvL1XJAmCLss+D9Ssrw945MOIFjK5PbgU5Id5184J5+XkFe+aehJI
-	+2o1VongqUQtq1bxYTIQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xnn82r80e-1
+	qcppdkim1; bh=2p0cjqRkP2V6AC42/7fG/rRA8VzQJI3JHBbxLYZfJSk=; b=hX
+	bvKiMMrqOJt1gW9BL63MD+jIPJo3iN8wSrZQlSF6Mv7oZWKZhm2/Su9leegcBT/S
+	9ExTmNNuVmUMS6NWBdsFCWIYKInA1hwF39PP84c/YqlUBngTW7JPJpZRN6Ym7oz5
+	lXVzOM313CvebpBZCtUNV2Z4DqXGv6FuNf70E9233MNhATXeZgoPfoQjnS6hPyKE
+	RnlKr77jyAHimyKHuouxbiLrygiQjMiDig2BdvnSs0oaUp6eDamFe/E0XyMZPhnR
+	DAoT8EE2O1fTJX4J35OEs8kt7cbxl8SxzJ6g4Xhw/iC1rWNKAM8G7bSVNKdLuEAo
+	7X2oDIsCO/IyKHLbAXcg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xnet792mn-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Apr 2024 10:38:05 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43MAc4d2027818
+	Mon, 22 Apr 2024 10:58:11 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43MAwA0T028661
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Apr 2024 10:38:04 GMT
-Received: from [10.216.28.79] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+	Mon, 22 Apr 2024 10:58:10 GMT
+Received: from [10.218.5.19] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 22 Apr
- 2024 03:37:59 -0700
-Message-ID: <ced05784-79f8-2ec5-59ef-7fcbb3ac1988@quicinc.com>
-Date: Mon, 22 Apr 2024 16:07:56 +0530
+ 2024 03:58:05 -0700
+Message-ID: <4b2e0c76-e455-40f8-b652-a4b723cc8601@quicinc.com>
+Date: Mon, 22 Apr 2024 16:27:54 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v2 3/8] ASoC: dt-bindings: wcd937x-sdw: add bindings for
- wcd937x-sdw
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 RESEND 5/6] clk: qcom: camcc-sm8650: Add SM8650 camera
+ clock controller driver
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Michael
+ Turquette" <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, "Rob
+ Herring" <robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Taniya Das
+	<quic_tdas@quicinc.com>,
+        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+        Ajit Pandey <quic_ajipan@quicinc.com>,
+        Imran Shaik
+	<quic_imrashai@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+References: <20240321092529.13362-1-quic_jkona@quicinc.com>
+ <20240321092529.13362-6-quic_jkona@quicinc.com>
+ <d3d3be20-7ec0-419c-b5a3-77047d8bc7bf@linaro.org>
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Srinivas Kandagatla
-	<srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        "Rob
- Herring" <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai
-	<tiwai@suse.com>
-CC: <alsa-devel@alsa-project.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_rohkumar@quicinc.com>,
-        <quic_pkumpatl@quicinc.com>
-References: <20240416063600.309747-1-quic_mohs@quicinc.com>
- <20240416063600.309747-4-quic_mohs@quicinc.com>
- <20acec19-0dc9-4926-aac5-f24fcc09cba3@kernel.org>
-From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-In-Reply-To: <20acec19-0dc9-4926-aac5-f24fcc09cba3@kernel.org>
+From: Jagadeesh Kona <quic_jkona@quicinc.com>
+In-Reply-To: <d3d3be20-7ec0-419c-b5a3-77047d8bc7bf@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: BmvezGpEuMkSvJ_mXWp02lNoRtRdZ62X
-X-Proofpoint-ORIG-GUID: BmvezGpEuMkSvJ_mXWp02lNoRtRdZ62X
+X-Proofpoint-GUID: tO_2aQsLXLe0gpglmVOZK7bt-DqU4HPo
+X-Proofpoint-ORIG-GUID: tO_2aQsLXLe0gpglmVOZK7bt-DqU4HPo
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-22_08,2024-04-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- suspectscore=0 adultscore=0 clxscore=1015 bulkscore=0 malwarescore=0
- spamscore=0 impostorscore=0 priorityscore=1501 mlxlogscore=999
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404220049
+ definitions=2024-04-22_09,2024-04-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ mlxlogscore=999 suspectscore=0 spamscore=0 priorityscore=1501 mlxscore=0
+ bulkscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0 phishscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404220050
 
-On 4/17/2024 9:26 PM, Krzysztof Kozlowski wrote:
-> On 16/04/2024 08:35, Mohammad Rafi Shaik wrote:
->> From: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+
+
+On 4/19/2024 3:00 AM, Vladimir Zapolskiy wrote:
+> Hello Jagadeesh,
+> 
+> thank you for submitting the clock driver.
+> 
+> On 3/21/24 11:25, Jagadeesh Kona wrote:
+>> Add support for the camera clock controller for camera clients to
+>> be able to request for camcc clocks on SM8650 platform.
 >>
->> Qualcomm WCD9370/WCD9375 Codec is a standalone Hi-Fi audio codec IC
->> connected over SoundWire. This device has two SoundWire devices RX and
->> TX respectively.
->> This binding is for those slave devices on WCD9370/WCD9375.
->>
->> Co-developed-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
->> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
->> Signed-off-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 >> ---
->>   .../bindings/sound/qcom,wcd937x-sdw.yaml      | 71 +++++++++++++++++++
->>   1 file changed, 71 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
+>>   drivers/clk/qcom/Kconfig        |    8 +
+>>   drivers/clk/qcom/Makefile       |    1 +
+>>   drivers/clk/qcom/camcc-sm8650.c | 3591 +++++++++++++++++++++++++++++++
+>>   3 files changed, 3600 insertions(+)
+>>   create mode 100644 drivers/clk/qcom/camcc-sm8650.c
 >>
->> diff --git a/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml b/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
+>> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+>> index 8ab08e7b5b6c..6257f4a02ec4 100644
+>> --- a/drivers/clk/qcom/Kconfig
+>> +++ b/drivers/clk/qcom/Kconfig
+>> @@ -826,6 +826,14 @@ config SM_CAMCC_8550
+>>         Support for the camera clock controller on SM8550 devices.
+>>         Say Y if you want to support camera devices and camera 
+>> functionality.
+>> +config SM_CAMCC_8650
+>> +    tristate "SM8650 Camera Clock Controller"
+>> +    depends on ARM64 || COMPILE_TEST
+>> +    select SM_GCC_8650
+>> +    help
+>> +      Support for the camera clock controller on SM8650 devices.
+>> +      Say Y if you want to support camera devices and camera 
+>> functionality.
+>> +
+>>   config SM_DISPCC_6115
+>>       tristate "SM6115 Display Clock Controller"
+>>       depends on ARM64 || COMPILE_TEST
+>> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+>> index dec5b6db6860..28bffa1eb8dd 100644
+>> --- a/drivers/clk/qcom/Makefile
+>> +++ b/drivers/clk/qcom/Makefile
+>> @@ -109,6 +109,7 @@ obj-$(CONFIG_SM_CAMCC_6350) += camcc-sm6350.o
+>>   obj-$(CONFIG_SM_CAMCC_8250) += camcc-sm8250.o
+>>   obj-$(CONFIG_SM_CAMCC_8450) += camcc-sm8450.o
+>>   obj-$(CONFIG_SM_CAMCC_8550) += camcc-sm8550.o
+>> +obj-$(CONFIG_SM_CAMCC_8650) += camcc-sm8650.o
+>>   obj-$(CONFIG_SM_DISPCC_6115) += dispcc-sm6115.o
+>>   obj-$(CONFIG_SM_DISPCC_6125) += dispcc-sm6125.o
+>>   obj-$(CONFIG_SM_DISPCC_6350) += dispcc-sm6350.o
+>> diff --git a/drivers/clk/qcom/camcc-sm8650.c 
+>> b/drivers/clk/qcom/camcc-sm8650.c
 >> new file mode 100644
->> index 000000000000..2b7358e266ba
+>> index 000000000000..1b28e086e519
 >> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
->> @@ -0,0 +1,71 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/sound/qcom,wcd937x-sdw.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +++ b/drivers/clk/qcom/camcc-sm8650.c
+>> @@ -0,0 +1,3591 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights 
+>> reserved.
+>> + */
 >> +
->> +title: Qualcomm SoundWire Slave devices on WCD9370
+>> +#include <linux/clk-provider.h>
+>> +#include <linux/mod_devicetable.h>
+>> +#include <linux/module.h>
+>> +#include <linux/platform_device.h>
+>> +#include <linux/pm_runtime.h>
+>> +#include <linux/regmap.h>
 >> +
->> +maintainers:
->> +  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>> +#include <dt-bindings/clock/qcom,sm8650-camcc.h>
 >> +
->> +description: |
-> 
-> Do not need '|' unless you need to preserve formatting.
-
-ACK
-
-will remove '|' in next version patch set.
-
-> 
->> +  Qualcomm WCD9370 Codec is a standalone Hi-Fi audio codec IC.
->> +  It has RX and TX Soundwire slave devices. This bindings is for the
->> +  slave devices.
+>> +#include "clk-alpha-pll.h"
+>> +#include "clk-branch.h"
+>> +#include "clk-rcg.h"
+>> +#include "clk-regmap.h"
+>> +#include "common.h"
+>> +#include "gdsc.h"
+>> +#include "reset.h"
 >> +
->> +properties:
->> +  compatible:
->> +    const: sdw20217010a00
+>> +enum {
+>> +    DT_IFACE,
+>> +    DT_BI_TCXO,
+>> +    DT_BI_TCXO_AO,
+>> +    DT_SLEEP_CLK,
+>> +};
 >> +
->> +  reg:
->> +    maxItems: 1
+>> +enum {
+>> +    P_BI_TCXO,
+>> +    P_BI_TCXO_AO,
+>> +    P_CAM_CC_PLL0_OUT_EVEN,
+>> +    P_CAM_CC_PLL0_OUT_MAIN,
+>> +    P_CAM_CC_PLL0_OUT_ODD,
+>> +    P_CAM_CC_PLL1_OUT_EVEN,
+>> +    P_CAM_CC_PLL2_OUT_EVEN,
+>> +    P_CAM_CC_PLL2_OUT_MAIN,
+>> +    P_CAM_CC_PLL3_OUT_EVEN,
+>> +    P_CAM_CC_PLL4_OUT_EVEN,
+>> +    P_CAM_CC_PLL5_OUT_EVEN,
+>> +    P_CAM_CC_PLL6_OUT_EVEN,
+>> +    P_CAM_CC_PLL7_OUT_EVEN,
+>> +    P_CAM_CC_PLL8_OUT_EVEN,
+>> +    P_CAM_CC_PLL9_OUT_EVEN,
+>> +    P_CAM_CC_PLL9_OUT_ODD,
+>> +    P_CAM_CC_PLL10_OUT_EVEN,
+>> +    P_SLEEP_CLK,
+>> +};
 >> +
->> +  qcom,tx-port-mapping:
->> +    description: |
->> +      Specifies static port mapping between slave and master tx ports.
->> +      In the order of slave port index.
+>> +static const struct pll_vco lucid_ole_vco[] = {
+>> +    { 249600000, 2300000000, 0 },
+>> +};
 > 
-> Use inclusive terminology. Describe what is here - what is the index?
-> What is the value?
+> I've noticed that a downstream Android kernel v6.1.25 defines this clock as
+> 
+>      static const struct pll_vco lucid_ole_vco[] = {
+>          { 249600000, 2100000000, 0 },
+>      };
+> 
+> Do you know any particular reason why here the clock frequencies are 
+> different?
+> 
 
-ACK
+Thanks Vladimir for your review!
 
-> 
->> +    $ref: /schemas/types.yaml#/definitions/uint32-array
->> +    minItems: 4
->> +    maxItems: 4
-> 
-> Add constraints on values. You have maximum 15 TX ports, don't you?
-> 
+The min and max supported frequencies of PLL mentioned above are taken 
+from the HW specification, and as per the latest HW spec, the maximum 
+supported frequency for lucid OLE PLL is 2300MHz, hence used 2300MHz above.
+
 >> +
->> +  qcom,rx-port-mapping:
->> +    description: |
->> +      Specifies static port mapping between slave and master rx ports.
->> +      In the order of slave port index.
->> +    $ref: /schemas/types.yaml#/definitions/uint32-array
->> +    minItems: 5
->> +    maxItems: 5
+>> +static const struct pll_vco rivian_ole_vco[] = {
+>> +    { 777000000, 1285000000, 0 },
+>> +};
 >> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - qcom,port-mapping
 > 
-> Test your binding. There is no need to engage reviewers for reviewing
-> simple mistakes which *tools* can point. Respect reviewers time and use
-> the tools first.
+> <snip>
 > 
-> You need oneOf: with required for TX and RX... or just unify the
-> properties. Why do you need two?
+>> +static struct clk_rcg2 cam_cc_bps_clk_src = {
+>> +    .cmd_rcgr = 0x10050,
+>> +    .mnd_width = 0,
+>> +    .hid_width = 5,
+>> +    .parent_map = cam_cc_parent_map_2,
+>> +    .freq_tbl = ftbl_cam_cc_bps_clk_src,
+>> +    .clkr.hw.init = &(const struct clk_init_data) {
+>> +        .name = "cam_cc_bps_clk_src",
+>> +        .parent_data = cam_cc_parent_data_2,
+>> +        .num_parents = ARRAY_SIZE(cam_cc_parent_data_2),
+>> +        .flags = CLK_SET_RATE_PARENT,
+>> +        .ops = &clk_rcg2_shared_ops,
+>> +    },
+>> +};
 > 
-ACK,
+> Please let me ask after Dmitry about your rationale to select
+> &clk_rcg2_shared_ops here and below for all *_src clocks introduced in
+> the driver, I do remember you've did it in v1, could you please
+> elaborate it a bit more?
+> 
+> I have a concern that it's not possible to get an .is_enabled status
+> of the shared clocks, however at least in this particular case of
+> camcc clocks it seems to be technically possible.
+> 
+> It might indicate that there is an incompleteness in clk-rcg2.c driver
+> also, if it's really possible to get is_enabled runtime status at least
+> for some of the shared clocks.
+> 
 
-will fix the binding errors.
-> 
+The recommendation from HW team is to park the RCG's at XO clock source 
+when RCG is in disabled state and clk_rcg2_shared_ops is the closest 
+implementation for achieving the same, hence used clk_rcg2_shared_ops 
+for all the RCG's.
+
+I will check if .is_enabled callback can be added to shared_ops and post 
+a separate series for it based on the requirement.
+
 >> +
->> +additionalProperties: false
+>> +static const struct freq_tbl ftbl_cam_cc_camnoc_axi_rt_clk_src[] = {
+>> +    F(300000000, P_CAM_CC_PLL0_OUT_EVEN, 2, 0, 0),
+>> +    F(400000000, P_CAM_CC_PLL0_OUT_ODD, 1, 0, 0),
+>> +    { }
+>> +};
 >> +
->> +examples:
->> +  - |
->> +    soundwire@3210000 {
-> Drop unit address.
-
-
-actually took the reference from wcd938x.
-
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/Documentation/devicetree/bindings/sound/qcom,wcd938x-sdw.yaml#n48
-
-
 > 
->> +        #address-cells = <2>;
->> +        #size-cells = <0>;
->> +        reg = <0x03210000 0x2000>;
+> <snip>
 > 
-> Drop, not relevant and not placed correctly (see DTS coding style).
-
->> +        wcd937x_rx: codec@0,4 {
+> Other than two my open questions above I don't see any issues with the
+> driver, if you be kind to provide the answers, please feel free to add
+> my
 > 
-> Drop label, not used.
-> 
->> +            compatible = "sdw20217010a00";
->> +            reg  = <0 4>;
->> +            qcom,rx-port-mapping = <1 2 3 4 5>;
->> +        };
->> +    };
->> +
->> +    soundwire@3230000 {
-> 
-> Drop this example, it's almost identical.
-> 
-> Best regards,
-> Krzysztof
+> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> Tested-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 > 
 
-Thanks & Regards,
-Rafi
+Thanks, sure will add these tags in next series.
+
+Thanks,
+Jagadeesh
+
+> -- 
+> Best wishes,
+> Vladimir
+> 
 
