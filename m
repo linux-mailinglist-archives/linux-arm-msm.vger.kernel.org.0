@@ -1,210 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-18176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18177-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 438AA8ACE29
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 15:28:15 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC30B8ACF64
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 16:29:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AE23D1F21C27
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 13:28:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5D828B252DA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 14:29:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93E1F14F13B;
-	Mon, 22 Apr 2024 13:28:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28C181514D4;
+	Mon, 22 Apr 2024 14:29:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="K9NLovZN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="li+Aj8Fo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BCFD14F134
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 13:28:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81AF022625
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 14:29:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713792491; cv=none; b=LfR/6iueuHqAOY9rYuA9/cbIKFWeRZtkDkZGQ4DhCdJAJOPDzXXwg0Y1Tq9PeiEuQK4kAZXULoNo47PTUzVcdcjpWi6dfz1RrylQ1xTdMXw/6xU5+YjUtt9nG8UODGW2HQYQT2d8vQ+S1rbfneixpsEe7Un7+/7NJlYeL6r7gOc=
+	t=1713796170; cv=none; b=dNOcC+x36eCxNs7laBH6VLd50WTNlJ6TVaw7ecLbP7ktYaMaeHOPkkA74ocwYk/yAi8Ajid86LhvkxfE1PdxCGvU5wFI9zRLh6hwTqpin8THJRfopGD7ZUAgkLzOfkwXLW4tGPVly6N5LIpWQIsFBnhlASUmyrSCQt9CyfkZVhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713792491; c=relaxed/simple;
-	bh=O+UWWnSZNwB3FwIAJQr602a3lfAWbqxvGietL4ZofxU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=I+vj3hM7PUCkjWNnN+54EFMqdSkB4EWiQStd9jNg6Hq9yflJDeOlZ1eL2TbjrbCkmS5d839npT8YzI0vHOPu2hRd/TbXIfH7vtl2Gb32rjOpQdijX8+kQCn0Po2nw1ui7MQqIPZL9hsB5CUBYDy/8nHCEAP51b6SOCfsPfzlBgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=K9NLovZN; arc=none smtp.client-ip=209.85.167.44
+	s=arc-20240116; t=1713796170; c=relaxed/simple;
+	bh=2nUa3Ja53feSTxJmwBVeEpCaY43Yvj2yiQKQ8D1rksw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LRKRKyZGp1w1+ec9A2VJPd5bJtC5EGs7nVI7N+X/2dbMfAj1o51k1ajO4orquQqQB4wF+aXdkf+H8pYjkvCberFS5GOs9JM0sjKgtTjtvg9wGbK/nxGbrbj8qvtFmQP8Py5XbMQVPBpMJIjQpuX4FuAgl42BIjz5EZ1U4qQD41Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=li+Aj8Fo; arc=none smtp.client-ip=209.85.167.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-51967f75729so5027327e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 06:28:09 -0700 (PDT)
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-51ab47ce811so4041172e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 07:29:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713792487; x=1714397287; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=XX6Rj3ViyKFJRZt9TUxrdPILzpKRJIFwxHEizIAbiXA=;
-        b=K9NLovZN+eHetnbHf7fo294s2cN3x1YUl4AWMIzds3FicpIn+4wCUODnmSS+jBgSIA
-         sOAUZmUKKTUkxcF7fAh9X0tXWP6vQQzJFA2v20RSvETHhF5FEAeoq7wW1oFpJO0fzQna
-         ck3ZATKUp4WWvFu1C7/sDlZog75/p8h/R+bgQVGKnxs0WxvFe3LtBSN5XSVhbhxv4SB0
-         BC8avPrsWPtAqral3Efa44/Uv4boIv1ZQSOGoQjH+g2GN8lbmeAv/CucNSRkzS+qKJpj
-         hh47jUaDF7GBjFbR9ow+JVbiV6a4jOM9//eFXCY7mEnxihpEN0fEEKhpj3QZcatLQTx0
-         Bjgg==
+        d=linaro.org; s=google; t=1713796167; x=1714400967; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=LXHHnDak7lgem7M5GBJJasjq0fymlxs7eNC3HgwuabY=;
+        b=li+Aj8FoCrxBqonIPixTgHs8dlwXYBzAo0TF4c7Pwamq+PzyWXhc1PmVj2b2Hfrh1H
+         QVn39p4sEr2EyfBmXEP1ozPItdD4AbL/XcVs3qzzwAq0zN0ywaLyLxPLQEQmw7l9cYUY
+         rde9WIQE9MHn8tKNQqQv5H6RYbh5EWJsU1Kpdszyjf5au7ilyQ8ceg7NKhBbZ5qBYcf1
+         TJQEczoYmKSC1i48QwbJPS08To0/+t4ZMj8NhzAH+oPjNueZeZG7370GQD3PAKB7MsEK
+         gO2NP5xhO5vVz1sdA/m22/OA0T/CFgBhDH98BviltABa9Zz+M9i9cSqeiyh3hXCpz2mh
+         Yp1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713792487; x=1714397287;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1713796167; x=1714400967;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XX6Rj3ViyKFJRZt9TUxrdPILzpKRJIFwxHEizIAbiXA=;
-        b=eUK3x2YnsEGhxk9iEQfJ6yyuy4cC0+s0V9V50fKYn81Y6jTSvfM8l4KQHRe2wVM534
-         eb2abI5ganK1Xap0kDbw1GLXScy2KE/YWEmJN06UdOeeEsEKSO59cXWI4veNZOAaCDXv
-         haST8PkP9GzdiXIW+AHxrym4gDYrxtHSKrKCQi8ZjFBTXEWPQ34i3W7/R5Optde9WBmt
-         GaIVSmUyaVgEdeD9Regor6mN+R1KuWDxC0lSm31GNq/FhEtDUIhHfMFXB2+/e5B/j2RI
-         8I8u4Vga97aY8wc+9eox1pm8/g5mony9HsMdyWbPOIQODADm8+3oYUEGkArVmEQnkJ4d
-         XGKA==
-X-Forwarded-Encrypted: i=1; AJvYcCWSaOMYeD5Xs4EoUHMSQ85mreJM+oFtkjrbv9p+ASVcCAe34EidFp8iJXpI8rxL+REikIliidctJqJQjAlvB8bWapfFB0at0o4SVKzzww==
-X-Gm-Message-State: AOJu0YzNR+gWGCFNEzaCCfT7n2rp+nj4vlTpKn3oXa+u3eUUua3JJ+HK
-	hAe2mt8+5dYceq7mNAKlGDXSqBL3tsw3Eexw8XXatLkRb0cUjP+m1M3Dl/gIo8k=
-X-Google-Smtp-Source: AGHT+IGDPvlMItNcQnL6SP1fEpUFzqwGmerZ0Fb6TEO3t0LlL1yYrvPrZIwoPE4t255l4aDeVBBZUQ==
-X-Received: by 2002:ac2:4182:0:b0:519:5acc:b114 with SMTP id z2-20020ac24182000000b005195accb114mr5630645lfh.45.1713792487411;
-        Mon, 22 Apr 2024 06:28:07 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::8a5])
-        by smtp.gmail.com with ESMTPSA id y22-20020a0565123f1600b0051b64136e0esm136932lfa.52.2024.04.22.06.28.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Apr 2024 06:28:07 -0700 (PDT)
-Date: Mon, 22 Apr 2024 16:28:05 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jani Nikula <jani.nikula@intel.com>
-Cc: dri-devel@lists.freedesktop.org, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>, Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>, 
-	Oded Gabbay <ogabbay@kernel.org>, Russell King <linux@armlinux.org.uk>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Jani Nikula <jani.nikula@linux.intel.com>, 
-	Rodrigo Vivi <rodrigo.vivi@intel.com>, Joonas Lahtinen <joonas.lahtinen@linux.intel.com>, 
-	Tvrtko Ursulin <tursulin@ursulin.net>, Frank Binns <frank.binns@imgtec.com>, 
-	Matt Coster <matt.coster@imgtec.com>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>, 
-	Danilo Krummrich <dakr@redhat.com>, Alex Deucher <alexander.deucher@amd.com>, 
-	Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>, "Pan, Xinhui" <Xinhui.Pan@amd.com>, 
-	Alain Volmat <alain.volmat@foss.st.com>, Huang Rui <ray.huang@amd.com>, 
-	Zack Rusin <zack.rusin@broadcom.com>, 
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Lucas De Marchi <lucas.demarchi@intel.com>, 
-	Thomas =?utf-8?Q?Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>, intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org, 
-	amd-gfx@lists.freedesktop.org
-Subject: Re: [PATCH 1/2] drm/print: drop include debugfs.h and include where
- needed
-Message-ID: <dgx4grz65pbvne6nt7o5fvklbs6igup7xj4g7ksd6wrsy6hdhn@bunxrngdaq6j>
-References: <20240422121011.4133236-1-jani.nikula@intel.com>
+        bh=LXHHnDak7lgem7M5GBJJasjq0fymlxs7eNC3HgwuabY=;
+        b=pHg+SN+kYCepWxrqPOdCQ6go82/7CbxqFEgtN+EM8oLr/mS79ytCAxGRoQS4WrStCX
+         igkIx+oh+KxyTIGy+1VjjTXj7OD5Ccprlio8142BMitxW0goKp3WaCa+t3E+UTG0vAGg
+         pvusGUjGmQYUsr9TVdApme+XGLYjKEP4w8dV15JHF97nhC1/8d4JOIJg6BWJHUjbACFV
+         TaZ7GIapYrC2vLn/DkC9HVffRaNY7nuNIFE43HhoH2Vhq4jx3Ya6D4G003sldGAFtLZR
+         YjWeKi1fK5/XOtbqHFT0s2VSgSA63usAC6b731USXNFwRivYWdh7Lngtpim+thvnkF2M
+         Zy9Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVTGMpV4dduGB/VdyZym9OEs5Ca088AaymuAO2YkYYCdeKAgC54Q9/S88jeoTgvEyza0tFDu7f4n2O64jDnJo7EIypC8JXmRD6e+jvg4g==
+X-Gm-Message-State: AOJu0Yz5iEJLm/Fkviu0vgX8DB2MHTUwuflHEkU+T3ywDZfptSGREbJh
+	eCaEQJ4kCzN9HMblF2Vce7Df4wfVSp4M92pYA3SwwA6xbcXcZMJZK9lZXlkkh4g=
+X-Google-Smtp-Source: AGHT+IFURma49nlaoif2Ttdrovjgb+IMnG5pgohKMHIuVNPmGWqDe7YcAEozJ3QOwed9btGw+bfpRw==
+X-Received: by 2002:a05:6512:3e0d:b0:51a:c8bb:fcf7 with SMTP id i13-20020a0565123e0d00b0051ac8bbfcf7mr6809395lfv.3.1713796166491;
+        Mon, 22 Apr 2024 07:29:26 -0700 (PDT)
+Received: from [172.30.205.46] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id a22-20020a195f56000000b00518e16f8297sm1780897lfj.55.2024.04.22.07.29.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Apr 2024 07:29:25 -0700 (PDT)
+Message-ID: <130c31dc-5224-4442-bae3-88ed0ec23fe2@linaro.org>
+Date: Mon, 22 Apr 2024 16:29:24 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240422121011.4133236-1-jani.nikula@intel.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 7/7] arm64: dts: qcom: ipq9574: add PCIe2 nodes
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ mr.nuke.me@gmail.com
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-clk@vger.kernel.org
+References: <20240415182052.374494-1-mr.nuke.me@gmail.com>
+ <20240415182052.374494-8-mr.nuke.me@gmail.com>
+ <20240417073412.GD3894@thinkpad>
+ <e8957b07-692f-7d38-e276-b0e3791d31f4@gmail.com>
+ <20240422071054.GA9522@thinkpad>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20240422071054.GA9522@thinkpad>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Apr 22, 2024 at 03:10:10PM +0300, Jani Nikula wrote:
-> Surprisingly many places depend on debugfs.h to be included via
-> drm_print.h. Fix them.
-> 
-> v3: Also fix armada, ite-it6505, imagination, msm, sti, vc4, and xe
-> 
-> v2: Also fix ivpu and vmwgfx
-> 
-> Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
-> Acked-by: Maxime Ripard <mripard@kernel.org>
-> Link: https://patchwork.freedesktop.org/patch/msgid/20240410141434.157908-1-jani.nikula@intel.com
-> Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-> 
-> ---
-> 
-> Cc: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-> Cc: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-> Cc: Oded Gabbay <ogabbay@kernel.org>
-> Cc: Russell King <linux@armlinux.org.uk>
-> Cc: David Airlie <airlied@gmail.com>
-> Cc: Daniel Vetter <daniel@ffwll.ch>
-> Cc: Andrzej Hajda <andrzej.hajda@intel.com>
-> Cc: Neil Armstrong <neil.armstrong@linaro.org>
-> Cc: Robert Foss <rfoss@kernel.org>
-> Cc: Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
-> Cc: Jonas Karlman <jonas@kwiboo.se>
-> Cc: Jernej Skrabec <jernej.skrabec@gmail.com>
-> Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-> Cc: Maxime Ripard <mripard@kernel.org>
-> Cc: Thomas Zimmermann <tzimmermann@suse.de>
-> Cc: Jani Nikula <jani.nikula@linux.intel.com>
-> Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-> Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-> Cc: Tvrtko Ursulin <tursulin@ursulin.net>
-> Cc: Frank Binns <frank.binns@imgtec.com>
-> Cc: Matt Coster <matt.coster@imgtec.com>
-> Cc: Rob Clark <robdclark@gmail.com>
-> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: Sean Paul <sean@poorly.run>
-> Cc: Marijn Suijten <marijn.suijten@somainline.org>
-> Cc: Karol Herbst <kherbst@redhat.com>
-> Cc: Lyude Paul <lyude@redhat.com>
-> Cc: Danilo Krummrich <dakr@redhat.com>
-> Cc: Alex Deucher <alexander.deucher@amd.com>
-> Cc: "Christian König" <christian.koenig@amd.com>
-> Cc: "Pan, Xinhui" <Xinhui.Pan@amd.com>
-> Cc: Alain Volmat <alain.volmat@foss.st.com>
-> Cc: Huang Rui <ray.huang@amd.com>
-> Cc: Zack Rusin <zack.rusin@broadcom.com>
-> Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
-> Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-> Cc: "Thomas Hellström" <thomas.hellstrom@linux.intel.com>
-> Cc: dri-devel@lists.freedesktop.org
-> Cc: intel-gfx@lists.freedesktop.org
-> Cc: intel-xe@lists.freedesktop.org
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: freedreno@lists.freedesktop.org
-> Cc: nouveau@lists.freedesktop.org
-> Cc: amd-gfx@lists.freedesktop.org
-> ---
->  drivers/accel/ivpu/ivpu_debugfs.c           | 2 ++
->  drivers/gpu/drm/armada/armada_debugfs.c     | 1 +
->  drivers/gpu/drm/bridge/ite-it6505.c         | 1 +
->  drivers/gpu/drm/bridge/panel.c              | 2 ++
->  drivers/gpu/drm/drm_print.c                 | 6 +++---
->  drivers/gpu/drm/i915/display/intel_dmc.c    | 1 +
->  drivers/gpu/drm/imagination/pvr_fw_trace.c  | 1 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 2 ++
 
-Acked-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # drm/msm
 
->  drivers/gpu/drm/nouveau/dispnv50/crc.c      | 2 ++
->  drivers/gpu/drm/radeon/r100.c               | 1 +
->  drivers/gpu/drm/radeon/r300.c               | 1 +
->  drivers/gpu/drm/radeon/r420.c               | 1 +
->  drivers/gpu/drm/radeon/r600.c               | 3 ++-
->  drivers/gpu/drm/radeon/radeon_fence.c       | 1 +
->  drivers/gpu/drm/radeon/radeon_gem.c         | 1 +
->  drivers/gpu/drm/radeon/radeon_ib.c          | 2 ++
->  drivers/gpu/drm/radeon/radeon_pm.c          | 1 +
->  drivers/gpu/drm/radeon/radeon_ring.c        | 2 ++
->  drivers/gpu/drm/radeon/radeon_ttm.c         | 1 +
->  drivers/gpu/drm/radeon/rs400.c              | 1 +
->  drivers/gpu/drm/radeon/rv515.c              | 1 +
->  drivers/gpu/drm/sti/sti_drv.c               | 1 +
->  drivers/gpu/drm/ttm/ttm_device.c            | 1 +
->  drivers/gpu/drm/ttm/ttm_resource.c          | 3 ++-
->  drivers/gpu/drm/ttm/ttm_tt.c                | 5 +++--
->  drivers/gpu/drm/vc4/vc4_drv.h               | 1 +
->  drivers/gpu/drm/vmwgfx/vmwgfx_gem.c         | 2 ++
->  drivers/gpu/drm/xe/xe_debugfs.c             | 1 +
->  drivers/gpu/drm/xe/xe_gt_debugfs.c          | 2 ++
->  drivers/gpu/drm/xe/xe_uc_debugfs.c          | 2 ++
->  include/drm/drm_print.h                     | 2 +-
->  31 files changed, 46 insertions(+), 8 deletions(-)
+[...]
 
--- 
-With best wishes
-Dmitry
+
+>>>> +
+>>>> +			#interrupt-cells = <1>;
+>>>> +			interrupt-map-mask = <0 0 0 0x7>;
+>>>> +			interrupt-map = <0 0 0 1 &intc 0 0 164
+>>>> +					 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
+>>>> +					<0 0 0 2 &intc 0 0 165
+>>>> +					 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
+>>>> +					<0 0 0 3 &intc 0 0 186
+>>>> +					 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+>>>> +					<0 0 0 4 &intc 0 0 187
+>>>> +					 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
+>>>
+>>> Use a single line for each INTX entry even if it exceeds 80 column width.
+>>
+>> Yes. Will do.
+
+And drop the /* int_x */ comments
+
+Konrad
 
