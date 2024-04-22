@@ -1,146 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-18148-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77B3F8AC8E6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 11:30:21 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11D118ACA19
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 12:00:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 208481F21690
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 09:30:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C0B32283EDA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 10:00:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30F515490E;
-	Mon, 22 Apr 2024 09:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5825413CAA3;
+	Mon, 22 Apr 2024 10:00:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GJzhJEIE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LfWW2/38"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49B35029A;
-	Mon, 22 Apr 2024 09:30:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F3213C9CC
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 10:00:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713778217; cv=none; b=mr+PARSRvO02FRc4iE+3rzVBRMf2iO5QnETFRouGeXnQhmhOT+TL/TYq6Y6ZpfcDEOO8arjCXrlGwR60v5UU2x7YhREbT7Aknf+rk4o56k67bvl2Su0quGuDN4h1eXwqjyodQK0jDgIuVlxlFEuituKIwZ4Gt+JwXWzwchfTfHw=
+	t=1713780024; cv=none; b=Kvjl2+1PLgUYPqWZVTS52kX0RdtmYbUHp6z4EdO3o2UIvfg3Ij0vkeIu2AJjcEYt+Rb5AE1D9/21kRfty9IaKtkl6KE2yGGIhXCJlB3dW9Ziik9efsJ5Xos6vY51b/aZR7rX5yMXlEpTU8EbxVaRUdi9RyfwxvuJ+Ll+Dtgg0Mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713778217; c=relaxed/simple;
-	bh=EESYxXe371fcWRXjGI9bPSFEjgmbWU9a8XVa2tbzFQE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kCzuRWycpLn+yDlxfZ8UeXiyTPtKEHutfqIIlLNXR3FLcMEUpDgfNgCMIsSZ/kNZVe16gAGUIfjEq1GkvN3E7Bg65idbfSfkxE0hTp2lSFZ2uCRvX4OQUhCOfH8v8UNIcCRndIhCXoGGM/GL/xQNHuc82FxEIEsi1x2SKFMJGCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GJzhJEIE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F17BC113CC;
-	Mon, 22 Apr 2024 09:30:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713778216;
-	bh=EESYxXe371fcWRXjGI9bPSFEjgmbWU9a8XVa2tbzFQE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GJzhJEIEdrVn3UR5wDwmgtXyJ3D1hYmqDK9ZCaV5oHq0LHAWy77vYsB5zGSsc24Ti
-	 BUEtAfqwYUlUffVIrbiGfyCWudcRomRqBKmg5sSoIL4lCpPH9a/1WVLDSZUzi2oCoo
-	 CcZjP+LCBcwW2t7PhVhXRj7ote5xbSuEN9JyQggWdxgB0LWQnggJ7tlIbQ9rvg5LPc
-	 M8lULz/DFG+nHfCzuBHecDLJ5AWL9mZ29tmDG8rE/oUOzRIy/jyime52EqZjgetPBf
-	 0iSDy5zZmctguF+py2v5ixATr2R404SpElNFrls7KAaGaoLc+Pmaix5wOHQMbYNXIJ
-	 xxZ6gFl/6iVbw==
-Date: Mon, 22 Apr 2024 11:30:09 +0200
-From: Niklas Cassel <cassel@kernel.org>
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
-	linux-tegra@vger.kernel.org, Damien Le Moal <dlemoal@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: Re: [PATCH 05/11] PCI: epf-{mhi/test}: Move DMA initialization to
- EPC init callback
-Message-ID: <ZiYuIaX7ZV0exKMt@ryzen>
-References: <20240314-pci-epf-rework-v1-0-6134e6c1d491@linaro.org>
- <20240314-pci-epf-rework-v1-5-6134e6c1d491@linaro.org>
- <Zf2tXgKo-gc3qy1D@ryzen>
- <20240326082636.GG9565@thinkpad>
- <ZgKsBoTvPWWhPO9e@ryzen>
- <20240327055457.GA2742@thinkpad>
- <ZgQFXsgqpeLbXMTb@ryzen>
- <ZgW6KB73Wh1X6911@matsya>
- <Zg5oeDzq5u3jmKIu@ryzen>
- <20240422075521.GB9775@thinkpad>
+	s=arc-20240116; t=1713780024; c=relaxed/simple;
+	bh=2MYeFddZE6jhnGVLqQLIsG6n52OsJy9BifCmmy7rs2w=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=V7tRCGJe7HSnYh5vmmauslOzJSmGhHpWHzCGYT8fHm2xkIo8PGUTuPhkRLlpfBu9ISzQkBh5AKnnqkZqEuZe+bVMU72DSAWa/ust8fY30JNZwTkvKiW/tinO+tfXj1HVglrVXMAH7PJ4CQTfK/sg248IzWDEpxpzddZHw01n4UI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LfWW2/38; arc=none smtp.client-ip=209.85.219.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-dc6cbe1ac75so3126914276.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 03:00:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1713780022; x=1714384822; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2MYeFddZE6jhnGVLqQLIsG6n52OsJy9BifCmmy7rs2w=;
+        b=LfWW2/38Ykb4CyG7PczDnGOjb9E2LJgR5FzC8b47bV5Mk5N4+sEohphTMdbb4bcC7O
+         fgf8eI3w1kx8mKN46vO5mlm0Px3BJ9xkH1iqQ8glo3UZBouwpYU5H/6kBOwIzmAboUrr
+         +4S5JcHJVhaUjdJ3OGRWB9zWLdta54aCimwMVoOn2wcw2GWFPvHlL0hNLN0GVCJ7/8iL
+         eHmT3n2tXPlwoqqVHeE6q7BLPPX9e726LXc8uZ11DOLZKThG00+LtSqaMGtNfg8qx5kh
+         VBf2vonEbDqZms8gJFWWpeh3EZwZMJK6jRbOiDReaX14F/lXjflMVhySPlAm8rCClOyn
+         OTYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713780022; x=1714384822;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2MYeFddZE6jhnGVLqQLIsG6n52OsJy9BifCmmy7rs2w=;
+        b=vl3Gfots2C8av14tclmvgTlS0GCpYzdy42WniOlbV6wHkgHihnhvQ9JtS0fysCtNX3
+         Ggr4rX1toWRXaCbaIbNksPD9dPTAOXbq6oc1tQ/3Z7kaiGLoxYPmfgRdNdGfEV2R+Syn
+         HZWK35KlgHqT3DSOLt42+t5ng6yuOC5WIeI2ntOymgNeP1oqNV70hgLiMbFVu7QkY7Iu
+         0ZxQX6/aNx5dQGiCZop//UpfyjW8Au4p8jC3XHWXE95bYarmFaoqQ/Stiw98l7qUi/do
+         qUX7zrE09APRAr0A3dr7a0hdZHpGxqk8dRuuq/huUofvKG0DxiuGHaoqi82YbBHPAuhF
+         /pRg==
+X-Forwarded-Encrypted: i=1; AJvYcCWhivW82ydsvknDd9/ZqiHQA2DhSQHaptuYomRhWSJ9Ps2uRpwv197V8LJMrCNMjMqYp5qhI2BAXBLpWS+xjsshTgGPqC88nyZVpVsImg==
+X-Gm-Message-State: AOJu0YzU4D97JjG3GXrhFd/bJV0nXGvGDIktim+hnkP09LvMt14X1riO
+	Sd7AGmGUnp9C1MrtB9IaZ+aJs14PVQUU62CqSTMP3USALkroaEvEdISt0SQvTAEIL29K5zmziYV
+	zZ4TR4R9oJ79+zT/Byq+gK7UZKXB/QGuuo1id+A==
+X-Google-Smtp-Source: AGHT+IHbBAbCSSKh+Ocb9jiNKVh/DB2SxHf3//CLOL1UZnbbdg1GJVfSWTlZKJ2zsSAoTdZErEZaPNUgvBoomS4y2UI=
+X-Received: by 2002:a25:acc1:0:b0:dc6:5570:898e with SMTP id
+ x1-20020a25acc1000000b00dc65570898emr7558121ybd.17.1713780021745; Mon, 22 Apr
+ 2024 03:00:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240422075521.GB9775@thinkpad>
+References: <20240419-qcom-pd-mapper-v5-0-e35b6f847e99@linaro.org> <57a99244-373c-40c0-9e32-9e8272c0c3e1@kernel.org>
+In-Reply-To: <57a99244-373c-40c0-9e32-9e8272c0c3e1@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 22 Apr 2024 13:00:10 +0300
+Message-ID: <CAA8EJpqzqfQCLCgj=G910V8Nk6b3adB0CTPPOO+G==+_=q5+oQ@mail.gmail.com>
+Subject: Re: [PATCH v5 0/6] soc: qcom: add in-kernel pd-mapper implementation
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Mathieu Poirier <mathieu.poirier@linaro.org>, Sibi Sankar <quic_sibis@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
+	Johan Hovold <johan+linaro@kernel.org>, Xilin Wu <wuxilin123@gmail.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 22, 2024 at 01:25:21PM +0530, Manivannan Sadhasivam wrote:
-> > 
-> > What I would like is more consistency between the EPF drivers.
-> > 
-> > I guess an if-statement that skips the pci_epc_map_addr() in pci-epf-test
-> > if using eDMA would make pci-epf-mhi and pci-epf-test most consistent.
-> > 
-> 
-> Agree.
+On Sat, 20 Apr 2024 at 14:32, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>
+> On 19/04/2024 16:00, Dmitry Baryshkov wrote:
+> > Protection domain mapper is a QMI service providing mapping between
+> > 'protection domains' and services supported / allowed in these domains.
+> > For example such mapping is required for loading of the WiFi firmware o=
+r
+> > for properly starting up the UCSI / altmode / battery manager support.
+> >
+> > The existing userspace implementation has several issue. It doesn't pla=
+y
+> > well with CONFIG_EXTRA_FIRMWARE, it doesn't reread the JSON files if th=
+e
+> > firmware location is changed (or if the firmware was not available at
+> > the time pd-mapper was started but the corresponding directory is
+> > mounted later), etc.
+> >
+> > However this configuration is largely static and common between
+> > different platforms. Provide in-kernel service implementing static
+> > per-platform data.
+> >
+> > Unlike previous revisions of the patchset, this iteration uses static
+> > configuration per platform, rather than building it dynamically from th=
+e
+> > list of DSPs being started.
+> >
+>
+> I applied this patchset and... it does not compile.
+>
+> drivers/remoteproc/qcom_q6v5_wcss.c:243:15: error: implicit declaration
+> of function =E2=80=98qcom_pdm_get=E2=80=99; did you mean =E2=80=98em_pd_g=
+et=E2=80=99?
+> [-Werror=3Dimplicit-function-declaration]
+>
+>
+> That's just defconfig, so I have doubts this was tested.
 
+I usually do not care about defconfig. This was tested as the
+built-in. I had the WCNSS driver disabled, never needed it. Enabled it
+now.
 
-> > 1) Do we want to rely on the fact that hopefully none of the iATUs in the DWC
-> > controller has configured a mapping that might mess things up for us?
-> > I don't see why the PCI/DMA address of the remote buffer, supplied to
-> > pci-epf-test via test_reg BAR, might not fall within the physical iATU window
-> > on the local EP system. (As long as the PCI EPF driver has mapped any address
-> > using pci_epc_map_addr().)
-> > 
-> > This is a big argument that EPF drivers running on a DWC-based EPC should
-> > definitely NOT call pci_epc_map_addr() needlessly when using eDMA, as it
-> > can be catastrophic. (pci-epf-test needs to be patched.)
-> > 
-> 
-> Right. There is no need to do iATU translation for DMA. I avoid that in MHI
-> driver.
-
-There is no need for pci_epc_map_addr() when using DMA_SLAVE *for DWC-based
-controllers*.
-
-Are we certain that this will not break pci-epf-test for non DWC-based
-controllers?
-
-
-> > 2) Can we really assume that both pci-epf-test and pci-epf-mhi does not need
-> > to call pci_epc_map_addr() when using a DMA_SLAVE DMA controller?
-> > This seems to be designed only with DWC in mind. Other PCIe endpoint
-> > controllers might require this.
-> > (Yes, for DWC-based controllers, this definitely should be skipped, but EPF
-> > drivers are supposed to be independent from a specific EPC.)
-> > 
-> 
-> For TEST yes, but for MHI, no. In MHI, I kind of mix both iATU and DMA to ripe
-> most of the performance (small vs big transactions). But for the TEST driver, it
-> is fair to not call pci_epc_map_addr() when DMA_SLAVE is supported.
-
-I agree that we should definitely skip pci_epc_map_addr() in pci-epf-test when
-using DMA_SLAVE on DWC-based controllers, but I don't feel comfortable in
-submitting a patch that does this unconditionally for pci-epf-test.c,
-as I don't know how the DMA hardware in:
-drivers/pci/controller/cadence/pcie-cadence-ep.c
-drivers/pci/controller/pcie-rcar-ep.c
-drivers/pci/controller/pcie-rockchip-ep.c
-
-works, and I do not want to regress them.
-
-I did suggest that DWC-based drivers could set a DMA_SLAVE_SKIP_MEM_MAP flag
-or similar when registering the eDMA, which pci-epf-test then could check,
-but I got no response if anoyone else thought that this was a good idea.
-
-
-Kind regards,
-Niklas
+--=20
+With best wishes
+Dmitry
 
