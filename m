@@ -1,237 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-18353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18356-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 416538AF7F2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 22:23:50 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 558368AF89F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 22:56:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5EA3FB25CA2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 20:23:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 877AE1C24228
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 20:56:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48B4B142659;
-	Tue, 23 Apr 2024 20:23:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36E28144D31;
+	Tue, 23 Apr 2024 20:53:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=nxp.com header.i=@nxp.com header.b="Yt3hXkHe"
+	dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="A4F8BDiV";
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="jvkZwTSM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from EUR03-DBA-obe.outbound.protection.outlook.com (mail-dbaeur03on2073.outbound.protection.outlook.com [40.107.104.73])
+Received: from fallback2.i.mail.ru (fallback2.i.mail.ru [79.137.243.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE3AF1422D4;
-	Tue, 23 Apr 2024 20:23:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.104.73
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713903823; cv=fail; b=mxaAnATLZJB5haXJD31kykO/mVLpZysvrvjtpjhL/sq6z+v3f/I6P8yOViVwE8mEA1b1/8BaQU0oMNkyHTTIhlmqXQpKCdRNxtCsM3FPvjCVqnqyw8sBQLDwhyfghqIM2pU96001/GXmqN36W70txMeRQUsbBgVjLge9QREjWAo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713903823; c=relaxed/simple;
-	bh=an/TOhL7pUB+lrpojGg9hnMakXSMAoH/2NFRqr5loLQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=FMO0GDFsdto996tv1cbXp4tPBRnLRLLnjuYDsmOxqK7f6HN6za2XfFmB2ynG22X3IuV6yhSixkqeyL1/L5Mw7UUNa73PiQjl3AY+c4/XvOnyFzRf1qX/yxKAy8VwtFMUtC2Zqg12LdVTxFepHoeicsyRInCjtB7+mz9bZ92STBA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (1024-bit key) header.d=nxp.com header.i=@nxp.com header.b=Yt3hXkHe; arc=fail smtp.client-ip=40.107.104.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=la4cMJVwnN9PppJFaYEy089LlDDTdD5sXHWUN0ghzsTt60fWmLPH3nWkSm7wbKaDpf/gum9PUGMtzPP6Zj7onC8L+F/LD2I6d+lTs2UN+WfLui2p7sIuG2wuwvUfukT4W/+Dy2vfdqW/0gfut6Bu6J1RigMx4moPY9ceJArmek8PYPYERKHP7FwV5FQXzOQRh4v0o41XW4zjmbvlreYRoxd0Unp4dtk00frzJLL5bfo/3hk5c+BT/3pGhIAij0mj8CN6ZtrGHMd1irtx6vcZuEuRYfJwocppq69MJzlRasFAPAGR7o7g7SL9tMAbhLVClUp9VDBLUi9dWO49HWtmEQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0a+Js7elHfVkkwA5LmfROcELMrGjeCLb2qiC5suCJTY=;
- b=jxIjdmy/HqMH0wyjGnjIA3zh8M33qStMjscm6mL+pCLvC26tirRRuoHbI8ECQJm4isn+VIEv+ww7Zc2gO6K3k0Cib/innRa8bxGSlrKxeUrxNDemT0dUXktiCJa0FAzaLnywgU32CiQ/C2vyovS0GktbAne4iCDI4LZilJo9nHKMGTTSXCA3ypQUme3vVS/D7MqDjM0wBKRvr+j5q9px7xQjJIaYaI+4/LiwNDXfqEh9zmp1u78GdeJxUwtpBBSOTSo2mv8knR0j5J2fV50FLnu/UGiM4ay09ZWS0WgOkkc6clgaYPzjIxI0g9KYu22jBWCMtnhLL/QvXE2jxrIi/A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0a+Js7elHfVkkwA5LmfROcELMrGjeCLb2qiC5suCJTY=;
- b=Yt3hXkHeuvv/4tHMGEgGIln1dWSH/1npmXCJcS6F5YIi/GcUWx+g2lyr7XFzAZLGIjWg7kSIMW39mj5Vv1yFw5i7QVLef1H04FTKgTXHyQDqhLOk9EfxjCL0OfJJv7PSKEDdAK2EzYw6AEFzAduQA/G1YnveHOS9p/Qi3vZb4QU=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-Received: from PAXPR04MB9642.eurprd04.prod.outlook.com (2603:10a6:102:240::14)
- by PA1PR04MB10169.eurprd04.prod.outlook.com (2603:10a6:102:465::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7452.50; Tue, 23 Apr
- 2024 20:23:18 +0000
-Received: from PAXPR04MB9642.eurprd04.prod.outlook.com
- ([fe80::1e67:dfc9:d0c1:fe58]) by PAXPR04MB9642.eurprd04.prod.outlook.com
- ([fe80::1e67:dfc9:d0c1:fe58%7]) with mapi id 15.20.7472.044; Tue, 23 Apr 2024
- 20:23:18 +0000
-Date: Tue, 23 Apr 2024 16:23:06 -0400
-From: Frank Li <Frank.li@nxp.com>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>,
-	linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	imx@lists.linux.dev, linux-amlogic@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>, Yue Wang <yue.wang@amlogic.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Xiaowei Song <songxiaowei@hisilicon.com>,
-	Binghui Wang <wangbinghui@hisilicon.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-	Pali =?iso-8859-1?Q?Roh=E1r?= <pali@kernel.org>
-Subject: Re: [PATCH v2 3/4] PCI: imx6: Convert to agnostic GPIO API
-Message-ID: <ZigYqtyn4BTbWgRu@lizhi-Precision-Tower-5810>
-References: <20240423172208.2723892-1-andriy.shevchenko@linux.intel.com>
- <20240423172208.2723892-4-andriy.shevchenko@linux.intel.com>
- <ZigSiCBIwoEIPYoG@lizhi-Precision-Tower-5810>
- <ZigUL7exXBSbWDIR@smile.fi.intel.com>
- <ZigXJJj4e+oaANAt@lizhi-Precision-Tower-5810>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZigXJJj4e+oaANAt@lizhi-Precision-Tower-5810>
-X-ClientProxiedBy: SJ0PR03CA0224.namprd03.prod.outlook.com
- (2603:10b6:a03:39f::19) To PAXPR04MB9642.eurprd04.prod.outlook.com
- (2603:10a6:102:240::14)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E495B143873;
+	Tue, 23 Apr 2024 20:53:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.68
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1713905594; cv=none; b=Sm/KT1M7zxzj/rzPLApDFnaRDY+DDqRK1Jri0rNPTVns7Wc03vXT/PQtZE66XoaDrud+P6BeidCcYxHpnUVJ8jzx8bQEbGIzWsuRSQW092J4AInpAfQDwbjypur/Pybo8JqCxXU5BWXK8gWYeEmKlDIPrkQgSOXWVXzWx++XLEI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1713905594; c=relaxed/simple;
+	bh=tkJQhuAxRxkvlrKAxT/DYjqof9/LOkisJTnyrjWYV14=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=MQUkZm8J4OtQrH/0UO/Gv3ea0r4cHEf9sucP4kTT2DoEUYPXj/aLkIMN4e2siiRGxrhfEYxMeXTNr5Yzs5rdIn0Rr+mfdX49jXuRKUaRKnJl1GqVI0OwfM2933Zmf5Jm/wZzZKB+huN51pFBmy0ioQkxGrBtt7GFMW5GLgZVc8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com; spf=pass smtp.mailfrom=jiaxyga.com; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=A4F8BDiV; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=jvkZwTSM; arc=none smtp.client-ip=79.137.243.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jiaxyga.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com; s=mailru;
+	h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:Cc:To:From:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=7hcB/HPbOxH1LOV4E8zMrvgm7jVmfF4251sN1tcnEj8=;
+	t=1713905589;x=1713995589; 
+	b=A4F8BDiVzjwJhB2wRlYpGnDAhQrfZiUed9tXA/GDpgmz5MNDRTYT1QXY3/P3N+B/Ipyy2V6BGODGD1pPiCDnGbi5ri09xsMjxge79GDt/HypyCI/oAV1CMwwKiKXe0s2A/Wa9DuoKHjA++42M9pduXuSiLpAjWqluognrgT7uZ8=;
+Received: from [10.12.4.6] (port=43420 helo=smtp32.i.mail.ru)
+	by fallback2.i.mail.ru with esmtp (envelope-from <danila@jiaxyga.com>)
+	id 1rzMpk-003fU7-EJ; Tue, 23 Apr 2024 23:33:44 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
+	; s=mailru; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
+	Cc:To:From:From:Sender:Reply-To:To:Cc:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
+	X-Cloud-Ids:Disposition-Notification-To;
+	bh=7hcB/HPbOxH1LOV4E8zMrvgm7jVmfF4251sN1tcnEj8=; t=1713904424; x=1713994424; 
+	b=jvkZwTSMueRqsri8BrY3uVo4Zctjuh5MPDzNalYB9Rs5aivWuzpJryE704lgRMqoaVine9xVZoz
+	UkkjWvB2cWpzqjgOF+rT5F28HwjXDX673Z2DcUU86fV8LjDtmu4HiSj3ZMOmvbmcUoLx4Ry+5b3c5
+	6X+WfAMkfUHMsj74rYw=;
+Received: by smtp32.i.mail.ru with esmtpa (envelope-from <danila@jiaxyga.com>)
+	id 1rzMpV-00000001fLu-2PSQ; Tue, 23 Apr 2024 23:33:30 +0300
+From: Danila Tikhonov <danila@jiaxyga.com>
+To: andersson@kernel.org,
+	linus.walleij@linaro.org
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Danila Tikhonov <danila@jiaxyga.com>
+Subject: [PATCH] pinctrl: qcom: pinctrl-sm7150: Fix sdc1 and ufs special pins regs
+Date: Tue, 23 Apr 2024 23:32:45 +0300
+Message-ID: <20240423203245.188480-1-danila@jiaxyga.com>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PAXPR04MB9642:EE_|PA1PR04MB10169:EE_
-X-MS-Office365-Filtering-Correlation-Id: b64f75f9-a092-45f4-26f5-08dc63d3367b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?8yiShEKiyqqkUtcMv+qMciDg7kemd2oIZTMPYmmHG1/rtYkAoNqc0fF4IiIv?=
- =?us-ascii?Q?dmi1P0/gJpe/SMNK/vDn+oYFbgBZHmf3/oHdKD2rJx7piGtR2JYzqamvZWzT?=
- =?us-ascii?Q?D4NxIW6YsB4qRup09Gwv5ofRTjcCxqrb/1EUk3VSAgFCzVRzPShEoL8KOX/h?=
- =?us-ascii?Q?nWPxbmonhdMCiADLflBCBezX2LJJYxK7SvsbASDCjQirHGy6VdVuEVhxx8aV?=
- =?us-ascii?Q?sst7KjV8Vp5rtF/cG61j1SiLEL5gvoghhcRxhBXw05kSoJlhV1/DB28W/wtG?=
- =?us-ascii?Q?0YlmjNO5jw+o0764YtBGfGedGvdmK2/EiXR9IndqQJ9qv44BKxVuj53aRCZd?=
- =?us-ascii?Q?MHjbj+gc6wsRCLv7ZrvyB/ADRVABVi8lK0eiF6sSRui+BgbcvKDZh8tPt4Q1?=
- =?us-ascii?Q?GtZS7i5xQnw+EYMbWnYVcrsrIjBy3Fj8i0bN/3mQ6gFA80tFMlHx6b8iTtMI?=
- =?us-ascii?Q?PFEKBPTmw9G+hGZ8ZphAjJ0gb5yoeIAh8EATLiJQVqPPQsTL+sK3WdOH8Wrd?=
- =?us-ascii?Q?mB5k+xR0eycqHYllk/Hwe1juu/8U2w+dPKGh7/e6dEZsvSi1CiDjspShNWn6?=
- =?us-ascii?Q?Bh6bgRVipA5r6jZcmxvgq0Aptx63ceq1H9H78GVtxxxjif0NOqyp+oAtd1Rk?=
- =?us-ascii?Q?5YgrtuP8c7n5mu69Z/4UpphfLdhQyecZxQ9SSx9jCgfsk73CpGOjxCi4pmJX?=
- =?us-ascii?Q?dKbQaU78F4YXO3CYgy4vxNmOTcaPNPLVjo/+N92p3NIMhxB4UbKO1MLd+8jE?=
- =?us-ascii?Q?SDEGyrcHql7+bzWrBA0F0DiWZaigzEM8W3xOTCVV+4VPiFlZ0xR2PokaNx10?=
- =?us-ascii?Q?xxFKwIC3EUFdUKamLzSuK18IIQEYhkfKGnrNLE/9f3bkuXoQFuyQY3MTQbGa?=
- =?us-ascii?Q?fh+Y4JT7jhbl6xYHBOWbKWXhchUqIlsTdHsY9P/IB9cKSXTD4olNZNWjkD0T?=
- =?us-ascii?Q?I1AALPtSxp9cAccALWE6boR40KCzFObq7+odh6s/k7t1AqQukgqXfq1bFKDv?=
- =?us-ascii?Q?2dKDaFpBEsgaT+JGk9dhzr1mKGnc0reQ5LR9y44xXV3Ffn1IDQnsCBv/WlwR?=
- =?us-ascii?Q?oAyj5wmv6G5EqbE04CAhpKdFs9ejflZKCYcyEtgEqjYejNex6voNrOXkurUg?=
- =?us-ascii?Q?6xSEOlkL99KG/jUvqZvqP5yOJsNhLXcGz4rc0FSwHcW8gWurSTdBHmtTefg0?=
- =?us-ascii?Q?mvKJh8hA0nVeVLA6xvgqcidkfni7pxD1BXkvYbzVHflatfkL908Y7ClW+A8e?=
- =?us-ascii?Q?tTzLea4ggngFLiO8KvRR7KZTK/8w3vlp+nsRSnSpYG4nazJtQSQKlror5ByY?=
- =?us-ascii?Q?9ZB56ypBDy413lA6IDyk9iL6zwRwssiSxlnQCAhZ8hgcCg=3D=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR04MB9642.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366007)(376005)(7416005)(52116005)(1800799015)(38350700005);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?r3T4Wpt/g/Y5f1wZ25LCK8fqTUkl/jJt+frZcf/rKPvIC+wWisSPVKrW+Pg6?=
- =?us-ascii?Q?DnfhsZJUSp7vJr0mYjE8aTLVnnLdeq9m+UhczihiIG8Nciqj5eaWoJYKdQnw?=
- =?us-ascii?Q?4wNLcCWxe0Wn1aR7K3mAEX0dchVImAC2cMq/cLTfywYuPqmERe1r/s0dQ3mt?=
- =?us-ascii?Q?V2WTlWi9V4tiW7UGqWeExjO6ojTW6pMFybUvxK29wYn9iRGKZ9nMB1XW6FHK?=
- =?us-ascii?Q?BMo+28ku+7MDtOlUIPlLVmzIfBBKehpPdeYmXR9JQp/crZSgbXs3Tsvoaj3m?=
- =?us-ascii?Q?ZoIhcEiFRILEeuh5tnJpdX5gZLbEusLqit/QuQ+mE8KxRlELgRMIRFavjgt9?=
- =?us-ascii?Q?bb02zTbi7SQFIoQmBPQKZZ73gYO8t243XpHIMol7NN/3Qb05CjiawAjpZWaz?=
- =?us-ascii?Q?f2uwEgTePgeU3XFtGo5QyAwAqwZ+Pn6d3xpRGAkKhhwHxjoHqcQUoGz0EYK6?=
- =?us-ascii?Q?H8AlzPOmNtfR6L89m6ttGciUmtZPcd5vDiIV8SPojZmwvu/DyIgK5P9FZWGy?=
- =?us-ascii?Q?PNSSumTyOFtBZWebIE2BHvFNxD0SWXePlZ/S0QsqQAHnIf5dwUKUy6qIw2uT?=
- =?us-ascii?Q?OqEIgF+9r3/ofCEZ4zYI/7nidZdL8kRbBuh1Y1sNwLt8LuMumU+DlQFAmN0/?=
- =?us-ascii?Q?y8PpgRFWE7WBulBbFx3WdP027yIwn5sFx+ZlF4+TUxZUe6T/79OKPpZ2FgTT?=
- =?us-ascii?Q?7hRWoaqe2EEPpmVEytpJ8y3Gu224lRhWxmRU/7x2XHUwpIvAeNvrHzQjmypM?=
- =?us-ascii?Q?Zm0t+/MQZgEjTRPs81FlDKyJ4RqDRS2ipYujlisq5qWOPBQpmzsKJCqCRyaY?=
- =?us-ascii?Q?2dDYQM+SoyHbTJ+mTc5Q0w1tGZYlE/oNBhC2ZTSprbWkvfqc1G+JxYpF4hs/?=
- =?us-ascii?Q?x75q6tPQBCUPgs9YcEJn645PDzBkSCuFJGqnBjM7+jUCdPDe0+yaf0JTswS1?=
- =?us-ascii?Q?mJQxEaKYkg6r3XCI1C4Rg4cNE+rKb8PcPT4tNkxAE8s76YWGJPPr6LMMN61+?=
- =?us-ascii?Q?rYxql4wGejH/FlMkc83JzMbjzdW6rK04p344iOaUfnGSNWfV5FEAhEsGAOau?=
- =?us-ascii?Q?CH5IATTVeBQHkriNI41I7HkyzFpa6l6oIgZsZCmBoTWQXDkyyP8s/fiUMRle?=
- =?us-ascii?Q?9/3Dy24S7p12XGZV6HAM5lP6l2Pyt54azsduy3Zt/2UDR66rFCAcfos9TO6+?=
- =?us-ascii?Q?C5Q90Bjrdd5vDT8EPbk49b4n6n3lNRkpGmOUtXJB4Z7VMK4jhcrUbk1Rfsfa?=
- =?us-ascii?Q?stAQGshZLdwarLYTa4m3zlanUmUeDaUFtKY2r/XGQCaC2gUwpRorKAm20Zka?=
- =?us-ascii?Q?UWc65MclVOiD8yi6DVag9Ps3gab4lPpzDFBab853L7BraKUJm06NjHuIKVWy?=
- =?us-ascii?Q?szQgQf9KvHdqApuGK7vSsuXtnEYp4fAHfxdFASVfR/HvfYdJAVdhAfKRX+HC?=
- =?us-ascii?Q?jERadBedpndCTNaeLijLh7/jflfGZ7Husg7EjLk3u1hZOv8aBGfp5ctfS4eC?=
- =?us-ascii?Q?eKsS+9Krm9hIlMkUkj4B0oZzbg8eNRnMZ8Kn094acVheU6E+UzW0OnABE4M2?=
- =?us-ascii?Q?yoVRNR0M9J68JEuj1DRCr6NLYYv1/iUoRJFiR2+Y?=
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b64f75f9-a092-45f4-26f5-08dc63d3367b
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR04MB9642.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Apr 2024 20:23:18.4883
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: KTx85ekG1/Rq6NQFinYUq8AUqIOVahBwkxIH9KZq1gz4DunP1A9QcR65w3bi1iKmBJqaBdoB/bhDgKhyp04Stw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA1PR04MB10169
+Content-Transfer-Encoding: 8bit
+X-Mailru-Src: smtp
+X-7564579A: 78E4E2B564C1792B
+X-77F55803: 4F1203BC0FB41BD9CB0CA91FF61D77F079DB05CF36BBC9A3F69AE33A8C859DB8182A05F5380850406946F34C56A382629487ABAC94A94B54471C65A309377891598152BD3252769AB14F0FA0E0289DA8
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE77E216A0E97507353EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F790063703E3935C5A8197E98638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D85C2982A8BDF01D17A411E1E24DA7AD66A20C02CBBD2F4920CC7F00164DA146DAFE8445B8C89999728AA50765F79006377FF6DF7F8AE7C7A6389733CBF5DBD5E9C8A9BA7A39EFB766F5D81C698A659EA7CC7F00164DA146DA9985D098DBDEAEC8632EDEA9CD5989A3F6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA73AA81AA40904B5D9A18204E546F3947C6089696B24BB1D196E0066C2D8992A164AD6D5ED66289B523666184CF4C3C14F6136E347CC761E07725E5C173C3A84C3C778128E6DD73434BA3038C0950A5D36B5C8C57E37DE458B330BD67F2E7D9AF16D1867E19FE14079C09775C1D3CA48CFE478A468B35FE7671DD303D21008E298D5E8D9A59859A8B6B372FE9A2E580EFC725E5C173C3A84C310D8D88A3CEF7A9335872C767BF85DA2F004C90652538430E4A6367B16DE6309
+X-C1DE0DAB: 0D63561A33F958A59BF55377A6AC763D5002B1117B3ED69650AA5E65191A7B99B74D9144D44E4FCF823CB91A9FED034534781492E4B8EEADC3194D76C41E9723C79554A2A72441328621D336A7BC284946AD531847A6065A535571D14F44ED41
+X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF77DD89D51EBB7742D3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CFE02C963CED2E748716C353189E1DC92A896897DD9602F5F88AE5DEDA4A54973FCCDF2CE9FE05F2E7930DB2EDDBD5B4A185302B5F5BA37EE0A7E06B51654D070DDA75654BAFD43DF477C8E16086367389913E6812662D5F2A78A556DA1408BD603BAB4BE5B351B77B77D7EADF59166DF0
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojbL9S8ysBdXif34LPabVk/xqkB+AD+gK2
+X-Mailru-Sender: 9EB879F2C80682A09F26F806C73949817A7D7943590EEF51D85FDC519B83646028049072C5A59D1E2A72FDF98597EBDB2C62728BC403A049225EC17F3711B6CF1A6F2E8989E84EC137BFB0221605B344978139F6FA5A77F05FEEDEB644C299C0ED14614B50AE0675
+X-Mras: Ok
+X-7564579A: 646B95376F6C166E
+X-77F55803: 6242723A09DB00B475A7E96CA7452FC883DD00B47595C7BFD442F0DCAF96DD3D049FFFDB7839CE9E89C7DB93084D3E9CDA427CD6706D5A64A10E8988E20EB5F14B4C8169A88E8F15
+X-7FA49CB5: 0D63561A33F958A5D914510388C8334F0E83B89AE99F3855DCFF150050F863BF8941B15DA834481FA18204E546F3947C0072D29C69FDE18FF6B57BC7E64490618DEB871D839B7333395957E7521B51C2DFABB839C843B9C08941B15DA834481F8AA50765F79006372D0AD69218B09DB0389733CBF5DBD5E9B5C8C57E37DE458BD96E472CDF7238E0725E5C173C3A84C3770A2E5BFE0A2A8135872C767BF85DA2F004C90652538430E4A6367B16DE6309
+X-87b9d050: 1
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojzz1Jr2ms4lXxX+WP3M/0og==
+X-Mailru-MI: 8000000000000800
+X-Mras: Ok
 
-On Tue, Apr 23, 2024 at 04:16:36PM -0400, Frank Li wrote:
-> On Tue, Apr 23, 2024 at 11:03:59PM +0300, Andy Shevchenko wrote:
-> > On Tue, Apr 23, 2024 at 03:56:56PM -0400, Frank Li wrote:
-> > > On Tue, Apr 23, 2024 at 08:19:06PM +0300, Andy Shevchenko wrote:
-> > 
-> > ...
-> > 
-> > > > +	imx6_pcie->reset_gpiod =
-> > > > +		devm_gpiod_get_optional(dev, "reset",
-> > > > +			imx6_pcie->gpio_active_high ? GPIOD_OUT_HIGH : GPIOD_OUT_LOW);
-> > > > +	if (IS_ERR(imx6_pcie->reset_gpiod))
-> > > > +		return dev_err_probe(dev, PTR_ERR(imx6_pcie->reset_gpiod),
-> > > > +				     "unable to get reset gpio\n");
-> > > 
-> > > Small problem here. err message "unable to get reset gpio\n" will print
-> > > when -EPROBE_DEFER happen. EPROBE_DEFER is quite common when use i2c
-> > > expand gpio chip.
-> > 
-> > I'm not sure how you come to this conclusion. Can you elaborate, please?
-> > P.S> I do not see a problem as described.
-> 
-> If i2c gpio-expander driver have not load when imx6_pcie probe, I supposed
-> devm_gpiod_get_optional() will return -EPROBE_DEFER, 
-> 
-> if (IS_ERR(imx6_pcie->reset_gpiod)) should be true. then dev_err_probe()
-> will run and print "unable to get reset gpio\n" with error code
-> -EPROBE_DEFER.
+SDC1 and UFS_RESET special pins are located in the west memory bank.
 
-Sorry for that. dev_err_probe() already consider this. Please forget my
-comments.
+SDC1 have address 0x359a000:
+0x3500000 (TLMM BASE) + 0x0 (WEST) + 0x9a000 (SDC1_OFFSET) = 0x359a000
 
-dev_err_probe() 
-{
-	if (err != -EPROBE_DEFER) {
-		dev_err(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
-	}
-}
+UFS_RESET have address 0x359f000:
+0x3500000 (TLMM BASE) + 0x0 (WEST) + 0x9f000 (UFS_OFFSET) = 0x359a000
 
-So:
+Fixes: b915395c9e04 ("pinctrl: qcom: Add SM7150 pinctrl driver")
+Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+---
+ drivers/pinctrl/qcom/pinctrl-sm7150.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+diff --git a/drivers/pinctrl/qcom/pinctrl-sm7150.c b/drivers/pinctrl/qcom/pinctrl-sm7150.c
+index c542f9bc6bcd..095a1ca75849 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sm7150.c
++++ b/drivers/pinctrl/qcom/pinctrl-sm7150.c
+@@ -65,7 +65,7 @@ enum {
+ 		.intr_detection_width = 2,		\
+ 	}
+ 
+-#define SDC_QDSD_PINGROUP(pg_name, ctl, pull, drv)	\
++#define SDC_QDSD_PINGROUP(pg_name, _tile, ctl, pull, drv) \
+ 	{						\
+ 		.grp = PINCTRL_PINGROUP(#pg_name, 	\
+ 			pg_name##_pins, 		\
+@@ -75,7 +75,7 @@ enum {
+ 		.intr_cfg_reg = 0,			\
+ 		.intr_status_reg = 0,			\
+ 		.intr_target_reg = 0,			\
+-		.tile = SOUTH,				\
++		.tile = _tile,				\
+ 		.mux_bit = -1,				\
+ 		.pull_bit = pull,			\
+ 		.drv_bit = drv,				\
+@@ -101,7 +101,7 @@ enum {
+ 		.intr_cfg_reg = 0,			\
+ 		.intr_status_reg = 0,			\
+ 		.intr_target_reg = 0,			\
+-		.tile = SOUTH,				\
++		.tile = WEST,				\
+ 		.mux_bit = -1,				\
+ 		.pull_bit = 3,				\
+ 		.drv_bit = 0,				\
+@@ -1199,13 +1199,13 @@ static const struct msm_pingroup sm7150_groups[] = {
+ 	[117] = PINGROUP(117, NORTH, _, _, _, _, _, _, _, _, _),
+ 	[118] = PINGROUP(118, NORTH, _, _, _, _, _, _, _, _, _),
+ 	[119] = UFS_RESET(ufs_reset, 0x9f000),
+-	[120] = SDC_QDSD_PINGROUP(sdc1_rclk, 0x9a000, 15, 0),
+-	[121] = SDC_QDSD_PINGROUP(sdc1_clk, 0x9a000, 13, 6),
+-	[122] = SDC_QDSD_PINGROUP(sdc1_cmd, 0x9a000, 11, 3),
+-	[123] = SDC_QDSD_PINGROUP(sdc1_data, 0x9a000, 9, 0),
+-	[124] = SDC_QDSD_PINGROUP(sdc2_clk, 0x98000, 14, 6),
+-	[125] = SDC_QDSD_PINGROUP(sdc2_cmd, 0x98000, 11, 3),
+-	[126] = SDC_QDSD_PINGROUP(sdc2_data, 0x98000, 9, 0),
++	[120] = SDC_QDSD_PINGROUP(sdc1_rclk, WEST, 0x9a000, 15, 0),
++	[121] = SDC_QDSD_PINGROUP(sdc1_clk, WEST, 0x9a000, 13, 6),
++	[122] = SDC_QDSD_PINGROUP(sdc1_cmd, WEST, 0x9a000, 11, 3),
++	[123] = SDC_QDSD_PINGROUP(sdc1_data, WEST, 0x9a000, 9, 0),
++	[124] = SDC_QDSD_PINGROUP(sdc2_clk, SOUTH, 0x98000, 14, 6),
++	[125] = SDC_QDSD_PINGROUP(sdc2_cmd, SOUTH, 0x98000, 11, 3),
++	[126] = SDC_QDSD_PINGROUP(sdc2_data, SOUTH, 0x98000, 9, 0),
+ };
+ 
+ static const struct msm_gpio_wakeirq_map sm7150_pdc_map[] = {
+-- 
+2.44.0
 
-> 
-> driver framework will retry imx6_pcie probe again when a new device appear.
-> it may retry sevial times utill i2c gpio-expander driver probe success or
-> timeout.
-> 
-> Frank
-> 
-> > 
-> > -- 
-> > With Best Regards,
-> > Andy Shevchenko
-> > 
-> > 
 
