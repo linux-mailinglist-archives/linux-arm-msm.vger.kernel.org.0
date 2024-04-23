@@ -1,328 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-18340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18344-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4575A8AF55D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 19:22:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 04BAD8AF6C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 20:43:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EF72828407B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 17:22:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AEBF82856FF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 18:43:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E937613E8BF;
-	Tue, 23 Apr 2024 17:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF8C513F445;
+	Tue, 23 Apr 2024 18:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Wdn4A8IU"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kxAoW/EL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDCFA13DBBC;
-	Tue, 23 Apr 2024 17:22:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D86413FD61;
+	Tue, 23 Apr 2024 18:42:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713892943; cv=none; b=RUw5LSuMQAZqmjiESBZVhls2moePSQ00PE/xBqHsttmwB+jdrMV0NKrX2T8+SjKFgdZOHhWiaX+tJZxS/Uu8Oxw1Iv04MmA+qId925odi6sk8yYA4An2zBR2MnuMAZA8PailjcVWdGvYcNQfS9H+Js2qETyv6D2DXUhPKG1iZeU=
+	t=1713897770; cv=none; b=FxAMI2B63n4hC5k73qAu9KF4We4pT5GUToD17mqPOVNjFBXQT1kiJIdxvLNQWLN9AKRn6rZfeMfYKjEC9+3i60SpN3/Ww8mMtDlxs2RewXxlD9Ggf+EJDgFvFE3AJVLw04LHD3a8uTjxwc13XQJC09EdRSJwzD+OJdOWMVRf/os=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713892943; c=relaxed/simple;
-	bh=HQ0CAMpENoxRAc45GVnSnQeccFUmQ6Kcw6VpvHptE3E=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nFOycIKP64202lGXUj3LJ2guQNflxafuu1nobYaAbPpPJA6A4DDiyUTk/gRwBO9bbQiSc6GrkQklMqL2uNPi5vPR9sX7/RAhOWE9jw3hmyHFFEJ6PjhtuXP46CiQp12rTHFiztMXlawPPVL2GZBLhN3RqXT+Nd7LJHrgMooWoBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Wdn4A8IU; arc=none smtp.client-ip=198.175.65.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1713892942; x=1745428942;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=HQ0CAMpENoxRAc45GVnSnQeccFUmQ6Kcw6VpvHptE3E=;
-  b=Wdn4A8IU8h6wQ3tNKkAob0g0MtX967bWidFVjxRxyJJbHYpuAnrfSwsC
-   7pnns5AUyagClPW4SzNbmb6b21ptj301ktuxTxAFCLjdcfj1HwU8x4SzL
-   eOdA9vQY2HhgpRnYlQINQ45rrV3LxdHXrzNPdJu1Y3R4G2vYa6k6Z6FMo
-   ZJKHj8aRSu4ZDkC9wLIEuh6Y5hyuGldCEhWwEyt4drcgW8vlmh5fVz3YR
-   ewm225JBVWRcVfr2JWPkjy7CmqVKV8giVK+OOpfkULxBMUh66y/TTq4Ka
-   Ikd2xg1aqgBkvYljKjEim2V3/7A/G/4IgH7wQlLr/iMKAqiHIUbzaR07c
-   w==;
-X-CSE-ConnectionGUID: 5LzHQR05SqW6Xcqr/s06fg==
-X-CSE-MsgGUID: 3GMLPa4wRGqA9GIwlaFRkg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11053"; a="20911805"
-X-IronPort-AV: E=Sophos;i="6.07,222,1708416000"; 
-   d="scan'208";a="20911805"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Apr 2024 10:22:20 -0700
-X-CSE-ConnectionGUID: D2LsbMA/T0SHx+Ukn/Iubg==
-X-CSE-MsgGUID: 3YywkTJMRTOlXe+oPfquJw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,222,1708416000"; 
-   d="scan'208";a="25051426"
-Received: from black.fi.intel.com ([10.237.72.28])
-  by orviesa008.jf.intel.com with ESMTP; 23 Apr 2024 10:22:11 -0700
-Received: by black.fi.intel.com (Postfix, from userid 1003)
-	id A611D51E; Tue, 23 Apr 2024 20:22:10 +0300 (EEST)
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	linux-omap@vger.kernel.org,
-	linux-pci@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	imx@lists.linux.dev,
-	linux-amlogic@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-tegra@vger.kernel.org
-Cc: Vignesh Raghavendra <vigneshr@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Yue Wang <yue.wang@Amlogic.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Xiaowei Song <songxiaowei@hisilicon.com>,
-	Binghui Wang <wangbinghui@hisilicon.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>
-Subject: [PATCH v2 4/4] PCI: kirin: Convert to agnostic GPIO API
-Date: Tue, 23 Apr 2024 20:19:07 +0300
-Message-ID: <20240423172208.2723892-5-andriy.shevchenko@linux.intel.com>
-X-Mailer: git-send-email 2.43.0.rc1.1336.g36b5255a03ac
-In-Reply-To: <20240423172208.2723892-1-andriy.shevchenko@linux.intel.com>
-References: <20240423172208.2723892-1-andriy.shevchenko@linux.intel.com>
+	s=arc-20240116; t=1713897770; c=relaxed/simple;
+	bh=g0Vv83DG4sqEBlU4WnqAEhu+6e0HEs/ZvIVf8KIJAzk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=k3RafVu25jPQca2rMkuyoadA7u3A00jLHARytU7s9clsRwiVwcuGCxNJJjX3v9Nb90O5BxBKWgzM6FZfVsXTEFjuSyDFd4qD1qS7MzWmNZmJHsJKGV+QQGHne8vIDQGP8Muo3pmb62zI88B5L1+URlAATTZ5nqLaF7kF+/Yi76s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kxAoW/EL; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43N9pqQs009943;
+	Tue, 23 Apr 2024 18:40:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=fi+Yeyjbs3lHGzE5VRRS5LlzgImkm2F7nnTS/uUtKaU=; b=kx
+	AoW/EL/jbcXACnypdoEvCrf7BIid6wG7T/eQIEwJImlKXeqP/YjljVHheaa/VKUC
+	jgSyDllLKtEX0XX3L5kKkRs0hTc7XkoQw33cPYHjSPVNBeWEnWbiMpfmDZ4fTExI
+	V0fVeOgsnNuWrRl/+BelHTdnv7ZaGEdTrkwql1IQt2gWTdPuXyO9LxoHejCiLxry
+	BcZN+PjmLyp0srAJsGhWWH0MzaXiiPcLd2ofxUwgxKl5NzlqsPwduht9OZFybt+h
+	ZaObPQqR7yBsOCsdYvPHIHfhz+YI//VL03i2EPJUHxNUGGo48gvhgaikizp3N8XN
+	ClHjK/Fas34RvQeZ3r+Q==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xpapmhhmp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 23 Apr 2024 18:40:32 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43NIeVV4022523
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 23 Apr 2024 18:40:31 GMT
+Received: from [10.71.109.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 23 Apr
+ 2024 11:40:30 -0700
+Message-ID: <15f18424-834a-65dc-9c39-8c744abce0a6@quicinc.com>
+Date: Tue, 23 Apr 2024 11:40:30 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 3/7] drm/msm/dpu: Always flush the slave INTF on the CTL
+Content-Language: en-US
+To: Marijn Suijten <marijn.suijten@somainline.org>,
+        Rob Clark
+	<robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean
+ Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter
+	<daniel@ffwll.ch>,
+        Archit Taneja <architt@codeaurora.org>,
+        Chandan Uddaraju
+	<chandanu@codeaurora.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Sravanthi
+ Kollukuduru <skolluku@codeaurora.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        Jordan
+ Crouse <jordan@cosmicpenguin.net>,
+        Rajesh Yadav <ryadav@codeaurora.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        AngeloGioacchino Del Regno
+	<angelogioacchino.delregno@collabora.com>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami
+ Kettunen <jami.kettunen@somainline.org>
+References: <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-0-78ae3ee9a697@somainline.org>
+ <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-3-78ae3ee9a697@somainline.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-3-78ae3ee9a697@somainline.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Vb2Pp9EBEyMwbxjyfOZsQQHuPjcOv84F
+X-Proofpoint-GUID: Vb2Pp9EBEyMwbxjyfOZsQQHuPjcOv84F
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-23_15,2024-04-23_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 lowpriorityscore=0 malwarescore=0 priorityscore=1501
+ mlxscore=0 mlxlogscore=999 clxscore=1011 spamscore=0 adultscore=0
+ phishscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404230043
 
-The of_gpio.h is going to be removed. In preparation of that convert
-the driver to the agnostic API.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Rob Herring <robh@kernel.org>
----
- drivers/pci/controller/dwc/pcie-kirin.c | 105 ++++++++----------------
- 1 file changed, 35 insertions(+), 70 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-kirin.c b/drivers/pci/controller/dwc/pcie-kirin.c
-index d5523f302102..1753ab63a541 100644
---- a/drivers/pci/controller/dwc/pcie-kirin.c
-+++ b/drivers/pci/controller/dwc/pcie-kirin.c
-@@ -12,12 +12,10 @@
- #include <linux/compiler.h>
- #include <linux/delay.h>
- #include <linux/err.h>
--#include <linux/gpio.h>
- #include <linux/gpio/consumer.h>
- #include <linux/interrupt.h>
- #include <linux/mfd/syscon.h>
- #include <linux/of.h>
--#include <linux/of_gpio.h>
- #include <linux/of_pci.h>
- #include <linux/phy/phy.h>
- #include <linux/pci.h>
-@@ -78,16 +76,16 @@ struct kirin_pcie {
- 	void		*phy_priv;	/* only for PCIE_KIRIN_INTERNAL_PHY */
- 
- 	/* DWC PERST# */
--	int		gpio_id_dwc_perst;
-+	struct gpio_desc *id_dwc_perst_gpio;
- 
- 	/* Per-slot PERST# */
- 	int		num_slots;
--	int		gpio_id_reset[MAX_PCI_SLOTS];
-+	struct gpio_desc *id_reset_gpio[MAX_PCI_SLOTS];
- 	const char	*reset_names[MAX_PCI_SLOTS];
- 
- 	/* Per-slot clkreq */
- 	int		n_gpio_clkreq;
--	int		gpio_id_clkreq[MAX_PCI_SLOTS];
-+	struct gpio_desc *id_clkreq_gpio[MAX_PCI_SLOTS];
- 	const char	*clkreq_names[MAX_PCI_SLOTS];
- };
- 
-@@ -381,15 +379,20 @@ static int kirin_pcie_get_gpio_enable(struct kirin_pcie *pcie,
- 	pcie->n_gpio_clkreq = ret;
- 
- 	for (i = 0; i < pcie->n_gpio_clkreq; i++) {
--		pcie->gpio_id_clkreq[i] = of_get_named_gpio(dev->of_node,
--						    "hisilicon,clken-gpios", i);
--		if (pcie->gpio_id_clkreq[i] < 0)
--			return pcie->gpio_id_clkreq[i];
-+		pcie->id_clkreq_gpio[i] = devm_gpiod_get_index(dev,
-+							"hisilicon,clken", i,
-+							GPIOD_ASIS);
-+		if (IS_ERR(pcie->id_clkreq_gpio[i]))
-+			return dev_err_probe(dev, PTR_ERR(pcie->id_clkreq_gpio[i]),
-+					     "unable to get a valid clken gpio\n");
- 
- 		pcie->clkreq_names[i] = devm_kasprintf(dev, GFP_KERNEL,
- 						       "pcie_clkreq_%d", i);
- 		if (!pcie->clkreq_names[i])
- 			return -ENOMEM;
-+
-+		gpiod_set_consumer_name(pcie->id_clkreq_gpio[i],
-+					pcie->clkreq_names[i]);
- 	}
- 
- 	return 0;
-@@ -407,10 +410,16 @@ static int kirin_pcie_parse_port(struct kirin_pcie *pcie,
- 		for_each_available_child_of_node(parent, child) {
- 			i = pcie->num_slots;
- 
--			pcie->gpio_id_reset[i] = of_get_named_gpio(child,
--							"reset-gpios", 0);
--			if (pcie->gpio_id_reset[i] < 0)
--				continue;
-+			pcie->id_reset_gpio[i] = devm_fwnode_gpiod_get_index(dev,
-+							 of_fwnode_handle(child),
-+							 "reset", 0, GPIOD_ASIS,
-+							 NULL);
-+			if (IS_ERR(pcie->id_reset_gpio[i])) {
-+				if (PTR_ERR(pcie->id_reset_gpio[i]) == -ENOENT)
-+					continue;
-+				return dev_err_probe(dev, PTR_ERR(pcie->id_reset_gpio[i]),
-+						     "unable to get a valid reset gpio\n");
-+			}
- 
- 			pcie->num_slots++;
- 			if (pcie->num_slots > MAX_PCI_SLOTS) {
-@@ -434,6 +443,9 @@ static int kirin_pcie_parse_port(struct kirin_pcie *pcie,
- 				ret = -ENOMEM;
- 				goto put_node;
- 			}
-+
-+			gpiod_set_consumer_name(pcie->id_reset_gpio[i],
-+						pcie->reset_names[i]);
- 		}
- 	}
- 
-@@ -463,14 +475,11 @@ static long kirin_pcie_get_resource(struct kirin_pcie *kirin_pcie,
- 		return PTR_ERR(kirin_pcie->apb);
- 
- 	/* pcie internal PERST# gpio */
--	kirin_pcie->gpio_id_dwc_perst = of_get_named_gpio(dev->of_node,
--							  "reset-gpios", 0);
--	if (kirin_pcie->gpio_id_dwc_perst == -EPROBE_DEFER) {
--		return -EPROBE_DEFER;
--	} else if (!gpio_is_valid(kirin_pcie->gpio_id_dwc_perst)) {
--		dev_err(dev, "unable to get a valid gpio pin\n");
--		return -ENODEV;
--	}
-+	kirin_pcie->id_dwc_perst_gpio = devm_gpiod_get(dev, "reset", GPIOD_ASIS);
-+	if (IS_ERR(kirin_pcie->id_dwc_perst_gpio))
-+		return dev_err_probe(dev, PTR_ERR(kirin_pcie->id_dwc_perst_gpio),
-+				     "unable to get a valid gpio pin\n");
-+	gpiod_set_consumer_name(kirin_pcie->id_dwc_perst_gpio, "pcie_perst_bridge");
- 
- 	ret = kirin_pcie_get_gpio_enable(kirin_pcie, pdev);
- 	if (ret)
-@@ -553,7 +562,7 @@ static int kirin_pcie_add_bus(struct pci_bus *bus)
- 
- 	/* Send PERST# to each slot */
- 	for (i = 0; i < kirin_pcie->num_slots; i++) {
--		ret = gpio_direction_output(kirin_pcie->gpio_id_reset[i], 1);
-+		ret = gpiod_direction_output_raw(kirin_pcie->id_reset_gpio[i], 1);
- 		if (ret) {
- 			dev_err(pci->dev, "PERST# %s error: %d\n",
- 				kirin_pcie->reset_names[i], ret);
-@@ -623,44 +632,6 @@ static int kirin_pcie_host_init(struct dw_pcie_rp *pp)
- 	return 0;
- }
- 
--static int kirin_pcie_gpio_request(struct kirin_pcie *kirin_pcie,
--				   struct device *dev)
--{
--	int ret, i;
--
--	for (i = 0; i < kirin_pcie->num_slots; i++) {
--		if (!gpio_is_valid(kirin_pcie->gpio_id_reset[i])) {
--			dev_err(dev, "unable to get a valid %s gpio\n",
--				kirin_pcie->reset_names[i]);
--			return -ENODEV;
--		}
--
--		ret = devm_gpio_request(dev, kirin_pcie->gpio_id_reset[i],
--					kirin_pcie->reset_names[i]);
--		if (ret)
--			return ret;
--	}
--
--	for (i = 0; i < kirin_pcie->n_gpio_clkreq; i++) {
--		if (!gpio_is_valid(kirin_pcie->gpio_id_clkreq[i])) {
--			dev_err(dev, "unable to get a valid %s gpio\n",
--				kirin_pcie->clkreq_names[i]);
--			return -ENODEV;
--		}
--
--		ret = devm_gpio_request(dev, kirin_pcie->gpio_id_clkreq[i],
--					kirin_pcie->clkreq_names[i]);
--		if (ret)
--			return ret;
--
--		ret = gpio_direction_output(kirin_pcie->gpio_id_clkreq[i], 0);
--		if (ret)
--			return ret;
--	}
--
--	return 0;
--}
--
- static const struct dw_pcie_ops kirin_dw_pcie_ops = {
- 	.read_dbi = kirin_pcie_read_dbi,
- 	.write_dbi = kirin_pcie_write_dbi,
-@@ -680,7 +651,7 @@ static int kirin_pcie_power_off(struct kirin_pcie *kirin_pcie)
- 		return hi3660_pcie_phy_power_off(kirin_pcie);
- 
- 	for (i = 0; i < kirin_pcie->n_gpio_clkreq; i++)
--		gpio_direction_output(kirin_pcie->gpio_id_clkreq[i], 1);
-+		gpiod_direction_output_raw(kirin_pcie->id_clkreq_gpio[i], 1);
- 
- 	phy_power_off(kirin_pcie->phy);
- 	phy_exit(kirin_pcie->phy);
-@@ -707,10 +678,6 @@ static int kirin_pcie_power_on(struct platform_device *pdev,
- 		if (IS_ERR(kirin_pcie->phy))
- 			return PTR_ERR(kirin_pcie->phy);
- 
--		ret = kirin_pcie_gpio_request(kirin_pcie, dev);
--		if (ret)
--			return ret;
--
- 		ret = phy_init(kirin_pcie->phy);
- 		if (ret)
- 			goto err;
-@@ -723,11 +690,9 @@ static int kirin_pcie_power_on(struct platform_device *pdev,
- 	/* perst assert Endpoint */
- 	usleep_range(REF_2_PERST_MIN, REF_2_PERST_MAX);
- 
--	if (!gpio_request(kirin_pcie->gpio_id_dwc_perst, "pcie_perst_bridge")) {
--		ret = gpio_direction_output(kirin_pcie->gpio_id_dwc_perst, 1);
--		if (ret)
--			goto err;
--	}
-+	ret = gpiod_direction_output_raw(kirin_pcie->id_dwc_perst_gpio, 1);
-+	if (ret)
-+		goto err;
- 
- 	usleep_range(PERST_2_ACCESS_MIN, PERST_2_ACCESS_MAX);
- 
--- 
-2.43.0.rc1.1336.g36b5255a03ac
+On 4/16/2024 4:57 PM, Marijn Suijten wrote:
+> As we can clearly see in a downstream kernel [1], flushing the slave INTF
+> is skipped /only if/ the PPSPLIT topology is active.
+> 
+> However, when DPU was originally submitted to mainline PPSPLIT was no
+> longer part of it (seems to have been ripped out before submission), but
+> this clause was incorrectly ported from the original SDE driver.  Given
+> that there is no support for PPSPLIT (currently), flushing the slave
+> INTF should /never/ be skipped (as the `if (ppsplit && !master) goto
+> skip;` clause downstream never becomes true).
+> 
+> [1]: https://git.codelinaro.org/clo/la/platform/vendor/opensource/display-drivers/-/blob/display-kernel.lnx.5.4.r1-rel/msm/sde/sde_encoder_phys_cmd.c?ref_type=heads#L1131-1139
+> 
+> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 3 ---
+>   1 file changed, 3 deletions(-)
+> 
+
+Yes, I agree with this, even though I did think earlier that intf master 
+flush was sufficient , I cross-checked the docs and this is the right way.
+
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
 
