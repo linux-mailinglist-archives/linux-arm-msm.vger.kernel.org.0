@@ -1,158 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-18356-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 558368AF89F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 22:56:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C18068AF811
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 22:36:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 877AE1C24228
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 20:56:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3B24A1F23FAE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 20:36:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36E28144D31;
-	Tue, 23 Apr 2024 20:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD902142E83;
+	Tue, 23 Apr 2024 20:36:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="A4F8BDiV";
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="jvkZwTSM"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="AfFm0DLD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fallback2.i.mail.ru (fallback2.i.mail.ru [79.137.243.68])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E495B143873;
-	Tue, 23 Apr 2024 20:53:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4398F1F95E
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Apr 2024 20:36:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713905594; cv=none; b=Sm/KT1M7zxzj/rzPLApDFnaRDY+DDqRK1Jri0rNPTVns7Wc03vXT/PQtZE66XoaDrud+P6BeidCcYxHpnUVJ8jzx8bQEbGIzWsuRSQW092J4AInpAfQDwbjypur/Pybo8JqCxXU5BWXK8gWYeEmKlDIPrkQgSOXWVXzWx++XLEI=
+	t=1713904601; cv=none; b=HoJTn3QRL+0SfBZMB56Bq+K67UJO1jbBlplRX7ENXT6nXVbS2IBCBoFGGgVxbhGRvzxd8EKIq8UayvpHpqFhnXUkzDUtOzdE/UlwzGQOvV1sjjrKdYgmyEEXZWeh2dv1keHCE4r8G74/LauwRltZIWfK2iEozTEkC35k4rnq1i8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713905594; c=relaxed/simple;
-	bh=tkJQhuAxRxkvlrKAxT/DYjqof9/LOkisJTnyrjWYV14=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=MQUkZm8J4OtQrH/0UO/Gv3ea0r4cHEf9sucP4kTT2DoEUYPXj/aLkIMN4e2siiRGxrhfEYxMeXTNr5Yzs5rdIn0Rr+mfdX49jXuRKUaRKnJl1GqVI0OwfM2933Zmf5Jm/wZzZKB+huN51pFBmy0ioQkxGrBtt7GFMW5GLgZVc8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com; spf=pass smtp.mailfrom=jiaxyga.com; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=A4F8BDiV; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=jvkZwTSM; arc=none smtp.client-ip=79.137.243.68
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jiaxyga.com
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com; s=mailru;
-	h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:Cc:To:From:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=7hcB/HPbOxH1LOV4E8zMrvgm7jVmfF4251sN1tcnEj8=;
-	t=1713905589;x=1713995589; 
-	b=A4F8BDiVzjwJhB2wRlYpGnDAhQrfZiUed9tXA/GDpgmz5MNDRTYT1QXY3/P3N+B/Ipyy2V6BGODGD1pPiCDnGbi5ri09xsMjxge79GDt/HypyCI/oAV1CMwwKiKXe0s2A/Wa9DuoKHjA++42M9pduXuSiLpAjWqluognrgT7uZ8=;
-Received: from [10.12.4.6] (port=43420 helo=smtp32.i.mail.ru)
-	by fallback2.i.mail.ru with esmtp (envelope-from <danila@jiaxyga.com>)
-	id 1rzMpk-003fU7-EJ; Tue, 23 Apr 2024 23:33:44 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
-	; s=mailru; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
-	Cc:To:From:From:Sender:Reply-To:To:Cc:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
-	X-Cloud-Ids:Disposition-Notification-To;
-	bh=7hcB/HPbOxH1LOV4E8zMrvgm7jVmfF4251sN1tcnEj8=; t=1713904424; x=1713994424; 
-	b=jvkZwTSMueRqsri8BrY3uVo4Zctjuh5MPDzNalYB9Rs5aivWuzpJryE704lgRMqoaVine9xVZoz
-	UkkjWvB2cWpzqjgOF+rT5F28HwjXDX673Z2DcUU86fV8LjDtmu4HiSj3ZMOmvbmcUoLx4Ry+5b3c5
-	6X+WfAMkfUHMsj74rYw=;
-Received: by smtp32.i.mail.ru with esmtpa (envelope-from <danila@jiaxyga.com>)
-	id 1rzMpV-00000001fLu-2PSQ; Tue, 23 Apr 2024 23:33:30 +0300
-From: Danila Tikhonov <danila@jiaxyga.com>
-To: andersson@kernel.org,
-	linus.walleij@linaro.org
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Danila Tikhonov <danila@jiaxyga.com>
-Subject: [PATCH] pinctrl: qcom: pinctrl-sm7150: Fix sdc1 and ufs special pins regs
-Date: Tue, 23 Apr 2024 23:32:45 +0300
-Message-ID: <20240423203245.188480-1-danila@jiaxyga.com>
-X-Mailer: git-send-email 2.44.0
+	s=arc-20240116; t=1713904601; c=relaxed/simple;
+	bh=hdVBYhMGvt4bNKMToAfaZbct/f7HDFw/iwj5G53CShY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tbyje3o67eA1GiaxOMdiam5O6Zof4QfULseY7eH3Z60yMr8lUlSO9aJK4g4H3XOXjPPEkcgrbCRtVTJO5KBw7euN+vxvNRy0DQjUqN35L5rhzF9WX2sDrd5Nz5q8nEc9Hci+fNvwrTCfM/UPL80VV+qpxP7Bc3FUs426ldM2syk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=AfFm0DLD; arc=none smtp.client-ip=209.85.222.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-78efd1a0022so450149385a.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Apr 2024 13:36:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1713904596; x=1714509396; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hdVBYhMGvt4bNKMToAfaZbct/f7HDFw/iwj5G53CShY=;
+        b=AfFm0DLDqAIgfOhgdgIlPSE17bGr/mf1rs3EKLIdFm8I6M/2ixA4QRO6xvNnlxLT95
+         TxIwYbf/9W4u5JAVzKWx6tAgOqxnjv/rjKDJ3n5B+5L/yNbynN4HEC1CLbES0yiBq/K2
+         ISYb71b3auMD/PTnBCUn4ueWgXibYM3by5SV4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713904596; x=1714509396;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hdVBYhMGvt4bNKMToAfaZbct/f7HDFw/iwj5G53CShY=;
+        b=hqbH51nFBvp97DL4x9vFZItxAtACM1hk3q/IKSPClg+DXkBOFDrirvd8MunLEKa6Hc
+         mG7/V1RYRkfkeDaHQR3v2WWlYpTO5zd75HxdCQGbhz80zI4kI7gKYs+hdp31VoiQ+S2W
+         TVoXB0SnJBcKjBi3KhZZ2d2EWXjV8Q3BHxH8NpNVJfhZ1nE9C8Hky06u6Joj58op6XUc
+         5Z+2FaTKrG9R62GOuOEQbJ8jS7HCiJvThSHoCUYxw4+rQ93YENVfT9fjDpteGf3UGfZs
+         KyLFhJPXtFJDMpJwBxluVD1CxIwyQWlVg+juyeIxjGbBA3WxlFTHMIpIaEskBRlp4Q8y
+         6FYQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWm5SnK7CeqUJwWu99cnTnG94tR1r5T4ynIiMjI/9+/u/zuTzPsdsXOZ4NCLYPNvmayqLRzB3baof46cGGqqDlrqqHRT4JgizhGkwM6UA==
+X-Gm-Message-State: AOJu0YwoxPC/TWEpo2dtP90qd8FLg8Dr9mlsE8YHiI/nUA1AodCvAYIg
+	ky8F9RBX+GBB+FTAAJ6rTo6urMvoXyXtRaKzaGGrdErUM5cBKffR2Uakf/q5GWDobz7ABt5ftP/
+	lzg2c
+X-Google-Smtp-Source: AGHT+IFc0TpbKBC3gUEt2R+KVBomuw0yKk5RzrWOJb+awK9JRCO+zha+nIMa99aglgIJH7rbtZ1mYg==
+X-Received: by 2002:a05:620a:238:b0:790:7d72:977c with SMTP id u24-20020a05620a023800b007907d72977cmr697063qkm.62.1713904596179;
+        Tue, 23 Apr 2024 13:36:36 -0700 (PDT)
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com. [209.85.160.174])
+        by smtp.gmail.com with ESMTPSA id a8-20020a05620a124800b0078f28a08785sm4394747qkl.88.2024.04.23.13.36.34
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 Apr 2024 13:36:35 -0700 (PDT)
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-43989e6ca42so95781cf.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Apr 2024 13:36:34 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVVFkar/5OE5mJbYJUMjvJMF2s3+9jPvapgMGIcGm6D5OmQkhLOvP61+rfQUqa5AAm+SRT0CIeg1sOG5JJGzNNEyAGr7LqPHyMr5XzLLg==
+X-Received: by 2002:a05:622a:1cc5:b0:437:b572:6a with SMTP id
+ bc5-20020a05622a1cc500b00437b572006amr6192qtb.23.1713904593750; Tue, 23 Apr
+ 2024 13:36:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Mailru-Src: smtp
-X-7564579A: 78E4E2B564C1792B
-X-77F55803: 4F1203BC0FB41BD9CB0CA91FF61D77F079DB05CF36BBC9A3F69AE33A8C859DB8182A05F5380850406946F34C56A382629487ABAC94A94B54471C65A309377891598152BD3252769AB14F0FA0E0289DA8
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE77E216A0E97507353EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F790063703E3935C5A8197E98638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D85C2982A8BDF01D17A411E1E24DA7AD66A20C02CBBD2F4920CC7F00164DA146DAFE8445B8C89999728AA50765F79006377FF6DF7F8AE7C7A6389733CBF5DBD5E9C8A9BA7A39EFB766F5D81C698A659EA7CC7F00164DA146DA9985D098DBDEAEC8632EDEA9CD5989A3F6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA73AA81AA40904B5D9A18204E546F3947C6089696B24BB1D196E0066C2D8992A164AD6D5ED66289B523666184CF4C3C14F6136E347CC761E07725E5C173C3A84C3C778128E6DD73434BA3038C0950A5D36B5C8C57E37DE458B330BD67F2E7D9AF16D1867E19FE14079C09775C1D3CA48CFE478A468B35FE7671DD303D21008E298D5E8D9A59859A8B6B372FE9A2E580EFC725E5C173C3A84C310D8D88A3CEF7A9335872C767BF85DA2F004C90652538430E4A6367B16DE6309
-X-C1DE0DAB: 0D63561A33F958A59BF55377A6AC763D5002B1117B3ED69650AA5E65191A7B99B74D9144D44E4FCF823CB91A9FED034534781492E4B8EEADC3194D76C41E9723C79554A2A72441328621D336A7BC284946AD531847A6065A535571D14F44ED41
-X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF77DD89D51EBB7742D3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CFE02C963CED2E748716C353189E1DC92A896897DD9602F5F88AE5DEDA4A54973FCCDF2CE9FE05F2E7930DB2EDDBD5B4A185302B5F5BA37EE0A7E06B51654D070DDA75654BAFD43DF477C8E16086367389913E6812662D5F2A78A556DA1408BD603BAB4BE5B351B77B77D7EADF59166DF0
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojbL9S8ysBdXif34LPabVk/xqkB+AD+gK2
-X-Mailru-Sender: 9EB879F2C80682A09F26F806C73949817A7D7943590EEF51D85FDC519B83646028049072C5A59D1E2A72FDF98597EBDB2C62728BC403A049225EC17F3711B6CF1A6F2E8989E84EC137BFB0221605B344978139F6FA5A77F05FEEDEB644C299C0ED14614B50AE0675
-X-Mras: Ok
-X-7564579A: 646B95376F6C166E
-X-77F55803: 6242723A09DB00B475A7E96CA7452FC883DD00B47595C7BFD442F0DCAF96DD3D049FFFDB7839CE9E89C7DB93084D3E9CDA427CD6706D5A64A10E8988E20EB5F14B4C8169A88E8F15
-X-7FA49CB5: 0D63561A33F958A5D914510388C8334F0E83B89AE99F3855DCFF150050F863BF8941B15DA834481FA18204E546F3947C0072D29C69FDE18FF6B57BC7E64490618DEB871D839B7333395957E7521B51C2DFABB839C843B9C08941B15DA834481F8AA50765F79006372D0AD69218B09DB0389733CBF5DBD5E9B5C8C57E37DE458BD96E472CDF7238E0725E5C173C3A84C3770A2E5BFE0A2A8135872C767BF85DA2F004C90652538430E4A6367B16DE6309
-X-87b9d050: 1
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojzz1Jr2ms4lXxX+WP3M/0og==
-X-Mailru-MI: 8000000000000800
-X-Mras: Ok
+References: <20240423134611.31979-1-johan+linaro@kernel.org>
+In-Reply-To: <20240423134611.31979-1-johan+linaro@kernel.org>
+From: Doug Anderson <dianders@chromium.org>
+Date: Tue, 23 Apr 2024 13:36:18 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=W2Y=Sr-=YkKb01XLQsbQJr2b981c9kcfvAc4_5E9XD7g@mail.gmail.com>
+Message-ID: <CAD=FV=W2Y=Sr-=YkKb01XLQsbQJr2b981c9kcfvAc4_5E9XD7g@mail.gmail.com>
+Subject: Re: [PATCH 0/6] HID/arm64: dts: qcom: sc8280xp-x13s: fix touchscreen
+ power on
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Jiri Kosina <jikos@kernel.org>, Benjamin Tissoires <benjamin.tissoires@redhat.com>, 
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, linux-input@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-SDC1 and UFS_RESET special pins are located in the west memory bank.
+Hi,
 
-SDC1 have address 0x359a000:
-0x3500000 (TLMM BASE) + 0x0 (WEST) + 0x9a000 (SDC1_OFFSET) = 0x359a000
+On Tue, Apr 23, 2024 at 6:46=E2=80=AFAM Johan Hovold <johan+linaro@kernel.o=
+rg> wrote:
+>
+> The Elan eKTH5015M touch controller on the X13s requires a 300 ms delay
+> before sending commands after having deasserted reset during power on.
+>
+> This series switches the X13s devicetree to use the Elan specific
+> binding so that the OS can determine the required power-on sequence and
+> make sure that the controller is always detected during boot. [1]
+>
+> The Elan hid-i2c driver currently asserts reset unconditionally during
+> suspend, which does not work on the X13s where the touch controller
+> supply is shared with other peripherals that may remain powered. Holding
+> the controller in reset can increase power consumption and also leaks
+> current through the reset circuitry pull ups.
 
-UFS_RESET have address 0x359f000:
-0x3500000 (TLMM BASE) + 0x0 (WEST) + 0x9f000 (UFS_OFFSET) = 0x359a000
+Can you provide more details about which devices exactly it shares
+power with? I'm worried that you may be shooting yourself in the foot
+to avoid shooting yourself in the arm.
 
-Fixes: b915395c9e04 ("pinctrl: qcom: Add SM7150 pinctrl driver")
-Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
----
- drivers/pinctrl/qcom/pinctrl-sm7150.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+Specifically, if those other peripherals that may remain powered ever
+power themselves off then you'll end up back-driving the touchscreen
+through the reset line, won't you? Since reset is active low then not
+asserting reset drives the reset line high and, if you power it off,
+it can leach power backwards through the reset line. The
+"goodix,no-reset-during-suspend" property that I added earlier
+specifically worked on systems where the rail was always-on so I could
+guarantee that didn't happen.
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm7150.c b/drivers/pinctrl/qcom/pinctrl-sm7150.c
-index c542f9bc6bcd..095a1ca75849 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm7150.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm7150.c
-@@ -65,7 +65,7 @@ enum {
- 		.intr_detection_width = 2,		\
- 	}
- 
--#define SDC_QDSD_PINGROUP(pg_name, ctl, pull, drv)	\
-+#define SDC_QDSD_PINGROUP(pg_name, _tile, ctl, pull, drv) \
- 	{						\
- 		.grp = PINCTRL_PINGROUP(#pg_name, 	\
- 			pg_name##_pins, 		\
-@@ -75,7 +75,7 @@ enum {
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
- 		.intr_target_reg = 0,			\
--		.tile = SOUTH,				\
-+		.tile = _tile,				\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-@@ -101,7 +101,7 @@ enum {
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
- 		.intr_target_reg = 0,			\
--		.tile = SOUTH,				\
-+		.tile = WEST,				\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
- 		.drv_bit = 0,				\
-@@ -1199,13 +1199,13 @@ static const struct msm_pingroup sm7150_groups[] = {
- 	[117] = PINGROUP(117, NORTH, _, _, _, _, _, _, _, _, _),
- 	[118] = PINGROUP(118, NORTH, _, _, _, _, _, _, _, _, _),
- 	[119] = UFS_RESET(ufs_reset, 0x9f000),
--	[120] = SDC_QDSD_PINGROUP(sdc1_rclk, 0x9a000, 15, 0),
--	[121] = SDC_QDSD_PINGROUP(sdc1_clk, 0x9a000, 13, 6),
--	[122] = SDC_QDSD_PINGROUP(sdc1_cmd, 0x9a000, 11, 3),
--	[123] = SDC_QDSD_PINGROUP(sdc1_data, 0x9a000, 9, 0),
--	[124] = SDC_QDSD_PINGROUP(sdc2_clk, 0x98000, 14, 6),
--	[125] = SDC_QDSD_PINGROUP(sdc2_cmd, 0x98000, 11, 3),
--	[126] = SDC_QDSD_PINGROUP(sdc2_data, 0x98000, 9, 0),
-+	[120] = SDC_QDSD_PINGROUP(sdc1_rclk, WEST, 0x9a000, 15, 0),
-+	[121] = SDC_QDSD_PINGROUP(sdc1_clk, WEST, 0x9a000, 13, 6),
-+	[122] = SDC_QDSD_PINGROUP(sdc1_cmd, WEST, 0x9a000, 11, 3),
-+	[123] = SDC_QDSD_PINGROUP(sdc1_data, WEST, 0x9a000, 9, 0),
-+	[124] = SDC_QDSD_PINGROUP(sdc2_clk, SOUTH, 0x98000, 14, 6),
-+	[125] = SDC_QDSD_PINGROUP(sdc2_cmd, SOUTH, 0x98000, 11, 3),
-+	[126] = SDC_QDSD_PINGROUP(sdc2_data, SOUTH, 0x98000, 9, 0),
- };
- 
- static const struct msm_gpio_wakeirq_map sm7150_pdc_map[] = {
--- 
-2.44.0
+From looking at your dts patch it looks like your power _is_ on an
+always-on rail so you should be OK, but it should be documented that
+this only works for always-on rails.
 
+...also, from your patch description it sounds as if (maybe?) you
+intend to eventually let the rail power off if the trackpad isn't a
+wakeup source. If you eventually plan to do that then you definitely
+need something more complex here...
+
+
+> Note that the latter also affects X13s variants where the touchscreen is
+> not populated as the driver also exits probe() with reset asserted.
+
+I assume driving against an external pull is _probably_ not a huge
+deal (should be a pretty small amount of power), but I agree it would
+be nice to fix.
+
+I'm a bit leery of actively driving the reset pin high (deasserting
+the reset) just to match the pull. It feels like in your case it would
+be better to make it an input w/ no pulls. It almost feels like
+something in the pinctrl system should handle this. Something where
+the pin is default "input no pull" at the board level and when the
+driver exits it should go back to the pinctrl default...
+
+
+I guess one last thought is: what do we do if/when someone needs the
+same solution but they want multiple sources of touchscreens, assuming
+we ever get the second-sourcing problem solved well. In that case the
+different touchscreen drivers might have a different idea of how the
+GPIO should be left when the driver exits...
+
+-Doug
 
