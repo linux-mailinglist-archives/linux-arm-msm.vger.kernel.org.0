@@ -1,859 +1,376 @@
-Return-Path: <linux-arm-msm+bounces-18317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA2578AE90D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 16:05:20 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1423B8AE91B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 16:08:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 18BC91C21A50
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 14:05:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BE952286428
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 14:08:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6447136E2F;
-	Tue, 23 Apr 2024 14:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18FA3137936;
+	Tue, 23 Apr 2024 14:08:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=imgtec.com header.i=@imgtec.com header.b="OqlZUDbN";
-	dkim=pass (1024-bit key) header.d=IMGTecCRM.onmicrosoft.com header.i=@IMGTecCRM.onmicrosoft.com header.b="Padl8vfC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kLyjOYu1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx07-00376f01.pphosted.com (mx07-00376f01.pphosted.com [185.132.180.163])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85B6A137902
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Apr 2024 14:04:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=185.132.180.163
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713881080; cv=fail; b=XjccOaeQ+DjxYP5HRBXCR04oilA7W88hl5XHUoLSo+HDyzE9+DeDhYD3j1EAiA4F1//wdHhFjeV4jJb0OdBQf8tTpjDyj2tVmQgk5rCDCSww3BlkOUmlTwzEPogDn7hmEvEkWs3/e9SVzPMQ6Snmxjy6uCdxtwnXx20gx7GnAp4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713881080; c=relaxed/simple;
-	bh=SCrDi3LAkAOR1r4wES7YtnAK4w5usO0rmn7AC2qC0ds=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=XDqqrY3IJJZXR0+RSCwY6Vpy1IceQox5XhhPXw9zjBBaRYVdVboMGXQ2megv6e3I5AJd/pAmhxUONscRWmi2ILpD8Uqn2GN/HcaGOSI3uAhkXXUl/rupvPTAdD9Zte8ks7ZUY3v1XL6+0eECUn2mnrDoP3gpbO6mCl0IcmY3dOM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=imgtec.com; spf=pass smtp.mailfrom=imgtec.com; dkim=pass (2048-bit key) header.d=imgtec.com header.i=@imgtec.com header.b=OqlZUDbN; dkim=pass (1024-bit key) header.d=IMGTecCRM.onmicrosoft.com header.i=@IMGTecCRM.onmicrosoft.com header.b=Padl8vfC; arc=fail smtp.client-ip=185.132.180.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=imgtec.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=imgtec.com
-Received: from pps.filterd (m0168889.ppops.net [127.0.0.1])
-	by mx07-00376f01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43N5VuoK027304;
-	Tue, 23 Apr 2024 15:02:40 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=imgtec.com; h=
-	from:to:cc:subject:date:message-id:references:in-reply-to
-	:content-type:mime-version; s=dk201812; bh=rDYvfZ2PiFxMYx3aRJFY2
-	O1VmY5HHcBwaJWRi8wh2V0=; b=OqlZUDbN2+TQdt9DYkgz9IN5ljVyrJc+2m2Qw
-	3Ew9R5RRPFAZfdLvWnxc8HWYR3dOdx9KZb/GzMRNFgNrED9AZuiBgrUr3KSaFxnh
-	lPPnKNlR/ReBVTOIjAjcLIfPhfrliV35IBYKWb9P1o34S5/mj00zPNW78MOoXVIX
-	AAn44j+BXorioM+AtqndQJNatsvPpcpKRLKy8cxG0rasWkq9YaxwHbsVrfE1nmrP
-	4C08HYLXUA118kT3Ok9UdFMYh6qcauewLwi0t2oph4Yc7ptF9+BJmgoJEkl80/K/
-	46QkNU6jo4MHeH7sjmAFMl1EJ1iuc5rLnDczRoI5gs/2QK1sw==
-Received: from hhmail05.hh.imgtec.org ([217.156.249.195])
-	by mx07-00376f01.pphosted.com (PPS) with ESMTPS id 3xm5ssktg9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Tue, 23 Apr 2024 15:02:39 +0100 (BST)
-Received: from HHMAIL05.hh.imgtec.org (10.100.10.120) by
- HHMAIL05.hh.imgtec.org (10.100.10.120) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.37; Tue, 23 Apr 2024 15:02:38 +0100
-Received: from GBR01-LO4-obe.outbound.protection.outlook.com (104.47.85.104)
- by email.imgtec.com (10.100.10.121) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.37 via Frontend Transport; Tue, 23 Apr 2024 15:02:38 +0100
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=GtXlDU0qhW6HFKotiskgQM+geGMj9+MZuVkDaGxdLFg4iwOOCBPGPXbXQLSmfvd5LNZAuhqQY0xGWuKEjonhEXNtfJwHmqX+VDCeN7Vg5W6V9Rs2SkLRWqwuU6K4mii9B7aDV9DdUmPUE7fXFhqoiBqOHyYlqUCb6B9VPRCBN0dxmfjHGfSXO8IIp9WMVT9e/wqvF/q2iOeqA22gym9RunLrTB3E0PTMvF+TufNyxPakAme5bIL9y0deqAbw5FfMn3y70HF2FrpuPPB9z16SQKF7zcl0qoIlDK63faanoX8U3aaEoqt1+MlUFl1eu4+fMIj+YwT1OoYMBarhn9J+aw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rDYvfZ2PiFxMYx3aRJFY2O1VmY5HHcBwaJWRi8wh2V0=;
- b=iWebxUuqcnYY3SPid48Tx9PLrvbqGKWNEp84EQTeltoi+3VB29zmdao2ZwRRZ4rtMwUWw+HQMhxRR1ZLXiag3L/CNcpLsQptsX7ddVUnOThb2ql2GDr4oVvLcgRaW4taTcFqsIBf5h3jmrxvnyt+04hlKoPE3VdWTFrt/600mGlRg5sy8iJhyKi+4EHEZ5GbCVRB67tHwVZlrdijmL8zU2XTKB7gnkpdTKXVf4wC8ezujZO/yhajxjyJawnCcFVdmlp/z5hfqUMuQyeKZBo34OAyxHELninTV69J32o66JzqUY9rSZFeEJGxvLXYlEvOLbmSqOYbT6/QjIkqZQykKA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=imgtec.com; dmarc=pass action=none header.from=imgtec.com;
- dkim=pass header.d=imgtec.com; arc=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A36D137909
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Apr 2024 14:08:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1713881292; cv=none; b=hZ0U7mnonIP+FzXvSbySDO05Ie85gWFEoFalFVH3lo2R/da5vSKHh9pm7xQk7Byp9Ns2JQgHfAMeYLtdCulB81qvm8dSd/U7NsZoHm9uEtknVryKMguiJGcpShQ/CT+m5Ban5hTJKeAT8+vFVeS+5oJjvsK13tuuFJd/9OFm5fA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1713881292; c=relaxed/simple;
+	bh=t/aqj9l6D4oGdOYYNfNJF28vDO2u61VylE1o53rL9Hk=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=MjsZWsPeDpC1HB9/L9qkVNM/k79lV2GCYP2yDMJhou4XYbsHutnaXMimJL7NASyjax0jVg1jSRuUnk3F5cy0ick3dBjgXMIhZs9uMdkDIzrpVakG2vEC2NYL/YbTBqxUXC/MEVbNuHrZqH/+ZMujmGr+yAirHLp1TY2LXU3mf70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kLyjOYu1; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4196c62bb4eso30305835e9.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Apr 2024 07:08:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=IMGTecCRM.onmicrosoft.com; s=selector2-IMGTecCRM-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rDYvfZ2PiFxMYx3aRJFY2O1VmY5HHcBwaJWRi8wh2V0=;
- b=Padl8vfClckeQX9QRLLUNzwjJmuSV9Uo7wdvnH8K/8KgN6llpYrRUWH12snlZ9gvthL8ZviKdCkIZhSTvhRU1eGPDS1P+lCoEFbHcXJAXHaauTn8SesUvkQIPzdmpXZHqsBgB2swn1ipfbCI+v53Vj+0mF8j6D7Lro4pP2OO3vA=
-Received: from CWXP265MB3397.GBRP265.PROD.OUTLOOK.COM (2603:10a6:400:e7::8) by
- LO0P265MB6243.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:24e::13) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7472.44; Tue, 23 Apr 2024 14:02:36 +0000
-Received: from CWXP265MB3397.GBRP265.PROD.OUTLOOK.COM
- ([fe80::8e9d:6b2f:9881:1e15]) by CWXP265MB3397.GBRP265.PROD.OUTLOOK.COM
- ([fe80::8e9d:6b2f:9881:1e15%6]) with mapi id 15.20.7472.044; Tue, 23 Apr 2024
- 14:02:36 +0000
-From: Matt Coster <Matt.Coster@imgtec.com>
-To: Jani Nikula <jani.nikula@intel.com>,
-        "dri-devel@lists.freedesktop.org"
-	<dri-devel@lists.freedesktop.org>
-CC: Andrzej Hajda <andrzej.hajda@intel.com>,
-        Maxime Ripard
-	<mripard@kernel.org>,
-        Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
-        Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
-        Oded Gabbay
-	<ogabbay@kernel.org>,
-        Russell King <linux@armlinux.org.uk>,
-        David Airlie
-	<airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Neil Armstrong
-	<neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Laurent Pinchart
-	<Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        "Jernej
- Skrabec" <jernej.skrabec@gmail.com>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Rodrigo Vivi
-	<rodrigo.vivi@intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Tvrtko Ursulin <tursulin@ursulin.net>,
-        Frank Binns <Frank.Binns@imgtec.com>, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Karol Herbst
-	<kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>,
-        Danilo Krummrich
-	<dakr@redhat.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        =?utf-8?B?Q2hyaXN0aWFuIEvDtm5pZw==?= <christian.koenig@amd.com>,
-        "Pan,
- Xinhui" <Xinhui.Pan@amd.com>,
-        Alain Volmat <alain.volmat@foss.st.com>,
-        "Huang
- Rui" <ray.huang@amd.com>, Zack Rusin <zack.rusin@broadcom.com>,
-        "bcm-kernel-feedback-list@broadcom.com"
-	<bcm-kernel-feedback-list@broadcom.com>,
-        Lucas De Marchi
-	<lucas.demarchi@intel.com>,
-        =?utf-8?B?VGhvbWFzIEhlbGxzdHLDtm0=?=
-	<thomas.hellstrom@linux.intel.com>,
-        "intel-gfx@lists.freedesktop.org"
-	<intel-gfx@lists.freedesktop.org>,
-        "intel-xe@lists.freedesktop.org"
-	<intel-xe@lists.freedesktop.org>,
-        "linux-arm-msm@vger.kernel.org"
-	<linux-arm-msm@vger.kernel.org>,
-        "freedreno@lists.freedesktop.org"
-	<freedreno@lists.freedesktop.org>,
-        "nouveau@lists.freedesktop.org"
-	<nouveau@lists.freedesktop.org>,
-        "amd-gfx@lists.freedesktop.org"
-	<amd-gfx@lists.freedesktop.org>
-Subject: Re: [PATCH 1/2] drm/print: drop include debugfs.h and include where
- needed
-Thread-Topic: [PATCH 1/2] drm/print: drop include debugfs.h and include where
- needed
-Thread-Index: AQHalYbkozT6WAMDO0iNRHXY6G8YNg==
-Date: Tue, 23 Apr 2024 14:02:35 +0000
-Message-ID: <1e44ed70-52ed-4213-83c1-b5e409579080@imgtec.com>
-References: <20240422121011.4133236-1-jani.nikula@intel.com>
-In-Reply-To: <20240422121011.4133236-1-jani.nikula@intel.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CWXP265MB3397:EE_|LO0P265MB6243:EE_
-x-ms-office365-filtering-correlation-id: 19547198-93d5-43f3-4f4e-08dc639e0759
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: =?utf-8?B?S1hoM0hrUXh3VG04a0g1aFZ0Ri8xdFNzRjRUcWg5aFpCLzRVTldOREpuNUZC?=
- =?utf-8?B?V2RmTHVNZlJFV0RiZ0ZvVkVzaVo1NDd0dlVKRjEwWmZReFBKcHB5dUYwWVdX?=
- =?utf-8?B?Ty9PS0pSVWh6S2hTSEswSzlTMXR2dDlEK2xtemg1SndmSExSdEQ1VkRRRktJ?=
- =?utf-8?B?Zy9VMHp2RWlkNjV6OEpTTXU1OXNZZU94Y0xvcEZyeVdLTzBqam5sUWJlaHRp?=
- =?utf-8?B?VnhMVUJUWndmdzdSUnJycnl6dEFwUzdqRmFlRWQ3eXhTVnpTbURISVAyK1d2?=
- =?utf-8?B?QjV0bjZ2OXhaRFVXQm1BeVl3OFBMeHVKVzhzdnQyYzdiVjRPOXlxTlYzcXhm?=
- =?utf-8?B?TW5hZkRpdmZLVDVTZW1mdjQ2dXJtKzF1dWZxdzNNTnBiZm1yYmd5OFAxY3BN?=
- =?utf-8?B?SDJIbC9UVFZOU2RCSXc1R2UwZFgySWp5SVBOZ2ZRTzBMRkliUXR1Sm5qeDJS?=
- =?utf-8?B?VDRxdmFwUERmMWlqS0gvUTZkeEJtRGVTSmNLMnJqaXVBdlNCSWlsakRDdU56?=
- =?utf-8?B?b3ZZdWw1L2VWTlAvY1lENmJIa0lqazM1ejJOWlY2U21vdklEeStEMlRXYTIw?=
- =?utf-8?B?UStRSHVrYWNtN2JPc1lKejROSjJXa3RJM29IbWNzak5kL2FrYlExN1k5S2w2?=
- =?utf-8?B?bW41VFZzS3dCOVlOQXNJeFI3a3FlWFpZd2VzOUJrRzJUSnAva0I2NEJzUDNp?=
- =?utf-8?B?ZEt6bkJWamJIU0pnTytkQU83SXk1RHlUVldaM2txT3Jmd2Y2dUZOYkQyVWdY?=
- =?utf-8?B?QnMvcHp2eGIrS3Y3b1E0eEZaK0huVFZQMXZwSmpSV0Z2U3d2aW43c09qbWtL?=
- =?utf-8?B?eGI5RDVWSVhZem5TYnFld1c1VDRBeHRPTWNiZkJzdk9ZUHZodThRWFpGUDk0?=
- =?utf-8?B?SzMrdjJaVG9uR1hrK1dLa1VRYmdmVFpHUVF0NUtoT1F3TlN4Ni83blEzREUw?=
- =?utf-8?B?L1BXNFh5TVhxUDZFaFNWK2s5OTU0ZTU1UUdUVUYzbmFLVkJURVU4eDJMNmhp?=
- =?utf-8?B?Vng5aEZocnZTR2VEQlV2Zml4T1BuRVhqU3k5TW5IazRPYm9QN0JUdFhxalVq?=
- =?utf-8?B?U0NqamVmaEtBcU9LeWFzSmN4M1NWajhOWFN2VlhxeTVacmNCMFZ1YXNBL2ZX?=
- =?utf-8?B?QUxpZGpxekhjamhsYlBLSTR2ZjFVR0Fpb0h1alFxcytwMmpNQVZ1OXdMQUpv?=
- =?utf-8?B?MmJYNXF4RzRQazJMWDBXMkJObG1UUFJhTXUrOTUwczIxNmV2K24ydnRVNEIz?=
- =?utf-8?B?MXF3cUxjbmNiNjVNMFM4Q2Q5OGxnN0VVeG1xcHo4UlhvNk53bER4VVZ2Y1Z2?=
- =?utf-8?B?Y2lJWVgzeEoxK0ZtU3ZPUmo2dlFZQnVmUkVHTldvU2F1NkF0d2Y0R0xqNGdz?=
- =?utf-8?B?SlRZNy92RUgzd2Y0VUh1M2dleUtCdE1HcllJUXZmSmk3YUVrd21hSnF3OTNi?=
- =?utf-8?B?NmU5RktpeEFMNkRLZkd4bG9RSTVFVUVFa2xLZUx6b2hCWUhsWEd6WDZBcUNB?=
- =?utf-8?B?ZDhRdER6dGJ2ZFhJMXFFMU1XdXBHUUdSMXU2cGhGM00xdWJSS0wwcWwreG5Z?=
- =?utf-8?B?YXNNc3BnSW55cWpmTUkzcWg5eSt3S04yZXZxTVA5ZlhUS2VLdlNaTFc2Y2hI?=
- =?utf-8?B?bzNObC9OUW1rWWF6QXQwbGtZMDVlNWlhSWJyZHVUMjBoSGtVdHpjZzN5TCti?=
- =?utf-8?B?U2h2REptU1JGVEU3dlExN3pQUWNYdHlXcjA2Vm1rRXRkM2IrUSszQzVnPT0=?=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CWXP265MB3397.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230031)(376005)(1800799015)(7416005)(366007)(38070700009);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?R2ZyakVVT2Z4WGFqQy9mZFlwL3pUSlMrUDNlc3ZQRlRtUFVpQkZmSm12YjFn?=
- =?utf-8?B?ZG5FV2NTZWhFWGFzeWNORUZOeFAyVHVhSGZPWVRlV2M3VmF6VERGMmoycEsv?=
- =?utf-8?B?MGloZzNmWXVoL2Z2Q1VFaVVjUG1vMXFxU2VyYTZ6NFBRajUxaDhiMFA1ZmFP?=
- =?utf-8?B?RzBtZ1ZZR0hMdEFNWTRQRnpzQ0dKQS9DT1FQTTRpcnl2dWpGQTNTc3FJdXhr?=
- =?utf-8?B?Ynh6cDMwaEMydzRmazhqWDNzQVJpSG5SVnovNENralVUWkVoZjZPbFNBaENP?=
- =?utf-8?B?WFhOQ3dXL2RXZDNPaHJkL3hFMTMvRXhFdGNydW5hS001cUdyb0dUV2dTSDRJ?=
- =?utf-8?B?UXNJcVBkT3YrNWNERGRIMGhzVFVuMkhEVmpUTU5qRzlPdTVsN0NXN25WZm1L?=
- =?utf-8?B?Mks5TnF1eFV0RkpiaFcvcVVaeWFqcEkvUmpUYkdTQWFZUGI5VHF0VFM5VVpP?=
- =?utf-8?B?cVhqT2xRWkYzSVhUeVoxaVhJWWxpRXB3ajVzOTRSWGZxTDN1bUZyVmxITGJX?=
- =?utf-8?B?QWpsQ1VpQmtVUWNRNXVXOGVZZFVFMVlscnJHL2hXaDdjWmxpcFVQWkZRZFlM?=
- =?utf-8?B?bXRTcnYwWFNkYkRIYThPem54Z1M3VFFOWG5tNW5SMXhLOXdTRVNqRzZlV0ZK?=
- =?utf-8?B?dWR3UTY2RzJiL1BiOGxYY3dLT3g5Zkc0bFNQNUdyZ21FbWVPVXMxZWlEZENx?=
- =?utf-8?B?ME80WWo5c0p2RXhrSVhkRGxtOXhreWJTSlVpczJsc0tocXBXZ2pUYzI0V2JZ?=
- =?utf-8?B?WllYeFhGYm5iQUZlTGFXMjhuUlV4NVNmdGpKM3RXTi96VXN4bFU1M0JqdUs5?=
- =?utf-8?B?Tm1vbWdHSnUrN01yQkMzR05DVWJrSWUwTVRCbGV0bHV0OHV3REU0QjNsallQ?=
- =?utf-8?B?VEdTci9rbkFrcW0rRXBuWFlYMXNSaGZTWEdGUDlNSWdyTjJIMlpiYUxYSHFi?=
- =?utf-8?B?RHlhZ0thTHZMaDFwYlkwL3Y2ZWYxcHpnVk14SmxDYURqeVg3VVQ1Uk9PREJt?=
- =?utf-8?B?Skl4ZDRBUHRncWNwMkFzMjRob0ZCcFhKWDRBdzdIUlpEb21vSVhOeWprdER1?=
- =?utf-8?B?OXBEVlROM1ExeCtCMDdOMTJvTWk1S3VpNlBnR3pJZk1UMEYwdVVTWXFGOFRn?=
- =?utf-8?B?eWhSSGZhek9Wall0RUg4M2twSmZ3ZjQ0QXNhSzRTRVBYS0Nvdkd3LytOc3RF?=
- =?utf-8?B?SmhiejhtcFhKVWJpWlVIdXFaM1FXbDR5eUliUnhYaHA3UUxzMndPMS9HSjhL?=
- =?utf-8?B?YmRGNTlIdUJORUpsdXBLNEw0Wm80anNGRWVkWmR4MUtNZHh4aTQwVFhLRkxS?=
- =?utf-8?B?MStCOU16Um9DaWZSd25rN2w3TE1DT0Uxem9SNXpOV0d5cUl4MWFRVEFmWWhz?=
- =?utf-8?B?SmxMNUtFN3ZBVGFtQ0pCNDlNSkxXTzU5Ly8yMktCdVpXTXpxMTR2UTUwaFNK?=
- =?utf-8?B?aTNyWFpzRjRUdzFOdlB4TzNpRDdEcTE5cFZ2M3B1TmlESDBGRG9mRWpUb05q?=
- =?utf-8?B?YnVPU0l0dlhVbkl5dklVU25iNHE3dkl2RDlJRC9TV1pVWnA0MTFicmxsVnhz?=
- =?utf-8?B?NDJUNVBUZHV4aHhEamNYTmlwSmgxbzNCZnpBOWFqb1NldmRhS3E4bGoydHpn?=
- =?utf-8?B?dlhlbTJQQXd5WmJId1U5TjJaY1NxTUIrR3Z3RWJJQVptbTY4V0dUdTlGWjIr?=
- =?utf-8?B?VyswQS9OZzdjYnZpM2tDcCtPVUpnY2NKUzd4cGFJS3lRZDk4UDB1eVBXRVkw?=
- =?utf-8?B?NFZ3K1FicktZNVZCMnNEb0Q2TkZCbDlPeXFRWEEvT2w0Vkg3Sk96UURlRGtU?=
- =?utf-8?B?SjNHd0NLOFkvQWJiZGJESWhjMWpiVTVIa1QzLzhZS0dwUnNHa0gxL3dpK2xC?=
- =?utf-8?B?cFpaMGZGaGc4VkFBUmVMWE42MlJaaUJJVGRuYzVXWkl4bFBmK2JpQnAwa1cz?=
- =?utf-8?B?K25rMnpGR3NLYkh2VXljVytpL09XZ1JwOC9wRE5zNXd6NVpUTTR0WE5WSzBW?=
- =?utf-8?B?VU5Mb0pQdTExTG1HZGRwOWI4dFYyL3JmTmg2NE1laThXQUx1QUhBZlMxWmVj?=
- =?utf-8?B?SUQvTWM4S1ZnbHgzcXA4OG1kSFZRL25XdnU1NWNhdk9vbVV0b2JPTHF5bU1i?=
- =?utf-8?B?S0x0TmRKdXFsMDF2c2hNdmUxSTJxV2kxSUg3eTZJeGVkZzhFT09hMHFjanE3?=
- =?utf-8?B?UFE9PQ==?=
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------EvvbMU0wKNEpCX7ZY0AzBDk8"
+        d=linaro.org; s=google; t=1713881286; x=1714486086; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eqvuTZM7igFDZlQNb4hdaTtUbESqUIooaQ5Bj01QpVg=;
+        b=kLyjOYu1R6de4TYaFHPdnc2+tlb1Qi6bYSiQwUb8uvEz1GiUJ8LYXBGSXWDO4nrENp
+         GGsnxAfV4RTYM0OqmAk8sM0SQP8RiL0v3x/6oYtXkkxO3g0ncsT1AzMQ/rToSEhniDNo
+         /L9E1AhiugVakqvI9ZgVb9vg3qtLKClOurxi5W809v0nlwe9TmjHeiHtnRY2aVOeiS5u
+         RgtE/MfpGnvHDbw6Bcg0ZQfP3gBzGp7aNnB5IkKRebF3iSokMJILQoeIOdeWVo/YXg29
+         5THsE0VqcGe2SGXiFWxN3Xh7voY8+K7AUw6VJ7UX5WHRFWjEhB1jhdgTqLHDSCGscYHc
+         Xn6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713881286; x=1714486086;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=eqvuTZM7igFDZlQNb4hdaTtUbESqUIooaQ5Bj01QpVg=;
+        b=ds8poA8ocs0pBIisM7guJVxp4tKqVFKvgGGInTlHiQ0IYEmg00PXAtiMxxIZ1r3mg6
+         eSUvm0X546C5uz94Esg429q7wH5xLwXzLY2O5m1Hy1/NYWC1akSnnfMfsE7USQQBKaYO
+         Apl/dOPFwapo6wViBpoLQD8VO8cz3gxTb+T76OA+OE8mjN2wse/XOm09filKs5w7jsyu
+         4ZqV/ANp8yN0UpmBF4Sr3kjqVUvQ7P2Tn7ec0YJHpvaS9xUHAadIn+KYm0xz1dcMM4tu
+         0sFv1vcdd9Hx02HQF/nSUBz9tQ/KKSfK+fLnuHGJMCHd9dBJ4PYceMm5Co6pXz8rdQTm
+         Exmg==
+X-Forwarded-Encrypted: i=1; AJvYcCW2IGrnUUmzoOWFFSWlIs2D+SPkD+NHUUvHXaDWx/AJOL3u5J4H+UHK5zi8X6YuX/uJeMhLlDAcHI9IvfY8p1omtneAtD5rK/RIl1F6zw==
+X-Gm-Message-State: AOJu0YwnD00CSPj4DGmHn4jqUCAU8Nukg30VKr8Xp3TYRh4JyTpACuSb
+	VkeVYzPZTuqelJ6ty4a1qf3joop4Zf1ONvQbAnTbaaaPTWBPo8HWe6rzXhW1aZk=
+X-Google-Smtp-Source: AGHT+IHKw6RqMukBMqPG6mxvhHjmXnorsMevPNOybd8lQo/Ht1W5X9vcVuYF9b9ElWkxkVWnfVIlMg==
+X-Received: by 2002:a05:600c:1da3:b0:41a:3b4f:822a with SMTP id p35-20020a05600c1da300b0041a3b4f822amr4820579wms.29.1713881285939;
+        Tue, 23 Apr 2024 07:08:05 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:dfee:1061:7e39:bfff? ([2a01:e0a:982:cbb0:dfee:1061:7e39:bfff])
+        by smtp.gmail.com with ESMTPSA id s6-20020a05600c45c600b00418244d459esm20453876wmo.4.2024.04.23.07.08.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 Apr 2024 07:08:05 -0700 (PDT)
+Message-ID: <4813aa76-6ce7-403d-8bff-1fb6e1d3f0a2@linaro.org>
+Date: Tue, 23 Apr 2024 16:08:04 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CWXP265MB3397.GBRP265.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: 19547198-93d5-43f3-4f4e-08dc639e0759
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Apr 2024 14:02:35.8740
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 0d5fd8bb-e8c2-4e0a-8dd5-2c264f7140fe
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 6V8dSFtJG3iIFu7U4XWBVglN35u68new26JbcJefy9qXSaP9gl1q4ELs9XHps3V8ZHJ9J1ghGhJiEz3O3+IqTg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO0P265MB6243
-X-OriginatorOrg: imgtec.com
-X-EXCLAIMER-MD-CONFIG: 15a78312-3e47-46eb-9010-2e54d84a9631
-X-Proofpoint-ORIG-GUID: 7FonBuaezhRqePCUIYlzF9BWd34AWXYe
-X-Proofpoint-GUID: 7FonBuaezhRqePCUIYlzF9BWd34AWXYe
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH] serial: msm: Unify TX and RX DMA paths
+To: Marek Szyprowski <m.szyprowski@samsung.com>,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Jiri Slaby <jirislaby@kernel.org>
+References: <CGME20240423120821eucas1p2e8eb7aa059e00ee2bc6272cda24d1457@eucas1p2.samsung.com>
+ <20240423120809.2678030-1-m.szyprowski@samsung.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20240423120809.2678030-1-m.szyprowski@samsung.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---------------EvvbMU0wKNEpCX7ZY0AzBDk8
-Content-Type: multipart/mixed; boundary="------------IkV14jgvWKund52SsSkpbYsR";
- protected-headers="v1"
-From: Matt Coster <matt.coster@imgtec.com>
-To: Jani Nikula <jani.nikula@intel.com>, dri-devel@lists.freedesktop.org
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>,
- Maxime Ripard <mripard@kernel.org>,
- Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
- Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
- Oded Gabbay <ogabbay@kernel.org>, Russell King <linux@armlinux.org.uk>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Thomas Zimmermann <tzimmermann@suse.de>,
- Jani Nikula <jani.nikula@linux.intel.com>,
- Rodrigo Vivi <rodrigo.vivi@intel.com>,
- Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
- Tvrtko Ursulin <tursulin@ursulin.net>, Frank Binns <frank.binns@imgtec.com>,
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>,
- Danilo Krummrich <dakr@redhat.com>, Alex Deucher
- <alexander.deucher@amd.com>, =?UTF-8?Q?Christian_K=C3=B6nig?=
- <christian.koenig@amd.com>, "Pan, Xinhui" <Xinhui.Pan@amd.com>,
- Alain Volmat <alain.volmat@foss.st.com>, Huang Rui <ray.huang@amd.com>,
- Zack Rusin <zack.rusin@broadcom.com>, bcm-kernel-feedback-list@broadcom.com,
- Lucas De Marchi <lucas.demarchi@intel.com>,
- =?UTF-8?Q?Thomas_Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
- intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org,
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
- nouveau@lists.freedesktop.org, amd-gfx@lists.freedesktop.org
-Message-ID: <1e44ed70-52ed-4213-83c1-b5e409579080@imgtec.com>
-Subject: Re: [PATCH 1/2] drm/print: drop include debugfs.h and include where
- needed
-References: <20240422121011.4133236-1-jani.nikula@intel.com>
-In-Reply-To: <20240422121011.4133236-1-jani.nikula@intel.com>
+Hi Marek,
 
---------------IkV14jgvWKund52SsSkpbYsR
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On 23/04/2024 14:08, Marek Szyprowski wrote:
+> Use scatterlist-based API also for RX mode to unify TX and RX DMA paths
+> as well as simplify the whole driver code a bit.
 
-On 22/04/2024 13:10, Jani Nikula wrote:
-> Surprisingly many places depend on debugfs.h to be included via
-> drm_print.h. Fix them.
->=20
-> v3: Also fix armada, ite-it6505, imagination, msm, sti, vc4, and xe
->=20
-> v2: Also fix ivpu and vmwgfx
->=20
-> Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
-> Acked-by: Maxime Ripard <mripard@kernel.org>
-> Link: https://patchwork.freedesktop.org/patch/msgid/20240410141434.1579=
-08-1-jani.nikula@intel.com
-> Signed-off-by: Jani Nikula <jani.nikula@intel.com>
->=20
+Thanks for the patch, I have no idea if this is right or wrong.
+
+Greg, I think we should wait until this change is fully tested on multiple
+platforms including DMA usage (bluetooth) before aplying it.
+
+Thanks,
+Neil
+
+> 
+> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
 > ---
->=20
-> Cc: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-> Cc: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-> Cc: Oded Gabbay <ogabbay@kernel.org>
-> Cc: Russell King <linux@armlinux.org.uk>
-> Cc: David Airlie <airlied@gmail.com>
-> Cc: Daniel Vetter <daniel@ffwll.ch>
-> Cc: Andrzej Hajda <andrzej.hajda@intel.com>
-> Cc: Neil Armstrong <neil.armstrong@linaro.org>
-> Cc: Robert Foss <rfoss@kernel.org>
-> Cc: Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
-> Cc: Jonas Karlman <jonas@kwiboo.se>
-> Cc: Jernej Skrabec <jernej.skrabec@gmail.com>
-> Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-> Cc: Maxime Ripard <mripard@kernel.org>
-> Cc: Thomas Zimmermann <tzimmermann@suse.de>
-> Cc: Jani Nikula <jani.nikula@linux.intel.com>
-> Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-> Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-> Cc: Tvrtko Ursulin <tursulin@ursulin.net>
-> Cc: Frank Binns <frank.binns@imgtec.com>
-> Cc: Matt Coster <matt.coster@imgtec.com>
-> Cc: Rob Clark <robdclark@gmail.com>
-> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: Sean Paul <sean@poorly.run>
-> Cc: Marijn Suijten <marijn.suijten@somainline.org>
-> Cc: Karol Herbst <kherbst@redhat.com>
-> Cc: Lyude Paul <lyude@redhat.com>
-> Cc: Danilo Krummrich <dakr@redhat.com>
-> Cc: Alex Deucher <alexander.deucher@amd.com>
-> Cc: "Christian K=C3=B6nig" <christian.koenig@amd.com>
-> Cc: "Pan, Xinhui" <Xinhui.Pan@amd.com>
-> Cc: Alain Volmat <alain.volmat@foss.st.com>
-> Cc: Huang Rui <ray.huang@amd.com>
-> Cc: Zack Rusin <zack.rusin@broadcom.com>
-> Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broa=
-dcom.com>
-> Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-> Cc: "Thomas Hellstr=C3=B6m" <thomas.hellstrom@linux.intel.com>
-> Cc: dri-devel@lists.freedesktop.org
-> Cc: intel-gfx@lists.freedesktop.org
-> Cc: intel-xe@lists.freedesktop.org
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: freedreno@lists.freedesktop.org
-> Cc: nouveau@lists.freedesktop.org
-> Cc: amd-gfx@lists.freedesktop.org
-> ---
->  drivers/accel/ivpu/ivpu_debugfs.c           | 2 ++
->  drivers/gpu/drm/armada/armada_debugfs.c     | 1 +
->  drivers/gpu/drm/bridge/ite-it6505.c         | 1 +
->  drivers/gpu/drm/bridge/panel.c              | 2 ++
->  drivers/gpu/drm/drm_print.c                 | 6 +++---
->  drivers/gpu/drm/i915/display/intel_dmc.c    | 1 +
->  drivers/gpu/drm/imagination/pvr_fw_trace.c  | 1 +
-
-Acked-by: Matt Coster <matt.coster@imgtec.com> # drm/imagination
-
-Cheers,
-Matt
-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 2 ++
->  drivers/gpu/drm/nouveau/dispnv50/crc.c      | 2 ++
->  drivers/gpu/drm/radeon/r100.c               | 1 +
->  drivers/gpu/drm/radeon/r300.c               | 1 +
->  drivers/gpu/drm/radeon/r420.c               | 1 +
->  drivers/gpu/drm/radeon/r600.c               | 3 ++-
->  drivers/gpu/drm/radeon/radeon_fence.c       | 1 +
->  drivers/gpu/drm/radeon/radeon_gem.c         | 1 +
->  drivers/gpu/drm/radeon/radeon_ib.c          | 2 ++
->  drivers/gpu/drm/radeon/radeon_pm.c          | 1 +
->  drivers/gpu/drm/radeon/radeon_ring.c        | 2 ++
->  drivers/gpu/drm/radeon/radeon_ttm.c         | 1 +
->  drivers/gpu/drm/radeon/rs400.c              | 1 +
->  drivers/gpu/drm/radeon/rv515.c              | 1 +
->  drivers/gpu/drm/sti/sti_drv.c               | 1 +
->  drivers/gpu/drm/ttm/ttm_device.c            | 1 +
->  drivers/gpu/drm/ttm/ttm_resource.c          | 3 ++-
->  drivers/gpu/drm/ttm/ttm_tt.c                | 5 +++--
->  drivers/gpu/drm/vc4/vc4_drv.h               | 1 +
->  drivers/gpu/drm/vmwgfx/vmwgfx_gem.c         | 2 ++
->  drivers/gpu/drm/xe/xe_debugfs.c             | 1 +
->  drivers/gpu/drm/xe/xe_gt_debugfs.c          | 2 ++
->  drivers/gpu/drm/xe/xe_uc_debugfs.c          | 2 ++
->  include/drm/drm_print.h                     | 2 +-
->  31 files changed, 46 insertions(+), 8 deletions(-)
->=20
-> diff --git a/drivers/accel/ivpu/ivpu_debugfs.c b/drivers/accel/ivpu/ivp=
-u_debugfs.c
-> index d09d29775b3f..e07e447d08d1 100644
-> --- a/drivers/accel/ivpu/ivpu_debugfs.c
-> +++ b/drivers/accel/ivpu/ivpu_debugfs.c
-> @@ -3,6 +3,8 @@
->   * Copyright (C) 2020-2023 Intel Corporation
->   */
-> =20
-> +#include <linux/debugfs.h>
-> +
->  #include <drm/drm_debugfs.h>
->  #include <drm/drm_file.h>
->  #include <drm/drm_print.h>
-> diff --git a/drivers/gpu/drm/armada/armada_debugfs.c b/drivers/gpu/drm/=
-armada/armada_debugfs.c
-> index 29f4b52e3c8d..a763349dd89f 100644
-> --- a/drivers/gpu/drm/armada/armada_debugfs.c
-> +++ b/drivers/gpu/drm/armada/armada_debugfs.c
-> @@ -5,6 +5,7 @@
->   */
-> =20
->  #include <linux/ctype.h>
-> +#include <linux/debugfs.h>
->  #include <linux/module.h>
->  #include <linux/seq_file.h>
->  #include <linux/uaccess.h>
-> diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/brid=
-ge/ite-it6505.c
-> index 27334173e911..3f68c82888c2 100644
-> --- a/drivers/gpu/drm/bridge/ite-it6505.c
-> +++ b/drivers/gpu/drm/bridge/ite-it6505.c
-> @@ -3,6 +3,7 @@
->   * Copyright (c) 2020, The Linux Foundation. All rights reserved.
->   */
->  #include <linux/bits.h>
-> +#include <linux/debugfs.h>
->  #include <linux/delay.h>
->  #include <linux/device.h>
->  #include <linux/err.h>
-> diff --git a/drivers/gpu/drm/bridge/panel.c b/drivers/gpu/drm/bridge/pa=
-nel.c
-> index 7f41525f7a6e..32506524d9a2 100644
-> --- a/drivers/gpu/drm/bridge/panel.c
-> +++ b/drivers/gpu/drm/bridge/panel.c
-> @@ -4,6 +4,8 @@
->   * Copyright (C) 2017 Broadcom
->   */
-> =20
-> +#include <linux/debugfs.h>
-> +
->  #include <drm/drm_atomic_helper.h>
->  #include <drm/drm_bridge.h>
->  #include <drm/drm_connector.h>
-> diff --git a/drivers/gpu/drm/drm_print.c b/drivers/gpu/drm/drm_print.c
-> index 699b7dbffd7b..cf2efb44722c 100644
-> --- a/drivers/gpu/drm/drm_print.c
-> +++ b/drivers/gpu/drm/drm_print.c
-> @@ -23,13 +23,13 @@
->   * Rob Clark <robdclark@gmail.com>
->   */
-> =20
-> -#include <linux/stdarg.h>
+>   drivers/tty/serial/msm_serial.c | 86 +++++++++++++--------------------
+>   1 file changed, 34 insertions(+), 52 deletions(-)
+> 
+> diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
+> index 0a9c5219df88..d5e00e613f73 100644
+> --- a/drivers/tty/serial/msm_serial.c
+> +++ b/drivers/tty/serial/msm_serial.c
+> @@ -161,14 +161,8 @@ enum {
+>   struct msm_dma {
+>   	struct dma_chan		*chan;
+>   	enum dma_data_direction dir;
+> -	union {
+> -		struct {
+> -			dma_addr_t		phys;
+> -			unsigned char		*virt;
+> -			unsigned int		count;
+> -		} rx;
+> -		struct scatterlist tx_sg;
+> -	};
+> +	unsigned char		*virt;
+> +	struct scatterlist	sg;
+>   	dma_cookie_t		cookie;
+>   	u32			enable_bit;
+>   	struct dma_async_tx_descriptor	*desc;
+> @@ -254,13 +248,7 @@ static void msm_stop_dma(struct uart_port *port, struct msm_dma *dma)
+>   	unsigned int mapped;
+>   	u32 val;
+>   
+> -	if (dma->dir == DMA_TO_DEVICE) {
+> -		mapped = sg_dma_len(&dma->tx_sg);
+> -	} else {
+> -		mapped = dma->rx.count;
+> -		dma->rx.count = 0;
+> -	}
 > -
-> +#include <linux/debugfs.h>
-> +#include <linux/dynamic_debug.h>
->  #include <linux/io.h>
->  #include <linux/moduleparam.h>
->  #include <linux/seq_file.h>
->  #include <linux/slab.h>
-> -#include <linux/dynamic_debug.h>
-> +#include <linux/stdarg.h>
-> =20
->  #include <drm/drm.h>
->  #include <drm/drm_drv.h>
-> diff --git a/drivers/gpu/drm/i915/display/intel_dmc.c b/drivers/gpu/drm=
-/i915/display/intel_dmc.c
-> index 3697a02b51b6..09346afd1f0e 100644
-> --- a/drivers/gpu/drm/i915/display/intel_dmc.c
-> +++ b/drivers/gpu/drm/i915/display/intel_dmc.c
-> @@ -22,6 +22,7 @@
->   *
->   */
-> =20
-> +#include <linux/debugfs.h>
->  #include <linux/firmware.h>
-> =20
->  #include "i915_drv.h"
-> diff --git a/drivers/gpu/drm/imagination/pvr_fw_trace.c b/drivers/gpu/d=
-rm/imagination/pvr_fw_trace.c
-> index 31199e45b72e..73707daa4e52 100644
-> --- a/drivers/gpu/drm/imagination/pvr_fw_trace.c
-> +++ b/drivers/gpu/drm/imagination/pvr_fw_trace.c
-> @@ -12,6 +12,7 @@
-> =20
->  #include <linux/build_bug.h>
->  #include <linux/dcache.h>
-> +#include <linux/debugfs.h>
->  #include <linux/sysfs.h>
->  #include <linux/types.h>
-> =20
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/=
-drm/msm/disp/dpu1/dpu_hw_sspp.c
-> index 0bf8a83e8df3..8586f2761782 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> @@ -2,6 +2,8 @@
->  /* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.=
+> +	mapped = sg_dma_len(&dma->sg);
+>   	dmaengine_terminate_all(dma->chan);
+>   
+>   	/*
+> @@ -275,11 +263,8 @@ static void msm_stop_dma(struct uart_port *port, struct msm_dma *dma)
+>   	msm_write(port, val, UARTDM_DMEN);
+>   
+>   	if (mapped) {
+> -		if (dma->dir == DMA_TO_DEVICE) {
+> -			dma_unmap_sg(dev, &dma->tx_sg, 1, dma->dir);
+> -			sg_init_table(&dma->tx_sg, 1);
+> -		} else
+> -			dma_unmap_single(dev, dma->rx.phys, mapped, dma->dir);
+> +		dma_unmap_sg(dev, &dma->sg, 1, dma->dir);
+> +		sg_init_table(&dma->sg, 1);
+>   	}
+>   }
+>   
+> @@ -299,7 +284,7 @@ static void msm_release_dma(struct msm_port *msm_port)
+>   	if (dma->chan) {
+>   		msm_stop_dma(&msm_port->uart, dma);
+>   		dma_release_channel(dma->chan);
+> -		kfree(dma->rx.virt);
+> +		kfree(dma->virt);
+>   	}
+>   
+>   	memset(dma, 0, sizeof(*dma));
+> @@ -371,8 +356,8 @@ static void msm_request_rx_dma(struct msm_port *msm_port, resource_size_t base)
+>   
+>   	of_property_read_u32(dev->of_node, "qcom,rx-crci", &crci);
+>   
+> -	dma->rx.virt = kzalloc(UARTDM_RX_SIZE, GFP_KERNEL);
+> -	if (!dma->rx.virt)
+> +	dma->virt = kzalloc(UARTDM_RX_SIZE, GFP_KERNEL);
+> +	if (!dma->virt)
+>   		goto rel_rx;
+>   
+>   	memset(&conf, 0, sizeof(conf));
+> @@ -399,7 +384,7 @@ static void msm_request_rx_dma(struct msm_port *msm_port, resource_size_t base)
+>   
+>   	return;
+>   err:
+> -	kfree(dma->rx.virt);
+> +	kfree(dma->virt);
+>   rel_rx:
+>   	dma_release_channel(dma->chan);
+>   no_rx:
+> @@ -434,7 +419,7 @@ static void msm_start_tx(struct uart_port *port)
+>   	struct msm_dma *dma = &msm_port->tx_dma;
+>   
+>   	/* Already started in DMA mode */
+> -	if (sg_dma_len(&dma->tx_sg))
+> +	if (sg_dma_len(&dma->sg))
+>   		return;
+>   
+>   	msm_port->imr |= MSM_UART_IMR_TXLEV;
+> @@ -462,12 +447,12 @@ static void msm_complete_tx_dma(void *args)
+>   	uart_port_lock_irqsave(port, &flags);
+>   
+>   	/* Already stopped */
+> -	if (!sg_dma_len(&dma->tx_sg))
+> +	if (!sg_dma_len(&dma->sg))
+>   		goto done;
+>   
+>   	dmaengine_tx_status(dma->chan, dma->cookie, &state);
+>   
+> -	dma_unmap_sg(port->dev, &dma->tx_sg, 1, dma->dir);
+> +	dma_unmap_sg(port->dev, &dma->sg, 1, dma->dir);
+>   
+>   	val = msm_read(port, UARTDM_DMEN);
+>   	val &= ~dma->enable_bit;
+> @@ -478,9 +463,9 @@ static void msm_complete_tx_dma(void *args)
+>   		msm_write(port, MSM_UART_CR_TX_ENABLE, MSM_UART_CR);
+>   	}
+>   
+> -	count = sg_dma_len(&dma->tx_sg) - state.residue;
+> +	count = sg_dma_len(&dma->sg) - state.residue;
+>   	uart_xmit_advance(port, count);
+> -	sg_init_table(&dma->tx_sg, 1);
+> +	sg_init_table(&dma->sg, 1);
+>   
+>   	/* Restore "Tx FIFO below watermark" interrupt */
+>   	msm_port->imr |= MSM_UART_IMR_TXLEV;
+> @@ -503,16 +488,16 @@ static int msm_handle_tx_dma(struct msm_port *msm_port, unsigned int count)
+>   	int ret;
+>   	u32 val;
+>   
+> -	sg_init_table(&dma->tx_sg, 1);
+> -	kfifo_dma_out_prepare(&tport->xmit_fifo, &dma->tx_sg, 1, count);
+> +	sg_init_table(&dma->sg, 1);
+> +	kfifo_dma_out_prepare(&tport->xmit_fifo, &dma->sg, 1, count);
+>   
+> -	mapped = dma_map_sg(port->dev, &dma->tx_sg, 1, dma->dir);
+> +	mapped = dma_map_sg(port->dev, &dma->sg, 1, dma->dir);
+>   	if (!mapped) {
+>   		ret = -EIO;
+>   		goto zero_sg;
+>   	}
+>   
+> -	dma->desc = dmaengine_prep_slave_sg(dma->chan, &dma->tx_sg, 1,
+> +	dma->desc = dmaengine_prep_slave_sg(dma->chan, &dma->sg, 1,
+>   						DMA_MEM_TO_DEV,
+>   						DMA_PREP_INTERRUPT |
+>   						DMA_PREP_FENCE);
+> @@ -550,9 +535,9 @@ static int msm_handle_tx_dma(struct msm_port *msm_port, unsigned int count)
+>   	dma_async_issue_pending(dma->chan);
+>   	return 0;
+>   unmap:
+> -	dma_unmap_sg(port->dev, &dma->tx_sg, 1, dma->dir);
+> +	dma_unmap_sg(port->dev, &dma->sg, 1, dma->dir);
+>   zero_sg:
+> -	sg_init_table(&dma->tx_sg, 1);
+> +	sg_init_table(&dma->sg, 1);
+>   	return ret;
+>   }
+>   
+> @@ -569,7 +554,7 @@ static void msm_complete_rx_dma(void *args)
+>   	uart_port_lock_irqsave(port, &flags);
+>   
+>   	/* Already stopped */
+> -	if (!dma->rx.count)
+> +	if (!sg_dma_len(&dma->sg))
+>   		goto done;
+>   
+>   	val = msm_read(port, UARTDM_DMEN);
+> @@ -586,14 +571,13 @@ static void msm_complete_rx_dma(void *args)
+>   
+>   	port->icount.rx += count;
+>   
+> -	dma->rx.count = 0;
+> -
+> -	dma_unmap_single(port->dev, dma->rx.phys, UARTDM_RX_SIZE, dma->dir);
+> +	dma_unmap_sg(port->dev, &dma->sg, 1, dma->dir);
+> +	sg_init_table(&dma->sg, 1);
+>   
+>   	for (i = 0; i < count; i++) {
+>   		char flag = TTY_NORMAL;
+>   
+> -		if (msm_port->break_detected && dma->rx.virt[i] == 0) {
+> +		if (msm_port->break_detected && dma->virt[i] == 0) {
+>   			port->icount.brk++;
+>   			flag = TTY_BREAK;
+>   			msm_port->break_detected = false;
+> @@ -604,9 +588,9 @@ static void msm_complete_rx_dma(void *args)
+>   		if (!(port->read_status_mask & MSM_UART_SR_RX_BREAK))
+>   			flag = TTY_NORMAL;
+>   
+> -		sysrq = uart_prepare_sysrq_char(port, dma->rx.virt[i]);
+> +		sysrq = uart_prepare_sysrq_char(port, dma->virt[i]);
+>   		if (!sysrq)
+> -			tty_insert_flip_char(tport, dma->rx.virt[i], flag);
+> +			tty_insert_flip_char(tport, dma->virt[i], flag);
+>   	}
+>   
+>   	msm_start_rx_dma(msm_port);
+> @@ -630,14 +614,13 @@ static void msm_start_rx_dma(struct msm_port *msm_port)
+>   	if (!dma->chan)
+>   		return;
+>   
+> -	dma->rx.phys = dma_map_single(uart->dev, dma->rx.virt,
+> -				   UARTDM_RX_SIZE, dma->dir);
+> -	ret = dma_mapping_error(uart->dev, dma->rx.phys);
+> -	if (ret)
+> +	sg_init_one(&dma->sg, dma->virt, UARTDM_RX_SIZE);
+> +	ret = dma_map_sg(uart->dev, &dma->sg, 1, dma->dir);
+> +	if (!ret)
+>   		goto sw_mode;
+>   
+> -	dma->desc = dmaengine_prep_slave_single(dma->chan, dma->rx.phys,
+> -						UARTDM_RX_SIZE, DMA_DEV_TO_MEM,
+> +	dma->desc = dmaengine_prep_slave_sg(dma->chan, &dma->sg, 1,
+> +						DMA_DEV_TO_MEM,
+>   						DMA_PREP_INTERRUPT);
+>   	if (!dma->desc)
+>   		goto unmap;
+> @@ -664,8 +647,6 @@ static void msm_start_rx_dma(struct msm_port *msm_port)
+>   
+>   	msm_write(uart, msm_port->imr, MSM_UART_IMR);
+>   
+> -	dma->rx.count = UARTDM_RX_SIZE;
+> -
+>   	dma_async_issue_pending(dma->chan);
+>   
+>   	msm_write(uart, MSM_UART_CR_CMD_RESET_STALE_INT, MSM_UART_CR);
+> @@ -684,7 +665,8 @@ static void msm_start_rx_dma(struct msm_port *msm_port)
+>   
+>   	return;
+>   unmap:
+> -	dma_unmap_single(uart->dev, dma->rx.phys, UARTDM_RX_SIZE, dma->dir);
+> +	dma_unmap_sg(uart->dev, &dma->sg, 1, dma->dir);
+> +	sg_init_table(&dma->sg, 1);
+>   
+>   sw_mode:
+>   	/*
+> @@ -967,7 +949,7 @@ static irqreturn_t msm_uart_irq(int irq, void *dev_id)
+>   	}
+>   
+>   	if (misr & (MSM_UART_IMR_RXLEV | MSM_UART_IMR_RXSTALE)) {
+> -		if (dma->rx.count) {
+> +		if (sg_dma_len(&dma->sg)) {
+>   			val = MSM_UART_CR_CMD_STALE_EVENT_DISABLE;
+>   			msm_write(port, val, MSM_UART_CR);
+>   			val = MSM_UART_CR_CMD_RESET_STALE_INT;
 
->   */
-> =20
-> +#include <linux/debugfs.h>
-> +
->  #include "dpu_hwio.h"
->  #include "dpu_hw_catalog.h"
->  #include "dpu_hw_lm.h"
-> diff --git a/drivers/gpu/drm/nouveau/dispnv50/crc.c b/drivers/gpu/drm/n=
-ouveau/dispnv50/crc.c
-> index 9c942fbd836d..5936b6b3b15d 100644
-> --- a/drivers/gpu/drm/nouveau/dispnv50/crc.c
-> +++ b/drivers/gpu/drm/nouveau/dispnv50/crc.c
-> @@ -1,5 +1,7 @@
->  // SPDX-License-Identifier: MIT
-> +#include <linux/debugfs.h>
->  #include <linux/string.h>
-> +
->  #include <drm/drm_crtc.h>
->  #include <drm/drm_atomic_helper.h>
->  #include <drm/drm_vblank.h>
-> diff --git a/drivers/gpu/drm/radeon/r100.c b/drivers/gpu/drm/radeon/r10=
-0.c
-> index 86b8b770af19..0b1e19345f43 100644
-> --- a/drivers/gpu/drm/radeon/r100.c
-> +++ b/drivers/gpu/drm/radeon/r100.c
-> @@ -26,6 +26,7 @@
->   *          Jerome Glisse
->   */
-> =20
-> +#include <linux/debugfs.h>
->  #include <linux/firmware.h>
->  #include <linux/module.h>
->  #include <linux/pci.h>
-> diff --git a/drivers/gpu/drm/radeon/r300.c b/drivers/gpu/drm/radeon/r30=
-0.c
-> index 25201b9a5aae..1620f534f55f 100644
-> --- a/drivers/gpu/drm/radeon/r300.c
-> +++ b/drivers/gpu/drm/radeon/r300.c
-> @@ -26,6 +26,7 @@
->   *          Jerome Glisse
->   */
-> =20
-> +#include <linux/debugfs.h>
->  #include <linux/pci.h>
->  #include <linux/seq_file.h>
->  #include <linux/slab.h>
-> diff --git a/drivers/gpu/drm/radeon/r420.c b/drivers/gpu/drm/radeon/r42=
-0.c
-> index eae8a6389f5e..a979662eaa73 100644
-> --- a/drivers/gpu/drm/radeon/r420.c
-> +++ b/drivers/gpu/drm/radeon/r420.c
-> @@ -26,6 +26,7 @@
->   *          Jerome Glisse
->   */
-> =20
-> +#include <linux/debugfs.h>
->  #include <linux/pci.h>
->  #include <linux/seq_file.h>
->  #include <linux/slab.h>
-> diff --git a/drivers/gpu/drm/radeon/r600.c b/drivers/gpu/drm/radeon/r60=
-0.c
-> index b5e97d95a19f..087d41e370fd 100644
-> --- a/drivers/gpu/drm/radeon/r600.c
-> +++ b/drivers/gpu/drm/radeon/r600.c
-> @@ -26,11 +26,12 @@
->   *          Jerome Glisse
->   */
-> =20
-> +#include <linux/debugfs.h>
->  #include <linux/firmware.h>
->  #include <linux/module.h>
->  #include <linux/pci.h>
-> -#include <linux/slab.h>
->  #include <linux/seq_file.h>
-> +#include <linux/slab.h>
-> =20
->  #include <drm/drm_device.h>
->  #include <drm/drm_vblank.h>
-> diff --git a/drivers/gpu/drm/radeon/radeon_fence.c b/drivers/gpu/drm/ra=
-deon/radeon_fence.c
-> index 9ebe4a0b9a6c..4fb780d96f32 100644
-> --- a/drivers/gpu/drm/radeon/radeon_fence.c
-> +++ b/drivers/gpu/drm/radeon/radeon_fence.c
-> @@ -30,6 +30,7 @@
->   */
-> =20
->  #include <linux/atomic.h>
-> +#include <linux/debugfs.h>
->  #include <linux/firmware.h>
->  #include <linux/kref.h>
->  #include <linux/sched/signal.h>
-> diff --git a/drivers/gpu/drm/radeon/radeon_gem.c b/drivers/gpu/drm/rade=
-on/radeon_gem.c
-> index 3fec3acdaf28..2ef201a072f1 100644
-> --- a/drivers/gpu/drm/radeon/radeon_gem.c
-> +++ b/drivers/gpu/drm/radeon/radeon_gem.c
-> @@ -26,6 +26,7 @@
->   *          Jerome Glisse
->   */
-> =20
-> +#include <linux/debugfs.h>
->  #include <linux/iosys-map.h>
->  #include <linux/pci.h>
-> =20
-> diff --git a/drivers/gpu/drm/radeon/radeon_ib.c b/drivers/gpu/drm/radeo=
-n/radeon_ib.c
-> index fb9ecf5dbe2b..63d914f3414d 100644
-> --- a/drivers/gpu/drm/radeon/radeon_ib.c
-> +++ b/drivers/gpu/drm/radeon/radeon_ib.c
-> @@ -27,6 +27,8 @@
->   *          Christian K=C3=B6nig
->   */
-> =20
-> +#include <linux/debugfs.h>
-> +
->  #include <drm/drm_file.h>
-> =20
->  #include "radeon.h"
-> diff --git a/drivers/gpu/drm/radeon/radeon_pm.c b/drivers/gpu/drm/radeo=
-n/radeon_pm.c
-> index 4482c8c5f5ce..2d9d9f46f243 100644
-> --- a/drivers/gpu/drm/radeon/radeon_pm.c
-> +++ b/drivers/gpu/drm/radeon/radeon_pm.c
-> @@ -21,6 +21,7 @@
->   *          Alex Deucher <alexdeucher@gmail.com>
->   */
-> =20
-> +#include <linux/debugfs.h>
->  #include <linux/hwmon-sysfs.h>
->  #include <linux/hwmon.h>
->  #include <linux/pci.h>
-> diff --git a/drivers/gpu/drm/radeon/radeon_ring.c b/drivers/gpu/drm/rad=
-eon/radeon_ring.c
-> index 38048593bb4a..8d1d458286a8 100644
-> --- a/drivers/gpu/drm/radeon/radeon_ring.c
-> +++ b/drivers/gpu/drm/radeon/radeon_ring.c
-> @@ -27,6 +27,8 @@
->   *          Christian K=C3=B6nig
->   */
-> =20
-> +#include <linux/debugfs.h>
-> +
->  #include <drm/drm_device.h>
->  #include <drm/drm_file.h>
-> =20
-> diff --git a/drivers/gpu/drm/radeon/radeon_ttm.c b/drivers/gpu/drm/rade=
-on/radeon_ttm.c
-> index 2078b0000e22..5c65b6dfb99a 100644
-> --- a/drivers/gpu/drm/radeon/radeon_ttm.c
-> +++ b/drivers/gpu/drm/radeon/radeon_ttm.c
-> @@ -30,6 +30,7 @@
->   *    Dave Airlie
->   */
-> =20
-> +#include <linux/debugfs.h>
->  #include <linux/dma-mapping.h>
->  #include <linux/pagemap.h>
->  #include <linux/pci.h>
-> diff --git a/drivers/gpu/drm/radeon/rs400.c b/drivers/gpu/drm/radeon/rs=
-400.c
-> index d7f552d441ab..d4d1501e6576 100644
-> --- a/drivers/gpu/drm/radeon/rs400.c
-> +++ b/drivers/gpu/drm/radeon/rs400.c
-> @@ -26,6 +26,7 @@
->   *          Jerome Glisse
->   */
-> =20
-> +#include <linux/debugfs.h>
->  #include <linux/seq_file.h>
->  #include <linux/slab.h>
-> =20
-> diff --git a/drivers/gpu/drm/radeon/rv515.c b/drivers/gpu/drm/radeon/rv=
-515.c
-> index 79709d26d983..bbc6ccabf788 100644
-> --- a/drivers/gpu/drm/radeon/rv515.c
-> +++ b/drivers/gpu/drm/radeon/rv515.c
-> @@ -26,6 +26,7 @@
->   *          Jerome Glisse
->   */
-> =20
-> +#include <linux/debugfs.h>
->  #include <linux/seq_file.h>
->  #include <linux/slab.h>
-> =20
-> diff --git a/drivers/gpu/drm/sti/sti_drv.c b/drivers/gpu/drm/sti/sti_dr=
-v.c
-> index 4bab93c4fefd..1799c12babf5 100644
-> --- a/drivers/gpu/drm/sti/sti_drv.c
-> +++ b/drivers/gpu/drm/sti/sti_drv.c
-> @@ -5,6 +5,7 @@
->   */
-> =20
->  #include <linux/component.h>
-> +#include <linux/debugfs.h>
->  #include <linux/dma-mapping.h>
->  #include <linux/kernel.h>
->  #include <linux/module.h>
-> diff --git a/drivers/gpu/drm/ttm/ttm_device.c b/drivers/gpu/drm/ttm/ttm=
-_device.c
-> index 76027960054f..434cf0258000 100644
-> --- a/drivers/gpu/drm/ttm/ttm_device.c
-> +++ b/drivers/gpu/drm/ttm/ttm_device.c
-> @@ -27,6 +27,7 @@
-> =20
->  #define pr_fmt(fmt) "[TTM DEVICE] " fmt
-> =20
-> +#include <linux/debugfs.h>
->  #include <linux/mm.h>
-> =20
->  #include <drm/ttm/ttm_bo.h>
-> diff --git a/drivers/gpu/drm/ttm/ttm_resource.c b/drivers/gpu/drm/ttm/t=
-tm_resource.c
-> index be8d286513f9..4a66b851b67d 100644
-> --- a/drivers/gpu/drm/ttm/ttm_resource.c
-> +++ b/drivers/gpu/drm/ttm/ttm_resource.c
-> @@ -22,8 +22,9 @@
->   * Authors: Christian K=C3=B6nig
->   */
-> =20
-> -#include <linux/iosys-map.h>
-> +#include <linux/debugfs.h>
->  #include <linux/io-mapping.h>
-> +#include <linux/iosys-map.h>
->  #include <linux/scatterlist.h>
-> =20
->  #include <drm/ttm/ttm_bo.h>
-> diff --git a/drivers/gpu/drm/ttm/ttm_tt.c b/drivers/gpu/drm/ttm/ttm_tt.=
-c
-> index 578a7c37f00b..474fe7aad2a0 100644
-> --- a/drivers/gpu/drm/ttm/ttm_tt.c
-> +++ b/drivers/gpu/drm/ttm/ttm_tt.c
-> @@ -32,10 +32,11 @@
->  #define pr_fmt(fmt) "[TTM] " fmt
-> =20
->  #include <linux/cc_platform.h>
-> -#include <linux/sched.h>
-> -#include <linux/shmem_fs.h>
-> +#include <linux/debugfs.h>
->  #include <linux/file.h>
->  #include <linux/module.h>
-> +#include <linux/sched.h>
-> +#include <linux/shmem_fs.h>
->  #include <drm/drm_cache.h>
->  #include <drm/drm_device.h>
->  #include <drm/drm_util.h>
-> diff --git a/drivers/gpu/drm/vc4/vc4_drv.h b/drivers/gpu/drm/vc4/vc4_dr=
-v.h
-> index ab61e96e7e14..08e29fa82563 100644
-> --- a/drivers/gpu/drm/vc4/vc4_drv.h
-> +++ b/drivers/gpu/drm/vc4/vc4_drv.h
-> @@ -5,6 +5,7 @@
->  #ifndef _VC4_DRV_H_
->  #define _VC4_DRV_H_
-> =20
-> +#include <linux/debugfs.h>
->  #include <linux/delay.h>
->  #include <linux/of.h>
->  #include <linux/refcount.h>
-> diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_gem.c b/drivers/gpu/drm/vmwg=
-fx/vmwgfx_gem.c
-> index 2132a8ad8c0c..07185c108218 100644
-> --- a/drivers/gpu/drm/vmwgfx/vmwgfx_gem.c
-> +++ b/drivers/gpu/drm/vmwgfx/vmwgfx_gem.c
-> @@ -30,6 +30,8 @@
->  #include "drm/drm_prime.h"
->  #include "drm/drm_gem_ttm_helper.h"
-> =20
-> +#include <linux/debugfs.h>
-> +
->  static void vmw_gem_object_free(struct drm_gem_object *gobj)
->  {
->  	struct ttm_buffer_object *bo =3D drm_gem_ttm_of_gem(gobj);
-> diff --git a/drivers/gpu/drm/xe/xe_debugfs.c b/drivers/gpu/drm/xe/xe_de=
-bugfs.c
-> index c9b30dbdc14d..0b7aebaae843 100644
-> --- a/drivers/gpu/drm/xe/xe_debugfs.c
-> +++ b/drivers/gpu/drm/xe/xe_debugfs.c
-> @@ -5,6 +5,7 @@
-> =20
->  #include "xe_debugfs.h"
-> =20
-> +#include <linux/debugfs.h>
->  #include <linux/string_helpers.h>
-> =20
->  #include <drm/drm_debugfs.h>
-> diff --git a/drivers/gpu/drm/xe/xe_gt_debugfs.c b/drivers/gpu/drm/xe/xe=
-_gt_debugfs.c
-> index ff7f4cf52fa9..8cf0b2625efc 100644
-> --- a/drivers/gpu/drm/xe/xe_gt_debugfs.c
-> +++ b/drivers/gpu/drm/xe/xe_gt_debugfs.c
-> @@ -5,6 +5,8 @@
-> =20
->  #include "xe_gt_debugfs.h"
-> =20
-> +#include <linux/debugfs.h>
-> +
->  #include <drm/drm_debugfs.h>
->  #include <drm/drm_managed.h>
-> =20
-> diff --git a/drivers/gpu/drm/xe/xe_uc_debugfs.c b/drivers/gpu/drm/xe/xe=
-_uc_debugfs.c
-> index 0a39ec5a6e99..78eb8db73791 100644
-> --- a/drivers/gpu/drm/xe/xe_uc_debugfs.c
-> +++ b/drivers/gpu/drm/xe/xe_uc_debugfs.c
-> @@ -3,6 +3,8 @@
->   * Copyright =C2=A9 2022 Intel Corporation
->   */
-> =20
-> +#include <linux/debugfs.h>
-> +
->  #include <drm/drm_debugfs.h>
-> =20
->  #include "xe_gt.h"
-> diff --git a/include/drm/drm_print.h b/include/drm/drm_print.h
-> index 9cc473e5d353..561c3b96b6fd 100644
-> --- a/include/drm/drm_print.h
-> +++ b/include/drm/drm_print.h
-> @@ -30,11 +30,11 @@
->  #include <linux/printk.h>
->  #include <linux/seq_file.h>
->  #include <linux/device.h>
-> -#include <linux/debugfs.h>
->  #include <linux/dynamic_debug.h>
-> =20
->  #include <drm/drm.h>
-> =20
-> +struct debugfs_regset32;
->  struct drm_device;
-> =20
->  /* Do *not* use outside of drm_print.[ch]! */
-
---------------IkV14jgvWKund52SsSkpbYsR--
-
---------------EvvbMU0wKNEpCX7ZY0AzBDk8
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQS4qDmoJvwmKhjY+nN5vBnz2d5qsAUCZie/ewUDAAAAAAAKCRB5vBnz2d5qsBCB
-AP9snwvOqu1oaLhyWxGllqALvt9GA1/G5NrKolujPEjZQgD9FlixRYbPHwT0xG6D9BSI6HB91lr4
-e+uXKBvAenVqcAI=
-=kuLt
------END PGP SIGNATURE-----
-
---------------EvvbMU0wKNEpCX7ZY0AzBDk8--
 
