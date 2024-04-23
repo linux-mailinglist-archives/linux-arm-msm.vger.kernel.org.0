@@ -1,232 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-18337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18342-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B6018AF522
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 19:11:08 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2490F8AF565
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 19:23:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E76081F228A3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 17:11:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 568951C2175E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 17:23:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4839A13D8B2;
-	Tue, 23 Apr 2024 17:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F21213FD9F;
+	Tue, 23 Apr 2024 17:22:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NoLQs1lS"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Hycmtpeh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9231BC23;
-	Tue, 23 Apr 2024 17:10:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D2013E40C;
+	Tue, 23 Apr 2024 17:22:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713892246; cv=none; b=uXPPSQ2eM91MJ4xEZKFvmBbAWgdjVngRaylGI2Ro/Zsm9rH/vNlO2T/QICOAiopOg30FSAgP3mQFHwNR7FeQ+dbfbhJWWGOlr1EElriDA056a8tVsXMWmzDrMp51zj84ghKprITKx+QJDhHyh4obxZv1bGYPSc3YJSK/pmhQh6Q=
+	t=1713892944; cv=none; b=j1Zx1Omh+4F8Itb2oQZaPZDb/ljsW3QShiTICkZGvp0MUknhPpaQE/zndTweWVa5DzDUo2TAk7YdprpQ0+j24hG1Zaj+6CpiixYb5Inq4kARcwHw9IzLCUvWN4l+7zTGqD37PfJRFbYGQ2YzDyvCC4Hw+coGskI1L3W07PNyaRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713892246; c=relaxed/simple;
-	bh=3iJsSjxbI0PNipnxd/KeM1DCk6cveiFrDgu3Xi+l1Og=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=s6gphxlWwj2aKIpXgCIEEWM13imqOqs2wPYO978x9eKgswKumrqoawrRmUkGJ/VBBzOxDqzDXKRx9NQZyLmaTwoH730pGV8vXj91EPxMsA/MCoKwDft15JED+mmNIFScW5doFF6mG5KDLDCQmOfxWe0S3qhal7FKTt49XB4JKBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NoLQs1lS; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43NBI66Z007348;
-	Tue, 23 Apr 2024 17:10:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=iwfP7SYyKYAwAEtQZw+SpCrrNAmXiipoup29vOfLkR8=; b=No
-	LQs1lSuLQagIs4RxVZYijk6ekijLT9OH0KL0M8aq/0CX0vfJUdSlKCN9E810mwjS
-	Ls38RwaPpWWZbMAjQnAMRQlG70z0pLrKo7VjcBWHmBE7GBQgR55u7UCXxgQS3g+j
-	K3yIaw7qQwHCBRvV2H3tDZJ83GmKhqo5OI1qT3pKRcbZdzQRTIarrPeXxjFaKJuz
-	4uDFWCWEWAYW469lR/rrUh1UZmoqKLcGt6owboQDze261U7o5rKzACVpvsa2Y30M
-	zkSUhkKQYmd8Tseud6vibHhIxXxG+3YdggYTR3r3kLituAabN7DlkYkMv+FSx8n3
-	T/1CF85n7u8Hz5TXRFxg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xp8chsn2d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Apr 2024 17:10:33 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43NHAWY6008955
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Apr 2024 17:10:32 GMT
-Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 23 Apr
- 2024 10:10:26 -0700
-Message-ID: <d5581614-71ad-5f7f-e948-bdbab3ef854e@quicinc.com>
-Date: Tue, 23 Apr 2024 22:40:22 +0530
+	s=arc-20240116; t=1713892944; c=relaxed/simple;
+	bh=wS6mLiwTSrStK6wq/zzMd+gLFuAwWxuYlHIG5FjkkyY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=N2+UDGQ1RwVBo0WhLbrIQiOd/jBCult6Kx7Yjtb7/mb8Gu0rlvUPx3LwMpGD11kYZPqUQtdZ4/e1i0Lt8CnG9sdjumn7YYaRetVYiwcrVM8RUKs7gMiG1HJbsy3nWh62kpQk3vGvRceGROciE8+ejgefShtmIvL14WBBVDwfgq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Hycmtpeh; arc=none smtp.client-ip=192.198.163.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1713892943; x=1745428943;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=wS6mLiwTSrStK6wq/zzMd+gLFuAwWxuYlHIG5FjkkyY=;
+  b=HycmtpehrL2ixjfPJ3repiM/CRe6mPEdeC1LLwDzKCU5hzxh1VJ8nvzU
+   LlFVaF3e7x6tN7zUAAB5VXvKuWg6/vnKjn4wGZpmLCYNumNkTBeVKvFh+
+   Y1L9W/DotGgp+vZvU/YbzspHqlANcIRSLGJR5eTXvbdksZql4tw5IT8sp
+   bPG7mpgrmUwJUNpJVLAh+gJWKU8HKtBAyF/uoChGZabAHc37td3cn37Cx
+   t/RrRa9VuYG6igXiCC6wFzMznQ4skbQH+a3SDLkQLp2qsr9VGbgvV1emt
+   CPf6sNUs2NkTuZiz9YiVt7iWW1cO+j0keBr4+uMxlFU06hTWvyIZnA68V
+   g==;
+X-CSE-ConnectionGUID: gJZDvhprQCGDh7lJC35VaQ==
+X-CSE-MsgGUID: iDFvOyR8STqQHSmY46f39g==
+X-IronPort-AV: E=McAfee;i="6600,9927,11053"; a="20898283"
+X-IronPort-AV: E=Sophos;i="6.07,222,1708416000"; 
+   d="scan'208";a="20898283"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Apr 2024 10:22:20 -0700
+X-CSE-ConnectionGUID: Dr85zdv8Ry67lMcR78sHfg==
+X-CSE-MsgGUID: T1Zw1WYoQVO/2Au0vKgZZA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,222,1708416000"; 
+   d="scan'208";a="55410233"
+Received: from black.fi.intel.com ([10.237.72.28])
+  by orviesa002.jf.intel.com with ESMTP; 23 Apr 2024 10:22:11 -0700
+Received: by black.fi.intel.com (Postfix, from userid 1003)
+	id 6E4F8192; Tue, 23 Apr 2024 20:22:10 +0300 (EEST)
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	linux-omap@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	imx@lists.linux.dev,
+	linux-amlogic@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-tegra@vger.kernel.org
+Cc: Vignesh Raghavendra <vigneshr@ti.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Yue Wang <yue.wang@Amlogic.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Xiaowei Song <songxiaowei@hisilicon.com>,
+	Binghui Wang <wangbinghui@hisilicon.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>
+Subject: [PATCH v2 0/4] PCI: controller: Move to agnostic GPIO API
+Date: Tue, 23 Apr 2024 20:19:03 +0300
+Message-ID: <20240423172208.2723892-1-andriy.shevchenko@linux.intel.com>
+X-Mailer: git-send-email 2.43.0.rc1.1336.g36b5255a03ac
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH V4 2/5] mailbox: Add support for QTI CPUCP mailbox
- controller
-Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, <sudeep.holla@arm.com>,
-        <cristian.marussi@arm.com>, <andersson@kernel.org>,
-        <jassisinghbrar@gmail.com>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <dmitry.baryshkov@linaro.org>
-CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_rgottimu@quicinc.com>,
-        <quic_kshivnan@quicinc.com>, <conor+dt@kernel.org>,
-        <quic_gkohli@quicinc.com>, <quic_nkela@quicinc.com>,
-        <quic_psodagud@quicinc.com>, <abel.vesa@linaro.org>
-References: <20240422164035.1045501-1-quic_sibis@quicinc.com>
- <20240422164035.1045501-3-quic_sibis@quicinc.com>
- <d6052413-5706-446b-b508-2a5ed839acc4@linaro.org>
-From: Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <d6052413-5706-446b-b508-2a5ed839acc4@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: upaUshkJipjEYvkzg4rZ8gJBqozeNrgc
-X-Proofpoint-ORIG-GUID: upaUshkJipjEYvkzg4rZ8gJBqozeNrgc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-23_14,2024-04-23_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- priorityscore=1501 adultscore=0 clxscore=1015 impostorscore=0 bulkscore=0
- mlxlogscore=999 mlxscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404230039
 
+Convert the PCI controller drivers to use GPIO agnostic API.
+While at it, remove of_gpio.h leftover from some of the drivers.
 
+In v2:
+- combined previously sent patches into a series (Manivannan)
+- added tags (Rob, Manivannan)
+- converted iMX.6 driver (Manivannan)
+- dropped leftover in aadvark drivers (Manivannan)
 
-On 4/23/24 04:47, Konrad Dybcio wrote:
-> 
-> 
-> On 4/22/24 18:40, Sibi Sankar wrote:
->> Add support for CPUSS Control Processor (CPUCP) mailbox controller,
->> this driver enables communication between AP and CPUCP by acting as
->> a doorbell between them.
->>
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->> ---
-> 
-> [...]
-> 
->> +
->> +static int qcom_cpucp_mbox_send_data(struct mbox_chan *chan, void *data)
->> +{
->> +    struct qcom_cpucp_mbox *cpucp = container_of(chan->mbox, struct 
->> qcom_cpucp_mbox, mbox);
->> +    unsigned long chan_id = channel_number(chan);
->> +    u32 *val = data;
->> +
->> +    writel(*val, cpucp->tx_base + APSS_CPUCP_TX_MBOX_CMD(chan_id) + 
->> APSS_CPUCP_MBOX_CMD_OFF);
-> 
+Andy Shevchenko (4):
+  PCI: aardvark: Remove unused of_gpio.h
+  PCI: dwc: Remove unused of_gpio.h
+  PCI: imx6: Convert to agnostic GPIO API
+  PCI: kirin: Convert to agnostic GPIO API
 
-Hey Konrad,
+ drivers/pci/controller/dwc/pci-dra7xx.c    |   1 -
+ drivers/pci/controller/dwc/pci-imx6.c      |  37 +++-----
+ drivers/pci/controller/dwc/pci-meson.c     |   1 -
+ drivers/pci/controller/dwc/pcie-kirin.c    | 105 +++++++--------------
+ drivers/pci/controller/dwc/pcie-qcom.c     |   1 -
+ drivers/pci/controller/dwc/pcie-tegra194.c |   2 -
+ drivers/pci/controller/pci-aardvark.c      |   1 -
+ 7 files changed, 49 insertions(+), 99 deletions(-)
 
-Thanks for taking time to review the series.
+-- 
+2.43.0.rc1.1336.g36b5255a03ac
 
-> Just checking in, is *this access only* supposed to be 32b instead of 64 
-> like others?
-
-yeah, the readl and writely in the driver were used intentionally.
-
-> 
-> [...]
-> 
->> +
->> +    writeq(0, cpucp->rx_base + APSS_CPUCP_RX_MBOX_EN);
->> +    writeq(0, cpucp->rx_base + APSS_CPUCP_RX_MBOX_CLEAR);
->> +    writeq(0, cpucp->rx_base + APSS_CPUCP_RX_MBOX_MAP);
-> 
-> If these writes are here to prevent a possible interrupt storm type 
-> tragedy,
-> you need to read back these registers to ensure the writes have left the 
-> CPU
-> complex and reached the observer at the other end of the bus (not to be
-> confused with barriers which only ensure that such accesses are ordered
-> *when still possibly within the CPU complex*).
-
-I couldn't find anything alluding to ^^. This sequence was just
-meant to reset the mailbox. Looks like we do need to preserve the
-ordering so relaxed read/writes aren't an option.
-
--Sibi
-
-> 
-> Moreover, if the order of them arriving (en/clear/mask) doesn't matter, you
-> can add _relaxed for a possible nanosecond-order perf gain
-> 
->> +
->> +    irq = platform_get_irq(pdev, 0);
->> +    if (irq < 0)
->> +        return irq;
->> +
->> +    ret = devm_request_irq(dev, irq, qcom_cpucp_mbox_irq_fn,
->> +                   IRQF_TRIGGER_HIGH, "apss_cpucp_mbox", cpucp);
->> +    if (ret < 0)
->> +        return dev_err_probe(dev, ret, "Failed to register irq: 
->> %d\n", irq);
->> +
->> +    writeq(APSS_CPUCP_RX_MBOX_CMD_MASK, cpucp->rx_base + 
->> APSS_CPUCP_RX_MBOX_MAP);
-> 
-> Similarly here, unless read back, we may potentially miss some 
-> interrupts if
-> e.g. a channel is opened and that write "is decided" (by the silicon) to 
-> leave
-> the internal buffer first
-
-At this point in time we don't expect any interrupts. They are expected
-only after channel activation. Also there were no recommendations for
-reading it back here as well.
-
--Sibi
-
-> 
-> 
->> +
->> +    mbox = &cpucp->mbox;
->> +    mbox->dev = dev;
->> +    mbox->num_chans = APSS_CPUCP_IPC_CHAN_SUPPORTED;
->> +    mbox->chans = cpucp->chans;
->> +    mbox->ops = &qcom_cpucp_mbox_chan_ops;
->> +    mbox->txdone_irq = false;
->> +    mbox->txdone_poll = false;
-> 
-> "false" == 0 is the default value (as you're using k*z*alloc)
-> 
-> 
->> +
->> +    ret = devm_mbox_controller_register(dev, mbox);
->> +    if (ret)
->> +        return dev_err_probe(dev, ret, "Failed to create mailbox\n");
->> +
->> +    return 0;
->> +}
->> +
->> +static const struct of_device_id qcom_cpucp_mbox_of_match[] = {
->> +    { .compatible = "qcom,x1e80100-cpucp-mbox" },
->> +    {}
->> +};
->> +MODULE_DEVICE_TABLE(of, qcom_cpucp_mbox_of_match);
->> +
->> +static struct platform_driver qcom_cpucp_mbox_driver = {
->> +    .probe = qcom_cpucp_mbox_probe,
->> +    .driver = {
->> +        .name = "qcom_cpucp_mbox",
->> +        .of_match_table = qcom_cpucp_mbox_of_match,
->> +    },
->> +};
->> +module_platform_driver(qcom_cpucp_mbox_driver);
-> 
-> That's turbo late. Go core_initcall.
-> 
-> Konrad
 
