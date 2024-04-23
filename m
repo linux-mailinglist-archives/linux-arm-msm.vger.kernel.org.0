@@ -1,134 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-18309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18316-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D54B8AE832
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 15:30:43 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C76B8AE883
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 15:47:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 58C152880C0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 13:30:42 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 67B0EB23C3B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 13:47:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 495D5135A6B;
-	Tue, 23 Apr 2024 13:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23E4C138480;
+	Tue, 23 Apr 2024 13:46:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="APkYP6so"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n1YofQiA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A812E135A61;
-	Tue, 23 Apr 2024 13:30:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B32831369BE;
+	Tue, 23 Apr 2024 13:46:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713879038; cv=none; b=knU4Cj7xYkZsvuW6NwoGG5YoHn8El7of9OLWyzNCbcx4mdPsUmolGlsofd99MLjBNg6Vu8Z4Z4KowUjUC+vr7FoIpXdkOUdHGUbH+yVk11EazRy0jDYZIp2WHU/zTuRIwT1cfc1pvLoADPT92pV5d4MxpZNCXxtnyOr46CO7/00=
+	t=1713880012; cv=none; b=HS/KxlOTRJM5dimZLLfUebBvEKas7XGw8TyGfqgyA4VchHJlbHcuJekAgm3r1NpUGXE0IHzq/7ZP50kd3YDRe4V0eVIIPWBFmyjRbca1qhuvyCaOmDMSCiiwa3Ch4LX/1N8I9qNlIM4NTSGbBEw9+0r8o4rmKkpU47BQ/4cS1gI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713879038; c=relaxed/simple;
-	bh=s8B8mBRZqb0UbCIrbQqEbuF/Zx/nSdseOONtEXgkorw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=XAOUX3zGJ+LYn1rngtGOPHpJJWw7h97ujJti7Vq3EOjZZd2xAMZSR9lFYA/ChYBUlp4dWPMT2pqY8z5pDrMHxmqXDjcSawQ2KHoeXQwuyAecFUPVkB7fzyNs/iZ+8j9SUH+45c5xFrlkKwgaZx8C3WarEmzyiENZKs/Z2wX1oYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=APkYP6so; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43N7uKxt007928;
-	Tue, 23 Apr 2024 13:30:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=FHxXmsQzs3QHPANqiuntiLXAQir+SMKlWo2mg8cQ+cU=; b=AP
-	kYP6soWSeW4vz6OdUBsH54jFQ3Tcn4K1yP8iD1VWmgkGfn+H2MnRsIpAPJUv0iIu
-	ZZzz5+pj6CRjbU9+yptwrNYRqVl5oGc4IW036T/zFiygcz5jX1Y9mon40JjcKOmN
-	TZ7UGOStm/2C4ye+P+WF2SD7HpdAa46XdKMvwsmeDbGywDcXXXX6kxQ9Y3TMAuPQ
-	Z9BbVoEBjU3OpPD7NceNNyVgQ44wB+HkeRLcBxd3Bttd0r3bZvOpH0z8lTL5mo6i
-	t0KwxgNUOKSIKjKk15xxccAoeubkr2IQ9C2/GiZv8eOFEXoX1D8tFxIm7Cw4TGTz
-	/+FN8igCGHmkpnQrnMcg==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xp91fgvyv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Apr 2024 13:30:20 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43NDUJYQ023702
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Apr 2024 13:30:19 GMT
-Received: from [10.217.219.66] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 23 Apr
- 2024 06:30:13 -0700
-Message-ID: <7f69c37c-07a4-07b8-9d16-dd4991f15311@quicinc.com>
-Date: Tue, 23 Apr 2024 19:00:10 +0530
+	s=arc-20240116; t=1713880012; c=relaxed/simple;
+	bh=Wm1xdrgosT91TDDq0rbWVizXhaR6E3LE+4BSaV+vb6A=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=QQTbnA4t5zPcw16ck6Pjcl2IYaLfx7HV2laUlKcMKbJaSea3+UjH75So/YGCdxHVrWYdDmA/2XRkoQdTBsewPNaJY3brrwUbInraFT2y2KBUsUz5an1IwUPnrEyID3y5R7ykpXFmlhvjky0ylA3w/LhbN/IaDpDWbS99IwkD9fY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n1YofQiA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DEE8C4AF07;
+	Tue, 23 Apr 2024 13:46:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1713880012;
+	bh=Wm1xdrgosT91TDDq0rbWVizXhaR6E3LE+4BSaV+vb6A=;
+	h=From:To:Cc:Subject:Date:From;
+	b=n1YofQiAQSaaW+Ph9p5+IdGwbdhbsdJuuaWlpJp0P8IxtxOY0UdutduFzvWdMvCpp
+	 EMXcZJ9rSO2IuqjeRgM8qKfvW7c46pPvQt+NlDKhXK3ibVtf9kQ6fphCXOvmgEaxDi
+	 LMrPMXgXjxLqIUqKnTjbjudUl2DOmqlh1ILzJu3lwMb85XaHgjfrGmvZFo7jbA68OM
+	 qdFFrekPyvUDj/Wu3EJEYWU9Q0v8PzZ1Sqi00kus+a3mXpxv0pnn82qLai0jw5PSEW
+	 eafiFqCxKX9hJqcDTq1NsGe6C6vzaxm3oraGlstudxGm0c+REiQNn/4/1S7Lywxrq6
+	 X9vqv5Eya3hVQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan+linaro@kernel.org>)
+	id 1rzGTx-000000008Ke-405K;
+	Tue, 23 Apr 2024 15:46:50 +0200
+From: Johan Hovold <johan+linaro@kernel.org>
+To: Jiri Kosina <jikos@kernel.org>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	linux-input@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 0/6] HID/arm64: dts: qcom: sc8280xp-x13s: fix touchscreen power on
+Date: Tue, 23 Apr 2024 15:46:05 +0200
+Message-ID: <20240423134611.31979-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.43.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v10 2/3] PCI: qcom-ep: Add support for SA8775P SOC
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, <andersson@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <manivannan.sadhasivam@linaro.org>
-CC: <quic_shazhuss@quicinc.com>, <quic_nitegupt@quicinc.com>,
-        <quic_ramkri@quicinc.com>, <quic_nayiluri@quicinc.com>,
-        <quic_krichai@quicinc.com>, <quic_vbadigan@quicinc.com>,
-        <quic_schintav@quicinc.com>, Bjorn Helgaas <bhelgaas@google.com>,
-        "Lorenzo
- Pieralisi" <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?=
-	<kw@linux.com>,
-        Rob Herring <robh@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1711725718-6362-1-git-send-email-quic_msarkar@quicinc.com>
- <1711725718-6362-3-git-send-email-quic_msarkar@quicinc.com>
- <8cdcfa2f-7a8f-4f63-b919-df0afde7d9de@linaro.org>
-Content-Language: en-US
-From: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-In-Reply-To: <8cdcfa2f-7a8f-4f63-b919-df0afde7d9de@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 4vmaV2N2r0bYxsn4RJIWAubYy3W2-8U7
-X-Proofpoint-ORIG-GUID: 4vmaV2N2r0bYxsn4RJIWAubYy3W2-8U7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-23_11,2024-04-23_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
- impostorscore=0 phishscore=0 spamscore=0 mlxlogscore=916
- priorityscore=1501 clxscore=1011 malwarescore=0 mlxscore=0
- lowpriorityscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2404010003 definitions=main-2404230033
+Content-Transfer-Encoding: 8bit
+
+The Elan eKTH5015M touch controller on the X13s requires a 300 ms delay
+before sending commands after having deasserted reset during power on.
+
+This series switches the X13s devicetree to use the Elan specific
+binding so that the OS can determine the required power-on sequence and
+make sure that the controller is always detected during boot. [1]
+
+The Elan hid-i2c driver currently asserts reset unconditionally during
+suspend, which does not work on the X13s where the touch controller
+supply is shared with other peripherals that may remain powered. Holding
+the controller in reset can increase power consumption and also leaks
+current through the reset circuitry pull ups.
+
+Note that the latter also affects X13s variants where the touchscreen is
+not populated as the driver also exits probe() with reset asserted.
+
+Fix this by adding a new 'no-reset-on-power-off' devicetree property
+which can be used by the OS to determine when reset needs to be asserted
+on power down and when it safe and desirable to leave it deasserted.
+
+I tried to look for drivers that had already addressed this but it was
+only after I finished implementing this that I noticed Doug's reference
+to commit 18eeef46d359 ("HID: i2c-hid: goodix: Tie the reset line to
+true state of the regulator"), which tried to solve a related problem.
+
+That commit has since been reverted but ultimately resulted in commit
+7607f12ba735 ("HID: i2c-hid: goodix: Add support for
+"goodix,no-reset-during-suspend" property") being merged to handle the
+related case where the touch controller supply is always on.
+
+The implementation is very similar, but I decided to use the slightly
+more generic 'no-reset-on-power-off' property name after considering a
+number of alternatives (including trying to describe the hardware
+configuration in the name). (And as this is not vendor specific, I left
+out the prefix.)
+
+Note that my X13s does not have a touchscreen, but I have done partial
+verification of the implementation using that machine and the sc8280xp
+CRD reference design. Bjorn has promised to help out with final
+verification on an X13s with a touchscreen.
+
+The devicetree changes are expected to go in through the Qualcomm tree
+once the binding and driver updates have been merged.
+
+Johan
 
 
-On 4/23/2024 6:38 PM, Konrad Dybcio wrote:
->
->
-> On 3/29/24 16:21, Mrinmay Sarkar wrote:
->> Add support for SA8775P SoC to the Qualcomm PCIe Endpoint Controller
->> driver. Adding new compatible string as it has different set of clocks
->> compared to other SoCs.
->
-> So is it the only change after all? What did we conclude on the NO_SNOOP
-> saga?
->
-> If the difference is only in the consumed clocks (and they're only 
-> supposed
-> to be "on" with no special handling), I don't think a separate compatible
-> is necessary at all
->
-> Konrad
+[1] The reset signal is currently deasserted using the pin configuration
+    and the controller would be detected if probe is deferred or if user
+    space triggers a reprobe through sysfs.
 
-Hi Konrad,
-Thanks for review.
-yes, we are going with the NO_SNOOP change for this platform.
-And that series has been reviewed and waiting for this patch to get applied.
 
-Thanks,
-Mrinmay
+Johan Hovold (6):
+  dt-bindings: HID: i2c-hid: add dedicated Ilitek ILI2901 schema
+  dt-bindings: HID: i2c-hid: elan: add Elan eKTH5015M
+  dt-bindings: HID: i2c-hid: elan: add 'no-reset-on-power-off' property
+  HID: i2c-hid: elan: fix reset suspend current leakage
+  arm64: dts: qcom: sc8280xp-x13s: fix touchscreen power on
+  arm64: dts: qcom: sc8280xp-crd: use external pull up for touch reset
+
+ .../bindings/input/elan,ekth6915.yaml         | 20 ++++--
+ .../bindings/input/ilitek,ili2901.yaml        | 66 +++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc8280xp-crd.dts     |  3 +-
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 15 +++--
+ drivers/hid/i2c-hid/i2c-hid-of-elan.c         | 37 ++++++++---
+ 5 files changed, 118 insertions(+), 23 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/input/ilitek,ili2901.yaml
+
+-- 
+2.43.2
 
 
