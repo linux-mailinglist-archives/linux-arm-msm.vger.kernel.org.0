@@ -1,192 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-18262-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18263-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1A858AD8F3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 01:17:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DF2788ADB9F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 03:43:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CEA0D1C20E11
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Apr 2024 23:17:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0F0F31C21447
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 01:43:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBB9C3D0BE;
-	Mon, 22 Apr 2024 23:17:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E07412E68;
+	Tue, 23 Apr 2024 01:43:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KfQM2Q2J"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XsE/uXQC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2373B3DB9A
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 23:17:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D3A117997;
+	Tue, 23 Apr 2024 01:43:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713827873; cv=none; b=bT/AZzEO7AGRYLO202oEdaE0UHJMNH9FWHLRyRdfhJ/OdOADSLVMVtOF+ie6k7KJPxW+ZFFqet6NznOUB+s/f1SyJrEsJGJ4nVfVYJYl/wk+/1YLP0H3zHz23PfacmCggbxSDBChfouyEogdJvyOopKWfe+R07duBKe/5tAokT0=
+	t=1713836609; cv=none; b=odbXiXUaO20omOUlYpylUMWCiiqTMn73zfZHZstLlWycv8M2D7+TXlHogU31sFIuRGNAVtzC83ETM1R59D0BW8a9Gmu5KhXstjqm3VASxyTnTv50O3IwkBtLsDcjliTh1J/l3+WkvkEYP7BhPSS6SkyvuWin1maibe4Q6QMrZVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713827873; c=relaxed/simple;
-	bh=95M91JY8+nuOcyOjPUKnS3Keb921esgNWQMhEdPr5k4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=V1jyvnUDWb2qz+qOgbhXTgjQe64Q+JBqmnC+6IU0W6JBBdFK6Z0GViHizvI2bxJnZfz1d1EQkFeUQRMWPzmiSD1v6YfBcIAeTOtMkvkUyljxHhBqmRekpsba85PI6Qok2LsUbEINpMf8/LUEBH7ueeQmkuFoqiETKHAuuFtw7JI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KfQM2Q2J; arc=none smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-51967f75763so5916659e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Apr 2024 16:17:51 -0700 (PDT)
+	s=arc-20240116; t=1713836609; c=relaxed/simple;
+	bh=ufSwTEYdLjNh53VNo5n/InjNNNfWiz9aDd8WKQpIqGA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pjtpURaZbt/FLiMvF/DGXYDKVZIbtZVvUrfc/zB/OUdOT4jD4mIwGlPg5qUEUblWr+aonFf5LODzVtaPGTTe491ix/MN5fGfzJCdl0pCqQP6/7xbRIXPvOoMEDQgyhYuTmtMITAoKUFkYtVJxXbboMrigownT5n2f6s33U5ZPqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XsE/uXQC; arc=none smtp.client-ip=209.85.210.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-6f30f69a958so1020782b3a.1;
+        Mon, 22 Apr 2024 18:43:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713827870; x=1714432670; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hLh3lBOz1X9lw4btxC91Q3jMd7oQ3OP123MjQh856S4=;
-        b=KfQM2Q2J2gBjtpS25E++HT8JeGdN9WwDYYOYaQd3MrDJ8k6lxLGDnqZX2qdbxiraAY
-         noudw9SYDzAIiCcpjit0yUFRad8QPW+fQFdYaEjxwKipk+ejaokEbuRoxDQLa/sGQvsr
-         cOGifysAGo/nDKlY6yqTehxBSFGUR1DskYuA9vhrFc0v11rtW873vjB6Jj8SG4y9d0kx
-         BgRpkBrUX9Pg7b2azQucoY9/GK++xb/XDiouNFC0nnCGy+fPpOc46oUcfoQ67cDBA3gp
-         YNnIPb2AB1HFD6BrriM55iARf7OCnuCgsUHrnXPjdK9LtEvcP3QPFxhS0TKjzaFSvPvu
-         Rxbg==
+        d=gmail.com; s=20230601; t=1713836607; x=1714441407; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=FVv9MGjbF3k+4QlXe6bHKBL0yNq+kWVhwIIKL4GtREU=;
+        b=XsE/uXQCN/6TG3l6T2DX0NeV+bTHIV4vN+5qaVPSmiL15rpKSg9yS0IXnscWg7K+wL
+         HpYmTOP6J623lV1IYfQIG+gE4yS6kWmwCdBmOgyrZ/xY9pYJZBJ3zcPQIjgwB2iQQPtj
+         tQMWSOg2Baj29JIUNhPiGIfoyqBN17FCepd85Xd02FOxOOwvPo33CldHBwIHjlDwlLQQ
+         8hC/LBbXsHOj/VXOfO1bNJvRJuKhwcobhyCbgCZDyPv0XKUebgNL9x3ZnTR3/biYBEO7
+         QZ/4Msd1/0qpNHRm5iriju4LzQJ18V8613YVXsKqqQC0QvZKFL1BqLl0C76cgtmas9Z6
+         Q1/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713827870; x=1714432670;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hLh3lBOz1X9lw4btxC91Q3jMd7oQ3OP123MjQh856S4=;
-        b=rm8zUML0KtOXrz8izZuSU7KrG5tPrYn9dO5ta8mZQaCt+i95PavKY2e9sQRsuuNwCp
-         shiR6xciAgKkU4KkbgLGTbT32DVfLPKXKTcYmfYeYCi4SeI0mo4Q400UM7KZYx8JkLh0
-         X00oasDaAgu4Et9YhrM5rpJMpUNX8JX9v3dH0b7W6IDu0UukakFbjHKmj3EbSEhHMd5e
-         4NdHMDoJipL6iqr425YGh/1hUYayuBBHflLI+fQIS85Qi9Eyap8id3UFiB5oUCn17Zwx
-         mcM8CfHuCN4oqOiXT0IOA7DmgfRH9/OOKGlhzNnu2LSE8EkiSBkCOZN2kxQwScFOPfN3
-         pilw==
-X-Forwarded-Encrypted: i=1; AJvYcCVCSwtNm4Di+oRCg0skT/ifDRJJXv5FZ9zyyPaQToCjHJTt6Njuzm8m1/7qsjSZHeJPnarL5CMPlkbpB44gB32wJuq5i5Jt/BXg3lztLA==
-X-Gm-Message-State: AOJu0Yxy8n+QmDRMrW5wZj+dEqsq4C+6bl0es9vBGe6cqPtMwV7ls0U4
-	fsZWnvbQWq+iZAy6nGIdostIqGar8co3x4yw6BTe9+jTmqae+xYVSFX2h71ejlc=
-X-Google-Smtp-Source: AGHT+IF0Sza2zvcIVhCthLW/B02Rjs/6ysWPCzn4LIEFLBIeKc6UZkGj+27NvYlP8RShDOBuRbFquA==
-X-Received: by 2002:a05:6512:10c6:b0:51a:c44d:b95f with SMTP id k6-20020a05651210c600b0051ac44db95fmr9685360lfg.28.1713827870290;
-        Mon, 22 Apr 2024 16:17:50 -0700 (PDT)
-Received: from [172.30.204.103] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id a21-20020a19f815000000b00518a37a7c2fsm1847861lff.51.2024.04.22.16.17.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Apr 2024 16:17:49 -0700 (PDT)
-Message-ID: <d6052413-5706-446b-b508-2a5ed839acc4@linaro.org>
-Date: Tue, 23 Apr 2024 01:17:46 +0200
+        d=1e100.net; s=20230601; t=1713836607; x=1714441407;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FVv9MGjbF3k+4QlXe6bHKBL0yNq+kWVhwIIKL4GtREU=;
+        b=LZ+lEhQFLS0zvfNvkBRewpF652PwiAbvvmBEEuMnmV5A0+yZmrNTEALjwEPayIcYXL
+         jdbzHzqC66ptkcmYLev4Tt6dCXIhg90syaRmVbMJW6lHb2Fs+UQC9iF8yCAn1V1ubaJb
+         oibqp5logYVxPJvXMLPXRcyOUVuFEF3D+DUkw6zMfj5k4YpyCkmWGD5I/9zsQaZHSjya
+         YhKFiCY/IGmOMuKjPIkI4UlnhC67r9evbdSqsWPv7WWxGOXF7PAdP0r4Jym3OloUqSL6
+         8dIKtfudwY1ATS3zPkSKbVe7mrVdTN8/zZZP2cePIQrCCRREq6PmXMNL9kfn2mNBzgvi
+         XP5g==
+X-Forwarded-Encrypted: i=1; AJvYcCWYJ6ZF7rt1lgZeO2TYI44322++PrkkhU6GNd+u/7qVx0qW2nrp9EVStb/fAMLxqpLZHdiwV/wwplp02ISLmVypABII5Vhk4yArHdplCZ6Wmm9eG2M/QNlMfpcQWTWohSj7fT5/R6RivOpcQZiwiawPeelCBhzc+l6tUH7xfNDqT2BgXf62PcW/cDAPWFMWZhiZk97O31RGSuYN0sE+G4J+dRWYBQIY1NET0lJhAmKeZxX20RW8Lps5L1HCVg==
+X-Gm-Message-State: AOJu0YzgXcvTuy0HRNjSOQlqi3WrO/w04DhcsKEwEvwwhweOQncUOTs0
+	HtA4L+sAorouIUeXqnm1hCTLU9wHNt/lazxJHsbhU52mVNysTlf2
+X-Google-Smtp-Source: AGHT+IHNvVbE9cA2XCQLQKjnl3qgdgnVkMyNXB6fh5i88nUQTMFnT4C4mWly1ZAKH13pWuCwaxCS8g==
+X-Received: by 2002:a05:6a00:1950:b0:6ec:fe38:d94 with SMTP id s16-20020a056a00195000b006ecfe380d94mr14924140pfk.33.1713836607279;
+        Mon, 22 Apr 2024 18:43:27 -0700 (PDT)
+Received: from archie.me ([103.124.138.155])
+        by smtp.gmail.com with ESMTPSA id gj14-20020a056a00840e00b006ed93e7ef22sm8471175pfb.39.2024.04.22.18.43.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Apr 2024 18:43:26 -0700 (PDT)
+Received: by archie.me (Postfix, from userid 1000)
+	id 6C2B718688A48; Tue, 23 Apr 2024 08:43:23 +0700 (WIB)
+Date: Tue, 23 Apr 2024 08:43:23 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
+	mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
+	corbet@lwn.net, lgirdwood@gmail.com, andersson@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
+	Thinh.Nguyen@synopsys.com, broonie@kernel.org, bgoswami@quicinc.com,
+	tiwai@suse.com, robh@kernel.org, konrad.dybcio@linaro.org
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+	alsa-devel@alsa-project.org
+Subject: Re: [PATCH v19 41/41] ASoC: doc: Add documentation for SOC USB
+Message-ID: <ZicSOzE8KyaYGi0v@archie.me>
+References: <20240422224906.15868-1-quic_wcheng@quicinc.com>
+ <20240422224906.15868-42-quic_wcheng@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 2/5] mailbox: Add support for QTI CPUCP mailbox
- controller
-To: Sibi Sankar <quic_sibis@quicinc.com>, sudeep.holla@arm.com,
- cristian.marussi@arm.com, andersson@kernel.org, jassisinghbrar@gmail.com,
- robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
- dmitry.baryshkov@linaro.org
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, quic_rgottimu@quicinc.com,
- quic_kshivnan@quicinc.com, conor+dt@kernel.org, quic_gkohli@quicinc.com,
- quic_nkela@quicinc.com, quic_psodagud@quicinc.com, abel.vesa@linaro.org
-References: <20240422164035.1045501-1-quic_sibis@quicinc.com>
- <20240422164035.1045501-3-quic_sibis@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240422164035.1045501-3-quic_sibis@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240422224906.15868-42-quic_wcheng@quicinc.com>
 
-
-
-On 4/22/24 18:40, Sibi Sankar wrote:
-> Add support for CPUSS Control Processor (CPUCP) mailbox controller,
-> this driver enables communication between AP and CPUCP by acting as
-> a doorbell between them.
-> 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> ---
-
-[...]
-
+On Mon, Apr 22, 2024 at 03:49:06PM -0700, Wesley Cheng wrote:
+> +.. code-block:: rst
 > +
-> +static int qcom_cpucp_mbox_send_data(struct mbox_chan *chan, void *data)
-> +{
-> +	struct qcom_cpucp_mbox *cpucp = container_of(chan->mbox, struct qcom_cpucp_mbox, mbox);
-> +	unsigned long chan_id = channel_number(chan);
-> +	u32 *val = data;
-> +
-> +	writel(*val, cpucp->tx_base + APSS_CPUCP_TX_MBOX_CMD(chan_id) + APSS_CPUCP_MBOX_CMD_OFF);
+> +int snd_soc_usb_setup_offload_jack(struct snd_soc_component *component,
+> +					struct snd_soc_jack *jack)
+> +..
 
-Just checking in, is *this access only* supposed to be 32b instead of 64 like others?
+You forget to indent snd_soc_usb_setup_offload_jack() prototype:
 
-[...]
+---- >8 ----
+diff --git a/Documentation/sound/soc/usb.rst b/Documentation/sound/soc/usb.rst
+index 3f7c3ef6a0c03c..0b6da0be9f317f 100644
+--- a/Documentation/sound/soc/usb.rst
++++ b/Documentation/sound/soc/usb.rst
+@@ -218,8 +218,8 @@ state.
+ 
+ .. code-block:: rst
+ 
+-int snd_soc_usb_setup_offload_jack(struct snd_soc_component *component,
+-					struct snd_soc_jack *jack)
++        int snd_soc_usb_setup_offload_jack(struct snd_soc_component *component,
++        					struct snd_soc_jack *jack)
+ ..
+ 
+   - ``component``: ASoC component to add the jack
 
-> +
-> +	writeq(0, cpucp->rx_base + APSS_CPUCP_RX_MBOX_EN);
-> +	writeq(0, cpucp->rx_base + APSS_CPUCP_RX_MBOX_CLEAR);
-> +	writeq(0, cpucp->rx_base + APSS_CPUCP_RX_MBOX_MAP);
+> +USB Offload Playback Route Select Kcontrol
+> +-----------------------------------
 
-If these writes are here to prevent a possible interrupt storm type tragedy,
-you need to read back these registers to ensure the writes have left the CPU
-complex and reached the observer at the other end of the bus (not to be
-confused with barriers which only ensure that such accesses are ordered
-*when still possibly within the CPU complex*).
+USB offload playback heading underlines are not long enough to cover heading
+titles, so I have to extend them:
 
-Moreover, if the order of them arriving (en/clear/mask) doesn't matter, you
-can add _relaxed for a possible nanosecond-order perf gain
+---- >8 ----
+diff --git a/Documentation/sound/soc/usb.rst b/Documentation/sound/soc/usb.rst
+index 0b6da0be9f317f..5e0e9fad131b24 100644
+--- a/Documentation/sound/soc/usb.rst
++++ b/Documentation/sound/soc/usb.rst
+@@ -482,7 +482,7 @@ into the physical USB port and enumerated.  The kcontrols are defined as:
+     kcontrol exposed by the platform card.
+ 
+ USB Offload Playback Route Select Kcontrol
+------------------------------------
++------------------------------------------
+ In order to allow for vendor specific implementations on audio offloading device
+ selection, the SOC USB layer exposes the following:
+ 
+@@ -545,7 +545,7 @@ along to the external DSP.
+ 
+ 
+ USB Offload Playback Route Status
+--------------------
++---------------------------------
+ SOC USB exposes APIs for keeping track of the offloading state, and expects this
+ to be maintained by the BE DAI link that created/added the SOC USB device.
+ 
+@@ -573,7 +573,7 @@ When executing the kcontrol get callback, it will loop across the active_list ar
+ and report to the application for active USB sound card and USB PCM device indexes.
+ 
+ USB Offload Playback Capable Card
+--------------------------------
++---------------------------------
+ USB sound also creates a kcontrol for applications to help determine which platform
+ sound card USB offloading is linked to.  This will allow applications to further
+ query the platform sound card for specific information about the current USB offload
 
-> +
-> +	irq = platform_get_irq(pdev, 0);
-> +	if (irq < 0)
-> +		return irq;
-> +
-> +	ret = devm_request_irq(dev, irq, qcom_cpucp_mbox_irq_fn,
-> +			       IRQF_TRIGGER_HIGH, "apss_cpucp_mbox", cpucp);
-> +	if (ret < 0)
-> +		return dev_err_probe(dev, ret, "Failed to register irq: %d\n", irq);
-> +
-> +	writeq(APSS_CPUCP_RX_MBOX_CMD_MASK, cpucp->rx_base + APSS_CPUCP_RX_MBOX_MAP);
+Thanks.
 
-Similarly here, unless read back, we may potentially miss some interrupts if
-e.g. a channel is opened and that write "is decided" (by the silicon) to leave
-the internal buffer first
-
-
-> +
-> +	mbox = &cpucp->mbox;
-> +	mbox->dev = dev;
-> +	mbox->num_chans = APSS_CPUCP_IPC_CHAN_SUPPORTED;
-> +	mbox->chans = cpucp->chans;
-> +	mbox->ops = &qcom_cpucp_mbox_chan_ops;
-> +	mbox->txdone_irq = false;
-> +	mbox->txdone_poll = false;
-
-"false" == 0 is the default value (as you're using k*z*alloc)
-
-
-> +
-> +	ret = devm_mbox_controller_register(dev, mbox);
-> +	if (ret)
-> +		return dev_err_probe(dev, ret, "Failed to create mailbox\n");
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct of_device_id qcom_cpucp_mbox_of_match[] = {
-> +	{ .compatible = "qcom,x1e80100-cpucp-mbox" },
-> +	{}
-> +};
-> +MODULE_DEVICE_TABLE(of, qcom_cpucp_mbox_of_match);
-> +
-> +static struct platform_driver qcom_cpucp_mbox_driver = {
-> +	.probe = qcom_cpucp_mbox_probe,
-> +	.driver = {
-> +		.name = "qcom_cpucp_mbox",
-> +		.of_match_table = qcom_cpucp_mbox_of_match,
-> +	},
-> +};
-> +module_platform_driver(qcom_cpucp_mbox_driver);
-
-That's turbo late. Go core_initcall.
-
-Konrad
+-- 
+An old man doll... just what I always wanted! - Clara
 
