@@ -1,169 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-18330-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 156CF8AF41B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 18:30:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D4648AF464
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 18:40:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 943AB1F22D07
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 16:30:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3EF2E1C22429
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 16:40:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1426C13D294;
-	Tue, 23 Apr 2024 16:29:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F75913D29E;
+	Tue, 23 Apr 2024 16:40:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IBgsWl/U"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="IuaknStN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39A313C9DE;
-	Tue, 23 Apr 2024 16:29:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B147C13CF90;
+	Tue, 23 Apr 2024 16:39:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713889792; cv=none; b=UuzaE8qv/gNHghCKHpJ7iQfpi0TAfd2NqurFNLXsj+xUSX1uOlayyjE8dbxh/QL1gYwxZ4sn5jNfygrx1VmjMEzcxGen2tczu7z0OurYyrQTsnQHT2oT1Xk+bWCLYHfhf4EKHDIXzClQPw8FEEbC2e4/FkVM6Dvm0wQRwhWFmKA=
+	t=1713890401; cv=none; b=nijC9K0LSEfMMo96+S7aVFXXx+Nbb7Bojab7ty7LdKtUOVbzg+MPdUTYBTk1hvoC2QDf6SJAAnKc65EuW0LE7dvGU0/4eVeYyZXcg6+aFGIx90IQzZtG3CD3fo5FLoGbeH/XJRaBKxXYdFNg/vTnaZFNYEGxdFQLsQLTKfnGp+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713889792; c=relaxed/simple;
-	bh=t2LezbxdKP35DVytCdS/mQglz2976ZAWz309dfVwZ0g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Cnt06NI+96ACEQPhwuRoGgnts4QZhIDYljvgnBhc3BdhPeOcs1oMjTyzv+TtDUc2kL80BfjuMPPtfRezB18zEj2DvHRXQ0K+RnXgE67lluOSqdTI3LUSBLpL/jneRHfMCYqqneiaA1c66jnWZ9yf/yPH85KJr8mgMo+gsFQQKjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IBgsWl/U; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB81DC116B1;
-	Tue, 23 Apr 2024 16:29:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713889791;
-	bh=t2LezbxdKP35DVytCdS/mQglz2976ZAWz309dfVwZ0g=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=IBgsWl/UdkmQxLX83OuGJMtsKjtqRaJ8W92N7deRue/6Xy4n6bGLUfg9q/pwdK3lR
-	 zJnJcL/hW3pMy+RLD562WMKyyQc4OgxP+TDUWMFcp0tpCuapg165WpECG/i6pcQO7K
-	 8ZIxMMkY4riaRjyOBOHX5RhVSobhgFtd4Z9gYGt6N1MCD981hoKXOdoN4p+wZT4QZY
-	 ndblvf1azZ7PuLcY16j9QTO2AvNy0JINHPXrUkUabB0UuctFdNermhVkMNdBafA2g0
-	 3K9NSTUwrSYbpiSSLJmaKngE1r3K2qLDlld6qNrwKEFVePAJxRZ82W76hLU0NcGtPs
-	 NQkKv9H2yRa/Q==
-Message-ID: <2e67e4e6-83a7-4153-b6a7-cdec0ab2c171@kernel.org>
-Date: Tue, 23 Apr 2024 18:29:44 +0200
+	s=arc-20240116; t=1713890401; c=relaxed/simple;
+	bh=UZSu4Bcaj41tuZdLznVgg+wmyuxc9D7LdkUtpGpC5uk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Dmu2cbloSvaGTOhQq+Aq4/MfFx5b8DTi48jyOE6KYRKKtRCgGvFgNsmqJYpdg7Bde8aMwLrVCgI3JlaWsgB6ui3RFX4Mi0LlXgjaKNp5zinFxVyrqrTJsGY+ik3HO9/PVWL98mdJshNGWAo4ifUUA/ebc/yNPWf9qevhNsEMDIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=IuaknStN; arc=none smtp.client-ip=192.198.163.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1713890399; x=1745426399;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=UZSu4Bcaj41tuZdLznVgg+wmyuxc9D7LdkUtpGpC5uk=;
+  b=IuaknStN+PJTN+p6rf2cVouE9vKxsi6c1aUCtoLb+933wuJFSK16alM5
+   b3xv1QkWx08xBhf36Kmm3UulUcW84YppNHDp1zYEhN7qjURaQstxQK9QX
+   fkEUabmpvHnQR0yRNsK1ocuC6Ze00RDsV2Kk0UWXeiOR4u6mcvIlL5pLQ
+   qHt3QANurPij5D2SJk4GCsSpQMlVhLpwKcWj+N/+iLCqC8T/lqHvOcY+1
+   37m9ANzlZwO2BYQgwcVLWVby6mRh7f5JShM+YyohkqaHOZt5Td06yaBVM
+   NXryFy8kNu7a1UBqiJbkffXltTvU/1zVzJ2S/NvoMCrOxM+MZvVEZXvzO
+   Q==;
+X-CSE-ConnectionGUID: MCmU9BFESaW5pZR8GKn2bA==
+X-CSE-MsgGUID: ZrHrDf4uS7WsIuNovrr8HA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11053"; a="20182269"
+X-IronPort-AV: E=Sophos;i="6.07,222,1708416000"; 
+   d="scan'208";a="20182269"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Apr 2024 09:39:58 -0700
+X-CSE-ConnectionGUID: i4kDePn9TVuD6B1wLCiCiA==
+X-CSE-MsgGUID: ce04Eyj5Q5WWfqulzqJizA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,222,1708416000"; 
+   d="scan'208";a="55624711"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by fmviesa001.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Apr 2024 09:39:53 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.97)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1rzJBN-00000000Ojk-2cFZ;
+	Tue, 23 Apr 2024 19:39:49 +0300
+Date: Tue, 23 Apr 2024 19:39:49 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-tegra@vger.kernel.org, Vignesh Raghavendra <vigneshr@ti.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Yue Wang <yue.wang@amlogic.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>
+Subject: Re: [PATCH v1 1/1] PCI: dwc: Remove unused of_gpio.h
+Message-ID: <ZifkVRL5Uvoso2O4@smile.fi.intel.com>
+References: <20240307122840.3682287-1-andriy.shevchenko@linux.intel.com>
+ <20240308095547.GI3789@thinkpad>
+ <Zer_9VTVJqCNoOFG@smile.fi.intel.com>
+ <20240308171029.GB53064@thinkpad>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/6] dt-bindings: HID: i2c-hid: elan: add
- 'no-reset-on-power-off' property
-To: Johan Hovold <johan+linaro@kernel.org>, Jiri Kosina <jikos@kernel.org>,
- Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>, Rob Herring
- <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Linus Walleij <linus.walleij@linaro.org>,
- Douglas Anderson <dianders@chromium.org>, linux-input@vger.kernel.org,
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240423134611.31979-1-johan+linaro@kernel.org>
- <20240423134611.31979-4-johan+linaro@kernel.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240423134611.31979-4-johan+linaro@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240308171029.GB53064@thinkpad>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-On 23/04/2024 15:46, Johan Hovold wrote:
-> When the power supply is shared with other peripherals the reset line
-> can be wired in such a way that it can remain deasserted regardless of
-> whether the supply is on or not.
-
-To clarify: the reset line is still present and working in such case?
-
+On Fri, Mar 08, 2024 at 10:40:29PM +0530, Manivannan Sadhasivam wrote:
+> On Fri, Mar 08, 2024 at 02:09:25PM +0200, Andy Shevchenko wrote:
+> > On Fri, Mar 08, 2024 at 03:25:47PM +0530, Manivannan Sadhasivam wrote:
+> > > On Thu, Mar 07, 2024 at 02:28:40PM +0200, Andy Shevchenko wrote:
+> > > > of_gpio.h is deprecated and subject to remove.
+> > > > The driver doesn't use it, simply remove the unused header.
+> > 
+> > > What about the rest?
+> > > 
+> > > drivers/pci/controller/dwc/pcie-kirin.c
+> > > drivers/pci/controller/dwc/pci-imx6.c
+> > 
+> > Have you chance to look at them?
 > 
-> This is important as it can be used to avoid holding the controller in
-> reset for extended periods of time when it remains powered, something
-> which can lead to increased power consumption. Leaving reset deasserted
-> also avoids leaking current through the reset circuitry pull-up
-> resistors.
+> Ok. I failed to spot the usage of of_get_named_gpio() in both drivers. But you
+> already submitted a patch to convert kirin last year [1], and that didn't get
+> any love from the maintainers. Could you please respin?
+
+Sure.
+
+> Perhaps convert imx6 also?
+
+I'll look at it, if it's easy enough, why not, otherwise let it rotten for a while.
+
+> [1] https://lore.kernel.org/all/20230213180735.42117-1-andriy.shevchenko@linux.intel.com/
 > 
-> Add a new 'no-reset-on-power-off' devicetree property which can be used
-> by the OS to determine when reset needs to be asserted on power down.
+> > > There is also one non-dwc driver:
+> > > 
+> > > drivers/pci/controller/pci-aardvark.c
+> > 
+> > Keyword: non-dwc.
+> > This patch is for DesignWare controllers that confirmed not using the header.
+> > 
+> > > It is better to remove it from all PCI drivers in a single patch.
+> > 
+> > I disagree on this. These are different drivers and even inside DesignWare not
+> > all of them can be converted with a simple change like this one.
+> > 
 > 
-> Note that this property can also be used when the supply cannot be
-> turned off by the OS at all.
+> Since this is just a header removal I thought you can just send a single patch
+> for these drivers since there is nothing special that warrants a separate patch
+> for aardvark (both are inside the drivers/pci/ hierarchy).
+
+I'll look at aadvark as well, I dunno if it's simple removal enough there.
+
+> But anyway, I wouldn't press for it.
 > 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
->  Documentation/devicetree/bindings/input/elan,ekth6915.yaml | 6 ++++++
->  1 file changed, 6 insertions(+)
+> > That said, please consider applying this one as is.
 > 
-> diff --git a/Documentation/devicetree/bindings/input/elan,ekth6915.yaml b/Documentation/devicetree/bindings/input/elan,ekth6915.yaml
-> index c3a6f901ff45..3d20673f10b2 100644
-> --- a/Documentation/devicetree/bindings/input/elan,ekth6915.yaml
-> +++ b/Documentation/devicetree/bindings/input/elan,ekth6915.yaml
-> @@ -37,6 +37,12 @@ properties:
->    reset-gpios:
->      description: Reset GPIO; not all touchscreens using eKTH6915 hook this up.
->  
-> +  no-reset-on-power-off:
+> I can give my R-o-b tag, but Lorenzo or Krzysztof will apply this.
+> 
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Missing vendor prefix. Unless you want to re-use existing property
-"keep-power-in-suspend", but the case here mentions power off, not suspend.
+Thank you!
 
-Anyway, the property sounds like what the OS should be doing, which is
-not what we want. You basically instruct driver what to do. We want a
-described hardware configuration or hardware specifics.
+-- 
+With Best Regards,
+Andy Shevchenko
 
-Reset is pulled to something? What is exactly different in this hardware
-configuration comparing to other hardware setup (regular)?
-
-> +    type: boolean
-> +    description:
-> +      Reset line is wired so that it can be left deasserted when the power
-> +      supply is off.
-
-Best regards,
-Krzysztof
 
 
