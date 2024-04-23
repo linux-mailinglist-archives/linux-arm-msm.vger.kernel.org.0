@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-18343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 146098AF6C6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 20:42:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 86F158AF6D8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 20:45:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C59E2287998
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 18:42:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4141B28DA7A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 18:45:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B6CD13CAB9;
-	Tue, 23 Apr 2024 18:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A37E13D503;
+	Tue, 23 Apr 2024 18:45:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bpGE6YPp"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Py4WITlL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B3285653;
-	Tue, 23 Apr 2024 18:42:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B5F1CD39;
+	Tue, 23 Apr 2024 18:45:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713897766; cv=none; b=IBtpvF5MP+XvsEUUOdR+k5+/yoFk7iTjIzLI+GIZP81FUIDoFgb10KEeXWn/NoZR7EtDsLTy0v4cObSr1Wum+RwvkYEE05EAef1WauqUs5nE6vH/7qWhqCgRac9Nk0T1NFC0XCUq0KV3+H+SW96K5ll3sWgRE93/2fEQ3VTbDzk=
+	t=1713897914; cv=none; b=hLXgaFkq9Jpk+orE2fecwVTaBxbPh77z6x5WDIHwDaoQ7Rk++F/8rcdHUOXAkFrBa8bV5lxL88UUBktjyCvEyB5KM0wFCCX8KIHJVHWNNiSTPd8oHdRFOGXD5jnKTpLBDR/uO5cb3kUz1X4LMtYA5M4zOrJEgfW2bSxsNclCaVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713897766; c=relaxed/simple;
-	bh=2U6q3AnIep0O9K7JjfLvpOuvvCYxZ9voAB/ZwE7uOUw=;
+	s=arc-20240116; t=1713897914; c=relaxed/simple;
+	bh=FVmo2qUeCFAK7JGM525GXTwOt66sExGefL9a3q+HSsY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=uVuX3VVtomR12CvNoCq8zsht8DPbqkE+CvyG1Olh4RUAb+TBv3ZcBBrrGSGSA5T08z0hHOPmR/aKXNpOOttUwewVak3SPkRhAyWY67LOruP7WIm0ocyvwLK+0Nzc/I+YZGBzjvbfVrQ6b0Er2Bd+HBsHjLX7AD6YKIC4hgtQJEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bpGE6YPp; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=KS95DdGyEO6EVZw5ObrwRVY6IeT2xzD+tWqwKcBwHM0yHWnQirwHQUVHH4u6pgiXP12AGxS7DJu43ekfmO6P8vDxTyv4E/YFAnb7FTtmBFTf8ldnX9TOmwx1HMNKBSB5Ros0J8v/rnkU4uBJZzzFcUYp/EC+euRbXyW5Jw3josA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Py4WITlL; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43N5qCGh013043;
-	Tue, 23 Apr 2024 18:42:41 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43NBTles002064;
+	Tue, 23 Apr 2024 18:45:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=tqHQDFqMUEDZk57HJ3NWrEhyU2BqbzhbR5rPVKR1UEM=; b=bp
-	GE6YPpdalyvKNMg8X8nS7wymRW/A62GrJ4Ah7GJQbVcr4s9CPlFvkQp5yinpHnrX
-	XNFi9Yr77JECaCgneF5IUZwMNR2UGqvl6tCISUhdjLApIDBS9p/G69jXV2VYFVq9
-	is9gTDSJaGC7glspL1WkSUBvQqarcOfyms8eE5vnfgKf0gVLEvlC+uQdcbmYkFTB
-	76KlicJvE0omenoxstR1vOA7a2sGVaBysgpFf8+erDiLf4T3Hk5x2WFfKa6lU4KQ
-	cGURS7mh9jTJn1muAGjF3/TYGa64xr0PugBV8hcdRDxw4l5eIyEdwY2bgG1ATLxr
-	HdOmBgNqALEYI3iUAGIQ==
+	qcppdkim1; bh=1xuRdsc5E4JkoyPybqYXAta3WzudMMp2B+z34cEsg30=; b=Py
+	4WITlLZbKNlVN3Z/ZSEnXPWcH7dcbmKf9ivi43MP8B+NPxLUrJhYnWhcHWNVmGBG
+	FOWOYa7I224Er6+JGviEfNsULYqw8HLLd6zCJbODLZqGKkSAduEQv0ZvQo60DHXs
+	Dx0Q/1lIuBRi1CMOTQ96GDoGmpukg5BMcANrs1ww6FtSBOoJ/yLGQ/IFPQm6OWl3
+	qgO/AggpKAZuWWjNgz+orHpzYmkLiiZl8JOZ7IFYSDTj7mDUm6sIXEZTWrqIIq2B
+	gifnRHuNczbw9jareruPuv7CB/2tl9O7IevOreQIDModOWVRzUJfAISCIQyMJ29e
+	elq618z92dcAGcgIZX/w==
 Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xnvtnb6u2-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xp91fhusf-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Apr 2024 18:42:41 +0000 (GMT)
+	Tue, 23 Apr 2024 18:45:09 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43NIge11023290
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43NIj80U027419
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Apr 2024 18:42:40 GMT
+	Tue, 23 Apr 2024 18:45:08 GMT
 Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 23 Apr
- 2024 11:42:39 -0700
-Message-ID: <4e766214-1bf4-9377-d9db-ed7b0b9e2832@quicinc.com>
-Date: Tue, 23 Apr 2024 12:42:38 -0600
+ 2024 11:45:07 -0700
+Message-ID: <88074e78-1dae-eebb-4e74-55644e1f3330@quicinc.com>
+Date: Tue, 23 Apr 2024 12:45:06 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,44 +66,61 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.0
-Subject: Re: [PATCH v4 1/3] bus: mhi: host: Add sysfs entry to force device to
- enter EDL
+Subject: Re: [PATCH v4 2/3] bus: mhi: host: Add a new API for getting channel
+ doorbell address
 Content-Language: en-US
 To: Qiang Yu <quic_qianyu@quicinc.com>, <mani@kernel.org>
 CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
         <quic_mrana@quicinc.com>
 References: <1713868417-37856-1-git-send-email-quic_qianyu@quicinc.com>
- <1713868417-37856-2-git-send-email-quic_qianyu@quicinc.com>
+ <1713868417-37856-3-git-send-email-quic_qianyu@quicinc.com>
 From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <1713868417-37856-2-git-send-email-quic_qianyu@quicinc.com>
+In-Reply-To: <1713868417-37856-3-git-send-email-quic_qianyu@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: xzaDnPiYSyLWFIa9-BJF5PvQh2FDQK8K
-X-Proofpoint-ORIG-GUID: xzaDnPiYSyLWFIa9-BJF5PvQh2FDQK8K
+X-Proofpoint-GUID: _vGLPflRVeDPEx-JSCvGzkohwjndsoBR
+X-Proofpoint-ORIG-GUID: _vGLPflRVeDPEx-JSCvGzkohwjndsoBR
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
  definitions=2024-04-23_15,2024-04-23_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 mlxlogscore=732 phishscore=0 priorityscore=1501
- mlxscore=0 adultscore=0 bulkscore=0 spamscore=0 malwarescore=0
- impostorscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
+ impostorscore=0 phishscore=0 spamscore=0 mlxlogscore=999
+ priorityscore=1501 clxscore=1015 malwarescore=0 mlxscore=0
+ lowpriorityscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.19.0-2404010003 definitions=main-2404230043
 
 On 4/23/2024 4:33 AM, Qiang Yu wrote:
-> Add sysfs entry to allow users of MHI bus force device to enter EDL.
-> Considering that the way to enter EDL mode varies from device to device and
-> some devices even do not support EDL. Hence, add a callback edl_trigger in
-> mhi controller as part of the sysfs entry to be invoked and MHI core will
-> only create EDL sysfs entry for mhi controller that provides edl_trigger
-> callback. All of the process a specific device required to enter EDL mode
-> can be placed in this callback.
+> Some controllers may want to know the address of a certain doorbell. Hence
+> add a new API where we read CHDBOFF register to get the base address of
+> doorbell, so that the controller can calculate the address of the doorbell
+> it wants by adding additional offset.
 > 
 > Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> index d968e1a..cb3b676 100644
+> --- a/include/linux/mhi.h
+> +++ b/include/linux/mhi.h
+> @@ -816,4 +816,10 @@ int mhi_queue_skb(struct mhi_device *mhi_dev, enum dma_data_direction dir,
+>    */
+>   bool mhi_queue_is_full(struct mhi_device *mhi_dev, enum dma_data_direction dir);
+>   
+> +/**
+> + * mhi_get_channel_doorbell_offset - Get the channel doorbell offset
+> + * @mhi_cntrl: MHI controller
+> + * @chdb_offset: Channel doorbell offset
+> + */
+> +int mhi_get_channel_doorbell_offset(struct mhi_controller *mhi_cntrl, u32 *chdb_offset);
 
+Should have a blank line here before the #endif just like how the file 
+was before this change
+
+>   #endif /* _MHI_H_ */
+
+With the above
 Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
