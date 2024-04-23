@@ -1,153 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-18355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 513D68AF815
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 22:37:39 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75AFD8AFC32
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 00:49:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CFF8D1F23C2D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 20:37:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 99C641C22522
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 22:49:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2DD3142E60;
-	Tue, 23 Apr 2024 20:37:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B1442D7B8;
+	Tue, 23 Apr 2024 22:49:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="GGcpfzFY"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cBW+NGtN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67565142E79
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Apr 2024 20:37:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF532C1AE;
+	Tue, 23 Apr 2024 22:49:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713904653; cv=none; b=F58nVMN1s+603vruQrGfCGeDWL2/b9EHJwkedIk7VCHAeEbUZ3isXon8BLK5EmsO1vJdSdBMbvaKR1J9LpOiVq7ensUxDIzzoOH6tUtXaIYBYm9/sKBxrxbwMebRrOA+8gKQbbMWotje/caIF7fhdaraghPI4FhxC43Cxy66TRw=
+	t=1713912553; cv=none; b=b7OokKEkPmnaxM8srujaUYlOBPx3lLkmNeHMHTYcAW6Jq+N51PhyMgVXH7MxIOnetMMCpZWkd17Yly0IgpdyWZ/PmzUAvHhYYnL3G7FpDZV+5GFeTXnZ1e/GT0OnSti2NAlVMdMAbNUk3iCRi/0A/VdRpNjLn9NeP+aVJKR3X0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713904653; c=relaxed/simple;
-	bh=rfhmOs1XODOFJs1l4DWhrD2bkxios+soWFbzgeUP8Dk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CEAR/3IVDR9/e7cSx5cGy3hVIwDQWqzFC4xXT86XbWw80P3+Sgn/Njz1UmCuBlat3eWB+5j7G3DyLfTAox+IE1RqLUWv0mqmxTYeXnE8nUyBEZmZhkDEaIS39KprI3628sdbVfSflUJ3hIGoIvKRq0jTO66N3vz8/2/mEUFJZfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=GGcpfzFY; arc=none smtp.client-ip=209.85.210.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-6eb7500abe3so3462054a34.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Apr 2024 13:37:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1713904648; x=1714509448; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=A8Z4Xephtak0B6Z0C10bXQoxaaScZEGJ8HuSBBJAqAk=;
-        b=GGcpfzFYUJLBQnGwSWyhreb9yGqz7lbtwpIgktXrvLVkfuvg7TR1hSgevNYM5o8fSw
-         0hWI/PJImoPnWf2/NEzwsFT0YHTJiRw/BFgL2TB/VOCic+WezZ9A3mrJCzMSUH3jkSOo
-         PbeqMME/OMN0P1zVcHGsRElSpFyiIuJj75cIo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713904648; x=1714509448;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=A8Z4Xephtak0B6Z0C10bXQoxaaScZEGJ8HuSBBJAqAk=;
-        b=Nygze4WmjuPgMJe+uCEabWNYx9I+pKHULWLCup8dOy2Q0WkGao9TaMRuCpb3mKN7i1
-         Zy00JgWI0pNZs1l9TjmztoBiK0hgJdYgEqpQmDriWFfJxF2VcWPgG6YG70wIyLsBAZT1
-         8PU8qstnG3yS8UzGUcy5R68MWVcKTsDSD4ydwRBhyjRizNHmdLIhOSJ9c8JDU9QJJ+RK
-         UxhXJFRPLDLAH6RW13+hTC7aqDYAWprtS0CSNsdhe7ejkJDNSOiomc1tseG8PJnak69U
-         Dsiup1ahwD7mx7XiF9uzOZF0oWA9OIJ1sv8wRTckpZfbZZMHwUTx60k2zb+1ld+ROrhW
-         OOJQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW2/N3AjtIa6dC7iF8VKnq4XSotgI1lycVa2VjbqaD2Y/TAGyIrHcHG0Qih8V/vFYFu8ibif8XJUZui6P/PNpRHxE6eACNw01DuD2BJSQ==
-X-Gm-Message-State: AOJu0Yxhjc3zTr2DDA/GLZpnNFMBoA5yu/JgGGrz9tOdIkEMPwC3Nrnr
-	QKd52+ns2RRMUy3tFZkRHcwewUQgVgJMUo9e5CwEsnIyqetynn+eBCXOgjKY7biReF7ngsH/FEW
-	cHrIO
-X-Google-Smtp-Source: AGHT+IHPEMnM/CE5fUaiAj4zW2LVg9okMSl078fwUuYjfq+4WK4XQIboGK0V3njZmHL4QFTTlPmwMA==
-X-Received: by 2002:a9d:76c9:0:b0:6eb:86c4:eeb5 with SMTP id p9-20020a9d76c9000000b006eb86c4eeb5mr821383otl.23.1713904648378;
-        Tue, 23 Apr 2024 13:37:28 -0700 (PDT)
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com. [209.85.160.171])
-        by smtp.gmail.com with ESMTPSA id j1-20020a37ef01000000b0078efd5f89ecsm5543983qkk.64.2024.04.23.13.37.27
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Apr 2024 13:37:27 -0700 (PDT)
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-434ffc2b520so45881cf.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Apr 2024 13:37:27 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXV6bCRvA4oqap8/Fw/dORUn2G3JxL8Rulp5JLdb8f+huZLB6AYY2fpunZpcOqRMdHTgAqPh+59m9070uH9YzghaOqWpgySkZvJ0tnqkw==
-X-Received: by 2002:ac8:48c5:0:b0:439:9aa4:41ed with SMTP id
- l5-20020ac848c5000000b004399aa441edmr71354qtr.16.1713904646630; Tue, 23 Apr
- 2024 13:37:26 -0700 (PDT)
+	s=arc-20240116; t=1713912553; c=relaxed/simple;
+	bh=TRuX/tTAJzD7cSBZjxwlCUN8qWsw1eNS9r8xYN+qJVw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=baLxLM0L8VDXWH/WXp4y2hLtmg7dzh8TkDdro9ynLsYSzNxopFtYDjcs2csxUpEuVZhM1O7LZ7P44FPHKq9eQVIxUGqxqpN2OPnnZOQKQfpVa3VQMuG24SApKxHPnKUrG5Hrpeujc147NUx1CqVTeLx2TTf+Oj/piJDYSFPJCHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cBW+NGtN; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43NM5IQN015367;
+	Tue, 23 Apr 2024 22:48:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=DDXZUb9B2qp1xMWb0EroroBnTTf58sdaiaj+26UKu5I=; b=cB
+	W+NGtNYFM1GqoOmyCowtmgRlTJaC2dalqNTOCyIa1B4tBeynyAvca5C5fvTmmvcj
+	jDzKC/l6wzG/EaGZeQsMwjMqjAbaK9a0N4MG4gnHxZDdi2eiebpl/LPBKUtl1PcM
+	9g5x2oV6G1gZNpF8XFXy6R2n9vLcAClfUSksV36DkTDoWKgb7esBgqdxbKNqLSUP
+	HTuZby/22SS/haVSE4yq6RwshxKOOxWekycPAEqRmAgmFJiSI3Z0EH7cW3RF8OKS
+	vPGA3ZU5xoPc2Zc6ueVlzG8ZQcTFaWMYeNVcu3jR2SXFxsaEn+8AAMJizpXhg1xB
+	5hmtyvO22MVROv/Cgd9Q==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xpjp8gqp4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 23 Apr 2024 22:48:45 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43NMmit4014980
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 23 Apr 2024 22:48:44 GMT
+Received: from [10.110.64.215] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 23 Apr
+ 2024 15:48:43 -0700
+Message-ID: <32ea2ffa-5ee4-5344-826d-3572085af705@quicinc.com>
+Date: Tue, 23 Apr 2024 15:48:43 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240423134611.31979-1-johan+linaro@kernel.org> <20240423134611.31979-5-johan+linaro@kernel.org>
-In-Reply-To: <20240423134611.31979-5-johan+linaro@kernel.org>
-From: Doug Anderson <dianders@chromium.org>
-Date: Tue, 23 Apr 2024 13:37:14 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XP8aCjwE3LfgMy4oBL4xftFg5NkgUFso__54zNp_ZWiA@mail.gmail.com>
-Message-ID: <CAD=FV=XP8aCjwE3LfgMy4oBL4xftFg5NkgUFso__54zNp_ZWiA@mail.gmail.com>
-Subject: Re: [PATCH 4/6] HID: i2c-hid: elan: fix reset suspend current leakage
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: Jiri Kosina <jikos@kernel.org>, Benjamin Tissoires <benjamin.tissoires@redhat.com>, 
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Linus Walleij <linus.walleij@linaro.org>, linux-input@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v19 41/41] ASoC: doc: Add documentation for SOC USB
+Content-Language: en-US
+To: Bagas Sanjaya <bagasdotme@gmail.com>, <srinivas.kandagatla@linaro.org>,
+        <mathias.nyman@intel.com>, <perex@perex.cz>, <conor+dt@kernel.org>,
+        <corbet@lwn.net>, <lgirdwood@gmail.com>, <andersson@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <gregkh@linuxfoundation.org>,
+        <Thinh.Nguyen@synopsys.com>, <broonie@kernel.org>,
+        <bgoswami@quicinc.com>, <tiwai@suse.com>, <robh@kernel.org>,
+        <konrad.dybcio@linaro.org>
+CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>
+References: <20240422224906.15868-1-quic_wcheng@quicinc.com>
+ <20240422224906.15868-42-quic_wcheng@quicinc.com>
+ <ZicSOzE8KyaYGi0v@archie.me>
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <ZicSOzE8KyaYGi0v@archie.me>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: W15zYV3-qeG-OQ9c9nb1NdmLHuOGZuDd
+X-Proofpoint-ORIG-GUID: W15zYV3-qeG-OQ9c9nb1NdmLHuOGZuDd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-23_18,2024-04-23_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=999
+ priorityscore=1501 phishscore=0 spamscore=0 clxscore=1011 bulkscore=0
+ impostorscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404230061
 
-Hi,
+Hi Bagas,
 
-On Tue, Apr 23, 2024 at 6:46=E2=80=AFAM Johan Hovold <johan+linaro@kernel.o=
-rg> wrote:
->
-> @@ -87,12 +104,14 @@ static int i2c_hid_of_elan_probe(struct i2c_client *=
-client)
->         ihid_elan->ops.power_up =3D elan_i2c_hid_power_up;
->         ihid_elan->ops.power_down =3D elan_i2c_hid_power_down;
->
-> -       /* Start out with reset asserted */
-> -       ihid_elan->reset_gpio =3D
-> -               devm_gpiod_get_optional(&client->dev, "reset", GPIOD_OUT_=
-HIGH);
-> +       ihid_elan->reset_gpio =3D devm_gpiod_get_optional(&client->dev, "=
-reset",
-> +                                                       GPIOD_ASIS);
+On 4/22/2024 6:43 PM, Bagas Sanjaya wrote:
+> On Mon, Apr 22, 2024 at 03:49:06PM -0700, Wesley Cheng wrote:
+>> +.. code-block:: rst
+>> +
+>> +int snd_soc_usb_setup_offload_jack(struct snd_soc_component *component,
+>> +					struct snd_soc_jack *jack)
+>> +..
+> 
+> You forget to indent snd_soc_usb_setup_offload_jack() prototype:
+> 
+> ---- >8 ----
+> diff --git a/Documentation/sound/soc/usb.rst b/Documentation/sound/soc/usb.rst
+> index 3f7c3ef6a0c03c..0b6da0be9f317f 100644
+> --- a/Documentation/sound/soc/usb.rst
+> +++ b/Documentation/sound/soc/usb.rst
+> @@ -218,8 +218,8 @@ state.
+>   
+>   .. code-block:: rst
+>   
+> -int snd_soc_usb_setup_offload_jack(struct snd_soc_component *component,
+> -					struct snd_soc_jack *jack)
+> +        int snd_soc_usb_setup_offload_jack(struct snd_soc_component *component,
+> +        					struct snd_soc_jack *jack)
+>   ..
+>   
+>     - ``component``: ASoC component to add the jack
+> 
+>> +USB Offload Playback Route Select Kcontrol
+>> +-----------------------------------
+> 
+> USB offload playback heading underlines are not long enough to cover heading
+> titles, so I have to extend them:
+> 
+> ---- >8 ----
+> diff --git a/Documentation/sound/soc/usb.rst b/Documentation/sound/soc/usb.rst
+> index 0b6da0be9f317f..5e0e9fad131b24 100644
+> --- a/Documentation/sound/soc/usb.rst
+> +++ b/Documentation/sound/soc/usb.rst
+> @@ -482,7 +482,7 @@ into the physical USB port and enumerated.  The kcontrols are defined as:
+>       kcontrol exposed by the platform card.
+>   
+>   USB Offload Playback Route Select Kcontrol
+> ------------------------------------
+> +------------------------------------------
+>   In order to allow for vendor specific implementations on audio offloading device
+>   selection, the SOC USB layer exposes the following:
+>   
+> @@ -545,7 +545,7 @@ along to the external DSP.
+>   
+>   
+>   USB Offload Playback Route Status
+> --------------------
+> +---------------------------------
+>   SOC USB exposes APIs for keeping track of the offloading state, and expects this
+>   to be maintained by the BE DAI link that created/added the SOC USB device.
+>   
+> @@ -573,7 +573,7 @@ When executing the kcontrol get callback, it will loop across the active_list ar
+>   and report to the application for active USB sound card and USB PCM device indexes.
+>   
+>   USB Offload Playback Capable Card
+> --------------------------------
+> +---------------------------------
+>   USB sound also creates a kcontrol for applications to help determine which platform
+>   sound card USB offloading is linked to.  This will allow applications to further
+>   query the platform sound card for specific information about the current USB offload
+> 
+> Thanks.
+> 
 
-I'm not a huge fan of this part of the change. It feels like the GPIO
-state should be initialized by the probe function. Right before we
-call i2c_hid_core_probe() we should be in the state of "powered off"
-and the reset line should be in a consistent state. If
-"no_reset_on_power_off" then it should be de-asserted. Else it should
-be asserted.
+Thanks for the review.  Will fix these all in the next revision.
 
-I think GPIOD_ASIS doesn't actually do anything useful for you, right?
-i2c_hid_core_probe() will power on and the first thing that'll happen
-there is that the reset line will be unconditionally asserted.
-
-Having this as "GPIOD_ASIS" makes it feel like the kernel is somehow
-able to maintain continuity of this GPIO line from the BIOS state to
-the kernel, but I don't think it can. I've looked at the "GPIOD_ASIS"
-property before because I've always wanted the ability to have GPIOs
-that could more seamlessly transition their firmware state to their
-kernel state. I don't think the API actually allows it. The fact that
-GPIO regulators don't support this seamless transition (even though it
-would be an obvious feature to add) supports my theory that the API
-doesn't currently allow it. It may be possible to make something work
-on some implementations but I think it's not guaranteed.
-
-Specifically, the docs say:
-
-* GPIOD_ASIS or 0 to not initialize the GPIO at all. The direction must be =
-set
-  later with one of the dedicated functions.
-
-So that means that you can't read the pin without making it an input
-(which might change the state if it was previously driving a value)
-and you can't write the pin without making it an output and choosing a
-value to set it to. Basically grabbing a pin with "asis" doesn't allow
-you to do anything with it--it just claims it and doesn't let anyone
-else have it.
-
--Doug
+Thanks
+Wesley Cheng
 
