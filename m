@@ -1,73 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-18361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18362-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3439E8AFCD6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 01:49:00 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0113B8AFD05
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 02:01:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DEBA42878D2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Apr 2024 23:48:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 31E8B1C22886
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 00:01:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B586944C89;
-	Tue, 23 Apr 2024 23:48:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 965E9800;
+	Wed, 24 Apr 2024 00:01:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="arJljgSj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JbuNX78n"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF04544384
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Apr 2024 23:48:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9425393
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 00:01:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713916135; cv=none; b=qzSGm1RXZF2KZUCVd9qc8Hnigow985N13fg2gsS+G5iulsswiyva91dF93mMn9TtChNY1QYGxDn8saE6gCo2n6DqcSROhmGARwM39LUJ+iKDzN9p5ouwgkgPWNHHbJY0id0CZuXqTzwE3I6IZ1uVLSEmnMciJmxgkxF/4bMnbhw=
+	t=1713916879; cv=none; b=WlZfqR19q0bFbkEW9XBnJ3GlS5DDgBhx6tmcsZ1t+YEXJvU5c7Kjb99aViNghY0yCET6FP0tQReQ+rmdmD9oTgWsVOMbdCs1azYTAN/Ou7622ExMT4a55z5f+T8FERdE8iC8b3V1w0a6rG7aG/Rx2yq39C34qCAwL34apMTyB2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713916135; c=relaxed/simple;
-	bh=O+pfz+OtQCyDo4+S17bvD89xB/KAdv6haRV5YqRwjyQ=;
+	s=arc-20240116; t=1713916879; c=relaxed/simple;
+	bh=FlGCPz9SGenILdhF8xtuorosJuisz2ItVng/S0g5r6E=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jhJ92+fmNVD6W/Wqlty7VvBQxokP6tXl8nuQ7BYU6hrAIWRIdWUhqSouaS4GqqwCI9AxXWQdHCudDynwnsr2Ase33TcIO+NWj2jGIEPaw6DMVdLqci+mli6ZVR+ZoQUFpKi3k+/L/o5ZTP11DWsqIifS6ZnAzaNaIvjDtW3gZ14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=arJljgSj; arc=none smtp.client-ip=209.85.218.42
+	 In-Reply-To:Content-Type; b=ASSfRToK8DO8hxl+A2xL6/g9zAmmt6i2jc4oSkSJKfo8jZNNmUCsm37CG6BhJaAAxXlmA9Qt92NKV2eIaeoqcCtbkva41X6xhcY/vLqHGfttK35YCGUo0+mPNyGW0dFILqZaF1d7as5iwGcU3H2QTIqoJ3tKJHUgHS23e79x64M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JbuNX78n; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a5557e3ebcaso68495166b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Apr 2024 16:48:53 -0700 (PDT)
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-41a77836f16so21155345e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Apr 2024 17:01:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713916132; x=1714520932; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1713916876; x=1714521676; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=qP3QDCXdvCgy9EMQKAFMtLndWf1Gq3dqKJVdLdrFV2Q=;
-        b=arJljgSj+68N3xFS97D2LvesY2r/vgRdIArko46f6J1ztm0pLh3/hz8nDHSzItM1ZA
-         si3hp1HtbKNPUr+8Dhb1Th7tRvQXSPn8PpgSQo8rRwp26eqOTVBMSOKKAR/FC+pShEcR
-         jF5YFu61XMs0Jgc3pEzyGiI1D0hSXAmO22119RtBKSBisHKb3fnlNse4ek3+IX+l2YEi
-         ywyrdpVoaYZopVFAjX5IVZJi+KxPlDzGLH5GVZ2s0FRYvNVDLZPY6nh1vHanzB+x5CRN
-         lxy8bEJevLoYS5UMt87it6yutlBYlOp+xO0YRZZYcDVhpimP18flly6fwFPNvECYTC0U
-         BoVA==
+        bh=zsaJN6SDatJpYxGO39STEsAbfE+Fwe8phzl0Lbv9X/w=;
+        b=JbuNX78nqH0mAfNc9nLQragiII5hZiROcV/E4YP8bqSBEnHiD9yXMxZ3ytXORm+96E
+         ursuaGKu+aRrFBx5ByVKn2U5ExrGycoKB6X2Y6GuUZUcAhuTwdb7mcXEl6Y4Owb0RybQ
+         LL3hSmUk/hLNFHPqcEZ/pFNqkA7CqPSJtoO0R5hWYCPu4GVPWsyfhFFQ6r8c3GW2SraU
+         btj+sEWk703LwN97dgqfhhCjqd9nLBVFnmvqdEdN868ITlo5ZAK8XLHrGoPhyFtMDDnj
+         r3dAfPTJZO2pn/KZ/y99JUUtMqmWCL+0JMvR5sE1Xll/RIaifyzHWZXkCSsJ80Xo66g9
+         9qFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713916132; x=1714520932;
+        d=1e100.net; s=20230601; t=1713916876; x=1714521676;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qP3QDCXdvCgy9EMQKAFMtLndWf1Gq3dqKJVdLdrFV2Q=;
-        b=My9VOU/UAC7kz5MA2bZd4L8VIHxRISIWOagDbd45Z6ktwK3xVENgE3K2oqYg5WSzrJ
-         OUzO+4UC8CVmsFk2rTtI7MsXACPHKNbNy+amWcqHfNIVWXTkFYGGZoVClnvSc29cIkId
-         E9cHTCw1Wq1Ny++/tfXWYAbHwMEWXBSEJPCAMJYZz3x8ujwgNT5tjIdfujSrtynlPf7R
-         AqvqyUomdNnGARQMLD1NNB334l3yMuQq0dJ+dRE5FvkyloqKRGNouIF7fec0j25owilR
-         t4GgwmHUrZy5lEtuNz1mTeO0EK8FcbM1jmwbMPo1WYOFUBVJYA7pjMEwGWHgrhwtDhLq
-         mdeg==
-X-Gm-Message-State: AOJu0YxCztYmnrViZZBFtGfNy65GnQCv6oq5wR/o26WTRB/cDNd2Dkxy
-	HWG0RDw1M2OnWLvAfHZcxArOu1d7uS3V5AN6BTv7ygY27iN2ok1U73MBQMvUigY=
-X-Google-Smtp-Source: AGHT+IEFXcr58PjTWkOGUBTopPC7H0jAaJReRUPaMqMe5LSgbDgixh7jul4TfOZmlJTgW+jQ740xaw==
-X-Received: by 2002:a17:906:2849:b0:a54:e181:792b with SMTP id s9-20020a170906284900b00a54e181792bmr4050621ejc.5.1713916131990;
-        Tue, 23 Apr 2024 16:48:51 -0700 (PDT)
+        bh=zsaJN6SDatJpYxGO39STEsAbfE+Fwe8phzl0Lbv9X/w=;
+        b=WAHJ1PQvchAAk5ON+OhD570gWgf66o7Hsk7LDleBKKngm0ooRJgge3GLO/+xgdpHBt
+         pEXZ0hRIHhrVTYpJ2cSdYOkN43NHYQqStVJu5L9y2r0wELqkkWipxaLkvWLZdCu2Qr2u
+         PJUWu0CnUo92k5XwXZvo5MarIxBO/qjojv/d0lmGPuYxKCHbq09DIFsS4PgCZTmOWSxR
+         Hz2PoSgxxgSxa59aXBPmP8CpM1oA5msW37KCien8cR5KuzthkoaTA0KDKSVkWawAK0Js
+         KuAtcpqGEPZUdSKJ3xi3YYiJwdh0ktS/njsi7t+u7dUaG5gwqOZWpV6oV+fvxUP0yslx
+         bGhA==
+X-Forwarded-Encrypted: i=1; AJvYcCWCphJdiRbCITzaswD8VfIIaqnp2HylzQ5c04gDrH6KpfHYTOArs7N9mPklJX2BL8kKvwy9UwKtm3GGWoes3mVpCjbrb7+KA4BrzAPfqA==
+X-Gm-Message-State: AOJu0Ywn0FI4CPEdjXddsqUNo5E5WrtKKSeKptuAuZ6jj2GViaJO/Xl+
+	XVEBTGGC4e91gtswVmGc+Sgwx6vQzP/b2hZJ8DmzRpiHKNVINi8FSjWDgpqkDeo=
+X-Google-Smtp-Source: AGHT+IELghywWCMPx0pelmAeEjjnEwDnuikrcmKL/8eSocRVR4XO2UIGCfF62Wk+H62jE6je6spPjg==
+X-Received: by 2002:a05:600c:4fd0:b0:418:d68d:f1fb with SMTP id o16-20020a05600c4fd000b00418d68df1fbmr674433wmq.31.1713916876258;
+        Tue, 23 Apr 2024 17:01:16 -0700 (PDT)
 Received: from [192.168.0.102] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id p10-20020a17090653ca00b00a5587038aefsm6196673ejo.156.2024.04.23.16.48.50
+        by smtp.gmail.com with ESMTPSA id l16-20020a05600c4f1000b0041a1fee2854sm11231876wmq.17.2024.04.23.17.01.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Apr 2024 16:48:51 -0700 (PDT)
-Message-ID: <e70e0379-cab0-4586-825e-ade6775ca67c@linaro.org>
-Date: Wed, 24 Apr 2024 00:48:50 +0100
+        Tue, 23 Apr 2024 17:01:15 -0700 (PDT)
+Message-ID: <4028de21-33ea-4172-904f-e6809ef9a878@linaro.org>
+Date: Wed, 24 Apr 2024 01:01:14 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,99 +76,58 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V5 RESEND 3/5] clk: qcom: gdsc: Add set and get hwmode
- callbacks to switch GDSC mode
-To: Jagadeesh Kona <quic_jkona@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Ulf Hansson <ulf.hansson@linaro.org>, "Rafael J . Wysocki"
- <rafael@kernel.org>, Kevin Hilman <khilman@kernel.org>,
- Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Andy Gross <agross@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Abel Vesa <abel.vesa@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
- linux-pm@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>,
- Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>,
- Ajit Pandey <quic_ajipan@quicinc.com>
-References: <20240413152013.22307-1-quic_jkona@quicinc.com>
- <20240413152013.22307-4-quic_jkona@quicinc.com>
+Subject: Re: [PATCH v3 0/4] MSM8976 MDSS/GPU/WCNSS support
+To: Adam Skladowski <a39.skl@gmail.com>
+Cc: phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240413170317.34553-1-a39.skl@gmail.com>
 Content-Language: en-US
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20240413152013.22307-4-quic_jkona@quicinc.com>
+In-Reply-To: <20240413170317.34553-1-a39.skl@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 13/04/2024 16:20, Jagadeesh Kona wrote:
-> Some GDSC client drivers require the GDSC mode to be switched dynamically
-> to HW mode at runtime to gain the power benefits. Typically such client
-> drivers require the GDSC to be brought up in SW mode initially to enable
-> the required dependent clocks and configure the hardware to proper state.
-> Once initial hardware set up is done, they switch the GDSC to HW mode to
-> save power. At the end of usecase, they switch the GDSC back to SW mode
-> and disable the GDSC.
+On 13/04/2024 18:03, Adam Skladowski wrote:
+> This patch series provide support for display subsystem, gpu
+> and also adds wireless connectivity subsystem support.
 > 
-> Introduce HW_CTRL_TRIGGER flag to register the set_hwmode_dev and
-> get_hwmode_dev callbacks for GDSC's whose respective client drivers
-> require the GDSC mode to be switched dynamically at runtime using
-> dev_pm_genpd_set_hwmode() API.
+> Changes since v2
+> ================
+> 1. Disabled mdss_dsi nodes by default
+> 2. Changed reg size of mdss_dsi0 to be equal on both
+> 3. Added operating points to second mdss_dsi
+> 4. Brought back required opp-supported-hw on adreno
+> 5. Moved status under operating points on adreno
 > 
-> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
->   drivers/clk/qcom/gdsc.c | 37 +++++++++++++++++++++++++++++++++++++
->   drivers/clk/qcom/gdsc.h |  1 +
->   2 files changed, 38 insertions(+)
+> Changes since v1
+> ================
+> 1. Addressed feedback
+> 2. Dropped already applied dt-bindings patches
+> 3. Dropped sdc patch as it was submitted as part of other series
+> 4. Dropped dt-bindings patch for Adreno, also separate now
 > 
-> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> index df9618ab7eea..c5f6be8181d8 100644
-> --- a/drivers/clk/qcom/gdsc.c
-> +++ b/drivers/clk/qcom/gdsc.c
-> @@ -363,6 +363,39 @@ static int gdsc_disable(struct generic_pm_domain *domain)
->   	return 0;
->   }
->   
-> +static int gdsc_set_hwmode(struct generic_pm_domain *domain, struct device *dev, bool mode)
-> +{
-> +	struct gdsc *sc = domain_to_gdsc(domain);
-> +	int ret;
-> +
-> +	ret = gdsc_hwctrl(sc, mode);
-> +	if (ret)
-> +		return ret;
-> +
-> +	/* Wait for 1usec for mode transition to properly complete */
-> +	udelay(1);
+> Adam Skladowski (4):
+>    arm64: dts: qcom: msm8976: Add IOMMU nodes
+>    arm64: dts: qcom: msm8976: Add MDSS nodes
+>    arm64: dts: qcom: msm8976: Add Adreno GPU
+>    arm64: dts: qcom: msm8976: Add WCNSS node
+> 
+>   arch/arm64/boot/dts/qcom/msm8976.dtsi | 536 +++++++++++++++++++++++++-
+>   1 file changed, 532 insertions(+), 4 deletions(-)
+> 
 
-A delay I suspect you don't need - if the HW spec says "takes 1 usec for 
-this to take effect" that's 1 usec from io write completion from APSS to 
-another system agent.
+I remembered you pinged me in IRC about my previous review feedback.
 
-You poll for the state transition down below anyway.
+Would appreciate if you could add a response email to your cover letter 
+explaining why that's not done.
 
-I'd be pretty certain that's a redundant delay.
+I'm sure you're probably right but, good practice is to state in your 
+log what was and wasn't done and why.
 
-> +
-> +	/*
-> +	 * When GDSC is switched to HW mode, HW can disable the GDSC.
-> +	 * When GDSC is switched back to SW mode, the GDSC will be enabled
-> +	 * again, hence need to poll for GDSC to complete the power up.
-> +	 */
-> +	if (!mode)
-> +		return gdsc_poll_status(sc, GDSC_ON);
-> +
-> +	return 0;
-> +}
-
-Other than that, seems fine.
-
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-
+---
+bod
 
