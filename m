@@ -1,500 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-18383-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18384-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8BCD8AFEB6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 04:48:56 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id D3E058AFF76
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 05:22:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CCEA41C22519
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 02:48:55 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1753CB21F5D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 03:22:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B546D144D2F;
-	Wed, 24 Apr 2024 02:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36FB41350FE;
+	Wed, 24 Apr 2024 03:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gGaDkb8S"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Q53fMSz/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F0C1448F3;
-	Wed, 24 Apr 2024 02:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 992FD947E;
+	Wed, 24 Apr 2024 03:22:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713926816; cv=none; b=M93DWnRAy7aqdy2rjzBi3ZLKEjiD5Ie62ohkz97avceYIaaVcNsBVtvxFfLWSOe2n5Sq+hKCFOQ+rWmTA2Hp7UhS3+ZDY/nWsOrnZQST9vqLJgUulhoGqNWAy5vQN0NmvHH2XUkX6DggJUhupA6u9oHVZB7MHLavqF2stQZ6G5g=
+	t=1713928927; cv=none; b=h9JbQHA4cDsMkLyfrR961YgxOggcMH+MCwPDXjSMxYsZ2w5cZBLk8gslBjKGytoOVm7Eca/h2ToB4ivqQnYDRPgAsGuwZxd/WxqkrCC+K/XRtK//a4yGfWSa2yLwkVKxoB2CXnkuTekF21xDq6BUuOWJzvd4bNy9AMfQhKBDCnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713926816; c=relaxed/simple;
-	bh=TotbuasMstows3LmwZJI1URkmGNwVV391O9P8bvdEDA=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DJd+cBnEgTMoYE/MON3D5mU/+Lf4nLK2Z3LewUlFor2WcgUCgaSdeD+UXUXfDcINjtCY1HkpBhFZYcdtJUXBStyXIo5fzBnNqks38NZoKmHHOKbnngvDe92Zw1KwARGa5pRVDn1ZxOkJ2nrcYgCYoqYurcSJZKutLGpMWheMTEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gGaDkb8S; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1713928927; c=relaxed/simple;
+	bh=R1mueC9SUcpU6A8TYOzL4KkjjbUjUGBMieumGsYzqD8=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=G+rhlDf4JQ5NkqXBXW74RaNsvWDrump4V1QMhbYa76V/Uy9z858tfJoCGpRDeN0fpQ6eabdOYjpLZ56YjG6ICLuYD78EqCAHUnlWxDynxt0exQFP5SPAcbN29eNZ1Dn02pa78Doe9eCXWL7OZmW2PgeIsU4JpzNk4Krhm+87PV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Q53fMSz/; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43O0ksTb009575;
-	Wed, 24 Apr 2024 02:46:43 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43O32IjH002198;
+	Wed, 24 Apr 2024 03:22:03 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=NeLuvT5f9Sgl0JrWEg2pPSo4dmllYBBBLULBZSWA+60=; b=gG
-	aDkb8SU3pojTyIkDU4qcNNTPugEkFtYzTqS0hGvQN+Ls3kCdysURuAqhPLGpJGH2
-	pKdZJsSPjrhFRMlr4nBPmRAUMuvRg07r2bHULUtzrDcsbFhfWMCXgFvuK4I9WAvT
-	4/j9oGM0vLSnRACuglEuYeBjaHKEJYyiNrlG6TQb3YDnx/FLFSi7cbvQSKbqGMR5
-	bUcx1NtXy/5hbgYNDhEVyuQY0ybYeR8lHhW/zJOJVXpbh/OZ7UvmKpr7KEq6F9Kn
-	lUDy78TD3XR6PY4/a/Ycczkmecr2GkVurJyvThkRNXInWOIQsvAAPmEL1eX3PzY9
-	11x5ljZABb8bBvjop3pw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xpcxej8v0-1
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=MuZUX7Ht1E8K
+	IROZNKFvqsRnZXOXGpGWf3Y/osE8/uQ=; b=Q53fMSz/qaQkzWwwamfM/1Ak/MWy
+	S75tvwD/txYX8fg5vLoicEyyic39f6oEtFinOESmS6lcqD3zPAD1qpM+cdfCIG/W
+	dH1ueX9y5fyzWHd9WVUVeP8j5LyaL5/fE0d82jd5UY+J4fJr1F3txdjy+/xIo2Uw
+	aNYX0xsI/jkn8DrDuUMFNgbp/o+tDAw7yS2Yrlc7F2Qpb3W9Ao6kwaf0vzI8PA3g
+	afyid6mo2+Sy/OeOHwyELNDVPQHmSW3OyjHq3VKTyYRXlC3F+0ygl9d755sM+up3
+	fQVJaYW/IZR7sEucScq/1TQHpDAZQgeBN1gOAEdlolZshxvMz1n/70nj1A==
+Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xpapmjrcd-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Apr 2024 02:46:43 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43O2kgLE000916
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Apr 2024 02:46:42 GMT
-Received: from tengfan-gv.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 23 Apr 2024 19:46:36 -0700
-From: Tengfei Fan <quic_tengfan@quicinc.com>
-To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <dmitry.baryshkov@linaro.org>
-CC: <keescook@chromium.org>, <tony.luck@intel.com>, <gpiccoli@igalia.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
-        <kernel@quicinc.com>, Tengfei Fan <quic_tengfan@quicinc.com>,
-        Qiang Yu
-	<quic_qianyu@quicinc.com>,
-        Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-Subject: [PATCH v7 4/4] arm64: dts: qcom: aim300: add AIM300 AIoT
-Date: Wed, 24 Apr 2024 10:45:08 +0800
-Message-ID: <20240424024508.3857602-5-quic_tengfan@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240424024508.3857602-1-quic_tengfan@quicinc.com>
-References: <20240424024508.3857602-1-quic_tengfan@quicinc.com>
+	Wed, 24 Apr 2024 03:22:02 +0000 (GMT)
+Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+	by APTAIPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 43O3M08G024079;
+	Wed, 24 Apr 2024 03:22:00 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 3xm6skh29k-1;
+	Wed, 24 Apr 2024 03:22:00 +0000
+Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43O3M0xL024074;
+	Wed, 24 Apr 2024 03:22:00 GMT
+Received: from cbsp-sh-gv.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
+	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 43O3M0AR024072;
+	Wed, 24 Apr 2024 03:22:00 +0000
+Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 4098150)
+	id 8113A5B1C; Wed, 24 Apr 2024 11:21:59 +0800 (CST)
+From: Qiang Yu <quic_qianyu@quicinc.com>
+To: mani@kernel.org, quic_jhugo@quicinc.com
+Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
+        quic_mrana@quicinc.com, Qiang Yu <quic_qianyu@quicinc.com>
+Subject: [PATCH v5 0/3] Add sysfs entry to EDL mode
+Date: Wed, 24 Apr 2024 11:21:52 +0800
+Message-Id: <1713928915-18229-1-git-send-email-quic_qianyu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: OPDHaBT4SW0C-ko7R442X_ztgV4OIU_D
+X-Proofpoint-GUID: OPDHaBT4SW0C-ko7R442X_ztgV4OIU_D
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-23_20,2024-04-23_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 lowpriorityscore=0 malwarescore=0 priorityscore=1501
+ mlxscore=0 mlxlogscore=762 clxscore=1015 spamscore=0 adultscore=0
+ phishscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404240014
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: tThZGNPkOmvBx_yX80ULmZdkmNkQtMM5
-X-Proofpoint-ORIG-GUID: tThZGNPkOmvBx_yX80ULmZdkmNkQtMM5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-23_20,2024-04-23_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
- mlxlogscore=999 phishscore=0 impostorscore=0 priorityscore=1501
- clxscore=1015 spamscore=0 mlxscore=0 lowpriorityscore=0 malwarescore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404240011
 
-Add AIM300 AIoT Carrier board DTS support, including usb, UART, PCIe,
-I2C functions support.
-Here is a diagram of AIM300 AIoT Carrie Board and SoM
- +--------------------------------------------------+
- |             AIM300 AIOT Carrier Board            |
- |                                                  |
- |           +-----------------+                    |
- |power----->| Fixed regulator |---------+          |
- |           +-----------------+         |          |
- |                                       |          |
- |                                       v VPH_PWR  |
- | +----------------------------------------------+ |
- | |                          AIM300 SOM |        | |
- | |                                     |VPH_PWR | |
- | |                                     v        | |
- | |   +-------+       +--------+     +------+    | |
- | |   | UFS   |       | QCS8550|     |PMIC  |    | |
- | |   +-------+       +--------+     +------+    | |
- | |                                              | |
- | +----------------------------------------------+ |
- |                                                  |
- |                    +----+          +------+      |
- |                    |USB |          | UART |      |
- |                    +----+          +------+      |
- +--------------------------------------------------+
+Add EDL sysfs entry for mhi controller that provides edl_trigger callback.
+Add mhi_pci_generic_edl_trigger for qualcomm sdx55,sdx65 and sdx75 as
+edl_trigger callback.
 
-Co-developed-by: Qiang Yu <quic_qianyu@quicinc.com>
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-Co-developed-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
----
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../boot/dts/qcom/qcs8550-aim300-aiot.dts     | 343 ++++++++++++++++++
- 2 files changed, 344 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dts
+v4->v5:
+1. Add a blank line before the #endif in patch[2/3].
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index f63abb43e9fe..c46c10d85697 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -96,6 +96,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-idp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-aim300-aiot.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-rb1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qrb4210-rb2.dtb
-diff --git a/arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dts b/arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dts
-new file mode 100644
-index 000000000000..146bf6ea9e6a
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dts
-@@ -0,0 +1,343 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/leds/common.h>
-+#include "qcs8550-aim300.dtsi"
-+#include "pm8010.dtsi"
-+#include "pmr735d_a.dtsi"
-+#include "pmr735d_b.dtsi"
-+
-+/ {
-+	model = "Qualcomm Technologies, Inc. QCS8550 AIM300 AIOT";
-+	compatible = "qcom,qcs8550-aim300-aiot", "qcom,qcs8550-aim300", "qcom,qcs8550",
-+		     "qcom,sm8550";
-+
-+	aliases {
-+		serial0 = &uart7;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-0 = <&volume_up_n>;
-+		pinctrl-names = "default";
-+
-+		key-volume-up {
-+			label = "Volume Up";
-+			debounce-interval = <15>;
-+			gpios = <&pm8550_gpios 6 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			linux,can-disable;
-+			wakeup-source;
-+		};
-+	};
-+
-+	pmic-glink {
-+		compatible = "qcom,sm8550-pmic-glink", "qcom,pmic-glink";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		orientation-gpios = <&tlmm 11 GPIO_ACTIVE_HIGH>;
-+
-+		connector@0 {
-+			compatible = "usb-c-connector";
-+			reg = <0>;
-+			power-role = "dual";
-+			data-role = "dual";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+
-+					pmic_glink_hs_in: endpoint {
-+						remote-endpoint = <&usb_1_dwc3_hs>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+
-+					pmic_glink_ss_in: endpoint {
-+						remote-endpoint = <&redriver_ss_out>;
-+					};
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+
-+					pmic_glink_sbu: endpoint {
-+						remote-endpoint = <&fsa4480_sbu_mux>;
-+					};
-+				};
-+			};
-+		};
-+	};
-+
-+	vph_pwr: regulator-vph-pwr {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+};
-+
-+&apps_rsc {
-+	regulators-0 {
-+		vdd-bob1-supply = <&vph_pwr>;
-+		vdd-bob2-supply = <&vph_pwr>;
-+	};
-+
-+	regulators-3 {
-+		vdd-s4-supply = <&vph_pwr>;
-+		vdd-s5-supply = <&vph_pwr>;
-+	};
-+
-+	regulators-4 {
-+		vdd-s4-supply = <&vph_pwr>;
-+	};
-+
-+	regulators-5 {
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+		vdd-s4-supply = <&vph_pwr>;
-+		vdd-s5-supply = <&vph_pwr>;
-+		vdd-s6-supply = <&vph_pwr>;
-+	};
-+};
-+
-+&i2c_hub_2 {
-+	status = "okay";
-+
-+	typec-mux@42 {
-+		compatible = "fcs,fsa4480";
-+		reg = <0x42>;
-+
-+		vcc-supply = <&vreg_bob1>;
-+
-+		mode-switch;
-+		orientation-switch;
-+
-+		port {
-+			fsa4480_sbu_mux: endpoint {
-+				remote-endpoint = <&pmic_glink_sbu>;
-+			};
-+		};
-+	};
-+
-+	typec-retimer@1c {
-+		compatible = "onnn,nb7vpq904m";
-+		reg = <0x1c>;
-+
-+		vcc-supply = <&vreg_l15b_1p8>;
-+
-+		orientation-switch;
-+		retimer-switch;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+
-+				redriver_ss_out: endpoint {
-+					remote-endpoint = <&pmic_glink_ss_in>;
-+				};
-+			};
-+
-+			port@1 {
-+				reg = <1>;
-+
-+				redriver_ss_in: endpoint {
-+					data-lanes = <3 2 1 0>;
-+					remote-endpoint = <&usb_dp_qmpphy_out>;
-+				};
-+			};
-+		};
-+	};
-+};
-+
-+&mdss_dsi0 {
-+	status = "okay";
-+
-+	panel@0 {
-+		compatible = "visionox,vtdr6130";
-+		reg = <0>;
-+
-+		pinctrl-0 = <&dsi_active>, <&te_active>;
-+		pinctrl-1 = <&dsi_suspend>, <&te_suspend>;
-+		pinctrl-names = "default", "sleep";
-+
-+		reset-gpios = <&tlmm 133 GPIO_ACTIVE_LOW>;
-+
-+		vci-supply = <&vreg_l13b_3p0>;
-+		vdd-supply = <&vreg_l11b_1p2>;
-+		vddio-supply = <&vreg_l12b_1p8>;
-+
-+		port {
-+			panel0_in: endpoint {
-+				remote-endpoint = <&mdss_dsi0_out>;
-+			};
-+		};
-+	};
-+};
-+
-+&mdss_dsi0_out {
-+	remote-endpoint = <&panel0_in>;
-+	data-lanes = <0 1 2 3>;
-+};
-+
-+&mdss_dsi0_phy {
-+	status = "okay";
-+};
-+
-+&pcie0 {
-+	pinctrl-0 = <&pcie0_default_state>;
-+	pinctrl-names = "default";
-+
-+	status = "okay";
-+};
-+
-+&pcie0_phy {
-+	status = "okay";
-+};
-+
-+&pcie1 {
-+	pinctrl-0 = <&pcie1_default_state>;
-+	pinctrl-names = "default";
-+
-+	status = "okay";
-+};
-+
-+&pcie1_phy {
-+	status = "okay";
-+};
-+
-+&pm8550_gpios {
-+	volume_up_n: volume-up-n-state {
-+		pins = "gpio6";
-+		function = "normal";
-+		power-source = <1>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+};
-+
-+&pon_pwrkey {
-+	status = "okay";
-+};
-+
-+&pon_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+
-+	status = "okay";
-+};
-+
-+&qupv3_id_0 {
-+	status = "okay";
-+};
-+
-+&remoteproc_adsp {
-+	firmware-name = "qcom/qcs8550/adsp.mbn",
-+			"qcom/qcs8550/adsp_dtbs.elf";
-+	status = "okay";
-+};
-+
-+&remoteproc_cdsp {
-+	firmware-name = "qcom/qcs8550/cdsp.mbn",
-+			"qcom/qcs8550/cdsp_dtbs.elf";
-+	status = "okay";
-+};
-+
-+&swr1 {
-+	status = "okay";
-+};
-+
-+&swr2 {
-+	status = "okay";
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <32 8>;
-+
-+	dsi_active: dsi-active-state {
-+		pins = "gpio133";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-disable;
-+	};
-+
-+	dsi_suspend: dsi-suspend-state {
-+		pins = "gpio133";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	te_active: te-active-state {
-+		pins = "gpio86";
-+		function = "mdp_vsync";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	te_suspend: te-suspend-state {
-+		pins = "gpio86";
-+		function = "mdp_vsync";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+};
-+
-+&uart7 {
-+	status = "okay";
-+};
-+
-+&usb_1 {
-+	status = "okay";
-+};
-+
-+&usb_1_dwc3 {
-+	dr_mode = "otg";
-+	usb-role-switch;
-+};
-+
-+&usb_1_dwc3_hs {
-+	remote-endpoint = <&pmic_glink_hs_in>;
-+};
-+
-+&usb_1_dwc3_ss {
-+	remote-endpoint = <&usb_dp_qmpphy_usb_ss_in>;
-+};
-+
-+&usb_1_hsphy {
-+	status = "okay";
-+};
-+
-+&usb_dp_qmpphy {
-+	orientation-switch;
-+
-+	status = "okay";
-+};
-+
-+&usb_dp_qmpphy_out {
-+	remote-endpoint = <&redriver_ss_in>;
-+};
-+
-+&usb_dp_qmpphy_usb_ss_in {
-+	remote-endpoint = <&usb_1_dwc3_ss>;
-+};
+2. Add reviewed-by tag.
+
+v3->v4:
+1. Modify some comments, commit message and sysfs entry description.
+
+2. Add error cleanups if get channel doorbell offset fail.
+
+3. s/force_edl/trigger_edl
+
+4. s/mhi_get_channel_doorbell/mhi_get_channel_doorbell_offset
+
+5. Use mhi_get_channel_doorbell_offset in mhi_init_mmio()
+
+v2->v3:
+1. Update Documentation/ABI/stable/sysfs-bus-mhi with description of
+   force_edl sysfs entry.
+
+2. Add comments about edl_trigger callback in mhi_controller struct.
+
+3. Follow reverse christmas tree in mhi_pci_generic_edl_trigger.
+
+4. Add a new API in MHI to allow controller to get CHDB address and avoid
+   duplicating the definition of CHDBOFF.
+
+v1->v2:
+1. Move all process needed by qualcomm sdx55,sdx65,sdx75 to enter EDL into
+   mhi_pci_generic_edl_trigger() as the callback to edl_trigger.
+
+2. MHI stack creates EDL sysfs entry to invoke edl_trigger callback so
+   that devices need different mechanism to enter EDL can provide its own
+   edl_trigger callabck.
+
+Qiang Yu (3):
+  bus: mhi: host: Add sysfs entry to force device to enter EDL
+  bus: mhi: host: Add a new API for getting channel doorbell address
+  bus: mhi: host: pci_generic: Add edl callback to enter EDL
+
+ Documentation/ABI/stable/sysfs-bus-mhi | 13 ++++++++++
+ drivers/bus/mhi/host/init.c            | 39 ++++++++++++++++++++++++++---
+ drivers/bus/mhi/host/main.c            | 16 ++++++++++++
+ drivers/bus/mhi/host/pci_generic.c     | 45 ++++++++++++++++++++++++++++++++++
+ include/linux/mhi.h                    |  9 +++++++
+ 5 files changed, 118 insertions(+), 4 deletions(-)
+
 -- 
-2.25.1
+2.7.4
 
 
