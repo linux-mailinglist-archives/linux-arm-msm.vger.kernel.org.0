@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-18465-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18466-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA4408B0EE4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 17:44:39 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A76B28B0F33
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 17:56:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DADC71C218F1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 15:44:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5D771297A1F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 15:56:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A77F1422AF;
-	Wed, 24 Apr 2024 15:44:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9151816190A;
+	Wed, 24 Apr 2024 15:55:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Wo9bEsve"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pF0UDVQE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9239015FA6A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 15:43:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FCB716131C
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 15:55:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713973441; cv=none; b=ZZ2dGfBGSwHtd6n/dWDva152xX8/19idZVM0NE7UNJtB32soku3UmKB7QwEYiQ2vi9rYWx98QlJDzxhIe3jujmx22ohb6m0R5GqXRlw1W5zqoaCWCRDy3RyWN1BC0MIEl3T4UELtxOq9ZlyU5kVp9i7UtJ0PUxXYJCHFqYhjyDk=
+	t=1713974132; cv=none; b=IbnQfi6Z3PbGcG0ykqmjkKfgt7XBcK50Bi7XlJURPOGReJQsmr3NvZ3mJrtDMPGI/jNHwCRSh4QF0NWfY5t5NxmuBgliWW+7LgK0NNTaAxLOHayWuFNScWbanvkbXEz7NZdjyOpsPHQuQ/65VObUn1taO0iDQ8VM86/snz6i/i4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713973441; c=relaxed/simple;
-	bh=Smn1thELJe6H8Hi4QwFeVCA2i/KhGRWxi/C3KjKLf4A=;
+	s=arc-20240116; t=1713974132; c=relaxed/simple;
+	bh=d/dFuZbf/EaZvg14xvAtbup8GJ74G5rU2m4Y1omafpE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hOQ8vrvNF6+B0e5mrLnLsT8XrI9IY0xAXNQ0+5seVsku/ddssR6INTkWI/ngP3pU+/s77fWUp+6J8IRJ1gDHuXVLwYKQnLcZyJmoQZ6bhYR+lsvPyTViG+ejCa2YFii39ZareNaad5sWrZuQlLXmxRSDJLjto4pbJ95DIbFoOUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Wo9bEsve; arc=none smtp.client-ip=209.85.218.51
+	 In-Reply-To:Content-Type; b=RnlLHzNzL6Prw4Q7j/515VU399CuEpAmxlLHfo/3ugF1IE3rmZLzMs3izNRrB2mtnSdOZA7zjuV+66LmWOHyuN2zfNYpQw39Gjzy46Khs1DZfsaaR/OHOCsxbqRwLcfSSUfJSlRODlktXTRz1VRNcxep9qN6xPQyQ2kcLRitgsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pF0UDVQE; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a5200202c1bso3272666b.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 08:43:59 -0700 (PDT)
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-417e327773cso6413785e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 08:55:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713973438; x=1714578238; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1713974128; x=1714578928; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=VNhQouszyO4G6x+Wog6/QhRAtYiInd0o+cfFBd5MkXo=;
-        b=Wo9bEsvel6gVXBdrRm/0gns+ED6qsGq/tHfvU6D5JBELEi14+W6uJvYHz7wZxo2iDu
-         1rFHFOVnKd27FchUAkkOzQWESOrnFOvAf1zr9bRxdb8soAqyI7BQ4gizGDOoaNteGEPA
-         ch/n1NM9ZZ9AmEamq0S3Cu/RPfjjMOVy++dyXucakLK0sJ49NWzwRLvnq+N2P7SNpjiF
-         VvNVH31SmriJeXI1g8tJbq/pKKJmHF7BLQ86FZx3LMtqM48Cxr1B2WSmqGXXg0T+9l06
-         E9XwjCAVY1lVBS/c2lR+aEJnh7YYCCnyd1W2p7Z7nQU+JedRCEx59TpB2GOf+JCwko9a
-         hhvg==
+        bh=OGygmmw5dUuftK+NtOQ8W0MuuBgiCdR1Jk9PiD/ccZY=;
+        b=pF0UDVQEIDiNaOZhdQp8SK5Xdn1zgyVoqpiGMlQoTXV5tSKyAJuQsm5kff732neyQ7
+         9aao+LKrHHUE8xZVZeUlTuOPpHRnryxH6ZiJ98Yq6guMsko4OgLDsFDG5Me60BMxiT56
+         44+k67H9c0WMNlK2cMc5/QpsYVX1/c2f43xMRe9WXVZ62OSOexjjQxNXcD19QfjG9mPH
+         xBN2/7rEP0mwS0sjMDcwMMjGnxKfasGEGQGLRoG1Dht4aNQIy3ZAYx9nEg0sFxLkBqpz
+         NFUfYX2PZ9LlPo5hCDCy49a0NgTYUsRXurFiB+L2eb5OF0zlGbMFmX8Ag4g2Ve2y0b7h
+         M/Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713973438; x=1714578238;
+        d=1e100.net; s=20230601; t=1713974128; x=1714578928;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VNhQouszyO4G6x+Wog6/QhRAtYiInd0o+cfFBd5MkXo=;
-        b=LkWMjX9OEI2JTV1lBdrEiYxKb1zXT1qgjowHqtAAY6T7elcKo5BIfOZCSLYG9sEqax
-         oAKQMjjOFcaBMrI3sfaqdCG+qiktg84kEuJDzYYwYIyMr/KZaepyLk5FFBI5A1vZEl0W
-         3Bs7od3e0xY4h8zj6BYI1On6NOHOYhsud1U9DVwOrdhjPGZSbRxm+34LZJG+T8vTqjQu
-         Yy9tVNYOAyW7yMNSV9cXbeZCyXlYzPU8M/J3ZbEDG4D2GCLGO+u/oA/oRdfQXNla7fH8
-         E8VJ20tXzFT7rGxviSZmMI5+Bd2uYCWJqm/I/2AMsSX2ilVvi7zIujpU7lEeEeVEvnYd
-         NDHQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX9yCJVbzc6dZA5qusLk6b8otHeZ6GHBY/WjpQkyDgmlXqcKyTVmCipAJBscRQulUj0Mk64W7K1z0J18pNfQCl+DJEpQArTXYZrk7Cw4w==
-X-Gm-Message-State: AOJu0YzE2FCXuJWcOzX5SHFkvgFycJyzOpBAUgqqbKEDsrxANtR/Tgbi
-	C5/oTynGoAUZ8fFIdo66P6QVwacIEOnJ6k47fw73yHqdjQ29C39YyFFVFOddgRw=
-X-Google-Smtp-Source: AGHT+IGbXGrpnubvU3fB+twJxorCJaNpth47KfqOPWrUQ5JuHE+TeN75cbmD+qlTh6lLqPPbiQHdkA==
-X-Received: by 2002:a17:906:a996:b0:a58:8662:1f06 with SMTP id jr22-20020a170906a99600b00a5886621f06mr2463128ejb.56.1713973437807;
-        Wed, 24 Apr 2024 08:43:57 -0700 (PDT)
+        bh=OGygmmw5dUuftK+NtOQ8W0MuuBgiCdR1Jk9PiD/ccZY=;
+        b=sWBdxY+0YHwDWDhYKK2z8CoLsrvpilrfdM77X58GuUmWJYXPNypsf2Kkl7SGRjHvzM
+         UO4HrTAVNXrQqQ8FXQJlWxxUetOTJeVZEkOlGFrNQtPB0UPYyBxLlgQTBDDq510NaNlS
+         l0ot+BzOpBbnqWck5yYij6wG0w49TjMrlGUFEcPNM7kafkf9SWsZXya155jar/7caOve
+         mEM84RJjR5eGWiwDMHID3Y0oPUwq9cayJcyuA7yWIc/svPLLIUjHyw12BQUg5QuI9o1V
+         /9riVRMcio1DmEUShF7I4AqHP3g52jbQIKjp8Yaa1/gHmYdzcsrhpTkNIEv74q3ftQ2f
+         rn0A==
+X-Forwarded-Encrypted: i=1; AJvYcCVjD3QYe5X586hS1TYGOcOmemqZnC7bIqqXPEaDreK9c00E2Qc2bJQfa80N+thSZK+HoVCAkayK/CzLtudK2k6rMiXjP2WivKkQ1j3pRA==
+X-Gm-Message-State: AOJu0Yx4F3eoHojNdkbUYnIKFEa2kSdjE+NwWk1EibpHCAHU7sGzdZWM
+	moCPK4uBKch79OqTsZOcKO5bVYIYv7py2A6ahPwYCJvitKuUq48NGeH+pL+TSVs=
+X-Google-Smtp-Source: AGHT+IHikMHMOXTMulwB47yle/P1Kf68zYdYPx2oI07Jwtj8DHkg3Wy57Z7buA+x9rEtvYYTZDgcOg==
+X-Received: by 2002:adf:e7c1:0:b0:34a:cb2:c52 with SMTP id e1-20020adfe7c1000000b0034a0cb20c52mr48257wrn.20.1713974127801;
+        Wed, 24 Apr 2024 08:55:27 -0700 (PDT)
 Received: from [192.168.0.102] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id i9-20020a170906090900b00a55b05c4598sm4459714ejd.133.2024.04.24.08.43.56
+        by smtp.gmail.com with ESMTPSA id x13-20020a5d54cd000000b0034335e47102sm17375359wrv.113.2024.04.24.08.55.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Apr 2024 08:43:57 -0700 (PDT)
-Message-ID: <aad0e811-28ff-4bbc-b5fa-691701d35f01@linaro.org>
-Date: Wed, 24 Apr 2024 16:43:55 +0100
+        Wed, 24 Apr 2024 08:55:27 -0700 (PDT)
+Message-ID: <17d36836-67cb-4d5a-a8b4-ecf1517a0020@linaro.org>
+Date: Wed, 24 Apr 2024 16:55:26 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,7 +76,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/10] dt-bindings: arm: qcom: Add AYN Odin 2
+Subject: Re: [PATCH 02/10] pwm: Add SI-EN SN3112 PWM support
 To: wuxilin123@gmail.com, =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?=
  <u.kleine-koenig@pengutronix.de>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
@@ -94,46 +94,451 @@ Cc: linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
  linux-arm-msm@vger.kernel.org
 References: <20240424-ayn-odin2-initial-v1-0-e0aa05c991fd@gmail.com>
- <20240424-ayn-odin2-initial-v1-9-e0aa05c991fd@gmail.com>
+ <20240424-ayn-odin2-initial-v1-2-e0aa05c991fd@gmail.com>
 Content-Language: en-US
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20240424-ayn-odin2-initial-v1-9-e0aa05c991fd@gmail.com>
+In-Reply-To: <20240424-ayn-odin2-initial-v1-2-e0aa05c991fd@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 24/04/2024 16:29, Xilin Wu via B4 Relay wrote:
-> From: Xilin Wu <wuxilin123@gmail.com>
+> From: Junhao Xie <bigfoot@classfun.cn>
 > 
-> This documents AYN Odin 2 which is a gaming handheld by AYN based on
-> the QCS8550 SoC.
+> Add a new driver for the SI-EN SN3112 12-channel 8-bit PWM LED controller.
 > 
-> Signed-off-by: Xilin Wu <wuxilin123@gmail.com>
+> Signed-off-by: Junhao Xie <bigfoot@classfun.cn>
 > ---
->   Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
->   1 file changed, 1 insertion(+)
+>   drivers/pwm/Kconfig      |  10 ++
+>   drivers/pwm/Makefile     |   1 +
+>   drivers/pwm/pwm-sn3112.c | 336 +++++++++++++++++++++++++++++++++++++++++++++++
+>   3 files changed, 347 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index 090fc5fda9b0..8e991f2bd9d8 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -1003,6 +1003,7 @@ properties:
+> diff --git a/drivers/pwm/Kconfig b/drivers/pwm/Kconfig
+> index 1dd7921194f5..e21c37c7991e 100644
+> --- a/drivers/pwm/Kconfig
+> +++ b/drivers/pwm/Kconfig
+> @@ -553,6 +553,16 @@ config PWM_SL28CPLD
+>   	  To compile this driver as a module, choose M here: the module
+>   	  will be called pwm-sl28cpld.
 >   
->         - items:
->             - enum:
-> +              - ayn,odin2
->                 - qcom,qcs8550-aim300-aiot
->             - const: qcom,qcs8550-aim300
->             - const: qcom,qcs8550
+> +config PWM_SN3112
+> +	tristate "SI-EN SN3112 PWM driver"
+> +	depends on I2C
+> +	select REGMAP_I2C
+> +	help
+> +	  Generic PWM framework driver for SI-EN SN3112 LED controller.
+> +
+> +	  To compile this driver as a module, choose M here: the module
+> +	  will be called pwm-sn3112.
+> +
+>   config PWM_SPEAR
+>   	tristate "STMicroelectronics SPEAr PWM support"
+>   	depends on PLAT_SPEAR || COMPILE_TEST
+> diff --git a/drivers/pwm/Makefile b/drivers/pwm/Makefile
+> index 90913519f11a..6aab2d113159 100644
+> --- a/drivers/pwm/Makefile
+> +++ b/drivers/pwm/Makefile
+> @@ -50,6 +50,7 @@ obj-$(CONFIG_PWM_RZ_MTU3)	+= pwm-rz-mtu3.o
+>   obj-$(CONFIG_PWM_SAMSUNG)	+= pwm-samsung.o
+>   obj-$(CONFIG_PWM_SIFIVE)	+= pwm-sifive.o
+>   obj-$(CONFIG_PWM_SL28CPLD)	+= pwm-sl28cpld.o
+> +obj-$(CONFIG_PWM_SN3112)	+= pwm-sn3112.o
+>   obj-$(CONFIG_PWM_SPEAR)		+= pwm-spear.o
+>   obj-$(CONFIG_PWM_SPRD)		+= pwm-sprd.o
+>   obj-$(CONFIG_PWM_STI)		+= pwm-sti.o
+> diff --git a/drivers/pwm/pwm-sn3112.c b/drivers/pwm/pwm-sn3112.c
+> new file mode 100644
+> index 000000000000..38ef948602a3
+> --- /dev/null
+> +++ b/drivers/pwm/pwm-sn3112.c
+> @@ -0,0 +1,336 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Driver for SN3112 12-channel 8-bit PWM LED controller
+> + *
+> + * Copyright (c) 2024 Junhao Xie <bigfoot@classfun.cn>
+> + *
+> + */
+> +
+> +#include <linux/i2c.h>
+> +#include <linux/module.h>
+> +#include <linux/mutex.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/pwm.h>
+> +#include <linux/regmap.h>
+> +#include <linux/delay.h>
+> +#include <linux/gpio/consumer.h>
+> +#include <linux/regulator/consumer.h>
+
+Includes should be alphabetised
+
+> +
+> +#define SN3112_CHANNELS 12
+> +#define SN3112_REG_ENABLE 0x00
+> +#define SN3112_REG_PWM_VAL 0x04
+> +#define SN3112_REG_PWM_EN 0x13
+> +#define SN3112_REG_APPLY 0x16
+> +#define SN3112_REG_RESET 0x17
+> +
+> +struct sn3112 {
+> +	struct device *pdev;
+> +	struct regmap *regmap;
+> +	struct mutex lock;
+> +	struct regulator *vdd;
+> +	uint8_t pwm_val[SN3112_CHANNELS];
+> +	uint8_t pwm_en_reg[3];
+> +	bool pwm_en[SN3112_CHANNELS];
+> +#if IS_ENABLED(CONFIG_GPIOLIB)
+> +	struct gpio_desc *sdb;
+> +#endif
+> +};
+> +
+> +static int sn3112_write_reg(struct sn3112 *priv, unsigned int reg,
+> +			    unsigned int val)
+> +{
+> +	int err;
+> +
+> +	dev_dbg(priv->pdev, "request regmap_write 0x%x 0x%x\n", reg, val);
+> +	err = regmap_write(priv->regmap, reg, val);
+> +	if (err)
+> +		dev_warn_ratelimited(
+> +			priv->pdev,
+> +			"regmap_write to register 0x%x failed: %pe\n", reg,
+> +			ERR_PTR(err));
+
+Multi-line should be encapsulated in {}
+
+if (err) {
+	stuff
+	goes here
+}
+
+> +	return err;
+> +}
+> +
+> +static int sn3112_set_en_reg(struct sn3112 *priv, unsigned int channel,
+> +			     bool enabled, bool write)
+> +{
+> +	unsigned int reg, bit;
+> +
+> +	if (channel >= SN3112_CHANNELS)
+> +		return -EINVAL;
+> +
+> +	/* LED_EN1: BIT5:BIT3 = OUT3:OUT1 */
+> +	if (channel >= 0 && channel <= 2)
+> +		reg = 0, bit = channel + 3;
+> +	/* LED_EN2: BIT5:BIT0 = OUT9:OUT4 */
+> +	else if (channel >= 3 && channel <= 8)
+> +		reg = 1, bit = channel - 3;
+> +	/* LED_EN3: BIT2:BIT0 = OUT12:OUT10 */
+> +	else if (channel >= 9 && channel <= 11)
+> +		reg = 2, bit = channel - 9;
+> +	else
+> +		return -EINVAL;
+> +
+> +	dev_dbg(priv->pdev, "channel %u enabled %u\n", channel, enabled);
+> +	dev_dbg(priv->pdev, "reg %u bit %u\n", reg, bit);
+> +	if (enabled)
+> +		set_bit(bit, (ulong *)&priv->pwm_en_reg[reg]);
+> +	else
+> +		clear_bit(bit, (ulong *)&priv->pwm_en_reg[reg]);
+> +	dev_dbg(priv->pdev, "set enable reg %u to %u\n", reg,
+> +		priv->pwm_en_reg[reg]);
+> +
+> +	if (!write)
+> +		return 0;
+newline
+> +	return sn3112_write_reg(priv, SN3112_REG_PWM_EN + reg,
+> +				priv->pwm_en_reg[reg]);
+> +}
+> +
+> +static int sn3112_set_val_reg(struct sn3112 *priv, unsigned int channel,
+> +			      uint8_t val, bool write)
+> +{
+> +	if (channel >= SN3112_CHANNELS)
+> +		return -EINVAL;
+newline
+> +	priv->pwm_val[channel] = val;
+> +	dev_dbg(priv->pdev, "set value reg %u to %u\n", channel,
+> +		priv->pwm_val[channel]);
+> +
+> +	if (!write)
+> +		return 0;
+newline
+> +	return sn3112_write_reg(priv, SN3112_REG_PWM_VAL + channel,
+> +				priv->pwm_val[channel]);
+> +}
+> +
+> +static int sn3112_write_all(struct sn3112 *priv)
+> +{
+> +	int i, ret;
+> +
+> +	/* regenerate enable register values */
+> +	for (i = 0; i < SN3112_CHANNELS; i++) {
+> +		ret = sn3112_set_en_reg(priv, i, priv->pwm_en[i], false);
+> +		if (ret != 0)
+> +			return ret;
+> +	}
+> +
+> +	/* use random value to clear all registers */
+> +	ret = sn3112_write_reg(priv, SN3112_REG_RESET, 0x66);
+> +	if (ret != 0)
+> +		return ret;
+> +
+> +	/* set software enable register */
+> +	ret = sn3112_write_reg(priv, SN3112_REG_ENABLE, 1);
+> +	if (ret != 0)
+> +		return ret;
+> +
+> +	/* rewrite pwm value register */
+> +	for (i = 0; i < SN3112_CHANNELS; i++) {
+> +		ret = sn3112_write_reg(priv, SN3112_REG_PWM_VAL + i,
+> +				       priv->pwm_val[i]);
+> +		if (ret != 0)
+> +			return ret;
+> +	}
+> +
+> +	/* rewrite pwm enable register */
+> +	for (i = 0; i < 3; i++) {
+> +		ret = sn3112_write_reg(priv, SN3112_REG_PWM_EN + i,
+> +				       priv->pwm_en_reg[i]);
+> +		if (ret != 0)
+> +			return ret;
+> +	}
+> +
+> +	/* use random value to apply changes */
+> +	ret = sn3112_write_reg(priv, SN3112_REG_APPLY, 0x66);
+> +	if (ret != 0)
+> +		return ret;
+> +
+> +	dev_dbg(priv->pdev, "reinitialized\n");
+> +	return 0;
+> +}
+> +
+> +static int sn3112_pwm_request(struct pwm_chip *chip, struct pwm_device *pwm)
+> +{
+> +	struct sn3112 *priv = pwmchip_get_drvdata(chip);
+> +
+> +	if (pwm->hwpwm >= SN3112_CHANNELS)
+> +		return -EINVAL;
+> +
+> +	dev_dbg(priv->pdev, "sn3112 request channel %u\n", pwm->hwpwm);
+> +	pwm->args.period = 1000000;
+newline
+> +	return 0;
+> +}
+> +
+> +static int sn3112_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+> +			    const struct pwm_state *state)
+> +{
+> +	u64 val = 0;
+> +	struct sn3112 *priv = pwmchip_get_drvdata(chip);
+> +
+> +	if (pwm->hwpwm >= SN3112_CHANNELS)
+> +		return -EINVAL;
+> +
+> +	if (state->polarity != PWM_POLARITY_NORMAL)
+> +		return -EINVAL;
+> +
+> +	if (state->period <= 0)
+> +		return -EINVAL;
+> +
+> +	val = mul_u64_u64_div_u64(state->duty_cycle, 0xff, state->period);
+> +	dev_dbg(priv->pdev, "duty_cycle %llu period %llu\n", state->duty_cycle,
+> +		state->period);
+> +	dev_dbg(priv->pdev, "set channel %u value to %llu\n", pwm->hwpwm, val);
+> +	dev_dbg(priv->pdev, "set channel %u enabled to %u\n", pwm->hwpwm,
+> +		state->enabled);
+> +
+> +	mutex_lock(&priv->lock);
+> +	sn3112_set_en_reg(priv, pwm->hwpwm, state->enabled, true);
+> +	sn3112_set_val_reg(priv, pwm->hwpwm, val, true);
+> +	sn3112_write_reg(priv, SN3112_REG_APPLY, 0x66);
+> +	mutex_unlock(&priv->lock);
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct pwm_ops sn3112_pwm_ops = {
+> +	.apply = sn3112_pwm_apply,
+> +	.request = sn3112_pwm_request,
+> +};
+> +
+> +static const struct regmap_config sn3112_regmap_i2c_config = {
+> +	.reg_bits = 8,
+> +	.val_bits = 8,
+> +	.max_register = 24,
+> +	.cache_type = REGCACHE_NONE,
+> +};
+> +
+> +static int sn3112_pwm_probe(struct i2c_client *client)
+> +{
+> +	struct pwm_chip *chip;
+> +	struct sn3112 *priv;
+> +	int ret, i;
+> +
+> +	dev_dbg(&client->dev, "probing\n");
+You can probably live without that in an upstream driver..
+
+> +	chip = devm_pwmchip_alloc(&client->dev, SN3112_CHANNELS, sizeof(*priv));
+> +	if (IS_ERR(chip))
+> +		return PTR_ERR(chip);
+> +	priv = pwmchip_get_drvdata(chip);
+> +	priv->pdev = &client->dev;
+> +
+> +	/* initialize sn3112 (chip does not support read command) */
+> +	for (i = 0; i < SN3112_CHANNELS; i++)
+> +		priv->pwm_en[i] = false;
+> +	for (i = 0; i < SN3112_CHANNELS; i++)
+> +		priv->pwm_val[i] = 0;
+> +	for (i = 0; i < 3; i++)
+> +		priv->pwm_en_reg[i] = 0;
+
+Why does pwm_val have a define to constrain the array but pwm_en_reg 
+have hard-coded 3 ?
+
+Suggest using a #define for the 3 value for consistency / extensibility.
+
+> +
+> +	/* enable sn5112 power vdd */
+> +	priv->vdd = devm_regulator_get(priv->pdev, "vdd");
+> +	if (IS_ERR(priv->vdd)) {
+> +		ret = PTR_ERR(priv->vdd);
+> +		dev_err(priv->pdev, "Unable to get vdd regulator: %d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +#if IS_ENABLED(CONFIG_GPIOLIB)
+> +	/* sn5112 hardware shutdown pin */
+> +	priv->sdb = devm_gpiod_get_optional(priv->pdev, "sdb", GPIOD_OUT_LOW);
+> +	if (PTR_ERR(priv->sdb) == -EPROBE_DEFER)
+> +		return -EPROBE_DEFER;
+> +#endif
+> +
+> +	/* enable sn5112 power vdd */
+> +	ret = regulator_enable(priv->vdd);
+> +	if (ret < 0) {
+> +		dev_err(priv->pdev, "Unable to enable regulator: %d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	priv->regmap = devm_regmap_init_i2c(client, &sn3112_regmap_i2c_config);
+> +	if (IS_ERR(priv->regmap)) {
+> +		ret = PTR_ERR(priv->regmap);
+> +		dev_err(priv->pdev, "Failed to initialize register map: %d\n",
+> +			ret);
+> +		return ret;
+> +	}
+> +
+> +	i2c_set_clientdata(client, chip);
+> +	mutex_init(&priv->lock);
+> +
+> +	chip->ops = &sn3112_pwm_ops;
+> +	ret = pwmchip_add(chip);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +#if IS_ENABLED(CONFIG_GPIOLIB)
+> +	/* disable hardware shutdown pin */
+> +	if (priv->sdb)
+> +		gpiod_set_value(priv->sdb, 0);
+> +#endif
+> +
+> +	/* initialize registers */
+> +	ret = sn3112_write_all(priv);
+> +	if (ret != 0) {
+> +		dev_err(priv->pdev, "Failed to initialize sn3112: %d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	dev_info(&client->dev,
+> +		 "Found SI-EN SN3112 12-channel 8-bit PWM LED controller\n");
+newline
+> +	return 0;
+> +}
+> +
+> +static void sn3112_pwm_remove(struct i2c_client *client)
+> +{
+> +	struct pwm_chip *chip = i2c_get_clientdata(client);
+> +	struct sn3112 *priv = pwmchip_get_drvdata(chip);
+> +
+> +	dev_dbg(priv->pdev, "remove\n");
+suggest dropping from both probe() and remove()
+> +
+> +	/* set software enable register */
+> +	sn3112_write_reg(priv, SN3112_REG_ENABLE, 0);
+> +
+> +	/* use random value to apply changes */
+> +	sn3112_write_reg(priv, SN3112_REG_APPLY, 0x66);
+> +
+> +#if IS_ENABLED(CONFIG_GPIOLIB)
+> +	/* enable hardware shutdown pin */
+> +	if (priv->sdb)
+> +		gpiod_set_value(priv->sdb, 1);
+> +#endif
+> +
+> +	/* power-off sn5112 power vdd */
+> +	regulator_disable(priv->vdd);
+> +
+> +	pwmchip_remove(chip);
+> +}
+> +
+> +static const struct i2c_device_id sn3112_id[] = {
+> +	{ "sn3112", 0 },
+> +	{ /* sentinel */ },
+> +};
+> +MODULE_DEVICE_TABLE(i2c, sn3112_id);
+> +
+> +#ifdef CONFIG_OF
+> +static const struct of_device_id sn3112_dt_ids[] = {
+> +	{ .compatible = "si-en,sn3112-pwm", },
+> +	{ /* sentinel */ }
+> +};
+> +MODULE_DEVICE_TABLE(of, sn3112_dt_ids);
+> +#endif
+> +
+> +static struct i2c_driver sn3112_i2c_driver = {
+> +	.driver = {
+> +		.name = "sn3112-pwm",
+> +		.of_match_table = of_match_ptr(sn3112_dt_ids),
+> +	},
+> +	.probe = sn3112_pwm_probe,
+> +	.remove = sn3112_pwm_remove,
+> +	.id_table = sn3112_id,
+> +};
+> +
+> +module_i2c_driver(sn3112_i2c_driver);
+> +
+> +MODULE_AUTHOR("BigfootACA <bigfoot@classfun.cn>");
+BigFootACA not Xilin Wu ?
+> +MODULE_DESCRIPTION("PWM driver for SI-EN SN3112");
+> +MODULE_LICENSE("GPL");
 > 
 
-Doesn't apply to -next
+Also please consider the following checkpatch errors
 
-Patch failed at 0009 dt-bindings: arm: qcom: Add AYN Odin 2
-When you have resolved this problem, run "git am --continue".
-If you prefer to skip this patch, run "git am --skip" instead.
-To restore the original branch and stop patching, run "git am --abort".
-error: patch failed: Documentation/devicetree/bindings/arm/qcom.yaml:1003
-error: Documentation/devicetree/bindings/arm/qcom.yaml: patch does not apply
-hint: Use 'git am --show-current-patch=diff' to see the failed patch
+WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+#50:
+new file mode 100644
+
+CHECK: struct mutex definition without comment
+#83: FILE: drivers/pwm/pwm-sn3112.c:29:
++	struct mutex lock;
+
+CHECK: Prefer kernel type 'u8' over 'uint8_t'
+#85: FILE: drivers/pwm/pwm-sn3112.c:31:
++	uint8_t pwm_val[SN3112_CHANNELS];
+
+CHECK: Prefer kernel type 'u8' over 'uint8_t'
+#86: FILE: drivers/pwm/pwm-sn3112.c:32:
++	uint8_t pwm_en_reg[3];
+
+CHECK: Lines should not end with a '('
+#101: FILE: drivers/pwm/pwm-sn3112.c:47:
++		dev_warn_ratelimited(
+
+CHECK: Prefer kernel type 'u8' over 'uint8_t'
+#145: FILE: drivers/pwm/pwm-sn3112.c:91:
++			      uint8_t val, bool write)
 
 
