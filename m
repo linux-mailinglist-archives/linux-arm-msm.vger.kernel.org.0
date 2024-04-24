@@ -1,100 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-18394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B61808B02D2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 09:03:40 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 81E5B8B02F9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 09:18:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 521321F2386A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 07:03:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8794DB22F8A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 07:18:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32A8D157498;
-	Wed, 24 Apr 2024 07:03:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38B61158853;
+	Wed, 24 Apr 2024 07:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H6sjQLiN"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XJna2nkf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F371315442D;
-	Wed, 24 Apr 2024 07:03:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA94D1586D2;
+	Wed, 24 Apr 2024 07:18:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713942215; cv=none; b=WE9IkW5M+wI5BZDrUCJl/7VhH2olLQZfeMvJBY7RS1SwLSQicd5HlZhE7chgVeaG3vKhdod+ZN4hZTnEzduLY8QyrmTOm4NvKZnNPAX1TdZ3q7Jjcw6T6GFOp6Fxo1sQmhM63T156BUjuC1xfqX+HFzLldVNWeSkKw8C9NFnmYI=
+	t=1713943099; cv=none; b=mrqmtB8t+kwdppbhBwJYdkVw2u5cuNi/Ung2V/HJgRFIBrb/mlxH88Lei2t5C3j3wB8TIGeTeq7WHgPN/KiO9Nm/kZiqBTWB3nLJOwlIb9OKlGpD9gF8fAA+q5ofeH0Cae3A38d25Tm4l9d7VK67kIDYc/9ias3zqCO2nV0/Jxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713942215; c=relaxed/simple;
-	bh=VdK8Fuzd/eYU2FHWOzvzIXTwl7D2F6yWLkUOsvGwFSQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UV7JZHg5ut2mVfvTMjgyoAWjZEdgr+n6d6i+zY/2aZrC+/A3ipVYgsHEN6usM96qXZu4WApUqqSn1deJacWlStCOphkRY22UlqVlXPLBI2Bkhf+aZFq1Wu5Tc2ulJNT60LcFR+ZbGTtOqPXJtL2CmLyU9hEzy/x0QL0OgZzA5Hs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H6sjQLiN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F015C113CE;
-	Wed, 24 Apr 2024 07:03:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713942214;
-	bh=VdK8Fuzd/eYU2FHWOzvzIXTwl7D2F6yWLkUOsvGwFSQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=H6sjQLiNYE34dpjw/kyqceO8MU+Yrdzy9ZYgThdr0DNfKUhAeF4i7SBiEb6LjlFfd
-	 AN3AMukrTFLph/AQsL1Dk3xSMHoggcbH32/UZP0lxpj/X6J4morHHyPIEM2MVnH1N0
-	 s1HQ0jWJAyeQW3qHeXxaVbMnBZLwvtZ3rrAad+1NWmykk6aIXqudZ9jqTShb/PZX0g
-	 U5jPs12w39/la+LQ8uiNcVvFZVrU3B3/4v7rbgUUT85CQ609i1I1tsLO/CI7cF2liL
-	 pWPyCmBSARuPchROm2eKsw00kZgDn9DrDJyyC5XljF3xiioQsLbRAJjZDFdgm/+wFP
-	 4gUHLLssdHlIg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rzWfE-0000000009x-3KM7;
-	Wed, 24 Apr 2024 09:03:32 +0200
-Date: Wed, 24 Apr 2024 09:03:32 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>, Jiri Kosina <jikos@kernel.org>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	linux-input@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/6] dt-bindings: HID: i2c-hid: elan: add Elan eKTH5015M
-Message-ID: <ZiiuxI3GfJQIjxAG@hovoldconsulting.com>
-References: <20240423134611.31979-1-johan+linaro@kernel.org>
- <20240423134611.31979-3-johan+linaro@kernel.org>
- <1dc47644-56c9-4fdc-80cf-756cf4cea54c@linaro.org>
+	s=arc-20240116; t=1713943099; c=relaxed/simple;
+	bh=fv+GIGOvqiVeo78BkG+zPn+Of31/+ZsuY6byizPk83M=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=D0EbTIJpWzkK+UecZ/nB81tC1dLZukuykj7JWf3m/jI0YYnmVfZIzVzEiWmyLMStd6JIlag33Kb5J867bAc8N2a1+7zEpX4PJcS3nWJxqc0wocPtrw67IJ8Fk9fJb6s4t+rQ/rD60kQtoYrH+79KFEdPH3jr8lu/8O7FBmXY+j4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XJna2nkf; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43O6YeiK026977;
+	Wed, 24 Apr 2024 07:18:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=SIiiTzshdZnb
+	bu1Kn6CE4UY2GKQW75/stSab/emf5JE=; b=XJna2nkfoXTIZgOdFk70qFdqXN3y
+	BArphEIY96aRK9BDdQJxD5LhHX0zGXA9GJxV/wh4O7Vgae1QFtuHUz+A/GJD3LRD
+	BkybJ2MkuPgnvT4cJCgDMzJBx8c3ABzgJ7b20aUSLrkn1JPJysVtJfFMTnqAhgfc
+	d1+bkyaRXpQIaf6COKZPh4BZd8SPHGO2ZJBl6Sd/tzRMRROVJUNuO7hf/L57/IuU
+	oxD/+KjJJdqz5DYFJrx6R+0ORKvcuy2a6L/+WH5a+aGUzOePiqLlrHRiQvlTTq6S
+	flVZIAidFLR14msxNavzx7GJ4aX8qlj8TtvrbXEoCFEUMmI3PyaDtyQ3xg==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xpv9e05nx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 24 Apr 2024 07:18:11 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 43O7I7AK006061;
+	Wed, 24 Apr 2024 07:18:07 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3xm6sm3w5m-1;
+	Wed, 24 Apr 2024 07:18:07 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43O7I7vw006055;
+	Wed, 24 Apr 2024 07:18:07 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-dikshita-hyd.qualcomm.com [10.213.110.13])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 43O7I6k9006053;
+	Wed, 24 Apr 2024 07:18:07 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 347544)
+	id 463843030; Wed, 24 Apr 2024 12:48:06 +0530 (+0530)
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+To: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>
+Subject: [PATCH] media: venus: fix use after free in vdec_close
+Date: Wed, 24 Apr 2024 12:47:50 +0530
+Message-Id: <1713943070-24085-1-git-send-email-quic_dikshita@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Yzx1oSc-SW4RbTjoohJQ-sn1EZR-AmMi
+X-Proofpoint-ORIG-GUID: Yzx1oSc-SW4RbTjoohJQ-sn1EZR-AmMi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-24_04,2024-04-23_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ bulkscore=0 lowpriorityscore=0 adultscore=0 spamscore=0 impostorscore=0
+ phishscore=0 mlxscore=0 suspectscore=0 clxscore=1015 malwarescore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404240031
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1dc47644-56c9-4fdc-80cf-756cf4cea54c@linaro.org>
 
-On Tue, Apr 23, 2024 at 06:24:39PM +0200, Krzysztof Kozlowski wrote:
-> On 23/04/2024 15:46, Johan Hovold wrote:
+There appears to be a possible use after free with vdec_close().
+The firmware will add buffer release work to the work queue through
+HFI callbacks as a normal part of decoding. Randomly closing the
+decoder device from userspace during normal decoding can incur
+a read after free for inst.
+
+Fix it by cancelling the work in vdec_close.
+
+Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+---
+ drivers/media/platform/qcom/venus/vdec.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index 29130a9..56f8a25 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -1747,6 +1747,7 @@ static int vdec_close(struct file *file)
  
-> >  properties:
-> >    compatible:
-> > -    items:
-> > -      - const: elan,ekth6915
-> > +    oneOf:
-> > +      - items:
-> > +          - enum:
-> > +              - elan,ekth5015m
-> > +          - const: elan,ekth6915
-> > +      - items:
-> 
-> Don't re-add the items for this entry. Just const.
+ 	vdec_pm_get(inst);
+ 
++	cancel_work_sync(&inst->delayed_process_work);
+ 	v4l2_m2m_ctx_release(inst->m2m_ctx);
+ 	v4l2_m2m_release(inst->m2m_dev);
+ 	vdec_ctrl_deinit(inst);
+-- 
+2.7.4
 
-Sure. But note that the example schema uses 'items' like this (e.g. for
-'compatible' and 'clock-names'):
-
-	https://docs.kernel.org/devicetree/bindings/writing-schema.html#annotated-example-schema
-
-Johan
 
