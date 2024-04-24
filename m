@@ -1,126 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-18407-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18408-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70EAC8B0527
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 10:57:14 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 990EB8B0536
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 11:01:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 85D341C23927
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 08:57:13 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A58E1B22165
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 09:01:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A503D158A29;
-	Wed, 24 Apr 2024 08:57:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6730158A36;
+	Wed, 24 Apr 2024 09:01:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XWQkydc6"
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="WHhiHQrP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.zeus03.de (www.zeus03.de [194.117.254.33])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC83158A16
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 08:57:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0434158A1A
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 09:00:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713949025; cv=none; b=cddg62OPUR7z4LAIajYeulDbcDLmTC3X3Monq0gQCH6fYOJssQRKNHhn6iHIlbm5Sx42C3yOTxbBD2xrMCEOnziXzKGAf3tiFNj8X6SAylCTS+tYuqN/VJ+c09ABUAgM5r4PpKim9yliOEv4GI/BqyvDb5fAyI/Rl+EGyjsniWs=
+	t=1713949260; cv=none; b=n6xGNU+tt9KwlqY5zT/Xe40FiS3JMcc/MI74jZat96UsanJmoDiBZLW/ft1Gn6NpFNPamPOYdlHPxZn3+HgR8buLsRtns/QJUXmdyBGZH15O7vkMzGd8LoBJpcUpa1IpZ/7QNJHG8W6wh3oLRqMXv5sY2F1LQOBazdNVOdTT6ZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713949025; c=relaxed/simple;
-	bh=2O72LDU1OqLroHzeVRXvbfTsfJ2fryQ4/oEHiZA7yqk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oC5GpZrxK0UJk3locDQnCABoHl2jNxRbGMJipMl2bCPrBXs2/6hHQ8FnPAebIP9gObCZDtpR2S/HvVY4NYZ9iT83v0wGTe8Y63ESW0X5FlAAnbHPByPC40oDOJR+NzIOWJPW3SPfskuZxlhQBO3bFG+cc83q8YbeiZ/Ny5sAd5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XWQkydc6; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-34a4772d5easo5377748f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 01:57:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713949021; x=1714553821; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AkIP6wFEIDdLYh2L9xznda/rD06h99rIWQ52OqgoXs8=;
-        b=XWQkydc6ifkoesYyyw2U5cHA0sdZiz0VjUkM/xH8y520/Dt5tITDvpVYNOHnqCNKsO
-         YeUs/mIzlikaaIXUw9xfTNIU8bcYE1ypsSNTvaLB5BY5zCqUoO9a4XOm7CFx22D8EpyF
-         H04vx0AO7iea0+w0oib9MLmG7cXIo/+lcn43nZyWdidxFNC4J9W9bcmUJJ9xmi+4d+Tp
-         8KRpj+ORL+IDXg/M/WCKmqI8dEnPs+4dKqiFFDWyb5NzReVNlBdvomZbOocJsscVhv81
-         0MiLGDZc9SNK6HXrEwvHfjXb2FSSO08J02IuRPoM5JJlZL7bSUjCcc483jPC3LsJDS5R
-         f6pg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713949021; x=1714553821;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AkIP6wFEIDdLYh2L9xznda/rD06h99rIWQ52OqgoXs8=;
-        b=Aw4GqtC8ziikzDSiHhERfUdgUwFSrRtrK70ypem+l3GP+uRJozIuCBeYYRJclQT0C8
-         vip3BmJl07oBtEP9/VDFO6DzNs9ahCHZ/JA8gd9LB9gXbG1izBP3OizGuK2aHte5bys4
-         asJHkV/lip8jraJYBfDoeitnyqlTyGLycc6F1I6h1x4Fdc7zFXyRU3UCBMIv/Aod/cA2
-         /97Gov8vg5JnhjZjdsoLC642F1av/ec6wCvwVWDAitWWqulWQGbRusUPh1CC3jgHODLI
-         SFU2JgYEBRlySqt7OJSNM8LOMCRsknTeNuWMqvxmRL2vl61FElTA0hZKuZ+VKS41iO3W
-         YbMw==
-X-Forwarded-Encrypted: i=1; AJvYcCX3mzvwgnjePnQAN+5zUsGOi/a9jFJVjMZKHxTASPY6+QyAUdDbiWapGm2w2p63QN33QjlxMWvtIBGyaOaZyCCWgMRlqAsJwHxCe1p/BA==
-X-Gm-Message-State: AOJu0YxxiIP7dqk45hEKjMc6PSUk/cXItuETOp3LthZDjxRgcrL2+6pg
-	P5lgOeKA/NfIoLAqRDk2k/Cyxb4VrH5dKn2ixiidPpslMFOAuVo9zmtF+qQrorA=
-X-Google-Smtp-Source: AGHT+IEyU1gmwXgqSJtlqDiujsmNdbhvlCic00FHBLWvq1Gj2coaTNmeFtYG0ICD0QzXKkhlq8J0Rg==
-X-Received: by 2002:a5d:5449:0:b0:34a:a836:b940 with SMTP id w9-20020a5d5449000000b0034aa836b940mr1011074wrv.18.1713949021138;
-        Wed, 24 Apr 2024 01:57:01 -0700 (PDT)
-Received: from [192.168.0.19] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id v2-20020adfe282000000b00346ceb9e060sm16488957wri.103.2024.04.24.01.56.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Apr 2024 01:57:00 -0700 (PDT)
-Message-ID: <40e817d3-3a7a-4da5-9237-12915357e011@linaro.org>
-Date: Wed, 24 Apr 2024 09:56:59 +0100
+	s=arc-20240116; t=1713949260; c=relaxed/simple;
+	bh=rlodAndDMyPA39Cl9zBq3gC2CE9mIUDdBUkS7hl2nGo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=K9k26SASMiQBEik9EZhICfSZcS3F4HH2lJwATXLa2w1i0WpbXUcL40GF27JqSPwd9n7p468iqNPS9emtrLWIT6aeFI+BUSPQpZC1zc8I1wTslsLd3hYHZmsB4YVcS86dzr2SsfiuMk7/CRP92IyTu2Kl7zgbwkjTNXSHXynrW/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=WHhiHQrP; arc=none smtp.client-ip=194.117.254.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	sang-engineering.com; h=date:from:to:cc:subject:message-id
+	:references:mime-version:content-type:in-reply-to; s=k1; bh=F/rZ
+	bYMw94pfUTMXvodaO2dpVGh5mtleHLV+nawJR/g=; b=WHhiHQrPoBK5rpd5VA86
+	giFZK/WK5QrP+Scmd3x1x3hLwHAF5BGRil3N9lSCG/OkS7EjhlOb3KHy5j81KxIJ
+	XaXBUVIuMGaM18HHTUgJRkx01WQ3RabIM3Zz5b5JakCGhRZrb6kOTPWQedekx4RO
+	R/H8oUjWLc1AF8CuHTrkFFdjh3jDINTYXczzFDoJQUKxUfdADEEN+AIaDHbZTkHW
+	svfje4hrAL8SZZycmdvgqYPnU2K6Cm4h1DkYBcpDF9Erlb7TJw1UvXCdUwuDhFWg
+	KO3RQsxqrhiqKIfhkyCrfRinbr1jsOR+GIFjr58RNV1q4R9FpRfaOVQoxeJtDkMu
+	uw==
+Received: (qmail 501040 invoked from network); 24 Apr 2024 11:00:53 +0200
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 24 Apr 2024 11:00:53 +0200
+X-UD-Smtp-Session: l3s3148p1@L6tq6NMWFsgujntt
+Date: Wed, 24 Apr 2024 11:00:53 +0200
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+To: Andy Shevchenko <andy.shevchenko@gmail.com>
+Cc: linux-i2c@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-omap@vger.kernel.org, 
+	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
+	linux-rpi-kernel@lists.infradead.org, linux-tegra@vger.kernel.org
+Subject: Re: [PATCH 00/18] i2c: remove printout on handled timeouts
+Message-ID: <sbkymvjmrufouqqscpmrui5kcd466gj6yn2bqwf3lhfk55mjos@n4ydx6wzyq4k>
+Mail-Followup-To: Wolfram Sang <wsa+renesas@sang-engineering.com>, 
+	Andy Shevchenko <andy.shevchenko@gmail.com>, linux-i2c@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-omap@vger.kernel.org, 
+	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
+	linux-rpi-kernel@lists.infradead.org, linux-tegra@vger.kernel.org
+References: <20240410112418.6400-20-wsa+renesas@sang-engineering.com>
+ <ZihNbtiVDkxgUDGk@surfacebook.localdomain>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: venus: fix use after free in vdec_close
-Content-Language: en-US
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <1713943070-24085-1-git-send-email-quic_dikshita@quicinc.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <1713943070-24085-1-git-send-email-quic_dikshita@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="tk743gnx4tnmnqhg"
+Content-Disposition: inline
+In-Reply-To: <ZihNbtiVDkxgUDGk@surfacebook.localdomain>
 
-On 24/04/2024 08:17, Dikshita Agarwal wrote:
-> There appears to be a possible use after free with vdec_close().
-> The firmware will add buffer release work to the work queue through
-> HFI callbacks as a normal part of decoding. Randomly closing the
-> decoder device from userspace during normal decoding can incur
-> a read after free for inst.
-> 
-> Fix it by cancelling the work in vdec_close.
-> 
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> ---
->   drivers/media/platform/qcom/venus/vdec.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-> index 29130a9..56f8a25 100644
-> --- a/drivers/media/platform/qcom/venus/vdec.c
-> +++ b/drivers/media/platform/qcom/venus/vdec.c
-> @@ -1747,6 +1747,7 @@ static int vdec_close(struct file *file)
->   
->   	vdec_pm_get(inst);
->   
-> +	cancel_work_sync(&inst->delayed_process_work);
->   	v4l2_m2m_ctx_release(inst->m2m_ctx);
->   	v4l2_m2m_release(inst->m2m_dev);
->   	vdec_ctrl_deinit(inst);
 
-Needs a Fixes tag
+--tk743gnx4tnmnqhg
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
----
-bod
+Hi Andy,
+
+On Wed, Apr 24, 2024 at 03:08:14AM +0300, Andy Shevchenko wrote:
+> Wed, Apr 10, 2024 at 01:24:14PM +0200, Wolfram Sang kirjoitti:
+> > While working on another cleanup series, I stumbled over the fact that
+> > some drivers print an error on I2C or SMBus related timeouts. This is
+> > wrong because it may be an expected state. The client driver on top
+> > knows this, so let's keep error handling on this level and remove the
+> > prinouts from controller drivers.
+> >=20
+> > Looking forward to comments,
+>=20
+> I do not see an equivalent change in I=C2=B2C core.
+
+There shouldn't be. The core neither knows if it is okay or not. The
+client driver knows.
+
+> IIRC in our case (DW or i801 or iSMT) we often have this message as the o=
+nly
+
+Often? How often?
+
+> one that points to the issues (on non-debug level), it will be much harde=
+r to
+> debug for our customers with this going away.
+
+The proper fix is to print the error in the client driver. Maybe this
+needs a helper for client drivers which they can use like:
+
+	i2c_report_error(client, retval, flags);
+
+The other thing which is also more helpful IMO is that we have
+trace_events for __i2c_transfer. There, you can see what was happening
+on the bus before the timeout. It can easily be that, if device X
+times out, it was because of the transfer before to device Y which locks
+up the bus. A simple "Bus timed out" message will not help you a lot
+there.
+
+And, keep in mind the false positives I mentioned in the coverletter.
+
+All the best,
+
+   Wolfram
+
+
+--tk743gnx4tnmnqhg
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmYoykAACgkQFA3kzBSg
+KbbLuBAAjzqZT2iFY7Av9H0s+wlzFx3PbOQR9XN1fKqU/9jvT5vumaPsTH+2fUZY
+sOMPYFZUeYiZIcZqbWOUYa5Gkg5oZyrnNIbFOpV97VM9nHq5tMBrn80hdTccNBcn
+dga0E8zizsjSv80+pRwrfrfzzAALZnRZ8pPCPf6NjfnhVuhVbM3nfTJ1cDKPzYLw
+d0+t0YJKs0J2Ez92HZh4sxYyhELQ2hNFKLFcJqLBQI194Y6AQ/SP376ZTWRzaRCr
+KTLHH/wpuWERvzrQBBm+MOpZ14LKy+oKzOYKUndYCFw1dZOART808i/5Zcaqzop7
+FRZpqfJzwLh/JtT9GiunHLkHbLIRI59otzBHejzX/oCkIRylcxrn5DEkTFsKsdZ+
+Ay1VMdtxGSVMkha8uFlq51uW06MqpDdiEqbtjkOsNBepk8hbt0trJOkGuezlNOGp
+wmZeJ62f5JVrHxHHpjQwSkIy8Cm+vMtEKmJZ6exv7LRyAx2FhXFDzqwOAkNBZzNx
+H2P24MVMK31rQMLcQGBQavb7O4d3Jsq1glbLHShaHkQeZYBu4aFj/zQfe+meCak/
+HIpzWTFHiM2a8pAM/AnFy/Na/pUKFyE6Pwsk5cQg95VqC6sJzywwVI9AH1WaZ+cL
+tED/pttmbdvulRljvoIXXsYWtCy+ENKqygemMVgNK26O1aANdr4=
+=g/wq
+-----END PGP SIGNATURE-----
+
+--tk743gnx4tnmnqhg--
 
