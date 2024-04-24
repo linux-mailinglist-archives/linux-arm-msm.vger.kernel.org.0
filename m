@@ -1,147 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-18448-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18449-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A295E8B0C7F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 16:29:27 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA2598B0C8E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 16:31:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D4E2E1C23228
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 14:29:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 15D2EB21876
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 14:31:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBDF315E7FB;
-	Wed, 24 Apr 2024 14:29:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A17C13E02C;
+	Wed, 24 Apr 2024 14:30:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="fjWge50t"
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="Dnto/3XR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
+Received: from mail-40137.protonmail.ch (mail-40137.protonmail.ch [185.70.40.137])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E0B915B15C;
-	Wed, 24 Apr 2024 14:29:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587A82E646;
+	Wed, 24 Apr 2024 14:30:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.137
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713968962; cv=none; b=iZnQITWmPwLUVfheyu+p5KEJoXRIQmoai9ggy9gC5Q+1Ck3tlIyfA6p+UVxoqOjIpHgVD3LcpwsA5ymZIqdrT1HP1kglMkWvII1IFexDLcEHhoxkJgt169IMyRXemLcPCJLMI3kZT7fBIGcjwAB5I/GYXAjWpI42vuncz/NPOcI=
+	t=1713969035; cv=none; b=ildidR9VHIujt4ImQ29UfyOpLYtgI/5T8Il7h9ZQ1NHPOnjcFQn5YoCaxDt2wKMnw9+QnShcHr1fYbMRsCgbTU0vhtJTwxTeHAfAGR2yMMe9n9olKAmV0esNsjenAEqMy1ZEosWTxozIUB+A8Gy9kEUi2cYkkOvUNPyM0THSm2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713968962; c=relaxed/simple;
-	bh=WnfZajOmHIFhVo2TmxnugInu6gBY+wQy/yoWHmvGXAc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WH6h3Xx+3XneFR11Cb38d8Gm66OpxTTcwwbPrg08diyYOUdb7bYMisInGzyB0fowrgszDaru46mheXrJjfyJIXCyGgPCfr4sNzoN7Or21ERr/UKnumOei4eHpWXiGqazjDf8dzJYfDC2ormLfPhdsjbuhis9FL3LjWjugvou+Ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=fjWge50t; arc=none smtp.client-ip=198.175.65.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1713968962; x=1745504962;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=WnfZajOmHIFhVo2TmxnugInu6gBY+wQy/yoWHmvGXAc=;
-  b=fjWge50tOh7FB7RT6wnhWGYNS2P1Klulq1gRYr8fUQi9KLUh5DUsPG3g
-   W67XM65GL54vpqrpC7F9NjB3/HLMEqmGyXTp4Um78ZhKrQzIezPnH/sxy
-   NAzZvYbE3iIZiNlbmNiETYrvdqxsoA159nw9NKm/bwVNRPPC4cqvu92Tc
-   8m99JQHGWVcx3QKIC0Li7QxvrR8qsEbThQcKxssXkdgbHDEXuCz1j25vD
-   Eu2UDPrkxf5AayEWSL4pho3Zm7ncSCapfrf0fyW7UB3vjSjie+SwHQwzn
-   YWaJ2N8L4gmPMHmKs5BLvIxpgXwDCXUrMZIuMFUbfLu9Y0lyYRUifNn5i
-   Q==;
-X-CSE-ConnectionGUID: 2akSrfGbQa+jAEqUfuRhlQ==
-X-CSE-MsgGUID: wcUfoYPxQwiNQ3quy/Gezw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11054"; a="27058532"
-X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; 
-   d="scan'208";a="27058532"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2024 07:29:21 -0700
-X-CSE-ConnectionGUID: C88DltovSWq1GS2a3z6jdw==
-X-CSE-MsgGUID: M1TpDd9ySvC4wXOuBMxm9w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; 
-   d="scan'208";a="29366565"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by orviesa003.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2024 07:29:14 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.97)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1rzdcU-00000000fvA-0mQd;
-	Wed, 24 Apr 2024 17:29:10 +0300
-Date: Wed, 24 Apr 2024 17:29:09 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: kernel test robot <lkp@intel.com>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>,
-	linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	imx@lists.linux.dev, linux-amlogic@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
-	llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <helgaas@kernel.org>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>, Yue Wang <yue.wang@amlogic.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Xiaowei Song <songxiaowei@hisilicon.com>
-Subject: Re: [PATCH v2 2/4] PCI: dwc: Remove unused of_gpio.h
-Message-ID: <ZikXNX_RZJWRso4d@smile.fi.intel.com>
-References: <20240423172208.2723892-3-andriy.shevchenko@linux.intel.com>
- <202404240649.QgY8lto8-lkp@intel.com>
- <ZikT0lWPOQD3uuH0@smile.fi.intel.com>
+	s=arc-20240116; t=1713969035; c=relaxed/simple;
+	bh=YuHq8eA6SLCImHbONPdueoD/jJr5PUsm1Eh9BqfAMj0=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=rRnYV7CwOSwe4I9KHCw6fcYdDrLHPvwthbHdDpGgUxiDXaGxilM+zZ2vkhoViITLf9dScqyW31WICBZS1mo5mMYBYrz6uqsp6dON1gQBQPiWUOfL1Y1NeALgMAfLGH4YGRR6aiAdAbN2isPc4+yT+Kah41Fe7rBhG3YtAtOlfec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=Dnto/3XR; arc=none smtp.client-ip=185.70.40.137
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1713969025; x=1714228225;
+	bh=YuHq8eA6SLCImHbONPdueoD/jJr5PUsm1Eh9BqfAMj0=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=Dnto/3XRvMRkn7pB/ihDgb7fwrQ84Fw9+HWL7sV5CXy30r93r2IorgCl3zSw8ubhW
+	 MjYlWcjmBuvsIt5XHkbUwJ+PIUFhXGqpa5E5DoN3AlybmfBVToou4grSiz0tHjtSUJ
+	 89mfV0CY+pjNpWCdI7V5idIlg2XCbT9Ang1c63AqJsPnRTiDNDqJwTo7XSABLcPHRP
+	 u0Fd8qdWpqmuXAHhSnm705D+4aIhGWlUuf4Ydxf8FrMuzKo8IIT+jIAWCE/g/gGzvX
+	 v6Rc37Zp7vOx6YSQWC7XwDa5ULYjv4qzqhYhepONOrDkYu6B4NTrYXx0x2sOnWKslb
+	 AabyLwU7kvsjA==
+Date: Wed, 24 Apr 2024 14:30:09 +0000
+To: linux-kernel@vger.kernel.org
+From: Raymond Hackley <raymondhackley@protonmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Jakob Hauser <jahau@rocketmail.com>, Stephan Gerhold <stephan@gerhold.net>, Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: [PATCH v2 0/2] arm64: dts: qcom: msm8916/39-samsung-a2015: Add PMIC and charger
+Message-ID: <20240424142952.24134-1-raymondhackley@protonmail.com>
+Feedback-ID: 49437091:user:proton
+X-Pm-Message-ID: 0890518e4e5b3ebfb83d1e0e134db4545b8ea97b
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZikT0lWPOQD3uuH0@smile.fi.intel.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Apr 24, 2024 at 05:14:43PM +0300, Andy Shevchenko wrote:
-> On Wed, Apr 24, 2024 at 06:51:05AM +0800, kernel test robot wrote:
-> > Hi Andy,
-> > 
-> > kernel test robot noticed the following build errors:
-> > 
-> > [auto build test ERROR on pci/next]
-> > [also build test ERROR on pci/for-linus mani-mhi/mhi-next linus/master v6.9-rc5 next-20240423]
-> > [If your patch is applied to the wrong git tree, kindly drop us a note.
-> > And when submitting patch, we suggest to use '--base' as documented in
-> > https://git-scm.com/docs/git-format-patch#_base_tree_information]
-> > 
-> > url:    https://github.com/intel-lab-lkp/linux/commits/Andy-Shevchenko/PCI-aardvark-Remove-unused-of_gpio-h/20240424-012448
-> > base:   https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git next
-> > patch link:    https://lore.kernel.org/r/20240423172208.2723892-3-andriy.shevchenko%40linux.intel.com
-> > patch subject: [PATCH v2 2/4] PCI: dwc: Remove unused of_gpio.h
-> > config: arm-defconfig (https://download.01.org/0day-ci/archive/20240424/202404240649.QgY8lto8-lkp@intel.com/config)
-> > compiler: clang version 14.0.6 (https://github.com/llvm/llvm-project.git f28c006a5895fc0e329fe15fead81e37457cb1d1)
-> > reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240424/202404240649.QgY8lto8-lkp@intel.com/reproduce)
-> > 
-> > If you fix the issue in a separate patch/commit (i.e. not just a new version of
-> > the same patch/commit), kindly add following tags
-> > | Reported-by: kernel test robot <lkp@intel.com>
-> > | Closes: https://lore.kernel.org/oe-kbuild-all/202404240649.QgY8lto8-lkp@intel.com/
-> > 
-> > All errors (new ones prefixed by >>):
-> 
-> Right, I need to add a chained_irq.h which I have in a separate patch for now.
+The phones listed below have Richtek RT5033 PMIC and charger.
+Add them to the device trees.
 
-This is here
-20240423211817.3995488-1-andriy.shevchenko@linux.intel.com
+- Samsung Galaxy A3/A5/A7 2015
+- Samsung Galaxy E5/E7
+- Samsung Galaxy Grand Max
 
-Which should be applied before this one.
-
--- 
-With Best Regards,
-Andy Shevchenko
-
+---
+v2: Split the connector into another patch
 
 
