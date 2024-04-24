@@ -1,74 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-18436-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB4C88B0937
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 14:23:09 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B6E48B096A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 14:26:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CFE371C22E57
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 12:23:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 82BBB1F254B9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 12:26:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 368A015959E;
-	Wed, 24 Apr 2024 12:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BDC5515B143;
+	Wed, 24 Apr 2024 12:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IO7gDWt7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VHdqBnNF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7732C15ADAD
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 12:23:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2BC15B116
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 12:25:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713961384; cv=none; b=jHGl5xSgYBC+GQEdQe1/0h72hqJBycWKrZG5uWRxfolBgTMuJZr9eKsInZRqSWlTtQEltqk0Ylsi9u2i/skUzBGCDwcEwkkmYsmp74PnK9tp8cBAI38fy3UQsW9c5rf5MhWZASM0XeCS8vXTpPj1jtYrx2A3Lcbh1V6oNGUOivk=
+	t=1713961545; cv=none; b=WR6pnoO4pPO7L2z0f+aawVyYO8Fd9Ap06xAeNqvUFoErxwOG1jnwJJsIm24mbArAwo4DRjYq7/eWvxl4orjlNWQ0qdZDbMfjWMfZPJ1hErbVmBPK93RC8WtvDIZSHBn98NkI9hAb4zvPJalQ/EQjMgl2MqQ25zCGxgIPWWhdgtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713961384; c=relaxed/simple;
-	bh=7EVAxZ43e6M9EqakVg8G5iPomQiclYYtKEY7SU0BQVY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ufm/KfHLHocYccr+7Yg+FCJlPB+3R0+S8LTFdTRg3gRtgZfQJaVZOvYJAojoNtk8VyJ9UBdsfhejxK0og4BsqWLDeKrKmyi+uKCvLYz8HKhBha7kXl6D4ACFkSsw8ThSl0m8FcXsaQQ7EVZWfrD7IRqx5qcDsyt7XvKU+JlisS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IO7gDWt7; arc=none smtp.client-ip=209.85.167.47
+	s=arc-20240116; t=1713961545; c=relaxed/simple;
+	bh=OUnlVrtOA8bfYKyxgEQlwedfzZMyoS8iLwh26XS6VIc=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=pG+djGW3IzEWfFNkmNB5dDJPwF6VtKgjRU5TQ6jSDJ1JTJrlkpDPKyiFgJ7BlFEx4E4Ep4AYI2IRdCcUM/P2fs3BiauowdRV12YoG91Vfu+l99qHT8fsXxMPiHnKnDzkJhnU43Jl0QuBNCatSkcNmLdB4MB8xXBJQG9dkHgQ1uU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VHdqBnNF; arc=none smtp.client-ip=209.85.167.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-516d2600569so8649343e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 05:23:02 -0700 (PDT)
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-51abf1a9332so7201259e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 05:25:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713961381; x=1714566181; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wrwSu6K9f3l7AxMNZgK7qc0Fh0lkJOEbmkGCWsVk/v8=;
-        b=IO7gDWt7YQAFaTBUpD7YgRJeYIb4RLs7YrftnlHEi8vQcQvHYxZMwATIpGG5vKCEjy
-         nTbiAoVLeUtzlKPPqZL1sLjk32domfv5Kau6Kd7wWBNeGeYzMR7stBkG4aiSMu/pNe9b
-         VTRFp7yCdzniirClYlowH7FuJyL/tFNNwTT+dTNBXMINQqeUyrMmoBkmvNlbomUaWnem
-         l/e/1QUARtc9ovYmbaOLF1pGhYO/QNiLsfetP7kGKRcyIgAp4R6UbU6WhSVWPlV+xvD1
-         AYzwQg/P/wHL4WBYl5FGNYLutz4XYF+pJr31oI6nuEZ8wk4yjUwQn1JZKKlob244UAOb
-         33wg==
+        d=linaro.org; s=google; t=1713961541; x=1714566341; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Kxsp6XgbCGqnM98GPeUTVgQx/m9yaIy5tDfehUmygVg=;
+        b=VHdqBnNF3CHmbEZ3dqufwUn56+xJSPmxFLsLH3L+ymETyTFz/JXZRss+ZQnrdEMF3D
+         Vh/pFxb3g25qvJoxvdl3NfbZrd1aOz/pbKgK04bbN0qaRAbG/4fOT23G/Eya56S/1HCX
+         WvrPjINHaFkYqWr4mnUDUNM3lj1NHnwVkLnsQQCT3ZN8Nxf/7FXWRfaoVTqmPL6wwRdq
+         NE1GZMEbcUV+YydNbu9aEZYHj/scj7mq0TEZd9fVfozEeTbu+qDr0vD3i1LeBoE8zqHN
+         VgPwkF4/AIExdocUaO6WlcLxdv86h4+Pa31HsPhgG192vyNiS3AHFOlv7i0hzD9Tgouh
+         MRgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713961381; x=1714566181;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1713961541; x=1714566341;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wrwSu6K9f3l7AxMNZgK7qc0Fh0lkJOEbmkGCWsVk/v8=;
-        b=Wbc4fjy90F6zOZcPHLou6xAc8cv6HBLFFb4/oIepMiQNElISlgUrk7/PPEff8QKyhV
-         cd8+Vl7xcWwpBVJBGMpm+o5LxpG/1X67JG8oyDA6lGW8tYhF0gp/b2UVOpnizLCadOJq
-         tvJNpege5GZbPepsoZnerhs1XfgiWB8B68z9qLTae0+SZ+Gqzl28jC1TbwGhya+7f49a
-         uXvrIZJ4usJD8TodGzCkLFB32oPbB2RORtXJIAs1IxCSDMyaQ1MBUQm3oVJjiYLbixfj
-         Z7+L6MJqc16/5Tq5LQpGzS3WfuoU6/bjj3GskBy9qVCkON68sGvyUA1p/f9Kqqn7hHMo
-         uS6A==
-X-Gm-Message-State: AOJu0YzPoiM76GZTHtdpblGAxWeGEW1dQyBlfGc0eWgKUoxqz7muc1Qg
-	wQUX2eKTL6k1AOk0OhnsYyG1WQHDDdTkl0sJnfR2U2pZIjUr3Gqm8wVEMeg+T4ncjfHJr3WBang
-	Zv7w=
-X-Google-Smtp-Source: AGHT+IFPa5xFHlLbe7/2cfOYqt4jxQXFvqOImOxBURYIRzLe89/MJtqrwwDMGKE5c0ccdXdD4aJkJg==
-X-Received: by 2002:a05:6512:310d:b0:51b:1f12:4844 with SMTP id n13-20020a056512310d00b0051b1f124844mr1876706lfb.64.1713961380616;
-        Wed, 24 Apr 2024 05:23:00 -0700 (PDT)
+        bh=Kxsp6XgbCGqnM98GPeUTVgQx/m9yaIy5tDfehUmygVg=;
+        b=ELiIl6rEwHgjZo99tli7Rqt417ggNacFIy8fTFe+s+Guczn1ymFGd9KmsVszUgCXuG
+         GEJRTKX03w1rwPkL5JWnvIYXU2g18GECXELzU/eem6NW7cMpRuAra52t9APitRNN9ePY
+         WSdQ5jZ9QyoFGH4gfoCb8iEcQJ9eu8pNkxIxmFR/MxSViBph6h3NveWRjWMbMZ1IQ68b
+         QTSa18woy31c4nG5jUL/DVKGYT9F8nPMPPLA+Gr1npn66ZDI7KpHw6BbMu/T1M1iTIPj
+         VgyYu6w/b8AVEFBeNgXTI9K3epcJ5Ygd9HNOFHfbUxwODJFoHwcthlRDo3H8vpGqKQ/6
+         /Fog==
+X-Gm-Message-State: AOJu0YwrAUO6Fl0BKaNg2IkXCNWHvtgP8IbrjMeeedSaWdlY3/8FzvEP
+	Dr/JymMha6NcdrN+EjRGZ+P7zcBQBjcEjMAQ7Ao+6mNnka41UJz01bnUHsbhGlE=
+X-Google-Smtp-Source: AGHT+IGisWWM3dOSMD/2TLTmlTpO/DkDiI5dyGZfRTU/1KaVCsR4C5njQohN6cTWFWdeG9//MP/iDg==
+X-Received: by 2002:a05:6512:2383:b0:519:2a14:8511 with SMTP id c3-20020a056512238300b005192a148511mr1977508lfv.69.1713961541257;
+        Wed, 24 Apr 2024 05:25:41 -0700 (PDT)
 Received: from [172.30.204.128] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id t3-20020a056512068300b0051b5835f3f9sm831432lfe.278.2024.04.24.05.22.56
+        by smtp.gmail.com with ESMTPSA id cf18-20020a056512281200b0051bb99b8946sm175720lfb.146.2024.04.24.05.25.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Apr 2024 05:23:00 -0700 (PDT)
-Message-ID: <603aef24-a8ad-4c39-8c5a-846139f77a77@linaro.org>
-Date: Wed, 24 Apr 2024 14:22:54 +0200
+        Wed, 24 Apr 2024 05:25:40 -0700 (PDT)
+Message-ID: <48326406-98c1-43c5-8c96-7e861b07efab@linaro.org>
+Date: Wed, 24 Apr 2024 14:25:38 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,6 +77,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH V5 RESEND 3/5] clk: qcom: gdsc: Add set and get hwmode
  callbacks to switch GDSC mode
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 To: Jagadeesh Kona <quic_jkona@quicinc.com>,
  Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>,
@@ -104,98 +104,105 @@ References: <20240413152013.22307-1-quic_jkona@quicinc.com>
  <e419c6aa-6bb2-48ff-bacb-17a2e85856ea@quicinc.com>
  <0ed739d8-7ef6-4b0d-bd61-62966c9a9362@linaro.org>
  <2e8f5e93-1f24-4451-ab9f-ad1e7d98bc65@quicinc.com>
+ <603aef24-a8ad-4c39-8c5a-846139f77a77@linaro.org>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <2e8f5e93-1f24-4451-ab9f-ad1e7d98bc65@quicinc.com>
+In-Reply-To: <603aef24-a8ad-4c39-8c5a-846139f77a77@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
 
 
-On 4/24/24 12:27, Jagadeesh Kona wrote:
+On 4/24/24 14:22, Konrad Dybcio wrote:
 > 
 > 
-> On 4/24/2024 3:25 PM, Bryan O'Donoghue wrote:
->> On 24/04/2024 10:47, Jagadeesh Kona wrote:
->>>
->>>
->>> On 4/24/2024 5:18 AM, Bryan O'Donoghue wrote:
->>>> On 13/04/2024 16:20, Jagadeesh Kona wrote:
->>>>> Some GDSC client drivers require the GDSC mode to be switched dynamically
->>>>> to HW mode at runtime to gain the power benefits. Typically such client
->>>>> drivers require the GDSC to be brought up in SW mode initially to enable
->>>>> the required dependent clocks and configure the hardware to proper state.
->>>>> Once initial hardware set up is done, they switch the GDSC to HW mode to
->>>>> save power. At the end of usecase, they switch the GDSC back to SW mode
->>>>> and disable the GDSC.
+> On 4/24/24 12:27, Jagadeesh Kona wrote:
+>>
+>>
+>> On 4/24/2024 3:25 PM, Bryan O'Donoghue wrote:
+>>> On 24/04/2024 10:47, Jagadeesh Kona wrote:
+>>>>
+>>>>
+>>>> On 4/24/2024 5:18 AM, Bryan O'Donoghue wrote:
+>>>>> On 13/04/2024 16:20, Jagadeesh Kona wrote:
+>>>>>> Some GDSC client drivers require the GDSC mode to be switched dynamically
+>>>>>> to HW mode at runtime to gain the power benefits. Typically such client
+>>>>>> drivers require the GDSC to be brought up in SW mode initially to enable
+>>>>>> the required dependent clocks and configure the hardware to proper state.
+>>>>>> Once initial hardware set up is done, they switch the GDSC to HW mode to
+>>>>>> save power. At the end of usecase, they switch the GDSC back to SW mode
+>>>>>> and disable the GDSC.
+>>>>>>
+>>>>>> Introduce HW_CTRL_TRIGGER flag to register the set_hwmode_dev and
+>>>>>> get_hwmode_dev callbacks for GDSC's whose respective client drivers
+>>>>>> require the GDSC mode to be switched dynamically at runtime using
+>>>>>> dev_pm_genpd_set_hwmode() API.
+>>>>>>
+>>>>>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+>>>>>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+>>>>>> ---
+>>>>>>   drivers/clk/qcom/gdsc.c | 37 +++++++++++++++++++++++++++++++++++++
+>>>>>>   drivers/clk/qcom/gdsc.h |  1 +
+>>>>>>   2 files changed, 38 insertions(+)
+>>>>>>
+>>>>>> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+>>>>>> index df9618ab7eea..c5f6be8181d8 100644
+>>>>>> --- a/drivers/clk/qcom/gdsc.c
+>>>>>> +++ b/drivers/clk/qcom/gdsc.c
+>>>>>> @@ -363,6 +363,39 @@ static int gdsc_disable(struct generic_pm_domain *domain)
+>>>>>>       return 0;
+>>>>>>   }
+>>>>>> +static int gdsc_set_hwmode(struct generic_pm_domain *domain, struct device *dev, bool mode)
+>>>>>> +{
+>>>>>> +    struct gdsc *sc = domain_to_gdsc(domain);
+>>>>>> +    int ret;
+>>>>>> +
+>>>>>> +    ret = gdsc_hwctrl(sc, mode);
+>>>>>> +    if (ret)
+>>>>>> +        return ret;
+>>>>>> +
+>>>>>> +    /* Wait for 1usec for mode transition to properly complete */
+>>>>>> +    udelay(1);
 >>>>>
->>>>> Introduce HW_CTRL_TRIGGER flag to register the set_hwmode_dev and
->>>>> get_hwmode_dev callbacks for GDSC's whose respective client drivers
->>>>> require the GDSC mode to be switched dynamically at runtime using
->>>>> dev_pm_genpd_set_hwmode() API.
+>>>>> A delay I suspect you don't need - if the HW spec says "takes 1 usec for this to take effect" that's 1 usec from io write completion from APSS to another system agent.
 >>>>>
->>>>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
->>>>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
->>>>> ---
->>>>>   drivers/clk/qcom/gdsc.c | 37 +++++++++++++++++++++++++++++++++++++
->>>>>   drivers/clk/qcom/gdsc.h |  1 +
->>>>>   2 files changed, 38 insertions(+)
+>>>>> You poll for the state transition down below anyway.
 >>>>>
->>>>> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
->>>>> index df9618ab7eea..c5f6be8181d8 100644
->>>>> --- a/drivers/clk/qcom/gdsc.c
->>>>> +++ b/drivers/clk/qcom/gdsc.c
->>>>> @@ -363,6 +363,39 @@ static int gdsc_disable(struct generic_pm_domain *domain)
->>>>>       return 0;
->>>>>   }
->>>>> +static int gdsc_set_hwmode(struct generic_pm_domain *domain, struct device *dev, bool mode)
->>>>> +{
->>>>> +    struct gdsc *sc = domain_to_gdsc(domain);
->>>>> +    int ret;
->>>>> +
->>>>> +    ret = gdsc_hwctrl(sc, mode);
->>>>> +    if (ret)
->>>>> +        return ret;
->>>>> +
->>>>> +    /* Wait for 1usec for mode transition to properly complete */
->>>>> +    udelay(1);
+>>>>> I'd be pretty certain that's a redundant delay.
+>>>>>
 >>>>
->>>> A delay I suspect you don't need - if the HW spec says "takes 1 usec for this to take effect" that's 1 usec from io write completion from APSS to another system agent.
+>>>> Thanks Bryan for your review!
 >>>>
->>>> You poll for the state transition down below anyway.
+>>>> This 1usec delay is needed every time GDSC is moved in and out of HW control mode and the reason for same is explained in one of the older gdsc driver change at below link
 >>>>
->>>> I'd be pretty certain that's a redundant delay.
+>>>> https://lore.kernel.org/all/1484027679-18397-1-git-send-email-rnayak@codeaurora.org/
 >>>>
 >>>
->>> Thanks Bryan for your review!
+>>> Right.
 >>>
->>> This 1usec delay is needed every time GDSC is moved in and out of HW control mode and the reason for same is explained in one of the older gdsc driver change at below link
+>>> If that is your precedent then you seem to be missing the mb(); between
 >>>
->>> https://lore.kernel.org/all/1484027679-18397-1-git-send-email-rnayak@codeaurora.org/
+>>> gdsc_hwctrl();
+>>>
+>>> /* mb(); here */
+>>>
+>>> and this
+>>>
+>>> udelay(1);
 >>>
 >>
->> Right.
+>> Sorry, earlier I shared the link to base patch series which has mb() used, but in the mainlined series of the same patch mb() is removed as per the review comments.
 >>
->> If that is your precedent then you seem to be missing the mb(); between
->>
->> gdsc_hwctrl();
->>
->> /* mb(); here */
->>
->> and this
->>
->> udelay(1);
->>
+>> Please find the mainlined series link:-
+>> https://lore.kernel.org/all/1485145581-517-1-git-send-email-rnayak@codeaurora.org/
 > 
-> Sorry, earlier I shared the link to base patch series which has mb() used, but in the mainlined series of the same patch mb() is removed as per the review comments.
+> Mostly because mb is a solution to a different problem. See this talk
+> for more details:
 > 
-> Please find the mainlined series link:-
-> https://lore.kernel.org/all/1485145581-517-1-git-send-email-rnayak@codeaurora.org/
+> https://youtu.be/i6DayghhA8Q
 
-Mostly because mb is a solution to a different problem. See this talk
-for more details:
-
-https://youtu.be/i6DayghhA8Q
+(long story short: you want to read back the register right after
+writing to make sure things arrive at the hardware when you
+expect it to)
 
 Konrad
 
