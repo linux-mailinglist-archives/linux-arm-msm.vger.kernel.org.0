@@ -1,58 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-18450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36E3D8B0C97
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 16:32:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C9918B0C9B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 16:32:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A32981F262D4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 14:32:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 160F01F26CBE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 14:32:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4621015F408;
-	Wed, 24 Apr 2024 14:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2391A1E535;
+	Wed, 24 Apr 2024 14:32:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="lQZNhrUi"
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="GenqAOoC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
+Received: from mail-4319.protonmail.ch (mail-4319.protonmail.ch [185.70.43.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EFCA15F32D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 14:30:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.165.51.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4110713E02C
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 14:32:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713969046; cv=none; b=scAH0C75XA+zHP7/GknkhUdPLt3Q1p2fFFopISedIilIcpf+saCSslzW7GQF3NCJMGgKmuUe7QBAZHcL8i6zTNa5oikyV4dsRbzZcQYZcg0ccSGPS0MXtTS4cr9ozK91XP3j9D+aD0xjm/awy3NwVbOgM4vUqBuqZ0Xi6NtTb/Y=
+	t=1713969145; cv=none; b=nWehVk63GO0lkDnT8zezv6fwErgb99NzcYN3Bhv20TZPSgkGLEmiTjaVjcjk+GLnPFwHXNhwr+PNPCqcT3ZmSm78O6iFgfUqIUxzE7EIY+nrWxZRF8DOF1Z2E400mMHIR9CCY+Ppdn4Pl4Eg6qpQ7+5NxId4o33ZwSf7UrGh5pI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713969046; c=relaxed/simple;
-	bh=lUbwmbACpUyNk3NJHtKvbkqtg1ZQrOGUu4jdy0ur7tI=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ld1aQUee/hUGCwxpBqUWDVhdgov99Qn9Vxt09/6dGVmxF0xZF75W7st0hHeZEjvB1knnTJZNYrKaotAW7Fqmb9C9l2RtZVYfuXp7n5uHWtnWGKddrd+GIbCHtRIuAVFK55qrda5cqopeD7nQbI6UXsrFD1NqwuDA8s7buk0xSZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=lQZNhrUi; arc=none smtp.client-ip=188.165.51.139
+	s=arc-20240116; t=1713969145; c=relaxed/simple;
+	bh=OcXTtqLaYOxzjC/irdoJBlXwf4PVEJPy2lAV3KR7dys=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=G26HGL0dtnZti0DiHar26syEyeZjJ8DXxni5/lFoK8JnggVXBsqICETnWzQ4oT17U/mhLl90Zbzw+V28eFOVvBzfpB7PXraudXyLH7oE+RWHqBoxv14FDf7GXXV0K8aCIrkIYTyUGHgLq2x9hkpRrOafTnAKLSCR+8c1ikGtazI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=GenqAOoC; arc=none smtp.client-ip=185.70.43.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1713969028; x=1714228228;
-	bh=YOUqMWyu64b4W+swnGia9RjBKKQpjLyK1AV6gnT28JA=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=lQZNhrUiFnBUvmAh/SJCXL5xokpKSWNtpuWVR55CPGSdk+uhdPs+wwIFKiR7CCWF5
-	 le7y3YY7RZUuZH4rPigiKUtXxmIDXezsdACIzyZusXe35ijEX2C9TTrEY8r04EH4uX
-	 WQGINbjveYcfn+MBc1vDNjkvVPolAsF/NvPoaUhSoX2ZL8HsrlNktg5SLVknn/ZbZ0
-	 541I7aK19lhePsn2PWrbe/cjcIw1o44u17PXaGxvWVPEe0nvR6r771CNujWcbZ6C5s
-	 UuKa7hgH1tZ1nkPYv01snu9WXqa7eJVoHojJdF8BWzHcfnCgXGQJuzIxXNQPtEI3fE
-	 U5e6Y93sxfEOQ==
-Date: Wed, 24 Apr 2024 14:30:19 +0000
+	s=protonmail3; t=1713969135; x=1714228335;
+	bh=a90d4TBjcJascEIB8j4K3VPbbCBfHLdOQNkr92BO7lU=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=GenqAOoCTpOKGa3FEgK0rPfVlqnG6dl0FDxoYXGDJ3+gEceU8X229p8v6QGGHwz4W
+	 wKksJclsFqr8BXvnyXq59+6tNBFbBHvfdUTVH4o0jWRHfg9JLTY/j4tLPf6uPNiCy/
+	 jVI0+ZRXUGh51z+WwI5b63hzo9JdqpDtZ3i+wV1DLnZ2e0y6JIBAVYkGDNNLhVuxyT
+	 pe2qGCzxNIwvkfaJOTpoUDP1DXqiiqV5iRBop3QFDLJmk2UP4waW9AOxgcz9M/DUeo
+	 8Ji8I4rNPz9zMSrVnhxVDd9uBKc2K+F/BCCvrksE4XtOKu43eLcsH4gOtQ67I8bslp
+	 rNWVk28OQgboA==
+Date: Wed, 24 Apr 2024 14:32:10 +0000
 To: linux-kernel@vger.kernel.org
 From: Raymond Hackley <raymondhackley@protonmail.com>
 Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Jakob Hauser <jahau@rocketmail.com>, Stephan Gerhold <stephan@gerhold.net>, Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Subject: [PATCH v3] arm64: dts: qcom: msm8916/39-samsung-a2015: Add PMIC and charger
-Message-ID: <20240424142952.24134-2-raymondhackley@protonmail.com>
-In-Reply-To: <20240424142952.24134-1-raymondhackley@protonmail.com>
-References: <20240424142952.24134-1-raymondhackley@protonmail.com>
+Subject: [RESEND PATCH v3] arm64: dts: qcom: msm8916/39-samsung-a2015: Add PMIC and charger
+Message-ID: <20240424143158.24358-1-raymondhackley@protonmail.com>
 Feedback-ID: 49437091:user:proton
-X-Pm-Message-ID: 1c6cd5f4be663087311b13706acb0d1d0d07e0d2
+X-Pm-Message-ID: c8244e3c633f411f6facc3e5d95595234df5a988
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,6 +69,7 @@ Signed-off-by: Raymond Hackley <raymondhackley@protonmail.com>
 ---
 v2: Split the connector into another patch
 v3: Skip applied conntector patch
+RESEND v3: Fix threading
 ---
  .../qcom/msm8916-samsung-a2015-common.dtsi    | 53 +++++++++++++++++-
  .../boot/dts/qcom/msm8916-samsung-a3u-eur.dts |  6 ++
