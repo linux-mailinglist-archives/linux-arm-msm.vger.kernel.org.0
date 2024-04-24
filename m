@@ -1,78 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-18363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 539848AFD1D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 02:08:39 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC69B8AFD3D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 02:16:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 84BA41C21ED4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 00:08:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 82F96282426
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 00:16:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32F896FC2;
-	Wed, 24 Apr 2024 00:08:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55B697EF;
+	Wed, 24 Apr 2024 00:16:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SgRe/ixf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fgw22-7.mail.saunalahti.fi (fgw22-7.mail.saunalahti.fi [62.142.5.83])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f68.google.com (mail-wr1-f68.google.com [209.85.221.68])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C89B6125
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 00:08:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.142.5.83
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A060A193
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 00:16:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713917299; cv=none; b=HWLhQoPP+PRpi2463Agfne27PlIB8KSiHMkHB2f1dmlKYynxfMoan+tXeIHFvB1QfgbXxpyYxu5qypWy7PQRb+5PN3KGhPdbj7Pxq3Z3PtpfRLQ6sbS4jFRvAMf3QL+Kdn5kek+CSYSZC1OpuSJHUYMblSgVUqVOZ6/AJdsUYg4=
+	t=1713917791; cv=none; b=XYkJ8gylUdgjHS+Ufgmz/plzO81MZxAywVa3gwiGW1Kl7Btad54zFTh32CyWDfXaTF/R5825ACf3wWFo3rYnGcv1y6biXHyo9xVJIAwgxW5vm5nmxhyaTJDC9cRWRCusKnXV8EADa6v3kuw+MFbvHhGl+uXkSS2UW+5/dn3qwNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713917299; c=relaxed/simple;
-	bh=2lT28vERDCRi5gr20Y4YZMGGpwzIyZ7BWvJ2WY+Nd7k=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=URwCbvVedXSq9M0umHP9gZfXhjjl99SAr/Z2YVsKkRMPHbKUAt1z53zIKKQCKx/a2nVoLcaCEA3s9cpNiCW1bYLZZna8QXjcZ42ZC8qh0aJQiopaRwcTjVjbe1tzm5Qlfts3xH8KBeVd9S9BUisVrcc9Xw1yS4ArtBhtpFVvjAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com; spf=fail smtp.mailfrom=gmail.com; arc=none smtp.client-ip=62.142.5.83
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=gmail.com
-Received: from localhost (88-113-25-208.elisa-laajakaista.fi [88.113.25.208])
-	by fgw21.mail.saunalahti.fi (Halon) with ESMTP
-	id bedb557c-01ce-11ef-abf4-005056bdd08f;
-	Wed, 24 Apr 2024 03:08:15 +0300 (EEST)
-From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Wed, 24 Apr 2024 03:08:14 +0300
-To: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc: linux-i2c@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-	linux-rockchip@lists.infradead.org,
-	linux-rpi-kernel@lists.infradead.org, linux-tegra@vger.kernel.org
-Subject: Re: [PATCH 00/18] i2c: remove printout on handled timeouts
-Message-ID: <ZihNbtiVDkxgUDGk@surfacebook.localdomain>
-References: <20240410112418.6400-20-wsa+renesas@sang-engineering.com>
+	s=arc-20240116; t=1713917791; c=relaxed/simple;
+	bh=vH8TUXVp14Y1tF11bj35c1Q3PKT0zOfhWqOZP+37v2Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LjKSnS4CWrT781gcDBVVPcR5FQ9J1fF8GmNAz7cWb2A+CAAyAmPlV19BDy/irRQd9w/jnDHyCP9uM+eqGMU70nSD/uZyeSwsjigR9KQUP4afuIerFBXIzBnP4dcVVQqRXDTmJvJNJpoblnryk8I2GU8kFuJzP5sxLAxS3OdQ46M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SgRe/ixf; arc=none smtp.client-ip=209.85.221.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f68.google.com with SMTP id ffacd0b85a97d-34a7e47d164so3833113f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Apr 2024 17:16:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1713917788; x=1714522588; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=K0pUZMSUM0wS5UBOCyyIVV0VM1ykC5stPfsCzESY0oc=;
+        b=SgRe/ixfPOk59310t0N5QalDW8DZpec+r65x+LzVsAmJFfN4kh8Sq+sszWFZyPmPjd
+         ykwAten+rOEUGEXA/8pu1NwvG/B9oAuxzb1ChKyX5KDhpHYCqnhvSIIUXpyKISWefGXa
+         K+mezNTHO+M5u6VrAvIyytqEGflXH8LLzFNkg3PTduTZy5/Com0yi3DXYy+iAhIGThna
+         hSfyADLeyCn0H+CglLPnKnA/codueF0LRhjimpWsaBQFUvbbXccgiM7tu0Im5S3WndDJ
+         QbGq4TPnuDpsHaVx+QqAmASo7SSCandYRRdgNRmi+Fd45VM+IWDhAJic10UkVJkEbghz
+         08Kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713917788; x=1714522588;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=K0pUZMSUM0wS5UBOCyyIVV0VM1ykC5stPfsCzESY0oc=;
+        b=bF7XdJ3FISka+EASQjFlg24ApyrP646VXtSZptQ8lPP9MU9HPDkgPa4EzizF2+SO+p
+         UAiknD1QHwVdGEQjmfTww7DcB+dS2jirQD5qjTcXhRQg+ZRuXAJyj7hXmNZOLq2M80TX
+         PfSF3E04LLZ4hjIfWwKDODLGAIRLBbQmPYxzgRKpMQQ1MlQzIgbfFXcvKdg2R/uNi0wx
+         UeQ3rw42ytBUX1sAozex0g1HH6a8r5kLcHMPErXEMWl3lKEi9xM05uXQ+/j3NgrihQ6B
+         TPSeEg9VYmC77EisFGBJZxBD8qkyVqt/vYZ7w+eSv/Vetz+GvxZBj1wufhd1uIYWn97D
+         4M5Q==
+X-Gm-Message-State: AOJu0YyNH7q6XLk0Fg6pvcSGdyn6fokO3rz5IJq3Y+t4q64tUDVQjtRq
+	x3ttFCGu68YWRf753oxZlA4IXgsdzWWm8FoOlbYl62Q++unMEM06vwVi1E6WTX4=
+X-Google-Smtp-Source: AGHT+IEBbsQv7MvHH+05WRyjPm/vcH5Gi/IkbhrXGGTHpSm/YU5rg7c2JJdbV16cVdR9Q8PVRh8I8A==
+X-Received: by 2002:a5d:504e:0:b0:33e:363b:a7dd with SMTP id h14-20020a5d504e000000b0033e363ba7ddmr469809wrt.20.1713917787851;
+        Tue, 23 Apr 2024 17:16:27 -0700 (PDT)
+Received: from [192.168.0.102] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id a3-20020adffb83000000b0034b32e5e9ccsm5235364wrr.64.2024.04.23.17.16.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 Apr 2024 17:16:27 -0700 (PDT)
+Message-ID: <a522f25f-bb38-4ae1-8f13-8e56934e5ef5@linaro.org>
+Date: Wed, 24 Apr 2024 01:16:26 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240410112418.6400-20-wsa+renesas@sang-engineering.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V5 RESEND 5/5] venus: pm_helpers: Use
+ dev_pm_genpd_set_hwmode to switch GDSC mode on V6
+To: Jagadeesh Kona <quic_jkona@quicinc.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Ulf Hansson <ulf.hansson@linaro.org>, "Rafael J . Wysocki"
+ <rafael@kernel.org>, Kevin Hilman <khilman@kernel.org>,
+ Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Andy Gross <agross@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Abel Vesa <abel.vesa@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+ linux-pm@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>,
+ Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+ Imran Shaik <quic_imrashai@quicinc.com>,
+ Ajit Pandey <quic_ajipan@quicinc.com>
+References: <20240413152013.22307-1-quic_jkona@quicinc.com>
+ <20240413152013.22307-6-quic_jkona@quicinc.com>
+ <5c78ad52-524b-4ad7-b149-0e7252abc2ee@linaro.org>
+ <b96ef82c-4033-43e0-9c1e-347ffb500751@quicinc.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <b96ef82c-4033-43e0-9c1e-347ffb500751@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Wed, Apr 10, 2024 at 01:24:14PM +0200, Wolfram Sang kirjoitti:
-> While working on another cleanup series, I stumbled over the fact that
-> some drivers print an error on I2C or SMBus related timeouts. This is
-> wrong because it may be an expected state. The client driver on top
-> knows this, so let's keep error handling on this level and remove the
-> prinouts from controller drivers.
+On 14/04/2024 15:52, Jagadeesh Kona wrote:
 > 
-> Looking forward to comments,
+> 
+> On 4/14/2024 6:09 PM, Bryan O'Donoghue wrote:
+>> On 13/04/2024 16:20, Jagadeesh Kona wrote:
+>>> The Venus driver requires vcodec GDSC to be ON in SW mode for clock
+>>> operations and move it back to HW mode to gain power benefits. Earlier,
+>>> as there is no interface to switch the GDSC mode from GenPD framework,
+>>> the GDSC is moved to HW control mode as part of GDSC enable callback and
+>>> venus driver is writing to its POWER_CONTROL register to keep the 
+>>> GDSC ON
+>>> from SW whereever required. But the POWER_CONTROL register addresses
+>>> are not constant and can vary across the variants.
+>>>
+>>> Also as per the HW recommendation, the GDSC mode switching needs to be
+>>> controlled from respective GDSC register and this is a uniform approach
+>>> across all the targets. Hence use dev_pm_genpd_set_hwmode() API which
+>>> controls GDSC mode switching using its respective GDSC register.
+>>>
+>>> In venus V6 variants, the vcodec gdsc gets enabled in SW mode by default
+>>> with new HW_CTRL_TRIGGER flag and there is no need to switch it to SW
+>>> mode again after enable, hence add check to avoid switching gdsc to 
+>>> SW mode
+>>> again after gdsc enable. Similarly add check to avoid switching GDSC 
+>>> to HW
+>>> mode before disabling the GDSC, so GDSC gets enabled in SW mode in 
+>>> the next
+>>> enable.
+>>>
+>>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+>>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+>>> ---
+>>
+>> When I tested this out on sm8250 a few months ago it was broken.
+>>
+>> I don't quite see in your commit logs, how the breakage was addressed.
+>>
+>> Can you provide some details ?
+>>
+> 
+> Thanks Bryan for your review!
+> 
+> In earlier series, venus driver is switching the vcodec GDSC to HW 
+> control mode before disabling the GDSC by invoking 
+> vcodec_control_v4(..., false) in poweroff_coreid(). Due to this, the 
+> subsequent GDSC enable from venus driver is failing while polling for 
+> GDSC power ON status, since GDSC is under HW control mode and HW can 
+> keep the GDSC in disabled state.
+> 
+> Now a check is added in poweroff_coreid() to avoid switching the GDSC to 
+> HW control mode before disabling the GDSC for Venus V6 variants that use 
+> this new API. Hence during the next GDSC enable, GDSC will be in SW mode 
+> and GDSC will powerup properly.
 
-I do not see an equivalent change in I²C core.
+Right so the intention is to have HW GDSC control during playback only - 
+and then revert to SW control when no stream is active, right ?
 
-IIRC in our case (DW or i801 or iSMT) we often have this message as the only
-one that points to the issues (on non-debug level), it will be much harder to
-debug for our customers with this going away.
+I tried your series on today's -next.
 
--- 
-With Best Regards,
-Andy Shevchenko
+Here is -next without your changes
 
+https://drive.google.com/file/d/1PFuLOlEp582rBQUvuwc9PNZUBxn1ioYf/view?usp=sharing
+
+and here is -next with your changes
+
+https://drive.google.com/file/d/1PHR4rZnWUH9Wp2B-itT5yCUXIMOMZrwM/view?usp=sharing
+
+The first time I tried that test the stopping/stuttering was worse.
+
+So yes the original crash was fixed but, this looks like a performance 
+regression to me.
+
+Here's the tree I tested with.
+
+https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-24-05-23-review?ref_type=heads
+
+---
+bod
 
 
