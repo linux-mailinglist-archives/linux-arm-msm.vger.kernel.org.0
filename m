@@ -1,290 +1,221 @@
-Return-Path: <linux-arm-msm+bounces-18504-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18505-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DBBC28B14DE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 22:48:21 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9FAFC8B14E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 22:51:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 92EDA284742
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 20:48:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C3C111C22BA4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 20:51:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00C3F156977;
-	Wed, 24 Apr 2024 20:48:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11B6C13A401;
+	Wed, 24 Apr 2024 20:51:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iUb7cQHR"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="B3l+HBJw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D4915689A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 20:48:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713991697; cv=none; b=Wb1mTnYB/gYzdwKGzhkZ/JUn8ciY+/XekyKtl8zUKs76QbCSs1Z8t2AbRn23hjPnHiCvwMGuZknlqe7SyTO2hekXfWFmebbSbdCa/TRBrot3afnqv9sCNLqg/eBhpE9MwbnR3NXCsmnEwFlsXaO3lcsD+AQVj2tpNgTgYyT+//Y=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713991697; c=relaxed/simple;
-	bh=APvvGfjt6M4RGHG68kcPHxSbyBNeXdPdp01IWBW2Xh8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bh//XbDQhcTvwqLmWSV7jz0rBHSFUeGJOyzErnzmF1LSFMEBT97gnhPicOz0gGyTjkKMtQ/L6lmAQfbfXh6HOyVozOM8sORCKUhv0bFmJ7mB3z5OiuHqyW6uo0XO15P++Qr8dfOk9x1mdmQyZ+2Zu4IfuAHx5Ka9zV+BJTHO0m8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iUb7cQHR; arc=none smtp.client-ip=209.85.219.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-dc25e12cc63so1304145276.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 13:48:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713991695; x=1714596495; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=l1pZWiUWl1nMefgATaw3YsOhf+pqCV2nzomHBQjDgDo=;
-        b=iUb7cQHRdPzSnLuOtQ10HQPxCXShHqlw84cVDllBYOK9PLxLXNpUcxPkGcxvBUu73J
-         hUmjPh0vxM8sawc1ymMSsanW8e05vYq5DQYUDciIRe4XmvrQaH38QOyruo0CWffkX4En
-         mZB0xm5MDcAx31d278omLoglYOBSzYO+dK1pSLTLH3AOtKqmDv9fIJ9Hh6yeLwA6jWxC
-         QEyVY8wJ1E4VhNsls+RKbnKQEA1F8ElpoSn75M4+2nTj9K7MhfyuVpjDPncxY0ydFrZ8
-         +eb1VbadOtXSSLQzh/s59jVAaQ9N5JNW2u5VFl8+ByPR3FPM26Am5gp3ADe0Vplq8JhC
-         9W6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713991695; x=1714596495;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=l1pZWiUWl1nMefgATaw3YsOhf+pqCV2nzomHBQjDgDo=;
-        b=LE7BOFK2z0XjaiM0ODteNhDmCRuLLjV9WIccRV9v/LEkUjGeRF6TTBYAlw2CVDphsY
-         93iB4ajXP+vLjlatwv32z7pZiQT5EhWJHXZZZPYC8ZHzjmOq7GYRCNIp6ZRNmSSoegTZ
-         NDkxv8jDLGRHUpfkuZvs/HRvxOoWFUxQlz5rJqV+ojMKld6T2eRvtBa9X9nt01MBijjW
-         ocB0Q8rHTVoUPr7bXOHwezq+j+kvIpl3yIj1vm7dMb08EL/x7hrSPyDmfo5JapRU+cbx
-         1mHPR7ONQZqsw8uTi3BjOTiKdKOEEV9Wi3yTiqa+a11cbGHODl8oC/E4WGPW8RHqbzhi
-         rrQA==
-X-Forwarded-Encrypted: i=1; AJvYcCXYtVziYvjkgkghaozrgXgM/U18dAlR+zIOJ0dN9FrQ3TyI8hoJN951KsM7tvw41MMpIBiLeS/aZqptSrjvgLFXv+6jh1S/t4J0PKfbRg==
-X-Gm-Message-State: AOJu0Yzeb8BOeMfyx78wX4iDxXpimzAhG4KtyI8OE42UfvDs8zKly2C9
-	AmOgD194WHJ+GehbSpYcXruzgPL63hA57V7Zd85o4m/MwlfXhjdi7iO+DGCsGoHsDD+raUuw5+r
-	82xsMBRkQR212NyWse8TZFdfeEZsp3ZOWyXfGOQ==
-X-Google-Smtp-Source: AGHT+IFoGSJUlBELzEJjb2GiElbJgSl6N/By/Nucv+WQf0ab/sVj/6V4J/pp7hLNpClrwGLOjUJdwEmao5p/n9i55u8=
-X-Received: by 2002:a25:ae85:0:b0:dcc:623e:1b5d with SMTP id
- b5-20020a25ae85000000b00dcc623e1b5dmr621667ybj.31.1713991695065; Wed, 24 Apr
- 2024 13:48:15 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61FA5156895
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 20:51:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.13
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1713991863; cv=fail; b=K+p1tOaGzeHhztPeoagU3CsefiDCppZJzmE24VDWK4Z5o2xEf48YPTwiHEYjSL9S6NIl0QzZe3ojdCH0LYbhhuYaViqdIBtjd43l3/n46Tm6Ex8TJ/JA9+z4kX93VP8OAOnW4ocEezbuzlmgxcgBFgZV304ssSJgjYh9WfXkMsA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1713991863; c=relaxed/simple;
+	bh=4t7gF7UOQ43HV3K+hQWHwVmXm/e6fV++oPCxz8DKbqw=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=BnzKKk6Xqbty02CxKXHxAPV/JvSes5u2Gpf++L+CWf8I2FH2QH2Rdw58JR4is3ZVczdvEDSjFgeQ+s2v1BI/wlo0jWYNFSs3vIhpG9M4MIhKKGlLgVjpXRBT2KJqA29k2ZrII41288VIuEY8EClSCjW6lcv5gm/SxO9z/GxckMI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=B3l+HBJw; arc=fail smtp.client-ip=192.198.163.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1713991860; x=1745527860;
+  h=date:from:to:cc:subject:message-id:references:
+   in-reply-to:mime-version;
+  bh=4t7gF7UOQ43HV3K+hQWHwVmXm/e6fV++oPCxz8DKbqw=;
+  b=B3l+HBJwWvQRa4GJLO5iMnGWidyY8pqSM/Eh3jYZnWLcskw4eP4ndVpk
+   Z4I3NOrSNLC+8FcKBkCfyHn/MBtKwdgK/RgN6A8WIGXAZ3pvJWyfWjxjy
+   GBxO532UD1mWlZkRcS7reL9IBdh1d0+658Kv3cnYQ78PS8tB4h0qBZQDY
+   T7JanpN2EmFRPcTpY8SSBz2aH+wH2+Mm89KbVSeG8JhUEKl+J0/ikOr/E
+   kc4bsPNTyhrFINDy7jcXf4k8LqXHesRCWCBgEAr454Fh7cMv2g1kWhOf6
+   os1tJ+P7uhBijw+2gGXT/ibFWR0/cjPc0MPoEDn9c9g9cTt1bZ/2xl0KI
+   w==;
+X-CSE-ConnectionGUID: jr0nPvTBS2W6AehSTK18GA==
+X-CSE-MsgGUID: ibpe8ut9QGaSzTHUy2TYfA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11054"; a="12583396"
+X-IronPort-AV: E=Sophos;i="6.07,227,1708416000"; 
+   d="scan'208";a="12583396"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2024 13:50:59 -0700
+X-CSE-ConnectionGUID: 96NYI9ScQkGaDfl1aDNCXw==
+X-CSE-MsgGUID: IGcnE6UfT6+FuC89dJ3yFQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,227,1708416000"; 
+   d="scan'208";a="24909497"
+Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
+  by fmviesa010.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 24 Apr 2024 13:50:59 -0700
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Wed, 24 Apr 2024 13:50:58 -0700
+Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
+ orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35 via Frontend Transport; Wed, 24 Apr 2024 13:50:58 -0700
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.100)
+ by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Wed, 24 Apr 2024 13:50:58 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=VLzDyPAd4kupL8IaDgNNB/iEkbDgPk2A1T110+j/zkdV/q/Q30cLSnlMw7VZrqdACW4x/DBUwk6mj0jM/J5wozaQhjS9ffKrLZroYiwzl9oc8x7nvbY/kUCy/1ho609HIqTaNm7iRfip2xc33y23f5T2xWai7lBuvMwNOOx+/v4TdAEvKJ69iDyQxYzKoYRBCEK2Wchj41f4/LzoyIEDp8GY/Gg0v2ARsS27HK6ra3h0FpyVVGQU2OAapYMy0wJi8WB2TgAwG9hZpeNY36Gb7G9bjcllN0ok2YHltyN4xH0l+qLKxlTPlPAEHnRyv3y+4bw7Mypp6XQww6vLrovNjQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=KNlwE5M79KJKKdv3qKShREXIJPMqIqtb6EsYaLd+10Y=;
+ b=Rrw7h7faCXcaJP/hpGy3Hxqborq494WlSq2wzCo95QWbTp5GWntq1xjk6mm3AlwP2yZHxc0J43jxpTsIKEd884nWsLuqPmgxVHf9d4ulDqkHCe+wfW2y8kXcz7M5dGu1V1WSEHimN10Xm8qxHvnenLp8gkCXZsAA9drUveV5257kb+lVcbGkPmfgtqaDH1aw6EZofEivQ1CSd8IXnNGM8AGorYNtcAUUJBHewLaNbVqDU5I7r+qkmqXlIARumxWXngX12ikeDcRK67n28lL9yLHV9V2DvxM+TkpEJsvZeC2zNVUWlUJgFxKzPlIu9XfsFiifhxlf+SrorieFlRUjbA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from CY5PR11MB6139.namprd11.prod.outlook.com (2603:10b6:930:29::17)
+ by SJ0PR11MB4943.namprd11.prod.outlook.com (2603:10b6:a03:2ad::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7519.22; Wed, 24 Apr
+ 2024 20:50:57 +0000
+Received: from CY5PR11MB6139.namprd11.prod.outlook.com
+ ([fe80::e9dd:320:976f:e257]) by CY5PR11MB6139.namprd11.prod.outlook.com
+ ([fe80::e9dd:320:976f:e257%4]) with mapi id 15.20.7519.020; Wed, 24 Apr 2024
+ 20:50:56 +0000
+Date: Wed, 24 Apr 2024 15:50:50 -0500
+From: Lucas De Marchi <lucas.demarchi@intel.com>
+To: Jani Nikula <jani.nikula@intel.com>
+CC: <dri-devel@lists.freedesktop.org>, Andrzej Hajda
+	<andrzej.hajda@intel.com>, Maxime Ripard <mripard@kernel.org>, "Jacek
+ Lawrynowicz" <jacek.lawrynowicz@linux.intel.com>, Stanislaw Gruszka
+	<stanislaw.gruszka@linux.intel.com>, Oded Gabbay <ogabbay@kernel.org>,
+	Russell King <linux@armlinux.org.uk>, David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>, Neil Armstrong <neil.armstrong@linaro.org>,
+	Robert Foss <rfoss@kernel.org>, Laurent Pinchart
+	<Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, "Jernej
+ Skrabec" <jernej.skrabec@gmail.com>, Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>,
+	Jani Nikula <jani.nikula@linux.intel.com>, Rodrigo Vivi
+	<rodrigo.vivi@intel.com>, Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>, Frank Binns <frank.binns@imgtec.com>,
+	Matt Coster <matt.coster@imgtec.com>, Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, Marijn Suijten
+	<marijn.suijten@somainline.org>, Karol Herbst <kherbst@redhat.com>, "Lyude
+ Paul" <lyude@redhat.com>, Danilo Krummrich <dakr@redhat.com>, Alex Deucher
+	<alexander.deucher@amd.com>, Christian =?utf-8?B?S8O2bmln?=
+	<christian.koenig@amd.com>, "Pan, Xinhui" <Xinhui.Pan@amd.com>, Alain Volmat
+	<alain.volmat@foss.st.com>, Huang Rui <ray.huang@amd.com>, Zack Rusin
+	<zack.rusin@broadcom.com>, Broadcom internal kernel review list
+	<bcm-kernel-feedback-list@broadcom.com>, Thomas =?utf-8?Q?Hellstr=C3=B6m?=
+	<thomas.hellstrom@linux.intel.com>, <intel-gfx@lists.freedesktop.org>,
+	<intel-xe@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+	<freedreno@lists.freedesktop.org>, <nouveau@lists.freedesktop.org>,
+	<amd-gfx@lists.freedesktop.org>
+Subject: Re: [PATCH 1/2] drm/print: drop include debugfs.h and include where
+ needed
+Message-ID: <7pqc75kl2gezmqc22nsdhaurepvlerglb3q6t5omnyst2wx3tt@uoyrm62dvhpy>
+References: <20240422121011.4133236-1-jani.nikula@intel.com>
+Content-Type: text/plain; charset="us-ascii"; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20240422121011.4133236-1-jani.nikula@intel.com>
+X-ClientProxiedBy: BYAPR07CA0039.namprd07.prod.outlook.com
+ (2603:10b6:a03:60::16) To CY5PR11MB6139.namprd11.prod.outlook.com
+ (2603:10b6:930:29::17)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240410124628.171783-1-brgl@bgdev.pl> <20240410124628.171783-2-brgl@bgdev.pl>
-In-Reply-To: <20240410124628.171783-2-brgl@bgdev.pl>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 24 Apr 2024 23:48:03 +0300
-Message-ID: <CAA8EJpq81Z4YH1apTidntwcfpsL3YjgMM_y+G0=waaoPjRL-Cw@mail.gmail.com>
-Subject: Re: [PATCH v7 01/16] regulator: dt-bindings: describe the PMU module
- of the QCA6390 package
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	"David S . Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Kalle Valo <kvalo@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Liam Girdwood <lgirdwood@gmail.com>, 
-	Mark Brown <broonie@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
-	Will Deacon <will@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Saravana Kannan <saravanak@google.com>, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	Arnd Bergmann <arnd@arndb.de>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Alex Elder <elder@linaro.org>, 
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Abel Vesa <abel.vesa@linaro.org>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Lukas Wunner <lukas@wunner.de>, Amit Pundir <amit.pundir@linaro.org>, 
-	Xilin Wu <wuxilin123@gmail.com>, linux-bluetooth@vger.kernel.org, 
-	netdev@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-pci@vger.kernel.org, linux-pm@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY5PR11MB6139:EE_|SJ0PR11MB4943:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6944de3f-efcf-4a22-61d3-08dc64a03d49
+X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230031|1800799015|7416005|376005|366007;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?h35WclnviN78GoQ9EDqxReHLUF4c5t1nemiAlrFIx8qQBkIbIz5NPhe+N2CU?=
+ =?us-ascii?Q?HBuh2eq0tDTt/LHNOL+x8UV0iNs/8w7MMXccQLL26K7EiprkJ+3OLLsSHBbM?=
+ =?us-ascii?Q?p1BMz0YlRxm8HX5fe8r6DmEXLdXJmlK93jyG+IqumrkW3cLOcnljkDvYqjGj?=
+ =?us-ascii?Q?sA0hmQc2CeX7xdmSZcGxKkeQy7AfX1g5EPLuKcwKXQGGycsiG+JYuRfyr2pX?=
+ =?us-ascii?Q?k1RU14ubE5fdrMXwta1+3tnXhmtoS6Cg+tqyKZx7LhuaI7ArD8VKJ+3YfR7P?=
+ =?us-ascii?Q?NGJd+PoCFocwQMSR9clwJ9T25lL6GZEs7JlWxjjGnC8s4JzuLGfoVv2Dhl7l?=
+ =?us-ascii?Q?pL48OTDK8dTc+5n2Ys5jDfuU8jO3byuA0XiR84l/RMdBrDegxyG48FsNXoch?=
+ =?us-ascii?Q?yzTIcekdRbrap2SOrNNEzJyVMkD2jT62OATxTLMNdhggsi8fcuMF/5TnrXdH?=
+ =?us-ascii?Q?j+jaVDbTGrGIyCstsk7nPcIpHUBnhjFLRixQfVgUty0avnFW36mLjI6J/CEn?=
+ =?us-ascii?Q?hnOUL4bdVz21EefZIEIuBfTOz13bxxF5FPXCHwUEXQLt8S46Ubh8EY2ahuJU?=
+ =?us-ascii?Q?bZxsyA24IOF/tlQX7noBmwS9enuW8KSIi5a4f8xTqAQnQE9jBftXVxG3wqU9?=
+ =?us-ascii?Q?VdDGdAm2VfPzCSiw/H+yb4TSoOyQu0i3tDIAZni3zt5BUI2KyNhVlDpeLG6Z?=
+ =?us-ascii?Q?Sd2oj172Vr/Dh3Bg/3ZinTutQpB0gxDwASLsZOhb/NhphAtAaeMxsGncuUJ1?=
+ =?us-ascii?Q?p46lL+Xdo418j6UOQd+ChZyvBwMsDpgDTfpCcgUQfmsTCYJOXfZubugVnc14?=
+ =?us-ascii?Q?fNA8qecwYeSMoKS/ZvFyFELR+gHloL9Hd9MeHxzCZLFuB9KlS5cZrvMUQ++p?=
+ =?us-ascii?Q?hRr9cy0K26YjoeVFSQXNMz5MSnIl+hKfRyXlKKghTZ4Q+3UsVDxVAA8tEYA0?=
+ =?us-ascii?Q?ykfiVQTf5rzaolcVWS4RXrJoz6ZVOxayqQmfJV68wGltsywsn5gIwaa3WkE4?=
+ =?us-ascii?Q?i/NWaa6S6NRdlT99kr16r+rrmBdbdRPoIYSFbCVYnAGotNGRy1jTS+mSo3IW?=
+ =?us-ascii?Q?oL9sul0IBVUsV4W2p9Vwns/I/pKJuZTNiOb6982D8tAJKzXnrP1c9vbzVwcA?=
+ =?us-ascii?Q?g0VCMSwSMFYIJ9xmwtn0RP9HalrqPd8ugKH00cNmNXFPCWPTZ8E+UdHt9Ha7?=
+ =?us-ascii?Q?1i+Gc9Uk3VnVEEvpDgOtB+NozAkx5kIo28ULFUgUiC1Kgpujqe01NExJBWV3?=
+ =?us-ascii?Q?dXfUElfMMEsDRXfZbV5qsDc71icyJwRHFvudt2k7Rg=3D=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY5PR11MB6139.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(7416005)(376005)(366007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?aMW9QMWzrChKFqrmeqtgzLdxa/the7RsupJfD0rPMUby5RNnqCU1ypVB7Q0G?=
+ =?us-ascii?Q?HVgAB5406al7Mrij6tmONcdY1Lph2kPYp88R8AU1v9v95nbCr/oLeJ7W7xrU?=
+ =?us-ascii?Q?/nlu14XP23xkVDMiOvELLHV+n0Im/ztUaFkVBo3Blqr22nfzd1W3BB+qCRgP?=
+ =?us-ascii?Q?DbSS+Bv2SGTH+j4NxnXINjv8zWlVneVX0tl+Y19rlgYvbTNzahEUJfL3uMY5?=
+ =?us-ascii?Q?7TQvBw6lhp1tngbduWBoYwRVgG93oS+2OJMWyaXeKbEXeiu8++dwphTunrr0?=
+ =?us-ascii?Q?q669VwxE4RkbAF+pH6Y5wY5pY1+5wqIJsvjrXmKqQlIe3rQeKqImCr6YojgA?=
+ =?us-ascii?Q?DOSxC9wWE6dkGr9MeyQHuCGnh4RHsJy1eyoVa9o1CW7PijIn0dTH1Zzy6qLB?=
+ =?us-ascii?Q?4PoGtyYW/SW5ySC+YpNW5wxEED6XHoysGyETc6sTi4EhTedI7i7vEegEdH9e?=
+ =?us-ascii?Q?0arkptQPLGSNK46E871Y8hCP+osR/alZGYLQzYS9v4rj/cP71LSWQA1174oj?=
+ =?us-ascii?Q?sZKQs9uUgMHEuC36TjXelG/CZLa/ikg4wDv6ZY4udpmR10nrXJe3qbTW0Sxy?=
+ =?us-ascii?Q?vptqkXYhiboGeCFllXIaauo2rmLWrKPeDZqw85X6pbsWOowGSHnyyoUfd+1V?=
+ =?us-ascii?Q?wOMuM6+kte/lcm84oudz0Clz7NOXaBxSB+kiFONyu7XgF9J0KAwZDKpD5fhI?=
+ =?us-ascii?Q?qSdDxeTJw3LQ4/YWASblGLmKyr3K1lWoc2sHYIIBTaC39FChm6eJbvU9ReQz?=
+ =?us-ascii?Q?Betk2EITZVYKraQCDN3GrBO/NNbnV2O0hsmJpCMSEL3LXBrcWt2dmvx6CRjA?=
+ =?us-ascii?Q?SDe5wfYWpRXWBq7q+plhyGAy2R3R/Gb3ZRKyUIdm9kEtCm5T9+RTdGRJr5GQ?=
+ =?us-ascii?Q?f+2oTzz4O+xahmS536gyzSqFwwI9B+ZlIQICKkAHvqEEtfvdAhAH8VitRdxK?=
+ =?us-ascii?Q?8PZ9Ge8zLWdu1E2C3LzQbG8oVuVDlSBESpSfvYU7gArIuzMQpHOeLT8XG0Pq?=
+ =?us-ascii?Q?9Jcm5VPOHd+qH1HTaL/hLPYakaOCEfi6LhMelE1iaQwp59fxvXDbdNdNnEpv?=
+ =?us-ascii?Q?k7/DoK0my4GC+p9I23cZymCq/kdyKT6iKpRYyste2B/mvYCMI5G78KOwCd14?=
+ =?us-ascii?Q?74HywSItRqFPKExPoXNZlSydim8UiFj3UklJWI0EjCqVDatOEEVLDVZBJRDG?=
+ =?us-ascii?Q?Lf4iUk2ew25rr6oCwcHW9n0IEjG5XZlRnmLcahWhj+0JycUs8noooNQk2TkR?=
+ =?us-ascii?Q?bhr+2Ds8b8UxI60nc5Mi6DMIq/6By/EfVw5iHkd5uY7GKq1W+VRa7m7Qg4Ll?=
+ =?us-ascii?Q?F/wfOOXmD6GYuIQ+DAuv+zM/6tDX1hbd39hUmo0yr9TkPLFtdVmXCFJm+dQF?=
+ =?us-ascii?Q?8IE18cUK71yPFhFfyv7EWwAZzc1rPRKk18lLcz7ZTuz/tU22c7Ac4T+UDdRE?=
+ =?us-ascii?Q?Ix7onVktuXmRxpVwcEZlevbcARc6x2zaTKn0bJckhJrrVZEbvIasUQAm7dLn?=
+ =?us-ascii?Q?/kQCpv/5yT6MODwiG88b6vYRWFu0VadAT/hoLkDFuQHZ1+M3i2sBzaxBueV5?=
+ =?us-ascii?Q?EM+/x8laE0o7LJeiozFTL8IN3QSC9b4HbnHBp+W5O9GE3MMfv71G80d6tIRc?=
+ =?us-ascii?Q?hw=3D=3D?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6944de3f-efcf-4a22-61d3-08dc64a03d49
+X-MS-Exchange-CrossTenant-AuthSource: CY5PR11MB6139.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Apr 2024 20:50:56.7474
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: TgrD4p6I+vL1R6w2teHf9HSLl5chkKIcDERXNhzQjciVRR+2Si5RrG45aJNCrgNwMJ3b9UJNOm5//ywZaHedNW2MMF3PwdijreuwChoYNZs=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB4943
+X-OriginatorOrg: intel.com
 
-On Wed, 10 Apr 2024 at 15:46, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
->
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->
-> The QCA6390 package contains discreet modules for WLAN and Bluetooth. They
-> are powered by the Power Management Unit (PMU) that takes inputs from the
-> host and provides LDO outputs. This document describes this module.
->
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> Acked-by: Mark Brown <broonie@kernel.org>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../bindings/regulator/qcom,qca6390-pmu.yaml  | 151 ++++++++++++++++++
->  1 file changed, 151 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/regulator/qcom,qca6390-pmu.yaml
->
-> diff --git a/Documentation/devicetree/bindings/regulator/qcom,qca6390-pmu.yaml b/Documentation/devicetree/bindings/regulator/qcom,qca6390-pmu.yaml
-> new file mode 100644
-> index 000000000000..9d39ff9a75fd
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/regulator/qcom,qca6390-pmu.yaml
-> @@ -0,0 +1,151 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/regulator/qcom,qca6390-pmu.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies, Inc. QCA6390 PMU Regulators
-> +
-> +maintainers:
-> +  - Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> +
-> +description:
-> +  The QCA6390 package contains discreet modules for WLAN and Bluetooth. They
-> +  are powered by the Power Management Unit (PMU) that takes inputs from the
-> +  host and provides LDO outputs. This document describes this module.
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,qca6390-pmu
-> +
-> +  vddaon-supply:
-> +    description: VDD_AON supply regulator handle
-> +
-> +  vddpmu-supply:
-> +    description: VDD_PMU supply regulator handle
-> +
-> +  vddrfa0p95-supply:
-> +    description: VDD_RFA_0P95 supply regulator handle
-> +
-> +  vddrfa1p3-supply:
-> +    description: VDD_RFA_1P3 supply regulator handle
-> +
-> +  vddrfa1p9-supply:
-> +    description: VDD_RFA_1P9 supply regulator handle
-> +
-> +  vddpcie1p3-supply:
-> +    description: VDD_PCIE_1P3 supply regulator handle<S-Del>
-> +
-> +  vddpcie1p9-supply:
-> +    description: VDD_PCIE_1P9 supply regulator handle
-> +
-> +  vddio-supply:
-> +    description: VDD_IO supply regulator handle
-> +
-> +  wlan-enable-gpios:
-> +    maxItems: 1
-> +    description: GPIO line enabling the ATH11K WLAN module supplied by the PMU
-> +
-> +  bt-enable-gpios:
-> +    maxItems: 1
-> +    description: GPIO line enabling the ATH11K Bluetooth module supplied by the PMU
-
-As a side node, I think we should also steal swctrl pin from the
-bluetooth device node. It represents the status of the PMU and as such
-it is not BT-specific.
-
-> +
-> +  regulators:
-> +    type: object
-> +    description:
-> +      LDO outputs of the PMU
-> +
-> +    patternProperties:
-> +      "^ldo[0-9]$":
-> +        $ref: regulator.yaml#
-> +        type: object
-> +        unevaluatedProperties: false
-> +
-> +    additionalProperties: false
-> +
-> +required:
-> +  - compatible
-> +  - regulators
-> +
-> +allOf:
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            const: qcom,qca6390-pmu
-> +    then:
-> +      required:
-> +        - vddaon-supply
-> +        - vddpmu-supply
-> +        - vddrfa0p95-supply
-> +        - vddrfa1p3-supply
-> +        - vddrfa1p9-supply
-> +        - vddpcie1p3-supply
-> +        - vddpcie1p9-supply
-> +        - vddio-supply
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/gpio/gpio.h>
-> +    pmu {
-> +        compatible = "qcom,qca6390-pmu";
-> +
-> +        pinctrl-names = "default";
-> +        pinctrl-0 = <&bt_en_state>, <&wlan_en_state>;
-> +
-> +        vddaon-supply = <&vreg_s6a_0p95>;
-> +        vddpmu-supply = <&vreg_s2f_0p95>;
-> +        vddrfa0p95-supply = <&vreg_s2f_0p95>;
-> +        vddrfa1p3-supply = <&vreg_s8c_1p3>;
-> +        vddrfa1p9-supply = <&vreg_s5a_1p9>;
-> +        vddpcie1p3-supply = <&vreg_s8c_1p3>;
-> +        vddpcie1p9-supply = <&vreg_s5a_1p9>;
-> +        vddio-supply = <&vreg_s4a_1p8>;
-> +
-> +        wlan-enable-gpios = <&tlmm 20 GPIO_ACTIVE_HIGH>;
-> +        bt-enable-gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
-> +
-> +        regulators {
-> +            vreg_pmu_rfa_cmn: ldo0 {
-> +                regulator-name = "vreg_pmu_rfa_cmn";
-> +            };
-> +
-> +            vreg_pmu_aon_0p59: ldo1 {
-> +                regulator-name = "vreg_pmu_aon_0p59";
-> +            };
-> +
-> +            vreg_pmu_wlcx_0p8: ldo2 {
-> +                regulator-name = "vreg_pmu_wlcx_0p8";
-> +            };
-> +
-> +            vreg_pmu_wlmx_0p85: ldo3 {
-> +                regulator-name = "vreg_pmu_wlmx_0p85";
-> +            };
-> +
-> +            vreg_pmu_btcmx_0p85: ldo4 {
-> +                regulator-name = "vreg_pmu_btcmx_0p85";
-> +            };
-> +
-> +            vreg_pmu_rfa_0p8: ldo5 {
-> +                regulator-name = "vreg_pmu_rfa_0p8";
-> +            };
-> +
-> +            vreg_pmu_rfa_1p2: ldo6 {
-> +                regulator-name = "vreg_pmu_rfa_1p2";
-> +            };
-> +
-> +            vreg_pmu_rfa_1p7: ldo7 {
-> +                regulator-name = "vreg_pmu_rfa_1p7";
-> +            };
-> +
-> +            vreg_pmu_pcie_0p9: ldo8 {
-> +                regulator-name = "vreg_pmu_pcie_0p9";
-> +            };
-> +
-> +            vreg_pmu_pcie_1p8: ldo9 {
-> +                regulator-name = "vreg_pmu_pcie_1p8";
-> +            };
-> +        };
-> +    };
-> --
-> 2.40.1
->
+On Mon, Apr 22, 2024 at 03:10:10PM GMT, Jani Nikula wrote:
+> drivers/gpu/drm/xe/xe_debugfs.c             | 1 +
+> drivers/gpu/drm/xe/xe_gt_debugfs.c          | 2 ++
+> drivers/gpu/drm/xe/xe_uc_debugfs.c          | 2 ++
 
 
--- 
-With best wishes
-Dmitry
+Acked-by: Lucas De Marchi <lucas.demarchi@intel.com>
+
+thanks
+Lucas De Marchi
 
