@@ -1,183 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-18434-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18435-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64F988B083E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 13:23:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DFB908B0924
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 14:21:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1BCBE28908A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 11:23:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 72A05288CC9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 12:21:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7555B15A49D;
-	Wed, 24 Apr 2024 11:23:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 879AF1DFCE;
+	Wed, 24 Apr 2024 12:21:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ULMeqJtG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D62bcCll"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D9315A483
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 11:23:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3897215AD9E;
+	Wed, 24 Apr 2024 12:21:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713957815; cv=none; b=gdSwZn3Pynxh2YPpqTgFiA3SX8kfdfNACMDjT6saWW38xjibIX+R7vCbG/CDRd+iBsRNcyJ2N4z5Ibg/jyiqTdHTZzaT12N+nmXYg1eX3cjlrC9lU7YN07kA9t2bNOqeMuVyMSa/YztDNB5jTM+0ZZUgqb2VAdS3WWz0piGicJ8=
+	t=1713961280; cv=none; b=E9dPpQNtFkbM3/GGtPVj7+pYu2uy3lhMxEE99Hhy04XoOv+JRXYTK59mikVr1YRdjvYoZJ0J6hDjHz3QzeGV59kfvT+tiRtc3Q6Li7VtoijUnikmG+Iwcn7BsT6UX1VXl11pI+LopGgX+Y7nYGUvWom4HESQrlzENzLRTkwt3vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713957815; c=relaxed/simple;
-	bh=jO1+xmcyT5I9v4tZVZ1d96pbFPmBoJZzFcDtl1zowAU=;
+	s=arc-20240116; t=1713961280; c=relaxed/simple;
+	bh=H9wIkxnLqjNz5ECWiZBiIgvbopdzcGJBXEACYg6ItOE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=osqSw+L7R3XXnIHLFcUQOZfILyQEkocFFjtcsfcBx5JsFoNrcV7FV8YfJUApjbx+EK0t6RknQMKMw4+pN0Dn23i0RB2s1rTvdb1TbK8a+tx0WBi1K/P8pGAGMRkjWdbRXWhlWX+X2GKaN81J02boMrQ1QF99N1JfMHqbysFeyzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ULMeqJtG; arc=none smtp.client-ip=209.85.219.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-de45385a1b4so6255774276.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 04:23:33 -0700 (PDT)
+	 To:Cc:Content-Type; b=mlm/TwgXFdCB6DKWPljnSd1PqUhh/AaPhvwwNthYPHFxJYUSZhMxFLwLRjzR39N0/bYQnMr+pE69oT/s5xqo5lotmhWW5tGcPC9jotvH8mLCq9O4/+BNetzVOT7ZufHYLooVW0Qwqy1g8o+j5UVB+C/1WpEYISdJn5gNKHiRCDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D62bcCll; arc=none smtp.client-ip=209.85.216.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-2adce8f7814so2800138a91.0;
+        Wed, 24 Apr 2024 05:21:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713957812; x=1714562612; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ln9+pg397axOqdZ8donOOoy2lTHgumZvva3u8wpOyis=;
-        b=ULMeqJtGGk8VtJdWNpblq5XHhxwlHRSxkvm9vTS14PXWx0aDNlx1yvPv0+GKtYAe1L
-         OkK/bKR8Xio/TZbXLDPug643BFq3lyWyNXkfiTp5t2kZP/ulS5inDET5ubv00bOAeuYr
-         hyJEpPQKem+3gupTwXAkqs9jk1QhnWz9BNISy9RDsrAEhveAQi80gTUtyxAKPHtp3xiB
-         bS9kDaNpdL15NOPwaUuXmrNZhggS2LTK3wyKUXFcgTnG5Y+hHUGRTMMQjodZohyZymBZ
-         w2FZeiKruxaS4jf59XIvI0CeTmW1yrfp9xFN5oV4jKlmMC1Ox9lD7skVZtYQRzJQqwp7
-         k6bw==
+        d=gmail.com; s=20230601; t=1713961278; x=1714566078; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bunj5XIiZEdgRNTi0guP+wyf7iojN98jqRolArsaLoM=;
+        b=D62bcClljDwDT6whoeeuepUs4DT8Eea0G2qD0IZ8eqLdTju2K0NfyTX2uB7spxXFf6
+         cqg7+Y3numblLQZbkvSDwqrnBrUSETWnypCO1B2oqQtEECSgoPOa7FmEHozekpI68idn
+         mBdX5P1lAwrFzq0OQUJFts6/l0yRHilGKfqVc6E7XmxedM5Qnexv7sTwiiQuK2YQbOpI
+         w0U2UrcN8CBD6yzqMNILHzGBv4v8uYkZjthe/hVnFfJOWwkNsviyjWhupl/Ga8onRlXU
+         TgP61OfPS+uJbCScpcxLbNIHV9VydCOyxV0LX2SFZrZwM3kqKRgKqDSdxn2qHPQBQ13v
+         6dUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713957812; x=1714562612;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Ln9+pg397axOqdZ8donOOoy2lTHgumZvva3u8wpOyis=;
-        b=UtMd5mXDkftTmZ04r35NjMQeSxEmwUWRuxLBjpgZ0/e8HKFyXklAdcvhle7lKe/yqP
-         TFPcwOkM0I5hiS7N/C8tBaYtnVN+Zc9n8kZv/HLmuEvgFhORsjKgl0sdYBr3UcQrQbKT
-         pDPKyRKJivMUaN/bOhFm1fxYf547mADIw74QTcWyUAjEa5zuyHkD/eKcil7A2a5JH2c/
-         Eh0wsRSLnAfvxkfjU0ftuR1z0R+iHvvRxDLcwrUVBQ7sN3Q0FCKFS3po2cH8K9cb1CJ7
-         8OHTyKhNj2SR7zY9cK44F5wPVVlQ4Caynv+U+F5tSS3hITqvCuFvXH0h4ug+V5HzG/Cb
-         618g==
-X-Forwarded-Encrypted: i=1; AJvYcCUlStkVeV0XC9GqLi1/UE10b4zIxM0tUKS4BTt0+iSMoSmPblschE9UsO9y8vN4eSMYkxz4j0TzPFtkLaSncfGYVjkUCalI/vURaMMvLg==
-X-Gm-Message-State: AOJu0YyHDvPobD2OTROkuYbpgOjPDfYVoisiaxWfhcGdSvr3nFbTXFzu
-	VwsCB+ev3vAmFWPvDms8P2HfdD02uG+aFqamOczNkmi1+M692jgOjMxLrsI4bVCWrZG7WHVHoZT
-	Q1/HugPbfgkCQuK1mUdzpvXZH+lnYihZnMicvgw==
-X-Google-Smtp-Source: AGHT+IGyMvZRrFQqm2rU9lrkFEVJeFfiWq/kBNzRzDGPLliI2awpe//wjMSlt7lzbgaKuWjFkR6/B06yPkXjykP9pGQ=
-X-Received: by 2002:a25:6841:0:b0:ddd:696a:8656 with SMTP id
- d62-20020a256841000000b00ddd696a8656mr2219684ybc.41.1713957812276; Wed, 24
- Apr 2024 04:23:32 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1713961278; x=1714566078;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bunj5XIiZEdgRNTi0guP+wyf7iojN98jqRolArsaLoM=;
+        b=AIeF1fJpb19eb2ZZ4TeZCDakqkvwCGf6GLyAomTLmLnizeQpPi2BOyAkCjt9Nvf46d
+         VHSQCWqc3ZLCw32GASnUSHDLQ+SJYIuC2X4/ntwdj3RiXwE7+I+/vw0S4Xb4Ow+H2o2B
+         eb/cBuIUUWWZlkCzovlFw4bqr0QVhwNux7E2SeeDpIFu5sT3uyJetRc/zcQfx4DpUIs6
+         OwOEr7gdvikSO0AK+I2DMCMl8O7PaNAglj4SV/tJzUchJZnL2o1f90B91v7tv7sETOt8
+         8/Jyz5MQsAR+1oNuozK6TmFjgRIIlJiEYNfKKxm+BrZmcrHCo6b7K7EAsSPO3MIoGPGw
+         tg9A==
+X-Forwarded-Encrypted: i=1; AJvYcCUwgEbNnWMlv5lGx+Rc2R6WfiTjNuciCTAkq0uCN06KTPUtbvEs1UsQoq4ZPWQ09BivpxloQojvXy0D3dIRn0SQV190EqC6AD/hpYgjP7IJv6nRsvY4z9uYo34UYlugFyavuAnfMgroiMB+ug==
+X-Gm-Message-State: AOJu0YyRhbgrngZOd32J0owY8PNsuwuSWo5WzmomtWqvKIPDat+IqE0q
+	9sO7ZxU/IcjDBRSnPJDiTratZf6plX/sQPcfsg/TVYXV2M2uBbLSdJJIMtYW9KkyDnBvd9CIIda
+	WRih05f3uglDnJiYk30LwWTOIVtk=
+X-Google-Smtp-Source: AGHT+IGETP+1lVi26Ns4UGyWygBlMb5M8kF1qGR/jCcvzQIASLeqnOBJjDQv+2u0GvL5nvwmYlOH4XoyTdsIPgVGb48=
+X-Received: by 2002:a17:90a:9a87:b0:2ae:8f3f:9bf2 with SMTP id
+ e7-20020a17090a9a8700b002ae8f3f9bf2mr2063814pjp.42.1713961278417; Wed, 24 Apr
+ 2024 05:21:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240424101503.635364-1-quic_tengfan@quicinc.com> <20240424101503.635364-4-quic_tengfan@quicinc.com>
-In-Reply-To: <20240424101503.635364-4-quic_tengfan@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 24 Apr 2024 14:23:21 +0300
-Message-ID: <CAA8EJpqiXqsNq0B6EHnqubPcUzwJ0bc0y3rJ4RfrRimKifPf0Q@mail.gmail.com>
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm4450: Supply clock from cpufreq
- node to CPUs
-To: Tengfei Fan <quic_tengfan@quicinc.com>
-Cc: rafael@kernel.org, viresh.kumar@linaro.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org, 
-	konrad.dybcio@linaro.org, manivannan.sadhasivam@linaro.org, 
-	linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20240401-fd-xml-shipped-v5-0-4bdb277a85a1@linaro.org> <20240401-fd-xml-shipped-v5-9-4bdb277a85a1@linaro.org>
+In-Reply-To: <20240401-fd-xml-shipped-v5-9-4bdb277a85a1@linaro.org>
+From: Connor Abbott <cwabbott0@gmail.com>
+Date: Wed, 24 Apr 2024 13:21:07 +0100
+Message-ID: <CACu1E7FjcBHHZerZjRBd7=WiLDu40-d6-4jKPcKmbY244w4Zww@mail.gmail.com>
+Subject: Re: [PATCH v5 09/18] drm/msm: import A6xx XML display registers database
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Masahiro Yamada <masahiroy@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
+	Nicolas Schier <nicolas@fjasle.eu>, Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, linux-kbuild@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 24 Apr 2024 at 13:17, Tengfei Fan <quic_tengfan@quicinc.com> wrote:
+On Mon, Apr 1, 2024 at 3:52=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 >
-> Qualcomm platforms making use of CPUFreq HW Engine (EPSS/OSM) supply
-> clocks to the CPU cores. But this relationship is not represented in DTS
-> so far.
+> Import Adreno registers database for A6xx from the Mesa, commit
+> 639488f924d9 ("freedreno/registers: limit the rules schema").
 >
-> So let's make cpufreq node as the clock provider and CPU nodes as the
-> consumers. The clock index for each CPU node is based on the frequency
-> domain index.
-
-Is there any reason why this is not a part of the previous patch?
-
->
-> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/sm4450.dtsi | 8 ++++++++
->  1 file changed, 8 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sm4450.dtsi b/arch/arm64/boot/dts/qcom/sm4450.dtsi
-> index 92badfd5b0e1..8d75c4f9731c 100644
-> --- a/arch/arm64/boot/dts/qcom/sm4450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm4450.dtsi
-> @@ -47,6 +47,7 @@ CPU0: cpu@0 {
->                         device_type = "cpu";
->                         compatible = "arm,cortex-a55";
->                         reg = <0x0 0x0>;
-> +                       clocks = <&cpufreq_hw 0>;
->                         enable-method = "psci";
->                         next-level-cache = <&L2_0>;
->                         power-domains = <&CPU_PD0>;
-> @@ -72,6 +73,7 @@ CPU1: cpu@100 {
->                         device_type = "cpu";
->                         compatible = "arm,cortex-a55";
->                         reg = <0x0 0x100>;
-> +                       clocks = <&cpufreq_hw 0>;
->                         enable-method = "psci";
->                         next-level-cache = <&L2_100>;
->                         power-domains = <&CPU_PD0>;
-> @@ -91,6 +93,7 @@ CPU2: cpu@200 {
->                         device_type = "cpu";
->                         compatible = "arm,cortex-a55";
->                         reg = <0x0 0x200>;
-> +                       clocks = <&cpufreq_hw 0>;
->                         enable-method = "psci";
->                         next-level-cache = <&L2_200>;
->                         power-domains = <&CPU_PD0>;
-> @@ -110,6 +113,7 @@ CPU3: cpu@300 {
->                         device_type = "cpu";
->                         compatible = "arm,cortex-a55";
->                         reg = <0x0 0x300>;
-> +                       clocks = <&cpufreq_hw 0>;
->                         enable-method = "psci";
->                         next-level-cache = <&L2_300>;
->                         power-domains = <&CPU_PD0>;
-> @@ -129,6 +133,7 @@ CPU4: cpu@400 {
->                         device_type = "cpu";
->                         compatible = "arm,cortex-a55";
->                         reg = <0x0 0x400>;
-> +                       clocks = <&cpufreq_hw 0>;
->                         enable-method = "psci";
->                         next-level-cache = <&L2_400>;
->                         power-domains = <&CPU_PD0>;
-> @@ -148,6 +153,7 @@ CPU5: cpu@500 {
->                         device_type = "cpu";
->                         compatible = "arm,cortex-a55";
->                         reg = <0x0 0x500>;
-> +                       clocks = <&cpufreq_hw 0>;
->                         enable-method = "psci";
->                         next-level-cache = <&L2_500>;
->                         power-domains = <&CPU_PD0>;
-> @@ -167,6 +173,7 @@ CPU6: cpu@600 {
->                         device_type = "cpu";
->                         compatible = "arm,cortex-a78";
->                         reg = <0x0 0x600>;
-> +                       clocks = <&cpufreq_hw 1>;
->                         enable-method = "psci";
->                         next-level-cache = <&L2_600>;
->                         power-domains = <&CPU_PD0>;
-> @@ -186,6 +193,7 @@ CPU7: cpu@700 {
->                         device_type = "cpu";
->                         compatible = "arm,cortex-a78";
->                         reg = <0x0 0x700>;
-> +                       clocks = <&cpufreq_hw 1>;
->                         enable-method = "psci";
->                         next-level-cache = <&L2_700>;
->                         power-domains = <&CPU_PD0>;
-> --
-> 2.25.1
->
+>  drivers/gpu/drm/msm/registers/adreno/a6xx.xml     | 4970 +++++++++++++++=
+++++++
+>  drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml |  228 +
+>  2 files changed, 5198 insertions(+)
 >
 
+FYI, this will conflict with a series I will send out soon based on
+the register updates in [1]. Is there any chance to update this before
+it lands in msm-next?
 
--- 
-With best wishes
-Dmitry
+Best regards,
+
+Connor
+
+[1] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/28883.
 
