@@ -1,124 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-18443-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18444-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02ABD8B0A9C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 15:14:36 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 407C48B0B1F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 15:37:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AEFBB2813BA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 13:14:34 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 604F9B2902E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 13:37:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBA0015B99C;
-	Wed, 24 Apr 2024 13:14:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC50715EFC6;
+	Wed, 24 Apr 2024 13:33:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ORTlE1Ye"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Uiohh11P"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C93015B98B;
-	Wed, 24 Apr 2024 13:14:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 303F115EFC0
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 13:33:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713964461; cv=none; b=S5zwZLx1H0eXJgn0MYswhk3Z4r5Lq1HFvrFmaRNB3/IEW0oluAoIdJI9y88LAl7zV6Nvmj9VytjFXn9LzxH3dHcMyYC6j7ViqDpCFpyU3uQS5y0qdDrKrT+KaTUBK/Wu13pXT/yCqPy6DylWngySn2xkY8TwZFmv8vjEM/nAuTI=
+	t=1713965616; cv=none; b=Go9SVa/WK1pnf6IKchyR2ae5FZkevwKY2/D5rnoONx5wX670J4Lgzgd/OxTjEyZpNS5h1bP3CW8YCG4dHCLjLWpUQmd3el4rK41Dbaz8HbmjpGBZoG2NNlp1N5qeX8XwYLy5DMihgOJm/iCL2M35q1rFN3l3uBKYVoKFjvZlyhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713964461; c=relaxed/simple;
-	bh=nZHbG0wfUOw2pjAGM1BQC+MUTbN5dqrkOpU54Nd4FUg=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=ldcdWVMyo8eSEOCnjrgJd3CYVNsYVpPKuQ8kAFTTqr+IdtP5Z/vcqa9ysbmcMx/O5JQDxO6MLOt1HlqQW3u1jma93bRE1hi7MlGAUCCYdaYtFTCJhWh0iGmsuRY1sgsWTVQYhI/6VWfGNVj8TAABx2p/RY00OGgl7loa457GjdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ORTlE1Ye; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2EA4C113CE;
-	Wed, 24 Apr 2024 13:14:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713964461;
-	bh=nZHbG0wfUOw2pjAGM1BQC+MUTbN5dqrkOpU54Nd4FUg=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=ORTlE1Ye5jmyLa+PRETfxpDtYkkQ7C3qX5cd2GZTBFu5JFc0hMJBdS3i+/LMVLhfS
-	 Z0PEnSDaUBRqo1WR0zslDTfxi53nX6hXihrQXSx1erL1GJ57WHzziepcdO3qxYjeR2
-	 igV7pOdZw2T3i2GaadMKl00ugZTYH/lA6Im2blcLoK4RcERalQYpPASfWzf9jp8EbH
-	 yLxUIbeMyj0YJM+TPjzN3ABoRvh+dooF6L4NC9hSJZvfIQApm89Y4rEK3PYWU/b4/I
-	 FUVTSn0+NriFLtoXs0QmQrJ1k784SYw31I8APoZ/HZxhW9VO37klGicBbW8RGMtrYX
-	 lqInvfHhCuVQw==
-Date: Wed, 24 Apr 2024 08:14:19 -0500
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+	s=arc-20240116; t=1713965616; c=relaxed/simple;
+	bh=yfKnRicF1t1beWdKe0Cxnk3zC7C8moxZz/Dj5koDfdg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ccgtN8MXTR5pE+gxhRgc6d2Ibcp3ZH/8AQDhk+3fY/8QQVj4CiXXsRf7ZqMm+0XAeSvjDW095RH40RNr3Iw+3UDFEVroI6i6xKYBcLrD1zWUaOMSt9SDCf20Rd8BqX3L4Ujj4yURIc8V+9SaU1pCPp5hYITYrjskUaIlyWvpavE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Uiohh11P; arc=none smtp.client-ip=209.85.219.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-de54b28c3b7so2322342276.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 06:33:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1713965614; x=1714570414; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Jc7SzQ2rFd1yOXtRir0afWZyCYP8A5E33YvodhVoINM=;
+        b=Uiohh11PM9gX02tczklc5JcyjX9IQ5U/MipEUt2pMQyyAAEEVh92u4WTNBDrnQ+uuC
+         34nwHcaZ0ZCA1PWciJIk5GaSdcU9X/BvOvR3vp9Yzp9Wz3yFF1TjCGduyZTdI/KRfHnq
+         aDENIInlZ3rF++5Qe7gZAVlZcTZ/H8MF1UBRTnuQVLKWu3KYqOzFxywSIhIcsG+5sM9G
+         R+l8H5G6ytPtzfYREJN48DZzWF3+LgX4WWukjE18zkfcT6XpoUXq8WXskIPp7vFCmi3X
+         qzsil6VSc7C5y+HrhBRha/USjUGayPzkaj8T0gPQnZNDaOUpmSHsid140hklp7prkM9V
+         bsaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713965614; x=1714570414;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Jc7SzQ2rFd1yOXtRir0afWZyCYP8A5E33YvodhVoINM=;
+        b=cQlHjyKd0qbi3mljt+S/jZElJ9ZdyCBicdiACFZaaoYn0Wl9TL2pzlaOsT8FfzA+4a
+         Pr0JeN9sgxa6Iorxx+fn60f7WThhYUAueQ6DTLW3gUJqU8iUCI5CFCzP6+B+8NeACFFi
+         6H+9seK5yIqS7VpvNJH+rpe4ruxY4V6UWr8mse9wNqXQdYV/XUXge3LzF17rdlbwA9ae
+         LXUtrj54xEJNoY/q2V8z7rlmN8QSrW560lLUUZejQx6Jz1sVQCdRFkIsBDoH/ta+hlS9
+         mJaU4OTXtmpR1wzxV9yMtuIEVp5gqJEsKCxS63/gSW4QWAE7r3Pew2aitXcT08vJmfPn
+         u0Mw==
+X-Forwarded-Encrypted: i=1; AJvYcCWxp2630E/Fog3Hb0psRKHN33b1Tnzh6M6I68lkofelQcA0Nzpw9ICUzI4ADt5vGBvTXZX6v01ZIcNfvCTWYIa332Xv82A2svgOarz/Ng==
+X-Gm-Message-State: AOJu0Yw5owlxOQonpEdS04of2XEnXGMh17vDO75Jw5yBvF3EkFqXtRdb
+	OAP6FOuk54qI/R4lsQAqViA/aBH+mcN7MoJ5RyA6N0QASPKCBs6U0JyKa/5Rns/1tvhTYznv5jf
+	jSZvyahomfU+jQm0wQMbo091HOfPQBsKPHPuD2g==
+X-Google-Smtp-Source: AGHT+IE8QrCc26Q5VHRiKgg2cj7tbF2iPJOAPFAsbXJakKBSPK+XP9cjRfoklyulE62TV9SW0c2EGNVo4hQ8l8eP4sM=
+X-Received: by 2002:a05:6902:110e:b0:dca:c369:fac2 with SMTP id
+ o14-20020a056902110e00b00dcac369fac2mr3013394ybu.3.1713965614110; Wed, 24 Apr
+ 2024 06:33:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-Cc: conor+dt@kernel.org, rajpat@codeaurora.org, luca.weiss@fairphone.com, 
- andersson@kernel.org, swboyd@chromium.org, devicetree@vger.kernel.org, 
- cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org, 
- quic_anupkulk@quicinc.com, mka@chromium.org, linux-kernel@vger.kernel.org, 
- konrad.dybcio@linaro.org, quic_msavaliy@quicinc.com, krzk+dt@kernel.org, 
- rojay@codeaurora.org
-In-Reply-To: <20240424075853.11445-1-quic_vdadhani@quicinc.com>
-References: <20240424075853.11445-1-quic_vdadhani@quicinc.com>
-Message-Id: <171396420160.3427004.14810050432348630573.robh@kernel.org>
-Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: Remove CTS/RTS
- configuration
+References: <20240130-wcn3990-board-fw-v1-0-738f7c19a8c8@linaro.org>
+ <CAA8EJprsjs8SWZmpTisyQcAZ9VC8g3_GEEc1hhp8bMZrm-hyaw@mail.gmail.com> <875xww3tv8.fsf@kernel.org>
+In-Reply-To: <875xww3tv8.fsf@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 24 Apr 2024 16:33:22 +0300
+Message-ID: <CAA8EJpp32a9G19TnaO_-JtO3TAwi6VkwPq0mJkfxj2Gmw=xsYg@mail.gmail.com>
+Subject: Re: [PATCH 0/3] wifi: ath10k: fix board file loading for wcn3990 devices
+To: Kalle Valo <kvalo@kernel.org>
+Cc: Jeff Johnson <quic_jjohnson@quicinc.com>, ath10k@lists.infradead.org, 
+	linux-wireless@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Yongqin Liu <yongqin.liu@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
+On Fri, 5 Apr 2024 at 14:57, Kalle Valo <kvalo@kernel.org> wrote:
+>
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
+>
+> > On Tue, 30 Jan 2024 at 08:47, Dmitry Baryshkov
+> > <dmitry.baryshkov@linaro.org> wrote:
+> >
+> >>
+> >> The ath10k driver fails to properly handle fallback from board-2.bin to
+> >> board.bin for WCN3990 cards. This happens because the
+> >> ath10k_hw_params_list doesn't include .fw.board* parameters for the
+> >> WCN3990 platform.
+> >>
+> >> Add board data configuration for WCN3990. While we are at it, merge
+> >> common pieces of BDF support: drop .board and .eboard names from struct
+> >> ath10k_hw_params_fw and use the common name instead.
+> >>
+> >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >> ---
+> >> Dmitry Baryshkov (3):
+> >>       wifi: ath10k: populate board data for WCN3990
+> >>       wifi: ath10k: drop chip-specific board data file name
+> >>       wifi: ath10k: drop fw.eboard file name
+> >>
+> >>  drivers/net/wireless/ath/ath10k/core.c      | 32 ++++-------------------------
+> >>  drivers/net/wireless/ath/ath10k/hw.h        | 14 ++-----------
+> >>  drivers/net/wireless/ath/ath10k/pci.c       | 10 ++++-----
+> >>  drivers/net/wireless/ath/ath10k/targaddrs.h |  3 +++
+> >>  4 files changed, 14 insertions(+), 45 deletions(-)
+> >> ---
+> >> base-commit: 596764183be8ebb13352b281a442a1f1151c9b06
+> >> change-id: 20240129-wcn3990-board-fw-a2d97507a712
+> >
+> > Kalle, Jeff, is there anything pending on me on this series?
+>
+> This is in my queue (Deferred state):
+>
+> https://patchwork.kernel.org/project/linux-wireless/list/?series=821157&state=*&order=date
+>
+> Unfortunately there is not really much time for ath10k nowadays so there
+> will be delays.
+>
+> --
+> https://patchwork.kernel.org/project/linux-wireless/list/
+>
+> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
-On Wed, 24 Apr 2024 13:28:53 +0530, Viken Dadhaniya wrote:
-> For IDP variant, GPIO 20/21 is used by camera use case and camera
-> driver is not able acquire these GPIOs as it is acquired by UART5
-> driver as RTS/CTS pin.
-> 
-> UART5 is designed for debug UART for all the board variants of the
-> sc7280 chipset and RTS/CTS configuration is not required for debug
-> uart usecase.
-> 
-> Remove CTS/RTS configuration for UART5 instance and change compatible
-> string to debug UART.
-> 
-> Remove overwriting compatible property from individual target specific
-> file as it is not required.
-> 
-> Fixes: 38cd93f413fd ("arm64: dts: qcom: sc7280: Update QUPv3 UART5 DT node")
-> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-> 
-> ---
-> v1 -> v2:
-> - Remove compatible property from target specific file.
-> - Update commit log.
-> ---
->  arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts |  1 -
->  arch/arm64/boot/dts/qcom/qcm6490-idp.dts           |  1 -
->  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts       |  1 -
->  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi           |  1 -
->  arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi         |  1 -
->  arch/arm64/boot/dts/qcom/sc7280.dtsi               | 14 ++------------
->  6 files changed, 2 insertions(+), 17 deletions(-)
-> 
+Please excuse me, can we get at least patch 1? It fixes an actual
+issue with WCN3990 which prevents us from testing board data files (or
+adding new boards) without fixing board-2.bin first. The driver
+ignores board.bin even if it is present on rootfs.
 
-
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
-
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-New warnings running 'make CHECK_DTBS=y qcom/qcm6490-fairphone-fp5.dtb qcom/qcm6490-idp.dtb qcom/qcs6490-rb3gen2.dtb' for 20240424075853.11445-1-quic_vdadhani@quicinc.com:
-
-arch/arm64/boot/dts/qcom/qcm6490-idp.dtb: usb@8cf8800: interrupt-names: ['pwr_event', 'hs_phy_irq', 'dp_hs_phy_irq', 'dm_hs_phy_irq'] is too short
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-
-
-
-
-
+-- 
+With best wishes
+Dmitry
 
