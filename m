@@ -1,180 +1,425 @@
-Return-Path: <linux-arm-msm+bounces-18427-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18428-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9526D8B0714
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 12:17:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 20A508B071C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 12:19:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B78AAB25A84
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 10:17:08 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F1A9FB265E0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 10:18:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 591F515A4B7;
-	Wed, 24 Apr 2024 10:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E155015921C;
+	Wed, 24 Apr 2024 10:18:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SiO436Eg"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="OncTH6Fu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD3C15A489;
-	Wed, 24 Apr 2024 10:16:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D885915920D
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 10:18:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713953775; cv=none; b=jWJwiZ3C7sicB7E3ZxuwhEvpaPfcYWMrI37fRnq0iQXsdNXMIRfBebRxMvhhj+UQDdgwDmdiDdjz28/IrnMoqLnDCZWIXp/7jffnEA3IhmkJtCfhjhdbV0JYD/+1Z0FOwTI7VKt7qE4XEmXBvZXYGYqLxMUWaezmRuriB0uUJo4=
+	t=1713953930; cv=none; b=FQYD/ULoqYqjix8Qo8yYhqqTAI1oDWqLhr+lMeHRQaciFLlNkrDefnba7zam7e7H4Z8y7no9XHjqbhzqH2gQ1oQsqCY8VtUEhlnMlSFF5C5yheYMmm4AdXZXk8n765qccifdeKEQgitZh8zClUVjk9zdgKmowKLfZ+AlSf9pSuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713953775; c=relaxed/simple;
-	bh=nCwO0FPcctgEwR/kASD6yruAySW0u2UROcCYLqegD6M=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CE7vN5RswKw877Q+BdrMR//cdMRLG+fLUfcecl4hEkhFJb+bqIR2X+/ImYo+q9A7sYTkfQfpzlTS7hO5+Zv61mf4nhDarNbndHjTrj6xkZcbK5xKX2v8ZS0T37CHq8oWHQTRJ7hi8diu148u3uQqXqxcvSinwwamEoaEbC0B3DM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SiO436Eg; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43O7fsk1019872;
-	Wed, 24 Apr 2024 10:16:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=ZmFRAVNzWh+mA1k4zIBq21it4dHyx5doGjk6CM4mhWQ=; b=Si
-	O436EgecEA0pEAFHUvBsEPKYZT5/K+mWnNegfAkpUEhchbK9IvPzpyu9l2V9WAmn
-	OywKNb6JuYwh5KF5Ww32y2GPk3xq+sGRrKflWRRTMwB5ebFy/3BYWSWy2MRmcXQL
-	6D+8qes34habSy0DvUDg57VnFHLVDer6Ie7qznS4GwF/DMjGG/y17Bdc0LPc6EwB
-	8IUsTyAJIW1ukco72wNSO2s/xL0d58U+q2S5fYs038F2L5apDKz9NdhK4pLwJLac
-	lcDxbWS6N/TSJ6oaGygkbgdba71ILRp3be+3NUKCK7YSg0lmuoiHkUzADA2i/WCK
-	tLy9l8LrhIQbBxdmtWRQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xpv9fggsq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Apr 2024 10:16:08 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43OAG7o0007349
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Apr 2024 10:16:07 GMT
-Received: from tengfan-gv.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 24 Apr 2024 03:16:04 -0700
-From: Tengfei Fan <quic_tengfan@quicinc.com>
-To: <rafael@kernel.org>, <viresh.kumar@linaro.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>
-CC: <manivannan.sadhasivam@linaro.org>, <linux-pm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Tengfei Fan <quic_tengfan@quicinc.com>
-Subject: [PATCH 3/3] arm64: dts: qcom: sm4450: Supply clock from cpufreq node to CPUs
-Date: Wed, 24 Apr 2024 18:15:03 +0800
-Message-ID: <20240424101503.635364-4-quic_tengfan@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240424101503.635364-1-quic_tengfan@quicinc.com>
-References: <20240424101503.635364-1-quic_tengfan@quicinc.com>
+	s=arc-20240116; t=1713953930; c=relaxed/simple;
+	bh=lK83DFMMrheEcjmLGnhK7+OwBHnpFcHV4An4Tq+hklQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gI9tTajGN0gIZbsfRhR0Z+qyin5mbq4b6i4bIerfGk54YoQYPbisPE5zi9aeDt/TuK1GFM7zhSRwjcMfaN34a4Y4MNqJzPKs2nymil/8vT4/eoM0vZjw1x5rHLzAUYA4KOcL90Ade+dCl53pbCHX5mu1/afvtDyvVFAUqAERFak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=OncTH6Fu; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5171a529224so8388432e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 03:18:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1713953927; x=1714558727; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mFdw4V9U4NST4C8w1cj4IEkGhdH2VTb3cZ2ewOJFDY8=;
+        b=OncTH6FujuC0CGt8CzSQHMJlJ0+X1C5+TGThi2US1Pl/TuRMBpb+3ib/Y22DraCOlZ
+         apmACURksvrHaxMZ84TzO0xCKz/pF34SXFn0UM/w6UKZacdGm7Iv/S4FFUZkncgBdp1i
+         /GygrQw+RizFWxNzGskbGp14jlpx75AjMa8qODcGzWWkAt4fbI/HCXXNHsiY5JjVfUZy
+         UMCvDdBn+kCrbgvjF3j/DTyn98CrWk3ZlBtA6HE+xz1O3y9EnF0Vd5Gljf+agCn6LiGc
+         csVOeyN+UL5stmX/C/+XxQHTmRe36OV80lV7/OB1XqHBTWPQhgKHZw8Q/9/WgHJz68dG
+         Gs+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713953927; x=1714558727;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mFdw4V9U4NST4C8w1cj4IEkGhdH2VTb3cZ2ewOJFDY8=;
+        b=jUxGwWFyeMOrmzOcigsU7miydxalMIiF7V1mUAzrSifRJEge3ihVjzmHiq/cQT7eaD
+         i3p55MVFC4jy20kfaa6nmVObyip0/60Q5xQUDuBcQ/VhVl44tvw0sHA3fH4l5cZJvgZ6
+         qZSMesV79VAR+N1qqX+0PV+Kk8OPZR5zig44GbFpHZfFbJJbNFpmjl9+Jhuo79RBG/ka
+         oKOqrz6kfZWaKaqlyi4eLBQLaK0UsfYpRRwKitscDa3dHyvWjqEwy3z/upqfpKBqbfYC
+         fBZG8rN6t65dR5XRxS+rp6BVKDEEw0pwSek/2qzzZTdX3Y4sCswRZ91TjZs4mJZ6Md/2
+         J9GA==
+X-Forwarded-Encrypted: i=1; AJvYcCXV2r8T1VmGMTX+e2VX8Ie/FttD8t9dL04UQ0jbz0Az+GuT7oLeA4pkDuXe5+k9/LkvPhFEmV6Q11CzjlAl7JDknHG2gunjx5/9tsu/ng==
+X-Gm-Message-State: AOJu0Ywt0LiapJRtCP/FKnPY9W+Idnu/OFJZGhEbpOiEt2lQfoWyEhF3
+	z9Uzy7Txuxudk6hEWs6lQRu8Tpa1j8VUUMJFnhGjT8/eZKvQbmyENv1N7onOP+KyPgDasaeFkl3
+	76FK7443SvbEGFB8EHX/5VVm+VYhdDoDSZS3q
+X-Google-Smtp-Source: AGHT+IG8wWkRon3EGwbXNZDXFJeXYV2g79QRt563aKJF+Zlpi8UbIP8U7SqapviVgrO6cjhFlvXRk8rG8EBwrRTYgAE=
+X-Received: by 2002:a19:690a:0:b0:51a:bdd6:e718 with SMTP id
+ e10-20020a19690a000000b0051abdd6e718mr1226965lfc.31.1713953926472; Wed, 24
+ Apr 2024 03:18:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: mrDe4N4t4uplIYZMDcMQjb4ekoGdzmty
-X-Proofpoint-GUID: mrDe4N4t4uplIYZMDcMQjb4ekoGdzmty
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-24_07,2024-04-23_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 priorityscore=1501 phishscore=0 bulkscore=0 mlxlogscore=989
- spamscore=0 adultscore=0 clxscore=1015 malwarescore=0 impostorscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404240042
+References: <20240424074242.519895-1-joychakr@google.com> <20240424074242.519895-2-joychakr@google.com>
+ <20240424104048.1b02b07e@donnerap.manchester.arm.com>
+In-Reply-To: <20240424104048.1b02b07e@donnerap.manchester.arm.com>
+From: Joy Chakraborty <joychakr@google.com>
+Date: Wed, 24 Apr 2024 15:48:32 +0530
+Message-ID: <CAOSNQF1cVFTgZN4uzmxLEUG9cEq6bCNMQ9Mar9Y8AHaYKh6OEg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] nvmem: Change return type of reg read/write to ssize_t
+To: Andre Przywara <andre.przywara@arm.com>
+Cc: Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>, 
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>, Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
+	NXP Linux Team <linux-imx@nxp.com>, Vladimir Zapolskiy <vz@mleia.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Kevin Hilman <khilman@baylibre.com>, 
+	Jerome Brunet <jbrunet@baylibre.com>, 
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Heiko Stuebner <heiko@sntech.de>, Orson Zhai <orsonzhai@gmail.com>, 
+	Baolin Wang <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Vincent Shih <vincent.sunplus@gmail.com>, Chen-Yu Tsai <wens@csie.org>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
+	Rafal Milecki <rafal@milecki.pl>, Kunihiko Hayashi <hayashi.kunihiko@socionext.com>, 
+	Masami Hiramatsu <mhiramat@kernel.org>, Michal Simek <michal.simek@amd.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, asahi@lists.linux.dev, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	linux-amlogic@lists.infradead.org, linux-mediatek@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org, 
+	linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev, 
+	manugautam@google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Qualcomm platforms making use of CPUFreq HW Engine (EPSS/OSM) supply
-clocks to the CPU cores. But this relationship is not represented in DTS
-so far.
+On Wed, Apr 24, 2024 at 3:11=E2=80=AFPM Andre Przywara <andre.przywara@arm.=
+com> wrote:
+>
+> On Wed, 24 Apr 2024 07:42:42 +0000
+> Joy Chakraborty <joychakr@google.com> wrote:
+>
+> > Change return type of reg_read() and reg_write() callback to ssize_t fo=
+r
+> > nvmem suppliers to return number of bytes read/written to the nvmem cor=
+e.
+> >
+> > Currently nvmem core assumes the amount of data read/written is equal
+> > to what it has requested from the supplier, this return code facilitate=
+s
+> > better error handling in the nvmem core.
+> >
+> > Signed-off-by: Joy Chakraborty <joychakr@google.com>
+>
+> There are two problems in the sunxi driver:
+>
+> > ---
+> >  drivers/nvmem/apple-efuses.c        |  7 +--
+> >  drivers/nvmem/bcm-ocotp.c           | 12 ++---
+> >  drivers/nvmem/brcm_nvram.c          | 10 ++--
+> >  drivers/nvmem/core.c                | 83 +++++++++++++----------------
+> >  drivers/nvmem/imx-iim.c             |  6 +--
+> >  drivers/nvmem/imx-ocotp-ele.c       |  4 +-
+> >  drivers/nvmem/imx-ocotp-scu.c       | 12 ++---
+> >  drivers/nvmem/imx-ocotp.c           | 10 ++--
+> >  drivers/nvmem/jz4780-efuse.c        |  7 +--
+> >  drivers/nvmem/lan9662-otpc.c        | 12 ++---
+> >  drivers/nvmem/layerscape-sfp.c      | 11 ++--
+> >  drivers/nvmem/lpc18xx_eeprom.c      | 14 ++---
+> >  drivers/nvmem/lpc18xx_otp.c         |  6 +--
+> >  drivers/nvmem/meson-efuse.c         | 22 +++++---
+> >  drivers/nvmem/meson-mx-efuse.c      |  6 +--
+> >  drivers/nvmem/microchip-otpc.c      |  6 +--
+> >  drivers/nvmem/mtk-efuse.c           |  6 +--
+> >  drivers/nvmem/mxs-ocotp.c           |  7 +--
+> >  drivers/nvmem/nintendo-otp.c        |  6 +--
+> >  drivers/nvmem/qcom-spmi-sdam.c      | 12 ++---
+> >  drivers/nvmem/qfprom.c              | 14 ++---
+> >  drivers/nvmem/qoriq-efuse.c         |  6 +--
+> >  drivers/nvmem/rave-sp-eeprom.c      | 18 +++----
+> >  drivers/nvmem/rmem.c                |  4 +-
+> >  drivers/nvmem/rockchip-efuse.c      | 19 +++----
+> >  drivers/nvmem/rockchip-otp.c        | 19 +++----
+> >  drivers/nvmem/sc27xx-efuse.c        |  3 +-
+> >  drivers/nvmem/sec-qfprom.c          |  4 +-
+> >  drivers/nvmem/snvs_lpgpr.c          | 17 +++---
+> >  drivers/nvmem/sprd-efuse.c          |  8 +--
+> >  drivers/nvmem/stm32-bsec-optee-ta.c | 12 ++---
+> >  drivers/nvmem/stm32-bsec-optee-ta.h | 20 +++----
+> >  drivers/nvmem/stm32-romem.c         | 26 ++++-----
+> >  drivers/nvmem/sunplus-ocotp.c       |  4 +-
+> >  drivers/nvmem/sunxi_sid.c           | 15 +++---
+> >  drivers/nvmem/u-boot-env.c          |  6 +--
+> >  drivers/nvmem/uniphier-efuse.c      |  6 +--
+> >  drivers/nvmem/vf610-ocotp.c         |  7 +--
+> >  drivers/nvmem/zynqmp_nvmem.c        | 13 ++---
+> >  include/linux/nvmem-provider.h      |  4 +-
+> >  40 files changed, 253 insertions(+), 231 deletions(-)
+>
+> [ ... ]
+>
+> >
+> > diff --git a/drivers/nvmem/sunxi_sid.c b/drivers/nvmem/sunxi_sid.c
+> > index ba14a76208ab..0133263d2adb 100644
+> > --- a/drivers/nvmem/sunxi_sid.c
+> > +++ b/drivers/nvmem/sunxi_sid.c
+> > @@ -36,8 +36,8 @@ struct sunxi_sid {
+> >       u32                     value_offset;
+> >  };
+> >
+> > -static int sunxi_sid_read(void *context, unsigned int offset,
+> > -                       void *val, size_t bytes)
+> > +static ssize_t sunxi_sid_read(void *context, unsigned int offset,
+> > +                           void *val, size_t bytes)
+> >  {
+> >       struct sunxi_sid *sid =3D context;
+> >       u32 word;
+> > @@ -56,7 +56,7 @@ static int sunxi_sid_read(void *context, unsigned int=
+ offset,
+>
+>         (adding more context here)
+>
+> >
+> >       val +=3D round_down(bytes, 4);
+> >       offset +=3D round_down(bytes, 4);
+> >       bytes =3D bytes % 4;
+> >
+> >       if (!bytes)
+> >               return 0;
+> >
+> >       /* Handle any trailing bytes */
+> >       word =3D readl_relaxed(sid->base + sid->value_offset + offset);
+> >       memcpy(val, &word, bytes);
+> >
+> > -     return 0;
+> > +     return bytes;
+>
+> So this is only the code path in case the read request was not 4 byte
+> aligned, so the "return 0;" above must also be changed. But please note
+> that the bytes parameter is changed, so we either need to save that, or
+> derive the amount read from something else.
+>
+> Cheers,
+> Andre
 
-So let's make cpufreq node as the clock provider and CPU nodes as the
-consumers. The clock index for each CPU node is based on the frequency
-domain index.
+Ack, Missed the return logic above.
+Will fix this next version by saving bytes read in another variable.
+Thanks for reviewing.
 
-Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sm4450.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Thanks
+Joy
 
-diff --git a/arch/arm64/boot/dts/qcom/sm4450.dtsi b/arch/arm64/boot/dts/qcom/sm4450.dtsi
-index 92badfd5b0e1..8d75c4f9731c 100644
---- a/arch/arm64/boot/dts/qcom/sm4450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm4450.dtsi
-@@ -47,6 +47,7 @@ CPU0: cpu@0 {
- 			device_type = "cpu";
- 			compatible = "arm,cortex-a55";
- 			reg = <0x0 0x0>;
-+			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
- 			power-domains = <&CPU_PD0>;
-@@ -72,6 +73,7 @@ CPU1: cpu@100 {
- 			device_type = "cpu";
- 			compatible = "arm,cortex-a55";
- 			reg = <0x0 0x100>;
-+			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_100>;
- 			power-domains = <&CPU_PD0>;
-@@ -91,6 +93,7 @@ CPU2: cpu@200 {
- 			device_type = "cpu";
- 			compatible = "arm,cortex-a55";
- 			reg = <0x0 0x200>;
-+			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_200>;
- 			power-domains = <&CPU_PD0>;
-@@ -110,6 +113,7 @@ CPU3: cpu@300 {
- 			device_type = "cpu";
- 			compatible = "arm,cortex-a55";
- 			reg = <0x0 0x300>;
-+			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_300>;
- 			power-domains = <&CPU_PD0>;
-@@ -129,6 +133,7 @@ CPU4: cpu@400 {
- 			device_type = "cpu";
- 			compatible = "arm,cortex-a55";
- 			reg = <0x0 0x400>;
-+			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_400>;
- 			power-domains = <&CPU_PD0>;
-@@ -148,6 +153,7 @@ CPU5: cpu@500 {
- 			device_type = "cpu";
- 			compatible = "arm,cortex-a55";
- 			reg = <0x0 0x500>;
-+			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_500>;
- 			power-domains = <&CPU_PD0>;
-@@ -167,6 +173,7 @@ CPU6: cpu@600 {
- 			device_type = "cpu";
- 			compatible = "arm,cortex-a78";
- 			reg = <0x0 0x600>;
-+			clocks = <&cpufreq_hw 1>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_600>;
- 			power-domains = <&CPU_PD0>;
-@@ -186,6 +193,7 @@ CPU7: cpu@700 {
- 			device_type = "cpu";
- 			compatible = "arm,cortex-a78";
- 			reg = <0x0 0x700>;
-+			clocks = <&cpufreq_hw 1>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_700>;
- 			power-domains = <&CPU_PD0>;
--- 
-2.25.1
-
+>
+> >  }
+> >
+> >  static int sun8i_sid_register_readout(const struct sunxi_sid *sid,
+> > @@ -90,10 +90,11 @@ static int sun8i_sid_register_readout(const struct =
+sunxi_sid *sid,
+> >   * to be not reliable at all.
+> >   * Read by the registers instead.
+> >   */
+> > -static int sun8i_sid_read_by_reg(void *context, unsigned int offset,
+> > -                              void *val, size_t bytes)
+> > +static ssize_t sun8i_sid_read_by_reg(void *context, unsigned int offse=
+t,
+> > +                                  void *val, size_t bytes)
+> >  {
+> >       struct sunxi_sid *sid =3D context;
+> > +     size_t bytes_read =3D bytes;
+> >       u32 word;
+> >       int ret;
+> >
+> > @@ -109,7 +110,7 @@ static int sun8i_sid_read_by_reg(void *context, uns=
+igned int offset,
+> >       }
+> >
+> >       if (!bytes)
+> > -             return 0;
+> > +             return bytes_read;
+> >
+> >       /* Handle any trailing bytes */
+> >       ret =3D sun8i_sid_register_readout(sid, offset, &word);
+> > @@ -118,7 +119,7 @@ static int sun8i_sid_read_by_reg(void *context, uns=
+igned int offset,
+> >
+> >       memcpy(val, &word, bytes);
+> >
+> > -     return 0;
+> > +     return bytes_read;
+> >  }
+> >
+> >  static int sunxi_sid_probe(struct platform_device *pdev)
+> > diff --git a/drivers/nvmem/u-boot-env.c b/drivers/nvmem/u-boot-env.c
+> > index befbab156cda..2288a2891bb2 100644
+> > --- a/drivers/nvmem/u-boot-env.c
+> > +++ b/drivers/nvmem/u-boot-env.c
+> > @@ -47,8 +47,8 @@ struct u_boot_env_image_broadcom {
+> >       DECLARE_FLEX_ARRAY(uint8_t, data);
+> >  } __packed;
+> >
+> > -static int u_boot_env_read(void *context, unsigned int offset, void *v=
+al,
+> > -                        size_t bytes)
+> > +static ssize_t u_boot_env_read(void *context, unsigned int offset, voi=
+d *val,
+> > +                            size_t bytes)
+> >  {
+> >       struct u_boot_env *priv =3D context;
+> >       struct device *dev =3D priv->dev;
+> > @@ -66,7 +66,7 @@ static int u_boot_env_read(void *context, unsigned in=
+t offset, void *val,
+> >               return -EIO;
+> >       }
+> >
+> > -     return 0;
+> > +     return bytes_read;
+> >  }
+> >
+> >  static int u_boot_env_read_post_process_ethaddr(void *context, const c=
+har *id, int index,
+> > diff --git a/drivers/nvmem/uniphier-efuse.c b/drivers/nvmem/uniphier-ef=
+use.c
+> > index 6ad3295d3195..a6c28e03adc2 100644
+> > --- a/drivers/nvmem/uniphier-efuse.c
+> > +++ b/drivers/nvmem/uniphier-efuse.c
+> > @@ -16,8 +16,8 @@ struct uniphier_efuse_priv {
+> >       void __iomem *base;
+> >  };
+> >
+> > -static int uniphier_reg_read(void *context,
+> > -                          unsigned int reg, void *_val, size_t bytes)
+> > +static ssize_t uniphier_reg_read(void *context,
+> > +                              unsigned int reg, void *_val, size_t byt=
+es)
+> >  {
+> >       struct uniphier_efuse_priv *priv =3D context;
+> >       u8 *val =3D _val;
+> > @@ -26,7 +26,7 @@ static int uniphier_reg_read(void *context,
+> >       for (offs =3D 0; offs < bytes; offs +=3D sizeof(u8))
+> >               *val++ =3D readb(priv->base + reg + offs);
+> >
+> > -     return 0;
+> > +     return bytes;
+> >  }
+> >
+> >  static int uniphier_efuse_probe(struct platform_device *pdev)
+> > diff --git a/drivers/nvmem/vf610-ocotp.c b/drivers/nvmem/vf610-ocotp.c
+> > index ee9c61ae727d..4e2bdb38305d 100644
+> > --- a/drivers/nvmem/vf610-ocotp.c
+> > +++ b/drivers/nvmem/vf610-ocotp.c
+> > @@ -143,11 +143,12 @@ static int vf610_get_fuse_address(int base_addr_o=
+ffset)
+> >       return -EINVAL;
+> >  }
+> >
+> > -static int vf610_ocotp_read(void *context, unsigned int offset,
+> > -                     void *val, size_t bytes)
+> > +static ssize_t vf610_ocotp_read(void *context, unsigned int offset,
+> > +                             void *val, size_t bytes)
+> >  {
+> >       struct vf610_ocotp *ocotp =3D context;
+> >       void __iomem *base =3D ocotp->base;
+> > +     size_t bytes_read =3D bytes;
+> >       u32 reg, *buf =3D val;
+> >       int fuse_addr;
+> >       int ret;
+> > @@ -193,7 +194,7 @@ static int vf610_ocotp_read(void *context, unsigned=
+ int offset,
+> >               offset +=3D 4;
+> >       }
+> >
+> > -     return 0;
+> > +     return bytes_read;
+> >  }
+> >
+> >  static struct nvmem_config ocotp_config =3D {
+> > diff --git a/drivers/nvmem/zynqmp_nvmem.c b/drivers/nvmem/zynqmp_nvmem.=
+c
+> > index 8682adaacd69..1502d4998159 100644
+> > --- a/drivers/nvmem/zynqmp_nvmem.c
+> > +++ b/drivers/nvmem/zynqmp_nvmem.c
+> > @@ -56,8 +56,8 @@ struct xilinx_efuse {
+> >       u32 pufuserfuse;
+> >  };
+> >
+> > -static int zynqmp_efuse_access(void *context, unsigned int offset,
+> > -                            void *val, size_t bytes, enum efuse_access=
+ flag,
+> > +static ssize_t zynqmp_efuse_access(void *context, unsigned int offset,
+> > +                                void *val, size_t bytes, enum efuse_ac=
+cess flag,
+> >                              unsigned int pufflag)
+> >  {
+> >       struct device *dev =3D context;
+> > @@ -140,10 +140,10 @@ static int zynqmp_efuse_access(void *context, uns=
+igned int offset,
+> >       dma_free_coherent(dev, sizeof(struct xilinx_efuse),
+> >                         efuse, dma_addr);
+> >
+> > -     return ret;
+> > +     return ret < 0 ? ret : bytes;
+> >  }
+> >
+> > -static int zynqmp_nvmem_read(void *context, unsigned int offset, void =
+*val, size_t bytes)
+> > +static ssize_t zynqmp_nvmem_read(void *context, unsigned int offset, v=
+oid *val, size_t bytes)
+> >  {
+> >       struct device *dev =3D context;
+> >       int ret;
+> > @@ -166,6 +166,7 @@ static int zynqmp_nvmem_read(void *context, unsigne=
+d int offset, void *val, size
+> >
+> >               dev_dbg(dev, "Read chipid val %x %x\n", idcode, version);
+> >               *(int *)val =3D version & SILICON_REVISION_MASK;
+> > +             ret =3D SOC_VER_SIZE;
+> >               break;
+> >       /* Efuse offset starts from 0xc */
+> >       case EFUSE_START_OFFSET ... EFUSE_END_OFFSET:
+> > @@ -182,8 +183,8 @@ static int zynqmp_nvmem_read(void *context, unsigne=
+d int offset, void *val, size
+> >       return ret;
+> >  }
+> >
+> > -static int zynqmp_nvmem_write(void *context,
+> > -                           unsigned int offset, void *val, size_t byte=
+s)
+> > +static ssize_t zynqmp_nvmem_write(void *context,
+> > +                               unsigned int offset, void *val, size_t =
+bytes)
+> >  {
+> >       int pufflag =3D 0;
+> >
+> > diff --git a/include/linux/nvmem-provider.h b/include/linux/nvmem-provi=
+der.h
+> > index 3ebeaa0ded00..f7e83a59aa2f 100644
+> > --- a/include/linux/nvmem-provider.h
+> > +++ b/include/linux/nvmem-provider.h
+> > @@ -16,9 +16,9 @@
+> >  #include <linux/gpio/consumer.h>
+> >
+> >  struct nvmem_device;
+> > -typedef int (*nvmem_reg_read_t)(void *priv, unsigned int offset,
+> > +typedef ssize_t (*nvmem_reg_read_t)(void *priv, unsigned int offset,
+> >                               void *val, size_t bytes);
+> > -typedef int (*nvmem_reg_write_t)(void *priv, unsigned int offset,
+> > +typedef ssize_t (*nvmem_reg_write_t)(void *priv, unsigned int offset,
+> >                                void *val, size_t bytes);
+> >  /* used for vendor specific post processing of cell data */
+> >  typedef int (*nvmem_cell_post_process_t)(void *priv, const char *id, i=
+nt index,
+>
 
