@@ -1,346 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-18415-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A9C18B0608
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 11:28:52 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1606D8B0639
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 11:40:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5219F285639
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 09:28:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 46915B25704
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 09:40:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AC81158D9A;
-	Wed, 24 Apr 2024 09:28:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5793F158D9C;
+	Wed, 24 Apr 2024 09:40:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EDARoSsl"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pbWQxf3y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725B41591E4
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 09:28:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D118A158DA8;
+	Wed, 24 Apr 2024 09:40:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713950887; cv=none; b=ueloegyznMxVZvXOHjSsGQ117N6EclkZuAFyA5CWaNmX8RHkLMPxCUWpNeH+gG5qvUp2u8EvT6Vd/aPGR64otY1TW+XbkOdaURoBvyLjUmdjEtiUhGiVYJ67KfDbkJd6SYf/8cW7v0VQ516LISlnYBDo3pQyJlbXXwLd3GiqOmQ=
+	t=1713951638; cv=none; b=HNDJmORJxP5XQbGldExLXazruI4VJcuUzQjjwaaSTYY0l+FquiXyLY2dlrCl+p8Z3+oWBzZWsy62mL4BR/LJCN8AXnuSi5he3FIgesmKIuMjVsOhFspYR7/05hP7TK0UbY95I85Fz3WHEs0pokt4UsSLqPX1eSzo1v6bZ0Pa4vU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713950887; c=relaxed/simple;
-	bh=fRpe4tZif781lZ12DHSpdu5zykO3631nXc2R0m1h4Bo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=BrDTfPD530Ik1suUSIGtGERs1eSdO0XlFODx13OFven0jf14njZML9ZxrtICDdeHMkn+0ymeQVTN2eI8DfKvNCeDop0Z2O6pkaXLoJGrTFTmTMd6Wt6+essljakiCFalFwDsPI40BzkFAnf3pUwd2dZHNsC/iGZXpe8lZiTpAjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EDARoSsl; arc=none smtp.client-ip=209.85.208.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2dd64d6fe94so41003831fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 02:28:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713950884; x=1714555684; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+XqnvD15NkzmaJMEzgWAv80CASkF9y6TdmD/lauJI7g=;
-        b=EDARoSslWh7Ym3+J9pihQkoxLnk6LEcN0ivKHg6uGmlfVT6c4TPKyCcRn2wooCYhtU
-         REhJ86HhRnh0CBowNiJRdkZSZLr7Pevuf4Z2USon63zBCCY8q1dSF2qCoUZmyLto5juy
-         NGSF9LnMlmN6+NqrLRzCo9t+chfdflY5ay/0+g7TmRlhMmY6rSrxUpxUhSTV4jH+5lH4
-         XFAA8/b89Ci19Vi7J7qFIgtmvnrcBAljGSKauRcKbEcl5AagusMd/sCnpq3+PctKs/Qj
-         llCGKXliOCBZu4GBeu13shPAyNNJU8kJ7AbCfyfeUQHzXh7rxr8eHMKXlH0+v3FCiQaX
-         0Wdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713950884; x=1714555684;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+XqnvD15NkzmaJMEzgWAv80CASkF9y6TdmD/lauJI7g=;
-        b=oT1YZF+SM4S6OWGTewt1Mpcvs590JZXHrLxO2OoWgiBagNpi24GjouNdUDuYNU2vxA
-         ANVDLudJ76M5LQ17kt535kDSLV9vOsW7/O7iiZW5vvGk1eAX8H/+pAQSvGlWD49GmV0m
-         zcUVXxqBvkIoM9Vuwqjg10hs3gs/BHhMMmFar/FY567VdJWLCHki/HXT6L4DwK3LEUgh
-         Pv/1BqQM84tDKrVmiJYtSRsa+lCj9+D++0q7FhK4m5Jbq35UTAJqCzamp6FP73kL6fiU
-         sEIfkhNucpKIiyAvD2H3O+29bt1V+DSpE1gfcRXDSAsoBlTQALHvleIdSjpZDpkdvLLZ
-         BEfA==
-X-Gm-Message-State: AOJu0Yy9+W4fQMJEwCzRafODd7+UQv6icf9Im4tNzCd/7CrSGaP4ti1R
-	w4KZTaiLVqxdwXBR/oGhmyxH9Lo/1r+F6iB2w3GeIJJs3rbhXzC8/dk63YEeRcE=
-X-Google-Smtp-Source: AGHT+IHvO2oi/VktVWA8LCiBkkfJy9IjL5OZLxNNUom42pclP2vD2CwEvmUDzgFeX6OIyWoKPZiIzQ==
-X-Received: by 2002:a2e:a710:0:b0:2d6:c29c:a4e9 with SMTP id s16-20020a2ea710000000b002d6c29ca4e9mr935422lje.22.1713950883834;
-        Wed, 24 Apr 2024 02:28:03 -0700 (PDT)
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id u2-20020a2e8442000000b002d8744903ebsm1916849ljh.68.2024.04.24.02.28.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Apr 2024 02:28:03 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 24 Apr 2024 12:28:02 +0300
-Subject: [PATCH v7 6/6] remoteproc: qcom: enable in-kernel PD mapper
+	s=arc-20240116; t=1713951638; c=relaxed/simple;
+	bh=mNayW+VecV2dc9vrrmAV27oQDPaUWep+d6YIBhCY27A=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bCP1EvPNqFIxDbfzPOS1BrXcqdLLdD6kWdNTPMSr6NyJ7wQ7hjtus8klbTUyxMvE0aghUAZncmrtSicBFnPUUWvvOz2o5C+YoRsOdD/BGamV1+xriWc36jOIGQUGt9JXd9Dc+h18k3bgSA8PoLDdrWcKC60E6t2O03NG3lwSVwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pbWQxf3y; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43O7aedI025191;
+	Wed, 24 Apr 2024 09:40:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:reply-to:references
+	:mime-version:content-type:in-reply-to; s=qcppdkim1; bh=W2zEB8HQ
+	4tTQ0a1nADzmO6g2Mci2r9l3DcHJICevofY=; b=pbWQxf3yYXquwvvyxi2w+bTw
+	PtZW5sWRsQd2RFfedYbVIo/yM3AuLFx4D98oB5+xPLboCBWALmfz0qtNPiMKhXZU
+	lsYp+5xo830zYl17oEMadZeJeSEdZeTfib5GSiqOwp+8ZkaM50CqCgWWf+Z0VGxS
+	0GtPL2MQjkfZX0JBkAdulMKumQYod2VFqWzLWNLWxmwIS3kXxTgVUIOqng4kWxDK
+	ODUSuyyP9IhziqGKGbCnvW0TTJf/SGTB+Tp2mBwyLyjCC3g6dwXcb2XYkYqDj3SW
+	k3zEHcbAVk+D9i9DvxeuA8m7vV2Ra9eLmyZkHY9i5TGKojMDW5q5Sfg353WpNg==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xpv9e0f3q-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 24 Apr 2024 09:40:10 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43O9e97n008033
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 24 Apr 2024 09:40:09 GMT
+Received: from quicinc.com (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 24 Apr
+ 2024 02:40:01 -0700
+Date: Wed, 24 Apr 2024 15:09:57 +0530
+From: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
+To: Elliot Berman <quic_eberman@quicinc.com>
+CC: Alex Elder <elder@linaro.org>,
+        Srinivas Kandagatla
+	<srinivas.kandagatla@linaro.org>,
+        Murali Nalajal <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Carl van Schaik
+	<quic_cvanscha@quicinc.com>,
+        Philip Derrin <quic_pderrin@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Jonathan Corbet
+	<corbet@lwn.net>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "Fuad
+ Tabba" <tabba@google.com>,
+        Sean Christopherson <seanjc@google.com>,
+        "Andrew
+ Morton" <akpm@linux-foundation.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-mm@kvack.org>
+Subject: Re: [PATCH v17 15/35] virt: gunyah: Add proxy-scheduled vCPUs
+Message-ID: <20240424093957.GY440762@quicinc.com>
+Reply-To: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
+References: <20240222-gunyah-v17-0-1e9da6763d38@quicinc.com>
+ <20240222-gunyah-v17-15-1e9da6763d38@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240424-qcom-pd-mapper-v7-6-05f7fc646e0f@linaro.org>
-References: <20240424-qcom-pd-mapper-v7-0-05f7fc646e0f@linaro.org>
-In-Reply-To: <20240424-qcom-pd-mapper-v7-0-05f7fc646e0f@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Sibi Sankar <quic_sibis@quicinc.com>, 
- Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-remoteproc@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>, 
- Xilin Wu <wuxilin123@gmail.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6924;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=fRpe4tZif781lZ12DHSpdu5zykO3631nXc2R0m1h4Bo=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmKNCe9qNz3JAWsWAbg3RcW5Ue7H40CniSi6hYQ
- 6OspBeES+qJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZijQngAKCRCLPIo+Aiko
- 1cxeCACptgP2ZLM38Mk8RWur2+UjHJrAQdL+lGrGWJqRxmOtyu9IM3pJ4z4P3J1oqIWfkAUj0Ad
- 3znlgS48XMDp47zwhjVs6fg0K5rRSBsy2ho0+bD52Dip+OiXHYJWd4G3Ex6zJYNt33RR4h8TMG6
- clwiUgXYzUpfIqaQ3Hr8ubUbzbgJQgydbrY+YPURJ0nCqG8kGnlqbqZcx5kM5NVKJuL0tPR7wmo
- VpYvGgFcj5jgURk6Bmw96PkN9SUbXK1H748ANIGh5QNnYDkBS3iJQxy62qeLqo6EEFbCE/OhoNa
- c2ARDL6LD3P7bXOdsQPLRz128K368t3xTL1uRSSlwoNkfXrY
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+In-Reply-To: <20240222-gunyah-v17-15-1e9da6763d38@quicinc.com>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: XLbgIb0Y_-CpZ9y5rvGSoXb-QMYlvkEG
+X-Proofpoint-ORIG-GUID: XLbgIb0Y_-CpZ9y5rvGSoXb-QMYlvkEG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-24_07,2024-04-23_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
+ suspectscore=0 phishscore=0 adultscore=0 impostorscore=0 clxscore=1011
+ spamscore=0 priorityscore=1501 mlxlogscore=825 lowpriorityscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404240041
 
-Request in-kernel protection domain mapper to be started before starting
-Qualcomm DSP and release it once DSP is stopped. Once all DSPs are
-stopped, the PD mapper will be stopped too.
+* Elliot Berman <quic_eberman@quicinc.com> [2024-02-22 15:16:38]:
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/remoteproc/Kconfig          |  4 ++++
- drivers/remoteproc/qcom_q6v5_adsp.c | 11 ++++++++++-
- drivers/remoteproc/qcom_q6v5_mss.c  | 10 +++++++++-
- drivers/remoteproc/qcom_q6v5_pas.c  | 12 +++++++++++-
- drivers/remoteproc/qcom_q6v5_wcss.c | 12 +++++++++++-
- 5 files changed, 45 insertions(+), 4 deletions(-)
+> +/**
+> + * struct gunyah_vm_exit_info - Reason for VM exit as reported by Gunyah
+> + * See Gunyah documentation for values.
+> + * @type: Describes how VM exited
+> + * @padding: padding bytes
+> + * @reason_size: Number of bytes valid for `reason`
+> + * @reason: See Gunyah documentation for interpretation. Note: these values are
+> + *          not interpreted by Linux and need to be converted from little-endian
+> + *          as applicable.
+> + */
+> +struct gunyah_vm_exit_info {
+> +	__u16 type;
 
-diff --git a/drivers/remoteproc/Kconfig b/drivers/remoteproc/Kconfig
-index 48845dc8fa85..a0ce552f89a1 100644
---- a/drivers/remoteproc/Kconfig
-+++ b/drivers/remoteproc/Kconfig
-@@ -181,6 +181,7 @@ config QCOM_Q6V5_ADSP
- 	depends on QCOM_SYSMON || QCOM_SYSMON=n
- 	depends on RPMSG_QCOM_GLINK || RPMSG_QCOM_GLINK=n
- 	depends on QCOM_AOSS_QMP || QCOM_AOSS_QMP=n
-+	depends on QCOM_PD_MAPPER || QCOM_PD_MAPPER=n
- 	select MFD_SYSCON
- 	select QCOM_PIL_INFO
- 	select QCOM_MDT_LOADER
-@@ -201,6 +202,7 @@ config QCOM_Q6V5_MSS
- 	depends on QCOM_SYSMON || QCOM_SYSMON=n
- 	depends on RPMSG_QCOM_GLINK || RPMSG_QCOM_GLINK=n
- 	depends on QCOM_AOSS_QMP || QCOM_AOSS_QMP=n
-+	depends on QCOM_PD_MAPPER || QCOM_PD_MAPPER=n
- 	select MFD_SYSCON
- 	select QCOM_MDT_LOADER
- 	select QCOM_PIL_INFO
-@@ -221,6 +223,7 @@ config QCOM_Q6V5_PAS
- 	depends on QCOM_SYSMON || QCOM_SYSMON=n
- 	depends on RPMSG_QCOM_GLINK || RPMSG_QCOM_GLINK=n
- 	depends on QCOM_AOSS_QMP || QCOM_AOSS_QMP=n
-+	depends on QCOM_PD_MAPPER || QCOM_PD_MAPPER=n
- 	select MFD_SYSCON
- 	select QCOM_PIL_INFO
- 	select QCOM_MDT_LOADER
-@@ -243,6 +246,7 @@ config QCOM_Q6V5_WCSS
- 	depends on QCOM_SYSMON || QCOM_SYSMON=n
- 	depends on RPMSG_QCOM_GLINK || RPMSG_QCOM_GLINK=n
- 	depends on QCOM_AOSS_QMP || QCOM_AOSS_QMP=n
-+	depends on QCOM_PD_MAPPER || QCOM_PD_MAPPER=n
- 	select MFD_SYSCON
- 	select QCOM_MDT_LOADER
- 	select QCOM_PIL_INFO
-diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-index 1d24c9b656a8..02d0c626b03b 100644
---- a/drivers/remoteproc/qcom_q6v5_adsp.c
-+++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-@@ -23,6 +23,7 @@
- #include <linux/remoteproc.h>
- #include <linux/reset.h>
- #include <linux/soc/qcom/mdt_loader.h>
-+#include <linux/soc/qcom/pd_mapper.h>
- #include <linux/soc/qcom/smem.h>
- #include <linux/soc/qcom/smem_state.h>
- 
-@@ -375,10 +376,14 @@ static int adsp_start(struct rproc *rproc)
- 	int ret;
- 	unsigned int val;
- 
--	ret = qcom_q6v5_prepare(&adsp->q6v5);
-+	ret = qcom_pdm_get();
- 	if (ret)
- 		return ret;
- 
-+	ret = qcom_q6v5_prepare(&adsp->q6v5);
-+	if (ret)
-+		goto put_pdm;
-+
- 	ret = adsp_map_carveout(rproc);
- 	if (ret) {
- 		dev_err(adsp->dev, "ADSP smmu mapping failed\n");
-@@ -446,6 +451,8 @@ static int adsp_start(struct rproc *rproc)
- 	adsp_unmap_carveout(rproc);
- disable_irqs:
- 	qcom_q6v5_unprepare(&adsp->q6v5);
-+put_pdm:
-+	qcom_pdm_release();
- 
- 	return ret;
- }
-@@ -478,6 +485,8 @@ static int adsp_stop(struct rproc *rproc)
- 	if (handover)
- 		qcom_adsp_pil_handover(&adsp->q6v5);
- 
-+	qcom_pdm_release();
-+
- 	return ret;
- }
- 
-diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-index 1779fc890e10..791f11e7adbf 100644
---- a/drivers/remoteproc/qcom_q6v5_mss.c
-+++ b/drivers/remoteproc/qcom_q6v5_mss.c
-@@ -26,6 +26,7 @@
- #include <linux/remoteproc.h>
- #include <linux/reset.h>
- #include <linux/soc/qcom/mdt_loader.h>
-+#include <linux/soc/qcom/pd_mapper.h>
- #include <linux/iopoll.h>
- #include <linux/slab.h>
- 
-@@ -1581,10 +1582,14 @@ static int q6v5_start(struct rproc *rproc)
- 	int xfermemop_ret;
- 	int ret;
- 
--	ret = q6v5_mba_load(qproc);
-+	ret = qcom_pdm_get();
- 	if (ret)
- 		return ret;
- 
-+	ret = q6v5_mba_load(qproc);
-+	if (ret)
-+		goto put_pdm;
-+
- 	dev_info(qproc->dev, "MBA booted with%s debug policy, loading mpss\n",
- 		 qproc->dp_size ? "" : "out");
- 
-@@ -1613,6 +1618,8 @@ static int q6v5_start(struct rproc *rproc)
- reclaim_mpss:
- 	q6v5_mba_reclaim(qproc);
- 	q6v5_dump_mba_logs(qproc);
-+put_pdm:
-+	qcom_pdm_release();
- 
- 	return ret;
- }
-@@ -1627,6 +1634,7 @@ static int q6v5_stop(struct rproc *rproc)
- 		dev_err(qproc->dev, "timed out on wait\n");
- 
- 	q6v5_mba_reclaim(qproc);
-+	qcom_pdm_release();
- 
- 	return 0;
- }
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 54d8005d40a3..653e54f975fc 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -23,6 +23,7 @@
- #include <linux/regulator/consumer.h>
- #include <linux/remoteproc.h>
- #include <linux/soc/qcom/mdt_loader.h>
-+#include <linux/soc/qcom/pd_mapper.h>
- #include <linux/soc/qcom/smem.h>
- #include <linux/soc/qcom/smem_state.h>
- 
-@@ -261,10 +262,14 @@ static int adsp_start(struct rproc *rproc)
- 	struct qcom_adsp *adsp = rproc->priv;
- 	int ret;
- 
--	ret = qcom_q6v5_prepare(&adsp->q6v5);
-+	ret = qcom_pdm_get();
- 	if (ret)
- 		return ret;
- 
-+	ret = qcom_q6v5_prepare(&adsp->q6v5);
-+	if (ret)
-+		goto put_pdm;
-+
- 	ret = adsp_pds_enable(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
- 	if (ret < 0)
- 		goto disable_irqs;
-@@ -356,6 +361,9 @@ static int adsp_start(struct rproc *rproc)
- 	/* Remove pointer to the loaded firmware, only valid in adsp_load() & adsp_start() */
- 	adsp->firmware = NULL;
- 
-+put_pdm:
-+	qcom_pdm_release();
-+
- 	return ret;
- }
- 
-@@ -399,6 +407,8 @@ static int adsp_stop(struct rproc *rproc)
- 	if (handover)
- 		qcom_pas_handover(&adsp->q6v5);
- 
-+	qcom_pdm_release();
-+
- 	return ret;
- }
- 
-diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
-index 94f68c919ee6..6ed60f3f3eee 100644
---- a/drivers/remoteproc/qcom_q6v5_wcss.c
-+++ b/drivers/remoteproc/qcom_q6v5_wcss.c
-@@ -18,6 +18,7 @@
- #include <linux/regulator/consumer.h>
- #include <linux/reset.h>
- #include <linux/soc/qcom/mdt_loader.h>
-+#include <linux/soc/qcom/pd_mapper.h>
- #include "qcom_common.h"
- #include "qcom_pil_info.h"
- #include "qcom_q6v5.h"
-@@ -240,13 +241,17 @@ static int q6v5_wcss_start(struct rproc *rproc)
- 	struct q6v5_wcss *wcss = rproc->priv;
- 	int ret;
- 
-+	ret = qcom_pdm_get();
-+	if (ret)
-+		return ret;
-+
- 	qcom_q6v5_prepare(&wcss->q6v5);
- 
- 	/* Release Q6 and WCSS reset */
- 	ret = reset_control_deassert(wcss->wcss_reset);
- 	if (ret) {
- 		dev_err(wcss->dev, "wcss_reset failed\n");
--		return ret;
-+		goto put_pdm;
- 	}
- 
- 	ret = reset_control_deassert(wcss->wcss_q6_reset);
-@@ -288,6 +293,9 @@ static int q6v5_wcss_start(struct rproc *rproc)
- wcss_reset:
- 	reset_control_assert(wcss->wcss_reset);
- 
-+put_pdm:
-+	qcom_pdm_release();
-+
- 	return ret;
- }
- 
-@@ -735,6 +743,8 @@ static int q6v5_wcss_stop(struct rproc *rproc)
- 
- 	qcom_q6v5_unprepare(&wcss->q6v5);
- 
-+	qcom_pdm_release();
-+
- 	return 0;
- }
- 
+Pls add an enum to describe the various exit types.
 
--- 
-2.39.2
+> +	__u16 padding;
+> +	__u32 reason_size;
+> +	__u8 reason[GUNYAH_VM_MAX_EXIT_REASON_SIZE];
+> +};
 
+- vatsa
 
