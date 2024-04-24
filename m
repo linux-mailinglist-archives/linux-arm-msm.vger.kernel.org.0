@@ -1,267 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-18433-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18434-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 216EB8B081A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 13:12:09 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 64F988B083E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 13:23:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CD20B283B87
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 11:12:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1BCBE28908A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 11:23:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B44EA15991B;
-	Wed, 24 Apr 2024 11:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7555B15A49D;
+	Wed, 24 Apr 2024 11:23:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ULMeqJtG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8601D1598E7;
-	Wed, 24 Apr 2024 11:12:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D9315A483
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 11:23:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713957123; cv=none; b=fBs6nP95GvETS/0bAapa1B2JXcpv/1kzzeqV1+k0ozU/i2Zs7Z7FZjgyem/EncCiXhFZIkbDOot4aTDGR6ht6klVTW/MxGHjlgrOEIH3HxzlD7KXamlAOHA6YSUUUOABPik5z+bPXPCl55X7uZscFIMJUq/CsrMDK8QJWmx9vyM=
+	t=1713957815; cv=none; b=gdSwZn3Pynxh2YPpqTgFiA3SX8kfdfNACMDjT6saWW38xjibIX+R7vCbG/CDRd+iBsRNcyJ2N4z5Ibg/jyiqTdHTZzaT12N+nmXYg1eX3cjlrC9lU7YN07kA9t2bNOqeMuVyMSa/YztDNB5jTM+0ZZUgqb2VAdS3WWz0piGicJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713957123; c=relaxed/simple;
-	bh=7j+bqzwwRnpE1+l6HyrvmBZeRb2GhcdwQavkB7KSqDU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uAcZKL04eO5e/ciftRbb5Xbqs8+j5Xm2Rsk/giTMzLu0gHyoagnwB0wp6HfjYwFIHtWT3y4he2P9QflNq+NOILRrTPsJs+qMtav+JAAMD+SK3nPQE/u9KguzVDPvkSSXWfTqzOjY0cprrcnlnFHSmthBGn2arbZ7nhcbx8ft4sM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2480C113CE;
-	Wed, 24 Apr 2024 11:11:53 +0000 (UTC)
-Message-ID: <3f834858-628b-4f21-bd85-1833cd8ccc98@xs4all.nl>
-Date: Wed, 24 Apr 2024 13:11:51 +0200
+	s=arc-20240116; t=1713957815; c=relaxed/simple;
+	bh=jO1+xmcyT5I9v4tZVZ1d96pbFPmBoJZzFcDtl1zowAU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=osqSw+L7R3XXnIHLFcUQOZfILyQEkocFFjtcsfcBx5JsFoNrcV7FV8YfJUApjbx+EK0t6RknQMKMw4+pN0Dn23i0RB2s1rTvdb1TbK8a+tx0WBi1K/P8pGAGMRkjWdbRXWhlWX+X2GKaN81J02boMrQ1QF99N1JfMHqbysFeyzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ULMeqJtG; arc=none smtp.client-ip=209.85.219.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-de45385a1b4so6255774276.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 04:23:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1713957812; x=1714562612; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ln9+pg397axOqdZ8donOOoy2lTHgumZvva3u8wpOyis=;
+        b=ULMeqJtGGk8VtJdWNpblq5XHhxwlHRSxkvm9vTS14PXWx0aDNlx1yvPv0+GKtYAe1L
+         OkK/bKR8Xio/TZbXLDPug643BFq3lyWyNXkfiTp5t2kZP/ulS5inDET5ubv00bOAeuYr
+         hyJEpPQKem+3gupTwXAkqs9jk1QhnWz9BNISy9RDsrAEhveAQi80gTUtyxAKPHtp3xiB
+         bS9kDaNpdL15NOPwaUuXmrNZhggS2LTK3wyKUXFcgTnG5Y+hHUGRTMMQjodZohyZymBZ
+         w2FZeiKruxaS4jf59XIvI0CeTmW1yrfp9xFN5oV4jKlmMC1Ox9lD7skVZtYQRzJQqwp7
+         k6bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713957812; x=1714562612;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ln9+pg397axOqdZ8donOOoy2lTHgumZvva3u8wpOyis=;
+        b=UtMd5mXDkftTmZ04r35NjMQeSxEmwUWRuxLBjpgZ0/e8HKFyXklAdcvhle7lKe/yqP
+         TFPcwOkM0I5hiS7N/C8tBaYtnVN+Zc9n8kZv/HLmuEvgFhORsjKgl0sdYBr3UcQrQbKT
+         pDPKyRKJivMUaN/bOhFm1fxYf547mADIw74QTcWyUAjEa5zuyHkD/eKcil7A2a5JH2c/
+         Eh0wsRSLnAfvxkfjU0ftuR1z0R+iHvvRxDLcwrUVBQ7sN3Q0FCKFS3po2cH8K9cb1CJ7
+         8OHTyKhNj2SR7zY9cK44F5wPVVlQ4Caynv+U+F5tSS3hITqvCuFvXH0h4ug+V5HzG/Cb
+         618g==
+X-Forwarded-Encrypted: i=1; AJvYcCUlStkVeV0XC9GqLi1/UE10b4zIxM0tUKS4BTt0+iSMoSmPblschE9UsO9y8vN4eSMYkxz4j0TzPFtkLaSncfGYVjkUCalI/vURaMMvLg==
+X-Gm-Message-State: AOJu0YyHDvPobD2OTROkuYbpgOjPDfYVoisiaxWfhcGdSvr3nFbTXFzu
+	VwsCB+ev3vAmFWPvDms8P2HfdD02uG+aFqamOczNkmi1+M692jgOjMxLrsI4bVCWrZG7WHVHoZT
+	Q1/HugPbfgkCQuK1mUdzpvXZH+lnYihZnMicvgw==
+X-Google-Smtp-Source: AGHT+IGyMvZRrFQqm2rU9lrkFEVJeFfiWq/kBNzRzDGPLliI2awpe//wjMSlt7lzbgaKuWjFkR6/B06yPkXjykP9pGQ=
+X-Received: by 2002:a25:6841:0:b0:ddd:696a:8656 with SMTP id
+ d62-20020a256841000000b00ddd696a8656mr2219684ybc.41.1713957812276; Wed, 24
+ Apr 2024 04:23:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/26] media: Fix coccinelle warning/errors
-Content-Language: en-US, nl
-To: Ricardo Ribalda <ribalda@chromium.org>,
- Martin Tuma <martin.tuma@digiteqautomotive.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
- Hugues Fruchet <hugues.fruchet@foss.st.com>,
- Alain Volmat <alain.volmat@foss.st.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Chen-Yu Tsai
- <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Samuel Holland <samuel@sholland.org>,
- Sakari Ailus <sakari.ailus@linux.intel.com>,
- Thierry Reding <thierry.reding@gmail.com>,
- Jonathan Hunter <jonathanh@nvidia.com>,
- Sowjanya Komatineni <skomatineni@nvidia.com>,
- Luca Ceresoli <luca.ceresoli@bootlin.com>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Sergey Kozlov <serjk@netup.ru>, Abylay Ospan <aospan@netup.ru>,
- Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
- Dmitry Osipenko <digetx@gmail.com>,
- Benjamin Mugnier <benjamin.mugnier@foss.st.com>,
- Sylvain Petinot <sylvain.petinot@foss.st.com>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org, linux-staging@lists.linux.dev,
- linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
- linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- Sergey Senozhatsky <senozhatsky@chromium.org>,
- Kieran Bingham <kieran.bingham@ideasonboard.com>,
- Dan Carpenter <dan.carpenter@linaro.org>
-References: <20240419-fix-cocci-v2-0-2119e692309c@chromium.org>
-From: Hans Verkuil <hverkuil@xs4all.nl>
-Autocrypt: addr=hverkuil@xs4all.nl; keydata=
- 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
-In-Reply-To: <20240419-fix-cocci-v2-0-2119e692309c@chromium.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20240424101503.635364-1-quic_tengfan@quicinc.com> <20240424101503.635364-4-quic_tengfan@quicinc.com>
+In-Reply-To: <20240424101503.635364-4-quic_tengfan@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 24 Apr 2024 14:23:21 +0300
+Message-ID: <CAA8EJpqiXqsNq0B6EHnqubPcUzwJ0bc0y3rJ4RfrRimKifPf0Q@mail.gmail.com>
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm4450: Supply clock from cpufreq
+ node to CPUs
+To: Tengfei Fan <quic_tengfan@quicinc.com>
+Cc: rafael@kernel.org, viresh.kumar@linaro.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org, 
+	konrad.dybcio@linaro.org, manivannan.sadhasivam@linaro.org, 
+	linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 19/04/2024 11:47, Ricardo Ribalda wrote:
-> After this set is applied, these are the only warnings left:
-> drivers/media/pci/ivtv/ivtv-fileops.c:223:4-10: preceding lock on line 267
-> drivers/media/pci/ivtv/ivtv-fileops.c:230:3-9: preceding lock on line 267
-> drivers/media/pci/ivtv/ivtv-fileops.c:236:4-10: preceding lock on line 267
-> drivers/media/pci/ivtv/ivtv-fileops.c:245:3-9: preceding lock on line 267
-> drivers/media/pci/ivtv/ivtv-fileops.c:251:3-9: preceding lock on line 267
-> drivers/media/pci/ivtv/ivtv-fileops.c:257:3-9: preceding lock on line 267
-> drivers/media/pci/ivtv/ivtv-fileops.c:272:3-9: preceding lock on line 267
-> drivers/media/pci/ivtv/ivtv-fileops.c:598:4-10: preceding lock on line 627
-> drivers/media/pci/ivtv/ivtv-fileops.c:598:4-10: preceding lock on line 689
-> drivers/media/pci/ivtv/ivtv-fileops.c:606:3-9: preceding lock on line 627
-> drivers/media/pci/ivtv/ivtv-fileops.c:606:3-9: preceding lock on line 689
-> drivers/media/pci/ivtv/ivtv-fileops.c:648:3-9: preceding lock on line 627
-> drivers/media/pci/ivtv/ivtv-fileops.c:648:3-9: preceding lock on line 689
-> drivers/media/pci/ivtv/ivtv-fileops.c:692:4-10: preceding lock on line 689
-> drivers/media/dvb-core/dvb_frontend.c:2897:1-7: preceding lock on line 2776
-> drivers/media/dvb-core/dvb_frontend.c:2897:1-7: preceding lock on line 2786
-> drivers/media/dvb-core/dvb_frontend.c:2897:1-7: preceding lock on line 2809
-> drivers/media/dvb-frontends/stv090x.c:799:1-7: preceding lock on line 768
-> drivers/media/usb/go7007/go7007-i2c.c:125:1-7: preceding lock on line 61
-> drivers/media/rc/imon.c:1167:1-7: preceding lock on line 1153
-> drivers/media/pci/cx18/cx18-scb.h:261:22-29: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_cmds.h:77:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_cmds.h:85:5-16: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_cmds.h:154:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_cmds.h:171:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_cmds.h:180:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_cmds.h:189:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_cmds.h:201:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_cmds.h:220:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_cmds.h:230:5-16: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_helper.h:764:5-15: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_helper.h:1008:43-60: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_helper.h:1014:36-46: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_helper.h:1041:5-15: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_helper.h:1088:39-51: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_helper.h:1093:5-22: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_helper.h:1144:4-8: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_helper.h:1239:4-8: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_helper.h:1267:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_helper.h:1272:4-13: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/common/siano/smscoreapi.h:619:5-13: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/common/siano/smscoreapi.h:669:6-13: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/common/siano/smscoreapi.h:1049:4-8: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/common/siano/smscoreapi.h:1055:4-8: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/dvb-frontends/mxl5xx_defs.h:171:4-8: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/dvb-frontends/mxl5xx_defs.h:182:4-8: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/allegro-dvt/nal-hevc.h:102:14-22: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/xilinx/xilinx-dma.h:100:19-22: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/staging/media/atomisp/pci/atomisp_tpg.h:30:18-22: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> 
-> CI tested:
-> https://gitlab.freedesktop.org/linux-media/media-staging/-/commit/055b5211c68e721c3a7090be5373cf44859da1a7/pipelines?ref=ribalda%2Ftest-cocci
+On Wed, 24 Apr 2024 at 13:17, Tengfei Fan <quic_tengfan@quicinc.com> wrote:
+>
+> Qualcomm platforms making use of CPUFreq HW Engine (EPSS/OSM) supply
+> clocks to the CPU cores. But this relationship is not represented in DTS
+> so far.
+>
+> So let's make cpufreq node as the clock provider and CPU nodes as the
+> consumers. The clock index for each CPU node is based on the frequency
+> domain index.
 
-Other than what others already reported, plus my own two comments, this series
-looks good. So likely I can pick up v3 once it is posted.
+Is there any reason why this is not a part of the previous patch?
 
-Regards,
-
-	Hans
-
-> 
-> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+>
+> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
 > ---
-> Changes in v2:
-> - Remove all the min() retval, and send a patch for cocci:  https://lore.kernel.org/lkml/20240415-minimax-v1-1-5feb20d66a79@chromium.org/T/#u
-> - platform_get_irq() cannot return 0, fix that (Thanks Dan).
-> - Fix stb0800 patch. chip_id can be 0 (Thanks Dan).
-> - Use runtime (IS_ENABLED), code looks nicer. (Thanks Dan).
-> - Do not replace do_div for venus (Thanks Dan).
-> - Do not replace do_div for tda10048 (Thanks Dan).
-> - Link to v1: https://lore.kernel.org/r/20240415-fix-cocci-v1-0-477afb23728b@chromium.org
-> 
-> ---
-> Ricardo Ribalda (26):
->       media: pci: mgb4: Refactor struct resources
->       media: stb0899: Simplify check
->       media: uvcvideo: Refactor iterators
->       media: uvcvideo: Use max() macro
->       media: go7007: Use min and max macros
->       media: stm32-dcmipp: Remove redundant printk
->       media: staging: sun6i-isp: Remove redundant printk
->       media: dvb-frontends: tda18271c2dd: Remove casting during div
->       media: v4l: async: refactor v4l2_async_create_ancillary_links
->       staging: media: tegra-video: Use swap macro
->       media: s2255: Use refcount_t instead of atomic_t for num_channels
->       media: platform: mtk-mdp3: Use refcount_t for job_count
->       media: common: saa7146: Use min macro
->       media: dvb-frontends: drx39xyj: Use min macro
->       media: netup_unidvb: Use min macro
->       media: au0828: Use min macro
->       media: flexcop-usb: Use min macro
->       media: gspca: cpia1: Use min macro
->       media: stk1160: Use min macro
->       media: tegra-vde: Refactor timeout handling
->       media: i2c: st-mipid02: Use the correct div function
->       media: tc358746: Use the correct div_ function
->       media: venus: vdec: Make explicit the range of us_per_frame
->       media: venus: venc: Make explicit the range of us_per_frame
->       media: dvb-frontends: tda10048: Fix integer overflow
->       media: dvb-frontends: tda10048: Make explicit the range of z.
-> 
->  drivers/media/common/saa7146/saa7146_hlp.c         |  8 +++----
->  drivers/media/dvb-frontends/drx39xyj/drxj.c        |  9 +++-----
->  drivers/media/dvb-frontends/stb0899_drv.c          |  2 +-
->  drivers/media/dvb-frontends/tda10048.c             | 13 +++++++----
->  drivers/media/dvb-frontends/tda18271c2dd.c         |  4 ++--
->  drivers/media/i2c/st-mipid02.c                     |  2 +-
->  drivers/media/i2c/tc358746.c                       |  3 +--
->  drivers/media/pci/mgb4/mgb4_core.c                 |  4 ++--
->  drivers/media/pci/mgb4/mgb4_regs.c                 |  2 +-
->  drivers/media/pci/netup_unidvb/netup_unidvb_i2c.c  |  2 +-
->  .../media/platform/mediatek/mdp3/mtk-mdp3-cmdq.c   | 10 ++++-----
->  .../media/platform/mediatek/mdp3/mtk-mdp3-core.c   |  6 ++---
->  .../media/platform/mediatek/mdp3/mtk-mdp3-core.h   |  2 +-
->  .../media/platform/mediatek/mdp3/mtk-mdp3-m2m.c    |  6 ++---
->  drivers/media/platform/nvidia/tegra-vde/h264.c     |  6 ++---
->  drivers/media/platform/qcom/venus/vdec.c           |  7 ++----
->  drivers/media/platform/qcom/venus/venc.c           |  7 ++----
->  .../platform/st/stm32/stm32-dcmipp/dcmipp-core.c   |  7 ++----
->  drivers/media/usb/au0828/au0828-video.c            |  5 +----
->  drivers/media/usb/b2c2/flexcop-usb.c               |  5 +----
->  drivers/media/usb/go7007/go7007-fw.c               |  4 ++--
->  drivers/media/usb/gspca/cpia1.c                    |  6 ++---
->  drivers/media/usb/s2255/s2255drv.c                 | 20 ++++++++---------
->  drivers/media/usb/stk1160/stk1160-video.c          | 10 ++-------
->  drivers/media/usb/uvc/uvc_ctrl.c                   | 26 ++++++++++++----------
->  drivers/media/v4l2-core/v4l2-async.c               |  7 +++---
->  drivers/staging/media/sunxi/sun6i-isp/sun6i_isp.c  |  3 +--
->  drivers/staging/media/tegra-video/tegra20.c        |  9 ++------
->  28 files changed, 84 insertions(+), 111 deletions(-)
-> ---
-> base-commit: 836e2548524d2dfcb5acaf3be78f203b6b4bde6f
-> change-id: 20240415-fix-cocci-2df3ef22a6f7
-> 
-> Best regards,
+>  arch/arm64/boot/dts/qcom/sm4450.dtsi | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sm4450.dtsi b/arch/arm64/boot/dts/qcom/sm4450.dtsi
+> index 92badfd5b0e1..8d75c4f9731c 100644
+> --- a/arch/arm64/boot/dts/qcom/sm4450.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm4450.dtsi
+> @@ -47,6 +47,7 @@ CPU0: cpu@0 {
+>                         device_type = "cpu";
+>                         compatible = "arm,cortex-a55";
+>                         reg = <0x0 0x0>;
+> +                       clocks = <&cpufreq_hw 0>;
+>                         enable-method = "psci";
+>                         next-level-cache = <&L2_0>;
+>                         power-domains = <&CPU_PD0>;
+> @@ -72,6 +73,7 @@ CPU1: cpu@100 {
+>                         device_type = "cpu";
+>                         compatible = "arm,cortex-a55";
+>                         reg = <0x0 0x100>;
+> +                       clocks = <&cpufreq_hw 0>;
+>                         enable-method = "psci";
+>                         next-level-cache = <&L2_100>;
+>                         power-domains = <&CPU_PD0>;
+> @@ -91,6 +93,7 @@ CPU2: cpu@200 {
+>                         device_type = "cpu";
+>                         compatible = "arm,cortex-a55";
+>                         reg = <0x0 0x200>;
+> +                       clocks = <&cpufreq_hw 0>;
+>                         enable-method = "psci";
+>                         next-level-cache = <&L2_200>;
+>                         power-domains = <&CPU_PD0>;
+> @@ -110,6 +113,7 @@ CPU3: cpu@300 {
+>                         device_type = "cpu";
+>                         compatible = "arm,cortex-a55";
+>                         reg = <0x0 0x300>;
+> +                       clocks = <&cpufreq_hw 0>;
+>                         enable-method = "psci";
+>                         next-level-cache = <&L2_300>;
+>                         power-domains = <&CPU_PD0>;
+> @@ -129,6 +133,7 @@ CPU4: cpu@400 {
+>                         device_type = "cpu";
+>                         compatible = "arm,cortex-a55";
+>                         reg = <0x0 0x400>;
+> +                       clocks = <&cpufreq_hw 0>;
+>                         enable-method = "psci";
+>                         next-level-cache = <&L2_400>;
+>                         power-domains = <&CPU_PD0>;
+> @@ -148,6 +153,7 @@ CPU5: cpu@500 {
+>                         device_type = "cpu";
+>                         compatible = "arm,cortex-a55";
+>                         reg = <0x0 0x500>;
+> +                       clocks = <&cpufreq_hw 0>;
+>                         enable-method = "psci";
+>                         next-level-cache = <&L2_500>;
+>                         power-domains = <&CPU_PD0>;
+> @@ -167,6 +173,7 @@ CPU6: cpu@600 {
+>                         device_type = "cpu";
+>                         compatible = "arm,cortex-a78";
+>                         reg = <0x0 0x600>;
+> +                       clocks = <&cpufreq_hw 1>;
+>                         enable-method = "psci";
+>                         next-level-cache = <&L2_600>;
+>                         power-domains = <&CPU_PD0>;
+> @@ -186,6 +193,7 @@ CPU7: cpu@700 {
+>                         device_type = "cpu";
+>                         compatible = "arm,cortex-a78";
+>                         reg = <0x0 0x700>;
+> +                       clocks = <&cpufreq_hw 1>;
+>                         enable-method = "psci";
+>                         next-level-cache = <&L2_700>;
+>                         power-domains = <&CPU_PD0>;
+> --
+> 2.25.1
+>
+>
 
+
+-- 
+With best wishes
+Dmitry
 
