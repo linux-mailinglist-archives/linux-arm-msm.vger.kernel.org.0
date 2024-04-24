@@ -1,104 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-18509-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52B398B1754
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 01:42:23 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A46BD8B1764
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 01:47:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D7DB21F24961
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 23:42:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3A7D1282E68
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Apr 2024 23:47:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B65AF16F26B;
-	Wed, 24 Apr 2024 23:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 681CB16F260;
+	Wed, 24 Apr 2024 23:47:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gAc/Ji1T"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sj5JSfzK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC784156993
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 23:42:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E277E13A3E6
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 23:47:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714002133; cv=none; b=bkojcTibto9GbgnalZVmeKNOHOJZMtLVzVkVJjR2+GnvLwmQDi7RjSD3zecJbivFle4glUiLlf+xazbkr8qc2j6Sj+U1U777HNQnUUIGWmGbjqa5eLulZEy9S5C6/W033yUir3PVQMk+tZU1uqIEZ9WnS4rfPRBDNIqM8De126I=
+	t=1714002454; cv=none; b=LVOyycVmVoQYdg2Pb2+EGdBGZiOB9jr5JOMzkzVGuVDzVnbzKYMqDW/3LmtwXt5Q6e8HuAcYODZO59Y1Jd3KfoLokIskq/6at24irAgW4hniu159xkq2MdLdsjqOCR39rKRf23KY49e/0ntC0cVnx6bxEz7NksQe0BUw5kxvXSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714002133; c=relaxed/simple;
-	bh=PI+JeQg21yVOePuaS0Iw7b/7W79QBq8ROcxLJNdsIlM=;
+	s=arc-20240116; t=1714002454; c=relaxed/simple;
+	bh=OMKvIJ7aZmnQ9wSxcW/ZI5sON1e/NHXRACIEAc/ndPg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=I38fEbBJW2hFa6ejCYENmelHzOMqLe9iBK1Bj19m27BJKQEjuvJy7jyhfrWEvokDovOzCMIXWHZ28neRCJNXWT0nqtnrH7x47/J/mJBewPp4swYzyj5qVjvpjFqSE9uwXtcC6s7/m6p972VyrU6CPny1i86rwh/HqALl2IWN/44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gAc/Ji1T; arc=none smtp.client-ip=209.85.219.182
+	 To:Cc:Content-Type; b=oMbMYjHzA3tYewJXDFh7yTpFssjSBECga4SQH9Y2mwoAxB1kbp1ukm815h88WBp73AH6F8QCSJE4kgdDJEQH/QgNYjsMtHCqGzru3XFqFE0Grk7Sb/hiQ/Az+RJEftOsGJGGUvmsfpAyxbttY+8VVJcKMRKPUGbGyQJNfAlbeVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sj5JSfzK; arc=none smtp.client-ip=209.85.219.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-de5809cd7b0so510473276.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 16:42:10 -0700 (PDT)
+Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-de54cb87998so461579276.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Apr 2024 16:47:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1714002130; x=1714606930; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1714002452; x=1714607252; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y3di6KRuk2RHSbdtvrUmozSSvs5i2WcfXE6+Fo0L3m8=;
-        b=gAc/Ji1TR7JadObuMUESXqzZx/R9pYFyDyHNTd3em+uf9PVzR/EhWXaR+C6yX3+ev5
-         gSuJZIItZu0pVHWHtY+5Jylrye3ORAuWPBv7Djlv/ph3ATrmlbDrxeL5drmtg7o+WsKT
-         4zkcd/oeWIQqmLx+bDlrwdpQF2f7of78zwPnB/VwMa5eiGs0YJEIJ8rrhc+/9SS0dbFc
-         rMHL2hhzI+9JjqmHid4TLreic+X9VG8Dfv6hMUxcPXeg7rCRHIf51f3mS8WRJxrdzgqF
-         e+RO64ncTpeK8SjJ8O8zKcvChhV/PvYOHZJsfiD6x9Gd48sd/Nw7OfoUqU7TGUYPTUXb
-         M5hg==
+        bh=/1tN60EyOoTTpXwgrDNf6TzRWNHHafqzCbKwzrT6DXE=;
+        b=sj5JSfzKTVevknleMSOnHiamY9JV8h6cuDNwAp7wOalckZRZNiJGfHYAGf+FHR0yt0
+         U4nujAI8HbJOv/AoSnfw/cFspn7WzRIqw6gEDh6vZbTS/0if4ShZqpe3DO2LyOqeBeGK
+         1l+bhnQ4hNRWwvm3mtpUde3pJ/+81vyROCucPs8UmlxU4VW30gMJ76W1jCTjDB50Su+8
+         UEHt24ja4Nzp0WhnHzlNoLleijs3s9bgdaskdTMyei/x9G/7ZBp2CBbC7dWXzqANsnqr
+         dBmedBNaodhmD2ShdYFPI99GU7XEjjEnK2rTkF/hqF41fqTF3V2w2C/RXj7sUdMa6XFp
+         J+SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714002130; x=1714606930;
+        d=1e100.net; s=20230601; t=1714002452; x=1714607252;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Y3di6KRuk2RHSbdtvrUmozSSvs5i2WcfXE6+Fo0L3m8=;
-        b=PuHtgB1czpsmOM4HTINFFuNqjK7RugxGJ4m0zbVCIZT8lRkauNNIfex4CuMbCUQTfc
-         8sRW6RcmOc5i9Xty5JiwqwzjvKD/9bjse1K29ZLTnhlW+9PUzQ3PBOF80LHLZ5DoM7OC
-         a4mS9jJOjnYOZvonp88t/RZHgBIS1peIHJV7JAxIiHl39DN4SGpEtHIo8ok0Ot53YA94
-         2pyo3xrwaH0AWe+YPuKYRcBnBgsC6uYSRg43NTDwUMsnpe+ubfDKYL/HB+wOKjirYSJP
-         AK/gh7q2G0ku3mIyo5PegsYo3GjPhdNPn9VXl8J2z+20atn3XBo1Brtp+ZFYc7HEyWLD
-         Mmiw==
-X-Forwarded-Encrypted: i=1; AJvYcCXu9mrY9q0xo7UkHpvtZDnW0Nn0DmGiEDUUcQf+inSLnw7ijEwWtzL+YD+pN8EbnyAwQ5XCiHoWwVnHYTE3mRCJtR3XXWDk0u6rgTXSwQ==
-X-Gm-Message-State: AOJu0Yx0hvqCMaCYP/GKM/KSBRwdetd0uJOLl1mVcujKA65ICjuRHeMy
-	O/JmErE1nOY/qt23dRylRjWPCVP1ZRPjKLnjkY+hhwU/Yrm86nsVuKB9mGq7Qnc/7Yift+7nspI
-	VDNPBRJ5wTA6lUclc8xHopMcr8ySr+cVQg0uhSQ==
-X-Google-Smtp-Source: AGHT+IFNoEoWuTCW+J4r60ygLSWMpFSH9Zo3V9Aq2hPRxkt1QB/fN+kZPsxejKNUHrSBHusjPdMi8tBWqcJwR5uPFYI=
-X-Received: by 2002:a05:6902:526:b0:dc6:ff12:13d7 with SMTP id
- y6-20020a056902052600b00dc6ff1213d7mr3280481ybs.60.1714002129912; Wed, 24 Apr
- 2024 16:42:09 -0700 (PDT)
+        bh=/1tN60EyOoTTpXwgrDNf6TzRWNHHafqzCbKwzrT6DXE=;
+        b=IFHx+ZT6O48NoHYj8Kq537biCqzKYpXBXU/s/VKHD0HAjlc0UyO5p7MvhgeL1xzszG
+         26L73samOBC0GEEd6xESQ0zENSZXS+2ZhhF+RDOf0QRroR54aEgnLgeHyJKCVJEeXwoD
+         lngFG79QPJpX7C+mpRfjXZVlWx7XwACjZjpLDVrPQSpt6FqbHHeYAYbBtjTIRJzg4G9T
+         V8NSLOHm7OVMfshvimJGF/kmofpVoCxr/XW6webJLk6FsH20E6a0QNgAv9ga4AQFu8zx
+         V7AWFM+wxIZz+PVBt0aEYG1QV93dAPcYKs/j0lIe0sqTvRuEQ7SZ54arUfsMqBhuPY+m
+         Qvdw==
+X-Forwarded-Encrypted: i=1; AJvYcCXWTtLukU3aeahJEbfV+AoEVlixF8z7InRHdO1dBxlwBaoupVVmifSw9evUF0ZY4YGuEuFulmJMiBVtT3UPXt5ZKAkCP/FUh1vPjY/ZhQ==
+X-Gm-Message-State: AOJu0YwL4ZUsNXaGQpzEBgna+y4vAyDe48ywCFOMAPQ82yny7wTqBMet
+	IYYkp0jxkTeEKW9Xxo5+SdQdloTa3lWTU7vZN84rQihYfvtGZfJjHUpBw9sPBwvAYaEwVC1iPwc
+	a/sOfsLRmNrral1+wae2Rei352mIKNIqXEZQw+Q==
+X-Google-Smtp-Source: AGHT+IH0ZhfG0Ni5n3NvfJ4JxKJary36xcWzUlVDAwrOHVIi0Ry6H9C6abzNJBTJEw8IWgmGC7WDcLOnbeiLdcitnGQ=
+X-Received: by 2002:a25:664a:0:b0:de0:d3af:f52f with SMTP id
+ z10-20020a25664a000000b00de0d3aff52fmr4141531ybm.49.1714002451985; Wed, 24
+ Apr 2024 16:47:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240424101503.635364-1-quic_tengfan@quicinc.com> <20240424101503.635364-3-quic_tengfan@quicinc.com>
-In-Reply-To: <20240424101503.635364-3-quic_tengfan@quicinc.com>
+References: <20240424024508.3857602-1-quic_tengfan@quicinc.com> <20240424024508.3857602-4-quic_tengfan@quicinc.com>
+In-Reply-To: <20240424024508.3857602-4-quic_tengfan@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 25 Apr 2024 02:41:59 +0300
-Message-ID: <CAA8EJpqGub3LuFPbwcA-MTYN2kY=94YXe=T3-mewYzxgcF-ZMQ@mail.gmail.com>
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sm4450: Add cpufreq support
+Date: Thu, 25 Apr 2024 02:47:21 +0300
+Message-ID: <CAA8EJprceDUBtcrT0XLc7V9e0Joyw21YZD9=DONjTTfNM9chBw@mail.gmail.com>
+Subject: Re: [PATCH v7 3/4] arm64: dts: qcom: add base AIM300 dtsi
 To: Tengfei Fan <quic_tengfan@quicinc.com>
-Cc: rafael@kernel.org, viresh.kumar@linaro.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org, 
-	konrad.dybcio@linaro.org, manivannan.sadhasivam@linaro.org, 
-	linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, keescook@chromium.org, 
+	tony.luck@intel.com, gpiccoli@igalia.com, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-hardening@vger.kernel.org, kernel@quicinc.com, 
+	Fenglin Wu <quic_fenglinw@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 24 Apr 2024 at 13:16, Tengfei Fan <quic_tengfan@quicinc.com> wrote:
+On Wed, 24 Apr 2024 at 05:46, Tengfei Fan <quic_tengfan@quicinc.com> wrote:
 >
-> Add a description of a SM4450 cpufreq-epss controller and references to
-> it from CPU nodes.
+> AIM300 Series is a highly optimized family of modules designed to
+> support AIoT applications. It integrates QCS8550 SoC, UFS and PMIC
+> chip etc.
+> Here is a diagram of AIM300 SoM:
+>           +----------------------------------------+
+>           |AIM300 SoM                              |
+>           |                                        |
+>           |                           +-----+      |
+>           |                      |--->| UFS |      |
+>           |                      |    +-----+      |
+>           |                      |                 |
+>           |                      |                 |
+>      3.7v |  +-----------------+ |    +---------+  |
+>   ---------->|       PMIC      |----->| QCS8550 |  |
+>           |  +-----------------+      +---------+  |
+>           |                      |                 |
+>           |                      |                 |
+>           |                      |    +-----+      |
+>           |                      |--->| ... |      |
+>           |                           +-----+      |
+>           |                                        |
+>           +----------------------------------------+
 >
+> Co-developed-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
 > Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/sm4450.dtsi | 29 ++++++++++++++++++++++++++++
->  1 file changed, 29 insertions(+)
+>  arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi | 403 +++++++++++++++++++
+>  1 file changed, 403 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi
 
-With the next patch being squashed in:
+
+> +
+> +&pcie_1_phy_aux_clk {
+> +       clock-frequency = <1000>;
+> +};
+
+Please rebase on top of
+https://lore.kernel.org/linux-arm-msm/20240422-topic-sm8x50-upstream-pcie-1-phy-aux-clk-v4-0-868b15a17a45@linaro.org/
+
+> +
+> +&pcie1 {
+> +       perst-gpios = <&tlmm 97 GPIO_ACTIVE_LOW>;
+> +       wake-gpios = <&tlmm 99 GPIO_ACTIVE_HIGH>;
+
+Please add pinctrl configurations for pcie0 and pcie1
+
+With that fixed:
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
--- 
+> +};
+> +
+>
+
+--
 With best wishes
 Dmitry
 
