@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-18596-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5362F8B2909
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 21:30:22 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E6128B2A3D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 22:57:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D6F711F23F42
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 19:30:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5FF661C2225A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 20:57:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9DF615217A;
-	Thu, 25 Apr 2024 19:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AC07153582;
+	Thu, 25 Apr 2024 20:57:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QjyRtX95"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="D8AseFBS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 422752135A;
-	Thu, 25 Apr 2024 19:30:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B4541553B7;
+	Thu, 25 Apr 2024 20:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714073417; cv=none; b=pJ+zZ+4gruH8Bo1zbchzMNfxLD2UKYFHeXlQSIe1mP/Ifg6FRjjgdSKvO6mkIuwJHYceyUvEawssjcDOtdWeoaPJzEW/SZem1j6ppvNUM32pXF3KYCDtQ1qJU7isNGOC4BMZwStCn6K4QngIPYHO5PLOcnOceeT56kxlFKhNAj4=
+	t=1714078653; cv=none; b=iUxUtprbt8sY28sEqmUlgwlLHN5f+JH9aOZ2MtSJSFpjITfvoDgJ3nhmmGHgkcoE7kSb0vLQgVhtBj405H+NPhGsBnmjgcam9XENUfBn3wUrkE83nGgmjfult0m/+cX/mPZqrs7PdriOkUWwIiLjBagav4+htjgo3wb4Lb6V1Bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714073417; c=relaxed/simple;
-	bh=QaXBz6hCQE64ka3eS8b1UvrKwdInmlXbY7024YOXUq4=;
+	s=arc-20240116; t=1714078653; c=relaxed/simple;
+	bh=AA31ddoXPKsG50Blt7amrjvlWtaClJc1gqXqt8UVLHc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Kz0iYh1+73ehN4oykQ+7Gz1pHJ7ky5S88FITTwYJ/xOvyMQRHAdOWq+gdjB6rl57C291grhU5/863SeD8FpfbcOCZ05ePNDdjhlLB/ZzxFtacXpko8xRiwKiMBHrK2UjILPT554aOXpjcE8Lq5rA65SXuEnqDay24dMLLQj/W44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QjyRtX95; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=SFkn6YkdJS28bdnWxm5xaHghSarEtymfteeH8GK3Jg0E9DxKd1g2dfyQ6T0KQL97iMySNG9EYpQP48Wy+u3Df2185YhUlSmQTMFN57l3cp17QRETBtpOuHwrq3+V/0cqRiLDq0ZG5b+/fVRr3xkVXVJBBeEtVVSFGTcA6Mq8ptE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=D8AseFBS; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43PItkEE009250;
-	Thu, 25 Apr 2024 19:30:10 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43PHoWMq019476;
+	Thu, 25 Apr 2024 20:57:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=BPyYe415dTkCdrIWikjwxnhAfeyA2CT12485YcYWpBk=; b=Qj
-	yRtX957dSpTt62piG/2yqriMpwhW+I8LbPt1cYDf9anmdW0laFR5nFkNYF0WS3p3
-	rrCEY6dVcm+UO4yMCDL9cWutWv2tfdeYVbxik8plttxyhM9Ej8wcU90rZ1q/dNlI
-	YqrkgnVrfv+UHDZ2xdBXRQYfcCV8tA27ocL2r6bnLm7i6CC6QrEwxlPMUwWwivt7
-	OU/c+Bc2AbRPzTMQMR96g9IrS7ac2zP3cy0h6DZEsWmKmIYRNgPM5uDTDxLBfMMz
-	IrhwQk/J7V+VGN82etiXhwzTQfpm7BXpUr53gD48dWZG23Fpxe3g+xxh6omXW6cw
-	xiwC3C3bA4M8bwx9t26Q==
+	qcppdkim1; bh=BJP5DtH0Y5o3nXhxlA9Gq4DZnIs9BkthWHmZdxjB3W0=; b=D8
+	AseFBSrS0mm3BNW+1LaXwnFTR/2BDqbsXye2JeygsXFV4DBUkVVttPbEjn+PJUjC
+	/uDhutnD1DYRqe9u9yH9Gzy9KVGL6RStemXCBQKEJgynEsxKTENT1OWNmEPARTTf
+	+dfdkyHxO6ReRuNiv8DcnPPAF4R+Fb6u2gbqEkf/RCmVrU+GIYQbxJfNQotIJEET
+	VpAnHrJ59Fd1HKcBoPKCqBtZEMgF47wiR2y8MqpaW+2aU3WKr1Bb4jS+moKx5fyd
+	Jja8x/M5o5v51FLxTzPczCepnYnSx9hbJDlxmtXNJFiG0h4NnJ/fQ/MI8noU1PON
+	pb7/QFPAw4/hEaehzhWA==
 Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xqenkkh1q-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xqtph8jd8-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 25 Apr 2024 19:30:09 +0000 (GMT)
+	Thu, 25 Apr 2024 20:57:25 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43PJU8nm008532
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43PKvOnX014606
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 25 Apr 2024 19:30:08 GMT
+	Thu, 25 Apr 2024 20:57:24 GMT
 Received: from [10.110.3.55] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 25 Apr
- 2024 12:30:07 -0700
-Message-ID: <d71c677f-eff7-2bc4-4328-38e4d83e1115@quicinc.com>
-Date: Thu, 25 Apr 2024 12:30:07 -0700
+ 2024 13:57:23 -0700
+Message-ID: <8ff32c6c-0ab9-b6b8-5c89-033eb11f33be@quicinc.com>
+Date: Thu, 25 Apr 2024 13:57:22 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,8 +66,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.15.1
-Subject: Re: [PATCH v7 1/6] soc: qcom: pdr: protect locator_addr with the main
- mutex
+Subject: Re: [PATCH v7 4/6] soc: qcom: qmi: add a way to remove running
+ service
+Content-Language: en-US
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Bjorn Andersson
 	<andersson@kernel.org>,
@@ -83,82 +84,45 @@ CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
 	<bryan.odonoghue@linaro.org>,
         Neil Armstrong <neil.armstrong@linaro.org>
 References: <20240424-qcom-pd-mapper-v7-0-05f7fc646e0f@linaro.org>
- <20240424-qcom-pd-mapper-v7-1-05f7fc646e0f@linaro.org>
-Content-Language: en-US
+ <20240424-qcom-pd-mapper-v7-4-05f7fc646e0f@linaro.org>
 From: Chris Lew <quic_clew@quicinc.com>
-In-Reply-To: <20240424-qcom-pd-mapper-v7-1-05f7fc646e0f@linaro.org>
+In-Reply-To: <20240424-qcom-pd-mapper-v7-4-05f7fc646e0f@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: mC-kUwEGWlYylnplApAnj_Fn0ljkiIoN
-X-Proofpoint-GUID: mC-kUwEGWlYylnplApAnj_Fn0ljkiIoN
+X-Proofpoint-GUID: 5KoNx70fbGDgiMyy4fhI3GQQeaCeLZ6E
+X-Proofpoint-ORIG-GUID: 5KoNx70fbGDgiMyy4fhI3GQQeaCeLZ6E
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-25_19,2024-04-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 phishscore=0
- mlxlogscore=999 priorityscore=1501 impostorscore=0 malwarescore=0
- bulkscore=0 lowpriorityscore=0 spamscore=0 adultscore=0 suspectscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404250140
+ definitions=2024-04-25_20,2024-04-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
+ suspectscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0 adultscore=0
+ mlxscore=0 phishscore=0 mlxlogscore=922 malwarescore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
+ definitions=main-2404250150
 
 
-On 4/24/2024 2:27 AM, Dmitry Baryshkov wrote:
-> If the service locator server is restarted fast enough, the PDR can
-> rewrite locator_addr fields concurrently. Protect them by placing
-> modification of those fields under the main pdr->lock.
+
+On 4/24/2024 2:28 AM, Dmitry Baryshkov wrote:
+> Add qmi_del_server(), a pair to qmi_add_server(), a way to remove
+> running server from the QMI socket. This is e.g. necessary for
+> pd-mapper, which needs to readd a server each time the DSP is started or
+
+s/readd/read/
+
+> stopped.
 > 
-> Fixes: fbe639b44a82 ("soc: qcom: Introduce Protection Domain Restart helpers")
 > Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->   drivers/soc/qcom/pdr_interface.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/soc/qcom/pdr_interface.c b/drivers/soc/qcom/pdr_interface.c
-> index a1b6a4081dea..19cfe4b41235 100644
-> --- a/drivers/soc/qcom/pdr_interface.c
-> +++ b/drivers/soc/qcom/pdr_interface.c
-> @@ -76,12 +76,12 @@ static int pdr_locator_new_server(struct qmi_handle *qmi,
->   					      locator_hdl);
->   	struct pdr_service *pds;
->   
-> +	mutex_lock(&pdr->lock);
->   	/* Create a local client port for QMI communication */
->   	pdr->locator_addr.sq_family = AF_QIPCRTR;
->   	pdr->locator_addr.sq_node = svc->node;
->   	pdr->locator_addr.sq_port = svc->port;
->   
-> -	mutex_lock(&pdr->lock);
->   	pdr->locator_init_complete = true;
->   	mutex_unlock(&pdr->lock);
->   
-> @@ -104,10 +104,10 @@ static void pdr_locator_del_server(struct qmi_handle *qmi,
->   
->   	mutex_lock(&pdr->lock);
->   	pdr->locator_init_complete = false;
-> -	mutex_unlock(&pdr->lock);
->   
->   	pdr->locator_addr.sq_node = 0;
->   	pdr->locator_addr.sq_port = 0;
-> +	mutex_unlock(&pdr->lock);
->   }
->   
->   static const struct qmi_ops pdr_locator_ops = {
-> 
 
-These two functions are provided as qmi_ops handlers in pdr_locator_ops. 
-Aren't they serialized in the qmi handle's workqueue since it as an 
-ordered_workqueue? Even in a fast pdr scenario I don't think we would 
-see a race condition between these two functions.
+<snip>
 
-The other access these two functions do race against is in the 
-pdr_notifier_work. I think you would need to protect locator_addr in 
-pdr_get_domain_list since the qmi_send_request there uses 
-'pdr->locator_addr'.
+> +/**
+> + * qmi_del_server() - register a service with the name service
 
-Thanks!
-Chris
+Update comment to describe removal of service instead of 'register'.
 
