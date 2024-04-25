@@ -1,222 +1,222 @@
-Return-Path: <linux-arm-msm+bounces-18526-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18527-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 871528B1B86
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 09:10:35 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C8448B1BAB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 09:14:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 791A51F23FCE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 07:10:34 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 72AF7B24F50
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 07:14:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB49F6BB39;
-	Thu, 25 Apr 2024 07:10:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A31696BFA3;
+	Thu, 25 Apr 2024 07:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HaAVBR2t"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NkFkTG2A"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B57269DF7
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Apr 2024 07:10:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FD4F3CF5E;
+	Thu, 25 Apr 2024 07:14:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714029031; cv=none; b=KBg+EUeuMZ6ckXGKEnbDdU66EaZ/KPoaSmyUPr+3IaT4iDnx6MJ3g79z5QapTYBs0U5y4EuflXRvHmWtSED52IzHscBriJxqmprB7XEDNLh1DJ5mxPx0krSYfgZIRfS/B0+ZtbGMT6qTWDRWxPBm0OMPUTnrHzRX1h9T/zmIy04=
+	t=1714029254; cv=none; b=dAx52MDaa94sqdngmsr4p/5DnEPnH1fdWswlk8sJCeS7ACx1Gxjp/1jYp3P0iGAsk8Auctth0sucfi01YMrBctAEhNYvWc0r5Gk1oECy+DRSIJYVz58t6W5IFshxJMqevOFokJx14Ntm0CSYmdmAuvNz7y23qhfiIj3AUQeQu0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714029031; c=relaxed/simple;
-	bh=UosUzcAmwAOmYz9QmcT8Kb2jGebrbGq4Ag1KzqJ9J30=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dYg3c+cq0s/bkSnuEYhF0Uc+eulOfMjRq/Y+fT36Tep0B7KozANYyRZW+7bBVc4xMA6lyyqORIZSpAjwVHJ0v6i7OzUApoQ1xKvKgJC2Y7+D02jCTQIbC/ny9wODNDXL5taOqEZ+rTOf6KIq9UOgkI4/oiRt4wTpQipPQEF+dsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HaAVBR2t; arc=none smtp.client-ip=209.85.128.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-6184acc1ef3so6369817b3.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Apr 2024 00:10:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1714029029; x=1714633829; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7oX94Z3yE7ZvhQXajp2mIOeyVn6muLJyVNKFNFAUgCM=;
-        b=HaAVBR2t2uEvmWpUJWSamKjcGulEiNRVBKtoheA+XQwiSBclHTY5EzR0wxmp7/KmrN
-         lB1Qjm/2c4xXJqDGvAzBOrk5OQglgB1ck4QOSoc+6A7JMW/KMdz75ai3D4TE/n/NMYzl
-         fMLOD0gPQlRWGsRYqP7DAXyHvVcumaTFVkP31aEe3KiEKrLb7mJnmga97yJGXCMGZixe
-         5EOP4sqJHLZuZh73vs+DeRwCnzU8tybYgUqMYRTXJMVnx3cLOs1zUS3NW4DzOfSf/Bpe
-         A9WZmZ0B7+e2uSgoy9lN3bZj8MyG599IBCAMflP+lAeb+elo0ZouZjgf/3Pb+U2fYWYa
-         V7AA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714029029; x=1714633829;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7oX94Z3yE7ZvhQXajp2mIOeyVn6muLJyVNKFNFAUgCM=;
-        b=v2tnh4AmdWJsmVfr68VIWFQmzCruEZv7KhvabmhYh3KGYeTxS3Sy7EDkLudyOO4nJU
-         vWTU7YSuo3V6lJi/OX5ZyhSPXSRVqPCek6QNF/nBCLvzKwT32bhKovWiss4KbPbCQg11
-         DQWoVdlUA6ovCG1kqrfpG8aPec2bLsKTlyfM9PKs6N9sYKLboHcOI2fI3h8QeC4cfhdi
-         MrOU5i1/8zhpTGjHXEPTH4Fe/4QWxmJ0nbZ8rzpSO2Qa1kB8ULonunWCbYqgW0np3pig
-         yYzjjLaReLsc2JG6UgRzndAMfi4W0gYjXLMbO9IWVgDTgjVE4fPtKlt1Q0ZVGJJkViSQ
-         9gYw==
-X-Forwarded-Encrypted: i=1; AJvYcCUQEqT7khPmIRct53Tlr704SOaemJ5GXENcz2fgBMzujFffjqnu8prUhtYiIbmbTZd0sm2zdYna3Q63qUMHBPHqviiKcN2820LxsxwbcA==
-X-Gm-Message-State: AOJu0YyTVHA9iRT030C3gcafG1WKvrNVOXBh1jcsIvSC2yCwsImsh1xt
-	I7zDs1QwE8SNVdSWmLOzTAdi9mFMCJ/PMbI5sPmecbByg8OT9g6BpATts0/P9aNih2sSpi/UrUE
-	kH5BaHD23/4wlufCW8WaklXjHUscTAi9TGlUexQ==
-X-Google-Smtp-Source: AGHT+IEuFXDLhT7w9hM4vccu8hN9DCiG61JhtScCmniCBEvYXxmf13IcAi4DlzLZfzd85CUtnDoN77G3bW+dO7pnOj4=
-X-Received: by 2002:a25:ef0e:0:b0:dcc:f5d4:8b43 with SMTP id
- g14-20020a25ef0e000000b00dccf5d48b43mr5704734ybd.9.1714029029048; Thu, 25 Apr
- 2024 00:10:29 -0700 (PDT)
+	s=arc-20240116; t=1714029254; c=relaxed/simple;
+	bh=Uw5k8snV45DhizBJ9JPEOBZducDLygG+f5i+Ls5pmA0=;
+	h=Date:From:To:CC:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=YtvB6+aTUEVk8COFrm6DG4OfKsX2ZAf2keugh72V6sw4JEZy+cPpHTj4bj3mD0tM/QI4WX1JxqlJzxicreUjkFWu+Qjt0OuHpsXMXIyZsV5751TFhcDhTXyXkGEYvW9BfXrE8DuO4+jHwPl6VCZPfw0eJtAMUw8XbkSxODHks5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NkFkTG2A; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43P2jExE001827;
+	Thu, 25 Apr 2024 07:14:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:mime-version:content-type; s=
+	qcppdkim1; bh=OPIXK7D3p+DrH1TF2OY64X+UHr1QtuBR8aKkWrFHsYA=; b=Nk
+	FkTG2Aedng8VcjMQArU8om7cPPYPXKikWSYwljzfjA68F++N8PdAcxRqusvVsVJp
+	D8g2RTf/WaimUkzMniGrtW1/G4/QBAmG64yhLbtjqbtXf7TshkiU9kuBVksNN6LD
+	m8DEc3NrzO3uhKT1e75g2Ggy9jaY5TMXGSd0HooyKFUi06ZiYe8EJ93Mc5cnoXBD
+	3veRZGcijGiigQ1+KuCOMCdAESaNd0KFuTZqezv4QRImqDmpaNGIwuWgnWZIWdyb
+	5efG+6+fvjDq0qLxfPlbMxY7sUulhEQepDPSwr+AJE7aRiNcl9RHjIrVVIQ0NCu/
+	f6XJY9UihSsI0UW5SO7w==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xqenhrsuy-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 25 Apr 2024 07:14:02 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43P7E1x4021022
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 25 Apr 2024 07:14:02 GMT
+Received: from hu-vvalluru-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 25 Apr 2024 00:13:58 -0700
+Date: Thu, 25 Apr 2024 12:43:54 +0530
+From: Venkata Prahlad Valluru <quic_vvalluru@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_abhinavk@quicinc.com>,
+        <quic_nankam@quicinc.com>
+Subject: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2: enable hdmi bridge
+Message-ID: <20240425071354.GA12900@hu-vvalluru-hyd.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240424-qcom-pd-mapper-v7-0-05f7fc646e0f@linaro.org> <CAKXuJqi4GS5T9JXuo39Zyma-2jSc1-rW9mg=nDQRSyB=ni9-1Q@mail.gmail.com>
-In-Reply-To: <CAKXuJqi4GS5T9JXuo39Zyma-2jSc1-rW9mg=nDQRSyB=ni9-1Q@mail.gmail.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 25 Apr 2024 10:10:18 +0300
-Message-ID: <CAA8EJppE4Xaf0ByoMZN3BzjHrBhL-mv3P=BvDht88eHk51AVGA@mail.gmail.com>
-Subject: Re: [PATCH v7 0/6] soc: qcom: add in-kernel pd-mapper implementation
-To: Steev Klimaszewski <steev@kali.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Sibi Sankar <quic_sibis@quicinc.com>, Mathieu Poirier <mathieu.poirier@linaro.org>, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-remoteproc@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>, 
-	Xilin Wu <wuxilin123@gmail.com>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Yl6rC1WRpP1-43TSVpgpoTTrp5ghBaXr
+X-Proofpoint-GUID: Yl6rC1WRpP1-43TSVpgpoTTrp5ghBaXr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-25_06,2024-04-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 adultscore=1 clxscore=1011
+ priorityscore=1501 phishscore=0 mlxlogscore=999 suspectscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
+ definitions=main-2404250050
 
-On Thu, 25 Apr 2024 at 10:08, Steev Klimaszewski <steev@kali.org> wrote:
->
-> Hi Dmitry,
->
-> On Wed, Apr 24, 2024 at 4:28=E2=80=AFAM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > Protection domain mapper is a QMI service providing mapping between
-> > 'protection domains' and services supported / allowed in these domains.
-> > For example such mapping is required for loading of the WiFi firmware o=
-r
-> > for properly starting up the UCSI / altmode / battery manager support.
-> >
-> > The existing userspace implementation has several issue. It doesn't pla=
-y
-> > well with CONFIG_EXTRA_FIRMWARE, it doesn't reread the JSON files if th=
-e
-> > firmware location is changed (or if the firmware was not available at
-> > the time pd-mapper was started but the corresponding directory is
-> > mounted later), etc.
-> >
-> > However this configuration is largely static and common between
-> > different platforms. Provide in-kernel service implementing static
-> > per-platform data.
-> >
-> > Unlike previous revisions of the patchset, this iteration uses static
-> > configuration per platform, rather than building it dynamically from th=
-e
-> > list of DSPs being started.
-> >
-> > To: Bjorn Andersson <andersson@kernel.org>
-> > To: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > To: Sibi Sankar <quic_sibis@quicinc.com>
-> > To: Mathieu Poirier <mathieu.poirier@linaro.org>
-> > Cc: linux-arm-msm@vger.kernel.org
-> > Cc: linux-kernel@vger.kernel.org
-> > Cc: linux-remoteproc@vger.kernel.org
-> > Cc: Johan Hovold <johan+linaro@kernel.org>
-> > Cc: Xilin Wu <wuxilin123@gmail.com>
-> > Cc: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
-> > --
-> >
-> > Changes in v7:
-> > - Fixed modular build (Steev)
-> > - Link to v6: https://lore.kernel.org/r/20240422-qcom-pd-mapper-v6-0-f9=
-6957d01207@linaro.org
-> >
-> > Changes in v6:
-> > - Reworked mutex to fix lockdep issue on deregistration
-> > - Fixed dependencies between PD-mapper and remoteproc to fix modular
-> >   builds (Krzysztof)
-> > - Added EXPORT_SYMBOL_GPL to fix modular builds (Krzysztof)
-> > - Fixed kerneldocs (Krzysztof)
-> > - Removed extra pr_debug messages (Krzysztof)
-> > - Fixed wcss build (Krzysztof)
-> > - Added platforms which do not require protection domain mapping to
-> >   silence the notice on those platforms
-> > - Link to v5: https://lore.kernel.org/r/20240419-qcom-pd-mapper-v5-0-e3=
-5b6f847e99@linaro.org
-> >
-> > Changes in v5:
-> > - pdr: drop lock in pdr_register_listener, list_lock is already held (C=
-hris Lew)
-> > - pd_mapper: reworked to provide static configuration per platform
-> >   (Bjorn)
-> > - Link to v4: https://lore.kernel.org/r/20240311-qcom-pd-mapper-v4-0-24=
-679cca5c24@linaro.org
-> >
-> > Changes in v4:
-> > - Fixed missing chunk, reenabled kfree in qmi_del_server (Konrad)
-> > - Added configuration for sm6350 (Thanks to Luca)
-> > - Removed RFC tag (Konrad)
-> > - Link to v3: https://lore.kernel.org/r/20240304-qcom-pd-mapper-v3-0-68=
-58fa1ac1c8@linaro.org
-> >
-> > Changes in RFC v3:
-> > - Send start / stop notifications when PD-mapper domain list is changed
-> > - Reworked the way PD-mapper treats protection domains, register all of
-> >   them in a single batch
-> > - Added SC7180 domains configuration based on TCL Book 14 GO
-> > - Link to v2: https://lore.kernel.org/r/20240301-qcom-pd-mapper-v2-0-5d=
-12a081d9d1@linaro.org
-> >
-> > Changes in RFC v2:
-> > - Swapped num_domains / domains (Konrad)
-> > - Fixed an issue with battery not working on sc8280xp
-> > - Added missing configuration for QCS404
-> >
-> > ---
-> > Dmitry Baryshkov (6):
-> >       soc: qcom: pdr: protect locator_addr with the main mutex
-> >       soc: qcom: pdr: fix parsing of domains lists
-> >       soc: qcom: pdr: extract PDR message marshalling data
-> >       soc: qcom: qmi: add a way to remove running service
-> >       soc: qcom: add pd-mapper implementation
-> >       remoteproc: qcom: enable in-kernel PD mapper
-> >
-> >  drivers/remoteproc/Kconfig          |   4 +
-> >  drivers/remoteproc/qcom_q6v5_adsp.c |  11 +-
-> >  drivers/remoteproc/qcom_q6v5_mss.c  |  10 +-
-> >  drivers/remoteproc/qcom_q6v5_pas.c  |  12 +-
-> >  drivers/remoteproc/qcom_q6v5_wcss.c |  12 +-
-> >  drivers/soc/qcom/Kconfig            |  14 +
-> >  drivers/soc/qcom/Makefile           |   2 +
-> >  drivers/soc/qcom/pdr_interface.c    |   6 +-
-> >  drivers/soc/qcom/pdr_internal.h     | 318 ++---------------
-> >  drivers/soc/qcom/qcom_pd_mapper.c   | 656 ++++++++++++++++++++++++++++=
-++++++++
-> >  drivers/soc/qcom/qcom_pdr_msg.c     | 353 +++++++++++++++++++
-> >  drivers/soc/qcom/qmi_interface.c    |  67 ++++
-> >  include/linux/soc/qcom/pd_mapper.h  |  28 ++
-> >  include/linux/soc/qcom/qmi.h        |   2 +
-> >  14 files changed, 1193 insertions(+), 302 deletions(-)
-> > ---
-> > base-commit: a59668a9397e7245b26e9be85d23f242ff757ae8
-> > change-id: 20240301-qcom-pd-mapper-e12d622d4ad0
-> >
-> > Best regards,
-> > --
-> > Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >
-> >
-> I've tested this series over a large number of reboots, and the p-d
-> devices(?) do always seem to come up (with the pd-mapper service
-> disabled) on my Thinkpad X13s.  One less service to run in userland!
-> Tested-by: Steev Klimaszewski <steev@kali.org>
+Enable lt9611uxc bridge for qcs6490 rb3 gen2 platform.
 
-Thank you!
+Signed-off-by: Prahlad Valluru <quic_vvalluru@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 86 ++++++++++++++++++++
+ 1 file changed, 86 insertions(+)
 
---=20
-With best wishes
-Dmitry
+diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+index a085ff5b5fb2..ff963f94c0e3 100644
+--- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
++++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+@@ -51,6 +51,18 @@
+ 			};
+ 		};
+ 	};
++	
++	hdmi-connector {
++		compatible = "hdmi-connector";
++		label = "HDMI";
++		type = "a";
++
++		port {
++			hdmi_con: endpoint {
++				remote-endpoint = <&lt9611_out>;
++			};
++		};
++	};
+ 
+ 	reserved-memory {
+ 		xbl_mem: xbl@80700000 {
+@@ -530,6 +542,45 @@
+ 			   <GCC_WPSS_RSCP_CLK>;
+ };
+ 
++&i2c0 {
++	clock-frequency = <400000>;
++	status = "okay";
++
++	lt9611_codec: hdmi-bridge@2b {
++		compatible = "lontium,lt9611uxc";
++		reg = <0x2b>;
++
++		interrupts-extended = <&tlmm 24 IRQ_TYPE_EDGE_FALLING>;
++		reset-gpios = <&pm7250b_gpios 2 GPIO_ACTIVE_HIGH>;
++
++		vcc-supply = <&vreg_l11c_2p8>;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&lt9611_irq_pin &lt9611_rst_pin>;
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++
++				lt9611_a: endpoint {
++					remote-endpoint = <&mdss_dsi0_out>;
++				};
++			};
++
++			port@2 {
++				reg = <2>;
++
++				lt9611_out: endpoint {
++					remote-endpoint = <&hdmi_con>;
++				};
++			};
++		};
++	};
++};
++
+ &i2c1 {
+ 	status = "okay";
+ 
+@@ -602,6 +653,21 @@
+ 	status = "okay";
+ };
+ 
++&mdss_dsi {
++        vdda-supply = <&vreg_l6b_1p2>;
++        status = "okay";
++};
++
++&mdss_dsi0_out {
++        remote-endpoint = <&lt9611_a>;
++        data-lanes = <0 1 2 3>;
++};
++
++&mdss_dsi_phy {
++        vdds-supply = <&vreg_l10c_0p88>;
++        status = "okay";
++};
++
+ &qupv3_id_0 {
+ 	status = "okay";
+ };
+@@ -711,3 +777,23 @@
+ 	function = "gpio";
+ 	bias-disable;
+ };
++
++&pm7250b_gpios {
++        lt9611_rst_pin: lt9611-rst-state {
++                pins = "gpio2";
++                function = "normal";
++
++                output-high;
++                input-disable;
++                power-source = <0>;
++        };
++};
++
++&tlmm {
++        lt9611_irq_pin: lt9611-irq {
++                pins = "gpio24";
++                function = "gpio";
++                drive-strength = <8>;
++                bias-disable;
++        };
++};
+-- 
+2.17.1
+
 
