@@ -1,57 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-18572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF0538B2334
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 15:55:33 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 586118B235F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 16:01:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8FA62B21F24
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 13:55:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8B4231C21A71
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 14:01:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B000149DF8;
-	Thu, 25 Apr 2024 13:55:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DFD2149C67;
+	Thu, 25 Apr 2024 14:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AWxqf85T"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hjFvDYeI"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502DF149DF0;
-	Thu, 25 Apr 2024 13:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5199E149C52;
+	Thu, 25 Apr 2024 14:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714053317; cv=none; b=DykYE5xWhwK9UuZpOO+qFo8FJqYPJRDkd3Iwtc4RJhWR0DcTwvalkLCpy24pV0C6LgHlQYNwaBRwI3NBBsh+5NvFu+VTi+o6Fju2hjNty3a7xOl+1IhG2lRM4zoobFMiWrpbngVbtL9dt6eVwHlg+wtp6yPbfl3obCst0RfVY+0=
+	t=1714053673; cv=none; b=iMhrsdf1LRVm40ofpbYuQyvXrIt+RJq+geygG/qCL2C7jmu/fbRdlUVaDzUXkJqwjprBvZrw3wU5cQ4FUWondSE0lrzDLZyA6eg9gJUpzYYF9HSLBEl1XwJjCrOw9yn6fUgKzEwr/5z/FShJOte5eK6+xZ0ym5i8dQPCWe9yQjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714053317; c=relaxed/simple;
-	bh=rGX1kGwneL3/PGdNllq2QBsrGpesZjG2VX8TcFm1Z98=;
+	s=arc-20240116; t=1714053673; c=relaxed/simple;
+	bh=Nb/EYWJi0ha97Uh0+IpoBR6DF1ibajY3g34psIbNSQU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ohvPJURszg2InnAyCqfbCdF3/RnjjDV8BOFOAgqUssZ1k+MhnzDE5WnJrS4a0EB6xtTBXo+IvGhDGZHepHOlzz0XyvDldBFz3iN+gdykgRRxZ2kqY13pcB6GuS4P5jECIuWSUa4u5FkC6DWVBoc0TW7o3UpV3cDDNrnWGgL57cE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AWxqf85T; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934B3C113CC;
-	Thu, 25 Apr 2024 13:55:14 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=mTFA1e3Xj0QOzWYcXIfAuYc/MqKN2yH4lqsbchTQz8TQjzVf4QZgFaxq3vWsJnq9N0jYB2VvAJuRQWXIKehVKrHbxufZvZsffcIkLNelby8RjRWWs5aeQO0i3mdqG+YKalp+ptehHuXhUw9nREVPPVNGTTK0I1FzaGikz8NHpeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hjFvDYeI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 994CAC113CC;
+	Thu, 25 Apr 2024 14:01:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714053316;
-	bh=rGX1kGwneL3/PGdNllq2QBsrGpesZjG2VX8TcFm1Z98=;
+	s=k20201202; t=1714053672;
+	bh=Nb/EYWJi0ha97Uh0+IpoBR6DF1ibajY3g34psIbNSQU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=AWxqf85TcYDGftbtM/0Kcfk4fmo4CNjwsPYu0PmuWTKny7o+fl3+c/jjaGuSvSufV
-	 aIh7134gn8pDD7fKtawkIwmH1rCYasAe082OCPdQkQSFnvkzQOi862di9oCWMxLmSk
-	 360yfty/bLN0il0y9l5OGeCym944lJNNBkUspV5+nVJMxiTZHdo39UnrZbsiUNvocP
-	 PquJHAC0ne/XjmytX5y3WE3qAYcOB4ZxU2BTa6mqsxv7Q9pSTE+usogLueNQrE+PeP
-	 kmNzXub6BLMpNH4Jetkw/HuQ1hmFRGDVqa3MxFZxrbrvpCH+H0yTfXsAVd8OBx+AED
-	 rV0RBRqu1yQSA==
-Date: Thu, 25 Apr 2024 19:25:06 +0530
+	b=hjFvDYeI8tBC/vJpFmCbM0Q/jPU6llQsaNTX6uuZ8JAqXizv4rYwjiTJv/i5k2mdV
+	 sUZBl8r622lC20BT8TWYYnJaSPctmzJ+ZMXb4JuDYtzKMju5AvQhLRxaFj/+Pc9o8l
+	 G9wi0BTW+ABisEetDdqzeU+GY6+h7LXi4RzXNLC5Xl4opLr4w2GDhKoHpUYAR0Yqq0
+	 fCV6CQcigf+hFVpQ6Q8V0fvZygKjmeR+SkLyjuwVZUIZ7Ts6HQKXgHxIbflIs7bdOC
+	 qxWpaOOskjvNw3ttmF9RAiwo/3O4uF2O6h0YfzbqnX7LHrVMRF6wjRgeAjD+OD9dNs
+	 tlN6w40rIcD7Q==
+Date: Thu, 25 Apr 2024 19:31:06 +0530
 From: Manivannan Sadhasivam <mani@kernel.org>
 To: Qiang Yu <quic_qianyu@quicinc.com>
 Cc: quic_jhugo@quicinc.com, mhi@lists.linux.dev,
 	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
 	quic_cang@quicinc.com, quic_mrana@quicinc.com
-Subject: Re: [PATCH v4 2/3] bus: mhi: host: Add a new API for getting channel
- doorbell address
-Message-ID: <20240425135506.GF3449@thinkpad>
+Subject: Re: [PATCH v4 3/3] bus: mhi: host: pci_generic: Add edl callback to
+ enter EDL
+Message-ID: <20240425140106.GG3449@thinkpad>
 References: <1713868417-37856-1-git-send-email-quic_qianyu@quicinc.com>
- <1713868417-37856-3-git-send-email-quic_qianyu@quicinc.com>
+ <1713868417-37856-4-git-send-email-quic_qianyu@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,88 +61,134 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1713868417-37856-3-git-send-email-quic_qianyu@quicinc.com>
+In-Reply-To: <1713868417-37856-4-git-send-email-quic_qianyu@quicinc.com>
 
-On Tue, Apr 23, 2024 at 06:33:36PM +0800, Qiang Yu wrote:
-> Some controllers may want to know the address of a certain doorbell. Hence
-> add a new API where we read CHDBOFF register to get the base address of
-> doorbell, so that the controller can calculate the address of the doorbell
-> it wants by adding additional offset.
+On Tue, Apr 23, 2024 at 06:33:37PM +0800, Qiang Yu wrote:
+> Some of the MHI modems like SDX65 based ones are capable of entering the EDL
+> mode as per the standard triggering mechanism defined in the MHI spec v1.2. So
+> let's add a common mhi_pci_generic_edl_trigger() function that triggers the EDL
+> mode in the device when user writes to the /sys/bus/mhi/devices/.../trigger_edl
+> file.
 > 
 > Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
 
-One nitpick below. But I'll fix it.
+Same comment as previous.
 
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 > ---
->  drivers/bus/mhi/host/init.c |  6 ++----
->  drivers/bus/mhi/host/main.c | 16 ++++++++++++++++
->  include/linux/mhi.h         |  6 ++++++
->  3 files changed, 24 insertions(+), 4 deletions(-)
+>  drivers/bus/mhi/host/pci_generic.c | 45 ++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 45 insertions(+)
 > 
-> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-> index 7104c18..6e0fa79 100644
-> --- a/drivers/bus/mhi/host/init.c
-> +++ b/drivers/bus/mhi/host/init.c
-> @@ -541,11 +541,9 @@ int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
->  	dev_dbg(dev, "Initializing MHI registers\n");
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index 51639bf..c65eaa8 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -27,12 +27,16 @@
+>  #define PCI_VENDOR_ID_THALES	0x1269
+>  #define PCI_VENDOR_ID_QUECTEL	0x1eac
 >  
->  	/* Read channel db offset */
-> -	ret = mhi_read_reg(mhi_cntrl, base, CHDBOFF, &val);
-> -	if (ret) {
-> -		dev_err(dev, "Unable to read CHDBOFF register\n");
-> +	ret = mhi_get_channel_doorbell_offset(mhi_cntrl, &val);
-> +	if (ret)
->  		return -EIO;
+> +#define MHI_EDL_DB			91
+> +#define MHI_EDL_COOKIE			0xEDEDEDED
+> +
+>  /**
+>   * struct mhi_pci_dev_info - MHI PCI device specific information
+>   * @config: MHI controller configuration
+>   * @name: name of the PCI module
+>   * @fw: firmware path (if any)
+>   * @edl: emergency download mode firmware path (if any)
+> + * @edl_trigger: capable of triggering EDL mode in the device (if supported)
+>   * @bar_num: PCI base address register to use for MHI MMIO register space
+>   * @dma_data_width: DMA transfer word size (32 or 64 bits)
+>   * @mru_default: default MRU size for MBIM network packets
+> @@ -44,6 +48,7 @@ struct mhi_pci_dev_info {
+>  	const char *name;
+>  	const char *fw;
+>  	const char *edl;
+> +	bool edl_trigger;
+>  	unsigned int bar_num;
+>  	unsigned int dma_data_width;
+>  	unsigned int mru_default;
+> @@ -292,6 +297,7 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx75_info = {
+>  	.name = "qcom-sdx75m",
+>  	.fw = "qcom/sdx75m/xbl.elf",
+>  	.edl = "qcom/sdx75m/edl.mbn",
+> +	.edl_trigger = true,
+>  	.config = &modem_qcom_v2_mhiv_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>  	.dma_data_width = 32,
+> @@ -302,6 +308,7 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx65_info = {
+>  	.name = "qcom-sdx65m",
+>  	.fw = "qcom/sdx65m/xbl.elf",
+>  	.edl = "qcom/sdx65m/edl.mbn",
+> +	.edl_trigger = true,
+>  	.config = &modem_qcom_v1_mhiv_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>  	.dma_data_width = 32,
+> @@ -312,6 +319,7 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
+>  	.name = "qcom-sdx55m",
+>  	.fw = "qcom/sdx55m/sbl1.mbn",
+>  	.edl = "qcom/sdx55m/edl.mbn",
+> +	.edl_trigger = true,
+>  	.config = &modem_qcom_v1_mhiv_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>  	.dma_data_width = 32,
+> @@ -928,6 +936,40 @@ static void health_check(struct timer_list *t)
+>  	mod_timer(&mhi_pdev->health_check_timer, jiffies + HEALTH_CHECK_PERIOD);
+>  }
+>  
+> +static int mhi_pci_generic_edl_trigger(struct mhi_controller *mhi_cntrl)
+> +{
+> +	void __iomem *base = mhi_cntrl->regs;
+> +	void __iomem *edl_db;
+> +	int ret = 0;
 
-	return ret;
+No need to initialize 'ret'.
 
 - Mani
 
-> -	}
->  
->  	if (val >= mhi_cntrl->reg_len - (8 * MHI_DEV_WAKE_DB)) {
->  		dev_err(dev, "CHDB offset: 0x%x is out of range: 0x%zx\n",
-> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-> index 15d657a..4de7567 100644
-> --- a/drivers/bus/mhi/host/main.c
-> +++ b/drivers/bus/mhi/host/main.c
-> @@ -1691,3 +1691,19 @@ void mhi_unprepare_from_transfer(struct mhi_device *mhi_dev)
->  	}
->  }
->  EXPORT_SYMBOL_GPL(mhi_unprepare_from_transfer);
+> +	u32 val;
 > +
-> +int mhi_get_channel_doorbell_offset(struct mhi_controller *mhi_cntrl, u32 *chdb_offset)
-> +{
-> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> +	void __iomem *base = mhi_cntrl->regs;
-> +	int ret;
-> +
-> +	ret = mhi_read_reg(mhi_cntrl, base, CHDBOFF, chdb_offset);
+> +	ret = mhi_device_get_sync(mhi_cntrl->mhi_dev);
 > +	if (ret) {
-> +		dev_err(dev, "Unable to read CHDBOFF register\n");
-> +		return -EIO;
+> +		dev_err(mhi_cntrl->cntrl_dev, "Failed to wakeup the device\n");
+> +		return ret;
 > +	}
 > +
-> +	return 0;
+> +	pm_wakeup_event(&mhi_cntrl->mhi_dev->dev, 0);
+> +	mhi_cntrl->runtime_get(mhi_cntrl);
+> +
+> +	ret = mhi_get_channel_doorbell_offset(mhi_cntrl, &val);
+> +	if (ret)
+> +		goto err_get_chdb;
+> +
+> +	edl_db = base + val + (8 * MHI_EDL_DB);
+> +
+> +	mhi_cntrl->write_reg(mhi_cntrl, edl_db + 4, upper_32_bits(MHI_EDL_COOKIE));
+> +	mhi_cntrl->write_reg(mhi_cntrl, edl_db, lower_32_bits(MHI_EDL_COOKIE));
+> +
+> +	mhi_soc_reset(mhi_cntrl);
+> +
+> +err_get_chdb:
+> +	mhi_cntrl->runtime_put(mhi_cntrl);
+> +	mhi_device_put(mhi_cntrl->mhi_dev);
+> +
+> +	return ret;
 > +}
-> +EXPORT_SYMBOL_GPL(mhi_get_channel_doorbell_offset);
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index d968e1a..cb3b676 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -816,4 +816,10 @@ int mhi_queue_skb(struct mhi_device *mhi_dev, enum dma_data_direction dir,
->   */
->  bool mhi_queue_is_full(struct mhi_device *mhi_dev, enum dma_data_direction dir);
+> +
+>  static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+>  {
+>  	const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info *) id->driver_data;
+> @@ -962,6 +1004,9 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+>  	mhi_cntrl->runtime_put = mhi_pci_runtime_put;
+>  	mhi_cntrl->mru = info->mru_default;
 >  
-> +/**
-> + * mhi_get_channel_doorbell_offset - Get the channel doorbell offset
-> + * @mhi_cntrl: MHI controller
-> + * @chdb_offset: Channel doorbell offset
-> + */
-> +int mhi_get_channel_doorbell_offset(struct mhi_controller *mhi_cntrl, u32 *chdb_offset);
->  #endif /* _MHI_H_ */
+> +	if (info->edl_trigger)
+> +		mhi_cntrl->edl_trigger = mhi_pci_generic_edl_trigger;
+> +
+>  	if (info->sideband_wake) {
+>  		mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
+>  		mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
 > -- 
 > 2.7.4
 > 
