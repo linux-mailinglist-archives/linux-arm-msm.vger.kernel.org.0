@@ -1,165 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-18552-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18553-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62A988B20C3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 13:53:36 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 126D48B20D3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 14:02:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4615CB259CA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 11:53:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 35A481C213BF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 12:02:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E291B12AAE0;
-	Thu, 25 Apr 2024 11:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27D9A12B148;
+	Thu, 25 Apr 2024 12:02:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uHvz8s1c"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ssZnt+F6"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2FB84DFC;
-	Thu, 25 Apr 2024 11:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC9884E0E;
+	Thu, 25 Apr 2024 12:02:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714046007; cv=none; b=mVda4k5d1gRi/2lPOSBxkJIGJHb+LqKw/dwtAaZjr6LWsGAAE9LpZbAsYxKRdBqJyxcqIwfMkPBzwLmwfu6DYaUfWUwpMXJnjREYo1y9F34+pAOffOiqCW/cfLzrSWKY48bjlvDwn8oxgdYczrFtTYunF0caQGsRPn6FmHpbJlM=
+	t=1714046535; cv=none; b=LcW0FfjMglvyzK+P9A/2sz74AdHpYZmk5W23chi8/ocY6Zr0YqfEc3pSE8wNWy3kC8V0qKfSzW2l1Hh5Y8t3sghl9iw9AGYZabyX1rF85fUULVADoEXJZ88FPHWoxqh9l2YDE15UsooloBDRSMfP8wiqa1D1SNyEtIeIUDrwFeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714046007; c=relaxed/simple;
-	bh=aSfRSzbWwXn9rPVbS1GrF8vTY4pX7wXyQ1jpn5zCY0Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WKcxAh0JIFyYLuPeWMlGY+8KSxGTH1zkaSxdJ+AykRZ/WKCxa27HkD+/IQe5VtwPCvQHYYZtf5hCOPqWVvN1C7KUCxwcAA93IoLsrmtqTdE2uffIfJquqPjiACa1zb4mfu/Lvutj0EuuHV53mwfaKmMOUbH8eZbPbRABL7ZsE50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uHvz8s1c; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC134C113CC;
-	Thu, 25 Apr 2024 11:53:22 +0000 (UTC)
+	s=arc-20240116; t=1714046535; c=relaxed/simple;
+	bh=IsokxEzMjspQdJ6vbgSWEZO+bwVScekTaycFJ/Dr5nM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FadfTfHAfGLJboiZmGniFIpW3JDMjvoVp1tz97fGMXMJCyqZ0CPWQZF0JgxOdvuxheheGOuFau418tbZWUudqyLz1xiDV2tSKpulI37YCX5Vw+G/cH5wyyPuOEl5NecqKd6V3iKZiqwyOv7BRzk+Im4hqxuajuZG6lxafkPjaBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ssZnt+F6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69D7DC113CC;
+	Thu, 25 Apr 2024 12:02:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714046007;
-	bh=aSfRSzbWwXn9rPVbS1GrF8vTY4pX7wXyQ1jpn5zCY0Y=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=uHvz8s1cmMTXAZLt/3PajxbpXItV7EGNw/wFmB6RODxKLGySTYVpi5ZZgwXebA1wh
-	 HK5bcsbOj4mU7fM2VWZAwbA3to2V/SljHI6oXcnSjvgi1FL8jFcj7lPqoReS4gk2qq
-	 n4hI0fXTQUTAqK+ZJ9+cXDsO8iDdb6ddPPKJzI5TmNbtFGX9kHCG9+0wJ6qDQElM26
-	 w2ZceHsrVRp6DJdOC36/wSfIrvtvKdDYsMq+848/asQPQNUJHwuGkBwdl6ltCxdbyC
-	 VpLNihJbgXbzj0yWQvNGr4VXUzanBYpNKlwZH7BDuePXwDo8x8Wkmx4aUSEjzcUcC2
-	 H4LjRTpWQ1/bg==
-Message-ID: <260f8e7c-d96e-4f47-bccd-414e3443fcff@kernel.org>
-Date: Thu, 25 Apr 2024 13:53:20 +0200
+	s=k20201202; t=1714046534;
+	bh=IsokxEzMjspQdJ6vbgSWEZO+bwVScekTaycFJ/Dr5nM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ssZnt+F6c5C7fMP2Rv+zpjBsDZUzPNNQxiUU3+aKm/gMy76wi/kViatVTn0CwizWF
+	 GKQmIY/KZtpsqcd3hGGWRqVBKFxKqfg/qhEFgvkPtoQ1Ivpaij54PeyWnWD86GOw+a
+	 ETQQ/q97VlYlkalLlE2f1QK8rzoFmCIfRROFKBF8GkTtOEAtg3pTvxbwd7F6CjYsDs
+	 wYIImnz+C3zwgR/vFCMBBUwSGAHZyw9Ar48HwrAeH/dS3xzUEh87u1PeUlPfub/0qb
+	 ADx988KGvC5r/QxV6gr3xd8jHidY7Afv0fAUZA3fRMj9svI5UE6nozaR80ECjOqEnn
+	 GH0q3p3x2sheA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rzxnq-000000001yQ-0MAo;
+	Thu, 25 Apr 2024 14:02:14 +0200
+Date: Thu, 25 Apr 2024 14:02:14 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Brian Norris <computersforpeace@gmail.com>,
+	Jaiganesh Narayanan <njaigane@codeaurora.org>,
+	Doug Anderson <dianders@chromium.org>,
+	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] pinctrl: qcom: Fix behavior in abscense of open-drain
+ support
+Message-ID: <ZipGRl_QC_x83MFt@hovoldconsulting.com>
+References: <20240424-tlmm-open-drain-v1-1-9dd2041f0532@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/7] ASoC: dt-bindings: document wcd937x Audio Codec
-To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>
-Cc: linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
- linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
- quic_pkumpatl@quicinc.com
-References: <20240425091857.2161088-1-quic_mohs@quicinc.com>
- <20240425091857.2161088-2-quic_mohs@quicinc.com>
- <3f961aca-6dff-4d51-bb0b-c974ed80b646@kernel.org>
- <89c29d6c-173d-5b19-ce7d-9c2b7cec40f2@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <89c29d6c-173d-5b19-ce7d-9c2b7cec40f2@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240424-tlmm-open-drain-v1-1-9dd2041f0532@quicinc.com>
 
-On 25/04/2024 13:47, Mohammad Rafi Shaik wrote:
-> On 4/25/2024 4:31 PM, Krzysztof Kozlowski wrote:
->> On 25/04/2024 11:18, Mohammad Rafi Shaik wrote:
->>> From: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
->>>
->>> Document the Qualcomm WCD9370/WCD9375 Audio Codec and the soundwire
->>> devices can be found on Qualcomm QCM6490 based platforms.
->>>
->>> The Qualcomm WCD9370/WCD9375 Audio Codec communicates
->>> with the host SoC over 2 Soundwire links to provide:
->>> - 3 TX ADC paths with 4 differential AMIC inputs
->>> - 6 DMIC inputs that are shared with AMIC input
->>> - 4 Microphone BIAS
->>> - RX paths with 4 PAs – HPHL/R, EAR and AUX
->>> - Stereo Headphone output
->>> - MBHC engine for Headset Detection
->>>
->>> Co-developed-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
->>> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
->>> Signed-off-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
->>
->> 1. That's odd order of tags. Who created the first patch?
+On Wed, Apr 24, 2024 at 08:45:31PM -0700, Bjorn Andersson wrote:
+> When a GPIO is configured as OPEN_DRAIN gpiolib will in
+> gpiod_direction_output() attempt to configure the open-drain property of
+> the hardware and if this fails fall back to software emulation of this
+> state.
 > 
->     First patch is created by : Prasad Kumpatla <quic_pkumpatl@quicinc.com>
-
-So look at submitting patches explaining the order.
-
-
->>
->> 2. Last time you received report that this was not tested. Now there is
->> again report.
->> Are you sure you test patches before sending?
->>
->    Yes i have tested patches multiple times before sending.
+> The TLMM block in most Qualcomm platform does not implement such
+> functionality, so this call would be expected to fail. But due to lack
+> of checks for this condition, the zero-initialized od_bit will cause
+> this request to silently corrupt the lowest bit in the config register
+> (which typically is part of the bias configuration) and happily continue
+> on.
 > 
->    In my setup the "make dt_binding_check"  became success, there is no 
-> errors.
+> Fix this by checking if the od_bit value is unspecified and if so fail
+> the request to avoid the unexpected state, and to make sure the software
+> fallback actually kicks in.
+
+Fortunately, this is currently not a problem as the gpiochip driver does
+not implement the set_config() callback, which means that the attempt to
+change the pin configuration currently always fails with -ENOTSUP (see
+gpio_do_set_config()).
+
+Specifically, this means that the software fallback kicks in, which I
+had already verified.
+
+Now, perhaps there is some other path which can allow you to end up
+here, but it's at least not via gpiod_direction_output().
+
+The msm pinctrl binding does not allow 'drive-open-drain' so that path
+should also be ok unless you have a non-conformant devicetree.
+
+> It is assumed for now that no implementation will come into existence
+> with BIT(0) being the open-drain bit, simply for convenience sake.
 > 
+> Fixes: 13355ca35cd1 ("pinctrl: qcom: ipq4019: add open drain support")
 
-I can easily reproduce the errors, so you probably don't have yamllint
-and use old dtschema and/or old kernel.
+I guess hardware open-drain mode has never been properly tested on
+ipq4019.
 
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> ---
+>  drivers/pinctrl/qcom/pinctrl-msm.c | 2 ++
+>  drivers/pinctrl/qcom/pinctrl-msm.h | 3 ++-
+>  2 files changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+> index aeaf0d1958f5..329474dc21c0 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+> @@ -313,6 +313,8 @@ static int msm_config_reg(struct msm_pinctrl *pctrl,
+>  			*mask |= BIT(g->i2c_pull_bit) >> *bit;
+>  		break;
+>  	case PIN_CONFIG_DRIVE_OPEN_DRAIN:
+> +		if (!g->od_bit)
+> +			return -EOPNOTSUPP;
 
+I believe this should be -ENOTSUPP, which the rest of the driver and
+subsystem appear to use.
 
-Best regards,
-Krzysztof
+>  		*bit = g->od_bit;
+>  		*mask = 1;
+>  		break;
 
+Johan
 
