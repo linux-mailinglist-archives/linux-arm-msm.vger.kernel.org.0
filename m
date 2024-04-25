@@ -1,73 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-18546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D84928B1F52
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 12:38:24 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 848D78B1FBE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 13:01:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 788611F21EDF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 10:38:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B10E91C21AC6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 11:01:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6293E1DA5F;
-	Thu, 25 Apr 2024 10:38:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C172C22EE8;
+	Thu, 25 Apr 2024 11:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r2H7/B80"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cIC6uP1i"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3612D1CD23;
-	Thu, 25 Apr 2024 10:38:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E17D1EB3E;
+	Thu, 25 Apr 2024 11:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714041498; cv=none; b=uuO8m6thXNw228GO/OxiuJ5DZMl0ywLlw9A3xPWkquNrwKZUG3LWK4qvk5kmor0DoC8S4dadRh4dujRA89RVoYqidX7QlfEoykApWh1MuOOIyTtixtosP6G2znMLY9wSwLqEyYg9oCHwlA6wqigxtZ+DJ/QJs9+sbA1wC0q1oow=
+	t=1714042883; cv=none; b=hWpXzVPgMzm+F29mb9F3n7YBmvHRuFgy+JfVAbwweC+2CEP2mg2xSQuqlmges6qJu/0+vsgDkkggQ1SgoUfT8osE8g5xa/JF+UNTKT+WGg9P+AXpV6VlbQeZEiPZvlO9l3+0lgwJf97Kdk1wGx5vItAsNH6yWQQPZaMBggx8s6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714041498; c=relaxed/simple;
-	bh=s0flc0O0ENfWyvDrw9EUrpvhWQMG2H4AQk5/xSXi9Dw=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=SDRQ0uvpBoMq+S84ETHGNz1wwmNQvaVglf+EoqB8cu1gwKbAvj8AFulIRXo0FcyxUjqt+7vc4Yytl/hIYA31HK4/M8Y8QmF6JKwNNp1nrZyj/1cTM1r5uQYFrTX9EJ8NW1pKv4gwvSMMqrf8YmI68GmwoFgAEQFA+ciVGqQaTMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r2H7/B80; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0076C113CE;
-	Thu, 25 Apr 2024 10:38:17 +0000 (UTC)
+	s=arc-20240116; t=1714042883; c=relaxed/simple;
+	bh=HReixTAFEcX9Geh8zF/+sultK6S116pjfJ2ejirmo3g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GPXJRfMurXpWfnzDH0RUgupbISYaqpum0+ysvsZe2RfzsZxR5gFQ/PTQtA6DkQdSZYgDMReGRs+AWKv9TQSG76OzVXWfjjw1rXUP2xO0XCCzQ/i1xC1fMaqi5bj5vQFPYbe9zuEBZOxG4WBNXAeoqzIlgwEy8/VdmkOGZipZnLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cIC6uP1i; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE91CC113CC;
+	Thu, 25 Apr 2024 11:01:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714041497;
-	bh=s0flc0O0ENfWyvDrw9EUrpvhWQMG2H4AQk5/xSXi9Dw=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=r2H7/B80LbmXbUwobGpFjbK/uHkJiSDy7N0XJdAWDAh4l8mZuGdqrQpJtcKT+kdQ7
-	 AiE9BX2JqCRSz+9ordjnrN8awj/1lEX7HEiw+n9iCzvADATTwFzNZG8tW1+monKTlS
-	 tr6fM7SSkZslpGTsr6n6EEF8FQzwqW1s2vmjwJXqgnxOUZP9zBi90O3yTEPnRvMNYu
-	 Oj9Hq3kr2Rtu5gA+ldv7kBzGbzzzD8FIAYbVf+XBnALVK7MCQWAdNYraNC8NkXlcz2
-	 4gKHq49/OyhhDb2vXe/4F1ZhQTIXPSvM2hQ/KigtwnxDobf0QNMWpOtsCd8WXFnKqc
-	 237EvN37jx1EA==
-Date: Thu, 25 Apr 2024 05:38:16 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=k20201202; t=1714042883;
+	bh=HReixTAFEcX9Geh8zF/+sultK6S116pjfJ2ejirmo3g=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=cIC6uP1i2RcUJc5F2lJlf1ztmEl9fW60og7UoX1Z1ImQFxbO9ONJbtHOQONPWljt3
+	 klAoqaRi6km0o2xEg8MDEyBMmeWMwy2jbNMr9bmFHbyXHOVhhwLPDDKR1uiQBIDwZY
+	 qBAb00g+RgptbzQ10tmcKwftsWXc8VRuykLKtTHB95mBdMa+EhiLaXh3QxHh3waVTC
+	 X3i+qZJeWm6apIS3G3QsGrQVqsRvSfcs/vfgrWs1VgqrIy5JoEuur1MXCn1EvDVnnf
+	 u+fWrhON1sSitxXcNtqTzmYvXozd/HlPD0VVDiMSdTAaWaeKEKdQ2DOc/Rm54f0eQB
+	 qPCRacNX0QrGA==
+Message-ID: <3f961aca-6dff-4d51-bb0b-c974ed80b646@kernel.org>
+Date: Thu, 25 Apr 2024 13:01:16 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Cc: Mark Brown <broonie@kernel.org>, Takashi Iwai <tiwai@suse.com>, 
- linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- quic_rohkumar@quicinc.com, linux-arm-msm@vger.kernel.org, 
- Banajit Goswami <bgoswami@quicinc.com>, quic_pkumpatl@quicinc.com, 
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
- alsa-devel@alsa-project.org, Conor Dooley <conor+dt@kernel.org>
-In-Reply-To: <20240425091857.2161088-2-quic_mohs@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/7] ASoC: dt-bindings: document wcd937x Audio Codec
+To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>
+Cc: linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
+ quic_pkumpatl@quicinc.com
 References: <20240425091857.2161088-1-quic_mohs@quicinc.com>
  <20240425091857.2161088-2-quic_mohs@quicinc.com>
-Message-Id: <171404149555.2167007.16345461403970586923.robh@kernel.org>
-Subject: Re: [PATCH v3 1/7] ASoC: dt-bindings: document wcd937x Audio Codec
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240425091857.2161088-2-quic_mohs@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-
-On Thu, 25 Apr 2024 14:48:51 +0530, Mohammad Rafi Shaik wrote:
+On 25/04/2024 11:18, Mohammad Rafi Shaik wrote:
 > From: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
 > 
 > Document the Qualcomm WCD9370/WCD9375 Audio Codec and the soundwire
@@ -85,46 +131,14 @@ On Thu, 25 Apr 2024 14:48:51 +0530, Mohammad Rafi Shaik wrote:
 > Co-developed-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 > Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 > Signed-off-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
-> ---
->  .../bindings/sound/qcom,wcd937x-sdw.yaml      | 78 +++++++++++++++++++
->  .../bindings/sound/qcom,wcd937x.yaml          | 58 ++++++++++++++
->  2 files changed, 136 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
->  create mode 100644 Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml
-> 
 
-My bot found errors running 'make dt_binding_check' on your patch:
+1. That's odd order of tags. Who created the first patch?
 
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml:30:11: [warning] wrong indentation: expected 4 but found 10 (indentation)
-./Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml:34:13: [warning] wrong indentation: expected 6 but found 12 (indentation)
-./Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml:34:17: [warning] too many spaces before colon (colons)
-./Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml:46:13: [warning] wrong indentation: expected 6 but found 12 (indentation)
-./Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml:46:17: [warning] too many spaces before colon (colons)
+2. Last time you received report that this was not tested. Now there is
+again report.
+Are you sure you test patches before sending?
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,wcd937x.example.dtb: codec: compatible:0: 'sdw20217010a00' was expected
-	from schema $id: http://devicetree.org/schemas/sound/qcom,wcd937x.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,wcd937x.example.dtb: codec: 'reg' is a required property
-	from schema $id: http://devicetree.org/schemas/sound/qcom,wcd937x.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,wcd937x.example.dtb: codec: '#sound-dai-cells', 'qcom,micbias1-microvolt', 'qcom,micbias2-microvolt', 'qcom,micbias3-microvolt', 'qcom,micbias4-microvolt', 'qcom,rx-device', 'qcom,tx-device', 'reset-gpios', 'vdd-buck-supply', 'vdd-mic-bias-supply', 'vdd-px-supply', 'vdd-rxtx-supply' do not match any of the regexes: 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/sound/qcom,wcd937x.yaml#
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240425091857.2161088-2-quic_mohs@quicinc.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+Best regards,
+Krzysztof
 
 
