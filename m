@@ -1,113 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-18586-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 962198B263E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 18:21:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 44D8F8B26B1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 18:40:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C57FA1C22B2C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 16:21:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 76C891C212CC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 16:40:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B10614D29A;
-	Thu, 25 Apr 2024 16:21:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62BE514D2B7;
+	Thu, 25 Apr 2024 16:40:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bJ/V4Z0o"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kpCGPsNP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097772D60A;
-	Thu, 25 Apr 2024 16:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3457614C5BD;
+	Thu, 25 Apr 2024 16:40:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714062105; cv=none; b=mqfQLSfrmwt9j5YrsolTHu+eMuOA5RNrWDRmGJ0Z4MvNoPzaMFjYIflUymxDoh7RwAJ0k9zblTKuFYsUAyAKB/D/fM5a1hCAwzuvNKiLaDofWoqXoDDcRDKTFJqxt0IDroaPz1QODC2Y+ZWd19SGRznxIqz8d68vyflDr9UhVVo=
+	t=1714063204; cv=none; b=e4Wnc9E3m4Al/9Mdx3Qdd8JnBEihjkwbsPDPX9PGAphjgHZrn438Y9zlykmaL5kOw5ljErLBBH6gy66uilH5ez5Do5zjS87t0V2TM0jT9D7Yy6aoZnrZBrSgld7M0E7IkFe7jOLpnUeRrLpP27oYrPo4Hf48yQZTmQN5pN0NauM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714062105; c=relaxed/simple;
-	bh=eNhCNG+DMjObqRB26BLTw1alILboFKx0y4neqkl4G7I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JTotyydE2E7rJxT0WbAvzD/1SArmHd+nAcpGPvmgDJwovYI6kgj3ZSn17hiP1rze71y9rp3aqVNaD910FpcEoIAsrpMpJl8SFbgEtKtwcVTPFY0wylHtsxptukhiboYCG6Z1QJIiaQ26Z8KJXGACGKjjsgkia28TxBEIyG8HhcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bJ/V4Z0o; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E2EC113CC;
-	Thu, 25 Apr 2024 16:21:41 +0000 (UTC)
+	s=arc-20240116; t=1714063204; c=relaxed/simple;
+	bh=LbSqadMzoFjsuXSnWvEu/tPbSTkv0wSi5qeCjW/x/YA=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=VeeOicCbLAAJnbbNXKmZRI5riOdl2+y904docYXmg2XLA6KR+IbMsGmZtNCtMkeyIPrxvslHOZfnZ3iM/J3uhcHsuDhTKQi3VB+b7YO8Hr7XqmKmaugYqaDEzGGgfo1q5PiZAn3xHWbEUvylstOe0imVKEIShr32zSV35qT7vAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kpCGPsNP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AFEEC113CE;
+	Thu, 25 Apr 2024 16:39:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714062104;
-	bh=eNhCNG+DMjObqRB26BLTw1alILboFKx0y4neqkl4G7I=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=bJ/V4Z0oJcOCLOhyzy2NXI/RceqrUY6tt2K2VV7Zgy7FV5+JWpUYhmKf37AbpM+k5
-	 2vpcYQnyq3o7NAESejvUHBILXaOsFwKvWw6X04D6LlSTSrvt5T4MKGwIulKV7YlweH
-	 FZb5jWhu/kGptXh/81RjwCYVk7qveQJS/AYyX+8Vy8vt7iaar9D7yhtrxFhlktqYDx
-	 jFuLYPZe03K//HVxKa4ApoONIoRXpC1fD/Mo/dBWjO1AfR70eVjzQne6Z2NI+347Gv
-	 ucRp0qm+P2nbnLnHr7dC0AvVCNvpuEngzTdb2lpUiutfAUf1BTqyRrITC5S3jf/3C1
-	 okwYxisXQY+Sw==
-Message-ID: <024c4c07-18df-4cab-97e5-30969d189aa8@kernel.org>
-Date: Thu, 25 Apr 2024 19:21:38 +0300
+	s=k20201202; t=1714063204;
+	bh=LbSqadMzoFjsuXSnWvEu/tPbSTkv0wSi5qeCjW/x/YA=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=kpCGPsNPtizwkRXzbbBOisqIxYXAYDvBURByNuPNU7j+hAZaM3rY4zD9QvWJosW68
+	 iC0L8DM0TP4KnXEx4C3MICMMVEH9a6cqbEgZ7ANWMYOYB6nyRMCg2jexrQAtQQNaO4
+	 sS+tAVTrBYCPA95XjLgyBzehFuUM7HqoFrvJ4I1FAjXyN03+BjI2hp4QK/8bHTh7sz
+	 CA0JgVVrA7XGz3fZ5GjYINhkpDAI3n3XxKqZtHGVMLXXrpq0YuSbeaa7K2SaZn/zPI
+	 ed2bP4EbknrklmiDXJLJCsNer2VxtXL2JV3xQkOXT7D3dMuzr4kwowbBdy2W06/FNN
+	 Re8OsFDjeHi7w==
+From: Kalle Valo <kvalo@kernel.org>
+To: Conor Dooley <conor@kernel.org>
+Cc: Marc Gonzalez <mgonzalez@freebox.fr>,  Dmitry Baryshkov
+ <dmitry.baryshkov@linaro.org>,  Konrad Dybcio <konrad.dybcio@linaro.org>,
+  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,  Jeff Johnson
+ <quic_jjohnson@quicinc.com>,  ath10k <ath10k@lists.infradead.org>,
+  wireless <linux-wireless@vger.kernel.org>,  DT
+ <devicetree@vger.kernel.org>,  MSM <linux-arm-msm@vger.kernel.org>,  Rob
+ Herring <robh+dt@kernel.org>,  Conor Dooley <conor+dt@kernel.org>,
+  Pierre-Hugues Husson <phhusson@freebox.fr>,  Arnaud Vrac
+ <avrac@freebox.fr>,  Bjorn Andersson <andersson@kernel.org>,  Jami
+ Kettunen <jamipkettunen@gmail.com>,  Marijn Suijten
+ <marijn.suijten@somainline.org>,  Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: msm8998: set
+ qcom,no-msa-ready-indicator for wifi
+References: <502322f1-4f66-4922-bc4e-46bacac23410@linaro.org>
+	<0ca1221b-b707-450f-877d-ca07a601624d@freebox.fr>
+	<CAA8EJppeREj-0g9oGCzzKx5ywhg1mgmJR1q8yvXKN7N45do1Xg@mail.gmail.com>
+	<87ttkh49xi.fsf@kernel.org>
+	<e804b257-4dc0-45f1-a5c5-66bda51cf296@freebox.fr>
+	<87h6gh406w.fsf@kernel.org>
+	<ad5e178b-cd64-4a87-8994-f917993f3bbb@freebox.fr>
+	<871q6tu6bn.fsf@kernel.org>
+	<de65290c-0f67-4499-ba28-a460e6d6e419@freebox.fr>
+	<87msphsb3b.fsf@kernel.org> <20240425-monopoly-barn-45608dae0996@spud>
+Date: Thu, 25 Apr 2024 19:39:34 +0300
+In-Reply-To: <20240425-monopoly-barn-45608dae0996@spud> (Conor Dooley's
+	message of "Thu, 25 Apr 2024 17:02:56 +0100")
+Message-ID: <87il05s8ft.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 1/6] interconnect: icc-clk: Allow user to specify
- master/slave ids
-Content-Language: en-US
-To: Varadarajan Narayanan <quic_varada@quicinc.com>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: andersson@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- dmitry.baryshkov@linaro.org, quic_anusha@quicinc.com,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org
-References: <20240418092305.2337429-1-quic_varada@quicinc.com>
- <20240418092305.2337429-2-quic_varada@quicinc.com>
- <da8fc783-6b2b-495d-ab15-be297b0fa435@linaro.org>
- <ZiowMuNlBsxYQesc@hu-varada-blr.qualcomm.com>
-From: Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <ZiowMuNlBsxYQesc@hu-varada-blr.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 25.04.24 13:28, Varadarajan Narayanan wrote:
-> On Tue, Apr 23, 2024 at 01:00:48AM +0200, Konrad Dybcio wrote:
->>
->>
->> On 4/18/24 11:23, Varadarajan Narayanan wrote:
->>> Presently, icc-clk driver autogenerates the master and slave ids.
->>> However, devices with multiple nodes on the interconnect could
->>> have other constraints and may not match with the auto generated
->>> node ids. Hence, allow the driver to provide the preferred master
->>> and slave ids.
->>>
->>> Also, update clk-cbf-8996 accordingly.
->>>
->>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
->>> ---
->>> v9: squash cbf-msm8996 change into this
->>> v8: Per review feedback, set master/slave ids explicitly. Dont autogenerate
->>>       https://lore.kernel.org/linux-arm-msm/f1b0d280-6986-4055-a611-2caceb15867d@linaro.org/
->>> ---
->>>    drivers/clk/qcom/clk-cbf-8996.c  | 7 ++++++-
->>>    drivers/interconnect/icc-clk.c   | 6 +++---
->>>    include/linux/interconnect-clk.h | 2 ++
->>
->> How is this going to be merged? :/
->>
->> icc-next? clk-next?
-> 
+Conor Dooley <conor@kernel.org> writes:
 
-Merging all patches via Bjorn's clk-qcom tree seems to be the best option, if he agrees of course.
+> On Thu, Apr 25, 2024 at 06:42:16PM +0300, Kalle Valo wrote:
+>
+>> Marc Gonzalez <mgonzalez@freebox.fr> writes:
+>> 
+>> > On 25/04/2024 11:42, Kalle Valo wrote:
+>> >
+>> >> Marc Gonzalez wrote:
+>> >> 
+>> >>> Do you prefer:
+>> >>>
+>> >>> Option A = never waiting for the MSA_READY indicator for ANYONE
+>> >>> Option B = not waiting for the MSA_READY indicator when
+>> >>> qcom,no-msa-ready-indicator is defined
+>> >>> Option C = not waiting for the MSA_READY indicator for certain
+>> >>> platforms (based on root compatible)
+>> >>> Option D = some other solution not yet discussed
+>> >> 
+>> >> After firmware-N.bin solution didn't work (sorry about that!) my
+>> >> preference is option B.
+>> >
+>> > Actually, Option B is this patch series.
+>> > Could you formally review it?
+>> 
+>> I'm happy with this series and would take it to ath.git, just need an
+>> ack from DT maintainers:
+>
+> As far as I can tell, Krzysztof wanted a commit message update for
+> 1/3.
 
-Thanks,
-Georgi
+That's my understanding as well, I assume Marc will submit v3. I marked
+this patchset as 'Changes Requested' in patchwork.
 
-> Bjorn,
-> 
-> Can you help answer this.
-> 
-> Thanks
-> Varada
+> Usually this dts patch would go via the qcom dts tree, so presumably
+> there's a need for an Ack from Bjorn or Konrad?
 
+Thanks pointing this out. What I meant to say earlier that I'm happy to
+take patches 1-2 to ath.git but I prefer that patch 3 goes via qcom dts
+tree.
+
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
