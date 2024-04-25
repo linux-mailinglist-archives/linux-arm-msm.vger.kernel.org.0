@@ -1,106 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-18592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18593-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A20B8B28A2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 20:59:46 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 66F818B28DC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 21:15:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EF3841F218B5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 18:59:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1CF831F23AB0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 19:15:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2399514F116;
-	Thu, 25 Apr 2024 18:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08B0B1514F5;
+	Thu, 25 Apr 2024 19:15:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TOgwzaAl"
+	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="GwFer7Rr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781F214E2CC;
-	Thu, 25 Apr 2024 18:59:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C202135A;
+	Thu, 25 Apr 2024 19:15:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714071582; cv=none; b=IJFrliSOC/SR0Fl268EMd/7+mdImyuzO6zE28AR9ih2qFWZnBC5bPhfjy18+Ku2a3wL2ntWVMOetQZoccWWmHZe7UxbPZVnMlv/a1TXevb2/0T7Lb+wQi/YuXn1R7jkJDdl4vj1o+a0Blsq/txUOGUiVd6XxNj6EUNYed7BpJBU=
+	t=1714072504; cv=none; b=bY4qA8ktwou7iq03zYZ58ziE/1wYjgSz4BWAdlHNfoaCfMoaPkyyq8cV2T5CF6QouEI+pGGhUGcQtw9ySpaDrsIOPfPjLSTYDMZaeqZ8dKpHrnpgx6R85Ye98v11MDaDSE3XKRGXRg9Fs36SZNX5NvsBILsnQOy7nrd0/QH4fes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714071582; c=relaxed/simple;
-	bh=W1jleSnAzaiTkRZrgdNKbc8caMPKFs8+4nzn+DPMNlw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=fLhzvy9lR908RPhViX+yBHNrmmRkLZatVYbdFzGw4k/p/1K7wEoD0GdqI8+flloMjAC9u96HefGaD4/d+KL3F3DXJv+PEW8pO6iTk+sPb6YAboZ6p5f/ggOPqZXmXJLdRWLIAQBo3n5/28/JRWCRFgosC4QEWw7ZI/UVVAKlE94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TOgwzaAl; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43PEP8FO013847;
-	Thu, 25 Apr 2024 18:59:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=W1jleSnAzaiTkRZrgdNKbc8caMPKFs8+4nzn+DPMNlw=; b=TO
-	gwzaAl+F09iIn7kr8AsNWX/nRO7Gryl9chXZrysYrfdpJyqy5eT+plzotzwwWI3Z
-	yDybu11dzKq8yACGyvhXIn/Ob/QCegiO2BCD49oq2RHwnX4sn8xuwT3xAuVeT0Ji
-	ZI1KavkYVkHKtBgIHYjBwFohAps41JEMfcy5pDzTSmGp7tgP8ihwSZXSIolZzFyF
-	y/4oRcpxK8U0iVYZwcM2UXb8plhTPMPCKAtoj7IUlF8yPiDMkifUKG7bF+elt+AG
-	N45fZNEftehAgpx/dekJupq0c7jHfrsweYkTBvByY98fiws0CIbCeTuY9S30g3ZG
-	yFVh1dEDhVuA8/EU9iAg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xqrwwrng3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 25 Apr 2024 18:59:36 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43PIxZEQ030335
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 25 Apr 2024 18:59:35 GMT
-Received: from [10.110.58.36] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 25 Apr
- 2024 11:59:35 -0700
-Message-ID: <22bfac62-5476-9e8f-e5a4-381cf5ae7a04@quicinc.com>
-Date: Thu, 25 Apr 2024 11:59:27 -0700
+	s=arc-20240116; t=1714072504; c=relaxed/simple;
+	bh=QvJQW5/tPo0PBeZh3lFDVxmj9QN7Tn9WNxdlpoVVeNY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=TunpT3ntry9uzveQ+nclyBkjIo5yb+q5vjTxVJ+h2mE+QSV3hwYfHJZBtbfGoZ32kutTTy2tIryMQXyniIaXYgFsqZNDaH+psjg8XkU4gZG+OPD+cWZMlyHlpABOy8siuQppJxiPqwRfOZcNaXUVSlB4YhnkftQtUWIPSmpjnQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz; spf=pass smtp.mailfrom=z3ntu.xyz; dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b=GwFer7Rr; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=z3ntu.xyz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=s1;
+	t=1714072501; bh=QvJQW5/tPo0PBeZh3lFDVxmj9QN7Tn9WNxdlpoVVeNY=;
+	h=From:Subject:Date:To:Cc;
+	b=GwFer7RrH2IJE270lw3hm7pfGbT4mYC1lv8Z6Y/bAeIj3aE6z1KDckCMY9jpSkAB4
+	 zF/+bqHi2R0655+ZPwDvtVzGelgcjbjMjUsiogWXpwleOHhDOLsQxueagp69IQBuHb
+	 N9DXOUlq890EiyDYcDeovCsuJTM9OgIr8EaROius=
+From: Luca Weiss <luca@z3ntu.xyz>
+Subject: [PATCH 0/2] Mark qcom,ipc as deprecated in two schemas
+Date: Thu, 25 Apr 2024 21:14:29 +0200
+Message-Id: <20240425-qcom-ipc-deprecate-v1-0-a8d8034253ea@z3ntu.xyz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v2 2/4] dt-bindings: pinctrl: qcom,pmic-gpio: Add PMIH0108
- and PMD8028 support
-Content-Language: en-US
-To: Rob Herring <robh+dt@kernel.org>
-CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linus.walleij@linaro.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_subbaram@quicinc.com>,
-        <quic_collinsd@quicinc.com>, <quic_jprakash@quicinc.com>
-References: <20240326220628.2392802-1-quic_amelende@quicinc.com>
- <20240326220628.2392802-3-quic_amelende@quicinc.com>
- <CAL_JsqLZkU_74JK-BGOe83-redCi_TcV3dOOZs9DX3jThHfXrw@mail.gmail.com>
-From: Anjelique Melendez <quic_amelende@quicinc.com>
-In-Reply-To: <CAL_JsqLZkU_74JK-BGOe83-redCi_TcV3dOOZs9DX3jThHfXrw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: mWJmo5NWXpS-fRBK6WbBb_4dnvZy3VwP
-X-Proofpoint-ORIG-GUID: mWJmo5NWXpS-fRBK6WbBb_4dnvZy3VwP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-25_19,2024-04-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1011
- mlxscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0
- suspectscore=0 adultscore=0 priorityscore=1501 phishscore=0
- mlxlogscore=681 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2404010003 definitions=main-2404250136
+X-B4-Tracking: v=1; b=H4sIAJWrKmYC/x2MQQqAIBAAvxJ7bsG0CPpKdLB1qz2kphFB9Pek4
+ wzMPJA5CWcYqgcSX5Il+AJNXQFt1q+M4gqDVrpVre7woLCjRELHMTHZk9H0dpnZGLKOoITFL3L
+ /03F63w+/XJkZZAAAAA==
+To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Andy Gross <agross@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Luca Weiss <luca@z3ntu.xyz>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=883; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=QvJQW5/tPo0PBeZh3lFDVxmj9QN7Tn9WNxdlpoVVeNY=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBmKqugrhDSHoYG60xXLK1PX+EXWogXQO/qABGhn
+ OJQRloOgpmJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZiqroAAKCRBy2EO4nU3X
+ VhazEADSzmJbKb1diAv9PI8AKWDeJtScDVudXGSs8YSkjoFRx6c+gZ4JtSYcktnXEVB2mPGS1e9
+ Z8pOgceZZf6k+oEvDFObS9y8Vtu+UUG23rmf19VSFy6GoT3PmYMUznceGQBjs4jJdhzDmS3VhFd
+ 3r5e7jLGBDderm7mbMxJXlWyxJ9Z7a/48c3WnBw7jSmpI8lxoFXNxBzwvyh4sWN0anKKr+66efe
+ SQcx8WQhq9QTwPOsxSOKdQ4uY/fkYoKUpP4ru9pdo4yxawFOLbBm/7Vz+VXOnRszY5P/mUpFEEv
+ 2TeBfgZSa0xQu8lCX1LkgijPFhCO1pHvSs1k4+CCW3A5FSOEuBTWLgqzJOorW4er3Mr4hOkEFrc
+ 7dLryo8M8D/hch//VeDO5E3LNajZBqkAX95HtQw3MlJvxvMTv54vNn4SFX9qHdNJ+amxe2d7LCa
+ 0AxRuhVdf5m4UW5/30RbqJYzlMYetWt0roVgj0uOFmWsS5hHVbSGWiDKyLP/Ry/cXWnA/n3uSO1
+ ZojTFgz+l/D3IzyF414qU2j3GtpALrB2FSVZjtEIFWc3RQCNadWz2Syzx+vasiH/p7idjaMcEDY
+ e02ZUo1yNELQq5O04zlAaDiOXF+vJYJAuNnbStfuhR/lCYNzaKiVwGZ+S6rnNf6ycQhUpWvHhDp
+ fucrWnFpcy0NNqQ==
+X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 
-On 4/23/2024 10:02 AM, Rob Herring wrote:
-> It took me a bit to find, but you've got a typo here. The result is
-> this "if" schema is always true unless you actually have an instance
-> with the typo too. Please send a fix.
-Thanks for finding typo! Fix is here: https://lore.kernel.org/all/20240425185603.3295450-1-quic_amelende@quicinc.com/
+The mboxes property has been supported in those bindings since a while
+and was always meant to the replace qcom,ipc properties, so let's mark
+qcom,ipc as deprecated - and update the examples to use mboxes.
+
+Related:
+https://lore.kernel.org/linux-arm-msm/20240424-apcs-mboxes-v1-0-6556c47cb501@z3ntu.xyz/
+
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+Luca Weiss (2):
+      dt-bindings: remoteproc: qcom,smd-edge: Mark qcom,ipc as deprecated
+      dt-bindings: soc: qcom,smp2p: Mark qcom,ipc as deprecated
+
+ Documentation/devicetree/bindings/remoteproc/qcom,smd-edge.yaml | 3 ++-
+ Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml      | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+---
+base-commit: a59668a9397e7245b26e9be85d23f242ff757ae8
+change-id: 20240425-qcom-ipc-deprecate-37afbe33cadc
+
+Best regards,
+-- 
+Luca Weiss <luca@z3ntu.xyz>
+
 
