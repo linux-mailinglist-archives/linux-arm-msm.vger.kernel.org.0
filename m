@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-18566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18567-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B36FE8B2314
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 15:44:57 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 53BED8B2318
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 15:45:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6D3EC2862A1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 13:44:56 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E366DB24C43
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 13:44:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBBD3149C6E;
-	Thu, 25 Apr 2024 13:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43A6C149C7B;
+	Thu, 25 Apr 2024 13:44:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wcv2WN1x"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LZKGKJ3p"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CA8149C7B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Apr 2024 13:44:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B29149C4D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Apr 2024 13:44:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714052690; cv=none; b=CWVvB481eG1ormAa7DhIGgZB/GPrj7YussMFnLmMfrzHnYjAktAa/KuM6+qypwjiTtObO7aolsms/GuLTOdawCynQtjqSGxwkBgCpqoGU6MAJbFJsUCOGYVtegMsY+HpD0TDsKluVkXXI+SPH0gc/4Rw5lEHxn+iCunih87zgO0=
+	t=1714052692; cv=none; b=edAXGIwpYLWCpNcTdztSl0lB0sgS4+RLZ3LzDWs/xNz3L3KoLOi9lvTddnIfpOZL5eo+ib3vlbHT/JUXjLsE7xfltBIqY+OSk5RMKSpXrb3Y1CRRT+XUSQDhGSx/IpuOSQhKFkUleozDUoEMVxPy0tf6oxLnR06Jt7s5mMDyodA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714052690; c=relaxed/simple;
-	bh=5WZhqwbdGj3Sg68xaK4arCck6q23nSTMtnsPPcHS2yU=;
+	s=arc-20240116; t=1714052692; c=relaxed/simple;
+	bh=q+8vvV85Xt2kiI6v4uLqD484bTYDKTHjzQ5nlUt5WmI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=g1qGu+pzZVCo5/Ib6/Xpsb0JmP2pdvsTuR18iTJU0SUL2m1SzSWL7cVXYrbW2bKnVnEfSijwjd1kS6CT399NLyVX+2nei4Lr5ILL7RPr9LhK3BM4H6Bp60QybUsH0oGVUCnATt8tftriCgO2H4HVypAEBLcq424f7Pxzwvh0EVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wcv2WN1x; arc=none smtp.client-ip=209.85.128.54
+	 MIME-Version; b=NbwD8mTMjZTgo23GkdQdvoBbbMZBy90sUovnc0ltDjABfNH7pTKGv7aLnh5pv7/Q2g5/haJ3IybJXfEDx8yso2xc24n5WZ0sBS2fp3hPggcTTBXbqkn/VzGLXpmaJ2veVAxUEqMef0RLfPVMSjBgwVlWz95y2DC1+zesoAF1LFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LZKGKJ3p; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-41a72f3a20dso6585405e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Apr 2024 06:44:48 -0700 (PDT)
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-41b5dd5aefaso2606995e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Apr 2024 06:44:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714052687; x=1714657487; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1714052689; x=1714657489; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4RFVnmOo8A5tNCWQYVrv1gyOa6F8hSBqaR1nrZ9un+U=;
-        b=Wcv2WN1xxNYmatndNvzkY63ECQeWBsom43zvOm9A9VVS9pVGoBHMIHGceYAMAQqjoG
-         17EkjhGagMR7iG0x0qOuw+Qrhn3QJBuDMC2WQEr8J0oeCNw+t4nYSMxIvtpfZlcsWZRc
-         qN/INXu3aflQK6iMWhtStjphrXcS1nkKqT/UgN659hG0lZDiGwVCW1isrwnloh/x6TAA
-         2lDcdTiFmoktjCXeQrtEhJTrXsCfLmkSYgpJds6/tkESfIknmK+IEGTq+qOXdTqszC40
-         /sZWPKTiQXwyDJm4k8D0tJf7aVjcMaXsVb8Twa4uuEJurqAAu+xHHhNmSlLtXtqaop3j
-         j8vQ==
+        bh=rTihIX8sLmoVIkXH5QcNahk5MX8P8s9owUap3i41n88=;
+        b=LZKGKJ3p4FCHpUnz4rUkl/KMp06Mz8Xgy3v1FK73pw/fxskgeY6P4D86260peifLP0
+         AWJlhGXh6jKaOzUYyv0RgsQGzXoCKFuL+JB6U4Z6SdfzqRU10ByJFsyqaTjebnJPnpli
+         Br1Ukp+eAxurvNJkBOGyGls0WTyDLSMzdFEVMFIZVrUr1WeJPOsDjN40cSrIoddqBKuA
+         zQbihr3nDrI32CXkdZ6UCzv4JWijZmcnrfHiKxBsVIKtIo7nAnyhS3NeuVXgt33YYDXk
+         C6qgWolf+Fe1LG0Sbj4KqOnpARn+oXWwv6ljiTN0N/HcjA0dUDYVN7JwzwJGtsDHLLba
+         /Mdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714052687; x=1714657487;
+        d=1e100.net; s=20230601; t=1714052689; x=1714657489;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4RFVnmOo8A5tNCWQYVrv1gyOa6F8hSBqaR1nrZ9un+U=;
-        b=BTGFFZG/PVgrSP/UGOgAvzk78r78iCSm42LAt3rB5bEWka2AebeE4wvpTOUKcihlig
-         mN5B3jpPJ2pKiuaUlkEjBpS3IQZ8LeT7nbe5A+RAMeBbxk1TVFRmFtFRYOmoF9LmAMo2
-         wr72EYFqCg/HUTOroVL+EpGuJuUWi8V4niAOq+2DCrIsmuNix3G3TJyNZeMVmsdLl0+e
-         IYaPsRGJnrPRboY8BfticQ2KUzAQ3GiDuPn4Q52KNEbNIylumcjpNmjAv7XPdBwRL5Tr
-         gHaKxVVfkVbMXaaTG6jJwCPeLhiJqVaygX5LW4tdvLJb3iLngoTU5jyggcswTSeq/Rw7
-         G+Sw==
-X-Forwarded-Encrypted: i=1; AJvYcCWYVDWhaMt2CF33npHaXjscCrYPK/nuKgZ3RSD3oQtNrGFpWRF3Jfut7uv2Tg4z+v7QlJpb0ZK1X4j0Lc5eP6o1vVu3aTxnUbVpdlRXQA==
-X-Gm-Message-State: AOJu0Yw6Sg34uEiNERchhwXzLVg/eDXuA/UKMLdUOFQdXrQ2Sn2+Mbpj
-	YoRnBDsEevJeXH/KnWGHq6+UqTXkpzSRt2e1VITmlyVMK/4vT1+N
-X-Google-Smtp-Source: AGHT+IF/vzLeiuLcCVw2n0fBwad5kx+1qLvBsRs9a1VyKzFnQzt6YUgMuJbFTayG4LQSuxcQ3ZGn3g==
-X-Received: by 2002:a05:600c:4fc3:b0:419:87ab:f6da with SMTP id o3-20020a05600c4fc300b0041987abf6damr4553524wmq.3.1714052687207;
-        Thu, 25 Apr 2024 06:44:47 -0700 (PDT)
+        bh=rTihIX8sLmoVIkXH5QcNahk5MX8P8s9owUap3i41n88=;
+        b=fSr5dPaUYtDxYNuRWMjUw8NsdVAlcI6Xs5h9xh+Yh+p1tixEKGCWX4GTibbdNknAhQ
+         loTQPY0RxXOYrJweB3748APJNYC0lRLwbthQOiG4kHRk9b55GJHnjwQQ6k4Ltiv1f22s
+         B40AZiAh4qb6QLLEFlfqouUHtUJIwWeNVryT5dmhrugO2l2FznC3A/vbDE4nPhq3WqmH
+         3kQjEr+fpeH4jHhq3NhqZ9BgLhqbar3aNwfHAOAcXfwcHTNeGTSWCShlHY117Fup1AG2
+         4cdKyeLUijDRK4zIxxlb3DN41zxLgagh3HQOxEibOoTCPYgy/YRNkJLZABcMoqYhfO7W
+         FuJA==
+X-Forwarded-Encrypted: i=1; AJvYcCWHzuIGHiWwOXW2WRUvmUdEnESkPNnVswXRynFRTQd5RiEKjB8NgFsDL4rdOCgROc63dggVvqAkQN/QsIjkFGj4t9qhHYeAl8atG1QXVg==
+X-Gm-Message-State: AOJu0YxYys9Dauor+s4s6vpp/lGAfXG1HzwQVPTxab2lQ1TDOy8/gdAS
+	FJNwdEgdePSfkaNGDSz0/sSNwKnEKTzonoNry4B1B9ndxSK7g7oE
+X-Google-Smtp-Source: AGHT+IFZ92tOkIQrO4aXjKukSWhhCUnA1Xin4NMwCj3oY3AYnvdhKhxqz09eLcO+ejeKoynapqIDTg==
+X-Received: by 2002:a05:600c:4691:b0:415:6daf:c626 with SMTP id p17-20020a05600c469100b004156dafc626mr5654356wmo.21.1714052688603;
+        Thu, 25 Apr 2024 06:44:48 -0700 (PDT)
 Received: from lucy.. (cpc115152-dals23-2-0-cust532.20-2.cable.virginm.net. [86.12.82.21])
-        by smtp.gmail.com with ESMTPSA id bg11-20020a05600c3c8b00b0041a9c3444a6sm11235579wmb.28.2024.04.25.06.44.46
+        by smtp.gmail.com with ESMTPSA id bg11-20020a05600c3c8b00b0041a9c3444a6sm11235579wmb.28.2024.04.25.06.44.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Apr 2024 06:44:46 -0700 (PDT)
+        Thu, 25 Apr 2024 06:44:47 -0700 (PDT)
 From: Connor Abbott <cwabbott0@gmail.com>
 To: Rob Clark <robdclark@gmail.com>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -76,9 +76,9 @@ To: Rob Clark <robdclark@gmail.com>,
 	linux-arm-msm@vger.kernel.org,
 	freedreno@lists.freedesktop.org
 Cc: Connor Abbott <cwabbott0@gmail.com>
-Subject: [PATCH 3/6] drm/msm: Update a6xx registers
-Date: Thu, 25 Apr 2024 14:43:51 +0100
-Message-Id: <20240425134354.1233862-4-cwabbott0@gmail.com>
+Subject: [PATCH 4/6] drm/msm/a7xx: Initialize a750 "software fuse"
+Date: Thu, 25 Apr 2024 14:43:52 +0100
+Message-Id: <20240425134354.1233862-5-cwabbott0@gmail.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20240425134354.1233862-1-cwabbott0@gmail.com>
 References: <20240425134354.1233862-1-cwabbott0@gmail.com>
@@ -90,95 +90,168 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Update to mesa commit ff155f46a33 ("freedreno/a7xx: Register updates
-from kgsl").
+On all Qualcomm platforms with a7xx GPUs, qcom_scm provides a method to
+initialize cx_mem. Copy this from downstream (minus BCL which we
+currently don't support). On a750, this includes a new "fuse" register
+which can be used by qcom_scm to fuse off certain features like
+raytracing in software. The fuse is default off, and is initialized by
+calling the method. Afterwards we have to read it to find out which
+features were enabled.
 
 Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
 ---
- drivers/gpu/drm/msm/registers/adreno/a6xx.xml | 28 +++++++++++++++++--
- 1 file changed, 25 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 89 ++++++++++++++++++++++++-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h |  2 +
+ 2 files changed, 90 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/registers/adreno/a6xx.xml b/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
-index 78524aaab9d4..43fe90c12679 100644
---- a/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
-+++ b/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
-@@ -1227,6 +1227,7 @@ to upconvert to 32b float internally?
- 		<bitfield name="DEBBUS_INTR_0" pos="26" type="boolean"/>
- 		<bitfield name="DEBBUS_INTR_1" pos="27" type="boolean"/>
- 		<bitfield name="TSBWRITEERROR" pos="28" type="boolean" variants="A7XX-"/>
-+		<bitfield name="SWFUSEVIOLATION" pos="29" type="boolean" variants="A7XX-"/>
- 		<bitfield name="ISDB_CPU_IRQ" pos="30" type="boolean"/>
- 		<bitfield name="ISDB_UNDER_DEBUG" pos="31" type="boolean"/>
- 	</bitset>
-@@ -1503,6 +1504,9 @@ to upconvert to 32b float internally?
- 	<reg32 offset="0x0287" name="RBBM_CLOCK_MODE_BV_VFD" variants="A7XX-"/>
- 	<reg32 offset="0x0288" name="RBBM_CLOCK_MODE_BV_GPC" variants="A7XX-"/>
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index cf0b1de1c071..fb2722574ae5 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -10,6 +10,7 @@
  
-+	<reg32 offset="0x02c0" name="RBBM_SW_FUSE_INT_STATUS" variants="A7XX-"/>
-+	<reg32 offset="0x02c1" name="RBBM_SW_FUSE_INT_MASK" variants="A7XX-"/>
+ #include <linux/bitfield.h>
+ #include <linux/devfreq.h>
++#include <linux/firmware/qcom/qcom_scm.h>
+ #include <linux/pm_domain.h>
+ #include <linux/soc/qcom/llcc-qcom.h>
+ 
+@@ -1686,7 +1687,8 @@ static int a6xx_zap_shader_init(struct msm_gpu *gpu)
+ 		       A6XX_RBBM_INT_0_MASK_RBBM_HANG_DETECT | \
+ 		       A6XX_RBBM_INT_0_MASK_UCHE_OOB_ACCESS | \
+ 		       A6XX_RBBM_INT_0_MASK_UCHE_TRAP_INTR | \
+-		       A6XX_RBBM_INT_0_MASK_TSBWRITEERROR)
++		       A6XX_RBBM_INT_0_MASK_TSBWRITEERROR | \
++		       A6XX_RBBM_INT_0_MASK_SWFUSEVIOLATION)
+ 
+ #define A7XX_APRIV_MASK (A6XX_CP_APRIV_CNTL_ICACHE | \
+ 			 A6XX_CP_APRIV_CNTL_RBFETCH | \
+@@ -2356,6 +2358,26 @@ static void a6xx_fault_detect_irq(struct msm_gpu *gpu)
+ 	kthread_queue_work(gpu->worker, &gpu->recover_work);
+ }
+ 
++static void a7xx_sw_fuse_violation_irq(struct msm_gpu *gpu)
++{
++	u32 status;
 +
- 	<array offset="0x0400" name="RBBM_PERFCTR_CP" stride="2" length="14" variants="A6XX"/>
- 	<array offset="0x041c" name="RBBM_PERFCTR_RBBM" stride="2" length="4" variants="A6XX"/>
- 	<array offset="0x0424" name="RBBM_PERFCTR_PC" stride="2" length="8" variants="A6XX"/>
-@@ -2842,7 +2846,11 @@ to upconvert to 32b float internally?
- 		</reg32>
- 	</array>
- 	<!-- 0x891b-0x8926 invalid -->
--	<reg64 offset="0x8927" name="RB_SAMPLE_COUNT_ADDR" type="waddress" align="16" usage="cmd" variants="A6XX"/>
-+	<doc>
-+		RB_SAMPLE_COUNT_ADDR register is used up to (and including) a730. After that
-+		the address is specified through CP_EVENT_WRITE7::WRITE_SAMPLE_COUNT.
-+	</doc>
-+	<reg64 offset="0x8927" name="RB_SAMPLE_COUNT_ADDR" type="waddress" align="16" usage="cmd"/>
- 	<!-- 0x8929-0x89ff invalid -->
- 
- 	<!-- TODO: there are some registers in the 0x8a00-0x8bff range -->
-@@ -2950,7 +2958,7 @@ to upconvert to 32b float internally?
- 	<!-- 0x8e1d-0x8e1f invalid -->
- 	<!-- 0x8e20-0x8e25 more perfcntr sel? -->
- 	<!-- 0x8e26-0x8e27 invalid -->
--	<reg32 offset="0x8e28" name="RB_UNKNOWN_8E28" low="0" high="10"/>
-+	<reg32 offset="0x8e28" name="RB_CMP_DBG_ECO_CNTL"/>
- 	<!-- 0x8e29-0x8e2b invalid -->
- 	<array offset="0x8e2c" name="RB_PERFCTR_CMP_SEL" stride="1" length="4"/>
- 	<array offset="0x8e30" name="RB_PERFCTR_UFC_SEL" stride="1" length="6" variants="A7XX-"/>
-@@ -3306,6 +3314,15 @@ to upconvert to 32b float internally?
- 		<bitfield name="DISCARD" pos="2" type="boolean"/>
- 	</reg32>
- 
-+	<!-- Both are a750+.
-+	     Probably needed to correctly overlap execution of several draws.
-+	-->
-+	<reg32 offset="0x9885" name="PC_TESS_PARAM_SIZE" variants="A7XX-" usage="cmd"/>
-+	<!-- Blob adds a bit more space {0x10, 0x20, 0x30, 0x40} bytes, but the meaning of
-+	     this additional space is not known.
-+	-->
-+	<reg32 offset="0x9886" name="PC_TESS_FACTOR_SIZE" variants="A7XX-" usage="cmd"/>
++	status = gpu_read(gpu, REG_A7XX_RBBM_SW_FUSE_INT_STATUS);
++	gpu_write(gpu, REG_A7XX_RBBM_SW_FUSE_INT_MASK, 0);
 +
- 	<!-- 0x9982-0x9aff invalid -->
++	dev_err_ratelimited(&gpu->pdev->dev, "SW fuse violation status=%8.8x\n", status);
++
++	/* Ignore FASTBLEND violations, because the HW will silently fall back
++	 * to legacy blending.
++	 */
++	if (status & (A7XX_CX_MISC_SW_FUSE_VALUE_RAYTRACING |
++		      A7XX_CX_MISC_SW_FUSE_VALUE_LPAC)) {
++		del_timer(&gpu->hangcheck_timer);
++
++		kthread_queue_work(gpu->worker, &gpu->recover_work);
++	}
++}
++
+ static irqreturn_t a6xx_irq(struct msm_gpu *gpu)
+ {
+ 	struct msm_drm_private *priv = gpu->dev->dev_private;
+@@ -2384,6 +2406,9 @@ static irqreturn_t a6xx_irq(struct msm_gpu *gpu)
+ 	if (status & A6XX_RBBM_INT_0_MASK_UCHE_OOB_ACCESS)
+ 		dev_err_ratelimited(&gpu->pdev->dev, "UCHE | Out of bounds access\n");
  
- 	<reg32 offset="0x9b00" name="PC_PRIMITIVE_CNTL_0" type="a6xx_primitive_cntl_0" usage="rp_blit"/>
-@@ -4293,7 +4310,7 @@ to upconvert to 32b float internally?
- 	<!-- always 0x100000 or 0x1000000? -->
- 	<reg32 offset="0xb600" name="TPL1_DBG_ECO_CNTL" low="0" high="25" usage="cmd"/>
- 	<reg32 offset="0xb601" name="TPL1_ADDR_MODE_CNTL" type="a5xx_address_mode"/>
--	<reg32 offset="0xb602" name="TPL1_UNKNOWN_B602" low="0" high="7" type="uint" usage="cmd"/>
-+	<reg32 offset="0xb602" name="TPL1_DBG_ECO_CNTL1" usage="cmd"/>
- 	<reg32 offset="0xb604" name="TPL1_NC_MODE_CNTL">
- 		<bitfield name="MODE" pos="0" type="boolean"/>
- 		<bitfield name="LOWER_BIT" low="1" high="2" type="uint"/>
-@@ -4965,6 +4982,11 @@ to upconvert to 32b float internally?
- 	<reg32 offset="0x0001" name="SYSTEM_CACHE_CNTL_0"/>
- 	<reg32 offset="0x0002" name="SYSTEM_CACHE_CNTL_1"/>
- 	<reg32 offset="0x0039" name="CX_MISC_TCM_RET_CNTL" variants="A7XX-"/>
-+	<reg32 offset="0x0400" name="CX_MISC_SW_FUSE_VALUE" variants="A7XX-">
-+		<bitfield pos="0" name="FASTBLEND" type="boolean"/>
-+		<bitfield pos="1" name="LPAC" type="boolean"/>
-+		<bitfield pos="2" name="RAYTRACING" type="boolean"/>
-+	</reg32>
- </domain>
++	if (status & A6XX_RBBM_INT_0_MASK_SWFUSEVIOLATION)
++		a7xx_sw_fuse_violation_irq(gpu);
++
+ 	if (status & A6XX_RBBM_INT_0_MASK_CP_CACHE_FLUSH_TS)
+ 		msm_gpu_retire(gpu);
  
- </database>
+@@ -2525,6 +2550,60 @@ static void a6xx_llc_slices_init(struct platform_device *pdev,
+ 		a6xx_gpu->llc_mmio = ERR_PTR(-EINVAL);
+ }
+ 
++static int a7xx_cx_mem_init(struct a6xx_gpu *a6xx_gpu)
++{
++	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
++	struct msm_gpu *gpu = &adreno_gpu->base;
++	u32 gpu_req = QCOM_SCM_GPU_ALWAYS_EN_REQ;
++	u32 fuse_val;
++	int ret;
++
++	if (adreno_is_a740(adreno_gpu)) {
++		/* Raytracing is always enabled on a740 */
++		adreno_gpu->has_ray_tracing = true;
++	}
++
++	if (!qcom_scm_is_available()) {
++		/* Assume that if qcom scm isn't available, that whatever
++		 * replacement allows writing the fuse register ourselves.
++		 * Users of alternative firmware need to make sure this
++		 * register is writeable or indicate that it's not somehow.
++		 * Print a warning because if you mess this up you're about to
++		 * crash horribly.
++		 */
++		if (adreno_is_a750(adreno_gpu)) {
++			dev_warn_once(gpu->dev->dev,
++				"SCM is not available, poking fuse register\n");
++			a6xx_llc_write(a6xx_gpu, REG_A7XX_CX_MISC_SW_FUSE_VALUE,
++				A7XX_CX_MISC_SW_FUSE_VALUE_RAYTRACING |
++				A7XX_CX_MISC_SW_FUSE_VALUE_FASTBLEND |
++				A7XX_CX_MISC_SW_FUSE_VALUE_LPAC);
++			adreno_gpu->has_ray_tracing = true;
++		}
++
++		return 0;
++	}
++
++	if (adreno_is_a750(adreno_gpu))
++		gpu_req |= QCOM_SCM_GPU_TSENSE_EN_REQ;
++
++	ret = qcom_scm_gpu_init_regs(gpu_req);
++	if (ret)
++		return ret;
++
++	/* On a750 raytracing may be disabled by the firmware, find out whether
++	 * that's the case. The scm call above sets the fuse register.
++	 */
++	if (adreno_is_a750(adreno_gpu)) {
++		fuse_val = a6xx_llc_read(a6xx_gpu, REG_A7XX_CX_MISC_SW_FUSE_VALUE);
++		adreno_gpu->has_ray_tracing =
++			!!(fuse_val & A7XX_CX_MISC_SW_FUSE_VALUE_RAYTRACING);
++	}
++
++	return 0;
++}
++
++
+ #define GBIF_CLIENT_HALT_MASK		BIT(0)
+ #define GBIF_ARB_HALT_MASK		BIT(1)
+ #define VBIF_XIN_HALT_CTRL0_MASK	GENMASK(3, 0)
+@@ -3094,6 +3173,14 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
+ 		return ERR_PTR(ret);
+ 	}
+ 
++	if (adreno_is_a7xx(adreno_gpu)) {
++		ret = a7xx_cx_mem_init(a6xx_gpu);
++		if (ret) {
++			a6xx_destroy(&(a6xx_gpu->base.base));
++			return ERR_PTR(ret);
++		}
++	}
++
+ 	if (gpu->aspace)
+ 		msm_mmu_set_fault_handler(gpu->aspace->mmu, gpu,
+ 				a6xx_fault_handler);
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+index 77526892eb8c..4180f3149dd8 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+@@ -182,6 +182,8 @@ struct adreno_gpu {
+ 	 */
+ 	const unsigned int *reg_offsets;
+ 	bool gmu_is_wrapper;
++
++	bool has_ray_tracing;
+ };
+ #define to_adreno_gpu(x) container_of(x, struct adreno_gpu, base)
+ 
 -- 
 2.31.1
 
