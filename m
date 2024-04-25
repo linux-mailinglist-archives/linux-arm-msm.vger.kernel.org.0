@@ -1,152 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-18582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18583-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C56A88B25E5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 18:03:07 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 201608B260B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 18:11:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D0EEC1C214D2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 16:03:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 50FD91C2150C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 16:11:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17A0214BFA5;
-	Thu, 25 Apr 2024 16:03:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51B8114A096;
+	Thu, 25 Apr 2024 16:11:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QLKO3pOk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j9jx071Q"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03ED1494BF;
-	Thu, 25 Apr 2024 16:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2448614C5BF;
+	Thu, 25 Apr 2024 16:11:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714060983; cv=none; b=HGn6tZuLxPa5eaYr/QKvemLQzOF8RIlFRUdgDVD+SlcVQQ1Nk39lZalrejjoLSClG82lDVK0Dpz1P3fRlYC2TvRqjxD7Njj3q6ahWA2HjXRYQqRRDRR5UqBOYORRPe4YqPnnu6ivOYlIWFg2DrrbP6nYY8krE0D1F7vdnRVfLQw=
+	t=1714061497; cv=none; b=aCI8nm5GJipqYJ3XEljGM229NfaLB0p3IMHTUZDPrH0WEmWf/CvyCELgGdlMqVCIK43dFrv580H2Q7mnrKiXaCyK6A5oKypebfphW9uWW6xJmnwzwuMo103WbYfbhE0H3lQPsy5LQuLUoeCOuKR9YwuTXWpsfSeYllTv+IkCKVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714060983; c=relaxed/simple;
-	bh=F4x4Lmt+cQRG94onurPrKbBq2z3g90UEAceM4vYt2Vk=;
+	s=arc-20240116; t=1714061497; c=relaxed/simple;
+	bh=ho12mLf87MAZYvf64xJHQvB9LOeFouGnTfDbUPjBnlc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S6A0ziy9JFU9jJzc5Fy2o5oOjbM1nuavH8EKJOXvXNUKe6Sw4nAWfrBy7YHKlhRvRm13xY10qgu2+lgAudCB0DUfxm2qNXBqApsEP3C8hULPoD/9nLTQKWqQ8tfivEmD+iZ+vHnIzpqAq7fDcf1U0uZY/YytkDMt5J3rCqEoDrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QLKO3pOk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF513C113CC;
-	Thu, 25 Apr 2024 16:02:58 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=VVny7zPyM2an7MNRL3VaNXx6M8asck4H+t1yG2DvJrXJ1qEWxyyLetDyNnr8lv0N4pUCQXx5FZYhuvU47RDjiIQjRJ3K8JbEfrm2iEaFUdEgfqbPBjfplzauclRwu6JxaLEmMA1L5UoDFmQpwbnEfMKCl6IRj5Pnt2qkYMr929s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j9jx071Q; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ABE8C113CC;
+	Thu, 25 Apr 2024 16:11:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714060982;
-	bh=F4x4Lmt+cQRG94onurPrKbBq2z3g90UEAceM4vYt2Vk=;
+	s=k20201202; t=1714061496;
+	bh=ho12mLf87MAZYvf64xJHQvB9LOeFouGnTfDbUPjBnlc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QLKO3pOkjaMo3fAat8eU382biRncn++pQr4l1+5HlIi6MXlTJmnW1AxW6Yg02ox3W
-	 HuM4YCE4jQIf+OVbZXvbGqkUaFJg8m43F+6D2Bxe2nvDcRpOZN+346vY1JhyVaOkrk
-	 Nbt+nIvILJwR3TzhhD0tnE28iyucWIHJUVF0B6iWgplVHMB51dZnTSrZjujS0nYYYp
-	 8Bkzbncn3Ml0uuM78m2ExhGe2rjj2ep4e0z4f01hnA+pSeqT9lSDukD2awhSV75CjF
-	 sUBoBM5FHC9TahI+oeFZ6mFXTH9/Rz7p2tQ1NxRj/+XAtbcntfz8ThbFUI3XQB33c5
-	 KbPItXBjw46ZQ==
-Date: Thu, 25 Apr 2024 17:02:56 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Kalle Valo <kvalo@kernel.org>
-Cc: Marc Gonzalez <mgonzalez@freebox.fr>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	ath10k <ath10k@lists.infradead.org>,
-	wireless <linux-wireless@vger.kernel.org>,
-	DT <devicetree@vger.kernel.org>,
-	MSM <linux-arm-msm@vger.kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
+	b=j9jx071QsFWrW3XHntMLgzQJpPLY6JtJxBxjwcMn3XrjyxGciv8cAY3zY7azsgZF8
+	 OZAubVoWj+tHQxw7TilPa1OGCxI4t+STVuEOVn4QYOYfEfszslIkEcGSzj81xGCbhY
+	 g1RFk1oqlxhXZBtYDu68IODgvXXTc21m0MgRk3rReFOxi/ptErGI8XnNfIXRiVUY04
+	 kcKRBSHkVfjNcgnC2fcjpSkOCycEIt1JGGxd38cIluYciDBAdztxnhSpl0BPuXd3GO
+	 lsdAPpgXvvCZEV03auyx5q+1dL3mKJtCCDsTsomA7nkWnat1g+z6bdfd6lhbpJjWuA
+	 vr3IbtzSMPUJQ==
+Date: Thu, 25 Apr 2024 11:11:34 -0500
+From: Rob Herring <robh@kernel.org>
+To: Xilin Wu <wuxilin123@gmail.com>
+Cc: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Pierre-Hugues Husson <phhusson@freebox.fr>,
-	Arnaud Vrac <avrac@freebox.fr>,
+	Junhao Xie <bigfoot@classfun.cn>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Sam Ravnborg <sam@ravnborg.org>, David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Bjorn Andersson <andersson@kernel.org>,
-	Jami Kettunen <jamipkettunen@gmail.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: msm8998: set
- qcom,no-msa-ready-indicator for wifi
-Message-ID: <20240425-monopoly-barn-45608dae0996@spud>
-References: <502322f1-4f66-4922-bc4e-46bacac23410@linaro.org>
- <0ca1221b-b707-450f-877d-ca07a601624d@freebox.fr>
- <CAA8EJppeREj-0g9oGCzzKx5ywhg1mgmJR1q8yvXKN7N45do1Xg@mail.gmail.com>
- <87ttkh49xi.fsf@kernel.org>
- <e804b257-4dc0-45f1-a5c5-66bda51cf296@freebox.fr>
- <87h6gh406w.fsf@kernel.org>
- <ad5e178b-cd64-4a87-8994-f917993f3bbb@freebox.fr>
- <871q6tu6bn.fsf@kernel.org>
- <de65290c-0f67-4499-ba28-a460e6d6e419@freebox.fr>
- <87msphsb3b.fsf@kernel.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Tengfei Fan <quic_tengfan@quicinc.com>,
+	Molly Sophia <mollysophia379@gmail.com>, linux-pwm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 03/10] dt-bindings: display: panel: Add Synaptics TD4328
+Message-ID: <20240425161134.GA2695912-robh@kernel.org>
+References: <20240424-ayn-odin2-initial-v1-0-e0aa05c991fd@gmail.com>
+ <20240424-ayn-odin2-initial-v1-3-e0aa05c991fd@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="tiPZAU7Mew+vAoOh"
-Content-Disposition: inline
-In-Reply-To: <87msphsb3b.fsf@kernel.org>
-
-
---tiPZAU7Mew+vAoOh
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20240424-ayn-odin2-initial-v1-3-e0aa05c991fd@gmail.com>
 
-On Thu, Apr 25, 2024 at 06:42:16PM +0300, Kalle Valo wrote:
-> Marc Gonzalez <mgonzalez@freebox.fr> writes:
->=20
-> > On 25/04/2024 11:42, Kalle Valo wrote:
-> >
-> >> Marc Gonzalez wrote:
-> >>=20
-> >>> Do you prefer:
-> >>>
-> >>> Option A =3D never waiting for the MSA_READY indicator for ANYONE
-> >>> Option B =3D not waiting for the MSA_READY indicator when
-> >>> qcom,no-msa-ready-indicator is defined
-> >>> Option C =3D not waiting for the MSA_READY indicator for certain
-> >>> platforms (based on root compatible)
-> >>> Option D =3D some other solution not yet discussed
-> >>=20
-> >> After firmware-N.bin solution didn't work (sorry about that!) my
-> >> preference is option B.
-> >
-> > Actually, Option B is this patch series.
-> > Could you formally review it?
->=20
-> I'm happy with this series and would take it to ath.git, just need an
-> ack from DT maintainers:
+On Wed, Apr 24, 2024 at 11:29:08PM +0800, Xilin Wu wrote:
+> Synaptics TD4328 is a display driver IC used to drive LCD DSI panels.
+> 
+> Signed-off-by: Xilin Wu <wuxilin123@gmail.com>
+> ---
+>  .../bindings/display/panel/synaptics,td4328.yaml   | 69 ++++++++++++++++++++++
+>  1 file changed, 69 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/display/panel/synaptics,td4328.yaml b/Documentation/devicetree/bindings/display/panel/synaptics,td4328.yaml
+> new file mode 100644
+> index 000000000000..216f2fb22b88
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/panel/synaptics,td4328.yaml
+> @@ -0,0 +1,69 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/panel/synaptics,td4328.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Synaptics TD4328-based DSI display panels
+> +
+> +maintainers:
+> +  - Xilin Wu <wuxilin123@gmail.com>
+> +
+> +description:
+> +  The Synaptics TD4328 is a generic DSI Panel IC used to control
+> +  LCD panels.
+> +
+> +allOf:
+> +  - $ref: panel-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    contains:
+> +      const: syna,td4328
 
-As far as I can tell, Krzysztof wanted a commit message update for 1/3.
-Usually this dts patch would go via the qcom dts tree, so presumably
-there's a need for an Ack from Bjorn or Konrad?
+You need a compatible specific to a panel. This can be a fallback 
+though.
 
->=20
-> https://patchwork.kernel.org/project/linux-wireless/patch/84f20fb5-5d48-4=
-19c-8eff-d7044afb81c0@freebox.fr/
->=20
-> > Perhaps one thing I could do slightly differently is to NOT call
-> > ath10k_qmi_event_msa_ready() a second time if we DO receive the
-> > indicator later.
->=20
-> Good point. And maybe add an ath10k_warn() message so that we notice if
-> there's a mismatch.
->=20
-> --=20
-> https://patchwork.kernel.org/project/linux-wireless/list/
->=20
-> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpa=
-tches
-
---tiPZAU7Mew+vAoOh
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZip+sAAKCRB4tDGHoIJi
-0o+YAQCCZYEZ2U1aVxSGNQuMVNcvcuOmlw4+qtZjc2LH2bDn7wEA0lVi4wIeNh+F
-ZbiMp3gzzAKwmfNX3gcOma5h23G0Rgs=
-=DCf+
------END PGP SIGNATURE-----
-
---tiPZAU7Mew+vAoOh--
+> +
+> +  vdd-supply:
+> +    description: Digital voltage rail
+> +
+> +  vddio-supply:
+> +    description: Digital I/O voltage rail
+> +
+> +  reg: true
+> +  port: true
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reset-gpios
+> +  - vdd-supply
+> +  - vddio-supply
+> +  - port
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/gpio/gpio.h>
+> +
+> +    dsi {
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        panel@0 {
+> +            compatible = "syna,td4328";
+> +            reg = <0>;
+> +
+> +            backlight = <&backlight>;
+> +            reset-gpios = <&tlmm 133 GPIO_ACTIVE_LOW>;
+> +
+> +            vdd-supply = <&vdd_lcm_2p8>;
+> +            vddio-supply = <&vreg_l12b_1p8>;
+> +
+> +            port {
+> +                panel_in_0: endpoint {
+> +                    remote-endpoint = <&dsi0_out>;
+> +                };
+> +            };
+> +        };
+> +    };
+> +
+> +...
+> 
+> -- 
+> 2.44.0
+> 
 
