@@ -1,199 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-18539-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D54F8B1E33
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 11:39:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E685A8B1E44
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 11:42:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5E2BCB26842
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 09:39:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 45D45B271ED
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 09:42:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72BB985937;
-	Thu, 25 Apr 2024 09:39:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 502B984FC8;
+	Thu, 25 Apr 2024 09:42:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tm1GSJi/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cC5k7vw8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3944485269;
-	Thu, 25 Apr 2024 09:39:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D9584FA5;
+	Thu, 25 Apr 2024 09:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714037972; cv=none; b=MVL4rXEz9okFBN60f8T6W6fKs+M0uRXlcQeoFg37enWG9rdScqCEDPs3Fowbo19GDFMPyNQ4DxcoQ80k6s+DWnWjUNGE/vkGOyUcCPE1DNX8yqGsaj5i24uHg0ssiebulK8sjBLQ17Rc+MrbjH/6i8MeRsSh/oXR+eSowz4vyRs=
+	t=1714038147; cv=none; b=X4hQOJySgxzyoxd/Jpgkf+aidx/U+AKC+D/QovpDogYuDh/yr+ry+Wcf3DJKVTJLtOFGPzaFqx6Pft5UQ5b7SbBMxkkU6fkyO9jNP07dMs7XR9st8txoSBNT1NxrcMjauOMM8MzOyPO65hGccBQtGIiEoxCNbi24ouZlrXNZbIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714037972; c=relaxed/simple;
-	bh=T7SvUzXNPNaghOVhRL4B9Uz9WmnB5ZSjgpxjLxrL+5M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=a1zUxdzLdCo5Vexhypk8LfoQU1hKwpwk8dKT2CvX18ONTISVeQUGlaMRSheHlTz+0Jm8AefGc773dJeahvdQ/cRDvGuSa0kKcuh/iG2plB/cAH2TAMqiankaBs6gneLs+d8i5kgTWzfzrjvXdGZ+AyuRVMR2ET6yw2ejIBi0pdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tm1GSJi/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7F33C113CC;
-	Thu, 25 Apr 2024 09:39:26 +0000 (UTC)
+	s=arc-20240116; t=1714038147; c=relaxed/simple;
+	bh=3T9FjsUymGNFdluw54Z0v54M1QVaVyL3oEp/dxeaIlg=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=ogMNLaK0O+bmhAFXV6P2lQhEN+5M3V0VY7juCrt93o+9uNZt24CKOP3OQSSVfDff7BW58svp59H79PnzxA3xxJ8WRLDJoH1VpI67I5Ro1TRsjGSmgiRP2LYYdENACsEPPOk1NSmwsPH+cZ2qLh+VGchC34ITkm5sqQcNbr2ivy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cC5k7vw8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD23C113CC;
+	Thu, 25 Apr 2024 09:42:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714037971;
-	bh=T7SvUzXNPNaghOVhRL4B9Uz9WmnB5ZSjgpxjLxrL+5M=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=tm1GSJi/iuVx4IbFOzTr3vtqSh5XzrLL1XU/Hp4KmTZJlzoTPuQybRrw2ib5hJhzc
-	 hHD8SgemxwTh81dlj2SQeXFrnLDjBUWFRKvm75E7WEnX0zn/Y5bO8wRfjnvJ7+eBwT
-	 yvzWJf7qdSOu2VVBzJigvGMV0Si+ND+/Y750uqbHFL0ol8p7q9Bx1F5ot7a+ifjYYk
-	 I2kvumO5sKxEcvOz8oQERj6KM6CYOuxJiar9e5CUhVzw9daMMhGy2t0Pbwms1fwPuZ
-	 G3ytUWiShsTl+/eT/7NuibyFlGUFmQFM8IJVrhyvldRG0Yeqi0ow4PxnsLP3Fu9oh2
-	 +8zQRvc3EUm9g==
-Message-ID: <bde4884c-117b-4e6e-8c7b-401b8320655b@kernel.org>
-Date: Thu, 25 Apr 2024 11:39:24 +0200
+	s=k20201202; t=1714038146;
+	bh=3T9FjsUymGNFdluw54Z0v54M1QVaVyL3oEp/dxeaIlg=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=cC5k7vw8ltoalYvDhw0Jk6rN6jkchple0+rnrvgR+80LMeiwhC7qraCbaq5wl53v5
+	 Xhw49PZ7Ulsh0qB7iFzNSR2Y7ziceOxydyqP7+hniRpox875fDZUJwqH1BMJHHPb/E
+	 nUNiAR+NkWWY/MJuG/eLOTrdjCt/FHTRwLA7ZQZMawUjeA4GnPv0gaPBjal3nFaUm4
+	 b8w1o8GCivxXCXnzE7l+qeVrErJH6vHFnwJIV9hsdhclc2+Lnkt/guc/I9hx8RfhTo
+	 r1IYqbCKAZ7MtT40/G4seDFTQPsnLmED+pvHyzloW76OZrQGPReFfKsgCS+VgKTSSV
+	 9LBhzNUN/C67A==
+From: Kalle Valo <kvalo@kernel.org>
+To: Marc Gonzalez <mgonzalez@freebox.fr>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,  Konrad Dybcio
+ <konrad.dybcio@linaro.org>,  Krzysztof Kozlowski
+ <krzysztof.kozlowski@linaro.org>,  Jeff Johnson
+ <quic_jjohnson@quicinc.com>,  ath10k <ath10k@lists.infradead.org>,
+  wireless <linux-wireless@vger.kernel.org>,  DT
+ <devicetree@vger.kernel.org>,  MSM <linux-arm-msm@vger.kernel.org>,  Rob
+ Herring <robh+dt@kernel.org>,  Conor Dooley <conor+dt@kernel.org>,
+  Pierre-Hugues Husson <phhusson@freebox.fr>,  Arnaud Vrac
+ <avrac@freebox.fr>,  Bjorn Andersson <andersson@kernel.org>,  Jami
+ Kettunen <jamipkettunen@gmail.com>,  Marijn Suijten
+ <marijn.suijten@somainline.org>,  Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: msm8998: set
+ qcom,no-msa-ready-indicator for wifi
+References: <fd26ce4a-a9f3-4ada-8d46-ed36fb2456ca@freebox.fr>
+	<5cdad89c-282a-4df5-a286-b8404bc4dd81@freebox.fr>
+	<252618e8-9e80-4774-a96c-caa7f838ef01@linaro.org>
+	<502322f1-4f66-4922-bc4e-46bacac23410@linaro.org>
+	<0ca1221b-b707-450f-877d-ca07a601624d@freebox.fr>
+	<CAA8EJppeREj-0g9oGCzzKx5ywhg1mgmJR1q8yvXKN7N45do1Xg@mail.gmail.com>
+	<87ttkh49xi.fsf@kernel.org>
+	<e804b257-4dc0-45f1-a5c5-66bda51cf296@freebox.fr>
+	<87h6gh406w.fsf@kernel.org>
+	<ad5e178b-cd64-4a87-8994-f917993f3bbb@freebox.fr>
+Date: Thu, 25 Apr 2024 12:42:20 +0300
+In-Reply-To: <ad5e178b-cd64-4a87-8994-f917993f3bbb@freebox.fr> (Marc
+	Gonzalez's message of "Mon, 8 Apr 2024 17:53:01 +0200")
+Message-ID: <871q6tu6bn.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/6] dt-bindings: HID: i2c-hid: elan: add
- 'no-reset-on-power-off' property
-To: Johan Hovold <johan@kernel.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>, Jiri Kosina <jikos@kernel.org>,
- Benjamin Tissoires <benjamin.tissoires@redhat.com>,
- Dmitry Torokhov <dmitry.torokhov@gmail.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Linus Walleij <linus.walleij@linaro.org>,
- Douglas Anderson <dianders@chromium.org>, linux-input@vger.kernel.org,
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240423134611.31979-1-johan+linaro@kernel.org>
- <20240423134611.31979-4-johan+linaro@kernel.org>
- <2e67e4e6-83a7-4153-b6a7-cdec0ab2c171@kernel.org>
- <Zii2CUeIyBwxzrBu@hovoldconsulting.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <Zii2CUeIyBwxzrBu@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 24/04/2024 09:34, Johan Hovold wrote:
-> On Tue, Apr 23, 2024 at 06:29:44PM +0200, Krzysztof Kozlowski wrote:
->> On 23/04/2024 15:46, Johan Hovold wrote:
->>> When the power supply is shared with other peripherals the reset line
->>> can be wired in such a way that it can remain deasserted regardless of
->>> whether the supply is on or not.
->>
->> To clarify: the reset line is still present and working in such case?
-> 
-> Yes.
-> 
->>> This is important as it can be used to avoid holding the controller in
->>> reset for extended periods of time when it remains powered, something
->>> which can lead to increased power consumption. Leaving reset deasserted
->>> also avoids leaking current through the reset circuitry pull-up
->>> resistors.
+Marc Gonzalez <mgonzalez@freebox.fr> writes:
+
+> On 04/04/2024 17:28, Kalle Valo wrote:
+>
+>> Marc Gonzalez wrote:
+>> 
+>>> On 04/04/2024 13:57, Kalle Valo wrote:
 >>>
->>> Add a new 'no-reset-on-power-off' devicetree property which can be used
->>> by the OS to determine when reset needs to be asserted on power down.
+>>>> Dmitry Baryshkov wrote:
+>>>>
+>>>>> I'd say, we should take a step back and actually verify how this was
+>>>>> handled in the vendor kernel.
+>>>>
+>>>> One comment related to this: usually vendor driver and firmware branches
+>>>> go "hand in hand", meaning that a version of driver supports only one
+>>>> specific firmware branch. And there can be a lot of branches. So even if
+>>>> one branch might have a check for something specific, there are no
+>>>> guarantees what the other N+1 branches do :/
 >>>
->>> Note that this property can also be used when the supply cannot be
->>> turned off by the OS at all.
-> 
->>>    reset-gpios:
->>>      description: Reset GPIO; not all touchscreens using eKTH6915 hook this up.
->>>  
->>> +  no-reset-on-power-off:
->>
->> Missing vendor prefix. Unless you want to re-use existing property
->> "keep-power-in-suspend", but the case here mentions power off, not suspend.
-> 
-> No, I left out the prefix on purpose as I mentioned in the cover letter.
-> There is nothing vendor specific about this property and I expect it to
-> be reused for other devices.
-> 
-> And "keep-power-in-suspend" is too specific and indeed looks like
-> instruction to the OS rather than hw description (more below), but
-> importantly it is not related to the problem here (which is about
-> reset, not power).
->  
->> Anyway, the property sounds like what the OS should be doing, which is
->> not what we want. You basically instruct driver what to do. We want a
->> described hardware configuration or hardware specifics.
-> 
-> Right, and this was why I at first rejected a property name like this in
-> favour of 'reset-pulled-to-supply' in my first draft. That name
-> obviously does not work as the 'supply' suffix is already claimed, but I
-> also realised that it doesn't really describe the hardware property that
-> allows the reset line to remain asserted.
-> 
-> The key feature in this hardware design is that the reset line will not
-> just be pulled to the supply voltage (what other voltage would it be
-> pulled to), but that it is also pulled to ground when the supply is
-> disabled.
+>>> The consequences and ramifications of the above comment are not clear to me.
+>>>
+>>> Does this mean:
+>>> "It is pointless to analyze a given version (or even several versions)
+>>> of the vendor driver downstream, because there are exist a large number
+>>> of variations of the code." ?
+>> 
+>> I was trying to say that because the design philosophy between vendor
+>> drivers and upstream drivers is very different, we can't 100% trust
+>> vendor drivers. It's a very good idea to check what vendor drivers do
+>> but we just need to be careful before making any conclusions. Testing
+>> real hardware (and corresponding firmware) is the most reliable way to
+>> know how different products/firmware work, unfortunately.
+>> 
+>>> And thus, "it is nonsensical to try to "align" the mainline driver to
+>>> "the" vendor driver, as there is no single "vendor driver"" ?
+>> 
+>> No no, I'm not saying that. I have suffered this "N+1 different firmware
+>> branches behaving slighly differently" problem since ath6kl days so for
+>> me this is business as usual, sadly. I'm sure we can find a solution for
+>> ath10k.
+>
+> Hello Kalle,
+>
+> I can spin a v3, no problem.
+>
+> Do you prefer:
+>
+> Option A = never waiting for the MSA_READY indicator for ANYONE
+> Option B = not waiting for the MSA_READY indicator when
+> qcom,no-msa-ready-indicator is defined
+> Option C = not waiting for the MSA_READY indicator for certain
+> platforms (based on root compatible)
+> Option D = some other solution not yet discussed
 
-OK, if the property was specific to the hardware, then I would propose
-something more hardware-related, e.g. "reset-supply-tied". However :
+After firmware-N.bin solution didn't work (sorry about that!) my
+prerence is option B.
 
+> Dmitry has tested Option A on 5 platforms, where it does not induce regressions.
+> I worked on msm8998, where Option A (or any equivalent) unbreaks WiFi.
 
-> Rather than trying to encode this in the property name, I settled on the
-> descriptive 'no-reset-on-power-off' after the seeing the prior art in
-> 'goodix,no-reset-during-suspend' property. The latter is too specific
-> and encodes policy, but the former could still be considered hardware
-> description and would also apply to other designs which have the
-> property that the reset line should be left deasserted.
-> 
-> One such example is when the supply can not be disabled at all (e.g. the
-> Goodix case), but I can imagine there being more than one way to design
-> such reset circuits.
+What do you mean here? Are you saying that option A works on all
+devices? I'm guessing I'm misunderstanding something.
 
-It seems it is common problem. LEDs have property
-"retain-state-shutdown", to indicate that during system shutdown we
-should not touch them (like power off). Would some variant be applicable
-here? First, do we talk here about power off like system shutdown or
-runtime PM, thus suspend?
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
 
-
-Best regards,
-Krzysztof
-
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
