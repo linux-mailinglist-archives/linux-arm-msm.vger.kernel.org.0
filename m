@@ -1,116 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-18554-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18555-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96BB08B2175
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 14:17:49 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 820358B21BE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 14:39:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4C0781F21033
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 12:17:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 47843283070
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 12:39:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46A1612AAE8;
-	Thu, 25 Apr 2024 12:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54C3D1494AF;
+	Thu, 25 Apr 2024 12:39:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n47zh4n6"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SARf4k9w"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C084812C46D;
-	Thu, 25 Apr 2024 12:17:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCA812BF04;
+	Thu, 25 Apr 2024 12:39:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714047463; cv=none; b=MpxhThw/sLEINCtRUxoJi09wuIM7jPG8/2+ltX4n3L8GHelWaLkZESKwe7//GeuPb+FTO+BGu7j8/k9CxzsSNQHjRN2UZBEQqv8siAZ0kDV5/CPqAZb7IC6slC7IX/uXnkQ0PjsNbt0zJ9B/M6z2GnHpSxxNmMPKw/OtbK5vyy8=
+	t=1714048745; cv=none; b=RRvy3N2xHgRI5MBWHM099UHbqF4RI40LdvipPl/ywzvwXFJWC/i6oeTHIy5GRQbcUztwsuqXvMioVBs1OPoQYDCRcIlrHdn2j/RwHWNnUTNa3H6PIi6P59EJ47uzE+Ykb9GpZPeujNKGdQiKpBG3AAyWQ828cpmw1yQ4dC/XCGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714047463; c=relaxed/simple;
-	bh=9qw8mw8cRq2pIoUpumnN13h5GTULZh/nYCoUByN5pLs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KiTWE9uwCq9MXpFSeK4Kzrns6fQnAqBOCKYw5ANxko7HmjRBgt3huG2X1nXgsi5uNSgqvVjKh46RABF/QyuLdGkxJYF2y4bVAMNJo4IEQP43rpdMh7IhVUCjdTNInxD8R70ktJynAHDgb0Ko8RAv+Jch0aBB6AuoLN4CJvsiYHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n47zh4n6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27C70C113CE;
-	Thu, 25 Apr 2024 12:17:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714047462;
-	bh=9qw8mw8cRq2pIoUpumnN13h5GTULZh/nYCoUByN5pLs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=n47zh4n6wXIBltmcJ4jjW33nz0KvtVQQOy8aEBnp5quBpNq+fAPysAsCHRxDJA6WS
-	 tyzzkidxPukVJpwSNWRCtnWUGSD8u6LR5cN/rfc4XQL4lWm5TWezBL3fIkiTRvI9R/
-	 R6Xj+GFF73EL5kmwnWZ+eDpuqpU/M2qPeTB5cgh452HerG6iAHoW1xued258PIL1H7
-	 PP0mmHchmL7ngzNwKK9xnduhGdXAbYYRv9vxxyqZctHSdiLRcs7+mubis8aCE7TK5w
-	 zXcKt1GPeXKqUBBr71aOx3njVnMlW5oaaXQqTh3K2g4XH5CWWxXGiomj02IgSjl93Z
-	 YLT7Lh5yVRhoA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rzy2n-000000002CT-1Kly;
-	Thu, 25 Apr 2024 14:17:42 +0200
-Date: Thu, 25 Apr 2024 14:17:41 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Caleb Connolly <caleb.connolly@linaro.org>
-Subject: Re: [PATCH v4] usb: typec: qcom-pmic-typec: split HPD bridge alloc
- and registration
-Message-ID: <ZipJ5WVuxPY7dK21@hovoldconsulting.com>
-References: <20240424-qc-pmic-typec-hpd-split-v4-1-f7e10d147443@linaro.org>
+	s=arc-20240116; t=1714048745; c=relaxed/simple;
+	bh=BVdWvAedTNOZ6PJWR1bHtbmXUdHDTHAhobj91tClV38=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=EOEYFYgz8K/etqv3srhdVIBHTjqjJFPogpHYkKgaAbaekLN3XCGO4zyFeoIQ/H99PuCVp1yhgvCpVY2iUrdo4UCmtJymAetFpuVTWa7TFxUyU4i3oIPOg4E2M0uzl3QeL6e2vES50XZzgNE1/gteXQT6iY1IBFmgNjWAXNBTkLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SARf4k9w; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43PC5GQD002355;
+	Thu, 25 Apr 2024 12:38:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=d1tj7b/5ep7BGWGsy9t18TIvNN2i9tXDWcCeCzfSP34=; b=SA
+	Rf4k9wD0I9s/MIjuVbAZnLcD92EK8UFEABS2udSa+6D0vBi31W927H4LU99gSBcU
+	fhQQfmuhs+fORkcPNYKu4T3W3G3fc90NJR1U+MkCUM5bAHIWrJ7aTvigHiLAdDFe
+	A3+L0oJr4b174royFO8FNdxjbp2UeSoSrvnsrdcNVfuG2FIxdijQPoFNlWLH3Rtz
+	lE+9D3W8FBLYr7WeZRYKvP1kBvqVjAApzXV9mSEBTy6ifqaQYuaOU6SrRMBPgPIy
+	gj6Vc0XPxpiS3ohpQBZbQOSj6Fz6950qTvv2/Txa9B6942UVioU1wZXICSouMfiW
+	FCXdaGwdJ9s+q/UilmLw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xqenkjgtu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 25 Apr 2024 12:38:51 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43PCcoVF032390
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 25 Apr 2024 12:38:50 GMT
+Received: from [10.111.139.7] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 25 Apr
+ 2024 05:38:46 -0700
+Message-ID: <77df205b-3577-7b89-dcaf-7cb3947b4fb4@quicinc.com>
+Date: Thu, 25 Apr 2024 18:08:44 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240424-qc-pmic-typec-hpd-split-v4-1-f7e10d147443@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v3 14/19] media: venus: core: Define a pointer to
+ core->res
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stanimir Varbanov
+	<stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Andy Gross
+	<agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Mauro Carvalho
+ Chehab" <mchehab@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+CC: Marijn Suijten <marijn.suijten@somainline.org>,
+        Stanimir Varbanov
+	<stanimir.varbanov@linaro.org>,
+        Mauro Carvalho Chehab
+	<mchehab+huawei@kernel.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20230911-topic-mars-v3-0-79f23b81c261@linaro.org>
+ <20230911-topic-mars-v3-14-79f23b81c261@linaro.org>
+Content-Language: en-US
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <20230911-topic-mars-v3-14-79f23b81c261@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: cFnzlcj5cyhptGoRcYAAIAls-nGkJJ1r
+X-Proofpoint-GUID: cFnzlcj5cyhptGoRcYAAIAls-nGkJJ1r
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-25_12,2024-04-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
+ mlxlogscore=999 priorityscore=1501 impostorscore=0 malwarescore=0
+ bulkscore=0 lowpriorityscore=0 spamscore=0 adultscore=0 suspectscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404250091
 
-On Wed, Apr 24, 2024 at 05:16:57AM +0300, Dmitry Baryshkov wrote:
-> If a probe function returns -EPROBE_DEFER after creating another device
-> there is a change of ending up in a probe deferral loop, (see commit
-> fbc35b45f9f6 ("Add documentation on meaning of -EPROBE_DEFER"). In case
-> of the qcom-pmic-typec driver the tcpm_register_port() function looks up
-> external resources (USB role switch and inherently via called
-> typec_register_port() USB-C muxes, switches and retimers).
+
+
+On 3/27/2024 11:38 PM, Konrad Dybcio wrote:
+> To make the code more concise, define a new variable 'res' pointing to
+> the abundantly referenced core->res.
 > 
-> In order to prevent such probe-defer loops caused by qcom-pmic-typec
-> driver, use the API added by Johan Hovold and move HPD bridge
-> registration to the end of the probe function.
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  drivers/media/platform/qcom/venus/core.c | 11 +++++++----
+>  1 file changed, 7 insertions(+), 4 deletions(-)
 > 
-> The devm_drm_dp_hpd_bridge_add() is called at the end of the probe
-> function after all TCPM start functions. This is done as a way to
-> overcome a different problem, the DRM subsystem can not properly cope
-> with the DRM bridges being destroyed once the bridge is attached. Having
-> this function call at the end of the probe function prevents possible
-> DRM bridge device creation followed by destruction in case one of the
-> TCPM start functions returns an error.
-
-As I mentioned again off-list yesterday, I would have preferred to see
-an explanation why registering the bridge after starting the port and
-phy is ok as it's not obvious to someone not familiar with the driver.
-
-But given that bridge registration only registers an aux device which
-may not have been probed by the time the function returns I guess that
-implies that the old driver did not actually rely on it being registered
-before starting either. So I'm fine with this as-is.
-
-> Reported-by: Caleb Connolly <caleb.connolly@linaro.org>
-> Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-> Dependency: https://lore.kernel.org/lkml/20240418145730.4605-2-johan+linaro@kernel.org/
-> ---
-> Changes in v4:
-> - Rebased on top of Johan's patches
-> - Link to v3: https://lore.kernel.org/r/20240416-qc-pmic-typec-hpd-split-v3-1-fd071e3191a1@linaro.org
-
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-
-Johan
+> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+> index 5b18b1f41267..e61aa863b7f7 100644
+> --- a/drivers/media/platform/qcom/venus/core.c
+> +++ b/drivers/media/platform/qcom/venus/core.c
+> @@ -285,6 +285,7 @@ static irqreturn_t venus_isr_thread(int irq, void *dev_id)
+>  
+>  static int venus_probe(struct platform_device *pdev)
+>  {
+> +	const struct venus_resources *res;
+>  	struct device *dev = &pdev->dev;
+>  	struct venus_core *core;
+>  	int i, ret;
+> @@ -315,9 +316,11 @@ static int venus_probe(struct platform_device *pdev)
+>  	if (!core->res)
+>  		return -ENODEV;
+>  
+> +	res = core->res;
+> +
+>  	mutex_init(&core->pm_lock);
+>  
+> -	core->pm_ops = venus_pm_get(core->res->hfi_version);
+> +	core->pm_ops = venus_pm_get(res->hfi_version);
+>  	if (!core->pm_ops)
+>  		return -ENODEV;
+>  
+> @@ -325,8 +328,8 @@ static int venus_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		return ret;
+>  
+> -	for (i = 0; i < core->res->resets_num; i++) {
+> -		core->resets[i] = devm_reset_control_get_exclusive(dev, core->res->resets[i]);
+> +	for (i = 0; i < res->resets_num; i++) {
+> +		core->resets[i] = devm_reset_control_get_exclusive(dev, res->resets[i]);
+>  		if (IS_ERR(core->resets[i]))
+>  			return PTR_ERR(core->resets[i]);
+>  	}
+> @@ -337,7 +340,7 @@ static int venus_probe(struct platform_device *pdev)
+>  			return ret;
+>  	}
+>  
+> -	ret = dma_set_mask_and_coherent(dev, core->res->dma_mask);
+> +	ret = dma_set_mask_and_coherent(dev, res->dma_mask);
+>  	if (ret)
+>  		goto err_core_put;
+>  
+> 
+Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>	
 
