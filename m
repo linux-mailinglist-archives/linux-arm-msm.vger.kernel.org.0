@@ -1,118 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-18595-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18596-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9EB568B28E3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 21:15:20 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5362F8B2909
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 21:30:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7F7C41C21CE1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 19:15:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D6F711F23F42
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 19:30:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9FF01152527;
-	Thu, 25 Apr 2024 19:15:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9DF615217A;
+	Thu, 25 Apr 2024 19:30:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="YFYyARut"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QjyRtX95"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F7A614F9EA;
-	Thu, 25 Apr 2024 19:15:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 422752135A;
+	Thu, 25 Apr 2024 19:30:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714072505; cv=none; b=m2ZXfu5Cwwj5SMdz9JqKQlM+8q9j/KcME3Jk0D63bxzw3/uoYimKuLxNyQ//JuQgmMZZ51Fk9VMvYaLORdxtAE5d/AZeR9YwOsdm0KQ7LVPy1MIGtCLxG+KiJyFK+oz16An3cUGOHR3+WPK4TKV5zde6wjduKQYOUL7IgMqRl1Y=
+	t=1714073417; cv=none; b=pJ+zZ+4gruH8Bo1zbchzMNfxLD2UKYFHeXlQSIe1mP/Ifg6FRjjgdSKvO6mkIuwJHYceyUvEawssjcDOtdWeoaPJzEW/SZem1j6ppvNUM32pXF3KYCDtQ1qJU7isNGOC4BMZwStCn6K4QngIPYHO5PLOcnOceeT56kxlFKhNAj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714072505; c=relaxed/simple;
-	bh=AQfbI7vOuFm8YP/Xkec/49RruMYlAkAUez61BlDr6HQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=lFWcsOmyPJgdSjtAqVr0ZiW1V/+IV2sa6yorXouGs430PzTs7Z1Kp3Dp9qhoi5yrnrgXw6AG9FDhGmxmlY8uYnCgog5mASKC+E10Dt1zA8Y/TeYZCgVg+uXVWXxviCRqbNSwlQqJMnizQ5EbizYlnUi3OkYmfv0Th2tt6jmkbQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz; spf=pass smtp.mailfrom=z3ntu.xyz; dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b=YFYyARut; arc=none smtp.client-ip=128.199.32.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=z3ntu.xyz
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=s1;
-	t=1714072502; bh=AQfbI7vOuFm8YP/Xkec/49RruMYlAkAUez61BlDr6HQ=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=YFYyARutU8agXJa2F8fjT4vlV8GvAQZj8i237mYGywFyCEOkAOHmzNmeNHpSB6MT5
-	 piRR7jY+knRYcMgkwHFupGeajR7pKnpY4x2+KkD9xy4Z0YbF0wJoY1zTqoFhkBfj72
-	 1YbW1suYm7lF94KgnRPjLsDKXS+hHo7/dFgPfDJE=
-From: Luca Weiss <luca@z3ntu.xyz>
-Date: Thu, 25 Apr 2024 21:14:31 +0200
-Subject: [PATCH 2/2] dt-bindings: soc: qcom,smp2p: Mark qcom,ipc as
- deprecated
+	s=arc-20240116; t=1714073417; c=relaxed/simple;
+	bh=QaXBz6hCQE64ka3eS8b1UvrKwdInmlXbY7024YOXUq4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Kz0iYh1+73ehN4oykQ+7Gz1pHJ7ky5S88FITTwYJ/xOvyMQRHAdOWq+gdjB6rl57C291grhU5/863SeD8FpfbcOCZ05ePNDdjhlLB/ZzxFtacXpko8xRiwKiMBHrK2UjILPT554aOXpjcE8Lq5rA65SXuEnqDay24dMLLQj/W44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QjyRtX95; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43PItkEE009250;
+	Thu, 25 Apr 2024 19:30:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=BPyYe415dTkCdrIWikjwxnhAfeyA2CT12485YcYWpBk=; b=Qj
+	yRtX957dSpTt62piG/2yqriMpwhW+I8LbPt1cYDf9anmdW0laFR5nFkNYF0WS3p3
+	rrCEY6dVcm+UO4yMCDL9cWutWv2tfdeYVbxik8plttxyhM9Ej8wcU90rZ1q/dNlI
+	YqrkgnVrfv+UHDZ2xdBXRQYfcCV8tA27ocL2r6bnLm7i6CC6QrEwxlPMUwWwivt7
+	OU/c+Bc2AbRPzTMQMR96g9IrS7ac2zP3cy0h6DZEsWmKmIYRNgPM5uDTDxLBfMMz
+	IrhwQk/J7V+VGN82etiXhwzTQfpm7BXpUr53gD48dWZG23Fpxe3g+xxh6omXW6cw
+	xiwC3C3bA4M8bwx9t26Q==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xqenkkh1q-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 25 Apr 2024 19:30:09 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43PJU8nm008532
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 25 Apr 2024 19:30:08 GMT
+Received: from [10.110.3.55] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 25 Apr
+ 2024 12:30:07 -0700
+Message-ID: <d71c677f-eff7-2bc4-4328-38e4d83e1115@quicinc.com>
+Date: Thu, 25 Apr 2024 12:30:07 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v7 1/6] soc: qcom: pdr: protect locator_addr with the main
+ mutex
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Sibi Sankar
+	<quic_sibis@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Xilin Wu <wuxilin123@gmail.com>,
+        Bryan O'Donoghue
+	<bryan.odonoghue@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+References: <20240424-qcom-pd-mapper-v7-0-05f7fc646e0f@linaro.org>
+ <20240424-qcom-pd-mapper-v7-1-05f7fc646e0f@linaro.org>
+Content-Language: en-US
+From: Chris Lew <quic_clew@quicinc.com>
+In-Reply-To: <20240424-qcom-pd-mapper-v7-1-05f7fc646e0f@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240425-qcom-ipc-deprecate-v1-2-a8d8034253ea@z3ntu.xyz>
-References: <20240425-qcom-ipc-deprecate-v1-0-a8d8034253ea@z3ntu.xyz>
-In-Reply-To: <20240425-qcom-ipc-deprecate-v1-0-a8d8034253ea@z3ntu.xyz>
-To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- Bjorn Andersson <andersson@kernel.org>, 
- Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Andy Gross <agross@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Luca Weiss <luca@z3ntu.xyz>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1179; i=luca@z3ntu.xyz;
- h=from:subject:message-id; bh=AQfbI7vOuFm8YP/Xkec/49RruMYlAkAUez61BlDr6HQ=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBmKqu0A0raTWi5QiSyZMZPNUcsBx00rHW6j1Es1
- wsMpEQlTC2JAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZiqrtAAKCRBy2EO4nU3X
- VtU9D/9+qWpTms/tpH8LMz8s6RPt7yhwX/HudrWqZdPNLIVhqzjbTjoSjFVFgwhv2jMMQrp78ps
- Vogq2hWhGvvKsuygor7Aa2BpqIABh1RzBB24sUhAH4Nxl3jv2Gt8BJ5y/9BTpwPnVMSB6DQPYKJ
- qKuTIK1t0yBAOx0jF3VMPi5STLwX9uAOj0NgR1Kz85m9kymTVbC8l2RUU/rq22acEihMFvvUUjS
- 1U1QMSU28MAFHJKTjLL7LwkBDaVckuKeA/pcMjb9i8pFwmZwWGT2rJHvL3wJkT0l0KV9w6eUhNb
- nEqGxaDmoKmxNOhHlOyRFq7+9ZCcbQsMHKl9tXG/ABh8FmLk3CxK5dP/ekz39n/rvTLRg+ca5I1
- pxTys4uLWVF33vZ6AvbB9xkqJoBluYLMyO4qFXzxANjPBAiOUrNr2ditDlr6tWKeQ1Z2ZTH7uXT
- vqI3JGQv4p3dfU/MzS9kt6DzJhXDPdR8EylUcbPo8WqVLoxLrSkjL39cENJ6KKcdJEcx/eSRZQP
- gWZQnsQYZyMjNclhY8gs8tQEcZHmTB3aXYybcSqOcPrFYxuvNQlIGzMfTME4ImgUvWp/BNuCLgj
- g8tKlcAoh9pd/YhOuU7Rkhv/HuVwHTo24Q9j5G0p6jQcAEU0537WmhNbcE50gEltBbSV3cHMWRs
- eov2tS+j/EhNQ2w==
-X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
- fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: mC-kUwEGWlYylnplApAnj_Fn0ljkiIoN
+X-Proofpoint-GUID: mC-kUwEGWlYylnplApAnj_Fn0ljkiIoN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-25_19,2024-04-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 phishscore=0
+ mlxlogscore=999 priorityscore=1501 impostorscore=0 malwarescore=0
+ bulkscore=0 lowpriorityscore=0 spamscore=0 adultscore=0 suspectscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404250140
 
-Deprecate the qcom,ipc way of accessing the mailbox in favor of the
-'mboxes' property.
 
-Update the example to use mboxes.
+On 4/24/2024 2:27 AM, Dmitry Baryshkov wrote:
+> If the service locator server is restarted fast enough, the PDR can
+> rewrite locator_addr fields concurrently. Protect them by placing
+> modification of those fields under the main pdr->lock.
+> 
+> Fixes: fbe639b44a82 ("soc: qcom: Introduce Protection Domain Restart helpers")
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/soc/qcom/pdr_interface.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/pdr_interface.c b/drivers/soc/qcom/pdr_interface.c
+> index a1b6a4081dea..19cfe4b41235 100644
+> --- a/drivers/soc/qcom/pdr_interface.c
+> +++ b/drivers/soc/qcom/pdr_interface.c
+> @@ -76,12 +76,12 @@ static int pdr_locator_new_server(struct qmi_handle *qmi,
+>   					      locator_hdl);
+>   	struct pdr_service *pds;
+>   
+> +	mutex_lock(&pdr->lock);
+>   	/* Create a local client port for QMI communication */
+>   	pdr->locator_addr.sq_family = AF_QIPCRTR;
+>   	pdr->locator_addr.sq_node = svc->node;
+>   	pdr->locator_addr.sq_port = svc->port;
+>   
+> -	mutex_lock(&pdr->lock);
+>   	pdr->locator_init_complete = true;
+>   	mutex_unlock(&pdr->lock);
+>   
+> @@ -104,10 +104,10 @@ static void pdr_locator_del_server(struct qmi_handle *qmi,
+>   
+>   	mutex_lock(&pdr->lock);
+>   	pdr->locator_init_complete = false;
+> -	mutex_unlock(&pdr->lock);
+>   
+>   	pdr->locator_addr.sq_node = 0;
+>   	pdr->locator_addr.sq_port = 0;
+> +	mutex_unlock(&pdr->lock);
+>   }
+>   
+>   static const struct qmi_ops pdr_locator_ops = {
+> 
 
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
----
- Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+These two functions are provided as qmi_ops handlers in pdr_locator_ops. 
+Aren't they serialized in the qmi handle's workqueue since it as an 
+ordered_workqueue? Even in a fast pdr scenario I don't think we would 
+see a race condition between these two functions.
 
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
-index 58500529b90f..141d666dc3f7 100644
---- a/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
-@@ -41,6 +41,7 @@ properties:
-     description:
-       Three entries specifying the outgoing ipc bit used for signaling the
-       remote end of the smp2p edge.
-+    deprecated: true
- 
-   qcom,local-pid:
-     $ref: /schemas/types.yaml#/definitions/uint32
-@@ -128,7 +129,7 @@ examples:
-         compatible = "qcom,smp2p";
-         qcom,smem = <431>, <451>;
-         interrupts = <GIC_SPI 143 IRQ_TYPE_EDGE_RISING>;
--        qcom,ipc = <&apcs 8 18>;
-+        mboxes = <&apcs 18>;
-         qcom,local-pid = <0>;
-         qcom,remote-pid = <4>;
- 
+The other access these two functions do race against is in the 
+pdr_notifier_work. I think you would need to protect locator_addr in 
+pdr_get_domain_list since the qmi_send_request there uses 
+'pdr->locator_addr'.
 
--- 
-2.44.0
-
+Thanks!
+Chris
 
