@@ -1,193 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-18570-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18571-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BB358B231D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 15:48:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7704D8B232A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 15:53:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 037BC282B69
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 13:48:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D7B0A1F220AA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 13:53:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C2E4149C61;
-	Thu, 25 Apr 2024 13:48:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A28F149C72;
+	Thu, 25 Apr 2024 13:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="boLIi6R+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B/y6tfKz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43741494D1;
-	Thu, 25 Apr 2024 13:48:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D67A1494C4;
+	Thu, 25 Apr 2024 13:53:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714052888; cv=none; b=g45d/bJWS++AymiPaa3ytPMdGtrgzZDuoORYl5lg8gjgOFpTTYZEXPSL3hLA5zJJjbPc6MjdefPh+DAtMi26nf4hcK+k8iXhFL+D4Cr0GPeRemlJEJK48UgdVqOqIdndBGIIRsUCiLHisH8Sl6b93Vuhj2Bi3V1gNJm0zi9XgJs=
+	t=1714053188; cv=none; b=pAtBgY6qfJ2iqQtaRIoYE/ke4U8OAQlojqZa+qirfEeLEMdbTsSbHWOXEszfx5LYs4+5Ywf+cAWQbS8otgj8uKvRQ/oVyHHNpZ7y8HHD0xMk5T8qcl/HAMvgvH0mXpvEm87M1k4xliwFPgXt3xu8nxmyibWrDU20kmB64bFp4lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714052888; c=relaxed/simple;
-	bh=VVDERpYPM9KQxilgs5G//sA0Lmaf+Mjj63KOyRayoYA=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=knl2qqPhwvcorxkmwa9RVZnlSTCpFZLQPx6vaQJqMHyg3+Qlzl/UxwVSL8DfilychZVAdgc9G2A0H1nimxaQBGIfezXbwxX+73dPwuAXWqiAzHZl39tsX5xZlCMmg2YsYp29ecpWJpJ3THQPCUiFEIBx+ZyevGVj8n133qUZ3Sk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=boLIi6R+; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43P9x6BW001380;
-	Thu, 25 Apr 2024 13:47:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=WDD9ufnAdqz8oMuirK7+5
-	QxXew2z3pBpsyZ1Jwjt7L0=; b=boLIi6R+6EfAd0ae5YFqCZ81/Hcff19XR94gu
-	iRsxQV1cj1qWjqclIGYpAeEZja6LSsJkRF5rNT8MzrdzmGPrHzL1i05N+UkikQ3X
-	0+89IcHIvmiXoJ20jRXLqu4Ee2xQLX3EexEe174jlZlD3PposanJIvn/mzMcUNO/
-	QZGN4KTJw35jC5TYBfB/scxiPv6KXGhxAO0mbmQvR79s3yaSUlaK2sx5I+/4alyv
-	i/GSMof8oBYZns6RLweS8+DgpyTgq2REasrVjSVsOXf0CjTaUdceHHbplgqvrv+6
-	P7d4ZWtoGbuBEo6ND8TqrAVkRIG+8n2l/QHvaTCG57coyc53Q==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xqn0wgtwj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 25 Apr 2024 13:47:29 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43PDlRlJ019865
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 25 Apr 2024 13:47:27 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 25 Apr 2024 06:47:27 -0700
-Date: Thu, 25 Apr 2024 06:47:26 -0700
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: Johan Hovold <johan@kernel.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Linus Walleij
-	<linus.walleij@linaro.org>,
-        Brian Norris <computersforpeace@gmail.com>,
-        Jaiganesh Narayanan <njaigane@codeaurora.org>,
-        Doug Anderson
-	<dianders@chromium.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] pinctrl: qcom: Fix behavior in abscense of open-drain
- support
-Message-ID: <Zipe7u/9ajRXa81U@hu-bjorande-lv.qualcomm.com>
-References: <20240424-tlmm-open-drain-v1-1-9dd2041f0532@quicinc.com>
- <ZipGRl_QC_x83MFt@hovoldconsulting.com>
+	s=arc-20240116; t=1714053188; c=relaxed/simple;
+	bh=q8Fc8bGuKfZhJ9bV0xXSD+ms886NX3ElTyriE5uXRjQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OptD8Fq/pVVB52bjxctv+bqhzU9nAo1Avu2Fwu1JwURax6ssGn3/H+d1ffsD0KWWdBZv00zsIcNv3BtWPAk0EXq1SQoDKed5RLGKW0O080i3Rvyw6E/4F/AzDzck4RVW6eLNDaCTgt+fulbM6CUYyCw7O2Qq03hYHiN8pISlkmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B/y6tfKz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F03FDC113CC;
+	Thu, 25 Apr 2024 13:53:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1714053188;
+	bh=q8Fc8bGuKfZhJ9bV0xXSD+ms886NX3ElTyriE5uXRjQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=B/y6tfKzgFh32a1GAYHkZYBY4XB5U60kptxA3VLkB7ThcyhGxdwn3537Inle8EDAl
+	 DWbmehmNneYuzgjywEOTgoo/CLdCSQ88tiMkyi2IC7O+t2Uwn48C4tvYIbmAw4WdhS
+	 HR1zyVofPZP0RXl1mbctHuebcCDvx2bLsPqX/Y5aFCYOfyafnP6CHDpux950e9dMfI
+	 uw1ZsfeghqQzhVYEm0euFEa5wN3f3/kQNh0NFT6cKC1CbPEFlsqaT4+RmxrqhEC0mg
+	 a4r2igcre9HEd1B7phjo67twtiYQbZpj+ueTLIp55OPkp4Mce0enx8R+rgVZhc9WF3
+	 tNWZtCuYSVSqQ==
+Date: Thu, 25 Apr 2024 19:23:00 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Qiang Yu <quic_qianyu@quicinc.com>
+Cc: mani@kernel.org, quic_jhugo@quicinc.com, mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_cang@quicinc.com, quic_mrana@quicinc.com
+Subject: Re: [PATCH v4 1/3] bus: mhi: host: Add sysfs entry to force device
+ to enter EDL
+Message-ID: <20240425135300.GE3449@thinkpad>
+References: <1713868417-37856-1-git-send-email-quic_qianyu@quicinc.com>
+ <1713868417-37856-2-git-send-email-quic_qianyu@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZipGRl_QC_x83MFt@hovoldconsulting.com>
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: dadqXKE7q0Kd3I_QQxoWGIW_xYmiAZfD
-X-Proofpoint-GUID: dadqXKE7q0Kd3I_QQxoWGIW_xYmiAZfD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-25_13,2024-04-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1015
- impostorscore=0 malwarescore=0 phishscore=0 suspectscore=0 mlxscore=0
- mlxlogscore=999 lowpriorityscore=0 bulkscore=0 spamscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404250100
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1713868417-37856-2-git-send-email-quic_qianyu@quicinc.com>
 
-On Thu, Apr 25, 2024 at 02:02:14PM +0200, Johan Hovold wrote:
-> On Wed, Apr 24, 2024 at 08:45:31PM -0700, Bjorn Andersson wrote:
-> > When a GPIO is configured as OPEN_DRAIN gpiolib will in
-> > gpiod_direction_output() attempt to configure the open-drain property of
-> > the hardware and if this fails fall back to software emulation of this
-> > state.
-> > 
-> > The TLMM block in most Qualcomm platform does not implement such
-> > functionality, so this call would be expected to fail. But due to lack
-> > of checks for this condition, the zero-initialized od_bit will cause
-> > this request to silently corrupt the lowest bit in the config register
-> > (which typically is part of the bias configuration) and happily continue
-> > on.
-> > 
-> > Fix this by checking if the od_bit value is unspecified and if so fail
-> > the request to avoid the unexpected state, and to make sure the software
-> > fallback actually kicks in.
+On Tue, Apr 23, 2024 at 06:33:35PM +0800, Qiang Yu wrote:
+> Add sysfs entry to allow users of MHI bus force device to enter EDL.
+> Considering that the way to enter EDL mode varies from device to device and
+> some devices even do not support EDL. Hence, add a callback edl_trigger in
+> mhi controller as part of the sysfs entry to be invoked and MHI core will
+> only create EDL sysfs entry for mhi controller that provides edl_trigger
+> callback. All of the process a specific device required to enter EDL mode
+> can be placed in this callback.
 > 
-> Fortunately, this is currently not a problem as the gpiochip driver does
-> not implement the set_config() callback, which means that the attempt to
-> change the pin configuration currently always fails with -ENOTSUP (see
-> gpio_do_set_config()).
+> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+
+One nitpick below. But I'll fix it while applying.
+
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+> ---
+>  Documentation/ABI/stable/sysfs-bus-mhi | 13 +++++++++++++
+>  drivers/bus/mhi/host/init.c            | 33 +++++++++++++++++++++++++++++++++
+>  include/linux/mhi.h                    |  2 ++
+>  3 files changed, 48 insertions(+)
+> 
+> diff --git a/Documentation/ABI/stable/sysfs-bus-mhi b/Documentation/ABI/stable/sysfs-bus-mhi
+> index 1a47f9e..b44f467 100644
+> --- a/Documentation/ABI/stable/sysfs-bus-mhi
+> +++ b/Documentation/ABI/stable/sysfs-bus-mhi
+> @@ -29,3 +29,16 @@ Description:	Initiates a SoC reset on the MHI controller.  A SoC reset is
+>                  This can be useful as a method of recovery if the device is
+>                  non-responsive, or as a means of loading new firmware as a
+>                  system administration task.
+> +
+> +What:           /sys/bus/mhi/devices/.../trigger_edl
+> +Date:           April 2024
+> +KernelVersion:  6.9
+
+6.9 is done, now we are working for 6.10 (feature wise).
+
+- Mani
+
+> +Contact:        mhi@lists.linux.dev
+> +Description:    Writing a non-zero value to this file will force devices to
+> +                enter EDL (Emergency Download) mode. This entry only exists for
+> +                devices capable of entering the EDL mode using the standard EDL
+> +                triggering mechanism defined in the MHI spec v1.2. Once in EDL
+> +                mode, the flash programmer image can be downloaded to the
+> +                device to enter the flash programmer execution environment.
+> +                This can be useful if user wants to use QDL (Qualcomm Download,
+> +                which is used to download firmware over EDL) to update firmware.
+> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+> index 44f9349..7104c18 100644
+> --- a/drivers/bus/mhi/host/init.c
+> +++ b/drivers/bus/mhi/host/init.c
+> @@ -127,6 +127,30 @@ static ssize_t soc_reset_store(struct device *dev,
+>  }
+>  static DEVICE_ATTR_WO(soc_reset);
+>  
+> +static ssize_t trigger_edl_store(struct device *dev,
+> +			       struct device_attribute *attr,
+> +			       const char *buf, size_t count)
+> +{
+> +	struct mhi_device *mhi_dev = to_mhi_device(dev);
+> +	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+> +	unsigned long val;
+> +	int ret;
+> +
+> +	ret = kstrtoul(buf, 10, &val);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	if (!val)
+> +		return -EINVAL;
+> +
+> +	ret = mhi_cntrl->edl_trigger(mhi_cntrl);
+> +	if (ret)
+> +		return ret;
+> +
+> +	return count;
+> +}
+> +static DEVICE_ATTR_WO(trigger_edl);
+> +
+>  static struct attribute *mhi_dev_attrs[] = {
+>  	&dev_attr_serial_number.attr,
+>  	&dev_attr_oem_pk_hash.attr,
+> @@ -1018,6 +1042,12 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
+>  	if (ret)
+>  		goto err_release_dev;
+>  
+> +	if (mhi_cntrl->edl_trigger) {
+> +		ret = sysfs_create_file(&mhi_dev->dev.kobj, &dev_attr_trigger_edl.attr);
+> +		if (ret)
+> +			goto err_release_dev;
+> +	}
+> +
+>  	mhi_cntrl->mhi_dev = mhi_dev;
+>  
+>  	mhi_create_debugfs(mhi_cntrl);
+> @@ -1051,6 +1081,9 @@ void mhi_unregister_controller(struct mhi_controller *mhi_cntrl)
+>  	mhi_deinit_free_irq(mhi_cntrl);
+>  	mhi_destroy_debugfs(mhi_cntrl);
+>  
+> +	if (mhi_cntrl->edl_trigger)
+> +		sysfs_remove_file(&mhi_dev->dev.kobj, &dev_attr_trigger_edl.attr);
+> +
+>  	destroy_workqueue(mhi_cntrl->hiprio_wq);
+>  	kfree(mhi_cntrl->mhi_cmd);
+>  	kfree(mhi_cntrl->mhi_event);
+> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> index cde01e1..d968e1a 100644
+> --- a/include/linux/mhi.h
+> +++ b/include/linux/mhi.h
+> @@ -353,6 +353,7 @@ struct mhi_controller_config {
+>   * @read_reg: Read a MHI register via the physical link (required)
+>   * @write_reg: Write a MHI register via the physical link (required)
+>   * @reset: Controller specific reset function (optional)
+> + * @edl_trigger: CB function to trigger EDL mode (optional)
+>   * @buffer_len: Bounce buffer length
+>   * @index: Index of the MHI controller instance
+>   * @bounce_buf: Use of bounce buffer
+> @@ -435,6 +436,7 @@ struct mhi_controller {
+>  	void (*write_reg)(struct mhi_controller *mhi_cntrl, void __iomem *addr,
+>  			  u32 val);
+>  	void (*reset)(struct mhi_controller *mhi_cntrl);
+> +	int (*edl_trigger)(struct mhi_controller *mhi_cntrl);
+>  
+>  	size_t buffer_len;
+>  	int index;
+> -- 
+> 2.7.4
+> 
 > 
 
-You're right. I was convinced that I implemented set_config() and got
-lost in the indirections.
-
-> Specifically, this means that the software fallback kicks in, which I
-> had already verified.
-> 
-
-I thought you did, and found this strange.
-
-> Now, perhaps there is some other path which can allow you to end up
-> here, but it's at least not via gpiod_direction_output().
-> 
-> The msm pinctrl binding does not allow 'drive-open-drain' so that path
-> should also be ok unless you have a non-conformant devicetree.
-> 
-
-Looking at it again, I believe you're right and this is currently dead
-code, waiting to screw us over once someone opens up the code path I
-thought I fixed...
-
-> > It is assumed for now that no implementation will come into existence
-> > with BIT(0) being the open-drain bit, simply for convenience sake.
-> > 
-> > Fixes: 13355ca35cd1 ("pinctrl: qcom: ipq4019: add open drain support")
-> 
-> I guess hardware open-drain mode has never been properly tested on
-> ipq4019.
-> 
-
-I see no other explanation. Perhaps there were additional changes in the
-downstream tree where that change came from.
-
-> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> > ---
-> >  drivers/pinctrl/qcom/pinctrl-msm.c | 2 ++
-> >  drivers/pinctrl/qcom/pinctrl-msm.h | 3 ++-
-> >  2 files changed, 4 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-> > index aeaf0d1958f5..329474dc21c0 100644
-> > --- a/drivers/pinctrl/qcom/pinctrl-msm.c
-> > +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-> > @@ -313,6 +313,8 @@ static int msm_config_reg(struct msm_pinctrl *pctrl,
-> >  			*mask |= BIT(g->i2c_pull_bit) >> *bit;
-> >  		break;
-> >  	case PIN_CONFIG_DRIVE_OPEN_DRAIN:
-> > +		if (!g->od_bit)
-> > +			return -EOPNOTSUPP;
-> 
-> I believe this should be -ENOTSUPP, which the rest of the driver and
-> subsystem appear to use.
-> 
-
-Both error codes are used in across gpio/pinctrl subsystems. I first
-went ENOTSUPP but folded, perhaps too easily, when checkpatch told me
-EOPNOTSUPP was better.
-
-
-I'm leaning towards us reverting the ipq4019 patch, rather than try
-complete the patch, but will give this some more thought before spinning
-v2.
-
-Thank you,
-Bjorn
-
-> >  		*bit = g->od_bit;
-> >  		*mask = 1;
-> >  		break;
-> 
-> Johan
+-- 
+மணிவண்ணன் சதாசிவம்
 
