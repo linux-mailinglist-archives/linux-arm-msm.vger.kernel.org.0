@@ -1,64 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-18553-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18554-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 126D48B20D3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 14:02:19 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96BB08B2175
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 14:17:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 35A481C213BF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 12:02:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4C0781F21033
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Apr 2024 12:17:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27D9A12B148;
-	Thu, 25 Apr 2024 12:02:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46A1612AAE8;
+	Thu, 25 Apr 2024 12:17:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ssZnt+F6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n47zh4n6"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC9884E0E;
-	Thu, 25 Apr 2024 12:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C084812C46D;
+	Thu, 25 Apr 2024 12:17:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714046535; cv=none; b=LcW0FfjMglvyzK+P9A/2sz74AdHpYZmk5W23chi8/ocY6Zr0YqfEc3pSE8wNWy3kC8V0qKfSzW2l1Hh5Y8t3sghl9iw9AGYZabyX1rF85fUULVADoEXJZ88FPHWoxqh9l2YDE15UsooloBDRSMfP8wiqa1D1SNyEtIeIUDrwFeE=
+	t=1714047463; cv=none; b=MpxhThw/sLEINCtRUxoJi09wuIM7jPG8/2+ltX4n3L8GHelWaLkZESKwe7//GeuPb+FTO+BGu7j8/k9CxzsSNQHjRN2UZBEQqv8siAZ0kDV5/CPqAZb7IC6slC7IX/uXnkQ0PjsNbt0zJ9B/M6z2GnHpSxxNmMPKw/OtbK5vyy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714046535; c=relaxed/simple;
-	bh=IsokxEzMjspQdJ6vbgSWEZO+bwVScekTaycFJ/Dr5nM=;
+	s=arc-20240116; t=1714047463; c=relaxed/simple;
+	bh=9qw8mw8cRq2pIoUpumnN13h5GTULZh/nYCoUByN5pLs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FadfTfHAfGLJboiZmGniFIpW3JDMjvoVp1tz97fGMXMJCyqZ0CPWQZF0JgxOdvuxheheGOuFau418tbZWUudqyLz1xiDV2tSKpulI37YCX5Vw+G/cH5wyyPuOEl5NecqKd6V3iKZiqwyOv7BRzk+Im4hqxuajuZG6lxafkPjaBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ssZnt+F6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69D7DC113CC;
-	Thu, 25 Apr 2024 12:02:14 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=KiTWE9uwCq9MXpFSeK4Kzrns6fQnAqBOCKYw5ANxko7HmjRBgt3huG2X1nXgsi5uNSgqvVjKh46RABF/QyuLdGkxJYF2y4bVAMNJo4IEQP43rpdMh7IhVUCjdTNInxD8R70ktJynAHDgb0Ko8RAv+Jch0aBB6AuoLN4CJvsiYHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n47zh4n6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27C70C113CE;
+	Thu, 25 Apr 2024 12:17:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714046534;
-	bh=IsokxEzMjspQdJ6vbgSWEZO+bwVScekTaycFJ/Dr5nM=;
+	s=k20201202; t=1714047462;
+	bh=9qw8mw8cRq2pIoUpumnN13h5GTULZh/nYCoUByN5pLs=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ssZnt+F6c5C7fMP2Rv+zpjBsDZUzPNNQxiUU3+aKm/gMy76wi/kViatVTn0CwizWF
-	 GKQmIY/KZtpsqcd3hGGWRqVBKFxKqfg/qhEFgvkPtoQ1Ivpaij54PeyWnWD86GOw+a
-	 ETQQ/q97VlYlkalLlE2f1QK8rzoFmCIfRROFKBF8GkTtOEAtg3pTvxbwd7F6CjYsDs
-	 wYIImnz+C3zwgR/vFCMBBUwSGAHZyw9Ar48HwrAeH/dS3xzUEh87u1PeUlPfub/0qb
-	 ADx988KGvC5r/QxV6gr3xd8jHidY7Afv0fAUZA3fRMj9svI5UE6nozaR80ECjOqEnn
-	 GH0q3p3x2sheA==
+	b=n47zh4n6wXIBltmcJ4jjW33nz0KvtVQQOy8aEBnp5quBpNq+fAPysAsCHRxDJA6WS
+	 tyzzkidxPukVJpwSNWRCtnWUGSD8u6LR5cN/rfc4XQL4lWm5TWezBL3fIkiTRvI9R/
+	 R6Xj+GFF73EL5kmwnWZ+eDpuqpU/M2qPeTB5cgh452HerG6iAHoW1xued258PIL1H7
+	 PP0mmHchmL7ngzNwKK9xnduhGdXAbYYRv9vxxyqZctHSdiLRcs7+mubis8aCE7TK5w
+	 zXcKt1GPeXKqUBBr71aOx3njVnMlW5oaaXQqTh3K2g4XH5CWWxXGiomj02IgSjl93Z
+	 YLT7Lh5yVRhoA==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan@kernel.org>)
-	id 1rzxnq-000000001yQ-0MAo;
-	Thu, 25 Apr 2024 14:02:14 +0200
-Date: Thu, 25 Apr 2024 14:02:14 +0200
+	id 1rzy2n-000000002CT-1Kly;
+	Thu, 25 Apr 2024 14:17:42 +0200
+Date: Thu, 25 Apr 2024 14:17:41 +0200
 From: Johan Hovold <johan@kernel.org>
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Brian Norris <computersforpeace@gmail.com>,
-	Jaiganesh Narayanan <njaigane@codeaurora.org>,
-	Doug Anderson <dianders@chromium.org>,
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] pinctrl: qcom: Fix behavior in abscense of open-drain
- support
-Message-ID: <ZipGRl_QC_x83MFt@hovoldconsulting.com>
-References: <20240424-tlmm-open-drain-v1-1-9dd2041f0532@quicinc.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Caleb Connolly <caleb.connolly@linaro.org>
+Subject: Re: [PATCH v4] usb: typec: qcom-pmic-typec: split HPD bridge alloc
+ and registration
+Message-ID: <ZipJ5WVuxPY7dK21@hovoldconsulting.com>
+References: <20240424-qc-pmic-typec-hpd-split-v4-1-f7e10d147443@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,70 +69,48 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240424-tlmm-open-drain-v1-1-9dd2041f0532@quicinc.com>
+In-Reply-To: <20240424-qc-pmic-typec-hpd-split-v4-1-f7e10d147443@linaro.org>
 
-On Wed, Apr 24, 2024 at 08:45:31PM -0700, Bjorn Andersson wrote:
-> When a GPIO is configured as OPEN_DRAIN gpiolib will in
-> gpiod_direction_output() attempt to configure the open-drain property of
-> the hardware and if this fails fall back to software emulation of this
-> state.
+On Wed, Apr 24, 2024 at 05:16:57AM +0300, Dmitry Baryshkov wrote:
+> If a probe function returns -EPROBE_DEFER after creating another device
+> there is a change of ending up in a probe deferral loop, (see commit
+> fbc35b45f9f6 ("Add documentation on meaning of -EPROBE_DEFER"). In case
+> of the qcom-pmic-typec driver the tcpm_register_port() function looks up
+> external resources (USB role switch and inherently via called
+> typec_register_port() USB-C muxes, switches and retimers).
 > 
-> The TLMM block in most Qualcomm platform does not implement such
-> functionality, so this call would be expected to fail. But due to lack
-> of checks for this condition, the zero-initialized od_bit will cause
-> this request to silently corrupt the lowest bit in the config register
-> (which typically is part of the bias configuration) and happily continue
-> on.
+> In order to prevent such probe-defer loops caused by qcom-pmic-typec
+> driver, use the API added by Johan Hovold and move HPD bridge
+> registration to the end of the probe function.
 > 
-> Fix this by checking if the od_bit value is unspecified and if so fail
-> the request to avoid the unexpected state, and to make sure the software
-> fallback actually kicks in.
+> The devm_drm_dp_hpd_bridge_add() is called at the end of the probe
+> function after all TCPM start functions. This is done as a way to
+> overcome a different problem, the DRM subsystem can not properly cope
+> with the DRM bridges being destroyed once the bridge is attached. Having
+> this function call at the end of the probe function prevents possible
+> DRM bridge device creation followed by destruction in case one of the
+> TCPM start functions returns an error.
 
-Fortunately, this is currently not a problem as the gpiochip driver does
-not implement the set_config() callback, which means that the attempt to
-change the pin configuration currently always fails with -ENOTSUP (see
-gpio_do_set_config()).
+As I mentioned again off-list yesterday, I would have preferred to see
+an explanation why registering the bridge after starting the port and
+phy is ok as it's not obvious to someone not familiar with the driver.
 
-Specifically, this means that the software fallback kicks in, which I
-had already verified.
+But given that bridge registration only registers an aux device which
+may not have been probed by the time the function returns I guess that
+implies that the old driver did not actually rely on it being registered
+before starting either. So I'm fine with this as-is.
 
-Now, perhaps there is some other path which can allow you to end up
-here, but it's at least not via gpiod_direction_output().
-
-The msm pinctrl binding does not allow 'drive-open-drain' so that path
-should also be ok unless you have a non-conformant devicetree.
-
-> It is assumed for now that no implementation will come into existence
-> with BIT(0) being the open-drain bit, simply for convenience sake.
-> 
-> Fixes: 13355ca35cd1 ("pinctrl: qcom: ipq4019: add open drain support")
-
-I guess hardware open-drain mode has never been properly tested on
-ipq4019.
-
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> Reported-by: Caleb Connolly <caleb.connolly@linaro.org>
+> Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  drivers/pinctrl/qcom/pinctrl-msm.c | 2 ++
->  drivers/pinctrl/qcom/pinctrl-msm.h | 3 ++-
->  2 files changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-> index aeaf0d1958f5..329474dc21c0 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-> @@ -313,6 +313,8 @@ static int msm_config_reg(struct msm_pinctrl *pctrl,
->  			*mask |= BIT(g->i2c_pull_bit) >> *bit;
->  		break;
->  	case PIN_CONFIG_DRIVE_OPEN_DRAIN:
-> +		if (!g->od_bit)
-> +			return -EOPNOTSUPP;
+> Dependency: https://lore.kernel.org/lkml/20240418145730.4605-2-johan+linaro@kernel.org/
+> ---
+> Changes in v4:
+> - Rebased on top of Johan's patches
+> - Link to v3: https://lore.kernel.org/r/20240416-qc-pmic-typec-hpd-split-v3-1-fd071e3191a1@linaro.org
 
-I believe this should be -ENOTSUPP, which the rest of the driver and
-subsystem appear to use.
-
->  		*bit = g->od_bit;
->  		*mask = 1;
->  		break;
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
 
 Johan
 
