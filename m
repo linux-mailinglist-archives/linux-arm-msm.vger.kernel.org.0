@@ -1,60 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-18699-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18700-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB5DD8B3FE2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 21:07:26 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA15A8B3FE8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 21:08:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F33D5B23271
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 19:07:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6214F1F2568F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 19:08:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 300A8C2E3;
-	Fri, 26 Apr 2024 19:07:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04DE713AF2;
+	Fri, 26 Apr 2024 19:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hNh9Wzv7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fIdRoWWR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2DFD224D2;
-	Fri, 26 Apr 2024 19:07:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B4520DD3;
+	Fri, 26 Apr 2024 19:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714158439; cv=none; b=Gx6ouxwSPxYlXNb580haSBxv5IXWEmoI/IhA9fTWrECThzavGlyQHiGFAMclSX9R0gT4QK30QOEcT5OHsaHev4xJh7HY15rAbiAbQKEAorD/iBzT/zEzXTajbpuUyNAO46BSX2J/osy5rFDMvS+tNRFi+gJJoYel+Fm483Mc4VA=
+	t=1714158487; cv=none; b=Qbw+LhkZGOM/jmu+x7oWwziFk2DgsArwDPH+JfCz/bw5AzjvMFzij/wOUNEd8oS4n0y5n5psDgFh+AUiL0QKKykLWXsKoNp5tDoKLAAhJmHr12IlWk1BXp6oZqqk6nWDBymo5HnR6McRQkRVvy+HmurTZETdBOza4vYiMq5ohig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714158439; c=relaxed/simple;
-	bh=kFCVen7MFJA35K6YKbUhEnZic7BvetDT54NLAcixGoQ=;
+	s=arc-20240116; t=1714158487; c=relaxed/simple;
+	bh=J0bm1XiiM+tKHo9Zy6ObIpyPXXSSYQFpIVKVA8D2znE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DcZeC1oIAAG00Ux/lcrWor84xZvkjvDNQDaEQKEcRup6sAGNCycbzUxajVHLFOn5kucuYbaTCS2bUFfI0eOZB7rtmQNflZsc2jQ2wGFHFt8akpCjDH5VMHMbvinShztjBzNAKGNnZVWnWUO52qw8YPzxg20p0bjKz+Zaaqp3IP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hNh9Wzv7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47ADEC113CD;
-	Fri, 26 Apr 2024 19:07:18 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Tt/vGeMbCycc3vg+cILRbzKXlwBQ0yEl+hce4dL3P9QJBRItN17cRA7n48380D1/m9e3KF1nIMX17WnnmisBNFz/lvRkhHmiLM46HudhzfZtn3YdWk7hX5GGS5SbtUAbIEEN/lT/r5I9f9bzDl0aqhiNY6XuIt7valfhnNOn8pU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fIdRoWWR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1603EC113CD;
+	Fri, 26 Apr 2024 19:08:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714158438;
-	bh=kFCVen7MFJA35K6YKbUhEnZic7BvetDT54NLAcixGoQ=;
+	s=k20201202; t=1714158487;
+	bh=J0bm1XiiM+tKHo9Zy6ObIpyPXXSSYQFpIVKVA8D2znE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hNh9Wzv7VhK0UWWL8MC54sUtMJQxDX4Z5f6ODx4LUzvChFe1rTrN35R+xL55naEcN
-	 UIC6TzNBzUoRBibjPlUSze1hsgsVorsm/2PPZtc/iKmjfGaOSsTwap2u09sQths32N
-	 93+cpMnDGCoRFkccMqdizOwlNSF5yIWnuvgijC5W3TeyN81W0hXaGEwXv6KfYYD2WR
-	 xDWLZnD9cgZVNZpwQ9NjB4zE931+bTplMvkPsYw5e+MaGR/cJBZvL7nsmmmWJWTbkg
-	 vPTj0l7RXD9NTeipLhKPFpaHqWj+pZKwxBwbGKYtR/ry8qKB5cLauUWy/aOpLaHRh0
-	 p2Et9ljsKgPiw==
-Date: Fri, 26 Apr 2024 14:07:15 -0500
+	b=fIdRoWWRaAKveDW96bra4dLZXF2z/txwTGcg0L5F/OmAfXGheRui0URjn3gu+BaSb
+	 EVwAWIr5lGglm64jloclMCJpUN5kL7QOX62WH2bOcIJHRSjYPp6DILWryYwDgkSdnu
+	 waOkZHOqfJpFkAzaJGkFe69T8ZoewrD4WeZXM58GKo/bccBZOlyKCs23lOYv9LGlXl
+	 OXgOXOkgaB/ngTsk6fBb3lhb49hPsAFfmGb8B9ZV4ujEv7oLVP2sGP0R1CIgat2mQG
+	 vJ1dmTy3TXEULIWhBmncoDZN3wOrMQx+ILY0byo2/aVfQ3uCIpK7vDSaB6IHBWBKhx
+	 OKr7TGknMJTLA==
+Date: Fri, 26 Apr 2024 14:08:04 -0500
 From: Rob Herring <robh@kernel.org>
 To: Rohit Agarwal <quic_rohiagar@quicinc.com>
-Cc: andersson@kernel.org, jassisinghbrar@gmail.com,
-	devicetree@vger.kernel.org, lee@kernel.org,
-	konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
-	conor+dt@kernel.org, kernel@quicinc.com,
-	linux-kernel@vger.kernel.org, manivannan.sadhasivam@linaro.org,
-	krzk+dt@kernel.org
-Subject: Re: [PATCH 1/6] dt-bindings: mailbox: qcom-ipcc: Document the SDX75
- IPCC
-Message-ID: <171415842070.2640773.96854760213793283.robh@kernel.org>
+Cc: andersson@kernel.org, lee@kernel.org, kernel@quicinc.com,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	jassisinghbrar@gmail.com, linux-kernel@vger.kernel.org,
+	conor+dt@kernel.org, krzk+dt@kernel.org,
+	manivannan.sadhasivam@linaro.org, konrad.dybcio@linaro.org
+Subject: Re: [PATCH 3/6] dt-bindings: soc: qcom,aoss-qmp: Document the SDX75
+ AOSS channel
+Message-ID: <171415845909.2646970.9861178013586174124.robh@kernel.org>
 References: <20240426055326.3141727-1-quic_rohiagar@quicinc.com>
- <20240426055326.3141727-2-quic_rohiagar@quicinc.com>
+ <20240426055326.3141727-4-quic_rohiagar@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,15 +62,15 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240426055326.3141727-2-quic_rohiagar@quicinc.com>
+In-Reply-To: <20240426055326.3141727-4-quic_rohiagar@quicinc.com>
 
 
-On Fri, 26 Apr 2024 11:23:21 +0530, Rohit Agarwal wrote:
-> Document the Inter-Processor Communication Controller on the SDX75 Platform.
+On Fri, 26 Apr 2024 11:23:23 +0530, Rohit Agarwal wrote:
+> Document the Always-On Subsystem side channel on the SDX75 Platform.
 > 
 > Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
 > ---
->  Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml | 1 +
+>  Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.yaml | 1 +
 >  1 file changed, 1 insertion(+)
 > 
 
