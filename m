@@ -1,160 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-18704-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C4E28B418B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 23:55:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E4568B420B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Apr 2024 00:08:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 40B84283629
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 21:55:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E1DC7283F99
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 22:08:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6953B37703;
-	Fri, 26 Apr 2024 21:55:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7A4E374DB;
+	Fri, 26 Apr 2024 22:08:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UB1c/KyQ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XiAPYb6t"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D470125AE;
-	Fri, 26 Apr 2024 21:55:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25D332C6B7;
+	Fri, 26 Apr 2024 22:08:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714168536; cv=none; b=C7aZq+tPx/zjr2ASyFMDBVAZsjRI2YtuLr7q3OsB4XRlbIeGH3P02+TwXh3Lzn6x0CNpZQE7p2wRaTaLZKshavasVSwZwNnNAyeRWMm8VfGI/dBAK5uU1cC7V/HVJcMbv+zO9BuB/2jK+kAwxEMDZGTLXBcX7sHuIviwRGi3GM4=
+	t=1714169300; cv=none; b=V6nkYnDFpb2fcswdQR4bFqDDj4r4Roc3gTfwLBU3bTJ8WQV3LkD0/C23HyhLx7KevSJG2jS/3KSancp00bq8V5c6tbcVg85lrpoy3bby/beEFjFJQhhyOSI0TdizSvLsdNXSDcnjLmVkjSMYcl1k5TIu6sc4984lSGVpul0iQCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714168536; c=relaxed/simple;
-	bh=7/12lQ8m5ACp3C54KCnXpyWNuV5AkXC4wJVhYXCnf8Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=HX1VSI8KBPyevNrW23YUZstXijuSaF1qK/9x2YAjEwTgcv8/kcAhXeKpJ0rOnaPoizE3iZBAAYWc6DmsBTVF6Wgqu1J0vB7xzZxLiiX7wKkQFx9mfKbeHQoEHOIBJKgh4K3icm3isOjI9vBHktCOfLDwAWL5vZIYFFhO4Oo/ECI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UB1c/KyQ; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43QLqmWU024490;
-	Fri, 26 Apr 2024 21:55:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=CoaUWkpf4ziyf5/z5HH9Em0tl4jcL6HqmjBiVk7KXP0=; b=UB
-	1c/KyQ8V2QkCCL7+hSWaN1MmFJUooEw7xjJQRzhC+Qia9tFlPoljc5Q45qI97+xe
-	ApPCubZg1MjaYW3I7gUECUXYIJXaOQOt8dmuKb3G9KTmKLJwYVVf4aR+9z2OpahB
-	vU8rZdBpCsv+KdJUXkMj8zX8XnEKsg2tf2RDVxQjp1ikFadKI4YeSHk3S3YXYC4n
-	eemk8dc0DeTuaOlo3MtyQVf7LpZn+IRf7o3bVb8qprvPF6nAK+GZ4QhbdFaNy84+
-	oQZ07TDe/IU6q9FqCH2cQyuN+PvTYvo3gwRD8qoRGNBVh880QEnsTK+RLx4GJ09j
-	m6VX/Pkudy5y7M2cijYw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xr35eu06j-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Apr 2024 21:55:14 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43QLtBOi024640
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Apr 2024 21:55:11 GMT
-Received: from [10.110.6.235] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 26 Apr
- 2024 14:55:10 -0700
-Message-ID: <f128feb6-4be2-2f14-b4cb-8bf1d0908892@quicinc.com>
-Date: Fri, 26 Apr 2024 14:55:09 -0700
+	s=arc-20240116; t=1714169300; c=relaxed/simple;
+	bh=0khILg54FT/sDBrzWK5mNL6qNVmfbtcLyd+OTVQdtoU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pf7tT9/yTl3JuhjgZRZ6LB05H4bOgsHv2Um+yQIEmrhsZYJfGzfq7Zb++21kW8R4Nl0tWaAW6+zYQSUeoKG08zscuR1lLM7yh4KrGSwBuxrBglBMiM1IoGKsgJdJQNgqjuuBvVT6mhRMq1wIX/vOwQZrK8/u5rHKONMcvAEVaoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XiAPYb6t; arc=none smtp.client-ip=209.85.219.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-de596c078c2so2316503276.0;
+        Fri, 26 Apr 2024 15:08:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1714169298; x=1714774098; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0khILg54FT/sDBrzWK5mNL6qNVmfbtcLyd+OTVQdtoU=;
+        b=XiAPYb6tRt3fA84i+wAAyzsq8knS7Ik8jZxt5ebiFI9/1vc5xulY36+ie9LN+FxYfo
+         9+q7sFeCgfG2mW+KWY+VsYBushZuxgQ7ChZ3jiZZniGBSruTxR+lZ8m2rBVGCvlMqx8b
+         sM3UhSGyEBzKzHOqrLnkpz9wmtkhSIuHcHbgzAheY/4bVFLxuq3Q4Nc6qj1Xi6mwV7Cd
+         cgobJwi7OZhaltCKcNTnt9Jt2n+Gi+5Au9z1nXv+Ya0fTq5lGZfTu+3U6XBmLyXx3wOs
+         dHpASih3/Z4itkZb5h4OwSZ3Muu5a/jHLiWLZdWCAU+PDI8m879CH0oHUNtJ3dvyMGrA
+         fTeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714169298; x=1714774098;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0khILg54FT/sDBrzWK5mNL6qNVmfbtcLyd+OTVQdtoU=;
+        b=xN+cZJbRG3NuP73E8h68eEw1admeA8L8bNz5G1SM/TRMM1fDdcIs/JgN69hoj7Soka
+         47Zuoy7TZ4KYMCuwC1iN/OIu842rK0xRYyAg8qZXevJjOAcaSJMBJd/7kl3sEsbg11DH
+         6z4fAWOM7O9SpZPGBGNqKL10Hci311GaCI4kz6COMeBebINkVxJaTfuoThXoHjaZH+IJ
+         C49vxfQiiRi2JvIRJ0Zf02CK8x8j8/kunSNHxE6fBmu5VFmPQ9o7Xd4++501w0XJZ1Wu
+         EhqPnQsK4DlKjT4v8w2j3xztWEtHRrJ7H42tTE9R7TFedKxbW24PHs8rEvKJbve6xchQ
+         05fg==
+X-Forwarded-Encrypted: i=1; AJvYcCWnlnVZLixhnXTbubdXLWSx9Uk5id0J3UEsv0U3jGGRaJxc5F3w98HZZE53WNN95MNyDLFUej29DJbqfHjSWb3uyOCXpfmhpABh+JSVl54/LSAQLZLF3+AZTspLiNmah+wn3HQ2MDIpJa9R7yJLoyO0wh2gIDm1QRm/ykQ6thhRc0GVycEZiTY=
+X-Gm-Message-State: AOJu0YyiRCzFSBZNmeUV0vkWz1Ii4VVmMcqIcXM/p5R6EyT+RI+15hE4
+	8UKEdsz6ncwOWuNu3y95A7vRe1nI2jlkHyGuq/JbSsdZJtep/s+me0BRYFQfipioJDoArX1qgIr
+	S9ILkLtoB5mIeUiLOUFIhZ4vo/2c=
+X-Google-Smtp-Source: AGHT+IGATzNR3kaBbDpb0EkDU4wV4HvJlDtd4NArx1rLPtzu8SyJ9NkwXfooBm54KAjIyFV9MaKB/H1WtIXS9Q4VarU=
+X-Received: by 2002:a25:d845:0:b0:de5:a15a:7118 with SMTP id
+ p66-20020a25d845000000b00de5a15a7118mr4144739ybg.42.1714169298049; Fri, 26
+ Apr 2024 15:08:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v20 09/41] ASoC: Add SOC USB APIs for adding an USB
- backend
-Content-Language: en-US
-To: =?UTF-8?Q?Amadeusz_S=c5=82awi=c5=84ski?=
-	<amadeuszx.slawinski@linux.intel.com>,
-        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
-        <lgirdwood@gmail.com>, <andersson@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <gregkh@linuxfoundation.org>,
-        <Thinh.Nguyen@synopsys.com>, <broonie@kernel.org>,
-        <bgoswami@quicinc.com>, <tiwai@suse.com>, <robh@kernel.org>,
-        <konrad.dybcio@linaro.org>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>
-References: <20240425215125.29761-1-quic_wcheng@quicinc.com>
- <20240425215125.29761-10-quic_wcheng@quicinc.com>
- <b8ff8777-6bcb-4fd7-9480-231536d23759@linux.intel.com>
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <b8ff8777-6bcb-4fd7-9480-231536d23759@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: R74DSglKBDCBfnJ5wNDAeCcJ3-qNHc_Q
-X-Proofpoint-ORIG-GUID: R74DSglKBDCBfnJ5wNDAeCcJ3-qNHc_Q
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-26_18,2024-04-26_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=999
- lowpriorityscore=0 malwarescore=0 spamscore=0 bulkscore=0 impostorscore=0
- phishscore=0 priorityscore=1501 clxscore=1015 suspectscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
- definitions=main-2404260154
+References: <20240424-tlmm-open-drain-v1-1-9dd2041f0532@quicinc.com> <ZipGRl_QC_x83MFt@hovoldconsulting.com>
+In-Reply-To: <ZipGRl_QC_x83MFt@hovoldconsulting.com>
+From: Brian Norris <computersforpeace@gmail.com>
+Date: Fri, 26 Apr 2024 15:08:06 -0700
+Message-ID: <CAN8TOE_Vd9c2eYgomhu_ukofTeO9eK8Yhrtt-8BQckmJnGfj6w@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: qcom: Fix behavior in abscense of open-drain support
+To: Johan Hovold <johan@kernel.org>
+Cc: Bjorn Andersson <quic_bjorande@quicinc.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, Jaiganesh Narayanan <njaigane@codeaurora.org>, 
+	Doug Anderson <dianders@chromium.org>, linux-arm-msm@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Amadeusz,
+Hi Johan, Bjorn,
 
-On 4/26/2024 6:25 AM, Amadeusz Sławiński wrote:
-> On 4/25/2024 11:50 PM, Wesley Cheng wrote:
->> Some platforms may have support for offloading USB audio devices to a
->> dedicated audio DSP.  Introduce a set of APIs that allow for 
->> management of
->> USB sound card and PCM devices enumerated by the USB SND class driver.
->> This allows for the ASoC components to be aware of what USB devices are
->> available for offloading.
->>
->> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->> ---
-> 
-> (...)
-> 
->> +const char *snd_soc_usb_get_components_tag(bool playback)
->> +{
->> +    if (playback)
->> +        return "usbplybkoffld: 1";
->> +    else
->> +        return "usbcapoffld: 1";
->> +}
->> +EXPORT_SYMBOL_GPL(snd_soc_usb_get_components_tag);
-> 
-> Is this used to expose some information to userspace?
-> Can those be some more readable strings if so, like:
-> usbplaybackoffload, usbcaptureoffload
-> 
+On Thu, Apr 25, 2024 at 5:02=E2=80=AFAM Johan Hovold <johan@kernel.org> wro=
+te:
+>
+> On Wed, Apr 24, 2024 at 08:45:31PM -0700, Bjorn Andersson wrote:
+> > When a GPIO is configured as OPEN_DRAIN gpiolib will in
+> > gpiod_direction_output() attempt to configure the open-drain property o=
+f
+> > the hardware and if this fails fall back to software emulation of this
+> > state.
+> >
+> > The TLMM block in most Qualcomm platform does not implement such
+> > functionality, so this call would be expected to fail. But due to lack
+> > of checks for this condition, the zero-initialized od_bit will cause
+> > this request to silently corrupt the lowest bit in the config register
+> > (which typically is part of the bias configuration) and happily continu=
+e
+> > on.
 
-Sure we can make it a bit more complete.  Was trying to keep it short, 
-but if the intention isn't clear on the tag, then we can keep the full form.
+Apologies if I broke something here. Both the pinctrl subsystem and
+the wide world of diverse QCOM chips can be complicated beasts. I
+definitely could have missed things along the way. (And on first
+glance, it seems like you may have found one. I definitely did not
+consider the gpiod_direction_output() "emulation" behavior here when
+submitting this.)
 
-> (...)
-> 
->> +
->> +    node = snd_soc_find_phandle(usbdev);
->> +    if (IS_ERR(node))
->> +        return -ENODEV;
->> +
->> +    ctx = snd_soc_find_usb_ctx(node);
->> +    of_node_put(node);
->> +    if (!ctx)
->> +        return -ENODEV;
-> 
-> Perhaps introduce some helper function, you do this 
-> snd_soc_find_phandle() followed by snd_soc_find_usb_ctx() in few places...
-> 
+But I can't tell based on subsequent conversation: are you observing a
+real problem, or is this a theoretical one that only exists if the
+gpiochip driver adds set_config() support?
 
-Will do.  Will make a helper and replace instances with this.
+> > Fix this by checking if the od_bit value is unspecified and if so fail
+> > the request to avoid the unexpected state, and to make sure the softwar=
+e
+> > fallback actually kicks in.
+>
+> Fortunately, this is currently not a problem as the gpiochip driver does
+> not implement the set_config() callback, which means that the attempt to
+> change the pin configuration currently always fails with -ENOTSUP (see
+> gpio_do_set_config()).
+>
+> Specifically, this means that the software fallback kicks in, which I
+> had already verified.
+>
+> Now, perhaps there is some other path which can allow you to end up
+> here, but it's at least not via gpiod_direction_output().
+>
+> The msm pinctrl binding does not allow 'drive-open-drain' so that path
+> should also be ok unless you have a non-conformant devicetree.
 
-Thanks
-Wesley Cheng
+The ipq4019 binding does:
+https://git.kernel.org/linus/99d19f5a48ee6fbc647935de458505e9308078e3
+
+This is used in OpenWrt device trees.
+
+> > It is assumed for now that no implementation will come into existence
+> > with BIT(0) being the open-drain bit, simply for convenience sake.
+> >
+> > Fixes: 13355ca35cd1 ("pinctrl: qcom: ipq4019: add open drain support")
+>
+> I guess hardware open-drain mode has never been properly tested on
+> ipq4019.
+
+It was quite some time ago that I wrote and tested this, and per the
+above, I easily could have missed things. (Plus, the open drain
+configuration may not have much practical effect on the systems in
+question, so certain errors may not even be observable.)
+
+But I do recall seeing the code in question activate. And inspection
+shows that the pinconf_apply_setting() -> ... msm_config_group_set()
+path is non-dead code here, for appropriate device trees.
+
+I can try to fire up my development devices again and see what's up if
+that helps, but I won't have time to do that in the next few days.
+
+Brian
 
