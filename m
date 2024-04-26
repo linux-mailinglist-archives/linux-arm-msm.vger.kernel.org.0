@@ -1,185 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-18706-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18707-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E79EC8B42BC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Apr 2024 01:25:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 734B08B42C8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Apr 2024 01:44:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A5124282D44
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 23:25:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2A202282698
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 23:44:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8F6B3BBCE;
-	Fri, 26 Apr 2024 23:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98E553BBCE;
+	Fri, 26 Apr 2024 23:44:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Frlo/t2R"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GMB7FAU+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3FF3A8E4;
-	Fri, 26 Apr 2024 23:25:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B434C8C;
+	Fri, 26 Apr 2024 23:44:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714173939; cv=none; b=YSBWoNsxikzGq2ZY5EJrLVarLU0DGP8GcsSb7SPfhDLFPhz53eZPnyCR2R/i7BN6bv54doCLNf6bU3uPocKN3K8/MTTEr8LKLfUOApZpFi6TfM6YXYE7YT0L08LfcKiSYzyEpqbVJIP7X6J0xYQsvIWVwV9ZvMWafGMwvGHKpXc=
+	t=1714175069; cv=none; b=sZljz2SBNopdR8k/QhjQTx4nbvjZ491I0dE6dh35+P1XOT0dsdnbwgduVoVtc51NQTTg9qTPNpiAUG9eH8444DWO2K2A1fyS/vEV5zbCu+1dAdkkFLvgoACKV12AHIf0xwranBm6Nb4ucZGX/kuGbpkOchh0yDmqQfncS50Egfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714173939; c=relaxed/simple;
-	bh=Oo3OtoMFZgV8oyBBeZdB6VsYE2VPjoVz9FYqPtF9BJ0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=gvoR41PXNmd6YrLu3+82eKtJvmh9bg6jvWLIOHFnDL6cZhsDQnrE575gtZ+v4TIjjVFy0nUVBT2abrDanKoKwVw8SSUdJcCUbfisIQsNrjZYxPw50kvWUa/WZbG+ACFfWdOrWPks13HRfFjlWkwTmCLhilZDCFz89GZCA+LC3bA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Frlo/t2R; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1714175069; c=relaxed/simple;
+	bh=VjnxGuvPOCHw/9I5pDPbvU2HDjwTkVBHsu9VkyFjC2A=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KmXIMmt2/INgBWvorpDmln6E+uaC1WEJZOOxxW/TaAWBkWY7huM5LJXtafRaUmjtrf27BsDcYtKyJnywBuJLxsFI9QMi/zvNFTkNQqLjehopai0tDqiDJRPU+whajE4GznRSo7YQcciyYVm/gvE7RU/Cm7ftC8bf2T/m3KlMkKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GMB7FAU+; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43QNMkCt023899;
-	Fri, 26 Apr 2024 23:25:32 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43QMEfta027231;
+	Fri, 26 Apr 2024 23:43:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=XDkUIigcVGqC8gCqZT1/+lGYK1cHWMUguzns/fZY7WU=; b=Fr
-	lo/t2RcNY7/5flTCMi4u2SOlyAMPDSEwsc5QfQXcCIxS/7krFsc6Lq4Iflf9zr6i
-	/KB3S0Ff0e+eKDWwkJ3GaAQEnsFsUlWS3fJuhYBdxQ5ZMhmGEbrhnAje3z17BHkv
-	qBOH1+Ck/IOC1lcMHAd88IE1G24mdO1gTQWp6WD5RuszIw59q6QKhT72fye/w9z+
-	08iaTt495KwEfjPo90H2rQ6h0d7Cl4su0QtW7I/ipP4Ecssd6fOEgJA6tShzDrYO
-	/9RW9FZAy2q0Z4GInnmmSXRjyM2X1DQTcAw/796v579I1WnO7oJyWHBrCULi8pzh
-	+He/KOi+cVVQkF3JXBOw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xranmhfnq-1
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:content-transfer-encoding:in-reply-to; s=
+	qcppdkim1; bh=fvZQEOMEBMhpsqY4aqtd8hxe5+VAEhLT1fCgDKvfvvc=; b=GM
+	B7FAU+45LCPYMJ/MUNgt+1RkhC271XUlinQSe+K54fnKLKN5Gm5o68AygFgTW2oy
+	nMCnKpJVFgdYZL6OztEiWl7Og6suWcaeeSlab6xuR6IJwiWxm+R3yucII8XNZZmn
+	oHH//bZOs//I/hUyrhjU4KjgngGdCEEs8EfJrOAmTjY/3VGT51wRP94qYQE3EP1b
+	lI8B7ABr0T+GRgFwXHiqhZcjKuI94/R7/DMikixvs6ApyFfjhtwhnguyGfpdWhuq
+	JDRrFbdI1jfb7zPzZCV3u3IbET1Mnhvi3GbB/OsNOWcYcwenRpIYDgxyRaD5vAqC
+	URupSEslvpumLE2Bb6Rw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xr88fhvmt-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Apr 2024 23:25:32 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43QNPV1I031896
+	Fri, 26 Apr 2024 23:43:57 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43QNhutm023766
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Apr 2024 23:25:31 GMT
-Received: from [10.110.11.138] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 26 Apr
- 2024 16:25:30 -0700
-Message-ID: <6b6298c4-485d-ebe5-fa8d-9edc461467a0@quicinc.com>
-Date: Fri, 26 Apr 2024 16:25:29 -0700
+	Fri, 26 Apr 2024 23:43:56 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 26 Apr 2024 16:43:56 -0700
+Date: Fri, 26 Apr 2024 16:43:54 -0700
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+To: Brian Norris <computersforpeace@gmail.com>
+CC: Johan Hovold <johan@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Jaiganesh Narayanan
+	<njaigane@codeaurora.org>,
+        Doug Anderson <dianders@chromium.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] pinctrl: qcom: Fix behavior in abscense of open-drain
+ support
+Message-ID: <Ziw8OrNS55AtyDkI@hu-bjorande-lv.qualcomm.com>
+References: <20240424-tlmm-open-drain-v1-1-9dd2041f0532@quicinc.com>
+ <ZipGRl_QC_x83MFt@hovoldconsulting.com>
+ <CAN8TOE_Vd9c2eYgomhu_ukofTeO9eK8Yhrtt-8BQckmJnGfj6w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v7 5/6] soc: qcom: add pd-mapper implementation
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Sibi Sankar
-	<quic_sibis@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Xilin Wu <wuxilin123@gmail.com>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>
-References: <20240424-qcom-pd-mapper-v7-0-05f7fc646e0f@linaro.org>
- <20240424-qcom-pd-mapper-v7-5-05f7fc646e0f@linaro.org>
-Content-Language: en-US
-From: Chris Lew <quic_clew@quicinc.com>
-In-Reply-To: <20240424-qcom-pd-mapper-v7-5-05f7fc646e0f@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAN8TOE_Vd9c2eYgomhu_ukofTeO9eK8Yhrtt-8BQckmJnGfj6w@mail.gmail.com>
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: xiSbrLKX4H3KLGrkCGae4cBJFRNzDXEx
-X-Proofpoint-ORIG-GUID: xiSbrLKX4H3KLGrkCGae4cBJFRNzDXEx
+X-Proofpoint-ORIG-GUID: Ifl1ivFekn3THFMt8QS6P6VNvuH_5K65
+X-Proofpoint-GUID: Ifl1ivFekn3THFMt8QS6P6VNvuH_5K65
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
  definitions=2024-04-26_20,2024-04-26_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- lowpriorityscore=0 suspectscore=0 bulkscore=0 phishscore=0 clxscore=1015
- malwarescore=0 adultscore=0 impostorscore=0 spamscore=0 priorityscore=1501
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404260166
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
+ lowpriorityscore=0 mlxscore=0 phishscore=0 mlxlogscore=999 spamscore=0
+ bulkscore=0 adultscore=0 malwarescore=0 impostorscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
+ definitions=main-2404260167
 
+On Fri, Apr 26, 2024 at 03:08:06PM -0700, Brian Norris wrote:
+> Hi Johan, Bjorn,
+> 
+> On Thu, Apr 25, 2024 at 5:02 AM Johan Hovold <johan@kernel.org> wrote:
+> >
+> > On Wed, Apr 24, 2024 at 08:45:31PM -0700, Bjorn Andersson wrote:
+> > > When a GPIO is configured as OPEN_DRAIN gpiolib will in
+> > > gpiod_direction_output() attempt to configure the open-drain property of
+> > > the hardware and if this fails fall back to software emulation of this
+> > > state.
+> > >
+> > > The TLMM block in most Qualcomm platform does not implement such
+> > > functionality, so this call would be expected to fail. But due to lack
+> > > of checks for this condition, the zero-initialized od_bit will cause
+> > > this request to silently corrupt the lowest bit in the config register
+> > > (which typically is part of the bias configuration) and happily continue
+> > > on.
+> 
+> Apologies if I broke something here.
 
+False alarm on the breakage part, I got lost in the software layers.
 
-On 4/24/2024 2:28 AM, Dmitry Baryshkov wrote:
+> Both the pinctrl subsystem and
+> the wide world of diverse QCOM chips can be complicated beasts. I
+> definitely could have missed things along the way. (And on first
+> glance, it seems like you may have found one. I definitely did not
+> consider the gpiod_direction_output() "emulation" behavior here when
+> submitting this.)
+> 
+> But I can't tell based on subsequent conversation: are you observing a
+> real problem, or is this a theoretical one that only exists if the
+> gpiochip driver adds set_config() support?
+> 
 
-> +static int qcom_pdm_start(void)
-> +{
-> +	const struct of_device_id *match;
-> +	const struct qcom_pdm_domain_data * const *domains;
-> +	struct device_node *root;
-> +	int ret, i;
-> +
-> +	root = of_find_node_by_path("/");
-> +	if (!root)
-> +		return -ENODEV;
-> +
-> +	match = of_match_node(qcom_pdm_domains, root);
-> +	of_node_put(root);
-> +	if (!match) {
-> +		pr_notice("PDM: no support for the platform, userspace daemon might be required.\n");
-> +		return -ENODEV;
-> +	}
-> +
-> +	domains = match->data;
-> +	if (!domains) {
-> +		pr_debug("PDM: no domains\n");
-> +		return -ENODEV;
-> +	}
-> +
-> +	mutex_lock(&qcom_pdm_mutex);
-> +	for (i = 0; domains[i]; i++) {
-> +		ret = qcom_pdm_add_domain(domains[i]);
-> +		if (ret)
-> +			goto free_domains;
-> +	}
-> +
-> +	ret = qmi_handle_init(&qcom_pdm_handle, 1024,
-> +			      NULL, qcom_pdm_msg_handlers);
+There is a problem that if a non-ipq4019 device where to be pinconf'ed
+for open-drain, the outcome would be unexpected and I have a concern
+that someone one day would implement set_config().
 
-1024 here seems arbitrary, I think most other usage of qmi_handle_init 
-has a macro defined for the max message length of the qmi service.
+So, I'd like to fix this, but my argumentation is at least wrong.
 
-> +	if (ret)
-> +		goto free_domains;
-> +
-> +	ret = qmi_add_server(&qcom_pdm_handle, SERVREG_LOCATOR_SERVICE,
-> +			     SERVREG_QMI_VERSION, SERVREG_QMI_INSTANCE);
-> +	if (ret) {
-> +		pr_err("PDM: error adding server %d\n", ret);
-> +		goto release_handle;
-> +	}
-> +	mutex_unlock(&qcom_pdm_mutex);
-> +
-> +	return 0;
-> +
-> +release_handle:
-> +	qmi_handle_release(&qcom_pdm_handle);
-> +
-> +free_domains:
-> +	qcom_pdm_free_domains();
-> +	mutex_unlock(&qcom_pdm_mutex);
-> +
-> +	return ret;
-> +}
-> +
-> +static void qcom_pdm_stop(void)
-> +{
-> +	qmi_del_server(&qcom_pdm_handle, SERVREG_LOCATOR_SERVICE,
-> +		       SERVREG_QMI_VERSION, SERVREG_QMI_INSTANCE);
-> +
-> +	qmi_handle_release(&qcom_pdm_handle);
-> +
+> > > Fix this by checking if the od_bit value is unspecified and if so fail
+> > > the request to avoid the unexpected state, and to make sure the software
+> > > fallback actually kicks in.
+> >
+> > Fortunately, this is currently not a problem as the gpiochip driver does
+> > not implement the set_config() callback, which means that the attempt to
+> > change the pin configuration currently always fails with -ENOTSUP (see
+> > gpio_do_set_config()).
+> >
+> > Specifically, this means that the software fallback kicks in, which I
+> > had already verified.
+> >
+> > Now, perhaps there is some other path which can allow you to end up
+> > here, but it's at least not via gpiod_direction_output().
+> >
+> > The msm pinctrl binding does not allow 'drive-open-drain' so that path
+> > should also be ok unless you have a non-conformant devicetree.
+> 
+> The ipq4019 binding does:
+> https://git.kernel.org/linus/99d19f5a48ee6fbc647935de458505e9308078e3
+> 
 
-I don't think doing an explicit qmi_del_server() is necessary. As part 
-of the qmi_handle_release(), the qrtr socket will be closed and the qrtr 
-ns will broadcast a DEL_SERVER and DEL_CLIENT notification as part of 
-the cleanup.
+Perhaps we could convert that to yaml?
 
-> +	qcom_pdm_free_domains();
-> +}
-> +
+> This is used in OpenWrt device trees.
+> 
+
+Thanks, I couldn't find a user, so this was helpful input for deciding
+the path forward.
+
+> > > It is assumed for now that no implementation will come into existence
+> > > with BIT(0) being the open-drain bit, simply for convenience sake.
+> > >
+> > > Fixes: 13355ca35cd1 ("pinctrl: qcom: ipq4019: add open drain support")
+> >
+> > I guess hardware open-drain mode has never been properly tested on
+> > ipq4019.
+> 
+> It was quite some time ago that I wrote and tested this, and per the
+> above, I easily could have missed things. (Plus, the open drain
+> configuration may not have much practical effect on the systems in
+> question, so certain errors may not even be observable.)
+> 
+> But I do recall seeing the code in question activate. And inspection
+> shows that the pinconf_apply_setting() -> ... msm_config_group_set()
+> path is non-dead code here, for appropriate device trees.
+> 
+
+Thank you for taking a look, Brian. This was valuable input. I will
+rework this to have a valid motivation - at least.
+
+> I can try to fire up my development devices again and see what's up if
+> that helps, but I won't have time to do that in the next few days.
+> 
+
+As my observation was incorrect, I don't think that is urgent.
+
+Regards,
+Bjorn
 
