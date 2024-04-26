@@ -1,251 +1,323 @@
-Return-Path: <linux-arm-msm+bounces-18679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B70038B39FB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 16:29:08 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C34108B3A6C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 16:53:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 45F491F2415F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 14:29:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7A98428C304
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 14:53:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4FFE14D433;
-	Fri, 26 Apr 2024 14:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E99851487DC;
+	Fri, 26 Apr 2024 14:53:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OWiQs0Y+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YvWSAGaP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B700814884C;
-	Fri, 26 Apr 2024 14:27:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9C21D52C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Apr 2024 14:53:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714141637; cv=none; b=ScKtHM3QuutDxfo+JrGByBYRtPh9U9+GHBRureHarDRFwhy/ZpBp/2knP7UiiKcAtNxqnOWm4Ep9X69VX3YBGKr67s9fUru0EmOnulghLuQkYIX5X4xXxrsLwB4tGlQuJRfVkB69kwNdhY9BcK3s0O68CVbEciJg1HjMTiX31xg=
+	t=1714143219; cv=none; b=WI1N90m2thf+/9Fe5mJtG3zXu2BnDfv/0Vp8p0KHdr39SjHtoQDFJSWx6EwB8K3ttepXwGirNges+ODpc69LrDL5aPLdSMk6Y0+A6V7imvyLemMgmFo3j58A96bb+1ISGSFG+1RRBpgQS/N0r3DBOPZ+t0NOcKjJ8enGDr7Nids=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714141637; c=relaxed/simple;
-	bh=kBeI3sp3mXMadZ7jRTDexEqrXzzu7Lpzk7zR5WSE3ts=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=D+DkJTYsnSxX2PmDv+oYaEq3yLfrzRi1YFLUXK3ZC5c8y9bu7e4vDYqgy2BLTXohCvjf1MvVE27VkMeTvFbTqT97KdiDCNWNRU+s5bFQxhfd4YT7DGYgJ1xxuowfml6MNyuz7jhTo2RC3lFSppDnVqMACVWVAmamWfEkST6qBlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OWiQs0Y+; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43QApoFI012994;
-	Fri, 26 Apr 2024 14:27:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=Fb2vf9mu0Wt2OchcXVnA335lXG9jz+XpRSg+ZnSNp1Y=; b=OW
-	iQs0Y+/m3ZBYdHkp62LZTzuFLNmTc2zzziuUvarrcEVf593pNXO1IvhqUtmGiwEI
-	Hch7KadMk1bqnT798NSLB02UX2lwF4WoyVa1RRYV53AIaTUQUMOV1luF++sCcpP1
-	zfg3ah/Vld1fGzpUikHovS0uCEp1nHeWsN+eeeg336Ze91yEuVZVhnAgSuM1AqKR
-	46qrQhOWMbaxpFmO1GBGlastq9utYBZq+ZkFcu4GzG+JbQ+KYjo9Qkn+EpsToxdU
-	SHOoXFK83ZkuwLV0PAzVGACF2aXDpe3/kEwFJmUJulqX7jI10s3yxVs1PKMOFcvx
-	Ag/qHyTyiQ1TX4njnnsg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xr35922pt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Apr 2024 14:27:10 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43QER9Ap014540
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Apr 2024 14:27:09 GMT
-Received: from [10.216.28.217] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 26 Apr
- 2024 07:27:03 -0700
-Message-ID: <dfcaa665-512a-4c7c-8f5d-2ba819797ddb@quicinc.com>
-Date: Fri, 26 Apr 2024 19:56:51 +0530
+	s=arc-20240116; t=1714143219; c=relaxed/simple;
+	bh=gtrLTlK0O+b4uvdP2Vfbmnqc90fJiDhDXcMA3NQgpw0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TqC0i6U6fX7+xsqjBOG+SLILq6on9Q9KqS+zXhxuplZwU0sLwcm68ts/4N1Be0GlYipkH0yttwbR0G/4bzIIVBVJsZS7e0xWR/WVa4skhVldZi4AJcWkoIEKnqJZ963znfFK2mvAAbnnD7B2Pe09WRg1wjU4Dsq5MD3g3H2owS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YvWSAGaP; arc=none smtp.client-ip=209.85.219.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-de467733156so2410293276.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Apr 2024 07:53:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1714143217; x=1714748017; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QhTklF2ssw03aSEnPuH/7wuRfYWVRoL485tWE+/Aod0=;
+        b=YvWSAGaPa/hkhjzEF+lyMnMOWGWGAc4C66z9hpKRoFgLH7pUChlLUI13nCySiMaUY5
+         ZZ6bxa1xsO1FJDm/odU3Ah+qEZets8UjnWdno7DZ8I2bFA55NhORNyzHMKyv6JMgu9z9
+         eq054DtWW2Ij+Ot5qZAQHltQ5azSdkthQc0ywQ/24Za+Hf2hh1WQClzd0lEtvt/7q7dS
+         sdimdizvDfb5rxKQ+94JUXeVjkdMO3MX5rDxE7MYH0wi4qVmnIS0HxoFkb/hs8dXJ8Ju
+         pKyIIAzxtczESWmI7e/nT7iJHLOS7VWCwhuaUvoTM8tsUFu6yAxJWEHU1XbKu30gudJR
+         Xmrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714143217; x=1714748017;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=QhTklF2ssw03aSEnPuH/7wuRfYWVRoL485tWE+/Aod0=;
+        b=Wun1714YT05Vj9ZtMzpGVPoBdEF3u/WWZxLYeR9bu/bCPPGwTikp33QZ0oey2yfsUF
+         HTkJ0hepLjLCBX51GwckXTyLaJsWj2O2asaohjtS6OLAYA7xTMDiIB0N+99ydaOzh0wH
+         UIZe6+6MPqyIZE05iykifrt6i79Fa14Fiaca2R4RSwSjye3FjE8J46TIg7292D3RYS2k
+         A77M6tkNUbbAjqMW/Y5tKDeX8YlTv0bM/9fqqAvJPPWHsp9K734GI4BTrYow0jk3u2xX
+         7KNROOCpwLpt1L8x9+8YCE1sqfI02Ux8npIKBIzhVTuV1z2pB5j6Yg68XeT/pHnIbkOy
+         au3g==
+X-Forwarded-Encrypted: i=1; AJvYcCW/SIHCY41Lli/87AkaOAbJN5tDkFzBysm9ms1kRKRbSCoibKjTip6/gTSljrbTrAmflLodQvrnNKMt5XpdlOK7sHgZZGyHV7zrvFkghw==
+X-Gm-Message-State: AOJu0YzLrDqJzwBg5Sae1A1HSbuSG+XjgPkrHSW66WzGBcuufU4eMIuo
+	zuIPfFJWEyn/AFdMgfxY5LRNmQ9o0FHPfrt1sISwsFbE7pTodoTLDzm/6XblWqI83cqJyavYlMC
+	tUniM4d8F0WaNpU3s0ioMARBFAvePvmPmd3WEB5TJ5iPq6MNi
+X-Google-Smtp-Source: AGHT+IHom/4/jqDtGGAX6E3bCdeQXmUtQv6RYoq6Z3Vii4M3VzC7Cd6xLjdGWXyWi7qzfecBCnl7fXcNuVR1k1fxIxU=
+X-Received: by 2002:a25:9347:0:b0:de0:deb0:c363 with SMTP id
+ g7-20020a259347000000b00de0deb0c363mr3496389ybo.31.1714143216763; Fri, 26 Apr
+ 2024 07:53:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 RESEND 1/6] dt-bindings: clock: qcom: Add SM8650 video
- clock controller
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
-        "Satya
- Priya Kakitapalli" <quic_skakitap@quicinc.com>,
-        Ajit Pandey
-	<quic_ajipan@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>
-References: <20240321092529.13362-1-quic_jkona@quicinc.com>
- <20240321092529.13362-2-quic_jkona@quicinc.com>
- <CAA8EJppsMchthssctEgUf9q45j84cSLQ78Ur+vaA0Z7GEQi8+g@mail.gmail.com>
- <725471b1-46a9-43b0-bede-33f01c953d51@quicinc.com>
- <c3ea22ed-5750-438f-89d5-e56f908ba835@linaro.org>
- <73c5ffca-9275-437c-a49e-ef3251c8d313@quicinc.com>
- <d160289a-d0c7-498e-88b2-89861ab9fa50@linaro.org>
-Content-Language: en-US
-From: Jagadeesh Kona <quic_jkona@quicinc.com>
-In-Reply-To: <d160289a-d0c7-498e-88b2-89861ab9fa50@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: p8vmHFzwkM4WbaO-Qnc-QZK4YkA2fYTx
-X-Proofpoint-ORIG-GUID: p8vmHFzwkM4WbaO-Qnc-QZK4YkA2fYTx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-26_12,2024-04-26_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
- impostorscore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0
- clxscore=1015 mlxscore=0 suspectscore=0 phishscore=0 mlxlogscore=999
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404260096
+References: <20240425134354.1233862-1-cwabbott0@gmail.com> <20240425134354.1233862-5-cwabbott0@gmail.com>
+ <CAA8EJpp-OVceLDK4TuqQERY53O-mU+AhEyjNUOnNc9PUhcUm0A@mail.gmail.com>
+ <CACu1E7E_xMQvBLCEiP_0JozmGCMTEcRc-Lq4sAOHU520q6j2mQ@mail.gmail.com>
+ <CAA8EJpo7NtVkOYGM0DeACmkjpToMtKihS-HkkiVhigsBf3xXRg@mail.gmail.com> <CACu1E7HzDJz4JvwnO6uFa8uwTdQAUtazdJLKbZnN2AtxcVzGQQ@mail.gmail.com>
+In-Reply-To: <CACu1E7HzDJz4JvwnO6uFa8uwTdQAUtazdJLKbZnN2AtxcVzGQQ@mail.gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 26 Apr 2024 17:53:25 +0300
+Message-ID: <CAA8EJppVbMGT5r0WJ93gxGDeyYxu4yc4bXYHXt1yyTyX=nEUSQ@mail.gmail.com>
+Subject: Re: [PATCH 4/6] drm/msm/a7xx: Initialize a750 "software fuse"
+To: Connor Abbott <cwabbott0@gmail.com>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, 26 Apr 2024 at 17:05, Connor Abbott <cwabbott0@gmail.com> wrote:
+>
+> On Fri, Apr 26, 2024 at 2:31=E2=80=AFPM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > On Fri, 26 Apr 2024 at 15:35, Connor Abbott <cwabbott0@gmail.com> wrote=
+:
+> > >
+> > > On Fri, Apr 26, 2024 at 12:02=E2=80=AFAM Dmitry Baryshkov
+> > > <dmitry.baryshkov@linaro.org> wrote:
+> > > >
+> > > > On Thu, 25 Apr 2024 at 16:44, Connor Abbott <cwabbott0@gmail.com> w=
+rote:
+> > > > >
+> > > > > On all Qualcomm platforms with a7xx GPUs, qcom_scm provides a met=
+hod to
+> > > > > initialize cx_mem. Copy this from downstream (minus BCL which we
+> > > > > currently don't support). On a750, this includes a new "fuse" reg=
+ister
+> > > > > which can be used by qcom_scm to fuse off certain features like
+> > > > > raytracing in software. The fuse is default off, and is initializ=
+ed by
+> > > > > calling the method. Afterwards we have to read it to find out whi=
+ch
+> > > > > features were enabled.
+> > > > >
+> > > > > Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
+> > > > > ---
+> > > > >  drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 89 +++++++++++++++++++=
++++++-
+> > > > >  drivers/gpu/drm/msm/adreno/adreno_gpu.h |  2 +
+> > > > >  2 files changed, 90 insertions(+), 1 deletion(-)
+> > > > >
+> > > > > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/=
+drm/msm/adreno/a6xx_gpu.c
+> > > > > index cf0b1de1c071..fb2722574ae5 100644
+> > > > > --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > > > > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > > > > @@ -10,6 +10,7 @@
+> > > > >
+> > > > >  #include <linux/bitfield.h>
+> > > > >  #include <linux/devfreq.h>
+> > > > > +#include <linux/firmware/qcom/qcom_scm.h>
+> > > > >  #include <linux/pm_domain.h>
+> > > > >  #include <linux/soc/qcom/llcc-qcom.h>
+> > > > >
+> > > > > @@ -1686,7 +1687,8 @@ static int a6xx_zap_shader_init(struct msm_=
+gpu *gpu)
+> > > > >                        A6XX_RBBM_INT_0_MASK_RBBM_HANG_DETECT | \
+> > > > >                        A6XX_RBBM_INT_0_MASK_UCHE_OOB_ACCESS | \
+> > > > >                        A6XX_RBBM_INT_0_MASK_UCHE_TRAP_INTR | \
+> > > > > -                      A6XX_RBBM_INT_0_MASK_TSBWRITEERROR)
+> > > > > +                      A6XX_RBBM_INT_0_MASK_TSBWRITEERROR | \
+> > > > > +                      A6XX_RBBM_INT_0_MASK_SWFUSEVIOLATION)
+> > > > >
+> > > > >  #define A7XX_APRIV_MASK (A6XX_CP_APRIV_CNTL_ICACHE | \
+> > > > >                          A6XX_CP_APRIV_CNTL_RBFETCH | \
+> > > > > @@ -2356,6 +2358,26 @@ static void a6xx_fault_detect_irq(struct m=
+sm_gpu *gpu)
+> > > > >         kthread_queue_work(gpu->worker, &gpu->recover_work);
+> > > > >  }
+> > > > >
+> > > > > +static void a7xx_sw_fuse_violation_irq(struct msm_gpu *gpu)
+> > > > > +{
+> > > > > +       u32 status;
+> > > > > +
+> > > > > +       status =3D gpu_read(gpu, REG_A7XX_RBBM_SW_FUSE_INT_STATUS=
+);
+> > > > > +       gpu_write(gpu, REG_A7XX_RBBM_SW_FUSE_INT_MASK, 0);
+> > > > > +
+> > > > > +       dev_err_ratelimited(&gpu->pdev->dev, "SW fuse violation s=
+tatus=3D%8.8x\n", status);
+> > > > > +
+> > > > > +       /* Ignore FASTBLEND violations, because the HW will silen=
+tly fall back
+> > > > > +        * to legacy blending.
+> > > > > +        */
+> > > > > +       if (status & (A7XX_CX_MISC_SW_FUSE_VALUE_RAYTRACING |
+> > > > > +                     A7XX_CX_MISC_SW_FUSE_VALUE_LPAC)) {
+> > > > > +               del_timer(&gpu->hangcheck_timer);
+> > > > > +
+> > > > > +               kthread_queue_work(gpu->worker, &gpu->recover_wor=
+k);
+> > > > > +       }
+> > > > > +}
+> > > > > +
+> > > > >  static irqreturn_t a6xx_irq(struct msm_gpu *gpu)
+> > > > >  {
+> > > > >         struct msm_drm_private *priv =3D gpu->dev->dev_private;
+> > > > > @@ -2384,6 +2406,9 @@ static irqreturn_t a6xx_irq(struct msm_gpu =
+*gpu)
+> > > > >         if (status & A6XX_RBBM_INT_0_MASK_UCHE_OOB_ACCESS)
+> > > > >                 dev_err_ratelimited(&gpu->pdev->dev, "UCHE | Out =
+of bounds access\n");
+> > > > >
+> > > > > +       if (status & A6XX_RBBM_INT_0_MASK_SWFUSEVIOLATION)
+> > > > > +               a7xx_sw_fuse_violation_irq(gpu);
+> > > > > +
+> > > > >         if (status & A6XX_RBBM_INT_0_MASK_CP_CACHE_FLUSH_TS)
+> > > > >                 msm_gpu_retire(gpu);
+> > > > >
+> > > > > @@ -2525,6 +2550,60 @@ static void a6xx_llc_slices_init(struct pl=
+atform_device *pdev,
+> > > > >                 a6xx_gpu->llc_mmio =3D ERR_PTR(-EINVAL);
+> > > > >  }
+> > > > >
+> > > > > +static int a7xx_cx_mem_init(struct a6xx_gpu *a6xx_gpu)
+> > > > > +{
+> > > > > +       struct adreno_gpu *adreno_gpu =3D &a6xx_gpu->base;
+> > > > > +       struct msm_gpu *gpu =3D &adreno_gpu->base;
+> > > > > +       u32 gpu_req =3D QCOM_SCM_GPU_ALWAYS_EN_REQ;
+> > > > > +       u32 fuse_val;
+> > > > > +       int ret;
+> > > > > +
+> > > > > +       if (adreno_is_a740(adreno_gpu)) {
+> > > > > +               /* Raytracing is always enabled on a740 */
+> > > > > +               adreno_gpu->has_ray_tracing =3D true;
+> > > > > +       }
+> > > > > +
+> > > > > +       if (!qcom_scm_is_available()) {
+> > > > > +               /* Assume that if qcom scm isn't available, that =
+whatever
+> > > > > +                * replacement allows writing the fuse register o=
+urselves.
+> > > > > +                * Users of alternative firmware need to make sur=
+e this
+> > > > > +                * register is writeable or indicate that it's no=
+t somehow.
+> > > > > +                * Print a warning because if you mess this up yo=
+u're about to
+> > > > > +                * crash horribly.
+> > > > > +                */
+> > > > > +               if (adreno_is_a750(adreno_gpu)) {
+> > > > > +                       dev_warn_once(gpu->dev->dev,
+> > > > > +                               "SCM is not available, poking fus=
+e register\n");
+> > > > > +                       a6xx_llc_write(a6xx_gpu, REG_A7XX_CX_MISC=
+_SW_FUSE_VALUE,
+> > > > > +                               A7XX_CX_MISC_SW_FUSE_VALUE_RAYTRA=
+CING |
+> > > > > +                               A7XX_CX_MISC_SW_FUSE_VALUE_FASTBL=
+END |
+> > > > > +                               A7XX_CX_MISC_SW_FUSE_VALUE_LPAC);
+> > > > > +                       adreno_gpu->has_ray_tracing =3D true;
+> > > > > +               }
+> > > > > +
+> > > > > +               return 0;
+> > > > > +       }
+> > > > > +
+> > > > > +       if (adreno_is_a750(adreno_gpu))
+> > > >
+> > > > Most of the function is under the if (adreno_is_a750) conditions. C=
+an
+> > > > we invert the logic and add a single block of if(adreno_is_a750) an=
+d
+> > > > then place all the code underneath?
+> > >
+> > > You mean to duplicate the qcom_scm_is_available check and qcom_scm_
+> > >
+> > > >
+> > > > > +               gpu_req |=3D QCOM_SCM_GPU_TSENSE_EN_REQ;
+> > > > > +
+> > > > > +       ret =3D qcom_scm_gpu_init_regs(gpu_req);
+> > > > > +       if (ret)
+> > > > > +               return ret;
+> > > > > +
+> > > > > +       /* On a750 raytracing may be disabled by the firmware, fi=
+nd out whether
+> > > > > +        * that's the case. The scm call above sets the fuse regi=
+ster.
+> > > > > +        */
+> > > > > +       if (adreno_is_a750(adreno_gpu)) {
+> > > > > +               fuse_val =3D a6xx_llc_read(a6xx_gpu, REG_A7XX_CX_=
+MISC_SW_FUSE_VALUE);
+> > > >
+> > > > This register isn't accessible with the current sm8650.dtsi. Since =
+DT
+> > > > and driver are going through different trees, please add safety gua=
+rds
+> > > > here, so that the driver doesn't crash if used with older dtsi
+> > >
+> > > I don't see how this is an issue. msm-next is currently based on 6.9,
+> > > which doesn't have the GPU defined in sm8650.dtsi. AFAIK patches 1 an=
+d
+> > > 2 will have to go through the linux-arm-msm tree, which will have to
+> > > be merged into msm-next before this patch lands there, so there will
+> > > never be any breakage.
+> >
+> > linux-arm-msm isn't going to be merged into msm-next. If we do not ask
+> > for ack for the fix to go through msm-next, they will get these
+> > patches in parallel.
+>
+> I'm not familiar with how complicated cross-tree changes like this get
+> merged, but why would we merge these in parallel given that this patch
+> depends on the previous patch that introduces
+> qcom_scm_gpu_init_regs(), and that would (I assume?) normally go
+> through the same tree as patch 1? Even if patch 1 gets merged in
+> parallel in linux-arm-msm, in what scenario would we have a broken
+> boot? You won't have a devicetree with a working sm8650 GPU and
+> drm/msm with raytracing until linux-arm-msm is merged into msm-next at
+> which point patch 1 will have landed somehow.
+
+arch/arm64/qcom/dts and drivers/firmware/qcom are two separate trees.
+So yes, this needs a lot of coordination.
+
+>
+> >
+> > Another option is to get dtsi fix into 6.9 and delay the raytracing
+> > until 6.10-rc which doesn't make a lot of sense from my POV).
+> >
+> > >
+> > > > (not to mention that dts is considered to be an ABI and newer kerne=
+ls
+> > > > are supposed not to break with older DT files).
+> > >
+> > > That policy only applies to released kernels, so that's irrelevant he=
+re.
+> >
+> > It applies to all kernels, the reason being pretty simple: git-bisect
+> > should not be broken.
+>
+> As I wrote above, this is not an issue. The point I was making is that
+> mixing and matching dtb's from one unmerged subsystem tree and a
+> kernel from another isn't supported AFAIK, and that's the only
+> scenario where this could break.
+
+And it can happen if somebody running a bisect ends up in the branch
+with these patches in, but with the dtsi bits not being picked up.
 
 
-
-On 4/25/2024 7:02 PM, Vladimir Zapolskiy wrote:
-> Hi Jagadeesh,
-> 
-> On 4/22/24 14:00, Jagadeesh Kona wrote:
->>
->> On 4/19/2024 2:31 AM, Vladimir Zapolskiy wrote:
->>> Hello Jagadeesh,
->>>
->>> On 3/25/24 08:07, Jagadeesh Kona wrote:
->>>>
->>>>
->>>> On 3/21/2024 6:42 PM, Dmitry Baryshkov wrote:
->>>>> On Thu, 21 Mar 2024 at 11:26, Jagadeesh Kona <quic_jkona@quicinc.com>
->>>>> wrote:
->>>>>>
->>>>>> Extend device tree bindings of SM8450 videocc to add support
->>>>>> for SM8650 videocc. While it at, fix the incorrect header
->>>>>> include in sm8450 videocc yaml documentation.
->>>>>>
->>>>>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
->>>>>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>>>> ---
->>>>>>     .../devicetree/bindings/clock/qcom,sm8450-videocc.yaml    | 4 
->>>>>> +++-
->>>>>>     include/dt-bindings/clock/qcom,sm8450-videocc.h           | 8
->>>>>> +++++++-
->>>>>>     2 files changed, 10 insertions(+), 2 deletions(-)
->>>>>>
->>>>>> diff --git
->>>>>> a/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
->>>>>> b/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
->>>>>> index bad8f019a8d3..79f55620eb70 100644
->>>>>> --- 
->>>>>> a/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
->>>>>> +++ 
->>>>>> b/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
->>>>>> @@ -8,18 +8,20 @@ title: Qualcomm Video Clock & Reset Controller on
->>>>>> SM8450
->>>>>>
->>>>>>     maintainers:
->>>>>>       - Taniya Das <quic_tdas@quicinc.com>
->>>>>> +  - Jagadeesh Kona <quic_jkona@quicinc.com>
->>>>>>
->>>>>>     description: |
->>>>>>       Qualcomm video clock control module provides the clocks, resets
->>>>>> and power
->>>>>>       domains on SM8450.
->>>>>>
->>>>>> -  See also:: include/dt-bindings/clock/qcom,videocc-sm8450.h
->>>>>> +  See also:: include/dt-bindings/clock/qcom,sm8450-videocc.h
->>>>>
->>>>> This almost pleads to go to a separate patch. Fixes generally should
->>>>> be separated from the rest of the changes.
->>>>>
->>>>
->>>> Thanks Dmitry for your review.
->>>>
->>>> Sure, will separate this into a separate patch in next series.
->>>>
->>>>>>
->>>>>>     properties:
->>>>>>       compatible:
->>>>>>         enum:
->>>>>>           - qcom,sm8450-videocc
->>>>>>           - qcom,sm8550-videocc
->>>>>> +      - qcom,sm8650-videocc
->>>>>>
->>>>>>       reg:
->>>>>>         maxItems: 1
->>>>>> diff --git a/include/dt-bindings/clock/qcom,sm8450-videocc.h
->>>>>> b/include/dt-bindings/clock/qcom,sm8450-videocc.h
->>>>>> index 9d795adfe4eb..ecfebe52e4bb 100644
->>>>>> --- a/include/dt-bindings/clock/qcom,sm8450-videocc.h
->>>>>> +++ b/include/dt-bindings/clock/qcom,sm8450-videocc.h
->>>>>> @@ -1,6 +1,6 @@
->>>>>>     /* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
->>>>>>     /*
->>>>>> - * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights
->>>>>> reserved.
->>>>>> + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All
->>>>>> rights reserved.
->>>>>>      */
->>>>>>
->>>>>>     #ifndef _DT_BINDINGS_CLK_QCOM_VIDEO_CC_SM8450_H
->>>>>> @@ -19,6 +19,11 @@
->>>>>>     #define
->>>>>> VIDEO_CC_MVS1C_DIV2_DIV_CLK_SRC                                9
->>>>>>     #define VIDEO_CC_PLL0                                          10
->>>>>>     #define VIDEO_CC_PLL1                                          11
->>>>>> +#define
->>>>>> VIDEO_CC_MVS0_SHIFT_CLK                                        12
->>>>>> +#define VIDEO_CC_MVS0C_SHIFT_CLK                               13
->>>>>> +#define
->>>>>> VIDEO_CC_MVS1_SHIFT_CLK                                        14
->>>>>> +#define VIDEO_CC_MVS1C_SHIFT_CLK                               15
->>>>>> +#define VIDEO_CC_XO_CLK_SRC                                    16
->>>>>
->>>>> Are these values applicable to sm8450?
->>>>>
->>>>
->>>> No, the shift clocks above are part of SM8650 only. To reuse the
->>>> existing SM8550 videocc driver for SM8650 and to register these shift
->>>> clocks for SM8650, I added them here.
->>>>
->>>
->>> In such case I'd strongly suggest to add a new qcom,sm8650-videocc.h 
->>> file,
->>> and do #include qcom,sm8450-videocc.h in it, thus the new header will be
->>> really a short one.
->>>
->>> This will add pristine clarity.
->>>
->>
->> Thanks Vladimir for your suggestion. I believe adding a comment for
->> these set of clocks should be sufficient to indicate these clocks are
->> applicable only for SM8650, I can add the required comment and post the
->> next series. Please let me know if this works?
-> 
-> Well, I didn't get any new information to abandon my suggestion, what is
-> wrong with it or why is it less preferable?
-> 
-> Even if you add a comment in the header file, it means that for SM8450
-> platforms you'll begin to define inapplicable/unrelated macro for the
-> platform, which opens a small risk of the misusage, and which can be
-> easily avoided. I believe that the clarity is better for maintenance.
-> 
-
-Yes, I agree. Will check and move these new clocks to a separate header 
-file in next series. Thanks!
-
-Thanks,
-Jagadeesh
+--=20
+With best wishes
+Dmitry
 
