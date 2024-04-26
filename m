@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-18668-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18669-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D2298B3850
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 15:25:12 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5FDC88B3857
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 15:25:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BEEF31C22ACC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 13:25:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 16FA028561C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 13:25:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D3741474B5;
-	Fri, 26 Apr 2024 13:25:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 813B61474C5;
+	Fri, 26 Apr 2024 13:25:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="H00NgdkS"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="FxYfYQoJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9227146D62;
-	Fri, 26 Apr 2024 13:25:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E07BF13E88A;
+	Fri, 26 Apr 2024 13:25:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714137910; cv=none; b=Rwj+7eeJpL47/52S09jtOa9uXbdwPsSGI4FHcdQGmpUrWJ1oPAVaYxDccNfDxLg22fyGB6uJm70DYckN1Xs8HVfixty12pLjSapRM2XofA2BK5MZC2U6tXz8uDipK7DWtDKOGRbmkl1lqGKBPeX1EqEBkmJmveLoLdScyhitGQg=
+	t=1714137926; cv=none; b=lA7tds5MdMkFXiC4jOgTAkxyj+9rnUbo7UDTGG7bq3+R92qB9hmTl3mvYwpAb/xog1y/Dh2j5bEmZTvAM6LQ77292gHVTSNSO9G8I4bBJECYymvshoamISdE/YNxH1/GuakwAMYgwK778amJ9lExRQPzj/kp55Y36rSblGL2t30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714137910; c=relaxed/simple;
-	bh=ckDRuhsvVS1VZSimrLSwe76FYVFxcPXR+y8JqIk4Hrg=;
+	s=arc-20240116; t=1714137926; c=relaxed/simple;
+	bh=wrFvzBHWtoD17fbW2f/KSN/X1vBLYzoBPj1SNMLxdRo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=T4MtUGG/Fm67v8AVOmFaiiahy4dpYI2NnBLg6dHzwQCpH61ZL/sqN4fIpZX5ER9vSE+WOmaFr42+r+CXvfiDY3O/4Hf/I//5xNlG0a31QC4zlm3qNUh3Ofx7HMWI4nxUlzR2rbpuejkeaeKxLhqI/YOfENJOW15VGVTXnTZ1Ou4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=H00NgdkS; arc=none smtp.client-ip=192.198.163.8
+	 In-Reply-To:Content-Type; b=S0aD/DO7a9zZMYjy83iFfUAv92bilnSYJCZyKjpmN4BURoJETpnCakWrtzFnEvo52U2WTv6Z6cF1vTobF4DVi74I0MMTVeLKxSz+q6cVvbrDgc0bxTE2E1OOwTm0AQ2a0Wu4lGQCJfSAlOfrCxwiDXuA6V2l8h1kBrxgRh2J4gg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=FxYfYQoJ; arc=none smtp.client-ip=192.198.163.8
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1714137909; x=1745673909;
+  t=1714137925; x=1745673925;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=ckDRuhsvVS1VZSimrLSwe76FYVFxcPXR+y8JqIk4Hrg=;
-  b=H00NgdkSGOETAO0uXkpNy50eVFE4gUriz9jUORmu2sgD/RBNR4CQnV2o
-   krxIONYgNy/5VIBrELEcLTP0cUUnomlvvc4xblseApsaE//KE1XRnH6cS
-   Vgd9wjQqNpJfbzfOSJH760k+ZOymMf/hbY2VOXFGmdCMJf1E0q/eeLWp/
-   oi1fJ7Wl0Tano3s2CZaOsu2Kyp/fz+ncHHpbgkmkoQBS/I7mFR2XfGn+0
-   BlzZiT1tlDdzKmWkIGyyZA6+25rlSA9jR4LATB+YsO5WHvE2ady1wHPO1
-   cAhEAoRpHnKK3+TbPilHIT6r1Jdk+TW8GtlAVqKi0s/WshAruXJ5ORlNV
+  bh=wrFvzBHWtoD17fbW2f/KSN/X1vBLYzoBPj1SNMLxdRo=;
+  b=FxYfYQoJiqQ4XFK0+20FMa/SdLPdyR14aywTaRZZrqY0I0BOOJ9eidwS
+   D2kckzlnJNOmiwV+UTAYJWHl78DcWFCFZ5q9IOE3CAbmlRm7a88cs7MDT
+   H1NHT9DiUAu3iAlc5tcpoo8HwpRTzxXKB4dAQyPBb7D5fX+CiihHYiRDW
+   PA4ZYH2XB6PdWRfd3h2JxAG4OPBktKMobIw1uChJZRZ4CzdvfouaFRaUc
+   rU+8+42FkFvnGSkYvDg/yRkJqIT+vDkYlIJxQ1sOwTAditnAlu8fopdqj
+   MUkHqLfD38jKQ2Vv0xyQNChUIDPL1E5jUNnpvGzj/j9FFowJ26cmWjoKh
    w==;
-X-CSE-ConnectionGUID: RK4q18J1T5C2g2Bw5FwZyA==
-X-CSE-MsgGUID: mPaSsJcnT2WKS5WQ93XX3A==
-X-IronPort-AV: E=McAfee;i="6600,9927,11056"; a="27388423"
+X-CSE-ConnectionGUID: ZKv3CoJfR0WM2TDV1wlD+A==
+X-CSE-MsgGUID: omO/glAoR7GgvzoCwfq3BQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11056"; a="27388466"
 X-IronPort-AV: E=Sophos;i="6.07,232,1708416000"; 
-   d="scan'208";a="27388423"
+   d="scan'208";a="27388466"
 Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2024 06:25:08 -0700
-X-CSE-ConnectionGUID: e13BTyWfSnS+Wk2p9q4Yrg==
-X-CSE-MsgGUID: kknPYFCBTRSMZLGJk31ntQ==
+  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2024 06:25:24 -0700
+X-CSE-ConnectionGUID: Gl8OHmJ8Qr+bku/V74LdJA==
+X-CSE-MsgGUID: YJy8i+p+RI6WRk3uU1XurA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.07,232,1708416000"; 
-   d="scan'208";a="25302192"
+   d="scan'208";a="25302209"
 Received: from aslawinx-mobl.ger.corp.intel.com (HELO [10.94.0.53]) ([10.94.0.53])
-  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2024 06:25:02 -0700
-Message-ID: <b8ff8777-6bcb-4fd7-9480-231536d23759@linux.intel.com>
-Date: Fri, 26 Apr 2024 15:25:02 +0200
+  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2024 06:25:18 -0700
+Message-ID: <3d70c19f-bab8-4e50-9551-de406a0e0314@linux.intel.com>
+Date: Fri, 26 Apr 2024 15:25:18 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,7 +67,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v20 09/41] ASoC: Add SOC USB APIs for adding an USB
+Subject: Re: [PATCH v20 22/41] ASoC: usb: Add PCM format check API for USB
  backend
 Content-Language: en-US
 To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
@@ -81,51 +81,56 @@ Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
  alsa-devel@alsa-project.org
 References: <20240425215125.29761-1-quic_wcheng@quicinc.com>
- <20240425215125.29761-10-quic_wcheng@quicinc.com>
+ <20240425215125.29761-23-quic_wcheng@quicinc.com>
 From: =?UTF-8?Q?Amadeusz_S=C5=82awi=C5=84ski?=
  <amadeuszx.slawinski@linux.intel.com>
-In-Reply-To: <20240425215125.29761-10-quic_wcheng@quicinc.com>
+In-Reply-To: <20240425215125.29761-23-quic_wcheng@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 4/25/2024 11:50 PM, Wesley Cheng wrote:
-> Some platforms may have support for offloading USB audio devices to a
-> dedicated audio DSP.  Introduce a set of APIs that allow for management of
-> USB sound card and PCM devices enumerated by the USB SND class driver.
-> This allows for the ASoC components to be aware of what USB devices are
-> available for offloading.
+On 4/25/2024 11:51 PM, Wesley Cheng wrote:
+> Introduce a helper to check if a particular PCM format is supported by the
+> USB audio device connected.  If the USB audio device does not have an
+> audio profile which can support the requested format, then notify the USB
+> backend.
 > 
 > Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
 > ---
 
 (...)
 
-> +const char *snd_soc_usb_get_components_tag(bool playback)
+> +/**
+> + * snd_soc_usb_find_format() - Check if audio format is supported
+> + * @card_idx: USB sound chip array index
+> + * @params: PCM parameters
+> + * @direction: capture or playback
+> + *
+> + * Ensure that a requested audio profile from the ASoC side is able to be
+> + * supported by the USB device.
+> + *
+> + * Return 0 on success, negative on error.
+> + *
+> + */
+> +int snd_soc_usb_find_format(int card_idx, struct snd_pcm_hw_params *params,
+> +			int direction)
+
+Perhaps name function similar to its snd_usb equivalent, so 
+snd_soc_usb_find_supported_format?
+
 > +{
-> +	if (playback)
-> +		return "usbplybkoffld: 1";
-> +	else
-> +		return "usbcapoffld: 1";
+> +	struct snd_usb_stream *as;
+> +
+> +	as = snd_usb_find_suppported_substream(card_idx, params, direction);
+> +	if (!as)
+> +		return -EOPNOTSUPP;
+> +
+> +	return 0;
 > +}
-> +EXPORT_SYMBOL_GPL(snd_soc_usb_get_components_tag);
-
-Is this used to expose some information to userspace?
-Can those be some more readable strings if so, like:
-usbplaybackoffload, usbcaptureoffload
-
-(...)
-
+> +EXPORT_SYMBOL_GPL(snd_soc_usb_find_format);
 > +
-> +	node = snd_soc_find_phandle(usbdev);
-> +	if (IS_ERR(node))
-> +		return -ENODEV;
-> +
-> +	ctx = snd_soc_find_usb_ctx(node);
-> +	of_node_put(node);
-> +	if (!ctx)
-> +		return -ENODEV;
-
-Perhaps introduce some helper function, you do this 
-snd_soc_find_phandle() followed by snd_soc_find_usb_ctx() in few places...
+>   /**
+>    * snd_soc_usb_allocate_port() - allocate a SOC USB device
+>    * @component: USB DPCM backend DAI component
+> 
 
 
