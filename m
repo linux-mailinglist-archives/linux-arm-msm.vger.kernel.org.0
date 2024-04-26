@@ -1,143 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-18652-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18654-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08A7B8B2FE6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 07:54:16 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ACDF38B3098
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 08:37:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3BA23B226E3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 05:54:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 640DD284A32
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 06:37:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8373613AA52;
-	Fri, 26 Apr 2024 05:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A216D13A276;
+	Fri, 26 Apr 2024 06:37:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lR27SZD4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y5X3Pd/x"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0702C13A40D;
-	Fri, 26 Apr 2024 05:53:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76E6C139CFF;
+	Fri, 26 Apr 2024 06:37:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714110820; cv=none; b=GDlMQbDecpi0giq5MSPPO43rVbqZz4Oe5N7tEibZ4s3aVIZzOo7ujI+VHO/oCcwQThYP0NsN2juE3IAFnNSifajdwWTaLtkgSqZkYev61Y8q+wPVoPxp7/W22S/VxHZeZ+yiC6OpjNYLnBWEXXBhw3/G3vAZYeNRyz0kDL6SudQ=
+	t=1714113456; cv=none; b=gNtNQEJEkXikIXihnd0QsgQRzcE6yJrFL4Rxtghr18jpzdgBcjRonwR9zGtlOp3QO441hiF4Q7Y2pr8z/mdAjrFMeeu+YfQeSLG6iJPDo8T352bofBsZfrCunlUY55oSV5O68Wn3DXXYYplBk32yKKe40qbiLfOqq4lteGWw7Wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714110820; c=relaxed/simple;
-	bh=j97wrJmhDrkFtsUT1grIZkEdJPgugxdV4Uw9WEJuSos=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=SxNzOyqcJlDXVcDxGdzpnz05y5dALkh5FUEbwP96piDXNSjZ6SLwroxZa+MwZlC3Ee+XE+wLlTST2WDjLsdnpKApicOhRqPzTTugGnp8kOE+5z23effqDJZtK23HHYzRav/Wrv34sJfb5q9gTJmjSD9x2LZvfNZnWdlnFPhNBdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lR27SZD4; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43Q3CKKv025010;
-	Fri, 26 Apr 2024 05:53:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding; s=qcppdkim1; bh=tC/Y04U
-	v15aUX5P+ir6hzbsw8akIMt2s/6A0/MT9ChA=; b=lR27SZD4xyW3fSOnBvE2b8g
-	GpwPCx9nvz2QtzGvHcitellisXog7TZ3dXKEw1WJO1cZY3uKkyUgc6ugVZUNaRBq
-	gOFeRuP4jym2Ui4yaRQTsiaTsyKF2hd/NJ87mMTb5yjKiCfF0fgWHakrmH2ohpT6
-	8cK8B8yqA0K4f6conZhFUJ/F/CfE8Gh2WZqXtGDogxDcvQfAFfJPHHnHEKfIAfvr
-	IwuETJ2MfNMoEccHLFAyjiJ2uYjD6792/9vhWgW45ojki9fIDrqWxWAESPAcQss8
-	EHh5+gfqa7cao0qghBGyqySMOB5SuR5bno3g06cHSMf+oVe6uVC8DL4LdXFlB9w=
-	=
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xqenhvu66-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Apr 2024 05:53:34 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 43Q5rTVU002267;
-	Fri, 26 Apr 2024 05:53:30 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 3xm6smm8sv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Apr 2024 05:53:30 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43Q5rU1g002317;
-	Fri, 26 Apr 2024 05:53:30 GMT
-Received: from hu-devc-hyd-u20-c-new.qualcomm.com (hu-rohiagar-hyd.qualcomm.com [10.147.246.70])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 43Q5rUIP002316
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Apr 2024 05:53:30 +0000
-Received: by hu-devc-hyd-u20-c-new.qualcomm.com (Postfix, from userid 3970568)
-	id 9C9D220FFA; Fri, 26 Apr 2024 11:23:29 +0530 (+0530)
-From: Rohit Agarwal <quic_rohiagar@quicinc.com>
-To: andersson@kernel.org, konrad.dybcio@linaro.org,
-        manivannan.sadhasivam@linaro.org, jassisinghbrar@gmail.com,
-        robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-        lee@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, kernel@quicinc.com,
-        Rohit Agarwal <quic_rohiagar@quicinc.com>
-Subject: [PATCH 6/6] arm64: dts: qcom: sdx75: Add AOSS node
-Date: Fri, 26 Apr 2024 11:23:26 +0530
-Message-Id: <20240426055326.3141727-7-quic_rohiagar@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240426055326.3141727-1-quic_rohiagar@quicinc.com>
-References: <20240426055326.3141727-1-quic_rohiagar@quicinc.com>
+	s=arc-20240116; t=1714113456; c=relaxed/simple;
+	bh=GtFGLKTg+JvNMOZGqXHx0ThjXQud+Q4uyZygnAPI0Yk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=f856dTQEhviulF7BnLdySKE1ocIDPWwLfmRYErFRGrv0RyQffmK5w4MLOdlj2t8t29IvSRrMpfuICh0+k7Vvu5S+Y7U2x1B0NiMswIJdp28bZU0pDlAA8ctclwzHBlrWnNrIFpH+rkBlq2vz//+GXS51Go6Hp5+csJBG7IkTdQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y5X3Pd/x; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8303C113CD;
+	Fri, 26 Apr 2024 06:37:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1714113456;
+	bh=GtFGLKTg+JvNMOZGqXHx0ThjXQud+Q4uyZygnAPI0Yk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Y5X3Pd/xFOUuOzG9yU8VK8x1NkmvDKRoCDoescnbVVJI5Rz29YjTKQsS+rMYRoNj5
+	 g/fg86kAe7agMLT6lmpCa0L5gJnxwE8O2YmZRT7Ikf1qGoCNt+Y34hEQyI1g7naN+C
+	 WWHQXKCsxtk4mlESk61wpTYKhxCHfDqxsK9tBhbbWgeY1LjgW761Q/dATMm7CenwGS
+	 WpJdlmd4yFkl9Ypielf6TYp6KNH0mOLUh/zHIH/XXRWkrrQnEN8KjBJLMIxpSc4WIs
+	 bXH7C7j3QSE+IGz7VIQg0diktUk80p/C5yJJmhkUcQnhosfPXbUABjdsrGJucd8FrH
+	 fUWAzD39vuPvw==
+Message-ID: <79fb3842-62c9-4e44-ba53-cd66cf332b75@kernel.org>
+Date: Fri, 26 Apr 2024 08:37:30 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: BQA0EkTmXJP2GKNKjdhARbfvKoSCLIyP
-X-Proofpoint-GUID: BQA0EkTmXJP2GKNKjdhARbfvKoSCLIyP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-26_06,2024-04-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- lowpriorityscore=0 bulkscore=0 malwarescore=0 adultscore=0 clxscore=1015
- priorityscore=1501 phishscore=0 mlxlogscore=720 suspectscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
- definitions=main-2404260034
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: mark ethernet devices as
+ DMA-coherent
+To: Sagar Cheluvegowda <quic_scheluve@quicinc.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240425-mark_ethernet_devices_dma_coherent-v1-1-ad0755044e26@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240425-mark_ethernet_devices_dma_coherent-v1-1-ad0755044e26@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Add AOSS channel devicetree node for Qcom's SDX75 SoC.
+On 26/04/2024 01:07, Sagar Cheluvegowda wrote:
+> Ethernet devices are cache coherent, mark it as such in the dtsi.
+> 
+> Change-Id: Id180fae617f2e348c0a80c6664b131cc57fcb4d6
 
-Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sdx75.dtsi | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ALWAYS run checkpatch before sending any patch.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdx75.dtsi b/arch/arm64/boot/dts/qcom/sdx75.dtsi
-index f3f30bbcb37d..96e3eec57008 100644
---- a/arch/arm64/boot/dts/qcom/sdx75.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdx75.dtsi
-@@ -11,6 +11,7 @@
- #include <dt-bindings/interconnect/qcom,icc.h>
- #include <dt-bindings/interconnect/qcom,sdx75.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
-+#include <dt-bindings/mailbox/qcom-ipcc.h>
- #include <dt-bindings/power/qcom,rpmhpd.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
- #include <dt-bindings/soc/qcom,rpmh-rsc.h>
-@@ -641,6 +642,17 @@ pdc: interrupt-controller@b220000 {
- 			interrupt-controller;
- 		};
- 
-+		aoss_qmp: power-controller@c310000 {
-+			compatible = "qcom,sdx75-aoss-qmp", "qcom,aoss-qmp";
-+			reg = <0 0x0c310000 0 0x1000>;
-+			interrupt-parent = <&ipcc>;
-+			interrupts-extended = <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLINK_QMP
-+						     IRQ_TYPE_EDGE_RISING>;
-+			mboxes = <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLINK_QMP>;
-+
-+			#clock-cells = <0>;
-+		};
-+
- 		spmi_bus: spmi@c400000 {
- 			compatible = "qcom,spmi-pmic-arb";
- 			reg = <0x0 0x0c400000 0x0 0x3000>,
--- 
-2.25.1
+Best regards,
+Krzysztof
 
 
