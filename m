@@ -1,191 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-18657-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18658-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 707388B33C2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 11:20:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 491CB8B33F6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 11:29:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2F77228406E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 09:20:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F12662849DF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 09:29:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1EC913E052;
-	Fri, 26 Apr 2024 09:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 115DB13E8B2;
+	Fri, 26 Apr 2024 09:29:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NtUEw5A+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iUqfNMNx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BFB13C90F;
-	Fri, 26 Apr 2024 09:20:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F6E282EA;
+	Fri, 26 Apr 2024 09:29:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714123234; cv=none; b=SSBKXWP22zCQQmkiKsCY9mIYD5jyOrIZM3RZx+2fvavpUo8EK61ZVWxe2RwuQnYb3WMk9dmS/N/PwlyiL+NAUKDW+HOvv6u5sbVrDWcpeR2tDyG2sXZvo2Lqk8UUsRcIOSkC/ug0OWGanoxbpN6RVkcn1+ldhiTsNwgYfxGBJJU=
+	t=1714123777; cv=none; b=NZw9opJd2mLUZvFn+99J+qEYd6cgaDBMiSbJUbEbSuW/UeLShLl2SZHK7R8DpC5WbGJxtoGAARA0Mqz76kfr5bZjxdO39o7R26de9D574Crcy34yYpyLXmCSLswMmDzFc8LHAwRwo8xknkQs0OTK07rH1odcnrC2YVAq7m/gzzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714123234; c=relaxed/simple;
-	bh=xBUpP3VAjhJdXrYIjPZD0CAQ4mXC99ueDEdcVvn0xbY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=YrKe4UIejjFyVfWqUAzzwO57LvdthVhT1vokVOVHr4fGjiiPkyPyM0ClPx/Vf77x4nVx2Ot++okCL/YWSA4SqmbfpRYgbUQM+/OKrjbf9mhiTL5CaaK7+A6AMrvGj+9PAkuB95sYVLOJAH+b3LheM8HJntYIoim96VTb70GEgy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NtUEw5A+; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43Q41YLU012981;
-	Fri, 26 Apr 2024 09:20:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=BUIIFoA4N2ESIijEp2JWqnWgumg1YcDccO7inyej7yI=; b=Nt
-	UEw5A+H8vL4iSQmfnMTb8OIaAEu9zI1irjgkP9JL4s5QPos/EMOutuHwvoBn0uRx
-	ZpR4MsWd/7ksqCHDctVXN/KUFWeO3JLKDxgW2o7gBSpy0ZngQWbCVTGdGRs8n08y
-	SD/atlbO/HLr/HaJUkJRWvb6XMUcnm8Auf4+0zJgblHtTaZue42rbquYLaEPH+gd
-	rhawsOCZiCiW1MAI1t5tdu0Ap2n41fbrfNuYX6bEPbkx6ptiNQ6RNQSTFaEYKm/q
-	ucUzvhf05Jl6IRfgdGr32Jq81Fb6jYPvVzwz8b7WB/qzRW6VT4NYG4bJoaTqo0pO
-	HUarX30L6YOVDZL/BWow==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xr3591ctd-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Apr 2024 09:20:25 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43Q9KMaN025356
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Apr 2024 09:20:22 GMT
-Received: from [10.218.10.146] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 26 Apr
- 2024 02:20:16 -0700
-Message-ID: <ca017ebf-c099-b436-f062-1341f765a08c@quicinc.com>
-Date: Fri, 26 Apr 2024 14:50:12 +0530
+	s=arc-20240116; t=1714123777; c=relaxed/simple;
+	bh=G92cwOhiPQS7Q5kYfxITNoEUqeEw92zFYUHW/hjpagc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=L38RMI+afYhO4VFneyqOYXFUvRpVL+rtcYZal1mCAqUGd/MUoN1BV7zfWqyjuTtezYNYV42tHsPmmFCvKDEHC3NefepgXjA4igvWjYvVqMIEMiNV1GzyouhKIqULfgHFAaXCJOFkM9LNhLJADsTz3nPQedtcRw13FFCxBNwAMwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iUqfNMNx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FEFFC113CD;
+	Fri, 26 Apr 2024 09:29:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1714123776;
+	bh=G92cwOhiPQS7Q5kYfxITNoEUqeEw92zFYUHW/hjpagc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=iUqfNMNx7JSRrAXJvJBDJUeXLvPKDz8+GVpkqVRdxY8z9KaXmz7RK1sJrVTaBoWPN
+	 G6/3K2PysJY3ClJtgvNibwmWEkunQAum87+eIuagiO5CUZrF5DDT9cKB+RY2FwW4Cv
+	 f8BPBuSBFlgwSuXLihSNJVed/2hojzyyvxBz418X2mShdemMwpFL+fcSyy8UbqiDHA
+	 Bg021h3Yb4LJFb+V5xR1wuk+M9V+r1MkPtCjw6shabcUp2tbVUFpgB0ZudWKRC9Uwz
+	 rAOlGqCTRMC6PdBN8+WLgGbOhUZkwGXQomf510wCITZF+dUK9fU6KfynyNlUKkRmzC
+	 dOnPOFUhtjE+g==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1s0Htg-000000001bi-4A4q;
+	Fri, 26 Apr 2024 11:29:37 +0200
+Date: Fri, 26 Apr 2024 11:29:36 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Doug Anderson <dianders@chromium.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>, Jiri Kosina <jikos@kernel.org>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	linux-input@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: Re: [PATCH 4/6] HID: i2c-hid: elan: fix reset suspend current leakage
+Message-ID: <Zit0ADAycyHp67Ax@hovoldconsulting.com>
+References: <20240423134611.31979-1-johan+linaro@kernel.org>
+ <20240423134611.31979-5-johan+linaro@kernel.org>
+ <CAD=FV=XP8aCjwE3LfgMy4oBL4xftFg5NkgUFso__54zNp_ZWiA@mail.gmail.com>
+ <ZijlZw6zm4R9ULBU@hovoldconsulting.com>
+ <CAD=FV=Vxgu==8Cv3sDydFpEdd6ws2stkZvxvajE1OAFm2BgmXw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH V2 7/8] clk: qcom: Add GPUCC driver support for SM4450
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
-	<sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Vladimir Zapolskiy
-	<vladimir.zapolskiy@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        "Jagadeesh Kona" <quic_jkona@quicinc.com>,
-        Imran Shaik
-	<quic_imrashai@quicinc.com>,
-        "Satya Priya Kakitapalli"
-	<quic_skakitap@quicinc.com>
-References: <20240416182005.75422-1-quic_ajipan@quicinc.com>
- <20240416182005.75422-8-quic_ajipan@quicinc.com>
- <CAA8EJpqwrKcgm7c57=LpxS7+CfrN2UxNg8k_46auBrdZG7vQnA@mail.gmail.com>
-Content-Language: en-US
-From: Ajit Pandey <quic_ajipan@quicinc.com>
-In-Reply-To: <CAA8EJpqwrKcgm7c57=LpxS7+CfrN2UxNg8k_46auBrdZG7vQnA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 3uiw9dIqgbCoJcFFm8PKZL3HkWEE3PTx
-X-Proofpoint-ORIG-GUID: 3uiw9dIqgbCoJcFFm8PKZL3HkWEE3PTx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-26_09,2024-04-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
- impostorscore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0
- clxscore=1015 mlxscore=0 suspectscore=0 phishscore=0 mlxlogscore=999
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404260060
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAD=FV=Vxgu==8Cv3sDydFpEdd6ws2stkZvxvajE1OAFm2BgmXw@mail.gmail.com>
 
+On Wed, Apr 24, 2024 at 09:24:33AM -0700, Doug Anderson wrote:
+> On Wed, Apr 24, 2024 at 3:56 AM Johan Hovold <johan@kernel.org> wrote:
+> > On Tue, Apr 23, 2024 at 01:37:14PM -0700, Doug Anderson wrote:
+> > > On Tue, Apr 23, 2024 at 6:46 AM Johan Hovold <johan+linaro@kernel.org> wrote:
 
+> > > > @@ -87,12 +104,14 @@ static int i2c_hid_of_elan_probe(struct i2c_client *client)
+> > > >         ihid_elan->ops.power_up = elan_i2c_hid_power_up;
+> > > >         ihid_elan->ops.power_down = elan_i2c_hid_power_down;
+> > > >
+> > > > -       /* Start out with reset asserted */
+> > > > -       ihid_elan->reset_gpio =
+> > > > -               devm_gpiod_get_optional(&client->dev, "reset", GPIOD_OUT_HIGH);
+> > > > +       ihid_elan->reset_gpio = devm_gpiod_get_optional(&client->dev, "reset",
+> > > > +                                                       GPIOD_ASIS);
+> > >
+> > > I'm not a huge fan of this part of the change. It feels like the GPIO
+> > > state should be initialized by the probe function. Right before we
+> > > call i2c_hid_core_probe() we should be in the state of "powered off"
+> > > and the reset line should be in a consistent state. If
+> > > "no_reset_on_power_off" then it should be de-asserted. Else it should
+> > > be asserted.
 
-On 4/17/2024 11:35 AM, Dmitry Baryshkov wrote:
-> On Tue, 16 Apr 2024 at 21:23, Ajit Pandey <quic_ajipan@quicinc.com> wrote:
->>
->> Add Graphics Clock Controller (GPUCC) support for SM4450 platform.
->>
->> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
->> ---
->>   drivers/clk/qcom/Kconfig        |   9 +
->>   drivers/clk/qcom/Makefile       |   1 +
->>   drivers/clk/qcom/gpucc-sm4450.c | 805 ++++++++++++++++++++++++++++++++
->>   3 files changed, 815 insertions(+)
->>   create mode 100644 drivers/clk/qcom/gpucc-sm4450.c
+> > Second, the device is not necessarily in the "powered off" state
 > 
-> [skipped]
-> 
->> +
->> +static int gpu_cc_sm4450_probe(struct platform_device *pdev)
->> +{
->> +       struct regmap *regmap;
->> +
->> +       regmap = qcom_cc_map(pdev, &gpu_cc_sm4450_desc);
->> +       if (IS_ERR(regmap))
->> +               return PTR_ERR(regmap);
->> +
->> +       clk_lucid_evo_pll_configure(&gpu_cc_pll0, regmap, &gpu_cc_pll0_config);
->> +       clk_lucid_evo_pll_configure(&gpu_cc_pll1, regmap, &gpu_cc_pll1_config);
->> +
->> +       /* Keep some clocks always enabled */
->> +       qcom_branch_set_clk_en(regmap, 0x93a4); /* GPU_CC_CB_CLK */
->> +       qcom_branch_set_clk_en(regmap, 0x9004); /* GPU_CC_CXO_AON_CLK */
->> +       qcom_branch_set_clk_en(regmap, 0x900c); /* GPU_CC_DEMET_CLK */
-> 
-> My main concern here is the AON clocks. If we don't model
-> gpu_cc_demet_clk as a leaf clock, then gpu_cc_demet_div_clk_src
-> becomes a clock without children and can be disabled by Linux.
-> Likewise not modelling gpu_cc_cxo_aon_clk removes one of the voters on
-> gpu_cc_xo_clk_src, which can now be turned off by Linux.
-> Our usual recommendation is to model such clocks properly and to use
-> CLK_IS_CRITICAL or CLK_IGNORE_UNUSED to mark then as aon.
-> 
-Thanks for review, actually if leaf (branch) clock is ON, hardware will 
-take care of enabling and keeping the parent ON. So parent clocks won't 
-get turned OFF in HW as long as branch clock is enabled.
+> Logically, the driver treats it as being in "powered off" state,
+> though. That's why the i2c-hid core makes the call to power it on. IMO
+> we should strive to make it more of a consistent state, not less of
+> one.
 
-For clocks which are fixed rate (19.2MHz) and recommended to be kept ON 
-forever from HW design, modelling and exposing clock structure in kernel 
-will be a redundant code in kernel memory, hence as per earlier 
-suggestion in previous thread such clocks are recommended to be kept 
-enabled from probe.
->> +
->> +       return qcom_cc_really_probe(pdev, &gpu_cc_sm4450_desc, regmap);
->> +}
->> +
->> +static struct platform_driver gpu_cc_sm4450_driver = {
->> +       .probe = gpu_cc_sm4450_probe,
->> +       .driver = {
->> +               .name = "gpucc-sm4450",
->> +               .of_match_table = gpu_cc_sm4450_match_table,
->> +       },
->> +};
->> +
->> +module_platform_driver(gpu_cc_sm4450_driver);
->> +
->> +MODULE_DESCRIPTION("QTI GPUCC SM4450 Driver");
->> +MODULE_LICENSE("GPL");
->> --
->> 2.25.1
->>
->>
-> 
-> 
+That's not really true. The device is often in an undefined power state
+and we try to make sure that the hand over is as smooth as possible to
+avoid resetting displays and similar unnecessarily.
 
--- 
-Thanks, and Regards
-Ajit
+The power-on sequence is what brings the device into a defined power
+state.
+
+> > as the
+> > driver leaves the power supplies in whatever state that the boot
+> > firmware left them in.
+> 
+> I guess it depends on the regulator. ;-) For GPIO-regulators they
+> aren't in whatever state the boot firmware left them in. For non-GPIO
+> regulators we (usually) do preserve the state that the boot firmware
+> left them in.
+
+Even for GPIO regulators we have the "regulator-boot-on" devicetree
+property which is supposed to be set if the boot firmware has left a
+regulator on so that the regulator initialisation can preserve the
+state.
+
+> > Not immediately asserting reset and instead leaving it in the state that
+> > the boot firmware left it in is also no different from what happens when
+> > a probe function bails out before requesting the reset line.
+> >
+> > > I think GPIOD_ASIS doesn't actually do anything useful for you, right?
+> > > i2c_hid_core_probe() will power on and the first thing that'll happen
+> > > there is that the reset line will be unconditionally asserted.
+> >
+> > It avoids asserting reset before we need to and thus also avoid the need
+> > to deassert it on early probe failures (e.g. if one of the regulator
+> > lookups fails).
+> 
+> I guess so, though I'm of the opinion that we should be robust against
+> the state that firmware left things in. The firmware's job is to boot
+> the kernel and make sure that the system is running in a safe/reliable
+> way, not to optimize the power consumption of the board.
+
+Agreed.
+
+> If the
+> firmware left the line configured as "output low" then you'd let that
+> stand. If it's important for the line to be left in a certain state,
+> isn't it better to make that explicit?
+
+As I pointed out above we already do this for any error paths before
+requesting the reset line. And I also don't think we need to worry too
+much about power consumption in case of errors.
+
+But there is one case I had not considered before, and that is your gpio
+regulator example but where the boot-on flag does not match the actual
+regulator state.
+
+If the supply is on and reset deasserted, but the regulator-boot-on
+flag is not set, then we want to make sure that reset is asserted before
+disabling the supply when requesting the regulator.
+
+> Also note: if we really end up keeping GPIOD_ASIS, which I'm still not
+> convinced is the right move, the docs seem to imply that you need to
+> explicitly set a direction before using it. Your current patch doesn't
+> do that.
+
+You're right. It will work in my case because of the gpiolib open-drain
+implementation, but not generally.
+
+I'll add back the reset during early probe and add error handling for
+deasserting reset on machines like the X13s. On these, the touchscreen
+may now be reset a couple of times in case of probe deferrals, but
+device links should generally prevent that.
+
+Johan
 
