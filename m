@@ -1,149 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-18660-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35E358B3681
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 13:29:54 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 184E58B3729
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 14:26:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CB1201F22AB0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 11:29:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AF49F1F23B5C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Apr 2024 12:26:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 646871448DA;
-	Fri, 26 Apr 2024 11:29:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92D27145B0D;
+	Fri, 26 Apr 2024 12:26:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="METmOIPG"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Q/okE3gT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910C313C9A7;
-	Fri, 26 Apr 2024 11:29:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E9114535C;
+	Fri, 26 Apr 2024 12:26:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714130989; cv=none; b=b1cMT6rSTjb+HJ3CVGI1OldBr8TRxWggimd2+RYg6naSOow2iMgvsbbWeqfSVfGkYZKXmgoeYIV9t3bsSI/Edl9svtqtdXaBhZIAo/2TDKm14D4y5viWNIQnOe985bZLiXv/HADzwhGA0Zzk+X7CDnH0debIdj59G5NnB9tIRJs=
+	t=1714134367; cv=none; b=EISiH7ahcGl5V2lOvHHOfez7SlP1Zh1wP9hibuStpANSkkXfi9dpUF4Vqi4HgtTc6HlQGO7FEEotPIXHi+TeKTBXSEH7lm3NwkgDTHMTkT27qWcqb8+ZggVUB8BJtcQGC3w8mxtuZsaSoguXDsrbCoTrD5DWCTwWD03/MyaBb2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714130989; c=relaxed/simple;
-	bh=7uH01oNQfg0uWOj1guEY3yI5YYNX3XHX79FJGcwjXt0=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ZUS7WsGEA0onDXD8GusOfugQ7NfW9TfrFvzDqzZrsWciKoaZZm7blwntzKDid/kjBWz4HZ8REUZibiKkmPIzG/wlPomlPuB7rI/U3rCSLhPFimrphQ7fK6qnuVfAJHZjgWD5Oor+XdJ8d68XD7AnmaPXJ4pEEvlItMtITLHhze8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=METmOIPG; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1714134367; c=relaxed/simple;
+	bh=dYh57E6ZQFNHZXIEQC6AnVwy5RS0Foaz8BUdG7uKogU=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=j02TNXSiUSWtH8fwTLATSsaHHuHWJt617A0tQdqjDykN4ygVI5tkROko3bqdmo2BxD2ynhKg3IfcsgJVXc2/oQR4/sU4ls/6yNnQKeANQovdz9yRRQ175kqaSf1SYcJ4fvCvpLoO36YvVs1OEqLSGFD+hWjhF1PsPE4BydseyvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Q/okE3gT; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43QAoBKP013574;
-	Fri, 26 Apr 2024 11:29:43 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43QBdJgL011896;
+	Fri, 26 Apr 2024 12:25:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version:content-type; s=
-	qcppdkim1; bh=Wg3YvD6fPxXrEy9zgAjx7T8S8noK1qDhEngP+GsQamE=; b=ME
-	TmOIPGw87oZHBi5P+o+4VpLkiNyM/kNmb2CgQmVQTjbxcwITxCiOA1wUv4yGLy6S
-	Cu9rXZJM7nED7HJAxZIfslFxI87hh88OWGInsXCEpClsxKejM4cf1xUWc1KPprsW
-	5bH9sHEwsl8CBzLP6pj4pheFkGzW+2UX3jRoKhHbAknts9m7PSzk732fUk8ET3n9
-	KVMW4ssbN9QgDy+/5AWUli/D5YKW7Z1soB/2cyKwBzhmPs11xGghi6uHiaC0Whs7
-	xJwtBl5xrWOeOWph6bSLjeMOasXmO6fGU7wCKOinS7Nr9KK4/rXkefjSOS//BZfq
-	Cv8qlw7wwcvFG8+AHTjA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xqx03a7p8-1
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=fHEAhtk
+	w2wOoewJBYMs/2MEtu56/1mA6pRiADYx7uCk=; b=Q/okE3gTGMdnRj5Q6etX5yv
+	OWmDLBFHKWmhfBMmRImGE0JvHEPulvsghahGPWjUWsA+D/2OVkjimZk8nQimLnIj
+	r5gCIxXMlYlOWVzZZzPFJxs2a5qkE2DcKPfOAaK/1rvPmfR5SUwg1s4YPbyjpyIF
+	oQGXbtucyrk5EFeCSkvjKD8lBEWoMOVFW4BdQIdM+ErOB8v7M6SH6W79cBZ/2Ybq
+	L5Ot9ZqTtmdm5iFJOuafZNIlznc9IxKE+xkO+akwHdgMtQ8AkQA0UDh8WG420dpL
+	GdtSn/03nM1cSMxqAgSF55Ko92TZR5BjMYhF7TJXnyzRDWC0ckG2b3GYNzHk8yg=
+	=
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xr3591t0v-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Apr 2024 11:29:43 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43QBTfmN014242
+	Fri, 26 Apr 2024 12:25:43 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43QCPf37005147
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Apr 2024 11:29:41 GMT
-Received: from hu-kaushalk-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+	Fri, 26 Apr 2024 12:25:41 GMT
+Received: from hu-kuruva-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 26 Apr 2024 04:29:38 -0700
-From: Kaushal Kumar <quic_kaushalk@quicinc.com>
-To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Kaushal Kumar <quic_kaushalk@quicinc.com>
-Subject: [PATCH] arm64: dts: qcom: sdx75: Add modem SMP2P node
-Date: Fri, 26 Apr 2024 16:58:37 +0530
-Message-ID: <20240426112837.17478-1-quic_kaushalk@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+ 15.2.1544.9; Fri, 26 Apr 2024 05:25:35 -0700
+From: Rajashekar kuruva <quic_kuruva@quicinc.com>
+To: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
+        <lgirdwood@gmail.com>, <andersson@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <gregkh@linuxfoundation.org>,
+        <Thinh.Nguyen@synopsys.com>, <broonie@kernel.org>,
+        <bgoswami@quicinc.com>, <tiwai@suse.com>, <robh@kernel.org>,
+        <konrad.dybcio@linaro.org>
+CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>,
+        Rajashekar kuruva <quic_kuruva@quicinc.com>
+Subject: [PATCH] [RFC PATCH] ALSA: usb-audio: endpoint: Prevent NULL pointer deference in snd_usb_endpoint_close
+Date: Fri, 26 Apr 2024 17:55:11 +0530
+Message-ID: <20240426122511.547755-1-quic_kuruva@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 7j7PoHPOCjwMdsXJk7hWy94m3GkEGtTQ
-X-Proofpoint-ORIG-GUID: 7j7PoHPOCjwMdsXJk7hWy94m3GkEGtTQ
+X-Proofpoint-GUID: 3qfEpPMRQq5Ur703ay_jX8btNchQt73f
+X-Proofpoint-ORIG-GUID: 3qfEpPMRQq5Ur703ay_jX8btNchQt73f
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
  definitions=2024-04-26_12,2024-04-26_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- spamscore=0 phishscore=0 mlxlogscore=623 clxscore=1011 adultscore=0
- lowpriorityscore=0 malwarescore=0 suspectscore=0 impostorscore=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
+ impostorscore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0
+ clxscore=1011 mlxscore=0 suspectscore=0 phishscore=0 mlxlogscore=968
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404260076
+ engine=8.19.0-2404010003 definitions=main-2404260082
 
-Add SMP2P node for the SDX75 platform to communicate with the modem.
+When multiple plug-in and plug-out events occur,
+there is a risk of encountering a NULL pointer dereference
+leading to a kernel panic during a headset use-case.
+this issue arises in the snd_usb_endpoint_close function
 
-Signed-off-by: Kaushal Kumar <quic_kaushalk@quicinc.com>
+To avoid check if ep->iface_ref is not null before decrementing
+its opened count. If ep->iface_ref is null, we skip the decrement
+and the subsequent logic.
+
+Signed-off-by: Rajashekar kuruva <quic_kuruva@quicinc.com>
 ---
-This patch is dependent on the series published [1].
+ sound/usb/endpoint.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-[1]: https://lore.kernel.org/all/20240426055326.3141727-1-quic_rohiagar@quicinc.com/
-
- arch/arm64/boot/dts/qcom/sdx75.dtsi | 35 +++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdx75.dtsi b/arch/arm64/boot/dts/qcom/sdx75.dtsi
-index 96e3eec57008..536f41f856c8 100644
---- a/arch/arm64/boot/dts/qcom/sdx75.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdx75.dtsi
-@@ -406,6 +406,41 @@
- 		};
- 	};
-
-+	smp2p-modem {
-+		compatible = "qcom,smp2p";
-+		qcom,smem = <435>, <428>;
-+		interrupts-extended = <&ipcc IPCC_CLIENT_MPSS
-+					     IPCC_MPROC_SIGNAL_SMP2P
-+					     IRQ_TYPE_EDGE_RISING>;
-+		mboxes = <&ipcc IPCC_CLIENT_MPSS
-+				IPCC_MPROC_SIGNAL_SMP2P>;
-+
-+		qcom,local-pid = <0>;
-+		qcom,remote-pid = <1>;
-+
-+		smp2p_modem_out: master-kernel {
-+			qcom,entry-name = "master-kernel";
-+			#qcom,smem-state-cells = <1>;
-+		};
-+
-+		smp2p_modem_in: slave-kernel {
-+			qcom,entry-name = "slave-kernel";
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+		};
-+
-+		ipa_smp2p_out: ipa-ap-to-modem {
-+			qcom,entry-name = "ipa";
-+			#qcom,smem-state-cells = <1>;
-+		};
-+
-+		ipa_smp2p_in: ipa-modem-to-ap {
-+			qcom,entry-name = "ipa";
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+		};
-+	};
-+
- 	smem: qcom,smem {
- 		compatible = "qcom,smem";
- 		memory-region = <&smem_mem>;
---
-2.17.1
+diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
+index 8f65349a06d3..0e3101b7e392 100644
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -950,7 +950,7 @@ void snd_usb_endpoint_close(struct snd_usb_audio *chip,
+ 	usb_audio_dbg(chip, "Closing EP 0x%x (count %d)\n",
+ 		      ep->ep_num, ep->opened);
+ 
+-	if (!--ep->iface_ref->opened &&
++	if (ep->iface_ref && !--ep->iface_ref->opened &&
+ 		!(chip->quirk_flags & QUIRK_FLAG_IFACE_SKIP_CLOSE))
+ 		endpoint_set_interface(chip, ep, false);
+ 
+-- 
+2.25.1
 
 
