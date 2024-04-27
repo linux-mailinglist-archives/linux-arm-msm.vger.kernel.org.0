@@ -1,97 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-18745-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D37208B47AC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Apr 2024 21:36:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E544B8B47E7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Apr 2024 22:36:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 115951C20D41
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Apr 2024 19:36:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 23AB71C20954
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Apr 2024 20:36:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7731B15AAB8;
-	Sat, 27 Apr 2024 19:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FE0E4D9EC;
+	Sat, 27 Apr 2024 20:36:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CMa/cIwB"
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="J/dbn4NF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.zeus03.de (www.zeus03.de [194.117.254.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC0115AAA5;
-	Sat, 27 Apr 2024 19:34:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACC23F9C6
+	for <linux-arm-msm@vger.kernel.org>; Sat, 27 Apr 2024 20:36:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714246475; cv=none; b=e1EYdWw4JVtIOir+aBPs7CyL39Wg1InRggHv2IMEvcdd/X5LB3FLfHhdlb7HhS90CB5Ty9FKMwoU3dWaAM+CJx2LESUf/ThOiAQQjt3cwewemxlsS92hviN0r+BMW5fKJlyN/HHsJXd7iYhPoT3LomBLC0pf4QJbP1XAL7WXJ3Q=
+	t=1714250181; cv=none; b=rdC3NUgs+8z3FkUBnjogFkQkphEzoEBXF60pIW7s8+nalEc4O35k7/l6hk534r1BED59kShybXTL6A05qrby/VbryEK+9o5jnnUFMvZKjO4tm9u7IaikSOmfVhUi3o6hrPlYO4fd796AxcwmJcRGJnCodrTYwmnc31Oa+OWiqZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714246475; c=relaxed/simple;
-	bh=9mXvCoOYe07NthLlcwS5/plcRT0kQrP4fA2pIlYlRuw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MT0d1MXhjvxLPge0VLJ/Wk8+kaq7vQzH7k2VYmhwRMzuVZQDVeoFFZuABL2kNjIUlj+ZnCHvhWkzUK034baNlVAhn3GxgY4+QYoEJrQpFkCeuqPRMzLSRpqQuR717SEyqrsGfpftlKk14Jz1e9jD8/uOKL8dE3E2Vz/oGimc/Rs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CMa/cIwB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C36FFC32781;
-	Sat, 27 Apr 2024 19:34:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714246474;
-	bh=9mXvCoOYe07NthLlcwS5/plcRT0kQrP4fA2pIlYlRuw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CMa/cIwBdTx6hnB9WWE/ZPV0oiOlGCIwbHOQ093Z2BC6BV3UWXBfl4MC3lHLx/0k+
-	 NmWhqvqk5Db1CqIFO7NRhoG7PLHooIEA/lH2C6vOyX7AboS9BxTkR1YYwtUfUoPXVi
-	 pmODT/OBIV5vsHAqdn2qLh3Ll3jKqaAH0J02NsP6R6yv/WaDnBB0H6QtiMLQtPQKkA
-	 Mckfq8lgAtVzcLuCKBK5QNQ+Qnp6KljuoLA4ZMW9AZo25BsL/BGbTMv/wa19bAc3Qg
-	 7bKrgcQtGbuEbXn7U7RPy4vnQwIEMhO54O8ywlsO/p6q65seKNkrTSuEeA8NLTL9nw
-	 bBONMN2umx4kA==
-From: Bjorn Andersson <andersson@kernel.org>
-To: Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Bryan O Donoghue <bryan.odonoghue@linaro.org>,
-	Marc Gonzalez <mgonzalez@freebox.fr>
-Cc: MSM <linux-arm-msm@vger.kernel.org>,
-	linux-clk <linux-clk@vger.kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Pierre-Hugues Husson <phhusson@freebox.fr>,
-	Arnaud Vrac <avrac@freebox.fr>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>
-Subject: Re: [PATCH v3] clk: qcom: mmcc-msm8998: fix venus clock issue
-Date: Sat, 27 Apr 2024 14:34:23 -0500
-Message-ID: <171424646121.1448451.7219465997551736348.b4-ty@kernel.org>
+	s=arc-20240116; t=1714250181; c=relaxed/simple;
+	bh=Tx0G6b9JwQMFmz7pulrhML1UHa1rgqE/GzFQrCputUY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=IdPjEglh3718zZEbABysrEKay+AqpINoXiiTGwtf1TlVABgEtfmXbNYv9QZIzB//pw7QVCN0v3l6t/vnOtpOS1Tn48yjoiCWhifsfyMjKLD5erSi0//LpfYsXQh0CYeD9DbQ6rn8UlEDyGyc9551UjgXc0qB/fm0U4o9qYk1HxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=J/dbn4NF; arc=none smtp.client-ip=194.117.254.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	sang-engineering.com; h=from:to:cc:subject:date:message-id
+	:mime-version:content-transfer-encoding; s=k1; bh=vucjjM3RsCbo5+
+	FPCKzNEmVbLons1oLEEtyP6oygaEw=; b=J/dbn4NFhpPLnpA2UHgTAGogwIkFVU
+	c1Oe144PmBmlBY7G1bZjfrO64wUSfJItMs30Ey1vHza/lqVrpXpu3HBC64PtE6wm
+	PM643I22QuBpe+FQCCFBy9C1g8B/+qKR2wnguasGV7MKIQhjrLfC6ogaEikc7wZg
+	NXKz5ylEb6ox+6JSJCa222bDqBSM7wjjeZmD2itN/VEqY86s1JzjVcawhMT0dNBB
+	ZfrCpu0HSx1LJTveW87o2Bi1Cr36obPwq5lvaoeqdeUgwJOFx2FSWFozO2gDVB1+
+	r2IRSzGgTFNtpEl2Svq5p+/Wg9jwOurnZVwcxRc0W7D4YqCilqvAW/8A==
+Received: (qmail 1781755 invoked from network); 27 Apr 2024 22:36:14 +0200
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 27 Apr 2024 22:36:14 +0200
+X-UD-Smtp-Session: l3s3148p1@ZFeo+BkXsI9ehh9l
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+To: linux-i2c@vger.kernel.org
+Cc: Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	imx@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-mips@vger.kernel.org,
+	linux-omap@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com
+Subject: [PATCH 00/15] i2c: use 'time_left' with wait_for_*
+Date: Sat, 27 Apr 2024 22:35:52 +0200
+Message-ID: <20240427203611.3750-1-wsa+renesas@sang-engineering.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <ff4e2e34-a677-4c39-8c29-83655c5512ae@freebox.fr>
-References: <ff4e2e34-a677-4c39-8c29-83655c5512ae@freebox.fr>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
+There is a confusing pattern in the kernel to use a variable named 'timeout' to
+store the result of wait_for_*() causing patterns like:
 
-On Thu, 25 Apr 2024 17:07:07 +0200, Marc Gonzalez wrote:
-> Right now, msm8998 video decoder (venus) is non-functional:
-> 
-> $ time mpv --hwdec=v4l2m2m-copy --vd-lavc-software-fallback=no --vo=null --no-audio --untimed --length=30 --quiet demo-480.webm
->  (+) Video --vid=1 (*) (vp9 854x480 29.970fps)
->      Audio --aid=1 --alang=eng (*) (opus 2ch 48000Hz)
-> [ffmpeg/video] vp9_v4l2m2m: output VIDIOC_REQBUFS failed: Connection timed out
-> [ffmpeg/video] vp9_v4l2m2m: no v4l2 output context's buffers
-> [ffmpeg/video] vp9_v4l2m2m: can't configure decoder
-> Could not open codec.
-> Software decoding fallback is disabled.
-> Exiting... (Quit)
-> 
-> [...]
+        timeout = wait_for_completion_timeout(...)
+        if (!timeout) return -ETIMEDOUT;
 
-Applied, thanks!
+with all kinds of permutations. Use 'time_left' as a variable to make the code
+self explaining.
 
-[1/1] clk: qcom: mmcc-msm8998: fix venus clock issue
-      commit: e20ae5ae9f0c843aded4f06f3d1cab7384789e92
+This is the I2C part of a tree-wide series. The rest of the patches can
+be found here (slightly WIP):
 
-Best regards,
+git://git.kernel.org/pub/scm/linux/kernel/git/wsa/linux.git i2c/time_left
+
+Because these patches are generated, they need manual audit. So, I will
+send them step by step. This is part 1 and also a call for opinions if
+this is a desirable change. But at least in the I2C realm, I really want
+to have it proper.
+
+Build bot is happy with these patches and I also compile tested them
+(except two). No functional changes intended.
+
+Wolfram Sang (15):
+  i2c: amd-mp2-plat: use 'time_left' variable with
+    wait_for_completion_timeout()
+  i2c: digicolor: use 'time_left' variable with
+    wait_for_completion_timeout()
+  i2c: exynos5: use 'time_left' variable with
+    wait_for_completion_timeout()
+  i2c: hix5hd2: use 'time_left' variable with
+    wait_for_completion_timeout()
+  i2c: imx-lpi2c: use 'time_left' variable with
+    wait_for_completion_timeout()
+  i2c: omap: use 'time_left' variable with wait_for_completion_timeout()
+  i2c: st: use 'time_left' variable with wait_for_completion_timeout()
+  i2c: stm32f4: use 'time_left' variable with
+    wait_for_completion_timeout()
+  i2c: stm32f7: use 'time_left' variable with
+    wait_for_completion_timeout()
+  i2c: synquacer: use 'time_left' variable with
+    wait_for_completion_timeout()
+  i2c: jz4780: use 'time_left' variable with
+    wait_for_completion_timeout()
+  i2c: qcom-geni: use 'time_left' variable with
+    wait_for_completion_timeout()
+  i2c: rk3x: use 'time_left' variable with wait_event_timeout()
+  i2c: s3c2410: use 'time_left' variable with wait_event_timeout()
+  i2c: pxa: use 'time_left' variable with wait_event_timeout()
+
 -- 
-Bjorn Andersson <andersson@kernel.org>
+2.43.0
+
 
