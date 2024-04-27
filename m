@@ -1,76 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-18708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8A828B4355
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Apr 2024 02:46:01 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30F018B4359
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Apr 2024 02:48:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B04611C2257E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Apr 2024 00:46:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DC187282D5C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Apr 2024 00:48:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7035D2C84F;
-	Sat, 27 Apr 2024 00:45:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9D1C2AF0E;
+	Sat, 27 Apr 2024 00:48:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VDsQwced"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zwzuDhkE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 919D727456
-	for <linux-arm-msm@vger.kernel.org>; Sat, 27 Apr 2024 00:45:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A97728DB7
+	for <linux-arm-msm@vger.kernel.org>; Sat, 27 Apr 2024 00:48:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714178751; cv=none; b=u2EEvIHg27qXqqV0+zg4lxibf/1tndXy1tjakroljSMF1rzPfRu0OtSl1Zd6v5ZVpxx/zviF9egglWHde8o8BvPrrh3Kz3acqrqiVjYd9845qu7npek2uMqGAnEc/u1D5uJl8oyVqjUBUzabziRexLEXRP9RkIYM2/DMXmoiJKM=
+	t=1714178884; cv=none; b=tf+mNFJjjamKj4yl6hCFT1Pe8WPCTrtGqgPiFfvQzQGiPnnisYsgG+zrTdzH9ak+KEnbghuUk+t+NAYA7bJZ/2jKhQE2Goxr9E46toCIwFhiDHS10Q0B5kahi6adRVCktAmkf61rTvLQA4iUtTsImYStw0ycV74vsZTVHfq+FQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714178751; c=relaxed/simple;
-	bh=tlLeddA8IfiVI/BV6SeRst1cSQvh9/2ymyQjw29Jj24=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=CgLx3lXezcQcGjg5NcFQaETVQU1ruOiGLgT0B2U+3Rsypg5WAg0XgcWhtRwXvhcpogjFaRjTfwONcN2tkgUED1esFeALmdoZa79aFSwkzhyvRG3GIdTaxwKPqmuj+joSVqnSv1f0FdeKs2S+ZBoVxJRfO0CNKnhbzsczDjDxnvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VDsQwced; arc=none smtp.client-ip=209.85.221.44
+	s=arc-20240116; t=1714178884; c=relaxed/simple;
+	bh=JIkQ7bjEYerzpEkRf+P2gcJGNyrfqbQRm58Iol7ctvI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=edDefNCEceLZnzSoYU6h1P677Nnyb+6qXqbQQV3QfdiS9KXImVfGlNdk/7Yx/cchI0ZajLQNwbVX06WZoFPWaEZ3YVP2Z6tadS0zyXjU9cAXKflOTLPHofL+Y78idcZpX9kewTKQS0idJxC6tm/RJNxZXzZXuxcpmJOCEUJzUmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zwzuDhkE; arc=none smtp.client-ip=209.85.208.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-34b1e35155aso2808791f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Apr 2024 17:45:48 -0700 (PDT)
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5723edf0ae5so2959322a12.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Apr 2024 17:48:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1714178747; x=1714783547; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1714178881; x=1714783681; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=/rLHsM/vPD3T2A1VsQsnTpBE6ImIRB5h8YGhBpHcNkM=;
-        b=VDsQwcedQPjPWh20OLNDoDdjlsCFmksBe6FecL0sMpwUFRWwwc4b2yfAVrtifO6vqA
-         yQCBcbntEh/u9CHgluTaodwB7LCYYWe/D8TiilJPVy+KiWOLUkonyETP99hJF8cSv4Ev
-         LYfbQ81vuLwLrs6VZo8TaFjXnpqPr36spW+ZMJsGcD/gre3ZQMnqsSIPP9peZ0GxUttI
-         HH5bIt99JJPJPgRFclsqk3+Aix1GzoW0OJxMzpgXSSTmBDjep4tw5OGtq+VP/XN1f0DS
-         b62NpEgGEOENFSY7OKE61scyZH9TuSjR7MCGpxjmbxQjnZwoVC5qL2eKbg6PujA44flL
-         aBqw==
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=zMnYuuseHj6T9Txy4PL5QKe+p/vQsriDzZKXx0Leon8=;
+        b=zwzuDhkEetG40rw7Ny9A8OK77gK/z/igS/fGU41I4MXgXzznr9A/fLh568Ncsy4teR
+         D5wRGmhE1vbCgvYZA6gyv+bH7e6tckdAORiPai6VcL8j5ZmkyyN9bOfGSz/8KIPyxC4I
+         IaEAi99kZWBxC8zjqpR9BIRk1QZl5QIcTkUsmVh9mv4Nb3Dua1nA4iDkO06ukIF2GYVH
+         nT00FstRBsf5O3EIOsRkfXut2LApU9RitBGoEIcciNc1OfZIstTgnLm4ldpVTzYJz/EZ
+         p4iZE6fKoTodFvM0EyHvEdhtnvgasfbFT3u3Syshs17eikOOt3DWoAWsyRkKOe45UAyz
+         kJyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714178747; x=1714783547;
+        d=1e100.net; s=20230601; t=1714178881; x=1714783681;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/rLHsM/vPD3T2A1VsQsnTpBE6ImIRB5h8YGhBpHcNkM=;
-        b=lTxIGY8QATUgGW/+TjS+VxFH7sSU+cuiI5fmQQF5WXMnRADWQwP9K9Mqeg72SNCI7S
-         F2VQsVKMXVKg7JB//3YGjTAhZO+vAsGvMCPsRM8CpLrwoYDtHJP+Wya5Bfg/X+KpOeFY
-         DC62mcbQMnteiFacod+av0q35F8mFcdel8G4DwTlT8EYxFDnGWDpn/JHKakwJM3LhyNo
-         2iKTTIrdBFwO7gK7la8ySqeo3IdLodKM0zpe84WeSlGe4dYE5rusGoZ08Dx2x21961ox
-         03nHHsz7WPSj+fdJtaW/kmax468QpyN1QarpgYCpTAoukxWm4OdWPGgwRb/kUiGNrTop
-         1HRw==
-X-Forwarded-Encrypted: i=1; AJvYcCWiotQ4Pehq6HXJlMCgXAOa6JXeB/Bd0hGlLkLz/lZaxrFDGi8BTHk4Q6MXLaVXENDBPsI/GN2J+v83FI3JbNBh7dzDjwAc8bszuNASag==
-X-Gm-Message-State: AOJu0YzUJ1TwADha4AaZaGzasuLR+y7xb8keC6Yg1sOrnScRzSHRDmqF
-	qrHYGD0Z51XYaogh1UCXMOpNCil0StnFUddFmE6YCD+vmfJkZy4sn0cMwyJJdYIbXTK0HJtZuFD
-	O
-X-Google-Smtp-Source: AGHT+IHuC2I1HuJmKPzf5FByUGepHiT1AA25eWz7/Jmjw71OtqQi7p2+YDA2yUgEQDqRTVPTei6Bhw==
-X-Received: by 2002:adf:f7d0:0:b0:34c:8cbb:d6e9 with SMTP id a16-20020adff7d0000000b0034c8cbbd6e9mr861193wrq.71.1714178746708;
-        Fri, 26 Apr 2024 17:45:46 -0700 (PDT)
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zMnYuuseHj6T9Txy4PL5QKe+p/vQsriDzZKXx0Leon8=;
+        b=ZdMXS2keMRKX2D1+eht8Mud0E/BXoYfb5k/cFL7/TvLppTQebazGCFVj7iptP377qD
+         PjUdWNfcAiyUU1z6HkEdVgWxPJDcErPDNpoVoWMGhM1LXVxJZ50e2kV+0xg+B7ac7ZbB
+         xQR4513wdn9KvjLRom01JoqeiBi7tWpKhADYGrbrHIw+1KztcZ02XWQgi2+XdG9p3cQ9
+         6h5EW4bYo79Jkqv+S4fuqA7fp07v381L/lbUgkmAvKH4wt6V3RWQTgiC6MU8vqCXxn45
+         bH+LIIgfbfwMCDYOHi+G50gUsWL/uMqMD1YmYWwsAu5J6EjTKDhtuK42A8ec7CR7kC1V
+         L3EA==
+X-Gm-Message-State: AOJu0YxcRUzjURsjxYe02NYB9tybA1RD6QzF2OG/L9EfyjeldJXON7UM
+	zLRepBf+AeNR/LjmNVfHqsYr5TDURCu4Hwhum/tm+7Rc61W+rqVPh+7C8BaKwzM=
+X-Google-Smtp-Source: AGHT+IHxhjAHwNZShHkxvJw+LX4E7HbPdpvwGbxudfkDavBOALlqbhcMmzj0VdQCaNSGgWA0mM4iaA==
+X-Received: by 2002:a17:906:1757:b0:a52:2441:277 with SMTP id d23-20020a170906175700b00a5224410277mr683105eje.66.1714178881284;
+        Fri, 26 Apr 2024 17:48:01 -0700 (PDT)
 Received: from [192.168.114.15] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id p13-20020a170906604d00b00a587bc4ef2esm4990294ejj.122.2024.04.26.17.45.45
+        by smtp.gmail.com with ESMTPSA id l9-20020a17090615c900b00a555be38aaasm11092278ejd.164.2024.04.26.17.47.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 Apr 2024 17:45:46 -0700 (PDT)
-Message-ID: <31b0574d-1d8b-48d0-b28f-3d0b20f89c37@linaro.org>
-Date: Sat, 27 Apr 2024 02:45:44 +0200
+        Fri, 26 Apr 2024 17:48:00 -0700 (PDT)
+Message-ID: <2f4eaba9-9e82-48e2-bb17-4e09e947a700@linaro.org>
+Date: Sat, 27 Apr 2024 02:47:58 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,14 +76,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qocm: sdx75: align smem node name with coding
- style
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240426123101.500676-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v2] clk: qcom: mmcc-msm8998: fix venus clock issue
+To: Marc Gonzalez <mgonzalez@freebox.fr>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
+Cc: MSM <linux-arm-msm@vger.kernel.org>, linux-clk
+ <linux-clk@vger.kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Bryan O Donoghue <bryan.odonoghue@linaro.org>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Jeffrey Hugo <quic_jhugo@quicinc.com>,
+ Douglas Anderson <dianders@chromium.org>,
+ Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>
+References: <c325691e-1cbe-4589-87fc-b67a41e93294@freebox.fr>
+ <22628ff2-6128-4ac9-89e3-d978f57be378@linaro.org>
+ <2394efa5-713a-421d-84cf-f6c1b2ad26ac@freebox.fr>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -123,17 +127,69 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240426123101.500676-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <2394efa5-713a-421d-84cf-f6c1b2ad26ac@freebox.fr>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 26.04.2024 2:31 PM, Krzysztof Kozlowski wrote:
-> Node names should not have vendor prefixes.
+On 25.04.2024 1:25 PM, Marc Gonzalez wrote:
+> On 15/04/2024 21:56, Konrad Dybcio wrote:
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
+>> On 4/10/24 13:13, Marc Gonzalez wrote:
+>>
+>>> Video decoder (venus) was broken on msm8998.
+>>>
+>>> PH found crude work-around:
+>>> Drop venus_sys_set_power_control() call.
+>>>
+>>> Bryan suggested proper fix:
+>>> Set required register offsets in venus GDSC structs.
+>>> Set HW_CTRL flag.
+>>>
+>>> GDSC = Globally Distributed Switch Controller
+>>>
+>>> Use same code as mmcc-msm8996 with:
+>>> s/venus_gdsc/video_top_gdsc/
+>>> s/venus_core0_gdsc/video_subcore0_gdsc/
+>>> s/venus_core1_gdsc/video_subcore1_gdsc/
+>>>
+>>> https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/include/dt-bindings/clock/msm-clocks-hwio-8996.h
+>>> https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/include/dt-bindings/clock/msm-clocks-hwio-8998.h
+>>>
+>>> 0x1024 = MMSS_VIDEO GDSCR (undocumented)
+>>> 0x1028 = MMSS_VIDEO_CORE_CBCR
+>>> 0x1030 = MMSS_VIDEO_AHB_CBCR
+>>> 0x1034 = MMSS_VIDEO_AXI_CBCR
+>>> 0x1038 = MMSS_VIDEO_MAXI_CBCR
+>>> 0x1040 = MMSS_VIDEO_SUBCORE0 GDSCR (undocumented)
+>>> 0x1044 = MMSS_VIDEO_SUBCORE1 GDSCR (undocumented)
+>>> 0x1048 = MMSS_VIDEO_SUBCORE0_CBCR
+>>> 0x104c = MMSS_VIDEO_SUBCORE1_CBCR
+>>>
+>>> Suggested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+>>> ---
+>>
+>> [...]
+>>
+>>
+>>>   static struct gdsc video_top_gdsc = {
+>>>   	.gdscr = 0x1024,
+>>> +	.cxcs = (unsigned int []){ 0x1028, 0x1034, 0x1038 },
+>>> +	.cxc_count = 3,
+>>
+>> Marc, have you verified all three are necessary for stuff to work?
+>>
+>> I'd expect 0x1028/venus core to be absolutely necessary fwiw
+> 
+> Considering the absence of public documentation, these register offsets
+> mostly boil down to cargo-cult programming.
+> 
+> Thus, using different code on 8996 and 8998 risks provoking the wrath
+> of the embedded gods. Better, safer to cast the same incantations.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+I don't think many maintainers believe in such embedded gods and would rather
+see the thing tested and answered considering it's more or less deterministic..
 
 Konrad
 
