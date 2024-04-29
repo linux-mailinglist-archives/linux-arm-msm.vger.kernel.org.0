@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-18779-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18780-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24C248B561C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 13:10:37 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 551CD8B5627
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 13:11:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CBD9F1F21699
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 11:10:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1188A2817EC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 11:11:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A6F640841;
-	Mon, 29 Apr 2024 11:10:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F2913D970;
+	Mon, 29 Apr 2024 11:10:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AiTVkJQW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NtbQ6BR+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52E83F8F4;
-	Mon, 29 Apr 2024 11:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13C829437;
+	Mon, 29 Apr 2024 11:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714389020; cv=none; b=STbAVruFxVETPUcUXNA2T85NwjDZCO8Mj5Ip/p9NHhNdeukx/Ks49vMTYAJglqb3anrlmaBPkz+73Nkn1Xej8wxqVldpe/zL/BFEvuO285J3j0IdXvef/0bqOBoBACu8gx3UzvnIBCbuAQ/cGTh4emejboWPlOtcSGfvUOOWvhY=
+	t=1714389051; cv=none; b=E5QZq5KmrftUyI7fkkFxqwHdG0Lsm1l4Dhyp6FoT2a4fTAX8Uzjrm8bDs3BgZsF7SiNWhqxgoqlKIxv/NkiskeFMygtzfPj9IpNTYFOX8yoBFVaIbXANIABrw2LkO0ml0RgJtqEUPpQOD3lCqeB+zQ2af6TDCs24Vu3qUvixXkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714389020; c=relaxed/simple;
-	bh=Jw3BF58j9P0+pjLJIARhtTeUVYkoPyQ1uQaF82KC3Y4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FjS/r0JKz7+zIJsKXxkcs96TjiuZWdXHAAhB7hNLuuACnCZsnTi9chtYPPUiSEEMbQ4981fHR7nRMYOeGaYJK4JAK9nvUo9Y/DUOeqFstPP9iN2e6X2KlbX4T7fFR+NW9iwvHt5gO2q3aASd+sHPOZeEHcoyrcUbsUfqmITTqjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AiTVkJQW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 707E2C113CD;
-	Mon, 29 Apr 2024 11:10:16 +0000 (UTC)
+	s=arc-20240116; t=1714389051; c=relaxed/simple;
+	bh=2xFiJF919yl60viNz/D6rBa2ad6gJAgeZZLR7Hj1Xz4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=FRIfFg2W2GX3nXEtnIKzdr1wpfrqqadKR26bPyP8sbQqp74Yr9swdnz23RRk4vpSJmncyGfpSD1TcnSFBA2VVVLhDw/NCxM5qHq5+6G96Y+5hulKsi4ssdn0M2fa2Ydwm3P1udu3+GzOochk+1G6ugmEM6aHpjC7lhEJNwKr0jI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NtbQ6BR+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CAD5C113CD;
+	Mon, 29 Apr 2024 11:10:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714389019;
-	bh=Jw3BF58j9P0+pjLJIARhtTeUVYkoPyQ1uQaF82KC3Y4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=AiTVkJQW7op2LofnLvs340f5MU8ojxjvvCr13fEzy0b+UyD3RbbTQg/i/11ALgKBr
-	 T8/pvOqZucIMlrp8o4BbwLllopJbDrCPXZJsgJ68NpEcJ4Cl2CTslrqPueqgzFVoSR
-	 Al81zGt5eW8KNn6c/tYHv1uBbgpDFLdBoNYdFxwDJi7xA0yoF4RDtZt72OusTVVu9X
-	 QqN89uJkj3p75e7UqVOBIikxVS/GL75mTIa4Xi6hWKhUxRKq7g8NURfZyeAEbnOYdp
-	 qVwgZ5pBbwSc377NOE9b96YhFGw/NZNyrJF6ghlpInYwwIvheDy8GKE9p3h8f5SCEI
-	 riYtYrr5Hy7uA==
-Message-ID: <56d29770-6cf2-43bf-9d48-6f314a5ac5e1@kernel.org>
-Date: Mon, 29 Apr 2024 14:10:16 +0300
+	s=k20201202; t=1714389050;
+	bh=2xFiJF919yl60viNz/D6rBa2ad6gJAgeZZLR7Hj1Xz4=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=NtbQ6BR+Q6bObSUx8Xy+3U7KJk7rjvo0SiKJJiV64cLte2sDBGxR7ZYoECsopVMZk
+	 iMelZgM8RdCYxHVX9qflMGr7vJghokl8CCZ+Ci5FjEII0ks76cQ9u49prljudkEcuT
+	 KYJhgPfo4ZJNeOI2fucX4Rni2gq6t28YKgPZFo40kvCaY7VZgEpA0cT4gWQEsqcLFh
+	 Z4L62mccWoI2I5g0iNY5soR33l5yjmJc4wyK8fqfr0JualFurpILykyzj5xzfQQH8E
+	 cC5TxqWW0EaF1KrZfTnIBUVffV5cowot2AYFWgJ/q9O6BJ4HawdswplAGzxZAPoorh
+	 buOTj07FJZLGA==
+Message-ID: <b1131b1a-5706-4675-8c97-c2e6a58d6be0@kernel.org>
+Date: Mon, 29 Apr 2024 14:10:47 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 2/6] dt-bindings: interconnect: Add Qualcomm IPQ9574
- support
+Subject: Re: [PATCH v10 3/6] interconnect: icc-clk: Add devm_icc_clk_register
 Content-Language: en-US
 To: Varadarajan Narayanan <quic_varada@quicinc.com>, andersson@kernel.org,
  mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
@@ -60,128 +59,72 @@ To: Varadarajan Narayanan <quic_varada@quicinc.com>, andersson@kernel.org,
  linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-pm@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 References: <20240429091314.761900-1-quic_varada@quicinc.com>
- <20240429091314.761900-3-quic_varada@quicinc.com>
+ <20240429091314.761900-4-quic_varada@quicinc.com>
 From: Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <20240429091314.761900-3-quic_varada@quicinc.com>
+In-Reply-To: <20240429091314.761900-4-quic_varada@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 29.04.24 12:13, Varadarajan Narayanan wrote:
-> Add interconnect-cells to clock provider so that it can be
-> used as icc provider.
+> Wrap icc_clk_register to create devm_icc_clk_register to be
+> able to release the resources properly.
 > 
-> Add master/slave ids for Qualcomm IPQ9574 Network-On-Chip
-> interfaces. This will be used by the gcc-ipq9574 driver
-> that will for providing interconnect services using the
-> icc-clk framework.
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 
 Acked-by: Georgi Djakov <djakov@kernel.org>
 
 > ---
-> v8:
-> Remove ICC_xxx macros
-> Fix macro defines to be consistent with other bindings
-> v7:
-> Fix macro names to be consistent with other bindings
-> v6:
-> Removed Reviewed-by: Krzysztof Kozlowski
-> Redefine the bindings such that driver and DT can share them
-> 
-> v3:
-> Squash Documentation/ and include/ changes into same patch
-> 
-> qcom,ipq9574.h
-> 	Move 'first id' to clock driver
-> 
+> v8: Added Reviewed-by: Dmitry Baryshkov
+> v7: Simplify devm_icc_clk_register implementation as suggested in review
+> v5: Introduced devm_icc_clk_register
 > ---
->   .../bindings/clock/qcom,ipq9574-gcc.yaml      |  3 +
->   .../dt-bindings/interconnect/qcom,ipq9574.h   | 59 +++++++++++++++++++
->   2 files changed, 62 insertions(+)
->   create mode 100644 include/dt-bindings/interconnect/qcom,ipq9574.h
+>   drivers/interconnect/icc-clk.c   | 18 ++++++++++++++++++
+>   include/linux/interconnect-clk.h |  2 ++
+>   2 files changed, 20 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml
-> index 944a0ea79cd6..824781cbdf34 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml
-> @@ -33,6 +33,9 @@ properties:
->         - description: PCIE30 PHY3 pipe clock source
->         - description: USB3 PHY pipe clock source
+> diff --git a/drivers/interconnect/icc-clk.c b/drivers/interconnect/icc-clk.c
+> index 2be193fd7d8f..f788db15cd76 100644
+> --- a/drivers/interconnect/icc-clk.c
+> +++ b/drivers/interconnect/icc-clk.c
+> @@ -148,6 +148,24 @@ struct icc_provider *icc_clk_register(struct device *dev,
+>   }
+>   EXPORT_SYMBOL_GPL(icc_clk_register);
 >   
-> +  '#interconnect-cells':
-> +    const: 1
+> +static void devm_icc_release(void *res)
+> +{
+> +	icc_clk_unregister(res);
+> +}
 > +
->   required:
->     - compatible
->     - clocks
-> diff --git a/include/dt-bindings/interconnect/qcom,ipq9574.h b/include/dt-bindings/interconnect/qcom,ipq9574.h
-> new file mode 100644
-> index 000000000000..42019335c7dd
-> --- /dev/null
-> +++ b/include/dt-bindings/interconnect/qcom,ipq9574.h
-> @@ -0,0 +1,59 @@
-> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-> +#ifndef INTERCONNECT_QCOM_IPQ9574_H
-> +#define INTERCONNECT_QCOM_IPQ9574_H
+> +int devm_icc_clk_register(struct device *dev, unsigned int first_id,
+> +			  unsigned int num_clocks, const struct icc_clk_data *data)
+> +{
+> +	struct icc_provider *prov;
 > +
-> +#define MASTER_ANOC_PCIE0		0
-> +#define SLAVE_ANOC_PCIE0		1
-> +#define MASTER_SNOC_PCIE0		2
-> +#define SLAVE_SNOC_PCIE0		3
-> +#define MASTER_ANOC_PCIE1		4
-> +#define SLAVE_ANOC_PCIE1		5
-> +#define MASTER_SNOC_PCIE1		6
-> +#define SLAVE_SNOC_PCIE1		7
-> +#define MASTER_ANOC_PCIE2		8
-> +#define SLAVE_ANOC_PCIE2		9
-> +#define MASTER_SNOC_PCIE2		10
-> +#define SLAVE_SNOC_PCIE2		11
-> +#define MASTER_ANOC_PCIE3		12
-> +#define SLAVE_ANOC_PCIE3		13
-> +#define MASTER_SNOC_PCIE3		14
-> +#define SLAVE_SNOC_PCIE3		15
-> +#define MASTER_USB			16
-> +#define SLAVE_USB			17
-> +#define MASTER_USB_AXI			18
-> +#define SLAVE_USB_AXI			19
-> +#define MASTER_NSSNOC_NSSCC		20
-> +#define SLAVE_NSSNOC_NSSCC		21
-> +#define MASTER_NSSNOC_SNOC_0		22
-> +#define SLAVE_NSSNOC_SNOC_0		23
-> +#define MASTER_NSSNOC_SNOC_1		24
-> +#define SLAVE_NSSNOC_SNOC_1		25
-> +#define MASTER_NSSNOC_PCNOC_1		26
-> +#define SLAVE_NSSNOC_PCNOC_1		27
-> +#define MASTER_NSSNOC_QOSGEN_REF	28
-> +#define SLAVE_NSSNOC_QOSGEN_REF		29
-> +#define MASTER_NSSNOC_TIMEOUT_REF	30
-> +#define SLAVE_NSSNOC_TIMEOUT_REF	31
-> +#define MASTER_NSSNOC_XO_DCD		32
-> +#define SLAVE_NSSNOC_XO_DCD		33
-> +#define MASTER_NSSNOC_ATB		34
-> +#define SLAVE_NSSNOC_ATB		35
-> +#define MASTER_MEM_NOC_NSSNOC		36
-> +#define SLAVE_MEM_NOC_NSSNOC		37
-> +#define MASTER_NSSNOC_MEMNOC		38
-> +#define SLAVE_NSSNOC_MEMNOC		39
-> +#define MASTER_NSSNOC_MEM_NOC_1		40
-> +#define SLAVE_NSSNOC_MEM_NOC_1		41
+> +	prov = icc_clk_register(dev, first_id, num_clocks, data);
+> +	if (IS_ERR(prov))
+> +		return PTR_ERR(prov);
 > +
-> +#define MASTER_NSSNOC_PPE		0
-> +#define SLAVE_NSSNOC_PPE		1
-> +#define MASTER_NSSNOC_PPE_CFG		2
-> +#define SLAVE_NSSNOC_PPE_CFG		3
-> +#define MASTER_NSSNOC_NSS_CSR		4
-> +#define SLAVE_NSSNOC_NSS_CSR		5
-> +#define MASTER_NSSNOC_IMEM_QSB		6
-> +#define SLAVE_NSSNOC_IMEM_QSB		7
-> +#define MASTER_NSSNOC_IMEM_AHB		8
-> +#define SLAVE_NSSNOC_IMEM_AHB		9
+> +	return devm_add_action_or_reset(dev, devm_icc_release, prov);
+> +}
+> +EXPORT_SYMBOL_GPL(devm_icc_clk_register);
 > +
-> +#endif /* INTERCONNECT_QCOM_IPQ9574_H */
+>   /**
+>    * icc_clk_unregister() - unregister a previously registered clk interconnect provider
+>    * @provider: provider returned by icc_clk_register()
+> diff --git a/include/linux/interconnect-clk.h b/include/linux/interconnect-clk.h
+> index 170898faaacb..9bcee3e9c56c 100644
+> --- a/include/linux/interconnect-clk.h
+> +++ b/include/linux/interconnect-clk.h
+> @@ -19,6 +19,8 @@ struct icc_provider *icc_clk_register(struct device *dev,
+>   				      unsigned int first_id,
+>   				      unsigned int num_clocks,
+>   				      const struct icc_clk_data *data);
+> +int devm_icc_clk_register(struct device *dev, unsigned int first_id,
+> +			  unsigned int num_clocks, const struct icc_clk_data *data);
+>   void icc_clk_unregister(struct icc_provider *provider);
+>   
+>   #endif
 
 
