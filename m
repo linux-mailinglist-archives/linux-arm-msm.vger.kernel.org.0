@@ -1,76 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-18801-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18802-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B0018B592D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 14:55:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 702C98B5A61
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 15:45:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 11AE42861FB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 12:55:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2BE51282ADE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 13:45:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63D5E7EF1D;
-	Mon, 29 Apr 2024 12:52:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96D4774404;
+	Mon, 29 Apr 2024 13:45:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ExgKD7j/"
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="WGyXNhiB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D2B75804
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 12:52:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF59651B6
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 13:45:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714395162; cv=none; b=H+9kl+ESKBgLl8CcRKTHObWsTklF5IjR2hgixNLKqJnGbadwn43+HUIwLvnwrTxu1bpf+qGPdHcgfHjBBTMWJSWyAFFqgXUlSAM6iWGmQD9o7va0Hcf76SuAerh67l3vgZtIrjPxozg+zo7u8BQ6RWnjTD36/3SkwQCLivCTYYQ=
+	t=1714398331; cv=none; b=sgt7Tlf1F2629RNM5syxbWJ/3NH926weamzDmrHHMlVjwPy8sxYZaf1CYDdopjfm6ZUZmt1XNw/PykVBGptd0kyvt9vZmZoSMkACX5HaAdQ4xqToj1n6sFa8aL8SU6YUT7+5AL3TdHOOh/lytIP/hHM453G0l143U0Bw6FggZSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714395162; c=relaxed/simple;
-	bh=yMytuPO5lxWxXc3yn3xfzLGhfVQXqpW6poI0dAsDQ8Q=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Qor0BrwaSGWFLklWnJtxXMh8Nz1K27h8WDLzMbn5K2ZitnjY+YJ2P5G6hyPeflCxBlOD0h8ZMAmAPv9kmuM0czliYlrKIA14FG2aRPFnSxnO2rPbcMruuaOID55BoFWnuTZGaSxdjV95g31JrQxQQHvJSQjR9CsuG+fsvnxU+Ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ExgKD7j/; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-41b782405bbso23770005e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 05:52:40 -0700 (PDT)
+	s=arc-20240116; t=1714398331; c=relaxed/simple;
+	bh=vtbvaC21ZvS54m3NkJLVn/TRbwfNyAghSlO0A4SPHOQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fSZSjO8RwpocDByT19FB9qHDbZdNBYqa48G4aq39IwuSkSMZjNoF3KPeiV84INIu3W76DGk+c1j7ghROIc0l9RLTA92NPl5uDmu1y0JdYOnkXC4TE6KainUa3yV+krWw3ZL7PAUe5L3+/xYbzbN9FhEFGCCX5g7uW5bchTvcpkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=WGyXNhiB; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-41b794510cdso26999495e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 06:45:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1714395159; x=1714999959; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=faGPWRrGeahCSJiTf18r83A81SFNIZKNhVYrt2vpUHE=;
-        b=ExgKD7j/0G1KRYF22nwNH0mUgQjRqhRszUYlMKHWpzPNhOq0m5H1RtMTgJz4cRZI5p
-         XLdU6eTgph8UMaAFfExB4Oc7ui5q4KgRYJPhwr2Cwk4DLHBytQj20oPaNZnyAyH7tdFT
-         7BUHPWhW3WNs/EvXNIUB93nh2xgiuBahm+1WZx/7rxzm8zqBl5IMPSwps3jvdAf9Wkxt
-         acyKnVOJ7qBsnIQ7EYmidyxpqFvidFX+f2cA3Blu8yluNl0Snl4kRUsS1Mjo65aiDZba
-         zp3buETPDMgsT4vRs55ml54ECu6P78bT6NoYhnkfnnmZn0QSwq6x2k4ejkNA/Am7t/lp
-         r7pg==
+        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1714398327; x=1715003127; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hgm0JV0g+EuEQXNEVE6w0LpnECwwFk89ooo6qDS/rJY=;
+        b=WGyXNhiBeHGBdK9HzCC4F7ea+bUwk+d4xxn7iAc1Vhn2aOY8LIb7b1FOU5JQEwuauO
+         IzVQoozFq30qMwnHzFTYPjRFhiDLdChZZP6qRUcOW4a+zRNpe1mSCXXXevxPuqLv13re
+         pFd51c8WLDs0pRHq/9nCMUjRUiagt5XwYVIojs0eBVsLjFvbo5eupbQm1ENXoZe9flDN
+         Uprlwf7YwlV2w3RdW8cHBOdguuyBnGR3/bX0OKXNCrtggoTt77voTQ+blp81nT937zZ4
+         iQMnyBgT/Li8iM9Eq7CkfkTSsR62pboFUgyigMzEX12VlRSYltomUpOAlFcFChcoPswg
+         SK1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714395159; x=1714999959;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=faGPWRrGeahCSJiTf18r83A81SFNIZKNhVYrt2vpUHE=;
-        b=WuClV9BgVa54jzOwzZcJUpWFQ/VVYX9a9IszJNZFM4bT44T6CSSIOuylCIiW80FtGM
-         hnIsf5TOOSIPxBOzMWi187iwDn8NBr/gTVepygVJi+8z4P9D5FSJj6Dmmq3I2crrFSXl
-         m8qWguetjzOwsOI+KHmyQJGNRxwieGJSNiM6OxBCsQfmXwyGTLhRpfVYFhqMEZM35gre
-         PoVsKTUuMZdVxaI9WhplvXJPvfsidDjbO8EotHFDWKQkuV0AdVS2fmn9StwAOB/vpAyB
-         5dRdYFni7fB27CVz0GZB2JtmM97fbGtmg4dZfvhG3sQ3R8Ke4+chFfZzZRllN0gZVHtb
-         7Mww==
-X-Gm-Message-State: AOJu0YwpQ4FPIvxhvg9K3NadukjEEV+7DH4qiFB2sEZQYFq4vAHJRseB
-	kt9oejDhcOMV+G8CeE0cvu7tBh8peq38pQqn3rOABh3deI+ffv3hfJ3YsfRoOCqGJl1Vwoa6X1h
-	SSIXQNA==
-X-Google-Smtp-Source: AGHT+IFoFfYeoOCH5RyosC+fxy/kn88ubP8n1obWqOWr3e36lBCsqBeNAOdlfYF7OubEt6H6iZKKgQ==
-X-Received: by 2002:a05:6000:196a:b0:34b:400:2fea with SMTP id da10-20020a056000196a00b0034b04002feamr6936604wrb.71.1714395159111;
-        Mon, 29 Apr 2024 05:52:39 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:cad:2140:d72:4b40:65fa:89e6? ([2a01:e0a:cad:2140:d72:4b40:65fa:89e6])
-        by smtp.gmail.com with ESMTPSA id p8-20020a5d48c8000000b0034af40b2efdsm21289088wrs.108.2024.04.29.05.52.36
+        d=1e100.net; s=20230601; t=1714398327; x=1715003127;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hgm0JV0g+EuEQXNEVE6w0LpnECwwFk89ooo6qDS/rJY=;
+        b=FWF1s3ThNEjKaH8zSLjQC8Is6fca5CXJDVidIOhfGs8FWUk+RsEuDY1ufBnPctBkom
+         v0ladIV7HzS3TbaVsMsV0E8JGk3TnI7Xv9YQO4brSWX5oArCiRl/ZtycZ0uurY8Tq3I0
+         NnMT5QKcHDsvwJjRPQENLpTLu7YbHCT4/LZsNxlqO7yMgsYwcS+3A3Gdk7GMtVo0uQPb
+         hLn265ZLqCLy1e1xXdI8M3+S9QsLJZsh7P7VvvGMm7p6nQgcuJG+ED2ZkkqXZ+yOpDnQ
+         qiEIUQKWMdbBo75y1zaN0Z5Nlv3RY/ieLgOKJ2BSncxvE2B+HPxx3x4P8Xc7Nw2YjKLL
+         BmpQ==
+X-Gm-Message-State: AOJu0YyKXSCo0nqY+Bt/Nlgrf5H7DyAZBy9umSKFuVf91OgBaOcxeQyJ
+	zc/zJwvW581rxKe0vxB/f0oYerlMNxL8l/1qjL7W2OWmlxdJ5QX0ixzE1Y+7roE=
+X-Google-Smtp-Source: AGHT+IEMSMpMhXhXBd/VE2xFEJexSsaVVCJ6hk6nFG/c3P6znyBIkSqSyaaK2XgJ87h6K8r5FKbaDw==
+X-Received: by 2002:a05:600c:1c10:b0:41c:7be:851 with SMTP id j16-20020a05600c1c1000b0041c07be0851mr3897406wms.9.1714398327279;
+        Mon, 29 Apr 2024 06:45:27 -0700 (PDT)
+Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
+        by smtp.gmail.com with ESMTPSA id m15-20020a05600c460f00b0041a964b55ddsm9101471wmo.1.2024.04.29.06.45.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Apr 2024 05:52:37 -0700 (PDT)
-Message-ID: <80125ab0-cf11-4757-8a8b-7588026f5e12@linaro.org>
-Date: Mon, 29 Apr 2024 14:52:35 +0200
+        Mon, 29 Apr 2024 06:45:27 -0700 (PDT)
+Message-ID: <c595791a-bf36-481d-a2f5-aa99ec28a4b7@freebox.fr>
+Date: Mon, 29 Apr 2024 15:45:26 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,137 +75,90 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 05/12] arm64: dts: qcom: sm8650: move USB graph to the SoC
- dtsi
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240429-usb-link-dtsi-v1-0-87c341b55cdf@linaro.org>
- <20240429-usb-link-dtsi-v1-5-87c341b55cdf@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20240429-usb-link-dtsi-v1-5-87c341b55cdf@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v3] clk: qcom: mmcc-msm8998: fix venus clock issue
+To: Bjorn Andersson <andersson@kernel.org>,
+ Jeffrey Hugo <quic_jhugo@quicinc.com>,
+ Bryan O Donoghue <bryan.odonoghue@linaro.org>
+Cc: MSM <linux-arm-msm@vger.kernel.org>, linux-clk
+ <linux-clk@vger.kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Douglas Anderson <dianders@chromium.org>,
+ Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
+References: <ff4e2e34-a677-4c39-8c29-83655c5512ae@freebox.fr>
+ <171424646121.1448451.7219465997551736348.b4-ty@kernel.org>
+Content-Language: en-US
+From: Marc Gonzalez <mgonzalez@freebox.fr>
+In-Reply-To: <171424646121.1448451.7219465997551736348.b4-ty@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29/04/2024 14:43, Dmitry Baryshkov wrote:
-> Move the graph connection between USB host, USB SS PHY and DP port to
-> the SoC dtsi file. They are linked in hardware in this way.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/sm8650-qrd.dts | 13 -------------
->   arch/arm64/boot/dts/qcom/sm8650.dtsi    |  4 ++++
->   2 files changed, 4 insertions(+), 13 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-> index 4e94f7fe4d2d..65ee00db5622 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-> @@ -832,7 +832,6 @@ &mdss_dp0 {
->   
->   &mdss_dp0_out {
->   	data-lanes = <0 1>;
-> -	remote-endpoint = <&usb_dp_qmpphy_dp_in>;
->   };
->   
->   &pcie_1_phy_aux_clk {
-> @@ -1211,10 +1210,6 @@ &usb_1_dwc3_hs {
->   	remote-endpoint = <&pmic_glink_hs_in>;
->   };
->   
-> -&usb_1_dwc3_ss {
-> -	remote-endpoint = <&usb_dp_qmpphy_usb_ss_in>;
-> -};
-> -
->   &usb_1_hsphy {
->   	vdd-supply = <&vreg_l1i_0p88>;
->   	vdda12-supply = <&vreg_l3i_1p2>;
-> @@ -1233,18 +1228,10 @@ &usb_dp_qmpphy {
->   	status = "okay";
->   };
->   
-> -&usb_dp_qmpphy_dp_in {
-> -	remote-endpoint = <&mdss_dp0_out>;
-> -};
-> -
->   &usb_dp_qmpphy_out {
->   	remote-endpoint = <&redriver_ss_in>;
->   };
->   
-> -&usb_dp_qmpphy_usb_ss_in {
-> -	remote-endpoint = <&usb_1_dwc3_ss>;
-> -};
-> -
->   &xo_board {
->   	clock-frequency = <76800000>;
->   };
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> index 8e0c1841f748..4624ea4906d9 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> @@ -3675,6 +3675,7 @@ port@1 {
->   						reg = <1>;
->   
->   						mdss_dp0_out: endpoint {
-> +							remote-endpoint = <&usb_dp_qmpphy_dp_in>;
->   						};
->   					};
->   				};
-> @@ -3767,6 +3768,7 @@ port@1 {
->   					reg = <1>;
->   
->   					usb_dp_qmpphy_usb_ss_in: endpoint {
-> +						remote-endpoint = <&usb_1_dwc3_ss>;
->   					};
->   				};
->   
-> @@ -3774,6 +3776,7 @@ port@2 {
->   					reg = <2>;
->   
->   					usb_dp_qmpphy_dp_in: endpoint {
-> +						remote-endpoint = <&mdss_dp0_out>;
->   					};
->   				};
->   			};
-> @@ -3864,6 +3867,7 @@ port@1 {
->   						reg = <1>;
->   
->   						usb_1_dwc3_ss: endpoint {
-> +							remote-endpoint = <&usb_dp_qmpphy_usb_ss_in>;
->   						};
->   					};
->   				};
-> 
+On 27/04/2024 21:34, Bjorn Andersson wrote:
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> On Thu, 25 Apr 2024 17:07:07 +0200, Marc Gonzalez wrote:
+> 
+>> Right now, msm8998 video decoder (venus) is non-functional:
+>>
+>> $ time mpv --hwdec=v4l2m2m-copy --vd-lavc-software-fallback=no --vo=null --no-audio --untimed --length=30 --quiet demo-480.webm
+>>  (+) Video --vid=1 (*) (vp9 854x480 29.970fps)
+>>      Audio --aid=1 --alang=eng (*) (opus 2ch 48000Hz)
+>> [ffmpeg/video] vp9_v4l2m2m: output VIDIOC_REQBUFS failed: Connection timed out
+>> [ffmpeg/video] vp9_v4l2m2m: no v4l2 output context's buffers
+>> [ffmpeg/video] vp9_v4l2m2m: can't configure decoder
+>> Could not open codec.
+>> Software decoding fallback is disabled.
+>> Exiting... (Quit)
+>>
+>> [...]
+> 
+> Applied, thanks!
+> 
+> [1/1] clk: qcom: mmcc-msm8998: fix venus clock issue
+>       commit: e20ae5ae9f0c843aded4f06f3d1cab7384789e92
+
+Yes!
+
+Going on a tangent.
+
+During my tests, I saw an unrelated error in the boot log:
+
+[   10.404521] clk: Disabling unused clocks
+[   10.412141] ------------[ cut here ]------------
+[   10.415538] vmem_ahb_clk status stuck at 'on'
+[   10.415570] WARNING: CPU: 0 PID: 1 at drivers/clk/qcom/clk-branch.c:87 clk_branch_toggle+0x160/0x178
+[   10.424420] Modules linked in:
+[   10.433586] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.9.0-rc1-00027-g483ea571c987 #70
+[   10.436478] Hardware name: Freebox Delta (DT)
+[   10.444356] pstate: 600000c5 (nZCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   10.448884] pc : clk_branch_toggle+0x160/0x178
+[   10.455642] lr : clk_branch_toggle+0x160/0x178
+[   10.460154] sp : ffff80008005bc40
+[   10.464574] x29: ffff80008005bc40 x28: 0000000000000000 x27: ffff800082df9070
+[   10.467982] x26: ffff800082d100b0 x25: ffff800082c57cb0 x24: ffff800082b23958
+[   10.475100] x23: 0000000000000000 x22: 0000000000000000 x21: ffff8000833b6208
+[   10.482218] x20: ffff80008072bbec x19: 0000000000000000 x18: ffffffffff00d218
+[   10.489337] x17: ffff800083476aa8 x16: ffff800083476a38 x15: 0000000000000030
+[   10.496454] x14: 0000000000000000 x13: ffff0000f5348000 x12: 000000000000086d
+[   10.503572] x11: 00000000000002cf x10: ffff0000f7f4c368 x9 : ffff0000f5348000
+[   10.510692] x8 : 00000000fff7ffff x7 : ffff0000f7f48000 x6 : 00000000000002cf
+[   10.517809] x5 : 00000000005ffff4 x4 : 40000000fff802cf x3 : 0000000000000000
+[   10.524926] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff000080118000
+[   10.532046] Call trace:
+[   10.539137]  clk_branch_toggle+0x160/0x178
+[   10.541402]  clk_branch2_disable+0x1c/0x28
+[   10.545569]  clk_disable_unused_subtree+0xfc/0x138
+[   10.549652]  clk_disable_unused_subtree+0x2c/0x138
+[   10.554427]  clk_disable_unused_subtree+0x2c/0x138
+[   10.559201]  clk_disable_unused_subtree+0x2c/0x138
+[   10.563975]  clk_disable_unused_subtree+0x2c/0x138
+[   10.568749]  clk_disable_unused_subtree+0x2c/0x138
+[   10.573525]  clk_disable_unused_subtree+0x2c/0x138
+[   10.578298]  clk_disable_unused+0x50/0x138
+[   10.583070]  do_one_initcall+0x6c/0x1b0
+[   10.587147]  kernel_init_freeable+0x1d4/0x2cc
+[   10.590883]  kernel_init+0x20/0x1d8
+[   10.595391]  ret_from_fork+0x10/0x20
+[   10.598693] ---[ end trace 0000000000000000 ]---
+
 
