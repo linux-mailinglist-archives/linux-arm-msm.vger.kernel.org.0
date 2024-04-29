@@ -1,73 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-18849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 403238B6604
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 01:06:45 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 634A38B661B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 01:16:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 71C921C21BF8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 23:06:44 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7E6BAB219BF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 23:16:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED6E31420BC;
-	Mon, 29 Apr 2024 23:06:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57FFA77F10;
+	Mon, 29 Apr 2024 23:16:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zWWhImlz"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fJvxJY6W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f65.google.com (mail-wr1-f65.google.com [209.85.221.65])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64BBE7441F
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 23:06:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 973291EA90
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 23:16:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714431997; cv=none; b=OCYCxyclmnFyJ1GBuBnZqvRyJLPciT+xf+enBiPAzV7du6yYx6aiChA8wM4L3eLNe5xx3ZeoAPuBf+vcAMqlIQqtGBH24I7IEkW7D4kJ1bsaqLnGe8Jw3oyCtgsvztRn56lN7ZaHCAL+cpX93dV/i1+JI9m36I3PRVQAA3NiL6Y=
+	t=1714432610; cv=none; b=sM6TAMkKWELoLtEss3SdymYLIZ/MBrjmGeIj1mh1Mc89Oh/eBcGKHhm0SIutN0C/w5CMAsAgb/v4buVNlZhT83xenAD2kPrKhoXXaA5enIRBM6diLIa7cCL258aNeLgYryNvRFtzTGE4acQ7no+D144TBaYOIiYbSJtLaiUGSCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714431997; c=relaxed/simple;
-	bh=oCpzsnULxIgSn6f6NyIWzCzj4/D2x7S7p/X3jeHAGOo=;
+	s=arc-20240116; t=1714432610; c=relaxed/simple;
+	bh=El9CxvK17lJ0yXh18eAG7X9aNa362SEAULLsd9cWa24=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=e2VdQW1DgqAfd9sENOsZNrQOYK5jP8xRTWVWQA2417bSZH9MrZdAJvqAm2H/QksuOc/vHS1rxatGOv84zdjpChMt9ugiT2RAzc9Kyr2McNXjtQJLwTpsPO15FxZMg144iyMlO7mC1xN4QxPN0xBUthSWOtbKmbrI3AdFDK8QG0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zWWhImlz; arc=none smtp.client-ip=209.85.221.65
+	 In-Reply-To:Content-Type; b=Qg4wnqk1+7vv6fSZHcuIfVnx3Wb9DB503S1l60OeRf4EyaxfQYY/iP0wS5l0D41DGVPz3JQ1rWUNfwubFajRPUMo9ETP1Vh1ZlWKLRtf8mXJMoYxoGMzSYc000ruakenuje/44eqP/Md+rGB3d+REgbLbksMnJPj7p3zscSGQQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fJvxJY6W; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f65.google.com with SMTP id ffacd0b85a97d-34c8592b8dbso2774912f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 16:06:35 -0700 (PDT)
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-41adf3580dbso29925435e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 16:16:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1714431994; x=1715036794; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1714432607; x=1715037407; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Y9Wc1VRWdSj/kw6OxjVRGGw4/2n20BQdC0iB/qkj8dg=;
-        b=zWWhImlzXZjQmWla9wIXBCooFCJDbmLFMy7op2Wc8hoDsHj3i/qCfnrfvvOx8MM14Y
-         6ayFOyZAWWEYM8FlRLy4gbVhQJGibdwPo5lINr88DZg4s+QcYX7NhBl91RZlq3VI1cu7
-         8PIAf6mwVKzi7/AcUcUlXxqqRC9dKI7Lm4HKKWuLgnKC4tsobq8YsYYf4KUw6rv70Ebf
-         ORhItLOh8nwLOLr/ZzkQGQAwqEw3tTUkwtrmeUWLEKHQJfEzMNO6rteu+b6lqsP5kvz8
-         i0oS/VGko/IwLY2DsifvcqicxcZ4nw3OolLb7SVKzRaNoaM1aMGkMI81PqpHNyQoWB39
-         miNw==
+        bh=eAfUv7krEDpHWriJ3W9+nPFnIEeV6MBtg4cLqPbx8GM=;
+        b=fJvxJY6WPYLf9gZL/Cs7DA/M8Xk1EX7qIduKl38EezK5d7U/fV/PmfecUXqF2PzU4W
+         bwfA8Jh0BBaF7l8Wh6YflL7Zap8JQcMAuukAQAhIPopFmIMHmexlxfEw83E19tRCF+Yz
+         51LX9UEcs+c3wywf/P4dAxdAJjS3pRDPqiZoQXKdVTTVln/5RuKY5ajcqiDSFLBYBaom
+         yh/XLkcxDaoCze7ESMFLQBsCCeZcOKiz06k0H6IGT5KthrqEJXmgfUbCHryaiS10q0j6
+         TOKarE3AxlNqB+NP0kGn2g2ZnLdeuVZW5pv1mz7ijkoIVRjyNIYXl8lBfuvcvZylOszn
+         DDIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714431994; x=1715036794;
+        d=1e100.net; s=20230601; t=1714432607; x=1715037407;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y9Wc1VRWdSj/kw6OxjVRGGw4/2n20BQdC0iB/qkj8dg=;
-        b=Wkzetn+kfuatJhMjCTqKkzqgjjorfc+nrmGVEFRzfR3l2xjM+oGAT0OeVMSSmJZhqm
-         ZENxlwNUx2BqRJEeGSbknFfzLX41Zw5oXlqqkz8WgN7/QtGtsOCn6nU6ijUkSFBAC8vl
-         hv2OiE8rX35vCxN3x/luGOckIIvqOJq1tNbRRXg1UChF34zQ8IJXGHin/BVwOVk0Y+YP
-         a+oZDWgkmf0mOgcEPCgGNiC7y41IihUR+AjcfGFiXPZqhjUDmv0SoftsXuLgaAVdBla3
-         mAA8+NRtE7pPkw80kBCZH5Wne/OdEcOMOyHYH1jQTCzZMdQ3U1sFRLzTM37ksyar9zWZ
-         qfTA==
-X-Gm-Message-State: AOJu0YyAtGjmlUE1O7nKur4rIjHHLv/uVHeoWAT6rlatYLwuDOBxnLOQ
-	zw6IANOoOHiEzmuyfNC8qNOwSTwZxiT0J921RzaYng9CJQ8D4MHtlGYYnoAARBw=
-X-Google-Smtp-Source: AGHT+IHCWKrgaTKGrhkqF26FTfzxhgQB+moXIvDSb8J8J/IOshycaSS5Xrsj1BsiFf+7Gnj7wtoHtg==
-X-Received: by 2002:adf:ee0c:0:b0:34a:2a90:c45 with SMTP id y12-20020adfee0c000000b0034a2a900c45mr8641646wrn.31.1714431993724;
-        Mon, 29 Apr 2024 16:06:33 -0700 (PDT)
+        bh=eAfUv7krEDpHWriJ3W9+nPFnIEeV6MBtg4cLqPbx8GM=;
+        b=qQorhQso3eZMqGK0SpbMd5dckNi8BTTz81+z4PgS16EuO4YRj9b+KqdIpCSsMX4IoX
+         8Wtucug8AfZrUw7y9uPvkt7nI1FmDAe47icskSg79eI4PtBgLEQy34h4FiuGavYrRrRY
+         ivN25PMKrZap43h13lUpbgbUIxV3roWVR8pdnmJ5QpjF9TMOmBXMH1K/EiKQaQILMChb
+         dvJ1NeadGzD6pp3qI+R6vSX/6i7s/jQMH1BREKvIvfn+TXbr7TrkaUX/jAHC+I4/m9WS
+         lg9MreeG50pWdh/l7NWauj8Pap450yhYqhPobLDF0VX9zJFnRwmM/aVn5EJ7hzPQpNSW
+         hGPQ==
+X-Gm-Message-State: AOJu0YzNR4Wq9wWDhrYxqaRmh5CenMRc7AOcNMKmvvPSO/AunstimPQU
+	U9HUesjKrJXgTWrRX5oR93ntD9UwHScRdWt/Xh9VCpeimI9TseCLR0uauphx1Co=
+X-Google-Smtp-Source: AGHT+IHdrP1g5HDu9nqdd34tb7Op68RcspZRXp0nwxly1lL0D60g1H1v4IiU/k274IlSpSSNj8g+Kw==
+X-Received: by 2002:a05:600c:3583:b0:415:ff48:59fc with SMTP id p3-20020a05600c358300b00415ff4859fcmr992929wmq.8.1714432607051;
+        Mon, 29 Apr 2024 16:16:47 -0700 (PDT)
 Received: from [192.168.0.102] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id r30-20020adfb1de000000b00343e392829dsm30873168wra.97.2024.04.29.16.06.32
+        by smtp.gmail.com with ESMTPSA id h13-20020a05600c314d00b0041ac4aafd3dsm24536212wmo.12.2024.04.29.16.16.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Apr 2024 16:06:33 -0700 (PDT)
-Message-ID: <32b3c158-8709-42c0-9e6e-81ccdd0e7ab5@linaro.org>
-Date: Tue, 30 Apr 2024 00:06:32 +0100
+        Mon, 29 Apr 2024 16:16:46 -0700 (PDT)
+Message-ID: <92e9fbee-dca4-4b8a-9856-ff420d8b9b23@linaro.org>
+Date: Tue, 30 Apr 2024 00:16:45 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,7 +75,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/3] dt-bindings: media: add qcom,msm8998-venus
+Subject: Re: [PATCH v1 2/3] arm64: dts: qcom: msm8998: add venus node
 To: Marc Gonzalez <mgonzalez@freebox.fr>,
  Bjorn Andersson <andersson@kernel.org>, Jeffrey Hugo
  <quic_jhugo@quicinc.com>, Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -88,45 +88,88 @@ Cc: MSM <linux-arm-msm@vger.kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
  Conor Dooley <conor+dt@kernel.org>
 References: <2b21b160-a530-486a-9404-c5bf8863ffed@freebox.fr>
- <4ea494cf-134e-4380-aea1-4c166a626561@freebox.fr>
+ <61729cd3-0a93-4e8c-a7c8-6832d43c7a3a@freebox.fr>
 Content-Language: en-US
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <4ea494cf-134e-4380-aea1-4c166a626561@freebox.fr>
+In-Reply-To: <61729cd3-0a93-4e8c-a7c8-6832d43c7a3a@freebox.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 29/04/2024 17:15, Marc Gonzalez wrote:
-> Add YAML binding for Qualcomm MSM8998 Venus HW video encode and decode.
-> (Based on qcom,msm8996-venus.yaml)
+On 29/04/2024 17:17, Marc Gonzalez wrote:
+> From: Pierre-Hugues Husson <phhusson@freebox.fr>
 > 
+> Now that the venus clocks are fixed, we can add the DT node.
+> 
+> Signed-off-by: Pierre-Hugues Husson <phhusson@freebox.fr>
 > Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
 > ---
->   Documentation/devicetree/bindings/media/qcom,msm8998-venus.yaml | 155 ++++++++++++++++++++++++++++
->   1 file changed, 155 insertions(+)
+>   arch/arm64/boot/dts/qcom/msm8998.dtsi | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 48 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/media/qcom,msm8998-venus.yaml b/Documentation/devicetree/bindings/media/qcom,msm8998-venus.yaml
-> new file mode 100644
-> index 0000000000000..86a20954cb354
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/media/qcom,msm8998-venus.yaml
-> @@ -0,0 +1,155 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/media/qcom,msm8998-venus.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm MSM8998 Venus video encode and decode accelerators
-> +
-> +maintainers:
-> +  - Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> index 5f5b90a6e2bf1..3d3b1f61c0690 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> @@ -3010,6 +3010,54 @@ mdss_dsi1_phy: phy@c996400 {
+>   			};
+>   		};
+>   
+> +		venus: video-codec@cc00000 {
+> +			compatible = "qcom,msm8998-venus";
+> +			reg = <0x0cc00000 0xff000>;
+> +			interrupts = <GIC_SPI 287 IRQ_TYPE_LEVEL_HIGH>;
 
-You should list yourself as maintaining a file you add upstream, plus 
-I'm pretty sure that's not Stan's current email address.
+interconnects are not present on 8998 eek !
 
-However, looking at this I think you should just add a new compat to 
-Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml since 
-the rest of the file is 1:1
+> +			power-domains = <&mmcc VIDEO_TOP_GDSC>;
+> +			clocks = <&mmcc VIDEO_CORE_CLK>,
+> +				 <&mmcc VIDEO_AHB_CLK>,
+> +				 <&mmcc VIDEO_AXI_CLK>,
+> +				 <&mmcc VIDEO_MAXI_CLK>;
+> +			clock-names = "core", "iface", "bus", "mbus";
+> +			iommus = <&mmss_smmu 0x400>,
+> +				 <&mmss_smmu 0x401>,
+> +				 <&mmss_smmu 0x40a>,
+> +				 <&mmss_smmu 0x407>,
+> +				 <&mmss_smmu 0x40e>,
+> +				 <&mmss_smmu 0x40f>,
+> +				 <&mmss_smmu 0x408>,
+> +				 <&mmss_smmu 0x409>,
+> +				 <&mmss_smmu 0x40b>,
+> +				 <&mmss_smmu 0x40c>,
+> +				 <&mmss_smmu 0x40d>,
+> +				 <&mmss_smmu 0x410>,
+> +				 <&mmss_smmu 0x421>,
+> +				 <&mmss_smmu 0x428>,
+> +				 <&mmss_smmu 0x429>,
+> +				 <&mmss_smmu 0x42b>,
+> +				 <&mmss_smmu 0x42c>,
+> +				 <&mmss_smmu 0x42d>,
+> +				 <&mmss_smmu 0x411>,
+> +				 <&mmss_smmu 0x431>;
+> +			memory-region = <&venus_mem>;
+> +			status = "disabled";
+> +
+> +			video-decoder {
+> +				compatible = "venus-decoder";
+> +				clocks = <&mmcc VIDEO_SUBCORE0_CLK>;
+> +				clock-names = "core";
+> +				power-domains = <&mmcc VIDEO_SUBCORE0_GDSC>;
+> +			};
+> +
+> +			video-encoder {
+> +				compatible = "venus-encoder";
+> +				clocks = <&mmcc VIDEO_SUBCORE1_CLK>;
+> +				clock-names = "core";
+> +				power-domains = <&mmcc VIDEO_SUBCORE1_GDSC>;
+> +			};
+> +		};
+> +
+
+So without interconnects I guess the tip-of-tree kernel is not very 
+usable for 8998 but, that's not specific to this patch.
+
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
 ---
 bod
