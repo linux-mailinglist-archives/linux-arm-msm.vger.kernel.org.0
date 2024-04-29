@@ -1,73 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-18818-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18819-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FE1E8B5C8E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 17:07:02 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 804478B5C90
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 17:07:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 87FA51F22918
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 15:07:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EBF481F2296E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 15:07:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2236986641;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89E4385923;
 	Mon, 29 Apr 2024 15:04:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="GORs/M6Z"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="iJF0jV50"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 885F98592A
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 15:04:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776C085C58
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 15:04:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714403095; cv=none; b=F0t7uInXIFgXZ7Helw0qcUdonzFEdlG26aa0y3p6Gozu4VkcMjqIDf8H/1nAcppPZSxLW8tKcgLmVCmq7plav3q1FMELscdwPKfjs8ktOjTTrJlg1dqtQm+sDGUWYO7oz7Xprgbg9Iz8gvgTc2I7bC+42I20yxveoghdlpCBzHg=
+	t=1714403095; cv=none; b=JYAEmXf1VQUV+cvDBinXnfxohxDog/R+khWzZ3GfaY23I9zmRiAswD6gLvZzR/ypjf41SuCWDaeMhbdoOJIoBGlw1YcVl3yQKv3GSqFzMefdCPyxXcvT8ZMOSxG8FS+gkDeCnQZOfq+pHUfXRCjbhPgjIln6ARxD0yOse4r6DT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1714403095; c=relaxed/simple;
-	bh=gV1i+WLU4fCANNV2YgqfOpEz5J1mXWIBo29pdtjhlBc=;
+	bh=TYiaV8/876fGs7BbPI/75wYP3iQVyz/w58Jr4KxHpck=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VDApEJ9fMwJQwuCFL4hU5KD9wBcTExfgIUM4B+ptY/AOyB/k6+PyH+Pw9hFGYRLq2JzpgB5UX5m0d0XeEjA8uvJEQzw+c52z5lBd+F7mcyvBfSb+bHyXf2V4oWp2nQhKqefjjB5ACoJI9cqo3V3FKxHWcsYK7M9cvgzzj0oer1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=GORs/M6Z; arc=none smtp.client-ip=209.85.222.181
+	 In-Reply-To:To:Cc; b=aVrCFjUosOF+O97DlidAnC1PfI/0s4zJaNwc4hm42Cn0IzMudOjxmzVOP1w4VLf+03bwVBpOLC1okQR0a4pgAHoB8SMJ1ISySQtvVYlXEow8VQNK1d1NJAS5XjisPk3jpR320m5uDVxOEiHn2JwlmGEYzza30H8bxomM5PVlGC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=iJF0jV50; arc=none smtp.client-ip=209.85.160.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-78efd533a00so336961585a.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 08:04:52 -0700 (PDT)
+Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-23cededea57so116559fac.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 08:04:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1714403091; x=1715007891; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1714403092; x=1715007892; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=OI4AOi/6PtgU5zRnLUWjMVWmm8Y+CckVMvMt6qKhGc0=;
-        b=GORs/M6Z1iqskikBgHnleziXv0DsTapeQbroeb2poOFoFOBzNxIS0MrzvU3HqKw08R
-         NbU6lsJ7zDHUZvtJSsLL3I34yfUm6kku6OOKItDUoxgwpVKnAh3Gi/gzKEmre/nCvpwW
-         JZoPEihfidWLo+NbplqRQHMReCmFLr9tUnDIo=
+        bh=JNRsm9gIh82mFVXKJ+HUiStpAhIByx8KXG3SUDPUD70=;
+        b=iJF0jV503Otz3O1L0GPGJDOBp0iyfSy6chueJazjoL15DmuTfpd/+1JZuvk/E1Sb2G
+         euDgh/SGYwcls8BX1DBf+xw7MNx7AlyMI+wwKJqkfTlkD/Qmx8QnJJw2hh9FcRQbq5FF
+         UVUMDl6PhSGWbheKVbTq7ZvwykaNesVDU0R9w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714403091; x=1715007891;
+        d=1e100.net; s=20230601; t=1714403092; x=1715007892;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OI4AOi/6PtgU5zRnLUWjMVWmm8Y+CckVMvMt6qKhGc0=;
-        b=NW+Z2Lrjm9TBr3UXZSXPca2TWfqEykNwyoI1LeDI+uuXS50VhcQ7I1ftf3n1IlF8DC
-         peV43Htp6NciOOe6Q11SJzkJok22KGoH2jFyqMc/q3OyBX9fjgN9JkVEK8eBpj7KK3Xk
-         mdTPYAift7OUsM1xWO8aalCp9dYVdW/E+Hs6PTJ5EiiZjSAunPt3jGajPLSJAZVaMrTL
-         tQm8Okbbmg0qaGrBbmUpRfmGDAfK6ZfHMembXw1u2xzwShkRdLMPYomEtELMA5q1ZZJE
-         70wTPTD99QyNQDWuobQ4ZzVzl82LhCC30PLrVC/4aR1BZ76BNjBYTuRPTGHlWX0eST0o
-         aFCw==
-X-Forwarded-Encrypted: i=1; AJvYcCWxe2eWk7X6L9F9A6N2RaL7AtP00SpnHAQuSAKuogPq6WTMs3N/19Df2nGivpIEHWnpOlDWQBx7B1gDcrpndheBnxDg4twOeQsZZfpFLg==
-X-Gm-Message-State: AOJu0YwOJy+9Yvzsyk+p+y0NntGwcMM2YuUiIopgokBPPlUCLGIUBKYw
-	pbQOIIg5+sSHV39Xg6LbvTf4SDaRgVDhNkECXbyduFQPJ1fHudj20CvYe6Aozg==
-X-Google-Smtp-Source: AGHT+IG3TSxma0YdxDVyjt+TwA8E2r3YjCQOsUMIKvXlCmNNngt83Fx59gwPuYEOR/mAqhiKqgMwqA==
-X-Received: by 2002:a05:620a:2445:b0:790:f04b:328c with SMTP id h5-20020a05620a244500b00790f04b328cmr4582245qkn.29.1714403091343;
-        Mon, 29 Apr 2024 08:04:51 -0700 (PDT)
+        bh=JNRsm9gIh82mFVXKJ+HUiStpAhIByx8KXG3SUDPUD70=;
+        b=K32h+03MRVfMUkWQjt9E7GahukN4ZtNSRVKiLhYnbrqr9oeWx/9P/jnL8H3Wsu0Yhy
+         nkkFXyxALny7pqGsjUvhxn3xWJNBl58JJwUsUcKcDUiac4J+KEqaEVcfeO+j0hKtFGMW
+         xIvbm3em2mGAj99roWPVSxtBWTENjPnfIwHg8G5QefobQH3WOsg05tU9avgHL8pqNUio
+         8xAxSYxU7+92FKUo5TOMX28+MS1YI9b+LUojy4EM0Br/tgSlPwcWObTxmOeMNbBIfygX
+         pOz/aAoEOX6y/frWTF5qeh3lL/6Y+cHgFiHWpTYqWLfBLGVnlLJ2NnfT4Z0N2bmooUEk
+         XLhA==
+X-Forwarded-Encrypted: i=1; AJvYcCVdKW1niZRCwtvf3zyKMLaJALLdRQ49ktGl7k2ub9jI8z0qYYRrCmkERdsEGuA/4bOsR38ynT6rHY0+CYcjz37RcSUPCiPrIF+Zjd8Z4g==
+X-Gm-Message-State: AOJu0YxNjhFOYKcVu1VlMivJ2PZUOfy2/N0Z0GUhFW+73G2+i65WVLCQ
+	NChqIThTOE2ealthOWcTRR3pDsgvZqExGotjeMpx5DQK9gzvicmVViFjTiaycw==
+X-Google-Smtp-Source: AGHT+IGXcStN+XAFfYHJlQ/BhJGSDUpZDAykPn1StedMjlrpGT2G5swu1IRQFedvTjeL4JvuXpf10g==
+X-Received: by 2002:a05:6871:a416:b0:233:b5ef:3bab with SMTP id vz22-20020a056871a41600b00233b5ef3babmr9216406oab.3.1714403092563;
+        Mon, 29 Apr 2024 08:04:52 -0700 (PDT)
 Received: from denia.c.googlers.com (114.152.245.35.bc.googleusercontent.com. [35.245.152.114])
-        by smtp.gmail.com with ESMTPSA id p7-20020a05620a056700b0078d3b9139edsm10568591qkp.97.2024.04.29.08.04.50
+        by smtp.gmail.com with ESMTPSA id p7-20020a05620a056700b0078d3b9139edsm10568591qkp.97.2024.04.29.08.04.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Apr 2024 08:04:51 -0700 (PDT)
+        Mon, 29 Apr 2024 08:04:52 -0700 (PDT)
 From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Mon, 29 Apr 2024 15:04:47 +0000
-Subject: [PATCH v3 08/26] media: dvb-frontends: tda18271c2dd: Remove
- casting during div
+Date: Mon, 29 Apr 2024 15:04:48 +0000
+Subject: [PATCH v3 09/26] media: v4l: async: refactor
+ v4l2_async_create_ancillary_links
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,7 +76,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240429-fix-cocci-v3-8-3c4865f5a4b0@chromium.org>
+Message-Id: <20240429-fix-cocci-v3-9-3c4865f5a4b0@chromium.org>
 References: <20240429-fix-cocci-v3-0-3c4865f5a4b0@chromium.org>
 In-Reply-To: <20240429-fix-cocci-v3-0-3c4865f5a4b0@chromium.org>
 To: Martin Tuma <martin.tuma@digiteqautomotive.com>, 
@@ -116,40 +116,45 @@ Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
  Ricardo Ribalda <ribalda@chromium.org>
 X-Mailer: b4 0.12.4
 
-do_div() divides 64 bits by 32. We were adding a casting to the divider
-to 64 bits, for a number that fits perfectly in 32 bits. Remove it.
+Return 0 without checking IS_ERR or PTR_ERR if CONFIG_MEDIA_CONTROLLER
+is not enabled.
 
-Found by cocci:
-drivers/media/dvb-frontends/tda18271c2dd.c:355:1-7: WARNING: do_div() does a 64-by-32 division, please consider using div64_u64 instead.
-drivers/media/dvb-frontends/tda18271c2dd.c:331:1-7: WARNING: do_div() does a 64-by-32 division, please consider using div64_u64 instead.
+This makes cocci happier:
 
+drivers/media/v4l2-core/v4l2-async.c:331:23-30: ERROR: PTR_ERR applied after initialization to constant on line 319
+
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 ---
- drivers/media/dvb-frontends/tda18271c2dd.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/v4l2-core/v4l2-async.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/dvb-frontends/tda18271c2dd.c b/drivers/media/dvb-frontends/tda18271c2dd.c
-index a34834487943..fd928787207e 100644
---- a/drivers/media/dvb-frontends/tda18271c2dd.c
-+++ b/drivers/media/dvb-frontends/tda18271c2dd.c
-@@ -328,7 +328,7 @@ static int CalcMainPLL(struct tda_state *state, u32 freq)
+diff --git a/drivers/media/v4l2-core/v4l2-async.c b/drivers/media/v4l2-core/v4l2-async.c
+index 3a22da443a22..421b2b96bc8a 100644
+--- a/drivers/media/v4l2-core/v4l2-async.c
++++ b/drivers/media/v4l2-core/v4l2-async.c
+@@ -316,9 +316,10 @@ v4l2_async_nf_try_all_subdevs(struct v4l2_async_notifier *notifier);
+ static int v4l2_async_create_ancillary_links(struct v4l2_async_notifier *n,
+ 					     struct v4l2_subdev *sd)
+ {
+-	struct media_link *link = NULL;
++	struct media_link *link;
  
- 	OscFreq = (u64) freq * (u64) Div;
- 	OscFreq *= (u64) 16384;
--	do_div(OscFreq, (u64)16000000);
-+	do_div(OscFreq, 16000000);
- 	MainDiv = OscFreq;
+-#if IS_ENABLED(CONFIG_MEDIA_CONTROLLER)
++	if (!IS_ENABLED(CONFIG_MEDIA_CONTROLLER))
++		return 0;
  
- 	state->m_Regs[MPD] = PostDiv & 0x77;
-@@ -352,7 +352,7 @@ static int CalcCalPLL(struct tda_state *state, u32 freq)
- 	OscFreq = (u64)freq * (u64)Div;
- 	/* CalDiv = u32( OscFreq * 16384 / 16000000 ); */
- 	OscFreq *= (u64)16384;
--	do_div(OscFreq, (u64)16000000);
-+	do_div(OscFreq, 16000000);
- 	CalDiv = OscFreq;
+ 	if (sd->entity.function != MEDIA_ENT_F_LENS &&
+ 	    sd->entity.function != MEDIA_ENT_F_FLASH)
+@@ -326,8 +327,6 @@ static int v4l2_async_create_ancillary_links(struct v4l2_async_notifier *n,
  
- 	state->m_Regs[CPD] = PostDiv;
+ 	link = media_create_ancillary_link(&n->sd->entity, &sd->entity);
+ 
+-#endif
+-
+ 	return IS_ERR(link) ? PTR_ERR(link) : 0;
+ }
+ 
 
 -- 
 2.44.0.769.g3c40516874-goog
