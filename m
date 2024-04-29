@@ -1,151 +1,271 @@
-Return-Path: <linux-arm-msm+bounces-18758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18759-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C01578B526E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 09:36:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B45DD8B52AE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 09:56:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E3D041C21017
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 07:36:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D309E1C20A87
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 07:56:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57DAA1427B;
-	Mon, 29 Apr 2024 07:36:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8C7D1640B;
+	Mon, 29 Apr 2024 07:56:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uDB5j69l"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="G3LmW3uB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B393314273
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 07:36:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2FB514AB0;
+	Mon, 29 Apr 2024 07:56:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714376173; cv=none; b=FJrAAeu4bDGvz/LjqxNeqyn7DdW9Rz3NP+H9Cdripz6p1f+zFaZ1YgYnhONL1IkX3bMSN7p0UUygGHbUOQykrYvZILSw1unGU8V7L+1dOejFPeXipImx7bA38oDQcdAynY4k6M6P78X/npez9kPMgMMFK/eQ0LnHHlFOVtUsULA=
+	t=1714377370; cv=none; b=LbYg3zJS1T4eWSuaTbXgMoRLdUOgxHz3xXRvPj2l1TVG9naX40CwbAvq8rjaBI3mH85XNPy5zgGKNUADZ3pmGp7lxhr+VVPIaQjl6easgN06guv4g+/SQ611rIxzF5K9nHuvbZJXNwvcUXR1MXFppznOmNTPP/dSgmyaJKwF5ds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714376173; c=relaxed/simple;
-	bh=33GlNWDoneeKLX4h7qhhA3i8Q9JLIcERc+9AZY2t3hY=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=kugvS+oPx3rRP7xfMrQ9eAIr0sWeUXvVjguavAs8tRfJCMoMjTq+xgQ+rF32HiXKqNFe9M+sr7tJhf+qpcLbOGSmpKjuse1dfMp5CLoY23UI+Up25ZgMDAaTPQRt7TG1YjnME4/P5TWHhJx8rRXzFVxpnwdwm3UZrbcdPuxTL9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uDB5j69l; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-41c01902dcdso7736885e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 00:36:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1714376170; x=1714980970; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2YPpX3LmNwDjVUlNB/0j3ZN9nZwfzcoxuiregVpsmGM=;
-        b=uDB5j69lAJ0QSAVsQrN7Xr0CfdOHoeDCmLqhW1vudwTv5Z2Es167dS91vf2yOav2Vg
-         pGfs7nvCLcwq5qpvCxElnkJtfT3i1r/HejbboGseVdbb+iL6e/oNOtC9ssqWO4LJt6c1
-         8wL3vs1ojcxvaZ1/yt5e1ODQPlAX2G2DUZ2rpIelGofkXpLcltnsm1SfKJvPYFWMDi8b
-         mZqzsVR6bI569Xtt9WoUQGGS4UeHkaIZAHB6mIHaJF8VTNEUxY/iXG+KbsjUbfSGgGcS
-         j5d+eRjHDOoEwwswA1J6i49IFONmya5xVRHefpN4fgp7xcYCl/UXvJQYe/1k6IGXYjjZ
-         /jIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714376170; x=1714980970;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=2YPpX3LmNwDjVUlNB/0j3ZN9nZwfzcoxuiregVpsmGM=;
-        b=jTs580kjqpyIvj+v1R/d8UsuIYAT3C4D+XOgM4YLOaz+5+00LGoxUDEiXjN8XrgsmT
-         DAYcgNTtzaqbWiuDcGJBhlYNofeWeajdn19Ya0i+Ft6fIxVYAvFw21dmXUj9JlHe/dS+
-         irKKMU2pjmjjwtG30g7BXBv31Jipa1Q7QRgBZ26IE5HHVbqXO/HJ95YdH1bH7AjO6xYC
-         BZW2t+Sedkj52c3Er1ZOXEQ/FfAnMM9rf/2sFyRcDYKADJSxCLYTd8EW32ICwcjgQSQB
-         uiZmCg1LgJlD5KukRFpzFtMvYO9Mbfm65PJeWcaK09FznGAQHUhRBQyZLAwbuPXPl39I
-         aETg==
-X-Forwarded-Encrypted: i=1; AJvYcCVoSQFYn6zF5EGSeUl59xHJyHITst8qWKouzxOgFTS6tWC0Xop4a2Nf5SzAJ6jnriikmEht9olh684LnqiT2HlxeYtZ73Xkp1pXBX9xtw==
-X-Gm-Message-State: AOJu0Yx3YniF27SK14KD0GZNthNcTWNrXIu9oBBkyYmjrss+La3Hamo4
-	RsrW0lk33PeF2KKUajLnR55oAKEo6r8TCFDqkwnbM+xgEhEF6I1YP4hl3Xa0Ibs82bhK28/mGeO
-	/ZSjmxA==
-X-Google-Smtp-Source: AGHT+IGUFxK98NOI5jFo2xQj8ldkC/5ShZT8LR1GFygIJ814JksY0q9Y/IXVYd6vZcmGjJbsKUX/qA==
-X-Received: by 2002:a05:600c:4508:b0:41b:f28a:a11e with SMTP id t8-20020a05600c450800b0041bf28aa11emr4477073wmo.22.1714376169980;
-        Mon, 29 Apr 2024 00:36:09 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:cad:2140:d72:4b40:65fa:89e6? ([2a01:e0a:cad:2140:d72:4b40:65fa:89e6])
-        by smtp.gmail.com with ESMTPSA id bi7-20020a05600c3d8700b0041be609b1c7sm7391629wmb.47.2024.04.29.00.36.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Apr 2024 00:36:09 -0700 (PDT)
-Message-ID: <91d8143f-b79f-4108-8593-ac0165628728@linaro.org>
-Date: Mon, 29 Apr 2024 09:36:08 +0200
+	s=arc-20240116; t=1714377370; c=relaxed/simple;
+	bh=r6S5MOacY5QRk302Bfmb2I3E++F09XEoC/O/+83ErDs=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=GqlgD/A1cgcXgJqzzKVgbyIUH3qUiWsBlXM38iuzaGKZRVPE6VKemyR9zmNqgmTrh7bBowdsHdh5EKr6jL7K6UZRsZXefpvz2I001Nyww0ibaFLBdssPyTipqtoc/Idpiykee3Aa23/sAx43x5tquRsvYmTMMjIZsrG0N5SyweA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=G3LmW3uB; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43T4dxlB009472;
+	Mon, 29 Apr 2024 07:56:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=Mdq8xm1
+	TDA9azyRgISTqabXD2DV2KdmkzikPaa6Dr2I=; b=G3LmW3uBRaaMNBs+BSddfvr
+	ax1675BjlE78WTwp0GLE/AqVZ25LFeH8CRDLTs6/0lAOZ9gQ8RWhDV53eCR1OEqj
+	ICcwYwJq3LsMYC9Z1sf/mBUxvOR78eYIoiwHaPmhkXiy2hvJ8/WoHbGCJXTCTY4a
+	iZNN4HwRHYDOw1vIIjbz9hRzPR/UJ3qkvHZVT89nebChXbVvMbw9H8sXiIW72hEz
+	h+TOMAuIRFA07iK1+RXu4ene9+mGdjxNlG+WRbGRtJ0l6wCy0tSYiSmtqWMUR3t3
+	eHH9DLffGdMdkbd9UOrAOUgWw+1eIaJ+/oe9MJLyncR47OXPHmWOhe8EwrVDtcg=
+	=
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xrtnek0ru-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 29 Apr 2024 07:56:03 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43T7u2sT020554
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 29 Apr 2024 07:56:02 GMT
+Received: from hu-sudeepgo-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 29 Apr 2024 00:55:59 -0700
+From: Sudeepgoud Patil <quic_sudeepgo@quicinc.com>
+To: <quic_bjorande@quicinc.com>, <andersson@kernel.org>,
+        <quic_clew@quicinc.com>, <mathieu.poirier@linaro.org>
+CC: <linux-kernel@vger.kernel.org>, <quic_deesin@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
+        "Konrad
+ Dybcio" <konrad.dybcio@linaro.org>
+Subject: [PATCH V1] soc: qcom: smp2p: Introduce tracepoint support
+Date: Mon, 29 Apr 2024 13:25:24 +0530
+Message-ID: <20240429075528.1723133-1-quic_sudeepgo@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] serial: msm: Unify TX and RX DMA paths
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Marek Szyprowski <m.szyprowski@samsung.com>,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- Jiri Slaby <jirislaby@kernel.org>
-References: <CGME20240423120821eucas1p2e8eb7aa059e00ee2bc6272cda24d1457@eucas1p2.samsung.com>
- <20240423120809.2678030-1-m.szyprowski@samsung.com>
- <4813aa76-6ce7-403d-8bff-1fb6e1d3f0a2@linaro.org>
- <2024042342-unmade-surely-da1c@gregkh>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <2024042342-unmade-surely-da1c@gregkh>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 8KLYj2xStve0AFmBV336ust-fV1VGiLD
+X-Proofpoint-ORIG-GUID: 8KLYj2xStve0AFmBV336ust-fV1VGiLD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-29_05,2024-04-26_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 malwarescore=0
+ bulkscore=0 lowpriorityscore=0 phishscore=0 priorityscore=1501
+ clxscore=1011 impostorscore=0 spamscore=0 mlxlogscore=999 adultscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404290049
 
-Hi Greg,
+Introduce tracepoint support for smp2p providing useful logging
+for communication between clients.
 
-On 24/04/2024 01:33, Greg Kroah-Hartman wrote:
-> On Tue, Apr 23, 2024 at 04:08:04PM +0200, neil.armstrong@linaro.org wrote:
->> Hi Marek,
->>
->> On 23/04/2024 14:08, Marek Szyprowski wrote:
->>> Use scatterlist-based API also for RX mode to unify TX and RX DMA paths
->>> as well as simplify the whole driver code a bit.
->>
->> Thanks for the patch, I have no idea if this is right or wrong.
->>
->> Greg, I think we should wait until this change is fully tested on multiple
->> platforms including DMA usage (bluetooth) before aplying it.
-> 
-> Great, who is going to test that without me adding it to linux-next?
+Signed-off-by: Sudeepgoud Patil <quic_sudeepgo@quicinc.com>
+Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
+---
+ drivers/soc/qcom/Makefile      |  1 +
+ drivers/soc/qcom/smp2p.c       | 10 ++++
+ drivers/soc/qcom/trace-smp2p.h | 99 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 110 insertions(+)
+ create mode 100644 drivers/soc/qcom/trace-smp2p.h
 
-Qcom developers, reviewers and maintainers will review it and test it like
-any other patch affecting the qcom platform.
-
-Thanks,
-Neil
-
-> 
-> thanks,
-> 
-> greg k-h
-
+diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+index ca0bece0dfff..30c1bf645501 100644
+--- a/drivers/soc/qcom/Makefile
++++ b/drivers/soc/qcom/Makefile
+@@ -23,6 +23,7 @@ qcom_rpmh-y			+= rpmh.o
+ obj-$(CONFIG_QCOM_SMD_RPM)	+= rpm-proc.o smd-rpm.o
+ obj-$(CONFIG_QCOM_SMEM) +=	smem.o
+ obj-$(CONFIG_QCOM_SMEM_STATE) += smem_state.o
++CFLAGS_smp2p.o := -I$(src)
+ obj-$(CONFIG_QCOM_SMP2P)	+= smp2p.o
+ obj-$(CONFIG_QCOM_SMSM)	+= smsm.o
+ obj-$(CONFIG_QCOM_SOCINFO)	+= socinfo.o
+diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
+index a21241cbeec7..dde8513641ae 100644
+--- a/drivers/soc/qcom/smp2p.c
++++ b/drivers/soc/qcom/smp2p.c
+@@ -20,6 +20,9 @@
+ #include <linux/soc/qcom/smem_state.h>
+ #include <linux/spinlock.h>
+ 
++#define CREATE_TRACE_POINTS
++#include "trace-smp2p.h"
++
+ /*
+  * The Shared Memory Point to Point (SMP2P) protocol facilitates communication
+  * of a single 32-bit value between two processors.  Each value has a single
+@@ -191,6 +194,7 @@ static void qcom_smp2p_do_ssr_ack(struct qcom_smp2p *smp2p)
+ 	struct smp2p_smem_item *out = smp2p->out;
+ 	u32 val;
+ 
++	trace_smp2p_ssr_ack(smp2p->remote_pid);
+ 	smp2p->ssr_ack = !smp2p->ssr_ack;
+ 
+ 	val = out->flags & ~BIT(SMP2P_FLAGS_RESTART_ACK_BIT);
+@@ -213,6 +217,7 @@ static void qcom_smp2p_negotiate(struct qcom_smp2p *smp2p)
+ 			smp2p->ssr_ack_enabled = true;
+ 
+ 		smp2p->negotiation_done = true;
++		trace_smp2p_negotiate(smp2p->remote_pid, smp2p->ssr_ack_enabled);
+ 	}
+ }
+ 
+@@ -251,6 +256,8 @@ static void qcom_smp2p_notify_in(struct qcom_smp2p *smp2p)
+ 		status = val ^ entry->last_value;
+ 		entry->last_value = val;
+ 
++		trace_smp2p_notify_in(smp2p->remote_pid, entry->name, status, val);
++
+ 		/* No changes of this entry? */
+ 		if (!status)
+ 			continue;
+@@ -406,6 +413,9 @@ static int smp2p_update_bits(void *data, u32 mask, u32 value)
+ 	writel(val, entry->value);
+ 	spin_unlock_irqrestore(&entry->lock, flags);
+ 
++	trace_smp2p_update_bits(entry->smp2p->remote_pid,
++		entry->name, orig, val);
++
+ 	if (val != orig)
+ 		qcom_smp2p_kick(entry->smp2p);
+ 
+diff --git a/drivers/soc/qcom/trace-smp2p.h b/drivers/soc/qcom/trace-smp2p.h
+new file mode 100644
+index 000000000000..c61afab23f0c
+--- /dev/null
++++ b/drivers/soc/qcom/trace-smp2p.h
+@@ -0,0 +1,99 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
++ */
++
++#undef TRACE_SYSTEM
++#define TRACE_SYSTEM qcom_smp2p
++
++#if !defined(__QCOM_SMP2P_TRACE_H__) || defined(TRACE_HEADER_MULTI_READ)
++#define __QCOM_SMP2P_TRACE_H__
++
++#include <linux/tracepoint.h>
++
++TRACE_EVENT(smp2p_ssr_ack,
++	TP_PROTO(unsigned int remote_pid),
++	TP_ARGS(remote_pid),
++	TP_STRUCT__entry(
++		__field(u32, remote_pid)
++	),
++	TP_fast_assign(
++		__entry->remote_pid = remote_pid;
++	),
++	TP_printk("%d: SSR detected, doing SSR Handshake",
++		__entry->remote_pid
++	)
++);
++
++TRACE_EVENT(smp2p_negotiate,
++	TP_PROTO(unsigned int remote_pid, bool ssr_ack_enabled),
++	TP_ARGS(remote_pid, ssr_ack_enabled),
++	TP_STRUCT__entry(
++		__field(u32, remote_pid)
++		__field(bool, ssr_ack_enabled)
++	),
++	TP_fast_assign(
++		__entry->remote_pid = remote_pid;
++		__entry->ssr_ack_enabled = ssr_ack_enabled;
++	),
++	TP_printk("%d: state=open ssr_ack=%d",
++		__entry->remote_pid,
++		__entry->ssr_ack_enabled
++	)
++);
++
++TRACE_EVENT(smp2p_notify_in,
++	TP_PROTO(unsigned int remote_pid, const char *name, unsigned long status, u32 val),
++	TP_ARGS(remote_pid, name, status, val),
++	TP_STRUCT__entry(
++		__field(u32, remote_pid)
++		__string(name, name)
++		__field(unsigned long, status)
++		__field(u32, val)
++	),
++	TP_fast_assign(
++		__entry->remote_pid = remote_pid;
++		__assign_str(name, name);
++		__entry->status = status;
++		__entry->val = val;
++	),
++	TP_printk("%d: %s: status:0x%0lx val:0x%0x",
++		__entry->remote_pid,
++		__get_str(name),
++		__entry->status,
++		__entry->val
++	)
++);
++
++TRACE_EVENT(smp2p_update_bits,
++	TP_PROTO(unsigned int remote_pid, const char *name, u32 orig, u32 val),
++	TP_ARGS(remote_pid, name, orig, val),
++	TP_STRUCT__entry(
++		__field(u32, remote_pid)
++		__string(name, name)
++		__field(u32, orig)
++		__field(u32, val)
++	),
++	TP_fast_assign(
++		__entry->remote_pid = remote_pid;
++		__assign_str(name, name);
++		__entry->orig = orig;
++		__entry->val = val;
++	),
++	TP_printk("%d: %s: orig:0x%0x new:0x%0x",
++		__entry->remote_pid,
++		__get_str(name),
++		__entry->orig,
++		__entry->val
++	)
++);
++
++#endif /* __QCOM_SMP2P_TRACE_H__ */
++
++#undef TRACE_INCLUDE_PATH
++#define TRACE_INCLUDE_PATH .
++
++#undef TRACE_INCLUDE_FILE
++#define TRACE_INCLUDE_FILE trace-smp2p
++
++#include <trace/define_trace.h>
+-- 
 
