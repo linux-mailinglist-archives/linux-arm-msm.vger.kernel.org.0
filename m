@@ -1,73 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-18821-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 301B88B5C9D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 17:07:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 562A48B5C9E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 17:07:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DAB092832C5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 15:07:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0AB292832C5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 15:07:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2ADA2127E21;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EBDD127E31;
 	Mon, 29 Apr 2024 15:05:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="a759Nmm4"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="IskcnPoq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B825126F39
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97DB81272B7
 	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 15:04:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714403099; cv=none; b=X5gG8bKlCtRb8SYn8VwFKCT9e2nVoO6OrY/CXe+UGJ+U+vXco7qCVZqJqXsn4bET4B3d1rgD+20tWOEo6ZDatN5CySXlXp+f8pLdQ0TcbgOTrSmli7WtG4BgcIcOr/NCHumHANmy/ibKKpn9LXvN1BNZ0xDQyKcj6st8kpQ5KP0=
+	t=1714403100; cv=none; b=qg9iRZpf7lFIqqmw9/GnOkAgKZSTS/kb4E+e9MOvEn5GJR2TU+/h8/EQK5NlRvv7SbAbvp8SBWRCwCwsjPsfczPSX2QXVqbCvwENAt46OtFkD33vebh/KpQQBMI+VoQWCodyhveVfAmjC1IFjUd/YrLM0TThMHvfqpcWt1ss9F0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714403099; c=relaxed/simple;
-	bh=IwVC+qmR5b/10H0elYXxcr5eG/G4ClY19WrOjc/vxJY=;
+	s=arc-20240116; t=1714403100; c=relaxed/simple;
+	bh=06mL5EXe9kTunFEegEJRz7Wo9ks6u/t6gIH9sJH9trw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qbWbPWKqaHEiLRvQx9aUYX4UTNdQQuhFW4HLoCchK4DaJ9lek5+zz/azEtbUPbDJtTyxoFmkf+tw7NjWiy/GPsrCrX1knKXOPLEKX4XKU08dDNS1Tkc6UUcCYrmTo1fRHn3d+n9FWaCortoC5EFAWNl4P1d4w8co7iWWMQShkCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=a759Nmm4; arc=none smtp.client-ip=209.85.222.171
+	 In-Reply-To:To:Cc; b=chi/wPyO6Y9M45Igxpgty8QiFH5wE8MTOuSgILJN34jIcKZlfWKJlzj0r4u05H55U2EkR111TkFvknIKsHZ+nIbJQynnCTC5nF2w1G5tZSRC61vUmyXP3nJvU9DqRK8Q9NEoidHUSiO4ur+8D2aEx0QTWph/0RutO8z5RiJd9gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=IskcnPoq; arc=none smtp.client-ip=209.85.160.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-78edc49861aso344064185a.3
+Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-23935d89261so2063590fac.1
         for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 08:04:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1714403095; x=1715007895; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1714403096; x=1715007896; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=M/K5Byxt1ig+CQr/X/PeYwmg4ty1EjIby+WFZ625f+g=;
-        b=a759Nmm41FhoBiYTTl1RMWDko8VIkz7s0BZbYvJF+3zd60ELKcBa6tfvFNG9lvLQuu
-         LKh1d2R10IJs4bG8ullosN2CN3VpR688uCZJx9bY2M07Pd2N3CqSHHVBaHFYqb8FQ5of
-         ZlUeqhGcGUns5G6RunOSjbO4hNHtvujboz8j4=
+        bh=X5IbU7HBHK5ZSrS81fN3o3XopIPldfFFy8PdyHH7F6Q=;
+        b=IskcnPoqOFbyLQXmOKlaK5atK/emWkDJWdAyluzeQdiqql2yK3MxR8X5a3WkRzAiy1
+         ZCilvpeZ8voUE0W7PFOK1B6av+R55O/KBujNvnFa8UZzBAt1otv+YWss3yCQKAep1XJZ
+         QUH2a/QSEACzWlb1t7SF6AwFUWfv9CKspAD5I=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714403095; x=1715007895;
+        d=1e100.net; s=20230601; t=1714403096; x=1715007896;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=M/K5Byxt1ig+CQr/X/PeYwmg4ty1EjIby+WFZ625f+g=;
-        b=grkAkUPc3aYzTysKpx34dCbOKN5BzmQgCp4WYNgPWZZyQDccXvbb9A+vLFicM/Eg2i
-         5GCbb2C+VsN6D+8T7k/CRMR+/CXy1tcXnpBiP/VQde0MLcPtc6XlEB6uQ+d4rKmCk/2Y
-         A+C6wjh9Cyr84wtz3hqNlTgZe+ob6YE0wbAMHZSc5ASrqbKKFt8jhRlLbSkVxW/uWGJJ
-         CNEI5PCe95JVvBbyl8L95QT6C8jFgCjQuIe9SyB09eRgySpBg1bXo0B5Pgv8BEFmcviq
-         pC/uskQj+cDfXQwW/onphgnw/LKycMp7EYYPJOiEmLn8fbmZRocy49/DWFLEyyga35h7
-         tqdw==
-X-Forwarded-Encrypted: i=1; AJvYcCXj74CJ2YwALhMshuXKs1S/ZkJTyqgnYM1El7EdFWhQtsG2ZVOrSSQpssTrlWSSGa6DqG+sT/nRMwBdb/D6n3xSLEV3RvvLSqOH9NDTgQ==
-X-Gm-Message-State: AOJu0YxFlmBkrqpCspqrMwxPsHlwxujPJDjpPpsmxAes9vH5lvz791r2
-	Z+/u33O3HkDi5+G+wqg5QNraM8KKAEi9ORMn1pCHGCzJ2CkXbdrLfSP1T2FTAg==
-X-Google-Smtp-Source: AGHT+IFfkHTGOiMiEN/DumhtisfWTU2X4/tYd3muzzupABl3mh4QKavP+6J3XAW0kBG33eeQdwXV6g==
-X-Received: by 2002:a05:620a:298a:b0:790:f2b2:ed2e with SMTP id r10-20020a05620a298a00b00790f2b2ed2emr5311152qkp.64.1714403094908;
-        Mon, 29 Apr 2024 08:04:54 -0700 (PDT)
+        bh=X5IbU7HBHK5ZSrS81fN3o3XopIPldfFFy8PdyHH7F6Q=;
+        b=JlA0+MWYOcD5MoBFb59NLJxgrC01ejTywp2V0bmdQCZ4pJPs+L9XUZKXd78JiCx+Kt
+         f5Z6EnNMKwzD/ndtN/pWdKH0CmGfnKwo/AWzo/HsfWvyht+6dMnzl7SZ0gSCCZIbr8So
+         HV54eJiNnvS6DRs2S6/mKtEvuwH0Xazs1VRVqNqcnvvmC+PS3/ASpRz8ep18KcpHw6g6
+         WD5+sTeUDZmi9+VBQWZKB2hwKAGOvAlh8Aa/GGJVRe1zC9iPMKecM7/0ggvGZ0yykXk4
+         Hvb/vTkZ7OKQntK01IPzcXrkFL6a5d0Lkuz7nIeJMwnyKLFUaHHL+UC0vtv5rWgoMOUX
+         rE/g==
+X-Forwarded-Encrypted: i=1; AJvYcCW9eqzoww3O+yTBPfr8uIbRjRBSbBr17F2wuSMfIYnYr3k9X8ICIcdTMPGUe8ouRILTFqsV9l5gpirOLI5ShkUtX8aZbdBn21lttXLuQg==
+X-Gm-Message-State: AOJu0YzSN2h68x9ePBXJ78gLxs7OBQelfPeu3e13LvG+4Hn3wmgzEfAX
+	G80gienKp8zHx9UNe51eheJFdK0YzztRa9VU3r1WpDYpENR8VxFgIXl1hNxLGQ==
+X-Google-Smtp-Source: AGHT+IGVAH/IwNYZ4S96l7NvgpYNIEj4hEsjMjcli1Y8ndu6kmVsTG4AE2U+O+g2MrONF6L3wD0YHA==
+X-Received: by 2002:a05:6870:2401:b0:233:55b8:edf1 with SMTP id n1-20020a056870240100b0023355b8edf1mr12050766oap.8.1714403095753;
+        Mon, 29 Apr 2024 08:04:55 -0700 (PDT)
 Received: from denia.c.googlers.com (114.152.245.35.bc.googleusercontent.com. [35.245.152.114])
-        by smtp.gmail.com with ESMTPSA id p7-20020a05620a056700b0078d3b9139edsm10568591qkp.97.2024.04.29.08.04.54
+        by smtp.gmail.com with ESMTPSA id p7-20020a05620a056700b0078d3b9139edsm10568591qkp.97.2024.04.29.08.04.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Apr 2024 08:04:54 -0700 (PDT)
+        Mon, 29 Apr 2024 08:04:55 -0700 (PDT)
 From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Mon, 29 Apr 2024 15:04:50 +0000
-Subject: [PATCH v3 11/26] media: s2255: Use refcount_t instead of atomic_t
- for num_channels
+Date: Mon, 29 Apr 2024 15:04:51 +0000
+Subject: [PATCH v3 12/26] media: platform: mtk-mdp3: Use refcount_t for
+ job_count
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,7 +76,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240429-fix-cocci-v3-11-3c4865f5a4b0@chromium.org>
+Message-Id: <20240429-fix-cocci-v3-12-3c4865f5a4b0@chromium.org>
 References: <20240429-fix-cocci-v3-0-3c4865f5a4b0@chromium.org>
 In-Reply-To: <20240429-fix-cocci-v3-0-3c4865f5a4b0@chromium.org>
 To: Martin Tuma <martin.tuma@digiteqautomotive.com>, 
@@ -116,100 +116,120 @@ Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
  Ricardo Ribalda <ribalda@chromium.org>
 X-Mailer: b4 0.12.4
 
-Use an API that resembles more the actual use of num_channels.
+Use an API that resembles more the actual use of job_count.
 
 Found by cocci:
-drivers/media/usb/s2255/s2255drv.c:2362:5-24: WARNING: atomic_dec_and_test variation before object free at line 2363.
-drivers/media/usb/s2255/s2255drv.c:1557:5-24: WARNING: atomic_dec_and_test variation before object free at line 1558.
+drivers/media/platform/mediatek/mdp3/mtk-mdp3-cmdq.c:527:5-24: WARNING: atomic_dec_and_test variation before object free at line 541.
+drivers/media/platform/mediatek/mdp3/mtk-mdp3-cmdq.c:578:6-25: WARNING: atomic_dec_and_test variation before object free at line 581.
 
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 ---
- drivers/media/usb/s2255/s2255drv.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/media/platform/mediatek/mdp3/mtk-mdp3-cmdq.c | 10 +++++-----
+ drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c |  6 +++---
+ drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.h |  2 +-
+ drivers/media/platform/mediatek/mdp3/mtk-mdp3-m2m.c  |  6 +++---
+ 4 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/media/usb/s2255/s2255drv.c b/drivers/media/usb/s2255/s2255drv.c
-index 8e1de1e8bd12..a6e450181fd0 100644
---- a/drivers/media/usb/s2255/s2255drv.c
-+++ b/drivers/media/usb/s2255/s2255drv.c
-@@ -247,7 +247,7 @@ struct s2255_vc {
- struct s2255_dev {
- 	struct s2255_vc         vc[MAX_CHANNELS];
- 	struct v4l2_device      v4l2_dev;
--	atomic_t                num_channels;
-+	refcount_t		num_channels;
- 	int			frames;
- 	struct mutex		lock;	/* channels[].vdev.lock */
- 	struct mutex		cmdlock; /* protects cmdbuf */
-@@ -1550,11 +1550,11 @@ static void s2255_video_device_release(struct video_device *vdev)
- 		container_of(vdev, struct s2255_vc, vdev);
+diff --git a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-cmdq.c b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-cmdq.c
+index 1d64bac34b90..ea2ea119dd2a 100644
+--- a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-cmdq.c
++++ b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-cmdq.c
+@@ -524,7 +524,7 @@ static void mdp_auto_release_work(struct work_struct *work)
+ 	mdp_comp_clocks_off(&mdp->pdev->dev, cmd->comps,
+ 			    cmd->num_comps);
  
- 	dprintk(dev, 4, "%s, chnls: %d\n", __func__,
--		atomic_read(&dev->num_channels));
-+		refcount_read(&dev->num_channels));
+-	if (atomic_dec_and_test(&mdp->job_count)) {
++	if (refcount_dec_and_test(&mdp->job_count)) {
+ 		if (cmd->mdp_ctx)
+ 			mdp_m2m_job_finish(cmd->mdp_ctx);
  
- 	v4l2_ctrl_handler_free(&vc->hdl);
+@@ -575,7 +575,7 @@ static void mdp_handle_cmdq_callback(struct mbox_client *cl, void *mssg)
+ 		mdp_comp_clocks_off(&mdp->pdev->dev, cmd->comps,
+ 				    cmd->num_comps);
  
--	if (atomic_dec_and_test(&dev->num_channels))
-+	if (refcount_dec_and_test(&dev->num_channels))
- 		s2255_destroy(dev);
- 	return;
+-		if (atomic_dec_and_test(&mdp->job_count))
++		if (refcount_dec_and_test(&mdp->job_count))
+ 			wake_up(&mdp->callback_wq);
+ 
+ 		mdp_cmdq_pkt_destroy(&cmd->pkt);
+@@ -724,9 +724,9 @@ int mdp_cmdq_send(struct mdp_dev *mdp, struct mdp_cmdq_param *param)
+ 	int i, ret;
+ 	u8 pp_used = __get_pp_num(param->param->type);
+ 
+-	atomic_set(&mdp->job_count, pp_used);
++	refcount_set(&mdp->job_count, pp_used);
+ 	if (atomic_read(&mdp->suspended)) {
+-		atomic_set(&mdp->job_count, 0);
++		refcount_set(&mdp->job_count, 0);
+ 		return -ECANCELED;
+ 	}
+ 
+@@ -764,7 +764,7 @@ int mdp_cmdq_send(struct mdp_dev *mdp, struct mdp_cmdq_param *param)
+ 		mdp_comp_clocks_off(&mdp->pdev->dev, cmd[i]->comps,
+ 				    cmd[i]->num_comps);
+ err_cancel_job:
+-	atomic_set(&mdp->job_count, 0);
++	refcount_set(&mdp->job_count, 0);
+ 
+ 	return ret;
  }
-@@ -1659,7 +1659,7 @@ static int s2255_probe_v4l(struct s2255_dev *dev)
- 				"failed to register video device!\n");
- 			break;
+diff --git a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c
+index 5209f531ef8d..c1f3bf98120a 100644
+--- a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c
++++ b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c
+@@ -380,14 +380,14 @@ static int __maybe_unused mdp_suspend(struct device *dev)
+ 
+ 	atomic_set(&mdp->suspended, 1);
+ 
+-	if (atomic_read(&mdp->job_count)) {
++	if (refcount_read(&mdp->job_count)) {
+ 		ret = wait_event_timeout(mdp->callback_wq,
+-					 !atomic_read(&mdp->job_count),
++					 !refcount_read(&mdp->job_count),
+ 					 2 * HZ);
+ 		if (ret == 0) {
+ 			dev_err(dev,
+ 				"%s:flushed cmdq task incomplete, count=%d\n",
+-				__func__, atomic_read(&mdp->job_count));
++				__func__, refcount_read(&mdp->job_count));
+ 			return -EBUSY;
  		}
--		atomic_inc(&dev->num_channels);
-+		refcount_inc(&dev->num_channels);
- 		v4l2_info(&dev->v4l2_dev, "V4L2 device registered as %s\n",
- 			  video_device_node_name(&vc->vdev));
+ 	}
+diff --git a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.h b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.h
+index 8c09e984fd01..430251f63754 100644
+--- a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.h
++++ b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.h
+@@ -134,7 +134,7 @@ struct mdp_dev {
+ 	/* synchronization protect for m2m device operation */
+ 	struct mutex				m2m_lock;
+ 	atomic_t				suspended;
+-	atomic_t				job_count;
++	refcount_t				job_count;
+ };
  
-@@ -1667,11 +1667,11 @@ static int s2255_probe_v4l(struct s2255_dev *dev)
- 	pr_info("Sensoray 2255 V4L driver Revision: %s\n",
- 		S2255_VERSION);
- 	/* if no channels registered, return error and probe will fail*/
--	if (atomic_read(&dev->num_channels) == 0) {
-+	if (refcount_read(&dev->num_channels) == 0) {
- 		v4l2_device_unregister(&dev->v4l2_dev);
- 		return ret;
- 	}
--	if (atomic_read(&dev->num_channels) != MAX_CHANNELS)
-+	if (refcount_read(&dev->num_channels) != MAX_CHANNELS)
- 		pr_warn("s2255: Not all channels available.\n");
- 	return 0;
- }
-@@ -2221,7 +2221,7 @@ static int s2255_probe(struct usb_interface *interface,
- 		goto errorFWDATA1;
- 	}
+ struct mdp_pipe_info {
+diff --git a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-m2m.c b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-m2m.c
+index 35a8b059bde5..0e69128a3772 100644
+--- a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-m2m.c
++++ b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-m2m.c
+@@ -104,14 +104,14 @@ static void mdp_m2m_device_run(void *priv)
+ 	task.cb_data = NULL;
+ 	task.mdp_ctx = ctx;
  
--	atomic_set(&dev->num_channels, 0);
-+	refcount_set(&dev->num_channels, 0);
- 	dev->pid = id->idProduct;
- 	dev->fw_data = kzalloc(sizeof(struct s2255_fw), GFP_KERNEL);
- 	if (!dev->fw_data)
-@@ -2341,12 +2341,12 @@ static void s2255_disconnect(struct usb_interface *interface)
- {
- 	struct s2255_dev *dev = to_s2255_dev(usb_get_intfdata(interface));
- 	int i;
--	int channels = atomic_read(&dev->num_channels);
-+	int channels = refcount_read(&dev->num_channels);
- 	mutex_lock(&dev->lock);
- 	v4l2_device_disconnect(&dev->v4l2_dev);
- 	mutex_unlock(&dev->lock);
- 	/*see comments in the uvc_driver.c usb disconnect function */
--	atomic_inc(&dev->num_channels);
-+	refcount_inc(&dev->num_channels);
- 	/* unregister each video device. */
- 	for (i = 0; i < channels; i++)
- 		video_unregister_device(&dev->vc[i].vdev);
-@@ -2359,7 +2359,7 @@ static void s2255_disconnect(struct usb_interface *interface)
- 		dev->vc[i].vidstatus_ready = 1;
- 		wake_up(&dev->vc[i].wait_vidstatus);
+-	if (atomic_read(&ctx->mdp_dev->job_count)) {
++	if (refcount_read(&ctx->mdp_dev->job_count)) {
+ 		ret = wait_event_timeout(ctx->mdp_dev->callback_wq,
+-					 !atomic_read(&ctx->mdp_dev->job_count),
++					 !refcount_read(&ctx->mdp_dev->job_count),
+ 					 2 * HZ);
+ 		if (ret == 0) {
+ 			dev_err(&ctx->mdp_dev->pdev->dev,
+ 				"%d jobs not yet done\n",
+-				atomic_read(&ctx->mdp_dev->job_count));
++				refcount_read(&ctx->mdp_dev->job_count));
+ 			goto worker_end;
+ 		}
  	}
--	if (atomic_dec_and_test(&dev->num_channels))
-+	if (refcount_dec_and_test(&dev->num_channels))
- 		s2255_destroy(dev);
- 	dev_info(&interface->dev, "%s\n", __func__);
- }
 
 -- 
 2.44.0.769.g3c40516874-goog
