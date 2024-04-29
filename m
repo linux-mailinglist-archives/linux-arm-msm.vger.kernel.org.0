@@ -1,178 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-18757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8BFC08B523B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 09:21:31 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C01578B526E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 09:36:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 045BC1F219B3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 07:21:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E3D041C21017
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 07:36:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EAC615E8C;
-	Mon, 29 Apr 2024 07:21:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57DAA1427B;
+	Mon, 29 Apr 2024 07:36:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gC/uRCyV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uDB5j69l"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com [209.85.222.53])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7470B15AF9
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 07:21:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B393314273
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 07:36:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714375277; cv=none; b=iiG6A7kwu+rU8zIa0033RCqzZ3x+RYe8AfBxH0t/1mABzYemnwQmmvvE+8L1PDP1l8YGvMv0SkwegIOOAvM0DNGDZzp7TKVBnv2/wTyQ+FIC4XRabRpVA9sQ0RBG6hWK2o7wOHV2XVb2qr6NyZKbGCIp3eqidGsO6lYTd348ikE=
+	t=1714376173; cv=none; b=FJrAAeu4bDGvz/LjqxNeqyn7DdW9Rz3NP+H9Cdripz6p1f+zFaZ1YgYnhONL1IkX3bMSN7p0UUygGHbUOQykrYvZILSw1unGU8V7L+1dOejFPeXipImx7bA38oDQcdAynY4k6M6P78X/npez9kPMgMMFK/eQ0LnHHlFOVtUsULA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714375277; c=relaxed/simple;
-	bh=cBTnCY3KBtBRr30AjNsz8q6YkNKmPKiRnzFhas2NNX8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oumkLDdjXDK0vuwvFJAFA6nEkZzynJxeVwFGFhHcqCehenQ0u/kjL29/h4AAFXLjz/usBaQnMhVt7AjNLoBqBahLRDznLmBrmAtLGQLbMRGEUpdfeV560MmCWPe29LOUjtSThDxKCqm2zq7mbvU6PcVSafflEvCnQC6Jnm9s8pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gC/uRCyV; arc=none smtp.client-ip=209.85.222.53
+	s=arc-20240116; t=1714376173; c=relaxed/simple;
+	bh=33GlNWDoneeKLX4h7qhhA3i8Q9JLIcERc+9AZY2t3hY=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=kugvS+oPx3rRP7xfMrQ9eAIr0sWeUXvVjguavAs8tRfJCMoMjTq+xgQ+rF32HiXKqNFe9M+sr7tJhf+qpcLbOGSmpKjuse1dfMp5CLoY23UI+Up25ZgMDAaTPQRt7TG1YjnME4/P5TWHhJx8rRXzFVxpnwdwm3UZrbcdPuxTL9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uDB5j69l; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-7f032da81e4so14780241.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 00:21:15 -0700 (PDT)
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-41c01902dcdso7736885e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 00:36:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1714375274; x=1714980074; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=k4CtgL63N0Lb5Fc/VSdHeoMgN9WVz1qLr0PmEGVLiVA=;
-        b=gC/uRCyVHPA41Q9BN/kaZQ5YtCu0u2XpOeeKu/jKzziCuUWdYrcVW4tdlxF8XQWSLG
-         mza6/y9Kfn+Ve1S035X48zQ5joAVFhiIA2ZylBg5omEh5UsVoA2fIFG7CqahJdy0b/dl
-         C8gIMaKq9z+aZyFjvQkAkEXZSsTYCr/f9tno8ctNdrV0Lkx7V1ky+p/E7ACEMOdm12/K
-         soQVKWgiJkckUjiiWmzheBvvcdmcJWa+AzmhGwctOvbp3fDxbPsQmIg5NS4F2ME/W/UB
-         UVdgH/aVPH6PUE2J9Rwxp3VsOeD0d2XJf82j6dVKa271WIb23vBSZ9TWYErLj8DuLpG8
-         TaGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714375274; x=1714980074;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1714376170; x=1714980970; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=k4CtgL63N0Lb5Fc/VSdHeoMgN9WVz1qLr0PmEGVLiVA=;
-        b=eRIV9H3aZBaRjbKsmTPDIanExPWcX/rZj3ojkhHO+YrnquDz5DJPoPyic9DC0LVCM6
-         kiXGrquNi/6IpUokKi18lHHc6DxhkY2bm/FOahdPdGMDQFxkrpsYv8M5qiO8+ALSFi94
-         odFRrKI2S0eOADGm6yQ42iX3SxiDQU6MO1muZIEDmnewjOKSqgqdb6iUTf6R7P0/s8K1
-         nKCDCZ6X3USEcGmlvaQjW9CsmmiGMiX1guKOBg408ndCafD8DiJTIT7D7hqat/2klIcI
-         zusjUEQQCE9OLJ3m0rlGV5UfX+Oz7MO4uoOrvFjd7AAe9C13LIIzGHUzQkTCpdOORFLp
-         acXQ==
-X-Gm-Message-State: AOJu0YxOwa7UWRX0aP0+KQw9RgyQ26WQ7XBMLQRrkZYu/Bb8vnl+S9d9
-	b67bhwGrb+HXiVDqVGms/Z/jG2jRExfHWzTk+59MSgke5iuw19HS+xJauGCilHfb8vHHVxUXanj
-	z19Z4C7A6yOeu+Oiauc/RP0gEKY5pobYwtYePdQ==
-X-Google-Smtp-Source: AGHT+IFTQhCi6zGH8UpHY/Gea7P61K+intVrtnp1dSZHdoHSbR6jH1Glk906JzDo6d3r6zm3BQ4dpX/TSHx7GI4x8ZA=
-X-Received: by 2002:a67:ee09:0:b0:47b:d49b:c59 with SMTP id
- f9-20020a67ee09000000b0047bd49b0c59mr8661651vsp.10.1714375274307; Mon, 29 Apr
- 2024 00:21:14 -0700 (PDT)
+        bh=2YPpX3LmNwDjVUlNB/0j3ZN9nZwfzcoxuiregVpsmGM=;
+        b=uDB5j69lAJ0QSAVsQrN7Xr0CfdOHoeDCmLqhW1vudwTv5Z2Es167dS91vf2yOav2Vg
+         pGfs7nvCLcwq5qpvCxElnkJtfT3i1r/HejbboGseVdbb+iL6e/oNOtC9ssqWO4LJt6c1
+         8wL3vs1ojcxvaZ1/yt5e1ODQPlAX2G2DUZ2rpIelGofkXpLcltnsm1SfKJvPYFWMDi8b
+         mZqzsVR6bI569Xtt9WoUQGGS4UeHkaIZAHB6mIHaJF8VTNEUxY/iXG+KbsjUbfSGgGcS
+         j5d+eRjHDOoEwwswA1J6i49IFONmya5xVRHefpN4fgp7xcYCl/UXvJQYe/1k6IGXYjjZ
+         /jIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714376170; x=1714980970;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=2YPpX3LmNwDjVUlNB/0j3ZN9nZwfzcoxuiregVpsmGM=;
+        b=jTs580kjqpyIvj+v1R/d8UsuIYAT3C4D+XOgM4YLOaz+5+00LGoxUDEiXjN8XrgsmT
+         DAYcgNTtzaqbWiuDcGJBhlYNofeWeajdn19Ya0i+Ft6fIxVYAvFw21dmXUj9JlHe/dS+
+         irKKMU2pjmjjwtG30g7BXBv31Jipa1Q7QRgBZ26IE5HHVbqXO/HJ95YdH1bH7AjO6xYC
+         BZW2t+Sedkj52c3Er1ZOXEQ/FfAnMM9rf/2sFyRcDYKADJSxCLYTd8EW32ICwcjgQSQB
+         uiZmCg1LgJlD5KukRFpzFtMvYO9Mbfm65PJeWcaK09FznGAQHUhRBQyZLAwbuPXPl39I
+         aETg==
+X-Forwarded-Encrypted: i=1; AJvYcCVoSQFYn6zF5EGSeUl59xHJyHITst8qWKouzxOgFTS6tWC0Xop4a2Nf5SzAJ6jnriikmEht9olh684LnqiT2HlxeYtZ73Xkp1pXBX9xtw==
+X-Gm-Message-State: AOJu0Yx3YniF27SK14KD0GZNthNcTWNrXIu9oBBkyYmjrss+La3Hamo4
+	RsrW0lk33PeF2KKUajLnR55oAKEo6r8TCFDqkwnbM+xgEhEF6I1YP4hl3Xa0Ibs82bhK28/mGeO
+	/ZSjmxA==
+X-Google-Smtp-Source: AGHT+IGUFxK98NOI5jFo2xQj8ldkC/5ShZT8LR1GFygIJ814JksY0q9Y/IXVYd6vZcmGjJbsKUX/qA==
+X-Received: by 2002:a05:600c:4508:b0:41b:f28a:a11e with SMTP id t8-20020a05600c450800b0041bf28aa11emr4477073wmo.22.1714376169980;
+        Mon, 29 Apr 2024 00:36:09 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:cad:2140:d72:4b40:65fa:89e6? ([2a01:e0a:cad:2140:d72:4b40:65fa:89e6])
+        by smtp.gmail.com with ESMTPSA id bi7-20020a05600c3d8700b0041be609b1c7sm7391629wmb.47.2024.04.29.00.36.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 Apr 2024 00:36:09 -0700 (PDT)
+Message-ID: <91d8143f-b79f-4108-8593-ac0165628728@linaro.org>
+Date: Mon, 29 Apr 2024 09:36:08 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240403043416.3800259-1-sumit.garg@linaro.org>
- <CAFA6WYNxTPgiq6WLQaKGMTenuKe51SXXhgGYkdyRibghXAMfnA@mail.gmail.com> <CAFA6WYPk6E8JM8z62Skxq454WwPFYQ9EDx7FD--inqe7YoNJkg@mail.gmail.com>
-In-Reply-To: <CAFA6WYPk6E8JM8z62Skxq454WwPFYQ9EDx7FD--inqe7YoNJkg@mail.gmail.com>
-From: Sumit Garg <sumit.garg@linaro.org>
-Date: Mon, 29 Apr 2024 12:51:03 +0530
-Message-ID: <CAFA6WYNbQLz2Gio6dS2MbDT7hgNWmq27K2ng218cbYmGvQ+VhA@mail.gmail.com>
-Subject: Re: [PATCH v5 0/3] arm64: dts: qcom: apq8016: Add Schneider HMIBSC
- board DTS
-To: andersson@kernel.org, konrad.dybcio@linaro.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
-	stephan@gerhold.net, caleb.connolly@linaro.org, neil.armstrong@linaro.org, 
-	dmitry.baryshkov@linaro.org, laetitia.mariottini@se.com, 
-	pascal.eberhard@se.com, abdou.saker@se.com, jimmy.lalande@se.com, 
-	benjamin.missey@non.se.com, daniel.thompson@linaro.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH] serial: msm: Unify TX and RX DMA paths
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Marek Szyprowski <m.szyprowski@samsung.com>,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Jiri Slaby <jirislaby@kernel.org>
+References: <CGME20240423120821eucas1p2e8eb7aa059e00ee2bc6272cda24d1457@eucas1p2.samsung.com>
+ <20240423120809.2678030-1-m.szyprowski@samsung.com>
+ <4813aa76-6ce7-403d-8bff-1fb6e1d3f0a2@linaro.org>
+ <2024042342-unmade-surely-da1c@gregkh>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <2024042342-unmade-surely-da1c@gregkh>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, 19 Apr 2024 at 20:57, Sumit Garg <sumit.garg@linaro.org> wrote:
->
-> On Tue, 9 Apr 2024 at 23:24, Sumit Garg <sumit.garg@linaro.org> wrote:
-> >
-> > Hi Bjorn, Konrad,
-> >
-> > On Wed, 3 Apr 2024 at 10:04, Sumit Garg <sumit.garg@linaro.org> wrote:
-> > >
-> > > Add Schneider Electric HMIBSC board DTS. The HMIBSC board is an IIoT Edge
-> > > Box Core board based on the Qualcomm APQ8016E SoC. For more information
-> > > refer to the product page [1].
-> > >
-> > > One of the major difference from db410c is serial port where HMIBSC board
-> > > uses UART1 as the debug console with a default RS232 mode (UART1 mode mux
-> > > configured via gpio99 and gpio100).
-> > >
-> > > Support for Schneider Electric HMIBSC. Features:
-> > > - Qualcomm Snapdragon 410C SoC - APQ8016 (4xCortex A53, Adreno 306)
-> > > - 1GiB RAM
-> > > - 8GiB eMMC, SD slot
-> > > - WiFi and Bluetooth
-> > > - 2x Host, 1x Device USB port
-> > > - HDMI
-> > > - Discrete TPM2 chip over SPI
-> > > - USB ethernet adaptors (soldered)
-> > >
-> > > This series is a v2 since v1 of this DTS file has been reviewed on the
-> > > U-Boot mailing list [2].
-> > >
-> > > Changes in v5:
-> > > - Addressed another nitpick from Stephen.
-> > > - Collected Stephen's review tag.
-> > > - Warnings reported by Rob's DT check bot aren't related to HMIBSC
-> > >   board DTS but rather they are due to msm8916.dtsi or extcon-usb-gpio.txt
-> > >   still not converted to YAML format.
-> > >
-> >
-> > I haven't seen any further comments on this series, can you help to pick it up?
->
-> Gentle reminder.
->
+Hi Greg,
 
-Is there anything missing on my part to get this accepted? It has
-already gone through the review cycle with v5 posted for about a month
-now.
+On 24/04/2024 01:33, Greg Kroah-Hartman wrote:
+> On Tue, Apr 23, 2024 at 04:08:04PM +0200, neil.armstrong@linaro.org wrote:
+>> Hi Marek,
+>>
+>> On 23/04/2024 14:08, Marek Szyprowski wrote:
+>>> Use scatterlist-based API also for RX mode to unify TX and RX DMA paths
+>>> as well as simplify the whole driver code a bit.
+>>
+>> Thanks for the patch, I have no idea if this is right or wrong.
+>>
+>> Greg, I think we should wait until this change is fully tested on multiple
+>> platforms including DMA usage (bluetooth) before aplying it.
+> 
+> Great, who is going to test that without me adding it to linux-next?
 
--Sumit
+Qcom developers, reviewers and maintainers will review it and test it like
+any other patch affecting the qcom platform.
 
->
-> >
-> > > Changes in v4:
-> > > - Dropped IRQ_TYPE_EDGE_FALLING for pm8916_resin given the expectations
-> > >   of Linux kernel driver. Instead depend on systemd workaround suggested
-> > >   by Caleb to get expected HMIBSC reset behaviour.
-> > > - Incorporated further DT coding style comments from Stephen.
-> > > - Warnings reported by Rob's DT check bot aren't related to HMIBSC
-> > >   board DTS but rather they are due to msm8916.dtsi or extcon-usb-gpio.txt
-> > >   still not converted to YAML format.
-> > >
-> > > Changes in v3:
-> > > - Picked up tags.
-> > > - Fixed further DT schema warnings.
-> > > - Configure resin/power button interrupt as falling edge.
-> > > - Incorporate DTS coding style comments from Krzysztof and Konrad.
-> > >
-> > > Changes in v2:
-> > > - Fix DT schema warnings.
-> > > - Incorporate suggestions from Stephan.
-> > > - Document UART1 mode GPIOs based mux.
-> > >
-> > > [1] https://www.se.com/us/en/product/HMIBSCEA53D1L0T/iiot-edge-box-core-harmony-ipc-emmc-dc-linux-tpm/
-> > > [2] https://patchwork.ozlabs.org/project/uboot/patch/20240311111027.44577-6-sumit.garg@linaro.org/
-> > >
-> > > Sumit Garg (3):
-> > >   dt-bindings: vendor-prefixes: Add Schneider Electric
-> > >   dt-bindings: arm: qcom: Add Schneider Electric HMIBSC board
-> > >   arm64: dts: qcom: apq8016: Add Schneider HMIBSC board DTS
-> > >
-> > >  .../devicetree/bindings/arm/qcom.yaml         |   1 +
-> > >  .../devicetree/bindings/vendor-prefixes.yaml  |   2 +
-> > >  arch/arm64/boot/dts/qcom/Makefile             |   1 +
-> > >  .../dts/qcom/apq8016-schneider-hmibsc.dts     | 491 ++++++++++++++++++
-> > >  4 files changed, 495 insertions(+)
-> > >  create mode 100644 arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
-> > >
-> > > --
-> > > 2.34.1
-> > >
+Thanks,
+Neil
+
+> 
+> thanks,
+> 
+> greg k-h
+
 
