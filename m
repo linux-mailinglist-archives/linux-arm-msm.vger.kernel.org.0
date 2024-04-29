@@ -1,171 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-18776-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18777-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 132838B55E1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 12:55:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE71D8B560B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 13:08:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6C33E1F23753
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 10:55:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E513D1C20D08
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 11:08:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8997A39AF1;
-	Mon, 29 Apr 2024 10:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0A633D56D;
+	Mon, 29 Apr 2024 11:08:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RqN72Smo"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZQPbM460"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5D739AC7
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 10:55:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405D43D39B
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 11:08:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714388147; cv=none; b=RO0fxnXwM17GrqZIdnp3YCh28Gz2r4rpOPkR9lBq0QluAJjr4nQhrOiFJPLngcDkgzaIhK7BGwd9Vq6juZ1R4APDg9DFTl7vyBZ6vg+Y1cbzBnM688Es6bJlE9QYkwMXDxJg7BonQS+wWiwZ+e9nU0YO7Jt2qcEIwQ96CoFkFFg=
+	t=1714388925; cv=none; b=Lio2IrKsrusnzNimARzfV5Hbtur3i/OR/Sd0A5nGMRARZgmk2KmR7RZOd0xidLVZjl/iusDM9ofUG9zcREy6uOa7G7KRcQIGivUTi3K4zbWOwAf8uIAcKqtUiqnFxo3o0HTCzRN2w4RNmFib1By5qiMyoN89nEl4iFZ/h7hj+YQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714388147; c=relaxed/simple;
-	bh=Xpupn6nv6f2q38+tmYSrohtAxHhfoWPOabgy2X+P2HM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eegfEIWqYmO+J3qEHZGlUaltpYl7HJHElfEwaDLosYaQ5zqgMvdlw0c1uHS+eM2x6kPbXsB+VlE38x8JA4O1rwZbP25jplzR7pal5fLb5sAL8bfq7X6pw68PzUpsH9SVj5NzDALWBhf7nczKY9tMkdNkNFP0GflwXvZpydvT6U4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RqN72Smo; arc=none smtp.client-ip=209.85.219.176
+	s=arc-20240116; t=1714388925; c=relaxed/simple;
+	bh=9c7oxmiXTpo5sdlDiSIF1N+bBYPppb/Glq+E27VXlkw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=Ng/mGcfY5s7QG2J5vCuk1gmKERfnC6vSoFuYNjvqzzIEhVi8b7ihq7+1j+2qt4X5MrpAnTpOVoZi2MpPVwGeXPFvS377dP5guNYfHyxprWujGa7IH7w6HR19aKMBl6GhN3jR8yw8hYP9pQTGiEZnmZK9Yia0Ewnon1NtmQxo0Ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZQPbM460; arc=none smtp.client-ip=209.85.208.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-de59daab3f3so3542155276.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 03:55:44 -0700 (PDT)
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2dd7e56009cso56082191fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 04:08:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1714388144; x=1714992944; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=HK9OBY6JCsI5PbvjejB+IUXQa8uw72iX0OVXzGaQJV4=;
-        b=RqN72Smo87boybYk0biU491UJ2hX+RJHRb0epw9NuEPoXPbZy+O/dcrX2UQzwz8zfn
-         22unEBQRlyVVqSgIQ/HEephQ9WNkxmNkLm8v2VzY5JUlHFujea//EyDoUTY6m0hgFpJD
-         vSixFTitHZPDDzbd/I3UGA4l0UoHZjBbeZbI0FbsSwFOjZJImU4hDUfDlniXwaeSsrJ1
-         NdQQjLtv7e/TT8Norxfk8IVQsMmxpYgXr6BpoPtQQ1Iqb2cQXmjWc98pYN0UPW96r8G6
-         8dKBcsZvFHCValowyiSrTJAnLiJnSU138DJr9MctjH2udQl5ua90RDaXiVV6R7kX0Xaw
-         IZLw==
+        d=linaro.org; s=google; t=1714388922; x=1714993722; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=H5nlE/gKXKtZyCtKakKoynFLO/s21hRFIz45EgqLtos=;
+        b=ZQPbM460kozq1CpFc+Plb987ashUoCYhb8CLXrqLu52eVeb7LHngaOLgXGWnR4KoSm
+         flfUTU80UqUOpk9d/N6VRaUSnthl0GCyODewjnd/Ia5GKX+wVbBbxz6U1f9zsZvUf25e
+         ErxJvc/sqSR2HB1zuUWnkkYWJbWpg3bw8vqQulIXxcgIu+Yu2Mn2bGs4XYDdsw4N4Hpm
+         HAgWDHT4tbaeNrVu0Y5WD7IEztlpA0b+ea1Qhwx3rm6w0f/2Np+FFOUkIUPqhnqCfn5f
+         BcSKtz5rAyuSdTg7U0fJkBjQrYEoYO/rtJ7vvgceRKgavFrDWQs6Hltos9d+tXmg/EhE
+         XBVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714388144; x=1714992944;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=HK9OBY6JCsI5PbvjejB+IUXQa8uw72iX0OVXzGaQJV4=;
-        b=HDEh+hNnGMvZHqT+916epW/epQAKkFE+AxcWgW34uHDIOrFJa3KzNR+6mL2/ns+YeA
-         0NmyL5du2eWkm70g7ejdBr3LAYpKu8u1ADKMKoMYcqRlLgUlF5Ap+bn6qbN8rh82wqS7
-         HxOPf+6gkrB1KSJ2KzNPPioSJn2TlK+tBMQScIUZaspAUv04SwX7o9K/UhS9RlEqiswL
-         wcOufHpxS5SpejXsPO8xVY+E64AE+sGuaZSfbEFIsraxdm4NZ4TajaCI2BrHeFSiyth2
-         LfDQb5x7pqDpWS+dtokxGZAyNaXwH8FZ37d3Yb5zoeUY+j1/SvZtmtAdBZdKTcR22xXN
-         JDQQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUc4IBh1ycjLRWmMXKNwuu3RXLihTYA81ynXO3BkrBizMFxNYinJkt94OTYjwHkIGCuY2JhPkgPk1TQPRSZ+vymevzYwk9qHdHrfdM8nA==
-X-Gm-Message-State: AOJu0YyXK0t060+kyhs3/vUAMNYyG4bJ4Gm1zG32n6TcgxTSW6iOE/sr
-	cu/14xV4UdsECSbxhC/qBR9vT8IxNk+R0NEET4AViPmFPOr6vq7dn886nEmM+KUaG6ALyfXZi1y
-	3OBJc8yRvb28xobCh8liFXK8jFVuNF9FIlPqENw==
-X-Google-Smtp-Source: AGHT+IGnLAI/1mmfL0Yrtu3STdW3JZRgrtSe9fLYX4PwRR3wSZS0mEZbbEeASJOYhpilXlNLDeYA2jBBTzekDMQ4uOM=
-X-Received: by 2002:a25:ae18:0:b0:de5:5d4b:1632 with SMTP id
- a24-20020a25ae18000000b00de55d4b1632mr9731287ybj.60.1714388144152; Mon, 29
- Apr 2024 03:55:44 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1714388922; x=1714993722;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=H5nlE/gKXKtZyCtKakKoynFLO/s21hRFIz45EgqLtos=;
+        b=J4xcIvY9DZ0p/F4RE6a5KO0nviNSa4t/PqGTDnYI75ChdMTaVEh/C8E2HN46LK7Erm
+         mXRF/9NDv3ldGK8Ss+bB4Vwn7sVI1Mzcdr1clWHyuIf50Gu5LcXxvFgUvQbvKCLQ3nJH
+         GrTiEq3qs4V1IjJFDO07IveH99ONEcS7h1nxO5hj6RMaJppQGfac/gohh0Kkhuc5LayW
+         6UlKx2uggyquuYdhgBxElD0Xi7t73ciiWUswmVddMi2fIFxWUaolz1suPSGGlL/l5i8h
+         4VAUOMdzjjbP0x2imU0i1xr2l1aoM7BDDPNWiuUBsnD+cHHwSMHmUhCSdEoAzA7Nd05J
+         e2Ag==
+X-Forwarded-Encrypted: i=1; AJvYcCWMBzWx6+F1MPfQW0YxQuCQItDM+BR6Gh17TPdcw2iVfMquHu+TKzf5dGgkaw3CRZtiXff6Mb6TbgiP1ZIPhsvohfAWaFzthsBSu/TF1Q==
+X-Gm-Message-State: AOJu0YzU1oQUv5cAP3kRdt4DQLTYxbUA68GzLnI5CiRZJezhoUXZ2dhd
+	FeEd98SjqvsTwPC8tapVswg2Jm8HqKc7fN/Vi71uQEF9enU73vGd4wz57qcujmE=
+X-Google-Smtp-Source: AGHT+IEuF9MTMbDDvvruAjzlean3gb0uB7Mg8YLjCNZkBk4ndSHhKaHF5XHYI+hxCwcB4isDtTQ6/Q==
+X-Received: by 2002:a2e:3513:0:b0:2de:d00f:e656 with SMTP id z19-20020a2e3513000000b002ded00fe656mr6854910ljz.37.1714388922282;
+        Mon, 29 Apr 2024 04:08:42 -0700 (PDT)
+Received: from [192.168.0.102] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id a16-20020adffb90000000b0034af18ef68csm21326343wrr.5.2024.04.29.04.08.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 Apr 2024 04:08:41 -0700 (PDT)
+Message-ID: <cfd60a71-b0c1-49d5-82ce-0c52764cea14@linaro.org>
+Date: Mon, 29 Apr 2024 12:08:40 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240415182052.374494-1-mr.nuke.me@gmail.com> <20240415182052.374494-7-mr.nuke.me@gmail.com>
- <CAA8EJpqY1aDZMaeqBULEOD26UeGYbLd8RsA16jZw7zXJ7_oGPQ@mail.gmail.com>
- <6726fa2b-f5fe-10fb-6aab-f76d61f0b3cd@gmail.com> <4a7b1e1d-ac68-4857-8925-f90c9e123fd1@gmail.com>
- <CAA8EJppGW=qyk2P6Z_S=dp0njsCjqZaXjw8qU4MY1HOZR-N=4A@mail.gmail.com> <Zi88Hdx6UgBo/gti@hu-varada-blr.qualcomm.com>
-In-Reply-To: <Zi88Hdx6UgBo/gti@hu-varada-blr.qualcomm.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 29 Apr 2024 13:55:32 +0300
-Message-ID: <CAA8EJpq+Bbws8yH5Xq7rHyA+-=DaCcfEcgUa5RUt2+LWQW0kKg@mail.gmail.com>
-Subject: Re: [PATCH v3 6/7] phy: qcom-qmp-pcie: add support for ipq9574 gen3x2 PHY
-To: Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc: "Alex G." <mr.nuke.me@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	=?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-phy@lists.infradead.org, linux-clk@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 1/6] interconnect: icc-clk: Allow user to specify
+ master/slave ids
+To: Varadarajan Narayanan <quic_varada@quicinc.com>, andersson@kernel.org,
+ mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, konrad.dybcio@linaro.org,
+ djakov@kernel.org, dmitry.baryshkov@linaro.org, quic_anusha@quicinc.com,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org
+References: <20240429091314.761900-1-quic_varada@quicinc.com>
+ <20240429091314.761900-2-quic_varada@quicinc.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20240429091314.761900-2-quic_varada@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, 29 Apr 2024 at 09:20, Varadarajan Narayanan
-<quic_varada@quicinc.com> wrote:
->
-> On Wed, Apr 17, 2024 at 12:50:49AM +0300, Dmitry Baryshkov wrote:
-> > On Wed, 17 Apr 2024 at 00:25, Alex G. <mr.nuke.me@gmail.com> wrote:
-> > >
-> > > Hi Dmitry,
-> > >
-> > > On 4/15/24 16:25, mr.nuke.me@gmail.com wrote:
-> > > >
-> > > >
-> > > > On 4/15/24 15:10, Dmitry Baryshkov wrote:
-> > > >> On Mon, 15 Apr 2024 at 21:23, Alexandru Gagniuc <mr.nuke.me@gmail.com>
-> > > >> wrote:
-> > > >>>
-> > > >>> Add support for the gen3x2 PCIe PHY on IPQ9574, ported form downstream
-> > > >>> 5.4 kernel. Only the serdes and pcs_misc tables are new, the others
-> > > >>> being reused from IPQ8074 and IPQ6018 PHYs.
-> > > >>>
-> > > >>> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
-> > > >>> ---
-> > > >>>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 136 +++++++++++++++++-
-> > > >>>   .../phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5.h   |  14 ++
-> > > >>>   2 files changed, 149 insertions(+), 1 deletion(-)
-> > > >>>
-> > > >>
-> > > >> [skipped]
-> > > >>
-> > > >>> @@ -2448,7 +2542,7 @@ static inline void qphy_clrbits(void __iomem
-> > > >>> *base, u32 offset, u32 val)
-> > > >>>
-> > > >>>   /* list of clocks required by phy */
-> > > >>>   static const char * const qmp_pciephy_clk_l[] = {
-> > > >>> -       "aux", "cfg_ahb", "ref", "refgen", "rchng", "phy_aux",
-> > > >>> +       "aux", "cfg_ahb", "ref", "refgen", "rchng", "phy_aux",
-> > > >>> "anoc", "snoc"
-> > > >>
-> > > >> Are the NoC clocks really necessary to drive the PHY? I think they are
-> > > >> usually connected to the controllers, not the PHYs.
-> > > >
-> > > > The system will hang if these clocks are not enabled. They are also
-> > > > attached to the PHY in the QCA 5.4 downstream kernel.
-> >
-> > Interesting.
-> > I see that Varadarajan is converting these clocks into interconnects.
-> > Maybe it's better to wait for those patches to land and use
-> > interconnects instead. I think it would better suit the
-> > infrastructure.
-> >
-> > Varadarajan, could you please comment, are these interconnects
-> > connected to the PHY too or just to the PCIe controller?
->
-> Sorry for the late response. Missed this e-mail.
->
-> These 2 clks are related to AXI port clk on Aggnoc/SNOC, not
-> directly connected to PCIE wrapper, but it should be enabled to
-> generate pcie traffic.
+On 29/04/2024 10:13, Varadarajan Narayanan wrote:
+>   	for (i = 0, j = 0; i < num_clocks; i++) {
+>   		qp->clocks[i].clk = data[i].clk;
+>   
+> -		node = icc_node_create(first_id + j);
+> +		node = icc_node_create(first_id + data[i].master_id);
 
-So, are they required for the PHY or are they required for the PCIe
-controller only?
+You have a few conditionals in the way down the end of the existing 
+for() loop but then you hit this
 
->
-> Thanks
-> Varada
->
-> > > They are named "anoc_lane", and "snoc_lane" in the downstream kernel.
-> > > Would you like me to use these names instead?
-> >
-> > I'm fine either way.
-> >
+         onecell->nodes[j++] = node;
+     }
 
+which means that this
 
+     node = icc_node_create(first_id + data[i].master_id);
 
--- 
-With best wishes
-Dmitry
+is not analogous to this
+
+     node = icc_node_create(first_id + j);
+
+So for any loop of this for() where j was incremented previously you 
+would not _not_ have the same node ids after your change.
+
+In other words dropping the j index will result in different node numbering.
+
+Is that
+
+a) intended
+b) correct
+
+Your commit log says "allow the drive rto provide the preferred master 
+ids and slave ids" which it does but it _also_ changes the autogenerated 
+ids.
+
+So could you either a) fix that or b) justify it, in your commit log.
+
+Also I think the 8996 specific change should be in its own patch.
+
+TBH I'm not sure the autogen change is on-purpose or warranted and for 
+certain the commit log is not elucidating on which is the intended case.
+
+I think you should rewrite this patch in two ways
+
+1. Fix the autogen case or
+1. Justify the change for the autogen case.
+2. Separate drivers/clk/qcom/clk-cbf-8996.c into its own patch that
+    applies directly after changing the core
+
+Perhaps you've already gone through this debate with other reviewers but 
+then you haven't captured that in your cover letter or commit log so at 
+a minimum, please do that.
+
+---
+bod
 
