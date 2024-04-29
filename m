@@ -1,328 +1,199 @@
-Return-Path: <linux-arm-msm+bounces-18773-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18774-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6C4E8B5542
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 12:27:01 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 489188B55D3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 12:51:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8EEF728458E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 10:27:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 533F7B21CFC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 10:51:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43C95376FE;
-	Mon, 29 Apr 2024 10:25:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F5373B1AB;
+	Mon, 29 Apr 2024 10:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="b2fzXdHE"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="A/QSWlVy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f45.google.com (mail-ua1-f45.google.com [209.85.222.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E90481BB;
-	Mon, 29 Apr 2024 10:25:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0D93A28E
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 10:51:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714386332; cv=none; b=RmLT4UuNzrra/p7xz3MM6q5oLWqx4vUmzpoEC9pmKqgO6NK0JpGS+dvXz46lhv0siN32G+h4AZQzw0b1P6J+s7rFldJFfgaEtwLNiGHlxz1K3nJcYXgJEdv68EiL7yHMrrpaJ1kj36rylBsBQZTqNVPBGe6gDq9lNec4hwZN5oA=
+	t=1714387907; cv=none; b=CshMKcKzZLqIsRPYo4jddbQhykhCAEi7kV6v7nlzDQEbFk3qXD8zC1wfXM5HfEM2vVP1ZNx36D/9YGj+XpsJLFSGnk1YCZ5FduDo2EIRV4ndLWXlvK3BLqGfB5TmF2a0rYwT0+qRrGXrjuiHGqnlFjoZ14p6cB1uzE9lQw15MgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714386332; c=relaxed/simple;
-	bh=LIvkjHjII+w/YIjWTkZSqs4gt20HyUr04K+dyazYQ+c=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RgagMJ2oNgkJwUWS3CueW2BIl4NVbb/v9ATTxB50j9s1a56yWmS5UBTxa9M1QZSWuftjrie3OjmcYXrejxxq/Uw4cMW+Vy/zGC7rOE42F1kduh3bqJGb9nTBLT15oUkiXvhN3WpTSrqNFJmyRZz29t/+8iKDoBejL/G7iuvQ6c4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=b2fzXdHE; arc=none smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1714386331; x=1745922331;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=LIvkjHjII+w/YIjWTkZSqs4gt20HyUr04K+dyazYQ+c=;
-  b=b2fzXdHExp9FNOUaEDjVtqp1eNkfEr9d2uv+WgT6jhP8Sj4nT0/EOk7k
-   wbLDafqMeTG6g1awzPOoBe47c1n8Nr9aeDgfavmZYxVSYusDgYHVEqIaA
-   9QEJEYWJxIGNDignHGQmY9O6l+W0RR+MkgJTImORLiILtPklK9P/BEwB0
-   KM5CJDHX7c77gixH/WDtnC0ZozNqVyyoNhxVGAKf/CKRJEvq7x+ngc5Q+
-   Zx6p695V+Hg7/fEpuPIH9hAa6QlPh/6NKUx3gXn+jmej0zT6v4fGkqJQC
-   zNjJptpfVIMWleRKcp8chp9PoFQkqe+dCV93jQTy7ITscDT3lt6uPVB7A
-   Q==;
-X-CSE-ConnectionGUID: Ym77BXNwSZqv1TbAn7Iohg==
-X-CSE-MsgGUID: HvHyO5ouQs2HYHvcLp53Mg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11057"; a="13827951"
-X-IronPort-AV: E=Sophos;i="6.07,239,1708416000"; 
-   d="scan'208";a="13827951"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2024 03:25:29 -0700
-X-CSE-ConnectionGUID: Z088nAtaQXWtNHpchgLpJw==
-X-CSE-MsgGUID: hJ+YXbotRPu8C/D8hqLxIA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,239,1708416000"; 
-   d="scan'208";a="26475181"
-Received: from black.fi.intel.com ([10.237.72.28])
-  by orviesa006.jf.intel.com with ESMTP; 29 Apr 2024 03:25:21 -0700
-Received: by black.fi.intel.com (Postfix, from userid 1003)
-	id CFCF82F2; Mon, 29 Apr 2024 13:25:11 +0300 (EEST)
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	linux-omap@vger.kernel.org,
-	linux-pci@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	imx@lists.linux.dev,
-	linux-amlogic@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-tegra@vger.kernel.org
-Cc: Vignesh Raghavendra <vigneshr@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Yue Wang <yue.wang@Amlogic.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Xiaowei Song <songxiaowei@hisilicon.com>,
-	Binghui Wang <wangbinghui@hisilicon.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>
-Subject: [PATCH v3 5/5] PCI: kirin: Convert to agnostic GPIO API
-Date: Mon, 29 Apr 2024 13:23:22 +0300
-Message-ID: <20240429102510.2665280-6-andriy.shevchenko@linux.intel.com>
-X-Mailer: git-send-email 2.43.0.rc1.1336.g36b5255a03ac
-In-Reply-To: <20240429102510.2665280-1-andriy.shevchenko@linux.intel.com>
-References: <20240429102510.2665280-1-andriy.shevchenko@linux.intel.com>
+	s=arc-20240116; t=1714387907; c=relaxed/simple;
+	bh=4OFQmfmBaaiVFMtf3n+9BGYMCu4VhD/PO1uFErhL+cg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lMh59pEgxBkJCR08Qu9VcjuHvbm7xnPU4G+UimA3CQw+I7keC0pKkvRq5RqUb/g98+CL8PxtA905nLOo8DuquDs06jRcE/du13zl3s6MaqDWKyqVrzmOxE7MmUUjpmJccPFqXmhoDwsqiDS13ToVwrFPSGy0NuBAxe7+SR+3kys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=A/QSWlVy; arc=none smtp.client-ip=209.85.222.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-ua1-f45.google.com with SMTP id a1e0cc1a2514c-7e043f577c5so2121511241.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 03:51:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1714387904; x=1714992704; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=BXhEnLpZuSACRtLpCaCHyHe6X1epB7qL3alOjAjU9x8=;
+        b=A/QSWlVyyX8g7NZFwagC3u0WSl7hW/jd1RkYaLlcWYaENhoNhqUp/l6TCyMnBi9+7M
+         oW85Xz2VRyg/faeQSd5dBqplqPkB/JLs06qaj0d9BfFsZujRwBBHMM5vtyxbrz3LPQKN
+         ysYtjdQPP7zgN/GzqQKWMcqGYhv8EyqmfxFPk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714387904; x=1714992704;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BXhEnLpZuSACRtLpCaCHyHe6X1epB7qL3alOjAjU9x8=;
+        b=gb3TWgj8kEJhO58XANQtB3dbWOdEYYjaRYLe2AjZPMEhUDs9gBu+ZeHBJyqfCyq3hR
+         YRCSMslO7qK8+9DE+u3GHlVEEdNXz0fE4WACLvlN2QeN1eCFHFLk96Eq/6ZjQKBcM9sR
+         3hLEEG3+CgPDf7AFRN3Z79j8GQGFFKn7XP55v7uuo4bBcpTw9n4jJNjS63J1HUMGnE43
+         WAUjD7ju+Nk4BaSiaqJR8ArrK+fDbXgZbHu2BAR1La8gW8aWYLAAR4anI7awfYFuKr1X
+         IAwv948FoW0uo3ZaoDFBUSmpass13OjCSQN2xwdS7JazAGz2t2o+S9/dj7bbcBqyqVWB
+         v/jQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXf6v87/BeIAOLA3thHT1Wyi/An2XjMWgCiS1kiEjFWoWF5ebc5hpYmBA7Ow8/rMskTQQi/gGQMSZdXdt3MtMspUj7mJCkvl+SGedIeKA==
+X-Gm-Message-State: AOJu0YzqZEoDL8ximvF4GPSRtheKn7zdwt5N2H3OI9cM8B/6upzLvWBL
+	AkGTcAw3UG77geXyghohCUmYw5sGB+Qd9ryyKOUvIsQpnm6WYY/dLuL9wqwKwWB9MO3g6NrR/r0
+	=
+X-Google-Smtp-Source: AGHT+IHdhp2SqzpXDrfCZctvJsPYCO7XzLOZ0x6URHfHhXvhCudbY/BDQucVHz3VVtFptfs7+gyWdg==
+X-Received: by 2002:a67:ed45:0:b0:47a:40df:e799 with SMTP id m5-20020a67ed45000000b0047a40dfe799mr6403854vsp.5.1714387903261;
+        Mon, 29 Apr 2024 03:51:43 -0700 (PDT)
+Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com. [209.85.217.54])
+        by smtp.gmail.com with ESMTPSA id jt26-20020a056130511a00b007e613f6fac2sm3839743uab.8.2024.04.29.03.51.42
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 Apr 2024 03:51:42 -0700 (PDT)
+Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-47bb81424adso2239180137.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 03:51:42 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCXptQNbQOKFK+zWFF3kl4iYC27+QeUOkHWtrtN7/FkI4scsfh87BtGi0ZoyR1hmQGq7ATLZo/ROknnuHWCYwPpe4bSQptH/WzjiOG+MrQ==
+X-Received: by 2002:a05:6214:27cd:b0:6a0:4d4f:9428 with SMTP id
+ ge13-20020a05621427cd00b006a04d4f9428mr14947200qvb.32.1714387880813; Mon, 29
+ Apr 2024 03:51:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240419-fix-cocci-v2-0-2119e692309c@chromium.org>
+ <20240419-fix-cocci-v2-9-2119e692309c@chromium.org> <40b9c015-8ccf-4313-800a-ecae9aa8cc27@xs4all.nl>
+ <ZilMu614pUAzEGTa@kekkonen.localdomain> <20240424184603.GA6282@pendragon.ideasonboard.com>
+In-Reply-To: <20240424184603.GA6282@pendragon.ideasonboard.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
+Date: Mon, 29 Apr 2024 12:51:08 +0200
+X-Gmail-Original-Message-ID: <CANiDSCucvz=dQYDguzBZ-f95ZP84zuhvoKnmEYoJqAs1YnZ3ZA@mail.gmail.com>
+Message-ID: <CANiDSCucvz=dQYDguzBZ-f95ZP84zuhvoKnmEYoJqAs1YnZ3ZA@mail.gmail.com>
+Subject: Re: [PATCH v2 09/26] media: v4l: async: refactor v4l2_async_create_ancillary_links
+To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Cc: Sakari Ailus <sakari.ailus@linux.intel.com>, Hans Verkuil <hverkuil@xs4all.nl>, 
+	Martin Tuma <martin.tuma@digiteqautomotive.com>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Hugues Fruchet <hugues.fruchet@foss.st.com>, 
+	Alain Volmat <alain.volmat@foss.st.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+	Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Paul Kocialkowski <paul.kocialkowski@bootlin.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Chen-Yu Tsai <wens@csie.org>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
+	Thierry Reding <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Sowjanya Komatineni <skomatineni@nvidia.com>, Luca Ceresoli <luca.ceresoli@bootlin.com>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Sergey Kozlov <serjk@netup.ru>, 
+	Abylay Ospan <aospan@netup.ru>, Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>, 
+	Dmitry Osipenko <digetx@gmail.com>, Benjamin Mugnier <benjamin.mugnier@foss.st.com>, 
+	Sylvain Petinot <sylvain.petinot@foss.st.com>, 
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, Vikash Garodia <quic_vgarodia@quicinc.com>, 
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-media@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
+	linux-arm-kernel@lists.infradead.org, linux-staging@lists.linux.dev, 
+	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
+	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-The of_gpio.h is going to be removed. In preparation of that convert
-the driver to the agnostic API.
+Hi Hans
 
-Reviewed-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
----
- drivers/pci/controller/dwc/pcie-kirin.c | 105 ++++++++----------------
- 1 file changed, 35 insertions(+), 70 deletions(-)
+Your proposal is what I sent for v1:
+https://lore.kernel.org/linux-media/20240415-fix-cocci-v1-9-477afb23728b@chromium.org/
 
-diff --git a/drivers/pci/controller/dwc/pcie-kirin.c b/drivers/pci/controller/dwc/pcie-kirin.c
-index d5523f302102..d1f54f188e71 100644
---- a/drivers/pci/controller/dwc/pcie-kirin.c
-+++ b/drivers/pci/controller/dwc/pcie-kirin.c
-@@ -12,12 +12,10 @@
- #include <linux/compiler.h>
- #include <linux/delay.h>
- #include <linux/err.h>
--#include <linux/gpio.h>
- #include <linux/gpio/consumer.h>
- #include <linux/interrupt.h>
- #include <linux/mfd/syscon.h>
- #include <linux/of.h>
--#include <linux/of_gpio.h>
- #include <linux/of_pci.h>
- #include <linux/phy/phy.h>
- #include <linux/pci.h>
-@@ -78,16 +76,16 @@ struct kirin_pcie {
- 	void		*phy_priv;	/* only for PCIE_KIRIN_INTERNAL_PHY */
- 
- 	/* DWC PERST# */
--	int		gpio_id_dwc_perst;
-+	struct gpio_desc *id_dwc_perst_gpio;
- 
- 	/* Per-slot PERST# */
- 	int		num_slots;
--	int		gpio_id_reset[MAX_PCI_SLOTS];
-+	struct gpio_desc *id_reset_gpio[MAX_PCI_SLOTS];
- 	const char	*reset_names[MAX_PCI_SLOTS];
- 
- 	/* Per-slot clkreq */
- 	int		n_gpio_clkreq;
--	int		gpio_id_clkreq[MAX_PCI_SLOTS];
-+	struct gpio_desc *id_clkreq_gpio[MAX_PCI_SLOTS];
- 	const char	*clkreq_names[MAX_PCI_SLOTS];
- };
- 
-@@ -381,15 +379,20 @@ static int kirin_pcie_get_gpio_enable(struct kirin_pcie *pcie,
- 	pcie->n_gpio_clkreq = ret;
- 
- 	for (i = 0; i < pcie->n_gpio_clkreq; i++) {
--		pcie->gpio_id_clkreq[i] = of_get_named_gpio(dev->of_node,
--						    "hisilicon,clken-gpios", i);
--		if (pcie->gpio_id_clkreq[i] < 0)
--			return pcie->gpio_id_clkreq[i];
-+		pcie->id_clkreq_gpio[i] = devm_gpiod_get_index(dev,
-+							"hisilicon,clken", i,
-+							GPIOD_OUT_LOW);
-+		if (IS_ERR(pcie->id_clkreq_gpio[i]))
-+			return dev_err_probe(dev, PTR_ERR(pcie->id_clkreq_gpio[i]),
-+					     "unable to get a valid clken gpio\n");
- 
- 		pcie->clkreq_names[i] = devm_kasprintf(dev, GFP_KERNEL,
- 						       "pcie_clkreq_%d", i);
- 		if (!pcie->clkreq_names[i])
- 			return -ENOMEM;
-+
-+		gpiod_set_consumer_name(pcie->id_clkreq_gpio[i],
-+					pcie->clkreq_names[i]);
- 	}
- 
- 	return 0;
-@@ -407,10 +410,16 @@ static int kirin_pcie_parse_port(struct kirin_pcie *pcie,
- 		for_each_available_child_of_node(parent, child) {
- 			i = pcie->num_slots;
- 
--			pcie->gpio_id_reset[i] = of_get_named_gpio(child,
--							"reset-gpios", 0);
--			if (pcie->gpio_id_reset[i] < 0)
--				continue;
-+			pcie->id_reset_gpio[i] = devm_fwnode_gpiod_get_index(dev,
-+							 of_fwnode_handle(child),
-+							 "reset", 0, GPIOD_OUT_LOW,
-+							 NULL);
-+			if (IS_ERR(pcie->id_reset_gpio[i])) {
-+				if (PTR_ERR(pcie->id_reset_gpio[i]) == -ENOENT)
-+					continue;
-+				return dev_err_probe(dev, PTR_ERR(pcie->id_reset_gpio[i]),
-+						     "unable to get a valid reset gpio\n");
-+			}
- 
- 			pcie->num_slots++;
- 			if (pcie->num_slots > MAX_PCI_SLOTS) {
-@@ -434,6 +443,9 @@ static int kirin_pcie_parse_port(struct kirin_pcie *pcie,
- 				ret = -ENOMEM;
- 				goto put_node;
- 			}
-+
-+			gpiod_set_consumer_name(pcie->id_reset_gpio[i],
-+						pcie->reset_names[i]);
- 		}
- 	}
- 
-@@ -463,14 +475,11 @@ static long kirin_pcie_get_resource(struct kirin_pcie *kirin_pcie,
- 		return PTR_ERR(kirin_pcie->apb);
- 
- 	/* pcie internal PERST# gpio */
--	kirin_pcie->gpio_id_dwc_perst = of_get_named_gpio(dev->of_node,
--							  "reset-gpios", 0);
--	if (kirin_pcie->gpio_id_dwc_perst == -EPROBE_DEFER) {
--		return -EPROBE_DEFER;
--	} else if (!gpio_is_valid(kirin_pcie->gpio_id_dwc_perst)) {
--		dev_err(dev, "unable to get a valid gpio pin\n");
--		return -ENODEV;
--	}
-+	kirin_pcie->id_dwc_perst_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
-+	if (IS_ERR(kirin_pcie->id_dwc_perst_gpio))
-+		return dev_err_probe(dev, PTR_ERR(kirin_pcie->id_dwc_perst_gpio),
-+				     "unable to get a valid gpio pin\n");
-+	gpiod_set_consumer_name(kirin_pcie->id_dwc_perst_gpio, "pcie_perst_bridge");
- 
- 	ret = kirin_pcie_get_gpio_enable(kirin_pcie, pdev);
- 	if (ret)
-@@ -553,7 +562,7 @@ static int kirin_pcie_add_bus(struct pci_bus *bus)
- 
- 	/* Send PERST# to each slot */
- 	for (i = 0; i < kirin_pcie->num_slots; i++) {
--		ret = gpio_direction_output(kirin_pcie->gpio_id_reset[i], 1);
-+		ret = gpiod_direction_output_raw(kirin_pcie->id_reset_gpio[i], 1);
- 		if (ret) {
- 			dev_err(pci->dev, "PERST# %s error: %d\n",
- 				kirin_pcie->reset_names[i], ret);
-@@ -623,44 +632,6 @@ static int kirin_pcie_host_init(struct dw_pcie_rp *pp)
- 	return 0;
- }
- 
--static int kirin_pcie_gpio_request(struct kirin_pcie *kirin_pcie,
--				   struct device *dev)
--{
--	int ret, i;
--
--	for (i = 0; i < kirin_pcie->num_slots; i++) {
--		if (!gpio_is_valid(kirin_pcie->gpio_id_reset[i])) {
--			dev_err(dev, "unable to get a valid %s gpio\n",
--				kirin_pcie->reset_names[i]);
--			return -ENODEV;
--		}
--
--		ret = devm_gpio_request(dev, kirin_pcie->gpio_id_reset[i],
--					kirin_pcie->reset_names[i]);
--		if (ret)
--			return ret;
--	}
--
--	for (i = 0; i < kirin_pcie->n_gpio_clkreq; i++) {
--		if (!gpio_is_valid(kirin_pcie->gpio_id_clkreq[i])) {
--			dev_err(dev, "unable to get a valid %s gpio\n",
--				kirin_pcie->clkreq_names[i]);
--			return -ENODEV;
--		}
--
--		ret = devm_gpio_request(dev, kirin_pcie->gpio_id_clkreq[i],
--					kirin_pcie->clkreq_names[i]);
--		if (ret)
--			return ret;
--
--		ret = gpio_direction_output(kirin_pcie->gpio_id_clkreq[i], 0);
--		if (ret)
--			return ret;
--	}
--
--	return 0;
--}
--
- static const struct dw_pcie_ops kirin_dw_pcie_ops = {
- 	.read_dbi = kirin_pcie_read_dbi,
- 	.write_dbi = kirin_pcie_write_dbi,
-@@ -680,7 +651,7 @@ static int kirin_pcie_power_off(struct kirin_pcie *kirin_pcie)
- 		return hi3660_pcie_phy_power_off(kirin_pcie);
- 
- 	for (i = 0; i < kirin_pcie->n_gpio_clkreq; i++)
--		gpio_direction_output(kirin_pcie->gpio_id_clkreq[i], 1);
-+		gpiod_direction_output_raw(kirin_pcie->id_clkreq_gpio[i], 1);
- 
- 	phy_power_off(kirin_pcie->phy);
- 	phy_exit(kirin_pcie->phy);
-@@ -707,10 +678,6 @@ static int kirin_pcie_power_on(struct platform_device *pdev,
- 		if (IS_ERR(kirin_pcie->phy))
- 			return PTR_ERR(kirin_pcie->phy);
- 
--		ret = kirin_pcie_gpio_request(kirin_pcie, dev);
--		if (ret)
--			return ret;
--
- 		ret = phy_init(kirin_pcie->phy);
- 		if (ret)
- 			goto err;
-@@ -723,11 +690,9 @@ static int kirin_pcie_power_on(struct platform_device *pdev,
- 	/* perst assert Endpoint */
- 	usleep_range(REF_2_PERST_MIN, REF_2_PERST_MAX);
- 
--	if (!gpio_request(kirin_pcie->gpio_id_dwc_perst, "pcie_perst_bridge")) {
--		ret = gpio_direction_output(kirin_pcie->gpio_id_dwc_perst, 1);
--		if (ret)
--			goto err;
--	}
-+	ret = gpiod_direction_output_raw(kirin_pcie->id_dwc_perst_gpio, 1);
-+	if (ret)
-+		goto err;
- 
- 	usleep_range(PERST_2_ACCESS_MIN, PERST_2_ACCESS_MAX);
- 
+I have no strong opinion for any of the two, please feel free to land
+whatever version you prefer.
+
+
+Regards
+
+On Wed, 24 Apr 2024 at 20:46, Laurent Pinchart
+<laurent.pinchart@ideasonboard.com> wrote:
+>
+> On Wed, Apr 24, 2024 at 06:17:31PM +0000, Sakari Ailus wrote:
+> > On Wed, Apr 24, 2024 at 12:55:20PM +0200, Hans Verkuil wrote:
+> > > On 19/04/2024 11:47, Ricardo Ribalda wrote:
+> > > > Return 0 without checking IS_ERR or PTR_ERR if CONFIG_MEDIA_CONTROLLER
+> > > > is not enabled.
+> > > >
+> > > > This makes cocci happier:
+> > > >
+> > > > drivers/media/v4l2-core/v4l2-async.c:331:23-30: ERROR: PTR_ERR applied after initialization to constant on line 319
+> > > >
+> > > > Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+> > > > ---
+> > > >  drivers/media/v4l2-core/v4l2-async.c | 7 +++----
+> > > >  1 file changed, 3 insertions(+), 4 deletions(-)
+> > > >
+> > > > diff --git a/drivers/media/v4l2-core/v4l2-async.c b/drivers/media/v4l2-core/v4l2-async.c
+> > > > index 4bb073587817..915a9f3ea93c 100644
+> > > > --- a/drivers/media/v4l2-core/v4l2-async.c
+> > > > +++ b/drivers/media/v4l2-core/v4l2-async.c
+> > > > @@ -316,9 +316,10 @@ v4l2_async_nf_try_all_subdevs(struct v4l2_async_notifier *notifier);
+> > > >  static int v4l2_async_create_ancillary_links(struct v4l2_async_notifier *n,
+> > > >                                        struct v4l2_subdev *sd)
+> > > >  {
+> > > > - struct media_link *link = NULL;
+> > > > + struct media_link *link;
+> > > >
+> > > > -#if IS_ENABLED(CONFIG_MEDIA_CONTROLLER)
+> > > > + if (!IS_ENABLED(CONFIG_MEDIA_CONTROLLER))
+> > > > +         return 0;
+> > > >
+> > > >   if (sd->entity.function != MEDIA_ENT_F_LENS &&
+> > > >       sd->entity.function != MEDIA_ENT_F_FLASH)
+> > > > @@ -326,8 +327,6 @@ static int v4l2_async_create_ancillary_links(struct v4l2_async_notifier *n,
+> > > >
+> > > >   link = media_create_ancillary_link(&n->sd->entity, &sd->entity);
+> > > >
+> > > > -#endif
+> > > > -
+> > > >   return IS_ERR(link) ? PTR_ERR(link) : 0;
+> > > >  }
+> > >
+> > > I think I would prefer:
+> > >
+> > > static int v4l2_async_create_ancillary_links(struct v4l2_async_notifier *n,
+> > >                                          struct v4l2_subdev *sd)
+> > > {
+> > > #if IS_ENABLED(CONFIG_MEDIA_CONTROLLER)
+> > >     struct media_link *link;
+> > >
+> > >     ...
+> > >
+> > >     return IS_ERR(link) ? PTR_ERR(link) : 0;
+> > > #else
+> > >     return 0;
+> > > #endif
+> > > }
+> > >
+> >
+> > Me, too.
+>
+> I actually prefer Ricardo's proposal :-)
+>
+> --
+> Regards,
+>
+> Laurent Pinchart
+
+
+
 -- 
-2.43.0.rc1.1336.g36b5255a03ac
-
+Ricardo Ribalda
 
