@@ -1,131 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-18781-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 593E78B56ED
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 13:39:51 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F8E78B58D6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 14:44:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DB13B1F26212
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 11:39:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BEF3D2845E6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 12:44:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0E0E4597D;
-	Mon, 29 Apr 2024 11:39:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8F2E56768;
+	Mon, 29 Apr 2024 12:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="MPVTwJat"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SAlHzqr6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A4C4176B
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 11:39:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5198C2D0
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 12:43:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714390783; cv=none; b=NjbBQDRhcZ98H3piKMqC0ocI6wmZlO6n5KN7/bfljT0PZBinFXpF+GVBLngd7mRj0weFbWvLiIWs0xVdR+rImlLzonu5iUXWseyhTab5XxCZKWyPUOP4EfE2rpDCUJcEbKq4eeNL34O9CFg6XOneRM5TbpJbMc4QRa00NNAm9I0=
+	t=1714394629; cv=none; b=E4FDldFYAZqEBvfbnQoLyq6IMvHg0qdZaaSmtWG84bo5NiS3Jmaz3QJBmaOgem7/lOGnBFFTpX9OT0V6cIRy7wi4xVKtZYlpOI/SMOebBlaFK8KFvSetQGpqOc77E+dqnUbCKaa3plUKvLjzf+WNrI8JPQnR5fcbuZfM7T6npzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714390783; c=relaxed/simple;
-	bh=I96nVD/pvl/HbzA+JSRfMVYooN/S/Dzke1463qRCo+o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DR9o7F8k8attMW/Ed8EYyZp5XA0xRkRdIePXql0dhX/7XPtJIEH1d4/gAzIGNf9ND8drtu3BfPKQiuVK+Y9JEeGKPpmk6Ho3zI36dj8s7jdo7MwmNwm7UEYoxHhB3ocy/juiGidLAH6UAuNedzCAIeT2YRnaemd9/vTJxwwednE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=MPVTwJat; arc=none smtp.client-ip=209.85.222.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-78efd533a00so322872585a.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 04:39:41 -0700 (PDT)
+	s=arc-20240116; t=1714394629; c=relaxed/simple;
+	bh=AYTeRuvHJlMLRQito12OMFplU5LKMWC583mTfDv8bzM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=tlbDPdZsWDPYEwMP3wgrW1oI886vATOs7KhjJu/AsR8pgd9amvxXpHaQUVLsy1BpIDUSrGWFSayZSM5jwJ0W4hSAoOaOHO0dxf5jHtfTmkTE3ssHkja9NQ3OB7tIojxY8dka/3z4Fd3k/hNSEJdiWy9CXMaH0pKBl7jXKGHGd7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SAlHzqr6; arc=none smtp.client-ip=209.85.208.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2db6f5977e1so51219371fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 05:43:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1714390781; x=1714995581; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=05L08pI3kBTDsTqcTJqQ2PruWVHcpez2K/eYqwLWDm0=;
-        b=MPVTwJatyDLYP3g1H06sNv8qi68dfxAH6k6GgKzb3blmsttWHzYsqCR5UZJddUB4lo
-         CH3SBkcRyH7prIbaWdUVf3eJwrtF/cEiNn2OoApeIrNL6n45VAUZ6yjnmbrwoiPT4X80
-         js/cfLMc/1AkccLURcui0twXbRMJT2uxTfDrk=
+        d=linaro.org; s=google; t=1714394624; x=1714999424; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=X98w+dsAmZ1edpw2dvQtNUW63fW6JMB3gSJvixOmib4=;
+        b=SAlHzqr6L4vSWF3/QE90KrwOj+zRjK2s+TpNX90g7F/jbMXiONxPSGhbumI4GmLC02
+         7abzjzMgAWL0Sijok89/y9xDiaxH2X1Olj6CCJYt+aqzZFZPcgE7uzeSQUbzOeosOBM5
+         lheoc0Dy0SFSscY5Oowh6MIm+H0DM66w24fX42uWySc8pfX23LsAraYPLsjjGf4BKiXE
+         OMktFLsFjzx/EqEQ7/Tc5AU+uWzD4Dn+J7TKUfV6EwBox5Pi9/+jdki6eufOHsXSPSGu
+         HMv5S09CBippNiLxRy55BrradgGJoaJWNoQp6WBaUyAvIBxtcUrmS+cmzzCOHeTSO6HL
+         OlQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714390781; x=1714995581;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1714394624; x=1714999424;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=05L08pI3kBTDsTqcTJqQ2PruWVHcpez2K/eYqwLWDm0=;
-        b=cb1O9Dl3IjE33EpAqd0W1ZnNjpDcCVChm0sTYf2fd1oYrZmK2DtodYuaKJosFCcm5x
-         BTrSjT+knMTrOYMsHmKiXAW6/nrxlg8dVLw6mU//NCs66rf9+HGY88t/CKq90nWbSTkC
-         4UQYAbroItMWaH9ItKsqBHE24MJBTD98tEkksZDOZh7AORjRQcjyW11TxlNN3nfEPA6H
-         jMeq4mudxsEUbcd5ohLIp4MsgJUFz7KzfV/kA2HX9qCrrOdsvMdZmRaCZNzymEPE/C61
-         MxG3NXfZ7tGIqsF2np9PbR82Y+Vq5JgYRNeqyw/je8VuBt8zmHe4GGjU5tTKchk+j02f
-         wu2g==
-X-Forwarded-Encrypted: i=1; AJvYcCWxGSVl0KXqJh3+FXrlU0w+t4bgiJovmzAMLpP4OYcr80Tlvsxzs+z3gKiDZlWkAIjvVomg5eBFJmMLloNf6mRanrO78BZHM0feTQbUCg==
-X-Gm-Message-State: AOJu0YzEMX2xpNNlcPFUUpP5yIqGcV7v3gb9FJn8ObqV/bk02NHsFYzI
-	grEMP1xA+U9YYkbQcUIXqBbC16FMCHTpcKDtpDOlh+Qp2aNGkbo0aJSsW6vlOoy0EQn0muM1ppI
-	=
-X-Google-Smtp-Source: AGHT+IFLgMzWW8TwGPnu2yu8ecaG/jZntz5PoD1kKV77aA/JoyjF++IVG3dgFptoK4DVl6Yu83UHYw==
-X-Received: by 2002:a05:620a:6110:b0:78d:5065:c5df with SMTP id oq16-20020a05620a611000b0078d5065c5dfmr7154501qkn.18.1714390780879;
-        Mon, 29 Apr 2024 04:39:40 -0700 (PDT)
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com. [209.85.219.51])
-        by smtp.gmail.com with ESMTPSA id a10-20020a05620a02ea00b00790f7abff7asm633156qko.128.2024.04.29.04.39.40
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Apr 2024 04:39:40 -0700 (PDT)
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-6a0406438b5so17486206d6.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 04:39:40 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXMFfICrF7AcIymvX3aMhwwphNFKS/ZDf5u1Ct0sngBnsmc9ZN7AEdo0G0HnbNTPt5V1g0oeHXwrS1F7ZZYoIPB/bFgncG6/wcoigAIpg==
-X-Received: by 2002:aca:f1a:0:b0:3c8:39b2:bd8b with SMTP id
- 26-20020aca0f1a000000b003c839b2bd8bmr7165395oip.55.1714390759097; Mon, 29 Apr
- 2024 04:39:19 -0700 (PDT)
+        bh=X98w+dsAmZ1edpw2dvQtNUW63fW6JMB3gSJvixOmib4=;
+        b=M2alkixg20N9iyTtSc+nX8h+wmGHyXp3WAaWlQv9t/TOL4J91/IiN4IdEWjdcUD16x
+         8eLFkzgUx5d8QDmHE6VLXA8WUOZMwINHJMD8hwQT87ujynFcLo6mSvpyxvv1nhY25QfM
+         JPaXY6QmB22uCJ50LPNG+bJf5J+6HaGj3irPE2+5UJhVcrxwcflc1/WG/yJ2TMr/u8bn
+         NvOrM/05SSdku5HMIhfE7PnQ2cl5WbANhydMWjWjYJXjcZKQvactJZQClufhuZrltss1
+         jc602EUcm3o7W9tarMB/Iy8QaPxNt2Qms0r6YbVdmFqclZl9VYfNMkkBRD56yrZ5t8zu
+         nc+Q==
+X-Gm-Message-State: AOJu0Yw9wspSPzOupiDVgfnRFE27t/K4MCJuARsIttyEbDT6t7Nc/gTn
+	8ir5ILOTZSl6w76ySa34zpRdxSf91X5brIkzI7Y3lhYOxvRcwJoVDyOSoIY+FCk=
+X-Google-Smtp-Source: AGHT+IE4+SQp+d+oRxY6HdxQTk+/7Isuty9mmBbPQ6H+zh5OOVPEIx8L377wSdccFUahcgdmc+ghRA==
+X-Received: by 2002:a05:6512:3b2a:b0:51d:d630:365a with SMTP id f42-20020a0565123b2a00b0051dd630365amr1769777lfv.54.1714394623891;
+        Mon, 29 Apr 2024 05:43:43 -0700 (PDT)
+Received: from umbar.lan ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id h18-20020a0565123c9200b0051d94297380sm467538lfv.241.2024.04.29.05.43.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Apr 2024 05:43:43 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 00/12] arm64: dts: qcom: move common USB-related properties
+ to SoC dtsi
+Date: Mon, 29 Apr 2024 15:43:37 +0300
+Message-Id: <20240429-usb-link-dtsi-v1-0-87c341b55cdf@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240415-fix-cocci-v1-0-477afb23728b@chromium.org>
- <20240415-fix-cocci-v1-23-477afb23728b@chromium.org> <97f51ae8-6672-4bd4-b55b-f02114e3d8d0@moroto.mountain>
- <7a8d403b-8baf-4eff-8f9c-69cdcb8b2180@moroto.mountain> <9ba7f4e6-2b8b-44a3-9cac-9ed6e50f1700@moroto.mountain>
-In-Reply-To: <9ba7f4e6-2b8b-44a3-9cac-9ed6e50f1700@moroto.mountain>
-From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Mon, 29 Apr 2024 13:39:03 +0200
-X-Gmail-Original-Message-ID: <CANiDSCsCpE55_huYq1BchDCR88O3FWRYBGYwA00o01ZdZeL3NA@mail.gmail.com>
-Message-ID: <CANiDSCsCpE55_huYq1BchDCR88O3FWRYBGYwA00o01ZdZeL3NA@mail.gmail.com>
-Subject: Re: [PATCH 23/35] media: dvb-frontends: tda10048: Use the right div
-To: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: Martin Tuma <martin.tuma@digiteqautomotive.com>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, 
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>, Hugues Fruchet <hugues.fruchet@foss.st.com>, 
-	Alain Volmat <alain.volmat@foss.st.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
-	Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Paul Kocialkowski <paul.kocialkowski@bootlin.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Chen-Yu Tsai <wens@csie.org>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
-	Sakari Ailus <sakari.ailus@linux.intel.com>, Thierry Reding <thierry.reding@gmail.com>, 
-	Jonathan Hunter <jonathanh@nvidia.com>, Sowjanya Komatineni <skomatineni@nvidia.com>, 
-	Luca Ceresoli <luca.ceresoli@bootlin.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Hans Verkuil <hverkuil@xs4all.nl>, 
-	Sergey Kozlov <serjk@netup.ru>, Abylay Ospan <aospan@netup.ru>, 
-	Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>, Dmitry Osipenko <digetx@gmail.com>, 
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, Vikash Garodia <quic_vgarodia@quicinc.com>, 
-	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Benjamin Mugnier <benjamin.mugnier@foss.st.com>, 
-	Sylvain Petinot <sylvain.petinot@foss.st.com>, Jacopo Mondi <jacopo+renesas@jmondi.org>, 
-	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>, 
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>, 
-	=?UTF-8?Q?Niklas_S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>, 
-	Pavel Machek <pavel@ucw.cz>, linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-kernel@lists.infradead.org, linux-staging@lists.linux.dev, 
-	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPmVL2YC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDEyNT3dLiJN2czLxs3ZSS4kxdY+M0U0NDIwtzQ0sjJaCegqLUtMwKsHn
+ RsbW1ADS2NCJfAAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3248;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=AYTeRuvHJlMLRQito12OMFplU5LKMWC583mTfDv8bzM=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmL5X9kY3GaRty1HkyJcheHSz2A5QWi6g43gu3r
+ 9qPnOdyTBiJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZi+V/QAKCRCLPIo+Aiko
+ 1UiwB/91GPxr8RtEjFFInoKLXkk7uYm1BtoyLMYWWsNA6JRDpQaCCgPm8eBo6XOxb+oWWXQHeEv
+ aO3ao8nVf/d8tTlwadUT5Y8ItSNIwfTureRqwgS+qEwAXmc5Iezfw5RqyZWguH3OOUujmGQUotM
+ Pie98vrbX3i6IzkInefl/68mTFxJQLPKbrAKb5ZBGNotATI3ljn+bM3Yt8ok/slKd1GdDW3ItTW
+ PExRpApPLTwXXMuT7MJbh+fIEOAjA7oTCAqL4BR+hMQUpOQxfS142PdX5EztOQrTLLf6mRv/vTT
+ dGsJ6ynLZLbVXSZUiXZJOSgqib+4nqn2cDXHzym6Co8+2huL
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Hi Dan
+Move common USB-related properties and nodes (e.g. PHY's
+orientation-switch, generic endpoint connections) to the SoC file. If
+the board has different needs, it has to override these generic
+usecases.
 
-On Tue, 23 Apr 2024 at 11:55, Dan Carpenter <dan.carpenter@linaro.org> wrote:
->
-> Btw, here is the output from my check (based on linux next from a few
-> days ago).  There are some false positives because Smatch parses
-> __pow10() incorrectly etc but it's mostly correct.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Dmitry Baryshkov (12):
+      arm64: dts: qcom: sm8150: move USB graph to the SoC dtsi
+      arm64: dts: qcom: sm8350: move USB graph to the SoC dtsi
+      arm64: dts: qcom: sm8450: move USB graph to the SoC dtsi
+      arm64: dts: qcom: sm8550: move USB graph to the SoC dtsi
+      arm64: dts: qcom: sm8650: move USB graph to the SoC dtsi
+      arm64: dts: qcom: sm8350: move PHY's orientation-switch to SoC dtsi
+      arm64: dts: qcom: sm8450: move PHY's orientation-switch to SoC dtsi
+      arm64: dts: qcom: sm8550: move PHY's orientation-switch to SoC dtsi
+      arm64: dts: qcom: sm8650: move PHY's orientation-switch to SoC dtsi
+      arm64: dts: qcom: sm8650-mtp: connect USB-C SS port to QMP PHY
+      arm64: dts: qcom: delete wrong usb-role-switch properties
+      arm64: dts: qcom: x1e80100: drop wrong usb-role-switch properties
 
-This looks pretty cool :)
+ .../boot/dts/qcom/msm8953-motorola-potter.dts      |  1 +
+ arch/arm64/boot/dts/qcom/msm8953-xiaomi-daisy.dts  |  1 +
+ arch/arm64/boot/dts/qcom/msm8953-xiaomi-mido.dts   |  1 +
+ arch/arm64/boot/dts/qcom/msm8953-xiaomi-tissot.dts |  1 +
+ arch/arm64/boot/dts/qcom/msm8953-xiaomi-vince.dts  |  1 +
+ arch/arm64/boot/dts/qcom/qcm6490-idp.dts           |  1 +
+ arch/arm64/boot/dts/qcom/qrb5165-rb5.dts           |  1 -
+ arch/arm64/boot/dts/qcom/sdm450-motorola-ali.dts   |  1 +
+ arch/arm64/boot/dts/qcom/sdm632-motorola-ocean.dts |  1 +
+ .../arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts |  1 +
+ arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts    |  1 +
+ arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts  |  1 +
+ arch/arm64/boot/dts/qcom/sm8150-hdk.dts            | 13 -----------
+ arch/arm64/boot/dts/qcom/sm8150.dtsi               |  4 ++++
+ arch/arm64/boot/dts/qcom/sm8250.dtsi               |  2 ++
+ arch/arm64/boot/dts/qcom/sm8350-hdk.dts            | 27 +++-------------------
+ arch/arm64/boot/dts/qcom/sm8350.dtsi               | 13 +++++++++++
+ arch/arm64/boot/dts/qcom/sm8450-hdk.dts            | 27 +++-------------------
+ arch/arm64/boot/dts/qcom/sm8450.dtsi               | 13 +++++++++++
+ arch/arm64/boot/dts/qcom/sm8550-hdk.dts            | 15 ------------
+ arch/arm64/boot/dts/qcom/sm8550-mtp.dts            | 15 ------------
+ arch/arm64/boot/dts/qcom/sm8550-qrd.dts            | 15 ------------
+ .../dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts    |  9 --------
+ arch/arm64/boot/dts/qcom/sm8550.dtsi               |  6 +++++
+ arch/arm64/boot/dts/qcom/sm8650-mtp.dts            | 10 ++++----
+ arch/arm64/boot/dts/qcom/sm8650-qrd.dts            | 15 ------------
+ arch/arm64/boot/dts/qcom/sm8650.dtsi               |  6 +++++
+ arch/arm64/boot/dts/qcom/x1e80100-crd.dts          |  3 ---
+ arch/arm64/boot/dts/qcom/x1e80100-qcp.dts          |  3 ---
+ 29 files changed, 66 insertions(+), 142 deletions(-)
+---
+base-commit: dee9d87bf6c3cb70771fbc057d507bc6bd24a604
+change-id: 20240425-usb-link-dtsi-33f511287192
 
-Are you planning to add this to smatch soon?
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Thanks!
 
