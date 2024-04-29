@@ -1,170 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-18845-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18839-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B16268B5EDC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 18:21:56 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 13EFA8B5ECC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 18:21:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D53FD1C2129A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 16:21:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A8FCD1F22227
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 16:21:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2946885C6F;
-	Mon, 29 Apr 2024 16:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A86B483CC7;
+	Mon, 29 Apr 2024 16:21:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="ccJtUqTw"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZZaRH0Ch"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2876483CB0
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 16:21:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9AB882D69;
+	Mon, 29 Apr 2024 16:21:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714407679; cv=none; b=MTkHh6+LoIx76B8HY3d9w7VjgTnLAScPF3CLKGztGsZGHiODyeSfi6gBrnRKkyAiJA9g5zeH3yu7OQAF+Q+e5gjwHvcmmosew2CunDQ9XIJxviKWIMTeV+GEjst3OZLSU+TOyiyNu09zI+uABzqmjkCdIwVatBm4XEOvO6YLEak=
+	t=1714407672; cv=none; b=qQMuXIx863A+gYvBzq5PGvc80foppmdJO4oVkF60+UTJfIu1EqckgMKTLC/y9eh+buMwVg4oCt5Ug/iq87M9RETpjvCVvXkSqFk6l+p1ot5lRUKRolhKJBRwDrbWJydw5+wyPlnKn9Va2GkJWnjVTj3BZwVIefFmu34Hb0Odi94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714407679; c=relaxed/simple;
-	bh=f09XPEMd1cpgM+0G/Mmk2IfLd3rZXQ6Qse5lUXfMQt8=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=YnV5dHAjZ4r5Zn2frkrCErV9uo04i7YlxStxc1tYDxlFtL9yX3SwO2cB4JV0gqmhmVXQrfR17hOShbtPxaqdakHPHnacDP+vVkUOIEDJv2Pk50pdELRS3gtzhN3HfZT8sfAejAEcO2lht09vs6miXMNIdmD8YiuiqeqBvwUXQiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=ccJtUqTw; arc=none smtp.client-ip=209.85.208.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2db7c6b5598so60345531fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 09:21:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1714407675; x=1715012475; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=g8N15hk2cj73KP+gQB9y1hbe0Q0mU9PexGJT9++xN1o=;
-        b=ccJtUqTwAvl/PzWKOs/c1sCeGhSYRM/LI7Qj/RuyjK2mMoMq3b0p+Kw5XvEvb8I/de
-         +cuNrXX/HC5nlqll7PO4vSOhU3acPwTU0wg7x65Q51Nj8Bnp4SO1u4fKSnAhDImmHgY8
-         BAeUcW3gsVwlG7kyNxY0447Uh6MHVLvr4I1EHlmAuwSuCla24MS9BppZktzVuLs4qkL/
-         kYLpOX9/zIvgKkjPJLdYl2mAOyL1H0u4NALHCPFj8GkqPgj+ja+EgXkC68Sc5IwQF7dO
-         DzRA0rvHhyBX9dD496iXn/o1y5lASSueMjT5tPGhaUpkxouJyn6z7/KH3oy/91CRW6Bp
-         zjrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714407675; x=1715012475;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=g8N15hk2cj73KP+gQB9y1hbe0Q0mU9PexGJT9++xN1o=;
-        b=NlRbSYvipzLHz1NYzJJRwp0/mUpOHrQER8AfM8PA/6auwb8BwYz+5ANLQEAsATocaf
-         w1QqwEDrwblaKa3iH2D/v6yTy5oEZvlDymENTqKYZr+Xk9mdoW3ioSdgkiZ0T/9zW5YG
-         JYQ+YQOvFaIsfvaTruv0gOiZ/Rlso+PVll1gyMoUllvqXiukShNsaqj2VVa7Cd99Blha
-         rORUsNFxS+k9hR6icBEdFc+TsiFH/k4iEyBCxR0hVWAQJSe5/22os6IbiY3G6ZAp4Na+
-         2kQTbGWPsh8/upV0P8FCjBj9o/yCrEWBUTmHekHwvbdS1c1OVvRuesWcfHYUZ5wkGYFk
-         wTWA==
-X-Gm-Message-State: AOJu0YxMiNd+CmArMqxSZPTHHsvMqa0koNwz+S+JtGcwslNzWPy0DWe6
-	eRePs5XK5WitZLqqm/5u3tHMSMlzejZRNVADvJ19f7NNlfE8GVJdCs6O/UUUsSg=
-X-Google-Smtp-Source: AGHT+IE4TOW4UjIewweRE0HIrulhSqoUwGIv3MAML2KPrKAxT78+lJT31zNYlcM2Hzb+lFfQd/FvSA==
-X-Received: by 2002:a2e:9497:0:b0:2da:736d:3cf5 with SMTP id c23-20020a2e9497000000b002da736d3cf5mr5229286ljh.41.1714407675418;
-        Mon, 29 Apr 2024 09:21:15 -0700 (PDT)
-Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
-        by smtp.gmail.com with ESMTPSA id t20-20020a05600c199400b0041c012ca327sm7469761wmq.45.2024.04.29.09.21.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Apr 2024 09:21:15 -0700 (PDT)
-Message-ID: <31072144-8880-483f-880b-8c8ca73b2003@freebox.fr>
-Date: Mon, 29 Apr 2024 18:19:27 +0200
+	s=arc-20240116; t=1714407672; c=relaxed/simple;
+	bh=YpWz6dyPMsWgPKci9Mv3aLudoCRrteUIAN4b3Y5cerE=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=hXOETWvtn2IX+TeYGTzasBSxMy1Ao+P6VT7mMIBK1QkR1x7gwNoaPYKocaLVvw2QiTqraouwqCIjRtpgLSUXE2XG6KY93UiUp3BQ5KpznxKJClvIyrlaGiJZ3uJYszAlcf4bnJP2Ln95ebFW/oEsZhHwoPyy23DiatMFPQ3ZEGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZZaRH0Ch; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43T9k65N013509;
+	Mon, 29 Apr 2024 16:21:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=tnNMZkU
+	t8rEws8GJkMM2V4jzl2sD/mdNSlIZ2rZ92l8=; b=ZZaRH0ChN4HJ5y0k+nUEXZx
+	yrLSxB0+sRBLhQGSG/9h2IGo2X54385bPywFSjfikNlyyYbjlMOlfZ2LATSDXllD
+	RzJo+hr9gx0y0zdy0JnLCNanNOn8m63TN7xufLeEsp6sk1OPEvjKDFVZo/E3BLq2
+	cXy7tPj1hurgpQhFmPrE5D7mwcLztIDEf++NUecRKq3RqHuynobQ7EGqt+sdp8E9
+	cA0Ck18K/bWKdnN0vB6B1UkgamurqdzNJ4taGbltMpjjYw0rljrGUX9hAQRRloca
+	Z+f6qMOIulFVqQJIbp5JGf4V+9qs8+DmI5kLQtfYA7hRFa5cDGojrjdTr+pSrTw=
+	=
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xt85sa5t3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 29 Apr 2024 16:21:02 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43TGL1w7024076
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 29 Apr 2024 16:21:01 GMT
+Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 29 Apr 2024 09:20:57 -0700
+From: Krishna Kurapati <quic_kriskura@quicinc.com>
+To: Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, Johan Hovold
+	<johan@kernel.org>
+CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <quic_ppratap@quicinc.com>,
+        <quic_jackp@quicinc.com>, Krishna Kurapati <quic_kriskura@quicinc.com>
+Subject: [PATCH v16 0/2] Add DT support for Multiport controller on SC8280XP
+Date: Mon, 29 Apr 2024 21:50:46 +0530
+Message-ID: <20240429162048.2133512-1-quic_kriskura@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH v1 3/3] media: venus: add MSM8998 support
-From: Marc Gonzalez <mgonzalez@freebox.fr>
-To: Bjorn Andersson <andersson@kernel.org>,
- Jeffrey Hugo <quic_jhugo@quicinc.com>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Bryan O Donoghue <bryan.odonoghue@linaro.org>
-Cc: MSM <linux-arm-msm@vger.kernel.org>,
- linux-media <linux-media@vger.kernel.org>, DT <devicetree@vger.kernel.org>,
- Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-References: <2b21b160-a530-486a-9404-c5bf8863ffed@freebox.fr>
-Content-Language: en-US
-In-Reply-To: <2b21b160-a530-486a-9404-c5bf8863ffed@freebox.fr>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: d8I84FR02c9eXrWdP3gI5bl2tsJa8khp
+X-Proofpoint-ORIG-GUID: d8I84FR02c9eXrWdP3gI5bl2tsJa8khp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-29_14,2024-04-29_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=613 adultscore=0
+ impostorscore=0 mlxscore=0 suspectscore=0 bulkscore=0 phishscore=0
+ priorityscore=1501 malwarescore=0 spamscore=0 clxscore=1011
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404290105
 
-From: Pierre-Hugues Husson <phhusson@freebox.fr>
+Series [1] introduces binding and driver support for DWC3 Multiport
+controllers. This series adds support for tertiary controller of SC8280
+and enabled multiport controller for SA8295P-ADP platform.
 
-Add the missing bits for MSM8998 support.
+Till v13 [2] the DT was pushed along with driver code. Separated the DT
+changes from driver update and pushing it as this series. The first two
+versions were marked as v1 and v2. Marked this as v16 to avoid missing
+of change log till v13.
 
-Signed-off-by: Pierre-Hugues Husson <phhusson@freebox.fr>
-Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
----
- drivers/media/platform/qcom/venus/core.c | 42 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 42 insertions(+)
+Changes in v16:
+Marked it as v16 rather than v3 since till v13, there were DT changes
+sent along with driver code but were separated and this version is
+supposed to be v16.
+Fixed interrupt triggers from EDGE_RISING to EDGE_BOTH.
 
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index ce206b7097541..42e0c580e093d 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -587,6 +587,47 @@ static const struct venus_resources msm8996_res = {
- 	.fwname = "qcom/venus-4.2/venus.mbn",
- };
- 
-+static const struct freq_tbl msm8998_freq_table[] = {
-+	{ 1944000, 520000000 },	/* 4k UHD @ 60 (decode only) */
-+	{  972000, 520000000 },	/* 4k UHD @ 30 */
-+	{  489600, 346666667 },	/* 1080p @ 60 */
-+	{  244800, 150000000 },	/* 1080p @ 30 */
-+	{  108000,  75000000 },	/* 720p @ 30 */
-+};
-+
-+/*
-+ * https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/arch/arm/boot/dts/qcom/msm8998-vidc.dtsi
-+ */
-+static const struct reg_val msm8998_reg_preset[] = {
-+	{ 0x80124, 0x00000003 },
-+	{ 0x80550, 0x01111111 },
-+	{ 0x80560, 0x01111111 },
-+	{ 0x80568, 0x01111111 },
-+	{ 0x80570, 0x01111111 },
-+	{ 0x80580, 0x01111111 },
-+	{ 0x80588, 0x01111111 },
-+	{ 0xe2010, 0x00000000 },
-+};
-+
-+static const struct venus_resources msm8998_res = {
-+	.freq_tbl = msm8998_freq_table,
-+	.freq_tbl_size = ARRAY_SIZE(msm8998_freq_table),
-+	.reg_tbl = msm8998_reg_preset,
-+	.reg_tbl_size = ARRAY_SIZE(msm8998_reg_preset),
-+	.clks = { "core", "iface", "bus", "mbus" },
-+	.clks_num = 4,
-+	.vcodec0_clks = { "core" },
-+	.vcodec1_clks = { "core" },
-+	.vcodec_clks_num = 1,
-+	.max_load = 2563200,
-+	.hfi_version = HFI_VERSION_3XX,
-+	.vmem_id = VIDC_RESOURCE_NONE,
-+	.vmem_size = 0,
-+	.vmem_addr = 0,
-+	.dma_mask = 0xddc00000 - 1,
-+	.fwname = "qcom/venus-4.4/venus.mbn",
-+};
-+
- static const struct freq_tbl sdm660_freq_table[] = {
- 	{ 979200, 518400000 },
- 	{ 489600, 441600000 },
-@@ -893,6 +934,7 @@ static const struct venus_resources sc7280_res = {
- static const struct of_device_id venus_dt_match[] = {
- 	{ .compatible = "qcom,msm8916-venus", .data = &msm8916_res, },
- 	{ .compatible = "qcom,msm8996-venus", .data = &msm8996_res, },
-+	{ .compatible = "qcom,msm8998-venus", .data = &msm8998_res, },
- 	{ .compatible = "qcom,sdm660-venus", .data = &sdm660_res, },
- 	{ .compatible = "qcom,sdm845-venus", .data = &sdm845_res, },
- 	{ .compatible = "qcom,sdm845-venus-v2", .data = &sdm845_res_v2, },
+Link to v15:
+https://lore.kernel.org/all/20240213082724.1789096-1-quic_kriskura@quicinc.com/
+
+Changes in v15:
+SA8540 Ride related code changes have been dropped and will pushed later
+due to unavailability of hardware with either Andrew or me for testing the
+gpio hog changes suggested in v1.
+Implemented vbus boost regulators as fixed regulators instead of modelling
+their enable pins as pinctrl nodes.
+
+Link to v14:
+https://lore.kernel.org/all/20240206114745.1388491-1-quic_kriskura@quicinc.com/
+
+[1]: https://lore.kernel.org/all/20240420044901.884098-1-quic_kriskura@quicinc.com/
+[2]: https://lore.kernel.org/all/20231007154806.605-1-quic_kriskura@quicinc.com/#r
+
+Krishna Kurapati (2):
+  arm64: dts: qcom: sc8280xp: Add USB DWC3 Multiport controller
+  arm64: dts: qcom: sa8295p: Enable tertiary controller and its 4 USB
+    ports
+
+ arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 83 ++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi   | 82 +++++++++++++++++++++++
+ 2 files changed, 165 insertions(+)
+
 -- 
 2.34.1
 
